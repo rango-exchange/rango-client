@@ -1,0 +1,32 @@
+import { WalletType, CanSwitchNetwork, Connect, Subscribe, SwitchNetwork, WalletSigners,   canSwitchNetworkToEvm,
+  getEvmAccounts,
+  subscribeToEvm,
+  switchNetworkForEvm,
+ } from '@rangodev/wallets-shared';
+import { trustWallet as trustwallet_instance } from './helpers';
+import signer from './signer';
+
+const WALLET = WalletType.TRUST_WALLET;
+
+export const config = {
+  type: WALLET,
+};
+
+export const getInstance = trustwallet_instance;
+
+// doc: https://developer.trustwallet.com/trust-wallet-browser-extension/extension-guide
+export const connect: Connect = async ({ instance }) => {
+  const { accounts, chainId } = await getEvmAccounts(instance);
+  return {
+    accounts,
+    chainId,
+  };
+};
+
+export const subscribe: Subscribe = subscribeToEvm;
+
+export const switchNetwork: SwitchNetwork = switchNetworkForEvm;
+
+export const canSwitchNetworkTo: CanSwitchNetwork = canSwitchNetworkToEvm;
+
+export const getSigners: (provider: any) => WalletSigners = signer;

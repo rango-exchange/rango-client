@@ -1,0 +1,25 @@
+{
+  "name": "@rangodev/queue-manager-demo",
+  "version": "0.1.7",
+  "license": "MIT",
+  "source": "public/index.html",
+  "browserslist": "> 0.5%, last 2 versions, not dead",
+  "scripts": {
+    "start": "parcel -p 3000",
+    "build": "parcel build"
+  },
+  "devDependencies": {
+    "parcel": "^2.7.0",
+    "process": "^0.11.10"
+  },
+  "dependencies": {
+    "@ethersproject/providers": "^5.7.2",
+    "@rangodev/queue-manager-core": "^0.1.7",
+    "ethers": "^5.7.2",
+    "rango-sdk-basic": "^0.0.9"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "gitHead": "f91b0fbd2de1239720b1b4919aef9e60bd1ca9a1"
+}
