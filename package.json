@@ -1,0 +1,37 @@
+{
+  "name": "rango-client",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": [
+    "widget/*",
+    "queue-manager/*",
+    "wallets/*"
+  ],
+  "scripts": {
+    "build:wallets": "lerna run --scope @rangodev/wallets-* --scope @rangodev/provider-* build",
+    "build:queue-manager": "lerna run --scope @rangodev/queue-manager-* build",
+    "build:widget": "lerna run --scope @rangodev/widget-* build",
+    "build": "lerna run build",
+    "dev:wallets": "lerna run dev --scope @rangodev/wallets-demo",
+    "lint": "lerna run lint",
+    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "publish": "lerna publish"
+  },
+  "dependencies": {
+    "@size-limit/preset-small-lib": "^8.1.0",
+    "husky": "^8.0.2",
+    "prettier": "^2.7.1",
+    "size-limit": "^8.1.0",
+    "tsdx": "^0.14.1",
+    "tslib": "^2.4.1",
+    "typescript": "^4.9.3"
+  },
+  "devDependencies": {
+    "buffer": "^5.5.0",
+    "lerna": "^6.1.0",
+    "path-browserify": "^1.0.0",
+    "punycode": "^1.4.1",
+    "stream-browserify": "^3.0.0",
+    "util": "^0.12.3"
+  }
+}
