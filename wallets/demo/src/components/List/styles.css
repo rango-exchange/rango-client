@@ -1,0 +1,56 @@
+.row {
+  display: grid;
+  grid-template-columns: auto auto auto auto;
+}
+.wallet_box {
+  border: 1px solid #777b7e;
+  border-radius: 8px;
+  padding: 12px;
+  margin: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.title {
+  display: flex;
+}
+
+h3 {
+  margin-top: 0;
+}
+
+button {
+  width: 100%;
+  padding: 6px 0;
+  border-radius: 8px;
+  margin-top: 12px;
+}
+
+.wallet_status::before {
+  content: "";
+  display: inline-block;
+  width: 15px;
+  height: 15px;
+  -moz-border-radius: 7.5px;
+  -webkit-border-radius: 7.5px;
+  border-radius: 7.5px;
+  margin-right: 8px;
+}
+
+.connected::before {
+  background-color: #3bb143;
+}
+.disconnected::before {
+  background-color: #999da0;
+}
+
+
+select{
+  width: 100%;
+  margin: 18px 0px;
+}
+
+.account{
+  border-bottom: 1px dashed grey;
+  padding: 12px 0;
+}
