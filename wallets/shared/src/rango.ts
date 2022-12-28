@@ -1,8 +1,6 @@
 export const IS_DEV =
   !process.env.NODE_ENV || process.env.NODE_ENV === 'development';
 
-
-
 export const getBlockChainNameFromId = (
   chainId: string | number,
   blockchains: BlockchainMeta[]
@@ -122,8 +120,13 @@ export enum Network {
   Unknown = 'Unkown',
 }
 
-export const XDEFI_WALLET_SUPPORTED_NATIVE_CHAINS = [Network.BTC, Network.LTC, Network.THORCHAIN, Network.BCH, Network.BINANCE];
-
+export const XDEFI_WALLET_SUPPORTED_NATIVE_CHAINS = [
+  Network.BTC,
+  Network.LTC,
+  Network.THORCHAIN,
+  Network.BCH,
+  Network.BINANCE,
+];
 
 export const isEvmBlockchain = (
   blockchainMeta: BlockchainMeta
@@ -603,4 +606,20 @@ export type WalletSigners = {
     requestId: string
   ) => Promise<string>;
   signEvmMessage: (walletAddress: string, message: string) => Promise<string>;
+};
+
+export const evmBlockchains = (allBlockChains: BlockchainMeta[]) =>
+  allBlockChains.filter(isEvmBlockchain);
+export const solanaBlockchain = (allBlockChains: BlockchainMeta[]) =>
+  allBlockChains.filter(isSolanaBlockchain);
+
+export const cosmosBlockchains = (allBlockChains: BlockchainMeta[]) =>
+  allBlockChains.filter(isCosmosBlockchain);
+
+export type WalletInfo = {
+  name: string;
+  img: string;
+  installLink: string;
+  color: string;
+  supportedChains: BlockchainMeta[];
 };

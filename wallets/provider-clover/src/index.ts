@@ -12,6 +12,10 @@ import {
   getEvmAccounts,
   switchNetworkForEvm,
   isEvmBlockchain,
+  BlockchainMeta,
+  WalletInfo,
+  evmBlockchains,
+  solanaBlockchain,
 } from '@rangodev/wallets-shared';
 
 import { getNonEvmAccounts, clover as clover_instance } from './helpers';
@@ -84,3 +88,18 @@ export const switchNetwork: SwitchNetwork = async (options) => {
 export const canSwitchNetworkTo: CanSwitchNetwork = canSwitchNetworkToEvm;
 
 export const getSigners: (provider: any) => WalletSigners = signer;
+
+export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
+  allBlockChains
+) => {
+  const evms = evmBlockchains(allBlockChains);
+  const solana = solanaBlockchain(allBlockChains);
+  return {
+    name: 'Clover',
+    img: 'https://avatars.githubusercontent.com/u/71871595?s=200&v=4',
+    installLink:
+      'https://chrome.google.com/webstore/detail/clover-wallet/nhnkbkgjikgcigadomkphalanndcapjk',
+    color: '#96e7ed',
+    supportedChains: [...evms, ...solana],
+  };
+};

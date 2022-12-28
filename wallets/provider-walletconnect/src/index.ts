@@ -13,6 +13,9 @@ import {
   convertEvmBlockchainMetaToEvmChainInfo,
   canSwitchNetworkToEvm,
   switchOrAddNetworkForMetamaskCompatibleWallets,
+  BlockchainMeta,
+  WalletInfo,
+  evmBlockchains,
 } from '@rangodev/wallets-shared';
 // import {
 //   CanSwitchNetwork,
@@ -166,3 +169,16 @@ export const disconnect: Disconnect = async ({ instance, destroyInstance }) => {
 };
 
 export const getSigners: (provider: any) => WalletSigners = signer;
+
+export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
+  allBlockChains
+) => {
+  const evms = evmBlockchains(allBlockChains);
+  return {
+    name: 'WalletConnect',
+    img: 'https://walletconnect.com/_next/static/media/logo_mark.84dd8525.svg',
+    installLink: '',
+    color: '#b2dbff',
+    supportedChains: evms,
+  };
+};
