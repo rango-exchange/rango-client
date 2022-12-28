@@ -17,6 +17,7 @@
 
 h3 {
   margin-top: 0;
+  margin-bottom: 0;
 }
 
 button {
@@ -44,13 +45,32 @@ button {
   background-color: #999da0;
 }
 
-
-select{
+select {
   width: 100%;
   margin: 18px 0px;
 }
 
-.account{
+.account {
   border-bottom: 1px dashed grey;
   padding: 12px 0;
+}
+
+.title {
+  display: flex;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.image_div {
+  margin-right: 10px;
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+
+}
+img{
+  border-radius: 4px;
+
 }

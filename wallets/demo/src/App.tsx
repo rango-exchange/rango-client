@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { Provider, WalletsAndSupportedChains } from "@rangodev/wallets-core";
+import { Provider } from "@rangodev/wallets-core";
 import List from "./components/List";
 import { allProviders } from "@rangodev/provider-all";
-import { walletsAndSupportedChains } from "./constant";
 import { getBlockchains } from "./services";
 const providers = allProviders();
 
@@ -16,17 +15,12 @@ export function App() {
     };
     getAllBlockchains();
   }, []);
-  const supportedChains: WalletsAndSupportedChains = walletsAndSupportedChains({
-    allBlockChains,
-  });
+
   return (
     <div>
-      <Provider
-        providers={providers}
-        walletsAndSupportedChains={supportedChains}
-      >
+      <Provider providers={providers} allBlockChains={allBlockChains}>
         <h1>Providers</h1>
-        <List allBlockChains={allBlockChains} />
+        <List />
       </Provider>
     </div>
   );

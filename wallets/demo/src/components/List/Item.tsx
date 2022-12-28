@@ -1,26 +1,18 @@
 import React, { useState } from "react";
 import { useWallets } from "@rangodev/wallets-core";
-import { BlockchainMeta, Network, WalletType } from "@rangodev/wallets-shared";
-import { walletsAndSupportedChains, WALLET_LINKS } from "../../constant";
-import { CapitalizeFirstLetter } from "../../utils";
+import { Network, WalletType } from "@rangodev/wallets-shared";
 import "./styles.css";
 
-function Item({
-  type,
-  allBlockChains,
-}: {
-  type: WalletType;
-  allBlockChains: BlockchainMeta[];
-}) {
-  const { connect, state, disconnect, canSwitchNetworkTo } = useWallets();
-  const supportedChains = walletsAndSupportedChains({ allBlockChains });
-  const networks = supportedChains[type];
+function Item({ type }: { type: WalletType }) {
+  const { connect, state, disconnect, canSwitchNetworkTo, getWalletInfo } =
+    useWallets();
+  const info = getWalletInfo(type);
   const walletState = state(type);
   const [network, setNetwork] = useState<Network>(Network.AKASH);
   const handleConnectWallet = () => {
     if (!walletState.connected) {
       if (walletState.installed) connect(type);
-      else window.open(WALLET_LINKS[type], "_blank");
+      else window.open(info.installLink, "_blank");
     } else {
       disconnect(type);
     }
@@ -36,7 +28,13 @@ function Item({
   return (
     <div className="wallet_box">
       <div>
-        <h3>{CapitalizeFirstLetter(type)}</h3>
+        <div className="title">
+          <div className="image_div" style={{ backgroundColor: info.color }}>
+            <img src={info.img} alt={info.name}  width={35} />
+          </div>
+          <h3>{info.name}</h3>
+        </div>
+
         <div
           className={`wallet_status ${
             walletState.connected ? "connected" : "disconnected"
@@ -62,7 +60,7 @@ function Item({
           <option value="-1" selected>
             Default Chain
           </option>
-          {networks.map((network) => (
+          {info.supportedChains.map((network) => (
             <option key={network.name} value={network.name}>
               {network.displayName}
             </option>
@@ -72,8 +70,7 @@ function Item({
 
       <div>
         <button onClick={handleConnectWallet}>
-          {walletState.connected ? "Disconnect" : "Connect"}(
-          {CapitalizeFirstLetter(type)})
+          {walletState.connected ? "Disconnect" : "Connect"}({info.name})
         </button>
         <button disabled={!walletState.connected} onClick={handleChangeNetwork}>
           Change Network

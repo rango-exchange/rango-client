@@ -8,13 +8,13 @@ const excludedWallets = [
   WalletType.LEAP,
 ];
 
-function List({allBlockChains}) {
+function List() {
   return (
     <div className="row">
       {Object.keys(WalletType).map(
         (type) =>
           !excludedWallets.includes(WalletType[type]) && (
-            <Item allBlockChains={allBlockChains} type={WalletType[type]} />
+            <Item type={WalletType[type]} />
           )
       )}
     </div>
