@@ -8,6 +8,7 @@ import {
   SolanaTransaction,
   TransferTransaction,
   BlockchainMeta,
+  WalletInfo,
 } from '@rangodev/wallets-shared';
 import {
   EventHandler as WalletEventHandler,
@@ -26,10 +27,6 @@ export type ConnectResult = {
 
 export type Providers = { [type in WalletType]?: any };
 
-export type WalletsAndSupportedChains = {
-  [key in WalletType]: BlockchainMeta[];
-};
-
 export type ProviderContext = {
   connect(type: WalletType, network?: Network): Promise<ConnectResult>;
   disconnect(type: WalletType): Promise<void>;
@@ -38,11 +35,12 @@ export type ProviderContext = {
   canSwitchNetworkTo(type: WalletType, network: Network): boolean;
   providers(): Providers;
   getSigners(type: WalletType): WalletSigners;
+  getWalletInfo(type: WalletType): WalletInfo;
 };
 
 export type ProviderProps = PropsWithChildren<{
   onUpdateState?: WalletEventHandler;
-  walletsAndSupportedChains: WalletsAndSupportedChains | null;
+  allBlockChains: BlockchainMeta[] | null;
   providers: WalletProvider[];
 }>;
 
@@ -116,6 +114,7 @@ export interface WalletActions {
   switchNetwork?: SwitchNetwork;
   getSigners: (provider: any) => WalletSigners;
   canSwitchNetworkTo?: CanSwitchNetwork;
+  getWalletInfo(allBlockChains: BlockchainMeta[]): WalletInfo;
 }
 
 export interface WalletConfig {
