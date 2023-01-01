@@ -10,9 +10,9 @@ const icon = css({
 const ButtonContainer = styled('button', {
   borderRadius: '5px',
   fontSize: '$m',
+  fontWeight: '$l',
   cursor: 'pointer',
   padding: '$l',
-  fontWeight: '$m',
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
