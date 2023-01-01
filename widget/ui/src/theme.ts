@@ -5,9 +5,13 @@ const { createStitches } = require('@stitches/react');
 export const { styled, css } = createStitches({
   theme: {
     colors: {
-      primary: 'green',
+      primary: '#5FA425',
       white: '#fff',
-      black: '#333',
+      black: '#10150F',
+
+      neutral01: '#D0D0D0',
+      neutral02: '#F3F3F3',
+      neutral03: '#636363',
     },
     space: {
       s: '4px',
@@ -20,10 +24,16 @@ export const { styled, css } = createStitches({
       l: '20px',
     },
     fonts: {},
-    fontWeights: {},
+    fontWeights: {
+      s: '400',
+      m: '600',
+      l: '900',
+    },
     lineHeights: {},
     letterSpacings: {},
-    sizes: {},
+    sizes: {
+      s: '16px',
+    },
     borderWidths: {},
     borderStyles: {},
     radii: {},

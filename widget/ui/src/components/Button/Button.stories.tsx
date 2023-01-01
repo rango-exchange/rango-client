@@ -1,22 +1,33 @@
-import React from "react";
-import { ComponentMeta } from "@storybook/react";
+import React from 'react';
+import { ComponentMeta } from '@storybook/react';
 
-import Button, { PropTypes } from "./Button";
+import Button, { PropTypes } from './Button';
 
 export default {
-  title: "Button",
+  title: 'Button',
   component: Button,
   argTypes: {
-    type: {
-      name: "type",
-      control: { type: "select" },
-      options: ["primary", "transparent"],
+    variant: {
+      name: 'Variant',
+      control: { type: 'select' },
+      options: ['contained', 'outlined', 'text'],
+      defaultValue: 'contained',
+    },
+    fullWidth: {
+      name: 'Full Width',
+      control: { type: 'boolean' },
+    },
+    disabled: {
+      name: 'Disabled',
+      control: { type: 'boolean' },
     },
   },
 } as ComponentMeta<typeof Button>;
 
 export const Main = (props: PropTypes) => (
-  <Button {...props}>
-    I'm a button
-  </Button>
+  <Button {...props}>I'm a button</Button>
+);
+
+export const ButtonWithIcon = (props: PropTypes) => (
+  <Button startIcon={<div>start Icon</div>} endIcon={<div>end Icon</div>} {...props}>I'm a button</Button>
 );
