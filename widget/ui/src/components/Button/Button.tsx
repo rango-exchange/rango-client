@@ -1,42 +1,78 @@
-import React, { PropsWithChildren } from 'react';
+import { css } from '@stitches/react';
+import React, { PropsWithChildren, ReactNode } from 'react';
 import { styled } from '../../theme';
+import Spinner from '../Spinner';
+
+const icon = css({
+  margin: '0 $l',
+});
 
 const ButtonContainer = styled('button', {
-  borderRadius: '12px',
-  fontSize: '$s',
-  padding: '$m $l',
-  border: 0,
+  borderRadius: '5px',
+  fontSize: '$m',
+  cursor: 'pointer',
+  padding: '$l',
+  fontWeight: '$m',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  '&:disabled': {
+    background: '$neutral01',
+    color: '$neutral02',
+    border: 0,
+  },
   variants: {
-    type: {
-      transparent: {
-        color: 'black',
-        '&:hover': {
-          backgroundColor: '$black',
-          color: '$white',
-        },
+    variant: {
+      contained: {
+        background: '$primary',
+        color: '$black',
+        border: 0,
       },
-      primary: {
-        backgroundColor: '$primary',
-        color: '$white',
-        '&:hover': {
-          backgroundColor: 'lightgray',
-        },
+      outlined: {
+        background: 'transparent',
+        border: 1,
+        borderStyle: 'solid',
+        color: '$primary',
+        borderColor: '$primary',
+      },
+      text: {
+        background: 'transparent',
+        border: 0,
+        color: '$primary',
+      },
+    },
+    fullWidth: {
+      true: {
+        width: '100%',
       },
     },
   },
 });
 
 export interface PropTypes {
-  type: 'primary' | 'transparent';
   onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
+  variant: 'contained' | 'outlined' | 'text';
+  fullWidth?: boolean;
+  disabled?: boolean;
+  loading?: boolean;
+  endIcon?: ReactNode;
+  startIcon?: ReactNode;
 }
 
-function Button(props: PropsWithChildren<PropTypes>) {
-  let { children, type, onClick } = props;
-
+function Button({
+  children,
+  loading,
+  disabled,
+  startIcon,
+  endIcon,
+  ...props
+}: PropsWithChildren<PropTypes>) {
   return (
-    <ButtonContainer type={type} onClick={onClick}>
+    <ButtonContainer disabled={disabled || loading} {...props}>
+      {startIcon && <div className={icon()}>{startIcon}</div>}
       {children}
+      {loading && <Spinner />}
+      {endIcon && <div className={icon()}>{endIcon}</div>}
     </ButtonContainer>
   );
 }
