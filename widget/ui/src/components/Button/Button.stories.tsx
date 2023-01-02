@@ -9,17 +9,17 @@ export default {
   component: Button,
   argTypes: {
     variant: {
-      name: 'Variant',
+      name: 'variant',
       control: { type: 'select' },
       options: ['contained', 'outlined', 'text'],
       defaultValue: 'contained',
     },
     fullWidth: {
-      name: 'Full Width',
+      name: 'fullWidth',
       control: { type: 'boolean' },
     },
     disabled: {
-      name: 'Disabled',
+      name: 'disabled',
       control: { type: 'boolean' },
     },
   },

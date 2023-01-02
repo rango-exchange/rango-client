@@ -7,8 +7,8 @@ export const { styled, css } = createStitches({
     colors: {
       primary: '#5FA425',
       white: '#fff',
-      black: '#10150F',
-
+      text01: '#10150F',
+      text02:'#0E1617',
       neutral01: '#D0D0D0',
       neutral02: '#F3F3F3',
       neutral03: '#636363',
