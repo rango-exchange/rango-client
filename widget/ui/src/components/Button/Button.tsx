@@ -25,7 +25,7 @@ const ButtonContainer = styled('button', {
     variant: {
       contained: {
         background: '$primary',
-        color: '$black',
+        color: '$text01',
         border: 0,
       },
       outlined: {

@@ -8,13 +8,13 @@ export default {
   component: Typography,
   argTypes: {
     variant: {
-      name: 'Variant',
+      name: 'variant',
       control: { type: 'select' },
       options: ['body1', 'body2', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6'],
       defaultValue: 'h1',
     },
     align: {
-      name: 'Align',
+      name: 'align',
       control: { type: 'select' },
       options: ['center', 'left', 'right'],
     },

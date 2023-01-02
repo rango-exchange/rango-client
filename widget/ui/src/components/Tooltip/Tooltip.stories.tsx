@@ -14,7 +14,7 @@ export default {
       defaultValue: 'I am a tooltip',
     },
     side: {
-      name: 'Side',
+      name: 'side',
       control: { type: 'select' },
       options: ['top', 'right', 'bottom', 'left'],
       defaultValue: 'top',
