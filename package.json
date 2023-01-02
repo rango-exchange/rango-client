@@ -13,6 +13,7 @@
     "build:widget": "lerna run --scope @rangodev/widget-* build",
     "build": "lerna run build",
     "dev:wallets": "lerna run dev --scope @rangodev/wallets-demo",
+    "dev:queue": "lerna run dev --scope @rangodev/queue-manager-*",
     "lint": "lerna run lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "publish": "lerna publish"
