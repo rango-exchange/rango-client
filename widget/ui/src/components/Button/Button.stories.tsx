@@ -2,6 +2,7 @@ import React from 'react';
 import { ComponentMeta } from '@storybook/react';
 
 import Button, { PropTypes } from './Button';
+import AddWallet from '../Icon/AddWallet';
 
 export default {
   title: 'Button',
@@ -29,5 +30,13 @@ export const Main = (props: PropTypes) => (
 );
 
 export const ButtonWithIcon = (props: PropTypes) => (
-  <Button startIcon={<div>start Icon</div>} endIcon={<div>end Icon</div>} {...props}>I'm a button</Button>
+  <div>
+    <Button startIcon={<AddWallet />} {...props}>
+      I'm a button
+    </Button>
+    <div style={{margin:'10px 0'}}/>
+    <Button endIcon={<AddWallet />} {...props}>
+      I'm a button
+    </Button>
+  </div>
 );
