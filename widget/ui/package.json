@@ -68,7 +68,9 @@
     "typescript": "^4.8.4"
   },
   "dependencies": {
+    "@radix-ui/react-checkbox": "^1.0.1",
     "@radix-ui/react-switch": "^1.0.1",
+    "@radix-ui/react-tooltip": "^1.0.2",
     "@stitches/react": "^1.2.8"
   },
   "publishConfig": {
