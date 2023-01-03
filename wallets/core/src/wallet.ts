@@ -16,7 +16,8 @@ export type EventHandler = (
   type: WalletType,
   event: Events,
   value: any,
-  coreState: State
+  coreState: State,
+  supportedChains: BlockchainMeta[]
 ) => void;
 
 export interface State {
@@ -309,7 +310,13 @@ class Wallet<InstanceType = any> {
 
     const state = this.getState();
     updates.forEach(([name, value]) => {
-      this.options.handler(this.options.config.type, name, value, state);
+      this.options.handler(
+        this.options.config.type,
+        name,
+        value,
+        state,
+        this.meta
+      );
     });
   }
 

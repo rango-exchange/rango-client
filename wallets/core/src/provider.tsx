@@ -52,14 +52,20 @@ const WalletContext = createContext<ProviderContext>({});
   we are using this function.
 */
 function makeEventHandler(dispatcher: any, onUpdateState?: WalletEventHandler) {
-  const handler: WalletEventHandler = (type, name, value, coreState) => {
+  const handler: WalletEventHandler = (
+    type,
+    name,
+    value,
+    coreState,
+    supportedChains
+  ) => {
     const action = { type: 'new_state', wallet: type, name, value };
     // Update state
     dispatcher(action);
 
     // Giving the event to the outside listener
     if (onUpdateState) {
-      onUpdateState(type, name, value, coreState);
+      onUpdateState(type, name, value, coreState, supportedChains);
     }
   };
 
@@ -99,6 +105,7 @@ function Provider(props: ProviderProps) {
   const addWalletRef = useInitializers(
     makeEventHandler(dispatch, props.onUpdateState)
   );
+  
 
   const listOfProviders = props.providers;
   // const listOfProviders = [

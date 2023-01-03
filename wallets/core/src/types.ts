@@ -40,7 +40,7 @@ export type ProviderContext = {
 
 export type ProviderProps = PropsWithChildren<{
   onUpdateState?: WalletEventHandler;
-  allBlockChains: BlockchainMeta[] | null;
+  allBlockChains?: BlockchainMeta[];
   providers: WalletProvider[];
 }>;
 
