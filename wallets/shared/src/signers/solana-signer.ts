@@ -1,4 +1,4 @@
-import { Connection, PublicKey, Transaction, TransactionInstruction } from '@solana/web3.js';
+import { Connection, PublicKey, Transaction, TransactionInstruction, VersionedTransaction,VersionedMessage } from '@solana/web3.js';
 import * as Sentry from '@sentry/browser';
 import { CaptureContext } from '@sentry/types';
 import { SolanaTransaction, Network, IS_DEV } from '../rango';
@@ -83,7 +83,7 @@ function confirmTx(signature: string): Promise<boolean> {
 }
 
 export type SolanaSigner = (
-  solanaWeb3Transaction: Transaction,
+  solanaWeb3Transaction: Transaction | VersionedTransaction | undefined,
 ) => Promise<number[] | Buffer | Uint8Array>;
 
 export const generalSolanaTransactionExecutor = async (
@@ -92,17 +92,24 @@ export const generalSolanaTransactionExecutor = async (
   solanaSigner: SolanaSigner,
 ): Promise<string> => {
   const connection = getSolanaConnection();
-  let transaction: Transaction;
+  let versionedTransaction: VersionedTransaction | undefined = undefined 
+  let transaction: Transaction | undefined = undefined;
   if (tx.serializedMessage != null) {
-    transaction = Transaction.from(Buffer.from(new Uint8Array(tx.serializedMessage)));
-    transaction.feePayer = new PublicKey(tx.from);
-    transaction.recentBlockhash = undefined;
+    if (tx.txType === 'VERSIONED') {
+      const message = VersionedMessage.deserialize(new Uint8Array(tx.serializedMessage))
+      message.recentBlockhash = tx.recentBlockhash
+      versionedTransaction = new VersionedTransaction(message)
+    } else if (tx.txType === 'LEGACY') {
+      transaction = Transaction.from(Buffer.from(new Uint8Array(tx.serializedMessage)));
+      transaction.feePayer = new PublicKey(tx.from);
+      transaction.recentBlockhash = undefined;
+    }
   } else {
     transaction = new Transaction();
     transaction.feePayer = new PublicKey(tx.from);
     transaction.recentBlockhash = tx.recentBlockhash;
     tx.instructions.forEach((instruction) => {
-      transaction.add(
+      transaction?.add(
         new TransactionInstruction({
           keys: instruction.keys.map((accountMeta) => ({
             pubkey: new PublicKey(accountMeta.pubkey),
@@ -117,16 +124,16 @@ export const generalSolanaTransactionExecutor = async (
     tx.signatures.forEach(function (signatureItem) {
       const signature = Buffer.from(new Uint8Array(signatureItem.signature));
       const publicKey = new PublicKey(signatureItem.publicKey);
-      transaction.addSignature(publicKey, signature);
+      transaction?.addSignature(publicKey, signature);
     });
   }
-  if (!transaction) throw new Error('error creating transaction');
+  if (!transaction && !versionedTransaction) throw new Error('error creating transaction');
   try {
-    if (!transaction.recentBlockhash)
+    if (!!transaction && !transaction.recentBlockhash)
       transaction.recentBlockhash = (
-        await retryPromise(connection.getLatestBlockhash('confirmed'), 5, 10000)
+        await retryPromise(connection.getLatestBlockhash('confirmed'), 5, 10_000)
       ).blockhash;
-    const raw = await solanaSigner(transaction);
+    const raw = await solanaSigner(transaction || versionedTransaction);
     const signature = await retryPromise(connection.sendRawTransaction(raw), 2, 30000);
     if (!signature) throw new Error('tx cant send to blockchain. signature=' + signature);
     const confirmed = await confirmTx(signature);

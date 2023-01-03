@@ -502,6 +502,7 @@ export type SolanaTransaction = {
   from: string;
   identifier: string;
   type: GenericTransactionType;
+  txType: 'LEGACY' | 'VERSIONED';
   externalTxId: string | null;
   recentBlockhash: string;
   signatures: SolanaSignature[];
