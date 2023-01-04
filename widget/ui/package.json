@@ -1,6 +1,6 @@
 {
   "name": "@rangodev/ui",
-  "version": "0.1.7",
+  "version": "0.1.8-alpha.2+09c5465",
   "license": "MIT",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -68,5 +68,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "f91b0fbd2de1239720b1b4919aef9e60bd1ca9a1"
+  "gitHead": "09c54650090e82fe27a952a87cfac6d97b657da4"
 }
