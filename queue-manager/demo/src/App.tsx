@@ -44,7 +44,6 @@ export function App(props: PropTypes) {
 
   return (
     <Provider
-      // @ts-ignore
       queuesDefs={[simpleSwapQueueDefinition, swapQueueDef]}
       context={queueContext}
     >
