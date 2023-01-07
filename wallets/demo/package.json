@@ -1,6 +1,6 @@
 {
   "name": "@rangodev/wallets-demo",
-  "version": "0.1.8-alpha.3+6a1dd3a",
+  "version": "0.1.8",
   "license": "MIT",
   "private": true,
   "source": "public/index.html",
@@ -10,13 +10,12 @@
     "build": "parcel build"
   },
   "dependencies": {
-    "@rangodev/provider-all": "^0.1.8-alpha.3+6a1dd3a",
+    "@rangodev/provider-all": "^0.1.8",
     "@rangodev/wallets-core": "^0.1.8-alpha.3+6a1dd3a",
     "parcel": "^2.8.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
-  "peerDependencies": {},
   "publishConfig": {
     "access": "public"
   },

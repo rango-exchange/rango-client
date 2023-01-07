@@ -1,6 +1,6 @@
 {
   "name": "@rangodev/widget-embedded",
-  "version": "0.1.8-alpha.3+6a1dd3a",
+  "version": "0.1.8",
   "license": "MIT",
   "source": "public/index.html",
   "browserslist": "> 0.5%, last 2 versions, not dead",
@@ -8,9 +8,8 @@
     "start": "parcel",
     "build": "parcel build"
   },
-  "devDependencies": {},
   "dependencies": {
-    "@rangodev/ui": "^0.1.8-alpha.3+6a1dd3a",
+    "@rangodev/ui": "^0.1.8",
     "parcel": "^2.8.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
