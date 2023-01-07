@@ -1,8 +1,6 @@
 export const IS_DEV =
   !process.env.NODE_ENV || process.env.NODE_ENV === 'development';
 
-
-
 export const getBlockChainNameFromId = (
   chainId: string | number,
   blockchains: BlockchainMeta[]
@@ -122,8 +120,13 @@ export enum Network {
   Unknown = 'Unkown',
 }
 
-export const XDEFI_WALLET_SUPPORTED_NATIVE_CHAINS = [Network.BTC, Network.LTC, Network.THORCHAIN, Network.BCH, Network.BINANCE];
-
+export const XDEFI_WALLET_SUPPORTED_NATIVE_CHAINS = [
+  Network.BTC,
+  Network.LTC,
+  Network.THORCHAIN,
+  Network.BCH,
+  Network.BINANCE,
+];
 
 export const isEvmBlockchain = (
   blockchainMeta: BlockchainMeta
@@ -521,6 +524,12 @@ export type TransferTransaction = {
   externalTxId: string | null;
   id: string;
 };
+
+export type Transaction =
+  | EvmTransaction
+  | CosmosTransaction
+  | SolanaTransaction
+  | TransferTransaction;
 
 // core
 

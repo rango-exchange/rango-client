@@ -2,23 +2,24 @@ import { openDB, DBSchema, IDBPDatabase } from 'idb';
 
 import { QueueID, QueueName } from './manager';
 import { QueueState, Task } from './queue';
-import { QueueContext, Status } from './types';
+import { QueueStorage, Status } from './types';
 
 const DB_NAME = 'queues-manager';
 const OBJECT_STORE_NAME = 'queues';
 const VERSION = 1;
 
-interface PersistedQueue {
+export interface PersistedQueue {
   id: QueueID;
+  createdAt: number;
   name: QueueName;
   status: Status;
-  tasksState: QueueState;
-  tasksList: Task[];
-  context: QueueContext;
+  state: QueueState;
+  tasks: Task[];
+  storage: QueueStorage;
 }
 
 type UpdatePersistedQueue = Partial<
-  Pick<PersistedQueue, 'status' | 'tasksState' | 'tasksList' | 'context'>
+  Pick<PersistedQueue, 'status' | 'state' | 'tasks' | 'storage'>
 >;
 
 interface Database extends DBSchema {
