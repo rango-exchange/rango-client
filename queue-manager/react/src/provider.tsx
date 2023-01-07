@@ -34,18 +34,23 @@ function Provider(props: PropsWithChildren<PropTypes>) {
       queuesDefs: props.queuesDefs,
       events: {
         onStorageUpdate: () => {
+          console.log('onStorage');
           forceRender((prev) => prev + 1);
         },
         onCreateQueue: () => {
+          console.log('onCreateQ');
           forceRender((prev) => prev + 1);
         },
         onCreateTask: () => {
+          console.log('onCreateT');
           forceRender((prev) => prev + 1);
         },
         onUpdateQueue: () => {
+          console.log('onUpdateQ');
           forceRender((prev) => prev + 1);
         },
         onUpdateTask: () => {
+          console.log('onUpdateT');
           forceRender((prev) => prev + 1);
         },
       },
@@ -56,6 +61,8 @@ function Provider(props: PropsWithChildren<PropTypes>) {
   useLayoutEffect(() => {
     context.current = props.context;
   }, [props.context]);
+
+  console.log('mmmmmmmmmmmmmmmmmmmmmmmmm');
 
   return (
     <ManagerCtx.Provider value={{ manager, count }}>
