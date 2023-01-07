@@ -5,27 +5,11 @@ import React, {
   useReducer,
   useRef,
 } from 'react';
-// import * as metamask from '../provider-metamask';
-// import * as walletConnect from '../provider-walletconnect';
-// import * as trustwallet from '../provider-trustwallet';
-// import * as xDefi from '../provider-xdefi';
-// import * as coinbase from '../provider-coinbase';
-// import * as phantom from '../provider-phantom';
-// import * as keplr from '../provider-keplr';
-// import * as binanceChainWallet from '../provider-binance-chain-wallet';
-// import * as coin98 from '../provider-coin98';
-// import * as mathWallet from '../provider-math-wallet';
-// import * as exodus from '../provider-exodus';
-// import * as safepal from '../provider-safepal';
-// import * as tokenPocket from '../provider-tokenpocket';
-// import * as cosmostation from '../provider-cosmostation';
-// import * as clover from '../provider-clover';
-// import * as brave from '../provider-brave';
-// import * as okx from '../provider-okx';
 
 import {
   availableWallets,
   checkWalletProviders,
+  connectedWallets,
   defaultWalletState,
   getComptaibleProvider,
   state_reducer,
@@ -105,28 +89,9 @@ function Provider(props: ProviderProps) {
   const addWalletRef = useInitializers(
     makeEventHandler(dispatch, props.onUpdateState)
   );
-  
+  // const providersRef = useRef<{ [type in WalletType]?: any }>({});
 
   const listOfProviders = props.providers;
-  // const listOfProviders = [
-  //   metamask,
-  //   coin98,
-  //   keplr,
-  //   xDefi,
-  //   walletConnect,
-  //   coinbase,
-  //   binanceChainWallet,
-  //   phantom,
-  //   mathWallet,
-  //   trustwallet,
-  //   exodus,
-  //   safepal,
-  //   tokenPocket,
-  //   clover,
-  //   cosmostation,
-  //   brave,
-  //   okx,
-  // ];
   const wallets = checkWalletProviders(listOfProviders);
   const api: ProviderContext = {
     // TODO: Fix type error
@@ -157,7 +122,7 @@ function Provider(props: ProviderProps) {
       // When a wallet is initializing, a record will be added to `providersState`
       // So we use them to know what wallet has been initialized then we need to
       // filter connected wallets only.
-      availableWallets(providersState).forEach((type) => {
+      connectedWallets(providersState).forEach((type) => {
         const wallet = wallets.get(type);
 
         if (!!wallet) {

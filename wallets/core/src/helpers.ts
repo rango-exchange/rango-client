@@ -85,7 +85,7 @@ export function readAccountAddress(addressWithNetwork: string): {
   };
 }
 
-export function availableWallets(providersState: State): WalletType[] {
+export function connectedWallets(providersState: State): WalletType[] {
   return Object.entries(providersState)
     .filter(([, wallet_state]) => {
       return wallet_state?.connected;
@@ -93,6 +93,12 @@ export function availableWallets(providersState: State): WalletType[] {
     .map(([type]) => {
       return type as WalletType;
     });
+}
+
+export function availableWallets(providersState: State): WalletType[] {
+  return Object.entries(providersState).map(([type]) => {
+    return type as WalletType;
+  });
 }
 
 export function checkWalletProviders(list: WalletProvider[]): WalletProviders {

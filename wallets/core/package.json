@@ -1,6 +1,6 @@
 {
   "name": "@rangodev/wallets-core",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "license": "MIT",
   "module": "dist/wallets-core.esm.js",
   "main": "dist/index.js",
@@ -17,12 +17,13 @@
     "build": "tsdx build",
     "test": "tsdx test --passWithNoTests",
     "lint": "tsdx lint",
-    "prepare": "tsdx build",
     "size": "size-limit",
     "analyze": "size-limit --why"
   },
   "peerDependencies": {
-    "react": ">=16"
+    "@types/react": "^17.0.0 || ^18.0.0",
+    "react": "^17.0.0 || ^18.0.0",
+    "react-dom": "^17.0.0 || ^18.0.0"
   },
   "husky": {
     "hooks": {
@@ -45,24 +46,12 @@
       "limit": "10 KB"
     }
   ],
-  "devDependencies": {
-    "@size-limit/preset-small-lib": "^8.1.0",
-    "@types/react": "^18.0.25",
-    "@types/react-dom": "^18.0.9",
-    "husky": "^8.0.2",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "size-limit": "^8.1.0",
-    "tsdx": "^0.14.1",
-    "tslib": "^2.4.1",
-    "typescript": "^4.9.3"
-  },
   "dependencies": {
-    "@rangodev/wallets-shared": "^0.1.7",
+    "@rangodev/wallets-shared": "^0.1.8",
     "@walletconnect/ethereum-provider": "1.8.0"
   },
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "f91b0fbd2de1239720b1b4919aef9e60bd1ca9a1"
+  "gitHead": "09c54650090e82fe27a952a87cfac6d97b657da4"
 }

@@ -525,6 +525,12 @@ export type TransferTransaction = {
   id: string;
 };
 
+export type Transaction =
+  | EvmTransaction
+  | CosmosTransaction
+  | SolanaTransaction
+  | TransferTransaction;
+
 // core
 
 // wallets/core/src/wallet.ts -> State

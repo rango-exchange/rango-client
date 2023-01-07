@@ -1,1 +1,1 @@
-export * from "./provider"
+export { default as Provider, useManager } from './provider';
