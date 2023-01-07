@@ -1,5 +1,5 @@
 {
-  "version": "0.1.7",
+  "version": "0.1.8",
   "license": "MIT",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -11,16 +11,18 @@
     "node": ">=10"
   },
   "scripts": {
-    "start": "tsdx watch",
+    "dev": "tsdx watch",
     "build": "tsdx build",
     "test": "tsdx test --passWithNoTests",
     "lint": "tsdx lint",
-    "prepare": "tsdx build",
     "size": "size-limit",
     "analyze": "size-limit --why"
   },
   "peerDependencies": {
-    "react": ">=16"
+    "@rangodev/queue-manager-core": "*",
+    "@types/react": "^17.0.0 || ^18.0.0",
+    "react": "^17.0.0 || ^18.0.0",
+    "react-dom": "^17.0.0 || ^18.0.0"
   },
   "husky": {
     "hooks": {
@@ -47,22 +49,11 @@
     }
   ],
   "devDependencies": {
-    "@size-limit/preset-small-lib": "^8.1.0",
-    "@types/react": "^18.0.25",
-    "@types/react-dom": "^18.0.9",
-    "husky": "^8.0.2",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "size-limit": "^8.1.0",
-    "tsdx": "^0.14.1",
-    "tslib": "^2.4.1",
-    "typescript": "^4.9.3"
-  },
-  "dependencies": {
-    "@rangodev/queue-manager-core": "^0.1.7"
+    "react-dom": "^18.2.0"
   },
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "f91b0fbd2de1239720b1b4919aef9e60bd1ca9a1"
+  "gitHead": "6a1dd3a10333466b93bb13c66dfd148df0059070"
 }
