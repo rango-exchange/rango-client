@@ -176,7 +176,7 @@ export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
   const evms = evmBlockchains(allBlockChains);
   return {
     name: 'WalletConnect',
-    img: 'https://walletconnect.com/_next/static/media/logo_mark.84dd8525.svg',
+    img: 'https://avatars.githubusercontent.com/u/37784886?s=200&v=4',
     installLink: '',
     color: '#b2dbff',
     supportedChains: evms,
