@@ -47,7 +47,9 @@
   "dependencies": {
     "@binance-chain/javascript-sdk": "^4.1.1",
     "@rangodev/wallets-shared": "^0.1.8",
-    "@walletconnect/jsonrpc-utils": "^1.0.4"
+    "@walletconnect/client": "^1.8.0",
+    "@walletconnect/jsonrpc-utils": "^1.0.4",
+    "@walletconnect/qrcode-modal": "^1.8.0"
   },
   "publishConfig": {
     "access": "public"

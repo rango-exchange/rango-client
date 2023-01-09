@@ -289,7 +289,7 @@ export interface NativeBlockchainMeta extends BlockchainMeta {
 export interface Meta {
   blockchains: AllBlockchains;
   evmNetworkChainInfo: EvmNetworksChainInfo;
-  walletsAndSupportedChainsNames: { [type in WalletType]?: Network[] } | null;
+  getSupportedChainNames: (type: WalletType) => Network[] | null;
   evmBasedChains: EvmBlockchainMeta[];
 }
 
