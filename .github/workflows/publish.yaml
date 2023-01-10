@@ -28,15 +28,17 @@ jobs:
         run: yarn install --frozen-lockfile
 
       - name: Build packages
-        run: yarn build
+        run: yarn build:npm
 
-      - name: Versioning
-        run: |
-          if [ ${{ github.base_ref }} = next ]; then
-            npx lerna version --conventional-commits --conventional-prerelease --preid next --yes
-          else
-            npx lerna version --conventional-commits --conventional-graduate --yes
-          fi
+      - name: Versioning (Prerelease)
+        if: github.ref == 'refs/heads/next' || github.event.pull_request.base.ref == 'next'
+        run: npx lerna version --conventional-prerelease --yes
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Versioning (Production)
+        if: github.ref == 'refs/heads/main' || github.event.pull_request.base.ref == 'main'
+        run: npx lerna version --conventional-graduate --yes
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
