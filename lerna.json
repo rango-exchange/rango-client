@@ -6,7 +6,7 @@
     "version": {
       "conventionalCommits": true,
       "preid": "next",
-      "message": "chore(release): publish %s"
+      "message": "chore(release): publish"
     }
   }
 }
