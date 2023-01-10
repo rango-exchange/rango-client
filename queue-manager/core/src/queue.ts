@@ -61,6 +61,15 @@ interface QueueOptions {
   actions: QueueDef['actions'];
 }
 
+/**
+ *
+ * Notes on statuses:
+ *  - Success: last task has success status
+ *  - Failed: any of task has been failed
+ *  - Running: first task is not on pending
+ *  - Pending: default state. not started
+ *
+ */
 class Queue {
   public id: string;
   public state: QueueState = {
@@ -79,15 +88,26 @@ class Queue {
     this.actions = options.actions;
   }
 
-  updateQueueStatus(status: Status) {
+  /**
+   * Update queue status and trigger an event
+   *
+   */
+  private updateQueueStatus(status: Status) {
     this.state.status = status;
     this.events.onUpdateListStatus(status);
   }
-  updateActiveTaskIndex(index: number) {
+
+  private updateActiveTaskIndex(index: number) {
     this.state.activeTaskIndex = index;
   }
 
-  updateTaskState(id: TaskId, nextState: Partial<TaskState>) {
+  /**
+   *
+   * Update task state (`status`, `blockedFor`) and trigger an event.
+   * @param id
+   * @param nextState
+   */
+  private updateTaskState(id: TaskId, nextState: Partial<TaskState>) {
     if (nextState.status) {
       this.state.tasks[id].status = nextState.status;
     }
@@ -103,6 +123,12 @@ class Queue {
     this.events.onUpdate(updatedTaskEvent);
   }
 
+  /**
+   * Create a task by providing an `action` name.
+   *
+   * this method creating the task, push it to the queue's tasks and trigger an event.
+   * @param action
+   */
   createTask(action: string) {
     const id = uuidv4();
     this.tasks.push({
@@ -122,7 +148,13 @@ class Queue {
     });
   }
 
-  initTasks(info: InitTasks) {
+  /**
+   * Initilize a queue with some tasks, instead of an empty queue.
+   *
+   * Using it for recover the queue state from persistor.
+   *
+   */
+  public initTasks(info: InitTasks) {
     this.state = info.state;
     this.storage = info.storage;
 
@@ -147,7 +179,7 @@ class Queue {
     });
   }
 
-  checkBlock() {
+  public checkBlock() {
     const currentActiveTask = this.getActiveTask();
 
     if (!currentActiveTask) {
@@ -164,7 +196,10 @@ class Queue {
     }
   }
 
-  get(id: string): TaskState | null {
+  /**
+   * Getting task state by ID
+   */
+  public get(id: string): TaskState | null {
     const task = this.state.tasks[id];
 
     if (!task) return null;
@@ -172,7 +207,12 @@ class Queue {
     return task;
   }
 
-  lastTaskIsSuccessful() {
+  /**
+   *
+   * Checking if status of the last is `SUCCESS` or not
+   *
+   */
+  private lastTaskIsSuccessful() {
     const lastTask = this.tasks[this.tasks.length - 1];
 
     // checking for empty lists.
@@ -188,7 +228,13 @@ class Queue {
     return false;
   }
 
-  firstTaskIsStarted() {
+  /**
+   * If the first task started (it's not PENDING),
+   * it means the queue has been ran.
+   *
+   * @returns
+   */
+  private firstTaskIsStarted() {
     const firstTask = this.tasks[0];
 
     // checking for empty lists.
@@ -206,7 +252,12 @@ class Queue {
     return false;
   }
 
-  getActiveTask() {
+  /**
+   * Getting active task index from state and
+   * returns the task and its state.
+   *
+   */
+  private getActiveTask() {
     // First try to get task with `activeTask`
     const index = this.state.activeTaskIndex;
     const task = this.tasks[index];
@@ -221,13 +272,10 @@ class Queue {
     return { task, state, index };
   }
 
-  // success = last task has success status.
-  // failed = any of task has been failed.
-  // running = first task is not on pending.
-  // pending = default state. not started.
-
-  // check tasks and update listState
-  check() {
+  /**
+   * Update and find the queue status by checking state of each tasks in the queue.
+   */
+  public check() {
     const currentListStatus = this.state.status;
     let nextListStatus = this.firstTaskIsStarted()
       ? Status.RUNNING
@@ -254,7 +302,17 @@ class Queue {
     }
   }
 
-  next(params: NextParams) {
+  /**
+   * Execute active task.
+   * Based on the state of active task, the behaviour is different. If status is:
+   *  - Success -> we need to go to next task by updating the active index and try `next` on more time.
+   *  - Failed, Running, or no active task -> doesn't do anything.
+   *  - Pending or Blocked -> update the task and queue status to running, and execute the provided `action` for the task.
+   *
+   * The queue is a linked list somehow, active task means the pointer to where we are in the queue right now.
+   *
+   */
+  public next(params: NextParams) {
     console.log('[next]', this.state, params);
 
     this.check();
@@ -326,9 +384,6 @@ class Queue {
         },
         getStorage: this.getStorage.bind(this),
         setStorage: this.setStorage.bind(this),
-        // onCompleteTask: (cb) => {
-        //   this.updateTaskStatusCallbacks.push(cb);
-        // },
         block: (reason: Record<string, unknown>) => {
           this.block({ reason });
         },
@@ -339,7 +394,10 @@ class Queue {
     }
   }
 
-  block({ reason }: { reason: Record<string, unknown> }) {
+  /**
+   * Change the `status` of active task and queue to BLOCKED, then trigger an event.
+   */
+  public block({ reason }: { reason: Record<string, unknown> }) {
     const currentActiveTask = this.getActiveTask();
 
     if (!currentActiveTask) {
@@ -358,7 +416,11 @@ class Queue {
     });
   }
 
-  unblock() {
+  /**
+   * If the active task is `BLOCKED`, update the task status to `PENDING`, queue status to `RUNNING`
+   * then trigger an event.
+   */
+  public unblock() {
     const currentActiveTask = this.getActiveTask();
 
     if (
@@ -375,8 +437,15 @@ class Queue {
     this.events.onUnblock({ id: currentActiveTask.task.id });
   }
 
-  // Run a blocked task
-  forceRun(params: NextParams) {
+  /**
+   * If the active task is `BLOCKED` then execute the `action` for the task.
+   *
+   * It is useful for when we need to run a blocked task without changing the status of task at the first place.
+   * For scenarios like we have some conditions in `action` and needs to run the `action` again
+   * to check the conditions are met or not, if yes, so we can proceed the `action`.
+   *
+   */
+  public forceRun(params: NextParams) {
     const currentTask = this.getActiveTask();
 
     if (!currentTask || currentTask.state.status !== Status.BLOCKED) {
@@ -426,7 +495,7 @@ class Queue {
       },
     });
   }
-  markCurrentTaskAsFinished(params: NextParams) {
+  private markCurrentTaskAsFinished(params: NextParams) {
     this.check();
     const activeTaskIndex = this.state.activeTaskIndex;
     const activeTask = this.tasks[activeTaskIndex];
@@ -455,8 +524,14 @@ class Queue {
     }
   }
 
-  resume(params: NextParams) {
-    // this.check();
+  /**
+   * If the active task is `RUNNING`, change it to `PENING` the try to run the task by calling `next`.
+   * If it's other than `RUNNING` we reset the queue state and run the queue from the beggining.
+   *
+   * @param params
+   * @returns
+   */
+  public resume(params: NextParams) {
     const activeTaskIndex = this.state.activeTaskIndex;
     const activeTask = this.tasks[activeTaskIndex];
     if (!activeTask) {
@@ -482,7 +557,12 @@ class Queue {
     }
   }
 
-  cancel() {
+  /**
+   *
+   * Cancel the queue by changing active task and queue status to `CANCELED`.
+   *
+   */
+  public cancel() {
     const currentActiveTask = this.getActiveTask();
 
     if (
@@ -511,7 +591,10 @@ class Queue {
     this.updateQueueStatus(Status.CANCELED);
   }
 
-  resetState() {
+  /**
+   * Update queue status, and all the tasks inside queue to `PENDING`.
+   */
+  private resetState() {
     this.state.activeTaskIndex = 0;
     this.state.status = Status.PENDING;
     Object.keys(this.state.tasks).forEach((id) => {
@@ -519,10 +602,10 @@ class Queue {
     });
   }
 
-  getStorage() {
+  public getStorage() {
     return this.storage;
   }
-  setStorage(data: QueueStorage) {
+  public setStorage(data: QueueStorage) {
     this.storage = data;
     this.events.onStorageUpdate(data);
     return this.storage;
