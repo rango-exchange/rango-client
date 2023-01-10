@@ -32,7 +32,7 @@ jobs:
 
       - name: Versioning
         run: |
-          if [ ${{ github.base_ref }} = development ]; then
+          if [ ${{ github.base_ref }} = next ]; then
             npx lerna version --conventional-commits --conventional-prerelease --preid next --yes
           else
             npx lerna version --conventional-commits --conventional-graduate --yes
