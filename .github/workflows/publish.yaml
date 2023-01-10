@@ -1,5 +1,16 @@
 name: Publish
-on: [push]
+on:
+  push:
+    branches:
+      - "main"
+      - "next"
+  pull_request:
+    types:
+      - closed
+    branches:
+      - "main"
+      - "next"
+
 jobs:
   publish:
     runs-on: ubuntu-latest
