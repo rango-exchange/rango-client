@@ -5,6 +5,8 @@ export { default as InfoCircle } from './InfoCircle';
 export { default as Add } from './Add';
 export { default as MinusCircle } from './MinusCircle';
 export { default as CheckCircle } from './CheckCircle';
+export { default as Check } from './Check';
+
 export { default as Ban } from './Ban';
 export { default as Warning } from './Warning';
 

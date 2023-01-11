@@ -36,4 +36,5 @@ export type Icon =
   | 'DeleteWallet'
   | 'CheckWallet'
   | 'SwapWallet'
-  | 'Bag';
+  | 'Bag'
+  | 'Check';
