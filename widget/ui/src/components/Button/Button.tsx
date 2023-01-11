@@ -9,7 +9,7 @@ const ButtonContainer = styled('button', {
   variants: {
     type: {
       transparent: {
-        color: 'black',
+        color: '$black',
         '&:hover': {
           backgroundColor: '$black',
           color: '$white',
