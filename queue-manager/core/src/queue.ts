@@ -1,9 +1,21 @@
 import { v4 as uuidv4 } from 'uuid';
-import { QueueDef } from './manager';
-import { QueueContext, Status } from './types';
+import { ManagerContext, QueueDef, QueueID } from './manager';
+import { QueueStorage, Status } from './types';
 
 type TaskId = string;
-export type TaskState = Status;
+export type TaskState = {
+  status: Status;
+  blockedFor: any;
+};
+
+export interface QueueContext {
+  _queue?: {
+    id: string;
+  };
+}
+export type NextParams = {
+  context: ManagerContext;
+};
 
 export interface QueueState {
   status: Status;
@@ -21,12 +33,13 @@ export interface Task {
 export type InitTasks = {
   tasks: Task[];
   state: QueueState;
-  context: QueueContext;
+  storage: QueueStorage;
 };
 
 export interface TaskEvent {
   id: TaskId;
   task: TaskState;
+  action: string;
 }
 
 export interface QueueEventHandlers {
@@ -35,15 +48,21 @@ export interface QueueEventHandlers {
   // single task
   onCreate: (event: TaskEvent) => void;
   onUpdate: (event: TaskEvent) => void;
-  onContextUpdate: (data: QueueContext) => void;
+  onStorageUpdate: (data: QueueStorage) => void;
+  onBlock: (
+    data: Omit<TaskEvent, 'task'> & { reason: Record<string, unknown> }
+  ) => void;
+  onUnblock: (data: { id: string }) => void;
 }
 
 interface QueueOptions {
+  id: QueueID;
   events: QueueEventHandlers;
   actions: QueueDef['actions'];
 }
 
 class Queue {
+  public id: string;
   public state: QueueState = {
     status: Status.PENDING,
     activeTaskIndex: 0,
@@ -52,9 +71,10 @@ class Queue {
   public tasks: Task[] = [];
   private events: QueueOptions['events'];
   private actions: QueueOptions['actions'];
-  private context: QueueContext = {};
+  private storage: QueueStorage = {};
 
   constructor(options: QueueOptions) {
+    this.id = options.id;
     this.events = options.events;
     this.actions = options.actions;
   }
@@ -67,12 +87,18 @@ class Queue {
     this.state.activeTaskIndex = index;
   }
 
-  updateTaskStatus(id: TaskId, status: Status) {
-    this.state.tasks[id] = status;
+  updateTaskState(id: TaskId, nextState: Partial<TaskState>) {
+    if (nextState.status) {
+      this.state.tasks[id].status = nextState.status;
+    }
+    if (nextState.blockedFor) {
+      this.state.tasks[id].blockedFor = nextState.blockedFor;
+    }
 
     const updatedTaskEvent = {
       id: id,
       task: this.get(id)!,
+      action: this.tasks.find((task) => task.id === id)!.action,
     };
     this.events.onUpdate(updatedTaskEvent);
   }
@@ -83,26 +109,59 @@ class Queue {
       action,
       id,
     });
-    this.state.tasks[id] = Status.PENDING;
+    this.state.tasks[id] = {
+      status: Status.PENDING,
+      blockedFor: null,
+    };
 
     const createdTask = this.get(id);
     this.events.onCreate({
       id,
       task: createdTask!,
+      action,
     });
   }
 
   initTasks(info: InitTasks) {
     this.state = info.state;
-    this.context = info.context;
+    this.storage = info.storage;
 
     info.tasks.forEach((task) => {
       this.tasks.push(task);
+
+      const taskState = info.state.tasks[task.id];
+      const action = this.tasks.find((t) => t.id === task.id)!.action;
       this.events.onCreate({
         id: task.id,
         task: this.get(task.id)!,
+        action,
       });
+
+      if (taskState.status === Status.BLOCKED) {
+        this.events.onBlock({
+          action: action,
+          id: task.id,
+          reason: taskState.blockedFor,
+        });
+      }
     });
+  }
+
+  checkBlock() {
+    const currentActiveTask = this.getActiveTask();
+
+    if (!currentActiveTask) {
+      return;
+    }
+    const { task, state } = currentActiveTask;
+
+    if (state.status === Status.BLOCKED) {
+      this.events.onBlock({
+        action: task.action,
+        id: task.id,
+        reason: state.blockedFor,
+      });
+    }
   }
 
   get(id: string): TaskState | null {
@@ -121,7 +180,7 @@ class Queue {
       const lastTaskState = this.state.tasks[lastTask.id];
 
       // Maybe we didn't create the state yet. It should has success status as well.
-      if (!!lastTaskState && lastTaskState === Status.SUCCESS) {
+      if (!!lastTaskState && lastTaskState.status === Status.SUCCESS) {
         return true;
       }
     }
@@ -138,7 +197,7 @@ class Queue {
 
       // Maybe we didn't create the state yet.
       if (!!firstTaskState) {
-        if (firstTaskState !== Status.PENDING) {
+        if (firstTaskState.status !== Status.PENDING) {
           return true;
         }
       }
@@ -170,17 +229,19 @@ class Queue {
   // check tasks and update listState
   check() {
     const currentListStatus = this.state.status;
-    let nextListStatus = this.firstTaskIsStarted() ? Status.RUNNING : Status.PENDING;
+    let nextListStatus = this.firstTaskIsStarted()
+      ? Status.RUNNING
+      : Status.PENDING;
 
     if (this.lastTaskIsSuccessful()) {
       nextListStatus = Status.SUCCESS;
     } else {
       // Is there any failed task?
       for (const task of this.tasks) {
-        const status = this.state.tasks[task.id];
+        const state = this.state.tasks[task.id];
 
         // If one item fails, we stop to work on the list.
-        if (status === Status.FAILED) {
+        if (state.status === Status.FAILED) {
           nextListStatus = Status.FAILED;
           break;
         }
@@ -193,7 +254,9 @@ class Queue {
     }
   }
 
-  next() {
+  next(params: NextParams) {
+    console.log('[next]', this.state, params);
+
     this.check();
 
     const currentActiveTask = this.getActiveTask();
@@ -202,56 +265,168 @@ class Queue {
       return;
     }
 
-    const { index: activeTaskIndex, task: activeTask, state: activeTaskState } = currentActiveTask;
+    const {
+      index: activeTaskIndex,
+      task: activeTask,
+      state: activeTaskState,
+    } = currentActiveTask;
 
     // if `activeTask` is already done, we will go for next one.
-    if (activeTaskState === Status.SUCCESS) {
+    if (activeTaskState.status === Status.SUCCESS) {
       this.updateActiveTaskIndex(activeTaskIndex + 1);
-      this.next();
+      this.next(params);
       return;
     }
 
-    if (activeTaskState === Status.FAILED) {
+    if (activeTaskState.status === Status.FAILED) {
       console.log('Task has been failed. It can not be proceed.');
       return;
     }
 
-    if (activeTaskState === Status.CANCELED) {
+    if (activeTaskState.status === Status.CANCELED) {
       console.log('Task has been canceled. It can not be proceed.');
       return;
     }
 
-    if (activeTaskState === Status.RUNNING) {
+    if (activeTaskState.status === Status.RUNNING) {
       console.log('Task is running. It can not be proceed.');
       return;
     }
 
-    if (activeTaskState === Status.PENDING) {
+    if (
+      activeTaskState.status === Status.PENDING ||
+      activeTaskState.status === Status.BLOCKED
+    ) {
       // Update task status to `running`
-      this.updateTaskStatus(activeTask.id, Status.RUNNING);
+      this.updateTaskState(activeTask.id, {
+        status: Status.RUNNING,
+      });
       this.updateQueueStatus(Status.RUNNING);
 
       // Try to execute task.
       const execute = this.actions[activeTask.action];
       execute({
+        context: this.getContext(params),
         next: () => {
-          this.markCurrentTaskAsFinished();
+          console.log('[execute][next]', params);
+          this.markCurrentTaskAsFinished(params);
+        },
+        retry: () => {
+          this.resume(params);
         },
         failed: () => {
-          this.updateTaskStatus(activeTask.id, Status.FAILED);
+          this.updateTaskState(activeTask.id, {
+            status: Status.FAILED,
+          });
           this.check();
         },
         schedule: (action) => {
           this.createTask(action);
           this.check();
         },
-        getContext: this.getContext.bind(this),
-        setContext: this.setContext.bind(this),
+        getStorage: this.getStorage.bind(this),
+        setStorage: this.setStorage.bind(this),
+        // onCompleteTask: (cb) => {
+        //   this.updateTaskStatusCallbacks.push(cb);
+        // },
+        block: (reason: Record<string, unknown>) => {
+          this.block({ reason });
+        },
+        unblock: () => {
+          this.unblock();
+        },
       });
     }
   }
 
-  markCurrentTaskAsFinished() {
+  block({ reason }: { reason: Record<string, unknown> }) {
+    const currentActiveTask = this.getActiveTask();
+
+    if (!currentActiveTask) {
+      throw new Error("Task isn't exist.");
+    }
+
+    this.updateTaskState(currentActiveTask.task.id, {
+      status: Status.BLOCKED,
+      blockedFor: reason,
+    });
+    this.updateQueueStatus(Status.BLOCKED);
+    this.events.onBlock({
+      action: currentActiveTask.task.action,
+      id: currentActiveTask.task.id,
+      reason,
+    });
+  }
+
+  unblock() {
+    const currentActiveTask = this.getActiveTask();
+
+    if (
+      !currentActiveTask ||
+      currentActiveTask.state.status !== Status.BLOCKED
+    ) {
+      throw new Error('Task is not blocked.');
+    }
+
+    this.updateTaskState(currentActiveTask.task.id, {
+      status: Status.PENDING,
+    });
+    this.updateQueueStatus(Status.RUNNING);
+    this.events.onUnblock({ id: currentActiveTask.task.id });
+  }
+
+  // Run a blocked task
+  forceRun(params: NextParams) {
+    const currentTask = this.getActiveTask();
+
+    if (!currentTask || currentTask.state.status !== Status.BLOCKED) {
+      throw new Error('Task is not blocked.');
+    }
+
+    // Try to execute task.
+    const execute = this.actions[currentTask.task.action];
+    execute({
+      context: this.getContext(params),
+      next: () => {
+        console.log('[force run][execute][next]', params);
+
+        /*
+          NOTE:
+            When running `forceRun`, the status of task can be `BLOCKED`
+            So we need to change to `Running` first. 
+        */
+        // Update task status to `running`
+        this.updateTaskState(currentTask.task.id, {
+          status: Status.RUNNING,
+        });
+        this.updateQueueStatus(Status.RUNNING);
+
+        this.markCurrentTaskAsFinished(params);
+      },
+      retry: () => {
+        this.resume(params);
+      },
+      failed: () => {
+        this.updateTaskState(currentTask.task.id, {
+          status: Status.FAILED,
+        });
+        this.check();
+      },
+      schedule: (action) => {
+        this.createTask(action);
+        this.check();
+      },
+      getStorage: this.getStorage.bind(this),
+      setStorage: this.setStorage.bind(this),
+      block: (reason: Record<string, unknown>) => {
+        this.block({ reason });
+      },
+      unblock: () => {
+        this.unblock();
+      },
+    });
+  }
+  markCurrentTaskAsFinished(params: NextParams) {
     this.check();
     const activeTaskIndex = this.state.activeTaskIndex;
     const activeTask = this.tasks[activeTaskIndex];
@@ -262,35 +437,39 @@ class Queue {
     }
 
     const activeTaskState = this.state.tasks[activeTask.id];
-    if (activeTaskState === Status.RUNNING) {
-      this.updateTaskStatus(activeTask.id, Status.SUCCESS);
+    if (activeTaskState.status === Status.RUNNING) {
+      this.updateTaskState(activeTask.id, {
+        status: Status.SUCCESS,
+      });
       this.updateActiveTaskIndex(activeTaskIndex + 1);
 
       const updatedTaskEvent = {
         id: activeTask.id,
         task: this.get(activeTask.id)!,
+        action: this.tasks.find((task) => task.id === activeTask.id)!.action,
       };
       this.events.onUpdate(updatedTaskEvent);
-      this.next();
+      this.next(params);
     } else {
       console.log('There is no running task.');
     }
   }
 
-  resume() {
+  resume(params: NextParams) {
     // this.check();
     const activeTaskIndex = this.state.activeTaskIndex;
     const activeTask = this.tasks[activeTaskIndex];
-
     if (!activeTask) {
       console.log("It seems this queue has been finished. Task doesn't exist.");
       return;
     }
 
     const activeTaskState = this.state.tasks[activeTask.id];
-    if (activeTaskState === Status.RUNNING) {
-      this.updateTaskStatus(activeTask.id, Status.PENDING);
-      this.next();
+    if (activeTaskState.status === Status.RUNNING) {
+      this.updateTaskState(activeTask.id, {
+        status: Status.PENDING,
+      });
+      this.next(params);
     } else {
       console.log('There is no running task. restart the queue', {
         state: this.state.tasks,
@@ -299,7 +478,7 @@ class Queue {
         activeTaskIndex,
       });
       this.resetState();
-      this.next();
+      this.next(params);
     }
   }
 
@@ -308,7 +487,9 @@ class Queue {
 
     if (
       !currentActiveTask ||
-      [Status.FAILED, Status.CANCELED, Status.SUCCESS].includes(currentActiveTask.state)
+      [Status.FAILED, Status.CANCELED, Status.SUCCESS].includes(
+        currentActiveTask.state.status
+      )
     ) {
       return;
     }
@@ -316,10 +497,13 @@ class Queue {
     const { task } = currentActiveTask;
 
     // Update task status to `canceled`
-    this.updateTaskStatus(task.id, Status.CANCELED);
+    this.updateTaskState(task.id, {
+      status: Status.CANCELED,
+    });
     const updatedTaskEvent = {
       id: task.id,
       task: this.get(task.id)!,
+      action: this.tasks.find((t) => t.id === task.id)!.action,
     };
     this.events.onUpdate(updatedTaskEvent);
 
@@ -331,17 +515,26 @@ class Queue {
     this.state.activeTaskIndex = 0;
     this.state.status = Status.PENDING;
     Object.keys(this.state.tasks).forEach((id) => {
-      this.state.tasks[id] = Status.PENDING;
+      this.state.tasks[id].status = Status.PENDING;
     });
   }
 
-  getContext() {
-    return this.context;
+  getStorage() {
+    return this.storage;
   }
-  setContext(data: QueueContext) {
-    this.context = data;
-    this.events.onContextUpdate(data);
-    return this.context;
+  setStorage(data: QueueStorage) {
+    this.storage = data;
+    this.events.onStorageUpdate(data);
+    return this.storage;
+  }
+
+  private getContext(params: NextParams): QueueContext & ManagerContext {
+    return {
+      ...params.context,
+      _queue: {
+        id: this.id,
+      },
+    };
   }
 }
 

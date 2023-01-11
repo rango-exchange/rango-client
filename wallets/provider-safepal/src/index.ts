@@ -12,6 +12,10 @@ import {
   getEvmAccounts,
   subscribeToEvm,
   switchNetworkForEvm,
+  BlockchainMeta,
+  WalletInfo,
+  evmBlockchains,
+  solanaBlockchain,
 } from '@rangodev/wallets-shared';
 import { getNonEvmAccounts, safepal as safepal_instance } from './helpers';
 import signer from './signer';
@@ -57,3 +61,18 @@ export const switchNetwork: SwitchNetwork = switchNetworkForEvm;
 export const canSwitchNetworkTo: CanSwitchNetwork = canSwitchNetworkToEvm;
 
 export const getSigners: (provider: any) => WalletSigners = signer;
+
+export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
+  allBlockChains
+) => {
+  const evms = evmBlockchains(allBlockChains);
+  const solana = solanaBlockchain(allBlockChains);
+  return {
+    name: 'SafePal',
+    img: 'https://avatars.githubusercontent.com/u/52519650?v=4',
+    installLink:
+      'https://chrome.google.com/webstore/detail/safepal-extension-wallet/lgmpcpglpngdoalbgeoldeajfclnhafa',
+    color: '#4A21EF',
+    supportedChains: [...evms, ...solana],
+  };
+};

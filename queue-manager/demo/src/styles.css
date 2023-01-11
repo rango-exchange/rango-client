@@ -106,3 +106,14 @@ body {
 .tooltip:hover .tooltiptext {
   visibility: visible;
 }
+
+.wallets {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+.wallets .wallet{
+  background-color: #fff;
+  width: 20%;
+  padding: 1rem;
+}

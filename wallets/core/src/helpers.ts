@@ -1,6 +1,17 @@
 import WalletConnectProvider from '@walletconnect/ethereum-provider';
-import { convertEvmBlockchainMetaToEvmChainInfo, evmChainsToRpcMap,  Network, WalletType, isEvmBlockchain  } from '@rangodev/wallets-shared';
-import { State, WalletProvider, WalletProviders, WalletsAndSupportedChains } from './types';
+import {
+  convertEvmBlockchainMetaToEvmChainInfo,
+  evmChainsToRpcMap,
+  Network,
+  WalletType,
+  isEvmBlockchain,
+  BlockchainMeta,
+} from '@rangodev/wallets-shared';
+import {
+  State,
+  WalletProvider,
+  WalletProviders,
+} from './types';
 import { Options, State as WalletState } from './wallet';
 
 export function choose(wallets: any[], type: WalletType): any | null {
@@ -44,11 +55,17 @@ export function state_reducer(state: State, action: any) {
   return state;
 }
 
-export function formatAddressWithNetwork(address: string, network?: Network | null) {
+export function formatAddressWithNetwork(
+  address: string,
+  network?: Network | null
+) {
   return `${network || ''}:${address}`;
 }
 
-export function accountAddressesWithNetwork(addresses: string[] | null, network?: Network | null) {
+export function accountAddressesWithNetwork(
+  addresses: string[] | null,
+  network?: Network | null
+) {
   if (!addresses) return [];
 
   return addresses.map((address) => {
@@ -68,7 +85,7 @@ export function readAccountAddress(addressWithNetwork: string): {
   };
 }
 
-export function availableWallets(providersState: State): WalletType[] {
+export function connectedWallets(providersState: State): WalletType[] {
   return Object.entries(providersState)
     .filter(([, wallet_state]) => {
       return wallet_state?.connected;
@@ -76,6 +93,12 @@ export function availableWallets(providersState: State): WalletType[] {
     .map(([type]) => {
       return type as WalletType;
     });
+}
+
+export function availableWallets(providersState: State): WalletType[] {
+  return Object.entries(providersState).map(([type]) => {
+    return type as WalletType;
+  });
 }
 
 export function checkWalletProviders(list: WalletProvider[]): WalletProviders {
@@ -112,16 +135,15 @@ export function isWalletDerivedFromWalletConnect(wallet_type: WalletType) {
 }
 
 export function getComptaibleProvider(
-  walletsAndSupportedChains: WalletsAndSupportedChains | null,
+  supportedChains: BlockchainMeta[],
   provider: any,
-  type: WalletType,
+  type: WalletType
 ) {
-  if (walletsAndSupportedChains && isWalletDerivedFromWalletConnect(type)) {
-    const currentWalletSupportedChains = walletsAndSupportedChains
-      ? walletsAndSupportedChains[type]
-      : [];
-    const evmBlockchains = currentWalletSupportedChains.filter(isEvmBlockchain);
-    const rpcUrls = evmChainsToRpcMap(convertEvmBlockchainMetaToEvmChainInfo(evmBlockchains));
+  if (isWalletDerivedFromWalletConnect(type)) {
+    const evmBlockchains = supportedChains.filter(isEvmBlockchain);
+    const rpcUrls = evmChainsToRpcMap(
+      convertEvmBlockchainMetaToEvmChainInfo(evmBlockchains)
+    );
     return new WalletConnectProvider({
       qrcode: false,
       rpc: rpcUrls,

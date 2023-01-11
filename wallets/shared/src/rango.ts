@@ -1,8 +1,6 @@
 export const IS_DEV =
   !process.env.NODE_ENV || process.env.NODE_ENV === 'development';
 
-
-
 export const getBlockChainNameFromId = (
   chainId: string | number,
   blockchains: BlockchainMeta[]
@@ -36,10 +34,7 @@ export const getBlockchainChainIdByName = (
 ) => allBlockChains[netwok]?.chainId || null;
 
 export const uint8ArrayToHex = (buffer: Uint8Array): string => {
-  // buffer is an ArrayBuffer
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
-  return [...buffer].map((x) => x.toString(16).padStart(2, '0')).join('');
+  return Buffer.from(buffer).toString('hex');
 };
 
 export enum WalletType {
@@ -122,8 +117,13 @@ export enum Network {
   Unknown = 'Unkown',
 }
 
-export const XDEFI_WALLET_SUPPORTED_NATIVE_CHAINS = [Network.BTC, Network.LTC, Network.THORCHAIN, Network.BCH, Network.BINANCE];
-
+export const XDEFI_WALLET_SUPPORTED_NATIVE_CHAINS = [
+  Network.BTC,
+  Network.LTC,
+  Network.THORCHAIN,
+  Network.BCH,
+  Network.BINANCE,
+];
 
 export const isEvmBlockchain = (
   blockchainMeta: BlockchainMeta
@@ -286,7 +286,7 @@ export interface NativeBlockchainMeta extends BlockchainMeta {
 export interface Meta {
   blockchains: AllBlockchains;
   evmNetworkChainInfo: EvmNetworksChainInfo;
-  walletsAndSupportedChainsNames: { [type in WalletType]?: Network[] } | null;
+  getSupportedChainNames: (type: WalletType) => Network[] | null;
   evmBasedChains: EvmBlockchainMeta[];
 }
 
@@ -522,6 +522,12 @@ export type TransferTransaction = {
   id: string;
 };
 
+export type Transaction =
+  | EvmTransaction
+  | CosmosTransaction
+  | SolanaTransaction
+  | TransferTransaction;
+
 // core
 
 // wallets/core/src/wallet.ts -> State
@@ -603,4 +609,20 @@ export type WalletSigners = {
     requestId: string
   ) => Promise<string>;
   signEvmMessage: (walletAddress: string, message: string) => Promise<string>;
+};
+
+export const evmBlockchains = (allBlockChains: BlockchainMeta[]) =>
+  allBlockChains.filter(isEvmBlockchain);
+export const solanaBlockchain = (allBlockChains: BlockchainMeta[]) =>
+  allBlockChains.filter(isSolanaBlockchain);
+
+export const cosmosBlockchains = (allBlockChains: BlockchainMeta[]) =>
+  allBlockChains.filter(isCosmosBlockchain);
+
+export type WalletInfo = {
+  name: string;
+  img: string;
+  installLink: string;
+  color: string;
+  supportedChains: BlockchainMeta[];
 };

@@ -11,6 +11,10 @@ import {
   Subscribe,
   SwitchNetwork,
   WalletSigners,
+  BlockchainMeta,
+  WalletInfo,
+  evmBlockchains,
+  solanaBlockchain,
 } from '@rangodev/wallets-shared';
 import { coin98 as coin98_instances } from './helpers';
 import { getSolanaAccounts } from './helpers';
@@ -87,3 +91,18 @@ export const switchNetwork: SwitchNetwork = async (options) => {
 export const canSwitchNetworkTo: CanSwitchNetwork = canSwitchNetworkToEvm;
 
 export const getSigners: (provider: any) => WalletSigners = signer;
+
+export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
+  allBlockChains
+) => {
+  const evms = evmBlockchains(allBlockChains);
+  const solana = solanaBlockchain(allBlockChains);
+  return {
+    name: 'Coin98',
+    img: 'https://avatars.githubusercontent.com/u/82671669?s=200&v=4',
+    installLink:
+      'https://chrome.google.com/webstore/detail/coin98-wallet/aeachknmefphepccionboohckonoeemg',
+    color: '#1d1c25',
+    supportedChains: [...evms, ...solana],
+  };
+};
