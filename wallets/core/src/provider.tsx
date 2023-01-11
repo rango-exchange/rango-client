@@ -1,30 +1,25 @@
-import React, { createContext, useContext, useEffect, useReducer, useRef } from 'react';
-// import * as metamask from '../provider-metamask';
-// import * as walletConnect from '../provider-walletconnect';
-// import * as trustwallet from '../provider-trustwallet';
-// import * as xDefi from '../provider-xdefi';
-// import * as coinbase from '../provider-coinbase';
-// import * as phantom from '../provider-phantom';
-// import * as keplr from '../provider-keplr';
-// import * as binanceChainWallet from '../provider-binance-chain-wallet';
-// import * as coin98 from '../provider-coin98';
-// import * as mathWallet from '../provider-math-wallet';
-// import * as exodus from '../provider-exodus';
-// import * as safepal from '../provider-safepal';
-// import * as tokenPocket from '../provider-tokenpocket';
-// import * as cosmostation from '../provider-cosmostation';
-// import * as clover from '../provider-clover';
-// import * as brave from '../provider-brave';
-// import * as okx from '../provider-okx';
+import React, {
+  createContext,
+  useContext,
+  useEffect,
+  useReducer,
+  useRef,
+} from 'react';
 
 import {
   availableWallets,
   checkWalletProviders,
+  connectedWallets,
   defaultWalletState,
   getComptaibleProvider,
   state_reducer,
 } from './helpers';
-import { ProviderProps, ProviderContext, WalletActions, WalletConfig } from './types';
+import {
+  ProviderProps,
+  ProviderContext,
+  WalletActions,
+  WalletConfig,
+} from './types';
 import { WalletType } from '@rangodev/wallets-shared';
 
 import Wallet, { EventHandler as WalletEventHandler } from './wallet';
@@ -60,7 +55,10 @@ function useInitializers(onChangeState: WalletEventHandler) {
     [key in WalletType]?: Wallet;
   }>({});
 
-  function updater(wallet: { actions: WalletActions; config: WalletConfig }): Wallet {
+  function updater(wallet: {
+    actions: WalletActions;
+    config: WalletConfig;
+  }): Wallet {
     const type = wallet.config.type;
     // We only update, if there is no instance available.
     if (typeof availableWallets.current[type] === 'undefined') {
@@ -69,7 +67,7 @@ function useInitializers(onChangeState: WalletEventHandler) {
           config: wallet.config,
           handler: onChangeState,
         },
-        wallet.actions,
+        wallet.actions
       );
     }
 
@@ -82,28 +80,12 @@ function useInitializers(onChangeState: WalletEventHandler) {
 function Provider(props: ProviderProps) {
   const [providersState, dispatch] = useReducer(state_reducer, {});
 
-  const addWalletRef = useInitializers(makeEventHandler(dispatch, props.onUpdateState));
+  const addWalletRef = useInitializers(
+    makeEventHandler(dispatch, props.onUpdateState)
+  );
+  // const providersRef = useRef<{ [type in WalletType]?: any }>({});
 
   const listOfProviders = props.providers;
-  // const listOfProviders = [
-  //   metamask,
-  //   coin98,
-  //   keplr,
-  //   xDefi,
-  //   walletConnect,
-  //   coinbase,
-  //   binanceChainWallet,
-  //   phantom,
-  //   mathWallet,
-  //   trustwallet,
-  //   exodus,
-  //   safepal,
-  //   tokenPocket,
-  //   clover,
-  //   cosmostation,
-  //   brave,
-  //   okx,
-  // ];
   const wallets = checkWalletProviders(listOfProviders);
   const api: ProviderContext = {
     // TODO: Fix type error
@@ -134,7 +116,7 @@ function Provider(props: ProviderProps) {
       // When a wallet is initializing, a record will be added to `providersState`
       // So we use them to know what wallet has been initialized then we need to
       // filter connected wallets only.
-      availableWallets(providersState).forEach((type) => {
+      connectedWallets(providersState).forEach((type) => {
         const wallet = wallets.get(type);
 
         if (!!wallet) {
@@ -177,7 +159,11 @@ function Provider(props: ProviderProps) {
         throw new Error(`You should add ${type} to provider first.`);
       }
       const ref = addWalletRef(wallet);
-      const provider = getComptaibleProvider(props.walletsAndSupportedChains, ref.provider, type);
+      const provider = getComptaibleProvider(
+        props.walletsAndSupportedChains,
+        ref.provider,
+        type
+      );
       const result = ref.getSigners(provider);
 
       return result;
@@ -194,7 +180,10 @@ function Provider(props: ProviderProps) {
       };
 
       const initWhenPageIsReady = (event: Event) => {
-        if (event.target && (event.target as Document).readyState === 'complete') {
+        if (
+          event.target &&
+          (event.target as Document).readyState === 'complete'
+        ) {
           runOnInit();
 
           document.removeEventListener('readystatechange', initWhenPageIsReady);
@@ -227,12 +216,17 @@ function Provider(props: ProviderProps) {
     });
   }, [props.onUpdateState]);
 
-  return <WalletContext.Provider value={api}>{props.children}</WalletContext.Provider>;
+  return (
+    <WalletContext.Provider value={api}>
+      {props.children}
+    </WalletContext.Provider>
+  );
 }
 
 export function useWallets(): ProviderContext {
   const context = useContext(WalletContext);
-  if (!context) throw Error('useWallet can only be used within the Provider component');
+  if (!context)
+    throw Error('useWallet can only be used within the Provider component');
   return context;
 }
 

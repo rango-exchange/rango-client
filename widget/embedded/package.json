@@ -1,6 +1,6 @@
 {
   "name": "@rangodev/widget-embedded",
-  "version": "0.1.7",
+  "version": "0.1.9",
   "license": "MIT",
   "source": "public/index.html",
   "browserslist": "> 0.5%, last 2 versions, not dead",
@@ -8,12 +8,8 @@
     "start": "parcel",
     "build": "parcel build"
   },
-  "devDependencies": {
-    "@types/react": "^18.0.25",
-    "@types/react-dom": "^18.0.9"
-  },
   "dependencies": {
-    "@rangodev/ui": "^0.1.7",
+    "@rangodev/ui": "^0.1.9",
     "parcel": "^2.8.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
@@ -21,5 +17,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "f91b0fbd2de1239720b1b4919aef9e60bd1ca9a1"
+  "gitHead": "6a1dd3a10333466b93bb13c66dfd148df0059070"
 }
