@@ -1,6 +1,6 @@
 {
   "name": "@rangodev/provider-all",
-  "version": "0.1.7",
+  "version": "0.1.10",
   "license": "MIT",
   "module": "dist/provider-all.esm.js",
   "main": "dist/index.js",
@@ -17,7 +17,6 @@
     "build": "tsdx build",
     "test": "tsdx test --passWithNoTests",
     "lint": "tsdx lint",
-    "prepare": "tsdx build",
     "size": "size-limit",
     "analyze": "size-limit --why"
   },
@@ -45,36 +44,27 @@
       "limit": "10 KB"
     }
   ],
-  "devDependencies": {
-    "@size-limit/preset-small-lib": "^8.1.0",
-    "@types/uuid": "^8.3.4",
-    "husky": "^8.0.2",
-    "size-limit": "^8.1.0",
-    "tsdx": "^0.14.1",
-    "tslib": "^2.4.1",
-    "typescript": "^4.9.3"
-  },
   "dependencies": {
-    "@rangodev/provider-binance-chain-wallet": "^0.1.7",
-    "@rangodev/provider-brave": "^0.1.7",
-    "@rangodev/provider-clover": "^0.1.7",
-    "@rangodev/provider-coin98": "^0.1.7",
-    "@rangodev/provider-coinbase": "^0.1.7",
-    "@rangodev/provider-cosmostation": "^0.1.7",
-    "@rangodev/provider-exodus": "^0.1.7",
-    "@rangodev/provider-keplr": "^0.1.7",
-    "@rangodev/provider-math-wallet": "^0.1.7",
-    "@rangodev/provider-metamask": "^0.1.7",
-    "@rangodev/provider-okx": "^0.1.7",
-    "@rangodev/provider-phantom": "^0.1.7",
-    "@rangodev/provider-safepal": "^0.1.7",
-    "@rangodev/provider-tokenpocket": "^0.1.7",
-    "@rangodev/provider-trustwallet": "^0.1.7",
-    "@rangodev/provider-walletconnect": "^0.1.7",
-    "@rangodev/provider-xdefi": "^0.1.7"
+    "@rangodev/provider-binance-chain-wallet": "^0.1.10",
+    "@rangodev/provider-brave": "^0.1.10",
+    "@rangodev/provider-clover": "^0.1.10",
+    "@rangodev/provider-coin98": "^0.1.10",
+    "@rangodev/provider-coinbase": "^0.1.10",
+    "@rangodev/provider-cosmostation": "^0.1.10",
+    "@rangodev/provider-exodus": "^0.1.10",
+    "@rangodev/provider-keplr": "^0.1.10",
+    "@rangodev/provider-math-wallet": "^0.1.10",
+    "@rangodev/provider-metamask": "^0.1.10",
+    "@rangodev/provider-okx": "^0.1.10",
+    "@rangodev/provider-phantom": "^0.1.10",
+    "@rangodev/provider-safepal": "^0.1.10",
+    "@rangodev/provider-tokenpocket": "^0.1.10",
+    "@rangodev/provider-trustwallet": "^0.1.10",
+    "@rangodev/provider-walletconnect": "^0.1.10",
+    "@rangodev/provider-xdefi": "^0.1.10"
   },
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "f91b0fbd2de1239720b1b4919aef9e60bd1ca9a1"
+  "gitHead": "6a1dd3a10333466b93bb13c66dfd148df0059070"
 }
