@@ -31,11 +31,11 @@ export const Main = (props: PropTypes) => (
 
 export const ButtonWithIcon = (props: PropTypes) => (
   <div>
-    <Button startIcon={<AddWallet />} {...props}>
+    <Button startIcon={<AddWallet size={24} />} {...props}>
       I'm a button
     </Button>
     <div style={{ margin: '10px 0' }} />
-    <Button endIcon={<AddWallet />} {...props}>
+    <Button endIcon={<AddWallet size={24} />} {...props}>
       I'm a button
     </Button>
   </div>
