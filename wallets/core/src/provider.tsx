@@ -36,14 +36,20 @@ const WalletContext = createContext<ProviderContext>({});
   we are using this function.
 */
 function makeEventHandler(dispatcher: any, onUpdateState?: WalletEventHandler) {
-  const handler: WalletEventHandler = (type, name, value, coreState) => {
+  const handler: WalletEventHandler = (
+    type,
+    name,
+    value,
+    coreState,
+    supportedChains
+  ) => {
     const action = { type: 'new_state', wallet: type, name, value };
     // Update state
     dispatcher(action);
 
     // Giving the event to the outside listener
     if (onUpdateState) {
-      onUpdateState(type, name, value, coreState);
+      onUpdateState(type, name, value, coreState, supportedChains);
     }
   };
 
@@ -151,7 +157,17 @@ function Provider(props: ProviderProps) {
 
       return providers;
     },
+    getWalletInfo(type) {
+      const wallet = wallets.get(type);
+      if (!wallet) {
+        throw new Error(`You should add ${type} to provider first.`);
+      }
 
+      const ref = addWalletRef(wallet);
+      const result = ref.getWalletInfo(props.allBlockChains || []);
+
+      return result;
+    },
     getSigners(type) {
       const wallet = wallets.get(type);
 
@@ -159,8 +175,11 @@ function Provider(props: ProviderProps) {
         throw new Error(`You should add ${type} to provider first.`);
       }
       const ref = addWalletRef(wallet);
+      const supportedChains = ref.getWalletInfo(
+        props.allBlockChains || []
+      ).supportedChains;
       const provider = getComptaibleProvider(
-        props.walletsAndSupportedChains,
+        supportedChains,
         ref.provider,
         type
       );
@@ -200,14 +219,17 @@ function Provider(props: ProviderProps) {
   }, []);
 
   useEffect(() => {
-    const walletsAndSupportedChains = props.walletsAndSupportedChains;
-    if (!!walletsAndSupportedChains) {
+    const allBlockChains = props.allBlockChains;
+    if (!!allBlockChains) {
       wallets.forEach((wallet) => {
         const ref = addWalletRef(wallet);
-        ref.setMeta(walletsAndSupportedChains);
+        const supportedChains = ref.getWalletInfo(
+          props.allBlockChains || []
+        ).supportedChains;
+        ref.setMeta(supportedChains);
       });
     }
-  }, [props.walletsAndSupportedChains]);
+  }, [props.allBlockChains]);
 
   useEffect(() => {
     wallets.forEach((wallet) => {

@@ -1,27 +1,22 @@
-import { useWallets } from "@rangodev/wallets-core";
 import { WalletType } from "@rangodev/wallets-shared";
 import React from "react";
+import Item from "./Item";
+import "./styles.css";
+const excludedWallets = [
+  WalletType.UNKNOWN,
+  WalletType.TERRA_STATION,
+  WalletType.LEAP,
+];
 
 function List() {
-  const { connect, state } = useWallets();
-  const phantomState = state(WalletType.PHANTOM);
-
   return (
-    <div>
-      <div>
-        accounts:
-        {phantomState.accounts?.map((account) => (
-          <div>{account}</div>
-        ))}
-      </div>
-      <div>connected: {phantomState.connected ? "yes" : "no"}</div>
-      <button
-        onClick={() => {
-          connect(WalletType.PHANTOM);
-        }}
-      >
-        Connect (Phantom)
-      </button>
+    <div className="row">
+      {Object.keys(WalletType).map(
+        (type) =>
+          !excludedWallets.includes(WalletType[type]) && (
+            <Item type={WalletType[type]} />
+          )
+      )}
     </div>
   );
 }

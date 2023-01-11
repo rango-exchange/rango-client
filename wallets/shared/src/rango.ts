@@ -286,7 +286,7 @@ export interface NativeBlockchainMeta extends BlockchainMeta {
 export interface Meta {
   blockchains: AllBlockchains;
   evmNetworkChainInfo: EvmNetworksChainInfo;
-  walletsAndSupportedChainsNames: { [type in WalletType]?: Network[] } | null;
+  getSupportedChainNames: (type: WalletType) => Network[] | null;
   evmBasedChains: EvmBlockchainMeta[];
 }
 
@@ -610,4 +610,20 @@ export type WalletSigners = {
     requestId: string
   ) => Promise<string>;
   signEvmMessage: (walletAddress: string, message: string) => Promise<string>;
+};
+
+export const evmBlockchains = (allBlockChains: BlockchainMeta[]) =>
+  allBlockChains.filter(isEvmBlockchain);
+export const solanaBlockchain = (allBlockChains: BlockchainMeta[]) =>
+  allBlockChains.filter(isSolanaBlockchain);
+
+export const cosmosBlockchains = (allBlockChains: BlockchainMeta[]) =>
+  allBlockChains.filter(isCosmosBlockchain);
+
+export type WalletInfo = {
+  name: string;
+  img: string;
+  installLink: string;
+  color: string;
+  supportedChains: BlockchainMeta[];
 };
