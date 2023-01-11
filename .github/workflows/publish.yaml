@@ -43,13 +43,13 @@ jobs:
 
       - name: Versioning (Prerelease)
         if: github.ref == 'refs/heads/next' || github.event.pull_request.base.ref == 'next'
-        run: npx lerna version --conventional-prerelease --yes
+        run: npx lerna version --conventional-prerelease --no-changelog --include-merged-tags --yes
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Versioning (Production)
         if: github.ref == 'refs/heads/main' || github.event.pull_request.base.ref == 'main'
-        run: npx lerna version --conventional-graduate --yes
+        run: npx lerna version --conventional-graduate --include-merged-tags --yes
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
