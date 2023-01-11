@@ -5,12 +5,12 @@ import {
   Network,
   WalletType,
   isEvmBlockchain,
+  BlockchainMeta,
 } from '@rangodev/wallets-shared';
 import {
   State,
   WalletProvider,
   WalletProviders,
-  WalletsAndSupportedChains,
 } from './types';
 import { Options, State as WalletState } from './wallet';
 
@@ -135,15 +135,12 @@ export function isWalletDerivedFromWalletConnect(wallet_type: WalletType) {
 }
 
 export function getComptaibleProvider(
-  walletsAndSupportedChains: WalletsAndSupportedChains | null,
+  supportedChains: BlockchainMeta[],
   provider: any,
   type: WalletType
 ) {
-  if (walletsAndSupportedChains && isWalletDerivedFromWalletConnect(type)) {
-    const currentWalletSupportedChains = walletsAndSupportedChains
-      ? walletsAndSupportedChains[type]
-      : [];
-    const evmBlockchains = currentWalletSupportedChains.filter(isEvmBlockchain);
+  if (isWalletDerivedFromWalletConnect(type)) {
+    const evmBlockchains = supportedChains.filter(isEvmBlockchain);
     const rpcUrls = evmChainsToRpcMap(
       convertEvmBlockchainMetaToEvmChainInfo(evmBlockchains)
     );

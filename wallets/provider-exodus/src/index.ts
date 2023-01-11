@@ -13,8 +13,14 @@ import {
   WalletSigners,
   isEvmBlockchain,
   isSolanaBlockchain,
+  BlockchainMeta,
+  WalletInfo,
 } from '@rangodev/wallets-shared';
-import { exodus_instances, getSolanaAccounts } from './helpers';
+import {
+  exodus_instances,
+  EXODUS_WALLET_SUPPORTED_CHAINS,
+  getSolanaAccounts,
+} from './helpers';
 import signer from './signer';
 
 const WALLET = WalletType.EXODUS;
@@ -91,3 +97,16 @@ export const switchNetwork: SwitchNetwork = async (options) => {
 export const canSwitchNetworkTo: CanSwitchNetwork = canSwitchNetworkToEvm;
 
 export const getSigners: (provider: any) => WalletSigners = signer;
+
+export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
+  allBlockChains
+) => ({
+  name: 'Exodus',
+  img: 'https://lh3.googleusercontent.com/FX5p3lkSFGhNy888EmvEzuegJFhTnhB6ZdIAp9UyE_IuOWWVRigyEJeL0hi7cSu-4nApqY-MU3OqdEqROs070c_n=w128-h128-e365-rj-sc0x00ffffff',
+  installLink:
+    'https://chrome.google.com/webstore/detail/exodus-web3-wallet/aholpfdialjgjfhomihkjbmgjidlcdno',
+  color: '#8f70fa',
+  supportedChains: allBlockChains.filter((blockchainMeta) =>
+    EXODUS_WALLET_SUPPORTED_CHAINS.includes(blockchainMeta.name)
+  ),
+});
