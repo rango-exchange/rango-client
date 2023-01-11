@@ -15,6 +15,10 @@ import {
   isCosmosBlockchain,
   isEvmBlockchain,
   getCosmosAccounts,
+  BlockchainMeta,
+  WalletInfo,
+  evmBlockchains,
+  cosmosBlockchains,
 } from '@rangodev/wallets-shared';
 import { cosmostation as cosmostation_instance } from './helpers';
 import signer from './signer';
@@ -86,3 +90,18 @@ export const subscribe: Subscribe = ({
 };
 
 export const getSigners: (provider: any) => WalletSigners = signer;
+
+export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
+  allBlockChains
+) => {
+  const evms = evmBlockchains(allBlockChains);
+  const cosmos = cosmosBlockchains(allBlockChains);
+  return {
+    name: 'Cosmostation',
+    img: 'https://avatars.githubusercontent.com/u/49175386?s=200&v=4',
+    installLink:
+      'https://chrome.google.com/webstore/detail/cosmostation/fpkhgmpbidmiogeglndfbkegfdlnajnf',
+    color: 'black',
+    supportedChains: [...evms, ...cosmos],
+  };
+};

@@ -29,3 +29,13 @@ export async function getSolanaAccounts(
 
   return results;
 }
+const BNB_SYMBOL = "BNB";
+
+export const EXODUS_WALLET_SUPPORTED_CHAINS = [
+  Network.SOLANA,
+  Network.ETHEREUM,
+  Network.BSC,
+  Network.POLYGON,
+  Network.AVAX_CCHAIN,
+  BNB_SYMBOL,
+];
