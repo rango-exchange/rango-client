@@ -83,9 +83,8 @@ function confirmTx(signature: string): Promise<boolean> {
 }
 
 export type SolanaSigner = (
-  solanaWeb3Transaction: Transaction | VersionedTransaction | undefined,
+  solanaWeb3Transaction: Transaction | VersionedTransaction,
 ) => Promise<number[] | Buffer | Uint8Array>;
-
 export const generalSolanaTransactionExecutor = async (
   requestId: string,
   tx: SolanaTransaction,
@@ -138,10 +137,17 @@ export const generalSolanaTransactionExecutor = async (
       transaction?.addSignature(publicKey, signature);
     });
   }
-  if (!transaction && !versionedTransaction) throw new Error('error creating transaction');
   try {
-    const raw = await solanaSigner(transaction || versionedTransaction);
-    const signature = await retryPromise(connection.sendRawTransaction(raw), 2, 30000);
+    let finalTx: Transaction | VersionedTransaction;
+    if (!!transaction) {
+      finalTx = transaction
+    } else if (!!versionedTransaction) {
+      finalTx = versionedTransaction
+    } else {
+      throw new Error('error creating transaction')
+    }
+    const raw = await solanaSigner(finalTx);
+    const signature = await retryPromise(connection.sendRawTransaction(raw), 2, 30_000);
     if (!signature) throw new Error('tx cant send to blockchain. signature=' + signature);
     const confirmed = await confirmTx(signature);
     if (!confirmed) throw new Error('tx cant confirm on blockchain. signature=' + signature);
