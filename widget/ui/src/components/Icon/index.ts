@@ -28,7 +28,7 @@ export { default as RetryLeft } from './RetryLeft';
 export { default as TryAgain } from './TryAgain';
 export { default as VerticalSwap } from './VerticalSwap';
 export { default as HorizontalSwap } from './HorizontalSwap';
-export { default as Loading } from './Loading';
+export { default as Retry } from './Retry';
 
 export { default as Wallet } from './Wallet';
 export { default as AddWallet } from './AddWallet';

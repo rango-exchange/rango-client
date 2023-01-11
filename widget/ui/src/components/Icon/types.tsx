@@ -30,7 +30,7 @@ export type Icon =
   | 'TryAgain'
   | 'VerticalSwap'
   | 'HorizontalSwap'
-  | 'Loading'
+  | 'Retry'
   | 'Wallet'
   | 'AddWallet'
   | 'DeleteWallet'
