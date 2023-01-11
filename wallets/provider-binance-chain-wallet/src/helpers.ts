@@ -94,3 +94,5 @@ export async function accountsForActiveWallet(instance: any, currentEthAddress: 
   const accounts = activeAccount ? getAllAccounts(activeAccount) : [];
   return accounts;
 }
+
+export const BINANCE_CHAIN_WALLET_SUPPORTED_CHAINS = [Network.ETHEREUM, Network.BSC, Network.BINANCE];

@@ -12,9 +12,15 @@ import {
   getEvmAccounts,
   switchNetworkForEvm,
   isEvmBlockchain,
+  BlockchainMeta,
+  WalletInfo,
 } from '@rangodev/wallets-shared';
 
-import { getSolanaAccounts, okx_instance } from './helpers';
+import {
+  getSolanaAccounts,
+  okx_instance,
+  OKX_WALLET_SUPPORTED_CHAINS,
+} from './helpers';
 import signer from './signer';
 
 const WALLET = WalletType.OKX;
@@ -71,3 +77,16 @@ export const switchNetwork: SwitchNetwork = async (options) => {
 export const canSwitchNetworkTo: CanSwitchNetwork = canSwitchNetworkToEvm;
 
 export const getSigners: (provider: any) => WalletSigners = signer;
+
+export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
+  allBlockChains
+) => ({
+  name: 'Okx',
+  img: 'https://avatars.githubusercontent.com/u/58539418?s=200&v=4',
+  installLink:
+    'https://chrome.google.com/webstore/detail/okx-wallet/mcohilncbfahbmgdjkbpemcciiolgcge',
+  color: 'white',
+  supportedChains: allBlockChains.filter((blockchainMeta) =>
+    OKX_WALLET_SUPPORTED_CHAINS.includes(blockchainMeta.name as Network)
+  ),
+});

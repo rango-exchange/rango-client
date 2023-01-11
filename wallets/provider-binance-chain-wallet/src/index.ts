@@ -1,5 +1,20 @@
-import { Network, WalletType, CanSwitchNetwork, Connect, Subscribe, WalletSigners, getEvmAccounts, isEvmBlockchain } from '@rangodev/wallets-shared';
-import { accountsForActiveWallet, binance as binance_instance } from './helpers';
+import {
+  Network,
+  WalletType,
+  CanSwitchNetwork,
+  Connect,
+  Subscribe,
+  WalletSigners,
+  getEvmAccounts,
+  isEvmBlockchain,
+  WalletInfo,
+  BlockchainMeta,
+} from '@rangodev/wallets-shared';
+import {
+  accountsForActiveWallet,
+  binance as binance_instance,
+  BINANCE_CHAIN_WALLET_SUPPORTED_CHAINS,
+} from './helpers';
 import signer from './signer';
 
 const WALLET = WalletType.BINANCE_CHAIN;
@@ -22,7 +37,13 @@ export const connect: Connect = async ({ instance }) => {
   return accounts;
 };
 
-export const subscribe: Subscribe = ({ instance, state, meta, updateChainId, updateAccounts }) => {
+export const subscribe: Subscribe = ({
+  instance,
+  state,
+  meta,
+  updateChainId,
+  updateAccounts,
+}) => {
   instance?.on('accountsChanged', async (addresses: string[]) => {
     if (state.connected) {
       const accounts = await accountsForActiveWallet(instance, addresses[0]);
@@ -46,3 +67,18 @@ export const subscribe: Subscribe = ({ instance, state, meta, updateChainId, upd
 export const canSwitchNetworkTo: CanSwitchNetwork = () => false;
 
 export const getSigners: (provider: any) => WalletSigners = signer;
+
+export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
+  allBlockChains
+) => ({
+  name: 'Binance',
+  img: 'https://avatars.githubusercontent.com/u/69836600?s=200&v=4',
+  installLink:
+    'https://chrome.google.com/webstore/detail/binance-chain-wallet/fhbohimaelbohpjbbldcngcnapndodjp',
+  color: '#2b2e35',
+  supportedChains: allBlockChains.filter((blockchainMeta) =>
+    BINANCE_CHAIN_WALLET_SUPPORTED_CHAINS.includes(
+      blockchainMeta.name as Network
+    )
+  ),
+});
