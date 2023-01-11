@@ -4,6 +4,7 @@ export enum Status {
   FAILED = 'FAILED',
   SUCCESS = 'SUCCESS',
   CANCELED = 'CANCELED',
+  BLOCKED = 'BLOCKED',
 }
 
-export type QueueContext = Record<string, unknown>;
+export type QueueStorage = Record<string, unknown>;

@@ -1,8 +1,6 @@
 export const IS_DEV =
   !process.env.NODE_ENV || process.env.NODE_ENV === 'development';
 
-
-
 export const getBlockChainNameFromId = (
   chainId: string | number,
   blockchains: BlockchainMeta[]
@@ -36,10 +34,7 @@ export const getBlockchainChainIdByName = (
 ) => allBlockChains[netwok]?.chainId || null;
 
 export const uint8ArrayToHex = (buffer: Uint8Array): string => {
-  // buffer is an ArrayBuffer
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
-  return [...buffer].map((x) => x.toString(16).padStart(2, '0')).join('');
+  return Buffer.from(buffer).toString('hex');
 };
 
 export enum WalletType {
@@ -122,8 +117,13 @@ export enum Network {
   Unknown = 'Unkown',
 }
 
-export const XDEFI_WALLET_SUPPORTED_NATIVE_CHAINS = [Network.BTC, Network.LTC, Network.THORCHAIN, Network.BCH, Network.BINANCE];
-
+export const XDEFI_WALLET_SUPPORTED_NATIVE_CHAINS = [
+  Network.BTC,
+  Network.LTC,
+  Network.THORCHAIN,
+  Network.BCH,
+  Network.BINANCE,
+];
 
 export const isEvmBlockchain = (
   blockchainMeta: BlockchainMeta
@@ -521,6 +521,12 @@ export type TransferTransaction = {
   externalTxId: string | null;
   id: string;
 };
+
+export type Transaction =
+  | EvmTransaction
+  | CosmosTransaction
+  | SolanaTransaction
+  | TransferTransaction;
 
 // core
 
