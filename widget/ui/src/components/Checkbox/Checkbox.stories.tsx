@@ -3,7 +3,7 @@ import { ComponentMeta } from '@storybook/react';
 import Checkbox, { PropTypes } from './Checkbox';
 
 export default {
-  title: 'Checkbox',
+  title: 'Components/Checkbox',
   component: Checkbox,
   argTypes: {
     label: {

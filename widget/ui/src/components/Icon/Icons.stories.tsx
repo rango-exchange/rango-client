@@ -4,7 +4,7 @@ import * as Icons from '.';
 import { ComponentMeta } from '@storybook/react';
 
 export default {
-  title: 'Icons',
+  title: 'Components/Icons',
   component: Icons.AngleRight,
 } as ComponentMeta<typeof Icons.AngleRight>;
 

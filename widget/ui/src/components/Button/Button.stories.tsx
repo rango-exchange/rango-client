@@ -5,7 +5,7 @@ import Button, { PropTypes } from './Button';
 import { AddWallet } from '../Icon';
 
 export default {
-  title: 'Button',
+  title: 'Components/Button',
   component: Button,
   argTypes: {
     variant: {
