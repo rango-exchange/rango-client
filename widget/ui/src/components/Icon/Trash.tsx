@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { IconProps } from './types';
 
-export const Warning = React.forwardRef<SVGSVGElement, IconProps>(
+export const Trash = React.forwardRef<SVGSVGElement, IconProps>(
   ({ size = 50, ...props }) => {
     return (
       <svg
@@ -13,16 +13,9 @@ export const Warning = React.forwardRef<SVGSVGElement, IconProps>(
         {...props}
       >
         <path
-          d="M12 9v5M12 21.41H5.94c-3.47 0-4.92-2.48-3.24-5.51l3.12-5.62L8.76 5c1.78-3.21 4.7-3.21 6.48 0l2.94 5.29 3.12 5.62c1.68 3.03.22 5.51-3.24 5.51H12v-.01Z"
+          d="M21.5 5.98c-3.33-.33-6.68-.5-10.02-.5-1.98 0-3.96.1-5.94.3l-2.04.2M9 4.97l.22-1.31C9.38 2.71 9.5 2 11.19 2h2.62c1.69 0 1.82.75 1.97 1.67l.22 1.3M19.35 9.14l-.65 10.07c-.11 1.57-.2 2.79-2.99 2.79H9.29c-2.79 0-2.88-1.22-2.99-2.79L5.65 9.14M10.83 16.5h3.33M10 12.5h5"
           stroke="#000"
           strokeWidth={1.5}
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
-        <path
-          d="M11.994 17h.01"
-          stroke="#000"
-          strokeWidth={2}
           strokeLinecap="round"
           strokeLinejoin="round"
         />
@@ -31,4 +24,4 @@ export const Warning = React.forwardRef<SVGSVGElement, IconProps>(
   }
 );
 
-export default Warning;
+export default Trash;

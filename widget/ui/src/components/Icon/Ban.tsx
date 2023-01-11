@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { IconProps } from './types';
 
-export const Warning = React.forwardRef<SVGSVGElement, IconProps>(
+export const Ban = React.forwardRef<SVGSVGElement, IconProps>(
   ({ size = 50, ...props }) => {
     return (
       <svg
@@ -13,16 +13,10 @@ export const Warning = React.forwardRef<SVGSVGElement, IconProps>(
         {...props}
       >
         <path
-          d="M12 9v5M12 21.41H5.94c-3.47 0-4.92-2.48-3.24-5.51l3.12-5.62L8.76 5c1.78-3.21 4.7-3.21 6.48 0l2.94 5.29 3.12 5.62c1.68 3.03.22 5.51-3.24 5.51H12v-.01Z"
+          d="M12 22c5.52 0 10-4.48 10-10S17.52 2 12 2 2 6.48 2 12s4.48 10 10 10ZM18.9 5l-14 14"
           stroke="#000"
           strokeWidth={1.5}
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
-        <path
-          d="M11.994 17h.01"
-          stroke="#000"
-          strokeWidth={2}
+          strokeMiterlimit={10}
           strokeLinecap="round"
           strokeLinejoin="round"
         />
@@ -31,4 +25,4 @@ export const Warning = React.forwardRef<SVGSVGElement, IconProps>(
   }
 );
 
-export default Warning;
+export default Ban;
