@@ -504,7 +504,7 @@ export type SolanaTransaction = {
   type: GenericTransactionType;
   txType: 'LEGACY' | 'VERSIONED';
   externalTxId: string | null;
-  recentBlockhash: string;
+  recentBlockhash: string | null;
   signatures: SolanaSignature[];
   serializedMessage: number[] | null;
   instructions: SolanaInstruction[];

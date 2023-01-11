@@ -45,7 +45,7 @@ function getTxExtra(tx: SolanaTransaction, requestId: string): CaptureContext {
 
 const SOLANA_RPC_URL = !IS_DEV
   ? 'https://icy-crimson-wind.solana-mainnet.quiknode.pro/c83f94ebeb39a6d6a9d2ab03d4cba2c2af83c5c0/'
-  : 'https://api.metaplex.solana.com/';
+  : 'https://fluent-still-scion.solana-mainnet.discover.quiknode.pro/fc8be9b8ac7aea382ec591359628e16d8c52ef6a/';
 
 function getSolanaConnection(): Connection {
   return new Connection(SOLANA_RPC_URL, {
@@ -97,7 +97,13 @@ export const generalSolanaTransactionExecutor = async (
   if (tx.serializedMessage != null) {
     if (tx.txType === 'VERSIONED') {
       const message = VersionedMessage.deserialize(new Uint8Array(tx.serializedMessage))
-      message.recentBlockhash = tx.recentBlockhash
+      if (!!tx.recentBlockhash)
+        message.recentBlockhash = tx.recentBlockhash
+      else {
+        message.recentBlockhash = (
+          await retryPromise(connection.getLatestBlockhash('confirmed'), 5, 10_000)
+        ).blockhash;
+      }
       versionedTransaction = new VersionedTransaction(message)
     } else if (tx.txType === 'LEGACY') {
       transaction = Transaction.from(Buffer.from(new Uint8Array(tx.serializedMessage)));
@@ -107,7 +113,12 @@ export const generalSolanaTransactionExecutor = async (
   } else {
     transaction = new Transaction();
     transaction.feePayer = new PublicKey(tx.from);
-    transaction.recentBlockhash = tx.recentBlockhash;
+    if (tx.recentBlockhash)
+      transaction.recentBlockhash = tx.recentBlockhash;
+    else
+      transaction.recentBlockhash = (
+        await retryPromise(connection.getLatestBlockhash('confirmed'), 5, 10_000)
+      ).blockhash;
     tx.instructions.forEach((instruction) => {
       transaction?.add(
         new TransactionInstruction({
@@ -129,10 +140,6 @@ export const generalSolanaTransactionExecutor = async (
   }
   if (!transaction && !versionedTransaction) throw new Error('error creating transaction');
   try {
-    if (!!transaction && !transaction.recentBlockhash)
-      transaction.recentBlockhash = (
-        await retryPromise(connection.getLatestBlockhash('confirmed'), 5, 10_000)
-      ).blockhash;
     const raw = await solanaSigner(transaction || versionedTransaction);
     const signature = await retryPromise(connection.sendRawTransaction(raw), 2, 30000);
     if (!signature) throw new Error('tx cant send to blockchain. signature=' + signature);
@@ -178,3 +185,4 @@ export async function executeSolanaTransaction(
   };
   return await generalSolanaTransactionExecutor(requestId, tx, solanaSigner);
 }
+
