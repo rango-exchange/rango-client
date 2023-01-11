@@ -1,6 +1,6 @@
 {
   "name": "@rangodev/provider-phantom",
-  "version": "0.1.11-next.0",
+  "version": "0.1.11-next.1",
   "license": "MIT",
   "module": "dist/provider-phantom.esm.js",
   "main": "dist/index.js",
@@ -46,7 +46,7 @@
   ],
   "dependencies": {
     "@binance-chain/javascript-sdk": "^4.1.1",
-    "@rangodev/wallets-shared": "^0.1.11-next.0"
+    "@rangodev/wallets-shared": "^0.1.11-next.1"
   },
   "publishConfig": {
     "access": "public"
