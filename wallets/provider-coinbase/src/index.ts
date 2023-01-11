@@ -14,6 +14,10 @@ import {
   isEvmBlockchain,
   isSolanaBlockchain,
   getCoinbaseInstance as coinbase_instance,
+  BlockchainMeta,
+  WalletInfo,
+  evmBlockchains,
+  solanaBlockchain,
 } from '@rangodev/wallets-shared';
 
 import { getSolanaAccounts } from './helpers';
@@ -85,3 +89,18 @@ export const switchNetwork: SwitchNetwork = switchNetworkForEvm;
 export const canSwitchNetworkTo: CanSwitchNetwork = canSwitchNetworkToEvm;
 
 export const getSigners: (provider: any) => WalletSigners = signer;
+
+export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
+  allBlockChains
+) => {
+  const evms = evmBlockchains(allBlockChains);
+  const solana = solanaBlockchain(allBlockChains);
+  return {
+    name: 'Coinbase',
+    img: 'https://avatars.githubusercontent.com/u/1885080?s=200&v=4',
+    installLink:
+      'https://chrome.google.com/webstore/detail/coinbase-wallet-extension/hnfanknocfeofbddgcijnmhnfnkdnaad',
+    color: '#2a62f5',
+    supportedChains: [...evms, ...solana],
+  };
+};
