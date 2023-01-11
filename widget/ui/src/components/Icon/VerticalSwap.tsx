@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { IconProps } from './types';
 
-export const Gas = React.forwardRef<SVGSVGElement, IconProps>(
+export const VerticalSwap = React.forwardRef<SVGSVGElement, IconProps>(
   ({ size = 50, ...props }) => {
     return (
       <svg
@@ -13,14 +13,15 @@ export const Gas = React.forwardRef<SVGSVGElement, IconProps>(
         {...props}
       >
         <path
-          d="M4 22V5c0-2 1.34-3 3-3h8c1.66 0 3 1 3 3v17H4ZM2.5 22h17"
+          d="m13.82 6.85 3.04 3.04M13.82 17.15V6.85M10.18 17.15l-3.04-3.04M10.18 6.85v10.3"
           stroke="#000"
           strokeWidth={1.5}
+          strokeMiterlimit={10}
           strokeLinecap="round"
           strokeLinejoin="round"
         />
         <path
-          d="M8.89 10h4.23c1.04 0 1.89-.5 1.89-1.89V6.88c0-1.39-.85-1.89-1.89-1.89H8.89C7.85 4.99 7 5.49 7 6.88v1.23C7 9.5 7.85 10 8.89 10ZM7 13h3M18 16.01l4.5-.01v-6l-2-1"
+          d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10Z"
           stroke="#000"
           strokeWidth={1.5}
           strokeLinecap="round"
@@ -31,4 +32,4 @@ export const Gas = React.forwardRef<SVGSVGElement, IconProps>(
   }
 );
 
-export default Gas;
+export default VerticalSwap;

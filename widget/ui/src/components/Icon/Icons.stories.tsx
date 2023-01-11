@@ -5,13 +5,8 @@ import { ComponentMeta } from '@storybook/react';
 
 export default {
   title: 'Icons',
-  component: Icons.AddWallet,
-  color: {
-    name: 'color',
-    control: { type: 'text' },
-    defaultValue: '#000',
-  },
-} as ComponentMeta<typeof Icons.AddWallet>;
+  component: Icons.AngleRight,
+} as ComponentMeta<typeof Icons.AngleRight>;
 
 export const Main = (props: IconProps) => (
   <div
@@ -23,7 +18,12 @@ export const Main = (props: IconProps) => (
   >
     {Object.keys(Icons).map((icon) => {
       const Component = Icons[icon as Icon];
-      return <Component {...props} />;
+      return (
+        <div>
+          <Component {...props} />
+          <p> {icon}</p>
+        </div>
+      );
     })}
   </div>
 );
