@@ -12,6 +12,7 @@
     "build:queue-manager": "lerna run --scope @rangodev/queue-manager-* --ignore @rangodev/queue-manager-demo build",
     "build:widget": "lerna run --scope @rangodev/widget-* build",
     "build:npm": "yarn build:wallets && yarn build:queue-manager",
+    "build:demo": "lerna run --scope @rangodev/wallets-demo build",
     "build": "lerna run build",
     "dev:wallets": "lerna run dev --scope @rangodev/wallets-demo",
     "dev:queue-manager": "lerna run dev --scope @rangodev/queue-manager-*",
