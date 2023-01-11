@@ -6,6 +6,9 @@ export { default as Add } from './Add';
 export { default as MinusCircle } from './MinusCircle';
 export { default as CheckCircle } from './CheckCircle';
 export { default as Check } from './Check';
+export { default as Failed } from './Failed';
+export { default as Success } from './Success';
+export { default as Running } from './Running';
 
 export { default as Ban } from './Ban';
 export { default as Warning } from './Warning';
@@ -28,7 +31,8 @@ export { default as RetryLeft } from './RetryLeft';
 export { default as TryAgain } from './TryAgain';
 export { default as VerticalSwap } from './VerticalSwap';
 export { default as HorizontalSwap } from './HorizontalSwap';
-export { default as Loading } from './Loading';
+export { default as Retry } from './Retry';
+export { default as Arrow } from './Arrow';
 
 export { default as Wallet } from './Wallet';
 export { default as AddWallet } from './AddWallet';
@@ -37,3 +41,4 @@ export { default as CheckWallet } from './CheckWallet';
 export { default as SwapWallet } from './SwapWallet';
 
 export { default as Bag } from './Bag';
+

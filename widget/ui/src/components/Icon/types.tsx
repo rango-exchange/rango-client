@@ -30,11 +30,15 @@ export type Icon =
   | 'TryAgain'
   | 'VerticalSwap'
   | 'HorizontalSwap'
-  | 'Loading'
+  | 'Retry'
   | 'Wallet'
   | 'AddWallet'
   | 'DeleteWallet'
   | 'CheckWallet'
   | 'SwapWallet'
   | 'Bag'
-  | 'Check';
+  | 'Check'
+  | 'Arrow'
+  | 'Success'
+  | 'Failed'
+  | 'Running';

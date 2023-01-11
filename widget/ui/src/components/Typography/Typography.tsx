@@ -2,15 +2,20 @@ import React, { PropsWithChildren } from 'react';
 import { styled } from '../../theme';
 
 const TypographyContainer = styled('p', {
+  margin: 0,
+  lineHeight: '24px',
+
   variants: {
     variant: {
       h1: {
         fontSize: '$h1',
         fontWeight: '$xl',
+        lineHeight: '48px',
       },
       h2: {
         fontSize: '$xxxl',
         fontWeight: '$xl',
+        lineHeight: '48px',
       },
       h3: {
         fontSize: '$xxl',
