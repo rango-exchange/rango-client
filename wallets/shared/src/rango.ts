@@ -58,6 +58,7 @@ export enum WalletType {
   MATH = 'math',
   EXODUS = 'exodus',
   OKX = 'okx',
+  ARGENTX = 'argentx',
 }
 
 export enum Network {
@@ -112,6 +113,7 @@ export enum Network {
   MEDIBLOC = 'MEDIBLOC',
   KONSTELLATION = 'KONSTELLATION',
   UMEE = 'UMEE',
+  STARKNET = 'STARKNET',
 
   // Using instead of null
   Unknown = 'Unkown',
@@ -145,6 +147,11 @@ export const isNativeBlockchain = (
 ): blockchainMeta is NativeBlockchainMeta =>
   blockchainMeta.type === GenericTransactionType.TRANSFER;
 
+export const isStarknetBlockchain = (
+  blockchainMeta: BlockchainMeta
+): blockchainMeta is StarknetBlockchainMeta =>
+  blockchainMeta.type === GenericTransactionType.STARKNET;
+
 // Meta
 export type Asset = {
   blockchain: Network;
@@ -157,6 +164,7 @@ export enum GenericTransactionType {
   TRANSFER = 'TRANSFER',
   COSMOS = 'COSMOS',
   SOLANA = 'SOLANA',
+  STARKNET = 'STARKNET',
 }
 
 type EvmInfo = {
@@ -277,6 +285,12 @@ export interface SolanaBlockchainMeta extends BlockchainMeta {
   info: null;
   chainId: string;
 }
+export interface StarknetBlockchainMeta extends BlockchainMeta {
+  type: GenericTransactionType.STARKNET;
+  info: null;
+  chainId: string;
+}
+
 export interface NativeBlockchainMeta extends BlockchainMeta {
   type: GenericTransactionType.TRANSFER;
   info: null;
@@ -522,10 +536,25 @@ export type TransferTransaction = {
   id: string;
 };
 
+export type StarknetCallData = {
+  contractAddress: string;
+  calldata?: string[];
+  entrypoint: string;
+};
+
+export type StarknetTransaction = {
+  blockChain: Network;
+  type: GenericTransactionType;
+  calls: StarknetCallData[];
+  externalTxId: string | null;
+  isApprovalTx: boolean;
+};
+
 export type Transaction =
   | EvmTransaction
   | CosmosTransaction
   | SolanaTransaction
+  | StarknetTransaction
   | TransferTransaction;
 
 // core
@@ -608,13 +637,21 @@ export type WalletSigners = {
     tx: SolanaTransaction,
     requestId: string
   ) => Promise<string>;
+  executeStarknetTransaction: (
+    tx: StarknetTransaction,
+    meta: Meta
+  ) => Promise<string>;
   signEvmMessage: (walletAddress: string, message: string) => Promise<string>;
 };
 
 export const evmBlockchains = (allBlockChains: BlockchainMeta[]) =>
   allBlockChains.filter(isEvmBlockchain);
+
 export const solanaBlockchain = (allBlockChains: BlockchainMeta[]) =>
   allBlockChains.filter(isSolanaBlockchain);
+
+export const starknetBlockchain = (allBlockChains: BlockchainMeta[]) =>
+  allBlockChains.filter(isStarknetBlockchain);
 
 export const cosmosBlockchains = (allBlockChains: BlockchainMeta[]) =>
   allBlockChains.filter(isCosmosBlockchain);

@@ -142,10 +142,9 @@ export const getSolanaAccounts: Connect = async ({ instance }) => {
   };
 };
 
-
-
-
-export function getCoinbaseInstance(lookingFor: 'coinbase' | 'metamask' = 'coinbase') {
+export function getCoinbaseInstance(
+  lookingFor: 'coinbase' | 'metamask' = 'coinbase'
+) {
   const { ethereum, coinbaseSolana } = window;
   const instances = new Map();
   if (!!ethereum) {
@@ -173,4 +172,3 @@ export function getCoinbaseInstance(lookingFor: 'coinbase' | 'metamask' = 'coinb
 
   return instances;
 }
-
