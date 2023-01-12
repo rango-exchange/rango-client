@@ -15,6 +15,7 @@ import * as safepal from '@rangodev/provider-safepal';
 import * as tokenpocket from '@rangodev/provider-tokenpocket';
 import * as trustwallet from '@rangodev/provider-trustwallet';
 import * as walletconnect from '@rangodev/provider-walletconnect';
+import * as argentx from '@rangodev/provider-argentx';
 
 export const allProviders = () => [
   binance,
@@ -34,4 +35,5 @@ export const allProviders = () => [
   tokenpocket,
   trustwallet,
   walletconnect,
+  argentx,
 ];
