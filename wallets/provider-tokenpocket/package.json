@@ -45,7 +45,6 @@
     }
   ],
   "dependencies": {
-    "@binance-chain/javascript-sdk": "^4.1.1",
     "@rangodev/wallets-shared": "^0.1.11-next.6"
   },
   "publishConfig": {
