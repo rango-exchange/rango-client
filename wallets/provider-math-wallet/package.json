@@ -1,6 +1,6 @@
 {
   "name": "@rangodev/provider-math-wallet",
-  "version": "0.1.11-next.5",
+  "version": "0.1.11-next.6",
   "license": "MIT",
   "module": "dist/provider-math-wallet.esm.js",
   "main": "dist/index.js",
@@ -46,7 +46,7 @@
   ],
   "dependencies": {
     "@binance-chain/javascript-sdk": "^4.1.1",
-    "@rangodev/wallets-shared": "^0.1.11-next.5"
+    "@rangodev/wallets-shared": "^0.1.11-next.6"
   },
   "publishConfig": {
     "access": "public"
