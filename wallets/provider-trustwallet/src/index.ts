@@ -47,7 +47,7 @@ export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
   const evms = evmBlockchains(allBlockChains);
   return {
     name: 'Trust Wallet',
-    img: 'https://avatars.githubusercontent.com/u/32179889?s=200&v=4',
+    img: 'https://app.rango.exchange/wallets/trust.png',
     installLink:
       'https://chrome.google.com/webstore/detail/trust-wallet/egjidjbpglichdcondbcbdnbeeppgdph/',
     color: '#ffffff',

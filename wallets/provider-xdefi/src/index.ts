@@ -84,7 +84,7 @@ export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
   allBlockChains
 ) => ({
   name: 'XDefi',
-  img: 'https://avatars.githubusercontent.com/u/69113105?s=200&v=4',
+  img: 'https://app.rango.exchange/wallets/xdefi.jpg',
   installLink:
     'https://chrome.google.com/webstore/detail/xdefi-wallet/hmeobnfnfcmdkdcmlblgagmfpfboieaf',
   color: '#0646c7',
