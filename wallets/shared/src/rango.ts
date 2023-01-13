@@ -59,6 +59,7 @@ export enum WalletType {
   EXODUS = 'exodus',
   OKX = 'okx',
   ARGENTX = 'argentx',
+  TRON_LINK = 'tron-link',
 }
 
 export enum Network {
@@ -152,6 +153,11 @@ export const isStarknetBlockchain = (
 ): blockchainMeta is StarknetBlockchainMeta =>
   blockchainMeta.type === GenericTransactionType.STARKNET;
 
+export const isTronBlockchain = (
+  blockchainMeta: BlockchainMeta
+): blockchainMeta is StarknetBlockchainMeta =>
+  blockchainMeta.type === GenericTransactionType.TRON;
+
 // Meta
 export type Asset = {
   blockchain: Network;
@@ -165,6 +171,7 @@ export enum GenericTransactionType {
   COSMOS = 'COSMOS',
   SOLANA = 'SOLANA',
   STARKNET = 'STARKNET',
+  TRON = 'TRON',
 }
 
 type EvmInfo = {
@@ -266,6 +273,7 @@ export type AddEthereumChainParameter = {
   blockExplorerUrls?: string[];
   iconUrls?: string[]; // Currently ignored.
 };
+
 export type EvmNetworksChainInfo = { [key: string]: AddEthereumChainParameter };
 
 export interface EvmBlockchainMeta extends BlockchainMeta {
@@ -285,8 +293,15 @@ export interface SolanaBlockchainMeta extends BlockchainMeta {
   info: null;
   chainId: string;
 }
+
 export interface StarknetBlockchainMeta extends BlockchainMeta {
   type: GenericTransactionType.STARKNET;
+  info: null;
+  chainId: string;
+}
+
+export interface TronBlockchainMeta extends BlockchainMeta {
+  type: GenericTransactionType.TRON;
   info: null;
   chainId: string;
 }
@@ -550,6 +565,14 @@ export type StarknetTransaction = {
   isApprovalTx: boolean;
 };
 
+export type TronTransaction = {
+  blockChain: Network;
+  type: GenericTransactionType;
+  // calls: StarknetCallData[];
+  externalTxId: string | null;
+  isApprovalTx: boolean;
+};
+
 export type Transaction =
   | EvmTransaction
   | CosmosTransaction
@@ -641,6 +664,7 @@ export type WalletSigners = {
     tx: StarknetTransaction,
     meta: Meta
   ) => Promise<string>;
+  executeTronTransaction: (tx: TronTransaction, meta: Meta) => Promise<string>;
   signEvmMessage: (walletAddress: string, message: string) => Promise<string>;
 };
 
@@ -652,6 +676,9 @@ export const solanaBlockchain = (allBlockChains: BlockchainMeta[]) =>
 
 export const starknetBlockchain = (allBlockChains: BlockchainMeta[]) =>
   allBlockChains.filter(isStarknetBlockchain);
+
+export const tronBlockchain = (allBlockChains: BlockchainMeta[]) =>
+  allBlockChains.filter(isTronBlockchain);
 
 export const cosmosBlockchains = (allBlockChains: BlockchainMeta[]) =>
   allBlockChains.filter(isCosmosBlockchain);
