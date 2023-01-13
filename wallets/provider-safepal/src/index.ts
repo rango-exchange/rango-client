@@ -69,7 +69,7 @@ export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
   const solana = solanaBlockchain(allBlockChains);
   return {
     name: 'SafePal',
-    img: 'https://avatars.githubusercontent.com/u/52519650?v=4',
+    img: 'https://app.rango.exchange/wallets/safepal.png',
     installLink:
       'https://chrome.google.com/webstore/detail/safepal-extension-wallet/lgmpcpglpngdoalbgeoldeajfclnhafa',
     color: '#4A21EF',

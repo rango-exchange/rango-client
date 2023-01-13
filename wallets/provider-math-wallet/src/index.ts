@@ -68,7 +68,7 @@ export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
   const solana = solanaBlockchain(allBlockChains);
   return {
     name: 'Math Wallet',
-    img: 'https://avatars.githubusercontent.com/u/49776094?s=200&v=4',
+    img: 'https://app.rango.exchange/wallets/math-wallet.png',
     installLink:
       'https://chrome.google.com/webstore/detail/math-wallet/afbcbjpbpfadlkmhmclhkeeodmamcflc',
     color: '#2b2f25',
