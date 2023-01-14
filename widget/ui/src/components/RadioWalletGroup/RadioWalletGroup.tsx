@@ -1,0 +1,105 @@
+import React, { PropsWithChildren, useState } from 'react';
+import {
+  ActiveWalletsType,
+  Wallet,
+} from '../../containers/ConfirmWallets/types';
+import { styled } from '../../theme';
+import Typography from '../Typography';
+
+const Row = styled('div', {
+  display: 'grid',
+  gap: '28px',
+  gridTemplateColumns: 'auto auto',
+  justifyContent: 'flex-start',
+  margin: '$xl 0',
+});
+
+const Circle = styled('div', {
+  width: 12,
+  height: 12,
+  borderRadius: 6,
+  border: '1px solid $pending',
+  position: 'absolute',
+  top: 8,
+  right: 8,
+  variants: {
+    checked: {
+      true: {
+        borderColor: '$success',
+      },
+      false: {
+        borderColor: '$pending',
+      },
+    },
+  },
+});
+const SolidCircle = styled('div', {
+  width: 6,
+  margin: '30% auto',
+  height: 6,
+  borderRadius: 3,
+  variants: {
+    checked: {
+      true: {
+        backgroundColor: '$success',
+      },
+      false: {
+        backgroundColor: '$pending',
+      },
+    },
+  },
+});
+const RadioContainer = styled('div', {
+  border: '1.5px solid',
+  borderRadius: 5,
+  padding: '$l',
+  display: 'flex',
+  flexDirection: 'column',
+  justifyContent: 'space-between',
+  width: 124,
+  height: 92,
+  cursor: 'pointer',
+  position: 'relative',
+  variants: {
+    checked: {
+      true: {
+        borderColor: '$success',
+        color: '$success',
+      },
+      false: {
+        borderColor: '$pending',
+        color: '$pending',
+      },
+    },
+  },
+});
+export interface PropTypes {
+  wallet: ActiveWalletsType;
+  onChange?: (w: Wallet) => void;
+}
+
+function RadioWalletGroup({ wallet, onChange }: PropsWithChildren<PropTypes>) {
+  const [active, setActive] = useState<string>('');
+  const onClick = (w: Wallet) => {
+    setActive(w.title);
+    onChange && onChange(w);
+  };
+  return (
+    <Row>
+      {wallet.wallets.map((w) => {
+        const checked = active === w.title;
+        return (
+          <RadioContainer checked={checked} onClick={() => onClick(w)}>
+            <img src={w.logo} alt={wallet.type} width={24} height={24} />
+            <Typography variant="body1">{w.title}</Typography>
+            <Circle checked={checked}>
+              <SolidCircle checked={checked} />
+            </Circle>
+          </RadioContainer>
+        );
+      })}
+    </Row>
+  );
+}
+
+export default RadioWalletGroup;

@@ -41,6 +41,30 @@ const TypographyContainer = styled('p', {
         fontSize: '$l',
         fontWeight: '$s',
       },
+      body3: {
+        fontSize: '13px',
+        fontWeight: '$s',
+      },
+      bodySmall: {
+        fontSize: '$s',
+        fontWeight: '$s',
+        lineHeight: '20px',
+      },
+      legal: {
+        fontWeight: '$m',
+        fontSize: '11px',
+        lineHeight: '20px',
+      },
+      footnote1: {
+        fontWeight: '$s',
+        fontSize: '11px',
+        lineHeight: '20px',
+      },
+      footnote2: {
+        fontWeight: '$s',
+        fontSize: '$xs',
+        lineHeight: '16px',
+      },
     },
     align: {
       center: {
@@ -62,7 +86,20 @@ const TypographyContainer = styled('p', {
 });
 
 export interface PropTypes {
-  variant: 'body1' | 'body2' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
+  variant:
+    | 'h1'
+    | 'h2'
+    | 'h3'
+    | 'h4'
+    | 'h5'
+    | 'h6'
+    | 'body1'
+    | 'body2'
+    | 'body3'
+    | 'bodySmall'
+    | 'footnote1'
+    | 'footnote2'
+    | 'legal';
   align?: 'center' | 'left' | 'right';
   noWrap?: boolean;
 }
