@@ -40,3 +40,9 @@ export const ButtonWithIcon = (props: PropTypes) => (
     </Button>
   </div>
 );
+
+export const IconButton = (props: PropTypes) => (
+  <div>
+    <Button startIcon={<AddWallet size={24} />} {...props} />
+  </div>
+);

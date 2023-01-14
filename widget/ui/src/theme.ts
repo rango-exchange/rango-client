@@ -7,6 +7,7 @@ export const { styled, css } = createStitches({
     colors: {
       primary: '#5FA425',
       white: '#fff',
+      black:'#000',
       text01: '#10150F',
       text02: '#0E1617',
       text03: '#555555',
@@ -23,8 +24,10 @@ export const { styled, css } = createStitches({
       l: '12px',
       xl: '18px',
       xxl: '22px',
+      xxxl: '24px',
     },
     fontSizes: {
+      xs: '10px',
       s: '12px',
       m: '14px',
       l: '16px',

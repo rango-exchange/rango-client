@@ -12,6 +12,7 @@ const ButtonContainer = styled('button', {
   fontSize: '$m',
   fontWeight: '$l',
   cursor: 'pointer',
+  height:'52px',
   padding: '$l',
   display: 'flex',
   alignItems: 'center',
@@ -69,10 +70,10 @@ function Button({
 }: PropsWithChildren<PropTypes>) {
   return (
     <ButtonContainer disabled={disabled || loading} {...props}>
-      {startIcon && <div className={icon()}>{startIcon}</div>}
-      {children}
+      {startIcon}
+      {children && <div className={icon()}>{children} </div>}
       {loading && <Spinner />}
-      {endIcon && <div className={icon()}>{endIcon}</div>}
+      {endIcon}
     </ButtonContainer>
   );
 }

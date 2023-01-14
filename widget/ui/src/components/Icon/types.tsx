@@ -41,4 +41,5 @@ export type Icon =
   | 'Arrow'
   | 'Success'
   | 'Failed'
-  | 'Running';
+  | 'Running'
+  | 'Time';
