@@ -2,7 +2,7 @@ import React from 'react';
 import { ComponentMeta } from '@storybook/react';
 
 import History, { PropTypes } from './History';
-import { mockData } from './MockData';
+import { pendingSwap } from './mock';
 
 export default {
   title: 'Containers/History',
@@ -10,5 +10,7 @@ export default {
 } as ComponentMeta<typeof History>;
 
 export const Main = (props: PropTypes) => (
-  <History {...props} swaps={mockData} />
+  <div style={{ width: 516 }}>
+    <History {...props} swaps={pendingSwap} />
+  </div>
 );
