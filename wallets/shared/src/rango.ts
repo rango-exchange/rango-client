@@ -565,10 +565,37 @@ export type StarknetTransaction = {
   isApprovalTx: boolean;
 };
 
+export type TrxParameterValue = {
+  data: string;
+  ownerAddress: string;
+  contractAddress: string;
+  callValue: string | undefined;
+};
+
+export type TrxContractParameter = {
+  value: TrxParameterValue;
+  typeUrl: string;
+};
+
+export type TrxContractData = {
+  parameter: TrxContractParameter;
+  type: string;
+};
+
+export type TrxRawData = {
+  contract: TrxContractData[];
+  refBlockBytes: string;
+  refBlockHash: string;
+  expiration: string;
+  feeLimit: string;
+  timestamp: string;
+};
+
 export type TronTransaction = {
   blockChain: Network;
   type: GenericTransactionType;
-  // calls: StarknetCallData[];
+  rawData: TrxRawData | null;
+  rawDataHex: string | null;
   externalTxId: string | null;
   isApprovalTx: boolean;
 };
@@ -578,6 +605,7 @@ export type Transaction =
   | CosmosTransaction
   | SolanaTransaction
   | StarknetTransaction
+  | TronTransaction
   | TransferTransaction;
 
 // core

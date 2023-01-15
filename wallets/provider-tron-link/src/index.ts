@@ -25,7 +25,6 @@ export const getInstance = tronLink_instance;
 
 export const connect: Connect = async ({ instance }) => {
   let r = undefined;
-  console.log(instance.ready);
   if (!!instance && !instance.ready) {
     r = await instance.request({ method: 'tron_requestAccounts' });
     if (!r) {

@@ -6,7 +6,10 @@ export async function executeTronTransaction(
   provider: any
 ): Promise<string> {
   const tronProvider = getNetworkInstance(provider, Network.TRON);
-  console.log({ tronProvider, tx });
-  // const { transaction_hash } = await starknetProvider.account.execute(tx.calls);
-  return 'transaction_hash';
+  const signedTxn = await provider.tronWeb.trx.sign({
+    raw_data: tx.rawData,
+    raw_data_hex: tx.rawDataHex,
+  });
+  const receipt = await provider.tronWeb.trx.sendRawTransaction(signedTxn);
+  return receipt?.transaction?.txID;
 }
