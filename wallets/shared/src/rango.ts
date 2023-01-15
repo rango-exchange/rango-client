@@ -180,6 +180,18 @@ type EvmInfo = {
   transactionUrl: string;
 };
 
+type StarkNetInfo = {
+  chainName: string;
+  nativeCurrency: {
+    name: string;
+    symbol: string;
+    decimals: number;
+  };
+  blockExplorerUrls: string[];
+  addressUrl: string;
+  transactionUrl: string;
+};
+
 export interface CosmosChainInfo {
   rpc: string;
   rest: string;
@@ -234,7 +246,7 @@ export interface CosmosInfo extends Omit<CosmosChainInfo, 'chianId'> {
   experimental: boolean;
 }
 
-type BlockchainInfo = EvmInfo | CosmosInfo | null;
+type BlockchainInfo = EvmInfo | CosmosInfo | StarkNetInfo | null;
 
 export interface BlockchainMeta {
   name: Network;
@@ -287,7 +299,7 @@ export interface SolanaBlockchainMeta extends BlockchainMeta {
 }
 export interface StarknetBlockchainMeta extends BlockchainMeta {
   type: GenericTransactionType.STARKNET;
-  info: null;
+  info: StarkNetInfo;
   chainId: string;
 }
 
