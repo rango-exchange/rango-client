@@ -2,7 +2,7 @@
 // Solution: (https://github.com/stitchesjs/stitches/issues/833#issuecomment-950707025)
 const { createStitches } = require('@stitches/react');
 
-export const { styled, css, createTheme } = createStitches({
+export const { styled, css, createTheme , keyframes } = createStitches({
   theme: {
     colors: {
       'primary-500': '#5FA425',
@@ -23,6 +23,7 @@ export const { styled, css, createTheme } = createStitches({
       backgroundColorDisabled: '$neutral-300',
       text: '$neutral-900',
       borderColor: '$neutral-400',
+      hover: '$neutral-300',
     },
     space: {
       0: '0',
@@ -62,7 +63,26 @@ export const { styled, css, createTheme } = createStitches({
     },
     lineHeights: {},
     letterSpacings: {},
-    sizes: {},
+    sizes: {
+      0: '0',
+      1: '.25rem',
+      2: '.5rem',
+      3: '.75rem',
+      4: '1rem',
+      6: '1.5rem',
+      8: '2rem',
+      10: '2.5rem',
+      12: '3rem',
+      14: '3.5rem',
+      16: '4rem',
+      18: '4.5rem',
+      20: '5rem',
+      24: '6rem',
+      28: '7rem',
+      32: '8rem',
+      36: '9rem',
+      40: '10rem',
+    },
     borderWidths: {},
     borderStyles: {},
     radii: {
