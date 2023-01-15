@@ -60,6 +60,7 @@ export class WalletError extends Error {
       'user rejected',
       'user denied',
       'request rejected',
+      'user abort',
     ];
     if (!!error && typeof error === 'string') {
       for (const msg of POSSIBLE_REJECTION_ERRORS) {
