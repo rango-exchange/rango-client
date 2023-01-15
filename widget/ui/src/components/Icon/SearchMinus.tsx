@@ -1,10 +1,13 @@
 import * as React from 'react';
 import { IconProps } from './types';
-
+import { styled } from '../../theme';
+const Svg = styled('svg', {
+  color: '$text',
+});
 export const SearchMinus = React.forwardRef<SVGSVGElement, IconProps>(
   ({ size = 50, ...props }) => {
     return (
-      <svg
+      <Svg
         width={size}
         height={size}
         viewBox="0 0 24 24"
@@ -19,7 +22,7 @@ export const SearchMinus = React.forwardRef<SVGSVGElement, IconProps>(
           strokeLinecap="round"
           strokeLinejoin="round"
         />
-      </svg>
+      </Svg>
     );
   }
 );

@@ -17,11 +17,11 @@ const CheckboxRoot = styled(RadixCheckbox.Root, {
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
-  marginRight: 8,
-  backgroundColor: '$white',
+  marginRight: '$2',
+  backgroundColor: '$neutral-100',
 });
 const Label = styled('label', {
-  color: '$text02',
+  color: '$text',
   fontSize: '$m',
 });
 

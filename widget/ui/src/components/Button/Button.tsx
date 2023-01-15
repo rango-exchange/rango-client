@@ -1,44 +1,50 @@
-import { css } from '@stitches/react';
 import React, { PropsWithChildren, ReactNode } from 'react';
-import { styled } from '../../theme';
+import { css, styled } from '../../theme';
 import Spinner from '../Spinner';
 
 const icon = css({
-  margin: '0 $l',
+  margin: '0 $3',
 });
 
 const ButtonContainer = styled('button', {
-  borderRadius: '5px',
+  borderRadius: '$s',
   fontSize: '$m',
   fontWeight: '$l',
   cursor: 'pointer',
-  padding: '$l',
+  padding: '$3',
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
   '&:disabled': {
-    background: '$neutral01',
-    color: '$neutral02',
+    background: '$backgroundColorDisabled',
+    color: '$neutral-400',
     border: 0,
+  },
+  '&:hover': {
+    opacity: 0.75,
   },
   variants: {
     variant: {
       contained: {
-        background: '$primary',
-        color: '$text01',
+        background: '$primary-500',
+        color: '$text',
         border: 0,
       },
       outlined: {
         background: 'transparent',
         border: 1,
         borderStyle: 'solid',
-        color: '$primary',
-        borderColor: '$primary',
+        color: '$primary-500',
+        borderColor: '$primary-500',
+        '&:hover': {
+          backgroundColor: '$hover',
+          border: 0,
+        },
       },
       text: {
         background: 'transparent',
         border: 0,
-        color: '$primary',
+        color: '$primary-500',
       },
     },
     fullWidth: {
