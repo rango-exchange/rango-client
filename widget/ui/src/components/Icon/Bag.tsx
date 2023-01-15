@@ -1,10 +1,13 @@
 import * as React from 'react';
 import { IconProps } from './types';
-
+import { styled } from '../../theme';
+const Svg = styled('svg', {
+  color: '$text',
+});
 export const Bag = React.forwardRef<SVGSVGElement, IconProps>(
   ({ size = 50, ...props }) => {
     return (
-      <svg
+      <Svg
         width={size}
         height={size}
         viewBox="0 0 32 32"
@@ -26,7 +29,7 @@ export const Bag = React.forwardRef<SVGSVGElement, IconProps>(
             <path fill="#fff" d="M0 0h32v32H0z" />
           </clipPath>
         </defs>
-      </svg>
+      </Svg>
     );
   }
 );

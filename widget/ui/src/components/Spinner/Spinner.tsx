@@ -1,6 +1,5 @@
-import { keyframes } from '@stitches/react';
 import React from 'react';
-import { styled } from '../../theme';
+import { keyframes, styled } from '../../theme';
 
 const spin = keyframes({
   '100%': {
@@ -9,12 +8,12 @@ const spin = keyframes({
 });
 
 const SpinnerContainer = styled('div', {
-  width: '$s',
-  height: '$s',
+  width: '$4',
+  height: '$4',
   borderRadius: '50%',
   position: 'relative',
-  border: `2px solid $neutral03`,
-  borderRight: `2px solid $primary`,
+  border: `2px solid $neutral-300`,
+  borderRight: `2px solid $primary-500`,
   animation: `${spin} 1s linear infinite`,
   margin: `0px $m`,
 });

@@ -7,22 +7,25 @@ export interface PropTypes {
   side?: 'top' | 'right' | 'bottom' | 'left';
 }
 const TooltipContent = styled(RadixTooltip.Content, {
-  borderRadius: 5,
-  padding: '$m $l',
+  borderRadius: '$s',
+  padding: '$2 $3',
   fontSize: '$l',
-  color: '$text01',
-  backgroundColor: '$white',
-  boxShadow:
-    'hsl(206 22% 7% / 35%) 0px 10px 38px -10px, hsl(206 22% 7% / 20%) 0px 10px 20px -15px',
+  color: '$text',
+  backgroundColor: '$backgroundColor2',
+  boxShadow: '$s',
   animationDuration: '400ms',
   animationTimingFunction: 'cubic-bezier(0.16, 1, 0.3, 1)',
   willChange: ' transform, opacity',
 });
 const TooltipArrow = styled(RadixTooltip.Arrow, {
-  fill: '$white',
+  fill: '$backgroundColor2',
 });
 
-function Tooltip({ children, content, side }: PropsWithChildren<PropTypes>) {
+function Tooltip({
+  children,
+  content,
+  side = 'top',
+}: PropsWithChildren<PropTypes>) {
   return (
     <RadixTooltip.Provider>
       <RadixTooltip.Root>

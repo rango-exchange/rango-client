@@ -1,10 +1,13 @@
 import * as React from 'react';
 import { IconProps } from './types';
-
+import { styled } from '../../theme';
+const Svg = styled('svg', {
+  color: '$text',
+});
 export const Wallet = React.forwardRef<SVGSVGElement, IconProps>(
   ({ size = 50, ...props }) => {
     return (
-      <svg
+      <Svg
         width={size}
         height={size}
         viewBox="0 0 24 24"
@@ -30,7 +33,7 @@ export const Wallet = React.forwardRef<SVGSVGElement, IconProps>(
           d="M4.5 10.705a.75.75 0 0 1 .75-.75h7a.75.75 0 0 1 0 1.5h-7a.75.75 0 0 1-.75-.75Z"
           fill="#000"
         />
-      </svg>
+      </Svg>
     );
   }
 );

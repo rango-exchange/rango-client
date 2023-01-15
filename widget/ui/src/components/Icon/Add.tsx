@@ -1,10 +1,14 @@
 import * as React from 'react';
+import { styled } from '../../theme';
 import { IconProps } from './types';
+const Svg = styled('svg', {
+  color: '$text',
+});
 
 export const AddCircle = React.forwardRef<SVGSVGElement, IconProps>(
   ({ size = 50, ...props }) => {
     return (
-      <svg
+      <Svg
         width={size}
         height={size}
         viewBox="0 0 24 24"
@@ -19,7 +23,7 @@ export const AddCircle = React.forwardRef<SVGSVGElement, IconProps>(
           strokeLinecap="round"
           strokeLinejoin="round"
         />
-      </svg>
+      </Svg>
     );
   }
 );
