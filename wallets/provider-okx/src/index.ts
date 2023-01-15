@@ -81,7 +81,7 @@ export const getSigners: (provider: any) => WalletSigners = signer;
 export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
   allBlockChains
 ) => ({
-  name: 'Okx',
+  name: 'OKX',
   img: 'https://app.rango.exchange/wallets/okx.png',
   installLink:
     'https://chrome.google.com/webstore/detail/okx-wallet/mcohilncbfahbmgdjkbpemcciiolgcge',

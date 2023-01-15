@@ -43,6 +43,7 @@ export enum WalletType {
   TRUST_WALLET = 'trust-wallet',
   TERRA_STATION = 'terra-station',
   KEPLR = 'keplr',
+  OKX = 'okx',
   PHANTOM = 'phantom',
   COINBASE = 'coinbase',
   XDEFI = 'xdefi',
@@ -57,7 +58,6 @@ export enum WalletType {
   UNKNOWN = 'unknown',
   MATH = 'math',
   EXODUS = 'exodus',
-  OKX = 'okx',
   ARGENTX = 'argentx',
 }
 
