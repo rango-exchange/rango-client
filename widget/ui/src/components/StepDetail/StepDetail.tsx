@@ -36,6 +36,7 @@ const StepContainer = styled('div', {
       },
       vertical: {
         flexDirection: 'column',
+        textAlign:'center',
         justifyContent: 'center',
       },
     },

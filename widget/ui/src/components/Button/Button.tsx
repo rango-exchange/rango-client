@@ -12,7 +12,7 @@ const ButtonContainer = styled('button', {
   fontSize: '$m',
   fontWeight: '$l',
   cursor: 'pointer',
-  height:'52px',
+  height: '52px',
   padding: '$l',
   display: 'flex',
   alignItems: 'center',
@@ -21,6 +21,9 @@ const ButtonContainer = styled('button', {
     background: '$neutral01',
     color: '$neutral02',
     border: 0,
+  },
+  '&:hover': {
+    opacity: 0.75,
   },
   variants: {
     variant: {
