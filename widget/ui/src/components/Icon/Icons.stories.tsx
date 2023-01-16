@@ -2,11 +2,16 @@ import React from 'react';
 import { Icon, IconProps } from './types';
 import * as Icons from '.';
 import { ComponentMeta } from '@storybook/react';
+import { styled } from '@stitches/react';
 
 export default {
   title: 'Icons',
   component: Icons.AngleRight,
 } as ComponentMeta<typeof Icons.AngleRight>;
+
+const IconName = styled('p', {
+  color: '$text',
+});
 
 export const Main = (props: IconProps) => (
   <div
@@ -21,7 +26,7 @@ export const Main = (props: IconProps) => (
       return (
         <div>
           <Component {...props} />
-          <p> {icon}</p>
+          <IconName> {icon}</IconName>
         </div>
       );
     })}

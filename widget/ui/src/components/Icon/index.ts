@@ -37,3 +37,5 @@ export { default as CheckWallet } from './CheckWallet';
 export { default as SwapWallet } from './SwapWallet';
 
 export { default as Bag } from './Bag';
+
+export { default as FilledCircle } from './FilledCircle';

@@ -10,22 +10,21 @@ const ChipCointainer = styled('div', {
   height: '2rem',
   fontSize: '$m',
   marginRight: '$2',
+  cursor: 'pointer',
+  '&:hover': {
+    backgroundColor: '$neutral-300',
+  },
   variants: {
-    variant: {
-      outlined: {
-        backgroundColor: 'none',
-        border: '1px solid $neutral-700',
-      },
-      contained: {
-        backgroundColor: '$neutral-300',
-      },
+    selected: {
+      true: { backgroundColor: '$neutral-400' },
+      false: { backgroundColor: '$backgroundColor' },
     },
   },
 });
 
 export interface PropTypes {
   label: string;
-  variant: 'outlined' | 'contained';
+  selected?: boolean;
   onClick?: React.MouseEventHandler<HTMLDivElement>;
   className?: string;
   style?: React.CSSProperties;
@@ -34,9 +33,9 @@ export interface PropTypes {
 }
 
 function Chip(props: PropTypes) {
-  const { label, variant, prefix, suffix, onClick, style } = props;
+  const { label, selected, prefix, suffix, onClick, style } = props;
   return (
-    <ChipCointainer variant={variant} onClick={onClick} style={style}>
+    <ChipCointainer selected={selected} onClick={onClick} style={style}>
       {prefix || null}
       {label}
       {suffix || null}

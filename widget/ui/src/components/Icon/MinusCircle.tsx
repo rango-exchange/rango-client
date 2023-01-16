@@ -5,7 +5,7 @@ const Svg = styled('svg', {
   color: '$text',
 });
 export const MinusCircle = React.forwardRef<SVGSVGElement, IconProps>(
-  ({ size = 50, ...props }) => {
+  ({ color = 'currentColor', size = 50, ...props }) => {
     return (
       <Svg
         width={size}
@@ -17,7 +17,7 @@ export const MinusCircle = React.forwardRef<SVGSVGElement, IconProps>(
       >
         <path
           d="M11.92 22c5.5 0 10-4.5 10-10s-4.5-10-10-10-10 4.5-10 10 4.5 10 10 10ZM7.92 12h8"
-          stroke="#000"
+          stroke={color}
           strokeWidth={1.5}
           strokeLinecap="round"
           strokeLinejoin="round"

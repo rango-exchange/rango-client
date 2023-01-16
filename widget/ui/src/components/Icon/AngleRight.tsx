@@ -5,7 +5,7 @@ const Svg = styled('svg', {
   color: '$text',
 });
 export const AngleRight = React.forwardRef<SVGSVGElement, IconProps>(
-  ({ size = 50, ...props }) => {
+  ({ color = 'currentColor', size = 50, ...props }) => {
     return (
       <Svg
         width={size}
@@ -17,7 +17,7 @@ export const AngleRight = React.forwardRef<SVGSVGElement, IconProps>(
       >
         <path
           d="m8.91 19.92 6.52-6.52c.77-.77.77-2.03 0-2.8L8.91 4.08"
-          stroke="#000"
+          stroke={color}
           strokeWidth={1.5}
           strokeMiterlimit={10}
           strokeLinecap="round"

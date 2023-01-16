@@ -1,11 +1,11 @@
 import React, { forwardRef, useEffect, useState } from 'react';
-import * as Select from '@radix-ui/react-select';
-import {
-  CheckIcon,
-  ChevronDownIcon,
-  ChevronUpIcon,
-  Cross2Icon,
-} from '@radix-ui/react-icons';
+// import * as Select from '@radix-ui/react-select';
+// import {
+//   CheckIcon,
+//   ChevronDownIcon,
+//   ChevronUpIcon,
+//   Cross2Icon,
+// } from '@radix-ui/react-icons';
 import './style.css';
 import Chip from '../Chip/Chip';
 import VirtualizedList from '../VirtualizedList/VirtualizedList';
@@ -80,14 +80,14 @@ const SelectedValues = styled('div', {
   flexWrap: 'wrap',
 });
 
-const CloseIcon = styled(Cross2Icon, {
-  color: '$error',
-  cursor: 'pointer',
-  marginLeft: '$2',
-  '&:hover': {
-    opacity: '0.5',
-  },
-});
+// const CloseIcon = styled(Cross2Icon, {
+//   color: '$error',
+//   cursor: 'pointer',
+//   marginLeft: '$2',
+//   '&:hover': {
+//     opacity: '0.5',
+//   },
+// });
 
 const DropDownContainer = styled('div', {
   backgroundColor: '$neutral-100',
@@ -210,9 +210,9 @@ function ComboBox(props: PropTypes) {
                 onClick={() => {
                   handleSelect(v.value, v.label);
                 }}
-                variant="contained"
+                selected
                 label={v.label}
-                suffix={<CloseIcon />}
+                // suffix={<CloseIcon />}
               />
             ))
           : selectedValue[0].label}

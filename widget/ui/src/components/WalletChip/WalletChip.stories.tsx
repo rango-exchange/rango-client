@@ -1,7 +1,8 @@
 import React from 'react';
 import { ComponentMeta } from '@storybook/react';
 
-import WalletChip, { PropTypes, WalletState } from './WalletChip';
+import WalletChip, { PropTypes } from './WalletChip';
+import { WalletState } from '../../types/wallet';
 
 export default {
   title: 'Wallet chip',
@@ -13,7 +14,7 @@ export default {
       defaultValue: 'Coinbase',
     },
     image: {
-      name: 'title',
+      name: 'image',
       type: 'string',
       defaultValue: 'https://app.rango.exchange/wallets/coinbase.svg',
     },

@@ -2,8 +2,8 @@ import React, { PropsWithChildren } from 'react';
 import { styled } from '../../theme';
 
 const TypographyContainer = styled('p', {
+  color: '$text',
   variants: {
-    color:'$text',
     variant: {
       h1: {
         fontSize: '$h1',

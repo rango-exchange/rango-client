@@ -1,18 +1,18 @@
 // TSDX + stiches doesn't work with import statement and has a bug.
 // Solution: (https://github.com/stitchesjs/stitches/issues/833#issuecomment-950707025)
-const { createStitches } = require('@stitches/react');
+import { createStitches } from '@stitches/react';
 
-export const { styled, css, createTheme , keyframes } = createStitches({
+export const { styled, css, createTheme, keyframes } = createStitches({
   theme: {
     colors: {
       'primary-500': '#5FA425',
       'neutral-100': '#fff',
-      'neutral-200': '#f0f2f5',
+      'neutral-200': '#F6F6F6',
       'neutral-300': '#E7E7E7',
       'neutral-400': '#CDCDCD',
       'neutral-500': '#525252',
       'neutral-700': '#333',
-      'netural-800': '#222',
+      'netural-800': '#1D1F1C',
       'neutral-900': '#000',
       success: '#0AA65B',
       error: '#F40000',

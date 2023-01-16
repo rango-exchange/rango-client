@@ -2,7 +2,7 @@ import React from 'react';
 import { ComponentMeta } from '@storybook/react';
 
 import Chip, { PropTypes } from './Chip';
-import { Cross2Icon } from '@radix-ui/react-icons';
+// import { Cross2Icon } from '@radix-ui/react-icons';
 
 export default {
   title: 'Chip',
@@ -32,6 +32,6 @@ export const Main = (props: PropTypes) => (
         style={{ width: '20px' }}
       />
     }
-    suffix={<Cross2Icon />}
+    // suffix={<Cross2Icon />}
   ></Chip>
 );

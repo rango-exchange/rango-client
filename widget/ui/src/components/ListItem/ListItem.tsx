@@ -49,7 +49,6 @@ export type PropTypes = (
 
 function ListItem(props: PropsWithChildren<PropTypes>) {
   const { isSelected, isDisabled, onClick, children, style } = props;
-  console.log(style);
   return (
     <Item
       isSelected={isSelected}

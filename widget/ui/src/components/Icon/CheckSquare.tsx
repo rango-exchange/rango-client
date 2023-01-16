@@ -5,7 +5,7 @@ const Svg = styled('svg', {
   color: '$text',
 });
 export const CheckSquare = React.forwardRef<SVGSVGElement, IconProps>(
-  ({ size = 50, ...props }) => {
+  ({ color = 'currentColor', size = 50, ...props }) => {
     return (
       <Svg
         width={size}
@@ -17,14 +17,14 @@ export const CheckSquare = React.forwardRef<SVGSVGElement, IconProps>(
       >
         <path
           d="M9 22h6c5 0 7-2 7-7V9c0-5-2-7-7-7H9C4 2 2 4 2 9v6c0 5 2 7 7 7Z"
-          stroke="#000"
+          stroke={color}
           strokeWidth={1.5}
           strokeLinecap="round"
           strokeLinejoin="round"
         />
         <path
           d="m7.75 12 2.83 2.83 5.67-5.66"
-          stroke="#000"
+          stroke={color}
           strokeWidth={1.5}
           strokeLinecap="round"
           strokeLinejoin="round"

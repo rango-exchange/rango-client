@@ -1,10 +1,18 @@
 import React from 'react';
 
 import { styled } from '../../theme';
-import { Download, Retry } from '../Icon';
+import { WalletInfo, WalletState } from '../../types/wallet';
+import { Download, FilledCircle } from '../Icon';
 import ListItem from '../ListItem';
 import Spinner from '../Spinner';
 import Typography from '../Typography';
+
+const Container = styled('div', {
+  display: 'flex',
+  justifyContent: 'space-between',
+  alignItems: 'center',
+  width: '100%',
+});
 
 const WalletDetails = styled('div', {
   display: 'flex',
@@ -16,57 +24,39 @@ const WalletDetails = styled('div', {
   },
 });
 
-export enum WalletState {
-  NOT_INSTALLED = 'not installed',
-  DISCONNECTED = 'disconnected',
-  CONNECTING = 'connecting',
-  CONNECTED = 'connected',
-}
+const StateIconContainer = styled('span', {
+  width: '24px',
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+});
 
-export interface PropTypes {
-  state: WalletState;
-  isDisabled?: boolean;
-  title: string;
-  image: string;
-}
+export type PropTypes = WalletInfo & { onClick: (walletName: string) => void };
 
 function WalletChip(props: PropTypes) {
-  const { title, image, state, isDisabled } = props;
+  const { name, image, state, onClick } = props;
   return (
     <ListItem
       {...(state
         ? { isSelected: state === WalletState.CONNECTED }
-        : { isDisabled })}
+        : { isDisabled: true })}
+      onClick={onClick.bind(null, name)}
     >
-      <div
-        style={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-        }}
-      >
+      <Container>
         <WalletDetails>
           <img src={image} />
           <Typography variant="h5" noWrap={false}>
-            {title}
+            {name}
           </Typography>
         </WalletDetails>
-        {state === WalletState.NOT_INSTALLED && (
-          <Download size={23} color="#00A9BB" />
+        {state !== WalletState.DISCONNECTED && (
+          <StateIconContainer>
+            {state === WalletState.NOT_INSTALLED && <Download size={23} />}
+            {state === WalletState.CONNECTING && <Spinner />}
+            {state === WalletState.CONNECTED && <FilledCircle size={8} />}
+          </StateIconContainer>
         )}
-        {state === WalletState.CONNECTING && <Spinner />}
-        {state === WalletState.CONNECTED && (
-          <svg
-            width="8"
-            height="8"
-            viewBox="0 0 8 8"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <circle cx="4" cy="4" r="4" fill="#5FA425" />
-          </svg>
-        )}
-      </div>
+      </Container>
     </ListItem>
   );
 }
