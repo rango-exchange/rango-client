@@ -16,6 +16,7 @@
     "build": "lerna run build",
     "dev:wallets": "lerna run dev --scope @rangodev/wallets-demo --scope @rangodev/provider-*",
     "dev:queue-manager": "lerna run dev --scope @rangodev/queue-manager-*",
+    "dev:ui": "lerna run dev --scope @rangodev/ui",
     "lint": "lerna run lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "publish": "lerna publish"
