@@ -12,7 +12,7 @@ const ButtonContainer = styled('button', {
   alignItems: 'center',
   justifyContent: 'center',
   '&:disabled': {
-    background: '$neutrals700',
+    background: '$neutrals400 !important',
     border: 0,
   },
   variants: {
@@ -280,8 +280,8 @@ function Button({
   return (
     <ButtonContainer disabled={disabled || loading} {...props}>
       {prefix}
-      {children && <Content align={align} ml={!!prefix}  mr={!!suffix} >{children}</Content>}
-      {loading && <Spinner/>}
+      {children && <Content align={align} ml={!!prefix}  mr={!!suffix && !loading} >{children}</Content>}
+      {loading && <Spinner size={16} color={'primary'}/>}
       {suffix}
     </ButtonContainer>
   );

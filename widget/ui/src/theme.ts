@@ -1,9 +1,9 @@
 // TSDX + stiches doesn't work with import statement and has a bug.
 
-import { createStitches, PropertyValue } from '@stitches/react';
+import { PropertyValue } from '@stitches/react';
 
 // Solution: (https://github.com/stitchesjs/stitches/issues/833#issuecomment-950707025)
-// const { createStitches } = require('@stitches/react');
+const { createStitches } = require('@stitches/react');
 
 export const { styled, css, createTheme, keyframes } = createStitches({
   theme: {
@@ -70,6 +70,8 @@ export const { styled, css, createTheme, keyframes } = createStitches({
     letterSpacings: {},
     sizes: {
       16: '16px',
+      20: '20px',
+      24: '24px',
       32: '32px',
       40: '40px',
       48: '48px',
