@@ -11,8 +11,26 @@ export default {
     variant: {
       name: 'variant',
       control: { type: 'select' },
-      options: ['contained', 'outlined', 'text'],
+      options: ['contained', 'outlined', 'ghost'],
       defaultValue: 'contained',
+    },
+    type: {
+      name: 'type',
+      control: { type: 'select' },
+      options: ['primary', 'error', 'warning', 'success'],
+      defaultValue: 'primary',
+    },
+    align: {
+      name: 'align',
+      control: { type: 'select' },
+      options: ['start', 'grow'],
+      defaultValue: 'grow',
+    },
+    size: {
+      name: 'size',
+      control: { type: 'radio' },
+      options: ['small', 'medium', 'large'],
+      defaultValue: 'medium',
     },
     fullWidth: {
       name: 'fullWidth',
@@ -31,19 +49,18 @@ export const Main = (props: PropTypes) => (
 
 export const ButtonWithIcon = (props: PropTypes) => (
   <div>
-    <Button startIcon={<AddWallet size={24} />} {...props}>
+    <Button prefix={<AddWallet size={24} />} {...props}>
       I'm a button
     </Button>
     <div style={{ margin: '10px 0' }} />
-    <Button endIcon={<AddWallet size={24} />} {...props}>
+    <Button suffix={<AddWallet size={24} />} {...props}>
       I'm a button
     </Button>
   </div>
 );
 
-
 export const IconButton = (props: PropTypes) => (
   <div>
-    <Button startIcon={<AddWallet size={24} />} {...props} />
+    <Button suffix={<AddWallet size={24} />} {...props} />
   </div>
 );
