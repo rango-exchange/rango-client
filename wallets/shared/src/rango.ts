@@ -577,16 +577,9 @@ export type StarknetTransaction = {
   isApprovalTx: boolean;
 };
 
-export type TrxParameterValue = {
-  data: string;
-  ownerAddress: string;
-  contractAddress: string;
-  callValue: string | undefined;
-};
-
 export type TrxContractParameter = {
-  value: TrxParameterValue;
-  typeUrl: string;
+  value: any;
+  type_url: string;
 };
 
 export type TrxContractData = {
@@ -596,18 +589,19 @@ export type TrxContractData = {
 
 export type TrxRawData = {
   contract: TrxContractData[];
-  refBlockBytes: string;
-  refBlockHash: string;
-  expiration: string;
-  feeLimit: string;
-  timestamp: string;
+  ref_block_bytes: string;
+  ref_block_hash: string;
+  expiration: number;
+  timestamp: number;
 };
 
 export type TronTransaction = {
   blockChain: Network;
   type: GenericTransactionType;
-  rawData: TrxRawData | null;
-  rawDataHex: string | null;
+  raw_data: TrxRawData | null;
+  raw_data_hex: string | null;
+  txID: string;
+  visible: boolean;
   externalTxId: string | null;
   isApprovalTx: boolean;
 };
