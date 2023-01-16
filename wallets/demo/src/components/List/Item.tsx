@@ -8,13 +8,17 @@ function Item({ type }: { type: WalletType }) {
     useWallets();
   const info = getWalletInfo(type);
   const walletState = state(type);
-  const [network, setNetwork] = useState<Network>(Network.AKASH);
-  const handleConnectWallet = () => {
-    if (!walletState.connected) {
-      if (walletState.installed) connect(type);
-      else window.open(info.installLink, "_blank");
-    } else {
-      disconnect(type);
+  const [network, setNetwork] = useState<Network>(Network.Unknown);
+  const handleConnectWallet = async () => {
+    try {
+      if (!walletState.connected) {
+        if (walletState.installed) await connect(type);
+        else window.open(info.installLink, "_blank");
+      } else {
+        disconnect(type);
+      }
+    } catch (err) {
+      console.log({ err });
     }
   };
 

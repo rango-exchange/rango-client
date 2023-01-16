@@ -62,7 +62,8 @@
     "@rangodev/provider-tokenpocket": "^0.1.11-next.14",
     "@rangodev/provider-trustwallet": "^0.1.11-next.14",
     "@rangodev/provider-walletconnect": "^0.1.11-next.14",
-    "@rangodev/provider-xdefi": "^0.1.11-next.14"
+    "@rangodev/provider-xdefi": "^0.1.11-next.14",
+    "@rangodev/provider-tron-link": "^0.1.11-next.8"
   },
   "publishConfig": {
     "access": "public"
