@@ -1,84 +1,288 @@
-import React, { PropsWithChildren, ReactNode } from 'react';
-import { css, styled } from '../../theme';
+import React, { PropsWithChildren } from 'react';
+import { styled } from '../../theme';
 import Spinner from '../Spinner';
 
-const icon = css({
-  margin: '0 $3',
-});
-
 const ButtonContainer = styled('button', {
-  borderRadius: '$s',
-  fontSize: '$m',
-  fontWeight: '$l',
+  borderRadius: '$5',
+  fontSize: '$16',
+  fontWeight: '$400',
   cursor: 'pointer',
-  padding: '$3',
+  padding: '0 $12',
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
   '&:disabled': {
-    background: '$backgroundColorDisabled',
-    color: '$neutral-400',
+    background: '$neutrals700',
     border: 0,
   },
-  '&:hover': {
-    opacity: 0.75,
-  },
   variants: {
+    fullWidth: {
+      true: {
+        width: '100%',
+      },
+    },
+    size: {
+      small: {
+        height: '$32',
+      },
+      medium: {
+        height: '$40',
+      },
+      large: {
+        height: '$48',
+      },
+    },
     variant: {
       contained: {
-        background: '$primary-500',
-        color: '$text',
+        color: '$white',
         border: 0,
       },
       outlined: {
         background: 'transparent',
         border: 1,
         borderStyle: 'solid',
-        color: '$primary-500',
-        borderColor: '$primary-500',
-        '&:hover': {
-          backgroundColor: '$hover',
-          border: 0,
-        },
       },
-      text: {
+      ghost: {
         background: 'transparent',
         border: 0,
-        color: '$primary-500',
       },
     },
-    fullWidth: {
-      true: {
-        width: '100%',
+
+    type: {
+      primary: {},
+      error: {},
+      warning: {},
+      success: {},
+    },
+  },
+
+  compoundVariants: [
+    {
+      type: 'primary',
+      variant: 'contained',
+      css: {
+        background: '$primary',
+        '&:hover': {
+          background: '$primary700',
+        },
+     '&:visited': {
+          background: '$primary900',
+        },  
+        '&:focus': {
+          background: '$primary600',
+        }, 
+        
       },
     },
+    {
+      type: 'primary',
+      variant: 'outlined',
+      css: {
+        color: '$primary',
+        borderColor: '$primary',
+        '&:hover': {
+          background: '$primary700',
+        },
+     '&:visited': {
+          background: '$primary900',
+        },  
+        '&:focus': {
+          background: '$primary600',
+        }, 
+      },
+    },
+    {
+      type: 'primary',
+      variant: 'ghost',
+      css: {
+        color: '$primary',
+      },
+    },
+    {
+      type: 'error',
+      variant: 'contained',
+      css: {
+        background: '$error',
+        '&:hover': {
+          background: '$error700',
+        },
+     '&:visited': {
+          background: '$error900',
+        },  
+        '&:focus': {
+          background: '$error600',
+        }, 
+      },
+    },
+    {
+      type: 'error',
+      variant: 'outlined',
+      css: {
+        color: '$error',
+        borderColor: '$error',
+        '&:hover': {
+          background: '$error700',
+        },
+     '&:visited': {
+          background: '$error900',
+        },  
+        '&:focus': {
+          background: '$error600',
+        }, 
+      },
+    },
+    {
+      type: 'error',
+      variant: 'ghost',
+      css: {
+        color: '$error',
+      },
+    },
+    {
+      type: 'warning',
+      variant: 'contained',
+      css: {
+        background: '$warning',
+        '&:hover': {
+          background: '$warning700',
+        },
+     '&:visited': {
+          background: '$warning900',
+        },  
+        '&:focus': {
+          background: '$warning600',
+        }, 
+      },
+    },
+    {
+      type: 'warning',
+      variant: 'outlined',
+      css: {
+        color: '$warning',
+        borderColor: '$warning',
+        '&:hover': {
+          background: '$warning700',
+        },
+     '&:visited': {
+          background: '$warning900',
+        },  
+        '&:focus': {
+          background: '$warning600',
+        }, 
+      },
+    },
+    {
+      type: 'warning',
+      variant: 'ghost',
+      css: {
+        color: '$warning',
+      },
+    },
+    {
+      type: 'success',
+      variant: 'contained',
+      css: {
+        background: '$success',
+        '&:hover': {
+          background: '$success700',
+        },
+     '&:visited': {
+          background: '$success900',
+        },  
+        '&:focus': {
+          background: '$success600',
+        }, 
+      },
+    },
+    {
+      type: 'success',
+      variant: 'outlined',
+      css: {
+        color: '$success',
+        borderColor: '$success',
+        '&:hover': {
+          background: '$success700',
+        },
+     '&:visited': {
+          background: '$success900',
+        },  
+        '&:focus': {
+          background: '$success600',
+        }, 
+      },
+    },
+    {
+      type: 'success',
+      variant: 'ghost',
+      css: {
+        color: '$success',
+      },
+    },
+  ],
+  defaultVariants: {
+    size: 'medium',
+    type: 'primary',
+    variant: 'contained',
+  },
+});
+
+const Content= styled('div', {
+  flex:1,
+
+  variants: {
+    align : {
+      'start' :{
+        textAlign:'left'
+      } ,
+      'grow':{
+        textAlign:'center'
+      }
+    },
+    ml:{
+      true:{
+        marginLeft:'$8'
+      }
+    },
+    mr:{
+      true:{
+        marginRight:'$8'
+      }
+    }
+  },
+
+  defaultVariants: {
+    align: 'grow'
   },
 });
 
 export interface PropTypes {
   onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
-  variant: 'contained' | 'outlined' | 'text';
   fullWidth?: boolean;
+  size?: 'small' | 'medium' | 'large'; // default: medium
+  variant?: 'contained' | 'outlined' | 'ghost'; // default: contained
+  type?: 'primary' | 'error' | 'warning' | 'success'; // default: primary
+  prefix?: React.ReactNode;
+  suffix?: React.ReactNode;
+  align?: 'start' | 'grow';
+  loading?: boolean; // default: false
   disabled?: boolean;
-  loading?: boolean;
-  endIcon?: ReactNode;
-  startIcon?: ReactNode;
 }
 
 function Button({
   children,
   loading,
   disabled,
-  startIcon,
-  endIcon,
+  prefix,
+  suffix,
+  align,
   ...props
 }: PropsWithChildren<PropTypes>) {
   return (
     <ButtonContainer disabled={disabled || loading} {...props}>
-      {startIcon && <div className={icon()}>{startIcon}</div>}
-      {children}
-      {loading && <Spinner />}
-      {endIcon && <div className={icon()}>{endIcon}</div>}
+      {prefix}
+      {children && <Content align={align} ml={!!prefix}  mr={!!suffix} >{children}</Content>}
+      {loading && <Spinner/>}
+      {suffix}
     </ButtonContainer>
   );
 }
