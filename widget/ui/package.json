@@ -32,7 +32,7 @@
     "printWidth": 80,
     "semi": true,
     "singleQuote": true,
-    "trailingComma": "es6"
+    "trailingComma": "es5"
   },
   "module": "dist/ui.esm.js",
   "size-limit": [
