@@ -2,9 +2,9 @@ import React, { PropsWithChildren } from 'react';
 import { styled } from '../../theme';
 
 const ButtonContainer = styled('button', {
-  borderRadius: '12px',
-  fontSize: '$s',
-  padding: '$m $l',
+  borderRadius: '$5',
+  fontSize: '$12',
+  padding: '$8 $12',
   border: 0,
   variants: {
     type: {
