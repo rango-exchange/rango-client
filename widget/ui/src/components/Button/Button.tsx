@@ -258,13 +258,13 @@ const Content= styled('div', {
 export interface PropTypes {
   onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
   fullWidth?: boolean;
-  size?: 'small' | 'medium' | 'large'; // default: medium
-  variant?: 'contained' | 'outlined' | 'ghost'; // default: contained
-  type?: 'primary' | 'error' | 'warning' | 'success'; // default: primary
+  size?: 'small' | 'medium' | 'large';
+  variant?: 'contained' | 'outlined' | 'ghost';
+  type?: 'primary' | 'error' | 'warning' | 'success'; 
   prefix?: React.ReactNode;
   suffix?: React.ReactNode;
   align?: 'start' | 'grow';
-  loading?: boolean; // default: false
+  loading?: boolean;
   disabled?: boolean;
 }
 

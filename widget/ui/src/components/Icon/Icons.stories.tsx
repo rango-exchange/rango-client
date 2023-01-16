@@ -6,6 +6,23 @@ import { ComponentMeta } from '@storybook/react';
 export default {
   title: 'Icons',
   component: Icons.AngleRight,
+  argTypes: {
+  
+    color: {
+      name: 'type',
+      control: { type: 'select' },
+      options: ['primary', 'error', 'warning', 'success','black','white'],
+      defaultValue: 'black',
+    },
+
+    size: {
+      name: 'size',
+      control: { type: 'radio' },
+      options: [16, 20, 24],
+      defaultValue: 16,
+    },
+    
+  },
 } as ComponentMeta<typeof Icons.AngleRight>;
 
 export const Main = (props: IconProps) => (

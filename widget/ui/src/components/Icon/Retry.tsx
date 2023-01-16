@@ -2,10 +2,33 @@ import * as React from 'react';
 import { IconProps } from './types';
 import { styled } from '../../theme';
 const Svg = styled('svg', {
-  color: '$text',
+  variants: {
+   color: {
+     primary: {
+       fill:'$primary'
+     },
+     error: {
+       fill:'$error'
+     },
+     warning: {
+       fill:'$warning'
+     },
+     success: {
+       fill:'$success'
+     },
+     black:{
+       fill:'$black'
+     },
+     white:{
+       fill:'$white'
+     }
+   },
+ },
+
+
 });
 export const Retry = React.forwardRef<SVGSVGElement, IconProps>(
-  ({ color = 'currentColor', size=50, ...props }, forwardedRef) => {
+  ({ color = 'black', size=50, ...props }, forwardedRef) => {
     return (
       <Svg
         width={size}
@@ -13,7 +36,7 @@ export const Retry = React.forwardRef<SVGSVGElement, IconProps>(
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 24 24"
-
+        color={color}
         {...props}
         ref={forwardedRef}
       >
