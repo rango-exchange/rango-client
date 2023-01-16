@@ -30,6 +30,7 @@ export type WalletOperationName =
   | 'executeCosmosMessage'
   | 'executeSolanaTransaction'
   | 'executeTransfer'
+  | 'executeStarknetTransaction'
   | 'signEvmMessage';
 
 export class WalletError extends Error {
@@ -41,7 +42,10 @@ export class WalletError extends Error {
     Object.setPrototypeOf(this, WalletError.prototype);
     this.code = code;
     this.root = root;
-    if (this.code === WalletErrorCode.REJECTED_BY_USER || WalletError.isRejectedError(root)) {
+    if (
+      this.code === WalletErrorCode.REJECTED_BY_USER ||
+      WalletError.isRejectedError(root)
+    ) {
       this.code = WalletErrorCode.REJECTED_BY_USER;
       this.message = 'User rejected the transaction';
       this.root = undefined;
@@ -56,6 +60,7 @@ export class WalletError extends Error {
       'user rejected',
       'user denied',
       'request rejected',
+      'user abort',
     ];
     if (!!error && typeof error === 'string') {
       for (const msg of POSSIBLE_REJECTION_ERRORS) {
@@ -74,24 +79,37 @@ export class WalletError extends Error {
     return false;
   }
 
-  static UnsupportedError(operation: WalletOperationName, walletType: WalletType): WalletError {
+  static UnsupportedError(
+    operation: WalletOperationName,
+    walletType: WalletType
+  ): WalletError {
     return new WalletError(
       WalletErrorCode.OPERATION_UNSUPPORTED,
-      `'${operation}' is not supported by the ${walletType}`,
+      `'${operation}' is not supported by the ${walletType}`
     );
   }
-  static UnimplementedError(operation: WalletOperationName, walletType: WalletType): WalletError {
+  static UnimplementedError(
+    operation: WalletOperationName,
+    walletType: WalletType
+  ): WalletError {
     return new WalletError(
       WalletErrorCode.NOT_IMPLEMENTED,
-      `'${operation}' is not implemented by the ${walletType}`,
+      `'${operation}' is not implemented by the ${walletType}`
     );
   }
 
   static AssertionFailed(m: string): WalletError {
-    return new WalletError(WalletErrorCode.UNEXPECTED_BEHAVIOUR, 'Assertion failed: ' + m);
+    return new WalletError(
+      WalletErrorCode.UNEXPECTED_BEHAVIOUR,
+      'Assertion failed: ' + m
+    );
   }
 
-  getErrorDetail(): { code: WalletErrorCode; message: string; detail?: string | undefined } {
+  getErrorDetail(): {
+    code: WalletErrorCode;
+    message: string;
+    detail?: string | undefined;
+  } {
     if (this.code === WalletErrorCode.REJECTED_BY_USER) {
       return {
         code: this.code,

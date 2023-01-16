@@ -28,3 +28,23 @@ export async function getSolanaAccounts(
 
   return results;
 }
+
+export const OKX_WALLET_SUPPORTED_CHAINS = [
+  Network.ETHEREUM,
+  Network.BTC,
+  Network.BSC,
+  Network.TRON,
+  Network.SOLANA,
+  Network.POLYGON,
+  Network.FANTOM,
+  Network.ARBITRUM,
+  Network.OPTIMISM,
+  Network.CRONOS,
+  Network.BOBA,
+  Network.GNOSIS,
+  Network.MOONBEAM,
+  Network.MOONRIVER,
+  Network.HARMONY,
+  Network.LTC,
+  Network.AVAX_CCHAIN,
+];

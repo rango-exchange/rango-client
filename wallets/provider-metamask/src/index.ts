@@ -9,6 +9,9 @@ import {
   getEvmAccounts,
   subscribeToEvm,
   switchNetworkForEvm,
+  evmBlockchains,
+  BlockchainMeta,
+  WalletInfo,
 } from '@rangodev/wallets-shared';
 import { metamask as metamask_instance } from './helpers';
 import signer from './signer';
@@ -40,3 +43,17 @@ export const switchNetwork: SwitchNetwork = switchNetworkForEvm;
 export const canSwitchNetworkTo: CanSwitchNetwork = canSwitchNetworkToEvm;
 
 export const getSigners: (provider: any) => WalletSigners = signer;
+
+export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
+  allBlockChains
+) => {
+  const evms = evmBlockchains(allBlockChains);
+  return {
+    name: 'MetaMask',
+    img: 'https://app.rango.exchange/wallets/metamask.svg',
+    installLink:
+      'https://chrome.google.com/webstore/detail/metamask/nkbihfbeogaeaoehlefnkodbefgpgknn?hl=en',
+    color: '#dac7ae',
+    supportedChains: evms,
+  };
+};

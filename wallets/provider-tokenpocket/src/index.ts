@@ -9,6 +9,9 @@ import {
   getEvmAccounts,
   subscribeToEvm,
   switchNetworkForEvm,
+  BlockchainMeta,
+  WalletInfo,
+  evmBlockchains,
 } from '@rangodev/wallets-shared';
 import { tokenpocket as tokenpocket_instance } from './helpers';
 import signer from './signer';
@@ -40,3 +43,17 @@ export const switchNetwork: SwitchNetwork = switchNetworkForEvm;
 export const canSwitchNetworkTo: CanSwitchNetwork = canSwitchNetworkToEvm;
 
 export const getSigners: (provider: any) => WalletSigners = signer;
+
+export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
+  allBlockChains
+) => {
+  const evms = evmBlockchains(allBlockChains);
+  return {
+    name: 'Token Pocket',
+    img: 'https://app.rango.exchange/wallets/tp.png',
+    color: '#b2dbff',
+    installLink:
+      'https://chrome.google.com/webstore/detail/tokenpocket/mfgccjchihfkkindfppnaooecgfneiii',
+    supportedChains: evms,
+  };
+};

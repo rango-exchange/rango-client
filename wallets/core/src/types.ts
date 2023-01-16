@@ -2,12 +2,9 @@ import { PropsWithChildren } from 'react';
 import {
   Network,
   WalletType,
-  Meta,
-  CosmosTransaction,
-  EvmTransaction,
-  SolanaTransaction,
-  TransferTransaction,
   BlockchainMeta,
+  WalletInfo,
+  WalletSigners,
 } from '@rangodev/wallets-shared';
 import {
   EventHandler as WalletEventHandler,
@@ -26,10 +23,6 @@ export type ConnectResult = {
 
 export type Providers = { [type in WalletType]?: any };
 
-export type WalletsAndSupportedChains = {
-  [key in WalletType]: BlockchainMeta[];
-};
-
 export type ProviderContext = {
   connect(type: WalletType, network?: Network): Promise<ConnectResult>;
   disconnect(type: WalletType): Promise<void>;
@@ -38,11 +31,12 @@ export type ProviderContext = {
   canSwitchNetworkTo(type: WalletType, network: Network): boolean;
   providers(): Providers;
   getSigners(type: WalletType): WalletSigners;
+  getWalletInfo(type: WalletType): WalletInfo;
 };
 
 export type ProviderProps = PropsWithChildren<{
   onUpdateState?: WalletEventHandler;
-  walletsAndSupportedChains: WalletsAndSupportedChains | null;
+  allBlockChains?: BlockchainMeta[];
   providers: WalletProvider[];
 }>;
 
@@ -116,6 +110,7 @@ export interface WalletActions {
   switchNetwork?: SwitchNetwork;
   getSigners: (provider: any) => WalletSigners;
   canSwitchNetworkTo?: CanSwitchNetwork;
+  getWalletInfo(allBlockChains: BlockchainMeta[]): WalletInfo;
 }
 
 export interface WalletConfig {
@@ -134,14 +129,3 @@ export type WalletProviders = Map<
 >;
 
 export type WalletProvider = { config: WalletConfig } & WalletActions;
-
-export type WalletSigners = {
-  executeTransfer: (tx: TransferTransaction, meta: Meta) => Promise<string>;
-  executeEvmTransaction: (tx: EvmTransaction, meta: Meta) => Promise<string>;
-  executeCosmosMessage: (tx: CosmosTransaction, meta: Meta) => Promise<string>;
-  executeSolanaTransaction: (
-    tx: SolanaTransaction,
-    requestId: string
-  ) => Promise<string>;
-  signEvmMessage: (walletAddress: string, message: string) => Promise<string>;
-};
