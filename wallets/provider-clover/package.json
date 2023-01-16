@@ -1,6 +1,6 @@
 {
   "name": "@rangodev/provider-clover",
-  "version": "0.1.11-next.13",
+  "version": "0.1.11-next.14",
   "license": "MIT",
   "module": "dist/provider-clover.esm.js",
   "main": "dist/index.js",
@@ -45,7 +45,7 @@
     }
   ],
   "dependencies": {
-    "@rangodev/wallets-shared": "^0.1.11-next.13"
+    "@rangodev/wallets-shared": "^0.1.11-next.14"
   },
   "publishConfig": {
     "access": "public"
