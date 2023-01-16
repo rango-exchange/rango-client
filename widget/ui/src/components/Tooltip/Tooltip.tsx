@@ -5,35 +5,103 @@ import React, { PropsWithChildren } from 'react';
 export interface PropTypes {
   content: string;
   side?: 'top' | 'right' | 'bottom' | 'left';
+  color?:
+    | 'primary'
+    | 'error'
+    | 'warning'
+    | 'success'
+    | 'gray'
+    | 'white'
+    | 'black';
 }
+const TooltipTrigger = styled(RadixTooltip.Trigger, {
+  border: 0,
+  padding: 0,
+
+  backgroundColor: 'transparent',
+});
 const TooltipContent = styled(RadixTooltip.Content, {
-  borderRadius: '$s',
-  padding: '$2 $3',
-  fontSize: '$l',
-  color: '$text',
-  backgroundColor: '$backgroundColor2',
-  boxShadow: '$s',
+  borderRadius: '$5',
+  padding: '$4 $8',
+  fontSize: '$14',
   animationDuration: '400ms',
   animationTimingFunction: 'cubic-bezier(0.16, 1, 0.3, 1)',
-  willChange: ' transform, opacity',
+  willChange: 'transform, opacity',
+  variants: {
+    color: {
+      primary: {
+        backgroundColor: '$primary',
+        color: '$white',
+      },
+      error: {
+        backgroundColor: '$error',
+        color: '$white',
+      },
+      warning: {
+        backgroundColor: '$warning',
+        color: '$white',
+      },
+      success: {
+        backgroundColor: '$success',
+        color: '$white',
+      },
+      gray: {
+        backgroundColor: '$neutrals300',
+        color: '$black',
+      },
+      black: {
+        backgroundColor: '$black',
+        color: '$white',
+      },
+      white: {
+        backgroundColor: '$white',
+        color: '$black',
+      },
+    },
+  },
 });
 const TooltipArrow = styled(RadixTooltip.Arrow, {
-  fill: '$backgroundColor2',
+  variants: {
+    color: {
+      primary: {
+        fill: '$primary',
+      },
+      error: {
+        fill: '$error',
+      },
+      warning: {
+        fill: '$warning',
+      },
+      success: {
+        fill: '$success',
+      },
+      gray: {
+        fill: '$neutrals300',
+      },
+      black: {
+        fill: '$black',
+      },
+      white: {
+        fill: '$white',
+      },
+    },
+  },
 });
 
 function Tooltip({
   children,
   content,
   side = 'top',
+  color = 'gray',
 }: PropsWithChildren<PropTypes>) {
   return (
     <RadixTooltip.Provider>
       <RadixTooltip.Root>
-        <RadixTooltip.Trigger asChild>{children}</RadixTooltip.Trigger>
+        <TooltipTrigger>{children}</TooltipTrigger>
         <RadixTooltip.Portal>
-          <TooltipContent side={side} sideOffset={5}>
+          <TooltipContent color={color} side={side} sideOffset={5}>
             {content}
-            <TooltipArrow />
+            <TooltipArrow color={color}/>
           </TooltipContent>
         </RadixTooltip.Portal>
       </RadixTooltip.Root>

@@ -95,6 +95,7 @@ export const { styled, css, createTheme, keyframes } = createStitches({
 export const lightTheme = createTheme({
   colors: {
     backgroundColor: '$neutral-100',
+
   },
 });
 
