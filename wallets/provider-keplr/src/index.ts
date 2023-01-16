@@ -5,6 +5,9 @@ import {
   WalletSigners,
   Subscribe,
   getCosmosAccounts,
+  BlockchainMeta,
+  WalletInfo,
+  cosmosBlockchains,
 } from '@rangodev/wallets-shared';
 
 import { keplr as keplrInstance } from './helpers';
@@ -35,3 +38,17 @@ export const subscribe: Subscribe = ({ connect, disconnect }) => {
 };
 
 export const getSigners: (provider: any) => WalletSigners = signer;
+
+export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
+  allBlockChains
+) => {
+  const cosmos = cosmosBlockchains(allBlockChains);
+  return {
+    name: 'Keplr',
+    img: 'https://app.rango.exchange/wallets/keplr.png',
+    installLink:
+      'https://chrome.google.com/webstore/detail/keplr/dmkamcknogkgcdfhhbddcghachkejeap',
+    color: '#3898e5',
+    supportedChains: cosmos.filter((blockchainMeta) => !!blockchainMeta.info),
+  };
+};

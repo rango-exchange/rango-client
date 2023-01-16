@@ -6,6 +6,9 @@ import {
   Subscribe,
   WalletSigners,
   getSolanaAccounts,
+  BlockchainMeta,
+  WalletInfo,
+  solanaBlockchain,
 } from '@rangodev/wallets-shared';
 import { phantom as phantom_instance } from './helpers';
 import signer from './signer';
@@ -34,3 +37,17 @@ export const subscribe: Subscribe = ({ instance, updateAccounts, connect }) => {
 export const canSwitchNetworkTo: CanSwitchNetwork = () => false;
 
 export const getSigners: (provider: any) => WalletSigners = signer;
+
+export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
+  allBlockChains
+) => {
+  const solana = solanaBlockchain(allBlockChains);
+  return {
+    name: 'Phantom',
+    img: 'https://app.rango.exchange/wallets/phantom.svg',
+    installLink:
+      'https://chrome.google.com/webstore/detail/phantom/bfnaelmomeimhlpmgjnjophhpkkoljpa',
+    color: '#4d40c6',
+    supportedChains: solana,
+  };
+};

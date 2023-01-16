@@ -43,6 +43,7 @@ export enum WalletType {
   TRUST_WALLET = 'trust-wallet',
   TERRA_STATION = 'terra-station',
   KEPLR = 'keplr',
+  OKX = 'okx',
   PHANTOM = 'phantom',
   COINBASE = 'coinbase',
   XDEFI = 'xdefi',
@@ -57,7 +58,7 @@ export enum WalletType {
   UNKNOWN = 'unknown',
   MATH = 'math',
   EXODUS = 'exodus',
-  OKX = 'okx',
+  ARGENTX = 'argentx',
 }
 
 export enum Network {
@@ -112,6 +113,7 @@ export enum Network {
   MEDIBLOC = 'MEDIBLOC',
   KONSTELLATION = 'KONSTELLATION',
   UMEE = 'UMEE',
+  STARKNET = 'STARKNET',
 
   // Using instead of null
   Unknown = 'Unkown',
@@ -145,6 +147,11 @@ export const isNativeBlockchain = (
 ): blockchainMeta is NativeBlockchainMeta =>
   blockchainMeta.type === GenericTransactionType.TRANSFER;
 
+export const isStarknetBlockchain = (
+  blockchainMeta: BlockchainMeta
+): blockchainMeta is StarknetBlockchainMeta =>
+  blockchainMeta.type === GenericTransactionType.STARKNET;
+
 // Meta
 export type Asset = {
   blockchain: Network;
@@ -157,6 +164,7 @@ export enum GenericTransactionType {
   TRANSFER = 'TRANSFER',
   COSMOS = 'COSMOS',
   SOLANA = 'SOLANA',
+  STARKNET = 'STARKNET',
 }
 
 type EvmInfo = {
@@ -167,6 +175,18 @@ type EvmInfo = {
     decimals: number;
   };
   rpcUrls: string[];
+  blockExplorerUrls: string[];
+  addressUrl: string;
+  transactionUrl: string;
+};
+
+type StarkNetInfo = {
+  chainName: string;
+  nativeCurrency: {
+    name: string;
+    symbol: string;
+    decimals: number;
+  };
   blockExplorerUrls: string[];
   addressUrl: string;
   transactionUrl: string;
@@ -226,7 +246,7 @@ export interface CosmosInfo extends Omit<CosmosChainInfo, 'chianId'> {
   experimental: boolean;
 }
 
-type BlockchainInfo = EvmInfo | CosmosInfo | null;
+type BlockchainInfo = EvmInfo | CosmosInfo | StarkNetInfo | null;
 
 export interface BlockchainMeta {
   name: Network;
@@ -277,6 +297,12 @@ export interface SolanaBlockchainMeta extends BlockchainMeta {
   info: null;
   chainId: string;
 }
+export interface StarknetBlockchainMeta extends BlockchainMeta {
+  type: GenericTransactionType.STARKNET;
+  info: StarkNetInfo;
+  chainId: string;
+}
+
 export interface NativeBlockchainMeta extends BlockchainMeta {
   type: GenericTransactionType.TRANSFER;
   info: null;
@@ -286,7 +312,7 @@ export interface NativeBlockchainMeta extends BlockchainMeta {
 export interface Meta {
   blockchains: AllBlockchains;
   evmNetworkChainInfo: EvmNetworksChainInfo;
-  walletsAndSupportedChainsNames: { [type in WalletType]?: Network[] } | null;
+  getSupportedChainNames: (type: WalletType) => Network[] | null;
   evmBasedChains: EvmBlockchainMeta[];
 }
 
@@ -522,10 +548,25 @@ export type TransferTransaction = {
   id: string;
 };
 
+export type StarknetCallData = {
+  contractAddress: string;
+  calldata?: string[];
+  entrypoint: string;
+};
+
+export type StarknetTransaction = {
+  blockChain: Network;
+  type: GenericTransactionType;
+  calls: StarknetCallData[];
+  externalTxId: string | null;
+  isApprovalTx: boolean;
+};
+
 export type Transaction =
   | EvmTransaction
   | CosmosTransaction
   | SolanaTransaction
+  | StarknetTransaction
   | TransferTransaction;
 
 // core
@@ -608,5 +649,29 @@ export type WalletSigners = {
     tx: SolanaTransaction,
     requestId: string
   ) => Promise<string>;
+  executeStarknetTransaction: (
+    tx: StarknetTransaction,
+    meta: Meta
+  ) => Promise<string>;
   signEvmMessage: (walletAddress: string, message: string) => Promise<string>;
+};
+
+export const evmBlockchains = (allBlockChains: BlockchainMeta[]) =>
+  allBlockChains.filter(isEvmBlockchain);
+
+export const solanaBlockchain = (allBlockChains: BlockchainMeta[]) =>
+  allBlockChains.filter(isSolanaBlockchain);
+
+export const starknetBlockchain = (allBlockChains: BlockchainMeta[]) =>
+  allBlockChains.filter(isStarknetBlockchain);
+
+export const cosmosBlockchains = (allBlockChains: BlockchainMeta[]) =>
+  allBlockChains.filter(isCosmosBlockchain);
+
+export type WalletInfo = {
+  name: string;
+  img: string;
+  installLink: string;
+  color: string;
+  supportedChains: BlockchainMeta[];
 };

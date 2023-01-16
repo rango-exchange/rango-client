@@ -20,5 +20,6 @@ declare global {
     safepalProvider: any;
     trustwallet: any;
     okxwallet: any;
+    starknet: any;
   }
 }

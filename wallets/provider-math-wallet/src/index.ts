@@ -9,6 +9,10 @@ import {
   chooseInstance,
   getEvmAccounts,
   subscribeToEvm,
+  BlockchainMeta,
+  WalletInfo,
+  evmBlockchains,
+  solanaBlockchain,
 } from '@rangodev/wallets-shared';
 import {
   getNonEvmAccounts,
@@ -56,3 +60,18 @@ export const subscribe: Subscribe = (options) => {
 export const canSwitchNetworkTo: CanSwitchNetwork = () => false;
 
 export const getSigners: (provider: any) => WalletSigners = signer;
+
+export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
+  allBlockChains
+) => {
+  const evms = evmBlockchains(allBlockChains);
+  const solana = solanaBlockchain(allBlockChains);
+  return {
+    name: 'Math Wallet',
+    img: 'https://app.rango.exchange/wallets/math-wallet.png',
+    installLink:
+      'https://chrome.google.com/webstore/detail/math-wallet/afbcbjpbpfadlkmhmclhkeeodmamcflc',
+    color: '#2b2f25',
+    supportedChains: [...evms, ...solana],
+  };
+};
