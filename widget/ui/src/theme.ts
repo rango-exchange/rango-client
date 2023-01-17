@@ -92,22 +92,6 @@ export const { styled, css, createTheme, keyframes } = createStitches({
   },
 });
 
-export const lightTheme = createTheme({
-  colors: {
-    backgroundColor: '$neutral-100',
+export const lightTheme = createTheme({});
 
-  },
-});
-
-export const darkTheme = createTheme({
-  colors: {
-    backgroundColor: '$neutral-900',
-    text: '$neutral-100',
-    backgroundColor2: '$neutral-700',
-    backgroundColorDisabled: 'rgba(82, 82, 82, 0.4)',
-    borderColor: '$neutral-500',
-  },
-  shadows: {
-    s: '0px 3px 5px 3px #222, 0px 6px 10px 3px #222, 0px 1px 18px 3px #222',
-  },
-});
+export const darkTheme = createTheme({});

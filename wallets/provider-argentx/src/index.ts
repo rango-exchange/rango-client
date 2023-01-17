@@ -29,10 +29,9 @@ export const getInstance = argentx_instances;
 
 export const connect: Connect = async ({ instance }) => {
   let r = undefined;
-  try {
-    r = await instance?.enable();
-  } catch (err) {
-    console.log({ err });
+  r = await instance?.enable();
+  if (!r || !instance.isConnected || r?.length === 0) {
+    throw new Error('Error connecting ArgentX');
   }
   if (instance?.chainId !== MAINNET_CHAIN_ID)
     throw new Error(

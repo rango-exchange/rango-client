@@ -31,6 +31,7 @@ export type WalletOperationName =
   | 'executeSolanaTransaction'
   | 'executeTransfer'
   | 'executeStarknetTransaction'
+  | 'executeTronTransaction'
   | 'signEvmMessage';
 
 export class WalletError extends Error {

@@ -6,12 +6,14 @@ import {
   Meta,
   WalletSigners,
   StarknetTransaction,
+  TronTransaction,
 } from '../rango';
 import { WalletError } from '../errors';
 import { executeEvmTransaction, signEvmMessage } from './evm-signer';
 import { executeCosmosTransaction } from './cosmos-signer';
 import { executeSolanaTransaction } from './solana-signer';
 import { executeStarknetTransaction } from './starknet-signer';
+import { executeTronTransaction } from './tron-signer';
 
 type DefaultSignerProps = {
   provider: any;
@@ -20,6 +22,7 @@ type DefaultSignerProps = {
   supportCosmos?: boolean;
   supportSolana?: boolean;
   supportStarknet?: boolean;
+  supportTron?: boolean;
 };
 
 export const defaultSigners = ({
@@ -29,6 +32,7 @@ export const defaultSigners = ({
   supportCosmos,
   supportSolana,
   supportStarknet,
+  supportTron,
 }: DefaultSignerProps): WalletSigners => {
   return {
     executeSolanaTransaction: (
@@ -78,6 +82,11 @@ export const defaultSigners = ({
         'executeStarknetTransaction',
         walletType
       );
+    },
+
+    executeTronTransaction: (tx: TronTransaction): Promise<string> => {
+      if (supportTron) return executeTronTransaction(tx, provider);
+      throw WalletError.UnsupportedError('executeTronTransaction', walletType);
     },
   };
 };
