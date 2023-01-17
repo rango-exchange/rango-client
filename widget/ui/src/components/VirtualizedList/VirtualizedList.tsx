@@ -36,7 +36,6 @@ function VirtualizedList(props: PropsWithChildren<PropTypes>) {
     Item,
     innerElementType,
   } = props;
-  console.log('virtual', itemCount, hasNextPage, isNextPageLoading);
   const listRef = useRef<any>(null);
 
   const isItemLoaded = (index: number) => !hasNextPage || index < itemCount;
@@ -82,7 +81,7 @@ function VirtualizedList(props: PropsWithChildren<PropTypes>) {
               <List
                 innerElementType={innerElementType}
                 ref={listRef}
-                itemSize={() => 56}
+                itemSize={() => 72}
                 itemCount={itemCount}
                 height={height}
                 width={width}

@@ -153,17 +153,14 @@ function ComboBox(props: PropTypes) {
   }, [open]);
 
   useEffect(() => {
-    console.log(searchedText);
     setFilterdOptions(options.filter((pr) => pr.label.includes(searchedText)));
   }, [searchedText]);
-  console.log(filteredOptions);
 
   useEffect(() => {
     setFilterdOptions(options.slice(0, PAGE_SIZE));
   }, [options.length]);
 
   const handleSelect = (value: string, label: string) => {
-    console.log('handle select');
     if (!multiple) {
       if (!selectedValue.find((v) => v.value === value))
         setSelectedValue([{ value, label }]);
@@ -176,7 +173,6 @@ function ComboBox(props: PropTypes) {
 
   const innerElementType: React.FC<CommonProps> = forwardRef(
     ({ style, ...rest }, ref) => {
-      console.log(`${parseFloat(style?.height as string) + 8 * 2}px`);
       return (
         <div
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -192,7 +188,6 @@ function ComboBox(props: PropTypes) {
     }
   );
 
-  console.log(filteredOptions, open);
   return (
     <ComboBoxContainer
       multiple={multiple}

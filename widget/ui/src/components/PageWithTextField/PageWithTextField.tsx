@@ -2,6 +2,7 @@ import React, { ReactElement, useEffect, useRef, useState } from 'react';
 // import { ChevronLeftIcon } from '@radix-ui/react-icons';
 import { styled } from '../../theme';
 import { AngleLeft, Search } from '../Icon';
+import SwapContainer from '../SwapContainer/SwapContainer';
 import TextField from '../TextField/TextField';
 import Typography from '../Typography';
 
@@ -35,7 +36,8 @@ const BackIcon = styled(AngleLeft, {
 });
 
 const ContentContainer = styled('div', {
-  overflowY: 'scroll',
+  flex: '1',
+  overflowY: 'auto',
   marginTop: '$4',
 });
 
@@ -44,23 +46,25 @@ function PageWithTextField(props: PropTypes) {
   const [searchedText, setSearchedText] = useState('');
 
   return (
-    <Container>
-      <HeaderContainer>
-        <BackIcon size={28} />
-        <Typography variant="h4">{title}</Typography>
-        {TopButton}
-      </HeaderContainer>
-      <TextField
-        prefix={<Search size={24} />}
-        placeholder={textFieldPlaceholder}
-        onChange={(event) => setSearchedText(event.target.value)}
-        value={searchedText}
-        autoFocus
-      />
-      <ContentContainer>
-        <Content searchedText={searchedText} />
-      </ContentContainer>
-    </Container>
+    <SwapContainer>
+      <Container>
+        <HeaderContainer>
+          <BackIcon size={28} />
+          <Typography variant="h4">{title}</Typography>
+          {TopButton}
+        </HeaderContainer>
+        <TextField
+          prefix={<Search size={24} />}
+          placeholder={textFieldPlaceholder}
+          onChange={(event) => setSearchedText(event.target.value)}
+          value={searchedText}
+          autoFocus
+        />
+        <ContentContainer>
+          <Content searchedText={searchedText} />
+        </ContentContainer>
+      </Container>
+    </SwapContainer>
   );
 }
 

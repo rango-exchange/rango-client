@@ -113,4 +113,12 @@ export type TokenMeta = {
   coinSourceUrl: string | null;
   name: string | null;
   decimals: number;
+  balance?: { amount: string; usdPrice: string };
 };
+
+export interface LiquiditySource {
+  title: string;
+  logo: string;
+  type: 'exchange' | 'bridge';
+  selected: boolean;
+}
