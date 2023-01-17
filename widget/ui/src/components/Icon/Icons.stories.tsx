@@ -9,7 +9,7 @@ export default {
   component: Icons.AngleRight,
   argTypes: {
     color: {
-      name: 'type',
+      name: 'color',
       control: { type: 'select' },
       options: ['primary', 'error', 'warning', 'success', 'black', 'white'],
     },
@@ -27,7 +27,6 @@ const Container = styled('div', {
   display: 'grid',
   gridTemplateColumns: 'auto auto auto auto auto',
   gap: 15,
-  color: '$textPrimary',
 });
 
 export const Main = (props: IconProps) => (
