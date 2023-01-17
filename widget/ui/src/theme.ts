@@ -2,7 +2,7 @@
 // Solution: (https://github.com/stitchesjs/stitches/issues/833#issuecomment-950707025)
 const { createStitches } = require('@stitches/react');
 
-export const { styled, css } = createStitches({
+export const { styled, css, createTheme } = createStitches({
   theme: {
     colors: {
       primary: '#5FA425',
@@ -77,4 +77,13 @@ export const { styled, css } = createStitches({
     zIndices: {},
     transitions: {},
   },
+});
+
+
+export const lightTheme = createTheme({
+
+});
+
+export const darkTheme = createTheme({
+
 });
