@@ -11,10 +11,6 @@ const ButtonContainer = styled('button', {
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
-  '&:disabled': {
-    background: '$neutrals400 !important',
-    border: 0,
-  },
   variants: {
     align: {
       start: {
@@ -39,6 +35,10 @@ const ButtonContainer = styled('button', {
     },
     variant: {
       contained: {
+        '&:disabled': {
+          background: '$neutrals400 !important',
+          border: 0,
+        },
         $$color: '$colors$background',
         [`.${darkTheme} &`]: {
           $$color: '$colors$foreground',
@@ -47,11 +47,18 @@ const ButtonContainer = styled('button', {
         border: 0,
       },
       outlined: {
+        '&:disabled': {
+          borderColor: '$neutrals400 !important',
+          color: '$neutrals400 !important',
+        },
         background: 'transparent',
         border: 1,
         borderStyle: 'solid',
       },
       ghost: {
+        '&:disabled': {
+          color: '$neutrals400 !important',
+        },
         background: 'transparent',
         border: 0,
       },
