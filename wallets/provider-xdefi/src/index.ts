@@ -13,7 +13,11 @@ import {
   getEvmAccounts,
   switchNetworkForEvm,
   getSolanaAccounts,
+  XDEFI_WALLET_SUPPORTED_NATIVE_CHAINS,
+  BlockchainMeta,
+  WalletInfo,
 } from '@rangodev/wallets-shared';
+import { SUPPORTED_ETH_CHAINS } from './constants';
 
 import { getNonEvmAccounts, xdefi as xdefi_instances } from './helpers';
 import signer from './signer';
@@ -75,3 +79,20 @@ export const switchNetwork: SwitchNetwork = switchNetworkForEvm;
 export const canSwitchNetworkTo: CanSwitchNetwork = canSwitchNetworkToEvm;
 
 export const getSigners: (provider: any) => WalletSigners = signer;
+
+export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
+  allBlockChains
+) => ({
+  name: 'XDefi',
+  img: 'https://app.rango.exchange/wallets/xdefi.jpg',
+  installLink:
+    'https://chrome.google.com/webstore/detail/xdefi-wallet/hmeobnfnfcmdkdcmlblgagmfpfboieaf',
+  color: '#0646c7',
+  supportedChains: allBlockChains.filter((blockchainMeta) =>
+    [
+      ...SUPPORTED_ETH_CHAINS,
+      ...XDEFI_WALLET_SUPPORTED_NATIVE_CHAINS,
+      Network.SOLANA,
+    ].includes(blockchainMeta.name as Network)
+  ),
+});

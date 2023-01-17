@@ -23,6 +23,7 @@ const CheckboxRoot = styled(RadixCheckbox.Root, {
 const Label = styled('label', {
   color: '$text',
   fontSize: '$m',
+  marginLeft: '$8',
 });
 
 export interface PropTypes {
