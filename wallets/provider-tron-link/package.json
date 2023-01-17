@@ -1,8 +1,8 @@
 {
-  "name": "@rangodev/wallets-core",
-  "version": "0.1.11-next.15",
+  "name": "@rangodev/provider-tron-link",
+  "version": "0.1.11-next.9",
   "license": "MIT",
-  "module": "dist/wallets-core.esm.js",
+  "module": "dist/provider-tron-link.esm.js",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
   "files": [
@@ -13,7 +13,7 @@
     "node": ">=10"
   },
   "scripts": {
-    "start": "tsdx watch",
+    "dev": "tsdx watch",
     "build": "tsdx build",
     "test": "tsdx test --passWithNoTests",
     "lint": "tsdx lint",
@@ -21,9 +21,7 @@
     "analyze": "size-limit --why"
   },
   "peerDependencies": {
-    "@types/react": "^17.0.0 || ^18.0.0",
-    "react": "^17.0.0 || ^18.0.0",
-    "react-dom": "^17.0.0 || ^18.0.0"
+    "react": ">=16"
   },
   "husky": {
     "hooks": {
@@ -38,20 +36,19 @@
   },
   "size-limit": [
     {
-      "path": "dist/wallets-core.cjs.production.min.js",
+      "path": "dist/provider-tron-link.cjs.production.min.js",
       "limit": "10 KB"
     },
     {
-      "path": "dist/wallets-core.esm.js",
+      "path": "dist/provider-tron-link.esm.js",
       "limit": "10 KB"
     }
   ],
   "dependencies": {
-    "@rangodev/wallets-shared": "^0.1.11-next.15",
-    "@walletconnect/ethereum-provider": "1.8.0"
+    "@rangodev/wallets-shared": "^0.1.11-next.15"
   },
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "a4584c2a3341fe23e033a9ff2db0f201b0a6278c"
+  "gitHead": "dd92a217bf0e45fa27ea9416bed5e575a6e41bcc"
 }
