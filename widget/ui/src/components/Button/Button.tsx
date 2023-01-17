@@ -16,11 +16,6 @@ const ButtonContainer = styled('button', {
     border: 0,
   },
   variants: {
-    fullWidth: {
-      true: {
-        width: '100%',
-      },
-    },
     size: {
       small: {
         height: '$32',
@@ -65,13 +60,12 @@ const ButtonContainer = styled('button', {
         '&:hover': {
           background: '$primary700',
         },
-     '&:visited': {
+        '&:visited': {
           background: '$primary900',
-        },  
+        },
         '&:focus': {
           background: '$primary600',
-        }, 
-        
+        },
       },
     },
     {
@@ -83,12 +77,12 @@ const ButtonContainer = styled('button', {
         '&:hover': {
           background: '$primary700',
         },
-     '&:visited': {
+        '&:visited': {
           background: '$primary900',
-        },  
+        },
         '&:focus': {
           background: '$primary600',
-        }, 
+        },
       },
     },
     {
@@ -106,12 +100,12 @@ const ButtonContainer = styled('button', {
         '&:hover': {
           background: '$error700',
         },
-     '&:visited': {
+        '&:visited': {
           background: '$error900',
-        },  
+        },
         '&:focus': {
           background: '$error600',
-        }, 
+        },
       },
     },
     {
@@ -123,12 +117,12 @@ const ButtonContainer = styled('button', {
         '&:hover': {
           background: '$error700',
         },
-     '&:visited': {
+        '&:visited': {
           background: '$error900',
-        },  
+        },
         '&:focus': {
           background: '$error600',
-        }, 
+        },
       },
     },
     {
@@ -146,12 +140,12 @@ const ButtonContainer = styled('button', {
         '&:hover': {
           background: '$warning700',
         },
-     '&:visited': {
+        '&:visited': {
           background: '$warning900',
-        },  
+        },
         '&:focus': {
           background: '$warning600',
-        }, 
+        },
       },
     },
     {
@@ -163,12 +157,12 @@ const ButtonContainer = styled('button', {
         '&:hover': {
           background: '$warning700',
         },
-     '&:visited': {
+        '&:visited': {
           background: '$warning900',
-        },  
+        },
         '&:focus': {
           background: '$warning600',
-        }, 
+        },
       },
     },
     {
@@ -186,12 +180,12 @@ const ButtonContainer = styled('button', {
         '&:hover': {
           background: '$success700',
         },
-     '&:visited': {
+        '&:visited': {
           background: '$success900',
-        },  
+        },
         '&:focus': {
           background: '$success600',
-        }, 
+        },
       },
     },
     {
@@ -203,12 +197,12 @@ const ButtonContainer = styled('button', {
         '&:hover': {
           background: '$success700',
         },
-     '&:visited': {
+        '&:visited': {
           background: '$success900',
-        },  
+        },
         '&:focus': {
           background: '$success600',
-        }, 
+        },
       },
     },
     {
@@ -226,41 +220,40 @@ const ButtonContainer = styled('button', {
   },
 });
 
-const Content= styled('div', {
-  flex:1,
+const Content = styled('div', {
+  flex: 1,
 
   variants: {
-    align : {
-      'start' :{
-        textAlign:'left'
-      } ,
-      'grow':{
-        textAlign:'center'
-      }
+    align: {
+      start: {
+        textAlign: 'left',
+      },
+      grow: {
+        textAlign: 'center',
+      },
     },
-    ml:{
-      true:{
-        marginLeft:'$8'
-      }
+    ml: {
+      true: {
+        marginLeft: '$8',
+      },
     },
-    mr:{
-      true:{
-        marginRight:'$8'
-      }
-    }
+    mr: {
+      true: {
+        marginRight: '$8',
+      },
+    },
   },
 
   defaultVariants: {
-    align: 'grow'
+    align: 'grow',
   },
 });
 
 export interface PropTypes {
   onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
-  fullWidth?: boolean;
   size?: 'small' | 'medium' | 'large';
   variant?: 'contained' | 'outlined' | 'ghost';
-  type?: 'primary' | 'error' | 'warning' | 'success'; 
+  type?: 'primary' | 'error' | 'warning' | 'success';
   prefix?: React.ReactNode;
   suffix?: React.ReactNode;
   align?: 'start' | 'grow';
@@ -280,8 +273,12 @@ function Button({
   return (
     <ButtonContainer disabled={disabled || loading} {...props}>
       {prefix}
-      {children && <Content align={align} ml={!!prefix}  mr={!!suffix && !loading} >{children}</Content>}
-      {loading && <Spinner size={16} color={'primary'}/>}
+      {children && (
+        <Content align={align} ml={!!prefix} mr={!!suffix && !loading}>
+          {children}
+        </Content>
+      )}
+      {loading && <Spinner size={16} color={props.type} />}
       {suffix}
     </ButtonContainer>
   );

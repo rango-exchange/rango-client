@@ -49,11 +49,11 @@ export const Main = (props: PropTypes) => (
 
 export const ButtonWithIcon = (props: PropTypes) => (
   <div>
-    <Button prefix={<AddWallet size={24} />} {...props}>
+    <Button prefix={<AddWallet size={24} color="white" />} {...props}>
       I'm a button
     </Button>
     <div style={{ margin: '10px 0' }} />
-    <Button suffix={<AddWallet size={24} />} {...props}>
+    <Button suffix={<AddWallet size={24} color="white" />} {...props}>
       I'm a button
     </Button>
   </div>
@@ -61,6 +61,6 @@ export const ButtonWithIcon = (props: PropTypes) => (
 
 export const IconButton = (props: PropTypes) => (
   <div>
-    <Button suffix={<AddWallet size={24} />} {...props} />
+    <Button suffix={<AddWallet size={24} color="white" />} {...props} />
   </div>
 );
