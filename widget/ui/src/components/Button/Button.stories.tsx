@@ -24,17 +24,12 @@ export default {
       name: 'align',
       control: { type: 'select' },
       options: ['start', 'grow'],
-      defaultValue: 'grow',
     },
     size: {
       name: 'size',
       control: { type: 'radio' },
       options: ['small', 'medium', 'large'],
       defaultValue: 'medium',
-    },
-    fullWidth: {
-      name: 'fullWidth',
-      control: { type: 'boolean' },
     },
     disabled: {
       name: 'disabled',

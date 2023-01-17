@@ -1,8 +1,7 @@
-import { styled } from '../../theme';
+import { darkTheme, styled } from '../../theme';
 
-//@ts-ignore
 export const SvgWithStrokeColor = styled('svg', {
-  stroke: '$textPrimary',
+  stroke: '$foreground',
   variants: {
     color: {
       primary: {
@@ -18,18 +17,25 @@ export const SvgWithStrokeColor = styled('svg', {
         stroke: '$success',
       },
       black: {
-        stroke: '$black',
+        $$color: '$colors$foreground',
+        [`.${darkTheme} &`]: {
+          $$color: '$colors$background',
+        },
+        stroke: '$$color',
       },
       white: {
-        stroke: '$white',
+        $$color: '$colors$background',
+        [`.${darkTheme} &`]: {
+          $$color: '$colors$foreground',
+        },
+        stroke: '$$color',
       },
     },
   },
 });
 
-//@ts-ignore
 export const SvgWithFillColor = styled('svg', {
-  fill: '$textPrimary',
+  fill: '$foreground',
   variants: {
     color: {
       primary: {
@@ -45,10 +51,18 @@ export const SvgWithFillColor = styled('svg', {
         fill: '$success',
       },
       black: {
-        fill: '$black',
+        $$color: '$colors$foreground',
+        [`.${darkTheme} &`]: {
+          $$color: '$colors$background',
+        },
+        fill: '$$color',
       },
       white: {
-        fill: '$white',
+        $$color: '$colors$background',
+        [`.${darkTheme} &`]: {
+          $$color: '$colors$foreground',
+        },
+        fill: '$$color',
       },
     },
   },

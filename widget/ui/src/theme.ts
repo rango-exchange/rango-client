@@ -26,8 +26,8 @@ export const { styled, css, createTheme, keyframes } = createStitches({
       neutrals700: '#444444',
       neutrals800: '#333333',
       neutrals900: '#111111',
-      white: '#fff',
-      black: '#000',
+      background: '#fff',
+      foreground: '#000',
       success: '#0070F3',
       success100: '#D3E5FF',
       success300: '#3291FF',
@@ -43,8 +43,6 @@ export const { styled, css, createTheme, keyframes } = createStitches({
       error300: '#FF3333',
       error500: '#FF0000',
       error700: '#E60000',
-      backgroundColorPrimary: '$white',
-      textPrimary: '$black',
     },
     space: {
       4: '4px',
@@ -97,5 +95,5 @@ export const { styled, css, createTheme, keyframes } = createStitches({
 export const lightTheme = createTheme({});
 
 export const darkTheme = createTheme({
-  colors: { backgroundColorPrimary: '$black', textPrimary: '$white' },
+  colors: { foreground: '#fff', background: '#000' },
 });

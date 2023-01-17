@@ -20,12 +20,19 @@ export default {
       defaultValue: 'top',
     },
     color: {
-      name: 'type',
+      name: 'color',
       control: { type: 'select' },
-      options: ['primary', 'error', 'warning', 'success','black','white', 'gray'],
+      options: [
+        'primary',
+        'error',
+        'warning',
+        'success',
+        'black',
+        'white',
+        'gray',
+      ],
       defaultValue: 'gray',
     },
-
   },
 } as ComponentMeta<typeof Tooltip>;
 
@@ -39,7 +46,7 @@ export const Main = (props: PropTypes) => (
     }}
   >
     <Tooltip {...props}>
-      <AddWallet  size={24}/>
+      <AddWallet size={24} />
     </Tooltip>
   </div>
 );
