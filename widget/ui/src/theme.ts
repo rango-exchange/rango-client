@@ -1,8 +1,11 @@
 // TSDX + stiches doesn't work with import statement and has a bug.
+
+import { PropertyValue } from '@stitches/react';
+
 // Solution: (https://github.com/stitchesjs/stitches/issues/833#issuecomment-950707025)
 const { createStitches } = require('@stitches/react');
 
-export const { styled, css, createTheme } = createStitches({
+export const { styled, css, createTheme, keyframes } = createStitches({
   theme: {
     colors: {
       primary: '#5FA425',
@@ -23,8 +26,8 @@ export const { styled, css, createTheme } = createStitches({
       neutrals700: '#444444',
       neutrals800: '#333333',
       neutrals900: '#111111',
-      white: '#fff',
-      black: '#000',
+      background: '#fff',
+      foreground: '#000',
       success: '#0070F3',
       success100: '#D3E5FF',
       success300: '#3291FF',
@@ -67,6 +70,11 @@ export const { styled, css, createTheme } = createStitches({
     letterSpacings: {},
     sizes: {
       16: '16px',
+      20: '20px',
+      24: '24px',
+      32: '32px',
+      40: '40px',
+      48: '48px',
     },
     borderWidths: {},
     borderStyles: {},
@@ -77,13 +85,15 @@ export const { styled, css, createTheme } = createStitches({
     zIndices: {},
     transitions: {},
   },
+  utils: {
+    bc: (value: PropertyValue<'backgroundColor'>) => ({
+      backgroundColor: value,
+    }),
+  },
 });
 
-
-export const lightTheme = createTheme({
-
-});
+export const lightTheme = createTheme({});
 
 export const darkTheme = createTheme({
-
+  colors: { foreground: '#fff', background: '#000' },
 });
