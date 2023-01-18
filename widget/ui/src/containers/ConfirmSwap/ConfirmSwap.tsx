@@ -22,12 +22,10 @@ const TitleContainer = styled('div', {
 });
 const Line = styled('div', {
   width: '0',
-  marginLeft: '$l',
-
+  marginLeft: '$12',
   height: '36px',
-  border: '1px dashed $black',
+  border: '1px dashed $foreground',
   borderRadius: 'inherit',
-  zIndex: -1,
 });
 const SwapperContainer = styled('div', {
   display: 'flex',
@@ -40,8 +38,8 @@ const Fee = styled('div', {
   alignItems: 'center',
 });
 const SwapperLogo = styled('img', {
-  width: '$s',
-  height: '$s',
+  width: '$16',
+  height: '$16',
 });
 const RelativeContainer = styled('div', {
   position: 'relative',
@@ -55,39 +53,38 @@ const Footer = styled('div', {
   alignItems: 'center',
 });
 const Dot = styled('div', {
-  width: '8px',
-  height: '8px',
-  backgroundColor: '$black',
+  width: '$8',
+  height: '$8',
+  backgroundColor: '$foreground',
   borderRadius: '4px',
-  marginLeft: '9px',
+  marginLeft: '$8',
 });
 const ArrowDown = styled('div', {
   width: '0px',
   height: '0px',
   borderLeft: '5px solid transparent',
   borderRight: '5px solid transparent',
-  borderTop: '5px solid $black',
-  marginLeft: '8px',
+  borderTop: '5px solid $foreground',
+  marginLeft: '$8',
 });
-const Detail = styled('div', {
-  paddingLeft: '$m',
-  color: '$text03',
-});
-const GasLogo = styled(Gas, {
-  marginRight: '$m',
-});
+
 const SwapButton = styled(Button, {
-  marginLeft: '$l',
+  marginLeft: '$12',
+  width: '100%',
 });
 export interface PropTypes {
   bestRoute: BestRouteType;
-  handleUpdateRoute: ((event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void)
+  handleUpdateRoute:
+    | ((event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void)
     | undefined;
-  handleBack: ((event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void)
+  handleBack:
+    | ((event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void)
     | undefined;
-  handleAddWallet: ((event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void)
+  handleAddWallet:
+    | ((event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void)
     | undefined;
-  handleSwap: ((event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void)
+  handleSwap:
+    | ((event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void)
     | undefined;
   loading: boolean;
 }
@@ -103,15 +100,15 @@ function ConfirmSwap({
     <Container>
       <TitleContainer>
         <Button
-          variant="text"
+          variant="ghost"
           onClick={handleBack}
-          startIcon={<AngleLeft size={24} />}
+          prefix={<AngleLeft size={24} />}
         />
         <Title>Swap</Title>
         <Button
-          variant="text"
+          variant="ghost"
           onClick={handleUpdateRoute}
-          startIcon={<Retry size={24} />}
+          prefix={<Retry size={24} />}
         />
       </TitleContainer>
       <Body>
@@ -132,22 +129,22 @@ function ConfirmSwap({
             <Line />
             <SwapperContainer>
               <SwapperLogo src={swap.swapperLogo} alt={swap.swapperId} />
-              <Detail>
-                <Typography variant="legal">
+              <div>
+                <Typography ml={4} variant="caption">
                   {swap.swapperType} from {swap.from.symbol} to {swap.to.symbol}{' '}
                   via {swap.swapperId}{' '}
                 </Typography>
                 <Fee>
-                  <GasLogo width={12} height={12} />
-                  <Typography variant="footnote2">
+                  <Gas />
+                  <Typography ml={4} variant="caption">
                     {parseFloat(swap.fee[0].amount).toFixed(6)} estimated gas
                     fee
                   </Typography>
                 </Fee>
-              </Detail>
+              </div>
             </SwapperContainer>
             <Line />
-            <ArrowDown />
+            {index + 1 === bestRoute.result?.swaps.length && <ArrowDown />}
             <StepDetail
               logo={swap.to.logo}
               symbol={swap.to.symbol}
@@ -162,12 +159,12 @@ function ConfirmSwap({
         <Tooltip side="bottom" content="send to a different wallet">
           <Button
             variant="contained"
-            startIcon={<AddWallet width={28} height={28} />}
+            prefix={<AddWallet size={24} color="white" />}
             onClick={handleAddWallet}
           />
         </Tooltip>
 
-        <SwapButton loading={loading} variant="contained" onClick={handleSwap} fullWidth={true}>
+        <SwapButton loading={loading} variant="contained" onClick={handleSwap}>
           swap
         </SwapButton>
       </Footer>

@@ -1,22 +1,48 @@
 import React, { PropsWithChildren } from 'react';
-import { Arrow, Failed, Running, Success } from '../../components/Icon';
+import { CheckCircle, InfoCircle, TryAgain } from '../../components/Icon';
+// import { Arrow } from '../../components/Icon';
 import StepDetail from '../../components/StepDetail';
 import Typography from '../../components/Typography';
 import { styled } from '../../theme';
 import { PendingSwap } from './types';
 
 const Container = styled('div', {
-  padding: '$xxl $xl',
+  padding: '$18 $22',
+});
+const Arrow = styled('div', {
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+});
+const Line = styled('div', {
+  height: '0',
+  width: '$48',
+  border: '1px dashed $foreground',
+  borderRadius: 'inherit',
+});
+const Dot = styled('div', {
+  width: '$8',
+  height: '$8',
+  backgroundColor: '$foreground',
+  borderRadius: '4px',
+  marginLeft: '$8',
+});
+const ArrowRight = styled('div', {
+  width: '0px',
+  height: '0px',
+  borderTop: '5px solid transparent',
+  borderBottom: '5px solid transparent',
+  borderLeft: '5px solid $foreground',
 });
 const SwapContainer = styled('div', {
-  padding: '$l',
-  marginTop: '$m',
+  padding: '$12',
+  marginTop: '$8',
   border: '1px solid',
   display: 'flex',
-  borderRadius: '5px',
+  borderRadius: '$5',
   justifyContent: 'space-between',
   '&:hover': {
-    background: '$neutral02',
+    background: '$neutrals300',
     border: 0,
   },
 
@@ -26,7 +52,7 @@ const SwapContainer = styled('div', {
         borderColor: '$error',
       },
       running: {
-        borderColor: '$pending',
+        borderColor: '$neutrals400',
       },
       success: {
         borderColor: '$success',
@@ -38,16 +64,20 @@ const StatusContainer = styled('div', {
   position: 'absolute',
   right: '-10px',
   top: '35%',
+  background:'$background',
+  borderRadius:'50%',
+  display: 'flex',
+  justifyContent: 'center',
 });
 const RelativeContainer = styled('div', {
   position: 'relative',
 });
 
 const Group = styled(Typography, {
-  marginBottom: '$xxxl',
+  marginBottom: '$24',
 });
 const GroupTitle = styled(Typography, {
-  color: '$text03',
+  color: '$neutrals500',
 });
 
 export interface PropTypes {
@@ -98,9 +128,11 @@ function History({ swaps }: PropsWithChildren<PropTypes>) {
                     blockchain={firstStep.fromBlockchain}
                     amount={swap.inputAmount}
                   />
-
-                  <Arrow />
-
+                  <Arrow>
+                    <Dot />
+                    <Line />
+                    <ArrowRight />
+                  </Arrow>
                   <StepDetail
                     logo={lastStep.fromLogo}
                     symbol={lastStep.fromSymbol}
@@ -111,11 +143,11 @@ function History({ swaps }: PropsWithChildren<PropTypes>) {
                 </SwapContainer>
                 <StatusContainer>
                   {swap.status === 'running' ? (
-                    <Running size={24} />
+                    <TryAgain size={20} color="black" />
                   ) : swap.status === 'failed' ? (
-                    <Failed size={24} />
+                    <InfoCircle size={20} color="error" />
                   ) : (
-                    <Success size={20} />
+                    <CheckCircle size={20} color="success" />
                   )}
                 </StatusContainer>
               </RelativeContainer>

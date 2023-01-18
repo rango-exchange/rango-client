@@ -39,8 +39,4 @@ export type Icon =
   | 'SwapWallet'
   | 'Bag'
   | 'Check'
-  | 'Arrow'
-  | 'Success'
-  | 'Failed'
-  | 'Running'
   | 'Time';
