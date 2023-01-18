@@ -155,7 +155,7 @@ export const isStarknetBlockchain = (
 
 export const isTronBlockchain = (
   blockchainMeta: BlockchainMeta
-): blockchainMeta is StarknetBlockchainMeta =>
+): blockchainMeta is TronBlockchainMeta =>
   blockchainMeta.type === GenericTransactionType.TRON;
 
 // Meta
@@ -602,6 +602,7 @@ export type TronTransaction = {
   raw_data_hex: string | null;
   txID: string;
   visible: boolean;
+  __payload__: object;
   externalTxId: string | null;
   isApprovalTx: boolean;
 };
