@@ -4,7 +4,7 @@ import { styled } from '../../theme';
 const TypographyContainer = styled('p', {
   margin: 0,
   lineHeight: '24px',
-
+  color: '$text1',
   variants: {
     variant: {
       h1: {

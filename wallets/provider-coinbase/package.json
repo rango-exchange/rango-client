@@ -1,6 +1,6 @@
 {
   "name": "@rangodev/provider-coinbase",
-  "version": "0.1.10",
+  "version": "0.1.11-next.17",
   "license": "MIT",
   "module": "dist/provider-coinbase.esm.js",
   "main": "dist/index.js",
@@ -45,11 +45,10 @@
     }
   ],
   "dependencies": {
-    "@binance-chain/javascript-sdk": "^4.1.1",
-    "@rangodev/wallets-shared": "^0.1.10"
+    "@rangodev/wallets-shared": "^0.1.11-next.17"
   },
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "6a1dd3a10333466b93bb13c66dfd148df0059070"
+  "gitHead": "a4584c2a3341fe23e033a9ff2db0f201b0a6278c"
 }

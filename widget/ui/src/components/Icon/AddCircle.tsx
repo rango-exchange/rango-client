@@ -1,25 +1,26 @@
 import * as React from 'react';
+import { SvgWithStrokeColor } from './common';
 import { IconProps } from './types';
 
 export const Add = React.forwardRef<SVGSVGElement, IconProps>(
-  ({ size = 50, ...props }) => {
+  ({ size = 16, color, ...props }) => {
     return (
-      <svg
+      <SvgWithStrokeColor
         width={size}
         height={size}
         viewBox="0 0 24 24"
+        color={color}
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
         {...props}
       >
         <path
           d="M6 12h12M12 18V6"
-          stroke="#10150F"
           strokeWidth={1.5}
           strokeLinecap="round"
           strokeLinejoin="round"
         />
-      </svg>
+      </SvgWithStrokeColor>
     );
   }
 );

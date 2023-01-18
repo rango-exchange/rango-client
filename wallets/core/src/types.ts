@@ -2,13 +2,9 @@ import { PropsWithChildren } from 'react';
 import {
   Network,
   WalletType,
-  Meta,
-  CosmosTransaction,
-  EvmTransaction,
-  SolanaTransaction,
-  TransferTransaction,
   BlockchainMeta,
   WalletInfo,
+  WalletSigners,
 } from '@rangodev/wallets-shared';
 import {
   EventHandler as WalletEventHandler,
@@ -133,14 +129,3 @@ export type WalletProviders = Map<
 >;
 
 export type WalletProvider = { config: WalletConfig } & WalletActions;
-
-export type WalletSigners = {
-  executeTransfer: (tx: TransferTransaction, meta: Meta) => Promise<string>;
-  executeEvmTransaction: (tx: EvmTransaction, meta: Meta) => Promise<string>;
-  executeCosmosMessage: (tx: CosmosTransaction, meta: Meta) => Promise<string>;
-  executeSolanaTransaction: (
-    tx: SolanaTransaction,
-    requestId: string
-  ) => Promise<string>;
-  signEvmMessage: (walletAddress: string, message: string) => Promise<string>;
-};

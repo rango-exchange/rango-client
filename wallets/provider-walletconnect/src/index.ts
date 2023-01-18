@@ -17,16 +17,6 @@ import {
   WalletInfo,
   evmBlockchains,
 } from '@rangodev/wallets-shared';
-// import {
-//   CanSwitchNetwork,
-//   Connect,
-//   Disconnect,
-//   GetInstance,
-//   Subscribe,
-//   SwitchNetwork,
-//   WalletConfig,
-//   WalletSigners,
-// } from '../core/types';
 import { formatJsonRpcRequest } from '@walletconnect/jsonrpc-utils';
 import signer from './signer';
 
@@ -176,7 +166,7 @@ export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
   const evms = evmBlockchains(allBlockChains);
   return {
     name: 'WalletConnect',
-    img: 'https://avatars.githubusercontent.com/u/37784886?s=200&v=4',
+    img: 'https://app.rango.exchange/wallets/walletconnect.svg',
     installLink: '',
     color: '#b2dbff',
     supportedChains: evms,
