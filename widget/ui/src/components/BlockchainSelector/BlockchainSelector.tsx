@@ -1,24 +1,29 @@
 import React from 'react';
 import { BlockchainMeta } from '../../types/meta';
 import BlockchainsList from '../BlockchainsList';
-import PageWithTextField from '../PageWithTextField';
+import SecondaryPage from '../PageWithTextField/SecondaryPage';
 
 export interface PropTypes {
   type: 'Source' | 'Destination';
-  blockchains: Pick<BlockchainMeta, 'name' | 'displayName' | 'logo'>[];
+  blockchains: BlockchainMeta[];
+  selectedBlockchain: BlockchainMeta;
+  onSelectedBlockchainChanged: (blockchain: BlockchainMeta) => void;
 }
 
 function BlockchainSelector(props: PropTypes) {
-  const { type, blockchains } = props;
+  const { type, blockchains, onSelectedBlockchainChanged, selectedBlockchain } =
+    props;
   return (
-    <PageWithTextField
+    <SecondaryPage
+      textField={true}
       textFieldPlaceholder="Search Blockchain By Name"
       title={`Select ${type} Network`}
       Content={({ searchedText }) => (
         <BlockchainsList
           searchedText={searchedText}
           blockchains={blockchains}
-          selectedBlockchain="BTC"
+          selectedBlockchain={selectedBlockchain}
+          onSelectedBlockchainChanged={onSelectedBlockchainChanged}
         />
       )}
     />

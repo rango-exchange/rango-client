@@ -2,7 +2,8 @@ import React from 'react';
 
 import { styled } from '../../theme';
 import { WalletInfo, WalletState } from '../../types/wallet';
-import { Download, FilledCircle } from '../Icon';
+import Button from '../Button/Button';
+import { Download } from '../Icon';
 import ListItem from '../ListItem';
 import Spinner from '../Spinner';
 import Typography from '../Typography';
@@ -14,14 +15,10 @@ const Container = styled('div', {
   width: '100%',
 });
 
-const WalletDetails = styled('div', {
-  display: 'flex',
-  alignItems: 'center',
-  '& img': {
-    width: '$24',
-    height: '$24',
-    marginRight: '$12',
-  },
+const WalletImage = styled('img', {
+  width: '$24',
+  height: '$24',
+  marginRight: '$12',
 });
 
 const StateIconContainer = styled('span', {
@@ -31,35 +28,43 @@ const StateIconContainer = styled('span', {
   alignItems: 'center',
 });
 
+const FilledCircle = styled('span', {
+  width: '10px',
+  height: '10px',
+  backgroundColor: '$primary500',
+  borderRadius: '99999px',
+});
+
 export type PropTypes = WalletInfo & { onClick: (walletName: string) => void };
 
 function WalletChip(props: PropTypes) {
   const { name, image, state, onClick } = props;
   return (
-    <ListItem
+    <Button
       {...(state
-        ? { selected: state === WalletState.CONNECTED }
+        ? { type: state === WalletState.CONNECTED ? 'primary' : undefined }
         : { disabled: true })}
       onClick={onClick.bind(null, name)}
-    >
-      <Container>
-        <WalletDetails>
-          <img src={image} />
-          <Typography variant="h5" noWrap={false}>
-            {name}
-          </Typography>
-        </WalletDetails>
-        {state !== WalletState.DISCONNECTED && (
+      align="start"
+      variant="outlined"
+      size="large"
+      prefix={<WalletImage src={image} />}
+      suffix={
+        state !== WalletState.DISCONNECTED && (
           <StateIconContainer>
             {state === WalletState.NOT_INSTALLED && (
               <Download size={24} color="success" />
             )}
             {state === WalletState.CONNECTING && <Spinner />}
-            {state === WalletState.CONNECTED && <FilledCircle size={16} />}
+            {state === WalletState.CONNECTED && <FilledCircle />}
           </StateIconContainer>
-        )}
-      </Container>
-    </ListItem>
+        )
+      }
+    >
+      <Typography variant="h5" noWrap={false}>
+        {name}
+      </Typography>
+    </Button>
   );
 }
 

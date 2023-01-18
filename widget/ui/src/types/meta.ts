@@ -81,18 +81,8 @@ export enum GenericTransactionType {
 
 export interface BlockchainMeta {
   name: string;
-  defaultDecimals: number;
-  addressPatterns: string[];
-  feeAssets: Asset[];
   logo: string;
   displayName: string;
-  shortName: string;
-  sort: number;
-  color: string;
-  enabled: boolean;
-  type: GenericTransactionType;
-  chainId: string | null;
-  info: BlockchainInfo;
 }
 
 export type SwapperMeta = {

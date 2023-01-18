@@ -87,7 +87,9 @@ export const { styled, css, createTheme, keyframes } = createStitches({
       5: '5px',
       10: '10px',
     },
-    shadows: {},
+    shadows: {
+      s: '0px 3px 5px 3px #f0f2f5, 0px 6px 10px 3px #f0f2f5, 0px 1px 18px 3px #f0f2f5',
+    },
     zIndices: {},
     transitions: {},
   },
@@ -112,5 +114,8 @@ export const darkTheme = createTheme({
     neutrals900: '#FAFAFA',
     foreground: '#fff',
     background: '#000',
+  },
+  shadows: {
+    s: '0px 3px 5px 3px #222, 0px 6px 10px 3px #222, 0px 1px 18px 3px #222',
   },
 });

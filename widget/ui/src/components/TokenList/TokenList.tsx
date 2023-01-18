@@ -3,19 +3,20 @@ import { CommonProps } from 'react-window';
 import { containsText } from '../../helpers';
 import { styled } from '../../theme';
 import { TokenMeta } from '../../types/meta';
-import ListItem from '../ListItem';
+import Button from '../Button/Button';
 import Typography from '../Typography';
 import VirtualizedList from '../VirtualizedList/VirtualizedList';
 
 export interface PropTypes {
   tokens: TokenMeta[];
-  selectedToken: string;
+  selectedToken: TokenMeta;
   searchedText: string;
+  onSelectedTokenChanged: (token: TokenMeta) => void;
 }
 
 const TokenImage = styled('img', {
-  width: '$40',
-  maxHeight: '$40',
+  width: '$32',
+  maxHeight: '$32',
   marginRight: '$16',
 });
 
@@ -31,7 +32,14 @@ const TokenAmountContainer = styled('div', {
 });
 
 function TokenList(props: PropTypes) {
-  const { tokens, searchedText, selectedToken } = props;
+  const { tokens, searchedText, onSelectedTokenChanged } = props;
+
+  const [selectedToken, setSelectedToken] = useState(props.selectedToken);
+
+  const changeSelectedToken = (token: TokenMeta) => {
+    setSelectedToken(token);
+    onSelectedTokenChanged(token);
+  };
 
   const Token = ({
     filteredTokens,
@@ -50,24 +58,24 @@ function TokenList(props: PropTypes) {
           alignItems: 'center',
           width: '100%',
           ...style,
-          height: '4rem',
+          height: '48px',
           top: `${parseFloat(style?.top as string) + 0}px`,
         }}
       >
-        <ListItem style={{ width: '100%', height: '100%' }}>
-          <TokenImage src={currentToken.image} />
-          <div
-            style={{
-              display: 'flex',
-              flex: 1,
-              justifyContent: 'space-between',
-            }}
-          >
-            <TokenNameContainer>
-              <Typography variant="body1">{currentToken.symbol}</Typography>
-              <Typography variant="body2">{currentToken.name}</Typography>
-            </TokenNameContainer>
-            {!!currentToken.balance && (
+        <Button
+          variant="outlined"
+          size="large"
+          align="start"
+          onClick={changeSelectedToken.bind(null, currentToken)}
+          type={
+            selectedToken.symbol === currentToken.symbol &&
+            selectedToken.address === currentToken.address
+              ? 'primary'
+              : undefined
+          }
+          prefix={<TokenImage src={currentToken.image} />}
+          suffix={
+            !!currentToken.balance && (
               <TokenAmountContainer>
                 <Typography variant="body1">
                   {currentToken.balance.amount}
@@ -76,9 +84,14 @@ function TokenList(props: PropTypes) {
                   {currentToken.balance.usdPrice}
                 </Typography>
               </TokenAmountContainer>
-            )}
-          </div>
-        </ListItem>
+            )
+          }
+        >
+          <TokenNameContainer>
+            <Typography variant="body1">{currentToken.symbol}</Typography>
+            <Typography variant="body2">{currentToken.name}</Typography>
+          </TokenNameContainer>
+        </Button>
       </div>
     );
   };
@@ -143,7 +156,7 @@ function TokenList(props: PropTypes) {
         loadNextPage={loadNextPage}
         focus={1}
         innerElementType={innerElementType}
-        size={72}
+        size={56}
       />
     </>
   );

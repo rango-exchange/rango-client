@@ -9,9 +9,7 @@ export default {
   argTypes: {
     searchedText: {
       type: 'string',
-    },
-    selectedBlockchain: {
-      type: 'string',
+      defaultValue: '',
     },
   },
 } as ComponentMeta<typeof BlockchainsList>;
@@ -21,8 +19,7 @@ export const Main = (args: PropTypes) => {
     <BlockchainsList
       {...args}
       blockchains={blockchainMeta}
-      searchedText={''}
-      selectedBlockchain={'BTC'}
+      selectedBlockchain={blockchainMeta[0]}
     />
   );
 };

@@ -6,14 +6,21 @@ import SwapContainer from '../SwapContainer/SwapContainer';
 import TextField from '../TextField/TextField';
 import Typography from '../Typography';
 
-interface PropTypes {
+export type PropTypes = (
+  | {
+      textField: true;
+      Content: (props: { searchedText: string }) => ReactElement;
+      textFieldPlaceholder: string;
+    }
+  | {
+      textField: false;
+      Content: React.ReactNode;
+    }
+) & {
   title: string;
-  Content: (props: { searchedText: string }) => ReactElement;
-  onEnter?: (e: React.KeyboardEvent<HTMLDivElement>) => void;
   onBack?: () => void;
-  textFieldPlaceholder: string;
   TopButton?: React.ReactNode;
-}
+};
 
 const Container = styled('div', {
   display: 'flex',
@@ -46,8 +53,8 @@ const StyledBackIcon = styled(BackIcon, {
   cursor: 'pointer',
 });
 
-function PageWithTextField(props: PropTypes) {
-  const { title, TopButton, Content, textFieldPlaceholder, onBack } = props;
+function SecondaryPage(props: PropTypes) {
+  const { title, TopButton, Content, onBack, textField } = props;
   const [searchedText, setSearchedText] = useState('');
 
   return (
@@ -58,19 +65,22 @@ function PageWithTextField(props: PropTypes) {
           <Typography variant="h4">{title}</Typography>
           {TopButton}
         </HeaderContainer>
-        <TextField
-          prefix={<Search size={24} />}
-          placeholder={textFieldPlaceholder}
-          onChange={(event) => setSearchedText(event.target.value)}
-          value={searchedText}
-          autoFocus
-        />
+        {textField && (
+          <TextField
+            prefix={<Search size={24} />}
+            placeholder={props.textFieldPlaceholder}
+            onChange={(event) => setSearchedText(event.target.value)}
+            value={searchedText}
+            autoFocus
+          />
+        )}
         <ContentContainer>
-          <Content searchedText={searchedText} />
+          {textField && <Content searchedText={searchedText} />}
+          {!textField && Content}
         </ContentContainer>
       </Container>
     </SwapContainer>
   );
 }
 
-export default PageWithTextField;
+export default SecondaryPage;

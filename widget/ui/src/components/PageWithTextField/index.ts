@@ -1,1 +1,1 @@
-export { default } from './PageWithTextField';
+export { default } from './SecondaryPage';

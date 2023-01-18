@@ -38,5 +38,4 @@ export { default as SwapWallet } from './SwapWallet';
 
 export { default as Bag } from './Bag';
 
-export { default as FilledCircle } from './FilledCircle';
 export { default as Close } from './Close';

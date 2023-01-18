@@ -30,6 +30,7 @@ const ModalContainer = styled('div', {
   padding: '$16 $16',
   display: 'flex',
   flexDirection: 'column',
+  boxShadow: '$s',
 });
 
 const ModalHeader = styled('div', {
