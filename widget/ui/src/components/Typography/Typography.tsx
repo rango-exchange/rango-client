@@ -3,67 +3,44 @@ import { styled } from '../../theme';
 
 const TypographyContainer = styled('p', {
   margin: 0,
-  lineHeight: '24px',
   color: '$text1',
   variants: {
     variant: {
       h1: {
-        fontSize: '$h1',
-        fontWeight: '$xl',
-        lineHeight: '48px',
+        fontSize: '$48',
+        fontWeight: '$700',
       },
       h2: {
-        fontSize: '$xxxl',
-        fontWeight: '$xl',
-        lineHeight: '48px',
+        fontSize: '$40',
+        fontWeight: '$700',
       },
       h3: {
-        fontSize: '$xxl',
-        fontWeight: '$xl',
+        fontSize: '$32',
+        fontWeight: '$700',
       },
       h4: {
-        fontSize: '$xl',
-        fontWeight: '$l',
+        fontSize: '$24',
+        fontWeight: '$600',
       },
       h5: {
-        fontSize: '$l',
-        fontWeight: '$l',
+        fontSize: '$20',
+        fontWeight: '$600',
       },
       h6: {
-        fontSize: '$m',
-        fontWeight: '$l',
+        fontSize: '$18',
+        fontWeight: '$500',
       },
       body1: {
-        fontSize: '$l',
-        fontWeight: '$m',
+        fontSize: '$18',
+        fontWeight: '$400',
       },
       body2: {
-        fontSize: '$l',
-        fontWeight: '$s',
+        fontSize: '$16',
+        fontWeight: '$400',
       },
-      body3: {
-        fontSize: '13px',
-        fontWeight: '$s',
-      },
-      bodySmall: {
-        fontSize: '$s',
-        fontWeight: '$s',
-        lineHeight: '20px',
-      },
-      legal: {
-        fontWeight: '$m',
-        fontSize: '11px',
-        lineHeight: '20px',
-      },
-      footnote1: {
-        fontWeight: '$s',
-        fontSize: '11px',
-        lineHeight: '20px',
-      },
-      footnote2: {
-        fontWeight: '$s',
-        fontSize: '$xs',
-        lineHeight: '16px',
+      caption: {
+        fontSize: '$12',
+        fontWeight: '$400',
       },
     },
     align: {
@@ -82,6 +59,62 @@ const TypographyContainer = styled('p', {
         whiteSpace: 'nowrap',
       },
     },
+    ml: {
+      2: {
+        marginLeft: '$2',
+      },
+      4: {
+        marginLeft: '$4',
+      },
+      8: {
+        marginLeft: '$8',
+      },
+      12: {
+        marginLeft: '$12',
+      },
+    },
+    mt: {
+      2: {
+        marginTop: '$2',
+      },
+      4: {
+        marginTop: '$4',
+      },
+      8: {
+        marginTop: '$8',
+      },
+      12: {
+        marginTop: '$12',
+      },
+    },
+    mr: {
+      2: {
+        marginRight: '$2',
+      },
+      4: {
+        marginRight: '$4',
+      },
+      8: {
+        marginRight: '$8',
+      },
+      12: {
+        marginRight: '$12',
+      },
+    },
+    mb: {
+      2: {
+        marginBottom: '$2',
+      },
+      4: {
+        marginBottom: '$4',
+      },
+      8: {
+        marginBottom: '$8',
+      },
+      12: {
+        marginBottom: '$12',
+      },
+    },
   },
 });
 
@@ -95,13 +128,13 @@ export interface PropTypes {
     | 'h6'
     | 'body1'
     | 'body2'
-    | 'body3'
-    | 'bodySmall'
-    | 'footnote1'
-    | 'footnote2'
-    | 'legal';
+    | 'caption';
   align?: 'center' | 'left' | 'right';
   noWrap?: boolean;
+  mt?: 2 | 4 | 8 | 12;
+  mb?: 2 | 4 | 8 | 12;
+  ml?: 2 | 4 | 8 | 12;
+  mr?: 2 | 4 | 8 | 12;
 }
 
 function Typography({ children, ...props }: PropsWithChildren<PropTypes>) {

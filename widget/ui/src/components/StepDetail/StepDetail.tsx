@@ -4,8 +4,8 @@ import Typography from '../Typography';
 
 const StepLogoContainer = styled('div', {
   position: 'relative',
-  width: '28px',
-  height: '28px',
+  width: '$28',
+  height: '$28',
   variants: {
     direction: {
       vertical: {
@@ -15,16 +15,16 @@ const StepLogoContainer = styled('div', {
   },
 });
 const Logo = styled('img', {
-  width: '28px',
-  height: '28px',
+  width: '$28',
+  height: '$28',
   borderRadius: '50%',
 });
 
 const ChainLogo = styled('img', {
   position: 'absolute',
   bottom: 0,
-  width: '12px',
-  height: '12px',
+  width: '$12',
+  height: '$12',
   right: 0,
 });
 const StepContainer = styled('div', {
@@ -36,17 +36,26 @@ const StepContainer = styled('div', {
       },
       vertical: {
         flexDirection: 'column',
-        textAlign:'center',
+        textAlign: 'center',
         justifyContent: 'center',
       },
     },
   },
 });
 const Detail = styled('div', {
-  paddingLeft: '$m',
+  variants: {
+    pl: {
+      true: {
+        paddingLeft: '$8',
+      },
+      false: {
+        paddingTop: '$8',
+      },
+    },
+  },
 });
 const SubTitle = styled(Typography, {
-  color: '$text03',
+  color: '$neutrals600',
 });
 export interface PropTypes {
   logo: string;
@@ -71,11 +80,11 @@ function StepDetail({
         <Logo src={logo} alt={symbol} />
         <ChainLogo src={chainLogo} alt={blockchain} />
       </StepLogoContainer>
-      <Detail>
-        <Typography noWrap variant={direction === 'vertical' ? 'legal' : 'h5'}>
-          {parseFloat(amount).toFixed(3)} {symbol}
+      <Detail pl={direction === 'horizontal'}>
+        <Typography noWrap variant={direction === 'vertical' ? 'body2' : 'h6'}>
+          {parseFloat(amount).toFixed(2)} {symbol}
         </Typography>
-        <SubTitle noWrap variant="footnote2">
+        <SubTitle noWrap variant="caption">
           on {blockchain}
         </SubTitle>
       </Detail>
