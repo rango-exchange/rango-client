@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { containsText } from '../../helpers';
 import { styled } from '../../theme';
 import { BlockchainMeta } from '../../types/meta';
 import ListItem from '../ListItem';
@@ -33,8 +34,8 @@ function BlockchainsList(props: PropTypes) {
     setFilteredBlockchains(
       blockchains.filter(
         (blockchain) =>
-          blockchain.name.includes(searchedText) ||
-          blockchain.displayName.includes(searchedText)
+          containsText(blockchain.name, searchedText) ||
+          containsText(blockchain.displayName, searchedText)
       )
     );
   }, [searchedText]);
@@ -44,7 +45,7 @@ function BlockchainsList(props: PropTypes) {
       {filteredBlockchains.map((blockchain) => {
         return (
           <ListItem
-            isSelected={blockchain.name === selectedBlockchain}
+            selected={blockchain.name === selectedBlockchain}
             style={{ justifyContent: 'start' }}
           >
             <Image src={blockchain.logo} />

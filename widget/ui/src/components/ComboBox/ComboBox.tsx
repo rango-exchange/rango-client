@@ -1,21 +1,13 @@
 import React, { forwardRef, useEffect, useState } from 'react';
-// import * as Select from '@radix-ui/react-select';
-// import {
-//   CheckIcon,
-//   ChevronDownIcon,
-//   ChevronUpIcon,
-//   Cross2Icon,
-// } from '@radix-ui/react-icons';
 import './style.css';
 import Chip from '../Chip/Chip';
 import VirtualizedList from '../VirtualizedList/VirtualizedList';
-import TextField from '../TextField/TextField';
-import { darkTheme, styled } from '../../theme';
+import { styled } from '../../theme';
 import ListItem from '../ListItem';
 import { CommonProps } from 'react-window';
-
-export const containsText = (text: string, searchText: string) =>
-  text.toLowerCase().indexOf(searchText.toLowerCase()) > -1;
+import { AngleDown, Close } from '../Icon';
+import CloseIcon from '../Icon/Close';
+import { containsText } from '../../helpers';
 
 interface SingleSelect {
   multiple: false;
@@ -39,30 +31,31 @@ export type PropTypes = (SingleSelect | MultipleSelect) & {
 const ComboBoxContainer = styled('div', {
   maxHeight: 'fit-content',
   position: 'relative',
-  border: '1px solid $borderColor',
-  borderRadius: '$s',
-  height: '3rem',
+  border: '1px solid $neutrals400',
+  borderRadius: '$5',
+  height: '$48',
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'start',
   transition: 'border-color ease .3s',
-  padding: '$0 $4',
+  paddingLeft: '$16',
+  paddingRight: '$16',
   '&:focus-within': {
-    borderColor: '$info',
+    borderColor: '$primary500',
   },
   variants: {
     disabled: {
       true: {
-        backgroundColor: '$backgroundColorDisabled',
+        backgroundColor: '$neutrals300',
         cursor: 'not-allowed',
         filter: 'grayscale(100%)',
       },
     },
     multiple: {
       true: {
-        minHeight: '3rem',
+        minHeight: '$48',
         height: 'auto',
-        paddingTop: '$2',
+        paddingTop: '$8',
       },
     },
   },
@@ -71,29 +64,21 @@ const ComboBoxContainer = styled('div', {
     flexGrow: 1,
     backgroundColor: 'transparent',
     outline: 'none',
-    marginBottom: '$2',
+    marginBottom: '$8',
+    color: '$foreground',
   },
 });
 
 const SelectedValues = styled('div', {
   display: 'flex',
+  justifyContent: 'center',
   flexWrap: 'wrap',
 });
 
-// const CloseIcon = styled(Cross2Icon, {
-//   color: '$error',
-//   cursor: 'pointer',
-//   marginLeft: '$2',
-//   '&:hover': {
-//     opacity: '0.5',
-//   },
-// });
-
 const DropDownContainer = styled('div', {
-  backgroundColor: '$neutral-100',
   boxShadow:
-    '0px 3px 5px -1px #f0f2f5, 0px 6px 10px 0px #f0f2f5, 0px 1px 18px 0px #f0f2f5',
-  padding: '$1 $2',
+    '0px 3px 5px -1px $neutrals200, 0px 6px 10px 0px $neutrals200, 0px 1px 18px 0px $neutrals200',
+  padding: '$4 $8',
   // height: 'auto',
   height: '50vh',
   position: 'absolute',
@@ -101,7 +86,43 @@ const DropDownContainer = styled('div', {
   width: '100%',
   left: 0,
   boxSizing: 'border-box',
+  borderRadius: '$10',
   overflowX: 'hidden',
+});
+
+const StyledCloseIcon = styled(Close, {
+  marginLeft: '$8',
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+});
+
+const StyledAngleDown = styled(AngleDown, {
+  cursor: 'pointer',
+  variants: {
+    open: {
+      true: {
+        transform: 'rotate(180deg)',
+        transition: 'transform 200ms',
+      },
+    },
+  },
+});
+
+const InputControlls = styled('div', {
+  position: 'absolute',
+  top: '50%',
+  transform: 'translateY(-50%)',
+  right: '$16',
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+});
+
+const Line = styled('div', {
+  borderBottom: '1px solid $foreground',
+  width: '$20',
+  transform: 'rotate(90deg)',
 });
 
 function ComboBox(props: PropTypes) {
@@ -112,6 +133,7 @@ function ComboBox(props: PropTypes) {
     options,
     onChange,
     useVirualizedList,
+    clearButton,
   } = props;
 
   const [filteredOptions, setFilterdOptions] = useState<
@@ -153,7 +175,9 @@ function ComboBox(props: PropTypes) {
   }, [open]);
 
   useEffect(() => {
-    setFilterdOptions(options.filter((pr) => pr.label.includes(searchedText)));
+    setFilterdOptions(
+      options.filter((option) => containsText(option.label, searchedText))
+    );
   }, [searchedText]);
 
   useEffect(() => {
@@ -201,20 +225,21 @@ function ComboBox(props: PropTypes) {
         {multiple
           ? selectedValue.map((v) => (
               <Chip
-                style={{ marginBottom: '0.5rem' }}
+                style={{ marginBottom: '8px', marginRight: '8px' }}
                 onClick={() => {
                   handleSelect(v.value, v.label);
                 }}
                 selected
                 label={v.label}
-                // suffix={<CloseIcon />}
+                suffix={<StyledCloseIcon />}
               />
             ))
-          : selectedValue[0].label}
+          : selectedValue[0]?.label}
         {open && (
           <input
             value={searchedText}
             onChange={(e) => setSearchedText(e.target.value)}
+            spellCheck="false"
           />
         )}
       </SelectedValues>
@@ -234,9 +259,7 @@ function ComboBox(props: PropTypes) {
                   e.stopPropagation();
                   handleSelect(option.value, option.label);
                 }}
-                isSelected={
-                  !!selectedValue.find((v) => v.value === option.value)
-                }
+                selected={!!selectedValue.find((v) => v.value === option.value)}
               >
                 {option.label}
               </ListItem>
@@ -246,6 +269,7 @@ function ComboBox(props: PropTypes) {
               innerElementType={innerElementType}
               itemCount={filteredOptions.length}
               focus={1}
+              size={48}
               Item={({ style, index }) => (
                 <div
                   style={{
@@ -253,7 +277,7 @@ function ComboBox(props: PropTypes) {
                     alignItems: 'center',
                     width: '100%',
                     ...style,
-                    height: '3.5rem',
+                    height: '56px',
                     top: `${parseFloat(style?.top as string) + 8}px`,
                   }}
                 >
@@ -265,7 +289,7 @@ function ComboBox(props: PropTypes) {
                         filteredOptions[index].label
                       );
                     }}
-                    isSelected={
+                    selected={
                       !!selectedValue.find(
                         (v) => v.value === filteredOptions[index].value
                       )
@@ -288,6 +312,15 @@ function ComboBox(props: PropTypes) {
           )}
         </DropDownContainer>
       )}
+      <InputControlls>
+        {clearButton && (
+          <>
+            <CloseIcon onClick={setSelectedValue.bind(null, [])} />
+            <Line />
+          </>
+        )}
+        <StyledAngleDown open={open} />
+      </InputControlls>
     </ComboBoxContainer>
   );
 }

@@ -1,23 +1,23 @@
 import React from 'react';
 import { styled } from '../../theme';
+import Typography from '../Typography';
 
 const ChipCointainer = styled('div', {
   display: 'inline-flex',
   justifyContent: 'center',
   alignItems: 'center',
-  borderRadius: '$s',
-  padding: '$0 $2',
-  height: '2rem',
-  fontSize: '$m',
-  marginRight: '$2',
+  borderRadius: '$5',
+  padding: '$4 $8',
+  height: '32',
+  fontSize: '$14',
   cursor: 'pointer',
   '&:hover': {
-    backgroundColor: '$neutral-300',
+    backgroundColor: '$neutrals300',
   },
   variants: {
     selected: {
-      true: { backgroundColor: '$neutral-400' },
-      false: { backgroundColor: '$backgroundColor' },
+      true: { backgroundColor: '$neutrals300' },
+      false: { backgroundColor: '$background' },
     },
   },
 });
@@ -37,7 +37,7 @@ function Chip(props: PropTypes) {
   return (
     <ChipCointainer selected={selected} onClick={onClick} style={style}>
       {prefix || null}
-      {label}
+      <Typography variant="body2">{label}</Typography>
       {suffix || null}
     </ChipCointainer>
   );

@@ -22,12 +22,30 @@ const options = [
   { value: 'ten', label: 'ten' },
 ];
 
-export const Main = (arg: PropTypes) => (
+export const Main = (args: PropTypes) => (
   <ComboBox
-    useVirualizedList
+    {...args}
+    options={options}
+    multiple={false}
+    defaultValue={{ value: 'one', label: 'one' }}
+  />
+);
+
+export const Multiple = (args: PropTypes) => (
+  <ComboBox
+    {...args}
     options={options}
     multiple={true}
-    onChange={() => {}}
+    defaultValue={[{ value: 'one', label: 'one' }]}
+  />
+);
+
+export const MultipleWithVirtualizedList = (args: PropTypes) => (
+  <ComboBox
+    {...args}
+    options={options}
+    multiple={true}
+    useVirualizedList={true}
     defaultValue={[{ value: 'one', label: 'one' }]}
   />
 );

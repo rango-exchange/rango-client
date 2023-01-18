@@ -18,8 +18,8 @@ export default {
       type: 'string',
       defaultValue: 'https://app.rango.exchange/wallets/coinbase.svg',
     },
-    isDisabled: {
-      name: 'isDisabled',
+    disabled: {
+      name: 'disabled',
       type: 'boolean',
       defaultValue: false,
     },

@@ -18,14 +18,14 @@ const WalletDetails = styled('div', {
   display: 'flex',
   alignItems: 'center',
   '& img': {
-    width: '1.5rem',
-    height: '1.5rem',
-    marginRight: '$3',
+    width: '$24',
+    height: '$24',
+    marginRight: '$12',
   },
 });
 
 const StateIconContainer = styled('span', {
-  width: '24px',
+  width: '$28',
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
@@ -38,8 +38,8 @@ function WalletChip(props: PropTypes) {
   return (
     <ListItem
       {...(state
-        ? { isSelected: state === WalletState.CONNECTED }
-        : { isDisabled: true })}
+        ? { selected: state === WalletState.CONNECTED }
+        : { disabled: true })}
       onClick={onClick.bind(null, name)}
     >
       <Container>
@@ -51,9 +51,11 @@ function WalletChip(props: PropTypes) {
         </WalletDetails>
         {state !== WalletState.DISCONNECTED && (
           <StateIconContainer>
-            {state === WalletState.NOT_INSTALLED && <Download size={23} />}
+            {state === WalletState.NOT_INSTALLED && (
+              <Download size={24} color="success" />
+            )}
             {state === WalletState.CONNECTING && <Spinner />}
-            {state === WalletState.CONNECTED && <FilledCircle size={8} />}
+            {state === WalletState.CONNECTED && <FilledCircle size={16} />}
           </StateIconContainer>
         )}
       </Container>

@@ -1,8 +1,8 @@
 export { default as DeleteCircle } from './DeleteCircle';
 export { default as CheckSquare } from './CheckSquare';
-export { default as AddCircle } from './AddCircle';
+export { default as AddCircle } from './Add';
 export { default as InfoCircle } from './InfoCircle';
-export { default as Add } from './Add';
+export { default as Add } from './AddCircle';
 export { default as MinusCircle } from './MinusCircle';
 export { default as CheckCircle } from './CheckCircle';
 export { default as Check } from './Check';
@@ -39,3 +39,4 @@ export { default as SwapWallet } from './SwapWallet';
 export { default as Bag } from './Bag';
 
 export { default as FilledCircle } from './FilledCircle';
+export { default as Close } from './Close';

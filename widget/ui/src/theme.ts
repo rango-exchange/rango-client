@@ -48,6 +48,11 @@ export const { styled, css, createTheme, keyframes } = createStitches({
       4: '4px',
       8: '8px',
       12: '12px',
+      16: '16px',
+      20: '20px',
+      24: '24px',
+      28: '28px',
+      32: '32px',
     },
     fontSizes: {
       10: '10px',
@@ -80,6 +85,7 @@ export const { styled, css, createTheme, keyframes } = createStitches({
     borderStyles: {},
     radii: {
       5: '5px',
+      10: '10px',
     },
     shadows: {},
     zIndices: {},
@@ -95,5 +101,16 @@ export const { styled, css, createTheme, keyframes } = createStitches({
 export const lightTheme = createTheme({});
 
 export const darkTheme = createTheme({
-  colors: { foreground: '#fff', background: '#000' },
+  colors: {
+    neutrals200: '#111111',
+    neutrals300: '#333333',
+    neutrals400: '#444444',
+    neutrals500: '#666666',
+    neutrals600: '#888888',
+    neutrals700: '#999999',
+    neutrals800: '#EAEAEA',
+    neutrals900: '#FAFAFA',
+    foreground: '#fff',
+    background: '#000',
+  },
 });

@@ -1,12 +1,11 @@
 import React, { forwardRef, useEffect, useState } from 'react';
 import { CommonProps } from 'react-window';
+import { containsText } from '../../helpers';
 import { styled } from '../../theme';
-import { BlockchainMeta, TokenMeta } from '../../types/meta';
+import { TokenMeta } from '../../types/meta';
 import ListItem from '../ListItem';
 import Typography from '../Typography';
-import VirtualizedList, {
-  VirtualizedListItem,
-} from '../VirtualizedList/VirtualizedList';
+import VirtualizedList from '../VirtualizedList/VirtualizedList';
 
 export interface PropTypes {
   tokens: TokenMeta[];
@@ -15,9 +14,9 @@ export interface PropTypes {
 }
 
 const TokenImage = styled('img', {
-  width: '$10',
-  maxHeight: '$10',
-  marginRight: '$4',
+  width: '$40',
+  maxHeight: '$40',
+  marginRight: '$16',
 });
 
 const TokenNameContainer = styled('div', {
@@ -99,7 +98,12 @@ function TokenList(props: PropTypes) {
 
   useEffect(() => {
     setFilteredTokens(
-      tokens.filter((token) => token.symbol.includes(searchedText))
+      tokens.filter(
+        (token) =>
+          containsText(token.symbol, searchedText) ||
+          containsText(token.address || '', searchedText) ||
+          containsText(token.name || '', searchedText)
+      )
     );
   }, [searchedText]);
 
@@ -139,6 +143,7 @@ function TokenList(props: PropTypes) {
         loadNextPage={loadNextPage}
         focus={1}
         innerElementType={innerElementType}
+        size={72}
       />
     </>
   );

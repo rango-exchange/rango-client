@@ -3,27 +3,27 @@ import React, { PropsWithChildren } from 'react';
 import { styled } from '../../theme';
 
 const InputContainer = styled('div', {
-  border: '1px solid $borderColor',
-  borderRadius: '$s',
-  height: '3rem',
+  border: '1px solid $neutrals400',
+  borderRadius: '$5',
+  height: '$48',
   display: 'flex',
   position: 'relative',
   alignItems: 'center',
   transition: 'border-color ease .3s',
   '&:focus-within': {
-    borderColor: '$info',
+    borderColor: '$primary500',
   },
   variants: {
     disabled: {
       true: {
-        backgroundColor: '$backgroundColorDisabled',
+        backgroundColor: '$neutrals300',
         cursor: 'not-allowed',
         filter: 'grayscale(100%)',
       },
     },
     prefix: {
       true: {
-        paddingLeft: '$4',
+        paddingLeft: '$16',
       },
       false: {
         paddingLeft: '$0',
@@ -31,7 +31,7 @@ const InputContainer = styled('div', {
     },
     suffix: {
       true: {
-        paddingRight: '$4',
+        paddingRight: '$16',
       },
       false: {
         paddingRight: '$0',
@@ -42,11 +42,12 @@ const InputContainer = styled('div', {
 
 const Input = styled('input', {
   color: '$text',
-  padding: '$0 $4',
+  paddingLeft: '$16',
+  paddingRight: '$16',
   flexGrow: 1,
   widows: '100%',
   border: 'none',
-  borderRadius: '$m',
+  borderRadius: '$5',
   outline: 'none',
   fontSize: '$l',
   backgroundColor: 'transparent',
@@ -56,8 +57,8 @@ const Input = styled('input', {
 });
 const Label = styled('label', {
   display: 'inline-block',
-  fontSize: '$l',
-  marginBottom: '$1',
+  fontSize: '$16',
+  marginBottom: '$4',
 });
 
 export type PropTypes = {

@@ -12,7 +12,7 @@
     "node": ">=10"
   },
   "scripts": {
-    "dev": "start-storybook -p 6006",
+    "dev": "start-storybook -p 3000",
     "build": "tsdx build",
     "test": "tsdx test --passWithNoTests",
     "lint": "tsdx lint",

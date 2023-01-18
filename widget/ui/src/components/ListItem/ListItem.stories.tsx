@@ -6,21 +6,21 @@ export default {
   title: 'List item',
   component: ListItem,
   argTypes: {
-    isSelected: {
-      name: 'isSelected',
+    selected: {
+      name: 'selected',
       defaultValue: false,
       type: 'boolean',
       if: {
-        arg: 'isDisabled',
+        arg: 'disabled',
         truthy: false,
       },
     },
-    isDisabled: {
-      name: 'isDisabled',
+    disabled: {
+      name: 'disabled',
       defaultValue: false,
       type: 'boolean',
       if: {
-        arg: 'isSelected',
+        arg: 'selected',
         truthy: false,
       },
     },

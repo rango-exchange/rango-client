@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { styled } from '../../theme';
-import { Add } from '../Icon';
+import CloseIcon from '../Icon/Close';
 import Typography from '../Typography';
 
 export interface PropTypes {
@@ -17,17 +17,17 @@ const BackDrop = styled('div', {
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
-  top: '$0',
-  left: '$0',
+  top: '0',
+  left: '0',
   width: '100vw',
   height: '100vh',
   backgroundColor: 'rgba(0,0,0,.1)',
 });
 
 const ModalContainer = styled('div', {
-  backgroundColor: '$backgroundColor',
-  borderRadius: '$m',
-  padding: '$4 $4',
+  backgroundColor: '$background',
+  borderRadius: '$10',
+  padding: '$16 $16',
   display: 'flex',
   flexDirection: 'column',
 });
@@ -37,12 +37,7 @@ const ModalHeader = styled('div', {
   justifyContent: 'space-between',
   alignItems: 'center',
   position: 'relative',
-  marginBottom: '$4',
-});
-
-const CloseIcon = styled(Add, {
-  transform: 'rotate(45deg)',
-  cursor: 'pointer',
+  marginBottom: '$16',
 });
 
 const ContentContainer = styled('div', {
@@ -63,7 +58,7 @@ function Modal(props: PropTypes) {
           <ModalContainer style={containerStyle}>
             <ModalHeader>
               <Typography variant="h4">{title}</Typography>
-              <CloseIcon size={28} onClick={onClose} />
+              <CloseIcon size={24} onClick={onClose} />
             </ModalHeader>
             <ContentContainer>{content}</ContentContainer>
           </ModalContainer>

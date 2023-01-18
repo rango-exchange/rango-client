@@ -2,35 +2,34 @@ import React, { PropsWithChildren } from 'react';
 import { styled } from '../../theme';
 
 const Item = styled('li', {
+  backgroundColor: '$background',
   boxSizing: 'border-box',
-  border: '1px solid $borderColor',
-  borderRadius: '$s',
-  height: '3rem',
-  padding: '$0 $4',
-  fontSize: '$l',
-  color: '$text',
+  border: '1px solid $neutrals400',
+  borderRadius: '$5',
+  height: '$48',
+  paddingLeft: '$16',
+  paddingRight: '$16',
+  fontSize: '$16',
+  color: '$foreground',
   cursor: 'pointer',
   display: 'flex',
   justifyContent: 'space-between',
   alignItems: 'center',
   '&:hover': {
-    backgroundColor: '$backgroundColor2',
+    backgroundColor: '$neutrals200',
   },
   variants: {
-    isSelected: {
+    selected: {
       true: {
-        borderColor: '$primary-500',
+        borderColor: '$primary500',
       },
     },
-    isDisabled: {
+    disabled: {
       true: {
-        backgroundColor: '$backgroundColorDisabled',
+        backgroundColor: '$neutrals300 !important',
         borderColor: 'transparent',
         cursor: 'not-allowed',
         filter: 'grayscale(100%)',
-        '&:hover': {
-          backgroundColor: '$backgroundColorDisabled',
-        },
       },
     },
   },
@@ -38,21 +37,21 @@ const Item = styled('li', {
 
 export type PropTypes = (
   | {
-      isSelected?: boolean;
-      isDisabled?: never;
+      selected?: boolean;
+      disabled?: never;
     }
-  | { isSelected?: never; isDisabled?: boolean }
+  | { selected?: never; disabled?: boolean }
 ) & {
   onClick?: (event: React.MouseEvent<HTMLLIElement>) => void;
   style?: React.CSSProperties;
 };
 
 function ListItem(props: PropsWithChildren<PropTypes>) {
-  const { isSelected, isDisabled, onClick, children, style } = props;
+  const { selected, disabled, onClick, children, style } = props;
   return (
     <Item
-      isSelected={isSelected}
-      isDisabled={isDisabled}
+      selected={selected}
+      disabled={disabled}
       onClick={onClick}
       css={{ ...style }}
     >

@@ -9,12 +9,12 @@ const StyledSwitchRoot = styled(RadixSwitch.Root, {
   borderStyle: 'solid',
   width: '42px',
   height: '22px',
-  backgroundColor: '$backgroundColor2',
-  borderColor: '$borderColor',
+  backgroundColor: '$neutrals300',
+  borderColor: '$neutrals400',
   borderRadius: '99999px',
   position: 'relative',
   '&[data-state="checked"]': {
-    // borderColor: '$primary-500',
+    backgroundColor: '$primary100',
   },
   '-webkit-tap-highlight-color': 'rgba(0, 0, 0, 0)',
 });
@@ -26,13 +26,13 @@ const StyledSwitchThumb = styled(RadixSwitch.Thumb, {
   display: 'block',
   width: '18px',
   height: '18px',
-  backgroundColor: 'Gray',
+  backgroundColor: '$neutrals500',
   borderRadius: '999999px',
   transition: 'transform 100ms',
   willChange: 'transform',
   '&[data-state="checked"]': {
     transform: 'translateX(20px)',
-    backgroundColor: '$primary-500',
+    backgroundColor: '$primary500',
   },
 });
 

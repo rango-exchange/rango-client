@@ -24,6 +24,7 @@ type PropTypes = {
   Item: VirtualizedListItem;
   focus: number;
   innerElementType: ReactElementType | undefined;
+  size: number;
 };
 
 function VirtualizedList(props: PropsWithChildren<PropTypes>) {
@@ -35,25 +36,11 @@ function VirtualizedList(props: PropsWithChildren<PropTypes>) {
     focus,
     Item,
     innerElementType,
+    size,
   } = props;
   const listRef = useRef<any>(null);
 
   const isItemLoaded = (index: number) => !hasNextPage || index < itemCount;
-  // eslint-disable-next-line react/display-name, react/prop-types
-  // const innerElementType: React.FC<CommonProps> = forwardRef(
-  //   ({ style, ...rest }, ref) => (
-  //     <div
-  //       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  //       ref={ref as any}
-  //       style={{
-  //         ...style,
-  //         // eslint-disable-next-line react/prop-types
-  //         height: `${parseFloat(style?.height as string) + 8 * 2}px`,
-  //       }}
-  //       {...rest}
-  //     />
-  //   )
-  // );
   const scrollTo = (num: number) =>
     listRef?.current?.scrollToItem(num, 'center');
 
@@ -81,7 +68,7 @@ function VirtualizedList(props: PropsWithChildren<PropTypes>) {
               <List
                 innerElementType={innerElementType}
                 ref={listRef}
-                itemSize={() => 72}
+                itemSize={() => size}
                 itemCount={itemCount}
                 height={height}
                 width={width}

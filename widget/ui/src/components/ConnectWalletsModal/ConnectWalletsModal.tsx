@@ -13,8 +13,8 @@ export interface PropTypes {
 
 const ModalContent = styled('div', {
   display: 'grid',
-  gap: '.5rem',
-  gridTemplateColumns: ' repeat(2, minmax(0, 1fr))',
+  gap: '$8',
+  gridTemplateColumns: 'repeat(2, minmax(0, 1fr))',
 });
 
 function ConnectWalletsModal(props: PropTypes) {

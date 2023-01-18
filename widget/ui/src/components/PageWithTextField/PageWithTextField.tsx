@@ -1,4 +1,4 @@
-import React, { ReactElement, useEffect, useRef, useState } from 'react';
+import React, { ReactElement, useState } from 'react';
 // import { ChevronLeftIcon } from '@radix-ui/react-icons';
 import { styled } from '../../theme';
 import { AngleLeft, Search } from '../Icon';
@@ -10,6 +10,7 @@ interface PropTypes {
   title: string;
   Content: (props: { searchedText: string }) => ReactElement;
   onEnter?: (e: React.KeyboardEvent<HTMLDivElement>) => void;
+  onBack?: () => void;
   textFieldPlaceholder: string;
   TopButton?: React.ReactNode;
 }
@@ -19,37 +20,41 @@ const Container = styled('div', {
   flexDirection: 'column',
   height: '100%',
   width: '100%',
-  padding: '$4',
+  padding: '$16',
 });
 
 const HeaderContainer = styled('div', {
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
-  marginBottom: '$4',
+  marginBottom: '$16',
   position: 'relative',
 });
 
 const BackIcon = styled(AngleLeft, {
   position: 'absolute',
-  left: '$0',
+  left: '0',
 });
 
 const ContentContainer = styled('div', {
   flex: '1',
   overflowY: 'auto',
-  marginTop: '$4',
+  marginTop: '$16',
+});
+
+const StyledBackIcon = styled(BackIcon, {
+  cursor: 'pointer',
 });
 
 function PageWithTextField(props: PropTypes) {
-  const { title, TopButton, Content, textFieldPlaceholder } = props;
+  const { title, TopButton, Content, textFieldPlaceholder, onBack } = props;
   const [searchedText, setSearchedText] = useState('');
 
   return (
     <SwapContainer>
       <Container>
         <HeaderContainer>
-          <BackIcon size={28} />
+          <StyledBackIcon size={24} onClick={onBack} />
           <Typography variant="h4">{title}</Typography>
           {TopButton}
         </HeaderContainer>

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { containsText } from '../../helpers';
 import { styled } from '../../theme';
 import { LiquiditySource } from '../../types/meta';
 import ListItem from '../ListItem';
@@ -8,9 +9,12 @@ import Typography from '../Typography';
 const LiquiditySourceType = styled(Typography, {
   position: 'sticky',
   top: '0',
-  margin: '$4 $0 $2 $0',
-  backgroundColor: '$backgroundColor',
-  padding: '$4 0',
+  marginTop: '$16',
+  marginBottom: '$8',
+  backgroundColor: '$background',
+  zIndex: '9999',
+  paddingTop: '$16',
+  paddingBottom: '$16',
 });
 
 const ListContainer = styled('div', {});
@@ -20,9 +24,9 @@ const LiquiditySourceInfo = styled('div', {
   justifyContent: 'center',
   alignItems: 'center',
   '& img': {
-    width: '$6',
-    maxHeight: '$6',
-    marginRight: '$4',
+    width: '$20',
+    maxHeight: '$20',
+    marginRight: '$16',
   },
 });
 
@@ -48,7 +52,7 @@ function LiquiditySourceList(props: PropTypes) {
   useEffect(() => {
     setFilteredLiquiditySources(
       liquiditySources.filter((liquiditySource) =>
-        liquiditySource.title.toLowerCase().includes(searchedText.toLowerCase())
+        containsText(liquiditySource.title, searchedText)
       )
     );
   }, [searchedText]);
