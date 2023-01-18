@@ -9,12 +9,9 @@ import { SwapResult } from '../types';
 import { BestRouteType } from '../types';
 
 const Container = styled('div', {
-  padding: '$xxl $xl',
+  padding: '$18 $22',
 });
-const Title = styled('div', {
-  fontSize: '$xl',
-  fontWeight: '$xl',
-});
+
 const TitleContainer = styled('div', {
   display: 'flex',
   alignItems: 'center',
@@ -45,8 +42,8 @@ const RelativeContainer = styled('div', {
   position: 'relative',
 });
 const Body = styled('div', {
-  marginTop: '30px',
-  marginBottom: '16px',
+  marginTop: '$30',
+  marginBottom: '$16',
 });
 const Footer = styled('div', {
   display: 'flex',
@@ -104,7 +101,7 @@ function ConfirmSwap({
           onClick={handleBack}
           prefix={<AngleLeft size={24} />}
         />
-        <Title>Swap</Title>
+        <Typography variant="h4">Swap</Typography>
         <Button
           variant="ghost"
           onClick={handleUpdateRoute}

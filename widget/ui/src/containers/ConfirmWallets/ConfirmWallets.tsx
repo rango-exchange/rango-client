@@ -9,13 +9,9 @@ import { BestRouteType } from '../types';
 import { ActiveWalletsType } from './types';
 
 const Container = styled('div', {
-  padding: '$xxl $xl',
+  padding: '$18 $22',
 });
 
-const Title = styled('div', {
-  fontSize: '$xl',
-  fontWeight: '$xl',
-});
 const TitleContainer = styled('div', {
   display: 'flex',
   alignItems: 'center',
@@ -23,8 +19,8 @@ const TitleContainer = styled('div', {
 });
 
 const Body = styled('div', {
-  marginTop: '30px',
-  marginBottom: '16px',
+  marginTop: '$30',
+  marginBottom: '$16',
 });
 const Footer = styled('div', {
   display: 'flex',
@@ -32,7 +28,8 @@ const Footer = styled('div', {
 });
 
 const SwapButton = styled(Button, {
-  marginLeft: '$l',
+  marginLeft: '$12',
+  width: '100%',
 });
 
 export interface PropTypes {
@@ -68,19 +65,20 @@ function ConfirmWallets({
     <Container>
       <TitleContainer>
         <Button
-          variant="text"
+          variant="ghost"
           onClick={handleBack}
-          startIcon={<AngleLeft size={24} />}
+          prefix={<AngleLeft size={24} />}
         />
-        <Title>Swap</Title>
+        <Typography variant="h4">Swap</Typography>
+
         <Button
-          variant="text"
+          variant="ghost"
           onClick={handleUpdateRoute}
-          startIcon={<Retry size={24} />}
+          prefix={<Retry size={24} />}
         />
       </TitleContainer>
       <Body>
-        <Typography variant="h5" noWrap>
+        <Typography variant="h6" mb={12} noWrap>
           Confirm swap {parseFloat(firstStep?.fromAmount || '0').toFixed(4)}{' '}
           {lastStep?.from.symbol} ({firstStep?.from.blockchain}) to{' '}
           {parseFloat(lastStep?.toAmount || '0').toFixed(4)}{' '}
@@ -88,7 +86,7 @@ function ConfirmWallets({
         </Typography>
         {wallets.map((wallet: ActiveWalletsType, index: number) => (
           <div>
-            <Typography variant="legal">
+            <Typography variant="body2" mb={12} mt={12}>
               {index + 1}) your {wallet.type} wallet
             </Typography>
             <RadioWalletGroup wallet={wallet} />
@@ -99,7 +97,7 @@ function ConfirmWallets({
         <Tooltip side="bottom" content="send to a different wallet">
           <Button
             variant="contained"
-            startIcon={<AddWallet width={28} height={28} />}
+            prefix={<AddWallet size={24} color="white" />}
             onClick={handleAddWallet}
           />
         </Tooltip>

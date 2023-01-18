@@ -18,7 +18,7 @@ const Circle = styled('div', {
   width: 12,
   height: 12,
   borderRadius: 6,
-  border: '1px solid $pending',
+  border: '1px solid $neutrals400',
   position: 'absolute',
   top: 8,
   right: 8,
@@ -28,14 +28,14 @@ const Circle = styled('div', {
         borderColor: '$success',
       },
       false: {
-        borderColor: '$pending',
+        borderColor: '$neutrals400',
       },
     },
   },
 });
 const SolidCircle = styled('div', {
   width: 6,
-  margin: '30% auto',
+  margin: '20% auto',
   height: 6,
   borderRadius: 3,
   variants: {
@@ -44,15 +44,15 @@ const SolidCircle = styled('div', {
         backgroundColor: '$success',
       },
       false: {
-        backgroundColor: '$pending',
+        backgroundColor: '$neutrals400',
       },
     },
   },
 });
 const RadioContainer = styled('div', {
   border: '1.5px solid',
-  borderRadius: 5,
-  padding: '$l',
+  borderRadius: '$5',
+  padding: '$12',
   display: 'flex',
   flexDirection: 'column',
   justifyContent: 'space-between',
@@ -67,8 +67,8 @@ const RadioContainer = styled('div', {
         color: '$success',
       },
       false: {
-        borderColor: '$pending',
-        color: '$pending',
+        borderColor: '$neutrals400',
+        color: '$neutrals400',
       },
     },
   },
@@ -91,7 +91,7 @@ function RadioWalletGroup({ wallet, onChange }: PropsWithChildren<PropTypes>) {
         return (
           <RadioContainer checked={checked} onClick={() => onClick(w)}>
             <img src={w.logo} alt={wallet.type} width={24} height={24} />
-            <Typography variant="body1">{w.title}</Typography>
+            <Typography variant="body2">{w.title}</Typography>
             <Circle checked={checked}>
               <SolidCircle checked={checked} />
             </Circle>
