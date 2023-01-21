@@ -3,7 +3,6 @@ import { ComponentMeta } from '@storybook/react';
 
 import History, { PropTypes } from './History';
 import { pendingSwap } from './mock';
-import SwapContainer from '../../components/SwapContainer';
 
 export default {
   title: 'Containers/History',
@@ -11,7 +10,5 @@ export default {
 } as ComponentMeta<typeof History>;
 
 export const Main = (props: PropTypes) => (
-  <SwapContainer>
-    <History {...props} list={pendingSwap} />
-  </SwapContainer>
+  <History {...props} list={pendingSwap} />
 );

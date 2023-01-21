@@ -1,10 +1,13 @@
-
 export type ActiveWalletsType = {
+  blockchain: string;
+  id: string;
   type: string;
-  wallets: Wallet[];
+  options: Wallet[];
 };
 
 export type Wallet = {
-  title: string;
+  walletType: string;
+  address: string;
   logo: string;
 };
+

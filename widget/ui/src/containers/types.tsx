@@ -86,7 +86,9 @@ export type SwapperId =
   | 'PoS Bridge'
   | 'Wormhole'
   | 'AnySwap Aggregator'
-  | 'PangolinSwap';
+  | 'PangolinSwap'
+  | 'ParaSwap Bsc'
+  | 'Satellite';
 
 export enum PendingSwapNetworkStatus {
   WaitingForConnectingWallet = 'waitingForConnectingWallet',
@@ -267,6 +269,7 @@ export type SimulationResult = {
   swaps: SwapResult[];
 };
 export type SwapResult = {
+  result: any;
   swapperId: SwapperId;
   swapperLogo: string;
   from: SwapResultAsset;
@@ -314,7 +317,7 @@ export type BestRouteType = {
   from: Asset;
   to: Asset;
   requestAmount: string;
-  result: SimulationResult | null;
+  result?: SimulationResult | null;
   validationStatus: SimulationValidationStatus[] | null;
   requestId: string;
   missingBlockchains: string[];

@@ -1,117 +1,89 @@
 import React, { PropsWithChildren } from 'react';
 import Button from '../../components/Button';
-import { AngleLeft, Retry, AddWallet } from '../../components/Icon';
-import RadioWalletGroup from '../../components/RadioWalletGroup';
+import { AddWallet } from '../../components/Icon';
+import SecondaryPage from '../../components/PageWithTextField/SecondaryPage';
+import SelectableWalletList from '../../components/SelectableWalletList';
+import Spacer from '../../components/Spacer';
 import Tooltip from '../../components/Tooltip';
 import Typography from '../../components/Typography';
+import { decimalNumber } from '../../helper/number';
 import { styled } from '../../theme';
 import { BestRouteType } from '../types';
 import { ActiveWalletsType } from './types';
 
-const Container = styled('div', {
-  padding: '$18 $22',
-});
-
-const TitleContainer = styled('div', {
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'space-between',
-});
-
-const Body = styled('div', {
-  marginTop: '$30',
-  marginBottom: '$16',
-});
 const Footer = styled('div', {
   display: 'flex',
   alignItems: 'center',
 });
 
-const SwapButton = styled(Button, {
-  marginLeft: '$12',
-  width: '100%',
-});
-
 export interface PropTypes {
-  bestRoute: BestRouteType;
-  handleUpdateRoute:
-    | ((event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void)
-    | undefined;
-  handleBack:
-    | ((event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void)
-    | undefined;
-  handleAddWallet:
-    | ((event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void)
-    | undefined;
-  handleSwap:
-    | ((event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void)
-    | undefined;
-  loading: boolean;
+  swap: BestRouteType;
+  onBack?: () => void;
+  onAddWallet?: (
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => void;
+  onConfirm?: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
+  loading?: boolean;
   wallets: ActiveWalletsType[];
 }
-
 function ConfirmWallets({
-  bestRoute,
-  handleUpdateRoute,
-  handleBack,
-  handleAddWallet,
-  handleSwap,
+  onBack,
   loading,
+  onAddWallet,
+  onConfirm,
+  swap,
   wallets,
 }: PropsWithChildren<PropTypes>) {
-  const firstStep = bestRoute.result?.swaps[0];
-  const lastStep = bestRoute.result?.swaps[bestRoute.result?.swaps.length - 1];
+  const firstStep = swap.result?.swaps[0];
+  const lastStep = swap.result?.swaps[swap.result?.swaps.length - 1];
+
+  const fromAmount = decimalNumber(firstStep?.fromAmount, 3);
+  const toAmount = decimalNumber(lastStep?.toAmount, 3);
+
   return (
-    <Container>
-      <TitleContainer>
-        <Button
-          variant="ghost"
-          onClick={handleBack}
-          prefix={<AngleLeft size={24} />}
-        />
-        <Typography variant="h4">Swap</Typography>
+    <SecondaryPage
+      textField={false}
+      title="Swap"
+      onBack={onBack}
+      Footer={
+        <Footer>
+          <Tooltip side="bottom" content="send to a different wallet">
+            <Button
+              variant="contained"
+              prefix={<AddWallet size={24} color="white" />}
+              onClick={onAddWallet}
+            />
+          </Tooltip>
+          <Spacer />
 
-        <Button
-          variant="ghost"
-          onClick={handleUpdateRoute}
-          prefix={<Retry size={24} />}
-        />
-      </TitleContainer>
-      <Body>
-        <Typography variant="h6" mb={12} noWrap>
-          Confirm swap {parseFloat(firstStep?.fromAmount || '0').toFixed(4)}{' '}
-          {lastStep?.from.symbol} ({firstStep?.from.blockchain}) to{' '}
-          {parseFloat(lastStep?.toAmount || '0').toFixed(4)}{' '}
-          {lastStep?.to.symbol} (on {lastStep?.to.blockchain})
-        </Typography>
-        {wallets.map((wallet: ActiveWalletsType, index: number) => (
-          <div>
-            <Typography variant="body2" mb={12} mt={12}>
-              {index + 1}) your {wallet.type} wallet
-            </Typography>
-            <RadioWalletGroup wallet={wallet} />
-          </div>
-        ))}
-      </Body>
-      <Footer>
-        <Tooltip side="bottom" content="send to a different wallet">
           <Button
+            fullWidth
+            loading={loading}
             variant="contained"
-            prefix={<AddWallet size={24} color="white" />}
-            onClick={handleAddWallet}
-          />
-        </Tooltip>
-
-        <SwapButton
-          loading={loading}
-          variant="contained"
-          onClick={handleSwap}
-          fullWidth={true}
-        >
-          swap
-        </SwapButton>
-      </Footer>
-    </Container>
+            onClick={onConfirm}
+          >
+            Confirm
+          </Button>
+        </Footer>
+      }
+      Content={
+        <>
+          <Typography variant="h6" mb={12} >
+            Confirm swap {fromAmount} {lastStep?.from.symbol} (
+            {firstStep?.from.blockchain}) to {toAmount} {lastStep?.to.symbol}{' '}
+            (on {lastStep?.to.blockchain})
+          </Typography>
+          {wallets.map((wallet: ActiveWalletsType, index: number) => (
+            <div>
+              <Typography variant="body2" mb={12} mt={12}>
+                {index + 1}) Your {wallet.type} Wallet
+              </Typography>
+              <SelectableWalletList data={wallet} />
+            </div>
+          ))}
+        </>
+      }
+    />
   );
 }
 

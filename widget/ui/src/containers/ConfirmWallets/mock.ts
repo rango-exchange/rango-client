@@ -10,6 +10,7 @@ export const bestRoute: BestRouteType = {
     outputAmount: '5.685715974132648891',
     swaps: [
       {
+        result: null,
         swapperId: 'AnySwap Aggregator',
         swapperType: 'AGGREGATOR',
         swapperLogo: 'https://api.rango.exchange/swappers/multichain.png',
@@ -56,6 +57,7 @@ export const bestRoute: BestRouteType = {
         includesDestinationTx: false,
       },
       {
+        result: null,
         swapperId: 'PangolinSwap',
         swapperLogo: 'https://api.rango.exchange/swappers/pangolin.png',
         swapperType: 'DEX',
@@ -140,24 +142,78 @@ export const bestRoute: BestRouteType = {
 
 export const wallets: Array<ActiveWalletsType> = [
   {
-    type: 'BSC',
-    wallets: [
+    blockchain: 'BSC',
+    id: '0x5423e28219d6d568dcf62a8134d623e6f4a1c2df',
+    type: 'metamask',
+    options: [
       {
-        title: 'Metamask',
-        logo: 'https://lh3.googleusercontent.com/QW0gZ3yugzXDvTANa5-cc1EpabQ2MGnl6enW11O6kIerEaBQGOhgyUOvhRedndD9io8RJMmJZfIXq1rMxUsFHS2Ttw=w128-h128-e365-rj-sc0x00ffffff',
+        walletType: 'metamask',
+        address: '0x5423e28219d6d568dcf62a8134d623e6f4a1c2df',
+        logo: 'https://app.rango.exchange/wallets/metamask.svg',
       },
       {
-        title: 'Keplr',
-        logo: 'https://lh3.googleusercontent.com/lv1Ras6ux_YN-LdWvL69MYKi4phi7mtXrhLi5umba9NagBB_ZnvYJwiHdKr-k-q77WIskj58z2BCD8Dpfk9WyWkVaro=w128-h128-e365-rj-sc0x00ffffff',
+        walletType: 'okx',
+        address: '0x2702d89c1c8658b49c45dd460deebcc45faec03c',
+        logo: 'https://app.rango.exchange/wallets/okx.png',
       },
     ],
   },
   {
-    type: 'Polygon',
-    wallets: [
+    blockchain: 'OSMOSIS',
+    id: 'osmo1unf2rcytjxfpz8x8ar63h4qeftadptg5t0nqcl',
+    type: 'keplr',
+    options: [
       {
-        title: 'Metamask',
-        logo: 'https://lh3.googleusercontent.com/QW0gZ3yugzXDvTANa5-cc1EpabQ2MGnl6enW11O6kIerEaBQGOhgyUOvhRedndD9io8RJMmJZfIXq1rMxUsFHS2Ttw=w128-h128-e365-rj-sc0x00ffffff',
+        walletType: 'keplr',
+        address: 'osmo1unf2rcytjxfpz8x8ar63h4qeftadptg5t0nqcl',
+        logo: 'https://app.rango.exchange/wallets/keplr.png',
+      },
+    ],
+  },
+];
+
+export const exampleFor5Wallets: Array<ActiveWalletsType> = [
+  {
+    blockchain: 'BSC',
+    id: '0x5423e28219d6d568dcf62a8134d623e6f4a1c2df',
+    type: 'metamask',
+    options: [
+      {
+        walletType: 'metamask',
+        address: '0x5423e28219d6d568dcf62a8134d623e6f4a1c2df',
+        logo: 'https://app.rango.exchange/wallets/metamask.svg',
+      },
+      {
+        walletType: 'okx',
+        address: '0x2702d89c1c8658b49c45dd460deebcc45faec03c',
+        logo: 'https://app.rango.exchange/wallets/okx.png',
+      },
+      {
+        walletType: 'exodus',
+        address: '0x2702d89c1c8658b49c45dd460deebcc45faec03c',
+        logo: 'https://app.rango.exchange/wallets/exodus.png',
+      },
+      {
+        walletType: 'mathwallet',
+        address: '0x2702d89c1c8658b49c45dd460deebcc45faec03c',
+        logo: 'https://app.rango.exchange/wallets/math-wallet.png',
+      },
+      {
+        walletType: 'clover',
+        address: '0x2702d89c1c8658b49c45dd460deebcc45faec03c',
+        logo: 'https://app.rango.exchange/wallets/clover.jpeg',
+      },
+    ],
+  },
+  {
+    blockchain: 'OSMOSIS',
+    id: 'osmo1unf2rcytjxfpz8x8ar63h4qeftadptg5t0nqcl',
+    type: 'keplr',
+    options: [
+      {
+        walletType: 'keplr',
+        address: 'osmo1unf2rcytjxfpz8x8ar63h4qeftadptg5t0nqcl',
+        logo: 'https://app.rango.exchange/wallets/keplr.png',
       },
     ],
   },

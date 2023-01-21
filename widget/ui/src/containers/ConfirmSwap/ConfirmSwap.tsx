@@ -1,6 +1,8 @@
 import React, { PropsWithChildren } from 'react';
 import Button from '../../components/Button';
-import { AngleLeft, Retry, Gas, AddWallet } from '../../components/Icon';
+import { Retry, Gas, AddWallet } from '../../components/Icon';
+import SecondaryPage from '../../components/PageWithTextField/SecondaryPage';
+import Spacer from '../../components/Spacer';
 import StepDetail from '../../components/StepDetail';
 import Tooltip from '../../components/Tooltip';
 import Typography from '../../components/Typography';
@@ -8,15 +10,6 @@ import { styled } from '../../theme';
 import { SwapResult } from '../types';
 import { BestRouteType } from '../types';
 
-const Container = styled('div', {
-  padding: '$18 $22',
-});
-
-const TitleContainer = styled('div', {
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'space-between',
-});
 const Line = styled('div', {
   width: '0',
   marginLeft: '$12',
@@ -29,7 +22,12 @@ const SwapperContainer = styled('div', {
   alignItems: 'center',
   marginLeft: '6px',
 });
-
+const BodyError = styled('div', {
+  height: '100%',
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+});
 const Fee = styled('div', {
   display: 'flex',
   alignItems: 'center',
@@ -41,10 +39,7 @@ const SwapperLogo = styled('img', {
 const RelativeContainer = styled('div', {
   position: 'relative',
 });
-const Body = styled('div', {
-  marginTop: '$30',
-  marginBottom: '$16',
-});
+
 const Footer = styled('div', {
   display: 'flex',
   alignItems: 'center',
@@ -64,108 +59,114 @@ const ArrowDown = styled('div', {
   borderTop: '5px solid $foreground',
   marginLeft: '$8',
 });
-
-const SwapButton = styled(Button, {
-  marginLeft: '$12',
-  width: '100%',
+const UpdateIcon = styled(Retry, {
+  position: 'absolute',
+  right: '0',
+});
+const StyledUpdateIcon = styled(UpdateIcon, {
+  cursor: 'pointer',
+});
+const ErrorMsg = styled(Typography, {
+  color: '$error',
 });
 export interface PropTypes {
-  bestRoute: BestRouteType;
-  handleUpdateRoute:
-    | ((event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void)
-    | undefined;
-  handleBack:
-    | ((event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void)
-    | undefined;
-  handleAddWallet:
-    | ((event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void)
-    | undefined;
-  handleSwap:
-    | ((event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void)
-    | undefined;
-  loading: boolean;
+  swap: BestRouteType;
+  onRefresh?: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
+  onBack?: () => void;
+  onAddWallet?: (
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => void;
+  onConfirm?: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
+  loading?: boolean;
+  error?: string;
 }
 function ConfirmSwap({
-  bestRoute,
-  handleUpdateRoute,
-  handleBack,
-  handleAddWallet,
-  handleSwap,
+  swap,
+  onRefresh,
+  onBack,
+  onAddWallet,
+  onConfirm,
   loading,
+  error,
 }: PropsWithChildren<PropTypes>) {
   return (
-    <Container>
-      <TitleContainer>
-        <Button
-          variant="ghost"
-          onClick={handleBack}
-          prefix={<AngleLeft size={24} />}
-        />
-        <Typography variant="h4">Swap</Typography>
-        <Button
-          variant="ghost"
-          onClick={handleUpdateRoute}
-          prefix={<Retry size={24} />}
-        />
-      </TitleContainer>
-      <Body>
-        {bestRoute.result?.swaps.map((swap: SwapResult, index: number) => (
-          <>
-            {index === 0 && (
-              <RelativeContainer>
-                <StepDetail
-                  logo={swap.from.logo}
-                  symbol={swap.from.symbol}
-                  chainLogo={swap.from.blockchainlogo}
-                  blockchain={swap.from.blockchain}
-                  amount={swap.fromAmount}
-                />
-                <Dot />
-              </RelativeContainer>
-            )}
-            <Line />
-            <SwapperContainer>
-              <SwapperLogo src={swap.swapperLogo} alt={swap.swapperId} />
-              <div>
-                <Typography ml={4} variant="caption">
-                  {swap.swapperType} from {swap.from.symbol} to {swap.to.symbol}{' '}
-                  via {swap.swapperId}{' '}
-                </Typography>
-                <Fee>
-                  <Gas />
-                  <Typography ml={4} variant="caption">
-                    {parseFloat(swap.fee[0].amount).toFixed(6)} estimated gas
-                    fee
-                  </Typography>
-                </Fee>
-              </div>
-            </SwapperContainer>
-            <Line />
-            {index + 1 === bestRoute.result?.swaps.length && <ArrowDown />}
-            <StepDetail
-              logo={swap.to.logo}
-              symbol={swap.to.symbol}
-              chainLogo={swap.to.blockchainlogo}
-              blockchain={swap.to.blockchain}
-              amount={swap.toAmount}
+    <SecondaryPage
+      textField={false}
+      title="Swap"
+      onBack={onBack}
+      Footer={
+        <Footer>
+          <Tooltip side="bottom" content="send to a different wallet">
+            <Button
+              variant="contained"
+              prefix={<AddWallet size={24} color="white" />}
+              onClick={onAddWallet}
             />
-          </>
-        ))}
-      </Body>
-      <Footer>
-        <Tooltip side="bottom" content="send to a different wallet">
-          <Button
-            variant="contained"
-            prefix={<AddWallet size={24} color="white" />}
-            onClick={handleAddWallet}
-          />
-        </Tooltip>
+          </Tooltip>
+          <Spacer />
 
-        <SwapButton loading={loading} variant="contained" onClick={handleSwap}>
-          swap
-        </SwapButton>
-      </Footer>
-    </Container>
+          <Button
+            fullWidth
+            loading={loading}
+            variant="contained"
+            onClick={onConfirm}
+          >
+            Swap
+          </Button>
+        </Footer>
+      }
+      TopButton={<StyledUpdateIcon size={24} onClick={onRefresh} />}
+      Content={
+        error ? (
+          <BodyError>
+            <ErrorMsg variant="caption">{error}</ErrorMsg>
+          </BodyError>
+        ) : (
+          swap.result?.swaps.map((swap: SwapResult, index: number) => (
+            <>
+              {index === 0 && (
+                <RelativeContainer>
+                  <StepDetail
+                    logo={swap.from.logo}
+                    symbol={swap.from.symbol}
+                    chainLogo={swap.from.blockchainlogo}
+                    blockchain={swap.from.blockchain}
+                    amount={swap.fromAmount}
+                  />
+                  <Dot />
+                </RelativeContainer>
+              )}
+              <Line />
+              <SwapperContainer>
+                <SwapperLogo src={swap.swapperLogo} alt={swap.swapperId} />
+                <div>
+                  <Typography ml={4} variant="caption">
+                    {swap.swapperType} from {swap.from.symbol} to{' '}
+                    {swap.to.symbol} via {swap.swapperId}{' '}
+                  </Typography>
+                  <Fee>
+                    <Gas />
+                    <Typography ml={4} variant="caption">
+                      {parseFloat(swap.fee[0].amount).toFixed(6)} estimated gas
+                      fee
+                    </Typography>
+                  </Fee>
+                </div>
+              </SwapperContainer>
+              <Line />
+              {index + 1 === swap.result?.swaps.length && <ArrowDown />}
+              <StepDetail
+                logo={swap.to.logo}
+                symbol={swap.to.symbol}
+                chainLogo={swap.to.blockchainlogo}
+                blockchain={swap.to.blockchain}
+                amount={swap.toAmount}
+              />
+            </>
+          ))
+        )
+      }
+    />
   );
 }
 

@@ -2,7 +2,7 @@ import React, { PropsWithChildren } from 'react';
 import SecondaryPage from '../../components/PageWithTextField/SecondaryPage';
 import SwapDetail from '../../components/SwapDetail';
 import Typography from '../../components/Typography';
-import { GroupingOfSwaps } from '../../helper/groupingOfSwaps';
+import { GroupingOfSwaps } from '../../helper/swaps';
 import { styled } from '../../theme';
 import { PendingSwap } from './types';
 

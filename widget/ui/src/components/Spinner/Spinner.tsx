@@ -57,8 +57,6 @@ export interface PropTypes {
 }
 
 function Spinner({ size = 16, color = 'primary' }: PropTypes) {
-  console.log({ size, color });
-
   return <SpinnerContainer size={size} color={color} />;
 }
 

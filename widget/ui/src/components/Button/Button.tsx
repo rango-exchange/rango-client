@@ -63,6 +63,14 @@ const ButtonContainer = styled('button', {
         border: 0,
       },
     },
+    fullWidth: {
+      true: {
+        width: '100%',
+      },
+    },
+    loading: {
+      true: {},
+    },
     type: {
       primary: {},
       error: {},
@@ -275,6 +283,130 @@ const ButtonContainer = styled('button', {
         },
       },
     },
+    {
+      type: 'primary',
+      variant: 'contained',
+      loading: true,
+      css: {
+        '&:disabled': {
+          background: '$primary !important',
+        },
+      },
+    },
+    {
+      type: 'primary',
+      variant: 'outlined',
+      loading: true,
+      css: {
+        '&:disabled': {
+          borderColor: '$primary !important',
+          color: '$primary !important',
+        },
+      },
+    },
+    {
+      type: 'primary',
+      variant: 'ghost',
+      loading: true,
+      css: {
+        '&:disabled': {
+          color: '$primary !important',
+        },
+      },
+    },
+    {
+      type: 'error',
+      variant: 'contained',
+      loading: true,
+      css: {
+        '&:disabled': {
+          background: '$error !important',
+        },
+      },
+    },
+    {
+      type: 'error',
+      variant: 'outlined',
+      loading: true,
+      css: {
+        '&:disabled': {
+          borderColor: '$error !important',
+          color: '$error !important',
+        },
+      },
+    },
+    {
+      type: 'error',
+      variant: 'ghost',
+      loading: true,
+      css: {
+        '&:disabled': {
+          color: '$error !important',
+        },
+      },
+    },
+    {
+      type: 'warning',
+      variant: 'contained',
+      loading: true,
+      css: {
+        '&:disabled': {
+          background: '$warning !important',
+        },
+      },
+    },
+    {
+      type: 'warning',
+      variant: 'outlined',
+      loading: true,
+      css: {
+        '&:disabled': {
+          borderColor: '$warning !important',
+          color: '$warning !important',
+        },
+      },
+    },
+    {
+      type: 'warning',
+      variant: 'ghost',
+      loading: true,
+      css: {
+        '&:disabled': {
+          color: '$warning !important',
+        },
+      },
+    },
+    {
+      type: 'success',
+      variant: 'contained',
+      loading: true,
+      css: {
+        '&:disabled': {
+          background: '$success !important',
+        },
+      },
+    },
+    {
+      type: 'success',
+      variant: 'outlined',
+      loading: true,
+      css: {
+        '&:disabled': {
+          borderColor: '$success !important',
+          color: '$success !important',
+        },
+      },
+    },
+    {
+      type: 'success',
+      variant: 'ghost',
+      loading: true,
+      css: {
+        '&:disabled': {
+          color: '$success !important',
+        },
+      },
+    },
   ],
   defaultVariants: {
     size: 'medium',
@@ -316,6 +448,7 @@ export interface PropTypes {
   suffix?: React.ReactNode;
   align?: 'start' | 'grow';
   loading?: boolean;
+  fullWidth?: boolean;
   disabled?: boolean;
 }
 
@@ -329,7 +462,12 @@ function Button({
   ...props
 }: PropsWithChildren<PropTypes>) {
   return (
-    <ButtonContainer disabled={disabled} {...props} align={align}>
+    <ButtonContainer
+      disabled={disabled || loading}
+      {...props}
+      loading={loading}
+      align={align}
+    >
       {prefix}
       {children && (
         <Content align={align} ml={!!prefix} mr={!!suffix && !loading}>

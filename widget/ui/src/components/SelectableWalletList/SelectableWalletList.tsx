@@ -7,11 +7,8 @@ import { styled } from '../../theme';
 import Typography from '../Typography';
 
 const Row = styled('div', {
-  display: 'grid',
-  gap: '28px',
-  gridTemplateColumns: 'auto auto',
-  justifyContent: 'flex-start',
-  margin: '$xl 0',
+  display: 'flex',
+  flexWrap: 'wrap',
 });
 
 const Circle = styled('div', {
@@ -20,8 +17,8 @@ const Circle = styled('div', {
   borderRadius: 6,
   border: '1px solid $neutrals400',
   position: 'absolute',
-  top: 8,
-  right: 8,
+  top: 12,
+  right: 12,
   variants: {
     checked: {
       true: {
@@ -49,10 +46,12 @@ const SolidCircle = styled('div', {
     },
   },
 });
-const RadioContainer = styled('div', {
+const Container = styled('div', {
   border: '1.5px solid',
   borderRadius: '$5',
   padding: '$12',
+  flexBasis: 'calc(33.33% - 10px)',
+  margin: 5,
   display: 'flex',
   flexDirection: 'column',
   justifyContent: 'space-between',
@@ -74,32 +73,35 @@ const RadioContainer = styled('div', {
   },
 });
 export interface PropTypes {
-  wallet: ActiveWalletsType;
+  data: ActiveWalletsType;
   onChange?: (w: Wallet) => void;
 }
 
-function RadioWalletGroup({ wallet, onChange }: PropsWithChildren<PropTypes>) {
+function SelectableWalletList({
+  data,
+  onChange,
+}: PropsWithChildren<PropTypes>) {
   const [active, setActive] = useState<string>('');
   const onClick = (w: Wallet) => {
-    setActive(w.title);
+    setActive(w.walletType);
     onChange && onChange(w);
   };
   return (
     <Row>
-      {wallet.wallets.map((w) => {
-        const checked = active === w.title;
+      {data.options.map((w) => {
+        const checked = active === w.walletType;
         return (
-          <RadioContainer checked={checked} onClick={() => onClick(w)}>
-            <img src={w.logo} alt={wallet.type} width={24} height={24} />
-            <Typography variant="body2">{w.title}</Typography>
+          <Container checked={checked} onClick={() => onClick(w)}>
+            <img src={w.logo} alt={w.walletType} width={24} height={24} />
+            <Typography variant="body2">{w.walletType}</Typography>
             <Circle checked={checked}>
               <SolidCircle checked={checked} />
             </Circle>
-          </RadioContainer>
+          </Container>
         );
       })}
     </Row>
   );
 }
 
-export default RadioWalletGroup;
+export default SelectableWalletList;
