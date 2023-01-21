@@ -46,7 +46,10 @@ const Detail = styled('div', {
   variants: {
     pl: {
       true: {
-        paddingLeft: '$8',
+        paddingLeft: '$4',
+        '@lg': {
+          paddingLeft: '$8',
+        },
       },
       false: {
         paddingTop: '$8',

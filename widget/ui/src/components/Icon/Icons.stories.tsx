@@ -17,7 +17,7 @@ export default {
     size: {
       name: 'size',
       control: { type: 'radio' },
-      options: [16, 20, 24],
+      options: [16, 18, 20, 24],
       defaultValue: 16,
     },
   },

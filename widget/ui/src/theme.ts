@@ -6,6 +6,11 @@ import { PropertyValue } from '@stitches/react';
 const { createStitches } = require('@stitches/react');
 
 export const { styled, css, createTheme, keyframes } = createStitches({
+  media: {
+    sm: '(min-width: 640px)',
+    md: '(min-width: 768px)',
+    lg: '(min-width: 1024px)',
+  },
   theme: {
     colors: {
       primary: '#5FA425',
@@ -47,6 +52,7 @@ export const { styled, css, createTheme, keyframes } = createStitches({
     space: {
       2: '2px',
       4: '4px',
+      6: '6px',
       8: '8px',
       10: '10px',
       12: '12px',
@@ -63,6 +69,7 @@ export const { styled, css, createTheme, keyframes } = createStitches({
       20: '20px',
       24: '24px',
       32: '32px',
+      36: '36px',
       40: '40px',
       48: '48px',
     },
@@ -77,6 +84,7 @@ export const { styled, css, createTheme, keyframes } = createStitches({
     letterSpacings: {},
     sizes: {
       4: '4px',
+      6: '6px',
       8: '8px',
       12: '12px',
       16: '16px',

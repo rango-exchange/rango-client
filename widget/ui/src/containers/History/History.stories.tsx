@@ -12,6 +12,6 @@ export default {
 
 export const Main = (props: PropTypes) => (
   <SwapContainer>
-    <History {...props} swaps={pendingSwap} />
+    <History {...props} list={pendingSwap} />
   </SwapContainer>
 );

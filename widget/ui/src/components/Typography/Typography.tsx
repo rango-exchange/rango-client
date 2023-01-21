@@ -7,40 +7,88 @@ const TypographyContainer = styled('p', {
   variants: {
     variant: {
       h1: {
-        fontSize: '$48',
+        fontSize: '$36',
         fontWeight: '$700',
+        '@md': {
+          fontSize: '$40',
+        },
+        '@lg': {
+          fontSize: '$48',
+        },
       },
       h2: {
-        fontSize: '$40',
-        fontWeight: '$700',
-      },
-      h3: {
         fontSize: '$32',
         fontWeight: '$700',
+        '@md': {
+          fontSize: '$36',
+        },
+        '@lg': {
+          fontSize: '$40',
+        },
+      },
+      h3: {
+        fontSize: '$20',
+        fontWeight: '$700',
+        '@md': {
+          fontSize: '$24',
+        },
+        '@lg': {
+          fontSize: '$32',
+        },
       },
       h4: {
-        fontSize: '$24',
+        fontSize: '$18',
         fontWeight: '$600',
+        '@md': {
+          fontSize: '$20',
+        },
+        '@lg': {
+          fontSize: '$24',
+        },
       },
       h5: {
-        fontSize: '$20',
+        fontSize: '$16',
         fontWeight: '$600',
+        '@md': {
+          fontSize: '$18',
+        },
+        '@lg': {
+          fontSize: '$20',
+        },
       },
       h6: {
-        fontSize: '$18',
+        fontSize: '$14',
         fontWeight: '$500',
+        '@md': {
+          fontSize: '$16',
+        },
+        '@lg': {
+          fontSize: '$18',
+        },
       },
       body1: {
-        fontSize: '$18',
+        fontSize: '$14',
         fontWeight: '$400',
+        '@md': {
+          fontSize: '$16',
+        },
+        '@lg': {
+          fontSize: '$18',
+        },
       },
       body2: {
-        fontSize: '$16',
+        fontSize: '$14',
         fontWeight: '$400',
+        '@lg': {
+          fontSize: '$16',
+        },
       },
       caption: {
-        fontSize: '$12',
+        fontSize: '$10',
         fontWeight: '$400',
+        '@lg': {
+          fontSize: '$12',
+        },
       },
     },
     align: {

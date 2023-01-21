@@ -27,7 +27,11 @@ const Container = styled('div', {
   flexDirection: 'column',
   height: '100%',
   width: '100%',
-  padding: '$16',
+  padding: '$12',
+
+  '@lg': {
+    padding: '$16',
+  },
 });
 
 const HeaderContainer = styled('div', {
