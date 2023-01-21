@@ -48,6 +48,7 @@ export const { styled, css, createTheme, keyframes } = createStitches({
       2: '2px',
       4: '4px',
       8: '8px',
+      10: '10px',
       12: '12px',
       16: '16px',
       24: '24px',
@@ -91,8 +92,11 @@ export const { styled, css, createTheme, keyframes } = createStitches({
     borderStyles: {},
     radii: {
       5: '5px',
+      10: '10px',
     },
-    shadows: {},
+    shadows: {
+      s: '0px 3px 5px 3px #f0f2f5, 0px 6px 10px 3px #f0f2f5, 0px 1px 18px 3px #f0f2f5',
+    },
     zIndices: {},
     transitions: {},
   },

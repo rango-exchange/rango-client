@@ -1,5 +1,6 @@
 import React, { PropsWithChildren } from 'react';
 import { CheckCircle, InfoCircle, TryAgain } from '../../components/Icon';
+import SecondaryPage from '../../components/PageWithTextField/SecondaryPage';
 // import { Arrow } from '../../components/Icon';
 import StepDetail from '../../components/StepDetail';
 import Typography from '../../components/Typography';
@@ -64,8 +65,8 @@ const StatusContainer = styled('div', {
   position: 'absolute',
   right: '-10px',
   top: '35%',
-  background:'$background',
-  borderRadius:'50%',
+  background: '$background',
+  borderRadius: '50%',
   display: 'flex',
   justifyContent: 'center',
 });
@@ -73,8 +74,9 @@ const RelativeContainer = styled('div', {
   position: 'relative',
 });
 
-const Group = styled(Typography, {
+const Group = styled('div', {
   marginBottom: '$24',
+  paddingRight: '$10',
 });
 const GroupTitle = styled(Typography, {
   color: '$neutrals500',
@@ -106,57 +108,109 @@ function History({ swaps }: PropsWithChildren<PropTypes>) {
   );
 
   return (
-    <Container>
-      <Typography variant="h4">History</Typography>
-      <input
-        style={{ margin: '22px 0', width: '100%' }}
-        placeholder="search by blockchain or token"
-      />
-      {swapsInGroup.map((group) => (
-        <Group>
-          <GroupTitle>{group.title}</GroupTitle>
-          {group.swaps.map((swap: PendingSwap) => {
-            const firstStep = swap.steps[0];
-            const lastStep = swap.steps[swap.steps.length - 1];
-            return (
-              <RelativeContainer>
-                <SwapContainer status={swap.status}>
-                  <StepDetail
-                    logo={firstStep.fromLogo}
-                    symbol={firstStep.fromSymbol}
-                    chainLogo={firstStep.fromBlockchainLogo}
-                    blockchain={firstStep.fromBlockchain}
-                    amount={swap.inputAmount}
-                  />
-                  <Arrow>
-                    <Dot />
-                    <Line />
-                    <ArrowRight />
-                  </Arrow>
-                  <StepDetail
-                    logo={lastStep.fromLogo}
-                    symbol={lastStep.fromSymbol}
-                    chainLogo={lastStep.fromBlockchainLogo}
-                    blockchain={lastStep.fromBlockchain}
-                    amount={lastStep.outputAmount}
-                  />
-                </SwapContainer>
-                <StatusContainer>
-                  {swap.status === 'running' ? (
-                    <TryAgain size={20} color="black" />
-                  ) : swap.status === 'failed' ? (
-                    <InfoCircle size={20} color="error" />
-                  ) : (
-                    <CheckCircle size={20} color="success" />
-                  )}
-                </StatusContainer>
-              </RelativeContainer>
-            );
-          })}
-        </Group>
-      ))}
-    </Container>
+    <SecondaryPage
+      textField={true}
+      textFieldPlaceholder="Search By Blockchain Or Token"
+      title="History"
+      Content={() => (
+        <>
+          {swapsInGroup.map((group) => (
+            <Group>
+              <GroupTitle>{group.title}</GroupTitle>
+              {group.swaps.map((swap: PendingSwap) => {
+                const firstStep = swap.steps[0];
+                const lastStep = swap.steps[swap.steps.length - 1];
+                return (
+                  <RelativeContainer>
+                    <SwapContainer status={swap.status}>
+                      <StepDetail
+                        logo={firstStep.fromLogo}
+                        symbol={firstStep.fromSymbol}
+                        chainLogo={firstStep.fromBlockchainLogo}
+                        blockchain={firstStep.fromBlockchain}
+                        amount={swap.inputAmount}
+                      />
+                      <Arrow>
+                        <Dot />
+                        <Line />
+                        <ArrowRight />
+                      </Arrow>
+                      <StepDetail
+                        logo={lastStep.fromLogo}
+                        symbol={lastStep.fromSymbol}
+                        chainLogo={lastStep.fromBlockchainLogo}
+                        blockchain={lastStep.fromBlockchain}
+                        amount={lastStep.outputAmount}
+                      />
+                    </SwapContainer>
+                    <StatusContainer>
+                      {swap.status === 'running' ? (
+                        <TryAgain size={20} />
+                      ) : swap.status === 'failed' ? (
+                        <InfoCircle size={20} color="error" />
+                      ) : (
+                        <CheckCircle size={20} color="success" />
+                      )}
+                    </StatusContainer>
+                  </RelativeContainer>
+                );
+              })}
+            </Group>
+          ))}
+        </>
+      )}
+    />
   );
 }
 
 export default History;
+//  <Container>
+//       <Typography variant="h4">History</Typography>
+//       <input
+//         style={{ margin: '22px 0', width: '100%' }}
+//         placeholder="search by blockchain or token"
+//       />
+//       {swapsInGroup.map((group) => (
+//         <Group>
+//           <GroupTitle>{group.title}</GroupTitle>
+//           {group.swaps.map((swap: PendingSwap) => {
+//             const firstStep = swap.steps[0];
+//             const lastStep = swap.steps[swap.steps.length - 1];
+//             return (
+//               <RelativeContainer>
+//                 <SwapContainer status={swap.status}>
+//                   <StepDetail
+//                     logo={firstStep.fromLogo}
+//                     symbol={firstStep.fromSymbol}
+//                     chainLogo={firstStep.fromBlockchainLogo}
+//                     blockchain={firstStep.fromBlockchain}
+//                     amount={swap.inputAmount}
+//                   />
+//                   <Arrow>
+//                     <Dot />
+//                     <Line />
+//                     <ArrowRight />
+//                   </Arrow>
+//                   <StepDetail
+//                     logo={lastStep.fromLogo}
+//                     symbol={lastStep.fromSymbol}
+//                     chainLogo={lastStep.fromBlockchainLogo}
+//                     blockchain={lastStep.fromBlockchain}
+//                     amount={lastStep.outputAmount}
+//                   />
+//                 </SwapContainer>
+//                 <StatusContainer>
+//                   {swap.status === 'running' ? (
+//                     <TryAgain size={20} color="black" />
+//                   ) : swap.status === 'failed' ? (
+//                     <InfoCircle size={20} color="error" />
+//                   ) : (
+//                     <CheckCircle size={20} color="success" />
+//                   )}
+//                 </StatusContainer>
+//               </RelativeContainer>
+//             );
+//           })}
+//         </Group>
+//       ))}
+//     </Container>
