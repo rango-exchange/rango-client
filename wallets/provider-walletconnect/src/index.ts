@@ -13,17 +13,10 @@ import {
   convertEvmBlockchainMetaToEvmChainInfo,
   canSwitchNetworkToEvm,
   switchOrAddNetworkForMetamaskCompatibleWallets,
+  BlockchainMeta,
+  WalletInfo,
+  evmBlockchains,
 } from '@rangodev/wallets-shared';
-// import {
-//   CanSwitchNetwork,
-//   Connect,
-//   Disconnect,
-//   GetInstance,
-//   Subscribe,
-//   SwitchNetwork,
-//   WalletConfig,
-//   WalletSigners,
-// } from '../core/types';
 import { formatJsonRpcRequest } from '@walletconnect/jsonrpc-utils';
 import signer from './signer';
 
@@ -166,3 +159,16 @@ export const disconnect: Disconnect = async ({ instance, destroyInstance }) => {
 };
 
 export const getSigners: (provider: any) => WalletSigners = signer;
+
+export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
+  allBlockChains
+) => {
+  const evms = evmBlockchains(allBlockChains);
+  return {
+    name: 'WalletConnect',
+    img: 'https://app.rango.exchange/wallets/walletconnect.svg',
+    installLink: '',
+    color: '#b2dbff',
+    supportedChains: evms,
+  };
+};

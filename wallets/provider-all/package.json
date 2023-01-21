@@ -1,6 +1,6 @@
 {
   "name": "@rangodev/provider-all",
-  "version": "0.1.10",
+  "version": "0.1.11-next.18",
   "license": "MIT",
   "module": "dist/provider-all.esm.js",
   "main": "dist/index.js",
@@ -45,26 +45,28 @@
     }
   ],
   "dependencies": {
-    "@rangodev/provider-binance-chain-wallet": "^0.1.10",
-    "@rangodev/provider-brave": "^0.1.10",
-    "@rangodev/provider-clover": "^0.1.10",
-    "@rangodev/provider-coin98": "^0.1.10",
-    "@rangodev/provider-coinbase": "^0.1.10",
-    "@rangodev/provider-cosmostation": "^0.1.10",
-    "@rangodev/provider-exodus": "^0.1.10",
-    "@rangodev/provider-keplr": "^0.1.10",
-    "@rangodev/provider-math-wallet": "^0.1.10",
-    "@rangodev/provider-metamask": "^0.1.10",
-    "@rangodev/provider-okx": "^0.1.10",
-    "@rangodev/provider-phantom": "^0.1.10",
-    "@rangodev/provider-safepal": "^0.1.10",
-    "@rangodev/provider-tokenpocket": "^0.1.10",
-    "@rangodev/provider-trustwallet": "^0.1.10",
-    "@rangodev/provider-walletconnect": "^0.1.10",
-    "@rangodev/provider-xdefi": "^0.1.10"
+    "@rangodev/provider-argentx": "^0.1.11-next.18",
+    "@rangodev/provider-binance-chain-wallet": "^0.1.11-next.18",
+    "@rangodev/provider-brave": "^0.1.11-next.18",
+    "@rangodev/provider-clover": "^0.1.11-next.18",
+    "@rangodev/provider-coin98": "^0.1.11-next.18",
+    "@rangodev/provider-coinbase": "^0.1.11-next.18",
+    "@rangodev/provider-cosmostation": "^0.1.11-next.18",
+    "@rangodev/provider-exodus": "^0.1.11-next.18",
+    "@rangodev/provider-keplr": "^0.1.11-next.18",
+    "@rangodev/provider-math-wallet": "^0.1.11-next.18",
+    "@rangodev/provider-metamask": "^0.1.11-next.18",
+    "@rangodev/provider-okx": "^0.1.11-next.18",
+    "@rangodev/provider-phantom": "^0.1.11-next.18",
+    "@rangodev/provider-safepal": "^0.1.11-next.18",
+    "@rangodev/provider-tokenpocket": "^0.1.11-next.18",
+    "@rangodev/provider-tron-link": "^0.1.11-next.12",
+    "@rangodev/provider-trustwallet": "^0.1.11-next.18",
+    "@rangodev/provider-walletconnect": "^0.1.11-next.18",
+    "@rangodev/provider-xdefi": "^0.1.11-next.18"
   },
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "6a1dd3a10333466b93bb13c66dfd148df0059070"
+  "gitHead": "a4584c2a3341fe23e033a9ff2db0f201b0a6278c"
 }

@@ -1,6 +1,6 @@
 {
   "name": "@rangodev/queue-manager-core",
-  "version": "0.1.9",
+  "version": "0.1.10-next.18",
   "license": "MIT",
   "module": "dist/queue-manager-core.esm.js",
   "main": "dist/index.js",
@@ -51,5 +51,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "6a1dd3a10333466b93bb13c66dfd148df0059070"
+  "gitHead": "dd92a217bf0e45fa27ea9416bed5e575a6e41bcc"
 }

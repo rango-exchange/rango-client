@@ -1,6 +1,6 @@
 {
   "name": "@rangodev/ui",
-  "version": "0.1.9",
+  "version": "0.1.10-next.18",
   "license": "MIT",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -12,13 +12,12 @@
     "node": ">=10"
   },
   "scripts": {
-    "start": "tsdx watch",
+    "dev": "start-storybook -p 6006",
     "build": "tsdx build",
     "test": "tsdx test --passWithNoTests",
     "lint": "tsdx lint",
     "size": "size-limit",
     "analyze": "size-limit --why",
-    "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook"
   },
   "peerDependencies": {
@@ -60,11 +59,13 @@
     "react-is": "^18.2.0"
   },
   "dependencies": {
+    "@radix-ui/react-checkbox": "^1.0.1",
     "@radix-ui/react-switch": "^1.0.1",
+    "@radix-ui/react-tooltip": "^1.0.2",
     "@stitches/react": "^1.2.8"
   },
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "6a1dd3a10333466b93bb13c66dfd148df0059070"
+  "gitHead": "dd92a217bf0e45fa27ea9416bed5e575a6e41bcc"
 }
