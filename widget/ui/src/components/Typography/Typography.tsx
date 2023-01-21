@@ -3,7 +3,7 @@ import { styled } from '../../theme';
 
 const TypographyContainer = styled('p', {
   margin: 0,
-  color: '$text1',
+  color: '$foreground',
   variants: {
     variant: {
       h1: {

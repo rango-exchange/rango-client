@@ -9,7 +9,7 @@ export default {
 } as ComponentMeta<typeof ConfirmWallets>;
 
 export const Main = (props: PropTypes) => (
-  <div style={{ width: 516 }}>
+  <div style={{ minWidth: 516 }}>
     <ConfirmWallets {...props} bestRoute={bestRoute} wallets={wallets} />
   </div>
 );

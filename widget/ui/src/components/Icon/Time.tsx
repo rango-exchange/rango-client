@@ -14,7 +14,7 @@ export const Time = React.forwardRef<SVGSVGElement, IconProps>(
         {...props}
         ref={forwardedRef}
       >
-        <circle cx={10} cy={10} r={7.25} stroke={'#000'} strokeWidth={1.5} />
+        <circle cx={10} cy={10} r={7.25} strokeWidth={1.5} />
         <path
           fillRule="evenodd"
           clipRule="evenodd"
