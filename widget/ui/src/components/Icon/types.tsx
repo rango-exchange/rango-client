@@ -41,3 +41,4 @@ export type Icon =
   | 'Check'
   | 'Time'
   | 'Close';
+
