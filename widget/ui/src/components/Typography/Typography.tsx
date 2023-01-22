@@ -2,7 +2,7 @@ import React, { PropsWithChildren } from 'react';
 import { styled } from '../../theme';
 
 const TypographyContainer = styled('p', {
-  color: '$text1',
+  color: '$foreground',
   variants: {
     variant: {
       h1: {

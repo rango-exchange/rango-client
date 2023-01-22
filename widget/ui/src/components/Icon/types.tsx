@@ -38,4 +38,5 @@ export type Icon =
   | 'CheckWallet'
   | 'SwapWallet'
   | 'Bag'
-  | 'Check';
+  | 'Check'
+  | 'FilledCircle';
