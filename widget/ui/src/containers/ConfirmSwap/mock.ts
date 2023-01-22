@@ -1,4 +1,4 @@
-import { BestRouteType } from "../types";
+import { BestRouteType } from '../types';
 
 export const bestRoute: BestRouteType = {
   from: { blockchain: 'BSC', symbol: 'BNB', address: null },
@@ -12,7 +12,7 @@ export const bestRoute: BestRouteType = {
         swapperId: 'AnySwap Aggregator',
         swapperType: 'AGGREGATOR',
         swapperLogo: 'https://api.rango.exchange/swappers/multichain.png',
-
+        result: null,
         from: {
           symbol: 'BNB',
           logo: 'https://api.rango.exchange/i/Y3v1KW',
@@ -56,8 +56,9 @@ export const bestRoute: BestRouteType = {
       },
       {
         swapperId: 'PangolinSwap',
-        swapperLogo: "https://api.rango.exchange/swappers/pangolin.png",
+        swapperLogo: 'https://api.rango.exchange/swappers/pangolin.png',
         swapperType: 'DEX',
+        result:null,
         from: {
           symbol: 'WETH.E',
           logo: 'https://api.rango.exchange/i/j9xgdC',

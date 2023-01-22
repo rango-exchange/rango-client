@@ -6,7 +6,7 @@ import SelectableWalletList from '../../components/SelectableWalletList';
 import Spacer from '../../components/Spacer';
 import Tooltip from '../../components/Tooltip';
 import Typography from '../../components/Typography';
-import { decimalNumber } from '../../helper/number';
+import { decimalNumber } from '../../helper';
 import { styled } from '../../theme';
 import { BestRouteType } from '../types';
 import { ActiveWalletsType } from './types';

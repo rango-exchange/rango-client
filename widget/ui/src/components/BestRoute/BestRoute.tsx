@@ -7,7 +7,7 @@ import {
   RawFees,
   SecondsToString,
   TotalArrivalTime,
-} from '../../helper/number';
+} from '../../helper';
 import { styled } from '../../theme';
 import Skeleton from '../Skeleton';
 import Spinner from '../Spinner';

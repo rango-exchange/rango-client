@@ -32,6 +32,7 @@ export const swap: PendingSwap = {
         swapperId: 'Osmosis',
         swapperType: 'DEX',
         swapperLogo: '',
+        result: null,
         from: {
           symbol: 'JUNO',
           logo: 'https://api.rango.exchange/tokens/COSMOS/JUNO.png',

@@ -33,13 +33,14 @@ export const pendingSwap: PendingSwap[] = [
           swapperId: 'Osmosis',
           swapperType: 'DEX',
           swapperLogo: '',
+          result: null,
           from: {
             symbol: 'JUNO',
             logo: 'https://api.rango.exchange/tokens/COSMOS/JUNO.png',
             address:
               'ibc/46b44899322f3cd854d2d46deef881958467cdd4b3b10086da49296bbed94bed',
             blockchain: 'OSMOSIS',
-            blockchainlogo:'',
+            blockchainlogo: '',
             decimals: 6,
             usdPrice: 1.1091996179668873,
           },
@@ -49,7 +50,7 @@ export const pendingSwap: PendingSwap[] = [
             address: null,
             blockchain: 'OSMOSIS',
             decimals: 6,
-            blockchainlogo:'',
+            blockchainlogo: '',
             usdPrice: 0.7192435454440882,
           },
           fromAmount: '1.000000',
@@ -299,7 +300,7 @@ export const pendingSwap: PendingSwap[] = [
         {
           swapperId: 'Osmosis',
           swapperLogo: '',
-
+          result: null,
           swapperType: 'DEX',
           from: {
             symbol: 'JUNO',
@@ -307,7 +308,7 @@ export const pendingSwap: PendingSwap[] = [
             address:
               'ibc/46b44899322f3cd854d2d46deef881958467cdd4b3b10086da49296bbed94bed',
             blockchain: 'OSMOSIS',
-            blockchainlogo:'',
+            blockchainlogo: '',
             decimals: 6,
             usdPrice: 1.1091996179668873,
           },
@@ -317,7 +318,7 @@ export const pendingSwap: PendingSwap[] = [
             address: null,
             blockchain: 'OSMOSIS',
             decimals: 6,
-            blockchainlogo:'',
+            blockchainlogo: '',
             usdPrice: 0.7192435454440882,
           },
           fromAmount: '1.000000',
@@ -565,6 +566,7 @@ export const pendingSwap: PendingSwap[] = [
       outputAmount: '1.540670',
       swaps: [
         {
+          result: null,
           swapperId: 'Osmosis',
           swapperType: 'DEX',
           swapperLogo: '',
@@ -575,7 +577,7 @@ export const pendingSwap: PendingSwap[] = [
             address:
               'ibc/46b44899322f3cd854d2d46deef881958467cdd4b3b10086da49296bbed94bed',
             blockchain: 'OSMOSIS',
-            blockchainlogo:'',
+            blockchainlogo: '',
             decimals: 6,
             usdPrice: 1.1091996179668873,
           },
@@ -585,7 +587,7 @@ export const pendingSwap: PendingSwap[] = [
             address: null,
             blockchain: 'OSMOSIS',
             decimals: 6,
-            blockchainlogo:'',
+            blockchainlogo: '',
             usdPrice: 0.7192435454440882,
           },
           fromAmount: '1.000000',

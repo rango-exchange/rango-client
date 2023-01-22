@@ -28,6 +28,9 @@ const BodyError = styled('div', {
   justifyContent: 'center',
   alignItems: 'center',
 });
+const ErrorMsg = styled(Typography, {
+  color: '$error',
+});
 const Fee = styled('div', {
   display: 'flex',
   alignItems: 'center',
@@ -66,9 +69,7 @@ const UpdateIcon = styled(Retry, {
 const StyledUpdateIcon = styled(UpdateIcon, {
   cursor: 'pointer',
 });
-const ErrorMsg = styled(Typography, {
-  color: '$error',
-});
+
 export interface PropTypes {
   swap: BestRouteType;
   onRefresh?: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
