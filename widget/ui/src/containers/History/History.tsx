@@ -3,7 +3,7 @@ import SecondaryPage from '../../components/PageWithTextField/SecondaryPage';
 import SwapDetail from '../../components/SwapDetail';
 import Typography from '../../components/Typography';
 import { containsText } from '../../helper';
-import { GroupingOfSwaps } from '../../helper/swaps';
+import { groupingOfSwaps } from '../../helper/swaps';
 import { styled } from '../../theme';
 import { PendingSwap } from './types';
 
@@ -44,13 +44,13 @@ export interface PropTypes {
   list: PendingSwap[];
 }
 const SwapsGroup = ({ list }: { list: PendingSwap[] }) => {
-  const swapsInGroup = GroupingOfSwaps(list);
+  const swapsInGroup = groupingOfSwaps(list);
 
   return (
     <>
       {swapsInGroup.map((group) => (
         <Group>
-          <GroupTitle>{group.title}</GroupTitle>
+          <GroupTitle variant='body2'>{group.title}</GroupTitle>
           {group.swaps.map((swap: PendingSwap) => (
             <SwapDetail swap={swap} status={swap.status} />
           ))}

@@ -11,6 +11,7 @@ const ButtonContainer = styled('button', {
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
+
   variants: {
     align: {
       start: {
@@ -43,7 +44,7 @@ const ButtonContainer = styled('button', {
           color: '$foreground',
         },
         '&:disabled': {
-          background: '$neutrals400 ',
+          background: '$neutrals400 !important',
         },
       },
       outlined: {
@@ -67,7 +68,7 @@ const ButtonContainer = styled('button', {
           color: '$neutrals600',
         },
         '&:disabled': {
-          color: '$neutrals300',
+          color: '$neutrals400 !important',
         },
         background: 'transparent',
         border: 0,
@@ -316,130 +317,6 @@ const ButtonContainer = styled('button', {
         },
       },
     },
-    {
-      type: 'primary',
-      variant: 'contained',
-      loading: true,
-      css: {
-        '&:disabled': {
-          background: '$primary !important',
-        },
-      },
-    },
-    {
-      type: 'primary',
-      variant: 'outlined',
-      loading: true,
-      css: {
-        '&:disabled': {
-          borderColor: '$primary !important',
-          color: '$primary !important',
-        },
-      },
-    },
-    {
-      type: 'primary',
-      variant: 'ghost',
-      loading: true,
-      css: {
-        '&:disabled': {
-          color: '$primary !important',
-        },
-      },
-    },
-    {
-      type: 'error',
-      variant: 'contained',
-      loading: true,
-      css: {
-        '&:disabled': {
-          background: '$error !important',
-        },
-      },
-    },
-    {
-      type: 'error',
-      variant: 'outlined',
-      loading: true,
-      css: {
-        '&:disabled': {
-          borderColor: '$error !important',
-          color: '$error !important',
-        },
-      },
-    },
-    {
-      type: 'error',
-      variant: 'ghost',
-      loading: true,
-      css: {
-        '&:disabled': {
-          color: '$error !important',
-        },
-      },
-    },
-    {
-      type: 'warning',
-      variant: 'contained',
-      loading: true,
-      css: {
-        '&:disabled': {
-          background: '$warning !important',
-        },
-      },
-    },
-    {
-      type: 'warning',
-      variant: 'outlined',
-      loading: true,
-      css: {
-        '&:disabled': {
-          borderColor: '$warning !important',
-          color: '$warning !important',
-        },
-      },
-    },
-    {
-      type: 'warning',
-      variant: 'ghost',
-      loading: true,
-      css: {
-        '&:disabled': {
-          color: '$warning !important',
-        },
-      },
-    },
-    {
-      type: 'success',
-      variant: 'contained',
-      loading: true,
-      css: {
-        '&:disabled': {
-          background: '$success !important',
-        },
-      },
-    },
-    {
-      type: 'success',
-      variant: 'outlined',
-      loading: true,
-      css: {
-        '&:disabled': {
-          borderColor: '$success !important',
-          color: '$success !important',
-        },
-      },
-    },
-    {
-      type: 'success',
-      variant: 'ghost',
-      loading: true,
-      css: {
-        '&:disabled': {
-          color: '$success !important',
-        },
-      },
-    },
   ],
   defaultVariants: {
     size: 'medium',
@@ -494,13 +371,9 @@ function Button({
   align,
   ...props
 }: PropsWithChildren<PropTypes>) {
+  const isDisabled = loading || disabled;
   return (
-    <ButtonContainer
-      disabled={disabled || loading}
-      {...props}
-      loading={loading}
-      align={align}
-    >
+    <ButtonContainer disabled={isDisabled} {...props} align={align}>
       {prefix}
       {children && (
         <Content align={align} ml={!!prefix} mr={!!suffix && !loading}>

@@ -3,11 +3,7 @@ import { Gas, Time } from '../../components/Icon';
 import StepDetail from '../../components/StepDetail';
 import Typography from '../../components/Typography';
 import { BestRouteType, SwapResult } from '../../types/swaps';
-import {
-  RawFees,
-  SecondsToString,
-  TotalArrivalTime,
-} from '../../helper';
+import { rawFees, secondsToString, totalArrivalTime } from '../../helper';
 import { styled } from '../../theme';
 import Skeleton from '../Skeleton';
 import Spinner from '../Spinner';
@@ -17,6 +13,7 @@ const Container = styled('div', {
   border: '1px solid $neutrals300',
   display: 'flex',
   alignItems: 'center',
+  minHeight: 126,
   justifyContent: 'space-between',
 });
 
@@ -112,13 +109,13 @@ export interface PropTypes {
   error?: string;
 }
 function BestRoute({ data, loading, error }: PropsWithChildren<PropTypes>) {
-  const fee = RawFees(data);
-  const time = SecondsToString(TotalArrivalTime(data));
+  const fee = rawFees(data);
+  const time = secondsToString(totalArrivalTime(data));
   return (
     <Container>
       {loading ? (
         <SkeletonContainer>
-          <Skeleton width={36} height={48} />
+          <Skeleton width={48} height={94} />
         </SkeletonContainer>
       ) : (
         <GasContainer>

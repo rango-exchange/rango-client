@@ -50,12 +50,15 @@ const SkeletonContainer = styled('div', {
       48: {
         height: '$48',
       },
+      94: {
+        height: 94,
+      },
     },
   },
 });
 export interface PropTypes {
   width?: 20 | 24 | 36 | 48;
-  height?: 20 | 24 | 36 | 48;
+  height?: 20 | 24 | 36 | 48 | 94;
 }
 
 function Skeleton({ width = 20, height = 20 }: PropTypes) {

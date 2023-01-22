@@ -1,13 +1,13 @@
 import { BestRouteType } from '../types/swaps';
 
-export const SecondsToString = (s: number): string => {
+export const secondsToString = (s: number): string => {
   const minutes = parseInt((s / 60).toString()).toString();
   return `${minutes}`;
 };
-export const TotalArrivalTime = (data: BestRouteType) =>
+export const totalArrivalTime = (data: BestRouteType) =>
   data?.result?.swaps?.reduce((a, b) => a + b.estimatedTimeInSeconds, 0) || 0;
 
-export const RawFees = (data: BestRouteType): string =>
+export const rawFees = (data: BestRouteType): string =>
   (
     data?.result?.swaps?.flatMap((s) =>
       s.fee.map((f) => ({ swapperId: s.swapperId, fee: f }))

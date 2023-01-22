@@ -1,6 +1,6 @@
 import { PendingSwap } from '../containers/History/types';
 
-export function GroupingOfSwaps(list: PendingSwap[]) {
+export function groupingOfSwaps(list: PendingSwap[]) {
   return list.reduce(
     (acc: Array<{ title: string; swaps: PendingSwap[] }>, swap) => {
       const categoryIndex = acc.findIndex(
