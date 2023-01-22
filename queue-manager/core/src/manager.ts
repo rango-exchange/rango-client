@@ -59,14 +59,14 @@ export interface QueueDef<
   ) => void;
 }
 
-interface Events {
+export interface Events {
   onCreateQueue: (queue: QueueInfo & { id: QueueID }) => void;
   onUpdateQueue: (queue_id: QueueID, queue: QueueInfo) => void;
   onCreateTask: (queue_id: QueueID, event: TaskEvent) => void;
   onUpdateTask: (queue_id: QueueID, event: TaskEvent) => void;
   onStorageUpdate: (queue_id: QueueID, data: QueueStorage) => void;
   onTaskBlock: (queue_id: QueueID) => void;
-  onPersistedDataLoaded: () => void;
+  onPersistedDataLoaded: (manager: Manager) => void;
 }
 
 interface ManagerOptions {
@@ -198,7 +198,7 @@ class Manager {
       }
     });
 
-    this.events.onPersistedDataLoaded();
+    this.events.onPersistedDataLoaded(this);
   }
 
   /**
@@ -490,9 +490,11 @@ class Manager {
   public retry() {
     for (const [, q] of Array.from(this.queues)) {
       if (q.status === Status.BLOCKED) {
-        console.log("Found a blocked queue. Let's run onBlock callback.", q);
+        console.log(
+          `[Retry] Found: ${q.list.id}, Running onBlock callback.`,
+          q
+        );
         q.list.checkBlock();
-        return;
       }
     }
 
