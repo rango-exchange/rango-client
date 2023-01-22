@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from 'react';
-import { containsText } from '../../helpers';
+import React, { useState } from 'react';
 import { styled } from '../../theme';
 import { LiquiditySource } from '../../types/meta';
 import Button from '../Button/Button';

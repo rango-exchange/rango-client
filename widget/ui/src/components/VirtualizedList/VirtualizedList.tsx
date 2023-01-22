@@ -1,9 +1,5 @@
-import React, { forwardRef, PropsWithChildren, useEffect, useRef } from 'react';
-import {
-  CommonProps,
-  ReactElementType,
-  VariableSizeList as List,
-} from 'react-window';
+import React, { PropsWithChildren, useRef } from 'react';
+import { ReactElementType, VariableSizeList as List } from 'react-window';
 import InfiniteLoader from 'react-window-infinite-loader';
 import AutoSizer from 'react-virtualized-auto-sizer';
 

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { containsText } from '../../helpers';
 import { LiquiditySource } from '../../types/meta';
 import LiquiditySourceList from '../LiquiditySourceList';
