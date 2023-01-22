@@ -1,4 +1,4 @@
-import { BestRouteType } from '../containers/types';
+import { BestRouteType } from '../types/swaps';
 
 export const SecondsToString = (s: number): string => {
   const minutes = parseInt((s / 60).toString()).toString();

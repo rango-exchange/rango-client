@@ -6,12 +6,13 @@ export async function executeTronTransaction(
   provider: any
 ): Promise<string> {
   const tronProvider = getNetworkInstance(provider, Network.TRON);
-  const signedTxn = await tronProvider.tronWeb.trx.sign({
-    raw_data: tx.raw_data,
-    raw_data_hex: tx.raw_data_hex,
-    txID: tx.txID,
-    visible: tx.visible,
-  });
+  let finalTx = {};
+  if (!!tx.raw_data) finalTx = { ...finalTx, to: tx.raw_data };
+  if (!!tx.raw_data_hex) finalTx = { ...finalTx, to: tx.raw_data_hex };
+  if (!!tx.txID) finalTx = { ...finalTx, to: tx.txID };
+  if (tx.visible !== undefined) finalTx = { ...finalTx, to: tx.visible };
+  if (!!tx.__payload__) finalTx = { ...finalTx, to: tx.__payload__ };
+  const signedTxn = await tronProvider.tronWeb.trx.sign(finalTx);
   const receipt = await provider.tronWeb.trx.sendRawTransaction(signedTxn);
   return receipt?.transaction?.txID;
 }

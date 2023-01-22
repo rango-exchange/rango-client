@@ -68,14 +68,7 @@ export type PropTypes = {
 } & Omit<React.InputHTMLAttributes<HTMLInputElement>, 'prefix' | 'sp'>;
 
 function TextField(props: PropsWithChildren<PropTypes>) {
-  const {
-    // size = 'medium',
-    label,
-    prefix,
-    suffix,
-    children,
-    ...inputAttributes
-  } = props;
+  const { label, prefix, suffix, children, ...inputAttributes } = props;
   return (
     <div>
       {label && (

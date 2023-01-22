@@ -1,4 +1,4 @@
-import { BestRouteType } from '../types';
+import { BestRouteType } from '../../types/swaps';
 import { ActiveWalletsType } from './types';
 
 export const bestRoute: BestRouteType = {

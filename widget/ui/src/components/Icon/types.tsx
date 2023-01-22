@@ -39,4 +39,5 @@ export type Icon =
   | 'SwapWallet'
   | 'Bag'
   | 'Check'
-  | 'Time';
+  | 'Time'
+  | 'Close';

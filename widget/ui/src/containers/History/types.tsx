@@ -13,7 +13,7 @@ import {
   SwapStatus,
   TransferTransaction,
   WalletTypeAndAddress,
-} from '../types';
+} from '../../types/swaps';
 
 export type PendingSwapStep = {
   id: number;

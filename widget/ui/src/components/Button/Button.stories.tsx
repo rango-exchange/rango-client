@@ -18,7 +18,6 @@ export default {
       name: 'type',
       control: { type: 'select' },
       options: ['primary', 'error', 'warning', 'success'],
-      defaultValue: 'primary',
     },
     align: {
       name: 'align',

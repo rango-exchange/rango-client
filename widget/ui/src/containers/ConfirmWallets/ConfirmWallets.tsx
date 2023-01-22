@@ -8,7 +8,7 @@ import Tooltip from '../../components/Tooltip';
 import Typography from '../../components/Typography';
 import { decimalNumber } from '../../helper';
 import { styled } from '../../theme';
-import { BestRouteType } from '../types';
+import { BestRouteType } from '../../types/swaps';
 import { ActiveWalletsType } from './types';
 
 const Footer = styled('div', {
@@ -50,6 +50,7 @@ function ConfirmWallets({
           <Tooltip side="bottom" content="send to a different wallet">
             <Button
               variant="contained"
+              type="primary"
               prefix={<AddWallet size={24} color="white" />}
               onClick={onAddWallet}
             />
@@ -59,6 +60,7 @@ function ConfirmWallets({
           <Button
             fullWidth
             loading={loading}
+            type="primary"
             variant="contained"
             onClick={onConfirm}
           >
@@ -68,7 +70,7 @@ function ConfirmWallets({
       }
       Content={
         <>
-          <Typography variant="h6" mb={12} >
+          <Typography variant="h6" mb={12}>
             Confirm swap {fromAmount} {lastStep?.from.symbol} (
             {firstStep?.from.blockchain}) to {toAmount} {lastStep?.to.symbol}{' '}
             (on {lastStep?.to.blockchain})

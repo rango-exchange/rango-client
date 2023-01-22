@@ -2,7 +2,7 @@ import React, { PropsWithChildren } from 'react';
 import { Gas, Time } from '../../components/Icon';
 import StepDetail from '../../components/StepDetail';
 import Typography from '../../components/Typography';
-import { BestRouteType, SwapResult } from '../../containers/types';
+import { BestRouteType, SwapResult } from '../../types/swaps';
 import {
   RawFees,
   SecondsToString,

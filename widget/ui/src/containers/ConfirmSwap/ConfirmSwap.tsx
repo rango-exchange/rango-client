@@ -7,8 +7,8 @@ import StepDetail from '../../components/StepDetail';
 import Tooltip from '../../components/Tooltip';
 import Typography from '../../components/Typography';
 import { styled } from '../../theme';
-import { SwapResult } from '../types';
-import { BestRouteType } from '../types';
+import { SwapResult } from '../../types/swaps';
+import { BestRouteType } from '../../types/swaps';
 
 const Line = styled('div', {
   width: '0',
@@ -72,7 +72,7 @@ const StyledUpdateIcon = styled(UpdateIcon, {
 
 export interface PropTypes {
   swap: BestRouteType;
-  onRefresh?: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
+  onRefresh?: React.MouseEventHandler<SVGElement>;
   onBack?: () => void;
   onAddWallet?: (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
@@ -99,6 +99,7 @@ function ConfirmSwap({
         <Footer>
           <Tooltip side="bottom" content="send to a different wallet">
             <Button
+              type="primary"
               variant="contained"
               prefix={<AddWallet size={24} color="white" />}
               onClick={onAddWallet}
@@ -107,6 +108,7 @@ function ConfirmSwap({
           <Spacer />
 
           <Button
+            type="primary"
             fullWidth
             loading={loading}
             variant="contained"

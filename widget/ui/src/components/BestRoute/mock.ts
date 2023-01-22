@@ -1,4 +1,4 @@
-import { BestRouteType } from '../../containers/types';
+import { BestRouteType } from '../../types/swaps';
 
 export const bestRoute: BestRouteType = {
   from: { blockchain: 'BSC', symbol: 'BNB', address: null },
