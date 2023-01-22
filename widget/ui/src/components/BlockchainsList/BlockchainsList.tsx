@@ -41,7 +41,9 @@ function BlockchainsList(props: PropTypes) {
             variant="outlined"
             size="large"
             prefix={<Image src={blockchain.logo} />}
-            suffix={blockchain.name === selected.name && <FilledCircle />}
+            suffix={
+              blockchain.name === selected.name ? <FilledCircle /> : undefined
+            }
             align="start"
             onClick={changeSelectedBlockchain.bind(null, blockchain)}
             key={index}

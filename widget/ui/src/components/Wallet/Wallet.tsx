@@ -3,10 +3,8 @@ import React from 'react';
 import { styled } from '../../theme';
 import { WalletInfo, WalletState } from '../../types/wallet';
 import Button from '../Button/Button';
-import { FilledCircle } from '../common';
-import { Download } from '../Icon';
-import Spinner from '../Spinner';
 import Typography from '../Typography';
+import State from './State';
 
 const WalletImage = styled('img', {
   width: '$24',
@@ -14,38 +12,9 @@ const WalletImage = styled('img', {
   marginRight: '$12',
 });
 
-const StateIconContainer = styled('span', {
-  width: '$28',
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-});
-
-const State = ({
-  walletState,
-  installLink,
-}: {
-  walletState: WalletState | undefined;
-  installLink: string | undefined;
-}) => (
-  <>
-    {walletState !== WalletState.DISCONNECTED && (
-      <StateIconContainer>
-        {walletState === WalletState.NOT_INSTALLED && (
-          <a href={installLink}>
-            <Download size={24} color="success" />
-          </a>
-        )}
-        {walletState === WalletState.CONNECTING && <Spinner />}
-        {walletState === WalletState.CONNECTED && <FilledCircle />}
-      </StateIconContainer>
-    )}
-  </>
-);
-
 export type PropTypes = WalletInfo & { onClick: (walletName: string) => void };
 
-function WalletChip(props: PropTypes) {
+function Wallet(props: PropTypes) {
   const { name, image, state, onClick } = props;
   return (
     <Button
@@ -72,4 +41,4 @@ function WalletChip(props: PropTypes) {
   );
 }
 
-export default WalletChip;
+export default Wallet;

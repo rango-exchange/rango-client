@@ -2,7 +2,7 @@ import React from 'react';
 import { styled } from '../../theme';
 import { WalletInfo } from '../../types/wallet';
 import Modal from '../Modal';
-import WalletChip from '../Wallet/Wallet';
+import Wallet from '../Wallet/Wallet';
 
 export interface PropTypes {
   open: boolean;
@@ -23,7 +23,7 @@ function ConnectWalletsModal(props: PropTypes) {
   const Content = (
     <ModalContent>
       {list.map((info, index) => (
-        <WalletChip {...info} key={index} onClick={onSelect} />
+        <Wallet {...info} key={index} onClick={onSelect} />
       ))}
     </ModalContent>
   );
