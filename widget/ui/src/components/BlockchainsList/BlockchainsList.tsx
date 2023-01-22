@@ -1,15 +1,14 @@
-import React, { useEffect, useState } from 'react';
-import { containsText } from '../../helpers';
+import React, { useState } from 'react';
 import { styled } from '../../theme';
 import { BlockchainMeta } from '../../types/meta';
 import Button from '../Button/Button';
+import { FilledCircle } from '../common';
 import Typography from '../Typography';
 
 export interface PropTypes {
-  blockchains: BlockchainMeta[];
-  selectedBlockchain: BlockchainMeta;
-  searchedText: string;
-  onSelectedBlockchainChanged: (blockchain: BlockchainMeta) => void;
+  list: BlockchainMeta[];
+  selected: BlockchainMeta;
+  onChange: (blockchain: BlockchainMeta) => void;
 }
 
 const ListContainer = styled('div', {
@@ -25,45 +24,27 @@ const Image = styled('img', {
 });
 
 function BlockchainsList(props: PropTypes) {
-  const { blockchains, searchedText, onSelectedBlockchainChanged } = props;
-  const [selectedBlockchain, setSelectedBlockchain] = useState(
-    props.selectedBlockchain
-  );
-  const [filteredBlockchains, setFilteredBlockchains] =
-    useState<Pick<BlockchainMeta, 'name' | 'displayName' | 'logo'>[]>(
-      blockchains
-    );
+  const { list, onChange } = props;
+  const [selected, setSelected] = useState(props.selected);
 
   const changeSelectedBlockchain = (blockchain: BlockchainMeta) => {
-    setSelectedBlockchain(blockchain);
-    onSelectedBlockchainChanged(blockchain);
+    setSelected(blockchain);
+    onChange(blockchain);
   };
-
-  useEffect(() => {
-    setFilteredBlockchains(
-      blockchains.filter(
-        (blockchain) =>
-          containsText(blockchain.name, searchedText) ||
-          containsText(blockchain.displayName, searchedText)
-      )
-    );
-  }, [searchedText]);
 
   return (
     <ListContainer>
-      {filteredBlockchains.map((blockchain) => {
+      {list.map((blockchain, index) => {
         return (
           <Button
-            type={
-              blockchain.name === selectedBlockchain.name
-                ? 'primary'
-                : undefined
-            }
+            type={blockchain.name === selected.name ? 'primary' : undefined}
             variant="outlined"
             size="large"
             prefix={<Image src={blockchain.logo} />}
+            suffix={blockchain.name === selected.name && <FilledCircle />}
             align="start"
             onClick={changeSelectedBlockchain.bind(null, blockchain)}
+            key={index}
           >
             <Typography variant="body2">{blockchain.displayName}</Typography>
           </Button>

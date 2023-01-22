@@ -8,10 +8,26 @@ export default {
   component: Chip,
 } as ComponentMeta<typeof Chip>;
 
-export const Main = (props: PropTypes) => (
+export const Main = (args: PropTypes) => <Chip {...args} label="chip" />;
+
+export const ChipWithPrefix = (args: PropTypes) => (
   <Chip
-    {...props}
+    {...args}
+    label="chip"
     prefix={
+      <img
+        src="	https://api.rango.exchange/blockchains/binance.svg"
+        style={{ width: '20px' }}
+      />
+    }
+  />
+);
+
+export const ChipWithSuffix = (args: PropTypes) => (
+  <Chip
+    {...args}
+    label="chip"
+    suffix={
       <img
         src="	https://api.rango.exchange/blockchains/binance.svg"
         style={{ width: '20px' }}

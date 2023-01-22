@@ -2,12 +2,12 @@ import React from 'react';
 import { styled } from '../../theme';
 import { WalletInfo } from '../../types/wallet';
 import Modal from '../Modal';
-import WalletChip from '../WalletChip/WalletChip';
+import WalletChip from '../Wallet/Wallet';
 
 export interface PropTypes {
   open: boolean;
-  walletsInfo: WalletInfo[];
-  onWalletClick: (walletName: string) => void;
+  list: WalletInfo[];
+  onSelect: (walletName: string) => void;
   onClose: () => void;
 }
 
@@ -18,12 +18,12 @@ const ModalContent = styled('div', {
 });
 
 function ConnectWalletsModal(props: PropTypes) {
-  const { open, walletsInfo, onWalletClick, onClose } = props;
+  const { open, list, onSelect, onClose } = props;
 
   const Content = (
     <ModalContent>
-      {walletsInfo.map((info, index) => (
-        <WalletChip {...info} key={index} onClick={onWalletClick} />
+      {list.map((info, index) => (
+        <WalletChip {...info} key={index} onClick={onSelect} />
       ))}
     </ModalContent>
   );

@@ -4,26 +4,26 @@ import SecondaryPage from '../PageWithTextField/SecondaryPage';
 import TokenList from '../TokenList';
 
 export interface PropTypes {
-  tokens: TokenMeta[];
+  list: TokenMeta[];
   type: 'Source' | 'Destination';
-  selectedToken: TokenMeta;
-  onSelectedBlockchainChanged: (token: TokenMeta) => void;
+  selected: TokenMeta;
+  onChange: (token: TokenMeta) => void;
 }
 
 function TokenSelector(props: PropTypes) {
-  const { tokens, type, selectedToken, onSelectedBlockchainChanged } = props;
+  const { list, type, selected, onChange } = props;
 
   return (
     <SecondaryPage
       textField={true}
       textFieldPlaceholder="Search Blockchain By Name"
       title={`Select ${type} Token`}
-      Content={({ searchedText }) => (
+      Content={({ searchedFor }) => (
         <TokenList
-          searchedText={searchedText}
-          tokens={tokens}
-          selectedToken={selectedToken}
-          onSelectedTokenChanged={onSelectedBlockchainChanged}
+          searchedText={searchedFor}
+          list={list}
+          selected={selected}
+          onChange={onChange}
         />
       )}
     />

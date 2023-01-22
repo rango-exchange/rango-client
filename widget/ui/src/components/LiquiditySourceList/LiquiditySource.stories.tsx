@@ -9,5 +9,5 @@ export default {
 } as ComponentMeta<typeof LiquiditySourceList>;
 
 export const Main = (args: PropTypes) => (
-  <LiquiditySourceList {...args} liquiditySources={liquiditySources} />
+  <LiquiditySourceList {...args} list={liquiditySources} />
 );

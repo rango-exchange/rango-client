@@ -18,8 +18,8 @@ export const Main = (args: PropTypes) => (
   <SwapContainer>
     <BlockchainSelector
       {...args}
-      blockchains={blockchainMeta}
-      selectedBlockchain={blockchainMeta[0]}
+      list={blockchainMeta}
+      selected={blockchainMeta[0]}
     />
   </SwapContainer>
 );

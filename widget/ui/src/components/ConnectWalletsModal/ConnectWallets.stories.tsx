@@ -9,5 +9,5 @@ export default {
 } as ComponentMeta<typeof ConnectWalletsModal>;
 
 export const Main = (args: PropTypes) => (
-  <ConnectWalletsModal {...args} walletsInfo={walletsInfo} />
+  <ConnectWalletsModal {...args} list={walletsInfo} />
 );

@@ -9,7 +9,7 @@ import Typography from '../Typography';
 export type PropTypes = (
   | {
       textField: true;
-      Content: (props: { searchedText: string }) => ReactElement;
+      Content: (props: { searchedFor: string }) => ReactElement;
       textFieldPlaceholder: string;
     }
   | {
@@ -55,7 +55,7 @@ const StyledBackIcon = styled(BackIcon, {
 
 function SecondaryPage(props: PropTypes) {
   const { title, TopButton, Content, onBack, textField } = props;
-  const [searchedText, setSearchedText] = useState('');
+  const [searchedFor, setSearchedFor] = useState('');
 
   return (
     <SwapContainer>
@@ -69,13 +69,13 @@ function SecondaryPage(props: PropTypes) {
           <TextField
             prefix={<Search size={24} />}
             placeholder={props.textFieldPlaceholder}
-            onChange={(event) => setSearchedText(event.target.value)}
-            value={searchedText}
+            onChange={(event) => setSearchedFor(event.target.value)}
+            value={searchedFor}
             autoFocus
           />
         )}
         <ContentContainer>
-          {textField && <Content searchedText={searchedText} />}
+          {textField && <Content searchedFor={searchedFor} />}
           {!textField && Content}
         </ContentContainer>
       </Container>

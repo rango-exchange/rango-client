@@ -6,6 +6,17 @@ import Button from '../Button/Button';
 import Switch from '../Switch';
 import Typography from '../Typography';
 
+const groupLiquiditySources = (
+  liquiditySources: LiquiditySource[]
+): { [key in LiquiditySource['type']]: LiquiditySource[] } => ({
+  bridge: liquiditySources.filter(
+    (liquiditySource) => liquiditySource.type === 'bridge'
+  ),
+  exchange: liquiditySources.filter(
+    (liquiditySource) => liquiditySource.type === 'exchange'
+  ),
+});
+
 const LiquiditySourceType = styled(Typography, {
   position: 'sticky',
   top: '0',
@@ -24,76 +35,78 @@ const LiquidityImage = styled('img', {
 });
 
 export interface PropTypes {
-  searchedText: string;
-  liquiditySources: LiquiditySource[];
-  onLiquiditySourcesChanged: (liquiditySource: LiquiditySource) => void;
+  list: LiquiditySource[];
+  onChange: (liquiditySource: LiquiditySource) => void;
 }
 
 function LiquiditySourceList(props: PropTypes) {
-  const { searchedText, liquiditySources, onLiquiditySourcesChanged } = props;
+  const { list, onChange } = props;
 
-  // const [liquiditySources, setLiquiditySources] = useState(
-  //   props.liquiditySources
-  // );
-
-  const [filteredLiquiditySources, setFilteredLiquiditySources] =
-    useState(liquiditySources);
-
-  const changeLiquiditySources = (selectedLiquiditySource: LiquiditySource) => {
-    const updatedData: LiquiditySource = {
-      ...selectedLiquiditySource,
-      selected: !selectedLiquiditySource.selected,
-    };
-    setFilteredLiquiditySources((prevState) =>
-      prevState.map((liquiditySource) => {
-        if (liquiditySource.title === selectedLiquiditySource.title)
-          return updatedData;
-        else return liquiditySource;
-      })
-    );
-    onLiquiditySourcesChanged(updatedData);
-  };
-
-  const LiquiditySourceItem = (liquiditySourceInfo: LiquiditySource) => (
-    <Button
-      size="large"
-      align="start"
-      variant="outlined"
-      prefix={<LiquidityImage src={liquiditySourceInfo.logo} />}
-      suffix={<Switch checked={liquiditySourceInfo.selected} />}
-      style={{ marginBottom: '8px' }}
-      type={liquiditySourceInfo.selected ? 'primary' : undefined}
-      onClick={changeLiquiditySources.bind(null, liquiditySourceInfo)}
-    >
-      <Typography variant="body1">{liquiditySourceInfo.title}</Typography>
-    </Button>
+  const [selected, setSelected] = useState(
+    list.filter((item) => item.selected)
   );
 
-  useEffect(() => {
-    setFilteredLiquiditySources(
-      liquiditySources.filter((liquiditySource) =>
-        containsText(liquiditySource.title, searchedText || '')
-      )
+  const changeLiquiditySources = (clickedItem: LiquiditySource) => {
+    clickedItem.selected = !clickedItem.selected;
+    setSelected((prevState) => {
+      console.log(clickedItem.selected, clickedItem.title);
+      if (clickedItem.selected) return [...prevState, clickedItem];
+      return prevState.filter((item) => item.title != clickedItem.title);
+    });
+    onChange(clickedItem);
+  };
+
+  const LiquiditySourceItem = ({
+    liquiditySource,
+    selected,
+  }: {
+    liquiditySource: LiquiditySource;
+    selected: boolean;
+  }) => {
+    console.log(selected);
+    return (
+      <Button
+        size="large"
+        align="start"
+        variant="outlined"
+        prefix={<LiquidityImage src={liquiditySource.logo} />}
+        suffix={<Switch checked={selected} />}
+        style={{ marginBottom: '8px' }}
+        type={selected ? 'primary' : undefined}
+        onClick={changeLiquiditySources.bind(null, liquiditySource)}
+      >
+        <Typography variant="body1">{liquiditySource.title}</Typography>
+      </Button>
     );
-  }, [searchedText]);
+  };
+
+  const isSelected = (liquiditySource: LiquiditySource) => {
+    const a = !!selected.find((item) => liquiditySource.title === item.title);
+    console.log(a);
+    return a;
+  };
 
   return (
     <>
       <div>
         <LiquiditySourceType variant="h4">Bridges</LiquiditySourceType>
-        {filteredLiquiditySources
-          .filter((liquiditySource) => liquiditySource.type === 'bridge')
-          .map((liquiditySource) => (
-            <LiquiditySourceItem {...liquiditySource} />
-          ))}
+        {groupLiquiditySources(list).bridge.map((liquiditySource, index) => (
+          <LiquiditySourceItem
+            liquiditySource={liquiditySource}
+            key={index}
+            selected={isSelected(liquiditySource)}
+          />
+        ))}
       </div>
       <div>
         <LiquiditySourceType variant="h4">Exchanges</LiquiditySourceType>
-        {filteredLiquiditySources
-          .filter((liquiditySource) => liquiditySource.type === 'exchange')
-          .map((liquiditySource) => (
-            <LiquiditySourceItem {...liquiditySource} />
-          ))}
+        {groupLiquiditySources(list).exchange.map((liquiditySource, index) => (
+          <LiquiditySourceItem
+            liquiditySource={liquiditySource}
+            key={index}
+            selected={isSelected(liquiditySource)}
+          />
+        ))}
       </div>
     </>
   );

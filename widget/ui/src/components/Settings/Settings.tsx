@@ -4,8 +4,7 @@ import { AngleRight } from '../Icon';
 import SecondaryPage from '../PageWithTextField/SecondaryPage';
 import Typography from '../Typography';
 import Chip from '../Chip';
-
-const Container = styled('div', {});
+import { LiquiditySource } from '../../types/meta';
 
 const SlippageContainer = styled('div', {
   borderRadius: '$5',
@@ -40,17 +39,17 @@ const LiquiditySourceNumber = styled('div', {
 export interface PropTypes {
   slippages: string[];
   selectedSlippage: string;
-  totalLiquiditySources: number;
-  selectedLiquiditySources: number;
-  onSlippageChanged: (slippage: string) => void;
+  liquiditySources: LiquiditySource[];
+  selectedLiquiditySources: LiquiditySource[];
+  onSlippageChange: (slippage: string) => void;
 }
 
 function Settings(props: PropTypes) {
   const {
     slippages,
     selectedLiquiditySources,
-    totalLiquiditySources,
-    onSlippageChanged,
+    liquiditySources,
+    onSlippageChange,
   } = props;
 
   const [selectedSlippage, setSelectedSlippage] = useState(
@@ -59,11 +58,11 @@ function Settings(props: PropTypes) {
 
   const changeSlippage = (slippage: string) => {
     setSelectedSlippage(slippage);
-    onSlippageChanged(slippage);
+    onSlippageChange(slippage);
   };
 
   const PageContent = (
-    <Container>
+    <>
       <SlippageContainer>
         <Typography variant="body1">Slippage tolerance per Swap</Typography>
         <SlippageChipsContainer>
@@ -80,11 +79,11 @@ function Settings(props: PropTypes) {
       <LiquiditySourceContainer>
         <Typography variant="body1">Liquidity Sources</Typography>
         <LiquiditySourceNumber>
-          <Typography variant="body2">{`( ${selectedLiquiditySources} / ${totalLiquiditySources} )`}</Typography>
+          <Typography variant="body2">{`( ${selectedLiquiditySources.length} / ${liquiditySources.length} )`}</Typography>
           <StyledAngleRight />
         </LiquiditySourceNumber>
       </LiquiditySourceContainer>
-    </Container>
+    </>
   );
 
   return (

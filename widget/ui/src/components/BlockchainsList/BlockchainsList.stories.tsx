@@ -18,8 +18,8 @@ export const Main = (args: PropTypes) => {
   return (
     <BlockchainsList
       {...args}
-      blockchains={blockchainMeta}
-      selectedBlockchain={blockchainMeta[0]}
+      list={blockchainMeta}
+      selected={blockchainMeta[0]}
     />
   );
 };

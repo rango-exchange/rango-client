@@ -11,5 +11,5 @@ export default {
 } as ComponentMeta<typeof LiquiditySourcesSelector>;
 
 export const Main = (args: PropTypes) => (
-  <LiquiditySourcesSelector {...args} liquiditySources={liquiditySources} />
+  <LiquiditySourcesSelector {...args} list={liquiditySources} />
 );

@@ -14,5 +14,5 @@ export default {
 } as ComponentMeta<typeof TokenSelector>;
 
 export const Main = (args: PropTypes) => (
-  <TokenSelector {...args} tokens={tokensMeta} selectedToken={tokensMeta[0]} />
+  <TokenSelector {...args} list={tokensMeta} selected={tokensMeta[0]} />
 );

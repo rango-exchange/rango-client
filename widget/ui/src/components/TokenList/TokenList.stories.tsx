@@ -14,5 +14,5 @@ export default {
 } as ComponentMeta<typeof TokenList>;
 
 export const Main = (args: PropTypes) => (
-  <TokenList {...args} tokens={tokensMeta} selectedToken={tokensMeta[0]} />
+  <TokenList {...args} list={tokensMeta} selected={tokensMeta[0]} />
 );

@@ -7,11 +7,12 @@ import Button from '../Button/Button';
 import Typography from '../Typography';
 import VirtualizedList from '../VirtualizedList/VirtualizedList';
 
+const PAGE_SIZE = 20;
 export interface PropTypes {
-  tokens: TokenMeta[];
-  selectedToken: TokenMeta;
+  list: TokenMeta[];
+  selected: TokenMeta;
   searchedText: string;
-  onSelectedTokenChanged: (token: TokenMeta) => void;
+  onChange: (token: TokenMeta) => void;
 }
 
 const TokenImage = styled('img', {
@@ -32,13 +33,13 @@ const TokenAmountContainer = styled('div', {
 });
 
 function TokenList(props: PropTypes) {
-  const { tokens, searchedText, onSelectedTokenChanged } = props;
+  const { list, searchedText, onChange } = props;
 
-  const [selectedToken, setSelectedToken] = useState(props.selectedToken);
+  const [selected, setSelected] = useState(props.selected);
 
-  const changeSelectedToken = (token: TokenMeta) => {
-    setSelectedToken(token);
-    onSelectedTokenChanged(token);
+  const changeSelected = (token: TokenMeta) => {
+    setSelected(token);
+    onChange(token);
   };
 
   const Token = ({
@@ -66,10 +67,10 @@ function TokenList(props: PropTypes) {
           variant="outlined"
           size="large"
           align="start"
-          onClick={changeSelectedToken.bind(null, currentToken)}
+          onClick={changeSelected.bind(null, currentToken)}
           type={
-            selectedToken.symbol === currentToken.symbol &&
-            selectedToken.address === currentToken.address
+            selected.symbol === currentToken.symbol &&
+            selected.address === currentToken.address
               ? 'primary'
               : undefined
           }
@@ -95,23 +96,22 @@ function TokenList(props: PropTypes) {
       </div>
     );
   };
-  const PAGE_SIZE = 10;
 
   const [hasNextPage, setHasNextPage] = useState<boolean>(true);
   const [isNextPageLoading, setIsNextPageLoading] = useState<boolean>(false);
-  const [filteredTokens, setFilteredTokens] = useState<TokenMeta[]>(tokens);
+  const [filteredTokens, setFilteredTokens] = useState<TokenMeta[]>(list);
 
   const loadNextPage = () => {
     setIsNextPageLoading(true);
     setTimeout(() => {
       setIsNextPageLoading(false);
-      setFilteredTokens(tokens.slice(0, filteredTokens.length + PAGE_SIZE));
-    }, 100);
+      setFilteredTokens(list.slice(0, filteredTokens.length + PAGE_SIZE));
+    }, 0);
   };
 
   useEffect(() => {
     setFilteredTokens(
-      tokens.filter(
+      list.filter(
         (token) =>
           containsText(token.symbol, searchedText) ||
           containsText(token.address || '', searchedText) ||
@@ -121,11 +121,11 @@ function TokenList(props: PropTypes) {
   }, [searchedText]);
 
   useEffect(() => {
-    setHasNextPage(tokens.length > filteredTokens.length);
+    setHasNextPage(list.length > filteredTokens.length);
   }, [filteredTokens.length]);
 
   useEffect(() => {
-    setFilteredTokens(tokens.slice(0, PAGE_SIZE));
+    setFilteredTokens(list.slice(0, PAGE_SIZE));
   }, []);
 
   const innerElementType: React.FC<CommonProps> = forwardRef(
@@ -154,7 +154,6 @@ function TokenList(props: PropTypes) {
         isNextPageLoading={isNextPageLoading}
         itemCount={filteredTokens.length}
         loadNextPage={loadNextPage}
-        focus={1}
         innerElementType={innerElementType}
         size={56}
       />

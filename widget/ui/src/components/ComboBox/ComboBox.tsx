@@ -8,6 +8,8 @@ import { CommonProps } from 'react-window';
 import { AngleDown, Close } from '../Icon';
 import CloseIcon from '../Icon/Close';
 import { containsText } from '../../helpers';
+import Button from '../Button/Button';
+import Typography from '../Typography';
 
 interface SingleSelect {
   multiple: false;
@@ -76,8 +78,7 @@ const SelectedValues = styled('div', {
 });
 
 const DropDownContainer = styled('div', {
-  boxShadow:
-    '0px 3px 5px -1px $neutrals200, 0px 6px 10px 0px $neutrals200, 0px 1px 18px 0px $neutrals200',
+  boxShadow: '$s',
   padding: '$4 $8',
   // height: 'auto',
   height: '50vh',
@@ -186,6 +187,7 @@ function ComboBox(props: PropTypes) {
 
   const handleSelect = (value: string, label: string) => {
     if (!multiple) {
+      setOpen(false);
       if (!selectedValue.find((v) => v.value === value))
         setSelectedValue([{ value, label }]);
     } else {
@@ -218,7 +220,7 @@ function ComboBox(props: PropTypes) {
       disabled={disabled}
       onClick={setOpen.bind(null, true)}
       onBlur={(e) => {
-        setOpen(false);
+        // setOpen(false);
       }}
     >
       <SelectedValues>
@@ -240,6 +242,16 @@ function ComboBox(props: PropTypes) {
             value={searchedText}
             onChange={(e) => setSearchedText(e.target.value)}
             spellCheck="false"
+            onKeyDown={(e) => {
+              if (e.code === 'Backspace' && !searchedText) {
+                setSelectedValue((prev) => prev.slice(0, -1));
+              }
+              console.log(e.code);
+              if (e.code === 'ArrowUp') {
+              }
+              if (e.code === 'ArrowDown') {
+              }
+            }}
           />
         )}
       </SelectedValues>
@@ -247,28 +259,34 @@ function ComboBox(props: PropTypes) {
         <DropDownContainer onMouseDown={(e) => e.preventDefault()}>
           {!useVirualizedList ? (
             filteredOptions.map((option) => (
-              <ListItem
+              <Button
                 style={{
                   margin: '0.5rem 0',
                   display: 'flex',
                   alignItems: 'center',
                 }}
+                variant="outlined"
+                align="start"
+                size="large"
                 // value={option.value}
                 onClick={(e) => {
                   e.preventDefault();
                   e.stopPropagation();
                   handleSelect(option.value, option.label);
                 }}
-                selected={!!selectedValue.find((v) => v.value === option.value)}
+                type={
+                  !!selectedValue.find((v) => v.value === option.value)
+                    ? 'primary'
+                    : undefined
+                }
               >
-                {option.label}
-              </ListItem>
+                <Typography variant="body1">{option.label}</Typography>
+              </Button>
             ))
           ) : (
             <VirtualizedList
               innerElementType={innerElementType}
               itemCount={filteredOptions.length}
-              focus={1}
               size={48}
               Item={({ style, index }) => (
                 <div
@@ -281,7 +299,7 @@ function ComboBox(props: PropTypes) {
                     top: `${parseFloat(style?.top as string) + 8}px`,
                   }}
                 >
-                  <ListItem
+                  <Button
                     // value={option.value}
                     onClick={() => {
                       handleSelect(
@@ -289,11 +307,16 @@ function ComboBox(props: PropTypes) {
                         filteredOptions[index].label
                       );
                     }}
-                    selected={
+                    type={
                       !!selectedValue.find(
                         (v) => v.value === filteredOptions[index].value
                       )
+                        ? 'primary'
+                        : undefined
                     }
+                    variant="outlined"
+                    align="start"
+                    size="large"
                     style={{
                       width: '100%',
                       height: '3rem',
@@ -301,8 +324,10 @@ function ComboBox(props: PropTypes) {
                       alignItems: 'center',
                     }}
                   >
-                    {filteredOptions[index].label}
-                  </ListItem>
+                    <Typography variant="body1">
+                      {filteredOptions[index].label}
+                    </Typography>
+                  </Button>
                 </div>
               )}
               isNextPageLoading={isNextPageLoading}
@@ -319,7 +344,7 @@ function ComboBox(props: PropTypes) {
             <Line />
           </>
         )}
-        <StyledAngleDown open={open} />
+        <StyledAngleDown open={open} onClick={setOpen.bind(null, !open)} />
       </InputControlls>
     </ComboBoxContainer>
   );

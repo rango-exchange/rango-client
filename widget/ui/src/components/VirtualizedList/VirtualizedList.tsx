@@ -22,7 +22,6 @@ type PropTypes = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   loadNextPage: () => void;
   Item: VirtualizedListItem;
-  focus: number;
   innerElementType: ReactElementType | undefined;
   size: number;
 };
@@ -33,7 +32,6 @@ function VirtualizedList(props: PropsWithChildren<PropTypes>) {
     hasNextPage,
     isNextPageLoading,
     loadNextPage,
-    focus,
     Item,
     innerElementType,
     size,
@@ -41,12 +39,6 @@ function VirtualizedList(props: PropsWithChildren<PropTypes>) {
   const listRef = useRef<any>(null);
 
   const isItemLoaded = (index: number) => !hasNextPage || index < itemCount;
-  const scrollTo = (num: number) =>
-    listRef?.current?.scrollToItem(num, 'center');
-
-  useEffect(() => {
-    focus === 0 && scrollTo(focus);
-  }, [focus]);
 
   return (
     <InfiniteLoader

@@ -28,8 +28,8 @@ const StyledSwitchThumb = styled(RadixSwitch.Thumb, {
   width: '18px',
   height: '18px',
   backgroundColor: '$neutrals500',
+  transition: ' transform 100ms',
   borderRadius: '999999px',
-  transition: 'transform 100ms',
   willChange: 'transform',
   '&[data-state="checked"]': {
     transform: 'translateX(20px)',
@@ -39,13 +39,13 @@ const StyledSwitchThumb = styled(RadixSwitch.Thumb, {
 
 export interface PropTypes {
   checked: boolean;
-  onChanged?: (checked: boolean) => void;
+  onChange?: (checked: boolean) => void;
 }
 
 function Switch(props: PropTypes) {
-  const { checked, onChanged } = props;
+  const { checked, onChange } = props;
   return (
-    <StyledSwitchRoot checked={checked} onCheckedChange={onChanged}>
+    <StyledSwitchRoot checked={checked} onCheckedChange={onChange}>
       <StyledSwitchThumb />
     </StyledSwitchRoot>
   );

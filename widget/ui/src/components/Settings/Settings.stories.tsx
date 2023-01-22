@@ -2,6 +2,7 @@ import React from 'react';
 import { ComponentMeta } from '@storybook/react';
 import Settings, { PropTypes } from './Settings';
 import SwapContainer from '../SwapContainer/SwapContainer';
+import { liquiditySources } from '../LiquiditySourceList/mockData';
 
 export default {
   title: 'Settings',
@@ -11,11 +12,11 @@ export default {
       defaultValue: ['0.5%', '1%', '3%', '5%', '8%', '13%', '20%'],
     },
     selectedSlippage: { defaultValue: '3%' },
-    totalLiquiditySources: {
-      defaultValue: 49,
+    liquiditySources: {
+      defaultValue: liquiditySources,
     },
     selectedLiquiditySources: {
-      defaultValue: 40,
+      defaultValue: liquiditySources.slice(0, 5),
     },
   },
 } as ComponentMeta<typeof Settings>;

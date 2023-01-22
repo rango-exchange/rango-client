@@ -1,26 +1,33 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { containsText } from '../../helpers';
 import { LiquiditySource } from '../../types/meta';
 import LiquiditySourceList from '../LiquiditySourceList';
 import SecondaryPage from '../PageWithTextField/SecondaryPage';
 
+const filterLiquiditySources = (
+  liquiditySources: LiquiditySource[],
+  searchedFor: string
+) =>
+  liquiditySources.filter((liquiditySource) =>
+    containsText(liquiditySource.title, searchedFor || '')
+  );
 export interface PropTypes {
-  liquiditySources: LiquiditySource[];
-  onSelectedLiquiditySourcesChanged: (liquiditySource: LiquiditySource) => void;
+  list: LiquiditySource[];
+  onChange: (liquiditySource: LiquiditySource) => void;
 }
 
 function LiquiditySourcesSelector(props: PropTypes) {
-  const { liquiditySources, onSelectedLiquiditySourcesChanged } = props;
+  const { list, onChange } = props;
 
   return (
     <SecondaryPage
       textField={true}
       textFieldPlaceholder="Search By Name"
       title="Liquidity Sources"
-      Content={({ searchedText }) => (
+      Content={({ searchedFor }) => (
         <LiquiditySourceList
-          searchedText={searchedText}
-          liquiditySources={liquiditySources}
-          onLiquiditySourcesChanged={onSelectedLiquiditySourcesChanged}
+          list={filterLiquiditySources(list, searchedFor)}
+          onChange={onChange}
         />
       )}
     />
