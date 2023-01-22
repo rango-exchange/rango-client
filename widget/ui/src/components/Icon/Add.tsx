@@ -2,7 +2,7 @@ import * as React from 'react';
 import { SvgWithStrokeColor } from './common';
 import { IconProps } from './types';
 
-export const AddCircle = React.forwardRef<SVGSVGElement, IconProps>(
+export const Add = React.forwardRef<SVGSVGElement, IconProps>(
   ({ size = 16, color, ...props }) => {
     return (
       <SvgWithStrokeColor
@@ -15,7 +15,7 @@ export const AddCircle = React.forwardRef<SVGSVGElement, IconProps>(
         {...props}
       >
         <path
-          d="M12 22c5.5 0 10-4.5 10-10S17.5 2 12 2 2 6.5 2 12s4.5 10 10 10ZM8 12h8M12 16V8"
+          d="M6 12h12M12 18V6"
           strokeWidth={1.5}
           strokeLinecap="round"
           strokeLinejoin="round"
@@ -25,4 +25,4 @@ export const AddCircle = React.forwardRef<SVGSVGElement, IconProps>(
   }
 );
 
-export default AddCircle;
+export default Add;

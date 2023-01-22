@@ -3,7 +3,7 @@
 import { PropertyValue } from '@stitches/react';
 
 // Solution: (https://github.com/stitchesjs/stitches/issues/833#issuecomment-950707025)
-const { createStitches } = require('@stitches/react');
+import { createStitches } from '@stitches/react';
 
 export const { styled, css, createTheme, keyframes } = createStitches({
   theme: {
@@ -48,6 +48,11 @@ export const { styled, css, createTheme, keyframes } = createStitches({
       4: '4px',
       8: '8px',
       12: '12px',
+      16: '16px',
+      20: '20px',
+      24: '24px',
+      28: '28px',
+      32: '32px',
     },
     fontSizes: {
       10: '10px',
@@ -80,8 +85,11 @@ export const { styled, css, createTheme, keyframes } = createStitches({
     borderStyles: {},
     radii: {
       5: '5px',
+      10: '10px',
     },
-    shadows: {},
+    shadows: {
+      s: '0px 3px 5px 3px #f0f2f5, 0px 6px 10px 3px #f0f2f5, 0px 1px 18px 3px #f0f2f5',
+    },
     zIndices: {},
     transitions: {},
   },
@@ -95,5 +103,19 @@ export const { styled, css, createTheme, keyframes } = createStitches({
 export const lightTheme = createTheme({});
 
 export const darkTheme = createTheme({
-  colors: { foreground: '#fff', background: '#000' },
+  colors: {
+    neutrals200: '#111111',
+    neutrals300: '#333333',
+    neutrals400: '#444444',
+    neutrals500: '#666666',
+    neutrals600: '#888888',
+    neutrals700: '#999999',
+    neutrals800: '#EAEAEA',
+    neutrals900: '#FAFAFA',
+    foreground: '#fff',
+    background: '#000',
+  },
+  shadows: {
+    s: '0px 3px 5px 3px #222, 0px 6px 10px 3px #222, 0px 1px 18px 3px #222',
+  },
 });
