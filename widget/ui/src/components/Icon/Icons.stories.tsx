@@ -5,8 +5,22 @@ import { ComponentMeta } from '@storybook/react';
 import { styled } from '../../theme';
 
 export default {
-  title: 'Icons',
+  title: 'Components/Icons',
   component: Icons.AngleRight,
+  argTypes: {
+    color: {
+      name: 'color',
+      control: { type: 'select' },
+      options: ['primary', 'error', 'warning', 'success', 'black', 'white'],
+    },
+
+    size: {
+      name: 'size',
+      control: { type: 'radio' },
+      options: [16, 18, 20, 24],
+      defaultValue: 16,
+    },
+  },
 } as ComponentMeta<typeof Icons.AngleRight>;
 
 const Container = styled('div', {

@@ -70,7 +70,7 @@ export interface CosmosInfo extends Omit<CosmosChainInfo, 'chianId'> {
   experimental: boolean;
 }
 
-type BlockchainInfo = EvmInfo | CosmosInfo | null;
+export type BlockchainInfo = EvmInfo | CosmosInfo | null;
 
 export enum GenericTransactionType {
   EVM = 'EVM',

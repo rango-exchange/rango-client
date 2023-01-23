@@ -3,7 +3,7 @@ import { SvgWithFillColor } from './common';
 import { IconProps } from './types';
 
 export const Retry = React.forwardRef<SVGSVGElement, IconProps>(
-  ({ color, size = 50, ...props }, forwardedRef) => {
+  ({ color, size = 16, ...props }, forwardedRef) => {
     return (
       <SvgWithFillColor
         width={size}

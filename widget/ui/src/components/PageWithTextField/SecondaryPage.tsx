@@ -20,6 +20,7 @@ export type PropTypes = (
   title: string;
   onBack?: () => void;
   TopButton?: React.ReactNode;
+  Footer?: React.ReactNode;
 };
 
 const Container = styled('div', {
@@ -27,7 +28,11 @@ const Container = styled('div', {
   flexDirection: 'column',
   height: '100%',
   width: '100%',
-  padding: '$16',
+  padding: '$12',
+
+  '@lg': {
+    padding: '$16',
+  },
 });
 
 const HeaderContainer = styled('div', {
@@ -42,19 +47,20 @@ const BackIcon = styled(AngleLeft, {
   position: 'absolute',
   left: '0',
 });
-
-const ContentContainer = styled('div', {
-  flex: '1',
-  overflowY: 'auto',
-  marginTop: '$16',
-});
-
 const StyledBackIcon = styled(BackIcon, {
   cursor: 'pointer',
 });
 
+const ContentContainer = styled('div', {
+  flex: '1',
+  overflowY: 'auto',
+  overflowX: 'hidden',
+  marginTop: '$16',
+  marginBottom: '$16',
+});
+
 function SecondaryPage(props: PropTypes) {
-  const { title, TopButton, Content, onBack, textField } = props;
+  const { title, Footer, TopButton, Content, onBack, textField } = props;
   const [searchedFor, setSearchedFor] = useState('');
 
   return (
@@ -78,6 +84,8 @@ function SecondaryPage(props: PropTypes) {
           {textField && <Content searchedFor={searchedFor} />}
           {!textField && Content}
         </ContentContainer>
+
+        {Footer}
       </Container>
     </SwapContainer>
   );

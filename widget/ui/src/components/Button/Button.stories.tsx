@@ -5,7 +5,7 @@ import Button, { PropTypes } from './Button';
 import { AddWallet } from '../Icon';
 
 export default {
-  title: 'Button',
+  title: 'Components/Button',
   component: Button,
   argTypes: {
     variant: {
@@ -41,20 +41,19 @@ export const Main = (props: PropTypes) => (
   <Button {...props}>I'm a button</Button>
 );
 
-export const ButtonWithIcon = (props: PropTypes) => (
-  <div>
-    <Button prefix={<AddWallet size={24} color="white" />} {...props}>
-      I'm a button
-    </Button>
-    <div style={{ margin: '10px 0' }} />
-    <Button suffix={<AddWallet size={24} color="white" />} {...props}>
-      I'm a button
-    </Button>
-  </div>
+export const WithPrefix = (args: PropTypes) => (
+  <Button prefix={<AddWallet size={24} color="white" />} {...args}>
+    I'm a button
+  </Button>
 );
 
-export const IconButton = (props: PropTypes) => (
+export const WithSuffix = (args: PropTypes) => (
+  <Button suffix={<AddWallet size={24} color="white" />} {...args}>
+    I'm a button
+  </Button>
+);
+export const IconButton = (args: PropTypes) => (
   <div>
-    <Button suffix={<AddWallet size={24} color="white" />} {...props} />
+    <Button suffix={<AddWallet size={24} color="white" />} {...args} />
   </div>
 );

@@ -38,4 +38,5 @@ export { default as SwapWallet } from './SwapWallet';
 
 export { default as Bag } from './Bag';
 
+export { default as Time } from './Time';
 export { default as Close } from './Close';
