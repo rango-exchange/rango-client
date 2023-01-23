@@ -160,22 +160,12 @@ class Queue {
 
     info.tasks.forEach((task) => {
       this.tasks.push(task);
-
-      const taskState = info.state.tasks[task.id];
       const action = this.tasks.find((t) => t.id === task.id)!.action;
       this.events.onCreate({
         id: task.id,
         task: this.get(task.id)!,
         action,
       });
-
-      if (taskState.status === Status.BLOCKED) {
-        this.events.onBlock({
-          action: action,
-          id: task.id,
-          reason: taskState.blockedFor,
-        });
-      }
     });
   }
 

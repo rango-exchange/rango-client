@@ -1,3 +1,5 @@
+import Queue from './queue';
+
 export enum Status {
   PENDING = 'PENDING',
   RUNNING = 'RUNNING',
@@ -8,3 +10,5 @@ export enum Status {
 }
 
 export type QueueStorage = Record<string, unknown>;
+
+export type QueueType = Queue;
