@@ -1,6 +1,6 @@
 import { PropTypes } from './BlockchainsList';
 
-export const blockchainMeta: PropTypes['blockchains'] = [
+export const blockchainMeta: PropTypes['list'] = [
   {
     name: 'BSC',
     displayName: 'BSC',

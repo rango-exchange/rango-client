@@ -11,6 +11,7 @@ const StepLogoContainer = styled('div', {
       vertical: {
         margin: 'auto',
       },
+      horizontal: {},
     },
   },
 });
