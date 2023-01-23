@@ -16,8 +16,5 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
-  "publishConfig": {
-    "access": "public"
-  },
   "gitHead": "6a1dd3a10333466b93bb13c66dfd148df0059070"
 }

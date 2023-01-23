@@ -22,8 +22,5 @@
     "ethers": "^5.7.2",
     "rango-sdk-basic": "^0.0.9"
   },
-  "publishConfig": {
-    "access": "public"
-  },
   "gitHead": "6a1dd3a10333466b93bb13c66dfd148df0059070"
 }
