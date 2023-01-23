@@ -1,11 +1,11 @@
 import * as React from 'react';
 import { IconProps } from './types';
-import { SvgWithStrokeColor } from './common';
+import { SvgWithFillColor } from './common';
 
 export const CheckCircle = React.forwardRef<SVGSVGElement, IconProps>(
   ({ size = 16, color, ...props }) => {
     return (
-      <SvgWithStrokeColor
+      <SvgWithFillColor
         width={size}
         height={size}
         viewBox="0 0 24 24"
@@ -19,14 +19,16 @@ export const CheckCircle = React.forwardRef<SVGSVGElement, IconProps>(
           strokeWidth={1.5}
           strokeLinecap="round"
           strokeLinejoin="round"
+          stroke="#fff"
         />
         <path
           d="m7.75 12 2.83 2.83 5.67-5.66"
           strokeWidth={1.5}
           strokeLinecap="round"
           strokeLinejoin="round"
+          stroke="#fff"
         />
-      </SvgWithStrokeColor>
+      </SvgWithFillColor>
     );
   }
 );

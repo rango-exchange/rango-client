@@ -3,6 +3,6 @@ import SecondaryPage from './SecondaryPage';
 import PageWithTextField from './SecondaryPage';
 
 export default {
-  title: 'Secondary Page',
+  title: 'Components/Secondary Page',
   component: SecondaryPage,
 } as ComponentMeta<typeof PageWithTextField>;

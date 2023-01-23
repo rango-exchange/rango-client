@@ -6,12 +6,18 @@ import { PropertyValue } from '@stitches/react';
 import { createStitches } from '@stitches/react';
 
 export const { styled, css, createTheme, keyframes } = createStitches({
+  media: {
+    sm: '(min-width: 640px)',
+    md: '(min-width: 768px)',
+    lg: '(min-width: 1024px)',
+  },
   theme: {
     colors: {
       primary: '#5FA425',
       primary100: '#9FC87C',
       primary200: '#8FBF66',
-      primary300: '#7FB651',
+      primary300
+      : '#7FB651',
       primary400: '#6FAD3B',
       primary500: '#5FA425',
       primary600: '#4C831E',
@@ -45,13 +51,17 @@ export const { styled, css, createTheme, keyframes } = createStitches({
       error700: '#E60000',
     },
     space: {
+      2: '2px',
       4: '4px',
+      6: '6px',
       8: '8px',
+      10: '10px',
       12: '12px',
       16: '16px',
       20: '20px',
       24: '24px',
       28: '28px',
+      30: '30px',
       32: '32px',
     },
     fontSizes: {
@@ -59,9 +69,11 @@ export const { styled, css, createTheme, keyframes } = createStitches({
       12: '12px',
       14: '14px',
       16: '16px',
-      20: '18px',
+      18: '18px',
+      20: '20px',
       24: '24px',
       32: '32px',
+      36: '36px',
       40: '40px',
       48: '48px',
     },
@@ -69,15 +81,22 @@ export const { styled, css, createTheme, keyframes } = createStitches({
     fontWeights: {
       400: '400',
       500: '500',
+      600: '600',
       700: '700',
     },
     lineHeights: {},
     letterSpacings: {},
     sizes: {
+      4: '4px',
+      6: '6px',
+      8: '8px',
+      12: '12px',
       16: '16px',
       20: '20px',
       24: '24px',
+      28: '28px',
       32: '32px',
+      36: '36px',
       40: '40px',
       48: '48px',
     },

@@ -5,7 +5,8 @@ import TextField, { PropTypes } from './TextField';
 import { Search } from '../Icon';
 
 export default {
-  title: 'Text Field',
+  title: 'Components/Text Field',
+
   component: TextField,
   argTypes: {
     disabled: {

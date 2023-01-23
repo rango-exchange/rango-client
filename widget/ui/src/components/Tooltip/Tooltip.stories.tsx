@@ -5,7 +5,7 @@ import Tooltip, { PropTypes } from './Tooltip';
 import { AddWallet } from '../Icon';
 
 export default {
-  title: 'Tooltip',
+  title: 'Components/Tooltip',
   component: Tooltip,
   argTypes: {
     content: {

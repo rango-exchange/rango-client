@@ -1,8 +1,8 @@
 import * as React from 'react';
 
 export interface IconProps extends React.SVGAttributes<SVGElement> {
-  size?: 16 | 20 | 24; 
-  color?: 'primary' | 'error' | 'warning' | 'success' | 'black' | 'white'; 
+  size?: 16 | 18 | 20 | 24;
+  color?: 'primary' | 'error' | 'warning' | 'success' | 'black' | 'white';
 }
 
 export type Icon =
@@ -39,4 +39,6 @@ export type Icon =
   | 'SwapWallet'
   | 'Bag'
   | 'Check'
-  | 'FilledCircle';
+  | 'Time'
+  | 'Close';
+
