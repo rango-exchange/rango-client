@@ -11,6 +11,7 @@ import {
   ManagerContext as Context,
   Manager,
   QueueDef,
+  Events,
 } from '@rangodev/queue-manager-core';
 import { ManagerContext } from './types';
 
@@ -22,6 +23,7 @@ const ManagerCtx = createContext<{ manager: ManagerContext; count: number }>({
 interface PropTypes {
   queuesDefs: QueueDef<any>[];
   context: Context;
+  onPersistedDataLoaded?: Events['onPersistedDataLoaded'];
 }
 
 function Provider(props: PropsWithChildren<PropTypes>) {
@@ -47,6 +49,13 @@ function Provider(props: PropsWithChildren<PropTypes>) {
         },
         onUpdateTask: () => {
           forceRender((prev) => prev + 1);
+        },
+        onPersistedDataLoaded: (manager) => {
+          forceRender((prev) => prev + 1);
+
+          if (props.onPersistedDataLoaded) {
+            props.onPersistedDataLoaded(manager);
+          }
         },
       },
       context: context || {},
