@@ -4,7 +4,7 @@ import { Network, WalletType } from '@rangodev/wallets-shared';
 import './styles.css';
 
 function Item({ type }: { type: WalletType }) {
-  const { connect, providers, state, disconnect, canSwitchNetworkTo, getWalletInfo } = useWallets();
+  const { connect, state, disconnect, canSwitchNetworkTo, getWalletInfo } = useWallets();
   const info = getWalletInfo(type);
   const walletState = state(type);
   const [network, setNetwork] = useState<Network>(Network.Unknown);
@@ -20,7 +20,6 @@ function Item({ type }: { type: WalletType }) {
       console.log({ err });
     }
   };
-  console.log(providers(), '>>>>>>>>>>>>>>>>>>>>');
 
   const handleChangeNetwork = () => {
     const canSwitchNetwork = canSwitchNetworkTo(type, network);

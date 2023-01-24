@@ -1,19 +1,51 @@
-import React, { createContext, useContext } from 'react';
+import React, { createContext, useContext, useReducer } from 'react';
 import {
   ProviderProps,
   Provider as WalletProvider,
 } from '@rangodev/wallets-core';
-const AdaptorContext = createContext<any>({});
+import Adapter from './adapter';
+import { ProviderContext } from './types';
+import { defaultState, state_reducer } from './helpers';
+// @ts-ignore
+const AdapterContext = createContext<ProviderContext>({});
 
-function ModalProvider(props: ProviderProps) {
-  return <WalletProvider {...props}>{props.children}</WalletProvider>;
+function AdapterProvider({
+  providers,
+  allBlockChains,
+  onUpdateState,
+  children,
+}: ProviderProps) {
+  const [modalState, dispatch] = useReducer(state_reducer, defaultState);
+
+  const api: ProviderContext = {
+    onOpenModal() {
+      dispatch({ value: true });
+    },
+    onCloseModal() {
+      dispatch({ value: false });
+    },
+  };
+  return (
+    <WalletProvider
+      providers={providers}
+      allBlockChains={allBlockChains}
+      onUpdateState={onUpdateState}
+    >
+      <AdapterContext.Provider value={api}>
+        {children}
+        <Adapter onClose={api.onCloseModal} open={modalState.open} />
+      </AdapterContext.Provider>
+    </WalletProvider>
+  );
 }
 
-export function useModalAdaptor(): any {
-  const context = useContext(AdaptorContext);
+export function useAdapter(): ProviderContext {
+  const context = useContext(AdapterContext);
   if (!context)
-    throw Error('useModalAdaptor can only be used within the Provider component');
+    throw Error(
+      'useModalAdapter can only be used within the Provider component'
+    );
   return context;
 }
 
-export default ModalProvider;
+export default AdapterProvider;

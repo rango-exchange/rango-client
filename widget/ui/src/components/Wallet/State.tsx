@@ -16,8 +16,8 @@ const State = ({
   walletState,
   installLink,
 }: {
-  walletState: WalletState | undefined;
-  installLink: string | undefined;
+  walletState: WalletState;
+  installLink?: string;
 }) => (
   <Fragment>
     {walletState !== WalletState.DISCONNECTED && (

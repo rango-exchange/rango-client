@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { styled } from '../../theme';
-import { WalletInfo, WalletState } from '../../types/wallet';
+import { WalletInfo, WalletState, WalletType } from '../../types/wallet';
 import Button from '../Button/Button';
 import Typography from '../Typography';
 import State from './State';
@@ -12,15 +12,15 @@ const WalletImage = styled('img', {
   marginRight: '$12',
 });
 
-export type PropTypes = WalletInfo & { onClick: (walletName: string) => void };
+export type PropTypes = WalletInfo & { onClick: (walletType: WalletType) => void };
 
 function Wallet(props: PropTypes) {
-  const { name, image, state, onClick } = props;
+  const { name, type, image, state, onClick } = props;
   return (
     <Button
       type={state === WalletState.CONNECTED ? 'primary' : undefined}
       disabled={!state}
-      onClick={onClick.bind(null, name)}
+      onClick={onClick.bind(null, type)}
       align="start"
       variant="outlined"
       size="large"

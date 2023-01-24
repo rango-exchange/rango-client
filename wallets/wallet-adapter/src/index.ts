@@ -1,1 +1,1 @@
-export { default as ModalProvider, useModalAdaptor } from './provider';
+export { default as AdapterProvider, useAdapter } from './provider';
