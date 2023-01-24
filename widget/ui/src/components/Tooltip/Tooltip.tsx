@@ -1,5 +1,5 @@
 import * as RadixTooltip from '@radix-ui/react-tooltip';
-import { styled } from '@stitches/react';
+import { styled } from '../../theme';
 import React, { PropsWithChildren } from 'react';
 
 export interface PropTypes {

@@ -60,7 +60,7 @@ const ContentContainer = styled('div', {
 });
 
 export function SecondaryPage(props: PropTypes) {
-  const { title, Footer, TopButton, Content, onBack, textField } = props;
+  const { title, Footer, TopButton, onBack } = props;
   const [searchedFor, setSearchedFor] = useState('');
 
   return (
@@ -71,7 +71,7 @@ export function SecondaryPage(props: PropTypes) {
           <Typography variant="h4">{title}</Typography>
           {TopButton}
         </HeaderContainer>
-        {textField && (
+        {props.textField && (
           <TextField
             prefix={<Search size={24} />}
             placeholder={props.textFieldPlaceholder}
@@ -81,8 +81,8 @@ export function SecondaryPage(props: PropTypes) {
           />
         )}
         <ContentContainer>
-          {textField && <Content searchedFor={searchedFor} />}
-          {!textField && Content}
+          {props.textField && <props.Content searchedFor={searchedFor} />}
+          {!props.textField && props.Content}
         </ContentContainer>
 
         {Footer}
