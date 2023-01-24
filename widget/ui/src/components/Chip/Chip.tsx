@@ -1,6 +1,6 @@
 import React from 'react';
 import { styled } from '../../theme';
-import Typography from '../Typography';
+import { Typography } from '../Typography';
 
 const ChipCointainer = styled('div', {
   display: 'inline-flex',
@@ -32,7 +32,7 @@ export interface PropTypes {
   suffix?: React.ReactNode;
 }
 
-function Chip(props: PropTypes) {
+export function Chip(props: PropTypes) {
   const { label, selected, prefix, suffix, onClick, style } = props;
   return (
     <ChipCointainer selected={selected} onClick={onClick} style={style}>
@@ -42,5 +42,3 @@ function Chip(props: PropTypes) {
     </ChipCointainer>
   );
 }
-
-export default Chip;

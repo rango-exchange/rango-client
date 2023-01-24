@@ -1,6 +1,6 @@
 import React, { PropsWithChildren } from 'react';
 import { darkTheme, styled } from '../../theme';
-import Spinner from '../Spinner';
+import { Spinner } from '../Spinner';
 
 const ButtonContainer = styled('button', {
   borderRadius: '$5',
@@ -362,7 +362,7 @@ export interface PropTypes {
   style?: React.CSSProperties;
 }
 
-function Button({
+export function Button({
   children,
   loading,
   disabled,
@@ -385,5 +385,3 @@ function Button({
     </ButtonContainer>
   );
 }
-
-export default Button;

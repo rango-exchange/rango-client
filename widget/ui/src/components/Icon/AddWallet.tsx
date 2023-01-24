@@ -43,5 +43,3 @@ export const AddWallet = React.forwardRef<SVGSVGElement, IconProps>(
     );
   }
 );
-
-export default AddWallet;

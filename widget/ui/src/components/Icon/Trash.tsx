@@ -24,5 +24,3 @@ export const Trash = React.forwardRef<SVGSVGElement, IconProps>(
     );
   }
 );
-
-export default Trash;

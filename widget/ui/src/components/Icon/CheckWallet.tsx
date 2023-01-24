@@ -2,7 +2,7 @@ import * as React from 'react';
 import { IconProps } from './types';
 import { SvgWithFillColor } from './common';
 
-export const SwapWallet = React.forwardRef<SVGSVGElement, IconProps>(
+export const CheckWallet = React.forwardRef<SVGSVGElement, IconProps>(
   ({ size = 16, color, ...props }) => {
     return (
       <SvgWithFillColor
@@ -38,5 +38,3 @@ export const SwapWallet = React.forwardRef<SVGSVGElement, IconProps>(
     );
   }
 );
-
-export default SwapWallet;

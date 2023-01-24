@@ -1,7 +1,7 @@
 import React, { PropsWithChildren } from 'react';
-import SecondaryPage from '../../components/PageWithTextField/SecondaryPage';
-import SwapDetail from '../../components/SwapDetail';
-import Typography from '../../components/Typography';
+import { SecondaryPage } from '../../components/SecondaryPage';
+import { SwapDetail } from '../../components/SwapDetail';
+import { Typography } from '../../components/Typography';
 import { containsText } from '../../helper';
 import { groupingOfSwaps } from '../../helper/swaps';
 import { styled } from '../../theme';
@@ -50,7 +50,7 @@ const SwapsGroup = ({ list }: { list: PendingSwap[] }) => {
     <>
       {swapsInGroup.map((group) => (
         <Group>
-          <GroupTitle variant='body2'>{group.title}</GroupTitle>
+          <GroupTitle variant="body2">{group.title}</GroupTitle>
           {group.swaps.map((swap: PendingSwap) => (
             <SwapDetail swap={swap} status={swap.status} />
           ))}
@@ -60,7 +60,7 @@ const SwapsGroup = ({ list }: { list: PendingSwap[] }) => {
   );
 };
 
-function History({ list = [] }: PropsWithChildren<PropTypes>) {
+export function History({ list = [] }: PropsWithChildren<PropTypes>) {
   return (
     <SecondaryPage
       textField={true}
@@ -79,5 +79,3 @@ function History({ list = [] }: PropsWithChildren<PropTypes>) {
     />
   );
 }
-
-export default History;

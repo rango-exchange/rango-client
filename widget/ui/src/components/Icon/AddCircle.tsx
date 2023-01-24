@@ -24,5 +24,3 @@ export const AddCircle = React.forwardRef<SVGSVGElement, IconProps>(
     );
   }
 );
-
-export default AddCircle;

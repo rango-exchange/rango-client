@@ -1,8 +1,8 @@
 import React from 'react';
 import { containsText } from '../../helpers';
 import { BlockchainMeta } from '../../types/meta';
-import BlockchainsList from '../BlockchainsList';
-import SecondaryPage from '../PageWithTextField/SecondaryPage';
+import { BlockchainsList } from '../BlockchainsList';
+import { SecondaryPage } from '../SecondaryPage/SecondaryPage';
 
 const filterBlockchains = (list: BlockchainMeta[], searchedFor: string) =>
   list.filter(
@@ -18,7 +18,7 @@ export interface PropTypes {
   onChange: (blockchain: BlockchainMeta) => void;
 }
 
-function BlockchainSelector(props: PropTypes) {
+export function BlockchainSelector(props: PropTypes) {
   const { type, list, onChange, selected } = props;
 
   return (
@@ -36,5 +36,3 @@ function BlockchainSelector(props: PropTypes) {
     />
   );
 }
-
-export default BlockchainSelector;

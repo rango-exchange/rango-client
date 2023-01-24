@@ -186,8 +186,9 @@ export interface PropTypes {
   mr?: 2 | 4 | 8 | 12;
 }
 
-function Typography({ children, ...props }: PropsWithChildren<PropTypes>) {
+export function Typography({
+  children,
+  ...props
+}: PropsWithChildren<PropTypes>) {
   return <TypographyContainer {...props}>{children}</TypographyContainer>;
 }
-
-export default Typography;

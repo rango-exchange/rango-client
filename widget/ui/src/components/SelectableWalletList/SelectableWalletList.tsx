@@ -4,7 +4,7 @@ import {
   Wallet,
 } from '../../containers/ConfirmWallets/types';
 import { styled } from '../../theme';
-import Typography from '../Typography';
+import { Typography } from '../Typography';
 
 const Row = styled('div', {
   display: 'flex',
@@ -77,7 +77,7 @@ export interface PropTypes {
   onChange?: (w: Wallet) => void;
 }
 
-function SelectableWalletList({
+export function SelectableWalletList({
   data,
   onChange,
 }: PropsWithChildren<PropTypes>) {
@@ -103,5 +103,3 @@ function SelectableWalletList({
     </Row>
   );
 }
-
-export default SelectableWalletList;

@@ -3,7 +3,7 @@
 import { PropertyValue } from '@stitches/react';
 
 // Solution: (https://github.com/stitchesjs/stitches/issues/833#issuecomment-950707025)
-import { createStitches } from '@stitches/react';
+const { createStitches } = require('@stitches/react');
 
 export const { styled, css, createTheme, keyframes } = createStitches({
   media: {
@@ -16,8 +16,7 @@ export const { styled, css, createTheme, keyframes } = createStitches({
       primary: '#5FA425',
       primary100: '#9FC87C',
       primary200: '#8FBF66',
-      primary300
-      : '#7FB651',
+      primary300: '#7FB651',
       primary400: '#6FAD3B',
       primary500: '#5FA425',
       primary600: '#4C831E',

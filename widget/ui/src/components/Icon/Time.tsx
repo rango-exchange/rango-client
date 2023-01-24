@@ -24,5 +24,3 @@ export const Time = React.forwardRef<SVGSVGElement, IconProps>(
     );
   }
 );
-
-export default Time;

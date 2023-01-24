@@ -1,11 +1,11 @@
 import React, { PropsWithChildren } from 'react';
-import Button from '../../components/Button';
+import { Button } from '../../components/Button';
 import { Retry, Gas, AddWallet } from '../../components/Icon';
-import SecondaryPage from '../../components/PageWithTextField/SecondaryPage';
-import Spacer from '../../components/Spacer';
-import StepDetail from '../../components/StepDetail';
-import Tooltip from '../../components/Tooltip';
-import Typography from '../../components/Typography';
+import { SecondaryPage } from '../../components/SecondaryPage/';
+import { Spacer } from '../../components/Spacer';
+import { StepDetail } from '../../components/StepDetail';
+import { Tooltip } from '../../components/Tooltip';
+import { Typography } from '../../components/Typography';
 import { styled } from '../../theme';
 import { SwapResult } from '../../types/swaps';
 import { BestRouteType } from '../../types/swaps';
@@ -81,7 +81,7 @@ export interface PropTypes {
   loading?: boolean;
   error?: string;
 }
-function ConfirmSwap({
+export function ConfirmSwap({
   swap,
   onRefresh,
   onBack,
@@ -172,5 +172,3 @@ function ConfirmSwap({
     />
   );
 }
-
-export default ConfirmSwap;

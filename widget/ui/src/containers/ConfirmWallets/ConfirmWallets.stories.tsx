@@ -1,6 +1,6 @@
 import React from 'react';
 import { ComponentMeta } from '@storybook/react';
-import ConfirmWallets, { PropTypes } from './ConfirmWallets';
+import { ConfirmWallets, PropTypes } from './ConfirmWallets';
 import { bestRoute, exampleFor5Wallets, wallets } from './mock';
 
 export default {

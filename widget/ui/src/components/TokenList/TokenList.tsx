@@ -3,9 +3,9 @@ import { CommonProps } from 'react-window';
 import { containsText } from '../../helpers';
 import { styled } from '../../theme';
 import { TokenMeta } from '../../types/meta';
-import Button from '../Button/Button';
-import Typography from '../Typography';
-import VirtualizedList from '../VirtualizedList/VirtualizedList';
+import { Button } from '../Button/Button';
+import { Typography } from '../Typography';
+import { VirtualizedList } from '../VirtualizedList/VirtualizedList';
 
 const PAGE_SIZE = 20;
 export interface PropTypes {
@@ -32,7 +32,7 @@ const TokenAmountContainer = styled('div', {
   alignItems: 'flex-end',
 });
 
-function TokenList(props: PropTypes) {
+export function TokenList(props: PropTypes) {
   const { list, searchedText, onChange } = props;
 
   const [selected, setSelected] = useState(props.selected);
@@ -160,5 +160,3 @@ function TokenList(props: PropTypes) {
     </>
   );
 }
-
-export default TokenList;

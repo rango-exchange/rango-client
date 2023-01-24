@@ -23,8 +23,6 @@ export interface PropTypes {
   size?: 12 | 16 | 18 | 20;
 }
 
-function Spacer({ size = 12 }: PropTypes) {
+export function Spacer({ size = 12 }: PropTypes) {
   return <SpacerContainer size={size} />;
 }
-
-export default Spacer;
