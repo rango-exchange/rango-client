@@ -23,5 +23,3 @@ export const Check = React.forwardRef<SVGSVGElement, IconProps>(
     );
   }
 );
-
-export default Check;

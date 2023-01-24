@@ -43,5 +43,3 @@ export const DeleteWallet = React.forwardRef<SVGSVGElement, IconProps>(
     );
   }
 );
-
-export default DeleteWallet;

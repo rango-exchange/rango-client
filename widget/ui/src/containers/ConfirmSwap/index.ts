@@ -1,1 +1,1 @@
-export { default } from "./ConfirmSwap";
+export { ConfirmSwap } from './ConfirmSwap';

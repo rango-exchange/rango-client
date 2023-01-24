@@ -1,8 +1,8 @@
 import React from 'react';
 import { containsText } from '../../helpers';
 import { LiquiditySource } from '../../types/meta';
-import LiquiditySourceList from '../LiquiditySourceList';
-import SecondaryPage from '../PageWithTextField/SecondaryPage';
+import { LiquiditySourceList } from '../LiquiditySourceList';
+import { SecondaryPage } from '../SecondaryPage/SecondaryPage';
 
 const filterLiquiditySources = (
   liquiditySources: LiquiditySource[],
@@ -16,7 +16,7 @@ export interface PropTypes {
   onChange: (liquiditySource: LiquiditySource) => void;
 }
 
-function LiquiditySourcesSelector(props: PropTypes) {
+export function LiquiditySourcesSelector(props: PropTypes) {
   const { list, onChange } = props;
 
   return (
@@ -33,5 +33,3 @@ function LiquiditySourcesSelector(props: PropTypes) {
     />
   );
 }
-
-export default LiquiditySourcesSelector;

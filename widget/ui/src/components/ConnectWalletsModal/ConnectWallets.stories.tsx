@@ -1,6 +1,6 @@
 import React from 'react';
 import { ComponentMeta } from '@storybook/react';
-import ConnectWalletsModal, { PropTypes } from './ConnectWalletsModal';
+import { ConnectWalletsModal, PropTypes } from './ConnectWalletsModal';
 import { walletsInfo } from './mockData';
 
 export default {

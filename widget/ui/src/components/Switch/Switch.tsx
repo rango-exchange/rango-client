@@ -42,7 +42,7 @@ export interface PropTypes {
   onChange?: (checked: boolean) => void;
 }
 
-function Switch(props: PropTypes) {
+export function Switch(props: PropTypes) {
   const { checked, onChange } = props;
   return (
     <StyledSwitchRoot checked={checked} onCheckedChange={onChange}>
@@ -50,5 +50,3 @@ function Switch(props: PropTypes) {
     </StyledSwitchRoot>
   );
 }
-
-export default Switch;

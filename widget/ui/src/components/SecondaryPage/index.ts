@@ -1,0 +1,1 @@
+export { SecondaryPage } from './SecondaryPage';

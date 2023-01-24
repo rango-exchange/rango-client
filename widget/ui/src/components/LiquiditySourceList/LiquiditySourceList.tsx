@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { styled } from '../../theme';
 import { LiquiditySource } from '../../types/meta';
-import Button from '../Button/Button';
-import Switch from '../Switch';
-import Typography from '../Typography';
+import { Button } from '../Button/Button';
+import { Switch } from '../Switch';
+import { Typography } from '../Typography';
 
 const groupLiquiditySources = (
   liquiditySources: LiquiditySource[]
@@ -38,7 +38,7 @@ export interface PropTypes {
   onChange: (liquiditySource: LiquiditySource) => void;
 }
 
-function LiquiditySourceList(props: PropTypes) {
+export function LiquiditySourceList(props: PropTypes) {
   const { list, onChange } = props;
 
   const [selected, setSelected] = useState(
@@ -62,7 +62,6 @@ function LiquiditySourceList(props: PropTypes) {
     liquiditySource: LiquiditySource;
     selected: boolean;
   }) => {
-    console.log(selected);
     return (
       <Button
         size="large"
@@ -110,5 +109,3 @@ function LiquiditySourceList(props: PropTypes) {
     </>
   );
 }
-
-export default LiquiditySourceList;

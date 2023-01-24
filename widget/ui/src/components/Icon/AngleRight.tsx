@@ -25,5 +25,3 @@ export const AngleRight = React.forwardRef<SVGSVGElement, IconProps>(
     );
   }
 );
-
-export default AngleRight;

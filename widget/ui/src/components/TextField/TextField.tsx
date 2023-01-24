@@ -67,7 +67,7 @@ export type PropTypes = {
   suffix?: React.ReactNode;
 } & Omit<React.InputHTMLAttributes<HTMLInputElement>, 'prefix' | 'sp'>;
 
-function TextField(props: PropsWithChildren<PropTypes>) {
+export function TextField(props: PropsWithChildren<PropTypes>) {
   const { label, prefix, suffix, children, ...inputAttributes } = props;
   return (
     <div>
@@ -88,5 +88,3 @@ function TextField(props: PropsWithChildren<PropTypes>) {
     </div>
   );
 }
-
-export default TextField;

@@ -1,6 +1,6 @@
 import React from 'react';
 import { ComponentMeta } from '@storybook/react';
-import SwapDetail, { PropTypes } from './SwapDetail';
+import { SwapDetail, PropTypes } from './SwapDetail';
 import { swap } from './mock';
 
 export default {

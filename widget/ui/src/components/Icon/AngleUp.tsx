@@ -2,7 +2,7 @@ import * as React from 'react';
 import { IconProps } from './types';
 import { SvgWithStrokeColor } from './common';
 
-export const AngleLeft = React.forwardRef<SVGSVGElement, IconProps>(
+export const AngleUp = React.forwardRef<SVGSVGElement, IconProps>(
   ({ size = 16, color, ...props }) => {
     return (
       <SvgWithStrokeColor
@@ -25,5 +25,3 @@ export const AngleLeft = React.forwardRef<SVGSVGElement, IconProps>(
     );
   }
 );
-
-export default AngleLeft;

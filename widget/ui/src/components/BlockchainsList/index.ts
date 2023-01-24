@@ -1,1 +1,1 @@
-export { default } from './BlockchainsList';
+export { BlockchainsList } from './BlockchainsList';

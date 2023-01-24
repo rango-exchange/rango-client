@@ -30,5 +30,3 @@ export const Gas = React.forwardRef<SVGSVGElement, IconProps>(
     );
   }
 );
-
-export default Gas;

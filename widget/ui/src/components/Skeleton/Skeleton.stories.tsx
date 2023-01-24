@@ -1,6 +1,6 @@
 import { ComponentMeta } from '@storybook/react';
 import React from 'react';
-import Skeleton, { PropTypes } from './Skeleton';
+import { Skeleton, PropTypes } from './Skeleton';
 
 export default {
   title: 'Components/Skeleton',

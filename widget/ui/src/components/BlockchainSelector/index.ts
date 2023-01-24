@@ -1,1 +1,1 @@
-export { default } from './BlockchainSelector';
+export { BlockchainSelector } from './BlockchainSelector';

@@ -32,5 +32,3 @@ export const CheckCircle = React.forwardRef<SVGSVGElement, IconProps>(
     );
   }
 );
-
-export default CheckCircle;

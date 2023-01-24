@@ -24,5 +24,3 @@ export const Add = React.forwardRef<SVGSVGElement, IconProps>(
     );
   }
 );
-
-export default Add;

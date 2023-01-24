@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { styled } from '../../theme';
 import { BlockchainMeta } from '../../types/meta';
-import Button from '../Button/Button';
+import { Button } from '../Button/Button';
 import { FilledCircle } from '../common';
-import Typography from '../Typography';
+import { Typography } from '../Typography';
 
 export interface PropTypes {
   list: BlockchainMeta[];
@@ -23,7 +23,7 @@ const Image = styled('img', {
   marginRight: '$4',
 });
 
-function BlockchainsList(props: PropTypes) {
+export function BlockchainsList(props: PropTypes) {
   const { list, onChange } = props;
   const [selected, setSelected] = useState(props.selected);
 
@@ -55,5 +55,3 @@ function BlockchainsList(props: PropTypes) {
     </ListContainer>
   );
 }
-
-export default BlockchainsList;

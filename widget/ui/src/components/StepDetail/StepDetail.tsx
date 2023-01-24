@@ -1,6 +1,6 @@
 import React, { PropsWithChildren } from 'react';
 import { styled } from '../../theme';
-import Typography from '../Typography';
+import { Typography } from '../Typography';
 
 const StepLogoContainer = styled('div', {
   position: 'relative',
@@ -70,7 +70,7 @@ export interface PropTypes {
   direction?: 'horizontal' | 'vertical';
 }
 
-function StepDetail({
+export function StepDetail({
   logo,
   chainLogo,
   amount,
@@ -95,5 +95,3 @@ function StepDetail({
     </StepContainer>
   );
 }
-
-export default StepDetail;

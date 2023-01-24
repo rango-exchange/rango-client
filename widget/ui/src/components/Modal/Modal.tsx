@@ -1,8 +1,8 @@
 import React from 'react';
 
 import { styled } from '../../theme';
-import CloseIcon from '../Icon/Close';
-import Typography from '../Typography';
+import { Close } from '../Icon/Close';
+import { Typography } from '../Typography';
 
 export interface PropTypes {
   title: string;
@@ -45,7 +45,7 @@ const ContentContainer = styled('div', {
   overflowY: 'scroll',
 });
 
-function Modal(props: PropTypes) {
+export function Modal(props: PropTypes) {
   const { title, content, open, onClose, containerStyle } = props;
 
   const handleBackDropClick = (event: React.MouseEvent<HTMLDivElement>) => {
@@ -59,7 +59,7 @@ function Modal(props: PropTypes) {
           <ModalContainer style={containerStyle}>
             <ModalHeader>
               <Typography variant="h4">{title}</Typography>
-              <CloseIcon size={24} onClick={onClose} />
+              <Close size={24} onClick={onClose} />
             </ModalHeader>
             <ContentContainer>{content}</ContentContainer>
           </ModalContainer>
@@ -68,5 +68,3 @@ function Modal(props: PropTypes) {
     </>
   );
 }
-
-export default Modal;

@@ -31,5 +31,3 @@ export const HorizontalSwap = React.forwardRef<SVGSVGElement, IconProps>(
     );
   }
 );
-
-export default HorizontalSwap;

@@ -24,5 +24,3 @@ export const TryAgain = React.forwardRef<SVGSVGElement, IconProps>(
     );
   }
 );
-
-export default TryAgain;

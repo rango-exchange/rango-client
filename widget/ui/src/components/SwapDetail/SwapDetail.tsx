@@ -2,7 +2,7 @@ import React, { PropsWithChildren } from 'react';
 import { PendingSwap } from '../../containers/History/types';
 import { styled } from '../../theme';
 import { CheckCircle, InfoCircle, TryAgain } from '../Icon';
-import StepDetail from '../StepDetail';
+import { StepDetail } from '../StepDetail';
 
 const Container = styled('div', {
   position: 'relative',
@@ -19,7 +19,6 @@ const SwapContainer = styled('div', {
   },
   '&:hover': {
     borderColor: '$primary',
-
   },
 
   variants: {
@@ -89,7 +88,7 @@ export interface PropTypes {
   status: 'running' | 'failed' | 'success';
 }
 
-function SwapDetail({ swap, status }: PropsWithChildren<PropTypes>) {
+export function SwapDetail({ swap, status }: PropsWithChildren<PropTypes>) {
   const firstStep = swap.steps[0];
   const lastStep = swap.steps[swap.steps.length - 1];
   return (
@@ -119,7 +118,7 @@ function SwapDetail({ swap, status }: PropsWithChildren<PropTypes>) {
         {status === 'running' ? (
           <TryAgain size={16} />
         ) : status === 'failed' ? (
-          <InfoCircle   size={18} color="error" />
+          <InfoCircle size={18} color="error" />
         ) : (
           <CheckCircle size={18} color="success" />
         )}
@@ -127,5 +126,3 @@ function SwapDetail({ swap, status }: PropsWithChildren<PropTypes>) {
     </Container>
   );
 }
-
-export default SwapDetail;

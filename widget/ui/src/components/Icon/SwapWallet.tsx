@@ -43,5 +43,3 @@ export const SwapWallet = React.forwardRef<SVGSVGElement, IconProps>(
     );
   }
 );
-
-export default SwapWallet;

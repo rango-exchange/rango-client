@@ -1,7 +1,7 @@
 import React from 'react';
 import { ComponentMeta } from '@storybook/react';
 
-import SwapContainer from './SwapContainer';
+import { SwapContainer } from './SwapContainer';
 
 export default {
   title: 'Components/Swap Box',

@@ -1,1 +1,1 @@
-export { default } from './SwapContainer';
+export { SwapContainer } from './SwapContainer';

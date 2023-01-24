@@ -1,7 +1,7 @@
 import React from 'react';
 import { ComponentMeta } from '@storybook/react';
 
-import Tooltip, { PropTypes } from './Tooltip';
+import { Tooltip, PropTypes } from './Tooltip';
 import { AddWallet } from '../Icon';
 
 export default {
