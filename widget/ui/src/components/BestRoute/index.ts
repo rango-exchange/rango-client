@@ -1,1 +1,1 @@
-export { default } from "./BestRoute";
+export { BestRoute } from './BestRoute';

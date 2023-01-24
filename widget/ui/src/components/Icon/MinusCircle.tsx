@@ -24,5 +24,3 @@ export const MinusCircle = React.forwardRef<SVGSVGElement, IconProps>(
     );
   }
 );
-
-export default MinusCircle;

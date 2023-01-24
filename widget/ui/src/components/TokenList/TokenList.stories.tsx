@@ -1,6 +1,6 @@
 import React from 'react';
 import { ComponentMeta } from '@storybook/react';
-import TokenList, { PropTypes } from './TokenList';
+import { TokenList, PropTypes } from './TokenList';
 import { tokensMeta } from './mockData';
 
 export default {

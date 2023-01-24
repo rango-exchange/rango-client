@@ -22,7 +22,7 @@ type PropTypes = {
   size: number;
 };
 
-function VirtualizedList(props: PropsWithChildren<PropTypes>) {
+export function VirtualizedList(props: PropsWithChildren<PropTypes>) {
   const {
     itemCount,
     hasNextPage,
@@ -75,5 +75,3 @@ function VirtualizedList(props: PropsWithChildren<PropTypes>) {
     </InfiniteLoader>
   );
 }
-
-export default VirtualizedList;

@@ -24,5 +24,3 @@ export const Search = React.forwardRef<SVGSVGElement, IconProps>(
     );
   }
 );
-
-export default Search;

@@ -1,1 +1,1 @@
-export { default } from "./ConfirmWallets";
+export { ConfirmWallets } from './ConfirmWallets';

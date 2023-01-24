@@ -32,5 +32,3 @@ export const Bag = React.forwardRef<SVGSVGElement, IconProps>(
     );
   }
 );
-
-export default Bag;

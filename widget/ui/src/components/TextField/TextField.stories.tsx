@@ -1,7 +1,7 @@
 import React from 'react';
 import { ComponentMeta } from '@storybook/react';
 
-import TextField, { PropTypes } from './TextField';
+import { TextField, PropTypes } from './TextField';
 import { Search } from '../Icon';
 
 export default {

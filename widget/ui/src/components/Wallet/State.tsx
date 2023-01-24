@@ -2,7 +2,7 @@ import React, { Fragment } from 'react';
 import { styled } from '../../theme';
 import { FilledCircle } from '../common';
 import { Download } from '../Icon';
-import Spinner from '../Spinner';
+import { Spinner } from '../Spinner';
 import { WalletState } from '../../types/wallet';
 
 const StateIconContainer = styled('span', {
@@ -12,7 +12,7 @@ const StateIconContainer = styled('span', {
   alignItems: 'center',
 });
 
-const State = ({
+export const State = ({
   walletState,
   installLink,
 }: {
@@ -33,5 +33,3 @@ const State = ({
     )}
   </Fragment>
 );
-
-export default State;

@@ -30,5 +30,3 @@ export const CheckSquare = React.forwardRef<SVGSVGElement, IconProps>(
     );
   }
 );
-
-export default CheckSquare;

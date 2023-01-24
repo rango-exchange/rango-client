@@ -1,6 +1,6 @@
 import React from 'react';
 import { ComponentMeta } from '@storybook/react';
-import ConfirmSwap, { PropTypes } from './ConfirmSwap';
+import { ConfirmSwap, PropTypes } from './ConfirmSwap';
 import { bestRoute } from './mock';
 
 export default {

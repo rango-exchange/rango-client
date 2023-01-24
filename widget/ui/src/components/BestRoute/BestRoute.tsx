@@ -1,12 +1,12 @@
 import React, { PropsWithChildren } from 'react';
 import { Gas, Time } from '../../components/Icon';
-import StepDetail from '../../components/StepDetail';
-import Typography from '../../components/Typography';
+import { StepDetail } from '../../components/StepDetail';
+import { Typography } from '../../components/Typography';
 import { BestRouteType, SwapResult } from '../../types/swaps';
 import { rawFees, secondsToString, totalArrivalTime } from '../../helper';
 import { styled } from '../../theme';
-import Skeleton from '../Skeleton';
-import Spinner from '../Spinner';
+import { Skeleton } from '../Skeleton';
+import { Spinner } from '../Spinner';
 
 const Container = styled('div', {
   borderRadius: '$5',
@@ -108,7 +108,11 @@ export interface PropTypes {
   loading?: boolean;
   error?: string;
 }
-function BestRoute({ data, loading, error }: PropsWithChildren<PropTypes>) {
+export function BestRoute({
+  data,
+  loading,
+  error,
+}: PropsWithChildren<PropTypes>) {
   const fee = rawFees(data);
   const time = secondsToString(totalArrivalTime(data));
   return (
@@ -173,5 +177,3 @@ function BestRoute({ data, loading, error }: PropsWithChildren<PropTypes>) {
     </Container>
   );
 }
-
-export default BestRoute;

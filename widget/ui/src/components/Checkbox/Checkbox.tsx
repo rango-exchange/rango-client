@@ -36,7 +36,11 @@ export interface PropTypes {
   name?: string;
 }
 
-function Checkbox({ label, id, ...props }: PropsWithChildren<PropTypes>) {
+export function Checkbox({
+  label,
+  id,
+  ...props
+}: PropsWithChildren<PropTypes>) {
   return (
     <CheckboxContainer>
       <CheckboxRoot id={id} {...props}>
@@ -48,5 +52,3 @@ function Checkbox({ label, id, ...props }: PropsWithChildren<PropTypes>) {
     </CheckboxContainer>
   );
 }
-
-export default Checkbox;

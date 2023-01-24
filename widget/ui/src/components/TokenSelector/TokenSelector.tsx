@@ -1,7 +1,7 @@
 import React from 'react';
 import { TokenMeta } from '../../types/meta';
-import SecondaryPage from '../PageWithTextField/SecondaryPage';
-import TokenList from '../TokenList';
+import { SecondaryPage } from '../SecondaryPage/SecondaryPage';
+import { TokenList } from '../TokenList';
 
 export interface PropTypes {
   list: TokenMeta[];
@@ -10,7 +10,7 @@ export interface PropTypes {
   onChange: (token: TokenMeta) => void;
 }
 
-function TokenSelector(props: PropTypes) {
+export function TokenSelector(props: PropTypes) {
   const { list, type, selected, onChange } = props;
 
   return (
@@ -29,5 +29,3 @@ function TokenSelector(props: PropTypes) {
     />
   );
 }
-
-export default TokenSelector;

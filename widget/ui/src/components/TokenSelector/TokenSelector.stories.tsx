@@ -1,6 +1,6 @@
 import React from 'react';
 import { ComponentMeta } from '@storybook/react';
-import TokenSelector, { PropTypes } from './TokenSelector';
+import { TokenSelector, PropTypes } from './TokenSelector';
 import { tokensMeta } from '../TokenList/mockData';
 
 export default {

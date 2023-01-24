@@ -1,1 +1,1 @@
-export { default } from "./SwapDetail";
+export { SwapDetail } from './SwapDetail';

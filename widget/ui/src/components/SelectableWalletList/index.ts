@@ -1,1 +1,1 @@
-export { default } from "./SelectableWalletList";
+export { SelectableWalletList } from './SelectableWalletList';

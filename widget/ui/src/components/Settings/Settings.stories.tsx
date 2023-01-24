@@ -1,7 +1,7 @@
 import React from 'react';
 import { ComponentMeta } from '@storybook/react';
-import Settings, { PropTypes } from './Settings';
-import SwapContainer from '../SwapContainer/SwapContainer';
+import { Settings, PropTypes } from './Settings';
+import { SwapContainer } from '../SwapContainer/SwapContainer';
 import { liquiditySources } from '../LiquiditySourceList/mockData';
 
 export default {

@@ -1,1 +1,1 @@
-export { default } from './Spacer';
+export { Spacer } from './Spacer';

@@ -1,9 +1,9 @@
 import { styled } from '../../theme';
 import React, { useState } from 'react';
 import { AngleRight } from '../Icon';
-import SecondaryPage from '../PageWithTextField/SecondaryPage';
-import Typography from '../Typography';
-import Chip from '../Chip';
+import { SecondaryPage } from '../SecondaryPage/SecondaryPage';
+import { Typography } from '../Typography';
+import { Chip } from '../Chip';
 import { LiquiditySource } from '../../types/meta';
 
 const SlippageContainer = styled('div', {
@@ -44,7 +44,7 @@ export interface PropTypes {
   onSlippageChange: (slippage: string) => void;
 }
 
-function Settings(props: PropTypes) {
+export function Settings(props: PropTypes) {
   const {
     slippages,
     selectedLiquiditySources,
@@ -90,5 +90,3 @@ function Settings(props: PropTypes) {
     <SecondaryPage title="Settings" textField={false} Content={PageContent} />
   );
 }
-
-export default Settings;

@@ -1,1 +1,1 @@
-export { default } from './TokenSelector';
+export { TokenSelector } from './TokenSelector';
