@@ -15,11 +15,11 @@ const WalletImage = styled('img', {
 export type PropTypes = WalletInfo & { onClick: (walletName: string) => void };
 
 export function Wallet(props: PropTypes) {
-  const { name, image, state, onClick } = props;
+  const { name, image, onClick } = props;
   return (
     <Button
-      type={state === WalletState.CONNECTED ? 'primary' : undefined}
-      disabled={!state}
+      type={props.state === WalletState.CONNECTED ? 'primary' : undefined}
+      disabled={!props.state}
       onClick={onClick.bind(null, name)}
       align="start"
       variant="outlined"
@@ -27,9 +27,11 @@ export function Wallet(props: PropTypes) {
       prefix={<WalletImage src={image} />}
       suffix={
         <State
-          walletState={state}
+          walletState={props.state}
           installLink={
-            state === WalletState.NOT_INSTALLED ? props.installLink : undefined
+            props.state === WalletState.NOT_INSTALLED
+              ? props.installLink
+              : undefined
           }
         />
       }
