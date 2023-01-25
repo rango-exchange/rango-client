@@ -1,10 +1,9 @@
 import {
-  Network,
   WalletInfo,
   WalletState,
   WalletType,
 } from '@rangodev/wallets-shared';
-import { State as ModalState } from './types';
+import { ModalState, State } from './types';
 import {
   WalletInfo as ModalWalletInfo,
   WalletState as WalletStatus,
@@ -18,15 +17,6 @@ export function state_reducer(state: { open: boolean }, action: any) {
     ...state,
     open: action.value,
   };
-}
-
-export interface State {
-  connected: boolean;
-  connecting: boolean;
-  reachable: boolean;
-  installed: boolean;
-  accounts: string[] | null;
-  network: Network | null;
 }
 
 export const getStateWallet = (state: State): WalletStatus => {

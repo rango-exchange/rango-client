@@ -1,1 +1,2 @@
-export { default as AdapterProvider, useAdapter } from './provider';
+export { default as AdapterProvider } from './provider';
+export { useAdapter } from './adapter';

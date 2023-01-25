@@ -23,7 +23,7 @@ const State = ({
     {walletState !== WalletState.DISCONNECTED && (
       <StateIconContainer>
         {walletState === WalletState.NOT_INSTALLED && (
-          <a href={installLink}>
+          <a href={installLink} target="_blank">
             <Download size={24} color="success" />
           </a>
         )}
