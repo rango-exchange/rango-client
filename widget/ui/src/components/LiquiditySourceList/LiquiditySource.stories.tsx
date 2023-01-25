@@ -1,6 +1,6 @@
 import React from 'react';
 import { ComponentMeta } from '@storybook/react';
-import LiquiditySourceList, { PropTypes } from './LiquiditySourceList';
+import { LiquiditySourceList, PropTypes } from './LiquiditySourceList';
 import { liquiditySources } from './mockData';
 
 export default {

@@ -1,15 +1,15 @@
-import React, { ReactElement, useState } from 'react';
+import React, { useState } from 'react';
 // import { ChevronLeftIcon } from '@radix-ui/react-icons';
 import { styled } from '../../theme';
 import { AngleLeft, Search } from '../Icon';
-import SwapContainer from '../SwapContainer/SwapContainer';
-import TextField from '../TextField/TextField';
-import Typography from '../Typography';
+import { SwapContainer } from '../SwapContainer/SwapContainer';
+import { TextField } from '../TextField/TextField';
+import { Typography } from '../Typography';
 
 export type PropTypes = (
   | {
       textField: true;
-      Content: (props: { searchedFor: string }) => ReactElement;
+      Content: React.ElementType<{ searchedFor: string }>;
       textFieldPlaceholder: string;
     }
   | {
@@ -59,8 +59,8 @@ const ContentContainer = styled('div', {
   marginBottom: '$16',
 });
 
-function SecondaryPage(props: PropTypes) {
-  const { title, Footer, TopButton, Content, onBack, textField } = props;
+export function SecondaryPage(props: PropTypes) {
+  const { title, Footer, TopButton, onBack } = props;
   const [searchedFor, setSearchedFor] = useState('');
 
   return (
@@ -71,7 +71,7 @@ function SecondaryPage(props: PropTypes) {
           <Typography variant="h4">{title}</Typography>
           {TopButton}
         </HeaderContainer>
-        {textField && (
+        {props.textField && (
           <TextField
             prefix={<Search size={24} />}
             placeholder={props.textFieldPlaceholder}
@@ -81,8 +81,8 @@ function SecondaryPage(props: PropTypes) {
           />
         )}
         <ContentContainer>
-          {textField && <Content searchedFor={searchedFor} />}
-          {!textField && Content}
+          {props.textField && <props.Content searchedFor={searchedFor} />}
+          {!props.textField && props.Content}
         </ContentContainer>
 
         {Footer}
@@ -90,5 +90,3 @@ function SecondaryPage(props: PropTypes) {
     </SwapContainer>
   );
 }
-
-export default SecondaryPage;

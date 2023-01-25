@@ -19,19 +19,16 @@ export const InfoCircle = React.forwardRef<SVGSVGElement, IconProps>(
           strokeWidth={2}
           strokeLinecap="round"
           strokeLinejoin="round"
-          stroke='#fff'
-
+          stroke="#fff"
         />
         <path
           d="M11.994 16h.01"
           strokeWidth={2}
           strokeLinecap="round"
           strokeLinejoin="round"
-          stroke='#fff'
+          stroke="#fff"
         />
       </SvgWithFillColor>
     );
   }
 );
-
-export default InfoCircle;

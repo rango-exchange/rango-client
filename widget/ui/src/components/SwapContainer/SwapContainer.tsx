@@ -1,10 +1,8 @@
-import { styled } from '@stitches/react';
+import { styled } from '../../theme';
 
-const SwapContainer = styled('div', {
+export const SwapContainer = styled('div', {
   borderRadius: '$10',
   maxWidth: '512px',
   height: '592px',
   boxShadow: '$s',
 });
-
-export default SwapContainer;

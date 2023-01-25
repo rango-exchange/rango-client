@@ -1,6 +1,6 @@
 import { ComponentMeta } from '@storybook/react';
 import React from 'react';
-import Spacer, { PropTypes } from './Spacer';
+import { Spacer, PropTypes } from './Spacer';
 
 export default {
   title: 'Components/Spacer',

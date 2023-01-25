@@ -1,2 +1,3 @@
-export { default as ConnectWalletsModal } from './components/ConnectWalletsModal';
 export * from './types';
+export * from './components';
+export * from './containers';

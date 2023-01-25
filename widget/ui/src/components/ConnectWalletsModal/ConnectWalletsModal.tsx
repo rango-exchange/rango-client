@@ -1,7 +1,7 @@
 import React from 'react';
 import { styled } from '../../theme';
 import { WalletInfo, WalletType } from '../../types/wallet';
-import Modal from '../Modal';
+import { Modal } from '../Modal';
 import Wallet from '../Wallet/Wallet';
 
 export interface PropTypes {
@@ -18,7 +18,7 @@ const ModalContent = styled('div', {
   gridTemplateColumns: 'repeat(2, minmax(0, 1fr))',
 });
 
-function ConnectWalletsModal(props: PropTypes) {
+export function ConnectWalletsModal(props: PropTypes) {
   const { open, list, onSelect, onClose } = props;
 
   const Content = (
@@ -39,5 +39,3 @@ function ConnectWalletsModal(props: PropTypes) {
     />
   );
 }
-
-export default ConnectWalletsModal;

@@ -56,8 +56,6 @@ export interface PropTypes {
   color?: 'primary' | 'error' | 'warning' | 'success' | 'black' | 'white';
 }
 
-function Spinner({ size = 16, color = 'primary' }: PropTypes) {
+export function Spinner({ size = 16, color = 'primary' }: PropTypes) {
   return <SpinnerContainer size={size} color={color} />;
 }
-
-export default Spinner;

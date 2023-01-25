@@ -1,7 +1,7 @@
 import React from 'react';
 import { ComponentMeta } from '@storybook/react';
 
-import SelectableWalletList, { PropTypes } from './SelectableWalletList';
+import { SelectableWalletList, PropTypes } from './SelectableWalletList';
 import { data } from './mock';
 
 export default {

@@ -1,7 +1,7 @@
 import React from 'react';
 import { ComponentMeta } from '@storybook/react';
 
-import History, { PropTypes } from './History';
+import { History, PropTypes } from './History';
 import { pendingSwap } from './mock';
 
 export default {

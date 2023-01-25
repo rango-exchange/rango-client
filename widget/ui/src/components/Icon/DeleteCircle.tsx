@@ -24,5 +24,3 @@ export const DeleteCircle = React.forwardRef<SVGSVGElement, IconProps>(
     );
   }
 );
-
-export default DeleteCircle;

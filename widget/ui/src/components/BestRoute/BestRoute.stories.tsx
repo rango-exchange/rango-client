@@ -1,6 +1,6 @@
 import React from 'react';
 import { ComponentMeta } from '@storybook/react';
-import BestRoute, { PropTypes } from './BestRoute';
+import { BestRoute, PropTypes } from './BestRoute';
 import { bestRoute, bestRouteExample2, bestRouteExample3 } from './mock';
 
 export default {

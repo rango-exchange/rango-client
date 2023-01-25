@@ -25,5 +25,3 @@ export const Ban = React.forwardRef<SVGSVGElement, IconProps>(
     );
   }
 );
-
-export default Ban;

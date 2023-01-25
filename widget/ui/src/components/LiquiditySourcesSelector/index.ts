@@ -1,1 +1,1 @@
-export { default } from './LiquiditySourcesSelector';
+export { LiquiditySourcesSelector } from './LiquiditySourcesSelector';

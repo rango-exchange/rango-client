@@ -30,5 +30,3 @@ export const Warning = React.forwardRef<SVGSVGElement, IconProps>(
     );
   }
 );
-
-export default Warning;

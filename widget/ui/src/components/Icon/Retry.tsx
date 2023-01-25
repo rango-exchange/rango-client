@@ -25,5 +25,3 @@ export const Retry = React.forwardRef<SVGSVGElement, IconProps>(
     );
   }
 );
-
-export default Retry;

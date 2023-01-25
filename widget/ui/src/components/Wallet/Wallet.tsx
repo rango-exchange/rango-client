@@ -2,9 +2,9 @@ import React from 'react';
 
 import { styled } from '../../theme';
 import { WalletInfo, WalletState, WalletType } from '../../types/wallet';
-import Button from '../Button/Button';
-import Typography from '../Typography';
-import State from './State';
+import { Button } from '../Button/Button';
+import { Typography } from '../Typography';
+import { State } from './State';
 
 const WalletImage = styled('img', {
   width: '$24',
@@ -12,7 +12,9 @@ const WalletImage = styled('img', {
   marginRight: '$12',
 });
 
-export type PropTypes = WalletInfo & { onClick: (walletType: WalletType) => void };
+export type PropTypes = WalletInfo & {
+  onClick: (walletType: WalletType) => void;
+};
 
 function Wallet(props: PropTypes) {
   const { name, type, image, state, onClick } = props;
@@ -27,9 +29,11 @@ function Wallet(props: PropTypes) {
       prefix={<WalletImage src={image} />}
       suffix={
         <State
-          walletState={state}
+          walletState={props.state}
           installLink={
-            state === WalletState.NOT_INSTALLED ? props.installLink : undefined
+            props.state === WalletState.NOT_INSTALLED
+              ? props.installLink
+              : undefined
           }
         />
       }
@@ -40,5 +44,4 @@ function Wallet(props: PropTypes) {
     </Button>
   );
 }
-
 export default Wallet;

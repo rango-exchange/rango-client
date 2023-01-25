@@ -32,5 +32,3 @@ export const Setting = React.forwardRef<SVGSVGElement, IconProps>(
     );
   }
 );
-
-export default Setting;

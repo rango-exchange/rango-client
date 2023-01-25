@@ -30,5 +30,3 @@ export const Download = React.forwardRef<SVGSVGElement, IconProps>(
     );
   }
 );
-
-export default Download;

@@ -1,7 +1,7 @@
 import React from 'react';
 import { ComponentMeta } from '@storybook/react';
 
-import Chip, { PropTypes } from './Chip';
+import { Chip, PropTypes } from './Chip';
 
 export default {
   title: 'Chip',

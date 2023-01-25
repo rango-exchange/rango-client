@@ -15,7 +15,7 @@ export type Icon =
   | 'CheckCircle'
   | 'Ban'
   | 'Warning'
-  | 'History'
+  | 'HistoryIcon'
   | 'Gas'
   | 'Setting'
   | 'Trash'
@@ -32,7 +32,6 @@ export type Icon =
   | 'VerticalSwap'
   | 'HorizontalSwap'
   | 'Retry'
-  | 'Wallet'
   | 'AddWallet'
   | 'DeleteWallet'
   | 'CheckWallet'
@@ -40,5 +39,5 @@ export type Icon =
   | 'Bag'
   | 'Check'
   | 'Time'
-  | 'Close';
-
+  | 'Close'
+  | 'WalletIcon';

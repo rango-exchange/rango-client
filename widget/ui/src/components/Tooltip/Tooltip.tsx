@@ -1,5 +1,5 @@
 import * as RadixTooltip from '@radix-ui/react-tooltip';
-import { styled } from '@stitches/react';
+import { styled } from '../../theme';
 import React, { PropsWithChildren } from 'react';
 
 export interface PropTypes {
@@ -88,7 +88,7 @@ const TooltipArrow = styled(RadixTooltip.Arrow, {
   },
 });
 
-function Tooltip({
+export function Tooltip({
   children,
   content,
   side = 'top',
@@ -101,12 +101,10 @@ function Tooltip({
         <RadixTooltip.Portal>
           <TooltipContent color={color} side={side} sideOffset={5}>
             {content}
-            <TooltipArrow color={color}/>
+            <TooltipArrow color={color} />
           </TooltipContent>
         </RadixTooltip.Portal>
       </RadixTooltip.Root>
     </RadixTooltip.Provider>
   );
 }
-
-export default Tooltip;

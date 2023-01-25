@@ -1,8 +1,8 @@
 import React from 'react';
 import { ComponentMeta } from '@storybook/react';
-import BlockchainSelector, { PropTypes } from './BlockchainSelector';
+import { BlockchainSelector, PropTypes } from './BlockchainSelector';
 import { blockchainMeta } from '../BlockchainsList/mockData';
-import SwapContainer from '../SwapContainer/SwapContainer';
+import { SwapContainer } from '../SwapContainer/SwapContainer';
 
 export default {
   title: 'Blockchain Selector',

@@ -1,6 +1,6 @@
 import React from 'react';
 import { ComponentMeta } from '@storybook/react';
-import BlockchainsList, { PropTypes } from './BlockchainsList';
+import { BlockchainsList, PropTypes } from './BlockchainsList';
 import { blockchainMeta } from './mockData';
 
 export default {

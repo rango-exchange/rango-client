@@ -1,6 +1,6 @@
 import React from 'react';
 import { ComponentMeta } from '@storybook/react';
-import StepDetail, { PropTypes } from './StepDetail';
+import { StepDetail, PropTypes } from './StepDetail';
 
 export default {
   title: 'Components/StepDetail',

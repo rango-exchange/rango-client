@@ -1,11 +1,11 @@
 import React, { PropsWithChildren } from 'react';
-import Button from '../../components/Button';
+import { Button } from '../../components/Button';
 import { AddWallet } from '../../components/Icon';
-import SecondaryPage from '../../components/PageWithTextField/SecondaryPage';
-import SelectableWalletList from '../../components/SelectableWalletList';
-import Spacer from '../../components/Spacer';
-import Tooltip from '../../components/Tooltip';
-import Typography from '../../components/Typography';
+import { SecondaryPage } from '../../components/SecondaryPage/SecondaryPage';
+import { SelectableWalletList } from '../../components/SelectableWalletList';
+import { Spacer } from '../../components/Spacer';
+import { Tooltip } from '../../components/Tooltip';
+import { Typography } from '../../components/Typography';
 import { decimalNumber } from '../../helper';
 import { styled } from '../../theme';
 import { BestRouteType } from '../../types/swaps';
@@ -26,7 +26,7 @@ export interface PropTypes {
   loading?: boolean;
   wallets: ActiveWalletsType[];
 }
-function ConfirmWallets({
+export function ConfirmWallets({
   onBack,
   loading,
   onAddWallet,
@@ -88,5 +88,3 @@ function ConfirmWallets({
     />
   );
 }
-
-export default ConfirmWallets;

@@ -61,8 +61,6 @@ export interface PropTypes {
   height?: 20 | 24 | 36 | 48 | 94;
 }
 
-function Skeleton({ width = 20, height = 20 }: PropTypes) {
+export function Skeleton({ width = 20, height = 20 }: PropTypes) {
   return <SkeletonContainer width={width} height={height} />;
 }
-
-export default Skeleton;
