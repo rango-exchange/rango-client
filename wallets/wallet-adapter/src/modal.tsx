@@ -6,14 +6,15 @@ import { getlistWallet } from './helpers';
 export interface PropTypes {
   open: boolean;
   onClose: () => void;
+  list: WalletType[];
 }
 
 function Modal(props: PropTypes) {
-  const { open, onClose } = props;
+  const { open, onClose, list } = props;
   const [walletMessage, setWalletErrorMessage] = useState('');
 
   const { state, disconnect, getWalletInfo, connect } = useWallets();
-  const allWallets = getlistWallet(state, getWalletInfo);
+  const allWallets = getlistWallet(state, getWalletInfo,list);
 
   const onSelectWallet = async (type: WalletType) => {
     const wallet = state(type);

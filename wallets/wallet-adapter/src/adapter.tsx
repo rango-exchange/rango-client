@@ -8,10 +8,11 @@ import { ProviderContext } from './types';
 import { defaultState, state_reducer } from './helpers';
 import { useWallets } from '@rangodev/wallets-core';
 import Modal from './modal';
+import { WalletType } from '@rangodev/wallets-shared';
 // @ts-ignore
 const AdapterContext = createContext<ProviderContext>({});
 
-function Adapter({ children }: PropsWithChildren) {
+function Adapter({ children, list }: PropsWithChildren<{ list: WalletType[] }>) {
   const [modalState, dispatch] = useReducer(state_reducer, defaultState);
   const {
     disconnectAll,
@@ -46,7 +47,7 @@ function Adapter({ children }: PropsWithChildren) {
   return (
     <AdapterContext.Provider value={api}>
       {children}
-      <Modal onClose={api.onCloseModal} open={modalState.open} />
+      <Modal list={list} onClose={api.onCloseModal} open={modalState.open} />
     </AdapterContext.Provider>
   );
 }
