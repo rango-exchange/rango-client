@@ -1,5 +1,5 @@
-import React from "react";
-import { Button } from "@rangodev/ui";
+import React from 'react';
+import { Button } from '@rangodev/ui';
 
 export function App() {
   return (
