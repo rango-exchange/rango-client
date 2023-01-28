@@ -1,5 +1,5 @@
 import React from 'react';
-
+import { createPortal } from 'react-dom';
 import { styled } from '../../theme';
 import { Close } from '../Icon/Close';
 import { Typography } from '../Typography';
@@ -54,17 +54,19 @@ export function Modal(props: PropTypes) {
 
   return (
     <>
-      {open && (
-        <BackDrop onClick={handleBackDropClick}>
-          <ModalContainer style={containerStyle}>
-            <ModalHeader>
-              <Typography variant="h4">{title}</Typography>
-              <Close size={24} onClick={onClose} />
-            </ModalHeader>
-            <ContentContainer>{content}</ContentContainer>
-          </ModalContainer>
-        </BackDrop>
-      )}
+      {open &&
+        createPortal(
+          <BackDrop onClick={handleBackDropClick}>
+            <ModalContainer style={containerStyle}>
+              <ModalHeader>
+                <Typography variant="h4">{title}</Typography>
+                <Close size={24} onClick={onClose} />
+              </ModalHeader>
+              <ContentContainer>{content}</ContentContainer>
+            </ModalContainer>
+          </BackDrop>,
+          document.body
+        )}
     </>
   );
 }
