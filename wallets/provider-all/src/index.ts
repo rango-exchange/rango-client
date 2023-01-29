@@ -17,6 +17,7 @@ import * as trustwallet from '@rangodev/provider-trustwallet';
 import * as walletconnect from '@rangodev/provider-walletconnect';
 import * as argentx from '@rangodev/provider-argentx';
 import * as tronLink from '@rangodev/provider-tron-link';
+import * as frontier from '@rangodev/provider-frontier';
 
 export const allProviders = () => [
   binance,
@@ -38,4 +39,5 @@ export const allProviders = () => [
   walletconnect,
   argentx,
   tronLink,
+  frontier,
 ];

@@ -45,6 +45,7 @@ export enum WalletType {
   KEPLR = 'keplr',
   OKX = 'okx',
   PHANTOM = 'phantom',
+  FRONTIER = 'frontier',
   COINBASE = 'coinbase',
   XDEFI = 'xdefi',
   BINANCE_CHAIN = 'binance-chain',
