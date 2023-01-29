@@ -4,22 +4,25 @@ import { Close } from '../Icon/Close';
 import { Typography } from '../Typography';
 
 export interface PropTypes {
-  title?: string;
+  title: string;
   open: boolean;
   onClose: () => void;
   content: React.ReactNode;
-  containerStyle?: React.CSSProperties;
+  containerStyle: React.CSSProperties;
   anchor?: 'bottom' | 'left' | 'right' | 'top';
   showClose?: boolean;
-  footer?: React.ReactNode;
+  footer: React.ReactNode;
 }
 
 const BackDrop = styled('div', {
-  position: 'absolute',
+  position: 'fixed',
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
   top: '0',
   left: '0',
-  width: '100%',
-  height: '100%',
+  width: '100vw',
+  height: '100vh',
 
   backgroundColor: 'rgba(0,0,0,.1)',
 });
@@ -28,7 +31,7 @@ const DrawerContainer = styled('div', {
   position: 'fixed',
   boxShadow: '$s',
   background: '$background',
-  padding: '$20',
+  padding: '20px',
 
   variants: {
     anchor: {
@@ -75,14 +78,13 @@ const DrawerHeader = styled('div', {
 });
 
 const Body = styled('div', {
-  overflowY: 'auto',
-  height: '100%',
+  overflowY: 'scroll',
 });
-const Footer = styled('footer', {
-  width: '100%',
+const Footer = styled('div', {
+  display: 'flex',
+  alignItems: 'center',
   position: 'absolute',
-  bottom: 0,
-  left: 0,
+  bottom: 20,
 });
 
 export function Drawer(props: PropTypes) {
