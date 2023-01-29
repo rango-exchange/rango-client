@@ -10,13 +10,13 @@ export function HeaderButtons() {
   return (
     <ButtonsContainer>
       <Tooltip content="Wallets">
-        <WalletIcon />
+        <WalletIcon size={24} />
       </Tooltip>
       <Tooltip content="Transactions Hitory">
-        <HistoryIcon />
+        <HistoryIcon size={24} />
       </Tooltip>
       <Tooltip content="Settings">
-        <Setting />
+        <Setting size={24} />
       </Tooltip>
     </ButtonsContainer>
   );
