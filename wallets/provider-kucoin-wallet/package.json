@@ -1,8 +1,8 @@
 {
-  "name": "@rangodev/provider-kucoin",
+  "name": "@rangodev/provider-kucoin-wallet",
   "version": "0.1.11-next.24",
   "license": "MIT",
-  "module": "dist/provider-kucoin.esm.js",
+  "module": "dist/provider-kucoin-wallet.esm.js",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
   "files": [
@@ -36,11 +36,11 @@
   },
   "size-limit": [
     {
-      "path": "dist/provider-kucoin.cjs.production.min.js",
+      "path": "dist/provider-kucoin-wallet.cjs.production.min.js",
       "limit": "10 KB"
     },
     {
-      "path": "dist/provider-kucoin.esm.js",
+      "path": "dist/provider-kucoin-wallet.esm.js",
       "limit": "10 KB"
     }
   ],

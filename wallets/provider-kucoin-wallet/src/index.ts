@@ -50,7 +50,7 @@ export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
   const evms = evmBlockchains(allBlockChains);
   return {
     name: 'KuCoin',
-    img: 'https://app.rango.exchange/wallets/tp.png',
+    img: 'https://app.rango.exchange/wallets/kucoin.png',
     color: '#b2dbff',
     installLink:
       'https://chrome.google.com/webstore/detail/kucoin-wallet/nbdpmlhambbdkhkmbfpljckjcmgibalo',
