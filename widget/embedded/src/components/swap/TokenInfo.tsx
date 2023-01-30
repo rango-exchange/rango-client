@@ -1,13 +1,14 @@
 import React from 'react';
-import { AngleDown, Button, styled, TextField, Typography } from '@rangodev/ui';
+import { AngleDownIcon, Button, styled, TextField, Typography } from '@rangodev/ui';
 
 interface PropTypes {
-  label: 'From' | 'To';
+  type: 'From' | 'To';
 }
 
 const Container = styled('div', {
-  backgroundColor: '$neutrals200',
-  padding: '$8',
+  boxSizing: 'border-box',
+  backgroundColor: '$neutrals300',
+  padding: '$24 $8 $8 $8',
   borderRadius: '$5',
   display: 'flex',
   margin: '$16 0',
@@ -18,18 +19,32 @@ const StyledImage = styled('img', {
   width: '24px',
 });
 
+const MaxAmount = styled('div', {
+  display: 'flex',
+  position: 'absolute',
+  right: '$16',
+  top: '$6',
+});
+
 export function TokenInfo(props: PropTypes) {
-  const { label } = props;
+  const { type } = props;
   return (
     <Container>
       <div style={{ position: 'absolute', bottom: '100%' }}>
-        <Typography variant="body2">{label}</Typography>
+        <Typography variant="body2">{type}</Typography>
       </div>
+      {type === 'From' && (
+        <MaxAmount>
+          <Typography variant="body2">Max:&nbsp;</Typography>
+          <Typography variant="body1">1234</Typography>
+        </MaxAmount>
+      )}
       <Button
         variant="outlined"
         prefix={<StyledImage src="https://api.rango.exchange/blockchains/polygon.svg" />}
-        suffix={<AngleDown />}
-        style={{ backgroundColor: 'white' }}>
+        suffix={<AngleDownIcon />}
+        size="large"
+        style={{ marginRight: '.5rem' }}>
         Polygon
       </Button>
       <Button
@@ -41,11 +56,12 @@ export function TokenInfo(props: PropTypes) {
             su
           />
         }
-        suffix={<AngleDown />}
-        style={{ backgroundColor: 'white' }}>
+        suffix={<AngleDownIcon />}
+        size="large"
+        style={{ marginRight: '.5rem' }}>
         USDT
       </Button>
-      <TextField type="number" />
+      <TextField type="number" size="large" />
     </Container>
   );
 }

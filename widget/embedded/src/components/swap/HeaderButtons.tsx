@@ -1,22 +1,40 @@
 import React from 'react';
-import { styled } from '@stitches/react';
-import { HistoryIcon, Setting, Tooltip, WalletIcon } from '@rangodev/ui';
+import { HistoryIcon, SettingsIcon, Tooltip, WalletIcon, styled } from '@rangodev/ui';
+import { useNavigate } from 'react-router-dom';
 
 const ButtonsContainer = styled('div', {
   display: 'flex',
 });
 
+const StyledWalletIcon = styled(WalletIcon, {
+  marginRight: '$16',
+  cursor: 'pointer',
+});
+
+const StyledHistoryIcon = styled(HistoryIcon, { marginRight: '$16', cursor: 'pointer' });
+
+const StyledSettingsIcon = styled(SettingsIcon, {
+  cursor: 'pointer',
+});
+
 export function HeaderButtons() {
+  const navigate = useNavigate();
+
   return (
     <ButtonsContainer>
-      <Tooltip content="Wallets">
-        <WalletIcon size={24} />
+      <Tooltip content="Connect Wallets">
+        <StyledWalletIcon size={24} />
       </Tooltip>
       <Tooltip content="Transactions Hitory">
-        <HistoryIcon size={24} />
+        <StyledHistoryIcon size={24} />
       </Tooltip>
       <Tooltip content="Settings">
-        <Setting size={24} />
+        <StyledSettingsIcon
+          size={24}
+          onClick={() => {
+            navigate('/settings');
+          }}
+        />
       </Tooltip>
     </ButtonsContainer>
   );

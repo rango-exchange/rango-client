@@ -48,6 +48,7 @@ const ButtonContainer = styled('button', {
         },
       },
       outlined: {
+        backgroundColor: '$background !important',
         borderColor: '$neutrals400 !important',
         color: '$foreground',
         '&:hover': {

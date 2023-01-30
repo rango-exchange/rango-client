@@ -1,14 +1,21 @@
-import { LiquiditySourcesSelector, Setting, Settings } from '@rangodev/ui';
+import {
+  History,
+  LiquiditySourcesSelector,
+  SettingsIcon,
+  Settings,
+  Typography,
+} from '@rangodev/ui';
 import React from 'react';
 import { useRoutes } from 'react-router-dom';
-import { Swap } from './pages/swap';
+import { Home } from './pages/Home';
+import { SettingsPage } from './pages/SettingsPage';
 
 export const AppRoutes = () =>
   useRoutes([
-    { path: '/', element: <Swap /> },
-    { path: '/settings', element: <Settings /> },
-    {
-      path: '/settings/liquidity-sources',
-      element: <LiquiditySourcesSelector />,
-    },
+    { path: '/', element: <Home /> },
+    { path: '/settings', element: <SettingsPage /> },
+    // {
+    //   path: '/settings/liquidity-sources',
+    //   element: <LiquiditySourcesSelector />,
+    //   },
   ]);

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 // import { ChevronLeftIcon } from '@radix-ui/react-icons';
 import { styled } from '../../theme';
-import { AngleLeft, Search } from '../Icon';
+import { AngleLeftIcon, SearchIcon } from '../Icon';
 import { SwapContainer } from '../SwapContainer/SwapContainer';
 import { TextField } from '../TextField/TextField';
 import { Typography } from '../Typography';
@@ -43,7 +43,7 @@ const HeaderContainer = styled('div', {
   position: 'relative',
 });
 
-const BackIcon = styled(AngleLeft, {
+const BackIcon = styled(AngleLeftIcon, {
   position: 'absolute',
   left: '0',
 });
@@ -73,9 +73,9 @@ export function SecondaryPage(props: PropTypes) {
         </HeaderContainer>
         {props.textField && (
           <TextField
-            prefix={<Search size={24} />}
+            prefix={<SearchIcon size={24} />}
             placeholder={props.textFieldPlaceholder}
-            onChange={(event) => setSearchedFor(event.target.value)}
+            onChange={event => setSearchedFor(event.target.value)}
             value={searchedFor}
             autoFocus
           />

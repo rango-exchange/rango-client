@@ -1,6 +1,6 @@
 import React, { PropsWithChildren } from 'react';
 import { Button } from '../../components/Button';
-import { Retry, Gas, AddWallet } from '../../components/Icon';
+import { RetryIcon, GasIcon, AddWalletIcon } from '../../components/Icon';
 import { SecondaryPage } from '../../components/SecondaryPage/';
 import { Spacer } from '../../components/Spacer';
 import { StepDetail } from '../../components/StepDetail';
@@ -62,7 +62,7 @@ const ArrowDown = styled('div', {
   borderTop: '5px solid $foreground',
   marginLeft: '$8',
 });
-const UpdateIcon = styled(Retry, {
+const UpdateIcon = styled(RetryIcon, {
   position: 'absolute',
   right: '0',
 });
@@ -101,7 +101,7 @@ export function ConfirmSwap({
             <Button
               type="primary"
               variant="contained"
-              prefix={<AddWallet size={24} color="white" />}
+              prefix={<AddWalletIcon size={24} color="white" />}
               onClick={onAddWallet}
             />
           </Tooltip>
@@ -148,7 +148,7 @@ export function ConfirmSwap({
                     {swap.to.symbol} via {swap.swapperId}{' '}
                   </Typography>
                   <Fee>
-                    <Gas />
+                    <GasIcon />
                     <Typography ml={4} variant="caption">
                       {parseFloat(swap.fee[0].amount).toFixed(6)} estimated gas
                       fee

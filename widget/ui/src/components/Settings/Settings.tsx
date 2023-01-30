@@ -1,6 +1,6 @@
 import { styled } from '../../theme';
 import React, { useState } from 'react';
-import { AngleRight } from '../Icon';
+import { AngleRightIcon } from '../Icon';
 import { SecondaryPage } from '../SecondaryPage/SecondaryPage';
 import { Typography } from '../Typography';
 import { Chip } from '../Chip';
@@ -27,7 +27,7 @@ const LiquiditySourceContainer = styled('div', {
   marginTop: '$32',
 });
 
-const StyledAngleRight = styled(AngleRight, { marginLeft: '8px' });
+const StyledAngleRight = styled(AngleRightIcon, { marginLeft: '8px' });
 
 const LiquiditySourceNumber = styled('div', {
   display: 'flex',
@@ -66,7 +66,7 @@ export function Settings(props: PropTypes) {
       <SlippageContainer>
         <Typography variant="body1">Slippage tolerance per Swap</Typography>
         <SlippageChipsContainer>
-          {slippages.map((slippage) => (
+          {slippages.map(slippage => (
             <Chip
               onClick={changeSlippage.bind(null, slippage)}
               selected={slippage === selectedSlippage}

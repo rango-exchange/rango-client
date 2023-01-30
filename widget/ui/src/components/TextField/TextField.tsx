@@ -3,10 +3,13 @@ import React, { PropsWithChildren } from 'react';
 import { styled } from '../../theme';
 
 const InputContainer = styled('div', {
+  backgroundColor: '$background',
+  boxSizing: 'border-box',
   border: '1px solid $neutrals400',
   borderRadius: '$5',
   height: '$48',
   display: 'flex',
+  flexGrow: 1,
   position: 'relative',
   alignItems: 'center',
   transition: 'border-color ease .3s',
@@ -14,6 +17,17 @@ const InputContainer = styled('div', {
     borderColor: '$primary500',
   },
   variants: {
+    size: {
+      small: {
+        height: '$32',
+      },
+      medium: {
+        height: '$40',
+      },
+      large: {
+        height: '$48',
+      },
+    },
     disabled: {
       true: {
         backgroundColor: '$neutrals300',
@@ -38,6 +52,9 @@ const InputContainer = styled('div', {
       },
     },
   },
+  defaultVariants: {
+    size: 'medium',
+  },
 });
 
 const Input = styled('input', {
@@ -45,12 +62,14 @@ const Input = styled('input', {
   paddingLeft: '$16',
   paddingRight: '$16',
   flexGrow: 1,
-  widows: '100%',
+  width: '100%',
   border: 'none',
   borderRadius: '$5',
   outline: 'none',
   fontSize: '$l',
   backgroundColor: 'transparent',
+  '-webkit-appearance': 'none',
+  margin: 0,
   '&:disabled': {
     cursor: 'not-allowed',
   },
@@ -65,12 +84,13 @@ export type PropTypes = {
   label?: string;
   prefix?: React.ReactNode;
   suffix?: React.ReactNode;
-} & Omit<React.InputHTMLAttributes<HTMLInputElement>, 'prefix' | 'sp'>;
+  size?: 'small' | 'medium' | 'large';
+} & Omit<React.InputHTMLAttributes<HTMLInputElement>, 'prefix' | 'size'>;
 
 export function TextField(props: PropsWithChildren<PropTypes>) {
-  const { label, prefix, suffix, children, ...inputAttributes } = props;
+  const { label, prefix, suffix, children, size, ...inputAttributes } = props;
   return (
-    <div>
+    <>
       {label && (
         <Label {...(inputAttributes.id && { htmlFor: inputAttributes.id })}>
           {label}
@@ -80,11 +100,12 @@ export function TextField(props: PropsWithChildren<PropTypes>) {
         disabled={inputAttributes.disabled}
         prefix={!!prefix}
         suffix={!!suffix}
+        size={size}
       >
         {prefix || null}
         <Input {...inputAttributes} spellCheck={false} />
         {suffix || null}
       </InputContainer>
-    </div>
+    </>
   );
 }

@@ -20,7 +20,7 @@ const filteredHistory = (
   list: PendingSwap[],
   searchedFor: string
 ): PendingSwap[] => {
-  return list.filter((swap) => {
+  return list.filter(swap => {
     const firstStep = swap.steps[0];
     const lastStep = swap.steps[swap.steps.length - 1];
     return (
@@ -48,7 +48,7 @@ const SwapsGroup = ({ list }: { list: PendingSwap[] }) => {
 
   return (
     <>
-      {swapsInGroup.map((group) => (
+      {swapsInGroup.map(group => (
         <Group>
           <GroupTitle variant="body2">{group.title}</GroupTitle>
           {group.swaps.map((swap: PendingSwap) => (

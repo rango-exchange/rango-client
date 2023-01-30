@@ -1,7 +1,39 @@
-import React from 'react';
-import { Button } from '@rangodev/ui';
-import { Swap } from './pages/swap';
+import { SwapContainer } from '@rangodev/ui';
+import React, { useEffect } from 'react';
+import { AppRouter } from './AppRouter';
+import { AppRoutes } from './AppRoutes';
+import { useMetaStore } from './state/meta';
+
+interface Token {
+  name: string;
+  contractAddress?: string;
+}
+
+export type WidgetProps = {
+  fromChain?: string;
+  fromToken?: string;
+  toChain?: string;
+  toToken?: string;
+  fromAmount?: string;
+  slippage?: number;
+  chains?: string[];
+  tokens?: Token[];
+  liquiditySources?: string[];
+  theme: 'dark' | 'light' | 'auto';
+};
 
 export function App() {
-  return <Swap />;
+  const fetchMeta = useMetaStore(state => state.fetchMeta);
+
+  useEffect(() => {
+    fetchMeta().then();
+  }, []);
+
+  return (
+    <SwapContainer>
+      <AppRouter>
+        <AppRoutes />
+      </AppRouter>
+    </SwapContainer>
+  );
 }
