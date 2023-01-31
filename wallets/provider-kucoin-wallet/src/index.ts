@@ -13,7 +13,7 @@ import {
   WalletInfo,
 } from '@rangodev/wallets-shared';
 import {
-  kuCoin as kuCoin_instance,
+  getKucoinInstance as kucoin_instance,
   KUCOIN_WALLET_SUPPORTED_CHAINS,
 } from './helpers';
 import signer from './signer';
@@ -24,7 +24,7 @@ export const config = {
   type: WALLET,
 };
 
-export const getInstance = kuCoin_instance;
+export const getInstance = kucoin_instance;
 export const connect: Connect = async ({ instance }) => {
   // Note: We need to get `chainId` here, because for the first time
   // after opening the browser, wallet is locked, and don't give us accounts and chainId

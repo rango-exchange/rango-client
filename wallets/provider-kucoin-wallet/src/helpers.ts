@@ -1,6 +1,6 @@
 import { Network } from '@rangodev/wallets-shared';
 
-export function kuCoin() {
+export function getKucoinInstance() {
   const { kucoin } = window;
   if (kucoin && kucoin.isKuCoinWallet) return kucoin;
 
