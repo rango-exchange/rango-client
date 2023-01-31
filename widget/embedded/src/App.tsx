@@ -2,7 +2,7 @@ import { SwapContainer } from '@rangodev/ui';
 import React, { useEffect } from 'react';
 import { AppRouter } from './AppRouter';
 import { AppRoutes } from './AppRoutes';
-import { useMetaStore } from './state/meta';
+import { useMetaStore } from './store/meta';
 
 interface Token {
   name: string;
@@ -23,10 +23,12 @@ export type WidgetProps = {
 };
 
 export function App() {
-  const fetchMeta = useMetaStore(state => state.fetchMeta);
+  const fetchMeta = useMetaStore((state) => state.fetchMeta);
 
   useEffect(() => {
-    fetchMeta().then();
+    (async () => {
+      await fetchMeta();
+    })();
   }, []);
 
   return (
