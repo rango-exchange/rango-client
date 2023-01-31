@@ -63,7 +63,8 @@
     "@rangodev/provider-tron-link": "^0.1.11-next.19",
     "@rangodev/provider-trustwallet": "^0.1.11-next.25",
     "@rangodev/provider-walletconnect": "^0.1.11-next.25",
-    "@rangodev/provider-xdefi": "^0.1.11-next.25"
+    "@rangodev/provider-xdefi": "^0.1.11-next.25",
+    "@rangodev/provider-kucoin-wallet": "^0.1.11-next.25"
   },
   "publishConfig": {
     "access": "public"
