@@ -8,8 +8,6 @@ export default function getSigners(provider: any): WalletSigners {
   return defaultSigners({
     provider,
     walletType: WalletType.FRONTIER,
-    supportSolana: true,
     supportEvm: true,
-    supportCosmos: true,
   });
 }
