@@ -60,6 +60,7 @@ export enum WalletType {
   EXODUS = 'exodus',
   ARGENTX = 'argentx',
   TRON_LINK = 'tron-link',
+  KUCOIN = 'kucoin',
 }
 
 export enum Network {
