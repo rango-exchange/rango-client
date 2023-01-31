@@ -48,7 +48,7 @@
     "@rangodev/provider-all": "^0.1.11-next.20",
     "@rangodev/wallets-core": "^0.1.11-next.20",
     "@rangodev/wallets-shared": "^0.1.11-next.20",
-    "@rangodev/ui": "0.1.10-next.20"
+    "@rangodev/ui": "^0.1.10-next.20"
   },
   "publishConfig": {
     "access": "public"

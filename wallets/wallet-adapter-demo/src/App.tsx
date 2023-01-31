@@ -1,21 +1,28 @@
 import React, { useEffect, useState } from 'react';
 import { allProviders } from '@rangodev/provider-all';
 import WalletsModal from './components/WalletsModal';
-import { BlockchainMeta, RangoClient } from 'rango-sdk';
+import { RangoClient } from 'rango-sdk';
 import { AdapterProvider } from '@rangodev/wallet-adapter';
+
 const providers = allProviders();
 export function App() {
-  const client = new RangoClient(process.env.REACT_API_KEY as string);
+  const client = new RangoClient(process.env.REACT_APP_API_KEY as string);
 
-  const [blockchains, setBlockChains] = useState<BlockchainMeta[]>([]);
+  // Because allBlockChains didn't use the BlockchainMeta type from rango-sdk, we have to use any type
+  const [blockchains, setBlockChains] = useState<any>([]);
 
   useEffect(() => {
     const getAllBlockchains = async () => {
-      const res = await client.getAllMetadata();
-      if (res) setBlockChains(res.blockchains);
+      try {
+        const res = await client.getAllMetadata();
+        setBlockChains(res.blockchains);
+      } catch (e) {
+        console.log('failed on connect.', e);
+      }
     };
     getAllBlockchains();
   }, []);
+  console.log({ blockchains });
 
   return (
     <AdapterProvider providers={providers} allBlockChains={blockchains}>

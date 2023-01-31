@@ -14,7 +14,7 @@ function Modal(props: PropTypes) {
   const [walletMessage, setWalletErrorMessage] = useState('');
 
   const { state, disconnect, getWalletInfo, connect } = useWallets();
-  const allWallets = getlistWallet(state, getWalletInfo,list);
+  const allWallets = getlistWallet(state, getWalletInfo, list);
 
   const onSelectWallet = async (type: WalletType) => {
     const wallet = state(type);

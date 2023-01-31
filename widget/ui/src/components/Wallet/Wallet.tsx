@@ -17,7 +17,7 @@ export type PropTypes = WalletInfo & {
 };
 
 function Wallet(props: PropTypes) {
-  const { name, type, image, state, onClick } = props;
+  const { name, type, image, state, onClick, installLink } = props;
   return (
     <Button
       type={state === WalletState.CONNECTED ? 'primary' : undefined}
@@ -27,16 +27,7 @@ function Wallet(props: PropTypes) {
       variant="outlined"
       size="large"
       prefix={<WalletImage src={image} />}
-      suffix={
-        <State
-          walletState={props.state}
-          installLink={
-            props.state === WalletState.NOT_INSTALLED
-              ? props.installLink
-              : undefined
-          }
-        />
-      }
+      suffix={<State walletState={state} installLink={installLink} />}
     >
       <Typography variant="h5" noWrap={false}>
         {name}
