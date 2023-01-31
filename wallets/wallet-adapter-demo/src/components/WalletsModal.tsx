@@ -3,11 +3,7 @@ import React from 'react';
 
 function WalletsModal() {
   const { onOpenModal } = useAdapter();
-  return (
-    <div>
-      <button onClick={onOpenModal}> open modal</button>
-    </div>
-  );
+  return <button onClick={onOpenModal}> open modal</button>;
 }
 
 export default WalletsModal;

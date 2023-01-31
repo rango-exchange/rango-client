@@ -7,21 +7,19 @@ import { AdapterProvider } from '@rangodev/wallet-adapter';
 const providers = allProviders();
 
 export function App() {
-  const [allBlockChains, setAllBlockChains] = useState([]);
+  const [blockchains, setBlockChains] = useState([]);
 
   useEffect(() => {
     const getAllBlockchains = async () => {
       const res = await getBlockchains();
-      setAllBlockChains(res);
+      setBlockChains(res);
     };
     getAllBlockchains();
   }, []);
 
   return (
-    <div>
-      <AdapterProvider providers={providers} allBlockChains={allBlockChains}>
-        <WalletsModal />
-      </AdapterProvider>
-    </div>
+    <AdapterProvider providers={providers} allBlockChains={blockchains}>
+      <WalletsModal />
+    </AdapterProvider>
   );
 }
