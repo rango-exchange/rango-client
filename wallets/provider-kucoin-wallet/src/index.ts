@@ -11,9 +11,11 @@ import {
   switchNetworkForEvm,
   BlockchainMeta,
   WalletInfo,
-  evmBlockchains,
 } from '@rangodev/wallets-shared';
-import { kuCoin as kuCoin_instance } from './helpers';
+import {
+  kuCoin as kuCoin_instance,
+  KUCOIN_WALLET_SUPPORTED_CHAINS,
+} from './helpers';
 import signer from './signer';
 
 const WALLET = WalletType.KUCOIN;
@@ -47,13 +49,14 @@ export const getSigners: (provider: any) => WalletSigners = signer;
 export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
   allBlockChains
 ) => {
-  const evms = evmBlockchains(allBlockChains);
   return {
     name: 'KuCoin',
     img: 'https://app.rango.exchange/wallets/kucoin.png',
     color: '#b2dbff',
     installLink:
       'https://chrome.google.com/webstore/detail/kucoin-wallet/nbdpmlhambbdkhkmbfpljckjcmgibalo',
-    supportedChains: evms,
+    supportedChains: allBlockChains.filter((blockchainMeta) =>
+      KUCOIN_WALLET_SUPPORTED_CHAINS.includes(blockchainMeta.name)
+    ),
   };
 };
