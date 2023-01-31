@@ -8,7 +8,7 @@ import {
 export const defaultState: ModalState = {
   open: false,
 };
-export function state_reducer(state: { open: boolean }, action: any) {
+export function state_reducer(state: { open: boolean }, action: { value: boolean; }) {
   return {
     ...state,
     open: action.value,
@@ -16,14 +16,16 @@ export function state_reducer(state: { open: boolean }, action: any) {
 }
 
 export const getStateWallet = (state: State): WalletStatus => {
-  if (state.connected) {
-    return WalletStatus.CONNECTED;
-  } else if (state.connecting) {
-    return WalletStatus.CONNECTING;
-  } else if (!state.installed) {
-    return WalletStatus.NOT_INSTALLED;
+  switch (true) {
+    case state.connected:
+      return WalletStatus.CONNECTED;
+    case state.connecting:
+      return WalletStatus.CONNECTING;
+    case !state.installed:
+      return WalletStatus.NOT_INSTALLED;
+    default:
+      return WalletStatus.DISCONNECTED;
   }
-  return WalletStatus.DISCONNECTED;
 };
 
 export function getlistWallet(
@@ -36,7 +38,7 @@ export function getlistWallet(
     WalletType.TERRA_STATION,
     WalletType.LEAP,
   ];
-  // @ts-ignore
+
   return list
     .filter((wallet) => !excludedWallets.includes(wallet))
     .map((type) => {

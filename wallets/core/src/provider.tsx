@@ -91,9 +91,7 @@ function Provider(props: ProviderProps) {
   );
   // const providersRef = useRef<{ [type in WalletType]?: any }>({});
 
-  const listOfProviders = props.providers;
-  console.log(listOfProviders, "....");
-  
+  const listOfProviders = props.providers;  
   const wallets = checkWalletProviders(listOfProviders);
   const api: ProviderContext = {
     // TODO: Fix type error
