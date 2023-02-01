@@ -82,7 +82,7 @@ export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
   allBlockChains
 ) => ({
   name: 'OKX',
-  img: 'https://app.rango.exchange/wallets/okx.png',
+  img: 'https://raw.githubusercontent.com/rango-exchange/rango-types/main/assets/icons/wallets/okx.png',
   installLink:
     'https://chrome.google.com/webstore/detail/okx-wallet/mcohilncbfahbmgdjkbpemcciiolgcge',
   color: 'white',

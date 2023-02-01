@@ -11,18 +11,20 @@ import {
   switchNetworkForEvm,
   BlockchainMeta,
   WalletInfo,
-  evmBlockchains,
 } from '@rangodev/wallets-shared';
-import { tokenpocket as tokenpocket_instance } from './helpers';
+import {
+  getKucoinInstance as kucoin_instance,
+  KUCOIN_WALLET_SUPPORTED_CHAINS,
+} from './helpers';
 import signer from './signer';
 
-const WALLET = WalletType.TOKEN_POCKET;
+const WALLET = WalletType.KUCOIN;
 
 export const config = {
   type: WALLET,
 };
 
-export const getInstance = tokenpocket_instance;
+export const getInstance = kucoin_instance;
 export const connect: Connect = async ({ instance }) => {
   // Note: We need to get `chainId` here, because for the first time
   // after opening the browser, wallet is locked, and don't give us accounts and chainId
@@ -47,13 +49,14 @@ export const getSigners: (provider: any) => WalletSigners = signer;
 export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
   allBlockChains
 ) => {
-  const evms = evmBlockchains(allBlockChains);
   return {
-    name: 'Token Pocket',
-    img: 'https://raw.githubusercontent.com/rango-exchange/rango-types/main/assets/icons/wallets/tp.png',
+    name: 'KuCoin',
+    img: 'https://raw.githubusercontent.com/rango-exchange/rango-types/main/assets/icons/wallets/kucoin.png',
     color: '#b2dbff',
     installLink:
-      'https://chrome.google.com/webstore/detail/tokenpocket/mfgccjchihfkkindfppnaooecgfneiii',
-    supportedChains: evms,
+      'https://chrome.google.com/webstore/detail/kucoin-wallet/nbdpmlhambbdkhkmbfpljckjcmgibalo',
+    supportedChains: allBlockChains.filter((blockchainMeta) =>
+      KUCOIN_WALLET_SUPPORTED_CHAINS.includes(blockchainMeta.name)
+    ),
   };
 };

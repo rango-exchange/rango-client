@@ -1,8 +1,8 @@
 {
-  "name": "@rangodev/provider-binance-chain-wallet",
+  "name": "@rangodev/provider-kucoin-wallet",
   "version": "0.1.11-next.26",
   "license": "MIT",
-  "module": "dist/provider-binance-chain-wallet.esm.js",
+  "module": "dist/provider-kucoin-wallet.esm.js",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
   "files": [
@@ -36,20 +36,19 @@
   },
   "size-limit": [
     {
-      "path": "dist/provider-binance-chain-wallet.cjs.production.min.js",
+      "path": "dist/provider-kucoin-wallet.cjs.production.min.js",
       "limit": "10 KB"
     },
     {
-      "path": "dist/provider-binance-chain-wallet.esm.js",
+      "path": "dist/provider-kucoin-wallet.esm.js",
       "limit": "10 KB"
     }
   ],
   "dependencies": {
-    "@binance-chain/javascript-sdk": "^4.1.1",
     "@rangodev/wallets-shared": "^0.1.11-next.26"
   },
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "dd92a217bf0e45fa27ea9416bed5e575a6e41bcc"
+  "gitHead": "a4584c2a3341fe23e033a9ff2db0f201b0a6278c"
 }

@@ -55,6 +55,7 @@ export interface QueueDef<
       getBlockedTasks: () => BlockedTask[];
       forceRun: (queue_id: string, data?: object) => void;
       retry: () => void;
+      manager: Manager;
     }
   ) => void;
 }
@@ -215,6 +216,7 @@ class Manager {
     queue_id: QueueID;
     queue_name: QueueName;
   }) {
+    const manager = this;
     const def = this.queuesDefs.get(queue_name)!;
     const list = new Queue({
       id: queue_id,
@@ -267,6 +269,7 @@ class Manager {
               getBlockedTasks: this.getBlockedTasks.bind(this),
               forceRun: this.forceRun.bind(this),
               retry: this.retry.bind(this),
+              manager,
             });
           }
 
