@@ -99,7 +99,7 @@ export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
   const solana = solanaBlockchain(allBlockChains);
   return {
     name: 'Coin98',
-    img: 'https://app.rango.exchange/wallets/coin98.svg',
+    img: 'https://raw.githubusercontent.com/rango-exchange/rango-types/main/assets/icons/wallets/coin98.svg',
     installLink:
       'https://chrome.google.com/webstore/detail/coin98-wallet/aeachknmefphepccionboohckonoeemg',
     color: '#1d1c25',
