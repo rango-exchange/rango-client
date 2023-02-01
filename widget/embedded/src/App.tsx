@@ -25,7 +25,7 @@ export type WidgetProps = {
 };
 
 export function App() {
-  const fetchMeta = useMetaStore((state) => state.fetchMeta);
+  const fetchMeta = useMetaStore(state => state.fetchMeta);
 
   useEffect(() => {
     (async () => {
@@ -35,7 +35,7 @@ export function App() {
 
   return (
     <div className={darkTheme}>
-      <SwapContainer onConnectWallet={() => alert('connect your wallet:')} fixedHeight>
+      <SwapContainer onConnectWallet={() => alert('connect your wallet:')} fixedHeight={true}>
         <AppRouter>
           <AppRoutes />
         </AppRouter>

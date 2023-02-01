@@ -13,6 +13,11 @@ const MainContainer = styled('div', {
   flexDirection: 'column',
   alignItems: 'end',
   padding: '$8',
+});
+
+const ContentContainer = styled('div', {
+  marginTop: '$8',
+  width: '100%',
   variants: {
     fixedHeight: {
       true: {
@@ -20,11 +25,6 @@ const MainContainer = styled('div', {
       },
     },
   },
-});
-
-const ContentContainer = styled('div', {
-  marginTop: '$8',
-  width: '100%',
 });
 
 export interface PropTypes {
@@ -37,7 +37,7 @@ export function SwapContainer(props: PropsWithChildren<PropTypes>) {
   const { onConnectWallet, children, style, fixedHeight } = props;
 
   return (
-    <MainContainer style={style} fixedHeight={fixedHeight}>
+    <MainContainer style={style}>
       <Button
         size="small"
         suffix={<AddWalletIcon size={20} />}
@@ -46,7 +46,7 @@ export function SwapContainer(props: PropsWithChildren<PropTypes>) {
       >
         <Typography variant="body2">Connect Wallet</Typography>
       </Button>
-      <ContentContainer>{children}</ContentContainer>
+      <ContentContainer fixedHeight={fixedHeight}>{children}</ContentContainer>
     </MainContainer>
   );
 }
