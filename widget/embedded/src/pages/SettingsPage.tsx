@@ -3,7 +3,7 @@ import { Settings } from '@rangodev/ui';
 import { useSettingsStore } from '../store/settings';
 import { useMetaStore } from '../store/meta';
 import { useNavigate } from 'react-router-dom';
-import { navigationRoutes } from '../navigationRoutes';
+import { navigationRoutes } from '../router/navigationRoutes';
 
 export function SettingsPage() {
   const {

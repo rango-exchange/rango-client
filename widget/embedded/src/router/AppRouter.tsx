@@ -1,7 +1,7 @@
 import React, { Fragment, PropsWithChildren, useEffect } from 'react';
 import { MemoryRouter, useInRouterContext, useLocation, useMatch } from 'react-router';
-import { urlToToken } from './helpers/url';
-import { useMetaStore } from './store/meta';
+import { urlToToken } from '../helpers/url';
+import { useMetaStore } from '../store/meta';
 
 export function AppRouter({ children }: PropsWithChildren) {
   const isRouterInContex = useInRouterContext();

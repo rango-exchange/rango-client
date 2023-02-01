@@ -8,7 +8,7 @@ import {
   AddWalletIcon,
 } from '@rangodev/ui';
 import { useNavigate } from 'react-router-dom';
-import { navigationRoutes } from '../../navigationRoutes';
+import { navigationRoutes } from '../../router/navigationRoutes';
 
 const ButtonsContainer = styled('div', {
   display: 'flex',
