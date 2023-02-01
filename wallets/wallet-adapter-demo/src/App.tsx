@@ -22,7 +22,6 @@ export function App() {
     };
     getAllBlockchains();
   }, []);
-  console.log({ blockchains });
 
   return (
     <AdapterProvider providers={providers} allBlockChains={blockchains}>
