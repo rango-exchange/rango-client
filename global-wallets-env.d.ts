@@ -22,6 +22,7 @@ declare global {
     okxwallet: any;
     starknet: any;
     tronLink: any;
+    kucoin: any;
     frontier: any;
   }
 }
