@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 // import { ChevronLeftIcon } from '@radix-ui/react-icons';
 import { styled } from '../../theme';
 import { AngleLeftIcon, SearchIcon } from '../Icon';
-import { SwapContainer } from '../SwapContainer/SwapContainer';
 import { TextField } from '../TextField/TextField';
 import { Typography } from '../Typography';
 
@@ -18,7 +17,7 @@ export type PropTypes = (
     }
 ) & {
   title: string;
-  onBack?: () => void;
+  onBack: () => void;
   TopButton?: React.ReactNode;
   Footer?: React.ReactNode;
 };
@@ -64,29 +63,31 @@ export function SecondaryPage(props: PropTypes) {
   const [searchedFor, setSearchedFor] = useState('');
 
   return (
-    <SwapContainer>
-      <Container>
-        <HeaderContainer>
-          <StyledBackIcon size={24} onClick={onBack} />
-          <Typography variant="h4">{title}</Typography>
-          {TopButton}
-        </HeaderContainer>
-        {props.textField && (
+    <Container>
+      <HeaderContainer>
+        <StyledBackIcon size={24} onClick={onBack} />
+        <Typography variant="h4">{title}</Typography>
+        {TopButton}
+      </HeaderContainer>
+
+      {props.textField && (
+        <div>
           <TextField
+            size="large"
             prefix={<SearchIcon size={24} />}
             placeholder={props.textFieldPlaceholder}
-            onChange={event => setSearchedFor(event.target.value)}
+            onChange={(event) => setSearchedFor(event.target.value)}
             value={searchedFor}
             autoFocus
           />
-        )}
-        <ContentContainer>
-          {props.textField && <props.Content searchedFor={searchedFor} />}
-          {!props.textField && props.Content}
-        </ContentContainer>
+        </div>
+      )}
+      <ContentContainer>
+        {props.textField && <props.Content searchedFor={searchedFor} />}
+        {!props.textField && props.Content}
+      </ContentContainer>
 
-        {Footer}
-      </Container>
-    </SwapContainer>
+      {Footer}
+    </Container>
   );
 }

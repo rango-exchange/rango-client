@@ -1,13 +1,21 @@
 import React from 'react';
-import { HistoryIcon, SettingsIcon, Tooltip, WalletIcon, styled } from '@rangodev/ui';
+import {
+  HistoryIcon,
+  SettingsIcon,
+  Tooltip,
+  WalletIcon,
+  styled,
+  AddWalletIcon,
+} from '@rangodev/ui';
 import { useNavigate } from 'react-router-dom';
+import { navigationRoutes } from '../../navigationRoutes';
 
 const ButtonsContainer = styled('div', {
   display: 'flex',
 });
 
-const StyledWalletIcon = styled(WalletIcon, {
-  marginRight: '$16',
+const StyledWalletIcon = styled(AddWalletIcon, {
+  marginRight: '$24',
   cursor: 'pointer',
 });
 
@@ -22,17 +30,14 @@ export function HeaderButtons() {
 
   return (
     <ButtonsContainer>
-      <Tooltip content="Connect Wallets">
-        <StyledWalletIcon size={24} />
-      </Tooltip>
       <Tooltip content="Transactions Hitory">
-        <StyledHistoryIcon size={24} />
+        <StyledHistoryIcon size={24} onClick={() => navigate(navigationRoutes.history)} />
       </Tooltip>
       <Tooltip content="Settings">
         <StyledSettingsIcon
           size={24}
           onClick={() => {
-            navigate('/settings');
+            navigate(navigationRoutes.settings);
           }}
         />
       </Tooltip>

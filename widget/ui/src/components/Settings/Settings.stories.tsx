@@ -22,7 +22,7 @@ export default {
 } as ComponentMeta<typeof Settings>;
 
 export const Main = (args: PropTypes) => (
-  <SwapContainer>
+  <SwapContainer onConnectWallet={() => {}}>
     <Settings {...args} />
   </SwapContainer>
 );

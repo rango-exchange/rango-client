@@ -7365,6 +7365,15 @@ axios@^1.0.0:
     form-data "^4.0.0"
     proxy-from-env "^1.1.0"
 
+axios@^1.2.6:
+  version "1.2.6"
+  resolved "https://registry.yarnpkg.com/axios/-/axios-1.2.6.tgz#eacb6d065baa11bad5959e7ffa0cb6745c65f392"
+  integrity sha512-rC/7F08XxZwjMV4iuWv+JpD3E0Ksqg9nac4IIg6RwNuF0JTeWoCo/mBNG54+tNhhI11G3/VDRbdDQTs9hGp4pQ==
+  dependencies:
+    follow-redirects "^1.15.0"
+    form-data "^4.0.0"
+    proxy-from-env "^1.1.0"
+
 axobject-query@^3.1.1:
   version "3.1.1"
   resolved "https://registry.yarnpkg.com/axobject-query/-/axobject-query-3.1.1.tgz#3b6e5c6d4e43ca7ba51c5babf99d22a9c68485e1"
@@ -11863,6 +11872,11 @@ ignore@^5.0.4, ignore@^5.2.0:
   resolved "https://registry.yarnpkg.com/ignore/-/ignore-5.2.4.tgz#a291c0c6178ff1b960befe47fcdec301674a6324"
   integrity sha512-MAb38BcSbH0eHNBxn7ql2NH/kX33OkB3lZ1BNdh7ENeRChHTYsTvWrMubiIAMNS2llXEEgZ1MUOBtXChP3kaFQ==
 
+immer@^9.0.19:
+  version "9.0.19"
+  resolved "https://registry.yarnpkg.com/immer/-/immer-9.0.19.tgz#67fb97310555690b5f9cd8380d38fc0aabb6b38b"
+  integrity sha512-eY+Y0qcsB4TZKwgQzLaE/lqYMlKhv5J9dyd2RhhtGhNo2njPXDqU9XPfcNfa3MIDsdtZt5KlkIsirlo4dHsWdQ==
+
 import-fresh@^3.0.0, import-fresh@^3.1.0, import-fresh@^3.2.1:
   version "3.3.0"
   resolved "https://registry.yarnpkg.com/import-fresh/-/import-fresh-3.3.0.tgz#37162c25fcb9ebaa2e6e53d5b4d88ce17d9e0c2b"
@@ -16162,14 +16176,20 @@ rango-sdk-basic@^0.0.9:
     bignumber.js "^9.0.2"
     uuid "^8.3.2"
 
-rango-sdk@^0.0.9:
-  version "0.0.9"
-  resolved "https://registry.yarnpkg.com/rango-sdk/-/rango-sdk-0.0.9.tgz#4db7786a8a651c9c84658c1f4e025034bd96e18f"
-  integrity sha512-KBlOrtoHYmdYi2+zAe7jbhvP7pgshN9VLQc37gI6ClwxBoDOi6X3P/5R79kY0M0rYXitqzsFoSHPLXXGQfbOzA==
+rango-sdk@^0.1.1:
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/rango-sdk/-/rango-sdk-0.1.1.tgz#10cc771310fcd174bd7812c86f7b6019c7781d4a"
+  integrity sha512-UCc6LCQBPNYMadPSxi5jIEe8Pq++B5Tbcew3cYqwo8fSPBXQqp1BaSCi8je260zsKPtCYlbIHhhJ8v2ZHiOnMw==
   dependencies:
-    axios "^0.24.0"
-    bignumber.js "^9.0.2"
-    uuid "^8.3.2"
+    axios "^1.2.6"
+    bignumber.js "^9.1.1"
+    rango-types "^0.1.2"
+    uuid "^9.0.0"
+
+rango-types@^0.1.2:
+  version "0.1.2"
+  resolved "https://registry.yarnpkg.com/rango-types/-/rango-types-0.1.2.tgz#631a8864f0dd56e9d821212773c079fc09c8a48f"
+  integrity sha512-HW7Gv2cbLSlIRLLohpln/DIlFeayYOTWI66+IUN7WFdyHY0241px8/e44FCVO1opK01Fmb8EW5ST68B2YgNEZw==
 
 raw-body@2.5.1:
   version "2.5.1"

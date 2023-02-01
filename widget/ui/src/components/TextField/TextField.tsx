@@ -12,6 +12,7 @@ const InputContainer = styled('div', {
   flexGrow: 1,
   position: 'relative',
   alignItems: 'center',
+  color: '$foreground',
   transition: 'border-color ease .3s',
   '&:focus-within': {
     borderColor: '$primary500',
@@ -88,7 +89,8 @@ export type PropTypes = {
 } & Omit<React.InputHTMLAttributes<HTMLInputElement>, 'prefix' | 'size'>;
 
 export function TextField(props: PropsWithChildren<PropTypes>) {
-  const { label, prefix, suffix, children, size, ...inputAttributes } = props;
+  const { label, prefix, suffix, children, size, style, ...inputAttributes } =
+    props;
   return (
     <>
       {label && (
@@ -101,6 +103,7 @@ export function TextField(props: PropsWithChildren<PropTypes>) {
         prefix={!!prefix}
         suffix={!!suffix}
         size={size}
+        css={style}
       >
         {prefix || null}
         <Input {...inputAttributes} spellCheck={false} />

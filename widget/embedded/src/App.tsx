@@ -1,8 +1,10 @@
-import { SwapContainer } from '@rangodev/ui';
+import { SwapContainer, darkTheme } from '@rangodev/ui';
 import React, { useEffect } from 'react';
 import { AppRouter } from './AppRouter';
 import { AppRoutes } from './AppRoutes';
 import { useMetaStore } from './store/meta';
+import './app.css';
+import { BrowserRouter } from 'react-router-dom';
 
 interface Token {
   name: string;
@@ -32,10 +34,12 @@ export function App() {
   }, []);
 
   return (
-    <SwapContainer>
-      <AppRouter>
-        <AppRoutes />
-      </AppRouter>
-    </SwapContainer>
+    <div className={darkTheme}>
+      <SwapContainer onConnectWallet={() => alert('connect your wallet:')} fixedHeight>
+        <AppRouter>
+          <AppRoutes />
+        </AppRouter>
+      </SwapContainer>
+    </div>
   );
 }

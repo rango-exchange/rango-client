@@ -1,8 +1,52 @@
+import React, { PropsWithChildren } from 'react';
 import { styled } from '../../theme';
+import { Button } from '../Button';
+import { AddWalletIcon } from '../Icon';
+import { Typography } from '../Typography';
 
-export const SwapContainer = styled('div', {
+const MainContainer = styled('div', {
   borderRadius: '$10',
   maxWidth: '512px',
-  height: '592px',
   boxShadow: '$s',
+  backgroundColor: '$background',
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'end',
+  padding: '$8',
+  variants: {
+    fixedHeight: {
+      true: {
+        height: '600px',
+      },
+    },
+  },
 });
+
+const ContentContainer = styled('div', {
+  marginTop: '$8',
+  width: '100%',
+});
+
+export interface PropTypes {
+  onConnectWallet: () => void;
+  fixedHeight?: boolean;
+  style?: React.CSSProperties;
+}
+
+export function SwapContainer(props: PropsWithChildren<PropTypes>) {
+  const { onConnectWallet, children, style, fixedHeight } = props;
+
+  return (
+    <MainContainer style={style} fixedHeight={fixedHeight}>
+      <Button
+        size="small"
+        suffix={<AddWalletIcon size={20} />}
+        variant="ghost"
+        onClick={onConnectWallet}
+      >
+        <Typography variant="body2">Connect Wallet</Typography>
+      </Button>
+      <ContentContainer>{children}</ContentContainer>
+    </MainContainer>
+  );
+}

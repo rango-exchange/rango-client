@@ -20,7 +20,7 @@ const filteredHistory = (
   list: PendingSwap[],
   searchedFor: string
 ): PendingSwap[] => {
-  return list.filter(swap => {
+  return list.filter((swap) => {
     const firstStep = swap.steps[0];
     const lastStep = swap.steps[swap.steps.length - 1];
     return (
@@ -42,13 +42,14 @@ const GroupTitle = styled(Typography, {
 
 export interface PropTypes {
   list: PendingSwap[];
+  onBack: () => void;
 }
 const SwapsGroup = ({ list }: { list: PendingSwap[] }) => {
   const swapsInGroup = groupingOfSwaps(list);
 
   return (
     <>
-      {swapsInGroup.map(group => (
+      {swapsInGroup.map((group) => (
         <Group>
           <GroupTitle variant="body2">{group.title}</GroupTitle>
           {group.swaps.map((swap: PendingSwap) => (
@@ -60,9 +61,10 @@ const SwapsGroup = ({ list }: { list: PendingSwap[] }) => {
   );
 };
 
-export function History({ list = [] }: PropsWithChildren<PropTypes>) {
+export function History({ list = [], onBack }: PropsWithChildren<PropTypes>) {
   return (
     <SecondaryPage
+      onBack={onBack}
       textField={true}
       textFieldPlaceholder="Search By Blockchain Or Token"
       title="History"

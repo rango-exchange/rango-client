@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import { styled } from '../../theme';
-import { BlockchainMeta } from '../../types/meta';
+import { BlockchainMeta } from 'rango-sdk';
 import { Button } from '../Button/Button';
 import { FilledCircle } from '../common';
 import { Typography } from '../Typography';
 
 export interface PropTypes {
   list: BlockchainMeta[];
-  selected: BlockchainMeta;
+  selected: BlockchainMeta | null;
   onChange: (blockchain: BlockchainMeta) => void;
 }
 
@@ -37,12 +37,12 @@ export function BlockchainsList(props: PropTypes) {
       {list.map((blockchain, index) => {
         return (
           <Button
-            type={blockchain.name === selected.name ? 'primary' : undefined}
+            type={blockchain.name === selected?.name ? 'primary' : undefined}
             variant="outlined"
             size="large"
             prefix={<Image src={blockchain.logo} />}
             suffix={
-              blockchain.name === selected.name ? <FilledCircle /> : undefined
+              blockchain.name === selected?.name ? <FilledCircle /> : undefined
             }
             align="start"
             onClick={changeSelectedBlockchain.bind(null, blockchain)}

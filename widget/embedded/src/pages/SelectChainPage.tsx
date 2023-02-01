@@ -1,19 +1,22 @@
 import React from 'react';
 import { BlockchainSelector } from '@rangodev/ui';
-import { useRouteStore } from '../store/route';
+import { useBestRouteStore } from '../store/bestRoute';
 import { useMetaStore } from '../store/meta';
+import { useNavigate } from 'react-router-dom';
 
 interface PropTypes {
   type: 'from' | 'to';
 }
 
-export function SelectChain(props: PropTypes) {
+export function SelectChainPage(props: PropTypes) {
   const { type } = props;
 
   const {
     meta: { blockchains },
   } = useMetaStore();
-  const { fromChain, toChain, setFromChain, setToChain } = useRouteStore();
+  const { fromChain, toChain, setFromChain, setToChain, setFromToken, setToToken } =
+    useBestRouteStore();
+  const navigate = useNavigate();
 
   return (
     <BlockchainSelector
@@ -23,7 +26,11 @@ export function SelectChain(props: PropTypes) {
       onChange={(chain) => {
         if (type === 'from') setFromChain(chain);
         else setToChain(chain);
+        if (type === 'from' && fromChain?.name != chain.name) setFromToken(null);
+        if (type === 'to' && toChain?.name != chain.name) setToToken(null);
+        navigate(-1);
       }}
+      onBack={navigate.bind(null, -1)}
     />
   );
 }

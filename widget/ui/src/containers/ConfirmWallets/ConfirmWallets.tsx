@@ -18,7 +18,7 @@ const Footer = styled('div', {
 
 export interface PropTypes {
   swap: BestRouteType;
-  onBack?: () => void;
+  onBack: () => void;
   onAddWallet?: (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => void;

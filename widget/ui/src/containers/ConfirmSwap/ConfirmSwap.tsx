@@ -73,7 +73,7 @@ const StyledUpdateIcon = styled(UpdateIcon, {
 export interface PropTypes {
   swap: BestRouteType;
   onRefresh?: React.MouseEventHandler<SVGElement>;
-  onBack?: () => void;
+  onBack: () => void;
   onAddWallet?: (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => void;

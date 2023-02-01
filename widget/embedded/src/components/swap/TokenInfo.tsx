@@ -3,6 +3,7 @@ import { AngleDownIcon, Button, styled, TextField, Typography } from '@rangodev/
 import { useMetaStore } from '../../store/meta';
 import { BlockchainMeta, Token } from 'rango-sdk';
 import { useNavigate } from 'react-router-dom';
+import { useBestRouteStore } from '../../store/bestRoute';
 
 interface PropTypes {
   type: 'From' | 'To';
@@ -18,6 +19,7 @@ const Container = styled('div', {
   display: 'flex',
   margin: '$16 0',
   position: 'relative',
+  width: '100%',
 });
 
 const StyledImage = styled('img', {
@@ -29,6 +31,7 @@ const MaxAmount = styled('div', {
   position: 'absolute',
   right: '$16',
   top: '$6',
+  cursor: 'pointer',
 });
 
 const ImagePlaceholder = styled('span', {
@@ -38,9 +41,26 @@ const ImagePlaceholder = styled('span', {
   borderRadius: '99999px',
 });
 
+const TokenBalance = styled('div', { position: 'relative', bottom: '2px' });
+
+const OutputContainer = styled('div', {
+  height: '$48',
+  borderRadius: '$5',
+  flexGrow: 1,
+  width: '70%',
+  backgroundColor: '$background',
+  border: '1px solid transparent',
+  position: 'relative',
+  display: 'flex',
+  alignItems: 'center',
+  paddingLeft: '$8',
+  paddingRight: '$8',
+});
+
 export function TokenInfo(props: PropTypes) {
   const { type, chain, token } = props;
-  const loadingStatus = useMetaStore((state) => state.loadingStatus);
+  const { loadingStatus } = useMetaStore();
+  const { fromChain, toChain } = useBestRouteStore();
   const navigate = useNavigate();
   return (
     <Container>
@@ -48,14 +68,16 @@ export function TokenInfo(props: PropTypes) {
         <Typography variant="body2">{type}</Typography>
       </div>
       {type === 'From' && (
-        <MaxAmount>
+        <MaxAmount onClick={() => {}}>
           <Typography variant="body2">Max:&nbsp;</Typography>
-          <Typography variant="body1">1234</Typography>
+          <TokenBalance>
+            <Typography variant="body1">1234</Typography>
+          </TokenBalance>
         </MaxAmount>
       )}
       <Button
         onClick={() => {
-          navigate(`/${type}-chain`);
+          navigate(`/${type.toLowerCase()}-chain`);
         }}
         variant="outlined"
         disabled={loadingStatus === 'failed'}
@@ -68,16 +90,21 @@ export function TokenInfo(props: PropTypes) {
           )
         }
         suffix={<AngleDownIcon />}
+        align="start"
         size="large"
         style={{ marginRight: '.5rem' }}>
         {loadingStatus === 'success' && chain ? chain.name : 'Chain'}
       </Button>
       <Button
         onClick={() => {
-          navigate(`/${type}-token`);
+          navigate(`/${type.toLowerCase()}-token`);
         }}
         variant="outlined"
-        disabled={loadingStatus === 'failed'}
+        disabled={
+          loadingStatus === 'failed' ||
+          (type === 'From' && !fromChain) ||
+          (type === 'To' && !toChain)
+        }
         loading={loadingStatus === 'loading'}
         prefix={
           loadingStatus === 'success' && token ? (
@@ -88,10 +115,30 @@ export function TokenInfo(props: PropTypes) {
         }
         suffix={<AngleDownIcon />}
         size="large"
+        align="start"
         style={{ marginRight: '.5rem' }}>
         {loadingStatus === 'success' && token ? token.symbol : 'Token'}
       </Button>
-      <TextField type="number" size="large" disabled={loadingStatus != 'success'} />
+      {type === 'From' ? (
+        <TextField
+          type="number"
+          size="large"
+          disabled={loadingStatus != 'success'}
+          style={{ width: '70%', position: 'relative', backgroundColor: '$background !important' }}
+          suffix={
+            <span style={{ position: 'absolute', right: '4px', bottom: '2px' }}>
+              <Typography variant="caption">$0.0</Typography>
+            </span>
+          }
+        />
+      ) : (
+        <OutputContainer>
+          <Typography variant="body1">{'111'}</Typography>
+          <span style={{ position: 'absolute', right: '4px', bottom: '2px' }}>
+            <Typography variant="caption">$0.0</Typography>
+          </span>
+        </OutputContainer>
+      )}
     </Container>
   );
 }

@@ -5,6 +5,7 @@ import { SecondaryPage } from '../SecondaryPage/SecondaryPage';
 import { Typography } from '../Typography';
 import { Chip } from '../Chip';
 import { LiquiditySource } from '../../types/meta';
+import { TextField } from '../TextField';
 
 const SlippageContainer = styled('div', {
   borderRadius: '$5',
@@ -39,9 +40,15 @@ const LiquiditySourceNumber = styled('div', {
 export interface PropTypes {
   slippages: string[];
   selectedSlippage: string;
+  customSlippage: string;
+  maxSlippage: string;
+  minSlippage: string;
   liquiditySources: LiquiditySource[];
+  onLiquiditySourcesClick: () => void;
   selectedLiquiditySources: LiquiditySource[];
   onSlippageChange: (slippage: string) => void;
+  onCustomSlippageChange: (customSlippage: string) => void;
+  onBack: () => void;
 }
 
 export function Settings(props: PropTypes) {
@@ -50,6 +57,12 @@ export function Settings(props: PropTypes) {
     selectedLiquiditySources,
     liquiditySources,
     onSlippageChange,
+    onLiquiditySourcesClick,
+    onBack,
+    customSlippage,
+    onCustomSlippageChange,
+    maxSlippage,
+    minSlippage,
   } = props;
 
   const [selectedSlippage, setSelectedSlippage] = useState(
@@ -66,19 +79,44 @@ export function Settings(props: PropTypes) {
       <SlippageContainer>
         <Typography variant="body1">Slippage tolerance per Swap</Typography>
         <SlippageChipsContainer>
-          {slippages.map(slippage => (
+          {slippages.map((slippage, index) => (
             <Chip
+              key={index}
               onClick={changeSlippage.bind(null, slippage)}
-              selected={slippage === selectedSlippage}
+              selected={!customSlippage && slippage === selectedSlippage}
               label={slippage}
-              style={{ marginRight: '8px' }}
+              style={{
+                marginRight: '8px',
+              }}
             />
           ))}
+          <TextField
+            type="number"
+            value={customSlippage}
+            onChange={event => {
+              if (
+                !event.target.value ||
+                (event.target.value >= minSlippage &&
+                  maxSlippage >= event.target.value)
+              )
+                onCustomSlippageChange(event.target.value);
+            }}
+            suffix={
+              customSlippage && <Typography variant="body2">%</Typography>
+            }
+            size="small"
+            placeholder="Custom"
+            style={{
+              width: '128px',
+              flexGrow: 'initial',
+              borderColor: customSlippage ? '$success' : 'initial',
+            }}
+          />
         </SlippageChipsContainer>
       </SlippageContainer>
       <LiquiditySourceContainer>
         <Typography variant="body1">Liquidity Sources</Typography>
-        <LiquiditySourceNumber>
+        <LiquiditySourceNumber onClick={onLiquiditySourcesClick}>
           <Typography variant="body2">{`( ${selectedLiquiditySources.length} / ${liquiditySources.length} )`}</Typography>
           <StyledAngleRight />
         </LiquiditySourceNumber>
@@ -87,6 +125,11 @@ export function Settings(props: PropTypes) {
   );
 
   return (
-    <SecondaryPage title="Settings" textField={false} Content={PageContent} />
+    <SecondaryPage
+      title="Settings"
+      textField={false}
+      Content={PageContent}
+      onBack={onBack}
+    />
   );
 }

@@ -7,12 +7,13 @@ import { Typography } from '../Typography';
 
 const groupLiquiditySources = (
   liquiditySources: LiquiditySource[]
-): { [key in LiquiditySource['type']]: LiquiditySource[] } => ({
+): { [key in 'bridge' | 'exchange']: LiquiditySource[] } => ({
   bridge: liquiditySources.filter(
-    (liquiditySource) => liquiditySource.type === 'bridge'
+    (liquiditySource) =>
+      liquiditySource.type === 'BRIDGE' || liquiditySource.type === 'AGGREGATOR'
   ),
   exchange: liquiditySources.filter(
-    (liquiditySource) => liquiditySource.type === 'exchange'
+    (liquiditySource) => liquiditySource.type === 'DEX'
   ),
 });
 
