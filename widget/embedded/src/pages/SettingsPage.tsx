@@ -4,6 +4,7 @@ import { useSettingsStore } from '../store/settings';
 import { useMetaStore } from '../store/meta';
 import { useNavigate } from 'react-router-dom';
 import { navigationRoutes } from '../router/navigationRoutes';
+import { Radio } from '@rangodev/ui/src/components/Radio/Radio';
 
 export function SettingsPage() {
   const {
@@ -12,6 +13,8 @@ export function SettingsPage() {
     disabledLiquiditySources,
     customSlippage,
     setCustomSlippage,
+    theme,
+    setTheme,
   } = useSettingsStore();
   const {
     meta: { swappers },
@@ -24,11 +27,11 @@ export function SettingsPage() {
     type: 'BRIDGE' | 'AGGREGATOR' | 'DEX';
     selected: boolean;
   }> = [];
-  Array.from(new Set(swappers.map(s => s.swapperGroup)))
-    .map(swapperGroup => {
-      return swappers.find(s => s.swapperGroup === swapperGroup);
+  Array.from(new Set(swappers.map((s) => s.swapperGroup)))
+    .map((swapperGroup) => {
+      return swappers.find((s) => s.swapperGroup === swapperGroup);
     })
-    .find(s => {
+    .find((s) => {
       if (s) {
         for (const type of s.types) {
           uniqueSwappersGroups.push({
@@ -45,15 +48,17 @@ export function SettingsPage() {
     <Settings
       slippages={['1', '2', '3', '4']}
       selectedSlippage={slippage}
-      onSlippageChange={slippage => setSlippage(slippage)}
+      onSlippageChange={(slippage) => setSlippage(slippage)}
       liquiditySources={uniqueSwappersGroups}
-      selectedLiquiditySources={uniqueSwappersGroups.filter(s => s.selected)}
+      selectedLiquiditySources={uniqueSwappersGroups.filter((s) => s.selected)}
       onLiquiditySourcesClick={() => navigate(navigationRoutes.liquiditySources.split('/')[1])}
       onBack={navigate.bind(null, -1)}
       customSlippage={customSlippage}
       onCustomSlippageChange={setCustomSlippage}
       minSlippage="1"
       maxSlippage="10"
+      selectedTheme={theme}
+      onThemeChange={setTheme}
     />
   );
 }

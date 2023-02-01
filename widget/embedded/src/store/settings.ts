@@ -13,39 +13,39 @@ interface Settings {
   disabledLiquiditySources: string[];
   theme: Theme;
   setSlippage: (slippage: string) => void;
-  setCustomSlippage: (customSlippage: string) => void;
+  setCustomSlippage: (customSlippage: string | null) => void;
   toggleInfinitApprove: () => void;
   toggleLiquiditySource: (name: string) => void;
   setTheme: (theme: Theme) => void;
 }
 
 export const useSettingsStore = create<Settings>()(
-  immer(set => ({
+  immer((set) => ({
     slippage: '1',
     customSlippage: '',
     infinitApprove: false,
     disabledLiquiditySources: [],
     theme: 'auto',
-    setSlippage: slippage =>
-      set(state => {
+    setSlippage: (slippage) =>
+      set((state) => {
         state.slippage = slippage;
       }),
-    setCustomSlippage: customSlippage =>
-      set(state => {
+    setCustomSlippage: (customSlippage) =>
+      set((state) => {
         state.customSlippage = customSlippage;
       }),
     toggleInfinitApprove: () =>
-      set(state => {
+      set((state) => {
         state.infinitApprove = !state.infinitApprove;
       }),
-    toggleLiquiditySource: name =>
-      set(state => {
+    toggleLiquiditySource: (name) =>
+      set((state) => {
         state.disabledLiquiditySources = state.disabledLiquiditySources.includes(name)
-          ? state.disabledLiquiditySources.filter(liquiditySource => liquiditySource === name)
+          ? state.disabledLiquiditySources.filter((liquiditySource) => liquiditySource === name)
           : state.disabledLiquiditySources.concat(name);
       }),
-    setTheme: theme =>
-      set(state => {
+    setTheme: (theme) =>
+      set((state) => {
         state.theme = theme;
       }),
   })),

@@ -6,6 +6,7 @@ import { Typography } from '../Typography';
 import { Chip } from '../Chip';
 import { LiquiditySource } from '../../types/meta';
 import { TextField } from '../TextField';
+import { Radio } from '../Radio';
 
 const SlippageContainer = styled('div', {
   borderRadius: '$5',
@@ -37,6 +38,15 @@ const LiquiditySourceNumber = styled('div', {
   cursor: 'pointer',
 });
 
+const ThemesContainer = styled('div', {
+  borderRadius: '$5',
+  backgroundColor: '$neutrals200',
+  padding: '$16',
+  marginTop: '$32',
+});
+
+type Theme = 'dark' | 'light' | 'auto';
+
 export interface PropTypes {
   slippages: string[];
   selectedSlippage: string;
@@ -47,7 +57,9 @@ export interface PropTypes {
   onLiquiditySourcesClick: () => void;
   selectedLiquiditySources: LiquiditySource[];
   onSlippageChange: (slippage: string) => void;
-  onCustomSlippageChange: (customSlippage: string) => void;
+  onCustomSlippageChange: (customSlippage: string | null) => void;
+  selectedTheme: Theme;
+  onThemeChange: (theme: Theme) => void;
   onBack: () => void;
 }
 
@@ -63,6 +75,8 @@ export function Settings(props: PropTypes) {
     onCustomSlippageChange,
     maxSlippage,
     minSlippage,
+    selectedTheme,
+    onThemeChange,
   } = props;
 
   const [selectedSlippage, setSelectedSlippage] = useState(
@@ -77,12 +91,15 @@ export function Settings(props: PropTypes) {
   const PageContent = (
     <>
       <SlippageContainer>
-        <Typography variant="body1">Slippage tolerance per Swap</Typography>
+        <Typography variant="body1">Slippage tolerance per swap</Typography>
         <SlippageChipsContainer>
           {slippages.map((slippage, index) => (
             <Chip
               key={index}
-              onClick={changeSlippage.bind(null, slippage)}
+              onClick={() => {
+                if (customSlippage) onCustomSlippageChange(null);
+                changeSlippage(slippage);
+              }}
               selected={!customSlippage && slippage === selectedSlippage}
               label={slippage}
               style={{
@@ -93,7 +110,7 @@ export function Settings(props: PropTypes) {
           <TextField
             type="number"
             value={customSlippage}
-            onChange={event => {
+            onChange={(event) => {
               if (
                 !event.target.value ||
                 (event.target.value >= minSlippage &&
@@ -114,6 +131,20 @@ export function Settings(props: PropTypes) {
           />
         </SlippageChipsContainer>
       </SlippageContainer>
+      <ThemesContainer>
+        <Typography variant="body2">Theme</Typography>
+        <Radio
+          defaultValue={selectedTheme}
+          options={[
+            { value: 'dark', label: 'Dark' },
+            { value: 'light', label: 'Light' },
+            { value: 'auto', label: 'Auto' },
+          ]}
+          onChange={(value) => onThemeChange(value as Theme)}
+          direction="horizontal"
+          style={{ marginTop: '$24' }}
+        />
+      </ThemesContainer>
       <LiquiditySourceContainer>
         <Typography variant="body1">Liquidity Sources</Typography>
         <LiquiditySourceNumber onClick={onLiquiditySourcesClick}>
