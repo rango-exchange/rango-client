@@ -9,5 +9,6 @@ export default function getSigners(provider: any): WalletSigners {
     provider,
     walletType: WalletType.FRONTIER,
     supportEvm: true,
+    supportSolana: true,
   });
 }
