@@ -7,4 +7,5 @@ export const navigationRoutes = {
   settings: 'settings',
   liquiditySources: 'settings/liquidity-sources',
   history: 'history',
+  wallets: 'wallets',
 };
