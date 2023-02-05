@@ -53,7 +53,7 @@ export interface QueueDef<
       queue: Queue;
       context: C;
       getBlockedTasks: () => BlockedTask[];
-      forceRun: (queue_id: string, data?: object) => void;
+      forceExecute: (queue_id: string, data?: object) => void;
       retry: () => void;
       manager: Manager;
     }
@@ -74,6 +74,7 @@ interface ManagerOptions {
   events?: Partial<Events>;
   queuesDefs: QueueDef[];
   context?: ManagerContext;
+  isPaused?: boolean;
 }
 
 export interface QueueInfo {
@@ -95,6 +96,7 @@ class Manager {
   private events: Events;
   private persistor: Persistor;
   private context: ManagerContext;
+  private isPaused: boolean = false;
 
   /**
    *
@@ -141,7 +143,11 @@ class Manager {
 
     this.context = options.context || {};
     this.persistor = new Persistor();
-    this.initQueuesFromPersistor();
+    this.sync();
+
+    if (options.isPaused) {
+      this.pause();
+    }
   }
 
   /**
@@ -149,20 +155,26 @@ class Manager {
    * Reading persisted data from storage then brings into memory.
    *
    * Notes:
+   *  - Reset the memory, so we can call this method whenever we want and not only on the initialize process.
    *  - All the events will be tirggered (like onCreateQueue, onCreateTask, onBlock, ....)
    *  - Try to `resume` if the status is `running`.
    *  - Trigger `onPersistedDataLoaded` event when queues recovered from storage.
    *
    */
-  private async initQueuesFromPersistor() {
+  private async sync() {
+    // Reset queues, if anything is exist in memory.
+    this.queues = new Map();
+
+    // Reading queues from storage
     const queues = await this.persistor.getAll();
 
+    // Brings them into memory
     queues.forEach((q) => {
       const list = this.createQueue({
         queue_id: q.id,
         queue_name: q.name,
       });
-      this.addQueueToManager(q.id, {
+      this.add(q.id, {
         list,
         createdAt: q.createdAt,
         name: q.name,
@@ -199,6 +211,7 @@ class Manager {
       }
     });
 
+    // Trigger an event to let the subscribers we are done here.
     this.events.onPersistedDataLoaded(this);
   }
 
@@ -243,7 +256,7 @@ class Manager {
           this.handleUpdate(queue_id);
 
           // After finishing a queue, try to run other queues.
-          this.run();
+          this.execute();
           if (def.events?.onUpdateListStatus)
             def.events.onUpdateListStatus(status);
         },
@@ -267,7 +280,7 @@ class Manager {
               queue: list,
               context: this.getContext(),
               getBlockedTasks: this.getBlockedTasks.bind(this),
-              forceRun: this.forceRun.bind(this),
+              forceExecute: this.forceExecute.bind(this),
               retry: this.retry.bind(this),
               manager,
             });
@@ -286,7 +299,7 @@ class Manager {
           // Sync
           this.handleUpdate(queue_id);
 
-          this.run();
+          this.execute();
         },
       },
       actions: def.actions,
@@ -330,13 +343,13 @@ class Manager {
 
   /**
    *
-   * Add queue to manager to keep track of the queue and its state.
+   * Add a queue to the manager to keep track of the queue and its state.
    *
    * @param id
    * @param queue
    * @returns
    */
-  private addQueueToManager(id: QueueID, queue: QueueInfo) {
+  private add(id: QueueID, queue: QueueInfo) {
     this.queues.set(id, queue);
     const createdQueue = this.get(id)!;
     this.events.onCreateQueue({ ...createdQueue, id });
@@ -371,7 +384,7 @@ class Manager {
     });
     list.setStorage(storage);
 
-    const createdQueue = this.addQueueToManager(queue_id, {
+    const createdQueue = this.add(queue_id, {
       list,
       createdAt,
       name,
@@ -413,7 +426,7 @@ class Manager {
     });
 
     // After creating a new queue, try to run.
-    this.run();
+    this.execute();
     return queue_id;
   }
 
@@ -442,7 +455,9 @@ class Manager {
    * It only try to run queues with `PENDING` status and ignore all the other statuses.
    *
    */
-  public run() {
+  public execute() {
+    if (!this.shouldExecute()) return;
+
     for (const [, q] of Array.from(this.queues)) {
       if (q.status === Status.PENDING) {
         console.log('There is a pending queue. Run it.');
@@ -463,6 +478,8 @@ class Manager {
    * @returns
    */
   public resume() {
+    if (!this.shouldExecute()) return;
+
     for (const [, q] of Array.from(this.queues)) {
       if (q.status === Status.RUNNING) {
         console.log("Found a running queue. Let's resume the queue.", q);
@@ -474,7 +491,7 @@ class Manager {
     }
 
     // If there is no running queue, try to run a new queue.
-    this.run();
+    this.execute();
   }
 
   /**
@@ -491,6 +508,8 @@ class Manager {
    * @returns
    */
   public retry() {
+    if (!this.shouldExecute()) return;
+
     for (const [, q] of Array.from(this.queues)) {
       if (q.status === Status.BLOCKED) {
         console.log(
@@ -502,7 +521,7 @@ class Manager {
     }
 
     // If there is no running queue, try to run a new queue.
-    this.run();
+    this.execute();
   }
 
   /**
@@ -513,7 +532,7 @@ class Manager {
    * to the task and try to run it manually with the provided data.
    *
    */
-  public forceRun(queue_id: string, data?: object) {
+  public forceExecute(queue_id: string, data?: object) {
     const queue = this.get(queue_id);
     let context = this.getContext();
     if (data) {
@@ -551,10 +570,36 @@ class Manager {
     }
   }
 
+  /**
+   * Active readonly mode for manager, it means it doesn't run anythin,
+   * And only can be used to read the data.
+   */
+  public pause() {
+    this.isPaused = true;
+  }
+
+  /**
+   * Activate normal mode which means it will be able to run the queuese as well.
+   */
+  public run() {
+    // If call this method multiple times, it should be run for once.
+    if (this.isPaused) {
+      this.isPaused = false;
+      this.sync();
+    }
+  }
+
   private getContext() {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     //@ts-ignore
     return this.context?.current || {};
+  }
+
+  private shouldExecute() {
+    console.log('[shouldExecute] checking and result is:', {
+      isPaused: this.isPaused,
+    });
+    return !this.isPaused;
   }
 }
 
