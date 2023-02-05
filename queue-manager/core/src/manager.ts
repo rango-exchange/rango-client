@@ -174,7 +174,7 @@ class Manager {
         queue_id: q.id,
         queue_name: q.name,
       });
-      this.addQueueToManager(q.id, {
+      this.add(q.id, {
         list,
         createdAt: q.createdAt,
         name: q.name,
@@ -343,13 +343,13 @@ class Manager {
 
   /**
    *
-   * Add queue to manager to keep track of the queue and its state.
+   * Add a queue to the manager to keep track of the queue and its state.
    *
    * @param id
    * @param queue
    * @returns
    */
-  private addQueueToManager(id: QueueID, queue: QueueInfo) {
+  private add(id: QueueID, queue: QueueInfo) {
     this.queues.set(id, queue);
     const createdQueue = this.get(id)!;
     this.events.onCreateQueue({ ...createdQueue, id });
@@ -384,7 +384,7 @@ class Manager {
     });
     list.setStorage(storage);
 
-    const createdQueue = this.addQueueToManager(queue_id, {
+    const createdQueue = this.add(queue_id, {
       list,
       createdAt,
       name,
