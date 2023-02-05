@@ -15,6 +15,8 @@ const ListContainer = styled('div', {
   display: 'grid',
   gap: '.5rem',
   gridTemplateColumns: ' repeat(2, minmax(0, 1fr))',
+  height: '450px',
+  alignContent: 'baseline',
 });
 
 const Image = styled('img', {

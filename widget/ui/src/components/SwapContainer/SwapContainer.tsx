@@ -18,23 +18,16 @@ const MainContainer = styled('div', {
 const ContentContainer = styled('div', {
   marginTop: '$8',
   width: '100%',
-  variants: {
-    fixedHeight: {
-      true: {
-        height: '600px',
-      },
-    },
-  },
+  maxHeight: '600px',
 });
 
 export interface PropTypes {
   onConnectWallet: () => void;
-  fixedHeight?: boolean;
   style?: React.CSSProperties;
 }
 
 export function SwapContainer(props: PropsWithChildren<PropTypes>) {
-  const { onConnectWallet, children, style, fixedHeight } = props;
+  const { onConnectWallet, children, style } = props;
 
   return (
     <MainContainer style={style}>
@@ -46,7 +39,7 @@ export function SwapContainer(props: PropsWithChildren<PropTypes>) {
       >
         <Typography variant="body2">Connect Wallet</Typography>
       </Button>
-      <ContentContainer fixedHeight={fixedHeight}>{children}</ContentContainer>
+      <ContentContainer>{children}</ContentContainer>
     </MainContainer>
   );
 }

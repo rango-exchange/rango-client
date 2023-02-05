@@ -9,11 +9,11 @@ const groupLiquiditySources = (
   liquiditySources: LiquiditySource[]
 ): { [key in 'bridge' | 'exchange']: LiquiditySource[] } => ({
   bridge: liquiditySources.filter(
-    liquiditySource =>
+    (liquiditySource) =>
       liquiditySource.type === 'BRIDGE' || liquiditySource.type === 'AGGREGATOR'
   ),
   exchange: liquiditySources.filter(
-    liquiditySource => liquiditySource.type === 'DEX'
+    (liquiditySource) => liquiditySource.type === 'DEX'
   ),
 });
 
@@ -42,14 +42,15 @@ export interface PropTypes {
 export function LiquiditySourceList(props: PropTypes) {
   const { list, onChange } = props;
 
-  const [selected, setSelected] = useState(list.filter(item => item.selected));
+  const [selected, setSelected] = useState(
+    list.filter((item) => item.selected)
+  );
 
   const changeLiquiditySources = (clickedItem: LiquiditySource) => {
     clickedItem.selected = !clickedItem.selected;
-    setSelected(prevState => {
-      console.log(clickedItem.selected, clickedItem.title);
+    setSelected((prevState) => {
       if (clickedItem.selected) return [...prevState, clickedItem];
-      return prevState.filter(item => item.title != clickedItem.title);
+      return prevState.filter((item) => item.title != clickedItem.title);
     });
     onChange(clickedItem);
   };
@@ -78,10 +79,10 @@ export function LiquiditySourceList(props: PropTypes) {
   };
 
   const isSelected = (liquiditySource: LiquiditySource) =>
-    !!selected.find(item => liquiditySource.title === item.title);
+    !!selected.find((item) => liquiditySource.title === item.title);
 
   return (
-    <>
+    <div style={{ height: '450px' }}>
       <div>
         <LiquiditySourceType variant="h4">Bridges</LiquiditySourceType>
         {groupLiquiditySources(list).bridge.map((liquiditySource, index) => (
@@ -102,6 +103,6 @@ export function LiquiditySourceList(props: PropTypes) {
           />
         ))}
       </div>
-    </>
+    </div>
   );
 }

@@ -145,7 +145,7 @@ export function TokenList(props: PropTypes) {
     }
   );
   return (
-    <>
+    <div style={{ height: '450px' }}>
       <VirtualizedList
         Item={({ index, style }) => (
           <Token filteredTokens={filteredTokens} style={style} index={index} />
@@ -157,6 +157,6 @@ export function TokenList(props: PropTypes) {
         innerElementType={innerElementType}
         size={56}
       />
-    </>
+    </div>
   );
 }

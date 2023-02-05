@@ -3,6 +3,7 @@ import { BlockchainSelector } from '@rangodev/ui';
 import { useBestRouteStore } from '../store/bestRoute';
 import { useMetaStore } from '../store/meta';
 import { useNavigate } from 'react-router-dom';
+import { navigationRoutes } from '../router/navigationRoutes';
 
 interface PropTypes {
   type: 'from' | 'to';
@@ -28,9 +29,9 @@ export function SelectChainPage(props: PropTypes) {
         else setToChain(chain);
         if (type === 'from' && fromChain?.name != chain.name) setFromToken(null);
         if (type === 'to' && toChain?.name != chain.name) setToToken(null);
-        navigate(-1);
+        navigate(navigationRoutes.home);
       }}
-      onBack={navigate.bind(null, -1)}
+      onBack={navigate.bind(null, navigationRoutes.home)}
     />
   );
 }

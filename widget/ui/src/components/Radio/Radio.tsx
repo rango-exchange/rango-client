@@ -69,7 +69,6 @@ export interface PropTypes {
 
 export function Radio(props: PropTypes) {
   const { defaultValue, onChange, direction = 'vertical', style } = props;
-  console.log(direction);
   return (
     <form>
       <StyledRoot

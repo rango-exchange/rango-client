@@ -1,6 +1,7 @@
 import { LiquiditySourcesSelector } from '@rangodev/ui';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { navigationRoutes } from '../router/navigationRoutes';
 import { useMetaStore } from '../store/meta';
 import { useSettingsStore } from '../store/settings';
 
@@ -38,7 +39,7 @@ export function LiquiditySourcePage() {
     <LiquiditySourcesSelector
       list={uniqueSwappersGroups}
       onChange={(liquiditySource) => toggleLiquiditySource(liquiditySource.title)}
-      onBack={navigate.bind(null, -1)}
+      onBack={navigate.bind(null, navigationRoutes.settings)}
     />
   );
 }

@@ -48,16 +48,16 @@ const ThemesContainer = styled('div', {
 type Theme = 'dark' | 'light' | 'auto';
 
 export interface PropTypes {
-  slippages: string[];
-  selectedSlippage: string;
-  customSlippage: string;
-  maxSlippage: string;
-  minSlippage: string;
+  slippages: number[];
+  selectedSlippage: number;
+  customSlippage: number;
+  maxSlippage: number;
+  minSlippage: number;
   liquiditySources: LiquiditySource[];
   onLiquiditySourcesClick: () => void;
   selectedLiquiditySources: LiquiditySource[];
-  onSlippageChange: (slippage: string) => void;
-  onCustomSlippageChange: (customSlippage: string | null) => void;
+  onSlippageChange: (slippage: number) => void;
+  onCustomSlippageChange: (customSlippage: number | null) => void;
   selectedTheme: Theme;
   onThemeChange: (theme: Theme) => void;
   onBack: () => void;
@@ -83,7 +83,7 @@ export function Settings(props: PropTypes) {
     props.selectedSlippage
   );
 
-  const changeSlippage = (slippage: string) => {
+  const changeSlippage = (slippage: number) => {
     setSelectedSlippage(slippage);
     onSlippageChange(slippage);
   };
@@ -101,7 +101,7 @@ export function Settings(props: PropTypes) {
                 changeSlippage(slippage);
               }}
               selected={!customSlippage && slippage === selectedSlippage}
-              label={slippage}
+              label={`${slippage.toString()} %`}
               style={{
                 marginRight: '8px',
               }}
@@ -111,12 +111,12 @@ export function Settings(props: PropTypes) {
             type="number"
             value={customSlippage}
             onChange={(event) => {
+              const parsedValue = parseFloat(event.target.value);
               if (
-                !event.target.value ||
-                (event.target.value >= minSlippage &&
-                  maxSlippage >= event.target.value)
+                !parsedValue ||
+                (parsedValue >= minSlippage && parsedValue <= maxSlippage)
               )
-                onCustomSlippageChange(event.target.value);
+                onCustomSlippageChange(parsedValue);
             }}
             suffix={
               customSlippage && <Typography variant="body2">%</Typography>

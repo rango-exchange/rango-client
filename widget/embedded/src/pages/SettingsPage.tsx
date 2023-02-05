@@ -4,7 +4,6 @@ import { useSettingsStore } from '../store/settings';
 import { useMetaStore } from '../store/meta';
 import { useNavigate } from 'react-router-dom';
 import { navigationRoutes } from '../router/navigationRoutes';
-import { Radio } from '@rangodev/ui/src/components/Radio/Radio';
 
 export function SettingsPage() {
   const {
@@ -46,17 +45,17 @@ export function SettingsPage() {
 
   return (
     <Settings
-      slippages={['1', '2', '3', '4']}
+      slippages={[1, 2, 3, 4]}
       selectedSlippage={slippage}
       onSlippageChange={(slippage) => setSlippage(slippage)}
       liquiditySources={uniqueSwappersGroups}
       selectedLiquiditySources={uniqueSwappersGroups.filter((s) => s.selected)}
       onLiquiditySourcesClick={() => navigate(navigationRoutes.liquiditySources.split('/')[1])}
-      onBack={navigate.bind(null, -1)}
-      customSlippage={customSlippage}
+      onBack={navigate.bind(null, navigationRoutes.home)}
+      customSlippage={customSlippage || NaN}
       onCustomSlippageChange={setCustomSlippage}
-      minSlippage="1"
-      maxSlippage="10"
+      minSlippage={1}
+      maxSlippage={10}
       selectedTheme={theme}
       onThemeChange={setTheme}
     />

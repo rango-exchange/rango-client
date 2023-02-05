@@ -9,14 +9,20 @@ export default {
   component: Settings,
   argTypes: {
     slippages: {
-      defaultValue: ['0.5%', '1%', '3%', '5%', '8%', '13%', '20%'],
+      defaultValue: [0.5, 1, 3, 5, 8, 13, 20],
     },
-    selectedSlippage: { defaultValue: '3%' },
+    selectedSlippage: { defaultValue: 3 },
     liquiditySources: {
       defaultValue: liquiditySources,
     },
     selectedLiquiditySources: {
       defaultValue: liquiditySources.slice(0, 5),
+    },
+    minSlippage: {
+      defaultValue: 1,
+    },
+    maxSlippage: {
+      defaultValue: 10,
     },
   },
 } as ComponentMeta<typeof Settings>;

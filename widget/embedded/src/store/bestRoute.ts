@@ -21,8 +21,8 @@ interface RouteState {
   fromToken: Token | null;
   toToken: Token | null;
   availableBalance: WalletBalance | null;
-  setFromChain: (chain: BlockchainMeta) => void;
-  setToChain: (chian: BlockchainMeta) => void;
+  setFromChain: (chain: BlockchainMeta | null) => void;
+  setToChain: (chian: BlockchainMeta | null) => void;
   setFromToken: (token: Token | null) => void;
   setToToken: (token: Token | null) => void;
 }

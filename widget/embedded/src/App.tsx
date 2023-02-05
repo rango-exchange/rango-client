@@ -1,11 +1,12 @@
 import { SwapContainer, darkTheme, lightTheme } from '@rangodev/ui';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { AppRouter } from './router/AppRouter';
 import { AppRoutes } from './router/AppRoutes';
 import { useMetaStore } from './store/meta';
 import './app.css';
-import { BrowserRouter } from 'react-router-dom';
+import { useLocation, useSearchParams } from 'react-router-dom';
 import { useSettingsStore } from './store/settings';
+import { useBestRouteStore } from './store/bestRoute';
 
 interface Token {
   name: string;
@@ -26,9 +27,71 @@ export type WidgetProps = {
 };
 
 export function App() {
+  const firstRender = useRef(true);
   const fetchMeta = useMetaStore((state) => state.fetchMeta);
   const { theme } = useSettingsStore();
   const [OSTheme, setOSTheme] = useState(lightTheme);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const location = useLocation();
+  const {
+    loadingStatus,
+    meta: { blockchains, tokens },
+  } = useMetaStore();
+  const {
+    fromChain,
+    toChain,
+    fromToken,
+    toToken,
+    setFromChain,
+    setFromToken,
+    setToChain,
+    setToToken,
+  } = useBestRouteStore();
+  useEffect(() => {
+    //todo: refactor and replace strings with constants
+    if (!firstRender.current) {
+      const fChain = fromChain?.name || '';
+      const fToken =
+        (fromToken?.symbol || '') + (fromToken?.address ? '--' + fromToken?.address : '');
+      const tChain = toChain?.name || '';
+      const tToken = (toToken?.symbol || '') + (toToken?.address ? '--' + toToken?.address : '');
+      setSearchParams({
+        ...(fChain && { fromChain: fChain }),
+        ...(fToken && { fromToken: fToken }),
+        ...(tChain && { toChain: tChain }),
+        ...(tToken && { toToken: tToken }),
+      });
+    }
+    firstRender.current = false;
+  }, [location.pathname]);
+
+  useEffect(() => {
+    //todo: refactor and replace strings with constants
+    if (loadingStatus === 'success') {
+      const fChain = searchParams.get('fromChain');
+      const fToken = searchParams.get('fromToken');
+      const tChain = searchParams.get('toChain');
+      const tToken = searchParams.get('toToken');
+      const fromChain = blockchains.find((blockchain) => blockchain.name === fChain);
+      const fromToken = tokens.find((token) => {
+        const t = fToken?.split('--');
+        return token.symbol === t?.[0] && token.address === t?.[1];
+      });
+      const toChain = blockchains.find((blockchain) => blockchain.name === tChain);
+      const toToken = tokens.find((token) => {
+        const t = tToken?.split('--');
+        return token.symbol === t?.[0] && token.address === t?.[1];
+      });
+      if (!!fromChain) {
+        setFromChain(fromChain);
+        if (!!fromToken) setFromToken(fromToken);
+      }
+      if (!!toChain) {
+        setToChain(toChain);
+        if (!!toToken) setToToken(toToken);
+      }
+    }
+  }, [loadingStatus]);
 
   useEffect(() => {
     (async () => {
@@ -57,7 +120,7 @@ export function App() {
 
   return (
     <div className={getTheme()}>
-      <SwapContainer onConnectWallet={() => alert('connect your wallet:')} fixedHeight={true}>
+      <SwapContainer onConnectWallet={() => alert('connect your wallet:')}>
         <AppRouter>
           <AppRoutes />
         </AppRouter>
