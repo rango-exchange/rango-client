@@ -1,7 +1,7 @@
 import React from 'react';
 import { ComponentMeta } from '@storybook/react';
 
-import { Wallet, PropTypes } from './Wallet';
+import { PropTypes, Wallet } from './Wallet';
 import { WalletState } from '../../types/wallet';
 
 export default {
