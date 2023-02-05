@@ -5,7 +5,6 @@ import "./styles.css";
 const excludedWallets = [
   WalletType.UNKNOWN,
   WalletType.TERRA_STATION,
-  WalletType.LEAP,
 ];
 
 function List() {
