@@ -13,8 +13,10 @@
     "@rangodev/provider-all": "^0.1.11-next.28",
     "@rangodev/wallets-core": "^0.1.11-next.28",
     "parcel": "^2.8.0",
+    "rango-sdk": "^0.1.2",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "react-tooltip": "^5.7.4"
   },
   "gitHead": "6a1dd3a10333466b93bb13c66dfd148df0059070"
 }
