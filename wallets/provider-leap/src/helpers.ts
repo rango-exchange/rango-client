@@ -5,3 +5,9 @@ export function leap_instance() {
 
   return null;
 }
+
+export async function getSupportedChains(
+  instance: any
+): Promise<Array<string>> {
+  return instance.getSupportedChains();
+}

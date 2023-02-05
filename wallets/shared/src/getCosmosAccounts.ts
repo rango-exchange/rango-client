@@ -76,19 +76,14 @@ async function getMainAccounts({
   const accountsPromises = offlineSigners.map(({ signer }) =>
     signer.getAccounts()
   );
-
-  const availableAccountForChains = await Promise.all(
-    accountsPromises.map((p) => p.catch(() => null))
-  );
+  const availableAccountForChains = await Promise.all(accountsPromises);
 
   const resolvedAccounts: ProviderConnectResult[] = [];
   availableAccountForChains.forEach(
     (accounts: { address: string }[], index) => {
       const { chainId } = offlineSigners[index];
-      if (accounts) {
-        const addresses = accounts.map((account) => account.address);
-        resolvedAccounts.push({ accounts: addresses, chainId });
-      }
+      const addresses = accounts.map((account) => account.address);
+      resolvedAccounts.push({ accounts: addresses, chainId });
     }
   );
 

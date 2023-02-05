@@ -9,7 +9,7 @@ import {
   WalletInfo,
   cosmosBlockchains,
 } from '@rangodev/wallets-shared';
-import { leap_instance } from './helpers';
+import { leap_instance, getSupportedChains } from './helpers';
 import signer from './signer';
 
 const WALLET = WalletType.LEAP;
@@ -21,9 +21,15 @@ export const config = {
 
 export const getInstance = leap_instance;
 export const connect: Connect = async ({ instance, network, meta }) => {
+  const supportedChains = await getSupportedChains(instance);
+  const leapBlockchainMeta = meta.filter(
+    (block) =>
+      supportedChains.includes(block.name.toLowerCase()) ||
+      block.name === network
+  );
   const results = await getCosmosAccounts({
     instance,
-    meta,
+    meta: leapBlockchainMeta,
     network,
   });
   return results;
