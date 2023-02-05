@@ -2,6 +2,7 @@ import React, {
   createContext,
   PropsWithChildren,
   useContext,
+  useEffect,
   useLayoutEffect,
   useMemo,
   useRef,
@@ -24,6 +25,7 @@ interface PropTypes {
   queuesDefs: QueueDef<any>[];
   context: Context;
   onPersistedDataLoaded?: Events['onPersistedDataLoaded'];
+  isPaused?: boolean;
 }
 
 function Provider(props: PropsWithChildren<PropTypes>) {
@@ -59,12 +61,23 @@ function Provider(props: PropsWithChildren<PropTypes>) {
         },
       },
       context: context || {},
+      isPaused: props.isPaused,
     });
   }, []);
 
   useLayoutEffect(() => {
     context.current = props.context;
   }, [props.context]);
+
+  useEffect(() => {
+    if (typeof props.isPaused !== 'undefined') {
+      if (props.isPaused) {
+        manager.pause();
+      } else {
+        manager.run();
+      }
+    }
+  }, [props.isPaused]);
 
   return (
     <ManagerCtx.Provider value={{ manager, count }}>
