@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { MetaResponse, Token } from 'rango-sdk';
+import { MetaResponse } from 'rango-sdk';
 import { httpService } from '../services/httpService';
 
 interface MetaState {

@@ -1,7 +1,4 @@
 import { create } from 'zustand';
-
-import { BlockchainMeta } from 'rango-sdk';
-import { Token } from 'rango-sdk';
 import { persist } from 'zustand/middleware';
 import { immer } from 'zustand/middleware/immer';
 

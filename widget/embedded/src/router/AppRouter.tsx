@@ -1,9 +1,15 @@
 import React, { Fragment, PropsWithChildren, useEffect } from 'react';
 import { MemoryRouter, useInRouterContext } from 'react-router';
+import { UpdateUrl } from './UpdateUrl';
 
 export function AppRouter({ children }: PropsWithChildren) {
-  const isRouterInContex = useInRouterContext();
-  const Router = isRouterInContex ? Fragment : MemoryRouter;
+  const isRouterInContext = useInRouterContext();
+  const Router = isRouterInContext ? Fragment : MemoryRouter;
 
-  return <Router>{children}</Router>;
+  return (
+    <>
+      <Router>{children}</Router>
+      {isRouterInContext && <UpdateUrl />}
+    </>
+  );
 }

@@ -1,3 +1,3 @@
 import { RangoClient } from 'rango-sdk';
-
-export const httpService = new RangoClient('4a624ab5-16ff-4f96-90b7-ab00ddfc342c');
+console.log(process.env.REACT_API_KEY);
+export const httpService = new RangoClient(process.env.REACT_API_KEY as string);
