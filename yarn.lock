@@ -8329,6 +8329,11 @@ caniuse-lite@^1.0.30001109:
   resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001434.tgz#ec1ec1cfb0a93a34a0600d37903853030520a4e5"
   integrity sha512-aOBHrLmTQw//WFa2rcF1If9fa3ypkC1wzqqiKHgfdrXTWcU8C4gKVZT77eQAPWN1APys3+uQ0Df07rKauXGEYA==
 
+caniuse-lite@^1.0.30001400:
+  version "1.0.30001450"
+  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001450.tgz#022225b91200589196b814b51b1bbe45144cf74f"
+  integrity sha512-qMBmvmQmFXaSxexkjjfMvD5rnDL0+m+dUMZKoDYsGG8iZN29RuYh9eRoMvKsT6uMAWlyUUGDEQGJJYjzCIO9ew==
+
 capture-exit@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/capture-exit/-/capture-exit-2.0.0.tgz#fb953bfaebeb781f62898239dabb426d08a509a4"
@@ -16222,6 +16227,31 @@ rango-sdk-basic@^0.0.9:
     bignumber.js "^9.0.2"
     uuid "^8.3.2"
 
+rango-sdk@^0.0.10:
+  version "0.0.10"
+  resolved "https://registry.yarnpkg.com/rango-sdk/-/rango-sdk-0.0.10.tgz#c6d6eeca2a50c1643aa8954b12c82a0b479d44a8"
+  integrity sha512-ByBXyCHheaVshv+D1KEVVMcmKahoW0MQD2JcjdbVUrMczZeNJqmxRRHqS80k3gkkLll6QfHSrGRRuPubLLHyxg==
+  dependencies:
+    axios "^1.2.6"
+    bignumber.js "^9.1.1"
+    rango-types "^0.1.1"
+    uuid "^9.0.0"
+
+rango-sdk@^0.1.1:
+  version "0.1.2"
+  resolved "https://registry.yarnpkg.com/rango-sdk/-/rango-sdk-0.1.2.tgz#81bf233b16ec0658191935d9104997f9d1f0be0b"
+  integrity sha512-FPjZHW0NXShMMUvMmmFPtPSvYop9AisUiB1yZajwvSbp6Q2ulDGFOrrl5yQp+GXJqcbDzWryTPHb0bY9f2FgXQ==
+  dependencies:
+    axios "^1.2.6"
+    bignumber.js "^9.1.1"
+    rango-types "^0.1.5"
+    uuid "^9.0.0"
+
+rango-types@^0.1.1, rango-types@^0.1.5:
+  version "0.1.5"
+  resolved "https://registry.yarnpkg.com/rango-types/-/rango-types-0.1.5.tgz#0abd972ecc4e1c847104d11720292af2eec7e62c"
+  integrity sha512-tEacrWTgC3M60MeJV/hp4ShyVVwOCLN5Cwnd18apiJcGca0UAXsXiRulGLQYVkv6UddWpK/pEv8oYyPnxoTM7g==
+
 raw-body@2.5.1:
   version "2.5.1"
   resolved "https://registry.yarnpkg.com/raw-body/-/raw-body-2.5.1.tgz#fe1b1628b181b700215e5fd42389f98b71392857"
@@ -18774,7 +18804,7 @@ typeforce@^1.11.5:
   resolved "https://registry.yarnpkg.com/typeforce/-/typeforce-1.18.0.tgz#d7416a2c5845e085034d70fcc5b6cc4a90edbfdc"
   integrity sha512-7uc1O8h1M1g0rArakJdf0uLRSSgFcYexrVoKo+bzJd32gd4gDy2L/Z+8/FjPnU9ydY3pEnVPtr9FyscYY60K1g==
 
-"typescript@^3 || ^4", typescript@^4.8.4, typescript@^4.9.3:
+"typescript@^3 || ^4", typescript@^4.9.3:
   version "4.9.4"
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.9.4.tgz#a2a3d2756c079abda241d75f149df9d561091e78"
   integrity sha512-Uz+dTXYzxXXbsFpM86Wh3dKCxrQqUcVMxwU54orwlJjOpO3ao8L7j5lH+dWfTwgCwIuM9GQ2kvVotzYJMXTBZg==
