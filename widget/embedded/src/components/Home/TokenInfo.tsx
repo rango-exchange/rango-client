@@ -4,12 +4,14 @@ import { useMetaStore } from '../../store/meta';
 import { BlockchainMeta, Token } from 'rango-sdk';
 import { useNavigate } from 'react-router-dom';
 import { useBestRouteStore } from '../../store/bestRoute';
+import { numberToString } from '../../utils/numbers';
 
-interface PropTypes {
-  type: 'From' | 'To';
-  chain: BlockchainMeta | null;
-  token: Token | null;
-}
+type PropTypes = (
+  | { type: 'From'; inputAmount: number | null; onAmountChange: (amount: number) => void }
+  | {
+      type: 'To';
+    }
+) & { chain: BlockchainMeta | null; token: Token | null };
 
 const Container = styled('div', {
   boxSizing: 'border-box',
@@ -58,16 +60,16 @@ const OutputContainer = styled('div', {
 });
 
 export function TokenInfo(props: PropTypes) {
-  const { type, chain, token } = props;
+  const { chain, token } = props;
   const { loadingStatus } = useMetaStore();
-  const { fromChain, toChain } = useBestRouteStore();
+  const { fromChain, toChain, inputUsdValue } = useBestRouteStore();
   const navigate = useNavigate();
   return (
     <Container>
       <div style={{ position: 'absolute', bottom: '100%' }}>
-        <Typography variant="body2">{type}</Typography>
+        <Typography variant="body2">{props.type}</Typography>
       </div>
-      {type === 'From' && (
+      {props.type === 'From' && (
         <MaxAmount onClick={() => {}}>
           <Typography variant="body2">Max:&nbsp;</Typography>
           <TokenBalance>
@@ -77,7 +79,7 @@ export function TokenInfo(props: PropTypes) {
       )}
       <Button
         onClick={() => {
-          navigate(`/${type.toLowerCase()}-chain`);
+          navigate(`/${props.type.toLowerCase()}-chain`);
         }}
         variant="outlined"
         disabled={loadingStatus === 'failed'}
@@ -97,13 +99,13 @@ export function TokenInfo(props: PropTypes) {
       </Button>
       <Button
         onClick={() => {
-          navigate(`/${type.toLowerCase()}-token`);
+          navigate(`/${props.type.toLowerCase()}-token`);
         }}
         variant="outlined"
         disabled={
           loadingStatus === 'failed' ||
-          (type === 'From' && !fromChain) ||
-          (type === 'To' && !toChain)
+          (props.type === 'From' && !fromChain) ||
+          (props.type === 'To' && !toChain)
         }
         loading={loadingStatus === 'loading'}
         prefix={
@@ -119,7 +121,7 @@ export function TokenInfo(props: PropTypes) {
         style={{ marginRight: '.5rem' }}>
         {loadingStatus === 'success' && token ? token.symbol : 'Token'}
       </Button>
-      {type === 'From' ? (
+      {props.type === 'From' ? (
         <TextField
           type="number"
           size="large"
@@ -127,9 +129,15 @@ export function TokenInfo(props: PropTypes) {
           style={{ width: '70%', position: 'relative', backgroundColor: '$background !important' }}
           suffix={
             <span style={{ position: 'absolute', right: '4px', bottom: '2px' }}>
-              <Typography variant="caption">$0.0</Typography>
+              <Typography variant="caption">{`$${numberToString(inputUsdValue)}`}</Typography>
             </span>
           }
+          {...(props.type === 'From' && {
+            value: props.inputAmount?.toString() || '',
+            onChange: (event) => {
+              props.onAmountChange(parseFloat(event.target.value));
+            },
+          })}
         />
       ) : (
         <OutputContainer>

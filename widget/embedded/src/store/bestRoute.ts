@@ -2,6 +2,10 @@ import { BlockchainMeta } from 'rango-sdk';
 import { Token } from 'rango-sdk/lib';
 import { create } from 'zustand';
 import { immer } from 'zustand/middleware/immer';
+import BigNumber from 'bignumber.js';
+
+const getUsdValue = (token: Token, amount: number | null) =>
+  new BigNumber(amount || 0).multipliedBy(token.usdPrice || 0);
 
 export type WalletBalance = {
   chain: string;
@@ -18,6 +22,8 @@ export type WalletBalance = {
 interface RouteState {
   fromChain: BlockchainMeta | null;
   toChain: BlockchainMeta | null;
+  inputAmount: number | null;
+  inputUsdValue: BigNumber;
   fromToken: Token | null;
   toToken: Token | null;
   availableBalance: WalletBalance | null;
@@ -25,12 +31,15 @@ interface RouteState {
   setToChain: (chian: BlockchainMeta | null) => void;
   setFromToken: (token: Token | null) => void;
   setToToken: (token: Token | null) => void;
+  setInputAmount: (amount: number | null) => void;
 }
 
 export const useBestRouteStore = create<RouteState>()(
   immer((set) => ({
     fromChain: null,
     fromToken: null,
+    inputAmount: null,
+    inputUsdValue: new BigNumber(0),
     toChain: null,
     toToken: null,
     availableBalance: null,
@@ -41,6 +50,8 @@ export const useBestRouteStore = create<RouteState>()(
     setFromToken: (token) =>
       set((state) => {
         state.fromToken = token;
+        if (!!state.inputAmount)
+          state.inputUsdValue = getUsdValue(state.fromToken!, state.inputAmount);
       }),
     setToChain: (chain) =>
       set((state) => {
@@ -49,6 +60,12 @@ export const useBestRouteStore = create<RouteState>()(
     setToToken: (token) =>
       set((state) => {
         state.toToken = token;
+      }),
+    setInputAmount: (amount) =>
+      set((state) => {
+        state.inputAmount = amount;
+        if (!!state.fromToken)
+          state.inputUsdValue = getUsdValue(state.fromToken, state.inputAmount);
       }),
   })),
 );

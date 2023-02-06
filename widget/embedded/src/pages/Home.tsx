@@ -1,4 +1,4 @@
-import { Button, styled, VerticalSwapIcon } from '@rangodev/ui';
+import { BestRoute, Button, styled, VerticalSwapIcon } from '@rangodev/ui';
 import React, { useState } from 'react';
 import { Header } from '../components/Home/Header';
 import { TokenInfo } from '../components/Home/TokenInfo';
@@ -27,6 +27,8 @@ export function Home() {
     setFromToken,
     setToChain,
     setToToken,
+    inputAmount,
+    setInputAmount,
   } = useBestRouteStore();
 
   const swithFromAndTo = () => {
@@ -40,12 +42,19 @@ export function Home() {
   return (
     <Container>
       <Header />
-      <TokenInfo type="From" chain={fromChain} token={fromToken} />
+      <TokenInfo
+        type="From"
+        chain={fromChain}
+        token={fromToken}
+        onAmountChange={setInputAmount}
+        inputAmount={inputAmount}
+      />
       <Button variant="ghost" onClick={swithFromAndTo}>
         <VerticalSwapIcon size={36} />
         {isRouterInContext && <SwithFromAndTo count={count} />}
       </Button>
       <TokenInfo type="To" chain={toChain} token={toToken} />
+      <BestRoute />
       <Button type="primary" align="grow" size="large">
         Connect Wallet
       </Button>
