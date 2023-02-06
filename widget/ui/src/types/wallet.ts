@@ -1,4 +1,4 @@
-import { WalletType } from "@rangodev/wallets-shared";
+import { WalletType } from '@rangodev/wallets-shared';
 
 export enum WalletState {
   NOT_INSTALLED = 'not installed',
@@ -6,7 +6,6 @@ export enum WalletState {
   CONNECTING = 'connecting',
   CONNECTED = 'connected',
 }
-
 
 export type WalletInfo = {
   state:

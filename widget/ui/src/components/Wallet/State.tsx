@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 import { styled } from '../../theme';
 import { FilledCircle } from '../common';
-import { Download } from '../Icon';
+import { DownloadIcon } from '../Icon';
 import { Spinner } from '../Spinner';
 import { WalletState } from '../../types/wallet';
 
@@ -17,14 +17,14 @@ export const State = ({
   installLink,
 }: {
   walletState: WalletState;
-  installLink?: string;
+  installLink: string;
 }) => (
   <Fragment>
     {walletState !== WalletState.DISCONNECTED && (
       <StateIconContainer>
         {walletState === WalletState.NOT_INSTALLED && (
           <a href={installLink} target="_blank">
-            <Download size={24} color="success" />
+            <DownloadIcon size={24} color="success" />
           </a>
         )}
         {walletState === WalletState.CONNECTING && <Spinner />}

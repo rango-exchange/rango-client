@@ -1,1 +1,1 @@
-export { WalletInfo, WalletState } from './wallet';
+export * from './wallet';

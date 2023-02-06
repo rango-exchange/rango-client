@@ -42,6 +42,7 @@ const GroupTitle = styled(Typography, {
 
 export interface PropTypes {
   list: PendingSwap[];
+  onBack: () => void;
 }
 const SwapsGroup = ({ list }: { list: PendingSwap[] }) => {
   const swapsInGroup = groupingOfSwaps(list);
@@ -60,9 +61,10 @@ const SwapsGroup = ({ list }: { list: PendingSwap[] }) => {
   );
 };
 
-export function History({ list = [] }: PropsWithChildren<PropTypes>) {
+export function History({ list = [], onBack }: PropsWithChildren<PropTypes>) {
   return (
     <SecondaryPage
+      onBack={onBack}
       textField={true}
       textFieldPlaceholder="Search By Blockchain Or Token"
       title="History"

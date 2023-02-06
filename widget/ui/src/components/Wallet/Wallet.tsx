@@ -1,7 +1,8 @@
+import { WalletType } from '@rangodev/wallets-shared';
 import React from 'react';
 
 import { styled } from '../../theme';
-import { WalletInfo, WalletState, WalletType } from '../../types/wallet';
+import { WalletInfo, WalletState } from '../../types/wallet';
 import { Button } from '../Button/Button';
 import { Typography } from '../Typography';
 import { State } from './State';
@@ -16,7 +17,7 @@ export type PropTypes = WalletInfo & {
   onClick: (walletType: WalletType) => void;
 };
 
-function Wallet(props: PropTypes) {
+export function Wallet(props: PropTypes) {
   const { name, type, image, state, onClick, installLink } = props;
   return (
     <Button
@@ -35,4 +36,3 @@ function Wallet(props: PropTypes) {
     </Button>
   );
 }
-export default Wallet;
