@@ -54,7 +54,14 @@ function Item({ type }: { type: WalletType }) {
       supportedChainsNames,
     ).find((a) => a.accounts.find((b) => b.isConnected));
     const signers = getSigners(type);
-    signers.signEvmMessage(activeAccount?.accounts[0]?.address || '', 'sign test');
+    signers
+      .signEvmMessage(activeAccount?.accounts[0]?.address || '', 'sign test')
+      .then((signature) => {
+        console.log(signature);
+      })
+      .catch((ex) => {
+        console.log(ex);
+      });
   };
   return (
     <div className="wallet_box">
