@@ -79,12 +79,6 @@ export enum GenericTransactionType {
   SOLANA = 'SOLANA',
 }
 
-export interface BlockchainMeta {
-  name: string;
-  logo: string;
-  displayName: string;
-}
-
 export type SwapperMeta = {
   id: string;
   title: string;
@@ -109,6 +103,6 @@ export type TokenMeta = {
 export interface LiquiditySource {
   title: string;
   logo: string;
-  type: 'exchange' | 'bridge';
+  type: 'BRIDGE' | 'AGGREGATOR' | 'DEX';
   selected: boolean;
 }

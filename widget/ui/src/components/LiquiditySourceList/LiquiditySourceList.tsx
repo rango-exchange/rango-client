@@ -7,12 +7,13 @@ import { Typography } from '../Typography';
 
 const groupLiquiditySources = (
   liquiditySources: LiquiditySource[]
-): { [key in LiquiditySource['type']]: LiquiditySource[] } => ({
+): { [key in 'bridge' | 'exchange']: LiquiditySource[] } => ({
   bridge: liquiditySources.filter(
-    (liquiditySource) => liquiditySource.type === 'bridge'
+    (liquiditySource) =>
+      liquiditySource.type === 'BRIDGE' || liquiditySource.type === 'AGGREGATOR'
   ),
   exchange: liquiditySources.filter(
-    (liquiditySource) => liquiditySource.type === 'exchange'
+    (liquiditySource) => liquiditySource.type === 'DEX'
   ),
 });
 
@@ -48,7 +49,6 @@ export function LiquiditySourceList(props: PropTypes) {
   const changeLiquiditySources = (clickedItem: LiquiditySource) => {
     clickedItem.selected = !clickedItem.selected;
     setSelected((prevState) => {
-      console.log(clickedItem.selected, clickedItem.title);
       if (clickedItem.selected) return [...prevState, clickedItem];
       return prevState.filter((item) => item.title != clickedItem.title);
     });
@@ -78,14 +78,11 @@ export function LiquiditySourceList(props: PropTypes) {
     );
   };
 
-  const isSelected = (liquiditySource: LiquiditySource) => {
-    const a = !!selected.find((item) => liquiditySource.title === item.title);
-    console.log(a);
-    return a;
-  };
+  const isSelected = (liquiditySource: LiquiditySource) =>
+    !!selected.find((item) => liquiditySource.title === item.title);
 
   return (
-    <>
+    <div style={{ height: '450px' }}>
       <div>
         <LiquiditySourceType variant="h4">Bridges</LiquiditySourceType>
         {groupLiquiditySources(list).bridge.map((liquiditySource, index) => (
@@ -106,6 +103,6 @@ export function LiquiditySourceList(props: PropTypes) {
           />
         ))}
       </div>
-    </>
+    </div>
   );
 }
