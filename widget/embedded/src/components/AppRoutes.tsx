@@ -1,6 +1,6 @@
 import React from 'react';
 import { useRoutes } from 'react-router-dom';
-import { navigationRoutes } from './navigationRoutes';
+import { navigationRoutes } from '../constants/navigationRoutes';
 import { HistoryPage } from '../pages/HistoryPage';
 import { Home } from '../pages/Home';
 import { LiquiditySourcePage } from '../pages/LiquiditySourcesPage';

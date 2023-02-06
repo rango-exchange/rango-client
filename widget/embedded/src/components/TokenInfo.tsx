@@ -1,9 +1,9 @@
 import React from 'react';
 import { AngleDownIcon, Button, styled, TextField, Typography } from '@rangodev/ui';
-import { useMetaStore } from '../../store/meta';
+import { useMetaStore } from '../store/meta';
 import { BlockchainMeta, Token } from 'rango-sdk';
 import { useNavigate } from 'react-router-dom';
-import { useBestRouteStore } from '../../store/bestRoute';
+import { useBestRouteStore } from '../store/bestRoute';
 
 interface PropTypes {
   type: 'From' | 'To';

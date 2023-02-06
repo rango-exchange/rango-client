@@ -1,12 +1,12 @@
 import { Button, styled, VerticalSwapIcon } from '@rangodev/ui';
 import React, { useState } from 'react';
-import { Header } from '../components/Home/Header';
-import { TokenInfo } from '../components/Home/TokenInfo';
-import { useBestRouteStore } from '../store/bestRoute';
-import { BottomLogo } from '../components/Home/BottomLogo';
 import { useInRouterContext } from 'react-router-dom';
-import { SwithFromAndTo } from '../router/SwitchFromAndTo';
-import { Footer } from '../components/Home/Footer';
+import { Header } from '../components/Header';
+import { TokenInfo } from '../components/TokenInfo';
+import { useBestRouteStore } from '../store/bestRoute';
+import { BottomLogo } from '../components/BottomLogo';
+import { SwithFromAndTo } from '../components/SwitchFromAndTo';
+import { Footer } from '../components/Footer';
 
 const Container = styled('div', {
   display: 'flex',

@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { SearchParams } from './searchParams';
+import { SearchParams } from '../constants/searchParams';
 
 export function SwithFromAndTo({ count }: { count: number }) {
   const firstRender = useRef(true);

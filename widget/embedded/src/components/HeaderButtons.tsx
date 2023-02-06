@@ -1,7 +1,7 @@
 import React from 'react';
 import { SettingsIcon, Tooltip, styled, AddWalletIcon, Button } from '@rangodev/ui';
 import { useNavigate } from 'react-router-dom';
-import { navigationRoutes } from '../../router/navigationRoutes';
+import { navigationRoutes } from '../constants/navigationRoutes';
 
 const ButtonsContainer = styled('div', {
   display: 'flex',

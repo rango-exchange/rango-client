@@ -1,7 +1,7 @@
 import { SwapContainer, darkTheme, lightTheme } from '@rangodev/ui';
 import React, { useEffect, useState } from 'react';
-import { AppRouter } from './router/AppRouter';
-import { AppRoutes } from './router/AppRoutes';
+import { AppRouter } from './components/AppRouter';
+import { AppRoutes } from './components/AppRoutes';
 import { useMetaStore } from './store/meta';
 import './app.css';
 import { useSettingsStore } from './store/settings';
