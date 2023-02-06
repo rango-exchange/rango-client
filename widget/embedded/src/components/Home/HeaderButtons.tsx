@@ -1,12 +1,5 @@
 import React from 'react';
-import {
-  HistoryIcon,
-  SettingsIcon,
-  Tooltip,
-  WalletIcon,
-  styled,
-  AddWalletIcon,
-} from '@rangodev/ui';
+import { SettingsIcon, Tooltip, styled, AddWalletIcon, Button } from '@rangodev/ui';
 import { useNavigate } from 'react-router-dom';
 import { navigationRoutes } from '../../router/navigationRoutes';
 
@@ -14,32 +7,20 @@ const ButtonsContainer = styled('div', {
   display: 'flex',
 });
 
-const StyledWalletIcon = styled(AddWalletIcon, {
-  marginRight: '$24',
-  cursor: 'pointer',
-});
-
-const StyledHistoryIcon = styled(HistoryIcon, { marginRight: '$16', cursor: 'pointer' });
-
-const StyledSettingsIcon = styled(SettingsIcon, {
-  cursor: 'pointer',
-});
-
 export function HeaderButtons() {
   const navigate = useNavigate();
 
   return (
     <ButtonsContainer>
-      <Tooltip content="Transactions Hitory">
-        <StyledHistoryIcon size={24} onClick={() => navigate(navigationRoutes.history)} />
+      <Tooltip content="Transactions History">
+        <Button variant="ghost" onClick={() => navigate(navigationRoutes.history)}>
+          <AddWalletIcon size={24} />
+        </Button>
       </Tooltip>
       <Tooltip content="Settings">
-        <StyledSettingsIcon
-          size={24}
-          onClick={() => {
-            navigate(navigationRoutes.settings);
-          }}
-        />
+        <Button variant="ghost" onClick={() => navigate(navigationRoutes.settings)}>
+          <SettingsIcon size={24} />
+        </Button>
       </Tooltip>
     </ButtonsContainer>
   );
