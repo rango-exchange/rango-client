@@ -3,7 +3,7 @@
   grid-template-columns: 1fr 1fr 1fr 1fr;
 }
 .wallet_box {
-  box-shadow: 10px 10px 5px #ebebeb;
+  box-shadow: 1px 1px 12px #ebebeb;
   border-radius: 8px;
   padding: 12px;
   margin: 20px;
@@ -12,7 +12,7 @@
   justify-content: space-between;
   border-left: 1px solid #ebebeb;
   border-top: 1px solid #ebebeb;
-  height: 500px;
+  height: 465px;
 }
 .title {
   display: flex;
@@ -66,9 +66,7 @@ select {
   display: flex;
   justify-content: center;
 }
-img {
-  border-radius: 4px;
-}
+
 .header {
   display: flex;
   justify-content: space-between;
@@ -86,4 +84,15 @@ h4 {
 .error-msg {
   color: #ff0000;
   font-size: 16px;
+}
+
+
+.body{
+  text-align: center;
+  margin-top: 25px;
+}
+
+.body img{
+  margin: 10px auto;
+  border-radius: 50%;
 }
