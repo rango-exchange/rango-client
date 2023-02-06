@@ -12,13 +12,14 @@
     "node": ">=10"
   },
   "scripts": {
-    "dev": "start-storybook -p 3000",
+    "dev": "tsdx watch",
     "build": "tsdx build",
     "test": "tsdx test --passWithNoTests",
     "lint": "tsdx lint",
     "prepare": "tsdx build",
     "size": "size-limit",
     "analyze": "size-limit --why",
+    "storybook": "start-storybook -p 3000",
     "build-storybook": "build-storybook"
   },
   "peerDependencies": {
@@ -71,9 +72,11 @@
   },
   "dependencies": {
     "@radix-ui/react-checkbox": "^1.0.1",
+    "@radix-ui/react-radio-group": "^1.1.1",
     "@radix-ui/react-switch": "^1.0.1",
     "@radix-ui/react-tooltip": "^1.0.2",
     "@stitches/react": "^1.2.8",
+    "rango-sdk": "^0.1.1",
     "react-virtualized-auto-sizer": "^1.0.7",
     "react-window": "^1.8.8",
     "react-window-infinite-loader": "^1.0.8"
