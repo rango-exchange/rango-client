@@ -2,17 +2,17 @@ import React, { forwardRef, useEffect, useState } from 'react';
 import { CommonProps } from 'react-window';
 import { containsText } from '../../helpers';
 import { styled } from '../../theme';
-import { TokenMeta } from '../../types/meta';
+import { Token } from 'rango-sdk';
 import { Button } from '../Button/Button';
 import { Typography } from '../Typography';
 import { VirtualizedList } from '../VirtualizedList/VirtualizedList';
 
 const PAGE_SIZE = 20;
 export interface PropTypes {
-  list: TokenMeta[];
-  selected: TokenMeta;
+  list: Token[];
+  selected: Token | null;
   searchedText: string;
-  onChange: (token: TokenMeta) => void;
+  onChange: (token: Token) => void;
 }
 
 const TokenImage = styled('img', {
@@ -26,18 +26,18 @@ const TokenNameContainer = styled('div', {
   flexDirection: 'column',
 });
 
-const TokenAmountContainer = styled('div', {
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'flex-end',
-});
+// const TokenAmountContainer = styled('div', {
+//   display: 'flex',
+//   flexDirection: 'column',
+//   alignItems: 'flex-end',
+// });
 
 export function TokenList(props: PropTypes) {
   const { list, searchedText, onChange } = props;
 
   const [selected, setSelected] = useState(props.selected);
 
-  const changeSelected = (token: TokenMeta) => {
+  const changeSelected = (token: Token) => {
     setSelected(token);
     onChange(token);
   };
@@ -47,7 +47,7 @@ export function TokenList(props: PropTypes) {
     index,
     style,
   }: {
-    filteredTokens: TokenMeta[];
+    filteredTokens: Token[];
     index: number;
     style: React.CSSProperties | undefined;
   }) => {
@@ -69,24 +69,24 @@ export function TokenList(props: PropTypes) {
           align="start"
           onClick={changeSelected.bind(null, currentToken)}
           type={
-            selected.symbol === currentToken.symbol &&
-            selected.address === currentToken.address
+            selected?.symbol === currentToken.symbol &&
+            selected?.address === currentToken.address
               ? 'primary'
               : undefined
           }
           prefix={<TokenImage src={currentToken.image} />}
-          suffix={
-            !!currentToken.balance && (
-              <TokenAmountContainer>
-                <Typography variant="body1">
-                  {currentToken.balance.amount}
-                </Typography>
-                <Typography variant="body2">
-                  {currentToken.balance.usdPrice}
-                </Typography>
-              </TokenAmountContainer>
-            )
-          }
+          // suffix={
+          //   !!currentToken.balance && (
+          //     <TokenAmountContainer>
+          //       <Typography variant="body1">
+          //         {currentToken.balance.amount}
+          //       </Typography>
+          //       <Typography variant="body2">
+          //         {currentToken.balance.usdPrice}
+          //       </Typography>
+          //     </TokenAmountContainer>
+          //   )
+          // }
         >
           <TokenNameContainer>
             <Typography variant="body1">{currentToken.symbol}</Typography>
@@ -99,7 +99,7 @@ export function TokenList(props: PropTypes) {
 
   const [hasNextPage, setHasNextPage] = useState<boolean>(true);
   const [isNextPageLoading, setIsNextPageLoading] = useState<boolean>(false);
-  const [filteredTokens, setFilteredTokens] = useState<TokenMeta[]>(list);
+  const [filteredTokens, setFilteredTokens] = useState<Token[]>(list);
 
   const loadNextPage = () => {
     setIsNextPageLoading(true);
@@ -145,7 +145,7 @@ export function TokenList(props: PropTypes) {
     }
   );
   return (
-    <>
+    <div style={{ height: '450px' }}>
       <VirtualizedList
         Item={({ index, style }) => (
           <Token filteredTokens={filteredTokens} style={style} index={index} />
@@ -157,6 +157,6 @@ export function TokenList(props: PropTypes) {
         innerElementType={innerElementType}
         size={56}
       />
-    </>
+    </div>
   );
 }

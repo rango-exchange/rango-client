@@ -1,7 +1,7 @@
 import React, { PropsWithChildren } from 'react';
 import { PendingSwap } from '../../containers/History/types';
 import { styled } from '../../theme';
-import { CheckCircle, InfoCircle, TryAgain } from '../Icon';
+import { CheckCircleIcon, InfoCircleIcon, TryAgainIcon } from '../Icon';
 import { StepDetail } from '../StepDetail';
 
 const Container = styled('div', {
@@ -116,11 +116,11 @@ export function SwapDetail({ swap, status }: PropsWithChildren<PropTypes>) {
       </SwapContainer>
       <StatusContainer>
         {status === 'running' ? (
-          <TryAgain size={16} />
+          <TryAgainIcon size={16} />
         ) : status === 'failed' ? (
-          <InfoCircle size={18} color="error" />
+          <InfoCircleIcon size={18} color="error" />
         ) : (
-          <CheckCircle size={18} color="success" />
+          <CheckCircleIcon size={18} color="success" />
         )}
       </StatusContainer>
     </Container>

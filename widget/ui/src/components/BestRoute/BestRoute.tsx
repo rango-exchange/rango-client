@@ -1,5 +1,5 @@
 import React, { PropsWithChildren } from 'react';
-import { Gas, Time } from '../../components/Icon';
+import { GasIcon, TimeIcon } from '../../components/Icon';
 import { StepDetail } from '../../components/StepDetail';
 import { Typography } from '../../components/Typography';
 import { BestRouteType, SwapResult } from '../../types/swaps';
@@ -123,12 +123,12 @@ export function BestRoute({
         </SkeletonContainer>
       ) : (
         <GasContainer>
-          <Gas size={20} />
+          <GasIcon size={20} />
           <Typography mt={4} align="center" variant="caption">
             {error ? '-' : `$${fee}`}
           </Typography>
           <HR />
-          <Time size={20} />
+          <TimeIcon size={20} />
           <Typography mt={4} align="center" variant="caption">
             {error ? '-' : `~${time}m`}
           </Typography>
