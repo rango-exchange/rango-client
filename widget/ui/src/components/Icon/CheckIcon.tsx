@@ -12,6 +12,7 @@ export const CheckIcon = React.forwardRef<SVGSVGElement, IconProps>(
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
         color={color}
+        className="_icon"
         {...props}
       >
         <path
@@ -23,3 +24,5 @@ export const CheckIcon = React.forwardRef<SVGSVGElement, IconProps>(
     );
   }
 );
+
+CheckIcon.toString = () => '._icon';

@@ -12,6 +12,7 @@ export const BanIcon = React.forwardRef<SVGSVGElement, IconProps>(
         color={color}
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
+        className="_icon"
         {...props}
       >
         <path
@@ -25,3 +26,5 @@ export const BanIcon = React.forwardRef<SVGSVGElement, IconProps>(
     );
   }
 );
+
+BanIcon.toString = () => '._icon';

@@ -12,6 +12,7 @@ export const VerticalSwapIcon = React.forwardRef<SVGSVGElement, IconProps>(
         color={color}
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
+        className="_icon"
         {...props}
       >
         <path
@@ -31,3 +32,5 @@ export const VerticalSwapIcon = React.forwardRef<SVGSVGElement, IconProps>(
     );
   }
 );
+
+VerticalSwapIcon.toString = () => '._icon';

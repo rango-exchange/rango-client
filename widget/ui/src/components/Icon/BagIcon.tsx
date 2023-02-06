@@ -12,6 +12,7 @@ export const BagIcon = React.forwardRef<SVGSVGElement, IconProps>(
         color={color}
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
+        className="_icon"
         {...props}
       >
         <g clipPath="url(#a)" strokeWidth={1.5}>
@@ -32,3 +33,5 @@ export const BagIcon = React.forwardRef<SVGSVGElement, IconProps>(
     );
   }
 );
+
+BagIcon.toString = () => '._icon';
