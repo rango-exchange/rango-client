@@ -387,7 +387,13 @@ class Queue {
   /**
    * Change the `status` of active task and queue to BLOCKED, then trigger an event.
    */
-  public block({ reason }: { reason: Record<string, unknown> }) {
+  public block({
+    reason,
+    silent = false,
+  }: {
+    reason: Record<string, unknown>;
+    silent?: boolean;
+  }) {
     const currentActiveTask = this.getActiveTask();
 
     if (!currentActiveTask) {
@@ -399,11 +405,14 @@ class Queue {
       blockedFor: reason,
     });
     this.updateQueueStatus(Status.BLOCKED);
-    this.events.onBlock({
-      action: currentActiveTask.task.action,
-      id: currentActiveTask.task.id,
-      reason,
-    });
+
+    if (!silent) {
+      this.events.onBlock({
+        action: currentActiveTask.task.action,
+        id: currentActiveTask.task.id,
+        reason,
+      });
+    }
   }
 
   /**

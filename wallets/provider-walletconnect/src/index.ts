@@ -166,7 +166,7 @@ export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
   const evms = evmBlockchains(allBlockChains);
   return {
     name: 'WalletConnect',
-    img: 'https://app.rango.exchange/wallets/walletconnect.svg',
+    img: 'https://raw.githubusercontent.com/rango-exchange/rango-types/main/assets/icons/wallets/walletconnect.svg',
     installLink: '',
     color: '#b2dbff',
     supportedChains: evms,
