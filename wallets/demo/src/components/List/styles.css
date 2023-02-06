@@ -12,7 +12,7 @@
   justify-content: space-between;
   border-left: 1px solid #ebebeb;
   border-top: 1px solid #ebebeb;
-  height: 465px;
+  height: 500px;
 }
 .title {
   display: flex;
@@ -21,30 +21,15 @@ h3 {
   margin-top: 0;
   margin-bottom: 0;
 }
-button {
-  width: 100%;
-  border-radius: 8px;
-  margin-top: 12px;
-  padding: 12px 0px;
-  border: 0;
-  background: #5fa425;
-  color: #ffffff;
-  font-weight: 700;
-}
-button:disabled,
-button[disabled] {
-  background-color: #cccccc;
-  color: #666666;
-}
 .wallet_status::before {
   content: '';
   display: inline-block;
-  width: 18px;
-  height: 18px;
+  width: 20px;
+  height: 20px;
   -moz-border-radius: 9px;
   box-shadow: 4px 4px 3px #ebeaea;
   -webkit-border-radius: 9px;
-  border-radius: 9px;
+  border-radius: 10px;
 }
 .connected::before {
   background-color: #3bb143;
@@ -92,4 +77,13 @@ img {
 }
 h4 {
   margin-bottom: 8px;
+}
+.info {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.error-msg {
+  color: #ff0000;
+  font-size: 16px;
 }
