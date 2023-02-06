@@ -6,13 +6,15 @@
   box-shadow: 1px 1px 12px #ebebeb;
   border-radius: 8px;
   padding: 12px;
-  margin: 20px;
+  margin: 12px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   border-left: 1px solid #ebebeb;
   border-top: 1px solid #ebebeb;
   height: 465px;
+  width: 406px;
+  background-color: #ffffff;
 }
 .title {
   display: flex;
@@ -47,12 +49,12 @@ select {
 }
 .account_box {
   max-height: 150px;
-  overflow-y: auto;
-  overflow-x: hidden;
+  overflow: auto;
 }
 .account {
   border-bottom: 1px dashed grey;
   padding: 12px 0;
+  font-size: 14px;
 }
 .title {
   display: flex;
@@ -84,6 +86,7 @@ h4 {
 .error-msg {
   color: #ff0000;
   font-size: 16px;
+  text-align: center;
 }
 
 
@@ -95,4 +98,10 @@ h4 {
 .body img{
   margin: 10px auto;
   border-radius: 50%;
+}
+
+
+.flex{
+  display: flex;
+  
 }
