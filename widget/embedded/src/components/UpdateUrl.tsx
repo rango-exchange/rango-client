@@ -3,7 +3,7 @@ import { useEffect, useRef } from 'react';
 import { useLocation, useSearchParams } from 'react-router-dom';
 import { useBestRouteStore } from '../store/bestRoute';
 import { useMetaStore } from '../store/meta';
-import { SearchParams } from './searchParams';
+import { SearchParams } from '../constants/searchParams';
 
 function searchParamsToToken(tokens: Token[], searchParams: string | null): Token | null {
   return (
