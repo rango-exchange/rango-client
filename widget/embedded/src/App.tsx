@@ -56,7 +56,7 @@ export function App() {
   };
 
   return (
-    <div className={getTheme()}>
+    <div id="pageContainer" className={getTheme()}>
       <SwapContainer onConnectWallet={() => alert('connect your wallet:')}>
         <AppRouter>
           <AppRoutes />
