@@ -1,6 +1,6 @@
 import React from 'react';
 import { styled } from '../../theme';
-import { WalletInfo, WalletType } from '../../types/wallet';
+import { WalletInfo } from '../../types/wallet';
 import { Modal } from '../Modal';
 import { WalletType } from '@rangodev/wallets-shared';
 import { Wallet } from '../Wallet';
