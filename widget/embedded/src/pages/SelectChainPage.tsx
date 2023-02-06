@@ -3,7 +3,7 @@ import { BlockchainSelector } from '@rangodev/ui';
 import { useBestRouteStore } from '../store/bestRoute';
 import { useMetaStore } from '../store/meta';
 import { useNavigate } from 'react-router-dom';
-import { navigationRoutes } from '../router/navigationRoutes';
+import { navigationRoutes } from '../constants/navigationRoutes';
 
 interface PropTypes {
   type: 'from' | 'to';

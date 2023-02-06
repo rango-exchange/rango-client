@@ -12,6 +12,7 @@ export const AngleUpIcon = React.forwardRef<SVGSVGElement, IconProps>(
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 24 24"
         color={color}
+        className="_icon"
         {...props}
       >
         <path
@@ -25,3 +26,5 @@ export const AngleUpIcon = React.forwardRef<SVGSVGElement, IconProps>(
     );
   }
 );
+
+AngleUpIcon.toString = () => '._icon';

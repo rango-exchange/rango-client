@@ -12,6 +12,7 @@ export const RetryIcon = React.forwardRef<SVGSVGElement, IconProps>(
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 24 24"
         color={color}
+        className="_icon"
         {...props}
         ref={forwardedRef}
       >
@@ -25,3 +26,5 @@ export const RetryIcon = React.forwardRef<SVGSVGElement, IconProps>(
     );
   }
 );
+
+RetryIcon.toString = () => '._icon';

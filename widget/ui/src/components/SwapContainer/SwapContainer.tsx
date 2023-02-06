@@ -7,6 +7,8 @@ import { Typography } from '../Typography';
 const MainContainer = styled('div', {
   borderRadius: '$10',
   maxWidth: '512px',
+  minWidth: '375px',
+  width: '100%',
   boxShadow: '$s',
   backgroundColor: '$background',
   display: 'flex',
@@ -16,7 +18,6 @@ const MainContainer = styled('div', {
 });
 
 const ContentContainer = styled('div', {
-  marginTop: '$8',
   width: '100%',
   maxHeight: '600px',
 });

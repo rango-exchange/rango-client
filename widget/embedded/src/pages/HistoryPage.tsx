@@ -781,5 +781,12 @@ export const pendingSwap: PendingSwap[] = [
 
 export function HistoryPage() {
   const navigate = useNavigate();
-  return <History list={pendingSwap} onBack={navigate.bind(null, navigationRoutes.home)} />;
+  return (
+    <History
+      list={pendingSwap}
+      onBack={() => {
+        navigate(-1);
+      }}
+    />
+  );
 }

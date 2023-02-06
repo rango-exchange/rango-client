@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { IconProps } from './types';
 import { SvgWithStrokeColor } from './common';
+import { AngleDownIcon } from './AngleDownIcon';
 
 export const AngleLeftIcon = React.forwardRef<SVGSVGElement, IconProps>(
   ({ size = 16, color, ...props }) => {
@@ -12,6 +13,7 @@ export const AngleLeftIcon = React.forwardRef<SVGSVGElement, IconProps>(
         viewBox="0 0 24 24"
         color={color}
         xmlns="http://www.w3.org/2000/svg"
+        className="_icon"
         {...props}
       >
         <path
@@ -25,3 +27,5 @@ export const AngleLeftIcon = React.forwardRef<SVGSVGElement, IconProps>(
     );
   }
 );
+
+AngleDownIcon.toString = () => '._icon';

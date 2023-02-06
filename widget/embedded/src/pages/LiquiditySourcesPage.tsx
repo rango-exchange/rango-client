@@ -39,7 +39,9 @@ export function LiquiditySourcePage() {
     <LiquiditySourcesSelector
       list={uniqueSwappersGroups}
       onChange={(liquiditySource) => toggleLiquiditySource(liquiditySource.title)}
-      onBack={navigate.bind(null, navigationRoutes.settings)}
+      onBack={() => {
+        navigate(-1);
+      }}
     />
   );
 }

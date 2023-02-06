@@ -2,6 +2,7 @@ import React, {
   createContext,
   PropsWithChildren,
   useContext,
+  useEffect,
   useLayoutEffect,
   useMemo,
   useRef,
@@ -15,20 +16,20 @@ import {
 } from '@rangodev/queue-manager-core';
 import { ManagerContext } from './types';
 
-const ManagerCtx = createContext<{ manager: ManagerContext; count: number }>({
+const ManagerCtx = createContext<{ manager: ManagerContext }>({
   manager: undefined,
-  count: 0,
 });
 
 interface PropTypes {
   queuesDefs: QueueDef<any>[];
   context: Context;
   onPersistedDataLoaded?: Events['onPersistedDataLoaded'];
+  isPaused?: boolean;
 }
 
 function Provider(props: PropsWithChildren<PropTypes>) {
   // TODO: this is not a proper way but i don't want to change the context interface atm.
-  const [count, forceRender] = useState(0);
+  const [, forceRender] = useState({});
   const context = useRef(props.context);
 
   const manager = useMemo<Manager>(() => {
@@ -36,29 +37,33 @@ function Provider(props: PropsWithChildren<PropTypes>) {
       queuesDefs: props.queuesDefs,
       events: {
         onStorageUpdate: () => {
-          forceRender((prev) => prev + 1);
+          forceRender({});
         },
         onCreateQueue: () => {
-          forceRender((prev) => prev + 1);
+          forceRender({});
         },
         onCreateTask: () => {
-          forceRender((prev) => prev + 1);
+          forceRender({});
         },
         onUpdateQueue: () => {
-          forceRender((prev) => prev + 1);
+          forceRender({});
         },
         onUpdateTask: () => {
-          forceRender((prev) => prev + 1);
+          forceRender({});
         },
         onPersistedDataLoaded: (manager) => {
-          forceRender((prev) => prev + 1);
+          forceRender({});
 
           if (props.onPersistedDataLoaded) {
             props.onPersistedDataLoaded(manager);
           }
         },
+        onTaskBlock: () => {
+          forceRender({});
+        },
       },
       context: context || {},
+      isPaused: props.isPaused,
     });
   }, []);
 
@@ -66,8 +71,19 @@ function Provider(props: PropsWithChildren<PropTypes>) {
     context.current = props.context;
   }, [props.context]);
 
+  useEffect(() => {
+    if (typeof props.isPaused !== 'undefined') {
+      if (props.isPaused) {
+        manager.pause();
+      } else {
+        manager.run();
+      }
+      forceRender({});
+    }
+  }, [props.isPaused]);
+
   return (
-    <ManagerCtx.Provider value={{ manager, count }}>
+    <ManagerCtx.Provider value={{ manager }}>
       {props.children}
     </ManagerCtx.Provider>
   );
