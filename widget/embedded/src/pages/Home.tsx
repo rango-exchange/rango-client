@@ -6,9 +6,9 @@ import { useBestRouteStore } from '../store/bestRoute';
 import { BottomLogo } from '../components/Home/BottomLogo';
 import { useInRouterContext } from 'react-router-dom';
 import { SwithFromAndTo } from '../router/SwitchFromAndTo';
+import { Footer } from '../components/Home/Footer';
 
 const Container = styled('div', {
-  padding: '$32 $16 $16 $16',
   display: 'flex',
   flexDirection: 'column',
   justifyContent: 'center',
@@ -46,10 +46,12 @@ export function Home() {
         {isRouterInContext && <SwithFromAndTo count={count} />}
       </Button>
       <TokenInfo type="To" chain={toChain} token={toToken} />
-      <Button type="primary" align="grow" size="large">
-        Connect Wallet
-      </Button>
-      <BottomLogo />
+      <Footer>
+        <Button type="primary" align="grow" size="large">
+          Connect Wallet
+        </Button>
+        <BottomLogo />
+      </Footer>
     </Container>
   );
 }
