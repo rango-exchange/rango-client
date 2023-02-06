@@ -5,7 +5,9 @@ import { AppRoutes } from './components/AppRoutes';
 import { useMetaStore } from './store/meta';
 import './app.css';
 import { useSettingsStore } from './store/settings';
-
+import { Provider, WalletProvider } from '@rangodev/wallets-core';
+import { allProviders } from '@rangodev/provider-all';
+const providers = allProviders();
 interface Token {
   name: string;
   contractAddress?: string;
@@ -27,9 +29,9 @@ export type WidgetProps = {
 
 export function App() {
   const fetchMeta = useMetaStore((state) => state.fetchMeta);
+  const { blockchains } = useMetaStore((state) => state.meta);
   const { theme } = useSettingsStore();
   const [OSTheme, setOSTheme] = useState(lightTheme);
-
   useEffect(() => {
     (async () => {
       await fetchMeta();
@@ -56,12 +58,14 @@ export function App() {
   };
 
   return (
-    <div id="pageContainer" className={getTheme()}>
-      <SwapContainer onConnectWallet={() => alert('connect your wallet:')}>
-        <AppRouter>
-          <AppRoutes />
-        </AppRouter>
-      </SwapContainer>
-    </div>
+    <Provider allBlockChains={blockchains as any} providers={providers}>
+      <div id="pageContainer" className={getTheme()}>
+        <SwapContainer onConnectWallet={() => alert('connect your wallet:')}>
+          <AppRouter>
+            <AppRoutes />
+          </AppRouter>
+        </SwapContainer>
+      </div>
+    </Provider>
   );
 }

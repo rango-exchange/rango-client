@@ -16,14 +16,14 @@ export const State = ({
   walletState,
   installLink,
 }: {
-  walletState: WalletState | undefined;
-  installLink: string | undefined;
+  walletState: WalletState;
+  installLink: string;
 }) => (
   <Fragment>
     {walletState !== WalletState.DISCONNECTED && (
       <StateIconContainer>
         {walletState === WalletState.NOT_INSTALLED && (
-          <a href={installLink}>
+          <a href={installLink} target="_blank">
             <DownloadIcon size={24} color="success" />
           </a>
         )}

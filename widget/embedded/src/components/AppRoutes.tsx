@@ -7,6 +7,7 @@ import { LiquiditySourcePage } from '../pages/LiquiditySourcesPage';
 import { SelectChainPage } from '../pages/SelectChainPage';
 import { SelectTokenPage } from '../pages/SelectTokenPage';
 import { SettingsPage } from '../pages/SettingsPage';
+import { WalletsPage } from '../pages/WalletsPage';
 
 export const AppRoutes = () =>
   useRoutes([
@@ -21,4 +22,5 @@ export const AppRoutes = () =>
       element: <LiquiditySourcePage />,
     },
     { path: navigationRoutes.history, element: <HistoryPage /> },
+    { path: navigationRoutes.wallets, element: <WalletsPage /> },
   ]);
