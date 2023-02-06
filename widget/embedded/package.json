@@ -10,6 +10,8 @@
   },
   "dependencies": {
     "@rangodev/ui": "^0.1.10-next.29",
+    "@rangodev/provider-all": "^0.1.11-next.28",
+    "@rangodev/wallets-core": "^0.1.11-next.28",
     "bignumber.js": "^9.1.1",
     "immer": "^9.0.19",
     "parcel": "^2.8.0",
