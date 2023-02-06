@@ -5,7 +5,7 @@
   "source": "public/index.html",
   "browserslist": "> 0.5%, last 2 versions, not dead",
   "scripts": {
-    "start": "parcel serve -p 3000",
+    "dev": "parcel serve -p 3000",
     "build": "parcel build"
   },
   "dependencies": {
