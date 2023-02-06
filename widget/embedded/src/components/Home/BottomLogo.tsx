@@ -7,7 +7,7 @@ const Container = styled('div', {
   width: '100%',
   justifyContent: 'end',
   alignItems: 'center',
-  marginTop: '$24',
+  paddingTop: '$16',
 });
 
 const Logo = styled('svg', {

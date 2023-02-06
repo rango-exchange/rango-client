@@ -7,7 +7,7 @@ export const HeaderContainer = styled('div', {
   justifyContent: 'space-between',
   alignItems: 'center',
   width: '100%',
-  marginBottom: '$24',
+  padding: '$16 $8',
 });
 
 export function Header() {

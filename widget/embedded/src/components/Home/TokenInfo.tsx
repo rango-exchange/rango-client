@@ -11,27 +11,34 @@ interface PropTypes {
   token: Token | null;
 }
 
+const Box = styled('div', {
+  padding: '$16',
+  display: 'flex',
+  flexDirection: 'column',
+  width: '100%',
+});
+
 const Container = styled('div', {
   boxSizing: 'border-box',
   backgroundColor: '$neutrals300',
-  padding: '$24 $8 $8 $8',
   borderRadius: '$5',
-  display: 'flex',
-  margin: '$16 0',
-  position: 'relative',
-  width: '100%',
+  padding: '$8 0',
+
+  '.form': {
+    display: 'flex',
+    width: '100%',
+    padding: '$8 $16',
+  },
 });
 
 const StyledImage = styled('img', {
   width: '24px',
 });
 
-const MaxAmount = styled('div', {
+const Options = styled('div', {
   display: 'flex',
-  position: 'absolute',
-  right: '$16',
-  top: '$6',
-  cursor: 'pointer',
+  justifyContent: 'flex-end',
+  padding: '0 $8',
 });
 
 const ImagePlaceholder = styled('span', {
@@ -63,82 +70,95 @@ export function TokenInfo(props: PropTypes) {
   const { fromChain, toChain } = useBestRouteStore();
   const navigate = useNavigate();
   return (
-    <Container>
-      <div style={{ position: 'absolute', bottom: '100%' }}>
+    <Box>
+      <div>
         <Typography variant="body2">{type}</Typography>
       </div>
-      {type === 'From' && (
-        <MaxAmount onClick={() => {}}>
-          <Typography variant="body2">Max:&nbsp;</Typography>
-          <TokenBalance>
-            <Typography variant="body1">1234</Typography>
-          </TokenBalance>
-        </MaxAmount>
-      )}
-      <Button
-        onClick={() => {
-          navigate(`/${type.toLowerCase()}-chain`);
-        }}
-        variant="outlined"
-        disabled={loadingStatus === 'failed'}
-        loading={loadingStatus === 'loading'}
-        prefix={
-          loadingStatus === 'success' && chain ? (
-            <StyledImage src={chain.logo} />
+      <Container>
+        {type === 'From' && (
+          <Options>
+            <div className="balance" onClick={() => {}}>
+              <Button variant="ghost" size="small">
+                <Typography variant="body2">Max: 123 USD</Typography>
+              </Button>
+              {/* <Typography variant="body2">Max:&nbsp;</Typography>
+              <TokenBalance>
+                <Typography variant="body1">1234</Typography>
+              </TokenBalance> */}
+            </div>
+          </Options>
+        )}
+        <div className="form">
+          <Button
+            onClick={() => {
+              navigate(`/${type.toLowerCase()}-chain`);
+            }}
+            variant="outlined"
+            disabled={loadingStatus === 'failed'}
+            loading={loadingStatus === 'loading'}
+            prefix={
+              loadingStatus === 'success' && chain ? (
+                <StyledImage src={chain.logo} />
+              ) : (
+                <ImagePlaceholder />
+              )
+            }
+            suffix={<AngleDownIcon />}
+            align="start"
+            size="large"
+            style={{ marginRight: '.5rem' }}>
+            {loadingStatus === 'success' && chain ? chain.name : 'Chain'}
+          </Button>
+          <Button
+            onClick={() => {
+              navigate(`/${type.toLowerCase()}-token`);
+            }}
+            variant="outlined"
+            disabled={
+              loadingStatus === 'failed' ||
+              (type === 'From' && !fromChain) ||
+              (type === 'To' && !toChain)
+            }
+            loading={loadingStatus === 'loading'}
+            prefix={
+              loadingStatus === 'success' && token ? (
+                <StyledImage src={token.image} />
+              ) : (
+                <ImagePlaceholder />
+              )
+            }
+            suffix={<AngleDownIcon />}
+            size="large"
+            align="start"
+            style={{ marginRight: '.5rem' }}>
+            {loadingStatus === 'success' && token ? token.symbol : 'Token'}
+          </Button>
+          {type === 'From' ? (
+            <TextField
+              type="number"
+              size="large"
+              disabled={loadingStatus != 'success'}
+              style={{
+                width: '70%',
+                position: 'relative',
+                backgroundColor: '$background !important',
+              }}
+              suffix={
+                <span style={{ position: 'absolute', right: '4px', bottom: '2px' }}>
+                  <Typography variant="caption">$0.0</Typography>
+                </span>
+              }
+            />
           ) : (
-            <ImagePlaceholder />
-          )
-        }
-        suffix={<AngleDownIcon />}
-        align="start"
-        size="large"
-        style={{ marginRight: '.5rem' }}>
-        {loadingStatus === 'success' && chain ? chain.name : 'Chain'}
-      </Button>
-      <Button
-        onClick={() => {
-          navigate(`/${type.toLowerCase()}-token`);
-        }}
-        variant="outlined"
-        disabled={
-          loadingStatus === 'failed' ||
-          (type === 'From' && !fromChain) ||
-          (type === 'To' && !toChain)
-        }
-        loading={loadingStatus === 'loading'}
-        prefix={
-          loadingStatus === 'success' && token ? (
-            <StyledImage src={token.image} />
-          ) : (
-            <ImagePlaceholder />
-          )
-        }
-        suffix={<AngleDownIcon />}
-        size="large"
-        align="start"
-        style={{ marginRight: '.5rem' }}>
-        {loadingStatus === 'success' && token ? token.symbol : 'Token'}
-      </Button>
-      {type === 'From' ? (
-        <TextField
-          type="number"
-          size="large"
-          disabled={loadingStatus != 'success'}
-          style={{ width: '70%', position: 'relative', backgroundColor: '$background !important' }}
-          suffix={
-            <span style={{ position: 'absolute', right: '4px', bottom: '2px' }}>
-              <Typography variant="caption">$0.0</Typography>
-            </span>
-          }
-        />
-      ) : (
-        <OutputContainer>
-          <Typography variant="body1">{'111'}</Typography>
-          <span style={{ position: 'absolute', right: '4px', bottom: '2px' }}>
-            <Typography variant="caption">$0.0</Typography>
-          </span>
-        </OutputContainer>
-      )}
-    </Container>
+            <OutputContainer>
+              <Typography variant="body1">{'111'}</Typography>
+              <span style={{ position: 'absolute', right: '4px', bottom: '2px' }}>
+                <Typography variant="caption">$0.0</Typography>
+              </span>
+            </OutputContainer>
+          )}
+        </div>
+      </Container>
+    </Box>
   );
 }
