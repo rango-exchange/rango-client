@@ -1,6 +1,6 @@
 {
   "name": "@rangodev/widget-embedded",
-  "version": "0.1.10-next.28",
+  "version": "0.1.10-next.29",
   "license": "MIT",
   "source": "public/index.html",
   "browserslist": "> 0.5%, last 2 versions, not dead",
@@ -9,7 +9,7 @@
     "build": "parcel build"
   },
   "dependencies": {
-    "@rangodev/ui": "^0.1.10-next.28",
+    "@rangodev/ui": "^0.1.10-next.29",
     "bignumber.js": "^9.1.1",
     "immer": "^9.0.19",
     "parcel": "^2.8.0",
