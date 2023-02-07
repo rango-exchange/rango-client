@@ -41,7 +41,6 @@ function Item({ type }: { type: WalletType }) {
     }
   };
   const canSwitchNetwork = network !== Network.Unknown && canSwitchNetworkTo(type, network);
-  if (type === WalletType.KEPLR) console.log(evmBasedChains.length);
   const handleChangeNetwork = async () => {
     if (canSwitchNetwork) {
       try {
