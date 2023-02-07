@@ -13,6 +13,7 @@ import { httpService } from './services/httpService';
 import { Layout } from './components/Layout';
 import { globalStyles } from './globalStyles';
 import { useTheme } from './hooks/useTheme';
+import QueueManager from './QueueManager';
 
 const providers = allProviders();
 interface Token {
@@ -77,11 +78,13 @@ export function App() {
   return (
     <Provider allBlockChains={blockchains} providers={providers} onUpdateState={onUpdateState}>
       <div id="pageContainer" className={activeTheme}>
-        <SwapContainer>
-          <AppRouter>
-            <Layout />
-          </AppRouter>
-        </SwapContainer>
+        <QueueManager>
+          <SwapContainer>
+            <AppRouter>
+              <Layout />
+            </AppRouter>
+          </SwapContainer>
+        </QueueManager>
       </div>
     </Provider>
   );
