@@ -16237,7 +16237,7 @@ rango-sdk@^0.0.10:
     rango-types "^0.1.1"
     uuid "^9.0.0"
 
-rango-sdk@^0.1.1:
+rango-sdk@^0.1.1, rango-sdk@^0.1.2:
   version "0.1.2"
   resolved "https://registry.yarnpkg.com/rango-sdk/-/rango-sdk-0.1.2.tgz#81bf233b16ec0658191935d9104997f9d1f0be0b"
   integrity sha512-FPjZHW0NXShMMUvMmmFPtPSvYop9AisUiB1yZajwvSbp6Q2ulDGFOrrl5yQp+GXJqcbDzWryTPHb0bY9f2FgXQ==
@@ -16248,11 +16248,6 @@ rango-sdk@^0.1.1:
     uuid "^9.0.0"
 
 rango-types@^0.1.1, rango-types@^0.1.5:
-  version "0.1.5"
-  resolved "https://registry.yarnpkg.com/rango-types/-/rango-types-0.1.5.tgz#0abd972ecc4e1c847104d11720292af2eec7e62c"
-  integrity sha512-tEacrWTgC3M60MeJV/hp4ShyVVwOCLN5Cwnd18apiJcGca0UAXsXiRulGLQYVkv6UddWpK/pEv8oYyPnxoTM7g==
-
-rango-types@^0.1.5:
   version "0.1.5"
   resolved "https://registry.yarnpkg.com/rango-types/-/rango-types-0.1.5.tgz#0abd972ecc4e1c847104d11720292af2eec7e62c"
   integrity sha512-tEacrWTgC3M60MeJV/hp4ShyVVwOCLN5Cwnd18apiJcGca0UAXsXiRulGLQYVkv6UddWpK/pEv8oYyPnxoTM7g==
