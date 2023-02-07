@@ -152,9 +152,8 @@ function Item({ type }: { type: WalletType }) {
             </option>
           ))}
         </select>
-        <div className="flex">
+        <div className="flex mb-5">
           <Button
-            style={{ marginBottom: 12 }}
             fullWidth
             type="primary"
             onClick={handleConnectWallet}>
