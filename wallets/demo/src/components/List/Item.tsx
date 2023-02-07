@@ -2,13 +2,20 @@ import React, { useState } from 'react';
 import { useWallets } from '@rangodev/wallets-core';
 import { Network, WalletType } from '@rangodev/wallets-shared';
 import './styles.css';
-import { Button, InfoCircleIcon, Spacer, SwapWalletIcon, Tooltip, Typography } from '@rangodev/ui';
+import {
+  Button,
+  HorizontalSwapIcon,
+  InfoCircleIcon,
+  SignatureIcon,
+  Spacer,
+  Tooltip,
+  Typography,
+} from '@rangodev/ui';
 import {
   evmBasedChainsSelector,
   prepareAccounts,
   walletAndSupportedChainsNames,
 } from '../../helper';
-import SignatureIcon from '../signature';
 
 function Item({ type }: { type: WalletType }) {
   const { connect, state, disconnect, canSwitchNetworkTo, getWalletInfo, getSigners } =
@@ -85,7 +92,7 @@ function Item({ type }: { type: WalletType }) {
           <div className="info">
             {walletState.connected && !canSwitchNetwork && (
               <>
-                <Tooltip content="This wallet doesn't support network changing" color="gray">
+                <Tooltip content="Only default network is supported for this wallet." color="gray">
                   <InfoCircleIcon size={24} color="success" />
                 </Tooltip>
                 <Spacer size={12} />
@@ -113,7 +120,7 @@ function Item({ type }: { type: WalletType }) {
         ) : (
           <div className="body">
             <img src={info.img} alt={info.name} width={100} />
-            <h2 className='my-12'>{info.name}</h2>
+            <h2 className="my-12">{info.name}</h2>
             <Typography variant="body2">
               {!walletState.installed
                 ? 'The wallet is not installed'
@@ -167,7 +174,7 @@ function Item({ type }: { type: WalletType }) {
             fullWidth
             disabled={!walletState.connected}
             type="primary"
-            suffix={<SignatureIcon width={24} height={24} />}
+            suffix={<SignatureIcon size={24} color="white" />}
             onClick={() =>
               evmBasedChains.length
                 ? handleSigner()
@@ -179,9 +186,11 @@ function Item({ type }: { type: WalletType }) {
           <Button
             fullWidth
             disabled={!walletState.connected}
-            suffix={<SwapWalletIcon size={24} color={'white'} />}
+            suffix={<HorizontalSwapIcon size={24} color="white" />}
             type="primary"
-            onClick={() => alert("Executing custom transactions is not implemented for the demo yet.")}>
+            onClick={() =>
+              alert('Executing custom transactions is not implemented for the demo yet.')
+            }>
             Swap
           </Button>
         </div>
