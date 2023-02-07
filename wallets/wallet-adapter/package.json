@@ -1,8 +1,8 @@
 {
-  "name": "@rangodev/queue-manager-core",
-  "version": "0.1.10-next.31",
+  "name": "@rangodev/wallet-adapter",
+  "version": "0.1.11-next.21",
   "license": "MIT",
-  "module": "dist/queue-manager-core.esm.js",
+  "module": "dist/wallet-adapter.esm.js",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
   "files": [
@@ -13,12 +13,15 @@
     "node": ">=10"
   },
   "scripts": {
-    "dev": "tsdx watch",
+    "start": "tsdx watch",
     "build": "tsdx build",
-    "test": "tsdx test",
+    "test": "tsdx test --passWithNoTests",
     "lint": "tsdx lint",
     "size": "size-limit",
     "analyze": "size-limit --why"
+  },
+  "peerDependencies": {
+    "react": ">=16"
   },
   "husky": {
     "hooks": {
@@ -33,23 +36,22 @@
   },
   "size-limit": [
     {
-      "path": "dist/queue-manager-core.cjs.production.min.js",
+      "path": "dist/provider-all.cjs.production.min.js",
       "limit": "10 KB"
     },
     {
-      "path": "dist/queue-manager-core.esm.js",
+      "path": "dist/provider-all.esm.js",
       "limit": "10 KB"
     }
   ],
-  "devDependencies": {
-    "@types/uuid": "^8.3.4"
-  },
   "dependencies": {
-    "idb": "^7.1.1",
-    "uuid": "^9.0.0"
+    "@rangodev/provider-all": "^0.1.11-next.31",
+    "@rangodev/ui": "^0.1.10-next.31",
+    "@rangodev/wallets-core": "^0.1.11-next.31",
+    "@rangodev/wallets-shared": "^0.1.11-next.31"
   },
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "dd92a217bf0e45fa27ea9416bed5e575a6e41bcc"
+  "gitHead": "6a1dd3a10333466b93bb13c66dfd148df0059070"
 }
