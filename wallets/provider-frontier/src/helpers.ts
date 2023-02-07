@@ -2,6 +2,8 @@ import { Network, ProviderConnectResult } from '@rangodev/wallets-shared';
 
 export function frontier() {
   const { frontier } = window;
+  if (!frontier) return null;
+
   const instances = new Map();
   if (frontier?.ethereum) instances.set(Network.ETHEREUM, frontier?.ethereum);
   if (frontier?.solana) instances.set(Network.SOLANA, frontier?.solana);
