@@ -41,3 +41,4 @@ export { BagIcon } from './BagIcon';
 
 export { TimeIcon } from './TimeIcon';
 export { CloseIcon } from './CloseIcon';
+export { SignatureIcon } from './SignatureIcon';
