@@ -8,4 +8,6 @@ export const navigationRoutes = {
   liquiditySources: 'settings/liquidity-sources',
   history: 'history',
   wallets: 'wallets',
+  confirmSwap: 'confirm-swap',
+  confirmWallets: 'confirm-wallets',
 };
