@@ -1,0 +1,24 @@
+body,
+html {
+  background-color: #f3f3f3;
+}
+
+.ml-12 {
+  margin-left: 12;
+}
+
+.error {
+  color: #ff0000;
+  font-size: 18px;
+}
+.warning {
+  font-size: 18px;
+  color: #f5a623;
+  margin-bottom: 0;
+  font-weight: 700;
+}
+
+.flex {
+  display: flex;
+  align-items: center;
+}
