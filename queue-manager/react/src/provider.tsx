@@ -89,7 +89,7 @@ function Provider(props: PropsWithChildren<PropTypes>) {
   );
 }
 
-export function useManager(): { manager: ManagerContext; count: number } {
+export function useManager(): { manager: ManagerContext } {
   const context = useContext(ManagerCtx);
   if (!context)
     throw Error('useManager can only be used within the Provider component');
