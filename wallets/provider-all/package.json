@@ -53,6 +53,7 @@
     "@rangodev/provider-coinbase": "^0.1.11-next.33",
     "@rangodev/provider-cosmostation": "^0.1.11-next.33",
     "@rangodev/provider-exodus": "^0.1.11-next.33",
+    "@rangodev/provider-frontier": "^0.1.11-next.24",
     "@rangodev/provider-keplr": "^0.1.11-next.33",
     "@rangodev/provider-kucoin-wallet": "^0.1.11-next.33",
     "@rangodev/provider-math-wallet": "^0.1.11-next.33",
