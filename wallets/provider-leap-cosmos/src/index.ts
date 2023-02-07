@@ -9,23 +9,24 @@ import {
   WalletInfo,
   cosmosBlockchains,
 } from '@rangodev/wallets-shared';
-import { leap_instance, getSupportedChains } from './helpers';
+import { leap_cosmos_instance, getSupportedChains } from './helpers';
 import signer from './signer';
 
-const WALLET = WalletType.LEAP;
+const WALLET = WalletType.LEAP_COSMOS;
 
 export const config = {
   type: WALLET,
   defaultNetwork: Network.COSMOS,
 };
 
-export const getInstance = leap_instance;
+export const getInstance = leap_cosmos_instance;
 export const connect: Connect = async ({ instance, network, meta }) => {
   const supportedChains = await getSupportedChains(instance);
   const leapBlockchainMeta = meta.filter(
-    (block) =>
-      supportedChains.includes(block.name.toLowerCase()) ||
-      block.name === network
+    (chain) =>
+      chain.enabled &&
+      (supportedChains.includes(chain.name.toLowerCase()) ||
+        chain.name === network)
   );
   const results = await getCosmosAccounts({
     instance,
@@ -49,8 +50,8 @@ export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
 ) => {
   const cosmos = cosmosBlockchains(allBlockChains);
   return {
-    name: 'Leap',
-    img: 'https://raw.githubusercontent.com/rango-exchange/rango-types/main/assets/icons/wallets/leap.png',
+    name: 'Leap-Cosmos',
+    img: 'https://raw.githubusercontent.com/rango-exchange/rango-types/main/assets/icons/wallets/leap-cosmos.png',
     installLink:
       'https://chrome.google.com/webstore/detail/leap-cosmos-wallet/fcfcfllfndlomdhbehjjcoimbgofdncg',
     color: 'black',

@@ -6,7 +6,7 @@ import {
 
 export default function getSigners(provider: any): WalletSigners {
   return defaultSigners({
-    walletType: WalletType.LEAP,
+    walletType: WalletType.LEAP_COSMOS,
     provider,
     supportCosmos: true,
   });

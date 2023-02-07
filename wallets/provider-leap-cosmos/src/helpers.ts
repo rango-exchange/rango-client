@@ -1,4 +1,4 @@
-export function leap_instance() {
+export function leap_cosmos_instance() {
   const { leap } = window;
 
   if (!!leap) return leap;

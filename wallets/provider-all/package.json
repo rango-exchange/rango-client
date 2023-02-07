@@ -55,7 +55,7 @@
     "@rangodev/provider-exodus": "^0.1.11-next.29",
     "@rangodev/provider-keplr": "^0.1.11-next.29",
     "@rangodev/provider-kucoin-wallet": "^0.1.11-next.29",
-    "@rangodev/provider-leap": "^0.1.11-next.26",
+    "@rangodev/provider-leap-cosmos": "^0.1.11-next.26",
     "@rangodev/provider-math-wallet": "^0.1.11-next.29",
     "@rangodev/provider-metamask": "^0.1.11-next.29",
     "@rangodev/provider-okx": "^0.1.11-next.29",
