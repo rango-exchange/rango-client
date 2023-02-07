@@ -1,6 +1,6 @@
 import React, { PropsWithChildren } from 'react';
 import { Button } from '../../components/Button';
-import { AddWallet } from '../../components/Icon';
+import { AddWalletIcon } from '../../components/Icon';
 import { SecondaryPage } from '../../components/SecondaryPage/SecondaryPage';
 import { SelectableWalletList } from '../../components/SelectableWalletList';
 import { Spacer } from '../../components/Spacer';
@@ -18,7 +18,7 @@ const Footer = styled('div', {
 
 export interface PropTypes {
   swap: BestRouteType;
-  onBack?: () => void;
+  onBack: () => void;
   onAddWallet?: (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => void;
@@ -51,7 +51,7 @@ export function ConfirmWallets({
             <Button
               variant="contained"
               type="primary"
-              prefix={<AddWallet size={24} color="white" />}
+              prefix={<AddWalletIcon size={24} color="white" />}
               onClick={onAddWallet}
             />
           </Tooltip>

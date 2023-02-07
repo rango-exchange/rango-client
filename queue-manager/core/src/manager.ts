@@ -203,7 +203,7 @@ class Manager {
         storage: q.storage || {},
       });
 
-      if (q.status === Status.RUNNING) {
+      if (q.status === Status.RUNNING && this.shouldExecute()) {
         console.log('[INIT] Try to resume');
         list.resume({
           context: this.getContext(),

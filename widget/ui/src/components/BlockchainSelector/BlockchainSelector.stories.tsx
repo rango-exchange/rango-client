@@ -15,11 +15,11 @@ export default {
 } as ComponentMeta<typeof BlockchainSelector>;
 
 export const Main = (args: PropTypes) => (
-  <SwapContainer>
+  <SwapContainer onConnectWallet={() => {}}>
     <BlockchainSelector
       {...args}
-      list={blockchainMeta}
-      selected={blockchainMeta[0]}
+      list={blockchainMeta as any}
+      selected={blockchainMeta[0] as any}
     />
   </SwapContainer>
 );
