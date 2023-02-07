@@ -1,0 +1,57 @@
+{
+  "name": "@rangodev/wallet-adapter",
+  "version": "0.1.11-next.22",
+  "license": "MIT",
+  "module": "dist/wallet-adapter.esm.js",
+  "main": "dist/index.js",
+  "typings": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "src"
+  ],
+  "engines": {
+    "node": ">=10"
+  },
+  "scripts": {
+    "start": "tsdx watch",
+    "build": "tsdx build",
+    "test": "tsdx test --passWithNoTests",
+    "lint": "tsdx lint",
+    "size": "size-limit",
+    "analyze": "size-limit --why"
+  },
+  "peerDependencies": {
+    "react": ">=16"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "tsdx lint"
+    }
+  },
+  "prettier": {
+    "printWidth": 80,
+    "semi": true,
+    "singleQuote": true,
+    "trailingComma": "es5"
+  },
+  "size-limit": [
+    {
+      "path": "dist/provider-all.cjs.production.min.js",
+      "limit": "10 KB"
+    },
+    {
+      "path": "dist/provider-all.esm.js",
+      "limit": "10 KB"
+    }
+  ],
+  "dependencies": {
+    "@rangodev/provider-all": "^0.1.11-next.32",
+    "@rangodev/ui": "^0.1.10-next.32",
+    "@rangodev/wallets-core": "^0.1.11-next.32",
+    "@rangodev/wallets-shared": "^0.1.11-next.32"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "gitHead": "6a1dd3a10333466b93bb13c66dfd148df0059070"
+}

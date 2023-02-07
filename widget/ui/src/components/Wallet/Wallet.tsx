@@ -1,3 +1,4 @@
+import { WalletType } from '@rangodev/wallets-shared';
 import React from 'react';
 
 import { styled } from '../../theme';
@@ -12,29 +13,22 @@ const WalletImage = styled('img', {
   marginRight: '$12',
 });
 
-export type PropTypes = WalletInfo & { onClick: (walletName: string) => void };
+export type PropTypes = WalletInfo & {
+  onClick: (walletType: WalletType) => void;
+};
 
 export function Wallet(props: PropTypes) {
-  const { name, image, onClick } = props;
+  const { name, type, image, state, onClick, installLink } = props;
   return (
     <Button
-      type={props.state === WalletState.CONNECTED ? 'primary' : undefined}
-      disabled={!props.state}
-      onClick={onClick.bind(null, name)}
+      type={state === WalletState.CONNECTED ? 'primary' : undefined}
+      disabled={!state}
+      onClick={onClick.bind(null, type)}
       align="start"
       variant="outlined"
       size="large"
       prefix={<WalletImage src={image} />}
-      suffix={
-        <State
-          walletState={props.state}
-          installLink={
-            props.state === WalletState.NOT_INSTALLED
-              ? props.installLink
-              : undefined
-          }
-        />
-      }
+      suffix={<State walletState={state} installLink={installLink} />}
     >
       <Typography variant="h5" noWrap={false}>
         {name}

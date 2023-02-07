@@ -1,12 +1,13 @@
 import { Button, styled, VerticalSwapIcon } from '@rangodev/ui';
 import React, { useState } from 'react';
-import { useInRouterContext } from 'react-router-dom';
+import { useInRouterContext, useNavigate } from 'react-router-dom';
 import { Header } from '../components/Header';
 import { TokenInfo } from '../components/TokenInfo';
 import { useBestRouteStore } from '../store/bestRoute';
 import { BottomLogo } from '../components/BottomLogo';
 import { SwithFromAndTo } from '../components/SwitchFromAndTo';
 import { Footer } from '../components/Footer';
+import { navigationRoutes } from '../constants/navigationRoutes';
 
 const Container = styled('div', {
   display: 'flex',
@@ -17,6 +18,7 @@ const Container = styled('div', {
 
 export function Home() {
   const isRouterInContext = useInRouterContext();
+  const navigate = useNavigate();
   const [count, setCount] = useState(0);
   const {
     fromChain,
@@ -47,7 +49,11 @@ export function Home() {
       </Button>
       <TokenInfo type="To" chain={toChain} token={toToken} />
       <Footer>
-        <Button type="primary" align="grow" size="large">
+        <Button
+          type="primary"
+          align="grow"
+          size="large"
+          onClick={() => navigate(navigationRoutes.wallets)}>
           Connect Wallet
         </Button>
         <BottomLogo />
