@@ -3,7 +3,7 @@ import { Provider } from '@rangodev/wallets-core';
 import List from './components/List';
 import { allProviders } from '@rangodev/provider-all';
 import { RangoClient } from 'rango-sdk';
-import { InfoCircleIcon } from '@rangodev/ui';
+import { InfoCircleIcon, Spinner, Typography } from '@rangodev/ui';
 
 const providers = allProviders();
 
@@ -12,6 +12,8 @@ export function App() {
   // Because allBlockChains didn't use the BlockchainMeta type from rango-sdk, we have to use any type
   const [blockchains, setBlockChains] = useState<any>([]);
   const [error, setError] = useState<string>('');
+  const [loading, setLoading] = useState<boolean>(true);
+
   useEffect(() => {
     const getAllBlockchains = async () => {
       try {
@@ -21,6 +23,7 @@ export function App() {
         console.log('failed on connect.', e);
         setError(e.message);
       }
+      setLoading(false);
     };
     getAllBlockchains();
   }, []);
@@ -32,7 +35,14 @@ export function App() {
           <InfoCircleIcon color="warning" size={24} /> Please add REACT_APP_API_KEY into .env
         </p>
       )}
-      <h1 className="ml-12">Providers</h1>
+      <div className="flex">
+        <h1 className="ml-12">Providers</h1>
+        {loading && (
+          <div className="flex">
+            <Spinner size={20} /> <Typography variant="caption">Loading...</Typography>
+          </div>
+        )}
+      </div>
       {!!error && <p className="ml-12 error">Failed Get Blockchains From Server: {error}</p>}
       <List />
     </Provider>

@@ -17,3 +17,8 @@ html {
   margin-bottom: 0;
   font-weight: 700;
 }
+
+.flex{
+    display: flex;
+    align-items: center;
+}

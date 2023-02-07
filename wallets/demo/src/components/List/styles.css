@@ -1,20 +1,21 @@
 .row {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-gap: 1rem;
+  margin: 0 auto;
 }
+
 .wallet_box {
   box-shadow: 1px 1px 12px #ebebeb;
   border-radius: 8px;
   padding: 12px;
-  margin: 12px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   border-left: 1px solid #ebebeb;
   border-top: 1px solid #ebebeb;
   height: 475px;
-  width: 406px;
   background-color: #ffffff;
+  overflow: hidden;
 }
 .title {
   display: flex;
@@ -116,4 +117,28 @@ h4 {
 }
 .my-12 {
   margin: 12px 0;
+}
+
+@media (min-width: 640px) {
+  .row {
+    grid-template-columns: repeat(1, 1fr);
+  }
+}
+
+@media (min-width: 768px) {
+  .row {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .row {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (min-width: 1280px) {
+  .row {
+    grid-template-columns: repeat(4, 1fr);
+  }
 }
