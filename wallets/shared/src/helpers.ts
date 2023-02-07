@@ -6,6 +6,8 @@ import {
   Connect,
 } from './rango';
 
+export { isAddress as isEvmAddress } from 'ethers/lib/utils';
+
 export function deepCopy(obj: any): any {
   let copy;
 

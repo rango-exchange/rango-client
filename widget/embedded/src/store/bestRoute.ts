@@ -3,21 +3,10 @@ import { Token } from 'rango-sdk/lib';
 import { create } from 'zustand';
 import { immer } from 'zustand/middleware/immer';
 import BigNumber from 'bignumber.js';
+import { WalletBalance } from './wallets';
 
-const getUsdValue = (token: Token, amount: number | null) =>
-  new BigNumber(amount || 0).multipliedBy(token.usdPrice || 0);
-
-export type WalletBalance = {
-  chain: string;
-  symbol: string;
-  ticker: string;
-  address: string | null;
-  rawAmount: string;
-  decimal: number | null;
-  amount: string;
-  logo: string | null;
-  usdPrice: number | null;
-};
+const getUsdValue = (token: Token | null, amount: number | null) =>
+  new BigNumber(amount || 0).multipliedBy(token?.usdPrice || 0);
 
 interface RouteState {
   fromChain: BlockchainMeta | null;

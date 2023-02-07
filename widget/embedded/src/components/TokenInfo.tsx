@@ -4,12 +4,14 @@ import { useMetaStore } from '../store/meta';
 import { BlockchainMeta, Token } from 'rango-sdk';
 import { useNavigate } from 'react-router-dom';
 import { useBestRouteStore } from '../store/bestRoute';
+import { numberToString } from '../utils/numbers';
 
-interface PropTypes {
-  type: 'From' | 'To';
-  chain: BlockchainMeta | null;
-  token: Token | null;
-}
+type PropTypes = (
+  | { type: 'From'; inputAmount: number | null; onAmountChange: (amount: number) => void }
+  | {
+      type: 'To';
+    }
+) & { chain: BlockchainMeta | null; token: Token | null };
 
 const Box = styled('div', {
   padding: '$16',
@@ -67,7 +69,7 @@ const OutputContainer = styled('div', {
 export function TokenInfo(props: PropTypes) {
   const { type, chain, token } = props;
   const { loadingStatus } = useMetaStore();
-  const { fromChain, toChain } = useBestRouteStore();
+  const { fromChain, toChain, inputUsdValue } = useBestRouteStore();
   const navigate = useNavigate();
   return (
     <Box>
@@ -75,7 +77,7 @@ export function TokenInfo(props: PropTypes) {
         <Typography variant="body2">{type}</Typography>
       </div>
       <Container>
-        {type === 'From' && (
+        {props.type === 'From' && (
           <Options>
             <div className="balance" onClick={() => {}}>
               <Button variant="ghost" size="small">
@@ -91,7 +93,7 @@ export function TokenInfo(props: PropTypes) {
         <div className="form">
           <Button
             onClick={() => {
-              navigate(`/${type.toLowerCase()}-chain`);
+              navigate(`/${props.type.toLowerCase()}-chain`);
             }}
             variant="outlined"
             disabled={loadingStatus === 'failed'}
@@ -111,7 +113,7 @@ export function TokenInfo(props: PropTypes) {
           </Button>
           <Button
             onClick={() => {
-              navigate(`/${type.toLowerCase()}-token`);
+              navigate(`/${props.type.toLowerCase()}-token`);
             }}
             variant="outlined"
             disabled={
@@ -133,7 +135,7 @@ export function TokenInfo(props: PropTypes) {
             style={{ marginRight: '.5rem' }}>
             {loadingStatus === 'success' && token ? token.symbol : 'Token'}
           </Button>
-          {type === 'From' ? (
+          {props.type === 'From' ? (
             <TextField
               type="number"
               size="large"
@@ -145,9 +147,15 @@ export function TokenInfo(props: PropTypes) {
               }}
               suffix={
                 <span style={{ position: 'absolute', right: '4px', bottom: '2px' }}>
-                  <Typography variant="caption">$0.0</Typography>
+                  <Typography variant="caption">{`$${numberToString(inputUsdValue)}`}</Typography>
                 </span>
               }
+              {...(props.type === 'From' && {
+                value: props.inputAmount?.toString() || '',
+                onChange: (event) => {
+                  props.onAmountChange(parseFloat(event.target.value));
+                },
+              })}
             />
           ) : (
             <OutputContainer>

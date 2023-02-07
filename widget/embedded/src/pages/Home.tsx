@@ -1,4 +1,4 @@
-import { Button, styled, VerticalSwapIcon } from '@rangodev/ui';
+import { BestRoute, Button, styled, VerticalSwapIcon } from '@rangodev/ui';
 import React, { useState } from 'react';
 import { useInRouterContext, useNavigate } from 'react-router-dom';
 import { Header } from '../components/Header';
@@ -8,6 +8,7 @@ import { BottomLogo } from '../components/BottomLogo';
 import { SwithFromAndTo } from '../components/SwitchFromAndTo';
 import { Footer } from '../components/Footer';
 import { navigationRoutes } from '../constants/navigationRoutes';
+import { useBestRoute } from '../hooks/useBestRoute';
 
 const Container = styled('div', {
   display: 'flex',
@@ -19,6 +20,7 @@ const Container = styled('div', {
 export function Home() {
   const isRouterInContext = useInRouterContext();
   const navigate = useNavigate();
+  const { inputAmount, setInputAmount } = useBestRouteStore();
   const [count, setCount] = useState(0);
   const {
     fromChain,
@@ -39,15 +41,24 @@ export function Home() {
     setCount((prev) => prev + 1);
   };
 
+  const { data, loading, error } = useBestRoute();
+
   return (
     <Container>
       <Header />
-      <TokenInfo type="From" chain={fromChain} token={fromToken} />
+      <TokenInfo
+        type="From"
+        chain={fromChain}
+        token={fromToken}
+        onAmountChange={setInputAmount}
+        inputAmount={inputAmount}
+      />
       <Button variant="ghost" onClick={swithFromAndTo}>
         <VerticalSwapIcon size={36} />
         {isRouterInContext && <SwithFromAndTo count={count} />}
       </Button>
       <TokenInfo type="To" chain={toChain} token={toToken} />
+      <BestRoute error={error} loading={loading} data={data} />
       <Footer>
         <Button
           type="primary"

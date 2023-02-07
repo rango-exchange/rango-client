@@ -5,7 +5,6 @@ import { SearchParams } from '../constants/searchParams';
 export function SwithFromAndTo({ count }: { count: number }) {
   const firstRender = useRef(true);
   const [searchParams, setSearchParams] = useSearchParams();
-  console.log(count);
 
   useEffect(() => {
     if (!firstRender.current) {
