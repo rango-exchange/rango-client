@@ -16,7 +16,7 @@ export const HorizontalSwapIcon = React.forwardRef<SVGSVGElement, IconProps>(
         {...props}
       >
         <path
-          d="m13.82 6.85 3.04 3.04M13.82 17.15V6.85M10.18 17.15l-3.04-3.04M10.18 6.85v10.3"
+          d="m17.15 13.82-3.04 3.04M6.85 13.82h10.3M6.85 10.18l3.04-3.04M17.15 10.18H6.85"
           strokeWidth={1.5}
           strokeMiterlimit={10}
           strokeLinecap="round"

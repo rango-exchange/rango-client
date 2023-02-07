@@ -1,8 +1,8 @@
 {
-  "name": "@rangodev/wallet-adapter",
-  "version": "0.1.11-next.23",
+  "name": "@rangodev/provider-frontier",
+  "version": "0.1.11-next.24",
   "license": "MIT",
-  "module": "dist/wallet-adapter.esm.js",
+  "module": "dist/provider-frontier.esm.js",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
   "files": [
@@ -36,22 +36,19 @@
   },
   "size-limit": [
     {
-      "path": "dist/provider-all.cjs.production.min.js",
+      "path": "dist/provider-frontier.cjs.production.min.js",
       "limit": "10 KB"
     },
     {
-      "path": "dist/provider-all.esm.js",
+      "path": "dist/provider-frontier.esm.js",
       "limit": "10 KB"
     }
   ],
   "dependencies": {
-    "@rangodev/provider-all": "^0.1.11-next.33",
-    "@rangodev/ui": "^0.1.10-next.33",
-    "@rangodev/wallets-core": "^0.1.11-next.33",
-    "@rangodev/wallets-shared": "^0.1.11-next.33"
+    "@rangodev/wallets-shared": "^0.1.11-next.24"
   },
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "6a1dd3a10333466b93bb13c66dfd148df0059070"
+  "gitHead": "dd92a217bf0e45fa27ea9416bed5e575a6e41bcc"
 }

@@ -24,5 +24,6 @@ declare global {
     tronLink: any;
     kucoin: any;
     leap: any;
+    frontier: any;
   }
 }

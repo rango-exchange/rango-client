@@ -1,6 +1,6 @@
 {
   "name": "@rangodev/provider-all",
-  "version": "0.1.11-next.32",
+  "version": "0.1.11-next.33",
   "license": "MIT",
   "module": "dist/provider-all.esm.js",
   "main": "dist/index.js",
