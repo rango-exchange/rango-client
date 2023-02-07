@@ -1,8 +1,9 @@
+import { useManager } from '@rangodev/queue-manager-react';
 import { History } from '@rangodev/ui';
 import { PendingSwap } from '@rangodev/ui/dist/containers/History/types';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { navigationRoutes } from '../router/navigationRoutes';
+import { getPendingSwaps } from '../rango/helpers';
 
 export const pendingSwap: PendingSwap[] = [
   {
@@ -781,9 +782,12 @@ export const pendingSwap: PendingSwap[] = [
 
 export function HistoryPage() {
   const navigate = useNavigate();
+  const { manager } = useManager();
+  const pendingSwaps = getPendingSwaps(manager);
+
   return (
     <History
-      list={pendingSwap}
+      list={pendingSwaps.map((pending) => pending.swap)}
       onBack={() => {
         navigate(-1);
       }}

@@ -12,6 +12,7 @@ import { isEvmBlockchain, Network } from '@rangodev/wallets-shared';
 import { prepareAccountsForWalletStore, walletAndSupportedChainsNames } from './utils/wallets';
 import { useWalletsStore } from './store/wallets';
 import { httpService } from './services/httpService';
+import QueueManager from './QueueManager';
 
 const providers = allProviders();
 interface Token {
@@ -105,11 +106,13 @@ export function App() {
       providers={providers}
       onUpdateState={onUpdateState}>
       <div id="pageContainer" className={getTheme()}>
-        <SwapContainer onConnectWallet={() => alert('connect your wallet:')}>
-          <AppRouter>
-            <AppRoutes />
-          </AppRouter>
-        </SwapContainer>
+        <QueueManager>
+          <SwapContainer onConnectWallet={() => alert('connect your wallet:')}>
+            <AppRouter>
+              <AppRoutes />
+            </AppRouter>
+          </SwapContainer>
+        </QueueManager>
       </div>
     </Provider>
   );

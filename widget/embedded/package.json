@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@rangodev/provider-all": "^0.1.11-next.30",
+    "@rangodev/queue-manager-react": "^0.1.10-next.32",
     "@rangodev/ui": "^0.1.10-next.30",
     "@rangodev/wallets-core": "^0.1.11-next.30",
     "bignumber.js": "^9.1.1",
