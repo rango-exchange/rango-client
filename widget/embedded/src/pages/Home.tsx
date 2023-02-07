@@ -17,6 +17,11 @@ const Container = styled('div', {
   alignItems: 'center',
 });
 
+const BestRouteContainer = styled('div', {
+  width: '100%',
+  padding: '0 $16',
+});
+
 export function Home() {
   const isRouterInContext = useInRouterContext();
   const navigate = useNavigate();
@@ -41,11 +46,13 @@ export function Home() {
     setCount((prev) => prev + 1);
   };
 
-  const { data, loading, error } = useBestRoute();
+  const { data, loading, error, retry } = useBestRoute();
+
+  const showBestRoute = inputAmount && (!!data || loading || error);
 
   return (
     <Container>
-      <Header />
+      <Header onClick={retry} />
       <TokenInfo
         type="From"
         chain={fromChain}
@@ -58,7 +65,11 @@ export function Home() {
         {isRouterInContext && <SwithFromAndTo count={count} />}
       </Button>
       <TokenInfo type="To" chain={toChain} token={toToken} />
-      <BestRoute error={error} loading={loading} data={data} />
+      {showBestRoute && (
+        <BestRouteContainer>
+          <BestRoute error={error} loading={loading} data={data} />
+        </BestRouteContainer>
+      )}
       <Footer>
         <Button
           type="primary"

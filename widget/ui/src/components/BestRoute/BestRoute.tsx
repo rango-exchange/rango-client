@@ -156,7 +156,8 @@ export function BestRoute({
                     direction="vertical"
                     logo={swap.from.logo}
                     symbol={swap.from.symbol}
-                    chainLogo={''}
+                    //@ts-ignore
+                    chainLogo={swap.from.blockchainLogo}
                     blockchain={swap.from.blockchain}
                     amount={swap.fromAmount}
                   />
@@ -165,7 +166,11 @@ export function BestRoute({
               )}
               <SwapperContainer>
                 <Line />
-                <SwapperLogo src={''} alt={swap.swapperId} />
+                <SwapperLogo
+                  //@ts-ignore
+                  src={swap.swapperLogo}
+                  alt={swap.swapperId}
+                />
                 <Line />
               </SwapperContainer>
 
@@ -174,12 +179,16 @@ export function BestRoute({
                 direction="vertical"
                 logo={swap.to.logo}
                 symbol={swap.to.symbol}
-                chainLogo={''}
+                //@ts-ignore
+                chainLogo={swap.to.blockchainLogo}
                 blockchain={swap.to.blockchain}
                 amount={swap.toAmount}
               />
             </>
           ))}
+        {!!data && !data?.result && (
+          <Typography variant="body2">No routes found</Typography>
+        )}
       </BestRouteContainer>
     </Container>
   );

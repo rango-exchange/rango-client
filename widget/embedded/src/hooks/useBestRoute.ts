@@ -10,12 +10,18 @@ export function useBestRoute() {
   const swapSettings: UserSettings = {
     slippage: customSlippage?.toString() || slippage.toString(),
   };
+  const [count, setCount] = useState(0);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [data, setData] = useState<BestRouteResponse | null>(null);
 
+  const retry = () => {
+    setCount((prev) => prev + 1);
+  };
+
   useEffect(() => {
     if (!!fromToken && !!toToken && !!inputAmount) {
+      if (!!data) setData(null);
       const requestBody: BestRouteRequest = {
         amount: inputAmount?.toString(),
         connectedWallets: [],
@@ -41,7 +47,7 @@ export function useBestRoute() {
           setLoading(false);
         });
     }
-  }, [fromToken, toToken, inputAmount]);
+  }, [fromToken, toToken, inputAmount, count]);
 
-  return { loading, error, data };
+  return { loading, error, data, retry };
 }

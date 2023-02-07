@@ -10,11 +10,11 @@ export const HeaderContainer = styled('div', {
   padding: '$16 $8',
 });
 
-export function Header() {
+export function Header({ onClick }: { onClick: () => void }) {
   return (
     <HeaderContainer>
       <Typography variant="h4">SWAP</Typography>
-      <HeaderButtons />
+      <HeaderButtons onClick={onClick} />
     </HeaderContainer>
   );
 }
