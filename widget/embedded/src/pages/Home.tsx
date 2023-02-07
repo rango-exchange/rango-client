@@ -9,6 +9,9 @@ import { SwithFromAndTo } from '../components/SwitchFromAndTo';
 import { Footer } from '../components/Footer';
 import { navigationRoutes } from '../constants/navigationRoutes';
 import { useBestRoute } from '../hooks/useBestRoute';
+import BigNumber from 'bignumber.js';
+import { ZERO } from '../utils/balance';
+import { getBestRouteToTokenUsdPrice } from '../utils/routing';
 
 const Container = styled('div', {
   display: 'flex',
@@ -48,6 +51,14 @@ export function Home() {
 
   const { data, loading, error, retry } = useBestRoute();
 
+  const outputAmount = !!data?.result?.outputAmount
+    ? new BigNumber(data?.result?.outputAmount)
+    : null;
+
+  const outUsdValue: BigNumber = (outputAmount || ZERO).multipliedBy(
+    (!loading && getBestRouteToTokenUsdPrice(data)) || toToken?.usdPrice || 0,
+  );
+
   const showBestRoute = inputAmount && (!!data || loading || error);
 
   return (
@@ -64,7 +75,13 @@ export function Home() {
         <VerticalSwapIcon size={36} />
         {isRouterInContext && <SwithFromAndTo count={count} />}
       </Button>
-      <TokenInfo type="To" chain={toChain} token={toToken} />
+      <TokenInfo
+        type="To"
+        chain={toChain}
+        token={toToken}
+        outputAmount={outputAmount}
+        outputUsdValue={outUsdValue}
+      />
       {showBestRoute && (
         <BestRouteContainer>
           <BestRoute error={error} loading={loading} data={data} />

@@ -5,11 +5,14 @@ import { BlockchainMeta, Token } from 'rango-sdk';
 import { useNavigate } from 'react-router-dom';
 import { useBestRouteStore } from '../store/bestRoute';
 import { numberToString } from '../utils/numbers';
+import BigNumber from 'bignumber.js';
 
 type PropTypes = (
   | { type: 'From'; inputAmount: number | null; onAmountChange: (amount: number) => void }
   | {
       type: 'To';
+      outputAmount: BigNumber | null;
+      outputUsdValue: BigNumber;
     }
 ) & { chain: BlockchainMeta | null; token: Token | null };
 
@@ -159,9 +162,11 @@ export function TokenInfo(props: PropTypes) {
             />
           ) : (
             <OutputContainer>
-              <Typography variant="body1">{'111'}</Typography>
+              <Typography variant="body1">{numberToString(props.outputAmount) || '?'}</Typography>
               <span style={{ position: 'absolute', right: '4px', bottom: '2px' }}>
-                <Typography variant="caption">$0.0</Typography>
+                <Typography variant="caption">{`$${numberToString(
+                  props.outputUsdValue,
+                )}`}</Typography>
               </span>
             </OutputContainer>
           )}
