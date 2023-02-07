@@ -1,7 +1,7 @@
 import React, { PropsWithChildren } from 'react';
 import { styled } from '../../theme';
 import * as RadixCheckbox from '@radix-ui/react-checkbox';
-import { Check } from '../Icon';
+import { CheckIcon } from '../Icon';
 
 const CheckboxContainer = styled('div', {
   display: 'flex',
@@ -45,7 +45,7 @@ export function Checkbox({
     <CheckboxContainer>
       <CheckboxRoot id={id} {...props}>
         <RadixCheckbox.Indicator>
-          <Check size={20} />
+          <CheckIcon size={20} />
         </RadixCheckbox.Indicator>
       </CheckboxRoot>
       <Label htmlFor={id}>{label} </Label>

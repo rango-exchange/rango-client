@@ -6,7 +6,7 @@ import { styled } from '../../theme';
 
 export default {
   title: 'Components/Icons',
-  component: Icons.AngleRight,
+  component: Icons.AngleRightIcon,
   argTypes: {
     color: {
       name: 'color',
@@ -17,11 +17,11 @@ export default {
     size: {
       name: 'size',
       control: { type: 'radio' },
-      options: [16, 18, 20, 24],
+      options: [16, 18, 20, 24, 28, 32, 36, 40],
       defaultValue: 16,
     },
   },
-} as ComponentMeta<typeof Icons.AngleRight>;
+} as ComponentMeta<typeof Icons.AngleRightIcon>;
 
 const Container = styled('div', {
   display: 'grid',
@@ -31,7 +31,7 @@ const Container = styled('div', {
 
 export const Main = (props: IconProps) => (
   <Container>
-    {Object.keys(Icons).map((icon) => {
+    {Object.keys(Icons).map(icon => {
       const Component = Icons[icon as Icon];
       return (
         <div>

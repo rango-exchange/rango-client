@@ -2,7 +2,7 @@ import React from 'react';
 import { ComponentMeta } from '@storybook/react';
 
 import { Button, PropTypes } from './Button';
-import { AddWallet } from '../Icon';
+import { AddWalletIcon } from '../Icon';
 
 export default {
   title: 'Components/Button',
@@ -42,18 +42,18 @@ export const Main = (props: PropTypes) => (
 );
 
 export const WithPrefix = (args: PropTypes) => (
-  <Button prefix={<AddWallet size={24} color="white" />} {...args}>
+  <Button prefix={<AddWalletIcon size={24} color="white" />} {...args}>
     I'm a button
   </Button>
 );
 
 export const WithSuffix = (args: PropTypes) => (
-  <Button suffix={<AddWallet size={24} color="white" />} {...args}>
+  <Button suffix={<AddWalletIcon size={24} color="white" />} {...args}>
     I'm a button
   </Button>
 );
 export const IconButton = (args: PropTypes) => (
   <div>
-    <Button suffix={<AddWallet size={24} color="white" />} {...args} />
+    <Button suffix={<AddWalletIcon size={24} color="white" />} {...args} />
   </div>
 );

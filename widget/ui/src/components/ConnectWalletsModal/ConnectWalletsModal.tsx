@@ -2,13 +2,15 @@ import React from 'react';
 import { styled } from '../../theme';
 import { WalletInfo } from '../../types/wallet';
 import { Modal } from '../Modal';
-import { Wallet } from '../Wallet/Wallet';
+import { WalletType } from '@rangodev/wallets-shared';
+import { Wallet } from '../Wallet';
 
 export interface PropTypes {
   open: boolean;
   list: WalletInfo[];
-  onSelect: (walletName: string) => void;
+  onSelect: (walletType: WalletType) => void;
   onClose: () => void;
+  error?: string;
 }
 
 const ModalContent = styled('div', {
