@@ -1,6 +1,7 @@
 import React from 'react';
 import { useRoutes } from 'react-router-dom';
 import { navigationRoutes } from '../constants/navigationRoutes';
+import { ConfirmSwapPage } from '../pages/ConfirmSwapPage';
 import { HistoryPage } from '../pages/HistoryPage';
 import { Home } from '../pages/Home';
 import { LiquiditySourcePage } from '../pages/LiquiditySourcesPage';
@@ -8,6 +9,7 @@ import { SelectChainPage } from '../pages/SelectChainPage';
 import { SelectTokenPage } from '../pages/SelectTokenPage';
 import { SettingsPage } from '../pages/SettingsPage';
 import { WalletsPage } from '../pages/WalletsPage';
+import { ConfirmWalletsPage } from '../pages/ConfirmWalletsPage';
 
 export const AppRoutes = () =>
   useRoutes([
@@ -23,4 +25,6 @@ export const AppRoutes = () =>
     },
     { path: navigationRoutes.history, element: <HistoryPage /> },
     { path: navigationRoutes.wallets, element: <WalletsPage /> },
+    { path: navigationRoutes.confirmSwap, element: <ConfirmSwapPage /> },
+    { path: navigationRoutes.confirmWallets, element: <ConfirmWalletsPage /> },
   ]);

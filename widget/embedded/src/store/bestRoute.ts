@@ -1,4 +1,4 @@
-import { BlockchainMeta } from 'rango-sdk';
+import { BestRouteResponse, BlockchainMeta } from 'rango-sdk';
 import { Token } from 'rango-sdk/lib';
 import { create } from 'zustand';
 import { immer } from 'zustand/middleware/immer';
@@ -21,6 +21,8 @@ interface RouteState {
   setFromToken: (token: Token | null) => void;
   setToToken: (token: Token | null) => void;
   setInputAmount: (amount: number | null) => void;
+  bestRoute: BestRouteResponse | null;
+  setBestRoute: (bestRoute: BestRouteResponse | null) => void;
 }
 
 export const useBestRouteStore = create<RouteState>()(
@@ -32,6 +34,11 @@ export const useBestRouteStore = create<RouteState>()(
     toChain: null,
     toToken: null,
     availableBalance: null,
+    bestRoute: null,
+    setBestRoute: (bestRoute) =>
+      set((state) => {
+        state.bestRoute = bestRoute;
+      }),
     setFromChain: (chain) =>
       set((state) => {
         state.fromChain = chain;

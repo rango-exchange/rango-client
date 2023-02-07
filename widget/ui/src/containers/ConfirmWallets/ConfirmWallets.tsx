@@ -1,3 +1,4 @@
+import { BestRouteResponse } from 'rango-sdk';
 import React, { PropsWithChildren } from 'react';
 import { Button } from '../../components/Button';
 import { AddWalletIcon } from '../../components/Icon';
@@ -8,7 +9,6 @@ import { Tooltip } from '../../components/Tooltip';
 import { Typography } from '../../components/Typography';
 import { decimalNumber } from '../../helper';
 import { styled } from '../../theme';
-import { BestRouteType } from '../../types/swaps';
 import { ActiveWalletsType } from './types';
 
 const Footer = styled('div', {
@@ -17,7 +17,7 @@ const Footer = styled('div', {
 });
 
 export interface PropTypes {
-  swap: BestRouteType;
+  swap: BestRouteResponse;
   onBack: () => void;
   onAddWallet?: (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>

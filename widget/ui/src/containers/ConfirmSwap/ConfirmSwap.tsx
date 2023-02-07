@@ -1,3 +1,4 @@
+import { BestRouteResponse } from 'rango-sdk';
 import React, { PropsWithChildren } from 'react';
 import { Button } from '../../components/Button';
 import { RetryIcon, GasIcon, AddWalletIcon } from '../../components/Icon';
@@ -7,8 +8,6 @@ import { StepDetail } from '../../components/StepDetail';
 import { Tooltip } from '../../components/Tooltip';
 import { Typography } from '../../components/Typography';
 import { styled } from '../../theme';
-import { SwapResult } from '../../types/swaps';
-import { BestRouteType } from '../../types/swaps';
 
 const Line = styled('div', {
   width: '0',
@@ -71,7 +70,7 @@ const StyledUpdateIcon = styled(UpdateIcon, {
 });
 
 export interface PropTypes {
-  swap: BestRouteType;
+  swap: BestRouteResponse;
   onRefresh?: React.MouseEventHandler<SVGElement>;
   onBack: () => void;
   onAddWallet?: (
@@ -90,6 +89,7 @@ export function ConfirmSwap({
   loading,
   error,
 }: PropsWithChildren<PropTypes>) {
+  const s = swap;
   return (
     <SecondaryPage
       textField={false}
@@ -125,14 +125,15 @@ export function ConfirmSwap({
             <ErrorMsg variant="caption">{error}</ErrorMsg>
           </BodyError>
         ) : (
-          swap.result?.swaps.map((swap: SwapResult, index: number) => (
+          swap.result?.swaps.map((swap, index: number) => (
             <>
               {index === 0 && (
                 <RelativeContainer>
                   <StepDetail
                     logo={swap.from.logo}
                     symbol={swap.from.symbol}
-                    chainLogo={swap.from.blockchainlogo}
+                    //@ts-ignore
+                    chainLogo={swap.from.blockchainLogo}
                     blockchain={swap.from.blockchain}
                     amount={swap.fromAmount}
                   />
@@ -141,7 +142,11 @@ export function ConfirmSwap({
               )}
               <Line />
               <SwapperContainer>
-                <SwapperLogo src={swap.swapperLogo} alt={swap.swapperId} />
+                <SwapperLogo
+                  //@ts-ignore
+                  src={swap.swapperLogo}
+                  alt={swap.swapperId}
+                />
                 <div>
                   <Typography ml={4} variant="caption">
                     {swap.swapperType} from {swap.from.symbol} to{' '}
@@ -157,11 +162,12 @@ export function ConfirmSwap({
                 </div>
               </SwapperContainer>
               <Line />
-              {index + 1 === swap.result?.swaps.length && <ArrowDown />}
+              {index + 1 === s.result?.swaps.length && <ArrowDown />}
               <StepDetail
                 logo={swap.to.logo}
                 symbol={swap.to.symbol}
-                chainLogo={swap.to.blockchainlogo}
+                //@ts-ignore
+                chainLogo={swap.to.blockchainLogo}
                 blockchain={swap.to.blockchain}
                 amount={swap.toAmount}
               />

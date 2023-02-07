@@ -1,5 +1,5 @@
 import { BestRoute, Button, styled, VerticalSwapIcon } from '@rangodev/ui';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useInRouterContext, useNavigate } from 'react-router-dom';
 import { Header } from '../components/Header';
 import { TokenInfo } from '../components/TokenInfo';
@@ -12,6 +12,8 @@ import { useBestRoute } from '../hooks/useBestRoute';
 import BigNumber from 'bignumber.js';
 import { ZERO } from '../utils/balance';
 import { getBestRouteToTokenUsdPrice } from '../utils/routing';
+import { useMetaStore } from '../store/meta';
+import { useWalletsStore } from '../store/wallets';
 
 const Container = styled('div', {
   display: 'flex',
@@ -39,7 +41,11 @@ export function Home() {
     setFromToken,
     setToChain,
     setToToken,
+    setBestRoute,
   } = useBestRouteStore();
+
+  const { loadingStatus } = useMetaStore();
+  const { balance } = useWalletsStore();
 
   const swithFromAndTo = () => {
     setFromChain(toChain);
@@ -51,6 +57,10 @@ export function Home() {
 
   const { data, loading, error, retry } = useBestRoute();
 
+  useEffect(() => {
+    setBestRoute(data);
+  }, [data]);
+
   const outputAmount = !!data?.result?.outputAmount
     ? new BigNumber(data?.result?.outputAmount)
     : null;
@@ -60,6 +70,10 @@ export function Home() {
   );
 
   const showBestRoute = inputAmount && (!!data || loading || error);
+
+  const buttonDisabled = loading || (!data && loadingStatus != 'success');
+
+  const buttonTitle = balance.length === 0 ? 'Connect Wallet' : 'Swap';
 
   return (
     <Container>
@@ -92,8 +106,14 @@ export function Home() {
           type="primary"
           align="grow"
           size="large"
-          onClick={() => navigate(navigationRoutes.wallets)}>
-          Connect Wallet
+          disabled={buttonDisabled}
+          onClick={() => {
+            if (buttonTitle === 'Connect Wallet') navigate(navigationRoutes.wallets);
+            else {
+              navigate(navigationRoutes.confirmSwap);
+            }
+          }}>
+          {buttonTitle}
         </Button>
         <BottomLogo />
       </Footer>
