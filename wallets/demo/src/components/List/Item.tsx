@@ -10,9 +10,6 @@ import {
 } from '../../helper';
 import SignatureIcon from '../signature';
 
-const DEFAULT_WALLET_INJECTION_ERROR =
-  'Failed to connect to wallet, if you have turned injection off (disable default wallet for xDefi), turn it on and refresh the page';
-
 function Item({ type }: { type: WalletType }) {
   const { connect, state, disconnect, canSwitchNetworkTo, getWalletInfo, getSigners } =
     useWallets();
@@ -33,7 +30,7 @@ function Item({ type }: { type: WalletType }) {
         disconnect(type);
       }
     } catch (err) {
-      setError('Error: ' + (err.message || DEFAULT_WALLET_INJECTION_ERROR));
+      setError('Error: ' + (err.message || 'Failed to connect wallet'));
     }
   };
   const canSwitchNetwork = network !== Network.Unknown && canSwitchNetworkTo(type, network);
@@ -45,27 +42,31 @@ function Item({ type }: { type: WalletType }) {
         setError('');
         setNetwork(result.network || Network.Unknown);
       } catch (err) {
-        setError('Error: ' + (err.message || DEFAULT_WALLET_INJECTION_ERROR));
+        setError('Error: ' + (err.message || 'Failed to connect wallet'));
       }
     }
   };
   const handleSigner = () => {
-    const supportedChainsNames = walletAndSupportedChainsNames(info.supportedChains);
-    const activeAccount = prepareAccounts(
-      walletState.accounts || [],
-      walletState.network,
-      evmBasedChains,
-      supportedChainsNames,
-    ).find((a) => a.accounts.find((b) => b.isConnected));
-    const signers = getSigners(type);
-    signers
-      .signEvmMessage(activeAccount?.accounts[0]?.address || '', 'sign test')
-      .then((signature) => {
-        console.log(signature);
-      })
-      .catch((ex) => {
-        console.log(ex);
-      });
+    if (!walletState.accounts || !walletState.accounts.length) {
+      alert("You don't currently have an account or you haven't connected to wallet correctly!");
+    } else {
+      const supportedChainsNames = walletAndSupportedChainsNames(info.supportedChains);
+      const activeAccount = prepareAccounts(
+        walletState.accounts,
+        walletState.network,
+        evmBasedChains,
+        supportedChainsNames,
+      ).find((a) => a.accounts.find((b) => b.isConnected));
+      const signers = getSigners(type);
+      signers
+        .signEvmMessage(activeAccount?.accounts[0].address || '', 'Hello World')
+        .then((signature) => {
+          alert(signature);
+        })
+        .catch((ex) => {
+          alert('Error' + `(${info.name}): ` + (ex.message || 'Failed to sign'));
+        });
+    }
   };
   return (
     <div className="wallet_box">
@@ -98,21 +99,21 @@ function Item({ type }: { type: WalletType }) {
 
         {walletState.connected ? (
           <>
-            <h4 style={{ marginTop: 8 }}>Accounts: </h4>
+            <h4 className="mt-8">Accounts: </h4>
             <div className="account_box">
               {walletState?.accounts?.map((account) => (
                 <div className="account">{account}</div>
               ))}
             </div>
-            <div style={{ marginTop: 10 }}>
+            <div className="mt-10">
               <h4>Chain: </h4>
-              <div style={{ fontSize: 14 }}>{walletState?.network}</div>
+              <div className="font-14">{walletState?.network}</div>
             </div>
           </>
         ) : (
           <div className="body">
             <img src={info.img} alt={info.name} width={100} />
-            <h2>{info.name}</h2>
+            <h2 className='my-12'>{info.name}</h2>
             <Typography variant="body2">
               {!walletState.installed
                 ? 'The wallet is not installed'
@@ -180,7 +181,7 @@ function Item({ type }: { type: WalletType }) {
             disabled={!walletState.connected}
             suffix={<SwapWalletIcon size={24} color={'white'} />}
             type="primary"
-            onClick={() => alert("Swap hasn't been implemented yet")}>
+            onClick={() => alert("Executing custom transactions is not implemented for the demo yet.")}>
             Swap
           </Button>
         </div>

@@ -44,7 +44,6 @@ export function prepareAccounts(
       const evmChainsSupportedByWallet = supportedChains.filter((chain) =>
         evmBasedChains.includes(chain),
       );
-
       evmChainsSupportedByWallet.forEach((network) => {
         addAccount(network, address.toLowerCase());
       });

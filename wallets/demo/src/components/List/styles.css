@@ -12,7 +12,7 @@
   justify-content: space-between;
   border-left: 1px solid #ebebeb;
   border-top: 1px solid #ebebeb;
-  height: 465px;
+  height: 475px;
   width: 406px;
   background-color: #ffffff;
 }
@@ -89,19 +89,31 @@ h4 {
   text-align: center;
 }
 
-
-.body{
+.body {
   text-align: center;
   margin-top: 25px;
 }
 
-.body img{
+.body img {
   margin: 10px auto;
   border-radius: 50%;
 }
 
-
-.flex{
+.flex {
   display: flex;
-  
+}
+
+.mt-8 {
+  margin-top: 8px;
+}
+
+.mt-10 {
+  margin-top: 10;
+}
+
+.font-14 {
+  font-size: 14px;
+}
+.my-12 {
+  margin: 12px 0;
 }

@@ -25,7 +25,7 @@ export function App() {
 
   return (
     <Provider providers={providers} allBlockChains={blockchains}>
-      <h1 style={{marginLeft:12}}>Providers</h1>
+      <h1 className='title'>Providers</h1>
       <List />
     </Provider>
   );
