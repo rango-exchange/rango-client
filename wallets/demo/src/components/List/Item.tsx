@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { useWallets } from '@rangodev/wallets-core';
 import { Network, WalletType } from '@rangodev/wallets-shared';
 import './styles.css';
-<<<<<<< HEAD
 import { Button, InfoCircleIcon, Spacer, SwapWalletIcon, Tooltip, Typography } from '@rangodev/ui';
 import {
   evmBasedChainsSelector,
@@ -17,11 +16,6 @@ const DEFAULT_WALLET_INJECTION_ERROR =
 function Item({ type }: { type: WalletType }) {
   const { connect, state, disconnect, canSwitchNetworkTo, getWalletInfo, getSigners } =
     useWallets();
-=======
-
-function Item({ type }: { type: WalletType }) {
-  const { connect, state, disconnect, canSwitchNetworkTo, getWalletInfo } = useWallets();
->>>>>>> next
   const info = getWalletInfo(type);
   const walletState = state(type);
   const [network, setNetwork] = useState<Network>(Network.Unknown);
@@ -30,16 +24,11 @@ function Item({ type }: { type: WalletType }) {
   const handleConnectWallet = async () => {
     try {
       if (!walletState.connected) {
-<<<<<<< HEAD
         if (walletState.installed) {
           const result = await connect(type);
           setError('');
           setNetwork(result.network || Network.Unknown);
         } else window.open(info.installLink, '_blank');
-=======
-        if (walletState.installed) await connect(type);
-        else window.open(info.installLink, '_blank');
->>>>>>> next
       } else {
         disconnect(type);
       }
@@ -81,7 +70,6 @@ function Item({ type }: { type: WalletType }) {
   return (
     <div className="wallet_box">
       <div>
-<<<<<<< HEAD
         <div className="header">
           {walletState.connected ? (
             <div className="title">
@@ -105,15 +93,9 @@ function Item({ type }: { type: WalletType }) {
             <div
               className={`wallet_status ${walletState.connected ? 'connected' : 'disconnected'}`}
             />
-=======
-        <div className="title">
-          <div className="image_div" style={{ backgroundColor: info.color }}>
-            <img src={info.img} alt={info.name} width={35} />
->>>>>>> next
           </div>
         </div>
 
-<<<<<<< HEAD
         {walletState.connected ? (
           <>
             <h4 style={{ marginTop: 8 }}>Accounts: </h4>
@@ -153,22 +135,6 @@ function Item({ type }: { type: WalletType }) {
           id="Network"
           onChange={(e) => setNetwork(e.target.value as Network)}
           disabled={!walletState.connected || !canSwitchNetwork}>
-=======
-        <div className={`wallet_status ${walletState.connected ? 'connected' : 'disconnected'}`}>
-          {walletState.connected ? 'Connected' : 'Disconnected'}
-        </div>
-        <div style={{ marginTop: 8 }}>
-          Accounts:
-          {walletState.accounts?.map((account) => (
-            <div className="account">{account}</div>
-          ))}
-        </div>
-        <div style={{ marginTop: 8 }}>
-          Chain:
-          {walletState.network}
-        </div>
-        <select name="Network" id="Network" onChange={(e) => setNetwork(e.target.value as Network)}>
->>>>>>> next
           <option value="-1" selected>
             Default Chain
           </option>
@@ -178,7 +144,6 @@ function Item({ type }: { type: WalletType }) {
             </option>
           ))}
         </select>
-<<<<<<< HEAD
         <div className="flex">
           <Button
             style={{ marginBottom: 12 }}
@@ -219,17 +184,6 @@ function Item({ type }: { type: WalletType }) {
             Swap
           </Button>
         </div>
-=======
-      </div>
-
-      <div>
-        <button onClick={handleConnectWallet}>
-          {walletState.connected ? 'Disconnect' : 'Connect'}({info.name})
-        </button>
-        <button disabled={!walletState.connected} onClick={handleChangeNetwork}>
-          Change Network
-        </button>
->>>>>>> next
       </div>
     </div>
   );
