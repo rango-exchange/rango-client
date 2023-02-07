@@ -1,6 +1,6 @@
 {
   "name": "@rangodev/queue-manager-core",
-  "version": "0.1.10-next.33",
+  "version": "0.1.10-next.34",
   "license": "MIT",
   "module": "dist/queue-manager-core.esm.js",
   "main": "dist/index.js",
