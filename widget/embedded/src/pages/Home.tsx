@@ -45,7 +45,8 @@ export function Home() {
   } = useBestRouteStore();
 
   const { loadingStatus } = useMetaStore();
-  const { balance } = useWalletsStore();
+  const { balance, accounts } = useWalletsStore();
+  console.log('balance:', balance, 'accounts:', accounts);
 
   const swithFromAndTo = () => {
     setFromChain(toChain);

@@ -9,5 +9,5 @@ export const navigationRoutes = {
   history: 'history',
   wallets: 'wallets',
   confirmSwap: 'confirm-swap',
-  confirmWallets: 'confirm-wallets',
+  confirmWallets: 'confirm-swap/confirm-wallets',
 };

@@ -233,6 +233,8 @@ export type SwapResult = {
   routes: SwapRoute[] | null;
   recommendedSlippage: RecommendedSlippage | null;
   includesDestinationTx: boolean | null | undefined;
+  //todo : remove this property and fix best route and pending swap type
+  explorerUrl?: SwapExplorerUrl[] | null;
 };
 
 export type WalletRequiredAssetReason =

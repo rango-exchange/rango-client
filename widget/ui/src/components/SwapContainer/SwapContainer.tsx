@@ -19,7 +19,7 @@ const MainContainer = styled('div', {
 
 const ContentContainer = styled('div', {
   width: '100%',
-  maxHeight: '600px',
+  // maxHeight: '600px',
 });
 
 export interface PropTypes {

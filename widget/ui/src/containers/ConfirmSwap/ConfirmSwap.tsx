@@ -9,51 +9,51 @@ import { Tooltip } from '../../components/Tooltip';
 import { Typography } from '../../components/Typography';
 import { styled } from '../../theme';
 
-const Line = styled('div', {
+export const Line = styled('div', {
   width: '0',
   marginLeft: '$12',
   height: '36px',
   border: '1px dashed $foreground',
   borderRadius: 'inherit',
 });
-const SwapperContainer = styled('div', {
+export const SwapperContainer = styled('div', {
   display: 'flex',
   alignItems: 'center',
   marginLeft: '6px',
 });
-const BodyError = styled('div', {
+export const BodyError = styled('div', {
   height: '100%',
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
 });
-const ErrorMsg = styled(Typography, {
+export const ErrorMsg = styled(Typography, {
   color: '$error',
 });
-const Fee = styled('div', {
+export const Fee = styled('div', {
   display: 'flex',
   alignItems: 'center',
 });
-const SwapperLogo = styled('img', {
+export const SwapperLogo = styled('img', {
   width: '$16',
   height: '$16',
 });
-const RelativeContainer = styled('div', {
+export const RelativeContainer = styled('div', {
   position: 'relative',
 });
 
-const Footer = styled('div', {
+export const Footer = styled('div', {
   display: 'flex',
   alignItems: 'center',
 });
-const Dot = styled('div', {
+export const Dot = styled('div', {
   width: '$8',
   height: '$8',
   backgroundColor: '$foreground',
   borderRadius: '4px',
   marginLeft: '$8',
 });
-const ArrowDown = styled('div', {
+export const ArrowDown = styled('div', {
   width: '0px',
   height: '0px',
   borderLeft: '5px solid transparent',
@@ -61,16 +61,16 @@ const ArrowDown = styled('div', {
   borderTop: '5px solid $foreground',
   marginLeft: '$8',
 });
-const UpdateIcon = styled(RetryIcon, {
+export const UpdateIcon = styled(RetryIcon, {
   position: 'absolute',
   right: '0',
 });
-const StyledUpdateIcon = styled(UpdateIcon, {
+export const StyledUpdateIcon = styled(UpdateIcon, {
   cursor: 'pointer',
 });
 
 export interface PropTypes {
-  swap: BestRouteResponse;
+  bestRoute: BestRouteResponse | null;
   onRefresh?: React.MouseEventHandler<SVGElement>;
   onBack: () => void;
   onAddWallet?: (
@@ -81,7 +81,7 @@ export interface PropTypes {
   error?: string;
 }
 export function ConfirmSwap({
-  swap,
+  bestRoute,
   onRefresh,
   onBack,
   onAddWallet,
@@ -89,7 +89,6 @@ export function ConfirmSwap({
   loading,
   error,
 }: PropsWithChildren<PropTypes>) {
-  const s = swap;
   return (
     <SecondaryPage
       textField={false}
@@ -125,7 +124,7 @@ export function ConfirmSwap({
             <ErrorMsg variant="caption">{error}</ErrorMsg>
           </BodyError>
         ) : (
-          swap.result?.swaps.map((swap, index: number) => (
+          bestRoute?.result?.swaps.map((swap, index) => (
             <>
               {index === 0 && (
                 <RelativeContainer>
@@ -162,7 +161,7 @@ export function ConfirmSwap({
                 </div>
               </SwapperContainer>
               <Line />
-              {index + 1 === s.result?.swaps.length && <ArrowDown />}
+              {index + 1 === bestRoute.result?.swaps.length && <ArrowDown />}
               <StepDetail
                 logo={swap.to.logo}
                 symbol={swap.to.symbol}

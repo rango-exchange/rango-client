@@ -9,7 +9,7 @@ import { Tooltip } from '../../components/Tooltip';
 import { Typography } from '../../components/Typography';
 import { decimalNumber } from '../../helper';
 import { styled } from '../../theme';
-import { ActiveWalletsType } from './types';
+import { SelectableWallet } from './types';
 
 const Footer = styled('div', {
   display: 'flex',
@@ -24,7 +24,8 @@ export interface PropTypes {
   ) => void;
   onConfirm?: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
   loading?: boolean;
-  wallets: ActiveWalletsType[];
+  requiredWallets: string[];
+  selectableWallets: SelectableWallet[];
 }
 export function ConfirmWallets({
   onBack,
@@ -32,7 +33,8 @@ export function ConfirmWallets({
   onAddWallet,
   onConfirm,
   swap,
-  wallets,
+  requiredWallets,
+  selectableWallets,
 }: PropsWithChildren<PropTypes>) {
   const firstStep = swap.result?.swaps[0];
   const lastStep = swap.result?.swaps[swap.result?.swaps.length - 1];
@@ -75,12 +77,12 @@ export function ConfirmWallets({
             {firstStep?.from.blockchain}) to {toAmount} {lastStep?.to.symbol}{' '}
             (on {lastStep?.to.blockchain})
           </Typography>
-          {wallets.map((wallet: ActiveWalletsType, index: number) => (
-            <div>
+          {requiredWallets.map((wallet, index) => (
+            <div key={index}>
               <Typography variant="body2" mb={12} mt={12}>
-                {index + 1}) Your {wallet.type} Wallet
+                {index + 1}) Your {wallet} Wallet
               </Typography>
-              <SelectableWalletList data={wallet} />
+              <SelectableWalletList list={selectableWallets} />
             </div>
           ))}
         </>
