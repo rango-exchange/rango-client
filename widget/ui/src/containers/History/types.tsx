@@ -33,6 +33,7 @@ export type PendingSwapStep = {
   toDecimals: number;
   toLogo: string;
   swapperId: SwapperId;
+  swapperLogo: string;
   expectedOutputAmountHumanReadable: string | null;
   startTransactionTime: number;
   outputAmount: string;

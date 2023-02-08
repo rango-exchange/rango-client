@@ -77,14 +77,20 @@ export function ConfirmWallets({
             {firstStep?.from.blockchain}) to {toAmount} {lastStep?.to.symbol}{' '}
             (on {lastStep?.to.blockchain})
           </Typography>
-          {requiredWallets.map((wallet, index) => (
-            <div key={index}>
-              <Typography variant="body2" mb={12} mt={12}>
-                {index + 1}) Your {wallet} Wallet
-              </Typography>
-              <SelectableWalletList list={selectableWallets} />
-            </div>
-          ))}
+          {requiredWallets.map((wallet, index) => {
+            return (
+              <div key={index}>
+                <Typography variant="body2" mb={12} mt={12}>
+                  {index + 1}) Your {wallet} Wallet
+                </Typography>
+                <SelectableWalletList
+                  list={selectableWallets.filter(
+                    (w) => wallet === w.blockchain
+                  )}
+                />
+              </div>
+            );
+          })}
         </>
       }
     />

@@ -85,13 +85,13 @@ export function SelectableWalletList({
   };
   return (
     <Row>
-      {list.map((w) => {
+      {list.map((w, index) => {
         const checked = active === w.walletType;
         return (
-          <Container checked={checked} onClick={() => onClick(w)}>
+          <Container checked={index === 0} onClick={() => onClick(w)}>
             <img src={w.image} alt={w.walletType} width={24} height={24} />
             <Typography variant="body2">{w.walletType}</Typography>
-            <Circle checked={checked}>
+            <Circle checked={index === 0}>
               <SolidCircle checked={checked} />
             </Circle>
           </Container>

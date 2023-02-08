@@ -1,28 +1,23 @@
 import React from 'react';
-import {
-  StepDetail,
-  Typography,
-  GasIcon,
-  SecondaryPage,
-} from '../../components';
-import { BestRouteType } from '../../types/swaps';
+import { StepDetail, SecondaryPage } from '../../components';
 import {
   RelativeContainer,
   Dot,
   Line,
   SwapperContainer,
   SwapperLogo,
-  Fee,
   ArrowDown,
 } from '../ConfirmSwap/ConfirmSwap';
+import { PendingSwap } from '../History/types';
 
 export interface PropTypes {
-  bestRoute: BestRouteType;
+  pendingSwap: PendingSwap;
   onBack: () => void;
 }
 
 export function SwapHistory(props: PropTypes) {
-  const { bestRoute, onBack } = props;
+  const { pendingSwap, onBack } = props;
+  console.log(pendingSwap);
 
   return (
     <SecondaryPage
@@ -31,40 +26,35 @@ export function SwapHistory(props: PropTypes) {
       onBack={onBack}
       Content={
         <>
-          {bestRoute?.result?.swaps.map((swap, index) => (
+          {pendingSwap?.steps.map((step, index) => (
             <>
               {index === 0 && (
                 <RelativeContainer>
                   <StepDetail
-                    logo={swap.from.logo}
-                    symbol={swap.from.symbol}
-                    //@ts-ignore
-                    chainLogo={swap.from.blockchainLogo}
-                    blockchain={swap.from.blockchain}
-                    amount={swap.fromAmount}
+                    logo={step.fromLogo}
+                    symbol={step.fromSymbol}
+                    chainLogo={step.fromBlockchainLogo}
+                    blockchain={step.fromBlockchain}
+                    amount={pendingSwap.inputAmount}
                   />
                   <Dot />
                 </RelativeContainer>
               )}
               <Line />
               <SwapperContainer>
-                <SwapperLogo
-                  //@ts-ignore
-                  src={swap.swapperLogo}
-                  alt={swap.swapperId}
-                />
+                <SwapperLogo src={step.swapperLogo} alt={step.swapperId} />
                 <div>
-                  <Typography ml={4} variant="caption">
-                    {swap.swapperType} from {swap.from.symbol} to{' '}
-                    {swap.to.symbol} via {swap.swapperId}{' '}
+                  {/* <Typography ml={4} variant="caption">
+                    {step.swapperType} from {step.from.symbol} to{' '}
+                    {step.to.symbol} via {step.swapperId}{' '}
                   </Typography>
                   <Fee>
                     <GasIcon />
                     <Typography ml={4} variant="caption">
-                      {parseFloat(swap.fee[0].amount).toFixed(6)} estimated gas
+                      {parseFloat(step.fee[0].amount).toFixed(6)} estimated gas
                       fee
                     </Typography>
-                  </Fee>
+                  </Fee> */}
                 </div>
               </SwapperContainer>
               <div
@@ -73,8 +63,8 @@ export function SwapHistory(props: PropTypes) {
                 }}
               >
                 <Line />
-                {!!swap.explorerUrl &&
-                  swap.explorerUrl.map((item, index) => (
+                {!!step.explorerUrl &&
+                  step.explorerUrl.map((item, index) => (
                     <a
                       href={item.url}
                       target="_blank"
@@ -94,14 +84,14 @@ export function SwapHistory(props: PropTypes) {
                     </a>
                   ))}
               </div>
-              {index + 1 === bestRoute.result?.swaps.length && <ArrowDown />}
+              {index + 1 === pendingSwap.steps.length && <ArrowDown />}
               <StepDetail
-                logo={swap.to.logo}
-                symbol={swap.to.symbol}
+                logo={step.toLogo}
+                symbol={step.toSymbol}
                 //@ts-ignore
-                chainLogo={swap.to.blockchainLogo}
-                blockchain={swap.to.blockchain}
-                amount={swap.toAmount}
+                chainLogo={step.toBlockchainLogo}
+                blockchain={step.toBlockchain}
+                amount={step.outputAmount}
               />
             </>
           ))}
