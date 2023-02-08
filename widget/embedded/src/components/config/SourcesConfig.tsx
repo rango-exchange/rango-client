@@ -13,14 +13,15 @@ interface PropTypes {
 export function SourcesConfig({ onChange, config }: PropTypes) {
   const {
     meta: { swappers },
+    loadingStatus,
   } = useMetaStore();
 
   const uniqueSwappersGroups: Array<LiquiditySource> = [];
-  Array.from(new Set(swappers.map((s) => s.swapperGroup)))
-    .map((swapperGroup) => {
-      return swappers.find((s) => s.swapperGroup === swapperGroup);
+  Array.from(new Set(swappers.map(s => s.swapperGroup)))
+    .map(swapperGroup => {
+      return swappers.find(s => s.swapperGroup === swapperGroup);
     })
-    .find((s) => {
+    .find(s => {
       if (s) {
         for (const type of s.types) {
           uniqueSwappersGroups.push({
@@ -41,6 +42,8 @@ export function SourcesConfig({ onChange, config }: PropTypes) {
         <MultiSelect
           label="Supported Sources"
           type="Sources"
+          loading={loadingStatus === 'loading'}
+          disabled={loadingStatus === 'failed'}
           modalTitle="Select Sources"
           list={uniqueSwappersGroups}
           onChange={onChange}
