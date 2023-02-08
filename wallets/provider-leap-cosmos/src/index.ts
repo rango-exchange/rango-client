@@ -31,7 +31,6 @@ export const connect: Connect = async ({ instance, network, meta }) => {
   const results = await getCosmosAccounts({
     instance,
     meta: leapBlockchainMeta,
-    network,
   });
   return results;
 };
