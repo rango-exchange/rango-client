@@ -2,7 +2,7 @@ import React from 'react';
 import { ComponentMeta } from '@storybook/react';
 
 import { TextField, PropTypes } from './TextField';
-import { Search } from '../Icon';
+import { SearchIcon } from '../Icon';
 
 export default {
   title: 'Components/Text Field',
@@ -23,9 +23,9 @@ export default {
 export const Main = (args: PropTypes) => <TextField {...args} />;
 
 export const WithPrefix = (args: PropTypes) => (
-  <TextField {...args} prefix={<Search size={20} />} />
+  <TextField {...args} prefix={<SearchIcon size={20} />} />
 );
 
 export const WithSuffix = (args: PropTypes) => (
-  <TextField {...args} suffix={<Search size={20} />} />
+  <TextField {...args} suffix={<SearchIcon size={20} />} />
 );

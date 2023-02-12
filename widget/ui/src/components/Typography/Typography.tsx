@@ -1,9 +1,8 @@
 import React, { PropsWithChildren } from 'react';
 import { styled } from '../../theme';
 
-const TypographyContainer = styled('p', {
+const TypographyContainer = styled('span', {
   margin: 0,
-
   color: '$foreground',
   variants: {
     variant: {
@@ -190,5 +189,11 @@ export function Typography({
   children,
   ...props
 }: PropsWithChildren<PropTypes>) {
-  return <TypographyContainer {...props}>{children}</TypographyContainer>;
+  return (
+    <TypographyContainer className="_typography" {...props}>
+      {children}
+    </TypographyContainer>
+  );
 }
+
+Typography.toString = () => '._typography';

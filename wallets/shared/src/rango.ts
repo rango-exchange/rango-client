@@ -45,6 +45,7 @@ export enum WalletType {
   KEPLR = 'keplr',
   OKX = 'okx',
   PHANTOM = 'phantom',
+  FRONTIER = 'frontier',
   COINBASE = 'coinbase',
   XDEFI = 'xdefi',
   BINANCE_CHAIN = 'binance-chain',
@@ -60,6 +61,7 @@ export enum WalletType {
   EXODUS = 'exodus',
   ARGENTX = 'argentx',
   TRON_LINK = 'tron-link',
+  KUCOIN = 'kucoin',
 }
 
 export enum Network {

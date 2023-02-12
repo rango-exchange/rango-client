@@ -1,6 +1,6 @@
 {
   "name": "@rangodev/provider-binance-chain-wallet",
-  "version": "0.1.11-next.24",
+  "version": "0.1.11-next.35",
   "license": "MIT",
   "module": "dist/provider-binance-chain-wallet.esm.js",
   "main": "dist/index.js",
@@ -46,7 +46,7 @@
   ],
   "dependencies": {
     "@binance-chain/javascript-sdk": "^4.1.1",
-    "@rangodev/wallets-shared": "^0.1.11-next.24"
+    "@rangodev/wallets-shared": "^0.1.11-next.35"
   },
   "publishConfig": {
     "access": "public"

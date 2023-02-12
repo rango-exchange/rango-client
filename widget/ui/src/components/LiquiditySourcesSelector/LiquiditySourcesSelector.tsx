@@ -14,16 +14,18 @@ const filterLiquiditySources = (
 export interface PropTypes {
   list: LiquiditySource[];
   onChange: (liquiditySource: LiquiditySource) => void;
+  onBack: () => void;
 }
 
 export function LiquiditySourcesSelector(props: PropTypes) {
-  const { list, onChange } = props;
+  const { list, onChange, onBack } = props;
 
   return (
     <SecondaryPage
       textField={true}
       textFieldPlaceholder="Search By Name"
       title="Liquidity Sources"
+      onBack={onBack}
       Content={({ searchedFor }) => (
         <LiquiditySourceList
           list={filterLiquiditySources(list, searchedFor)}

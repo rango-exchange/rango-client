@@ -1,6 +1,7 @@
 import React, { PropsWithChildren } from 'react';
 import { darkTheme, styled } from '../../theme';
 import { Spinner } from '../Spinner';
+import { Typography } from '../Typography';
 
 const ButtonContainer = styled('button', {
   borderRadius: '$5',
@@ -48,6 +49,7 @@ const ButtonContainer = styled('button', {
         },
       },
       outlined: {
+        backgroundColor: '$background !important',
         borderColor: '$neutrals400 !important',
         color: '$foreground',
         '&:hover': {
@@ -65,13 +67,17 @@ const ButtonContainer = styled('button', {
       ghost: {
         color: '$foreground',
         '&:hover': {
-          color: '$neutrals600',
+          backgroundColor: '$neutrals200',
         },
         '&:disabled': {
           color: '$neutrals400 !important',
         },
         background: 'transparent',
         border: 0,
+
+        [`& ${Typography}`]: {
+          color: 'inherit',
+        },
       },
     },
     fullWidth: {
