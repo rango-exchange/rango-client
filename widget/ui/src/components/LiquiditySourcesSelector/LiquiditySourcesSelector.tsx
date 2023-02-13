@@ -15,16 +15,18 @@ export interface PropTypes {
   list: LiquiditySource[];
   onChange: (liquiditySource: LiquiditySource) => void;
   onBack: () => void;
+  actionButton?: React.ReactNode;
 }
 
 export function LiquiditySourcesSelector(props: PropTypes) {
-  const { list, onChange, onBack } = props;
+  const { list, onChange, onBack, actionButton } = props;
 
   return (
     <SecondaryPage
       textField={true}
       textFieldPlaceholder="Search By Name"
       title="Liquidity Sources"
+      TopButton={actionButton}
       onBack={onBack}
       Content={({ searchedFor }) => (
         <LiquiditySourceList
