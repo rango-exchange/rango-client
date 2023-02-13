@@ -4,6 +4,7 @@ import {
   EvmBlockchainMeta,
   Network,
   Connect,
+  Wallet,
 } from './rango';
 
 export function deepCopy(obj: any): any {
@@ -171,4 +172,13 @@ export function getCoinbaseInstance(
   if (lookingFor === 'metamask') return instances.get(Network.ETHEREUM);
 
   return instances;
+}
+
+export function SortWalletsBasedOnState(wallets: Wallet[]): Wallet[] {
+  return wallets.sort(
+    (a, b) =>
+      Number(b.connected) - Number(a.connected) ||
+      Number(b.installed) - Number(a.installed) ||
+      Number(b.extensionAvailable) - Number(a.extensionAvailable)
+  );
 }

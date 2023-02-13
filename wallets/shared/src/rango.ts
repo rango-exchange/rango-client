@@ -727,3 +727,11 @@ export type WalletInfo = {
   color: string;
   supportedChains: BlockchainMeta[];
 };
+
+export interface Wallet {
+  type: WalletType;
+  extensionAvailable?: boolean;
+  installed?: boolean;
+  connected: boolean;
+  info: Partial<WalletInfo>;
+}
