@@ -720,10 +720,15 @@ export const tronBlockchain = (allBlockChains: BlockchainMeta[]) =>
 export const cosmosBlockchains = (allBlockChains: BlockchainMeta[]) =>
   allBlockChains.filter(isCosmosBlockchain);
 
+export type InstallObjects = {
+  CHROME: string;
+  FIREFOX?: string;
+};
+
 export type WalletInfo = {
   name: string;
   img: string;
-  installLink: string;
+  installLink: InstallObjects | string;
   color: string;
   supportedChains: BlockchainMeta[];
 };

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useWallets } from '@rangodev/wallets-core';
+import { useWallets, detectInstallLink } from '@rangodev/wallets-core';
 import { Network, WalletType } from '@rangodev/wallets-shared';
 import './styles.css';
 import {
@@ -32,7 +32,13 @@ function Item({ type }: { type: WalletType }) {
           const result = await connect(type);
           setError('');
           setNetwork(result.network || Network.Unknown);
-        } else window.open(info.installLink, '_blank');
+        } else {
+          const detectBrowser =
+            typeof info.installLink === 'object'
+              ? detectInstallLink(info.installLink)
+              : info.installLink;
+          window.open(detectBrowser, '_blank');
+        }
       } else {
         disconnect(type);
       }
@@ -152,10 +158,7 @@ function Item({ type }: { type: WalletType }) {
           ))}
         </select>
         <div className="flex mb-5">
-          <Button
-            fullWidth
-            type="primary"
-            onClick={handleConnectWallet}>
+          <Button fullWidth type="primary" onClick={handleConnectWallet}>
             {!walletState.installed ? 'Install' : walletState.connected ? 'Disconnect' : 'Connect'}
           </Button>
           <Spacer size={12} />

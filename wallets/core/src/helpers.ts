@@ -7,11 +7,7 @@ import {
   isEvmBlockchain,
   BlockchainMeta,
 } from '@rangodev/wallets-shared';
-import {
-  State,
-  WalletProvider,
-  WalletProviders,
-} from './types';
+import { State, WalletProvider, WalletProviders } from './types';
 import { Options, State as WalletState } from './wallet';
 
 export function choose(wallets: any[], type: WalletType): any | null {
@@ -152,4 +148,13 @@ export function getComptaibleProvider(
     });
   }
   return provider;
+}
+
+export function detectInstallLink(install: any) {
+  if (navigator.userAgent.indexOf('Chrome') !== -1) {
+    return install['CHROME'];
+  } else if (navigator.userAgent.indexOf('Firefox') !== -1) {
+    return install['FIREFOX'];
+  }
+  return install['CHROME'];
 }
