@@ -1,6 +1,7 @@
 import React from 'react';
+import { createPortal } from 'react-dom';
 import { styled } from '../../theme';
-import { Close } from '../Icon/Close';
+import { CloseIcon } from '../Icon';
 import { Typography } from '../Typography';
 
 export interface PropTypes {
@@ -29,6 +30,9 @@ const DrawerContainer = styled('div', {
   boxShadow: '$s',
   background: '$background',
   padding: '$20',
+  display: 'flex',
+  flexDirection: 'column',
+  justifyContent: 'space-between',
 
   variants: {
     anchor: {
@@ -36,7 +40,8 @@ const DrawerContainer = styled('div', {
         top: 0,
         left: 0,
         height: '100%',
-        width: '300px',
+        minWidth: '300px',
+        maxWidth: '90%',
         borderTopRightRadius: '$10',
         borderBottomRightRadius: '$10',
       },
@@ -44,23 +49,26 @@ const DrawerContainer = styled('div', {
         top: 0,
         right: 0,
         height: '100%',
-        width: '300px',
+        minWidth: '300px',
+        maxWidth: '90%',
         borderTopLeftRadius: '$10',
         borderBottomLeftRadius: '$10',
       },
       bottom: {
         bottom: 0,
         width: '100%',
-        height: '300px',
+        maxHeight: '90%',
         borderTopRightRadius: '$10',
         borderTopLeftRadius: '$10',
+        
       },
       top: {
         top: 0,
         width: '100%',
-        height: '300px',
+        maxHeight: '90%',
         borderBottomRightRadius: '$10',
         borderBottomLeftRadius: '$10',
+        
       },
     },
   },
@@ -80,9 +88,7 @@ const Body = styled('div', {
 });
 const Footer = styled('footer', {
   width: '100%',
-  position: 'absolute',
-  bottom: 0,
-  left: 0,
+  marginTop:'$28'
 });
 
 export function Drawer(props: PropTypes) {
@@ -103,18 +109,20 @@ export function Drawer(props: PropTypes) {
 
   return (
     <>
-      {open && (
-        <BackDrop onClick={handleBackDropClick}>
-          <DrawerContainer anchor={anchor} style={containerStyle}>
-            <DrawerHeader>
-              <Typography variant="h4">{title}</Typography>
-              {showClose && <Close size={24} onClick={onClose} />}
-            </DrawerHeader>
-            <Body>{content}</Body>
-            <Footer>{footer}</Footer>
-          </DrawerContainer>
-        </BackDrop>
-      )}
+      {open &&
+        createPortal(
+          <BackDrop onClick={handleBackDropClick}>
+            <DrawerContainer anchor={anchor} style={containerStyle}>
+              <DrawerHeader>
+                <Typography variant="h4">{title}</Typography>
+                {showClose && <CloseIcon size={24} onClick={onClose} />}
+              </DrawerHeader>
+              <Body>{content}</Body>
+              <Footer>{footer}</Footer>
+            </DrawerContainer>
+          </BackDrop>,
+          document.body
+        )}
     </>
   );
 }

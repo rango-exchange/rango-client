@@ -7,9 +7,7 @@ import { Typography } from '../Typography';
 const MainContainer = styled('div', {
   borderRadius: '$10',
   maxWidth: '512px',
-  position: 'relative',
   boxShadow: '$s',
-  overflow: 'hidden',
   minWidth: '375px',
   width: '100%',
   backgroundColor: '$background',

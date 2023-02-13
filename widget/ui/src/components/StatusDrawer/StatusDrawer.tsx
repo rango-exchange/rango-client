@@ -2,7 +2,7 @@ import React from 'react';
 import { styled } from '../../theme';
 import { Button } from '../Button';
 import { Drawer } from '../Drawer';
-import { CheckCircle, InfoCircle, Warning } from '../Icon';
+import { CheckCircleIcon, InfoCircleIcon, WarningIcon } from '../Icon';
 import { Spacer } from '../Spacer';
 import { Typography } from '../Typography';
 
@@ -17,6 +17,10 @@ export interface PropTypes {
 }
 const Header = styled('div', {
   textAlign: 'center',
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  marginBottom: '$16',
 });
 const Footer = styled('div', {
   padding: '$20',
@@ -37,17 +41,15 @@ export function StatusDrawer({
         <>
           <Header>
             {status === 'success' ? (
-              <CheckCircle color="success" size={24} />
+              <CheckCircleIcon color="success" size={24} />
             ) : status === 'failed' ? (
-              <InfoCircle color="error" size={24} />
+              <InfoCircleIcon color="error" size={24} />
             ) : (
-              <Warning color="warning" size={24} />
+              <WarningIcon color="warning" size={24} />
             )}
             <Typography variant="h6">{title}</Typography>
           </Header>
-          <Typography variant="body2" mt={12}>
-            {subtitle}
-          </Typography>
+          <Typography variant="body2">{subtitle}</Typography>
         </>
       }
       footer={
