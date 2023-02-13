@@ -71,27 +71,33 @@ const Container = styled('div', {
 });
 export interface PropTypes {
   list: SelectableWallet[];
-  onChange?: (w: SelectableWallet) => void;
+  onChange: (w: SelectableWallet) => void;
 }
 
 export function SelectableWalletList({
   list,
   onChange,
 }: PropsWithChildren<PropTypes>) {
-  const [active, setActive] = useState<string>('');
+  const [active, setActive] = useState<string>(
+    list.find((item) => item.selected)?.walletType || ''
+  );
   const onClick = (w: SelectableWallet) => {
     setActive(w.walletType);
-    onChange?.(w);
+    onChange(w);
   };
   return (
     <Row>
       {list.map((w, index) => {
         const checked = active === w.walletType;
         return (
-          <Container checked={index === 0} onClick={() => onClick(w)}>
+          <Container
+            checked={checked}
+            onClick={onClick.bind(null, w)}
+            key={index}
+          >
             <img src={w.image} alt={w.walletType} width={24} height={24} />
             <Typography variant="body2">{w.walletType}</Typography>
-            <Circle checked={index === 0}>
+            <Circle checked={checked}>
               <SolidCircle checked={checked} />
             </Circle>
           </Container>

@@ -26,6 +26,7 @@ export interface PropTypes {
   loading?: boolean;
   requiredWallets: string[];
   selectableWallets: SelectableWallet[];
+  onChange: (w: SelectableWallet) => void;
 }
 export function ConfirmWallets({
   onBack,
@@ -35,6 +36,7 @@ export function ConfirmWallets({
   swap,
   requiredWallets,
   selectableWallets,
+  onChange,
 }: PropsWithChildren<PropTypes>) {
   const firstStep = swap.result?.swaps[0];
   const lastStep = swap.result?.swaps[swap.result?.swaps.length - 1];
@@ -87,6 +89,7 @@ export function ConfirmWallets({
                   list={selectableWallets.filter(
                     (w) => wallet === w.blockchain
                   )}
+                  onChange={onChange}
                 />
               </div>
             );

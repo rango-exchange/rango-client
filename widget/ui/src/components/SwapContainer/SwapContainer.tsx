@@ -1,8 +1,5 @@
 import React, { PropsWithChildren } from 'react';
 import { styled } from '../../theme';
-import { Button } from '../Button';
-import { AddWalletIcon } from '../Icon';
-import { Typography } from '../Typography';
 
 const MainContainer = styled('div', {
   borderRadius: '$10',
@@ -23,23 +20,14 @@ const ContentContainer = styled('div', {
 });
 
 export interface PropTypes {
-  onConnectWallet: () => void;
   style?: React.CSSProperties;
 }
 
 export function SwapContainer(props: PropsWithChildren<PropTypes>) {
-  const { onConnectWallet, children, style } = props;
+  const { children, style } = props;
 
   return (
     <MainContainer style={style}>
-      <Button
-        size="small"
-        suffix={<AddWalletIcon size={20} />}
-        variant="ghost"
-        onClick={onConnectWallet}
-      >
-        <Typography variant="body2">Connect Wallet</Typography>
-      </Button>
       <ContentContainer>{children}</ContentContainer>
     </MainContainer>
   );

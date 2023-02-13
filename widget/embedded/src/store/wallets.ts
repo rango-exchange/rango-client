@@ -1,12 +1,13 @@
 import { readAccountAddress } from '@rangodev/wallets-core';
-import { isEvmAddress, Network } from '@rangodev/wallets-shared';
+import { isEvmAddress, Network, WalletType } from '@rangodev/wallets-shared';
 import BigNumber from 'bignumber.js';
 import { WalletDetail, WalletDetailsResponse } from 'rango-sdk';
 import { create } from 'zustand';
 import { immer } from 'zustand/middleware/immer';
+import { SelectableWallet } from '../pages/ConfirmWalletsPage';
 import { httpService } from '../services/httpService';
-
-type WalletType = string;
+import { getRequiredChains, SelectedWallet } from '../utils/wallets';
+import { useBestRouteStore } from './bestRoute';
 
 export interface Account {
   blockchain: string;
@@ -43,15 +44,19 @@ export interface Balance {
 interface WalletsStore {
   accounts: Account[];
   balance: Balance[];
+  selectedWallets: SelectedWallet[];
   insertAccount: (balance: Balance[]) => void;
   insertBalance: (wallets: WalletDetail[], walletType: string) => void;
   disconnectWallet: (walletType: WalletType) => void;
+  initSelectedWallets: () => void;
+  setSelectedWallet: (wallet: SelectableWallet) => void;
 }
 
 export const useWalletsStore = create<WalletsStore>()(
   immer((set) => ({
-    accounts: [],
-    balance: [],
+    accounts: [] as any,
+    balance: [] as any,
+    selectedWallets: [] as any,
     insertAccount: (accounts) =>
       set((state) => {
         accounts.forEach((account) => {
@@ -59,7 +64,6 @@ export const useWalletsStore = create<WalletsStore>()(
             (acc) => acc.blockchain === account.blockchain,
           );
           if (!!blockchainAccount) {
-            console.log(blockchainAccount);
             blockchainAccount?.accounts.push({
               address: account.accountsWithBalance[0].address,
               walletType: account.accountsWithBalance[0].walletType,
@@ -109,9 +113,47 @@ export const useWalletsStore = create<WalletsStore>()(
               logo: '',
               usdPrice: null,
             })) || [];
-          b.walletType = walletType;
+          b.walletType = walletType as any;
         });
       }),
-    disconnectWallet: () => set(() => {}),
+    disconnectWallet: (walletType) =>
+      set(() => {
+        //
+      }),
+    initSelectedWallets: () =>
+      set((state) => {
+        const requiredChains = getRequiredChains(useBestRouteStore.getState().bestRoute);
+        const connectedWallets: SelectedWallet[] = [];
+        const selectedWallets: SelectedWallet[] = [];
+        state.accounts.forEach((account) => {
+          account.accounts.forEach((acc) => {
+            connectedWallets.push({
+              address: acc.address,
+              walletType: acc.walletType,
+              blockchain: account.blockchain,
+            });
+          });
+        });
+        requiredChains.forEach((chain) => {
+          const firstWalletWithMatchedChain = connectedWallets.find(
+            (wallet) => wallet.blockchain === chain,
+          );
+          if (!!firstWalletWithMatchedChain)
+            selectedWallets.push({
+              address: firstWalletWithMatchedChain.address,
+              blockchain: firstWalletWithMatchedChain.blockchain,
+              walletType: firstWalletWithMatchedChain.walletType,
+            });
+        });
+        state.selectedWallets.push(...selectedWallets);
+      }),
+    setSelectedWallet: (wallet) =>
+      set((state) => {
+        state.selectedWallets.splice(
+          state.selectedWallets.findIndex((w) => wallet.blockchain === w.blockchain),
+          1,
+          { blockchain: wallet.blockchain, address: wallet.address, walletType: wallet.walletType },
+        );
+      }),
   })),
 );

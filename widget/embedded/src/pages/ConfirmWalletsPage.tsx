@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { ConfirmWallets, SecondaryPage } from '@rangodev/ui';
 import { useNavigate } from 'react-router-dom';
 import { useBestRoute } from '../hooks/useBestRoute';
@@ -9,18 +9,22 @@ import { useWallets } from '@rangodev/wallets-core';
 import { BestRouteRequest, BestRouteResponse } from 'rango-sdk';
 import { httpService } from '../services/httpService';
 import { PendingSwap, PendingSwapStep } from '@rangodev/ui/dist/containers/History/types';
-import { SwapSavedSettings, WalletTypeAndAddress } from '@rangodev/ui/dist/types/swaps';
+import {
+  BestRouteType,
+  SwapSavedSettings,
+  WalletTypeAndAddress,
+} from '@rangodev/ui/dist/types/swaps';
+import { navigationRoutes } from '../constants/navigationRoutes';
+import { getRequiredChains, getSelectableWallets, SelectedWallet } from '../utils/wallets';
 
-export interface SelectableWallet {
-  blockchain: string;
-  walletType: WalletType;
-  address: string;
+export interface SelectableWallet extends SelectedWallet {
   image: string;
+  selected: boolean;
 }
 
 export function calculatePendingSwap(
   inputAmount: string,
-  bestRoute: BestRouteResponse,
+  bestRoute: BestRouteType,
   wallets: { [p: string]: WalletTypeAndAddress },
   settings: SwapSavedSettings,
   validateBalanceOrFee: boolean,
@@ -95,7 +99,7 @@ export function ConfirmWalletsPage() {
   const navigate = useNavigate();
 
   const { bestRoute, inputAmount, fromToken, toToken } = useBestRouteStore();
-  const { accounts } = useWalletsStore();
+  const { accounts, selectedWallets, initSelectedWallets, setSelectedWallet } = useWalletsStore();
   const { state, getWalletInfo } = useWallets();
   const requiredWallets = (route: BestRouteResponse | null) => {
     const wallets: string[] = [];
@@ -111,79 +115,29 @@ export function ConfirmWalletsPage() {
     return wallets;
   };
 
-  const connectedWallets: SelectableWallet[] = [];
-  accounts.forEach((account) => {
-    account.accounts.forEach((acc) => {
-      connectedWallets.push({
-        address: acc.address,
-        walletType: acc.walletType as WalletType,
-        blockchain: account.blockchain,
-        image: getWalletInfo(acc.walletType as WalletType).img,
-      });
-    });
-  });
-  console.log(connectedWallets);
-
-  console.log(
-    connectedWallets.filter((wallet) => requiredWallets(bestRoute).includes(wallet.blockchain)),
-  );
-
   const walletsForCalculatePendingSwap: { [p: string]: WalletTypeAndAddress } = {};
 
-  requiredWallets(bestRoute).forEach(
-    (blockchain) =>
-      (walletsForCalculatePendingSwap[blockchain] = {
-        walletType: connectedWallets.filter((w) => w.blockchain === blockchain)[0].walletType,
-        address: connectedWallets.filter((w) => w.blockchain === blockchain)[0].address,
-      }),
-  );
+  // requiredWallets(bestRoute).forEach(
+  //   (blockchain) =>
+  //     (walletsForCalculatePendingSwap[blockchain] = {
+  //       walletType: connectedWallets.filter((w) => w.blockchain === blockchain)[0].walletType,
+  //       address: connectedWallets.filter((w) => w.blockchain === blockchain)[0].address,
+  //     }),
+  // );
 
   return (
     <ConfirmWallets
-      requiredWallets={requiredWallets(bestRoute)}
-      selectableWallets={connectedWallets.filter((wallet) =>
-        requiredWallets(bestRoute).includes(wallet.blockchain),
+      requiredWallets={getRequiredChains(bestRoute)}
+      selectableWallets={getSelectableWallets(
+        accounts,
+        getRequiredChains(bestRoute),
+        selectedWallets,
+        getWalletInfo,
       )}
       onBack={() => navigate(-1)}
       swap={bestRoute as any}
-      onConfirm={() => {
-        const selectedWalletsMap: { [p: string]: string } = {};
-        accounts.forEach((acc) => (selectedWalletsMap[acc.blockchain] = acc.accounts[0].address));
-        const body: BestRouteRequest = {
-          amount: inputAmount!.toString(),
-          checkPrerequisites: true,
-          from: {
-            address: fromToken!.address,
-            blockchain: fromToken!.blockchain,
-            symbol: fromToken!.symbol,
-          },
-          to: {
-            address: toToken!.address,
-            blockchain: toToken!.blockchain,
-            symbol: toToken!.symbol,
-          },
-          connectedWallets: accounts.map((acc) => ({
-            addresses: acc.accounts.map((a) => a.address),
-            blockchain: acc.blockchain,
-          })),
-          selectedWallets: selectedWalletsMap,
-        };
-        httpService
-          .getBestRoute(body)
-          .then((res) => {
-            console.log('second best route: ', res);
-            const pendingSwap = calculatePendingSwap(
-              inputAmount!.toString(),
-              bestRoute!,
-              walletsForCalculatePendingSwap,
-              { disabledSwappersGroups: [], disabledSwappersIds: [], slippage: '1.0' },
-              false,
-            );
-            console.log('pending swap: ', pendingSwap);
-          })
-          .catch(() => alert('error in calculating pending swap'));
-      }}
+      onConfirm={() => navigate(navigationRoutes.confirmSwap)}
+      onChange={(wallet) => setSelectedWallet(wallet)}
     />
   );
-  return <div>hi</div>;
 }

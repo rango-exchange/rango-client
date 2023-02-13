@@ -1,7 +1,7 @@
-import { styled } from '@stitches/react';
 import React from 'react';
 import { CheckCircleIcon, InfoCircleIcon, WarningIcon } from '../Icon';
 import { Typography } from '../Typography';
+import { styled } from '../../theme';
 
 const MainContainer = styled('div', {
   display: 'flex',

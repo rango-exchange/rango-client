@@ -5,4 +5,5 @@ export interface SelectableWallet {
   walletType: WalletType;
   address: string;
   image: string;
+  selected: boolean;
 }

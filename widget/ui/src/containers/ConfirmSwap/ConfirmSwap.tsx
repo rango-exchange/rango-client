@@ -1,5 +1,5 @@
-import { BestRouteResponse } from 'rango-sdk';
 import React, { PropsWithChildren } from 'react';
+import { Alert } from '../../components/Alert';
 import { Button } from '../../components/Button';
 import { RetryIcon, GasIcon, AddWalletIcon } from '../../components/Icon';
 import { SecondaryPage } from '../../components/SecondaryPage/';
@@ -8,6 +8,7 @@ import { StepDetail } from '../../components/StepDetail';
 import { Tooltip } from '../../components/Tooltip';
 import { Typography } from '../../components/Typography';
 import { styled } from '../../theme';
+import { BestRouteType } from '../../types/swaps';
 
 export const Line = styled('div', {
   width: '0',
@@ -70,7 +71,7 @@ export const StyledUpdateIcon = styled(UpdateIcon, {
 });
 
 export interface PropTypes {
-  bestRoute: BestRouteResponse | null;
+  bestRoute: BestRouteType | null;
   onRefresh?: React.MouseEventHandler<SVGElement>;
   onBack: () => void;
   onAddWallet?: (
@@ -79,6 +80,7 @@ export interface PropTypes {
   onConfirm?: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
   loading?: boolean;
   error?: string;
+  warning?: string;
 }
 export function ConfirmSwap({
   bestRoute,
@@ -88,6 +90,7 @@ export function ConfirmSwap({
   onConfirm,
   loading,
   error,
+  warning,
 }: PropsWithChildren<PropTypes>) {
   return (
     <SecondaryPage
@@ -118,62 +121,55 @@ export function ConfirmSwap({
         </Footer>
       }
       TopButton={<StyledUpdateIcon size={24} onClick={onRefresh} />}
-      Content={
-        error ? (
-          <BodyError>
-            <ErrorMsg variant="caption">{error}</ErrorMsg>
-          </BodyError>
-        ) : (
-          bestRoute?.result?.swaps.map((swap, index) => (
-            <>
-              {index === 0 && (
-                <RelativeContainer>
-                  <StepDetail
-                    logo={swap.from.logo}
-                    symbol={swap.from.symbol}
-                    //@ts-ignore
-                    chainLogo={swap.from.blockchainLogo}
-                    blockchain={swap.from.blockchain}
-                    amount={swap.fromAmount}
-                  />
-                  <Dot />
-                </RelativeContainer>
-              )}
-              <Line />
-              <SwapperContainer>
-                <SwapperLogo
-                  //@ts-ignore
-                  src={swap.swapperLogo}
-                  alt={swap.swapperId}
-                />
-                <div>
-                  <Typography ml={4} variant="caption">
-                    {swap.swapperType} from {swap.from.symbol} to{' '}
-                    {swap.to.symbol} via {swap.swapperId}{' '}
-                  </Typography>
-                  <Fee>
-                    <GasIcon />
-                    <Typography ml={4} variant="caption">
-                      {parseFloat(swap.fee[0].amount).toFixed(6)} estimated gas
-                      fee
-                    </Typography>
-                  </Fee>
-                </div>
-              </SwapperContainer>
-              <Line />
-              {index + 1 === bestRoute.result?.swaps.length && <ArrowDown />}
+      Content={bestRoute?.result?.swaps.map((swap, index) => (
+        <>
+          {error && <Alert description={error} type="error" />}
+          {warning && <Alert description={warning} type="warning" />}
+          {index === 0 && (
+            <RelativeContainer>
               <StepDetail
-                logo={swap.to.logo}
-                symbol={swap.to.symbol}
+                logo={swap.from.logo}
+                symbol={swap.from.symbol}
                 //@ts-ignore
-                chainLogo={swap.to.blockchainLogo}
-                blockchain={swap.to.blockchain}
-                amount={swap.toAmount}
+                chainLogo={swap.from.blockchainLogo}
+                blockchain={swap.from.blockchain}
+                amount={swap.fromAmount}
               />
-            </>
-          ))
-        )
-      }
+              <Dot />
+            </RelativeContainer>
+          )}
+          <Line />
+          <SwapperContainer>
+            <SwapperLogo
+              //@ts-ignore
+              src={swap.swapperLogo}
+              alt={swap.swapperId}
+            />
+            <div>
+              <Typography ml={4} variant="caption">
+                {swap.swapperType} from {swap.from.symbol} to {swap.to.symbol}{' '}
+                via {swap.swapperId}{' '}
+              </Typography>
+              <Fee>
+                <GasIcon />
+                <Typography ml={4} variant="caption">
+                  {parseFloat(swap.fee[0].amount).toFixed(6)} estimated gas fee
+                </Typography>
+              </Fee>
+            </div>
+          </SwapperContainer>
+          <Line />
+          {index + 1 === bestRoute.result?.swaps.length && <ArrowDown />}
+          <StepDetail
+            logo={swap.to.logo}
+            symbol={swap.to.symbol}
+            //@ts-ignore
+            chainLogo={swap.to.blockchainLogo}
+            blockchain={swap.to.blockchain}
+            amount={swap.toAmount}
+          />
+        </>
+      ))}
     />
   );
 }

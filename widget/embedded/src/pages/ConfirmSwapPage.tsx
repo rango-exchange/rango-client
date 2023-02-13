@@ -1,19 +1,27 @@
 import React from 'react';
-import { ConfirmSwap, SecondaryPage } from '@rangodev/ui';
+import { ConfirmSwap } from '@rangodev/ui';
 import { useNavigate } from 'react-router-dom';
 import { useBestRouteStore } from '../store/bestRoute';
-import { navigationRoutes } from '../constants/navigationRoutes';
+import { emitter } from '../events/eventEmitter';
+import { useConfirmSwap } from '../hooks/useConfirmSwap';
 
 export function ConfirmSwapPage() {
   const navigate = useNavigate();
 
   const { bestRoute } = useBestRouteStore();
 
+  const { data, error, loading, warning, bestRouteChanged, enoughBalance, feeStatus } =
+    useConfirmSwap();
+
+  console.log(data, error, loading, warning, bestRouteChanged, enoughBalance, feeStatus);
+
   return (
     <ConfirmSwap
-      onConfirm={() => navigate(navigationRoutes.confirmWallets.split('/')[1])}
+      onConfirm={() => emitter.emit('confirm_swap')}
       onBack={() => navigate(-1)}
       bestRoute={bestRoute}
+      loading={loading}
+      error={error}
     />
   );
 }

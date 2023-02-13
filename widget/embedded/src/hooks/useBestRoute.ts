@@ -1,3 +1,4 @@
+import { BestRouteType } from '@rangodev/ui/dist/types/swaps';
 import { BestRouteRequest, BestRouteResponse, Token, UserSettings } from 'rango-sdk';
 import { useEffect, useState } from 'react';
 import { httpService } from '../services/httpService';
@@ -42,7 +43,6 @@ export function useBestRoute() {
           setLoading(false);
         })
         .catch((error) => {
-          console.error(error);
           setError(error.message);
           setLoading(false);
         });

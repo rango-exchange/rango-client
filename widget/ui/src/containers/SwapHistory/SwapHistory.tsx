@@ -1,5 +1,10 @@
 import React from 'react';
-import { StepDetail, SecondaryPage } from '../../components';
+import {
+  StepDetail,
+  SecondaryPage,
+  GasIcon,
+  Typography,
+} from '../../components';
 import {
   RelativeContainer,
   Dot,
@@ -7,6 +12,7 @@ import {
   SwapperContainer,
   SwapperLogo,
   ArrowDown,
+  Fee,
 } from '../ConfirmSwap/ConfirmSwap';
 import { PendingSwap } from '../History/types';
 
@@ -44,17 +50,17 @@ export function SwapHistory(props: PropTypes) {
               <SwapperContainer>
                 <SwapperLogo src={step.swapperLogo} alt={step.swapperId} />
                 <div>
-                  {/* <Typography ml={4} variant="caption">
-                    {step.swapperType} from {step.from.symbol} to{' '}
-                    {step.to.symbol} via {step.swapperId}{' '}
+                  <Typography ml={4} variant="caption">
+                    {/* {step.swapperType} from {step.fromSymbol} to {step.toSymbol} */}
+                    via {step.swapperId}
                   </Typography>
                   <Fee>
                     <GasIcon />
                     <Typography ml={4} variant="caption">
-                      {parseFloat(step.fee[0].amount).toFixed(6)} estimated gas
+                      {/* {parseFloat(step.fee[0].amount).toFixed(6)} estimated gas */}
                       fee
                     </Typography>
-                  </Fee> */}
+                  </Fee>
                 </div>
               </SwapperContainer>
               <div
@@ -63,26 +69,29 @@ export function SwapHistory(props: PropTypes) {
                 }}
               >
                 <Line />
-                {!!step.explorerUrl &&
-                  step.explorerUrl.map((item, index) => (
-                    <a
-                      href={item.url}
-                      target="_blank"
-                      rel="noreferrer"
-                      key={index}
-                    >
-                      <div className="mt-1.5 rounded-sm bg-gray-700 p-0.5 hover:bg-gray-600">
-                        {!item.description ? (
-                          <b>View transaction</b>
-                        ) : (
-                          <b>
-                            {item.description.substr(0, 1).toUpperCase()}
-                            {item.description.substr(1)} tx
-                          </b>
-                        )}
-                      </div>
-                    </a>
-                  ))}
+                {!!step.explorerUrl && (
+                  <div>
+                    {step.explorerUrl.map((item, index) => (
+                      <a
+                        href={item.url}
+                        target="_blank"
+                        rel="noreferrer"
+                        key={index}
+                      >
+                        <div>
+                          {!item.description ? (
+                            <b>View transaction</b>
+                          ) : (
+                            <b>
+                              {item.description.substring(0, 1).toUpperCase()}
+                              {item.description.substring(1)} tx
+                            </b>
+                          )}
+                        </div>
+                      </a>
+                    ))}
+                  </div>
+                )}
               </div>
               {index + 1 === pendingSwap.steps.length && <ArrowDown />}
               <StepDetail

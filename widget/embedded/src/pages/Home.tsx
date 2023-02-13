@@ -14,6 +14,7 @@ import { ZERO } from '../utils/balance';
 import { getBestRouteToTokenUsdPrice } from '../utils/routing';
 import { useMetaStore } from '../store/meta';
 import { useWalletsStore } from '../store/wallets';
+import { BestRouteType } from '@rangodev/ui/dist/types/swaps';
 
 const Container = styled('div', {
   display: 'flex',
@@ -45,8 +46,7 @@ export function Home() {
   } = useBestRouteStore();
 
   const { loadingStatus } = useMetaStore();
-  const { balance, accounts } = useWalletsStore();
-  console.log('balance:', balance, 'accounts:', accounts);
+  const { balance, accounts, initSelectedWallets } = useWalletsStore();
 
   const swithFromAndTo = () => {
     setFromChain(toChain);
@@ -59,7 +59,7 @@ export function Home() {
   const { data, loading, error, retry } = useBestRoute();
 
   useEffect(() => {
-    setBestRoute(data);
+    setBestRoute(data as BestRouteType);
   }, [data]);
 
   const outputAmount = !!data?.result?.outputAmount
@@ -111,7 +111,8 @@ export function Home() {
           onClick={() => {
             if (buttonTitle === 'Connect Wallet') navigate(navigationRoutes.wallets);
             else {
-              navigate(navigationRoutes.confirmSwap);
+              initSelectedWallets();
+              navigate(navigationRoutes.confirmWallets);
             }
           }}>
           {buttonTitle}

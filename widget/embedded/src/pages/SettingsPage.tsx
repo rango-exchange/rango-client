@@ -50,7 +50,7 @@ export function SettingsPage() {
       onSlippageChange={(slippage) => setSlippage(slippage)}
       liquiditySources={uniqueSwappersGroups}
       selectedLiquiditySources={uniqueSwappersGroups.filter((s) => s.selected)}
-      onLiquiditySourcesClick={() => navigate(navigationRoutes.liquiditySources.split('/')[1])}
+      onLiquiditySourcesClick={() => navigate(navigationRoutes.liquiditySources)}
       onBack={navigate.bind(null, navigationRoutes.home)}
       customSlippage={customSlippage || NaN}
       onCustomSlippageChange={setCustomSlippage}

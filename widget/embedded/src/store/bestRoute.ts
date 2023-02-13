@@ -4,6 +4,7 @@ import { create } from 'zustand';
 import { immer } from 'zustand/middleware/immer';
 import BigNumber from 'bignumber.js';
 import { WalletBalance } from './wallets';
+import { BestRouteType } from '@rangodev/ui/dist/types/swaps';
 
 const getUsdValue = (token: Token | null, amount: number | null) =>
   new BigNumber(amount || 0).multipliedBy(token?.usdPrice || 0);
@@ -21,8 +22,8 @@ interface RouteState {
   setFromToken: (token: Token | null) => void;
   setToToken: (token: Token | null) => void;
   setInputAmount: (amount: number | null) => void;
-  bestRoute: BestRouteResponse | null;
-  setBestRoute: (bestRoute: BestRouteResponse | null) => void;
+  bestRoute: BestRouteType | null;
+  setBestRoute: (bestRoute: BestRouteType | null) => void;
 }
 
 export const useBestRouteStore = create<RouteState>()(
