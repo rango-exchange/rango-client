@@ -15,6 +15,8 @@ interface Settings {
   toggleInfinitApprove: () => void;
   toggleLiquiditySource: (name: string) => void;
   setTheme: (theme: Theme) => void;
+  clearDisabledLiquiditySource: () => void;
+  disabledAllLiquiditySource: (sources: string[]) => void;
 }
 
 export const useSettingsStore = create<Settings>()(
@@ -43,6 +45,14 @@ export const useSettingsStore = create<Settings>()(
           state.disabledLiquiditySources = state.disabledLiquiditySources.includes(name)
             ? state.disabledLiquiditySources.filter((liquiditySource) => liquiditySource != name)
             : state.disabledLiquiditySources.concat(name);
+        }),
+      clearDisabledLiquiditySource: () =>
+        set((state) => {
+          state.disabledLiquiditySources = [];
+        }),
+      disabledAllLiquiditySource: (sources) =>
+        set((state) => {
+          state.disabledLiquiditySources = sources;
         }),
       setTheme: (theme) =>
         set((state) => {
