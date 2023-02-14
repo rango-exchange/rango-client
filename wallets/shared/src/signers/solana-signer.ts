@@ -220,14 +220,22 @@ export async function signSolanaMessage(
 ): Promise<string> {
   try {
     const encodedMessage = new TextEncoder().encode(message);
-    const ethProvider = getNetworkInstance(provider, Network.SOLANA);
+    const solanaProvider = getNetworkInstance(provider, Network.SOLANA);
 
-    const { signature } = await ethProvider.request({
+    const { signature } = await solanaProvider.request({
       method: 'signMessage',
       params: {
         message: encodedMessage,
       },
     });
+
+    // its better to verify it on backend side.
+
+    // const isVerify = nacl.sign.detached.verify(
+    //   encodedMessage,
+    //   bs58.decode(signature),
+    //   bs58.decode(publicKey)
+    // );
 
     return signature;
   } catch (error) {

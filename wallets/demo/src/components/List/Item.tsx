@@ -14,6 +14,7 @@ import {
 import {
   evmBasedChainsSelector,
   prepareAccounts,
+  solanaBasedChainsSelector,
   walletAndSupportedChainsNames,
 } from '../../helper';
 
@@ -25,6 +26,7 @@ function Item({ type }: { type: WalletType }) {
   const [network, setNetwork] = useState<Network>(Network.Unknown);
   const [error, setError] = useState<string>('');
   const evmBasedChains = evmBasedChainsSelector(info.supportedChains);
+  const solanaBasedChains = solanaBasedChainsSelector(info.supportedChains);
   const handleConnectWallet = async () => {
     try {
       if (!walletState.connected) {
@@ -171,7 +173,7 @@ function Item({ type }: { type: WalletType }) {
             type="primary"
             suffix={<SignatureIcon size={24} color="white" />}
             onClick={() =>
-              evmBasedChains.length
+              evmBasedChains.length || solanaBasedChains.length
                 ? handleSigner()
                 : alert('At the moment, you can only test the signature on the EVM wallets')
             }>

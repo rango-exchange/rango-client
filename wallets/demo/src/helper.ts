@@ -1,5 +1,10 @@
 import { readAccountAddress } from '@rangodev/wallets-core';
-import { BlockchainMeta, isEvmBlockchain, Network } from '@rangodev/wallets-shared';
+import {
+  BlockchainMeta,
+  isEvmBlockchain,
+  isSolanaBlockchain,
+  Network,
+} from '@rangodev/wallets-shared';
 export type Blockchain = { name: Network; accounts: { address: string; isConnected: boolean }[] };
 
 export function prepareAccounts(
@@ -68,3 +73,6 @@ export const evmBasedChainsSelector = (blockchains: BlockchainMeta[]) =>
     .map((blockchainMeta) => blockchainMeta)
     .filter(isEvmBlockchain)
     .map((blockchainMeta) => blockchainMeta.name);
+
+export const solanaBasedChainsSelector = (blockchains: BlockchainMeta[]): BlockchainMeta[] =>
+  blockchains.filter(isSolanaBlockchain);
