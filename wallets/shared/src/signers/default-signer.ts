@@ -11,7 +11,7 @@ import {
 import { WalletError } from '../errors';
 import { executeEvmTransaction, signEvmMessage } from './evm-signer';
 import { executeCosmosTransaction } from './cosmos-signer';
-import { executeSolanaTransaction } from './solana-signer';
+import { executeSolanaTransaction, signSolanaMessage } from './solana-signer';
 import { executeStarknetTransaction } from './starknet-signer';
 import { executeTronTransaction } from './tron-signer';
 
@@ -63,13 +63,16 @@ export const defaultSigners = ({
       throw WalletError.UnsupportedError('executeEvmTransaction', walletType);
     },
 
-    signEvmMessage: async (
+    signMessage: async (
       walletAddress: string,
       message: string
     ): Promise<string> => {
-      if (supportEvm)
+      if (supportEvm) {
         return await signEvmMessage(walletAddress, message, provider);
-      throw WalletError.UnsupportedError('signEvmMessage', walletType);
+      } else if (supportSolana) {
+        return await signSolanaMessage(message, provider);
+      }
+      throw WalletError.UnsupportedError('signMessage', walletType);
     },
 
     executeTransfer: () => {

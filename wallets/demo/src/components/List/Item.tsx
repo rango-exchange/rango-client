@@ -65,7 +65,7 @@ function Item({ type }: { type: WalletType }) {
       ).find((a) => a.accounts.find((b) => b.isConnected));
       const signers = getSigners(type);
       signers
-        .signEvmMessage(activeAccount?.accounts[0].address || '', 'Hello World')
+        .signMessage(activeAccount?.accounts[0].address || '', 'Hello World')
         .then((signature) => {
           alert(signature);
         })
@@ -152,10 +152,7 @@ function Item({ type }: { type: WalletType }) {
           ))}
         </select>
         <div className="flex mb-5">
-          <Button
-            fullWidth
-            type="primary"
-            onClick={handleConnectWallet}>
+          <Button fullWidth type="primary" onClick={handleConnectWallet}>
             {!walletState.installed ? 'Install' : walletState.connected ? 'Disconnect' : 'Connect'}
           </Button>
           <Spacer size={12} />

@@ -32,7 +32,7 @@ export type WalletOperationName =
   | 'executeTransfer'
   | 'executeStarknetTransaction'
   | 'executeTronTransaction'
-  | 'signEvmMessage';
+  | 'signMessage';
 
 export class WalletError extends Error {
   public readonly code: WalletErrorCode;
