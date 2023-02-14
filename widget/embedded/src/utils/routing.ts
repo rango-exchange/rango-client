@@ -12,7 +12,7 @@ import { SelectedWallet } from './wallets';
 
 export const getBestRouteToTokenUsdPrice = (
   bestRoute: BestRouteResponse | null,
-): string | null | undefined =>
+): number | null | undefined =>
   bestRoute?.result?.swaps[bestRoute?.result?.swaps.length - 1].to.usdPrice;
 
 export type RouteChangeStatus = {

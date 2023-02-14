@@ -1,3 +1,4 @@
+import { RoutingResultType, TransactionType } from 'rango-sdk';
 import { PendingSwap } from './types';
 
 export const pendingSwap: PendingSwap[] = [
@@ -27,13 +28,13 @@ export const pendingSwap: PendingSwap[] = [
       disabledSwappersGroups: [],
     },
     simulationResult: {
+      resultType: RoutingResultType.OK,
       outputAmount: '1.540670',
       swaps: [
         {
           swapperId: 'Osmosis',
           swapperType: 'DEX',
           swapperLogo: '',
-          result: null,
           from: {
             symbol: 'JUNO',
             logo: 'https://api.rango.exchange/tokens/COSMOS/JUNO.png',
@@ -57,7 +58,7 @@ export const pendingSwap: PendingSwap[] = [
           fromAmountPrecision: null,
           fromAmountMinValue: null,
           fromAmountMaxValue: null,
-          fromAmountRestrictionType: null,
+          fromAmountRestrictionType: 'EXCLUSIVE',
           toAmount: '1.540670',
           fee: [
             {
@@ -68,6 +69,7 @@ export const pendingSwap: PendingSwap[] = [
               },
               expenseType: 'FROM_SOURCE_WALLET',
               amount: '0',
+              name: 'Network Fee',
             },
           ],
           estimatedTimeInSeconds: 45,
@@ -141,6 +143,8 @@ export const pendingSwap: PendingSwap[] = [
             max: 241,
           },
           includesDestinationTx: false,
+          maxRequiredSign: 1,
+          warnings: [],
         },
       ],
     },
@@ -180,7 +184,7 @@ export const pendingSwap: PendingSwap[] = [
           },
         ],
         cosmosTransaction: {
-          type: 'COSMOS',
+          type: TransactionType.COSMOS,
           fromWalletAddress: 'osmo1unf2rcytjxfpz8x8ar63h4qeftadptg5t0nqcl',
           blockChain: 'OSMOSIS',
           data: {
@@ -296,12 +300,12 @@ export const pendingSwap: PendingSwap[] = [
       disabledSwappersGroups: [],
     },
     simulationResult: {
+      resultType: RoutingResultType.OK,
       outputAmount: '1.540670',
       swaps: [
         {
           swapperId: 'Osmosis',
           swapperLogo: '',
-          result: null,
           swapperType: 'DEX',
           from: {
             symbol: 'JUNO',
@@ -326,7 +330,7 @@ export const pendingSwap: PendingSwap[] = [
           fromAmountPrecision: null,
           fromAmountMinValue: null,
           fromAmountMaxValue: null,
-          fromAmountRestrictionType: null,
+          fromAmountRestrictionType: 'EXCLUSIVE',
           toAmount: '1.540670',
           fee: [
             {
@@ -337,6 +341,7 @@ export const pendingSwap: PendingSwap[] = [
               },
               expenseType: 'FROM_SOURCE_WALLET',
               amount: '0',
+              name: 'Network Fee',
             },
           ],
           estimatedTimeInSeconds: 45,
@@ -410,6 +415,8 @@ export const pendingSwap: PendingSwap[] = [
             max: 241,
           },
           includesDestinationTx: false,
+          maxRequiredSign: 1,
+          warnings: [],
         },
       ],
     },
@@ -449,7 +456,7 @@ export const pendingSwap: PendingSwap[] = [
           },
         ],
         cosmosTransaction: {
-          type: 'COSMOS',
+          type: TransactionType.COSMOS,
           fromWalletAddress: 'osmo1unf2rcytjxfpz8x8ar63h4qeftadptg5t0nqcl',
           blockChain: 'OSMOSIS',
           data: {
@@ -565,10 +572,10 @@ export const pendingSwap: PendingSwap[] = [
       disabledSwappersGroups: [],
     },
     simulationResult: {
+      resultType: RoutingResultType.OK,
       outputAmount: '1.540670',
       swaps: [
         {
-          result: null,
           swapperId: 'Osmosis',
           swapperType: 'DEX',
           swapperLogo: '',
@@ -596,7 +603,7 @@ export const pendingSwap: PendingSwap[] = [
           fromAmountPrecision: null,
           fromAmountMinValue: null,
           fromAmountMaxValue: null,
-          fromAmountRestrictionType: null,
+          fromAmountRestrictionType: 'EXCLUSIVE',
           toAmount: '1.540670',
           fee: [
             {
@@ -607,6 +614,7 @@ export const pendingSwap: PendingSwap[] = [
               },
               expenseType: 'FROM_SOURCE_WALLET',
               amount: '0',
+              name: 'Network Fee',
             },
           ],
           estimatedTimeInSeconds: 45,
@@ -680,6 +688,8 @@ export const pendingSwap: PendingSwap[] = [
             max: 241,
           },
           includesDestinationTx: false,
+          maxRequiredSign: 1,
+          warnings: [],
         },
       ],
     },
@@ -719,7 +729,7 @@ export const pendingSwap: PendingSwap[] = [
           },
         ],
         cosmosTransaction: {
-          type: 'COSMOS',
+          type: TransactionType.COSMOS,
           fromWalletAddress: 'osmo1unf2rcytjxfpz8x8ar63h4qeftadptg5t0nqcl',
           blockChain: 'OSMOSIS',
           data: {
