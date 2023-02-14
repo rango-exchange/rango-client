@@ -14,7 +14,6 @@ import {
 import {
   evmBasedChainsSelector,
   prepareAccounts,
-  solanaBasedChainsSelector,
   walletAndSupportedChainsNames,
 } from '../../helper';
 
@@ -26,7 +25,6 @@ function Item({ type }: { type: WalletType }) {
   const [network, setNetwork] = useState<Network>(Network.Unknown);
   const [error, setError] = useState<string>('');
   const evmBasedChains = evmBasedChainsSelector(info.supportedChains);
-  const solanaBasedChains = solanaBasedChainsSelector(info.supportedChains);
   const handleConnectWallet = async () => {
     try {
       if (!walletState.connected) {

@@ -73,6 +73,3 @@ export const evmBasedChainsSelector = (blockchains: BlockchainMeta[]) =>
     .map((blockchainMeta) => blockchainMeta)
     .filter(isEvmBlockchain)
     .map((blockchainMeta) => blockchainMeta.name);
-
-export const solanaBasedChainsSelector = (blockchains: BlockchainMeta[]): BlockchainMeta[] =>
-  blockchains.filter(isSolanaBlockchain);
