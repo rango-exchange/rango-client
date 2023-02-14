@@ -1,5 +1,5 @@
 import { Network } from '@rangodev/wallets-shared';
-
+import { BestRouteResponse } from 'rango-sdk';
 export type SwapStatus = 'running' | 'failed' | 'success';
 export type MessageSeverity = 'error' | 'warning' | 'info' | 'success';
 
@@ -260,13 +260,4 @@ export type SimulationValidationStatus = {
   blockchain: string;
   wallets: SimulationWallet[];
 };
-export type BestRouteType = {
-  from: Asset;
-  to: Asset;
-  requestAmount: string;
-  result?: SimulationResult | null;
-  validationStatus: SimulationValidationStatus[] | null;
-  requestId: string;
-  missingBlockchains: string[];
-  diagnosisMessages: string[];
-};
+export type BestRouteType = BestRouteResponse
