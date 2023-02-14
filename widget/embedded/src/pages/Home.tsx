@@ -1,4 +1,4 @@
-import { BestRoute, Button, styled, VerticalSwapIcon } from '@rangodev/ui';
+import { BestRoute, Button, styled, VerticalSwapIcon, Alert } from '@rangodev/ui';
 import React, { useEffect, useState } from 'react';
 import { useInRouterContext, useNavigate } from 'react-router-dom';
 import { Header } from '../components/Header';
@@ -15,6 +15,7 @@ import { getBestRouteToTokenUsdPrice } from '../utils/routing';
 import { useMetaStore } from '../store/meta';
 import { useWalletsStore } from '../store/wallets';
 import { BestRouteType } from '@rangodev/ui/dist/types/swaps';
+import { errorMessages } from '../constants/errors';
 
 const Container = styled('div', {
   display: 'flex',
@@ -23,12 +24,25 @@ const Container = styled('div', {
   alignItems: 'center',
 });
 
+const SwitchButtonContainer = styled('div', {
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  position: 'relative',
+  top: '11px',
+});
+
 const BestRouteContainer = styled('div', {
   width: '100%',
-  padding: '0 $16',
+  paddingTop: '$16',
+});
+
+const Alerts = styled('div', {
+  paddingTop: '$16',
 });
 
 export function Home() {
+  const [waningMessage, setWarningMessage] = useState('');
   const isRouterInContext = useInRouterContext();
   const navigate = useNavigate();
   const { inputAmount, setInputAmount } = useBestRouteStore();
@@ -56,7 +70,10 @@ export function Home() {
     setCount((prev) => prev + 1);
   };
 
-  const { data, loading, error, retry } = useBestRoute();
+  const { data, loading, error: bestRouteError, retry } = useBestRoute();
+
+  const errorMessage =
+    loadingStatus === 'failed' ? errorMessages.genericServerError : bestRouteError;
 
   useEffect(() => {
     setBestRoute(data as BestRouteType);
@@ -70,7 +87,7 @@ export function Home() {
     (!loading && getBestRouteToTokenUsdPrice(data)) || toToken?.usdPrice || 0,
   );
 
-  const showBestRoute = inputAmount && (!!data || loading || error);
+  const showBestRoute = inputAmount && (!!data || loading || bestRouteError);
 
   const buttonDisabled = loading || (!data && loadingStatus != 'success');
 
@@ -86,10 +103,12 @@ export function Home() {
         onAmountChange={setInputAmount}
         inputAmount={inputAmount}
       />
-      <Button variant="ghost" onClick={swithFromAndTo}>
-        <VerticalSwapIcon size={36} />
-        {isRouterInContext && <SwithFromAndTo count={count} />}
-      </Button>
+      <SwitchButtonContainer>
+        <Button variant="ghost" onClick={swithFromAndTo}>
+          <VerticalSwapIcon size={36} />
+          {isRouterInContext && <SwithFromAndTo count={count} />}
+        </Button>
+      </SwitchButtonContainer>
       <TokenInfo
         type="To"
         chain={toChain}
@@ -99,8 +118,14 @@ export function Home() {
       />
       {showBestRoute && (
         <BestRouteContainer>
-          <BestRoute error={error} loading={loading} data={data} />
+          <BestRoute error={bestRouteError} loading={loading} data={data} />
         </BestRouteContainer>
+      )}
+      {(errorMessage || waningMessage) && (
+        <Alerts>
+          {errorMessage && <Alert description={errorMessage} type="error" />}
+          {waningMessage && <Alert description={waningMessage} type="warning" />}
+        </Alerts>
       )}
       <Footer>
         <Button

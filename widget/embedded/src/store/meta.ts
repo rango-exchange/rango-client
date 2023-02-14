@@ -2,9 +2,11 @@ import { create } from 'zustand';
 import { MetaResponse } from 'rango-sdk';
 import { httpService } from '../services/httpService';
 
+export type LoadingStatus = 'loading' | 'success' | 'failed';
+
 interface MetaState {
   meta: MetaResponse;
-  loadingStatus: 'loading' | 'success' | 'failed';
+  loadingStatus: LoadingStatus;
   fetchMeta: () => Promise<void>;
 }
 
@@ -20,7 +22,8 @@ export const useMetaStore = create<MetaState>()((set) => ({
       const enabledChains = response.blockchains.filter(
         (chain) => chain.enabled && chainThatHasTokenInMetaResponse.includes(chain.name),
       );
-      response.blockchains = enabledChains;
+      //@ts-ignore
+      response.blockchains = enabledChains.sort((a, b) => a.sort - b.sort);
       set({ meta: response, loadingStatus: 'success' });
     } catch (error) {
       set({ loadingStatus: 'failed' });

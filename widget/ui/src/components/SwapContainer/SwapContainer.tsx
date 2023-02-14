@@ -11,7 +11,7 @@ const MainContainer = styled('div', {
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'end',
-  padding: '$8',
+  padding: '$16 $24',
 });
 
 const ContentContainer = styled('div', {

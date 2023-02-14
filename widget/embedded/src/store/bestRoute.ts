@@ -60,7 +60,8 @@ export const useBestRouteStore = create<RouteState>()(
       }),
     setInputAmount: (amount) =>
       set((state) => {
-        state.inputAmount = amount;
+        if (amount === 0) state.inputAmount = null;
+        else state.inputAmount = amount;
         if (!!state.fromToken)
           state.inputUsdValue = getUsdValue(state.fromToken, state.inputAmount);
       }),

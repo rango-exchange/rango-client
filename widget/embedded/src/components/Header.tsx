@@ -7,7 +7,7 @@ export const HeaderContainer = styled('div', {
   justifyContent: 'space-between',
   alignItems: 'center',
   width: '100%',
-  padding: '$16 $8',
+  padding: '$16 0',
 });
 
 export function Header({ onClick }: { onClick: () => void }) {

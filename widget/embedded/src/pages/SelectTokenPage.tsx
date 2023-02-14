@@ -52,12 +52,12 @@ export function SelectTokenPage(props: PropTypes) {
             ZERO,
         ).multipliedBy(token.usdPrice),
       );
-
+    console.log(tokenAmount !== '0' ? tokenAmount : '');
     return {
       ...token,
       balance: {
-        amount: tokenAmount != '0' ? tokenAmount : '',
-        usdValue: tokenUsdValue,
+        amount: tokenAmount !== '0' ? tokenAmount : '',
+        usdValue: tokenUsdValue !== '0' ? tokenUsdValue : '',
       },
     };
   });
