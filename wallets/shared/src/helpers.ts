@@ -175,7 +175,7 @@ export function getCoinbaseInstance(
   return instances;
 }
 
-export function SortWalletsBasedOnState(wallets: Wallet[]): Wallet[] {
+export function sortWalletsBasedOnState(wallets: Wallet[]): Wallet[] {
   return wallets.sort(
     (a, b) =>
       Number(b.connected) - Number(a.connected) ||

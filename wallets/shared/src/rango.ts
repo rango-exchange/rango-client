@@ -740,5 +740,5 @@ export interface Wallet {
   extensionAvailable?: boolean;
   installed?: boolean;
   connected: boolean;
-  info: Partial<WalletInfo>;
+  info: Omit<WalletInfo, "color" | "supportedChains">;
 }
