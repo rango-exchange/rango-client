@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useWallets } from '@rangodev/wallets-core';
-import { Network, WalletType, detectInstallLink } from '@rangodev/wallets-shared';
+import { Network, WalletType, detectInstallLink, WalletInfo } from '@rangodev/wallets-shared';
 import './styles.css';
 import {
   Button,
@@ -17,10 +17,8 @@ import {
   walletAndSupportedChainsNames,
 } from '../../helper';
 
-function Item({ type }: { type: WalletType }) {
-  const { connect, state, disconnect, canSwitchNetworkTo, getWalletInfo, getSigners } =
-    useWallets();
-  const info = getWalletInfo(type);
+function Item({ type, info }: { type: WalletType; info: WalletInfo }) {
+  const { connect, state, disconnect, canSwitchNetworkTo, getSigners } = useWallets();
   const walletState = state(type);
   const [network, setNetwork] = useState<Network>(Network.Unknown);
   const [error, setError] = useState<string>('');
