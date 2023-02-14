@@ -723,6 +723,7 @@ export const cosmosBlockchains = (allBlockChains: BlockchainMeta[]) =>
 export type InstallObjects = {
   CHROME: string;
   FIREFOX?: string;
+  EDGE?: string;
 };
 
 export type WalletInfo = {
@@ -731,6 +732,7 @@ export type WalletInfo = {
   installLink: InstallObjects | string;
   color: string;
   supportedChains: BlockchainMeta[];
+  showOnMobile?: boolean;
 };
 
 export interface Wallet {

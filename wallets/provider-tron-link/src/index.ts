@@ -70,8 +70,11 @@ export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
   return {
     name: 'TronLink',
     img: 'https://raw.githubusercontent.com/rango-exchange/rango-types/main/assets/icons/wallets/tronlink.png',
-    installLink:
-      'https://chrome.google.com/webstore/detail/tronlink/ibnejdfjmmkpcnlpebklmnkoeoihofec',
+    installLink: {
+      CHROME:
+        'https://chrome.google.com/webstore/detail/tronlink/ibnejdfjmmkpcnlpebklmnkoeoihofec',
+      FIREFOX: 'https://addons.mozilla.org/en-US/firefox/addon/tronlink-wallet',
+    },
     color: '#96e7ed',
     supportedChains: tron,
   };

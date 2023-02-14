@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { useWallets, detectInstallLink } from '@rangodev/wallets-core';
-import { Network, WalletType } from '@rangodev/wallets-shared';
+import { useWallets } from '@rangodev/wallets-core';
+import { Network, WalletType, detectInstallLink } from '@rangodev/wallets-shared';
 import './styles.css';
 import {
   Button,
@@ -33,11 +33,7 @@ function Item({ type }: { type: WalletType }) {
           setError('');
           setNetwork(result.network || Network.Unknown);
         } else {
-          const detectBrowser =
-            typeof info.installLink === 'object'
-              ? detectInstallLink(info.installLink)
-              : info.installLink;
-          window.open(detectBrowser, '_blank');
+          window.open(detectInstallLink(info.installLink), '_blank');
         }
       } else {
         disconnect(type);

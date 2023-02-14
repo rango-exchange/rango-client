@@ -5,6 +5,7 @@ import {
   Network,
   Connect,
   Wallet,
+  InstallObjects,
 } from './rango';
 
 export function deepCopy(obj: any): any {
@@ -180,5 +181,27 @@ export function SortWalletsBasedOnState(wallets: Wallet[]): Wallet[] {
       Number(b.connected) - Number(a.connected) ||
       Number(b.installed) - Number(a.installed) ||
       Number(b.extensionAvailable) - Number(a.extensionAvailable)
+  );
+}
+
+export function detectInstallLink(install: InstallObjects | string): string {
+  if (typeof install !== 'object') {
+    return install;
+  } else {
+    let link;
+    if (navigator.userAgent.indexOf('Chrome') !== -1) {
+      link = install.CHROME;
+    } else if (navigator.userAgent.indexOf('Firefox') !== -1) {
+      link = install.FIREFOX;
+    } else if (navigator.userAgent.indexOf('Edge') !== -1) {
+      link = install.EDGE;
+    }
+    return link || install.CHROME;
+  }
+}
+
+export function detectSmallScreens(): boolean {
+  return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+    navigator.userAgent
   );
 }
