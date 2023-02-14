@@ -68,16 +68,14 @@ export const defaultSigners = ({
       walletAddress: string,
       message: string
     ): Promise<string> => {
-      if (supportEvm) {
+      if (supportEvm)
         return await signEvmMessage(walletAddress, message, provider);
-      }
       throw WalletError.UnsupportedError('signEvmMessage', walletType);
     },
 
     signSolanaMessage: async (message: string): Promise<string> => {
-      if (supportSolana) {
-        return await signSolanaMessage(message, provider);
-      }
+      if (supportSolana) return await signSolanaMessage(message, provider);
+
       throw WalletError.UnsupportedError('signSolanaMessage', walletType);
     },
 
@@ -86,9 +84,8 @@ export const defaultSigners = ({
       message: string,
       meta: BlockchainMeta[]
     ): Promise<string> => {
-      if (supportCosmos) {
+      if (supportCosmos)
         return await signCosmosMessage(walletAddress, message, provider, meta);
-      }
       throw WalletError.UnsupportedError('signCosmosMessage', walletType);
     },
 

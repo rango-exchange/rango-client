@@ -1,10 +1,5 @@
 import { readAccountAddress } from '@rangodev/wallets-core';
-import {
-  BlockchainMeta,
-  isEvmBlockchain,
-  isSolanaBlockchain,
-  Network,
-} from '@rangodev/wallets-shared';
+import { BlockchainMeta, isEvmBlockchain, Network } from '@rangodev/wallets-shared';
 export type Blockchain = { name: Network; accounts: { address: string; isConnected: boolean }[] };
 
 export function prepareAccounts(

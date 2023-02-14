@@ -18,8 +18,6 @@ import {
 import { getNetworkInstance } from '../providers';
 import { WalletError, WalletErrorCode } from '../errors';
 import { getCosmosExperimentalChainInfo } from '../getCosmosAccounts';
-// import { DirectSecp256k1HdWallet } from '@cosmjs/proto-signing';
-// import { SigningCosmosClient } from '@cosmjs/launchpad';
 
 // todo: unhardcode this. sifchain has some gas price apis. but gaslimits might be hardcoded still
 // hardcoded based on
