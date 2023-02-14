@@ -66,8 +66,16 @@ function Item({ type }: { type: WalletType }) {
         supportedChainsNames,
       ).find((a) => a.accounts.find((b) => b.isConnected));
       const signers = getSigners(type);
-      signers
-        .signMessage(activeAccount?.accounts[0].address || '', 'Hello World')
+      const result =
+        (network === Network.COSMOS &&
+          signers.signCosmosMessage(
+            activeAccount?.accounts[0].address || '',
+            'Hello World',
+            info.supportedChains,
+          )) ||
+        (network === Network.SOLANA && signers.signSolanaMessage('Hello World')) ||
+        signers.signEvmMessage(activeAccount?.accounts[0].address || '', 'Hello World');
+      result
         .then((signature) => {
           alert(signature);
         })
@@ -172,11 +180,7 @@ function Item({ type }: { type: WalletType }) {
             disabled={!walletState.connected}
             type="primary"
             suffix={<SignatureIcon size={24} color="white" />}
-            onClick={() =>
-              evmBasedChains.length || solanaBasedChains.length
-                ? handleSigner()
-                : alert('At the moment, you can only test the signature on the EVM wallets')
-            }>
+            onClick={handleSigner}>
             Sign
           </Button>
           <Spacer size={12} />

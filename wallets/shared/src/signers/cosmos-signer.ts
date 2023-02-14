@@ -12,9 +12,14 @@ import {
   Network,
   Meta,
   uint8ArrayToHex,
+  CosmosBlockchainMeta,
+  BlockchainMeta,
 } from '../rango';
 import { getNetworkInstance } from '../providers';
 import { WalletError, WalletErrorCode } from '../errors';
+import { getCosmosExperimentalChainInfo } from '../getCosmosAccounts';
+// import { DirectSecp256k1HdWallet } from '@cosmjs/proto-signing';
+// import { SigningCosmosClient } from '@cosmjs/launchpad';
 
 // todo: unhardcode this. sifchain has some gas price apis. but gaslimits might be hardcoded still
 // hardcoded based on
@@ -260,4 +265,28 @@ function manipulateMsgForDirectIBC(m: any): any {
     return result;
   }
   return { ...m };
+}
+
+export async function signCosmosMessage(
+  walletAddress: string,
+  messages: string,
+  provider: any,
+  meta: BlockchainMeta[]
+): Promise<string> {
+  try {
+    const cosmosProvider = getNetworkInstance(provider, Network.COSMOS);
+    const chainInfo = getCosmosExperimentalChainInfo(
+      meta as CosmosBlockchainMeta[]
+    )[Network.COSMOS];
+
+    const { signature } = await cosmosProvider.signArbitrary(
+      chainInfo.id,
+      walletAddress,
+      messages
+    );
+
+    return signature;
+  } catch (error) {
+    throw new WalletError(WalletErrorCode.SIGN_TX_ERROR, undefined, error);
+  }
 }

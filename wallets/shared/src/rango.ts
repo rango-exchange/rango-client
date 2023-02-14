@@ -702,7 +702,13 @@ export type WalletSigners = {
     meta: Meta
   ) => Promise<string>;
   executeTronTransaction: (tx: TronTransaction, meta: Meta) => Promise<string>;
-  signMessage: (walletAddress: string, message: string) => Promise<string>;
+  signEvmMessage: (walletAddress: string, message: string) => Promise<string>;
+  signSolanaMessage: (message: string) => Promise<string>;
+  signCosmosMessage: (
+    walletAddress: string,
+    message: string,
+    meta: BlockchainMeta[]
+  ) => Promise<string>;
 };
 
 export const evmBlockchains = (allBlockChains: BlockchainMeta[]) =>

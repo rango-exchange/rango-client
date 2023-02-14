@@ -23,7 +23,9 @@ const getCosmosMiscChainsIds = (blockchains: CosmosBlockchainMeta[]) =>
     .filter((blockchain) => blockchain.info?.experimental)
     .map((blockchain) => blockchain.chainId);
 
-const getCosmosExperimentalChainInfo = (blockchains: CosmosBlockchainMeta[]) =>
+export const getCosmosExperimentalChainInfo = (
+  blockchains: CosmosBlockchainMeta[]
+) =>
   blockchains
     .filter((blockchain) => !!blockchain.info)
     .reduce(
