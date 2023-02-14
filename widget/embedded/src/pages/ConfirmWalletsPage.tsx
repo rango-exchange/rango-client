@@ -50,7 +50,6 @@ export function calculatePendingSwap(
     settings: settings,
     simulationResult: simulationResult,
     validateBalanceOrFee,
-    //@ts-ignore
     steps:
       bestRoute.result?.swaps?.map((s, i) => ({
         id: i + 1,
@@ -70,7 +69,7 @@ export function calculatePendingSwap(
         startTransactionTime: new Date().getTime(),
         swapperId: s.swapperId,
         expectedOutputAmountHumanReadable: s.toAmount,
-        outputAmount: null,
+        outputAmount: s.toAmount,
         status: 'created',
         networkStatus: null,
         executedTransactionId: null,

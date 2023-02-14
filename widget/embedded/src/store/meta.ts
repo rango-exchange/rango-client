@@ -22,7 +22,6 @@ export const useMetaStore = create<MetaState>()((set) => ({
       const enabledChains = response.blockchains.filter(
         (chain) => chain.enabled && chainThatHasTokenInMetaResponse.includes(chain.name),
       );
-      //@ts-ignore
       response.blockchains = enabledChains.sort((a, b) => a.sort - b.sort);
       set({ meta: response, loadingStatus: 'success' });
     } catch (error) {

@@ -134,7 +134,7 @@ export type SwapSavedSettings = {
 export type SwapResultAsset = {
   symbol: string;
   logo: string;
-  blockchainlogo: string;
+  blockchainLogo: string;
   address: string | null;
   blockchain: Network | any;
   decimals: number;
@@ -221,10 +221,10 @@ export type SwapResult = {
   to: SwapResultAsset;
   swapperType: string;
   fromAmount: string;
-  fromAmountPrecision: number | string | null;
+  fromAmountPrecision: string | null;
   fromAmountRestrictionType: null | 'EXCLUSIVE' | 'INCLUSIVE';
-  fromAmountMinValue: number | string | null;
-  fromAmountMaxValue: number | string | null;
+  fromAmountMinValue: string | null;
+  fromAmountMaxValue: string | null;
   toAmount: string;
   fee: SwapFee[];
   estimatedTimeInSeconds: number;

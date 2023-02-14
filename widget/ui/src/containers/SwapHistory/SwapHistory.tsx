@@ -97,7 +97,6 @@ export function SwapHistory(props: PropTypes) {
               <StepDetail
                 logo={step.toLogo}
                 symbol={step.toSymbol}
-                //@ts-ignore
                 chainLogo={step.toBlockchainLogo}
                 blockchain={step.toBlockchain}
                 amount={step.outputAmount}
