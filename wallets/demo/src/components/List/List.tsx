@@ -2,7 +2,7 @@ import { WalletType } from '@rangodev/wallets-shared';
 import React from 'react';
 import Item from './Item';
 import './styles.css';
-const excludedWallets = [WalletType.UNKNOWN, WalletType.TERRA_STATION, WalletType.LEAP];
+const excludedWallets = [WalletType.UNKNOWN, WalletType.TERRA_STATION, WalletType.LEAP, WalletType.TRON_LINK];
 
 function List() {
   return (
