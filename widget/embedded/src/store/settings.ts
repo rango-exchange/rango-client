@@ -27,7 +27,6 @@ export const useSettingsStore = create<Settings>()(
       theme: 'auto',
       setSlippage: (slippage) =>
         set((state) => {
-          console.log(state);
           state.slippage = slippage;
         }),
       setCustomSlippage: (customSlippage) => {

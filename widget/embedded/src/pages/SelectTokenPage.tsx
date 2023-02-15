@@ -52,7 +52,6 @@ export function SelectTokenPage(props: PropTypes) {
             ZERO,
         ).multipliedBy(token.usdPrice),
       );
-    console.log(tokenAmount !== '0' ? tokenAmount : '');
     return {
       ...token,
       balance: {

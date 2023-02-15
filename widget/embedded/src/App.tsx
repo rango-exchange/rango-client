@@ -41,7 +41,6 @@ export function App() {
   const { blockchains } = useMetaStore((state) => state.meta);
   const { insertAccount, disconnectWallet } = useWalletsStore();
   const { accounts, balance, insertBalance } = useWalletsStore();
-  console.log(accounts, balance);
   const evmBasedChainNames = useMetaStore((state) => state.meta.blockchains as any)
     .filter(isEvmBlockchain)
     .map((chain) => chain.name);

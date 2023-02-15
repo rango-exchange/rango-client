@@ -172,9 +172,5 @@ export const getSelectableWallets = (
     });
   });
 
-  console.log(
-    'wallet arr',
-    connectedWallets.filter((wallet) => requiredChains.includes(wallet.blockchain)),
-  );
   return connectedWallets.filter((wallet) => requiredChains.includes(wallet.blockchain));
 };

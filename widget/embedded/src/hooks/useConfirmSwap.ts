@@ -178,7 +178,6 @@ export function useConfirmSwap() {
         settings,
         false,
       );
-      console.log('pendingSwap:', newSwap);
     }
 
     !proceedAnyway &&
@@ -214,7 +213,6 @@ export function useConfirmSwap() {
                 settings,
                 true,
               );
-              console.log('pendingSwap:', newSwap);
             } else if (!hasEnoughBalanceOrSlippage.balance) {
               setError('not enough balance');
             }

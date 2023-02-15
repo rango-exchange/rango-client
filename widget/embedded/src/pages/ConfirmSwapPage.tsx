@@ -13,8 +13,6 @@ export function ConfirmSwapPage() {
   const { data, error, loading, warning, bestRouteChanged, enoughBalance, feeStatus } =
     useConfirmSwap();
 
-  console.log(data, error, loading, warning, bestRouteChanged, enoughBalance, feeStatus);
-
   return (
     <ConfirmSwap
       onConfirm={() => emitter.emit('confirm_swap')}
