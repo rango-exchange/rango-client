@@ -34,7 +34,6 @@ cd packages/widget
 yarn start
 ```
 
-
 ## Todos
 
 - [ ] Migrate wallets
