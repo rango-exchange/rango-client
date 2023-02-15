@@ -91,6 +91,7 @@ export function calculatePendingSwap(
         fromBlockchainLogo: '',
         toBlockchainLogo: '',
         swapperLogo: '',
+        swapperType: '',
       })) || [],
   };
 }
@@ -114,16 +115,14 @@ export function ConfirmWalletsPage() {
     });
     return wallets;
   };
+  //@ts-ignore
+  const confirmDisabled = !requiredWallets(bestRoute).every((chain) =>
+    selectedWallets.map((wallet) => wallet.blockchain).includes(chain),
+  );
 
-  const walletsForCalculatePendingSwap: { [p: string]: WalletTypeAndAddress } = {};
-
-  // requiredWallets(bestRoute).forEach(
-  //   (blockchain) =>
-  //     (walletsForCalculatePendingSwap[blockchain] = {
-  //       walletType: connectedWallets.filter((w) => w.blockchain === blockchain)[0].walletType,
-  //       address: connectedWallets.filter((w) => w.blockchain === blockchain)[0].address,
-  //     }),
-  // );
+  useEffect(() => {
+    initSelectedWallets();
+  }, []);
 
   return (
     <ConfirmWallets
@@ -138,6 +137,7 @@ export function ConfirmWalletsPage() {
       swap={bestRoute as any}
       onConfirm={() => navigate(navigationRoutes.confirmSwap)}
       onChange={(wallet) => setSelectedWallet(wallet)}
+      confirmDisabled={confirmDisabled}
     />
   );
 }

@@ -70,6 +70,8 @@ export const StyledUpdateIcon = styled(UpdateIcon, {
   cursor: 'pointer',
 });
 
+const Alerts = styled('div', { paddingBottom: '$16' });
+
 export interface PropTypes {
   bestRoute: BestRouteType | null;
   onRefresh?: React.MouseEventHandler<SVGElement>;
@@ -92,6 +94,8 @@ export function ConfirmSwap({
   error,
   warning,
 }: PropsWithChildren<PropTypes>) {
+  console.log('error', error);
+  console.log('warning', warning);
   return (
     <SecondaryPage
       textField={false}
@@ -123,8 +127,10 @@ export function ConfirmSwap({
       TopButton={<StyledUpdateIcon size={24} onClick={onRefresh} />}
       Content={bestRoute?.result?.swaps.map((swap, index) => (
         <>
-          {error && <Alert description={error} type="error" />}
-          {warning && <Alert description={warning} type="warning" />}
+          <Alerts>
+            {error && <Alert description={error} type="error" />}
+            {warning && <Alert description={warning} type="warning" />}
+          </Alerts>
           {index === 0 && (
             <RelativeContainer>
               <StepDetail

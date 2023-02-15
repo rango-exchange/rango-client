@@ -1,4 +1,4 @@
-import { BestRoute, Button, styled, VerticalSwapIcon, Alert } from '@rangodev/ui';
+import { Alert, BestRoute, Button, styled, VerticalSwapIcon } from '@rangodev/ui';
 import React, { useEffect, useState } from 'react';
 import { useInRouterContext, useNavigate } from 'react-router-dom';
 import { Header } from '../components/Header';
@@ -11,7 +11,6 @@ import { navigationRoutes } from '../constants/navigationRoutes';
 import { useBestRoute } from '../hooks/useBestRoute';
 import BigNumber from 'bignumber.js';
 import { ZERO } from '../utils/balance';
-import { getBestRouteToTokenUsdPrice } from '../utils/routing';
 import { useMetaStore } from '../store/meta';
 import { useWalletsStore } from '../store/wallets';
 import { BestRouteType } from '@rangodev/ui/dist/types/swaps';
@@ -45,7 +44,6 @@ export function Home() {
   const [waningMessage, setWarningMessage] = useState('');
   const isRouterInContext = useInRouterContext();
   const navigate = useNavigate();
-  const { inputAmount, setInputAmount } = useBestRouteStore();
   const [count, setCount] = useState(0);
   const {
     fromChain,
@@ -57,6 +55,12 @@ export function Home() {
     setToChain,
     setToToken,
     setBestRoute,
+    inputUsdValue,
+    inputAmount,
+    setInputAmount,
+    outputAmount,
+    outputUsdValue,
+    bestRoute,
   } = useBestRouteStore();
 
   const { loadingStatus } = useMetaStore();
@@ -67,6 +71,7 @@ export function Home() {
     setFromToken(toToken);
     setToChain(fromChain);
     setToToken(fromToken);
+    setInputAmount(outputAmount?.toString() || '');
     setCount((prev) => prev + 1);
   };
 
@@ -79,19 +84,82 @@ export function Home() {
     setBestRoute(data as BestRouteType);
   }, [data]);
 
-  const outputAmount = !!data?.result?.outputAmount
-    ? new BigNumber(data?.result?.outputAmount)
-    : null;
-
-  const outUsdValue: BigNumber = (outputAmount || ZERO).multipliedBy(
-    (!loading && getBestRouteToTokenUsdPrice(data)) || toToken?.usdPrice || 0,
-  );
-
   const showBestRoute = inputAmount && (!!data || loading || bestRouteError);
 
-  const buttonDisabled = loading || (!data && loadingStatus != 'success');
+  const hasLimitError =
+    !loading &&
+    !!bestRoute?.result &&
+    (bestRoute?.result?.swaps || []).filter((swap) => {
+      const minimum = !!swap.fromAmountMinValue ? new BigNumber(swap.fromAmountMinValue) : null;
+      const maximum = !!swap.fromAmountMaxValue ? new BigNumber(swap.fromAmountMaxValue) : null;
+      const isExclusive = swap.fromAmountRestrictionType === 'EXCLUSIVE';
+      return (
+        (!isExclusive &&
+          ((!!minimum && minimum?.gt(swap.fromAmount)) ||
+            (!!maximum && maximum?.lt(swap.fromAmount)))) ||
+        (isExclusive &&
+          ((!!minimum && minimum?.gte(swap.fromAmount)) ||
+            (!!maximum && maximum?.lte(swap.fromAmount))))
+      );
+    }).length > 0;
 
-  const buttonTitle = balance.length === 0 ? 'Connect Wallet' : 'Swap';
+  const outToInRatio =
+    inputUsdValue === null || inputUsdValue.lte(ZERO)
+      ? 0
+      : outputUsdValue === null || outputUsdValue.lte(ZERO)
+      ? 0
+      : outputUsdValue.div(inputUsdValue).minus(1).multipliedBy(100);
+
+  const outToRatioHasWarning =
+    (parseInt(outToInRatio?.toFixed(2) || '0') <= -10 &&
+      (inputUsdValue === null || inputUsdValue.gte(new BigNumber(200)))) ||
+    (parseInt(outToInRatio?.toFixed(2) || '0') <= -5 &&
+      (inputUsdValue === null || inputUsdValue.gte(new BigNumber(1000))));
+
+  const priceImpactCanNotBeComputed =
+    (inputUsdValue === null ||
+      inputUsdValue.lte(ZERO) ||
+      outputUsdValue === null ||
+      outputUsdValue.lte(ZERO)) &&
+    inputAmount !== '' &&
+    inputAmount !== '0' &&
+    parseFloat(inputAmount || '0') !== 0 &&
+    !!bestRoute?.result;
+
+  const needsToWarnEthOnPath = false;
+
+  const buttonTitle =
+    accounts.length > 0
+      ? hasLimitError
+        ? 'Limit Error'
+        : loading
+        ? 'Finding Best Route...'
+        : outToRatioHasWarning
+        ? 'Price impact is too high!'
+        : priceImpactCanNotBeComputed
+        ? 'USD price is unknown, price impact might be high!'
+        : needsToWarnEthOnPath
+        ? 'The route goes through Ethereum. Continue?'
+        : 'Swap'
+      : loading
+      ? 'Finding Best Route...'
+      : outToRatioHasWarning
+      ? 'Price impact is too high!'
+      : priceImpactCanNotBeComputed
+      ? 'USD price is unknown, price impact might be high!'
+      : needsToWarnEthOnPath
+      ? 'The route goes through Ethereum. Continue?'
+      : 'Connect Wallet';
+
+  const buttonDisabled =
+    loading ||
+    (accounts.length > 0 && hasLimitError) ||
+    (accounts.length > 0 && !bestRoute?.result) ||
+    (parseInt(outToInRatio?.toFixed(2) || '0') <= -10 &&
+      (inputUsdValue === null || inputUsdValue.gte(new BigNumber(400)))) ||
+    (parseInt(outToInRatio?.toFixed(2) || '0') <= -5 &&
+      (inputUsdValue === null || inputUsdValue.gte(new BigNumber(1000)))) ||
+    loadingStatus != 'success';
 
   return (
     <Container>
@@ -114,7 +182,7 @@ export function Home() {
         chain={toChain}
         token={toToken}
         outputAmount={outputAmount}
-        outputUsdValue={outUsdValue}
+        outputUsdValue={outputUsdValue}
       />
       {showBestRoute && (
         <BestRouteContainer>
@@ -136,7 +204,6 @@ export function Home() {
           onClick={() => {
             if (buttonTitle === 'Connect Wallet') navigate(navigationRoutes.wallets);
             else {
-              initSelectedWallets();
               navigate(navigationRoutes.confirmWallets);
             }
           }}>

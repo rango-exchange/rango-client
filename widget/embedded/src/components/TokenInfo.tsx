@@ -10,11 +10,11 @@ import { getBalanceFromWallet } from '../utils/balance';
 import { useWalletsStore } from '../store/wallets';
 
 type PropTypes = (
-  | { type: 'From'; inputAmount: number | null; onAmountChange: (amount: number) => void }
+  | { type: 'From'; inputAmount: string; onAmountChange: (amount: string) => void }
   | {
       type: 'To';
       outputAmount: BigNumber | null;
-      outputUsdValue: BigNumber;
+      outputUsdValue: BigNumber | null;
     }
 ) & { chain: BlockchainMeta | null; token: Token | null };
 
@@ -117,8 +117,7 @@ export function TokenInfo(props: PropTypes) {
             <div
               className="balance"
               onClick={() => {
-                if (tokenBalance !== '0')
-                  setInputAmount(parseFloat(tokenBalanceReal.split(',').join('')));
+                if (tokenBalance !== '0') setInputAmount(tokenBalanceReal.split(',').join(''));
               }}>
               <Button variant="ghost" size="small">
                 <Typography variant="body2">{`Max: ${tokenBalance} ${
@@ -190,9 +189,9 @@ export function TokenInfo(props: PropTypes) {
                 </span>
               }
               {...(props.type === 'From' && {
-                value: props.inputAmount?.toString() || '',
+                value: props.inputAmount || '',
                 onChange: (event) => {
-                  props.onAmountChange(parseFloat(event.target.value || '0'));
+                  props.onAmountChange(event.target.value);
                 },
               })}
             />

@@ -7,7 +7,7 @@ import { useSettingsStore } from '../store/settings';
 
 export function useBestRoute() {
   const { fromToken, toToken, inputAmount } = useBestRouteStore();
-  const { slippage, customSlippage, infinitApprove } = useSettingsStore();
+  const { slippage, customSlippage, infinitApprove, disabledLiquiditySources } = useSettingsStore();
   const swapSettings: UserSettings = {
     slippage: customSlippage?.toString() || slippage.toString(),
   };
@@ -32,6 +32,9 @@ export function useBestRoute() {
         connectedWallets: [],
         selectedWallets: {},
         checkPrerequisites: false,
+        //@ts-ignore
+        swapperGroups: disabledLiquiditySources,
+        swappersGroupsExclude: true,
         from: {
           address: fromToken.address,
           blockchain: fromToken.blockchain,
@@ -53,7 +56,15 @@ export function useBestRoute() {
           setLoading(false);
         });
     }
-  }, [fromToken, toToken, inputAmount, count]);
+  }, [
+    fromToken,
+    toToken,
+    inputAmount,
+    count,
+    slippage,
+    customSlippage,
+    disabledLiquiditySources.length,
+  ]);
 
   return { loading, error, data, retry };
 }

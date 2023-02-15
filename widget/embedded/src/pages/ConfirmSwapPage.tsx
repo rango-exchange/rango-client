@@ -22,6 +22,7 @@ export function ConfirmSwapPage() {
       bestRoute={bestRoute}
       loading={loading}
       error={error}
+      warning={warning}
     />
   );
 }

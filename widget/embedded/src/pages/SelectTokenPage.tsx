@@ -70,9 +70,9 @@ export function SelectTokenPage(props: PropTypes) {
       onChange={(token) => {
         if (type === 'from') setFromToken(token);
         else setToToken(token);
-        navigate(navigationRoutes.home);
+        navigate(-1);
       }}
-      onBack={navigate.bind(null, navigationRoutes.home)}
+      onBack={navigate.bind(null, -1)}
     />
   );
 }

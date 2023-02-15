@@ -1,4 +1,4 @@
-import React, { PropsWithChildren, useState } from 'react';
+import React, { PropsWithChildren, useEffect, useState } from 'react';
 import { SelectableWallet } from '../../containers/ConfirmWallets/types';
 import { styled } from '../../theme';
 import { Typography } from '../Typography';
@@ -85,6 +85,11 @@ export function SelectableWalletList({
     setActive(w.walletType);
     onChange(w);
   };
+
+  useEffect(() => {
+    setActive(list.find((item) => item.selected)?.walletType || '');
+  }, [list]);
+
   return (
     <Row>
       {list.map((w, index) => {

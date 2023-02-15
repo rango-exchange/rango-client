@@ -34,6 +34,7 @@ export type PendingSwapStep = {
   toLogo: string;
   swapperId: SwapperId;
   swapperLogo: string;
+  swapperType: string;
   expectedOutputAmountHumanReadable: string | null;
   startTransactionTime: number;
   outputAmount: string;

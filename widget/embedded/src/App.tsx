@@ -13,6 +13,7 @@ import { prepareAccountsForWalletStore, walletAndSupportedChainsNames } from './
 import { useWalletsStore } from './store/wallets';
 import { httpService } from './services/httpService';
 import { Layout } from './components/Layout';
+import { globalStyles } from './globalStyles';
 
 const providers = allProviders();
 interface Token {
@@ -35,6 +36,7 @@ export type WidgetProps = {
 };
 
 export function App() {
+  globalStyles();
   const fetchMeta = useMetaStore((state) => state.fetchMeta);
   const { blockchains } = useMetaStore((state) => state.meta);
   const { insertAccount, disconnectWallet } = useWalletsStore();

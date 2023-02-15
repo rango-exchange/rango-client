@@ -3,4 +3,5 @@ export enum SearchParams {
   'FROM_TOKEN' = 'fromToken',
   'TO_CHAIN' = 'toChain',
   'TO_TOKEN' = 'toToken',
+  'FROM_AMOUNT' = 'fromAmount',
 }

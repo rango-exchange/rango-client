@@ -48,8 +48,6 @@ export function useConfirmSwap() {
   ): { balance: boolean; slippage: boolean; routeChanged: boolean } => {
     const fee = route.validationStatus;
 
-    // TODO:
-    // if (fee === null) return {balance: false, slippage: true};
     if (fee === null || fee.length === 0) return { balance: true, slippage: true, routeChanged };
 
     for (const wallet of selectedWallets) {
@@ -113,6 +111,9 @@ export function useConfirmSwap() {
           (sw: Record<string, string>, wallet) => ((sw[wallet.blockchain] = wallet.address), sw),
           {},
         ),
+        //@ts-ignore
+        swapperGroups: disabledLiquiditySources,
+        swappersGroupsExclude: true,
       })
       .catch((error) => {
         setError(error.message);
@@ -133,6 +134,8 @@ export function useConfirmSwap() {
     const isChanged = routeChangeStatus.isChanged;
     const changeWarningMessage = routeChangeStatus.warningMessage;
     setBestRouteChanged(isChanged);
+    setWarning('Best route changed');
+    setData(r);
     // setOutputAmount(!!r.result?.outputAmount ? new BigNumber(r.result?.outputAmount) : null);
     return {
       hasEnoughBalanceOrSlippage: hasEnoughBalanceOrProperSlippage(
@@ -164,7 +167,7 @@ export function useConfirmSwap() {
 
     const settings: SwapSavedSettings = {
       slippage: slippage.toString(),
-      disabledSwappersGroups: disabledLiquiditySources,
+      disabledSwappersGroups: ['Osmosis'],
       disabledSwappersIds: [],
     };
     if (proceedAnyway) {

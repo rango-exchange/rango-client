@@ -4,17 +4,55 @@ import {
   SecondaryPage,
   GasIcon,
   Typography,
+  CheckCircleIcon,
+  InfoCircleIcon,
 } from '../../components';
+import { styled } from '../../theme';
 import {
   RelativeContainer,
   Dot,
-  Line,
   SwapperContainer,
   SwapperLogo,
   ArrowDown,
   Fee,
 } from '../ConfirmSwap/ConfirmSwap';
 import { PendingSwap } from '../History/types';
+
+const StyledAnchor = styled('a', {
+  color: '$primary',
+  fontWeight: '$600',
+  marginLeft: '$12',
+});
+
+const InternalDetailsContainer = styled('div', {
+  display: 'flex',
+});
+
+const InternalDetail = styled('div', {
+  display: 'flex',
+  padding: '$10',
+});
+
+const DescriptionContainer = styled('div', {
+  display: 'flex',
+  alignItems: 'center',
+});
+
+const Description = styled(Typography, {
+  color: '$success',
+  marginLeft: '$8',
+});
+
+const Error = styled(Description, {
+  color: '$error',
+});
+
+export const Line = styled('div', {
+  width: '0',
+  marginLeft: '$12',
+  border: '1px dashed $foreground',
+  borderRadius: 'inherit',
+});
 
 export interface PropTypes {
   pendingSwap: PendingSwap;
@@ -51,7 +89,7 @@ export function SwapHistory(props: PropTypes) {
                 <SwapperLogo src={step.swapperLogo} alt={step.swapperId} />
                 <div>
                   <Typography ml={4} variant="caption">
-                    {/* {step.swapperType} from {step.fromSymbol} to {step.toSymbol} */}
+                    {step.swapperType} from {step.fromSymbol} to {step.toSymbol}
                     via {step.swapperId}
                   </Typography>
                   <Fee>
@@ -68,36 +106,53 @@ export function SwapHistory(props: PropTypes) {
                   display: 'flex',
                 }}
               >
-                <Line />
-                {!!step.explorerUrl && (
-                  <div>
-                    {step.explorerUrl.map((item, index) => (
-                      <a
-                        href={item.url}
-                        target="_blank"
-                        rel="noreferrer"
-                        key={index}
-                      >
-                        <div>
-                          {!item.description ? (
-                            <b>View transaction</b>
-                          ) : (
-                            <b>
-                              {item.description.substring(0, 1).toUpperCase()}
-                              {item.description.substring(1)} tx
-                            </b>
-                          )}
-                        </div>
-                      </a>
-                    ))}
-                  </div>
-                )}
+                <InternalDetailsContainer>
+                  <Line />
+                  {!!step.explorerUrl && (
+                    <div>
+                      {step.explorerUrl.map((item, index) => (
+                        <InternalDetail>
+                          <DescriptionContainer>
+                            <CheckCircleIcon color="success" />
+                            <Description variant="body2">
+                              {!item.description ? (
+                                <b>View transaction</b>
+                              ) : (
+                                <b>
+                                  {item.description
+                                    .substring(0, 1)
+                                    .toUpperCase()}
+                                  {item.description.substring(1)}
+                                </b>
+                              )}
+                            </Description>
+                          </DescriptionContainer>
+                          <StyledAnchor
+                            href={item.url}
+                            target="_blank"
+                            rel="noreferrer"
+                            key={index}
+                          >
+                            TX-Link
+                          </StyledAnchor>
+                        </InternalDetail>
+                      ))}
+                      {step.status === 'failed' && (
+                        <InternalDetail>
+                          <DescriptionContainer>
+                            <InfoCircleIcon color="error" />
+                            <Error variant="body2">Step failed</Error>
+                          </DescriptionContainer>
+                        </InternalDetail>
+                      )}
+                    </div>
+                  )}
+                </InternalDetailsContainer>
               </div>
               {index + 1 === pendingSwap.steps.length && <ArrowDown />}
               <StepDetail
                 logo={step.toLogo}
                 symbol={step.toSymbol}
-                //@ts-ignore
                 chainLogo={step.toBlockchainLogo}
                 blockchain={step.toBlockchain}
                 amount={step.outputAmount}

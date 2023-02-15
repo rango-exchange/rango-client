@@ -5,9 +5,10 @@ export const navigationRoutes = {
   toChain: '/to-chain',
   toToken: '/to-token',
   settings: '/settings',
-  liquiditySources: '/settings/liquidity-sources',
+  liquiditySources: '/liquidity-sources',
   history: '/history',
   wallets: '/wallets',
   confirmSwap: '/confirm-swap',
   confirmWallets: '/confirm-wallets',
+  swapDetails: '/swap-details',
 };

@@ -17,6 +17,7 @@ export function SelectChainPage(props: PropTypes) {
 
   const {
     meta: { blockchains },
+    loadingStatus,
   } = useMetaStore();
   const { fromChain, toChain, setFromChain, setToChain, setFromToken, setToToken } =
     useBestRouteStore();
@@ -43,14 +44,15 @@ export function SelectChainPage(props: PropTypes) {
       type={type === 'from' ? 'Source' : 'Destination'}
       list={list}
       selected={type === 'from' ? fromChain : toChain}
+      loadingStatus={loadingStatus}
       onChange={(chain) => {
         if (type === 'from') setFromChain(chain);
         else setToChain(chain);
         if (type === 'from' && fromChain?.name != chain.name) setFromToken(null);
         if (type === 'to' && toChain?.name != chain.name) setToToken(null);
-        navigate(navigationRoutes.home);
+        navigate(-1);
       }}
-      onBack={navigate.bind(null, navigationRoutes.home)}
+      onBack={navigate.bind(null, -1)}
     />
   );
 }

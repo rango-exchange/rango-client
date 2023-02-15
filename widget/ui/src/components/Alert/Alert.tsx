@@ -5,6 +5,7 @@ import { styled } from '../../theme';
 
 const MainContainer = styled('div', {
   display: 'flex',
+  width: '100%',
   alignItems: 'center',
   padding: '$16',
   borderRadius: '$5',
