@@ -4,19 +4,22 @@ import {
   Connect,
   CosmosBlockchainMeta,
   CosmosChainInfo,
-  CosmosInfo,
   ProviderConnectResult,
 } from './rango';
 import { Keplr as InstanceType } from '@keplr-wallet/types';
 
+interface CosmosInfo extends Omit<CosmosChainInfo, 'experimental'> {
+  chainId: string;
+}
+
 type CosmosExperimentalChainsInfo = {
-  [k: string]: { id: string; info: CosmosChainInfo; experimental: boolean };
+  [k: string]: { id: string; info: CosmosInfo; experimental: boolean };
 };
 
 const getCosmosMainChainsIds = (blockchains: CosmosBlockchainMeta[]) =>
   blockchains
     .filter((blockchain) => !blockchain.info?.experimental)
-    .map((blockchain) => blockchain.chainId);
+    .map((blockchain) => blockchain.chainId || '');
 
 const getCosmosMiscChainsIds = (blockchains: CosmosBlockchainMeta[]) =>
   blockchains
@@ -31,7 +34,7 @@ const getCosmosExperimentalChainInfo = (blockchains: CosmosBlockchainMeta[]) =>
         cosmosExperimentalChainsInfo: CosmosExperimentalChainsInfo,
         blockchain
       ) => {
-        const info = deepCopy(blockchain.info) as CosmosInfo;
+        const info = deepCopy(blockchain.info) as CosmosChainInfo;
         info.stakeCurrency.coinImageUrl =
           window.location.origin + info.stakeCurrency.coinImageUrl;
         info.currencies = info.currencies.map((currency) => ({
@@ -46,8 +49,8 @@ const getCosmosExperimentalChainInfo = (blockchains: CosmosBlockchainMeta[]) =>
         const { experimental, ...otherProperties } = info;
         return (
           (cosmosExperimentalChainsInfo[blockchain.name] = {
-            id: blockchain.chainId,
-            info: { ...otherProperties, chainId: blockchain.chainId },
+            id: blockchain.chainId || '',
+            info: { ...otherProperties, chainId: blockchain.chainId || '' },
             experimental: experimental,
           }),
           cosmosExperimentalChainsInfo
@@ -102,7 +105,7 @@ async function tryRequestMiscAccounts({
   const offlineSigners = getCosmosMiscChainsIds(meta as CosmosBlockchainMeta[])
     .filter((id) => id !== excludedChain)
     .map((chainId) => {
-      const signer = instance.getOfflineSigner(chainId);
+      const signer = instance.getOfflineSigner(chainId || '');
       return {
         signer,
         chainId,
@@ -121,7 +124,7 @@ async function tryRequestMiscAccounts({
     const { chainId } = offlineSigners[index];
     const addresses = accounts.map((account) => account.address);
 
-    resolvedAccounts.push({ accounts: addresses, chainId });
+    resolvedAccounts.push({ accounts: addresses, chainId: chainId || '' });
   });
 
   return resolvedAccounts;

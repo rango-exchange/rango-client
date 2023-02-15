@@ -10056,6 +10056,11 @@ eslint-config-prettier@^6.0.0:
   dependencies:
     get-stdin "^6.0.0"
 
+eslint-config-prettier@^8.5.0:
+  version "8.6.0"
+  resolved "https://registry.yarnpkg.com/eslint-config-prettier/-/eslint-config-prettier-8.6.0.tgz#dec1d29ab728f4fa63061774e1672ac4e363d207"
+  integrity sha512-bAF0eLpLVqP5oEVUFKpMA+NnRFICwn9X8B5jrR9FcqnYBuPbqWEjTEspPWMj5ye6czoSLDweCzSo3Ko7gGrZaA==
+
 eslint-config-react-app@^5.2.1:
   version "5.2.1"
   resolved "https://registry.yarnpkg.com/eslint-config-react-app/-/eslint-config-react-app-5.2.1.tgz#698bf7aeee27f0cea0139eaef261c7bf7dd623df"
@@ -10133,6 +10138,13 @@ eslint-plugin-prettier@^3.1.0:
   version "3.4.1"
   resolved "https://registry.yarnpkg.com/eslint-plugin-prettier/-/eslint-plugin-prettier-3.4.1.tgz#e9ddb200efb6f3d05ffe83b1665a716af4a387e5"
   integrity sha512-htg25EUYUeIhKHXjOinK4BgCcDwtLHjqaxCDsMy5nbnUMkKFvIhMVCp+5GFUXQ4Nr8lBsPqtGAqBenbpFqAA2g==
+  dependencies:
+    prettier-linter-helpers "^1.0.0"
+
+eslint-plugin-prettier@^4.2.1:
+  version "4.2.1"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-prettier/-/eslint-plugin-prettier-4.2.1.tgz#651cbb88b1dab98bfd42f017a12fa6b2d993f94b"
+  integrity sha512-f/0rXLXUt0oFYs8ra4w49wYZBG5GKZpAYsJSm6rnYL5uVDjd+zowwMwVZHnAjf4edNrKpCDYfXDgmRE/Ak7QyQ==
   dependencies:
     prettier-linter-helpers "^1.0.0"
 
@@ -16238,19 +16250,17 @@ rango-sdk@^0.0.10:
     uuid "^9.0.0"
 
 rango-sdk@^0.1.1, rango-sdk@^0.1.2:
-  version "0.1.2"
-  resolved "https://registry.yarnpkg.com/rango-sdk/-/rango-sdk-0.1.2.tgz#81bf233b16ec0658191935d9104997f9d1f0be0b"
-  integrity sha512-FPjZHW0NXShMMUvMmmFPtPSvYop9AisUiB1yZajwvSbp6Q2ulDGFOrrl5yQp+GXJqcbDzWryTPHb0bY9f2FgXQ==
+  version "0.1.8"
+  resolved "https://registry.yarnpkg.com/rango-sdk/-/rango-sdk-0.1.8.tgz#8bff88ec4af7bc668ef30e5db6361176a0fbcd92"
+  integrity sha512-6v2fD6vwkFZTYFgjX6USPLrg+9VROhJdeFJlp3a2eOCdRjUDc/M4mBG/jnyzm8EPt/bS6oxfbJ5+JUjNPlFDOA==
   dependencies:
     axios "^1.2.6"
     bignumber.js "^9.1.1"
-    rango-types "^0.1.5"
+    rango-types "^0.1.11"
     uuid "^9.0.0"
 
-rango-types@^0.1.1, rango-types@^0.1.5:
-  version "0.1.5"
-  resolved "https://registry.yarnpkg.com/rango-types/-/rango-types-0.1.5.tgz#0abd972ecc4e1c847104d11720292af2eec7e62c"
-  integrity sha512-tEacrWTgC3M60MeJV/hp4ShyVVwOCLN5Cwnd18apiJcGca0UAXsXiRulGLQYVkv6UddWpK/pEv8oYyPnxoTM7g==
+rango-types@^0.1.1, rango-types@^0.1.11, "rango-types@file:wallets/shared/.yalc/rango-types":
+  version "0.1.11"
 
 raw-body@2.5.1:
   version "2.5.1"

@@ -6,15 +6,17 @@ import { cosmos } from '@keplr-wallet/cosmos';
 import { MsgExecuteContract } from 'cosmjs-types/cosmwasm/wasm/v1/tx';
 import { KeplrSignOptions } from '@keplr-wallet/types';
 import {
-  CosmosTransaction,
   getBlockchainChainIdByName,
-  DirectCosmosIBCTransferMessage,
   Network,
   Meta,
   uint8ArrayToHex,
 } from '../rango';
 import { getNetworkInstance } from '../providers';
 import { WalletError, WalletErrorCode } from '../errors';
+import {
+  DirectCosmosIBCTransferMessage,
+  CosmosTransaction,
+} from 'rango-types/lib';
 
 // todo: unhardcode this. sifchain has some gas price apis. but gaslimits might be hardcoded still
 // hardcoded based on

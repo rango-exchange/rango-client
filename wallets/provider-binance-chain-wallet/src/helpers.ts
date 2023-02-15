@@ -1,6 +1,14 @@
-import { Network, ProviderConnectResult, Msg as RangoMsg, MsgSend as RangoMsgSend  } from '@rangodev/wallets-shared';
+import {
+  Network,
+  ProviderConnectResult,
+  Msg as RangoMsg,
+  MsgSend as RangoMsgSend,
+} from '@rangodev/wallets-shared';
 import { RequestedAccount } from './types';
-import { SignInputOutput, SendMsg } from '@binance-chain/javascript-sdk/lib/types';
+import {
+  SignInputOutput,
+  SendMsg,
+} from '@binance-chain/javascript-sdk/lib/types';
 
 export function binance() {
   const { BinanceChain } = window;
@@ -25,7 +33,9 @@ export function addressTypeToNetwork(type: string): Network {
       return Network.Unknown;
   }
 }
-export function getAllAccounts(account: RequestedAccount): ProviderConnectResult[] {
+export function getAllAccounts(
+  account: RequestedAccount
+): ProviderConnectResult[] {
   const output: ProviderConnectResult[] = [];
   account.addresses
     .filter((address) => !address.type.includes('testnet'))
@@ -41,7 +51,7 @@ export function getAllAccounts(account: RequestedAccount): ProviderConnectResult
 
 export function findActiveAccount(
   accounts: RequestedAccount[],
-  currentEthAddress: string,
+  currentEthAddress: string
 ): RequestedAccount | undefined {
   return accounts.find((account) => {
     const searchForAddress = account.addresses.find((addressData) => {
@@ -85,14 +95,27 @@ export function cosmosMessageToBCSendMsg(msg: RangoMsg): SendMsg {
     return new SendMsg(msgCopy.inputs[0].address, outputs);
   }
 
-  throw Error(`Cosmos message with type ${msg.__type} not supported in Terra Station`);
+  throw Error(
+    `Cosmos message with type ${msg.__type} not supported in Terra Station`
+  );
 }
 
-export async function accountsForActiveWallet(instance: any, currentEthAddress: string) {
-  const allAvailableAccounts = (await instance.requestAccounts()) as RequestedAccount[];
-  const activeAccount = findActiveAccount(allAvailableAccounts, currentEthAddress);
+export async function accountsForActiveWallet(
+  instance: any,
+  currentEthAddress: string
+) {
+  const allAvailableAccounts =
+    (await instance.requestAccounts()) as RequestedAccount[];
+  const activeAccount = findActiveAccount(
+    allAvailableAccounts,
+    currentEthAddress
+  );
   const accounts = activeAccount ? getAllAccounts(activeAccount) : [];
   return accounts;
 }
 
-export const BINANCE_CHAIN_WALLET_SUPPORTED_CHAINS = [Network.ETHEREUM, Network.BSC, Network.BINANCE];
+export const BINANCE_CHAIN_WALLET_SUPPORTED_CHAINS = [
+  Network.ETHEREUM,
+  Network.BSC,
+  Network.BINANCE,
+];
