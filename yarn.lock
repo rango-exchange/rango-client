@@ -16242,14 +16242,14 @@ rango-sdk@^0.0.10:
     rango-types "^0.1.1"
     uuid "^9.0.0"
 
-rango-sdk@^0.1.5:
-  version "0.1.5"
-  resolved "https://registry.yarnpkg.com/rango-sdk/-/rango-sdk-0.1.5.tgz#510d660d2b36845febdc22b30091d3329ef295d9"
-  integrity sha512-rgyVzFnzVfwOrYb9SZq7n9UijBJ6URjNxZ6feB7+8OwCtPFuC8D1Re45B0Po+QJGnlUTNJZrwKmwV1Q33zQi5A==
+rango-sdk@^0.1.8:
+  version "0.1.8"
+  resolved "https://registry.yarnpkg.com/rango-sdk/-/rango-sdk-0.1.8.tgz#8bff88ec4af7bc668ef30e5db6361176a0fbcd92"
+  integrity sha512-6v2fD6vwkFZTYFgjX6USPLrg+9VROhJdeFJlp3a2eOCdRjUDc/M4mBG/jnyzm8EPt/bS6oxfbJ5+JUjNPlFDOA==
   dependencies:
     axios "^1.2.6"
     bignumber.js "^9.1.1"
-    rango-types "^0.1.8"
+    rango-types "^0.1.11"
     uuid "^9.0.0"
 
 rango-types@^0.1.1:
@@ -16257,10 +16257,10 @@ rango-types@^0.1.1:
   resolved "https://registry.yarnpkg.com/rango-types/-/rango-types-0.1.5.tgz#0abd972ecc4e1c847104d11720292af2eec7e62c"
   integrity sha512-tEacrWTgC3M60MeJV/hp4ShyVVwOCLN5Cwnd18apiJcGca0UAXsXiRulGLQYVkv6UddWpK/pEv8oYyPnxoTM7g==
 
-rango-types@^0.1.8:
-  version "0.1.8"
-  resolved "https://registry.yarnpkg.com/rango-types/-/rango-types-0.1.8.tgz#c52415c6d4d7a56c661e4c22d79b2e9f80d841b4"
-  integrity sha512-2PUBr/U2/B+6WPaa4MPWJUcDxhQ3z0APaZvqKRe999WytCwvq3mSfRMP66wmISduefyqxHEGgudP/oPRkE2qRw==
+rango-types@^0.1.11:
+  version "0.1.11"
+  resolved "https://registry.yarnpkg.com/rango-types/-/rango-types-0.1.11.tgz#5dd869bf877434ad4485d6d15bbb11806e4e04e9"
+  integrity sha512-r+5vEqefHbgaJKSeZTNBnatMONlCQgH9f4I4/9dlKI8fCzkTlzC0VthxbHv+9twYNcnQ0lBljuM5FPAoOvYGlQ==
 
 raw-body@2.5.1:
   version "2.5.1"

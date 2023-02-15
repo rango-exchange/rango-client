@@ -73,8 +73,9 @@ export function App() {
   const onUpdateState: EventHandler = (type, event, value, state, supportedChains) => {
     if (event === Events.ACCOUNTS) {
       if (value) {
-        const supportedChainNames: Network[] | null =
-          walletAndSupportedChainsNames(supportedChains);
+        const supportedChainNames: Network[] | null = walletAndSupportedChainsNames(
+          supportedChains as any,
+        );
         const data = prepareAccountsForWalletStore(
           type,
           value,
@@ -101,7 +102,6 @@ export function App() {
   };
 
   return (
-
     <Provider
       allBlockChains={blockchains as any}
       providers={providers}

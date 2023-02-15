@@ -1,4 +1,8 @@
-import { BestRouteResponse, BlockchainValidationStatus, WalletRequiredAssets } from 'rango-sdk';
+import {
+  BestRouteResponse,
+  BlockchainValidationStatus,
+  WalletRequiredAssets,
+} from 'rango-sdk';
 export type SwapStatus = 'running' | 'failed' | 'success';
 export type MessageSeverity = 'error' | 'warning' | 'info' | 'success';
 
@@ -26,12 +30,7 @@ export type SwapSavedSettings = {
   disabledSwappersIds: string[];
   disabledSwappersGroups: string[];
 };
-// export type Asset = {
-//   blockchain: Network | any;
-//   symbol: string;
-//   address: string | null;
-// };
 
-export type SimulationAssetAndAmount = WalletRequiredAssets
-export type SimulationValidationStatus = BlockchainValidationStatus
-export type BestRouteType = BestRouteResponse
+export type SimulationAssetAndAmount = WalletRequiredAssets;
+export type SimulationValidationStatus = BlockchainValidationStatus;
+export type BestRouteType = BestRouteResponse;

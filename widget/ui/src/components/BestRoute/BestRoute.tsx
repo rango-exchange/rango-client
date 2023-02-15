@@ -165,10 +165,7 @@ export function BestRoute({
               )}
               <SwapperContainer>
                 <Line />
-                <SwapperLogo
-                  src={swap.swapperLogo}
-                  alt={swap.swapperId}
-                />
+                <SwapperLogo src={swap.swapperLogo} alt={swap.swapperId} />
                 <Line />
               </SwapperContainer>
 

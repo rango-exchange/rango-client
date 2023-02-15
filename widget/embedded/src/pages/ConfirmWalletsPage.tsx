@@ -69,7 +69,7 @@ export function calculatePendingSwap(
         startTransactionTime: new Date().getTime(),
         swapperId: s.swapperId,
         expectedOutputAmountHumanReadable: s.toAmount,
-        outputAmount: "", // TODO
+        outputAmount: '', // TODO
         status: 'created',
         networkStatus: null,
         executedTransactionId: null,

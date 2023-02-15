@@ -1,6 +1,7 @@
+import { WalletType } from '@rangodev/wallets-shared';
 import { RoutingResultType } from 'rango-sdk';
 import { BestRouteType } from '../../types/swaps';
-import { ActiveWalletsType } from './types';
+import { SelectableWallet } from './types';
 
 export const bestRoute: BestRouteType = {
   from: { blockchain: 'BSC', symbol: 'BNB', address: null },
@@ -149,81 +150,73 @@ export const bestRoute: BestRouteType = {
   processingLimitReached: false,
 };
 
-export const wallets: Array<ActiveWalletsType> = [
+export const wallets: SelectableWallet[] = [
   {
+    walletType: WalletType.META_MASK,
+    address: '0x5423e28219d6d568dcf62a8134d623e6f4a1c2df',
+    image: 'https://app.rango.exchange/wallets/metamask.svg',
     blockchain: 'BSC',
-    id: '0x5423e28219d6d568dcf62a8134d623e6f4a1c2df',
-    type: 'metamask',
-    options: [
-      {
-        walletType: 'metamask',
-        address: '0x5423e28219d6d568dcf62a8134d623e6f4a1c2df',
-        logo: 'https://app.rango.exchange/wallets/metamask.svg',
-      },
-      {
-        walletType: 'okx',
-        address: '0x2702d89c1c8658b49c45dd460deebcc45faec03c',
-        logo: 'https://app.rango.exchange/wallets/okx.png',
-      },
-    ],
+    selected: false,
   },
   {
+    walletType: WalletType.OKX,
+    address: '0x2702d89c1c8658b49c45dd460deebcc45faec03c',
+    image: 'https://app.rango.exchange/wallets/okx.png',
+    blockchain: 'BSC',
+    selected: false,
+  },
+
+  {
+    walletType: WalletType.KEPLR,
+    address: 'osmo1unf2rcytjxfpz8x8ar63h4qeftadptg5t0nqcl',
+    image: 'https://app.rango.exchange/wallets/keplr.png',
     blockchain: 'OSMOSIS',
-    id: 'osmo1unf2rcytjxfpz8x8ar63h4qeftadptg5t0nqcl',
-    type: 'keplr',
-    options: [
-      {
-        walletType: 'keplr',
-        address: 'osmo1unf2rcytjxfpz8x8ar63h4qeftadptg5t0nqcl',
-        logo: 'https://app.rango.exchange/wallets/keplr.png',
-      },
-    ],
+    selected: false,
   },
 ];
 
-export const exampleFor5Wallets: Array<ActiveWalletsType> = [
+export const exampleFor5Wallets: SelectableWallet[] = [
   {
+    walletType: WalletType.META_MASK,
+    address: '0x5423e28219d6d568dcf62a8134d623e6f4a1c2df',
+    image: 'https://app.rango.exchange/wallets/metamask.svg',
+    selected: false,
     blockchain: 'BSC',
-    id: '0x5423e28219d6d568dcf62a8134d623e6f4a1c2df',
-    type: 'metamask',
-    options: [
-      {
-        walletType: 'metamask',
-        address: '0x5423e28219d6d568dcf62a8134d623e6f4a1c2df',
-        logo: 'https://app.rango.exchange/wallets/metamask.svg',
-      },
-      {
-        walletType: 'okx',
-        address: '0x2702d89c1c8658b49c45dd460deebcc45faec03c',
-        logo: 'https://app.rango.exchange/wallets/okx.png',
-      },
-      {
-        walletType: 'exodus',
-        address: '0x2702d89c1c8658b49c45dd460deebcc45faec03c',
-        logo: 'https://app.rango.exchange/wallets/exodus.png',
-      },
-      {
-        walletType: 'mathwallet',
-        address: '0x2702d89c1c8658b49c45dd460deebcc45faec03c',
-        logo: 'https://app.rango.exchange/wallets/math-wallet.png',
-      },
-      {
-        walletType: 'clover',
-        address: '0x2702d89c1c8658b49c45dd460deebcc45faec03c',
-        logo: 'https://app.rango.exchange/wallets/clover.jpeg',
-      },
-    ],
   },
   {
+    walletType: WalletType.OKX,
+    address: '0x2702d89c1c8658b49c45dd460deebcc45faec03c',
+    image: 'https://app.rango.exchange/wallets/okx.png',
+    selected: false,
+    blockchain: 'BSC',
+  },
+  {
+    walletType: WalletType.EXODUS,
+    address: '0x2702d89c1c8658b49c45dd460deebcc45faec03c',
+    image: 'https://app.rango.exchange/wallets/exodus.png',
+    selected: false,
+    blockchain: 'BSC',
+  },
+  {
+    walletType: WalletType.MATH,
+    address: '0x2702d89c1c8658b49c45dd460deebcc45faec03c',
+    image: 'https://app.rango.exchange/wallets/math-wallet.png',
+    selected: false,
+    blockchain: 'BSC',
+  },
+  {
+    walletType: WalletType.CLOVER,
+    address: '0x2702d89c1c8658b49c45dd460deebcc45faec03c',
+    image: 'https://app.rango.exchange/wallets/clover.jpeg',
+    selected: false,
+    blockchain: 'BSC',
+  },
+
+  {
+    walletType: WalletType.KEPLR,
+    address: 'osmo1unf2rcytjxfpz8x8ar63h4qeftadptg5t0nqcl',
+    image: 'https://app.rango.exchange/wallets/keplr.png',
+    selected: false,
     blockchain: 'OSMOSIS',
-    id: 'osmo1unf2rcytjxfpz8x8ar63h4qeftadptg5t0nqcl',
-    type: 'keplr',
-    options: [
-      {
-        walletType: 'keplr',
-        address: 'osmo1unf2rcytjxfpz8x8ar63h4qeftadptg5t0nqcl',
-        logo: 'https://app.rango.exchange/wallets/keplr.png',
-      },
-    ],
   },
 ];
