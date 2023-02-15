@@ -1,6 +1,6 @@
 {
   "name": "@rangodev/provider-leap-cosmos",
-  "version": "0.1.11-next.26",
+  "version": "0.1.11-next.37",
   "license": "MIT",
   "module": "dist/provider-leap-cosmos.esm.js",
   "main": "dist/index.js",
