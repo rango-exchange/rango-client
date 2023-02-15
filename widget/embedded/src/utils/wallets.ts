@@ -48,7 +48,7 @@ export function getlistWallet(
     });
 }
 
-export function walletAndSupportedChainsNames(supportedChains: any): Network[] | null {
+export function walletAndSupportedChainsNames(supportedChains: BlockchainMeta[]): Network[] | null {
   if (!supportedChains) return null;
   let walletAndSupportedChainsNames: Network[] = [];
   walletAndSupportedChainsNames = supportedChains.map(

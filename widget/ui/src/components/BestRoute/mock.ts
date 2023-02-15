@@ -1,3 +1,4 @@
+import { RoutingResultType } from 'rango-sdk';
 import { BestRouteType } from '../../types/swaps';
 
 export const bestRoute: BestRouteType = {
@@ -6,18 +7,19 @@ export const bestRoute: BestRouteType = {
   requestAmount: '0.3',
   requestId: '228529e3-27d7-4fa9-ab84-bb2b90eade6f',
   result: {
+    resultType: RoutingResultType.OK,
     outputAmount: '5.685715974132648891',
     swaps: [
       {
-        result: null,
         swapperId: 'AnySwap Aggregator',
         swapperType: 'AGGREGATOR',
         swapperLogo: 'https://api.rango.exchange/swappers/multichain.png',
-
+        maxRequiredSign: 1,
+        warnings: [],
         from: {
           symbol: 'BNB',
           logo: 'https://api.rango.exchange/i/Y3v1KW',
-          blockchainlogo: 'https://api.rango.exchange/blockchains/binance.svg',
+          blockchainLogo: 'https://api.rango.exchange/blockchains/binance.svg',
 
           address: null,
           blockchain: 'BSC',
@@ -27,7 +29,7 @@ export const bestRoute: BestRouteType = {
         to: {
           symbol: 'WETH.E',
           logo: 'https://api.rango.exchange/i/j9xgdC',
-          blockchainlogo:
+          blockchainLogo:
             'https://api.rango.exchange/blockchains/avax_cchain.svg',
 
           address: '0x49d5c2bdffac6ce2bfdb6640f4f80f226bc10bab',
@@ -43,9 +45,14 @@ export const bestRoute: BestRouteType = {
         toAmount: '0.062064305934309070',
         fee: [
           {
-            asset: { blockchain: 'BSC', symbol: 'BNB', address: null },
+            asset: {
+              blockchain: 'BSC',
+              symbol: 'BNB',
+              address: null,
+            },
             expenseType: 'FROM_SOURCE_WALLET',
             amount: '0.001388002000000000',
+            name: 'Network Fee',
           },
         ],
         estimatedTimeInSeconds: 300,
@@ -59,7 +66,8 @@ export const bestRoute: BestRouteType = {
         swapperId: 'PangolinSwap',
         swapperLogo: 'https://api.rango.exchange/swappers/pangolin.png',
         swapperType: 'DEX',
-        result: null,
+        maxRequiredSign: 1,
+        warnings: [],
         from: {
           symbol: 'WETH.E',
           logo: 'https://api.rango.exchange/i/j9xgdC',
@@ -67,7 +75,7 @@ export const bestRoute: BestRouteType = {
           blockchain: 'AVAX_CCHAIN',
           decimals: 18,
           usdPrice: 1329.24,
-          blockchainlogo:
+          blockchainLogo:
             'https://api.rango.exchange/blockchains/avax_cchain.svg',
         },
         to: {
@@ -77,14 +85,14 @@ export const bestRoute: BestRouteType = {
           blockchain: 'AVAX_CCHAIN',
           decimals: 18,
           usdPrice: 12.5,
-          blockchainlogo:
+          blockchainLogo:
             'https://api.rango.exchange/blockchains/avax_cchain.svg',
         },
         fromAmount: '0.062064305934309070',
         fromAmountPrecision: null,
         fromAmountMinValue: null,
         fromAmountMaxValue: null,
-        fromAmountRestrictionType: null,
+        fromAmountRestrictionType: 'EXCLUSIVE',
         toAmount: '5.685715974132648891',
         fee: [
           {
@@ -94,12 +102,14 @@ export const bestRoute: BestRouteType = {
               address: '0x49d5c2bdffac6ce2bfdb6640f4f80f226bc10bab',
             },
             expenseType: 'DECREASE_FROM_OUTPUT',
+            name: 'Network Fee',
             amount:
               '0.00018619291780292721387591870688029381530892436558133340440690517425537109375',
           },
           {
             asset: { blockchain: 'AVAX_CCHAIN', symbol: 'AVAX', address: null },
             expenseType: 'FROM_SOURCE_WALLET',
+            name: 'Network Fee',
             amount: '0.005370022532678750',
           },
         ],
@@ -137,6 +147,8 @@ export const bestRoute: BestRouteType = {
   validationStatus: null,
   missingBlockchains: [],
   diagnosisMessages: [],
+  processingLimitReached: false,
+  walletNotSupportingFromBlockchain: false,
 };
 export const bestRouteExample2: BestRouteType = {
   from: {
@@ -148,17 +160,19 @@ export const bestRouteExample2: BestRouteType = {
   requestAmount: '10',
   requestId: '56a3f944-02ec-4011-b3c6-6c76c3ad049b',
   result: {
+    resultType: RoutingResultType.OK,
     outputAmount: '30.983906',
     swaps: [
       {
-        result: null,
+        maxRequiredSign: 1,
+        warnings: [],
         swapperId: 'ParaSwap Bsc',
         swapperType: 'DEX',
         swapperLogo: 'https://api.rango.exchange/swappers/para-swap.png',
 
         from: {
           symbol: 'USDC',
-          blockchainlogo: 'https://api.rango.exchange/blockchains/binance.svg',
+          blockchainLogo: 'https://api.rango.exchange/blockchains/binance.svg',
 
           logo: 'https://api.rango.exchange/i/toXKGV',
           address: '0x8ac76a51cc950d9822d68b83fe1ad97b32cd580d',
@@ -168,7 +182,7 @@ export const bestRouteExample2: BestRouteType = {
         },
         to: {
           symbol: 'AXLUSDC',
-          blockchainlogo: 'https://api.rango.exchange/blockchains/binance.svg',
+          blockchainLogo: 'https://api.rango.exchange/blockchains/binance.svg',
           logo: 'https://api.rango.exchange/tokens/COSMOS/AXLUSDC.png',
           address: '0x4268b8f0b87b6eae5d897996e6b845ddbd99adf3',
           blockchain: 'BSC',
@@ -179,13 +193,14 @@ export const bestRouteExample2: BestRouteType = {
         fromAmountPrecision: null,
         fromAmountMinValue: null,
         fromAmountMaxValue: null,
-        fromAmountRestrictionType: null,
+        fromAmountRestrictionType: 'EXCLUSIVE',
         toAmount: '9.957577',
         fee: [
           {
             asset: { blockchain: 'BSC', symbol: 'BNB', address: null },
             expenseType: 'FROM_SOURCE_WALLET',
             amount: '0.002179644500000000',
+            name: 'Network Fee',
           },
           {
             asset: {
@@ -195,6 +210,7 @@ export const bestRouteExample2: BestRouteType = {
             },
             expenseType: 'DECREASE_FROM_OUTPUT',
             amount: '0.004978',
+            name: 'Network Fee',
           },
         ],
         estimatedTimeInSeconds: 60,
@@ -247,15 +263,14 @@ export const bestRouteExample2: BestRouteType = {
         includesDestinationTx: false,
       },
       {
-        result: null,
-
+        maxRequiredSign: 1,
+        warnings: [],
         swapperId: 'Satellite',
         swapperType: 'BRIDGE',
         swapperLogo: 'https://api.rango.exchange/swappers/satellite.png',
-
         from: {
           symbol: 'AXLUSDC',
-          blockchainlogo: 'https://api.rango.exchange/blockchains/binance.svg',
+          blockchainLogo: 'https://api.rango.exchange/blockchains/binance.svg',
           logo: 'https://api.rango.exchange/tokens/COSMOS/AXLUSDC.png',
           address: '0x4268b8f0b87b6eae5d897996e6b845ddbd99adf3',
           blockchain: 'BSC',
@@ -264,7 +279,7 @@ export const bestRouteExample2: BestRouteType = {
         },
         to: {
           symbol: 'USDC',
-          blockchainlogo: 'https://api.rango.exchange/swappers/osmosis.png',
+          blockchainLogo: 'https://api.rango.exchange/swappers/osmosis.png',
           logo: 'https://api.rango.exchange/tokens/COSMOS/USDC.png',
           address:
             'ibc/d189335c6e4a68b513c10ab227bf1c1d38c746766278ba3eeb4fb14124f1d858',
@@ -276,7 +291,7 @@ export const bestRouteExample2: BestRouteType = {
         fromAmountPrecision: null,
         fromAmountMinValue: null,
         fromAmountMaxValue: null,
-        fromAmountRestrictionType: null,
+        fromAmountRestrictionType: 'EXCLUSIVE',
         toAmount: '8.357577',
         fee: [
           {
@@ -284,6 +299,7 @@ export const bestRouteExample2: BestRouteType = {
             expenseType: 'FROM_SOURCE_WALLET',
             amount:
               '0.0003850000000000000239784127112452447212753714467226018314249813556671142578125000000000000',
+            name: 'Network Fee',
           },
         ],
         estimatedTimeInSeconds: 360,
@@ -294,14 +310,15 @@ export const bestRouteExample2: BestRouteType = {
         includesDestinationTx: false,
       },
       {
-        result: null,
+        maxRequiredSign: 1,
+        warnings: [],
         swapperId: 'Osmosis',
         swapperType: 'DEX',
         swapperLogo: 'https://api.rango.exchange/swappers/osmosis.png',
         from: {
           symbol: 'USDC',
           logo: 'https://api.rango.exchange/tokens/COSMOS/USDC.png',
-          blockchainlogo: 'https://api.rango.exchange/swappers/osmosis.png',
+          blockchainLogo: 'https://api.rango.exchange/swappers/osmosis.png',
           address:
             'ibc/d189335c6e4a68b513c10ab227bf1c1d38c746766278ba3eeb4fb14124f1d858',
           blockchain: 'OSMOSIS',
@@ -311,7 +328,7 @@ export const bestRouteExample2: BestRouteType = {
         to: {
           symbol: 'AKT',
           logo: 'https://api.rango.exchange/tokens/COSMOS/AKT.png',
-          blockchainlogo: 'https://api.rango.exchange/swappers/osmosis.png',
+          blockchainLogo: 'https://api.rango.exchange/swappers/osmosis.png',
           address:
             'ibc/1480b8fd20ad5fcae81ea87584d269547dd4d436843c1d20f15e00eb64743ef4',
           blockchain: 'OSMOSIS',
@@ -322,13 +339,14 @@ export const bestRouteExample2: BestRouteType = {
         fromAmountPrecision: null,
         fromAmountMinValue: null,
         fromAmountMaxValue: null,
-        fromAmountRestrictionType: null,
+        fromAmountRestrictionType: 'EXCLUSIVE',
         toAmount: '30.983906',
         fee: [
           {
             asset: { blockchain: 'OSMOSIS', symbol: 'OSMO', address: null },
             expenseType: 'FROM_SOURCE_WALLET',
             amount: '0',
+            name: 'Network Fee',
           },
         ],
         estimatedTimeInSeconds: 45,
@@ -385,14 +403,15 @@ export const bestRouteExample2: BestRouteType = {
         includesDestinationTx: false,
       },
       {
-        result: null,
+        maxRequiredSign: 1,
+        warnings: [],
         swapperId: 'Osmosis',
         swapperType: 'BRIDGE',
         swapperLogo: 'https://api.rango.exchange/swappers/osmosis.png',
         from: {
           symbol: 'AKT',
           logo: 'https://api.rango.exchange/tokens/COSMOS/AKT.png',
-          blockchainlogo: 'https://api.rango.exchange/swappers/osmosis.png',
+          blockchainLogo: 'https://api.rango.exchange/swappers/osmosis.png',
           address:
             'ibc/1480b8fd20ad5fcae81ea87584d269547dd4d436843c1d20f15e00eb64743ef4',
           blockchain: 'OSMOSIS',
@@ -402,7 +421,7 @@ export const bestRouteExample2: BestRouteType = {
         to: {
           symbol: 'AKT',
           logo: 'https://api.rango.exchange/i/3MAS1e',
-          blockchainlogo: 'https://api.rango.exchange/swappers/osmosis.png',
+          blockchainLogo: 'https://api.rango.exchange/swappers/osmosis.png',
           address: null,
           blockchain: 'AKASH',
           decimals: 6,
@@ -412,13 +431,14 @@ export const bestRouteExample2: BestRouteType = {
         fromAmountPrecision: null,
         fromAmountMinValue: null,
         fromAmountMaxValue: null,
-        fromAmountRestrictionType: null,
+        fromAmountRestrictionType: 'EXCLUSIVE',
         toAmount: '30.983906',
         fee: [
           {
             asset: { blockchain: 'OSMOSIS', symbol: 'OSMO', address: null },
             expenseType: 'FROM_SOURCE_WALLET',
             amount: '0.005000',
+            name: 'Network Fee',
           },
         ],
         estimatedTimeInSeconds: 45,
@@ -452,6 +472,8 @@ export const bestRouteExample2: BestRouteType = {
   validationStatus: null,
   missingBlockchains: [],
   diagnosisMessages: [],
+  processingLimitReached: false,
+  walletNotSupportingFromBlockchain: false,
 };
 
 export const bestRouteExample3: BestRouteType = {
@@ -460,11 +482,12 @@ export const bestRouteExample3: BestRouteType = {
   requestAmount: '0.3',
   requestId: '228529e3-27d7-4fa9-ab84-bb2b90eade6f',
   result: {
+    resultType: RoutingResultType.OK,
     outputAmount: '5.685715974132648891',
     swaps: [
       {
-        result: null,
-
+        maxRequiredSign: 1,
+        warnings: [],
         swapperId: 'AnySwap Aggregator',
         swapperType: 'AGGREGATOR',
         swapperLogo: 'https://api.rango.exchange/swappers/multichain.png',
@@ -472,7 +495,7 @@ export const bestRouteExample3: BestRouteType = {
         from: {
           symbol: 'BNB',
           logo: 'https://api.rango.exchange/i/Y3v1KW',
-          blockchainlogo: 'https://api.rango.exchange/blockchains/binance.svg',
+          blockchainLogo: 'https://api.rango.exchange/blockchains/binance.svg',
 
           address: null,
           blockchain: 'BSC',
@@ -482,7 +505,7 @@ export const bestRouteExample3: BestRouteType = {
         to: {
           symbol: 'WETH.E',
           logo: 'https://api.rango.exchange/i/j9xgdC',
-          blockchainlogo:
+          blockchainLogo:
             'https://api.rango.exchange/blockchains/avax_cchain.svg',
 
           address: '0x49d5c2bdffac6ce2bfdb6640f4f80f226bc10bab',
@@ -501,6 +524,7 @@ export const bestRouteExample3: BestRouteType = {
             asset: { blockchain: 'BSC', symbol: 'BNB', address: null },
             expenseType: 'FROM_SOURCE_WALLET',
             amount: '0.001388002000000000',
+            name: 'Network Fee',
           },
         ],
         estimatedTimeInSeconds: 300,
@@ -515,4 +539,6 @@ export const bestRouteExample3: BestRouteType = {
   validationStatus: null,
   missingBlockchains: [],
   diagnosisMessages: [],
+  processingLimitReached: false,
+  walletNotSupportingFromBlockchain: false,
 };

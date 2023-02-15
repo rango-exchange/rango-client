@@ -136,7 +136,6 @@ export function ConfirmSwap({
               <StepDetail
                 logo={swap.from.logo}
                 symbol={swap.from.symbol}
-                //@ts-ignore
                 chainLogo={swap.from.blockchainLogo}
                 blockchain={swap.from.blockchain}
                 amount={swap.fromAmount}
@@ -147,7 +146,6 @@ export function ConfirmSwap({
           <Line />
           <SwapperContainer>
             <SwapperLogo
-              //@ts-ignore
               src={swap.swapperLogo}
               alt={swap.swapperId}
             />
@@ -169,7 +167,6 @@ export function ConfirmSwap({
           <StepDetail
             logo={swap.to.logo}
             symbol={swap.to.symbol}
-            //@ts-ignore
             chainLogo={swap.to.blockchainLogo}
             blockchain={swap.to.blockchain}
             amount={swap.toAmount}

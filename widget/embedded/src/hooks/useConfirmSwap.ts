@@ -62,7 +62,7 @@ export function useConfirmSwap() {
     const slippageError = (slippages?.filter((s) => !!s?.error)?.length || 0) > 0;
     const minSlippage =
       slippages
-        ?.map((s) => parseFloat(s?.slippage || '0') || 0)
+        ?.map((s) => parseFloat(s?.slippage.toString() || '0') || 0)
         ?.filter((s) => s > 0)
         ?.sort((a, b) => b - a)
         ?.find(() => true) || null;
@@ -89,7 +89,7 @@ export function useConfirmSwap() {
       .map((sw) => [sw.blockchain, sw.address || ''])
       .forEach(([b, address]) => (selectedWalletsMap[b] = address));
 
-    const r: any = await httpService
+    const r = await httpService
       .getBestRoute({
         amount: inputAmount!.toString(),
         checkPrerequisites: true,

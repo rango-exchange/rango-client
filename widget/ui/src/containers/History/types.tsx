@@ -1,17 +1,10 @@
+import { CosmosTransaction, EvmTransaction, SimulationResult, SolanaTransaction, SwapExplorerUrl, SwapperStatusStep, Transfer } from 'rango-sdk';
 import {
-  CosmosTransaction,
-  EvmTransaction,
   MessageSeverity,
   PendingSwapNetworkStatus,
-  SimulationResult,
-  SolanaTransaction,
   StepStatus,
-  SwapExplorerUrl,
-  SwapperId,
-  SwapperStatusStep,
   SwapSavedSettings,
   SwapStatus,
-  TransferTransaction,
   WalletTypeAndAddress,
 } from '../../types/swaps';
 
@@ -32,7 +25,7 @@ export type PendingSwapStep = {
   toSymbolAddress: string | null;
   toDecimals: number;
   toLogo: string;
-  swapperId: SwapperId;
+  swapperId: string;
   swapperLogo: string;
   swapperType: string;
   expectedOutputAmountHumanReadable: string | null;
@@ -44,8 +37,8 @@ export type PendingSwapStep = {
   explorerUrl: SwapExplorerUrl[] | null;
   evmApprovalTransaction: EvmTransaction | null;
   evmTransaction: EvmTransaction | null;
-  cosmosTransaction: any | CosmosTransaction | null;
-  transferTransaction: TransferTransaction | null;
+  cosmosTransaction: CosmosTransaction | null;
+  transferTransaction: Transfer | null;
   solanaTransaction: SolanaTransaction | null;
   diagnosisUrl: string | null;
   internalSteps: SwapperStatusStep[] | null;
