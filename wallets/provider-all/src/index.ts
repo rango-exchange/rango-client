@@ -16,7 +16,7 @@ import * as tokenpocket from '@rangodev/provider-tokenpocket';
 import * as trustwallet from '@rangodev/provider-trustwallet';
 import * as walletconnect from '@rangodev/provider-walletconnect';
 import * as argentx from '@rangodev/provider-argentx';
-// import * as tronLink from '@rangodev/provider-tron-link';
+import * as tronLink from '@rangodev/provider-tron-link';
 import * as kucoin from '@rangodev/provider-kucoin-wallet';
 import * as frontier from '@rangodev/provider-frontier';
 
@@ -39,7 +39,7 @@ export const allProviders = () => [
   trustwallet,
   walletconnect,
   argentx,
-  // tronLink,
+  tronLink,
   kucoin,
   frontier,
 ];
