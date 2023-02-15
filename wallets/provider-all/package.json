@@ -65,7 +65,8 @@
     "@rangodev/provider-tron-link": "^0.1.11-next.31",
     "@rangodev/provider-trustwallet": "^0.1.11-next.37",
     "@rangodev/provider-walletconnect": "^0.1.11-next.37",
-    "@rangodev/provider-xdefi": "^0.1.11-next.37"
+    "@rangodev/provider-xdefi": "^0.1.11-next.37",
+    "@rangodev/provider-leap-cosmos": "^0.1.11-next.37"
   },
   "publishConfig": {
     "access": "public"

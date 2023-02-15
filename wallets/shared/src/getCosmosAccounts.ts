@@ -151,7 +151,9 @@ export const getCosmosAccounts: Connect = async ({
   let desiredChainIds: string[] = getCosmosMainChainsIds(
     meta as CosmosBlockchainMeta[]
   );
-  desiredChainIds.push(chainInfo!.id);
+  if (!!chainInfo) {
+    desiredChainIds.push(chainInfo!.id);
+  }
   desiredChainIds = Array.from(new Set(desiredChainIds));
 
   await instance.enable(desiredChainIds);
@@ -162,11 +164,13 @@ export const getCosmosAccounts: Connect = async ({
   });
 
   const exclude = !!chainInfo ? chainInfo.id : undefined;
-  const miscAccounts = await tryRequestMiscAccounts({
-    instance,
-    meta,
-    excludedChain: exclude,
-  });
+  const miscAccounts = exclude
+    ? await tryRequestMiscAccounts({
+        instance,
+        meta,
+        excludedChain: exclude,
+      })
+    : [];
 
   const results = [...mainAccounts, ...miscAccounts];
   return results;

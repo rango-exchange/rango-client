@@ -49,6 +49,7 @@ export enum WalletType {
   XDEFI = 'xdefi',
   BINANCE_CHAIN = 'binance-chain',
   LEAP = 'leap',
+  LEAP_COSMOS = 'leap-cosmos',
   CLOVER = 'clover',
   COSMOSTATION = 'cosmostation',
   COIN98 = 'coin98',

@@ -7,7 +7,6 @@ const excludedWallets = [WalletType.UNKNOWN, WalletType.TERRA_STATION, WalletTyp
 function List() {
   return (
     <div className="row">
-      
       {Object.keys(WalletType).map(
         (type) =>
           !excludedWallets.includes(WalletType[type]) && (
