@@ -1,6 +1,6 @@
 {
   "name": "@rangodev/provider-argentx",
-  "version": "0.1.11-next.63",
+  "version": "0.1.11-next.64",
   "license": "MIT",
   "module": "dist/provider-argentx.esm.js",
   "main": "dist/index.js",
@@ -45,7 +45,7 @@
     }
   ],
   "dependencies": {
-    "@rangodev/wallets-shared": "^0.1.11-next.63"
+    "@rangodev/wallets-shared": "^0.1.11-next.64"
   },
   "publishConfig": {
     "access": "public"
