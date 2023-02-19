@@ -6,15 +6,14 @@ import {
 } from '@rangodev/ui/dist/types/swaps';
 import { WalletType } from '@rangodev/wallets-shared';
 import BigNumber from 'bignumber.js';
-import { BestRouteRequest, BestRouteResponse, Token, UserSettings } from 'rango-sdk';
-import { useEffect, useState } from 'react';
-import { emitter } from '../events/eventEmitter';
-import { calculatePendingSwap } from '../pages/ConfirmWalletsPage';
+import { BestRouteResponse } from 'rango-sdk';
+import { useState } from 'react';
 import { httpService } from '../services/httpService';
 import { useBestRouteStore } from '../store/bestRoute';
 import { useSettingsStore } from '../store/settings';
 import { useWalletsStore } from '../store/wallets';
 import { compareRoutes, getRequiredBalanceOfWallet } from '../utils/routing';
+import { calculatePendingSwap } from '../utils/swap';
 import { SelectedWallet } from '../utils/wallets';
 
 type CheckFeeAndBalanceResult =
@@ -28,10 +27,7 @@ type CheckFeeAndBalanceResult =
 export function useConfirmSwap() {
   const { fromToken, toToken, inputAmount, bestRoute, setBestRoute } = useBestRouteStore();
   const { selectedWallets, accounts } = useWalletsStore();
-  const { slippage, customSlippage, infinitApprove, disabledLiquiditySources } = useSettingsStore();
-  const swapSettings: UserSettings = {
-    slippage: customSlippage?.toString() || slippage.toString(),
-  };
+  const { slippage, disabledLiquiditySources } = useSettingsStore();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [warning, setWarning] = useState('');
@@ -63,9 +59,9 @@ export function useConfirmSwap() {
     const minSlippage =
       slippages
         ?.map((s) => parseFloat(s?.slippage || '0') || 0)
-        ?.filter((s) => s > 0)
-        ?.sort((a, b) => b - a)
-        ?.find(() => true) || null;
+        .filter((s) => s > 0)
+        .sort((a, b) => b - a)
+        .find(() => true) || null;
     if (slippageError) {
       setError('Server cannot calculated required slippage for your swap');
       return { balance: true, slippage: false, routeChanged };
@@ -151,12 +147,6 @@ export function useConfirmSwap() {
   const swap = () => {
     if (!bestRoute) return;
     if (inputAmount!.toString() === '') return;
-    // try {
-    //   gtag('event', 'confirm_swap');
-    // } catch (e) {
-    //   // continue regardless of error
-    // }
-
     const wallets: { [p: string]: { address: string; walletType: WalletType } } = {};
     selectedWallets.forEach(
       (wallet) =>
@@ -223,13 +213,5 @@ export function useConfirmSwap() {
         });
   };
 
-  useEffect(() => {
-    const handler = () => swap();
-    emitter.on('confirm_swap', handler);
-    return () => {
-      emitter.off('confirm_swap', handler);
-    };
-  }, []);
-
-  return { loading, error, data, warning, feeStatus, bestRouteChanged, enoughBalance };
+  return { loading, error, data, warning, feeStatus, bestRouteChanged, enoughBalance, swap };
 }

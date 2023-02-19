@@ -1,6 +1,6 @@
 import { Button, AddWalletIcon, Typography, styled } from '@rangodev/ui';
 import React from 'react';
-import { useNavigate, useNavigation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { navigationRoutes } from '../constants/navigationRoutes';
 import { AppRoutes } from './AppRoutes';
 

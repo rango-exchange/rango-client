@@ -1,4 +1,4 @@
-import { BestRouteResponse, BlockchainMeta } from 'rango-sdk';
+import { BlockchainMeta } from 'rango-sdk';
 import { Token } from 'rango-sdk/lib';
 import { create } from 'zustand';
 import { immer } from 'zustand/middleware/immer';
@@ -17,7 +17,7 @@ interface RouteState {
   inputAmount: string;
   inputUsdValue: BigNumber;
   outputAmount: BigNumber | null;
-  outputUsdValue: BigNumber | null;
+  outputUsdValue: BigNumber;
   fromToken: Token | null;
   toToken: Token | null;
   availableBalance: WalletBalance | null;

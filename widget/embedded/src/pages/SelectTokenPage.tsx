@@ -3,7 +3,6 @@ import { TokenSelector } from '@rangodev/ui';
 import { useBestRouteStore } from '../store/bestRoute';
 import { useMetaStore } from '../store/meta';
 import { useNavigate } from 'react-router-dom';
-import { navigationRoutes } from '../constants/navigationRoutes';
 import { Token } from 'rango-sdk';
 import { numberToString } from '../utils/numbers';
 import BigNumber from 'bignumber.js';

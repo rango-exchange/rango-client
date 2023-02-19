@@ -2,7 +2,6 @@ import React from 'react';
 import { ConfirmSwap } from '@rangodev/ui';
 import { useNavigate } from 'react-router-dom';
 import { useBestRouteStore } from '../store/bestRoute';
-import { emitter } from '../events/eventEmitter';
 import { useConfirmSwap } from '../hooks/useConfirmSwap';
 
 export function ConfirmSwapPage() {
@@ -10,13 +9,12 @@ export function ConfirmSwapPage() {
 
   const { bestRoute } = useBestRouteStore();
 
-  const { data, error, loading, warning, bestRouteChanged, enoughBalance, feeStatus } =
-    useConfirmSwap();
+  const { error, loading, warning, swap } = useConfirmSwap();
 
   return (
     <ConfirmSwap
-      onConfirm={() => emitter.emit('confirm_swap')}
-      onBack={() => navigate(-1)}
+      onConfirm={swap.bind(null)}
+      onBack={navigate.bind(null, -1)}
       bestRoute={bestRoute}
       loading={loading}
       error={error}

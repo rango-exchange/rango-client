@@ -5,14 +5,13 @@ import {
 } from '@rangodev/ui/dist/types/swaps';
 import BigNumber from 'bignumber.js';
 import { BestRouteResponse } from 'rango-sdk';
-import { httpService } from '../services/httpService';
 import { ZERO } from './balance';
 import { numberToString } from './numbers';
 import { SelectedWallet } from './wallets';
 
 export const getBestRouteToTokenUsdPrice = (
   bestRoute: BestRouteResponse | null,
-): string | null | undefined =>
+): number | null | undefined =>
   bestRoute?.result?.swaps[bestRoute?.result?.swaps.length - 1].to.usdPrice;
 
 export type RouteChangeStatus = {

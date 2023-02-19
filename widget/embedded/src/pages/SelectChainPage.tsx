@@ -3,7 +3,6 @@ import { BlockchainSelector } from '@rangodev/ui';
 import { useBestRouteStore } from '../store/bestRoute';
 import { useMetaStore } from '../store/meta';
 import { useNavigate } from 'react-router-dom';
-import { navigationRoutes } from '../constants/navigationRoutes';
 import { useWalletsStore } from '../store/wallets';
 import { BlockchainMeta } from 'rango-sdk';
 
@@ -29,12 +28,13 @@ export function SelectChainPage(props: PropTypes) {
     let chainSortedByConnectedWallets: BlockchainMeta[] = [];
     if (accounts.length !== 0) {
       const connectedChains = accounts.map((account) => account.blockchain);
-      chainSortedByConnectedWallets = [
-        ...blockchains.filter((chain) => connectedChains.includes(chain.name)),
-        ...blockchains.filter((chain) => !connectedChains.includes(chain.name)),
-      ];
+      chainSortedByConnectedWallets = blockchains.sort(
+        (blockchainA, blockchainB) =>
+          connectedChains.lastIndexOf(blockchainA.name) -
+          connectedChains.lastIndexOf(blockchainB.name),
+      );
     } else {
-      chainSortedByConnectedWallets = [...blockchains];
+      chainSortedByConnectedWallets = blockchains;
     }
     setList(chainSortedByConnectedWallets);
   }, [blockchains, accounts]);

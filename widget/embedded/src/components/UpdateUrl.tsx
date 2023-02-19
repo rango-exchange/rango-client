@@ -10,7 +10,7 @@ function searchParamsToToken(tokens: Token[], searchParams: string | null): Toke
     tokens.find((token) => {
       const symbolAndAddress = searchParams?.split('--');
       if (symbolAndAddress?.length === 1)
-        return token.symbol === symbolAndAddress?.[0] && token.address === null;
+        return token.symbol === symbolAndAddress[0] && token.address === null;
       return token.symbol === symbolAndAddress?.[0] && token.address === symbolAndAddress?.[1];
     }) || null
   );

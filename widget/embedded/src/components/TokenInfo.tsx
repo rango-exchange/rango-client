@@ -1,6 +1,6 @@
-import React, { useEffect, useRef } from 'react';
+import React from 'react';
 import { AngleDownIcon, Button, InfoCircleIcon, styled, TextField, Typography } from '@rangodev/ui';
-import { LoadingStatus, useMetaStore } from '../store/meta';
+import { useMetaStore } from '../store/meta';
 import { BlockchainMeta, Token } from 'rango-sdk';
 import { useNavigate } from 'react-router-dom';
 import { useBestRouteStore } from '../store/bestRoute';
@@ -19,7 +19,6 @@ type PropTypes = (
 ) & { chain: BlockchainMeta | null; token: Token | null };
 
 const Box = styled('div', {
-  // padding: '$16',
   display: 'flex',
   flexDirection: 'column',
   width: '100%',
@@ -55,8 +54,6 @@ const ImagePlaceholder = styled('span', {
   backgroundColor: '$neutrals300',
   borderRadius: '99999px',
 });
-
-const TokenBalance = styled('div', { position: 'relative', bottom: '2px' });
 
 const OutputContainer = styled('div', {
   height: '$48',
@@ -188,12 +185,14 @@ export function TokenInfo(props: PropTypes) {
                   <Typography variant="caption">{`$${numberToString(inputUsdValue)}`}</Typography>
                 </span>
               }
-              {...(props.type === 'From' && {
-                value: props.inputAmount || '',
-                onChange: (event) => {
-                  props.onAmountChange(event.target.value);
-                },
-              })}
+              value={props.inputAmount || ''}
+              onChange={
+                props.type === 'From'
+                  ? (event) => {
+                      props.onAmountChange(event.target.value);
+                    }
+                  : undefined
+              }
             />
           ) : (
             <OutputContainer>

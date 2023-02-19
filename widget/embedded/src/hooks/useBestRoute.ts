@@ -1,5 +1,4 @@
-import { BestRouteType } from '@rangodev/ui/dist/types/swaps';
-import { BestRouteRequest, BestRouteResponse, Token, UserSettings } from 'rango-sdk';
+import { BestRouteRequest, BestRouteResponse } from 'rango-sdk';
 import { useEffect, useRef, useState } from 'react';
 import { httpService } from '../services/httpService';
 import { useBestRouteStore } from '../store/bestRoute';
@@ -7,10 +6,7 @@ import { useSettingsStore } from '../store/settings';
 
 export function useBestRoute() {
   const { fromToken, toToken, inputAmount } = useBestRouteStore();
-  const { slippage, customSlippage, infinitApprove, disabledLiquiditySources } = useSettingsStore();
-  const swapSettings: UserSettings = {
-    slippage: customSlippage?.toString() || slippage.toString(),
-  };
+  const { slippage, customSlippage, disabledLiquiditySources } = useSettingsStore();
   const [count, setCount] = useState(0);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');

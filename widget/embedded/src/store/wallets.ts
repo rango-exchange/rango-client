@@ -1,11 +1,9 @@
-import { readAccountAddress } from '@rangodev/wallets-core';
-import { isEvmAddress, Network, WalletType } from '@rangodev/wallets-shared';
+import { WalletType } from '@rangodev/wallets-shared';
 import BigNumber from 'bignumber.js';
-import { WalletDetail, WalletDetailsResponse } from 'rango-sdk';
+import { WalletDetail } from 'rango-sdk';
 import { create } from 'zustand';
 import { immer } from 'zustand/middleware/immer';
 import { SelectableWallet } from '../pages/ConfirmWalletsPage';
-import { httpService } from '../services/httpService';
 import { getRequiredChains, SelectedWallet } from '../utils/wallets';
 import { useBestRouteStore } from './bestRoute';
 

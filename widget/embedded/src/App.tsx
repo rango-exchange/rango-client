@@ -1,11 +1,9 @@
-import { SwapContainer, darkTheme, lightTheme } from '@rangodev/ui';
-import React, { useEffect, useState } from 'react';
+import { SwapContainer } from '@rangodev/ui';
+import React from 'react';
 import { AppRouter } from './components/AppRouter';
-import { AppRoutes } from './components/AppRoutes';
 import { useMetaStore } from './store/meta';
 import './app.css';
-import { useSettingsStore } from './store/settings';
-import { Events, Provider, WalletProvider } from '@rangodev/wallets-core';
+import { Events, Provider } from '@rangodev/wallets-core';
 import { allProviders } from '@rangodev/provider-all';
 import { EventHandler } from '@rangodev/wallets-core/dist/wallet';
 import { isEvmBlockchain, Network } from '@rangodev/wallets-shared';
@@ -14,6 +12,7 @@ import { useWalletsStore } from './store/wallets';
 import { httpService } from './services/httpService';
 import { Layout } from './components/Layout';
 import { globalStyles } from './globalStyles';
+import { useTheme } from './hooks/useTheme';
 
 const providers = allProviders();
 interface Token {
@@ -37,39 +36,13 @@ export type WidgetProps = {
 
 export function App() {
   globalStyles();
-  const fetchMeta = useMetaStore((state) => state.fetchMeta);
+  const { activeTheme } = useTheme();
   const { blockchains } = useMetaStore((state) => state.meta);
   const { insertAccount, disconnectWallet } = useWalletsStore();
-  const { accounts, balance, insertBalance } = useWalletsStore();
+  const { insertBalance } = useWalletsStore();
   const evmBasedChainNames = useMetaStore((state) => state.meta.blockchains as any)
     .filter(isEvmBlockchain)
     .map((chain) => chain.name);
-  const { theme } = useSettingsStore();
-  const [OSTheme, setOSTheme] = useState(lightTheme);
-  useEffect(() => {
-    (async () => {
-      await fetchMeta();
-    })();
-
-    const switchTheme = (event: MediaQueryListEvent) => {
-      if (event.matches) setOSTheme(darkTheme);
-      else setOSTheme(lightTheme);
-    };
-
-    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-      setOSTheme(darkTheme);
-    }
-
-    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', switchTheme);
-    return () => {
-      window.matchMedia('(prefers-color-scheme: dark)').removeEventListener('change', switchTheme);
-    };
-  }, []);
-
-  const getTheme = () => {
-    if (theme === 'auto') return OSTheme;
-    else return theme === 'dark' ? darkTheme : lightTheme;
-  };
 
   const onUpdateState: EventHandler = (type, event, value, state, supportedChains) => {
     if (event === Events.ACCOUNTS) {
@@ -106,7 +79,7 @@ export function App() {
       allBlockChains={blockchains as any}
       providers={providers}
       onUpdateState={onUpdateState}>
-      <div id="pageContainer" className={getTheme()}>
+      <div id="pageContainer" className={activeTheme}>
         <SwapContainer>
           <AppRouter>
             <Layout />
