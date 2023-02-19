@@ -20,7 +20,7 @@ import {
 import {
   CosmosTransaction,
   EvmTransaction,
-  GenericTransactionType,
+  TransactionType,
   getBlockChainNameFromId,
   Meta,
   Network,
@@ -195,14 +195,14 @@ export function delay(ms: number) {
 }
 
 export const isEvmTransaction = (tx: Transaction): tx is EvmTransaction =>
-  tx.type === GenericTransactionType.EVM;
+  tx.type === TransactionType.EVM;
 export const isCosmosTransaction = (tx: Transaction): tx is CosmosTransaction =>
-  tx.type === GenericTransactionType.COSMOS;
+  tx.type === TransactionType.COSMOS;
 export const isSolanaTransaction = (tx: Transaction): tx is SolanaTransaction =>
-  tx.type === GenericTransactionType.SOLANA;
+  tx.type === TransactionType.SOLANA;
 export const isTrasnferTransaction = (
   tx: Transaction
-): tx is TransferTransaction => tx.type === GenericTransactionType.TRANSFER;
+): tx is TransferTransaction => tx.type === TransactionType.TRANSFER;
 
 export const getSwapWalletType = (
   swap: PendingSwap,
