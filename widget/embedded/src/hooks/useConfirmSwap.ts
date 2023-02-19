@@ -107,6 +107,7 @@ export function useConfirmSwap() {
           (sw: Record<string, string>, wallet) => ((sw[wallet.blockchain] = wallet.address), sw),
           {},
         ),
+        //@ts-ignore
         swapperGroups: disabledLiquiditySources,
         swappersGroupsExclude: true,
       })
