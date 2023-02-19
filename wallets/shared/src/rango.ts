@@ -740,7 +740,7 @@ export type WalletInfo = {
 
 export interface Wallet {
   type: WalletType;
-  extensionAvailable?: boolean;
+  extensionAvailable: boolean;
   connected: boolean;
   info: Omit<WalletInfo, 'color' | 'supportedChains'>;
 }
