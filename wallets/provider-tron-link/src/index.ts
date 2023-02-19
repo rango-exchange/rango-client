@@ -73,7 +73,9 @@ export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
     installLink: {
       CHROME:
         'https://chrome.google.com/webstore/detail/tronlink/ibnejdfjmmkpcnlpebklmnkoeoihofec',
-      FIREFOX: 'https://addons.mozilla.org/en-US/firefox/addon/tronlink-wallet',
+      BRAVE:
+        'https://chrome.google.com/webstore/detail/tronlink/ibnejdfjmmkpcnlpebklmnkoeoihofec',
+      DEFAULT: 'https://www.tronlink.org',
     },
     color: '#96e7ed',
     supportedChains: tron,

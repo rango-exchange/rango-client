@@ -179,9 +179,20 @@ export function sortWalletsBasedOnState(wallets: Wallet[]): Wallet[] {
   return wallets.sort(
     (a, b) =>
       Number(b.connected) - Number(a.connected) ||
-      Number(b.installed) - Number(a.installed) ||
       Number(b.extensionAvailable) - Number(a.extensionAvailable)
   );
+}
+
+function isBrave() {
+  let isBrave = false;
+  const nav: any = navigator;
+  if (nav.brave && nav.brave.isBrave) {
+    nav.brave.isBrave().then((res: boolean) => {
+      if (res) isBrave = true;
+    });
+  }
+
+  return isBrave;
 }
 
 export function detectInstallLink(install: InstallObjects | string): string {
@@ -189,18 +200,20 @@ export function detectInstallLink(install: InstallObjects | string): string {
     return install;
   } else {
     let link;
-    if (navigator.userAgent.indexOf('Chrome') !== -1) {
+    if (isBrave()) {
+      link = install.BRAVE;
+    } else if (navigator.userAgent.toLowerCase().indexOf('chrome') !== -1) {
       link = install.CHROME;
-    } else if (navigator.userAgent.indexOf('Firefox') !== -1) {
+    } else if (navigator.userAgent.toLowerCase().indexOf('firefox') !== -1) {
       link = install.FIREFOX;
-    } else if (navigator.userAgent.indexOf('Edge') !== -1) {
+    } else if (navigator.userAgent.toLowerCase().indexOf('edge') !== -1) {
       link = install.EDGE;
     }
-    return link || install.CHROME;
+    return link || install.DEFAULT;
   }
 }
 
-export function detectSmallScreens(): boolean {
+export function detectMobileScreens(): boolean {
   return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
     navigator.userAgent
   );

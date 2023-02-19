@@ -18,7 +18,7 @@ function List() {
         return {
           type: WalletType[type],
           connected,
-          installed,
+          extensionAvailable: installed,
           info,
         };
       }),

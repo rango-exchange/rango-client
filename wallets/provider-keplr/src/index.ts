@@ -49,8 +49,10 @@ export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
     installLink: {
       CHROME:
         'https://chrome.google.com/webstore/detail/keplr/dmkamcknogkgcdfhhbddcghachkejeap',
-
+      BRAVE:
+        'https://chrome.google.com/webstore/detail/keplr/dmkamcknogkgcdfhhbddcghachkejeap',
       FIREFOX: 'https://addons.mozilla.org/en-US/firefox/addon/keplr',
+      DEFAULT: 'https://www.keplr.app',
     },
     color: '#3898e5',
     supportedChains: cosmos.filter((blockchainMeta) => !!blockchainMeta.info),

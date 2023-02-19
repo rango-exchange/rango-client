@@ -725,6 +725,8 @@ export type InstallObjects = {
   CHROME: string;
   FIREFOX?: string;
   EDGE?: string;
+  BRAVE?: string;
+  DEFAULT: string;
 };
 
 export type WalletInfo = {
@@ -739,7 +741,6 @@ export type WalletInfo = {
 export interface Wallet {
   type: WalletType;
   extensionAvailable?: boolean;
-  installed?: boolean;
   connected: boolean;
-  info: Omit<WalletInfo, "color" | "supportedChains">;
+  info: Omit<WalletInfo, 'color' | 'supportedChains'>;
 }

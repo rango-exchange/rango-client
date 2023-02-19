@@ -86,8 +86,10 @@ export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
   installLink: {
     CHROME:
       'https://chrome.google.com/webstore/detail/okx-wallet/mcohilncbfahbmgdjkbpemcciiolgcge',
-
+    BRAVE:
+      'https://chrome.google.com/webstore/detail/okx-wallet/mcohilncbfahbmgdjkbpemcciiolgcge',
     FIREFOX: 'https://addons.mozilla.org/en-US/firefox/addon/okexwallet',
+    DEFAULT: 'https://www.okx.com/web3',
   },
   color: 'white',
   supportedChains: allBlockChains.filter((blockchainMeta) =>

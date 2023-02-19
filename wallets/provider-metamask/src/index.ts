@@ -54,9 +54,12 @@ export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
     installLink: {
       CHROME:
         'https://chrome.google.com/webstore/detail/metamask/nkbihfbeogaeaoehlefnkodbefgpgknn?hl=en',
+      BRAVE:
+        'https://chrome.google.com/webstore/detail/metamask/nkbihfbeogaeaoehlefnkodbefgpgknn?hl=en',
 
       FIREFOX: 'https://addons.mozilla.org/en-US/firefox/addon/ether-metamask',
       EDGE: 'https://microsoftedge.microsoft.com/addons/detail/metamask/ejbalbakoplchlghecdalmeeeajnimhm?hl=en-US',
+      DEFAULT: 'https://metamask.io/download/',
     },
     color: '#dac7ae',
     supportedChains: evms,

@@ -76,7 +76,10 @@ export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
   installLink: {
     CHROME:
       'https://chrome.google.com/webstore/detail/binance-chain-wallet/fhbohimaelbohpjbbldcngcnapndodjp',
+    BRAVE:
+      'https://chrome.google.com/webstore/detail/binance-chain-wallet/fhbohimaelbohpjbbldcngcnapndodjp',
     FIREFOX: 'https://addons.mozilla.org/en-US/firefox/addon/binance-chain',
+    DEFAULT: 'https://www.bnbchain.org/en',
   },
   color: '#2b2e35',
   supportedChains: allBlockChains.filter((blockchainMeta) =>

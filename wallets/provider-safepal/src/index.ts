@@ -73,9 +73,11 @@ export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
     installLink: {
       CHROME:
         'https://chrome.google.com/webstore/detail/safepal-extension-wallet/lgmpcpglpngdoalbgeoldeajfclnhafa',
-
+      BRAVE:
+        'https://chrome.google.com/webstore/detail/safepal-extension-wallet/lgmpcpglpngdoalbgeoldeajfclnhafa',
       FIREFOX:
         'https://addons.mozilla.org/en-US/firefox/addon/safepal-extension-wallet',
+      DEFAULT: 'https://www.safepal.com/download',
     },
     color: '#4A21EF',
     supportedChains: [...evms, ...solana],
