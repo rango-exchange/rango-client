@@ -21,6 +21,5 @@
     "bignumber.js": "^9.1.1",
     "ethers": "^5.7.2",
     "rango-sdk-basic": "^0.0.9"
-  },
-  "gitHead": "6a1dd3a10333466b93bb13c66dfd148df0059070"
+  }
 }
