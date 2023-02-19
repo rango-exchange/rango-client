@@ -7,12 +7,19 @@ import { Button } from '../Button/Button';
 import { Typography } from '../Typography';
 import { VirtualizedList } from '../VirtualizedList/VirtualizedList';
 
+export interface TokenWithAmount extends Token {
+  balance?: {
+    amount: string;
+    usdValue: string;
+  };
+}
+
 const PAGE_SIZE = 20;
 export interface PropTypes {
-  list: Token[];
-  selected: Token | null;
+  list: TokenWithAmount[];
+  selected: TokenWithAmount | null;
   searchedText: string;
-  onChange: (token: Token) => void;
+  onChange: (token: TokenWithAmount) => void;
 }
 
 const TokenImage = styled('img', {
@@ -26,18 +33,18 @@ const TokenNameContainer = styled('div', {
   flexDirection: 'column',
 });
 
-// const TokenAmountContainer = styled('div', {
-//   display: 'flex',
-//   flexDirection: 'column',
-//   alignItems: 'flex-end',
-// });
+const TokenAmountContainer = styled('div', {
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'flex-end',
+});
 
 export function TokenList(props: PropTypes) {
   const { list, searchedText, onChange } = props;
 
   const [selected, setSelected] = useState(props.selected);
 
-  const changeSelected = (token: Token) => {
+  const changeSelected = (token: TokenWithAmount) => {
     setSelected(token);
     onChange(token);
   };
@@ -47,7 +54,7 @@ export function TokenList(props: PropTypes) {
     index,
     style,
   }: {
-    filteredTokens: Token[];
+    filteredTokens: TokenWithAmount[];
     index: number;
     style: React.CSSProperties | undefined;
   }) => {
@@ -75,18 +82,18 @@ export function TokenList(props: PropTypes) {
               : undefined
           }
           prefix={<TokenImage src={currentToken.image} />}
-          // suffix={
-          //   !!currentToken.balance && (
-          //     <TokenAmountContainer>
-          //       <Typography variant="body1">
-          //         {currentToken.balance.amount}
-          //       </Typography>
-          //       <Typography variant="body2">
-          //         {currentToken.balance.usdPrice}
-          //       </Typography>
-          //     </TokenAmountContainer>
-          //   )
-          // }
+          suffix={
+            !!currentToken.balance && (
+              <TokenAmountContainer>
+                <Typography variant="body2">
+                  {currentToken.balance.amount}
+                </Typography>
+                <Typography variant="caption">
+                  {currentToken.balance.usdValue}
+                </Typography>
+              </TokenAmountContainer>
+            )
+          }
         >
           <TokenNameContainer>
             <Typography variant="body1">{currentToken.symbol}</Typography>
@@ -99,7 +106,7 @@ export function TokenList(props: PropTypes) {
 
   const [hasNextPage, setHasNextPage] = useState<boolean>(true);
   const [isNextPageLoading, setIsNextPageLoading] = useState<boolean>(false);
-  const [filteredTokens, setFilteredTokens] = useState<Token[]>(list);
+  const [filteredTokens, setFilteredTokens] = useState<TokenWithAmount[]>(list);
 
   const loadNextPage = () => {
     setIsNextPageLoading(true);

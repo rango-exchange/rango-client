@@ -1,5 +1,5 @@
 import React from 'react';
-import { styled, Button, Typography } from '@rangodev/ui';
+import { styled, Typography } from '@rangodev/ui';
 import { HeaderButtons } from './HeaderButtons';
 
 export const HeaderContainer = styled('div', {
@@ -7,14 +7,19 @@ export const HeaderContainer = styled('div', {
   justifyContent: 'space-between',
   alignItems: 'center',
   width: '100%',
-  padding: '$16 $8',
+  padding: '$16 0',
 });
 
-export function Header() {
+export interface PropTypes {
+  onClickRefresh: () => void;
+}
+
+export function Header(props: PropTypes) {
+  const { onClickRefresh } = props;
   return (
     <HeaderContainer>
       <Typography variant="h4">SWAP</Typography>
-      <HeaderButtons />
+      <HeaderButtons onClickRefresh={onClickRefresh} />
     </HeaderContainer>
   );
 }

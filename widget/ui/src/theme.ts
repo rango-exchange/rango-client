@@ -126,18 +126,19 @@ const typedCreateStiches = createStitches as CreateStitches;
 // We can directly check it with `tsc` to see if the error is correct or not.
 // We `ignore` it for now, to get safety check on VSCode.
 // @ts-ignore
-export const { styled, css, createTheme, keyframes } = typedCreateStiches<
-  '',
-  typeof media,
-  typeof theme,
-  DefaultThemeMap,
-  // TODO: Make `utils` typesafe as well.
-  {}
->({
-  media,
-  theme,
-  utils,
-});
+export const { styled, css, createTheme, keyframes, globalCss } =
+  typedCreateStiches<
+    '',
+    typeof media,
+    typeof theme,
+    DefaultThemeMap,
+    // TODO: Make `utils` typesafe as well.
+    {}
+  >({
+    media,
+    theme,
+    utils,
+  });
 
 export const lightTheme = createTheme({});
 

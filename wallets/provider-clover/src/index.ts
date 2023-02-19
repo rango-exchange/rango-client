@@ -97,8 +97,14 @@ export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
   return {
     name: 'Clover',
     img: 'https://raw.githubusercontent.com/rango-exchange/rango-types/main/assets/icons/wallets/clover.jpeg',
-    installLink:
-      'https://chrome.google.com/webstore/detail/clover-wallet/nhnkbkgjikgcigadomkphalanndcapjk',
+    installLink: {
+      CHROME:
+        'https://chrome.google.com/webstore/detail/clover-wallet/nhnkbkgjikgcigadomkphalanndcapjk',
+      BRAVE:
+        'https://chrome.google.com/webstore/detail/clover-wallet/nhnkbkgjikgcigadomkphalanndcapjk',
+      DEFAULT: 'https://wallet.clover.finance',
+    },
+
     color: '#96e7ed',
     supportedChains: [...evms, ...solana],
   };

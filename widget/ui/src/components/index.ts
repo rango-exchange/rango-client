@@ -21,3 +21,4 @@ export * from './TokenSelector';
 export * from './Tooltip';
 export * from './Typography';
 export * from './Wallet';
+export * from './Alert';

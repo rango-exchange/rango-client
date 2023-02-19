@@ -1,13 +1,13 @@
 import React from 'react';
-import { Token } from 'rango-sdk';
 import { SecondaryPage } from '../SecondaryPage/SecondaryPage';
 import { TokenList } from '../TokenList';
+import { TokenWithAmount } from '../TokenList/TokenList';
 
 export interface PropTypes {
-  list: Token[];
+  list: TokenWithAmount[];
   type: 'Source' | 'Destination';
-  selected: Token | null;
-  onChange: (token: Token) => void;
+  selected: TokenWithAmount | null;
+  onChange: (token: TokenWithAmount) => void;
   onBack: () => void;
 }
 
