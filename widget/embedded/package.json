@@ -2,16 +2,15 @@
   "name": "@rango-dev/widget-embedded",
   "version": "0.1.10-next.70",
   "license": "MIT",
-  "source": "public/index.html",
-  "main": "dist/test.js",
-  "typings": "dist/test.d.ts",
+  "main": "dist/index.js",
+  "typings": "dist/index.d.ts",
   "files": [
     "dist",
     "src"
   ],
   "browserslist": "> 0.5%, last 2 versions, not dead",
   "scripts": {
-    "dev": "parcel serve -p 3000",
+    "dev": "parcel public/index.html -p 3000",
     "build": "parcel build",
     "build2": "tsdx build --entry ./src/test.tsx"
   },
@@ -26,7 +25,6 @@
     "singleQuote": true,
     "trailingComma": "es5"
   },
-
   "dependencies": {
     "@rango-dev/provider-all": "^0.1.11-next.70",
     "@rango-dev/ui": "^0.1.10-next.70",
