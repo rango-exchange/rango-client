@@ -14,7 +14,7 @@
     "build:widget": "lerna run --scope @rangodev/widget-* build",
     "build:npm": "yarn build:wallets && yarn build:queue-manager",
     "build:demo": "lerna run --scope @rangodev/wallets-demo build",
-    "build": "lerna run build",
+    "build": "nx affected --target=build --parallel=3",
     "dev:wallets": "lerna run dev --scope @rangodev/wallets-demo --scope @rangodev/provider-*",
     "dev:queue-manager": "lerna run dev --scope @rangodev/queue-manager-*",
     "dev:ui": "lerna run storybook --scope @rangodev/ui",
