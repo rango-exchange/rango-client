@@ -1,1 +1,2 @@
+
 Widget will use `components`, `queues` and `wallets` to make a react app to be embedded as widget.
