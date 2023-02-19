@@ -1,0 +1,54 @@
+{
+  "name": "@rangodev/provider-leap-cosmos",
+  "version": "0.1.11-next.40",
+  "license": "MIT",
+  "module": "dist/provider-leap-cosmos.esm.js",
+  "main": "dist/index.js",
+  "typings": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "src"
+  ],
+  "engines": {
+    "node": ">=10"
+  },
+  "scripts": {
+    "start": "tsdx watch",
+    "build": "tsdx build",
+    "test": "tsdx test --passWithNoTests",
+    "lint": "tsdx lint",
+    "size": "size-limit",
+    "analyze": "size-limit --why"
+  },
+  "peerDependencies": {
+    "react": ">=16"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "tsdx lint"
+    }
+  },
+  "prettier": {
+    "printWidth": 80,
+    "semi": true,
+    "singleQuote": true,
+    "trailingComma": "es5"
+  },
+  "size-limit": [
+    {
+      "path": "dist/provider-leap-cosmos.cjs.production.min.js",
+      "limit": "10 KB"
+    },
+    {
+      "path": "dist/provider-leap-cosmos.esm.js",
+      "limit": "10 KB"
+    }
+  ],
+  "dependencies": {
+    "@rangodev/wallets-shared": "^0.1.11-next.40"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "gitHead": "a4584c2a3341fe23e033a9ff2db0f201b0a6278c"
+}

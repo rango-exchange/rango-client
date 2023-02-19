@@ -170,5 +170,6 @@ export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
     installLink: '',
     color: '#b2dbff',
     supportedChains: evms,
+    showOnMobile: true,
   };
 };
