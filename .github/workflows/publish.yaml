@@ -2,77 +2,99 @@ name: Publish
 on:
   push:
     branches:
-      - "main"
-      - "next"
+      - 'main'
+      - 'next'
+      - 'feat/publish'
   pull_request:
     types:
       - closed
     branches:
-      - "main"
-      - "next"
+      - 'main'
+      - 'next'
 
 jobs:
-  publish:
+  # publish:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v3
+
+  #     - name: Setup NodeJS
+  #       uses: actions/setup-node@v3
+  #       with:
+  #         node-version: "14"
+  #         cache: "yarn"
+
+  #     - name: Git
+  #       run: |
+  #         git config --global user.name 'github-actions[bot]'
+  #         git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+
+  #     - name: Auth
+  #       run: |
+  #         echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> .npmrc
+  #         npm whoami
+  #       env:
+  #         NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+  #     - name: Install packages
+  #       run: yarn install --frozen-lockfile
+
+  #     - name: Build packages
+  #       run: yarn build:npm
+
+  #     - name: Versioning (Prerelease)
+  #       if: github.ref == 'refs/heads/next' || github.event.pull_request.base.ref == 'next'
+  #       run: npx lerna version --conventional-prerelease --no-changelog --yes
+  #       env:
+  #         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  #     - name: Versioning (Production)
+  #       if: github.ref == 'refs/heads/main' || github.event.pull_request.base.ref == 'main'
+  #       run: npx lerna version --conventional-graduate --yes
+  #       env:
+  #         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  #     - name: Publish
+  #       run: npx lerna publish from-git --yes
+
+  # deploy-ghp:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v3
+  #     - name: Setup NodeJS
+  #       uses: actions/setup-node@v3
+  #       with:
+  #         node-version: "14"
+  #         cache: "yarn"
+
+  #     - name: Install packages
+  #       run: yarn install --frozen-lockfile
+
+  #     - name: Build packages
+  #       run: yarn build:demo
+
+  #     - name: Deploy 🚀
+  #       uses: JamesIves/github-pages-deploy-action@v4
+  #       with:
+  #         folder: wallets/demo/dist
+
+  Deploy-Vercel-Production:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-
-      - name: Setup NodeJS
-        uses: actions/setup-node@v3
-        with:
-          node-version: "14"
-          cache: "yarn"
-
-      - name: Git
+      - name: Determine affected packages
         run: |
-          git config --global user.name 'github-actions[bot]'
-          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          # Identify changes in the packages/ folder
+          echo "${{ github.base_ref }}"
+          echo "${{ github.head_ref }}"
+          AFFECTED_PACKAGES=$(git diff --name-only ${{ github.base_ref }}...${{ github.head_ref }})
+          echo "Affected packages: $AFFECTED_PACKAGES"
 
-      - name: Auth
-        run: |
-          echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> .npmrc
-          npm whoami
-        env:
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-
-      - name: Install packages
-        run: yarn install --frozen-lockfile
-
-      - name: Build packages
-        run: yarn build:npm
-
-      - name: Versioning (Prerelease)
-        if: github.ref == 'refs/heads/next' || github.event.pull_request.base.ref == 'next'
-        run: npx lerna version --conventional-prerelease --no-changelog --yes
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Versioning (Production)
-        if: github.ref == 'refs/heads/main' || github.event.pull_request.base.ref == 'main'
-        run: npx lerna version --conventional-graduate --yes
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Publish
-        run: npx lerna publish from-git --yes
-
-  deploy-ghp: 
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - name: Setup NodeJS
-        uses: actions/setup-node@v3
-        with:
-          node-version: "14"
-          cache: "yarn"
-
-      - name: Install packages
-        run: yarn install --frozen-lockfile
-
-      - name: Build packages
-        run: yarn build:demo
-
-      - name: Deploy 🚀 
-        uses: JamesIves/github-pages-deploy-action@v4
-        with:
-          folder: wallets/demo/dist
+      # - name: Install Vercel CLI
+      #   run: npm install --global vercel@canary
+      # - name: Pull Vercel Environment Information
+      #   run: vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
+      # - name: Build Project Artifacts
+      #   run: vercel build --prod --token=${{ secrets.VERCEL_TOKEN }}
+      # - name: Deploy Project Artifacts to Vercel
+      #   run: vercel deploy --prebuilt --prod --token=${{ secrets.VERCEL_TOKEN }}
