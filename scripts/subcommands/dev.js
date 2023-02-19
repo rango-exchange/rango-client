@@ -10,7 +10,7 @@ function dev(params) {
   const dev = exec(command, { cwd }, (err, stdout, stderr) => {
     if (err) {
       console.log(headStyle('dev', 'error', 'bgRed'), stderr);
-      process.exit(0);
+      process.exit(1);
     }
     console.log(headStyle('dev'), stdout);
   });
