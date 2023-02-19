@@ -12,7 +12,7 @@
   "scripts": {
     "dev": "parcel public/index.html -p 3000",
     "build": "parcel build",
-    "build:swapbox": "tsdx build --entry ./src/swapBox.tsx"
+    "build:lib": "tsdx build --entry ./src/lib.tsx"
   },
   "husky": {
     "hooks": {
