@@ -92,26 +92,32 @@ export const useWalletsStore = create<WalletsStore>()(
     insertBalance: (wallets, walletType) =>
       set((state) => {
         wallets.forEach((wallet) => {
-          const a = state.balance.find((b) => b.blockchain === wallet.blockChain)!;
-          const b = a?.accountsWithBalance.find((acc) => acc.walletType === walletType)!;
-          b.address = wallet.address;
-          b.error = wallet.failed;
-          b.explorerUrl = wallet.explorerUrl;
-          b.isConnected = true;
-          b.loading = false;
-          b.balances =
-            wallet.balances?.map((b) => ({
+          const walletsWithSameBlockchain = state.balance.find(
+            (acc) => acc.blockchain === wallet.blockChain,
+          )!;
+          const retrivedWallet = walletsWithSameBlockchain?.accountsWithBalance.find(
+            (acc) => acc.walletType === walletType,
+          )!;
+          retrivedWallet.address = wallet.address;
+          retrivedWallet.error = wallet.failed;
+          retrivedWallet.explorerUrl = wallet.explorerUrl;
+          retrivedWallet.isConnected = true;
+          retrivedWallet.loading = false;
+          retrivedWallet.balances =
+            wallet.balances?.map((retrivedWallet) => ({
               chain: wallet.blockChain,
-              symbol: b.asset.symbol,
-              ticker: b.asset.symbol,
-              address: b.asset.address || null,
-              rawAmount: b.amount.amount,
-              decimal: b.amount.decimals,
-              amount: new BigNumber(b.amount.amount).shiftedBy(-b.amount.decimals).toFixed(),
+              symbol: retrivedWallet.asset.symbol,
+              ticker: retrivedWallet.asset.symbol,
+              address: retrivedWallet.asset.address || null,
+              rawAmount: retrivedWallet.amount.amount,
+              decimal: retrivedWallet.amount.decimals,
+              amount: new BigNumber(retrivedWallet.amount.amount)
+                .shiftedBy(-retrivedWallet.amount.decimals)
+                .toFixed(),
               logo: '',
               usdPrice: null,
             })) || [];
-          b.walletType = walletType;
+          retrivedWallet.walletType = walletType;
         });
       }),
     disconnectWallet: (walletType) =>
