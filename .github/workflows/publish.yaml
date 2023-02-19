@@ -22,7 +22,7 @@ jobs:
       - name: Setup NodeJS
         uses: actions/setup-node@v3
         with:
-          node-version: '14'
+          node-version: '18'
           cache: 'yarn'
 
       - name: Git
@@ -40,23 +40,8 @@ jobs:
       - name: Install packages
         run: yarn install --frozen-lockfile
 
-      - name: Build packages
-        run: yarn build:npm
+      - name: Version, build & publish packages
+        run: yarn run publish
         env:
           REF: ${{ github.ref }}
           BASE_REF: ${{ github.event.pull_request.base.ref }}
-
-      - name: Versioning (Prerelease)
-        if: github.ref == 'refs/heads/next' || github.event.pull_request.base.ref == 'next'
-        run: npx lerna version --conventional-prerelease --no-changelog --yes
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Versioning (Production)
-        if: github.ref == 'refs/heads/main' || github.event.pull_request.base.ref == 'main'
-        run: npx lerna version --conventional-graduate --yes
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Publish
-        run: npx lerna publish from-git --yes
