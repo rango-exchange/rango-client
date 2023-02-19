@@ -18,6 +18,7 @@ import * as walletconnect from '@rangodev/provider-walletconnect';
 import * as argentx from '@rangodev/provider-argentx';
 import * as tronLink from '@rangodev/provider-tron-link';
 import * as kucoin from '@rangodev/provider-kucoin-wallet';
+import * as leapCosmos from '@rangodev/provider-leap-cosmos';
 import * as frontier from '@rangodev/provider-frontier';
 
 export const allProviders = () => [
@@ -41,5 +42,6 @@ export const allProviders = () => [
   argentx,
   tronLink,
   kucoin,
+  leapCosmos,
   frontier,
 ];

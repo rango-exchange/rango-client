@@ -23,6 +23,7 @@ declare global {
     starknet: any;
     tronLink: any;
     kucoin: any;
+    leap: any;
     frontier: any;
   }
 }
