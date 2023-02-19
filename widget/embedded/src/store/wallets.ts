@@ -44,7 +44,7 @@ interface WalletsStore {
   balance: Balance[];
   selectedWallets: SelectedWallet[];
   insertAccount: (balance: Balance[]) => void;
-  insertBalance: (wallets: WalletDetail[], walletType: string) => void;
+  insertBalance: (wallets: WalletDetail[], walletType: WalletType) => void;
   disconnectWallet: (walletType: WalletType) => void;
   initSelectedWallets: () => void;
   setSelectedWallet: (wallet: SelectableWallet) => void;
@@ -52,9 +52,9 @@ interface WalletsStore {
 
 export const useWalletsStore = create<WalletsStore>()(
   immer((set) => ({
-    accounts: [] as any,
-    balance: [] as any,
-    selectedWallets: [] as any,
+    accounts: [],
+    balance: [],
+    selectedWallets: [],
     insertAccount: (accounts) =>
       set((state) => {
         accounts.forEach((account) => {
@@ -111,7 +111,7 @@ export const useWalletsStore = create<WalletsStore>()(
               logo: '',
               usdPrice: null,
             })) || [];
-          b.walletType = walletType as any;
+          b.walletType = walletType;
         });
       }),
     disconnectWallet: (walletType) =>

@@ -1,5 +1,4 @@
 //TODO: remove mock data after queue manager integration
-
 export const pendingSwap: any = {
   creationTime: '1675837879344',
   finishTime: '1675842500799',

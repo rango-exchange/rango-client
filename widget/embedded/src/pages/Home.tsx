@@ -11,7 +11,6 @@ import { navigationRoutes } from '../constants/navigationRoutes';
 import { useBestRoute } from '../hooks/useBestRoute';
 import { useMetaStore } from '../store/meta';
 import { useWalletsStore } from '../store/wallets';
-import { BestRouteType } from '@rangodev/ui/dist/types/swaps';
 import { errorMessages } from '../constants/errors';
 import {
   getSwapButtonTitle,
@@ -98,7 +97,6 @@ export function Home() {
   const highValueLoss = outputRatioHasWarning(inputUsdValue, outToInRatio);
 
   const priceImpactCanNotBeComputed = !canComputePriceImpact(
-    //@ts-ignore
     bestRoute,
     inputAmount,
     inputUsdValue,
@@ -108,7 +106,6 @@ export function Home() {
   const buttonTitle = getSwapButtonTitle(
     accounts,
     fetchingBestRoute,
-    //@ts-ignore
     hasLimitError(bestRoute),
     highValueLoss,
     priceImpactCanNotBeComputed,
@@ -120,11 +117,10 @@ export function Home() {
     fetchingBestRoute ||
     highValueLoss ||
     (noConnectedWallet && noRoutesFound) ||
-    //@ts-ignore
     hasLimitError(bestRoute);
 
   useEffect(() => {
-    setBestRoute(data as BestRouteType);
+    setBestRoute(data);
   }, [data]);
 
   return (

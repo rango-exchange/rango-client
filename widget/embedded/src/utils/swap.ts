@@ -1,9 +1,5 @@
 import { PendingSwap } from '@rangodev/ui/dist/containers/History/types';
-import {
-  BestRouteType,
-  WalletTypeAndAddress,
-  SwapSavedSettings,
-} from '@rangodev/ui/dist/types/swaps';
+import { WalletTypeAndAddress, SwapSavedSettings } from '@rangodev/ui/dist/types/swaps';
 import BigNumber from 'bignumber.js';
 import { BestRouteResponse } from 'rango-sdk';
 import { Account } from '../store/wallets';
@@ -55,7 +51,7 @@ export function getSwapButtonTitle(
 }
 
 export function canComputePriceImpact(
-  bestRoute: BestRouteResponse,
+  bestRoute: BestRouteResponse | null,
   inputAmount: string,
   inputUsdValue: BigNumber,
   outputUsdValue: BigNumber,
@@ -71,12 +67,12 @@ export function canComputePriceImpact(
 
 export function calculatePendingSwap(
   inputAmount: string,
-  bestRoute: BestRouteType,
+  bestRoute: BestRouteResponse,
   wallets: { [p: string]: WalletTypeAndAddress },
   settings: SwapSavedSettings,
   validateBalanceOrFee: boolean,
 ): PendingSwap {
-  const simulationResult = bestRoute.result as any;
+  const simulationResult = bestRoute.result;
   if (!simulationResult) throw Error('Simulation result should not be null');
 
   return {
@@ -97,6 +93,7 @@ export function calculatePendingSwap(
     settings: settings,
     simulationResult: simulationResult,
     validateBalanceOrFee,
+    //TODO: finalize PendingSwap type and remove ts-ignore
     //@ts-ignore
     steps:
       bestRoute.result?.swaps?.map((s, i) => ({

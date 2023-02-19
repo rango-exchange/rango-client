@@ -1,3 +1,4 @@
+import { BestRouteResponse } from 'rango-sdk';
 import React, { PropsWithChildren } from 'react';
 import { Alert } from '../../components/Alert';
 import { Button } from '../../components/Button';
@@ -8,7 +9,6 @@ import { StepDetail } from '../../components/StepDetail';
 import { Tooltip } from '../../components/Tooltip';
 import { Typography } from '../../components/Typography';
 import { styled } from '../../theme';
-import { BestRouteType } from '../../types/swaps';
 
 export const Line = styled('div', {
   width: '0',
@@ -73,7 +73,7 @@ export const StyledUpdateIcon = styled(UpdateIcon, {
 const Alerts = styled('div', { paddingBottom: '$16' });
 
 export interface PropTypes {
-  bestRoute: BestRouteType | null;
+  bestRoute: BestRouteResponse | null;
   onRefresh?: React.MouseEventHandler<SVGElement>;
   onBack: () => void;
   onAddWallet?: (
@@ -136,7 +136,6 @@ export function ConfirmSwap({
               <StepDetail
                 logo={swap.from.logo}
                 symbol={swap.from.symbol}
-                //@ts-ignore
                 chainLogo={swap.from.blockchainLogo}
                 blockchain={swap.from.blockchain}
                 amount={swap.fromAmount}
@@ -146,11 +145,7 @@ export function ConfirmSwap({
           )}
           <Line />
           <SwapperContainer>
-            <SwapperLogo
-              //@ts-ignore
-              src={swap.swapperLogo}
-              alt={swap.swapperId}
-            />
+            <SwapperLogo src={swap.swapperLogo} alt={swap.swapperId} />
             <div>
               <Typography ml={4} variant="caption">
                 {swap.swapperType} from {swap.from.symbol} to {swap.to.symbol}{' '}
@@ -169,7 +164,6 @@ export function ConfirmSwap({
           <StepDetail
             logo={swap.to.logo}
             symbol={swap.to.symbol}
-            //@ts-ignore
             chainLogo={swap.to.blockchainLogo}
             blockchain={swap.to.blockchain}
             amount={swap.toAmount}

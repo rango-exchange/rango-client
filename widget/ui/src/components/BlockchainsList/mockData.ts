@@ -1,6 +1,8 @@
 // import { PropTypes } from './BlockchainsList';
 
-export const blockchainMeta: any = [
+import { BlockchainMeta, TransactionType } from 'rango-sdk';
+
+export const blockchainMeta: BlockchainMeta[] = [
   {
     name: 'BSC',
     defaultDecimals: 18,
@@ -18,7 +20,7 @@ export const blockchainMeta: any = [
     sort: 1,
     color: '#F3BA2F',
     enabled: true,
-    type: 'EVM',
+    type: TransactionType.EVM,
     chainId: '0x38',
     info: {
       infoType: 'EvmMetaInfo',
@@ -51,7 +53,7 @@ export const blockchainMeta: any = [
     sort: 2,
     color: '#8247E5',
     enabled: true,
-    type: 'EVM',
+    type: TransactionType.EVM,
     chainId: '0x89',
     info: {
       infoType: 'EvmMetaInfo',
@@ -84,7 +86,7 @@ export const blockchainMeta: any = [
     sort: 3,
     color: '#ecf0f1',
     enabled: true,
-    type: 'EVM',
+    type: TransactionType.EVM,
     chainId: '0x1',
     info: {
       infoType: 'EvmMetaInfo',
@@ -117,7 +119,7 @@ export const blockchainMeta: any = [
     sort: 4,
     color: '#7901B4',
     enabled: true,
-    type: 'COSMOS',
+    type: TransactionType.COSMOS,
     chainId: 'osmosis-1',
     info: {
       infoType: 'CosmosMetaInfo',
@@ -198,7 +200,7 @@ export const blockchainMeta: any = [
     sort: 5,
     color: '#f0827d',
     enabled: true,
-    type: 'COSMOS',
+    type: TransactionType.COSMOS,
     chainId: 'juno-1',
     info: {
       infoType: 'CosmosMetaInfo',
@@ -272,7 +274,7 @@ export const blockchainMeta: any = [
     sort: 6,
     color: '#e84142',
     enabled: true,
-    type: 'EVM',
+    type: TransactionType.EVM,
     chainId: '0xa86a',
     info: {
       infoType: 'EvmMetaInfo',
@@ -305,7 +307,7 @@ export const blockchainMeta: any = [
     sort: 7,
     color: '#28a0f0',
     enabled: true,
-    type: 'EVM',
+    type: TransactionType.EVM,
     chainId: '0xa4b1',
     info: {
       infoType: 'EvmMetaInfo',
@@ -353,7 +355,7 @@ export const blockchainMeta: any = [
     sort: 8,
     color: '#5493F7',
     enabled: false,
-    type: 'COSMOS',
+    type: TransactionType.COSMOS,
     chainId: 'columbus-5',
     info: {
       infoType: 'CosmosMetaInfo',
@@ -441,7 +443,7 @@ export const blockchainMeta: any = [
     sort: 8,
     color: '#2E3148',
     enabled: true,
-    type: 'COSMOS',
+    type: TransactionType.COSMOS,
     chainId: 'cosmoshub-4',
     info: {
       infoType: 'CosmosMetaInfo',
@@ -499,28 +501,6 @@ export const blockchainMeta: any = [
     },
   },
   {
-    name: 'STARKNET',
-    defaultDecimals: 18,
-    addressPatterns: ['^(0x)[0-9A-Fa-f]{64}$'],
-    feeAssets: [
-      {
-        blockchain: 'STARKNET',
-        symbol: 'ETH',
-        address:
-          '0x049d36570d4e46f48e99674bd3fcc84644ddd6b96f7c741b1562b82f9e004dc7',
-      },
-    ],
-    logo: 'https://api.rango.exchange/blockchains/starknet.svg',
-    displayName: 'StarkNet',
-    shortName: 'StarkNet',
-    sort: 8,
-    color: '#28286E',
-    enabled: true,
-    type: 'ZK_ROLLUP',
-    chainId: 'SN_MAIN',
-    info: null,
-  },
-  {
     name: 'FANTOM',
     defaultDecimals: 18,
     addressPatterns: ['^(0x)[0-9A-Fa-f]{40}$'],
@@ -537,7 +517,7 @@ export const blockchainMeta: any = [
     sort: 9,
     color: '#337afe',
     enabled: true,
-    type: 'EVM',
+    type: TransactionType.EVM,
     chainId: '0xfa',
     info: {
       infoType: 'EvmMetaInfo',
@@ -570,7 +550,7 @@ export const blockchainMeta: any = [
     sort: 10,
     color: '#FF0420',
     enabled: true,
-    type: 'EVM',
+    type: TransactionType.EVM,
     chainId: '0xa',
     info: {
       infoType: 'EvmMetaInfo',
@@ -603,7 +583,7 @@ export const blockchainMeta: any = [
     sort: 11,
     color: '#708DD2',
     enabled: true,
-    type: 'SOLANA',
+    type: TransactionType.SOLANA,
     chainId: 'mainnet-beta',
     info: null,
   },
@@ -624,7 +604,7 @@ export const blockchainMeta: any = [
     sort: 11,
     color: '#29a0f0',
     enabled: true,
-    type: 'EVM',
+    type: TransactionType.EVM,
     chainId: '0x42',
     info: {
       infoType: 'EvmMetaInfo',
@@ -657,7 +637,7 @@ export const blockchainMeta: any = [
     sort: 12,
     color: '#1a90ff',
     enabled: true,
-    type: 'EVM',
+    type: TransactionType.EVM,
     chainId: '0x19',
     info: {
       infoType: 'EvmMetaInfo',
@@ -690,7 +670,7 @@ export const blockchainMeta: any = [
     sort: 13,
     color: '#F3B404',
     enabled: true,
-    type: 'EVM',
+    type: TransactionType.EVM,
     chainId: '0x505',
     info: {
       infoType: 'EvmMetaInfo',
@@ -723,7 +703,7 @@ export const blockchainMeta: any = [
     sort: 14,
     color: '#B3206B',
     enabled: true,
-    type: 'EVM',
+    type: TransactionType.EVM,
     chainId: '0x504',
     info: {
       infoType: 'EvmMetaInfo',
@@ -750,7 +730,7 @@ export const blockchainMeta: any = [
     sort: 14,
     color: '#E6007A',
     enabled: false,
-    type: 'TRANSFER',
+    type: TransactionType.TRANSFER,
     chainId: null,
     info: null,
   },
@@ -771,7 +751,7 @@ export const blockchainMeta: any = [
     sort: 15,
     color: '#BA9F33',
     enabled: false,
-    type: 'TRANSFER',
+    type: TransactionType.TRANSFER,
     chainId: null,
     info: null,
   },
@@ -792,7 +772,7 @@ export const blockchainMeta: any = [
     sort: 15,
     color: '#4CA852',
     enabled: true,
-    type: 'EVM',
+    type: TransactionType.EVM,
     chainId: '0x80',
     info: {
       infoType: 'EvmMetaInfo',
@@ -825,7 +805,7 @@ export const blockchainMeta: any = [
     sort: 15,
     color: '#78d64b',
     enabled: true,
-    type: 'EVM',
+    type: TransactionType.EVM,
     chainId: '0x4e454152',
     info: {
       infoType: 'EvmMetaInfo',
@@ -858,7 +838,7 @@ export const blockchainMeta: any = [
     sort: 15,
     color: '#50AEE9',
     enabled: true,
-    type: 'EVM',
+    type: TransactionType.EVM,
     chainId: '0x63564c40',
     info: {
       infoType: 'EvmMetaInfo',
@@ -891,7 +871,7 @@ export const blockchainMeta: any = [
     sort: 15,
     color: '#2D2925',
     enabled: true,
-    type: 'EVM',
+    type: TransactionType.EVM,
     chainId: '0x2329',
     info: {
       infoType: 'EvmMetaInfo',
@@ -918,7 +898,7 @@ export const blockchainMeta: any = [
     sort: 16,
     color: '#FF060A',
     enabled: false,
-    type: 'TRANSFER',
+    type: TransactionType.TRANSFER,
     chainId: null,
     info: null,
   },
@@ -939,7 +919,7 @@ export const blockchainMeta: any = [
     sort: 16,
     color: '#CAAA3A',
     enabled: true,
-    type: 'COSMOS',
+    type: TransactionType.COSMOS,
     chainId: 'sifchain-1',
     info: {
       infoType: 'CosmosMetaInfo',
@@ -1013,7 +993,7 @@ export const blockchainMeta: any = [
     sort: 17,
     color: '#1AE6CB',
     enabled: true,
-    type: 'TRANSFER',
+    type: TransactionType.TRANSFER,
     chainId: null,
     info: null,
   },
@@ -1034,7 +1014,7 @@ export const blockchainMeta: any = [
     sort: 18,
     color: '#0693E3',
     enabled: true,
-    type: 'EVM',
+    type: TransactionType.EVM,
     chainId: '0x7f08',
     info: {
       infoType: 'EvmMetaInfo',
@@ -1067,7 +1047,7 @@ export const blockchainMeta: any = [
     sort: 18,
     color: '#F3BA2F',
     enabled: true,
-    type: 'COSMOS',
+    type: TransactionType.COSMOS,
     chainId: null,
     info: null,
   },
@@ -1088,7 +1068,7 @@ export const blockchainMeta: any = [
     sort: 19,
     color: '#231B60',
     enabled: true,
-    type: 'COSMOS',
+    type: TransactionType.COSMOS,
     chainId: 'stargaze-1',
     info: {
       infoType: 'CosmosMetaInfo',
@@ -1164,7 +1144,7 @@ export const blockchainMeta: any = [
     sort: 20,
     color: '#F7931A',
     enabled: true,
-    type: 'TRANSFER',
+    type: TransactionType.TRANSFER,
     chainId: null,
     info: null,
   },
@@ -1185,7 +1165,7 @@ export const blockchainMeta: any = [
     sort: 21,
     color: '#103F68',
     enabled: true,
-    type: 'COSMOS',
+    type: TransactionType.COSMOS,
     chainId: 'crypto-org-chain-mainnet-1',
     info: {
       infoType: 'CosmosMetaInfo',
@@ -1259,7 +1239,7 @@ export const blockchainMeta: any = [
     sort: 22,
     color: '#EFC92B',
     enabled: true,
-    type: 'COSMOS',
+    type: TransactionType.COSMOS,
     chainId: 'chihuahua-1',
     info: {
       infoType: 'CosmosMetaInfo',
@@ -1333,7 +1313,7 @@ export const blockchainMeta: any = [
     sort: 23,
     color: '#4520E6',
     enabled: true,
-    type: 'COSMOS',
+    type: TransactionType.COSMOS,
     chainId: 'laozi-mainnet',
     info: {
       infoType: 'CosmosMetaInfo',
@@ -1403,7 +1383,7 @@ export const blockchainMeta: any = [
     sort: 23,
     color: '#FE4350',
     enabled: true,
-    type: 'COSMOS',
+    type: TransactionType.COSMOS,
     chainId: 'comdex-1',
     info: {
       infoType: 'CosmosMetaInfo',
@@ -1473,7 +1453,7 @@ export const blockchainMeta: any = [
     sort: 24,
     color: '#4FB573',
     enabled: true,
-    type: 'COSMOS',
+    type: TransactionType.COSMOS,
     chainId: 'regen-1',
     info: {
       infoType: 'CosmosMetaInfo',
@@ -1547,7 +1527,7 @@ export const blockchainMeta: any = [
     sort: 25,
     color: '#8A4A8E',
     enabled: true,
-    type: 'COSMOS',
+    type: TransactionType.COSMOS,
     chainId: 'irishub-1',
     info: {
       infoType: 'CosmosMetaInfo',
@@ -1621,7 +1601,7 @@ export const blockchainMeta: any = [
     sort: 25,
     color: '#DFF5EF',
     enabled: true,
-    type: 'COSMOS',
+    type: TransactionType.COSMOS,
     chainId: 'emoney-3',
     info: {
       infoType: 'CosmosMetaInfo',
@@ -1703,7 +1683,7 @@ export const blockchainMeta: any = [
     sort: 26,
     color: '#3E6957',
     enabled: true,
-    type: 'EVM',
+    type: TransactionType.EVM,
     chainId: '0x64',
     info: {
       infoType: 'EvmMetaInfo',
@@ -1736,7 +1716,7 @@ export const blockchainMeta: any = [
     sort: 27,
     color: '#345D9D',
     enabled: true,
-    type: 'TRANSFER',
+    type: TransactionType.TRANSFER,
     chainId: null,
     info: null,
   },
@@ -1757,7 +1737,7 @@ export const blockchainMeta: any = [
     sort: 28,
     color: '#0AC18E',
     enabled: true,
-    type: 'TRANSFER',
+    type: TransactionType.TRANSFER,
     chainId: null,
     info: null,
   },
@@ -1778,7 +1758,7 @@ export const blockchainMeta: any = [
     sort: 29,
     color: '#FF005C',
     enabled: false,
-    type: 'COSMOS',
+    type: TransactionType.COSMOS,
     chainId: 'bitsong-2b',
     info: {
       infoType: 'CosmosMetaInfo',
@@ -1848,7 +1828,7 @@ export const blockchainMeta: any = [
     sort: 29,
     color: '#C5F9AD',
     enabled: true,
-    type: 'EVM',
+    type: TransactionType.EVM,
     chainId: '0x7a',
     info: {
       infoType: 'EvmMetaInfo',
@@ -1881,7 +1861,7 @@ export const blockchainMeta: any = [
     sort: 30,
     color: '#ED3524',
     enabled: true,
-    type: 'COSMOS',
+    type: TransactionType.COSMOS,
     chainId: 'akashnet-2',
     info: {
       infoType: 'CosmosMetaInfo',
@@ -1955,7 +1935,7 @@ export const blockchainMeta: any = [
     sort: 30,
     color: '#0F2B3D',
     enabled: true,
-    type: 'COSMOS',
+    type: TransactionType.COSMOS,
     chainId: 'kichain-2',
     info: {
       infoType: 'CosmosMetaInfo',
@@ -2025,7 +2005,7 @@ export const blockchainMeta: any = [
     sort: 31,
     color: '#DF3935',
     enabled: true,
-    type: 'COSMOS',
+    type: TransactionType.COSMOS,
     chainId: 'kaiyo-1',
     info: {
       infoType: 'CosmosMetaInfo',
@@ -2099,7 +2079,7 @@ export const blockchainMeta: any = [
     sort: 31,
     color: '#383838',
     enabled: true,
-    type: 'COSMOS',
+    type: TransactionType.COSMOS,
     chainId: 'core-1',
     info: {
       infoType: 'CosmosMetaInfo',
@@ -2173,7 +2153,7 @@ export const blockchainMeta: any = [
     sort: 31,
     color: '#4B66DC',
     enabled: false,
-    type: 'COSMOS',
+    type: TransactionType.COSMOS,
     chainId: 'panacea-3',
     info: {
       infoType: 'CosmosMetaInfo',
@@ -2247,7 +2227,7 @@ export const blockchainMeta: any = [
     sort: 32,
     color: '#142E51',
     enabled: true,
-    type: 'COSMOS',
+    type: TransactionType.COSMOS,
     chainId: 'sentinelhub-2',
     info: {
       infoType: 'CosmosMetaInfo',
@@ -2321,7 +2301,7 @@ export const blockchainMeta: any = [
     sort: 33,
     color: '#29B2F4',
     enabled: false,
-    type: 'COSMOS',
+    type: TransactionType.COSMOS,
     chainId: 'injective-1',
     info: {
       infoType: 'CosmosMetaInfo',
@@ -2395,7 +2375,7 @@ export const blockchainMeta: any = [
     sort: 34,
     color: '#1B1B1B',
     enabled: false,
-    type: 'COSMOS',
+    type: TransactionType.COSMOS,
     chainId: 'secret-4',
     info: {
       infoType: 'CosmosMetaInfo',
@@ -2469,7 +2449,7 @@ export const blockchainMeta: any = [
     sort: 35,
     color: '#BC64BB',
     enabled: true,
-    type: 'COSMOS',
+    type: TransactionType.COSMOS,
     chainId: 'iov-mainnet-ibc',
     info: {
       infoType: 'CosmosMetaInfo',
@@ -2544,7 +2524,7 @@ export const blockchainMeta: any = [
     sort: 35,
     color: '#3D7BC2',
     enabled: false,
-    type: 'COSMOS',
+    type: TransactionType.COSMOS,
     chainId: 'darchub',
     info: {
       infoType: 'CosmosMetaInfo',
@@ -2614,7 +2594,7 @@ export const blockchainMeta: any = [
     sort: 36,
     color: '#D2B6FF',
     enabled: true,
-    type: 'COSMOS',
+    type: TransactionType.COSMOS,
     chainId: 'umee-1',
     info: {
       infoType: 'CosmosMetaInfo',
@@ -2688,7 +2668,7 @@ export const blockchainMeta: any = [
     sort: 36,
     color: '#3CC194',
     enabled: true,
-    type: 'COSMOS',
+    type: TransactionType.COSMOS,
     chainId: 'bitcanna-1',
     info: {
       infoType: 'CosmosMetaInfo',
@@ -2758,7 +2738,7 @@ export const blockchainMeta: any = [
     sort: 37,
     color: '#DF6952',
     enabled: true,
-    type: 'COSMOS',
+    type: TransactionType.COSMOS,
     chainId: 'desmos-mainnet',
     info: {
       infoType: 'CosmosMetaInfo',
@@ -2828,7 +2808,7 @@ export const blockchainMeta: any = [
     sort: 38,
     color: '#1B42B4',
     enabled: true,
-    type: 'COSMOS',
+    type: TransactionType.COSMOS,
     chainId: 'lum-network-1',
     info: {
       infoType: 'CosmosMetaInfo',
@@ -2898,7 +2878,7 @@ export const blockchainMeta: any = [
     sort: 39,
     color: '#ccff00',
     enabled: true,
-    type: 'EVM',
+    type: TransactionType.EVM,
     chainId: '0x120',
     info: {
       infoType: 'EvmMetaInfo',
@@ -2931,7 +2911,7 @@ export const blockchainMeta: any = [
     sort: 40,
     color: '#15181C',
     enabled: false,
-    type: 'COSMOS',
+    type: TransactionType.COSMOS,
     chainId: 'axelar-dojo-1',
     info: {
       infoType: 'CosmosMetaInfo',

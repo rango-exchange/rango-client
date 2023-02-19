@@ -11,7 +11,6 @@ import { BestRouteResponse, BlockchainMeta } from 'rango-sdk';
 import { readAccountAddress } from '@rangodev/wallets-core';
 import { Account, Balance } from '../store/wallets';
 import { SelectableWallet } from '../pages/ConfirmWalletsPage';
-import { BestRouteType } from '@rangodev/ui/dist/types/swaps';
 
 export const getStateWallet = (state: WalletState): WalletStatus => {
   switch (true) {
@@ -48,7 +47,7 @@ export function getlistWallet(
     });
 }
 
-export function walletAndSupportedChainsNames(supportedChains: any): Network[] | null {
+export function walletAndSupportedChainsNames(supportedChains: BlockchainMeta[]): Network[] | null {
   if (!supportedChains) return null;
   let walletAndSupportedChainsNames: Network[] = [];
   walletAndSupportedChainsNames = supportedChains.map(
@@ -133,7 +132,7 @@ export function prepareAccountsForWalletStore(
   return Object.values(result);
 }
 
-export const getRequiredChains = (route: BestRouteType | null) => {
+export const getRequiredChains = (route: BestRouteResponse | null) => {
   const wallets: string[] = [];
 
   route?.result?.swaps.forEach((swap) => {

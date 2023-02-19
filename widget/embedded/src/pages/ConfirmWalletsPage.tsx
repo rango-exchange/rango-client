@@ -6,6 +6,7 @@ import { useWalletsStore } from '../store/wallets';
 import { useWallets } from '@rangodev/wallets-core';
 import { navigationRoutes } from '../constants/navigationRoutes';
 import { getRequiredChains, getSelectableWallets, SelectedWallet } from '../utils/wallets';
+import { requiredWallets } from '../utils/swap';
 
 export interface SelectableWallet extends SelectedWallet {
   image: string;
@@ -18,7 +19,6 @@ export function ConfirmWalletsPage() {
   const { bestRoute } = useBestRouteStore();
   const { accounts, selectedWallets, initSelectedWallets, setSelectedWallet } = useWalletsStore();
   const { getWalletInfo } = useWallets();
-  //@ts-ignore
   const confirmDisabled = !requiredWallets(bestRoute).every((chain) =>
     selectedWallets.map((wallet) => wallet.blockchain).includes(chain),
   );
@@ -37,7 +37,7 @@ export function ConfirmWalletsPage() {
         getWalletInfo,
       )}
       onBack={() => navigate(-1)}
-      swap={bestRoute as any}
+      swap={bestRoute!}
       onConfirm={() => navigate(navigationRoutes.confirmSwap)}
       onChange={(wallet) => setSelectedWallet(wallet)}
       confirmDisabled={confirmDisabled}

@@ -1,5 +1,4 @@
 import {
-  BestRouteType,
   SimulationAssetAndAmount,
   SimulationValidationStatus,
 } from '@rangodev/ui/dist/types/swaps';
@@ -20,8 +19,8 @@ export type RouteChangeStatus = {
 };
 
 export const compareRoutes = (
-  route1: BestRouteType,
-  route2: BestRouteType,
+  route1: BestRouteResponse,
+  route2: BestRouteResponse,
   inputAmount: string,
   fromTokenUsdPrice: number | null,
   toTokenUsdPrice: number | null,
