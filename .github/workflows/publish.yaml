@@ -2,14 +2,14 @@ name: Publish
 on:
   push:
     branches:
-      - "main"
-      - "next"
+      - 'main'
+      - 'next'
   pull_request:
     types:
       - closed
     branches:
-      - "main"
-      - "next"
+      - 'main'
+      - 'next'
 
 jobs:
   publish:
@@ -20,8 +20,8 @@ jobs:
       - name: Setup NodeJS
         uses: actions/setup-node@v3
         with:
-          node-version: "14"
-          cache: "yarn"
+          node-version: '14'
+          cache: 'yarn'
 
       - name: Git
         run: |
@@ -40,6 +40,9 @@ jobs:
 
       - name: Build packages
         run: yarn build:npm
+        env:
+          REF: ${{ github.ref }}
+          BASE_REF: ${{ github.event.pull_request.base.ref }}
 
       - name: Versioning (Prerelease)
         if: github.ref == 'refs/heads/next' || github.event.pull_request.base.ref == 'next'
