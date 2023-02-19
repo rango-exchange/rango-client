@@ -39,7 +39,7 @@ jobs:
         run: yarn install --frozen-lockfile
 
       - name: Build packages
-        run: yarn build:npm
+        run: yarn build
 
       - name: Versioning (Prerelease)
         if: github.ref == 'refs/heads/next' || github.event.pull_request.base.ref == 'next'
