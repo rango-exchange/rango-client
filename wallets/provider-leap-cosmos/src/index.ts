@@ -51,8 +51,13 @@ export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
   return {
     name: 'Leap Cosmos',
     img: 'https://raw.githubusercontent.com/rango-exchange/rango-types/main/assets/icons/wallets/leap-cosmos.png',
-    installLink:
-      'https://chrome.google.com/webstore/detail/leap-cosmos-wallet/fcfcfllfndlomdhbehjjcoimbgofdncg',
+    installLink: {
+      CHROME:
+        'https://chrome.google.com/webstore/detail/leap-cosmos-wallet/fcfcfllfndlomdhbehjjcoimbgofdncg',
+      BRAVE:
+        'https://chrome.google.com/webstore/detail/leap-cosmos-wallet/fcfcfllfndlomdhbehjjcoimbgofdncg',
+      DEFAULT: 'https://www.leapwallet.io/cosmos',
+    },
     color: 'black',
     supportedChains: cosmos.filter((blockchainMeta) => !!blockchainMeta.info),
   };

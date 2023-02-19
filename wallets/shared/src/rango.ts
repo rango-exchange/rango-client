@@ -721,10 +721,26 @@ export const tronBlockchain = (allBlockChains: BlockchainMeta[]) =>
 export const cosmosBlockchains = (allBlockChains: BlockchainMeta[]) =>
   allBlockChains.filter(isCosmosBlockchain);
 
+export type InstallObjects = {
+  CHROME?: string;
+  FIREFOX?: string;
+  EDGE?: string;
+  BRAVE?: string;
+  DEFAULT: string;
+};
+
 export type WalletInfo = {
   name: string;
   img: string;
-  installLink: string;
+  installLink: InstallObjects | string;
   color: string;
   supportedChains: BlockchainMeta[];
+  showOnMobile?: boolean;
 };
+
+export interface Wallet {
+  type: WalletType;
+  extensionAvailable: boolean;
+  connected: boolean;
+  info: Omit<WalletInfo, 'color' | 'supportedChains'>;
+}
