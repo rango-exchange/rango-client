@@ -16,15 +16,13 @@ import {
   TransferBlockchainMeta,
   TronBlockchainMeta,
   StarkNetBlockchainMeta,
-  Msg,
-  MsgSend,
   evmBlockchains,
   cosmosBlockchains,
   starknetBlockchain,
   tronBlockchain,
   transferBlockchains,
   solanaBlockchain,
-} from 'rango-types/lib';
+} from 'rango-types';
 import {
   CosmosTransaction,
   EvmTransaction,
@@ -319,6 +317,4 @@ export {
   StarkNetBlockchainMeta,
   CosmosChainInfo,
   EVMChainInfo,
-  Msg,
-  MsgSend,
 };

@@ -16259,8 +16259,15 @@ rango-sdk@^0.1.1, rango-sdk@^0.1.2:
     rango-types "^0.1.11"
     uuid "^9.0.0"
 
-rango-types@^0.1.1, rango-types@^0.1.11, "rango-types@file:wallets/shared/.yalc/rango-types":
-  version "0.1.11"
+rango-types@^0.1.1, rango-types@^0.1.11:
+  version "0.1.12"
+  resolved "https://registry.yarnpkg.com/rango-types/-/rango-types-0.1.12.tgz#e19c8d5bf1c0f7dddf9d6dc97238cf54844d7cef"
+  integrity sha512-nT6NRaxo7Ze1SUAHbbxf8FVzw9HT2UCP79b4iJtBvrchpFXwOsonfFgiQaB//Hwx/Cru0v0MFeK3dl4gEYGNYg==
+
+rango-types@^0.1.13:
+  version "0.1.13"
+  resolved "https://registry.yarnpkg.com/rango-types/-/rango-types-0.1.13.tgz#763ecda9a7a6535930d895a1ed66d592f2c2ed73"
+  integrity sha512-+Ffw7wWJ5j7IloFvoaNvlNn4vVo4Q+1v2+GHPFDPGzJhr5pJAG25JTmeGcPvfxfgxJ4VXB6vax4V84FkAfCvWw==
 
 raw-body@2.5.1:
   version "2.5.1"

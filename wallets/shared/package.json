@@ -52,7 +52,7 @@
     "cosmjs-types": "^0.5.2",
     "ethers": "^5.7.2",
     "long": "^5.2.1",
-    "rango-types": "file:.yalc/rango-types"
+    "rango-types": "^0.1.13"
   },
   "publishConfig": {
     "access": "public"

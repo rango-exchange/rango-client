@@ -1,9 +1,0 @@
-{
-  "version": "v1",
-  "packages": {
-    "rango-types": {
-      "signature": "3ee171502cce8583c50861161a09a562",
-      "file": true
-    }
-  }
-}
