@@ -11,7 +11,7 @@ function watch(params) {
   const watcher = exec(command, { cwd }, (err, stdout, stderr) => {
     if (err) {
       console.log(headStyle('watch', 'error', 'bgRed'), stderr);
-      process.exit(0);
+      process.exit(1);
     }
     console.log(headStyle('watch'), stdout);
   });
