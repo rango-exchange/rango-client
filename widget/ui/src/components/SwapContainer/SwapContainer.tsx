@@ -1,3 +1,4 @@
+import { CSSProperties } from '@stitches/react';
 import React, { PropsWithChildren } from 'react';
 import { styled } from '../../theme';
 
@@ -20,7 +21,7 @@ const ContentContainer = styled('div', {
 });
 
 export interface PropTypes {
-  style?: React.CSSProperties;
+  style?: CSSProperties;
 }
 
 export function SwapContainer(props: PropsWithChildren<PropTypes>) {

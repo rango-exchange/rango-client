@@ -1,3 +1,4 @@
+import { CSSProperties } from '@stitches/react';
 import React from 'react';
 import { createPortal } from 'react-dom';
 import { styled } from '../../theme';
@@ -9,7 +10,7 @@ export interface PropTypes {
   open: boolean;
   onClose: () => void;
   content: React.ReactNode;
-  containerStyle: React.CSSProperties;
+  containerStyle: CSSProperties;
 }
 
 const BackDrop = styled('div', {

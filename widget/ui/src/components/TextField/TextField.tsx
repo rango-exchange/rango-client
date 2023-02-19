@@ -117,7 +117,7 @@ export const TextField = React.forwardRef(
           prefix={!!prefix}
           suffix={!!suffix}
           size={size}
-          css={style}
+          style={style}
         >
           {prefix || null}
           <Input {...inputAttributes} spellCheck={false} ref={ref} />
