@@ -7,9 +7,10 @@ import {
 } from '@rangodev/wallets-shared';
 
 import { WalletInfo as ModalWalletInfo, WalletState as WalletStatus } from '@rangodev/ui';
-import { BlockchainMeta } from 'rango-sdk';
+import { BestRouteResponse, BlockchainMeta } from 'rango-sdk';
 import { readAccountAddress } from '@rangodev/wallets-core';
-import { Balance } from '../store/wallets';
+import { Account, Balance } from '../store/wallets';
+import { SelectableWallet } from '../pages/ConfirmWalletsPage';
 
 export const getStateWallet = (state: WalletState): WalletStatus => {
   switch (true) {
@@ -46,7 +47,7 @@ export function getlistWallet(
     });
 }
 
-export function walletAndSupportedChainsNames(supportedChains: any): Network[] | null {
+export function walletAndSupportedChainsNames(supportedChains: BlockchainMeta[]): Network[] | null {
   if (!supportedChains) return null;
   let walletAndSupportedChainsNames: Network[] = [];
   walletAndSupportedChainsNames = supportedChains.map(
@@ -130,3 +131,45 @@ export function prepareAccountsForWalletStore(
 
   return Object.values(result);
 }
+
+export const getRequiredChains = (route: BestRouteResponse | null) => {
+  const wallets: string[] = [];
+
+  route?.result?.swaps.forEach((swap) => {
+    const currentStepFromBlockchain = swap.from.blockchain;
+    const currentStepToBlockchain = swap.to.blockchain;
+    let lastAddedWallet = wallets[wallets.length - 1];
+    if (currentStepFromBlockchain != lastAddedWallet) wallets.push(currentStepFromBlockchain);
+    lastAddedWallet = wallets[wallets.length - 1];
+    if (currentStepToBlockchain != lastAddedWallet) wallets.push(currentStepToBlockchain);
+  });
+  return wallets;
+};
+
+export interface SelectedWallet {
+  address: string;
+  walletType: WalletType;
+  blockchain: string;
+}
+
+export const getSelectableWallets = (
+  accounts: Account[],
+  requiredChains: string[],
+  selectedWallets: SelectedWallet[],
+  getWalletInfo: (type: WalletType) => WalletInfo,
+) => {
+  const connectedWallets: SelectableWallet[] = [];
+  accounts.forEach((account) => {
+    account.accounts.forEach((acc) => {
+      connectedWallets.push({
+        address: acc.address,
+        walletType: acc.walletType as WalletType,
+        blockchain: account.blockchain,
+        image: getWalletInfo(acc.walletType as WalletType).img,
+        selected: !!selectedWallets.find((wallet) => wallet.blockchain === account.blockchain),
+      });
+    });
+  });
+
+  return connectedWallets.filter((wallet) => requiredChains.includes(wallet.blockchain));
+};

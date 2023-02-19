@@ -3,7 +3,6 @@ import { TokenSelector } from '@rangodev/ui';
 import { useBestRouteStore } from '../store/bestRoute';
 import { useMetaStore } from '../store/meta';
 import { useNavigate } from 'react-router-dom';
-import { navigationRoutes } from '../constants/navigationRoutes';
 import { Token } from 'rango-sdk';
 import { numberToString } from '../utils/numbers';
 import BigNumber from 'bignumber.js';
@@ -52,12 +51,11 @@ export function SelectTokenPage(props: PropTypes) {
             ZERO,
         ).multipliedBy(token.usdPrice),
       );
-
     return {
       ...token,
       balance: {
-        amount: tokenAmount != '0' ? tokenAmount : '',
-        usdValue: tokenUsdValue,
+        amount: tokenAmount !== '0' ? tokenAmount : '',
+        usdValue: tokenUsdValue !== '0' ? tokenUsdValue : '',
       },
     };
   });
@@ -70,9 +68,9 @@ export function SelectTokenPage(props: PropTypes) {
       onChange={(token) => {
         if (type === 'from') setFromToken(token);
         else setToToken(token);
-        navigate(navigationRoutes.home);
+        navigate(-1);
       }}
-      onBack={navigate.bind(null, navigationRoutes.home)}
+      onBack={navigate.bind(null, -1)}
     />
   );
 }

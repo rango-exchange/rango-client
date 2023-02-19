@@ -52,8 +52,13 @@ export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
     name: 'Token Pocket',
     img: 'https://raw.githubusercontent.com/rango-exchange/rango-types/main/assets/icons/wallets/tp.png',
     color: '#b2dbff',
-    installLink:
-      'https://chrome.google.com/webstore/detail/tokenpocket/mfgccjchihfkkindfppnaooecgfneiii',
+    installLink: {
+      CHROME:
+        'https://chrome.google.com/webstore/detail/tokenpocket/mfgccjchihfkkindfppnaooecgfneiii',
+      BRAVE:
+        'https://chrome.google.com/webstore/detail/tokenpocket/mfgccjchihfkkindfppnaooecgfneiii',
+      DEFAULT: 'https://www.tokenpocket.pro/en/download/app',
+    },
     supportedChains: evms,
   };
 };

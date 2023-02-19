@@ -1,4 +1,4 @@
-import { WalletType } from '@rangodev/wallets-shared';
+import { InstallObjects, WalletType } from '@rangodev/wallets-shared';
 
 export enum WalletState {
   NOT_INSTALLED = 'not installed',
@@ -13,7 +13,7 @@ export type WalletInfo = {
     | WalletState.DISCONNECTED
     | WalletState.CONNECTING
     | WalletState.NOT_INSTALLED;
-  installLink: string;
+  installLink: InstallObjects | string;
   name: string;
   image: string;
   type: WalletType;

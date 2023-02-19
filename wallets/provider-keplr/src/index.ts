@@ -46,8 +46,14 @@ export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
   return {
     name: 'Keplr',
     img: 'https://raw.githubusercontent.com/rango-exchange/rango-types/main/assets/icons/wallets/keplr.png',
-    installLink:
-      'https://chrome.google.com/webstore/detail/keplr/dmkamcknogkgcdfhhbddcghachkejeap',
+    installLink: {
+      CHROME:
+        'https://chrome.google.com/webstore/detail/keplr/dmkamcknogkgcdfhhbddcghachkejeap',
+      BRAVE:
+        'https://chrome.google.com/webstore/detail/keplr/dmkamcknogkgcdfhhbddcghachkejeap',
+      FIREFOX: 'https://addons.mozilla.org/en-US/firefox/addon/keplr',
+      DEFAULT: 'https://www.keplr.app',
+    },
     color: '#3898e5',
     supportedChains: cosmos.filter((blockchainMeta) => !!blockchainMeta.info),
   };

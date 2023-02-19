@@ -1,4 +1,4 @@
-import { BestRoute, Button, styled, VerticalSwapIcon } from '@rangodev/ui';
+import { Alert, BestRoute, Button, styled, VerticalSwapIcon } from '@rangodev/ui';
 import React, { useEffect, useState } from 'react';
 import { useInRouterContext, useNavigate } from 'react-router-dom';
 import { Header } from '../components/Header';
@@ -9,11 +9,16 @@ import { SwithFromAndTo } from '../components/SwitchFromAndTo';
 import { Footer } from '../components/Footer';
 import { navigationRoutes } from '../constants/navigationRoutes';
 import { useBestRoute } from '../hooks/useBestRoute';
-import BigNumber from 'bignumber.js';
-import { ZERO } from '../utils/balance';
-import { getBestRouteToTokenUsdPrice } from '../utils/routing';
 import { useMetaStore } from '../store/meta';
 import { useWalletsStore } from '../store/wallets';
+import { errorMessages } from '../constants/errors';
+import {
+  getSwapButtonTitle,
+  getOutputRatio,
+  hasLimitError,
+  outputRatioHasWarning,
+  canComputePriceImpact,
+} from '../utils/swap';
 
 const Container = styled('div', {
   display: 'flex',
@@ -22,15 +27,27 @@ const Container = styled('div', {
   alignItems: 'center',
 });
 
+const SwitchButtonContainer = styled('div', {
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  position: 'relative',
+  top: '11px',
+});
+
 const BestRouteContainer = styled('div', {
   width: '100%',
-  padding: '0 $16',
+  paddingTop: '$16',
+});
+
+const Alerts = styled('div', {
+  paddingTop: '$16',
 });
 
 export function Home() {
+  const [waningMessage, setWarningMessage] = useState('');
   const isRouterInContext = useInRouterContext();
   const navigate = useNavigate();
-  const { inputAmount, setInputAmount } = useBestRouteStore();
   const [count, setCount] = useState(0);
   const {
     fromChain,
@@ -42,42 +59,73 @@ export function Home() {
     setToChain,
     setToToken,
     setBestRoute,
+    inputUsdValue,
+    inputAmount,
+    setInputAmount,
+    outputAmount,
+    outputUsdValue,
+    bestRoute,
   } = useBestRouteStore();
 
-  const { loadingStatus } = useMetaStore();
-  const { balance } = useWalletsStore();
+  const { loadingStatus: loadingMetaStatus } = useMetaStore();
+  const { accounts } = useWalletsStore();
 
   const swithFromAndTo = () => {
     setFromChain(toChain);
     setFromToken(toToken);
     setToChain(fromChain);
     setToToken(fromToken);
+    setInputAmount(outputAmount?.toString() || '');
     setCount((prev) => prev + 1);
   };
 
-  const { data, loading, error, retry } = useBestRoute();
+  const { data, loading: fetchingBestRoute, error: bestRouteError, retry } = useBestRoute();
+
+  const noConnectedWallet = accounts.length > 0;
+
+  const noRoutesFound = !bestRoute?.result;
+
+  const errorMessage =
+    loadingMetaStatus === 'failed' ? errorMessages.genericServerError : bestRouteError;
+
+  const needsToWarnEthOnPath = false;
+
+  const showBestRoute = inputAmount && (!!data || fetchingBestRoute || bestRouteError);
+
+  const outToInRatio = getOutputRatio(inputUsdValue, outputUsdValue);
+
+  const highValueLoss = outputRatioHasWarning(inputUsdValue, outToInRatio);
+
+  const priceImpactCanNotBeComputed = !canComputePriceImpact(
+    bestRoute,
+    inputAmount,
+    inputUsdValue,
+    outputUsdValue,
+  );
+
+  const buttonTitle = getSwapButtonTitle(
+    accounts,
+    fetchingBestRoute,
+    hasLimitError(bestRoute),
+    highValueLoss,
+    priceImpactCanNotBeComputed,
+    needsToWarnEthOnPath,
+  );
+
+  const buttonDisabled =
+    loadingMetaStatus != 'success' ||
+    fetchingBestRoute ||
+    highValueLoss ||
+    (noConnectedWallet && noRoutesFound) ||
+    hasLimitError(bestRoute);
 
   useEffect(() => {
     setBestRoute(data);
   }, [data]);
 
-  const outputAmount = !!data?.result?.outputAmount
-    ? new BigNumber(data?.result?.outputAmount)
-    : null;
-
-  const outUsdValue: BigNumber = (outputAmount || ZERO).multipliedBy(
-    (!loading && getBestRouteToTokenUsdPrice(data)) || toToken?.usdPrice || 0,
-  );
-
-  const showBestRoute = inputAmount && (!!data || loading || error);
-
-  const buttonDisabled = loading || (!data && loadingStatus != 'success');
-
-  const buttonTitle = balance.length === 0 ? 'Connect Wallet' : 'Swap';
-
   return (
     <Container>
-      <Header onClick={retry} />
+      <Header onClickRefresh={retry} />
       <TokenInfo
         type="From"
         chain={fromChain}
@@ -85,21 +133,29 @@ export function Home() {
         onAmountChange={setInputAmount}
         inputAmount={inputAmount}
       />
-      <Button variant="ghost" onClick={swithFromAndTo}>
-        <VerticalSwapIcon size={36} />
-        {isRouterInContext && <SwithFromAndTo count={count} />}
-      </Button>
+      <SwitchButtonContainer>
+        <Button variant="ghost" onClick={swithFromAndTo}>
+          <VerticalSwapIcon size={36} />
+          {isRouterInContext && <SwithFromAndTo count={count} />}
+        </Button>
+      </SwitchButtonContainer>
       <TokenInfo
         type="To"
         chain={toChain}
         token={toToken}
         outputAmount={outputAmount}
-        outputUsdValue={outUsdValue}
+        outputUsdValue={outputUsdValue}
       />
       {showBestRoute && (
         <BestRouteContainer>
-          <BestRoute error={error} loading={loading} data={data} />
+          <BestRoute error={bestRouteError} loading={fetchingBestRoute} data={data} />
         </BestRouteContainer>
+      )}
+      {(errorMessage || waningMessage) && (
+        <Alerts>
+          {errorMessage && <Alert description={errorMessage} type="error" />}
+          {waningMessage && <Alert description={waningMessage} type="warning" />}
+        </Alerts>
       )}
       <Footer>
         <Button
@@ -110,7 +166,7 @@ export function Home() {
           onClick={() => {
             if (buttonTitle === 'Connect Wallet') navigate(navigationRoutes.wallets);
             else {
-              navigate(navigationRoutes.confirmSwap);
+              navigate(navigationRoutes.confirmWallets);
             }
           }}>
           {buttonTitle}

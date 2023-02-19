@@ -11,6 +11,7 @@ import {
   switchNetworkForEvm,
   BlockchainMeta,
   WalletInfo,
+  Network,
 } from '@rangodev/wallets-shared';
 import {
   getKucoinInstance as kucoin_instance,
@@ -53,10 +54,15 @@ export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
     name: 'KuCoin',
     img: 'https://raw.githubusercontent.com/rango-exchange/rango-types/main/assets/icons/wallets/kucoin.png',
     color: '#b2dbff',
-    installLink:
-      'https://chrome.google.com/webstore/detail/kucoin-wallet/nbdpmlhambbdkhkmbfpljckjcmgibalo',
+    installLink: {
+      CHROME:
+        'https://chrome.google.com/webstore/detail/kucoin-wallet/nbdpmlhambbdkhkmbfpljckjcmgibalo',
+      BRAVE:
+        'https://chrome.google.com/webstore/detail/kucoin-wallet/nbdpmlhambbdkhkmbfpljckjcmgibalo',
+      DEFAULT: 'https://kuwallet.com/',
+    },
     supportedChains: allBlockChains.filter((blockchainMeta) =>
-      KUCOIN_WALLET_SUPPORTED_CHAINS.includes(blockchainMeta.name)
+      KUCOIN_WALLET_SUPPORTED_CHAINS.includes(blockchainMeta.name as Network)
     ),
   };
 };

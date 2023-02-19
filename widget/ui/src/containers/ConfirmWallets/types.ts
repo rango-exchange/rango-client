@@ -1,13 +1,9 @@
-export type ActiveWalletsType = {
+import { WalletType } from '@rangodev/wallets-shared';
+
+export interface SelectableWallet {
   blockchain: string;
-  id: string;
-  type: string;
-  options: Wallet[];
-};
-
-export type Wallet = {
-  walletType: string;
+  walletType: WalletType;
   address: string;
-  logo: string;
-};
-
+  image: string;
+  selected: boolean;
+}

@@ -69,8 +69,13 @@ export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
   return {
     name: 'Math Wallet',
     img: 'https://raw.githubusercontent.com/rango-exchange/rango-types/main/assets/icons/wallets/math.png',
-    installLink:
-      'https://chrome.google.com/webstore/detail/math-wallet/afbcbjpbpfadlkmhmclhkeeodmamcflc',
+    installLink: {
+      CHROME:
+        'https://chrome.google.com/webstore/detail/math-wallet/afbcbjpbpfadlkmhmclhkeeodmamcflc',
+      BRAVE:
+        'https://chrome.google.com/webstore/detail/math-wallet/afbcbjpbpfadlkmhmclhkeeodmamcflc',
+      DEFAULT: 'https://mathwallet.org/en-us/',
+    },
     color: '#2b2f25',
     supportedChains: [...evms, ...solana],
   };

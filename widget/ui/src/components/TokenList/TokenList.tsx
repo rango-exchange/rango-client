@@ -6,6 +6,7 @@ import { Token } from 'rango-sdk';
 import { Button } from '../Button/Button';
 import { Typography } from '../Typography';
 import { VirtualizedList } from '../VirtualizedList/VirtualizedList';
+import { CSSProperties } from '@stitches/react';
 
 export interface TokenWithAmount extends Token {
   balance?: {
@@ -56,7 +57,7 @@ export function TokenList(props: PropTypes) {
   }: {
     filteredTokens: TokenWithAmount[];
     index: number;
-    style: React.CSSProperties | undefined;
+    style: CSSProperties | undefined;
   }) => {
     const currentToken = filteredTokens[index];
     return (

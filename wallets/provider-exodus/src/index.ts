@@ -103,10 +103,15 @@ export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
 ) => ({
   name: 'Exodus',
   img: 'https://raw.githubusercontent.com/rango-exchange/rango-types/main/assets/icons/wallets/exodus.png',
-  installLink:
-    'https://chrome.google.com/webstore/detail/exodus-web3-wallet/aholpfdialjgjfhomihkjbmgjidlcdno',
+  installLink: {
+    CHROME:
+      'https://chrome.google.com/webstore/detail/exodus-web3-wallet/aholpfdialjgjfhomihkjbmgjidlcdno',
+    BRAVE:
+      'https://chrome.google.com/webstore/detail/exodus-web3-wallet/aholpfdialjgjfhomihkjbmgjidlcdno',
+    DEFAULT: 'https://www.exodus.com/',
+  },
   color: '#8f70fa',
   supportedChains: allBlockChains.filter((blockchainMeta) =>
-    EXODUS_WALLET_SUPPORTED_CHAINS.includes(blockchainMeta.name)
+    EXODUS_WALLET_SUPPORTED_CHAINS.includes(blockchainMeta.name as Network)
   ),
 });

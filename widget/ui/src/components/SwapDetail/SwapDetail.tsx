@@ -1,18 +1,19 @@
 import React, { PropsWithChildren } from 'react';
 import { PendingSwap } from '../../containers/History/types';
 import { styled } from '../../theme';
+import { Button } from '../Button';
 import { CheckCircleIcon, InfoCircleIcon, TryAgainIcon } from '../Icon';
 import { StepDetail } from '../StepDetail';
 
 const Container = styled('div', {
   position: 'relative',
 });
+
+const ButtonContainer = styled('div', {
+  paddingTop: '$8',
+});
 const SwapContainer = styled('div', {
-  padding: '$6',
-  marginTop: '$8',
-  border: '1px solid',
   display: 'flex',
-  borderRadius: '$5',
   justifyContent: 'space-between',
   '@md': {
     padding: '$12',
@@ -86,34 +87,55 @@ const StatusContainer = styled('div', {
 export interface PropTypes {
   swap: PendingSwap;
   status: 'running' | 'failed' | 'success';
+  onClick: (requestId: string) => void;
 }
 
-export function SwapDetail({ swap, status }: PropsWithChildren<PropTypes>) {
+export function SwapDetail({
+  swap,
+  status,
+  onClick,
+}: PropsWithChildren<PropTypes>) {
   const firstStep = swap.steps[0];
   const lastStep = swap.steps[swap.steps.length - 1];
+
   return (
-    <Container>
-      <SwapContainer status={status}>
-        <StepDetail
-          logo={firstStep.fromLogo}
-          symbol={firstStep.fromSymbol}
-          chainLogo={firstStep.fromBlockchainLogo}
-          blockchain={firstStep.fromBlockchain}
-          amount={swap.inputAmount}
-        />
-        <Arrow>
-          <Dot />
-          <Line />
-          <ArrowRight />
-        </Arrow>
-        <StepDetail
-          logo={lastStep.fromLogo}
-          symbol={lastStep.fromSymbol}
-          chainLogo={lastStep.fromBlockchainLogo}
-          blockchain={lastStep.fromBlockchain}
-          amount={lastStep.outputAmount}
-        />
-      </SwapContainer>
+    <Container onClick={onClick.bind(null, swap.requestId)}>
+      <ButtonContainer>
+        <Button
+          variant="outlined"
+          align="grow"
+          size="large"
+          type={
+            status === 'failed'
+              ? 'error'
+              : status === 'success'
+              ? 'success'
+              : undefined
+          }
+        >
+          <SwapContainer>
+            <StepDetail
+              logo={firstStep.fromLogo}
+              symbol={firstStep.fromSymbol}
+              chainLogo={firstStep.fromBlockchainLogo}
+              blockchain={firstStep.fromBlockchain}
+              amount={swap.inputAmount}
+            />
+            <Arrow>
+              <Dot />
+              <Line />
+              <ArrowRight />
+            </Arrow>
+            <StepDetail
+              logo={lastStep.fromLogo}
+              symbol={lastStep.fromSymbol}
+              chainLogo={lastStep.fromBlockchainLogo}
+              blockchain={lastStep.fromBlockchain}
+              amount={lastStep.outputAmount}
+            />
+          </SwapContainer>
+        </Button>
+      </ButtonContainer>
       <StatusContainer>
         {status === 'running' ? (
           <TryAgainIcon size={16} />

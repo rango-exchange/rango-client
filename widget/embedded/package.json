@@ -1,6 +1,6 @@
 {
   "name": "@rangodev/widget-embedded",
-  "version": "0.1.10-next.32",
+  "version": "0.1.10-next.53",
   "license": "MIT",
   "source": "public/index.html",
   "browserslist": "> 0.5%, last 2 versions, not dead",
@@ -9,14 +9,14 @@
     "build": "parcel build"
   },
   "dependencies": {
-    "@rangodev/queue-manager-react": "^0.1.10-next.32",
-    "@rangodev/provider-all": "^0.1.11-next.32",
-    "@rangodev/ui": "^0.1.10-next.32",
-    "@rangodev/wallets-core": "^0.1.11-next.32",
+    "@rangodev/provider-all": "^0.1.11-next.53",
+    "@rangodev/ui": "^0.1.10-next.53",
+    "@rangodev/wallets-core": "^0.1.11-next.53",
     "bignumber.js": "^9.1.1",
     "immer": "^9.0.19",
+    "mitt": "^3.0.0",
     "parcel": "^2.8.0",
-    "rango-sdk": "^0.1.1",
+    "rango-sdk": "^0.1.12",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.8.0",

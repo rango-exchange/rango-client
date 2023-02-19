@@ -10,6 +10,7 @@ import { SelectTokenPage } from '../pages/SelectTokenPage';
 import { SettingsPage } from '../pages/SettingsPage';
 import { WalletsPage } from '../pages/WalletsPage';
 import { ConfirmWalletsPage } from '../pages/ConfirmWalletsPage';
+import { SwapDetailsPage } from '../pages/SwapDetailsPage';
 
 export const AppRoutes = () =>
   useRoutes([
@@ -27,4 +28,5 @@ export const AppRoutes = () =>
     { path: navigationRoutes.wallets, element: <WalletsPage /> },
     { path: navigationRoutes.confirmSwap, element: <ConfirmSwapPage /> },
     { path: navigationRoutes.confirmWallets, element: <ConfirmWalletsPage /> },
+    { path: navigationRoutes.swapDetails, element: <SwapDetailsPage /> },
   ]);

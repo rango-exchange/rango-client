@@ -2,19 +2,20 @@ import React from 'react';
 import { SettingsIcon, Tooltip, styled, Button, HistoryIcon, RetryIcon } from '@rangodev/ui';
 import { useNavigate } from 'react-router-dom';
 import { navigationRoutes } from '../constants/navigationRoutes';
-import { useBestRoute } from '../hooks/useBestRoute';
+import { PropTypes } from './Header';
 
 const ButtonsContainer = styled('div', {
   display: 'flex',
 });
 
-export function HeaderButtons({ onClick }: { onClick: () => void }) {
+export function HeaderButtons(props: PropTypes) {
+  const { onClickRefresh } = props;
   const navigate = useNavigate();
 
   return (
     <ButtonsContainer>
       <Tooltip content="Retry">
-        <Button variant="ghost" onClick={() => onClick()}>
+        <Button variant="ghost" onClick={onClickRefresh.bind(null)}>
           <RetryIcon size={28} />
         </Button>
       </Tooltip>

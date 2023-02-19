@@ -1,23 +1,24 @@
 import React from 'react';
-import { AngleDownIcon, Button, styled, TextField, Typography } from '@rangodev/ui';
+import { AngleDownIcon, Button, InfoCircleIcon, styled, TextField, Typography } from '@rangodev/ui';
 import { useMetaStore } from '../store/meta';
 import { BlockchainMeta, Token } from 'rango-sdk';
 import { useNavigate } from 'react-router-dom';
 import { useBestRouteStore } from '../store/bestRoute';
 import { numberToString } from '../utils/numbers';
 import BigNumber from 'bignumber.js';
+import { getBalanceFromWallet } from '../utils/balance';
+import { useWalletsStore } from '../store/wallets';
 
 type PropTypes = (
-  | { type: 'From'; inputAmount: number | null; onAmountChange: (amount: number) => void }
+  | { type: 'From'; inputAmount: string; onAmountChange: (amount: string) => void }
   | {
       type: 'To';
       outputAmount: BigNumber | null;
-      outputUsdValue: BigNumber;
+      outputUsdValue: BigNumber | null;
     }
 ) & { chain: BlockchainMeta | null; token: Token | null };
 
 const Box = styled('div', {
-  padding: '$16',
   display: 'flex',
   flexDirection: 'column',
   width: '100%',
@@ -37,7 +38,8 @@ const Container = styled('div', {
 });
 
 const StyledImage = styled('img', {
-  width: '24px',
+  width: '$24',
+  maxHeight: '$24',
 });
 
 const Options = styled('div', {
@@ -52,8 +54,6 @@ const ImagePlaceholder = styled('span', {
   backgroundColor: '$neutrals300',
   borderRadius: '99999px',
 });
-
-const TokenBalance = styled('div', { position: 'relative', bottom: '2px' });
 
 const OutputContainer = styled('div', {
   height: '$48',
@@ -72,8 +72,37 @@ const OutputContainer = styled('div', {
 export function TokenInfo(props: PropTypes) {
   const { type, chain, token } = props;
   const { loadingStatus } = useMetaStore();
-  const { fromChain, toChain, inputUsdValue } = useBestRouteStore();
+  const { fromChain, toChain, inputUsdValue, fromToken, setInputAmount, bestRoute, inputAmount } =
+    useBestRouteStore();
+  const { balance } = useWalletsStore();
   const navigate = useNavigate();
+
+  const tokenBalance =
+    !!fromChain && !!fromToken
+      ? numberToString(
+          getBalanceFromWallet(balance, fromChain?.name, fromToken?.symbol, fromToken?.address)
+            ?.amount || '0',
+          8,
+        )
+      : '0';
+
+  const tokenBalanceReal =
+    !!fromChain && !!fromToken
+      ? numberToString(
+          getBalanceFromWallet(balance, fromChain?.name, fromToken?.symbol, fromToken?.address)
+            ?.amount || '0',
+          getBalanceFromWallet(balance, fromChain?.name, fromToken?.symbol, fromToken?.address)
+            ?.decimal,
+        )
+      : '0';
+
+  const ItemSuffix = (
+    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+      {loadingStatus === 'failed' && <InfoCircleIcon color="error" size={24} />}
+      <AngleDownIcon />
+    </div>
+  );
+
   return (
     <Box>
       <div>
@@ -82,14 +111,16 @@ export function TokenInfo(props: PropTypes) {
       <Container>
         {props.type === 'From' && (
           <Options>
-            <div className="balance" onClick={() => {}}>
+            <div
+              className="balance"
+              onClick={() => {
+                if (tokenBalance !== '0') setInputAmount(tokenBalanceReal.split(',').join(''));
+              }}>
               <Button variant="ghost" size="small">
-                <Typography variant="body2">Max: 123 USD</Typography>
+                <Typography variant="body2">{`Max: ${tokenBalance} ${
+                  fromToken?.symbol || ''
+                }`}</Typography>
               </Button>
-              {/* <Typography variant="body2">Max:&nbsp;</Typography>
-              <TokenBalance>
-                <Typography variant="body1">1234</Typography>
-              </TokenBalance> */}
             </div>
           </Options>
         )}
@@ -108,7 +139,7 @@ export function TokenInfo(props: PropTypes) {
                 <ImagePlaceholder />
               )
             }
-            suffix={<AngleDownIcon />}
+            suffix={ItemSuffix}
             align="start"
             size="large"
             style={{ marginRight: '.5rem' }}>
@@ -132,7 +163,7 @@ export function TokenInfo(props: PropTypes) {
                 <ImagePlaceholder />
               )
             }
-            suffix={<AngleDownIcon />}
+            suffix={ItemSuffix}
             size="large"
             align="start"
             style={{ marginRight: '.5rem' }}>
@@ -142,7 +173,8 @@ export function TokenInfo(props: PropTypes) {
             <TextField
               type="number"
               size="large"
-              disabled={loadingStatus != 'success'}
+              autoFocus
+              placeholder="0"
               style={{
                 width: '70%',
                 position: 'relative',
@@ -153,16 +185,20 @@ export function TokenInfo(props: PropTypes) {
                   <Typography variant="caption">{`$${numberToString(inputUsdValue)}`}</Typography>
                 </span>
               }
-              {...(props.type === 'From' && {
-                value: props.inputAmount?.toString() || '',
-                onChange: (event) => {
-                  props.onAmountChange(parseFloat(event.target.value));
-                },
-              })}
+              value={props.inputAmount || ''}
+              onChange={
+                props.type === 'From'
+                  ? (event) => {
+                      props.onAmountChange(event.target.value);
+                    }
+                  : undefined
+              }
             />
           ) : (
             <OutputContainer>
-              <Typography variant="body1">{numberToString(props.outputAmount) || '?'}</Typography>
+              <Typography variant="body1">
+                {bestRoute ? `≈ ${numberToString(props.outputAmount)}` : inputAmount ? '?' : '0'}
+              </Typography>
               <span style={{ position: 'absolute', right: '4px', bottom: '2px' }}>
                 <Typography variant="caption">{`$${numberToString(
                   props.outputUsdValue,
