@@ -281,12 +281,58 @@ export type WalletSigners = {
   signEvmMessage: (walletAddress: string, message: string) => Promise<string>;
 };
 
+export type InstallObjects = {
+  CHROME?: string;
+  FIREFOX?: string;
+  EDGE?: string;
+  BRAVE?: string;
+  DEFAULT: string;
+};
+
 export type WalletInfo = {
   name: string;
   img: string;
-  installLink: string;
+  installLink: InstallObjects | string;
   color: string;
   supportedChains: BlockchainMeta[];
+  showOnMobile?: boolean;
+};
+
+export interface Wallet {
+  type: WalletType;
+  extensionAvailable: boolean;
+  connected: boolean;
+  info: Omit<WalletInfo, 'color' | 'supportedChains'>;
+}
+
+export {
+  EvmTransaction,
+  StarknetTransaction,
+  TronTransaction,
+  CosmosTransaction,
+  SolanaTransaction,
+  Transfer as TransferTransaction,
+  isEvmBlockchain,
+  isCosmosBlockchain,
+  isSolanaBlockchain,
+  isTronBlockchain,
+  isStarknetBlockchain,
+  isTransferBlockchain,
+  evmBlockchains,
+  cosmosBlockchains,
+  starknetBlockchain,
+  tronBlockchain,
+  transferBlockchains,
+  solanaBlockchain,
+  BlockchainMeta,
+  EvmBlockchainMeta,
+  CosmosBlockchainMeta,
+  SolanaBlockchainMeta,
+  TransferBlockchainMeta,
+  TronBlockchainMeta,
+  StarkNetBlockchainMeta,
+  CosmosChainInfo,
+  EVMChainInfo,
 };
 
 export {
@@ -318,3 +364,10 @@ export {
   CosmosChainInfo,
   EVMChainInfo,
 };
+
+export interface Wallet {
+  type: WalletType;
+  extensionAvailable: boolean;
+  connected: boolean;
+  info: Omit<WalletInfo, 'color' | 'supportedChains'>;
+}
