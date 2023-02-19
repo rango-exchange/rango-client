@@ -4588,11 +4588,6 @@
   dependencies:
     "@babel/runtime" "^7.13.10"
 
-"@rangodev/queue-manager-react@^0.1.10-next.32":
-  version "0.1.10-next.32"
-  resolved "https://registry.yarnpkg.com/@rangodev/queue-manager-react/-/queue-manager-react-0.1.10-next.32.tgz#75561221dad490343c99d784917be6852a6ac5bb"
-  integrity sha512-8M965TfFj1A910ND5ZIkcrE31c9uISLSp6HhC3W+mIibc1CiWS+RaNZfROJ/KUV5HwwjBmR9/c3fi+X0p/hjdA==
-
 "@reach/router@^1.2.1":
   version "1.3.4"
   resolved "https://registry.yarnpkg.com/@reach/router/-/router-1.3.4.tgz#d2574b19370a70c80480ed91f3da840136d10f8c"

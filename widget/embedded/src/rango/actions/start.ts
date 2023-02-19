@@ -1,6 +1,6 @@
-import { ActionParams } from '../types';
+import { ActionParams, SwapActionTypes } from '../types';
 
-export function start({ next }: ActionParams): void {
-  console.log('ready to go....');
+export function start({ schedule, next }: ActionParams): void {
+  schedule(SwapActionTypes.SCHEDULE_NEXT_STEP);
   next();
 }

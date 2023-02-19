@@ -1,3 +1,4 @@
+import { useManager } from '@rangodev/queue-manager-react';
 import { PendingSwap } from '@rangodev/ui/dist/containers/History/types';
 import {
   BestRouteType,
@@ -8,6 +9,8 @@ import { WalletType } from '@rangodev/wallets-shared';
 import BigNumber from 'bignumber.js';
 import { BestRouteResponse } from 'rango-sdk';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { navigationRoutes } from '../constants/navigationRoutes';
 import { httpService } from '../services/httpService';
 import { useBestRouteStore } from '../store/bestRoute';
 import { useSettingsStore } from '../store/settings';
@@ -25,7 +28,10 @@ type CheckFeeAndBalanceResult =
   | null;
 
 export function useConfirmSwap() {
-  const { fromToken, toToken, inputAmount, bestRoute, setBestRoute } = useBestRouteStore();
+  const { manager: queueManager } = useManager();
+  const navigate = useNavigate();
+  const { fromToken, toToken, inputAmount, bestRoute, setBestRoute, setInputAmount } =
+    useBestRouteStore();
   const { selectedWallets, accounts } = useWalletsStore();
   const { slippage, disabledLiquiditySources } = useSettingsStore();
   const [loading, setLoading] = useState(false);
@@ -166,6 +172,9 @@ export function useConfirmSwap() {
         settings,
         false,
       );
+      queueManager?.create('swap', { swapDetails: newSwap });
+      navigate(navigationRoutes.home);
+      setInputAmount('');
     }
 
     !proceedAnyway &&
@@ -201,6 +210,9 @@ export function useConfirmSwap() {
                 settings,
                 true,
               );
+              queueManager?.create('swap', { swapDetails: newSwap });
+              navigate(navigationRoutes.home);
+              setInputAmount('');
             } else if (!hasEnoughBalanceOrSlippage.balance) {
               setError('not enough balance');
             }
