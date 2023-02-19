@@ -132,7 +132,6 @@ export function useConfirmSwap() {
     setBestRouteChanged(isChanged);
     setWarning('Best route changed');
     setData(r);
-    // setOutputAmount(!!r.result?.outputAmount ? new BigNumber(r.result?.outputAmount) : null);
     return {
       hasEnoughBalanceOrSlippage: hasEnoughBalanceOrProperSlippage(
         r,
