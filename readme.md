@@ -34,14 +34,3 @@ cd packages/widget
 yarn start
 ```
 
-## Todos
-
-- [ ] Migrate wallets
-- [ ] Migrate queue-manage
-- [ ] Publish wallets and queue-manager and use it in Rango
-- [ ] Setup repository to be fully linked to local packages and work together smoothly. And also setup the 
-- [ ] Make a test client for wallets
-- [ ] Make a test client for queque manager (already have a basic version)
-- [ ] Implementing UI components for widget (blocked by design)
-- [ ] Implementing a react client for widget (embedded)
-- [ ] Implementing a wrapper for exposing widget APIs 
