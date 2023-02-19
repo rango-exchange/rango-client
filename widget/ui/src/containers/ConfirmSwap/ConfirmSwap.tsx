@@ -94,8 +94,6 @@ export function ConfirmSwap({
   error,
   warning,
 }: PropsWithChildren<PropTypes>) {
-  console.log('error', error);
-  console.log('warning', warning);
   return (
     <SecondaryPage
       textField={false}
