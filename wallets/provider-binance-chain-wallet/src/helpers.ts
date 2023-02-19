@@ -1,9 +1,4 @@
-import {
-  Network,
-  ProviderConnectResult,
-  Msg as RangoMsg,
-  MsgSend as RangoMsgSend,
-} from '@rangodev/wallets-shared';
+import { Network, ProviderConnectResult } from '@rangodev/wallets-shared';
 import { RequestedAccount } from './types';
 import {
   SignInputOutput,
@@ -63,20 +58,20 @@ export function findActiveAccount(
   });
 }
 
-function isMsgSend(msg: RangoMsg): msg is RangoMsgSend {
+function isMsgSend(msg: any) {
   return msg.__type === 'MsgSend';
 }
 
-export function cosmosMessageToBCSendMsg(msg: RangoMsg): SendMsg {
+export function cosmosMessageToBCSendMsg(msg: any): SendMsg {
   if (isMsgSend(msg)) {
-    const msgCopy = msg as RangoMsgSend;
+    const msgCopy = msg;
 
     if (msgCopy.inputs.length !== 1)
       throw Error('Multi input coins for binance chain not supported');
     if (msgCopy.outputs.length !== 1)
       throw Error('Multi output coins for binance chain not supported');
     if (msgCopy.inputs[0].coins.length !== 1)
-      throw Error('Multi input coins for binance chain not supported');
+      throw Error('Multi input coins for binaisMsgSendnce chain not supported');
     if (msgCopy.outputs[0].coins.length !== 1)
       throw Error('Multi output coins for binance chain not supported');
 

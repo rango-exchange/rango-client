@@ -22,6 +22,8 @@ import {
   tronBlockchain,
   transferBlockchains,
   solanaBlockchain,
+  TransactionType,
+  GenericTransactionType,
 } from 'rango-types';
 import {
   CosmosTransaction,
@@ -305,6 +307,14 @@ export interface Wallet {
   info: Omit<WalletInfo, 'color' | 'supportedChains'>;
 }
 
+export type Transaction =
+  | EvmTransaction
+  | StarknetTransaction
+  | TronTransaction
+  | CosmosTransaction
+  | SolanaTransaction
+  | Transfer;
+
 export {
   EvmTransaction,
   StarknetTransaction,
@@ -333,4 +343,6 @@ export {
   StarkNetBlockchainMeta,
   CosmosChainInfo,
   EVMChainInfo,
+  TransactionType,
+  GenericTransactionType,
 };
