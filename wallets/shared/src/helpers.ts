@@ -202,11 +202,11 @@ export function detectInstallLink(install: InstallObjects | string): string {
     let link;
     if (isBrave()) {
       link = install.BRAVE;
-    } else if (navigator.userAgent.toLowerCase().indexOf('chrome') !== -1) {
+    } else if (navigator.userAgent?.toLowerCase().indexOf('chrome') !== -1) {
       link = install.CHROME;
-    } else if (navigator.userAgent.toLowerCase().indexOf('firefox') !== -1) {
+    } else if (navigator.userAgent?.toLowerCase().indexOf('firefox') !== -1) {
       link = install.FIREFOX;
-    } else if (navigator.userAgent.toLowerCase().indexOf('edge') !== -1) {
+    } else if (navigator.userAgent?.toLowerCase().indexOf('edge') !== -1) {
       link = install.EDGE;
     }
     return link || install.DEFAULT;
