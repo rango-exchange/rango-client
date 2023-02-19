@@ -123,8 +123,6 @@ export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
     name: 'Brave',
     img: 'https://raw.githubusercontent.com/rango-exchange/rango-types/main/assets/icons/wallets/brave.png',
     installLink: {
-      CHROME: 'https://brave.com/wallet/',
-      BRAVE: 'https://brave.com/wallet/',
       DEFAULT: 'https://brave.com/wallet/',
     },
     color: '#ef342f',

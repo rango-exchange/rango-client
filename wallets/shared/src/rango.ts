@@ -722,7 +722,7 @@ export const cosmosBlockchains = (allBlockChains: BlockchainMeta[]) =>
   allBlockChains.filter(isCosmosBlockchain);
 
 export type InstallObjects = {
-  CHROME: string;
+  CHROME?: string;
   FIREFOX?: string;
   EDGE?: string;
   BRAVE?: string;
