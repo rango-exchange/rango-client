@@ -1,6 +1,6 @@
 {
   "name": "@rangodev/provider-metamask",
-  "version": "0.1.11-next.43",
+  "version": "0.1.11-next.44",
   "license": "MIT",
   "module": "dist/provider-metamask.esm.js",
   "main": "dist/index.js",
@@ -45,7 +45,7 @@
     }
   ],
   "dependencies": {
-    "@rangodev/wallets-shared": "^0.1.11-next.43"
+    "@rangodev/wallets-shared": "^0.1.11-next.44"
   },
   "publishConfig": {
     "access": "public"
