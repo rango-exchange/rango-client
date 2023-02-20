@@ -1,6 +1,6 @@
 {
   "name": "@rangodev/provider-coinbase",
-  "version": "0.1.11-next.45",
+  "version": "0.1.11-next.46",
   "license": "MIT",
   "module": "dist/provider-coinbase.esm.js",
   "main": "dist/index.js",
@@ -45,7 +45,7 @@
     }
   ],
   "dependencies": {
-    "@rangodev/wallets-shared": "^0.1.11-next.45"
+    "@rangodev/wallets-shared": "^0.1.11-next.46"
   },
   "publishConfig": {
     "access": "public"
