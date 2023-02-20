@@ -66,6 +66,7 @@ export interface PropTypes {
   onChange: (value: string) => void;
   direction?: 'vertical' | 'horizontal';
   style?: CSSProperties;
+
 }
 
 export function Radio(props: PropTypes) {
