@@ -36,11 +36,11 @@ export type WidgetProps = {
 export function App() {
   globalStyles();
   const { activeTheme } = useTheme();
-  const { blockchains } = useMetaStore.use.meta();
-  const disconnectWallet = useWalletsStore.use.disconnectWallet();
-  const connectWallet = useWalletsStore.use.connectWallet();
-  const evmBasedChainNames = blockchains
-    //@ts-ignore
+  const { blockchains, tokens } = useMetaStore((state) => state.meta);
+  const { insertAccount, disconnectWallet } = useWalletsStore();
+  const { insertBalance } = useWalletsStore();
+  //TDOD : remove any after resloving type conflicts
+  const evmBasedChainNames = useMetaStore((state) => state.meta.blockchains as any)
     .filter(isEvmBlockchain)
     .map((chain) => chain.name);
 
@@ -56,7 +56,18 @@ export function App() {
           evmBasedChainNames,
           supportedChainNames,
         );
-        connectWallet(data);
+        insertAccount(data);
+        httpService
+          .getWalletsDetails(
+            data.map((acc) => ({
+              address: acc.accountsWithBalance[0].address,
+              blockchain: acc.blockchain,
+            })),
+          )
+          .then((res) => {
+            insertBalance(res.wallets, data[0].accountsWithBalance[0].walletType, tokens);
+          })
+          .catch();
       } else {
         disconnectWallet(type);
       }

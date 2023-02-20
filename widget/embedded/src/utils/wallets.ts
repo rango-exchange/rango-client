@@ -1,3 +1,4 @@
+import { BigNumber } from 'bignumber.js';
 import {
   isEvmAddress,
   Network,
@@ -9,10 +10,9 @@ import {
 import { WalletInfo as ModalWalletInfo, WalletState as WalletStatus } from '@rangodev/ui';
 import { BestRouteResponse, BlockchainMeta, WalletDetail } from 'rango-sdk';
 import { readAccountAddress } from '@rangodev/wallets-core';
-import { Account } from '../store/wallets';
+import { Account, AccountWithBalance, Balance } from '../store/wallets';
 import { SelectableWallet } from '../pages/ConfirmWalletsPage';
-import { Balance, TokenBalance } from '../store/wallets';
-import BigNumber from 'bignumber.js';
+import { ZERO } from './balance';
 
 export function getStateWallet(state: WalletState): WalletStatus {
   switch (true) {
@@ -139,82 +139,49 @@ export interface SelectedWallet extends Account {}
 
 export function getSelectableWallets(
   accounts: Account[],
-  requiredChains: string[],
   selectedWallets: SelectedWallet[],
   getWalletInfo: (type: WalletType) => WalletInfo,
-) {
-  const connectedWallets: SelectableWallet[] = accounts.map((account) => ({
-    address: account.address,
-    walletType: account.walletType,
-    chain: account.chain,
-    image: getWalletInfo(account.walletType).img,
-    selected: !!selectedWallets.find((wallet) => wallet.chain === account.chain),
-  }));
+  requiredChains?: string[],
+): SelectableWallet[] => {
+  const connectedWallets: SelectableWallet[] = [];
+  accounts.forEach((account) => {
+    account.accounts.forEach((acc) => {
+      connectedWallets.push({
+        address: acc.address,
+        walletType: acc.walletType as WalletType,
+        blockchain: account.blockchain,
+        image: getWalletInfo(acc.walletType as WalletType).img,
+        selected: !!selectedWallets.find((wallet) => wallet.blockchain === account.blockchain),
+      });
+    });
+  });
 
-  return connectedWallets.filter((wallet) => requiredChains.includes(wallet.chain));
-}
+  return requiredChains
+    ? connectedWallets.filter((wallet) => requiredChains.includes(wallet.blockchain))
+    : removeDuplicateWallets(connectedWallets, 'walletType');
+};
 
-export function getBalanceFromWallet(
-  balances: Balance[],
-  chain: string,
-  symbol: string,
-  address: string | null,
-): TokenBalance | null {
-  if (balances.length === 0) return null;
+const removeDuplicateWallets = (arr: SelectableWallet[], key: string): SelectableWallet[] => {
+  return [...new Map(arr.map((item) => [item[key], item])).values()];
+};
 
-  const selectedChainBalances = balances.filter((balance) => balance.chain === chain);
-  if (selectedChainBalances.length === 0) return null;
+export const calculateWalletUsdValue = (balance: Balance[]): string => {
+  const flatBalance = balance.map((b) => {
+    let accounts: AccountWithBalance[] = [];
+    b.accountsWithBalance.forEach((initAcc, index) => {
+      if (accounts.findIndex((acc) => initAcc.address !== acc.address) !== -1 || index === 0) {
+        accounts.push(initAcc);
+      }
+    });
+    return { blockchain: b.blockchain, accounts };
+  });
 
-  return (
-    selectedChainBalances
-      .map(
-        (a) =>
-          a.balances?.find(
-            (bl) =>
-              (address !== null && bl.address === address) ||
-              (address === null && bl.address === address && bl.symbol === symbol),
-          ) || null,
-      )
-      .filter((b) => b !== null)
-      .sort((a, b) => parseFloat(b?.amount || '0') - parseFloat(a?.amount || '1'))
-      .find(() => true) || null
-  );
-}
+  const total =
+    flatBalance
+      ?.flatMap((b) => b.accounts)
+      ?.flatMap((a) => a?.balances)
+      ?.map((b) => new BigNumber(b?.amount || ZERO).multipliedBy(b?.usdPrice || 0))
+      ?.reduce((a, b) => a.plus(b), ZERO) || ZERO;
 
-export function isAccountAndBalanceMatched(account: Account, balance: Balance) {
-  return (
-    account.address === balance.address &&
-    account.chain === balance.chain &&
-    account.walletType === balance.walletType
-  );
-}
-
-export function makeBalanceFor(account: Account, retrivedBalance: WalletDetail): Balance {
-  const { address, blockChain: chain, explorerUrl, balances = [] } = retrivedBalance;
-  return {
-    address,
-    chain,
-    loading: false,
-    error: false,
-    explorerUrl,
-    walletType: account.walletType,
-    balances:
-      balances?.map((tokenBalance) => ({
-        chain,
-        symbol: tokenBalance.asset.symbol,
-        ticker: tokenBalance.asset.symbol,
-        address: tokenBalance.asset.address || null,
-        rawAmount: tokenBalance.amount.amount,
-        decimal: tokenBalance.amount.decimals,
-        amount: new BigNumber(tokenBalance.amount.amount)
-          .shiftedBy(-tokenBalance.amount.decimals)
-          .toFixed(),
-        logo: '',
-        usdPrice: null,
-      })) || [],
-  };
-}
-
-export function resetBalanceState(balance: Balance): Balance {
-  return { ...balance, loading: false, error: true };
-}
+  return total.toNumber().toFixed(1);
+};
