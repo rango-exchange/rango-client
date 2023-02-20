@@ -44,7 +44,7 @@ interface WalletsStore {
   balance: Balance[];
   selectedWallets: SelectedWallet[];
   insertAccount: (balance: Balance[]) => void;
-  insertBalance: (wallets: WalletDetail[], walletType: WalletType) => void;
+  insertBalance: (wallets: WalletDetail[], walletType: WalletType, token?: any) => void;
   disconnectWallet: (walletType: WalletType) => void;
   initSelectedWallets: () => void;
   setSelectedWallet: (wallet: SelectableWallet) => void;
@@ -89,7 +89,7 @@ export const useWalletsStore = create<WalletsStore>()(
           else state.balance?.push(account);
         });
       }),
-    insertBalance: (wallets, walletType) =>
+    insertBalance: (wallets, walletType, tokens) =>
       set((state) => {
         wallets.forEach((wallet) => {
           const walletsWithSameBlockchain = state.balance.find(
@@ -115,7 +115,9 @@ export const useWalletsStore = create<WalletsStore>()(
                 .shiftedBy(-retrivedWallet.amount.decimals)
                 .toFixed(),
               logo: '',
-              usdPrice: null,
+              usdPrice:
+                tokens?.find((i: any) => i.symbol === retrivedWallet.asset.symbol)?.usdPrice ||
+                null,
             })) || [];
           retrivedWallet.walletType = walletType;
         });

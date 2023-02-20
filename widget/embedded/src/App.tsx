@@ -37,7 +37,7 @@ export type WidgetProps = {
 export function App() {
   globalStyles();
   const { activeTheme } = useTheme();
-  const { blockchains } = useMetaStore((state) => state.meta);
+  const { blockchains, tokens } = useMetaStore((state) => state.meta);
   const { insertAccount, disconnectWallet } = useWalletsStore();
   const { insertBalance } = useWalletsStore();
   //TDOD : remove any after resloving type conflicts
@@ -67,7 +67,7 @@ export function App() {
             })),
           )
           .then((res) => {
-            insertBalance(res.wallets, data[0].accountsWithBalance[0].walletType);
+            insertBalance(res.wallets, data[0].accountsWithBalance[0].walletType, tokens);
           })
           .catch();
       } else {

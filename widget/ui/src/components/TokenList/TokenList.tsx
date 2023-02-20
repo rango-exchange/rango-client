@@ -6,6 +6,7 @@ import { Token } from 'rango-sdk';
 import { Button } from '../Button/Button';
 import { Typography } from '../Typography';
 import { VirtualizedList } from '../VirtualizedList/VirtualizedList';
+import { sortTokensList } from '../../helper';
 
 export interface TokenWithAmount extends Token {
   balance?: {
@@ -112,18 +113,22 @@ export function TokenList(props: PropTypes) {
     setIsNextPageLoading(true);
     setTimeout(() => {
       setIsNextPageLoading(false);
-      setFilteredTokens(list.slice(0, filteredTokens.length + PAGE_SIZE));
+      setFilteredTokens(
+        list.slice(0, filteredTokens.length + PAGE_SIZE).sort(sortTokensList)
+      );
     }, 0);
   };
 
   useEffect(() => {
     setFilteredTokens(
-      list.filter(
-        (token) =>
-          containsText(token.symbol, searchedText) ||
-          containsText(token.address || '', searchedText) ||
-          containsText(token.name || '', searchedText)
-      )
+      list
+        .filter(
+          (token) =>
+            containsText(token.symbol, searchedText) ||
+            containsText(token.address || '', searchedText) ||
+            containsText(token.name || '', searchedText)
+        )
+        .sort(sortTokensList)
     );
   }, [searchedText]);
 
@@ -132,7 +137,7 @@ export function TokenList(props: PropTypes) {
   }, [filteredTokens.length]);
 
   useEffect(() => {
-    setFilteredTokens(list.slice(0, PAGE_SIZE));
+    setFilteredTokens(list.slice(0, PAGE_SIZE).sort(sortTokensList));
   }, []);
 
   const innerElementType: React.FC<CommonProps> = forwardRef(

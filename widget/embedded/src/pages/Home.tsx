@@ -1,6 +1,7 @@
 import { Alert, BestRoute, Button, styled, VerticalSwapIcon } from '@rangodev/ui';
 import React, { useEffect, useState } from 'react';
 import { useInRouterContext, useNavigate } from 'react-router-dom';
+import { BigNumber } from 'bignumber.js';
 import { Header } from '../components/Header';
 import { TokenInfo } from '../components/TokenInfo';
 import { useBestRouteStore } from '../store/bestRoute';
@@ -19,6 +20,7 @@ import {
   outputRatioHasWarning,
   canComputePriceImpact,
 } from '../utils/swap';
+import { ZERO } from '../utils/balance';
 
 const Container = styled('div', {
   display: 'flex',
@@ -44,6 +46,26 @@ const Alerts = styled('div', {
   paddingTop: '$16',
 });
 
+export const calculateWalletUsdValue = (balance: any) => {
+  const flatBalance = balance.map((i) => {
+    let accounts: any = [];
+    i.accountsWithBalance.forEach((j, ind) => {
+      if (accounts.findIndex((h: any) => h.address !== j.address) !== -1 || ind === 0) {
+        accounts.push(j);
+      }
+    });
+    return { blockchain: i.blockchain, accounts };
+  });
+  const total =
+    flatBalance
+      ?.flatMap((b) => b.accounts)
+      ?.flatMap((a) => a?.balances)
+      ?.map((b) => new BigNumber(b?.amount || ZERO).multipliedBy(b?.usdPrice || 0))
+      ?.reduce((a, b) => a.plus(b), ZERO) || ZERO;
+
+  return total.toString();
+};
+
 export function Home() {
   const [waningMessage, setWarningMessage] = useState('');
   const isRouterInContext = useInRouterContext();
@@ -68,7 +90,7 @@ export function Home() {
   } = useBestRouteStore();
 
   const { loadingStatus: loadingMetaStatus } = useMetaStore();
-  const { accounts } = useWalletsStore();
+  const { accounts, balance } = useWalletsStore();
 
   const swithFromAndTo = () => {
     setFromChain(toChain);
@@ -123,6 +145,11 @@ export function Home() {
     setBestRoute(data);
   }, [data]);
 
+  const calculateBalance = () => {
+    const totalAmount = calculateWalletUsdValue(balance);
+    console.log(totalAmount);
+  };
+
   return (
     <Container>
       <Header onClickRefresh={retry} />
@@ -158,6 +185,9 @@ export function Home() {
         </Alerts>
       )}
       <Footer>
+        <Button type="primary" align="grow" size="large" onClick={calculateBalance}>
+          +
+        </Button>
         <Button
           type="primary"
           align="grow"
