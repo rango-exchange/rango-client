@@ -39,7 +39,6 @@ export interface Balance {
   accountsWithBalance: AccountWithBalance[];
 }
 
-//TODO: change wallet store interface
 interface WalletsStore {
   accounts: Account[];
   balance: Balance[];
