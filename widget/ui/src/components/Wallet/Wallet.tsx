@@ -23,7 +23,11 @@ export function Wallet(props: PropTypes) {
     <Button
       type={state === WalletState.CONNECTED ? 'primary' : undefined}
       disabled={!state}
-      onClick={onClick.bind(null, type)}
+      onClick={() => {
+        if (state === WalletState.NOT_INSTALLED) {
+          window.open(installLink, '_blank');
+        } else onClick(type);
+      }}
       align="start"
       variant="outlined"
       size="large"

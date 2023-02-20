@@ -1,7 +1,6 @@
 import { LiquiditySourcesSelector } from '@rangodev/ui';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { navigationRoutes } from '../router/navigationRoutes';
 import { useMetaStore } from '../store/meta';
 import { useSettingsStore } from '../store/settings';
 

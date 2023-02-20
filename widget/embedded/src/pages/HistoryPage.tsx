@@ -2,7 +2,7 @@ import { History } from '@rangodev/ui';
 import { PendingSwap } from '@rangodev/ui/dist/containers/History/types';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { navigationRoutes } from '../router/navigationRoutes';
+import { navigationRoutes } from '../constants/navigationRoutes';
 
 export const pendingSwap: PendingSwap[] = [
   {
@@ -784,6 +784,7 @@ export function HistoryPage() {
   return (
     <History
       list={pendingSwap}
+      onSwapClick={() => navigate(navigationRoutes.swapDetails)}
       onBack={() => {
         navigate(-1);
       }}

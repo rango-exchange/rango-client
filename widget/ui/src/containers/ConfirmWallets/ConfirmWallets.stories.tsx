@@ -6,12 +6,21 @@ import { bestRoute, exampleFor5Wallets, wallets } from './mock';
 export default {
   title: 'Containers/ConfirmWallets',
   component: ConfirmWallets,
+  argTypes: {
+    requiredWallets: {
+      defaultValue: ['BSC', 'OSMOSIS'],
+    },
+  },
 } as ComponentMeta<typeof ConfirmWallets>;
 
 export const Main = (props: PropTypes) => (
-  <ConfirmWallets {...props} swap={bestRoute} wallets={wallets} />
+  <ConfirmWallets {...props} swap={bestRoute} selectableWallets={wallets} />
 );
 
 export const With5Wallets = (props: PropTypes) => (
-  <ConfirmWallets {...props} swap={bestRoute} wallets={exampleFor5Wallets} />
+  <ConfirmWallets
+    {...props}
+    swap={bestRoute}
+    selectableWallets={exampleFor5Wallets}
+  />
 );

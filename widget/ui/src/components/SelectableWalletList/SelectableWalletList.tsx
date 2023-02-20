@@ -1,8 +1,5 @@
-import React, { PropsWithChildren, useState } from 'react';
-import {
-  ActiveWalletsType,
-  Wallet,
-} from '../../containers/ConfirmWallets/types';
+import React, { PropsWithChildren, useEffect, useState } from 'react';
+import { SelectableWallet } from '../../containers/ConfirmWallets/types';
 import { styled } from '../../theme';
 import { Typography } from '../Typography';
 
@@ -73,26 +70,37 @@ const Container = styled('div', {
   },
 });
 export interface PropTypes {
-  data: ActiveWalletsType;
-  onChange?: (w: Wallet) => void;
+  list: SelectableWallet[];
+  onChange: (w: SelectableWallet) => void;
 }
 
 export function SelectableWalletList({
-  data,
+  list,
   onChange,
 }: PropsWithChildren<PropTypes>) {
-  const [active, setActive] = useState<string>('');
-  const onClick = (w: Wallet) => {
+  const [active, setActive] = useState<string>(
+    list.find((item) => item.selected)?.walletType || ''
+  );
+  const onClick = (w: SelectableWallet) => {
     setActive(w.walletType);
-    onChange && onChange(w);
+    onChange(w);
   };
+
+  useEffect(() => {
+    setActive(list.find((item) => item.selected)?.walletType || '');
+  }, [list]);
+
   return (
     <Row>
-      {data.options.map((w) => {
+      {list.map((w, index) => {
         const checked = active === w.walletType;
         return (
-          <Container checked={checked} onClick={() => onClick(w)}>
-            <img src={w.logo} alt={w.walletType} width={24} height={24} />
+          <Container
+            checked={checked}
+            onClick={onClick.bind(null, w)}
+            key={index}
+          >
+            <img src={w.image} alt={w.walletType} width={24} height={24} />
             <Typography variant="body2">{w.walletType}</Typography>
             <Circle checked={checked}>
               <SolidCircle checked={checked} />

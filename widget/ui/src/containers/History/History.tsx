@@ -43,8 +43,10 @@ const GroupTitle = styled(Typography, {
 export interface PropTypes {
   list: PendingSwap[];
   onBack: () => void;
+  onSwapClick: (requestId: string) => void;
 }
-const SwapsGroup = ({ list }: { list: PendingSwap[] }) => {
+const SwapsGroup = (props: Omit<PropTypes, 'onBack'>) => {
+  const { list, onSwapClick } = props;
   const swapsInGroup = groupingOfSwaps(list);
 
   return (
@@ -53,7 +55,11 @@ const SwapsGroup = ({ list }: { list: PendingSwap[] }) => {
         <Group>
           <GroupTitle variant="body2">{group.title}</GroupTitle>
           {group.swaps.map((swap: PendingSwap) => (
-            <SwapDetail swap={swap} status={swap.status} />
+            <SwapDetail
+              swap={swap}
+              status={swap.status}
+              onClick={onSwapClick}
+            />
           ))}
         </Group>
       ))}
@@ -61,7 +67,11 @@ const SwapsGroup = ({ list }: { list: PendingSwap[] }) => {
   );
 };
 
-export function History({ list = [], onBack }: PropsWithChildren<PropTypes>) {
+export function History({
+  list = [],
+  onBack,
+  onSwapClick,
+}: PropsWithChildren<PropTypes>) {
   return (
     <SecondaryPage
       onBack={onBack}
@@ -71,7 +81,7 @@ export function History({ list = [], onBack }: PropsWithChildren<PropTypes>) {
       Content={({ searchedFor }) => {
         const filterSwaps = filteredHistory(list, searchedFor);
         return filterSwaps.length ? (
-          <SwapsGroup list={filterSwaps} />
+          <SwapsGroup list={filterSwaps} onSwapClick={onSwapClick} />
         ) : (
           <BodyError>
             <ErrorMsg variant="caption">Not Found</ErrorMsg>
