@@ -1,3 +1,4 @@
+import { CSSProperties } from '@stitches/react';
 import React from 'react';
 import { styled } from '../../theme';
 import { Typography } from '../Typography';
@@ -27,7 +28,7 @@ export interface PropTypes {
   selected?: boolean;
   onClick?: React.MouseEventHandler<HTMLDivElement>;
   className?: string;
-  style?: React.CSSProperties;
+  style?: CSSProperties;
   prefix?: React.ReactNode;
   suffix?: React.ReactNode;
 }

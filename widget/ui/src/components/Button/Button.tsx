@@ -1,3 +1,4 @@
+import { CSSProperties } from '@stitches/react';
 import React, { PropsWithChildren } from 'react';
 import { darkTheme, styled } from '../../theme';
 import { Spinner } from '../Spinner';
@@ -365,7 +366,7 @@ export interface PropTypes {
   loading?: boolean;
   fullWidth?: boolean;
   disabled?: boolean;
-  style?: React.CSSProperties;
+  style?: CSSProperties;
 }
 
 export function Button({
