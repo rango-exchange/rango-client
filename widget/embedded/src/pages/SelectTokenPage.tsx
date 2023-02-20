@@ -24,11 +24,15 @@ export function SelectTokenPage(props: PropTypes) {
   const { type } = props;
   const navigate = useNavigate();
 
-  const {
-    meta: { tokens },
-  } = useMetaStore();
-  const { fromChain, toChain, fromToken, toToken, setFromToken, setToToken } = useBestRouteStore();
-  const balance = useWalletsStore((state) => state.balance);
+  const { tokens } = useMetaStore.use.meta();
+  const fromChain = useBestRouteStore.use.fromChain();
+  const toChain = useBestRouteStore.use.toChain();
+  const fromToken = useBestRouteStore.use.fromToken();
+  const toToken = useBestRouteStore.use.toToken();
+  const setFromToken = useBestRouteStore.use.setFromToken();
+  const setToToken = useBestRouteStore.use.setToToken();
+
+  const balance = useWalletsStore.use.balance();
 
   const tokenWithSelectedChain = tokens.filter((token) => {
     if (type === 'from') return token.blockchain === fromChain?.name;

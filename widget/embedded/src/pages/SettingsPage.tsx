@@ -6,18 +6,14 @@ import { useNavigate } from 'react-router-dom';
 import { navigationRoutes } from '../constants/navigationRoutes';
 
 export function SettingsPage() {
-  const {
-    slippage,
-    setSlippage,
-    disabledLiquiditySources,
-    customSlippage,
-    setCustomSlippage,
-    theme,
-    setTheme,
-  } = useSettingsStore();
-  const {
-    meta: { swappers },
-  } = useMetaStore();
+  const slippage = useSettingsStore.use.slippage();
+  const setSlippage = useSettingsStore.use.setSlippage();
+  const disabledLiquiditySources = useSettingsStore.use.disabledLiquiditySources();
+  const customSlippage = useSettingsStore.use.customSlippage();
+  const setCustomSlippage = useSettingsStore.use.setCustomSlippage();
+  const theme = useSettingsStore.use.theme();
+  const setTheme = useSettingsStore.use.setTheme();
+  const { swappers } = useMetaStore.use.meta();
   const navigate = useNavigate();
 
   const uniqueSwappersGroups: Array<{

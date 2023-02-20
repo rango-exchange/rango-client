@@ -12,14 +12,17 @@ interface PropTypes {
 
 export function SelectChainPage(props: PropTypes) {
   const { type } = props;
-  const { accounts } = useWalletsStore();
+  const accounts = useWalletsStore.use.accounts();
 
-  const {
-    meta: { blockchains },
-    loadingStatus,
-  } = useMetaStore();
-  const { fromChain, toChain, setFromChain, setToChain, setFromToken, setToToken } =
-    useBestRouteStore();
+  const { blockchains } = useMetaStore.use.meta();
+  const loadingStatus = useMetaStore.use.loadingStatus();
+  const fromChain = useBestRouteStore.use.fromChain();
+  const toChain = useBestRouteStore.use.toChain();
+  const setFromChain = useBestRouteStore.use.setFromChain();
+  const setToChain = useBestRouteStore.use.setToChain();
+  const setFromToken = useBestRouteStore.use.setFromToken();
+  const setToToken = useBestRouteStore.use.setToToken();
+
   const navigate = useNavigate();
 
   const [list, setList] = useState(blockchains);

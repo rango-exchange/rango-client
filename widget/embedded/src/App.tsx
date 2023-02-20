@@ -37,11 +37,12 @@ export type WidgetProps = {
 export function App() {
   globalStyles();
   const { activeTheme } = useTheme();
-  const { blockchains } = useMetaStore((state) => state.meta);
-  const { insertAccount, disconnectWallet } = useWalletsStore();
-  const { insertBalance } = useWalletsStore();
+  const { blockchains } = useMetaStore.use.meta();
+  const insertBalance = useWalletsStore.use.insertBalance();
+  const insertAccount = useWalletsStore.use.insertAccount();
+  const disconnectWallet = useWalletsStore.use.disconnectWallet();
   //TDOD : remove any after resloving type conflicts
-  const evmBasedChainNames = useMetaStore((state) => state.meta.blockchains as any)
+  const evmBasedChainNames = (blockchains as any)
     .filter(isEvmBlockchain)
     .map((chain) => chain.name);
 

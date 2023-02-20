@@ -71,10 +71,15 @@ const OutputContainer = styled('div', {
 
 export function TokenInfo(props: PropTypes) {
   const { type, chain, token } = props;
-  const { loadingStatus } = useMetaStore();
-  const { fromChain, toChain, inputUsdValue, fromToken, setInputAmount, bestRoute, inputAmount } =
-    useBestRouteStore();
-  const { balance } = useWalletsStore();
+  const loadingStatus = useMetaStore.use.loadingStatus();
+  const fromChain = useBestRouteStore.use.fromChain();
+  const toChain = useBestRouteStore.use.toChain();
+  const inputUsdValue = useBestRouteStore.use.inputUsdValue();
+  const fromToken = useBestRouteStore.use.fromToken();
+  const setInputAmount = useBestRouteStore.use.setInputAmount();
+  const bestRoute = useBestRouteStore.use.bestRoute();
+  const inputAmount = useBestRouteStore.use.inputAmount();
+  const balance = useWalletsStore.use.balance();
   const navigate = useNavigate();
 
   const tokenBalance =
