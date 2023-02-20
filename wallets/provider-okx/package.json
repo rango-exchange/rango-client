@@ -1,0 +1,54 @@
+{
+  "name": "@rangodev/provider-okx",
+  "version": "0.1.11-next.49",
+  "license": "MIT",
+  "module": "dist/provider-okx.esm.js",
+  "main": "dist/index.js",
+  "typings": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "src"
+  ],
+  "engines": {
+    "node": ">=10"
+  },
+  "scripts": {
+    "start": "tsdx watch",
+    "build": "tsdx build",
+    "test": "tsdx test --passWithNoTests",
+    "lint": "tsdx lint",
+    "size": "size-limit",
+    "analyze": "size-limit --why"
+  },
+  "peerDependencies": {
+    "react": ">=16"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "tsdx lint"
+    }
+  },
+  "prettier": {
+    "printWidth": 80,
+    "semi": true,
+    "singleQuote": true,
+    "trailingComma": "es5"
+  },
+  "size-limit": [
+    {
+      "path": "dist/provider-okx.cjs.production.min.js",
+      "limit": "10 KB"
+    },
+    {
+      "path": "dist/provider-okx.esm.js",
+      "limit": "10 KB"
+    }
+  ],
+  "dependencies": {
+    "@rangodev/wallets-shared": "^0.1.11-next.49"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "gitHead": "dd92a217bf0e45fa27ea9416bed5e575a6e41bcc"
+}

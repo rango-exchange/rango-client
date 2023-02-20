@@ -1,0 +1,47 @@
+{
+  "name": "rango-client",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": [
+    "widget/*",
+    "queue-manager/*",
+    "wallets/*"
+  ],
+  "scripts": {
+    "build:wallets": "lerna run --scope @rangodev/wallets-* --scope @rangodev/provider-* --ignore @rangodev/wallets-demo build",
+    "build:queue-manager": "lerna run --scope @rangodev/queue-manager-* --ignore @rangodev/queue-manager-demo build",
+    "build:widget": "lerna run --scope @rangodev/widget-* build",
+    "build:npm": "yarn build:wallets && yarn build:queue-manager",
+    "build:demo": "lerna run --scope @rangodev/wallets-demo build",
+    "build": "lerna run build",
+    "dev:wallets": "lerna run dev --scope @rangodev/wallets-demo --scope @rangodev/provider-*",
+    "dev:queue-manager": "lerna run dev --scope @rangodev/queue-manager-*",
+    "dev:ui": "lerna run storybook --scope @rangodev/ui",
+    "dev:embedded": "lerna run dev --scope @rangodev/widget-embedded --scope @rangodev/ui",
+    "dev:wallet-adapter": "lerna run dev --scope @rangodev/wallet-adapter-*",
+    "lint": "lerna run lint",
+    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "publish": "lerna publish"
+  },
+  "dependencies": {
+    "@size-limit/preset-small-lib": "^8.1.0",
+    "husky": "^8.0.2",
+    "size-limit": "^8.1.0",
+    "tsdx": "^0.14.1",
+    "tslib": "^2.4.1",
+    "typescript": "^4.9.3"
+  },
+  "devDependencies": {
+    "@types/react": "^18.0.26",
+    "@types/react-dom": "^18.0.10",
+    "buffer": "^5.5.0",
+    "lerna": "^6.1.0",
+    "path-browserify": "^1.0.0",
+    "prettier": "^2.7.1",
+    "punycode": "^1.4.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "stream-browserify": "^3.0.0",
+    "util": "^0.12.3"
+  }
+}

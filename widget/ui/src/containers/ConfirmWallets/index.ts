@@ -1,0 +1,1 @@
+export { ConfirmWallets } from './ConfirmWallets';
