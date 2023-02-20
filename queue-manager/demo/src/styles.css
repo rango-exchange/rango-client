@@ -1,0 +1,119 @@
+html,
+body {
+  box-sizing: border-box;
+  background-color: #e9e9e9;
+  font-family: 'Roboto', sans-serif;
+}
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
+.list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.list .item {
+  width: 32%;
+  padding: 1rem;
+  background-color: #fff;
+  border-radius: 0.5rem;
+  margin-bottom: 2%;
+}
+
+.queues .q {
+  background-color: #fff;
+  border-radius: 0.5rem;
+  margin-bottom: 1rem;
+  padding: 1rem;
+}
+.queues .q h4 {
+  margin: 0;
+  padding-bottom: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.queues .q-list {
+  display: flex;
+  flex-wrap: wrap;
+}
+.queues .q-list .task {
+  width: 25%;
+  display: flex;
+  align-items: center;
+  padding-right: 0.5rem;
+}
+
+.queues .q-list .task .id {
+  margin-right: 0.25rem;
+}
+
+
+.status {
+  padding: 0.5rem;
+  background-color: #000;
+  color: #fff;
+  border-radius: 0.5rem;
+  font-size: 12px;
+}
+
+.status.pending {
+  background-color: #D8D9CF;
+  color: #333;
+}
+
+.status.success {
+  background-color: #38E54D;
+}
+.status.failed {
+  background-color: #FF1E1E;
+}
+
+
+
+
+
+
+
+
+/* Tooltip container */
+.tooltip {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black; /* If you want dots under the hoverable text */
+}
+
+/* Tooltip text */
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  padding: 5px 0;
+  border-radius: 6px;
+ 
+  /* Position the tooltip text - see examples below! */
+  position: absolute;
+  z-index: 1;
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+}
+
+.wallets {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+.wallets .wallet{
+  background-color: #fff;
+  width: 20%;
+  padding: 1rem;
+}
