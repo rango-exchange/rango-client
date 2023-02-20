@@ -351,6 +351,12 @@ const Content = styled('div', {
         marginRight: '$8',
       },
     },
+    flexContent: {
+      true: {
+        display: 'flex',
+        alignItems: 'center',
+      },
+    },
   },
 });
 
@@ -366,6 +372,7 @@ export interface PropTypes {
   fullWidth?: boolean;
   disabled?: boolean;
   style?: React.CSSProperties;
+  flexContent?: boolean;
 }
 
 export function Button({
@@ -375,6 +382,7 @@ export function Button({
   prefix,
   suffix,
   align,
+  flexContent,
   ...props
 }: PropsWithChildren<PropTypes>) {
   const isDisabled = loading || disabled;
@@ -382,7 +390,12 @@ export function Button({
     <ButtonContainer disabled={isDisabled} {...props} align={align}>
       {prefix}
       {children && (
-        <Content align={align} ml={!!prefix} mr={!!suffix && !loading}>
+        <Content
+          align={align}
+          ml={!!prefix}
+          mr={!!suffix && !loading}
+          flexContent={flexContent}
+        >
           {children}
         </Content>
       )}

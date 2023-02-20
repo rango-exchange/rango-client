@@ -25,9 +25,7 @@ export const containsText = (text: string, searchText: string) =>
 export const sortTokensList = (
   tokenA: TokenWithAmount,
   tokenB: TokenWithAmount
-) => {
-  // if (!tokenA.balance?.usdValue || !tokenB.balance?.usdValue) return 0;
-
+): number => {
   if (Number(tokenA.balance?.usdValue) > Number(tokenB.balance?.usdValue)) {
     return -1;
   }

@@ -1,6 +1,6 @@
 import { WalletType } from '@rangodev/wallets-shared';
 import BigNumber from 'bignumber.js';
-import { WalletDetail } from 'rango-sdk';
+import { Token, WalletDetail } from 'rango-sdk';
 import { create } from 'zustand';
 import { immer } from 'zustand/middleware/immer';
 import { SelectableWallet } from '../pages/ConfirmWalletsPage';
@@ -44,7 +44,7 @@ interface WalletsStore {
   balance: Balance[];
   selectedWallets: SelectedWallet[];
   insertAccount: (balance: Balance[]) => void;
-  insertBalance: (wallets: WalletDetail[], walletType: WalletType, token?: any) => void;
+  insertBalance: (wallets: WalletDetail[], walletType: WalletType, tokens?: Token[]) => void;
   disconnectWallet: (walletType: WalletType) => void;
   initSelectedWallets: () => void;
   setSelectedWallet: (wallet: SelectableWallet) => void;
@@ -116,7 +116,7 @@ export const useWalletsStore = create<WalletsStore>()(
                 .toFixed(),
               logo: '',
               usdPrice:
-                tokens?.find((i: any) => i.symbol === retrivedWallet.asset.symbol)?.usdPrice ||
+                tokens?.find((token) => token.symbol === retrivedWallet.asset.symbol)?.usdPrice ||
                 null,
             })) || [];
           retrivedWallet.walletType = walletType;

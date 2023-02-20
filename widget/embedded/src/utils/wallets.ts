@@ -1,3 +1,4 @@
+import { BigNumber } from 'bignumber.js';
 import {
   isEvmAddress,
   Network,
@@ -9,8 +10,9 @@ import {
 import { WalletInfo as ModalWalletInfo, WalletState as WalletStatus } from '@rangodev/ui';
 import { BestRouteResponse, BlockchainMeta } from 'rango-sdk';
 import { readAccountAddress } from '@rangodev/wallets-core';
-import { Account, Balance } from '../store/wallets';
+import { Account, AccountWithBalance, Balance } from '../store/wallets';
 import { SelectableWallet } from '../pages/ConfirmWalletsPage';
+import { ZERO } from './balance';
 
 export const getStateWallet = (state: WalletState): WalletStatus => {
   switch (true) {
@@ -154,10 +156,10 @@ export interface SelectedWallet {
 
 export const getSelectableWallets = (
   accounts: Account[],
-  requiredChains: string[],
   selectedWallets: SelectedWallet[],
   getWalletInfo: (type: WalletType) => WalletInfo,
-) => {
+  requiredChains?: string[],
+): SelectableWallet[] => {
   const connectedWallets: SelectableWallet[] = [];
   accounts.forEach((account) => {
     account.accounts.forEach((acc) => {
@@ -171,5 +173,32 @@ export const getSelectableWallets = (
     });
   });
 
-  return connectedWallets.filter((wallet) => requiredChains.includes(wallet.blockchain));
+  return requiredChains
+    ? connectedWallets.filter((wallet) => requiredChains.includes(wallet.blockchain))
+    : removeDuplicateWallets(connectedWallets, 'walletType');
+};
+
+const removeDuplicateWallets = (arr: SelectableWallet[], key: string): SelectableWallet[] => {
+  return [...new Map(arr.map((item) => [item[key], item])).values()];
+};
+
+export const calculateWalletUsdValue = (balance: Balance[]): string => {
+  const flatBalance = balance.map((b) => {
+    let accounts: AccountWithBalance[] = [];
+    b.accountsWithBalance.forEach((initAcc, index) => {
+      if (accounts.findIndex((acc) => initAcc.address !== acc.address) !== -1 || index === 0) {
+        accounts.push(initAcc);
+      }
+    });
+    return { blockchain: b.blockchain, accounts };
+  });
+
+  const total =
+    flatBalance
+      ?.flatMap((b) => b.accounts)
+      ?.flatMap((a) => a?.balances)
+      ?.map((b) => new BigNumber(b?.amount || ZERO).multipliedBy(b?.usdPrice || 0))
+      ?.reduce((a, b) => a.plus(b), ZERO) || ZERO;
+
+  return total.toNumber().toFixed(1);
 };

@@ -1,8 +1,11 @@
 import { Button, AddWalletIcon, Typography, styled } from '@rangodev/ui';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useWallets } from '@rangodev/wallets-core';
 import { navigationRoutes } from '../constants/navigationRoutes';
 import { AppRoutes } from './AppRoutes';
+import { useWalletsStore } from '../store/wallets';
+import { calculateWalletUsdValue, getSelectableWallets } from '../utils/wallets';
 
 const Header = styled('div', {
   display: 'flex',
@@ -10,8 +13,21 @@ const Header = styled('div', {
   justifyContent: 'end',
 });
 
+const WalletImage = styled('img', {
+  width: '$24',
+  height: '$24',
+  marginLeft: -10,
+  marginRight: '$6',
+  borderRadius: '99999px',
+});
+
 export function Layout() {
   const navigate = useNavigate();
+  const { balance, accounts, selectedWallets } = useWalletsStore();
+  const { getWalletInfo } = useWallets();
+  const filterSelelectedWallets = getSelectableWallets(accounts, selectedWallets, getWalletInfo);
+  const totalBalance = calculateWalletUsdValue(balance);
+
   return (
     <>
       <Header>
@@ -19,8 +35,18 @@ export function Layout() {
           size="small"
           suffix={<AddWalletIcon size={20} />}
           variant="ghost"
+          flexContent
           onClick={() => navigate(navigationRoutes.wallets)}>
-          <Typography variant="body2">Connect Wallet</Typography>
+          {accounts?.length ? (
+            filterSelelectedWallets.map((selectedWallet) => (
+              <WalletImage src={selectedWallet.image} />
+            ))
+          ) : (
+            <></>
+          )}
+          <Typography variant="body2">
+            {!accounts?.length ? 'Connect Wallet' : totalBalance}
+          </Typography>
         </Button>
       </Header>
       <AppRoutes />

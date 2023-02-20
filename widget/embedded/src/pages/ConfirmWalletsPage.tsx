@@ -32,9 +32,9 @@ export function ConfirmWalletsPage() {
       requiredWallets={getRequiredChains(bestRoute)}
       selectableWallets={getSelectableWallets(
         accounts,
-        getRequiredChains(bestRoute),
         selectedWallets,
         getWalletInfo,
+        getRequiredChains(bestRoute),
       )}
       onBack={() => navigate(-1)}
       swap={bestRoute!}
