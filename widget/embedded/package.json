@@ -1,6 +1,6 @@
 {
   "name": "@rangodev/widget-embedded",
-  "version": "0.1.10-next.48",
+  "version": "0.1.10-next.49",
   "license": "MIT",
   "source": "public/index.html",
   "browserslist": "> 0.5%, last 2 versions, not dead",
@@ -9,9 +9,9 @@
     "build": "parcel build"
   },
   "dependencies": {
-    "@rangodev/provider-all": "^0.1.11-next.48",
-    "@rangodev/ui": "^0.1.10-next.48",
-    "@rangodev/wallets-core": "^0.1.11-next.48",
+    "@rangodev/provider-all": "^0.1.11-next.49",
+    "@rangodev/ui": "^0.1.10-next.49",
+    "@rangodev/wallets-core": "^0.1.11-next.49",
     "bignumber.js": "^9.1.1",
     "immer": "^9.0.19",
     "mitt": "^3.0.0",
