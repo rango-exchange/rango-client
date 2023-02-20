@@ -12,7 +12,7 @@ export async function executeStarknetTransaction(
       tx.calls
     );
     return transaction_hash;
-  } catch (error: any) {
+  } catch (error) {
     throw new WalletError(WalletErrorCode.SEND_TX_ERROR, undefined, error);
   }
 }

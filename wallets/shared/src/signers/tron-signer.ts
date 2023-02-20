@@ -18,7 +18,7 @@ export async function executeTronTransaction(
     const signedTxn = await tronProvider.tronWeb.trx.sign(finalTx);
     const receipt = await provider.tronWeb.trx.sendRawTransaction(signedTxn);
     return receipt?.transaction?.txID;
-  } catch (error: any) {
+  } catch (error) {
     throw new WalletError(WalletErrorCode.SEND_TX_ERROR, undefined, error);
   }
 }
