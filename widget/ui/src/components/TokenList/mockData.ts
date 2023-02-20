@@ -1,6 +1,6 @@
-import { TokenMeta } from '../../types/meta';
+import { TokenWithAmount } from './TokenList';
 
-export const tokensMeta: TokenMeta[] = [
+export const tokensMeta: TokenWithAmount[] = [
   {
     blockchain: 'OPTIMISM',
     symbol: 'ETH',
@@ -12,7 +12,7 @@ export const tokensMeta: TokenMeta[] = [
     coinSourceUrl: null,
     name: 'Ethereum',
     decimals: 18,
-    balance: { amount: '1', usdPrice: '2000' },
+    balance: { amount: '1', usdValue: '2000' },
   },
   {
     blockchain: 'OPTIMISM',

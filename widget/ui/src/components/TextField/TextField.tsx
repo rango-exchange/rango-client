@@ -1,3 +1,4 @@
+import { CSS } from '@stitches/react';
 import React, { PropsWithChildren, RefObject } from 'react';
 
 import { styled } from '../../theme';
@@ -117,7 +118,7 @@ export const TextField = React.forwardRef(
           prefix={!!prefix}
           suffix={!!suffix}
           size={size}
-          css={style}
+          css={style as CSS}
         >
           {prefix || null}
           <Input {...inputAttributes} spellCheck={false} ref={ref} />

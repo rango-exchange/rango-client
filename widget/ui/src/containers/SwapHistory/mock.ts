@@ -1,7 +1,7 @@
 import { RoutingResultType, TransactionType } from 'rango-sdk';
-import { PendingSwap } from '../../containers/History/types';
+import { PendingSwap } from '../History/types';
 
-export const swap: PendingSwap = {
+export const pendingSwap: PendingSwap = {
   creationTime: '1673164511955',
   finishTime: '1673164550137',
   requestId: '51e211d9-d61c-45d2-a4d4-1f9f7f90ee85',
@@ -40,7 +40,7 @@ export const swap: PendingSwap = {
           address:
             'ibc/46b44899322f3cd854d2d46deef881958467cdd4b3b10086da49296bbed94bed',
           blockchain: 'OSMOSIS',
-          blockchainLogo: 'https://api.rango.exchange/swappers/osmosis.png',
+          blockchainLogo: '',
           decimals: 6,
           usdPrice: 1.1091996179668873,
         },
@@ -50,7 +50,7 @@ export const swap: PendingSwap = {
           address: null,
           blockchain: 'OSMOSIS',
           decimals: 6,
-          blockchainLogo: 'https://api.rango.exchange/swappers/osmosis.png',
+          blockchainLogo: '',
           usdPrice: 0.7192435454440882,
         },
         fromAmount: '1.000000',
@@ -67,8 +67,8 @@ export const swap: PendingSwap = {
               address: null,
             },
             expenseType: 'FROM_SOURCE_WALLET',
-            name: 'Network Fee',
             amount: '0',
+            name: 'Network Fee',
           },
         ],
         estimatedTimeInSeconds: 45,
@@ -153,7 +153,6 @@ export const swap: PendingSwap = {
       id: 1,
       fromBlockchain: 'OSMOSIS',
       fromSymbol: 'JUNO',
-      swapperType: 'test',
       fromSymbolAddress:
         'ibc/46b44899322f3cd854d2d46deef881958467cdd4b3b10086da49296bbed94bed',
       fromDecimals: 6,
@@ -166,11 +165,12 @@ export const swap: PendingSwap = {
       fromLogo: 'https://api.rango.exchange/tokens/COSMOS/JUNO.png',
       toSymbol: 'OSMO',
       toSymbolAddress: null,
+      swapperType: 'DEX',
       toDecimals: 6,
       toLogo: 'https://api.rango.exchange/i/mJQPS2',
       startTransactionTime: 1673164519916,
       swapperId: 'Osmosis',
-      swapperLogo: 'https://api.rango.exchange/swappers/osmosis.png',
+      swapperLogo: '',
       expectedOutputAmountHumanReadable: '1.540670',
       outputAmount: '1.540658',
       status: 'running',

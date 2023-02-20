@@ -61,7 +61,6 @@ export interface PropTypes {
 
 export function SwapHistory(props: PropTypes) {
   const { pendingSwap, onBack } = props;
-  console.log(pendingSwap);
 
   return (
     <SecondaryPage
