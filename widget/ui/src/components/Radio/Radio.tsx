@@ -2,7 +2,7 @@ import React from 'react';
 import * as RadioGroup from '@radix-ui/react-radio-group';
 import { styled } from '../../theme';
 import { Typography } from '../Typography';
-import { CSS } from '@stitches/react';
+import { CSSProperties } from '@stitches/react';
 
 const StyledRoot = styled(RadioGroup.Root, {
   variants: {
@@ -65,7 +65,8 @@ export interface PropTypes {
   defaultValue: string;
   onChange: (value: string) => void;
   direction?: 'vertical' | 'horizontal';
-  style?: CSS;
+  style?: CSSProperties;
+
 }
 
 export function Radio(props: PropTypes) {
@@ -76,7 +77,7 @@ export function Radio(props: PropTypes) {
         onValueChange={onChange}
         defaultValue={defaultValue}
         direction={direction}
-        css={style}
+        style={style}
       >
         {props.options.map((option) => (
           <ItemContainer>
