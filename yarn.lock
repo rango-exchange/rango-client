@@ -14351,6 +14351,11 @@ mississippi@^3.0.0:
     stream-each "^1.1.0"
     through2 "^2.0.0"
 
+mitt@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/mitt/-/mitt-3.0.0.tgz#69ef9bd5c80ff6f57473e8d89326d01c414be0bd"
+  integrity sha512-7dX2/10ITVyqh4aOSVI9gdape+t9l2/8QxHrFmUXu4EEUpdlxl6RudZUPZoc+zuY2hk1j7XxVroIVIan/pD/SQ==
+
 mixin-deep@^1.2.0:
   version "1.3.2"
   resolved "https://registry.yarnpkg.com/mixin-deep/-/mixin-deep-1.3.2.tgz#1120b43dc359a785dce65b55b82e257ccf479566"
@@ -16249,7 +16254,7 @@ rango-sdk@^0.0.10:
     rango-types "^0.1.1"
     uuid "^9.0.0"
 
-rango-sdk@^0.1.1, rango-sdk@^0.1.2:
+rango-sdk@^0.1.8:
   version "0.1.8"
   resolved "https://registry.yarnpkg.com/rango-sdk/-/rango-sdk-0.1.8.tgz#8bff88ec4af7bc668ef30e5db6361176a0fbcd92"
   integrity sha512-6v2fD6vwkFZTYFgjX6USPLrg+9VROhJdeFJlp3a2eOCdRjUDc/M4mBG/jnyzm8EPt/bS6oxfbJ5+JUjNPlFDOA==
@@ -16268,6 +16273,11 @@ rango-types@^0.1.13:
   version "0.1.13"
   resolved "https://registry.yarnpkg.com/rango-types/-/rango-types-0.1.13.tgz#763ecda9a7a6535930d895a1ed66d592f2c2ed73"
   integrity sha512-+Ffw7wWJ5j7IloFvoaNvlNn4vVo4Q+1v2+GHPFDPGzJhr5pJAG25JTmeGcPvfxfgxJ4VXB6vax4V84FkAfCvWw==
+
+rango-types@^0.1.11:
+  version "0.1.11"
+  resolved "https://registry.yarnpkg.com/rango-types/-/rango-types-0.1.11.tgz#5dd869bf877434ad4485d6d15bbb11806e4e04e9"
+  integrity sha512-r+5vEqefHbgaJKSeZTNBnatMONlCQgH9f4I4/9dlKI8fCzkTlzC0VthxbHv+9twYNcnQ0lBljuM5FPAoOvYGlQ==
 
 raw-body@2.5.1:
   version "2.5.1"

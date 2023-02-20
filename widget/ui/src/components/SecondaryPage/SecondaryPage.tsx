@@ -27,10 +27,10 @@ const Container = styled('div', {
   flexDirection: 'column',
   height: '100%',
   width: '100%',
-  padding: '$12',
+  padding: '$12 0',
 
   '@lg': {
-    padding: '$16',
+    padding: '$16 0',
   },
 });
 
@@ -55,7 +55,6 @@ const ContentContainer = styled('div', {
   overflowY: 'auto',
   overflowX: 'hidden',
   marginTop: '$16',
-  marginBottom: '$16',
 });
 
 export function SecondaryPage(props: PropTypes) {

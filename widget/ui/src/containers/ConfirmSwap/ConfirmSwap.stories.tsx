@@ -9,5 +9,5 @@ export default {
 } as ComponentMeta<typeof ConfirmSwap>;
 
 export const Main = (props: PropTypes) => (
-  <ConfirmSwap {...props} swap={bestRoute} />
+  <ConfirmSwap {...props} bestRoute={bestRoute} />
 );

@@ -8,7 +8,7 @@ import { LiquiditySource } from '../../types/meta';
 import { TextField } from '../TextField';
 import { Radio } from '../Radio';
 
-const SlippageContainer = styled('div', {
+const BaseContainer = styled('div', {
   borderRadius: '$5',
   backgroundColor: '$neutrals200',
   padding: '$16',
@@ -20,13 +20,11 @@ const SlippageChipsContainer = styled('div', {
   marginTop: '$16',
 });
 
-const LiquiditySourceContainer = styled('div', {
+const LiquiditySourceContainer = styled(BaseContainer, {
   display: 'flex',
   justifyContent: 'space-between',
-  borderRadius: '$5',
-  backgroundColor: '$neutrals200',
-  padding: '$16',
   marginTop: '$32',
+  cursor: 'pointer',
 });
 
 const StyledAngleRight = styled(AngleRightIcon, { marginLeft: '8px' });
@@ -35,13 +33,9 @@ const LiquiditySourceNumber = styled('div', {
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
-  cursor: 'pointer',
 });
 
-const ThemesContainer = styled('div', {
-  borderRadius: '$5',
-  backgroundColor: '$neutrals200',
-  padding: '$16',
+const ThemesContainer = styled(BaseContainer, {
   marginTop: '$32',
 });
 
@@ -90,7 +84,7 @@ export function Settings(props: PropTypes) {
 
   const PageContent = (
     <>
-      <SlippageContainer>
+      <BaseContainer>
         <Typography variant="body1">Slippage tolerance per swap</Typography>
         <SlippageChipsContainer>
           {slippages.map((slippage, index) => (
@@ -130,7 +124,7 @@ export function Settings(props: PropTypes) {
             }}
           />
         </SlippageChipsContainer>
-      </SlippageContainer>
+      </BaseContainer>
       <ThemesContainer>
         <Typography variant="body2">Theme</Typography>
         <Radio
@@ -145,7 +139,7 @@ export function Settings(props: PropTypes) {
           style={{ marginTop: '$24' }}
         />
       </ThemesContainer>
-      <LiquiditySourceContainer>
+      <LiquiditySourceContainer onClick={onLiquiditySourcesClick}>
         <Typography variant="body1">Liquidity Sources</Typography>
         <LiquiditySourceNumber onClick={onLiquiditySourcesClick}>
           <Typography variant="body2">{`( ${selectedLiquiditySources.length} / ${liquiditySources.length} )`}</Typography>
