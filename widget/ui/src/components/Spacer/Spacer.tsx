@@ -10,7 +10,7 @@ const SpacerContainer = styled('div', {
       20: {},
       24: {},
     },
-    scale: {
+    direction: {
       vertical: {},
       horizontal: {},
     },
@@ -18,70 +18,70 @@ const SpacerContainer = styled('div', {
   compoundVariants: [
     {
       size: 12,
-      scale: 'horizontal',
+      direction: 'horizontal',
       css: {
         width: '$12',
       },
     },
     {
       size: 12,
-      scale: 'vertical',
+      direction: 'vertical',
       css: {
         height: '$12',
       },
     },
     {
       size: 16,
-      scale: 'horizontal',
+      direction: 'horizontal',
       css: {
         width: '$16',
       },
     },
     {
       size: 16,
-      scale: 'vertical',
+      direction: 'vertical',
       css: {
         height: '$16',
       },
     },
     {
       size: 18,
-      scale: 'horizontal',
+      direction: 'horizontal',
       css: {
         width: '$18',
       },
     },
     {
       size: 18,
-      scale: 'vertical',
+      direction: 'vertical',
       css: {
         height: '$18',
       },
     },
     {
       size: 20,
-      scale: 'horizontal',
+      direction: 'horizontal',
       css: {
         width: '$20',
       },
     },
     {
       size: 20,
-      scale: 'vertical',
+      direction: 'vertical',
       css: {
         height: '$20',
       },
     },
     {
       size: 24,
-      scale: 'horizontal',
+      direction: 'horizontal',
       css: {
         width: '$24',
       },
     },
     {
       size: 24,
-      scale: 'vertical',
+      direction: 'vertical',
       css: {
         height: '$24',
       },
@@ -90,9 +90,9 @@ const SpacerContainer = styled('div', {
 });
 export interface PropTypes {
   size?: 12 | 16 | 18 | 20 | 24;
-  scale?: 'vertical' | 'horizontal';
+  direction?: 'vertical' | 'horizontal';
 }
 
-export function Spacer({ size = 12, scale = 'horizontal' }: PropTypes) {
-  return <SpacerContainer size={size} scale={scale} />;
+export function Spacer({ size = 12, direction = 'horizontal' }: PropTypes) {
+  return <SpacerContainer size={size} direction={direction} />;
 }

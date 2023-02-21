@@ -1,6 +1,8 @@
 import React from 'react';
 import { containsText } from '../../helpers';
+import { styled } from '../../theme';
 import { LiquiditySource } from '../../types/meta';
+import { Button } from '../Button';
 import { LiquiditySourceList } from '../LiquiditySourceList';
 import { SecondaryPage } from '../SecondaryPage/SecondaryPage';
 
@@ -15,18 +17,27 @@ export interface PropTypes {
   list: LiquiditySource[];
   onChange: (liquiditySource: LiquiditySource) => void;
   onBack: () => void;
-  actionButton?: React.ReactNode;
+  toggleAll: () => void;
+  allSelected: boolean;
 }
+const ActionButton = styled(Button, {
+  position: 'absolute',
+  right: 0,
+});
 
 export function LiquiditySourcesSelector(props: PropTypes) {
-  const { list, onChange, onBack, actionButton } = props;
+  const { list, onChange, onBack, toggleAll, allSelected } = props;
 
   return (
     <SecondaryPage
       textField={true}
       textFieldPlaceholder="Search By Name"
       title="Liquidity Sources"
-      TopButton={actionButton}
+      TopButton={
+        <ActionButton variant="ghost" type="primary" onClick={toggleAll}>
+          {allSelected ? 'Select all' : 'Clear all'}
+        </ActionButton>
+      }
       onBack={onBack}
       Content={({ searchedFor }) => (
         <LiquiditySourceList
