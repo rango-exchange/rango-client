@@ -86,7 +86,7 @@ export function LiquiditySourceList(props: PropTypes) {
     <div style={{ height: '450px' }}>
       <div>
         <LiquiditySourceType variant="h5">Bridges</LiquiditySourceType>
-        <Spacer size={16} scale="vertical"/>
+        <Spacer size={16} direction="vertical"/>
         {groupLiquiditySources(list).bridge.map((liquiditySource, index) => (
           <LiquiditySourceItem
             liquiditySource={liquiditySource}
@@ -97,7 +97,7 @@ export function LiquiditySourceList(props: PropTypes) {
       </div>
       <div>
         <LiquiditySourceType variant="h5">Exchanges</LiquiditySourceType>
-        <Spacer size={16} scale="vertical" />
+        <Spacer size={16} direction="vertical" />
 
         {groupLiquiditySources(list).exchange.map((liquiditySource, index) => (
           <LiquiditySourceItem

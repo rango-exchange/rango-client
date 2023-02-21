@@ -4,21 +4,12 @@ import { useNavigate } from 'react-router-dom';
 import { useMetaStore } from '../store/meta';
 import { useSettingsStore } from '../store/settings';
 
-const ActionButton = styled(Button, {
-  position: 'absolute',
-  right: 0,
-});
-
 export function LiquiditySourcePage() {
   const {
     meta: { swappers },
   } = useMetaStore();
-  const {
-    disabledLiquiditySources,
-    toggleLiquiditySource,
-    clearDisabledLiquiditySource,
-    disabledAllLiquiditySource,
-  } = useSettingsStore();
+  const { disabledLiquiditySources, toggleLiquiditySource, toggleAllLiquiditySources } =
+    useSettingsStore();
   const navigate = useNavigate();
 
   const uniqueSwappersGroups: Array<{
@@ -44,24 +35,19 @@ export function LiquiditySourcePage() {
       }
     });
 
-  const resetAllOrSelectAll = () => {
+  const toggleAll = () => {
     if (uniqueSwappersGroups.length - disabledLiquiditySources.length === 0)
-      clearDisabledLiquiditySource();
+      toggleAllLiquiditySources([]);
     else {
       const swappers = uniqueSwappersGroups.map((swapper) => swapper.title);
-      disabledAllLiquiditySource(swappers);
+      toggleAllLiquiditySources(swappers);
     }
   };
 
   return (
     <LiquiditySourcesSelector
-      actionButton={
-        <ActionButton variant="ghost" type="primary" onClick={resetAllOrSelectAll}>
-          {uniqueSwappersGroups.length - disabledLiquiditySources.length === 0
-            ? 'Select all'
-            : 'Clear all'}
-        </ActionButton>
-      }
+      toggleAll={toggleAll}
+      allSelected = {uniqueSwappersGroups.length - disabledLiquiditySources.length === 0}
       list={uniqueSwappersGroups}
       onChange={(liquiditySource) => toggleLiquiditySource(liquiditySource.title)}
       onBack={() => {
