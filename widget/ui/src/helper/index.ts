@@ -1,5 +1,4 @@
 import { BestRouteResponse } from 'rango-sdk';
-import type { TokenWithAmount } from '../components/TokenList/TokenList';
 export const secondsToString = (s: number): string => {
   const minutes = parseInt((s / 60).toString()).toString();
   return `${minutes}`;
@@ -21,16 +20,3 @@ export const decimalNumber = (number = '0', toFixed: number) =>
 
 export const containsText = (text: string, searchText: string) =>
   text.toLowerCase().indexOf(searchText.toLowerCase()) > -1;
-
-export const sortTokensList = (
-  tokenA: TokenWithAmount,
-  tokenB: TokenWithAmount
-): number => {
-  if (Number(tokenA.balance?.usdValue) > Number(tokenB.balance?.usdValue)) {
-    return -1;
-  }
-  if (Number(tokenB.balance?.usdValue) > Number(tokenA.balance?.usdValue)) {
-    return 1;
-  }
-  return 0;
-};

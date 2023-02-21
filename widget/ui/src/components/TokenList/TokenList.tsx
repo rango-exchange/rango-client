@@ -6,7 +6,6 @@ import { Token } from 'rango-sdk';
 import { Button } from '../Button/Button';
 import { Typography } from '../Typography';
 import { VirtualizedList } from '../VirtualizedList/VirtualizedList';
-import { sortTokensList } from '../../helper';
 
 export interface TokenWithAmount extends Token {
   balance?: {
@@ -90,7 +89,7 @@ export function TokenList(props: PropTypes) {
                   {currentToken.balance.amount}
                 </Typography>
                 <Typography variant="caption">
-                  {currentToken.balance.usdValue}
+                  {`${currentToken.balance.usdValue}$`}
                 </Typography>
               </TokenAmountContainer>
             )
@@ -113,22 +112,18 @@ export function TokenList(props: PropTypes) {
     setIsNextPageLoading(true);
     setTimeout(() => {
       setIsNextPageLoading(false);
-      setFilteredTokens(
-        list.slice(0, filteredTokens.length + PAGE_SIZE).sort(sortTokensList)
-      );
+      setFilteredTokens(list.slice(0, filteredTokens.length + PAGE_SIZE));
     }, 0);
   };
 
   useEffect(() => {
     setFilteredTokens(
-      list
-        .filter(
-          (token) =>
-            containsText(token.symbol, searchedText) ||
-            containsText(token.address || '', searchedText) ||
-            containsText(token.name || '', searchedText)
-        )
-        .sort(sortTokensList)
+      list.filter(
+        (token) =>
+          containsText(token.symbol, searchedText) ||
+          containsText(token.address || '', searchedText) ||
+          containsText(token.name || '', searchedText)
+      )
     );
   }, [searchedText]);
 
@@ -137,7 +132,7 @@ export function TokenList(props: PropTypes) {
   }, [filteredTokens.length]);
 
   useEffect(() => {
-    setFilteredTokens(list.slice(0, PAGE_SIZE).sort(sortTokensList));
+    setFilteredTokens(list.slice(0, PAGE_SIZE));
   }, []);
 
   const innerElementType: React.FC<CommonProps> = forwardRef(

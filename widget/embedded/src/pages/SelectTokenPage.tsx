@@ -8,7 +8,7 @@ import { numberToString } from '../utils/numbers';
 import BigNumber from 'bignumber.js';
 import { getBalanceFromWallet } from '../utils/wallets';
 import { useWalletsStore } from '../store/wallets';
-import { ZERO } from '../constants/numbers';
+import { sortedTokens } from '../utils/wallets';
 
 interface PropTypes {
   type: 'from' | 'to';
@@ -65,10 +65,19 @@ export function SelectTokenPage(props: PropTypes) {
     };
   });
 
+  const walletSymbols = new Set(
+    (balance || [])
+      .flatMap((b) => b.accountsWithBalance)
+      .flatMap((a) => a.balances || [])
+      .filter((b) => (new BigNumber(b?.rawAmount) || ZERO).gt(0))
+      .map((b) => `${b?.chain}.${b?.symbol}.${b?.address}`),
+  );
+  const sortedTokenList = sortedTokens(TokensWithBalance, walletSymbols, type, balance);
+
   return (
     <TokenSelector
       type={type === 'from' ? 'Source' : 'Destination'}
-      list={TokensWithBalance}
+      list={sortedTokenList}
       selected={type === 'from' ? fromToken : toToken}
       onChange={(token) => {
         if (type === 'from') setFromToken(token);
