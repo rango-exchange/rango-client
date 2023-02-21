@@ -16,7 +16,7 @@ const Header = styled('div', {
 const WalletImage = styled('img', {
   width: '$24',
   height: '$24',
-  marginLeft: -10,
+  marginLeft: -15,
   marginRight: '$6',
   borderRadius: '99999px',
 });
@@ -45,7 +45,7 @@ export function Layout() {
             <></>
           )}
           <Typography variant="body2">
-            {!accounts?.length ? 'Connect Wallet' : totalBalance}
+            {!accounts?.length ? 'Connect Wallet' : `$${totalBalance || 0}`}
           </Typography>
         </Button>
       </Header>
