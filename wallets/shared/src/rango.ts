@@ -23,7 +23,6 @@ import {
   transferBlockchains,
   solanaBlockchain,
   TransactionType,
-  GenericTransactionType,
 } from 'rango-types';
 import {
   CosmosTransaction,
@@ -344,5 +343,4 @@ export {
   CosmosChainInfo,
   EVMChainInfo,
   TransactionType,
-  GenericTransactionType,
 };
