@@ -3,6 +3,7 @@ import { RequestedAccount } from './types';
 import {
   SignInputOutput,
   SendMsg,
+  Coin,
 } from '@binance-chain/javascript-sdk/lib/types';
 
 export function binance() {
@@ -58,7 +59,16 @@ export function findActiveAccount(
   });
 }
 
-function isMsgSend(msg: any) {
+type InputOutput = { address: string; coins: Coin[] };
+
+type MsgSend = {
+  __type: string;
+  inputs: InputOutput[];
+  outputs: InputOutput[];
+  aminoPrefix: string;
+};
+
+function isMsgSend(msg: MsgSend): msg is MsgSend {
   return msg.__type === 'MsgSend';
 }
 
