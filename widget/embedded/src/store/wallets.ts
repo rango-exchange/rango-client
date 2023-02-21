@@ -112,7 +112,7 @@ export const useWalletsStore = createSelectors(
                 .toFixed(),
               logo: '',
               usdPrice: getUsdPrice(
-                retrivedWallet.asset.blockchain,
+                wallet.blockChain,
                 retrivedWallet.asset.symbol,
                 retrivedWallet.asset.address,
                 tokens,
