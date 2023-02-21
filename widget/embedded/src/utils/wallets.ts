@@ -8,11 +8,13 @@ import {
 } from '@rangodev/wallets-shared';
 
 import { WalletInfo as ModalWalletInfo, WalletState as WalletStatus } from '@rangodev/ui';
-import { BestRouteResponse, BlockchainMeta, WalletDetail } from 'rango-sdk';
+import { BestRouteResponse, BlockchainMeta, Token } from 'rango-sdk';
 import { readAccountAddress } from '@rangodev/wallets-core';
 import { Account, AccountWithBalance, Balance } from '../store/wallets';
 import { SelectableWallet } from '../pages/ConfirmWalletsPage';
-import { ZERO } from './balance';
+import { getBalanceFromWallet, ZERO } from './balance';
+import { numberToString } from './numbers';
+import { TokenWithBalance } from '../pages/SelectTokenPage';
 
 export function getStateWallet(state: WalletState): WalletStatus {
   switch (true) {
@@ -135,9 +137,9 @@ export function getRequiredChains(route: BestRouteResponse | null) {
   return wallets;
 }
 
-export interface SelectedWallet extends Account {}
+type Blockchain = { name: string; accounts: AccountWithBalance[] };
 
-export function getSelectableWallets(
+export const getSelectableWallets = (
   accounts: Account[],
   selectedWallets: SelectedWallet[],
   getWalletInfo: (type: WalletType) => WalletInfo,
@@ -166,22 +168,90 @@ const removeDuplicateWallets = (arr: SelectableWallet[], key: string): Selectabl
 };
 
 export const calculateWalletUsdValue = (balance: Balance[]): string => {
-  const flatBalance = balance.map((b) => {
-    let accounts: AccountWithBalance[] = [];
-    b.accountsWithBalance.forEach((initAcc, index) => {
-      if (accounts.findIndex((acc) => initAcc.address !== acc.address) !== -1 || index === 0) {
-        accounts.push(initAcc);
+  const uniqueAccountAddresses = new Set<string>();
+  const modifiedWalletBlockchains = balance?.map((chain) => {
+    const modifiedWalletBlockchain: Blockchain = { name: chain.blockchain, accounts: [] };
+    chain.accountsWithBalance.forEach((account) => {
+      if (!uniqueAccountAddresses.has(account.address)) {
+        uniqueAccountAddresses.add(account.address);
       }
     });
-    return { blockchain: b.blockchain, accounts };
+    uniqueAccountAddresses.forEach((accountAddress) => {
+      const lastConnectedAccountWithSameAddress = [...chain.accountsWithBalance]
+        .reverse()
+        .find((b) => b.address === accountAddress);
+      if (!!lastConnectedAccountWithSameAddress)
+        modifiedWalletBlockchain.accounts.push(lastConnectedAccountWithSameAddress);
+    });
+    return modifiedWalletBlockchain;
   });
 
-  const total =
-    flatBalance
+  const total = numberToString(
+    modifiedWalletBlockchains
       ?.flatMap((b) => b.accounts)
       ?.flatMap((a) => a?.balances)
       ?.map((b) => new BigNumber(b?.amount || ZERO).multipliedBy(b?.usdPrice || 0))
-      ?.reduce((a, b) => a.plus(b), ZERO) || ZERO;
+      ?.reduce((a, b) => a.plus(b), ZERO) || ZERO,
+  ).toString();
 
-  return total.toNumber().toFixed(1);
+  return numberWithThousandSeperator(total);
+};
+
+function numberWithThousandSeperator(number: string | number): string {
+  var parts = number.toString().split('.');
+  parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  return parts.join('.');
+}
+
+export const sortedTokens = (
+  tokens: TokenWithBalance[],
+  walletSymbols: Set<string>,
+  position: 'from' | 'to',
+  balance: Balance[],
+): TokenWithBalance[] => {
+  if (!tokens) return [];
+  let sortedList = [
+    ...tokens.filter((t) => !t.address && walletSymbols.size && position === 'to'),
+    ...tokens
+      .filter(
+        (t) =>
+          !(position === 'to' && !t.address) &&
+          walletSymbols.has(`${t.blockchain}.${t.symbol}.${t.address}`),
+      )
+      .sort((tokenA, tokenB) => compareBalance(tokenA, tokenB, balance)),
+    ...tokens.filter(
+      (t) =>
+        !walletSymbols.has(`${t.blockchain}.${t.symbol}.${t.address}`) &&
+        !t.address &&
+        (!walletSymbols.size || position === 'from'),
+    ),
+    ...tokens.filter(
+      (t) =>
+        !walletSymbols.has(`${t.blockchain}.${t.symbol}.${t.address}`) &&
+        t.address &&
+        !t.isSecondaryCoin,
+    ),
+    ...tokens.filter(
+      (t) => !walletSymbols.has(`${t.blockchain}.${t.symbol}.${t.address}`) && t.isSecondaryCoin,
+    ),
+  ];
+
+  return sortedList;
+};
+
+const compareBalance = (
+  tokenA: TokenWithBalance,
+  tokenB: TokenWithBalance,
+  wallet: Balance[],
+): number => {
+  if (!tokenA.usdPrice || !tokenB.usdPrice) return 0;
+
+  const tokenAUsdValue = new BigNumber(
+    getBalanceFromWallet(wallet, tokenA.blockchain, tokenA.symbol, tokenA.address)?.amount || ZERO,
+  ).multipliedBy(tokenA.usdPrice);
+  const tokenBUsdValue = new BigNumber(
+    getBalanceFromWallet(wallet, tokenB.blockchain, tokenB.symbol, tokenB.address)?.amount || ZERO,
+  ).multipliedBy(tokenB.usdPrice);
+  if (tokenAUsdValue.gt(tokenBUsdValue)) return -1;
+  return 1;
 };
