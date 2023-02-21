@@ -16,21 +16,26 @@ export type CosmosExperimentalChainsInfo = {
   [k: string]: { id: string; info: CosmosInfo; experimental: boolean };
 };
 
+interface CosmosBlockchainMetaWithChainId
+  extends Omit<CosmosBlockchainMeta, 'chainId'> {
+  chainId: string;
+}
+
 const getCosmosMainChainsIds = (blockchains: CosmosBlockchainMeta[]) =>
   blockchains
     .filter((blockchain) => !blockchain.info?.experimental)
-    .map((blockchain) => blockchain.chainId || '');
-
-const getCosmosMiscChainsIds = (blockchains: CosmosBlockchainMeta[]) =>
-  blockchains
-    .filter((blockchain) => blockchain.info?.experimental)
-    .map((blockchain) => blockchain.chainId);
+    .map((blockchain) => blockchain.chainId)
+    .filter((chainId): chainId is string => !!chainId);
 
 export const getCosmosExperimentalChainInfo = (
   blockchains: CosmosBlockchainMeta[]
 ) =>
   blockchains
     .filter((blockchain) => !!blockchain.info)
+    .filter(
+      (blockchain): blockchain is CosmosBlockchainMetaWithChainId =>
+        !!blockchain.chainId
+    )
     .reduce(
       (
         cosmosExperimentalChainsInfo: CosmosExperimentalChainsInfo,
@@ -51,8 +56,8 @@ export const getCosmosExperimentalChainInfo = (
         const { experimental, ...otherProperties } = info;
         return (
           (cosmosExperimentalChainsInfo[blockchain.name] = {
-            id: blockchain.chainId || '',
-            info: { ...otherProperties, chainId: blockchain.chainId || '' },
+            id: blockchain.chainId,
+            info: { ...otherProperties, chainId: blockchain.chainId },
             experimental: experimental,
           }),
           cosmosExperimentalChainsInfo
