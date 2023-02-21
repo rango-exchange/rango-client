@@ -8,11 +8,11 @@ import {
 } from './rango';
 import { Keplr as InstanceType } from '@keplr-wallet/types';
 
-interface CosmosInfo extends Omit<CosmosChainInfo, 'experimental'> {
+export interface CosmosInfo extends Omit<CosmosChainInfo, 'experimental'> {
   chainId: string;
 }
 
-type CosmosExperimentalChainsInfo = {
+export type CosmosExperimentalChainsInfo = {
   [k: string]: { id: string; info: CosmosInfo; experimental: boolean };
 };
 
@@ -26,7 +26,9 @@ const getCosmosMiscChainsIds = (blockchains: CosmosBlockchainMeta[]) =>
     .filter((blockchain) => blockchain.info?.experimental)
     .map((blockchain) => blockchain.chainId);
 
-const getCosmosExperimentalChainInfo = (blockchains: CosmosBlockchainMeta[]) =>
+export const getCosmosExperimentalChainInfo = (
+  blockchains: CosmosBlockchainMeta[]
+) =>
   blockchains
     .filter((blockchain) => !!blockchain.info)
     .reduce(

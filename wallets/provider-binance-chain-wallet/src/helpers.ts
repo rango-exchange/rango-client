@@ -71,7 +71,7 @@ export function cosmosMessageToBCSendMsg(msg: any): SendMsg {
     if (msgCopy.outputs.length !== 1)
       throw Error('Multi output coins for binance chain not supported');
     if (msgCopy.inputs[0].coins.length !== 1)
-      throw Error('Multi input coins for binaisMsgSendnce chain not supported');
+      throw Error('Multi input coins for binance chain not supported');
     if (msgCopy.outputs[0].coins.length !== 1)
       throw Error('Multi output coins for binance chain not supported');
 

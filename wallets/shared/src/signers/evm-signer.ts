@@ -52,6 +52,10 @@ export async function executeEvmTransaction(
         ...tx,
         gasPrice: '0x' + parseInt(evmTransaction.gasPrice).toString(16),
       };
+    if (!!evmTransaction.maxFeePerGas)
+      tx = { ...tx, maxFeePerGas: evmTransaction.maxFeePerGas };
+    if (!!evmTransaction.maxPriorityFeePerGas)
+      tx = { ...tx, maxPriorityFeePerGas: evmTransaction.maxPriorityFeePerGas };
     const tr = await signer.sendTransaction(tx);
     return tr.hash;
     // @ts-ignore
