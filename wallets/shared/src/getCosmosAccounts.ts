@@ -27,6 +27,12 @@ const getCosmosMainChainsIds = (blockchains: CosmosBlockchainMeta[]) =>
     .map((blockchain) => blockchain.chainId)
     .filter((chainId): chainId is string => !!chainId);
 
+const getCosmosMiscChainsIds = (blockchains: CosmosBlockchainMeta[]) =>
+  blockchains
+    .filter((blockchain) => blockchain.info?.experimental)
+    .map((blockchain) => blockchain.chainId)
+    .filter((chainId): chainId is string => !!chainId);
+
 export const getCosmosExperimentalChainInfo = (
   blockchains: CosmosBlockchainMeta[]
 ) =>
