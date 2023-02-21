@@ -35,7 +35,7 @@ export function LiquiditySourcesSelector(props: PropTypes) {
       title="Liquidity Sources"
       TopButton={
         <ActionButton variant="ghost" type="primary" onClick={toggleAll}>
-          {allSelected ? 'Select all' : 'Clear all'}
+          {allSelected ? 'Clear all' : 'Select all'}
         </ActionButton>
       }
       onBack={onBack}
