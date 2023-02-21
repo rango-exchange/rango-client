@@ -3,7 +3,6 @@ import { RequestedAccount } from './types';
 import {
   SignInputOutput,
   SendMsg,
-  Coin,
 } from '@binance-chain/javascript-sdk/lib/types';
 
 export function binance() {
