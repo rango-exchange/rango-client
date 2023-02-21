@@ -12,7 +12,7 @@ import { readAccountAddress } from '@rangodev/wallets-core';
 import { Account } from '../store/wallets';
 import { SelectableWallet } from '../pages/ConfirmWalletsPage';
 
-export const getStateWallet = (state: WalletState): WalletStatus => {
+export function getStateWallet(state: WalletState): WalletStatus {
   switch (true) {
     case state.connected:
       return WalletStatus.CONNECTED;
@@ -23,7 +23,7 @@ export const getStateWallet = (state: WalletState): WalletStatus => {
     default:
       return WalletStatus.DISCONNECTED;
   }
-};
+}
 
 export function getlistWallet(
   getState: (type: WalletType) => WalletState,
@@ -120,7 +120,7 @@ export function prepareAccountsForWalletStore(
   return result;
 }
 
-export const getRequiredChains = (route: BestRouteResponse | null) => {
+export function getRequiredChains(route: BestRouteResponse | null) {
   const wallets: string[] = [];
 
   route?.result?.swaps.forEach((swap) => {
@@ -132,16 +132,16 @@ export const getRequiredChains = (route: BestRouteResponse | null) => {
     if (currentStepToBlockchain != lastAddedWallet) wallets.push(currentStepToBlockchain);
   });
   return wallets;
-};
+}
 
 export interface SelectedWallet extends Account {}
 
-export const getSelectableWallets = (
+export function getSelectableWallets(
   accounts: Account[],
   requiredChains: string[],
   selectedWallets: SelectedWallet[],
   getWalletInfo: (type: WalletType) => WalletInfo,
-) => {
+) {
   const connectedWallets: SelectableWallet[] = accounts.map((account) => ({
     address: account.address,
     walletType: account.walletType,
@@ -151,4 +151,41 @@ export const getSelectableWallets = (
   }));
 
   return connectedWallets.filter((wallet) => requiredChains.includes(wallet.chain));
-};
+}
+
+import { Balance, TokenBalance } from '../store/wallets';
+
+export function getBalanceFromWallet(
+  balances: Balance[],
+  chain: string,
+  symbol: string,
+  address: string | null,
+): TokenBalance | null {
+  if (balances.length === 0) return null;
+
+  const selectedChainBalances = balances.filter((balance) => balance.chain === chain);
+  if (selectedChainBalances.length === 0) return null;
+
+  return (
+    selectedChainBalances
+      .map(
+        (a) =>
+          a.balances?.find(
+            (bl) =>
+              (address !== null && bl.address === address) ||
+              (address === null && bl.address === address && bl.symbol === symbol),
+          ) || null,
+      )
+      .filter((b) => b !== null)
+      .sort((a, b) => parseFloat(b?.amount || '0') - parseFloat(a?.amount || '1'))
+      .find(() => true) || null
+  );
+}
+
+export function isAccountAndBalanceMatch(account: Account, balance: Balance) {
+  return (
+    account.address === balance.address &&
+    account.chain === balance.chain &&
+    account.walletType === balance.walletType
+  );
+}

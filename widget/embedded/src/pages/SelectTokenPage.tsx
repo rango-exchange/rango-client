@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { Token } from 'rango-sdk';
 import { numberToString } from '../utils/numbers';
 import BigNumber from 'bignumber.js';
-import { getBalanceFromWallet } from '../utils/balance';
+import { getBalanceFromWallet } from '../utils/wallets';
 import { useWalletsStore } from '../store/wallets';
 import { ZERO } from '../constants/numbers';
 

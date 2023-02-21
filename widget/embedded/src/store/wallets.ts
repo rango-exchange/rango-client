@@ -3,7 +3,7 @@ import BigNumber from 'bignumber.js';
 import { create } from 'zustand';
 import { SelectableWallet } from '../pages/ConfirmWalletsPage';
 import { httpService } from '../services/httpService';
-import { getRequiredChains, SelectedWallet } from '../utils/wallets';
+import { getRequiredChains, isAccountAndBalanceMatch, SelectedWallet } from '../utils/wallets';
 import { useBestRouteStore } from './bestRoute';
 
 export interface Account {
@@ -72,11 +72,7 @@ export const useWalletsStore = create<WalletsStore>()((set, get) => ({
         if (retrivedBalance) {
           set((state) => ({
             balances: state.balances.map((balance) => {
-              if (
-                balance.address === account.address &&
-                balance.chain === account.chain &&
-                balance.walletType === account.walletType
-              ) {
+              if (isAccountAndBalanceMatch(account, balance)) {
                 return {
                   address: retrivedBalance.address,
                   chain: retrivedBalance.blockChain,
@@ -104,15 +100,11 @@ export const useWalletsStore = create<WalletsStore>()((set, get) => ({
               }
             }),
           }));
-        }
+        } else throw new Error('Wallet not found');
       } catch (error) {
         set((state) => ({
           balances: state.balances.map((balance) => {
-            if (
-              balance.address === account.address &&
-              balance.chain === account.chain &&
-              balance.walletType === account.walletType
-            ) {
+            if (isAccountAndBalanceMatch(account, balance)) {
               return { ...balance, loading: false, error: true };
             } else return balance;
           }),

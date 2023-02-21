@@ -3,8 +3,7 @@ import { Token } from 'rango-sdk/lib';
 import { create } from 'zustand';
 import { immer } from 'zustand/middleware/immer';
 import BigNumber from 'bignumber.js';
-import { WalletBalance } from './wallets';
-import { ZERO } from '../utils/balance';
+import { ZERO } from '../constants/numbers';
 import { getBestRouteToTokenUsdPrice } from '../utils/routing';
 
 const getUsdValue = (token: Token | null, amount: string) =>
@@ -19,7 +18,6 @@ interface RouteState {
   outputUsdValue: BigNumber;
   fromToken: Token | null;
   toToken: Token | null;
-  availableBalance: WalletBalance | null;
   setFromChain: (chain: BlockchainMeta | null) => void;
   setToChain: (chian: BlockchainMeta | null) => void;
   setFromToken: (token: Token | null) => void;
@@ -39,7 +37,6 @@ export const useBestRouteStore = create<RouteState>()(
     outputUsdValue: new BigNumber(0),
     toChain: null,
     toToken: null,
-    availableBalance: null,
     bestRoute: null,
     setBestRoute: (bestRoute) =>
       set((state) => {
