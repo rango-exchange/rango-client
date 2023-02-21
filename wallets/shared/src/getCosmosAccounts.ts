@@ -4,34 +4,50 @@ import {
   Connect,
   CosmosBlockchainMeta,
   CosmosChainInfo,
-  CosmosInfo,
   ProviderConnectResult,
 } from './rango';
 import { Keplr as InstanceType } from '@keplr-wallet/types';
 
-type CosmosExperimentalChainsInfo = {
-  [k: string]: { id: string; info: CosmosChainInfo; experimental: boolean };
+export interface CosmosInfo extends Omit<CosmosChainInfo, 'experimental'> {
+  chainId: string;
+}
+
+export type CosmosExperimentalChainsInfo = {
+  [k: string]: { id: string; info: CosmosInfo; experimental: boolean };
 };
+
+interface CosmosBlockchainMetaWithChainId
+  extends Omit<CosmosBlockchainMeta, 'chainId'> {
+  chainId: string;
+}
 
 const getCosmosMainChainsIds = (blockchains: CosmosBlockchainMeta[]) =>
   blockchains
     .filter((blockchain) => !blockchain.info?.experimental)
-    .map((blockchain) => blockchain.chainId);
+    .map((blockchain) => blockchain.chainId)
+    .filter((chainId): chainId is string => !!chainId);
 
 const getCosmosMiscChainsIds = (blockchains: CosmosBlockchainMeta[]) =>
   blockchains
     .filter((blockchain) => blockchain.info?.experimental)
-    .map((blockchain) => blockchain.chainId);
+    .map((blockchain) => blockchain.chainId)
+    .filter((chainId): chainId is string => !!chainId);
 
-const getCosmosExperimentalChainInfo = (blockchains: CosmosBlockchainMeta[]) =>
+export const getCosmosExperimentalChainInfo = (
+  blockchains: CosmosBlockchainMeta[]
+) =>
   blockchains
     .filter((blockchain) => !!blockchain.info)
+    .filter(
+      (blockchain): blockchain is CosmosBlockchainMetaWithChainId =>
+        !!blockchain.chainId
+    )
     .reduce(
       (
         cosmosExperimentalChainsInfo: CosmosExperimentalChainsInfo,
         blockchain
       ) => {
-        const info = deepCopy(blockchain.info) as CosmosInfo;
+        const info = deepCopy(blockchain.info) as CosmosChainInfo;
         info.stakeCurrency.coinImageUrl =
           window.location.origin + info.stakeCurrency.coinImageUrl;
         info.currencies = info.currencies.map((currency) => ({

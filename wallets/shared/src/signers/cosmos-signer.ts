@@ -6,15 +6,14 @@ import { cosmos } from '@keplr-wallet/cosmos';
 import { MsgExecuteContract } from 'cosmjs-types/cosmwasm/wasm/v1/tx';
 import { KeplrSignOptions } from '@keplr-wallet/types';
 import {
-  CosmosTransaction,
   getBlockchainChainIdByName,
-  DirectCosmosIBCTransferMessage,
   Network,
   Meta,
   uint8ArrayToHex,
 } from '../rango';
 import { getNetworkInstance } from '../providers';
 import { WalletError, WalletErrorCode } from '../errors';
+import { CosmosTransaction } from 'rango-types/lib';
 
 // todo: unhardcode this. sifchain has some gas price apis. but gaslimits might be hardcoded still
 // hardcoded based on
@@ -215,7 +214,7 @@ export const executeCosmosTransaction = async (
 function manipulateMsg(m: any): any {
   if (!m.__type) return m;
   if (m.__type === 'DirectCosmosIBCTransferMessage') {
-    const result = { ...m } as DirectCosmosIBCTransferMessage;
+    const result = { ...m };
     if (result.value.timeoutTimestamp)
       result.value.timeoutTimestamp = Long.fromString(
         result.value.timeoutTimestamp
@@ -247,7 +246,7 @@ function manipulateMsgForDirectIBC(m: any): any {
     delete m['value']['source_channel'];
     delete m['value']['timeout_timestamp'];
     delete m['value']['timeout_height'];
-    const result = { ...m } as DirectCosmosIBCTransferMessage;
+    const result = { ...m };
     result.typeUrl = x;
     result.value.timeoutTimestamp = timeoutTimestamp;
     result.value.sourceChannel = sourceChannel;
