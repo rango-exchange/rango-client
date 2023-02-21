@@ -137,7 +137,7 @@ async function tryRequestMiscAccounts({
     const { chainId } = offlineSigners[index];
     const addresses = accounts.map((account) => account.address);
 
-    resolvedAccounts.push({ accounts: addresses, chainId: chainId });
+    resolvedAccounts.push({ accounts: addresses, chainId });
   });
 
   return resolvedAccounts;
