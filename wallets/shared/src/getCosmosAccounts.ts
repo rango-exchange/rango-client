@@ -154,7 +154,7 @@ export const getCosmosAccounts: Connect = async ({
   if (!!chainInfo) {
     desiredChainIds.push(chainInfo!.id);
   }
-  desiredChainIds = Array.from(new Set(desiredChainIds));
+  desiredChainIds = Array.from(new Set(desiredChainIds)).filter(Boolean);
 
   await instance.enable(desiredChainIds);
 
