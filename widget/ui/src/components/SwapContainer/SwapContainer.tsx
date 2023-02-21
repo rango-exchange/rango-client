@@ -5,9 +5,9 @@ import { styled } from '../../theme';
 const MainContainer = styled('div', {
   borderRadius: '$10',
   maxWidth: '512px',
+  boxShadow: '$s',
   minWidth: '375px',
   width: '100%',
-  boxShadow: '$s',
   backgroundColor: '$background',
   display: 'flex',
   flexDirection: 'column',

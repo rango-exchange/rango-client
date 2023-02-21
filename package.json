@@ -8,6 +8,7 @@
     "wallets/*"
   ],
   "scripts": {
+    "prepare": "husky install",
     "build:wallets": "lerna run --scope @rangodev/wallets-* --scope @rangodev/provider-* --ignore @rangodev/wallets-demo build",
     "build:queue-manager": "lerna run --scope @rangodev/queue-manager-* --ignore @rangodev/queue-manager-demo build",
     "build:widget": "lerna run --scope @rangodev/widget-* build",
@@ -25,7 +26,7 @@
   },
   "dependencies": {
     "@size-limit/preset-small-lib": "^8.1.0",
-    "husky": "^8.0.2",
+    "husky": "^8.0.3",
     "size-limit": "^8.1.0",
     "tsdx": "^0.14.1",
     "tslib": "^2.4.1",
