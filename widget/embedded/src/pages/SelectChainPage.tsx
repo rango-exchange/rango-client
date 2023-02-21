@@ -27,7 +27,7 @@ export function SelectChainPage(props: PropTypes) {
   useEffect(() => {
     let chainSortedByConnectedWallets: BlockchainMeta[] = [];
     if (accounts.length !== 0) {
-      const connectedChains = accounts.map((account) => account.blockchain);
+      const connectedChains = Array.from(new Set(accounts.map((account) => account.chain)));
       chainSortedByConnectedWallets = blockchains.sort(
         (blockchainA, blockchainB) =>
           connectedChains.lastIndexOf(blockchainA.name) -
@@ -37,7 +37,7 @@ export function SelectChainPage(props: PropTypes) {
       chainSortedByConnectedWallets = blockchains;
     }
     setList(chainSortedByConnectedWallets);
-  }, [blockchains, accounts]);
+  }, [blockchains.length, accounts.length]);
 
   return (
     <BlockchainSelector

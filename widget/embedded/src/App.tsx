@@ -9,7 +9,6 @@ import { EventHandler } from '@rangodev/wallets-core/dist/wallet';
 import { isEvmBlockchain, Network } from '@rangodev/wallets-shared';
 import { prepareAccountsForWalletStore, walletAndSupportedChainsNames } from './utils/wallets';
 import { useWalletsStore } from './store/wallets';
-import { httpService } from './services/httpService';
 import { Layout } from './components/Layout';
 import { globalStyles } from './globalStyles';
 import { useTheme } from './hooks/useTheme';
@@ -38,8 +37,7 @@ export function App() {
   globalStyles();
   const { activeTheme } = useTheme();
   const { blockchains } = useMetaStore((state) => state.meta);
-  const { insertAccount, disconnectWallet } = useWalletsStore();
-  const { insertBalance } = useWalletsStore();
+  const { connectWallet, disconnectWallet, accounts, balances } = useWalletsStore();
   //TDOD : remove any after resloving type conflicts
   const evmBasedChainNames = useMetaStore((state) => state.meta.blockchains as any)
     .filter(isEvmBlockchain)
@@ -58,18 +56,7 @@ export function App() {
           evmBasedChainNames,
           supportedChainNames,
         );
-        insertAccount(data);
-        httpService
-          .getWalletsDetails(
-            data.map((acc) => ({
-              address: acc.accountsWithBalance[0].address,
-              blockchain: acc.blockchain,
-            })),
-          )
-          .then((res) => {
-            insertBalance(res.wallets, data[0].accountsWithBalance[0].walletType);
-          })
-          .catch();
+        connectWallet(data);
       } else {
         disconnectWallet(type);
       }

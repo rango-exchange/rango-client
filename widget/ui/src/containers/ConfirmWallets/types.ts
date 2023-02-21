@@ -1,7 +1,7 @@
 import { WalletType } from '@rangodev/wallets-shared';
 
 export interface SelectableWallet {
-  blockchain: string;
+  chain: string;
   walletType: WalletType;
   address: string;
   image: string;

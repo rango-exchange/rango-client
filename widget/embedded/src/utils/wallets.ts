@@ -9,7 +9,7 @@ import {
 import { WalletInfo as ModalWalletInfo, WalletState as WalletStatus } from '@rangodev/ui';
 import { BestRouteResponse, BlockchainMeta } from 'rango-sdk';
 import { readAccountAddress } from '@rangodev/wallets-core';
-import { Account, Balance } from '../store/wallets';
+import { Account } from '../store/wallets';
 import { SelectableWallet } from '../pages/ConfirmWalletsPage';
 
 export const getStateWallet = (state: WalletState): WalletStatus => {
@@ -63,29 +63,17 @@ export function prepareAccountsForWalletStore(
   connectedNetwork: Network | null,
   evmBasedChains: string[],
   supportedChainNames: Network[] | null,
-): Balance[] {
-  const result = {} as { [type in Network]: Balance };
+): Account[] {
+  const result: Account[] = [];
 
   function addAccount(network: Network, address: string) {
-    const isConnected = network === connectedNetwork;
-    const newAccount = {
+    const newAccount: Account = {
       address,
-      balances: null,
-      loading: true,
+      chain: network,
       walletType: wallet,
-      isConnected,
-      error: false,
-      explorerUrl: null,
     };
 
-    if (!!result[network]) {
-      result[network].accountsWithBalance.push(newAccount);
-    } else {
-      result[network] = {
-        blockchain: network,
-        accountsWithBalance: [newAccount],
-      };
-    }
+    result.push(newAccount);
   }
 
   const supportedChains = supportedChainNames || [];
@@ -129,7 +117,7 @@ export function prepareAccountsForWalletStore(
     }
   });
 
-  return Object.values(result);
+  return result;
 }
 
 export const getRequiredChains = (route: BestRouteResponse | null) => {
@@ -146,11 +134,7 @@ export const getRequiredChains = (route: BestRouteResponse | null) => {
   return wallets;
 };
 
-export interface SelectedWallet {
-  address: string;
-  walletType: WalletType;
-  blockchain: string;
-}
+export interface SelectedWallet extends Account {}
 
 export const getSelectableWallets = (
   accounts: Account[],
@@ -158,18 +142,13 @@ export const getSelectableWallets = (
   selectedWallets: SelectedWallet[],
   getWalletInfo: (type: WalletType) => WalletInfo,
 ) => {
-  const connectedWallets: SelectableWallet[] = [];
-  accounts.forEach((account) => {
-    account.accounts.forEach((acc) => {
-      connectedWallets.push({
-        address: acc.address,
-        walletType: acc.walletType as WalletType,
-        blockchain: account.blockchain,
-        image: getWalletInfo(acc.walletType as WalletType).img,
-        selected: !!selectedWallets.find((wallet) => wallet.blockchain === account.blockchain),
-      });
-    });
-  });
+  const connectedWallets: SelectableWallet[] = accounts.map((account) => ({
+    address: account.address,
+    walletType: account.walletType,
+    chain: account.chain,
+    image: getWalletInfo(account.walletType).img,
+    selected: !!selectedWallets.find((wallet) => wallet.chain === account.chain),
+  }));
 
-  return connectedWallets.filter((wallet) => requiredChains.includes(wallet.blockchain));
+  return connectedWallets.filter((wallet) => requiredChains.includes(wallet.chain));
 };

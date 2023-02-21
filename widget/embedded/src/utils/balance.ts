@@ -1,21 +1,18 @@
-import BigNumber from 'bignumber.js';
-import { AccountWithBalance, Balance, WalletBalance } from '../store/wallets';
-
-export const ZERO = new BigNumber(0);
+import { Balance, TokenBalance } from '../store/wallets';
 
 export const getBalanceFromWallet = (
-  balance: Balance[],
-  blockchain: string,
+  balances: Balance[],
+  chain: string,
   symbol: string,
   address: string | null,
-): WalletBalance | null => {
-  if (!balance) return null;
+): TokenBalance | null => {
+  if (balances.length === 0) return null;
 
-  const bc = balance.find((b) => b.blockchain === blockchain);
-  if (!bc || bc.accountsWithBalance.length === 0) return null;
+  const selectedChainBalances = balances.filter((balance) => balance.chain === chain);
+  if (selectedChainBalances.length === 0) return null;
 
   return (
-    bc.accountsWithBalance
+    selectedChainBalances
       .map(
         (a) =>
           a.balances?.find(
