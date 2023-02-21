@@ -77,7 +77,7 @@
     "@radix-ui/react-tooltip": "^1.0.2",
     "@rangodev/wallets-shared": "^0.1.11-next.50",
     "@stitches/react": "^1.2.8",
-    "rango-sdk": "^0.1.8",
+    "rango-sdk": "^0.1.11",
     "react-virtualized-auto-sizer": "^1.0.7",
     "react-window": "^1.8.8",
     "react-window-infinite-loader": "^1.0.8"

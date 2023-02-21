@@ -40,17 +40,15 @@ export function App() {
   const { blockchains } = useMetaStore((state) => state.meta);
   const { insertAccount, disconnectWallet } = useWalletsStore();
   const { insertBalance } = useWalletsStore();
-  //TDOD : remove any after resloving type conflicts
-  const evmBasedChainNames = useMetaStore((state) => state.meta.blockchains as any)
+  const evmBasedChainNames = useMetaStore((state) => state.meta.blockchains)
     .filter(isEvmBlockchain)
     .map((chain) => chain.name);
 
   const onUpdateState: EventHandler = (type, event, value, state, supportedChains) => {
     if (event === Events.ACCOUNTS) {
       if (value) {
-        const supportedChainNames: Network[] | null = walletAndSupportedChainsNames(
-          supportedChains as any,
-        );
+        const supportedChainNames: Network[] | null =
+          walletAndSupportedChainsNames(supportedChains);
         const data = prepareAccountsForWalletStore(
           type,
           value,
@@ -77,11 +75,7 @@ export function App() {
   };
 
   return (
-    <Provider
-      //TDOD : remove any after resloving type conflicts
-      allBlockChains={blockchains as any}
-      providers={providers}
-      onUpdateState={onUpdateState}>
+    <Provider allBlockChains={blockchains} providers={providers} onUpdateState={onUpdateState}>
       <div id="pageContainer" className={activeTheme}>
         <SwapContainer>
           <AppRouter>
