@@ -37,7 +37,7 @@ export function App() {
   globalStyles();
   const { activeTheme } = useTheme();
   const { blockchains } = useMetaStore((state) => state.meta);
-  const { connectWallet, disconnectWallet, accounts, balances } = useWalletsStore();
+  const { connectWallet, disconnectWallet } = useWalletsStore();
   //TDOD : remove any after resloving type conflicts
   const evmBasedChainNames = useMetaStore((state) => state.meta.blockchains as any)
     .filter(isEvmBlockchain)
