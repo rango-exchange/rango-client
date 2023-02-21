@@ -255,3 +255,18 @@ const compareBalance = (
   if (tokenAUsdValue.gt(tokenBUsdValue)) return -1;
   return 1;
 };
+
+export const getUsdPrice = (
+  blockchain: string,
+  symbol: string,
+  address: string | null,
+  allTokens: Token[],
+): number | null => {
+  const token = allTokens?.find(
+    (t) =>
+      t.blockchain === blockchain &&
+      t.symbol?.toUpperCase() === symbol?.toUpperCase() &&
+      t.address === address,
+  );
+  return token?.usdPrice || null;
+};

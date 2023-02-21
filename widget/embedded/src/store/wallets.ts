@@ -3,14 +3,7 @@ import BigNumber from 'bignumber.js';
 import { Token, WalletDetail } from 'rango-sdk';
 import { create } from 'zustand';
 import { SelectableWallet } from '../pages/ConfirmWalletsPage';
-import { httpService } from '../services/httpService';
-import {
-  getRequiredChains,
-  isAccountAndBalanceMatched,
-  makeBalanceFor,
-  resetBalanceState,
-  SelectedWallet,
-} from '../utils/wallets';
+import { getRequiredChains, SelectedWallet, getUsdPrice } from '../utils/wallets';
 import { useBestRouteStore } from './bestRoute';
 import createSelectors from './selectors';
 
@@ -47,7 +40,7 @@ interface WalletsStore {
   balances: Balance[];
   selectedWallets: SelectedWallet[];
   insertAccount: (balance: Balance[]) => void;
-  insertBalance: (wallets: WalletDetail[], walletType: WalletType, tokens?: Token[]) => void;
+  insertBalance: (wallets: WalletDetail[], walletType: WalletType, tokens: Token[]) => void;
   disconnectWallet: (walletType: WalletType) => void;
   initSelectedWallets: () => void;
   setSelectedWallet: (wallet: SelectableWallet) => void;
@@ -118,9 +111,12 @@ export const useWalletsStore = createSelectors(
                 .shiftedBy(-retrivedWallet.amount.decimals)
                 .toFixed(),
               logo: '',
-              usdPrice:
-                tokens?.find((token) => token.symbol === retrivedWallet.asset.symbol)?.usdPrice ||
-                null,
+              usdPrice: getUsdPrice(
+                retrivedWallet.asset.blockchain,
+                retrivedWallet.asset.symbol,
+                retrivedWallet.asset.address,
+                tokens,
+              ),
             })) || [];
           retrivedWallet.walletType = walletType;
         });
