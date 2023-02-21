@@ -1,4 +1,4 @@
-import { Button, LiquiditySourcesSelector, styled } from '@rangodev/ui';
+import { LiquiditySourcesSelector } from '@rangodev/ui';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useMetaStore } from '../store/meta';
@@ -47,7 +47,7 @@ export function LiquiditySourcePage() {
   return (
     <LiquiditySourcesSelector
       toggleAll={toggleAll}
-      allSelected = {uniqueSwappersGroups.length - disabledLiquiditySources.length === 0}
+      allSelected={uniqueSwappersGroups.length - disabledLiquiditySources.length !== 0}
       list={uniqueSwappersGroups}
       onChange={(liquiditySource) => toggleLiquiditySource(liquiditySource.title)}
       onBack={() => {
