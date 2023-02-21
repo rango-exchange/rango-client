@@ -118,7 +118,7 @@ async function tryRequestMiscAccounts({
   const offlineSigners = getCosmosMiscChainsIds(meta as CosmosBlockchainMeta[])
     .filter((id) => id !== excludedChain)
     .map((chainId) => {
-      const signer = instance.getOfflineSigner(chainId || '');
+      const signer = instance.getOfflineSigner(chainId);
       return {
         signer,
         chainId,
@@ -137,7 +137,7 @@ async function tryRequestMiscAccounts({
     const { chainId } = offlineSigners[index];
     const addresses = accounts.map((account) => account.address);
 
-    resolvedAccounts.push({ accounts: addresses, chainId: chainId || '' });
+    resolvedAccounts.push({ accounts: addresses, chainId: chainId });
   });
 
   return resolvedAccounts;
