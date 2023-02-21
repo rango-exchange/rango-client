@@ -59,6 +59,11 @@ export function findActiveAccount(
   });
 }
 
+type Coin = {
+  denom: string;
+  amount: string;
+};
+
 type InputOutput = { address: string; coins: Coin[] };
 
 type MsgSend = {
@@ -68,11 +73,11 @@ type MsgSend = {
   aminoPrefix: string;
 };
 
-function isMsgSend(msg: MsgSend): msg is MsgSend {
+function isMsgSend(msg: { __type: string }): msg is MsgSend {
   return msg.__type === 'MsgSend';
 }
 
-export function cosmosMessageToBCSendMsg(msg: any): SendMsg {
+export function cosmosMessageToBCSendMsg(msg: { __type: string }): SendMsg {
   if (isMsgSend(msg)) {
     const msgCopy = msg;
 
