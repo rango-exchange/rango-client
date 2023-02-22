@@ -7,12 +7,14 @@ import {
 } from '@rangodev/wallets-shared';
 
 import { WalletInfo as ModalWalletInfo, WalletState as WalletStatus } from '@rangodev/ui';
-import { BestRouteResponse, BlockchainMeta } from 'rango-sdk';
+import { BestRouteResponse, BlockchainMeta, WalletDetail } from 'rango-sdk';
 import { readAccountAddress } from '@rangodev/wallets-core';
-import { Account, Balance } from '../store/wallets';
+import { Account } from '../store/wallets';
 import { SelectableWallet } from '../pages/ConfirmWalletsPage';
+import { Balance, TokenBalance } from '../store/wallets';
+import BigNumber from 'bignumber.js';
 
-export const getStateWallet = (state: WalletState): WalletStatus => {
+export function getStateWallet(state: WalletState): WalletStatus {
   switch (true) {
     case state.connected:
       return WalletStatus.CONNECTED;
@@ -23,7 +25,7 @@ export const getStateWallet = (state: WalletState): WalletStatus => {
     default:
       return WalletStatus.DISCONNECTED;
   }
-};
+}
 
 export function getlistWallet(
   getState: (type: WalletType) => WalletState,
@@ -60,32 +62,19 @@ export function walletAndSupportedChainsNames(supportedChains: BlockchainMeta[])
 export function prepareAccountsForWalletStore(
   wallet: WalletType,
   accounts: string[],
-  connectedNetwork: Network | null,
   evmBasedChains: string[],
   supportedChainNames: Network[] | null,
-): Balance[] {
-  const result = {} as { [type in Network]: Balance };
+): Account[] {
+  const result: Account[] = [];
 
   function addAccount(network: Network, address: string) {
-    const isConnected = network === connectedNetwork;
-    const newAccount = {
+    const newAccount: Account = {
       address,
-      balances: null,
-      loading: true,
+      chain: network,
       walletType: wallet,
-      isConnected,
-      error: false,
-      explorerUrl: null,
     };
 
-    if (!!result[network]) {
-      result[network].accountsWithBalance.push(newAccount);
-    } else {
-      result[network] = {
-        blockchain: network,
-        accountsWithBalance: [newAccount],
-      };
-    }
+    result.push(newAccount);
   }
 
   const supportedChains = supportedChainNames || [];
@@ -129,10 +118,10 @@ export function prepareAccountsForWalletStore(
     }
   });
 
-  return Object.values(result);
+  return result;
 }
 
-export const getRequiredChains = (route: BestRouteResponse | null) => {
+export function getRequiredChains(route: BestRouteResponse | null) {
   const wallets: string[] = [];
 
   route?.result?.swaps.forEach((swap) => {
@@ -144,32 +133,88 @@ export const getRequiredChains = (route: BestRouteResponse | null) => {
     if (currentStepToBlockchain != lastAddedWallet) wallets.push(currentStepToBlockchain);
   });
   return wallets;
-};
-
-export interface SelectedWallet {
-  address: string;
-  walletType: WalletType;
-  blockchain: string;
 }
 
-export const getSelectableWallets = (
+export interface SelectedWallet extends Account {}
+
+export function getSelectableWallets(
   accounts: Account[],
   requiredChains: string[],
   selectedWallets: SelectedWallet[],
   getWalletInfo: (type: WalletType) => WalletInfo,
-) => {
-  const connectedWallets: SelectableWallet[] = [];
-  accounts.forEach((account) => {
-    account.accounts.forEach((acc) => {
-      connectedWallets.push({
-        address: acc.address,
-        walletType: acc.walletType as WalletType,
-        blockchain: account.blockchain,
-        image: getWalletInfo(acc.walletType as WalletType).img,
-        selected: !!selectedWallets.find((wallet) => wallet.blockchain === account.blockchain),
-      });
-    });
-  });
+) {
+  const connectedWallets: SelectableWallet[] = accounts.map((account) => ({
+    address: account.address,
+    walletType: account.walletType,
+    chain: account.chain,
+    image: getWalletInfo(account.walletType).img,
+    selected: !!selectedWallets.find((wallet) => wallet.chain === account.chain),
+  }));
 
-  return connectedWallets.filter((wallet) => requiredChains.includes(wallet.blockchain));
-};
+  return connectedWallets.filter((wallet) => requiredChains.includes(wallet.chain));
+}
+
+export function getBalanceFromWallet(
+  balances: Balance[],
+  chain: string,
+  symbol: string,
+  address: string | null,
+): TokenBalance | null {
+  if (balances.length === 0) return null;
+
+  const selectedChainBalances = balances.filter((balance) => balance.chain === chain);
+  if (selectedChainBalances.length === 0) return null;
+
+  return (
+    selectedChainBalances
+      .map(
+        (a) =>
+          a.balances?.find(
+            (bl) =>
+              (address !== null && bl.address === address) ||
+              (address === null && bl.address === address && bl.symbol === symbol),
+          ) || null,
+      )
+      .filter((b) => b !== null)
+      .sort((a, b) => parseFloat(b?.amount || '0') - parseFloat(a?.amount || '1'))
+      .find(() => true) || null
+  );
+}
+
+export function isAccountAndBalanceMatched(account: Account, balance: Balance) {
+  return (
+    account.address === balance.address &&
+    account.chain === balance.chain &&
+    account.walletType === balance.walletType
+  );
+}
+
+export function makeBalanceFor(account: Account, retrivedBalance: WalletDetail): Balance {
+  const { address, blockChain: chain, explorerUrl, balances = [] } = retrivedBalance;
+  return {
+    address,
+    chain,
+    loading: false,
+    error: false,
+    explorerUrl,
+    walletType: account.walletType,
+    balances:
+      balances?.map((tokenBalance) => ({
+        chain,
+        symbol: tokenBalance.asset.symbol,
+        ticker: tokenBalance.asset.symbol,
+        address: tokenBalance.asset.address || null,
+        rawAmount: tokenBalance.amount.amount,
+        decimal: tokenBalance.amount.decimals,
+        amount: new BigNumber(tokenBalance.amount.amount)
+          .shiftedBy(-tokenBalance.amount.decimals)
+          .toFixed(),
+        logo: '',
+        usdPrice: null,
+      })) || [],
+  };
+}
+
+export function resetBalanceState(balance: Balance): Balance {
+  return { ...balance, loading: false, error: true };
+}
