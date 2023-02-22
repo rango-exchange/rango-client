@@ -6,8 +6,9 @@ import { useNavigate } from 'react-router-dom';
 import { Token } from 'rango-sdk';
 import { numberToString } from '../utils/numbers';
 import BigNumber from 'bignumber.js';
-import { getBalanceFromWallet, ZERO } from '../utils/balance';
+import { getBalanceFromWallet } from '../utils/wallets';
 import { useWalletsStore } from '../store/wallets';
+import { ZERO } from '../constants/numbers';
 
 interface PropTypes {
   type: 'from' | 'to';
@@ -28,7 +29,7 @@ export function SelectTokenPage(props: PropTypes) {
     meta: { tokens },
   } = useMetaStore();
   const { fromChain, toChain, fromToken, toToken, setFromToken, setToToken } = useBestRouteStore();
-  const balance = useWalletsStore((state) => state.balance);
+  const balance = useWalletsStore((state) => state.balances);
 
   const tokenWithSelectedChain = tokens.filter((token) => {
     if (type === 'from') return token.blockchain === fromChain?.name;

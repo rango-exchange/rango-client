@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { useBestRouteStore } from '../store/bestRoute';
 import { numberToString } from '../utils/numbers';
 import BigNumber from 'bignumber.js';
-import { getBalanceFromWallet } from '../utils/balance';
+import { getBalanceFromWallet } from '../utils/wallets';
 import { useWalletsStore } from '../store/wallets';
 
 type PropTypes = (
@@ -74,13 +74,13 @@ export function TokenInfo(props: PropTypes) {
   const { loadingStatus } = useMetaStore();
   const { fromChain, toChain, inputUsdValue, fromToken, setInputAmount, bestRoute, inputAmount } =
     useBestRouteStore();
-  const { balance } = useWalletsStore();
+  const { balances } = useWalletsStore();
   const navigate = useNavigate();
 
   const tokenBalance =
     !!fromChain && !!fromToken
       ? numberToString(
-          getBalanceFromWallet(balance, fromChain?.name, fromToken?.symbol, fromToken?.address)
+          getBalanceFromWallet(balances, fromChain?.name, fromToken?.symbol, fromToken?.address)
             ?.amount || '0',
           8,
         )
@@ -89,9 +89,9 @@ export function TokenInfo(props: PropTypes) {
   const tokenBalanceReal =
     !!fromChain && !!fromToken
       ? numberToString(
-          getBalanceFromWallet(balance, fromChain?.name, fromToken?.symbol, fromToken?.address)
+          getBalanceFromWallet(balances, fromChain?.name, fromToken?.symbol, fromToken?.address)
             ?.amount || '0',
-          getBalanceFromWallet(balance, fromChain?.name, fromToken?.symbol, fromToken?.address)
+          getBalanceFromWallet(balances, fromChain?.name, fromToken?.symbol, fromToken?.address)
             ?.decimal,
         )
       : '0';
