@@ -263,16 +263,16 @@ function manipulateMsgForDirectIBC(m: any): any {
 
 export async function signCosmosMessage(
   walletAddress: string,
-  messages: string,
+  message: string,
   provider: any,
-  chainId: string
+  chainId: string | null
 ): Promise<string> {
   try {
     const cosmosProvider = getNetworkInstance(provider, Network.COSMOS);
     const { signature } = await cosmosProvider.signArbitrary(
       chainId,
       walletAddress,
-      messages
+      message
     );
 
     return signature;
