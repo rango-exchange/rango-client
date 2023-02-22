@@ -6,7 +6,7 @@ import { useBestRouteStore } from '../store/bestRoute';
 export function SwithFromAndTo({ count }: { count: number }) {
   const firstRender = useRef(true);
   const [searchParams, setSearchParams] = useSearchParams();
-  const { outputAmount } = useBestRouteStore();
+  const outputAmount = useBestRouteStore.use.outputAmount();
 
   useEffect(() => {
     if (!firstRender.current) {
