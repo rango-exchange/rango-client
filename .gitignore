@@ -36,3 +36,5 @@ yarn-error.log*
 .turbo
 
 .parcel-cache
+storybook-static
+.yalc

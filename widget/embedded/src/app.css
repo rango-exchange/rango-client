@@ -6,18 +6,7 @@
   padding: 0;
   list-style-type: none;
 }
-::-webkit-scrollbar {
-  width: 8px;
-}
-::-webkit-scrollbar-track {
-  background: #444;
-}
-::-webkit-scrollbar-thumb {
-  background: #656565;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: #555;
-}
+
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
   -webkit-appearance: none;
@@ -27,12 +16,10 @@ input[type='number'] {
   -moz-appearance: textfield;
 }
 
-
-#app{
+#app {
   height: 100vh;
 }
-#pageContainer{
-
+#pageContainer {
   display: flex;
   align-items: center;
   justify-content: center;

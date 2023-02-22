@@ -2,11 +2,11 @@ import React, { PropsWithChildren } from 'react';
 import { GasIcon, TimeIcon } from '../../components/Icon';
 import { StepDetail } from '../../components/StepDetail';
 import { Typography } from '../../components/Typography';
-import { BestRouteType, SwapResult } from '../../types/swaps';
 import { rawFees, secondsToString, totalArrivalTime } from '../../helper';
 import { styled } from '../../theme';
 import { Skeleton } from '../Skeleton';
 import { Spinner } from '../Spinner';
+import { BestRouteResponse } from 'rango-sdk';
 
 const Container = styled('div', {
   borderRadius: '$5',
@@ -104,7 +104,7 @@ const SwapperContainer = styled('div', {
 });
 
 export interface PropTypes {
-  data: BestRouteType;
+  data: BestRouteResponse | null;
   loading?: boolean;
   error?: string;
 }
@@ -113,8 +113,14 @@ export function BestRoute({
   loading,
   error,
 }: PropsWithChildren<PropTypes>) {
-  const fee = rawFees(data);
-  const time = secondsToString(totalArrivalTime(data));
+  let fee,
+    time: string = '';
+
+  if (!!data) {
+    fee = rawFees(data);
+    time = secondsToString(totalArrivalTime(data));
+  }
+
   return (
     <Container>
       {loading ? (
@@ -125,22 +131,24 @@ export function BestRoute({
         <GasContainer>
           <GasIcon size={20} />
           <Typography mt={4} align="center" variant="caption">
-            {error ? '-' : `$${fee}`}
+            {error && '-'}
+            {!!data && `$${fee}`}
           </Typography>
           <HR />
           <TimeIcon size={20} />
           <Typography mt={4} align="center" variant="caption">
-            {error ? '-' : `~${time}m`}
+            {error && '-'}
+            {!!data && `~${time}m`}
           </Typography>
         </GasContainer>
       )}
       <BestRouteContainer>
-        {loading ? (
-          <Spinner color="primary" />
-        ) : error ? (
-          <ErrorMsg variant="caption">{error}</ErrorMsg>
-        ) : (
-          data.result?.swaps.map((swap: SwapResult, index: number) => (
+        {loading && <Spinner color="primary" />}
+
+        {error && <ErrorMsg variant="caption">{error}</ErrorMsg>}
+
+        {!!data &&
+          data.result?.swaps.map((swap, index) => (
             <>
               {index === 0 && (
                 <RelativeContainer>
@@ -148,7 +156,7 @@ export function BestRoute({
                     direction="vertical"
                     logo={swap.from.logo}
                     symbol={swap.from.symbol}
-                    chainLogo={swap.from.blockchainlogo}
+                    chainLogo={swap.from.blockchainLogo}
                     blockchain={swap.from.blockchain}
                     amount={swap.fromAmount}
                   />
@@ -166,12 +174,14 @@ export function BestRoute({
                 direction="vertical"
                 logo={swap.to.logo}
                 symbol={swap.to.symbol}
-                chainLogo={swap.to.blockchainlogo}
+                chainLogo={swap.to.blockchainLogo}
                 blockchain={swap.to.blockchain}
                 amount={swap.toAmount}
               />
             </>
-          ))
+          ))}
+        {!!data && !data?.result && (
+          <Typography variant="body2">No routes found</Typography>
         )}
       </BestRouteContainer>
     </Container>

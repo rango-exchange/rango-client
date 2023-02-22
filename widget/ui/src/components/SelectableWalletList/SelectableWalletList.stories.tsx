@@ -10,5 +10,5 @@ export default {
 } as ComponentMeta<typeof SelectableWalletList>;
 
 export const Main = (props: PropTypes) => (
-  <SelectableWalletList {...props} data={data} />
+  <SelectableWalletList {...props} list={data} />
 );

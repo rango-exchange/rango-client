@@ -1,6 +1,6 @@
 {
   "name": "@rangodev/wallets-shared",
-  "version": "0.1.11-next.35",
+  "version": "0.1.11-next.53",
   "license": "MIT",
   "module": "dist/wallets-shared.esm.js",
   "main": "dist/index.js",
@@ -13,7 +13,7 @@
     "node": ">=10"
   },
   "scripts": {
-    "start": "tsdx watch",
+    "dev": "tsdx watch",
     "build": "tsdx build",
     "test": "tsdx test",
     "lint": "tsdx lint",
@@ -51,7 +51,8 @@
     "@solana/web3.js": "^1.67.2",
     "cosmjs-types": "^0.5.2",
     "ethers": "^5.7.2",
-    "long": "^5.2.1"
+    "long": "^5.2.1",
+    "rango-types": "^0.1.13"
   },
   "publishConfig": {
     "access": "public"

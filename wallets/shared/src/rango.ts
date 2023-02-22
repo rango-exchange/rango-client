@@ -1,3 +1,36 @@
+import {
+  StarknetTransaction,
+  TronTransaction,
+  isEvmBlockchain,
+  isCosmosBlockchain,
+  isSolanaBlockchain,
+  isTronBlockchain,
+  isStarknetBlockchain,
+  isTransferBlockchain,
+  CosmosChainInfo,
+  EVMChainInfo,
+  BlockchainMeta,
+  EvmBlockchainMeta,
+  CosmosBlockchainMeta,
+  SolanaBlockchainMeta,
+  TransferBlockchainMeta,
+  TronBlockchainMeta,
+  StarkNetBlockchainMeta,
+  evmBlockchains,
+  cosmosBlockchains,
+  starknetBlockchain,
+  tronBlockchain,
+  transferBlockchains,
+  solanaBlockchain,
+  TransactionType,
+} from 'rango-types';
+import {
+  CosmosTransaction,
+  EvmTransaction,
+  SolanaTransaction,
+  Transfer,
+} from 'rango-types/lib/api/main';
+
 export const IS_DEV =
   !process.env.NODE_ENV || process.env.NODE_ENV === 'development';
 
@@ -17,14 +50,14 @@ export const getBlockChainNameFromId = (
 
   if (chainId === 'Binance-Chain-Tigris') return Network.BINANCE;
   return (
-    blockchains
+    (blockchains
       .filter((blockchainMeta) => !!blockchainMeta.chainId)
       .find((blockchainMeta) => {
         const blockchainChainId = blockchainMeta.chainId?.startsWith('0x')
           ? parseInt(blockchainMeta.chainId)
           : blockchainMeta.chainId;
         return blockchainChainId == chainId;
-      })?.name || null
+      })?.name as Network) || null
   );
 };
 
@@ -43,25 +76,26 @@ export enum WalletType {
   TRUST_WALLET = 'trust-wallet',
   TERRA_STATION = 'terra-station',
   KEPLR = 'keplr',
-  OKX = 'okx',
   PHANTOM = 'phantom',
   FRONTIER = 'frontier',
   COINBASE = 'coinbase',
   XDEFI = 'xdefi',
   BINANCE_CHAIN = 'binance-chain',
   LEAP = 'leap',
+  LEAP_COSMOS = 'leap-cosmos',
   CLOVER = 'clover',
   COSMOSTATION = 'cosmostation',
   COIN98 = 'coin98',
   SAFEPAL = 'safepal',
   TOKEN_POCKET = 'token-pocket',
   BRAVE = 'brave',
-  UNKNOWN = 'unknown',
   MATH = 'math',
   EXODUS = 'exodus',
+  OKX = 'okx',
   ARGENTX = 'argentx',
   TRON_LINK = 'tron-link',
   KUCOIN = 'kucoin',
+  UNKNOWN = 'unknown',
 }
 
 export enum Network {
@@ -130,148 +164,11 @@ export const XDEFI_WALLET_SUPPORTED_NATIVE_CHAINS = [
   Network.BINANCE,
 ];
 
-export const isEvmBlockchain = (
-  blockchainMeta: BlockchainMeta
-): blockchainMeta is EvmBlockchainMeta =>
-  blockchainMeta.type === GenericTransactionType.EVM;
-
-export const isCosmosBlockchain = (
-  blockchainMeta: BlockchainMeta
-): blockchainMeta is CosmosBlockchainMeta =>
-  blockchainMeta.type === GenericTransactionType.COSMOS;
-
-export const isSolanaBlockchain = (
-  blockchainMeta: BlockchainMeta
-): blockchainMeta is SolanaBlockchainMeta =>
-  blockchainMeta.type === GenericTransactionType.SOLANA;
-
-export const isNativeBlockchain = (
-  blockchainMeta: BlockchainMeta
-): blockchainMeta is NativeBlockchainMeta =>
-  blockchainMeta.type === GenericTransactionType.TRANSFER;
-
-export const isStarknetBlockchain = (
-  blockchainMeta: BlockchainMeta
-): blockchainMeta is StarknetBlockchainMeta =>
-  blockchainMeta.type === GenericTransactionType.STARKNET;
-
-export const isTronBlockchain = (
-  blockchainMeta: BlockchainMeta
-): blockchainMeta is TronBlockchainMeta =>
-  blockchainMeta.type === GenericTransactionType.TRON;
-
-// Meta
 export type Asset = {
   blockchain: Network;
   symbol: string;
   address: string | null;
 };
-
-export enum GenericTransactionType {
-  EVM = 'EVM',
-  TRANSFER = 'TRANSFER',
-  COSMOS = 'COSMOS',
-  SOLANA = 'SOLANA',
-  STARKNET = 'STARKNET',
-  TRON = 'TRON',
-}
-
-type EvmInfo = {
-  chainName: string;
-  nativeCurrency: {
-    name: string;
-    symbol: string;
-    decimals: number;
-  };
-  rpcUrls: string[];
-  blockExplorerUrls: string[];
-  addressUrl: string;
-  transactionUrl: string;
-};
-
-type StarkNetInfo = {
-  chainName: string;
-  nativeCurrency: {
-    name: string;
-    symbol: string;
-    decimals: number;
-  };
-  blockExplorerUrls: string[];
-  addressUrl: string;
-  transactionUrl: string;
-};
-
-export interface CosmosChainInfo {
-  rpc: string;
-  rest: string;
-  chainId: string;
-  cosmostationLcdUrl?: string;
-  cosmostationApiUrl?: string;
-  cosmostationDenomTracePath?: string;
-  mintScanName?: string | null;
-  chainName: string;
-  stakeCurrency: {
-    coinDenom: string;
-    coinMinimalDenom: string;
-    coinDecimals: number;
-    coinGeckoId: string;
-    coinImageUrl: string;
-  };
-  bip44: {
-    coinType: number;
-  };
-  bech32Config: {
-    bech32PrefixAccAddr: string;
-    bech32PrefixAccPub: string;
-    bech32PrefixValAddr: string;
-    bech32PrefixValPub: string;
-    bech32PrefixConsAddr: string;
-    bech32PrefixConsPub: string;
-  };
-  currencies: {
-    coinDenom: string;
-    coinMinimalDenom: string;
-    coinDecimals: number;
-    coinGeckoId: string;
-    coinImageUrl: string;
-  }[];
-  feeCurrencies: {
-    coinDenom: string;
-    coinMinimalDenom: string;
-    coinDecimals: number;
-    coinGeckoId: string;
-    coinImageUrl: string;
-  }[];
-  features: string[];
-  explorerUrlToTx: string;
-  gasPriceStep?: {
-    low: number;
-    average: number;
-    high: number;
-  };
-}
-
-export interface CosmosInfo extends Omit<CosmosChainInfo, 'chianId'> {
-  experimental: boolean;
-}
-
-type BlockchainInfo = EvmInfo | CosmosInfo | StarkNetInfo | null;
-
-export interface BlockchainMeta {
-  name: Network;
-  defaultDecimals: number;
-  addressPatterns: string[];
-  feeAssets: Asset[];
-  logo: string;
-  displayName: string;
-  shortName: string;
-  sort: number;
-  color: string;
-  enabled: boolean;
-  type: GenericTransactionType;
-  chainId: string | null;
-  info: BlockchainInfo;
-}
 
 export type AllBlockchains = { [key: string]: BlockchainMeta };
 
@@ -290,332 +187,12 @@ export type AddEthereumChainParameter = {
 
 export type EvmNetworksChainInfo = { [key: string]: AddEthereumChainParameter };
 
-export interface EvmBlockchainMeta extends BlockchainMeta {
-  type: GenericTransactionType.EVM;
-  info: EvmInfo;
-  chainId: string;
-}
-
-export interface CosmosBlockchainMeta extends BlockchainMeta {
-  type: GenericTransactionType.COSMOS;
-  info: CosmosInfo | null;
-  chainId: string;
-}
-
-export interface SolanaBlockchainMeta extends BlockchainMeta {
-  type: GenericTransactionType.SOLANA;
-  info: null;
-  chainId: string;
-}
-
-export interface StarknetBlockchainMeta extends BlockchainMeta {
-  type: GenericTransactionType.STARKNET;
-  info: StarkNetInfo;
-  chainId: string;
-}
-
-export interface TronBlockchainMeta extends BlockchainMeta {
-  type: GenericTransactionType.TRON;
-  info: null;
-  chainId: string;
-}
-
-export interface NativeBlockchainMeta extends BlockchainMeta {
-  type: GenericTransactionType.TRANSFER;
-  info: null;
-  chainId: null;
-}
-
 export interface Meta {
   blockchains: AllBlockchains;
   evmNetworkChainInfo: EvmNetworksChainInfo;
   getSupportedChainNames: (type: WalletType) => Network[] | null;
   evmBasedChains: EvmBlockchainMeta[];
 }
-
-// Transaction
-
-export type CosmosIBCTokenAndAmount = {
-  denom: string;
-  amount: string;
-};
-
-export type CosmosIBCTimeoutHeight = {
-  revision_number: string;
-  revision_height: string;
-};
-
-export type CosmosIBCTransferMessageValue = {
-  source_port: string;
-  source_channel: string;
-  token: CosmosIBCTokenAndAmount;
-  sender: string;
-  receiver: string;
-  timeout_height: CosmosIBCTimeoutHeight;
-};
-
-export type CosmosIBCTransferMessage = {
-  __type: string;
-  type: string;
-  value: CosmosIBCTransferMessageValue;
-};
-
-export type TerraBridgeBurnExecuteMessageAmount = { amount: string };
-export type TerraBridgeBurnExecuteMessage = {
-  burn: TerraBridgeBurnExecuteMessageAmount;
-};
-
-export type TerraBridgeTransferExecuteMessage = {
-  recipient: string;
-  amount: string;
-};
-
-export type TerraSwapSingleSwapCW20Send = {
-  amount: string;
-  contract: string;
-  msg: string;
-};
-export type TerraSwapSingleSwapFromCW20TokenCallWrapper = {
-  send: TerraSwapSingleSwapCW20Send;
-};
-
-export type TerraSwapSingleSwapNativeToken = { denom: string };
-export type TerraSwapSingleSwapAssetInfo = {
-  native_token: TerraSwapSingleSwapNativeToken;
-};
-export type TerraSwapSingleSwapOfferAsset = {
-  amount: string;
-  info: TerraSwapSingleSwapAssetInfo;
-};
-export type TerraSwapSingleSwap = {
-  offer_asset: TerraSwapSingleSwapOfferAsset;
-};
-export type TerraSwapSingleSwapFromNativeTokenCallWrapper = {
-  swap: TerraSwapSingleSwap;
-};
-
-export type CosmosExecuteMessage =
-  | TerraBridgeBurnExecuteMessage
-  | TerraBridgeTransferExecuteMessage
-  | TerraSwapSingleSwapFromCW20TokenCallWrapper
-  | TerraSwapSingleSwapFromNativeTokenCallWrapper;
-
-export type Coin = { denom: string; amount: string };
-
-export type OsmosisSwapMessage = {
-  __type: string;
-  type: string;
-  value: number[];
-};
-
-export type MsgExecuteContract = {
-  __type: string;
-  sender: string;
-  contract: string;
-  execute_msg: CosmosExecuteMessage;
-  coins: Coin[];
-};
-
-export type MsgSend = {
-  __type: string;
-  inputs: InputOutput[];
-  outputs: InputOutput[];
-  aminoPrefix: string;
-};
-export type InputOutput = { address: string; coins: Coin[] };
-
-export type DirectMsgSend = {
-  __type: string;
-  typeUrl: string;
-  value: SifchainMsgSendValue;
-};
-export type SifchainMsgSendValue = {
-  amount: Coin[];
-  fromAddress: string;
-  toAddress: string;
-};
-
-export type DirectCosmosIBCTimeoutHeight = {
-  revisionNumber: string;
-  revisionHeight: string;
-};
-
-export type DirectCosmosIBCTransferMessageValue = {
-  sourcePort: string;
-  sourceChannel: string;
-  token: CosmosIBCTokenAndAmount;
-  sender: string;
-  receiver: string;
-  timeoutHeight: DirectCosmosIBCTimeoutHeight;
-  timeoutTimestamp: string | null;
-};
-
-export type DirectCosmosIBCTransferMessage = {
-  __type: string;
-  typeUrl: string;
-  value: DirectCosmosIBCTransferMessageValue;
-};
-
-export type Msg =
-  | CosmosIBCTransferMessage
-  | MsgExecuteContract
-  | OsmosisSwapMessage
-  | MsgSend
-  | DirectMsgSend
-  | DirectCosmosIBCTransferMessage;
-
-export type ProtoMsg = { type_url: string; value: number[] };
-
-export type CosmosFeeAmount = { denom: string; amount: string };
-export type CosmosFee = { gas: string; amount: CosmosFeeAmount[] };
-
-export type CosmosMessage = {
-  chainId: string | null;
-  account_number: number | null;
-  sequence: string | null;
-  msgs: Msg[];
-  protoMsgs: ProtoMsg[];
-  memo: string | null;
-  source: number | null;
-  fee: CosmosFee | null;
-  signType: 'AMINO' | 'DIRECT';
-  rpcUrl: string;
-};
-
-export type AssetWithTicker = {
-  blockchain: Network;
-  symbol: string;
-  address: string | null;
-  ticker: string;
-};
-
-export type CosmosRawTransferData = {
-  method: string;
-  asset: AssetWithTicker;
-  amount: string;
-  decimals: number;
-  recipient: string;
-  memo: string | null;
-};
-
-export type SolanaSignature = {
-  signature: number[];
-  publicKey: string;
-};
-
-export type SolanaInstructionKey = {
-  pubkey: string;
-  isSigner: boolean;
-  isWritable: boolean;
-};
-
-export type SolanaInstruction = {
-  keys: SolanaInstructionKey[];
-  programId: string;
-  data: number[];
-};
-
-export type CosmosTransaction = {
-  fromWalletAddress: string;
-  type: GenericTransactionType;
-  blockChain: Network;
-  data: CosmosMessage;
-  rawTransfer: CosmosRawTransferData | null;
-  externalTxId: string | null;
-  id: string;
-};
-
-export type EvmTransaction = {
-  blockChain: Network;
-  type: GenericTransactionType;
-  from: string | null;
-  to: string;
-  data: string | null;
-  value: string | null;
-  gasLimit: string | null;
-  gasPrice: string | null;
-  nonce: string | null;
-  externalTxId: string | null;
-  isApprovalTx: boolean;
-  id: string;
-};
-
-export type SolanaTransaction = {
-  blockChain: Network;
-  from: string;
-  identifier: string;
-  type: GenericTransactionType;
-  externalTxId: string | null;
-  recentBlockhash: string;
-  signatures: SolanaSignature[];
-  serializedMessage: number[] | null;
-  instructions: SolanaInstruction[];
-};
-
-export type TransferTransaction = {
-  fromWalletAddress: string;
-  type: GenericTransactionType;
-  method: string;
-  recipientAddress: string | null;
-  memo: string | null;
-  amount: string;
-  decimals: number;
-  asset: AssetWithTicker;
-  externalTxId: string | null;
-  id: string;
-};
-
-export type StarknetCallData = {
-  contractAddress: string;
-  calldata?: string[];
-  entrypoint: string;
-};
-
-export type StarknetTransaction = {
-  blockChain: Network;
-  type: GenericTransactionType;
-  calls: StarknetCallData[];
-  externalTxId: string | null;
-  isApprovalTx: boolean;
-};
-
-export type TrxContractParameter = {
-  value: any;
-  type_url: string;
-};
-
-export type TrxContractData = {
-  parameter: TrxContractParameter;
-  type: string;
-};
-
-export type TrxRawData = {
-  contract: TrxContractData[];
-  ref_block_bytes: string;
-  ref_block_hash: string;
-  expiration: number;
-  timestamp: number;
-};
-
-export type TronTransaction = {
-  blockChain: Network;
-  type: GenericTransactionType;
-  raw_data: TrxRawData | null;
-  raw_data_hex: string | null;
-  txID: string;
-  visible: boolean;
-  __payload__: object;
-  externalTxId: string | null;
-  isApprovalTx: boolean;
-};
-
-export type Transaction =
-  | EvmTransaction
-  | CosmosTransaction
-  | SolanaTransaction
-  | StarknetTransaction
-  | TronTransaction
-  | TransferTransaction;
 
 // core
 
@@ -690,7 +267,7 @@ export type CanSwitchNetwork = (options: {
 }) => boolean;
 
 export type WalletSigners = {
-  executeTransfer: (tx: TransferTransaction, meta: Meta) => Promise<string>;
+  executeTransfer: (tx: Transfer, meta: Meta) => Promise<string>;
   executeEvmTransaction: (tx: EvmTransaction, meta: Meta) => Promise<string>;
   executeCosmosMessage: (tx: CosmosTransaction, meta: Meta) => Promise<string>;
   executeSolanaTransaction: (
@@ -705,25 +282,65 @@ export type WalletSigners = {
   signEvmMessage: (walletAddress: string, message: string) => Promise<string>;
 };
 
-export const evmBlockchains = (allBlockChains: BlockchainMeta[]) =>
-  allBlockChains.filter(isEvmBlockchain);
-
-export const solanaBlockchain = (allBlockChains: BlockchainMeta[]) =>
-  allBlockChains.filter(isSolanaBlockchain);
-
-export const starknetBlockchain = (allBlockChains: BlockchainMeta[]) =>
-  allBlockChains.filter(isStarknetBlockchain);
-
-export const tronBlockchain = (allBlockChains: BlockchainMeta[]) =>
-  allBlockChains.filter(isTronBlockchain);
-
-export const cosmosBlockchains = (allBlockChains: BlockchainMeta[]) =>
-  allBlockChains.filter(isCosmosBlockchain);
+export type InstallObjects = {
+  CHROME?: string;
+  FIREFOX?: string;
+  EDGE?: string;
+  BRAVE?: string;
+  DEFAULT: string;
+};
 
 export type WalletInfo = {
   name: string;
   img: string;
-  installLink: string;
+  installLink: InstallObjects | string;
   color: string;
   supportedChains: BlockchainMeta[];
+  showOnMobile?: boolean;
+};
+
+export interface Wallet {
+  type: WalletType;
+  extensionAvailable: boolean;
+  connected: boolean;
+  info: Omit<WalletInfo, 'color' | 'supportedChains'>;
+}
+
+export type Transaction =
+  | EvmTransaction
+  | StarknetTransaction
+  | TronTransaction
+  | CosmosTransaction
+  | SolanaTransaction
+  | Transfer;
+
+export {
+  EvmTransaction,
+  StarknetTransaction,
+  TronTransaction,
+  CosmosTransaction,
+  SolanaTransaction,
+  Transfer as TransferTransaction,
+  isEvmBlockchain,
+  isCosmosBlockchain,
+  isSolanaBlockchain,
+  isTronBlockchain,
+  isStarknetBlockchain,
+  isTransferBlockchain,
+  evmBlockchains,
+  cosmosBlockchains,
+  starknetBlockchain,
+  tronBlockchain,
+  transferBlockchains,
+  solanaBlockchain,
+  BlockchainMeta,
+  EvmBlockchainMeta,
+  CosmosBlockchainMeta,
+  SolanaBlockchainMeta,
+  TransferBlockchainMeta,
+  TronBlockchainMeta,
+  StarkNetBlockchainMeta,
+  CosmosChainInfo,
+  EVMChainInfo,
+  TransactionType,
 };

@@ -45,8 +45,12 @@ export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
   return {
     name: 'Phantom',
     img: 'https://raw.githubusercontent.com/rango-exchange/rango-types/main/assets/icons/wallets/phantom.svg',
-    installLink:
-      'https://chrome.google.com/webstore/detail/phantom/bfnaelmomeimhlpmgjnjophhpkkoljpa',
+    installLink: {
+      CHROME:
+        'https://chrome.google.com/webstore/detail/phantom/bfnaelmomeimhlpmgjnjophhpkkoljpa',
+
+      DEFAULT: 'https://phantom.app/',
+    },
     color: '#4d40c6',
     supportedChains: solana,
   };
