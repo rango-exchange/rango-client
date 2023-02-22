@@ -19,7 +19,7 @@ const AlertContainer = styled('div', {
 export function WalletsPage() {
   const navigate = useNavigate();
   const { state, disconnect, getWalletInfo, connect } = useWallets();
-  const Wallets = getlistWallet(state, getWalletInfo, Object.values(WalletType));
+  const wallets = getlistWallet(state, getWalletInfo, Object.values(WalletType));
   const [walletErrorMessage, setWalletErrorMessage] = useState('');
 
   const onSelectWallet = async (type: WalletType) => {
@@ -50,7 +50,7 @@ export function WalletsPage() {
             </AlertContainer>
           )}
           <ListContainer>
-            {Wallets.map((info, index) => (
+            {wallets.map((info, index) => (
               <Wallet {...info} key={index} onClick={onSelectWallet} />
             ))}
           </ListContainer>
