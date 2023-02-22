@@ -7,10 +7,12 @@ import {
 } from '@rangodev/wallets-shared';
 
 import { WalletInfo as ModalWalletInfo, WalletState as WalletStatus } from '@rangodev/ui';
-import { BestRouteResponse, BlockchainMeta } from 'rango-sdk';
+import { BestRouteResponse, BlockchainMeta, WalletDetail } from 'rango-sdk';
 import { readAccountAddress } from '@rangodev/wallets-core';
 import { Account } from '../store/wallets';
 import { SelectableWallet } from '../pages/ConfirmWalletsPage';
+import { Balance, TokenBalance } from '../store/wallets';
+import BigNumber from 'bignumber.js';
 
 export function getStateWallet(state: WalletState): WalletStatus {
   switch (true) {
@@ -60,7 +62,6 @@ export function walletAndSupportedChainsNames(supportedChains: BlockchainMeta[])
 export function prepareAccountsForWalletStore(
   wallet: WalletType,
   accounts: string[],
-  connectedNetwork: Network | null,
   evmBasedChains: string[],
   supportedChainNames: Network[] | null,
 ): Account[] {
@@ -153,8 +154,6 @@ export function getSelectableWallets(
   return connectedWallets.filter((wallet) => requiredChains.includes(wallet.chain));
 }
 
-import { Balance, TokenBalance } from '../store/wallets';
-
 export function getBalanceFromWallet(
   balances: Balance[],
   chain: string,
@@ -182,10 +181,40 @@ export function getBalanceFromWallet(
   );
 }
 
-export function isAccountAndBalanceMatch(account: Account, balance: Balance) {
+export function isAccountAndBalanceMatched(account: Account, balance: Balance) {
   return (
     account.address === balance.address &&
     account.chain === balance.chain &&
     account.walletType === balance.walletType
   );
+}
+
+export function makeBalanceFor(account: Account, retrivedBalance: WalletDetail): Balance {
+  const { address, blockChain: chain, explorerUrl, balances = [] } = retrivedBalance;
+  return {
+    address,
+    chain,
+    loading: false,
+    error: false,
+    explorerUrl,
+    walletType: account.walletType,
+    balances:
+      balances?.map((tokenBalance) => ({
+        chain,
+        symbol: tokenBalance.asset.symbol,
+        ticker: tokenBalance.asset.symbol,
+        address: tokenBalance.asset.address || null,
+        rawAmount: tokenBalance.amount.amount,
+        decimal: tokenBalance.amount.decimals,
+        amount: new BigNumber(tokenBalance.amount.amount)
+          .shiftedBy(-tokenBalance.amount.decimals)
+          .toFixed(),
+        logo: '',
+        usdPrice: null,
+      })) || [],
+  };
+}
+
+export function resetBalanceState(balance: Balance): Balance {
+  return { ...balance, loading: false, error: true };
 }

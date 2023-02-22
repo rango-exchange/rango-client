@@ -5,6 +5,7 @@ import { useMetaStore } from '../store/meta';
 import { useNavigate } from 'react-router-dom';
 import { useWalletsStore } from '../store/wallets';
 import { BlockchainMeta } from 'rango-sdk';
+import { removeDuplicateFrom } from '../utils/common';
 
 interface PropTypes {
   type: 'from' | 'to';
@@ -27,7 +28,7 @@ export function SelectChainPage(props: PropTypes) {
   useEffect(() => {
     let chainSortedByConnectedWallets: BlockchainMeta[] = [];
     if (accounts.length !== 0) {
-      const connectedChains = Array.from(new Set(accounts.map((account) => account.chain)));
+      const connectedChains = removeDuplicateFrom(accounts.map((account) => account.chain));
       chainSortedByConnectedWallets = blockchains.sort(
         (blockchainA, blockchainB) =>
           connectedChains.lastIndexOf(blockchainA.name) -

@@ -1,9 +1,14 @@
 import { WalletType } from '@rangodev/wallets-shared';
-import BigNumber from 'bignumber.js';
 import { create } from 'zustand';
 import { SelectableWallet } from '../pages/ConfirmWalletsPage';
 import { httpService } from '../services/httpService';
-import { getRequiredChains, isAccountAndBalanceMatch, SelectedWallet } from '../utils/wallets';
+import {
+  getRequiredChains,
+  isAccountAndBalanceMatched,
+  makeBalanceFor,
+  resetBalanceState,
+  SelectedWallet,
+} from '../utils/wallets';
 import { useBestRouteStore } from './bestRoute';
 
 export interface Account {
@@ -68,45 +73,22 @@ export const useWalletsStore = create<WalletsStore>()((set, get) => ({
         const response = await httpService.getWalletsDetails([
           { address: account.address, blockchain: account.chain },
         ]);
-        const retrivedBalance = response.wallets.find(() => true);
+        const retrivedBalance = response.wallets[0];
         if (retrivedBalance) {
           set((state) => ({
             balances: state.balances.map((balance) => {
-              if (isAccountAndBalanceMatch(account, balance)) {
-                return {
-                  address: retrivedBalance.address,
-                  chain: retrivedBalance.blockChain,
-                  loading: false,
-                  error: false,
-                  explorerUrl: retrivedBalance.explorerUrl,
-                  walletType: account.walletType,
-                  balances:
-                    retrivedBalance.balances?.map((tokenBalance) => ({
-                      chain: retrivedBalance.blockChain,
-                      symbol: tokenBalance.asset.symbol,
-                      ticker: tokenBalance.asset.symbol,
-                      address: tokenBalance.asset.address || null,
-                      rawAmount: tokenBalance.amount.amount,
-                      decimal: tokenBalance.amount.decimals,
-                      amount: new BigNumber(tokenBalance.amount.amount)
-                        .shiftedBy(-tokenBalance.amount.decimals)
-                        .toFixed(),
-                      logo: '',
-                      usdPrice: null,
-                    })) || [],
-                };
-              } else {
-                return balance;
-              }
+              return isAccountAndBalanceMatched(account, balance)
+                ? makeBalanceFor(account, retrivedBalance)
+                : balance;
             }),
           }));
         } else throw new Error('Wallet not found');
       } catch (error) {
         set((state) => ({
           balances: state.balances.map((balance) => {
-            if (isAccountAndBalanceMatch(account, balance)) {
-              return { ...balance, loading: false, error: true };
-            } else return balance;
+            return isAccountAndBalanceMatched(account, balance)
+              ? resetBalanceState(balance)
+              : balance;
           }),
         }));
       }

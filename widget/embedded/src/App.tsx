@@ -52,7 +52,6 @@ export function App() {
         const data = prepareAccountsForWalletStore(
           type,
           value,
-          state.network,
           evmBasedChainNames,
           supportedChainNames,
         );
