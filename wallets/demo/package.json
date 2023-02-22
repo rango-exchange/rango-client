@@ -1,6 +1,6 @@
 {
   "name": "@rangodev/wallets-demo",
-  "version": "0.1.11-next.55",
+  "version": "0.1.11-next.56",
   "license": "MIT",
   "private": true,
   "source": "public/index.html",
@@ -10,9 +10,9 @@
     "build": "parcel build"
   },
   "dependencies": {
-    "@rangodev/provider-all": "^0.1.11-next.55",
-    "@rangodev/ui": "^0.1.10-next.55",
-    "@rangodev/wallets-core": "^0.1.11-next.55",
+    "@rangodev/provider-all": "^0.1.11-next.56",
+    "@rangodev/ui": "^0.1.10-next.56",
+    "@rangodev/wallets-core": "^0.1.11-next.56",
     "parcel": "^2.8.0",
     "rango-sdk": "^0.1.12",
     "react": "^18.2.0",
