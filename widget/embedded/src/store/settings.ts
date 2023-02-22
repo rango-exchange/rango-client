@@ -39,17 +39,16 @@ export const useSettingsStore = createSelectors(
           });
         },
         toggleAllLiquiditySources: () =>
-        set((state) => {
-          const { swappers } = useMetaStore.getState().meta;
-          console.log( state.disabledLiquiditySources.length  , swappers.length);
-          
-          if (swappers.length - state.disabledLiquiditySources.length === 0)
-            state.disabledLiquiditySources = [];
-          else {
-            const allSwappers = swappers.map((swapper) => swapper.swapperGroup);
-            state.disabledLiquiditySources = allSwappers;
-          }
-        }),
+          set((state) => {
+            const { swappers } = useMetaStore.getState().meta;
+
+            if (swappers.length - state.disabledLiquiditySources.length === 0)
+              state.disabledLiquiditySources = [];
+            else {
+              const allSwappers = swappers.map((swapper) => swapper.swapperGroup);
+              state.disabledLiquiditySources = allSwappers;
+            }
+          }),
         toggleInfinitApprove: () =>
           set((state) => {
             state.infinitApprove = !state.infinitApprove;
