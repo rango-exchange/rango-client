@@ -33,7 +33,7 @@ const InputContainer = styled('div', {
       true: {
         backgroundColor: '$neutrals300',
         cursor: 'not-allowed',
-        filter: 'graydirection(100%)',
+        filter: 'grayscale(100%)',
       },
     },
     prefix: {
