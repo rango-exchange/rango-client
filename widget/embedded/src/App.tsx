@@ -19,6 +19,7 @@ interface Token {
   contractAddress?: string;
 }
 
+//todo: update interface and update widget state based on WidgetProps change
 export type WidgetProps = {
   fromChain?: string;
   fromToken?: string;
