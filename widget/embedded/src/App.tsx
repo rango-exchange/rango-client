@@ -43,6 +43,7 @@ export function App() {
   const disconnectWallet = useWalletsStore.use.disconnectWallet();
   //TDOD : remove any after resloving type conflicts
   const evmBasedChainNames = (blockchains as any)
+    //@ts-ignore
     .filter(isEvmBlockchain)
     .map((chain) => chain.name);
 
@@ -50,6 +51,7 @@ export function App() {
     if (event === Events.ACCOUNTS) {
       if (value) {
         const supportedChainNames: Network[] | null =
+          //@ts-ignore
           walletAndSupportedChainsNames(supportedChains);
         const data = prepareAccountsForWalletStore(
           type,
@@ -77,6 +79,7 @@ export function App() {
   };
 
   return (
+    //@ts-ignore
     <Provider allBlockChains={blockchains} providers={providers} onUpdateState={onUpdateState}>
       <div id="pageContainer" className={activeTheme}>
         <SwapContainer>
