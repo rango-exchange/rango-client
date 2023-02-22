@@ -11,6 +11,7 @@ import {
   switchNetworkForEvm,
   BlockchainMeta,
   WalletInfo,
+  Network,
 } from '@rangodev/wallets-shared';
 import {
   getKucoinInstance as kucoin_instance,
@@ -61,7 +62,7 @@ export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
       DEFAULT: 'https://kuwallet.com/',
     },
     supportedChains: allBlockChains.filter((blockchainMeta) =>
-      KUCOIN_WALLET_SUPPORTED_CHAINS.includes(blockchainMeta.name)
+      KUCOIN_WALLET_SUPPORTED_CHAINS.includes(blockchainMeta.name as Network)
     ),
   };
 };

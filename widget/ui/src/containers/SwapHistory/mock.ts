@@ -260,7 +260,7 @@ export const pendingSwap: PendingSwap = {
             ],
           },
           signType: 'AMINO',
-          rpcUrl: null,
+          rpcUrl: 'sample_rpc',
         },
         rawTransfer: null,
       },

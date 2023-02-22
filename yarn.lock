@@ -11865,7 +11865,7 @@ humanize-ms@^1.2.1:
   dependencies:
     ms "^2.0.0"
 
-husky@^8.0.2:
+husky@^8.0.2, husky@^8.0.3:
   version "8.0.3"
   resolved "https://registry.yarnpkg.com/husky/-/husky-8.0.3.tgz#4936d7212e46d1dea28fef29bb3a108872cd9184"
   integrity sha512-+dQSyqPh4x1hlO1swXBiNb2HzTDN1I2IGLQx1GrBuiqFJfoMrnZWwVmatvSiO+Iz8fBUnf+lekwNo4c2LlXItg==
@@ -16242,37 +16242,22 @@ rango-sdk@^0.0.10:
     rango-types "^0.1.1"
     uuid "^9.0.0"
 
-rango-sdk@^0.1.2:
-  version "0.1.10"
-  resolved "https://registry.yarnpkg.com/rango-sdk/-/rango-sdk-0.1.10.tgz#cc4e8952374fefa39e7adecb6ec0a9316055b96a"
-  integrity sha512-6kuo7u2cmx4lOloqKv9acJ0vL7YRA2Lncr9E5iOs4nDy4sZ2j4/18mEY0pnEC2FDfGKvaG8Ba88bmdPPOXY22g==
+rango-sdk@^0.1.11, rango-sdk@^0.1.12:
+  version "0.1.12"
+  resolved "https://registry.yarnpkg.com/rango-sdk/-/rango-sdk-0.1.12.tgz#111e73c6e46500f365c8b8db7d0bde2fb0a512fb"
+  integrity sha512-wg/TPFQbzgNXJrq3qd4ldjkiWwabqbtR+ek+3fJLd+nAWFJ2XmrgrJuHDJxMbaSU8KUg6OCfAmti5YLvqXS/vQ==
   dependencies:
     axios "^1.2.6"
     bignumber.js "^9.1.1"
-    rango-types "^0.1.12"
+    rango-types "^0.1.13"
     uuid-random "^1.3.2"
 
-rango-sdk@^0.1.8:
-  version "0.1.8"
-  resolved "https://registry.yarnpkg.com/rango-sdk/-/rango-sdk-0.1.8.tgz#8bff88ec4af7bc668ef30e5db6361176a0fbcd92"
-  integrity sha512-6v2fD6vwkFZTYFgjX6USPLrg+9VROhJdeFJlp3a2eOCdRjUDc/M4mBG/jnyzm8EPt/bS6oxfbJ5+JUjNPlFDOA==
-  dependencies:
-    axios "^1.2.6"
-    bignumber.js "^9.1.1"
-    rango-types "^0.1.11"
-    uuid "^9.0.0"
-
 rango-types@^0.1.1:
-  version "0.1.5"
-  resolved "https://registry.yarnpkg.com/rango-types/-/rango-types-0.1.5.tgz#0abd972ecc4e1c847104d11720292af2eec7e62c"
-  integrity sha512-tEacrWTgC3M60MeJV/hp4ShyVVwOCLN5Cwnd18apiJcGca0UAXsXiRulGLQYVkv6UddWpK/pEv8oYyPnxoTM7g==
+  version "0.1.12"
+  resolved "https://registry.yarnpkg.com/rango-types/-/rango-types-0.1.12.tgz#e19c8d5bf1c0f7dddf9d6dc97238cf54844d7cef"
+  integrity sha512-nT6NRaxo7Ze1SUAHbbxf8FVzw9HT2UCP79b4iJtBvrchpFXwOsonfFgiQaB//Hwx/Cru0v0MFeK3dl4gEYGNYg==
 
-rango-types@^0.1.11:
-  version "0.1.11"
-  resolved "https://registry.yarnpkg.com/rango-types/-/rango-types-0.1.11.tgz#5dd869bf877434ad4485d6d15bbb11806e4e04e9"
-  integrity sha512-r+5vEqefHbgaJKSeZTNBnatMONlCQgH9f4I4/9dlKI8fCzkTlzC0VthxbHv+9twYNcnQ0lBljuM5FPAoOvYGlQ==
-
-rango-types@^0.1.12:
+rango-types@^0.1.13:
   version "0.1.13"
   resolved "https://registry.yarnpkg.com/rango-types/-/rango-types-0.1.13.tgz#763ecda9a7a6535930d895a1ed66d592f2c2ed73"
   integrity sha512-+Ffw7wWJ5j7IloFvoaNvlNn4vVo4Q+1v2+GHPFDPGzJhr5pJAG25JTmeGcPvfxfgxJ4VXB6vax4V84FkAfCvWw==

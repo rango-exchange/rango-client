@@ -33,7 +33,6 @@ export function useBestRoute() {
         connectedWallets: [],
         selectedWallets: {},
         checkPrerequisites: false,
-        //@ts-ignore
         swapperGroups: disabledLiquiditySources,
         swappersGroupsExclude: true,
         from: {
