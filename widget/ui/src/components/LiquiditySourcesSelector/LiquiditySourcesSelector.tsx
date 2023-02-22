@@ -18,7 +18,6 @@ export interface PropTypes {
   onChange: (liquiditySource: LiquiditySource) => void;
   onBack: () => void;
   toggleAll: () => void;
-  allSelected: boolean;
 }
 const ActionButton = styled(Button, {
   position: 'absolute',
@@ -26,7 +25,7 @@ const ActionButton = styled(Button, {
 });
 
 export function LiquiditySourcesSelector(props: PropTypes) {
-  const { list, onChange, onBack, toggleAll, allSelected } = props;
+  const { list, onChange, onBack, toggleAll } = props;
 
   return (
     <SecondaryPage
@@ -35,7 +34,7 @@ export function LiquiditySourcesSelector(props: PropTypes) {
       title="Liquidity Sources"
       TopButton={
         <ActionButton variant="ghost" type="primary" onClick={toggleAll}>
-          {allSelected ? 'Clear all' : 'Select all'}
+          {list.find((item) => item.selected) ? 'Clear all' : 'Select all'}
         </ActionButton>
       }
       onBack={onBack}
