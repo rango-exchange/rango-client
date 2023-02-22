@@ -100,8 +100,13 @@ export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
   return {
     name: 'Coin98',
     img: 'https://raw.githubusercontent.com/rango-exchange/rango-types/main/assets/icons/wallets/coin98.svg',
-    installLink:
-      'https://chrome.google.com/webstore/detail/coin98-wallet/aeachknmefphepccionboohckonoeemg',
+    installLink: {
+      CHROME:
+        'https://chrome.google.com/webstore/detail/coin98-wallet/aeachknmefphepccionboohckonoeemg',
+      BRAVE:
+        'https://chrome.google.com/webstore/detail/coin98-wallet/aeachknmefphepccionboohckonoeemg',
+      DEFAULT: 'https://coin98.com/wallet',
+    },
     color: '#1d1c25',
     supportedChains: [...evms, ...solana],
   };

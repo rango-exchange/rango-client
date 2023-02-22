@@ -61,8 +61,15 @@ export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
   return {
     name: 'ArgentX',
     img: 'https://raw.githubusercontent.com/rango-exchange/rango-types/main/assets/icons/wallets/argentx.svg',
-    installLink:
-      'https://chrome.google.com/webstore/detail/argent-x/dlcobpjiigpikoobohmabehhmhfoodbb',
+    installLink: {
+      CHROME:
+        'https://chrome.google.com/webstore/detail/argent-x/dlcobpjiigpikoobohmabehhmhfoodbb',
+      BRAVE:
+        'https://chrome.google.com/webstore/detail/argent-x/dlcobpjiigpikoobohmabehhmhfoodbb',
+      FIREFOX: 'https://addons.mozilla.org/en-GB/firefox/addon/argent-x',
+      DEFAULT: 'https://www.argent.xyz',
+    },
+
     color: '#96e7ed',
     supportedChains: starknet,
   };

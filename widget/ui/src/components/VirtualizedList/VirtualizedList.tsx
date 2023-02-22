@@ -2,13 +2,14 @@ import React, { PropsWithChildren, useRef } from 'react';
 import { ReactElementType, VariableSizeList as List } from 'react-window';
 import InfiniteLoader from 'react-window-infinite-loader';
 import AutoSizer from 'react-virtualized-auto-sizer';
+import { CSSProperties } from '@stitches/react';
 
 export type VirtualizedListItem = ({
   index,
   style,
 }: {
   index: number;
-  style: React.CSSProperties | undefined;
+  style: CSSProperties | undefined;
 }) => JSX.Element | null;
 
 type PropTypes = {
@@ -64,7 +65,7 @@ export function VirtualizedList(props: PropsWithChildren<PropTypes>) {
               >
                 {({ index, style }) =>
                   isItemLoaded(index) ? (
-                    <Item index={index} style={style} />
+                    <Item index={index} style={style as CSSProperties} />
                   ) : null
                 }
               </List>

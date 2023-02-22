@@ -1,3 +1,4 @@
+import { RoutingResultType, TransactionType } from 'rango-sdk';
 import { PendingSwap } from './types';
 
 export const pendingSwap: PendingSwap[] = [
@@ -27,20 +28,20 @@ export const pendingSwap: PendingSwap[] = [
       disabledSwappersGroups: [],
     },
     simulationResult: {
+      resultType: RoutingResultType.OK,
       outputAmount: '1.540670',
       swaps: [
         {
           swapperId: 'Osmosis',
           swapperType: 'DEX',
           swapperLogo: '',
-          result: null,
           from: {
             symbol: 'JUNO',
             logo: 'https://api.rango.exchange/tokens/COSMOS/JUNO.png',
             address:
               'ibc/46b44899322f3cd854d2d46deef881958467cdd4b3b10086da49296bbed94bed',
             blockchain: 'OSMOSIS',
-            blockchainlogo: '',
+            blockchainLogo: '',
             decimals: 6,
             usdPrice: 1.1091996179668873,
           },
@@ -50,14 +51,14 @@ export const pendingSwap: PendingSwap[] = [
             address: null,
             blockchain: 'OSMOSIS',
             decimals: 6,
-            blockchainlogo: '',
+            blockchainLogo: '',
             usdPrice: 0.7192435454440882,
           },
           fromAmount: '1.000000',
           fromAmountPrecision: null,
           fromAmountMinValue: null,
           fromAmountMaxValue: null,
-          fromAmountRestrictionType: null,
+          fromAmountRestrictionType: 'EXCLUSIVE',
           toAmount: '1.540670',
           fee: [
             {
@@ -68,6 +69,7 @@ export const pendingSwap: PendingSwap[] = [
               },
               expenseType: 'FROM_SOURCE_WALLET',
               amount: '0',
+              name: 'Network Fee',
             },
           ],
           estimatedTimeInSeconds: 45,
@@ -141,6 +143,8 @@ export const pendingSwap: PendingSwap[] = [
             max: 241,
           },
           includesDestinationTx: false,
+          maxRequiredSign: 1,
+          warnings: [],
         },
       ],
     },
@@ -162,10 +166,12 @@ export const pendingSwap: PendingSwap[] = [
         fromLogo: 'https://api.rango.exchange/tokens/COSMOS/JUNO.png',
         toSymbol: 'OSMO',
         toSymbolAddress: null,
+        swapperType: 'DEX',
         toDecimals: 6,
         toLogo: 'https://api.rango.exchange/i/mJQPS2',
         startTransactionTime: 1673164519916,
         swapperId: 'Osmosis',
+        swapperLogo: '',
         expectedOutputAmountHumanReadable: '1.540670',
         outputAmount: '1.540658',
         status: 'running',
@@ -179,7 +185,7 @@ export const pendingSwap: PendingSwap[] = [
           },
         ],
         cosmosTransaction: {
-          type: 'COSMOS',
+          type: TransactionType.COSMOS,
           fromWalletAddress: 'osmo1unf2rcytjxfpz8x8ar63h4qeftadptg5t0nqcl',
           blockChain: 'OSMOSIS',
           data: {
@@ -256,7 +262,7 @@ export const pendingSwap: PendingSwap[] = [
               ],
             },
             signType: 'AMINO',
-            rpcUrl: null,
+            rpcUrl: 'sample_rpc',
           },
           rawTransfer: null,
         },
@@ -295,12 +301,12 @@ export const pendingSwap: PendingSwap[] = [
       disabledSwappersGroups: [],
     },
     simulationResult: {
+      resultType: RoutingResultType.OK,
       outputAmount: '1.540670',
       swaps: [
         {
           swapperId: 'Osmosis',
           swapperLogo: '',
-          result: null,
           swapperType: 'DEX',
           from: {
             symbol: 'JUNO',
@@ -308,7 +314,7 @@ export const pendingSwap: PendingSwap[] = [
             address:
               'ibc/46b44899322f3cd854d2d46deef881958467cdd4b3b10086da49296bbed94bed',
             blockchain: 'OSMOSIS',
-            blockchainlogo: '',
+            blockchainLogo: '',
             decimals: 6,
             usdPrice: 1.1091996179668873,
           },
@@ -318,14 +324,14 @@ export const pendingSwap: PendingSwap[] = [
             address: null,
             blockchain: 'OSMOSIS',
             decimals: 6,
-            blockchainlogo: '',
+            blockchainLogo: '',
             usdPrice: 0.7192435454440882,
           },
           fromAmount: '1.000000',
           fromAmountPrecision: null,
           fromAmountMinValue: null,
           fromAmountMaxValue: null,
-          fromAmountRestrictionType: null,
+          fromAmountRestrictionType: 'EXCLUSIVE',
           toAmount: '1.540670',
           fee: [
             {
@@ -336,6 +342,7 @@ export const pendingSwap: PendingSwap[] = [
               },
               expenseType: 'FROM_SOURCE_WALLET',
               amount: '0',
+              name: 'Network Fee',
             },
           ],
           estimatedTimeInSeconds: 45,
@@ -409,6 +416,8 @@ export const pendingSwap: PendingSwap[] = [
             max: 241,
           },
           includesDestinationTx: false,
+          maxRequiredSign: 1,
+          warnings: [],
         },
       ],
     },
@@ -434,6 +443,8 @@ export const pendingSwap: PendingSwap[] = [
         toLogo: 'https://api.rango.exchange/i/mJQPS2',
         startTransactionTime: 1673164519916,
         swapperId: 'Osmosis',
+        swapperType: 'DEX',
+        swapperLogo: '',
         expectedOutputAmountHumanReadable: '1.540670',
         outputAmount: '1.540658',
         status: 'failed',
@@ -447,7 +458,7 @@ export const pendingSwap: PendingSwap[] = [
           },
         ],
         cosmosTransaction: {
-          type: 'COSMOS',
+          type: TransactionType.COSMOS,
           fromWalletAddress: 'osmo1unf2rcytjxfpz8x8ar63h4qeftadptg5t0nqcl',
           blockChain: 'OSMOSIS',
           data: {
@@ -524,7 +535,7 @@ export const pendingSwap: PendingSwap[] = [
               ],
             },
             signType: 'AMINO',
-            rpcUrl: null,
+            rpcUrl: 'sample_rpc',
           },
           rawTransfer: null,
         },
@@ -563,10 +574,10 @@ export const pendingSwap: PendingSwap[] = [
       disabledSwappersGroups: [],
     },
     simulationResult: {
+      resultType: RoutingResultType.OK,
       outputAmount: '1.540670',
       swaps: [
         {
-          result: null,
           swapperId: 'Osmosis',
           swapperType: 'DEX',
           swapperLogo: '',
@@ -577,7 +588,7 @@ export const pendingSwap: PendingSwap[] = [
             address:
               'ibc/46b44899322f3cd854d2d46deef881958467cdd4b3b10086da49296bbed94bed',
             blockchain: 'OSMOSIS',
-            blockchainlogo: '',
+            blockchainLogo: '',
             decimals: 6,
             usdPrice: 1.1091996179668873,
           },
@@ -587,14 +598,14 @@ export const pendingSwap: PendingSwap[] = [
             address: null,
             blockchain: 'OSMOSIS',
             decimals: 6,
-            blockchainlogo: '',
+            blockchainLogo: '',
             usdPrice: 0.7192435454440882,
           },
           fromAmount: '1.000000',
           fromAmountPrecision: null,
           fromAmountMinValue: null,
           fromAmountMaxValue: null,
-          fromAmountRestrictionType: null,
+          fromAmountRestrictionType: 'EXCLUSIVE',
           toAmount: '1.540670',
           fee: [
             {
@@ -605,6 +616,7 @@ export const pendingSwap: PendingSwap[] = [
               },
               expenseType: 'FROM_SOURCE_WALLET',
               amount: '0',
+              name: 'Network Fee',
             },
           ],
           estimatedTimeInSeconds: 45,
@@ -678,6 +690,8 @@ export const pendingSwap: PendingSwap[] = [
             max: 241,
           },
           includesDestinationTx: false,
+          maxRequiredSign: 1,
+          warnings: [],
         },
       ],
     },
@@ -703,6 +717,8 @@ export const pendingSwap: PendingSwap[] = [
         toLogo: 'https://api.rango.exchange/i/mJQPS2',
         startTransactionTime: 1673164519916,
         swapperId: 'Osmosis',
+        swapperType: 'DEX',
+        swapperLogo: '',
         expectedOutputAmountHumanReadable: '1.540670',
         outputAmount: '1.540658',
         status: 'success',
@@ -716,7 +732,7 @@ export const pendingSwap: PendingSwap[] = [
           },
         ],
         cosmosTransaction: {
-          type: 'COSMOS',
+          type: TransactionType.COSMOS,
           fromWalletAddress: 'osmo1unf2rcytjxfpz8x8ar63h4qeftadptg5t0nqcl',
           blockChain: 'OSMOSIS',
           data: {
@@ -793,7 +809,7 @@ export const pendingSwap: PendingSwap[] = [
               ],
             },
             signType: 'AMINO',
-            rpcUrl: null,
+            rpcUrl: 'sample_rpc',
           },
           rawTransfer: null,
         },

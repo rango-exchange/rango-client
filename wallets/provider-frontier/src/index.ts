@@ -105,8 +105,13 @@ export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
   return {
     name: 'Frontier',
     img: 'https://raw.githubusercontent.com/rango-exchange/rango-types/main/assets/icons/wallets/frontier.png',
-    installLink:
-      'https://chrome.google.com/webstore/detail/frontier-wallet/kppfdiipphfccemcignhifpjkapfbihd',
+    installLink: {
+      CHROME:
+        'https://chrome.google.com/webstore/detail/frontier-wallet/kppfdiipphfccemcignhifpjkapfbihd',
+      BRAVE:
+        'https://chrome.google.com/webstore/detail/frontier-wallet/kppfdiipphfccemcignhifpjkapfbihd',
+      DEFAULT: 'https://www.frontier.xyz',
+    },
     color: '#4d40c6',
     supportedChains: [...evms, ...solana],
   };
