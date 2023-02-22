@@ -10,9 +10,10 @@ import {
   BlockchainMeta,
 } from '../rango';
 import { WalletError } from '../errors';
-import { executeEvmTransaction, signEvmMessage } from './evm-signer';
-import { executeCosmosTransaction, signCosmosMessage } from './cosmos-signer';
-import { executeSolanaTransaction, signSolanaMessage } from './solana-signer';
+import { signMessage } from './sign-message';
+import { executeEvmTransaction } from './evm-signer';
+import { executeCosmosTransaction } from './cosmos-signer';
+import { executeSolanaTransaction } from './solana-signer';
 import { executeStarknetTransaction } from './starknet-signer';
 import { executeTronTransaction } from './tron-signer';
 
@@ -64,29 +65,19 @@ export const defaultSigners = ({
       throw WalletError.UnsupportedError('executeEvmTransaction', walletType);
     },
 
-    signEvmMessage: async (
-      walletAddress: string,
-      message: string
-    ): Promise<string> => {
-      if (supportEvm)
-        return await signEvmMessage(walletAddress, message, provider);
-      throw WalletError.UnsupportedError('signEvmMessage', walletType);
-    },
-
-    signSolanaMessage: async (message: string): Promise<string> => {
-      if (supportSolana) return await signSolanaMessage(message, provider);
-
-      throw WalletError.UnsupportedError('signSolanaMessage', walletType);
-    },
-
-    signCosmosMessage: async (
+    signMessage: async (
       walletAddress: string,
       message: string,
+      blockChain: string,
       meta: BlockchainMeta[]
     ): Promise<string> => {
-      if (supportCosmos)
-        return await signCosmosMessage(walletAddress, message, provider, meta);
-      throw WalletError.UnsupportedError('signCosmosMessage', walletType);
+      return await signMessage(
+        walletAddress,
+        message,
+        provider,
+        blockChain,
+        meta
+      );
     },
 
     executeTransfer: () => {

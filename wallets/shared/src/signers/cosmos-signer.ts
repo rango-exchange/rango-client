@@ -12,12 +12,9 @@ import {
   Network,
   Meta,
   uint8ArrayToHex,
-  CosmosBlockchainMeta,
-  BlockchainMeta,
 } from '../rango';
 import { getNetworkInstance } from '../providers';
 import { WalletError, WalletErrorCode } from '../errors';
-import { getCosmosExperimentalChainInfo } from '../getCosmosAccounts';
 
 // todo: unhardcode this. sifchain has some gas price apis. but gaslimits might be hardcoded still
 // hardcoded based on
@@ -269,16 +266,12 @@ export async function signCosmosMessage(
   walletAddress: string,
   messages: string,
   provider: any,
-  meta: BlockchainMeta[]
+  chainId: string
 ): Promise<string> {
   try {
     const cosmosProvider = getNetworkInstance(provider, Network.COSMOS);
-    const chainInfo = getCosmosExperimentalChainInfo(
-      meta as CosmosBlockchainMeta[]
-    )[Network.COSMOS];
-
     const { signature } = await cosmosProvider.signArbitrary(
-      chainInfo.id,
+      chainId,
       walletAddress,
       messages
     );
