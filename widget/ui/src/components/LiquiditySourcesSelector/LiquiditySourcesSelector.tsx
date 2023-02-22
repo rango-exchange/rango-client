@@ -1,3 +1,4 @@
+import { CSSProperties } from '@stitches/react';
 import React from 'react';
 import { containsText } from '../../helpers';
 import { styled } from '../../theme';
@@ -16,8 +17,10 @@ const filterLiquiditySources = (
 export interface PropTypes {
   list: LiquiditySource[];
   onChange: (liquiditySource: LiquiditySource) => void;
-  onBack: () => void;
-  toggleAll: () => void;
+  toggleAll?: () => void;
+  onBack?: () => void;
+  hasHeader?: boolean;
+  listContainerStyle?: CSSProperties;
 }
 const ActionButton = styled(Button, {
   position: 'absolute',
@@ -25,7 +28,8 @@ const ActionButton = styled(Button, {
 });
 
 export function LiquiditySourcesSelector(props: PropTypes) {
-  const { list, onChange, onBack, toggleAll } = props;
+  const { list, onChange, onBack, hasHeader, listContainerStyle, toggleAll } =
+    props;
 
   return (
     <SecondaryPage
@@ -37,9 +41,11 @@ export function LiquiditySourcesSelector(props: PropTypes) {
           {list.find((item) => item.selected) ? 'Clear all' : 'Select all'}
         </ActionButton>
       }
+      hasHeader={hasHeader}
       onBack={onBack}
       Content={({ searchedFor }) => (
         <LiquiditySourceList
+          listContainerStyle={listContainerStyle}
           list={filterLiquiditySources(list, searchedFor)}
           onChange={onChange}
         />

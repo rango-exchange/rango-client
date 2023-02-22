@@ -20,23 +20,19 @@ export function UpdateUrl() {
   const firstRender = useRef(true);
   const [searchParams, setSearchParams] = useSearchParams();
   const location = useLocation();
-  const {
-    fromChain,
-    toChain,
-    fromToken,
-    toToken,
-    setFromChain,
-    setFromToken,
-    setToChain,
-    setToToken,
-    inputAmount,
-    setInputAmount,
-  } = useBestRouteStore();
 
-  const {
-    loadingStatus,
-    meta: { blockchains, tokens },
-  } = useMetaStore();
+  const fromChain = useBestRouteStore.use.fromChain();
+  const toChain = useBestRouteStore.use.toChain();
+  const fromToken = useBestRouteStore.use.fromToken();
+  const toToken = useBestRouteStore.use.toToken();
+  const setFromChain = useBestRouteStore.use.setFromChain();
+  const setFromToken = useBestRouteStore.use.setFromToken();
+  const setToChain = useBestRouteStore.use.setToChain();
+  const setToToken = useBestRouteStore.use.setToToken();
+  const inputAmount = useBestRouteStore.use.inputAmount();
+  const setInputAmount = useBestRouteStore.use.setInputAmount();
+  const loadingStatus = useMetaStore.use.loadingStatus();
+  const { blockchains, tokens } = useMetaStore.use.meta();
 
   useEffect(() => {
     if (!firstRender.current) {

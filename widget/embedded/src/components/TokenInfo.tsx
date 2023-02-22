@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { useBestRouteStore } from '../store/bestRoute';
 import { numberToString } from '../utils/numbers';
 import BigNumber from 'bignumber.js';
-import { getBalanceFromWallet } from '../utils/balance';
+import { getBalanceFromWallet } from '../utils/wallets';
 import { useWalletsStore } from '../store/wallets';
 
 type PropTypes = (
@@ -71,16 +71,21 @@ const OutputContainer = styled('div', {
 
 export function TokenInfo(props: PropTypes) {
   const { type, chain, token } = props;
-  const { loadingStatus } = useMetaStore();
-  const { fromChain, toChain, inputUsdValue, fromToken, setInputAmount, bestRoute, inputAmount } =
-    useBestRouteStore();
-  const { balance } = useWalletsStore();
+  const loadingStatus = useMetaStore.use.loadingStatus();
+  const fromChain = useBestRouteStore.use.fromChain();
+  const toChain = useBestRouteStore.use.toChain();
+  const inputUsdValue = useBestRouteStore.use.inputUsdValue();
+  const fromToken = useBestRouteStore.use.fromToken();
+  const setInputAmount = useBestRouteStore.use.setInputAmount();
+  const bestRoute = useBestRouteStore.use.bestRoute();
+  const inputAmount = useBestRouteStore.use.inputAmount();
+  const balances = useWalletsStore.use.balances();
   const navigate = useNavigate();
 
   const tokenBalance =
     !!fromChain && !!fromToken
       ? numberToString(
-          getBalanceFromWallet(balance, fromChain?.name, fromToken?.symbol, fromToken?.address)
+          getBalanceFromWallet(balances, fromChain?.name, fromToken?.symbol, fromToken?.address)
             ?.amount || '0',
           8,
         )
@@ -89,9 +94,9 @@ export function TokenInfo(props: PropTypes) {
   const tokenBalanceReal =
     !!fromChain && !!fromToken
       ? numberToString(
-          getBalanceFromWallet(balance, fromChain?.name, fromToken?.symbol, fromToken?.address)
+          getBalanceFromWallet(balances, fromChain?.name, fromToken?.symbol, fromToken?.address)
             ?.amount || '0',
-          getBalanceFromWallet(balance, fromChain?.name, fromToken?.symbol, fromToken?.address)
+          getBalanceFromWallet(balances, fromChain?.name, fromToken?.symbol, fromToken?.address)
             ?.decimal,
         )
       : '0';

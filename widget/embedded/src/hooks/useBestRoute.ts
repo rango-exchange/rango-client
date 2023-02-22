@@ -5,8 +5,13 @@ import { useBestRouteStore } from '../store/bestRoute';
 import { useSettingsStore } from '../store/settings';
 
 export function useBestRoute() {
-  const { fromToken, toToken, inputAmount } = useBestRouteStore();
-  const { slippage, customSlippage, disabledLiquiditySources } = useSettingsStore();
+  const fromToken = useBestRouteStore.use.fromToken();
+  const toToken = useBestRouteStore.use.toToken();
+  const inputAmount = useBestRouteStore.use.inputAmount();
+
+  const slippage = useSettingsStore.use.slippage();
+  const customSlippage = useSettingsStore.use.customSlippage();
+  const disabledLiquiditySources = useSettingsStore.use.disabledLiquiditySources();
   const [count, setCount] = useState(0);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');

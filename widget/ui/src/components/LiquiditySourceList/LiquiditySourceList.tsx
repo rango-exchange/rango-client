@@ -1,3 +1,4 @@
+import { CSSProperties } from '@stitches/react';
 import React, { useState } from 'react';
 import { styled } from '../../theme';
 import { LiquiditySource } from '../../types/meta';
@@ -38,10 +39,11 @@ const LiquidityImage = styled('img', {
 export interface PropTypes {
   list: LiquiditySource[];
   onChange: (liquiditySource: LiquiditySource) => void;
+  listContainerStyle?: CSSProperties;
 }
 
 export function LiquiditySourceList(props: PropTypes) {
-  const { list, onChange } = props;
+  const { list, onChange, listContainerStyle } = props;
 
   const [selected, setSelected] = useState(
     list.filter((item) => item.selected)
@@ -83,7 +85,7 @@ export function LiquiditySourceList(props: PropTypes) {
     !!selected.find((item) => liquiditySource.title === item.title);
 
   return (
-    <div style={{ height: '450px' }}>
+    <div style={{ height: '450px', ...listContainerStyle }}>
       <div>
         <LiquiditySourceType variant="h5">Bridges</LiquiditySourceType>
         <Spacer size={16} direction="vertical"/>
