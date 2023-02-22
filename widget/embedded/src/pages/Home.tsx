@@ -49,26 +49,24 @@ export function Home() {
   const isRouterInContext = useInRouterContext();
   const navigate = useNavigate();
   const [count, setCount] = useState(0);
-  const {
-    fromChain,
-    fromToken,
-    toChain,
-    toToken,
-    setFromChain,
-    setFromToken,
-    setToChain,
-    setToToken,
-    setBestRoute,
-    inputUsdValue,
-    inputAmount,
-    setInputAmount,
-    outputAmount,
-    outputUsdValue,
-    bestRoute,
-  } = useBestRouteStore();
+  const fromChain = useBestRouteStore.use.fromChain();
+  const fromToken = useBestRouteStore.use.fromToken();
+  const toChain = useBestRouteStore.use.toChain();
+  const toToken = useBestRouteStore.use.toToken();
+  const setFromChain = useBestRouteStore.use.setFromChain();
+  const setFromToken = useBestRouteStore.use.setFromToken();
+  const setToChain = useBestRouteStore.use.setToChain();
+  const setToToken = useBestRouteStore.use.setToToken();
+  const setBestRoute = useBestRouteStore.use.setBestRoute();
+  const inputUsdValue = useBestRouteStore.use.inputUsdValue();
+  const inputAmount = useBestRouteStore.use.inputAmount();
+  const setInputAmount = useBestRouteStore.use.setInputAmount();
+  const outputAmount = useBestRouteStore.use.outputAmount();
+  const outputUsdValue = useBestRouteStore.use.outputUsdValue();
+  const bestRoute = useBestRouteStore.use.bestRoute();
 
-  const { loadingStatus: loadingMetaStatus } = useMetaStore();
-  const { accounts } = useWalletsStore();
+  const loadingMetaStatus = useMetaStore.use.loadingStatus();
+  const accounts = useWalletsStore.use.accounts();
 
   const swithFromAndTo = () => {
     setFromChain(toChain);

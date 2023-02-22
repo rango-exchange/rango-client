@@ -7,7 +7,7 @@ import { useConfirmSwap } from '../hooks/useConfirmSwap';
 export function ConfirmSwapPage() {
   const navigate = useNavigate();
 
-  const { bestRoute } = useBestRouteStore();
+  const bestRoute = useBestRouteStore.use.bestRoute();
 
   const { error, loading, warning, swap } = useConfirmSwap();
 

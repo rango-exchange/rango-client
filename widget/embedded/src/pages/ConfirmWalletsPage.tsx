@@ -16,8 +16,13 @@ export interface SelectableWallet extends SelectedWallet {
 export function ConfirmWalletsPage() {
   const navigate = useNavigate();
 
-  const { bestRoute } = useBestRouteStore();
-  const { accounts, selectedWallets, initSelectedWallets, setSelectedWallet } = useWalletsStore();
+  const bestRoute = useBestRouteStore.use.bestRoute();
+
+  const accounts = useWalletsStore.use.accounts();
+  const selectedWallets = useWalletsStore.use.selectedWallets();
+  const initSelectedWallets = useWalletsStore.use.initSelectedWallets();
+  const setSelectedWallet = useWalletsStore.use.setSelectedWallet();
+
   const { getWalletInfo } = useWallets();
   const confirmDisabled = !requiredWallets(bestRoute).every((chain) =>
     selectedWallets.map((wallet) => wallet.chain).includes(chain),

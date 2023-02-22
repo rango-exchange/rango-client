@@ -6,10 +6,10 @@ import { useSettingsStore } from '../store/settings';
 import { removeDuplicateFrom } from '../utils/common';
 
 export function LiquiditySourcePage() {
-  const {
-    meta: { swappers },
-  } = useMetaStore();
-  const { disabledLiquiditySources, toggleLiquiditySource } = useSettingsStore();
+  const { swappers } = useMetaStore.use.meta();
+  const toggleLiquiditySource = useSettingsStore.use.toggleLiquiditySource();
+  const disabledLiquiditySources = useSettingsStore.use.disabledLiquiditySources();
+
   const navigate = useNavigate();
 
   const uniqueSwappersGroups: Array<{

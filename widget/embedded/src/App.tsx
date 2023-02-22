@@ -36,10 +36,11 @@ export type WidgetProps = {
 export function App() {
   globalStyles();
   const { activeTheme } = useTheme();
-  const { blockchains } = useMetaStore((state) => state.meta);
-  const { connectWallet, disconnectWallet } = useWalletsStore();
-  //TDOD : remove any after resloving type conflicts
-  const evmBasedChainNames = useMetaStore((state) => state.meta.blockchains as any)
+  const { blockchains } = useMetaStore.use.meta();
+  const disconnectWallet = useWalletsStore.use.disconnectWallet();
+  const connectWallet = useWalletsStore.use.connectWallet();
+  const evmBasedChainNames = blockchains
+    //@ts-ignore
     .filter(isEvmBlockchain)
     .map((chain) => chain.name);
 

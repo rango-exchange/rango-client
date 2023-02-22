@@ -4,8 +4,8 @@ import { useMetaStore } from '../store/meta';
 import { useSettingsStore } from '../store/settings';
 
 export function useTheme() {
-  const theme = useSettingsStore((state) => state.theme);
-  const fetchMeta = useMetaStore((state) => state.fetchMeta);
+  const theme = useSettingsStore.use.theme();
+  const fetchMeta = useMetaStore.use.fetchMeta();
 
   const [OSTheme, setOSTheme] = useState(lightTheme);
   useEffect(() => {

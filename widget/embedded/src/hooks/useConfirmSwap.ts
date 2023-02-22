@@ -25,9 +25,16 @@ type CheckFeeAndBalanceResult =
   | null;
 
 export function useConfirmSwap() {
-  const { fromToken, toToken, inputAmount, bestRoute, setBestRoute } = useBestRouteStore();
-  const { selectedWallets, accounts } = useWalletsStore();
-  const { slippage, disabledLiquiditySources } = useSettingsStore();
+  const fromToken = useBestRouteStore.use.fromToken();
+  const toToken = useBestRouteStore.use.toToken();
+  const inputAmount = useBestRouteStore.use.inputAmount();
+  const bestRoute = useBestRouteStore.use.bestRoute();
+  const setBestRoute = useBestRouteStore.use.setBestRoute();
+  const accounts = useWalletsStore.use.accounts();
+  const selectedWallets = useWalletsStore.use.selectedWallets();
+
+  const slippage = useSettingsStore.use.slippage();
+  const disabledLiquiditySources = useSettingsStore.use.disabledLiquiditySources();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [warning, setWarning] = useState('');
