@@ -41,6 +41,7 @@ export function App() {
   const { insertAccount, disconnectWallet } = useWalletsStore();
   const { insertBalance } = useWalletsStore();
   const evmBasedChainNames = useMetaStore((state) => state.meta.blockchains)
+    //@ts-ignore
     .filter(isEvmBlockchain)
     .map((chain) => chain.name);
 
@@ -48,6 +49,7 @@ export function App() {
     if (event === Events.ACCOUNTS) {
       if (value) {
         const supportedChainNames: Network[] | null =
+          //@ts-ignore
           walletAndSupportedChainsNames(supportedChains);
         const data = prepareAccountsForWalletStore(
           type,
@@ -75,6 +77,7 @@ export function App() {
   };
 
   return (
+    //@ts-ignore
     <Provider allBlockChains={blockchains} providers={providers} onUpdateState={onUpdateState}>
       <div id="pageContainer" className={activeTheme}>
         <SwapContainer>
