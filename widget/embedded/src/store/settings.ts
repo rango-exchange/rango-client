@@ -1,6 +1,7 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { immer } from 'zustand/middleware/immer';
+import { useMetaStore } from './meta';
 import createSelectors from './selectors';
 
 type Theme = 'auto' | 'dark' | 'light';
@@ -16,6 +17,7 @@ interface Settings {
   toggleInfinitApprove: () => void;
   toggleLiquiditySource: (name: string) => void;
   setTheme: (theme: Theme) => void;
+  toggleAllLiquiditySources: () => void;
 }
 
 export const useSettingsStore = createSelectors(
@@ -36,6 +38,17 @@ export const useSettingsStore = createSelectors(
             state.customSlippage = customSlippage;
           });
         },
+        toggleAllLiquiditySources: () =>
+          set((state) => {
+            const { swappers } = useMetaStore.getState().meta;
+
+            if (swappers.length - state.disabledLiquiditySources.length === 0)
+              state.disabledLiquiditySources = [];
+            else {
+              const allSwappers = swappers.map((swapper) => swapper.swapperGroup);
+              state.disabledLiquiditySources = allSwappers;
+            }
+          }),
         toggleInfinitApprove: () =>
           set((state) => {
             state.infinitApprove = !state.infinitApprove;

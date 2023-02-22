@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { styled } from '../../theme';
 import { LiquiditySource } from '../../types/meta';
 import { Button } from '../Button/Button';
+import { Spacer } from '../Spacer';
 import { Switch } from '../Switch';
 import { Typography } from '../Typography';
 
@@ -21,12 +22,12 @@ const groupLiquiditySources = (
 const LiquiditySourceType = styled(Typography, {
   position: 'sticky',
   top: '0',
-  marginTop: '$16',
+  marginTop: '$8',
   marginBottom: '$8',
   backgroundColor: '$background',
   zIndex: '9999',
-  paddingTop: '$16',
-  paddingBottom: '$16',
+  paddingTop: '$8',
+  paddingBottom: '$8',
 });
 
 const LiquidityImage = styled('img', {
@@ -71,7 +72,7 @@ export function LiquiditySourceList(props: PropTypes) {
         variant="outlined"
         prefix={<LiquidityImage src={liquiditySource.logo} />}
         suffix={<Switch checked={selected} />}
-        style={{ marginBottom: '8px' }}
+        style={{ marginBottom: '12px' }}
         type={selected ? 'primary' : undefined}
         onClick={changeLiquiditySources.bind(null, liquiditySource)}
       >
@@ -86,7 +87,8 @@ export function LiquiditySourceList(props: PropTypes) {
   return (
     <div style={{ height: '450px', ...listContainerStyle }}>
       <div>
-        <LiquiditySourceType variant="h4">Bridges</LiquiditySourceType>
+        <LiquiditySourceType variant="h5">Bridges</LiquiditySourceType>
+        <Spacer size={16} direction="vertical"/>
         {groupLiquiditySources(list).bridge.map((liquiditySource, index) => (
           <LiquiditySourceItem
             liquiditySource={liquiditySource}
@@ -96,7 +98,9 @@ export function LiquiditySourceList(props: PropTypes) {
         ))}
       </div>
       <div>
-        <LiquiditySourceType variant="h4">Exchanges</LiquiditySourceType>
+        <LiquiditySourceType variant="h5">Exchanges</LiquiditySourceType>
+        <Spacer size={16} direction="vertical" />
+
         {groupLiquiditySources(list).exchange.map((liquiditySource, index) => (
           <LiquiditySourceItem
             liquiditySource={liquiditySource}

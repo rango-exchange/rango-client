@@ -9,6 +9,7 @@ export function LiquiditySourcePage() {
   const { swappers } = useMetaStore.use.meta();
   const toggleLiquiditySource = useSettingsStore.use.toggleLiquiditySource();
   const disabledLiquiditySources = useSettingsStore.use.disabledLiquiditySources();
+  const toggleAllLiquiditySources = useSettingsStore.use.toggleAllLiquiditySources();
 
   const navigate = useNavigate();
 
@@ -37,6 +38,7 @@ export function LiquiditySourcePage() {
 
   return (
     <LiquiditySourcesSelector
+      toggleAll={toggleAllLiquiditySources}
       list={uniqueSwappersGroups}
       onChange={(liquiditySource) => toggleLiquiditySource(liquiditySource.title)}
       onBack={() => {
