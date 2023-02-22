@@ -1,3 +1,4 @@
+import { CSSProperties } from '@stitches/react';
 import React from 'react';
 import { createPortal } from 'react-dom';
 import { styled } from '../../theme';
@@ -9,7 +10,8 @@ export interface PropTypes {
   open: boolean;
   onClose: () => void;
   content: React.ReactNode;
-  containerStyle: React.CSSProperties;
+  containerStyle?: CSSProperties;
+  contentStyle?: CSSProperties;
 }
 
 const BackDrop = styled('div', {
@@ -46,7 +48,7 @@ const ContentContainer = styled('div', {
 });
 
 export function Modal(props: PropTypes) {
-  const { title, content, open, onClose, containerStyle } = props;
+  const { title, content, open, onClose, containerStyle, contentStyle } = props;
 
   const handleBackDropClick = (event: React.MouseEvent<HTMLDivElement>) => {
     if (event.target === event.currentTarget) onClose();
@@ -62,7 +64,9 @@ export function Modal(props: PropTypes) {
                 <Typography variant="h4">{title}</Typography>
                 <CloseIcon size={24} onClick={onClose} />
               </ModalHeader>
-              <ContentContainer>{content}</ContentContainer>
+              <ContentContainer style={contentStyle}>
+                {content}
+              </ContentContainer>
             </ModalContainer>
           </BackDrop>,
           document.body

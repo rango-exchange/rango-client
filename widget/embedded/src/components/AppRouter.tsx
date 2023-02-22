@@ -1,4 +1,4 @@
-import React, { Fragment, PropsWithChildren, useEffect } from 'react';
+import React, { Fragment, PropsWithChildren } from 'react';
 import { MemoryRouter, useInRouterContext } from 'react-router';
 import { UpdateUrl } from './UpdateUrl';
 

@@ -1,4 +1,4 @@
-import React, { PropsWithChildren } from 'react';
+import React, { PropsWithChildren, RefObject } from 'react';
 
 import { styled } from '../../theme';
 
@@ -86,29 +86,44 @@ export type PropTypes = {
   prefix?: React.ReactNode;
   suffix?: React.ReactNode;
   size?: 'small' | 'medium' | 'large';
-} & Omit<React.InputHTMLAttributes<HTMLInputElement>, 'prefix' | 'size'>;
+} & Omit<React.InputHTMLAttributes<HTMLInputElement>, 'prefix' | 'size'> & {
+    ref?:
+      | ((instance: HTMLInputElement | null) => void)
+      | React.RefObject<HTMLInputElement>
+      | null
+      | undefined;
+  };
 
-export function TextField(props: PropsWithChildren<PropTypes>) {
-  const { label, prefix, suffix, children, size, style, ...inputAttributes } =
-    props;
-  return (
-    <>
-      {label && (
-        <Label {...(inputAttributes.id && { htmlFor: inputAttributes.id })}>
-          {label}
-        </Label>
-      )}
-      <InputContainer
-        disabled={inputAttributes.disabled}
-        prefix={!!prefix}
-        suffix={!!suffix}
-        size={size}
-        css={style}
-      >
-        {prefix || null}
-        <Input {...inputAttributes} spellCheck={false} />
-        {suffix || null}
-      </InputContainer>
-    </>
-  );
-}
+export const TextField = React.forwardRef(
+  (
+    props: PropsWithChildren<PropTypes>,
+    ref:
+      | RefObject<HTMLInputElement>
+      | ((instance: HTMLInputElement | null) => void)
+      | null
+      | undefined
+  ) => {
+    const { label, prefix, suffix, children, size, style, ...inputAttributes } =
+      props;
+    return (
+      <>
+        {label && (
+          <Label {...(inputAttributes.id && { htmlFor: inputAttributes.id })}>
+            {label}
+          </Label>
+        )}
+        <InputContainer
+          disabled={inputAttributes.disabled}
+          prefix={!!prefix}
+          suffix={!!suffix}
+          size={size}
+          style={style}
+        >
+          {prefix || null}
+          <Input {...inputAttributes} spellCheck={false} ref={ref} />
+          {suffix || null}
+        </InputContainer>
+      </>
+    );
+  }
+);

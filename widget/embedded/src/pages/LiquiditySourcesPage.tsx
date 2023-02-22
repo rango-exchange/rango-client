@@ -1,15 +1,15 @@
 import { LiquiditySourcesSelector } from '@rangodev/ui';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { navigationRoutes } from '../router/navigationRoutes';
 import { useMetaStore } from '../store/meta';
 import { useSettingsStore } from '../store/settings';
+import { removeDuplicateFrom } from '../utils/common';
 
 export function LiquiditySourcePage() {
-  const {
-    meta: { swappers },
-  } = useMetaStore();
-  const { disabledLiquiditySources, toggleLiquiditySource } = useSettingsStore();
+  const { swappers } = useMetaStore.use.meta();
+  const toggleLiquiditySource = useSettingsStore.use.toggleLiquiditySource();
+  const disabledLiquiditySources = useSettingsStore.use.disabledLiquiditySources();
+
   const navigate = useNavigate();
 
   const uniqueSwappersGroups: Array<{
@@ -18,7 +18,7 @@ export function LiquiditySourcePage() {
     type: 'BRIDGE' | 'AGGREGATOR' | 'DEX';
     selected: boolean;
   }> = [];
-  Array.from(new Set(swappers.map((s) => s.swapperGroup)))
+  removeDuplicateFrom(swappers.map((s) => s.swapperGroup))
     .map((swapperGroup) => {
       return swappers.find((s) => s.swapperGroup === swapperGroup);
     })

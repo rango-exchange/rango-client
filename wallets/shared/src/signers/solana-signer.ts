@@ -129,7 +129,7 @@ export const generalSolanaTransactionExecutor = async (
   } else {
     transaction = new Transaction();
     transaction.feePayer = new PublicKey(tx.from);
-    transaction.recentBlockhash = tx.recentBlockhash;
+    transaction.recentBlockhash = tx.recentBlockhash || undefined;
     tx.instructions.forEach((instruction) => {
       transaction.add(
         new TransactionInstruction({

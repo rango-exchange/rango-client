@@ -4,20 +4,17 @@ import { useSettingsStore } from '../store/settings';
 import { useMetaStore } from '../store/meta';
 import { useNavigate } from 'react-router-dom';
 import { navigationRoutes } from '../constants/navigationRoutes';
+import { removeDuplicateFrom } from '../utils/common';
 
 export function SettingsPage() {
-  const {
-    slippage,
-    setSlippage,
-    disabledLiquiditySources,
-    customSlippage,
-    setCustomSlippage,
-    theme,
-    setTheme,
-  } = useSettingsStore();
-  const {
-    meta: { swappers },
-  } = useMetaStore();
+  const slippage = useSettingsStore.use.slippage();
+  const setSlippage = useSettingsStore.use.setSlippage();
+  const disabledLiquiditySources = useSettingsStore.use.disabledLiquiditySources();
+  const customSlippage = useSettingsStore.use.customSlippage();
+  const setCustomSlippage = useSettingsStore.use.setCustomSlippage();
+  const theme = useSettingsStore.use.theme();
+  const setTheme = useSettingsStore.use.setTheme();
+  const { swappers } = useMetaStore.use.meta();
   const navigate = useNavigate();
 
   const uniqueSwappersGroups: Array<{
@@ -26,7 +23,7 @@ export function SettingsPage() {
     type: 'BRIDGE' | 'AGGREGATOR' | 'DEX';
     selected: boolean;
   }> = [];
-  Array.from(new Set(swappers.map((s) => s.swapperGroup)))
+  removeDuplicateFrom(swappers.map((s) => s.swapperGroup))
     .map((swapperGroup) => {
       return swappers.find((s) => s.swapperGroup === swapperGroup);
     })
@@ -50,8 +47,8 @@ export function SettingsPage() {
       onSlippageChange={(slippage) => setSlippage(slippage)}
       liquiditySources={uniqueSwappersGroups}
       selectedLiquiditySources={uniqueSwappersGroups.filter((s) => s.selected)}
-      onLiquiditySourcesClick={() => navigate(navigationRoutes.liquiditySources.split('/')[1])}
-      onBack={navigate.bind(null, navigationRoutes.home)}
+      onLiquiditySourcesClick={() => navigate(navigationRoutes.liquiditySources)}
+      onBack={navigate.bind(null, -1)}
       customSlippage={customSlippage || NaN}
       onCustomSlippageChange={setCustomSlippage}
       minSlippage={1}
