@@ -46,9 +46,9 @@ export function App() {
   const onUpdateState: EventHandler = (type, event, value, state, supportedChains) => {
     if (event === Events.ACCOUNTS) {
       if (value) {
-        const supportedChainNames: Network[] | null = walletAndSupportedChainsNames(
-          supportedChains as any,
-        );
+        const supportedChainNames: Network[] | null =
+          //@ts-ignore
+          walletAndSupportedChainsNames(supportedChains);
         const data = prepareAccountsForWalletStore(
           type,
           value,
@@ -63,11 +63,8 @@ export function App() {
   };
 
   return (
-    <Provider
-      //TDOD : remove any after resloving type conflicts
-      allBlockChains={blockchains as any}
-      providers={providers}
-      onUpdateState={onUpdateState}>
+    //@ts-ignore
+    <Provider allBlockChains={blockchains} providers={providers} onUpdateState={onUpdateState}>
       <div id="pageContainer" className={activeTheme}>
         <SwapContainer>
           <AppRouter>

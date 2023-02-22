@@ -1,6 +1,6 @@
 {
   "name": "@rangodev/provider-keplr",
-  "version": "0.1.11-next.51",
+  "version": "0.1.11-next.56",
   "license": "MIT",
   "module": "dist/provider-keplr.esm.js",
   "main": "dist/index.js",
@@ -46,7 +46,7 @@
   ],
   "dependencies": {
     "@keplr-wallet/types": "^0.11.21",
-    "@rangodev/wallets-shared": "^0.1.11-next.51"
+    "@rangodev/wallets-shared": "^0.1.11-next.56"
   },
   "publishConfig": {
     "access": "public"

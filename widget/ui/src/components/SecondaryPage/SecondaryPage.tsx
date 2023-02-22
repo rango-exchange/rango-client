@@ -17,9 +17,10 @@ export type PropTypes = (
     }
 ) & {
   title: string;
-  onBack: () => void;
+  onBack?: () => void;
   TopButton?: React.ReactNode;
   Footer?: React.ReactNode;
+  hasHeader?: boolean;
 };
 
 const Container = styled('div', {
@@ -58,16 +59,18 @@ const ContentContainer = styled('div', {
 });
 
 export function SecondaryPage(props: PropTypes) {
-  const { title, Footer, TopButton, onBack } = props;
+  const { title, Footer, TopButton, onBack, hasHeader = true } = props;
   const [searchedFor, setSearchedFor] = useState('');
 
   return (
     <Container>
-      <HeaderContainer>
-        <StyledBackIcon size={24} onClick={onBack} />
-        <Typography variant="h4">{title}</Typography>
-        {TopButton}
-      </HeaderContainer>
+      {hasHeader && (
+        <HeaderContainer>
+          <StyledBackIcon size={24} onClick={onBack} />
+          <Typography variant="h4">{title}</Typography>
+          {TopButton}
+        </HeaderContainer>
+      )}
 
       {props.textField && (
         <div>

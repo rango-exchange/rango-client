@@ -24,11 +24,14 @@ export default function getSigners(provider: any): WalletSigners {
       const { blockchain } = tx.asset;
 
       // Everything except ETH
-      if (!XDEFI_WALLET_SUPPORTED_NATIVE_CHAINS.includes(blockchain))
+      if (!XDEFI_WALLET_SUPPORTED_NATIVE_CHAINS.includes(blockchain as Network))
         throw new Error(
           `blockchain: ${blockchain} transfer not implemented yet.`
         );
-      const transferProvider = getNetworkInstance(provider, blockchain);
+      const transferProvider = getNetworkInstance(
+        provider,
+        blockchain as Network
+      );
 
       const {
         method,

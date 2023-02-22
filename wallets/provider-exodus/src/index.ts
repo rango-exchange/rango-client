@@ -112,6 +112,6 @@ export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
   },
   color: '#8f70fa',
   supportedChains: allBlockChains.filter((blockchainMeta) =>
-    EXODUS_WALLET_SUPPORTED_CHAINS.includes(blockchainMeta.name)
+    EXODUS_WALLET_SUPPORTED_CHAINS.includes(blockchainMeta.name as Network)
   ),
 });
