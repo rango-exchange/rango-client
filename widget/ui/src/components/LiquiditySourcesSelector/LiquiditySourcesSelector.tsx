@@ -1,3 +1,4 @@
+import { CSSProperties } from '@stitches/react';
 import React from 'react';
 import { containsText } from '../../helpers';
 import { LiquiditySource } from '../../types/meta';
@@ -14,20 +15,24 @@ const filterLiquiditySources = (
 export interface PropTypes {
   list: LiquiditySource[];
   onChange: (liquiditySource: LiquiditySource) => void;
-  onBack: () => void;
+  onBack?: () => void;
+  hasHeader?: boolean;
+  listContainerStyle?: CSSProperties;
 }
 
 export function LiquiditySourcesSelector(props: PropTypes) {
-  const { list, onChange, onBack } = props;
+  const { list, onChange, onBack, hasHeader, listContainerStyle } = props;
 
   return (
     <SecondaryPage
       textField={true}
       textFieldPlaceholder="Search By Name"
       title="Liquidity Sources"
+      hasHeader={hasHeader}
       onBack={onBack}
       Content={({ searchedFor }) => (
         <LiquiditySourceList
+          listContainerStyle={listContainerStyle}
           list={filterLiquiditySources(list, searchedFor)}
           onChange={onChange}
         />
