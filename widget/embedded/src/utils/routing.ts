@@ -4,7 +4,7 @@ import {
 } from '@rangodev/ui/dist/types/swaps';
 import BigNumber from 'bignumber.js';
 import { BestRouteResponse } from 'rango-sdk';
-import { ZERO } from './balance';
+import { ZERO } from '../constants/numbers';
 import { numberToString } from './numbers';
 import { SelectedWallet } from './wallets';
 
@@ -101,7 +101,7 @@ export const getRequiredBalanceOfWallet = (
 ): SimulationAssetAndAmount[] | null => {
   if (fee === null) return null;
   const relatedFeeStatus = fee
-    ?.find((it) => it.blockchain === wallet.blockchain)
+    ?.find((item) => item.blockchain === wallet.chain)
     ?.wallets.find((it) => it.address?.toLowerCase() === wallet.address.toLowerCase());
   if (!relatedFeeStatus) return null;
   return relatedFeeStatus.requiredAssets;

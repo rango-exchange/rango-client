@@ -25,7 +25,7 @@ export function ConfirmWalletsPage() {
 
   const { getWalletInfo } = useWallets();
   const confirmDisabled = !requiredWallets(bestRoute).every((chain) =>
-    selectedWallets.map((wallet) => wallet.blockchain).includes(chain),
+    selectedWallets.map((wallet) => wallet.chain).includes(chain),
   );
 
   useEffect(() => {

@@ -3,7 +3,7 @@ import { WalletTypeAndAddress, SwapSavedSettings } from '@rangodev/ui/dist/types
 import BigNumber from 'bignumber.js';
 import { BestRouteResponse } from 'rango-sdk';
 import { Account } from '../store/wallets';
-import { ZERO } from './balance';
+import { ZERO } from '../constants/numbers';
 
 export function getOutputRatio(inputUsdValue: BigNumber, outputUsdValue: BigNumber) {
   if (inputUsdValue.lte(ZERO) || outputUsdValue.lte(ZERO)) return 0;

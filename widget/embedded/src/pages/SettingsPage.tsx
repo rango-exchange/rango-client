@@ -4,6 +4,7 @@ import { useSettingsStore } from '../store/settings';
 import { useMetaStore } from '../store/meta';
 import { useNavigate } from 'react-router-dom';
 import { navigationRoutes } from '../constants/navigationRoutes';
+import { removeDuplicateFrom } from '../utils/common';
 
 export function SettingsPage() {
   const slippage = useSettingsStore.use.slippage();
@@ -22,7 +23,7 @@ export function SettingsPage() {
     type: 'BRIDGE' | 'AGGREGATOR' | 'DEX';
     selected: boolean;
   }> = [];
-  Array.from(new Set(swappers.map((s) => s.swapperGroup)))
+  removeDuplicateFrom(swappers.map((s) => s.swapperGroup))
     .map((swapperGroup) => {
       return swappers.find((s) => s.swapperGroup === swapperGroup);
     })

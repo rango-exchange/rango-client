@@ -45,7 +45,6 @@ export function ConfirmWallets({
   onChange,
   confirmDisabled,
 }: PropsWithChildren<PropTypes>) {
-  console.log('seelcted wallets', selectableWallets);
   const firstStep = swap.result?.swaps[0];
   const lastStep = swap.result?.swaps[swap.result?.swaps.length - 1];
 
@@ -89,9 +88,7 @@ export function ConfirmWallets({
             (on {lastStep?.to.blockchain})
           </Typography>
           {requiredWallets.map((wallet, index) => {
-            const list = selectableWallets.filter(
-              (w) => wallet === w.blockchain
-            );
+            const list = selectableWallets.filter((w) => wallet === w.chain);
             return (
               <div key={index}>
                 <Typography variant="body2" mb={12} mt={12}>
