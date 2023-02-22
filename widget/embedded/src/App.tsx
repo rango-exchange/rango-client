@@ -42,7 +42,7 @@ export function App() {
   const insertAccount = useWalletsStore.use.insertAccount();
   const disconnectWallet = useWalletsStore.use.disconnectWallet();
   //TDOD : remove any after resloving type conflicts
-  const evmBasedChainNames = (blockchains as any)
+  const evmBasedChainNames = blockchains
     //@ts-ignore
     .filter(isEvmBlockchain)
     .map((chain) => chain.name);
