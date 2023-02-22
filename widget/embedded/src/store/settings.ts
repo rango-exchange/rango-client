@@ -1,6 +1,7 @@
-import { create } from 'zustand';
+import { create, useStore } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { immer } from 'zustand/middleware/immer';
+import { useMetaStore } from './meta';
 
 type Theme = 'auto' | 'dark' | 'light';
 
@@ -15,7 +16,7 @@ interface Settings {
   toggleInfinitApprove: () => void;
   toggleLiquiditySource: (name: string) => void;
   setTheme: (theme: Theme) => void;
-  toggleAllLiquiditySources: (sources: string[]) => void;
+  toggleAllLiquiditySources: () => void;
 }
 
 export const useSettingsStore = create<Settings>()(
@@ -45,9 +46,17 @@ export const useSettingsStore = create<Settings>()(
             ? state.disabledLiquiditySources.filter((liquiditySource) => liquiditySource != name)
             : state.disabledLiquiditySources.concat(name);
         }),
-      toggleAllLiquiditySources: (sources) =>
+      toggleAllLiquiditySources: () =>
         set((state) => {
-          state.disabledLiquiditySources = sources;
+          const { swappers } = useMetaStore.getState().meta;
+          console.log( state.disabledLiquiditySources.length  , swappers.length);
+          
+          if (swappers.length - state.disabledLiquiditySources.length === 0)
+            state.disabledLiquiditySources = [];
+          else {
+            const allSwappers = swappers.map((swapper) => swapper.swapperGroup);
+            state.disabledLiquiditySources = allSwappers;
+          }
         }),
       setTheme: (theme) =>
         set((state) => {

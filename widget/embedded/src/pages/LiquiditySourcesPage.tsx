@@ -35,19 +35,9 @@ export function LiquiditySourcePage() {
       }
     });
 
-  const toggleAll = () => {
-    if (uniqueSwappersGroups.length - disabledLiquiditySources.length === 0)
-      toggleAllLiquiditySources([]);
-    else {
-      const swappers = uniqueSwappersGroups.map((swapper) => swapper.title);
-      toggleAllLiquiditySources(swappers);
-    }
-  };
-
   return (
     <LiquiditySourcesSelector
-      toggleAll={toggleAll}
-      allSelected={uniqueSwappersGroups.length - disabledLiquiditySources.length !== 0}
+      toggleAll={toggleAllLiquiditySources}
       list={uniqueSwappersGroups}
       onChange={(liquiditySource) => toggleLiquiditySource(liquiditySource.title)}
       onBack={() => {
