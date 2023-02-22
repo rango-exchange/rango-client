@@ -6,6 +6,7 @@ import { SecondaryPage } from '../SecondaryPage/SecondaryPage';
 import { Alert } from '../Alert';
 import { Spinner } from '../Spinner';
 import { styled } from '../../theme';
+import { CSSProperties } from '@stitches/react';
 
 const ListContainer = styled('div', {
   height: '450px',
@@ -24,27 +25,39 @@ const filterBlockchains = (list: BlockchainMeta[], searchedFor: string) =>
 export type LoadingStatus = 'loading' | 'success' | 'failed';
 
 export interface PropTypes {
-  type: 'Source' | 'Destination';
+  type?: 'Source' | 'Destination';
   list: BlockchainMeta[];
   selected: BlockchainMeta | null;
   onChange: (blockchain: BlockchainMeta) => void;
-  onBack: () => void;
+  onBack?: () => void;
   loadingStatus: LoadingStatus;
+  hasHeader?: boolean;
+  listContainerStyle?: CSSProperties;
 }
 
 export function BlockchainSelector(props: PropTypes) {
-  const { type, list, onChange, selected, onBack, loadingStatus } = props;
+  const {
+    type,
+    list,
+    onChange,
+    selected,
+    onBack,
+    loadingStatus,
+    hasHeader,
+    listContainerStyle,
+  } = props;
 
   return (
     <SecondaryPage
       textField={true}
       textFieldPlaceholder="Search Blockchain By Name"
       title={`Select ${type} Network`}
+      hasHeader={hasHeader}
       onBack={onBack}
       Content={({ searchedFor }) => {
         const filteredBlockchains = filterBlockchains(list, searchedFor);
         return (
-          <ListContainer>
+          <ListContainer style={listContainerStyle}>
             {loadingStatus === 'loading' && (
               <div>
                 <Spinner size={24} />

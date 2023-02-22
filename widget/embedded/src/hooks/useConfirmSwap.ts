@@ -6,7 +6,7 @@ import {
 } from '@rangodev/ui/dist/types/swaps';
 import { WalletType } from '@rangodev/wallets-shared';
 import BigNumber from 'bignumber.js';
-import { BestRouteResponse } from 'rango-sdk';
+import { BestRouteRequest, BestRouteResponse } from 'rango-sdk';
 import { useState } from 'react';
 import { httpService } from '../services/httpService';
 import { useBestRouteStore } from '../store/bestRoute';
@@ -25,9 +25,16 @@ type CheckFeeAndBalanceResult =
   | null;
 
 export function useConfirmSwap() {
-  const { fromToken, toToken, inputAmount, bestRoute, setBestRoute } = useBestRouteStore();
-  const { selectedWallets, accounts } = useWalletsStore();
-  const { slippage, disabledLiquiditySources } = useSettingsStore();
+  const fromToken = useBestRouteStore.use.fromToken();
+  const toToken = useBestRouteStore.use.toToken();
+  const inputAmount = useBestRouteStore.use.inputAmount();
+  const bestRoute = useBestRouteStore.use.bestRoute();
+  const setBestRoute = useBestRouteStore.use.setBestRoute();
+  const accounts = useWalletsStore.use.accounts();
+  const selectedWallets = useWalletsStore.use.selectedWallets();
+
+  const slippage = useSettingsStore.use.slippage();
+  const disabledLiquiditySources = useSettingsStore.use.disabledLiquiditySources();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [warning, setWarning] = useState('');
@@ -79,11 +86,20 @@ export function useConfirmSwap() {
     setLoading(true);
     setFeeStatus(null);
 
-    const selectedWalletsMap: { [p: string]: string } = {};
-    selectedWallets
-      .filter((sw) => sw.address !== null)
-      .map((sw) => [sw.blockchain, sw.address || ''])
-      .forEach(([b, address]) => (selectedWalletsMap[b] = address));
+    const selectedWalletsMap = selectedWallets.reduce(
+      (selectedWalletsMap: BestRouteRequest['selectedWallets'], selectedWallet) => (
+        (selectedWalletsMap[selectedWallet.chain] = selectedWallet.address), selectedWalletsMap
+      ),
+      {},
+    );
+
+    const connectedWallets: BestRouteRequest['connectedWallets'] = [];
+
+    accounts.forEach((account) => {
+      const chainAndAccounts = connectedWallets.find((wallet) => wallet.blockchain);
+      if (!!chainAndAccounts) chainAndAccounts.addresses.push(account.address);
+      else connectedWallets.push({ blockchain: account.chain, addresses: [account.address] });
+    });
 
     const r = await httpService
       .getBestRoute({
@@ -99,14 +115,9 @@ export function useConfirmSwap() {
           blockchain: toToken!.blockchain,
           symbol: toToken!.symbol,
         },
-        connectedWallets: accounts.map((acc) => ({
-          blockchain: acc.blockchain,
-          addresses: Array.from(new Set(acc.accounts.map((a) => a.address))),
-        })),
-        selectedWallets: selectedWallets.reduce(
-          (sw: Record<string, string>, wallet) => ((sw[wallet.blockchain] = wallet.address), sw),
-          {},
-        ),
+        connectedWallets,
+        selectedWallets: selectedWalletsMap,
+        //@ts-ignore
         swapperGroups: disabledLiquiditySources,
         swappersGroupsExclude: true,
       })
@@ -145,10 +156,18 @@ export function useConfirmSwap() {
   const swap = () => {
     if (!bestRoute) return;
     if (inputAmount!.toString() === '') return;
-    const wallets: { [p: string]: { address: string; walletType: WalletType } } = {};
-    selectedWallets.forEach(
-      (wallet) =>
-        (wallets[wallet.blockchain] = { address: wallet.address, walletType: wallet.walletType }),
+    const wallets = selectedWallets.reduce(
+      (
+        selectedWalletsMap: { [p: string]: { address: string; walletType: WalletType } },
+        selectedWallet,
+      ) => (
+        (selectedWalletsMap[selectedWallet.chain] = {
+          address: selectedWallet.address,
+          walletType: selectedWallet.walletType,
+        }),
+        selectedWalletsMap
+      ),
+      {},
     );
 
     const proceedAnyway = enoughBalance !== null;

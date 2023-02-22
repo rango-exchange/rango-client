@@ -1,6 +1,6 @@
 {
   "name": "@rangodev/provider-math-wallet",
-  "version": "0.1.11-next.53",
+  "version": "0.1.11-next.58",
   "license": "MIT",
   "module": "dist/provider-math-wallet.esm.js",
   "main": "dist/index.js",
@@ -45,7 +45,7 @@
     }
   ],
   "dependencies": {
-    "@rangodev/wallets-shared": "^0.1.11-next.53"
+    "@rangodev/wallets-shared": "^0.1.11-next.58"
   },
   "publishConfig": {
     "access": "public"
