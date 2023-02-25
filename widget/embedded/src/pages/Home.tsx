@@ -18,7 +18,9 @@ import {
   hasLimitError,
   outputRatioHasWarning,
   canComputePriceImpact,
+  LimitErrorMessage,
 } from '../utils/swap';
+import { numberToString } from '../utils/numbers';
 
 const Container = styled('div', {
   display: 'flex',
@@ -41,6 +43,7 @@ const BestRouteContainer = styled('div', {
 });
 
 const Alerts = styled('div', {
+  width: '100%',
   paddingTop: '$16',
 });
 
@@ -64,6 +67,7 @@ export function Home() {
   const outputAmount = useBestRouteStore.use.outputAmount();
   const outputUsdValue = useBestRouteStore.use.outputUsdValue();
   const bestRoute = useBestRouteStore.use.bestRoute();
+  const swappers = useMetaStore.use.meta().swappers;
 
   const loadingMetaStatus = useMetaStore.use.loadingStatus();
   const accounts = useWalletsStore.use.accounts();
@@ -94,6 +98,8 @@ export function Home() {
 
   const highValueLoss = outputRatioHasWarning(inputUsdValue, outToInRatio);
 
+  const { fromAmountRangeError, recommendation, swap } = LimitErrorMessage(bestRoute);
+
   const priceImpactCanNotBeComputed = !canComputePriceImpact(
     bestRoute,
     inputAmount,
@@ -109,6 +115,7 @@ export function Home() {
     priceImpactCanNotBeComputed,
     needsToWarnEthOnPath,
   );
+  console.log('swap', swap);
 
   const buttonDisabled =
     loadingMetaStatus != 'success' ||
@@ -149,9 +156,19 @@ export function Home() {
           <BestRoute error={bestRouteError} loading={fetchingBestRoute} data={data} />
         </BestRouteContainer>
       )}
-      {(errorMessage || waningMessage) && (
+      {(errorMessage || waningMessage || hasLimitError(bestRoute)) && (
         <Alerts>
           {errorMessage && <Alert description={errorMessage} type="error" />}
+          {hasLimitError(bestRoute) && (
+            <Alert
+              type="error"
+              title={`${swap?.swapperId} Limit`}
+              description={`${fromAmountRangeError}\n
+              Yours: ${numberToString(swap?.fromAmount || null)} ${swap?.from.symbol}\n
+              ${recommendation}
+              `}
+            />
+          )}
           {waningMessage && <Alert description={waningMessage} type="warning" />}
         </Alerts>
       )}
