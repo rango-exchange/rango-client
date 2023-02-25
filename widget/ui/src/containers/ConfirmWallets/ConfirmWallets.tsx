@@ -2,11 +2,8 @@ import { BestRouteResponse } from 'rango-sdk';
 import React, { PropsWithChildren } from 'react';
 import { Alert } from '../../components';
 import { Button } from '../../components/Button';
-import { AddWalletIcon } from '../../components/Icon';
 import { SecondaryPage } from '../../components/SecondaryPage/SecondaryPage';
 import { SelectableWalletList } from '../../components/SelectableWalletList';
-import { Spacer } from '../../components/Spacer';
-import { Tooltip } from '../../components/Tooltip';
 import { Typography } from '../../components/Typography';
 import { decimalNumber } from '../../helper';
 import { styled } from '../../theme';
@@ -24,9 +21,6 @@ const AlertContainer = styled('div', {
 export interface PropTypes {
   swap: BestRouteResponse;
   onBack: () => void;
-  onAddWallet?: (
-    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ) => void;
   onConfirm?: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
   confirmDisabled?: boolean;
   loading?: boolean;
@@ -37,7 +31,6 @@ export interface PropTypes {
 export function ConfirmWallets({
   onBack,
   loading,
-  onAddWallet,
   onConfirm,
   swap,
   requiredWallets,
@@ -58,16 +51,6 @@ export function ConfirmWallets({
       onBack={onBack}
       Footer={
         <Footer>
-          <Tooltip side="bottom" content="send to a different wallet">
-            <Button
-              variant="contained"
-              type="primary"
-              prefix={<AddWalletIcon size={24} color="white" />}
-              onClick={onAddWallet}
-            />
-          </Tooltip>
-          <Spacer />
-
           <Button
             fullWidth
             loading={loading}
