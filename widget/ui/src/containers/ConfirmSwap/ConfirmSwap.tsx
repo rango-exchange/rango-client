@@ -2,11 +2,9 @@ import { BestRouteResponse } from 'rango-sdk';
 import React, { PropsWithChildren } from 'react';
 import { Alert } from '../../components/Alert';
 import { Button } from '../../components/Button';
-import { RetryIcon, GasIcon, AddWalletIcon } from '../../components/Icon';
+import { RetryIcon, GasIcon } from '../../components/Icon';
 import { SecondaryPage } from '../../components/SecondaryPage/';
-import { Spacer } from '../../components/Spacer';
 import { StepDetail } from '../../components/StepDetail';
-import { Tooltip } from '../../components/Tooltip';
 import { Typography } from '../../components/Typography';
 import { styled } from '../../theme';
 
@@ -74,11 +72,7 @@ const Alerts = styled('div', { paddingBottom: '$16' });
 
 export interface PropTypes {
   bestRoute: BestRouteResponse | null;
-  onRefresh?: React.MouseEventHandler<SVGElement>;
   onBack: () => void;
-  onAddWallet?: (
-    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ) => void;
   onConfirm?: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
   loading?: boolean;
   error?: string;
@@ -86,9 +80,7 @@ export interface PropTypes {
 }
 export function ConfirmSwap({
   bestRoute,
-  onRefresh,
   onBack,
-  onAddWallet,
   onConfirm,
   loading,
   error,
@@ -101,16 +93,6 @@ export function ConfirmSwap({
       onBack={onBack}
       Footer={
         <Footer>
-          <Tooltip side="bottom" content="send to a different wallet">
-            <Button
-              type="primary"
-              variant="contained"
-              prefix={<AddWalletIcon size={24} color="white" />}
-              onClick={onAddWallet}
-            />
-          </Tooltip>
-          <Spacer />
-
           <Button
             type="primary"
             fullWidth
@@ -122,7 +104,6 @@ export function ConfirmSwap({
           </Button>
         </Footer>
       }
-      TopButton={<StyledUpdateIcon size={24} onClick={onRefresh} />}
       Content={bestRoute?.result?.swaps.map((swap, index) => (
         <>
           <Alerts>
