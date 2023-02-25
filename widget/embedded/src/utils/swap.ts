@@ -1,9 +1,10 @@
 import { PendingSwap } from '@rango-dev/ui/dist/containers/History/types';
 import { WalletTypeAndAddress, SwapSavedSettings } from '@rango-dev/ui/dist/types/swaps';
 import BigNumber from 'bignumber.js';
-import { BestRouteResponse } from 'rango-sdk';
+import { BestRouteResponse, SwapperMeta, SwapResult } from 'rango-sdk';
 import { Account } from '../store/wallets';
 import { ZERO } from '../constants/numbers';
+import { numberToString } from './numbers';
 
 export function getOutputRatio(inputUsdValue: BigNumber, outputUsdValue: BigNumber) {
   if (inputUsdValue.lte(ZERO) || outputUsdValue.lte(ZERO)) return 0;
@@ -30,6 +31,48 @@ export function hasLimitError(bestRoute: BestRouteResponse | null): boolean {
       }
     }).length > 0
   );
+}
+
+export function LimitErrorMessage(bestRoute: BestRouteResponse | null): {
+  swap: SwapResult | null;
+  fromAmountRangeError: string;
+  recommendation: string;
+} {
+  if (!bestRoute) return { swap: null, fromAmountRangeError: '', recommendation: '' };
+  const swap = (bestRoute?.result?.swaps || []).filter((swap) => {
+    const minimum = !!swap.fromAmountMinValue ? new BigNumber(swap.fromAmountMinValue) : null;
+    const maximum = !!swap.fromAmountMaxValue ? new BigNumber(swap.fromAmountMaxValue) : null;
+    const isExclusive = swap.fromAmountRestrictionType === 'EXCLUSIVE';
+    if (isExclusive) {
+      return minimum?.gte(swap.fromAmount) || maximum?.lte(swap.fromAmount);
+    } else {
+      return minimum?.gt(swap.fromAmount) || maximum?.lt(swap.fromAmount);
+    }
+  });
+  if (!swap) return { swap: null, fromAmountRangeError: '', recommendation: '' };
+  const minimum = !!swap.fromAmountMinValue ? new BigNumber(swap.fromAmountMinValue) : null;
+  const maximum = !!swap.fromAmountMaxValue ? new BigNumber(swap.fromAmountMaxValue) : null;
+  const isExclusive = swap.fromAmountRestrictionType === 'EXCLUSIVE';
+
+  let fromAmountRangeError = '';
+  let recommendation = '';
+  if (!isExclusive && !!minimum && minimum.gt(swap.fromAmount)) {
+    fromAmountRangeError = `Required: >= ${numberToString(minimum)} ${swap.from.symbol}`;
+    recommendation = 'Increase your swap amount';
+  } else if (isExclusive && !!minimum && minimum.gte(swap.fromAmount)) {
+    fromAmountRangeError = `Required: > ${numberToString(minimum)} ${swap.from.symbol}`;
+    recommendation = 'Increase your swap amount';
+  }
+
+  if (!isExclusive && !!maximum && maximum.lt(swap.fromAmount)) {
+    fromAmountRangeError = `Required: <= ${numberToString(maximum)} ${swap.from.symbol}`;
+    recommendation = 'Decrease your swap amount';
+  } else if (isExclusive && !!maximum && maximum.lte(swap.fromAmount)) {
+    fromAmountRangeError = `Required: < ${numberToString(maximum)} ${swap.from.symbol}`;
+    recommendation = 'Decrease your swap amount';
+  }
+
+  return { swap, fromAmountRangeError, recommendation };
 }
 
 export function getSwapButtonTitle(
