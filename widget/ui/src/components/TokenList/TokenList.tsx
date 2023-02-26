@@ -42,7 +42,6 @@ const TokenAmountContainer = styled('div', {
 
 export function TokenList(props: PropTypes) {
   const { list, searchedText, onChange } = props;
-
   const [selected, setSelected] = useState(props.selected);
 
   const changeSelected = (token: TokenWithAmount) => {
@@ -118,23 +117,31 @@ export function TokenList(props: PropTypes) {
   };
 
   useEffect(() => {
-    setFilteredTokens(
-      list.filter(
-        (token) =>
-          containsText(token.symbol, searchedText) ||
-          containsText(token.address || '', searchedText) ||
-          containsText(token.name || '', searchedText)
-      )
-    );
+    if (!!searchedText)
+      setFilteredTokens(
+        list.filter(
+          (token) =>
+            containsText(token.symbol, searchedText) ||
+            containsText(token.address || '', searchedText) ||
+            containsText(token.name || '', searchedText)
+        )
+      );
+    else {
+      setFilteredTokens(list.slice(0, PAGE_SIZE));
+    }
   }, [searchedText]);
 
   useEffect(() => {
-    setHasNextPage(list.length > filteredTokens.length);
+    setHasNextPage(
+      !!searchedText ? false : list.length > filteredTokens.length
+    );
   }, [filteredTokens.length]);
 
   useEffect(() => {
     setFilteredTokens(list.slice(0, PAGE_SIZE));
   }, []);
+
+  console.log(filteredTokens, searchedText, hasNextPage);
 
   const innerElementType: React.FC<CommonProps> = forwardRef(
     ({ style, ...rest }, ref) => {
@@ -152,6 +159,9 @@ export function TokenList(props: PropTypes) {
       );
     }
   );
+
+  console.log({ filteredTokens });
+
   return (
     <div style={{ height: '450px' }}>
       <VirtualizedList
