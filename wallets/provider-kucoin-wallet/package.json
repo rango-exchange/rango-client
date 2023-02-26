@@ -1,6 +1,6 @@
 {
   "name": "@rangodev/provider-kucoin-wallet",
-  "version": "0.1.11-next.61",
+  "version": "0.1.11-next.62",
   "license": "MIT",
   "module": "dist/provider-kucoin-wallet.esm.js",
   "main": "dist/index.js",
@@ -45,7 +45,7 @@
     }
   ],
   "dependencies": {
-    "@rangodev/wallets-shared": "^0.1.11-next.61"
+    "@rangodev/wallets-shared": "^0.1.11-next.62"
   },
   "publishConfig": {
     "access": "public"
