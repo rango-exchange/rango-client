@@ -137,7 +137,8 @@ export function getRequiredChains(route: BestRouteResponse | null) {
   return wallets;
 }
 
-type Blockchain = { name: string; accounts: AccountWithBalance[] };
+export interface SelectedWallet extends Account {}
+type Blockchain = { name: string; accounts: Balance[] };
 
 export const getSelectableWallets = (
   accounts: Account[],
@@ -167,25 +168,24 @@ const removeDuplicateWallets = (arr: SelectableWallet[], key: string): Selectabl
   return [...new Map(arr.map((item) => [item[key], item])).values()];
 };
 
-export const calculateWalletUsdValue = (balance: Balance[]): string => {
-  const uniqueAccountAddresses = new Set<string>();
-  const modifiedWalletBlockchains = balance?.map((chain) => {
-    const modifiedWalletBlockchain: Blockchain = { name: chain.blockchain, accounts: [] };
-    chain.accountsWithBalance.forEach((account) => {
-      if (!uniqueAccountAddresses.has(account.address)) {
-        uniqueAccountAddresses.add(account.address);
-      }
-    });
+export const calculateWalletUsdValue = (balance: Balance[]) => {
+  const uniqueAccountAddresses = new Set<string | null>();
+  const uniqueBalane: Balance[] = balance?.reduce((acc: Balance[], current: Balance) => {
+    return acc.findIndex((i) => i.address === current.address && i.chain === current.chain) === -1
+      ? [...acc, current]
+      : acc;
+  }, []);
+
+  const modifiedWalletBlockchains = uniqueBalane?.map((chain) => {
+    const modifiedWalletBlockchain: Blockchain = { name: chain.chain, accounts: [] };
+    if (!uniqueAccountAddresses.has(chain.address)) {
+      uniqueAccountAddresses.add(chain.address);
+    }
     uniqueAccountAddresses.forEach((accountAddress) => {
-      const lastConnectedAccountWithSameAddress = [...chain.accountsWithBalance]
-        .reverse()
-        .find((b) => b.address === accountAddress);
-      if (!!lastConnectedAccountWithSameAddress)
-        modifiedWalletBlockchain.accounts.push(lastConnectedAccountWithSameAddress);
+      if (chain.address === accountAddress) modifiedWalletBlockchain.accounts.push(chain);
     });
     return modifiedWalletBlockchain;
   });
-
   const total = numberToString(
     modifiedWalletBlockchains
       ?.flatMap((b) => b.accounts)
