@@ -7,9 +7,11 @@ import {
   WalletSigners,
   StarknetTransaction,
   TronTransaction,
+  BlockchainMeta,
 } from '../rango';
 import { WalletError } from '../errors';
-import { executeEvmTransaction, signEvmMessage } from './evm-signer';
+import { signMessage } from './sign-message';
+import { executeEvmTransaction } from './evm-signer';
 import { executeCosmosTransaction } from './cosmos-signer';
 import { executeSolanaTransaction } from './solana-signer';
 import { executeStarknetTransaction } from './starknet-signer';
@@ -63,13 +65,19 @@ export const defaultSigners = ({
       throw WalletError.UnsupportedError('executeEvmTransaction', walletType);
     },
 
-    signEvmMessage: async (
+    signMessage: async (
       walletAddress: string,
-      message: string
+      message: string,
+      blockChain: string,
+      meta: BlockchainMeta[]
     ): Promise<string> => {
-      if (supportEvm)
-        return await signEvmMessage(walletAddress, message, provider);
-      throw WalletError.UnsupportedError('signEvmMessage', walletType);
+      return await signMessage(
+        walletAddress,
+        message,
+        provider,
+        blockChain,
+        meta
+      );
     },
 
     executeTransfer: () => {

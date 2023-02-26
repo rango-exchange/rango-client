@@ -213,3 +213,32 @@ export async function executeSolanaTransaction(
   };
   return await generalSolanaTransactionExecutor(requestId, tx, solanaSigner);
 }
+
+export async function signSolanaMessage(
+  message: string,
+  provider: any
+): Promise<string> {
+  try {
+    const encodedMessage = new TextEncoder().encode(message);
+    const solanaProvider = getNetworkInstance(provider, Network.SOLANA);
+
+    const { signature } = await solanaProvider.request({
+      method: 'signMessage',
+      params: {
+        message: encodedMessage,
+      },
+    });
+
+    // its better to verify it on backend side.
+
+    // const isVerify = nacl.sign.detached.verify(
+    //   encodedMessage,
+    //   bs58.decode(signature),
+    //   bs58.decode(publicKey)
+    // );
+
+    return signature;
+  } catch (error) {
+    throw new WalletError(WalletErrorCode.SIGN_TX_ERROR, undefined, error);
+  }
+}

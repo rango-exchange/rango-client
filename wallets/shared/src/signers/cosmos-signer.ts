@@ -260,3 +260,23 @@ function manipulateMsgForDirectIBC(m: any): any {
   }
   return { ...m };
 }
+
+export async function signCosmosMessage(
+  walletAddress: string,
+  message: string,
+  provider: any,
+  chainId: string | null
+): Promise<string> {
+  try {
+    const cosmosProvider = getNetworkInstance(provider, Network.COSMOS);
+    const { signature } = await cosmosProvider.signArbitrary(
+      chainId,
+      walletAddress,
+      message
+    );
+
+    return signature;
+  } catch (error) {
+    throw new WalletError(WalletErrorCode.SIGN_TX_ERROR, undefined, error);
+  }
+}

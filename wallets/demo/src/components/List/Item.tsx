@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useWallets } from '@rangodev/wallets-core';
+import { readAccountAddress, useWallets } from '@rangodev/wallets-core';
 import { Network, WalletType, detectInstallLink, WalletInfo } from '@rangodev/wallets-shared';
 import './styles.css';
 import {
@@ -64,8 +64,19 @@ function Item({ type, info }: { type: WalletType; info: WalletInfo }) {
         supportedChainsNames,
       ).find((a) => a.accounts.find((b) => b.isConnected));
       const signers = getSigners(type);
-      signers
-        .signEvmMessage(activeAccount?.accounts[0].address || '', 'Hello World')
+      const address =
+        (walletState.accounts?.length > 1 &&
+          readAccountAddress(
+            walletState.accounts.find((account) => account.includes(network.toLowerCase()))!,
+          ).address) ||
+        activeAccount?.accounts[0].address;
+      const result = signers.signMessage(
+        address || '',
+        'Hello World',
+        network,
+        info.supportedChains,
+      );
+      result
         .then((signature) => {
           alert(signature);
         })
@@ -141,7 +152,7 @@ function Item({ type, info }: { type: WalletType; info: WalletInfo }) {
           name="Network"
           id="Network"
           onChange={(e) => setNetwork(e.target.value as Network)}
-          disabled={!walletState.connected || !canSwitchNetwork}>
+          disabled={!walletState.connected}>
           <option value="-1" selected>
             Default Chain
           </option>
@@ -170,11 +181,7 @@ function Item({ type, info }: { type: WalletType; info: WalletInfo }) {
             disabled={!walletState.connected}
             type="primary"
             suffix={<SignatureIcon size={24} color="white" />}
-            onClick={() =>
-              evmBasedChains.length
-                ? handleSigner()
-                : alert('At the moment, you can only test the signature on the EVM wallets')
-            }>
+            onClick={handleSigner}>
             Sign
           </Button>
           <Spacer size={12} />
