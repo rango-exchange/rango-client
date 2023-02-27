@@ -40,6 +40,23 @@ const TokenAmountContainer = styled('div', {
   alignItems: 'flex-end',
 });
 
+const filterTokens = (
+  list: Token[],
+  searchedText: string,
+  outputCount?: number
+) => {
+  if (searchedText)
+    return list
+      .filter(
+        (token) =>
+          containsText(token.symbol, searchedText) ||
+          containsText(token.address || '', searchedText) ||
+          containsText(token.name || '', searchedText)
+      )
+      .slice(0, outputCount);
+  else return list.slice(0, outputCount);
+};
+
 export function TokenList(props: PropTypes) {
   const { list, searchedText, onChange } = props;
   const [selected, setSelected] = useState(props.selected);
@@ -112,34 +129,21 @@ export function TokenList(props: PropTypes) {
     setIsNextPageLoading(true);
     setTimeout(() => {
       setIsNextPageLoading(false);
-      setFilteredTokens(list.slice(0, filteredTokens.length + PAGE_SIZE));
+      setFilteredTokens(
+        filterTokens(list, searchedText, filteredTokens.length + PAGE_SIZE)
+      );
     }, 0);
   };
 
   useEffect(() => {
-    if (!!searchedText)
-      setFilteredTokens(
-        list.filter(
-          (token) =>
-            containsText(token.symbol, searchedText) ||
-            containsText(token.address || '', searchedText) ||
-            containsText(token.name || '', searchedText)
-        )
-      );
-    else {
-      setFilteredTokens(list.slice(0, PAGE_SIZE));
-    }
+    setFilteredTokens(filterTokens(list, searchedText, PAGE_SIZE));
   }, [searchedText]);
 
   useEffect(() => {
     setHasNextPage(
-      !!searchedText ? false : list.length > filteredTokens.length
+      filterTokens(list, searchedText).length > filterTokens.length
     );
   }, [filteredTokens.length]);
-
-  useEffect(() => {
-    setFilteredTokens(list.slice(0, PAGE_SIZE));
-  }, []);
 
   const innerElementType: React.FC<CommonProps> = forwardRef(
     ({ style, ...rest }, ref) => {
