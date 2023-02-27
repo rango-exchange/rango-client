@@ -1,6 +1,6 @@
 {
   "name": "@rangodev/provider-cosmostation",
-  "version": "0.1.11-next.65",
+  "version": "0.1.11-next.66",
   "license": "MIT",
   "module": "dist/provider-cosmostation.esm.js",
   "main": "dist/index.js",
@@ -45,7 +45,7 @@
     }
   ],
   "dependencies": {
-    "@rangodev/wallets-shared": "^0.1.11-next.65"
+    "@rangodev/wallets-shared": "^0.1.11-next.66"
   },
   "publishConfig": {
     "access": "public"
