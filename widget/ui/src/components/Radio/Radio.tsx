@@ -66,7 +66,6 @@ export interface PropTypes {
   onChange: (value: string) => void;
   direction?: 'vertical' | 'horizontal';
   style?: CSSProperties;
-
 }
 
 export function Radio(props: PropTypes) {
@@ -79,8 +78,8 @@ export function Radio(props: PropTypes) {
         direction={direction}
         style={style}
       >
-        {props.options.map((option) => (
-          <ItemContainer>
+        {props.options.map((option, index) => (
+          <ItemContainer key={index}>
             <StyledItem value={option.value} id={option.value}>
               <StyledIndicator />
             </StyledItem>

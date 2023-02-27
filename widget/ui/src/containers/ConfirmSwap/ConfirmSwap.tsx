@@ -1,5 +1,5 @@
 import { BestRouteResponse } from 'rango-sdk';
-import React, { PropsWithChildren } from 'react';
+import React, { Fragment, PropsWithChildren } from 'react';
 import { Alert } from '../../components/Alert';
 import { Button } from '../../components/Button';
 import { RetryIcon, GasIcon, AddWalletIcon } from '../../components/Icon';
@@ -124,7 +124,7 @@ export function ConfirmSwap({
       }
       TopButton={<StyledUpdateIcon size={24} onClick={onRefresh} />}
       Content={bestRoute?.result?.swaps.map((swap, index) => (
-        <>
+        <Fragment key={index}>
           <Alerts>
             {error && <Alert description={error} type="error" />}
             {warning && <Alert description={warning} type="warning" />}
@@ -166,7 +166,7 @@ export function ConfirmSwap({
             blockchain={swap.to.blockchain}
             amount={swap.toAmount}
           />
-        </>
+        </Fragment>
       ))}
     />
   );

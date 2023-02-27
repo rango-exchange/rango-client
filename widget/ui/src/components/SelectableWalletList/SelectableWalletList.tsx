@@ -6,6 +6,7 @@ import { Typography } from '../Typography';
 const Row = styled('div', {
   display: 'flex',
   flexWrap: 'wrap',
+  justifyContent: 'center',
 });
 
 const Circle = styled('div', {
@@ -101,7 +102,7 @@ export function SelectableWalletList({
             key={index}
           >
             <img src={w.image} alt={w.walletType} width={24} height={24} />
-            <Typography variant="body2">{w.walletType}</Typography>
+            <Typography variant="body2">{w.name}</Typography>
             <Circle checked={checked}>
               <SolidCircle checked={checked} />
             </Circle>

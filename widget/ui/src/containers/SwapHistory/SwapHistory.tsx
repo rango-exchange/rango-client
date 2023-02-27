@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import {
   StepDetail,
   SecondaryPage,
@@ -70,7 +70,7 @@ export function SwapHistory(props: PropTypes) {
       Content={
         <>
           {pendingSwap?.steps.map((step, index) => (
-            <>
+            <Fragment key={index}>
               {index === 0 && (
                 <RelativeContainer>
                   <StepDetail
@@ -110,7 +110,7 @@ export function SwapHistory(props: PropTypes) {
                   {!!step.explorerUrl && (
                     <div>
                       {step.explorerUrl.map((item, index) => (
-                        <InternalDetail>
+                        <InternalDetail key={index}>
                           <DescriptionContainer>
                             <CheckCircleIcon color="success" />
                             <Description variant="body2">
@@ -156,7 +156,7 @@ export function SwapHistory(props: PropTypes) {
                 blockchain={step.toBlockchain}
                 amount={step.outputAmount}
               />
-            </>
+            </Fragment>
           ))}
         </>
       }

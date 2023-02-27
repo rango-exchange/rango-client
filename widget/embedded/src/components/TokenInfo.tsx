@@ -148,7 +148,7 @@ export function TokenInfo(props: PropTypes) {
             align="start"
             size="large"
             style={{ marginRight: '.5rem' }}>
-            {loadingStatus === 'success' && chain ? chain.name : 'Chain'}
+            {loadingStatus === 'success' && chain ? chain.displayName : 'Chain'}
           </Button>
           <Button
             onClick={() => {

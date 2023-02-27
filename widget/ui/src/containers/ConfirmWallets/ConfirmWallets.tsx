@@ -54,7 +54,7 @@ export function ConfirmWallets({
   return (
     <SecondaryPage
       textField={false}
-      title="Swap"
+      title="Confirm Swap"
       onBack={onBack}
       Footer={
         <Footer>
