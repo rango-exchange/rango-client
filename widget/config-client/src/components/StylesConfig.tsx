@@ -1,9 +1,8 @@
 import { ColorPicker, Radio, Spacer, styled, TextField, Typography } from '@rangodev/ui';
 import React from 'react';
-import { LANGUEGES } from '../constants';
+import { LANGUEGES, FONTS } from '../constants';
 import { StyleType } from '../types';
 import { ConfigurationContainer } from './ChainsConfig';
-import { fonts } from './mock';
 import { Select } from './Select';
 
 const COLORS = [
@@ -180,7 +179,7 @@ export function StylesConfig({ style, onChange }: PropTypes) {
             label="Font Faminy"
             value={style.fontFaminy}
             name="fontFaminy"
-            list={fonts}
+            list={FONTS}
             modalTitle="Fonts"
             onChange={(name, value) => onChangeStyles(name, value, false)}
           />
