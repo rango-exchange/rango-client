@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/ui",
-  "version": "0.1.10-next.68",
+  "version": "0.1.10-next.69",
   "license": "MIT",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -75,7 +75,7 @@
     "@radix-ui/react-radio-group": "^1.1.1",
     "@radix-ui/react-switch": "^1.0.1",
     "@radix-ui/react-tooltip": "^1.0.2",
-    "@rango-dev/wallets-shared": "^0.1.11-next.68",
+    "@rango-dev/wallets-shared": "^0.1.11-next.69",
     "@stitches/react": "^1.2.8",
     "rango-sdk": "^0.1.11",
     "react-virtualized-auto-sizer": "^1.0.7",
