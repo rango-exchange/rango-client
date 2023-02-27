@@ -1,4 +1,4 @@
-import React, { PropsWithChildren } from 'react';
+import React, { Fragment, PropsWithChildren } from 'react';
 import { GasIcon, TimeIcon } from '../../components/Icon';
 import { StepDetail } from '../../components/StepDetail';
 import { Typography } from '../../components/Typography';
@@ -149,7 +149,7 @@ export function BestRoute({
 
         {!!data &&
           data.result?.swaps.map((swap, index) => (
-            <>
+            <Fragment key={index}>
               {index === 0 && (
                 <RelativeContainer>
                   <StepDetail
@@ -178,7 +178,7 @@ export function BestRoute({
                 blockchain={swap.to.blockchain}
                 amount={swap.toAmount}
               />
-            </>
+            </Fragment>
           ))}
         {!!data && !data?.result && (
           <Typography variant="body2">No routes found</Typography>

@@ -56,6 +56,8 @@ export function Alert(props: PropTypes) {
     ['error', 'success', 'warning'] as PropTypes['type'][]
   ).includes(type);
 
+  const textColor = type === 'warning' ? 'primary' : 'secondary';
+
   return (
     <MainContainer type={type}>
       {showIcon && (
@@ -68,10 +70,14 @@ export function Alert(props: PropTypes) {
       <ContentContainer>
         {title && (
           <TitleContainer>
-            <Typography variant="h6">{title}</Typography>
+            <Typography color={textColor} variant="h6">
+              {title}
+            </Typography>
           </TitleContainer>
         )}
-        <Typography variant="body2">{description}</Typography>
+        <Typography color={textColor} variant="body2">
+          {description}
+        </Typography>
       </ContentContainer>
     </MainContainer>
   );
