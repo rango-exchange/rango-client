@@ -13,7 +13,7 @@ import {
   Manager,
   QueueDef,
   Events,
-} from '@rangodev/queue-manager-core';
+} from '@rango-dev/queue-manager-core';
 import { ManagerContext } from './types';
 
 const ManagerCtx = createContext<{ manager: ManagerContext }>({

@@ -1,6 +1,6 @@
-import { ConnectWalletsModal } from '@rangodev/ui';
-import { useWallets } from '@rangodev/wallets-core';
-import { WalletType } from '@rangodev/wallets-shared';
+import { ConnectWalletsModal } from '@rango-dev/ui';
+import { useWallets } from '@rango-dev/wallets-core';
+import { WalletType } from '@rango-dev/wallets-shared';
 import React, { useState } from 'react';
 import { getlistWallet } from './helpers';
 export interface PropTypes {

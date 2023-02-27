@@ -1,5 +1,5 @@
-import { Providers, WalletSigners } from '@rangodev/wallets-core';
-import { Network, WalletType, WalletInfo } from '@rangodev/wallets-shared';
+import { Providers, WalletSigners } from '@rango-dev/wallets-core';
+import { Network, WalletType, WalletInfo } from '@rango-dev/wallets-shared';
 export interface State {
   connected: boolean;
   connecting: boolean;

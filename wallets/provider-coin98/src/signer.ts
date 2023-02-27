@@ -7,7 +7,7 @@ import {
   defaultSigners,
   generalSolanaTransactionExecutor,
   SolanaSigner,
-} from '@rangodev/wallets-shared';
+} from '@rango-dev/wallets-shared';
 import { PublicKey, Transaction } from '@solana/web3.js';
 import bs58 from 'bs58';
 

@@ -6,9 +6,9 @@ import React, {
 } from 'react';
 import { ProviderContext } from './types';
 import { defaultState, state_reducer } from './helpers';
-import { useWallets } from '@rangodev/wallets-core';
+import { useWallets } from '@rango-dev/wallets-core';
 import Modal from './modal';
-import { WalletType } from '@rangodev/wallets-shared';
+import { WalletType } from '@rango-dev/wallets-shared';
 // @ts-ignore
 const AdapterContext = createContext<ProviderContext>({});
 

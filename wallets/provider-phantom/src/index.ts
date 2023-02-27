@@ -9,7 +9,7 @@ import {
   BlockchainMeta,
   WalletInfo,
   solanaBlockchain,
-} from '@rangodev/wallets-shared';
+} from '@rango-dev/wallets-shared';
 import { phantom as phantom_instance } from './helpers';
 import signer from './signer';
 

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { BlockchainSelector } from '@rangodev/ui';
+import { BlockchainSelector } from '@rango-dev/ui';
 import { useBestRouteStore } from '../store/bestRoute';
 import { useMetaStore } from '../store/meta';
 import { useNavigate } from 'react-router-dom';

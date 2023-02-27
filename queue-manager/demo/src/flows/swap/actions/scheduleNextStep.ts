@@ -1,6 +1,6 @@
-import { ExecuterActions } from "@rangodev/queue-manager-core";
-import { SwapActionTypes, SwapQueueContext, SwapStorage } from "../types";
-import { getCurrentStep, isTxAlreadyCreated } from "../helpers";
+import { ExecuterActions } from '@rango-dev/queue-manager-core';
+import { SwapActionTypes, SwapQueueContext, SwapStorage } from '../types';
+import { getCurrentStep, isTxAlreadyCreated } from '../helpers';
 
 export function scheduleNextStep({
   schedule,
@@ -10,10 +10,7 @@ export function scheduleNextStep({
   getStorage,
   context,
 }: ExecuterActions<SwapStorage, SwapActionTypes, SwapQueueContext>) {
-  console.log(
-    "%cschedule next step...",
-    "color:#5fa425; background:white; font-size: 1.5rem"
-  );
+  console.log('%cschedule next step...', 'color:#5fa425; background:white; font-size: 1.5rem');
 
   const swap = getStorage().swapDetails;
   const currentStep = getCurrentStep(swap);
@@ -28,15 +25,15 @@ export function scheduleNextStep({
       return next();
     }
 
-    swap.status = "running";
+    swap.status = 'running';
 
     setStorage({ ...getStorage(), swapDetails: swap });
 
     schedule(SwapActionTypes.CREATE_TRANSACTION);
     next();
   } else {
-    const isFailed = swap.steps.find((step) => step.status === "failed");
-    swap.status = isFailed ? "failed" : "success";
+    const isFailed = swap.steps.find((step) => step.status === 'failed');
+    swap.status = isFailed ? 'failed' : 'success';
     swap.finishTime = new Date().getTime().toString();
 
     setStorage({
@@ -45,7 +42,7 @@ export function scheduleNextStep({
     });
 
     context.notifier({
-      eventType: isFailed ? "task_failed" : "task_completed",
+      eventType: isFailed ? 'task_failed' : 'task_completed',
       swap: swap,
       step: null,
     });

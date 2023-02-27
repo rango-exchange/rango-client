@@ -1,5 +1,5 @@
 import React from 'react';
-import { Settings } from '@rangodev/ui';
+import { Settings } from '@rango-dev/ui';
 import { useSettingsStore } from '../store/settings';
 import { useMetaStore } from '../store/meta';
 import { useNavigate } from 'react-router-dom';

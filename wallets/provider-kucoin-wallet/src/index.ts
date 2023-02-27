@@ -12,7 +12,7 @@ import {
   BlockchainMeta,
   WalletInfo,
   Network,
-} from '@rangodev/wallets-shared';
+} from '@rango-dev/wallets-shared';
 import {
   getKucoinInstance as kucoin_instance,
   KUCOIN_WALLET_SUPPORTED_CHAINS,

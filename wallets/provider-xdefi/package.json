@@ -1,5 +1,5 @@
 {
-  "name": "@rangodev/provider-xdefi",
+  "name": "@rango-dev/provider-xdefi",
   "version": "0.1.11-next.68",
   "license": "MIT",
   "module": "dist/provider-xdefi.esm.js",
@@ -45,7 +45,7 @@
     }
   ],
   "dependencies": {
-    "@rangodev/wallets-shared": "^0.1.11-next.68"
+    "@rango-dev/wallets-shared": "^0.1.11-next.68"
   },
   "publishConfig": {
     "access": "public"

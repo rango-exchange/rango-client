@@ -1,5 +1,5 @@
 {
-  "name": "@rangodev/provider-tokenpocket",
+  "name": "@rango-dev/provider-tokenpocket",
   "version": "0.1.11-next.68",
   "license": "MIT",
   "module": "dist/provider-tokenpocket.esm.js",
@@ -45,7 +45,7 @@
     }
   ],
   "dependencies": {
-    "@rangodev/wallets-shared": "^0.1.11-next.68"
+    "@rango-dev/wallets-shared": "^0.1.11-next.68"
   },
   "publishConfig": {
     "access": "public"

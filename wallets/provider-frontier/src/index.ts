@@ -16,8 +16,8 @@ import {
   isEvmBlockchain,
   isSolanaBlockchain,
   solanaBlockchain,
-} from '@rangodev/wallets-shared';
-import type { ProviderConnectResult } from '@rangodev/wallets-shared';
+} from '@rango-dev/wallets-shared';
+import type { ProviderConnectResult } from '@rango-dev/wallets-shared';
 import { frontier as frontier_instance, getSolanaAccounts } from './helpers';
 import signer from './signer';
 

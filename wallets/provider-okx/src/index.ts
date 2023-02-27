@@ -14,7 +14,7 @@ import {
   isEvmBlockchain,
   BlockchainMeta,
   WalletInfo,
-} from '@rangodev/wallets-shared';
+} from '@rango-dev/wallets-shared';
 
 import {
   getSolanaAccounts,

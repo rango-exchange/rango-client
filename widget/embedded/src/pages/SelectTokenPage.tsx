@@ -1,5 +1,5 @@
 import React from 'react';
-import { TokenSelector } from '@rangodev/ui';
+import { TokenSelector } from '@rango-dev/ui';
 import { useBestRouteStore } from '../store/bestRoute';
 import { useMetaStore } from '../store/meta';
 import { useNavigate } from 'react-router-dom';

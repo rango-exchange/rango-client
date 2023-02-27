@@ -1,9 +1,9 @@
 import { useNavigate } from 'react-router-dom';
-import { Alert, SecondaryPage, styled, Wallet } from '@rangodev/ui';
+import { Alert, SecondaryPage, styled, Wallet } from '@rango-dev/ui';
 import React, { useState } from 'react';
 import { getlistWallet } from '../utils/wallets';
-import { WalletType } from '@rangodev/wallets-shared';
-import { useWallets } from '@rangodev/wallets-core';
+import { WalletType } from '@rango-dev/wallets-shared';
+import { useWallets } from '@rango-dev/wallets-core';
 
 const ListContainer = styled('div', {
   display: 'grid',

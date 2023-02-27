@@ -1,4 +1,4 @@
-import { globalCss } from '@rangodev/ui';
+import { globalCss } from '@rango-dev/ui';
 
 export const globalStyles = globalCss({
   '*': {

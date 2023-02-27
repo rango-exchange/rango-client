@@ -1,4 +1,4 @@
-import { WalletType } from '@rangodev/wallets-shared';
+import { WalletType } from '@rango-dev/wallets-shared';
 import { Token } from 'rango-sdk';
 import { create } from 'zustand';
 import { SelectableWallet } from '../pages/ConfirmWalletsPage';

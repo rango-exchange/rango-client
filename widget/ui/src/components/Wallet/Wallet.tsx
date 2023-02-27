@@ -1,4 +1,4 @@
-import { detectInstallLink, WalletType } from '@rangodev/wallets-shared';
+import { detectInstallLink, WalletType } from '@rango-dev/wallets-shared';
 import React from 'react';
 
 import { styled } from '../../theme';

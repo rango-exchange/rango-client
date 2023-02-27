@@ -3,7 +3,7 @@ import {
   ProviderConnectResult,
   WalletErrorCode,
   WalletError,
-} from '@rangodev/wallets-shared';
+} from '@rango-dev/wallets-shared';
 import { SUPPORTED_ETH_CHAINS, SUPPORTED_NETWORKS } from './constants';
 
 type Provider = Map<Network, any>;

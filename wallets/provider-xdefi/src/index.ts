@@ -16,7 +16,7 @@ import {
   XDEFI_WALLET_SUPPORTED_NATIVE_CHAINS,
   BlockchainMeta,
   WalletInfo,
-} from '@rangodev/wallets-shared';
+} from '@rango-dev/wallets-shared';
 import { SUPPORTED_ETH_CHAINS } from './constants';
 
 import { getNonEvmAccounts, xdefi as xdefi_instances } from './helpers';

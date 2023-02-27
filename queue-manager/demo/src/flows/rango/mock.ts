@@ -1,5 +1,5 @@
-import { WalletsAndSupportedChains } from "@rangodev/wallets-core";
-import { Meta, Network, WalletType } from "@rangodev/wallets-shared";
+import { WalletsAndSupportedChains } from "@rango-dev/wallets-core";
+import { Meta, Network, WalletType } from "@rango-dev/wallets-shared";
 import { RawAccounts, Wallet } from "./types";
 
 const evmAddress = "0x2702d89c1c8658b49c45dd460deebcc45faec03c";

@@ -1,4 +1,4 @@
-import { SwapHistory } from '@rangodev/ui';
+import { SwapHistory } from '@rango-dev/ui';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { pendingSwap } from '../mockData/pendingSwap';

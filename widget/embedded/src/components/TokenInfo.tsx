@@ -1,5 +1,5 @@
 import React from 'react';
-import { AngleDownIcon, Button, InfoCircleIcon, styled, TextField, Typography } from '@rangodev/ui';
+import { AngleDownIcon, Button, InfoCircleIcon, styled, TextField, Typography } from '@rango-dev/ui';
 import { useMetaStore } from '../store/meta';
 import { BlockchainMeta, Token } from 'rango-sdk';
 import { useNavigate } from 'react-router-dom';
