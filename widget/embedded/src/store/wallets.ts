@@ -11,6 +11,7 @@ import {
   SelectedWallet,
 } from '../utils/wallets';
 import { useBestRouteStore } from './bestRoute';
+import { useMetaStore } from './meta';
 import createSelectors from './selectors';
 
 export interface Account {
@@ -45,7 +46,7 @@ interface WalletsStore {
   accounts: Account[];
   balances: Balance[];
   selectedWallets: SelectedWallet[];
-  connectWallet: (accounts: Account[], tokens: Token[]) => void;
+  connectWallet: (accounts: Account[]) => void;
   disconnectWallet: (walletType: WalletType) => void;
   initSelectedWallets: () => void;
   setSelectedWallet: (wallet: SelectableWallet) => void;
@@ -56,7 +57,9 @@ export const useWalletsStore = createSelectors(
     accounts: [],
     balances: [],
     selectedWallets: [],
-    connectWallet: (accounts, tokens) => {
+    connectWallet: (accounts) => {
+      const tokens = useMetaStore.getState().meta.tokens;
+
       set((state) => ({
         accounts: state.accounts.concat(accounts),
         balances: state.balances.concat(
