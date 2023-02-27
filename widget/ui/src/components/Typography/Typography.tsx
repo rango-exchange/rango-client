@@ -4,6 +4,7 @@ import { styled } from '../../theme';
 const TypographyContainer = styled('span', {
   margin: 0,
   color: '$foreground',
+  display: 'inline-block',
   variants: {
     variant: {
       h1: {
@@ -163,6 +164,14 @@ const TypographyContainer = styled('span', {
         marginBottom: '$12',
       },
     },
+    color: {
+      primary: {
+        color: '$foreground',
+      },
+      secondary: {
+        color: '$background',
+      },
+    },
   },
 });
 
@@ -183,6 +192,7 @@ export interface PropTypes {
   mb?: 2 | 4 | 8 | 12;
   ml?: 2 | 4 | 8 | 12;
   mr?: 2 | 4 | 8 | 12;
+  color?: 'primary' | 'secondary';
 }
 
 export function Typography({

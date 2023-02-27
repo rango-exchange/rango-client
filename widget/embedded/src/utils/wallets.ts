@@ -157,7 +157,10 @@ export function getSelectableWallets(
     walletType: account.walletType,
     chain: account.chain,
     image: getWalletInfo(account.walletType).img,
-    selected: !!selectedWallets.find((wallet) => wallet.chain === account.chain),
+    name: getWalletInfo(account.walletType).name,
+    selected: !!selectedWallets.find(
+      (wallet) => wallet.chain === account.chain && wallet.walletType === account.walletType,
+    ),
   }));
 
   return requiredChains

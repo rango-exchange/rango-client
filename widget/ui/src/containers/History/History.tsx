@@ -51,11 +51,12 @@ const SwapsGroup = (props: Omit<PropTypes, 'onBack'>) => {
 
   return (
     <>
-      {swapsInGroup.map((group) => (
-        <Group>
+      {swapsInGroup.map((group, index) => (
+        <Group key={index}>
           <GroupTitle variant="body2">{group.title}</GroupTitle>
-          {group.swaps.map((swap: PendingSwap) => (
+          {group.swaps.map((swap: PendingSwap, index: number) => (
             <SwapDetail
+              key={index}
               swap={swap}
               status={swap.status}
               onClick={onSwapClick}
