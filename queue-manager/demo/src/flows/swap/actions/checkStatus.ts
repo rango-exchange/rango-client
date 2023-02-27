@@ -2,7 +2,7 @@ import BigNumber from 'bignumber.js';
 
 import { checkApproved, checkSwapStatus, getNextStep } from '../../rango/helpers';
 import { PendingSwap, MessageSeverity, SwapperStatusResponse } from '../../rango/types';
-import { ExecuterActions } from '@rangodev/queue-manager-core';
+import { ExecuterActions } from '@rango-dev/queue-manager-core';
 import {
   delay,
   getCurrentStep,

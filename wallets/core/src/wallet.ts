@@ -3,7 +3,7 @@ import {
   getBlockChainNameFromId,
   Network,
   WalletType,
-} from '@rangodev/wallets-shared';
+} from '@rango-dev/wallets-shared';
 import { accountAddressesWithNetwork, needsCheckInstallation } from './helpers';
 import {
   Events,

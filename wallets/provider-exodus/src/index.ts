@@ -15,7 +15,7 @@ import {
   isSolanaBlockchain,
   BlockchainMeta,
   WalletInfo,
-} from '@rangodev/wallets-shared';
+} from '@rango-dev/wallets-shared';
 import {
   exodus_instances,
   EXODUS_WALLET_SUPPORTED_CHAINS,

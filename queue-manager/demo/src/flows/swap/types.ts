@@ -1,13 +1,13 @@
-import { QueueStorage } from "@rangodev/queue-manager-core";
-import { QueueContext } from "@rangodev/queue-manager-core/dist/queue";
-import { ConnectResult, Providers } from "@rangodev/wallets-core";
+import { QueueStorage } from "@rango-dev/queue-manager-core";
+import { QueueContext } from "@rango-dev/queue-manager-core/dist/queue";
+import { ConnectResult, Providers } from "@rango-dev/wallets-core";
 import {
   Meta,
   Network,
   WalletSigners,
   WalletState,
   WalletType,
-} from "@rangodev/wallets-shared";
+} from "@rango-dev/wallets-shared";
 import { PendingSwap, SwapProgressNotification, Wallet } from "../rango/types";
 
 export interface SwapStorage extends QueueStorage {

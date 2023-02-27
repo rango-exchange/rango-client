@@ -1,5 +1,5 @@
 import React from 'react';
-import { ConfirmSwap } from '@rangodev/ui';
+import { ConfirmSwap } from '@rango-dev/ui';
 import { useNavigate } from 'react-router-dom';
 import { useBestRouteStore } from '../store/bestRoute';
 import { useConfirmSwap } from '../hooks/useConfirmSwap';

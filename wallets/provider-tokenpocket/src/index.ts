@@ -12,7 +12,7 @@ import {
   BlockchainMeta,
   WalletInfo,
   evmBlockchains,
-} from '@rangodev/wallets-shared';
+} from '@rango-dev/wallets-shared';
 import { tokenpocket as tokenpocket_instance } from './helpers';
 import signer from './signer';
 

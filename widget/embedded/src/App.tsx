@@ -1,12 +1,12 @@
-import { SwapContainer } from '@rangodev/ui';
+import { SwapContainer } from '@rango-dev/ui';
 import React from 'react';
 import { AppRouter } from './components/AppRouter';
 import { useMetaStore } from './store/meta';
 import './app.css';
-import { Events, Provider } from '@rangodev/wallets-core';
-import { allProviders } from '@rangodev/provider-all';
-import { EventHandler } from '@rangodev/wallets-core/dist/wallet';
-import { isEvmBlockchain, Network } from '@rangodev/wallets-shared';
+import { Events, Provider } from '@rango-dev/wallets-core';
+import { allProviders } from '@rango-dev/provider-all';
+import { EventHandler } from '@rango-dev/wallets-core/dist/wallet';
+import { isEvmBlockchain, Network } from '@rango-dev/wallets-shared';
 import { prepareAccountsForWalletStore, walletAndSupportedChainsNames } from './utils/wallets';
 import { useWalletsStore } from './store/wallets';
 import { Layout } from './components/Layout';

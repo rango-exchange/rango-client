@@ -13,7 +13,7 @@ import {
   WalletInfo,
   evmBlockchains,
   solanaBlockchain,
-} from '@rangodev/wallets-shared';
+} from '@rango-dev/wallets-shared';
 import {
   getNonEvmAccounts,
   mathWallet as mathWallet_instance,

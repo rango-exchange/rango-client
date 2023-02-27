@@ -1,4 +1,4 @@
-import { Network, ProviderConnectResult } from '@rangodev/wallets-shared';
+import { Network, ProviderConnectResult } from '@rango-dev/wallets-shared';
 import { RequestedAccount } from './types';
 import {
   SignInputOutput,

@@ -20,7 +20,7 @@ import {
   WalletActions,
   WalletConfig,
 } from './types';
-import { WalletType } from '@rangodev/wallets-shared';
+import { WalletType } from '@rango-dev/wallets-shared';
 
 import Wallet, { EventHandler as WalletEventHandler } from './wallet';
 

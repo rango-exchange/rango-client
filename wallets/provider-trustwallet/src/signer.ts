@@ -2,7 +2,7 @@ import {
   WalletType,
   defaultSigners,
   WalletSigners,
-} from '@rangodev/wallets-shared';
+} from '@rango-dev/wallets-shared';
 
 export default function getSigners(provider: any): WalletSigners {
   return defaultSigners({

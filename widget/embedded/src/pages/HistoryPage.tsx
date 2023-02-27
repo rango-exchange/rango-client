@@ -1,5 +1,5 @@
-import { History } from '@rangodev/ui';
-import { PendingSwap } from '@rangodev/ui/dist/containers/History/types';
+import { History } from '@rango-dev/ui';
+import { PendingSwap } from '@rango-dev/ui/dist/containers/History/types';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { navigationRoutes } from '../constants/navigationRoutes';

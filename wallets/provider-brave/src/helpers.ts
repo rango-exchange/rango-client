@@ -1,4 +1,4 @@
-import { Network } from '@rangodev/wallets-shared';
+import { Network } from '@rango-dev/wallets-shared';
 
 export function brave() {
   const { ethereum, braveSolana } = window;

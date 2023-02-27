@@ -1,14 +1,17 @@
-import { WalletInfo, WalletState, WalletType } from '@rangodev/wallets-shared';
+import { WalletInfo, WalletState, WalletType } from '@rango-dev/wallets-shared';
 import { ModalState, State } from './types';
 import {
   WalletInfo as ModalWalletInfo,
   WalletState as WalletStatus,
-} from '@rangodev/ui';
+} from '@rango-dev/ui';
 
 export const defaultState: ModalState = {
   open: false,
 };
-export function state_reducer(state: { open: boolean }, action: { value: boolean; }) {
+export function state_reducer(
+  state: { open: boolean },
+  action: { value: boolean }
+) {
   return {
     ...state,
     open: action.value,

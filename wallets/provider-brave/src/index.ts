@@ -18,7 +18,7 @@ import {
   getSolanaAccounts,
   BlockchainMeta,
   WalletInfo,
-} from '@rangodev/wallets-shared';
+} from '@rango-dev/wallets-shared';
 import { brave as brave_instances } from './helpers';
 import signer from './signer';
 

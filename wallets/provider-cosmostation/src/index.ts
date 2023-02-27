@@ -19,7 +19,7 @@ import {
   WalletInfo,
   evmBlockchains,
   cosmosBlockchains,
-} from '@rangodev/wallets-shared';
+} from '@rango-dev/wallets-shared';
 import { cosmostation as cosmostation_instance } from './helpers';
 import signer from './signer';
 

@@ -16,7 +16,7 @@ import {
   WalletInfo,
   evmBlockchains,
   solanaBlockchain,
-} from '@rangodev/wallets-shared';
+} from '@rango-dev/wallets-shared';
 
 import { getNonEvmAccounts, clover as clover_instance } from './helpers';
 

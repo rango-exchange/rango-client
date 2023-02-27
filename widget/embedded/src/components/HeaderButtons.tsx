@@ -1,5 +1,5 @@
 import React from 'react';
-import { SettingsIcon, Tooltip, styled, Button, HistoryIcon, RetryIcon } from '@rangodev/ui';
+import { SettingsIcon, Tooltip, styled, Button, HistoryIcon, RetryIcon } from '@rango-dev/ui';
 import { useNavigate } from 'react-router-dom';
 import { navigationRoutes } from '../constants/navigationRoutes';
 import { PropTypes } from './Header';

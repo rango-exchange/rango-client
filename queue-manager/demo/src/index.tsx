@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { createRoot } from "react-dom/client";
-import { Events, Provider as WalletsProvider } from "@rangodev/wallets-core";
-import { allProviders } from "@rangodev/provider-all";
+import { Events, Provider as WalletsProvider } from "@rango-dev/wallets-core";
+import { allProviders } from "@rango-dev/provider-all";
 import { App } from "./App";
 import { walletsAndSupportedChains } from "./flows/rango/mock";
-import { WalletType } from "@rangodev/wallets-shared";
+import { WalletType } from "@rango-dev/wallets-shared";
 
 const providers = allProviders();
 

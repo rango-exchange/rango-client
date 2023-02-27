@@ -1,5 +1,5 @@
 import { WalletInfo, WalletState } from '../../types/wallet';
-import { WalletType } from '@rangodev/wallets-shared';
+import { WalletType } from '@rango-dev/wallets-shared';
 
 export const walletsInfo: WalletInfo[] = [
   {

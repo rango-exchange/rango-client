@@ -8,7 +8,7 @@ import {
   BlockchainMeta,
   WalletInfo,
   cosmosBlockchains,
-} from '@rangodev/wallets-shared';
+} from '@rango-dev/wallets-shared';
 import { leap_cosmos_instance, getSupportedChains } from './helpers';
 import signer from './signer';
 

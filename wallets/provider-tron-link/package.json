@@ -1,5 +1,5 @@
 {
-  "name": "@rangodev/provider-tron-link",
+  "name": "@rango-dev/provider-tron-link",
   "version": "0.1.11-next.62",
   "license": "MIT",
   "module": "dist/provider-tron-link.esm.js",
@@ -45,7 +45,7 @@
     }
   ],
   "dependencies": {
-    "@rangodev/wallets-shared": "^0.1.11-next.68"
+    "@rango-dev/wallets-shared": "^0.1.11-next.68"
   },
   "publishConfig": {
     "access": "public"

@@ -1,7 +1,7 @@
 import React from 'react';
-import { ProviderProps, Provider } from '@rangodev/wallets-core';
+import { ProviderProps, Provider } from '@rango-dev/wallets-core';
 import Adapter from './adapter';
-import { WalletProvider } from '@rangodev/wallets-core';
+import { WalletProvider } from '@rango-dev/wallets-core';
 
 function AdapterProvider({ children, ...props }: ProviderProps) {
   const list = props.providers.map(

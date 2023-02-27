@@ -10,9 +10,9 @@ import {
   WalletError,
   WalletType,
   XDEFI_WALLET_SUPPORTED_NATIVE_CHAINS,
-} from '@rangodev/wallets-shared';
+} from '@rango-dev/wallets-shared';
 
-import { SUPPORTED_ETH_CHAINS as XDEFI_WALLET_SUPPORTED_EVM_CHAINS } from '@rangodev/provider-xdefi/src/constants';
+import { SUPPORTED_ETH_CHAINS as XDEFI_WALLET_SUPPORTED_EVM_CHAINS } from '@rango-dev/provider-xdefi/src/constants';
 import {
   APIErrorCode,
   ApiMethodName,
@@ -43,7 +43,7 @@ import {
 } from './types';
 import { BigNumber } from 'bignumber.js';
 import { CheckApprovalResponse } from 'rango-sdk-basic/lib';
-import { Providers, readAccountAddress, WalletsAndSupportedChains } from '@rangodev/wallets-core';
+import { Providers, readAccountAddress, WalletsAndSupportedChains } from '@rango-dev/wallets-core';
 import { getCurrentStep } from '../swap/helpers';
 import { ethers } from 'ethers';
 import { sampleRawAccounts } from './mock';

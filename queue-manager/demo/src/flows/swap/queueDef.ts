@@ -1,5 +1,5 @@
-import { QueueDef } from "@rangodev/queue-manager-core";
-import { GenericTransactionType } from "@rangodev/wallets-shared";
+import { QueueDef } from "@rango-dev/queue-manager-core";
+import { GenericTransactionType } from "@rango-dev/wallets-shared";
 import {
   BlockReason,
   SwapActionTypes,

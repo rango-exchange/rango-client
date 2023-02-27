@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { readAccountAddress, useWallets } from '@rangodev/wallets-core';
-import { Network, WalletType, detectInstallLink, WalletInfo } from '@rangodev/wallets-shared';
+import { readAccountAddress, useWallets } from '@rango-dev/wallets-core';
+import { Network, WalletType, detectInstallLink, WalletInfo } from '@rango-dev/wallets-shared';
 import './styles.css';
 import {
   Button,
@@ -10,7 +10,7 @@ import {
   Spacer,
   Tooltip,
   Typography,
-} from '@rangodev/ui';
+} from '@rango-dev/ui';
 import {
   evmBasedChainsSelector,
   prepareAccounts,

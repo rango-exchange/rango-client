@@ -1,4 +1,4 @@
-import { styled } from '@rangodev/ui';
+import { styled } from '@rango-dev/ui';
 
 export const Footer = styled('div', {
   display: 'flex',

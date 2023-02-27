@@ -1,5 +1,5 @@
-import { ExecuterActions } from "@rangodev/queue-manager-core";
-import { SwapActionTypes, SwapQueueContext, SwapStorage } from "../types";
+import { ExecuterActions } from '@rango-dev/queue-manager-core';
+import { SwapActionTypes, SwapQueueContext, SwapStorage } from '../types';
 import {
   getCurrentStep,
   isCosmosTransaction,
@@ -7,20 +7,14 @@ import {
   isSolanaTransaction,
   isTrasnferTransaction,
   updateSwapStatus,
-} from "../helpers";
-import { CreateTransactionRequest } from "../../rango/types";
-import {
-  createTransaction as requestTransaction,
-  prettifyErrorMessage,
-} from "../../rango/helpers";
+} from '../helpers';
+import { CreateTransactionRequest } from '../../rango/types';
+import { createTransaction as requestTransaction, prettifyErrorMessage } from '../../rango/helpers';
 
 export async function createTransaction(
-  actions: ExecuterActions<SwapStorage, SwapActionTypes, SwapQueueContext>
+  actions: ExecuterActions<SwapStorage, SwapActionTypes, SwapQueueContext>,
 ) {
-  console.log(
-    "%ccreate transaction...",
-    "color:#5fa425; background:white; font-size: 1.5rem"
-  );
+  console.log('%ccreate transaction...', 'color:#5fa425; background:white; font-size: 1.5rem');
 
   const { setStorage, getStorage, next, schedule, context } = actions;
   const swap = getStorage().swapDetails;
@@ -55,8 +49,7 @@ export async function createTransaction(
       const { transaction } = await requestTransaction(request);
 
       if (isEvmTransaction(transaction)) {
-        if (transaction.isApprovalTx)
-          currentStep.evmApprovalTransaction = transaction;
+        if (transaction.isApprovalTx) currentStep.evmApprovalTransaction = transaction;
         else currentStep.evmTransaction = transaction;
       } else if (isCosmosTransaction(transaction)) {
         currentStep.cosmosTransaction = transaction;
@@ -70,20 +63,20 @@ export async function createTransaction(
       schedule(SwapActionTypes.EXECUTE_TRANSACTION);
       next();
     } catch (error) {
-      swap.status = "failed";
+      swap.status = 'failed';
       swap.finishTime = new Date().getTime().toString();
       const { extraMessage, extraMessageDetail } = prettifyErrorMessage(error);
 
       const updateResult = updateSwapStatus({
         getStorage,
         setStorage,
-        nextStatus: "failed",
-        nextStepStatus: "failed",
+        nextStatus: 'failed',
+        nextStepStatus: 'failed',
         message: extraMessage,
         details: extraMessageDetail,
       });
       context.notifier({
-        eventType: "task_failed",
+        eventType: 'task_failed',
         ...updateResult,
       });
 

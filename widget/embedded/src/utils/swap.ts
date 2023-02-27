@@ -1,5 +1,5 @@
-import { PendingSwap } from '@rangodev/ui/dist/containers/History/types';
-import { WalletTypeAndAddress, SwapSavedSettings } from '@rangodev/ui/dist/types/swaps';
+import { PendingSwap } from '@rango-dev/ui/dist/containers/History/types';
+import { WalletTypeAndAddress, SwapSavedSettings } from '@rango-dev/ui/dist/types/swaps';
 import BigNumber from 'bignumber.js';
 import { BestRouteResponse } from 'rango-sdk';
 import { Account } from '../store/wallets';

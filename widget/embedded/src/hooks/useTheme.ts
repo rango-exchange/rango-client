@@ -1,4 +1,4 @@
-import { lightTheme, darkTheme } from '@rangodev/ui';
+import { lightTheme, darkTheme } from '@rango-dev/ui';
 import { useState, useEffect } from 'react';
 import { useMetaStore } from '../store/meta';
 import { useSettingsStore } from '../store/settings';

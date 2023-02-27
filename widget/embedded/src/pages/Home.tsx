@@ -1,4 +1,4 @@
-import { Alert, BestRoute, Button, styled, VerticalSwapIcon } from '@rangodev/ui';
+import { Alert, BestRoute, Button, styled, VerticalSwapIcon } from '@rango-dev/ui';
 import React, { useEffect, useState } from 'react';
 import { useInRouterContext, useNavigate } from 'react-router-dom';
 import { Header } from '../components/Header';

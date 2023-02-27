@@ -1,4 +1,4 @@
-import { WalletType } from '@rangodev/wallets-shared';
+import { WalletType } from '@rango-dev/wallets-shared';
 
 export interface SelectableWallet {
   chain: string;

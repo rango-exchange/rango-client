@@ -1,6 +1,6 @@
 import React from 'react';
-import { styled } from '@rangodev/ui/src/theme';
-import { Typography } from '@rangodev/ui';
+import { styled } from '@rango-dev/ui/src/theme';
+import { Typography } from '@rango-dev/ui';
 
 const Container = styled('div', {
   display: 'flex',

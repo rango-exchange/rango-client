@@ -4,7 +4,7 @@ import { FilledCircle } from '../common';
 import { DownloadIcon } from '../Icon';
 import { Spinner } from '../Spinner';
 import { WalletState } from '../../types/wallet';
-import { InstallObjects, detectInstallLink } from '@rangodev/wallets-shared';
+import { InstallObjects, detectInstallLink } from '@rango-dev/wallets-shared';
 
 const StateIconContainer = styled('span', {
   width: '$28',

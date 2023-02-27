@@ -1,10 +1,10 @@
-import { PendingSwap } from '@rangodev/ui/dist/containers/History/types';
+import { PendingSwap } from '@rango-dev/ui/dist/containers/History/types';
 import {
   BestRouteType,
   SimulationValidationStatus,
   SwapSavedSettings,
-} from '@rangodev/ui/dist/types/swaps';
-import { WalletType } from '@rangodev/wallets-shared';
+} from '@rango-dev/ui/dist/types/swaps';
+import { WalletType } from '@rango-dev/wallets-shared';
 import BigNumber from 'bignumber.js';
 import { BestRouteRequest, BestRouteResponse } from 'rango-sdk';
 import { useState } from 'react';

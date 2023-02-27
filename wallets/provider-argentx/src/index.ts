@@ -8,7 +8,7 @@ import {
   BlockchainMeta,
   WalletInfo,
   starknetBlockchain,
-} from '@rangodev/wallets-shared';
+} from '@rango-dev/wallets-shared';
 import { argentx as argentx_instances } from './helpers';
 import signer from './signer';
 

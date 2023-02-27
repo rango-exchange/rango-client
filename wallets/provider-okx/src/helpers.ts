@@ -1,4 +1,4 @@
-import { Network, ProviderConnectResult } from '@rangodev/wallets-shared';
+import { Network, ProviderConnectResult } from '@rango-dev/wallets-shared';
 
 export function okx_instance() {
   const { okxwallet } = window;
