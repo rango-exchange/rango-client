@@ -8,3 +8,15 @@ export const LANGUEGES = [
     logo: 'https://upload.wikimedia.org/wikipedia/en/thumb/b/ba/Flag_of_Germany.svg/800px-Flag_of_Germany.svg.png?20111003033442',
   },
 ];
+
+export const FONTS = [
+  {
+    name: 'Roboto',
+  },
+  {
+    name: 'New Roman',
+  },
+  {
+    name: 'Arial',
+  },
+];
