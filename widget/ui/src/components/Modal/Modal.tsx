@@ -48,7 +48,9 @@ const ModalHeader = styled('div', {
   marginBottom: '$16',
 });
 
-const ContentContainer = styled('div', {});
+const ContentContainer = styled('div', {
+  overflowY: 'scroll',
+});
 
 export function Modal(props: PropTypes) {
   const {
