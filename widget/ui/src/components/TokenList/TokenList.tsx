@@ -84,13 +84,13 @@ export function TokenList(props: PropTypes) {
           }
           prefix={<TokenImage src={currentToken.image} />}
           suffix={
-            !!currentToken.balance && (
+            currentToken.balance?.amount && (
               <TokenAmountContainer>
                 <Typography variant="body2">
                   {currentToken.balance.amount}
                 </Typography>
                 <Typography variant="caption">
-                {`${currentToken.balance.usdValue}$`}
+                  {`${currentToken.balance.usdValue}$`}
                 </Typography>
               </TokenAmountContainer>
             )

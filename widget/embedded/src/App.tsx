@@ -36,7 +36,7 @@ export type WidgetProps = {
 export function App() {
   globalStyles();
   const { activeTheme } = useTheme();
-  const { blockchains, tokens } = useMetaStore.use.meta();
+  const { blockchains } = useMetaStore.use.meta();
   const disconnectWallet = useWalletsStore.use.disconnectWallet();
   const connectWallet = useWalletsStore.use.connectWallet();
   const evmBasedChainNames = blockchains
@@ -56,7 +56,7 @@ export function App() {
           evmBasedChainNames,
           supportedChainNames,
         );
-        connectWallet(data, tokens);
+        connectWallet(data);
       } else {
         disconnectWallet(type);
       }
