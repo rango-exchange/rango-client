@@ -5,7 +5,7 @@ import {
   BlockchainMeta,
   WalletInfo,
   WalletSigners,
-} from '@rangodev/wallets-shared';
+} from '@rango-dev/wallets-shared';
 import {
   EventHandler as WalletEventHandler,
   State as WalletState,

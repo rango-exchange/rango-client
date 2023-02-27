@@ -2,7 +2,7 @@ import React from 'react';
 import { styled } from '../../theme';
 import { WalletInfo } from '../../types/wallet';
 import { Modal } from '../Modal';
-import { WalletType } from '@rangodev/wallets-shared';
+import { WalletType } from '@rango-dev/wallets-shared';
 import { Wallet } from '../Wallet';
 
 export interface PropTypes {

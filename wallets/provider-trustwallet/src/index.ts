@@ -12,7 +12,7 @@ import {
   evmBlockchains,
   BlockchainMeta,
   WalletInfo,
-} from '@rangodev/wallets-shared';
+} from '@rango-dev/wallets-shared';
 import { trustWallet as trustwallet_instance } from './helpers';
 import signer from './signer';
 

@@ -1,14 +1,14 @@
 import React from "react";
-import { Provider } from "@rangodev/queue-manager-react";
+import { Provider } from "@rango-dev/queue-manager-react";
 import { FlowsList } from "./components/FlowsList";
 import { simpleSwapQueueDefinition } from "./flows/single";
 import { swapQueueDef } from "./flows/swap/queueDef";
 import { meta } from "./flows/rango/mock";
-import { useWallets } from "@rangodev/wallets-core";
+import { useWallets } from "@rango-dev/wallets-core";
 import { SwapQueueContext } from "./flows/swap/types";
 import { metamaskWallet } from "./flows/rango/mock";
 import { Wallet } from "./flows/rango/types";
-import { Network, WalletType } from "@rangodev/wallets-shared";
+import { Network, WalletType } from "@rango-dev/wallets-shared";
 import { Wallets } from "./components/Wallets";
 import { History } from "./components/History";
 import { notifier } from "./flows/swap/helpers";

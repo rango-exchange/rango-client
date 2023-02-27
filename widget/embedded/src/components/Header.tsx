@@ -1,5 +1,5 @@
 import React from 'react';
-import { styled, Typography } from '@rangodev/ui';
+import { styled, Typography } from '@rango-dev/ui';
 import { HeaderButtons } from './HeaderButtons';
 
 export const HeaderContainer = styled('div', {

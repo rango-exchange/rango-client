@@ -1,4 +1,4 @@
-import { ExecuterActions } from "@rangodev/queue-manager-core";
+import { ExecuterActions } from '@rango-dev/queue-manager-core';
 
 import {
   getCurrentStep,
@@ -6,21 +6,13 @@ import {
   isRequiredWalletConnected,
   markRunningSwapAsWaitingForConnectingWallet,
   singTransaction,
-} from "../helpers";
-import {
-  BlockReason,
-  SwapActionTypes,
-  SwapQueueContext,
-  SwapStorage,
-} from "../types";
+} from '../helpers';
+import { BlockReason, SwapActionTypes, SwapQueueContext, SwapStorage } from '../types';
 
 export async function executeTransaction(
-  actions: ExecuterActions<SwapStorage, SwapActionTypes, SwapQueueContext>
+  actions: ExecuterActions<SwapStorage, SwapActionTypes, SwapQueueContext>,
 ) {
-  console.log(
-    "%cexecute transaction...",
-    "color:#5fa425; background:white; font-size: 1.5rem"
-  );
+  console.log('%cexecute transaction...', 'color:#5fa425; background:white; font-size: 1.5rem');
   const { getStorage, setStorage, context } = actions;
   const { meta, wallets, providers, notifier } = context;
 
@@ -35,24 +27,23 @@ export async function executeTransaction(
   }
 
   /* Make sure wallet is connected and also the connected wallet is matched with tx by checking address. */
-  const isWrongWallet =
-    !wallets || !isRequiredWalletConnected(swap, context.state);
+  const isWrongWallet = !wallets || !isRequiredWalletConnected(swap, context.state);
   if (isWrongWallet) {
     notifier({
-      eventType: "waiting_for_connecting_wallet",
+      eventType: 'waiting_for_connecting_wallet',
       swap: swap,
       step: currentStep,
     });
 
     const blockedFor = {
       reason: BlockReason.WAIT_FOR_CONNECT_WALLET,
-      description: "Use top right button to connect your wallet.",
+      description: 'Use top right button to connect your wallet.',
       details: {},
     };
     markRunningSwapAsWaitingForConnectingWallet(
       actions,
-      "Waiting for connecting wallet",
-      blockedFor.description
+      'Waiting for connecting wallet',
+      blockedFor.description,
     );
     actions.block(blockedFor);
     return;
@@ -67,17 +58,12 @@ export async function executeTransaction(
     !!currentStep.evmApprovalTransaction ||
     currentStep.cosmosTransaction;
   const isClaimed = context.claimedBy === context._queue?.id;
-  console.log(
-    "needsToBlockQueue",
-    isClaimed,
-    context.claimedBy,
-    context._queue
-  );
+  console.log('needsToBlockQueue', isClaimed, context.claimedBy, context._queue);
 
   if (needsToBlockQueue && !isClaimed) {
     const blockedFor = {
       reason: BlockReason.DEPENDS_ON_OTHER_QUEUES,
-      description: "Waiting for other running tasks to be finished",
+      description: 'Waiting for other running tasks to be finished',
       details: {},
     };
     actions.block(blockedFor);
@@ -90,19 +76,19 @@ export async function executeTransaction(
     currentStep,
     wallets,
     meta,
-    providers
+    providers,
   );
   if (!networkMatched) {
     const blockedFor = {
       reason: BlockReason.WAIT_FOR_NETWORK_CHANGE,
-      details: "Please change network in your wallet.",
+      details: 'Please change network in your wallet.',
     };
 
     actions.block(blockedFor);
     return;
   }
 
-  console.log("start to sign...");
+  console.log('start to sign...');
   // All the conditions are met. We can safely send the tx to wallet for sign.
   singTransaction(actions);
 }

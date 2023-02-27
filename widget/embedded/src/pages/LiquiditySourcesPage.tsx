@@ -1,4 +1,4 @@
-import { LiquiditySourcesSelector } from '@rangodev/ui';
+import { LiquiditySourcesSelector } from '@rango-dev/ui';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useMetaStore } from '../store/meta';

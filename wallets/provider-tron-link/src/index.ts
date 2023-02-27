@@ -1,4 +1,4 @@
-import { Subscribe } from '@rangodev/wallets-shared';
+import { Subscribe } from '@rango-dev/wallets-shared';
 import {
   Network,
   WalletType,
@@ -8,7 +8,7 @@ import {
   BlockchainMeta,
   WalletInfo,
   tronBlockchain,
-} from '@rangodev/wallets-shared';
+} from '@rango-dev/wallets-shared';
 import { tronLink as tronLink_instance } from './helpers';
 import signer from './signer';
 

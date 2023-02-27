@@ -7,7 +7,7 @@ import {
   WalletError,
   getNetworkInstance,
   defaultSigners,
-} from '@rangodev/wallets-shared';
+} from '@rango-dev/wallets-shared';
 import { BncClient, Transaction } from '@binance-chain/javascript-sdk';
 import { StdSignMsg } from '@binance-chain/javascript-sdk/lib/types';
 import { getPublicKey } from '@binance-chain/javascript-sdk/lib/crypto';

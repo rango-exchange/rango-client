@@ -4,11 +4,11 @@ import {
   WalletInfo,
   WalletState,
   WalletType,
-} from '@rangodev/wallets-shared';
+} from '@rango-dev/wallets-shared';
 
-import { WalletInfo as ModalWalletInfo, WalletState as WalletStatus } from '@rangodev/ui';
+import { WalletInfo as ModalWalletInfo, WalletState as WalletStatus } from '@rango-dev/ui';
 import { BestRouteResponse, BlockchainMeta, Token, WalletDetail } from 'rango-sdk';
-import { readAccountAddress } from '@rangodev/wallets-core';
+import { readAccountAddress } from '@rango-dev/wallets-core';
 import { SelectableWallet } from '../pages/ConfirmWalletsPage';
 import { Account, Balance, TokenBalance } from '../store/wallets';
 import { numberToString } from './numbers';

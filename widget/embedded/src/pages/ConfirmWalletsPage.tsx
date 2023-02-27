@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react';
-import { ConfirmWallets } from '@rangodev/ui';
+import { ConfirmWallets } from '@rango-dev/ui';
 import { useNavigate } from 'react-router-dom';
 import { useBestRouteStore } from '../store/bestRoute';
 import { useWalletsStore } from '../store/wallets';
-import { useWallets } from '@rangodev/wallets-core';
+import { useWallets } from '@rango-dev/wallets-core';
 import { navigationRoutes } from '../constants/navigationRoutes';
 import { getRequiredChains, getSelectableWallets, SelectedWallet } from '../utils/wallets';
 import { requiredWallets } from '../utils/swap';

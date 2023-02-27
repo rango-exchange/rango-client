@@ -7,7 +7,7 @@ import {
   SolanaTransaction,
   Asset,
   Transaction,
-} from "@rangodev/wallets-shared";
+} from "@rango-dev/wallets-shared";
 import BigNumber from "bignumber.js";
 
 export type WalletTypeAndAddress = {

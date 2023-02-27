@@ -10,7 +10,7 @@ import {
   WalletTypeAndAddress,
   SwapProgressNotification,
 } from "../rango/types";
-import { ExecuterActions } from "@rangodev/queue-manager-core";
+import { ExecuterActions } from "@rango-dev/queue-manager-core";
 import {
   BlockReason,
   SwapActionTypes,
@@ -29,7 +29,7 @@ import {
   TransferTransaction,
   WalletState,
   WalletType,
-} from "@rangodev/wallets-shared";
+} from "@rango-dev/wallets-shared";
 import {
   getCurrentBlockchainOf,
   getCurrentBlockchainOfOrNull,
@@ -38,7 +38,7 @@ import {
   prettifyErrorMessage,
   PrettyError,
 } from "../rango/helpers";
-import { Providers, readAccountAddress } from "@rangodev/wallets-core";
+import { Providers, readAccountAddress } from "@rango-dev/wallets-core";
 import { SwapQueueDef } from "./queueDef";
 
 type WhenTaskBlocked = Parameters<NonNullable<SwapQueueDef["whenTaskBlocked"]>>;

@@ -1,5 +1,5 @@
 {
-  "name": "@rangodev/widget-embedded",
+  "name": "@rango-dev/widget-embedded",
   "version": "0.1.10-next.68",
   "license": "MIT",
   "source": "public/index.html",
@@ -9,9 +9,9 @@
     "build": "parcel build"
   },
   "dependencies": {
-    "@rangodev/provider-all": "^0.1.11-next.68",
-    "@rangodev/ui": "^0.1.10-next.68",
-    "@rangodev/wallets-core": "^0.1.11-next.68",
+    "@rango-dev/provider-all": "^0.1.11-next.68",
+    "@rango-dev/ui": "^0.1.10-next.68",
+    "@rango-dev/wallets-core": "^0.1.11-next.68",
     "bignumber.js": "^9.1.1",
     "immer": "^9.0.19",
     "mitt": "^3.0.0",

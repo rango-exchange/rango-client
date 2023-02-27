@@ -6,7 +6,7 @@ import {
   WalletType,
   isEvmBlockchain,
   BlockchainMeta,
-} from '@rangodev/wallets-shared';
+} from '@rango-dev/wallets-shared';
 import { State, WalletProvider, WalletProviders } from './types';
 import { Options, State as WalletState } from './wallet';
 

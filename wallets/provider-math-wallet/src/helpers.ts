@@ -1,4 +1,4 @@
-import { Network, ProviderConnectResult } from '@rangodev/wallets-shared';
+import { Network, ProviderConnectResult } from '@rango-dev/wallets-shared';
 
 type Provider = Map<Network, any>;
 
@@ -6,8 +6,7 @@ export function mathWallet() {
   const instances = new Map();
   const { solana, ethereum } = window;
 
-  if (!!solana && solana.isMathWallet)
-    instances.set(Network.SOLANA, solana);
+  if (!!solana && solana.isMathWallet) instances.set(Network.SOLANA, solana);
 
   if (ethereum && ethereum.isMathWallet)
     instances.set(Network.ETHEREUM, ethereum);

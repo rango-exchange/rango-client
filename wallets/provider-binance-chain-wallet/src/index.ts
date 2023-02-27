@@ -9,7 +9,7 @@ import {
   isEvmBlockchain,
   WalletInfo,
   BlockchainMeta,
-} from '@rangodev/wallets-shared';
+} from '@rango-dev/wallets-shared';
 import {
   accountsForActiveWallet,
   binance as binance_instance,

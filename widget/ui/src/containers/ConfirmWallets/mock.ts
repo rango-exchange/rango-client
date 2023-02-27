@@ -1,4 +1,4 @@
-import { WalletType } from '@rangodev/wallets-shared';
+import { WalletType } from '@rango-dev/wallets-shared';
 import { RoutingResultType } from 'rango-sdk';
 import { BestRouteType } from '../../types/swaps';
 import { SelectableWallet } from './types';

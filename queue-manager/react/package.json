@@ -19,7 +19,7 @@
     "analyze": "size-limit --why"
   },
   "peerDependencies": {
-    "@rangodev/queue-manager-core": "*",
+    "@rango-dev/queue-manager-core": "*",
     "@types/react": "^17.0.0 || ^18.0.0",
     "react": "^17.0.0 || ^18.0.0",
     "react-dom": "^17.0.0 || ^18.0.0"
@@ -35,7 +35,7 @@
     "singleQuote": true,
     "trailingComma": "es5"
   },
-  "name": "@rangodev/queue-manager-react",
+  "name": "@rango-dev/queue-manager-react",
   "author": "mojtabast",
   "module": "dist/queue-manager-react.esm.js",
   "size-limit": [

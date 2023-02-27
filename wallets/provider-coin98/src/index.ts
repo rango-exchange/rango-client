@@ -15,7 +15,7 @@ import {
   WalletInfo,
   evmBlockchains,
   solanaBlockchain,
-} from '@rangodev/wallets-shared';
+} from '@rango-dev/wallets-shared';
 import { coin98 as coin98_instances } from './helpers';
 import { getSolanaAccounts } from './helpers';
 import signer from './signer';

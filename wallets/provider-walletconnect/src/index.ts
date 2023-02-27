@@ -16,7 +16,7 @@ import {
   BlockchainMeta,
   WalletInfo,
   evmBlockchains,
-} from '@rangodev/wallets-shared';
+} from '@rango-dev/wallets-shared';
 import { formatJsonRpcRequest } from '@walletconnect/jsonrpc-utils';
 import signer from './signer';
 
