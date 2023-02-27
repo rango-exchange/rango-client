@@ -9,6 +9,7 @@ import BigNumber from 'bignumber.js';
 import { getBalanceFromWallet } from '../utils/wallets';
 import { useWalletsStore } from '../store/wallets';
 import { sortedTokens } from '../utils/wallets';
+import { ZERO } from '../constants/numbers';
 
 interface PropTypes {
   type: 'from' | 'to';
@@ -65,14 +66,7 @@ export function SelectTokenPage(props: PropTypes) {
     };
   });
 
-  const walletSymbols = new Set(
-    (balance || [])
-      .flatMap((b) => b.accountsWithBalance)
-      .flatMap((a) => a.balances || [])
-      .filter((b) => (new BigNumber(b?.rawAmount) || ZERO).gt(0))
-      .map((b) => `${b?.chain}.${b?.symbol}.${b?.address}`),
-  );
-  const sortedTokenList = sortedTokens(TokensWithBalance, walletSymbols, type, balance);
+  const sortedTokenList = sortedTokens(TokensWithBalance, type, balance);
 
   return (
     <TokenSelector

@@ -372,7 +372,7 @@ export interface PropTypes {
   loading?: boolean;
   fullWidth?: boolean;
   disabled?: boolean;
-  style?: React.CSSProperties;
+  style?: CSSProperties;
   flexContent?: boolean;
 }
 

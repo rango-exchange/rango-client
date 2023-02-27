@@ -23,10 +23,10 @@ const WalletImage = styled('img', {
 
 export function Layout() {
   const navigate = useNavigate();
-  const { balance, accounts, selectedWallets } = useWalletsStore();
+  const { balances, accounts, selectedWallets } = useWalletsStore();
   const { getWalletInfo } = useWallets();
   const filterSelelectedWallets = getSelectableWallets(accounts, selectedWallets, getWalletInfo);
-  const totalBalance = calculateWalletUsdValue(balance);
+  const totalBalance = calculateWalletUsdValue(balances);
 
   return (
     <>
@@ -38,8 +38,8 @@ export function Layout() {
           flexContent
           onClick={() => navigate(navigationRoutes.wallets)}>
           {accounts?.length ? (
-            filterSelelectedWallets.map((selectedWallet) => (
-              <WalletImage src={selectedWallet.image} />
+            filterSelelectedWallets.map((selectedWallet, index) => (
+              <WalletImage key={index} src={selectedWallet.image} />
             ))
           ) : (
             <></>
