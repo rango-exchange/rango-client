@@ -141,8 +141,6 @@ export function TokenList(props: PropTypes) {
     setFilteredTokens(list.slice(0, PAGE_SIZE));
   }, []);
 
-  console.log(filteredTokens, searchedText, hasNextPage);
-
   const innerElementType: React.FC<CommonProps> = forwardRef(
     ({ style, ...rest }, ref) => {
       return (
@@ -159,8 +157,6 @@ export function TokenList(props: PropTypes) {
       );
     }
   );
-
-  console.log({ filteredTokens });
 
   return (
     <div style={{ height: '450px' }}>
