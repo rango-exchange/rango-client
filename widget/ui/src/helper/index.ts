@@ -1,4 +1,5 @@
 import { BestRouteResponse } from 'rango-sdk';
+
 export const secondsToString = (s: number): string => {
   const minutes = parseInt((s / 60).toString()).toString();
   return `${minutes}`;

@@ -6,6 +6,7 @@ import { Token } from 'rango-sdk';
 import { Button } from '../Button/Button';
 import { Typography } from '../Typography';
 import { VirtualizedList } from '../VirtualizedList/VirtualizedList';
+import { CSSProperties } from '@stitches/react';
 
 export interface TokenWithAmount extends Token {
   balance?: {
@@ -89,7 +90,7 @@ export function TokenList(props: PropTypes) {
                   {currentToken.balance.amount}
                 </Typography>
                 <Typography variant="caption">
-                  {`${currentToken.balance.usdValue}$`}
+                {`${currentToken.balance.usdValue}$`}
                 </Typography>
               </TokenAmountContainer>
             )
