@@ -10,6 +10,7 @@ export interface PropTypes {
   open: boolean;
   onClose: () => void;
   content: React.ReactNode;
+  action?: React.ReactNode;
   containerStyle?: CSSProperties;
   contentStyle?: CSSProperties;
 }
@@ -33,8 +34,12 @@ const ModalContainer = styled('div', {
   display: 'flex',
   flexDirection: 'column',
   boxShadow: '$s',
+  zIndex: 10,
 });
-
+const Row = styled('div', {
+  display: 'flex',
+  alignItems: 'center',
+});
 const ModalHeader = styled('div', {
   display: 'flex',
   justifyContent: 'space-between',
@@ -43,17 +48,22 @@ const ModalHeader = styled('div', {
   marginBottom: '$16',
 });
 
-const ContentContainer = styled('div', {
-  overflowY: 'scroll',
-});
+const ContentContainer = styled('div', {});
 
 export function Modal(props: PropTypes) {
-  const { title, content, open, onClose, containerStyle, contentStyle } = props;
+  const {
+    title,
+    content,
+    open,
+    onClose,
+    containerStyle,
+    action,
+    contentStyle,
+  } = props;
 
   const handleBackDropClick = (event: React.MouseEvent<HTMLDivElement>) => {
     if (event.target === event.currentTarget) onClose();
   };
-
   return (
     <>
       {open &&
@@ -62,7 +72,10 @@ export function Modal(props: PropTypes) {
             <ModalContainer style={containerStyle}>
               <ModalHeader>
                 <Typography variant="h4">{title}</Typography>
-                <CloseIcon size={24} onClick={onClose} />
+                <Row>
+                  {action}
+                  <CloseIcon size={24} onClick={onClose} />
+                </Row>
               </ModalHeader>
               <ContentContainer style={contentStyle}>
                 {content}
