@@ -21,7 +21,7 @@ interface PropTypes {
   }>;
 }
 const filterList = (list, searchedFor: string) =>
-  list.filter((item) => item.nam.toLowerCase().includes(searchedFor.toLowerCase()));
+  list.filter((item) => item.name.toLowerCase().includes(searchedFor.toLowerCase()));
 const Image = styled('img', {
   width: '24px',
   height: '24px',
