@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/provider-frontier",
-  "version": "0.1.11-next.60",
+  "version": "0.1.11-next.61",
   "license": "MIT",
   "module": "dist/provider-frontier.esm.js",
   "main": "dist/index.js",
@@ -45,7 +45,7 @@
     }
   ],
   "dependencies": {
-    "@rango-dev/wallets-shared": "^0.1.11-next.69"
+    "@rango-dev/wallets-shared": "^0.1.11-next.70"
   },
   "publishConfig": {
     "access": "public"

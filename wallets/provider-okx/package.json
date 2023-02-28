@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/provider-okx",
-  "version": "0.1.11-next.69",
+  "version": "0.1.11-next.70",
   "license": "MIT",
   "module": "dist/provider-okx.esm.js",
   "main": "dist/index.js",
@@ -45,7 +45,7 @@
     }
   ],
   "dependencies": {
-    "@rango-dev/wallets-shared": "^0.1.11-next.69"
+    "@rango-dev/wallets-shared": "^0.1.11-next.70"
   },
   "publishConfig": {
     "access": "public"
