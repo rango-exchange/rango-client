@@ -52,7 +52,6 @@ export function TokenInfo({ type }: PropTypes) {
     meta: { blockchains, tokens },
     loadingStatus,
   } = useMetaStore();
-
   return (
     <Container>
       <div>
@@ -150,7 +149,6 @@ export function TokenInfo({ type }: PropTypes) {
               <TokenSelector
                 list={tokens.filter((token) => token.blockchain === chain?.name)}
                 hasHeader={false}
-                loadingStatus={loadingStatus}
                 selected={token}
                 onChange={(token) => onChangeToken(token, type)}
               />
