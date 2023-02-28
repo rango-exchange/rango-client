@@ -8,7 +8,7 @@ import {
   TextField,
   TokenSelector,
   Typography,
-} from '@rangodev/ui';
+} from '@rango-dev/ui';
 import { useMetaStore } from '../store/meta';
 import { useConfigStore } from '../store/config';
 import { Type } from '../types';

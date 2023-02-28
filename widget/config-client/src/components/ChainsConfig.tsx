@@ -1,4 +1,4 @@
-import { Checkbox, Spacer, styled, Typography } from '@rangodev/ui';
+import { Checkbox, Spacer, styled, Typography } from '@rango-dev/ui';
 import React from 'react';
 import { useConfigStore } from '../store/config';
 import { useMetaStore } from '../store/meta';

@@ -1,4 +1,4 @@
-import { ColorPicker, Radio, Spacer, styled, TextField, Typography } from '@rangodev/ui';
+import { ColorPicker, Radio, Spacer, styled, TextField, Typography } from '@rango-dev/ui';
 import React from 'react';
 import { LANGUEGES, FONTS } from '../constants';
 import { COLORS, THEME, useConfigStore } from '../store/config';
