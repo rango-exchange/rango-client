@@ -10,10 +10,10 @@ import {
   Spacer,
   styled,
   Typography,
-} from '@rangodev/ui';
-import { LiquiditySource } from '@rangodev/ui/dist/types/meta';
+} from '@rango-dev/ui';
+import { LiquiditySource } from '@rango-dev/ui/dist/types/meta';
 import { Wallets } from '../types';
-import { WalletType } from '@rangodev/wallets-shared';
+import { WalletType } from '@rango-dev/wallets-shared';
 import { BlockchainMeta } from 'rango-sdk';
 import { useMetaStore } from '../store/meta';
 

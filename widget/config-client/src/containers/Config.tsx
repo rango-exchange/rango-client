@@ -1,11 +1,11 @@
 import React, { PropsWithChildren } from 'react';
-import { Spacer, styled, Typography } from '@rangodev/ui';
+import { Spacer, styled, Typography } from '@rango-dev/ui';
 import { ChainsConfig } from '../components/ChainsConfig';
 import { WalletsConfig } from '../components/WalletsConfig';
 import { SourcesConfig } from '../components/SourcesConfig';
 import { StylesConfig } from '../components/StylesConfig';
-import { Provider } from '@rangodev/wallets-core';
-import { allProviders } from '@rangodev/provider-all';
+import { Provider } from '@rango-dev/wallets-core';
+import { allProviders } from '@rango-dev/provider-all';
 
 const providers = allProviders();
 

@@ -1,5 +1,5 @@
-import { Spacer, Typography } from '@rangodev/ui';
-import { LiquiditySource } from '@rangodev/ui/dist/types/meta';
+import { Spacer, Typography } from '@rango-dev/ui';
+import { LiquiditySource } from '@rango-dev/ui/dist/types/meta';
 import React from 'react';
 import { useConfigStore } from '../store/config';
 import { useMetaStore } from '../store/meta';

@@ -1,6 +1,6 @@
-import { Checkbox, Spacer, Typography } from '@rangodev/ui';
-import { useWallets } from '@rangodev/wallets-core';
-import { WalletType } from '@rangodev/wallets-shared';
+import { Checkbox, Spacer, Typography } from '@rango-dev/ui';
+import { useWallets } from '@rango-dev/wallets-core';
+import { WalletType } from '@rango-dev/wallets-shared';
 import React from 'react';
 import { excludedWallets } from '../helpers';
 import { useConfigStore } from '../store/config';
