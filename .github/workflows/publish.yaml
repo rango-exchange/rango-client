@@ -6,6 +6,9 @@ on:
       - "next"
   pull_request:
     types:
+      - opened
+      - synchronize
+      - reopened
       - closed
     branches:
       - "main"
@@ -42,7 +45,7 @@ jobs:
         run: yarn build:npm
 
       - name: Versioning (Prerelease)
-        if: github.ref == 'refs/heads/next' || github.event.pull_request.base.ref == 'next'
+        if: success() && (github.ref == 'refs/heads/next' || github.event.pull_request.base.ref == 'next')
         run: npx lerna version --conventional-prerelease --no-changelog --yes
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -58,6 +61,7 @@ jobs:
 
   deploy-ghp: 
     runs-on: ubuntu-latest
+    if: success()
     steps:
       - uses: actions/checkout@v3
       - name: Setup NodeJS
