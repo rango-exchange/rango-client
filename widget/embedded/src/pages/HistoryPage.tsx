@@ -43,7 +43,8 @@ export const pendingSwap: PendingSwap[] = [
           from: {
             symbol: 'JUNO',
             logo: 'https://api.rango.exchange/tokens/COSMOS/JUNO.png',
-            address: 'ibc/46b44899322f3cd854d2d46deef881958467cdd4b3b10086da49296bbed94bed',
+            address:
+              'ibc/46b44899322f3cd854d2d46deef881958467cdd4b3b10086da49296bbed94bed',
             blockchain: 'OSMOSIS',
             blockchainLogo: '',
             decimals: 6,
@@ -95,7 +96,8 @@ export const pendingSwap: PendingSwap[] = [
                   fromBlockchain: 'OSMOSIS',
                   to: 'ATOM',
                   toLogo: 'https://api.rango.exchange/tokens/COSMOS/ATOM.png',
-                  toAddress: 'ibc/27394fb092d2eccd56123c74f36e4c1f926001ceada9ca97ea622b25f41e5eb2',
+                  toAddress:
+                    'ibc/27394fb092d2eccd56123c74f36e4c1f926001ceada9ca97ea622b25f41e5eb2',
                   toBlockchain: 'OSMOSIS',
                 },
                 {
@@ -113,7 +115,8 @@ export const pendingSwap: PendingSwap[] = [
                   fromBlockchain: 'OSMOSIS',
                   to: 'IRIS',
                   toLogo: 'https://api.rango.exchange/tokens/COSMOS/IRIS.png',
-                  toAddress: 'ibc/7c4d60aa95e5a7558b0a364860979ca34b7ff8aaf255b87af9e879374470cec0',
+                  toAddress:
+                    'ibc/7c4d60aa95e5a7558b0a364860979ca34b7ff8aaf255b87af9e879374470cec0',
                   toBlockchain: 'OSMOSIS',
                 },
                 {
@@ -153,7 +156,8 @@ export const pendingSwap: PendingSwap[] = [
         id: 1,
         fromBlockchain: 'OSMOSIS',
         fromSymbol: 'JUNO',
-        fromSymbolAddress: 'ibc/46b44899322f3cd854d2d46deef881958467cdd4b3b10086da49296bbed94bed',
+        fromSymbolAddress:
+          'ibc/46b44899322f3cd854d2d46deef881958467cdd4b3b10086da49296bbed94bed',
         fromDecimals: 6,
         fromAmountPrecision: null,
         fromAmountMinValue: null,
@@ -174,7 +178,8 @@ export const pendingSwap: PendingSwap[] = [
         outputAmount: '1.540658',
         status: 'running',
         networkStatus: null,
-        executedTransactionId: '0f8f17eecc863c2d6be65ef52cfe3128ff3cd7baeddf133160bea8ccdfbf876b',
+        executedTransactionId:
+          '0f8f17eecc863c2d6be65ef52cfe3128ff3cd7baeddf133160bea8ccdfbf876b',
         explorerUrl: [
           {
             url: 'https://www.mintscan.io/osmosis/txs/0f8f17eecc863c2d6be65ef52cfe3128ff3cd7baeddf133160bea8ccdfbf876b',
@@ -212,7 +217,8 @@ export const pendingSwap: PendingSwap[] = [
                     },
                   ],
                   token_in: {
-                    denom: 'ibc/46B44899322F3CD854D2D46DEEF881958467CDD4B3B10086DA49296BBED94BED',
+                    denom:
+                      'ibc/46B44899322F3CD854D2D46DEEF881958467CDD4B3B10086DA49296BBED94BED',
                     amount: '1000000',
                   },
                   token_out_min_amount: '1525264',
@@ -223,21 +229,26 @@ export const pendingSwap: PendingSwap[] = [
               {
                 type_url: '/osmosis.gamm.v1beta1.MsgSwapExactAmountIn',
                 value: [
-                  10, 43, 111, 115, 109, 111, 49, 117, 110, 102, 50, 114, 99, 121, 116, 106, 120,
-                  102, 112, 122, 56, 120, 56, 97, 114, 54, 51, 104, 52, 113, 101, 102, 116, 97, 100,
-                  112, 116, 103, 53, 116, 48, 110, 113, 99, 108, 18, 73, 8, -14, 3, 18, 68, 105, 98,
-                  99, 47, 50, 55, 51, 57, 52, 70, 66, 48, 57, 50, 68, 50, 69, 67, 67, 68, 53, 54,
-                  49, 50, 51, 67, 55, 52, 70, 51, 54, 69, 52, 67, 49, 70, 57, 50, 54, 48, 48, 49,
-                  67, 69, 65, 68, 65, 57, 67, 65, 57, 55, 69, 65, 54, 50, 50, 66, 50, 53, 70, 52,
-                  49, 69, 53, 69, 66, 50, 18, 72, 8, 8, 18, 68, 105, 98, 99, 47, 55, 67, 52, 68, 54,
-                  48, 65, 65, 57, 53, 69, 53, 65, 55, 53, 53, 56, 66, 48, 65, 51, 54, 52, 56, 54,
-                  48, 57, 55, 57, 67, 65, 51, 52, 66, 55, 70, 70, 56, 65, 65, 70, 50, 53, 53, 66,
-                  56, 55, 65, 70, 57, 69, 56, 55, 57, 51, 55, 52, 52, 55, 48, 67, 69, 67, 48, 18, 9,
-                  8, 7, 18, 5, 117, 111, 115, 109, 111, 26, 79, 10, 68, 105, 98, 99, 47, 52, 54, 66,
-                  52, 52, 56, 57, 57, 51, 50, 50, 70, 51, 67, 68, 56, 53, 52, 68, 50, 68, 52, 54,
-                  68, 69, 69, 70, 56, 56, 49, 57, 53, 56, 52, 54, 55, 67, 68, 68, 52, 66, 51, 66,
-                  49, 48, 48, 56, 54, 68, 65, 52, 57, 50, 57, 54, 66, 66, 69, 68, 57, 52, 66, 69,
-                  68, 18, 7, 49, 48, 48, 48, 48, 48, 48, 34, 7, 49, 53, 50, 53, 50, 54, 52,
+                  10, 43, 111, 115, 109, 111, 49, 117, 110, 102, 50, 114, 99,
+                  121, 116, 106, 120, 102, 112, 122, 56, 120, 56, 97, 114, 54,
+                  51, 104, 52, 113, 101, 102, 116, 97, 100, 112, 116, 103, 53,
+                  116, 48, 110, 113, 99, 108, 18, 73, 8, -14, 3, 18, 68, 105,
+                  98, 99, 47, 50, 55, 51, 57, 52, 70, 66, 48, 57, 50, 68, 50,
+                  69, 67, 67, 68, 53, 54, 49, 50, 51, 67, 55, 52, 70, 51, 54,
+                  69, 52, 67, 49, 70, 57, 50, 54, 48, 48, 49, 67, 69, 65, 68,
+                  65, 57, 67, 65, 57, 55, 69, 65, 54, 50, 50, 66, 50, 53, 70,
+                  52, 49, 69, 53, 69, 66, 50, 18, 72, 8, 8, 18, 68, 105, 98, 99,
+                  47, 55, 67, 52, 68, 54, 48, 65, 65, 57, 53, 69, 53, 65, 55,
+                  53, 53, 56, 66, 48, 65, 51, 54, 52, 56, 54, 48, 57, 55, 57,
+                  67, 65, 51, 52, 66, 55, 70, 70, 56, 65, 65, 70, 50, 53, 53,
+                  66, 56, 55, 65, 70, 57, 69, 56, 55, 57, 51, 55, 52, 52, 55,
+                  48, 67, 69, 67, 48, 18, 9, 8, 7, 18, 5, 117, 111, 115, 109,
+                  111, 26, 79, 10, 68, 105, 98, 99, 47, 52, 54, 66, 52, 52, 56,
+                  57, 57, 51, 50, 50, 70, 51, 67, 68, 56, 53, 52, 68, 50, 68,
+                  52, 54, 68, 69, 69, 70, 56, 56, 49, 57, 53, 56, 52, 54, 55,
+                  67, 68, 68, 52, 66, 51, 66, 49, 48, 48, 56, 54, 68, 65, 52,
+                  57, 50, 57, 54, 66, 66, 69, 68, 57, 52, 66, 69, 68, 18, 7, 49,
+                  48, 48, 48, 48, 48, 48, 34, 7, 49, 53, 50, 53, 50, 54, 52,
                 ],
               },
             ],
@@ -303,7 +314,8 @@ export const pendingSwap: PendingSwap[] = [
           from: {
             symbol: 'JUNO',
             logo: 'https://api.rango.exchange/tokens/COSMOS/JUNO.png',
-            address: 'ibc/46b44899322f3cd854d2d46deef881958467cdd4b3b10086da49296bbed94bed',
+            address:
+              'ibc/46b44899322f3cd854d2d46deef881958467cdd4b3b10086da49296bbed94bed',
             blockchain: 'OSMOSIS',
             blockchainLogo: '',
             decimals: 6,
@@ -355,7 +367,8 @@ export const pendingSwap: PendingSwap[] = [
                   fromBlockchain: 'OSMOSIS',
                   to: 'ATOM',
                   toLogo: 'https://api.rango.exchange/tokens/COSMOS/ATOM.png',
-                  toAddress: 'ibc/27394fb092d2eccd56123c74f36e4c1f926001ceada9ca97ea622b25f41e5eb2',
+                  toAddress:
+                    'ibc/27394fb092d2eccd56123c74f36e4c1f926001ceada9ca97ea622b25f41e5eb2',
                   toBlockchain: 'OSMOSIS',
                 },
                 {
@@ -373,7 +386,8 @@ export const pendingSwap: PendingSwap[] = [
                   fromBlockchain: 'OSMOSIS',
                   to: 'IRIS',
                   toLogo: 'https://api.rango.exchange/tokens/COSMOS/IRIS.png',
-                  toAddress: 'ibc/7c4d60aa95e5a7558b0a364860979ca34b7ff8aaf255b87af9e879374470cec0',
+                  toAddress:
+                    'ibc/7c4d60aa95e5a7558b0a364860979ca34b7ff8aaf255b87af9e879374470cec0',
                   toBlockchain: 'OSMOSIS',
                 },
                 {
@@ -413,7 +427,8 @@ export const pendingSwap: PendingSwap[] = [
         id: 1,
         fromBlockchain: 'OSMOSIS',
         fromSymbol: 'JUNO',
-        fromSymbolAddress: 'ibc/46b44899322f3cd854d2d46deef881958467cdd4b3b10086da49296bbed94bed',
+        fromSymbolAddress:
+          'ibc/46b44899322f3cd854d2d46deef881958467cdd4b3b10086da49296bbed94bed',
         fromDecimals: 6,
         fromAmountPrecision: null,
         fromAmountMinValue: null,
@@ -434,7 +449,8 @@ export const pendingSwap: PendingSwap[] = [
         outputAmount: '1.540658',
         status: 'failed',
         networkStatus: null,
-        executedTransactionId: '0f8f17eecc863c2d6be65ef52cfe3128ff3cd7baeddf133160bea8ccdfbf876b',
+        executedTransactionId:
+          '0f8f17eecc863c2d6be65ef52cfe3128ff3cd7baeddf133160bea8ccdfbf876b',
         explorerUrl: [
           {
             url: 'https://www.mintscan.io/osmosis/txs/0f8f17eecc863c2d6be65ef52cfe3128ff3cd7baeddf133160bea8ccdfbf876b',
@@ -472,7 +488,8 @@ export const pendingSwap: PendingSwap[] = [
                     },
                   ],
                   token_in: {
-                    denom: 'ibc/46B44899322F3CD854D2D46DEEF881958467CDD4B3B10086DA49296BBED94BED',
+                    denom:
+                      'ibc/46B44899322F3CD854D2D46DEEF881958467CDD4B3B10086DA49296BBED94BED',
                     amount: '1000000',
                   },
                   token_out_min_amount: '1525264',
@@ -483,21 +500,26 @@ export const pendingSwap: PendingSwap[] = [
               {
                 type_url: '/osmosis.gamm.v1beta1.MsgSwapExactAmountIn',
                 value: [
-                  10, 43, 111, 115, 109, 111, 49, 117, 110, 102, 50, 114, 99, 121, 116, 106, 120,
-                  102, 112, 122, 56, 120, 56, 97, 114, 54, 51, 104, 52, 113, 101, 102, 116, 97, 100,
-                  112, 116, 103, 53, 116, 48, 110, 113, 99, 108, 18, 73, 8, -14, 3, 18, 68, 105, 98,
-                  99, 47, 50, 55, 51, 57, 52, 70, 66, 48, 57, 50, 68, 50, 69, 67, 67, 68, 53, 54,
-                  49, 50, 51, 67, 55, 52, 70, 51, 54, 69, 52, 67, 49, 70, 57, 50, 54, 48, 48, 49,
-                  67, 69, 65, 68, 65, 57, 67, 65, 57, 55, 69, 65, 54, 50, 50, 66, 50, 53, 70, 52,
-                  49, 69, 53, 69, 66, 50, 18, 72, 8, 8, 18, 68, 105, 98, 99, 47, 55, 67, 52, 68, 54,
-                  48, 65, 65, 57, 53, 69, 53, 65, 55, 53, 53, 56, 66, 48, 65, 51, 54, 52, 56, 54,
-                  48, 57, 55, 57, 67, 65, 51, 52, 66, 55, 70, 70, 56, 65, 65, 70, 50, 53, 53, 66,
-                  56, 55, 65, 70, 57, 69, 56, 55, 57, 51, 55, 52, 52, 55, 48, 67, 69, 67, 48, 18, 9,
-                  8, 7, 18, 5, 117, 111, 115, 109, 111, 26, 79, 10, 68, 105, 98, 99, 47, 52, 54, 66,
-                  52, 52, 56, 57, 57, 51, 50, 50, 70, 51, 67, 68, 56, 53, 52, 68, 50, 68, 52, 54,
-                  68, 69, 69, 70, 56, 56, 49, 57, 53, 56, 52, 54, 55, 67, 68, 68, 52, 66, 51, 66,
-                  49, 48, 48, 56, 54, 68, 65, 52, 57, 50, 57, 54, 66, 66, 69, 68, 57, 52, 66, 69,
-                  68, 18, 7, 49, 48, 48, 48, 48, 48, 48, 34, 7, 49, 53, 50, 53, 50, 54, 52,
+                  10, 43, 111, 115, 109, 111, 49, 117, 110, 102, 50, 114, 99,
+                  121, 116, 106, 120, 102, 112, 122, 56, 120, 56, 97, 114, 54,
+                  51, 104, 52, 113, 101, 102, 116, 97, 100, 112, 116, 103, 53,
+                  116, 48, 110, 113, 99, 108, 18, 73, 8, -14, 3, 18, 68, 105,
+                  98, 99, 47, 50, 55, 51, 57, 52, 70, 66, 48, 57, 50, 68, 50,
+                  69, 67, 67, 68, 53, 54, 49, 50, 51, 67, 55, 52, 70, 51, 54,
+                  69, 52, 67, 49, 70, 57, 50, 54, 48, 48, 49, 67, 69, 65, 68,
+                  65, 57, 67, 65, 57, 55, 69, 65, 54, 50, 50, 66, 50, 53, 70,
+                  52, 49, 69, 53, 69, 66, 50, 18, 72, 8, 8, 18, 68, 105, 98, 99,
+                  47, 55, 67, 52, 68, 54, 48, 65, 65, 57, 53, 69, 53, 65, 55,
+                  53, 53, 56, 66, 48, 65, 51, 54, 52, 56, 54, 48, 57, 55, 57,
+                  67, 65, 51, 52, 66, 55, 70, 70, 56, 65, 65, 70, 50, 53, 53,
+                  66, 56, 55, 65, 70, 57, 69, 56, 55, 57, 51, 55, 52, 52, 55,
+                  48, 67, 69, 67, 48, 18, 9, 8, 7, 18, 5, 117, 111, 115, 109,
+                  111, 26, 79, 10, 68, 105, 98, 99, 47, 52, 54, 66, 52, 52, 56,
+                  57, 57, 51, 50, 50, 70, 51, 67, 68, 56, 53, 52, 68, 50, 68,
+                  52, 54, 68, 69, 69, 70, 56, 56, 49, 57, 53, 56, 52, 54, 55,
+                  67, 68, 68, 52, 66, 51, 66, 49, 48, 48, 56, 54, 68, 65, 52,
+                  57, 50, 57, 54, 66, 66, 69, 68, 57, 52, 66, 69, 68, 18, 7, 49,
+                  48, 48, 48, 48, 48, 48, 34, 7, 49, 53, 50, 53, 50, 54, 52,
                 ],
               },
             ],
@@ -564,7 +586,8 @@ export const pendingSwap: PendingSwap[] = [
           from: {
             symbol: 'JUNO',
             logo: 'https://api.rango.exchange/tokens/COSMOS/JUNO.png',
-            address: 'ibc/46b44899322f3cd854d2d46deef881958467cdd4b3b10086da49296bbed94bed',
+            address:
+              'ibc/46b44899322f3cd854d2d46deef881958467cdd4b3b10086da49296bbed94bed',
             blockchain: 'OSMOSIS',
             blockchainLogo: '',
             decimals: 6,
@@ -616,7 +639,8 @@ export const pendingSwap: PendingSwap[] = [
                   fromBlockchain: 'OSMOSIS',
                   to: 'ATOM',
                   toLogo: 'https://api.rango.exchange/tokens/COSMOS/ATOM.png',
-                  toAddress: 'ibc/27394fb092d2eccd56123c74f36e4c1f926001ceada9ca97ea622b25f41e5eb2',
+                  toAddress:
+                    'ibc/27394fb092d2eccd56123c74f36e4c1f926001ceada9ca97ea622b25f41e5eb2',
                   toBlockchain: 'OSMOSIS',
                 },
                 {
@@ -634,7 +658,8 @@ export const pendingSwap: PendingSwap[] = [
                   fromBlockchain: 'OSMOSIS',
                   to: 'IRIS',
                   toLogo: 'https://api.rango.exchange/tokens/COSMOS/IRIS.png',
-                  toAddress: 'ibc/7c4d60aa95e5a7558b0a364860979ca34b7ff8aaf255b87af9e879374470cec0',
+                  toAddress:
+                    'ibc/7c4d60aa95e5a7558b0a364860979ca34b7ff8aaf255b87af9e879374470cec0',
                   toBlockchain: 'OSMOSIS',
                 },
                 {
@@ -674,7 +699,8 @@ export const pendingSwap: PendingSwap[] = [
         id: 1,
         fromBlockchain: 'OSMOSIS',
         fromSymbol: 'JUNO',
-        fromSymbolAddress: 'ibc/46b44899322f3cd854d2d46deef881958467cdd4b3b10086da49296bbed94bed',
+        fromSymbolAddress:
+          'ibc/46b44899322f3cd854d2d46deef881958467cdd4b3b10086da49296bbed94bed',
         fromDecimals: 6,
         fromAmountPrecision: null,
         fromAmountMinValue: null,
@@ -695,7 +721,8 @@ export const pendingSwap: PendingSwap[] = [
         outputAmount: '1.540658',
         status: 'success',
         networkStatus: null,
-        executedTransactionId: '0f8f17eecc863c2d6be65ef52cfe3128ff3cd7baeddf133160bea8ccdfbf876b',
+        executedTransactionId:
+          '0f8f17eecc863c2d6be65ef52cfe3128ff3cd7baeddf133160bea8ccdfbf876b',
         explorerUrl: [
           {
             url: 'https://www.mintscan.io/osmosis/txs/0f8f17eecc863c2d6be65ef52cfe3128ff3cd7baeddf133160bea8ccdfbf876b',
@@ -733,7 +760,8 @@ export const pendingSwap: PendingSwap[] = [
                     },
                   ],
                   token_in: {
-                    denom: 'ibc/46B44899322F3CD854D2D46DEEF881958467CDD4B3B10086DA49296BBED94BED',
+                    denom:
+                      'ibc/46B44899322F3CD854D2D46DEEF881958467CDD4B3B10086DA49296BBED94BED',
                     amount: '1000000',
                   },
                   token_out_min_amount: '1525264',
@@ -744,21 +772,26 @@ export const pendingSwap: PendingSwap[] = [
               {
                 type_url: '/osmosis.gamm.v1beta1.MsgSwapExactAmountIn',
                 value: [
-                  10, 43, 111, 115, 109, 111, 49, 117, 110, 102, 50, 114, 99, 121, 116, 106, 120,
-                  102, 112, 122, 56, 120, 56, 97, 114, 54, 51, 104, 52, 113, 101, 102, 116, 97, 100,
-                  112, 116, 103, 53, 116, 48, 110, 113, 99, 108, 18, 73, 8, -14, 3, 18, 68, 105, 98,
-                  99, 47, 50, 55, 51, 57, 52, 70, 66, 48, 57, 50, 68, 50, 69, 67, 67, 68, 53, 54,
-                  49, 50, 51, 67, 55, 52, 70, 51, 54, 69, 52, 67, 49, 70, 57, 50, 54, 48, 48, 49,
-                  67, 69, 65, 68, 65, 57, 67, 65, 57, 55, 69, 65, 54, 50, 50, 66, 50, 53, 70, 52,
-                  49, 69, 53, 69, 66, 50, 18, 72, 8, 8, 18, 68, 105, 98, 99, 47, 55, 67, 52, 68, 54,
-                  48, 65, 65, 57, 53, 69, 53, 65, 55, 53, 53, 56, 66, 48, 65, 51, 54, 52, 56, 54,
-                  48, 57, 55, 57, 67, 65, 51, 52, 66, 55, 70, 70, 56, 65, 65, 70, 50, 53, 53, 66,
-                  56, 55, 65, 70, 57, 69, 56, 55, 57, 51, 55, 52, 52, 55, 48, 67, 69, 67, 48, 18, 9,
-                  8, 7, 18, 5, 117, 111, 115, 109, 111, 26, 79, 10, 68, 105, 98, 99, 47, 52, 54, 66,
-                  52, 52, 56, 57, 57, 51, 50, 50, 70, 51, 67, 68, 56, 53, 52, 68, 50, 68, 52, 54,
-                  68, 69, 69, 70, 56, 56, 49, 57, 53, 56, 52, 54, 55, 67, 68, 68, 52, 66, 51, 66,
-                  49, 48, 48, 56, 54, 68, 65, 52, 57, 50, 57, 54, 66, 66, 69, 68, 57, 52, 66, 69,
-                  68, 18, 7, 49, 48, 48, 48, 48, 48, 48, 34, 7, 49, 53, 50, 53, 50, 54, 52,
+                  10, 43, 111, 115, 109, 111, 49, 117, 110, 102, 50, 114, 99,
+                  121, 116, 106, 120, 102, 112, 122, 56, 120, 56, 97, 114, 54,
+                  51, 104, 52, 113, 101, 102, 116, 97, 100, 112, 116, 103, 53,
+                  116, 48, 110, 113, 99, 108, 18, 73, 8, -14, 3, 18, 68, 105,
+                  98, 99, 47, 50, 55, 51, 57, 52, 70, 66, 48, 57, 50, 68, 50,
+                  69, 67, 67, 68, 53, 54, 49, 50, 51, 67, 55, 52, 70, 51, 54,
+                  69, 52, 67, 49, 70, 57, 50, 54, 48, 48, 49, 67, 69, 65, 68,
+                  65, 57, 67, 65, 57, 55, 69, 65, 54, 50, 50, 66, 50, 53, 70,
+                  52, 49, 69, 53, 69, 66, 50, 18, 72, 8, 8, 18, 68, 105, 98, 99,
+                  47, 55, 67, 52, 68, 54, 48, 65, 65, 57, 53, 69, 53, 65, 55,
+                  53, 53, 56, 66, 48, 65, 51, 54, 52, 56, 54, 48, 57, 55, 57,
+                  67, 65, 51, 52, 66, 55, 70, 70, 56, 65, 65, 70, 50, 53, 53,
+                  66, 56, 55, 65, 70, 57, 69, 56, 55, 57, 51, 55, 52, 52, 55,
+                  48, 67, 69, 67, 48, 18, 9, 8, 7, 18, 5, 117, 111, 115, 109,
+                  111, 26, 79, 10, 68, 105, 98, 99, 47, 52, 54, 66, 52, 52, 56,
+                  57, 57, 51, 50, 50, 70, 51, 67, 68, 56, 53, 52, 68, 50, 68,
+                  52, 54, 68, 69, 69, 70, 56, 56, 49, 57, 53, 56, 52, 54, 55,
+                  67, 68, 68, 52, 66, 51, 66, 49, 48, 48, 56, 54, 68, 65, 52,
+                  57, 50, 57, 54, 66, 66, 69, 68, 57, 52, 66, 69, 68, 18, 7, 49,
+                  48, 48, 48, 48, 48, 48, 34, 7, 49, 53, 50, 53, 50, 54, 52,
                 ],
               },
             ],
