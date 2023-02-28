@@ -6,7 +6,7 @@ import {
   SecondaryPage,
   styled,
   Typography,
-} from '@rangodev/ui';
+} from '@rango-dev/ui';
 import React, { useState } from 'react';
 
 interface PropTypes {

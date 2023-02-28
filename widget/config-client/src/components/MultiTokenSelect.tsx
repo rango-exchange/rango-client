@@ -9,7 +9,7 @@ import {
   styled,
   TokenList,
   Typography,
-} from '@rangodev/ui';
+} from '@rango-dev/ui';
 import { BlockchainMeta, Token } from 'rango-sdk';
 import { Type } from '../types';
 import { useConfigStore } from '../store/config';

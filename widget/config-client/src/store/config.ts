@@ -1,8 +1,8 @@
 import { create } from 'zustand';
 import { BlockchainMeta, Token } from 'rango-sdk';
 import createSelectors from './selectors';
-import { LiquiditySource } from '@rangodev/ui/dist/types/meta';
-import { WalletType } from '@rangodev/wallets-shared';
+import { LiquiditySource } from '@rango-dev/ui/dist/types/meta';
+import { WalletType } from '@rango-dev/wallets-shared';
 import { immer } from 'zustand/middleware/immer';
 import { Type } from '../types';
 export type StringsName = 'title' | 'languege' | 'fontFaminy';
