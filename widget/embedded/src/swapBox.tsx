@@ -17,14 +17,13 @@ import { useTheme } from './hooks/useTheme';
 
 const providers = allProviders();
 
-export default function SwapBox() {
+export const SwapBox: React.FC = () => {
   globalStyles();
   const { activeTheme } = useTheme();
   const { blockchains } = useMetaStore.use.meta();
   const disconnectWallet = useWalletsStore.use.disconnectWallet();
   const connectWallet = useWalletsStore.use.connectWallet();
   const evmBasedChainNames = blockchains
-    //@ts-ignore
     .filter(isEvmBlockchain)
     .map((chain) => chain.name);
 
@@ -62,4 +61,4 @@ export default function SwapBox() {
       </div>
     </Provider>
   );
-}
+};

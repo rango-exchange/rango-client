@@ -8,7 +8,7 @@ const root = createRoot(container);
 root.render(
   <BrowserRouter>
     <App />,
-  </BrowserRouter>,
+  </BrowserRouter>
 );
 
-export * from './swapBox';
+export { SwapBox } from './swapBox';
