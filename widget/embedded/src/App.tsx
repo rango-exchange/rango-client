@@ -19,6 +19,13 @@ interface Token {
   contractAddress?: string;
 }
 
+const Container = styled('div', {
+  display: 'flex',
+  backgroundColor: '$neutrals300',
+  padding: 10,
+  justifyContent: 'center',
+});
+
 //todo: update interface and update widget state based on WidgetProps change
 export type WidgetProps = {
   fromChain?: string;
@@ -63,6 +70,16 @@ export function App() {
     }
   };
 
+  const onChangeStyles = (name, value, color) => {
+    if (color) {
+      setStyle((prev) => ({ ...prev, colors: { ...prev.colors, [name]: value } }));
+    } else {
+      setStyle((prev) => ({ ...prev, [name]: value }));
+    }
+  };
+
+  const onChangeConfig = (name, value) => setConfig((prev) => ({ ...prev, [name]: value }));
+  
   return (
     //@ts-ignore
     <Provider allBlockChains={blockchains} providers={providers} onUpdateState={onUpdateState}>
