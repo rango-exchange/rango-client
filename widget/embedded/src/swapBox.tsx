@@ -1,7 +1,7 @@
 import { SwapContainer } from '@rangodev/ui';
 import React from 'react';
 import { AppRouter } from './components/AppRouter';
-import { MetaState, useMetaStore } from './store/meta';
+import { useMetaStore } from './store/meta';
 import { Events, Provider } from '@rangodev/wallets-core';
 import { allProviders } from '@rangodev/provider-all';
 import { EventHandler } from '@rangodev/wallets-core/dist/wallet';
@@ -11,77 +11,36 @@ import {
   walletAndSupportedChainsNames,
 } from './utils/wallets';
 import { useWalletsStore } from './store/wallets';
-import { httpService } from './services/httpService';
 import { Layout } from './components/Layout';
 import { globalStyles } from './globalStyles';
 import { useTheme } from './hooks/useTheme';
 
 const providers = allProviders();
-// interface Token {
-//   name: string;
-//   contractAddress?: string;
-// }
 
-//todo: update interface and update widget state based on WidgetProps change
-// type WidgetProps = {
-//   fromChain?: string;
-//   fromToken?: string;
-//   toChain?: string;
-//   toToken?: string;
-//   fromAmount?: string;
-//   slippage?: number;
-//   chains?: string[];
-//   tokens?: Token[];
-//   liquiditySources?: string[];
-//   theme: 'dark' | 'light' | 'auto';
-// };
-
-export default function Test() {
+export default function SwapBox() {
   globalStyles();
   const { activeTheme } = useTheme();
-  const { blockchains } = useMetaStore((state: MetaState) => state.meta);
-
-  const { insertAccount, disconnectWallet } = useWalletsStore();
-  const { insertBalance } = useWalletsStore();
-  const evmBasedChainNames = useMetaStore(
-    (state: any) => state.meta.blockchains
-  )
+  const { blockchains } = useMetaStore.use.meta();
+  const disconnectWallet = useWalletsStore.use.disconnectWallet();
+  const connectWallet = useWalletsStore.use.connectWallet();
+  const evmBasedChainNames = blockchains
+    //@ts-ignore
     .filter(isEvmBlockchain)
-    .map((chain: any) => chain.name);
+    .map((chain) => chain.name);
 
-  const onUpdateState: EventHandler = (
-    type,
-    event,
-    value,
-    state,
-    supportedChains
-  ) => {
+  const onUpdateState: EventHandler = (type, event, value, supportedChains) => {
     if (event === Events.ACCOUNTS) {
       if (value) {
         const supportedChainNames: Network[] | null =
+          //@ts-ignore
           walletAndSupportedChainsNames(supportedChains);
         const data = prepareAccountsForWalletStore(
           type,
           value,
-          state.network,
           evmBasedChainNames,
           supportedChainNames
         );
-        insertAccount(data);
-        httpService
-          .getWalletsDetails(
-            data.map((acc) => ({
-              address: acc.accountsWithBalance[0].address,
-              blockchain: acc.blockchain,
-            }))
-          )
-          .then((res) => {
-            insertBalance(
-              res.wallets,
-              data[0].accountsWithBalance[0].walletType
-            );
-          })
-          .catch();
+        connectWallet(data);
       } else {
         disconnectWallet(type);
       }
