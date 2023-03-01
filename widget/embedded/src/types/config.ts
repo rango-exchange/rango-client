@@ -1,8 +1,10 @@
+import { BlockchainMeta, TokenMeta } from "@rangodev/ui/dist/types/meta";
+
 export type ConfigType = {
-  fromChain: string;
-  fromToken: string;
-  toChain: string;
-  toToken: string;
+  fromChain: BlockchainMeta;
+  fromToken: TokenMeta;
+  toChain: BlockchainMeta;
+  toToken: TokenMeta;
   fromAmount: string;
   chains: string[];
   tokens: string[];
