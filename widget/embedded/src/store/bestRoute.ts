@@ -29,7 +29,8 @@ interface RouteState {
 }
 
 export const useBestRouteStore = createSelectors(
-  create<RouteState>()(
+  create<RouteState>()
+  (
     immer((set) => ({
       fromChain: null,
       fromToken: null,

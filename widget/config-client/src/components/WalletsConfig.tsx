@@ -3,17 +3,16 @@ import { useWallets } from '@rangodev/wallets-core';
 import { WalletType } from '@rangodev/wallets-shared';
 import React from 'react';
 import { excludedWallets } from '../helpers';
-import { ConfigType } from '../types';
+import { useConfigStore } from '../store/config';
 import { ConfigurationContainer } from './ChainsConfig';
 import { MultiSelect } from './MultiSelect';
-interface PropTypes {
-  onChange: (name: string, value: 'all' | WalletType[] | boolean) => void;
-  config: ConfigType;
-}
-export function WalletsConfig({ onChange, config }: PropTypes) {
-  const { getWalletInfo } = useWallets();
 
-  const wallets = Object.values(WalletType)
+export function WalletsConfig() {
+  const { getWalletInfo } = useWallets();
+  const { wallets, onChangeWallets, multiChain, onChangeBooleansConfig } = useConfigStore(
+    (state) => state,
+  );
+  const walletList = Object.values(WalletType)
     .filter((wallet) => !excludedWallets.includes(wallet))
     .map((type) => {
       const { name: title, img: logo } = getWalletInfo(type);
@@ -31,19 +30,18 @@ export function WalletsConfig({ onChange, config }: PropTypes) {
       <ConfigurationContainer>
         <MultiSelect
           label="Supported Wallets"
-          type="Wallests"
+          type="Wallets"
           modalTitle="Select Wallets"
-          list={wallets}
-          name="wallets"
-          value={config.wallets}
-          onChange={onChange}
+          list={walletList}
+          value={wallets}
+          onChange={onChangeWallets}
         />
         <Spacer direction="vertical" size={12} />
         <Checkbox
-          onCheckedChange={(checked) => onChange('multiChain', checked)}
+          onCheckedChange={(checked) => onChangeBooleansConfig('multiChain', checked)}
           id="multi_wallets"
           label="Enable multi wallets simultaneously"
-          checked={config.multiChain}
+          checked={multiChain}
         />
       </ConfigurationContainer>
     </>

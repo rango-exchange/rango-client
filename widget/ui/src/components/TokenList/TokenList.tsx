@@ -70,19 +70,16 @@ export function TokenList(props: PropTypes) {
 
   const isSelect = (token: Token) => {
     if (multiSelect && selectedList) {
-      if (selectedList === 'all') return true;
-      else if (selectedList.length) {
-        const index = selectedList
+      return (
+        selectedList === 'all' ||
+        selectedList
           .map((item) => item.symbol + item.address)
-          .indexOf(token.symbol + token.address);
-        if (index !== -1) return true;
-      }
-    } else if (
-      selected?.symbol === token.symbol &&
-      selected?.address === token.address
-    )
-      return true;
-    return false;
+          .indexOf(token.symbol + token.address) > -1
+      );
+    }
+    return (
+      selected?.symbol === token.symbol && selected?.address === token.address
+    );
   };
 
   const Token = ({

@@ -10,14 +10,11 @@ import {
   Typography,
 } from '@rangodev/ui';
 import { useMetaStore } from '../store/meta';
-import { BlockchainMeta, Token } from 'rango-sdk';
+import { useConfigStore } from '../store/config';
+import { Type } from '../types';
 
 interface PropTypes {
-  type: 'from' | 'to';
-  chain: BlockchainMeta | null;
-  token: Token | null;
-  defualtAmount: number;
-  onChange: (name: string, value: BlockchainMeta | Token) => void;
+  type: Type;
 }
 
 const ImagePlaceholder = styled('span', {
@@ -36,15 +33,26 @@ const Container = styled('div', {
   gap: 12,
 });
 
-export function TokenInfo({ defualtAmount, type, chain, onChange, token }: PropTypes) {
+export function TokenInfo({ type }: PropTypes) {
+  const {
+    toChain,
+    fromChain,
+    toToken,
+    fromToken,
+    fromAmount,
+    onChangeNumbersConfig,
+    onChangeBlockChain,
+    onChangeToken,
+  } = useConfigStore((state) => state);
+  const token = type === 'Destination' ? fromToken : toToken;
+  const chain = type === 'Destination' ? fromChain : toChain;
+
   const [modal, setModal] = useState({ open: false, isChain: false, isToken: false });
   const {
     meta: { blockchains, tokens },
     loadingStatus,
   } = useMetaStore();
-  const onChangeConfig = (name, value) => {
-    onChange(name, value);
-  };
+
   return (
     <Container>
       <div>
@@ -108,12 +116,11 @@ export function TokenInfo({ defualtAmount, type, chain, onChange, token }: PropT
         </Button>
       </div>
 
-      {type !== 'from' ? (
+      {type !== 'Destination' ? (
         <div>
           <TextField
-            onChange={(e) => onChangeConfig(e.target.name, e.target.value)}
-            value={defualtAmount}
-            name="fromAmount"
+            onChange={(e) => onChangeNumbersConfig('fromAmount', parseInt(e.target.value || '0'))}
+            value={fromAmount}
             label="Default Amount"
             type="number"
             size="large"
@@ -135,7 +142,7 @@ export function TokenInfo({ defualtAmount, type, chain, onChange, token }: PropT
               list={blockchains}
               hasHeader={false}
               selected={chain}
-              onChange={(chain) => onChangeConfig(`${type}Chain`, chain)}
+              onChange={(chain) => onChangeBlockChain(chain, type)}
               loadingStatus={loadingStatus}
             />
           ) : (
@@ -145,12 +152,12 @@ export function TokenInfo({ defualtAmount, type, chain, onChange, token }: PropT
                 hasHeader={false}
                 loadingStatus={loadingStatus}
                 selected={token}
-                onChange={(token) => onChangeConfig(`${type}Token`, token)}
+                onChange={(token) => onChangeToken(token, type)}
               />
             )
           )
         }
-        title={`Select ${type === 'from' ? 'Source' : 'Destination'} Network`}
+        title={`Select ${type} Network`}
         containerStyle={{ width: '560px', height: '655px' }}></Modal>
     </Container>
   );
