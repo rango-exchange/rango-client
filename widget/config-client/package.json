@@ -6,7 +6,7 @@
   "source": "public/index.html",
   "browserslist": "> 0.5%, last 2 versions, not dead",
   "scripts": {
-    "dev": "parcel -p 3000 --no-cache",
+    "dev": "parcel -p 3005 --no-cache",
     "build": "parcel build"
   },
   "devDependencies": {
