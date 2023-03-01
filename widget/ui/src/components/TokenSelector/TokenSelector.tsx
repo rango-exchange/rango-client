@@ -6,14 +6,25 @@ import { TokenWithAmount } from '../TokenList/TokenList';
 export interface PropTypes {
   list: TokenWithAmount[];
   type?: 'Source' | 'Destination';
-  selected: TokenWithAmount | null;
+  selected?: TokenWithAmount;
   onChange: (token: TokenWithAmount) => void;
-  onBack?: () => void;
   hasHeader?: boolean;
+  multiSelect?: boolean;
+  onBack?: () => void;
+  selectedList?: TokenWithAmount[] | 'all';
 }
 
 export function TokenSelector(props: PropTypes) {
-  const { list, type, selected, onChange, onBack, hasHeader } = props;
+  const {
+    list,
+    type,
+    selected,
+    onChange,
+    hasHeader,
+    multiSelect,
+    selectedList,
+    onBack,
+  } = props;
 
   return (
     <SecondaryPage
@@ -27,6 +38,8 @@ export function TokenSelector(props: PropTypes) {
           searchedText={searchedFor}
           list={list}
           selected={selected}
+          selectedList={selectedList}
+          multiSelect={multiSelect}
           onChange={onChange}
         />
       )}

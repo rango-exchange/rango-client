@@ -7,8 +7,10 @@ import { Typography } from '../Typography';
 
 export interface PropTypes {
   list: BlockchainMeta[];
-  selected: BlockchainMeta | null;
+  selected?: BlockchainMeta | null;
   onChange: (blockchain: BlockchainMeta) => void;
+  multiSelect?: boolean;
+  selectedList?: BlockchainMeta[] | 'all';
 }
 
 const ListContainer = styled('div', {
@@ -27,7 +29,7 @@ const Image = styled('img', {
 });
 
 export function BlockchainsList(props: PropTypes) {
-  const { list, onChange } = props;
+  const { list, onChange, multiSelect, selectedList } = props;
   const [selected, setSelected] = useState(props.selected);
 
   const changeSelectedBlockchain = (blockchain: BlockchainMeta) => {
@@ -35,18 +37,24 @@ export function BlockchainsList(props: PropTypes) {
     onChange(blockchain);
   };
 
+  const isSelect = (name: string) => {
+    if (multiSelect) {
+      if (!selectedList?.length) return true;
+      else if (selectedList.indexOf(name) !== -1) return true;
+    } else if (name === selected?.name) return true;
+    return false;
+  };
+
   return (
     <ListContainer>
       {list.map((blockchain, index) => {
         return (
           <Button
-            type={blockchain.name === selected?.name ? 'primary' : undefined}
+            type={isSelect(blockchain.name) ? 'primary' : undefined}
             variant="outlined"
             size="large"
             prefix={<Image src={blockchain.logo} />}
-            suffix={
-              blockchain.name === selected?.name ? <FilledCircle /> : undefined
-            }
+            suffix={isSelect(blockchain.name) ? <FilledCircle /> : undefined}
             align="start"
             onClick={changeSelectedBlockchain.bind(null, blockchain)}
             key={index}

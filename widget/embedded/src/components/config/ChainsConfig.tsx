@@ -2,14 +2,14 @@ import { Checkbox, Spacer, styled, Typography } from '@rangodev/ui';
 import { BlockchainMeta, TokenMeta } from '@rangodev/ui/dist/types/meta';
 import React from 'react';
 import { ConfigType } from '../../types/config';
-import { blockchainMeta } from './mock';
+import { blockchainMeta, tokensMeta } from './mock';
 import { MultiSelect } from './MultiSelect';
 import { TokenInfo } from './TokenInfo';
 
 interface PropTypes {
   type: 'Destination' | 'Source';
   config: ConfigType;
-  onChange: (name: string, value: string | TokenMeta | BlockchainMeta | boolean) => void;
+  onChange: (name: string, value: string | TokenMeta | BlockchainMeta | boolean | string[]) => void;
 }
 export const ConfigurationContainer = styled('div', {
   borderRadius: '$10',
@@ -26,24 +26,23 @@ export function ChainsConfig({ type, config, onChange }: PropTypes) {
       <Spacer size={12} scale="vertical" />
       <ConfigurationContainer>
         <MultiSelect
-          // list={blockchainMeta}
+          list={blockchainMeta}
           label="Supported Blockchains"
-          type="Blockchains" 
-          modalTitle={''}          // selectItem={{
-          //   image: '',
-          //   value: '',
-          // }}
+          type="Blockchains"
+          onChange={onChange}
+          name={type === 'Destination' ? 'fromChains' : 'toChains'}
+          value={type === 'Destination' ? config.fromChains : config.toChains}
+          modalTitle="Select Blockchains"
         />
         <Spacer size={24} scale={'vertical'} />
         <MultiSelect
-          // list={blockchainMeta}
+          list={tokensMeta}
+          onChange={onChange}
+          modalTitle="Select Tokens"
           label="Supported Tokens"
           type="Tokens"
-          modalTitle={''} 
-          // selectItem={{
-          //   image: '',
-          //   value: '',
-          // }}
+          name={type === 'Destination' ? 'fromTokens' : 'toTokens'}
+          value={type === 'Destination' ? config.fromTokens : config.toTokens}
         />
         {type === 'Destination' ? (
           <>

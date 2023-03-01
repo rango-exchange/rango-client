@@ -15,7 +15,7 @@ export type PropTypes = (
       Content: React.ReactNode;
     }
 ) & {
-  title: string;
+  title?: string;
   onBack?: () => void;
   TopButton?: React.ReactNode;
   Footer?: React.ReactNode;

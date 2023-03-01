@@ -1,25 +1,35 @@
 import { Checkbox, Spacer, Typography } from '@rangodev/ui';
-import { BlockchainMeta, TokenMeta } from '@rangodev/ui/dist/types/meta';
+import { WalletType } from '@rangodev/wallets-shared';
 import React from 'react';
+import { ConfigType } from '../../types/config';
 import { ConfigurationContainer } from './ChainsConfig';
+import { Wallets } from './mock';
 import { MultiSelect } from './MultiSelect';
 interface PropTypes {
-  multiChain: boolean;
-  onChange: (name: string, value: string | TokenMeta | BlockchainMeta | boolean) => void;
+  onChange: (name: string, value:  WalletType[] | boolean) => void;
+  config: ConfigType;
 }
-export function WalletsConfig({ multiChain, onChange }: PropTypes) {
+export function WalletsConfig({ onChange, config }: PropTypes) {
   return (
     <>
       <Typography variant="h4">Wallet</Typography>
       <Spacer size={12} scale="vertical" />
       <ConfigurationContainer>
-        <MultiSelect label="Supported Wallets" type="Wallests" modalTitle={''} />
+        <MultiSelect
+          label="Supported Wallets"
+          type="Wallests"
+          modalTitle="Select Wallets"
+          list={Wallets}
+          name="wallets"
+          value={config.wallets}
+          onChange={onChange}
+        />
         <Spacer scale="vertical" size={12} />
         <Checkbox
           onCheckedChange={(checked) => onChange('multiChain', checked)}
-          id="custom_address"
+          id="multi_wallets"
           label="Enable multi wallets simultaneously"
-          checked={multiChain}
+          checked={config.multiChain}
         />
       </ConfigurationContainer>
     </>
