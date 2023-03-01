@@ -9,16 +9,24 @@ import {
   TokenSelector,
   Typography,
 } from '@rangodev/ui';
-import { blockchainMeta, tokensMeta } from './mock';
-import { BlockchainMeta, TokenMeta } from '@rangodev/ui/dist/types/meta';
+import { useMetaStore } from '../../store/meta';
+import { Value } from '../../types/config';
+import { BlockchainMeta, Token } from 'rango-sdk';
+
 interface PropTypes {
   type: 'from' | 'to';
-  chain: string;
-  token: string;
-  defualtAmount: string;
-  onChange: (name: string, value: string | TokenMeta | BlockchainMeta) => void;
+  chain: BlockchainMeta | null;
+  token: Token | null;
+  defualtAmount: number;
+  onChange: (name: string, value: Value) => void;
 }
 
+const ImagePlaceholder = styled('span', {
+  width: '24px',
+  height: '24px',
+  backgroundColor: '$neutrals300',
+  borderRadius: '99999px',
+});
 const Container = styled('div', {
   display: 'grid',
   position: 'relative',
@@ -32,10 +40,14 @@ const StyledImage = styled('img', {
 
 export function TokenInfo({ defualtAmount, type, chain, onChange, token }: PropTypes) {
   const [modal, setModal] = useState({ open: false, isChain: false, isToken: false });
-  const searchChain = blockchainMeta.find((c) => c.name === chain);
-  const searchToken = tokensMeta.find((t) => t.symbol === token);
-
-  const onChangeConfig = (name, value) => onChange(name, value);
+  const {
+    meta: { blockchains, tokens },
+    loadingStatus,
+  } = useMetaStore();
+  const onChangeConfig = (name, value) => {
+    console.log(name, value);
+    onChange(name, value);
+  };
   return (
     <Container>
       <div>
@@ -52,12 +64,20 @@ export function TokenInfo({ defualtAmount, type, chain, onChange, token }: PropT
               isToken: false,
             }))
           }
-          prefix={<StyledImage src={searchChain?.logo} />}
+          disabled={loadingStatus === 'failed'}
+          loading={loadingStatus === 'loading'}
+          prefix={
+            loadingStatus === 'success' && chain ? (
+              <StyledImage src={chain.logo} />
+            ) : (
+              <ImagePlaceholder />
+            )
+          }
           suffix={<AngleDownIcon />}
           fullWidth
           align="start"
           size="large">
-          {searchChain?.displayName}
+          {chain ? chain.displayName : 'Chain'}
         </Button>
       </div>
 
@@ -67,7 +87,15 @@ export function TokenInfo({ defualtAmount, type, chain, onChange, token }: PropT
         </Typography>
         <Button
           variant="outlined"
-          prefix={<StyledImage src={searchToken?.image} />}
+          disabled={loadingStatus === 'failed'}
+          loading={loadingStatus === 'loading'}
+          prefix={
+            loadingStatus === 'success' && token ? (
+              <StyledImage src={token.image} />
+            ) : (
+              <ImagePlaceholder />
+            )
+          }
           suffix={<AngleDownIcon />}
           fullWidth
           onClick={() =>
@@ -79,18 +107,21 @@ export function TokenInfo({ defualtAmount, type, chain, onChange, token }: PropT
           }
           align="start"
           size="large">
-          {searchToken?.symbol}
+          {token ? token.symbol : 'Token'}
         </Button>
       </div>
 
       {type !== 'from' ? (
-        <TextField
-          onChange={(e) => onChangeConfig(e.target.name, e.target.value)}
-          value={defualtAmount}
-          name="fromAmount"
-          label="Default Amount"
-          type="number"
-        />
+        <div>
+          <TextField
+            onChange={(e) => onChangeConfig(e.target.name, e.target.value)}
+            value={defualtAmount}
+            name="fromAmount"
+            label="Default Amount"
+            type="number"
+            size="large"
+          />
+        </div>
       ) : null}
 
       <Modal
@@ -104,19 +135,19 @@ export function TokenInfo({ defualtAmount, type, chain, onChange, token }: PropT
         content={
           modal.isChain ? (
             <BlockchainSelector
-              list={blockchainMeta}
+              list={blockchains}
               inModal={true}
               hasHeader={false}
-              selected={searchChain}
+              selected={chain}
               onChange={(chain) => onChangeConfig(`${type}Chain`, chain)}
             />
           ) : (
             modal.isToken && (
               <TokenSelector
-                list={tokensMeta}
+                list={tokens.filter((token) => token.blockchain === chain?.name)}
                 inModal={true}
                 hasHeader={false}
-                selected={searchToken}
+                selected={token}
                 onChange={(token) => onChangeConfig(`${type}Token`, token)}
               />
             )
