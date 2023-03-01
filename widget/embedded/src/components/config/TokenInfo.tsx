@@ -13,8 +13,8 @@ import { blockchainMeta, tokensMeta } from './mock';
 import { BlockchainMeta, TokenMeta } from '@rangodev/ui/dist/types/meta';
 interface PropTypes {
   type: 'from' | 'to';
-  chain: BlockchainMeta;
-  token: TokenMeta;
+  chain: string;
+  token: string;
   defualtAmount: string;
   onChange: (name: string, value: string | TokenMeta | BlockchainMeta) => void;
 }
@@ -32,6 +32,8 @@ const StyledImage = styled('img', {
 
 export function TokenInfo({ defualtAmount, type, chain, onChange, token }: PropTypes) {
   const [modal, setModal] = useState({ open: false, isChain: false, isToken: false });
+  const searchChain = blockchainMeta.find((c) => c.name === chain);
+  const searchToken = tokensMeta.find((t) => t.symbol === token);
 
   const onChangeConfig = (name, value) => onChange(name, value);
   return (
@@ -50,12 +52,12 @@ export function TokenInfo({ defualtAmount, type, chain, onChange, token }: PropT
               isToken: false,
             }))
           }
-          prefix={<StyledImage src={chain.logo} />}
+          prefix={<StyledImage src={searchChain?.logo} />}
           suffix={<AngleDownIcon />}
           fullWidth
           align="start"
           size="large">
-          {chain.displayName}
+          {searchChain?.displayName}
         </Button>
       </div>
 
@@ -65,7 +67,7 @@ export function TokenInfo({ defualtAmount, type, chain, onChange, token }: PropT
         </Typography>
         <Button
           variant="outlined"
-          prefix={<StyledImage src={token.image} />}
+          prefix={<StyledImage src={searchToken?.image} />}
           suffix={<AngleDownIcon />}
           fullWidth
           onClick={() =>
@@ -77,7 +79,7 @@ export function TokenInfo({ defualtAmount, type, chain, onChange, token }: PropT
           }
           align="start"
           size="large">
-          {token.symbol}
+          {searchToken?.symbol}
         </Button>
       </div>
 
@@ -102,11 +104,10 @@ export function TokenInfo({ defualtAmount, type, chain, onChange, token }: PropT
         content={
           modal.isChain ? (
             <BlockchainSelector
-              type={type === 'from' ? 'Source' : 'Destination'}
               list={blockchainMeta}
               inModal={true}
               hasHeader={false}
-              selected={chain}
+              selected={searchChain}
               onChange={(chain) => onChangeConfig(`${type}Chain`, chain)}
             />
           ) : (
@@ -115,9 +116,8 @@ export function TokenInfo({ defualtAmount, type, chain, onChange, token }: PropT
                 list={tokensMeta}
                 inModal={true}
                 hasHeader={false}
-                type={type === 'from' ? 'Source' : 'Destination'}
-                selected={token}
-                onChange={(chain) => onChangeConfig(`${type}Token`, chain)}
+                selected={searchToken}
+                onChange={(token) => onChangeConfig(`${type}Token`, token)}
               />
             )
           )

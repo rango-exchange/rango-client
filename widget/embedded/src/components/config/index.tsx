@@ -6,6 +6,7 @@ import { SourcesConfig } from './SourcesConfig';
 import { StylesConfig } from './StylesConfig';
 import { ConfigType, StyleType } from '../../types/config';
 import { BlockchainMeta, TokenMeta } from '@rangodev/ui/dist/types/meta';
+import { WalletType } from '@rangodev/wallets-shared';
 
 const Container = styled('div', {
   height: 'calc(100vh - 40px)',
@@ -15,7 +16,10 @@ interface PropTypes {
   style: StyleType;
   config: ConfigType;
   onChangeStyles: (name: string, value: string, color: boolean) => void;
-  onChangeConfig: (name: string, value: string | boolean | BlockchainMeta | TokenMeta) => void;
+  onChangeConfig: (
+    name: string,
+    value: string[] | WalletType[] | string | boolean | BlockchainMeta | TokenMeta,
+  ) => void;
 }
 
 export function Config({ style, config, onChangeStyles, onChangeConfig }: PropTypes) {
@@ -27,9 +31,9 @@ export function Config({ style, config, onChangeStyles, onChangeConfig }: PropTy
       <Spacer size={24} scale="vertical" />
       <ChainsConfig type="Destination" config={config} onChange={onChangeConfig} />
       <Spacer size={24} scale="vertical" />
-      <WalletsConfig  onChange={onChangeConfig} multiChain={config.multiChain}/>
+      <WalletsConfig onChange={onChangeConfig} config={config} />
       <Spacer size={24} scale="vertical" />
-      <SourcesConfig />
+      <SourcesConfig onChange={onChangeConfig} config={config} />
       <Spacer size={24} scale="vertical" />
       <StylesConfig onChange={onChangeStyles} style={style} />
     </Container>
