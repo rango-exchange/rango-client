@@ -1,13 +1,15 @@
-import { BlockchainMeta, TokenMeta } from "@rangodev/ui/dist/types/meta";
+import { WalletType } from '@rangodev/wallets-shared';
 
 export type ConfigType = {
-  fromChain: BlockchainMeta;
-  fromToken: TokenMeta;
-  toChain: BlockchainMeta;
-  toToken: TokenMeta;
+  fromChain: string;
+  fromToken: string;
+  toChain: string;
+  toToken: string;
   fromAmount: string;
-  chains: string[];
-  tokens: string[];
+  fromChains: string[];
+  fromTokens: string[];
+  toChains: string[];
+  toTokens: string[];
   liquiditySources: string[];
   theme: 'dark' | 'light' | 'auto';
   wallets: string[];
@@ -36,3 +38,11 @@ export type StyleType = {
     warning: string;
   };
 };
+
+export type Wallet = {
+  title: string;
+  logo: string;
+  type: WalletType;
+};
+
+export type Wallets = Array<Wallet>;
