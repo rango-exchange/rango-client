@@ -3,12 +3,30 @@
   "version": "0.1.10-next.70",
   "license": "MIT",
   "source": "public/index.html",
+  "main": "dist/test.js",
+  "typings": "dist/test.d.ts",
+  "files": [
+    "dist",
+    "src"
+  ],
   "browserslist": "> 0.5%, last 2 versions, not dead",
   "scripts": {
     "dev": "parcel serve -p 3000",
     "build": "parcel build",
-    "build2": "tsdx build --transpileOnly  --entry ./src/test.tsx"
+    "build2": "tsdx build --entry ./src/test.tsx"
   },
+  "husky": {
+    "hooks": {
+      "pre-commit": "tsdx lint"
+    }
+  },
+  "prettier": {
+    "printWidth": 80,
+    "semi": true,
+    "singleQuote": true,
+    "trailingComma": "es5"
+  },
+
   "dependencies": {
     "@rango-dev/provider-all": "^0.1.11-next.70",
     "@rango-dev/ui": "^0.1.10-next.70",

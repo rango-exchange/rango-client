@@ -8,6 +8,7 @@ import { StylesConfig } from './components/StylesConfig';
 import { Provider } from '@rangodev/wallets-core';
 import { useMetaStore } from './store/meta';
 import { allProviders } from '@rangodev/provider-all';
+import Test from '@rangodev/widget-embedded';
 const providers = allProviders();
 
 export function App() {
@@ -66,15 +67,16 @@ export function App() {
       setStyle((prev) => ({ ...prev, [name]: value }));
     }
   };
+  console.log({ Test });
 
   const onChangeConfig = (name, value) => setConfig((prev) => ({ ...prev, [name]: value }));
 
   return (
-  
     <Provider
       //TDOD : remove any after resloving type conflicts
       allBlockChains={blockchains as any}
       providers={providers}>
+      <Test/>
       <Typography variant="h1">Configuration</Typography>
       <Spacer size={20} scale="vertical" />
       <ChainsConfig type="Source" config={config} onChange={onChangeConfig} />
