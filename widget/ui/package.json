@@ -20,7 +20,7 @@
     "size": "size-limit",
     "analyze": "size-limit --why",
     "storybook": "start-storybook -p 3000",
-    "build-storybook": "build-storybook",
+    "build-storybook": "build-storybook"
   },
   "peerDependencies": {
     "react": ">=16"

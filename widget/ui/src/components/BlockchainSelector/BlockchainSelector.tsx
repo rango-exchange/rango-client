@@ -82,8 +82,6 @@ export function BlockchainSelector(props: PropTypes) {
                     multiSelect={multiSelect}
                     selectedList={selectedList}
                     onChange={onChange}
-                    multiSelect={multiSelect}
-                    selectedList={selectedList}
                   />
                 ) : (
                   <Alert
