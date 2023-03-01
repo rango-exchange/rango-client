@@ -51,6 +51,7 @@ const ModalHeader = styled('div', {
 const ContentContainer = styled('div', {});
 
 export function Modal(props: PropTypes) {
+<<<<<<< HEAD
   const {
     title,
     content,
@@ -60,6 +61,9 @@ export function Modal(props: PropTypes) {
     action,
     contentStyle,
   } = props;
+=======
+  const { title, content, open, onClose, containerStyle, action } = props;
+>>>>>>> 9b81e64 (Integrated swap box and config page and change types)
 
   const handleBackDropClick = (event: React.MouseEvent<HTMLDivElement>) => {
     if (event.target === event.currentTarget) onClose();
