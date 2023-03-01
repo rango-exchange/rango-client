@@ -61,7 +61,7 @@ const ListContainer = styled('div', {
 });
 
 const filterList = (list, searchedFor: string) =>
-  list.filter((item) => item.title.includes(searchedFor));
+  list.filter((item) => item.title.toLowerCase().includes(searchedFor.toLowerCase()));
 const Image = styled('img', {
   width: '1.5rem',
   maxHeight: '1.5rem',
