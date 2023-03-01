@@ -68,10 +68,16 @@ export function TokenList(props: PropTypes) {
     setSelected(token);
     onChange(token);
   };
-  const isSelect = (token: TokenWithAmount) => {
-    if (multiSelect) {
-      if (!selectedList?.length) return true;
-      else if (selectedList.indexOf(token?.symbol) !== -1) return true;
+
+  const isSelect = (token: Token) => {
+    if (multiSelect && selectedList) {
+      if (selectedList === 'all') return true;
+      else if (selectedList.length) {
+        const index = selectedList
+          .map((item) => item.symbol + item.address)
+          .indexOf(token.symbol + token.address);
+        if (index !== -1) return true;
+      }
     } else if (
       selected?.symbol === token.symbol &&
       selected?.address === token.address

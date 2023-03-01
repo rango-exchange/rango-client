@@ -1,15 +1,29 @@
 import { Checkbox, Spacer, Typography } from '@rangodev/ui';
+import { useWallets } from '@rangodev/wallets-core';
 import { WalletType } from '@rangodev/wallets-shared';
 import React from 'react';
-import { ConfigType } from '../../types/config';
+import { ConfigType, Value } from '../../types/config';
+import { excludedWallets } from '../../utils/wallets';
 import { ConfigurationContainer } from './ChainsConfig';
-import { Wallets } from './mock';
 import { MultiSelect } from './MultiSelect';
 interface PropTypes {
-  onChange: (name: string, value:  WalletType[] | boolean) => void;
+  onChange: (name: string, value: Value) => void;
   config: ConfigType;
 }
 export function WalletsConfig({ onChange, config }: PropTypes) {
+  const { getWalletInfo } = useWallets();
+
+  const wallets = Object.values(WalletType)
+    .filter((wallet) => !excludedWallets.includes(wallet))
+    .map((type) => {
+      const { name: title, img: logo } = getWalletInfo(type);
+      return {
+        title,
+        logo,
+        type,
+      };
+    });
+
   return (
     <>
       <Typography variant="h4">Wallet</Typography>
@@ -19,7 +33,7 @@ export function WalletsConfig({ onChange, config }: PropTypes) {
           label="Supported Wallets"
           type="Wallests"
           modalTitle="Select Wallets"
-          list={Wallets}
+          list={wallets}
           name="wallets"
           value={config.wallets}
           onChange={onChange}

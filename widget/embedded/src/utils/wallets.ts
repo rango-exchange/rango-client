@@ -29,6 +29,12 @@ export function getStateWallet(state: WalletState): WalletStatus {
   }
 }
 
+  export const excludedWallets = [
+    WalletType.UNKNOWN,
+    WalletType.TERRA_STATION,
+    WalletType.LEAP,
+  ];
+
 export function getlistWallet(
   getState: (type: WalletType) => WalletState,
   getWalletInfo: (type: WalletType) => WalletInfo,

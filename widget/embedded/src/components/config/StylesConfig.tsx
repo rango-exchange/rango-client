@@ -1,12 +1,4 @@
-import {
-  AngleDownIcon,
-  Button,
-  ColorPicker,
-  Spacer,
-  styled,
-  TextField,
-  Typography,
-} from '@rangodev/ui';
+import { ColorPicker, Radio, Spacer, styled, TextField, Typography } from '@rangodev/ui';
 import React from 'react';
 import { StyleType } from '../../types/config';
 import { ConfigurationContainer } from './ChainsConfig';
@@ -58,13 +50,16 @@ const GridContent = styled('div', {
   gap: 12,
 });
 
-const StyledImage = styled('img', {
-  width: '24px',
+const RadioContainer = styled('div', {
+  borderColor: '$neutrals600',
+  color: '$neutrals500',
+  border: '1px solid',
+  height: '$48',
+  borderRadius: '$5',
+  display: 'flex',
+  justifyContent: 'center',
 });
 
-const SelectButton = styled('div', {
-  flex: 1,
-});
 interface PropTypes {
   style: StyleType;
   onChange: (name: string, value: string, color: boolean) => void;
@@ -80,26 +75,41 @@ export function StylesConfig({ style, onChange }: PropTypes) {
   return (
     <div>
       <Typography variant="h4">Style</Typography>
+
       <Spacer size={12} scale="vertical" />
       <ConfigurationContainer>
         <GridContent>
-          <TextField onChange={onChangeInput} name="title" value={style.title} label="Title" />
-          <TextField
-            onChange={onChangeInput}
-            name="width"
-            value={style.width}
-            label="Width"
-            type="number"
-            suffix="px"
-          />
-          <TextField
-            onChange={onChangeInput}
-            name="height"
-            value={style.height}
-            label="Height"
-            type="number"
-            suffix="px"
-          />
+          <div>
+            <TextField
+              size="large"
+              onChange={onChangeInput}
+              name="title"
+              value={style.title}
+              label="Title"
+            />
+          </div>
+          <div>
+            <TextField
+              size="large"
+              onChange={onChangeInput}
+              name="width"
+              value={style.width}
+              label="Width"
+              type="number"
+              suffix="px"
+            />
+          </div>
+          <div>
+            <TextField
+              size="large"
+              onChange={onChangeInput}
+              name="height"
+              value={style.height}
+              label="Height"
+              type="number"
+              suffix="px"
+            />
+          </div>
         </GridContent>
         <Spacer size={20} scale="vertical" />
 
@@ -114,26 +124,34 @@ export function StylesConfig({ style, onChange }: PropTypes) {
           />
 
           <div>
-            <Typography mb={4} variant="body2">
-              Theme{' '}
-            </Typography>
-            <Button
-              variant="outlined"
-              suffix={<AngleDownIcon />}
-              fullWidth
-              align="start"
-              size="large">
-              Light
-            </Button>
+            <TextField
+              size="large"
+              onChange={onChangeInput}
+              name="borderRadius"
+              value={style.borderRadius}
+              label="Border Radius"
+              type="number"
+              suffix="px"
+            />
           </div>
-          <TextField
-            onChange={onChangeInput}
-            name="borderRadius"
-            value={style.borderRadius}
-            label="Border Radius"
-            type="number"
-            suffix="px"
-          />
+
+          <div>
+            <Typography variant="body2" mb={4}>
+              Theme
+            </Typography>
+            <RadioContainer>
+              <Radio
+                defaultValue={style.theme}
+                options={[
+                  { value: 'dark', label: 'Dark' },
+                  { value: 'light', label: 'Light' },
+                  { value: 'auto', label: 'Auto' },
+                ]}
+                onChange={(value) => onChangeStyles('theme', value, false)}
+                direction="horizontal"
+              />
+            </RadioContainer>
+          </div>
         </GridContent>
         <Spacer size={24} scale="vertical" />
 
@@ -164,23 +182,28 @@ export function StylesConfig({ style, onChange }: PropTypes) {
             modalTitle="Fonts"
             onChange={(name, value) => onChangeStyles(name, value, false)}
           />
-
-          <TextField
-            onChange={onChangeInput}
-            name="titleSize"
-            value={style.titleSize}
-            label="Forms Title Size"
-            type="number"
-            suffix="px"
-          />
-          <TextField
-            onChange={onChangeInput}
-            name="titelsWeight"
-            value={style.titelsWeight}
-            label="Titels Weight"
-            type="number"
-            suffix="px"
-          />
+          <div>
+            <TextField
+              size="large"
+              onChange={onChangeInput}
+              name="titleSize"
+              value={style.titleSize}
+              label="Forms Title Size"
+              type="number"
+              suffix="px"
+            />
+          </div>
+          <div>
+            <TextField
+              size="large"
+              onChange={onChangeInput}
+              name="titelsWeight"
+              value={style.titelsWeight}
+              label="Titels Weight"
+              type="number"
+              suffix="px"
+            />
+          </div>
         </GridContent>
       </ConfigurationContainer>
     </div>
