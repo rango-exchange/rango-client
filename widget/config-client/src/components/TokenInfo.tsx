@@ -10,7 +10,6 @@ import {
   Typography,
 } from '@rangodev/ui';
 import { useMetaStore } from '../store/meta';
-import { Value } from '../types';
 import { BlockchainMeta, Token } from 'rango-sdk';
 
 interface PropTypes {
@@ -18,7 +17,7 @@ interface PropTypes {
   chain: BlockchainMeta | null;
   token: Token | null;
   defualtAmount: number;
-  onChange: (name: string, value: Value) => void;
+  onChange: (name: string, value: BlockchainMeta | Token) => void;
 }
 
 const ImagePlaceholder = styled('span', {
@@ -134,7 +133,6 @@ export function TokenInfo({ defualtAmount, type, chain, onChange, token }: PropT
           modal.isChain ? (
             <BlockchainSelector
               list={blockchains}
-              inModal={true}
               hasHeader={false}
               selected={chain}
               onChange={(chain) => onChangeConfig(`${type}Chain`, chain)}
@@ -144,7 +142,6 @@ export function TokenInfo({ defualtAmount, type, chain, onChange, token }: PropT
             modal.isToken && (
               <TokenSelector
                 list={tokens.filter((token) => token.blockchain === chain?.name)}
-                inModal={true}
                 hasHeader={false}
                 loadingStatus={loadingStatus}
                 selected={token}

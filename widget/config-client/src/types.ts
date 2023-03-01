@@ -2,17 +2,6 @@ import { LiquiditySource } from '@rangodev/ui/dist/types/meta';
 import { WalletType } from '@rangodev/wallets-shared';
 import { BlockchainMeta, Token } from 'rango-sdk';
 
-export type Value =
-  | string
-  | Token
-  | BlockchainMeta
-  | Token[]
-  | BlockchainMeta[]
-  | boolean
-  | string[]
-  | LiquiditySource[]
-  | WalletType[];
-
 export type ConfigType = {
   fromChain: BlockchainMeta | null;
   fromToken: Token | null;

@@ -8,7 +8,6 @@ import { StylesConfig } from './components/StylesConfig';
 import { Provider } from '@rangodev/wallets-core';
 import { useMetaStore } from './store/meta';
 import { allProviders } from '@rangodev/provider-all';
-
 const providers = allProviders();
 
 export function App() {
@@ -40,7 +39,7 @@ export function App() {
     title: 'Swap Box',
     width: 525,
     height: 712,
-    languege: 'English (uS)',
+    languege: 'English (US)',
     borderRadius: 5,
     theme: 'auto',
     fontFaminy: 'Roboto',
@@ -71,6 +70,7 @@ export function App() {
   const onChangeConfig = (name, value) => setConfig((prev) => ({ ...prev, [name]: value }));
 
   return (
+  
     <Provider
       //TDOD : remove any after resloving type conflicts
       allBlockChains={blockchains as any}

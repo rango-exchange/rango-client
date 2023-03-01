@@ -3,11 +3,11 @@ import { useWallets } from '@rangodev/wallets-core';
 import { WalletType } from '@rangodev/wallets-shared';
 import React from 'react';
 import { excludedWallets } from '../helpers';
-import { ConfigType, Value } from '../types';
+import { ConfigType } from '../types';
 import { ConfigurationContainer } from './ChainsConfig';
 import { MultiSelect } from './MultiSelect';
 interface PropTypes {
-  onChange: (name: string, value: Value) => void;
+  onChange: (name: string, value: 'all' | WalletType[] | boolean) => void;
   config: ConfigType;
 }
 export function WalletsConfig({ onChange, config }: PropTypes) {
