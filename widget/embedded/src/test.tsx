@@ -6,7 +6,10 @@ import { Events, Provider } from '@rangodev/wallets-core';
 import { allProviders } from '@rangodev/provider-all';
 import { EventHandler } from '@rangodev/wallets-core/dist/wallet';
 import { isEvmBlockchain, Network } from '@rangodev/wallets-shared';
-import { prepareAccountsForWalletStore, walletAndSupportedChainsNames } from './utils/wallets';
+import {
+  prepareAccountsForWalletStore,
+  walletAndSupportedChainsNames,
+} from './utils/wallets';
 import { useWalletsStore } from './store/wallets';
 import { httpService } from './services/httpService';
 import { Layout } from './components/Layout';
@@ -14,37 +17,45 @@ import { globalStyles } from './globalStyles';
 import { useTheme } from './hooks/useTheme';
 
 const providers = allProviders();
-interface Token {
-  name: string;
-  contractAddress?: string;
-}
+// interface Token {
+//   name: string;
+//   contractAddress?: string;
+// }
 
 //todo: update interface and update widget state based on WidgetProps change
-export type WidgetProps = {
-  fromChain?: string;
-  fromToken?: string;
-  toChain?: string;
-  toToken?: string;
-  fromAmount?: string;
-  slippage?: number;
-  chains?: string[];
-  tokens?: Token[];
-  liquiditySources?: string[];
-  theme: 'dark' | 'light' | 'auto';
-};
+// type WidgetProps = {
+//   fromChain?: string;
+//   fromToken?: string;
+//   toChain?: string;
+//   toToken?: string;
+//   fromAmount?: string;
+//   slippage?: number;
+//   chains?: string[];
+//   tokens?: Token[];
+//   liquiditySources?: string[];
+//   theme: 'dark' | 'light' | 'auto';
+// };
 
-export function App() {
+export default function Test() {
   globalStyles();
   const { activeTheme } = useTheme();
   const { blockchains } = useMetaStore((state: MetaState) => state.meta);
 
   const { insertAccount, disconnectWallet } = useWalletsStore();
   const { insertBalance } = useWalletsStore();
-  const evmBasedChainNames = useMetaStore((state: any) => state.meta.blockchains)
+  const evmBasedChainNames = useMetaStore(
+    (state: any) => state.meta.blockchains
+  )
     .filter(isEvmBlockchain)
     .map((chain: any) => chain.name);
 
-  const onUpdateState: EventHandler = (type, event, value, state, supportedChains) => {
+  const onUpdateState: EventHandler = (
+    type,
+    event,
+    value,
+    state,
+    supportedChains
+  ) => {
     if (event === Events.ACCOUNTS) {
       if (value) {
         const supportedChainNames: Network[] | null =
@@ -54,7 +65,7 @@ export function App() {
           value,
           state.network,
           evmBasedChainNames,
-          supportedChainNames,
+          supportedChainNames
         );
         insertAccount(data);
         httpService
@@ -62,10 +73,13 @@ export function App() {
             data.map((acc) => ({
               address: acc.accountsWithBalance[0].address,
               blockchain: acc.blockchain,
-            })),
+            }))
           )
           .then((res) => {
-            insertBalance(res.wallets, data[0].accountsWithBalance[0].walletType);
+            insertBalance(
+              res.wallets,
+              data[0].accountsWithBalance[0].walletType
+            );
           })
           .catch();
       } else {
@@ -75,7 +89,11 @@ export function App() {
   };
 
   return (
-    <Provider allBlockChains={blockchains} providers={providers} onUpdateState={onUpdateState}>
+    <Provider
+      allBlockChains={blockchains}
+      providers={providers}
+      onUpdateState={onUpdateState}
+    >
       <div id="pageContainer" className={activeTheme}>
         <SwapContainer>
           <AppRouter>
