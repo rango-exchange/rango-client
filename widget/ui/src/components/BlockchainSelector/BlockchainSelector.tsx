@@ -50,9 +50,9 @@ export function BlockchainSelector(props: PropTypes) {
   return (
     <SecondaryPage
       textField={true}
+      hasHeader={hasHeader}
       textFieldPlaceholder="Search Blockchain By Name"
       title={`Select ${type} Network`}
-      hasHeader={hasHeader}
       onBack={onBack}
       Content={({ searchedFor }) => {
         const filteredBlockchains = filterBlockchains(list, searchedFor);
