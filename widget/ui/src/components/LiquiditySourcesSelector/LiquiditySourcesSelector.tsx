@@ -1,6 +1,5 @@
 import { CSSProperties } from '@stitches/react';
 import React from 'react';
-import { containsText } from '../../helpers';
 import { styled } from '../../theme';
 import { LiquiditySource } from '../../types/meta';
 import { Button } from '../Button';
@@ -12,7 +11,7 @@ const filterLiquiditySources = (
   searchedFor: string
 ) =>
   liquiditySources.filter((liquiditySource) =>
-    containsText(liquiditySource.title, searchedFor || '')
+    liquiditySource.title.includes(searchedFor)
   );
 export interface PropTypes {
   list: LiquiditySource[];

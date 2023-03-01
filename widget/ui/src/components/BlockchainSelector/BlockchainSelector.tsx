@@ -1,5 +1,4 @@
 import React from 'react';
-import { containsText } from '../../helpers';
 import { BlockchainMeta } from 'rango-sdk';
 import { BlockchainsList } from '../BlockchainsList';
 import { SecondaryPage } from '../SecondaryPage/SecondaryPage';
@@ -18,8 +17,8 @@ const ListContainer = styled('div', {
 const filterBlockchains = (list: BlockchainMeta[], searchedFor: string) =>
   list.filter(
     (blockchain) =>
-      containsText(blockchain.name, searchedFor) ||
-      containsText(blockchain.displayName, searchedFor)
+      blockchain.name.includes(searchedFor) ||
+      blockchain.displayName.includes(searchedFor)
   );
 
 export type LoadingStatus = 'loading' | 'success' | 'failed';
