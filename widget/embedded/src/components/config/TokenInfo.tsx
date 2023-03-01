@@ -1,27 +1,25 @@
 import React from 'react';
-import { AngleDownIcon, Button, Spacer, styled, TextField, Typography } from '@rangodev/ui';
+import { AngleDownIcon, Button, styled, TextField, Typography } from '@rangodev/ui';
 
 interface PropTypes {
   type: 'Destination' | 'Source';
 }
 
 const Container = styled('div', {
-  display: 'flex',
+  display: 'grid',
   position: 'relative',
+  gridTemplateColumns: '1fr 1fr 1fr',
+  gap: 12,
 });
 
 const StyledImage = styled('img', {
   width: '24px',
 });
 
-const SelectButton = styled('div', {
-  flex: 1,
-});
-
 export function TokenInfo(props: PropTypes) {
   return (
     <Container>
-      <SelectButton>
+      <div>
         <Typography mb={4} variant="body2">
           default Blockchains
         </Typography>
@@ -35,10 +33,9 @@ export function TokenInfo(props: PropTypes) {
           size="large">
           Polygon
         </Button>
-      </SelectButton>
+      </div>
 
-      <Spacer size={12} />
-      <SelectButton>
+      <div>
         <Typography mb={4} variant="body2">
           default Token
         </Typography>
@@ -51,14 +48,9 @@ export function TokenInfo(props: PropTypes) {
           size="large">
           USDT
         </Button>
-      </SelectButton>
+      </div>
 
-      {props.type !== 'Destination' ? (
-        <>
-          <Spacer size={12} />
-          <TextField label="default Amount" type="number" />
-        </>
-      ) : null}
+      {props.type !== 'Destination' ? <TextField label="default Amount" type="number" /> : null}
     </Container>
   );
 }
