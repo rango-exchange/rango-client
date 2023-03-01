@@ -28,7 +28,7 @@ const StyledSwitchThumb = styled(RadixSwitch.Thumb, {
   width: '18px',
   height: '18px',
   backgroundColor: '$neutrals500',
-  transition: ' transform 100ms',
+  transition: ' transform 300ms',
   borderRadius: '999999px',
   willChange: 'transform',
   '&[data-state="checked"]': {
