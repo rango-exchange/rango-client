@@ -6,7 +6,8 @@
   "browserslist": "> 0.5%, last 2 versions, not dead",
   "scripts": {
     "dev": "parcel serve -p 3000",
-    "build": "parcel build"
+    "build": "parcel build",
+    "build2": "tsdx build --transpileOnly  --entry ./src/test.tsx"
   },
   "dependencies": {
     "@rango-dev/provider-all": "^0.1.11-next.70",

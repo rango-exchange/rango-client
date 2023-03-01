@@ -45,7 +45,7 @@ const Alerts = styled('div', {
 });
 
 export function Home() {
-  const [waningMessage, setWarningMessage] = useState('');
+  const waningMessage = '';
   const isRouterInContext = useInRouterContext();
   const navigate = useNavigate();
   const [count, setCount] = useState(0);
