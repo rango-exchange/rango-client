@@ -171,8 +171,7 @@ export function MultiSelect({
             multiSelect
             selectedList={value}
             onChange={(chain) => onChangeSelectList(chain)}
-            loadingStatus={loadingStatus}
-          />
+            loadingStatus={loadingStatus}         />
         );
       case 'Wallets':
         return (

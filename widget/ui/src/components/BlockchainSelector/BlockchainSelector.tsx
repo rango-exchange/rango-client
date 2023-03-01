@@ -6,6 +6,7 @@ import { Alert } from '../Alert';
 import { Spinner } from '../Spinner';
 import { styled } from '../../theme';
 import { CSSProperties } from '@stitches/react';
+import { containsText } from '../../helper';
 
 const ListContainer = styled('div', {
   height: '450px',
@@ -17,8 +18,8 @@ const ListContainer = styled('div', {
 const filterBlockchains = (list: BlockchainMeta[], searchedFor: string) =>
   list.filter(
     (blockchain) =>
-      blockchain.name.includes(searchedFor) ||
-      blockchain.displayName.includes(searchedFor)
+      containsText(blockchain.name, searchedFor) ||
+      containsText(blockchain.displayName, searchedFor)
   );
 
 export type LoadingStatus = 'loading' | 'success' | 'failed';
@@ -78,6 +79,8 @@ export function BlockchainSelector(props: PropTypes) {
                   <BlockchainsList
                     list={filteredBlockchains}
                     selected={selected}
+                    multiSelect={multiSelect}
+                    selectedList={selectedList}
                     onChange={onChange}
                     multiSelect={multiSelect}
                     selectedList={selectedList}

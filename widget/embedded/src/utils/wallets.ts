@@ -265,6 +265,9 @@ export const calculateWalletUsdValue = (balance: Balance[]) => {
       ?.reduce((a, b) => a.plus(b), ZERO) || ZERO,
   ).toString();
 
+  console.log('total');
+  console.log(total);
+
   return numberWithThousandSeperator(total);
 };
 
