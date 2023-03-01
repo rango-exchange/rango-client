@@ -13,6 +13,7 @@ const StyledSwitchRoot = styled(RadixSwitch.Root, {
   borderColor: '$neutrals400',
   borderRadius: '99999px',
   position: 'relative',
+  padding: '0',
   cursor: 'pointer',
   '&[data-state="checked"]': {
     backgroundColor: '$primary100',
