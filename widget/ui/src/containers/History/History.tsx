@@ -2,7 +2,6 @@ import React, { PropsWithChildren } from 'react';
 import { SecondaryPage } from '../../components/SecondaryPage';
 import { SwapDetail } from '../../components/SwapDetail';
 import { Typography } from '../../components/Typography';
-import { containsText } from '../../helper';
 import { groupingOfSwaps } from '../../helper/swaps';
 import { styled } from '../../theme';
 import { PendingSwap } from './types';
@@ -24,11 +23,11 @@ const filteredHistory = (
     const firstStep = swap.steps[0];
     const lastStep = swap.steps[swap.steps.length - 1];
     return (
-      containsText(firstStep.fromBlockchain, searchedFor) ||
-      containsText(firstStep.fromSymbol, searchedFor) ||
-      containsText(lastStep.toBlockchain, searchedFor) ||
-      containsText(lastStep.toSymbol, searchedFor) ||
-      containsText(swap.requestId, searchedFor)
+      firstStep.fromBlockchain.includes(searchedFor) ||
+      firstStep.fromSymbol.includes(searchedFor) ||
+      lastStep.toBlockchain.includes(searchedFor) ||
+      lastStep.toSymbol.includes(searchedFor) ||
+      swap.requestId.includes(searchedFor)
     );
   });
 };

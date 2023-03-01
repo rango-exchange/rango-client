@@ -1,6 +1,5 @@
 import React, { forwardRef, useEffect, useState } from 'react';
 import { CommonProps } from 'react-window';
-import { containsText } from '../../helpers';
 import { styled } from '../../theme';
 import { Token } from 'rango-sdk';
 import { Button } from '../Button/Button';
