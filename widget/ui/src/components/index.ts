@@ -22,3 +22,4 @@ export * from './Tooltip';
 export * from './Typography';
 export * from './Wallet';
 export * from './Alert';
+export * from './ColorPicker';
