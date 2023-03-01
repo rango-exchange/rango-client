@@ -55,30 +55,9 @@ export function LiquiditySourceList(props: PropTypes) {
       if (clickedItem.selected) return [...prevState, clickedItem];
       return prevState.filter((item) => item.title != clickedItem.title);
     });
-    onChange(clickedItem);
-  };
-
-  const LiquiditySourceItem = ({
-    liquiditySource,
-    selected,
-  }: {
-    liquiditySource: LiquiditySource;
-    selected: boolean;
-  }) => {
-    return (
-      <Button
-        size="large"
-        align="start"
-        variant="outlined"
-        prefix={<LiquidityImage src={liquiditySource.logo} />}
-        suffix={<Switch checked={selected} />}
-        style={{ marginBottom: '12px' }}
-        type={selected ? 'primary' : undefined}
-        onClick={changeLiquiditySources.bind(null, liquiditySource)}
-      >
-        <Typography variant="body1">{liquiditySource.title}</Typography>
-      </Button>
-    );
+    setTimeout(() => {
+      onChange(clickedItem);
+    }, 200);
   };
 
   const isSelected = (liquiditySource: LiquiditySource) =>
@@ -88,12 +67,13 @@ export function LiquiditySourceList(props: PropTypes) {
     <div style={{ height: '450px', ...listContainerStyle }}>
       <div>
         <LiquiditySourceType variant="h5">Bridges</LiquiditySourceType>
-        <Spacer size={16} direction="vertical"/>
+        <Spacer size={16} direction="vertical" />
         {groupLiquiditySources(list).bridge.map((liquiditySource, index) => (
           <LiquiditySourceItem
             liquiditySource={liquiditySource}
             key={index}
             selected={isSelected(liquiditySource)}
+            onChange={changeLiquiditySources}
           />
         ))}
       </div>
@@ -106,9 +86,35 @@ export function LiquiditySourceList(props: PropTypes) {
             liquiditySource={liquiditySource}
             key={index}
             selected={isSelected(liquiditySource)}
+            onChange={changeLiquiditySources}
           />
         ))}
       </div>
     </div>
   );
 }
+
+const LiquiditySourceItem = ({
+  liquiditySource,
+  selected,
+  onChange,
+}: {
+  liquiditySource: LiquiditySource;
+  selected: boolean;
+  onChange: (clickedItem: LiquiditySource) => void;
+}) => {
+  return (
+    <Button
+      size="large"
+      align="start"
+      variant="outlined"
+      prefix={<LiquidityImage src={liquiditySource.logo} />}
+      suffix={<Switch checked={selected} />}
+      style={{ marginBottom: '12px' }}
+      type={selected ? 'primary' : undefined}
+      onClick={onChange.bind(null, liquiditySource)}
+    >
+      <Typography variant="body1">{liquiditySource.title}</Typography>
+    </Button>
+  );
+};
