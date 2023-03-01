@@ -25,6 +25,7 @@ export interface TokenWithBalance extends Token {
 export function SelectTokenPage(props: PropTypes) {
   const { type } = props;
   const navigate = useNavigate();
+
   const { tokens } = useMetaStore.use.meta();
   const fromChain = useBestRouteStore.use.fromChain();
   const toChain = useBestRouteStore.use.toChain();
