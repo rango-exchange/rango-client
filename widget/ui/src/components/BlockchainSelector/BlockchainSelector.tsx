@@ -27,12 +27,14 @@ export type LoadingStatus = 'loading' | 'success' | 'failed';
 export interface PropTypes {
   type?: 'Source' | 'Destination';
   list: BlockchainMeta[];
-  selected: BlockchainMeta | null;
+  selected?: BlockchainMeta | null;
   onChange: (blockchain: BlockchainMeta) => void;
   onBack?: () => void;
   loadingStatus: LoadingStatus;
   hasHeader?: boolean;
   listContainerStyle?: CSSProperties;
+  multiSelect?: boolean;
+  selectedList?: BlockchainMeta[] | 'all';
 }
 
 export function BlockchainSelector(props: PropTypes) {
@@ -45,6 +47,8 @@ export function BlockchainSelector(props: PropTypes) {
     loadingStatus,
     hasHeader,
     listContainerStyle,
+    multiSelect,
+    selectedList,
   } = props;
 
   return (
@@ -76,6 +80,8 @@ export function BlockchainSelector(props: PropTypes) {
                     list={filteredBlockchains}
                     selected={selected}
                     onChange={onChange}
+                    multiSelect={multiSelect}
+                    selectedList={selectedList}
                   />
                 ) : (
                   <Alert

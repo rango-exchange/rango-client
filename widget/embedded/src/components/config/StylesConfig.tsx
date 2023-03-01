@@ -10,6 +10,8 @@ import {
 import React from 'react';
 import { StyleType } from '../../types/config';
 import { ConfigurationContainer } from './ChainsConfig';
+import { fonts, langueges } from './mock';
+import { Select } from './Select';
 
 const COLORS = [
   {
@@ -102,21 +104,14 @@ export function StylesConfig({ style, onChange }: PropTypes) {
         <Spacer size={20} scale="vertical" />
 
         <GridContent>
-          <div>
-            <Typography mb={4} variant="body2">
-              Choose Language Widget{' '}
-            </Typography>
-
-            <Button
-              variant="outlined"
-              prefix={<StyledImage src="https://api.rango.exchange/blockchains/polygon.svg" />}
-              suffix={<AngleDownIcon />}
-              fullWidth
-              align="start"
-              size="large">
-              English
-            </Button>
-          </div>
+          <Select
+            label="Choose Language Widget"
+            value={style.languege}
+            name="languege"
+            list={langueges}
+            modalTitle="Languages"
+            onChange={(name, value) => onChangeStyles(name, value, false)}
+          />
 
           <div>
             <Typography mb={4} variant="body2">
@@ -161,20 +156,15 @@ export function StylesConfig({ style, onChange }: PropTypes) {
         <Spacer size={24} scale="vertical" />
 
         <GridContent>
-          <div>
-            <Typography mb={4} variant="body2">
-              Font Faminy
-            </Typography>
+          <Select
+            label="Font Faminy"
+            value={style.fontFaminy}
+            name="fontFaminy"
+            list={fonts}
+            modalTitle="Fonts"
+            onChange={(name, value) => onChangeStyles(name, value, false)}
+          />
 
-            <Button
-              variant="outlined"
-              suffix={<AngleDownIcon />}
-              fullWidth
-              align="start"
-              size="large">
-              Roboto
-            </Button>
-          </div>
           <TextField
             onChange={onChangeInput}
             name="titleSize"

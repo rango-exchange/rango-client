@@ -18,9 +18,11 @@ export interface TokenWithAmount extends Token {
 const PAGE_SIZE = 20;
 export interface PropTypes {
   list: TokenWithAmount[];
-  selected: TokenWithAmount | null;
+  selected?: TokenWithAmount | null;
   searchedText: string;
   onChange: (token: TokenWithAmount) => void;
+  multiSelect?: boolean;
+  selectedList?: TokenWithAmount[] | 'all';
 }
 
 const TokenImage = styled('img', {
@@ -58,12 +60,24 @@ const filterTokens = (
 };
 
 export function TokenList(props: PropTypes) {
-  const { list, searchedText, onChange } = props;
+  const { list, searchedText, onChange, multiSelect, selectedList } = props;
+
   const [selected, setSelected] = useState(props.selected);
 
   const changeSelected = (token: TokenWithAmount) => {
     setSelected(token);
     onChange(token);
+  };
+  const isSelect = (token: TokenWithAmount) => {
+    if (multiSelect) {
+      if (!selectedList?.length) return true;
+      else if (selectedList.indexOf(token?.symbol) !== -1) return true;
+    } else if (
+      selected?.symbol === token.symbol &&
+      selected?.address === token.address
+    )
+      return true;
+    return false;
   };
 
   const Token = ({
@@ -92,12 +106,7 @@ export function TokenList(props: PropTypes) {
           size="large"
           align="start"
           onClick={changeSelected.bind(null, currentToken)}
-          type={
-            selected?.symbol === currentToken.symbol &&
-            selected?.address === currentToken.address
-              ? 'primary'
-              : undefined
-          }
+          type={isSelect(currentToken) ? 'primary' : undefined}
           prefix={<TokenImage src={currentToken.image} />}
           suffix={
             currentToken.balance?.amount && (

@@ -23,5 +23,3 @@ export * from './Typography';
 export * from './Wallet';
 export * from './Alert';
 export * from './ColorPicker';
-export * from './Select';
-export * from './MultiSelect';
