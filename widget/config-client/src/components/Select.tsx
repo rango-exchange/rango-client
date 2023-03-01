@@ -8,7 +8,7 @@ import {
   Typography,
 } from '@rangodev/ui';
 import React, { useState } from 'react';
-import { containsText } from '../../helpers';
+import { containsText } from '../helpers';
 
 interface PropTypes {
   onChange: (name: string, value: string) => void;

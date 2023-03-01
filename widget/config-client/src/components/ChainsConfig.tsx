@@ -1,7 +1,7 @@
 import { Checkbox, Spacer, styled, Typography } from '@rangodev/ui';
 import React from 'react';
-import { useMetaStore } from '../../store/meta';
-import { ConfigType, Value } from '../../types/config';
+import { useMetaStore } from '../store/meta';
+import { ConfigType, Value } from '../types';
 import { MultiSelect } from './MultiSelect';
 import { MultiTokenSelect } from './MultiTokenSelect';
 import { TokenInfo } from './TokenInfo';
