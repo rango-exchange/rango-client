@@ -67,11 +67,11 @@ export function MultiTokenSelect({
   const [chain, setChain] = useState<string>('all');
   const [selectTokens, setSelectTokens] = useState({});
 
-  const onChangeSelectList = token => {
+  const onChangeSelectList = (token) => {
     const select = selectTokens;
     if (select[chain]) {
       const index = select[chain].findIndex(
-        item => item.symbol === token.symbol && item.address === token.address,
+        (item) => item.symbol === token.symbol && item.address === token.address,
       );
       if (index === -1) {
         select[chain].push(token);
@@ -84,7 +84,7 @@ export function MultiTokenSelect({
 
     let values = value !== 'all' ? value : [];
     const index = values.findIndex(
-      item => item.symbol === token.symbol && item.address === token.address,
+      (item) => item.symbol === token.symbol && item.address === token.address,
     );
     if (index === -1) {
       values.push(token);
@@ -95,19 +95,23 @@ export function MultiTokenSelect({
     onChange(name, values);
   };
 
-  const onClickSelectAll = listOfToken => {
+  const onClickSelectAll = (listOfToken) => {
     let values = value !== 'all' ? value : [];
     const select = selectTokens;
     if (selectTokens[chain] && selectTokens[chain].length === listOfToken.length) {
       select[chain] = [];
       for (const item of listOfToken) {
-        const index = values.findIndex(v => v.symbol === item.symbol && v.address === item.address);
+        const index = values.findIndex(
+          (v) => v.symbol === item.symbol && v.address === item.address,
+        );
         if (index !== -1) values.splice(index, 1);
       }
     } else {
       for (const item of listOfToken) {
         select[chain] = listOfToken;
-        const index = values.findIndex(v => v.symbol === item.symbol && v.address === item.address);
+        const index = values.findIndex(
+          (v) => v.symbol === item.symbol && v.address === item.address,
+        );
         if (index === -1) values.push(item);
       }
     }
@@ -116,18 +120,11 @@ export function MultiTokenSelect({
     onChange(name, values);
   };
 
-  const onClickAction = () => {
-    // if (value === 'all') onChange(name, { [chain]: [] });
-    // else if (Object.keys(value).length === 1 && value[chain]) {
-    //   onChange(name, 'all');
-    // }
-  };
-
   const onClose = () => {
     if (value !== 'all' && (!value.length || value.length === list.length)) {
       onChange(name, 'all');
     }
-    setModal(prev => ({
+    setModal((prev) => ({
       ...prev,
       open: false,
     }));
@@ -142,7 +139,7 @@ export function MultiTokenSelect({
 
         <Button
           onClick={() =>
-            setModal(prev => ({
+            setModal((prev) => ({
               open: !prev.open,
               isChain: false,
               isToken: true,
@@ -160,7 +157,7 @@ export function MultiTokenSelect({
       <Body>
         {value !== 'all' ? (
           <>
-            {[...value].splice(0, 10).map(v => (
+            {[...value].splice(0, 10).map((v) => (
               <Chip
                 style={{ margin: 2 }}
                 selected
@@ -172,7 +169,7 @@ export function MultiTokenSelect({
               selected
               label="..."
               onClick={() =>
-                setModal(prev => ({
+                setModal((prev) => ({
                   ...prev,
                   open: true,
                 }))
@@ -187,9 +184,12 @@ export function MultiTokenSelect({
         action={
           modal.isToken && (
             <Checkbox
-              onCheckedChange={checked => {
+              onCheckedChange={(checked) => {
                 if (checked) onChange(name, 'all');
-                else onChange(name, []);
+                else {
+                  onChange(name, []);
+                  setChain(blockchains[0].name);
+                }
               }}
               id="all_Tokens"
               label="Select All Tokens"
@@ -206,12 +206,12 @@ export function MultiTokenSelect({
             inModal
             textFieldPlaceholder="Search Token By Name"
             Content={({ searchedFor }) => {
-              const filterList = list.filter(token => token.blockchain === chain);
+              const filterList = list.filter((token) => token.blockchain === chain);
 
               return (
                 <>
                   <Row>
-                    {blockchains.map(blockchain => (
+                    {blockchains.map((blockchain) => (
                       <>
                         <Button
                           size="small"
@@ -252,7 +252,7 @@ export function MultiTokenSelect({
                         list={filterList}
                         selectedList={value}
                         multiSelect
-                        onChange={token => onChangeSelectList(token)}
+                        onChange={(token) => onChangeSelectList(token)}
                       />
                     </Content>
                   )}
