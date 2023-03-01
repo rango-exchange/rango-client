@@ -10,7 +10,6 @@ import {
   TokenList,
   Typography,
 } from '@rangodev/ui';
-import { Value } from '../types';
 import { BlockchainMeta, Token } from 'rango-sdk';
 
 type PropTypes = {
@@ -19,7 +18,7 @@ type PropTypes = {
   blockchains: BlockchainMeta[];
   label: string;
   modalTitle: string;
-  onChange: (name: string, value: Value) => void;
+  onChange: (name: string, value: 'all' | Token[]) => void;
   name: string;
   loading?: boolean;
   disabled?: boolean;
@@ -202,7 +201,6 @@ export function MultiTokenSelect({
           <SecondaryPage
             textField={true}
             hasHeader={false}
-            inModal
             textFieldPlaceholder="Search Token By Name"
             Content={({ searchedFor }) => {
               const filterList = list.filter((token) => token.blockchain === chain);

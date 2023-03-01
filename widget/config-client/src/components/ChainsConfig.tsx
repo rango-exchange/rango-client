@@ -1,7 +1,8 @@
 import { Checkbox, Spacer, styled, Typography } from '@rangodev/ui';
+import { BlockchainMeta, Token } from 'rango-sdk';
 import React from 'react';
 import { useMetaStore } from '../store/meta';
-import { ConfigType, Value } from '../types';
+import { ConfigType } from '../types';
 import { MultiSelect } from './MultiSelect';
 import { MultiTokenSelect } from './MultiTokenSelect';
 import { TokenInfo } from './TokenInfo';
@@ -9,7 +10,10 @@ import { TokenInfo } from './TokenInfo';
 interface PropTypes {
   type: 'Destination' | 'Source';
   config: ConfigType;
-  onChange: (name: string, value: Value) => void;
+  onChange: (
+    name: string,
+    value: 'all' | BlockchainMeta[] | Token[] | boolean | Token | BlockchainMeta,
+  ) => void;
 }
 export const ConfigurationContainer = styled('div', {
   borderRadius: '$10',
@@ -59,7 +63,7 @@ export function ChainsConfig({ type, config, onChange }: PropTypes) {
           <>
             <Spacer scale="vertical" size={12} />
             <Checkbox
-              onCheckedChange={checked => onChange('customeAddress', checked)}
+              onCheckedChange={(checked) => onChange('customeAddress', checked)}
               id="custom_address"
               label="Enable transfer to custom address"
               checked={config.customeAddress}

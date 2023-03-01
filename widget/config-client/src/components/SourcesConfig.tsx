@@ -2,12 +2,12 @@ import { Spacer, Typography } from '@rangodev/ui';
 import { LiquiditySource } from '@rangodev/ui/dist/types/meta';
 import React from 'react';
 import { useMetaStore } from '../store/meta';
-import { ConfigType, Value } from '../types';
+import { ConfigType } from '../types';
 import { ConfigurationContainer } from './ChainsConfig';
 import { MultiSelect } from './MultiSelect';
 
 interface PropTypes {
-  onChange: (name: string, value: Value) => void;
+  onChange: (name: string, value: 'all' | LiquiditySource[]) => void;
   config: ConfigType;
 }
 export function SourcesConfig({ onChange, config }: PropTypes) {
@@ -17,11 +17,11 @@ export function SourcesConfig({ onChange, config }: PropTypes) {
   } = useMetaStore();
 
   const uniqueSwappersGroups: Array<LiquiditySource> = [];
-  Array.from(new Set(swappers.map(s => s.swapperGroup)))
-    .map(swapperGroup => {
-      return swappers.find(s => s.swapperGroup === swapperGroup);
+  Array.from(new Set(swappers.map((s) => s.swapperGroup)))
+    .map((swapperGroup) => {
+      return swappers.find((s) => s.swapperGroup === swapperGroup);
     })
-    .find(s => {
+    .find((s) => {
       if (s) {
         for (const type of s.types) {
           uniqueSwappersGroups.push({

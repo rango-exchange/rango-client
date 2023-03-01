@@ -12,8 +12,7 @@ import {
   Typography,
 } from '@rangodev/ui';
 import { LiquiditySource } from '@rangodev/ui/dist/types/meta';
-import { containsText } from '../helpers';
-import { Value, Wallets } from '../types';
+import { Wallets } from '../types';
 import { WalletType } from '@rangodev/wallets-shared';
 import { BlockchainMeta } from 'rango-sdk';
 import { useMetaStore } from '../store/meta';
@@ -23,21 +22,23 @@ type PropTypes = (
       type: 'Blockchains';
       value: BlockchainMeta[] | 'all';
       list: BlockchainMeta[];
+      onChange: (name: string, value: BlockchainMeta[] | 'all') => void;
     }
   | {
       type: 'Wallests';
       value: WalletType[] | 'all';
       list: Wallets;
+      onChange: (name: string, value: WalletType[] | 'all') => void;
     }
   | {
       type: 'Sources';
       value: LiquiditySource[] | 'all';
       list: LiquiditySource[];
+      onChange: (name: string, value: LiquiditySource[] | 'all') => void;
     }
 ) & {
   label: string;
   modalTitle: string;
-  onChange: (name: string, value: Value) => void;
   name: string;
   loading?: boolean;
   disabled?: boolean;
@@ -61,7 +62,7 @@ const ListContainer = styled('div', {
 });
 
 const filterList = (list, searchedFor: string) =>
-  list.filter((item) => containsText(item.title, searchedFor));
+  list.filter((item) => item.title.includes(searchedFor));
 const Image = styled('img', {
   width: '1.5rem',
   maxHeight: '1.5rem',
@@ -89,7 +90,6 @@ function RenderSelectors({ type, list, selectedList, onChangeSelected }) {
     <SecondaryPage
       textField={true}
       hasHeader={false}
-      inModal
       textFieldPlaceholder={`Search ${type} By Name`}
       Content={({ searchedFor }) => (
         <ListContainer>
@@ -149,7 +149,7 @@ export function MultiSelect({
     if (value !== 'all') {
       const values = value;
       values.splice(index, 1);
-      onChange(name, value);
+      onChange(name, values as any);
     }
   };
 
@@ -168,7 +168,6 @@ export function MultiSelect({
         return (
           <BlockchainSelector
             list={list}
-            inModal
             hasHeader={false}
             multiSelect
             selectedList={value}
