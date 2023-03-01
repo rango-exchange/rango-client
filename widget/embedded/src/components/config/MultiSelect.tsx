@@ -1,46 +1,29 @@
-import React from 'react';
-import {
-  AngleDownIcon,
-  Button,
-  Chip,
-  Close,
-  Spacer,
-  styled,
-  TextField,
-  Typography,
-} from '@rangodev/ui';
+import React, { useState } from 'react';
+import { Button, Chip, Close, Modal, styled, Typography } from '@rangodev/ui';
 
 interface PropTypes {
   label: string;
   type: 'Blockchains' | 'Tokens' | 'Wallests' | 'Sources';
+  modalTitle: string;
 }
-const Container = styled('div', {
-  display: 'flex',
-  position: 'relative',
-});
 
-const StyledImage = styled('img', {
-  width: '24px',
-});
-
-const SelectButton = styled('div', {
-  flex: 1,
-});
-
-export function MultiSelect({ label, type }: PropTypes) {
+export function MultiSelect({ label, type, modalTitle }: PropTypes) {
+  const [open, setOpen] = useState<boolean>(false);
   return (
-    <SelectButton>
+    <div>
       <Typography mb={4} variant="body2">
         {label}
       </Typography>
 
-      <Button
-        variant="outlined"
-        fullWidth
-        align="start"
-        size="large">
+      <Button variant="outlined" fullWidth align="start" size="large">
         <Chip selected label={`All ${type}`} suffix={<Close />} />
       </Button>
-    </SelectButton>
+      {/* <Modal
+        open={open}
+        title={modalTitle}
+        onClose={() => setOpen(false)}
+        content={undefined}
+        containerStyle={undefined}></Modal> */}
+    </div>
   );
 }

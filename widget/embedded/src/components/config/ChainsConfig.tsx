@@ -1,6 +1,6 @@
-import { Checkbox, Spacer, styled, Typography } from '@rangodev/ui';
+import { Checkbox, MultiSelect, Spacer, styled, Typography } from '@rangodev/ui';
 import React from 'react';
-import { MultiSelect } from './MultiSelect';
+import { blockchainMeta } from './mock';
 import { TokenInfo } from './TokenInfo';
 
 interface PropTypes {
@@ -11,6 +11,7 @@ export const ConfigurationContainer = styled('div', {
   maxWidth: '732px',
   boxShadow: '$s',
   padding: '$16',
+  backgroundColor:'$background'
 });
 
 export function ChainsConfig({ type }: PropTypes) {
@@ -19,9 +20,25 @@ export function ChainsConfig({ type }: PropTypes) {
       <Typography variant="h4">{type} Form</Typography>
       <Spacer size={12} scale="vertical" />
       <ConfigurationContainer>
-        <MultiSelect label="Supported Blockchains" type="Blockchains" />
+        <MultiSelect
+          list={blockchainMeta}
+          label="Supported Blockchains"
+          type="Blockchains"
+          selectItem={{
+            image: '',
+            value: '',
+          }}
+        />
         <Spacer size={24} scale={'vertical'} />
-        <MultiSelect label="Supported Tokens" type="Tokens" />
+        <MultiSelect
+          list={blockchainMeta}
+          label="Supported Tokens"
+          type="Tokens"
+          selectItem={{
+            image: '',
+            value: '',
+          }}
+        />
         {type === 'Destination' ? (
           <>
             <Spacer scale="vertical" size={12} />
