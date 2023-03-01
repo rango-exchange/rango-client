@@ -27,6 +27,9 @@ const ImagePlaceholder = styled('span', {
   backgroundColor: '$neutrals300',
   borderRadius: '99999px',
 });
+const StyledImage = styled('img', {
+  width: '24px',
+});
 const Container = styled('div', {
   display: 'grid',
   position: 'relative',
@@ -34,9 +37,6 @@ const Container = styled('div', {
   gap: 12,
 });
 
-const StyledImage = styled('img', {
-  width: '24px',
-});
 
 export function TokenInfo({ defualtAmount, type, chain, onChange, token }: PropTypes) {
   const [modal, setModal] = useState({ open: false, isChain: false, isToken: false });
@@ -45,7 +45,6 @@ export function TokenInfo({ defualtAmount, type, chain, onChange, token }: PropT
     loadingStatus,
   } = useMetaStore();
   const onChangeConfig = (name, value) => {
-    console.log(name, value);
     onChange(name, value);
   };
   return (
