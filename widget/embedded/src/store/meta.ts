@@ -6,7 +6,7 @@ import { removeDuplicateFrom } from '../utils/common';
 
 export type LoadingStatus = 'loading' | 'success' | 'failed';
 
-interface MetaState {
+export interface MetaState {
   meta: MetaResponse;
   loadingStatus: LoadingStatus;
   fetchMeta: () => Promise<void>;

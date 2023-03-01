@@ -1,10 +1,5 @@
-import { PendingSwap } from '@rango-dev/ui/dist/containers/History/types';
-import {
-  BestRouteType,
-  SimulationValidationStatus,
-  SwapSavedSettings,
-} from '@rango-dev/ui/dist/types/swaps';
-import { WalletType } from '@rango-dev/wallets-shared';
+import { BestRouteType, SimulationValidationStatus } from '@rango-dev/ui/dist/types/swaps';
+// import { WalletType } from '@rango-dev/wallets-shared';
 import BigNumber from 'bignumber.js';
 import { BestRouteRequest, BestRouteResponse } from 'rango-sdk';
 import { useState } from 'react';
@@ -13,7 +8,6 @@ import { useBestRouteStore } from '../store/bestRoute';
 import { useSettingsStore } from '../store/settings';
 import { useWalletsStore } from '../store/wallets';
 import { compareRoutes, getRequiredBalanceOfWallet } from '../utils/routing';
-import { calculatePendingSwap } from '../utils/swap';
 import { SelectedWallet } from '../utils/wallets';
 
 type CheckFeeAndBalanceResult =
@@ -138,7 +132,7 @@ export function useConfirmSwap() {
     );
     setBestRoute(r);
     const isChanged = routeChangeStatus.isChanged;
-    const changeWarningMessage = routeChangeStatus.warningMessage;
+    // const changeWarningMessage = routeChangeStatus.warningMessage;
     setBestRouteChanged(isChanged);
     setWarning('Best route changed');
     setData(r);
@@ -156,36 +150,36 @@ export function useConfirmSwap() {
   const swap = () => {
     if (!bestRoute) return;
     if (inputAmount!.toString() === '') return;
-    const wallets = selectedWallets.reduce(
-      (
-        selectedWalletsMap: { [p: string]: { address: string; walletType: WalletType } },
-        selectedWallet,
-      ) => (
-        (selectedWalletsMap[selectedWallet.chain] = {
-          address: selectedWallet.address,
-          walletType: selectedWallet.walletType,
-        }),
-        selectedWalletsMap
-      ),
-      {},
-    );
+    // const wallets = selectedWallets.reduce(
+    //   (
+    //     selectedWalletsMap: { [p: string]: { address: string; walletType: WalletType } },
+    //     selectedWallet,
+    //   ) => (
+    //     (selectedWalletsMap[selectedWallet.chain] = {
+    //       address: selectedWallet.address,
+    //       walletType: selectedWallet.walletType,
+    //     }),
+    //     selectedWalletsMap
+    //   ),
+    //   {},
+    // );
 
     const proceedAnyway = enoughBalance !== null;
 
-    const settings: SwapSavedSettings = {
-      slippage: slippage.toString(),
-      disabledSwappersGroups: ['Osmosis'],
-      disabledSwappersIds: [],
-    };
-    if (proceedAnyway) {
-      const newSwap: PendingSwap = calculatePendingSwap(
-        inputAmount!.toString(),
-        bestRoute,
-        wallets,
-        settings,
-        false,
-      );
-    }
+    // const settings: SwapSavedSettings = {
+    //   slippage: slippage.toString(),
+    //   disabledSwappersGroups: ['Osmosis'],
+    //   disabledSwappersIds: [],
+    // };
+    // if (proceedAnyway) {
+    //   const newSwap: PendingSwap = calculatePendingSwap(
+    //     inputAmount!.toString(),
+    //     bestRoute,
+    //     wallets,
+    //     settings,
+    //     false,
+    //   );
+    // }
 
     !proceedAnyway &&
       checkFeeAndBalance(selectedWallets)
@@ -199,7 +193,8 @@ export function useConfirmSwap() {
             setError('confirm swap error');
             return;
           } else {
-            const { hasEnoughBalanceOrSlippage, bestRoute: newBestRoute } = data;
+            // @ts-ignore
+            const { hasEnoughBalanceOrSlippage } = data;
             if (!hasEnoughBalanceOrSlippage) {
               return;
             }
@@ -213,13 +208,13 @@ export function useConfirmSwap() {
               hasEnoughBalanceOrSlippage.slippage &&
               !hasEnoughBalanceOrSlippage.routeChanged
             ) {
-              const newSwap: PendingSwap = calculatePendingSwap(
-                inputAmount!.toString(),
-                newBestRoute,
-                wallets,
-                settings,
-                true,
-              );
+              // const newSwap: PendingSwap = calculatePendingSwap(
+              //   inputAmount!.toString(),
+              //   newBestRoute,
+              //   wallets,
+              //   settings,
+              //   true,
+              // );
             } else if (!hasEnoughBalanceOrSlippage.balance) {
               setError('not enough balance');
             }
