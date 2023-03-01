@@ -1,8 +1,8 @@
 import { Spacer, Typography } from '@rangodev/ui';
 import { LiquiditySource } from '@rangodev/ui/dist/types/meta';
 import React from 'react';
-import { useMetaStore } from '../../store/meta';
-import { ConfigType, Value } from '../../types/config';
+import { useMetaStore } from '../store/meta';
+import { ConfigType, Value } from '../types';
 import { ConfigurationContainer } from './ChainsConfig';
 import { MultiSelect } from './MultiSelect';
 

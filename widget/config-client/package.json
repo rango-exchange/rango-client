@@ -1,0 +1,27 @@
+{
+  "name": "@rangodev/config-client",
+  "version": "0.1.11-next.41",
+  "license": "MIT",
+  "private": true,
+  "source": "public/index.html",
+  "browserslist": "> 0.5%, last 2 versions, not dead",
+  "scripts": {
+    "dev": "parcel -p 3000 --no-cache",
+    "build": "parcel build"
+  },
+  "devDependencies": {
+    "parcel": "^2.7.0",
+    "process": "^0.11.10"
+  },
+  "dependencies": {
+    "@rangodev/wallets-shared": "^0.1.11-next.24",
+    "@rangodev/wallets-core": "^0.1.11-next.41",
+    "@rangodev/provider-all": "^0.1.11-next.41",
+    "@rangodev/ui": "^0.1.10-next.41",
+    "rango-sdk": "^0.1.8",
+    "zustand": "^4.3.2",
+    "react-dom": "^18.2.0",
+    "react": "^18.2.0"
+  },
+  "gitHead": "a4584c2a3341fe23e033a9ff2db0f201b0a6278c"
+}

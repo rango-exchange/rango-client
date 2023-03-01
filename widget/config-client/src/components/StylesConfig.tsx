@@ -1,6 +1,6 @@
 import { ColorPicker, Radio, Spacer, styled, TextField, Typography } from '@rangodev/ui';
 import React from 'react';
-import { StyleType } from '../../types/config';
+import { StyleType } from '../types';
 import { ConfigurationContainer } from './ChainsConfig';
 import { fonts, langueges } from './mock';
 import { Select } from './Select';
@@ -161,6 +161,7 @@ export function StylesConfig({ style, onChange }: PropTypes) {
         <GridContent>
           {COLORS.map((color) => (
             <ColorPicker
+              place="top"
               key={color.name}
               color={style.colors[color.name]}
               label={color.label}

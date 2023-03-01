@@ -2,8 +2,8 @@ import { Checkbox, Spacer, Typography } from '@rangodev/ui';
 import { useWallets } from '@rangodev/wallets-core';
 import { WalletType } from '@rangodev/wallets-shared';
 import React from 'react';
-import { ConfigType, Value } from '../../types/config';
-import { excludedWallets } from '../../utils/wallets';
+import { excludedWallets } from '../helpers';
+import { ConfigType, Value } from '../types';
 import { ConfigurationContainer } from './ChainsConfig';
 import { MultiSelect } from './MultiSelect';
 interface PropTypes {

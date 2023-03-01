@@ -12,11 +12,11 @@ import {
   Typography,
 } from '@rangodev/ui';
 import { LiquiditySource } from '@rangodev/ui/dist/types/meta';
-import { containsText } from '../../helpers';
-import { Value, Wallets } from '../../types/config';
+import { containsText } from '../helpers';
+import { Value, Wallets } from '../types';
 import { WalletType } from '@rangodev/wallets-shared';
 import { BlockchainMeta } from 'rango-sdk';
-import { useMetaStore } from '../../store/meta';
+import { useMetaStore } from '../store/meta';
 
 type PropTypes = (
   | {
