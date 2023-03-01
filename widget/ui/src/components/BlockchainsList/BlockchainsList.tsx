@@ -38,9 +38,12 @@ export function BlockchainsList(props: PropTypes) {
   };
 
   const isSelect = (name: string) => {
-    if (multiSelect) {
-      if (!selectedList?.length) return true;
-      else if (selectedList.indexOf(name) !== -1) return true;
+    if (multiSelect && selectedList) {
+      if (selectedList === 'all') return true;
+      else {
+        const index = selectedList.map((item) => item.name).indexOf(name);
+        if (index !== -1) return true;
+      }
     } else if (name === selected?.name) return true;
     return false;
   };

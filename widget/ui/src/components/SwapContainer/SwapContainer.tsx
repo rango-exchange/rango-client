@@ -9,6 +9,7 @@ const MainContainer = styled('div', {
   minWidth: '375px',
   width: '100%',
   backgroundColor: '$background',
+  height: 'fit-content',
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'end',

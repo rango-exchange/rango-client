@@ -23,9 +23,8 @@ const StyledRoot = styled(RadioGroup.Root, {
 const ItemContainer = styled('div', {
   display: 'flex',
   alignItems: 'center',
-  marginRight: '$24',
+  marginRight: '$8',
 });
-
 const StyledItem = styled(RadioGroup.Item, {
   backgroundColor: '$neutrals300',
   width: '20px',
@@ -36,6 +35,10 @@ const StyledItem = styled(RadioGroup.Item, {
   '&:hover': {
     backgroundColor: '$neutrals400',
   },
+});
+
+const Form = styled('form', {
+  display: 'flex',
 });
 
 const StyledIndicator = styled(RadioGroup.Indicator, {
@@ -56,7 +59,7 @@ const StyledIndicator = styled(RadioGroup.Indicator, {
 });
 
 const Label = styled('label', {
-  paddingLeft: '$16',
+  paddingLeft: '$8',
   cursor: 'pointer',
 });
 
@@ -72,7 +75,7 @@ export interface PropTypes {
 export function Radio(props: PropTypes) {
   const { defaultValue, onChange, direction = 'vertical', style } = props;
   return (
-    <form>
+    <Form>
       <StyledRoot
         onValueChange={onChange}
         defaultValue={defaultValue}
@@ -90,6 +93,6 @@ export function Radio(props: PropTypes) {
           </ItemContainer>
         ))}
       </StyledRoot>
-    </form>
+    </Form>
   );
 }
