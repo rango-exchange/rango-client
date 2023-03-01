@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/widget-embedded",
-  "version": "0.1.10-next.70",
+  "version": "0.1.10-next.71",
   "license": "MIT",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -26,9 +26,9 @@
     "trailingComma": "es5"
   },
   "dependencies": {
-    "@rango-dev/provider-all": "^0.1.11-next.70",
-    "@rango-dev/ui": "^0.1.10-next.70",
-    "@rango-dev/wallets-core": "^0.1.11-next.70",
+    "@rango-dev/provider-all": "^0.1.11-next.71",
+    "@rango-dev/ui": "^0.1.10-next.71",
+    "@rango-dev/wallets-core": "^0.1.11-next.71",
     "bignumber.js": "^9.1.1",
     "immer": "^9.0.19",
     "mitt": "^3.0.0",
