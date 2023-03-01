@@ -37,7 +37,6 @@ const Container = styled('div', {
   gap: 12,
 });
 
-
 export function TokenInfo({ defualtAmount, type, chain, onChange, token }: PropTypes) {
   const [modal, setModal] = useState({ open: false, isChain: false, isToken: false });
   const {
@@ -86,7 +85,7 @@ export function TokenInfo({ defualtAmount, type, chain, onChange, token }: PropT
         </Typography>
         <Button
           variant="outlined"
-          disabled={loadingStatus === 'failed'}
+          disabled={loadingStatus === 'failed' || !chain}
           loading={loadingStatus === 'loading'}
           prefix={
             loadingStatus === 'success' && token ? (
@@ -139,6 +138,7 @@ export function TokenInfo({ defualtAmount, type, chain, onChange, token }: PropT
               hasHeader={false}
               selected={chain}
               onChange={(chain) => onChangeConfig(`${type}Chain`, chain)}
+              loadingStatus={loadingStatus}
             />
           ) : (
             modal.isToken && (
@@ -146,6 +146,7 @@ export function TokenInfo({ defualtAmount, type, chain, onChange, token }: PropT
                 list={tokens.filter((token) => token.blockchain === chain?.name)}
                 inModal={true}
                 hasHeader={false}
+                loadingStatus={loadingStatus}
                 selected={token}
                 onChange={(token) => onChangeConfig(`${type}Token`, token)}
               />
