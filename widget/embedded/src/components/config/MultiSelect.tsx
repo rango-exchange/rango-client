@@ -16,6 +16,7 @@ import { containsText } from '../../helpers';
 import { Value, Wallets } from '../../types/config';
 import { WalletType } from '@rangodev/wallets-shared';
 import { BlockchainMeta } from 'rango-sdk';
+import { useMetaStore } from '../../store/meta';
 
 type PropTypes = (
   | {
@@ -60,7 +61,7 @@ const ListContainer = styled('div', {
 });
 
 const filterList = (list, searchedFor: string) =>
-  list.filter(item => containsText(item.title, searchedFor));
+  list.filter((item) => containsText(item.title, searchedFor));
 const Image = styled('img', {
   width: '1.5rem',
   maxHeight: '1.5rem',
@@ -70,11 +71,11 @@ const Image = styled('img', {
 const getIndex = (list, v, type) => {
   switch (type) {
     case 'Blockchains':
-      return list.findIndex(item => item.name === v.name);
+      return list.findIndex((item) => item.name === v.name);
     case 'Wallests':
-      return list.findIndex(item => item === v);
+      return list.findIndex((item) => item === v);
     case 'Sources':
-      return list.findIndex(item => item.title === v.title);
+      return list.findIndex((item) => item.title === v.title);
   }
 };
 
@@ -125,11 +126,11 @@ export function MultiSelect({
   disabled,
 }: PropTypes) {
   const [open, setOpen] = useState<boolean>(false);
-
-  const onChangeSelectList = v => {
+  const { loadingStatus } = useMetaStore();
+  const onChangeSelectList = (v) => {
     let values;
     if (value === 'all') {
-      values = type === 'Wallests' ? list.map(item => item.title) : [...list];
+      values = type === 'Wallests' ? list.map((item) => item.title) : [...list];
       const index = getIndex(values, v, type);
       values.splice(index, 1);
       onChange(name, values);
@@ -171,14 +172,15 @@ export function MultiSelect({
             hasHeader={false}
             multiSelect
             selectedList={value}
-            onChange={chain => onChangeSelectList(chain)}
+            onChange={(chain) => onChangeSelectList(chain)}
+            loadingStatus={loadingStatus}
           />
         );
       case 'Wallests':
         return (
           <RenderSelectors
             list={list}
-            onChangeSelected={item => onChangeSelectList(item)}
+            onChangeSelected={(item) => onChangeSelectList(item)}
             selectedList={value}
             type={type}
           />
@@ -187,7 +189,7 @@ export function MultiSelect({
         return (
           <RenderSelectors
             list={list}
-            onChangeSelected={item => onChangeSelectList(item)}
+            onChangeSelected={(item) => onChangeSelectList(item)}
             selectedList={value}
             type={type}
           />
@@ -195,7 +197,7 @@ export function MultiSelect({
     }
   };
 
-  const getLabel = value => {
+  const getLabel = (value) => {
     switch (type) {
       case 'Blockchains':
         return value.name;
@@ -227,7 +229,7 @@ export function MultiSelect({
         {value === 'all' ? (
           <Chip style={{ margin: 2 }} selected label={`All ${type}`} />
         ) : (
-          value.map(v => (
+          value.map((v) => (
             <Chip
               style={{ margin: 2 }}
               selected
