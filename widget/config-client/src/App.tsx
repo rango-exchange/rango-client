@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { ConfigType, StyleType } from './types';
-import { Spacer, Typography } from '@rangodev/ui';
+import { Spacer, styled, Typography } from '@rangodev/ui';
 import { ChainsConfig } from './components/ChainsConfig';
 import { WalletsConfig } from './components/WalletsConfig';
 import { SourcesConfig } from './components/SourcesConfig';
@@ -8,9 +8,19 @@ import { StylesConfig } from './components/StylesConfig';
 import { Provider } from '@rangodev/wallets-core';
 import { useMetaStore } from './store/meta';
 import { allProviders } from '@rangodev/provider-all';
-import Test from '@rangodev/widget-embedded';
+import SwapBox from '@rangodev/widget-embedded';
+
 const providers = allProviders();
 
+const Container = styled('div', {
+  display: 'flex',
+  justifyContent: 'center',
+});
+const SwapContent = styled('div', {
+  position: 'sticky',
+  top: 0,
+  marginTop: 115,
+});
 export function App() {
   const fetchMeta = useMetaStore((state) => state.fetchMeta);
 
@@ -67,7 +77,6 @@ export function App() {
       setStyle((prev) => ({ ...prev, [name]: value }));
     }
   };
-  console.log({ Test });
 
   const onChangeConfig = (name, value) => setConfig((prev) => ({ ...prev, [name]: value }));
 
@@ -76,18 +85,28 @@ export function App() {
       //TDOD : remove any after resloving type conflicts
       allBlockChains={blockchains as any}
       providers={providers}>
-      <Test/>
-      <Typography variant="h1">Configuration</Typography>
-      <Spacer size={20} scale="vertical" />
-      <ChainsConfig type="Source" config={config} onChange={onChangeConfig} />
-      <Spacer size={24} scale="vertical" />
-      <ChainsConfig type="Destination" config={config} onChange={onChangeConfig} />
-      <Spacer size={24} scale="vertical" />
-      <WalletsConfig onChange={onChangeConfig} config={config} />
-      <Spacer size={24} scale="vertical" />
-      <SourcesConfig onChange={onChangeConfig} config={config} />
-      <Spacer size={24} scale="vertical" />
-      <StylesConfig onChange={onChangeStyles} style={style} />
+      <Container>
+        <div>
+          <Typography variant="h1">Configuration</Typography>
+          <Spacer size={20} direction="vertical" />
+          <ChainsConfig type="Source" config={config} onChange={onChangeConfig} />
+          <Spacer size={24} direction="vertical" />
+          <ChainsConfig type="Destination" config={config} onChange={onChangeConfig} />
+          <Spacer size={24} direction="vertical" />
+          <WalletsConfig onChange={onChangeConfig} config={config} />
+          <Spacer size={24} direction="vertical" />
+          <SourcesConfig onChange={onChangeConfig} config={config} />
+          <Spacer size={24} direction="vertical" />
+          <StylesConfig onChange={onChangeStyles} style={style} />
+        </div>
+        <Spacer size={24} />
+        <div>
+          <SwapContent>
+            {/*@ts-ignore */} 
+            <SwapBox />
+          </SwapContent>
+        </div>
+      </Container>
     </Provider>
   );
 }

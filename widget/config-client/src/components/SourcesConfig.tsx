@@ -37,7 +37,7 @@ export function SourcesConfig({ onChange, config }: PropTypes) {
   return (
     <>
       <Typography variant="h4">Liquidity sources</Typography>
-      <Spacer size={12} scale="vertical" />
+      <Spacer size={12} direction="vertical" />
       <ConfigurationContainer>
         <MultiSelect
           label="Supported Sources"
