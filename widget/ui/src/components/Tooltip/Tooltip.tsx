@@ -88,6 +88,10 @@ const TooltipArrow = styled(RadixTooltip.Arrow, {
   },
 });
 
+const ChildrenWrapper = styled('div', {
+  display: 'inline-block',
+});
+
 export function Tooltip({
   children,
   content,
@@ -97,7 +101,9 @@ export function Tooltip({
   return (
     <RadixTooltip.Provider>
       <RadixTooltip.Root>
-        <TooltipTrigger>{children}</TooltipTrigger>
+        <TooltipTrigger asChild>
+          <ChildrenWrapper>{children}</ChildrenWrapper>
+        </TooltipTrigger>
         <RadixTooltip.Portal>
           <TooltipContent color={color} side={side} sideOffset={5}>
             {content}
