@@ -1,7 +1,7 @@
 import {
   AngleDownIcon,
   Button,
-  Check,
+  CheckIcon,
   Modal,
   SecondaryPage,
   styled,
@@ -68,7 +68,7 @@ export function Select({ label, value, onChange, modalTitle, list, name }: PropT
                     variant="ghost"
                     size="large"
                     prefix={item.logo && <Image src={item.logo} />}
-                    suffix={item.name === value ? <Check size={20}/> : undefined}
+                    suffix={item.name === value ? <CheckIcon size={20}/> : undefined}
                     align="start"
                     onClick={() => onChange(name, item.name)}
                     key={index}>

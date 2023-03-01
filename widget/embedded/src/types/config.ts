@@ -1,31 +1,44 @@
+import { LiquiditySource } from '@rangodev/ui/dist/types/meta';
 import { WalletType } from '@rangodev/wallets-shared';
+import { BlockchainMeta, Token } from 'rango-sdk';
+
+export type Value =
+  | string
+  | Token
+  | BlockchainMeta
+  | Token[]
+  | BlockchainMeta[]
+  | boolean
+  | string[]
+  | LiquiditySource[]
+  | WalletType[];
 
 export type ConfigType = {
-  fromChain: string;
-  fromToken: string;
-  toChain: string;
-  toToken: string;
-  fromAmount: string;
-  fromChains: string[];
-  fromTokens: string[];
-  toChains: string[];
-  toTokens: string[];
-  liquiditySources: string[];
-  theme: 'dark' | 'light' | 'auto';
-  wallets: string[];
+  fromChain: BlockchainMeta | null;
+  fromToken: Token | null;
+  toChain: BlockchainMeta | null;
+  toToken: Token | null;
+  fromAmount: number;
+  fromChains: 'all' | BlockchainMeta[];
+  fromTokens: 'all' | Token[];
+  toChains: 'all' | BlockchainMeta[];
+  toTokens: 'all' | Token[];
+  liquiditySources: 'all' | LiquiditySource[];
+  wallets: 'all' | WalletType[];
   multiChain: boolean;
   customeAddress: boolean;
 };
 
 export type StyleType = {
+  theme: 'dark' | 'light' | 'auto';
   title: string;
-  width: string;
-  height: string;
+  width: number;
+  height: number;
   languege: string;
-  borderRadius: string;
+  borderRadius: number;
   fontFaminy: string;
-  titleSize: string;
-  titelsWeight: string;
+  titleSize: number;
+  titelsWeight: number;
   colors: {
     background: string;
     inputBackground: string;
