@@ -1,19 +1,14 @@
 import { Checkbox, Spacer, styled, Typography } from '@rangodev/ui';
-import { BlockchainMeta, Token } from 'rango-sdk';
 import React from 'react';
+import { useConfigStore } from '../store/config';
 import { useMetaStore } from '../store/meta';
-import { ConfigType } from '../types';
+import { Type } from '../types';
 import { MultiSelect } from './MultiSelect';
 import { MultiTokenSelect } from './MultiTokenSelect';
 import { TokenInfo } from './TokenInfo';
 
 interface PropTypes {
-  type: 'Destination' | 'Source';
-  config: ConfigType;
-  onChange: (
-    name: string,
-    value: 'all' | BlockchainMeta[] | Token[] | boolean | Token | BlockchainMeta,
-  ) => void;
+  type: Type;
 }
 export const ConfigurationContainer = styled('div', {
   borderRadius: '$10',
@@ -23,13 +18,16 @@ export const ConfigurationContainer = styled('div', {
   backgroundColor: '$background',
 });
 
-export function ChainsConfig({ type, config, onChange }: PropTypes) {
+export function ChainsConfig({ type }: PropTypes) {
   const {
     meta: { blockchains, tokens },
     loadingStatus,
   } = useMetaStore();
 
-  const chains = type === 'Destination' ? config.fromChains : config.toChains;
+  const { fromChains, toChains, customeAddress, onChangeBlockChains, onChangeBooleansConfig } =
+    useConfigStore((state) => state);
+
+  const chains = type === 'Destination' ? fromChains : toChains;
 
   return (
     <div>
@@ -42,43 +40,34 @@ export function ChainsConfig({ type, config, onChange }: PropTypes) {
           type="Blockchains"
           loading={loadingStatus === 'loading'}
           disabled={loadingStatus === 'failed'}
-          onChange={onChange}
-          name={type === 'Destination' ? 'fromChains' : 'toChains'}
-          value={chains}
+          value={type === 'Destination' ? fromChains : toChains}
+          onChange={(chains) => onChangeBlockChains(chains, type)}
           modalTitle="Select Blockchains"
         />
         <Spacer size={24} direction={'vertical'} />
         <MultiTokenSelect
           list={tokens}
-          onChange={onChange}
           loading={loadingStatus === 'loading'}
           disabled={loadingStatus === 'failed'}
           modalTitle="Select Tokens"
           label="Supported Tokens"
-          name={type === 'Destination' ? 'fromTokens' : 'toTokens'}
-          value={type === 'Destination' ? config.fromTokens : config.toTokens}
+          type={type}
           blockchains={chains === 'all' ? blockchains : chains}
         />
         {type === 'Destination' ? (
           <>
             <Spacer direction="vertical" size={12} />
             <Checkbox
-              onCheckedChange={(checked) => onChange('customeAddress', checked)}
+              onCheckedChange={(checked) => onChangeBooleansConfig('customeAddress', checked)}
               id="custom_address"
               label="Enable transfer to custom address"
-              checked={config.customeAddress}
+              checked={customeAddress}
             />
           </>
         ) : null}
         <Spacer size={24} direction={'vertical'} />
 
-        <TokenInfo
-          type={type === 'Destination' ? 'from' : 'to'}
-          chain={type === 'Destination' ? config.fromChain : config.toChain}
-          defualtAmount={config.fromAmount}
-          onChange={onChange}
-          token={type === 'Destination' ? config.fromToken : config.toToken}
-        />
+        <TokenInfo type={type} />
       </ConfigurationContainer>
     </div>
   );

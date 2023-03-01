@@ -37,7 +37,7 @@ const StyledItem = styled(RadioGroup.Item, {
   },
 });
 
-const Form = styled('form', {
+const Container = styled('div', {
   display: 'flex',
 });
 
@@ -69,13 +69,12 @@ export interface PropTypes {
   onChange: (value: string) => void;
   direction?: 'vertical' | 'horizontal';
   style?: CSSProperties;
-
 }
 
 export function Radio(props: PropTypes) {
   const { defaultValue, onChange, direction = 'vertical', style } = props;
   return (
-    <Form>
+    <Container>
       <StyledRoot
         onValueChange={onChange}
         defaultValue={defaultValue}
@@ -93,6 +92,6 @@ export function Radio(props: PropTypes) {
           </ItemContainer>
         ))}
       </StyledRoot>
-    </Form>
+    </Container>
   );
 }
