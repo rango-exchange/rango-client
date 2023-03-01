@@ -12,7 +12,7 @@ const filterLiquiditySources = (
   searchedFor: string
 ) =>
   liquiditySources.filter((liquiditySource) =>
-    containsText(liquiditySource.title, searchedFor)
+    containsText(liquiditySource.title, searchedFor || '')
   );
 export interface PropTypes {
   list: LiquiditySource[];
