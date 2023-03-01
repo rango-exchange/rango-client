@@ -1,15 +1,13 @@
 import React, { useState } from 'react';
 import { ChromePicker, ColorResult } from 'react-color';
 import { styled } from '../../theme';
-import { Spacer } from '../Spacer';
+import { Button } from '../Button';
 import { Typography } from '../Typography';
-const ColorContent = styled('div', {
-  border: '1px solid $neutrals300',
-  padding: '$12',
-  borderRadius: '$5',
-  display: 'flex',
-  alignItems: 'center',
+
+const Container = styled('div', {
+  position: 'relative',
 });
+
 const Color = styled('div', {
   border: '1px solid $neutrals300',
   borderRadius: '$5',
@@ -33,24 +31,34 @@ export interface PropTypes {
     color: ColorResult,
     event: React.ChangeEvent<HTMLInputElement>
   ) => void;
+  label?: string;
 }
 
-export function ColorPicker({ color, onChangeColor }: PropTypes) {
+export function ColorPicker({ color, onChangeColor, label }: PropTypes) {
   const [displayColorPicker, setDisplayColorPicker] = useState<boolean>(false);
 
   return (
-    <div>
-      <ColorContent onClick={() => setDisplayColorPicker((prev) => !prev)}>
-        <Color style={{ backgroundColor: color }} />
-        <Spacer size={12} />
-        <Typography variant="body1">{color}</Typography>
-      </ColorContent>
+    <Container>
+      <Typography mb={4} variant="body2">
+        {label}
+      </Typography>
+      <Button
+        variant="outlined"
+        prefix={<Color style={{ backgroundColor: color }} />}
+        fullWidth
+        align="start"
+        size="large"
+        onClick={() => setDisplayColorPicker((prev) => !prev)}
+      >
+        {color}
+      </Button>
+
       {displayColorPicker && (
         <Popover>
           <Cover onClick={() => setDisplayColorPicker(false)} />
           <ChromePicker color={color} onChange={onChangeColor} />
         </Popover>
       )}
-    </div>
+    </Container>
   );
 }
