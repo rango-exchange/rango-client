@@ -24,3 +24,4 @@ export * from './Wallet';
 export * from './Alert';
 export * from './ColorPicker';
 export * from './Radio';
+export * from './TokenList';
