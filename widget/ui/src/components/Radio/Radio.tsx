@@ -27,6 +27,7 @@ const ItemContainer = styled('div', {
 });
 
 const StyledItem = styled(RadioGroup.Item, {
+  padding: '0',
   backgroundColor: '$neutrals300',
   width: '20px',
   height: '20px',
