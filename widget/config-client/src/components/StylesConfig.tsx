@@ -77,7 +77,7 @@ export function StylesConfig({ style, onChange }: PropTypes) {
     <div>
       <Typography variant="h4">Style</Typography>
 
-      <Spacer size={12} scale="vertical" />
+      <Spacer size={12} direction="vertical" />
       <ConfigurationContainer>
         <GridContent>
           <div>
@@ -112,7 +112,7 @@ export function StylesConfig({ style, onChange }: PropTypes) {
             />
           </div>
         </GridContent>
-        <Spacer size={20} scale="vertical" />
+        <Spacer size={20} direction="vertical" />
 
         <GridContent>
           <Select
@@ -154,10 +154,10 @@ export function StylesConfig({ style, onChange }: PropTypes) {
             </RadioContainer>
           </div>
         </GridContent>
-        <Spacer size={24} scale="vertical" />
+        <Spacer size={24} direction="vertical" />
 
         <hr />
-        <Spacer size={24} scale="vertical" />
+        <Spacer size={24} direction="vertical" />
 
         <GridContent>
           {COLORS.map((color) => (
@@ -170,10 +170,10 @@ export function StylesConfig({ style, onChange }: PropTypes) {
             />
           ))}
         </GridContent>
-        <Spacer size={24} scale="vertical" />
+        <Spacer size={24} direction="vertical" />
 
         <hr />
-        <Spacer size={24} scale="vertical" />
+        <Spacer size={24} direction="vertical" />
 
         <GridContent>
           <Select

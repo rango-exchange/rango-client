@@ -13,8 +13,8 @@ export default {
       options: [12, 16, 18, 20],
       defaultValue: 12,
     },
-    scale: {
-      name: 'scale',
+    direction: {
+      name: 'direction',
       control: { type: 'select' },
       options: ['vertical', 'horizontal'],
       defaultValue: 'horizontal',
@@ -23,7 +23,7 @@ export default {
 } as ComponentMeta<typeof Spacer>;
 
 export const Main = (props: PropTypes) => (
-  <div style={{ display: props.scale === 'horizontal' ? 'flex' : 'block' }}>
+  <div style={{ display: props.direction === 'horizontal' ? 'flex' : 'block' }}>
     <Typography variant="body1">spacer </Typography>
     <Spacer {...props} />
     <Typography variant="body1">spacer</Typography>

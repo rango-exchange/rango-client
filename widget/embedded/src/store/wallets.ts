@@ -52,7 +52,7 @@ interface WalletsStore {
 }
 
 export const useWalletsStore = createSelectors(
-  create<WalletsStore>()((set, get) => ({
+  create<WalletsStore>()((set) => ({
     accounts: [],
     balances: [],
     selectedWallets: [],

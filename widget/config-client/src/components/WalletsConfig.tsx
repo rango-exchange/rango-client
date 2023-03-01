@@ -27,7 +27,7 @@ export function WalletsConfig({ onChange, config }: PropTypes) {
   return (
     <>
       <Typography variant="h4">Wallet</Typography>
-      <Spacer size={12} scale="vertical" />
+      <Spacer size={12} direction="vertical" />
       <ConfigurationContainer>
         <MultiSelect
           label="Supported Wallets"
@@ -38,7 +38,7 @@ export function WalletsConfig({ onChange, config }: PropTypes) {
           value={config.wallets}
           onChange={onChange}
         />
-        <Spacer scale="vertical" size={12} />
+        <Spacer direction="vertical" size={12} />
         <Checkbox
           onCheckedChange={(checked) => onChange('multiChain', checked)}
           id="multi_wallets"
