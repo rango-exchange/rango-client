@@ -2,13 +2,12 @@ import {
   getCosmosExperimentalChainInfo,
   Network,
   WalletType,
-} from '@rangodev/wallets-shared';
+} from '@rango-dev/wallets-shared';
 import {
   BestRouteResponse,
   BlockchainMeta,
   isCosmosBlockchain,
 } from 'rango-sdk';
-import { useWallets } from '@rangodev/wallets-core';
 import React, { PropsWithChildren } from 'react';
 import { Alert } from '../../components';
 import { Button } from '../../components/Button';
@@ -39,6 +38,7 @@ export interface PropTypes {
   selectableWallets: SelectableWallet[];
   onChange: (w: SelectableWallet) => void;
   blockchains?: BlockchainMeta[];
+  connect?: (type: WalletType, network?: Network) => Promise<any>;
 }
 export function ConfirmWallets({
   onBack,
@@ -50,8 +50,8 @@ export function ConfirmWallets({
   onChange,
   confirmDisabled,
   blockchains,
+  connect,
 }: PropsWithChildren<PropTypes>) {
-  const { connect } = useWallets();
   const firstStep = swap.result?.swaps[0];
   const lastStep = swap.result?.swaps[swap.result?.swaps.length - 1];
 
@@ -123,7 +123,7 @@ export function ConfirmWallets({
                             const network = wallet as Network;
                             keplrCompatibleConnectedWallets.forEach(
                               (compatibleWallet: WalletType) =>
-                                connect(compatibleWallet, network)
+                                connect?.(compatibleWallet, network)
                             );
                           }}
                         >
