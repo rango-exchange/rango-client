@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { MetaResponse } from 'rango-sdk';
-import { httpService } from '../services/httpService';
+import { rango } from '../services/httpService';
 
 export type LoadingStatus = 'loading' | 'success' | 'failed';
 
@@ -15,7 +15,7 @@ export const useMetaStore = create<MetaState>()((set) => ({
   loadingStatus: 'loading',
   fetchMeta: async () => {
     try {
-      const response = await httpService.getAllMetadata();
+      const response = await rango.getAllMetadata();
       const chainThatHasTokenInMetaResponse = Array.from(
         new Set(response.tokens.map((t) => t.blockchain)),
       );

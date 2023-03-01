@@ -1,8 +1,9 @@
 import { ColorPicker, Radio, Spacer, styled, TextField, Typography } from '@rangodev/ui';
 import React from 'react';
+import { LANGUEGES } from '../constants';
 import { StyleType } from '../types';
 import { ConfigurationContainer } from './ChainsConfig';
-import { fonts, langueges } from './mock';
+import { fonts } from './mock';
 import { Select } from './Select';
 
 const COLORS = [
@@ -118,7 +119,7 @@ export function StylesConfig({ style, onChange }: PropTypes) {
             label="Choose Language Widget"
             value={style.languege}
             name="languege"
-            list={langueges}
+            list={LANGUEGES}
             modalTitle="Languages"
             onChange={(name, value) => onChangeStyles(name, value, false)}
           />

@@ -8,7 +8,6 @@ import {
   Typography,
 } from '@rangodev/ui';
 import React, { useState } from 'react';
-import { containsText } from '../helpers';
 
 interface PropTypes {
   onChange: (name: string, value: string) => void;
@@ -22,14 +21,13 @@ interface PropTypes {
   }>;
 }
 const filterList = (list, searchedFor: string) =>
-  list.filter((item) => containsText(item.name, searchedFor));
+  list.filter((item) => item.nam.includes(searchedFor));
 const Image = styled('img', {
   width: '24px',
   height: '24px',
   marginRight: '$4',
   borderRadius: '12px',
 });
-
 
 export function Select({ label, value, onChange, modalTitle, list, name }: PropTypes) {
   const [open, setOpen] = useState<boolean>(false);
@@ -59,7 +57,6 @@ export function Select({ label, value, onChange, modalTitle, list, name }: PropT
           <SecondaryPage
             textField={true}
             hasHeader={false}
-            inModal
             textFieldPlaceholder={`Search ${modalTitle} By Name`}
             Content={({ searchedFor }) =>
               filterList(list, searchedFor).map((item, index) => (
@@ -68,7 +65,7 @@ export function Select({ label, value, onChange, modalTitle, list, name }: PropT
                     variant="ghost"
                     size="large"
                     prefix={item.logo && <Image src={item.logo} />}
-                    suffix={item.name === value ? <CheckIcon size={20}/> : undefined}
+                    suffix={item.name === value ? <CheckIcon size={20} /> : undefined}
                     align="start"
                     onClick={() => onChange(name, item.name)}
                     key={index}>
