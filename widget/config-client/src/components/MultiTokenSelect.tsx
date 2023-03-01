@@ -10,9 +10,8 @@ import {
   TokenList,
   Typography,
 } from '@rangodev/ui';
-import { Value } from '../../types/config';
+import { Value } from '../types';
 import { BlockchainMeta, Token } from 'rango-sdk';
-import { useMetaStore } from '../../store/meta';
 
 type PropTypes = {
   value: Token[] | 'all';

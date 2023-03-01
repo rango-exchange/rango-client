@@ -9,8 +9,8 @@ import {
   TokenSelector,
   Typography,
 } from '@rangodev/ui';
-import { useMetaStore } from '../../store/meta';
-import { Value } from '../../types/config';
+import { useMetaStore } from '../store/meta';
+import { Value } from '../types';
 import { BlockchainMeta, Token } from 'rango-sdk';
 
 interface PropTypes {

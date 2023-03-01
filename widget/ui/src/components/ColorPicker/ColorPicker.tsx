@@ -24,9 +24,26 @@ const Cover = styled('div', {
 const Popover = styled('div', {
   position: 'absolute',
   zIndex: '2',
+  variants: {
+    place: {
+      top: {
+        top: '-241px',
+      },
+      bottom: {},
+      left: {
+        top: '-50%',
+        left: '-225px',
+      },
+      right: {
+        top: '-50%',
+        right: '-225px',
+      },
+    },
+  },
 });
 export interface PropTypes {
   color: string;
+  place: 'top' | 'bottom' | 'left' | 'right';
   onChangeColor: (
     color: ColorResult,
     event: React.ChangeEvent<HTMLInputElement>
@@ -34,7 +51,7 @@ export interface PropTypes {
   label?: string;
 }
 
-export function ColorPicker({ color, onChangeColor, label }: PropTypes) {
+export function ColorPicker({ color, onChangeColor, label, place }: PropTypes) {
   const [displayColorPicker, setDisplayColorPicker] = useState<boolean>(false);
 
   return (
@@ -54,7 +71,7 @@ export function ColorPicker({ color, onChangeColor, label }: PropTypes) {
       </Button>
 
       {displayColorPicker && (
-        <Popover>
+        <Popover place={place}>
           <Cover onClick={() => setDisplayColorPicker(false)} />
           <ChromePicker color={color} onChange={onChangeColor} />
         </Popover>
