@@ -34,7 +34,7 @@ export function ChainsConfig({ type, config, onChange }: PropTypes) {
   return (
     <div>
       <Typography variant="h4">{type} Form</Typography>
-      <Spacer size={12} scale="vertical" />
+      <Spacer size={12} direction="vertical" />
       <ConfigurationContainer>
         <MultiSelect
           list={blockchains}
@@ -47,7 +47,7 @@ export function ChainsConfig({ type, config, onChange }: PropTypes) {
           value={chains}
           modalTitle="Select Blockchains"
         />
-        <Spacer size={24} scale={'vertical'} />
+        <Spacer size={24} direction={'vertical'} />
         <MultiTokenSelect
           list={tokens}
           onChange={onChange}
@@ -61,7 +61,7 @@ export function ChainsConfig({ type, config, onChange }: PropTypes) {
         />
         {type === 'Destination' ? (
           <>
-            <Spacer scale="vertical" size={12} />
+            <Spacer direction="vertical" size={12} />
             <Checkbox
               onCheckedChange={(checked) => onChange('customeAddress', checked)}
               id="custom_address"
@@ -70,7 +70,7 @@ export function ChainsConfig({ type, config, onChange }: PropTypes) {
             />
           </>
         ) : null}
-        <Spacer size={24} scale={'vertical'} />
+        <Spacer size={24} direction={'vertical'} />
 
         <TokenInfo
           type={type === 'Destination' ? 'from' : 'to'}

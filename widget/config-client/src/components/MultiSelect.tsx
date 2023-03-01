@@ -223,7 +223,7 @@ export function MultiSelect({
           Change
         </Button>
       </Head>
-      <Spacer size={16} scale="vertical" />
+      <Spacer size={16} direction="vertical" />
       <Body>
         {value === 'all' ? (
           <Chip style={{ margin: 2 }} selected label={`All ${type}`} />

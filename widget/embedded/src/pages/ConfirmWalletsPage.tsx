@@ -31,10 +31,10 @@ export function ConfirmWalletsPage() {
   useEffect(() => {
     initSelectedWallets();
   }, []);
-
   return (
     <ConfirmWallets
-      requiredWallets={getRequiredChains(bestRoute)}
+    requiredWallets={getRequiredChains(bestRoute)}
+    // @ts-ignore
       selectableWallets={getSelectableWallets(
         accounts,
         selectedWallets,
@@ -44,6 +44,8 @@ export function ConfirmWalletsPage() {
       onBack={() => navigate(-1)}
       swap={bestRoute!}
       onConfirm={() => navigate(navigationRoutes.confirmSwap)}
+          // @ts-ignore
+
       onChange={(wallet) => setSelectedWallet(wallet)}
       confirmDisabled={confirmDisabled}
     />

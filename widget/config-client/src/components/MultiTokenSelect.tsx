@@ -151,7 +151,7 @@ export function MultiTokenSelect({
           Change
         </Button>
       </Head>
-      <Spacer size={16} scale="vertical" />
+      <Spacer size={16} direction="vertical" />
       <Body>
         {value !== 'all' ? (
           <>
@@ -227,7 +227,7 @@ export function MultiTokenSelect({
                       </>
                     ))}
                   </Row>
-                  <Spacer scale="vertical" />
+                  <Spacer direction="vertical" />
 
                   {value === 'all' ? (
                     <EmptyContent>

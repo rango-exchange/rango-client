@@ -1,4 +1,4 @@
-  {
+{
     // see https://www.typescriptlang.org/tsconfig to better understand tsconfigs
     "extends": "../../tsconfig.base.json",
     "include": ["src", "types"],
@@ -35,4 +35,3 @@
       "noEmit": true
     }
   }
-  
