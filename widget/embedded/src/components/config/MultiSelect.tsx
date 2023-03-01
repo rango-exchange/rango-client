@@ -9,25 +9,19 @@ import {
   SecondaryPage,
   Spacer,
   styled,
-  TokenSelector,
   Typography,
 } from '@rangodev/ui';
 import { LiquiditySource } from '@rangodev/ui/dist/types/meta';
 import { containsText } from '../../helpers';
 import { Value, Wallets } from '../../types/config';
 import { WalletType } from '@rangodev/wallets-shared';
-import { BlockchainMeta, Token } from 'rango-sdk';
+import { BlockchainMeta } from 'rango-sdk';
 
 type PropTypes = (
   | {
       type: 'Blockchains';
       value: BlockchainMeta[] | 'all';
       list: BlockchainMeta[];
-    }
-  | {
-      type: 'Tokens';
-      value: Token[] | 'all';
-      list: Token[];
     }
   | {
       type: 'Wallests';
@@ -77,8 +71,6 @@ const getIndex = (list, v, type) => {
   switch (type) {
     case 'Blockchains':
       return list.findIndex(item => item.name === v.name);
-    case 'Tokens':
-      return list.findIndex(item => item.symbol + item.address === v.symbol + v.address);
     case 'Wallests':
       return list.findIndex(item => item === v);
     case 'Sources':
@@ -135,7 +127,6 @@ export function MultiSelect({
   const [open, setOpen] = useState<boolean>(false);
 
   const onChangeSelectList = v => {
-    console.log('hello');
     let values;
     if (value === 'all') {
       values = type === 'Wallests' ? list.map(item => item.title) : [...list];
@@ -183,18 +174,6 @@ export function MultiSelect({
             onChange={chain => onChangeSelectList(chain)}
           />
         );
-      case 'Tokens':
-        return (
-          <TokenSelector
-            list={list}
-            inModal
-            multiSelect
-            hasHeader={false}
-            selectedList={value}
-            onChange={token => onChangeSelectList(token)}
-          />
-        );
-
       case 'Wallests':
         return (
           <RenderSelectors
@@ -220,8 +199,6 @@ export function MultiSelect({
     switch (type) {
       case 'Blockchains':
         return value.name;
-      case 'Tokens':
-        return `${value.symbol} (${value.blockchain})`;
       case 'Wallests':
         return value;
       case 'Sources':
@@ -249,13 +226,6 @@ export function MultiSelect({
       <Body>
         {value === 'all' ? (
           <Chip style={{ margin: 2 }} selected label={`All ${type}`} />
-        ) : type === 'Tokens' ? (
-          <>
-            {value.splice(0, 10).map(v => (
-              <Chip style={{ margin: 2 }} selected label={getLabel(v)} />
-            ))}
-            <Chip style={{ margin: 2 }} selected label="..." onClick={() => setOpen(true)} />
-          </>
         ) : (
           value.map(v => (
             <Chip

@@ -3,6 +3,7 @@ import React from 'react';
 import { useMetaStore } from '../../store/meta';
 import { ConfigType, Value } from '../../types/config';
 import { MultiSelect } from './MultiSelect';
+import { MultiTokenSelect } from './MultiTokenSelect';
 import { TokenInfo } from './TokenInfo';
 
 interface PropTypes {
@@ -23,6 +24,9 @@ export function ChainsConfig({ type, config, onChange }: PropTypes) {
     meta: { blockchains, tokens },
     loadingStatus,
   } = useMetaStore();
+
+  const chains = type === 'Destination' ? config.fromChains : config.toChains;
+
   return (
     <div>
       <Typography variant="h4">{type} Form</Typography>
@@ -36,26 +40,26 @@ export function ChainsConfig({ type, config, onChange }: PropTypes) {
           disabled={loadingStatus === 'failed'}
           onChange={onChange}
           name={type === 'Destination' ? 'fromChains' : 'toChains'}
-          value={type === 'Destination' ? config.fromChains : config.toChains}
+          value={chains}
           modalTitle="Select Blockchains"
         />
         <Spacer size={24} scale={'vertical'} />
-        <MultiSelect
+        <MultiTokenSelect
           list={tokens}
           onChange={onChange}
           loading={loadingStatus === 'loading'}
           disabled={loadingStatus === 'failed'}
           modalTitle="Select Tokens"
           label="Supported Tokens"
-          type="Tokens"
           name={type === 'Destination' ? 'fromTokens' : 'toTokens'}
           value={type === 'Destination' ? config.fromTokens : config.toTokens}
+          blockchains={chains === 'all' ? blockchains : chains}
         />
         {type === 'Destination' ? (
           <>
             <Spacer scale="vertical" size={12} />
             <Checkbox
-              onCheckedChange={(checked) => onChange('customeAddress', checked)}
+              onCheckedChange={checked => onChange('customeAddress', checked)}
               id="custom_address"
               label="Enable transfer to custom address"
               checked={config.customeAddress}
