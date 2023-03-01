@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import { SwapContainer } from '@rango-dev/ui';
 import React from 'react';
 import { AppRouter } from './components/AppRouter';
@@ -75,87 +74,5 @@ export function App() {
         </SwapContainer>
       </div>
     </Provider>
-=======
-import { Spacer, styled, SwapContainer } from '@rangodev/ui';
-import React, { useState } from 'react';
-import { Config } from './components/config';
-import { ConfigType, StyleType } from './types/config';
-const Container = styled('div', {
-  display: 'flex',
-  backgroundColor: '$neutrals300',
-  padding: 10,
-  justifyContent: 'center',
-});
-
-const SwapBox = styled(SwapContainer, {
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-  fontSize: '$36',
-  flex: 1,
-  marginTop: '6.5%',
-});
-
-export function App() {
-  const [config, setConfig] = useState<ConfigType>({
-    fromChain: 'BSC',
-    fromToken: 'ETH',
-    toChain: 'POLYGON',
-    toToken: 'USDT',
-    fromAmount: '0',
-    fromChains: [],
-    fromTokens: [],
-    toChains: [],
-    toTokens: [],
-    liquiditySources: [],
-    theme: 'auto',
-    wallets: [],
-    multiChain: true,
-    customeAddress: true,
-  });
-
-  const [style, setStyle] = useState<StyleType>({
-    title: 'Swap Box',
-    width: '525',
-    height: '712',
-    languege: 'English (uS)',
-    borderRadius: '5',
-    fontFaminy: 'Roboto',
-    titleSize: '48',
-    titelsWeight: '700',
-    colors: {
-      background: '#ECF3F4',
-      inputBackground: '#FFFFFF',
-      icons: '#10150F',
-      primary: '#5FA425',
-      secondary: '#CDCDCD',
-      text: '#0E1617',
-      success: '#0AA65B',
-      error: '#DE0700',
-      warning: '#FFD771',
-    },
-  });
-
-  const onChangeStyles = (name, value, color) => {
-    if (color) {
-      setStyle((prev) => ({ ...prev, colors: { ...prev.colors, [name]: value } }));
-    } else {
-      setStyle((prev) => ({ ...prev, [name]: value }));
-    }
-  };
-
-  const onChangeConfig = (name, value) => setConfig((prev) => ({ ...prev, [name]: value }));
-  return (
-    <Container>
-      <Config
-        onChangeConfig={onChangeConfig}
-        onChangeStyles={onChangeStyles}
-        style={style}
-        config={config}
-      />
-      <Spacer size={24} />
-      <SwapBox>{style.title}</SwapBox>
-    </Container>
->>>>>>> deaf27d (update config component)
   );
 }
