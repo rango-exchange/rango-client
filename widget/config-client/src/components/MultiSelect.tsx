@@ -22,24 +22,23 @@ type PropTypes = (
       type: 'Blockchains';
       value: BlockchainMeta[] | 'all';
       list: BlockchainMeta[];
-      onChange: (name: string, value: BlockchainMeta[] | 'all') => void;
+      onChange: (chains: BlockchainMeta[] | 'all') => void;
     }
   | {
-      type: 'Wallests';
+      type: 'Wallets';
       value: WalletType[] | 'all';
       list: Wallets;
-      onChange: (name: string, value: WalletType[] | 'all') => void;
+      onChange: (wallets: WalletType[] | 'all') => void;
     }
   | {
       type: 'Sources';
       value: LiquiditySource[] | 'all';
       list: LiquiditySource[];
-      onChange: (name: string, value: LiquiditySource[] | 'all') => void;
+      onChange: (sources: LiquiditySource[] | 'all') => void;
     }
 ) & {
   label: string;
   modalTitle: string;
-  name: string;
   loading?: boolean;
   disabled?: boolean;
 };
@@ -73,7 +72,7 @@ const getIndex = (list, v, type) => {
   switch (type) {
     case 'Blockchains':
       return list.findIndex((item) => item.name === v.name);
-    case 'Wallests':
+    case 'Wallets':
       return list.findIndex((item) => item === v);
     case 'Sources':
       return list.findIndex((item) => item.title === v.title);
@@ -82,10 +81,9 @@ const getIndex = (list, v, type) => {
 
 function RenderSelectors({ type, list, selectedList, onChangeSelected }) {
   const isSelect = (name: string) => {
-    if (selectedList === 'all') return true;
-    else if (getIndex(selectedList, name, type) !== -1) return true;
-    return false;
+    return selectedList === 'all' || getIndex(selectedList, name, type) > -1;
   };
+
   return (
     <SecondaryPage
       textField={true}
@@ -95,15 +93,15 @@ function RenderSelectors({ type, list, selectedList, onChangeSelected }) {
         <ListContainer>
           {filterList(list, searchedFor).map((item, index) => (
             <Button
-              type={isSelect(type === 'Wallests' ? item.type : item) ? 'primary' : undefined}
+              type={isSelect(type === 'Wallets' ? item.title : item) ? 'primary' : undefined}
               variant="outlined"
               size="large"
               prefix={<Image src={item.logo} />}
               suffix={
-                isSelect(type === 'Wallests' ? item.type : item) ? <FilledCircle /> : undefined
+                isSelect(type === 'Wallets' ? item.title : item) ? <FilledCircle /> : undefined
               }
               align="start"
-              onClick={onChangeSelected.bind(null, item)}
+              onClick={onChangeSelected.bind(null, type === 'Wallets' ? item.title : item)}
               key={index}>
               <Typography variant="body2">{item.title}</Typography>
             </Button>
@@ -121,45 +119,46 @@ export function MultiSelect({
   list,
   value,
   onChange,
-  name,
   loading,
   disabled,
 }: PropTypes) {
   const [open, setOpen] = useState<boolean>(false);
   const { loadingStatus } = useMetaStore();
+
   const onChangeSelectList = (v) => {
     let values;
     if (value === 'all') {
-      values = type === 'Wallests' ? list.map((item) => item.title) : [...list];
+      values = type === 'Wallets' ? list.map((item) => item.title) : [...list];
       const index = getIndex(values, v, type);
       values.splice(index, 1);
-      onChange(name, values);
+      onChange(values);
     } else {
-      values = value;
+      values = [...value];
       const index = getIndex(value, v, type);
+
       if (index !== -1) values.splice(index, 1);
       else values.push(v);
-      if (values.length === list.length) onChange(name, 'all');
-      else onChange(name, values);
+      if (values.length === list.length) onChange('all');
+      else onChange(values);
     }
   };
 
   const onClickChip = (v: string) => {
     const index = getIndex(value, v, type);
     if (value !== 'all') {
-      const values = value;
+      const values = [...value];
       values.splice(index, 1);
-      onChange(name, values as any);
+      onChange(values as any);
     }
   };
 
   const onClickAction = () => {
-    if (value === 'all') onChange(name, []);
-    else onChange(name, 'all');
+    if (value === 'all') onChange([]);
+    else onChange('all');
   };
 
   const onClose = () => {
-    if (value !== 'all' && !value.length) onChange(name, 'all');
+    if (value !== 'all' && !value.length) onChange('all');
     setOpen(false);
   };
   const renderModalContent = () => {
@@ -175,7 +174,7 @@ export function MultiSelect({
             loadingStatus={loadingStatus}
           />
         );
-      case 'Wallests':
+      case 'Wallets':
         return (
           <RenderSelectors
             list={list}
@@ -200,7 +199,7 @@ export function MultiSelect({
     switch (type) {
       case 'Blockchains':
         return value.name;
-      case 'Wallests':
+      case 'Wallets':
         return value;
       case 'Sources':
         return value.title;

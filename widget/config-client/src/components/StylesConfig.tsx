@@ -1,7 +1,7 @@
 import { ColorPicker, Radio, Spacer, styled, TextField, Typography } from '@rangodev/ui';
 import React from 'react';
 import { LANGUEGES, FONTS } from '../constants';
-import { StyleType } from '../types';
+import { COLORS, THEME, useConfigStore } from '../store/config';
 import { ConfigurationContainer } from './ChainsConfig';
 import { Select } from './Select';
 
@@ -60,17 +60,23 @@ const RadioContainer = styled('div', {
   justifyContent: 'center',
 });
 
-interface PropTypes {
-  style: StyleType;
-  onChange: (name: string, value: string, color: boolean) => void;
-}
-
-export function StylesConfig({ style, onChange }: PropTypes) {
-  const onChangeStyles = (name, value, color) => onChange(name, value, color);
-  const onChangeInput = (e) => {
-    const { value, name } = e.target;
-    onChangeStyles(name, value, false);
-  };
+export function StylesConfig() {
+  const {
+    title,
+    width,
+    height,
+    languege,
+    borderRadius,
+    theme,
+    fontFaminy,
+    colors,
+    titleSize,
+    titelsWeight,
+    onChangeStringsConfig,
+    onChangeNumbersConfig,
+    onChangeTheme,
+    onChangeColors,
+  } = useConfigStore((state) => state);
 
   return (
     <div>
@@ -82,18 +88,17 @@ export function StylesConfig({ style, onChange }: PropTypes) {
           <div>
             <TextField
               size="large"
-              onChange={onChangeInput}
-              name="title"
-              value={style.title}
+              onChange={(e) => onChangeStringsConfig('title', e.target.value)}
+              value={title}
               label="Title"
             />
           </div>
           <div>
             <TextField
               size="large"
-              onChange={onChangeInput}
+              onChange={(e) => onChangeNumbersConfig('width', parseInt(e.target.value))}
               name="width"
-              value={style.width}
+              value={width}
               label="Width"
               type="number"
               suffix="px"
@@ -102,9 +107,9 @@ export function StylesConfig({ style, onChange }: PropTypes) {
           <div>
             <TextField
               size="large"
-              onChange={onChangeInput}
+              onChange={(e) => onChangeNumbersConfig('height', parseInt(e.target.value))}
               name="height"
-              value={style.height}
+              value={height}
               label="Height"
               type="number"
               suffix="px"
@@ -116,19 +121,19 @@ export function StylesConfig({ style, onChange }: PropTypes) {
         <GridContent>
           <Select
             label="Choose Language Widget"
-            value={style.languege}
+            value={languege}
             name="languege"
             list={LANGUEGES}
             modalTitle="Languages"
-            onChange={(name, value) => onChangeStyles(name, value, false)}
+            onChange={(_, value) => onChangeStringsConfig('languege', value)}
           />
 
           <div>
             <TextField
               size="large"
-              onChange={onChangeInput}
+              onChange={(e) => onChangeNumbersConfig('borderRadius', parseInt(e.target.value))}
               name="borderRadius"
-              value={style.borderRadius}
+              value={borderRadius}
               label="Border Radius"
               type="number"
               suffix="px"
@@ -141,13 +146,13 @@ export function StylesConfig({ style, onChange }: PropTypes) {
             </Typography>
             <RadioContainer>
               <Radio
-                defaultValue={style.theme}
+                defaultValue={theme}
                 options={[
                   { value: 'dark', label: 'Dark' },
                   { value: 'light', label: 'Light' },
                   { value: 'auto', label: 'Auto' },
                 ]}
-                onChange={(value) => onChangeStyles('theme', value, false)}
+                onChange={(value) => onChangeTheme(value as THEME)}
                 direction="horizontal"
               />
             </RadioContainer>
@@ -163,9 +168,9 @@ export function StylesConfig({ style, onChange }: PropTypes) {
             <ColorPicker
               place="top"
               key={color.name}
-              color={style.colors[color.name]}
+              color={colors[color.name]}
               label={color.label}
-              onChangeColor={(c) => onChangeStyles(color.name, c.hex, true)}
+              onChangeColor={(c) => onChangeColors(color.name as COLORS, c.hex)}
             />
           ))}
         </GridContent>
@@ -177,18 +182,18 @@ export function StylesConfig({ style, onChange }: PropTypes) {
         <GridContent>
           <Select
             label="Font Faminy"
-            value={style.fontFaminy}
+            value={fontFaminy}
             name="fontFaminy"
             list={FONTS}
             modalTitle="Fonts"
-            onChange={(name, value) => onChangeStyles(name, value, false)}
+            onChange={(_, value) => onChangeStringsConfig('fontFaminy', value)}
           />
           <div>
             <TextField
               size="large"
-              onChange={onChangeInput}
+              onChange={(e) => onChangeNumbersConfig('titleSize', parseInt(e.target.value))}
               name="titleSize"
-              value={style.titleSize}
+              value={titleSize}
               label="Forms Title Size"
               type="number"
               suffix="px"
@@ -197,9 +202,9 @@ export function StylesConfig({ style, onChange }: PropTypes) {
           <div>
             <TextField
               size="large"
-              onChange={onChangeInput}
+              onChange={(e) => onChangeNumbersConfig('titelsWeight', parseInt(e.target.value))}
               name="titelsWeight"
-              value={style.titelsWeight}
+              value={titelsWeight}
               label="Titels Weight"
               type="number"
               suffix="px"

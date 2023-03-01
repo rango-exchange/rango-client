@@ -11,17 +11,17 @@ import {
   Typography,
 } from '@rangodev/ui';
 import { BlockchainMeta, Token } from 'rango-sdk';
+import { Type } from '../types';
+import { useConfigStore } from '../store/config';
 
 type PropTypes = {
-  value: Token[] | 'all';
   list: Token[];
   blockchains: BlockchainMeta[];
   label: string;
   modalTitle: string;
-  onChange: (name: string, value: 'all' | Token[]) => void;
-  name: string;
   loading?: boolean;
   disabled?: boolean;
+  type: Type;
 };
 
 const Head = styled('div', {
@@ -54,19 +54,21 @@ export function MultiTokenSelect({
   label,
   modalTitle,
   list,
-  value,
-  onChange,
-  name,
   loading,
   blockchains,
   disabled,
+  type,
 }: PropTypes) {
   const [modal, setModal] = useState({ open: false, isChain: false, isToken: false });
   const [chain, setChain] = useState<string>('all');
   const [selectTokens, setSelectTokens] = useState({});
 
+  const { fromTokens, toTokens, onChangeTokens } = useConfigStore((state) => state);
+
+  const tokens = type === 'Destination' ? fromTokens : toTokens;
+
   const onChangeSelectList = (token) => {
-    const select = selectTokens;
+    const select = { ...selectTokens };
     if (select[chain]) {
       const index = select[chain].findIndex(
         (item) => item.symbol === token.symbol && item.address === token.address,
@@ -80,7 +82,7 @@ export function MultiTokenSelect({
       select[chain] = [token];
     }
 
-    let values = value !== 'all' ? value : [];
+    let values = tokens !== 'all' ? [...tokens] : [];
     const index = values.findIndex(
       (item) => item.symbol === token.symbol && item.address === token.address,
     );
@@ -90,11 +92,11 @@ export function MultiTokenSelect({
       values.splice(index, 1);
     }
     setSelectTokens(select);
-    onChange(name, values);
+    onChangeTokens(values, type);
   };
 
   const onClickSelectAll = (listOfToken) => {
-    let values = value !== 'all' ? value : [];
+    let values = tokens !== 'all' ? [...tokens] : [];
     const select = selectTokens;
     if (selectTokens[chain] && selectTokens[chain].length === listOfToken.length) {
       select[chain] = [];
@@ -114,13 +116,12 @@ export function MultiTokenSelect({
       }
     }
     setSelectTokens(select);
-
-    onChange(name, values);
+    onChangeTokens(values, type);
   };
 
   const onClose = () => {
-    if (value !== 'all' && (!value.length || value.length === list.length)) {
-      onChange(name, 'all');
+    if (tokens !== 'all' && (!toTokens.length || tokens.length === list.length)) {
+      onChangeTokens('all', type);
     }
     setModal((prev) => ({
       ...prev,
@@ -153,9 +154,9 @@ export function MultiTokenSelect({
       </Head>
       <Spacer size={16} direction="vertical" />
       <Body>
-        {value !== 'all' ? (
+        {tokens !== 'all' ? (
           <>
-            {[...value].splice(0, 10).map((v) => (
+            {[...tokens].splice(0, 10).map((v) => (
               <Chip
                 style={{ margin: 2 }}
                 selected
@@ -183,15 +184,15 @@ export function MultiTokenSelect({
           modal.isToken && (
             <Checkbox
               onCheckedChange={(checked) => {
-                if (checked) onChange(name, 'all');
+                if (checked) onChangeTokens('all', type);
                 else {
-                  onChange(name, []);
+                  onChangeTokens([], type);
                   setChain(blockchains[0].name);
                 }
               }}
               id="all_Tokens"
               label="Select All Tokens"
-              checked={value === 'all'}
+              checked={tokens === 'all'}
             />
           )
         }
@@ -218,7 +219,7 @@ export function MultiTokenSelect({
                             padding: '0 8px',
                             margin: '0 8px 8px 0',
                           }}
-                          disabled={value === 'all'}
+                          disabled={tokens === 'all'}
                           type={chain === blockchain.name ? 'primary' : undefined}
                           variant="outlined"
                           onClick={() => setChain(blockchain.name)}>
@@ -229,7 +230,7 @@ export function MultiTokenSelect({
                   </Row>
                   <Spacer direction="vertical" />
 
-                  {value === 'all' ? (
+                  {tokens === 'all' ? (
                     <EmptyContent>
                       <Typography variant="body2">All tokens are selected</Typography>
                     </EmptyContent>
@@ -247,7 +248,7 @@ export function MultiTokenSelect({
                       <TokenList
                         searchedText={searchedFor}
                         list={filterList}
-                        selectedList={value}
+                        selectedList={tokens}
                         multiSelect
                         onChange={(token) => onChangeSelectList(token)}
                       />
