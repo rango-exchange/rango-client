@@ -93,15 +93,47 @@ const SwapBox = styled(SwapContainer, {
   alignItems: 'center',
   fontSize: '$36',
   flex: 1,
-  marginTop: '6.5%',
+  marginTop: '8%',
 });
 
 export function App() {
   const [config, setConfig] = useState<ConfigType>({
-    fromChain: 'Polygon',
-    fromToken: 'USDT',
-    toChain: 'BSC',
-    toToken: 'USDT',
+    fromChain: {
+      name: 'BSC',
+      displayName: 'BSC',
+      logo: 'https://api.rango.exchange/blockchains/binance.svg',
+    },
+    fromToken: {
+      blockchain: 'OPTIMISM',
+      symbol: 'ETH',
+      image: 'https://api.rango.exchange/i/MTyH5i',
+      address: null,
+      usdPrice: 1542.686,
+      isSecondaryCoin: false,
+      coinSource: null,
+      coinSourceUrl: null,
+      name: 'Ethereum',
+      decimals: 18,
+      balance: { amount: '1', usdPrice: '2000' },
+    },
+    toChain: {
+      name: 'POLYGON',
+      displayName: 'Polygon',
+      logo: 'https://api.rango.exchange/blockchains/polygon.svg',
+    },
+    toToken: {
+      blockchain: 'OPTIMISM',
+      symbol: 'ETH',
+      image: 'https://api.rango.exchange/i/MTyH5i',
+      address: null,
+      usdPrice: 1542.686,
+      isSecondaryCoin: false,
+      coinSource: null,
+      coinSourceUrl: null,
+      name: 'Ethereum',
+      decimals: 18,
+      balance: { amount: '1', usdPrice: '2000' },
+    },
     fromAmount: '0',
     chains: ['BSC'],
     tokens: ['USDT'],
@@ -141,9 +173,16 @@ export function App() {
       setStyle((prev) => ({ ...prev, [name]: value }));
     }
   };
+
+  const onChangeConfig = (name, value) => setConfig((prev) => ({ ...prev, [name]: value }));
   return (
     <Container>
-      <Config onChangeStyles={onChangeStyles} style={style} config={config} />
+      <Config
+        onChangeConfig={onChangeConfig}
+        onChangeStyles={onChangeStyles}
+        style={style}
+        config={config}
+      />
       <Spacer size={24} />
       <SwapBox>{style.title}</SwapBox>
     </Container>

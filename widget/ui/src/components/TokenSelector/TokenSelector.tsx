@@ -19,8 +19,8 @@ export function TokenSelector(props: PropTypes) {
     <SecondaryPage
       textField={true}
       textFieldPlaceholder="Search Blockchain By Name"
-      title={`Select ${type} Token`}
       hasHeader={hasHeader}
+      title={`Select ${type} Token`}
       onBack={onBack}
       Content={({ searchedFor }) => (
         <TokenList

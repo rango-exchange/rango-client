@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-// import { ChevronLeftIcon } from '@radix-ui/react-icons';
 import { styled } from '../../theme';
 import { AngleLeftIcon, SearchIcon } from '../Icon';
 import { TextField } from '../TextField/TextField';

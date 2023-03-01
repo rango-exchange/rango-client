@@ -31,7 +31,7 @@ export interface PropTypes {
   defaultChecked?: boolean;
   label: string;
   checked?: boolean;
-  onCheckedChange?: (checked: boolean | 'indeterminate') => void;
+  onCheckedChange?: (checked: boolean) => void;
   disabled?: boolean;
   name?: string;
 }
