@@ -3,7 +3,7 @@ import {
   BlockchainSelector,
   Button,
   Chip,
-  Close,
+  CloseIcon,
   FilledCircle,
   Modal,
   SecondaryPage,
@@ -12,20 +12,41 @@ import {
   TokenSelector,
   Typography,
 } from '@rangodev/ui';
-import { BlockchainMeta, LiquiditySource, TokenMeta } from '@rangodev/ui/dist/types/meta';
+import { LiquiditySource } from '@rangodev/ui/dist/types/meta';
 import { containsText } from '../../helpers';
-import { Wallets } from '../../types/config';
+import { Value, Wallets } from '../../types/config';
 import { WalletType } from '@rangodev/wallets-shared';
+import { BlockchainMeta, Token } from 'rango-sdk';
 
-interface PropTypes {
+type PropTypes = (
+  | {
+      type: 'Blockchains';
+      value: BlockchainMeta[] | 'all';
+      list: BlockchainMeta[];
+    }
+  | {
+      type: 'Tokens';
+      value: Token[] | 'all';
+      list: Token[];
+    }
+  | {
+      type: 'Wallests';
+      value: WalletType[] | 'all';
+      list: Wallets;
+    }
+  | {
+      type: 'Sources';
+      value: LiquiditySource[] | 'all';
+      list: LiquiditySource[];
+    }
+) & {
   label: string;
-  type: 'Blockchains' | 'Tokens' | 'Wallests' | 'Sources';
   modalTitle: string;
-  list: BlockchainMeta[] | TokenMeta[] | LiquiditySource[] | Wallets;
-  value: string[];
-  onChange: (name: string, value: string[] | WalletType[] | any) => void;
+  onChange: (name: string, value: Value) => void;
   name: string;
-}
+  loading?: boolean;
+  disabled?: boolean;
+};
 
 const Head = styled('div', {
   display: 'flex',
@@ -41,20 +62,34 @@ const ListContainer = styled('div', {
   display: 'grid',
   gap: '.5rem',
   gridTemplateColumns: ' repeat(2, minmax(0, 1fr))',
+  maxHeight: 480,
 });
 
 const filterList = (list, searchedFor: string) =>
-  list.filter((item) => containsText(item.title, searchedFor));
+  list.filter(item => containsText(item.title, searchedFor));
 const Image = styled('img', {
   width: '1.5rem',
   maxHeight: '1.5rem',
   marginRight: '$4',
 });
 
+const getIndex = (list, v, type) => {
+  switch (type) {
+    case 'Blockchains':
+      return list.findIndex(item => item.name === v.name);
+    case 'Tokens':
+      return list.findIndex(item => item.symbol + item.address === v.symbol + v.address);
+    case 'Wallests':
+      return list.findIndex(item => item === v);
+    case 'Sources':
+      return list.findIndex(item => item.title === v.title);
+  }
+};
+
 function RenderSelectors({ type, list, selectedList, onChangeSelected }) {
   const isSelect = (name: string) => {
-    if (!selectedList?.length) return true;
-    else if (selectedList.indexOf(name) !== -1) return true;
+    if (selectedList === 'all') return true;
+    else if (getIndex(selectedList, name, type) !== -1) return true;
     return false;
   };
   return (
@@ -67,14 +102,12 @@ function RenderSelectors({ type, list, selectedList, onChangeSelected }) {
         <ListContainer>
           {filterList(list, searchedFor).map((item, index) => (
             <Button
-              type={isSelect(type === 'Wallests' ? item.type : item.title) ? 'primary' : undefined}
+              type={isSelect(type === 'Wallests' ? item.type : item) ? 'primary' : undefined}
               variant="outlined"
               size="large"
               prefix={<Image src={item.logo} />}
               suffix={
-                isSelect(type === 'Wallests' ? item.type : item.title) ? (
-                  <FilledCircle />
-                ) : undefined
+                isSelect(type === 'Wallests' ? item.type : item) ? <FilledCircle /> : undefined
               }
               align="start"
               onClick={onChangeSelected.bind(null, item)}
@@ -88,60 +121,77 @@ function RenderSelectors({ type, list, selectedList, onChangeSelected }) {
   );
 }
 
-export function MultiSelect({ label, type, modalTitle, list, value, onChange, name }: PropTypes) {
+export function MultiSelect({
+  label,
+  type,
+  modalTitle,
+  list,
+  value,
+  onChange,
+  name,
+  loading,
+  disabled,
+}: PropTypes) {
   const [open, setOpen] = useState<boolean>(false);
 
-  const onChangeSelectList = (v, key) => {
-    if (!value.length) {
-      const values = list.map((item) => item[key]);
-      const index = values.findIndex((item) => item === v[key]);
+  const onChangeSelectList = v => {
+    console.log('hello');
+    let values;
+    if (value === 'all') {
+      values = type === 'Wallests' ? list.map(item => item.title) : [...list];
+      const index = getIndex(values, v, type);
       values.splice(index, 1);
-      console.log(values);
-
       onChange(name, values);
     } else {
-      let values = value;
-
-      const index = value.findIndex((value) => value === v[key]);
+      values = value;
+      const index = getIndex(value, v, type);
       if (index !== -1) values.splice(index, 1);
-      else {
-        values = [...value, v[key]];
-      }
-      if (values.length === list.length) onChange(name, []);
+      else values.push(v);
+      if (values.length === list.length) onChange(name, 'all');
       else onChange(name, values);
     }
   };
 
   const onClickChip = (v: string) => {
-    const values = value;
-
-    const index = value.findIndex((value) => value === v);
-    values.splice(index, 1);
-    onChange(name, values);
+    const index = getIndex(value, v, type);
+    if (value !== 'all') {
+      const values = value;
+      values.splice(index, 1);
+      onChange(name, value);
+    }
   };
 
+  const onClickAction = () => {
+    if (value === 'all') onChange(name, []);
+    else onChange(name, 'all');
+  };
+
+  const onClose = () => {
+    if (value !== 'all' && !value.length) onChange(name, 'all');
+    setOpen(false);
+  };
   const renderModalContent = () => {
     switch (type) {
       case 'Blockchains':
         return (
           <BlockchainSelector
-            list={list as BlockchainMeta[]}
+            list={list}
             inModal
             hasHeader={false}
             multiSelect
             selectedList={value}
-            onChange={(chain) => onChangeSelectList(chain, 'name')}
+            onChange={chain => onChangeSelectList(chain)}
           />
         );
       case 'Tokens':
         return (
           <TokenSelector
-            list={list as TokenMeta[]}
+            list={list}
             inModal
             multiSelect
             hasHeader={false}
             selectedList={value}
-            onChange={(token) => onChangeSelectList(token, 'symbol')}
+            onChange={token => onChangeSelectList(token)}
           />
         );
 
@@ -149,7 +199,7 @@ export function MultiSelect({ label, type, modalTitle, list, value, onChange, na
         return (
           <RenderSelectors
             list={list}
-            onChangeSelected={(item) => onChangeSelectList(item, 'type')}
+            onChangeSelected={item => onChangeSelectList(item)}
             selectedList={value}
             type={type}
           />
@@ -158,11 +208,24 @@ export function MultiSelect({ label, type, modalTitle, list, value, onChange, na
         return (
           <RenderSelectors
             list={list}
-            onChangeSelected={(item) => onChangeSelectList(item, 'title')}
+            onChangeSelected={item => onChangeSelectList(item)}
             selectedList={value}
             type={type}
           />
         );
+    }
+  };
+
+  const getLabel = value => {
+    switch (type) {
+      case 'Blockchains':
+        return value.name;
+      case 'Tokens':
+        return `${value.symbol} (${value.blockchain})`;
+      case 'Wallests':
+        return value;
+      case 'Sources':
+        return value.title;
     }
   };
   return (
@@ -175,8 +238,8 @@ export function MultiSelect({ label, type, modalTitle, list, value, onChange, na
         <Button
           onClick={() => setOpen(true)}
           variant="contained"
-          style={{ width: 70 }}
-          fullWidth
+          loading={loading}
+          disabled={disabled}
           size="small"
           type="primary">
           Change
@@ -184,23 +247,35 @@ export function MultiSelect({ label, type, modalTitle, list, value, onChange, na
       </Head>
       <Spacer size={16} scale="vertical" />
       <Body>
-        {!value?.length ? (
+        {value === 'all' ? (
           <Chip style={{ margin: 2 }} selected label={`All ${type}`} />
+        ) : type === 'Tokens' ? (
+          <>
+            {value.splice(0, 10).map(v => (
+              <Chip style={{ margin: 2 }} selected label={getLabel(v)} />
+            ))}
+            <Chip style={{ margin: 2 }} selected label="..." onClick={() => setOpen(true)} />
+          </>
         ) : (
-          value.map((v) => (
+          value.map(v => (
             <Chip
               style={{ margin: 2 }}
               selected
-              label={v}
-              suffix={<Close />}
+              label={getLabel(v)}
+              suffix={<CloseIcon />}
               onClick={() => onClickChip(v)}
             />
           ))
         )}
       </Body>
       <Modal
+        action={
+          <Button type="primary" variant="ghost" onClick={onClickAction}>
+            {value === 'all' ? 'Deselect All' : 'Select All'}
+          </Button>
+        }
         open={open}
-        onClose={() => setOpen((prev) => !prev)}
+        onClose={onClose}
         content={renderModalContent()}
         title={modalTitle}
         containerStyle={{ width: '560px', height: '655px' }}></Modal>

@@ -1,15 +1,38 @@
 import { Spacer, Typography } from '@rangodev/ui';
+import { LiquiditySource } from '@rangodev/ui/dist/types/meta';
 import React from 'react';
-import { ConfigType } from '../../types/config';
+import { useMetaStore } from '../../store/meta';
+import { ConfigType, Value } from '../../types/config';
 import { ConfigurationContainer } from './ChainsConfig';
-import { liquiditySources } from './mock';
 import { MultiSelect } from './MultiSelect';
 
 interface PropTypes {
-  onChange: (name: string, value: string[]) => void;
+  onChange: (name: string, value: Value) => void;
   config: ConfigType;
 }
 export function SourcesConfig({ onChange, config }: PropTypes) {
+  const {
+    meta: { swappers },
+  } = useMetaStore();
+
+  const uniqueSwappersGroups: Array<LiquiditySource> = [];
+  Array.from(new Set(swappers.map((s) => s.swapperGroup)))
+    .map((swapperGroup) => {
+      return swappers.find((s) => s.swapperGroup === swapperGroup);
+    })
+    .find((s) => {
+      if (s) {
+        for (const type of s.types) {
+          uniqueSwappersGroups.push({
+            title: s.swapperGroup,
+            logo: s.logo,
+            type,
+            selected: false,
+          });
+        }
+      }
+    });
+
   return (
     <>
       <Typography variant="h4">Liquidity sources</Typography>
@@ -19,7 +42,7 @@ export function SourcesConfig({ onChange, config }: PropTypes) {
           label="Supported Sources"
           type="Sources"
           modalTitle="Select Sources"
-          list={liquiditySources}
+          list={uniqueSwappersGroups}
           onChange={onChange}
           name="liquiditySources"
           value={config.liquiditySources}

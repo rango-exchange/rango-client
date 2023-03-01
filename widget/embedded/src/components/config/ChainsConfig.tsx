@@ -1,15 +1,14 @@
 import { Checkbox, Spacer, styled, Typography } from '@rangodev/ui';
-import { BlockchainMeta, TokenMeta } from '@rangodev/ui/dist/types/meta';
 import React from 'react';
-import { ConfigType } from '../../types/config';
-import { blockchainMeta, tokensMeta } from './mock';
+import { useMetaStore } from '../../store/meta';
+import { ConfigType, Value } from '../../types/config';
 import { MultiSelect } from './MultiSelect';
 import { TokenInfo } from './TokenInfo';
 
 interface PropTypes {
   type: 'Destination' | 'Source';
   config: ConfigType;
-  onChange: (name: string, value: string | TokenMeta | BlockchainMeta | boolean | string[]) => void;
+  onChange: (name: string, value: Value) => void;
 }
 export const ConfigurationContainer = styled('div', {
   borderRadius: '$10',
@@ -20,15 +19,21 @@ export const ConfigurationContainer = styled('div', {
 });
 
 export function ChainsConfig({ type, config, onChange }: PropTypes) {
+  const {
+    meta: { blockchains, tokens },
+    loadingStatus,
+  } = useMetaStore();
   return (
     <div>
       <Typography variant="h4">{type} Form</Typography>
       <Spacer size={12} scale="vertical" />
       <ConfigurationContainer>
         <MultiSelect
-          list={blockchainMeta}
+          list={blockchains}
           label="Supported Blockchains"
           type="Blockchains"
+          loading={loadingStatus === 'loading'}
+          disabled={loadingStatus === 'failed'}
           onChange={onChange}
           name={type === 'Destination' ? 'fromChains' : 'toChains'}
           value={type === 'Destination' ? config.fromChains : config.toChains}
@@ -36,8 +41,10 @@ export function ChainsConfig({ type, config, onChange }: PropTypes) {
         />
         <Spacer size={24} scale={'vertical'} />
         <MultiSelect
-          list={tokensMeta}
+          list={tokens}
           onChange={onChange}
+          loading={loadingStatus === 'loading'}
+          disabled={loadingStatus === 'failed'}
           modalTitle="Select Tokens"
           label="Supported Tokens"
           type="Tokens"
