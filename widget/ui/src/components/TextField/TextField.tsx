@@ -77,7 +77,7 @@ const Input = styled('input', {
 });
 const Label = styled('label', {
   display: 'inline-block',
-  fontSize: '$16',
+  fontSize: '$14',
   marginBottom: '$4',
 });
 
