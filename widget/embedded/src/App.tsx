@@ -62,6 +62,7 @@ export function App() {
       }
     }
   };
+  
   return (
     //@ts-ignore
     <Provider allBlockChains={blockchains} providers={providers} onUpdateState={onUpdateState}>
