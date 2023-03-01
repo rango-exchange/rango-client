@@ -14,6 +14,7 @@ const MainContainer = styled('div', {
   flexDirection: 'column',
   alignItems: 'end',
   padding: '$16 $24',
+  boxSizing: 'border-box',
 });
 
 const ContentContainer = styled('div', {
