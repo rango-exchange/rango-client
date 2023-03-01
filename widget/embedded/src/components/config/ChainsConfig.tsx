@@ -1,20 +1,37 @@
-import { Button, Spacer, styled, SwapContainer, Typography } from '@rangodev/ui';
+import { Checkbox, Spacer, styled, Typography } from '@rangodev/ui';
 import React from 'react';
+import { MultiSelect } from './MultiSelect';
+import { TokenInfo } from './TokenInfo';
 
 interface PropTypes {
-  title: string;
+  type: 'Destination' | 'Source';
 }
+export const ConfigurationContainer = styled('div', {
+  borderRadius: '$10',
+  maxWidth: '732px',
+  boxShadow: '$s',
+  padding: '$16',
+});
 
-export function ChainsConfig({ title }: PropTypes) {
-    console.log({title});
-    
+export function ChainsConfig({ type }: PropTypes) {
   return (
     <div>
-      <Typography variant="h6">{title}</Typography>
+      <Typography variant="h4">{type} Form</Typography>
       <Spacer size={12} scale="vertical" />
-      <SwapContainer>
-        
-      </SwapContainer>
+      <ConfigurationContainer>
+        <MultiSelect label="Supported Blockchains" type="Blockchains" />
+        <Spacer size={24} scale={'vertical'} />
+        <MultiSelect label="Supported Tokens" type="Tokens" />
+        {type === 'Destination' ? (
+          <>
+            <Spacer scale="vertical" size={12} />
+            <Checkbox id="custom_address" label="Enable transfer to custom address" checked />
+          </>
+        ) : null}
+        <Spacer size={24} scale={'vertical'} />
+
+        <TokenInfo type={type} />
+      </ConfigurationContainer>
     </div>
   );
 }
