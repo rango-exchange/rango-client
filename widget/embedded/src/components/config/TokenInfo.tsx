@@ -1,8 +1,22 @@
-import React from 'react';
-import { AngleDownIcon, Button, styled, TextField, Typography } from '@rangodev/ui';
-
+import React, { useState } from 'react';
+import {
+  AngleDownIcon,
+  BlockchainSelector,
+  Button,
+  Modal,
+  styled,
+  TextField,
+  TokenSelector,
+  Typography,
+} from '@rangodev/ui';
+import { blockchainMeta, tokensMeta } from './mock';
+import { BlockchainMeta, TokenMeta } from '@rangodev/ui/dist/types/meta';
 interface PropTypes {
-  type: 'Destination' | 'Source';
+  type: 'from' | 'to';
+  chain: BlockchainMeta;
+  token: TokenMeta;
+  defualtAmount: string;
+  onChange: (name: string, value: string | TokenMeta | BlockchainMeta) => void;
 }
 
 const Container = styled('div', {
@@ -16,7 +30,10 @@ const StyledImage = styled('img', {
   width: '24px',
 });
 
-export function TokenInfo(props: PropTypes) {
+export function TokenInfo({ defualtAmount, type, chain, onChange, token }: PropTypes) {
+  const [modal, setModal] = useState({ open: false, isChain: false, isToken: false });
+
+  const onChangeConfig = (name, value) => onChange(name, value);
   return (
     <Container>
       <div>
@@ -26,12 +43,19 @@ export function TokenInfo(props: PropTypes) {
 
         <Button
           variant="outlined"
-          prefix={<StyledImage src="https://api.rango.exchange/blockchains/polygon.svg" />}
+          onClick={() =>
+            setModal((prev) => ({
+              open: !prev.open,
+              isChain: true,
+              isToken: false,
+            }))
+          }
+          prefix={<StyledImage src={chain.logo} />}
           suffix={<AngleDownIcon />}
           fullWidth
           align="start"
           size="large">
-          Polygon
+          {chain.displayName}
         </Button>
       </div>
 
@@ -41,16 +65,65 @@ export function TokenInfo(props: PropTypes) {
         </Typography>
         <Button
           variant="outlined"
-          prefix={<StyledImage src="https://api.rango.exchange/i/aR1yFx" />}
+          prefix={<StyledImage src={token.image} />}
           suffix={<AngleDownIcon />}
           fullWidth
+          onClick={() =>
+            setModal((prev) => ({
+              open: !prev.open,
+              isChain: false,
+              isToken: true,
+            }))
+          }
           align="start"
           size="large">
-          USDT
+          {token.symbol}
         </Button>
       </div>
 
-      {props.type !== 'Destination' ? <TextField label="default Amount" type="number" /> : null}
+      {type !== 'from' ? (
+        <TextField
+          onChange={(e) => onChangeConfig(e.target.name, e.target.value)}
+          value={defualtAmount}
+          name="fromAmount"
+          label="Default Amount"
+          type="number"
+        />
+      ) : null}
+
+      <Modal
+        open={modal.open}
+        onClose={() =>
+          setModal((prev) => ({
+            ...prev,
+            open: false,
+          }))
+        }
+        content={
+          modal.isChain ? (
+            <BlockchainSelector
+              type={type === 'from' ? 'Source' : 'Destination'}
+              list={blockchainMeta}
+              inModal={true}
+              hasHeader={false}
+              selected={chain}
+              onChange={(chain) => onChangeConfig(`${type}Chain`, chain)}
+            />
+          ) : (
+            modal.isToken && (
+              <TokenSelector
+                list={tokensMeta}
+                inModal={true}
+                hasHeader={false}
+                type={type === 'from' ? 'Source' : 'Destination'}
+                selected={token}
+                onChange={(chain) => onChangeConfig(`${type}Token`, chain)}
+              />
+            )
+          )
+        }
+        title={`Select ${type === 'from' ? 'Source' : 'Destination'} Network`}
+        containerStyle={{ width: '560px', height: '655px' }}></Modal>
     </Container>
   );
 }

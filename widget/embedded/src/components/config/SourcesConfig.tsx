@@ -9,9 +9,7 @@ export function SourcesConfig() {
       <Typography variant="h4">Liquidity sources</Typography>
       <Spacer size={12} scale="vertical" />
       <ConfigurationContainer>
-        <MultiSelect label="Supported Sources" type="Sources" />
-        <Spacer scale="vertical" size={12} />
-        <Checkbox id="custom_address" label="Enable multi wallets simultaneously" checked />
+        <MultiSelect label="Supported Sources" type="Sources" modalTitle={''} />
       </ConfigurationContainer>
     </>
   );

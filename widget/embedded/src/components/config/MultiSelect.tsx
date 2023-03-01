@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Button, Chip, Close, Modal, styled, Typography } from '@rangodev/ui';
+import { BlockchainSelector, Button, Chip, Close, Modal, styled, Typography } from '@rangodev/ui';
+import { blockchainMeta } from './mock';
 
 interface PropTypes {
   label: string;
@@ -15,15 +16,24 @@ export function MultiSelect({ label, type, modalTitle }: PropTypes) {
         {label}
       </Typography>
 
-      <Button variant="outlined" fullWidth align="start" size="large">
+      <Button onClick={()=>setOpen(true)} variant="outlined" fullWidth align="start" size="large">
         <Chip selected label={`All ${type}`} suffix={<Close />} />
       </Button>
-      {/* <Modal
+      <Modal
         open={open}
-        title={modalTitle}
-        onClose={() => setOpen(false)}
-        content={undefined}
-        containerStyle={undefined}></Modal> */}
+        onClose={() => setOpen((prev) => !prev)}
+        content={
+          <BlockchainSelector
+            type={'Source'}
+            list={blockchainMeta}
+            inModal={true}
+            hasHeader={false}
+            selected={blockchainMeta[0]}
+            onChange={(chain) => console.log(chain)}
+          />
+        }
+        title={`Select Blockchains`}
+        containerStyle={{ width: '560px', height: '655px' }}></Modal>
     </div>
   );
 }
