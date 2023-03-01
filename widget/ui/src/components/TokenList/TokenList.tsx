@@ -6,6 +6,7 @@ import { Button } from '../Button/Button';
 import { Typography } from '../Typography';
 import { VirtualizedList } from '../VirtualizedList/VirtualizedList';
 import { CSSProperties } from '@stitches/react';
+import { containsText } from '../../helper';
 
 export interface TokenWithAmount extends Token {
   balance?: {

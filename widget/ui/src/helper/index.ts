@@ -18,3 +18,6 @@ export const rawFees = (data: BestRouteResponse): string =>
 
 export const decimalNumber = (number = '0', toFixed: number) =>
   parseFloat(number).toFixed(toFixed);
+
+export const containsText = (text: string, searchText: string) =>
+  text.toLowerCase().includes(searchText.toLowerCase());
