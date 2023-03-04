@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/wallets-shared",
-  "version": "0.1.11-next.71",
+  "version": "0.1.11-next.72",
   "license": "MIT",
   "module": "dist/wallets-shared.esm.js",
   "main": "dist/index.js",
