@@ -12,7 +12,7 @@
     "build:wallets": "lerna run --concurrency 5 --scope @rango-dev/wallets-* --scope @rango-dev/provider-* --ignore @rango-dev/wallets-demo build",
     "build:queue-manager": "lerna run --scope @rango-dev/queue-manager-* --ignore @rango-dev/queue-manager-demo build",
     "build:widget": "lerna run --scope @rango-dev/widget-* build",
-    "build:npm": "node ./scripts/publish.js; yarn build:wallets && yarn build:queue-manager",
+    "build:npm": "node ./scripts/publish.js; yarn build:wallets && yarn build:queue-manager && yarn build:widget",
     "build:demo": "lerna run --scope @rango-dev/wallets-demo build",
     "build": "nx affected --target=build --parallel=3",
     "dev:wallets": "lerna run dev --scope @rango-dev/wallets-demo --scope @rango-dev/provider-*",
