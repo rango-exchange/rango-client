@@ -11,8 +11,8 @@
   "browserslist": "> 0.5%, last 2 versions, not dead",
   "scripts": {
     "dev": "parcel public/index.html -p 3000",
-    "build": "parcel build",
-    "build:lib": "tsdx build --entry ./src/lib.tsx"
+    "build:app": "parcel build",
+    "build": "tsdx build --entry ./src/lib.tsx --transpileOnly"
   },
   "husky": {
     "hooks": {
