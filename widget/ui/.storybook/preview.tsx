@@ -16,6 +16,7 @@ const ThemeBlock = styled('div', {
   height: '100vh',
   bottom: 0,
   overflow: 'auto',
+  boxSizing: 'border-box',
   padding: '1rem',
   backgroundColor: '$background',
   variants: {
@@ -39,7 +40,6 @@ const ThemeBlock = styled('div', {
 const globalStyles = globalCss({
   '*': {
     fontFamily: 'Roboto',
-    boxSizing: 'border-box',
   },
 });
 
