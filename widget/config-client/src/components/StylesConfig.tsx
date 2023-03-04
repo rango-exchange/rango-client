@@ -46,8 +46,14 @@ const COLORS = [
 ];
 const GridContent = styled('div', {
   display: 'grid',
-  gridTemplateColumns: '1fr 1fr 1fr',
+  gridTemplateColumns: '1fr',
   gap: 12,
+  '@md': {
+    gridTemplateColumns: '1fr 1fr',
+  },
+  '@lg': {
+    gridTemplateColumns: '1fr 1fr 1fr',
+  },
 });
 
 const RadioContainer = styled('div', {
@@ -181,7 +187,7 @@ export function StylesConfig() {
 
         <GridContent>
           <Select
-            label="Font Faminy"
+            label="Font Family"
             value={fontFaminy}
             name="fontFaminy"
             list={FONTS}

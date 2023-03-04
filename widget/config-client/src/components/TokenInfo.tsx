@@ -7,7 +7,6 @@ import {
   styled,
   TextField,
   TokenSelector,
-  Typography,
 } from '@rango-dev/ui';
 import { useMetaStore } from '../store/meta';
 import { useConfigStore } from '../store/config';
@@ -29,8 +28,19 @@ const StyledImage = styled('img', {
 const Container = styled('div', {
   display: 'grid',
   position: 'relative',
-  gridTemplateColumns: '1fr 1fr 1fr',
   gap: 12,
+  gridTemplateColumns: '1fr',
+  '@md': {
+    gridTemplateColumns: '1fr 1fr',
+  },
+  '@lg': {
+    gridTemplateColumns: '1fr 1fr 1fr',
+  },
+});
+const Label = styled('label', {
+  display: 'inline-block',
+  fontSize: '$14',
+  marginBottom: '$4',
 });
 
 export function TokenInfo({ type }: PropTypes) {
@@ -55,9 +65,7 @@ export function TokenInfo({ type }: PropTypes) {
   return (
     <Container>
       <div>
-        <Typography mb={4} variant="body2">
-          default Blockchains
-        </Typography>
+        <Label>Default Blockchains</Label>
 
         <Button
           variant="outlined"
@@ -86,9 +94,7 @@ export function TokenInfo({ type }: PropTypes) {
       </div>
 
       <div>
-        <Typography mb={4} variant="body2">
-          default Token
-        </Typography>
+        <Label>Default Token</Label>
         <Button
           variant="outlined"
           disabled={loadingStatus === 'failed' || !chain}
