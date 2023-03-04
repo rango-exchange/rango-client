@@ -29,15 +29,19 @@ const Image = styled('img', {
   borderRadius: '12px',
 });
 
+const Label = styled('label', {
+  display: 'inline-block',
+  fontSize: '$14',
+  marginBottom: '$4',
+});
+
 export function Select({ label, value, onChange, modalTitle, list, name }: PropTypes) {
   const [open, setOpen] = useState<boolean>(false);
   const search = list.find((item) => item.name === value);
 
   return (
     <div>
-      <Typography mb={4} variant="body2">
-        {label}
-      </Typography>
+      <Label>{label}</Label>
 
       <Button
         variant="outlined"

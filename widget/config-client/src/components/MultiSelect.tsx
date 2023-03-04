@@ -171,7 +171,8 @@ export function MultiSelect({
             multiSelect
             selectedList={value}
             onChange={(chain) => onChangeSelectList(chain)}
-            loadingStatus={loadingStatus}         />
+            loadingStatus={loadingStatus}
+          />
         );
       case 'Wallets':
         return (
@@ -225,6 +226,8 @@ export function MultiSelect({
       <Body>
         {value === 'all' ? (
           <Chip style={{ margin: 2 }} selected label={`All ${type}`} />
+        ) : !value.length ? (
+          <Chip style={{ margin: 2 }} selected label="None Selected" />
         ) : (
           value.map((v) => (
             <Chip
