@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { ChromePicker, ColorResult } from 'react-color';
 import { styled } from '../../theme';
 import { Button } from '../Button';
-import { Typography } from '../Typography';
 
 const Container = styled('div', {
   position: 'relative',
@@ -51,14 +50,18 @@ export interface PropTypes {
   label?: string;
 }
 
+const Label = styled('label', {
+  display: 'inline-block',
+  fontSize: '$14',
+  marginBottom: '$4',
+});
+
 export function ColorPicker({ color, onChangeColor, label, place }: PropTypes) {
   const [displayColorPicker, setDisplayColorPicker] = useState<boolean>(false);
 
   return (
     <Container>
-      <Typography mb={4} variant="body2">
-        {label}
-      </Typography>
+      <Label>{label}</Label>
       <Button
         variant="outlined"
         prefix={<Color style={{ backgroundColor: color }} />}
