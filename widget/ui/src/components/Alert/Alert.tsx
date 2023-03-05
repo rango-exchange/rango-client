@@ -43,6 +43,19 @@ const IconContainer = styled('div', {
   marginRight: '$24',
 });
 
+const StyledTypography = styled(Typography, {
+  variants: {
+    color: {
+      primary: {
+        color: '$foreground',
+      },
+      secondary: {
+        color: '#fff',
+      },
+    },
+  },
+});
+
 export interface PropTypes {
   type: 'primary' | 'secondary' | 'success' | 'warning' | 'error';
   description: string;
@@ -70,14 +83,14 @@ export function Alert(props: PropTypes) {
       <ContentContainer>
         {title && (
           <TitleContainer>
-            <Typography color={textColor} variant="h6">
+            <StyledTypography color={textColor} variant="h6">
               {title}
-            </Typography>
+            </StyledTypography>
           </TitleContainer>
         )}
-        <Typography color={textColor} variant="body2">
+        <StyledTypography color={textColor} variant="body2">
           {description}
-        </Typography>
+        </StyledTypography>
       </ContentContainer>
     </MainContainer>
   );

@@ -164,14 +164,6 @@ const TypographyContainer = styled('span', {
         marginBottom: '$12',
       },
     },
-    color: {
-      primary: {
-        color: '$foreground',
-      },
-      secondary: {
-        color: '#fff',
-      },
-    },
   },
 });
 
@@ -192,7 +184,6 @@ export interface PropTypes {
   mb?: 2 | 4 | 8 | 12;
   ml?: 2 | 4 | 8 | 12;
   mr?: 2 | 4 | 8 | 12;
-  color?: 'primary' | 'secondary';
 }
 
 export function Typography({
