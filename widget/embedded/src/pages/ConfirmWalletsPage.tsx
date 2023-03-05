@@ -7,6 +7,7 @@ import { useWallets } from '@rango-dev/wallets-core';
 import { navigationRoutes } from '../constants/navigationRoutes';
 import { getRequiredChains, getSelectableWallets, SelectedWallet } from '../utils/wallets';
 import { requiredWallets } from '../utils/swap';
+import { useMetaStore } from '../store/meta';
 
 export interface SelectableWallet extends SelectedWallet {
   image: string;
@@ -18,6 +19,7 @@ export function ConfirmWalletsPage() {
 
   const bestRoute = useBestRouteStore.use.bestRoute();
 
+  const { blockchains } = useMetaStore.use.meta();
   const accounts = useWalletsStore.use.accounts();
   const selectedWallets = useWalletsStore.use.selectedWallets();
   const initSelectedWallets = useWalletsStore.use.initSelectedWallets();
@@ -46,6 +48,7 @@ export function ConfirmWalletsPage() {
       onConfirm={() => navigate(navigationRoutes.confirmSwap)}
       onChange={(wallet) => setSelectedWallet(wallet)}
       confirmDisabled={confirmDisabled}
+      blockchains={blockchains}
     />
   );
 }

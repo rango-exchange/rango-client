@@ -1,13 +1,24 @@
-import { BestRouteResponse } from 'rango-sdk';
+import {
+  getCosmosExperimentalChainInfo,
+  Network,
+  WalletType,
+} from '@rangodev/wallets-shared';
+import {
+  BestRouteResponse,
+  BlockchainMeta,
+  isCosmosBlockchain,
+} from 'rango-sdk';
+import { useWallets } from '@rangodev/wallets-core';
 import React, { PropsWithChildren } from 'react';
 import { Alert } from '../../components';
 import { Button } from '../../components/Button';
 import { SecondaryPage } from '../../components/SecondaryPage/SecondaryPage';
 import { SelectableWalletList } from '../../components/SelectableWalletList';
 import { Typography } from '../../components/Typography';
-import { decimalNumber } from '../../helper';
+import { decimalNumber, getConnectedWalletTypes } from '../../helper';
 import { styled } from '../../theme';
 import { SelectableWallet } from './types';
+import { KEPLR_COMPATIBLE_WALLETS } from '../../helper/constants';
 
 const Footer = styled('div', {
   display: 'flex',
@@ -27,6 +38,7 @@ export interface PropTypes {
   requiredWallets: string[];
   selectableWallets: SelectableWallet[];
   onChange: (w: SelectableWallet) => void;
+  blockchains?: BlockchainMeta[];
 }
 export function ConfirmWallets({
   onBack,
@@ -37,12 +49,27 @@ export function ConfirmWallets({
   selectableWallets,
   onChange,
   confirmDisabled,
+  blockchains,
 }: PropsWithChildren<PropTypes>) {
+  const { connect } = useWallets();
   const firstStep = swap.result?.swaps[0];
   const lastStep = swap.result?.swaps[swap.result?.swaps.length - 1];
 
   const fromAmount = decimalNumber(firstStep?.fromAmount, 3);
   const toAmount = decimalNumber(lastStep?.toAmount, 3);
+
+  const cosmosExperimentalChainInfo = blockchains
+    ? getCosmosExperimentalChainInfo(
+        Object.entries(blockchains)
+          .map(([, blockchainMeta]) => blockchainMeta)
+          .filter(isCosmosBlockchain)
+      )
+    : {};
+
+  const keplrCompatibleConnectedWallets = KEPLR_COMPATIBLE_WALLETS.filter(
+    (compatibleWallet) =>
+      getConnectedWalletTypes(selectableWallets).has(compatibleWallet)
+  );
 
   return (
     <SecondaryPage
@@ -78,12 +105,34 @@ export function ConfirmWallets({
                   {index + 1}) Your {wallet} Wallet
                 </Typography>
                 {list.length === 0 && (
-                  <AlertContainer>
-                    <Alert
-                      type="error"
-                      description={`You should connect a ${wallet} supported wallet`}
-                    />
-                  </AlertContainer>
+                  <>
+                    <AlertContainer>
+                      <Alert
+                        type="error"
+                        description={`You should connect a ${wallet} supported wallet`}
+                      />
+                    </AlertContainer>
+                    {keplrCompatibleConnectedWallets.length > 0 &&
+                      !!cosmosExperimentalChainInfo &&
+                      cosmosExperimentalChainInfo[wallet] && (
+                        <Button
+                          variant="contained"
+                          type="primary"
+                          align="grow"
+                          onClick={() => {
+                            const network = wallet as Network;
+                            keplrCompatibleConnectedWallets.forEach(
+                              (compatibleWallet: WalletType) =>
+                                connect(compatibleWallet, network)
+                            );
+                          }}
+                        >
+                          {keplrCompatibleConnectedWallets.length === 1
+                            ? `Add ${wallet} chain to ${keplrCompatibleConnectedWallets[0]}`
+                            : `Add ${wallet} chain to Cosmos wallets`}
+                        </Button>
+                      )}
+                  </>
                 )}
                 {list.length != 0 && (
                   <SelectableWalletList list={list} onChange={onChange} />

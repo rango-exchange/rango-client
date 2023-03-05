@@ -91,9 +91,14 @@ export function SelectableWalletList({
     setActive(list.find((item) => item.selected)?.walletType || '');
   }, [list]);
 
+  const filterSelelectedWallets = list.filter(
+    (wallet, index, array) =>
+      array.findIndex((w) => w.address == wallet.address) === index
+  );
+
   return (
     <Row>
-      {list.map((w, index) => {
+      {filterSelelectedWallets.map((w, index) => {
         const checked = active === w.walletType;
         return (
           <Container
