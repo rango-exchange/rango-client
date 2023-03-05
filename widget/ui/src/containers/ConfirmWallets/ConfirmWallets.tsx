@@ -2,6 +2,7 @@ import {
   getCosmosExperimentalChainInfo,
   Network,
   WalletType,
+  KEPLR_COMPATIBLE_WALLETS,
 } from '@rango-dev/wallets-shared';
 import {
   BestRouteResponse,
@@ -17,7 +18,6 @@ import { Typography } from '../../components/Typography';
 import { decimalNumber, getConnectedWalletTypes } from '../../helper';
 import { styled } from '../../theme';
 import { SelectableWallet } from './types';
-import { KEPLR_COMPATIBLE_WALLETS } from '../../helper/constants';
 
 const Footer = styled('div', {
   display: 'flex',
