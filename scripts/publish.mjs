@@ -1,73 +1,92 @@
 #!/usr/bin/env node
 'use strict';
 
-import { execa } from 'execa';
-import { join } from 'node:path';
 import {
   buildPackages,
   changed,
+  deployProjectsToVercel,
+  detectChannel,
+  getLastTagHashId,
+  groupPackagesForDeploy,
   increaseVersionForNext,
-  printDirname,
+  logAsSection,
+  publishPackages,
   pushToRemote,
   tagPackages,
 } from './utils.mjs';
 
-const root = join(printDirname(), '..');
-const nx = join(root, 'node_modules', '.bin', 'nx');
-
+// TODO: Working directory should be empty.
 async function run() {
+  // Detect last relase and what packages has changed since then.
   const baseCommit = await getLastTagHashId();
   const changedPkgs = await changed(baseCommit);
-  console.log({ baseCommit, changedPkgs });
 
+  // Info logs
+  logAsSection('Run...', `at ${baseCommit}`);
+  console.log(
+    changedPkgs.map((pkg) => `- ${pkg.name} (current version: ${pkg.version})`).join('\n'),
+  );
+
+  // If any package has changed, we exit from the process.
   if (changedPkgs.length === 0) {
-    throw new Error(`There is no changed package since ${baseCommit}`);
+    console.log(`There is no changed package since ${baseCommit}`);
+    process.exit(0);
   }
 
-  // TODO: Working directory should be empty.
-
+  // Run a specific workflow based on channel
   const channel = detectChannel();
   if (channel === 'next') {
-    const updatedPackages = await increaseVersionForNext(changedPkgs);
-    console.log({ updatedPackages });
-    const taggedPackages = await tagPackages(updatedPackages);
-    console.log({ taggedPackages });
-    await pushToRemote('next');
-    await buildPackages(changedPkgs);
-    console.log('Build has been finished...');
-    await publishPackages(changedPkgs);
-    return;
+    await publishNext(changedPkgs);
   } else {
     throw new Error('Channel not detected');
   }
 }
 
-run();
+run().catch((e) => {
+  console.error(e);
+  process.exit(1);
+});
 
-/* -------------------------------- */
+/* -------------- Flows ------------------ */
 
-function publishNext() {}
+async function publishNext(changedPkgs) {
+  // Versioning
+  logAsSection(`Versioning, Start...`, `for ${changedPkgs.length} packages`);
+  const updatedPackages = await increaseVersionForNext(changedPkgs);
 
-function detectChannel() {
-  // TODO: support for production
-  return 'next';
-}
+  logAsSection(`Versioning, Done.`);
+  console.log(
+    updatedPackages.map((pkg) => `- ${pkg.name} (next version: ${pkg.version})`).join('\n'),
+  );
 
-async function getAffectedProjects(base = 'HEAD') {
-  const { stdout: result } = await execa(nx, ['print-affected', '--base', base]);
+  logAsSection(`Tagging, Start...`, `for ${updatedPackages.length} packages`);
+  const taggedPackages = await tagPackages(updatedPackages);
+  logAsSection(`Tagging, Done.`);
+  console.log({ taggedPackages });
 
-  if (!result) {
-    throw new Error('There is no affected changes since the last release.');
+  logAsSection(`Pushing tags to remote...`);
+  await pushToRemote('next');
+  logAsSection(`Pushed.`);
+
+  // Publish to NPM
+  const packages = groupPackagesForDeploy(updatedPackages);
+
+  logAsSection(`It's time for building artifacts...`);
+  console.log({ packages });
+
+  if (packages.npm.length) {
+    logAsSection('NPM Build', `Build npm packages...`);
+    await buildPackages(packages.npm);
+    logAsSection('NPM Build', `Successfully built.`);
+    logAsSection('NPM Publish', 'Publishing npm packages....');
+    await publishPackages(packages.npm);
+    logAsSection('NPM Publish', 'Published. Congrats 🎉');
   }
-  // const result = execa(`nx print-affected --base=${base}`).toString();
-  // structure: tasks[], projects[], projectGraph[]
-  const data = JSON.parse(result);
 
-  return data.projects;
-}
-
-// TODO: Check for when there is no tag.
-async function getLastTagHashId() {
-  const { stdout: hash } = await execa('git', ['rev-list', '--max-count', 1, '--tags']);
-  return hash;
+  // Publish to Vercel
+  if (packages.vercel.length) {
+    logAsSection(`Build clients & deploy to vercel...`);
+    await deployProjectsToVercel(packages.vercel);
+    logAsSection(`We are good. Done.`);
+  }
 }
