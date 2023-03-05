@@ -14,4 +14,5 @@ function AdapterProvider({ children, ...props }: ProviderProps) {
     </Provider>
   );
 }
+
 export default AdapterProvider;
