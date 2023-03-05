@@ -164,7 +164,11 @@ export function getSelectableWallets(
   }));
 
   return requiredChains
-    ? connectedWallets.filter((wallet) => requiredChains.includes(wallet.chain))
+    ? connectedWallets.filter(
+        (wallet, index, array) =>
+          requiredChains.includes(wallet.chain) &&
+          array.findIndex((w) => w.address === wallet.address) === index,
+      )
     : removeDuplicateWallets(connectedWallets, 'walletType');
 }
 

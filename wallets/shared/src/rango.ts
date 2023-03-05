@@ -164,6 +164,11 @@ export const XDEFI_WALLET_SUPPORTED_NATIVE_CHAINS = [
   Network.BINANCE,
 ];
 
+export const KEPLR_COMPATIBLE_WALLETS = [
+  WalletType.KEPLR,
+  WalletType.COSMOSTATION,
+];
+
 export type Asset = {
   blockchain: Network;
   symbol: string;
