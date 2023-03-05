@@ -19,7 +19,7 @@
     "dev:queue-manager": "lerna run dev --scope @rango-dev/queue-manager-*",
     "dev:ui": "lerna run storybook --scope @rango-dev/ui",
     "dev:embedded": "lerna run dev --scope @rango-dev/widget-embedded --scope @rango-dev/ui",
-    "dev:wallet-adapter": "lerna run dev --scope @rango-dev/wallet-adapter-*",
+    "dev:wallets-adapter": "lerna run dev --scope @rango-dev/wallets-adapter-*",
     "lint": "lerna run lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "publish": "lerna publish"

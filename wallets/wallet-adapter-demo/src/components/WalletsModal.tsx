@@ -1,4 +1,4 @@
-import { useAdapter } from '@rango-dev/wallet-adapter';
+import { useAdapter } from '@rango-dev/wallets-adapter';
 import React from 'react';
 
 function WalletsModal() {

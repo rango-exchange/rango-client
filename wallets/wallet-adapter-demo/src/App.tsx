@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { allProviders } from '@rango-dev/provider-all';
 import WalletsModal from './components/WalletsModal';
 import { RangoClient } from 'rango-sdk';
-import { AdapterProvider } from '@rango-dev/wallet-adapter';
+import { AdapterProvider } from '@rango-dev/wallets-adapter';
 
 const providers = allProviders();
 export function App() {
