@@ -169,7 +169,7 @@ const TypographyContainer = styled('span', {
         color: '$foreground',
       },
       secondary: {
-        color: '$background',
+        color: '#fff',
       },
     },
   },
