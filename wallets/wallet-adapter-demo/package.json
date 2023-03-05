@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/wallets-adapter-demo",
-  "version": "0.1.11-next.65",
+  "version": "0.1.11-next.66",
   "license": "MIT",
   "private": true,
   "source": "public/index.html",
