@@ -1,12 +1,12 @@
 {
   "name": "@rango-dev/config-client",
-  "version": "0.1.11-next.46",
+  "version": "0.1.12",
   "license": "MIT",
   "private": true,
   "source": "public/index.html",
   "browserslist": "> 0.5%, last 2 versions, not dead",
   "scripts": {
-    "dev": "parcel -p 3005 --no-cache",
+    "dev": "parcel -p 3005",
     "build": "parcel build"
   },
   "devDependencies": {
