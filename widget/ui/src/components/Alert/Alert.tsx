@@ -1,7 +1,7 @@
 import React from 'react';
 import { CheckCircleIcon, InfoCircleIcon, WarningIcon } from '../Icon';
 import { Typography } from '../Typography';
-import { styled } from '../../theme';
+import { darkTheme, styled } from '../../theme';
 
 const MainContainer = styled('div', {
   display: 'flex',
@@ -21,7 +21,7 @@ const MainContainer = styled('div', {
         backgroundColor: '$success300',
       },
       warning: {
-        backgroundColor: '$warning300',
+        backgroundColor: '$warning500',
       },
       error: {
         backgroundColor: '$error300',
@@ -44,16 +44,7 @@ const IconContainer = styled('div', {
 });
 
 const StyledTypography = styled(Typography, {
-  variants: {
-    color: {
-      primary: {
-        color: '$foreground',
-      },
-      secondary: {
-        color: '#fff',
-      },
-    },
-  },
+  color: darkTheme.colors.foreground.value,
 });
 
 export interface PropTypes {
@@ -69,28 +60,22 @@ export function Alert(props: PropTypes) {
     ['error', 'success', 'warning'] as PropTypes['type'][]
   ).includes(type);
 
-  const textColor = type === 'warning' ? 'primary' : 'secondary';
-
   return (
     <MainContainer type={type}>
       {showIcon && (
         <IconContainer>
           {type === 'success' && <CheckCircleIcon color="success" size={28} />}
-          {type === 'warning' && <WarningIcon size={28} />}
+          {type === 'warning' && <WarningIcon color="white" size={28} />}
           {type === 'error' && <InfoCircleIcon color="error" size={28} />}
         </IconContainer>
       )}
       <ContentContainer>
         {title && (
           <TitleContainer>
-            <StyledTypography color={textColor} variant="h6">
-              {title}
-            </StyledTypography>
+            <StyledTypography variant="h6">{title}</StyledTypography>
           </TitleContainer>
         )}
-        <StyledTypography color={textColor} variant="body2">
-          {description}
-        </StyledTypography>
+        <StyledTypography variant="body2">{description}</StyledTypography>
       </ContentContainer>
     </MainContainer>
   );
