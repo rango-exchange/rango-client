@@ -1,13 +1,24 @@
 import {
+  getCosmosExperimentalChainInfo,
   isEvmAddress,
+  KEPLR_COMPATIBLE_WALLETS,
   Network,
   WalletInfo,
   WalletState,
   WalletType,
+  isCosmosBlockchain,
 } from '@rango-dev/wallets-shared';
 
-import { WalletInfo as ModalWalletInfo, WalletState as WalletStatus } from '@rango-dev/ui';
-import { BestRouteResponse, BlockchainMeta, Token, WalletDetail } from 'rango-sdk';
+import {
+  WalletInfo as ModalWalletInfo,
+  WalletState as WalletStatus,
+} from '@rango-dev/ui';
+import {
+  BestRouteResponse,
+  BlockchainMeta,
+  Token,
+  WalletDetail,
+} from 'rango-sdk';
 import { readAccountAddress } from '@rango-dev/wallets-core';
 import { SelectableWallet } from '../pages/ConfirmWalletsPage';
 import { Account, Balance, TokenBalance } from '../store/wallets';
@@ -29,18 +40,22 @@ export function getStateWallet(state: WalletState): WalletStatus {
   }
 }
 
-  export const excludedWallets = [
-    WalletType.UNKNOWN,
-    WalletType.TERRA_STATION,
-    WalletType.LEAP,
-  ];
+export const excludedWallets = [
+  WalletType.UNKNOWN,
+  WalletType.TERRA_STATION,
+  WalletType.LEAP,
+];
 
 export function getlistWallet(
   getState: (type: WalletType) => WalletState,
   getWalletInfo: (type: WalletType) => WalletInfo,
-  list: WalletType[],
+  list: WalletType[]
 ): ModalWalletInfo[] {
-  const excludedWallets = [WalletType.UNKNOWN, WalletType.TERRA_STATION, WalletType.LEAP];
+  const excludedWallets = [
+    WalletType.UNKNOWN,
+    WalletType.TERRA_STATION,
+    WalletType.LEAP,
+  ];
 
   return list
     .filter((wallet) => !excludedWallets.includes(wallet))
@@ -57,11 +72,13 @@ export function getlistWallet(
     });
 }
 
-export function walletAndSupportedChainsNames(supportedChains: BlockchainMeta[]): Network[] | null {
+export function walletAndSupportedChainsNames(
+  supportedChains: BlockchainMeta[]
+): Network[] | null {
   if (!supportedChains) return null;
   let walletAndSupportedChainsNames: Network[] = [];
   walletAndSupportedChainsNames = supportedChains.map(
-    (blockchainMeta) => blockchainMeta.name as Network,
+    (blockchainMeta) => blockchainMeta.name as Network
   );
 
   return walletAndSupportedChainsNames;
@@ -71,7 +88,7 @@ export function prepareAccountsForWalletStore(
   wallet: WalletType,
   accounts: string[],
   evmBasedChains: string[],
-  supportedChainNames: Network[] | null,
+  supportedChainNames: Network[] | null
 ): Account[] {
   const result: Account[] = [];
 
@@ -93,7 +110,8 @@ export function prepareAccountsForWalletStore(
     const hasLimitation = supportedChains.length > 0;
     const isSupported = supportedChains.includes(network);
     const isUnknown = network === Network.Unknown;
-    const notSupportedNetworkByWallet = hasLimitation && !isSupported && !isUnknown;
+    const notSupportedNetworkByWallet =
+      hasLimitation && !isSupported && !isUnknown;
 
     // Here we check given `network` is not supported by wallet
     // And also the network is known.
@@ -103,7 +121,8 @@ export function prepareAccountsForWalletStore(
     // pattern and act on it.
     // Example: showing our evm compatible netwrok when the uknown network is evem.
     // Otherwise, we stop executing this function.
-    const isUknownAndEvmBased = network === Network.Unknown && isEvmAddress(address);
+    const isUknownAndEvmBased =
+      network === Network.Unknown && isEvmAddress(address);
     if (isUnknown && !isUknownAndEvmBased) return;
 
     const isEvmBasedChain = evmBasedChains.includes(network);
@@ -113,7 +132,7 @@ export function prepareAccountsForWalletStore(
       // all evm chains are not supported in wallets, so we are adding
       // only to those that are supported by wallet.
       const evmChainsSupportedByWallet = supportedChains.filter((chain) =>
-        evmBasedChains.includes(chain),
+        evmBasedChains.includes(chain)
       );
 
       evmChainsSupportedByWallet.forEach((network) => {
@@ -136,9 +155,11 @@ export function getRequiredChains(route: BestRouteResponse | null) {
     const currentStepFromBlockchain = swap.from.blockchain;
     const currentStepToBlockchain = swap.to.blockchain;
     let lastAddedWallet = wallets[wallets.length - 1];
-    if (currentStepFromBlockchain != lastAddedWallet) wallets.push(currentStepFromBlockchain);
+    if (currentStepFromBlockchain != lastAddedWallet)
+      wallets.push(currentStepFromBlockchain);
     lastAddedWallet = wallets[wallets.length - 1];
-    if (currentStepToBlockchain != lastAddedWallet) wallets.push(currentStepToBlockchain);
+    if (currentStepToBlockchain != lastAddedWallet)
+      wallets.push(currentStepToBlockchain);
   });
   return wallets;
 }
@@ -150,7 +171,7 @@ export function getSelectableWallets(
   accounts: Account[],
   selectedWallets: SelectedWallet[],
   getWalletInfo: (type: WalletType) => WalletInfo,
-  requiredChains?: string[],
+  requiredChains?: string[]
 ) {
   const connectedWallets: SelectableWallet[] = accounts.map((account) => ({
     address: account.address,
@@ -159,7 +180,9 @@ export function getSelectableWallets(
     image: getWalletInfo(account.walletType).img,
     name: getWalletInfo(account.walletType).name,
     selected: !!selectedWallets.find(
-      (wallet) => wallet.chain === account.chain && wallet.walletType === account.walletType,
+      (wallet) =>
+        wallet.chain === account.chain &&
+        wallet.walletType === account.walletType
     ),
   }));
 
@@ -167,12 +190,15 @@ export function getSelectableWallets(
     ? connectedWallets.filter(
         (wallet, index, array) =>
           requiredChains.includes(wallet.chain) &&
-          array.findIndex((w) => w.address === wallet.address) === index,
+          array.findIndex((w) => w.address === wallet.address) === index
       )
     : removeDuplicateWallets(connectedWallets, 'walletType');
 }
 
-const removeDuplicateWallets = (arr: SelectableWallet[], key: string): SelectableWallet[] => {
+const removeDuplicateWallets = (
+  arr: SelectableWallet[],
+  key: string
+): SelectableWallet[] => {
   return [...new Map(arr.map((item) => [item[key], item])).values()];
 };
 
@@ -180,11 +206,13 @@ export function getBalanceFromWallet(
   balances: Balance[],
   chain: string,
   symbol: string,
-  address: string | null,
+  address: string | null
 ): TokenBalance | null {
   if (balances.length === 0) return null;
 
-  const selectedChainBalances = balances.filter((balance) => balance.chain === chain);
+  const selectedChainBalances = balances.filter(
+    (balance) => balance.chain === chain
+  );
   if (selectedChainBalances.length === 0) return null;
 
   return (
@@ -194,11 +222,15 @@ export function getBalanceFromWallet(
           a.balances?.find(
             (bl) =>
               (address !== null && bl.address === address) ||
-              (address === null && bl.address === address && bl.symbol === symbol),
-          ) || null,
+              (address === null &&
+                bl.address === address &&
+                bl.symbol === symbol)
+          ) || null
       )
       .filter((b) => b !== null)
-      .sort((a, b) => parseFloat(b?.amount || '0') - parseFloat(a?.amount || '1'))
+      .sort(
+        (a, b) => parseFloat(b?.amount || '0') - parseFloat(a?.amount || '1')
+      )
       .find(() => true) || null
   );
 }
@@ -214,9 +246,14 @@ export function isAccountAndBalanceMatched(account: Account, balance: Balance) {
 export function makeBalanceFor(
   account: Account,
   retrivedBalance: WalletDetail,
-  tokens: Token[],
+  tokens: Token[]
 ): Balance {
-  const { address, blockChain: chain, explorerUrl, balances = [] } = retrivedBalance;
+  const {
+    address,
+    blockChain: chain,
+    explorerUrl,
+    balances = [],
+  } = retrivedBalance;
   return {
     address,
     chain,
@@ -237,7 +274,12 @@ export function makeBalanceFor(
           .toFixed(),
         logo: '',
         usdPrice:
-          getUsdPrice(chain, tokenBalance.asset.symbol, tokenBalance.asset.address, tokens) || null,
+          getUsdPrice(
+            chain,
+            tokenBalance.asset.symbol,
+            tokenBalance.asset.address,
+            tokens
+          ) || null,
       })) || [],
   };
 }
@@ -248,19 +290,28 @@ export function resetBalanceState(balance: Balance): Balance {
 
 export const calculateWalletUsdValue = (balance: Balance[]) => {
   const uniqueAccountAddresses = new Set<string | null>();
-  const uniqueBalane: Balance[] = balance?.reduce((acc: Balance[], current: Balance) => {
-    return acc.findIndex((i) => i.address === current.address && i.chain === current.chain) === -1
-      ? [...acc, current]
-      : acc;
-  }, []);
+  const uniqueBalane: Balance[] = balance?.reduce(
+    (acc: Balance[], current: Balance) => {
+      return acc.findIndex(
+        (i) => i.address === current.address && i.chain === current.chain
+      ) === -1
+        ? [...acc, current]
+        : acc;
+    },
+    []
+  );
 
   const modifiedWalletBlockchains = uniqueBalane?.map((chain) => {
-    const modifiedWalletBlockchain: Blockchain = { name: chain.chain, accounts: [] };
+    const modifiedWalletBlockchain: Blockchain = {
+      name: chain.chain,
+      accounts: [],
+    };
     if (!uniqueAccountAddresses.has(chain.address)) {
       uniqueAccountAddresses.add(chain.address);
     }
     uniqueAccountAddresses.forEach((accountAddress) => {
-      if (chain.address === accountAddress) modifiedWalletBlockchain.accounts.push(chain);
+      if (chain.address === accountAddress)
+        modifiedWalletBlockchain.accounts.push(chain);
     });
     return modifiedWalletBlockchain;
   });
@@ -268,8 +319,10 @@ export const calculateWalletUsdValue = (balance: Balance[]) => {
     modifiedWalletBlockchains
       ?.flatMap((b) => b.accounts)
       ?.flatMap((a) => a?.balances)
-      ?.map((b) => new BigNumber(b?.amount || ZERO).multipliedBy(b?.usdPrice || 0))
-      ?.reduce((a, b) => a.plus(b), ZERO) || ZERO,
+      ?.map((b) =>
+        new BigNumber(b?.amount || ZERO).multipliedBy(b?.usdPrice || 0)
+      )
+      ?.reduce((a, b) => a.plus(b), ZERO) || ZERO
   ).toString();
 
   return numberWithThousandSeperator(total);
@@ -284,38 +337,42 @@ function numberWithThousandSeperator(number: string | number): string {
 export const sortedTokens = (
   tokens: TokenWithBalance[],
   position: 'from' | 'to',
-  balance: Balance[],
+  balance: Balance[]
 ): TokenWithBalance[] => {
   if (!tokens) return [];
   const walletSymbols = new Set(
     (balance || [])
       .flatMap((a) => a.balances || [])
       .filter((b) => (new BigNumber(b?.rawAmount) || ZERO).gt(0))
-      .map((b) => `${b?.chain}.${b?.symbol}.${b?.address}`),
+      .map((b) => `${b?.chain}.${b?.symbol}.${b?.address}`)
   );
   let sortedList = [
-    ...tokens.filter((t) => !t.address && walletSymbols.size && position === 'to'),
+    ...tokens.filter(
+      (t) => !t.address && walletSymbols.size && position === 'to'
+    ),
     ...tokens
       .filter(
         (t) =>
           !(position === 'to' && !t.address) &&
-          walletSymbols.has(`${t.blockchain}.${t.symbol}.${t.address}`),
+          walletSymbols.has(`${t.blockchain}.${t.symbol}.${t.address}`)
       )
       .sort((tokenA, tokenB) => compareBalance(tokenA, tokenB, balance)),
     ...tokens.filter(
       (t) =>
         !walletSymbols.has(`${t.blockchain}.${t.symbol}.${t.address}`) &&
         !t.address &&
-        (!walletSymbols.size || position === 'from'),
+        (!walletSymbols.size || position === 'from')
     ),
     ...tokens.filter(
       (t) =>
         !walletSymbols.has(`${t.blockchain}.${t.symbol}.${t.address}`) &&
         t.address &&
-        !t.isSecondaryCoin,
+        !t.isSecondaryCoin
     ),
     ...tokens.filter(
-      (t) => !walletSymbols.has(`${t.blockchain}.${t.symbol}.${t.address}`) && t.isSecondaryCoin,
+      (t) =>
+        !walletSymbols.has(`${t.blockchain}.${t.symbol}.${t.address}`) &&
+        t.isSecondaryCoin
     ),
   ];
 
@@ -325,15 +382,25 @@ export const sortedTokens = (
 const compareBalance = (
   tokenA: TokenWithBalance,
   tokenB: TokenWithBalance,
-  wallet: Balance[],
+  wallet: Balance[]
 ): number => {
   if (!tokenA.usdPrice || !tokenB.usdPrice) return 0;
 
   const tokenAUsdValue = new BigNumber(
-    getBalanceFromWallet(wallet, tokenA.blockchain, tokenA.symbol, tokenA.address)?.amount || ZERO,
+    getBalanceFromWallet(
+      wallet,
+      tokenA.blockchain,
+      tokenA.symbol,
+      tokenA.address
+    )?.amount || ZERO
   ).multipliedBy(tokenA.usdPrice);
   const tokenBUsdValue = new BigNumber(
-    getBalanceFromWallet(wallet, tokenB.blockchain, tokenB.symbol, tokenB.address)?.amount || ZERO,
+    getBalanceFromWallet(
+      wallet,
+      tokenB.blockchain,
+      tokenB.symbol,
+      tokenB.address
+    )?.amount || ZERO
   ).multipliedBy(tokenB.usdPrice);
   if (tokenAUsdValue.gt(tokenBUsdValue)) return -1;
   return 1;
@@ -343,13 +410,36 @@ export const getUsdPrice = (
   blockchain: string,
   symbol: string,
   address: string | null,
-  allTokens: Token[],
+  allTokens: Token[]
 ): number | null => {
   const token = allTokens?.find(
     (t) =>
       t.blockchain === blockchain &&
       t.symbol?.toUpperCase() === symbol?.toUpperCase() &&
-      t.address === address,
+      t.address === address
   );
   return token?.usdPrice || null;
+};
+export const isExperimentalChain = (
+  blockchains: BlockchainMeta[],
+  wallet: string
+): boolean => {
+  const cosmosExperimentalChainInfo = getCosmosExperimentalChainInfo(
+    Object.entries(blockchains)
+      .map(([, blockchainMeta]) => blockchainMeta)
+      .filter(isCosmosBlockchain)
+  );
+  return cosmosExperimentalChainInfo && !!cosmosExperimentalChainInfo[wallet];
+};
+
+export const getKeplrCompatibleConnectedWallets = (
+  selectableWallets: SelectableWallet[]
+): WalletType[] => {
+  const connectedWalletTypes = new Set(
+    selectableWallets.map((a: any) => a.walletType.toString())
+  );
+
+  return KEPLR_COMPATIBLE_WALLETS.filter((compatibleWallet) =>
+    connectedWalletTypes.has(compatibleWallet)
+  );
 };
