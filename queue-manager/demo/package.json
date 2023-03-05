@@ -16,6 +16,7 @@
   "dependencies": {
     "@rango-dev/provider-all": "^0.1.11-next.73",
     "@rango-dev/queue-manager-core": "^0.1.10-next.73",
+    "@rango-dev/queue-manager-react": "^0.1.10-next.73",
     "@rango-dev/wallets-core": "^0.1.11-next.73",
     "@rango-dev/wallets-shared": "^0.1.11-next.73",
     "bignumber.js": "^9.1.1",

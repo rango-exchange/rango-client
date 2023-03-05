@@ -2,6 +2,7 @@
 
 dist/
 lerna-debug.log
+.vercel
 
 # dependencies
 node_modules
