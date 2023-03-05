@@ -2,7 +2,7 @@
   "name": "@rango-dev/wallets-adapter",
   "version": "0.1.11-next.65",
   "license": "MIT",
-  "module": "dist/wallet-adapter.esm.js",
+  "module": "dist/wallets-adapter.esm.js",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
   "files": [
@@ -36,11 +36,11 @@
   },
   "size-limit": [
     {
-      "path": "dist/provider-all.cjs.production.min.js",
+      "path": "dist/wallets-adapter.cjs.production.min.js",
       "limit": "10 KB"
     },
     {
-      "path": "dist/provider-all.esm.js",
+      "path": "dist/wallets-adapter.esm.js",
       "limit": "10 KB"
     }
   ],
