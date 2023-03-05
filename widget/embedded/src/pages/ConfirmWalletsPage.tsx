@@ -5,9 +5,10 @@ import { useBestRouteStore } from '../store/bestRoute';
 import { useWalletsStore } from '../store/wallets';
 import { useWallets } from '@rango-dev/wallets-core';
 import { navigationRoutes } from '../constants/navigationRoutes';
-import { getRequiredChains, getSelectableWallets, SelectedWallet } from '../utils/wallets';
+import { getKeplrCompatibleConnectedWallets, getRequiredChains, getSelectableWallets, isExperimentalChain, SelectedWallet } from '../utils/wallets';
 import { requiredWallets } from '../utils/swap';
 import { useMetaStore } from '../store/meta';
+import { Network, WalletType } from '@rango-dev/wallets-shared';
 
 export interface SelectableWallet extends SelectedWallet {
   image: string;
@@ -33,22 +34,32 @@ export function ConfirmWalletsPage() {
     initSelectedWallets();
   }, []);
 
+  const selectableWallets = getSelectableWallets(
+    accounts,
+    selectedWallets,
+    getWalletInfo,
+    getRequiredChains(bestRoute),
+  );
+
+  const handleConnectChain = (wallet: string) => {
+    const network = wallet as Network;
+    getKeplrCompatibleConnectedWallets(selectableWallets).forEach(
+      (compatibleWallet: WalletType) =>
+        connect?.(compatibleWallet, network)
+    );
+  }
+    
   return (
     <ConfirmWallets
       requiredWallets={getRequiredChains(bestRoute)}
-      selectableWallets={getSelectableWallets(
-        accounts,
-        selectedWallets,
-        getWalletInfo,
-        getRequiredChains(bestRoute),
-      )}
+      selectableWallets={selectableWallets}
       onBack={() => navigate(-1)}
       swap={bestRoute!}
       onConfirm={() => navigate(navigationRoutes.confirmSwap)}
       onChange={(wallet) => setSelectedWallet(wallet)}
       confirmDisabled={confirmDisabled}
-      blockchains={blockchains}
-      connect={connect}
+      handleConnectChain={(wallet) => handleConnectChain(wallet)}
+      isExperimentalChain={(wallet) => getKeplrCompatibleConnectedWallets(selectableWallets).length > 0 ? isExperimentalChain(blockchains , wallet) : false}
     />
   );
 }

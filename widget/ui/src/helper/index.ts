@@ -1,5 +1,4 @@
 import { BestRouteResponse } from 'rango-sdk';
-import { SelectableWallet } from '../containers/ConfirmWallets/types';
 
 export const secondsToString = (s: number): string => {
   const minutes = parseInt((s / 60).toString()).toString();
@@ -22,8 +21,3 @@ export const decimalNumber = (number = '0', toFixed: number) =>
 
 export const containsText = (text: string, searchText: string) =>
   text.toLowerCase().includes(searchText.toLowerCase());
-
-export const getConnectedWalletTypes = (
-  selectableWallets: SelectableWallet[]
-): Set<string> =>
-  new Set(selectableWallets.map((a: any) => a.walletType.toString()));
