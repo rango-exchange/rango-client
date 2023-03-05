@@ -13,6 +13,10 @@ Our publish script will do these steps:
 3. Determine the target deplyement by using `publish.config.mjs`
 4. Publish libs to `npm` and apps to `Vercel`
 
+Note:
+Libs will be published under `next` tag on npm, which means you need to use `yarn add @rango/test-package@next` to install the published version whenever you need.
+And also all the apps published by `prerelase` workflow will be published under the Vercel's `preview` enviroment. 
+
 ### Production relase
 
 TBA
