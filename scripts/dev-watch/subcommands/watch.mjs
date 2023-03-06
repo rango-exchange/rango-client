@@ -1,8 +1,8 @@
-const { exec } = require('node:child_process');
-const process = require('node:process');
-const { parseCommand, headStyle } = require('../utils');
+import { exec } from 'node:child_process';
+import process from 'node:process';
+import { parseCommand, headStyle } from '../utils.mjs';
 
-function watch(params) {
+export function watch(params) {
   const { project, nx, cwd } = params;
   const command = `${nx} watch --projects=${project} --includeDependentProjects -- echo "[build]\\$NX_PROJECT_NAME"`;
 
@@ -15,7 +15,7 @@ function watch(params) {
     }
     console.log(headStyle('watch'), stdout);
   });
-  watcher.stdout.on('data', (d) => {
+  watcher.stdout.on('data', d => {
     const [command, data] = parseCommand(d);
     if (command === 'build' && data != project) {
       const build_command = `${nx} run ${data}:build`;
@@ -27,7 +27,7 @@ function watch(params) {
         console.log(headStyle('watch', 'build'), result);
       });
 
-      build.stdout.on('data', (da) => {
+      build.stdout.on('data', da => {
         console.log(headStyle('watch', 'build'), da);
       });
     }
@@ -35,7 +35,3 @@ function watch(params) {
     console.log(headStyle('watch'), d);
   });
 }
-
-module.exports = {
-  watch,
-};
