@@ -199,7 +199,8 @@ const removeDuplicateWallets = (
   arr: SelectableWallet[],
   key: string
 ): SelectableWallet[] => {
-  return [...new Map(arr.map((item) => [item[key], item])).values()];
+  const map = new Map(arr.map((item) => [item[key], item]));
+  return Array.from(map.values());
 };
 
 export function getBalanceFromWallet(
