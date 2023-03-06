@@ -11,6 +11,7 @@ const ListContainer = styled('div', {
   gridTemplateColumns: ' repeat(2, minmax(0, 1fr))',
   height: '450px',
   alignContent: 'baseline',
+  margin: '0 0.5rem',
 });
 
 const AlertContainer = styled('div', {
@@ -19,7 +20,11 @@ const AlertContainer = styled('div', {
 export function WalletsPage() {
   const navigate = useNavigate();
   const { state, disconnect, getWalletInfo, connect } = useWallets();
-  const wallets = getlistWallet(state, getWalletInfo, Object.values(WalletType));
+  const wallets = getlistWallet(
+    state,
+    getWalletInfo,
+    Object.values(WalletType)
+  );
   const [walletErrorMessage, setWalletErrorMessage] = useState('');
 
   const onSelectWallet = async (type: WalletType) => {
