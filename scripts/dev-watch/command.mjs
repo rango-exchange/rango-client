@@ -1,13 +1,14 @@
 #!/usr/bin/env node
 
 'use strict';
-const { join } = require('node:path');
-const commandLineArgs = require('command-line-args');
-const { dev } = require('./subcommands/dev');
-const { watch } = require('./subcommands/watch');
-const { awake } = require('./utils');
+import { join } from 'node:path';
+import commandLineArgs from 'command-line-args';
+import { dev } from './subcommands/dev.mjs';
+import { watch } from './subcommands/watch.mjs';
+import { awake } from './utils.mjs';
+import { printDirname } from '../common/utils.mjs';
 
-const cwd = join(__dirname, '..', '..');
+const cwd = join(printDirname(), '..', '..');
 const nx = join(cwd, 'node_modules', '.bin', 'nx');
 
 async function run() {
