@@ -1,11 +1,11 @@
-const chalk = require('chalk');
+import chalk from 'chalk';
 
 /**
     Extract command and data from a specific format (`[command]data`)
 
     @param {string} str - The input string that needs to be parsed for commands
 */
-function parseCommand(str) {
+export function parseCommand(str) {
   // trim whitespace from both ends of the string and convert to lower case
   const input = str.trim().toLowerCase();
   // regex to match parts in the middle between square brackets
@@ -23,7 +23,7 @@ function parseCommand(str) {
   return [command, data];
 }
 
-function awake() {
+export function awake() {
   process.stdin.resume();
   process.on('SIGINT', () => {
     console.log('Received SIGINT. Press Control-D to exit.');
@@ -31,13 +31,7 @@ function awake() {
   });
 }
 
-function headStyle(section, sub = '', color = 'bgBlue') {
+export function headStyle(section, sub = '', color = 'bgBlue') {
   sub = sub && `/${sub}`;
   return chalk[color](`[${chalk.bold(section)}${sub}]\n`);
 }
-
-module.exports = {
-  parseCommand,
-  awake,
-  headStyle,
-};
