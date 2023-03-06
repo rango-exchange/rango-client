@@ -7,7 +7,7 @@ const { dev } = require('./subcommands/dev');
 const { watch } = require('./subcommands/watch');
 const { awake } = require('./utils');
 
-const cwd = join(__dirname, '..');
+const cwd = join(__dirname, '..', '..');
 const nx = join(cwd, 'node_modules', '.bin', 'nx');
 
 async function run() {
