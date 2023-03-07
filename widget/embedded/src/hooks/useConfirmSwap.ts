@@ -1,10 +1,8 @@
-import { PendingSwap } from '@rango-dev/ui/dist/containers/History/types';
 import {
   BestRouteType,
   SimulationValidationStatus,
-  SwapSavedSettings,
 } from '@rango-dev/ui/dist/types/swaps';
-import { WalletType } from '@rango-dev/wallets-shared';
+// import { WalletType } from '@rango-dev/wallets-shared';
 import BigNumber from 'bignumber.js';
 import { BestRouteRequest, BestRouteResponse } from 'rango-sdk';
 import { useState } from 'react';
@@ -13,12 +11,15 @@ import { useBestRouteStore } from '../store/bestRoute';
 import { useSettingsStore } from '../store/settings';
 import { useWalletsStore } from '../store/wallets';
 import { compareRoutes, getRequiredBalanceOfWallet } from '../utils/routing';
-import { calculatePendingSwap } from '../utils/swap';
 import { SelectedWallet } from '../utils/wallets';
 
 type CheckFeeAndBalanceResult =
   | {
-      hasEnoughBalanceOrSlippage: { balance: boolean; slippage: boolean; routeChanged: boolean };
+      hasEnoughBalanceOrSlippage: {
+        balance: boolean;
+        slippage: boolean;
+        routeChanged: boolean;
+      };
       bestRoute: BestRouteType;
     }
   | { bestRoute: null }
@@ -34,12 +35,15 @@ export function useConfirmSwap() {
   const selectedWallets = useWalletsStore.use.selectedWallets();
 
   const slippage = useSettingsStore.use.slippage();
-  const disabledLiquiditySources = useSettingsStore.use.disabledLiquiditySources();
+  const disabledLiquiditySources =
+    useSettingsStore.use.disabledLiquiditySources();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [warning, setWarning] = useState('');
   const [data, setData] = useState<BestRouteResponse | null>(null);
-  const [feeStatus, setFeeStatus] = useState<SimulationValidationStatus[] | null>(null);
+  const [feeStatus, setFeeStatus] = useState<
+    SimulationValidationStatus[] | null
+  >(null);
   const [bestRouteChanged, setBestRouteChanged] = useState(false);
   const [enoughBalance, setEnoughBalance] = useState<boolean | null>(null);
 
@@ -47,22 +51,27 @@ export function useConfirmSwap() {
     route: BestRouteType,
     selectedWallets: SelectedWallet[],
     userSlippage: string,
-    routeChanged: boolean,
+    routeChanged: boolean
   ): { balance: boolean; slippage: boolean; routeChanged: boolean } => {
     const fee = route.validationStatus;
 
-    if (fee === null || fee.length === 0) return { balance: true, slippage: true, routeChanged };
+    if (fee === null || fee.length === 0)
+      return { balance: true, slippage: true, routeChanged };
 
     for (const wallet of selectedWallets) {
       const requiredAssets = getRequiredBalanceOfWallet(wallet, fee);
       if (!requiredAssets) continue;
 
-      const hasEnoughBalance = requiredAssets?.map((it) => it.ok).reduce((a, b) => a && b);
-      if (!hasEnoughBalance) return { balance: false, slippage: true, routeChanged };
+      const hasEnoughBalance = requiredAssets
+        ?.map((it) => it.ok)
+        .reduce((a, b) => a && b);
+      if (!hasEnoughBalance)
+        return { balance: false, slippage: true, routeChanged };
     }
 
     const slippages = route.result?.swaps?.map((s) => s.recommendedSlippage);
-    const slippageError = (slippages?.filter((s) => !!s?.error)?.length || 0) > 0;
+    const slippageError =
+      (slippages?.filter((s) => !!s?.error)?.length || 0) > 0;
     const minSlippage =
       slippages
         ?.map((s) => parseFloat(s?.slippage.toString() || '0') || 0)
@@ -81,24 +90,34 @@ export function useConfirmSwap() {
   };
 
   const checkFeeAndBalance = async (
-    selectedWallets: SelectedWallet[],
+    selectedWallets: SelectedWallet[]
   ): Promise<CheckFeeAndBalanceResult> => {
     setLoading(true);
     setFeeStatus(null);
 
     const selectedWalletsMap = selectedWallets.reduce(
-      (selectedWalletsMap: BestRouteRequest['selectedWallets'], selectedWallet) => (
-        (selectedWalletsMap[selectedWallet.chain] = selectedWallet.address), selectedWalletsMap
+      (
+        selectedWalletsMap: BestRouteRequest['selectedWallets'],
+        selectedWallet
+      ) => (
+        (selectedWalletsMap[selectedWallet.chain] = selectedWallet.address),
+        selectedWalletsMap
       ),
-      {},
+      {}
     );
 
     const connectedWallets: BestRouteRequest['connectedWallets'] = [];
 
     accounts.forEach((account) => {
-      const chainAndAccounts = connectedWallets.find((wallet) => wallet.blockchain);
+      const chainAndAccounts = connectedWallets.find(
+        (wallet) => wallet.blockchain
+      );
       if (!!chainAndAccounts) chainAndAccounts.addresses.push(account.address);
-      else connectedWallets.push({ blockchain: account.chain, addresses: [account.address] });
+      else
+        connectedWallets.push({
+          blockchain: account.chain,
+          addresses: [account.address],
+        });
     });
 
     const r = await httpService
@@ -127,18 +146,23 @@ export function useConfirmSwap() {
       });
     setLoading(false);
     if (!r || !r.result || !bestRoute) return { bestRoute: null };
-    if (!new BigNumber(r.requestAmount).isEqualTo(new BigNumber(inputAmount || '-1'))) return null;
+    if (
+      !new BigNumber(r.requestAmount).isEqualTo(
+        new BigNumber(inputAmount || '-1')
+      )
+    )
+      return null;
     setFeeStatus(r.validationStatus);
     const routeChangeStatus = compareRoutes(
       bestRoute,
       r,
       inputAmount!.toString(),
       fromToken!.usdPrice,
-      toToken!.usdPrice,
+      toToken!.usdPrice
     );
     setBestRoute(r);
     const isChanged = routeChangeStatus.isChanged;
-    const changeWarningMessage = routeChangeStatus.warningMessage;
+    // const changeWarningMessage = routeChangeStatus.warningMessage;
     setBestRouteChanged(isChanged);
     setWarning('Best route changed');
     setData(r);
@@ -147,7 +171,7 @@ export function useConfirmSwap() {
         r,
         selectedWallets,
         slippage.toString(),
-        isChanged,
+        isChanged
       ),
       bestRoute: r,
     };
@@ -156,36 +180,36 @@ export function useConfirmSwap() {
   const swap = () => {
     if (!bestRoute) return;
     if (inputAmount!.toString() === '') return;
-    const wallets = selectedWallets.reduce(
-      (
-        selectedWalletsMap: { [p: string]: { address: string; walletType: WalletType } },
-        selectedWallet,
-      ) => (
-        (selectedWalletsMap[selectedWallet.chain] = {
-          address: selectedWallet.address,
-          walletType: selectedWallet.walletType,
-        }),
-        selectedWalletsMap
-      ),
-      {},
-    );
+    // const wallets = selectedWallets.reduce(
+    //   (
+    //     selectedWalletsMap: { [p: string]: { address: string; walletType: WalletType } },
+    //     selectedWallet,
+    //   ) => (
+    //     (selectedWalletsMap[selectedWallet.chain] = {
+    //       address: selectedWallet.address,
+    //       walletType: selectedWallet.walletType,
+    //     }),
+    //     selectedWalletsMap
+    //   ),
+    //   {},
+    // );
 
     const proceedAnyway = enoughBalance !== null;
 
-    const settings: SwapSavedSettings = {
-      slippage: slippage.toString(),
-      disabledSwappersGroups: ['Osmosis'],
-      disabledSwappersIds: [],
-    };
-    if (proceedAnyway) {
-      const newSwap: PendingSwap = calculatePendingSwap(
-        inputAmount!.toString(),
-        bestRoute,
-        wallets,
-        settings,
-        false,
-      );
-    }
+    // const settings: SwapSavedSettings = {
+    //   slippage: slippage.toString(),
+    //   disabledSwappersGroups: ['Osmosis'],
+    //   disabledSwappersIds: [],
+    // };
+    // if (proceedAnyway) {
+    //   const newSwap: PendingSwap = calculatePendingSwap(
+    //     inputAmount!.toString(),
+    //     bestRoute,
+    //     wallets,
+    //     settings,
+    //     false,
+    //   );
+    // }
 
     !proceedAnyway &&
       checkFeeAndBalance(selectedWallets)
@@ -199,13 +223,15 @@ export function useConfirmSwap() {
             setError('confirm swap error');
             return;
           } else {
-            const { hasEnoughBalanceOrSlippage, bestRoute: newBestRoute } = data;
+            // @ts-ignore
+            const { hasEnoughBalanceOrSlippage } = data;
             if (!hasEnoughBalanceOrSlippage) {
               return;
             }
 
             setEnoughBalance(
-              hasEnoughBalanceOrSlippage.balance && hasEnoughBalanceOrSlippage.slippage,
+              hasEnoughBalanceOrSlippage.balance &&
+                hasEnoughBalanceOrSlippage.slippage
             );
 
             if (
@@ -213,13 +239,13 @@ export function useConfirmSwap() {
               hasEnoughBalanceOrSlippage.slippage &&
               !hasEnoughBalanceOrSlippage.routeChanged
             ) {
-              const newSwap: PendingSwap = calculatePendingSwap(
-                inputAmount!.toString(),
-                newBestRoute,
-                wallets,
-                settings,
-                true,
-              );
+              // const newSwap: PendingSwap = calculatePendingSwap(
+              //   inputAmount!.toString(),
+              //   newBestRoute,
+              //   wallets,
+              //   settings,
+              //   true,
+              // );
             } else if (!hasEnoughBalanceOrSlippage.balance) {
               setError('not enough balance');
             }
@@ -229,6 +255,14 @@ export function useConfirmSwap() {
           console.log('unexpected error', error);
         });
   };
-
-  return { loading, error, data, warning, feeStatus, bestRouteChanged, enoughBalance, swap };
+  return {
+    loading,
+    error,
+    data,
+    warning,
+    feeStatus,
+    bestRouteChanged,
+    enoughBalance,
+    swap,
+  } as any;
 }
