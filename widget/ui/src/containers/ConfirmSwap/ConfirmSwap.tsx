@@ -1,5 +1,5 @@
 import { BestRouteResponse } from 'rango-sdk';
-import React, { Fragment, PropsWithChildren } from 'react';
+import React, { Fragment, PropsWithChildren, ReactNode } from 'react';
 import { Alert } from '../../components/Alert';
 import { Button } from '../../components/Button';
 import { RetryIcon, GasIcon } from '../../components/Icon';
@@ -75,8 +75,8 @@ export interface PropTypes {
   onBack: () => void;
   onConfirm?: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
   loading?: boolean;
-  error?: string;
-  warning?: string;
+  error?: ReactNode;
+  warning?: ReactNode;
 }
 export function ConfirmSwap({
   bestRoute,
@@ -107,8 +107,8 @@ export function ConfirmSwap({
       Content={bestRoute?.result?.swaps.map((swap, index) => (
         <Fragment key={index}>
           <Alerts>
-            {error && <Alert description={error} type="error" />}
-            {warning && <Alert description={warning} type="warning" />}
+            {error && <Alert type="error">{error}</Alert>}
+            {warning && <Alert type="warning">{warning}</Alert>}
           </Alerts>
           {index === 0 && (
             <RelativeContainer>

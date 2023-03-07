@@ -166,25 +166,27 @@ export function Home() {
       )}
       {(errorMessage || waningMessage || hasLimitError(bestRoute)) && (
         <Alerts>
-          {errorMessage && <Alert description={errorMessage} type="error" />}
-          {hasLimitError(bestRoute) && (
-            <Alert
-              type="error"
-              title={`${swap?.swapperId} Limit`}
-              description={
-                <>
-                  <Typography variant="body2">{fromAmountRangeError}</Typography>
-                  <br />
-                  <Typography variant="body2">
-                    Yours: {numberToString(swap?.fromAmount || null)} {swap?.from.symbol}
-                  </Typography>
-                  <br />
-                  <Typography variant="body2">{recommendation}</Typography>
-                </>
-              }
-            />
+          {errorMessage && (
+            <Alert type="error">{<Typography variant="body2">{errorMessage}</Typography>}</Alert>
           )}
-          {waningMessage && <Alert description={waningMessage} type="warning" />}
+          {hasLimitError(bestRoute) && (
+            <Alert type="error" title={`${swap?.swapperId} Limit`}>
+              <>
+                <Typography variant="body2">{fromAmountRangeError}</Typography>
+                <br />
+                <Typography variant="body2">
+                  Yours: {numberToString(swap?.fromAmount || null)} {swap?.from.symbol}
+                </Typography>
+                <br />
+                <Typography variant="body2">{recommendation}</Typography>
+              </>
+            </Alert>
+          )}
+          {waningMessage && (
+            <Alert type="warning">
+              <Typography variant="body2">{waningMessage}</Typography>
+            </Alert>
+          )}
         </Alerts>
       )}
       <Footer>
