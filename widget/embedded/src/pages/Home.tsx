@@ -19,8 +19,9 @@ import {
   outputRatioHasWarning,
   canComputePriceImpact,
   LimitErrorMessage,
+  getTotalFeeInUsd,
 } from '../utils/swap';
-import { numberToString } from '../utils/numbers';
+import { numberToString, secondsToString, totalArrivalTime } from '../utils/numbers';
 
 const Container = styled('div', {
   display: 'flex',
@@ -67,7 +68,7 @@ export function Home() {
   const outputAmount = useBestRouteStore.use.outputAmount();
   const outputUsdValue = useBestRouteStore.use.outputUsdValue();
   const bestRoute = useBestRouteStore.use.bestRoute();
-  const swappers = useMetaStore.use.meta().swappers;
+  const tokens = useMetaStore.use.meta().tokens;
 
   const loadingMetaStatus = useMetaStore.use.loadingStatus();
   const accounts = useWalletsStore.use.accounts();
@@ -124,6 +125,8 @@ export function Home() {
     (noConnectedWallet && noRoutesFound) ||
     hasLimitError(bestRoute);
 
+  const totalFeeInUsd = getTotalFeeInUsd(bestRoute, tokens);
+
   useEffect(() => {
     setBestRoute(data);
   }, [data]);
@@ -153,7 +156,13 @@ export function Home() {
       />
       {showBestRoute && (
         <BestRouteContainer>
-          <BestRoute error={bestRouteError} loading={fetchingBestRoute} data={data} />
+          <BestRoute
+            error={bestRouteError}
+            loading={fetchingBestRoute}
+            data={data}
+            totalFee={numberToString(totalFeeInUsd)}
+            totalTime={secondsToString(totalArrivalTime(bestRoute))}
+          />
         </BestRouteContainer>
       )}
       {(errorMessage || waningMessage || hasLimitError(bestRoute)) && (

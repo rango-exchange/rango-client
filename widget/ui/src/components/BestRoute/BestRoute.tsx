@@ -2,7 +2,6 @@ import React, { Fragment, PropsWithChildren } from 'react';
 import { GasIcon, TimeIcon } from '../../components/Icon';
 import { StepDetail } from '../../components/StepDetail';
 import { Typography } from '../../components/Typography';
-import { rawFees, secondsToString, totalArrivalTime } from '../../helper';
 import { styled } from '../../theme';
 import { Skeleton } from '../Skeleton';
 import { Spinner } from '../Spinner';
@@ -105,6 +104,8 @@ const SwapperContainer = styled('div', {
 
 export interface PropTypes {
   data: BestRouteResponse | null;
+  totalFee: string;
+  totalTime: string;
   loading?: boolean;
   error?: string;
 }
@@ -112,15 +113,9 @@ export function BestRoute({
   data,
   loading,
   error,
+  totalFee,
+  totalTime,
 }: PropsWithChildren<PropTypes>) {
-  let fee,
-    time: string = '';
-
-  if (!!data) {
-    fee = rawFees(data);
-    time = secondsToString(totalArrivalTime(data));
-  }
-
   return (
     <Container>
       {loading ? (
@@ -132,13 +127,13 @@ export function BestRoute({
           <GasIcon size={20} />
           <Typography mt={4} align="center" variant="caption">
             {error && '-'}
-            {!!data && `$${fee}`}
+            {!!data && `$${totalFee}`}
           </Typography>
           <HR />
           <TimeIcon size={20} />
           <Typography mt={4} align="center" variant="caption">
             {error && '-'}
-            {!!data && `~${time}m`}
+            {!!data && `~${totalTime}m`}
           </Typography>
         </GasContainer>
       )}
