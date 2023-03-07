@@ -23,7 +23,7 @@
     "dev:wallets-adapter": "node ./scripts/dev-watch/command.mjs --project @rango-dev/wallets-adapter-demo",
     "lint": "nx run-many --target=lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "publish": "node ./scripts/publish.mjs"
+    "publish": "node ./scripts/publish/command.mjs"
   },
   "dependencies": {
     "@size-limit/preset-small-lib": "^8.1.0",
