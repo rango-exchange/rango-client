@@ -116,7 +116,6 @@ export function Home() {
     priceImpactCanNotBeComputed,
     needsToWarnEthOnPath,
   );
-  console.log('swap', swap);
 
   const buttonDisabled =
     loadingMetaStatus != 'success' ||
@@ -172,10 +171,17 @@ export function Home() {
             <Alert
               type="error"
               title={`${swap?.swapperId} Limit`}
-              description={`${fromAmountRangeError}\n
-              Yours: ${numberToString(swap?.fromAmount || null)} ${swap?.from.symbol}\n
-              ${recommendation}
-              `}
+              description={
+                <>
+                  <Typography variant="body2">{fromAmountRangeError}</Typography>
+                  <br />
+                  <Typography variant="body2">
+                    Yours: {numberToString(swap?.fromAmount || null)} {swap?.from.symbol}
+                  </Typography>
+                  <br />
+                  <Typography variant="body2">{recommendation}</Typography>
+                </>
+              }
             />
           )}
           {waningMessage && <Alert description={waningMessage} type="warning" />}

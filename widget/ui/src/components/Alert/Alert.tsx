@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import { CheckCircleIcon, InfoCircleIcon, WarningIcon } from '../Icon';
 import { Typography } from '../Typography';
 import { darkTheme, styled } from '../../theme';
@@ -49,7 +49,7 @@ const StyledTypography = styled(Typography, {
 
 export interface PropTypes {
   type: 'primary' | 'secondary' | 'success' | 'warning' | 'error';
-  description: string;
+  description: ReactNode;
   title?: string;
 }
 

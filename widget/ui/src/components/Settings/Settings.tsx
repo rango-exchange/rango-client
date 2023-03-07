@@ -141,7 +141,7 @@ export function Settings(props: PropTypes) {
       </ThemesContainer>
       <LiquiditySourceContainer onClick={onLiquiditySourcesClick}>
         <Typography variant="body1">Liquidity Sources</Typography>
-        <LiquiditySourceNumber onClick={onLiquiditySourcesClick}>
+        <LiquiditySourceNumber>
           <Typography variant="body2">{`( ${selectedLiquiditySources.length} / ${liquiditySources.length} )`}</Typography>
           <StyledAngleRight />
         </LiquiditySourceNumber>
