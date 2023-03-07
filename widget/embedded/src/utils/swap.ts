@@ -1,10 +1,20 @@
 import { PendingSwap } from '@rango-dev/ui/dist/containers/History/types';
-import { WalletTypeAndAddress, SwapSavedSettings } from '@rango-dev/ui/dist/types/swaps';
+import { WalletTypeAndAddress, SwapSavedSettings, SimulationValidationStatus } from '@rango-dev/ui/dist/types/swaps';
 import BigNumber from 'bignumber.js';
-import { BestRouteResponse, SwapperMeta, SwapResult, Token } from 'rango-sdk';
+import {
+  BestRouteRequest,
+  BestRouteResponse,
+  RecommendedSlippage,
+  SwapResult,
+  Token,
+} from 'rango-sdk';
 import { Account } from '../store/wallets';
 import { ZERO } from '../constants/numbers';
 import { numberToString } from './numbers';
+import { WalletType } from '@rangodev/wallets-shared';
+import { getRequiredBalanceOfWallet } from './routing';
+import { SelectedWallet } from './wallets';
+import { Typography } from '@rangodev/ui';
 
 export function getOutputRatio(inputUsdValue: BigNumber, outputUsdValue: BigNumber) {
   if (inputUsdValue.lte(ZERO) || outputUsdValue.lte(ZERO)) return 0;
@@ -112,7 +122,7 @@ export function calculatePendingSwap(
   inputAmount: string,
   bestRoute: BestRouteResponse,
   wallets: { [p: string]: WalletTypeAndAddress },
-  settings: SwapSavedSettings,
+  settings: Omit<SwapSavedSettings, 'disabledSwappersIds'>,
   validateBalanceOrFee: boolean,
   tokens: Token[],
 ): PendingSwap {
@@ -134,6 +144,7 @@ export function calculatePendingSwap(
     networkStatusExtraMessage: null,
     networkStatusExtraMessageDetail: null,
     lastNotificationTime: null,
+    //@ts-ignore
     settings: settings,
     simulationResult: simulationResult,
     validateBalanceOrFee,
@@ -241,3 +252,152 @@ export function getTotalFeeInUsd(
     ) || null
   );
 }
+
+export function hasSlippageError(slippages: (RecommendedSlippage | null)[] | undefined) {
+  return (slippages?.filter((s) => !!s?.error)?.length || 0) > 0;
+}
+
+export function getMinRequiredSlippage(slippages: (RecommendedSlippage | null)[] | undefined) {
+  return (
+    slippages
+      ?.map((s) => s?.slippage || 0)
+      ?.filter((s) => s > 0)
+      ?.sort((a, b) => b - a)
+      ?.find(() => true) || null
+  );
+}
+
+export function hasProperSlippage(userSlippage: string, minRequiredSlippage: number | null) {
+  return minRequiredSlippage !== null && parseFloat(userSlippage) > minRequiredSlippage;
+}
+
+export function hasEnoughBalance(route: BestRouteResponse, selectedWallets: SelectedWallet[]) {
+  const fee = route.validationStatus;
+
+  if (fee === null || fee.length === 0) return true;
+
+  for (const wallet of selectedWallets) {
+    const requiredAssets = getRequiredBalanceOfWallet(wallet, fee);
+    if (!requiredAssets) continue;
+
+    const enoughBalanceInWallet = requiredAssets
+      .map((asset) => asset.ok)
+      .reduce((previous, current) => previous && current);
+    if (!enoughBalanceInWallet) return false;
+  }
+
+  return true;
+}
+
+export function hasEnoughBalanceAndProperSlippage(
+  route: BestRouteResponse,
+  selectedWallets: SelectedWallet[],
+  userSlippage: string,
+  minRequiredSlippage: number | null,
+): boolean {
+  return (
+    hasEnoughBalance(route, selectedWallets) && hasProperSlippage(userSlippage, minRequiredSlippage)
+  );
+}
+
+export function createBestRouteRequestBody(
+  fromToken: Token,
+  toToken: Token,
+  inputAmount: string,
+  wallets: Account[],
+  selectedWallets: SelectedWallet[],
+  disabledLiquiditySources: string[],
+): BestRouteRequest {
+  const selectedWalletsMap = selectedWallets.reduce(
+    (selectedWalletsMap: BestRouteRequest['selectedWallets'], selectedWallet) => (
+      (selectedWalletsMap[selectedWallet.chain] = selectedWallet.address), selectedWalletsMap
+    ),
+    {},
+  );
+
+  const connectedWallets: BestRouteRequest['connectedWallets'] = [];
+
+  wallets.forEach((wallet) => {
+    const chainAndAccounts = connectedWallets.find((connectedWallet) => connectedWallet.blockchain);
+    if (!!chainAndAccounts) chainAndAccounts.addresses.push(wallet.address);
+    else connectedWallets.push({ blockchain: wallet.chain, addresses: [wallet.address] });
+  });
+
+  const requestBody: BestRouteRequest = {
+    amount: inputAmount.toString(),
+    checkPrerequisites: true,
+    from: {
+      address: fromToken.address,
+      blockchain: fromToken.blockchain,
+      symbol: fromToken.symbol,
+    },
+    to: {
+      address: toToken.address,
+      blockchain: toToken.blockchain,
+      symbol: toToken.symbol,
+    },
+    connectedWallets,
+    selectedWallets: selectedWalletsMap,
+    swapperGroups: disabledLiquiditySources,
+    swappersGroupsExclude: true,
+  };
+
+  return requestBody;
+}
+
+export function getWalletsForNewSwap(selectedWallets: SelectedWallet[]) {
+  const wallets = selectedWallets.reduce(
+    (
+      selectedWalletsMap: { [p: string]: { address: string; walletType: WalletType } },
+      selectedWallet,
+    ) => (
+      (selectedWalletsMap[selectedWallet.chain] = {
+        address: selectedWallet.address,
+        walletType: selectedWallet.walletType,
+      }),
+      selectedWalletsMap
+    ),
+    {},
+  );
+
+  return wallets;
+}
+
+const getHelperTextAndComp = (w: SelectedWallet, fee: SimulationValidationStatus[] | null) => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  let HelperTextComp = Typography as any;
+  let helperText = ;
+  const requiredAssets = getRequiredBalanceOfWallet(w, fee);
+  const result = [];
+  if (fee) helperText = '';
+  if (requiredAssets) {
+    for (const asset of requiredAssets) {
+      const symbol = asset.asset.symbol;
+      const currentAmount = numberToString(
+        new BigNumber(asset.currentAmount.amount).shiftedBy(-asset.currentAmount.decimals),
+        8,
+      );
+      const requiredAmount = numberToString(
+        new BigNumber(asset.requiredAmount.amount).shiftedBy(-asset.requiredAmount.decimals),
+        8,
+      );
+
+      let reason = '';
+      if (asset.reason === 'FEE') reason = ' for network fee';
+      if (asset.reason === 'INPUT_ASSET') reason = ' for swap';
+      if (asset.reason === 'FEE_AND_INPUT_ASSET') reason = ' for input and network fee';
+
+      if (asset.ok) {
+        helperText = `Needs ≈ ${requiredAmount} ${symbol}${reason}, and you have ${currentAmount} ${symbol}.`;
+        HelperTextComp = SuccessTypo;
+      } else {
+        helperText = `Needs ≈ ${requiredAmount} ${symbol}${reason}, but you have ${currentAmount} ${symbol}.`;
+        HelperTextComp = ErrorTypo;
+      }
+      result.push({ text: helperText, Component: HelperTextComp });
+    }
+  } else {
+    result.push({ text: helperText, Component: HelperTextComp });
+  }
+  return result;
+};
