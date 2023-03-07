@@ -12,8 +12,8 @@ export function HighSlippageWarning(props: PropTypes) {
   return (
     <Alert type="warning">
       <Typography variant="body2">
-        Your slippage is high <b>({selectedSlippage})</b>. You could update it
-        in the swap settings if you want.
+        slippage is high=&gt; Caution, your slippage is high (=
+        {selectedSlippage}). Your trade may be front run.
         <ChangeSlippageButton />
       </Typography>
     </Alert>
