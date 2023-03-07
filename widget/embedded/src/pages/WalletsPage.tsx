@@ -1,5 +1,11 @@
 import { useNavigate } from 'react-router-dom';
-import { Alert, SecondaryPage, styled, Wallet } from '@rango-dev/ui';
+import {
+  Alert,
+  SecondaryPage,
+  styled,
+  Wallet,
+  Typography,
+} from '@rango-dev/ui';
 import React, { useEffect, useState } from 'react';
 import { getlistWallet } from '../utils/wallets';
 import { WalletType } from '@rango-dev/wallets-shared';

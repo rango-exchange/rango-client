@@ -140,7 +140,7 @@ export function ConfirmSwap(props: PropsWithChildren<PropTypes>) {
           </div>
           <BestRouteContainer>
             {bestRoute?.result?.swaps.map((swap, index) => (
-              <>
+              <Fragment key={index}>
                 {index === 0 && (
                   <RelativeContainer>
                     <StepDetail
@@ -179,7 +179,7 @@ export function ConfirmSwap(props: PropsWithChildren<PropTypes>) {
                   blockchain={swap.to.blockchain}
                   amount={swap.toAmount}
                 />
-              </>
+              </Fragment>
             ))}
           </BestRouteContainer>
         </MainContainer>
