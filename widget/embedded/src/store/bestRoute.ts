@@ -6,6 +6,8 @@ import BigNumber from 'bignumber.js';
 import { ZERO } from '../constants/numbers';
 import { getBestRouteToTokenUsdPrice } from '../utils/routing';
 import createSelectors from './selectors';
+import { subscribeWithSelector } from 'zustand/middleware';
+import { useSettingsStore } from './settings';
 
 const getUsdValue = (token: Token | null, amount: string) =>
   new BigNumber(amount || ZERO).multipliedBy(token?.usdPrice || 0);
@@ -19,6 +21,8 @@ interface RouteState {
   outputUsdValue: BigNumber;
   fromToken: Token | null;
   toToken: Token | null;
+  loading: boolean;
+  error: string;
   setFromChain: (chain: BlockchainMeta | null) => void;
   setToChain: (chian: BlockchainMeta | null) => void;
   setFromToken: (token: Token | null) => void;
@@ -26,11 +30,12 @@ interface RouteState {
   setInputAmount: (amount: string) => void;
   bestRoute: BestRouteResponse | null;
   setBestRoute: (bestRoute: BestRouteResponse | null) => void;
+  fetchBestRoute: () => void;
 }
 
 export const useBestRouteStore = createSelectors(
   create<RouteState>()(
-    immer((set) => ({
+    subscribeWithSelector((set, get, api) => ({
       fromChain: null,
       fromToken: null,
       inputAmount: '',
@@ -40,43 +45,55 @@ export const useBestRouteStore = createSelectors(
       toChain: null,
       toToken: null,
       bestRoute: null,
+      loading: false,
+      error: '',
+      fetchBestRoute: () => {},
       setBestRoute: (bestRoute) =>
         set((state) => {
-          state.bestRoute = bestRoute;
+          let outputAmount: BigNumber | null = null;
+          let outputUsdValue: BigNumber = ZERO;
           if (!!bestRoute) {
-            const outputAmount = !!bestRoute.result?.outputAmount
+            outputAmount = !!bestRoute.result?.outputAmount
               ? new BigNumber(bestRoute.result?.outputAmount)
               : null;
-            state.outputAmount = outputAmount;
-            state.outputUsdValue = new BigNumber(outputAmount || ZERO).multipliedBy(
+            outputUsdValue = new BigNumber(outputAmount || ZERO).multipliedBy(
               getBestRouteToTokenUsdPrice(bestRoute) || state.toToken?.usdPrice || 0,
             );
           }
+          return {
+            bestRoute: bestRoute,
+            ...(!!bestRoute && {
+              outputAmount: outputAmount,
+              outputUsdValue: outputUsdValue,
+            }),
+          };
         }),
       setFromChain: (chain) =>
-        set((state) => {
-          state.fromChain = chain;
-        }),
+        set(() => ({
+          fromChain: chain,
+        })),
       setFromToken: (token) =>
-        set((state) => {
-          state.fromToken = token;
-          if (!!state.inputAmount)
-            state.inputUsdValue = getUsdValue(state.fromToken!, state.inputAmount);
-        }),
+        set((state) => ({
+          fromToken: token,
+          ...(!!state.inputAmount && {
+            inputUsdValue: getUsdValue(state.fromToken!, state.inputAmount),
+          }),
+        })),
       setToChain: (chain) =>
-        set((state) => {
-          state.toChain = chain;
-        }),
+        set(() => ({
+          toChain: chain,
+        })),
       setToToken: (token) =>
-        set((state) => {
-          state.toToken = token;
-        }),
+        set(() => ({
+          toToken: token,
+        })),
       setInputAmount: (amount) =>
-        set((state) => {
-          state.inputAmount = amount;
-          if (!!state.fromToken)
-            state.inputUsdValue = getUsdValue(state.fromToken, state.inputAmount);
-        }),
+        set((state) => ({
+          inputAmount: amount,
+          ...(!!state.fromToken && {
+            inputUsdValue: getUsdValue(state.fromToken, state.inputAmount),
+          }),
+        })),
     })),
   ),
 );
