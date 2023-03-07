@@ -10,6 +10,7 @@ import { BestRouteRequest, BestRouteResponse } from 'rango-sdk';
 import { useState } from 'react';
 import { httpService } from '../services/httpService';
 import { useBestRouteStore } from '../store/bestRoute';
+import { useMetaStore } from '../store/meta';
 import { useSettingsStore } from '../store/settings';
 import { useWalletsStore } from '../store/wallets';
 import { compareRoutes, getRequiredBalanceOfWallet } from '../utils/routing';
@@ -32,6 +33,7 @@ export function useConfirmSwap() {
   const setBestRoute = useBestRouteStore.use.setBestRoute();
   const accounts = useWalletsStore.use.accounts();
   const selectedWallets = useWalletsStore.use.selectedWallets();
+  const tokens = useMetaStore.use.meta().tokens;
 
   const slippage = useSettingsStore.use.slippage();
   const disabledLiquiditySources = useSettingsStore.use.disabledLiquiditySources();
@@ -140,7 +142,7 @@ export function useConfirmSwap() {
     const isChanged = routeChangeStatus.isChanged;
     const changeWarningMessage = routeChangeStatus.warningMessage;
     setBestRouteChanged(isChanged);
-    setWarning('Best route changed');
+    if (isChanged) setWarning('Best route changed');
     setData(r);
     return {
       hasEnoughBalanceOrSlippage: hasEnoughBalanceOrProperSlippage(
@@ -184,7 +186,9 @@ export function useConfirmSwap() {
         wallets,
         settings,
         false,
+        tokens,
       );
+      console.log(newSwap);
     }
 
     !proceedAnyway &&
@@ -219,7 +223,9 @@ export function useConfirmSwap() {
                 wallets,
                 settings,
                 true,
+                tokens,
               );
+              console.log(newSwap);
             } else if (!hasEnoughBalanceOrSlippage.balance) {
               setError('not enough balance');
             }

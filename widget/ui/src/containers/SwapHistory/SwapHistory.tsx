@@ -94,8 +94,7 @@ export function SwapHistory(props: PropTypes) {
                   <Fee>
                     <GasIcon />
                     <Typography ml={4} variant="caption">
-                      {/* {parseFloat(step.fee[0].amount).toFixed(6)} estimated gas */}
-                      fee
+                      {step.feeInUsd} estimated gas fee
                     </Typography>
                   </Fee>
                 </div>
