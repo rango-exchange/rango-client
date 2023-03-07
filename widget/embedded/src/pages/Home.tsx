@@ -1,4 +1,11 @@
-import { Alert, BestRoute, Button, styled, VerticalSwapIcon } from '@rango-dev/ui';
+import {
+  Alert,
+  BestRoute,
+  Button,
+  styled,
+  Typography,
+  VerticalSwapIcon,
+} from '@rango-dev/ui';
 import React, { useEffect, useState } from 'react';
 import { useInRouterContext, useNavigate } from 'react-router-dom';
 import { Header } from '../components/Header';
@@ -21,7 +28,11 @@ import {
   LimitErrorMessage,
   getTotalFeeInUsd,
 } from '../utils/swap';
-import { numberToString, secondsToString, totalArrivalTime } from '../utils/numbers';
+import {
+  numberToString,
+  secondsToString,
+  totalArrivalTime,
+} from '../utils/numbers';
 
 const Container = styled('div', {
   display: 'flex',
@@ -82,30 +93,39 @@ export function Home() {
     setCount((prev) => prev + 1);
   };
 
-  const { data, loading: fetchingBestRoute, error: bestRouteError, retry } = useBestRoute();
+  const {
+    data,
+    loading: fetchingBestRoute,
+    error: bestRouteError,
+    retry,
+  } = useBestRoute();
 
   const noConnectedWallet = accounts.length > 0;
 
   const noRoutesFound = !bestRoute?.result;
 
   const errorMessage =
-    loadingMetaStatus === 'failed' ? errorMessages.genericServerError : bestRouteError;
+    loadingMetaStatus === 'failed'
+      ? errorMessages.genericServerError
+      : bestRouteError;
 
   const needsToWarnEthOnPath = false;
 
-  const showBestRoute = inputAmount && (!!data || fetchingBestRoute || bestRouteError);
+  const showBestRoute =
+    inputAmount && (!!data || fetchingBestRoute || bestRouteError);
 
   const outToInRatio = getOutputRatio(inputUsdValue, outputUsdValue);
 
   const highValueLoss = outputRatioHasWarning(inputUsdValue, outToInRatio);
 
-  const { fromAmountRangeError, recommendation, swap } = LimitErrorMessage(bestRoute);
+  const { fromAmountRangeError, recommendation, swap } =
+    LimitErrorMessage(bestRoute);
 
   const priceImpactCanNotBeComputed = !canComputePriceImpact(
     bestRoute,
     inputAmount,
     inputUsdValue,
-    outputUsdValue,
+    outputUsdValue
   );
 
   const buttonTitle = getSwapButtonTitle(
@@ -114,7 +134,7 @@ export function Home() {
     hasLimitError(bestRoute),
     highValueLoss,
     priceImpactCanNotBeComputed,
-    needsToWarnEthOnPath,
+    needsToWarnEthOnPath
   );
 
   const buttonDisabled =
@@ -167,7 +187,9 @@ export function Home() {
       {(errorMessage || waningMessage || hasLimitError(bestRoute)) && (
         <Alerts>
           {errorMessage && (
-            <Alert type="error">{<Typography variant="body2">{errorMessage}</Typography>}</Alert>
+            <Alert type="error">
+              {<Typography variant="body2">{errorMessage}</Typography>}
+            </Alert>
           )}
           {hasLimitError(bestRoute) && (
             <Alert type="error" title={`${swap?.swapperId} Limit`}>
@@ -175,7 +197,8 @@ export function Home() {
                 <Typography variant="body2">{fromAmountRangeError}</Typography>
                 <br />
                 <Typography variant="body2">
-                  Yours: {numberToString(swap?.fromAmount || null)} {swap?.from.symbol}
+                  Yours: {numberToString(swap?.fromAmount || null)}{' '}
+                  {swap?.from.symbol}
                 </Typography>
                 <br />
                 <Typography variant="body2">{recommendation}</Typography>
@@ -196,11 +219,13 @@ export function Home() {
           size="large"
           disabled={buttonDisabled}
           onClick={() => {
-            if (buttonTitle === 'Connect Wallet') navigate(navigationRoutes.wallets);
+            if (buttonTitle === 'Connect Wallet')
+              navigate(navigationRoutes.wallets);
             else {
               navigate(navigationRoutes.confirmWallets);
             }
-          }}>
+          }}
+        >
           {buttonTitle}
         </Button>
         <BottomLogo />
