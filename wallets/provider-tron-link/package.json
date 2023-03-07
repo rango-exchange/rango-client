@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/provider-tron-link",
-  "version": "0.1.11-next.68",
+  "version": "0.1.11-next.69",
   "license": "MIT",
   "module": "dist/provider-tron-link.esm.js",
   "main": "dist/index.js",
