@@ -14,7 +14,7 @@ import {
 import { Account } from '../store/wallets';
 import { ZERO } from '../constants/numbers';
 import { numberToString } from './numbers';
-import { WalletType } from '@rangodev/wallets-shared';
+import { WalletType } from '@rango-dev/wallets-shared';
 import { getRequiredBalanceOfWallet } from './routing';
 import { getRequiredChains, SelectedWallet } from './wallets';
 
