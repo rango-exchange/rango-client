@@ -1,3 +1,6 @@
-import { SwapSavedSettings } from '@rangodev/ui/dist/types/swaps';
+import { SwapSavedSettings } from '@rango-dev/ui/dist/types/swaps';
 
-export type PendingSwapSettings = Omit<SwapSavedSettings, 'disabledSwappersIds'>;
+export type PendingSwapSettings = Omit<
+  SwapSavedSettings,
+  'disabledSwappersIds'
+>;

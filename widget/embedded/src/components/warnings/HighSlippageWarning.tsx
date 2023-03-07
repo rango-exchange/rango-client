@@ -1,4 +1,4 @@
-import { Alert, Typography } from '@rangodev/ui';
+import { Alert, Typography } from '@rango-dev/ui';
 import React from 'react';
 import { ChangeSlippageButton } from '../ChangeSlippageButton';
 
@@ -12,8 +12,8 @@ export function HighSlippageWarning(props: PropTypes) {
   return (
     <Alert type="warning">
       <Typography variant="body2">
-        Your slippage is high <b>({selectedSlippage})</b>. You could update it in the swap settings
-        if you want.
+        Your slippage is high <b>({selectedSlippage})</b>. You could update it
+        in the swap settings if you want.
         <ChangeSlippageButton />
       </Typography>
     </Alert>

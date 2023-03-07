@@ -1,4 +1,4 @@
-import { Typography } from '@rangodev/ui';
+import { Typography } from '@rango-dev/ui';
 import React from 'react';
 
 export function BalanceWarnings(warnings: string[]) {

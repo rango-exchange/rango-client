@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, styled } from '@rangodev/ui';
+import { Button, styled } from '@rango-dev/ui';
 import { useNavigate } from 'react-router-dom';
 import { navigationRoutes } from '../constants/navigationRoutes';
 
@@ -15,7 +15,8 @@ export function ChangeSlippageButton() {
       type="primary"
       variant="contained"
       size="small"
-      onClick={navigate.bind(null, navigationRoutes.settings)}>
+      onClick={navigate.bind(null, navigationRoutes.settings)}
+    >
       Change Slippage
     </StyledButton>
   );

@@ -1,6 +1,5 @@
 import { useRef } from 'react';
-import { PendingSwap } from '@rangodev/ui/dist/containers/History/types';
-import { SwapSavedSettings } from '@rangodev/ui/dist/types/swaps';
+import { PendingSwap } from '@rango-dev/ui/dist/containers/History/types';
 import BigNumber from 'bignumber.js';
 import { ReactNode, useState } from 'react';
 import { httpService } from '../services/httpService';
@@ -45,14 +44,17 @@ export function useConfirmSwap() {
 
   const slippage = useSettingsStore.use.slippage();
   const customSlippage = useSettingsStore.use.customSlippage();
-  const disabledLiquiditySources = useSettingsStore.use.disabledLiquiditySources();
+  const disabledLiquiditySources =
+    useSettingsStore.use.disabledLiquiditySources();
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState<ReactNode[]>([]);
   const [warnings, setWarnings] = useState<ReactNode[]>([]);
   const userSlippage = customSlippage || slippage;
   const swapConfirmed = useRef(false);
-  const addError = (error: ReactNode) => setErrors((prevState) => prevState.concat(error));
-  const addWarning = (warning: ReactNode) => setWarnings((prevState) => prevState.concat(warning));
+  const addError = (error: ReactNode) =>
+    setErrors((prevState) => prevState.concat(error));
+  const addWarning = (warning: ReactNode) =>
+    setWarnings((prevState) => prevState.concat(warning));
 
   if (!fromToken || !toToken || !inputAmount || !bestRoute)
     return { loading: false, errors: [], warnings: [], data: null, swap: null };
@@ -67,15 +69,18 @@ export function useConfirmSwap() {
         inputAmount,
         accounts,
         selectedWallets,
-        disabledLiquiditySources,
+        disabledLiquiditySources
       );
 
       const confirmBestRoute = await httpService.getBestRoute(requestBody);
       setLoading(false);
-      if (!confirmBestRoute || !confirmBestRoute.result || !bestRoute) addError('no routes found');
+      if (!confirmBestRoute || !confirmBestRoute.result || !bestRoute)
+        addError('no routes found');
       if (
         !!confirmBestRoute &&
-        !new BigNumber(confirmBestRoute.requestAmount).isEqualTo(new BigNumber(inputAmount || '-1'))
+        !new BigNumber(confirmBestRoute.requestAmount).isEqualTo(
+          new BigNumber(inputAmount || '-1')
+        )
       )
         addError('No routes found. Please try again later.');
       const routeChanged = isRouteChanged(bestRoute, confirmBestRoute!);
@@ -83,10 +88,13 @@ export function useConfirmSwap() {
       setBestRoute(confirmBestRoute!);
       if (routeChanged) {
         const newRouteOutputUsdValue = new BigNumber(
-          confirmBestRoute.result?.outputAmount || '0',
+          confirmBestRoute.result?.outputAmount || '0'
         ).multipliedBy(toToken.usdPrice || 0);
 
-        const outputRatio = getOutputRatio(inputUsdValue, newRouteOutputUsdValue);
+        const outputRatio = getOutputRatio(
+          inputUsdValue,
+          newRouteOutputUsdValue
+        );
         const highValueLoss = outputRatioHasWarning(inputUsdValue, outputRatio);
 
         if (isNumberOfSwapsChanged(bestRoute, confirmBestRoute))
@@ -95,22 +103,28 @@ export function useConfirmSwap() {
           addWarning('Route swappers has been updated.');
         if (isRouteInternalCoinsUpdated(bestRoute, confirmBestRoute))
           addWarning('Route internal coins has been updated.');
-        if (highValueLoss) addError('Route updated and price impact is too high, try again later!');
+        if (highValueLoss)
+          addError(
+            'Route updated and price impact is too high, try again later!'
+          );
         if (isOutputAmountChangedALot(bestRoute, confirmBestRoute))
           addWarning(`Output amount changed to ${numberToString(
-            getRouteOutputAmount(confirmBestRoute),
+            getRouteOutputAmount(confirmBestRoute)
           )} 
       (${numberToString(
         getPercentageChange(
           getRouteOutputAmount(bestRoute)!,
-          getRouteOutputAmount(confirmBestRoute)!,
+          getRouteOutputAmount(confirmBestRoute)!
         ),
         null,
-        2,
+        2
       )}% change).`);
       }
 
-      const balanceWarnings = getBalanceWarnings(confirmBestRoute, selectedWallets);
+      const balanceWarnings = getBalanceWarnings(
+        confirmBestRoute,
+        selectedWallets
+      );
       const enoughBalance = balanceWarnings.length === 0;
 
       if (!enoughBalance) addWarning(BalanceWarnings(balanceWarnings));
@@ -130,7 +144,7 @@ export function useConfirmSwap() {
           getWalletsForNewSwap(selectedWallets),
           swapSettings,
           false,
-          tokens,
+          tokens
         );
         console.log('new swap:', newSwap);
       } else if (!swapConfirmed.current) swapConfirmed.current = true;
@@ -138,7 +152,9 @@ export function useConfirmSwap() {
       setLoading(false);
       if (error.message) addError(error.message);
       else if (!!error.response)
-        addError(`Failed to confirm swap 'status': ${error.response.status}), please try again.`);
+        addError(
+          `Failed to confirm swap 'status': ${error.response.status}), please try again.`
+        );
       else addError('Failed to confirm swap, please try again.');
     }
   };
