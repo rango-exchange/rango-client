@@ -1,9 +1,10 @@
 import { useNavigate } from 'react-router-dom';
 import { Alert, SecondaryPage, styled, Wallet } from '@rango-dev/ui';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { getlistWallet } from '../utils/wallets';
 import { WalletType } from '@rango-dev/wallets-shared';
 import { useWallets } from '@rango-dev/wallets-core';
+import { useUiStore } from '../store/ui';
 
 const ListContainer = styled('div', {
   display: 'grid',
@@ -19,8 +20,14 @@ const AlertContainer = styled('div', {
 export function WalletsPage() {
   const navigate = useNavigate();
   const { state, disconnect, getWalletInfo, connect } = useWallets();
-  const wallets = getlistWallet(state, getWalletInfo, Object.values(WalletType));
+  const wallets = getlistWallet(
+    state,
+    getWalletInfo,
+    Object.values(WalletType)
+  );
   const [walletErrorMessage, setWalletErrorMessage] = useState('');
+  const toggleConnectWalletsButton =
+    useUiStore.use.toggleConnectWalletsButton();
 
   const onSelectWallet = async (type: WalletType) => {
     const wallet = state(type);
@@ -35,6 +42,12 @@ export function WalletsPage() {
       setWalletErrorMessage('Error: ' + e.message);
     }
   };
+
+  useEffect(() => {
+    toggleConnectWalletsButton();
+    return () => toggleConnectWalletsButton();
+  }, []);
+
   return (
     <SecondaryPage
       title="Select Wallet"

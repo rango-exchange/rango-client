@@ -36,6 +36,7 @@ export function UpdateUrl() {
 
   useEffect(() => {
     if (!firstRender.current) {
+      if (location.state === 'redirect') return;
       const fromChainString = fromChain?.name || '';
       const fromTokenString =
         (fromToken?.symbol || '') + (fromToken?.address ? `--${fromToken?.address}` : '');
