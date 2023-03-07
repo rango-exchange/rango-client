@@ -1,7 +1,7 @@
 import { PendingSwap } from '@rango-dev/ui/dist/containers/History/types';
 import { WalletTypeAndAddress, SwapSavedSettings } from '@rango-dev/ui/dist/types/swaps';
 import BigNumber from 'bignumber.js';
-import { BestRouteResponse, SwapperMeta, SwapResult } from 'rango-sdk';
+import { BestRouteResponse, SwapperMeta, SwapResult, Token } from 'rango-sdk';
 import { Account } from '../store/wallets';
 import { ZERO } from '../constants/numbers';
 import { numberToString } from './numbers';
@@ -195,4 +195,49 @@ export function requiredWallets(route: BestRouteResponse | null) {
     if (currentStepToBlockchain != lastAddedWallet) wallets.push(currentStepToBlockchain);
   });
   return wallets;
+}
+
+export const getUsdPrice = (
+  blockchain: string,
+  symbol: string,
+  address: string | null,
+  allTokens: Token[],
+): number | null => {
+  const token = allTokens?.find(
+    (t) =>
+      t.blockchain === blockchain &&
+      t.symbol?.toUpperCase() === symbol?.toUpperCase() &&
+      t.address === address,
+  );
+  return token?.usdPrice || null;
+};
+
+function getUsdFeeOfStep(step: SwapResult, allTokens: Token[]): BigNumber {
+  let totalFeeInUsd = ZERO;
+  for (let i = 0; i < step.fee.length; i++) {
+    const fee = step.fee[i];
+    if (fee.expenseType === 'DECREASE_FROM_OUTPUT') continue;
+
+    const unitPrice = getUsdPrice(
+      fee.asset.blockchain,
+      fee.asset.symbol,
+      fee.asset.address,
+      allTokens,
+    );
+    totalFeeInUsd = totalFeeInUsd.plus(new BigNumber(fee.amount).multipliedBy(unitPrice || 0));
+  }
+
+  return totalFeeInUsd;
+}
+
+export function getTotalFeeInUsd(
+  bestRoute: BestRouteResponse | null,
+  allTokens: Token[],
+): BigNumber | null {
+  return (
+    bestRoute?.result?.swaps.reduce(
+      (totalFee: BigNumber, step) => totalFee.plus(getUsdFeeOfStep(step, allTokens)),
+      ZERO,
+    ) || null
+  );
 }
