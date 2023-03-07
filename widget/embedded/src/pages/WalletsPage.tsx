@@ -11,7 +11,7 @@ const ListContainer = styled('div', {
   gridTemplateColumns: ' repeat(2, minmax(0, 1fr))',
   height: '450px',
   alignContent: 'baseline',
-  margin: '0 0.5rem',
+  padding: '0 0.5rem',
 });
 
 const AlertContainer = styled('div', {
