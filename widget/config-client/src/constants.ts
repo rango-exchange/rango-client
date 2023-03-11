@@ -14,7 +14,7 @@ export const FONTS = [
     name: 'Roboto',
   },
   {
-    name: 'New Roman',
+    name: 'Times New Roman',
   },
   {
     name: 'Arial',
