@@ -92,7 +92,7 @@ export function StylesConfig() {
     languege,
     borderRadius,
     theme,
-    fontFaminy,
+    fontFamily,
     colors,
     titleSize,
     titelsWeight,
@@ -221,11 +221,11 @@ export function StylesConfig() {
         <GridContent>
           <Select
             label="Font Family"
-            value={fontFaminy}
-            name="fontFaminy"
+            value={fontFamily}
+            name="fontFamily"
             list={FONTS}
             modalTitle="Fonts"
-            onChange={(_, value) => onChangeStringsConfig('fontFaminy', value)}
+            onChange={(_, value) => onChangeStringsConfig('fontFamily', value)}
           />
           <div>
             <TextField
