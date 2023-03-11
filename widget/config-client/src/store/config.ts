@@ -5,7 +5,7 @@ import { WalletType } from '@rango-dev/wallets-shared';
 import { immer } from 'zustand/middleware/immer';
 import { Source, Type } from '../types';
 
-export type StringsName = 'title' | 'languege' | 'fontFaminy';
+export type StringsName = 'title' | 'languege' | 'fontFamily';
 
 export type NumbersName =
   | 'width'
@@ -48,7 +48,7 @@ interface ConfigState {
     height: number;
     languege: string;
     borderRadius: number;
-    fontFaminy: string;
+    fontFamily: string;
     titleSize: number;
     titelsWeight: number;
     colors: {
@@ -99,7 +99,7 @@ export const useConfigStore = createSelectors(
         languege: 'English (US)',
         borderRadius: 5,
         theme: 'auto',
-        fontFaminy: 'Roboto',
+        fontFamily: 'Roboto',
         titleSize: 48,
         titelsWeight: 700,
         colors: {
