@@ -10,6 +10,7 @@ import {
   calculateWalletUsdValue,
   getSelectableWallets,
 } from '../utils/wallets';
+import { removeDuplicateFrom } from '../utils/common';
 
 const Header = styled('div', {
   display: 'flex',
@@ -29,11 +30,12 @@ export function Layout() {
   const navigate = useNavigate();
   const { balances, accounts, selectedWallets } = useWalletsStore();
   const { getWalletInfo } = useWallets();
-  const filterSelelectedWallets = getSelectableWallets(
-    accounts,
-    selectedWallets,
-    getWalletInfo
+  const connectedWalletsImages = removeDuplicateFrom(
+    getSelectableWallets(accounts, selectedWallets, getWalletInfo).map(
+      (w) => w.image
+    )
   );
+
   const totalBalance = calculateWalletUsdValue(balances);
   const connectWalletsButtonDisabled =
     useUiStore.use.connectWalletsButtonDisabled();
@@ -51,9 +53,9 @@ export function Layout() {
               navigate(navigationRoutes.wallets);
           }}
         >
-          {accounts?.length ? (
-            filterSelelectedWallets.map((selectedWallet, index) => (
-              <WalletImage key={index} src={selectedWallet.image} />
+          {connectedWalletsImages?.length ? (
+            connectedWalletsImages.map((walletImage, index) => (
+              <WalletImage key={index} src={walletImage} />
             ))
           ) : (
             <></>

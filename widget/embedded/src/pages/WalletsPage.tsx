@@ -1,4 +1,3 @@
-import { useNavigate } from 'react-router-dom';
 import {
   Alert,
   SecondaryPage,
@@ -11,6 +10,8 @@ import { getlistWallet } from '../utils/wallets';
 import { WalletType } from '@rango-dev/wallets-shared';
 import { useWallets } from '@rango-dev/wallets-core';
 import { useUiStore } from '../store/ui';
+import { useNavigateBack } from '../hooks/useNavigateBack';
+import { navigationRoutes } from '../constants/navigationRoutes';
 
 const ListContainer = styled('div', {
   display: 'grid',
@@ -25,7 +26,7 @@ const AlertContainer = styled('div', {
   paddingBottom: '$16',
 });
 export function WalletsPage() {
-  const navigate = useNavigate();
+  const { navigateBackFrom } = useNavigateBack();
   const { state, disconnect, getWalletInfo, connect } = useWallets();
   const wallets = getlistWallet(
     state,
@@ -59,25 +60,22 @@ export function WalletsPage() {
     <SecondaryPage
       title="Select Wallet"
       textField={false}
-      onBack={() => {
-        navigate(-1);
-      }}
-      Content={
-        <>
-          {walletErrorMessage && (
-            <AlertContainer>
-              <Alert type="error">
-                <Typography variant="body2">{walletErrorMessage}</Typography>
-              </Alert>
-            </AlertContainer>
-          )}
-          <ListContainer>
-            {wallets.map((info, index) => (
-              <Wallet {...info} key={index} onClick={onSelectWallet} />
-            ))}
-          </ListContainer>
-        </>
-      }
-    />
+      onBack={navigateBackFrom.bind(null, navigationRoutes.wallets)}
+    >
+      <>
+        {walletErrorMessage && (
+          <AlertContainer>
+            <Alert type="error">
+              <Typography variant="body2">{walletErrorMessage}</Typography>
+            </Alert>
+          </AlertContainer>
+        )}
+        <ListContainer>
+          {wallets.map((info, index) => (
+            <Wallet {...info} key={index} onClick={onSelectWallet} />
+          ))}
+        </ListContainer>
+      </>
+    </SecondaryPage>
   );
 }

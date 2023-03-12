@@ -4,9 +4,9 @@ import { parseCommand, headStyle } from '../utils.mjs';
 
 export function watch(params) {
   const { project, nx, cwd } = params;
-  const command = `${nx} watch --projects=${project} --includeDependentProjects -- echo "[build]\\$NX_PROJECT_NAME"`;
+  const command = `${nx} watch --projects=${project} --includeDependentProjects -- echo "[build]%NX_PROJECT_NAME%"`;
 
-  console.log(headStyle('main'), `Running watch command\n\n`);
+  console.log(headStyle('main'), `Running watch ${command}\n\n`);
 
   const watcher = exec(command, { cwd }, (err, stdout, stderr) => {
     if (err) {
@@ -15,7 +15,7 @@ export function watch(params) {
     }
     console.log(headStyle('watch'), stdout);
   });
-  watcher.stdout.on('data', d => {
+  watcher.stdout.on('data', (d) => {
     const [command, data] = parseCommand(d);
     if (command === 'build' && data != project) {
       const build_command = `${nx} run ${data}:build`;
@@ -27,7 +27,7 @@ export function watch(params) {
         console.log(headStyle('watch', 'build'), result);
       });
 
-      build.stdout.on('data', da => {
+      build.stdout.on('data', (da) => {
         console.log(headStyle('watch', 'build'), da);
       });
     }

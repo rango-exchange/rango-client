@@ -10,5 +10,5 @@ export const navigationRoutes = {
   wallets: '/wallets',
   confirmSwap: '/confirm-swap',
   confirmWallets: '/confirm-wallets',
-  swapDetails: '/swap-details',
+  swapDetails: '/history/swap-details',
 };

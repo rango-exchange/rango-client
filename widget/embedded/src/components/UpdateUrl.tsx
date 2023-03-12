@@ -5,13 +5,19 @@ import { useBestRouteStore } from '../store/bestRoute';
 import { useMetaStore } from '../store/meta';
 import { SearchParams } from '../constants/searchParams';
 
-function searchParamsToToken(tokens: Token[], searchParams: string | null): Token | null {
+function searchParamsToToken(
+  tokens: Token[],
+  searchParams: string | null
+): Token | null {
   return (
     tokens.find((token) => {
       const symbolAndAddress = searchParams?.split('--');
       if (symbolAndAddress?.length === 1)
         return token.symbol === symbolAndAddress[0] && token.address === null;
-      return token.symbol === symbolAndAddress?.[0] && token.address === symbolAndAddress?.[1];
+      return (
+        token.symbol === symbolAndAddress?.[0] &&
+        token.address === symbolAndAddress?.[1]
+      );
     }) || null
   );
 }
@@ -39,21 +45,29 @@ export function UpdateUrl() {
       if (location.state === 'redirect') return;
       const fromChainString = fromChain?.name || '';
       const fromTokenString =
-        (fromToken?.symbol || '') + (fromToken?.address ? `--${fromToken?.address}` : '');
+        (fromToken?.symbol || '') +
+        (fromToken?.address ? `--${fromToken?.address}` : '');
       const toChainString = toChain?.name || '';
       const toTokenString =
-        (toToken?.symbol || '') + (toToken?.address ? `--${toToken?.address}` : '');
+        (toToken?.symbol || '') +
+        (toToken?.address ? `--${toToken?.address}` : '');
       const fromAmount = inputAmount;
 
       setSearchParams(
         {
-          ...(fromChainString && { [SearchParams.FROM_CHAIN]: fromChainString }),
-          ...(fromTokenString && { [SearchParams.FROM_TOKEN]: fromTokenString }),
+          ...(fromChainString && {
+            [SearchParams.FROM_CHAIN]: fromChainString,
+          }),
+          ...(fromTokenString && {
+            [SearchParams.FROM_TOKEN]: fromTokenString,
+          }),
           ...(toChainString && { [SearchParams.TO_CHAIN]: toChainString }),
           ...(toTokenString && { [SearchParams.TO_TOKEN]: toTokenString }),
-          ...(fromAmount && { [SearchParams.FROM_AMOUNT]: fromAmount.toString() }),
+          ...(fromAmount && {
+            [SearchParams.FROM_AMOUNT]: fromAmount.toString(),
+          }),
         },
-        { replace: true },
+        { replace: true }
       );
     }
     firstRender.current = false;
@@ -66,9 +80,13 @@ export function UpdateUrl() {
       const toChainString = searchParams.get(SearchParams.TO_CHAIN);
       const toTokenString = searchParams.get(SearchParams.TO_TOKEN);
       const fromAmount = searchParams.get(SearchParams.FROM_AMOUNT);
-      const fromChain = blockchains.find((blockchain) => blockchain.name === fronChainString);
+      const fromChain = blockchains.find(
+        (blockchain) => blockchain.name === fronChainString
+      );
       const fromToken = searchParamsToToken(tokens, fromTokenString);
-      const toChain = blockchains.find((blockchain) => blockchain.name === toChainString);
+      const toChain = blockchains.find(
+        (blockchain) => blockchain.name === toChainString
+      );
       const toToken = searchParamsToToken(tokens, toTokenString);
       if (!!fromChain) {
         setFromChain(fromChain);

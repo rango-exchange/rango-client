@@ -14,10 +14,12 @@ const BaseContainer = styled('div', {
   padding: '$16',
 });
 
+const Title = styled(Typography, { marginBottom: '$16' });
+
 const SlippageChipsContainer = styled('div', {
-  display: 'flex',
-  flexWrap: 'wrap',
-  marginTop: '$16',
+  display: 'grid',
+  rowGap: '$16',
+  gridTemplateColumns: 'repeat(auto-fill, 64px)',
 });
 
 const LiquiditySourceContainer = styled(BaseContainer, {
@@ -27,7 +29,7 @@ const LiquiditySourceContainer = styled(BaseContainer, {
   cursor: 'pointer',
 });
 
-const StyledAngleRight = styled(AngleRightIcon, { marginLeft: '8px' });
+const StyledAngleRight = styled(AngleRightIcon, { marginLeft: '$8' });
 
 const LiquiditySourceNumber = styled('div', {
   display: 'flex',
@@ -85,7 +87,7 @@ export function Settings(props: PropTypes) {
   const PageContent = (
     <>
       <BaseContainer>
-        <Typography variant="body1">Slippage tolerance per swap</Typography>
+        <Title variant="body1">Slippage tolerance per swap</Title>
         <SlippageChipsContainer>
           {slippages.map((slippage, index) => (
             <Chip
@@ -126,7 +128,7 @@ export function Settings(props: PropTypes) {
         </SlippageChipsContainer>
       </BaseContainer>
       <ThemesContainer>
-        <Typography variant="body2">Theme</Typography>
+        <Title variant="body2">Theme</Title>
         <Radio
           defaultValue={selectedTheme}
           options={[
@@ -150,11 +152,8 @@ export function Settings(props: PropTypes) {
   );
 
   return (
-    <SecondaryPage
-      title="Settings"
-      textField={false}
-      Content={PageContent}
-      onBack={onBack}
-    />
+    <SecondaryPage title="Settings" textField={false} onBack={onBack}>
+      {PageContent}
+    </SecondaryPage>
   );
 }

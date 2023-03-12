@@ -43,13 +43,14 @@ export function LiquiditySourcesSelector(props: PropTypes) {
       }
       hasHeader={hasHeader}
       onBack={onBack}
-      Content={({ searchedFor }) => (
+    >
+      {(searchedFor) => (
         <LiquiditySourceList
           listContainerStyle={listContainerStyle}
           list={filterLiquiditySources(list, searchedFor)}
           onChange={onChange}
         />
       )}
-    />
+    </SecondaryPage>
   );
 }

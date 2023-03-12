@@ -17,6 +17,8 @@ import { numberToString } from './numbers';
 import { WalletType } from '@rango-dev/wallets-shared';
 import { getRequiredBalanceOfWallet } from './routing';
 import { getRequiredChains, SelectedWallet } from './wallets';
+import { SwapButtonState } from '../types';
+import { LoadingStatus } from '../store/meta';
 
 export function getOutputRatio(
   inputUsdValue: BigNumber,
@@ -117,24 +119,37 @@ export function LimitErrorMessage(bestRoute: BestRouteResponse | null): {
   return { swap, fromAmountRangeError, recommendation };
 }
 
-export function getSwapButtonTitle(
+export function getSwapButtonState(
+  loadingMetaStatus: LoadingStatus,
   accounts: Account[],
   loading: boolean,
+  bestRoute: BestRouteResponse | null,
   hasLimitError: boolean,
   highValueLoss: boolean,
   priceImpactCanNotBeComputed: boolean,
   needsToWarnEthOnPath: boolean
-): string {
-  if (loading) return 'Finding Best Route...';
-
-  if (accounts.length == 0) return 'Connect Wallet';
-  else if (hasLimitError) return 'Limit Error';
-  else if (highValueLoss) return 'Price impact is too high!';
+): SwapButtonState {
+  if (loadingMetaStatus !== 'success')
+    return { title: 'Connect Wallet', disabled: true };
+  if (accounts.length == 0) return { title: 'Connect Wallet', disabled: false };
+  if (loading) return { title: 'Finding Best Route...', disabled: true };
+  else if (!bestRoute) return { title: 'Swap', disabled: true };
+  else if (hasLimitError) return { title: 'Limit Error', disabled: true };
+  else if (highValueLoss)
+    return { title: 'Price impact is too high!', disabled: true };
   else if (priceImpactCanNotBeComputed)
-    return 'USD price is unknown, price impact might be high!';
+    return {
+      title: 'USD price is unknown, price impact might be high!',
+      disabled: false,
+      hasWarning: true,
+    };
   else if (needsToWarnEthOnPath)
-    return 'The route goes through Ethereum. Continue?';
-  else return 'Swap';
+    return {
+      title: 'The route goes through Ethereum. Continue?',
+      disabled: false,
+      hasWarning: true,
+    };
+  else return { title: 'Swap', disabled: false };
 }
 
 export function canComputePriceImpact(
@@ -290,6 +305,11 @@ export function getTotalFeeInUsd(
       ZERO
     ) || null
   );
+}
+
+export function hasHighFee(totalFeeInUsd: BigNumber | null) {
+  if (!totalFeeInUsd) return false;
+  return !totalFeeInUsd.lt(new BigNumber(30));
 }
 
 export function hasSlippageError(
