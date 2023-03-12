@@ -59,10 +59,11 @@ export function BlockchainSelector(props: PropTypes) {
       textFieldPlaceholder="Search Blockchain By Name"
       title={`Select ${type} Network`}
       onBack={onBack}
-      Content={({ searchedFor }) => {
+    >
+      {(searchedFor) => {
         const filteredBlockchains = filterBlockchains(list, searchedFor);
         return (
-          <ListContainer style={listContainerStyle}>
+          <ListContainer style={listContainerStyle} key="1">
             {loadingStatus === 'loading' && (
               <div>
                 <Spinner size={24} />
@@ -95,6 +96,6 @@ export function BlockchainSelector(props: PropTypes) {
           </ListContainer>
         );
       }}
-    />
+    </SecondaryPage>
   );
 }

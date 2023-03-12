@@ -1,6 +1,7 @@
 import { LiquiditySourcesSelector } from '@rango-dev/ui';
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { navigationRoutes } from '../constants/navigationRoutes';
+import { useNavigateBack } from '../hooks/useNavigateBack';
 import { useMetaStore } from '../store/meta';
 import { useSettingsStore } from '../store/settings';
 import { removeDuplicateFrom } from '../utils/common';
@@ -8,10 +9,12 @@ import { removeDuplicateFrom } from '../utils/common';
 export function LiquiditySourcePage() {
   const { swappers } = useMetaStore.use.meta();
   const toggleLiquiditySource = useSettingsStore.use.toggleLiquiditySource();
-  const disabledLiquiditySources = useSettingsStore.use.disabledLiquiditySources();
-  const toggleAllLiquiditySources = useSettingsStore.use.toggleAllLiquiditySources();
+  const disabledLiquiditySources =
+    useSettingsStore.use.disabledLiquiditySources();
+  const toggleAllLiquiditySources =
+    useSettingsStore.use.toggleAllLiquiditySources();
 
-  const navigate = useNavigate();
+  const { navigateBackFrom } = useNavigateBack();
 
   const uniqueSwappersGroups: Array<{
     title: string;
@@ -40,10 +43,10 @@ export function LiquiditySourcePage() {
     <LiquiditySourcesSelector
       toggleAll={toggleAllLiquiditySources}
       list={uniqueSwappersGroups}
-      onChange={(liquiditySource) => toggleLiquiditySource(liquiditySource.title)}
-      onBack={() => {
-        navigate(-1);
-      }}
+      onChange={(liquiditySource) =>
+        toggleLiquiditySource(liquiditySource.title)
+      }
+      onBack={navigateBackFrom.bind(null, navigationRoutes.liquiditySources)}
     />
   );
 }

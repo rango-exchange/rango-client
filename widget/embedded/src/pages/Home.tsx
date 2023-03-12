@@ -6,7 +6,7 @@ import {
   Typography,
   VerticalSwapIcon,
 } from '@rango-dev/ui';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useInRouterContext, useNavigate } from 'react-router-dom';
 import { Header } from '../components/Header';
 import { TokenInfo } from '../components/TokenInfo';
@@ -15,18 +15,18 @@ import { BottomLogo } from '../components/BottomLogo';
 import { SwithFromAndTo } from '../components/SwitchFromAndTo';
 import { Footer } from '../components/Footer';
 import { navigationRoutes } from '../constants/navigationRoutes';
-import { useBestRoute } from '../hooks/useBestRoute';
 import { useMetaStore } from '../store/meta';
 import { useWalletsStore } from '../store/wallets';
 import { errorMessages } from '../constants/errors';
 import {
-  getSwapButtonTitle,
+  getSwapButtonState,
   getOutputRatio,
   hasLimitError,
   outputRatioHasWarning,
   canComputePriceImpact,
   LimitErrorMessage,
   getTotalFeeInUsd,
+  hasHighFee,
 } from '../utils/swap';
 import {
   numberToString,
@@ -72,7 +72,6 @@ export function Home() {
   const setFromToken = useBestRouteStore.use.setFromToken();
   const setToChain = useBestRouteStore.use.setToChain();
   const setToToken = useBestRouteStore.use.setToToken();
-  const setBestRoute = useBestRouteStore.use.setBestRoute();
   const inputUsdValue = useBestRouteStore.use.inputUsdValue();
   const inputAmount = useBestRouteStore.use.inputAmount();
   const setInputAmount = useBestRouteStore.use.setInputAmount();
@@ -80,6 +79,8 @@ export function Home() {
   const outputUsdValue = useBestRouteStore.use.outputUsdValue();
   const bestRoute = useBestRouteStore.use.bestRoute();
   const tokens = useMetaStore.use.meta().tokens;
+  const fetchingBestRoute = useBestRouteStore.use.loading();
+  const bestRouteError = useBestRouteStore.use.error();
 
   const loadingMetaStatus = useMetaStore.use.loadingStatus();
   const accounts = useWalletsStore.use.accounts();
@@ -93,17 +94,6 @@ export function Home() {
     setCount((prev) => prev + 1);
   };
 
-  const {
-    data,
-    loading: fetchingBestRoute,
-    error: bestRouteError,
-    retry,
-  } = useBestRoute();
-
-  const noConnectedWallet = accounts.length > 0;
-
-  const noRoutesFound = !bestRoute?.result;
-
   const errorMessage =
     loadingMetaStatus === 'failed'
       ? errorMessages.genericServerError
@@ -112,7 +102,7 @@ export function Home() {
   const needsToWarnEthOnPath = false;
 
   const showBestRoute =
-    inputAmount && (!!data || fetchingBestRoute || bestRouteError);
+    inputAmount && (!!bestRoute || fetchingBestRoute || bestRouteError);
 
   const outToInRatio = getOutputRatio(inputUsdValue, outputUsdValue);
 
@@ -128,31 +118,24 @@ export function Home() {
     outputUsdValue
   );
 
-  const buttonTitle = getSwapButtonTitle(
+  const swapButtonState = getSwapButtonState(
+    loadingMetaStatus,
     accounts,
     fetchingBestRoute,
+    bestRoute,
     hasLimitError(bestRoute),
     highValueLoss,
     priceImpactCanNotBeComputed,
     needsToWarnEthOnPath
   );
 
-  const buttonDisabled =
-    loadingMetaStatus != 'success' ||
-    fetchingBestRoute ||
-    highValueLoss ||
-    (noConnectedWallet && noRoutesFound) ||
-    hasLimitError(bestRoute);
-
   const totalFeeInUsd = getTotalFeeInUsd(bestRoute, tokens);
 
-  useEffect(() => {
-    setBestRoute(data);
-  }, [data]);
+  const highFee = hasHighFee(totalFeeInUsd);
 
   return (
     <Container>
-      <Header onClickRefresh={retry} />
+      <Header onClickRefresh={() => {}} />
       <TokenInfo
         type="From"
         chain={fromChain}
@@ -178,8 +161,9 @@ export function Home() {
           <BestRoute
             error={bestRouteError}
             loading={fetchingBestRoute}
-            data={data}
-            totalFee={numberToString(totalFeeInUsd)}
+            data={bestRoute}
+            totalFee={numberToString(totalFeeInUsd, 0, 2)}
+            feeWarning={highFee}
             totalTime={secondsToString(totalArrivalTime(bestRoute))}
           />
         </BestRouteContainer>
@@ -197,7 +181,7 @@ export function Home() {
                 <Typography variant="body2">{fromAmountRangeError}</Typography>
                 <br />
                 <Typography variant="body2">
-                  Yours: {numberToString(swap?.fromAmount || null)}{' '}
+                  Yours: {numberToString(swap?.fromAmount || null)}
                   {swap?.from.symbol}
                 </Typography>
                 <br />
@@ -217,16 +201,16 @@ export function Home() {
           type="primary"
           align="grow"
           size="large"
-          disabled={buttonDisabled}
+          disabled={swapButtonState.disabled}
           onClick={() => {
-            if (buttonTitle === 'Connect Wallet')
+            if (swapButtonState.title === 'Connect Wallet')
               navigate(navigationRoutes.wallets);
             else {
               navigate(navigationRoutes.confirmWallets);
             }
           }}
         >
-          {buttonTitle}
+          {swapButtonState.title}
         </Button>
         <BottomLogo />
       </Footer>

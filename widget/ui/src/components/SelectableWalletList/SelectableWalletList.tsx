@@ -1,6 +1,6 @@
 import React, { PropsWithChildren, useEffect, useState } from 'react';
-import { SelectableWallet } from '../../containers/ConfirmWallets/types';
 import { styled } from '../../theme';
+import { SelectableWallet } from '../../types';
 import { Typography } from '../Typography';
 
 const Row = styled('div', {

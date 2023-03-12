@@ -124,66 +124,65 @@ export function ConfirmSwap(props: PropsWithChildren<PropTypes>) {
         </Footer>
       }
       TopButton={<StyledUpdateIcon size={24} onClick={onRefresh} />}
-      Content={
-        <MainContainer>
-          <div>
-            {extraMessages || null}
-            <Alerts>
-              {errors?.map((error) => (
-                <Alert type="error">{error}</Alert>
-              ))}
-              {/* {error && warnings && <Spacer direction="vertical" size={16} />} */}
-              {warnings?.map((warning) => (
-                <Alert type="warning">{warning}</Alert>
-              ))}
-            </Alerts>
-          </div>
-          <BestRouteContainer>
-            {bestRoute?.result?.swaps.map((swap, index) => (
-              <Fragment key={index}>
-                {index === 0 && (
-                  <RelativeContainer>
-                    <StepDetail
-                      logo={swap.from.logo}
-                      symbol={swap.from.symbol}
-                      chainLogo={swap.from.blockchainLogo}
-                      blockchain={swap.from.blockchain}
-                      amount={swap.fromAmount}
-                    />
-                    <Dot />
-                  </RelativeContainer>
-                )}
-                <Line />
-                <SwapperContainer>
-                  <SwapperLogo src={swap.swapperLogo} alt={swap.swapperId} />
-                  <div>
-                    <Typography ml={4} variant="caption">
-                      {swap.swapperType} from {swap.from.symbol} to{' '}
-                      {swap.to.symbol} via {swap.swapperId}{' '}
-                    </Typography>
-                    <Fee>
-                      <GasIcon />
-                      <Typography ml={4} variant="caption">
-                        {parseFloat(swap.fee[0].amount).toFixed(6)} estimated
-                        gas fee
-                      </Typography>
-                    </Fee>
-                  </div>
-                </SwapperContainer>
-                <Line />
-                {index + 1 === bestRoute.result?.swaps.length && <ArrowDown />}
-                <StepDetail
-                  logo={swap.to.logo}
-                  symbol={swap.to.symbol}
-                  chainLogo={swap.to.blockchainLogo}
-                  blockchain={swap.to.blockchain}
-                  amount={swap.toAmount}
-                />
-              </Fragment>
+    >
+      <MainContainer>
+        <div>
+          {extraMessages || null}
+          <Alerts>
+            {errors?.map((error) => (
+              <Alert type="error">{error}</Alert>
             ))}
-          </BestRouteContainer>
-        </MainContainer>
-      }
-    />
+            {/* {error && warnings && <Spacer direction="vertical" size={16} />} */}
+            {warnings?.map((warning) => (
+              <Alert type="warning">{warning}</Alert>
+            ))}
+          </Alerts>
+        </div>
+        <BestRouteContainer>
+          {bestRoute?.result?.swaps.map((swap, index) => (
+            <Fragment key={index}>
+              {index === 0 && (
+                <RelativeContainer>
+                  <StepDetail
+                    logo={swap.from.logo}
+                    symbol={swap.from.symbol}
+                    chainLogo={swap.from.blockchainLogo}
+                    blockchain={swap.from.blockchain}
+                    amount={swap.fromAmount}
+                  />
+                  <Dot />
+                </RelativeContainer>
+              )}
+              <Line />
+              <SwapperContainer>
+                <SwapperLogo src={swap.swapperLogo} alt={swap.swapperId} />
+                <div>
+                  <Typography ml={4} variant="caption">
+                    {swap.swapperType} from {swap.from.symbol} to{' '}
+                    {swap.to.symbol} via {swap.swapperId}{' '}
+                  </Typography>
+                  <Fee>
+                    <GasIcon />
+                    <Typography ml={4} variant="caption">
+                      {parseFloat(swap.fee[0].amount).toFixed(6)} estimated gas
+                      fee
+                    </Typography>
+                  </Fee>
+                </div>
+              </SwapperContainer>
+              <Line />
+              {index + 1 === bestRoute.result?.swaps.length && <ArrowDown />}
+              <StepDetail
+                logo={swap.to.logo}
+                symbol={swap.to.symbol}
+                chainLogo={swap.to.blockchainLogo}
+                blockchain={swap.to.blockchain}
+                amount={swap.toAmount}
+              />
+            </Fragment>
+          ))}
+        </BestRouteContainer>
+      </MainContainer>
+    </SecondaryPage>
   );
 }

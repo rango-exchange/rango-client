@@ -2,7 +2,7 @@ import React, { Fragment, PropsWithChildren } from 'react';
 import { GasIcon, TimeIcon } from '../../components/Icon';
 import { StepDetail } from '../../components/StepDetail';
 import { Typography } from '../../components/Typography';
-import { styled } from '../../theme';
+import { keyframes, styled } from '../../theme';
 import { Skeleton } from '../Skeleton';
 import { Spinner } from '../Spinner';
 import { BestRouteResponse } from 'rango-sdk';
@@ -76,6 +76,18 @@ const ArrowRight = styled('div', {
   borderLeft: '5px solid $foreground',
 });
 
+const pulse = keyframes({
+  '0%': {
+    opacity: 1,
+  },
+  '50%': {
+    opacity: 0.3,
+  },
+  '100%': {
+    opacity: 1,
+  },
+});
+
 const GasContainer = styled('div', {
   backgroundColor: '$neutrals300',
   borderRadius: '5px',
@@ -90,6 +102,30 @@ const GasContainer = styled('div', {
     margin: '$8',
   },
 });
+
+const FeeContainer = styled('div', {
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+  variants: {
+    warning: {
+      true: {
+        animation: `${pulse} 2s ease-in-out infinite`,
+      },
+    },
+  },
+});
+
+const TotalFee = styled(Typography, {
+  variants: {
+    warning: {
+      true: {
+        color: '$warning300',
+      },
+    },
+  },
+});
+
 const SkeletonContainer = styled('div', {
   padding: '$4',
   '@md': {
@@ -105,17 +141,13 @@ const SwapperContainer = styled('div', {
 export interface PropTypes {
   data: BestRouteResponse | null;
   totalFee: string;
+  feeWarning: boolean;
   totalTime: string;
   loading?: boolean;
   error?: string;
 }
-export function BestRoute({
-  data,
-  loading,
-  error,
-  totalFee,
-  totalTime,
-}: PropsWithChildren<PropTypes>) {
+export function BestRoute(props: PropsWithChildren<PropTypes>) {
+  const { data, loading, error, totalFee, feeWarning, totalTime } = props;
   return (
     <Container>
       {loading ? (
@@ -124,11 +156,18 @@ export function BestRoute({
         </SkeletonContainer>
       ) : (
         <GasContainer>
-          <GasIcon size={20} />
-          <Typography mt={4} align="center" variant="caption">
-            {error && '-'}
-            {!!data && `$${totalFee}`}
-          </Typography>
+          <FeeContainer warning={feeWarning}>
+            <GasIcon size={20} color={feeWarning ? 'warning' : undefined} />
+            <TotalFee
+              mt={4}
+              align="center"
+              variant="caption"
+              warning={feeWarning}
+            >
+              {error && '-'}
+              {!!data && `$${totalFee}`}
+            </TotalFee>
+          </FeeContainer>
           <HR />
           <TimeIcon size={20} />
           <Typography mt={4} align="center" variant="caption">

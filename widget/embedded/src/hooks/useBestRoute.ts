@@ -11,7 +11,8 @@ export function useBestRoute() {
 
   const slippage = useSettingsStore.use.slippage();
   const customSlippage = useSettingsStore.use.customSlippage();
-  const disabledLiquiditySources = useSettingsStore.use.disabledLiquiditySources();
+  const disabledLiquiditySources =
+    useSettingsStore.use.disabledLiquiditySources();
   const [count, setCount] = useState(0);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -40,11 +41,17 @@ export function useBestRoute() {
           blockchain: fromToken.blockchain,
           symbol: fromToken.symbol,
         },
-        to: { address: toToken.address, blockchain: toToken.blockchain, symbol: toToken.symbol },
+        to: {
+          address: toToken.address,
+          blockchain: toToken.blockchain,
+          symbol: toToken.symbol,
+        },
       };
       setLoading(true);
       httpService
-        .getBestRoute(requestBody, { signal: abortControllerRef.current.signal })
+        .getBestRoute(requestBody, {
+          signal: abortControllerRef.current.signal,
+        })
         .then((res) => {
           setData(res);
           setLoading(false);

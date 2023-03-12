@@ -1,17 +1,22 @@
 import React from 'react';
 import { ConfirmSwap } from '@rango-dev/ui';
-import { useNavigate } from 'react-router-dom';
 import { useBestRouteStore } from '../store/bestRoute';
-import { useConfirmSwap } from '../hooks/useConfirmSwap';
 import { useSettingsStore } from '../store/settings';
 import { ConfirmSwapExtraMessages } from '../components/warnings/ConfirmSwapExtraMessages';
+import { useNavigateBack } from '../hooks/useNavigateBack';
+import { navigationRoutes } from '../constants/navigationRoutes';
+import { confirmSwap, useConfirmSwapStore } from '../store/confirmSwap';
 
 export function ConfirmSwapPage() {
-  const navigate = useNavigate();
+  const { navigateBackFrom } = useNavigateBack();
 
   const bestRoute = useBestRouteStore.use.bestRoute();
 
-  const { loading, swap, errors, warnings } = useConfirmSwap();
+  const loading = useConfirmSwapStore.use.loading();
+  const warnings = useConfirmSwapStore.use.warnings();
+  const errors = useConfirmSwapStore.use.errors();
+
+  console.log(loading, warnings, errors);
 
   const slippage = useSettingsStore.use.slippage();
   const customSlippage = useSettingsStore.use.customSlippage();
@@ -19,8 +24,8 @@ export function ConfirmSwapPage() {
 
   return (
     <ConfirmSwap
-      onConfirm={swap?.bind(null)}
-      onBack={navigate.bind(null, -1)}
+      onConfirm={confirmSwap.bind(null)}
+      onBack={navigateBackFrom.bind(null, navigationRoutes.confirmSwap)}
       bestRoute={bestRoute}
       loading={loading}
       errors={errors}

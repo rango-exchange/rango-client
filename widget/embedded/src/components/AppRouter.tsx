@@ -1,8 +1,14 @@
 import React, { PropsWithChildren, useEffect, useRef } from 'react';
-import { MemoryRouter, useInRouterContext, useLocation, useNavigate } from 'react-router';
+import {
+  MemoryRouter,
+  useInRouterContext,
+  useLocation,
+  useNavigate,
+} from 'react-router';
 import { navigationRoutes } from '../constants/navigationRoutes';
 import { UpdateUrl } from './UpdateUrl';
 import { Home } from '../pages/Home';
+import { fetchBestRoute } from '../store/bestRoute';
 
 const Route: React.FC = (props: PropsWithChildren) => {
   const location = useLocation();
@@ -10,8 +16,11 @@ const Route: React.FC = (props: PropsWithChildren) => {
   const ref = useRef(true);
 
   useEffect(() => {
+    fetchBestRoute();
     if (
-      [navigationRoutes.confirmWallets, navigationRoutes.confirmSwap].includes(location.pathname) &&
+      [navigationRoutes.confirmWallets, navigationRoutes.confirmSwap].includes(
+        location.pathname
+      ) &&
       ref.current
     )
       navigate(navigationRoutes.home + location.search, { state: 'redirect' });
@@ -20,7 +29,9 @@ const Route: React.FC = (props: PropsWithChildren) => {
   }, []);
 
   if (
-    [navigationRoutes.confirmWallets, navigationRoutes.confirmSwap].includes(location.pathname) &&
+    [navigationRoutes.confirmWallets, navigationRoutes.confirmSwap].includes(
+      location.pathname
+    ) &&
     ref.current
   )
     return <Home />;

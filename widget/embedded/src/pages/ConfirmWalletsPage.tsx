@@ -10,20 +10,16 @@ import {
   getRequiredChains,
   getSelectableWallets,
   isExperimentalChain,
-  SelectedWallet,
 } from '../utils/wallets';
 import { requiredWallets } from '../utils/swap';
 import { decimalNumber } from '../utils/numbers';
 import { useMetaStore } from '../store/meta';
 import { Network, WalletType } from '@rango-dev/wallets-shared';
-
-export interface SelectableWallet extends SelectedWallet {
-  image: string;
-  selected: boolean;
-}
+import { useNavigateBack } from '../hooks/useNavigateBack';
 
 export function ConfirmWalletsPage() {
   const navigate = useNavigate();
+  const { navigateBackFrom } = useNavigateBack();
   const bestRoute = useBestRouteStore.use.bestRoute();
 
   const { blockchains } = useMetaStore.use.meta();
@@ -50,8 +46,7 @@ export function ConfirmWalletsPage() {
   const selectableWallets = getSelectableWallets(
     accounts,
     selectedWallets,
-    getWalletInfo,
-    getRequiredChains(bestRoute)
+    getWalletInfo
   );
 
   const handleConnectChain = (wallet: string) => {
@@ -65,11 +60,11 @@ export function ConfirmWalletsPage() {
     <ConfirmWallets
       requiredWallets={getRequiredChains(bestRoute)}
       selectableWallets={selectableWallets}
-      onBack={() => navigate(-1)}
+      onBack={navigateBackFrom.bind(null, navigationRoutes.confirmWallets)}
       swap={bestRoute!}
       fromAmount={fromAmount}
       toAmount={toAmount}
-      onConfirm={() => navigate(navigationRoutes.confirmSwap)}
+      onConfirm={navigate.bind(null, navigationRoutes.confirmSwap)}
       onChange={(wallet) => setSelectedWallet(wallet)}
       confirmDisabled={confirmDisabled}
       handleConnectChain={(wallet) => handleConnectChain(wallet)}
