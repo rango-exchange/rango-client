@@ -66,8 +66,11 @@ interface PropTypes {
   toChain: BlockchainMeta | null;
   toToken: Token | null;
   fromAmount: number;
+  titleSize?: number;
+  titleWeight?: number;
 }
 export function Home(props: PropTypes) {
+  const { title = 'SWAP', titleSize = 18, titleWeight = 600 } = props;
 
   const waningMessage = '';
   const isRouterInContext = useInRouterContext();
@@ -151,7 +154,12 @@ export function Home(props: PropTypes) {
   }, [props]);
   return (
     <Container>
-      <Header onClickRefresh={fetchBestRoute} />
+      <Header
+        title={title}
+        titleSize={titleSize}
+        titleWeight={titleWeight}
+        onClickRefresh={fetchBestRoute}
+      />
       <TokenInfo
         type="From"
         chain={fromChain}
