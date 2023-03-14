@@ -15,8 +15,6 @@ export type VirtualizedListItem = ({
 type PropTypes = {
   itemCount: number;
   hasNextPage: boolean;
-  isNextPageLoading: boolean;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   loadNextPage: () => void;
   Item: VirtualizedListItem;
   innerElementType: ReactElementType | undefined;
@@ -24,15 +22,8 @@ type PropTypes = {
 };
 
 export function VirtualizedList(props: PropsWithChildren<PropTypes>) {
-  const {
-    itemCount,
-    hasNextPage,
-    isNextPageLoading,
-    loadNextPage,
-    Item,
-    innerElementType,
-    size,
-  } = props;
+  const { itemCount, hasNextPage, loadNextPage, Item, innerElementType, size } =
+    props;
   const listRef = useRef<any>(null);
 
   const isItemLoaded = (index: number) => !hasNextPage || index < itemCount;
@@ -41,13 +32,7 @@ export function VirtualizedList(props: PropsWithChildren<PropTypes>) {
     <InfiniteLoader
       isItemLoaded={isItemLoaded}
       itemCount={hasNextPage ? itemCount + 1 : itemCount}
-      loadMoreItems={
-        isNextPageLoading
-          ? () => {
-              // do nothing
-            }
-          : loadNextPage
-      }
+      loadMoreItems={loadNextPage}
       threshold={1}
     >
       {({ onItemsRendered }) => {
