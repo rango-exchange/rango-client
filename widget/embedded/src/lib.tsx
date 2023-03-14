@@ -18,7 +18,7 @@ import { isEvmBlockchain } from 'rango-sdk';
 import { Configs } from './types';
 import { useSettingsStore } from './store/settings';
 import useSelectLanguage from './hooks/useSelectLanguage';
-import "./i18n"
+import './i18n';
 
 export type WidgetProps = {
   configs: Configs;
@@ -39,7 +39,7 @@ export const SwapBox: React.FC<WidgetProps> = ({ configs }) => {
 
   const evmBasedChainNames = blockchains
     .filter(isEvmBlockchain)
-    .map((chain) => chain.name);
+    .map(chain => chain.name);
 
   const onUpdateState: EventHandler = (type, event, value, supportedChains) => {
     if (event === Events.ACCOUNTS) {
@@ -63,9 +63,9 @@ export const SwapBox: React.FC<WidgetProps> = ({ configs }) => {
   const providers =
     wallets === 'all'
       ? allProviders()
-      : allProviders().filter((provider) => {
+      : allProviders().filter(provider => {
           const type = provider.config.type;
-          return wallets.find((w) => w === type);
+          return wallets.find(w => w === type);
         });
 
   useEffect(() => {
@@ -74,7 +74,6 @@ export const SwapBox: React.FC<WidgetProps> = ({ configs }) => {
 
   useEffect(() => {
     changeLanguage(configs?.languege);
-
   }, [configs?.languege]);
 
   return (
@@ -84,7 +83,12 @@ export const SwapBox: React.FC<WidgetProps> = ({ configs }) => {
       onUpdateState={onUpdateState}
     >
       <div id="pageContainer" className={activeTheme}>
-        <SwapContainer>
+        <SwapContainer
+          style={{
+            width: configs?.width || 'auto',
+            height: configs?.height || 'auto',
+          }}
+        >
           <AppRouter>
             <Layout configs={configs} />
           </AppRouter>

@@ -1,3 +1,4 @@
+import { CSSProperties } from '@stitches/react';
 import React, { PropsWithChildren } from 'react';
 import { styled } from '../../theme';
 
@@ -184,14 +185,18 @@ export interface PropTypes {
   mb?: 2 | 4 | 8 | 12;
   ml?: 2 | 4 | 8 | 12;
   mr?: 2 | 4 | 8 | 12;
+  className?: string;
+  style?: CSSProperties;
+
 }
 
 export function Typography({
   children,
+  className,
   ...props
 }: PropsWithChildren<PropTypes>) {
   return (
-    <TypographyContainer className="_typography" {...props}>
+    <TypographyContainer className={`_typography ${className}`} {...props}>
       {children}
     </TypographyContainer>
   );

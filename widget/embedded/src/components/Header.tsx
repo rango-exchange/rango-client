@@ -1,5 +1,5 @@
 import React from 'react';
-import { styled, Typography } from '@rango-dev/ui';
+import { css, styled, Typography } from '@rango-dev/ui';
 import { HeaderButtons } from './HeaderButtons';
 import { useTranslation } from 'react-i18next';
 
@@ -14,14 +14,23 @@ export const HeaderContainer = styled('div', {
 export interface PropTypes {
   onClickRefresh: () => void;
   title?: string;
+  titleSize?: number;
+  titleWeight?: number;
 }
 
 export function Header(props: PropTypes) {
-  const { onClickRefresh, title } = props;
+  const { onClickRefresh, title, titleSize, titleWeight } = props;
   const { t } = useTranslation();
+  const titleStyle = css({
+    fontSize: `${titleSize}px !important`,
+    fontWeight: `${titleWeight} !important`,
+  });
+
   return (
     <HeaderContainer>
-      <Typography variant="h4">{t(title.toLocaleLowerCase()) || title}</Typography>
+      <Typography variant="h4" className={titleStyle()}>
+        {t(title.toLocaleLowerCase()) || title}
+      </Typography>
       <HeaderButtons onClickRefresh={onClickRefresh} />
     </HeaderContainer>
   );
