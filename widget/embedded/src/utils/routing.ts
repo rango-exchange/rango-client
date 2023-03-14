@@ -8,29 +8,45 @@ import { areEqual } from './common';
 import { SelectedWallet } from './wallets';
 
 export const getBestRouteToTokenUsdPrice = (
-  bestRoute: BestRouteResponse | null,
+  bestRoute: BestRouteResponse | null
 ): number | null | undefined =>
   bestRoute?.result?.swaps[bestRoute?.result?.swaps.length - 1].to.usdPrice;
 
-export function isNumberOfSwapsChanged(route1: BestRouteResponse, route2: BestRouteResponse) {
+export function isNumberOfSwapsChanged(
+  route1: BestRouteResponse,
+  route2: BestRouteResponse
+) {
   const route1Swaps = route1.result?.swaps || [];
   const route2Swaps = route2.result?.swaps || [];
   return route1Swaps.length !== route2Swaps.length;
 }
 
-export function isRouteSwappersUpdated(route1: BestRouteResponse, route2: BestRouteResponse) {
-  const route1Swappers = route1.result?.swaps.map((swap) => swap.swapperId) || [];
-  const route2Swappers = route2.result?.swaps.map((swap) => swap.swapperId) || [];
+export function isRouteSwappersUpdated(
+  route1: BestRouteResponse,
+  route2: BestRouteResponse
+) {
+  const route1Swappers =
+    route1.result?.swaps.map((swap) => swap.swapperId) || [];
+  const route2Swappers =
+    route2.result?.swaps.map((swap) => swap.swapperId) || [];
   return !areEqual(route1Swappers, route2Swappers);
 }
 
-export function isRouteInternalCoinsUpdated(route1: BestRouteResponse, route2: BestRouteResponse) {
-  const route1InternalCoins = route1.result?.swaps.map((swap) => swap.to.symbol) || [];
-  const route2InternalCoins = route2.result?.swaps.map((swap) => swap.to.symbol) || [];
+export function isRouteInternalCoinsUpdated(
+  route1: BestRouteResponse,
+  route2: BestRouteResponse
+) {
+  const route1InternalCoins =
+    route1.result?.swaps.map((swap) => swap.to.symbol) || [];
+  const route2InternalCoins =
+    route2.result?.swaps.map((swap) => swap.to.symbol) || [];
   return !areEqual(route1InternalCoins, route2InternalCoins);
 }
 
-export const isRouteChanged = (route1: BestRouteResponse, route2: BestRouteResponse): boolean => {
+export const isRouteChanged = (
+  route1: BestRouteResponse,
+  route2: BestRouteResponse
+): boolean => {
   return (
     isNumberOfSwapsChanged(route1, route2) ||
     isRouteSwappersUpdated(route1, route2) ||
@@ -38,7 +54,10 @@ export const isRouteChanged = (route1: BestRouteResponse, route2: BestRouteRespo
   );
 };
 
-export const outToRatioHasWarning = (fromUsdValue: BigNumber | null, outToInRatio: BigNumber | 0) =>
+export const outToRatioHasWarning = (
+  fromUsdValue: BigNumber | null,
+  outToInRatio: BigNumber | 0
+) =>
   (parseInt(outToInRatio?.toFixed(2) || '0') <= -10 &&
     (fromUsdValue === null || fromUsdValue.gte(new BigNumber(200)))) ||
   (parseInt(outToInRatio?.toFixed(2) || '0') <= -5 &&
@@ -46,13 +65,14 @@ export const outToRatioHasWarning = (fromUsdValue: BigNumber | null, outToInRati
 
 export const getRequiredBalanceOfWallet = (
   selectedWallet: SelectedWallet,
-  fee: SimulationValidationStatus[] | null,
+  fee: SimulationValidationStatus[] | null
 ): SimulationAssetAndAmount[] | null => {
   if (fee === null) return null;
   const relatedFeeStatus = fee
     ?.find((item) => item.blockchain === selectedWallet.chain)
     ?.wallets.find(
-      (wallet) => wallet.address?.toLowerCase() === selectedWallet.address.toLowerCase(),
+      (wallet) =>
+        wallet.address?.toLowerCase() === selectedWallet.address.toLowerCase()
     );
   if (!relatedFeeStatus) return null;
   return relatedFeeStatus.requiredAssets;
