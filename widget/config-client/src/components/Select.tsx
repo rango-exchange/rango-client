@@ -63,8 +63,8 @@ export function Select({ label, value, onChange, modalTitle, list, name }: PropT
           <SecondaryPage
             textField={true}
             hasHeader={false}
-            textFieldPlaceholder={`Search ${modalTitle} By Name`}
-            Content={({ searchedFor }) =>
+            textFieldPlaceholder={`Search ${modalTitle} By Name`}>
+            {(searchedFor) =>
               filterList(list, searchedFor).map((item, index) => (
                 <>
                   <Button
@@ -81,10 +81,11 @@ export function Select({ label, value, onChange, modalTitle, list, name }: PropT
                 </>
               ))
             }
-          />
+          </SecondaryPage>
         }
         title={modalTitle}
-        containerStyle={{ width: '560px', height: '655px' }}/>
+        containerStyle={{ width: '560px', height: '655px' }}
+      />
     </div>
   );
 }
