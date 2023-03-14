@@ -12,6 +12,7 @@ import {
 import {
   WalletInfo as ModalWalletInfo,
   WalletState as WalletStatus,
+  SelectableWallet,
 } from '@rango-dev/ui';
 import {
   BestRouteResponse,
@@ -20,7 +21,6 @@ import {
   WalletDetail,
 } from 'rango-sdk';
 import { readAccountAddress } from '@rango-dev/wallets-core';
-import { SelectableWallet } from '../pages/ConfirmWalletsPage';
 import { Account, Balance, TokenBalance } from '../store/wallets';
 import { numberToString } from './numbers';
 import BigNumber from 'bignumber.js';
@@ -170,9 +170,8 @@ type Blockchain = { name: string; accounts: Balance[] };
 export function getSelectableWallets(
   accounts: Account[],
   selectedWallets: SelectedWallet[],
-  getWalletInfo: (type: WalletType) => WalletInfo,
-  requiredChains?: string[]
-) {
+  getWalletInfo: (type: WalletType) => WalletInfo
+): SelectableWallet[] {
   const connectedWallets: SelectableWallet[] = accounts.map((account) => ({
     address: account.address,
     walletType: account.walletType,
@@ -186,22 +185,8 @@ export function getSelectableWallets(
     ),
   }));
 
-  return requiredChains
-    ? connectedWallets.filter(
-        (wallet, index, array) =>
-          requiredChains.includes(wallet.chain) &&
-          array.findIndex((w) => w.address === wallet.address) === index
-      )
-    : removeDuplicateWallets(connectedWallets, 'walletType');
+  return connectedWallets;
 }
-
-const removeDuplicateWallets = (
-  arr: SelectableWallet[],
-  key: string
-): SelectableWallet[] => {
-  const map = new Map(arr.map((item) => [item[key], item]));
-  return Array.from(map.values());
-};
 
 export function getBalanceFromWallet(
   balances: Balance[],

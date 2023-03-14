@@ -2,7 +2,6 @@ import React from 'react';
 import { TokenSelector } from '@rango-dev/ui';
 import { useBestRouteStore } from '../store/bestRoute';
 import { useMetaStore } from '../store/meta';
-import { useNavigate } from 'react-router-dom';
 import { Token } from 'rango-sdk';
 import { numberToString } from '../utils/numbers';
 import BigNumber from 'bignumber.js';
@@ -10,6 +9,8 @@ import { getBalanceFromWallet } from '../utils/wallets';
 import { useWalletsStore } from '../store/wallets';
 import { sortedTokens } from '../utils/wallets';
 import { ZERO } from '../constants/numbers';
+import { useNavigateBack } from '../hooks/useNavigateBack';
+import { navigationRoutes } from '../constants/navigationRoutes';
 
 interface PropTypes {
   type: 'from' | 'to';
@@ -24,7 +25,7 @@ export interface TokenWithBalance extends Token {
 
 export function SelectTokenPage(props: PropTypes) {
   const { type } = props;
-  const navigate = useNavigate();
+  const { navigateBackFrom } = useNavigateBack();
 
   const { tokens } = useMetaStore.use.meta();
   const fromChain = useBestRouteStore.use.fromChain();
@@ -41,30 +42,40 @@ export function SelectTokenPage(props: PropTypes) {
     return token.blockchain === toChain?.name;
   });
 
-  const TokensWithBalance: TokenWithBalance[] = tokenWithSelectedChain.map((token) => {
-    const tokenAmount = numberToString(
-      new BigNumber(
-        getBalanceFromWallet(balance, token.blockchain, token.symbol, token.address)?.amount ||
-          ZERO,
-      ),
-    );
-
-    let tokenUsdValue = '';
-    if (token.usdPrice)
-      tokenUsdValue = numberToString(
+  const TokensWithBalance: TokenWithBalance[] = tokenWithSelectedChain.map(
+    (token) => {
+      const tokenAmount = numberToString(
         new BigNumber(
-          getBalanceFromWallet(balance, token.blockchain, token.symbol, token.address)?.amount ||
-            ZERO,
-        ).multipliedBy(token.usdPrice),
+          getBalanceFromWallet(
+            balance,
+            token.blockchain,
+            token.symbol,
+            token.address
+          )?.amount || ZERO
+        )
       );
-    return {
-      ...token,
-      balance: {
-        amount: tokenAmount !== '0' ? tokenAmount : '',
-        usdValue: tokenUsdValue !== '0' ? tokenUsdValue : '',
-      },
-    };
-  });
+
+      let tokenUsdValue = '';
+      if (token.usdPrice)
+        tokenUsdValue = numberToString(
+          new BigNumber(
+            getBalanceFromWallet(
+              balance,
+              token.blockchain,
+              token.symbol,
+              token.address
+            )?.amount || ZERO
+          ).multipliedBy(token.usdPrice)
+        );
+      return {
+        ...token,
+        balance: {
+          amount: tokenAmount !== '0' ? tokenAmount : '',
+          usdValue: tokenUsdValue !== '0' ? tokenUsdValue : '',
+        },
+      };
+    }
+  );
 
   const sortedTokenList = sortedTokens(TokensWithBalance, type, balance);
 
@@ -76,9 +87,9 @@ export function SelectTokenPage(props: PropTypes) {
       onChange={(token) => {
         if (type === 'from') setFromToken(token);
         else setToToken(token);
-        navigate(-1);
+        navigateBackFrom(navigationRoutes.fromToken);
       }}
-      onBack={navigate.bind(null, -1)}
+      onBack={navigateBackFrom.bind(null, navigationRoutes.fromToken)}
     />
   );
 }

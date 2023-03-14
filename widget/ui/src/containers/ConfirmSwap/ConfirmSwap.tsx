@@ -1,5 +1,5 @@
 import { BestRouteResponse } from 'rango-sdk';
-import React, { Fragment, PropsWithChildren } from 'react';
+import React, { Fragment, PropsWithChildren, ReactNode } from 'react';
 import { Alert } from '../../components/Alert';
 import { Button } from '../../components/Button';
 import { RetryIcon, GasIcon } from '../../components/Icon';
@@ -7,6 +7,10 @@ import { SecondaryPage } from '../../components/SecondaryPage/';
 import { StepDetail } from '../../components/StepDetail';
 import { Typography } from '../../components/Typography';
 import { styled } from '../../theme';
+
+const MainContainer = styled('div', {
+  overflow: 'hidden',
+});
 
 export const Line = styled('div', {
   width: '0',
@@ -68,24 +72,38 @@ export const StyledUpdateIcon = styled(UpdateIcon, {
   cursor: 'pointer',
 });
 
+const BestRouteContainer = styled('div', {
+  overflow: 'auto',
+});
+
 const Alerts = styled('div', { paddingBottom: '$16' });
 
 export interface PropTypes {
   bestRoute: BestRouteResponse | null;
+  onRefresh?: React.MouseEventHandler<SVGElement>;
+  confirmButtonTitle: string;
+  confirmButtonDisabled: boolean;
   onBack: () => void;
   onConfirm?: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
   loading?: boolean;
-  error?: string;
-  warning?: string;
+  errors?: ReactNode[];
+  warnings?: ReactNode[];
+  extraMessages?: ReactNode;
 }
-export function ConfirmSwap({
-  bestRoute,
-  onBack,
-  onConfirm,
-  loading,
-  error,
-  warning,
-}: PropsWithChildren<PropTypes>) {
+export function ConfirmSwap(props: PropsWithChildren<PropTypes>) {
+  const {
+    bestRoute,
+    onRefresh,
+    onBack,
+    onConfirm,
+    loading,
+    errors,
+    warnings,
+    extraMessages,
+    confirmButtonTitle,
+    confirmButtonDisabled,
+  } = props;
+
   return (
     <SecondaryPage
       textField={false}
@@ -99,56 +117,76 @@ export function ConfirmSwap({
             loading={loading}
             variant="contained"
             onClick={onConfirm}
+            disabled={confirmButtonDisabled}
           >
-            Swap
+            {confirmButtonTitle}
           </Button>
         </Footer>
       }
-      Content={bestRoute?.result?.swaps.map((swap, index) => (
-        <Fragment key={index}>
+      TopButton={<StyledUpdateIcon size={24} onClick={onRefresh} />}
+    >
+      <MainContainer>
+        <div>
+          {extraMessages || null}
           <Alerts>
-            {error && <Alert description={error} type="error" />}
-            {warning && <Alert description={warning} type="warning" />}
+            {errors?.map((error, index) => (
+              <Alert type="error" key={index}>
+                {error}
+              </Alert>
+            ))}
+            {/* {error && warnings && <Spacer direction="vertical" size={16} />} */}
+            {warnings?.map((warning, index) => (
+              <Alert type="warning" key={index}>
+                {warning}
+              </Alert>
+            ))}
           </Alerts>
-          {index === 0 && (
-            <RelativeContainer>
+        </div>
+        <BestRouteContainer>
+          {bestRoute?.result?.swaps.map((swap, index) => (
+            <Fragment key={index}>
+              {index === 0 && (
+                <RelativeContainer>
+                  <StepDetail
+                    logo={swap.from.logo}
+                    symbol={swap.from.symbol}
+                    chainLogo={swap.from.blockchainLogo}
+                    blockchain={swap.from.blockchain}
+                    amount={swap.fromAmount}
+                  />
+                  <Dot />
+                </RelativeContainer>
+              )}
+              <Line />
+              <SwapperContainer>
+                <SwapperLogo src={swap.swapperLogo} alt={swap.swapperId} />
+                <div>
+                  <Typography ml={4} variant="caption">
+                    {swap.swapperType} from {swap.from.symbol} to{' '}
+                    {swap.to.symbol} via {swap.swapperId}{' '}
+                  </Typography>
+                  <Fee>
+                    <GasIcon />
+                    <Typography ml={4} variant="caption">
+                      {parseFloat(swap.fee[0].amount).toFixed(6)} estimated gas
+                      fee
+                    </Typography>
+                  </Fee>
+                </div>
+              </SwapperContainer>
+              <Line />
+              {index + 1 === bestRoute.result?.swaps.length && <ArrowDown />}
               <StepDetail
-                logo={swap.from.logo}
-                symbol={swap.from.symbol}
-                chainLogo={swap.from.blockchainLogo}
-                blockchain={swap.from.blockchain}
-                amount={swap.fromAmount}
+                logo={swap.to.logo}
+                symbol={swap.to.symbol}
+                chainLogo={swap.to.blockchainLogo}
+                blockchain={swap.to.blockchain}
+                amount={swap.toAmount}
               />
-              <Dot />
-            </RelativeContainer>
-          )}
-          <Line />
-          <SwapperContainer>
-            <SwapperLogo src={swap.swapperLogo} alt={swap.swapperId} />
-            <div>
-              <Typography ml={4} variant="caption">
-                {swap.swapperType} from {swap.from.symbol} to {swap.to.symbol}{' '}
-                via {swap.swapperId}{' '}
-              </Typography>
-              <Fee>
-                <GasIcon />
-                <Typography ml={4} variant="caption">
-                  {parseFloat(swap.fee[0].amount).toFixed(6)} estimated gas fee
-                </Typography>
-              </Fee>
-            </div>
-          </SwapperContainer>
-          <Line />
-          {index + 1 === bestRoute.result?.swaps.length && <ArrowDown />}
-          <StepDetail
-            logo={swap.to.logo}
-            symbol={swap.to.symbol}
-            chainLogo={swap.to.blockchainLogo}
-            blockchain={swap.to.blockchain}
-            amount={swap.toAmount}
-          />
-        </Fragment>
-      ))}
-    />
+            </Fragment>
+          ))}
+        </BestRouteContainer>
+      </MainContainer>
+    </SecondaryPage>
   );
 }

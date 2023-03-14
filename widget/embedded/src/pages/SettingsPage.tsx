@@ -5,17 +5,25 @@ import { useMetaStore } from '../store/meta';
 import { useNavigate } from 'react-router-dom';
 import { navigationRoutes } from '../constants/navigationRoutes';
 import { removeDuplicateFrom } from '../utils/common';
+import {
+  MAX_SLIPPAGE,
+  MIN_SLIPPGAE,
+  SLIPPAGES,
+} from '../constants/swapSettings';
+import { useNavigateBack } from '../hooks/useNavigateBack';
 
 export function SettingsPage() {
   const slippage = useSettingsStore.use.slippage();
   const setSlippage = useSettingsStore.use.setSlippage();
-  const disabledLiquiditySources = useSettingsStore.use.disabledLiquiditySources();
+  const disabledLiquiditySources =
+    useSettingsStore.use.disabledLiquiditySources();
   const customSlippage = useSettingsStore.use.customSlippage();
   const setCustomSlippage = useSettingsStore.use.setCustomSlippage();
   const theme = useSettingsStore.use.theme();
   const setTheme = useSettingsStore.use.setTheme();
   const { swappers } = useMetaStore.use.meta();
   const navigate = useNavigate();
+  const { navigateBackFrom } = useNavigateBack();
 
   const uniqueSwappersGroups: Array<{
     title: string;
@@ -42,17 +50,20 @@ export function SettingsPage() {
 
   return (
     <Settings
-      slippages={[1, 2, 3, 4]}
+      slippages={SLIPPAGES}
       selectedSlippage={slippage}
       onSlippageChange={(slippage) => setSlippage(slippage)}
       liquiditySources={uniqueSwappersGroups}
       selectedLiquiditySources={uniqueSwappersGroups.filter((s) => s.selected)}
-      onLiquiditySourcesClick={() => navigate(navigationRoutes.liquiditySources)}
-      onBack={navigate.bind(null, -1)}
+      onLiquiditySourcesClick={navigate.bind(
+        null,
+        navigationRoutes.liquiditySources
+      )}
+      onBack={navigateBackFrom.bind(null, navigationRoutes.settings)}
       customSlippage={customSlippage || NaN}
       onCustomSlippageChange={setCustomSlippage}
-      minSlippage={1}
-      maxSlippage={10}
+      minSlippage={MIN_SLIPPGAE}
+      maxSlippage={MAX_SLIPPAGE}
       selectedTheme={theme}
       onThemeChange={setTheme}
     />

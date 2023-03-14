@@ -33,7 +33,8 @@ export function TokenSelector(props: PropTypes) {
       title={`Select ${type} Token`}
       hasHeader={hasHeader}
       onBack={onBack}
-      Content={({ searchedFor }) => (
+    >
+      {(searchedFor) => (
         <TokenList
           searchedText={searchedFor}
           list={list}
@@ -43,6 +44,6 @@ export function TokenSelector(props: PropTypes) {
           onChange={onChange}
         />
       )}
-    />
+    </SecondaryPage>
   );
 }

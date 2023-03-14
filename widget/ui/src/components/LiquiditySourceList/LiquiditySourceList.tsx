@@ -1,5 +1,5 @@
 import { CSSProperties } from '@stitches/react';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { styled } from '../../theme';
 import { LiquiditySource } from '../../types/meta';
 import { Button } from '../Button/Button';
@@ -21,6 +21,7 @@ const groupLiquiditySources = (
 
 const LiquiditySourceType = styled(Typography, {
   position: 'sticky',
+  display: 'block',
   top: '0',
   marginTop: '$8',
   marginBottom: '$8',
@@ -55,13 +56,15 @@ export function LiquiditySourceList(props: PropTypes) {
       if (clickedItem.selected) return [...prevState, clickedItem];
       return prevState.filter((item) => item.title != clickedItem.title);
     });
-    setTimeout(() => {
-      onChange(clickedItem);
-    }, 200);
+    onChange(clickedItem);
   };
 
   const isSelected = (liquiditySource: LiquiditySource) =>
     !!selected.find((item) => liquiditySource.title === item.title);
+
+  useEffect(() => {
+    setSelected(list.filter((item) => item.selected));
+  }, [list]);
 
   return (
     <div style={{ height: '450px', ...listContainerStyle }}>
@@ -102,19 +105,17 @@ const LiquiditySourceItem = ({
   liquiditySource: LiquiditySource;
   selected: boolean;
   onChange: (clickedItem: LiquiditySource) => void;
-}) => {
-  return (
-    <Button
-      size="large"
-      align="start"
-      variant="outlined"
-      prefix={<LiquidityImage src={liquiditySource.logo} />}
-      suffix={<Switch checked={selected} />}
-      style={{ marginBottom: '12px' }}
-      type={selected ? 'primary' : undefined}
-      onClick={onChange.bind(null, liquiditySource)}
-    >
-      <Typography variant="body1">{liquiditySource.title}</Typography>
-    </Button>
-  );
-};
+}) => (
+  <Button
+    size="large"
+    align="start"
+    variant="outlined"
+    prefix={<LiquidityImage src={liquiditySource.logo} />}
+    suffix={<Switch checked={selected} />}
+    style={{ marginBottom: '12px' }}
+    type={selected ? 'primary' : undefined}
+    onClick={onChange.bind(null, liquiditySource)}
+  >
+    <Typography variant="body1">{liquiditySource.title}</Typography>
+  </Button>
+);

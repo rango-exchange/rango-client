@@ -3,9 +3,14 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useWallets } from '@rango-dev/wallets-core';
 import { navigationRoutes } from '../constants/navigationRoutes';
+import { useUiStore } from '../store/ui';
 import { AppRoutes } from './AppRoutes';
 import { useWalletsStore } from '../store/wallets';
-import { calculateWalletUsdValue, getSelectableWallets } from '../utils/wallets';
+import {
+  calculateWalletUsdValue,
+  getSelectableWallets,
+} from '../utils/wallets';
+import { removeDuplicateFrom } from '../utils/common';
 
 const Header = styled('div', {
   display: 'flex',
@@ -25,8 +30,15 @@ export function Layout() {
   const navigate = useNavigate();
   const { balances, accounts, selectedWallets } = useWalletsStore();
   const { getWalletInfo } = useWallets();
-  const filterSelelectedWallets = getSelectableWallets(accounts, selectedWallets, getWalletInfo);
+  const connectedWalletsImages = removeDuplicateFrom(
+    getSelectableWallets(accounts, selectedWallets, getWalletInfo).map(
+      (w) => w.image
+    )
+  );
+
   const totalBalance = calculateWalletUsdValue(balances);
+  const connectWalletsButtonDisabled =
+    useUiStore.use.connectWalletsButtonDisabled();
 
   return (
     <>
@@ -36,10 +48,14 @@ export function Layout() {
           suffix={<AddWalletIcon size={20} />}
           variant="ghost"
           flexContent
-          onClick={() => navigate(navigationRoutes.wallets)}>
-          {accounts?.length ? (
-            filterSelelectedWallets.map((selectedWallet, index) => (
-              <WalletImage key={index} src={selectedWallet.image} />
+          onClick={() => {
+            if (!connectWalletsButtonDisabled)
+              navigate(navigationRoutes.wallets);
+          }}
+        >
+          {connectedWalletsImages?.length ? (
+            connectedWalletsImages.map((walletImage, index) => (
+              <WalletImage key={index} src={walletImage} />
             ))
           ) : (
             <></>
