@@ -1,4 +1,5 @@
 import React from 'react';
+import { containsText } from '../../helper';
 import { SecondaryPage } from '../SecondaryPage/SecondaryPage';
 import { TokenList } from '../TokenList';
 import { TokenWithAmount } from '../TokenList/TokenList';
@@ -13,6 +14,14 @@ export interface PropTypes {
   onBack?: () => void;
   selectedList?: TokenWithAmount[] | 'all';
 }
+
+const filterTokens = (list: TokenWithAmount[], searchedFor: string) =>
+  list.filter(
+    (token) =>
+      containsText(token.symbol, searchedFor) ||
+      containsText(token.address || '', searchedFor) ||
+      containsText(token.name || '', searchedFor)
+  );
 
 export function TokenSelector(props: PropTypes) {
   const {
@@ -36,7 +45,7 @@ export function TokenSelector(props: PropTypes) {
       Content={({ searchedFor }) => (
         <TokenList
           searchedText={searchedFor}
-          list={list}
+          list={filterTokens(list, searchedFor)}
           selected={selected}
           selectedList={selectedList}
           multiSelect={multiSelect}
