@@ -201,3 +201,8 @@ export function logAsSection(title, sub = '') {
 function packageNameWithoutScope(name) {
   return name.replace(/@.+\//, '');
 }
+
+// we are adding a fallback, to make sure predefiend VERCEL_PACKAGES always will be true.
+export function getProjectIdFromEnv(name) {
+  return process.env[name] || 'NOT SET';
+}
