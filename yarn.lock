@@ -18703,16 +18703,6 @@ rango-sdk-basic@^0.0.9:
     bignumber.js "^9.0.2"
     uuid "^8.3.2"
 
-rango-sdk@^0.0.10:
-  version "0.0.10"
-  resolved "https://registry.yarnpkg.com/rango-sdk/-/rango-sdk-0.0.10.tgz#c6d6eeca2a50c1643aa8954b12c82a0b479d44a8"
-  integrity sha512-ByBXyCHheaVshv+D1KEVVMcmKahoW0MQD2JcjdbVUrMczZeNJqmxRRHqS80k3gkkLll6QfHSrGRRuPubLLHyxg==
-  dependencies:
-    axios "^1.2.6"
-    bignumber.js "^9.1.1"
-    rango-types "^0.1.1"
-    uuid "^9.0.0"
-
 rango-sdk@^0.1.12, rango-sdk@^0.1.8:
   version "0.1.12"
   resolved "https://registry.yarnpkg.com/rango-sdk/-/rango-sdk-0.1.12.tgz#111e73c6e46500f365c8b8db7d0bde2fb0a512fb"
@@ -18733,10 +18723,15 @@ rango-sdk@^0.1.16:
     rango-types "^0.1.16"
     uuid-random "^1.3.2"
 
-rango-types@^0.1.1:
-  version "0.1.12"
-  resolved "https://registry.yarnpkg.com/rango-types/-/rango-types-0.1.12.tgz#e19c8d5bf1c0f7dddf9d6dc97238cf54844d7cef"
-  integrity sha512-nT6NRaxo7Ze1SUAHbbxf8FVzw9HT2UCP79b4iJtBvrchpFXwOsonfFgiQaB//Hwx/Cru0v0MFeK3dl4gEYGNYg==
+rango-sdk@^0.1.17:
+  version "0.1.17"
+  resolved "https://registry.yarnpkg.com/rango-sdk/-/rango-sdk-0.1.17.tgz#e1d16cffad5f0d41d6f905265c7351c6996e1081"
+  integrity sha512-TDNR5LAN7w5YWdvYCRAyaeiKchY4LvMvk5K0Z1yCD1aamvagFRsEiBGSrSTp/rxdn4pSZNdtiiYoqMFEOM7ozQ==
+  dependencies:
+    axios "^1.2.6"
+    bignumber.js "^9.1.1"
+    rango-types "^0.1.17"
+    uuid-random "^1.3.2"
 
 rango-types@^0.1.13:
   version "0.1.13"
@@ -18747,6 +18742,11 @@ rango-types@^0.1.16:
   version "0.1.16"
   resolved "https://registry.yarnpkg.com/rango-types/-/rango-types-0.1.16.tgz#f2eb711164fdc508608692dac4375a150dcb0e59"
   integrity sha512-PmnndwqFqIcjyDsyY97zPcXFTICKLu8wU2oxwtzky7KOYqGQnG3ukJkgvRiN/n+B0ulvdPjE8b5E6VFkSxC0Wg==
+
+rango-types@^0.1.17:
+  version "0.1.17"
+  resolved "https://registry.yarnpkg.com/rango-types/-/rango-types-0.1.17.tgz#3c7cc26f45bc2fe1c248bbcc512a253c12b4263f"
+  integrity sha512-LH6XovZv3hdUsFqN6PVMWqTGqv0ZYBM2L4da46sGmq26EQx4Jpzg7Hbvy9Gk1Ak+Hq8r8zVmvDgFgMnkN9He0Q==
 
 raw-body@2.5.1:
   version "2.5.1"
