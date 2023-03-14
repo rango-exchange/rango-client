@@ -25,17 +25,19 @@ export function SettingsPage() {
   const navigate = useNavigate();
   const { navigateBackFrom } = useNavigateBack();
 
+  const infiniteApprove = useSettingsStore.use.infiniteApprove();
+  const toggleInfiniteApprove = useSettingsStore.use.toggleInfiniteApprove();
   const uniqueSwappersGroups: Array<{
     title: string;
     logo: string;
     type: 'BRIDGE' | 'AGGREGATOR' | 'DEX';
     selected: boolean;
   }> = [];
-  removeDuplicateFrom(swappers.map((s) => s.swapperGroup))
-    .map((swapperGroup) => {
-      return swappers.find((s) => s.swapperGroup === swapperGroup);
+  removeDuplicateFrom(swappers.map(s => s.swapperGroup))
+    .map(swapperGroup => {
+      return swappers.find(s => s.swapperGroup === swapperGroup);
     })
-    .find((s) => {
+    .find(s => {
       if (s) {
         for (const type of s.types) {
           uniqueSwappersGroups.push({
@@ -52,7 +54,7 @@ export function SettingsPage() {
     <Settings
       slippages={SLIPPAGES}
       selectedSlippage={slippage}
-      onSlippageChange={(slippage) => setSlippage(slippage)}
+      onSlippageChange={slippage => setSlippage(slippage)}
       liquiditySources={uniqueSwappersGroups}
       selectedLiquiditySources={uniqueSwappersGroups.filter((s) => s.selected)}
       onLiquiditySourcesClick={navigate.bind(
@@ -66,6 +68,8 @@ export function SettingsPage() {
       maxSlippage={MAX_SLIPPAGE}
       selectedTheme={theme}
       onThemeChange={setTheme}
+      infiniteApprove={infiniteApprove}
+      toggleInfiniteApprove={toggleInfiniteApprove}
     />
   );
 }

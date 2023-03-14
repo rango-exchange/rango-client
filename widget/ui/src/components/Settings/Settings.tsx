@@ -7,6 +7,7 @@ import { Chip } from '../Chip';
 import { LiquiditySource } from '../../types/meta';
 import { TextField } from '../TextField';
 import { Radio } from '../Radio';
+import { Switch } from '../Switch';
 
 const BaseContainer = styled('div', {
   borderRadius: '$5',
@@ -27,6 +28,11 @@ const LiquiditySourceContainer = styled(BaseContainer, {
   justifyContent: 'space-between',
   marginTop: '$32',
   cursor: 'pointer',
+});
+const InfiniteContainer = styled(BaseContainer, {
+  display: 'flex',
+  justifyContent: 'space-between',
+  marginTop: '$32',
 });
 
 const StyledAngleRight = styled(AngleRightIcon, { marginLeft: '$8' });
@@ -57,6 +63,8 @@ export interface PropTypes {
   selectedTheme: Theme;
   onThemeChange: (theme: Theme) => void;
   onBack: () => void;
+  infiniteApprove: boolean;
+  toggleInfiniteApprove: (infinite: boolean) => void;
 }
 
 export function Settings(props: PropTypes) {
@@ -73,6 +81,8 @@ export function Settings(props: PropTypes) {
     minSlippage,
     selectedTheme,
     onThemeChange,
+    toggleInfiniteApprove,
+    infiniteApprove,
   } = props;
 
   const [selectedSlippage, setSelectedSlippage] = useState(
@@ -141,6 +151,10 @@ export function Settings(props: PropTypes) {
           style={{ marginTop: '$24' }}
         />
       </ThemesContainer>
+      <InfiniteContainer>
+        <Typography variant="body1">Infinite Approval</Typography>
+        <Switch checked={infiniteApprove} onChange={toggleInfiniteApprove} />
+      </InfiniteContainer>
       <LiquiditySourceContainer onClick={onLiquiditySourcesClick}>
         <Typography variant="body1">Liquidity Sources</Typography>
         <LiquiditySourceNumber>
