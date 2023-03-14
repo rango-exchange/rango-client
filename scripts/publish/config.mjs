@@ -1,3 +1,5 @@
+import { getProjectIdFromEnv } from "./utils.mjs";
+
 const scope = `@rango-dev`;
 export const VERCEL_ORG_ID = process.env.VERCEL_ORG_ID;
 export const VERCEL_TOKEN = process.env.VERCEL_TOKEN;
