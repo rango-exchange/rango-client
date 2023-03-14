@@ -78,6 +78,7 @@ export function Home() {
   const outputAmount = useBestRouteStore.use.outputAmount();
   const outputUsdValue = useBestRouteStore.use.outputUsdValue();
   const bestRoute = useBestRouteStore.use.bestRoute();
+  const swappers = useMetaStore.use.meta().swappers;
   const tokens = useMetaStore.use.meta().tokens;
   const fetchingBestRoute = useBestRouteStore.use.loading();
   const bestRouteError = useBestRouteStore.use.error();
@@ -128,6 +129,7 @@ export function Home() {
     priceImpactCanNotBeComputed,
     needsToWarnEthOnPath
   );
+  console.log('swap', swap);
 
   const totalFeeInUsd = getTotalFeeInUsd(bestRoute, tokens);
 
