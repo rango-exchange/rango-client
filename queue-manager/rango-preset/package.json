@@ -1,0 +1,59 @@
+{
+  "name": "@rango-dev/queue-manager-rango-preset",
+  "version": "0.1.10-next.75",
+  "license": "MIT",
+  "module": "dist/queue-manager-rango-preset.esm.js",
+  "main": "dist/index.js",
+  "typings": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "src"
+  ],
+  "scripts": {
+    "dev": "tsdx watch",
+    "build": "tsdx build",
+    "test": "tsdx test",
+    "lint": "tsdx lint",
+    "size": "size-limit",
+    "analyze": "size-limit --why"
+  },
+  "peerDependencies": {
+    "@rango-dev/queue-manager-core": "*",
+    "@rango-dev/wallets-core": "*",
+    "@rango-dev/wallets-shared": "*",
+    "@sentry/browser": "*",
+    "bignumber.js": "*",
+    "uuid": "*"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "tsdx lint"
+    }
+  },
+  "prettier": {
+    "printWidth": 80,
+    "semi": true,
+    "singleQuote": true,
+    "trailingComma": "es5"
+  },
+  "size-limit": [
+    {
+      "path": "dist/queue-manager-rango-preset.cjs.production.min.js",
+      "limit": "10 KB"
+    },
+    {
+      "path": "dist/queue-manager-rango-preset.esm.js",
+      "limit": "10 KB"
+    }
+  ],
+  "devDependencies": {
+    "@types/uuid": "^8.3.4"
+  },
+  "dependencies": {
+    "rango-sdk": "^0.1.17",
+    "uuid": "^9.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
