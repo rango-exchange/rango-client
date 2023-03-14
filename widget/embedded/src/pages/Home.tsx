@@ -10,7 +10,7 @@ import React, { useState } from 'react';
 import { useInRouterContext, useNavigate } from 'react-router-dom';
 import { Header } from '../components/Header';
 import { TokenInfo } from '../components/TokenInfo';
-import { useBestRouteStore } from '../store/bestRoute';
+import { fetchBestRoute, useBestRouteStore } from '../store/bestRoute';
 import { BottomLogo } from '../components/BottomLogo';
 import { SwithFromAndTo } from '../components/SwitchFromAndTo';
 import { Footer } from '../components/Footer';
@@ -135,7 +135,7 @@ export function Home() {
 
   return (
     <Container>
-      <Header onClickRefresh={() => {}} />
+      <Header onClickRefresh={fetchBestRoute} />
       <TokenInfo
         type="From"
         chain={fromChain}

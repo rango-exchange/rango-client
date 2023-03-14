@@ -129,12 +129,16 @@ export function ConfirmSwap(props: PropsWithChildren<PropTypes>) {
         <div>
           {extraMessages || null}
           <Alerts>
-            {errors?.map((error) => (
-              <Alert type="error">{error}</Alert>
+            {errors?.map((error, index) => (
+              <Alert type="error" key={index}>
+                {error}
+              </Alert>
             ))}
             {/* {error && warnings && <Spacer direction="vertical" size={16} />} */}
-            {warnings?.map((warning) => (
-              <Alert type="warning">{warning}</Alert>
+            {warnings?.map((warning, index) => (
+              <Alert type="warning" key={index}>
+                {warning}
+              </Alert>
             ))}
           </Alerts>
         </div>

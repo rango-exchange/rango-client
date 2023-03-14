@@ -76,8 +76,8 @@ export function ConfirmWallets(props: PropsWithChildren<PropTypes>) {
     >
       <>
         <Typography variant="h6" mb={12}>
-          Confirm swap {fromAmount} {lastStep?.from.symbol} (
-          {firstStep?.from.blockchain}) to {toAmount} {lastStep?.to.symbol} (on{' '}
+          Confirm swap {fromAmount} {firstStep?.from.symbol} (
+          {firstStep?.from.blockchain}) to {toAmount} {lastStep?.to.symbol} (on
           {lastStep?.to.blockchain})
         </Typography>
         {requiredWallets.map((wallet, index) => {

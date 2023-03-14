@@ -6,6 +6,8 @@ import { ConfirmSwapExtraMessages } from '../components/warnings/ConfirmSwapExtr
 import { useNavigateBack } from '../hooks/useNavigateBack';
 import { navigationRoutes } from '../constants/navigationRoutes';
 import { confirmSwap, useConfirmSwapStore } from '../store/confirmSwap';
+import { ConfirmSwapErrors } from '../components/ConfirmSwapErrors';
+import { ConfirmSwapWarnings } from '../components/ConfirmSwapWarnings';
 
 export function ConfirmSwapPage() {
   const { navigateBackFrom } = useNavigateBack();
@@ -16,7 +18,7 @@ export function ConfirmSwapPage() {
   const warnings = useConfirmSwapStore.use.warnings();
   const errors = useConfirmSwapStore.use.errors();
 
-  console.log(loading, warnings, errors);
+  console.log('loading:', loading, 'warnings:', warnings, 'errors:', errors);
 
   const slippage = useSettingsStore.use.slippage();
   const customSlippage = useSettingsStore.use.customSlippage();
@@ -28,13 +30,15 @@ export function ConfirmSwapPage() {
       onBack={navigateBackFrom.bind(null, navigationRoutes.confirmSwap)}
       bestRoute={bestRoute}
       loading={loading}
-      errors={errors}
-      warnings={warnings}
+      errors={ConfirmSwapErrors(errors)}
+      warnings={ConfirmSwapWarnings(warnings)}
       extraMessages={
         <ConfirmSwapExtraMessages selectedSlippage={selectedSlippage} />
       }
       confirmButtonTitle={
-        warnings.length > 0 ? 'Proceed anyway!' : 'Confirm swap!'
+        warnings.length > 0 || errors.length > 0
+          ? 'Proceed anyway!'
+          : 'Confirm swap!'
       }
       confirmButtonDisabled={errors.length > 0}
     />
