@@ -79,7 +79,8 @@ export function History({
       textField={true}
       textFieldPlaceholder="Search By Blockchain Or Token"
       title="History"
-      Content={({ searchedFor }) => {
+    >
+      {(searchedFor) => {
         const filterSwaps = filteredHistory(list, searchedFor);
         return filterSwaps.length ? (
           <SwapsGroup list={filterSwaps} onSwapClick={onSwapClick} />
@@ -89,6 +90,6 @@ export function History({
           </BodyError>
         );
       }}
-    />
+    </SecondaryPage>
   );
 }

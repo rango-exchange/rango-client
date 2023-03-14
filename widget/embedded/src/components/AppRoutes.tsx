@@ -15,9 +15,15 @@ import { SwapDetailsPage } from '../pages/SwapDetailsPage';
 export const AppRoutes = () =>
   useRoutes([
     { path: navigationRoutes.home, element: <Home /> },
-    { path: navigationRoutes.fromChain, element: <SelectChainPage type="from" /> },
+    {
+      path: navigationRoutes.fromChain,
+      element: <SelectChainPage type="from" />,
+    },
     { path: navigationRoutes.toChain, element: <SelectChainPage type="to" /> },
-    { path: navigationRoutes.fromToken + '/*', element: <SelectTokenPage type="from" /> },
+    {
+      path: navigationRoutes.fromToken + '/*',
+      element: <SelectTokenPage type="from" />,
+    },
     { path: navigationRoutes.toToken, element: <SelectTokenPage type="to" /> },
     { path: navigationRoutes.settings, element: <SettingsPage /> },
     {

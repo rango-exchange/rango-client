@@ -1,9 +1,15 @@
 import { SwapHistory } from '@rango-dev/ui';
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { navigationRoutes } from '../constants/navigationRoutes';
+import { useNavigateBack } from '../hooks/useNavigateBack';
 import { pendingSwap } from '../mockData/pendingSwap';
 
 export function SwapDetailsPage() {
-  const navigate = useNavigate();
-  return <SwapHistory onBack={navigate.bind(null, -1)} pendingSwap={pendingSwap} />;
+  const { navigateBackFrom } = useNavigateBack();
+  return (
+    <SwapHistory
+      onBack={navigateBackFrom.bind(null, navigationRoutes.swapDetails)}
+      pendingSwap={pendingSwap}
+    />
+  );
 }

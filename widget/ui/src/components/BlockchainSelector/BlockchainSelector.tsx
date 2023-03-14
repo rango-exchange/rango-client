@@ -7,6 +7,7 @@ import { Spinner } from '../Spinner';
 import { styled } from '../../theme';
 import { CSSProperties } from '@stitches/react';
 import { containsText } from '../../helper';
+import { Typography } from '../Typography';
 
 const ListContainer = styled('div', {
   height: '450px',
@@ -58,20 +59,22 @@ export function BlockchainSelector(props: PropTypes) {
       textFieldPlaceholder="Search Blockchain By Name"
       title={`Select ${type} Network`}
       onBack={onBack}
-      Content={({ searchedFor }) => {
+    >
+      {(searchedFor) => {
         const filteredBlockchains = filterBlockchains(list, searchedFor);
         return (
-          <ListContainer style={listContainerStyle}>
+          <ListContainer style={listContainerStyle} key="1">
             {loadingStatus === 'loading' && (
               <div>
                 <Spinner size={24} />
               </div>
             )}
             {loadingStatus === 'failed' && (
-              <Alert
-                type="error"
-                description="Error connecting server, please reload the app and try again"
-              />
+              <Alert type="error">
+                <Typography variant="body2">
+                  Error connecting server, please reload the app and try again
+                </Typography>
+              </Alert>
             )}
             {loadingStatus === 'success' && (
               <>
@@ -84,16 +87,15 @@ export function BlockchainSelector(props: PropTypes) {
                     onChange={onChange}
                   />
                 ) : (
-                  <Alert
-                    type="secondary"
-                    description={`${searchedFor} not found`}
-                  />
+                  <Alert type="secondary">
+                    <Typography variant="body2">{`${searchedFor} not found`}</Typography>
+                  </Alert>
                 )}
               </>
             )}
           </ListContainer>
         );
       }}
-    />
+    </SecondaryPage>
   );
 }

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { ReactNode, useState } from 'react';
 import { styled } from '../../theme';
 import { AngleLeftIcon, SearchIcon } from '../Icon';
 import { TextField } from '../TextField/TextField';
@@ -7,12 +7,12 @@ import { Typography } from '../Typography';
 export type PropTypes = (
   | {
       textField: true;
-      Content: React.ElementType<{ searchedFor: string }>;
+      children?: (searchedFor: string) => ReactNode;
       textFieldPlaceholder: string;
     }
   | {
       textField: false;
-      Content: React.ReactNode;
+      children?: ReactNode;
     }
 ) & {
   title?: string;
@@ -84,10 +84,9 @@ export function SecondaryPage(props: PropTypes) {
         </div>
       )}
       <ContentContainer>
-        {props.textField && <props.Content searchedFor={searchedFor} />}
-        {!props.textField && props.Content}
+        {props.textField && props.children?.(searchedFor)}
+        {!props.textField && props.children}
       </ContentContainer>
-
       {Footer}
     </Container>
   );
