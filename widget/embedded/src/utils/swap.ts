@@ -9,6 +9,7 @@ import {
   BestRouteResponse,
   RecommendedSlippage,
   SwapResult,
+  MetaResponse,
   Token,
 } from 'rango-sdk';
 import { Account } from '../store/wallets';
@@ -163,7 +164,8 @@ export function canComputePriceImpact(
     !!bestRoute?.result &&
     !!inputAmount &&
     inputAmount !== '0' &&
-    parseFloat(inputAmount || '0') !== 0
+    parseFloat(inputAmount || '0') !== 0 &&
+    !!bestRoute.result
   );
 }
 
@@ -173,7 +175,7 @@ export function calculatePendingSwap(
   wallets: { [p: string]: WalletTypeAndAddress },
   settings: Omit<SwapSavedSettings, 'disabledSwappersIds'>,
   validateBalanceOrFee: boolean,
-  tokens: Token[]
+  meta: MetaResponse
 ): PendingSwap {
   const simulationResult = bestRoute.result;
   if (!simulationResult) throw Error('Simulation result should not be null');
@@ -198,48 +200,60 @@ export function calculatePendingSwap(
     simulationResult: simulationResult,
     validateBalanceOrFee,
     steps:
-      bestRoute.result?.swaps?.map((s, i) => ({
-        id: i + 1,
-        fromBlockchain: s.from.blockchain,
-        fromSymbol: s.from.symbol,
-        fromSymbolAddress: s.from.address,
-        fromDecimals: s.from.decimals,
-        fromAmountPrecision: s.fromAmountPrecision,
-        fromAmountMinValue: s.fromAmountMinValue,
-        fromAmountMaxValue: s.fromAmountMaxValue,
-        toBlockchain: s.to.blockchain,
-        fromLogo: s.from.logo,
-        toSymbol: s.to.symbol,
-        toSymbolAddress: s.to.address,
-        toDecimals: s.to.decimals,
-        toLogo: s.to.logo,
-        startTransactionTime: new Date().getTime(),
-        swapperId: s.swapperId,
-        feeInUsd: numberToString(getUsdFeeOfStep(s, tokens), null, 2),
-        expectedOutputAmountHumanReadable: s.toAmount,
-        outputAmount: '',
-        status: 'created',
-        networkStatus: null,
-        executedTransactionId: null,
-        externalTransactionId: null,
-        explorerUrl: null,
-        trackingCode: null,
-        cosmosTransaction: null,
-        solanaTransaction: null,
-        starknetTransaction: null,
-        starknetApprovalTransaction: null,
-        tronTransaction: null,
-        tronApprovalTransaction: null,
-        evmTransaction: null,
-        evmApprovalTransaction: null,
-        transferTransaction: null,
-        diagnosisUrl: null,
-        internalSteps: null,
-        fromBlockchainLogo: '',
-        toBlockchainLogo: '',
-        swapperLogo: '',
-        swapperType: '',
-      })) || [],
+      bestRoute.result?.swaps?.map((swap, index) => {
+        const swapper = meta.swappers.find(
+          (swapper) => swapper.id === swap.swapperId
+        );
+        const swapperType = swapper?.types[0];
+        const fromBlockchain = meta.blockchains.find(
+          (blockchain) => blockchain.name === swap.from.blockchain
+        );
+        const toBlockchain = meta.blockchains.find(
+          (blockchain) => blockchain.name === swap.to.blockchain
+        );
+        return {
+          id: index + 1,
+          fromBlockchain: swap.from.blockchain,
+          fromSymbol: swap.from.symbol,
+          fromSymbolAddress: swap.from.address,
+          fromDecimals: swap.from.decimals,
+          fromAmountPrecision: swap.fromAmountPrecision,
+          fromAmountMinValue: swap.fromAmountMinValue,
+          fromAmountMaxValue: swap.fromAmountMaxValue,
+          toBlockchain: swap.to.blockchain,
+          fromLogo: swap.from.logo,
+          toSymbol: swap.to.symbol,
+          toSymbolAddress: swap.to.address,
+          toDecimals: swap.to.decimals,
+          toLogo: swap.to.logo,
+          startTransactionTime: new Date().getTime(),
+          swapperId: swap.swapperId,
+          feeInUsd: numberToString(getUsdFeeOfStep(swap, meta.tokens), null, 2),
+          expectedOutputAmountHumanReadable: swap.toAmount,
+          outputAmount: '',
+          status: 'created',
+          networkStatus: null,
+          executedTransactionId: null,
+          externalTransactionId: null,
+          explorerUrl: null,
+          trackingCode: null,
+          cosmosTransaction: null,
+          solanaTransaction: null,
+          starknetTransaction: null,
+          starknetApprovalTransaction: null,
+          tronTransaction: null,
+          tronApprovalTransaction: null,
+          evmTransaction: null,
+          evmApprovalTransaction: null,
+          transferTransaction: null,
+          diagnosisUrl: null,
+          internalSteps: null,
+          fromBlockchainLogo: fromBlockchain.logo,
+          toBlockchainLogo: toBlockchain.logo,
+          swapperLogo: swapper?.logo,
+          swapperType: swapperType,
+        };
+      }) || [],
   };
 }
 
@@ -378,7 +392,9 @@ export function createBestRouteRequestBody(
   inputAmount: string,
   wallets: Account[],
   selectedWallets: SelectedWallet[],
-  disabledLiquiditySources: string[]
+  disabledLiquiditySources: string[],
+  slippage: number,
+  checkPrerequisites: boolean
 ): BestRouteRequest {
   const selectedWalletsMap = selectedWallets.reduce(
     (
@@ -407,7 +423,7 @@ export function createBestRouteRequestBody(
 
   const requestBody: BestRouteRequest = {
     amount: inputAmount.toString(),
-    checkPrerequisites: true,
+    checkPrerequisites,
     from: {
       address: fromToken.address,
       blockchain: fromToken.blockchain,
@@ -422,6 +438,8 @@ export function createBestRouteRequestBody(
     selectedWallets: selectedWalletsMap,
     swapperGroups: disabledLiquiditySources,
     swappersGroupsExclude: true,
+    //@ts-ignore
+    slippage: slippage.toString(),
   };
 
   return requestBody;

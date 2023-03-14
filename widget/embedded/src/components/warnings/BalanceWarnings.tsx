@@ -1,10 +1,14 @@
 import { Typography } from '@rango-dev/ui';
 import React from 'react';
 
-export function BalanceWarnings(warnings: string[]) {
+interface PropTypes {
+  messages: string[];
+}
+
+export function BalanceWarnings({ messages }: PropTypes) {
   return (
     <div>
-      {warnings.map((warning) => (
+      {messages.map((warning) => (
         <Typography variant="body2">{warning}</Typography>
       ))}
     </div>

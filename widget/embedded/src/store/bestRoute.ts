@@ -1,4 +1,4 @@
-import { BestRouteRequest, BestRouteResponse, BlockchainMeta } from 'rango-sdk';
+import { BestRouteResponse, BlockchainMeta } from 'rango-sdk';
 import { Token } from 'rango-sdk/lib';
 import { create } from 'zustand';
 import BigNumber from 'bignumber.js';
@@ -8,6 +8,7 @@ import createSelectors from './selectors';
 import { subscribeWithSelector } from 'zustand/middleware';
 import { httpService } from '../services/httpService';
 import { useSettingsStore } from './settings';
+import { createBestRouteRequestBody } from '../utils/swap';
 
 const getUsdValue = (token: Token | null, amount: string) =>
   new BigNumber(amount || ZERO).multipliedBy(token?.usdPrice || 0);
@@ -61,10 +62,10 @@ export const useBestRouteStore = createSelectors(
             );
           }
           return {
-            bestRoute: bestRoute,
+            bestRoute,
             ...(!!bestRoute && {
-              outputAmount: outputAmount,
-              outputUsdValue: outputUsdValue,
+              outputAmount,
+              outputUsdValue,
             }),
           };
         }),
@@ -98,9 +99,49 @@ export const useBestRouteStore = createSelectors(
   )
 );
 
-let abortController: AbortController | null = null;
+const bestRoute = (
+  bestRouteStore: typeof useBestRouteStore,
+  settingsStore: typeof useSettingsStore
+) => {
+  let abortController: AbortController | null = null;
+  const fetchBestRoute = () => {
+    const { fromToken, toToken, inputAmount } = bestRouteStore.getState();
+    const { slippage, customSlippage, disabledLiquiditySources } =
+      settingsStore.getState();
+    if (!fromToken || !toToken || !inputAmount) return;
+    abortController?.abort();
+    abortController = new AbortController();
+    const userSlippage = customSlippage | slippage;
+    const requestBody = createBestRouteRequestBody(
+      fromToken,
+      toToken,
+      inputAmount,
+      [],
+      [],
+      disabledLiquiditySources,
+      userSlippage,
+      false
+    );
+    bestRouteStore.setState({ loading: true, bestRoute: null });
+    httpService
+      .getBestRoute(requestBody, {
+        signal: abortController.signal,
+      })
+      .then((res) => {
+        const { setBestRoute } = bestRouteStore.getState();
+        setBestRoute(res);
+        bestRouteStore.setState({ loading: false });
+        abortController = null;
+      })
+      .catch((error) => {
+        if (error.code === 'ERR_CANCELED') return;
+        bestRouteStore.setState({
+          error: error.message,
+          loading: false,
+        });
+      });
+  };
 
-export const fetchBestRoute = () => {
   useBestRouteStore.subscribe(
     (state) => ({
       fromChain: state.fromChain,
@@ -109,62 +150,20 @@ export const fetchBestRoute = () => {
       toToken: state.toToken,
       inputAmount: state.inputAmount,
     }),
-    (state) => {
-      if (abortController) abortController.abort();
-      abortController = new AbortController();
-      if (!!state.fromToken && !!state.toToken && !!state.inputAmount) {
-        const { slippage, customSlippage, disabledLiquiditySources } =
-          useSettingsStore.getState();
-        const userSlippage = customSlippage || slippage;
-        const requestBody: BestRouteRequest = {
-          amount: state.inputAmount?.toString(),
-          connectedWallets: [],
-          selectedWallets: {},
-          checkPrerequisites: false,
-          swapperGroups: disabledLiquiditySources,
-          swappersGroupsExclude: true,
-          from: {
-            address: state.fromToken.address,
-            blockchain: state.fromToken.blockchain,
-            symbol: state.fromToken.symbol,
-          },
-          to: {
-            address: state.toToken.address,
-            blockchain: state.toToken.blockchain,
-            symbol: state.toToken.symbol,
-          },
-        };
-        useBestRouteStore.setState({ loading: true });
-        httpService
-          .getBestRoute(requestBody, {
-            signal: abortController.signal,
-          })
-          .then((res) => {
-            useBestRouteStore.setState({ bestRoute: res, loading: false });
-            abortController = null;
-          })
-          .catch((error) => {
-            if (error.code === 'ERR_CANCELED') return;
-            useBestRouteStore.setState({
-              error: error.message,
-              loading: false,
-            });
-          });
-      }
-    },
+
+    fetchBestRoute.bind(null),
     {
-      fireImmediately: true,
-      equalityFn: (a, b) => {
+      equalityFn: (prevState, state) => {
         if (
-          a.fromChain?.name !== b.fromChain?.name ||
-          a.toChain?.name !== b.toChain?.name ||
-          a.inputAmount !== b.inputAmount ||
-          a.fromToken?.symbol !== b.fromToken?.symbol ||
-          a.toToken?.symbol !== b.toToken?.symbol ||
-          a.fromToken?.blockchain !== b.fromToken?.blockchain ||
-          a.toToken?.blockchain !== b.toToken?.blockchain ||
-          a.fromToken?.address !== b.fromToken?.address ||
-          a.toToken?.address !== b.toToken?.address
+          prevState.fromChain?.name !== state.fromChain?.name ||
+          prevState.toChain?.name !== state.toChain?.name ||
+          prevState.fromToken?.symbol !== state.fromToken?.symbol ||
+          prevState.toToken?.symbol !== state.toToken?.symbol ||
+          prevState.fromToken?.blockchain !== state.fromToken?.blockchain ||
+          prevState.toToken?.blockchain !== state.toToken?.blockchain ||
+          prevState.fromToken?.address !== state.fromToken?.address ||
+          prevState.toToken?.address !== state.toToken?.address ||
+          prevState.inputAmount !== state.inputAmount
         )
           return false;
         else return true;
@@ -178,60 +177,25 @@ export const fetchBestRoute = () => {
       customSlippage: state.customSlippage,
       disabledLiquiditySources: state.disabledLiquiditySources,
     }),
-    (state) => {
-      const { fromToken, toToken, inputAmount } = useBestRouteStore.getState();
-      if (abortController) abortController.abort();
-      abortController = new AbortController();
-      if (!!fromToken && !!toToken && !!inputAmount) {
-        const useSlippage = state.customSlippage || state.slippage;
-        const requestBody: BestRouteRequest = {
-          amount: inputAmount?.toString(),
-          connectedWallets: [],
-          selectedWallets: {},
-          checkPrerequisites: false,
-          swapperGroups: state.disabledLiquiditySources,
-          swappersGroupsExclude: true,
-          from: {
-            address: fromToken.address,
-            blockchain: fromToken.blockchain,
-            symbol: fromToken.symbol,
-          },
-          to: {
-            address: toToken.address,
-            blockchain: toToken.blockchain,
-            symbol: toToken.symbol,
-          },
-        };
-        useBestRouteStore.setState({ loading: true });
-        httpService
-          .getBestRoute(requestBody, {
-            signal: abortController.signal,
-          })
-          .then((res) => {
-            useBestRouteStore.setState({ bestRoute: res, loading: false });
-            abortController = null;
-          })
-          .catch((error) => {
-            if (error.code === 'ERR_CANCELED') return;
-            useBestRouteStore.setState({
-              error: error.message,
-              loading: false,
-            });
-          });
-      }
-    },
+    fetchBestRoute.bind(null),
     {
-      fireImmediately: true,
-      equalityFn: (a, b) => {
+      equalityFn: (prevState, state) => {
         if (
-          a.slippage !== b.slippage ||
-          a.customSlippage !== b.customSlippage ||
-          a.disabledLiquiditySources.length !==
-            b.disabledLiquiditySources.length
+          prevState.slippage !== state.slippage ||
+          prevState.customSlippage !== state.customSlippage ||
+          prevState.disabledLiquiditySources.length !==
+            state.disabledLiquiditySources.length
         )
           return false;
         else return true;
       },
     }
   );
+
+  return { fetchBestRoute };
 };
+
+export const { fetchBestRoute } = bestRoute(
+  useBestRouteStore,
+  useSettingsStore
+);
