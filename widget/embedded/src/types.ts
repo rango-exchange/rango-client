@@ -39,6 +39,6 @@ export type Configs = {
   borderRadius: number;
   fontFamily: string;
   titleSize: number;
-  titelsWeight: number;
+  titleWeight: number;
   colors: Colors;
 };

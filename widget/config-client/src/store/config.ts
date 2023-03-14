@@ -13,7 +13,7 @@ export type NumbersName =
   | 'height'
   | 'borderRadius'
   | 'titleSize'
-  | 'titelsWeight';
+  | 'titleWeight';
 
 export type THEME = 'dark' | 'light' | 'auto';
 export type COLORS =
@@ -50,7 +50,7 @@ interface ConfigState {
     borderRadius: number;
     fontFamily: string;
     titleSize: number;
-    titelsWeight: number;
+    titleWeight: number;
     colors: {
       background?: string;
       // inputBackground?: string;
@@ -95,13 +95,13 @@ export const useConfigStore = createSelectors(
         customeAddress: true,
         title: 'SWAP',
         width: 525,
-        height: 712,
+        height: 512,
         languege: 'en',
         borderRadius: 5,
         theme: 'auto',
         fontFamily: 'Roboto',
-        titleSize: 48,
-        titelsWeight: 700,
+        titleSize: 18,
+        titleWeight: 600,
         colors: {
           background: '#fff',
           primary: '#5FA425',

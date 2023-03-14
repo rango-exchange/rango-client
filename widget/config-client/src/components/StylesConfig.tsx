@@ -95,7 +95,7 @@ export function StylesConfig() {
     fontFamily,
     colors,
     titleSize,
-    titelsWeight,
+    titleWeight,
   } = configs;
   return (
     <div>
@@ -241,9 +241,9 @@ export function StylesConfig() {
           <div>
             <TextField
               size="large"
-              onChange={(e) => onChangeNumbersConfig('titelsWeight', parseInt(e.target.value))}
-              name="titelsWeight"
-              value={titelsWeight}
+              onChange={(e) => onChangeNumbersConfig('titleWeight', parseInt(e.target.value))}
+              name="titleWeight"
+              value={titleWeight}
               label="Titels Weight"
               type="number"
               suffix="px"
