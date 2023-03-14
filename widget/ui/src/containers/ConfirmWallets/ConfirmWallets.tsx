@@ -86,10 +86,9 @@ export function ConfirmWallets(props: PropsWithChildren<PropTypes>) {
                 {list.length === 0 && (
                   <>
                     <AlertContainer>
-                      <Alert
-                        type="error"
-                        description={`You should connect a ${wallet} supported wallet`}
-                      />
+                      <Alert type="error">
+                        <Typography variant="body2">{`You should connect a ${wallet} supported wallet`}</Typography>
+                      </Alert>
                     </AlertContainer>
                     {isExperimentalChain?.(wallet) && (
                       <Button

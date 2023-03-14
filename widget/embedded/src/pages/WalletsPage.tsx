@@ -60,7 +60,9 @@ export function WalletsPage() {
         <>
           {walletErrorMessage && (
             <AlertContainer>
-              <Alert type="error" description={walletErrorMessage} />
+              <Alert type="error">
+                <Typography variant="body2">{walletErrorMessage}</Typography>
+              </Alert>
             </AlertContainer>
           )}
           <ListContainer>

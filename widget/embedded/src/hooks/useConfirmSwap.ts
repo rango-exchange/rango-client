@@ -48,6 +48,7 @@ export function useConfirmSwap() {
   >(null);
   const [bestRouteChanged, setBestRouteChanged] = useState(false);
   const [enoughBalance, setEnoughBalance] = useState<boolean | null>(null);
+  const [minSlippage, setMinSlippage] = useState<null | number>(null);
 
   const hasEnoughBalanceOrProperSlippage = (
     route: BestRouteType,
@@ -81,7 +82,7 @@ export function useConfirmSwap() {
         .sort((a, b) => b - a)
         .find(() => true) || null;
     if (slippageError) {
-      setError('Server cannot calculated required slippage for your swap');
+      setMinSlippage(minSlippage);
       return { balance: true, slippage: false, routeChanged };
     } else if (minSlippage !== null && minSlippage > parseFloat(userSlippage)) {
       setError(`Your slippage should be ${minSlippage} at least`);
@@ -261,6 +262,7 @@ export function useConfirmSwap() {
           console.log('unexpected error', error);
         });
   };
+
   return {
     loading,
     error,
@@ -270,5 +272,6 @@ export function useConfirmSwap() {
     bestRouteChanged,
     enoughBalance,
     swap,
-  } as any;
+    minSlippage,
+  };
 }

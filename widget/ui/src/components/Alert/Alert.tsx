@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react';
+import React, { PropsWithChildren } from 'react';
 import { CheckCircleIcon, InfoCircleIcon, WarningIcon } from '../Icon';
 import { Typography } from '../Typography';
 import { darkTheme, styled } from '../../theme';
@@ -30,10 +30,7 @@ const MainContainer = styled('div', {
   },
 });
 
-const ContentContainer = styled('div', {
-  display: 'flex',
-  flexDirection: 'column',
-});
+const ContentContainer = styled('div', {});
 
 const TitleContainer = styled('div', {
   marginBottom: '$8',
@@ -49,12 +46,11 @@ const StyledTypography = styled(Typography, {
 
 export interface PropTypes {
   type: 'primary' | 'secondary' | 'success' | 'warning' | 'error';
-  description: ReactNode;
   title?: string;
 }
 
-export function Alert(props: PropTypes) {
-  const { type, description, title } = props;
+export function Alert(props: PropsWithChildren<PropTypes>) {
+  const { type, children, title } = props;
 
   const showIcon = (
     ['error', 'success', 'warning'] as PropTypes['type'][]
@@ -75,7 +71,7 @@ export function Alert(props: PropTypes) {
             <StyledTypography variant="h6">{title}</StyledTypography>
           </TitleContainer>
         )}
-        <StyledTypography variant="body2">{description}</StyledTypography>
+        {children}
       </ContentContainer>
     </MainContainer>
   );
