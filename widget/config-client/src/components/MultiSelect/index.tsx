@@ -134,7 +134,8 @@ export function MultiSelect({
         onClose={onClose}
         content={renderModalContent()}
         title={modalTitle}
-        containerStyle={{ width: '560px', height: '655px' }}></Modal>
+        containerStyle={{ width: '560px', height: '655px' }}
+      />
     </div>
   );
 }
