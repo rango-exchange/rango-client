@@ -77,6 +77,7 @@ export interface PropTypes {
   loading?: boolean;
   error?: ReactNode;
   warning?: ReactNode;
+  extraMessages?: ReactNode;
 }
 export function ConfirmSwap({
   bestRoute,
@@ -108,6 +109,7 @@ export function ConfirmSwap({
         <Fragment key={index}>
           <Alerts>
             {error && <Alert type="error">{error}</Alert>}
+            {error && warning && <Spacer direction="vertical" size={16} />}
             {warning && <Alert type="warning">{warning}</Alert>}
           </Alerts>
           {index === 0 && (
