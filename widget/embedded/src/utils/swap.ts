@@ -48,7 +48,7 @@ export function LimitErrorMessage(bestRoute: BestRouteResponse | null): {
     } else {
       return minimum?.gt(swap.fromAmount) || maximum?.lt(swap.fromAmount);
     }
-  });
+  })[0];
   if (!swap) return { swap: null, fromAmountRangeError: '', recommendation: '' };
   const minimum = !!swap.fromAmountMinValue ? new BigNumber(swap.fromAmountMinValue) : null;
   const maximum = !!swap.fromAmountMaxValue ? new BigNumber(swap.fromAmountMaxValue) : null;
@@ -114,6 +114,7 @@ export function calculatePendingSwap(
   wallets: { [p: string]: WalletTypeAndAddress },
   settings: SwapSavedSettings,
   validateBalanceOrFee: boolean,
+  tokens: Token[],
 ): PendingSwap {
   const simulationResult = bestRoute.result;
   if (!simulationResult) throw Error('Simulation result should not be null');
@@ -136,8 +137,6 @@ export function calculatePendingSwap(
     settings: settings,
     simulationResult: simulationResult,
     validateBalanceOrFee,
-    //TODO: finalize PendingSwap type and remove ts-ignore
-    //@ts-ignore
     steps:
       bestRoute.result?.swaps?.map((s, i) => ({
         id: i + 1,
@@ -156,8 +155,9 @@ export function calculatePendingSwap(
         toLogo: s.to.logo,
         startTransactionTime: new Date().getTime(),
         swapperId: s.swapperId,
+        feeInUsd: numberToString(getUsdFeeOfStep(s, tokens), null, 2),
         expectedOutputAmountHumanReadable: s.toAmount,
-        outputAmount: null,
+        outputAmount: '',
         status: 'created',
         networkStatus: null,
         executedTransactionId: null,

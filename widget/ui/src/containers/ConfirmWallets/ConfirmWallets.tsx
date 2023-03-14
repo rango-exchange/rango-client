@@ -5,7 +5,6 @@ import { Button } from '../../components/Button';
 import { SecondaryPage } from '../../components/SecondaryPage/SecondaryPage';
 import { SelectableWalletList } from '../../components/SelectableWalletList';
 import { Typography } from '../../components/Typography';
-import { decimalNumber } from '../../helper';
 import { styled } from '../../theme';
 import { SelectableWallet } from './types';
 
@@ -20,6 +19,8 @@ const AlertContainer = styled('div', {
 
 export interface PropTypes {
   swap: BestRouteResponse;
+  fromAmount: string;
+  toAmount: string;
   onBack: () => void;
   onConfirm?: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
   confirmDisabled?: boolean;
@@ -30,23 +31,24 @@ export interface PropTypes {
   isExperimentalChain?: (wallet: string) => boolean;
   handleConnectChain?: (wallet: string) => void;
 }
-export function ConfirmWallets({
-  onBack,
-  loading,
-  onConfirm,
-  swap,
-  requiredWallets,
-  selectableWallets,
-  onChange,
-  confirmDisabled,
-  isExperimentalChain,
-  handleConnectChain,
-}: PropsWithChildren<PropTypes>) {
+export function ConfirmWallets(props: PropsWithChildren<PropTypes>) {
+  const {
+    onBack,
+    loading,
+    onConfirm,
+    swap,
+    requiredWallets,
+    selectableWallets,
+    onChange,
+    confirmDisabled,
+    isExperimentalChain,
+    handleConnectChain,
+    fromAmount,
+    toAmount,
+  } = props;
+
   const firstStep = swap.result?.swaps[0];
   const lastStep = swap.result?.swaps[swap.result?.swaps.length - 1];
-
-  const fromAmount = decimalNumber(firstStep?.fromAmount, 3);
-  const toAmount = decimalNumber(lastStep?.toAmount, 3);
 
   return (
     <SecondaryPage
