@@ -10,12 +10,12 @@ type Theme = 'auto' | 'dark' | 'light';
 interface Settings {
   slippage: number;
   customSlippage: number | null;
-  infinitApprove: boolean;
+  infiniteApprove: boolean;
   disabledLiquiditySources: string[];
   theme: Theme;
   setSlippage: (slippage: number) => void;
   setCustomSlippage: (customSlippage: number | null) => void;
-  toggleInfinitApprove: () => void;
+  toggleInfiniteApprove: () => void;
   toggleLiquiditySource: (name: string) => void;
   setTheme: (theme: Theme) => void;
   toggleAllLiquiditySources: () => void;
@@ -27,7 +27,7 @@ export const useSettingsStore = createSelectors(
       subscribeWithSelector((set) => ({
         slippage: DEFAULT_SLIPPAGE,
         customSlippage: null,
-        infinitApprove: false,
+        infiniteApprove: false,
         disabledLiquiditySources: [],
         theme: 'auto',
         setSlippage: (slippage) =>
@@ -53,9 +53,9 @@ export const useSettingsStore = createSelectors(
               };
             }
           }),
-        toggleInfinitApprove: () =>
+        toggleInfiniteApprove: () =>
           set((state) => ({
-            infinitApprove: !state.infinitApprove,
+            infiniteApprove: !state.infiniteApprove,
           })),
         toggleLiquiditySource: (name) =>
           set((state) => {
