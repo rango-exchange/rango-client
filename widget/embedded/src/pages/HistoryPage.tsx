@@ -4,6 +4,7 @@ import { TransactionType } from 'rango-sdk';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { navigationRoutes } from '../constants/navigationRoutes';
+import { useNavigateBack } from '../hooks/useNavigateBack';
 
 export const pendingSwap: PendingSwap[] = [
   {
@@ -824,13 +825,12 @@ export const pendingSwap: PendingSwap[] = [
 
 export function HistoryPage() {
   const navigate = useNavigate();
+  const { navigateBackFrom } = useNavigateBack();
   return (
     <History
       list={pendingSwap}
-      onSwapClick={() => navigate(navigationRoutes.swapDetails)}
-      onBack={() => {
-        navigate(-1);
-      }}
+      onSwapClick={navigate.bind(null, navigationRoutes.swapDetails)}
+      onBack={navigateBackFrom.bind(null, navigationRoutes.history)}
     />
   );
 }

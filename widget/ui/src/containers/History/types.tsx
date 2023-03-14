@@ -1,4 +1,12 @@
-import { CosmosTransaction, EvmTransaction, SimulationResult, SolanaTransaction, SwapExplorerUrl, SwapperStatusStep, Transfer } from 'rango-sdk';
+import {
+  CosmosTransaction,
+  EvmTransaction,
+  SimulationResult,
+  SolanaTransaction,
+  SwapExplorerUrl,
+  SwapperStatusStep,
+  Transfer,
+} from 'rango-sdk';
 import {
   MessageSeverity,
   PendingSwapNetworkStatus,
@@ -28,6 +36,7 @@ export type PendingSwapStep = {
   swapperId: string;
   swapperLogo: string;
   swapperType: string;
+  feeInUsd: string;
   expectedOutputAmountHumanReadable: string | null;
   startTransactionTime: number;
   outputAmount: string;
