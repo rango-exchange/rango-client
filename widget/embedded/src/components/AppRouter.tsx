@@ -8,7 +8,6 @@ import {
 import { navigationRoutes } from '../constants/navigationRoutes';
 import { UpdateUrl } from './UpdateUrl';
 import { Home } from '../pages/Home';
-import { fetchBestRoute } from '../store/bestRoute';
 
 const Route: React.FC = (props: PropsWithChildren) => {
   const location = useLocation();
@@ -16,7 +15,6 @@ const Route: React.FC = (props: PropsWithChildren) => {
   const ref = useRef(true);
 
   useEffect(() => {
-    fetchBestRoute();
     if (
       [navigationRoutes.confirmWallets, navigationRoutes.confirmSwap].includes(
         location.pathname
