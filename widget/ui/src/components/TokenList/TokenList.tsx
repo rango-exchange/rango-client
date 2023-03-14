@@ -6,7 +6,6 @@ import { Button } from '../Button/Button';
 import { Typography } from '../Typography';
 import { VirtualizedList } from '../VirtualizedList/VirtualizedList';
 import { CSSProperties } from '@stitches/react';
-import { containsText } from '../../helper';
 
 export interface TokenWithAmount extends Token {
   balance?: {
@@ -42,21 +41,8 @@ const TokenAmountContainer = styled('div', {
   alignItems: 'flex-end',
 });
 
-const filterTokens = (
-  list: Token[],
-  searchedText: string,
-  outputCount?: number
-) => {
-  if (searchedText)
-    return list
-      .filter(
-        (token) =>
-          containsText(token.symbol, searchedText) ||
-          containsText(token.address || '', searchedText) ||
-          containsText(token.name || '', searchedText)
-      )
-      .slice(0, outputCount);
-  else return list.slice(0, outputCount);
+const paginateTokens = (list: Token[], outputCount?: number) => {
+  return list.slice(0, outputCount);
 };
 
 export function TokenList(props: PropTypes) {
@@ -84,78 +70,62 @@ export function TokenList(props: PropTypes) {
   };
 
   const Token = ({
-    filteredTokens,
-    index,
+    token,
     style,
   }: {
-    filteredTokens: TokenWithAmount[];
-    index: number;
+    token: TokenWithAmount;
     style: CSSProperties | undefined;
-  }) => {
-    const currentToken = filteredTokens[index];
-    return (
-      <div
-        style={{
-          display: 'flex',
-          alignItems: 'center',
-          width: '100%',
-          ...style,
-          height: '48px',
-          top: `${parseFloat(style?.top as string) + 0}px`,
-        }}
+  }) => (
+    <div
+      style={{
+        display: 'flex',
+        alignItems: 'center',
+        width: '100%',
+        ...style,
+        height: '48px',
+        top: `${parseFloat(style?.top as string) + 0}px`,
+      }}
+    >
+      <Button
+        variant="outlined"
+        size="large"
+        align="start"
+        onClick={changeSelected.bind(null, token)}
+        type={isSelect(token) ? 'primary' : undefined}
+        prefix={<TokenImage src={token.image} />}
+        suffix={
+          token.balance?.amount && (
+            <TokenAmountContainer>
+              <Typography variant="body2">{token.balance.amount}</Typography>
+              <Typography variant="caption">
+                {`${token.balance.usdValue}$`}
+              </Typography>
+            </TokenAmountContainer>
+          )
+        }
       >
-        <Button
-          variant="outlined"
-          size="large"
-          align="start"
-          onClick={changeSelected.bind(null, currentToken)}
-          type={isSelect(currentToken) ? 'primary' : undefined}
-          prefix={<TokenImage src={currentToken.image} />}
-          suffix={
-            currentToken.balance?.amount && (
-              <TokenAmountContainer>
-                <Typography variant="body2">
-                  {currentToken.balance.amount}
-                </Typography>
-                <Typography variant="caption">
-                  {`${currentToken.balance.usdValue}$`}
-                </Typography>
-              </TokenAmountContainer>
-            )
-          }
-        >
-          <TokenNameContainer>
-            <Typography variant="body1">{currentToken.symbol}</Typography>
-            <Typography variant="body2">{currentToken.name}</Typography>
-          </TokenNameContainer>
-        </Button>
-      </div>
-    );
-  };
+        <TokenNameContainer>
+          <Typography variant="body1">{token.symbol}</Typography>
+          <Typography variant="body2">{token.name}</Typography>
+        </TokenNameContainer>
+      </Button>
+    </div>
+  );
 
   const [hasNextPage, setHasNextPage] = useState<boolean>(true);
-  const [isNextPageLoading, setIsNextPageLoading] = useState<boolean>(false);
-  const [filteredTokens, setFilteredTokens] = useState<TokenWithAmount[]>(list);
+  const [tokens, setTokens] = useState<TokenWithAmount[]>(list);
 
   const loadNextPage = () => {
-    setIsNextPageLoading(true);
-    setTimeout(() => {
-      setIsNextPageLoading(false);
-      setFilteredTokens(
-        filterTokens(list, searchedText, filteredTokens.length + PAGE_SIZE)
-      );
-    }, 0);
+    setTokens(paginateTokens(list, tokens.length + PAGE_SIZE));
   };
 
   useEffect(() => {
-    setFilteredTokens(filterTokens(list, searchedText, PAGE_SIZE));
+    setTokens(paginateTokens(list, PAGE_SIZE));
   }, [searchedText]);
 
   useEffect(() => {
-    setHasNextPage(
-      filterTokens(list, searchedText).length > filterTokens.length
-    );
-  }, [filteredTokens.length]);
+    setHasNextPage(paginateTokens(list).length > paginateTokens.length);
+  }, [tokens.length]);
 
   const innerElementType: React.FC<CommonProps> = forwardRef(
     ({ style, ...rest }, ref) => {
@@ -178,11 +148,10 @@ export function TokenList(props: PropTypes) {
     <div style={{ height: '450px' }}>
       <VirtualizedList
         Item={({ index, style }) => (
-          <Token filteredTokens={filteredTokens} style={style} index={index} />
+          <Token token={tokens[index]} style={style} />
         )}
         hasNextPage={hasNextPage}
-        isNextPageLoading={isNextPageLoading}
-        itemCount={filteredTokens.length}
+        itemCount={tokens.length}
         loadNextPage={loadNextPage}
         innerElementType={innerElementType}
         size={56}
