@@ -86,6 +86,9 @@ async function publishNext(changedPkgs) {
   // Publish to Vercel
   if (packages.vercel.length) {
     logAsSection(`Build clients & deploy to vercel...`);
+    // TODO: This is not a good solution, because it will build the package itself twice.
+    await buildPackages(packages.vercel);
+    logAsSection('Dependency', `Successfully built.`);
     await deployProjectsToVercel(packages.vercel);
     logAsSection(`We are good. Done.`);
   }
