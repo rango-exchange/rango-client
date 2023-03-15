@@ -8,9 +8,11 @@ import { navigationRoutes } from '../constants/navigationRoutes';
 import { confirmSwap, useConfirmSwapStore } from '../store/confirmSwap';
 import { ConfirmSwapErrors } from '../components/ConfirmSwapErrors';
 import { ConfirmSwapWarnings } from '../components/ConfirmSwapWarnings';
+import { useManager } from '@rango-dev/queue-manager-react';
 
 export function ConfirmSwapPage() {
   const { navigateBackFrom } = useNavigateBack();
+  const { manager } = useManager();
 
   const bestRoute = useBestRouteStore.use.bestRoute();
 
@@ -26,7 +28,13 @@ export function ConfirmSwapPage() {
 
   return (
     <ConfirmSwap
-      onConfirm={confirmSwap.bind(null)}
+      onConfirm={() => {
+        confirmSwap().then((swap) => {
+          if (swap) {
+            manager?.create('swap', { swapDetails: swap });
+          }
+        });
+      }}
       onBack={navigateBackFrom.bind(null, navigationRoutes.confirmSwap)}
       bestRoute={bestRoute}
       loading={loading}

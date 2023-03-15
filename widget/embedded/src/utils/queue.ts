@@ -1,6 +1,8 @@
 import { Manager } from '@rango-dev/queue-manager-core';
-import { PendingSwapWithQueueID } from './rangoTypes';
-import { SwapStorage } from './types';
+import {
+  PendingSwapWithQueueID,
+  SwapStorage,
+} from '@rango-dev/queue-manager-rango-preset';
 
 export const getPendingSwaps = (manager: Manager | undefined) => {
   const result: PendingSwapWithQueueID[] = [];
