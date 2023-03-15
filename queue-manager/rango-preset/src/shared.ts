@@ -19,6 +19,11 @@ import { BigNumber } from 'bignumber.js';
 import { ErrorDetail, PrettyError } from './shared-errors';
 import { getRelatedWallet } from './helpers';
 
+export interface PendingSwapWithQueueID {
+  id: string;
+  swap: PendingSwap;
+}
+
 export type SwapperStatusResponse = {
   status: 'running' | 'failed' | 'success' | null;
   extraMessage: string | null;
