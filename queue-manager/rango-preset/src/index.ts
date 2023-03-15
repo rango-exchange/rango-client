@@ -37,3 +37,6 @@ export const swapQueueDef: SwapQueueDef = {
     }
   },
 };
+
+export { SwapQueueContext, SwapStorage } from './types';
+export { PendingSwapWithQueueID } from './shared';

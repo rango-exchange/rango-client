@@ -1,13 +1,75 @@
 import React, { PropsWithChildren } from 'react';
 import { Provider as ManagerProvider } from '@rango-dev/queue-manager-react';
-import { swapQueueDef } from '@rango-dev/queue-manager-rango-preset';
+import {
+  swapQueueDef,
+  SwapQueueContext,
+} from '@rango-dev/queue-manager-rango-preset';
+import { useWallets } from '@rango-dev/wallets-core';
+import {
+  convertEvmBlockchainMetaToEvmChainInfo,
+  isEvmBlockchain,
+  Network,
+  WalletType,
+} from '@rango-dev/wallets-shared';
+import { useMetaStore } from './store/meta';
+import { walletAndSupportedChainsNames } from './utils/wallets';
 
 function QueueManager(props: PropsWithChildren<{}>) {
-  const context = {};
+  const {
+    providers,
+    getSigners,
+    state,
+    connect,
+    canSwitchNetworkTo,
+    getWalletInfo,
+  } = useWallets();
+
+  const { blockchains } = useMetaStore.use.meta();
+  // TODO: Implement this
+  const wallets = null;
+  const switchNetwork = (wallet: WalletType, network: Network) => {
+    if (!canSwitchNetworkTo(wallet, network)) {
+      return undefined;
+    }
+    return connect(wallet, network);
+  };
+
+  // TODO: this code copy & pasted from rango, should be refactored.
+  const allBlockchains = blockchains
+    .filter((blockchain) => blockchain.enabled)
+    .reduce(
+      (blockchainsObj, blockchain) => (
+        (blockchainsObj[blockchain.name] = blockchain), blockchainsObj
+      ),
+      {}
+    );
+  const evmBasedChains = blockchains.filter(isEvmBlockchain);
+  const getSupportedChainNames = (type: WalletType) => {
+    const { supportedChains } = getWalletInfo(type);
+    return walletAndSupportedChainsNames(supportedChains);
+  };
+  const allProviders = providers();
+  const context: SwapQueueContext = {
+    meta: {
+      blockchains: allBlockchains,
+      evmBasedChains: evmBasedChains,
+      evmNetworkChainInfo:
+        convertEvmBlockchainMetaToEvmChainInfo(evmBasedChains),
+      getSupportedChainNames,
+    },
+    getSigners,
+    wallets,
+    providers: allProviders,
+    switchNetwork,
+    connect,
+    state,
+    notifier: (message) => {
+      console.log('[notifier]', message);
+    },
+  };
+
   return (
     <ManagerProvider
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
       queuesDefs={[swapQueueDef]}
       context={context}
       onPersistedDataLoaded={(_manager) => {}}

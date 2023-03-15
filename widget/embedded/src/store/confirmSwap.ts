@@ -29,6 +29,7 @@ import { useMetaStore } from './meta';
 import createSelectors from './selectors';
 import { useSettingsStore } from './settings';
 import { useWalletsStore } from './wallets';
+import { PendingSwap } from '@rango-dev/ui/dist/containers/History/types';
 
 interface ConfirmSwapState {
   loading: boolean;
@@ -95,7 +96,7 @@ export enum ConfirmSwapWarningTypes {
   INSUFFICIENT_BALANCE,
 }
 
-export const confirmSwap = () => {
+export const confirmSwap = async (): Promise<PendingSwap | undefined> => {
   const {
     fromToken,
     toToken,
@@ -131,11 +132,15 @@ export const confirmSwap = () => {
 
     console.log('new swap:', newSwap);
 
-    return useConfirmSwapStore.setState({
+    // queueManager?.create('swap', { swapDetails: newSwap });
+
+    useConfirmSwapStore.setState({
       errors: [],
       warnings: [],
       proceedAnyway: false,
     });
+
+    return newSwap;
   }
 
   let abortController: AbortController | null = new AbortController();
@@ -181,7 +186,7 @@ export const confirmSwap = () => {
     }
   );
 
-  httpService
+  const newSwap: PendingSwap | undefined | void = await httpService
     .getBestRoute(requestBody, { signal: abortController.signal })
     .then((confiremedRoute) => {
       useConfirmSwapStore.setState({ loading: false });
@@ -191,12 +196,14 @@ export const confirmSwap = () => {
         !new BigNumber(confiremedRoute.requestAmount).isEqualTo(
           new BigNumber(inputAmount || '-1')
         )
-      )
-        return useConfirmSwapStore.setState((prevState) => ({
+      ) {
+        useConfirmSwapStore.setState((prevState) => ({
           errors: prevState.errors.concat({
             type: ConfirmSwapErrorTypes.NO_ROUTE,
           }),
         }));
+        return undefined;
+      }
 
       const confirmSwap: Partial<ConfirmSwapState> = {
         loading: false,
@@ -294,12 +301,18 @@ export const confirmSwap = () => {
         );
 
         console.log('new swap:', newSwap);
-      } else if (!proceedAnyway) confirmSwap.proceedAnyway = true;
-
+        return newSwap;
+      } else if (!proceedAnyway) {
+        confirmSwap.proceedAnyway = true;
+        useConfirmSwapStore.setState(confirmSwap);
+      }
+      return undefined;
+    })
+    .then((result) => {
       abortController = null;
-      useConfirmSwapStore.setState(confirmSwap);
       unsubscribeFromBestRouteStore();
       unsubscribeFromWalletsStore();
+      return result;
     })
     .catch((error) => {
       abortController = null;
@@ -324,4 +337,6 @@ export const confirmSwap = () => {
         }),
       }));
     });
+
+  return newSwap || undefined;
 };
