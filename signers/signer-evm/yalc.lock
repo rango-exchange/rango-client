@@ -1,0 +1,10 @@
+{
+  "version": "v1",
+  "packages": {
+    "rango-types": {
+      "signature": "96dbc21b439bc90a0e44384299707d31",
+      "file": true,
+      "replaced": "^0.1.17"
+    }
+  }
+}

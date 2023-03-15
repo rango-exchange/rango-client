@@ -1,0 +1,48 @@
+{
+  "name": "@rango-dev/signer-evm",
+  "version": "0.1.11-next.76",
+  "license": "MIT",
+  "module": "dist/signer-evm.esm.js",
+  "main": "dist/index.js",
+  "typings": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "src"
+  ],
+  "scripts": {
+    "dev": "tsdx watch",
+    "build": "tsdx build",
+    "test": "tsdx test",
+    "lint": "tsdx lint",
+    "size": "size-limit",
+    "analyze": "size-limit --why"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "tsdx lint"
+    }
+  },
+  "prettier": {
+    "printWidth": 80,
+    "semi": true,
+    "singleQuote": true,
+    "trailingComma": "es5"
+  },
+  "size-limit": [
+    {
+      "path": "dist/signer-evm.cjs.production.min.js",
+      "limit": "10 KB"
+    },
+    {
+      "path": "dist/signer-evm.esm.js",
+      "limit": "10 KB"
+    }
+  ],
+  "dependencies": {
+    "ethers": "^5.7.2",
+    "rango-types": "file:.yalc/rango-types"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
