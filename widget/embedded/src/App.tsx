@@ -18,7 +18,7 @@ import { useTheme } from './hooks/useTheme';
 import QueueManager from './QueueManager';
 import { isEvmBlockchain } from 'rango-sdk';
 import { Configs } from './types';
-import "./i18n"
+import './i18n';
 
 const providers = allProviders();
 
@@ -47,13 +47,12 @@ export function App({ configs }: WidgetProps) {
     type,
     event,
     value,
-    state,
+    _,
     supportedChains
   ) => {
     if (event === Events.ACCOUNTS) {
       if (value) {
         const supportedChainNames: Network[] | null =
-          //@ts-ignore
           walletAndSupportedChainsNames(supportedChains);
         const data = prepareAccountsForWalletStore(
           type,
@@ -68,9 +67,7 @@ export function App({ configs }: WidgetProps) {
     }
   };
 
-
   return (
-    //@ts-ignore
     <Provider
       allBlockChains={blockchains}
       providers={providers}
