@@ -55,8 +55,6 @@ export function useTheme({
   };
 
 
-  console.log(colors);
-
   const customeLightTheme = createTheme({
     colors,
     radii: {

@@ -3,6 +3,7 @@ import {
   AngleDownIcon,
   BlockchainSelector,
   Button,
+  InfoCircleIcon,
   Modal,
   styled,
   TextField,
@@ -45,32 +46,44 @@ const Label = styled('label', {
 });
 
 export function TokenInfo({ type }: PropTypes) {
-  const { configs, onChangeNumbersConfig, onChangeBlockChain, onChangeToken } = useConfigStore(
-    (state) => state,
-  );
+  const toChain = useConfigStore.use.configs().toChain;
+  const fromChain = useConfigStore.use.configs().fromChain;
+  const toToken = useConfigStore.use.configs().toToken;
+  const fromToken = useConfigStore.use.configs().fromToken;
+  const fromAmount = useConfigStore.use.configs().fromAmount;
+  const toChains = useConfigStore.use.configs().toChains;
 
-  const {
-    toChain,
-    fromChain,
-    toToken,
-    fromToken,
-    fromAmount,
-    toChains,
-    fromChains,
-    toTokens,
-    fromTokens,
-  } = configs;
+  const fromChains = useConfigStore.use.configs().fromChains;
+  const toTokens = useConfigStore.use.configs().toTokens;
+  const fromTokens = useConfigStore.use.configs().fromTokens;
+
+  const onChangeNumbersConfig = useConfigStore.use.onChangeNumbersConfig();
+  const onChangeBlockChain = useConfigStore.use.onChangeBlockChain();
+  const onChangeToken = useConfigStore.use.onChangeToken();
+
   const token = type === 'Source' ? fromToken : toToken;
   const chain = type === 'Source' ? fromChain : toChain;
 
   const [modal, setModal] = useState({ open: false, isChain: false, isToken: false });
-  const {
-    meta: { blockchains, tokens },
-    loadingStatus,
-  } = useMetaStore();
+  const loadingStatus = useMetaStore.use.loadingStatus();
+  const blockchains = useMetaStore.use.meta().blockchains;
+  const tokens = useMetaStore.use.meta().tokens;
 
   const supportedChains = type === 'Source' ? fromChains : toChains;
   const supportedTokens = type == 'Source' ? fromTokens : toTokens;
+
+  const ItemSuffix = (
+    <div
+      style={{
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+      }}>
+      {loadingStatus === 'failed' && <InfoCircleIcon color="error" size={24} />}
+      <AngleDownIcon />
+    </div>
+  );
+
   return (
     <Container>
       <div>
@@ -94,7 +107,7 @@ export function TokenInfo({ type }: PropTypes) {
               <ImagePlaceholder />
             )
           }
-          suffix={<AngleDownIcon />}
+          suffix={ItemSuffix}
           fullWidth
           align="start"
           size="large">
@@ -115,7 +128,7 @@ export function TokenInfo({ type }: PropTypes) {
               <ImagePlaceholder />
             )
           }
-          suffix={<AngleDownIcon />}
+          suffix={ItemSuffix}
           fullWidth
           onClick={() =>
             setModal((prev) => ({

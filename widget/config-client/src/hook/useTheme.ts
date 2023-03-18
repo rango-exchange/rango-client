@@ -4,9 +4,8 @@ import { useConfigStore } from '../store/config';
 import { useMetaStore } from '../store/meta';
 
 export function useTheme() {
-  const { theme } = useConfigStore.use.configs();
+  const theme = useConfigStore.use.configs().theme;
   const fetchMeta = useMetaStore.use.fetchMeta();
-
   const [OSTheme, setOSTheme] = useState(lightTheme);
   useEffect(() => {
     (async () => {
@@ -35,8 +34,10 @@ export function useTheme() {
 
   useLayoutEffect(() => {
     const { classList } = document.body;
-    if (darkTheme) classList.add(getActiveTheme());
-    else classList.remove(getActiveTheme());
-  }, [theme]);
+    if (theme === 'auto') classList.add(OSTheme);
+    else if (theme === 'dark') classList.add(darkTheme);
+    else classList.remove(darkTheme);
+  }, [theme, OSTheme]);
+
   return { activeTheme: getActiveTheme() };
 }

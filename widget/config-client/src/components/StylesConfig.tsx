@@ -1,7 +1,6 @@
 import {
   Checkbox,
   ColorPicker,
-  Radio,
   Spacer,
   styled,
   Switch,
@@ -10,7 +9,7 @@ import {
 } from '@rango-dev/ui';
 import React, { useState } from 'react';
 import { LANGUEGES, FONTS } from '../constants';
-import { COLORS, THEME, useConfigStore } from '../store/config';
+import { COLORS, useConfigStore } from '../store/config';
 import { ConfigurationContainer } from './ChainsConfig';
 import { Select } from './Select';
 
@@ -81,22 +80,22 @@ const Line = styled('div', {
   backgroundColor: '$foreground',
 });
 export function StylesConfig() {
-  const { configs, onChangeStringsConfig, onChangeNumbersConfig, onChangeTheme, onChangeColors } =
-    useConfigStore((state) => state);
+  const title = useConfigStore.use.configs().title;
+  const width = useConfigStore.use.configs().width;
+  const height = useConfigStore.use.configs().height;
+  const languege = useConfigStore.use.configs().languege;
+  const borderRadius = useConfigStore.use.configs().borderRadius;
+  const theme = useConfigStore.use.configs().theme;
+  const fontFamily = useConfigStore.use.configs().fontFamily;
+  const colors = useConfigStore.use.configs().colors;
+  const titleSize = useConfigStore.use.configs().titleSize;
+  const titleWeight = useConfigStore.use.configs().titleWeight;
+  const onChangeStringsConfig = useConfigStore.use.onChangeStringsConfig();
+  const onChangeNumbersConfig = useConfigStore.use.onChangeNumbersConfig();
+  const onChangeTheme = useConfigStore.use.onChangeTheme();
+  const onChangeColors = useConfigStore.use.onChangeColors();
 
   const [checkedTheme, setChekedTheme] = useState<boolean>(true);
-  const {
-    title,
-    width,
-    height,
-    languege,
-    borderRadius,
-    theme,
-    fontFamily,
-    colors,
-    titleSize,
-    titleWeight,
-  } = configs;
   return (
     <div>
       <Typography variant="h4">Style</Typography>
