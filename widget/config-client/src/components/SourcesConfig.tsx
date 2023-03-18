@@ -8,12 +8,9 @@ import { ConfigurationContainer } from './ChainsConfig';
 import { MultiSelect } from './MultiSelect';
 
 export function SourcesConfig() {
-  const {
-    meta: { swappers },
-    loadingStatus,
-  } = useMetaStore();
-  const { liquiditySources } = useConfigStore((state) => state.configs);
-  const onChangeSources = useConfigStore((state) => state.onChangeSources);
+  const swappers = useMetaStore.use.meta().swappers;
+  const liquiditySources = useConfigStore.use.configs().liquiditySources;
+  const onChangeSources = useConfigStore.use.onChangeSources();
   const uniqueSwappersGroups: Array<LiquiditySource> = [];
   Array.from(new Set(swappers.map((s) => s.swapperGroup)))
     .map((swapperGroup) => {
@@ -53,8 +50,6 @@ export function SourcesConfig() {
         <MultiSelect
           label="Supported Sources"
           type="Sources"
-          loading={loadingStatus === 'loading'}
-          disabled={loadingStatus === 'failed'}
           modalTitle="Select Sources"
           list={uniqueSwappersGroups}
           onChange={onChange}

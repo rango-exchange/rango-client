@@ -30,8 +30,6 @@ type PropTypes = (
 ) & {
   label: string;
   modalTitle: string;
-  loading?: boolean;
-  disabled?: boolean;
 };
 
 export function MultiSelect({
@@ -41,11 +39,9 @@ export function MultiSelect({
   list,
   value,
   onChange,
-  loading,
-  disabled,
 }: PropTypes) {
   const [open, setOpen] = useState<boolean>(false);
-  const { loadingStatus } = useMetaStore();
+  const loadingStatus = useMetaStore.use.loadingStatus();
 
   const onClickAction = () => {
     if (value === 'all') onChange('empty');
@@ -102,11 +98,7 @@ export function MultiSelect({
   };
   return (
     <div>
-      <Container
-        loading={loading}
-        disabled={disabled}
-        label={label}
-        onOpenModal={() => setOpen(true)}>
+      <Container label={label} onOpenModal={() => setOpen(true)}>
         {value === 'all' ? (
           <Chip style={{ margin: 2 }} selected label={`All ${type}`} />
         ) : !value.length ? (

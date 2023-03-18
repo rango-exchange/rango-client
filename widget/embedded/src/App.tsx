@@ -1,5 +1,5 @@
 import { SwapContainer } from '@rango-dev/ui';
-import React, { useEffect } from 'react';
+import React from 'react';
 import { AppRouter } from './components/AppRouter';
 import { useMetaStore } from './store/meta';
 import './app.css';
