@@ -48,7 +48,9 @@ export function Checkbox({
           <CheckIcon size={20} />
         </RadixCheckbox.Indicator>
       </CheckboxRoot>
-      <Label htmlFor={id}>{label} </Label>
+      <Label className="_text" htmlFor={id}>
+        {label}
+      </Label>
     </CheckboxContainer>
   );
 }

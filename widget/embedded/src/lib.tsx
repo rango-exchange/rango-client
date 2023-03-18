@@ -25,11 +25,13 @@ export type WidgetProps = {
 };
 
 export const SwapBox: React.FC<WidgetProps> = ({ configs }) => {
-  globalFont(configs.fontFamily);
   globalStyles();
+  globalFont(configs?.fontFamily || 'Roboto');
+
   const { activeTheme } = useTheme({
     ...configs.colors,
-    borderRadius: configs.borderRadius,
+    borderRadius: configs?.borderRadius,
+    fontFamily: configs?.fontFamily,
   });
   const { blockchains } = useMetaStore.use.meta();
   const disconnectWallet = useWalletsStore.use.disconnectWallet();
