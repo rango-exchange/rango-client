@@ -109,7 +109,10 @@ export const TextField = React.forwardRef(
     return (
       <>
         {label && (
-          <Label {...(inputAttributes.id && { htmlFor: inputAttributes.id })}>
+          <Label
+            className="_text"
+            {...(inputAttributes.id && { htmlFor: inputAttributes.id })}
+          >
             {label}
           </Label>
         )}
@@ -119,9 +122,15 @@ export const TextField = React.forwardRef(
           suffix={!!suffix}
           size={size}
           style={style}
+          className="_text"
         >
           {prefix || null}
-          <Input {...inputAttributes} spellCheck={false} ref={ref} />
+          <Input
+            className="_text"
+            {...inputAttributes}
+            spellCheck={false}
+            ref={ref}
+          />
           {suffix || null}
         </InputContainer>
       </>

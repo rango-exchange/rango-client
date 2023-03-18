@@ -88,7 +88,7 @@ export function Radio(props: PropTypes) {
             <StyledItem value={option.value} id={option.value}>
               <StyledIndicator />
             </StyledItem>
-            <Label htmlFor={option.value}>
+            <Label className="_text" htmlFor={option.value}>
               <Typography variant="body2">{option.label}</Typography>
             </Label>
           </ItemContainer>

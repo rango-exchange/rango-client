@@ -1,9 +1,10 @@
 import { createTheme } from '@rango-dev/ui';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useLayoutEffect, useRef } from 'react';
 import { useMetaStore } from '../store/meta';
 import { useSettingsStore } from '../store/settings';
 import { Colors } from '../types';
 import { shadeColor } from '../utils/common';
+import usePrevious from './usePrevious';
 
 export function useTheme({
   primary = '#5FA425',
@@ -12,8 +13,9 @@ export function useTheme({
   error = '#FF0000',
   warning = '#F5A623',
   success = '#0070F3',
+  fontFamily = 'Robot',
   borderRadius = 5,
-}: Colors & { borderRadius?: number }) {
+}: Colors & { borderRadius?: number; fontFamily?: string }) {
   const theme = useSettingsStore.use.theme();
   const fetchMeta = useMetaStore.use.fetchMeta();
   const colors = {
@@ -53,7 +55,6 @@ export function useTheme({
     success500: shadeColor(success, -20),
     success700: shadeColor(success, -30),
   };
-
 
   const customeLightTheme = createTheme({
     colors,
@@ -107,6 +108,15 @@ export function useTheme({
         .removeEventListener('change', switchTheme);
     };
   }, []);
+
+  const prevFont = usePrevious(fontFamily);
+
+  useLayoutEffect(() => {
+    const { classList } = document.body;
+
+    if (prevFont) classList.remove(`font_${prevFont.replace(/ /g, '')}`);
+    classList.add(`font_${fontFamily.replace(/ /g, '')}`);
+  }, [fontFamily]);
 
   const getActiveTheme = () => {
     if (theme === 'auto') return OSTheme;
