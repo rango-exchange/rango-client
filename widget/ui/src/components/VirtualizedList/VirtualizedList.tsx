@@ -1,4 +1,4 @@
-import React, { PropsWithChildren, useRef } from 'react';
+import React, { PropsWithChildren } from 'react';
 import { ReactElementType, VariableSizeList as List } from 'react-window';
 import InfiniteLoader from 'react-window-infinite-loader';
 import AutoSizer from 'react-virtualized-auto-sizer';
@@ -24,24 +24,23 @@ type PropTypes = {
 export function VirtualizedList(props: PropsWithChildren<PropTypes>) {
   const { itemCount, hasNextPage, loadNextPage, Item, innerElementType, size } =
     props;
-  const listRef = useRef<any>(null);
 
   const isItemLoaded = (index: number) => !hasNextPage || index < itemCount;
 
   return (
-    <InfiniteLoader
-      isItemLoaded={isItemLoaded}
-      itemCount={hasNextPage ? itemCount + 1 : itemCount}
-      loadMoreItems={loadNextPage}
-      threshold={1}
-    >
-      {({ onItemsRendered }) => {
-        return (
-          <AutoSizer>
-            {({ width, height }) => (
+    <AutoSizer>
+      {({ width, height }) => (
+        <InfiniteLoader
+          isItemLoaded={isItemLoaded}
+          itemCount={hasNextPage ? itemCount + 1 : itemCount}
+          loadMoreItems={loadNextPage}
+          threshold={1}
+        >
+          {({ onItemsRendered, ref }) => {
+            return (
               <List
                 innerElementType={innerElementType}
-                ref={listRef}
+                ref={ref}
                 itemSize={() => size}
                 itemCount={itemCount}
                 height={height}
@@ -54,10 +53,10 @@ export function VirtualizedList(props: PropsWithChildren<PropTypes>) {
                   ) : null
                 }
               </List>
-            )}
-          </AutoSizer>
-        );
-      }}
-    </InfiniteLoader>
+            );
+          }}
+        </InfiniteLoader>
+      )}
+    </AutoSizer>
   );
 }
