@@ -62,7 +62,7 @@ export function ColorPicker({ color, onChangeColor, label, place }: PropTypes) {
 
   return (
     <Container>
-      <Label>{label}</Label>
+      <Label className="_text">{label}</Label>
       <Button
         variant="outlined"
         prefix={<Color style={{ backgroundColor: color }} />}

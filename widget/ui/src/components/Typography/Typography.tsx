@@ -196,7 +196,7 @@ export function Typography({
   ...props
 }: PropsWithChildren<PropTypes>) {
   return (
-    <TypographyContainer className={`_typography ${className}`} {...props}>
+    <TypographyContainer className={`_typography _text ${className}`} {...props}>
       {children}
     </TypographyContainer>
   );

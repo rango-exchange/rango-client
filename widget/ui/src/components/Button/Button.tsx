@@ -396,6 +396,7 @@ export function Button({
           ml={!!prefix}
           mr={!!suffix && !loading}
           flexContent={flexContent}
+          className="_text"
         >
           {children}
         </Content>
