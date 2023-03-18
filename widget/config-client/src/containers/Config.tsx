@@ -1,5 +1,5 @@
 import React, { PropsWithChildren } from 'react';
-import { Spacer, styled, Typography } from '@rango-dev/ui';
+import { Alert, Spacer, styled, Typography } from '@rango-dev/ui';
 import { ChainsConfig } from '../components/ChainsConfig';
 import { WalletsConfig } from '../components/WalletsConfig';
 import { SourcesConfig } from '../components/SourcesConfig';
@@ -7,14 +7,14 @@ import { StylesConfig } from '../components/StylesConfig';
 import { Provider } from '@rango-dev/wallets-core';
 import { allProviders } from '@rango-dev/provider-all';
 import { globalStyles } from '../globalStyles';
+import { useMetaStore } from '../store/meta';
 
 const providers = allProviders();
 
 const Container = styled('div', {
   display: 'flex',
   justifyContent: 'center',
-  backgroundColor:'$neutrals300'
-  
+  backgroundColor: '$neutrals300',
 });
 const SwapContent = styled('div', {
   width: '100%',
@@ -24,7 +24,6 @@ const ConfigContent = styled('div', {
   flexDirection: 'column',
   alignItems: 'end',
   width: '100%',
-
 });
 
 const Swap = styled('div', {
@@ -35,12 +34,21 @@ const Swap = styled('div', {
 
 export function Config(props: PropsWithChildren) {
   globalStyles();
+  const loadingStatus = useMetaStore.use.loadingStatus();
+
   return (
     <Container>
       <Provider providers={providers}>
-        <ConfigContent >
+        <ConfigContent>
           <div>
             <Typography variant="h1">Configuration</Typography>
+            {loadingStatus === 'failed' && (
+              <Alert type="error">
+                <Typography variant="body2">
+                  Error connecting server, please reload the app and try again
+                </Typography>
+              </Alert>
+            )}
             <Spacer size={20} direction="vertical" />
             <ChainsConfig type="Source" />
             <Spacer size={24} direction="vertical" />

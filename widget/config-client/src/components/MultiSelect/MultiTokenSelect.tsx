@@ -20,7 +20,6 @@ type PropTypes = {
   blockchains: BlockchainMeta[];
   label: string;
   modalTitle: string;
-  loading?: boolean;
   disabled?: boolean;
   type: Type;
 };
@@ -43,7 +42,6 @@ export function MultiTokenSelect({
   label,
   modalTitle,
   list,
-  loading,
   blockchains,
   disabled,
   type,
@@ -51,9 +49,10 @@ export function MultiTokenSelect({
   const [open, setOpen] = useState(false);
   const [chain, setChain] = useState<string>('all');
   const [selectTokens, setSelectTokens] = useState({});
+  const fromTokens = useConfigStore.use.configs().fromTokens;
+  const toTokens = useConfigStore.use.configs().toTokens;
 
-  const { fromTokens, toTokens } = useConfigStore((state) => state.configs);
-  const onChangeTokens = useConfigStore((state) => state.onChangeTokens);
+  const onChangeTokens = useConfigStore.use.onChangeTokens();
   const tokens = type === 'Source' ? fromTokens : toTokens;
 
   const onChangeSelectList = (token) => {
@@ -117,11 +116,7 @@ export function MultiTokenSelect({
 
   return (
     <div>
-      <Container
-        loading={loading}
-        disabled={disabled}
-        label={label}
-        onOpenModal={() => setOpen(true)}>
+      <Container label={label} onOpenModal={() => setOpen(true)}>
         {tokens !== 'all' ? (
           <>
             {[...tokens].splice(0, 10).map((v) => (
@@ -164,8 +159,8 @@ export function MultiTokenSelect({
           <SecondaryPage
             textField={true}
             hasHeader={false}
-            textFieldPlaceholder="Search Token By Name"
-            Content={({ searchedFor }) => {
+            textFieldPlaceholder="Search Token By Name">
+            {(searchedFor) => {
               const filterList = list.filter((token) => token.blockchain === chain);
 
               return (
@@ -219,10 +214,11 @@ export function MultiTokenSelect({
                 </>
               );
             }}
-          />
+          </SecondaryPage>
         }
         title={modalTitle}
-        containerStyle={{ width: '560px', maxHeight: '775px', minHeight: '665px' }}></Modal>
+        containerStyle={{ width: '560px', maxHeight: '775px', minHeight: '665px' }}
+      />
     </div>
   );
 }

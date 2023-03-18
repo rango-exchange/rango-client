@@ -20,13 +20,14 @@ export const ConfigurationContainer = styled('div', {
 });
 
 export function ChainsConfig({ type }: PropTypes) {
-  const {
-    meta: { blockchains, tokens },
-    loadingStatus,
-  } = useMetaStore();
+  const blockchains = useMetaStore.use.meta().blockchains;
+  const tokens = useMetaStore.use.meta().tokens;
+  const fromChains = useConfigStore.use.configs().fromChains;
+  const toChains = useConfigStore.use.configs().toChains;
+  const customeAddress = useConfigStore.use.configs().customeAddress;
+  const onChangeBlockChains = useConfigStore.use.onChangeBlockChains();
+  const onChangeBooleansConfig = useConfigStore.use.onChangeBooleansConfig();
 
-  const { configs, onChangeBlockChains, onChangeBooleansConfig } = useConfigStore((state) => state);
-  const { fromChains, toChains, customeAddress } = configs;
   const chains = type === 'Source' ? fromChains : toChains;
 
   const onChangeChains = (chain) => {
@@ -44,8 +45,6 @@ export function ChainsConfig({ type }: PropTypes) {
           list={blockchains}
           label="Supported Blockchains"
           type="Blockchains"
-          loading={loadingStatus === 'loading'}
-          disabled={loadingStatus === 'failed'}
           value={type === 'Source' ? fromChains : toChains}
           onChange={onChangeChains}
           modalTitle="Select Blockchains"
@@ -53,8 +52,6 @@ export function ChainsConfig({ type }: PropTypes) {
         <Spacer size={24} direction={'vertical'} />
         <MultiTokenSelect
           list={tokens}
-          loading={loadingStatus === 'loading'}
-          disabled={loadingStatus === 'failed'}
           modalTitle="Select Tokens"
           label="Supported Tokens"
           type={type}

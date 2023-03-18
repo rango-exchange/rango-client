@@ -1,9 +1,8 @@
 import React, { PropsWithChildren } from 'react';
-import { Button, Spacer, styled, Typography } from '@rango-dev/ui';
+import { Button, InfoCircleIcon, Spacer, styled, Typography } from '@rango-dev/ui';
+import { useMetaStore } from '../../store/meta';
 type PropTypes = {
   label: string;
-  loading?: boolean;
-  disabled?: boolean;
   onOpenModal: () => void;
 };
 
@@ -25,21 +24,9 @@ const Row = styled('div', {
   overflow: 'auto',
 });
 
-const EmptyContent = styled('div', {
-  textAlign: 'center',
-  marginTop: '20%',
-});
-const Content = styled('div', {
-  display: 'flex',
-  flexDirection: 'column',
-});
-export function Container({
-  label,
-  loading,
-  disabled,
-  onOpenModal,
-  children,
-}: PropsWithChildren<PropTypes>) {
+export function Container({ label, onOpenModal, children }: PropsWithChildren<PropTypes>) {
+  const loadingStatus = useMetaStore.use.loadingStatus();
+
   return (
     <div>
       <Head>
@@ -50,9 +37,10 @@ export function Container({
         <Button
           onClick={onOpenModal}
           variant="contained"
-          loading={loading}
-          disabled={disabled}
+          loading={loadingStatus === 'loading'}
+          disabled={loadingStatus === 'failed'}
           size="small"
+          suffix={loadingStatus === 'failed' && <InfoCircleIcon color="error" size={24} />}
           type="primary">
           Change
         </Button>

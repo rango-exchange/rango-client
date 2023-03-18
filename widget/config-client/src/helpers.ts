@@ -13,8 +13,6 @@ export const onChangeMultiSelects = (value, values, list, findIndex) => {
   } else {
     values = [...values];
     const index = values.findIndex(findIndex);
-    console.log(index);
-
     if (index !== -1) values.splice(index, 1);
     else values.push(value);
     if (values.length === list.length) return 'all';
