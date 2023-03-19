@@ -162,11 +162,11 @@ class Manager {
    *
    */
   private async sync() {
-    // Reset queues, if anything is exist in memory.
-    this.queues = new Map();
-
     // Reading queues from storage
     const queues = await this.persistor.getAll();
+
+    // Reset queues, if anything is exist in memory.
+    this.queues = new Map();
 
     // Brings them into memory
     queues.forEach((q) => {
