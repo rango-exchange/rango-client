@@ -8,17 +8,19 @@ import {
   Subscribe,
   SwitchNetwork,
   WalletConfig,
-  WalletSigners,
-  EvmBlockchainMeta,
   convertEvmBlockchainMetaToEvmChainInfo,
   canSwitchNetworkToEvm,
   switchOrAddNetworkForMetamaskCompatibleWallets,
-  BlockchainMeta,
   WalletInfo,
-  evmBlockchains,
 } from '@rango-dev/wallets-shared';
 import { formatJsonRpcRequest } from '@walletconnect/jsonrpc-utils';
 import signer from './signer';
+import {
+  SignerFactory,
+  EvmBlockchainMeta,
+  BlockchainMeta,
+  evmBlockchains,
+} from 'rango-types';
 
 const WALLET = WalletType.WALLET_CONNECT;
 
@@ -158,7 +160,7 @@ export const disconnect: Disconnect = async ({ instance, destroyInstance }) => {
   }
 };
 
-export const getSigners: (provider: any) => WalletSigners = signer;
+export const getSigners: (provider: any) => SignerFactory = signer;
 
 export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
   allBlockChains

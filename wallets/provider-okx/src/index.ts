@@ -6,13 +6,10 @@ import {
   ProviderConnectResult,
   Subscribe,
   SwitchNetwork,
-  WalletSigners,
   canSwitchNetworkToEvm,
   chooseInstance,
   getEvmAccounts,
   switchNetworkForEvm,
-  isEvmBlockchain,
-  BlockchainMeta,
   WalletInfo,
 } from '@rango-dev/wallets-shared';
 
@@ -22,6 +19,11 @@ import {
   OKX_WALLET_SUPPORTED_CHAINS,
 } from './helpers';
 import signer from './signer';
+import {
+  SignerFactory,
+  isEvmBlockchain,
+  BlockchainMeta,
+} from 'rango-types/lib';
 
 const WALLET = WalletType.OKX;
 
@@ -76,7 +78,7 @@ export const switchNetwork: SwitchNetwork = async (options) => {
 
 export const canSwitchNetworkTo: CanSwitchNetwork = canSwitchNetworkToEvm;
 
-export const getSigners: (provider: any) => WalletSigners = signer;
+export const getSigners: (provider: any) => SignerFactory = signer;
 
 export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
   allBlockChains

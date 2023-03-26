@@ -4,12 +4,10 @@ import {
   Connect,
   Subscribe,
   SwitchNetwork,
-  WalletSigners,
   canSwitchNetworkToEvm,
   getEvmAccounts,
   subscribeToEvm,
   switchNetworkForEvm,
-  BlockchainMeta,
   WalletInfo,
   Network,
 } from '@rango-dev/wallets-shared';
@@ -18,6 +16,7 @@ import {
   KUCOIN_WALLET_SUPPORTED_CHAINS,
 } from './helpers';
 import signer from './signer';
+import { SignerFactory, BlockchainMeta } from 'rango-types';
 
 const WALLET = WalletType.KUCOIN;
 
@@ -45,7 +44,7 @@ export const switchNetwork: SwitchNetwork = switchNetworkForEvm;
 
 export const canSwitchNetworkTo: CanSwitchNetwork = canSwitchNetworkToEvm;
 
-export const getSigners: (provider: any) => WalletSigners = signer;
+export const getSigners: (provider: any) => SignerFactory = signer;
 
 export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
   allBlockChains

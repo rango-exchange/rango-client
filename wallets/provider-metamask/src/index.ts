@@ -1,20 +1,18 @@
 import {
   WalletType,
+  WalletInfo,
   CanSwitchNetwork,
   Connect,
   Subscribe,
   SwitchNetwork,
-  WalletSigners,
   canSwitchNetworkToEvm,
   getEvmAccounts,
   subscribeToEvm,
   switchNetworkForEvm,
-  evmBlockchains,
-  BlockchainMeta,
-  WalletInfo,
 } from '@rango-dev/wallets-shared';
 import { metamask as metamask_instance } from './helpers';
 import signer from './signer';
+import { SignerFactory, evmBlockchains, BlockchainMeta } from 'rango-types';
 
 const WALLET = WalletType.META_MASK;
 
@@ -42,7 +40,7 @@ export const switchNetwork: SwitchNetwork = switchNetworkForEvm;
 
 export const canSwitchNetworkTo: CanSwitchNetwork = canSwitchNetworkToEvm;
 
-export const getSigners: (provider: any) => WalletSigners = signer;
+export const getSigners: (provider: any) => SignerFactory = signer;
 
 export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
   allBlockChains

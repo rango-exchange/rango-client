@@ -1,14 +1,11 @@
 import {
-  Network,
-  WalletType,
   CanSwitchNetwork,
   Connect,
   Subscribe,
-  WalletSigners,
   getEvmAccounts,
-  isEvmBlockchain,
+  Network,
+  WalletType,
   WalletInfo,
-  BlockchainMeta,
 } from '@rango-dev/wallets-shared';
 import {
   accountsForActiveWallet,
@@ -16,12 +13,12 @@ import {
   BINANCE_CHAIN_WALLET_SUPPORTED_CHAINS,
 } from './helpers';
 import signer from './signer';
+import { SignerFactory, BlockchainMeta, isEvmBlockchain } from 'rango-types';
 
 const WALLET = WalletType.BINANCE_CHAIN;
 
 export const config = {
   type: WALLET,
-  // TODO: Get from instance
   defaultNetwork: Network.ETHEREUM,
 };
 
@@ -66,7 +63,7 @@ export const subscribe: Subscribe = ({
 
 export const canSwitchNetworkTo: CanSwitchNetwork = () => false;
 
-export const getSigners: (provider: any) => WalletSigners = signer;
+export const getSigners: (provider: any) => SignerFactory = signer;
 
 export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
   allBlockChains

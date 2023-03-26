@@ -3,14 +3,12 @@ import {
   WalletType,
   Connect,
   Subscribe,
-  WalletSigners,
   getCosmosAccounts,
-  BlockchainMeta,
   WalletInfo,
-  cosmosBlockchains,
 } from '@rango-dev/wallets-shared';
 import { leap_cosmos_instance, getSupportedChains } from './helpers';
 import signer from './signer';
+import { SignerFactory, cosmosBlockchains, BlockchainMeta } from 'rango-types';
 
 const WALLET = WalletType.LEAP_COSMOS;
 
@@ -42,7 +40,7 @@ export const subscribe: Subscribe = ({ connect, disconnect }) => {
   });
 };
 
-export const getSigners: (provider: any) => WalletSigners = signer;
+export const getSigners: (provider: any) => SignerFactory = signer;
 
 export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
   allBlockChains

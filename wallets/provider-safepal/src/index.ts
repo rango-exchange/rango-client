@@ -6,19 +6,21 @@ import {
   ProviderConnectResult,
   Subscribe,
   SwitchNetwork,
-  WalletSigners,
   canSwitchNetworkToEvm,
   chooseInstance,
   getEvmAccounts,
   subscribeToEvm,
   switchNetworkForEvm,
-  BlockchainMeta,
   WalletInfo,
-  evmBlockchains,
-  solanaBlockchain,
 } from '@rango-dev/wallets-shared';
 import { getNonEvmAccounts, safepal as safepal_instance } from './helpers';
 import signer from './signer';
+import {
+  SignerFactory,
+  BlockchainMeta,
+  evmBlockchains,
+  solanaBlockchain,
+} from 'rango-types';
 
 const WALLET = WalletType.SAFEPAL;
 
@@ -60,7 +62,7 @@ export const switchNetwork: SwitchNetwork = switchNetworkForEvm;
 
 export const canSwitchNetworkTo: CanSwitchNetwork = canSwitchNetworkToEvm;
 
-export const getSigners: (provider: any) => WalletSigners = signer;
+export const getSigners: (provider: any) => SignerFactory = signer;
 
 export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
   allBlockChains

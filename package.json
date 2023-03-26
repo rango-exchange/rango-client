@@ -8,7 +8,8 @@
   "workspaces": [
     "widget/*",
     "queue-manager/*",
-    "wallets/*"
+    "wallets/*",
+    "signers/*"
   ],
   "scripts": {
     "prepare": "husky install",
