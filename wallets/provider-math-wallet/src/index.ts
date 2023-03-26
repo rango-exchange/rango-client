@@ -5,26 +5,27 @@ import {
   Connect,
   ProviderConnectResult,
   Subscribe,
-  WalletSigners,
   chooseInstance,
   getEvmAccounts,
   subscribeToEvm,
-  BlockchainMeta,
   WalletInfo,
-  evmBlockchains,
-  solanaBlockchain,
 } from '@rango-dev/wallets-shared';
 import {
   getNonEvmAccounts,
   mathWallet as mathWallet_instance,
 } from './helpers';
 import signer from './signer';
+import {
+  SignerFactory,
+  evmBlockchains,
+  solanaBlockchain,
+  BlockchainMeta,
+} from 'rango-types';
 
 const WALLET = WalletType.MATH;
 
 export const config = {
   type: WALLET,
-  // TODO: Get from evm networks
   defaultNetwork: Network.ETHEREUM,
 };
 
@@ -59,7 +60,7 @@ export const subscribe: Subscribe = (options) => {
 
 export const canSwitchNetworkTo: CanSwitchNetwork = () => false;
 
-export const getSigners: (provider: any) => WalletSigners = signer;
+export const getSigners: (provider: any) => SignerFactory = signer;
 
 export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
   allBlockChains

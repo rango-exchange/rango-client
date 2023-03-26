@@ -6,22 +6,24 @@ import {
   ProviderConnectResult,
   Subscribe,
   SwitchNetwork,
-  WalletSigners,
   canSwitchNetworkToEvm,
   chooseInstance,
   getEvmAccounts,
   subscribeToEvm,
   switchNetworkForEvm,
-  isCosmosBlockchain,
-  isEvmBlockchain,
   getCosmosAccounts,
-  BlockchainMeta,
   WalletInfo,
-  evmBlockchains,
-  cosmosBlockchains,
 } from '@rango-dev/wallets-shared';
 import { cosmostation as cosmostation_instance } from './helpers';
 import signer from './signer';
+import {
+  SignerFactory,
+  isCosmosBlockchain,
+  BlockchainMeta,
+  evmBlockchains,
+  cosmosBlockchains,
+  isEvmBlockchain,
+} from 'rango-types';
 
 const WALLET = WalletType.COSMOSTATION;
 
@@ -89,7 +91,7 @@ export const subscribe: Subscribe = ({
   });
 };
 
-export const getSigners: (provider: any) => WalletSigners = signer;
+export const getSigners: (provider: any) => SignerFactory = signer;
 
 export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
   allBlockChains

@@ -1,7 +1,5 @@
 import {
   Network,
-  evmBlockchains,
-  solanaBlockchain,
   WalletType,
   canSwitchNetworkToEvm,
   chooseInstance,
@@ -12,15 +10,19 @@ import {
   ProviderConnectResult,
   Subscribe,
   SwitchNetwork,
-  WalletSigners,
-  isEvmBlockchain,
-  isSolanaBlockchain,
-  getSolanaAccounts,
-  BlockchainMeta,
   WalletInfo,
+  getSolanaAccounts,
 } from '@rango-dev/wallets-shared';
 import { brave as brave_instances } from './helpers';
 import signer from './signer';
+import {
+  SignerFactory,
+  isEvmBlockchain,
+  isSolanaBlockchain,
+  BlockchainMeta,
+  evmBlockchains,
+  solanaBlockchain,
+} from 'rango-types';
 
 const WALLET = WalletType.BRAVE;
 
@@ -112,7 +114,7 @@ export const switchNetwork: SwitchNetwork = switchNetworkForEvm;
 
 export const canSwitchNetworkTo: CanSwitchNetwork = canSwitchNetworkToEvm;
 
-export const getSigners: (provider: any) => WalletSigners = signer;
+export const getSigners: (provider: any) => SignerFactory = signer;
 
 export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
   allBlockChains

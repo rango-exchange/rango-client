@@ -2,16 +2,13 @@ import {
   Network,
   WalletType,
   Connect,
-  WalletSigners,
   Subscribe,
   getCosmosAccounts,
-  BlockchainMeta,
   WalletInfo,
-  cosmosBlockchains,
 } from '@rango-dev/wallets-shared';
-
 import { keplr as keplrInstance } from './helpers';
 import signer from './signer';
+import { SignerFactory, cosmosBlockchains, BlockchainMeta } from 'rango-types';
 
 const WALLET = WalletType.KEPLR;
 
@@ -37,7 +34,7 @@ export const subscribe: Subscribe = ({ connect, disconnect }) => {
   });
 };
 
-export const getSigners: (provider: any) => WalletSigners = signer;
+export const getSigners: (provider: any) => SignerFactory = signer;
 
 export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
   allBlockChains

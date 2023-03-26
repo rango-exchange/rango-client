@@ -1,0 +1,47 @@
+{
+  "name": "@rango-dev/signer-tron",
+  "version": "0.1.11-next.76",
+  "license": "MIT",
+  "module": "dist/signer-tron.esm.js",
+  "main": "dist/index.js",
+  "typings": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "src"
+  ],
+  "scripts": {
+    "dev": "tsdx watch",
+    "build": "tsdx build",
+    "test": "tsdx test",
+    "lint": "tsdx lint",
+    "size": "size-limit",
+    "analyze": "size-limit --why"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "tsdx lint"
+    }
+  },
+  "prettier": {
+    "printWidth": 80,
+    "semi": true,
+    "singleQuote": true,
+    "trailingComma": "es5"
+  },
+  "size-limit": [
+    {
+      "path": "dist/signer-tron.cjs.production.min.js",
+      "limit": "10 KB"
+    },
+    {
+      "path": "dist/signer-tron.esm.js",
+      "limit": "10 KB"
+    }
+  ],
+  "dependencies": {
+    "rango-types": "^0.1.20"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

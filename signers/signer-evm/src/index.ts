@@ -1,1 +1,1 @@
-export * from './signer';
+export { IEvmSigner, EvmSigner } from './signer';

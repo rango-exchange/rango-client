@@ -6,21 +6,21 @@ import {
   ProviderConnectResult,
   Subscribe,
   SwitchNetwork,
-  WalletSigners,
   canSwitchNetworkToEvm,
   chooseInstance,
   getEvmAccounts,
   switchNetworkForEvm,
-  isEvmBlockchain,
-  BlockchainMeta,
   WalletInfo,
-  evmBlockchains,
-  solanaBlockchain,
 } from '@rango-dev/wallets-shared';
-
 import { getNonEvmAccounts, clover as clover_instance } from './helpers';
-
 import signer from './signer';
+import {
+  SignerFactory,
+  isEvmBlockchain,
+  evmBlockchains,
+  BlockchainMeta,
+  solanaBlockchain,
+} from 'rango-types';
 
 const WALLET = WalletType.CLOVER;
 
@@ -87,7 +87,7 @@ export const switchNetwork: SwitchNetwork = async (options) => {
 
 export const canSwitchNetworkTo: CanSwitchNetwork = canSwitchNetworkToEvm;
 
-export const getSigners: (provider: any) => WalletSigners = signer;
+export const getSigners: (provider: any) => SignerFactory = signer;
 
 export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
   allBlockChains
