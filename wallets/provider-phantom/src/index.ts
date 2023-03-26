@@ -4,14 +4,12 @@ import {
   CanSwitchNetwork,
   Connect,
   Subscribe,
-  WalletSigners,
   getSolanaAccounts,
-  BlockchainMeta,
   WalletInfo,
-  solanaBlockchain,
 } from '@rango-dev/wallets-shared';
 import { phantom as phantom_instance } from './helpers';
 import signer from './signer';
+import { SignerFactory, BlockchainMeta, solanaBlockchain } from 'rango-types';
 
 const WALLET = WalletType.PHANTOM;
 
@@ -36,7 +34,7 @@ export const subscribe: Subscribe = ({ instance, updateAccounts, connect }) => {
 
 export const canSwitchNetworkTo: CanSwitchNetwork = () => false;
 
-export const getSigners: (provider: any) => WalletSigners = signer;
+export const getSigners: (provider: any) => SignerFactory = signer;
 
 export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
   allBlockChains

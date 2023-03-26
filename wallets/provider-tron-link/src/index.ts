@@ -4,13 +4,11 @@ import {
   WalletType,
   CanSwitchNetwork,
   Connect,
-  WalletSigners,
-  BlockchainMeta,
   WalletInfo,
-  tronBlockchain,
 } from '@rango-dev/wallets-shared';
 import { tronLink as tronLink_instance } from './helpers';
 import signer from './signer';
+import { SignerFactory, BlockchainMeta, tronBlockchain } from 'rango-types';
 
 // https://docs.tronlink.org/dapp/start-developing
 // https://developers.tron.network/docs/tronlink-events
@@ -61,7 +59,7 @@ export const subscribe: Subscribe = ({ updateAccounts, disconnect }) => {
 
 export const canSwitchNetworkTo: CanSwitchNetwork = () => false;
 
-export const getSigners: (provider: any) => WalletSigners = signer;
+export const getSigners: (provider: any) => SignerFactory = signer;
 
 export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
   allBlockChains

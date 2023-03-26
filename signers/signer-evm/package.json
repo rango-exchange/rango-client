@@ -40,7 +40,7 @@
   ],
   "dependencies": {
     "ethers": "^5.7.2",
-    "rango-types": "file:.yalc/rango-types"
+    "rango-types": "^0.1.20"
   },
   "publishConfig": {
     "access": "public"

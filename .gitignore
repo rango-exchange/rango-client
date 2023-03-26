@@ -39,3 +39,4 @@ yarn-error.log*
 .parcel-cache
 storybook-static
 .yalc
+yalc.lock

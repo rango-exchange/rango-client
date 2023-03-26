@@ -10,10 +10,6 @@ import {
   ProviderConnectResult,
   Subscribe,
   SwitchNetwork,
-  WalletSigners,
-  isEvmBlockchain,
-  isSolanaBlockchain,
-  BlockchainMeta,
   WalletInfo,
 } from '@rango-dev/wallets-shared';
 import {
@@ -22,6 +18,12 @@ import {
   getSolanaAccounts,
 } from './helpers';
 import signer from './signer';
+import {
+  SignerFactory,
+  isEvmBlockchain,
+  isSolanaBlockchain,
+  BlockchainMeta,
+} from 'rango-types';
 
 const WALLET = WalletType.EXODUS;
 
@@ -96,7 +98,7 @@ export const switchNetwork: SwitchNetwork = async (options) => {
 
 export const canSwitchNetworkTo: CanSwitchNetwork = canSwitchNetworkToEvm;
 
-export const getSigners: (provider: any) => WalletSigners = signer;
+export const getSigners: (provider: any) => SignerFactory = signer;
 
 export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
   allBlockChains

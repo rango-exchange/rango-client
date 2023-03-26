@@ -4,17 +4,15 @@ import {
   Connect,
   Subscribe,
   SwitchNetwork,
-  WalletSigners,
   canSwitchNetworkToEvm,
   getEvmAccounts,
   subscribeToEvm,
   switchNetworkForEvm,
-  BlockchainMeta,
   WalletInfo,
-  evmBlockchains,
 } from '@rango-dev/wallets-shared';
 import { tokenpocket as tokenpocket_instance } from './helpers';
 import signer from './signer';
+import { SignerFactory, BlockchainMeta, evmBlockchains } from 'rango-types';
 
 const WALLET = WalletType.TOKEN_POCKET;
 
@@ -42,7 +40,7 @@ export const switchNetwork: SwitchNetwork = switchNetworkForEvm;
 
 export const canSwitchNetworkTo: CanSwitchNetwork = canSwitchNetworkToEvm;
 
-export const getSigners: (provider: any) => WalletSigners = signer;
+export const getSigners: (provider: any) => SignerFactory = signer;
 
 export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
   allBlockChains

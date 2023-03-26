@@ -4,22 +4,24 @@ import {
   CanSwitchNetwork,
   Connect,
   Subscribe,
-  WalletSigners,
-  BlockchainMeta,
   WalletInfo,
   getEvmAccounts,
-  evmBlockchains,
   SwitchNetwork,
   switchNetworkForEvm,
   canSwitchNetworkToEvm,
   chooseInstance,
-  isEvmBlockchain,
-  isSolanaBlockchain,
-  solanaBlockchain,
 } from '@rango-dev/wallets-shared';
 import type { ProviderConnectResult } from '@rango-dev/wallets-shared';
 import { frontier as frontier_instance, getSolanaAccounts } from './helpers';
 import signer from './signer';
+import {
+  SignerFactory,
+  isEvmBlockchain,
+  BlockchainMeta,
+  evmBlockchains,
+  isSolanaBlockchain,
+  solanaBlockchain,
+} from 'rango-types';
 
 const WALLET = WalletType.FRONTIER;
 
@@ -94,7 +96,7 @@ export const switchNetwork: SwitchNetwork = async (options) => {
 
 export const canSwitchNetworkTo: CanSwitchNetwork = canSwitchNetworkToEvm;
 
-export const getSigners: (provider: any) => WalletSigners = signer;
+export const getSigners: (provider: any) => SignerFactory = signer;
 
 export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
   allBlockChains
