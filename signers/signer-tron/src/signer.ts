@@ -25,8 +25,10 @@ export class TronSigner implements ITronSigner {
   async signAndSendTx(tx: TronTransaction): Promise<string> {
     try {
       const transaction = TronSigner.buildTx(tx);
-      const signedTxn = await this.signer.trx.sign(transaction);
-      const receipt = await this.signer.trx.sendRawTransaction(signedTxn);
+      const signedTxn = await this.signer.tronWeb.trx.sign(transaction);
+      const receipt = await this.signer.tronWeb.trx.sendRawTransaction(
+        signedTxn
+      );
       return receipt?.transaction?.txID;
     } catch (error) {
       throw new SignerError(SignerErrorCode.SEND_TX_ERROR, undefined, error);

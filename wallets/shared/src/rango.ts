@@ -271,27 +271,6 @@ export type CanSwitchNetwork = (options: {
   meta: BlockchainMeta[];
 }) => boolean;
 
-export type WalletSigners = {
-  executeTransfer: (tx: Transfer, meta: Meta) => Promise<string>;
-  executeEvmTransaction: (tx: EvmTransaction, meta: Meta) => Promise<string>;
-  executeCosmosMessage: (tx: CosmosTransaction, meta: Meta) => Promise<string>;
-  executeSolanaTransaction: (
-    tx: SolanaTransaction,
-    requestId: string
-  ) => Promise<string>;
-  executeStarknetTransaction: (
-    tx: StarknetTransaction,
-    meta: Meta
-  ) => Promise<string>;
-  executeTronTransaction: (tx: TronTransaction, meta: Meta) => Promise<string>;
-  signMessage: (
-    walletAddress: string,
-    message: string,
-    blockChain: string,
-    meta: BlockchainMeta[]
-  ) => Promise<string>;
-};
-
 export type InstallObjects = {
   CHROME?: string;
   FIREFOX?: string;
