@@ -10,15 +10,17 @@ import {
   Connect,
   Subscribe,
   SwitchNetwork,
-  WalletSigners,
-  BlockchainMeta,
   WalletInfo,
-  evmBlockchains,
-  solanaBlockchain,
 } from '@rango-dev/wallets-shared';
 import { coin98 as coin98_instances } from './helpers';
 import { getSolanaAccounts } from './helpers';
-import signer from './helper';
+import signer from './signer';
+import {
+  SignerFactory,
+  evmBlockchains,
+  solanaBlockchain,
+  BlockchainMeta,
+} from 'rango-types';
 
 const WALLET = WalletType.COIN98;
 
@@ -90,7 +92,7 @@ export const switchNetwork: SwitchNetwork = async (options) => {
 
 export const canSwitchNetworkTo: CanSwitchNetwork = canSwitchNetworkToEvm;
 
-export const getSigners: (provider: any) => WalletSigners = signer;
+export const getSigners: (provider: any) => SignerFactory = signer;
 
 export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
   allBlockChains
