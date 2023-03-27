@@ -293,7 +293,7 @@ export const confirmSwap = async (): Promise<PendingSwap | undefined> => {
 
         const newSwap = calculatePendingSwap(
           inputAmount.toString(),
-          initialRoute,
+          confiremedRoute,
           getWalletsForNewSwap(selectedWallets),
           swapSettings,
           false,

@@ -12,6 +12,7 @@ import {
   WalletType,
 } from '@rango-dev/wallets-shared';
 import { useMetaStore } from './store/meta';
+import { useWalletsStore } from './store/wallets';
 import { walletAndSupportedChainsNames } from './utils/wallets';
 
 function QueueManager(props: PropsWithChildren<{}>) {
@@ -25,8 +26,19 @@ function QueueManager(props: PropsWithChildren<{}>) {
   } = useWallets();
 
   const { blockchains } = useMetaStore.use.meta();
-  // TODO: Implement this
-  const wallets = null;
+  const balances = useWalletsStore.use.balances();
+
+  const wallets = {
+    blockchains: balances.map((w) => {
+      const updatedWallet = {
+        accounts: [w],
+        name: w.chain,
+      };
+
+      return updatedWallet;
+    }),
+  };
+
   const switchNetwork = (wallet: WalletType, network: Network) => {
     if (!canSwitchNetworkTo(wallet, network)) {
       return undefined;
