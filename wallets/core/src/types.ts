@@ -1,15 +1,10 @@
 import { PropsWithChildren } from 'react';
-import {
-  Network,
-  WalletType,
-  BlockchainMeta,
-  WalletInfo,
-  WalletSigners,
-} from '@rango-dev/wallets-shared';
+import { Network, WalletType, WalletInfo } from '@rango-dev/wallets-shared';
 import {
   EventHandler as WalletEventHandler,
   State as WalletState,
 } from './wallet';
+import { SignerFactory, BlockchainMeta } from 'rango-types';
 
 export type State = {
   [key in WalletType]?: WalletState;
@@ -30,7 +25,7 @@ export type ProviderContext = {
   state(type: WalletType): WalletState;
   canSwitchNetworkTo(type: WalletType, network: Network): boolean;
   providers(): Providers;
-  getSigners(type: WalletType): WalletSigners;
+  getSigners(type: WalletType): SignerFactory;
   getWalletInfo(type: WalletType): WalletInfo;
 };
 
@@ -108,7 +103,7 @@ export interface WalletActions {
 
   // Optional, but should be provided at the same time.
   switchNetwork?: SwitchNetwork;
-  getSigners: (provider: any) => WalletSigners;
+  getSigners: (provider: any) => SignerFactory;
   canSwitchNetworkTo?: CanSwitchNetwork;
   getWalletInfo(allBlockChains: BlockchainMeta[]): WalletInfo;
 }
