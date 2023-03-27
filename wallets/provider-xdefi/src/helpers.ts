@@ -1,10 +1,6 @@
-import {
-  Network,
-  ProviderConnectResult,
-  WalletErrorCode,
-  WalletError,
-} from '@rango-dev/wallets-shared';
+import { Network, ProviderConnectResult } from '@rango-dev/wallets-shared';
 import { SUPPORTED_ETH_CHAINS, SUPPORTED_NETWORKS } from './constants';
+import { SignerError, SignerErrorCode } from 'rango-types/lib';
 
 type Provider = Map<Network, any>;
 
@@ -35,10 +31,10 @@ export async function getNonEvmAccounts(
   instances: Provider
 ): Promise<ProviderConnectResult[]> {
   const nonEvmNetworks = SUPPORTED_NETWORKS.filter(
-    (net) => net !== Network.ETHEREUM
+    (net: Network) => net !== Network.ETHEREUM
   );
   const promises: Promise<ProviderConnectResult>[] = nonEvmNetworks.map(
-    (network) => {
+    (network: Network) => {
       return new Promise((resolve, reject) => {
         const instance = instances.get(network);
         instance.request(
@@ -95,7 +91,7 @@ export function xdefiTransfer(
       (error: any, result: any) => {
         if (error)
           reject(
-            new WalletError(WalletErrorCode.SEND_TX_ERROR, undefined, error)
+            new SignerError(SignerErrorCode.SEND_TX_ERROR, undefined, error)
           );
         else resolve(result);
       }

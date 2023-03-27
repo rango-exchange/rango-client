@@ -7,20 +7,19 @@ import {
   ProviderConnectResult,
   Subscribe,
   SwitchNetwork,
-  WalletSigners,
   canSwitchNetworkToEvm,
   chooseInstance,
   getEvmAccounts,
   switchNetworkForEvm,
   getSolanaAccounts,
   XDEFI_WALLET_SUPPORTED_NATIVE_CHAINS,
-  BlockchainMeta,
   WalletInfo,
 } from '@rango-dev/wallets-shared';
 import { SUPPORTED_ETH_CHAINS } from './constants';
 
 import { getNonEvmAccounts, xdefi as xdefi_instances } from './helpers';
-import signer from './test';
+import signer from './signer';
+import { SignerFactory, BlockchainMeta } from 'rango-types';
 
 const DEFAULT_NETWORK = Network.ETHEREUM;
 const WALLET = WalletType.XDEFI;
@@ -78,7 +77,7 @@ export const switchNetwork: SwitchNetwork = switchNetworkForEvm;
 
 export const canSwitchNetworkTo: CanSwitchNetwork = canSwitchNetworkToEvm;
 
-export const getSigners: (provider: any) => WalletSigners = signer;
+export const getSigners: (provider: any) => SignerFactory = signer;
 
 export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
   allBlockChains
