@@ -39,16 +39,6 @@
     }
   ],
   "dependencies": {
-    "@cosmjs/launchpad": "^0.27.1",
-    "@cosmjs/stargate": "^0.29.4",
-    "@keplr-wallet/cosmos": "^0.9.12",
-    "@keplr-wallet/types": "^0.9.12",
-    "@sentry/browser": "^7.22.0",
-    "@sentry/types": "^7.22.0",
-    "@solana/web3.js": "^1.67.2",
-    "cosmjs-types": "^0.5.2",
-    "ethers": "^5.7.2",
-    "long": "^5.2.1",
     "rango-types": "^0.1.13"
   },
   "publishConfig": {

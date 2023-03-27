@@ -94,13 +94,13 @@ function confirmTx(signature: string): Promise<boolean> {
 
 // https://docs.phantom.app/integrating/sending-a-transaction
 // https://codesandbox.io/s/github/phantom-labs/sandbox
-export type SolanaSigner = (
+export type SolanaWeb3Signer = (
   solanaWeb3Transaction: Transaction
 ) => Promise<number[] | Buffer | Uint8Array>;
 
 export const generalSolanaTransactionExecutor = async (
   tx: SolanaTransaction,
-  solanaSigner: SolanaSigner
+  solanaSigner: SolanaWeb3Signer
 ): Promise<string> => {
   const connection = getSolanaConnection();
   let transaction: Transaction;
@@ -150,11 +150,7 @@ export const generalSolanaTransactionExecutor = async (
     const confirmed = await confirmTx(signature);
     if (!confirmed)
       throw new Error('tx cant confirm on blockchain. signature=' + signature);
-    // try {
-    //   Sentry.captureMessage('SolanaStat Success', getTxExtra(tx, requestId));
-    // } catch (ee) {
-    //   console.log(ee);
-    // }
+
     return signature;
   } catch (e) {
     if (
@@ -165,12 +161,7 @@ export const generalSolanaTransactionExecutor = async (
       throw e;
     if (e && (e as any).hasOwnProperty('code') && (e as any).code === 4001)
       throw new SignerError(SignerErrorCode.REJECTED_BY_USER, undefined, e);
-    // try {
-    //   Sentry.captureMessage('SolanaStat Fail', getTxExtra(tx, requestId));
-    //   Sentry.captureException(e, getTxExtra(tx, requestId));
-    // } catch (ee) {
-    //   console.log(ee);
-    // }
+
     return getFailedHash(tx);
   }
 };
@@ -179,7 +170,7 @@ export async function executeSolanaTransaction(
   tx: SolanaTransaction,
   solanaProvider: any
 ): Promise<string> {
-  const solanaSigner: SolanaSigner = async (solanaWeb3Transaction) => {
+  const solanaSigner: SolanaWeb3Signer = async (solanaWeb3Transaction) => {
     try {
       const signedTransaction = await solanaProvider.signTransaction(
         solanaWeb3Transaction
