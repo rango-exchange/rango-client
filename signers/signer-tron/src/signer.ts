@@ -9,13 +9,13 @@ export interface ITronSigner extends ISigner<TronTransaction> {}
 
 // TODO - replace with real type
 // tslint:disable-next-line: no-any
-type TronExternalSigner = any;
+type TronExternalProvider = any;
 
 export class TronSigner implements ITronSigner {
-  private signer: TronExternalSigner;
+  private provider: TronExternalProvider;
 
-  constructor(signer: TronExternalSigner) {
-    this.signer = signer;
+  constructor(provider: TronExternalProvider) {
+    this.provider = provider;
   }
 
   async signMessage(): Promise<string> {
@@ -25,8 +25,8 @@ export class TronSigner implements ITronSigner {
   async signAndSendTx(tx: TronTransaction): Promise<string> {
     try {
       const transaction = TronSigner.buildTx(tx);
-      const signedTxn = await this.signer.tronWeb.trx.sign(transaction);
-      const receipt = await this.signer.tronWeb.trx.sendRawTransaction(
+      const signedTxn = await this.provider.tronWeb.trx.sign(transaction);
+      const receipt = await this.provider.tronWeb.trx.sendRawTransaction(
         signedTxn
       );
       return receipt?.transaction?.txID;
