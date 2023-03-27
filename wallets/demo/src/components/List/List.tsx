@@ -3,7 +3,7 @@ import { useWallets } from '@rango-dev/wallets-core';
 import { sortWalletsBasedOnState, WalletInfo, WalletType } from '@rango-dev/wallets-shared';
 import Item from './Item';
 import './styles.css';
-const excludedWallets = [WalletType.UNKNOWN, WalletType.TERRA_STATION, WalletType.LEAP, WalletType.TRON_LINK];
+const excludedWallets = [WalletType.UNKNOWN, WalletType.TERRA_STATION, WalletType.LEAP];
 
 function List() {
   const { state, getWalletInfo } = useWallets();
