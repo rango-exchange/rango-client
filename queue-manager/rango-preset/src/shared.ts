@@ -43,7 +43,7 @@ export type SwapProgressNotification = {
 };
 
 export type WalletBalance = {
-  chain: Network;
+  chain: Network | string;
   symbol: string;
   ticker: string;
   address: string | null;
@@ -61,7 +61,7 @@ export type Account = {
   walletType: WalletType;
   error: boolean;
   explorerUrl: string | null;
-  isConnected: boolean;
+  isConnected?: boolean;
 };
 export type Blockchain = { name: string; accounts: Account[] };
 export type Wallet = { blockchains: Blockchain[] };
