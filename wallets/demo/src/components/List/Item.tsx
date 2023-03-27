@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { readAccountAddress, useWallets } from '@rango-dev/wallets-core';
-import { Network, WalletType, detectInstallLink, WalletInfo, TransactionType, CosmosBlockchainMeta, CosmosChainInfo } from '@rango-dev/wallets-shared';
+import { Network, WalletType, detectInstallLink, WalletInfo, TransactionType } from '@rango-dev/wallets-shared';
 import './styles.css';
 import {
   Button,
