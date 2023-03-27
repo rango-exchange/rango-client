@@ -18,7 +18,7 @@ import {
 } from '@rango-dev/wallets-shared';
 import { coin98 as coin98_instances } from './helpers';
 import { getSolanaAccounts } from './helpers';
-import signer from './signer';
+import signer from './helper';
 
 const WALLET = WalletType.COIN98;
 
