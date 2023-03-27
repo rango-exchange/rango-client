@@ -1,5 +1,6 @@
-import { Providers, WalletSigners } from '@rango-dev/wallets-core';
+import { Providers } from '@rango-dev/wallets-core';
 import { Network, WalletType, WalletInfo } from '@rango-dev/wallets-shared';
+import { SignerFactory } from 'rango-types';
 export interface State {
   connected: boolean;
   connecting: boolean;
@@ -15,7 +16,7 @@ export type ProviderContext = {
   disconnectAll(): Promise<PromiseSettledResult<any>[]>;
   canSwitchNetworkTo(type: WalletType, network: Network): boolean;
   providers(): Providers;
-  getSigners(type: WalletType): WalletSigners;
+  getSigners(type: WalletType): SignerFactory;
   getWalletInfo(type: WalletType): WalletInfo;
 };
 
