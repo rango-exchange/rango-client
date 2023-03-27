@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { readAccountAddress, useWallets } from '@rango-dev/wallets-core';
-import { Network, WalletType, detectInstallLink, WalletInfo } from '@rango-dev/wallets-shared';
+import { Network, WalletType, detectInstallLink, WalletInfo, TransactionType, CosmosBlockchainMeta, CosmosChainInfo } from '@rango-dev/wallets-shared';
 import './styles.css';
 import {
   Button,
@@ -67,14 +67,17 @@ function Item({ type, info }: { type: WalletType; info: WalletInfo }) {
       const address =
         (walletState.accounts?.length > 1 &&
           readAccountAddress(
-            walletState.accounts.find((account) => account.includes(network.toLowerCase()))!,
+            walletState.accounts.find((account) => account?.toLowerCase()?.includes(network?.toLowerCase()))!,
           ).address) ||
         activeAccount?.accounts[0].address;
-      const result = signers.signMessage(
-        address || '',
+
+      const currentChain = info.supportedChains.find((chain) => chain.name === network)
+      const txType = currentChain?.type || TransactionType.EVM;
+      const chainId = currentChain?.chainId || null;
+      const result = signers.getSigner(txType).signMessage(
         'Hello World',
-        network,
-        info.supportedChains,
+        address!,
+        chainId
       );
       result
         .then((signature) => {
