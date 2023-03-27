@@ -1,8 +1,4 @@
-import {
-  ISigner,
-  SignerError,
-  Transfer as TransferTransaction,
-} from 'rango-types';
+import { ISigner, SignerError, Transfer } from 'rango-types';
 import { xdefiTransfer } from './helpers';
 import {
   Network,
@@ -10,23 +6,23 @@ import {
   getNetworkInstance,
 } from '@rango-dev/wallets-shared';
 
-export interface ITransferSigner extends ISigner<TransferTransaction> {}
+export interface ITransferSigner extends ISigner<Transfer> {}
 
 // TODO - replace with real type
 // tslint:disable-next-line: no-any
-type TransferExternalSigner = any;
+type TransferExternalProvider = any;
 
 export class CustomTransferSigner implements ITransferSigner {
-  private signer: TransferExternalSigner;
-  constructor(signer: TransferExternalSigner) {
-    this.signer = signer;
+  private provider: TransferExternalProvider;
+  constructor(provider: TransferExternalProvider) {
+    this.provider = provider;
   }
 
   async signMessage(): Promise<string> {
     throw SignerError.UnimplementedError('signMessage');
   }
 
-  async signAndSendTx(tx: TransferTransaction): Promise<string> {
+  async signAndSendTx(tx: Transfer): Promise<string> {
     const { blockchain } = tx.asset;
 
     // Everything except ETH
@@ -35,7 +31,7 @@ export class CustomTransferSigner implements ITransferSigner {
         `blockchain: ${blockchain} transfer not implemented yet.`
       );
     const transferProvider = getNetworkInstance(
-      this.signer,
+      this.provider,
       blockchain as Network
     );
 

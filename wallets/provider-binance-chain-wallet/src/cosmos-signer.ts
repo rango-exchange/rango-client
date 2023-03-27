@@ -63,12 +63,12 @@ export interface ICosmosSigner extends ISigner<CosmosTransaction> {}
 
 // TODO - replace with real type
 // tslint:disable-next-line: no-any
-type CosmosExternalSigner = any;
+type CosmosExternalProvider = any;
 
 export class CustomCosmosSigner implements ICosmosSigner {
-  private signer: CosmosExternalSigner;
-  constructor(signer: CosmosExternalSigner) {
-    this.signer = signer;
+  private provider: CosmosExternalProvider;
+  constructor(provider: CosmosExternalProvider) {
+    this.provider = provider;
   }
 
   async signMessage(): Promise<string> {
@@ -76,6 +76,6 @@ export class CustomCosmosSigner implements ICosmosSigner {
   }
 
   async signAndSendTx(tx: CosmosTransaction): Promise<string> {
-    return await executeCosmosMessage(this.signer, tx);
+    return await executeCosmosMessage(this.provider, tx);
   }
 }

@@ -4,13 +4,13 @@ import { Keplr } from '@keplr-wallet/types';
 
 export interface ICosmosSigner extends ISigner<CosmosTransaction> {}
 
-type CosmosExternalSigner = Keplr;
+type CosmosExternalProvider = Keplr;
 
 export class CosmosSigner implements ICosmosSigner {
-  private signer: CosmosExternalSigner;
+  private provider: CosmosExternalProvider;
 
-  constructor(signer: CosmosExternalSigner) {
-    this.signer = signer;
+  constructor(provider: CosmosExternalProvider) {
+    this.provider = provider;
   }
 
   async signMessage(
@@ -19,7 +19,7 @@ export class CosmosSigner implements ICosmosSigner {
     chainId: string | null
   ): Promise<string> {
     if (!chainId) throw Error('ChainId is required');
-    const { signature } = await this.signer.signArbitrary(
+    const { signature } = await this.provider.signArbitrary(
       chainId,
       address,
       msg
@@ -28,6 +28,6 @@ export class CosmosSigner implements ICosmosSigner {
   }
 
   async signAndSendTx(tx: CosmosTransaction): Promise<string> {
-    return await executeCosmosTransaction(tx, this.signer);
+    return await executeCosmosTransaction(tx, this.provider);
   }
 }

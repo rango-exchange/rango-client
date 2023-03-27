@@ -11,12 +11,12 @@ export interface ISolanaSigner extends ISigner<SolanaTransaction> {}
 
 // TODO - replace with real type
 // tslint:disable-next-line: no-any
-type SolanaExternalSigner = any;
+type SolanaExternalProvider = any;
 
 export class CustomSolanaSigner implements ISolanaSigner {
-  private signer: SolanaExternalSigner;
-  constructor(signer: SolanaExternalSigner) {
-    this.signer = signer;
+  private provider: SolanaExternalProvider;
+  constructor(provider: SolanaExternalProvider) {
+    this.provider = provider;
   }
 
   async signMessage(): Promise<string> {
@@ -28,7 +28,7 @@ export class CustomSolanaSigner implements ISolanaSigner {
       solanaWeb3Transaction: Transaction
     ) => {
       const response: { publicKey: string; signature: string } =
-        await this.signer.request({
+        await this.provider.request({
           method: 'sol_sign',
           params: [solanaWeb3Transaction],
         });
