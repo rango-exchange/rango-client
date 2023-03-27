@@ -20,7 +20,7 @@ import {
 import { SUPPORTED_ETH_CHAINS } from './constants';
 
 import { getNonEvmAccounts, xdefi as xdefi_instances } from './helpers';
-import signer from './signer';
+import signer from './test';
 
 const DEFAULT_NETWORK = Network.ETHEREUM;
 const WALLET = WalletType.XDEFI;
