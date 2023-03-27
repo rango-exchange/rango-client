@@ -29,21 +29,26 @@ export class EvmSigner implements IEvmSigner {
       const transaction = EvmSigner.buildTx(tx);
       const signerChainId = await this.signer.getChainId();
       const signerAddress = await this.signer.getAddress();
-      if (signerChainId.toString().toLowerCase() !== chainId?.toLowerCase()) {
+      if (
+        !!chainId &&
+        !!signerChainId &&
+        signerChainId.toString().toLowerCase() !== chainId?.toLowerCase()
+      ) {
         throw new SignerError(
           SignerErrorCode.UNEXPECTED_BEHAVIOUR,
-          `Signer chainId: '${signerChainId}' doesn't match with 
-          required chainId: '${chainId}' for tx.`
+          `Signer chainId: '${signerChainId}' doesn't match with required chainId: '${chainId}' for tx.`
         );
       }
-      if (signerAddress.toLowerCase() !== address.toLowerCase()) {
+      if (
+        !!signerAddress &&
+        !!address &&
+        signerAddress.toLowerCase() !== address.toLowerCase()
+      ) {
         throw new SignerError(
           SignerErrorCode.UNEXPECTED_BEHAVIOUR,
-          `Signer address: '${signerAddress.toLowerCase()}' doesn't match with 
-          required address: '${address.toLowerCase()}' for tx.`
+          `Signer address: '${signerAddress.toLowerCase()}' doesn't match with required address: '${address.toLowerCase()}' for tx.`
         );
       }
-
       return (await this.signer.sendTransaction(transaction)).hash;
     } catch (error) {
       let message = undefined;
