@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/wallets-adapter",
-  "version": "0.1.11-next.69",
+  "version": "0.1.11-next.70",
   "license": "MIT",
   "module": "dist/wallets-adapter.esm.js",
   "main": "dist/index.js",
