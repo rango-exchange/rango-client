@@ -14,7 +14,7 @@ import { BigNumber } from 'bignumber.js';
 
 import { ErrorDetail, PrettyError } from './shared-errors';
 import { getRelatedWallet } from './helpers';
-import { SignerError } from 'rango-types/lib';
+import { SignerError } from 'rango-types';
 
 export type SwapperStatusResponse = {
   status: 'running' | 'failed' | 'success' | null;
