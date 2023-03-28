@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { ConfirmSwap } from '@rango-dev/ui';
 import { useBestRouteStore } from '../store/bestRoute';
 import { useSettingsStore } from '../store/settings';
@@ -13,6 +14,7 @@ import { useManager } from '@rango-dev/queue-manager-react';
 export function ConfirmSwapPage() {
   const { navigateBackFrom } = useNavigateBack();
   const { manager } = useManager();
+  const navigate = useNavigate();
 
   const bestRoute = useBestRouteStore.use.bestRoute();
 
@@ -32,6 +34,9 @@ export function ConfirmSwapPage() {
         confirmSwap().then((swap) => {
           if (swap) {
             manager?.create('swap', { swapDetails: swap });
+            navigate(navigationRoutes.swapDetails, {
+              state: { requestId: swap.requestId },
+            });
           }
         });
       }}
