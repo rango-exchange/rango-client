@@ -35,6 +35,7 @@ const filteredHistory = (
 const Group = styled('div', {
   marginBottom: '$24',
   paddingRight: '$8',
+  maxHeight: '600px',
 });
 const GroupTitle = styled(Typography, {
   color: '$neutrals500',

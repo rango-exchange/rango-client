@@ -127,10 +127,10 @@ export function SwapDetail({
               <ArrowRight />
             </Arrow>
             <StepDetail
-              logo={lastStep.fromLogo}
-              symbol={lastStep.fromSymbol}
-              chainLogo={lastStep.fromBlockchainLogo}
-              blockchain={lastStep.fromBlockchain}
+              logo={lastStep.toLogo}
+              symbol={lastStep.toSymbol}
+              chainLogo={lastStep.toBlockchainLogo}
+              blockchain={lastStep.toBlockchain}
               amount={lastStep.outputAmount}
             />
           </SwapContainer>
