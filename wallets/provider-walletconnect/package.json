@@ -39,8 +39,8 @@
     }
   ],
   "dependencies": {
-    "@rango-dev/signer-evm": "^0.1.11-next.76",
-    "@rango-dev/wallets-shared": "^0.1.11-next.73",
+    "@rango-dev/signer-evm": "^0.1.11-next.77",
+    "@rango-dev/wallets-shared": "^0.1.11-next.77",
     "@walletconnect/client": "^1.8.0",
     "@walletconnect/jsonrpc-utils": "^1.0.4",
     "@walletconnect/qrcode-modal": "^1.8.0",
