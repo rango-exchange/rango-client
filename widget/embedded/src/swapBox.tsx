@@ -5,7 +5,7 @@ import { useMetaStore } from './store/meta';
 import { Events, Provider } from '@rango-dev/wallets-core';
 import { allProviders } from '@rango-dev/provider-all';
 import { EventHandler } from '@rango-dev/wallets-core/dist/wallet';
-import { isEvmBlockchain, Network } from '@rango-dev/wallets-shared';
+import { Network } from '@rango-dev/wallets-shared';
 import {
   prepareAccountsForWalletStore,
   walletAndSupportedChainsNames,
@@ -14,6 +14,7 @@ import { useWalletsStore } from './store/wallets';
 import { Layout } from './components/Layout';
 import { globalStyles } from './globalStyles';
 import { useTheme } from './hooks/useTheme';
+import { isEvmBlockchain } from 'rango-sdk';
 
 const providers = allProviders();
 

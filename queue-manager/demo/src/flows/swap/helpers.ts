@@ -9,27 +9,16 @@ import {
   PendingSwapStep,
   WalletTypeAndAddress,
   SwapProgressNotification,
-} from "../rango/types";
-import { ExecuterActions } from "@rango-dev/queue-manager-core";
+} from '../rango/types';
+import { ExecuterActions } from '@rango-dev/queue-manager-core';
+import { BlockReason, SwapActionTypes, SwapQueueContext, SwapStorage } from './types';
 import {
-  BlockReason,
-  SwapActionTypes,
-  SwapQueueContext,
-  SwapStorage,
-} from "./types";
-import {
-  CosmosTransaction,
-  EvmTransaction,
-  TransactionType,
   getBlockChainNameFromId,
   Meta,
   Network,
-  SolanaTransaction,
-  Transaction,
-  TransferTransaction,
   WalletState,
   WalletType,
-} from "@rango-dev/wallets-shared";
+} from '@rango-dev/wallets-shared';
 import {
   getCurrentBlockchainOf,
   getCurrentBlockchainOfOrNull,
@@ -37,20 +26,24 @@ import {
   logRPCError,
   prettifyErrorMessage,
   PrettyError,
-} from "../rango/helpers";
-import { Providers, readAccountAddress } from "@rango-dev/wallets-core";
-import { SwapQueueDef } from "./queueDef";
+} from '../rango/helpers';
+import { Providers, readAccountAddress } from '@rango-dev/wallets-core';
+import { SwapQueueDef } from './queueDef';
+import {
+  CosmosTransaction,
+  EvmTransaction,
+  SolanaTransaction,
+  Transaction,
+  TransactionType,
+  Transfer as TransferTransaction,
+} from 'rango-types/lib/api/main';
 
-type WhenTaskBlocked = Parameters<NonNullable<SwapQueueDef["whenTaskBlocked"]>>;
+type WhenTaskBlocked = Parameters<NonNullable<SwapQueueDef['whenTaskBlocked']>>;
 type WhenTaskBlockedEvent = WhenTaskBlocked[0];
 type WhenTaskBlockedMeta = WhenTaskBlocked[1];
 
 export const getCurrentStep = (swap: PendingSwap) => {
-  return (
-    swap.steps.find(
-      (step) => step.status !== "failed" && step.status !== "success"
-    ) || null
-  );
+  return swap.steps.find((step) => step.status !== 'failed' && step.status !== 'success') || null;
 };
 
 export function updateSwapStatus({
@@ -61,16 +54,8 @@ export function updateSwapStatus({
   message,
   details,
 }: {
-  getStorage: ExecuterActions<
-    SwapStorage,
-    SwapActionTypes,
-    SwapQueueContext
-  >["getStorage"];
-  setStorage: ExecuterActions<
-    SwapStorage,
-    SwapActionTypes,
-    SwapQueueContext
-  >["setStorage"];
+  getStorage: ExecuterActions<SwapStorage, SwapActionTypes, SwapQueueContext>['getStorage'];
+  setStorage: ExecuterActions<SwapStorage, SwapActionTypes, SwapQueueContext>['setStorage'];
   nextStatus: SwapStatus | null;
   nextStepStatus: StepStatus | null;
   message: string | null;
@@ -82,23 +67,23 @@ export function updateSwapStatus({
 
   if (!!nextStatus) swap.status = nextStatus;
 
-  if (!!nextStatus && ["failed", "success"].includes(nextStatus))
+  if (!!nextStatus && ['failed', 'success'].includes(nextStatus))
     swap.finishTime = new Date().getTime().toString();
 
   if (!!message) swap.extraMessage = message;
 
   if (!!details) swap.extraMessageDetail = details;
 
-  if (!!nextStepStatus && ["failed"].includes(nextStepStatus))
+  if (!!nextStepStatus && ['failed'].includes(nextStepStatus))
     swap.extraMessageSeverity = MessageSeverity.error;
-  else if (!!nextStepStatus && ["running"].includes(nextStepStatus))
+  else if (!!nextStepStatus && ['running'].includes(nextStepStatus))
     swap.extraMessageSeverity = MessageSeverity.info;
-  else if (!!nextStepStatus && ["success", "approved"].includes(nextStepStatus))
+  else if (!!nextStepStatus && ['success', 'approved'].includes(nextStepStatus))
     swap.extraMessageSeverity = MessageSeverity.success;
-  else if (nextStepStatus && ["waitingForApproval"].includes(nextStepStatus))
+  else if (nextStepStatus && ['waitingForApproval'].includes(nextStepStatus))
     swap.extraMessageSeverity = MessageSeverity.warning;
 
-  if (nextStepStatus === "running" && currentStep)
+  if (nextStepStatus === 'running' && currentStep)
     currentStep.startTransactionTime = new Date().getTime();
 
   setStorage({
@@ -113,7 +98,7 @@ export function updateSwapStatus({
 }
 
 export function notifier({ eventType, swap, step }: SwapProgressNotification) {
-  console.log("[notifier]", { eventType, swap, step });
+  console.log('[notifier]', { eventType, swap, step });
 }
 
 // export function changeStatusAndNotify(
@@ -132,7 +117,7 @@ export function setStepTransactionIds(
   txId: string | null,
   externalTxId: string | null,
   eventType: EventType,
-  notifier: SwapQueueContext["notifier"]
+  notifier: SwapQueueContext['notifier'],
 ) {
   const swap = getStorage().swapDetails;
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
@@ -146,12 +131,9 @@ export function setStepTransactionIds(
 }
 
 export function markRunningSwapAsWaitingForConnectingWallet(
-  {
-    getStorage,
-    setStorage,
-  }: ExecuterActions<SwapStorage, SwapActionTypes, SwapQueueContext>,
+  { getStorage, setStorage }: ExecuterActions<SwapStorage, SwapActionTypes, SwapQueueContext>,
   reason: string,
-  reasonDetail: string
+  reasonDetail: string,
 ): void {
   const swap = getStorage().swapDetails;
   const currentStep = getCurrentStep(swap);
@@ -160,10 +142,7 @@ export function markRunningSwapAsWaitingForConnectingWallet(
   swap.lastNotificationTime = currentTime.getTime().toString();
 
   // TODO: Do we need this?
-  if (
-    currentStep.networkStatus ===
-    PendingSwapNetworkStatus.WaitingForConnectingWallet
-  ) {
+  if (currentStep.networkStatus === PendingSwapNetworkStatus.WaitingForConnectingWallet) {
     setStorage({
       ...getStorage(),
       swapDetails: swap,
@@ -171,16 +150,14 @@ export function markRunningSwapAsWaitingForConnectingWallet(
   }
 
   const isAlreadyMarked =
-    currentStep.networkStatus ===
-      PendingSwapNetworkStatus.WaitingForConnectingWallet &&
+    currentStep.networkStatus === PendingSwapNetworkStatus.WaitingForConnectingWallet &&
     swap.networkStatusExtraMessage === reason &&
     swap.networkStatusExtraMessageDetail === reasonDetail;
   if (isAlreadyMarked) {
     return;
   }
 
-  currentStep.networkStatus =
-    PendingSwapNetworkStatus.WaitingForConnectingWallet;
+  currentStep.networkStatus = PendingSwapNetworkStatus.WaitingForConnectingWallet;
   swap.networkStatusExtraMessage = reason;
   swap.networkStatusExtraMessageDetail = reasonDetail;
 
@@ -200,23 +177,15 @@ export const isCosmosTransaction = (tx: Transaction): tx is CosmosTransaction =>
   tx.type === TransactionType.COSMOS;
 export const isSolanaTransaction = (tx: Transaction): tx is SolanaTransaction =>
   tx.type === TransactionType.SOLANA;
-export const isTrasnferTransaction = (
-  tx: Transaction
-): tx is TransferTransaction => tx.type === TransactionType.TRANSFER;
+export const isTrasnferTransaction = (tx: Transaction): tx is TransferTransaction =>
+  tx.type === TransactionType.TRANSFER;
 
-export const getSwapWalletType = (
-  swap: PendingSwap,
-  network: Network
-): WalletType => {
+export const getSwapWalletType = (swap: PendingSwap, network: Network): WalletType => {
   return swap.wallets[network]?.walletType;
 };
 
 export function isWalletNull(wallet: Wallet | null): boolean {
-  return (
-    wallet === null ||
-    wallet?.blockchains === null ||
-    wallet?.blockchains.length === 0
-  );
+  return wallet === null || wallet?.blockchains === null || wallet?.blockchains.length === 0;
 }
 
 export function getEvmProvider(providers: Providers, type: WalletType) {
@@ -252,7 +221,7 @@ export function getRequiredWallet(swap: PendingSwap) {
 
 async function getChainId(provider: any) {
   const chainId: number | string | null =
-    (await provider.request({ method: "eth_chainId" })) || provider?.chainId;
+    (await provider.request({ method: 'eth_chainId' })) || provider?.chainId;
   return chainId;
 }
 
@@ -261,20 +230,16 @@ export async function isNetworkMatchedForTransaction(
   step: PendingSwapStep,
   wallet: Wallet | null,
   meta: Meta,
-  providers: Providers
+  providers: Providers,
 ): Promise<boolean> {
   if (!wallet || isWalletNull(wallet)) {
-    console.warn("wallet object is null");
+    console.warn('wallet object is null');
     return false;
   }
   const fromBlockChain = getCurrentBlockchainOfOrNull(swap, step);
   if (!fromBlockChain) return false;
 
-  if (
-    !!meta.evmBasedChains.find(
-      (evmBlochain) => evmBlochain.name === fromBlockChain
-    )
-  ) {
+  if (!!meta.evmBasedChains.find((evmBlochain) => evmBlochain.name === fromBlockChain)) {
     try {
       const sourceWallet = swap.wallets[fromBlockChain];
       if (sourceWallet) {
@@ -302,19 +267,11 @@ export async function isNetworkMatchedForTransaction(
           if (chainId) {
             const blockChain = getBlockChainNameFromId(
               chainId,
-              Object.entries(meta.blockchains).map(
-                ([, blockchainMeta]) => blockchainMeta
-              )
+              Object.entries(meta.blockchains).map(([, blockchainMeta]) => blockchainMeta),
             );
-            if (
-              blockChain &&
-              blockChain.toLowerCase() === fromBlockChain.toLowerCase()
-            )
+            if (blockChain && blockChain.toLowerCase() === fromBlockChain.toLowerCase())
               return true;
-            if (
-              blockChain &&
-              blockChain.toLowerCase() !== fromBlockChain.toLowerCase()
-            )
+            if (blockChain && blockChain.toLowerCase() !== fromBlockChain.toLowerCase())
               return false;
           }
         } else {
@@ -329,15 +286,12 @@ export async function isNetworkMatchedForTransaction(
   return true;
 }
 
-export const getCurrentAddressOf = (
-  swap: PendingSwap,
-  step: PendingSwapStep
-): string => {
+export const getCurrentAddressOf = (swap: PendingSwap, step: PendingSwapStep): string => {
   const result =
-    swap.wallets[step.evmTransaction?.blockChain || ""] ||
-    swap.wallets[step.evmApprovalTransaction?.blockChain || ""] ||
-    swap.wallets[step.cosmosTransaction?.blockChain || ""] ||
-    swap.wallets[step.solanaTransaction?.blockChain || ""] ||
+    swap.wallets[step.evmTransaction?.blockChain || ''] ||
+    swap.wallets[step.evmApprovalTransaction?.blockChain || ''] ||
+    swap.wallets[step.cosmosTransaction?.blockChain || ''] ||
+    swap.wallets[step.solanaTransaction?.blockChain || ''] ||
     (step.transferTransaction?.fromWalletAddress
       ? { address: step.transferTransaction?.fromWalletAddress }
       : null) ||
@@ -348,7 +302,7 @@ export const getCurrentAddressOf = (
 
 export function getRelatedWallet(
   swap: PendingSwap,
-  currentStep: PendingSwapStep
+  currentStep: PendingSwapStep,
 ): WalletTypeAndAddress {
   const walletAddress = getCurrentAddressOf(swap, currentStep);
   const walletKV =
@@ -361,20 +315,17 @@ export function getRelatedWallet(
   const walletType = wallet?.walletType;
   if (walletType === WalletType.UNKNOWN || wallet === null)
     throw PrettyError.AssertionFailed(
-      `Wallet for source ${blockchain} not passed to transfer: walletType: ${walletType}`
+      `Wallet for source ${blockchain} not passed to transfer: walletType: ${walletType}`,
     );
   return wallet;
 }
 
-export const isTxAlreadyCreated = (
-  swap: PendingSwap,
-  step: PendingSwapStep
-): boolean => {
+export const isTxAlreadyCreated = (swap: PendingSwap, step: PendingSwapStep): boolean => {
   const result =
-    swap.wallets[step.evmTransaction?.blockChain || ""] ||
-    swap.wallets[step.evmApprovalTransaction?.blockChain || ""] ||
-    swap.wallets[step.cosmosTransaction?.blockChain || ""] ||
-    swap.wallets[step.solanaTransaction?.blockChain || ""] ||
+    swap.wallets[step.evmTransaction?.blockChain || ''] ||
+    swap.wallets[step.evmApprovalTransaction?.blockChain || ''] ||
+    swap.wallets[step.cosmosTransaction?.blockChain || ''] ||
+    swap.wallets[step.solanaTransaction?.blockChain || ''] ||
     step.transferTransaction?.fromWalletAddress ||
     null;
 
@@ -385,12 +336,12 @@ export function onBlockForConnectWallet(event, queue_ref, context) {
   const swap = queue_ref.getStorage().swapDetails;
 
   if (!isRequiredWalletConnected(swap, context.state)) {
-    console.log("Please connect requried wallet.");
+    console.log('Please connect requried wallet.');
     return;
   }
 
   queue_ref.unblock();
-  console.log("wallet should be connected now.");
+  console.log('wallet should be connected now.');
 }
 
 export function onBlockForChangeNetwork(event, queue_ref, context) {
@@ -398,7 +349,7 @@ export function onBlockForChangeNetwork(event, queue_ref, context) {
   const { type, network } = getRequiredWallet(swapDetails);
 
   if (!!type && !!network) {
-    console.log("try to switch network...", {
+    console.log('try to switch network...', {
       type,
       network,
       switchN: context.switchNetwork,
@@ -410,22 +361,19 @@ export function onBlockForChangeNetwork(event, queue_ref, context) {
       });
     }
   } else {
-    console.log("wallet not found");
+    console.log('wallet not found');
   }
 }
 
-export function onDependsOnOtherQueues(
-  ـevent: WhenTaskBlockedEvent,
-  meta: WhenTaskBlockedMeta
-) {
-  const { getBlockedTasks, forceRun, context, retry } = meta;
+export function onDependsOnOtherQueues(ـevent: WhenTaskBlockedEvent, meta: WhenTaskBlockedMeta) {
+  const { getBlockedTasks, forceExecute, context, retry } = meta;
 
   // We only needs those blocked tasks that have DEPENDS_ON_OTHER_QUEUES reason.
   const blockedTasks = getBlockedTasks().filter(
-    (task) => task.reason.reason === BlockReason.DEPENDS_ON_OTHER_QUEUES
+    (task) => task.reason.reason === BlockReason.DEPENDS_ON_OTHER_QUEUES,
   );
 
-  console.log("onDependsOnOtherQueues, blockedTasks", context._queue);
+  console.log('onDependsOnOtherQueues, blockedTasks', context._queue);
 
   if (blockedTasks.length === 0) {
     return;
@@ -434,11 +382,7 @@ export function onDependsOnOtherQueues(
   // Check if any queue `claimed` before, if yes, we don't should do anything.
   const isAlreadyClaimed = !!context.claimedBy;
 
-  console.log(
-    "onDependsOnOtherQueues, isAlreadyClaimed",
-    isAlreadyClaimed,
-    context.claimedBy
-  );
+  console.log('onDependsOnOtherQueues, isAlreadyClaimed', isAlreadyClaimed, context.claimedBy);
 
   if (isAlreadyClaimed) {
     return;
@@ -465,7 +409,7 @@ export function onDependsOnOtherQueues(
   console.log(task);
 
   // Run
-  forceRun(task.queue_id, {
+  forceExecute(task.queue_id, {
     claimedBy: task.queue_id,
     resetClaimedBy: () => {
       retry();
@@ -475,7 +419,7 @@ export function onDependsOnOtherQueues(
 
 export function isRequiredWalletConnected(
   swap: PendingSwap,
-  getState: (type: WalletType) => WalletState
+  getState: (type: WalletType) => WalletState,
 ) {
   const { type, address } = getRequiredWallet(swap);
   if (!type || !address) {
@@ -492,7 +436,7 @@ export function isRequiredWalletConnected(
 }
 
 export function singTransaction(
-  actions: ExecuterActions<SwapStorage, SwapActionTypes, SwapQueueContext>
+  actions: ExecuterActions<SwapStorage, SwapActionTypes, SwapQueueContext>,
 ) {
   const { getStorage, setStorage, failed, next, schedule, context } = actions;
   const { meta, getSigners, notifier } = context;
@@ -519,38 +463,33 @@ export function singTransaction(
     const spenderContract = evmApprovalTransaction.to;
 
     if (!spenderContract)
-      throw PrettyError.AssertionFailed(
-        "contract address is null for checking approval"
-      );
+      throw PrettyError.AssertionFailed('contract address is null for checking approval');
 
     // Update swap status
     const message = `waiting for approval of ${currentStep?.fromSymbol} coin ${
-      sourceWallet.walletType === WalletType.WALLET_CONNECT
-        ? "on your mobile phone"
-        : ""
+      sourceWallet.walletType === WalletType.WALLET_CONNECT ? 'on your mobile phone' : ''
     }`;
     const updateResult = updateSwapStatus({
       getStorage,
       setStorage,
       nextStatus: null,
-      nextStepStatus: "waitingForApproval",
+      nextStepStatus: 'waitingForApproval',
       message,
-      details:
-        "Waiting for approve transaction to be mined and confirmed successfully",
+      details: 'Waiting for approve transaction to be mined and confirmed successfully',
     });
     notifier({
-      eventType: "confirm_contract",
+      eventType: 'confirm_contract',
       ...updateResult,
     });
 
     // Execute transaction
     walletSigners.executeEvmTransaction(evmApprovalTransaction, meta).then(
       (hash) => {
-        console.debug("transaction of approval minted successfully", hash);
+        console.debug('transaction of approval minted successfully', hash);
         const approveUrl = getEvmApproveUrl(
           hash,
           getCurrentBlockchainOf(swap, currentStep),
-          meta.evmBasedChains
+          meta.evmBasedChains,
         );
         currentStep.explorerUrl = [
           ...(currentStep.explorerUrl || []),
@@ -571,8 +510,8 @@ export function singTransaction(
       },
 
       (error) => {
-        if (swap.status === "failed") return;
-        console.debug("error in approving", error);
+        if (swap.status === 'failed') return;
+        console.debug('error in approving', error);
         const prettyError = prettifyErrorMessage(error);
         let { extraMessage } = prettyError;
         const { extraMessageDetail } = prettyError;
@@ -590,28 +529,26 @@ export function singTransaction(
         const updateResult = updateSwapStatus({
           getStorage,
           setStorage,
-          nextStatus: "failed",
-          nextStepStatus: "failed",
+          nextStatus: 'failed',
+          nextStepStatus: 'failed',
           message: extraMessage,
           details: extraMessageDetail,
         });
         notifier({
-          eventType: "contract_rejected",
+          eventType: 'contract_rejected',
           ...updateResult,
         });
 
         failed();
         onFinish();
-      }
+      },
     );
     return;
   }
 
-  const executeMessage = "executing transaction";
+  const executeMessage = 'executing transaction';
   const executeDetails = `${
-    sourceWallet.walletType === WalletType.WALLET_CONNECT
-      ? "Check your mobile phone"
-      : ""
+    sourceWallet.walletType === WalletType.WALLET_CONNECT ? 'Check your mobile phone' : ''
   }`;
 
   if (!!transferTransaction) {
@@ -619,12 +556,12 @@ export function singTransaction(
       getStorage,
       setStorage,
       nextStatus: null,
-      nextStepStatus: "running",
+      nextStepStatus: 'running',
       message: executeMessage,
       details: executeDetails,
     });
     notifier({
-      eventType: "confirm_transfer",
+      eventType: 'confirm_transfer',
       ...updateResult,
     });
 
@@ -632,49 +569,42 @@ export function singTransaction(
 
     walletSigners.executeTransfer(transferTransaction, meta).then(
       (txId) => {
-        setStepTransactionIds(
-          actions,
-          txId,
-          tx.externalTxId,
-          "transfer_confirmed",
-          notifier
-        );
+        setStepTransactionIds(actions, txId, tx.externalTxId, 'transfer_confirmed', notifier);
         schedule(SwapActionTypes.CHECK_TRANSACTION_STATUS);
         next();
         onFinish();
       },
       (error) => {
-        if (swap.status === "failed") return;
-        const { extraMessage, extraMessageDetail } =
-          prettifyErrorMessage(error);
+        if (swap.status === 'failed') return;
+        const { extraMessage, extraMessageDetail } = prettifyErrorMessage(error);
 
         const updateResult = updateSwapStatus({
           getStorage,
           setStorage,
-          nextStatus: "failed",
-          nextStepStatus: "failed",
+          nextStatus: 'failed',
+          nextStepStatus: 'failed',
           message: extraMessage,
           details: extraMessageDetail,
         });
         notifier({
-          eventType: "transfer_rejected",
+          eventType: 'transfer_rejected',
           ...updateResult,
         });
         failed();
         onFinish();
-      }
+      },
     );
   } else if (!!evmTransaction) {
     const updateResult = updateSwapStatus({
       getStorage,
       setStorage,
       nextStatus: null,
-      nextStepStatus: "running",
+      nextStepStatus: 'running',
       message: executeMessage,
       details: executeDetails,
     });
     notifier({
-      eventType: "calling_smart_contract",
+      eventType: 'calling_smart_contract',
       ...updateResult,
     });
 
@@ -683,21 +613,15 @@ export function singTransaction(
     console.log({ evmTransaction });
     walletSigners.executeEvmTransaction(evmTransaction, meta).then(
       (id) => {
-        console.log("[executeEvmTransaction]", { tx, id });
+        console.log('[executeEvmTransaction]', { tx, id });
 
-        setStepTransactionIds(
-          actions,
-          id,
-          tx.externalTxId,
-          "smart_contract_called",
-          notifier
-        );
+        setStepTransactionIds(actions, id, tx.externalTxId, 'smart_contract_called', notifier);
         schedule(SwapActionTypes.CHECK_TRANSACTION_STATUS);
         next();
         onFinish();
       },
       (error) => {
-        if (swap.status === "failed") return;
+        if (swap.status === 'failed') return;
         const httpErrorMessage = error?.response?.data?.message;
         const prettyError = prettifyErrorMessage(httpErrorMessage || error);
         const { extraMessageDetail } = prettyError;
@@ -715,58 +639,58 @@ export function singTransaction(
         const updateResult = updateSwapStatus({
           getStorage,
           setStorage,
-          nextStatus: "failed",
-          nextStepStatus: "failed",
+          nextStatus: 'failed',
+          nextStepStatus: 'failed',
           message: extraMessage,
           details: extraMessageDetail,
         });
         notifier({
-          eventType: "smart_contract_call_failed",
+          eventType: 'smart_contract_call_failed',
           ...updateResult,
         });
 
         failed();
         onFinish();
-      }
+      },
     );
   } else if (!!cosmosTransaction) {
     const updateResult = updateSwapStatus({
       getStorage,
       setStorage,
       nextStatus: null,
-      nextStepStatus: "running",
+      nextStepStatus: 'running',
       message: executeMessage,
       details: executeDetails,
     });
     notifier({
-      eventType: "calling_smart_contract",
+      eventType: 'calling_smart_contract',
       ...updateResult,
     });
 
     const tx = cosmosTransaction;
     // If keplr wallet is executing contracts on terra, throw error. keplr doesn't support transfer or execute contracts. only IBC messages are supported
     if (
-      (currentStep?.swapperId.toString() === "TerraSwap" ||
-        (currentStep?.swapperId.toString() === "ThorChain" &&
+      (currentStep?.swapperId.toString() === 'TerraSwap' ||
+        (currentStep?.swapperId.toString() === 'ThorChain' &&
           currentStep?.fromBlockchain === Network.TERRA) ||
-        (currentStep?.swapperId.toString() === "Terra Bridge" &&
+        (currentStep?.swapperId.toString() === 'Terra Bridge' &&
           currentStep.fromBlockchain === Network.TERRA)) && // here we must allow ibc on terrastatus
       sourceWallet.walletType === WalletType.KEPLR
     ) {
       const { extraMessage, extraMessageDetail } = prettifyErrorMessage(
-        "Keplr only supports IBC Transactions on Terra. " +
-          "Using Terra Bridge, TerraSwap and THORChain is not possible with Keplr. Please use TerraStation or Leap wallet"
+        'Keplr only supports IBC Transactions on Terra. ' +
+          'Using Terra Bridge, TerraSwap and THORChain is not possible with Keplr. Please use TerraStation or Leap wallet',
       );
       const updateResult = updateSwapStatus({
         getStorage,
         setStorage,
-        nextStatus: "failed",
-        nextStepStatus: "failed",
+        nextStatus: 'failed',
+        nextStepStatus: 'failed',
         message: extraMessage,
         details: extraMessageDetail,
       });
       notifier({
-        eventType: "smart_contract_call_failed",
+        eventType: 'smart_contract_call_failed',
         ...updateResult,
       });
       failed();
@@ -777,86 +701,73 @@ export function singTransaction(
     walletSigners.executeCosmosMessage(cosmosTransaction, meta).then(
       // todo
       (id: string | null) => {
-        setStepTransactionIds(
-          actions,
-          id,
-          tx.externalTxId,
-          "smart_contract_called",
-          notifier
-        );
+        setStepTransactionIds(actions, id, tx.externalTxId, 'smart_contract_called', notifier);
         schedule(SwapActionTypes.CHECK_TRANSACTION_STATUS);
         next();
         onFinish();
       },
       (error: string | null) => {
-        if (swap.status === "failed") return;
+        if (swap.status === 'failed') return;
         const httpErrorMessage = error;
         const { extraMessage, extraMessageDetail } = prettifyErrorMessage(
-          httpErrorMessage || error
+          httpErrorMessage || error,
         );
         const updateResult = updateSwapStatus({
           getStorage,
           setStorage,
-          nextStatus: "failed",
-          nextStepStatus: "failed",
+          nextStatus: 'failed',
+          nextStepStatus: 'failed',
           message: extraMessage,
           details: extraMessageDetail,
         });
         notifier({
-          eventType: "smart_contract_call_failed",
+          eventType: 'smart_contract_call_failed',
           ...updateResult,
         });
         failed();
         onFinish();
-      }
+      },
     );
   } else if (!!solanaTransaction) {
     const updateResult = updateSwapStatus({
       getStorage,
       setStorage,
       nextStatus: null,
-      nextStepStatus: "running",
+      nextStepStatus: 'running',
       message: executeMessage,
       details: executeDetails,
     });
     notifier({
-      eventType: "calling_smart_contract",
+      eventType: 'calling_smart_contract',
       ...updateResult,
     });
 
     const tx = solanaTransaction;
     walletSigners.executeSolanaTransaction(tx, swap.requestId).then(
       (txId) => {
-        setStepTransactionIds(
-          actions,
-          txId,
-          tx.externalTxId,
-          "smart_contract_called",
-          notifier
-        );
+        setStepTransactionIds(actions, txId, tx.externalTxId, 'smart_contract_called', notifier);
         schedule(SwapActionTypes.CHECK_TRANSACTION_STATUS);
         next();
         onFinish();
       },
       (error) => {
-        if (swap.status === "failed") return;
-        const { extraMessage, extraMessageDetail } =
-          prettifyErrorMessage(error);
+        if (swap.status === 'failed') return;
+        const { extraMessage, extraMessageDetail } = prettifyErrorMessage(error);
         const updateResult = updateSwapStatus({
           getStorage,
           setStorage,
-          nextStatus: "failed",
-          nextStepStatus: "failed",
+          nextStatus: 'failed',
+          nextStepStatus: 'failed',
           message: extraMessage,
           details: extraMessageDetail,
         });
         notifier({
-          eventType: "smart_contract_call_failed",
+          eventType: 'smart_contract_call_failed',
           ...updateResult,
         });
         failed();
         onFinish();
-      }
+      },
     );
   }
 }

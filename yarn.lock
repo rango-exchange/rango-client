@@ -18345,7 +18345,7 @@ rango-sdk-basic@^0.0.9:
     bignumber.js "^9.0.2"
     uuid "^8.3.2"
 
-rango-sdk@^0.1.12, rango-sdk@^0.1.16, rango-sdk@^0.1.17, rango-sdk@^0.1.8:
+rango-sdk@^0.1.16, rango-sdk@^0.1.17, rango-sdk@^0.1.8:
   version "0.1.17"
   resolved "https://registry.yarnpkg.com/rango-sdk/-/rango-sdk-0.1.17.tgz#e1d16cffad5f0d41d6f905265c7351c6996e1081"
   integrity sha512-TDNR5LAN7w5YWdvYCRAyaeiKchY4LvMvk5K0Z1yCD1aamvagFRsEiBGSrSTp/rxdn4pSZNdtiiYoqMFEOM7ozQ==
