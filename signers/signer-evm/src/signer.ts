@@ -3,9 +3,7 @@ import { GenericSigner, SignerError, SignerErrorCode } from 'rango-types';
 import { EvmTransaction } from 'rango-types/lib/api/main';
 import { providers } from 'ethers';
 
-export interface EvmSigner extends GenericSigner<EvmTransaction> {}
-
-export class DefaultEvmSigner implements EvmSigner {
+export class DefaultEvmSigner implements GenericSigner<EvmTransaction> {
   private signer: providers.JsonRpcSigner;
 
   constructor(provider: providers.ExternalProvider) {

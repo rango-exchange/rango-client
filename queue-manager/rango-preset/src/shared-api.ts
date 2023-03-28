@@ -1,8 +1,4 @@
-import {
-  isWalletErrorCode,
-  WalletErrorCode,
-  WalletType,
-} from '@rango-dev/wallets-shared';
+import { WalletType } from '@rango-dev/wallets-shared';
 import { getCookieId, SwapperStatusResponse } from './shared';
 import {
   CheckApprovalResponse,
@@ -22,6 +18,7 @@ import {
   RANGO_COOKIE_HEADER,
   RANGO_DAPP_ID_QUERY,
 } from './constants';
+import { isSignerErrorCode, SignerErrorCode } from 'rango-types';
 
 export async function checkSwapStatus(
   requestId: string,
@@ -131,14 +128,14 @@ export function mapAppErrorCodesToAPIErrorCode(
   try {
     if (!errorCode) return defaultErrorCode;
     if (isAPIErrorCode(errorCode)) return errorCode;
-    if (isWalletErrorCode(errorCode)) {
-      const t: { [key in WalletErrorCode]: APIErrorCode } = {
-        [WalletErrorCode.REJECTED_BY_USER]: APIErrorCode.USER_REJECT,
-        [WalletErrorCode.SIGN_TX_ERROR]: APIErrorCode.CALL_WALLET_FAILED,
-        [WalletErrorCode.SEND_TX_ERROR]: APIErrorCode.SEND_TX_FAILED,
-        [WalletErrorCode.NOT_IMPLEMENTED]: defaultErrorCode,
-        [WalletErrorCode.OPERATION_UNSUPPORTED]: defaultErrorCode,
-        [WalletErrorCode.UNEXPECTED_BEHAVIOUR]: defaultErrorCode,
+    if (isSignerErrorCode(errorCode)) {
+      const t: { [key in SignerErrorCode]: APIErrorCode } = {
+        [SignerErrorCode.REJECTED_BY_USER]: APIErrorCode.USER_REJECT,
+        [SignerErrorCode.SIGN_TX_ERROR]: APIErrorCode.CALL_WALLET_FAILED,
+        [SignerErrorCode.SEND_TX_ERROR]: APIErrorCode.SEND_TX_FAILED,
+        [SignerErrorCode.NOT_IMPLEMENTED]: defaultErrorCode,
+        [SignerErrorCode.OPERATION_UNSUPPORTED]: defaultErrorCode,
+        [SignerErrorCode.UNEXPECTED_BEHAVIOUR]: defaultErrorCode,
       };
       return t[errorCode];
     }

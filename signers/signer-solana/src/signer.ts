@@ -36,9 +36,7 @@ export interface SolanaExternalProvider {
   accountChanged(newPublicKey: PublicKey): any;
 }
 
-export interface SolanaSigner extends GenericSigner<SolanaTransaction> {}
-
-export class DefaultSolanaSigner implements SolanaSigner {
+export class DefaultSolanaSigner implements GenericSigner<SolanaTransaction> {
   private provider: SolanaExternalProvider;
 
   constructor(provider: SolanaExternalProvider) {

@@ -2,14 +2,13 @@ import { QueueStorage, QueueDef } from '@rango-dev/queue-manager-core';
 import { QueueContext } from '@rango-dev/queue-manager-core/dist/queue';
 import { ConnectResult, Providers } from '@rango-dev/wallets-core';
 import {
-  EvmBlockchainMeta,
   Meta,
   Network,
-  WalletSigners,
   WalletState,
   WalletType,
 } from '@rango-dev/wallets-shared';
 import { PendingSwap, SwapProgressNotification, Wallet } from './shared';
+import { EvmBlockchainMeta, SignerFactory } from 'rango-types';
 
 export type SwapQueueDef = QueueDef<
   SwapStorage,
@@ -51,7 +50,7 @@ export interface SwapQueueContext extends QueueContext {
   meta: Meta;
   wallets: Wallet | null;
   providers: Providers;
-  getSigners: (type: WalletType) => WalletSigners;
+  getSigners: (type: WalletType) => SignerFactory;
   switchNetwork: (
     wallet: WalletType,
     network: Network

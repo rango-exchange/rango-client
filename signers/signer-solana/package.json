@@ -11,7 +11,7 @@
   ],
   "scripts": {
     "dev": "tsdx watch",
-    "build": "tsdx build",
+    "build": "tsdx build  --tsconfig ./tsconfig.json",
     "test": "tsdx test",
     "lint": "tsdx lint",
     "size": "size-limit",

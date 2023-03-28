@@ -1,13 +1,11 @@
 import { CosmosTransaction, GenericSigner, SignerError } from 'rango-types';
 import { xdefiTransfer } from './helpers';
 
-export interface CosmosSigner extends GenericSigner<CosmosTransaction> {}
-
 // TODO - replace with real type
 // tslint:disable-next-line: no-any
 type CosmosExternalProvider = any;
 
-export class CustomCosmosSigner implements CosmosSigner {
+export class CustomCosmosSigner implements GenericSigner<CosmosTransaction> {
   private provider: CosmosExternalProvider;
   constructor(provider: CosmosExternalProvider) {
     this.provider = provider;

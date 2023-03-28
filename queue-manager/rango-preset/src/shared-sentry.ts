@@ -16,7 +16,7 @@ export function logRPCError(
         swapper: currentStep?.swapperId || '',
         walletType: walletType || '',
       },
-      level: 'warning',
+      level: 'warning' as any,
     });
   } catch (e) {
     console.log({ e });
