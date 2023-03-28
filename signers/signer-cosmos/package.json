@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/signer-cosmos",
-  "version": "0.1.11-next.77",
+  "version": "0.1.11-next.78",
   "license": "MIT",
   "module": "dist/signer-cosmos.esm.js",
   "main": "dist/index.js",
@@ -39,9 +39,9 @@
     }
   ],
   "dependencies": {
-    "@keplr-wallet/cosmos": "^0.9.12",
     "@cosmjs/launchpad": "^0.27.1",
     "@cosmjs/stargate": "^0.29.4",
+    "@keplr-wallet/cosmos": "^0.9.12",
     "cosmjs-types": "^0.5.2",
     "long": "^5.2.1",
     "rango-types": "^0.1.21"
