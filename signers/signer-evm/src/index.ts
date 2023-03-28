@@ -1,1 +1,1 @@
-export { IEvmSigner, EvmSigner } from './signer';
+export { EvmSigner, DefaultEvmSigner } from './signer';

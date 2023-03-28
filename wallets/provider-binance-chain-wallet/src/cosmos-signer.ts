@@ -4,7 +4,7 @@ import { getPublicKey } from '@binance-chain/javascript-sdk/lib/crypto';
 import { cosmosMessageToBCSendMsg } from './helpers';
 import {
   CosmosTransaction,
-  ISigner,
+  GenericSigner,
   SignerError,
   SignerErrorCode,
 } from 'rango-types';
@@ -59,13 +59,13 @@ export const executeCosmosMessage = async (
   });
 };
 
-export interface ICosmosSigner extends ISigner<CosmosTransaction> {}
+export interface CosmosSigner extends GenericSigner<CosmosTransaction> {}
 
 // TODO - replace with real type
 // tslint:disable-next-line: no-any
 type CosmosExternalProvider = any;
 
-export class CustomCosmosSigner implements ICosmosSigner {
+export class CustomCosmosSigner implements CosmosSigner {
   private provider: CosmosExternalProvider;
   constructor(provider: CosmosExternalProvider) {
     this.provider = provider;
