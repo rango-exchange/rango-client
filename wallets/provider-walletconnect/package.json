@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/provider-walletconnect",
-  "version": "0.1.11-next.75",
+  "version": "0.1.11-next.76",
   "license": "MIT",
   "module": "dist/provider-walletconnect.esm.js",
   "main": "dist/index.js",
@@ -41,10 +41,10 @@
   "dependencies": {
     "@rango-dev/signer-evm": "^0.1.11-next.76",
     "@rango-dev/wallets-shared": "^0.1.11-next.73",
-    "rango-types": "^0.1.21",
     "@walletconnect/client": "^1.8.0",
     "@walletconnect/jsonrpc-utils": "^1.0.4",
-    "@walletconnect/qrcode-modal": "^1.8.0"
+    "@walletconnect/qrcode-modal": "^1.8.0",
+    "rango-types": "^0.1.21"
   },
   "publishConfig": {
     "access": "public"

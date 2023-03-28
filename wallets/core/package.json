@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/wallets-core",
-  "version": "0.1.11-next.76",
+  "version": "0.1.11-next.77",
   "license": "MIT",
   "module": "dist/wallets-core.esm.js",
   "main": "dist/index.js",
@@ -45,8 +45,8 @@
   ],
   "dependencies": {
     "@rango-dev/wallets-shared": "^0.1.11-next.73",
-    "rango-types": "^0.1.21",
-    "@walletconnect/ethereum-provider": "1.8.0"
+    "@walletconnect/ethereum-provider": "1.8.0",
+    "rango-types": "^0.1.21"
   },
   "publishConfig": {
     "access": "public"

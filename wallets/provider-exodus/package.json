@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/provider-exodus",
-  "version": "0.1.11-next.75",
+  "version": "0.1.11-next.76",
   "license": "MIT",
   "module": "dist/provider-exodus.esm.js",
   "main": "dist/index.js",

@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/queue-manager-rango-preset",
-  "version": "0.1.10-next.77",
+  "version": "0.1.10-next.78",
   "license": "MIT",
   "module": "dist/queue-manager-rango-preset.esm.js",
   "main": "dist/index.js",
@@ -21,8 +21,8 @@
     "@rango-dev/queue-manager-core": "*",
     "@rango-dev/wallets-core": "*",
     "@rango-dev/wallets-shared": "*",
-    "rango-types": "^0.1.21",
     "bignumber.js": "*",
+    "rango-types": "^0.1.21",
     "uuid": "*"
   },
   "husky": {

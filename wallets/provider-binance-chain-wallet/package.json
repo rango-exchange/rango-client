@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/provider-binance-chain-wallet",
-  "version": "0.1.11-next.75",
+  "version": "0.1.11-next.76",
   "license": "MIT",
   "module": "dist/provider-binance-chain-wallet.esm.js",
   "main": "dist/index.js",
