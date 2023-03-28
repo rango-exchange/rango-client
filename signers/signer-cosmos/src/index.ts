@@ -1,1 +1,2 @@
-export { CosmosSigner, DefaultCosmosSigner } from './signer';
+export { DefaultCosmosSigner } from './signer';
+export { executeCosmosTransaction } from './helpers';

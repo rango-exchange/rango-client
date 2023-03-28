@@ -5,13 +5,11 @@ import {
   TronTransaction,
 } from 'rango-types';
 
-export interface TronSigner extends GenericSigner<TronTransaction> {}
-
 // TODO - replace with real type
 // tslint:disable-next-line: no-any
 type TronExternalProvider = any;
 
-export class DefaultTronSigner implements TronSigner {
+export class DefaultTronSigner implements GenericSigner<TronTransaction> {
   private provider: TronExternalProvider;
 
   constructor(provider: TronExternalProvider) {

@@ -1,5 +1,4 @@
-import { SolanaTransaction } from '@rango-dev/wallets-shared';
-import { GenericSigner, SignerError } from 'rango-types';
+import { GenericSigner, SignerError, SolanaTransaction } from 'rango-types';
 import { PublicKey, Transaction } from '@solana/web3.js';
 import bs58 from 'bs58';
 import {
@@ -7,13 +6,11 @@ import {
   generalSolanaTransactionExecutor,
 } from '@rango-dev/signer-solana';
 
-export interface SolanaSigner extends GenericSigner<SolanaTransaction> {}
-
 // TODO - replace with real type
 // tslint:disable-next-line: no-any
 type SolanaExternalProvider = any;
 
-export class CustomSolanaSigner implements SolanaSigner {
+export class CustomSolanaSigner implements GenericSigner<SolanaTransaction> {
   private provider: SolanaExternalProvider;
   constructor(provider: SolanaExternalProvider) {
     this.provider = provider;

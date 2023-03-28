@@ -11,7 +11,7 @@
   ],
   "scripts": {
     "dev": "tsdx watch",
-    "build": "tsdx build",
+    "build": "tsdx build  --tsconfig ./tsconfig.json",
     "test": "tsdx test",
     "lint": "tsdx lint",
     "size": "size-limit",
@@ -21,7 +21,7 @@
     "@rango-dev/queue-manager-core": "*",
     "@rango-dev/wallets-core": "*",
     "@rango-dev/wallets-shared": "*",
-    "@sentry/browser": "*",
+    "rango-types": "^0.1.21",
     "bignumber.js": "*",
     "uuid": "*"
   },
@@ -50,6 +50,7 @@
     "@types/uuid": "^8.3.4"
   },
   "dependencies": {
+    "@sentry/browser": "^6.12.0",
     "rango-sdk": "^0.1.17",
     "uuid": "^9.0.0"
   },
