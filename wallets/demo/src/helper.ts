@@ -1,5 +1,6 @@
 import { readAccountAddress } from '@rango-dev/wallets-core';
-import { BlockchainMeta, isEvmBlockchain, Network } from '@rango-dev/wallets-shared';
+import { Network } from '@rango-dev/wallets-shared';
+import { BlockchainMeta, isEvmBlockchain } from 'rango-types';
 export type Blockchain = { name: Network; accounts: { address: string; isConnected: boolean }[] };
 
 export function prepareAccounts(
@@ -57,10 +58,10 @@ export function prepareAccounts(
 
 export function walletAndSupportedChainsNames(supportedChains: BlockchainMeta[]): Network[] | null {
   if (!supportedChains) return null;
-  let walletAndSupportedChainsNames: Network[] = [];
+  let walletAndSupportedChainsNames: string[] = [];
   walletAndSupportedChainsNames = supportedChains.map((blockchainMeta) => blockchainMeta.name);
 
-  return walletAndSupportedChainsNames;
+  return walletAndSupportedChainsNames as Network[];
 }
 
 export const evmBasedChainsSelector = (blockchains: BlockchainMeta[]) =>

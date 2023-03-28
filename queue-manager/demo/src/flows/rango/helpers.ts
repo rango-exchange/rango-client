@@ -1,13 +1,7 @@
 import {
   AllBlockchains,
-  BlockchainMeta,
-  EvmBlockchainMeta,
-  isCosmosBlockchain,
-  isEvmBlockchain,
-  isSolanaBlockchain,
   Meta,
   Network,
-  WalletError,
   WalletType,
   XDEFI_WALLET_SUPPORTED_NATIVE_CHAINS,
 } from '@rango-dev/wallets-shared';
@@ -43,10 +37,17 @@ import {
 } from './types';
 import { BigNumber } from 'bignumber.js';
 import { CheckApprovalResponse } from 'rango-sdk-basic/lib';
-import { Providers, readAccountAddress, WalletsAndSupportedChains } from '@rango-dev/wallets-core';
+import { Providers, readAccountAddress } from '@rango-dev/wallets-core';
 import { getCurrentStep } from '../swap/helpers';
 import { ethers } from 'ethers';
 import { sampleRawAccounts } from './mock';
+import {
+  EvmBlockchainMeta,
+  SignerError,
+  isCosmosBlockchain,
+  isEvmBlockchain,
+  isSolanaBlockchain,
+} from 'rango-types';
 
 const UNKNOWN_COIN_IMAGE = '/coins/unknown.png';
 const BRAVE_USER_AGENT_HEADER = 'X-Brave';
@@ -397,7 +398,7 @@ export async function createTransaction(
 export const prettifyErrorMessage = (obj: unknown): ErrorDetail => {
   if (!obj) return { extraMessage: '', extraMessageErrorCode: null };
   if (obj instanceof PrettyError) return obj.getErrorDetail();
-  if (obj instanceof WalletError) {
+  if (obj instanceof SignerError) {
     const t = obj.getErrorDetail();
     return {
       extraMessage: t.message,
@@ -550,9 +551,8 @@ export const evmBasedChainsNamesSelector = (blockchains: AllBlockchains) =>
     .filter(isEvmBlockchain)
     .map((blockchainMeta) => blockchainMeta.name);
 
-export const walletsAndSupportedChainsMetaSelector = (
-  blockchains: AllBlockchains,
-): WalletsAndSupportedChains | null => {
+export const walletsAndSupportedChainsMetaSelector = (blockchains: AllBlockchains): any | null => {
+  // TODO WalletsAndSupportedChains can't find model for return type
   if (Object.entries(blockchains).length === 0) return null;
   const blockchainsArray = Object.entries(blockchains).map(([, blockchainMeta]) => blockchainMeta);
   const evmBlockchains = blockchainsArray.filter(isEvmBlockchain);

@@ -1,13 +1,7 @@
-import {
-  Network,
-  BlockchainMeta,
-  isEvmBlockchain,
-  CanSwitchNetwork,
-  Subscribe,
-  SwitchNetwork,
-} from './rango';
+import { Network, CanSwitchNetwork, Subscribe, SwitchNetwork } from './rango';
 import { convertEvmBlockchainMetaToEvmChainInfo } from './helpers';
 import { switchOrAddNetworkForMetamaskCompatibleWallets } from './helpers';
+import { BlockchainMeta, isEvmBlockchain } from 'rango-types';
 
 export async function getEvmAccounts(instance: any) {
   const [accounts, chainId] = await Promise.all([

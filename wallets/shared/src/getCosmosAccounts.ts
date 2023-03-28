@@ -1,11 +1,10 @@
-import { deepCopy } from './helpers';
 import {
   BlockchainMeta,
-  Connect,
   CosmosBlockchainMeta,
   CosmosChainInfo,
-  ProviderConnectResult,
-} from './rango';
+} from 'rango-types';
+import { deepCopy } from './helpers';
+import { Connect, ProviderConnectResult } from './rango';
 import { Keplr as InstanceType } from '@keplr-wallet/types';
 
 export interface CosmosInfo extends Omit<CosmosChainInfo, 'experimental'> {

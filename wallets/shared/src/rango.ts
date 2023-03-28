@@ -1,35 +1,4 @@
-import {
-  StarknetTransaction,
-  TronTransaction,
-  isEvmBlockchain,
-  isCosmosBlockchain,
-  isSolanaBlockchain,
-  isTronBlockchain,
-  isStarknetBlockchain,
-  isTransferBlockchain,
-  CosmosChainInfo,
-  EVMChainInfo,
-  BlockchainMeta,
-  EvmBlockchainMeta,
-  CosmosBlockchainMeta,
-  SolanaBlockchainMeta,
-  TransferBlockchainMeta,
-  TronBlockchainMeta,
-  StarkNetBlockchainMeta,
-  evmBlockchains,
-  cosmosBlockchains,
-  starknetBlockchain,
-  tronBlockchain,
-  transferBlockchains,
-  solanaBlockchain,
-  TransactionType,
-} from 'rango-types';
-import {
-  CosmosTransaction,
-  EvmTransaction,
-  SolanaTransaction,
-  Transfer,
-} from 'rango-types/lib/api/main';
+import { BlockchainMeta, EvmBlockchainMeta } from 'rango-types';
 
 export const IS_DEV =
   !process.env.NODE_ENV || process.env.NODE_ENV === 'development';
@@ -294,42 +263,3 @@ export interface Wallet {
   connected: boolean;
   info: Omit<WalletInfo, 'color' | 'supportedChains'>;
 }
-
-export type Transaction =
-  | EvmTransaction
-  | StarknetTransaction
-  | TronTransaction
-  | CosmosTransaction
-  | SolanaTransaction
-  | Transfer;
-
-export {
-  EvmTransaction,
-  StarknetTransaction,
-  TronTransaction,
-  CosmosTransaction,
-  SolanaTransaction,
-  Transfer as TransferTransaction,
-  isEvmBlockchain,
-  isCosmosBlockchain,
-  isSolanaBlockchain,
-  isTronBlockchain,
-  isStarknetBlockchain,
-  isTransferBlockchain,
-  evmBlockchains,
-  cosmosBlockchains,
-  starknetBlockchain,
-  tronBlockchain,
-  transferBlockchains,
-  solanaBlockchain,
-  BlockchainMeta,
-  EvmBlockchainMeta,
-  CosmosBlockchainMeta,
-  SolanaBlockchainMeta,
-  TransferBlockchainMeta,
-  TronBlockchainMeta,
-  StarkNetBlockchainMeta,
-  CosmosChainInfo,
-  EVMChainInfo,
-  TransactionType,
-};
