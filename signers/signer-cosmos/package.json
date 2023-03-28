@@ -39,6 +39,7 @@
     }
   ],
   "dependencies": {
+    "@keplr-wallet/cosmos": "^0.9.12",
     "@cosmjs/launchpad": "^0.27.1",
     "@cosmjs/stargate": "^0.29.4",
     "cosmjs-types": "^0.5.2",
@@ -46,7 +47,6 @@
     "rango-types": "^0.1.21"
   },
   "devDependencies": {
-    "@keplr-wallet/cosmos": "^0.9.12",
     "@keplr-wallet/types": "^0.9.12"
   },
   "publishConfig": {
