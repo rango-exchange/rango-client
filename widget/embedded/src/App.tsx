@@ -6,12 +6,13 @@ import './app.css';
 import { Events, Provider } from '@rango-dev/wallets-core';
 import { allProviders } from '@rango-dev/provider-all';
 import { EventHandler } from '@rango-dev/wallets-core/dist/wallet';
-import { isEvmBlockchain, Network } from '@rango-dev/wallets-shared';
+import { Network } from '@rango-dev/wallets-shared';
 import { prepareAccountsForWalletStore, walletAndSupportedChainsNames } from './utils/wallets';
 import { useWalletsStore } from './store/wallets';
 import { Layout } from './components/Layout';
 import { globalStyles } from './globalStyles';
 import { useTheme } from './hooks/useTheme';
+import { isEvmBlockchain } from 'rango-sdk';
 
 const providers = allProviders();
 interface Token {
@@ -40,7 +41,6 @@ export function App() {
   const disconnectWallet = useWalletsStore.use.disconnectWallet();
   const connectWallet = useWalletsStore.use.connectWallet();
   const evmBasedChainNames = blockchains
-    //@ts-ignore
     .filter(isEvmBlockchain)
     .map((chain) => chain.name);
 

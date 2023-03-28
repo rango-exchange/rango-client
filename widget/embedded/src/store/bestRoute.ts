@@ -1,5 +1,5 @@
 import { BestRouteResponse, BlockchainMeta } from 'rango-sdk';
-import { Token } from 'rango-sdk/lib';
+import { Token } from 'rango-sdk';
 import { create } from 'zustand';
 import BigNumber from 'bignumber.js';
 import { ZERO } from '../constants/numbers';
