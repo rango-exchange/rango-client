@@ -5,6 +5,7 @@ import {
   TransactionInstruction,
 } from '@solana/web3.js';
 import { SignerError, SignerErrorCode, SolanaTransaction } from 'rango-types';
+import { SolanaExternalProvider } from './signer';
 
 async function retryPromise<Type>(
   promise: Promise<Type>,
@@ -168,7 +169,7 @@ export const generalSolanaTransactionExecutor = async (
 
 export async function executeSolanaTransaction(
   tx: SolanaTransaction,
-  solanaProvider: any
+  solanaProvider: SolanaExternalProvider
 ): Promise<string> {
   const DefaultSolanaSigner: SolanaWeb3Signer = async (
     solanaWeb3Transaction

@@ -4,13 +4,39 @@ import {
   SignerErrorCode,
   SolanaTransaction,
 } from 'rango-types';
+
 import { executeSolanaTransaction } from './helpers';
+import {
+  PublicKey,
+  SendOptions,
+  Transaction,
+  TransactionSignature,
+  VersionedTransaction,
+} from '@solana/web3.js';
+
+// https://github.com/solana-labs/wallet-adapter/blob/01c6316ce0725e0a075d6adb237bbcb4128e76ad/packages/wallets/phantom/src/adapter.ts#L30
+export interface SolanaExternalProvider {
+  isPhantom?: boolean;
+  publicKey?: { toBytes(): Uint8Array };
+  isConnected: boolean;
+  signTransaction<T extends Transaction | VersionedTransaction>(
+    transaction: T
+  ): Promise<T>;
+  signAllTransactions<T extends Transaction | VersionedTransaction>(
+    transactions: T[]
+  ): Promise<T[]>;
+  signAndSendTransaction<T extends Transaction | VersionedTransaction>(
+    transaction: T,
+    options?: SendOptions
+  ): Promise<{ signature: TransactionSignature }>;
+  signMessage(message: Uint8Array): Promise<{ signature: Uint8Array }>;
+  request(...args: any[]): Promise<any>;
+  connect(...args: any[]): Promise<any>;
+  disconnect(): Promise<void>;
+  accountChanged(newPublicKey: PublicKey): any;
+}
 
 export interface SolanaSigner extends GenericSigner<SolanaTransaction> {}
-
-// TODO - replace with real type
-// tslint:disable-next-line: no-any
-type SolanaExternalProvider = any;
 
 export class DefaultSolanaSigner implements SolanaSigner {
   private provider: SolanaExternalProvider;
