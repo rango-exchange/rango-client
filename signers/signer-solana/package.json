@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/signer-solana",
-  "version": "0.1.11-next.76",
+  "version": "0.1.11-next.77",
   "license": "MIT",
   "module": "dist/signer-solana.esm.js",
   "main": "dist/index.js",
@@ -39,8 +39,8 @@
     }
   ],
   "dependencies": {
-    "rango-types": "^0.1.21",
-    "@solana/web3.js": "^1.67.2"
+    "@solana/web3.js": "^1.67.2",
+    "rango-types": "^0.1.21"
   },
   "publishConfig": {
     "access": "public"
