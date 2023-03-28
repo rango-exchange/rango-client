@@ -39,8 +39,8 @@
     }
   ],
   "dependencies": {
-    "@rango-dev/signer-tron": "^0.1.11-next.76",
-    "@rango-dev/wallets-shared": "^0.1.11-next.73",
+    "@rango-dev/signer-tron": "^0.1.11-next.77",
+    "@rango-dev/wallets-shared": "^0.1.11-next.77",
     "rango-types": "^0.1.21"
   },
   "publishConfig": {
