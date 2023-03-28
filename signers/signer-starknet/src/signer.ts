@@ -1,17 +1,17 @@
 import {
-  ISigner,
+  GenericSigner,
   SignerError,
   SignerErrorCode,
   StarknetTransaction,
 } from 'rango-types';
 
-export interface IStarknetSigner extends ISigner<StarknetTransaction> {}
+export interface StarknetSigner extends GenericSigner<StarknetTransaction> {}
 
 // TODO - replace with real type
 // tslint:disable-next-line: no-any
 type StarknetExternalProvider = any;
 
-export class StarknetSigner implements IStarknetSigner {
+export class CustomStarknetSigner implements StarknetSigner {
   private provider: StarknetExternalProvider;
 
   constructor(provider: StarknetExternalProvider) {

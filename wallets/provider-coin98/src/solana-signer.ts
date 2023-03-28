@@ -1,5 +1,5 @@
 import { SolanaTransaction } from '@rango-dev/wallets-shared';
-import { ISigner, SignerError } from 'rango-types';
+import { GenericSigner, SignerError } from 'rango-types';
 import { PublicKey, Transaction } from '@solana/web3.js';
 import bs58 from 'bs58';
 import {
@@ -7,13 +7,13 @@ import {
   generalSolanaTransactionExecutor,
 } from '@rango-dev/signer-solana';
 
-export interface ISolanaSigner extends ISigner<SolanaTransaction> {}
+export interface SolanaSigner extends GenericSigner<SolanaTransaction> {}
 
 // TODO - replace with real type
 // tslint:disable-next-line: no-any
 type SolanaExternalProvider = any;
 
-export class CustomSolanaSigner implements ISolanaSigner {
+export class CustomSolanaSigner implements SolanaSigner {
   private provider: SolanaExternalProvider;
   constructor(provider: SolanaExternalProvider) {
     this.provider = provider;
@@ -24,7 +24,7 @@ export class CustomSolanaSigner implements ISolanaSigner {
   }
 
   async signAndSendTx(tx: SolanaTransaction): Promise<string> {
-    const solanaSigner: SolanaWeb3Signer = async (
+    const DefaultSolanaSigner: SolanaWeb3Signer = async (
       solanaWeb3Transaction: Transaction
     ) => {
       const response: { publicKey: string; signature: string } =
@@ -39,7 +39,10 @@ export class CustomSolanaSigner implements ISolanaSigner {
       const raw = solanaWeb3Transaction.serialize();
       return raw;
     };
-    const hash = await generalSolanaTransactionExecutor(tx, solanaSigner);
+    const hash = await generalSolanaTransactionExecutor(
+      tx,
+      DefaultSolanaSigner
+    );
     return hash;
   }
 }

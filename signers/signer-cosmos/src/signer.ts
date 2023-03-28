@@ -1,12 +1,12 @@
-import { ISigner, CosmosTransaction } from 'rango-types';
+import { GenericSigner, CosmosTransaction } from 'rango-types';
 import { executeCosmosTransaction } from './helpers';
 import { Keplr } from '@keplr-wallet/types';
 
-export interface ICosmosSigner extends ISigner<CosmosTransaction> {}
+export interface CosmosSigner extends GenericSigner<CosmosTransaction> {}
 
 type CosmosExternalProvider = Keplr;
 
-export class CosmosSigner implements ICosmosSigner {
+export class DefaultCosmosSigner implements CosmosSigner {
   private provider: CosmosExternalProvider;
 
   constructor(provider: CosmosExternalProvider) {

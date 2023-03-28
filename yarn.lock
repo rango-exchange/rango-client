@@ -18360,10 +18360,10 @@ rango-types@^0.1.13, rango-types@^0.1.17:
   resolved "https://registry.yarnpkg.com/rango-types/-/rango-types-0.1.17.tgz#3c7cc26f45bc2fe1c248bbcc512a253c12b4263f"
   integrity sha512-LH6XovZv3hdUsFqN6PVMWqTGqv0ZYBM2L4da46sGmq26EQx4Jpzg7Hbvy9Gk1Ak+Hq8r8zVmvDgFgMnkN9He0Q==
 
-rango-types@^0.1.20:
-  version "0.1.20"
-  resolved "https://registry.yarnpkg.com/rango-types/-/rango-types-0.1.20.tgz#168dcfbe4ab74620c8d096506e8b3faaad695fe7"
-  integrity sha512-8n6KCoakmrDzhPTEvR3RIglf81N/twku1fYQLE6G1UCBZMdLNtLCJFuLpc2HzlqhH9NnUB6qfvkZ6KFb1LXbrA==
+rango-types@^0.1.21:
+  version "0.1.21"
+  resolved "https://registry.yarnpkg.com/rango-types/-/rango-types-0.1.21.tgz#c1e5f2a6f19e62d690f827d61da8348cc66966fd"
+  integrity sha512-ZTEtNwQy/437vyLMW0ISODK6gS1dIHFLYdVDFjnr+qvhSAEBxHR9su5J8TCWJrsrtFqBuXCdFlsEf/Dm+5ztyA==
 
 raw-body@2.5.1:
   version "2.5.1"

@@ -1,1 +1,1 @@
-export { IStarknetSigner, StarknetSigner } from './signer';
+export { StarknetSigner, CustomStarknetSigner } from './signer';

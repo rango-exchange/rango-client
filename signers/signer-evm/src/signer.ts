@@ -1,11 +1,11 @@
 import { TransactionRequest } from '@ethersproject/abstract-provider';
-import { ISigner, SignerError, SignerErrorCode } from 'rango-types';
+import { GenericSigner, SignerError, SignerErrorCode } from 'rango-types';
 import { EvmTransaction } from 'rango-types/lib/api/main';
 import { providers } from 'ethers';
 
-export interface IEvmSigner extends ISigner<EvmTransaction> {}
+export interface EvmSigner extends GenericSigner<EvmTransaction> {}
 
-export class EvmSigner implements IEvmSigner {
+export class DefaultEvmSigner implements EvmSigner {
   private signer: providers.JsonRpcSigner;
 
   constructor(provider: providers.ExternalProvider) {
@@ -26,7 +26,7 @@ export class EvmSigner implements IEvmSigner {
     chainId: string | null
   ): Promise<string> {
     try {
-      const transaction = EvmSigner.buildTx(tx);
+      const transaction = DefaultEvmSigner.buildTx(tx);
       const signerChainId = await this.signer.getChainId();
       const signerAddress = await this.signer.getAddress();
       if (
