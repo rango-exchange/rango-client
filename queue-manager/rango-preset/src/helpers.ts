@@ -7,12 +7,9 @@ import {
   SwapStorage,
 } from './types';
 import {
-  EvmBlockchainMeta,
   getBlockChainNameFromId,
   Meta,
   Network,
-  Transaction,
-  TransactionType,
   WalletState,
   WalletType,
 } from '@rango-dev/wallets-shared';
@@ -25,6 +22,9 @@ import {
   EvmTransaction,
   SolanaTransaction,
   Transfer as TransferTransaction,
+  Transaction,
+  TransactionType,
+  EvmBlockchainMeta,
 } from 'rango-sdk';
 
 import {
@@ -526,7 +526,7 @@ export function getRelatedWallet(
   const walletType = wallet?.walletType;
   if (walletType === WalletType.UNKNOWN || wallet === null)
     throw PrettyError.AssertionFailed(
-      `Wallet for source ${blockchain} not passed to transfer: walletType: ${walletType}`
+      `Wallet for source ${blockchain} not passed: walletType: ${walletType}`
     );
   return wallet;
 }
@@ -764,6 +764,7 @@ export function singTransaction(
     transferTransaction,
   } = currentStep;
   const sourceWallet = getRelatedWallet(swap, currentStep);
+  const walletAddress = getCurrentAddressOf(swap, currentStep);
   const walletSigners = getSigners(sourceWallet.walletType);
   const onFinish = () => {
     if (actions.context.resetClaimedBy) {
@@ -799,65 +800,73 @@ export function singTransaction(
     });
 
     // Execute transaction
-    walletSigners.executeEvmTransaction(evmApprovalTransaction, meta).then(
-      (hash) => {
-        console.debug('transaction of approval minted successfully', hash);
-        const approveUrl = getEvmApproveUrl(
-          hash,
-          getCurrentBlockchainOf(swap, currentStep),
-          meta.evmBasedChains
-        );
-        currentStep.explorerUrl = [
-          ...(currentStep.explorerUrl || []),
-          {
-            url: approveUrl,
-            description: `approve`,
-          },
-        ];
+    walletSigners
+      .getSigner(TransactionType.EVM)
+      .signAndSendTx(evmApprovalTransaction, walletAddress, null)
+      .then(
+        (hash) => {
+          console.debug('transaction of approval minted successfully', hash);
+          const approveUrl = getEvmApproveUrl(
+            hash,
+            getCurrentBlockchainOf(swap, currentStep),
+            meta.evmBasedChains
+          );
+          currentStep.explorerUrl = [
+            ...(currentStep.explorerUrl || []),
+            {
+              url: approveUrl,
+              description: `approve`,
+            },
+          ];
 
-        // `currentStep` has been mutated, let's update storage.
-        setStorage({
-          ...getStorage(),
-          swapDetails: swap,
-        });
-        schedule(SwapActionTypes.CHECK_TRANSACTION_STATUS);
-        next();
-        onFinish();
-      },
+          // `currentStep` has been mutated, let's update storage.
+          setStorage({
+            ...getStorage(),
+            swapDetails: swap,
+          });
+          schedule(SwapActionTypes.CHECK_TRANSACTION_STATUS);
+          next();
+          onFinish();
+        },
 
-      (error) => {
-        if (swap.status === 'failed') return;
-        console.debug('error in approving', error);
-        const { extraMessage, extraMessageDetail, extraMessageErrorCode } =
-          prettifyErrorMessage(error);
-        if (
-          error &&
-          error?.root &&
-          error?.root?.message &&
-          error?.root?.code &&
-          error?.root?.reason
-        ) {
-          logRPCError(error.root, swap, currentStep, sourceWallet?.walletType);
+        (error) => {
+          if (swap.status === 'failed') return;
+          console.debug('error in approving', error);
+          const { extraMessage, extraMessageDetail, extraMessageErrorCode } =
+            prettifyErrorMessage(error);
+          if (
+            error &&
+            error?.root &&
+            error?.root?.message &&
+            error?.root?.code &&
+            error?.root?.reason
+          ) {
+            logRPCError(
+              error.root,
+              swap,
+              currentStep,
+              sourceWallet?.walletType
+            );
+          }
+
+          const updateResult = updateSwapStatus({
+            getStorage,
+            setStorage,
+            nextStatus: 'failed',
+            nextStepStatus: 'failed',
+            message: extraMessage,
+            details: extraMessageDetail,
+            errorCode: extraMessageErrorCode,
+          });
+          notifier({
+            eventType: 'contract_rejected',
+            ...updateResult,
+          });
+
+          failed();
+          onFinish();
         }
-
-        const updateResult = updateSwapStatus({
-          getStorage,
-          setStorage,
-          nextStatus: 'failed',
-          nextStepStatus: 'failed',
-          message: extraMessage,
-          details: extraMessageDetail,
-          errorCode: extraMessageErrorCode,
-        });
-        notifier({
-          eventType: 'contract_rejected',
-          ...updateResult,
-        });
-
-        failed();
-        onFinish();
-      }
-    );
+      );
     return;
   }
 
@@ -881,34 +890,37 @@ export function singTransaction(
       ...updateResult,
     });
 
-    walletSigners.executeTransfer(transferTransaction, meta).then(
-      (txId) => {
-        setStepTransactionIds(actions, txId, 'transfer_confirmed', notifier);
-        schedule(SwapActionTypes.CHECK_TRANSACTION_STATUS);
-        next();
-        onFinish();
-      },
-      (error) => {
-        if (swap.status === 'failed') return;
-        const { extraMessage, extraMessageDetail, extraMessageErrorCode } =
-          prettifyErrorMessage(error);
-        const updateResult = updateSwapStatus({
-          getStorage,
-          setStorage,
-          nextStatus: 'failed',
-          nextStepStatus: 'failed',
-          message: extraMessage,
-          details: extraMessageDetail,
-          errorCode: extraMessageErrorCode,
-        });
-        notifier({
-          eventType: 'transfer_rejected',
-          ...updateResult,
-        });
-        failed();
-        onFinish();
-      }
-    );
+    walletSigners
+      .getSigner(TransactionType.TRANSFER)
+      .signAndSendTx(transferTransaction, walletAddress, null)
+      .then(
+        (txId) => {
+          setStepTransactionIds(actions, txId, 'transfer_confirmed', notifier);
+          schedule(SwapActionTypes.CHECK_TRANSACTION_STATUS);
+          next();
+          onFinish();
+        },
+        (error) => {
+          if (swap.status === 'failed') return;
+          const { extraMessage, extraMessageDetail, extraMessageErrorCode } =
+            prettifyErrorMessage(error);
+          const updateResult = updateSwapStatus({
+            getStorage,
+            setStorage,
+            nextStatus: 'failed',
+            nextStepStatus: 'failed',
+            message: extraMessage,
+            details: extraMessageDetail,
+            errorCode: extraMessageErrorCode,
+          });
+          notifier({
+            eventType: 'transfer_rejected',
+            ...updateResult,
+          });
+          failed();
+          onFinish();
+        }
+      );
   } else if (!!evmTransaction) {
     const updateResult = updateSwapStatus({
       getStorage,
@@ -922,44 +934,52 @@ export function singTransaction(
       ...updateResult,
     });
 
-    walletSigners.executeEvmTransaction(evmTransaction, meta).then(
-      (id) => {
-        setStepTransactionIds(actions, id, 'smart_contract_called', notifier);
-        schedule(SwapActionTypes.CHECK_TRANSACTION_STATUS);
-        next();
-        onFinish();
-      },
-      (error) => {
-        if (swap.status === 'failed') return;
-        const { extraMessage, extraMessageDetail, extraMessageErrorCode } =
-          prettifyErrorMessage(error);
-        if (
-          error &&
-          error?.root &&
-          error?.root?.message &&
-          error?.root?.code &&
-          error?.root?.reason
-        ) {
-          logRPCError(error.root, swap, currentStep, sourceWallet?.walletType);
-        }
-        const updateResult = updateSwapStatus({
-          getStorage,
-          setStorage,
-          nextStatus: 'failed',
-          nextStepStatus: 'failed',
-          message: extraMessage,
-          details: extraMessageDetail,
-          errorCode: extraMessageErrorCode,
-        });
-        notifier({
-          eventType: 'smart_contract_call_failed',
-          ...updateResult,
-        });
+    walletSigners
+      .getSigner(TransactionType.EVM)
+      .signAndSendTx(evmTransaction, walletAddress, null)
+      .then(
+        (id) => {
+          setStepTransactionIds(actions, id, 'smart_contract_called', notifier);
+          schedule(SwapActionTypes.CHECK_TRANSACTION_STATUS);
+          next();
+          onFinish();
+        },
+        (error) => {
+          if (swap.status === 'failed') return;
+          const { extraMessage, extraMessageDetail, extraMessageErrorCode } =
+            prettifyErrorMessage(error);
+          if (
+            error &&
+            error?.root &&
+            error?.root?.message &&
+            error?.root?.code &&
+            error?.root?.reason
+          ) {
+            logRPCError(
+              error.root,
+              swap,
+              currentStep,
+              sourceWallet?.walletType
+            );
+          }
+          const updateResult = updateSwapStatus({
+            getStorage,
+            setStorage,
+            nextStatus: 'failed',
+            nextStepStatus: 'failed',
+            message: extraMessage,
+            details: extraMessageDetail,
+            errorCode: extraMessageErrorCode,
+          });
+          notifier({
+            eventType: 'smart_contract_call_failed',
+            ...updateResult,
+          });
 
-        failed();
-        onFinish();
-      }
-    );
+          failed();
+          onFinish();
+        }
+      );
   } else if (!!cosmosTransaction) {
     const updateResult = updateSwapStatus({
       getStorage,
@@ -1005,35 +1025,38 @@ export function singTransaction(
       return;
     }
 
-    walletSigners.executeCosmosMessage(cosmosTransaction, meta).then(
-      // todo
-      (id: string | null) => {
-        setStepTransactionIds(actions, id, 'smart_contract_called', notifier);
-        schedule(SwapActionTypes.CHECK_TRANSACTION_STATUS);
-        next();
-        onFinish();
-      },
-      (error: string | null) => {
-        if (swap.status === 'failed') return;
-        const { extraMessage, extraMessageDetail, extraMessageErrorCode } =
-          prettifyErrorMessage(error);
-        const updateResult = updateSwapStatus({
-          getStorage,
-          setStorage,
-          nextStatus: 'failed',
-          nextStepStatus: 'failed',
-          message: extraMessage,
-          details: extraMessageDetail,
-          errorCode: extraMessageErrorCode,
-        });
-        notifier({
-          eventType: 'smart_contract_call_failed',
-          ...updateResult,
-        });
-        failed();
-        onFinish();
-      }
-    );
+    walletSigners
+      .getSigner(TransactionType.COSMOS)
+      .signAndSendTx(cosmosTransaction, walletAddress, null)
+      .then(
+        // todo
+        (id: string | null) => {
+          setStepTransactionIds(actions, id, 'smart_contract_called', notifier);
+          schedule(SwapActionTypes.CHECK_TRANSACTION_STATUS);
+          next();
+          onFinish();
+        },
+        (error: string | null) => {
+          if (swap.status === 'failed') return;
+          const { extraMessage, extraMessageDetail, extraMessageErrorCode } =
+            prettifyErrorMessage(error);
+          const updateResult = updateSwapStatus({
+            getStorage,
+            setStorage,
+            nextStatus: 'failed',
+            nextStepStatus: 'failed',
+            message: extraMessage,
+            details: extraMessageDetail,
+            errorCode: extraMessageErrorCode,
+          });
+          notifier({
+            eventType: 'smart_contract_call_failed',
+            ...updateResult,
+          });
+          failed();
+          onFinish();
+        }
+      );
   } else if (!!solanaTransaction) {
     const updateResult = updateSwapStatus({
       getStorage,
@@ -1048,34 +1071,42 @@ export function singTransaction(
     });
 
     const tx = solanaTransaction;
-    walletSigners.executeSolanaTransaction(tx, swap.requestId).then(
-      (txId) => {
-        setStepTransactionIds(actions, txId, 'smart_contract_called', notifier);
-        schedule(SwapActionTypes.CHECK_TRANSACTION_STATUS);
-        next();
-        onFinish();
-      },
-      (error) => {
-        if (swap.status === 'failed') return;
-        const { extraMessage, extraMessageDetail, extraMessageErrorCode } =
-          prettifyErrorMessage(error);
-        const updateResult = updateSwapStatus({
-          getStorage,
-          setStorage,
-          nextStatus: 'failed',
-          nextStepStatus: 'failed',
-          message: extraMessage,
-          details: extraMessageDetail,
-          errorCode: extraMessageErrorCode,
-        });
-        notifier({
-          eventType: 'smart_contract_call_failed',
-          ...updateResult,
-        });
-        failed();
-        onFinish();
-      }
-    );
+    walletSigners
+      .getSigner(TransactionType.SOLANA)
+      .signAndSendTx(tx, walletAddress, null)
+      .then(
+        (txId) => {
+          setStepTransactionIds(
+            actions,
+            txId,
+            'smart_contract_called',
+            notifier
+          );
+          schedule(SwapActionTypes.CHECK_TRANSACTION_STATUS);
+          next();
+          onFinish();
+        },
+        (error) => {
+          if (swap.status === 'failed') return;
+          const { extraMessage, extraMessageDetail, extraMessageErrorCode } =
+            prettifyErrorMessage(error);
+          const updateResult = updateSwapStatus({
+            getStorage,
+            setStorage,
+            nextStatus: 'failed',
+            nextStepStatus: 'failed',
+            message: extraMessage,
+            details: extraMessageDetail,
+            errorCode: extraMessageErrorCode,
+          });
+          notifier({
+            eventType: 'smart_contract_call_failed',
+            ...updateResult,
+          });
+          failed();
+          onFinish();
+        }
+      );
   }
 }
 

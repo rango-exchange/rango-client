@@ -1,10 +1,4 @@
-import {
-  Network,
-  Transaction,
-  TransferTransaction,
-  WalletError,
-  WalletType,
-} from '@rango-dev/wallets-shared';
+import { Network, WalletType } from '@rango-dev/wallets-shared';
 import {
   CosmosTransaction,
   EvmBlockchainMeta,
@@ -12,12 +6,15 @@ import {
   SimulationResult,
   SolanaTransaction,
   StarknetTransaction,
+  Transaction,
   TronTransaction,
+  Transfer as TransferTransaction,
 } from 'rango-sdk';
 import { BigNumber } from 'bignumber.js';
 
 import { ErrorDetail, PrettyError } from './shared-errors';
 import { getRelatedWallet } from './helpers';
+import { SignerError } from 'rango-types/lib';
 
 export type SwapperStatusResponse = {
   status: 'running' | 'failed' | 'success' | null;
@@ -273,7 +270,7 @@ export const getEvmApproveUrl = (
 export const prettifyErrorMessage = (obj: unknown): ErrorDetail => {
   if (!obj) return { extraMessage: '', extraMessageErrorCode: null };
   if (obj instanceof PrettyError) return obj.getErrorDetail();
-  if (obj instanceof WalletError) {
+  if (obj instanceof SignerError) {
     const t = obj.getErrorDetail();
     return {
       extraMessage: t.message,

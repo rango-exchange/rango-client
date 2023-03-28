@@ -6,13 +6,11 @@ import {
   getNetworkInstance,
 } from '@rango-dev/wallets-shared';
 
-export interface ITransferSigner extends GenericSigner<Transfer> {}
-
 // TODO - replace with real type
 // tslint:disable-next-line: no-any
 type TransferExternalProvider = any;
 
-export class CustomTransferSigner implements ITransferSigner {
+export class CustomTransferSigner implements GenericSigner<Transfer> {
   private provider: TransferExternalProvider;
   constructor(provider: TransferExternalProvider) {
     this.provider = provider;

@@ -5,13 +5,13 @@ import {
   StarknetTransaction,
 } from 'rango-types';
 
-export interface StarknetSigner extends GenericSigner<StarknetTransaction> {}
-
 // TODO - replace with real type
 // tslint:disable-next-line: no-any
 type StarknetExternalProvider = any;
 
-export class DefaultStarknetSigner implements StarknetSigner {
+export class DefaultStarknetSigner
+  implements GenericSigner<StarknetTransaction>
+{
   private provider: StarknetExternalProvider;
 
   constructor(provider: StarknetExternalProvider) {
