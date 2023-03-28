@@ -1,1 +1,1 @@
-export { ICosmosSigner, CosmosSigner } from './signer';
+export { CosmosSigner, DefaultCosmosSigner } from './signer';

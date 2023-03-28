@@ -100,7 +100,7 @@ export type SolanaWeb3Signer = (
 
 export const generalSolanaTransactionExecutor = async (
   tx: SolanaTransaction,
-  solanaSigner: SolanaWeb3Signer
+  DefaultSolanaSigner: SolanaWeb3Signer
 ): Promise<string> => {
   const connection = getSolanaConnection();
   let transaction: Transaction;
@@ -139,7 +139,7 @@ export const generalSolanaTransactionExecutor = async (
       transaction.recentBlockhash = (
         await retryPromise(connection.getLatestBlockhash('confirmed'), 5, 10000)
       ).blockhash;
-    const raw = await solanaSigner(transaction);
+    const raw = await DefaultSolanaSigner(transaction);
     const signature = await retryPromise(
       connection.sendRawTransaction(raw),
       2,
@@ -170,7 +170,9 @@ export async function executeSolanaTransaction(
   tx: SolanaTransaction,
   solanaProvider: any
 ): Promise<string> {
-  const solanaSigner: SolanaWeb3Signer = async (solanaWeb3Transaction) => {
+  const DefaultSolanaSigner: SolanaWeb3Signer = async (
+    solanaWeb3Transaction
+  ) => {
     try {
       const signedTransaction = await solanaProvider.signTransaction(
         solanaWeb3Transaction
@@ -182,5 +184,5 @@ export async function executeSolanaTransaction(
       throw new SignerError(SignerErrorCode.SIGN_TX_ERROR, undefined, e);
     }
   };
-  return await generalSolanaTransactionExecutor(tx, solanaSigner);
+  return await generalSolanaTransactionExecutor(tx, DefaultSolanaSigner);
 }

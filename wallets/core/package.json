@@ -45,7 +45,7 @@
   ],
   "dependencies": {
     "@rango-dev/wallets-shared": "^0.1.11-next.73",
-    "rango-types": "^0.1.20",
+    "rango-types": "^0.1.21",
     "@walletconnect/ethereum-provider": "1.8.0"
   },
   "publishConfig": {

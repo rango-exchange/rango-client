@@ -1,4 +1,4 @@
-import { ISigner, SignerError, Transfer } from 'rango-types';
+import { GenericSigner, SignerError, Transfer } from 'rango-types';
 import { xdefiTransfer } from './helpers';
 import {
   Network,
@@ -6,7 +6,7 @@ import {
   getNetworkInstance,
 } from '@rango-dev/wallets-shared';
 
-export interface ITransferSigner extends ISigner<Transfer> {}
+export interface ITransferSigner extends GenericSigner<Transfer> {}
 
 // TODO - replace with real type
 // tslint:disable-next-line: no-any

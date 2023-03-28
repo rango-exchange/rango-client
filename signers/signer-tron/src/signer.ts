@@ -1,17 +1,17 @@
 import {
-  ISigner,
+  GenericSigner,
   SignerError,
   SignerErrorCode,
   TronTransaction,
 } from 'rango-types';
 
-export interface ITronSigner extends ISigner<TronTransaction> {}
+export interface TronSigner extends GenericSigner<TronTransaction> {}
 
 // TODO - replace with real type
 // tslint:disable-next-line: no-any
 type TronExternalProvider = any;
 
-export class TronSigner implements ITronSigner {
+export class DefaultTronSigner implements TronSigner {
   private provider: TronExternalProvider;
 
   constructor(provider: TronExternalProvider) {
@@ -24,7 +24,7 @@ export class TronSigner implements ITronSigner {
 
   async signAndSendTx(tx: TronTransaction): Promise<string> {
     try {
-      const transaction = TronSigner.buildTx(tx);
+      const transaction = DefaultTronSigner.buildTx(tx);
       const signedTxn = await this.provider.tronWeb.trx.sign(transaction);
       const receipt = await this.provider.tronWeb.trx.sendRawTransaction(
         signedTxn

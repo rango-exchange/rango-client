@@ -1,18 +1,18 @@
 import {
-  ISigner,
+  GenericSigner,
   SignerError,
   SignerErrorCode,
   SolanaTransaction,
 } from 'rango-types';
 import { executeSolanaTransaction } from './helpers';
 
-export interface ISolanaSigner extends ISigner<SolanaTransaction> {}
+export interface SolanaSigner extends GenericSigner<SolanaTransaction> {}
 
 // TODO - replace with real type
 // tslint:disable-next-line: no-any
 type SolanaExternalProvider = any;
 
-export class SolanaSigner implements ISolanaSigner {
+export class DefaultSolanaSigner implements SolanaSigner {
   private provider: SolanaExternalProvider;
 
   constructor(provider: SolanaExternalProvider) {

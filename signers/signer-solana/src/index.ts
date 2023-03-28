@@ -1,2 +1,2 @@
-export { ISolanaSigner, SolanaSigner } from './signer';
+export { SolanaSigner, DefaultSolanaSigner } from './signer';
 export { generalSolanaTransactionExecutor, SolanaWeb3Signer } from './helpers';
