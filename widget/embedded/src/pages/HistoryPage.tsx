@@ -15,7 +15,11 @@ export function HistoryPage() {
   return (
     <History
       list={pendingSwaps.map((pending) => pending.swap)}
-      onSwapClick={navigate.bind(null, navigationRoutes.swapDetails)}
+      onSwapClick={(requestId) =>
+        navigate(navigationRoutes.swapDetails, {
+          state: { requestId },
+        })
+      }
       onBack={navigateBackFrom.bind(null, navigationRoutes.history)}
     />
   );
