@@ -11,7 +11,7 @@ export interface StarknetSigner extends GenericSigner<StarknetTransaction> {}
 // tslint:disable-next-line: no-any
 type StarknetExternalProvider = any;
 
-export class CustomStarknetSigner implements StarknetSigner {
+export class DefaultStarknetSigner implements StarknetSigner {
   private provider: StarknetExternalProvider;
 
   constructor(provider: StarknetExternalProvider) {
