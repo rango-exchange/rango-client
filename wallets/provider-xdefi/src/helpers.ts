@@ -1,6 +1,6 @@
 import { Network, ProviderConnectResult } from '@rango-dev/wallets-shared';
 import { SUPPORTED_ETH_CHAINS, SUPPORTED_NETWORKS } from './constants';
-import { SignerError, SignerErrorCode } from 'rango-types/lib';
+import { SignerError, SignerErrorCode } from 'rango-types';
 
 type Provider = Map<Network, any>;
 
