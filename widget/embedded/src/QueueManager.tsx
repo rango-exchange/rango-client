@@ -29,14 +29,10 @@ function QueueManager(props: PropsWithChildren<{}>) {
   const balances = useWalletsStore.use.balances();
 
   const wallets = {
-    blockchains: balances.map((w) => {
-      const updatedWallet = {
-        accounts: [w],
-        name: w.chain,
-      };
-
-      return updatedWallet;
-    }),
+    blockchains: balances.map((wallet) => ({
+      accounts: [wallet],
+      name: wallet.chain,
+    })),
   };
 
   const switchNetwork = (wallet: WalletType, network: Network) => {
@@ -70,6 +66,8 @@ function QueueManager(props: PropsWithChildren<{}>) {
       getSupportedChainNames,
     },
     getSigners,
+    //todo: remove Network type
+    //@ts-ignore
     wallets,
     providers: allProviders,
     switchNetwork,

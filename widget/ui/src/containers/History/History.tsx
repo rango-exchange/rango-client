@@ -79,7 +79,7 @@ export function History({
       onBack={onBack}
       textField={true}
       textFieldPlaceholder="Search By Blockchain Or Token"
-      title="History"
+      title="Swaps"
     >
       {(searchedFor) => {
         const filterSwaps = filteredHistory(list, searchedFor);

@@ -41,4 +41,5 @@ export type Icon =
   | 'BagIcon'
   | 'TimeIcon'
   | 'CloseIcon'
-  | 'SignatureIcon';
+  | 'SignatureIcon'
+  | 'CopyIcon';

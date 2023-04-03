@@ -206,7 +206,7 @@ export function Home() {
             if (swapButtonState.title === 'Connect Wallet')
               navigate(navigationRoutes.wallets);
             else {
-              navigate(navigationRoutes.confirmWallets);
+              navigate(navigationRoutes.confirmWallets, { replace: true });
             }
           }}
         >

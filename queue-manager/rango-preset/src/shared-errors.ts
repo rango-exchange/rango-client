@@ -1,4 +1,8 @@
-import { WalletType } from '@rango-dev/wallets-shared';
+import {
+  WalletErrorCode,
+  WalletType,
+  isWalletErrorCode,
+} from '@rango-dev/wallets-shared';
 
 export type ErrorDetail = {
   extraMessage: string;
@@ -153,4 +157,30 @@ export const ERROR_CONFIRM_SWAP = (status?: number | string): string =>
 export const WARNING_STARKNET_FOUND =
   'StarknNet blockchain is still an ALPHA version. As such, delays may occur, and catastrophic bugs may lurk.';
 
-  
+function isAPIErrorCode(value: string): value is APIErrorCode {
+  return (Object.values(APIErrorCode) as string[]).includes(value);
+}
+
+export function mapAppErrorCodesToAPIErrorCode(
+  errorCode: string | null
+): APIErrorCode {
+  const defaultErrorCode = APIErrorCode.CLIENT_UNEXPECTED_BEHAVIOUR;
+  try {
+    if (!errorCode) return defaultErrorCode;
+    if (isAPIErrorCode(errorCode)) return errorCode;
+    if (isWalletErrorCode(errorCode)) {
+      const t: { [key in WalletErrorCode]: APIErrorCode } = {
+        [WalletErrorCode.REJECTED_BY_USER]: APIErrorCode.USER_REJECT,
+        [WalletErrorCode.SIGN_TX_ERROR]: APIErrorCode.CALL_WALLET_FAILED,
+        [WalletErrorCode.SEND_TX_ERROR]: APIErrorCode.SEND_TX_FAILED,
+        [WalletErrorCode.NOT_IMPLEMENTED]: defaultErrorCode,
+        [WalletErrorCode.OPERATION_UNSUPPORTED]: defaultErrorCode,
+        [WalletErrorCode.UNEXPECTED_BEHAVIOUR]: defaultErrorCode,
+      };
+      return t[errorCode];
+    }
+    return defaultErrorCode;
+  } catch (err) {
+    return defaultErrorCode;
+  }
+}

@@ -5,22 +5,25 @@ import { useNavigate } from 'react-router-dom';
 import { navigationRoutes } from '../constants/navigationRoutes';
 import { useNavigateBack } from '../hooks/useNavigateBack';
 import { getPendingSwaps } from '../utils/queue';
+import { useUiStore } from '../store/ui';
 
 export function HistoryPage() {
+  const setSelectedSwap = useUiStore.use.setSelectedSwap();
   const navigate = useNavigate();
   const { navigateBackFrom } = useNavigateBack();
   const { manager } = useManager();
-  const pendingSwaps = getPendingSwaps(manager);
+  const pendingSwaps = getPendingSwaps(manager).map(({ swap }) => swap);
 
   return (
     <History
-      list={pendingSwaps.map((pending) => pending.swap)}
-      onSwapClick={(requestId) =>
-        navigate(navigationRoutes.swapDetails, {
-          state: { requestId },
-        })
-      }
-      onBack={navigateBackFrom.bind(null, navigationRoutes.history)}
+      //todo: move PendingSwap type to rango-types
+      //@ts-ignore
+      list={pendingSwaps}
+      onSwapClick={(requestId) => {
+        setSelectedSwap(requestId);
+        navigate(navigationRoutes.swaps + `/${requestId}`);
+      }}
+      onBack={navigateBackFrom.bind(null, navigationRoutes.swaps)}
     />
   );
 }

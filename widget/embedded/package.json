@@ -10,7 +10,7 @@
   ],
   "browserslist": "> 0.5%, last 2 versions, not dead",
   "scripts": {
-    "dev": "parcel public/index.html -p 3000",
+    "dev": "parcel public/index.html -p 3001",
     "build:app": "parcel build",
     "build": "tsdx build --entry ./src/lib.tsx --transpileOnly"
   },
@@ -27,12 +27,13 @@
   },
   "dependencies": {
     "@rango-dev/provider-all": "^0.1.11-next.73",
+    "@rango-dev/queue-manager-core": "^0.1.10-next.75",
     "@rango-dev/queue-manager-rango-preset": "^0.1.10-next.77",
     "@rango-dev/queue-manager-react": "^0.1.10-next.73",
-    "@rango-dev/queue-manager-core": "^0.1.10-next.75",
     "@rango-dev/ui": "^0.1.10-next.75",
     "@rango-dev/wallets-core": "^0.1.11-next.73",
     "bignumber.js": "^9.1.1",
+    "copy-to-clipboard": "^3.3.3",
     "immer": "^9.0.19",
     "mitt": "^3.0.0",
     "parcel": "^2.8.0",

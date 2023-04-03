@@ -30,9 +30,12 @@ export const AppRoutes = () =>
       path: navigationRoutes.liquiditySources,
       element: <LiquiditySourcePage />,
     },
-    { path: navigationRoutes.history, element: <HistoryPage /> },
+    { path: navigationRoutes.swaps, element: <HistoryPage /> },
+    {
+      path: navigationRoutes.swapDetails,
+      element: <SwapDetailsPage />,
+    },
     { path: navigationRoutes.wallets, element: <WalletsPage /> },
     { path: navigationRoutes.confirmSwap, element: <ConfirmSwapPage /> },
     { path: navigationRoutes.confirmWallets, element: <ConfirmWalletsPage /> },
-    { path: navigationRoutes.swapDetails, element: <SwapDetailsPage /> },
   ]);

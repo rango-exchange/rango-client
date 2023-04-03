@@ -15,6 +15,7 @@ const MainContainer = styled('div', {
   alignItems: 'end',
   padding: '$16 $24',
   boxSizing: 'border-box',
+  position: 'relative',
 });
 
 const ContentContainer = styled('div', {
@@ -30,7 +31,7 @@ export function SwapContainer(props: PropsWithChildren<PropTypes>) {
   const { children, style } = props;
 
   return (
-    <MainContainer style={style}>
+    <MainContainer style={style} id="swap-box">
       <ContentContainer>{children}</ContentContainer>
     </MainContainer>
   );

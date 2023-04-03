@@ -64,7 +64,9 @@ export function ConfirmWalletsPage() {
       swap={bestRoute!}
       fromAmount={fromAmount}
       toAmount={toAmount}
-      onConfirm={navigate.bind(null, navigationRoutes.confirmSwap)}
+      onConfirm={() =>
+        navigate(navigationRoutes.confirmSwap, { replace: true })
+      }
       onChange={(wallet) => setSelectedWallet(wallet)}
       confirmDisabled={confirmDisabled}
       handleConnectChain={(wallet) => handleConnectChain(wallet)}
