@@ -19,7 +19,7 @@ export const config = {
 };
 
 async function waitInterval(instance: any) {
-  return new Promise<any>((resolve) => {
+  return new Promise<any>(resolve => {
     const interval = setInterval(async () => {
       resolve(instance.extension.getLastStates());
       clearInterval(interval);
@@ -34,7 +34,6 @@ export const connect: Connect = async ({ instance }) => {
   await instance.connect(ConnectType.EXTENSION, TERRA_STATION_WALLET_ID);
   await instance.refetchStates();
   const { network, wallet } = await waitInterval(instance);
-
   chainId = network.chainID;
   accounts = [wallet.terraAddress];
 
@@ -48,7 +47,6 @@ export const subscribe: Subscribe = ({
 }) => {
   instance.states().subscribe({
     next: (value: any) => {
-      console.log(value);
       if (value.status === 'WALLET_CONNECTED') {
         const accounts = value.wallets.map(
           ({ terraAddress }: any) => terraAddress
@@ -64,12 +62,13 @@ export const canSwitchNetworkTo: CanSwitchNetwork = () => false;
 
 export const getSigners: (provider: any) => WalletSigners = signer;
 
-export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
-  _allBlockChains
-) => {
+export const getWalletInfo: (
+  allBlockChains: BlockchainMeta[]
+) => WalletInfo = allBlockChains => {
   return {
-    name: 'SafePal',
-    img: 'https://raw.githubusercontent.com/rango-exchange/rango-types/main/assets/icons/wallets/terra-station.png',
+    name: 'Terra Station',
+    img:
+      'https://raw.githubusercontent.com/rango-exchange/rango-types/main/assets/icons/wallets/terra-station.png',
     installLink: {
       CHROME:
         'https://chrome.google.com/webstore/detail/terra-station/aiifbnbfobpmeekipheeijimdpnlpgpp',
@@ -80,6 +79,8 @@ export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
       DEFAULT: 'https://www.safepal.com/download',
     },
     color: '#4A21EF',
-    supportedChains: [],
+    supportedChains: allBlockChains.filter(blockchainMeta =>
+      ['TERRA_CLASSIC'].includes(blockchainMeta.name)
+    ),
   };
 };

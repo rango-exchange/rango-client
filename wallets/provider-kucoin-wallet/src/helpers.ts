@@ -11,4 +11,5 @@ export const KUCOIN_WALLET_SUPPORTED_CHAINS = [
   Network.ETHEREUM,
   Network.POLYGON,
   Network.BSC,
+
 ];
