@@ -6,6 +6,8 @@ import {
   isEvmTransaction,
   isSolanaTransaction,
   isTrasnferTransaction,
+  isStarknetTransaction,
+  isTronTransaction,
   updateSwapStatus,
 } from '../helpers';
 import { APIErrorCode } from '../shared-errors';
@@ -34,13 +36,21 @@ export async function createTransaction(
     transferTransaction,
     evmApprovalTransaction,
     solanaTransaction,
+    tronTransaction,
+    tronApprovalTransaction,
+    starknetTransaction,
+    starknetApprovalTransaction,
   } = currentStep;
 
   if (
     !evmTransaction &&
+    !evmApprovalTransaction &&
+    !tronTransaction &&
+    !tronApprovalTransaction &&
+    !starknetTransaction &&
+    !starknetApprovalTransaction &&
     !cosmosTransaction &&
     !transferTransaction &&
-    !evmApprovalTransaction &&
     !solanaTransaction
   ) {
     const request: CreateTransactionRequest = {
@@ -70,6 +80,14 @@ export async function createTransaction(
           currentStep.solanaTransaction = transaction;
         } else if (isTrasnferTransaction(transaction)) {
           currentStep.transferTransaction = transaction;
+        } else if (isStarknetTransaction(transaction)) {
+          if (transaction.isApprovalTx)
+            currentStep.starknetApprovalTransaction = transaction;
+          else currentStep.starknetTransaction = transaction;
+        } else if (isTronTransaction(transaction)) {
+          if (transaction.isApprovalTx)
+            currentStep.tronApprovalTransaction = transaction;
+          else currentStep.tronTransaction = transaction;
         }
       }
 
