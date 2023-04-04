@@ -6,9 +6,9 @@ export const navigationRoutes = {
   toToken: '/to-token',
   settings: '/settings',
   liquiditySources: '/settings/liquidity-sources',
-  history: '/history',
+  swaps: '/swaps',
   wallets: '/wallets',
   confirmSwap: '/confirm-swap',
   confirmWallets: '/confirm-wallets',
-  swapDetails: '/history/swap-details',
+  swapDetails: '/swaps/:requestId',
 };

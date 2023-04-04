@@ -10,8 +10,10 @@ import { confirmSwap, useConfirmSwapStore } from '../store/confirmSwap';
 import { ConfirmSwapErrors } from '../components/ConfirmSwapErrors';
 import { ConfirmSwapWarnings } from '../components/ConfirmSwapWarnings';
 import { useManager } from '@rango-dev/queue-manager-react';
+import { useUiStore } from '../store/ui';
 
 export function ConfirmSwapPage() {
+  const setSelectedSwap = useUiStore.use.setSelectedSwap();
   const { navigateBackFrom } = useNavigateBack();
   const { manager } = useManager();
   const navigate = useNavigate();
@@ -21,9 +23,6 @@ export function ConfirmSwapPage() {
   const loading = useConfirmSwapStore.use.loading();
   const warnings = useConfirmSwapStore.use.warnings();
   const errors = useConfirmSwapStore.use.errors();
-
-  console.log('loading:', loading, 'warnings:', warnings, 'errors:', errors);
-
   const slippage = useSettingsStore.use.slippage();
   const customSlippage = useSettingsStore.use.customSlippage();
   const selectedSlippage = customSlippage || slippage;
@@ -34,8 +33,9 @@ export function ConfirmSwapPage() {
         confirmSwap().then((swap) => {
           if (swap) {
             manager?.create('swap', { swapDetails: swap });
-            navigate(navigationRoutes.swapDetails, {
-              state: { requestId: swap.requestId },
+            setSelectedSwap(swap.requestId);
+            navigate(navigationRoutes.swaps + `/${swap.requestId}`, {
+              replace: true,
             });
           }
         });

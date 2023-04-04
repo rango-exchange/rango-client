@@ -1,8 +1,8 @@
 import React from 'react';
-import { createPortal } from 'react-dom';
 import { styled } from '../../theme';
 import { CloseIcon } from '../Icon';
 import { Typography } from '../Typography';
+import { createPortal } from 'react-dom';
 
 export interface PropTypes {
   title?: string;
@@ -13,6 +13,7 @@ export interface PropTypes {
   anchor?: 'bottom' | 'left' | 'right' | 'top';
   showClose?: boolean;
   footer?: React.ReactNode;
+  container: Element | null;
 }
 
 const BackDrop = styled('div', {
@@ -21,18 +22,21 @@ const BackDrop = styled('div', {
   left: '0',
   width: '100%',
   height: '100%',
-
+  zIndex: 9999999,
   backgroundColor: 'rgba(0,0,0,.1)',
+  borderRadius: '$10',
 });
 
 const DrawerContainer = styled('div', {
-  position: 'fixed',
+  position: 'absolute',
   boxShadow: '$s',
   background: '$background',
   padding: '$20',
   display: 'flex',
   flexDirection: 'column',
   justifyContent: 'space-between',
+  zIndex: 9999999,
+  borderRadius: '$10',
 
   variants: {
     anchor: {
@@ -42,8 +46,6 @@ const DrawerContainer = styled('div', {
         height: '100%',
         minWidth: '300px',
         maxWidth: '90%',
-        borderTopRightRadius: '$10',
-        borderBottomRightRadius: '$10',
       },
       right: {
         top: 0,
@@ -51,24 +53,16 @@ const DrawerContainer = styled('div', {
         height: '100%',
         minWidth: '300px',
         maxWidth: '90%',
-        borderTopLeftRadius: '$10',
-        borderBottomLeftRadius: '$10',
       },
       bottom: {
         bottom: 0,
         width: '100%',
         maxHeight: '90%',
-        borderTopRightRadius: '$10',
-        borderTopLeftRadius: '$10',
-        
       },
       top: {
         top: 0,
         width: '100%',
         maxHeight: '90%',
-        borderBottomRightRadius: '$10',
-        borderBottomLeftRadius: '$10',
-        
       },
     },
   },
@@ -88,7 +82,7 @@ const Body = styled('div', {
 });
 const Footer = styled('footer', {
   width: '100%',
-  marginTop:'$28'
+  marginTop: '$28',
 });
 
 export function Drawer(props: PropTypes) {
@@ -101,6 +95,7 @@ export function Drawer(props: PropTypes) {
     anchor = 'bottom',
     showClose = false,
     footer,
+    container,
   } = props;
 
   const handleBackDropClick = (event: React.MouseEvent<HTMLDivElement>) => {
@@ -110,6 +105,7 @@ export function Drawer(props: PropTypes) {
   return (
     <>
       {open &&
+        container &&
         createPortal(
           <BackDrop onClick={handleBackDropClick}>
             <DrawerContainer anchor={anchor} style={containerStyle}>
@@ -121,7 +117,7 @@ export function Drawer(props: PropTypes) {
               <Footer>{footer}</Footer>
             </DrawerContainer>
           </BackDrop>,
-          document.body
+          container
         )}
     </>
   );

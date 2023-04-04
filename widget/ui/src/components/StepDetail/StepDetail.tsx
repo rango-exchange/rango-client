@@ -86,7 +86,7 @@ export function StepDetail({
       </StepLogoContainer>
       <Detail pl={direction === 'horizontal'}>
         <Typography noWrap variant={direction === 'vertical' ? 'body2' : 'h6'}>
-          {parseFloat(amount).toFixed(2)} {symbol}
+          {amount ? parseFloat(amount).toFixed(2) : '?'} {symbol}
         </Typography>
         <SubTitle noWrap variant="caption">
           on {blockchain}
