@@ -1,10 +1,12 @@
-import { CosmosTransaction } from '../../../api/models/TransactionModels';
-import { WalletType } from '../../../utils/Constants';
-import { WalletSigners } from '../core/types';
-import { defaultSigners } from '../shared/signers';
 import { JSONSerializable } from '@terra-money/terra.js/dist/util/json';
 import { Coin, CreateTxOptions, Msg as TerraMsg } from '@terra-money/terra.js';
 import { Fee } from '@terra-money/terra.js/dist/core';
+import {
+  CosmosTransaction,
+  defaultSigners,
+  WalletSigners,
+  WalletType,
+} from '@rango-dev/wallets-shared';
 
 export default function getSigners(provider: any): WalletSigners {
   return {
@@ -13,12 +15,15 @@ export default function getSigners(provider: any): WalletSigners {
       walletType: WalletType.TERRA_STATION,
       supportEvm: false,
     }),
-    executeCosmosMessage: async (cosmos: CosmosTransaction): Promise<string> => {
+    executeCosmosMessage: async (
+      cosmos: CosmosTransaction
+    ): Promise<string> => {
       return new Promise<string>((resolve, reject) => {
         provider
           .post(cosmosTxToTerraTx(cosmos))
-          .then((result: { result: { txhash: string | PromiseLike<string> } }) =>
-            resolve(result?.result?.txhash),
+          .then(
+            (result: { result: { txhash: string | PromiseLike<string> } }) =>
+              resolve(result?.result?.txhash)
           )
           .catch((error: any) => {
             console.log({ error });
@@ -32,13 +37,15 @@ export default function getSigners(provider: any): WalletSigners {
 function cosmosTxToTerraTx(tx: CosmosTransaction): CreateTxOptions {
   let tmpStdFee: Fee | undefined = undefined;
   if (tx.data.fee) {
-    const tmpCoinsFee = tx.data.fee.amount.map((item) => new Coin(item.denom, item.amount));
+    const tmpCoinsFee = tx.data.fee.amount.map(
+      (item) => new Coin(item.denom, item.amount)
+    );
     // let coins = Coins()
     tmpStdFee = new Fee(parseInt(tx.data.fee.gas), tmpCoinsFee);
   }
 
   const msgs = tx.data.msgs.map(
-    (m) => new TerraMessageGeneralJsonSerializable(m) as unknown as TerraMsg,
+    (m) => new TerraMessageGeneralJsonSerializable(m) as unknown as TerraMsg
   );
 
   return {
@@ -49,7 +56,11 @@ function cosmosTxToTerraTx(tx: CosmosTransaction): CreateTxOptions {
   };
 }
 
-export class TerraMessageGeneralJsonSerializable extends JSONSerializable<any, any, any> {
+export class TerraMessageGeneralJsonSerializable extends JSONSerializable<
+  any,
+  any,
+  any
+> {
   constructor(public raw: any) {
     super();
   }
