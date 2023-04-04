@@ -1,4 +1,3 @@
-import BigNumber from 'bignumber.js';
 import { ExecuterActions } from '@rango-dev/queue-manager-core';
 import {
   delay,
@@ -12,8 +11,9 @@ import {
   resetNetworkStatus,
 } from '../helpers';
 import { SwapActionTypes, SwapQueueContext, SwapStorage } from '../types';
-import { getNextStep, MessageSeverity, SwapperStatusResponse } from '../shared';
-import { checkApproved, checkSwapStatus } from '../shared-api';
+import { getNextStep, MessageSeverity } from '../shared';
+import { TransactionStatusResponse } from 'rango-sdk';
+import { httpService } from '../services';
 
 const INTERVAL_FOR_CHECK = 2000;
 
@@ -38,21 +38,23 @@ async function checkTransactionStatus({
   const currentStep = getCurrentStep(swap)!;
   const txId = currentStep.executedTransactionId;
 
-  let status: SwapperStatusResponse | null = null;
+  let status: TransactionStatusResponse | null = null;
   try {
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    status = await checkSwapStatus(swap.requestId, txId!, currentStep.id);
+    status = await httpService.checkStatus({
+      requestId: swap.requestId,
+      txId: txId!,
+      step: currentStep.id,
+    });
   } catch (e) {
     await delay(INTERVAL_FOR_CHECK);
     retry();
     return;
   }
 
-  const outputAmount: BigNumber | null =
+  const outputAmount: string | null =
     status?.outputAmount ||
-    (!!currentStep.outputAmount
-      ? new BigNumber(currentStep.outputAmount)
-      : null);
+    (!!currentStep.outputAmount ? currentStep.outputAmount : null);
   const prevOutputAmount = currentStep.outputAmount;
   swap.extraMessage = status?.extraMessage || swap.extraMessage;
   swap.extraMessageSeverity = MessageSeverity.info;
@@ -61,8 +63,7 @@ async function checkTransactionStatus({
   currentStep.status = status?.status || currentStep.status;
   currentStep.diagnosisUrl =
     status?.diagnosisUrl || currentStep.diagnosisUrl || null;
-  currentStep.outputAmount =
-    outputAmount?.toFixed() || currentStep.outputAmount;
+  currentStep.outputAmount = outputAmount || currentStep.outputAmount;
   currentStep.explorerUrl = status?.explorerUrl || currentStep.explorerUrl;
   currentStep.internalSteps = status?.steps || null;
 
@@ -154,7 +155,7 @@ async function checkApprovalStatus({
   const currentStep = getCurrentStep(swap)!;
   let isApproved = false;
   try {
-    const response = await checkApproved(swap.requestId);
+    const response = await httpService.checkApproval(swap.requestId);
     isApproved = response.isApproved;
   } catch (e) {
     console.error('Failed to check getApprovedAmount', e);

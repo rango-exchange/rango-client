@@ -1,5 +1,12 @@
 import React from 'react';
-import { SettingsIcon, Tooltip, styled, Button, HistoryIcon, RetryIcon } from '@rango-dev/ui';
+import {
+  SettingsIcon,
+  Tooltip,
+  styled,
+  Button,
+  HistoryIcon,
+  RetryIcon,
+} from '@rango-dev/ui';
 import { useNavigate } from 'react-router-dom';
 import { navigationRoutes } from '../constants/navigationRoutes';
 import { PropTypes } from './Header';
@@ -15,17 +22,23 @@ export function HeaderButtons(props: PropTypes) {
   return (
     <ButtonsContainer>
       <Tooltip content="Retry">
-        <Button variant="ghost" onClick={onClickRefresh.bind(null)}>
+        <Button variant="ghost" onClick={onClickRefresh}>
           <RetryIcon size={28} />
         </Button>
       </Tooltip>
       <Tooltip content="Transactions History">
-        <Button variant="ghost" onClick={() => navigate(navigationRoutes.history)}>
+        <Button
+          variant="ghost"
+          onClick={() => navigate(navigationRoutes.swaps)}
+        >
           <HistoryIcon size={24} />
         </Button>
       </Tooltip>
       <Tooltip content="Settings">
-        <Button variant="ghost" onClick={() => navigate(navigationRoutes.settings)}>
+        <Button
+          variant="ghost"
+          onClick={() => navigate(navigationRoutes.settings)}
+        >
           <SettingsIcon size={24} />
         </Button>
       </Tooltip>
