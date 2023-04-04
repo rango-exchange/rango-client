@@ -69,7 +69,8 @@ export type EventType =
   | 'network_changed'
   | 'not_enough_balance'
   | 'check_fee_failed'
-  | 'route_failed_to_find';
+  | 'route_failed_to_find'
+  | 'transaction_expired';
 
 export type SwapSavedSettings = {
   slippage: string;
@@ -194,6 +195,7 @@ export type PendingSwap = {
   steps: PendingSwapStep[];
   simulationResult: SimulationResult;
   validateBalanceOrFee: boolean;
+  hasAlreadyProceededToSign?: boolean | null;
 };
 
 export const getCurrentBlockchainOfOrNull = (

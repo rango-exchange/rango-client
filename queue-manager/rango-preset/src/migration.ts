@@ -2,6 +2,7 @@ import {
   PersistedQueue,
   Persistor,
   Status,
+  DB_NAME,
 } from '@rango-dev/queue-manager-core';
 import { v4 as uuid } from 'uuid';
 import { PendingSwap } from './shared';
@@ -18,6 +19,16 @@ function migrated(): boolean {
   return !!window.localStorage.getItem(MIGRATED_KEY);
 }
 
+async function hasQueueManagerOnIDB(): Promise<boolean> {
+  try {
+    return (await window.indexedDB.databases())
+      .map((db) => db.name)
+      .includes(DB_NAME);
+  } catch {
+    return false;
+  }
+}
+
 /**
  *
  * By calling this function, we first check if the data already migrated or not,
@@ -26,9 +37,10 @@ function migrated(): boolean {
  */
 async function migration(): Promise<boolean> {
   const swapsFromStorage = window.localStorage.getItem('pendingSwaps');
+  const hasIndexDB = await hasQueueManagerOnIDB();
 
   // For new users or already migrated.
-  if (!swapsFromStorage || migrated()) {
+  if (!swapsFromStorage || migrated() || hasIndexDB) {
     return true;
   }
 
