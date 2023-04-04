@@ -168,6 +168,8 @@ async function checkApprovalStatus({
     swap.extraMessageSeverity = MessageSeverity.success;
     currentStep.evmApprovalTransaction = null;
     currentStep.executedTransactionId = null;
+    currentStep.starknetApprovalTransaction = null;
+    currentStep.tronApprovalTransaction = null;
 
     setStorage({
       ...getStorage(),
