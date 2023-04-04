@@ -21,8 +21,9 @@
     "@rango-dev/queue-manager-core": "*",
     "@rango-dev/wallets-core": "*",
     "@rango-dev/wallets-shared": "*",
+    "rango-types": "*",
+    "@sentry/browser": "*",
     "bignumber.js": "*",
-    "rango-types": "^0.1.21",
     "uuid": "*"
   },
   "husky": {

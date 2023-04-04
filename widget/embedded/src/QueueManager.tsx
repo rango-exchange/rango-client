@@ -7,13 +7,13 @@ import {
 import { useWallets } from '@rango-dev/wallets-core';
 import {
   convertEvmBlockchainMetaToEvmChainInfo,
-  isEvmBlockchain,
   Network,
   WalletType,
 } from '@rango-dev/wallets-shared';
 import { useMetaStore } from './store/meta';
 import { useWalletsStore } from './store/wallets';
 import { walletAndSupportedChainsNames } from './utils/wallets';
+import { isEvmBlockchain } from 'rango-sdk';
 
 function QueueManager(props: PropsWithChildren<{}>) {
   const {
