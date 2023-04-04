@@ -3,6 +3,7 @@ import {
   PublicKey,
   Transaction,
   TransactionInstruction,
+  VersionedTransaction,
 } from '@solana/web3.js';
 import { SignerError, SignerErrorCode, SolanaTransaction } from 'rango-types';
 import { SolanaExternalProvider } from './signer';
@@ -50,7 +51,7 @@ function getFailedHash(tx: SolanaTransaction) {
 const IS_DEV = !process.env.NODE_ENV || process.env.NODE_ENV === 'development';
 const SOLANA_RPC_URL = !IS_DEV
   ? 'https://icy-crimson-wind.solana-mainnet.quiknode.pro/c83f94ebeb39a6d6a9d2ab03d4cba2c2af83c5c0/'
-  : 'https://api.metaplex.solana.com/';
+  : 'https://fluent-still-scion.solana-mainnet.discover.quiknode.pro/fc8be9b8ac7aea382ec591359628e16d8c52ef6a/';
 
 function getSolanaConnection(): Connection {
   return new Connection(SOLANA_RPC_URL, {
@@ -96,7 +97,7 @@ function confirmTx(signature: string): Promise<boolean> {
 // https://docs.phantom.app/integrating/sending-a-transaction
 // https://codesandbox.io/s/github/phantom-labs/sandbox
 export type SolanaWeb3Signer = (
-  solanaWeb3Transaction: Transaction
+  solanaWeb3Transaction: Transaction | VersionedTransaction
 ) => Promise<number[] | Buffer | Uint8Array>;
 
 export const generalSolanaTransactionExecutor = async (
@@ -104,19 +105,42 @@ export const generalSolanaTransactionExecutor = async (
   DefaultSolanaSigner: SolanaWeb3Signer
 ): Promise<string> => {
   const connection = getSolanaConnection();
-  let transaction: Transaction;
+  let versionedTransaction: VersionedTransaction | undefined = undefined;
+  let transaction: Transaction | undefined = undefined;
   if (tx.serializedMessage != null) {
-    transaction = Transaction.from(
-      Buffer.from(new Uint8Array(tx.serializedMessage))
-    );
-    transaction.feePayer = new PublicKey(tx.from);
-    transaction.recentBlockhash = undefined;
+    if (tx.txType === 'VERSIONED') {
+      versionedTransaction = VersionedTransaction.deserialize(
+        new Uint8Array(tx.serializedMessage)
+      );
+      const blockhash = (
+        await retryPromise(
+          connection.getLatestBlockhash('confirmed'),
+          5,
+          10_000
+        )
+      ).blockhash;
+      if (!!blockhash) versionedTransaction.message.recentBlockhash = blockhash;
+    } else if (tx.txType === 'LEGACY') {
+      transaction = Transaction.from(
+        Buffer.from(new Uint8Array(tx.serializedMessage))
+      );
+      transaction.feePayer = new PublicKey(tx.from);
+      transaction.recentBlockhash = undefined;
+    }
   } else {
     transaction = new Transaction();
     transaction.feePayer = new PublicKey(tx.from);
-    transaction.recentBlockhash = tx.recentBlockhash || undefined;
+    if (tx.recentBlockhash) transaction.recentBlockhash = tx.recentBlockhash;
+    else
+      transaction.recentBlockhash = (
+        await retryPromise(
+          connection.getLatestBlockhash('confirmed'),
+          5,
+          10_000
+        )
+      ).blockhash;
     tx.instructions.forEach((instruction) => {
-      transaction.add(
+      transaction?.add(
         new TransactionInstruction({
           keys: instruction.keys.map((accountMeta) => ({
             pubkey: new PublicKey(accountMeta.pubkey),
@@ -131,20 +155,24 @@ export const generalSolanaTransactionExecutor = async (
     tx.signatures.forEach(function (signatureItem) {
       const signature = Buffer.from(new Uint8Array(signatureItem.signature));
       const publicKey = new PublicKey(signatureItem.publicKey);
-      transaction.addSignature(publicKey, signature);
+      transaction?.addSignature(publicKey, signature);
     });
   }
   if (!transaction) throw new Error('error creating transaction');
   try {
-    if (!transaction.recentBlockhash)
-      transaction.recentBlockhash = (
-        await retryPromise(connection.getLatestBlockhash('confirmed'), 5, 10000)
-      ).blockhash;
-    const raw = await DefaultSolanaSigner(transaction);
+    let finalTx: Transaction | VersionedTransaction;
+    if (!!transaction) {
+      finalTx = transaction;
+    } else if (!!versionedTransaction) {
+      finalTx = versionedTransaction;
+    } else {
+      throw new Error('error creating transaction');
+    }
+    const raw = await DefaultSolanaSigner(finalTx);
     const signature = await retryPromise(
       connection.sendRawTransaction(raw),
       2,
-      30000
+      30_000
     );
     if (!signature)
       throw new Error('tx cant send to blockchain. signature=' + signature);
