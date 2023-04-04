@@ -6,13 +6,16 @@ import './app.css';
 import { Events, Provider } from '@rango-dev/wallets-core';
 import { allProviders } from '@rango-dev/provider-all';
 import { EventHandler } from '@rango-dev/wallets-core/dist/wallet';
-import { Network } from '@rango-dev/wallets-shared';
-import { prepareAccountsForWalletStore, walletAndSupportedChainsNames } from './utils/wallets';
+import { isEvmBlockchain, Network } from '@rango-dev/wallets-shared';
+import {
+  prepareAccountsForWalletStore,
+  walletAndSupportedChainsNames,
+} from './utils/wallets';
 import { useWalletsStore } from './store/wallets';
 import { Layout } from './components/Layout';
 import { globalStyles } from './globalStyles';
 import { useTheme } from './hooks/useTheme';
-import { isEvmBlockchain } from 'rango-sdk';
+import QueueManager from './QueueManager';
 
 const providers = allProviders();
 interface Token {
@@ -44,7 +47,13 @@ export function App() {
     .filter(isEvmBlockchain)
     .map((chain) => chain.name);
 
-  const onUpdateState: EventHandler = (type, event, value, state, supportedChains) => {
+  const onUpdateState: EventHandler = (
+    type,
+    event,
+    value,
+    state,
+    supportedChains
+  ) => {
     if (event === Events.ACCOUNTS) {
       if (value) {
         const supportedChainNames: Network[] | null =
@@ -54,7 +63,7 @@ export function App() {
           type,
           value,
           evmBasedChainNames,
-          supportedChainNames,
+          supportedChainNames
         );
         connectWallet(data);
       } else {
@@ -62,16 +71,22 @@ export function App() {
       }
     }
   };
-  
+
   return (
     //@ts-ignore
-    <Provider allBlockChains={blockchains} providers={providers} onUpdateState={onUpdateState}>
+    <Provider
+      allBlockChains={blockchains}
+      providers={providers}
+      onUpdateState={onUpdateState}
+    >
       <div id="pageContainer" className={activeTheme}>
-        <SwapContainer>
-          <AppRouter>
-            <Layout />
-          </AppRouter>
-        </SwapContainer>
+        <QueueManager>
+          <SwapContainer>
+            <AppRouter>
+              <Layout />
+            </AppRouter>
+          </SwapContainer>
+        </QueueManager>
       </div>
     </Provider>
   );
