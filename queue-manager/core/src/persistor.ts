@@ -3,7 +3,7 @@ import { openDB, DBSchema, IDBPDatabase } from 'idb';
 import { QueueID } from './manager';
 import { PersistedQueue } from './types';
 
-const DB_NAME = 'queues-manager';
+export const DB_NAME = 'queues-manager';
 const OBJECT_STORE_NAME = 'queues';
 const VERSION = 1;
 
