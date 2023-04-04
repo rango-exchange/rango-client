@@ -159,6 +159,7 @@ async function checkApprovalStatus({
     isApproved = response.isApproved;
   } catch (e) {
     console.error('Failed to check getApprovedAmount', e);
+    isApproved = false;
   }
   if (isApproved) {
     currentStep.status = 'approved';
