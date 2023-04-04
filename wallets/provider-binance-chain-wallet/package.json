@@ -40,8 +40,8 @@
   ],
   "dependencies": {
     "@binance-chain/javascript-sdk": "^4.1.1",
-    "@rango-dev/signer-evm": "^0.1.11-next.77",
-    "@rango-dev/wallets-shared": "^0.1.11-next.77",
+    "@rango-dev/signer-evm": "^0.1.11-next.78",
+    "@rango-dev/wallets-shared": "^0.1.11-next.78",
     "rango-types": "^0.1.22"
   },
   "publishConfig": {
