@@ -75,7 +75,7 @@
     "@rango-dev/wallets-shared": "^0.1.11-next.77",
     "@stitches/react": "^1.2.8",
     "@types/react-color": "^3.0.6",
-    "rango-sdk": "^0.1.16",
+    "rango-sdk": "^0.1.18",
     "react-color": "^2.19.3",
     "react-virtualized-auto-sizer": "^1.0.7",
     "react-window": "^1.8.8",

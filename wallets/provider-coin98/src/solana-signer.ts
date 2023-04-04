@@ -1,5 +1,5 @@
 import { GenericSigner, SignerError, SolanaTransaction } from 'rango-types';
-import { PublicKey, Transaction } from '@solana/web3.js';
+import { PublicKey, Transaction, VersionedTransaction } from '@solana/web3.js';
 import bs58 from 'bs58';
 import {
   SolanaWeb3Signer,
@@ -22,7 +22,7 @@ export class CustomSolanaSigner implements GenericSigner<SolanaTransaction> {
 
   async signAndSendTx(tx: SolanaTransaction): Promise<string> {
     const DefaultSolanaSigner: SolanaWeb3Signer = async (
-      solanaWeb3Transaction: Transaction
+      solanaWeb3Transaction: Transaction | VersionedTransaction
     ) => {
       const response: { publicKey: string; signature: string } =
         await this.provider.request({
