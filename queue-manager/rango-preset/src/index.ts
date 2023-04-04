@@ -40,3 +40,6 @@ export const swapQueueDef: SwapQueueDef = {
 
 export { SwapQueueContext, SwapStorage } from './types';
 export { PendingSwapWithQueueID } from './shared';
+
+// TODO: This is for our frontend, by adding a cancel functionality, it can be removed.
+export { updateSwapStatus } from './helpers';
