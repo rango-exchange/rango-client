@@ -1,9 +1,4 @@
-import {
-  Network,
-  TransferTransaction,
-  WalletError,
-  WalletType,
-} from '@rango-dev/wallets-shared';
+import { Network, WalletType } from '@rango-dev/wallets-shared';
 import {
   CosmosTransaction,
   EvmBlockchainMeta,
@@ -11,13 +6,11 @@ import {
   SimulationResult,
   SolanaTransaction,
   StarknetTransaction,
-  Transaction,
   TronTransaction,
   Transfer as TransferTransaction,
 } from 'rango-sdk';
 
 import { ErrorDetail, PrettyError } from './shared-errors';
-import { getRelatedWallet } from './helpers';
 import { SignerError } from 'rango-types';
 
 export interface PendingSwapWithQueueID {
@@ -300,6 +293,45 @@ export function getNextStep(
         step.id !== currentStep.id
     ) || null
   );
+}
+
+// TODO:  we have samething in `helpers`, for fixing circular dependency, we copied and should be removed eventually.
+export const getCurrentAddressOf = (
+  swap: PendingSwap,
+  step: PendingSwapStep
+): string => {
+  const result =
+    swap.wallets[step.evmTransaction?.blockChain || ''] ||
+    swap.wallets[step.evmApprovalTransaction?.blockChain || ''] ||
+    swap.wallets[step.cosmosTransaction?.blockChain || ''] ||
+    swap.wallets[step.solanaTransaction?.blockChain || ''] ||
+    (step.transferTransaction?.fromWalletAddress
+      ? { address: step.transferTransaction?.fromWalletAddress }
+      : null) ||
+    null;
+  if (result == null) throw PrettyError.WalletMissing();
+  return result.address;
+};
+
+// TODO:  we have samething in `helpers`, for fixing circular dependency, we copied and should be removed eventually.
+export function getRelatedWallet(
+  swap: PendingSwap,
+  currentStep: PendingSwapStep
+): WalletTypeAndAddress {
+  const walletAddress = getCurrentAddressOf(swap, currentStep);
+  const walletKV =
+    Object.keys(swap.wallets)
+      .map((k) => ({ k, v: swap.wallets[k] }))
+      .find(({ v }) => v.address === walletAddress) || null;
+  const blockchain = walletKV?.k || null;
+  const wallet = walletKV?.v || null;
+
+  const walletType = wallet?.walletType;
+  if (walletType === WalletType.UNKNOWN || wallet === null)
+    throw PrettyError.AssertionFailed(
+      `Wallet for source ${blockchain} not passed: walletType: ${walletType}`
+    );
+  return wallet;
 }
 
 export function getRelatedWalletOrNull(

@@ -43,8 +43,8 @@ export function VirtualizedList(props: PropsWithChildren<PropTypes>) {
                 ref={ref}
                 itemSize={() => size}
                 itemCount={itemCount}
-                height={height}
-                width={width}
+                height={height || 0}
+                width={width || 0}
                 onItemsRendered={onItemsRendered}
               >
                 {({ index, style }) =>
