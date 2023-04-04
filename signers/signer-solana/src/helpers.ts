@@ -158,7 +158,6 @@ export const generalSolanaTransactionExecutor = async (
       transaction?.addSignature(publicKey, signature);
     });
   }
-  if (!transaction) throw new Error('error creating transaction');
   try {
     let finalTx: Transaction | VersionedTransaction;
     if (!!transaction) {
