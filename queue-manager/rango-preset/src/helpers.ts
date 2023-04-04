@@ -39,6 +39,8 @@ import {
   getCurrentBlockchainOf,
   getCurrentBlockchainOfOrNull,
   getEvmApproveUrl,
+  getStarknetApproveUrl,
+  getTronApproveUrl,
   getRelatedWalletOrNull,
   MessageSeverity,
   PendingSwap,
@@ -458,6 +460,8 @@ export async function isNetworkMatchedForTransaction(
             WalletType.COSMOSTATION,
             WalletType.CLOVER,
             WalletType.BRAVE,
+            WalletType.FRONTIER,
+            WalletType.KUCOIN,
           ].includes(sourceWallet.walletType)
         ) {
           const provider = getEvmProvider(providers, sourceWallet.walletType);
@@ -502,6 +506,10 @@ export const getCurrentAddressOf = (
   const result =
     swap.wallets[step.evmTransaction?.blockChain || ''] ||
     swap.wallets[step.evmApprovalTransaction?.blockChain || ''] ||
+    swap.wallets[step.tronTransaction?.blockChain || ''] ||
+    swap.wallets[step.tronApprovalTransaction?.blockChain || ''] ||
+    swap.wallets[step.starknetTransaction?.blockChain || ''] ||
+    swap.wallets[step.starknetApprovalTransaction?.blockChain || ''] ||
     swap.wallets[step.cosmosTransaction?.blockChain || ''] ||
     swap.wallets[step.solanaTransaction?.blockChain || ''] ||
     (step.transferTransaction?.fromWalletAddress
@@ -540,6 +548,10 @@ export const isTxAlreadyCreated = (
   const result =
     swap.wallets[step.evmTransaction?.blockChain || ''] ||
     swap.wallets[step.evmApprovalTransaction?.blockChain || ''] ||
+    swap.wallets[step.tronTransaction?.blockChain || ''] ||
+    swap.wallets[step.tronApprovalTransaction?.blockChain || ''] ||
+    swap.wallets[step.starknetTransaction?.blockChain || ''] ||
+    swap.wallets[step.starknetApprovalTransaction?.blockChain || ''] ||
     swap.wallets[step.cosmosTransaction?.blockChain || ''] ||
     swap.wallets[step.solanaTransaction?.blockChain || ''] ||
     step.transferTransaction?.fromWalletAddress ||
@@ -764,10 +776,15 @@ export function singTransaction(
     cosmosTransaction,
     solanaTransaction,
     transferTransaction,
+    tronTransaction,
+    tronApprovalTransaction,
+    starknetTransaction,
+    starknetApprovalTransaction,
   } = currentStep;
   const sourceWallet = getRelatedWallet(swap, currentStep);
   const walletAddress = getCurrentAddressOf(swap, currentStep);
   const walletSigners = getSigners(sourceWallet.walletType);
+
   const onFinish = () => {
     if (actions.context.resetClaimedBy) {
       actions.context.resetClaimedBy();
@@ -813,6 +830,176 @@ export function singTransaction(
             getCurrentBlockchainOf(swap, currentStep),
             meta.evmBasedChains
           );
+          currentStep.explorerUrl = [
+            ...(currentStep.explorerUrl || []),
+            {
+              url: approveUrl,
+              description: `approve`,
+            },
+          ];
+
+          // `currentStep` has been mutated, let's update storage.
+          setStorage({
+            ...getStorage(),
+            swapDetails: swap,
+          });
+          schedule(SwapActionTypes.CHECK_TRANSACTION_STATUS);
+          next();
+          onFinish();
+        },
+
+        (error) => {
+          if (swap.status === 'failed') return;
+          console.debug('error in approving', error);
+          const { extraMessage, extraMessageDetail, extraMessageErrorCode } =
+            prettifyErrorMessage(error);
+          if (
+            error &&
+            error?.root &&
+            error?.root?.message &&
+            error?.root?.code &&
+            error?.root?.reason
+          ) {
+            logRPCError(
+              error.root,
+              swap,
+              currentStep,
+              sourceWallet?.walletType
+            );
+          }
+
+          const updateResult = updateSwapStatus({
+            getStorage,
+            setStorage,
+            nextStatus: 'failed',
+            nextStepStatus: 'failed',
+            message: extraMessage,
+            details: extraMessageDetail,
+            errorCode: extraMessageErrorCode,
+          });
+          notifier({
+            eventType: 'contract_rejected',
+            ...updateResult,
+          });
+
+          failed();
+          onFinish();
+        }
+      );
+    return;
+  } else if (!!tronApprovalTransaction) {
+    // Update swap status
+    const message = `waiting for approval of ${currentStep?.fromSymbol} coin ${
+      sourceWallet.walletType === WalletType.WALLET_CONNECT
+        ? 'on your mobile phone'
+        : ''
+    }`;
+    const updateResult = updateSwapStatus({
+      getStorage,
+      setStorage,
+      nextStepStatus: 'waitingForApproval',
+      message,
+      details:
+        'Waiting for approve transaction to be mined and confirmed successfully',
+    });
+    notifier({
+      eventType: 'confirm_contract',
+      ...updateResult,
+    });
+
+    // Execute transaction
+    walletSigners
+      .getSigner(TransactionType.TRON)
+      .signAndSendTx(tronApprovalTransaction, walletAddress, null)
+      .then(
+        (hash) => {
+          console.debug('transaction of approval minted successfully', hash);
+          const approveUrl = getTronApproveUrl(hash);
+          currentStep.explorerUrl = [
+            ...(currentStep.explorerUrl || []),
+            {
+              url: approveUrl,
+              description: `approve`,
+            },
+          ];
+
+          // `currentStep` has been mutated, let's update storage.
+          setStorage({
+            ...getStorage(),
+            swapDetails: swap,
+          });
+          schedule(SwapActionTypes.CHECK_TRANSACTION_STATUS);
+          next();
+          onFinish();
+        },
+
+        (error) => {
+          if (swap.status === 'failed') return;
+          console.debug('error in approving', error);
+          const { extraMessage, extraMessageDetail, extraMessageErrorCode } =
+            prettifyErrorMessage(error);
+          if (
+            error &&
+            error?.root &&
+            error?.root?.message &&
+            error?.root?.code &&
+            error?.root?.reason
+          ) {
+            logRPCError(
+              error.root,
+              swap,
+              currentStep,
+              sourceWallet?.walletType
+            );
+          }
+
+          const updateResult = updateSwapStatus({
+            getStorage,
+            setStorage,
+            nextStatus: 'failed',
+            nextStepStatus: 'failed',
+            message: extraMessage,
+            details: extraMessageDetail,
+            errorCode: extraMessageErrorCode,
+          });
+          notifier({
+            eventType: 'contract_rejected',
+            ...updateResult,
+          });
+
+          failed();
+          onFinish();
+        }
+      );
+    return;
+  } else if (!!starknetApprovalTransaction) {
+    // Update swap status
+    const message = `waiting for approval of ${currentStep?.fromSymbol} coin ${
+      sourceWallet.walletType === WalletType.WALLET_CONNECT
+        ? 'on your mobile phone'
+        : ''
+    }`;
+    const updateResult = updateSwapStatus({
+      getStorage,
+      setStorage,
+      nextStepStatus: 'waitingForApproval',
+      message,
+      details:
+        'Waiting for approve transaction to be mined and confirmed successfully',
+    });
+    notifier({
+      eventType: 'confirm_contract',
+      ...updateResult,
+    });
+
+    // Execute transaction
+    walletSigners
+      .getSigner(TransactionType.STARKNET)
+      .signAndSendTx(starknetApprovalTransaction, walletAddress, null)
+      .then(
+        (hash) => {
+          console.debug('transaction of approval minted successfully', hash);
+          const approveUrl = getStarknetApproveUrl(hash);
           currentStep.explorerUrl = [
             ...(currentStep.explorerUrl || []),
             {
@@ -1105,6 +1292,124 @@ export function singTransaction(
             eventType: 'smart_contract_call_failed',
             ...updateResult,
           });
+          failed();
+          onFinish();
+        }
+      );
+  } else if (!!tronTransaction) {
+    const updateResult = updateSwapStatus({
+      getStorage,
+      setStorage,
+      nextStepStatus: 'running',
+      message: executeMessage,
+      details: executeDetails,
+    });
+    notifier({
+      eventType: 'calling_smart_contract',
+      ...updateResult,
+    });
+
+    walletSigners
+      .getSigner(TransactionType.TRON)
+      .signAndSendTx(tronTransaction, walletAddress, null)
+      .then(
+        (id) => {
+          setStepTransactionIds(actions, id, 'smart_contract_called', notifier);
+          schedule(SwapActionTypes.CHECK_TRANSACTION_STATUS);
+          next();
+          onFinish();
+        },
+        (error) => {
+          if (swap.status === 'failed') return;
+          const { extraMessage, extraMessageDetail, extraMessageErrorCode } =
+            prettifyErrorMessage(error);
+          if (
+            error &&
+            error?.root &&
+            error?.root?.message &&
+            error?.root?.code &&
+            error?.root?.reason
+          ) {
+            logRPCError(
+              error.root,
+              swap,
+              currentStep,
+              sourceWallet?.walletType
+            );
+          }
+          const updateResult = updateSwapStatus({
+            getStorage,
+            setStorage,
+            nextStatus: 'failed',
+            nextStepStatus: 'failed',
+            message: extraMessage,
+            details: extraMessageDetail,
+            errorCode: extraMessageErrorCode,
+          });
+          notifier({
+            eventType: 'smart_contract_call_failed',
+            ...updateResult,
+          });
+
+          failed();
+          onFinish();
+        }
+      );
+  } else if (!!starknetTransaction) {
+    const updateResult = updateSwapStatus({
+      getStorage,
+      setStorage,
+      nextStepStatus: 'running',
+      message: executeMessage,
+      details: executeDetails,
+    });
+    notifier({
+      eventType: 'calling_smart_contract',
+      ...updateResult,
+    });
+
+    walletSigners
+      .getSigner(TransactionType.STARKNET)
+      .signAndSendTx(starknetTransaction, walletAddress, null)
+      .then(
+        (id) => {
+          setStepTransactionIds(actions, id, 'smart_contract_called', notifier);
+          schedule(SwapActionTypes.CHECK_TRANSACTION_STATUS);
+          next();
+          onFinish();
+        },
+        (error) => {
+          if (swap.status === 'failed') return;
+          const { extraMessage, extraMessageDetail, extraMessageErrorCode } =
+            prettifyErrorMessage(error);
+          if (
+            error &&
+            error?.root &&
+            error?.root?.message &&
+            error?.root?.code &&
+            error?.root?.reason
+          ) {
+            logRPCError(
+              error.root,
+              swap,
+              currentStep,
+              sourceWallet?.walletType
+            );
+          }
+          const updateResult = updateSwapStatus({
+            getStorage,
+            setStorage,
+            nextStatus: 'failed',
+            nextStepStatus: 'failed',
+            message: extraMessage,
+            details: extraMessageDetail,
+            errorCode: extraMessageErrorCode,
+          });
+          notifier({
+            eventType: 'smart_contract_call_failed',
+            ...updateResult,
+          });
+
           failed();
           onFinish();
         }

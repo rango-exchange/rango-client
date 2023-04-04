@@ -257,6 +257,20 @@ export const getEvmApproveUrl = (
   throw Error(`Explorer url for ${network} is not implemented`);
 };
 
+export const getStarknetApproveUrl = (tx: string): string => {
+  return 'https://starkscan.co/tx/{txHash}'.replace(
+    '{txHash}',
+    tx.toLowerCase()
+  );
+};
+
+export const getTronApproveUrl = (tx: string): string => {
+  return 'https://tronscan.org/#/transaction/{txHash}'.replace(
+    '{txHash}',
+    tx.toLowerCase()
+  );
+};
+
 export const prettifyErrorMessage = (obj: unknown): ErrorDetail => {
   if (!obj) return { extraMessage: '', extraMessageErrorCode: null };
   if (obj instanceof PrettyError) return obj.getErrorDetail();
