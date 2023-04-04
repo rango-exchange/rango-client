@@ -46,6 +46,7 @@
   ],
   "dependencies": {
     "@rango-dev/wallets-shared": "^0.1.11-next.70",
+    "@terra-money/terra.js": "^3.1.7",
     "@terra-money/wallet-controller": "^3.11.2"
   },
   "publishConfig": {
