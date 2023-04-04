@@ -8,10 +8,10 @@ import {
   isTrasnferTransaction,
   updateSwapStatus,
 } from '../helpers';
-import { createTransaction as requestTransaction } from '../shared-api';
 import { APIErrorCode } from '../shared-errors';
 import { prettifyErrorMessage } from '../shared';
 import { CreateTransactionRequest } from 'rango-sdk';
+import { httpService } from '../services';
 
 /**
  *
@@ -57,7 +57,7 @@ export async function createTransaction(
     };
     try {
       // Getting transcation from server.
-      const { transaction } = await requestTransaction(request);
+      const { transaction } = await httpService.createTransaction(request);
 
       if (transaction) {
         if (isEvmTransaction(transaction)) {

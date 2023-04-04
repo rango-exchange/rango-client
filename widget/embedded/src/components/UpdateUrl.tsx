@@ -9,6 +9,7 @@ import { useBestRouteStore } from '../store/bestRoute';
 import { useMetaStore } from '../store/meta';
 import { SearchParams } from '../constants/searchParams';
 import { navigationRoutes } from '../constants/navigationRoutes';
+import { useUiStore } from '../store/ui';
 
 function searchParamsToToken(
   tokens: Token[],
@@ -33,17 +34,6 @@ export function UpdateUrl() {
   const location = useLocation();
   const firstRenderSearchParams = useRef(location.search);
   const searchParamsRef = useRef<Record<string, string>>({});
-
-  useEffect(() => {
-    const params: Record<string, string> = {};
-    createSearchParams(firstRenderSearchParams.current).forEach(
-      (value, key) => {
-        params[key] = value;
-      }
-    );
-    searchParamsRef.current = params;
-  }, []);
-
   const fromChain = useBestRouteStore.use.fromChain();
   const toChain = useBestRouteStore.use.toChain();
   const fromToken = useBestRouteStore.use.fromToken();
@@ -56,6 +46,20 @@ export function UpdateUrl() {
   const setInputAmount = useBestRouteStore.use.setInputAmount();
   const loadingStatus = useMetaStore.use.loadingStatus();
   const { blockchains, tokens } = useMetaStore.use.meta();
+  const setSelectedSwap = useUiStore.use.setSelectedSwap();
+
+  useEffect(() => {
+    const params: Record<string, string> = {};
+    createSearchParams(firstRenderSearchParams.current).forEach(
+      (value, key) => {
+        params[key] = value;
+      }
+    );
+    searchParamsRef.current = params;
+    const requestId =
+      location.pathname.split(navigationRoutes.swaps + '/')[1] || null;
+    if (requestId) setSelectedSwap(requestId);
+  }, []);
 
   useEffect(() => {
     let fromChainString = '',

@@ -1,4 +1,9 @@
-import { Network, WalletType } from '@rango-dev/wallets-shared';
+import {
+  Network,
+  TransferTransaction,
+  WalletError,
+  WalletType,
+} from '@rango-dev/wallets-shared';
 import {
   CosmosTransaction,
   EvmBlockchainMeta,
@@ -10,7 +15,6 @@ import {
   TronTransaction,
   Transfer as TransferTransaction,
 } from 'rango-sdk';
-import { BigNumber } from 'bignumber.js';
 
 import { ErrorDetail, PrettyError } from './shared-errors';
 import { getRelatedWallet } from './helpers';
@@ -21,18 +25,6 @@ export interface PendingSwapWithQueueID {
   swap: PendingSwap;
 }
 
-export type SwapperStatusResponse = {
-  status: 'running' | 'failed' | 'success' | null;
-  extraMessage: string | null;
-  timestamp: number;
-  outputAmount: BigNumber | null;
-  explorerUrl: SwapExplorerUrl[] | null;
-  trackingCode: string;
-  newTx: Transaction | null;
-  diagnosisUrl: string | null;
-  steps: SwapperStatusStep[] | null;
-};
-
 export type SwapProgressNotification = {
   eventType: EventType;
   swap: PendingSwap | null;
@@ -40,7 +32,7 @@ export type SwapProgressNotification = {
 };
 
 export type WalletBalance = {
-  chain: Network | string;
+  chain: Network;
   symbol: string;
   ticker: string;
   address: string | null;
@@ -295,19 +287,6 @@ export const prettifyErrorMessage = (obj: unknown): ErrorDetail => {
     };
   return { extraMessage: obj, extraMessageErrorCode: null };
 };
-
-export function getCookieId(): string {
-  const key = 'X-Rango-Id';
-  const cookieId = window.localStorage.getItem(key);
-  if (cookieId) {
-    return cookieId;
-  }
-  const value =
-    Math.random().toString(36).substring(2, 15) +
-    Math.random().toString(36).substring(2, 15);
-  window.localStorage.setItem(key, value);
-  return value;
-}
 
 export function getNextStep(
   swap: PendingSwap,

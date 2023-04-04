@@ -51,8 +51,8 @@ import {
   WalletTypeAndAddress,
 } from './shared';
 import { logRPCError } from './shared-sentry';
-import { PrettyError } from './shared-errors';
-import { mapAppErrorCodesToAPIErrorCode, reportFailed } from './shared-api';
+import { PrettyError, mapAppErrorCodesToAPIErrorCode } from './shared-errors';
+import { httpService } from './services';
 
 type WhenTaskBlocked = Parameters<NonNullable<SwapQueueDef['whenTaskBlocked']>>;
 type WhenTaskBlockedEvent = WhenTaskBlocked[0];
@@ -144,16 +144,18 @@ export function updateSwapStatus({
       details && details.includes('Warning')
         ? 'Swap canceled by user.'
         : details;
+    const walletType = getRelatedWalletOrNull(swap, currentStep!)?.walletType;
     swap.extraMessageSeverity = MessageSeverity.error;
-    reportFailed(
-      swap.requestId,
-      currentStep?.id || 1,
-      mapAppErrorCodesToAPIErrorCode(errorCode),
-      errorReason || '',
-      (currentStep
-        ? getRelatedWalletOrNull(swap, currentStep)?.walletType
-        : null) || null
-    ).then();
+    httpService
+      .reportFailure({
+        requestId: swap.requestId,
+        step: currentStep?.id || 1,
+        eventType: mapAppErrorCodesToAPIErrorCode(errorCode),
+        reason: errorReason || '',
+        data: walletType ? { wallet: walletType } : undefined,
+      })
+      .then()
+      .catch();
   } else if (!!nextStepStatus && ['running'].includes(nextStepStatus))
     swap.extraMessageSeverity = MessageSeverity.info;
   else if (!!nextStepStatus && ['success', 'approved'].includes(nextStepStatus))

@@ -76,7 +76,7 @@ const ArrowRight = styled('div', {
   borderLeft: '5px solid $foreground',
 });
 
-const pulse = keyframes({
+export const pulse = keyframes({
   '0%': {
     opacity: 1,
   },
