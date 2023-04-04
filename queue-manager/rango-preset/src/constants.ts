@@ -1,4 +1,4 @@
-export const RANGO_DAPP_API_KEY = process.env.REACT_API_KEY;
+export const RANGO_DAPP_API_KEY = process.env.REACT_APP_API_KEY;
 
 export const ERROR_MESSAGE_DEPENDS_ON_OTHER_QUEUES =
   'Waiting for other running tasks to be finished';
