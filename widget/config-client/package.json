@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/config-client",
-  "version": "0.1.13-next.4",
+  "version": "0.1.13-next.5",
   "license": "MIT",
   "private": true,
   "source": "public/index.html",
