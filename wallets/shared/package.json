@@ -39,7 +39,7 @@
     }
   ],
   "dependencies": {
-    "rango-types": "^0.1.13"
+    "rango-types": "^0.1.22"
   },
   "publishConfig": {
     "access": "public"

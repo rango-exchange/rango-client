@@ -52,7 +52,7 @@
   },
   "dependencies": {
     "@sentry/browser": "^6.12.0",
-    "rango-sdk": "^0.1.17",
+    "rango-sdk": "^0.1.18",
     "uuid": "^9.0.0"
   },
   "publishConfig": {
