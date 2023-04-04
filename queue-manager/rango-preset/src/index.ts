@@ -41,5 +41,12 @@ export const swapQueueDef: SwapQueueDef = {
 export { SwapQueueContext, SwapStorage } from './types';
 export { PendingSwapWithQueueID } from './shared';
 
-// TODO: This is for our frontend, by adding a cancel functionality, it can be removed.
-export { updateSwapStatus } from './helpers';
+// TODO: This is for our frontend, some of them can be removed.
+export {
+  updateSwapStatus,
+  checkWaitingForNetworkChange,
+  getCurrentStep,
+  getEvmProvider,
+  getRelatedWallet,
+} from './helpers';
+export { useMigration, useQueueManager } from './hooks';
