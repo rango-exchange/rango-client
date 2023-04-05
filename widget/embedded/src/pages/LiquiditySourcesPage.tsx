@@ -4,11 +4,12 @@ import { navigationRoutes } from '../constants/navigationRoutes';
 import { useNavigateBack } from '../hooks/useNavigateBack';
 import { useMetaStore } from '../store/meta';
 import { useSettingsStore } from '../store/settings';
+import { Source } from '../types';
 import { removeDuplicateFrom } from '../utils/common';
-// interface PropTypes {
-//   supportedSwappers: 'all' | SwapperMeta[];
-// }
-export function LiquiditySourcePage() {
+interface PropTypes {
+  supportedSwappers: 'all' | Source[];
+}
+export function LiquiditySourcePage({ supportedSwappers }: PropTypes) {
   const swappers = useMetaStore.use.meta().swappers;
   const toggleLiquiditySource = useSettingsStore.use.toggleLiquiditySource();
   const disabledLiquiditySources =
@@ -44,7 +45,16 @@ export function LiquiditySourcePage() {
   return (
     <LiquiditySourcesSelector
       toggleAll={toggleAllLiquiditySources}
-      list={uniqueSwappersGroups}
+      list={
+        supportedSwappers !== 'all'
+          ? uniqueSwappersGroups.filter(
+              (item) =>
+                supportedSwappers.filter(
+                  (s) => s.title === item.title && s.type === item.type
+                ).length > 0
+            )
+          : uniqueSwappersGroups
+      }
       onChange={(liquiditySource) =>
         toggleLiquiditySource(liquiditySource.title)
       }

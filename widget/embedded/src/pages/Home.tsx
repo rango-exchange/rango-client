@@ -6,7 +6,7 @@ import {
   Typography,
   VerticalSwapIcon,
 } from '@rango-dev/ui';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useInRouterContext, useNavigate } from 'react-router-dom';
 import { Header } from '../components/Header';
 import { TokenInfo } from '../components/TokenInfo';
@@ -33,6 +33,7 @@ import {
   secondsToString,
   totalArrivalTime,
 } from '../utils/numbers';
+import { BlockchainMeta, Token } from 'rango-sdk';
 
 const Container = styled('div', {
   display: 'flex',
@@ -58,8 +59,16 @@ const Alerts = styled('div', {
   width: '100%',
   paddingTop: '$16',
 });
+interface PropTypes {
+  title?: string;
+  fromChain: BlockchainMeta | null;
+  fromToken: Token | null;
+  toChain: BlockchainMeta | null;
+  toToken: Token | null;
+  fromAmount: number;
+}
+export function Home(props: PropTypes) {
 
-export function Home() {
   const waningMessage = '';
   const isRouterInContext = useInRouterContext();
   const navigate = useNavigate();
@@ -133,6 +142,13 @@ export function Home() {
 
   const highFee = hasHighFee(totalFeeInUsd);
 
+  useEffect(() => {
+    if (props.toChain) setToChain(props.toChain);
+    if (props.fromChain) setFromChain(props.fromChain);
+    if (props.toToken) setToToken(props.toToken);
+    if (props.fromToken) setFromToken(props.fromToken);
+    if (props.fromAmount) setInputAmount(props.fromAmount.toString());
+  }, [props]);
   return (
     <Container>
       <Header onClickRefresh={fetchBestRoute} />

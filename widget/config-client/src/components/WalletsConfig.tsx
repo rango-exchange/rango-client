@@ -2,7 +2,7 @@ import { Checkbox, Spacer, Typography } from '@rango-dev/ui';
 import { useWallets } from '@rango-dev/wallets-core';
 import { WalletType } from '@rango-dev/wallets-shared';
 import React from 'react';
-import { excludedWallets } from '../helpers';
+import { excludedWallets, onChangeMultiSelects } from '../helpers';
 import { useConfigStore } from '../store/config';
 import { ConfigurationContainer } from './ChainsConfig';
 import { MultiSelect } from './MultiSelect';
@@ -22,6 +22,12 @@ export function WalletsConfig() {
       };
     });
 
+  const onChange = (wallet) => {
+    const list = walletList.map((item) => item.type);
+    const values = onChangeMultiSelects(wallet, wallets, list, (item) => item === wallet.type);
+    onChangeWallets(values);
+  };
+
   return (
     <>
       <Typography variant="h4">Wallet</Typography>
@@ -33,7 +39,7 @@ export function WalletsConfig() {
           modalTitle="Select Wallets"
           list={walletList}
           value={wallets}
-          onChange={onChangeWallets}
+          onChange={onChange}
         />
         <Spacer direction="vertical" size={12} />
         <Checkbox

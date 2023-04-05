@@ -6,12 +6,15 @@ import { SourcesConfig } from '../components/SourcesConfig';
 import { StylesConfig } from '../components/StylesConfig';
 import { Provider } from '@rango-dev/wallets-core';
 import { allProviders } from '@rango-dev/provider-all';
+import { useTheme } from '../hook/useTheme';
 
 const providers = allProviders();
 
 const Container = styled('div', {
   display: 'flex',
   justifyContent: 'center',
+  backgroundColor:'$neutrals300'
+  
 });
 const SwapContent = styled('div', {
   width: '100%',
@@ -21,6 +24,7 @@ const ConfigContent = styled('div', {
   flexDirection: 'column',
   alignItems: 'end',
   width: '100%',
+
 });
 
 const Swap = styled('div', {
@@ -30,10 +34,12 @@ const Swap = styled('div', {
 });
 
 export function Config(props: PropsWithChildren) {
+  const { activeTheme } = useTheme();
+
   return (
-    <Container>
+    <Container className={activeTheme}>
       <Provider providers={providers}>
-        <ConfigContent>
+        <ConfigContent >
           <div>
             <Typography variant="h1">Configuration</Typography>
             <Spacer size={20} direction="vertical" />

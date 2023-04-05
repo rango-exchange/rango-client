@@ -1,6 +1,7 @@
 import { Spacer, Typography } from '@rango-dev/ui';
 import { LiquiditySource } from '@rango-dev/ui/dist/types/meta';
 import React from 'react';
+import { onChangeMultiSelects } from '../helpers';
 import { useConfigStore } from '../store/config';
 import { useMetaStore } from '../store/meta';
 import { ConfigurationContainer } from './ChainsConfig';
@@ -30,7 +31,20 @@ export function SourcesConfig() {
         }
       }
     });
+  const onChange = (source) => {
+    const list = uniqueSwappersGroups.map((item) => ({
+      title: item.title,
+      type: item.type,
+    }));
 
+    const values = onChangeMultiSelects(
+      source,
+      liquiditySources,
+      list,
+      (item) => item.title === source.title && item.type === source.type,
+    );
+    onChangeSources(values);
+  };
   return (
     <>
       <Typography variant="h4">Liquidity sources</Typography>
@@ -43,7 +57,7 @@ export function SourcesConfig() {
           disabled={loadingStatus === 'failed'}
           modalTitle="Select Sources"
           list={uniqueSwappersGroups}
-          onChange={onChangeSources}
+          onChange={onChange}
           value={liquiditySources}
         />
       </ConfigurationContainer>

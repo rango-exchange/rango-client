@@ -19,9 +19,28 @@ export const AppRoutes = ({
   fromTokens = 'all',
   toTokens = 'all',
   liquiditySources = 'all',
+  wallets = 'all',
+  title,
+  fromChain,
+  fromToken,
+  toChain,
+  toToken,
+  fromAmount,
 }: Configs) =>
   useRoutes([
-    { path: navigationRoutes.home, element: <Home /> },
+    {
+      path: navigationRoutes.home,
+      element: (
+        <Home
+          title={title}
+          fromChain={fromChain}
+          fromToken={fromToken}
+          toChain={toChain}
+          toToken={toToken}
+          fromAmount={fromAmount}
+        />
+      ),
+    },
     {
       path: navigationRoutes.fromChain,
       element: <SelectChainPage type="from" supportedChains={fromChains} />,
@@ -40,22 +59,21 @@ export const AppRoutes = ({
     },
     {
       path: navigationRoutes.settings,
-      element: <SettingsPage 
-      // supportedSwappers={liquiditySources} 
-      />,
+      element: <SettingsPage supportedSwappers={liquiditySources} />,
     },
     {
       path: navigationRoutes.liquiditySources,
-      element: <LiquiditySourcePage 
-      // supportedSwappers={liquiditySources}
-       />,
+      element: <LiquiditySourcePage supportedSwappers={liquiditySources} />,
     },
     { path: navigationRoutes.swaps, element: <HistoryPage /> },
     {
       path: navigationRoutes.swapDetails,
       element: <SwapDetailsPage />,
     },
-    { path: navigationRoutes.wallets, element: <WalletsPage /> },
+    {
+      path: navigationRoutes.wallets,
+      element: <WalletsPage supportedWallets={wallets} />,
+    },
     { path: navigationRoutes.confirmSwap, element: <ConfirmSwapPage /> },
     { path: navigationRoutes.confirmWallets, element: <ConfirmWalletsPage /> },
   ]);

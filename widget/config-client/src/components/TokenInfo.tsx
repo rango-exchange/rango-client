@@ -49,8 +49,8 @@ export function TokenInfo({ type }: PropTypes) {
   );
 
   const { toChain, fromChain, toToken, fromToken, fromAmount } = configs;
-  const token = type === 'Destination' ? fromToken : toToken;
-  const chain = type === 'Destination' ? fromChain : toChain;
+  const token = type === 'Source' ? fromToken : toToken;
+  const chain = type === 'Source' ? fromChain : toChain;
 
   const [modal, setModal] = useState({ open: false, isChain: false, isToken: false });
   const {
