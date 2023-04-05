@@ -12,6 +12,7 @@ import {
 } from '../utils/wallets';
 import { removeDuplicateFrom } from '../utils/common';
 import { Configs } from '../types';
+import { useTranslation } from 'react-i18next';
 
 const Header = styled('div', {
   display: 'flex',
@@ -44,6 +45,7 @@ export function Layout({ configs }: LayoutProps) {
   const totalBalance = calculateWalletUsdValue(balances);
   const connectWalletsButtonDisabled =
     useUiStore.use.connectWalletsButtonDisabled();
+  const { t } = useTranslation();
 
   return (
     <>
@@ -66,7 +68,7 @@ export function Layout({ configs }: LayoutProps) {
             <></>
           )}
           <Typography variant="body2">
-            {!accounts?.length ? 'Connect Wallet' : `$${totalBalance || 0}`}
+            {!accounts?.length ? t('Connect Wallet') : `$${totalBalance || 0}`}
           </Typography>
         </Button>
       </Header>

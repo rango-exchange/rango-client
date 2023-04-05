@@ -1,5 +1,12 @@
 import React from 'react';
-import { AngleDownIcon, Button, InfoCircleIcon, styled, TextField, Typography } from '@rango-dev/ui';
+import {
+  AngleDownIcon,
+  Button,
+  InfoCircleIcon,
+  styled,
+  TextField,
+  Typography,
+} from '@rango-dev/ui';
 import { useMetaStore } from '../store/meta';
 import { BlockchainMeta, Token } from 'rango-sdk';
 import { useNavigate } from 'react-router-dom';
@@ -8,9 +15,14 @@ import { numberToString } from '../utils/numbers';
 import BigNumber from 'bignumber.js';
 import { getBalanceFromWallet } from '../utils/wallets';
 import { useWalletsStore } from '../store/wallets';
+import { useTranslation } from 'react-i18next';
 
 type PropTypes = (
-  | { type: 'From'; inputAmount: string; onAmountChange: (amount: string) => void }
+  | {
+      type: 'From';
+      inputAmount: string;
+      onAmountChange: (amount: string) => void;
+    }
   | {
       type: 'To';
       outputAmount: BigNumber | null;
@@ -81,28 +93,47 @@ export function TokenInfo(props: PropTypes) {
   const inputAmount = useBestRouteStore.use.inputAmount();
   const balances = useWalletsStore.use.balances();
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const tokenBalance =
     !!fromChain && !!fromToken
       ? numberToString(
-          getBalanceFromWallet(balances, fromChain?.name, fromToken?.symbol, fromToken?.address)
-            ?.amount || '0',
-          8,
+          getBalanceFromWallet(
+            balances,
+            fromChain?.name,
+            fromToken?.symbol,
+            fromToken?.address
+          )?.amount || '0',
+          8
         )
       : '0';
 
   const tokenBalanceReal =
     !!fromChain && !!fromToken
       ? numberToString(
-          getBalanceFromWallet(balances, fromChain?.name, fromToken?.symbol, fromToken?.address)
-            ?.amount || '0',
-          getBalanceFromWallet(balances, fromChain?.name, fromToken?.symbol, fromToken?.address)
-            ?.decimal,
+          getBalanceFromWallet(
+            balances,
+            fromChain?.name,
+            fromToken?.symbol,
+            fromToken?.address
+          )?.amount || '0',
+          getBalanceFromWallet(
+            balances,
+            fromChain?.name,
+            fromToken?.symbol,
+            fromToken?.address
+          )?.decimal
         )
       : '0';
 
   const ItemSuffix = (
-    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+    <div
+      style={{
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+      }}
+    >
       {loadingStatus === 'failed' && <InfoCircleIcon color="error" size={24} />}
       <AngleDownIcon />
     </div>
@@ -111,7 +142,7 @@ export function TokenInfo(props: PropTypes) {
   return (
     <Box>
       <div>
-        <Typography variant="body2">{type}</Typography>
+        <Typography variant="body2">{t(type)}</Typography>
       </div>
       <Container>
         {props.type === 'From' && (
@@ -119,10 +150,12 @@ export function TokenInfo(props: PropTypes) {
             <div
               className="balance"
               onClick={() => {
-                if (tokenBalance !== '0') setInputAmount(tokenBalanceReal.split(',').join(''));
-              }}>
+                if (tokenBalance !== '0')
+                  setInputAmount(tokenBalanceReal.split(',').join(''));
+              }}
+            >
               <Button variant="ghost" size="small">
-                <Typography variant="body2">{`Max: ${tokenBalance} ${
+                <Typography variant="body2">{`${t('Max')}: ${tokenBalance} ${
                   fromToken?.symbol || ''
                 }`}</Typography>
               </Button>
@@ -147,8 +180,9 @@ export function TokenInfo(props: PropTypes) {
             suffix={ItemSuffix}
             align="start"
             size="large"
-            style={{ marginRight: '.5rem' }}>
-            {loadingStatus === 'success' && chain ? chain.displayName : 'Chain'}
+            style={{ marginRight: '.5rem' }}
+          >
+            {loadingStatus === 'success' && chain ? chain.displayName : t('Chain')}
           </Button>
           <Button
             onClick={() => {
@@ -171,8 +205,9 @@ export function TokenInfo(props: PropTypes) {
             suffix={ItemSuffix}
             size="large"
             align="start"
-            style={{ marginRight: '.5rem' }}>
-            {loadingStatus === 'success' && token ? token.symbol : 'Token'}
+            style={{ marginRight: '.5rem' }}
+          >
+            {loadingStatus === 'success' && token ? token.symbol : t('Token')}
           </Button>
           {props.type === 'From' ? (
             <TextField
@@ -186,8 +221,12 @@ export function TokenInfo(props: PropTypes) {
                 backgroundColor: '$background !important',
               }}
               suffix={
-                <span style={{ position: 'absolute', right: '4px', bottom: '2px' }}>
-                  <Typography variant="caption">{`$${numberToString(inputUsdValue)}`}</Typography>
+                <span
+                  style={{ position: 'absolute', right: '4px', bottom: '2px' }}
+                >
+                  <Typography variant="caption">{`$${numberToString(
+                    inputUsdValue
+                  )}`}</Typography>
                 </span>
               }
               value={props.inputAmount || ''}
@@ -202,11 +241,17 @@ export function TokenInfo(props: PropTypes) {
           ) : (
             <OutputContainer>
               <Typography variant="body1">
-                {bestRoute ? `≈ ${numberToString(props.outputAmount)}` : inputAmount ? '?' : '0'}
+                {bestRoute
+                  ? `≈ ${numberToString(props.outputAmount)}`
+                  : inputAmount
+                  ? '?'
+                  : '0'}
               </Typography>
-              <span style={{ position: 'absolute', right: '4px', bottom: '2px' }}>
+              <span
+                style={{ position: 'absolute', right: '4px', bottom: '2px' }}
+              >
                 <Typography variant="caption">{`$${numberToString(
-                  props.outputUsdValue,
+                  props.outputUsdValue
                 )}`}</Typography>
               </span>
             </OutputContainer>

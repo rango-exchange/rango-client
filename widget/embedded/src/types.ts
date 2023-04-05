@@ -29,7 +29,7 @@ export type Configs = {
   toTokens: 'all' | Token[];
   liquiditySources: 'all' | Source[];
   wallets: 'all' | WalletType[];
-  multiChain: boolean;
+  multiWallets: boolean;
   customeAddress: boolean;
   theme: 'dark' | 'light' | 'auto';
   title: string;

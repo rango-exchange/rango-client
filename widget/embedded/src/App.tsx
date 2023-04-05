@@ -1,5 +1,5 @@
 import { SwapContainer } from '@rango-dev/ui';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { AppRouter } from './components/AppRouter';
 import { useMetaStore } from './store/meta';
 import './app.css';
@@ -18,6 +18,7 @@ import { useTheme } from './hooks/useTheme';
 import QueueManager from './QueueManager';
 import { isEvmBlockchain } from 'rango-sdk';
 import { Configs } from './types';
+import "./i18n"
 
 const providers = allProviders();
 
@@ -66,6 +67,7 @@ export function App({ configs }: WidgetProps) {
       }
     }
   };
+
 
   return (
     //@ts-ignore

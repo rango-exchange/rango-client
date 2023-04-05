@@ -4,6 +4,7 @@ import {
   styled,
   Wallet,
   Typography,
+  WalletState,
 } from '@rango-dev/ui';
 import React, { useEffect, useState } from 'react';
 import { getlistWallet } from '../utils/wallets';
@@ -12,9 +13,11 @@ import { useWallets } from '@rango-dev/wallets-core';
 import { useUiStore } from '../store/ui';
 import { useNavigateBack } from '../hooks/useNavigateBack';
 import { navigationRoutes } from '../constants/navigationRoutes';
+import { useTranslation } from 'react-i18next';
 
 interface PropTypes {
   supportedWallets: 'all' | WalletType[];
+  multiWallets: boolean;
 }
 
 const ListContainer = styled('div', {
@@ -29,7 +32,7 @@ const ListContainer = styled('div', {
 const AlertContainer = styled('div', {
   paddingBottom: '$16',
 });
-export function WalletsPage({ supportedWallets }: PropTypes) {
+export function WalletsPage({ supportedWallets, multiWallets }: PropTypes) {
   const { navigateBackFrom } = useNavigateBack();
   const { state, disconnect, getWalletInfo, connect } = useWallets();
   const wallets = getlistWallet(
@@ -40,6 +43,7 @@ export function WalletsPage({ supportedWallets }: PropTypes) {
   const [walletErrorMessage, setWalletErrorMessage] = useState('');
   const toggleConnectWalletsButton =
     useUiStore.use.toggleConnectWalletsButton();
+  const { t } = useTranslation();
 
   const onSelectWallet = async (type: WalletType) => {
     const wallet = state(type);
@@ -48,6 +52,12 @@ export function WalletsPage({ supportedWallets }: PropTypes) {
       if (wallet.connected) {
         await disconnect(type);
       } else {
+        if (
+          !multiWallets &&
+          !!wallets.find((w) => w.state === WalletState.CONNECTED)
+        ) {
+          return;
+        }
         await connect(type);
       }
     } catch (e) {
@@ -62,7 +72,7 @@ export function WalletsPage({ supportedWallets }: PropTypes) {
 
   return (
     <SecondaryPage
-      title="Select Wallet"
+      title={t('Select Wallet')}
       textField={false}
       onBack={navigateBackFrom.bind(null, navigationRoutes.wallets)}
     >
