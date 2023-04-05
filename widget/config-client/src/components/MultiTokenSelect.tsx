@@ -65,7 +65,7 @@ export function MultiTokenSelect({
 
   const { fromTokens, toTokens } = useConfigStore((state) => state.configs);
   const onChangeTokens = useConfigStore((state) => state.onChangeTokens);
-  const tokens = type === 'Destination' ? fromTokens : toTokens;
+  const tokens = type === 'Source' ? fromTokens : toTokens;
 
   const onChangeSelectList = (token) => {
     const select = { ...selectTokens };
@@ -120,9 +120,10 @@ export function MultiTokenSelect({
   };
 
   const onClose = () => {
-    if (tokens !== 'all' && (!toTokens.length || tokens.length === list.length)) {
+    if (tokens !== 'all' && (!tokens.length || tokens.length === list.length)) {
       onChangeTokens('all', type);
     }
+
     setModal((prev) => ({
       ...prev,
       open: false,

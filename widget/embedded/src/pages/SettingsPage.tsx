@@ -12,6 +12,9 @@ import {
 } from '../constants/swapSettings';
 import { useNavigateBack } from '../hooks/useNavigateBack';
 
+// interface PropTypes {
+//   supportedSwappers: 'all' | SwapperMeta[];
+// }
 export function SettingsPage() {
   const slippage = useSettingsStore.use.slippage();
   const setSlippage = useSettingsStore.use.setSlippage();
@@ -21,7 +24,7 @@ export function SettingsPage() {
   const setCustomSlippage = useSettingsStore.use.setCustomSlippage();
   const theme = useSettingsStore.use.theme();
   const setTheme = useSettingsStore.use.setTheme();
-  const { swappers } = useMetaStore.use.meta();
+  const swappers = useMetaStore.use.meta().swappers;
   const navigate = useNavigate();
   const { navigateBackFrom } = useNavigateBack();
 

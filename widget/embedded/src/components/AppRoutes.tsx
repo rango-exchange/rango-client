@@ -11,24 +11,44 @@ import { SettingsPage } from '../pages/SettingsPage';
 import { WalletsPage } from '../pages/WalletsPage';
 import { ConfirmWalletsPage } from '../pages/ConfirmWalletsPage';
 import { SwapDetailsPage } from '../pages/SwapDetailsPage';
+import { Configs } from '../types';
 
-export const AppRoutes = () =>
+export const AppRoutes = ({
+  fromChains = 'all',
+  toChains = 'all',
+  fromTokens = 'all',
+  toTokens = 'all',
+  liquiditySources = 'all',
+}: Configs) =>
   useRoutes([
     { path: navigationRoutes.home, element: <Home /> },
     {
       path: navigationRoutes.fromChain,
-      element: <SelectChainPage type="from" />,
+      element: <SelectChainPage type="from" supportedChains={fromChains} />,
     },
-    { path: navigationRoutes.toChain, element: <SelectChainPage type="to" /> },
+    {
+      path: navigationRoutes.toChain,
+      element: <SelectChainPage type="to" supportedChains={toChains} />,
+    },
     {
       path: navigationRoutes.fromToken + '/*',
-      element: <SelectTokenPage type="from" />,
+      element: <SelectTokenPage type="from" supportedTokens={fromTokens} />,
     },
-    { path: navigationRoutes.toToken, element: <SelectTokenPage type="to" /> },
-    { path: navigationRoutes.settings, element: <SettingsPage /> },
+    {
+      path: navigationRoutes.toToken,
+      element: <SelectTokenPage type="to" supportedTokens={toTokens} />,
+    },
+    {
+      path: navigationRoutes.settings,
+      element: <SettingsPage 
+      // supportedSwappers={liquiditySources} 
+      />,
+    },
     {
       path: navigationRoutes.liquiditySources,
-      element: <LiquiditySourcePage />,
+      element: <LiquiditySourcePage 
+      // supportedSwappers={liquiditySources}
+       />,
     },
     { path: navigationRoutes.swaps, element: <HistoryPage /> },
     {

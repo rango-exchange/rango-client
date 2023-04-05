@@ -15,8 +15,8 @@ import { Layout } from './components/Layout';
 import { globalStyles } from './globalStyles';
 import { useTheme } from './hooks/useTheme';
 import { isEvmBlockchain } from 'rango-sdk';
-import { useConfigStore } from './store/config';
 import { Configs } from './types';
+import { useSettingsStore } from './store/settings';
 
 export type WidgetProps = {
   configs: Configs;
@@ -28,7 +28,7 @@ export const SwapBox: React.FC<WidgetProps> = ({ configs }) => {
   const { blockchains } = useMetaStore.use.meta();
   const disconnectWallet = useWalletsStore.use.disconnectWallet();
   const connectWallet = useWalletsStore.use.connectWallet();
-  const onChangeconfigs = useConfigStore.use.onChangeconfigs();
+  const setTheme = useSettingsStore.use.setTheme();
 
   const evmBasedChainNames = blockchains
     .filter(isEvmBlockchain)
@@ -58,18 +58,12 @@ export const SwapBox: React.FC<WidgetProps> = ({ configs }) => {
       ? allProviders()
       : allProviders().filter((provider) => {
           const type = provider.config.type;
-          console.log({type});
-          
           return wallets.find((w) => w === type);
         });
 
-
-        console.log({providers});
-        
   useEffect(() => {
-    // @ts-ignore
-    onChangeconfigs(configs);
-  }, [configs]);
+    if (configs.theme !== 'auto') setTheme(configs.theme);
+  }, [configs.theme]);
   return (
     <Provider
       allBlockChains={blockchains}
@@ -79,7 +73,7 @@ export const SwapBox: React.FC<WidgetProps> = ({ configs }) => {
       <div id="pageContainer" className={activeTheme}>
         <SwapContainer>
           <AppRouter>
-            <Layout />
+            <Layout configs={configs} />
           </AppRouter>
         </SwapContainer>
       </div>
