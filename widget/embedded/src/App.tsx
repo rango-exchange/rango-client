@@ -1,18 +1,12 @@
-import {
-  SwapContainer,
-  Alert,
-  Button,
-  Typography,
-  Drawer,
-} from '@rango-dev/ui';
-import React, { useState } from 'react';
+import { SwapContainer } from '@rango-dev/ui';
+import React from 'react';
 import { AppRouter } from './components/AppRouter';
 import { useMetaStore } from './store/meta';
 import './app.css';
 import { Events, Provider } from '@rango-dev/wallets-core';
 import { allProviders } from '@rango-dev/provider-all';
 import { EventHandler } from '@rango-dev/wallets-core/dist/wallet';
-import { Network } from '@rango-dev/wallets-shared';
+import { Network, WalletType } from '@rango-dev/wallets-shared';
 import {
   prepareAccountsForWalletStore,
   walletAndSupportedChainsNames,
@@ -22,7 +16,8 @@ import { Layout } from './components/Layout';
 import { globalStyles } from './globalStyles';
 import { useTheme } from './hooks/useTheme';
 import QueueManager from './QueueManager';
-import { isEvmBlockchain } from 'rango-sdk';
+import { LiquiditySource } from '@rango-dev/ui/dist/types/meta';
+import { BlockchainMeta, isEvmBlockchain } from 'rango-sdk';
 
 const providers = allProviders();
 interface Token {
@@ -32,16 +27,39 @@ interface Token {
 
 //todo: update interface and update widget state based on WidgetProps change
 export type WidgetProps = {
-  fromChain?: string;
-  fromToken?: string;
-  toChain?: string;
-  toToken?: string;
-  fromAmount?: string;
-  slippage?: number;
-  chains?: string[];
-  tokens?: Token[];
-  liquiditySources?: string[];
+  fromChain: BlockchainMeta | null;
+  fromToken: Token | null;
+  toChain: BlockchainMeta | null;
+  toToken: Token | null;
+  fromAmount: number;
+  fromChains: 'all' | BlockchainMeta[];
+  fromTokens: 'all' | Token[];
+  toChains: 'all' | BlockchainMeta[];
+  toTokens: 'all' | Token[];
+  liquiditySources: 'all' | LiquiditySource[];
+  wallets: 'all' | WalletType[];
+  multiChain: boolean;
+  customeAddress: boolean;
   theme: 'dark' | 'light' | 'auto';
+  title: string;
+  width: number;
+  height: number;
+  languege: string;
+  borderRadius: number;
+  fontFaminy: string;
+  titleSize: number;
+  titelsWeight: number;
+  colors: {
+    background: string;
+    inputBackground: string;
+    icons: string;
+    primary: string;
+    secondary: string;
+    text: string;
+    success: string;
+    error: string;
+    warning: string;
+  };
 };
 
 export function App() {

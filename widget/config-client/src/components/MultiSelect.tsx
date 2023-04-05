@@ -93,15 +93,15 @@ function RenderSelectors({ type, list, selectedList, onChangeSelected }) {
         <ListContainer>
           {filterList(list, searchedFor).map((item, index) => (
             <Button
-              type={isSelect(type === 'Wallets' ? item.title : item) ? 'primary' : undefined}
+              type={isSelect(type === 'Wallets' ? item.type : item) ? 'primary' : undefined}
               variant="outlined"
               size="large"
               prefix={<Image src={item.logo} />}
               suffix={
-                isSelect(type === 'Wallets' ? item.title : item) ? <FilledCircle /> : undefined
+                isSelect(type === 'Wallets' ? item.type : item) ? <FilledCircle /> : undefined
               }
               align="start"
-              onClick={onChangeSelected.bind(null, type === 'Wallets' ? item.title : item)}
+              onClick={onChangeSelected.bind(null, type === 'Wallets' ? item.type : item)}
               key={index}>
               <Typography variant="body2">{item.title}</Typography>
             </Button>
@@ -128,7 +128,7 @@ export function MultiSelect({
   const onChangeSelectList = (v) => {
     let values;
     if (value === 'all') {
-      values = type === 'Wallets' ? list.map((item) => item.title) : [...list];
+      values = type === 'Wallets' ? list.map((item) => item.type) : [...list];
       const index = getIndex(values, v, type);
       values.splice(index, 1);
       onChange(values);

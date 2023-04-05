@@ -24,10 +24,9 @@ export function ChainsConfig({ type }: PropTypes) {
     loadingStatus,
   } = useMetaStore();
 
-  const { fromChains, toChains, customeAddress, onChangeBlockChains, onChangeBooleansConfig } =
-    useConfigStore((state) => state);
-
-  const chains = type === 'Destination' ? fromChains : toChains;
+  const { configs, onChangeBlockChains, onChangeBooleansConfig } = useConfigStore((state) => state);
+  const { fromChains, toChains, customeAddress } = configs;
+  const chains = type === 'Source' ? fromChains : toChains;
 
   return (
     <div>
@@ -40,7 +39,7 @@ export function ChainsConfig({ type }: PropTypes) {
           type="Blockchains"
           loading={loadingStatus === 'loading'}
           disabled={loadingStatus === 'failed'}
-          value={type === 'Destination' ? fromChains : toChains}
+          value={type === 'Source' ? fromChains : toChains}
           onChange={(chains) => onChangeBlockChains(chains, type)}
           modalTitle="Select Blockchains"
         />

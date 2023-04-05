@@ -1,5 +1,5 @@
 import { SwapContainer } from '@rango-dev/ui';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { AppRouter } from './components/AppRouter';
 import { useMetaStore } from './store/meta';
 import { Events, Provider } from '@rango-dev/wallets-core';
@@ -15,15 +15,21 @@ import { Layout } from './components/Layout';
 import { globalStyles } from './globalStyles';
 import { useTheme } from './hooks/useTheme';
 import { isEvmBlockchain } from 'rango-sdk';
+import { useConfigStore } from './store/config';
+import { Configs } from './types';
 
-const providers = allProviders();
+export type WidgetProps = {
+  configs: Configs;
+};
 
-export const SwapBox: React.FC = () => {
+export const SwapBox: React.FC<WidgetProps> = ({ configs }) => {
   globalStyles();
   const { activeTheme } = useTheme();
   const { blockchains } = useMetaStore.use.meta();
   const disconnectWallet = useWalletsStore.use.disconnectWallet();
   const connectWallet = useWalletsStore.use.connectWallet();
+  const onChangeconfigs = useConfigStore.use.onChangeconfigs();
+
   const evmBasedChainNames = blockchains
     .filter(isEvmBlockchain)
     .map((chain) => chain.name);
@@ -46,7 +52,24 @@ export const SwapBox: React.FC = () => {
       }
     }
   };
+  const wallets = configs.wallets;
+  const providers =
+    wallets === 'all'
+      ? allProviders()
+      : allProviders().filter((provider) => {
+          const type = provider.config.type;
+          console.log({type});
+          
+          return wallets.find((w) => w === type);
+        });
 
+
+        console.log({providers});
+        
+  useEffect(() => {
+    // @ts-ignore
+    onChangeconfigs(configs);
+  }, [configs]);
   return (
     <Provider
       allBlockChains={blockchains}
