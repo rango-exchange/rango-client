@@ -5,17 +5,17 @@ import { useMetaStore } from '../store/meta';
 import { useNavigate } from 'react-router-dom';
 import { navigationRoutes } from '../constants/navigationRoutes';
 import { removeDuplicateFrom } from '../utils/common';
+import { Source } from '../types';
 import {
   MAX_SLIPPAGE,
   MIN_SLIPPGAE,
   SLIPPAGES,
 } from '../constants/swapSettings';
 import { useNavigateBack } from '../hooks/useNavigateBack';
-
-// interface PropTypes {
-//   supportedSwappers: 'all' | SwapperMeta[];
-// }
-export function SettingsPage() {
+interface PropTypes {
+  supportedSwappers: 'all' | Source[];
+}
+export function SettingsPage({ supportedSwappers }: PropTypes) {
   const slippage = useSettingsStore.use.slippage();
   const setSlippage = useSettingsStore.use.setSlippage();
   const disabledLiquiditySources =
@@ -43,6 +43,8 @@ export function SettingsPage() {
     .find(s => {
       if (s) {
         for (const type of s.types) {
+          if (supportedSwappers !== 'all') {
+          }
           uniqueSwappersGroups.push({
             title: s.swapperGroup,
             logo: s.logo,
@@ -52,19 +54,38 @@ export function SettingsPage() {
         }
       }
     });
+  supportedSwappers !== 'all' &&
+    uniqueSwappersGroups.filter(
+      (item) =>
+        supportedSwappers.filter(
+          (s) => s.title === item.title && s.type === item.type
+        ).length > 0
+    );
+
+  const supportedUniqueSwappersGroups =
+    supportedSwappers !== 'all'
+      ? uniqueSwappersGroups.filter(
+          (item) =>
+            supportedSwappers.filter(
+              (s) => s.title === item.title && s.type === item.type
+            ).length > 0
+        )
+      : uniqueSwappersGroups;
 
   return (
     <Settings
       slippages={SLIPPAGES}
       selectedSlippage={slippage}
       onSlippageChange={slippage => setSlippage(slippage)}
-      liquiditySources={uniqueSwappersGroups}
-      selectedLiquiditySources={uniqueSwappersGroups.filter((s) => s.selected)}
       onLiquiditySourcesClick={navigate.bind(
         null,
         navigationRoutes.liquiditySources
       )}
       onBack={navigateBackFrom.bind(null, navigationRoutes.settings)}
+      liquiditySources={supportedUniqueSwappersGroups}
+      selectedLiquiditySources={supportedUniqueSwappersGroups.filter(
+        (s) => s.selected
+      )}
       customSlippage={customSlippage || NaN}
       onCustomSlippageChange={setCustomSlippage}
       minSlippage={MIN_SLIPPGAE}

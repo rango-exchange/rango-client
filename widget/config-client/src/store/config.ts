@@ -1,10 +1,10 @@
 import { create } from 'zustand';
 import { BlockchainMeta, Token } from 'rango-sdk';
 import createSelectors from './selectors';
-import { LiquiditySource } from '@rango-dev/ui/dist/types/meta';
 import { WalletType } from '@rango-dev/wallets-shared';
 import { immer } from 'zustand/middleware/immer';
-import { Type } from '../types';
+import { Source, Type } from '../types';
+
 export type StringsName = 'title' | 'languege' | 'fontFaminy';
 
 export type NumbersName =
@@ -38,7 +38,7 @@ interface ConfigState {
     fromTokens: 'all' | Token[];
     toChains: 'all' | BlockchainMeta[];
     toTokens: 'all' | Token[];
-    liquiditySources: 'all' | LiquiditySource[];
+    liquiditySources: 'all' | Source[];
     wallets: 'all' | WalletType[];
     multiChain: boolean;
     customeAddress: boolean;
@@ -64,7 +64,7 @@ interface ConfigState {
     };
   };
   onChangeWallets: (wallets: WalletType[] | 'all') => void;
-  onChangeSources: (sources: LiquiditySource[] | 'all') => void;
+  onChangeSources: (sources: Source[] | 'all') => void;
   onChangeBlockChains: (chains: BlockchainMeta[] | 'all', type: Type) => void;
   onChangeTokens: (tokens: Token[] | 'all', type: Type) => void;
   onChangeBooleansConfig: (name: 'multiChain' | 'customeAddress', value: boolean) => void;
@@ -93,7 +93,7 @@ export const useConfigStore = createSelectors(
         wallets: 'all',
         multiChain: true,
         customeAddress: true,
-        title: 'Swap Box',
+        title: 'SWAP',
         width: 525,
         height: 712,
         languege: 'English (US)',

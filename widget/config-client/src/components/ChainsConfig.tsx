@@ -1,10 +1,11 @@
 import { Checkbox, Spacer, styled, Typography } from '@rango-dev/ui';
 import React from 'react';
+import { onChangeMultiSelects } from '../helpers';
 import { useConfigStore } from '../store/config';
 import { useMetaStore } from '../store/meta';
 import { Type } from '../types';
 import { MultiSelect } from './MultiSelect';
-import { MultiTokenSelect } from './MultiTokenSelect';
+import { MultiTokenSelect } from './MultiSelect/MultiTokenSelect';
 import { TokenInfo } from './TokenInfo';
 
 interface PropTypes {
@@ -28,6 +29,12 @@ export function ChainsConfig({ type }: PropTypes) {
   const { fromChains, toChains, customeAddress } = configs;
   const chains = type === 'Source' ? fromChains : toChains;
 
+  const onChangeChains = (chain) => {
+    let values = type === 'Source' ? fromChains : toChains;
+    values = onChangeMultiSelects(chain, values, blockchains, (item) => item.name === chain.name);
+    onChangeBlockChains(values, type);
+  };
+
   return (
     <div>
       <Typography variant="h4">{type} Form</Typography>
@@ -40,7 +47,7 @@ export function ChainsConfig({ type }: PropTypes) {
           loading={loadingStatus === 'loading'}
           disabled={loadingStatus === 'failed'}
           value={type === 'Source' ? fromChains : toChains}
-          onChange={(chains) => onChangeBlockChains(chains, type)}
+          onChange={onChangeChains}
           modalTitle="Select Blockchains"
         />
         <Spacer size={24} direction={'vertical'} />

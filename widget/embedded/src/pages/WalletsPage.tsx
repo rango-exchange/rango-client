@@ -13,6 +13,10 @@ import { useUiStore } from '../store/ui';
 import { useNavigateBack } from '../hooks/useNavigateBack';
 import { navigationRoutes } from '../constants/navigationRoutes';
 
+interface PropTypes {
+  supportedWallets: 'all' | WalletType[];
+}
+
 const ListContainer = styled('div', {
   display: 'grid',
   gap: '.5rem',
@@ -25,13 +29,13 @@ const ListContainer = styled('div', {
 const AlertContainer = styled('div', {
   paddingBottom: '$16',
 });
-export function WalletsPage() {
+export function WalletsPage({ supportedWallets }: PropTypes) {
   const { navigateBackFrom } = useNavigateBack();
   const { state, disconnect, getWalletInfo, connect } = useWallets();
   const wallets = getlistWallet(
     state,
     getWalletInfo,
-    configs.wallets === 'all' ? Object.values(WalletType) : configs.wallets
+    supportedWallets === 'all' ? Object.values(WalletType) : supportedWallets
   );
   const [walletErrorMessage, setWalletErrorMessage] = useState('');
   const toggleConnectWalletsButton =

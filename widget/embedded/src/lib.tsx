@@ -61,6 +61,9 @@ export const SwapBox: React.FC<WidgetProps> = ({ configs }) => {
           return wallets.find((w) => w === type);
         });
 
+        console.log({providers});
+        
+
   useEffect(() => {
     if (configs.theme !== 'auto') setTheme(configs.theme);
   }, [configs.theme]);

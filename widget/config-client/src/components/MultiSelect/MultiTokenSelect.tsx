@@ -11,8 +11,9 @@ import {
   Typography,
 } from '@rango-dev/ui';
 import { BlockchainMeta, Token } from 'rango-sdk';
-import { Type } from '../types';
-import { useConfigStore } from '../store/config';
+import { Type } from '../../types';
+import { useConfigStore } from '../../store/config';
+import { Container } from './Container';
 
 type PropTypes = {
   list: Token[];
@@ -23,18 +24,6 @@ type PropTypes = {
   disabled?: boolean;
   type: Type;
 };
-
-const Head = styled('div', {
-  display: 'flex',
-  justifyContent: 'space-between',
-  alignItems: 'center',
-});
-
-const Body = styled('div', {
-  maxHeight: 150,
-  overflow: 'hidden auto',
-});
-
 const Row = styled('div', {
   display: 'flex',
   flexWrap: 'wrap',
@@ -59,7 +48,7 @@ export function MultiTokenSelect({
   disabled,
   type,
 }: PropTypes) {
-  const [modal, setModal] = useState({ open: false, isChain: false, isToken: false });
+  const [open, setOpen] = useState(false);
   const [chain, setChain] = useState<string>('all');
   const [selectTokens, setSelectTokens] = useState({});
 
@@ -123,38 +112,16 @@ export function MultiTokenSelect({
     if (tokens !== 'all' && (!tokens.length || tokens.length === list.length)) {
       onChangeTokens('all', type);
     }
-
-    setModal((prev) => ({
-      ...prev,
-      open: false,
-    }));
+    setOpen(false);
   };
 
   return (
     <div>
-      <Head>
-        <Typography noWrap variant="h6">
-          {label}
-        </Typography>
-
-        <Button
-          onClick={() =>
-            setModal((prev) => ({
-              open: !prev.open,
-              isChain: false,
-              isToken: true,
-            }))
-          }
-          variant="contained"
-          loading={loading}
-          disabled={disabled}
-          size="small"
-          type="primary">
-          Change
-        </Button>
-      </Head>
-      <Spacer size={16} direction="vertical" />
-      <Body>
+      <Container
+        loading={loading}
+        disabled={disabled}
+        label={label}
+        onOpenModal={() => setOpen(true)}>
         {tokens !== 'all' ? (
           <>
             {[...tokens].splice(0, 10).map((v) => (
@@ -167,37 +134,31 @@ export function MultiTokenSelect({
             <Chip
               style={{ margin: 2 }}
               selected
-              label="..."
-              onClick={() =>
-                setModal((prev) => ({
-                  ...prev,
-                  open: true,
-                }))
-              }
+              label={!tokens.length ? 'None Selected' : '...'}
+              onClick={() => setOpen(true)}
             />
           </>
         ) : (
           <Chip style={{ margin: 2 }} selected label="All Tokens" />
         )}
-      </Body>
+      </Container>
+
       <Modal
         action={
-          modal.isToken && (
-            <Checkbox
-              onCheckedChange={(checked) => {
-                if (checked) onChangeTokens('all', type);
-                else {
-                  onChangeTokens([], type);
-                  setChain(blockchains[0].name);
-                }
-              }}
-              id="all_Tokens"
-              label="Select All Tokens"
-              checked={tokens === 'all'}
-            />
-          )
+          <Checkbox
+            onCheckedChange={(checked) => {
+              if (checked) onChangeTokens('all', type);
+              else {
+                onChangeTokens([], type);
+                setChain(blockchains[0].name);
+              }
+            }}
+            id="all_Tokens"
+            label="Select All Tokens"
+            checked={tokens === 'all'}
+          />
         }
-        open={modal.open}
+        open={open}
         onClose={onClose}
         content={
           <SecondaryPage

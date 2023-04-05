@@ -55,7 +55,7 @@ export function getlistWallet(
     WalletType.UNKNOWN,
     WalletType.TERRA_STATION,
     WalletType.LEAP,
-  ];
+  ];  
 
   return list
     .filter((wallet) => !excludedWallets.includes(wallet))
