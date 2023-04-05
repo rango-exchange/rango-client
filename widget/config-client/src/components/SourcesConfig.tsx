@@ -11,7 +11,8 @@ export function SourcesConfig() {
     meta: { swappers },
     loadingStatus,
   } = useMetaStore();
-  const { liquiditySources, onChangeSources } = useConfigStore((state) => state);
+  const { liquiditySources } = useConfigStore((state) => state.configs);
+  const onChangeSources = useConfigStore((state) => state.onChangeSources);
   const uniqueSwappersGroups: Array<LiquiditySource> = [];
   Array.from(new Set(swappers.map((s) => s.swapperGroup)))
     .map((swapperGroup) => {

@@ -44,16 +44,11 @@ const Label = styled('label', {
 });
 
 export function TokenInfo({ type }: PropTypes) {
-  const {
-    toChain,
-    fromChain,
-    toToken,
-    fromToken,
-    fromAmount,
-    onChangeNumbersConfig,
-    onChangeBlockChain,
-    onChangeToken,
-  } = useConfigStore((state) => state);
+  const { configs, onChangeNumbersConfig, onChangeBlockChain, onChangeToken } = useConfigStore(
+    (state) => state,
+  );
+
+  const { toChain, fromChain, toToken, fromToken, fromAmount } = configs;
   const token = type === 'Destination' ? fromToken : toToken;
   const chain = type === 'Destination' ? fromChain : toChain;
 

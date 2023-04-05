@@ -31,7 +31,7 @@ export function WalletsPage() {
   const wallets = getlistWallet(
     state,
     getWalletInfo,
-    Object.values(WalletType)
+    configs.wallets === 'all' ? Object.values(WalletType) : configs.wallets
   );
   const [walletErrorMessage, setWalletErrorMessage] = useState('');
   const toggleConnectWalletsButton =

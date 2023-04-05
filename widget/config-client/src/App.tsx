@@ -2,9 +2,11 @@ import React, { useEffect } from 'react';
 import { useMetaStore } from './store/meta';
 import { Config } from './containers/Config';
 import { SwapBox } from '@rango-dev/widget-embedded';
+import { useConfigStore } from './store/config';
 
 export function App() {
   const fetchMeta = useMetaStore((state) => state.fetchMeta);
+  const { configs } = useConfigStore((state) => state);
 
   useEffect(() => {
     (async () => {
@@ -14,7 +16,7 @@ export function App() {
 
   return (
     <Config>
-      <SwapBox />
+      <SwapBox configs={configs} />
     </Config>
   );
 }
