@@ -26,9 +26,12 @@ export type WidgetProps = {
   configs: Configs;
 };
 
-export function App({ configs }) {
+export function App({ configs }: WidgetProps) {
   globalStyles();
-  const { activeTheme } = useTheme();
+  const { activeTheme } = useTheme({
+    ...configs?.colors,
+    borderRadius: configs?.borderRadius,
+  });
   const { blockchains } = useMetaStore.use.meta();
   const disconnectWallet = useWalletsStore.use.disconnectWallet();
   const connectWallet = useWalletsStore.use.connectWallet();

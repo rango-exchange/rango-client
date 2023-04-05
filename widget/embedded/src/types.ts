@@ -5,6 +5,17 @@ export interface Source {
   type: 'BRIDGE' | 'AGGREGATOR' | 'DEX';
 }
 
+export type Colors = {
+  background?: string;
+  // inputBackground?: string;
+  // icons?: string;
+  primary?: string;
+  foreground?: string;
+  // text?: string;
+  success?: string;
+  error?: string;
+  warning?: string;
+};
 
 export type Configs = {
   fromChain: BlockchainMeta | null;
@@ -29,15 +40,5 @@ export type Configs = {
   fontFaminy: string;
   titleSize: number;
   titelsWeight: number;
-  colors: {
-    background: string;
-    inputBackground: string;
-    icons: string;
-    primary: string;
-    secondary: string;
-    text: string;
-    success: string;
-    error: string;
-    warning: string;
-  };
+  colors: Colors;
 };

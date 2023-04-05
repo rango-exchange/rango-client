@@ -7,6 +7,7 @@ import { StylesConfig } from '../components/StylesConfig';
 import { Provider } from '@rango-dev/wallets-core';
 import { allProviders } from '@rango-dev/provider-all';
 import { useTheme } from '../hook/useTheme';
+import { globalStyles } from '../globalStyles';
 
 const providers = allProviders();
 
@@ -34,6 +35,8 @@ const Swap = styled('div', {
 });
 
 export function Config(props: PropsWithChildren) {
+  globalStyles();
+
   const { activeTheme } = useTheme();
 
   return (

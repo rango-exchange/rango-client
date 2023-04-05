@@ -15,7 +15,7 @@ const InputContainer = styled('div', {
   color: '$foreground',
   transition: 'border-color ease .3s',
   '&:focus-within': {
-    borderColor: '$primary500',
+    borderColor: '$primary',
   },
   variants: {
     size: {
@@ -59,7 +59,7 @@ const InputContainer = styled('div', {
 });
 
 const Input = styled('input', {
-  color: '$text',
+  color: '$foreground',
   paddingLeft: '$16',
   paddingRight: '$16',
   flexGrow: 1,
@@ -78,6 +78,7 @@ const Input = styled('input', {
 const Label = styled('label', {
   display: 'inline-block',
   fontSize: '$14',
+  color: '$foreground',
   marginBottom: '$4',
 });
 

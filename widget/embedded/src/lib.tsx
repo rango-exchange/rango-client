@@ -24,7 +24,7 @@ export type WidgetProps = {
 
 export const SwapBox: React.FC<WidgetProps> = ({ configs }) => {
   globalStyles();
-  const { activeTheme } = useTheme();
+  const { activeTheme } = useTheme({ ...configs.colors, borderRadius: configs.borderRadius });
   const { blockchains } = useMetaStore.use.meta();
   const disconnectWallet = useWalletsStore.use.disconnectWallet();
   const connectWallet = useWalletsStore.use.connectWallet();
@@ -61,12 +61,10 @@ export const SwapBox: React.FC<WidgetProps> = ({ configs }) => {
           return wallets.find((w) => w === type);
         });
 
-        console.log({providers});
-        
-
   useEffect(() => {
     if (configs.theme !== 'auto') setTheme(configs.theme);
   }, [configs.theme]);
+
   return (
     <Provider
       allBlockChains={blockchains}

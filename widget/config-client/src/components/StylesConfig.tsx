@@ -19,27 +19,27 @@ const COLORS = [
     name: 'background',
     label: 'Background',
   },
-  {
-    name: 'inputBackground',
-    label: 'Input Background',
-  },
-  {
-    name: 'icons',
-    label: 'Icons',
-  },
+  // {
+  //   name: 'inputBackground',
+  //   label: 'Input Background',
+  // },
+  // {
+  //   name: 'icons',
+  //   label: 'Icons',
+  // },
   {
     name: 'primary',
     label: 'Primary Color',
   },
 
   {
-    name: 'secondary',
-    label: 'Secondary Color',
+    name: 'foreground',
+    label: 'Foreground Color',
   },
-  {
-    name: 'text',
-    label: 'Text',
-  },
+  // {
+  //   name: 'text',
+  //   label: 'Text',
+  // },
   {
     name: 'success',
     label: 'Success',
@@ -75,13 +75,16 @@ const ThemeContainer = styled('div', {
   justifyContent: 'center',
   alignItems: 'center',
 });
-
+const Line = styled('div', {
+  height: '100%',
+  width: 1,
+  backgroundColor: '$foreground',
+});
 export function StylesConfig() {
   const { configs, onChangeStringsConfig, onChangeNumbersConfig, onChangeTheme, onChangeColors } =
     useConfigStore((state) => state);
 
   const [checkedTheme, setChekedTheme] = useState<boolean>(true);
-  const [selectTheme, setSelectTheme] = useState<'dark' | 'light'>('light');
   const {
     title,
     width,
@@ -167,29 +170,30 @@ export function StylesConfig() {
                 label={'Auto'}
                 onCheckedChange={(checked) => {
                   if (checked) onChangeTheme('auto');
-                  else onChangeTheme(selectTheme);
-
+                  else onChangeTheme('light');
                   setChekedTheme(checked);
                 }}
               />
               <Spacer size={12} />
-              <Typography variant="caption"> Light </Typography>
+              <Line />
+              <Spacer size={12} />
+              <Typography variant="caption" mr={4}>
+                Light
+              </Typography>
               <Switch
-                checked={selectTheme === 'dark'}
+                checked={theme === 'dark'}
                 onChange={(checked) => {
                   if (!checkedTheme) {
                     let theme;
-                    if (checked) {
-                      theme = 'dark';
-                    } else {
-                      theme = 'light';
-                    }
+                    if (checked) theme = 'dark';
+                    else theme = 'light';
                     onChangeTheme(theme);
-                    setSelectTheme(theme);
                   }
                 }}
               />
-              <Typography variant="caption"> Dark </Typography>
+              <Typography variant="caption" ml={4}>
+                Dark
+              </Typography>
             </ThemeContainer>
           </div>
         </GridContent>
