@@ -41,6 +41,7 @@ const Label = styled('label', {
   display: 'inline-block',
   fontSize: '$14',
   marginBottom: '$4',
+  color:'$foreground'
 });
 
 export function TokenInfo({ type }: PropTypes) {

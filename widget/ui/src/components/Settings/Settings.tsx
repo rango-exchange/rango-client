@@ -140,7 +140,7 @@ export function Settings(props: PropTypes) {
       <ThemesContainer>
         <Title variant="body2">Theme</Title>
         <Radio
-          defaultValue={selectedTheme}
+          value={selectedTheme}
           options={[
             { value: 'dark', label: 'Dark' },
             { value: 'light', label: 'Light' },

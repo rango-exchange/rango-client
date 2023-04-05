@@ -52,15 +52,15 @@ interface ConfigState {
     titleSize: number;
     titelsWeight: number;
     colors: {
-      background: string;
-      inputBackground: string;
-      icons: string;
-      primary: string;
-      secondary: string;
-      text: string;
-      success: string;
-      error: string;
-      warning: string;
+      background?: string;
+      // inputBackground?: string;
+      // icons?: string;
+      primary?: string;
+      foreground?: string;
+      // text?: string;
+      success?: string;
+      error?: string;
+      warning?: string;
     };
   };
   onChangeWallets: (wallets: WalletType[] | 'all') => void;
@@ -103,15 +103,12 @@ export const useConfigStore = createSelectors(
         titleSize: 48,
         titelsWeight: 700,
         colors: {
-          background: '#ECF3F4',
-          inputBackground: '#FFFFFF',
-          icons: '#10150F',
+          background: '#fff',
           primary: '#5FA425',
-          secondary: '#CDCDCD',
-          text: '#0E1617',
-          success: '#0AA65B',
-          error: '#DE0700',
-          warning: '#FFD771',
+          foreground: '#000',
+          success: '#0070F3',
+          error: '#FF0000',
+          warning: '#F5A623',
         },
       },
       onChangeBlockChains: (chains, type) =>

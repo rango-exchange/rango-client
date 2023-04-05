@@ -62,23 +62,24 @@ const StyledIndicator = styled(RadioGroup.Indicator, {
 const Label = styled('label', {
   paddingLeft: '$8',
   cursor: 'pointer',
+  color: '$foreground',
 });
 
 export interface PropTypes {
   options: { label: string; value: string }[];
-  defaultValue: string;
+  value: string;
   onChange: (value: string) => void;
   direction?: 'vertical' | 'horizontal';
   style?: CSSProperties;
 }
 
 export function Radio(props: PropTypes) {
-  const { defaultValue, onChange, direction = 'vertical', style } = props;
+  const { value, onChange, direction = 'vertical', style } = props;
   return (
     <Container>
       <StyledRoot
         onValueChange={onChange}
-        defaultValue={defaultValue}
+        value={value}
         direction={direction}
         style={style}
       >
