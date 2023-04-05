@@ -23,7 +23,6 @@ export interface PropTypes {
 
 export function TokenList(props: PropTypes) {
   const { list, searchedText, onChange, multiSelect, selectedList } = props;
-
   const [selected, setSelected] = useState(props.selected);
 
   const changeSelected = (token: TokenWithAmount) => {
