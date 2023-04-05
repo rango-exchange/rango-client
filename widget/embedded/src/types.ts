@@ -37,7 +37,7 @@ export type Configs = {
   height: number;
   languege: string;
   borderRadius: number;
-  fontFaminy: string;
+  fontFamily: string;
   titleSize: number;
   titelsWeight: number;
   colors: Colors;
