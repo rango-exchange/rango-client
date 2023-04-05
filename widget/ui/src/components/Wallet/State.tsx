@@ -7,7 +7,6 @@ import { WalletState } from '../../types/wallet';
 import { InstallObjects, detectInstallLink } from '@rango-dev/wallets-shared';
 
 const StateIconContainer = styled('span', {
-  width: '$28',
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
