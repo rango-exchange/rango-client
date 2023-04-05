@@ -66,7 +66,7 @@ export function ChainsConfig({ type }: PropTypes) {
             <Checkbox
               onCheckedChange={(checked) => onChangeBooleansConfig('customeAddress', checked)}
               id="custom_address"
-              label="Enable transfer to custom address"
+              label="Enable Transfer To Custom Address"
               checked={customeAddress}
             />
           </>

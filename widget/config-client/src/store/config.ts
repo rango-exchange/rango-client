@@ -40,7 +40,7 @@ interface ConfigState {
     toTokens: 'all' | Token[];
     liquiditySources: 'all' | Source[];
     wallets: 'all' | WalletType[];
-    multiChain: boolean;
+    multiWallets: boolean;
     customeAddress: boolean;
     theme: THEME;
     title: string;
@@ -67,7 +67,7 @@ interface ConfigState {
   onChangeSources: (sources: Source[] | 'all') => void;
   onChangeBlockChains: (chains: BlockchainMeta[] | 'all', type: Type) => void;
   onChangeTokens: (tokens: Token[] | 'all', type: Type) => void;
-  onChangeBooleansConfig: (name: 'multiChain' | 'customeAddress', value: boolean) => void;
+  onChangeBooleansConfig: (name: 'multiWallets' | 'customeAddress', value: boolean) => void;
   onChangeBlockChain: (chain: BlockchainMeta, type: Type) => void;
   onChangeToken: (token: Token, type: Type) => void;
   onChangeStringsConfig: (name: StringsName, value: string) => void;
@@ -91,12 +91,12 @@ export const useConfigStore = createSelectors(
         toTokens: 'all',
         liquiditySources: 'all',
         wallets: 'all',
-        multiChain: true,
+        multiWallets: true,
         customeAddress: true,
         title: 'SWAP',
         width: 525,
         height: 712,
-        languege: 'English (US)',
+        languege: 'en',
         borderRadius: 5,
         theme: 'auto',
         fontFamily: 'Roboto',

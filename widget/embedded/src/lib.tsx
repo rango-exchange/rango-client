@@ -17,6 +17,8 @@ import { useTheme } from './hooks/useTheme';
 import { isEvmBlockchain } from 'rango-sdk';
 import { Configs } from './types';
 import { useSettingsStore } from './store/settings';
+import useSelectLanguage from './hooks/useSelectLanguage';
+import "./i18n"
 
 export type WidgetProps = {
   configs: Configs;
@@ -33,6 +35,7 @@ export const SwapBox: React.FC<WidgetProps> = ({ configs }) => {
   const disconnectWallet = useWalletsStore.use.disconnectWallet();
   const connectWallet = useWalletsStore.use.connectWallet();
   const setTheme = useSettingsStore.use.setTheme();
+  const { changeLanguage } = useSelectLanguage();
 
   const evmBasedChainNames = blockchains
     .filter(isEvmBlockchain)
@@ -68,6 +71,11 @@ export const SwapBox: React.FC<WidgetProps> = ({ configs }) => {
   useEffect(() => {
     if (configs.theme !== 'auto') setTheme(configs.theme);
   }, [configs.theme]);
+
+  useEffect(() => {
+    changeLanguage(configs?.languege);
+
+  }, [configs?.languege]);
 
   return (
     <Provider

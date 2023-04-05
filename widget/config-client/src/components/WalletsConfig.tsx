@@ -10,7 +10,7 @@ import { MultiSelect } from './MultiSelect';
 export function WalletsConfig() {
   const { getWalletInfo } = useWallets();
   const { configs, onChangeWallets, onChangeBooleansConfig } = useConfigStore((state) => state);
-  const { wallets, multiChain } = configs;
+  const { wallets, multiWallets } = configs;
   const walletList = Object.values(WalletType)
     .filter((wallet) => !excludedWallets.includes(wallet))
     .map((type) => {
@@ -43,10 +43,10 @@ export function WalletsConfig() {
         />
         <Spacer direction="vertical" size={12} />
         <Checkbox
-          onCheckedChange={(checked) => onChangeBooleansConfig('multiChain', checked)}
+          onCheckedChange={(checked) => onChangeBooleansConfig('multiWallets', checked)}
           id="multi_wallets"
-          label="Enable multi wallets simultaneously"
-          checked={multiChain}
+          label="Enable Multi Wallets Simultaneously"
+          checked={multiWallets}
         />
       </ConfigurationContainer>
     </>
