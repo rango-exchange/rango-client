@@ -9,3 +9,8 @@ export type Wallet = {
 export type Wallets = Array<Wallet>;
 
 export type Type = 'Destination' | 'Source';
+
+export interface Source {
+  title: string;
+  type: 'BRIDGE' | 'AGGREGATOR' | 'DEX';
+}

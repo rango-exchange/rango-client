@@ -13,7 +13,7 @@ const CheckboxRoot = styled(RadixCheckbox.Root, {
   width: 20,
   padding: 0,
   height: 20,
-  border: '1px solid',
+  border: '1px solid $foreground',
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',

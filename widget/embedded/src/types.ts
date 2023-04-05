@@ -1,6 +1,10 @@
 import { BlockchainMeta, Token } from 'rango-sdk';
-import { LiquiditySource } from '@rango-dev/ui/dist/types/meta';
 import { WalletType } from '@rango-dev/wallets-shared';
+export interface Source {
+  title: string;
+  type: 'BRIDGE' | 'AGGREGATOR' | 'DEX';
+}
+
 
 export type Configs = {
   fromChain: BlockchainMeta | null;
@@ -12,7 +16,7 @@ export type Configs = {
   fromTokens: 'all' | Token[];
   toChains: 'all' | BlockchainMeta[];
   toTokens: 'all' | Token[];
-  liquiditySources: 'all' | LiquiditySource[];
+  liquiditySources: 'all' | Source[];
   wallets: 'all' | WalletType[];
   multiChain: boolean;
   customeAddress: boolean;

@@ -1,5 +1,14 @@
-import { ColorPicker, Radio, Spacer, styled, TextField, Typography } from '@rango-dev/ui';
-import React from 'react';
+import {
+  Checkbox,
+  ColorPicker,
+  Radio,
+  Spacer,
+  styled,
+  Switch,
+  TextField,
+  Typography,
+} from '@rango-dev/ui';
+import React, { useState } from 'react';
 import { LANGUEGES, FONTS } from '../constants';
 import { COLORS, THEME, useConfigStore } from '../store/config';
 import { ConfigurationContainer } from './ChainsConfig';
@@ -56,7 +65,7 @@ const GridContent = styled('div', {
   },
 });
 
-const RadioContainer = styled('div', {
+const ThemeContainer = styled('div', {
   borderColor: '$neutrals600',
   color: '$neutrals500',
   border: '1px solid',
@@ -64,11 +73,15 @@ const RadioContainer = styled('div', {
   borderRadius: '$5',
   display: 'flex',
   justifyContent: 'center',
+  alignItems: 'center',
 });
 
 export function StylesConfig() {
   const { configs, onChangeStringsConfig, onChangeNumbersConfig, onChangeTheme, onChangeColors } =
     useConfigStore((state) => state);
+
+  const [checkedTheme, setChekedTheme] = useState<boolean>(true);
+  const [selectTheme, setSelectTheme] = useState<'dark' | 'light'>('light');
   const {
     title,
     width,
@@ -147,18 +160,37 @@ export function StylesConfig() {
             <Typography variant="body2" mb={4}>
               Theme
             </Typography>
-            <RadioContainer>
-              <Radio
-                defaultValue={theme}
-                options={[
-                  { value: 'dark', label: 'Dark' },
-                  { value: 'light', label: 'Light' },
-                  { value: 'auto', label: 'Auto' },
-                ]}
-                onChange={(value) => onChangeTheme(value as THEME)}
-                direction="horizontal"
+            <ThemeContainer>
+              <Checkbox
+                checked={checkedTheme}
+                id={'auto'}
+                label={'Auto'}
+                onCheckedChange={(checked) => {
+                  if (checked) onChangeTheme('auto');
+                  else onChangeTheme(selectTheme);
+
+                  setChekedTheme(checked);
+                }}
               />
-            </RadioContainer>
+              <Spacer size={12} />
+              <Typography variant="caption"> Light </Typography>
+              <Switch
+                checked={selectTheme === 'dark'}
+                onChange={(checked) => {
+                  if (!checkedTheme) {
+                    let theme;
+                    if (checked) {
+                      theme = 'dark';
+                    } else {
+                      theme = 'light';
+                    }
+                    onChangeTheme(theme);
+                    setSelectTheme(theme);
+                  }
+                }}
+              />
+              <Typography variant="caption"> Dark </Typography>
+            </ThemeContainer>
           </div>
         </GridContent>
         <Spacer size={24} direction="vertical" />

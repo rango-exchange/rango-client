@@ -12,13 +12,14 @@ export const HeaderContainer = styled('div', {
 
 export interface PropTypes {
   onClickRefresh: () => void;
+  title?: string;
 }
 
 export function Header(props: PropTypes) {
-  const { onClickRefresh } = props;
+  const { onClickRefresh, title } = props;
   return (
     <HeaderContainer>
-      <Typography variant="h4">SWAP</Typography>
+      <Typography variant="h4">{title}</Typography>
       <HeaderButtons onClickRefresh={onClickRefresh} />
     </HeaderContainer>
   );
