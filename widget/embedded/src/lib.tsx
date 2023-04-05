@@ -12,7 +12,7 @@ import {
 } from './utils/wallets';
 import { useWalletsStore } from './store/wallets';
 import { Layout } from './components/Layout';
-import { globalStyles } from './globalStyles';
+import { globalFont, globalStyles } from './globalStyles';
 import { useTheme } from './hooks/useTheme';
 import { isEvmBlockchain } from 'rango-sdk';
 import { Configs } from './types';
@@ -23,8 +23,12 @@ export type WidgetProps = {
 };
 
 export const SwapBox: React.FC<WidgetProps> = ({ configs }) => {
+  globalFont(configs.fontFamily);
   globalStyles();
-  const { activeTheme } = useTheme({ ...configs.colors, borderRadius: configs.borderRadius });
+  const { activeTheme } = useTheme({
+    ...configs.colors,
+    borderRadius: configs.borderRadius,
+  });
   const { blockchains } = useMetaStore.use.meta();
   const disconnectWallet = useWalletsStore.use.disconnectWallet();
   const connectWallet = useWalletsStore.use.connectWallet();
