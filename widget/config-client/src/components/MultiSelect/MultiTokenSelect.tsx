@@ -20,7 +20,6 @@ type PropTypes = {
   blockchains: BlockchainMeta[];
   label: string;
   modalTitle: string;
-  disabled?: boolean;
   type: Type;
 };
 const Row = styled('div', {
@@ -38,20 +37,12 @@ const Content = styled('div', {
   display: 'flex',
   flexDirection: 'column',
 });
-export function MultiTokenSelect({
-  label,
-  modalTitle,
-  list,
-  blockchains,
-  disabled,
-  type,
-}: PropTypes) {
+export function MultiTokenSelect({ label, modalTitle, list, blockchains, type }: PropTypes) {
   const [open, setOpen] = useState(false);
   const [chain, setChain] = useState<string>('all');
   const [selectTokens, setSelectTokens] = useState({});
   const fromTokens = useConfigStore.use.configs().fromTokens;
   const toTokens = useConfigStore.use.configs().toTokens;
-
   const onChangeTokens = useConfigStore.use.onChangeTokens();
   const tokens = type === 'Source' ? fromTokens : toTokens;
 
@@ -113,7 +104,6 @@ export function MultiTokenSelect({
     }
     setOpen(false);
   };
-
   return (
     <div>
       <Container label={label} onOpenModal={() => setOpen(true)}>
