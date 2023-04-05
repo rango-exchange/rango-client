@@ -18,6 +18,7 @@ interface PropTypes {
   list: Array<{
     name: string;
     logo?: string;
+    value: string;
   }>;
 }
 const filterList = (list, searchedFor: string) =>
@@ -38,7 +39,7 @@ const Label = styled('label', {
 
 export function Select({ label, value, onChange, modalTitle, list, name }: PropTypes) {
   const [open, setOpen] = useState<boolean>(false);
-  const search = list.find((item) => item.name === value);
+  const search = list.find((item) => item.value === value);
 
   return (
     <div>
@@ -52,7 +53,7 @@ export function Select({ label, value, onChange, modalTitle, list, name }: PropT
         fullWidth
         align="start"
         size="large">
-        {value}
+        {search?.name}
       </Button>
 
       <Modal
@@ -70,9 +71,9 @@ export function Select({ label, value, onChange, modalTitle, list, name }: PropT
                     variant="ghost"
                     size="large"
                     prefix={item.logo && <Image src={item.logo} />}
-                    suffix={item.name === value ? <CheckIcon size={20} /> : undefined}
+                    suffix={item.value === value ? <CheckIcon size={20} /> : undefined}
                     align="start"
-                    onClick={() => onChange(name, item.name)}
+                    onClick={() => onChange(name, item.value)}
                     key={index}>
                     <Typography variant="body2">{item.name}</Typography>
                   </Button>

@@ -26,6 +26,7 @@ export const AppRoutes = ({
   toChain,
   toToken,
   fromAmount,
+  multiWallets = true,
 }: Configs) =>
   useRoutes([
     {
@@ -72,7 +73,7 @@ export const AppRoutes = ({
     },
     {
       path: navigationRoutes.wallets,
-      element: <WalletsPage supportedWallets={wallets} />,
+      element: <WalletsPage supportedWallets={wallets} multiWallets={multiWallets} />,
     },
     { path: navigationRoutes.confirmSwap, element: <ConfirmSwapPage /> },
     { path: navigationRoutes.confirmWallets, element: <ConfirmWalletsPage /> },
