@@ -291,6 +291,10 @@ class Wallet<InstanceType = any> {
       this.state.connected = states.connected;
       updates.push([Events.CONNECTED, states.connected]);
     }
+    if (typeof states.connecting !== 'undefined') {
+      this.state.connecting = states.connecting;
+      updates.push([Events.CONNECTING, states.connecting]);
+    }
     if (typeof states.reachable !== 'undefined') {
       this.state.reachable = states.reachable;
       updates.push([Events.REACHABLE, states.reachable]);
