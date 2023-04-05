@@ -6,7 +6,7 @@ import './app.css';
 import { Events, Provider } from '@rango-dev/wallets-core';
 import { allProviders } from '@rango-dev/provider-all';
 import { EventHandler } from '@rango-dev/wallets-core/dist/wallet';
-import { Network, WalletType } from '@rango-dev/wallets-shared';
+import { Network } from '@rango-dev/wallets-shared';
 import {
   prepareAccountsForWalletStore,
   walletAndSupportedChainsNames,
@@ -16,53 +16,17 @@ import { Layout } from './components/Layout';
 import { globalStyles } from './globalStyles';
 import { useTheme } from './hooks/useTheme';
 import QueueManager from './QueueManager';
-import { LiquiditySource } from '@rango-dev/ui/dist/types/meta';
-import { BlockchainMeta, isEvmBlockchain } from 'rango-sdk';
+import { isEvmBlockchain } from 'rango-sdk';
+import { Configs } from './types';
 
 const providers = allProviders();
-interface Token {
-  name: string;
-  contractAddress?: string;
-}
 
 //todo: update interface and update widget state based on WidgetProps change
 export type WidgetProps = {
-  fromChain: BlockchainMeta | null;
-  fromToken: Token | null;
-  toChain: BlockchainMeta | null;
-  toToken: Token | null;
-  fromAmount: number;
-  fromChains: 'all' | BlockchainMeta[];
-  fromTokens: 'all' | Token[];
-  toChains: 'all' | BlockchainMeta[];
-  toTokens: 'all' | Token[];
-  liquiditySources: 'all' | LiquiditySource[];
-  wallets: 'all' | WalletType[];
-  multiChain: boolean;
-  customeAddress: boolean;
-  theme: 'dark' | 'light' | 'auto';
-  title: string;
-  width: number;
-  height: number;
-  languege: string;
-  borderRadius: number;
-  fontFaminy: string;
-  titleSize: number;
-  titelsWeight: number;
-  colors: {
-    background: string;
-    inputBackground: string;
-    icons: string;
-    primary: string;
-    secondary: string;
-    text: string;
-    success: string;
-    error: string;
-    warning: string;
-  };
+  configs: Configs;
 };
 
-export function App() {
+export function App({ configs }) {
   globalStyles();
   const { activeTheme } = useTheme();
   const { blockchains } = useMetaStore.use.meta();
@@ -109,7 +73,7 @@ export function App() {
         <QueueManager>
           <SwapContainer>
             <AppRouter>
-              <Layout />
+              <Layout configs={configs} />
             </AppRouter>
           </SwapContainer>
         </QueueManager>

@@ -14,6 +14,7 @@ import { navigationRoutes } from '../constants/navigationRoutes';
 
 interface PropTypes {
   type: 'from' | 'to';
+  supportedTokens: 'all' | Token[];
 }
 
 export interface TokenWithBalance extends Token {
@@ -24,10 +25,13 @@ export interface TokenWithBalance extends Token {
 }
 
 export function SelectTokenPage(props: PropTypes) {
-  const { type } = props;
   const { navigateBackFrom } = useNavigateBack();
 
-  const { tokens } = useMetaStore.use.meta();
+  const { type, supportedTokens } = props;
+  const tokens =
+    supportedTokens === 'all'
+      ? useMetaStore.use.meta().tokens
+      : supportedTokens;
   const fromChain = useBestRouteStore.use.fromChain();
   const toChain = useBestRouteStore.use.toChain();
   const fromToken = useBestRouteStore.use.fromToken();

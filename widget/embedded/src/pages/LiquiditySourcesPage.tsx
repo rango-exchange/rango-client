@@ -5,9 +5,11 @@ import { useNavigateBack } from '../hooks/useNavigateBack';
 import { useMetaStore } from '../store/meta';
 import { useSettingsStore } from '../store/settings';
 import { removeDuplicateFrom } from '../utils/common';
-
+// interface PropTypes {
+//   supportedSwappers: 'all' | SwapperMeta[];
+// }
 export function LiquiditySourcePage() {
-  const { swappers } = useMetaStore.use.meta();
+  const swappers = useMetaStore.use.meta().swappers;
   const toggleLiquiditySource = useSettingsStore.use.toggleLiquiditySource();
   const disabledLiquiditySources =
     useSettingsStore.use.disabledLiquiditySources();
