@@ -24,7 +24,8 @@ export function WalletsConfig() {
 
   const onChange = (wallet) => {
     const list = walletList.map((item) => item.type);
-    const values = onChangeMultiSelects(wallet, wallets, list, (item) => item === wallet.type);
+    const value = wallet.type || wallet;
+    const values = onChangeMultiSelects(value, wallets, list, (item) => item === value);
     onChangeWallets(values);
   };
 

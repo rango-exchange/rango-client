@@ -84,7 +84,7 @@ export function Select({ label, value, onChange, modalTitle, list, name }: PropT
           />
         }
         title={modalTitle}
-        containerStyle={{ width: '560px', height: '655px' }}></Modal>
+        containerStyle={{ width: '560px', height: '655px' }}/>
     </div>
   );
 }
