@@ -1,5 +1,5 @@
 import { lightTheme, darkTheme } from '@rango-dev/ui';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useLayoutEffect } from 'react';
 import { useConfigStore } from '../store/config';
 import { useMetaStore } from '../store/meta';
 
@@ -33,5 +33,10 @@ export function useTheme() {
     else return theme === 'dark' ? darkTheme : lightTheme;
   };
 
+  useLayoutEffect(() => {
+    const { classList } = document.body;
+    if (darkTheme) classList.add(getActiveTheme());
+    else classList.remove(getActiveTheme());
+  }, [theme]);
   return { activeTheme: getActiveTheme() };
 }

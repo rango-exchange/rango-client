@@ -41,7 +41,7 @@ const Label = styled('label', {
   display: 'inline-block',
   fontSize: '$14',
   marginBottom: '$4',
-  color:'$foreground'
+  color: '$foreground',
 });
 
 export function TokenInfo({ type }: PropTypes) {
@@ -49,7 +49,17 @@ export function TokenInfo({ type }: PropTypes) {
     (state) => state,
   );
 
-  const { toChain, fromChain, toToken, fromToken, fromAmount } = configs;
+  const {
+    toChain,
+    fromChain,
+    toToken,
+    fromToken,
+    fromAmount,
+    toChains,
+    fromChains,
+    toTokens,
+    fromTokens,
+  } = configs;
   const token = type === 'Source' ? fromToken : toToken;
   const chain = type === 'Source' ? fromChain : toChain;
 
@@ -58,6 +68,9 @@ export function TokenInfo({ type }: PropTypes) {
     meta: { blockchains, tokens },
     loadingStatus,
   } = useMetaStore();
+
+  const supportedChains = type === 'Source' ? fromChains : toChains;
+  const supportedTokens = type == 'Source' ? fromTokens : toTokens;
   return (
     <Container>
       <div>
@@ -140,7 +153,7 @@ export function TokenInfo({ type }: PropTypes) {
         content={
           modal.isChain ? (
             <BlockchainSelector
-              list={blockchains}
+              list={supportedChains === 'all' ? blockchains : supportedChains}
               hasHeader={false}
               selected={chain}
               onChange={(chain) => onChangeBlockChain(chain, type)}
@@ -149,7 +162,9 @@ export function TokenInfo({ type }: PropTypes) {
           ) : (
             modal.isToken && (
               <TokenSelector
-                list={tokens.filter((token) => token.blockchain === chain?.name)}
+                list={(supportedTokens === 'all' ? tokens : supportedTokens).filter(
+                  (token) => token.blockchain === chain?.name,
+                )}
                 hasHeader={false}
                 selected={token}
                 onChange={(token) => onChangeToken(token, type)}
