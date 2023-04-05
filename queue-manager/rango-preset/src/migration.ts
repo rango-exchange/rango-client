@@ -21,8 +21,8 @@ function migrated(): boolean {
 
 async function hasQueueManagerOnIDB(): Promise<boolean> {
   try {
-    return (await window.indexedDB.databases())
-      .map((db) => db.name)
+    return (await (window.indexedDB as any).databases())
+      .map((db: any) => db.name)
       .includes(DB_NAME);
   } catch {
     return false;
