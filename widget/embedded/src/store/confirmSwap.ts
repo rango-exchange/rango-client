@@ -113,7 +113,7 @@ export const confirmSwap = async (): Promise<PendingSwap | undefined> => {
 
   const userSlippage = customSlippage || slippage;
 
-  if (!fromToken || !toToken || !inputAmount || !initialRoute) return;
+  if (!fromToken || !toToken || !inputAmount || !initialRoute) return undefined;
 
   if (proceedAnyway!) {
     const swapSettings: PendingSwapSettings = {

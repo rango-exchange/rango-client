@@ -12,7 +12,7 @@
   "scripts": {
     "dev": "parcel public/index.html -p 3001",
     "build:app": "parcel build",
-    "build": "tsdx build --entry ./src/lib.tsx --transpileOnly"
+    "build": "tsdx build --entry ./src/lib.tsx"
   },
   "husky": {
     "hooks": {
@@ -31,7 +31,8 @@
     "@rango-dev/queue-manager-rango-preset": "^0.1.10-next.77",
     "@rango-dev/queue-manager-react": "^0.1.10-next.73",
     "@rango-dev/ui": "^0.1.10-next.75",
-    "@rango-dev/wallets-core": "^0.1.11-next.78",
+    "@rango-dev/wallets-core": "^0.1.11-next.80",
+    "@rango-dev/wallets-shared": "^0.1.11-next.78",
     "bignumber.js": "^9.1.1",
     "copy-to-clipboard": "^3.3.3",
     "immer": "^9.0.19",

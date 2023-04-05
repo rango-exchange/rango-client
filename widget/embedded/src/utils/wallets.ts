@@ -6,7 +6,6 @@ import {
   WalletInfo,
   WalletState,
   WalletType,
-  isCosmosBlockchain,
 } from '@rango-dev/wallets-shared';
 
 import {
@@ -20,6 +19,7 @@ import {
   Token,
   WalletDetail,
 } from 'rango-sdk';
+import { isCosmosBlockchain } from 'rango-types';
 import { readAccountAddress } from '@rango-dev/wallets-core';
 import { Account, Balance, TokenBalance } from '../store/wallets';
 import { numberToString } from './numbers';
