@@ -34,7 +34,7 @@ const StyledSwitchThumb = styled(RadixSwitch.Thumb, {
   willChange: 'transform',
   '&[data-state="checked"]': {
     transform: 'translateX(20px)',
-    backgroundColor: '$primary500',
+    backgroundColor: '$primary',
   },
 });
 

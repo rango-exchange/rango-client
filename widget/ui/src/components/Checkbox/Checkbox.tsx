@@ -21,7 +21,7 @@ const CheckboxRoot = styled(RadixCheckbox.Root, {
   backgroundColor: '$neutral-100',
 });
 const Label = styled('label', {
-  color: '$text',
+  color: '$foreground',
   fontSize: '$m',
   marginLeft: '$8',
 });
