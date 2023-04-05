@@ -3,13 +3,13 @@ import {
   CanSwitchNetwork,
   Connect,
   Subscribe,
-  WalletSigners,
   BlockchainMeta,
   WalletInfo,
 } from '@rango-dev/wallets-shared';
 import { terraStation as terraStation_instance } from './helpers';
 import signer from './signer';
 import { ConnectType } from '@terra-money/wallet-controller';
+import { SignerFactory } from 'rango-types';
 
 const WALLET = WalletType.TERRA_STATION;
 const TERRA_STATION_WALLET_ID = 'station';
@@ -19,7 +19,7 @@ export const config = {
 };
 
 async function waitInterval(instance: any) {
-  return new Promise<any>(resolve => {
+  return new Promise<any>((resolve) => {
     const interval = setInterval(async () => {
       resolve(instance.extension.getLastStates());
       clearInterval(interval);
@@ -36,7 +36,6 @@ export const connect: Connect = async ({ instance }) => {
   const { network, wallet } = await waitInterval(instance);
   chainId = network.chainID;
   accounts = [wallet.terraAddress];
-
   return { accounts, chainId };
 };
 
@@ -60,15 +59,14 @@ export const subscribe: Subscribe = ({
 
 export const canSwitchNetworkTo: CanSwitchNetwork = () => false;
 
-export const getSigners: (provider: any) => WalletSigners = signer;
+export const getSigners: (provider: any) => SignerFactory = signer;
 
-export const getWalletInfo: (
-  allBlockChains: BlockchainMeta[]
-) => WalletInfo = allBlockChains => {
+export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
+  allBlockChains
+) => {
   return {
     name: 'Terra Station',
-    img:
-      'https://raw.githubusercontent.com/rango-exchange/rango-types/main/assets/icons/wallets/terra-station.png',
+    img: 'https://raw.githubusercontent.com/rango-exchange/rango-types/main/assets/icons/wallets/terra-station.png',
     installLink: {
       CHROME:
         'https://chrome.google.com/webstore/detail/terra-station/aiifbnbfobpmeekipheeijimdpnlpgpp',
@@ -79,8 +77,8 @@ export const getWalletInfo: (
       DEFAULT: 'https://www.safepal.com/download',
     },
     color: '#4A21EF',
-    supportedChains: allBlockChains.filter(blockchainMeta =>
-      ['TERRA_CLASSIC'].includes(blockchainMeta.name)
+    supportedChains: allBlockChains.filter((blockchainMeta) =>
+      ['TERRA_CLASSIC', 'TERRA'].includes(blockchainMeta.name)
     ),
   };
 };
