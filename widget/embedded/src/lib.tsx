@@ -39,8 +39,7 @@ export const SwapBox: React.FC<WidgetProps> = ({ configs }) => {
   const connectWallet = useWalletsStore.use.connectWallet();
   const setTheme = useSettingsStore.use.setTheme();
   const { changeLanguage } = useSelectLanguage();
-  console.log({ blockchains });
-
+  
   const evmBasedChainNames = blockchains
     .filter(isEvmBlockchain)
     .map((chain) => chain.name);
@@ -55,7 +54,6 @@ export const SwapBox: React.FC<WidgetProps> = ({ configs }) => {
     if (event === Events.ACCOUNTS) {
       if (value) {
         const supportedChainNames: Network[] | null =
-          //@ts-ignore
           walletAndSupportedChainsNames(supportedChains);
         const data = prepareAccountsForWalletStore(
           type,

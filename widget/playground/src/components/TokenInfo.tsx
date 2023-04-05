@@ -169,7 +169,13 @@ export function TokenInfo({ type }: PropTypes) {
               list={supportedChains === 'all' ? blockchains : supportedChains}
               hasHeader={false}
               selected={chain}
-              onChange={(chain) => onChangeBlockChain(chain, type)}
+              onChange={(chain) => {
+                setModal((prev) => ({
+                  ...prev,
+                  open: !prev.open,
+                }));
+                onChangeBlockChain(chain, type);
+              }}
               loadingStatus={loadingStatus}
             />
           ) : (
@@ -180,7 +186,13 @@ export function TokenInfo({ type }: PropTypes) {
                 )}
                 hasHeader={false}
                 selected={token}
-                onChange={(token) => onChangeToken(token, type)}
+                onChange={(token) => {
+                  setModal((prev) => ({
+                    ...prev,
+                    open: !prev.open,
+                  }));
+                  onChangeToken(token, type);
+                }}
               />
             )
           )
