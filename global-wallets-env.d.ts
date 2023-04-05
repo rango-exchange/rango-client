@@ -25,5 +25,6 @@ declare global {
     kucoin: any;
     leap: any;
     frontier: any;
+    terraWallets: any;
   }
 }
