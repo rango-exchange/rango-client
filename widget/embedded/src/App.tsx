@@ -13,7 +13,7 @@ import {
 } from './utils/wallets';
 import { useWalletsStore } from './store/wallets';
 import { Layout } from './components/Layout';
-import { globalStyles } from './globalStyles';
+import { globalFont, globalStyles } from './globalStyles';
 import { useTheme } from './hooks/useTheme';
 import QueueManager from './QueueManager';
 import { isEvmBlockchain } from 'rango-sdk';
@@ -23,7 +23,7 @@ const providers = allProviders();
 
 //todo: update interface and update widget state based on WidgetProps change
 export type WidgetProps = {
-  configs: Configs;
+  configs?: Configs;
 };
 
 export function App({ configs }: WidgetProps) {
@@ -32,6 +32,8 @@ export function App({ configs }: WidgetProps) {
     ...configs?.colors,
     borderRadius: configs?.borderRadius,
   });
+  globalFont(configs?.fontFamily || 'Roboto');
+
   const { blockchains } = useMetaStore.use.meta();
   const disconnectWallet = useWalletsStore.use.disconnectWallet();
   const connectWallet = useWalletsStore.use.connectWallet();
