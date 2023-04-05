@@ -11,6 +11,7 @@ import {
   getSelectableWallets,
 } from '../utils/wallets';
 import { removeDuplicateFrom } from '../utils/common';
+import { Configs } from '../types';
 
 const Header = styled('div', {
   display: 'flex',
@@ -26,7 +27,11 @@ const WalletImage = styled('img', {
   borderRadius: '99999px',
 });
 
-export function Layout() {
+export type LayoutProps = {
+  configs: Configs;
+};
+
+export function Layout({ configs }: LayoutProps) {
   const navigate = useNavigate();
   const { balances, accounts, selectedWallets } = useWalletsStore();
   const { getWalletInfo } = useWallets();
@@ -65,7 +70,7 @@ export function Layout() {
           </Typography>
         </Button>
       </Header>
-      <AppRoutes />
+      <AppRoutes {...configs} />
     </>
   );
 }
