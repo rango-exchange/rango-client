@@ -9,9 +9,8 @@ import { MultiSelect } from './MultiSelect';
 
 export function WalletsConfig() {
   const { getWalletInfo } = useWallets();
-  const { wallets, onChangeWallets, multiChain, onChangeBooleansConfig } = useConfigStore(
-    (state) => state,
-  );
+  const { configs, onChangeWallets, onChangeBooleansConfig } = useConfigStore((state) => state);
+  const { wallets, multiChain } = configs;
   const walletList = Object.values(WalletType)
     .filter((wallet) => !excludedWallets.includes(wallet))
     .map((type) => {

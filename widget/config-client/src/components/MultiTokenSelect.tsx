@@ -63,8 +63,8 @@ export function MultiTokenSelect({
   const [chain, setChain] = useState<string>('all');
   const [selectTokens, setSelectTokens] = useState({});
 
-  const { fromTokens, toTokens, onChangeTokens } = useConfigStore((state) => state);
-
+  const { fromTokens, toTokens } = useConfigStore((state) => state.configs);
+  const onChangeTokens = useConfigStore((state) => state.onChangeTokens);
   const tokens = type === 'Destination' ? fromTokens : toTokens;
 
   const onChangeSelectList = (token) => {

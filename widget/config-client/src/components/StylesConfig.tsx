@@ -67,6 +67,8 @@ const RadioContainer = styled('div', {
 });
 
 export function StylesConfig() {
+  const { configs, onChangeStringsConfig, onChangeNumbersConfig, onChangeTheme, onChangeColors } =
+    useConfigStore((state) => state);
   const {
     title,
     width,
@@ -78,12 +80,7 @@ export function StylesConfig() {
     colors,
     titleSize,
     titelsWeight,
-    onChangeStringsConfig,
-    onChangeNumbersConfig,
-    onChangeTheme,
-    onChangeColors,
-  } = useConfigStore((state) => state);
-
+  } = configs;
   return (
     <div>
       <Typography variant="h4">Style</Typography>
