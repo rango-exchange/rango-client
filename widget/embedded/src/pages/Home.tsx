@@ -6,7 +6,7 @@ import {
   Typography,
   VerticalSwapIcon,
 } from '@rango-dev/ui';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useInRouterContext, useNavigate } from 'react-router-dom';
 import { Header } from '../components/Header';
 import { TokenInfo } from '../components/TokenInfo';
@@ -33,7 +33,6 @@ import {
   secondsToString,
   totalArrivalTime,
 } from '../utils/numbers';
-import { BlockchainMeta, Token } from 'rango-sdk';
 
 const Container = styled('div', {
   display: 'flex',
@@ -61,11 +60,6 @@ const Alerts = styled('div', {
 });
 interface PropTypes {
   title?: string;
-  fromChain: BlockchainMeta | null;
-  fromToken: Token | null;
-  toChain: BlockchainMeta | null;
-  toToken: Token | null;
-  fromAmount: number;
   titleSize?: number;
   titleWeight?: number;
 }
@@ -84,9 +78,9 @@ export function Home(props: PropTypes) {
   const setFromToken = useBestRouteStore.use.setFromToken();
   const setToChain = useBestRouteStore.use.setToChain();
   const setToToken = useBestRouteStore.use.setToToken();
+  const setInputAmount = useBestRouteStore.use.setInputAmount();
   const inputUsdValue = useBestRouteStore.use.inputUsdValue();
   const inputAmount = useBestRouteStore.use.inputAmount();
-  const setInputAmount = useBestRouteStore.use.setInputAmount();
   const outputAmount = useBestRouteStore.use.outputAmount();
   const outputUsdValue = useBestRouteStore.use.outputUsdValue();
   const bestRoute = useBestRouteStore.use.bestRoute();
@@ -145,15 +139,7 @@ export function Home(props: PropTypes) {
 
   const highFee = hasHighFee(totalFeeInUsd);
 
-  useEffect(() => {
-    if (props.fromChain && !fromChain) setFromChain(props.fromChain);
-    if (props.toChain && !toChain) setToChain(props.toChain);
-    if (props.toToken && !toToken) setToToken(props.toToken);
-    if (props.fromToken && !fromToken) setFromToken(props.fromToken);
-    if (props.fromAmount)
-      setInputAmount(props.fromAmount.toString());
-  }, [props]);
-  
+ 
   return (
     <Container>
       <Header
