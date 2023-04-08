@@ -170,11 +170,14 @@ export function TokenInfo({ type }: PropTypes) {
               hasHeader={false}
               selected={chain}
               onChange={(chain) => {
+                onChangeBlockChain(chain, type);
+                onChangeToken(null, type);
                 setModal((prev) => ({
                   ...prev,
                   open: !prev.open,
                 }));
-                onChangeBlockChain(chain, type);
+                
+
               }}
               loadingStatus={loadingStatus}
             />

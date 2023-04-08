@@ -1,5 +1,5 @@
 import { Button, AddWalletIcon, Typography, styled } from '@rango-dev/ui';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useWallets } from '@rango-dev/wallets-core';
 import { navigationRoutes } from '../constants/navigationRoutes';
@@ -13,6 +13,7 @@ import {
 import { removeDuplicateFrom } from '../utils/common';
 import { Configs } from '../types';
 import { useTranslation } from 'react-i18next';
+import { useBestRouteStore } from '../store/bestRoute';
 
 const Header = styled('div', {
   display: 'flex',
@@ -42,11 +43,29 @@ export function Layout({ configs }: LayoutProps) {
     )
   );
 
+  const { fromChain, toChain, toToken, fromToken, fromAmount } = configs;
+  const setFromChain = useBestRouteStore.use.setFromChain();
+  const setFromToken = useBestRouteStore.use.setFromToken();
+  const setToChain = useBestRouteStore.use.setToChain();
+  const setToToken = useBestRouteStore.use.setToToken();
+  const setInputAmount = useBestRouteStore.use.setInputAmount();
+
   const totalBalance = calculateWalletUsdValue(balances);
   const connectWalletsButtonDisabled =
     useUiStore.use.connectWalletsButtonDisabled();
   const { t } = useTranslation();
+  useEffect(() => {
+    setToChain(toChain);
+    setToToken(toToken);
+  }, [toChain, toToken]);
+  useEffect(() => {
+    setInputAmount(fromAmount.toString());
+  }, [fromAmount]);
 
+  useEffect(() => {
+    setFromToken(fromToken);
+    setFromChain(fromChain);
+  }, [fromToken, fromChain]);
   return (
     <>
       <Header>

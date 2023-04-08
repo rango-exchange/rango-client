@@ -8,14 +8,8 @@ import {
 import { navigationRoutes } from '../constants/navigationRoutes';
 import { UpdateUrl } from './UpdateUrl';
 import { Home } from '../pages/Home';
-import { BlockchainMeta, Token } from 'rango-sdk';
 interface PropTypes {
   title?: string;
-  fromChain: BlockchainMeta | null;
-  fromToken: Token | null;
-  toChain: BlockchainMeta | null;
-  toToken: Token | null;
-  fromAmount: number;
   titleSize?: number;
   titleWeight?: number;
 }

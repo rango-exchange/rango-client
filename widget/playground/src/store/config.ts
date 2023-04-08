@@ -69,7 +69,7 @@ interface ConfigState {
   onChangeTokens: (tokens: Token[] | 'all', type: Type) => void;
   onChangeBooleansConfig: (name: 'multiWallets' | 'customeAddress', value: boolean) => void;
   onChangeBlockChain: (chain: BlockchainMeta, type: Type) => void;
-  onChangeToken: (token: Token, type: Type) => void;
+  onChangeToken: (token: Token | null, type: Type) => void;
   onChangeStringsConfig: (name: StringsName, value: string) => void;
   onChangeNumbersConfig: (name: NumbersName, value: number) => void;
   onChangeTheme: (theme: THEME) => void;
