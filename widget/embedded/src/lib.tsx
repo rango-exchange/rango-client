@@ -39,7 +39,8 @@ export const SwapBox: React.FC<WidgetProps> = ({ configs }) => {
   const connectWallet = useWalletsStore.use.connectWallet();
   const setTheme = useSettingsStore.use.setTheme();
   const { changeLanguage } = useSelectLanguage();
-  
+  const clearConnectedWallet = useWalletsStore.use.clearConnectedWallet();
+
   const evmBasedChainNames = blockchains
     .filter(isEvmBlockchain)
     .map((chain) => chain.name);
@@ -67,18 +68,23 @@ export const SwapBox: React.FC<WidgetProps> = ({ configs }) => {
       }
     }
   };
-  const wallets = configs.wallets;
-  const providers =
-    wallets === 'all'
-      ? allProviders()
-      : allProviders().filter((provider) => {
-          const type = provider.config.type;
-          return wallets.find((w) => w === type);
-        });
+  let providers = allProviders();
 
   useEffect(() => {
     if (configs.theme !== 'auto') setTheme(configs.theme);
   }, [configs.theme]);
+
+  useEffect(() => {
+    const wallets = configs.wallets;
+    clearConnectedWallet();
+    providers =
+      wallets === 'all'
+        ? allProviders()
+        : allProviders().filter((provider) => {
+            const type = provider.config.type;
+            return wallets.find((w) => w === type);
+          });
+  }, [configs?.wallets]);
 
   useEffect(() => {
     changeLanguage(configs?.languege);

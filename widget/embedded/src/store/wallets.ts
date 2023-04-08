@@ -50,6 +50,7 @@ interface WalletsStore {
   disconnectWallet: (walletType: WalletType) => void;
   initSelectedWallets: () => void;
   setSelectedWallet: (wallet: SelectableWallet) => void;
+  clearConnectedWallet: () => void;
 }
 
 export const useWalletsStore = createSelectors(
@@ -150,6 +151,13 @@ export const useWalletsStore = createSelectors(
               address: wallet.address,
               walletType: wallet.walletType,
             }),
+        })),
+
+      clearConnectedWallet: () =>
+        set(() => ({
+          accounts: [],
+          balances: [],
+          selectedWallets: [],
         })),
     }))
   )
