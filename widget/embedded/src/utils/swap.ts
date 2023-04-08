@@ -18,8 +18,8 @@ import { numberToString } from './numbers';
 import { WalletType } from '@rango-dev/wallets-shared';
 import { getRequiredBalanceOfWallet } from './routing';
 import { getRequiredChains, SelectedWallet } from './wallets';
-import { SwapButtonState } from '../types';
 import { LoadingStatus } from '../store/meta';
+import { SwapButtonState } from '../types';
 
 export function getOutputRatio(
   inputUsdValue: BigNumber,

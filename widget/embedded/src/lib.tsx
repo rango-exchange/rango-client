@@ -19,6 +19,7 @@ import { Configs } from './types';
 import { useSettingsStore } from './store/settings';
 import useSelectLanguage from './hooks/useSelectLanguage';
 import './i18n';
+import QueueManager from './QueueManager';
 
 export type WidgetProps = {
   configs: Configs;
@@ -38,6 +39,7 @@ export const SwapBox: React.FC<WidgetProps> = ({ configs }) => {
   const connectWallet = useWalletsStore.use.connectWallet();
   const setTheme = useSettingsStore.use.setTheme();
   const { changeLanguage } = useSelectLanguage();
+  console.log({ blockchains });
 
   const evmBasedChainNames = blockchains
     .filter(isEvmBlockchain)
@@ -53,6 +55,7 @@ export const SwapBox: React.FC<WidgetProps> = ({ configs }) => {
     if (event === Events.ACCOUNTS) {
       if (value) {
         const supportedChainNames: Network[] | null =
+          //@ts-ignore
           walletAndSupportedChainsNames(supportedChains);
         const data = prepareAccountsForWalletStore(
           type,
@@ -90,16 +93,27 @@ export const SwapBox: React.FC<WidgetProps> = ({ configs }) => {
       onUpdateState={onUpdateState}
     >
       <div id="pageContainer" className={activeTheme}>
-        <SwapContainer
-          style={{
-            width: configs?.width || 'auto',
-            height: configs?.height || 'auto',
-          }}
-        >
-          <AppRouter>
-            <Layout configs={configs} />
-          </AppRouter>
-        </SwapContainer>
+        <QueueManager>
+          <SwapContainer
+            style={{
+              width: configs?.width || 'auto',
+              height: configs?.height || 'auto',
+            }}
+          >
+            <AppRouter
+              title={configs.title}
+              fromChain={configs.fromChain}
+              fromToken={configs.fromToken}
+              toChain={configs.toChain}
+              toToken={configs.toToken}
+              fromAmount={configs.fromAmount}
+              titleSize={configs.titleSize}
+              titleWeight={configs.titleWeight}
+            >
+              <Layout configs={configs} />
+            </AppRouter>
+          </SwapContainer>
+        </QueueManager>
       </div>
     </Provider>
   );
