@@ -674,7 +674,7 @@ export function onBlockForChangeNetwork(
   const swap = queue.getStorage().swapDetails as SwapStorage['swapDetails'];
   const currentStep = getCurrentStep(swap);
 
-  if (!currentStep) return;
+  if (!currentStep || swap.status !== 'running') return;
 
   const result = markRunningSwapAsSwitchingNetwork({
     getStorage: queue.getStorage.bind(queue),
@@ -1490,7 +1490,7 @@ export function checkWaitingForConnectWalletChange(params: {
   manager?.getAll().forEach((q) => {
     const queueStorage = q.list.getStorage() as SwapStorage | undefined;
     const swap = queueStorage?.swapDetails;
-    if (swap) {
+    if (swap && swap.status === 'running') {
       const currentStep = getCurrentStep(swap);
       if (currentStep) {
         const currentStepRequiredWallet =
@@ -1510,8 +1510,6 @@ export function checkWaitingForConnectWalletChange(params: {
 
         if (currentStepRequiredWallet === wallet && hasWaitingForConnect) {
           const queueInstance = q.list;
-          const swap = queueInstance.getStorage()
-            ?.swapDetails as SwapStorage['swapDetails'];
           const { type } = getRequiredWallet(swap);
           const description = ERROR_MESSAGE_WAIT_FOR_CHANGE_NETWORK(type);
 
@@ -1551,16 +1549,18 @@ export function checkWaitingForNetworkChange(manager?: Manager): void {
     if (hasWaitingForNetwork) {
       const swap = q.list.getStorage()
         ?.swapDetails as SwapStorage['swapDetails'];
-      const { type } = getRequiredWallet(swap);
-      const description = ERROR_MESSAGE_WAIT_FOR_WALLET_DESCRIPTION(type);
+      if (swap.status === 'running') {
+        const { type } = getRequiredWallet(swap);
+        const description = ERROR_MESSAGE_WAIT_FOR_WALLET_DESCRIPTION(type);
 
-      // Change the block reason to waiting for connecting wallet
-      q.list.block({
-        reason: {
-          reason: BlockReason.WAIT_FOR_CONNECT_WALLET,
-          description,
-        },
-      });
+        // Change the block reason to waiting for connecting wallet
+        q.list.block({
+          reason: {
+            reason: BlockReason.WAIT_FOR_CONNECT_WALLET,
+            description,
+          },
+        });
+      }
     }
   });
 }
