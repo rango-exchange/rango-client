@@ -57,9 +57,13 @@ export async function executeTransaction(
   const isWrongAddress = !isRequiredWalletConnected(swap, context.state);
   if (isWrongAddress) {
     const { type, address } = getRequiredWallet(swap);
-    const description = !wallets
-      ? ERROR_MESSAGE_WAIT_FOR_WALLET_DESCRIPTION(type)
-      : ERROR_MESSAGE_WAIT_FOR_WALLET_DESCRIPTION_WRONG_WALLET(type, address);
+    const description =
+      !wallets ||
+      wallets.blockchains?.find(
+        (w) => !w.accounts?.find((account) => account.walletType === type)
+      )
+        ? ERROR_MESSAGE_WAIT_FOR_WALLET_DESCRIPTION(type)
+        : ERROR_MESSAGE_WAIT_FOR_WALLET_DESCRIPTION_WRONG_WALLET(type, address);
 
     const blockedFor = {
       reason: BlockReason.WAIT_FOR_CONNECT_WALLET,
