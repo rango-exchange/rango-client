@@ -3,13 +3,12 @@ import {
   CanSwitchNetwork,
   Connect,
   Subscribe,
-  BlockchainMeta,
   WalletInfo,
 } from '@rango-dev/wallets-shared';
 import { terraStation as terraStation_instance } from './helpers';
 import signer from './signer';
 import { ConnectType } from '@terra-money/wallet-controller';
-import { SignerFactory } from 'rango-types';
+import { BlockchainMeta, SignerFactory } from 'rango-types';
 
 const WALLET = WalletType.TERRA_STATION;
 const TERRA_STATION_WALLET_ID = 'station';
@@ -45,7 +44,7 @@ export const subscribe: Subscribe = ({
   updateChainId,
 }) => {
   instance.states().subscribe({
-    next: (value: any) => {
+    next: (value: any) => {      
       if (value.status === 'WALLET_CONNECTED') {
         const accounts = value.wallets.map(
           ({ terraAddress }: any) => terraAddress
