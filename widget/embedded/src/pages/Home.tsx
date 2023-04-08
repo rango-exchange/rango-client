@@ -146,12 +146,14 @@ export function Home(props: PropTypes) {
   const highFee = hasHighFee(totalFeeInUsd);
 
   useEffect(() => {
-    if (props.toChain) setToChain(props.toChain);
-    if (props.fromChain) setFromChain(props.fromChain);
-    if (props.toToken) setToToken(props.toToken);
-    if (props.fromToken) setFromToken(props.fromToken);
-    if (props.fromAmount) setInputAmount(props.fromAmount.toString());
+    if (props.fromChain && !fromChain) setFromChain(props.fromChain);
+    if (props.toChain && !toChain) setToChain(props.toChain);
+    if (props.toToken && !toToken) setToToken(props.toToken);
+    if (props.fromToken && !fromToken) setFromToken(props.fromToken);
+    if (props.fromAmount)
+      setInputAmount(props.fromAmount.toString());
   }, [props]);
+  
   return (
     <Container>
       <Header
