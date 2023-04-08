@@ -21,11 +21,6 @@ export const AppRoutes = ({
   liquiditySources = 'all',
   wallets = 'all',
   title,
-  fromChain,
-  fromToken,
-  toChain,
-  toToken,
-  fromAmount,
   multiWallets = true,
   titleSize,
   titleWeight,
@@ -34,16 +29,7 @@ export const AppRoutes = ({
     {
       path: navigationRoutes.home,
       element: (
-        <Home
-          title={title}
-          titleSize={titleSize}
-          titleWeight={titleWeight}
-          fromChain={fromChain}
-          fromToken={fromToken}
-          toChain={toChain}
-          toToken={toToken}
-          fromAmount={fromAmount}
-        />
+        <Home title={title} titleSize={titleSize} titleWeight={titleWeight} />
       ),
     },
     {
