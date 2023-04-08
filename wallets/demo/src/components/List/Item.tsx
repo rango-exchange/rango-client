@@ -8,6 +8,7 @@ import {
   InfoCircleIcon,
   SignatureIcon,
   Spacer,
+  Spinner,
   Tooltip,
   Typography,
 } from '@rango-dev/ui';
@@ -16,6 +17,7 @@ import {
   prepareAccounts,
   walletAndSupportedChainsNames,
 } from '../../helper';
+import { TransactionType } from 'rango-sdk';
 
 function Item({ type, info }: { type: WalletType; info: WalletInfo }) {
   const { connect, state, disconnect, canSwitchNetworkTo, getSigners } = useWallets();
@@ -24,6 +26,7 @@ function Item({ type, info }: { type: WalletType; info: WalletInfo }) {
   const [error, setError] = useState<string>('');
   const evmBasedChains = evmBasedChainsSelector(info.supportedChains);
   const handleConnectWallet = async () => {
+    if (walletState.connecting) return;
     try {
       if (!walletState.connected) {
         if (walletState.installed) {
@@ -67,18 +70,16 @@ function Item({ type, info }: { type: WalletType; info: WalletInfo }) {
       const address =
         (walletState.accounts?.length > 1 &&
           readAccountAddress(
-            walletState.accounts.find((account) => account?.toLowerCase()?.includes(network?.toLowerCase()))!,
+            walletState.accounts.find((account) =>
+              account?.toLowerCase()?.includes(network?.toLowerCase()),
+            )!,
           ).address) ||
         activeAccount?.accounts[0].address;
 
-      const currentChain = info.supportedChains.find((chain) => chain.name === network)
+      const currentChain = info.supportedChains.find((chain) => chain.name === network);
       const txType = currentChain?.type || TransactionType.EVM;
       const chainId = currentChain?.chainId || null;
-      const result = signers.getSigner(txType).signMessage(
-        'Hello World',
-        address!,
-        chainId
-      );
+      const result = signers.getSigner(txType).signMessage('Hello World', address!, chainId);
       result
         .then((signature) => {
           alert(signature);
@@ -166,7 +167,11 @@ function Item({ type, info }: { type: WalletType; info: WalletInfo }) {
           ))}
         </select>
         <div className="flex mb-5">
-          <Button fullWidth type="primary" onClick={handleConnectWallet}>
+          <Button
+            fullWidth
+            suffix={walletState.connecting && <Spinner />}
+            type="primary"
+            onClick={handleConnectWallet}>
             {!walletState.installed ? 'Install' : walletState.connected ? 'Disconnect' : 'Connect'}
           </Button>
           <Spacer size={12} />
