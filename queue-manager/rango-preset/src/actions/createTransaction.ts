@@ -9,6 +9,7 @@ import {
   isStarknetTransaction,
   isTronTransaction,
   updateSwapStatus,
+  throwOnOK,
 } from '../helpers';
 import { APIErrorCode } from '../shared-errors';
 import { prettifyErrorMessage } from '../shared';
@@ -67,7 +68,10 @@ export async function createTransaction(
     };
     try {
       // Getting transcation from server.
-      const { transaction } = await httpService.createTransaction(request);
+
+      const { transaction } = await throwOnOK(
+        httpService.createTransaction(request)
+      );
 
       if (transaction) {
         if (isEvmTransaction(transaction)) {

@@ -25,6 +25,7 @@ import {
   Transaction,
   TransactionType,
   EvmBlockchainMeta,
+  CreateTransactionResponse,
 } from 'rango-sdk';
 
 import {
@@ -1646,4 +1647,24 @@ export function isNeedBlockQueueForParallel(step: PendingSwapStep): boolean {
     !!step.evmApprovalTransaction ||
     !!step.cosmosTransaction
   );
+}
+
+/*
+Create transaction endpoint doesn't return error code on http status code,
+For backward compatibilty with server and sdk, we use this wrapper to reject the promise.
+*/
+export async function throwOnOK(
+  rawResponse: Promise<CreateTransactionResponse>
+): Promise<CreateTransactionResponse> {
+  try {
+    const responseBody = await rawResponse;
+    if (!responseBody.ok || !responseBody.transaction) {
+      throw PrettyError.CreateTransaction(
+        responseBody.error || 'bad response from create tx endpoint'
+      );
+    }
+    return responseBody;
+  } catch (e) {
+    throw e;
+  }
 }
