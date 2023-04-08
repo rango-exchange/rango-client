@@ -8,8 +8,21 @@ import {
 import { navigationRoutes } from '../constants/navigationRoutes';
 import { UpdateUrl } from './UpdateUrl';
 import { Home } from '../pages/Home';
-
-const Route: React.FC = (props: PropsWithChildren) => {
+import { BlockchainMeta, Token } from 'rango-sdk';
+interface PropTypes {
+  title?: string;
+  fromChain: BlockchainMeta | null;
+  fromToken: Token | null;
+  toChain: BlockchainMeta | null;
+  toToken: Token | null;
+  fromAmount: number;
+  titleSize?: number;
+  titleWeight?: number;
+}
+const Route: React.FC = ({
+  children,
+  ...props
+}: PropTypes & PropsWithChildren) => {
   const location = useLocation();
   const navigate = useNavigate();
   const ref = useRef(true);
@@ -32,18 +45,21 @@ const Route: React.FC = (props: PropsWithChildren) => {
     ) &&
     ref.current
   )
-    return <Home />;
+    return <Home {...props} />;
 
-  return <> {props.children}</>;
+  return <> {children}</>;
 };
 
-export function AppRouter({ children }: PropsWithChildren) {
+export function AppRouter({
+  children,
+  ...props
+}: PropTypes & PropsWithChildren) {
   const isRouterInContext = useInRouterContext();
   const Router = isRouterInContext ? Route : MemoryRouter;
 
   return (
     <>
-      <Router>{children}</Router>
+      <Router {...props}>{children}</Router>
       {isRouterInContext && <UpdateUrl />}
     </>
   );

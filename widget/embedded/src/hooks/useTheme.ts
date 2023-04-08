@@ -1,5 +1,5 @@
 import { createTheme } from '@rango-dev/ui';
-import { useState, useEffect, useLayoutEffect, useRef } from 'react';
+import { useState, useEffect, useLayoutEffect } from 'react';
 import { useMetaStore } from '../store/meta';
 import { useSettingsStore } from '../store/settings';
 import { Colors } from '../types';

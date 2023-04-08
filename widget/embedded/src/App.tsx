@@ -29,11 +29,11 @@ export type WidgetProps = {
 
 export function App({ configs }: WidgetProps) {
   globalStyles();
+  globalFont(configs?.fontFamily || 'Roboto');
   const { activeTheme } = useTheme({
     ...configs?.colors,
     borderRadius: configs?.borderRadius,
   });
-  globalFont(configs?.fontFamily || 'Roboto');
 
   const { blockchains } = useMetaStore.use.meta();
   const disconnectWallet = useWalletsStore.use.disconnectWallet();
@@ -76,7 +76,16 @@ export function App({ configs }: WidgetProps) {
       <div id="pageContainer" className={activeTheme}>
         <QueueManager>
           <SwapContainer>
-            <AppRouter>
+            <AppRouter
+              title={configs?.title}
+              fromChain={configs?.fromChain}
+              fromToken={configs?.fromToken}
+              toChain={configs?.toChain}
+              toToken={configs?.toToken}
+              fromAmount={configs?.fromAmount}
+              titleSize={configs?.titleSize}
+              titleWeight={configs?.titleWeight}
+            >
               <Layout configs={configs} />
             </AppRouter>
           </SwapContainer>
