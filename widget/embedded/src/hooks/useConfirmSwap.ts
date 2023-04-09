@@ -95,7 +95,7 @@ export function useConfirmSwap(): ConfirmSwap {
 
         return newSwap;
       }
-      return undefined;
+      return;
     }
 
     abortControllerRef.current = new AbortController();
@@ -133,12 +133,10 @@ export function useConfirmSwap(): ConfirmSwap {
             type: ConfirmSwapErrorTypes.NO_ROUTE,
           })
         );
-        return undefined;
+        return;
       }
 
-      const confirmSwapState: Partial<
-        Omit<ConfirmSwap, 'confirmSwap' | 'loading'>
-      > = {
+      const confirmSwapState: Omit<ConfirmSwap, 'confirmSwap' | 'loading'> = {
         errors: [],
         warnings: [],
       };
@@ -238,13 +236,13 @@ export function useConfirmSwap(): ConfirmSwap {
         setWarnings(confirmSwapState.warnings);
         confiremedRouteRef.current = confiremedRoute;
       }
-      return undefined;
+      return;
     } catch (error) {
-      if (error.code === 'ERR_CANCELED') {
-        return undefined;
+      if ((error as any)?.code === 'ERR_CANCELED') {
+        return;
       }
 
-      const status = error.response?.status;
+      const status = (error as any)?.response?.status;
 
       setLoading(false);
       setErrors([
@@ -254,7 +252,7 @@ export function useConfirmSwap(): ConfirmSwap {
         },
       ]);
 
-      return undefined;
+      return;
     }
   };
 

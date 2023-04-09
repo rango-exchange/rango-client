@@ -67,7 +67,7 @@ export function WalletsPage({ supportedWallets, multiWallets }: PropTypes) {
         await connect(type);
       }
     } catch (e) {
-      setWalletErrorMessage('Error: ' + e.message);
+      setWalletErrorMessage('Error: ' + (e as any)?.message);
     }
   };
 
@@ -78,7 +78,7 @@ export function WalletsPage({ supportedWallets, multiWallets }: PropTypes) {
 
   return (
     <SecondaryPage
-      title={t('Select Wallet')}
+      title={t('Select Wallet') || ''}
       textField={false}
       onBack={navigateBackFrom.bind(null, navigationRoutes.wallets)}
     >

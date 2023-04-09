@@ -56,7 +56,7 @@ export function getlistWallet(
     WalletType.UNKNOWN,
     WalletType.TERRA_STATION,
     WalletType.LEAP,
-  ];  
+  ];
 
   return list
     .filter((wallet) => !excludedWallets.includes(wallet))
@@ -74,7 +74,7 @@ export function getlistWallet(
         installLink: detectInstallLink(installLink),
         state,
         type,
-        showOnMobile,
+        showOnMobile: typeof showOnMobile === 'undefined' ? false : true,
       };
     });
 }
@@ -342,8 +342,8 @@ export const sortTokens = (tokens: TokenWithBalance[]): TokenWithBalance[] => {
     .filter((token) => !!token.balance)
     .sort(
       (tokenA, tokenB) =>
-        parseFloat(tokenB.balance.usdValue) -
-        parseFloat(tokenA.balance.usdValue)
+        parseFloat(tokenB.balance?.usdValue || '0') -
+        parseFloat(tokenA.balance?.usdValue || '0')
     )
     .concat(
       tokens.filter((token) => !token.balance && !token.isSecondaryCoin),
@@ -428,15 +428,15 @@ export function getTokensWithBalance(
 }
 
 export function getSortedTokens(
-  chain: BlockchainMeta,
+  chain: BlockchainMeta | null,
   tokens: Token[],
   balances: Balance[],
   otherChainTokens: TokenWithBalance[]
 ): TokenWithBalance[] {
-  const fromChainEqueulsToToChain = chain.name === otherChainTokens[0]?.name;
+  const fromChainEqueulsToToChain = chain?.name === otherChainTokens[0]?.name;
   if (fromChainEqueulsToToChain) return otherChainTokens;
   const filteredTokens = tokens.filter(
-    (token) => token.blockchain === chain.name
+    (token) => token.blockchain === chain?.name
   );
   return sortTokens(getTokensWithBalance(filteredTokens, balances));
 }
@@ -451,7 +451,7 @@ export function tokensAreEqual(tokenA: Token | null, tokenB: Token | null) {
 
 export function getDefaultToken(
   sortedTokens: TokenWithBalance[],
-  otherToken: TokenWithBalance
+  otherToken: TokenWithBalance | null
 ): TokenWithBalance {
   let selectedToken: TokenWithBalance;
   const firstToken = sortedTokens[0];

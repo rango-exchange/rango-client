@@ -15,8 +15,9 @@ import { BestRouteWithFee } from '@rango-dev/ui';
 export function searchParamsToToken(
   tokens: Token[],
   searchParams: string | null,
-  chain: BlockchainMeta
+  chain: BlockchainMeta | null
 ): Token | null {
+  if (!chain) return null;
   return (
     tokens.find((token) => {
       const symbolAndAddress = searchParams?.split('--');
@@ -133,13 +134,15 @@ export function isRouteParametersChanged(
 }
 
 export function getBestRouteWithCalculatedFees(
-  bestRoute: BestRouteResponse,
+  bestRoute: BestRouteResponse | null,
   tokens: TokenMeta[]
-): BestRouteWithFee {
-  const swapsWithFee = bestRoute.result.swaps.map((swap) => ({
+): BestRouteWithFee | null {
+  if (!bestRoute || !bestRoute.result) return null;
+  const swapsWithFee = (bestRoute?.result?.swaps || []).map((swap) => ({
     ...swap,
     feeInUsd: numberToString(getUsdFeeOfStep(swap, tokens), 0, 2),
   }));
+
   return {
     ...bestRoute,
     result: { ...bestRoute.result, swaps: swapsWithFee },

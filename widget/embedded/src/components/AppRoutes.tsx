@@ -13,48 +13,73 @@ import { ConfirmWalletsPage } from '../pages/ConfirmWalletsPage';
 import { SwapDetailsPage } from '../pages/SwapDetailsPage';
 import { Configs } from '../types';
 
-export const AppRoutes = ({
-  fromChains = 'all',
-  toChains = 'all',
-  fromTokens = 'all',
-  toTokens = 'all',
-  liquiditySources = 'all',
-  wallets = 'all',
-  title,
-  multiWallets = true,
-  titleSize,
-  titleWeight,
-}: Configs) =>
-  useRoutes([
+interface PropTypes {
+  configs?: Configs;
+}
+
+export function AppRoutes(props: PropTypes) {
+  const { configs } = props;
+
+  return useRoutes([
     {
       path: navigationRoutes.home,
       element: (
-        <Home title={title} titleSize={titleSize} titleWeight={titleWeight} />
+        <Home
+          title={configs?.title}
+          titleSize={configs?.titleSize}
+          titleWeight={configs?.titleWeight}
+        />
       ),
     },
     {
       path: navigationRoutes.fromChain,
-      element: <SelectChainPage type="from" supportedChains={fromChains} />,
+      element: (
+        <SelectChainPage
+          type="from"
+          supportedChains={configs?.fromChains || 'all'}
+        />
+      ),
     },
     {
       path: navigationRoutes.toChain,
-      element: <SelectChainPage type="to" supportedChains={toChains} />,
+      element: (
+        <SelectChainPage
+          type="to"
+          supportedChains={configs?.toChains || 'all'}
+        />
+      ),
     },
     {
       path: navigationRoutes.fromToken + '/*',
-      element: <SelectTokenPage type="from" supportedTokens={fromTokens} />,
+      element: (
+        <SelectTokenPage
+          type="from"
+          supportedTokens={configs?.fromTokens || 'all'}
+        />
+      ),
     },
     {
       path: navigationRoutes.toToken,
-      element: <SelectTokenPage type="to" supportedTokens={toTokens} />,
+      element: (
+        <SelectTokenPage
+          type="to"
+          supportedTokens={configs?.toTokens || 'all'}
+        />
+      ),
     },
     {
       path: navigationRoutes.settings,
-      element: <SettingsPage supportedSwappers={liquiditySources} />,
+      element: (
+        <SettingsPage supportedSwappers={configs?.liquiditySources || 'all'} />
+      ),
     },
     {
       path: navigationRoutes.liquiditySources,
-      element: <LiquiditySourcePage supportedSwappers={liquiditySources} />,
+      element: (
+        <LiquiditySourcePage
+          supportedSwappers={configs?.liquiditySources || 'all'}
+        />
+      ),
     },
     { path: navigationRoutes.swaps, element: <HistoryPage /> },
     {
@@ -64,9 +89,17 @@ export const AppRoutes = ({
     {
       path: navigationRoutes.wallets,
       element: (
-        <WalletsPage supportedWallets={wallets} multiWallets={multiWallets} />
+        <WalletsPage
+          supportedWallets={configs?.wallets || 'all'}
+          multiWallets={
+            typeof configs?.multiWallets === 'undefined'
+              ? true
+              : configs.multiWallets
+          }
+        />
       ),
     },
     { path: navigationRoutes.confirmSwap, element: <ConfirmSwapPage /> },
     { path: navigationRoutes.confirmWallets, element: <ConfirmWalletsPage /> },
   ]);
+}

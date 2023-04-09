@@ -30,7 +30,7 @@ const WalletImage = styled('img', {
 });
 
 export type LayoutProps = {
-  configs: Configs;
+  configs?: Configs;
 };
 
 export function Layout({ configs }: LayoutProps) {
@@ -58,7 +58,7 @@ export function Layout({ configs }: LayoutProps) {
     setToToken(configs?.toToken || null);
   }, [configs?.toChain, configs?.toToken]);
   useEffect(() => {
-    setInputAmount(configs?.fromAmount.toString() || null);
+    setInputAmount(configs?.fromAmount?.toString() || '');
   }, [configs?.fromAmount]);
 
   useEffect(() => {
@@ -90,7 +90,7 @@ export function Layout({ configs }: LayoutProps) {
           </Typography>
         </Button>
       </Header>
-      <AppRoutes {...configs} />
+      <AppRoutes configs={configs} />
     </>
   );
 }
