@@ -6,11 +6,14 @@ import { useSettingsStore } from '../store/settings';
 import { ConfirmSwapExtraMessages } from '../components/warnings/ConfirmSwapExtraMessages';
 import { useNavigateBack } from '../hooks/useNavigateBack';
 import { navigationRoutes } from '../constants/navigationRoutes';
-import { confirmSwap, useConfirmSwapStore } from '../store/confirmSwap';
 import { ConfirmSwapErrors } from '../components/ConfirmSwapErrors';
 import { ConfirmSwapWarnings } from '../components/ConfirmSwapWarnings';
 import { useManager } from '@rango-dev/queue-manager-react';
 import { useUiStore } from '../store/ui';
+import { useConfirmSwap } from '../hooks/useConfirmSwap';
+import { ConfirmSwapErrorTypes } from '../store/confirmSwap';
+import { useMetaStore } from '../store/meta';
+import { getBestRouteWithCalculatedFees } from '../utils/routing';
 
 export function ConfirmSwapPage() {
   const setSelectedSwap = useUiStore.use.setSelectedSwap();
@@ -19,18 +22,22 @@ export function ConfirmSwapPage() {
   const navigate = useNavigate();
 
   const bestRoute = useBestRouteStore.use.bestRoute();
+  const fetchingBestRoute = useBestRouteStore.use.loading();
+  const { tokens } = useMetaStore.use.meta();
 
-  const loading = useConfirmSwapStore.use.loading();
-  const warnings = useConfirmSwapStore.use.warnings();
-  const errors = useConfirmSwapStore.use.errors();
   const slippage = useSettingsStore.use.slippage();
   const customSlippage = useSettingsStore.use.customSlippage();
   const selectedSlippage = customSlippage || slippage;
+  const { loading, errors, warnings, confirmSwap } = useConfirmSwap();
+
+  const showHighSlippageWarning = !errors.find(
+    (error) => error.type === ConfirmSwapErrorTypes.INSUFFICIENT_SLIPPAGE
+  );
 
   return (
     <ConfirmSwap
       onConfirm={() => {
-        confirmSwap().then((swap) => {
+        confirmSwap?.().then((swap) => {
           if (swap) {
             manager?.create('swap', { swapDetails: swap });
             setSelectedSwap(swap.requestId);
@@ -41,19 +48,21 @@ export function ConfirmSwapPage() {
         });
       }}
       onBack={navigateBackFrom.bind(null, navigationRoutes.confirmSwap)}
-      bestRoute={bestRoute}
+      bestRoute={getBestRouteWithCalculatedFees(bestRoute, tokens)}
       loading={loading}
       errors={ConfirmSwapErrors(errors)}
       warnings={ConfirmSwapWarnings(warnings)}
       extraMessages={
-        <ConfirmSwapExtraMessages selectedSlippage={selectedSlippage} />
+        showHighSlippageWarning && (
+          <ConfirmSwapExtraMessages selectedSlippage={selectedSlippage} />
+        )
       }
       confirmButtonTitle={
         warnings.length > 0 || errors.length > 0
           ? 'Proceed anyway!'
           : 'Confirm swap!'
       }
-      confirmButtonDisabled={errors.length > 0}
+      confirmButtonDisabled={fetchingBestRoute}
     />
   );
 }

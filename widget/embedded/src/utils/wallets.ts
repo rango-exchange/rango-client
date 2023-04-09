@@ -451,15 +451,14 @@ export function tokensAreEqual(tokenA: Token | null, tokenB: Token | null) {
 
 export function getDefaultToken(
   sortedTokens: TokenWithBalance[],
-  otherToken: Token
-): Token {
+  otherToken: TokenWithBalance
+): TokenWithBalance {
   let selectedToken: TokenWithBalance;
   const firstToken = sortedTokens[0];
   const secondToken = sortedTokens[1];
   if (sortedTokens.length === 1) selectedToken = firstToken;
   else if (tokensAreEqual(firstToken, otherToken)) selectedToken = secondToken;
   else selectedToken = firstToken;
-  delete selectedToken.balance;
   return selectedToken;
 }
 

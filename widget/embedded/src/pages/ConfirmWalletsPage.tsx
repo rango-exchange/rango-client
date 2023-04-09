@@ -61,7 +61,7 @@ export function ConfirmWalletsPage() {
       requiredWallets={getRequiredChains(bestRoute)}
       selectableWallets={selectableWallets}
       onBack={navigateBackFrom.bind(null, navigationRoutes.confirmWallets)}
-      swap={bestRoute!}
+      swap={bestRoute}
       fromAmount={fromAmount}
       toAmount={toAmount}
       onConfirm={() =>
