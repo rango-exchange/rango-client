@@ -1,5 +1,6 @@
 import { BestRouteResponse } from 'rango-sdk';
 import React, { Fragment, PropsWithChildren, ReactNode } from 'react';
+import { Spacer } from '../../components';
 import { Alert } from '../../components/Alert';
 import { Button } from '../../components/Button';
 import { RetryIcon, GasIcon } from '../../components/Icon';
@@ -130,15 +131,20 @@ export function ConfirmSwap(props: PropsWithChildren<PropTypes>) {
           {extraMessages || null}
           <Alerts>
             {errors?.map((error, index) => (
-              <Alert type="error" key={index}>
-                {error}
-              </Alert>
+              <>
+                <Spacer direction="vertical" />
+                <Alert type="error" key={index}>
+                  {error}
+                </Alert>
+              </>
             ))}
-            {/* {error && warnings && <Spacer direction="vertical" size={16} />} */}
             {warnings?.map((warning, index) => (
-              <Alert type="warning" key={index}>
-                {warning}
-              </Alert>
+              <>
+                <Spacer direction="vertical" />
+                <Alert type="warning" key={index}>
+                  {warning}
+                </Alert>
+              </>
             ))}
           </Alerts>
         </div>

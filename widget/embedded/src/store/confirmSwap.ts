@@ -160,9 +160,38 @@ export const confirmSwap = async (): Promise<PendingSwap | undefined> => {
   const unsubscribeFromBestRouteStore = useBestRouteStore.subscribe(
     (state) => state.bestRoute,
     () => {
-      abortController.abort();
+      abortController?.abort();
     },
     { equalityFn: shallow }
+  );
+  const unsubscribeFromSettingsStore = useSettingsStore.subscribe(
+    ({ customSlippage, slippage, disabledLiquiditySources }) => ({
+      customSlippage,
+      slippage,
+      disabledLiquiditySources,
+    }),
+    () => {
+      abortController?.abort();
+      if (!abortController) {
+        useConfirmSwapStore.setState({
+          errors: [],
+          warnings: [],
+          loading: false,
+          proceedAnyway: false,
+        });
+        unsubscribeFromSettingsStore();
+      }
+    },
+    {
+      equalityFn: (prevState, state) => {
+        return !(
+          prevState.customSlippage !== state.customSlippage ||
+          prevState.slippage !== state.slippage ||
+          prevState.disabledLiquiditySources.length !==
+            state.disabledLiquiditySources.length
+        );
+      },
+    }
   );
   const unsubscribeFromWalletsStore = useWalletsStore.subscribe(
     (state) => state.selectedWallets,
@@ -226,18 +255,6 @@ export const confirmSwap = async (): Promise<PendingSwap | undefined> => {
         );
         const highValueLoss = outputRatioHasWarning(inputUsdValue, outputRatio);
 
-        if (isNumberOfSwapsChanged(initialRoute, confiremedRoute))
-          confirmSwap.warnings.push({
-            type: ConfirmSwapWarningTypes.ROUTE_UPDATED,
-          });
-        else if (isRouteSwappersUpdated(initialRoute, confiremedRoute))
-          confirmSwap.warnings.push({
-            type: ConfirmSwapWarningTypes.ROUTE_SWAPPERS_UPDATED,
-          });
-        else isRouteInternalCoinsUpdated(initialRoute, confiremedRoute);
-        confirmSwap.warnings.push({
-          type: ConfirmSwapWarningTypes.ROUTE_COINS_UPDATED,
-        });
         if (highValueLoss)
           confirmSwap.errors.push({
             type: ConfirmSwapErrorTypes.ROUTE_UPDATED_WITH_HIGH_VALUE_LOSS,
@@ -256,6 +273,18 @@ export const confirmSwap = async (): Promise<PendingSwap | undefined> => {
               null,
               2
             ),
+          });
+        else if (isRouteInternalCoinsUpdated(initialRoute, confiremedRoute))
+          confirmSwap.warnings.push({
+            type: ConfirmSwapWarningTypes.ROUTE_COINS_UPDATED,
+          });
+        else if (isNumberOfSwapsChanged(initialRoute, confiremedRoute))
+          confirmSwap.warnings.push({
+            type: ConfirmSwapWarningTypes.ROUTE_UPDATED,
+          });
+        else if (isRouteSwappersUpdated(initialRoute, confiremedRoute))
+          confirmSwap.warnings.push({
+            type: ConfirmSwapWarningTypes.ROUTE_SWAPPERS_UPDATED,
           });
       }
 
@@ -312,6 +341,7 @@ export const confirmSwap = async (): Promise<PendingSwap | undefined> => {
       abortController = null;
       unsubscribeFromBestRouteStore();
       unsubscribeFromWalletsStore();
+      unsubscribeFromSettingsStore();
       return result;
     })
     .catch((error) => {
