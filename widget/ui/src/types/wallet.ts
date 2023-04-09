@@ -17,6 +17,7 @@ export type WalletInfo = {
   name: string;
   image: string;
   type: WalletType;
+  showOnMobile: boolean;
 };
 
 export interface SelectableWallet {

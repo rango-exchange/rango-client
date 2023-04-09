@@ -9,6 +9,9 @@ import { subscribeWithSelector } from 'zustand/middleware';
 import { httpService } from '../services/httpService';
 import { useSettingsStore } from './settings';
 import { createBestRouteRequestBody } from '../utils/swap';
+import { useMetaStore } from './meta';
+import { getDefaultToken, getSortedTokens } from '../utils/wallets';
+import { useWalletsStore } from './wallets';
 
 const getUsdValue = (token: Token | null, amount: string) =>
   new BigNumber(amount || ZERO).multipliedBy(token?.usdPrice || 0);
@@ -24,8 +27,13 @@ interface RouteState {
   toToken: Token | null;
   loading: boolean;
   error: string;
-  setFromChain: (chain: BlockchainMeta | null) => void;
-  setToChain: (chian: BlockchainMeta | null) => void;
+  sourceTokens: Token[];
+  destinationTokens: Token[];
+  setFromChain: (
+    chain: BlockchainMeta | null,
+    setDefaultToken?: boolean
+  ) => void;
+  setToChain: (chian: BlockchainMeta | null, setDefaultToken?: boolean) => void;
   setFromToken: (token: Token | null) => void;
   setToToken: (token: Token | null) => void;
   setInputAmount: (amount: string) => void;
@@ -47,6 +55,8 @@ export const useBestRouteStore = createSelectors(
       bestRoute: null,
       loading: false,
       error: '',
+      sourceTokens: [],
+      destinationTokens: [],
       setBestRoute: (bestRoute) =>
         set((state) => {
           let outputAmount: BigNumber | null = null;
@@ -69,10 +79,26 @@ export const useBestRouteStore = createSelectors(
             }),
           };
         }),
-      setFromChain: (chain) =>
-        set(() => ({
-          fromChain: chain,
-        })),
+      setFromChain: (chain, setDefaultToken) => {
+        set((state) => {
+          if (state.fromChain?.name === chain.name) return {};
+          const tokens = useMetaStore.getState().meta.tokens;
+          const balances = useWalletsStore.getState().balances;
+          const sortedTokens = getSortedTokens(
+            chain,
+            tokens,
+            balances,
+            state.destinationTokens
+          );
+          return {
+            fromChain: chain,
+            sourceTokens: sortedTokens,
+            ...(setDefaultToken && {
+              fromToken: getDefaultToken(sortedTokens, state.toToken),
+            }),
+          };
+        });
+      },
       setFromToken: (token) =>
         set((state) => ({
           fromToken: token,
@@ -80,21 +106,44 @@ export const useBestRouteStore = createSelectors(
             inputUsdValue: getUsdValue(token, state.inputAmount),
           }),
         })),
-      setToChain: (chain) =>
-        set(() => ({
-          toChain: chain,
-        })),
+      setToChain: (chain, setDefaultToken) => {
+        set((state) => {
+          if (state.toChain?.name === chain.name) return {};
+          const tokens = useMetaStore.getState().meta.tokens;
+          const balances = useWalletsStore.getState().balances;
+          const sortedTokens = getSortedTokens(
+            chain,
+            tokens,
+            balances,
+            state.destinationTokens
+          );
+
+          return {
+            toChain: chain,
+            destinationTokens: sortedTokens,
+            ...(setDefaultToken && {
+              toToken: getDefaultToken(sortedTokens, state.fromToken),
+            }),
+          };
+        });
+      },
       setToToken: (token) =>
         set(() => ({
           toToken: token,
         })),
-      setInputAmount: (amount) =>
+      setInputAmount: (amount) => {
         set((state) => ({
           inputAmount: amount,
+          ...(!amount && {
+            outputAmount: new BigNumber(0),
+            outputUsdValue: new BigNumber(0),
+            bestRoute: null,
+          }),
           ...(!!state.fromToken && {
             inputUsdValue: getUsdValue(state.fromToken, amount),
           }),
-        })),
+        }));
+      },
     }))
   )
 );
@@ -122,7 +171,12 @@ const bestRoute = (
       userSlippage,
       false
     );
-    bestRouteStore.setState({ loading: true, bestRoute: null });
+    bestRouteStore.setState({
+      loading: true,
+      bestRoute: null,
+      outputAmount: null,
+      outputUsdValue: new BigNumber(0),
+    });
     httpService
       .getBestRoute(requestBody, {
         signal: abortController.signal,
