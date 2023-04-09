@@ -1,4 +1,8 @@
-import { ExecuterActions, QueueType } from '@rango-dev/queue-manager-core';
+import {
+  ExecuterActions,
+  QueueInfo,
+  QueueType,
+} from '@rango-dev/queue-manager-core';
 import {
   BlockReason,
   SwapActionTypes,
@@ -1718,4 +1722,18 @@ export async function throwOnOK(
   } catch (e) {
     throw e;
   }
+}
+
+export function cancelSwap(swap: QueueInfo) {
+  swap.actions.cancel();
+  updateSwapStatus({
+    getStorage: swap.actions.getStorage,
+    setStorage: swap.actions.setStorage,
+    message: 'Swap canceled by user.',
+    details:
+      "Warning: If you've already signed and sent a transaction, it won't be affected, but next swap steps will not be executed.",
+    nextStatus: 'failed',
+    nextStepStatus: 'failed',
+    errorCode: 'USER_CANCEL',
+  });
 }
