@@ -248,10 +248,10 @@ export function calculatePendingSwap(
           transferTransaction: null,
           diagnosisUrl: null,
           internalSteps: null,
-          fromBlockchainLogo: fromBlockchain.logo,
-          toBlockchainLogo: toBlockchain.logo,
-          swapperLogo: swapper?.logo,
-          swapperType: swapperType,
+          fromBlockchainLogo: fromBlockchain?.logo || '',
+          toBlockchainLogo: toBlockchain?.logo || '',
+          swapperLogo: swapper?.logo || '',
+          swapperType: swapperType || '',
         };
       }) || [],
   };
@@ -335,7 +335,9 @@ export function hasSlippageError(
   return (slippages?.filter((s) => !!s?.error)?.length || 0) > 0;
 }
 
-export function getMinRequiredSlippage(route: BestRouteResponse) {
+export function getMinRequiredSlippage(
+  route: BestRouteResponse
+): number | null {
   const slippages = route.result?.swaps.map(
     (slippage) => slippage.recommendedSlippage
   );
@@ -469,14 +471,15 @@ export function getWalletsForNewSwap(selectedWallets: SelectedWallet[]) {
   return wallets;
 }
 
-export function getRouteOutputAmount(route: BestRouteResponse) {
-  return route.result?.outputAmount || null;
+export function getRouteOutputAmount(route: BestRouteResponse | null) {
+  return route?.result?.outputAmount || null;
 }
 
 export function getPercentageChange(
-  oldValue: string | number,
-  newValue: string | number
+  oldValue: string | number | null,
+  newValue: string | number | null
 ) {
+  if (!oldValue || !newValue) return null;
   return new BigNumber(newValue)
     .div(new BigNumber(oldValue))
     .minus(1)
@@ -494,6 +497,7 @@ export function isOutputAmountChangedALot(
     oldOutputAmount,
     newOutputAmount
   );
+  if (!percentageChange) return true;
 
   return percentageChange.toNumber() <= -1;
 }

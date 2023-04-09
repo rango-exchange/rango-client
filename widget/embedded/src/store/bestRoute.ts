@@ -168,7 +168,7 @@ const bestRoute = (
     if (!fromToken || !toToken || !inputAmount) return;
     abortController?.abort();
     abortController = new AbortController();
-    const userSlippage = customSlippage | slippage;
+    const userSlippage = !!customSlippage ? customSlippage : slippage;
     const requestBody = createBestRouteRequestBody(
       fromToken,
       toToken,

@@ -77,10 +77,9 @@ export function SettingsPage({ supportedSwappers }: PropTypes) {
       slippages={SLIPPAGES}
       selectedSlippage={slippage}
       onSlippageChange={(slippage) => setSlippage(slippage)}
-      onLiquiditySourcesClick={navigate.bind(
-        null,
-        navigationRoutes.liquiditySources
-      )}
+      onLiquiditySourcesClick={() =>
+        navigate(navigationRoutes.liquiditySources)
+      }
       onBack={navigateBackFrom.bind(null, navigationRoutes.settings)}
       liquiditySources={supportedUniqueSwappersGroups}
       selectedLiquiditySources={supportedUniqueSwappersGroups.filter(

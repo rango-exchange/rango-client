@@ -133,11 +133,19 @@ export function UpdateUrl() {
       const fromChain = blockchains.find(
         (blockchain) => blockchain.name === fromChainString
       );
-      const fromToken = searchParamsToToken(tokens, fromTokenString, fromChain);
+      const fromToken = searchParamsToToken(
+        tokens,
+        fromTokenString,
+        fromChain || null
+      );
       const toChain = blockchains.find(
         (blockchain) => blockchain.name === toChainString
       );
-      const toToken = searchParamsToToken(tokens, toTokenString, toChain);
+      const toToken = searchParamsToToken(
+        tokens,
+        toTokenString,
+        toChain || null
+      );
       if (!!fromChain) {
         setFromChain(fromChain);
         if (!!fromToken) setFromToken(fromToken);

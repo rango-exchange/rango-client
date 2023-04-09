@@ -7,7 +7,7 @@ import { TokenWithAmount } from '../TokenList/TokenList';
 export interface PropTypes {
   list: TokenWithAmount[];
   type?: 'Source' | 'Destination';
-  selected?: TokenWithAmount;
+  selected: TokenWithAmount | null;
   onChange: (token: TokenWithAmount) => void;
   hasHeader?: boolean;
   multiSelect?: boolean;

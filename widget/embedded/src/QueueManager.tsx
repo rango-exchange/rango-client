@@ -80,6 +80,7 @@ function QueueManager(props: PropsWithChildren<{}>) {
 
   return (
     <ManagerProvider
+      //@ts-ignore
       queuesDefs={[swapQueueDef]}
       context={context}
       onPersistedDataLoaded={(_manager) => {}}

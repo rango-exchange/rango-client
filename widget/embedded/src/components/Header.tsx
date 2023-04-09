@@ -29,7 +29,7 @@ export function Header(props: PropTypes) {
   return (
     <HeaderContainer>
       <Typography variant="h4" className={titleStyle()}>
-        {t(title.toLocaleLowerCase()) || title}
+        {title ? t(title.toLocaleLowerCase()) : ''}
       </Typography>
       <HeaderButtons onClickRefresh={onClickRefresh} />
     </HeaderContainer>
