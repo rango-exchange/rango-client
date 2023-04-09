@@ -343,7 +343,7 @@ export function getMinRequiredSlippage(
   );
   return (
     slippages
-      ?.map((s) => s?.slippage || 0)
+      ?.map((s) => parseFloat(s?.slippage || '0'))
       ?.filter((s) => s > 0)
       ?.sort((a, b) => b - a)
       ?.find(() => true) || null

@@ -40,7 +40,7 @@
   ],
   "dependencies": {
     "ethers": "^5.7.2",
-    "rango-types": "^0.1.22"
+    "rango-types": "^0.1.23"
   },
   "publishConfig": {
     "access": "public"
