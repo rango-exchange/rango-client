@@ -11,6 +11,7 @@ import {
   getSelectableWallets,
 } from '../utils/wallets';
 import { removeDuplicateFrom } from '../utils/common';
+//@ts-ignore
 import { Configs } from '../types';
 import { useTranslation } from 'react-i18next';
 import { useBestRouteStore } from '../store/bestRoute';

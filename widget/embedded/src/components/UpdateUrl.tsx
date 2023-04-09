@@ -1,4 +1,3 @@
-import { BlockchainMeta, Token } from 'rango-sdk';
 import { useEffect, useRef } from 'react';
 import {
   createSearchParams,

@@ -2,6 +2,7 @@ import { createTheme } from '@rango-dev/ui';
 import { useState, useEffect, useLayoutEffect } from 'react';
 import { useMetaStore } from '../store/meta';
 import { useSettingsStore } from '../store/settings';
+//@ts-ignore
 import { Colors } from '../types';
 import { shadeColor } from '../utils/common';
 import usePrevious from './usePrevious';

@@ -5,6 +5,7 @@ import { useMetaStore } from '../store/meta';
 import { useNavigate } from 'react-router-dom';
 import { navigationRoutes } from '../constants/navigationRoutes';
 import { removeDuplicateFrom } from '../utils/common';
+//@ts-ignore
 import { Source } from '../types';
 import {
   MAX_SLIPPAGE,
@@ -36,11 +37,11 @@ export function SettingsPage({ supportedSwappers }: PropTypes) {
     type: 'BRIDGE' | 'AGGREGATOR' | 'DEX';
     selected: boolean;
   }> = [];
-  removeDuplicateFrom(swappers.map(s => s.swapperGroup))
-    .map(swapperGroup => {
-      return swappers.find(s => s.swapperGroup === swapperGroup);
+  removeDuplicateFrom(swappers.map((s) => s.swapperGroup))
+    .map((swapperGroup) => {
+      return swappers.find((s) => s.swapperGroup === swapperGroup);
     })
-    .find(s => {
+    .find((s) => {
       if (s) {
         for (const type of s.types) {
           if (supportedSwappers !== 'all') {
@@ -76,7 +77,7 @@ export function SettingsPage({ supportedSwappers }: PropTypes) {
     <Settings
       slippages={SLIPPAGES}
       selectedSlippage={slippage}
-      onSlippageChange={slippage => setSlippage(slippage)}
+      onSlippageChange={(slippage) => setSlippage(slippage)}
       onLiquiditySourcesClick={navigate.bind(
         null,
         navigationRoutes.liquiditySources
