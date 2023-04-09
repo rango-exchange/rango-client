@@ -45,7 +45,12 @@ export function getlistWallet(
   return list
     .filter((wallet) => !excludedWallets.includes(wallet))
     .map((type) => {
-      const { name, img: image, installLink } = getWalletInfo(type);
+      const {
+        name,
+        img: image,
+        installLink,
+        showOnMobile,
+      } = getWalletInfo(type);
       const state = getStateWallet(getState(type));
       return {
         name,
@@ -53,6 +58,7 @@ export function getlistWallet(
         installLink,
         state,
         type,
+        showOnMobile: showOnMobile || false,
       };
     });
 }
