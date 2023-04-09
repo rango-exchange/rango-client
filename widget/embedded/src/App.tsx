@@ -17,7 +17,6 @@ import { globalFont, globalStyles } from './globalStyles';
 import { useTheme } from './hooks/useTheme';
 import QueueManager from './QueueManager';
 import { isEvmBlockchain } from 'rango-sdk';
-//@ts-ignore
 import { Configs } from './types';
 import './i18n';
 
