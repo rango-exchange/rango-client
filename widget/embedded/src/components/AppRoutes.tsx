@@ -11,7 +11,6 @@ import { SettingsPage } from '../pages/SettingsPage';
 import { WalletsPage } from '../pages/WalletsPage';
 import { ConfirmWalletsPage } from '../pages/ConfirmWalletsPage';
 import { SwapDetailsPage } from '../pages/SwapDetailsPage';
-//@ts-ignore
 import { Configs } from '../types';
 
 export const AppRoutes = ({
