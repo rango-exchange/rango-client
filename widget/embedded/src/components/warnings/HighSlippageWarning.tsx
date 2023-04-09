@@ -12,7 +12,7 @@ export function HighSlippageWarning(props: PropTypes) {
   return (
     <Alert type="warning">
       <Typography variant="body2">
-        slippage is high=&gt; Caution, your slippage is high (=
+        Caution, your slippage is high (=
         {selectedSlippage}). Your trade may be front run.
         <ChangeSlippageButton />
       </Typography>

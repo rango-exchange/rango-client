@@ -22,8 +22,6 @@ export function SelectChainPage(props: PropTypes) {
   const toChain = useBestRouteStore.use.toChain();
   const setFromChain = useBestRouteStore.use.setFromChain();
   const setToChain = useBestRouteStore.use.setToChain();
-  const setFromToken = useBestRouteStore.use.setFromToken();
-  const setToToken = useBestRouteStore.use.setToToken();
 
   const { navigateBackFrom } = useNavigateBack();
 
@@ -34,11 +32,8 @@ export function SelectChainPage(props: PropTypes) {
       selected={type === 'from' ? fromChain : toChain}
       loadingStatus={loadingStatus}
       onChange={(chain) => {
-        if (type === 'from') setFromChain(chain);
-        else setToChain(chain);
-        if (type === 'from' && fromChain?.name != chain.name)
-          setFromToken(null);
-        if (type === 'to' && toChain?.name != chain.name) setToToken(null);
+        if (type === 'from') setFromChain(chain, true);
+        else setToChain(chain, true);
         navigateBackFrom(navigationRoutes.fromChain);
       }}
       onBack={navigateBackFrom.bind(null, navigationRoutes.fromChain)}

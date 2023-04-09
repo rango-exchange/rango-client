@@ -3,9 +3,10 @@ import {
   isEvmAddress,
   KEPLR_COMPATIBLE_WALLETS,
   Network,
-  WalletInfo,
   WalletState,
   WalletType,
+  detectInstallLink,
+  WalletInfo,
 } from '@rango-dev/wallets-shared';
 
 import {
@@ -60,14 +61,20 @@ export function getlistWallet(
   return list
     .filter((wallet) => !excludedWallets.includes(wallet))
     .map((type) => {
-      const { name, img: image, installLink } = getWalletInfo(type);
+      const {
+        name,
+        img: image,
+        installLink,
+        showOnMobile,
+      } = getWalletInfo(type);
       const state = getStateWallet(getState(type));
       return {
         name,
         image,
-        installLink,
+        installLink: detectInstallLink(installLink),
         state,
         type,
+        showOnMobile,
       };
     });
 }
@@ -320,76 +327,28 @@ function numberWithThousandSeperator(number: string | number): string {
   return parts.join('.');
 }
 
-export const sortedTokens = (
-  tokens: TokenWithBalance[],
-  position: 'from' | 'to',
-  balance: Balance[]
-): TokenWithBalance[] => {
-  if (!tokens) return [];
-  const walletSymbols = new Set(
-    (balance || [])
-      .flatMap((a) => a.balances || [])
-      .filter((b) => (new BigNumber(b?.rawAmount) || ZERO).gt(0))
-      .map((b) => `${b?.chain}.${b?.symbol}.${b?.address}`)
-  );
-  let sortedList = [
-    ...tokens.filter(
-      (t) => !t.address && walletSymbols.size && position === 'to'
-    ),
-    ...tokens
-      .filter(
-        (t) =>
-          !(position === 'to' && !t.address) &&
-          walletSymbols.has(`${t.blockchain}.${t.symbol}.${t.address}`)
-      )
-      .sort((tokenA, tokenB) => compareBalance(tokenA, tokenB, balance)),
-    ...tokens.filter(
-      (t) =>
-        !walletSymbols.has(`${t.blockchain}.${t.symbol}.${t.address}`) &&
-        !t.address &&
-        (!walletSymbols.size || position === 'from')
-    ),
-    ...tokens.filter(
-      (t) =>
-        !walletSymbols.has(`${t.blockchain}.${t.symbol}.${t.address}`) &&
-        t.address &&
-        !t.isSecondaryCoin
-    ),
-    ...tokens.filter(
-      (t) =>
-        !walletSymbols.has(`${t.blockchain}.${t.symbol}.${t.address}`) &&
-        t.isSecondaryCoin
-    ),
-  ];
+export const sortTokens = (tokens: TokenWithBalance[]): TokenWithBalance[] => {
+  let walletConnected = !!tokens.some((token) => token.balance);
+  if (!walletConnected) {
+    return tokens
+      .filter((token) => !token.address)
+      .concat(
+        tokens.filter((token) => token.address && !token.isSecondaryCoin),
+        tokens.filter((token) => token.isSecondaryCoin)
+      );
+  }
 
-  return sortedList;
-};
-
-const compareBalance = (
-  tokenA: TokenWithBalance,
-  tokenB: TokenWithBalance,
-  wallet: Balance[]
-): number => {
-  if (!tokenA.usdPrice || !tokenB.usdPrice) return 0;
-
-  const tokenAUsdValue = new BigNumber(
-    getBalanceFromWallet(
-      wallet,
-      tokenA.blockchain,
-      tokenA.symbol,
-      tokenA.address
-    )?.amount || ZERO
-  ).multipliedBy(tokenA.usdPrice);
-  const tokenBUsdValue = new BigNumber(
-    getBalanceFromWallet(
-      wallet,
-      tokenB.blockchain,
-      tokenB.symbol,
-      tokenB.address
-    )?.amount || ZERO
-  ).multipliedBy(tokenB.usdPrice);
-  if (tokenAUsdValue.gt(tokenBUsdValue)) return -1;
-  return 1;
+  return tokens
+    .filter((token) => !!token.balance)
+    .sort(
+      (tokenA, tokenB) =>
+        parseFloat(tokenB.balance.usdValue) -
+        parseFloat(tokenA.balance.usdValue)
+    )
+    .concat(
+      tokens.filter((token) => !token.balance && !token.isSecondaryCoin),
+      tokens.filter((token) => !token.balance && token.isSecondaryCoin)
+    );
 };
 
 export const getUsdPrice = (
@@ -429,3 +388,89 @@ export const getKeplrCompatibleConnectedWallets = (
     connectedWalletTypes.has(compatibleWallet)
   );
 };
+
+export function getTokensWithBalance(
+  tokens: TokenWithBalance[],
+  balances: Balance[]
+): TokenWithBalance[] {
+  return tokens.map(({ balance, ...otherProps }) => {
+    const tokenAmount = numberToString(
+      new BigNumber(
+        getBalanceFromWallet(
+          balances,
+          otherProps.blockchain,
+          otherProps.symbol,
+          otherProps.address
+        )?.amount || ZERO
+      )
+    );
+
+    let tokenUsdValue = '';
+    if (otherProps.usdPrice)
+      tokenUsdValue = numberToString(
+        new BigNumber(
+          getBalanceFromWallet(
+            balances,
+            otherProps.blockchain,
+            otherProps.symbol,
+            otherProps.address
+          )?.amount || ZERO
+        ).multipliedBy(otherProps.usdPrice)
+      );
+
+    return {
+      ...otherProps,
+      ...(tokenAmount !== '0' && {
+        balance: { amount: tokenAmount, usdValue: tokenUsdValue },
+      }),
+    };
+  });
+}
+
+export function getSortedTokens(
+  chain: BlockchainMeta,
+  tokens: Token[],
+  balances: Balance[],
+  otherChainTokens: TokenWithBalance[]
+): TokenWithBalance[] {
+  const fromChainEqueulsToToChain = chain.name === otherChainTokens[0]?.name;
+  if (fromChainEqueulsToToChain) return otherChainTokens;
+  const filteredTokens = tokens.filter(
+    (token) => token.blockchain === chain.name
+  );
+  return sortTokens(getTokensWithBalance(filteredTokens, balances));
+}
+
+export function tokensAreEqual(tokenA: Token | null, tokenB: Token | null) {
+  return (
+    tokenA?.blockchain === tokenB?.blockchain &&
+    tokenA?.name === tokenB?.name &&
+    tokenA?.address === tokenB?.address
+  );
+}
+
+export function getDefaultToken(
+  sortedTokens: TokenWithBalance[],
+  otherToken: Token
+): Token {
+  let selectedToken: TokenWithBalance;
+  const firstToken = sortedTokens[0];
+  const secondToken = sortedTokens[1];
+  if (sortedTokens.length === 1) selectedToken = firstToken;
+  else if (tokensAreEqual(firstToken, otherToken)) selectedToken = secondToken;
+  else selectedToken = firstToken;
+  delete selectedToken.balance;
+  return selectedToken;
+}
+
+export function sortWalletsBasedOnState(
+  wallets: ModalWalletInfo[]
+): ModalWalletInfo[] {
+  return wallets.sort(
+    (a, b) =>
+      Number(b.state === WalletStatus.CONNECTED) -
+        Number(a.state === WalletStatus.CONNECTED) ||
+      Number(b.state === WalletStatus.DISCONNECTED) -
+        Number(a.state === WalletStatus.DISCONNECTED)
+  );
+}

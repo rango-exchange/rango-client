@@ -7,9 +7,10 @@ import {
   WalletState,
 } from '@rango-dev/ui';
 import React, { useEffect, useState } from 'react';
-import { getlistWallet } from '../utils/wallets';
-import { WalletType } from '@rango-dev/wallets-shared';
+import { getlistWallet, sortWalletsBasedOnState } from '../utils/wallets';
+import { WalletType, detectMobileScreens } from '@rango-dev/wallets-shared';
 import { useWallets } from '@rango-dev/wallets-core';
+
 import { useUiStore } from '../store/ui';
 import { useNavigateBack } from '../hooks/useNavigateBack';
 import { navigationRoutes } from '../constants/navigationRoutes';
@@ -40,6 +41,11 @@ export function WalletsPage({ supportedWallets, multiWallets }: PropTypes) {
     getWalletInfo,
     supportedWallets === 'all' ? Object.values(WalletType) : supportedWallets
   );
+
+  let sortedWallets = detectMobileScreens()
+    ? wallets.filter((wallet) => wallet.showOnMobile)
+    : wallets;
+  sortedWallets = sortWalletsBasedOnState(sortedWallets);
   const [walletErrorMessage, setWalletErrorMessage] = useState('');
   const toggleConnectWalletsButton =
     useUiStore.use.toggleConnectWalletsButton();
@@ -85,8 +91,12 @@ export function WalletsPage({ supportedWallets, multiWallets }: PropTypes) {
           </AlertContainer>
         )}
         <ListContainer>
-          {wallets.map((info, index) => (
-            <Wallet {...info} key={index} onClick={onSelectWallet} />
+          {sortedWallets.map((wallet, index) => (
+            <Wallet
+              {...wallet}
+              key={`${index}-${wallet.type}`}
+              onClick={onSelectWallet}
+            />
           ))}
         </ListContainer>
       </>

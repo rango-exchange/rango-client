@@ -5,14 +5,17 @@ import { subscribeWithSelector } from 'zustand/middleware';
 import { httpService } from '../services/httpService';
 import {
   getRequiredChains,
+  getTokensWithBalance,
   isAccountAndBalanceMatched,
   makeBalanceFor,
   resetBalanceState,
   SelectedWallet,
+  sortTokens,
 } from '../utils/wallets';
 import { useBestRouteStore } from './bestRoute';
 import { useMetaStore } from './meta';
 import createSelectors from './selectors';
+import { shallow } from 'zustand/shallow';
 
 export interface Account {
   chain: string;
@@ -161,4 +164,27 @@ export const useWalletsStore = createSelectors(
         })),
     }))
   )
+);
+
+useWalletsStore.subscribe(
+  (state) => state.balances,
+  (balances) => {
+    useBestRouteStore.setState(({ sourceTokens, destinationTokens }) => {
+      const sourceTokensWithBalance = getTokensWithBalance(
+        sourceTokens,
+        balances
+      );
+      const destinationTokensWithBalance = getTokensWithBalance(
+        destinationTokens,
+        balances
+      );
+      return {
+        sourceTokens: sortTokens(sourceTokensWithBalance),
+        destinationTokens: sortTokens(destinationTokensWithBalance),
+      };
+    });
+  },
+  {
+    equalityFn: shallow,
+  }
 );
