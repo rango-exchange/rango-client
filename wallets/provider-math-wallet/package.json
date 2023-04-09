@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/provider-math-wallet",
-  "version": "0.1.11-next.80",
+  "version": "0.1.11-next.81",
   "license": "MIT",
   "module": "dist/provider-math-wallet.esm.js",
   "main": "dist/index.js",

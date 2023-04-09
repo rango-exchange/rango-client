@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/provider-phantom",
-  "version": "0.1.11-next.80",
+  "version": "0.1.11-next.81",
   "license": "MIT",
   "module": "dist/provider-phantom.esm.js",
   "main": "dist/index.js",
