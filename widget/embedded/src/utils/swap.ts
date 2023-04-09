@@ -288,7 +288,10 @@ export const getUsdPrice = (
   return token?.usdPrice || null;
 };
 
-function getUsdFeeOfStep(step: SwapResult, allTokens: Token[]): BigNumber {
+export function getUsdFeeOfStep(
+  step: SwapResult,
+  allTokens: Token[]
+): BigNumber {
   let totalFeeInUsd = ZERO;
   for (let i = 0; i < step.fee.length; i++) {
     const fee = step.fee[i];
@@ -350,7 +353,8 @@ export function hasProperSlippage(
   minRequiredSlippage: number | null
 ) {
   if (!minRequiredSlippage) return true;
-  return parseFloat(userSlippage) > minRequiredSlippage;
+  //@ts-ignore
+  return parseFloat(userSlippage) >= parseFloat(minRequiredSlippage);
 }
 
 export function hasEnoughBalance(

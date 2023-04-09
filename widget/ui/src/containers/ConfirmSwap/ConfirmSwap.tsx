@@ -1,4 +1,3 @@
-import { BestRouteResponse } from 'rango-sdk';
 import React, { Fragment, PropsWithChildren, ReactNode } from 'react';
 import { Spacer } from '../../components';
 import { Alert } from '../../components/Alert';
@@ -8,6 +7,7 @@ import { SecondaryPage } from '../../components/SecondaryPage/';
 import { StepDetail } from '../../components/StepDetail';
 import { Typography } from '../../components/Typography';
 import { styled } from '../../theme';
+import { BestRouteWithFee } from '../../types/swaps';
 
 const MainContainer = styled('div', {
   overflow: 'hidden',
@@ -78,9 +78,8 @@ const BestRouteContainer = styled('div', {
 });
 
 const Alerts = styled('div', { paddingBottom: '$16' });
-
 export interface PropTypes {
-  bestRoute: BestRouteResponse | null;
+  bestRoute: BestRouteWithFee | null;
   onRefresh?: React.MouseEventHandler<SVGElement>;
   confirmButtonTitle: string;
   confirmButtonDisabled: boolean;
@@ -174,8 +173,7 @@ export function ConfirmSwap(props: PropsWithChildren<PropTypes>) {
                   <Fee>
                     <GasIcon />
                     <Typography ml={4} variant="caption">
-                      {parseFloat(swap.fee[0].amount).toFixed(6)} estimated gas
-                      fee
+                      ${swap.feeInUsd} estimated gas fee
                     </Typography>
                   </Fee>
                 </div>

@@ -87,7 +87,6 @@ export function Home(props: PropTypes) {
   const tokens = useMetaStore.use.meta().tokens;
   const fetchingBestRoute = useBestRouteStore.use.loading();
   const bestRouteError = useBestRouteStore.use.error();
-
   const loadingMetaStatus = useMetaStore.use.loadingStatus();
   const accounts = useWalletsStore.use.accounts();
 
