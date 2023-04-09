@@ -43,7 +43,6 @@ export function Layout({ configs }: LayoutProps) {
     )
   );
 
-  const { fromChain, toChain, toToken, fromToken, fromAmount } = configs;
   const setFromChain = useBestRouteStore.use.setFromChain();
   const setFromToken = useBestRouteStore.use.setFromToken();
   const setToChain = useBestRouteStore.use.setToChain();
@@ -55,17 +54,17 @@ export function Layout({ configs }: LayoutProps) {
     useUiStore.use.connectWalletsButtonDisabled();
   const { t } = useTranslation();
   useEffect(() => {
-    setToChain(toChain);
-    setToToken(toToken);
-  }, [toChain, toToken]);
+    setToChain(configs?.toChain || null);
+    setToToken(configs?.toToken || null);
+  }, [configs?.toChain, configs?.toToken]);
   useEffect(() => {
-    setInputAmount(fromAmount.toString());
-  }, [fromAmount]);
+    setInputAmount(configs?.fromAmount.toString() || null);
+  }, [configs?.fromAmount]);
 
   useEffect(() => {
-    setFromToken(fromToken);
-    setFromChain(fromChain);
-  }, [fromToken, fromChain]);
+    setFromToken(configs?.fromToken || null);
+    setFromChain(configs?.fromChain || null);
+  }, [configs?.fromToken, configs?.fromChain]);
   return (
     <>
       <Header>
