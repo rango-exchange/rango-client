@@ -78,11 +78,6 @@ export function App({ configs }: WidgetProps) {
           <SwapContainer>
             <AppRouter
               title={configs?.title}
-              fromChain={configs?.fromChain}
-              fromToken={configs?.fromToken}
-              toChain={configs?.toChain}
-              toToken={configs?.toToken}
-              fromAmount={configs?.fromAmount}
               titleSize={configs?.titleSize}
               titleWeight={configs?.titleWeight}
             >
