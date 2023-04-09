@@ -5,7 +5,6 @@ import { useMetaStore } from '../store/meta';
 import { useNavigate } from 'react-router-dom';
 import { navigationRoutes } from '../constants/navigationRoutes';
 import { removeDuplicateFrom } from '../utils/common';
-//@ts-ignore
 import { Source } from '../types';
 import {
   MAX_SLIPPAGE,

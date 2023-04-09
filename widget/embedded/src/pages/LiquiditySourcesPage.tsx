@@ -4,7 +4,6 @@ import { navigationRoutes } from '../constants/navigationRoutes';
 import { useNavigateBack } from '../hooks/useNavigateBack';
 import { useMetaStore } from '../store/meta';
 import { useSettingsStore } from '../store/settings';
-//@ts-ignore
 import { Source } from '../types';
 import { removeDuplicateFrom } from '../utils/common';
 interface PropTypes {
