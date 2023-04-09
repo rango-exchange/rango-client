@@ -68,6 +68,7 @@ export const convertBigNumberToHex = (value: BigNumber, decimals: number): strin
 
 export const uint8ArrayToHex = (buffer: Uint8Array): string => {
   // buffer is an ArrayBuffer
+  // @ts-ignore
   return [...buffer].map((x) => x.toString(16).padStart(2, '0')).join('');
 };
 
