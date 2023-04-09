@@ -48,5 +48,6 @@ export {
   getCurrentStep,
   getEvmProvider,
   getRelatedWallet,
+  cancelSwap,
 } from './helpers';
 export { useMigration, useQueueManager } from './hooks';
