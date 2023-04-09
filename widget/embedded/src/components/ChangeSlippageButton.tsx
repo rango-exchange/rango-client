@@ -15,7 +15,7 @@ export function ChangeSlippageButton() {
       type="primary"
       variant="contained"
       size="small"
-      onClick={navigate.bind(null, navigationRoutes.settings)}
+      onClick={() => navigate(navigationRoutes.settings)}
     >
       Change Slippage
     </StyledButton>

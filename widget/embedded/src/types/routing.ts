@@ -26,7 +26,7 @@ export type ConfirmSwapError =
     }
   | {
       type: ConfirmSwapErrorTypes.INSUFFICIENT_SLIPPAGE;
-      minRequiredSlippage: number;
+      minRequiredSlippage: number | null;
     }
   | {
       type: Exclude<
