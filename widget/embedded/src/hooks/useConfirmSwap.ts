@@ -8,9 +8,9 @@ import {
   ConfirmSwapErrorTypes,
   ConfirmSwapWarningTypes,
   ConfirmSwapWarnings,
-} from '../store/confirmSwap';
+  PendingSwapSettings,
+} from '../types';
 import { PendingSwap } from '@rango-dev/ui/dist/containers/History/types';
-import { PendingSwapSettings } from '../types';
 import {
   calculatePendingSwap,
   createBestRouteRequestBody,

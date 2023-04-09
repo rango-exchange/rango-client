@@ -15,6 +15,7 @@ import { Layout } from './components/Layout';
 import { globalFont, globalStyles } from './globalStyles';
 import { useTheme } from './hooks/useTheme';
 import { isEvmBlockchain } from 'rango-sdk';
+//@ts-ignore
 import { Configs } from './types';
 import { useSettingsStore } from './store/settings';
 import useSelectLanguage from './hooks/useSelectLanguage';

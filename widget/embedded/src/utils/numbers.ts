@@ -1,7 +1,8 @@
 import { BigNumber } from 'bignumber.js';
 import { BestRouteResponse } from 'rango-sdk';
 
-export const percentToString = (p: number, fractions = 0): string => (p * 100).toFixed(fractions);
+export const percentToString = (p: number, fractions = 0): string =>
+  (p * 100).toFixed(fractions);
 export const secondsToString = (s: number): string => {
   const seconds = (s % 60).toString().padStart(2, '0');
   const minutes = parseInt((s / 60).toString())
@@ -13,7 +14,7 @@ export const secondsToString = (s: number): string => {
 export const numberToString = (
   number: BigNumber | string | null,
   minDecimals: number | null = null,
-  maxDecimals: number | null = null,
+  maxDecimals: number | null = null
 ): string => {
   if (number === null) return '';
   if (number === '') return '';
@@ -30,39 +31,57 @@ export const numberToString = (
   if (n.gte(10000)) return n.toFormat(0, roundingMode);
   if (n.gte(1000))
     return n.toFormat(
-      Math.min(maxI, Math.min(maxDecimals || 100, Math.max(minDecimals || 0, 1))),
-      roundingMode,
+      Math.min(
+        maxI,
+        Math.min(maxDecimals || 100, Math.max(minDecimals || 0, 1))
+      ),
+      roundingMode
     );
   if (n.gte(100))
     return n.toFormat(
-      Math.min(maxI, Math.min(maxDecimals || 100, Math.max(minDecimals || 0, 1))),
-      roundingMode,
+      Math.min(
+        maxI,
+        Math.min(maxDecimals || 100, Math.max(minDecimals || 0, 1))
+      ),
+      roundingMode
     );
   if (n.gte(1))
     return n.toFormat(
-      Math.min(maxI, Math.min(maxDecimals || 100, Math.max(minDecimals || 0, 2))),
-      roundingMode,
+      Math.min(
+        maxI,
+        Math.min(maxDecimals || 100, Math.max(minDecimals || 0, 2))
+      ),
+      roundingMode
     );
   if (n.gte(0.01))
     return n.toFormat(
-      Math.min(maxI, Math.min(maxDecimals || 100, Math.max(minDecimals || 0, 4))),
-      roundingMode,
+      Math.min(
+        maxI,
+        Math.min(maxDecimals || 100, Math.max(minDecimals || 0, 4))
+      ),
+      roundingMode
     );
   for (let i = minDecimals || 4; i < 17; i++)
     if (n.gte(Math.pow(10, -i)))
       return n.toFormat(
-        Math.min(maxI, Math.min(maxDecimals || 100, Math.max(minDecimals || 0, i))),
-        roundingMode,
+        Math.min(
+          maxI,
+          Math.min(maxDecimals || 100, Math.max(minDecimals || 0, i))
+        ),
+        roundingMode
       );
   if (n.isEqualTo(0)) return '0';
 
   return n.toFormat(
     Math.min(maxI, Math.min(maxDecimals || 100, Math.max(minDecimals || 0, 8))),
-    roundingMode,
+    roundingMode
   );
 };
 
-export const convertBigNumberToHex = (value: BigNumber, decimals: number): string => {
+export const convertBigNumberToHex = (
+  value: BigNumber,
+  decimals: number
+): string => {
   return '0x' + value.shiftedBy(decimals).toString(16);
 };
 
@@ -100,13 +119,15 @@ export const totalArrivalTime = (data: BestRouteResponse | null) =>
 
 export const rawFees = (data: BestRouteResponse): string =>
   (
-    data?.result?.swaps?.flatMap((s) => s.fee.map((f) => ({ swapperId: s.swapperId, fee: f }))) ||
-    []
+    data?.result?.swaps?.flatMap((s) =>
+      s.fee.map((f) => ({ swapperId: s.swapperId, fee: f }))
+    ) || []
   )
     .reduce((partialSum, a) => partialSum + parseFloat(a.fee.amount), 0)
     .toFixed(3);
 
-export const decimalNumber = (number = '0', toFixed: number) => parseFloat(number).toFixed(toFixed);
+export const decimalNumber = (number = '0', toFixed: number) =>
+  parseFloat(number).toFixed(toFixed);
 
 export const containsText = (text: string, searchText: string) =>
   text.toLowerCase().indexOf(searchText.toLowerCase()) > -1;

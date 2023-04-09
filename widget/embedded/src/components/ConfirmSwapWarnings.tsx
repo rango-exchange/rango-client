@@ -1,9 +1,6 @@
 import React from 'react';
 import { Typography } from '@rango-dev/ui';
-import {
-  ConfirmSwapWarnings,
-  ConfirmSwapWarningTypes,
-} from '../store/confirmSwap';
+import { ConfirmSwapWarningTypes, ConfirmSwapWarnings } from '../types';
 import { BalanceWarnings } from './warnings/BalanceWarnings';
 
 export function ConfirmSwapWarnings(warnings: ConfirmSwapWarnings[]) {

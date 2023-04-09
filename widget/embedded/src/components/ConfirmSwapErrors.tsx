@@ -1,6 +1,6 @@
 import React from 'react';
 import { Typography } from '@rango-dev/ui';
-import { ConfirmSwapError, ConfirmSwapErrorTypes } from '../store/confirmSwap';
+import { ConfirmSwapError, ConfirmSwapErrorTypes } from '../types';
 import { MinRequiredSlippage } from './warnings/MinRequiredSlippage';
 
 export function ConfirmSwapErrors(errors: ConfirmSwapError[]) {

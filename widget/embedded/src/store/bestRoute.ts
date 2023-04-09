@@ -85,7 +85,7 @@ export const useBestRouteStore = createSelectors(
         }),
       setFromChain: (chain, setDefaultToken) => {
         set((state) => {
-          if (state.fromChain?.name === chain.name) return {};
+          if (state.fromChain?.name === chain?.name) return {};
           const tokens = useMetaStore.getState().meta.tokens;
           const balances = useWalletsStore.getState().balances;
           const sortedTokens = getSortedTokens(
@@ -116,7 +116,7 @@ export const useBestRouteStore = createSelectors(
         })),
       setToChain: (chain, setDefaultToken) => {
         set((state) => {
-          if (state.toChain?.name === chain.name) return {};
+          if (state.toChain?.name === chain?.name) return {};
           const tokens = useMetaStore.getState().meta.tokens;
           const balances = useWalletsStore.getState().balances;
           const sortedTokens = getSortedTokens(
