@@ -10,5 +10,11 @@ export function ConfirmSwapExtraMessages(props: PropTypes) {
   const { selectedSlippage } = props;
   const highSlippage = selectedSlippage >= HIGH_SLIPPAGE;
 
-  return <>{highSlippage && <HighSlippageWarning selectedSlippage={selectedSlippage} />}</>;
+  return (
+    <>
+      {highSlippage && (
+        <HighSlippageWarning selectedSlippage={selectedSlippage} />
+      )}
+    </>
+  );
 }

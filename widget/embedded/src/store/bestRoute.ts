@@ -3,7 +3,10 @@ import { Token } from 'rango-sdk';
 import { create } from 'zustand';
 import BigNumber from 'bignumber.js';
 import { ZERO } from '../constants/numbers';
-import { getBestRouteToTokenUsdPrice } from '../utils/routing';
+import {
+  getBestRouteToTokenUsdPrice,
+  isRouteParametersChanged,
+} from '../utils/routing';
 import createSelectors from './selectors';
 import { subscribeWithSelector } from 'zustand/middleware';
 import { httpService } from '../services/httpService';
@@ -12,19 +15,20 @@ import { createBestRouteRequestBody } from '../utils/swap';
 import { useMetaStore } from './meta';
 import { getDefaultToken, getSortedTokens } from '../utils/wallets';
 import { useWalletsStore } from './wallets';
+import { TokenWithBalance } from '../pages/SelectTokenPage';
 
 const getUsdValue = (token: Token | null, amount: string) =>
   new BigNumber(amount || ZERO).multipliedBy(token?.usdPrice || 0);
 
-interface RouteState {
+export interface RouteState {
   fromChain: BlockchainMeta | null;
   toChain: BlockchainMeta | null;
   inputAmount: string;
   inputUsdValue: BigNumber;
   outputAmount: BigNumber | null;
   outputUsdValue: BigNumber;
-  fromToken: Token | null;
-  toToken: Token | null;
+  fromToken: TokenWithBalance | null;
+  toToken: TokenWithBalance | null;
   loading: boolean;
   error: string;
   sourceTokens: Token[];
@@ -90,11 +94,15 @@ export const useBestRouteStore = createSelectors(
             balances,
             state.destinationTokens
           );
+          const fromToken = getDefaultToken(sortedTokens, state.toToken);
           return {
             fromChain: chain,
             sourceTokens: sortedTokens,
             ...(setDefaultToken && {
-              fromToken: getDefaultToken(sortedTokens, state.toToken),
+              fromToken,
+            }),
+            ...(!!state.inputAmount && {
+              inputUsdValue: getUsdValue(fromToken, state.inputAmount),
             }),
           };
         });
@@ -208,18 +216,7 @@ const bestRoute = (
     fetchBestRoute.bind(null),
     {
       equalityFn: (prevState, state) => {
-        if (
-          prevState.fromChain?.name !== state.fromChain?.name ||
-          prevState.toChain?.name !== state.toChain?.name ||
-          prevState.fromToken?.symbol !== state.fromToken?.symbol ||
-          prevState.toToken?.symbol !== state.toToken?.symbol ||
-          prevState.fromToken?.blockchain !== state.fromToken?.blockchain ||
-          prevState.toToken?.blockchain !== state.toToken?.blockchain ||
-          prevState.fromToken?.address !== state.fromToken?.address ||
-          prevState.toToken?.address !== state.toToken?.address ||
-          prevState.inputAmount !== state.inputAmount
-        )
-          return false;
+        if (isRouteParametersChanged(prevState, state)) return false;
         else return true;
       },
     }
@@ -234,13 +231,7 @@ const bestRoute = (
     fetchBestRoute.bind(null),
     {
       equalityFn: (prevState, state) => {
-        if (
-          prevState.slippage !== state.slippage ||
-          prevState.customSlippage !== state.customSlippage ||
-          prevState.disabledLiquiditySources.length !==
-            state.disabledLiquiditySources.length
-        )
-          return false;
+        if (isRouteParametersChanged(prevState, state)) return false;
         else return true;
       },
     }

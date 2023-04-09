@@ -22,7 +22,7 @@ const ConfirmButton = styled(Button, {
 });
 
 export interface PropTypes {
-  swap: BestRouteResponse;
+  swap: BestRouteResponse | null;
   fromAmount: string;
   toAmount: string;
   onBack: () => void;
@@ -51,8 +51,8 @@ export function ConfirmWallets(props: PropsWithChildren<PropTypes>) {
     toAmount,
   } = props;
 
-  const firstStep = swap.result?.swaps[0];
-  const lastStep = swap.result?.swaps[swap.result?.swaps.length - 1];
+  const firstStep = swap?.result?.swaps[0];
+  const lastStep = swap?.result?.swaps[swap.result?.swaps.length - 1];
 
   return (
     <SecondaryPage

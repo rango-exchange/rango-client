@@ -1,4 +1,4 @@
-import { Token } from 'rango-sdk';
+import { BlockchainMeta, Token } from 'rango-sdk';
 import { useEffect, useRef } from 'react';
 import {
   createSearchParams,
@@ -10,23 +10,7 @@ import { useMetaStore } from '../store/meta';
 import { SearchParams } from '../constants/searchParams';
 import { navigationRoutes } from '../constants/navigationRoutes';
 import { useUiStore } from '../store/ui';
-
-function searchParamsToToken(
-  tokens: Token[],
-  searchParams: string | null
-): Token | null {
-  return (
-    tokens.find((token) => {
-      const symbolAndAddress = searchParams?.split('--');
-      if (symbolAndAddress?.length === 1)
-        return token.symbol === symbolAndAddress[0] && token.address === null;
-      return (
-        token.symbol === symbolAndAddress?.[0] &&
-        token.address === symbolAndAddress?.[1]
-      );
-    }) || null
-  );
-}
+import { searchParamsToToken } from '../utils/routing';
 
 export function UpdateUrl() {
   const firstRender = useRef(true);
@@ -142,19 +126,19 @@ export function UpdateUrl() {
 
   useEffect(() => {
     if (loadingStatus === 'success') {
-      const fronChainString = searchParams.get(SearchParams.FROM_CHAIN);
+      const fromChainString = searchParams.get(SearchParams.FROM_CHAIN);
       const fromTokenString = searchParams.get(SearchParams.FROM_TOKEN);
       const toChainString = searchParams.get(SearchParams.TO_CHAIN);
       const toTokenString = searchParams.get(SearchParams.TO_TOKEN);
       const fromAmount = searchParams.get(SearchParams.FROM_AMOUNT);
       const fromChain = blockchains.find(
-        (blockchain) => blockchain.name === fronChainString
+        (blockchain) => blockchain.name === fromChainString
       );
-      const fromToken = searchParamsToToken(tokens, fromTokenString);
+      const fromToken = searchParamsToToken(tokens, fromTokenString, fromChain);
       const toChain = blockchains.find(
         (blockchain) => blockchain.name === toChainString
       );
-      const toToken = searchParamsToToken(tokens, toTokenString);
+      const toToken = searchParamsToToken(tokens, toTokenString, toChain);
       if (!!fromChain) {
         setFromChain(fromChain);
         if (!!fromToken) setFromToken(fromToken);

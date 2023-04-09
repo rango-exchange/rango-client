@@ -9,9 +9,9 @@ interface PropTypes {
 export function MinRequiredSlippage({ minRequiredSlippage }: PropTypes) {
   return (
     <Typography variant="body2">
-      We recommend you to increase slippage to at least
+      We recommend you to increase slippage to at least &nbsp;
       {minRequiredSlippage}
-      for this route.
+      &nbsp; for this route.
       <ChangeSlippageButton />
     </Typography>
   );

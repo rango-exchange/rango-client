@@ -1,6 +1,8 @@
 import {
   BestRouteResponse,
   BlockchainValidationStatus,
+  SimulationResult,
+  SwapResult,
   WalletRequiredAssets,
 } from 'rango-sdk';
 export type SwapStatus = 'running' | 'failed' | 'success';
@@ -34,3 +36,9 @@ export type SwapSavedSettings = {
 export type SimulationAssetAndAmount = WalletRequiredAssets;
 export type SimulationValidationStatus = BlockchainValidationStatus;
 export type BestRouteType = BestRouteResponse;
+
+export type BestRouteWithFee = Omit<BestRouteResponse, 'result'> & {
+  result: Omit<SimulationResult, 'swaps'> & {
+    swaps: (SwapResult & { feeInUsd?: string })[];
+  };
+};

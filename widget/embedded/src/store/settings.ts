@@ -7,7 +7,7 @@ import createSelectors from './selectors';
 
 type Theme = 'auto' | 'dark' | 'light';
 
-interface Settings {
+export interface SettingsState {
   slippage: number;
   customSlippage: number | null;
   infiniteApprove: boolean;
@@ -22,7 +22,7 @@ interface Settings {
 }
 
 export const useSettingsStore = createSelectors(
-  create<Settings>()(
+  create<SettingsState>()(
     persist(
       subscribeWithSelector((set) => ({
         slippage: DEFAULT_SLIPPAGE,
