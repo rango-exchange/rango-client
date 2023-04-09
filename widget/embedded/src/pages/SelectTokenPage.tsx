@@ -27,22 +27,21 @@ export function SelectTokenPage(props: PropTypes) {
   const supportedSourceTokens =
     supportedTokens === 'all'
       ? sourceTokens
-      : sourceTokens.filter(
-          (token) =>
-            !supportedTokens.some((supportedToken) =>
-              tokensAreEqual(supportedToken, token)
-            )
+      : sourceTokens.filter((token) =>
+          supportedTokens.some((supportedToken) =>
+            tokensAreEqual(supportedToken, token)
+          )
         );
 
   const supportedDestinationTokens =
     supportedTokens === 'all'
       ? destinationTokens
-      : destinationTokens.filter(
-          (token) =>
-            !supportedTokens.some((supportedToken) =>
-              tokensAreEqual(supportedToken, token)
-            )
+      : destinationTokens.filter((token) =>
+          supportedTokens.some((supportedToken) =>
+            tokensAreEqual(supportedToken, token)
+          )
         );
+  console.log(supportedSourceTokens);
 
   const fromToken = useBestRouteStore.use.fromToken();
   const toToken = useBestRouteStore.use.toToken();

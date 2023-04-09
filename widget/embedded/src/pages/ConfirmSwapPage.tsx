@@ -11,7 +11,7 @@ import { ConfirmSwapWarnings } from '../components/ConfirmSwapWarnings';
 import { useManager } from '@rango-dev/queue-manager-react';
 import { useUiStore } from '../store/ui';
 import { useConfirmSwap } from '../hooks/useConfirmSwap';
-import { ConfirmSwapErrorTypes } from '../store/confirmSwap';
+import { ConfirmSwapErrorTypes } from '../types';
 import { useMetaStore } from '../store/meta';
 import { getBestRouteWithCalculatedFees } from '../utils/routing';
 
