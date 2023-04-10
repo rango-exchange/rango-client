@@ -1595,7 +1595,7 @@ export function retryOn(
       const queueStorage = q.list.getStorage() as SwapStorage | undefined;
       const swap = queueStorage?.swapDetails;
 
-      if (swap && swap.status === "running") {
+      if (swap && swap.status === 'running') {
         const currentStep = getCurrentStep(swap);
         if (currentStep) {
           if (
