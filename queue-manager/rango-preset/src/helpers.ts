@@ -1724,9 +1724,12 @@ export async function throwOnOK(
   }
 }
 
-export function cancelSwap(swap: QueueInfo) {
+export function cancelSwap(swap: QueueInfo): {
+  swap: PendingSwap;
+  step: PendingSwapStep | null;
+} {
   swap.actions.cancel();
-  updateSwapStatus({
+  return updateSwapStatus({
     getStorage: swap.actions.getStorage,
     setStorage: swap.actions.setStorage,
     message: 'Swap canceled by user.',
