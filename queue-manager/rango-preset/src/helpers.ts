@@ -1107,7 +1107,10 @@ export function singTransaction(
     const notification = getSwapNotitfication('confirm_transfer', updateResult);
     notifier(notification);
 
-    if (notification.eventType !== 'transaction_expired') {
+    if (notification.eventType === 'transaction_expired') {
+      failed();
+      onFinish();
+    } else {
       walletSigners
         .getSigner(TransactionType.TRANSFER)
         .signAndSendTx(transferTransaction, walletAddress, null)
@@ -1161,7 +1164,10 @@ export function singTransaction(
     );
     notifier(notification);
 
-    if (notification.eventType !== 'transaction_expired') {
+    if (notification.eventType === 'transaction_expired') {
+      failed();
+      onFinish();
+    } else {
       walletSigners
         .getSigner(TransactionType.EVM)
         .signAndSendTx(evmTransaction, walletAddress, null)
@@ -1230,7 +1236,10 @@ export function singTransaction(
     );
     notifier(notification);
 
-    if (notification.eventType !== 'transaction_expired') {
+    if (notification.eventType === 'transaction_expired') {
+      failed();
+      onFinish();
+    } else {
       // If keplr wallet is executing contracts on terra, throw error. keplr doesn't support transfer or execute contracts. only IBC messages are supported
       if (
         (currentStep?.swapperId.toString() === 'TerraSwap' ||
@@ -1317,7 +1326,10 @@ export function singTransaction(
     );
     notifier(notification);
 
-    if (notification.eventType !== 'transaction_expired') {
+    if (notification.eventType === 'transaction_expired') {
+      failed();
+      onFinish();
+    } else {
       const tx = solanaTransaction;
       walletSigners
         .getSigner(TransactionType.SOLANA)
