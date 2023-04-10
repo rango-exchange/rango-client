@@ -373,13 +373,12 @@ class Manager {
   public async create(
     name: QueueName,
     storage: QueueStorage,
-    options: { id?: string }
+    options: { id?: QueueID }
   ) {
     if (!this.queuesDefs.has(name)) {
       throw new Error('You need to add a queue definition first.');
     }
     const def = this.queuesDefs.get(name)!;
-    // @ts-ignore
     const queue_id: QueueID = options?.id || uuidv4();
     const createdAt = Date.now();
     const list = this.createQueue({
