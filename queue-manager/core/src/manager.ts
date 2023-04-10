@@ -1,6 +1,7 @@
 import Persistor from './persistor';
 import Queue, { QueueEventHandlers, TaskEvent } from './queue';
 import { QueueStorage, Status } from './types';
+import { v4 as uuidv4 } from 'uuid';
 
 export type ManagerContext = object;
 export type QueueName = string;
@@ -369,13 +370,17 @@ class Manager {
    * @returns an ID for queue so it can be used to get the created queue later by client.
    *
    */
-  public async create(name: QueueName, storage: QueueStorage) {
+  public async create(
+    name: QueueName,
+    storage: QueueStorage,
+    options: { id?: string }
+  ) {
     if (!this.queuesDefs.has(name)) {
       throw new Error('You need to add a queue definition first.');
     }
-    const def = this.queuesDefs.get(name)!; 
+    const def = this.queuesDefs.get(name)!;
     // @ts-ignore
-    const queue_id: QueueID = storage?.swapDetails.requestId;
+    const queue_id: QueueID = options?.id || uuidv4();
     const createdAt = Date.now();
     const list = this.createQueue({
       queue_id: queue_id,
