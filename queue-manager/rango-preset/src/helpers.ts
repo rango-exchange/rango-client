@@ -1653,8 +1653,7 @@ export function retryOn(
         const currentStep = getCurrentStep(swap);
         if (currentStep) {
           if (
-            (currentStep.fromBlockchain == network ||
-              currentStep.toBlockchain == network) &&
+            currentStep.fromBlockchain == network &&
             queueStorage?.swapDetails.wallets[network]?.walletType === wallet
           ) {
             walletAndNetworkMatched.push(q.list);
