@@ -1,4 +1,3 @@
-import { v4 as uuidv4 } from 'uuid';
 import Persistor from './persistor';
 import Queue, { QueueEventHandlers, TaskEvent } from './queue';
 import { QueueStorage, Status } from './types';
@@ -374,9 +373,9 @@ class Manager {
     if (!this.queuesDefs.has(name)) {
       throw new Error('You need to add a queue definition first.');
     }
-
-    const def = this.queuesDefs.get(name)!;
-    const queue_id: QueueID = uuidv4();
+    const def = this.queuesDefs.get(name)!; 
+    // @ts-ignore
+    const queue_id: QueueID = storage?.swapDetails.requestId;
     const createdAt = Date.now();
     const list = this.createQueue({
       queue_id: queue_id,
