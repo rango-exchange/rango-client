@@ -36,6 +36,8 @@ export interface PropTypes {
   listContainerStyle?: CSSProperties;
   multiSelect?: boolean;
   selectedList?: BlockchainMeta[] | 'all';
+  onClose?: () => void;
+
 }
 
 export function BlockchainSelector(props: PropTypes) {
@@ -54,9 +56,9 @@ export function BlockchainSelector(props: PropTypes) {
 
   return (
     <SecondaryPage
-      textField={true}
+      hasSearch={true}
       hasHeader={hasHeader}
-      textFieldPlaceholder="Search Blockchain By Name"
+      searchPlaceholder="Search Blockchain By Name"
       title={`Select ${type} Network`}
       onBack={onBack}
     >

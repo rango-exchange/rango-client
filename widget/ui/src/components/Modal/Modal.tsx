@@ -2,6 +2,7 @@ import { CSSProperties } from '@stitches/react';
 import React, { useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { styled } from '../../theme';
+import { Header } from '../Header';
 import { CloseIcon } from '../Icon/CloseIcon';
 import { Typography } from '../Typography';
 
@@ -13,6 +14,11 @@ export interface PropTypes {
   action?: React.ReactNode;
   containerStyle?: CSSProperties;
   contentStyle?: CSSProperties;
+  hasSearch: boolean;
+  searchPlaceholder?: string;
+  onSearchChange?: React.ChangeEventHandler<HTMLInputElement>;
+  searchText?: string;
+  hasHeader?: boolean;
 }
 
 const BackDrop = styled('div', {
@@ -59,6 +65,11 @@ export function Modal(props: PropTypes) {
     containerStyle,
     action,
     contentStyle,
+    hasSearch,
+    searchPlaceholder,
+    onSearchChange,
+    searchText,
+    hasHeader = true,
   } = props;
 
   const handleBackDropClick = (event: React.MouseEvent<HTMLDivElement>) => {
@@ -74,6 +85,17 @@ export function Modal(props: PropTypes) {
         createPortal(
           <BackDrop onClick={handleBackDropClick}>
             <ModalContainer style={containerStyle}>
+              {hasHeader && (
+                <Header
+                  action={action}
+                  onClose={onClose}
+                  title={title}
+                  hasSearch={hasSearch}
+                  searchPlaceholder={searchPlaceholder}
+                  onSearchChange={onSearchChange}
+                  searchText={searchText}
+                />
+              )}
               <ModalHeader>
                 <Typography variant="h4">{title}</Typography>
                 <Row>

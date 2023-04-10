@@ -56,7 +56,7 @@ export function ConfirmWallets(props: PropsWithChildren<PropTypes>) {
 
   return (
     <SecondaryPage
-      textField={false}
+      hasSearch={false}
       title="Confirm Swap"
       onBack={onBack}
       Footer={

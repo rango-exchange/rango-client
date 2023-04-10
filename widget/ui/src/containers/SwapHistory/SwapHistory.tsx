@@ -111,7 +111,7 @@ export function SwapHistory(props: PropTypes) {
   const [showDrawer, setShowDrawer] = useState(false);
 
   return (
-    <SecondaryPage title="Swap Details" textField={false} onBack={onBack}>
+    <SecondaryPage title="Swap Details" hasSearch={false} onBack={onBack}>
       <div style={{ overflow: 'hidden' }}>
         <div>
           <Typography variant="body1"> request ID :</Typography>

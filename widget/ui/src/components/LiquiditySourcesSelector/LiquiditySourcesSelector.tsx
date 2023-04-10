@@ -19,6 +19,7 @@ export interface PropTypes {
   onChange: (liquiditySource: LiquiditySource) => void;
   toggleAll?: () => void;
   onBack?: () => void;
+  onClose?: () => void;
   hasHeader?: boolean;
   listContainerStyle?: CSSProperties;
 }
@@ -28,15 +29,23 @@ const ActionButton = styled(Button, {
 });
 
 export function LiquiditySourcesSelector(props: PropTypes) {
-  const { list, onChange, onBack, hasHeader, listContainerStyle, toggleAll } =
-    props;
+  const {
+    list,
+    onChange,
+    onClose,
+    onBack,
+    hasHeader,
+    listContainerStyle,
+    toggleAll,
+  } = props;
 
   return (
     <SecondaryPage
-      textField={true}
-      textFieldPlaceholder="Search By Name"
+      hasSearch={true}
+      searchPlaceholder="Search By Name"
       title="Liquidity Sources"
-      TopButton={
+      onClose={onClose}
+      action={
         <ActionButton variant="ghost" type="primary" onClick={toggleAll}>
           {list.find((item) => item.selected) ? 'Clear all' : 'Select all'}
         </ActionButton>

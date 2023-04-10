@@ -1,9 +1,6 @@
 import React, { ReactNode, useState } from 'react';
 import { styled } from '../../theme';
-import { AngleLeftIcon, SearchIcon } from '../Icon';
-import { TextField } from '../TextField/TextField';
-import { Typography } from '../Typography';
-
+import { Header } from '../Header';
 export type PropTypes = (
   | {
       textField: true;
@@ -17,9 +14,11 @@ export type PropTypes = (
 ) & {
   title?: string;
   onBack?: () => void;
-  TopButton?: React.ReactNode;
+  action?: React.ReactNode;
   Footer?: React.ReactNode;
   hasHeader?: boolean;
+  hasSearch?: boolean;
+  onClose?: () => void;
 };
 
 const Container = styled('div', {
@@ -35,22 +34,6 @@ const Container = styled('div', {
   },
 });
 
-const HeaderContainer = styled('div', {
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-  marginBottom: '$16',
-  position: 'relative',
-});
-
-const BackIcon = styled(AngleLeftIcon, {
-  position: 'absolute',
-  left: '0',
-});
-const StyledBackIcon = styled(BackIcon, {
-  cursor: 'pointer',
-});
-
 const ContentContainer = styled('div', {
   flex: '1',
   overflowY: 'auto',
@@ -59,30 +42,22 @@ const ContentContainer = styled('div', {
 });
 
 export function SecondaryPage(props: PropTypes) {
-  const { title, Footer, TopButton, onBack, hasHeader = true } = props;
+  const { title, Footer, action, onBack, hasHeader = true, onClose } = props;
   const [searchedFor, setSearchedFor] = useState('');
 
   return (
     <Container>
       {hasHeader && (
-        <HeaderContainer>
-          <StyledBackIcon size={24} onClick={onBack} />
-          <Typography variant="h4">{title}</Typography>
-          {TopButton}
-        </HeaderContainer>
-      )}
-
-      {props.textField && (
-        <div>
-          <TextField
-            size="large"
-            prefix={<SearchIcon size={24} />}
-            placeholder={props.textFieldPlaceholder}
-            onChange={(event) => setSearchedFor(event.target.value)}
-            value={searchedFor}
-            autoFocus
-          />
-        </div>
+        <Header
+          title={title}
+          hasSearch={props.hasSearch}
+          searchPlaceholder={props.hasSearch ? props?.searchPlaceholder : ''}
+          onSearchChange={(event) => setSearchedFor(event.target.value)}
+          searchText={searchedFor}
+          onBack={onBack}
+          action={action}
+          onClose={onClose}
+        />
       )}
       <ContentContainer>
         {props.textField && props.children?.(searchedFor)}

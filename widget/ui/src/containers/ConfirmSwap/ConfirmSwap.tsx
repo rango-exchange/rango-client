@@ -106,7 +106,7 @@ export function ConfirmSwap(props: PropsWithChildren<PropTypes>) {
 
   return (
     <SecondaryPage
-      textField={false}
+      hasSearch={false}
       title="Swap"
       onBack={onBack}
       Footer={

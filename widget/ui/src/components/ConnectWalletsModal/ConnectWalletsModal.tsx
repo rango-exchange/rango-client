@@ -32,6 +32,7 @@ export function ConnectWalletsModal(props: PropTypes) {
 
   return (
     <Modal
+      hasSearch={false}
       title="Connect Wallets"
       open={open}
       content={Content}

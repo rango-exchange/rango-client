@@ -77,9 +77,9 @@ export function History({
   return (
     <SecondaryPage
       onBack={onBack}
-      textField={true}
-      textFieldPlaceholder="Search By Blockchain Or Token"
-      title="Swaps"
+      hasSearch={true}
+      searchPlaceholder="Search By Blockchain Or Token"
+      title="History"
     >
       {(searchedFor) => {
         const filterSwaps = filteredHistory(list, searchedFor);

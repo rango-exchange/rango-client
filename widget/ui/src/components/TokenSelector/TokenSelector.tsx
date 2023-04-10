@@ -12,6 +12,7 @@ export interface PropTypes {
   hasHeader?: boolean;
   multiSelect?: boolean;
   onBack?: () => void;
+  onClose?: () => void;
   selectedList?: TokenWithAmount[] | 'all';
 }
 
@@ -33,15 +34,17 @@ export function TokenSelector(props: PropTypes) {
     multiSelect,
     selectedList,
     onBack,
+    onClose,
   } = props;
 
   return (
     <SecondaryPage
-      textField={true}
-      textFieldPlaceholder="Search Blockchain By Name"
+      hasSearch={true}
+      searchPlaceholder="Search Blockchain By Name"
       title={`Select ${type} Token`}
       hasHeader={hasHeader}
       onBack={onBack}
+      onClose={onClose}
     >
       {(searchedFor) => (
         <TokenList

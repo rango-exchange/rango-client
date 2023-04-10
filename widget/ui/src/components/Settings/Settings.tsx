@@ -166,7 +166,12 @@ export function Settings(props: PropTypes) {
   );
 
   return (
-    <SecondaryPage title="Settings" textField={false} onBack={onBack}>
+    <SecondaryPage
+      hasSearch={false}
+      title="Settings"
+      textField={false}
+      onBack={onBack}
+    >
       {PageContent}
     </SecondaryPage>
   );
