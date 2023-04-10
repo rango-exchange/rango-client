@@ -57,7 +57,7 @@ async function migration(): Promise<boolean> {
       const taskId = uuid();
 
       const convertedSwap: PersistedQueue = {
-        id: uuid(),
+        id: swap.requestId,
         createdAt: Number(swap.creationTime),
         name: 'swap',
         status: Status.RUNNING,
@@ -90,7 +90,7 @@ async function migration(): Promise<boolean> {
       const status = swap.status === 'success' ? Status.SUCCESS : Status.FAILED;
 
       const convertedSwap: PersistedQueue = {
-        id: uuid(),
+        id: swap.requestId,
         createdAt: Number(swap.creationTime),
         name: 'swap',
         status,
