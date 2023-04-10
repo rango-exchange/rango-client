@@ -89,6 +89,16 @@ function claimQueue() {
 
 /**
  *
+ * Returns "wallet and network" separately, even if the wallet is dashed inside.
+ *
+ */
+
+function splitWalletNetwork(input: string): string[] {
+  return input?.split(/-(?=[^-]*$)/);
+}
+
+/**
+ *
  * Returns `steps`, if it's a `running` swap.
  * Each `PendingSwap` has a `steps` inside it, `steps` shows how many tasks should be created and run to finish the swap.
  *
@@ -1521,8 +1531,7 @@ export function checkWaitingForConnectWalletChange(params: {
   evmChains: EvmBlockchainMeta[];
 }): void {
   const { wallet_network, evmChains, manager } = params;
-  const [wallet, network] = wallet_network.split(/-(?=[^-]*$)/);
-
+  const [wallet, network] = splitWalletNetwork(wallet_network);
   // We only need change network for EVM chains.
   if (!evmChains.some((chain) => chain.name == network)) return;
 
@@ -1626,7 +1635,7 @@ export function retryOn(
   manager?: Manager,
   options = { fallbackToOnlyWallet: true }
 ): void {
-  const [wallet, network] = wallet_network.split(/-(?=[^-]*$)/);
+  const [wallet, network] = splitWalletNetwork(wallet_network);
   if (!wallet || !network) {
     return;
   }
