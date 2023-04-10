@@ -373,7 +373,7 @@ class Manager {
   public async create(
     name: QueueName,
     storage: QueueStorage,
-    options: { id?: QueueID }
+    options?: { id?: QueueID }
   ) {
     if (!this.queuesDefs.has(name)) {
       throw new Error('You need to add a queue definition first.');
