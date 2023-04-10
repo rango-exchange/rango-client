@@ -26,6 +26,8 @@ export function ChainsConfig({ type }: PropTypes) {
   const toChains = useConfigStore.use.configs().toChains;
   const customeAddress = useConfigStore.use.configs().customeAddress;
   const onChangeBlockChains = useConfigStore.use.onChangeBlockChains();
+  const onChangeTokens = useConfigStore.use.onChangeTokens();
+
   const onChangeBooleansConfig = useConfigStore.use.onChangeBooleansConfig();
 
   const chains = type === 'Source' ? fromChains : toChains;
@@ -34,6 +36,7 @@ export function ChainsConfig({ type }: PropTypes) {
     let values = type === 'Source' ? fromChains : toChains;
     values = onChangeMultiSelects(chain, values, blockchains, (item) => item.name === chain.name);
     onChangeBlockChains(values, type);
+    onChangeTokens('all', type);
   };
 
   return (
