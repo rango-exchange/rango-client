@@ -1372,120 +1372,146 @@ export function singTransaction(
     const updateResult = updateSwapStatus({
       getStorage,
       setStorage,
-      nextStepStatus: 'running',
+      nextStepStatus: hasAlreadyProceededToSign ? 'failed' : 'running',
+      nextStatus: hasAlreadyProceededToSign ? 'failed' : 'running',
       message: executeMessage,
       details: executeDetails,
+      hasAlreadyProceededToSign,
     });
-    notifier({
-      eventType: 'calling_smart_contract',
-      ...updateResult,
-    });
+    const notification = getSwapNotitfication(
+      'calling_smart_contract',
+      updateResult
+    );
+    notifier(notification);
 
-    walletSigners
-      .getSigner(TransactionType.TRON)
-      .signAndSendTx(tronTransaction, walletAddress, null)
-      .then(
-        (id) => {
-          setStepTransactionIds(actions, id, 'smart_contract_called', notifier);
-          schedule(SwapActionTypes.CHECK_TRANSACTION_STATUS);
-          next();
-          onFinish();
-        },
-        (error) => {
-          if (swap.status === 'failed') return;
-          const { extraMessage, extraMessageDetail, extraMessageErrorCode } =
-            prettifyErrorMessage(error);
-          if (
-            error &&
-            error?.root &&
-            error?.root?.message &&
-            error?.root?.code &&
-            error?.root?.reason
-          ) {
-            logRPCError(
-              error.root,
-              swap,
-              currentStep,
-              sourceWallet?.walletType
+    if (notification.eventType === 'transaction_expired') {
+      failed();
+      onFinish();
+    } else {
+      walletSigners
+        .getSigner(TransactionType.TRON)
+        .signAndSendTx(tronTransaction, walletAddress, null)
+        .then(
+          (id) => {
+            setStepTransactionIds(
+              actions,
+              id,
+              'smart_contract_called',
+              notifier
             );
-          }
-          const updateResult = updateSwapStatus({
-            getStorage,
-            setStorage,
-            nextStatus: 'failed',
-            nextStepStatus: 'failed',
-            message: extraMessage,
-            details: extraMessageDetail,
-            errorCode: extraMessageErrorCode,
-          });
-          notifier({
-            eventType: 'smart_contract_call_failed',
-            ...updateResult,
-          });
+            schedule(SwapActionTypes.CHECK_TRANSACTION_STATUS);
+            next();
+            onFinish();
+          },
+          (error) => {
+            if (swap.status === 'failed') return;
+            const { extraMessage, extraMessageDetail, extraMessageErrorCode } =
+              prettifyErrorMessage(error);
+            if (
+              error &&
+              error?.root &&
+              error?.root?.message &&
+              error?.root?.code &&
+              error?.root?.reason
+            ) {
+              logRPCError(
+                error.root,
+                swap,
+                currentStep,
+                sourceWallet?.walletType
+              );
+            }
+            const updateResult = updateSwapStatus({
+              getStorage,
+              setStorage,
+              nextStatus: 'failed',
+              nextStepStatus: 'failed',
+              message: extraMessage,
+              details: extraMessageDetail,
+              errorCode: extraMessageErrorCode,
+            });
+            notifier({
+              eventType: 'smart_contract_call_failed',
+              ...updateResult,
+            });
 
-          failed();
-          onFinish();
-        }
-      );
+            failed();
+            onFinish();
+          }
+        );
+    }
   } else if (!!starknetTransaction) {
     const updateResult = updateSwapStatus({
       getStorage,
       setStorage,
-      nextStepStatus: 'running',
+      nextStepStatus: hasAlreadyProceededToSign ? 'failed' : 'running',
+      nextStatus: hasAlreadyProceededToSign ? 'failed' : 'running',
       message: executeMessage,
       details: executeDetails,
+      hasAlreadyProceededToSign,
     });
-    notifier({
-      eventType: 'calling_smart_contract',
-      ...updateResult,
-    });
+    const notification = getSwapNotitfication(
+      'calling_smart_contract',
+      updateResult
+    );
+    notifier(notification);
 
-    walletSigners
-      .getSigner(TransactionType.STARKNET)
-      .signAndSendTx(starknetTransaction, walletAddress, null)
-      .then(
-        (id) => {
-          setStepTransactionIds(actions, id, 'smart_contract_called', notifier);
-          schedule(SwapActionTypes.CHECK_TRANSACTION_STATUS);
-          next();
-          onFinish();
-        },
-        (error) => {
-          if (swap.status === 'failed') return;
-          const { extraMessage, extraMessageDetail, extraMessageErrorCode } =
-            prettifyErrorMessage(error);
-          if (
-            error &&
-            error?.root &&
-            error?.root?.message &&
-            error?.root?.code &&
-            error?.root?.reason
-          ) {
-            logRPCError(
-              error.root,
-              swap,
-              currentStep,
-              sourceWallet?.walletType
+    if (notification.eventType === 'transaction_expired') {
+      failed();
+      onFinish();
+    } else {
+      walletSigners
+        .getSigner(TransactionType.STARKNET)
+        .signAndSendTx(starknetTransaction, walletAddress, null)
+        .then(
+          (id) => {
+            setStepTransactionIds(
+              actions,
+              id,
+              'smart_contract_called',
+              notifier
             );
-          }
-          const updateResult = updateSwapStatus({
-            getStorage,
-            setStorage,
-            nextStatus: 'failed',
-            nextStepStatus: 'failed',
-            message: extraMessage,
-            details: extraMessageDetail,
-            errorCode: extraMessageErrorCode,
-          });
-          notifier({
-            eventType: 'smart_contract_call_failed',
-            ...updateResult,
-          });
+            schedule(SwapActionTypes.CHECK_TRANSACTION_STATUS);
+            next();
+            onFinish();
+          },
+          (error) => {
+            if (swap.status === 'failed') return;
+            const { extraMessage, extraMessageDetail, extraMessageErrorCode } =
+              prettifyErrorMessage(error);
+            if (
+              error &&
+              error?.root &&
+              error?.root?.message &&
+              error?.root?.code &&
+              error?.root?.reason
+            ) {
+              logRPCError(
+                error.root,
+                swap,
+                currentStep,
+                sourceWallet?.walletType
+              );
+            }
+            const updateResult = updateSwapStatus({
+              getStorage,
+              setStorage,
+              nextStatus: 'failed',
+              nextStepStatus: 'failed',
+              message: extraMessage,
+              details: extraMessageDetail,
+              errorCode: extraMessageErrorCode,
+            });
+            notifier({
+              eventType: 'smart_contract_call_failed',
+              ...updateResult,
+            });
 
-          failed();
-          onFinish();
-        }
-      );
+            failed();
+            onFinish();
+          }
+        );
+    }
   }
 }
 
