@@ -1,14 +1,15 @@
 import React, { ReactNode, useState } from 'react';
 import { styled } from '../../theme';
 import { Header } from '../Header';
+
 export type PropTypes = (
   | {
-      textField: true;
+      hasSearch: true;
       children?: (searchedFor: string) => ReactNode;
-      textFieldPlaceholder: string;
+      searchPlaceholder: string;
     }
   | {
-      textField: false;
+      hasSearch: false;
       children?: ReactNode;
     }
 ) & {
@@ -16,8 +17,7 @@ export type PropTypes = (
   onBack?: () => void;
   action?: React.ReactNode;
   Footer?: React.ReactNode;
-  hasHeader?: boolean;
-  hasSearch?: boolean;
+  hasHeaderTitle?: boolean;
   onClose?: () => void;
 };
 
@@ -42,26 +42,24 @@ const ContentContainer = styled('div', {
 });
 
 export function SecondaryPage(props: PropTypes) {
-  const { title, Footer, action, onBack, hasHeader = true, onClose } = props;
+  const { title, Footer, action, onBack, hasHeaderTitle = true, onClose } = props;
   const [searchedFor, setSearchedFor] = useState('');
 
   return (
     <Container>
-      {hasHeader && (
-        <Header
-          title={title}
-          hasSearch={props.hasSearch}
-          searchPlaceholder={props.hasSearch ? props?.searchPlaceholder : ''}
-          onSearchChange={(event) => setSearchedFor(event.target.value)}
-          searchText={searchedFor}
-          onBack={onBack}
-          action={action}
-          onClose={onClose}
-        />
-      )}
+      <Header
+        title={title}
+        hasHeaderTitle={hasHeaderTitle}
+        hasSearch={props.hasSearch}
+        searchPlaceholder={props.hasSearch ? props?.searchPlaceholder : ''}
+        onSearchChange={(event) => setSearchedFor(event.target.value)}
+        searchText={searchedFor}
+        onBack={onBack}
+        action={action}
+        onClose={onClose}
+      />
       <ContentContainer>
-        {props.textField && props.children?.(searchedFor)}
-        {!props.textField && props.children}
+        {props.hasSearch ? props.children?.(searchedFor) : props.children}
       </ContentContainer>
       {Footer}
     </Container>

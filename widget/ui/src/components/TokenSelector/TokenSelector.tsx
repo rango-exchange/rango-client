@@ -9,7 +9,7 @@ export interface PropTypes {
   type?: 'Source' | 'Destination';
   selected: TokenWithAmount | null;
   onChange: (token: TokenWithAmount) => void;
-  hasHeader?: boolean;
+  hasHeaderTitle?: boolean;
   multiSelect?: boolean;
   onBack?: () => void;
   onClose?: () => void;
@@ -30,7 +30,7 @@ export function TokenSelector(props: PropTypes) {
     type,
     selected,
     onChange,
-    hasHeader,
+    hasHeaderTitle,
     multiSelect,
     selectedList,
     onBack,
@@ -42,7 +42,7 @@ export function TokenSelector(props: PropTypes) {
       hasSearch={true}
       searchPlaceholder="Search Blockchain By Name"
       title={`Select ${type} Token`}
-      hasHeader={hasHeader}
+      hasHeaderTitle={hasHeaderTitle}
       onBack={onBack}
       onClose={onClose}
     >

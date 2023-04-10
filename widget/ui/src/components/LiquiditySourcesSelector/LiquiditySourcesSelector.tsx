@@ -20,7 +20,7 @@ export interface PropTypes {
   toggleAll?: () => void;
   onBack?: () => void;
   onClose?: () => void;
-  hasHeader?: boolean;
+  hasHeaderTitle?: boolean;
   listContainerStyle?: CSSProperties;
 }
 const ActionButton = styled(Button, {
@@ -34,7 +34,7 @@ export function LiquiditySourcesSelector(props: PropTypes) {
     onChange,
     onClose,
     onBack,
-    hasHeader,
+    hasHeaderTitle,
     listContainerStyle,
     toggleAll,
   } = props;
@@ -50,7 +50,7 @@ export function LiquiditySourcesSelector(props: PropTypes) {
           {list.find((item) => item.selected) ? 'Clear all' : 'Select all'}
         </ActionButton>
       }
-      hasHeader={hasHeader}
+      hasHeaderTitle={hasHeaderTitle}
       onBack={onBack}
     >
       {(searchedFor) => (

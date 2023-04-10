@@ -48,10 +48,7 @@ export default function ModalContent({ type, list, selectedList, onChange }: Pro
   };
 
   return (
-    <SecondaryPage
-      textField={true}
-      hasHeader={false}
-      textFieldPlaceholder={`Search ${type} By Name`}>
+    <SecondaryPage hasSearch={true} searchPlaceholder={`Search ${type} By Name`}>
       {(searchedFor) => (
         <ListContainer>
           {filterList(list, searchedFor).map((item, index) => (

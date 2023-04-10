@@ -3,6 +3,7 @@ import {
   Button,
   Checkbox,
   Chip,
+  containsText,
   Modal,
   SecondaryPage,
   Spacer,
@@ -37,6 +38,7 @@ const Content = styled('div', {
   display: 'flex',
   flexDirection: 'column',
 });
+
 export function MultiTokenSelect({ label, modalTitle, list, blockchains, type }: PropTypes) {
   const [open, setOpen] = useState(false);
   const [chain, setChain] = useState<string>('all');
@@ -147,12 +149,16 @@ export function MultiTokenSelect({ label, modalTitle, list, blockchains, type }:
         onClose={onClose}
         content={
           <SecondaryPage
-            textField={true}
-            hasHeader={false}
-            textFieldPlaceholder="Search Token By Name">
+            hasSearch={true}
+            hasHeaderTitle={false}
+            searchPlaceholder="Search Token By Name">
             {(searchedFor) => {
-              const filterList = list.filter((token) => token.blockchain === chain);
-
+              const filterList = list.filter((token) => token.blockchain === chain).filter(
+                (token) =>
+                  containsText(token.symbol, searchedFor) ||
+                  containsText(token.address || '', searchedFor) ||
+                  containsText(token.name || '', searchedFor),
+              );
               return (
                 <>
                   <Row>

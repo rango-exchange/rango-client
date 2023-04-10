@@ -123,7 +123,7 @@ export function ConfirmSwap(props: PropsWithChildren<PropTypes>) {
           </Button>
         </Footer>
       }
-      TopButton={<StyledUpdateIcon size={24} onClick={onRefresh} />}
+      action={<StyledUpdateIcon size={24} onClick={onRefresh} />}
     >
       <MainContainer>
         <div>

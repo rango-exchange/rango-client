@@ -167,7 +167,7 @@ export function TokenInfo({ type }: PropTypes) {
           modal.isChain ? (
             <BlockchainSelector
               list={supportedChains === 'all' ? blockchains : supportedChains}
-              hasHeader={false}
+              hasHeaderTitle={false}
               selected={chain}
               onChange={(chain) => {
                 onChangeBlockChain(chain, type);
@@ -187,7 +187,7 @@ export function TokenInfo({ type }: PropTypes) {
                 list={(supportedTokens === 'all' ? tokens : supportedTokens).filter(
                   (token) => token.blockchain === chain?.name,
                 )}
-                hasHeader={false}
+                hasHeaderTitle={false}
                 selected={token}
                 onChange={(token) => {
                   setModal((prev) => ({

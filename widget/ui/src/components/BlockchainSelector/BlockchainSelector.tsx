@@ -32,7 +32,7 @@ export interface PropTypes {
   onChange: (blockchain: BlockchainMeta) => void;
   onBack?: () => void;
   loadingStatus: LoadingStatus;
-  hasHeader?: boolean;
+  hasHeaderTitle?: boolean;
   listContainerStyle?: CSSProperties;
   multiSelect?: boolean;
   selectedList?: BlockchainMeta[] | 'all';
@@ -48,7 +48,7 @@ export function BlockchainSelector(props: PropTypes) {
     selected,
     onBack,
     loadingStatus,
-    hasHeader,
+    hasHeaderTitle,
     listContainerStyle,
     multiSelect,
     selectedList,
@@ -57,7 +57,7 @@ export function BlockchainSelector(props: PropTypes) {
   return (
     <SecondaryPage
       hasSearch={true}
-      hasHeader={hasHeader}
+      hasHeaderTitle={hasHeaderTitle}
       searchPlaceholder="Search Blockchain By Name"
       title={`Select ${type} Network`}
       onBack={onBack}

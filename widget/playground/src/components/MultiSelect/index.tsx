@@ -32,14 +32,7 @@ type PropTypes = (
   modalTitle: string;
 };
 
-export function MultiSelect({
-  label,
-  type,
-  modalTitle,
-  list,
-  value,
-  onChange,
-}: PropTypes) {
+export function MultiSelect({ label, type, modalTitle, list, value, onChange }: PropTypes) {
   const [open, setOpen] = useState<boolean>(false);
   const loadingStatus = useMetaStore.use.loadingStatus();
 
@@ -58,7 +51,7 @@ export function MultiSelect({
         return (
           <BlockchainSelector
             list={list}
-            hasHeader={false}
+            hasHeaderTitle={false}
             multiSelect
             selectedList={value}
             onChange={onChange}
@@ -117,6 +110,8 @@ export function MultiSelect({
       </Container>
 
       <Modal
+        hasSearch={false}
+        hasHeaderTitle={true}
         action={
           <Button type="primary" variant="ghost" onClick={onClickAction}>
             {value === 'all' ? 'Deselect All' : 'Select All'}

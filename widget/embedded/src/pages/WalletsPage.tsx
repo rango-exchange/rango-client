@@ -79,7 +79,7 @@ export function WalletsPage({ supportedWallets, multiWallets }: PropTypes) {
   return (
     <SecondaryPage
       title={t('Select Wallet') || ''}
-      textField={false}
+      hasSearch={false}
       onBack={navigateBackFrom.bind(null, navigationRoutes.wallets)}
     >
       <>

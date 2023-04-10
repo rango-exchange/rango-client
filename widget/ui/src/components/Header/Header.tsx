@@ -13,16 +13,18 @@ export type PropTypes = {
   searchPlaceholder?: string;
   onSearchChange?: React.ChangeEventHandler<HTMLInputElement>;
   searchText?: string;
+  hasHeaderTitle: boolean;
 };
 
 const HeaderContainer = styled('div', {
   display: 'flex',
   justifyContent: 'space-between',
   alignItems: 'center',
-  marginBottom: '$16',
   position: 'relative',
 });
-
+const SearchContainer = styled('div', {
+  marginTop: '$16',
+});
 const BackIcon = styled(AngleLeftIcon, {
   cursor: 'pointer',
 });
@@ -37,31 +39,36 @@ export function Header(props: PropTypes) {
     hasSearch,
     onBack,
     action,
+    hasHeaderTitle,
     onClose,
     searchPlaceholder,
     searchText,
     onSearchChange,
   } = props;
   return (
-    <>
-      <HeaderContainer>
-        {onBack && <BackIcon size={24} onClick={onBack} />}
-        <Typography variant="h4">{title}</Typography>
-        <Row>
-          {action}
-          {onClose && <CloseIcon size={24} onClick={onClose} />}
-        </Row>
-      </HeaderContainer>
-      {hasSearch && (
-        <TextField
-          size="large"
-          prefix={<SearchIcon size={24} />}
-          placeholder={searchPlaceholder}
-          onChange={onSearchChange}
-          value={searchText}
-          autoFocus
-        />
+    <div>
+      {hasHeaderTitle && (
+        <HeaderContainer>
+          {onBack && <BackIcon size={24} onClick={onBack} />}
+          <Typography variant="h4">{title}</Typography>
+          <Row>
+            {action}
+            {onClose && <CloseIcon size={24} onClick={onClose} />}
+          </Row>
+        </HeaderContainer>
       )}
-    </>
+      {hasSearch && (
+        <SearchContainer>
+          <TextField
+            size="large"
+            prefix={<SearchIcon size={24} />}
+            placeholder={searchPlaceholder}
+            onChange={onSearchChange}
+            value={searchText}
+            autoFocus
+          />
+        </SearchContainer>
+      )}
+    </div>
   );
 }

@@ -58,12 +58,14 @@ export function Select({ label, value, onChange, modalTitle, list, name }: PropT
 
       <Modal
         open={open}
+        hasHeaderTitle={false}
         onClose={() => setOpen((prev) => !prev)}
         content={
           <SecondaryPage
-            textField={true}
-            hasHeader={false}
-            textFieldPlaceholder={`Search ${modalTitle} By Name`}>
+            hasSearch={true}
+            title={modalTitle}
+            onClose={() => setOpen((prev) => !prev)}
+            searchPlaceholder={`Search ${modalTitle} By Name`}>
             {(searchedFor) =>
               filterList(list, searchedFor).map((item, index) => (
                 <>
