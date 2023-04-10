@@ -1560,7 +1560,7 @@ export function checkWaitingForConnectWalletChange(params: {
         if (
           currentStepRequiredWallet === wallet &&
           hasWaitingForConnect &&
-          getCurrentBlockchainOf(swap, currentStep) !== network
+          getCurrentBlockchainOfOrNull(swap, currentStep) != network
         ) {
           const { type } = getRequiredWallet(swap);
           const description = ERROR_MESSAGE_WAIT_FOR_CHANGE_NETWORK(type);
