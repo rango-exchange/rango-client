@@ -1541,7 +1541,6 @@ export function checkWaitingForConnectWalletChange(params: {
     if (swap && swap.status === 'running') {
       const currentStep = getCurrentStep(swap);
       if (currentStep) {
-        const queueInstance = q.list;
         const currentStepRequiredWallet =
           queueStorage?.swapDetails.wallets[currentStep.fromBlockchain]
             ?.walletType;
@@ -1562,6 +1561,7 @@ export function checkWaitingForConnectWalletChange(params: {
           hasWaitingForConnect &&
           getCurrentBlockchainOfOrNull(swap, currentStep) != network
         ) {
+          const queueInstance = q.list;
           const { type } = getRequiredWallet(swap);
           const description = ERROR_MESSAGE_WAIT_FOR_CHANGE_NETWORK(type);
 
@@ -1577,8 +1577,6 @@ export function checkWaitingForConnectWalletChange(params: {
             getStorage: queueInstance.getStorage.bind(queueInstance),
             setStorage: queueInstance.setStorage.bind(queueInstance),
           });
-        } else if (hasWaitingForConnect) {
-          queueInstance.unblock();
         }
       }
     }
