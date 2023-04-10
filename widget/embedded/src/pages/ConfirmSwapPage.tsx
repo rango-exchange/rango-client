@@ -39,7 +39,11 @@ export function ConfirmSwapPage() {
       onConfirm={() => {
         confirmSwap?.().then((swap) => {
           if (swap) {
-            manager?.create('swap', { swapDetails: swap });
+            manager?.create(
+              'swap',
+              { swapDetails: swap },
+              { id: swap.requestId }
+            );
             setSelectedSwap(swap.requestId);
             navigate(navigationRoutes.swaps + `/${swap.requestId}`, {
               replace: true,
