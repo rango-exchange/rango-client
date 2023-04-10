@@ -1521,7 +1521,7 @@ export function checkWaitingForConnectWalletChange(params: {
   evmChains: EvmBlockchainMeta[];
 }): void {
   const { wallet_network, evmChains, manager } = params;
-  const [wallet, network] = wallet_network.split('-');
+  const [wallet, network] = wallet_network.split(/-(?=[^-]*$)/);
 
   // We only need change network for EVM chains.
   if (!evmChains.some((chain) => chain.name == network)) return;
@@ -1532,8 +1532,11 @@ export function checkWaitingForConnectWalletChange(params: {
     if (swap && swap.status === 'running') {
       const currentStep = getCurrentStep(swap);
       if (currentStep) {
-        const currentStepRequiredWallet =
+        const currentStepRequiredFromWallet =
           queueStorage?.swapDetails.wallets[currentStep.fromBlockchain]
+            ?.walletType;
+        const currentStepRequiredToWallet =
+          queueStorage?.swapDetails.wallets[currentStep.toBlockchain]
             ?.walletType;
         const hasWaitingForConnect = Object.keys(q.list.state.tasks).some(
           (taskId) => {
@@ -1547,8 +1550,16 @@ export function checkWaitingForConnectWalletChange(params: {
           }
         );
 
-        if (currentStepRequiredWallet === wallet && hasWaitingForConnect) {
-          const queueInstance = q.list;
+        const queueInstance = q.list;
+        if (
+          (currentStepRequiredFromWallet === wallet ||
+            currentStepRequiredToWallet === wallet) &&
+          hasWaitingForConnect &&
+          currentStep.fromBlockchain !== network &&
+          currentStep.toBlockchain !== network
+        ) {
+          const swap = queueInstance.getStorage()
+            ?.swapDetails as SwapStorage['swapDetails'];
           const { type } = getRequiredWallet(swap);
           const description = ERROR_MESSAGE_WAIT_FOR_CHANGE_NETWORK(type);
 
@@ -1557,13 +1568,15 @@ export function checkWaitingForConnectWalletChange(params: {
               reason: BlockReason.WAIT_FOR_NETWORK_CHANGE,
               description,
             },
-            silent: true,
+            // silent: true,
           });
 
           markRunningSwapAsSwitchingNetwork({
             getStorage: queueInstance.getStorage.bind(queueInstance),
             setStorage: queueInstance.setStorage.bind(queueInstance),
           });
+        } else if (hasWaitingForConnect) {
+          queueInstance.unblock();
         }
       }
     }
@@ -1620,7 +1633,7 @@ export function retryOn(
   manager?: Manager,
   options = { fallbackToOnlyWallet: true }
 ): void {
-  const [wallet, network] = wallet_network.split('-');
+  const [wallet, network] = wallet_network.split(/-(?=[^-]*$)/);
   if (!wallet || !network) {
     return;
   }
@@ -1638,7 +1651,8 @@ export function retryOn(
         const currentStep = getCurrentStep(swap);
         if (currentStep) {
           if (
-            currentStep.fromBlockchain == network &&
+            (currentStep.fromBlockchain == network ||
+              currentStep.toBlockchain == network) &&
             queueStorage?.swapDetails.wallets[network]?.walletType === wallet
           ) {
             walletAndNetworkMatched.push(q.list);
