@@ -51,5 +51,8 @@
     "stream-browserify": "^3.0.0",
     "util": "^0.12.3",
     "vercel": "^28.16.12"
+  },
+  "resolutions": {
+    "react-refresh": "0.9.0"
   }
 }
