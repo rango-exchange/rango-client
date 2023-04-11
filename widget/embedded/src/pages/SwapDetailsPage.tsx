@@ -21,7 +21,7 @@ export function SwapDetailsPage() {
 
   //TODO: implement swap cancellation (move queueManager logic to queueManager/rango-preset)
   const onCancel = () => {
-    const swap = manager?.get(selectedSwap.id);
+    const swap = selectedSwap ? manager?.get(selectedSwap.id) : undefined;
     if (swap) cancelSwap(swap);
   };
   return (
