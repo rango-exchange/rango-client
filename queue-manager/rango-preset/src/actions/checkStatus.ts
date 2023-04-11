@@ -9,11 +9,13 @@ import {
   isTrasnferTransaction,
   isTronTransaction,
   resetNetworkStatus,
+  updateSwapStatus,
 } from '../helpers';
 import { SwapActionTypes, SwapQueueContext, SwapStorage } from '../types';
 import { getNextStep, MessageSeverity } from '../shared';
 import { TransactionStatusResponse } from 'rango-sdk';
 import { httpService } from '../services';
+import { APIErrorCode } from '../shared-errors';
 
 const INTERVAL_FOR_CHECK = 2000;
 
@@ -144,6 +146,7 @@ async function checkApprovalStatus({
   next,
   schedule,
   retry,
+  failed,
   context,
 }: ExecuterActions<
   SwapStorage,
@@ -151,12 +154,39 @@ async function checkApprovalStatus({
   SwapQueueContext
 >): Promise<void> {
   const swap = getStorage().swapDetails as SwapStorage['swapDetails'];
+  const onFinish = () => {
+    if (context.resetClaimedBy) {
+      context.resetClaimedBy();
+    }
+  };
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const currentStep = getCurrentStep(swap)!;
   let isApproved = false;
   try {
-    const response = await httpService.checkApproval(swap.requestId);
+    const response = await httpService.checkApproval(
+      swap.requestId,
+      currentStep.executedTransactionId || ''
+    );
     isApproved = response.isApproved;
+    if (!isApproved && response.txStatus === 'failed') {
+      // approve transaction failed on
+      // we should fail the whole swap
+      const updateResult = updateSwapStatus({
+        getStorage,
+        setStorage,
+        nextStatus: 'failed',
+        nextStepStatus: 'failed',
+        errorCode: APIErrorCode.SEND_TX_FAILED,
+        message: 'Approve transaction failed',
+        details: 'Smart contract approval failed in blockchain.',
+      });
+      context.notifier({
+        eventType: 'smart_contract_call_failed',
+        ...updateResult,
+      });
+      failed();
+      onFinish();
+    }
   } catch (e) {
     console.error('Failed to check getApprovedAmount', e);
     isApproved = false;

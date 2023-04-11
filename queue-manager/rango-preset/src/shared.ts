@@ -56,6 +56,7 @@ export type EventType =
   | 'task_completed'
   | 'task_canceled'
   | 'task_paused'
+  | 'confirm_approve_contract'
   | 'contract_confirmed'
   | 'contract_rejected'
   | 'transfer_confirmed'
