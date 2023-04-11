@@ -82,7 +82,7 @@ export async function executeTransaction(
   if (needsToBlockQueue && !isClaimed && context.claimedBy) {
     const blockedFor = {
       reason: BlockReason.DEPENDS_ON_OTHER_QUEUES,
-      description: 'Waiting for other running tasks to be finished',
+      description: 'Waiting for other swaps to complete',
       details: {},
     };
     requestBlock(blockedFor);

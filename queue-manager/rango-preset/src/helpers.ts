@@ -324,7 +324,8 @@ export function markRunningSwapAsSwitchingNetwork({
 export function markRunningSwapAsDependsOnOtherQueues({
   getStorage,
   setStorage,
-}: Pick<ExecuterActions, 'getStorage' | 'setStorage'>):
+  context,
+}: Pick<ExecuterActions, 'getStorage' | 'setStorage' | 'context'>):
   | {
       swap: PendingSwap;
       step: PendingSwapStep;
@@ -338,7 +339,11 @@ export function markRunningSwapAsDependsOnOtherQueues({
   swap.networkStatusExtraMessageDetail = '';
   currentStep.networkStatus = PendingSwapNetworkStatus.WaitingForQueue;
 
-  //TODO CHECK IF NOTIFIER IS NEEDED HERE
+  (context as SwapQueueContext)?.notifier({
+    eventType: 'waiting_for_queue',
+    swap,
+    step: currentStep,
+  });
 
   setStorage({
     ...getStorage(),
@@ -608,7 +613,6 @@ export function resetNetworkStatus(
 
   if (currentStep?.networkStatus) {
     currentStep.networkStatus = null;
-    //TODO CHECK IF NOTIFIER IS NEEDED HERE
     setStorage({ ...getStorage(), swapDetails: swap });
   }
 }
@@ -634,7 +638,6 @@ export function updateNetworkStatus(
     swap.networkStatusExtraMessage = message;
     swap.networkStatusExtraMessageDetail = details;
     currentStep.networkStatus = status;
-    //TODO CHECK IF NOTIFIER IS NEEDED HERE
     setStorage({ ...getStorage(), swapDetails: swap });
   }
 }
@@ -731,8 +734,7 @@ export function onDependsOnOtherQueues(
   _event: WhenTaskBlockedEvent,
   meta: WhenTaskBlockedMeta
 ): void {
-  // TODO NEEDED HERE
-  const { getBlockedTasks, forceExecute, queue, manager } = meta;
+  const { getBlockedTasks, forceExecute, queue, manager, context } = meta;
   const { setClaimer, claimedBy, reset } = claimQueue();
 
   // We only needs those blocked tasks that have DEPENDS_ON_OTHER_QUEUES reason.
@@ -753,6 +755,7 @@ export function onDependsOnOtherQueues(
     markRunningSwapAsDependsOnOtherQueues({
       getStorage: queue.getStorage.bind(queue),
       setStorage: queue.setStorage.bind(queue),
+      context,
     });
     return;
   }
@@ -781,7 +784,7 @@ export function onDependsOnOtherQueues(
     resetClaimedBy: () => {
       reset();
       // TODO: Use key generator
-      retryOn(`${type}-${network}-${address}`, manager);
+      retryOn(`${type}-${network}-${address}`, context, manager);
     },
   });
 }
@@ -1650,6 +1653,7 @@ export function checkWaitingForNetworkChange(manager?: Manager): void {
  */
 export function retryOn(
   wallet_network: string,
+  queueContext: SwapQueueContext,
   manager?: Manager,
   options = { fallbackToOnlyWallet: true }
 ): void {
@@ -1698,6 +1702,7 @@ export function retryOn(
         markRunningSwapAsDependsOnOtherQueues({
           getStorage: currentQueue.getStorage.bind(currentQueue),
           setStorage: currentQueue.setStorage.bind(currentQueue),
+          context: queueContext,
         });
       }
     }
