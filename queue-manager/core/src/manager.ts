@@ -582,7 +582,7 @@ class Manager {
     if (this.isPaused) return;
     this.isPaused = true;
     this.syncInterval = setInterval(() => {
-      console.log('Manager is paused. Sync caalled manually');
+      console.log('Manager is paused. Syncing state manually ...');
       this.sync();
     }, 5_000);
   }
