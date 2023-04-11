@@ -338,6 +338,8 @@ export function markRunningSwapAsDependsOnOtherQueues({
   swap.networkStatusExtraMessageDetail = '';
   currentStep.networkStatus = PendingSwapNetworkStatus.WaitingForQueue;
 
+  //TODO CHECK IF NOTIFIER IS NEEDED HERE
+
   setStorage({
     ...getStorage(),
     swapDetails: swap,
@@ -606,6 +608,7 @@ export function resetNetworkStatus(
 
   if (currentStep?.networkStatus) {
     currentStep.networkStatus = null;
+    //TODO CHECK IF NOTIFIER IS NEEDED HERE
     setStorage({ ...getStorage(), swapDetails: swap });
   }
 }
@@ -631,13 +634,14 @@ export function updateNetworkStatus(
     swap.networkStatusExtraMessage = message;
     swap.networkStatusExtraMessageDetail = details;
     currentStep.networkStatus = status;
+    //TODO CHECK IF NOTIFIER IS NEEDED HERE
     setStorage({ ...getStorage(), swapDetails: swap });
   }
 }
 
 /**
  * Event handler for blocked tasks.
- * If a transcation execution is manually blocked (like for parallel or waiting for walle),
+ * If a transcation execution is manually blocked (like for parallel or waiting for wallet),
  * This function will be called by queue manager using `queue definition`.
  *
  * It checks if the required wallet is connected, unblock the queue to be run.
@@ -727,6 +731,7 @@ export function onDependsOnOtherQueues(
   _event: WhenTaskBlockedEvent,
   meta: WhenTaskBlockedMeta
 ): void {
+  // TODO NEEDED HERE
   const { getBlockedTasks, forceExecute, queue, manager } = meta;
   const { setClaimer, claimedBy, reset } = claimQueue();
 
@@ -876,6 +881,8 @@ export function singTransaction(
           ];
 
           // `currentStep` has been mutated, let's update storage.
+
+          //TODO CHECK IF NOTIFIER IS NEEDED HERE
           setStorage({
             ...getStorage(),
             swapDetails: swap,
@@ -1533,6 +1540,7 @@ export function checkWaitingForConnectWalletChange(params: {
   wallet_network: string;
   manager?: Manager;
   evmChains: EvmBlockchainMeta[];
+  queueContext: SwapQueueContext;
 }): void {
   const { wallet_network, evmChains, manager } = params;
   const [wallet, network] = splitWalletNetwork(wallet_network);
@@ -1577,10 +1585,18 @@ export function checkWaitingForConnectWalletChange(params: {
             silent: true,
           });
 
-          markRunningSwapAsSwitchingNetwork({
+          const result = markRunningSwapAsSwitchingNetwork({
             getStorage: queueInstance.getStorage.bind(queueInstance),
             setStorage: queueInstance.setStorage.bind(queueInstance),
           });
+
+          if (result) {
+            params.queueContext?.notifier({
+              eventType: 'waiting_for_network_change',
+              swap: result.swap,
+              step: result.step,
+            });
+          }
         }
       }
     }

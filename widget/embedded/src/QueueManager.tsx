@@ -63,7 +63,7 @@ function QueueManager(props: PropsWithChildren<{}>) {
       blockchains: allBlockchains,
       evmBasedChains: evmBasedChains,
       evmNetworkChainInfo:
-        convertEvmBlockchainMetaToEvmChainInfo(evmBasedChains),
+      convertEvmBlockchainMetaToEvmChainInfo(evmBasedChains),
       getSupportedChainNames,
     },
     getSigners,
