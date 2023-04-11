@@ -97,6 +97,7 @@ class Manager {
   private persistor: Persistor;
   private context: ManagerContext;
   private isPaused: boolean = false;
+  private syncInterval: NodeJS.Timer | null = null;
 
   /**
    *
@@ -578,7 +579,12 @@ class Manager {
    * And only can be used to read the data.
    */
   public pause() {
+    if (this.isPaused) return;
     this.isPaused = true;
+    this.syncInterval = setInterval(() => {
+      console.log('Manager is paused. Sync caalled manually');
+      this.sync();
+    }, 5_000);
   }
 
   /**
@@ -588,6 +594,10 @@ class Manager {
     // If call this method multiple times, it should be run for once.
     if (this.isPaused) {
       this.isPaused = false;
+      if (!!this.syncInterval) {
+        clearInterval(this.syncInterval);
+        this.syncInterval = null;
+      }
       this.sync();
     }
   }
