@@ -59,11 +59,7 @@ import {
   SwapProgressNotification,
 } from './shared';
 import { logRPCError } from './shared-sentry';
-import {
-  PrettyError,
-  mapAppErrorCodesToAPIErrorCode,
-  APIErrorCode,
-} from './shared-errors';
+import { PrettyError, mapAppErrorCodesToAPIErrorCode } from './shared-errors';
 import { httpService } from './services';
 
 type WhenTaskBlocked = Parameters<NonNullable<SwapQueueDef['whenTaskBlocked']>>;
@@ -174,9 +170,7 @@ export function updateSwapStatus({
       .reportFailure({
         requestId: swap.requestId,
         step: currentStep?.id || 1,
-        eventType: mapAppErrorCodesToAPIErrorCode(
-          hasAlreadyProceededToSign ? APIErrorCode.TX_FAIL : errorCode
-        ),
+        eventType: mapAppErrorCodesToAPIErrorCode(errorCode),
         reason: errorReason || '',
         data: walletType ? { wallet: walletType } : undefined,
       })
@@ -1080,6 +1074,11 @@ export function singTransaction(
 
   const hasAlreadyProceededToSign =
     typeof swap.hasAlreadyProceededToSign === 'boolean';
+  const nextStepStatusBasedOnHasAlreadyProceededToSign =
+    hasAlreadyProceededToSign ? 'failed' : 'running';
+  const errorCodeBasedOnHasAlreadyProceededToSign = hasAlreadyProceededToSign
+    ? 'TX_EXPIRED'
+    : null;
   const executeMessage = hasAlreadyProceededToSign
     ? 'Transaction is expired. Please try again'
     : 'executing transaction';
@@ -1093,11 +1092,12 @@ export function singTransaction(
     const updateResult = updateSwapStatus({
       getStorage,
       setStorage,
-      nextStepStatus: hasAlreadyProceededToSign ? 'failed' : 'running',
-      nextStatus: hasAlreadyProceededToSign ? 'failed' : 'running',
+      nextStepStatus: nextStepStatusBasedOnHasAlreadyProceededToSign,
+      nextStatus: nextStepStatusBasedOnHasAlreadyProceededToSign,
       message: executeMessage,
       details: executeDetails,
       hasAlreadyProceededToSign,
+      errorCode: errorCodeBasedOnHasAlreadyProceededToSign,
     });
 
     const notification = getSwapNotitfication('confirm_transfer', updateResult);
@@ -1148,11 +1148,12 @@ export function singTransaction(
     const updateResult = updateSwapStatus({
       getStorage,
       setStorage,
-      nextStepStatus: hasAlreadyProceededToSign ? 'failed' : 'running',
-      nextStatus: hasAlreadyProceededToSign ? 'failed' : 'running',
+      nextStepStatus: nextStepStatusBasedOnHasAlreadyProceededToSign,
+      nextStatus: nextStepStatusBasedOnHasAlreadyProceededToSign,
       message: executeMessage,
       details: executeDetails,
       hasAlreadyProceededToSign,
+      errorCode: errorCodeBasedOnHasAlreadyProceededToSign,
     });
     const notification = getSwapNotitfication(
       'calling_smart_contract',
@@ -1220,11 +1221,12 @@ export function singTransaction(
     const updateResult = updateSwapStatus({
       getStorage,
       setStorage,
-      nextStepStatus: hasAlreadyProceededToSign ? 'failed' : 'running',
-      nextStatus: hasAlreadyProceededToSign ? 'failed' : 'running',
+      nextStepStatus: nextStepStatusBasedOnHasAlreadyProceededToSign,
+      nextStatus: nextStepStatusBasedOnHasAlreadyProceededToSign,
       message: executeMessage,
       details: executeDetails,
       hasAlreadyProceededToSign,
+      errorCode: errorCodeBasedOnHasAlreadyProceededToSign,
     });
     const notification = getSwapNotitfication(
       'calling_smart_contract',
@@ -1310,11 +1312,12 @@ export function singTransaction(
     const updateResult = updateSwapStatus({
       getStorage,
       setStorage,
-      nextStepStatus: hasAlreadyProceededToSign ? 'failed' : 'running',
-      nextStatus: hasAlreadyProceededToSign ? 'failed' : 'running',
+      nextStepStatus: nextStepStatusBasedOnHasAlreadyProceededToSign,
+      nextStatus: nextStepStatusBasedOnHasAlreadyProceededToSign,
       message: executeMessage,
       details: executeDetails,
       hasAlreadyProceededToSign,
+      errorCode: errorCodeBasedOnHasAlreadyProceededToSign,
     });
     const notification = getSwapNotitfication(
       'calling_smart_contract',
@@ -1368,11 +1371,12 @@ export function singTransaction(
     const updateResult = updateSwapStatus({
       getStorage,
       setStorage,
-      nextStepStatus: hasAlreadyProceededToSign ? 'failed' : 'running',
-      nextStatus: hasAlreadyProceededToSign ? 'failed' : 'running',
+      nextStepStatus: nextStepStatusBasedOnHasAlreadyProceededToSign,
+      nextStatus: nextStepStatusBasedOnHasAlreadyProceededToSign,
       message: executeMessage,
       details: executeDetails,
       hasAlreadyProceededToSign,
+      errorCode: errorCodeBasedOnHasAlreadyProceededToSign,
     });
     const notification = getSwapNotitfication(
       'calling_smart_contract',
@@ -1440,11 +1444,12 @@ export function singTransaction(
     const updateResult = updateSwapStatus({
       getStorage,
       setStorage,
-      nextStepStatus: hasAlreadyProceededToSign ? 'failed' : 'running',
-      nextStatus: hasAlreadyProceededToSign ? 'failed' : 'running',
+      nextStepStatus: nextStepStatusBasedOnHasAlreadyProceededToSign,
+      nextStatus: nextStepStatusBasedOnHasAlreadyProceededToSign,
       message: executeMessage,
       details: executeDetails,
       hasAlreadyProceededToSign,
+      errorCode: errorCodeBasedOnHasAlreadyProceededToSign,
     });
     const notification = getSwapNotitfication(
       'calling_smart_contract',
