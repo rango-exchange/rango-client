@@ -72,4 +72,5 @@ export interface UseQueueManagerParams {
   disconnectedWallet: WalletType | undefined;
   clearDisconnectedWallet: () => void;
   evmChains: EvmBlockchainMeta[];
+  queueContext: SwapQueueContext;
 }
