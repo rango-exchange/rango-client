@@ -1,5 +1,4 @@
 import { ExecuterActions } from '@rango-dev/queue-manager-core';
-import { Network } from '@rango-dev/wallets-shared';
 import {
   delay,
   getCurrentStep,
@@ -82,7 +81,6 @@ async function checkTransactionStatus({
     currentStep.starknetTransaction = null;
     currentStep.tronApprovalTransaction = null;
     currentStep.tronTransaction = null;
-    currentStep.fromBlockchain = newTransaction.blockChain as Network;
 
     if (isEvmTransaction(newTransaction)) {
       if (newTransaction.isApprovalTx)
