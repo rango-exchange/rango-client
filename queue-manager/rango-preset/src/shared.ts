@@ -70,7 +70,8 @@ export type EventType =
   | 'not_enough_balance'
   | 'check_fee_failed'
   | 'route_failed_to_find'
-  | 'transaction_expired';
+  | 'transaction_expired'
+  | 'waiting_for_queue';
 
 export type SwapSavedSettings = {
   slippage: string;

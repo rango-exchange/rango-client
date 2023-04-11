@@ -56,7 +56,7 @@ function useQueueManager(params: UseQueueManagerParams): void {
         manager,
         queueContext: params.queueContext,
       });
-      retryOn(params.lastConnectedWallet, manager);
+      retryOn(params.lastConnectedWallet, params.queueContext, manager);
     }
   }, [params.lastConnectedWallet]);
 
