@@ -108,9 +108,6 @@ export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
       DEFAULT: 'https://cosmostation.io/',
     },
     color: 'black',
-    supportedChains: [
-      ...evms,
-      ...cosmos.filter((c) => c.name !== Network.TERRA),
-    ],
+    supportedChains: [...evms, ...cosmos],
   };
 };
