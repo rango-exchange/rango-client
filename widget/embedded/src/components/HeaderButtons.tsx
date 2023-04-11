@@ -23,7 +23,7 @@ export function HeaderButtons(props: PropTypes) {
     <ButtonsContainer>
       <Tooltip content="Retry">
         <Button variant="ghost" onClick={onClickRefresh}>
-          <RetryIcon size={28} />
+          <RetryIcon size={24} />
         </Button>
       </Tooltip>
       <Tooltip content="Transactions History">
