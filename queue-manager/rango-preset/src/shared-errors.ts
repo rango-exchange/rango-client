@@ -8,6 +8,7 @@ export type ErrorDetail = {
 };
 
 export enum APIErrorCode {
+  TX_EXPIRED = 'TX_EXPIRED',
   TX_FAIL = 'TX_FAIL',
   FETCH_TX_FAILED = 'FETCH_TX_FAILED',
   USER_REJECT = 'USER_REJECT',
