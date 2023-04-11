@@ -18,11 +18,11 @@ import { cosmostation as cosmostation_instance } from './helpers';
 import signer from './signer';
 import {
   SignerFactory,
-  isCosmosBlockchain,
   BlockchainMeta,
   evmBlockchains,
-  cosmosBlockchains,
   isEvmBlockchain,
+  isCosmosBlockchain,
+  cosmosBlockchains,
 } from 'rango-types';
 
 const WALLET = WalletType.COSMOSTATION;
@@ -45,7 +45,6 @@ export const connect: Connect = async ({ instance, meta }) => {
   }
 
   if (cosmosInstance) {
-    const cosmosInstance = instance.get(Network.COSMOS);
     const cosmosBlockchainMeta = meta.filter(isCosmosBlockchain);
     const comsmosResult = await getCosmosAccounts({
       instance: cosmosInstance,
@@ -109,6 +108,9 @@ export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
       DEFAULT: 'https://cosmostation.io/',
     },
     color: 'black',
-    supportedChains: [...evms, ...cosmos],
+    supportedChains: [
+      ...evms,
+      ...cosmos.filter((c) => c.name !== Network.TERRA),
+    ],
   };
 };
