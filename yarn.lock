@@ -16677,10 +16677,10 @@ rango-sdk-basic@^0.0.9:
     bignumber.js "^9.0.2"
     uuid "^8.3.2"
 
-rango-sdk@^0.1.19:
-  version "0.1.19"
-  resolved "https://registry.yarnpkg.com/rango-sdk/-/rango-sdk-0.1.19.tgz#bf65a0dd9c6551bd215e1f7238b0b79686e99dbc"
-  integrity sha512-Cfb8Ig1PKGlfQg0qiADMZZQrtCZBp+GBz57KthiXMhkRINyQt+oKKnz8C1ceSpenlLKQe5bh5bsVb9eNJo8pDg==
+rango-sdk@^0.1.20:
+  version "0.1.20"
+  resolved "https://registry.yarnpkg.com/rango-sdk/-/rango-sdk-0.1.20.tgz#fad3cabef81f0c5586a06aab68479ca27ed2112f"
+  integrity sha512-YGTIvnML6pH6cSDHLdqcKU+2FhqWhnuDDJ7PGwGY1M4VqrbgZ2t8PnNf2TFwWNu5UqfP3xUPuIu5E6MOfEHc7Q==
   dependencies:
     axios "^1.2.6"
     bignumber.js "^9.1.1"

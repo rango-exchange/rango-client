@@ -206,19 +206,29 @@ export function updateSwapStatus({
 export function setStepTransactionIds(
   { getStorage, setStorage }: ExecuterActions<SwapStorage, SwapActionTypes>,
   txId: string | null,
-  eventType: EventType,
-  notifier: SwapQueueContext['notifier']
+  notifier: SwapQueueContext['notifier'],
+  eventType?: EventType,
+  approveUrl?: string
 ): void {
   const swap = getStorage().swapDetails;
   swap.hasAlreadyProceededToSign = null;
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const currentStep = getCurrentStep(swap)!;
   currentStep.executedTransactionId = txId || currentStep.executedTransactionId;
+  if (!!approveUrl)
+    currentStep.explorerUrl = [
+      ...(currentStep.explorerUrl || []),
+      {
+        url: approveUrl,
+        description: `approve`,
+      },
+    ];
   setStorage({
     ...getStorage(),
     swapDetails: swap,
   });
-  notifier({ eventType: eventType, swap: swap, step: currentStep });
+  if (!!eventType)
+    notifier({ eventType: eventType, swap: swap, step: currentStep });
 }
 
 export function getSwapNotitfication(
@@ -859,7 +869,7 @@ export function singTransaction(
         'Waiting for approve transaction to be mined and confirmed successfully',
     });
     notifier({
-      eventType: 'confirm_contract',
+      eventType: 'confirm_approve_contract',
       ...updateResult,
     });
 
@@ -875,21 +885,7 @@ export function singTransaction(
             getCurrentBlockchainOf(swap, currentStep),
             meta.evmBasedChains
           );
-          currentStep.explorerUrl = [
-            ...(currentStep.explorerUrl || []),
-            {
-              url: approveUrl,
-              description: `approve`,
-            },
-          ];
-
-          // `currentStep` has been mutated, let's update storage.
-
-          //TODO CHECK IF NOTIFIER IS NEEDED HERE
-          setStorage({
-            ...getStorage(),
-            swapDetails: swap,
-          });
+          setStepTransactionIds(actions, hash, notifier, undefined, approveUrl);
           schedule(SwapActionTypes.CHECK_TRANSACTION_STATUS);
           next();
           onFinish();
@@ -950,7 +946,7 @@ export function singTransaction(
         'Waiting for approve transaction to be mined and confirmed successfully',
     });
     notifier({
-      eventType: 'confirm_contract',
+      eventType: 'confirm_approve_contract',
       ...updateResult,
     });
 
@@ -962,19 +958,7 @@ export function singTransaction(
         (hash) => {
           console.debug('transaction of approval minted successfully', hash);
           const approveUrl = getTronApproveUrl(hash);
-          currentStep.explorerUrl = [
-            ...(currentStep.explorerUrl || []),
-            {
-              url: approveUrl,
-              description: `approve`,
-            },
-          ];
-
-          // `currentStep` has been mutated, let's update storage.
-          setStorage({
-            ...getStorage(),
-            swapDetails: swap,
-          });
+          setStepTransactionIds(actions, hash, notifier, undefined, approveUrl);
           schedule(SwapActionTypes.CHECK_TRANSACTION_STATUS);
           next();
           onFinish();
@@ -1035,7 +1019,7 @@ export function singTransaction(
         'Waiting for approve transaction to be mined and confirmed successfully',
     });
     notifier({
-      eventType: 'confirm_contract',
+      eventType: 'confirm_approve_contract',
       ...updateResult,
     });
 
@@ -1047,19 +1031,7 @@ export function singTransaction(
         (hash) => {
           console.debug('transaction of approval minted successfully', hash);
           const approveUrl = getStarknetApproveUrl(hash);
-          currentStep.explorerUrl = [
-            ...(currentStep.explorerUrl || []),
-            {
-              url: approveUrl,
-              description: `approve`,
-            },
-          ];
-
-          // `currentStep` has been mutated, let's update storage.
-          setStorage({
-            ...getStorage(),
-            swapDetails: swap,
-          });
+          setStepTransactionIds(actions, hash, notifier, undefined, approveUrl);
           schedule(SwapActionTypes.CHECK_TRANSACTION_STATUS);
           next();
           onFinish();
@@ -1143,8 +1115,8 @@ export function singTransaction(
             setStepTransactionIds(
               actions,
               txId,
-              'transfer_confirmed',
-              notifier
+              notifier,
+              'transfer_confirmed'
             );
             schedule(SwapActionTypes.CHECK_TRANSACTION_STATUS);
             next();
@@ -1200,8 +1172,8 @@ export function singTransaction(
             setStepTransactionIds(
               actions,
               id,
-              'smart_contract_called',
-              notifier
+              notifier,
+              'smart_contract_called'
             );
             schedule(SwapActionTypes.CHECK_TRANSACTION_STATUS);
             next();
@@ -1305,8 +1277,8 @@ export function singTransaction(
             setStepTransactionIds(
               actions,
               id,
-              'smart_contract_called',
-              notifier
+              notifier,
+              'smart_contract_called'
             );
             schedule(SwapActionTypes.CHECK_TRANSACTION_STATUS);
             next();
@@ -1363,8 +1335,8 @@ export function singTransaction(
             setStepTransactionIds(
               actions,
               txId,
-              'smart_contract_called',
-              notifier
+              notifier,
+              'smart_contract_called'
             );
             schedule(SwapActionTypes.CHECK_TRANSACTION_STATUS);
             next();
@@ -1420,8 +1392,8 @@ export function singTransaction(
             setStepTransactionIds(
               actions,
               id,
-              'smart_contract_called',
-              notifier
+              notifier,
+              'smart_contract_called'
             );
             schedule(SwapActionTypes.CHECK_TRANSACTION_STATUS);
             next();
@@ -1492,8 +1464,8 @@ export function singTransaction(
             setStepTransactionIds(
               actions,
               id,
-              'smart_contract_called',
-              notifier
+              notifier,
+              'smart_contract_called'
             );
             schedule(SwapActionTypes.CHECK_TRANSACTION_STATUS);
             next();
