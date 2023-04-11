@@ -4,8 +4,9 @@ import {
   styled,
   Wallet,
   WalletState,
+  WalletInfo,
 } from '@rango-dev/ui';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { getlistWallet, sortWalletsBasedOnState } from '../utils/wallets';
 import { WalletType, detectMobileScreens } from '@rango-dev/wallets-shared';
 import { useWallets } from '@rango-dev/wallets-core';
@@ -40,6 +41,7 @@ export function WalletsPage({ supportedWallets, multiWallets }: PropTypes) {
     getWalletInfo,
     supportedWallets === 'all' ? Object.values(WalletType) : supportedWallets
   );
+  const walletsRef = useRef<WalletInfo[]>();
 
   let sortedWallets = detectMobileScreens()
     ? wallets.filter((wallet) => wallet.showOnMobile)
@@ -69,11 +71,26 @@ export function WalletsPage({ supportedWallets, multiWallets }: PropTypes) {
       setWalletErrorMessage('Error: ' + (e as any)?.message);
     }
   };
-
+  const disconnectConnectingWallets = () => {
+    const connectingWallets =
+      walletsRef.current?.filter(
+        (wallet) => wallet.state === WalletState.CONNECTING
+      ) || [];
+    for (const wallet of connectingWallets) {
+      disconnect(wallet.type);
+    }
+  };
   useEffect(() => {
     toggleConnectWalletsButton();
-    return () => toggleConnectWalletsButton();
+    return () => {
+      disconnectConnectingWallets();
+      toggleConnectWalletsButton();
+    };
   }, []);
+
+  useEffect(() => {
+    walletsRef.current = wallets;
+  }, [wallets]);
 
   return (
     <SecondaryPage
