@@ -44,6 +44,8 @@ const theme = {
     error300: '#FF3333',
     error500: '#FF0000',
     error700: '#E60000',
+    // Only use this color when you are going to use white for both dark and light theme.
+    white: '#fff',
   },
   space: {
     2: '2px',
