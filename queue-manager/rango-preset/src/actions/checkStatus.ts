@@ -17,7 +17,7 @@ import { TransactionStatusResponse } from 'rango-sdk';
 import { httpService } from '../services';
 import { APIErrorCode } from '../shared-errors';
 
-const INTERVAL_FOR_CHECK = 2000;
+const INTERVAL_FOR_CHECK = 3_000;
 
 /**
  * Subscribe to status of swap transaction by checking from server periodically.
@@ -118,6 +118,10 @@ async function checkTransactionStatus({
     swap.extraMessage = !!nextStep
       ? `starting next step: ${nextStep.swapperId}: ${nextStep.fromBlockchain} -> ${nextStep.toBlockchain}`
       : '';
+  } else if (currentStep.status === 'failed') {
+    swap.extraMessage = 'Transaction failed in blockchain';
+    swap.extraMessageSeverity = MessageSeverity.error;
+    swap.extraMessageDetail = '';
   }
 
   // Sync data with storage
