@@ -11,7 +11,7 @@ import { Switch } from '../Switch';
 
 const BaseContainer = styled('div', {
   borderRadius: '$5',
-  backgroundColor: '$neutrals200',
+  backgroundColor: '$neutrals300',
   padding: '$16',
 });
 
@@ -45,6 +45,12 @@ const LiquiditySourceNumber = styled('div', {
 
 const ThemesContainer = styled(BaseContainer, {
   marginTop: '$32',
+});
+const Head = styled('div', {
+  display: 'flex',
+  justifyContent: 'space-between',
+  alignItems: 'center',
+  paddingBottom: '$16',
 });
 
 type Theme = 'dark' | 'light' | 'auto';
@@ -97,7 +103,14 @@ export function Settings(props: PropTypes) {
   const PageContent = (
     <>
       <BaseContainer>
-        <Title variant="body1">Slippage tolerance per swap</Title>
+        <Head>
+          <Typography variant="body1">Slippage tolerance per swap</Typography>
+          {customSlippage ? (
+            <Typography variant="caption" color="error">
+              {customSlippage}% Custom
+            </Typography>
+          ) : undefined}
+        </Head>
         <SlippageChipsContainer>
           {slippages.map((slippage, index) => (
             <Chip
@@ -107,7 +120,7 @@ export function Settings(props: PropTypes) {
                 changeSlippage(slippage);
               }}
               selected={!customSlippage && slippage === selectedSlippage}
-              label={`${slippage.toString()} %`}
+              label={`${slippage.toString()}%`}
               style={{
                 marginRight: '8px',
               }}
@@ -128,11 +141,10 @@ export function Settings(props: PropTypes) {
               customSlippage && <Typography variant="body2">%</Typography>
             }
             size="small"
-            placeholder="Custom"
+            placeholder="Custom %"
             style={{
               width: '128px',
               flexGrow: 'initial',
-              borderColor: customSlippage ? '$success' : 'initial',
             }}
           />
         </SlippageChipsContainer>
@@ -158,7 +170,11 @@ export function Settings(props: PropTypes) {
       <LiquiditySourceContainer onClick={onLiquiditySourcesClick}>
         <Typography variant="body1">Liquidity Sources</Typography>
         <LiquiditySourceNumber>
-          <Typography variant="body2">{`( ${selectedLiquiditySources.length} / ${liquiditySources.length} )`}</Typography>
+          <Typography variant="body2" color="neutrals800">
+            {liquiditySources.length !== selectedLiquiditySources.length
+              ? `${selectedLiquiditySources.length} / ${liquiditySources.length}`
+              : liquiditySources.length}
+          </Typography>
           <StyledAngleRight />
         </LiquiditySourceNumber>
       </LiquiditySourceContainer>
