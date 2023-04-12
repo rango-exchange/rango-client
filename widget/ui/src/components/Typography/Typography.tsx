@@ -4,7 +4,6 @@ import { styled } from '../../theme';
 
 const TypographyContainer = styled('span', {
   margin: 0,
-  color: '$foreground',
   display: 'inline-block',
   variants: {
     variant: {
@@ -84,6 +83,10 @@ const TypographyContainer = styled('span', {
         '@lg': {
           fontSize: '$16',
         },
+      },
+      body3: {
+        fontSize: '$12',
+        fontWeight: '$400',
       },
       caption: {
         fontSize: '$10',
@@ -187,16 +190,29 @@ export interface PropTypes {
   mr?: 2 | 4 | 8 | 12;
   className?: string;
   style?: CSSProperties;
-
+  color?: string;
 }
 
 export function Typography({
   children,
   className,
+  color,
   ...props
 }: PropsWithChildren<PropTypes>) {
+  const customCss = color
+    ? {
+        color: color.startsWith('$') ? color : `$${color}`,
+      }
+    : {
+        color: '$foreground',
+      };
+
   return (
-    <TypographyContainer className={`_typography _text ${className}`} {...props}>
+    <TypographyContainer
+      className={`_typography _text ${className || ''}`}
+      css={customCss}
+      {...props}
+    >
       {children}
     </TypographyContainer>
   );

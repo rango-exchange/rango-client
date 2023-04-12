@@ -13,6 +13,7 @@ const ButtonContainer = styled('button', {
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
+  transition: 'all 0.35s',
 
   variants: {
     align: {
@@ -26,6 +27,7 @@ const ButtonContainer = styled('button', {
       },
     },
     size: {
+      compact: {},
       small: {
         height: '$32',
       },
@@ -54,8 +56,8 @@ const ButtonContainer = styled('button', {
         borderColor: '$neutrals400 !important',
         color: '$foreground',
         '&:hover': {
-          borderColor: '$neutrals600 !important',
-          color: '$neutrals500 !important',
+          borderColor: '$neutrals500 !important',
+          // color: '$neutrals500 !important',
         },
         '&:disabled': {
           borderColor: '$neutrals300 !important',
@@ -322,6 +324,13 @@ const ButtonContainer = styled('button', {
         '&:focus': {
           color: '$success700',
         },
+      },
+    },
+    {
+      size: 'compact',
+      css: {
+        padding: '$2 $4',
+        fontSize: '$12',
       },
     },
   ],
