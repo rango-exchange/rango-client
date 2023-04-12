@@ -330,16 +330,19 @@ export function markRunningSwapAsSwitchingNetwork({
  * By calling this function some related fields will be updated to show a correct message and state for notfiying the user.
  */
 export function markRunningSwapAsDependsOnOtherQueues({
-  getStorage,
-  setStorage,
-  context,
-}: Pick<ExecuterActions, 'getStorage' | 'setStorage' | 'context'>):
+  executorActions,
+  contextNotifier,
+}: {
+  executorActions: Pick<ExecuterActions, 'getStorage' | 'setStorage'>;
+  contextNotifier: (data: SwapProgressNotification) => void;
+}):
   | {
       swap: PendingSwap;
       step: PendingSwapStep;
     }
   | undefined {
-  const swap = getStorage().swapDetails as SwapStorage['swapDetails'];
+  const swap = executorActions.getStorage()
+    .swapDetails as SwapStorage['swapDetails'];
   const currentStep = getCurrentStep(swap);
   if (!currentStep) return;
 
@@ -347,14 +350,14 @@ export function markRunningSwapAsDependsOnOtherQueues({
   swap.networkStatusExtraMessageDetail = '';
   currentStep.networkStatus = PendingSwapNetworkStatus.WaitingForQueue;
 
-  (context as SwapQueueContext)?.notifier({
+  contextNotifier({
     eventType: 'waiting_for_queue',
     swap,
     step: currentStep,
   });
 
-  setStorage({
-    ...getStorage(),
+  executorActions.setStorage({
+    ...executorActions.getStorage(),
     swapDetails: swap,
   });
 
@@ -716,9 +719,11 @@ export function onDependsOnOtherQueues(
   if (isClaimedByAnyQueue) {
     // We need to keep the latest swap messages
     markRunningSwapAsDependsOnOtherQueues({
-      getStorage: queue.getStorage.bind(queue),
-      setStorage: queue.setStorage.bind(queue),
-      context,
+      executorActions: {
+        getStorage: queue.getStorage.bind(queue),
+        setStorage: queue.setStorage.bind(queue),
+      },
+      contextNotifier: context.notifier,
     });
     return;
   }
@@ -747,7 +752,7 @@ export function onDependsOnOtherQueues(
     resetClaimedBy: () => {
       reset();
       // TODO: Use key generator
-      retryOn(`${type}-${network}-${address}`, context, manager);
+      retryOn(`${type}-${network}-${address}`, context.notifier, manager);
     },
   });
 }
@@ -1479,7 +1484,7 @@ export function checkWaitingForConnectWalletChange(params: {
   wallet_network: string;
   manager?: Manager;
   evmChains: EvmBlockchainMeta[];
-  queueContext: SwapQueueContext;
+  contextNotifier: (data: SwapProgressNotification) => void;
 }): void {
   const { wallet_network, evmChains, manager } = params;
   const [wallet, network] = splitWalletNetwork(wallet_network);
@@ -1530,7 +1535,7 @@ export function checkWaitingForConnectWalletChange(params: {
           });
 
           if (result) {
-            params.queueContext?.notifier({
+            params?.contextNotifier({
               eventType: 'waiting_for_network_change',
               swap: result.swap,
               step: result.step,
@@ -1589,7 +1594,7 @@ export function checkWaitingForNetworkChange(manager?: Manager): void {
  */
 export function retryOn(
   wallet_network: string,
-  queueContext: SwapQueueContext,
+  contextNotifier: (data: SwapProgressNotification) => void,
   manager?: Manager,
   options = { fallbackToOnlyWallet: true }
 ): void {
@@ -1636,9 +1641,11 @@ export function retryOn(
         const currentQueue = walletAndNetworkMatched[i];
 
         markRunningSwapAsDependsOnOtherQueues({
-          getStorage: currentQueue.getStorage.bind(currentQueue),
-          setStorage: currentQueue.setStorage.bind(currentQueue),
-          context: queueContext,
+          executorActions: {
+            getStorage: currentQueue.getStorage.bind(currentQueue),
+            setStorage: currentQueue.setStorage.bind(currentQueue),
+          },
+          contextNotifier,
         });
       }
     }
