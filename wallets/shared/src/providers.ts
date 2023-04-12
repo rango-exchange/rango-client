@@ -43,8 +43,9 @@ export const switchNetworkForEvm: SwitchNetwork = async ({
   meta,
 }) => {
   const evmBlockchains = meta.filter(isEvmBlockchain);
+  const evmInstance = getNetworkInstance(instance, Network.ETHEREUM);
   await switchOrAddNetworkForMetamaskCompatibleWallets(
-    instance,
+    evmInstance,
     network,
     convertEvmBlockchainMetaToEvmChainInfo(evmBlockchains)
   );
