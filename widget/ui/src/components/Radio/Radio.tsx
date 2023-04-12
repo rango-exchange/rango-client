@@ -27,14 +27,15 @@ const ItemContainer = styled('div', {
 });
 const StyledItem = styled(RadioGroup.Item, {
   padding: '0',
-  backgroundColor: '$neutrals300',
   width: '20px',
   height: '20px',
   borderRadius: '100%',
-  border: 'none',
   cursor: 'pointer',
+  backgroundColor: '$background',
+  border: '1px solid $neutrals400',
+
   '&:hover': {
-    backgroundColor: '$neutrals400',
+    borderColor: '$neutrals600',
   },
 });
 
