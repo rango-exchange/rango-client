@@ -1,52 +1,53 @@
-import React, { PropsWithChildren } from 'react';
+import React, { PropsWithChildren, ReactNode } from 'react';
 import { CheckCircleIcon, InfoCircleIcon, WarningIcon } from '../Icon';
 import { Typography } from '../Typography';
-import { darkTheme, styled } from '../../theme';
+import { styled } from '../../theme';
+import { Spacer } from '../Spacer';
 
 const MainContainer = styled('div', {
-  display: 'flex',
   width: '100%',
-  alignItems: 'center',
   padding: '$16',
   borderRadius: '$5',
+  backgroundColor: '$neutrals300',
+  color: '$neutrals800',
+
+  '.main': {
+    display: 'flex',
+    alignItems: 'center',
+  },
+
+  '.footer': {
+    paddingTop: '$8',
+  },
+  '&.hasIcon .footer': {
+    paddingLeft: '$32',
+  },
+
   variants: {
     type: {
       primary: {
-        backgroundColor: '$primary200',
+        color: '$primary200',
       },
       secondary: {
-        backgroundColor: '$neutrals400',
+        color: '$secondary',
       },
       success: {
-        backgroundColor: '$success300',
+        color: '$success300',
       },
       warning: {
-        backgroundColor: '$warning500',
+        color: '$warning500',
       },
       error: {
-        backgroundColor: '$error300',
+        color: '$error300',
       },
     },
   },
 });
 
-const ContentContainer = styled('div', {});
-
-const TitleContainer = styled('div', {
-  marginBottom: '$8',
-});
-
-const IconContainer = styled('div', {
-  marginRight: '$24',
-});
-
-const StyledTypography = styled(Typography, {
-  color: darkTheme.colors.foreground.value,
-});
-
 export interface PropTypes {
-  type: 'primary' | 'secondary' | 'success' | 'warning' | 'error';
+  type?: 'primary' | 'secondary' | 'success' | 'warning' | 'error';
   title?: string;
+  footer?: ReactNode;
 }
 
 export function Alert(props: PropsWithChildren<PropTypes>) {
@@ -57,22 +58,24 @@ export function Alert(props: PropsWithChildren<PropTypes>) {
   ).includes(type);
 
   return (
-    <MainContainer type={type}>
-      {showIcon && (
-        <IconContainer>
-          {type === 'success' && <CheckCircleIcon color="success" size={28} />}
-          {type === 'warning' && <WarningIcon color="white" size={28} />}
-          {type === 'error' && <InfoCircleIcon color="error" size={28} />}
-        </IconContainer>
-      )}
-      <ContentContainer>
+    <MainContainer type={type} className={showIcon ? 'hasIcon' : ''}>
+      <div className="main">
+        {showIcon && (
+          <>
+            {type === 'success' && <CheckCircleIcon color={type} size={24} />}
+            {type === 'warning' && <WarningIcon color={type} size={24} />}
+            {type === 'error' && <InfoCircleIcon color={type} size={24} />}
+            <Spacer size={8} />
+          </>
+        )}
         {title && (
-          <TitleContainer>
-            <StyledTypography variant="h6">{title}</StyledTypography>
-          </TitleContainer>
+          <Typography variant="h6" color={type}>
+            {title}
+          </Typography>
         )}
         {children}
-      </ContentContainer>
+      </div>
+      {props.footer ? <div className="footer">{props.footer}</div> : null}
     </MainContainer>
   );
 }

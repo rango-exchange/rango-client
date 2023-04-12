@@ -195,7 +195,7 @@ export function TokenInfo(props: PropTypes) {
                   'Balance'
                 )}: ${tokenBalance} ${fromToken?.symbol || ''}`}</Typography>
                 <Spacer size={4} />
-                <Button variant="ghost" size="compact">
+                <Button type="primary" variant="ghost" size="compact">
                   {t('Max')}
                 </Button>
               </div>

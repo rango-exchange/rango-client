@@ -5,6 +5,7 @@ const SpacerContainer = styled('div', {
   variants: {
     size: {
       4: {},
+      8: {},
       12: {},
       16: {},
       18: {},
@@ -29,6 +30,20 @@ const SpacerContainer = styled('div', {
       direction: 'vertical',
       css: {
         height: '$4',
+      },
+    },
+    {
+      size: 8,
+      direction: 'horizontal',
+      css: {
+        width: '$8',
+      },
+    },
+    {
+      size: 8,
+      direction: 'vertical',
+      css: {
+        height: '$8',
       },
     },
     {
@@ -104,7 +119,7 @@ const SpacerContainer = styled('div', {
   ],
 });
 export interface PropTypes {
-  size?: 4 | 12 | 16 | 18 | 20 | 24;
+  size?: 4 | 8 | 12 | 16 | 18 | 20 | 24;
   direction?: 'vertical' | 'horizontal';
 }
 

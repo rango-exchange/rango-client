@@ -21,12 +21,21 @@ const Logo = styled('img', {
   borderRadius: '50%',
 });
 
-const ChainLogo = styled('img', {
+const ChainLogo = styled('div', {
   position: 'absolute',
-  bottom: 0,
-  width: '$12',
-  height: '$12',
-  right: 0,
+  right: -4,
+  bottom: -4,
+  width: '$16',
+  height: '$16',
+  padding: '$2',
+  borderRadius: '50%',
+  backgroundColor: '$background',
+  border: '1px solid $neutrals400',
+
+  img: {
+    width: '100%',
+    display: 'block',
+  },
 });
 const StepContainer = styled('div', {
   display: 'flex',
@@ -82,13 +91,15 @@ export function StepDetail({
     <StepContainer direction={direction}>
       <StepLogoContainer direction={direction}>
         <Logo src={logo} alt={symbol} />
-        <ChainLogo src={chainLogo} alt={blockchain} />
+        <ChainLogo>
+          <img src={chainLogo} alt={blockchain} />
+        </ChainLogo>
       </StepLogoContainer>
       <Detail pl={direction === 'horizontal'}>
         <Typography noWrap variant={direction === 'vertical' ? 'body2' : 'h6'}>
           {amount ? parseFloat(amount).toFixed(2) : '?'} {symbol}
         </Typography>
-        <SubTitle noWrap variant="caption">
+        <SubTitle noWrap variant="caption" color="neutrals800">
           on {blockchain}
         </SubTitle>
       </Detail>

@@ -93,7 +93,6 @@ export interface PropTypes {
 export function ConfirmSwap(props: PropsWithChildren<PropTypes>) {
   const {
     bestRoute,
-    onRefresh,
     onBack,
     onConfirm,
     loading,
@@ -123,7 +122,6 @@ export function ConfirmSwap(props: PropsWithChildren<PropTypes>) {
           </Button>
         </Footer>
       }
-      TopButton={<StyledUpdateIcon size={24} onClick={onRefresh} />}
     >
       <MainContainer>
         <div>
