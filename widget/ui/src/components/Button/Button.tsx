@@ -15,6 +15,10 @@ const ButtonContainer = styled('button', {
   justifyContent: 'center',
   transition: 'all 0.35s',
 
+  '&:active': {
+    transform: 'scale(0.95)',
+  },
+
   variants: {
     align: {
       start: {
