@@ -3,12 +3,12 @@
   "Connect Wallet": "Connect Wallet",
   "Powered By": "Powered By",
   "From": "You sell",
-  "To": "You buy",
+  "To": "You receive",
   "Balance": "Balance",
   "Max": "Max",
   "Chain": "Chain",
   "Token": "Token",
   "Source": "Source",
   "Destination": "Destination",
-  "Select Wallet": "Select Wallet"
+  "Select Wallet": "Connect Your Wallet"
 }

@@ -50,12 +50,6 @@ const TypographyContainer = styled('span', {
       h5: {
         fontSize: '$16',
         fontWeight: '$600',
-        '@md': {
-          fontSize: '$18',
-        },
-        '@lg': {
-          fontSize: '$20',
-        },
       },
       h6: {
         fontSize: '$14',
