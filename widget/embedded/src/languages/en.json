@@ -1,13 +1,14 @@
 {
   "swap": "SWAP",
-  "Connect Wallet":"Connect Wallet",
-  "Powered By":"Powered By",
-  "From":"From",
-  "To":"To",
-  "Max":"Max",
+  "Connect Wallet": "Connect Wallet",
+  "Powered By": "Powered By",
+  "From": "You sell",
+  "To": "You buy",
+  "Balance": "Balance",
+  "Max": "Max",
   "Chain": "Chain",
   "Token": "Token",
-  "Source" :"Source",
-  "Destination" :"Destination",
-  "Select Wallet":"Select Wallet"
+  "Source": "Source",
+  "Destination": "Destination",
+  "Select Wallet": "Select Wallet"
 }

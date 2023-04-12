@@ -14,15 +14,15 @@ export function useTheme({
   warning = '#F5A623',
   success = '#0070F3',
   fontFamily = 'Robot',
-  borderRadius = 5,
+  borderRadius = 8,
 }: Colors & { borderRadius?: number; fontFamily?: string }) {
   const theme = useSettingsStore.use.theme();
   const fetchMeta = useMetaStore.use.fetchMeta();
   const colors = {
     neutrals200: '#FAFAFA',
-    neutrals300: '#EAEAEA',
-    neutrals400: '#999999',
-    neutrals500: '#888888',
+    neutrals300: '#f2f2f2',
+    neutrals400: '#dedede',
+    neutrals500: '#cccccc',
     neutrals600: '#666666',
     neutrals700: '#444444',
     neutrals800: '#333333',
@@ -70,9 +70,9 @@ export function useTheme({
       neutrals300: '#333333',
       neutrals400: '#444444',
       neutrals500: '#666666',
-      neutrals600: '#888888',
-      neutrals700: '#999999',
-      neutrals800: '#EAEAEA',
+      neutrals600: '#cccccc',
+      neutrals700: '#dedede',
+      neutrals800: '#f2f2f2',
       neutrals900: '#FAFAFA',
       foreground: background,
       background: foreground,

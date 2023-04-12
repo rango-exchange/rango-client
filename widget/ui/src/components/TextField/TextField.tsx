@@ -16,6 +16,7 @@ const InputContainer = styled('div', {
   transition: 'border-color ease .3s',
   '&:focus-within': {
     borderColor: '$primary',
+    outline: '1px solid $primary',
   },
   variants: {
     size: {
