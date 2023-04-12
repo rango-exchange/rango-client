@@ -1,7 +1,6 @@
 import { CSSProperties } from '@stitches/react';
 import React from 'react';
 import { styled } from '../../theme';
-import { Typography } from '../Typography';
 
 const ChipCointainer = styled('div', {
   display: 'inline-flex',
@@ -12,12 +11,15 @@ const ChipCointainer = styled('div', {
   height: '32',
   fontSize: '$14',
   cursor: 'pointer',
+  transition: 'all 0.35s',
+
   '&:hover': {
-    backgroundColor: '$neutrals300',
+    backgroundColor: '$success700',
+    color: '$background',
   },
   variants: {
     selected: {
-      true: { backgroundColor: '$neutrals400' },
+      true: { backgroundColor: '$success', color: '$background' },
       false: { backgroundColor: '$background' },
     },
   },
@@ -38,7 +40,7 @@ export function Chip(props: PropTypes) {
   return (
     <ChipCointainer selected={selected} onClick={onClick} style={style}>
       {prefix || null}
-      <Typography variant="body2">{label}</Typography>
+      {label}
       {suffix || null}
     </ChipCointainer>
   );
