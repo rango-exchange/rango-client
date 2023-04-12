@@ -19,9 +19,11 @@ const groupLiquiditySources = (
   ),
 });
 
-const LiquiditySourceType = styled(Typography, {
+const LiquiditySourceType = styled('div', {
   position: 'sticky',
-  display: 'block',
+  display: 'flex',
+  justifyContent: 'space-between',
+  alignItems: 'center',
   top: '0',
   marginTop: '$8',
   marginBottom: '$8',
@@ -66,12 +68,29 @@ export function LiquiditySourceList(props: PropTypes) {
     setSelected(list.filter((item) => item.selected));
   }, [list]);
 
+  const sections = groupLiquiditySources(list);
+  const bridges = sections.bridge;
+  const exchanges = sections.exchange;
+
+  const totalBridges = bridges.length;
+  const totalExchanges = exchanges.length;
+  // TODO: This is not performant
+  const totalSelectedBridges = bridges.filter(isSelected).length;
+  const totalSelectedExchanges = exchanges.filter(isSelected).length;
+
   return (
     <div style={{ height: '450px', ...listContainerStyle }}>
       <div>
-        <LiquiditySourceType variant="h5">Bridges</LiquiditySourceType>
-        <Spacer size={16} direction="vertical" />
-        {groupLiquiditySources(list).bridge.map((liquiditySource, index) => (
+        <LiquiditySourceType>
+          <Typography variant="h5">Bridges</Typography>
+          <Typography variant="body1" color="neutrals800">
+            {totalSelectedBridges === totalBridges
+              ? totalBridges
+              : `${totalSelectedBridges} / ${totalBridges}`}
+          </Typography>
+        </LiquiditySourceType>
+        <Spacer size={12} direction="vertical" />
+        {bridges.map((liquiditySource, index) => (
           <LiquiditySourceItem
             liquiditySource={liquiditySource}
             key={index}
@@ -81,10 +100,16 @@ export function LiquiditySourceList(props: PropTypes) {
         ))}
       </div>
       <div>
-        <LiquiditySourceType variant="h5">Exchanges</LiquiditySourceType>
-        <Spacer size={16} direction="vertical" />
-
-        {groupLiquiditySources(list).exchange.map((liquiditySource, index) => (
+        <LiquiditySourceType>
+          <Typography variant="h5">Exchanges</Typography>
+          <Typography variant="body1" color="neutrals800">
+            {totalSelectedExchanges === totalExchanges
+              ? totalExchanges
+              : `${totalSelectedExchanges} / ${totalExchanges}`}
+          </Typography>
+        </LiquiditySourceType>
+        <Spacer size={12} direction="vertical" />
+        {exchanges.map((liquiditySource, index) => (
           <LiquiditySourceItem
             liquiditySource={liquiditySource}
             key={index}
@@ -113,7 +138,6 @@ const LiquiditySourceItem = ({
     prefix={<LiquidityImage src={liquiditySource.logo} />}
     suffix={<Switch checked={selected} />}
     style={{ marginBottom: '12px' }}
-    type={selected ? 'primary' : undefined}
     onClick={onChange.bind(null, liquiditySource)}
   >
     <Typography variant="body1">{liquiditySource.title}</Typography>
