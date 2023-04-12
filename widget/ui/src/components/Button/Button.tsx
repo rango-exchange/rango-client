@@ -375,7 +375,7 @@ const Content = styled('div', {
 export interface PropTypes
   extends Omit<HTMLAttributes<HTMLButtonElement>, 'prefix'> {
   onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
-  size?: 'small' | 'medium' | 'large';
+  size?: 'small' | 'medium' | 'large' | 'compact';
   variant?: 'contained' | 'outlined' | 'ghost';
   type?: 'primary' | 'error' | 'warning' | 'success';
   prefix?: React.ReactNode;

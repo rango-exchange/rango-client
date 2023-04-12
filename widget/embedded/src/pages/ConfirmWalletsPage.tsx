@@ -21,6 +21,7 @@ import { useMetaStore } from '../store/meta';
 import { Network, WalletType } from '@rango-dev/wallets-shared';
 import { useNavigateBack } from '../hooks/useNavigateBack';
 import { TokenPreview } from '../components/TokenPreview';
+// @ts-ignore // TODO: fix error in tsc build
 import { t } from 'i18next';
 import { Spacer } from '@rango-dev/ui';
 import RoutesOverview from '../components/RoutesOverview';
@@ -71,9 +72,6 @@ export function ConfirmWalletsPage() {
       requiredWallets={getRequiredChains(bestRoute)}
       selectableWallets={selectableWallets}
       onBack={navigateBackFrom.bind(null, navigationRoutes.confirmWallets)}
-      swap={bestRoute}
-      fromAmount={fromAmount}
-      toAmount={toAmount}
       onConfirm={() =>
         navigate(navigationRoutes.confirmSwap, { replace: true })
       }

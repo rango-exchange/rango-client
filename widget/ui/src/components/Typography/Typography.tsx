@@ -175,6 +175,7 @@ export interface PropTypes {
     | 'h6'
     | 'body1'
     | 'body2'
+    | 'body3'
     | 'caption';
   align?: 'center' | 'left' | 'right';
   noWrap?: boolean;
