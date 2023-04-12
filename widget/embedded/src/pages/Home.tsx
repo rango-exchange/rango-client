@@ -37,16 +37,18 @@ import {
 const Container = styled('div', {
   display: 'flex',
   flexDirection: 'column',
-  justifyContent: 'center',
-  alignItems: 'center',
+});
+
+const FromContainer = styled('div', {
+  position: 'relative',
+  paddingBottom: '$12',
 });
 
 const SwitchButtonContainer = styled('div', {
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-  position: 'relative',
-  top: '11px',
+  position: 'absolute',
+  bottom: '-12px',
+  left: '50%',
+  transform: 'translate(-50%, 10%)',
 });
 
 const BestRouteContainer = styled('div', {
@@ -138,7 +140,6 @@ export function Home(props: PropTypes) {
 
   const highFee = hasHighFee(totalFeeInUsd);
 
- 
   return (
     <Container>
       <Header
@@ -147,19 +148,21 @@ export function Home(props: PropTypes) {
         titleWeight={titleWeight}
         onClickRefresh={fetchBestRoute}
       />
-      <TokenInfo
-        type="From"
-        chain={fromChain}
-        token={fromToken}
-        onAmountChange={setInputAmount}
-        inputAmount={inputAmount}
-      />
-      <SwitchButtonContainer>
-        <Button variant="ghost" onClick={swithFromAndTo}>
-          <VerticalSwapIcon size={36} />
-          {isRouterInContext && <SwithFromAndTo count={count} />}
-        </Button>
-      </SwitchButtonContainer>
+      <FromContainer>
+        <TokenInfo
+          type="From"
+          chain={fromChain}
+          token={fromToken}
+          onAmountChange={setInputAmount}
+          inputAmount={inputAmount}
+        />
+        <SwitchButtonContainer>
+          <Button variant="ghost" onClick={swithFromAndTo}>
+            <VerticalSwapIcon size={24} />
+            {isRouterInContext && <SwithFromAndTo count={count} />}
+          </Button>
+        </SwitchButtonContainer>
+      </FromContainer>
       <TokenInfo
         type="To"
         chain={toChain}

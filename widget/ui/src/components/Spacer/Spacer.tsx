@@ -4,6 +4,7 @@ import { styled } from '../../theme';
 const SpacerContainer = styled('div', {
   variants: {
     size: {
+      4: {},
       12: {},
       16: {},
       18: {},
@@ -16,6 +17,20 @@ const SpacerContainer = styled('div', {
     },
   },
   compoundVariants: [
+    {
+      size: 4,
+      direction: 'horizontal',
+      css: {
+        width: '$4',
+      },
+    },
+    {
+      size: 4,
+      direction: 'vertical',
+      css: {
+        height: '$4',
+      },
+    },
     {
       size: 12,
       direction: 'horizontal',
@@ -89,7 +104,7 @@ const SpacerContainer = styled('div', {
   ],
 });
 export interface PropTypes {
-  size?: 12 | 16 | 18 | 20 | 24;
+  size?: 4 | 12 | 16 | 18 | 20 | 24;
   direction?: 'vertical' | 'horizontal';
 }
 

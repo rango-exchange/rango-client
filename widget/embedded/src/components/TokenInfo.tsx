@@ -16,6 +16,7 @@ import BigNumber from 'bignumber.js';
 import { getBalanceFromWallet } from '../utils/wallets';
 import { useWalletsStore } from '../store/wallets';
 import { useTranslation } from 'react-i18next';
+import { Spacer } from '@rango-dev/ui';
 
 type PropTypes = (
   | {
@@ -38,14 +39,46 @@ const Box = styled('div', {
 
 const Container = styled('div', {
   boxSizing: 'border-box',
-  backgroundColor: '$neutrals300',
   borderRadius: '$5',
-  padding: '$8 0',
+  padding: '$8 $16 $16 $16',
 
+  variants: {
+    type: {
+      filled: {
+        backgroundColor: '$neutrals300',
+      },
+      outlined: {
+        border: '1px solid $neutrals300',
+      },
+    },
+  },
+
+  defaultVariants: {
+    type: 'filled',
+  },
+
+  '.head': {
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    minHeight: '32px',
+  },
   '.form': {
     display: 'flex',
     width: '100%',
-    padding: '$8 $16',
+    padding: '$2 0',
+    '.selectors': {
+      width: '35%',
+
+      '._text': {
+        whiteSpace: 'nowrap',
+        overflow: 'hidden',
+        textOverflow: 'ellipsis',
+      },
+    },
+    '.amount': {
+      width: '30%',
+    },
   },
 });
 
@@ -57,7 +90,11 @@ const StyledImage = styled('img', {
 const Options = styled('div', {
   display: 'flex',
   justifyContent: 'flex-end',
-  padding: '0 $8',
+
+  '.balance': {
+    display: 'flex',
+    alignItems: 'center',
+  },
 });
 
 const ImagePlaceholder = styled('span', {
@@ -68,10 +105,9 @@ const ImagePlaceholder = styled('span', {
 });
 
 const OutputContainer = styled('div', {
+  windth: '100%',
   height: '$48',
   borderRadius: '$5',
-  flexGrow: 1,
-  width: '70%',
   backgroundColor: '$background',
   border: '1px solid transparent',
   position: 'relative',
@@ -141,29 +177,39 @@ export function TokenInfo(props: PropTypes) {
 
   return (
     <Box>
-      <div>
-        <Typography variant="body2">{t(type)}</Typography>
-      </div>
-      <Container>
-        {props.type === 'From' && (
-          <Options>
-            <div
-              className="balance"
-              onClick={() => {
-                if (tokenBalance !== '0')
-                  setInputAmount(tokenBalanceReal.split(',').join(''));
-              }}
-            >
-              <Button variant="ghost" size="small">
-                <Typography variant="body2">{`${t('Max')}: ${tokenBalance} ${
-                  fromToken?.symbol || ''
-                }`}</Typography>
-              </Button>
-            </div>
-          </Options>
-        )}
+      <Container type={props.type === 'From' ? 'filled' : 'outlined'}>
+        <div className="head">
+          <Typography variant="body2" color="neutrals800">
+            {t(type)}
+          </Typography>
+          {props.type === 'From' ? (
+            <Options>
+              <div
+                className="balance"
+                onClick={() => {
+                  if (tokenBalance !== '0')
+                    setInputAmount(tokenBalanceReal.split(',').join(''));
+                }}
+              >
+                <Typography variant="body3" color="neutrals600">{`${t(
+                  'Balance'
+                )}: ${tokenBalance} ${fromToken?.symbol || ''}`}</Typography>
+                <Spacer size={4} />
+                <Button variant="ghost" size="compact">
+                  {t('Max')}
+                </Button>
+              </div>
+            </Options>
+          ) : (
+            <Typography
+              variant="caption"
+              color="neutrals600"
+            >{`$${numberToString(props.outputUsdValue)}`}</Typography>
+          )}
+        </div>
         <div className="form">
           <Button
+            className="selectors"
             onClick={() => {
               navigate(`/${props.type.toLowerCase()}-chain`);
             }}
@@ -180,11 +226,14 @@ export function TokenInfo(props: PropTypes) {
             suffix={ItemSuffix}
             align="start"
             size="large"
-            style={{ marginRight: '.5rem' }}
           >
-            {loadingStatus === 'success' && chain ? chain.displayName : t('Chain')}
+            {loadingStatus === 'success' && chain
+              ? chain.displayName
+              : t('Chain')}
           </Button>
+          <Spacer size={12} />
           <Button
+            className="selectors"
             onClick={() => {
               navigate(`/${props.type.toLowerCase()}-token`);
             }}
@@ -205,57 +254,56 @@ export function TokenInfo(props: PropTypes) {
             suffix={ItemSuffix}
             size="large"
             align="start"
-            style={{ marginRight: '.5rem' }}
           >
             {loadingStatus === 'success' && token ? token.symbol : t('Token')}
           </Button>
-          {props.type === 'From' ? (
-            <TextField
-              type="number"
-              size="large"
-              autoFocus
-              placeholder="0"
-              style={{
-                width: '70%',
-                position: 'relative',
-                backgroundColor: '$background !important',
-              }}
-              suffix={
-                <span
-                  style={{ position: 'absolute', right: '4px', bottom: '2px' }}
-                >
-                  <Typography variant="caption">{`$${numberToString(
-                    inputUsdValue
-                  )}`}</Typography>
-                </span>
-              }
-              value={props.inputAmount || ''}
-              onChange={
-                props.type === 'From'
-                  ? (event) => {
-                      props.onAmountChange(event.target.value);
-                    }
-                  : undefined
-              }
-            />
-          ) : (
-            <OutputContainer>
-              <Typography variant="body1">
-                {bestRoute
-                  ? `≈ ${numberToString(props.outputAmount)}`
-                  : inputAmount
-                  ? '?'
-                  : '0'}
-              </Typography>
-              <span
-                style={{ position: 'absolute', right: '4px', bottom: '2px' }}
-              >
-                <Typography variant="caption">{`$${numberToString(
-                  props.outputUsdValue
-                )}`}</Typography>
-              </span>
-            </OutputContainer>
-          )}
+          <Spacer size={12} />
+          <div className="amount">
+            {props.type === 'From' ? (
+              <TextField
+                type="number"
+                size="large"
+                autoFocus
+                placeholder="0"
+                style={{
+                  position: 'relative',
+                  backgroundColor: '$background !important',
+                }}
+                suffix={
+                  <span
+                    style={{
+                      position: 'absolute',
+                      right: '4px',
+                      bottom: '2px',
+                    }}
+                  >
+                    <Typography
+                      variant="caption"
+                      color="neutrals800"
+                    >{`$${numberToString(inputUsdValue)}`}</Typography>
+                  </span>
+                }
+                value={props.inputAmount || ''}
+                onChange={
+                  props.type === 'From'
+                    ? (event) => {
+                        props.onAmountChange(event.target.value);
+                      }
+                    : undefined
+                }
+              />
+            ) : (
+              <OutputContainer>
+                <Typography variant="h4">
+                  {bestRoute
+                    ? `≈ ${numberToString(props.outputAmount)}`
+                    : inputAmount
+                    ? '?'
+                    : '0'}
+                </Typography>
+              </OutputContainer>
+            )}
+          </div>
         </div>
       </Container>
     </Box>
