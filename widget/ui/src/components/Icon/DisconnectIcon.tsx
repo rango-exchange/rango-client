@@ -2,7 +2,7 @@ import * as React from 'react';
 import { SvgWithStrokeColor } from './common';
 import { IconProps } from './types';
 
-export const RetryIcon = React.forwardRef<SVGSVGElement, IconProps>(
+export const DisconnectIcon = React.forwardRef<SVGSVGElement, IconProps>(
   ({ color = 'black', size = 16, ...props }, forwardedRef) => {
     return (
       <SvgWithStrokeColor
@@ -20,11 +20,12 @@ export const RetryIcon = React.forwardRef<SVGSVGElement, IconProps>(
         {...props}
         ref={forwardedRef}
       >
-        <polyline points="23 4 23 10 17 10"></polyline>
-        <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path>
+        <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+        <polyline points="16 17 21 12 16 7"></polyline>
+        <line x1="21" y1="12" x2="9" y2="12"></line>
       </SvgWithStrokeColor>
     );
   }
 );
 
-RetryIcon.toString = () => '._icon';
+DisconnectIcon.toString = () => '._icon';

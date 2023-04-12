@@ -36,6 +36,7 @@ export { AddWalletIcon } from './AddWalletIcon';
 export { DeleteWalletIcon } from './DeleteWalletIcon';
 export { CheckWalletIcon } from './CheckWalletIcon';
 export { SwapWalletIcon } from './SwapWalletIcon';
+export { DisconnectIcon } from './DisconnectIcon';
 
 export { BagIcon } from './BagIcon';
 

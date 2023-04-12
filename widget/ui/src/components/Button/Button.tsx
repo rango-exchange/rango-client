@@ -14,6 +14,7 @@ const ButtonContainer = styled('button', {
   alignItems: 'center',
   justifyContent: 'center',
   transition: 'all 0.35s',
+  border: '0',
 
   '&:active': {
     transform: 'scale(0.95)',
@@ -52,24 +53,22 @@ const ButtonContainer = styled('button', {
           color: '$foreground',
         },
         '&:disabled': {
-          background: '$neutrals400 !important',
+          background: '$neutrals400',
         },
       },
       outlined: {
-        backgroundColor: '$background !important',
-        borderColor: '$neutrals400 !important',
-        color: '$foreground',
-        '&:hover': {
-          borderColor: '$neutrals500 !important',
-          // color: '$neutrals500 !important',
-        },
-        '&:disabled': {
-          borderColor: '$neutrals300 !important',
-          color: '$neutrals400 !important',
-        },
-        background: 'transparent',
+        backgroundColor: '$background',
         border: 1,
         borderStyle: 'solid',
+        borderColor: '$neutrals400',
+        color: '$foreground',
+        '&:hover': {
+          borderColor: '$neutrals600',
+        },
+        '&:disabled': {
+          borderColor: '$neutrals300',
+          color: '$neutrals400',
+        },
       },
       ghost: {
         color: '$foreground',
@@ -130,7 +129,7 @@ const ButtonContainer = styled('button', {
       variant: 'outlined',
       css: {
         color: '$primary !important',
-        borderColor: '$primary !important',
+        borderColor: '$primary',
         '&:hover': {
           color: '$primary700 !important',
           borderColor: '$primary700 !important',
@@ -185,7 +184,7 @@ const ButtonContainer = styled('button', {
       variant: 'outlined',
       css: {
         color: '$error !important',
-        borderColor: '$error !important',
+        borderColor: '$error',
         '&:hover': {
           color: '$error300 !important',
           borderColor: '$error300 !important',
@@ -242,7 +241,7 @@ const ButtonContainer = styled('button', {
       variant: 'outlined',
       css: {
         color: '$warning !important',
-        borderColor: '$warning !important',
+        borderColor: '$warning',
         '&:hover': {
           color: '$warning300 !important',
           borderColor: '$warning300 !important',
@@ -299,7 +298,7 @@ const ButtonContainer = styled('button', {
       variant: 'outlined',
       css: {
         color: '$success !important',
-        borderColor: '$success !important',
+        borderColor: '$success',
         '&:hover': {
           color: '$success300 !important',
           borderColor: '$success300 !important',

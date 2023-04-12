@@ -41,11 +41,13 @@ const Line = styled('div', {
     width: '$32',
   },
 });
+
 const HR = styled('hr', {
   width: '100%',
-  background: '$neutrals200',
+  border: '1px solid $neutrals400',
   margin: '$8 0',
 });
+
 const SwapperLogo = styled('img', {
   width: '$16',
   height: '$16',
@@ -104,7 +106,7 @@ const GasContainer = styled('div', {
   },
 });
 
-const FeeContainer = styled('div', {
+const CostContainer = styled('div', {
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
@@ -158,7 +160,7 @@ export function BestRoute(props: PropsWithChildren<PropTypes>) {
       ) : (
         <GasContainer>
           <Tooltip content="Transaction cost (fee)">
-            <FeeContainer warning={feeWarning}>
+            <CostContainer warning={feeWarning}>
               <GasIcon size={20} color={feeWarning ? 'warning' : undefined} />
               <TotalFee
                 mt={4}
@@ -169,15 +171,17 @@ export function BestRoute(props: PropsWithChildren<PropTypes>) {
                 {error && '-'}
                 {!!data && `$${totalFee}`}
               </TotalFee>
-            </FeeContainer>
+            </CostContainer>
           </Tooltip>
           <HR />
           <Tooltip content="Time estimate">
-            <TimeIcon size={20} />
-            <Typography mt={4} align="center" variant="caption">
-              {error && '-'}
-              {!!data && `~${totalTime}m`}
-            </Typography>
+            <CostContainer warning={feeWarning}>
+              <TimeIcon size={20} />
+              <Typography mt={4} align="center" variant="caption">
+                {error && '-'}
+                {!!data && `~${totalTime}m`}
+              </Typography>
+            </CostContainer>
           </Tooltip>
         </GasContainer>
       )}
