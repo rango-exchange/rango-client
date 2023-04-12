@@ -1,7 +1,6 @@
 import React, { Fragment } from 'react';
 import { styled } from '../../theme';
-import { FilledCircle } from '../common';
-import { DownloadIcon } from '../Icon';
+import { DisconnectIcon, DownloadIcon } from '../Icon';
 import { Spinner } from '../Spinner';
 import { WalletState } from '../../types/wallet';
 import { InstallObjects, detectInstallLink } from '@rango-dev/wallets-shared';
@@ -28,7 +27,7 @@ export const State = ({
           </a>
         )}
         {walletState === WalletState.CONNECTING && <Spinner />}
-        {walletState === WalletState.CONNECTED && <FilledCircle />}
+        {walletState === WalletState.CONNECTED && <DisconnectIcon />}
       </StateIconContainer>
     )}
   </Fragment>

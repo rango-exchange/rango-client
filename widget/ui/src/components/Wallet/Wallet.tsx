@@ -12,6 +12,25 @@ const WalletImage = styled('img', {
   height: '$24',
   marginRight: '$12',
 });
+const Text = styled('div', {
+  display: 'flex',
+  flexDirection: 'column',
+});
+
+const ExtendedButton = styled(Button, {
+  variants: {
+    type: {
+      primary: {
+        outline: '1px solid $primary',
+        borderColor: '$primary',
+
+        '&:hover': {
+          borderColor: '$primary',
+        },
+      },
+    },
+  },
+});
 
 export type PropTypes = WalletInfo & {
   onClick: (walletType: WalletType) => void;
@@ -19,8 +38,9 @@ export type PropTypes = WalletInfo & {
 
 export function Wallet(props: PropTypes) {
   const { name, type, image, state, onClick, installLink } = props;
+
   return (
-    <Button
+    <ExtendedButton
       type={state === WalletState.CONNECTED ? 'primary' : undefined}
       disabled={!state}
       onClick={() => {
@@ -34,9 +54,16 @@ export function Wallet(props: PropTypes) {
       prefix={<WalletImage src={image} />}
       suffix={<State walletState={state} installLink={installLink} />}
     >
-      <Typography variant="h5" noWrap={false}>
-        {name}
-      </Typography>
-    </Button>
+      <Text>
+        <Typography variant="h5" noWrap={false}>
+          {name}
+        </Typography>
+        {state === WalletState.CONNECTED ? (
+          <Typography variant="caption" noWrap={false} color="primary">
+            Connected
+          </Typography>
+        ) : null}
+      </Text>
+    </ExtendedButton>
   );
 }
