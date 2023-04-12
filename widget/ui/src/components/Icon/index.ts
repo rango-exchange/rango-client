@@ -23,6 +23,7 @@ export { AngleUpIcon } from './AngleUpIcon';
 export { AngleDownIcon } from './AngleDownIcon';
 export { AngleLeftIcon } from './AngleLeftIcon';
 export { DownloadIcon } from './DownloadIcon';
+export { ChevronRightIcon } from './ChevronRightIcon';
 
 export { RetryRightIcon } from './RetryRightIcon';
 export { RetryLeftIcon } from './RetryLeftIcon';
