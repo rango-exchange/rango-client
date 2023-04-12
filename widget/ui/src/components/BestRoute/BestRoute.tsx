@@ -6,6 +6,7 @@ import { keyframes, styled } from '../../theme';
 import { Skeleton } from '../Skeleton';
 import { Spinner } from '../Spinner';
 import { BestRouteResponse } from 'rango-sdk';
+import { Tooltip } from '../Tooltip';
 
 const Container = styled('div', {
   borderRadius: '$5',
@@ -156,24 +157,28 @@ export function BestRoute(props: PropsWithChildren<PropTypes>) {
         </SkeletonContainer>
       ) : (
         <GasContainer>
-          <FeeContainer warning={feeWarning}>
-            <GasIcon size={20} color={feeWarning ? 'warning' : undefined} />
-            <TotalFee
-              mt={4}
-              align="center"
-              variant="caption"
-              warning={feeWarning}
-            >
-              {error && '-'}
-              {!!data && `$${totalFee}`}
-            </TotalFee>
-          </FeeContainer>
+          <Tooltip content="Transaction cost (fee)">
+            <FeeContainer warning={feeWarning}>
+              <GasIcon size={20} color={feeWarning ? 'warning' : undefined} />
+              <TotalFee
+                mt={4}
+                align="center"
+                variant="caption"
+                warning={feeWarning}
+              >
+                {error && '-'}
+                {!!data && `$${totalFee}`}
+              </TotalFee>
+            </FeeContainer>
+          </Tooltip>
           <HR />
-          <TimeIcon size={20} />
-          <Typography mt={4} align="center" variant="caption">
-            {error && '-'}
-            {!!data && `~${totalTime}m`}
-          </Typography>
+          <Tooltip content="Time estimate">
+            <TimeIcon size={20} />
+            <Typography mt={4} align="center" variant="caption">
+              {error && '-'}
+              {!!data && `~${totalTime}m`}
+            </Typography>
+          </Tooltip>
         </GasContainer>
       )}
       <BestRouteContainer>
