@@ -50,11 +50,9 @@ const ButtonContainer = styled('button', {
         border: 0,
         '&:hover': {
           backgroundColor: '$neutrals200',
-          color: '$foreground',
         },
         '&:disabled': {
           background: '$neutrals400',
-          cursor: 'initial',
         },
         '&:disabled:hover': {
           background: '$neutrals400',
@@ -113,11 +111,7 @@ const ButtonContainer = styled('button', {
       variant: 'contained',
       css: {
         background: '$primary',
-        $$color: '$colors$background',
-        [`.${darkTheme} &`]: {
-          $$color: '$colors$foreground',
-        },
-        color: '$$color !important',
+        color: '$white',
         '&:hover': {
           background: '$primary700',
         },

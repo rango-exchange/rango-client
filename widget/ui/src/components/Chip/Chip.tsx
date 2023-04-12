@@ -12,6 +12,7 @@ const ChipCointainer = styled('div', {
   fontSize: '$14',
   cursor: 'pointer',
   transition: 'all 0.35s',
+  color: '$foreground',
 
   '&:hover': {
     backgroundColor: '$success700',
