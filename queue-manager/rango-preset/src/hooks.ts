@@ -54,9 +54,9 @@ function useQueueManager(params: UseQueueManagerParams): void {
         evmChains: params.evmChains,
         wallet_network: params.lastConnectedWallet,
         manager,
-        queueContext: params.queueContext,
+        contextNotifier: params.contextNotifier,
       });
-      retryOn(params.lastConnectedWallet, params.queueContext, manager);
+      retryOn(params.lastConnectedWallet, params.contextNotifier, manager);
     }
   }, [params.lastConnectedWallet]);
 

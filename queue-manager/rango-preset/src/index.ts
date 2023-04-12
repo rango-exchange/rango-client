@@ -17,5 +17,10 @@ export {
   getEvmProvider,
   cancelSwap,
 } from './helpers';
-export { getRelatedWallet } from './shared';
+export {
+  getRelatedWallet,
+  SwapProgressNotification,
+  PendingSwap,
+  PendingSwapStep,
+} from './shared';
 export { useMigration, useQueueManager } from './hooks';
