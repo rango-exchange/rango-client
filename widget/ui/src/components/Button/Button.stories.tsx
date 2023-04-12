@@ -27,7 +27,7 @@ export default {
     size: {
       name: 'size',
       control: { type: 'radio' },
-      options: ['small', 'medium', 'large'],
+      options: ['small', 'medium', 'large', 'compact'],
       defaultValue: 'medium',
     },
     disabled: {

@@ -3,7 +3,6 @@ import {
   SecondaryPage,
   styled,
   Wallet,
-  Typography,
   WalletState,
 } from '@rango-dev/ui';
 import React, { useEffect, useState } from 'react';

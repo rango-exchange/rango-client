@@ -13,6 +13,7 @@ export default {
       options: [
         'body1',
         'body2',
+        'body3',
         'h1',
         'h2',
         'h3',
@@ -60,6 +61,9 @@ export const Main = (props: PropTypes) => (
     </Typography>
     <Typography {...props} variant="body2">
       Body 2
+    </Typography>
+    <Typography {...props} variant="body3">
+      Body 3
     </Typography>
     <Typography {...props} variant="caption">
       Caption
