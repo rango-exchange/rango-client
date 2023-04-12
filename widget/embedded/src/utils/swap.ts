@@ -541,3 +541,12 @@ export function getBalanceWarnings(
       return warningMessage;
     });
 }
+
+export function calcOutputUsdValue(
+  outputAmount?: string,
+  tokenPrice?: number | null
+) {
+  const amount = !!outputAmount ? new BigNumber(outputAmount) : ZERO;
+
+  return amount.multipliedBy(tokenPrice || 0);
+}
