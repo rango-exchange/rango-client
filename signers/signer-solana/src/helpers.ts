@@ -183,8 +183,9 @@ export const generalSolanaTransactionExecutor = async (
   } catch (e) {
     if (
       e &&
-      e instanceof SignerError &&
-      e.code === SignerErrorCode.REJECTED_BY_USER
+      (e instanceof SignerError ||
+        Object.prototype.hasOwnProperty('_isSignerError')) &&
+      (e as SignerError).code === SignerErrorCode.REJECTED_BY_USER
     )
       throw e;
     if (e && (e as any).hasOwnProperty('code') && (e as any).code === 4001)
