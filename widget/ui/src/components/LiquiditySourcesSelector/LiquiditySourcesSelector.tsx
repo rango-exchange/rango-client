@@ -38,7 +38,7 @@ export function LiquiditySourcesSelector(props: PropTypes) {
       title="Liquidity Sources"
       TopButton={
         <ActionButton variant="ghost" type="primary" onClick={toggleAll}>
-          {list.find((item) => item.selected) ? 'Clear all' : 'Select all'}
+          {list.find((item) => item.selected) ? 'Deselect all' : 'Select all'}
         </ActionButton>
       }
       hasHeader={hasHeader}

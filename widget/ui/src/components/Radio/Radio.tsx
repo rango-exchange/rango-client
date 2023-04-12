@@ -56,7 +56,7 @@ const StyledIndicator = styled(RadioGroup.Indicator, {
     width: '10px',
     height: '10px',
     borderRadius: '50%',
-    backgroundColor: '$primary',
+    backgroundColor: '$success',
   },
 });
 
