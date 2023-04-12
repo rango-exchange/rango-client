@@ -128,12 +128,14 @@ export function getSwapButtonState(
   hasLimitError: boolean,
   highValueLoss: boolean,
   priceImpactCanNotBeComputed: boolean,
-  needsToWarnEthOnPath: boolean
+  needsToWarnEthOnPath: boolean,
+  inputIsZero: boolean
 ): SwapButtonState {
   if (loadingMetaStatus !== 'success')
     return { title: 'Connect Wallet', disabled: true };
   if (accounts.length == 0) return { title: 'Connect Wallet', disabled: false };
   if (loading) return { title: 'Finding Best Route...', disabled: true };
+  else if (inputIsZero) return { title: 'Enter an amount', disabled: true };
   else if (!bestRoute) return { title: 'Swap', disabled: true };
   else if (hasLimitError) return { title: 'Limit Error', disabled: true };
   else if (highValueLoss)

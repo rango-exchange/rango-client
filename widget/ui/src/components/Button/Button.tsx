@@ -54,6 +54,11 @@ const ButtonContainer = styled('button', {
         },
         '&:disabled': {
           background: '$neutrals400',
+          cursor: 'initial',
+        },
+        '&:disabled:hover': {
+          background: '$neutrals400',
+          transform: 'unset',
         },
       },
       outlined: {

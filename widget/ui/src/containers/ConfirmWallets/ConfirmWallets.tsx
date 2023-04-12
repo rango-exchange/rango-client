@@ -91,7 +91,7 @@ export function ConfirmWallets(props: PropsWithChildren<PropTypes>) {
                 <>
                   <AlertContainer>
                     <Alert type="error">
-                      <Typography variant="body2">{`You should connect a ${wallet} supported wallet`}</Typography>
+                      You should connect a {wallet} supported wallet
                     </Alert>
                   </AlertContainer>
                   {isExperimentalChain?.(wallet) && (

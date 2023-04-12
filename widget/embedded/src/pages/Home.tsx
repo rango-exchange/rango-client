@@ -68,7 +68,6 @@ interface PropTypes {
 export function Home(props: PropTypes) {
   const { title = 'SWAP', titleSize = 18, titleWeight = 600 } = props;
 
-  const waningMessage = '';
   const isRouterInContext = useInRouterContext();
   const navigate = useNavigate();
   const [count, setCount] = useState(0);
@@ -125,6 +124,7 @@ export function Home(props: PropTypes) {
     outputUsdValue
   );
 
+  const inputIsZero = inputAmount === '0';
   const swapButtonState = getSwapButtonState(
     loadingMetaStatus,
     accounts,
@@ -133,7 +133,8 @@ export function Home(props: PropTypes) {
     hasLimitError(bestRoute),
     highValueLoss,
     priceImpactCanNotBeComputed,
-    needsToWarnEthOnPath
+    needsToWarnEthOnPath,
+    inputIsZero
   );
 
   const totalFeeInUsd = getTotalFeeInUsd(bestRoute, tokens);
@@ -182,13 +183,9 @@ export function Home(props: PropTypes) {
           />
         </BestRouteContainer>
       )}
-      {(errorMessage || waningMessage || hasLimitError(bestRoute)) && (
+      {(errorMessage || hasLimitError(bestRoute)) && (
         <Alerts>
-          {errorMessage && (
-            <Alert type="error">
-              {<Typography variant="body2">{errorMessage}</Typography>}
-            </Alert>
-          )}
+          {errorMessage && <Alert type="error">{errorMessage}</Alert>}
           {hasLimitError(bestRoute) && (
             <Alert type="error" title={`${swap?.swapperId} Limit`}>
               <>
@@ -201,11 +198,6 @@ export function Home(props: PropTypes) {
                 <br />
                 <Typography variant="body2">{recommendation}</Typography>
               </>
-            </Alert>
-          )}
-          {waningMessage && (
-            <Alert type="warning">
-              <Typography variant="body2">{waningMessage}</Typography>
             </Alert>
           )}
         </Alerts>

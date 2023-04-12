@@ -87,9 +87,7 @@ export function BlockchainSelector(props: PropTypes) {
                     onChange={onChange}
                   />
                 ) : (
-                  <Alert type="secondary">
-                    <Typography variant="body2">{`${searchedFor} not found`}</Typography>
-                  </Alert>
+                  <Alert>{`${searchedFor} not found`}</Alert>
                 )}
               </>
             )}

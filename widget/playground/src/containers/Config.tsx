@@ -44,9 +44,7 @@ export function Config(props: PropsWithChildren) {
             <Typography variant="h1">Configuration</Typography>
             {loadingStatus === 'failed' && (
               <Alert type="error">
-                <Typography variant="body2">
-                  Error connecting server, please reload the app and try again
-                </Typography>
+                Error connecting server, please reload the app and try again
               </Alert>
             )}
             <Spacer size={20} direction="vertical" />

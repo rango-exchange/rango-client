@@ -85,9 +85,7 @@ export function WalletsPage({ supportedWallets, multiWallets }: PropTypes) {
       <>
         {walletErrorMessage && (
           <AlertContainer>
-            <Alert type="error">
-              <Typography variant="body2">{walletErrorMessage}</Typography>
-            </Alert>
+            <Alert type="error">{walletErrorMessage}</Alert>
           </AlertContainer>
         )}
         <ListContainer>
