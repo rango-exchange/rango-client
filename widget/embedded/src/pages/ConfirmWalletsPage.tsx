@@ -11,18 +11,26 @@ import {
   getSelectableWallets,
   isExperimentalChain,
 } from '../utils/wallets';
-import { requiredWallets } from '../utils/swap';
-import { decimalNumber } from '../utils/numbers';
+import {
+  calcOutputUsdValue,
+  getTotalFeeInUsd,
+  requiredWallets,
+} from '../utils/swap';
+import { decimalNumber, numberToString } from '../utils/numbers';
 import { useMetaStore } from '../store/meta';
 import { Network, WalletType } from '@rango-dev/wallets-shared';
 import { useNavigateBack } from '../hooks/useNavigateBack';
+import { TokenPreview } from '../components/TokenPreview';
+import { t } from 'i18next';
+import { Spacer } from '@rango-dev/ui';
+import RoutesOverview from '../components/RoutesOverview';
 
 export function ConfirmWalletsPage() {
   const navigate = useNavigate();
   const { navigateBackFrom } = useNavigateBack();
   const bestRoute = useBestRouteStore.use.bestRoute();
 
-  const { blockchains } = useMetaStore.use.meta();
+  const { blockchains, tokens } = useMetaStore.use.meta();
   const accounts = useWalletsStore.use.accounts();
   const selectedWallets = useWalletsStore.use.selectedWallets();
   const initSelectedWallets = useWalletsStore.use.initSelectedWallets();
@@ -56,6 +64,8 @@ export function ConfirmWalletsPage() {
     );
   };
 
+  const totalFeeInUsd = getTotalFeeInUsd(bestRoute, tokens);
+
   return (
     <ConfirmWallets
       requiredWallets={getRequiredChains(bestRoute)}
@@ -74,6 +84,45 @@ export function ConfirmWalletsPage() {
         getKeplrCompatibleConnectedWallets(selectableWallets).length > 0
           ? isExperimentalChain(blockchains, wallet)
           : false
+      }
+      previewInputs={
+        <>
+          <TokenPreview
+            chain={{
+              displayName: firstStep?.from.blockchain || '',
+              logo: firstStep?.from.blockchainLogo || '',
+            }}
+            token={{
+              symbol: firstStep?.from.symbol || '',
+              image: firstStep?.from.logo || '',
+            }}
+            usdValue={calcOutputUsdValue(fromAmount, firstStep?.from.usdPrice)}
+            amount={fromAmount}
+            label={t('From')}
+            loadingStatus={'success'}
+          />
+          <Spacer size={12} direction="vertical" />
+          <TokenPreview
+            chain={{
+              displayName: lastStep?.to.blockchain || '',
+              logo: lastStep?.to.blockchainLogo || '',
+            }}
+            token={{
+              symbol: lastStep?.to.symbol || '',
+              image: lastStep?.to.logo || '',
+            }}
+            usdValue={calcOutputUsdValue(toAmount, lastStep?.to.usdPrice)}
+            amount={toAmount}
+            label={t('To')}
+            loadingStatus={'success'}
+          />
+        </>
+      }
+      previewRoutes={
+        <RoutesOverview
+          routes={bestRoute}
+          totalFee={numberToString(totalFeeInUsd, 0, 2)}
+        />
       }
     />
   );

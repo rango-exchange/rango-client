@@ -1,5 +1,5 @@
 import { CSSProperties } from '@stitches/react';
-import React, { PropsWithChildren } from 'react';
+import React, { PropsWithChildren, HTMLAttributes } from 'react';
 import { darkTheme, styled } from '../../theme';
 import { Spinner } from '../Spinner';
 import { Typography } from '../Typography';
@@ -378,7 +378,8 @@ const Content = styled('div', {
   },
 });
 
-export interface PropTypes {
+export interface PropTypes
+  extends Omit<HTMLAttributes<HTMLButtonElement>, 'prefix'> {
   onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
   size?: 'small' | 'medium' | 'large';
   variant?: 'contained' | 'outlined' | 'ghost';

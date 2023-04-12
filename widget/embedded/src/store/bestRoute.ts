@@ -11,7 +11,7 @@ import createSelectors from './selectors';
 import { subscribeWithSelector } from 'zustand/middleware';
 import { httpService } from '../services/httpService';
 import { useSettingsStore } from './settings';
-import { createBestRouteRequestBody } from '../utils/swap';
+import { calcOutputUsdValue, createBestRouteRequestBody } from '../utils/swap';
 import { useMetaStore } from './meta';
 import { getDefaultToken, getSortedTokens } from '../utils/wallets';
 import { useWalletsStore } from './wallets';
@@ -69,10 +69,9 @@ export const useBestRouteStore = createSelectors(
             outputAmount = !!bestRoute.result?.outputAmount
               ? new BigNumber(bestRoute.result?.outputAmount)
               : null;
-            outputUsdValue = new BigNumber(outputAmount || ZERO).multipliedBy(
-              getBestRouteToTokenUsdPrice(bestRoute) ||
-                state.toToken?.usdPrice ||
-                0
+            outputUsdValue = calcOutputUsdValue(
+              bestRoute.result?.outputAmount,
+              getBestRouteToTokenUsdPrice(bestRoute) || state.toToken?.usdPrice
             );
           }
           return {

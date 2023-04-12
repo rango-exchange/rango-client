@@ -33,6 +33,7 @@ import {
   secondsToString,
   totalArrivalTime,
 } from '../utils/numbers';
+import BigNumber from 'bignumber.js';
 
 const Container = styled('div', {
   display: 'flex',
@@ -168,7 +169,9 @@ export function Home(props: PropTypes) {
         type="To"
         chain={toChain}
         token={toToken}
-        outputAmount={outputAmount}
+        outputAmount={
+          outputAmount ? new BigNumber(outputAmount) : new BigNumber(0)
+        }
         outputUsdValue={outputUsdValue}
       />
       {showBestRoute && (

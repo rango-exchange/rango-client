@@ -6,7 +6,6 @@ import { Typography } from '../Typography';
 const Row = styled('div', {
   display: 'flex',
   flexWrap: 'wrap',
-  justifyContent: 'center',
 });
 
 const Circle = styled('div', {
