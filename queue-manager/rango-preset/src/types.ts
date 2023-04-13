@@ -72,5 +72,5 @@ export interface UseQueueManagerParams {
   disconnectedWallet: WalletType | undefined;
   clearDisconnectedWallet: () => void;
   evmChains: EvmBlockchainMeta[];
-  contextNotifier: (data: SwapProgressNotification) => void;
+  notifier: (data: SwapProgressNotification) => void;
 }
