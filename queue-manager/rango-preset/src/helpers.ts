@@ -1578,6 +1578,40 @@ export function checkWaitingForNetworkChange(manager?: Manager): void {
 
 /**
  *
+ * Trying to reset notifications for running to swap to waiting_for_connect_wallet
+ * on page load, we could remove this after supporting auto connect for wallets
+ *
+ * @param queueContext
+ * @param manager
+ * @returns
+ */
+export function resetRunningSwapNotifsOnPageLoad(
+  queueContext: SwapQueueContext,
+  manager?: Manager
+) {
+  manager?.getAll().forEach((q) => {
+    // retry only on affected queues
+    if (
+      q.status === Status.BLOCKED ||
+      q.status === Status.RUNNING ||
+      q.status === Status.PENDING
+    ) {
+      const queueStorage = q.list.getStorage() as SwapStorage | undefined;
+      const swap = queueStorage?.swapDetails;
+      if (swap?.status === 'running') {
+        const currentStep = getCurrentStep(swap);
+        queueContext.notifier({
+          eventType: 'waiting_for_connecting_wallet',
+          swap: swap,
+          step: currentStep,
+        });
+      }
+    }
+  });
+}
+
+/**
+ *
  * Try to run blocked tasks by wallet and network name.
  * Goes through queues and extract blocked queues with matched wallet.
  * If found any blocked tasks with same wallet and network, runs them.
