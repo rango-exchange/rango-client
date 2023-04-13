@@ -19,8 +19,13 @@ export {
 } from './helpers';
 export {
   getRelatedWallet,
+  getRelatedWalletOrNull,
+  getCurrentBlockchainOf,
+  getCurrentBlockchainOfOrNull,
   SwapProgressNotification,
   PendingSwap,
+  PendingSwapNetworkStatus,
+  PendingSwapWithQueueID,
   PendingSwapStep,
 } from './shared';
 export { useMigration, useQueueManager } from './hooks';
