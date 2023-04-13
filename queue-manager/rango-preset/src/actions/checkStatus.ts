@@ -159,6 +159,7 @@ async function checkApprovalStatus({
 >): Promise<void> {
   const swap = getStorage().swapDetails as SwapStorage['swapDetails'];
   const onFinish = () => {
+    // TODO resetClaimedBy is undefined here
     if (context.resetClaimedBy) {
       context.resetClaimedBy();
     }
