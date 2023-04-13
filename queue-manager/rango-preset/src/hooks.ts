@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import {
   checkWaitingForConnectWalletChange,
   checkWaitingForNetworkChange,
+  resetRunningSwapNotifsOnPageLoad,
   retryOn,
 } from './helpers';
 import { migrated, migration } from './migration';
@@ -47,6 +48,15 @@ function useMigration(): {
  */
 function useQueueManager(params: UseQueueManagerParams): void {
   const { manager } = useManager();
+
+  useEffect(() => {
+    const x = setTimeout(() => {
+      // TODO check manager?.getAll() returns [] without timeout here
+      // call resetRunningSwapNotifsOnPageLoad for all running swaps
+      resetRunningSwapNotifsOnPageLoad(params.queueContext, manager);
+    }, 1_000);
+    return () => clearTimeout(x);
+  }, []);
 
   useEffect(() => {
     if (params.lastConnectedWallet) {
