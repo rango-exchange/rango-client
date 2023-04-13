@@ -794,6 +794,7 @@ export function singTransaction(
   const walletSigners = getSigners(sourceWallet.walletType);
 
   const onFinish = () => {
+    // TODO resetClaimedBy is undefined here
     if (actions.context.resetClaimedBy) {
       actions.context.resetClaimedBy();
     }
@@ -1578,8 +1579,8 @@ export function checkWaitingForNetworkChange(manager?: Manager): void {
 
 /**
  *
- * Trying to reset notifications for running to swap to waiting_for_connect_wallet
- * on page load, we could remove this after supporting auto connect for wallets
+ * Trying to reset notifications for pending swaps to correct message on page load.
+ * We could remove this after supporting auto connect for wallets.
  *
  * @param queueContext
  * @param manager
@@ -1669,7 +1670,6 @@ export function retryOn(
     }
   });
 
-  // const isWaitingForConnectWallet = (status: Status) =>
   let finalQueueToBeRun: QueueType | undefined = undefined;
   if (walletAndNetworkMatched.length > 0) {
     finalQueueToBeRun = walletAndNetworkMatched[0];
