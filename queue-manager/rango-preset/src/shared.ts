@@ -66,6 +66,7 @@ export type EventType =
   | 'step_completed_with_output'
   | 'waiting_for_network_change'
   | 'waiting_for_connecting_wallet'
+  | 'waiting_for_change_wallet_account'
   | 'network_changed'
   | 'not_enough_balance'
   | 'check_fee_failed'
