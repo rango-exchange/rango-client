@@ -163,10 +163,10 @@ function Provider(props: ProviderProps) {
         throw new Error(`You should add ${type} to provider first.`);
       }
 
-      const ref = addWalletRef(wallet);
-      const result = ref.getWalletInfo(props.allBlockChains || []);
+      // Get wallet info could be used in render methods to show wallets data
+      // So, we addWalletRef shouldn't be called in this method
 
-      return result;
+      return wallet.actions.getWalletInfo(props.allBlockChains || []);
     },
     getSigners(type) {
       const wallet = wallets.get(type);
