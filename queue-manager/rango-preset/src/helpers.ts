@@ -1598,10 +1598,19 @@ export function resetRunningSwapNotifsOnPageLoad(
     ) {
       const queueStorage = q.list.getStorage() as SwapStorage | undefined;
       const swap = queueStorage?.swapDetails;
-      if (swap?.status === 'running') {
-        const currentStep = getCurrentStep(swap);
+      if (!swap) return;
+      const currentStep = getCurrentStep(swap);
+      let eventType: EventType | undefined;
+      if (
+        currentStep?.networkStatus === PendingSwapNetworkStatus.WaitingForQueue
+      )
+        eventType = 'waiting_for_queue';
+      else if (swap?.status === 'running') {
+        eventType = 'waiting_for_connecting_wallet';
+      }
+      if (!!eventType) {
         queueContext.notifier({
-          eventType: 'waiting_for_connecting_wallet',
+          eventType,
           swap: swap,
           step: currentStep,
         });
