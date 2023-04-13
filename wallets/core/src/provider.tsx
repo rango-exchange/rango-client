@@ -164,7 +164,7 @@ function Provider(props: ProviderProps) {
       }
 
       // Get wallet info could be used in render methods to show wallets data
-      // So, we addWalletRef shouldn't be called in this method
+      // So, addWalletRef method shouldn't be called in this method
 
       return wallet.actions.getWalletInfo(props.allBlockChains || []);
     },
