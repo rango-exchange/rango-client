@@ -55,8 +55,8 @@ export type EventType =
   | 'task_completed'
   | 'task_canceled'
   | 'task_paused'
-  | 'confirm_approve_contract'
   | 'contract_confirmed'
+  | 'confirm_approve_contract'
   | 'contract_rejected'
   | 'transfer_confirmed'
   | 'transfer_rejected'
@@ -69,10 +69,10 @@ export type EventType =
   | 'waiting_for_change_wallet_account'
   | 'network_changed'
   | 'not_enough_balance'
+  | 'waiting_for_queue'
   | 'check_fee_failed'
   | 'route_failed_to_find'
-  | 'transaction_expired'
-  | 'waiting_for_queue';
+  | 'transaction_expired';
 
 export type SwapSavedSettings = {
   slippage: string;

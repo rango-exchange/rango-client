@@ -28,5 +28,6 @@ export {
   PendingSwapNetworkStatus,
   PendingSwapWithQueueID,
   PendingSwapStep,
+  EventType,
 } from './shared';
 export { useMigration, useQueueManager } from './hooks';
