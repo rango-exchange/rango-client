@@ -347,7 +347,6 @@ export function markRunningSwapAsDependsOnOtherQueues({
   swap.networkStatusExtraMessageDetail = '';
   currentStep.networkStatus = PendingSwapNetworkStatus.WaitingForQueue;
 
-  console.log('here', { context });
   (context as SwapQueueContext)?.notifier({
     eventType: 'waiting_for_queue',
     swap,
@@ -1531,7 +1530,7 @@ export function checkWaitingForConnectWalletChange(params: {
           });
 
           if (result) {
-            params.context.notifier({
+            params.context?.notifier({
               eventType: 'waiting_for_network_change',
               swap: result.swap,
               step: result.step,
@@ -1639,7 +1638,7 @@ export function retryOn(
         markRunningSwapAsDependsOnOtherQueues({
           getStorage: currentQueue.getStorage.bind(currentQueue),
           setStorage: currentQueue.setStorage.bind(currentQueue),
-          context: context,
+          context,
         });
       }
     }
