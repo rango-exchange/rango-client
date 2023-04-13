@@ -1,31 +1,19 @@
-import { QueueDef } from "@rango-dev/queue-manager-core";
-import { GenericTransactionType } from "@rango-dev/wallets-shared";
+import { QueueDef } from '@rango-dev/queue-manager-core';
+import { BlockReason, SwapActionTypes, SwapQueueContext, SwapStorage } from './types';
+import { checkStatus } from './actions/checkStatus';
+import { createTransaction } from './actions/createTransaction';
+import { executeTransaction } from './actions/executeTransaction';
+import { scheduleNextStep } from './actions/scheduleNextStep';
+import { start } from './actions/start';
 import {
-  BlockReason,
-  SwapActionTypes,
-  SwapQueueContext,
-  SwapStorage,
-} from "./types";
-import { checkStatus } from "./actions/checkStatus";
-import { createTransaction } from "./actions/createTransaction";
-import { executeTransaction } from "./actions/executeTransaction";
-import { scheduleNextStep } from "./actions/scheduleNextStep";
-import { start } from "./actions/start";
-import {
-  getCurrentStep,
   onBlockForChangeNetwork,
   onBlockForConnectWallet,
   onDependsOnOtherQueues,
-} from "./helpers";
-import { PendingSwapNetworkStatus } from "../rango/types";
+} from './helpers';
 
-export type SwapQueueDef = QueueDef<
-  SwapStorage,
-  SwapActionTypes,
-  SwapQueueContext
->;
+export type SwapQueueDef = QueueDef<SwapStorage, SwapActionTypes, SwapQueueContext>;
 export const swapQueueDef: SwapQueueDef = {
-  name: "rango-swap",
+  name: 'rango-swap',
   actions: {
     [SwapActionTypes.START]: start,
     [SwapActionTypes.SCHEDULE_NEXT_STEP]: scheduleNextStep,
@@ -36,7 +24,7 @@ export const swapQueueDef: SwapQueueDef = {
   run: [SwapActionTypes.START],
   whenTaskBlocked: (event, meta) => {
     const { queue, context, getBlockedTasks } = meta;
-    console.log("[whenTaskBlocked]", {
+    console.log('[whenTaskBlocked]', {
       reason: event.reason.reason,
       queue,
       event,
