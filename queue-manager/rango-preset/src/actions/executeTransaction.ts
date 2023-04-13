@@ -54,7 +54,7 @@ export async function executeTransaction(
   resetNetworkStatus(actions);
 
   /* Make sure wallet is connected and also the connected wallet is matched with tx by checking address. */
-  const isWrongAddress = !isRequiredWalletConnected(swap, context.state);
+  const isWrongAddress = !isRequiredWalletConnected(swap, context.state).ok;
   if (isWrongAddress) {
     const { type, address } = getRequiredWallet(swap);
     const isWalletInCompatible = wallets?.blockchains?.find(

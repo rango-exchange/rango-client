@@ -16,6 +16,7 @@ export {
   getCurrentStep,
   getEvmProvider,
   cancelSwap,
+  splitWalletNetwork,
 } from './helpers';
 export {
   getRelatedWallet,

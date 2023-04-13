@@ -92,13 +92,16 @@ function claimQueue() {
 }
 
 /**
- *
+ * Sample inputs are:
+ *  - "metamask-ETH"
+ *  - "metamask-BSC-BSC:0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
  * Returns "wallet and network" separately, even if the wallet is dashed inside.
  *
  */
 
-function splitWalletNetwork(input: string): string[] {
-  return input?.split(/-(?=[^-]*$)/);
+export function splitWalletNetwork(input: string): string[] {
+  const res = input?.split('-') || [];
+  return res.splice(0, 2);
 }
 
 /**
@@ -619,11 +622,16 @@ export function onBlockForConnectWallet(
   const { context, queue } = meta;
   const swap = queue.getStorage().swapDetails as SwapStorage['swapDetails'];
 
-  if (!isRequiredWalletConnected(swap, context.state)) {
+  const { ok, reason } = isRequiredWalletConnected(swap, context.state);
+
+  if (!ok) {
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     const currentStep = getCurrentStep(swap)!;
     context.notifier({
-      eventType: 'waiting_for_connecting_wallet',
+      eventType:
+        reason === 'account_miss_match'
+          ? 'waiting_for_change_wallet_account'
+          : 'waiting_for_connecting_wallet',
       swap: swap,
       step: currentStep,
     });
@@ -755,19 +763,21 @@ export function onDependsOnOtherQueues(
 export function isRequiredWalletConnected(
   swap: PendingSwap,
   getState: (type: WalletType) => WalletState
-): boolean {
+): { ok: boolean; reason: 'not_connected' | 'account_miss_match' } {
   const { type, address } = getRequiredWallet(swap);
   if (!type || !address) {
-    return false;
+    return { ok: false, reason: 'not_connected' };
   }
   const walletState = getState(type);
-  const { accounts } = walletState;
+  const { accounts, connected } = walletState;
   const connectedAccounts = accounts || [];
+  if (!connected) return { ok: false, reason: 'not_connected' };
 
-  return connectedAccounts.some((account) => {
+  const matched = connectedAccounts.some((account) => {
     const { address: accountAddress } = readAccountAddress(account);
     return address === accountAddress;
   });
+  return { ok: matched, reason: 'account_miss_match' };
 }
 
 export function singTransaction(
