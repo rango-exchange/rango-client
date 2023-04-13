@@ -1479,7 +1479,7 @@ export function checkWaitingForConnectWalletChange(params: {
   wallet_network: string;
   manager?: Manager;
   evmChains: EvmBlockchainMeta[];
-  context: SwapQueueContext;
+  queueContext: SwapQueueContext;
 }): void {
   const { wallet_network, evmChains, manager } = params;
   const [wallet, network] = splitWalletNetwork(wallet_network);
@@ -1530,7 +1530,7 @@ export function checkWaitingForConnectWalletChange(params: {
           });
 
           if (result) {
-            params.context?.notifier({
+            params.queueContext?.notifier({
               eventType: 'waiting_for_network_change',
               swap: result.swap,
               step: result.step,
@@ -1589,7 +1589,7 @@ export function checkWaitingForNetworkChange(manager?: Manager): void {
  */
 export function retryOn(
   wallet_network: string,
-  context: SwapQueueContext,
+  queueContext: SwapQueueContext,
   manager?: Manager,
   options = { fallbackToOnlyWallet: true }
 ): void {
@@ -1638,7 +1638,7 @@ export function retryOn(
         markRunningSwapAsDependsOnOtherQueues({
           getStorage: currentQueue.getStorage.bind(currentQueue),
           setStorage: currentQueue.setStorage.bind(currentQueue),
-          context,
+          context: queueContext,
         });
       }
     }
