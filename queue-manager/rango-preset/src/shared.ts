@@ -8,6 +8,7 @@ import {
   StarknetTransaction,
   TronTransaction,
   Transfer as TransferTransaction,
+  AmountRestrictionType,
 } from 'rango-sdk';
 
 import { PrettyError } from './shared-errors';
@@ -58,7 +59,8 @@ export type EventType =
   | 'contract_confirmed'
   | 'confirm_approve_contract'
   | 'contract_rejected'
-  | 'transfer_confirmed'
+  | 'check_tx_status'
+  | 'check_approve_tx_status'
   | 'transfer_rejected'
   | 'calling_smart_contract'
   | 'smart_contract_called'
@@ -116,14 +118,16 @@ export type StepStatus =
   | 'approved';
 
 export type PendingSwapStep = {
+  // routing data
   id: number;
   fromBlockchain: Network;
   fromSymbol: string;
   fromSymbolAddress: string | null;
   fromDecimals: number;
-  fromAmountPrecision: number | null;
-  fromAmountMinValue: number | null;
-  fromAmountMaxValue: number | null;
+  fromAmountPrecision: string | null;
+  fromAmountMinValue: string | null;
+  fromAmountMaxValue: string | null;
+  fromAmountRestrictionType: AmountRestrictionType | null;
   fromLogo: string;
   toBlockchain: string;
   toSymbol: string;
@@ -133,22 +137,28 @@ export type PendingSwapStep = {
   swapperId: string;
   expectedOutputAmountHumanReadable: string | null;
   startTransactionTime: number;
-  outputAmount: string | null;
+  internalSteps: SwapperStatusStep[] | null;
+  estimatedTimeInSeconds: number | null;
+
+  // status data
   status: StepStatus;
   networkStatus: PendingSwapNetworkStatus | null;
   executedTransactionId: string | null;
+  executedTransactionTime: string | null;
   explorerUrl: SwapExplorerUrl[] | null;
-  evmApprovalTransaction: EvmTransaction | null;
-  evmTransaction: EvmTransaction | null;
+  diagnosisUrl: string | null;
+  outputAmount: string | null;
+
+  // txs data
   cosmosTransaction: CosmosTransaction | null;
   transferTransaction: TransferTransaction | null;
   solanaTransaction: SolanaTransaction | null;
-  starknetTransaction: StarknetTransaction | null;
-  starknetApprovalTransaction: StarknetTransaction | null;
-  tronTransaction: TronTransaction | null;
+  evmApprovalTransaction: EvmTransaction | null;
+  evmTransaction: EvmTransaction | null;
   tronApprovalTransaction: TronTransaction | null;
-  diagnosisUrl: string | null;
-  internalSteps: SwapperStatusStep[] | null;
+  tronTransaction: TronTransaction | null;
+  starknetApprovalTransaction: StarknetTransaction | null;
+  starknetTransaction: StarknetTransaction | null;
 };
 
 export type WalletTypeAndAddress = {
