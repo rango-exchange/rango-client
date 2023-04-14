@@ -2,6 +2,7 @@ import {
   APIErrorCode,
   SignerError,
   SignerErrorCode,
+  isAPIErrorCode,
   isSignerErrorCode,
 } from 'rango-types';
 
@@ -21,6 +22,7 @@ export class PrettyError extends Error {
   private readonly detail?: string;
   private readonly root?: ErrorRoot;
   private readonly code?: APIErrorCode;
+  public _isPrettyError = true;
 
   constructor(
     code: APIErrorCode,
@@ -30,9 +32,17 @@ export class PrettyError extends Error {
   ) {
     super(m);
     Object.setPrototypeOf(this, PrettyError.prototype);
+    PrettyError.prototype._isPrettyError = true;
     this.code = code;
     this.detail = detail;
     this.root = root;
+  }
+
+  static isPrettyError(obj: unknown): obj is PrettyError {
+    return (
+      obj instanceof PrettyError ||
+      Object.prototype.hasOwnProperty('_isPrettyError')
+    );
   }
 
   getErrorDetail(): ErrorDetail {
@@ -101,22 +111,6 @@ export class PrettyError extends Error {
   }
 }
 
-// TODO remove it and add it to sdk
-function isAPIErrorCode(value: string): value is APIErrorCode {
-  const apiErrorCodes = [
-    'TX_FAIL',
-    'TX_EXPIRED',
-    'FETCH_TX_FAILED',
-    'USER_REJECT',
-    'USER_CANCEL',
-    'CALL_WALLET_FAILED',
-    'SEND_TX_FAILED',
-    'CALL_OR_SEND_FAILED',
-    'CLIENT_UNEXPECTED_BEHAVIOUR',
-  ];
-  return apiErrorCodes.includes(value);
-}
-
 export function mapAppErrorCodesToAPIErrorCode(
   errorCode: string | null
 ): APIErrorCode {
@@ -141,24 +135,10 @@ export function mapAppErrorCodesToAPIErrorCode(
   }
 }
 
-export const isPrettyError = (obj: unknown): obj is PrettyError => {
-  return (
-    obj instanceof PrettyError ||
-    Object.prototype.hasOwnProperty('_isPrettyError')
-  );
-};
-
-export const isSignerError = (obj: unknown): obj is SignerError => {
-  return (
-    obj instanceof SignerError ||
-    Object.prototype.hasOwnProperty('_isSignerError')
-  );
-};
-
 export const prettifyErrorMessage = (obj: unknown): ErrorDetail => {
   if (!obj) return { extraMessage: '', extraMessageErrorCode: null };
-  if (isPrettyError(obj)) return obj.getErrorDetail();
-  if (isSignerError(obj)) {
+  if (PrettyError.isPrettyError(obj)) return obj.getErrorDetail();
+  if (SignerError.isSignerError(obj)) {
     const t = obj.getErrorDetail();
     return {
       extraMessage: t.message,
