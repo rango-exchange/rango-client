@@ -198,11 +198,7 @@ export const executeCosmosTransaction = async (
       );
     }
   } catch (err) {
-    if (
-      err instanceof SignerError ||
-      Object.prototype.hasOwnProperty('_isSignerError')
-    )
-      throw err;
+    if (SignerError.isSignerError(err)) throw err;
     else throw new SignerError(SignerErrorCode.SEND_TX_ERROR, undefined, err);
   }
 };
