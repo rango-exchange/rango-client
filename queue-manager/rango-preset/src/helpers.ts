@@ -217,7 +217,8 @@ export function setStepTransactionIds(
   swap.hasAlreadyProceededToSign = null;
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const currentStep = getCurrentStep(swap)!;
-  currentStep.executedTransactionId = txId || currentStep.executedTransactionId;
+  currentStep.executedTransactionId = txId;
+  currentStep.executedTransactionTime = new Date().getTime().toString();
   if (!!approveUrl)
     currentStep.explorerUrl = [
       ...(currentStep.explorerUrl || []),
@@ -226,6 +227,16 @@ export function setStepTransactionIds(
         description: `approve`,
       },
     ];
+  if (eventType === 'check_tx_status') {
+    swap.extraMessage = 'Checking transaction status ...';
+    swap.extraMessageDetail = '';
+    swap.extraMessageSeverity = MessageSeverity.info;
+  } else if (eventType === 'check_approve_tx_status') {
+    swap.extraMessage = 'Checking approve transaction status ...';
+    swap.extraMessageDetail = '';
+    swap.extraMessageSeverity = MessageSeverity.info;
+  }
+
   setStorage({
     ...getStorage(),
     swapDetails: swap,
@@ -851,7 +862,13 @@ export function singTransaction(
             getCurrentBlockchainOf(swap, currentStep),
             meta.evmBasedChains
           );
-          setStepTransactionIds(actions, hash, notifier, undefined, approveUrl);
+          setStepTransactionIds(
+            actions,
+            hash,
+            notifier,
+            'check_approve_tx_status',
+            approveUrl
+          );
           schedule(SwapActionTypes.CHECK_TRANSACTION_STATUS);
           next();
           onFinish();
@@ -924,7 +941,13 @@ export function singTransaction(
         (hash) => {
           console.debug('transaction of approval minted successfully', hash);
           const approveUrl = getTronApproveUrl(hash);
-          setStepTransactionIds(actions, hash, notifier, undefined, approveUrl);
+          setStepTransactionIds(
+            actions,
+            hash,
+            notifier,
+            'check_approve_tx_status',
+            approveUrl
+          );
           schedule(SwapActionTypes.CHECK_TRANSACTION_STATUS);
           next();
           onFinish();
@@ -997,7 +1020,13 @@ export function singTransaction(
         (hash) => {
           console.debug('transaction of approval minted successfully', hash);
           const approveUrl = getStarknetApproveUrl(hash);
-          setStepTransactionIds(actions, hash, notifier, undefined, approveUrl);
+          setStepTransactionIds(
+            actions,
+            hash,
+            notifier,
+            'check_approve_tx_status',
+            approveUrl
+          );
           schedule(SwapActionTypes.CHECK_TRANSACTION_STATUS);
           next();
           onFinish();
@@ -1084,12 +1113,7 @@ export function singTransaction(
         .signAndSendTx(transferTransaction, walletAddress, null)
         .then(
           (txId) => {
-            setStepTransactionIds(
-              actions,
-              txId,
-              notifier,
-              'transfer_confirmed'
-            );
+            setStepTransactionIds(actions, txId, notifier, 'check_tx_status');
             schedule(SwapActionTypes.CHECK_TRANSACTION_STATUS);
             next();
             onFinish();
@@ -1142,12 +1166,7 @@ export function singTransaction(
         .signAndSendTx(evmTransaction, walletAddress, null)
         .then(
           (id) => {
-            setStepTransactionIds(
-              actions,
-              id,
-              notifier,
-              'smart_contract_called'
-            );
+            setStepTransactionIds(actions, id, notifier, 'check_tx_status');
             schedule(SwapActionTypes.CHECK_TRANSACTION_STATUS);
             next();
             onFinish();
@@ -1248,12 +1267,7 @@ export function singTransaction(
         .then(
           // todo
           (id: string | null) => {
-            setStepTransactionIds(
-              actions,
-              id,
-              notifier,
-              'smart_contract_called'
-            );
+            setStepTransactionIds(actions, id, notifier, 'check_tx_status');
             schedule(SwapActionTypes.CHECK_TRANSACTION_STATUS);
             next();
             onFinish();
@@ -1307,12 +1321,7 @@ export function singTransaction(
         .signAndSendTx(tx, walletAddress, null)
         .then(
           (txId) => {
-            setStepTransactionIds(
-              actions,
-              txId,
-              notifier,
-              'smart_contract_called'
-            );
+            setStepTransactionIds(actions, txId, notifier, 'check_tx_status');
             schedule(SwapActionTypes.CHECK_TRANSACTION_STATUS);
             next();
             onFinish();
@@ -1365,12 +1374,7 @@ export function singTransaction(
         .signAndSendTx(tronTransaction, walletAddress, null)
         .then(
           (id) => {
-            setStepTransactionIds(
-              actions,
-              id,
-              notifier,
-              'smart_contract_called'
-            );
+            setStepTransactionIds(actions, id, notifier, 'check_tx_status');
             schedule(SwapActionTypes.CHECK_TRANSACTION_STATUS);
             next();
             onFinish();
@@ -1438,12 +1442,7 @@ export function singTransaction(
         .signAndSendTx(starknetTransaction, walletAddress, null)
         .then(
           (id) => {
-            setStepTransactionIds(
-              actions,
-              id,
-              notifier,
-              'smart_contract_called'
-            );
+            setStepTransactionIds(actions, id, notifier, 'check_tx_status');
             schedule(SwapActionTypes.CHECK_TRANSACTION_STATUS);
             next();
             onFinish();
