@@ -73,6 +73,7 @@ async function checkTransactionStatus({
   if (!!newTransaction) {
     currentStep.status = 'created';
     currentStep.executedTransactionId = null;
+    currentStep.executedTransactionTime = null;
     currentStep.transferTransaction = null;
     currentStep.cosmosTransaction = null;
     currentStep.evmTransaction = null;
@@ -110,6 +111,14 @@ async function checkTransactionStatus({
       swap: swap,
       step: currentStep,
     });
+  else if (prevOutputAmount === null && outputAmount === null) {
+    // it is needed to set notification after reloading the page
+    context.notifier({
+      eventType: 'check_tx_status',
+      swap: swap,
+      step: currentStep,
+    });
+  }
 
   if (currentStep.status === 'success') {
     const nextStep = getNextStep(swap, currentStep);
@@ -190,6 +199,13 @@ async function checkApprovalStatus({
       });
       failed();
       onFinish();
+    } else if (!isApproved) {
+      // it is needed to set notification after reloading the page
+      context.notifier({
+        eventType: 'check_approve_tx_status',
+        swap: swap,
+        step: currentStep,
+      });
     }
   } catch (e) {
     console.error('Failed to check getApprovedAmount', e);
@@ -202,6 +218,7 @@ async function checkApprovalStatus({
     swap.extraMessageSeverity = MessageSeverity.success;
     currentStep.evmApprovalTransaction = null;
     currentStep.executedTransactionId = null;
+    currentStep.executedTransactionTime = null;
     currentStep.starknetApprovalTransaction = null;
     currentStep.tronApprovalTransaction = null;
 
