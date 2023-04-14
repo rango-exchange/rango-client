@@ -162,9 +162,10 @@ export function updateSwapStatus({
   if (!!nextStatus && ['failed', 'success'].includes(nextStatus))
     swap.finishTime = new Date().getTime().toString();
 
-  if (!!message) swap.extraMessage = message;
-
-  if (!!details) swap.extraMessageDetail = details;
+  if (!!message || !!details) {
+    swap.extraMessage = message || '';
+    swap.extraMessageDetail = details || '';
+  }
 
   if (!!nextStepStatus && ['failed'].includes(nextStepStatus)) {
     //if user cancel the swap, we should pass relevant reason to the server.
