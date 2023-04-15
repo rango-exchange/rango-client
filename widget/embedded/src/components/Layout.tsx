@@ -65,6 +65,19 @@ export function Layout({ configs }: LayoutProps) {
     setFromToken(configs?.fromToken || null);
     setFromChain(configs?.fromChain || null);
   }, [configs?.fromToken, configs?.fromChain]);
+
+  useEffect(() => {
+    setToChain(null);
+    setFromChain(null);
+    setFromToken(null);
+    setToToken(null);
+  }, [
+    configs?.fromChains,
+    configs?.toChains,
+    configs?.fromTokens,
+    configs?.toTokens,
+  ]);
+
   return (
     <>
       <Header>
