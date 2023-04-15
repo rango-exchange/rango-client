@@ -166,12 +166,13 @@ async function checkApprovalStatus({
   SwapQueueContext
 >): Promise<void> {
   const swap = getStorage().swapDetails as SwapStorage['swapDetails'];
-  const onFinish = () => {
-    // TODO resetClaimedBy is undefined here
-    if (context.resetClaimedBy) {
-      context.resetClaimedBy();
-    }
-  };
+  // double check it after fixing parallel
+  // const onFinish = () => {
+  //   // TODO resetClaimedBy is undefined here
+  //   if (context.resetClaimedBy) {
+  //     context.resetClaimedBy();
+  //   }
+  // };
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const currentStep = getCurrentStep(swap)!;
   let isApproved = false;
@@ -198,7 +199,7 @@ async function checkApprovalStatus({
         ...updateResult,
       });
       failed();
-      onFinish();
+      // onFinish();
     } else if (!isApproved) {
       // it is needed to set notification after reloading the page
       context.notifier({
