@@ -11,8 +11,7 @@ import {
   updateSwapStatus,
   throwOnOK,
 } from '../helpers';
-import { APIErrorCode } from '../shared-errors';
-import { prettifyErrorMessage } from '../shared';
+import { APIErrorCode, prettifyErrorMessage } from '../shared-errors';
 import { CreateTransactionRequest } from 'rango-sdk';
 import { httpService } from '../services';
 

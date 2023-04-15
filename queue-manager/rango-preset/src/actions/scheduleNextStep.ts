@@ -27,6 +27,7 @@ export function scheduleNextStep({
       return next();
     }
 
+    // TODO double check it after approval changes
     if (currentStep?.executedTransactionId) {
       schedule(SwapActionTypes.CHECK_TRANSACTION_STATUS);
       return next();
