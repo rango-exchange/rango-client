@@ -1,6 +1,6 @@
 import Persistor from './persistor';
 import Queue, { QueueEventHandlers, TaskEvent } from './queue';
-import { QueueStorage, Status } from './types';
+import { QueueStorage, SYNC_POLLING_INTERVAL, Status } from './types';
 import { v4 as uuidv4 } from 'uuid';
 
 export type ManagerContext = object;
@@ -584,7 +584,7 @@ class Manager {
     this.isPaused = true;
     this.syncInterval = setInterval(() => {
       this.sync();
-    }, 5_000);
+    }, SYNC_POLLING_INTERVAL);
   }
 
   /**
