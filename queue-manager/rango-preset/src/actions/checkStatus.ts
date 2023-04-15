@@ -15,7 +15,6 @@ import { SwapActionTypes, SwapQueueContext, SwapStorage } from '../types';
 import { getNextStep, MessageSeverity } from '../shared';
 import { TransactionStatusResponse } from 'rango-sdk';
 import { httpService } from '../services';
-import { APIErrorCode } from '../shared-errors';
 
 const INTERVAL_FOR_CHECK = 3_000;
 
@@ -181,7 +180,7 @@ async function checkApprovalStatus({
         setStorage,
         nextStatus: 'failed',
         nextStepStatus: 'failed',
-        errorCode: APIErrorCode.SEND_TX_FAILED,
+        errorCode: 'SEND_TX_FAILED',
         message: 'Approve transaction failed',
         details: 'Smart contract approval failed in blockchain.',
       });

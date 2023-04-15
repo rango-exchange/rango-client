@@ -107,19 +107,6 @@ export type SwapExplorerUrl = {
   description: string | null;
 };
 
-export type SwapperId =
-  | 'ThorChain'
-  | 'OneInchEth'
-  | 'Binance Bridge'
-  | 'OneInchBsc'
-  | 'OneInchPolygon'
-  | 'Terra Bridge'
-  | 'TerraSwap'
-  | 'Osmosis'
-  | 'Lido'
-  | 'PoS Bridge'
-  | 'Wormhole';
-
 export type StepStatus =
   | 'created'
   | 'running'
@@ -143,7 +130,7 @@ export type PendingSwapStep = {
   toSymbolAddress: string | null;
   toDecimals: number;
   toLogo: string;
-  swapperId: SwapperId;
+  swapperId: string;
   expectedOutputAmountHumanReadable: string | null;
   startTransactionTime: number;
   outputAmount: string | null;
@@ -289,7 +276,6 @@ export function getNextStep(
   );
 }
 
-// TODO:  we have samething in `helpers`, for fixing circular dependency, we copied and should be removed eventually.
 /**
  * Returns the wallet address, based on the current step of `PendingSwap`.
  */
