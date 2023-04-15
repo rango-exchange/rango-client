@@ -275,10 +275,24 @@ export const getTronApproveUrl = (tx: string): string => {
   );
 };
 
+export const isPrettyError = (obj: unknown): obj is PrettyError => {
+  return (
+    obj instanceof PrettyError ||
+    Object.prototype.hasOwnProperty('_isPrettyError')
+  );
+};
+
+export const isSignerError = (obj: unknown): obj is SignerError => {
+  return (
+    obj instanceof SignerError ||
+    Object.prototype.hasOwnProperty('_isSignerError')
+  );
+};
+
 export const prettifyErrorMessage = (obj: unknown): ErrorDetail => {
   if (!obj) return { extraMessage: '', extraMessageErrorCode: null };
-  if (obj instanceof PrettyError) return obj.getErrorDetail();
-  if (obj instanceof SignerError) {
+  if (isPrettyError(obj)) return obj.getErrorDetail();
+  if (isSignerError(obj)) {
     const t = obj.getErrorDetail();
     return {
       extraMessage: t.message,
