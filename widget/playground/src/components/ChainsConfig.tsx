@@ -37,7 +37,7 @@ export function ChainsConfig({ type }: PropTypes) {
 
   const onChangeChains = (chain) => {
     let chains = type === 'Source' ? fromChains : toChains;
-    let tokens = type === 'Source' ? fromTokens : toTokens;
+    const tokens = type === 'Source' ? fromTokens : toTokens;
     chains = onChangeMultiSelects(chain, chains, blockchains, (item) => item.name === chain.name);
     onChangeBlockChains(chains, type);
 
