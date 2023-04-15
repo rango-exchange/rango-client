@@ -39,8 +39,8 @@
     }
   ],
   "dependencies": {
-    "@rango-dev/signer-starknet": "^0.1.11-next.78",
-    "@rango-dev/wallets-shared": "^0.1.11-next.78",
+    "@rango-dev/signer-starknet": "^0.1.11-next.81",
+    "@rango-dev/wallets-shared": "^0.1.11-next.82",
     "rango-types": "^0.1.26"
   },
   "publishConfig": {
