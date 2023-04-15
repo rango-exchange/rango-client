@@ -1,11 +1,11 @@
 import { SwapContainer } from '@rango-dev/ui';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { AppRouter } from './components/AppRouter';
 import { useMetaStore } from './store/meta';
 import { Events, Provider } from '@rango-dev/wallets-core';
 import { allProviders } from '@rango-dev/provider-all';
 import { EventHandler } from '@rango-dev/wallets-core/dist/wallet';
-import { Network } from '@rango-dev/wallets-shared';
+import { Network, WalletType } from '@rango-dev/wallets-shared';
 import {
   prepareAccountsForWalletStore,
   walletAndSupportedChainsNames,
@@ -41,6 +41,10 @@ export const SwapBox: React.FC<WidgetProps> = ({ configs }) => {
   const { changeLanguage } = useSelectLanguage();
   const clearConnectedWallet = useWalletsStore.use.clearConnectedWallet();
 
+  const [lastConnectedWalletWithNetwork, setLastConnectedWalletWithNetwork] =
+    useState<string>('');
+  const [disconnectedWallet, setDisconnectedWallet] = useState<WalletType>();
+
   const evmBasedChainNames = blockchains
     .filter(isEvmBlockchain)
     .map((chain) => chain.name);
@@ -49,7 +53,7 @@ export const SwapBox: React.FC<WidgetProps> = ({ configs }) => {
     type,
     event,
     value,
-    _,
+    state,
     supportedChains
   ) => {
     if (event === Events.ACCOUNTS) {
@@ -66,6 +70,19 @@ export const SwapBox: React.FC<WidgetProps> = ({ configs }) => {
       } else {
         disconnectWallet(type);
       }
+    }
+
+    if (event === Events.ACCOUNTS && state.connected) {
+      const key = `${type}-${state.network}-${value}`;
+
+      if (state.connected) {
+        setLastConnectedWalletWithNetwork(key);
+      }
+    }
+
+    if (event === Events.NETWORK && state.network) {
+      const key = `${type}-${state.network}`;
+      setLastConnectedWalletWithNetwork(key);
     }
   };
   let providers = allProviders();
@@ -108,6 +125,11 @@ export const SwapBox: React.FC<WidgetProps> = ({ configs }) => {
               title={configs.title}
               titleSize={configs.titleSize}
               titleWeight={configs.titleWeight}
+              lastConnectedWallet={lastConnectedWalletWithNetwork}
+              disconnectedWallet={disconnectedWallet}
+              clearDisconnectedWallet={() => {
+                setDisconnectedWallet(undefined);
+              }}
             >
               <Layout configs={configs} />
             </AppRouter>
