@@ -23,6 +23,7 @@
     "dev:queue-manager": "node ./scripts/dev-watch/command.mjs --project @rango-dev/queue-manager-demo",
     "dev:embedded": "node ./scripts/dev-watch/command.mjs --project @rango-dev/widget-embedded",
     "dev:wallets-adapter": "node ./scripts/dev-watch/command.mjs --project @rango-dev/wallets-adapter-demo",
+    "dev:playground": "node ./scripts/dev-watch/command.mjs --project @rango-dev/widget-playground",
     "lint": "nx run-many --target=lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "publish": "node ./scripts/publish/command.mjs"
