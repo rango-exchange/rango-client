@@ -21,7 +21,7 @@ import {
 import { useWalletsStore } from './wallets';
 import { TokenWithBalance } from '../pages/SelectTokenPage';
 import { PendingSwap } from '@rango-dev/queue-manager-rango-preset/dist/shared';
-
+import { debounce } from 'lodash';
 const getUsdValue = (token: Token | null, amount: string) =>
   new BigNumber(amount || ZERO).multipliedBy(token?.usdPrice || 0);
 
@@ -231,7 +231,7 @@ const bestRoute = (
   settingsStore: typeof useSettingsStore
 ) => {
   let abortController: AbortController | null = null;
-  const fetchBestRoute = () => {
+  const fetchBestRoute = debounce(() => {
     const { fromToken, toToken, inputAmount } = bestRouteStore.getState();
     const { slippage, customSlippage, disabledLiquiditySources } =
       settingsStore.getState();
@@ -272,7 +272,7 @@ const bestRoute = (
           loading: false,
         });
       });
-  };
+  }, 1500);
 
   useBestRouteStore.subscribe(
     (state) => ({
