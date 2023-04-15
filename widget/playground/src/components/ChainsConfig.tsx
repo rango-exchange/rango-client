@@ -7,6 +7,7 @@ import { Type } from '../types';
 import { MultiSelect } from './MultiSelect';
 import { MultiTokenSelect } from './MultiSelect/MultiTokenSelect';
 import { TokenInfo } from './TokenInfo';
+import { Token } from 'rango-sdk';
 
 interface PropTypes {
   type: Type;
@@ -27,6 +28,8 @@ export function ChainsConfig({ type }: PropTypes) {
   const customeAddress = useConfigStore.use.configs().customeAddress;
   const onChangeBlockChains = useConfigStore.use.onChangeBlockChains();
   const onChangeTokens = useConfigStore.use.onChangeTokens();
+  const fromTokens = useConfigStore.use.configs().fromTokens;
+  const toTokens = useConfigStore.use.configs().toTokens;
 
   const onChangeBooleansConfig = useConfigStore.use.onChangeBooleansConfig();
 
@@ -36,7 +39,17 @@ export function ChainsConfig({ type }: PropTypes) {
     let values = type === 'Source' ? fromChains : toChains;
     values = onChangeMultiSelects(chain, values, blockchains, (item) => item.name === chain.name);
     onChangeBlockChains(values, type);
-    onChangeTokens('all', type);
+    let tokens = type === 'Source' ? fromTokens : toTokens;
+    console.log(tokens, '>>>>');
+
+    let list: Token[] = [];
+    if (tokens !== 'all' && values !== 'all') {
+      for (const chain of values) {
+        list = [...list, ...tokens.filter((token) => token.blockchain === chain?.name)];
+        console.log({ list });
+      }
+    }
+    onChangeTokens(list.length ? list : 'all', type);
   };
 
   return (
