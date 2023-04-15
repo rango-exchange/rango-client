@@ -106,15 +106,13 @@ export function splitWalletNetwork(input: string): string[] {
   const removedAddressInput = input?.split(':')[0] || '';
   const splittedInput = removedAddressInput.split('-');
   const network = splittedInput[splittedInput.length - 1];
+  const walletNetwork = splittedInput.slice(0, -1);
 
-  const remainingInput = splittedInput
-    .splice(0, splittedInput.length - 1)
-    .join('-');
+  if (walletNetwork[walletNetwork.length - 1] === network) {
+    walletNetwork.pop();
+  }
+  const wallet = walletNetwork.join('-');
 
-  let wallet = '';
-  if (remainingInput.indexOf(`-${network}`) !== -1)
-    wallet = remainingInput.replace(`-${network}`, '');
-  else wallet = remainingInput;
   return [wallet, network];
 }
 
@@ -361,8 +359,10 @@ export function markRunningSwapAsSwitchingNetwork({
 export function markRunningSwapAsDependsOnOtherQueues({
   getStorage,
   setStorage,
-  context,
-}: Pick<ExecuterActions, 'getStorage' | 'setStorage' | 'context'>):
+  notifier,
+}: Pick<ExecuterActions, 'getStorage' | 'setStorage'> & {
+  notifier: SwapQueueContext['notifier'];
+}):
   | {
       swap: PendingSwap;
       step: PendingSwapStep;
@@ -376,7 +376,7 @@ export function markRunningSwapAsDependsOnOtherQueues({
   swap.networkStatusExtraMessageDetail = '';
   currentStep.networkStatus = PendingSwapNetworkStatus.WaitingForQueue;
 
-  (context as SwapQueueContext)?.notifier({
+  notifier({
     eventType: 'waiting_for_queue',
     swap,
     step: currentStep,
@@ -752,7 +752,7 @@ export function onDependsOnOtherQueues(
     markRunningSwapAsDependsOnOtherQueues({
       getStorage: queue.getStorage.bind(queue),
       setStorage: queue.setStorage.bind(queue),
-      context,
+      notifier: context.notifier,
     });
     return;
   }
@@ -781,7 +781,7 @@ export function onDependsOnOtherQueues(
     resetClaimedBy: () => {
       reset();
       // TODO: Use key generator
-      retryOn(`${type}-${network}-${address}`, context, manager);
+      retryOn(`${type}-${network}-${address}`, context.notifier, manager);
     },
   });
 }
@@ -1504,7 +1504,7 @@ export function checkWaitingForConnectWalletChange(params: {
   wallet_network: string;
   manager?: Manager;
   evmChains: EvmBlockchainMeta[];
-  queueContext: SwapQueueContext;
+  notifier: SwapQueueContext['notifier'];
 }): void {
   const { wallet_network, evmChains, manager } = params;
   const [wallet, network] = splitWalletNetwork(wallet_network);
@@ -1556,7 +1556,7 @@ export function checkWaitingForConnectWalletChange(params: {
           });
 
           if (result) {
-            params.queueContext?.notifier({
+            params?.notifier({
               eventType: 'waiting_for_network_change',
               swap: result.swap,
               step: result.step,
@@ -1665,7 +1665,7 @@ export function resetRunningSwapNotifsOnPageLoad(
  */
 export function retryOn(
   wallet_network: string,
-  queueContext: SwapQueueContext,
+  notifier: SwapQueueContext['notifier'],
   manager?: Manager,
   options = { fallbackToOnlyWallet: true }
 ): void {
@@ -1713,7 +1713,7 @@ export function retryOn(
         markRunningSwapAsDependsOnOtherQueues({
           getStorage: currentQueue.getStorage.bind(currentQueue),
           setStorage: currentQueue.setStorage.bind(currentQueue),
-          context: queueContext,
+          notifier: notifier,
         });
       }
     }
