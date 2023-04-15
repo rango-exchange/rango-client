@@ -15,7 +15,7 @@ function AppContainer() {
   return (
     <WalletsProvider
       providers={providers}
-      walletsAndSupportedChains={walletsAndSupportedChains}
+      allBlockChains={walletsAndSupportedChains}
       onUpdateState={(type, event, value, coreState) => {
         if (event === Events.ACCOUNTS && coreState.connected) {
           console.log({ type, event });
