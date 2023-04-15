@@ -60,26 +60,3 @@ export async function swapUsdcToUsdt(actions) {
     actions.failed();
   }
 }
-
-function checkStatus(actions) {
-  console.log('check');
-  actions.next();
-}
-
-const simpleSwapQueueDefinition: QueueDef = {
-  name: 'simpleSwap',
-  actions: {
-    connectWallet,
-    changeNetworkToPolygon,
-    swapUsdcToUsdt,
-    checkStatus,
-  },
-  events: {
-    onUpdate(event) {
-      console.log({ event });
-    },
-  },
-  run: ['connectWallet', 'changeNetworkToPolygon', 'swapUsdcToUsdt'],
-};
-
-export { simpleSwapQueueDefinition };
