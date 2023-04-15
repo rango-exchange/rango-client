@@ -10,8 +10,7 @@ import {
   Transfer as TransferTransaction,
 } from 'rango-sdk';
 
-import { ErrorDetail, PrettyError } from './shared-errors';
-import { SignerError } from 'rango-types';
+import { PrettyError } from './shared-errors';
 
 export interface PendingSwapWithQueueID {
   id: string;
@@ -275,44 +274,6 @@ export const getTronApproveUrl = (tx: string): string => {
   );
 };
 
-export const isPrettyError = (obj: unknown): obj is PrettyError => {
-  return (
-    obj instanceof PrettyError ||
-    Object.prototype.hasOwnProperty('_isPrettyError')
-  );
-};
-
-export const isSignerError = (obj: unknown): obj is SignerError => {
-  return (
-    obj instanceof SignerError ||
-    Object.prototype.hasOwnProperty('_isSignerError')
-  );
-};
-
-export const prettifyErrorMessage = (obj: unknown): ErrorDetail => {
-  if (!obj) return { extraMessage: '', extraMessageErrorCode: null };
-  if (isPrettyError(obj)) return obj.getErrorDetail();
-  if (isSignerError(obj)) {
-    const t = obj.getErrorDetail();
-    return {
-      extraMessage: t.message,
-      extraMessageDetail: t.detail,
-      extraMessageErrorCode: t.code,
-    };
-  }
-  if (obj instanceof Error)
-    return {
-      extraMessage: obj.toString(),
-      extraMessageErrorCode: null,
-    };
-  if (typeof obj !== 'string')
-    return {
-      extraMessage: JSON.stringify(obj),
-      extraMessageErrorCode: null,
-    };
-  return { extraMessage: obj, extraMessageErrorCode: null };
-};
-
 export function getNextStep(
   swap: PendingSwap,
   currentStep: PendingSwapStep
@@ -328,6 +289,9 @@ export function getNextStep(
 }
 
 // TODO:  we have samething in `helpers`, for fixing circular dependency, we copied and should be removed eventually.
+/**
+ * Returns the wallet address, based on the current step of `PendingSwap`.
+ */
 export const getCurrentAddressOf = (
   swap: PendingSwap,
   step: PendingSwapStep
@@ -335,6 +299,10 @@ export const getCurrentAddressOf = (
   const result =
     swap.wallets[step.evmTransaction?.blockChain || ''] ||
     swap.wallets[step.evmApprovalTransaction?.blockChain || ''] ||
+    swap.wallets[step.tronTransaction?.blockChain || ''] ||
+    swap.wallets[step.tronApprovalTransaction?.blockChain || ''] ||
+    swap.wallets[step.starknetTransaction?.blockChain || ''] ||
+    swap.wallets[step.starknetApprovalTransaction?.blockChain || ''] ||
     swap.wallets[step.cosmosTransaction?.blockChain || ''] ||
     swap.wallets[step.solanaTransaction?.blockChain || ''] ||
     (step.transferTransaction?.fromWalletAddress
@@ -345,7 +313,6 @@ export const getCurrentAddressOf = (
   return result.address;
 };
 
-// TODO:  we have samething in `helpers`, for fixing circular dependency, we copied and should be removed eventually.
 export function getRelatedWallet(
   swap: PendingSwap,
   currentStep: PendingSwapStep

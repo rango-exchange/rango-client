@@ -51,15 +51,19 @@ import {
   PendingSwap,
   PendingSwapNetworkStatus,
   PendingSwapStep,
-  prettifyErrorMessage,
   StepStatus,
   SwapStatus,
   Wallet,
-  WalletTypeAndAddress,
   SwapProgressNotification,
+  getRelatedWallet,
+  getCurrentAddressOf,
 } from './shared';
 import { logRPCError } from './shared-sentry';
-import { PrettyError, mapAppErrorCodesToAPIErrorCode } from './shared-errors';
+import {
+  PrettyError,
+  mapAppErrorCodesToAPIErrorCode,
+  prettifyErrorMessage,
+} from './shared-errors';
 import { httpService } from './services';
 
 type WhenTaskBlocked = Parameters<NonNullable<SwapQueueDef['whenTaskBlocked']>>;
@@ -544,51 +548,6 @@ export async function isNetworkMatchedForTransaction(
   return true;
 }
 
-/**
- * Returns the wallet address, based on the current step of `PendingSwap`.
- */
-export const getCurrentAddressOf = (
-  swap: PendingSwap,
-  step: PendingSwapStep
-): string => {
-  const result =
-    swap.wallets[step.evmTransaction?.blockChain || ''] ||
-    swap.wallets[step.evmApprovalTransaction?.blockChain || ''] ||
-    swap.wallets[step.tronTransaction?.blockChain || ''] ||
-    swap.wallets[step.tronApprovalTransaction?.blockChain || ''] ||
-    swap.wallets[step.starknetTransaction?.blockChain || ''] ||
-    swap.wallets[step.starknetApprovalTransaction?.blockChain || ''] ||
-    swap.wallets[step.cosmosTransaction?.blockChain || ''] ||
-    swap.wallets[step.solanaTransaction?.blockChain || ''] ||
-    (step.transferTransaction?.fromWalletAddress
-      ? { address: step.transferTransaction?.fromWalletAddress }
-      : null) ||
-    null;
-  if (result == null) throw PrettyError.WalletMissing();
-  return result.address;
-};
-
-// Todo: Is it same with `getRequiredWallet`?
-export function getRelatedWallet(
-  swap: PendingSwap,
-  currentStep: PendingSwapStep
-): WalletTypeAndAddress {
-  const walletAddress = getCurrentAddressOf(swap, currentStep);
-  const walletKV =
-    Object.keys(swap.wallets)
-      .map((k) => ({ k, v: swap.wallets[k] }))
-      .find(({ v }) => v.address === walletAddress) || null;
-  const blockchain = walletKV?.k || null;
-  const wallet = walletKV?.v || null;
-
-  const walletType = wallet?.walletType;
-  if (walletType === WalletType.UNKNOWN || wallet === null)
-    throw PrettyError.AssertionFailed(
-      `Wallet for source ${blockchain} not passed: walletType: ${walletType}`
-    );
-  return wallet;
-}
-
 export const isTxAlreadyCreated = (
   swap: PendingSwap,
   step: PendingSwapStep
@@ -729,7 +688,7 @@ export function onBlockForChangeNetwork(
 
 /**
  * Event handler for blocked tasks. (Parallel mode)
- * If a transcation execution is manually blocked (like for parallel or waiting for walle),
+ * If a transcation execution flow is manually blocked (like for parallel or waiting for walle),
  * This function will be called by queue manager using `queue definition`.
  *
  * It checks the blocked tasks, if there is no active `claimed` queue, try to give it to the best candidate.

@@ -15,7 +15,7 @@ export {
   checkWaitingForNetworkChange,
   getCurrentStep,
   getEvmProvider,
-  getRelatedWallet,
   cancelSwap,
 } from './helpers';
+export { getRelatedWallet } from './shared';
 export { useMigration, useQueueManager } from './hooks';
