@@ -5,9 +5,14 @@ import {
   useLocation,
   useNavigate,
 } from 'react-router';
+import { useQueueManager } from '@rango-dev/queue-manager-rango-preset';
 import { navigationRoutes } from '../constants/navigationRoutes';
+import { WalletType } from '@rango-dev/wallets-shared';
+import { isEvmBlockchain } from 'rango-types';
 import { UpdateUrl } from './UpdateUrl';
 import { Home } from '../pages/Home';
+import { useMetaStore } from '../store/meta';
+
 interface PropTypes {
   title?: string;
   titleSize?: number;
@@ -47,9 +52,24 @@ const Route: React.FC = ({
 export function AppRouter({
   children,
   ...props
-}: PropTypes & PropsWithChildren) {
+}: PropTypes &
+  PropsWithChildren & {
+    lastConnectedWallet: string;
+    disconnectedWallet: WalletType | undefined;
+    clearDisconnectedWallet: () => void;
+  }) {
   const isRouterInContext = useInRouterContext();
   const Router = isRouterInContext ? Route : MemoryRouter;
+  const { blockchains } = useMetaStore.use.meta();
+
+  const evmChains = blockchains.filter(isEvmBlockchain);
+
+  useQueueManager({
+    lastConnectedWallet: props.lastConnectedWallet,
+    clearDisconnectedWallet: props.clearDisconnectedWallet,
+    disconnectedWallet: props.disconnectedWallet,
+    evmChains,
+  });
 
   return (
     <>

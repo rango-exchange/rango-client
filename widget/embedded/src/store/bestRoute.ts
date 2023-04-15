@@ -13,9 +13,14 @@ import { httpService } from '../services/httpService';
 import { useSettingsStore } from './settings';
 import { calcOutputUsdValue, createBestRouteRequestBody } from '../utils/swap';
 import { useMetaStore } from './meta';
-import { getDefaultToken, getSortedTokens } from '../utils/wallets';
+import {
+  getDefaultToken,
+  getSortedTokens,
+  tokensAreEqual,
+} from '../utils/wallets';
 import { useWalletsStore } from './wallets';
 import { TokenWithBalance } from '../pages/SelectTokenPage';
+import { PendingSwap } from '@rango-dev/queue-manager-rango-preset/dist/shared';
 
 const getUsdValue = (token: Token | null, amount: string) =>
   new BigNumber(amount || ZERO).multipliedBy(token?.usdPrice || 0);
@@ -43,6 +48,7 @@ export interface RouteState {
   setInputAmount: (amount: string) => void;
   bestRoute: BestRouteResponse | null;
   setBestRoute: (bestRoute: BestRouteResponse | null) => void;
+  retry: (pendingSwap: PendingSwap) => void;
 }
 
 export const useBestRouteStore = createSelectors(
@@ -150,6 +156,71 @@ export const useBestRouteStore = createSelectors(
             inputUsdValue: getUsdValue(state.fromToken, amount),
           }),
         }));
+      },
+      retry: (pendingSwap) => {
+        const { tokens, blockchains } = useMetaStore.getState().meta;
+        const balances = useWalletsStore.getState().balances;
+        const failedIndex =
+          pendingSwap.status === 'failed'
+            ? pendingSwap.steps.findIndex((s) => s.status === 'failed')
+            : null;
+
+        if (failedIndex === null || failedIndex < 0) return;
+
+        const firstStep = pendingSwap.steps[0];
+        const lastStep = pendingSwap.steps[pendingSwap.steps.length - 1];
+        const fromChain =
+          blockchains.find(
+            (blockchain) => blockchain.name === firstStep.fromBlockchain
+          ) || null;
+        const toChain =
+          blockchains.find(
+            (blockchain) => blockchain.name === lastStep.toBlockchain
+          ) || null;
+
+        const fromToken = tokens.find((token) =>
+          tokensAreEqual(token, {
+            blockchain: firstStep.fromBlockchain,
+            symbol: firstStep.fromSymbol,
+            address: firstStep.fromSymbolAddress,
+          })
+        );
+
+        const toToken = tokens.find((token) =>
+          tokensAreEqual(token, {
+            blockchain: lastStep.toBlockchain,
+            symbol: lastStep.toSymbol,
+            address: lastStep.toSymbolAddress,
+          })
+        );
+        const sortedSourceTokens = getSortedTokens(
+          fromChain,
+          tokens,
+          balances,
+          []
+        );
+        const sortedDestinationTokens = getSortedTokens(
+          toChain,
+          tokens,
+          balances,
+          []
+        );
+        const inputAmount = pendingSwap.inputAmount;
+        set({
+          fromChain,
+          fromToken,
+          inputAmount,
+          outputAmount: null,
+          inputUsdValue: new BigNumber(0),
+          outputUsdValue: new BigNumber(0),
+          toChain,
+          toToken,
+          bestRoute: null,
+          loading: false,
+          error: '',
+          sourceTokens: sortedSourceTokens,
+          destinationTokens: sortedDestinationTokens,
+        });
       },
     }))
   )

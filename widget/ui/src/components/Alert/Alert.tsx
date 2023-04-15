@@ -22,14 +22,13 @@ const MainContainer = styled('div', {
   '&.hasIcon .footer': {
     paddingLeft: '$32',
   },
-
   variants: {
     type: {
       primary: {
         color: '$primary200',
       },
       secondary: {
-        color: '$secondary',
+        color: '$foreground',
       },
       success: {
         color: '$success300',
@@ -62,18 +61,40 @@ export function Alert(props: PropsWithChildren<PropTypes>) {
       <div className="main">
         {showIcon && (
           <>
-            {type === 'success' && <CheckCircleIcon color={type} size={24} />}
-            {type === 'warning' && <WarningIcon color={type} size={24} />}
-            {type === 'error' && <InfoCircleIcon color={type} size={24} />}
-            <Spacer size={8} />
+            <div
+              style={{
+                width: '32px',
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}
+            >
+              {type === 'success' && <CheckCircleIcon color={type} size={24} />}
+              {type === 'warning' && <WarningIcon color={type} size={24} />}
+              {type === 'error' && <InfoCircleIcon color={type} size={24} />}
+              <Spacer size={8} />
+            </div>
           </>
         )}
-        {title && (
-          <Typography variant="h6" color={type}>
-            {title}
-          </Typography>
-        )}
-        {children}
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'start',
+            flexDirection: 'column',
+            width: '100%',
+          }}
+        >
+          {title && (
+            <>
+              <Typography className="title" variant="h6" color={type}>
+                {title}
+              </Typography>
+              {!!children && <Spacer size={8} direction="vertical" />}
+            </>
+          )}
+          {children}
+        </div>
       </div>
       {props.footer ? <div className="footer">{props.footer}</div> : null}
     </MainContainer>
