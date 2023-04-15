@@ -24,11 +24,23 @@ import {
 } from '../ConfirmSwap/ConfirmSwap';
 import { PendingSwap } from '../History/types';
 import { pulse } from '../../components/BestRoute/BestRoute';
+import {
+  SwapMessages,
+  PropTypes as SwapMessagesPropTypes,
+} from './SwapMessages';
 
 const StyledAnchor = styled('a', {
   color: '$primary',
   fontWeight: '$600',
   marginLeft: '$12',
+});
+
+const SwapInfoContainer = styled('div', {
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'start',
+  marginBottom: '16px',
+  flexDirection: 'column',
 });
 
 const InternalDetailsContainer = styled('div', {
@@ -63,18 +75,26 @@ export const Line = styled('div', {
 });
 
 const RequestIdContainer = styled('div', {
-  cursor: 'pointer',
-  backgroundColor: '$neutrals200',
-  padding: '$4',
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-  borderRadius: '$5',
-  marginBottom: '$16',
+  '.requestId': {
+    cursor: 'pointer',
+    backgroundColor: '$neutrals200',
+    padding: '$4',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: '$5',
+  },
 });
 
 const RequestId = styled(Typography, {
-  color: '$warning500',
+  width: '200px',
+  whiteSpace: 'nowrap',
+  overflow: 'hidden',
+  textOverflow: 'ellipsis',
+  color: '$primary !important',
+  '@sm': {
+    width: 'auto',
+  },
 });
 
 const CancelButtonContainer = styled('div', {
@@ -98,35 +118,120 @@ const StepContainer = styled('div', {
   },
 });
 
-export interface PropTypes {
+const SwapStatusContainer = styled('div', {
+  width: '100%',
+  display: 'flex',
+  justifyContent: 'space-between',
+  alignItems: 'center',
+  paddingBottom: '$8',
+});
+
+const SwapStatus = styled(Typography, {
+  fontWeight: '$600',
+  variants: {
+    status: {
+      running: {
+        color: '$primary !important',
+      },
+      success: {
+        color: '$success500 !important',
+      },
+      failed: { color: '$error500 !important' },
+    },
+  },
+});
+
+const DateContainer = styled('div', { paddingBottom: '$8' });
+
+type PropTypes = {
   pendingSwap: PendingSwap;
   onCopy: (requestId: string) => void;
   onBack: () => void;
   isCopied: boolean;
   onCancel: (requestId: string) => void;
-}
+  onRetry?: () => void;
+  date: string;
+} & SwapMessagesPropTypes;
 
 export function SwapHistory(props: PropTypes) {
-  const { pendingSwap, onBack, onCopy, isCopied, onCancel } = props;
+  const {
+    pendingSwap,
+    onBack,
+    onCopy,
+    isCopied,
+    onCancel,
+    date,
+    onRetry,
+    ...extraMessageProps
+  } = props;
   const [showDrawer, setShowDrawer] = useState(false);
 
   return (
     <SecondaryPage title="Swap Details" textField={false} onBack={onBack}>
       <div style={{ overflow: 'hidden' }}>
-        <div>
-          <Typography variant="body1"> request ID :</Typography>
+        <SwapInfoContainer>
           <RequestIdContainer
-            onClick={onCopy.bind(null, pendingSwap?.requestId)}
+            style={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              marginBottom: '8px',
+            }}
           >
-            <RequestId variant="body1">{pendingSwap?.requestId}</RequestId>
-            <Spacer size={12} />
-            {isCopied ? (
-              <CheckSquareIcon color="success" size={18} />
-            ) : (
-              <CopyIcon color="warning" size={18} />
-            )}
+            <Typography variant="body1"> Request ID :</Typography>
+            <div
+              className="requestId"
+              onClick={onCopy.bind(null, pendingSwap?.requestId)}
+            >
+              <RequestId variant="body1">{pendingSwap?.requestId}</RequestId>
+              <Spacer size={12} />
+              {isCopied ? (
+                <CheckSquareIcon color="success" size={18} />
+              ) : (
+                <CopyIcon color="primary" size={18} />
+              )}
+            </div>
           </RequestIdContainer>
-        </div>
+          <SwapStatusContainer>
+            <div>
+              <Typography variant="body1">Status:</Typography>
+              &nbsp;
+              <SwapStatus variant="body1" status={pendingSwap?.status}>
+                {pendingSwap?.status}
+              </SwapStatus>
+            </div>
+            {pendingSwap?.status === 'running' && (
+              <CancelButtonContainer>
+                <Button
+                  variant="contained"
+                  size="small"
+                  type="error"
+                  onClick={setShowDrawer.bind(null, true)}
+                >
+                  Cancel
+                </Button>
+              </CancelButtonContainer>
+            )}
+            {!!onRetry && (
+              <CancelButtonContainer>
+                <Button
+                  variant="contained"
+                  size="small"
+                  type="primary"
+                  onClick={onRetry}
+                >
+                  Try again
+                </Button>
+              </CancelButtonContainer>
+            )}
+          </SwapStatusContainer>
+          <DateContainer>
+            <Typography variant="body2">{date}</Typography>
+          </DateContainer>
+          {extraMessageProps.shortMessage && (
+            <SwapMessages {...extraMessageProps} />
+          )}
+        </SwapInfoContainer>
         <div style={{ overflow: 'auto', position: 'relative' }}>
           {pendingSwap?.steps.map((step, index) => (
             <StepContainer
@@ -224,17 +329,6 @@ export function SwapHistory(props: PropTypes) {
               />
             </StepContainer>
           ))}
-          {pendingSwap?.status === 'running' && (
-            <CancelButtonContainer>
-              <Button
-                variant="contained"
-                type="error"
-                onClick={setShowDrawer.bind(null, true)}
-              >
-                Cancel
-              </Button>
-            </CancelButtonContainer>
-          )}
         </div>
       </div>
       <Drawer
@@ -244,24 +338,19 @@ export function SwapHistory(props: PropTypes) {
         anchor="bottom"
         title="Cancel Progress"
         content={
-          <>
-            <Alert type="warning">
-              <Typography variant="body2">
-                <p>
-                  Warning: Rango <u>neither reverts</u> your transaction
-                  <u>nor refunds</u> you if you've already signed and sent a
-                  transaction to the blockchain since it's out of Rango's
-                  control. Beware that "Cancel" only stops next steps from being
-                  executed.
-                </p>
-                <Spacer size={12} direction="vertical" />
-                <p>
-                  If you have already signed your transaction to blockchain, you
-                  should wait for that to complete or rollback
-                </p>
-              </Typography>
-            </Alert>
-          </>
+          <Alert type="warning">
+            <p>
+              Warning: Rango <u>neither reverts</u> your transaction&nbsp;
+              <u>nor refunds</u> you if you've already signed and sent a
+              transaction to the blockchain since it's out of Rango's control.
+              Beware that "Cancel" only stops next steps from being executed.
+            </p>
+            <Spacer size={12} direction="vertical" />
+            <p>
+              If you have already signed your transaction to blockchain, you
+              should wait for that to complete or rollback
+            </p>
+          </Alert>
         }
         footer={
           <div

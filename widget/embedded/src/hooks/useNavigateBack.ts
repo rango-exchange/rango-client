@@ -8,6 +8,8 @@ export function useNavigateBack() {
   navigationRoutes;
 
   const navigateBackFrom = (currentRoute: string) => {
+    if (currentRoute === navigationRoutes.swapDetails)
+      return navigate(navigationRoutes.swaps, { replace: true });
     if (
       !isRouterInContext ||
       (window.history.state && window.history.state.idx > 0)
@@ -31,8 +33,6 @@ export function useNavigateBack() {
         navigate(navigationRoutes.settings, { replace: true });
       else if (currentRoute === navigationRoutes.swapDetails)
         navigate(navigationRoutes.swaps, { replace: true });
-      else if (currentRoute === navigationRoutes.confirmSwap)
-        navigate(navigationRoutes.confirmWallets, { replace: true });
     }
   };
 

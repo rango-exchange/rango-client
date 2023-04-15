@@ -3,6 +3,7 @@ import { Provider as ManagerProvider } from '@rango-dev/queue-manager-react';
 import {
   swapQueueDef,
   SwapQueueContext,
+  checkWaitingForNetworkChange,
 } from '@rango-dev/queue-manager-rango-preset';
 import { useWallets } from '@rango-dev/wallets-core';
 import {
@@ -83,7 +84,9 @@ function QueueManager(props: PropsWithChildren<{}>) {
       //@ts-ignore
       queuesDefs={[swapQueueDef]}
       context={context}
-      onPersistedDataLoaded={(_manager) => {}}
+      onPersistedDataLoaded={(manager) => {
+        checkWaitingForNetworkChange(manager);
+      }}
       isPaused={false}
     >
       {props.children}

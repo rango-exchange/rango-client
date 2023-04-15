@@ -11,3 +11,10 @@ export type SwapButtonState = (
 ) & {
   title: string;
 };
+
+export type ConvertedToken = {
+  symbol: string;
+  address: string | null;
+  blockchain: string;
+  outputAmount: string | null;
+} | null;

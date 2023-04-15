@@ -39,8 +39,15 @@ export const swapQueueDef: SwapQueueDef = {
 };
 
 export { SwapQueueContext, SwapStorage } from './types';
-export { PendingSwapWithQueueID } from './shared';
-
+export {
+  PendingSwapWithQueueID,
+  getCurrentBlockchainOfOrNull,
+  getRelatedWalletOrNull,
+  MessageSeverity,
+  PendingSwapStep,
+  PendingSwapNetworkStatus,
+  PendingSwap,
+} from './shared';
 // TODO: This is for our frontend, some of them can be removed.
 export {
   updateSwapStatus,
