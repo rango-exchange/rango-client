@@ -1,4 +1,3 @@
-import { WalletType } from '@rango-dev/wallets-shared';
 import { SignerErrorCode, isSignerErrorCode } from 'rango-types';
 
 export type ErrorDetail = {
@@ -19,16 +18,6 @@ export enum APIErrorCode {
   CLIENT_UNEXPECTED_BEHAVIOUR = 'CLIENT_UNEXPECTED_BEHAVIOUR',
 }
 
-export enum ApiMethodName {
-  RequestingSwapTransaction = 'Requesting Swap Transaction',
-  CreatingSwap = 'Creating Swap',
-  CheckingTransactionStatus = 'Checking transaction status',
-  CreateTransaction = 'Create Transaction',
-  CheckApproval = 'Check TX Approval',
-  GettingSwapDetail = 'Getting Swap Detail',
-  GettingUserLimits = 'Getting user limits',
-}
-
 export enum TransactionName {
   GenericTransaction = 'transaction',
   SendingOneInchTransaction = '1inch transaction',
@@ -37,26 +26,10 @@ export enum TransactionName {
 
 export const ERROR_ASSERTION_FAILED = 'Assertion failed (Unexpected behaviour)';
 
-export const ERROR_COMMUNICATING_WITH_API = (
-  apiMethodName: ApiMethodName
-): string => `Unexpected response from API (${apiMethodName})`;
-
-export const ERROR_DESCRIPTION_UNSUPPORTED_TRANSACTION = (
-  method: string,
-  walletType: WalletType
-): string => `method: ${method} call is unsupported for wallet ${walletType}`;
-
-export const ERROR_SIGNING_TRANSACTION = (
-  transactionName: TransactionName
-): string => `Error sending ${transactionName}`;
-export const ERROR_REJECTING_TRANSACTION = 'User rejected the message signing';
-
 export const ERROR_CREATE_TRANSACTION =
   'Create transaction failed in Rango Server';
-export const ERROR_INPUT_WALLET_NOT_FOUND = 'Input wallet not found';
 
-export const DEFAULT_WALLET_INJECTION_ERROR =
-  'Failed to connect to wallet, if you have turned injection off (disable default wallet for xDefi), turn it on and refresh the page';
+export const ERROR_INPUT_WALLET_NOT_FOUND = 'Input wallet not found';
 
 type ErrorRoot = string | Record<string, string> | null;
 
