@@ -53,7 +53,7 @@ export function TokenList(props: PropTypes) {
 
   useEffect(() => {
     setTokens(list.slice(0, PAGE_SIZE));
-  }, [searchedText]);
+  }, [searchedText, list]);
 
   useEffect(() => {
     setHasNextPage(list.length > tokens.length);
