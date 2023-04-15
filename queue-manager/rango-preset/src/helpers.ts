@@ -67,6 +67,7 @@ import {
 } from './shared-errors';
 import { httpService } from './services';
 import { APIErrorCode, SignerErrorCode } from 'rango-types/lib';
+export { getRelatedWallet } from './shared';
 
 type WhenTaskBlocked = Parameters<NonNullable<SwapQueueDef['whenTaskBlocked']>>;
 type WhenTaskBlockedEvent = WhenTaskBlocked[0];
