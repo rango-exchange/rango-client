@@ -52,9 +52,7 @@ export function UpdateUrl() {
       fromAmount = '';
     if (
       loadingStatus !== 'success' &&
-      ![navigationRoutes.confirmWallets, navigationRoutes.confirmSwap].includes(
-        location.pathname
-      )
+      location.pathname != navigationRoutes.confirmSwap
     ) {
       fromChainString = searchParamsRef.current[SearchParams.FROM_CHAIN];
       fromTokenString = searchParamsRef.current[SearchParams.FROM_TOKEN];

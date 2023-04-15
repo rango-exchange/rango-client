@@ -14,20 +14,65 @@ import {
   Drawer,
 } from '../../components';
 import { styled } from '../../theme';
-import {
-  RelativeContainer,
-  Dot,
-  SwapperContainer,
-  SwapperLogo,
-  ArrowDown,
-  Fee,
-} from '../ConfirmSwap/ConfirmSwap';
 import { PendingSwap } from '../History/types';
 import { pulse } from '../../components/BestRoute/BestRoute';
 import {
   SwapMessages,
   PropTypes as SwapMessagesPropTypes,
 } from './SwapMessages';
+
+export const SwapperContainer = styled('div', {
+  display: 'flex',
+  alignItems: 'center',
+  marginLeft: '6px',
+});
+
+export const BodyError = styled('div', {
+  height: '100%',
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+});
+
+export const ErrorMsg = styled(Typography, {
+  color: '$error',
+});
+
+export const Fee = styled('div', {
+  display: 'flex',
+  alignItems: 'center',
+});
+
+export const SwapperLogo = styled('img', {
+  width: '$16',
+  height: '$16',
+});
+
+export const RelativeContainer = styled('div', {
+  position: 'relative',
+});
+
+export const Footer = styled('div', {
+  display: 'flex',
+  alignItems: 'center',
+});
+
+export const Dot = styled('div', {
+  width: '$8',
+  height: '$8',
+  backgroundColor: '$foreground',
+  borderRadius: '4px',
+  marginLeft: '$8',
+});
+
+export const ArrowDown = styled('div', {
+  width: '0px',
+  height: '0px',
+  borderLeft: '5px solid transparent',
+  borderRight: '5px solid transparent',
+  borderTop: '5px solid $foreground',
+  marginLeft: '$8',
+});
 
 const StyledAnchor = styled('a', {
   color: '$primary',

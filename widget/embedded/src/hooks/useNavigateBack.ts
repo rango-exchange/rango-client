@@ -25,7 +25,7 @@ export function useNavigateBack() {
           navigationRoutes.settings,
           navigationRoutes.wallets,
           navigationRoutes.swaps,
-          navigationRoutes.confirmWallets,
+          navigationRoutes.confirmSwap,
         ].includes(currentRoute)
       )
         navigate(navigationRoutes.home, { replace: true });

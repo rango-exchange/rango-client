@@ -22,7 +22,6 @@ import './i18n';
 
 const providers = allProviders();
 
-//todo: update interface and update widget state based on WidgetProps change
 export type WidgetProps = {
   configs?: Configs;
 };
