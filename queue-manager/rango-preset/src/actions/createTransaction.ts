@@ -11,7 +11,7 @@ import {
   updateSwapStatus,
   throwOnOK,
 } from '../helpers';
-import { APIErrorCode, prettifyErrorMessage } from '../shared-errors';
+import { prettifyErrorMessage } from '../shared-errors';
 import { CreateTransactionRequest } from 'rango-sdk';
 import { httpService } from '../services';
 
@@ -109,7 +109,7 @@ export async function createTransaction(
         nextStepStatus: 'failed',
         message: extraMessage,
         details: extraMessageDetail,
-        errorCode: APIErrorCode.FETCH_TX_FAILED,
+        errorCode: 'FETCH_TX_FAILED',
       });
       context.notifier({
         eventType: 'task_failed',

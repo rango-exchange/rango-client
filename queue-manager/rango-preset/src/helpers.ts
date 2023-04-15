@@ -65,6 +65,7 @@ import {
   prettifyErrorMessage,
 } from './shared-errors';
 import { httpService } from './services';
+import { APIErrorCode, SignerErrorCode } from 'rango-types/lib';
 
 type WhenTaskBlocked = Parameters<NonNullable<SwapQueueDef['whenTaskBlocked']>>;
 type WhenTaskBlockedEvent = WhenTaskBlocked[0];
@@ -146,7 +147,7 @@ export function updateSwapStatus({
   nextStepStatus?: StepStatus;
   message?: string;
   details?: string | null | undefined;
-  errorCode?: string | null;
+  errorCode?: APIErrorCode | SignerErrorCode | null;
   hasAlreadyProceededToSign?: boolean;
 }): {
   swap: PendingSwap;
