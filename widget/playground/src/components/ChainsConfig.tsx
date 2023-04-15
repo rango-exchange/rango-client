@@ -36,17 +36,15 @@ export function ChainsConfig({ type }: PropTypes) {
   const chains = type === 'Source' ? fromChains : toChains;
 
   const onChangeChains = (chain) => {
-    let values = type === 'Source' ? fromChains : toChains;
-    values = onChangeMultiSelects(chain, values, blockchains, (item) => item.name === chain.name);
-    onChangeBlockChains(values, type);
+    let chains = type === 'Source' ? fromChains : toChains;
     let tokens = type === 'Source' ? fromTokens : toTokens;
-    console.log(tokens, '>>>>');
+    chains = onChangeMultiSelects(chain, chains, blockchains, (item) => item.name === chain.name);
+    onChangeBlockChains(chains, type);
 
     let list: Token[] = [];
-    if (tokens !== 'all' && values !== 'all') {
-      for (const chain of values) {
+    if (tokens !== 'all' && chains !== 'all') {
+      for (const chain of chains) {
         list = [...list, ...tokens.filter((token) => token.blockchain === chain?.name)];
-        console.log({ list });
       }
     }
     onChangeTokens(list.length ? list : 'all', type);
