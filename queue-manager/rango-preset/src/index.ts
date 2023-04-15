@@ -1,42 +1,27 @@
-export { swapQueueDef } from './queueDef';
+export { PrettyError, prettifyErrorMessage } from './shared-errors';
 export { SwapQueueContext, SwapStorage } from './types';
 export {
   PendingSwapWithQueueID,
   getCurrentBlockchainOfOrNull,
   getRelatedWalletOrNull,
+  getRelatedWallet,
   MessageSeverity,
   PendingSwapStep,
   PendingSwapNetworkStatus,
   PendingSwap,
-} from './shared';
-// TODO: This is for our frontend, some of them can be removed.
-export {
-  splitWalletNetwork,
-  resetRunningSwapNotifsOnPageLoad,
-  getRunningSwaps,
-} from './helpers';
-export {
-  // getRelatedWallet,
-  getCurrentBlockchainOf,
-  SwapProgressNotification,
   EventType,
+  SwapProgressNotification,
 } from './shared';
-export {
-  PendingSwapWithQueueID,
-  getCurrentBlockchainOfOrNull,
-  getRelatedWalletOrNull,
-  MessageSeverity,
-  PendingSwapStep,
-  PendingSwapNetworkStatus,
-  PendingSwap,
-} from './shared';
-// TODO: This is for our frontend, some of them can be removed.
 export {
   updateSwapStatus,
   checkWaitingForNetworkChange,
   getCurrentStep,
   getEvmProvider,
-  getRelatedWallet,
   cancelSwap,
+  getRequiredWallet,
+  getRunningSwaps,
+  splitWalletNetwork,
+  resetRunningSwapNotifsOnPageLoad,
 } from './helpers';
+export { swapQueueDef } from './queueDef';
 export { useMigration, useQueueManager } from './hooks';
