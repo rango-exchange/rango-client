@@ -1,5 +1,5 @@
 import { WalletType } from '@rango-dev/wallets-shared';
-import { SelectableWallet } from '../../containers/ConfirmWallets/types';
+import { SelectableWallet } from '../../containers/ConfirmSwap/types';
 
 export const data: SelectableWallet[] = [
   {

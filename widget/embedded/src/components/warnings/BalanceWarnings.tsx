@@ -23,6 +23,7 @@ const ListItem = styled('li', {
 
 const Message = styled(Typography, {
   display: 'block',
+  color: '$warning500 !important',
 });
 
 export function BalanceWarnings({ messages }: PropTypes) {

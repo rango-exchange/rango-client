@@ -215,7 +215,7 @@ export function Home(props: PropTypes) {
             if (swapButtonState.title === 'Connect Wallet')
               navigate(navigationRoutes.wallets);
             else {
-              navigate(navigationRoutes.confirmWallets, { replace: true });
+              navigate(navigationRoutes.confirmSwap, { replace: true });
             }
           }}
         >
