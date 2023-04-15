@@ -4020,6 +4020,221 @@
   dependencies:
     "@babel/runtime" "^7.13.10"
 
+"@rango-dev/provider-argentx@^0.1.11-next.85":
+  version "0.1.11-next.85"
+  resolved "https://registry.yarnpkg.com/@rango-dev/provider-argentx/-/provider-argentx-0.1.11-next.85.tgz#3b2e2f87278f87a298cee901c124426e11531574"
+  integrity sha512-SNMLrqf52FfUvpGowLSaC9WaZc2/GzPYhZ9WFkixzy6ISJ2U6Qv6otS0v8CMxn+bGUVeMHftRyHk3IH0/Ts93A==
+  dependencies:
+    "@rango-dev/signer-starknet" "^0.1.11-next.83"
+    "@rango-dev/wallets-shared" "^0.1.11-next.84"
+    rango-types "^0.1.28"
+
+"@rango-dev/provider-binance-chain-wallet@^0.1.11-next.85":
+  version "0.1.11-next.85"
+  resolved "https://registry.yarnpkg.com/@rango-dev/provider-binance-chain-wallet/-/provider-binance-chain-wallet-0.1.11-next.85.tgz#7a4b036f8a153dc3f9d2a5cbae634a3e8e08907c"
+  integrity sha512-f+tMY3aFeit2x2OHjohHyfjuJGP185S6+HXOrF29fSZSQtpDnnjqVisxwlR5f79JBaYQPbGuBeC+87jCOcVwDw==
+  dependencies:
+    "@binance-chain/javascript-sdk" "^4.1.1"
+    "@rango-dev/signer-evm" "^0.1.11-next.83"
+    "@rango-dev/wallets-shared" "^0.1.11-next.84"
+    rango-types "^0.1.28"
+
+"@rango-dev/provider-brave@^0.1.11-next.86":
+  version "0.1.11-next.86"
+  resolved "https://registry.yarnpkg.com/@rango-dev/provider-brave/-/provider-brave-0.1.11-next.86.tgz#6a9c8284459024613bdc7fc4a23a7422a86bb0a8"
+  integrity sha512-ihf+PJydu/RT1fdQ0XcyZ77y7Q0VTNSdq3zFz1NSX7mJKOnyFM84gplOMpeyHH76rDmsNzLP8OsNiVttKhhVLQ==
+  dependencies:
+    "@rango-dev/signer-evm" "^0.1.11-next.83"
+    "@rango-dev/signer-solana" "^0.1.11-next.84"
+    "@rango-dev/wallets-shared" "^0.1.11-next.84"
+    rango-types "^0.1.28"
+
+"@rango-dev/provider-clover@^0.1.11-next.86":
+  version "0.1.11-next.86"
+  resolved "https://registry.yarnpkg.com/@rango-dev/provider-clover/-/provider-clover-0.1.11-next.86.tgz#a02e9c0b1755d3025d3253131a281f50b0a1e1d1"
+  integrity sha512-+7apcqZyA1md9uNfRvcNuXJiiYFZBpP2WsTo+W0X0U2qNo2t7hkMdw3BVINb3trQfUIx6ou7Z4MNucG5IgZIaw==
+  dependencies:
+    "@rango-dev/signer-evm" "^0.1.11-next.83"
+    "@rango-dev/signer-solana" "^0.1.11-next.84"
+    "@rango-dev/wallets-shared" "^0.1.11-next.84"
+    rango-types "^0.1.28"
+
+"@rango-dev/provider-coin98@^0.1.11-next.86":
+  version "0.1.11-next.86"
+  resolved "https://registry.yarnpkg.com/@rango-dev/provider-coin98/-/provider-coin98-0.1.11-next.86.tgz#808aedd352df2464c46993526eeeb29e134c1666"
+  integrity sha512-Rwc3Y917s1Wh3Re7FQdCXF52Gjjtb9VC5xseUEJ8npIhOW+Iav4ff4Ejm8YDwTzX/pf8ZR1BRaphsLJVzgxkIQ==
+  dependencies:
+    "@rango-dev/signer-evm" "^0.1.11-next.83"
+    "@rango-dev/signer-solana" "^0.1.11-next.84"
+    "@rango-dev/wallets-shared" "^0.1.11-next.84"
+    "@solana/web3.js" "^1.67.2"
+    bs58 "^5.0.0"
+    rango-types "^0.1.28"
+
+"@rango-dev/provider-coinbase@^0.1.11-next.86":
+  version "0.1.11-next.86"
+  resolved "https://registry.yarnpkg.com/@rango-dev/provider-coinbase/-/provider-coinbase-0.1.11-next.86.tgz#74c479b68c0412d491507732d33ef5de73007c47"
+  integrity sha512-MduyL6iAWF2pwZKmtCKFX3gYlbJ5D1uZsnppxiO+dXm/QKZwlWtzzZIJqU1R/dxevgMUm198ELldbSIFaBVVzg==
+  dependencies:
+    "@rango-dev/signer-evm" "^0.1.11-next.83"
+    "@rango-dev/signer-solana" "^0.1.11-next.84"
+    "@rango-dev/wallets-shared" "^0.1.11-next.84"
+    rango-types "^0.1.28"
+
+"@rango-dev/provider-cosmostation@^0.1.11-next.87":
+  version "0.1.11-next.87"
+  resolved "https://registry.yarnpkg.com/@rango-dev/provider-cosmostation/-/provider-cosmostation-0.1.11-next.87.tgz#f024517efe604b782389b2013531552b3f8726ad"
+  integrity sha512-VBI0g925nBoi9pK0uWrz8kLtaZXOlwmlBVHl2zSuFIz8Y6MZX26pOimBMEst7NJjuOLjQMCvmUMq+pWRzsN7DA==
+  dependencies:
+    "@rango-dev/signer-cosmos" "^0.1.11-next.84"
+    "@rango-dev/signer-evm" "^0.1.11-next.83"
+    "@rango-dev/wallets-shared" "^0.1.11-next.84"
+    rango-types "^0.1.28"
+
+"@rango-dev/provider-exodus@^0.1.11-next.86":
+  version "0.1.11-next.86"
+  resolved "https://registry.yarnpkg.com/@rango-dev/provider-exodus/-/provider-exodus-0.1.11-next.86.tgz#840e13cbf16377b3b84a1e9062509b872f5c91f3"
+  integrity sha512-b7wH+Py1y/x5zH0Ttyg1BuCePNTco1FJxSyZ5g4ti2R3AKppHf4bo9Cms6hfroeYwxeTlJ591WWnbmXzATLquw==
+  dependencies:
+    "@rango-dev/signer-evm" "^0.1.11-next.83"
+    "@rango-dev/signer-solana" "^0.1.11-next.84"
+    "@rango-dev/wallets-shared" "^0.1.11-next.84"
+    rango-types "^0.1.28"
+
+"@rango-dev/provider-frontier@^0.1.11-next.77":
+  version "0.1.11-next.77"
+  resolved "https://registry.yarnpkg.com/@rango-dev/provider-frontier/-/provider-frontier-0.1.11-next.77.tgz#aa0d23c4e2a0cc02e687d69936d4f797e9037ead"
+  integrity sha512-LmuHhAguDy1cxPsHRq9kruYhwnk9RYqVtsHsSPbdxczW+an3pALx6VZxul62Z2i7NlhZL9sT/xZ+30GeA1P5Sw==
+  dependencies:
+    "@rango-dev/signer-evm" "^0.1.11-next.83"
+    "@rango-dev/signer-solana" "^0.1.11-next.84"
+    "@rango-dev/wallets-shared" "^0.1.11-next.84"
+    rango-types "^0.1.28"
+
+"@rango-dev/provider-keplr@^0.1.11-next.86":
+  version "0.1.11-next.86"
+  resolved "https://registry.yarnpkg.com/@rango-dev/provider-keplr/-/provider-keplr-0.1.11-next.86.tgz#942073c1a5d2368ed56948b04a2be636111d4f97"
+  integrity sha512-YkycSSOkO10Eml0ICIWyD3/mGq9UfFFuOfZ+dzu12CqoAsY+6w1/8HrOXTimNmSQYm5bAMoaGsu+XicnvnSlAA==
+  dependencies:
+    "@rango-dev/signer-cosmos" "^0.1.11-next.84"
+    "@rango-dev/wallets-shared" "^0.1.11-next.84"
+    rango-types "^0.1.28"
+
+"@rango-dev/provider-kucoin-wallet@^0.1.11-next.85":
+  version "0.1.11-next.85"
+  resolved "https://registry.yarnpkg.com/@rango-dev/provider-kucoin-wallet/-/provider-kucoin-wallet-0.1.11-next.85.tgz#e93ff39545dba925a03aa10c67dfba08b7f28b2e"
+  integrity sha512-vR7ELodtPq58WpwTezJN7syF0LtMgBf+AHlMV9W4b4QNPAYxTMxpAE5UBtidDUdiWHxIsiVzM2s7WvBN22CBJw==
+  dependencies:
+    "@rango-dev/signer-evm" "^0.1.11-next.83"
+    "@rango-dev/wallets-shared" "^0.1.11-next.84"
+    rango-types "^0.1.28"
+
+"@rango-dev/provider-leap-cosmos@^0.1.11-next.86":
+  version "0.1.11-next.86"
+  resolved "https://registry.yarnpkg.com/@rango-dev/provider-leap-cosmos/-/provider-leap-cosmos-0.1.11-next.86.tgz#e1aff17ae9f732a6474390c64cfb0c6fc7f773cc"
+  integrity sha512-IIJlYv/7RSESXYi+kqr1qJPSRK1cSlx78Sjyej6BTb02Djmad7xpF/0976QC6bjzoQMfycXNim8D7mtVzkFmug==
+  dependencies:
+    "@rango-dev/signer-cosmos" "^0.1.11-next.84"
+    "@rango-dev/wallets-shared" "^0.1.11-next.84"
+    rango-types "^0.1.28"
+
+"@rango-dev/provider-math-wallet@^0.1.11-next.86":
+  version "0.1.11-next.86"
+  resolved "https://registry.yarnpkg.com/@rango-dev/provider-math-wallet/-/provider-math-wallet-0.1.11-next.86.tgz#c419e60fe95fa36bf5df8f9b2d121dcdfb200b2a"
+  integrity sha512-IxpNAhW7ykput9Nr8ublL7vmhLxot7G14hmA+X7Z6j2CD4F49uBpOyvLzXqfSgzxLh2md+Z0EGJFbsGO1SEN7g==
+  dependencies:
+    "@rango-dev/signer-evm" "^0.1.11-next.83"
+    "@rango-dev/signer-solana" "^0.1.11-next.84"
+    "@rango-dev/wallets-shared" "^0.1.11-next.84"
+    rango-types "^0.1.28"
+
+"@rango-dev/provider-metamask@^0.1.11-next.85":
+  version "0.1.11-next.85"
+  resolved "https://registry.yarnpkg.com/@rango-dev/provider-metamask/-/provider-metamask-0.1.11-next.85.tgz#3914056596f664d2ec0f1c4285e3980beadfd43f"
+  integrity sha512-8fZcyODWMqVhdEbHQZUyruohDLblUff3UbXG6iyGiB3BBNJqS65I/rKP45LG9sYFMA1mUYmxVMd/fqIHYroS5g==
+  dependencies:
+    "@rango-dev/signer-evm" "^0.1.11-next.83"
+    "@rango-dev/wallets-shared" "^0.1.11-next.84"
+    rango-types "^0.1.28"
+
+"@rango-dev/provider-okx@^0.1.11-next.86":
+  version "0.1.11-next.86"
+  resolved "https://registry.yarnpkg.com/@rango-dev/provider-okx/-/provider-okx-0.1.11-next.86.tgz#d7991535a9469dad57de0fff4bfbf06702abc72a"
+  integrity sha512-bipHR0IzcVUu0BxWcEYCaQbtYvYLKOo9sg4xvxqHkDCMXJAG5LWYRXLHSMA1qPf+nFbdmlRcuSkV+QzBBbdzVg==
+  dependencies:
+    "@rango-dev/signer-evm" "^0.1.11-next.83"
+    "@rango-dev/signer-solana" "^0.1.11-next.84"
+    "@rango-dev/wallets-shared" "^0.1.11-next.84"
+    rango-types "^0.1.28"
+
+"@rango-dev/provider-phantom@^0.1.11-next.86":
+  version "0.1.11-next.86"
+  resolved "https://registry.yarnpkg.com/@rango-dev/provider-phantom/-/provider-phantom-0.1.11-next.86.tgz#6113778dad279e8354c9db45069c0dd0c2668804"
+  integrity sha512-aNJALLwSCbP2XmyNuT3gWqa8DRmmqphE7lrrxHKnPZcB7H1PMeM41gtgi2EyVyKl9VaECAHz0d9rbb0fZ3R7nQ==
+  dependencies:
+    "@rango-dev/signer-solana" "^0.1.11-next.84"
+    "@rango-dev/wallets-shared" "^0.1.11-next.84"
+    rango-types "^0.1.28"
+
+"@rango-dev/provider-safepal@^0.1.11-next.86":
+  version "0.1.11-next.86"
+  resolved "https://registry.yarnpkg.com/@rango-dev/provider-safepal/-/provider-safepal-0.1.11-next.86.tgz#aa9790347240c8ac448a3cf68c9051bee4e08ccd"
+  integrity sha512-FW6vIXqjGYnNdiVDosqFi04Eia/r4lrWaqCbBsQGaGlYURh84ey+xwZWUq5eIYR+/vzXEoS0cZF1kKpteCcfhQ==
+  dependencies:
+    "@rango-dev/signer-evm" "^0.1.11-next.83"
+    "@rango-dev/signer-solana" "^0.1.11-next.84"
+    "@rango-dev/wallets-shared" "^0.1.11-next.84"
+    rango-types "^0.1.28"
+
+"@rango-dev/provider-tokenpocket@^0.1.11-next.85":
+  version "0.1.11-next.85"
+  resolved "https://registry.yarnpkg.com/@rango-dev/provider-tokenpocket/-/provider-tokenpocket-0.1.11-next.85.tgz#2648129e756c05c4c0064f74a9a0d57e4267a147"
+  integrity sha512-rssLG9vA72mMcMXzTC5xSsx/slneDHqpxrEd24B9bdr973QZIFZUQoHl41kd8kRTDJI8btuhTW+/cItVsnAWAw==
+  dependencies:
+    "@rango-dev/signer-evm" "^0.1.11-next.83"
+    "@rango-dev/wallets-shared" "^0.1.11-next.84"
+    rango-types "^0.1.28"
+
+"@rango-dev/provider-tron-link@^0.1.11-next.79":
+  version "0.1.11-next.79"
+  resolved "https://registry.yarnpkg.com/@rango-dev/provider-tron-link/-/provider-tron-link-0.1.11-next.79.tgz#262512d835b41dc31dc940e3214e4d2d7d9af818"
+  integrity sha512-rwp2QJf4KgBxCQdofoXbCNXdBVEd8l+jy9vXOZq0PVeG1Il8awmMT54Hbc2WY17BjvdhrJx1JzIzrNhcKcfnrg==
+  dependencies:
+    "@rango-dev/signer-tron" "^0.1.11-next.83"
+    "@rango-dev/wallets-shared" "^0.1.11-next.84"
+    rango-types "^0.1.28"
+
+"@rango-dev/provider-trustwallet@^0.1.11-next.85":
+  version "0.1.11-next.85"
+  resolved "https://registry.yarnpkg.com/@rango-dev/provider-trustwallet/-/provider-trustwallet-0.1.11-next.85.tgz#6c386a4467cb7bdaf79b348939b4070189799671"
+  integrity sha512-o/t82m5Cvb34j9nmJn3Ooh1Uf82Q3hg266kcpvdGDorO1iHQA/cdNbbL2p9P1oGbbFI5mafE85U6qkKLg4AR/Q==
+  dependencies:
+    "@rango-dev/signer-evm" "^0.1.11-next.83"
+    "@rango-dev/wallets-shared" "^0.1.11-next.84"
+    rango-types "^0.1.28"
+
+"@rango-dev/provider-walletconnect@^0.1.11-next.85":
+  version "0.1.11-next.85"
+  resolved "https://registry.yarnpkg.com/@rango-dev/provider-walletconnect/-/provider-walletconnect-0.1.11-next.85.tgz#c6985c92a406e262a9b6d5f631a15f85faf8f991"
+  integrity sha512-eZU6E2CeTeGeaCmJVKC/+izG8tJPjUyi8TYEEHC9gyLjSNhRXe2IpSf9CDe5GwDX3rUiBZDZD2E06idwMxrp+Q==
+  dependencies:
+    "@rango-dev/signer-evm" "^0.1.11-next.83"
+    "@rango-dev/wallets-shared" "^0.1.11-next.84"
+    "@walletconnect/client" "^1.8.0"
+    "@walletconnect/jsonrpc-utils" "^1.0.4"
+    "@walletconnect/qrcode-modal" "^1.8.0"
+    rango-types "^0.1.28"
+
+"@rango-dev/provider-xdefi@^0.1.11-next.86":
+  version "0.1.11-next.86"
+  resolved "https://registry.yarnpkg.com/@rango-dev/provider-xdefi/-/provider-xdefi-0.1.11-next.86.tgz#b291a51d3abb17d573fa7dd0e2979bdf3650d8aa"
+  integrity sha512-96m/LT0OPiNw5Egpb9CMN90BCAL6g1kmvwJOWxM5Wd4ZTS2fk8U/+LoG4rQnzXKFZaYNf1evImCSPYa0+F0FIg==
+  dependencies:
+    "@rango-dev/signer-evm" "^0.1.11-next.83"
+    "@rango-dev/signer-solana" "^0.1.11-next.84"
+    "@rango-dev/wallets-shared" "^0.1.11-next.84"
+    rango-types "^0.1.28"
+
 "@reach/router@^1.2.1":
   version "1.3.4"
   resolved "https://registry.yarnpkg.com/@reach/router/-/router-1.3.4.tgz#d2574b19370a70c80480ed91f3da840136d10f8c"
