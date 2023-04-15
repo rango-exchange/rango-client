@@ -1,6 +1,7 @@
 import {
   ExecuterActions,
   QueueInfo,
+  QueueName,
   QueueType,
 } from '@rango-dev/queue-manager-core';
 import {
@@ -1601,44 +1602,51 @@ export function checkWaitingForNetworkChange(manager?: Manager): void {
 }
 
 /**
+ * Get list of all running swaps
+ *
+ * @param manager
+ * @returns list of pending swaps
+ */
+export function getRunningSwaps(manager: Manager): PendingSwap[] {
+  const queues = manager?.getAll() || new Map<QueueName, QueueInfo>();
+  let result: PendingSwap[] = [];
+  queues.forEach((q) => {
+    // retry only on affected queues
+    const queueStorage = q.list.getStorage() as SwapStorage | undefined;
+    const swap = queueStorage?.swapDetails;
+    if (!swap || swap.status !== 'running') return;
+    result.push(swap);
+  });
+  return result;
+}
+
+/**
  *
  * Trying to reset notifications for pending swaps to correct message on page load.
  * We could remove this after supporting auto connect for wallets.
  *
- * @param queueContext
- * @param manager
+ * @param swaps
+ * @param notifier
  * @returns
  */
 export function resetRunningSwapNotifsOnPageLoad(
-  queueContext: SwapQueueContext,
-  manager?: Manager
+  runningSwaps: PendingSwap[],
+  notifier: SwapQueueContext['notifier']
 ) {
-  manager?.getAll().forEach((q) => {
-    // retry only on affected queues
-    if (
-      q.status === Status.BLOCKED ||
-      q.status === Status.RUNNING ||
-      q.status === Status.PENDING
-    ) {
-      const queueStorage = q.list.getStorage() as SwapStorage | undefined;
-      const swap = queueStorage?.swapDetails;
-      if (!swap) return;
-      const currentStep = getCurrentStep(swap);
-      let eventType: EventType | undefined;
-      if (
-        currentStep?.networkStatus === PendingSwapNetworkStatus.WaitingForQueue
-      )
-        eventType = 'waiting_for_queue';
-      else if (swap?.status === 'running') {
-        eventType = 'waiting_for_connecting_wallet';
-      }
-      if (!!eventType) {
-        queueContext.notifier({
-          eventType,
-          swap: swap,
-          step: currentStep,
-        });
-      }
+  runningSwaps.forEach((swap) => {
+    const currentStep = getCurrentStep(swap);
+    let eventType: EventType | undefined;
+    if (currentStep?.networkStatus === PendingSwapNetworkStatus.WaitingForQueue)
+      eventType = 'waiting_for_queue';
+    else if (swap?.status === 'running') {
+      eventType = 'waiting_for_connecting_wallet';
+    }
+    if (!!eventType && !!notifier) {
+      notifier({
+        eventType,
+        swap: swap,
+        step: currentStep,
+      });
     }
   });
 }

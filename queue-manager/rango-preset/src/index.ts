@@ -17,6 +17,8 @@ export {
   getEvmProvider,
   cancelSwap,
   splitWalletNetwork,
+  resetRunningSwapNotifsOnPageLoad,
+  getRunningSwaps,
 } from './helpers';
 export {
   getRelatedWallet,
