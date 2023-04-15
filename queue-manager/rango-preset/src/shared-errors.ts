@@ -1,4 +1,4 @@
-import { SignerErrorCode, isSignerErrorCode } from 'rango-types';
+import { SignerError, SignerErrorCode, isSignerErrorCode } from 'rango-types';
 
 export type ErrorDetail = {
   extraMessage: string;
@@ -155,3 +155,41 @@ export function mapAppErrorCodesToAPIErrorCode(
     return defaultErrorCode;
   }
 }
+
+export const isPrettyError = (obj: unknown): obj is PrettyError => {
+  return (
+    obj instanceof PrettyError ||
+    Object.prototype.hasOwnProperty('_isPrettyError')
+  );
+};
+
+export const isSignerError = (obj: unknown): obj is SignerError => {
+  return (
+    obj instanceof SignerError ||
+    Object.prototype.hasOwnProperty('_isSignerError')
+  );
+};
+
+export const prettifyErrorMessage = (obj: unknown): ErrorDetail => {
+  if (!obj) return { extraMessage: '', extraMessageErrorCode: null };
+  if (isPrettyError(obj)) return obj.getErrorDetail();
+  if (isSignerError(obj)) {
+    const t = obj.getErrorDetail();
+    return {
+      extraMessage: t.message,
+      extraMessageDetail: t.detail,
+      extraMessageErrorCode: t.code,
+    };
+  }
+  if (obj instanceof Error)
+    return {
+      extraMessage: obj.toString(),
+      extraMessageErrorCode: null,
+    };
+  if (typeof obj !== 'string')
+    return {
+      extraMessage: JSON.stringify(obj),
+      extraMessageErrorCode: null,
+    };
+  return { extraMessage: obj, extraMessageErrorCode: null };
+};
