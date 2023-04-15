@@ -37,8 +37,7 @@ import {
 } from './types';
 import { BigNumber } from 'bignumber.js';
 import { CheckApprovalResponse } from 'rango-sdk-basic';
-import { Providers, readAccountAddress } from '@rango-dev/wallets-core';
-import { getCurrentStep } from '../swap/helpers';
+import { readAccountAddress } from '@rango-dev/wallets-core';
 import { ethers } from 'ethers';
 import { sampleRawAccounts } from './mock';
 import {
