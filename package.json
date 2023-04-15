@@ -12,6 +12,7 @@
     "signers/*"
   ],
   "scripts": {
+    "clean": "nx clear-cache",
     "prepare": "husky install",
     "build:signers": "nx run-many --target=build --projects=@rango-dev/signer-* --parallel=5",
     "build:wallets": "nx run-many --target=build --projects=@rango-dev/signer-*,@rango-dev/wallets-*,@rango-dev/provider-* --exclude @rango-dev/wallets-demo --parallel=5",
