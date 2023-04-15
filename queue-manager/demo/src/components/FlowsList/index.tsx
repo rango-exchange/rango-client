@@ -1,15 +1,10 @@
 import { useManager } from "@rango-dev/queue-manager-react";
 import React, { useEffect, useState } from "react";
-import { BigNumber } from "bignumber.js";
 import {
-  calculatePendingSwap,
-  getBestRoute,
   requestSwap,
   urlToToken,
 } from "../../flows/rango/helpers";
-import { PendingSwap, WalletTypeAndAddress } from "../../flows/rango/types";
 import { FlowRunner } from "../FlowRunner";
-import { sampleRawAccounts, metamaskWallet } from "../../flows/rango/mock";
 import { WalletType } from "@rango-dev/wallets-shared";
 
 interface PropTypes {
