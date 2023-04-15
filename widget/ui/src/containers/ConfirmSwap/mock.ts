@@ -1,5 +1,7 @@
+import { WalletType } from '@rango-dev/wallets-shared';
 import { RoutingResultType } from 'rango-sdk';
 import { BestRouteType } from '../../types/swaps';
+import { SelectableWallet } from './types';
 
 export const bestRoute: BestRouteType = {
   from: { blockchain: 'BSC', symbol: 'BNB', address: null },
@@ -14,10 +16,12 @@ export const bestRoute: BestRouteType = {
         swapperId: 'AnySwap Aggregator',
         swapperType: 'AGGREGATOR',
         swapperLogo: 'https://api.rango.exchange/swappers/multichain.png',
+
         from: {
           symbol: 'BNB',
           logo: 'https://api.rango.exchange/i/Y3v1KW',
           blockchainLogo: 'https://api.rango.exchange/blockchains/binance.svg',
+
           address: null,
           blockchain: 'BSC',
           decimals: 18,
@@ -28,6 +32,7 @@ export const bestRoute: BestRouteType = {
           logo: 'https://api.rango.exchange/i/j9xgdC',
           blockchainLogo:
             'https://api.rango.exchange/blockchains/avax_cchain.svg',
+
           address: '0x49d5c2bdffac6ce2bfdb6640f4f80f226bc10bab',
           blockchain: 'AVAX_CCHAIN',
           decimals: 18,
@@ -93,8 +98,8 @@ export const bestRoute: BestRouteType = {
               symbol: 'WETH.E',
               address: '0x49d5c2bdffac6ce2bfdb6640f4f80f226bc10bab',
             },
-            expenseType: 'DECREASE_FROM_OUTPUT',
             name: 'Network Fee',
+            expenseType: 'DECREASE_FROM_OUTPUT',
             amount:
               '0.00018619291780292721387591870688029381530892436558133340440690517425537109375',
           },
@@ -141,6 +146,77 @@ export const bestRoute: BestRouteType = {
   validationStatus: null,
   missingBlockchains: [],
   diagnosisMessages: [],
-  processingLimitReached: false,
   walletNotSupportingFromBlockchain: false,
+  processingLimitReached: false,
 };
+
+export const wallets: SelectableWallet[] = [
+  {
+    walletType: WalletType.META_MASK,
+    address: '0x5423e28219d6d568dcf62a8134d623e6f4a1c2df',
+    image: 'https://app.rango.exchange/wallets/metamask.svg',
+    chain: 'BSC',
+    selected: false,
+  },
+  {
+    walletType: WalletType.OKX,
+    address: '0x2702d89c1c8658b49c45dd460deebcc45faec03c',
+    image: 'https://app.rango.exchange/wallets/okx.png',
+    chain: 'BSC',
+    selected: false,
+  },
+
+  {
+    walletType: WalletType.KEPLR,
+    address: 'osmo1unf2rcytjxfpz8x8ar63h4qeftadptg5t0nqcl',
+    image: 'https://app.rango.exchange/wallets/keplr.png',
+    chain: 'OSMOSIS',
+    selected: false,
+  },
+];
+
+export const exampleFor5Wallets: SelectableWallet[] = [
+  {
+    walletType: WalletType.META_MASK,
+    address: '0x5423e28219d6d568dcf62a8134d623e6f4a1c2df',
+    image: 'https://app.rango.exchange/wallets/metamask.svg',
+    selected: false,
+    chain: 'BSC',
+  },
+  {
+    walletType: WalletType.OKX,
+    address: '0x2702d89c1c8658b49c45dd460deebcc45faec03c',
+    image: 'https://app.rango.exchange/wallets/okx.png',
+    selected: false,
+    chain: 'BSC',
+  },
+  {
+    walletType: WalletType.EXODUS,
+    address: '0x2702d89c1c8658b49c45dd460deebcc45faec03c',
+    image: 'https://app.rango.exchange/wallets/exodus.png',
+    selected: false,
+    chain: 'BSC',
+  },
+  {
+    walletType: WalletType.MATH,
+    address: '0x2702d89c1c8658b49c45dd460deebcc45faec03c',
+    image: 'https://app.rango.exchange/wallets/math-wallet.png',
+    selected: false,
+    chain: 'BSC',
+  },
+  {
+    walletType: WalletType.CLOVER,
+    address: '0x2702d89c1c8658b49c45dd460deebcc45faec03c',
+    image: 'https://app.rango.exchange/wallets/clover.jpeg',
+    selected: false,
+    chain: 'BSC',
+  },
+
+  {
+    walletType: WalletType.KEPLR,
+    address: 'osmo1unf2rcytjxfpz8x8ar63h4qeftadptg5t0nqcl',
+    image: 'https://app.rango.exchange/wallets/keplr.png',
+    selected: false,
+    chain: 'OSMOSIS',
+  },
+];

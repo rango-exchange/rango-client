@@ -27,23 +27,13 @@ const Route: React.FC = ({
   const ref = useRef(true);
 
   useEffect(() => {
-    if (
-      [navigationRoutes.confirmWallets, navigationRoutes.confirmSwap].includes(
-        location.pathname
-      ) &&
-      ref.current
-    )
+    if (location.pathname === navigationRoutes.confirmSwap && ref.current)
       navigate(navigationRoutes.home + location.search, { state: 'redirect' });
 
     ref.current = false;
   }, []);
 
-  if (
-    [navigationRoutes.confirmWallets, navigationRoutes.confirmSwap].includes(
-      location.pathname
-    ) &&
-    ref.current
-  )
+  if (location.pathname === navigationRoutes.confirmSwap && ref.current)
     return <Home {...props} />;
 
   return <> {children}</>;

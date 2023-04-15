@@ -41,7 +41,6 @@ export function SelectTokenPage(props: PropTypes) {
             tokensAreEqual(supportedToken, token)
           )
         );
-  console.log(supportedSourceTokens);
 
   const fromToken = useBestRouteStore.use.fromToken();
   const toToken = useBestRouteStore.use.toToken();

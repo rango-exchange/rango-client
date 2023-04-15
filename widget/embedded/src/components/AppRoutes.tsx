@@ -9,7 +9,6 @@ import { SelectChainPage } from '../pages/SelectChainPage';
 import { SelectTokenPage } from '../pages/SelectTokenPage';
 import { SettingsPage } from '../pages/SettingsPage';
 import { WalletsPage } from '../pages/WalletsPage';
-import { ConfirmWalletsPage } from '../pages/ConfirmWalletsPage';
 import { SwapDetailsPage } from '../pages/SwapDetailsPage';
 import { Configs } from '../types';
 
@@ -100,6 +99,5 @@ export function AppRoutes(props: PropTypes) {
       ),
     },
     { path: navigationRoutes.confirmSwap, element: <ConfirmSwapPage /> },
-    { path: navigationRoutes.confirmWallets, element: <ConfirmWalletsPage /> },
   ]);
 }

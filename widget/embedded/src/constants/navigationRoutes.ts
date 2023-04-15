@@ -9,6 +9,5 @@ export const navigationRoutes = {
   swaps: '/swaps',
   wallets: '/wallets',
   confirmSwap: '/confirm-swap',
-  confirmWallets: '/confirm-wallets',
   swapDetails: '/swaps/:requestId',
 };
