@@ -96,13 +96,25 @@ function claimQueue() {
  * Sample inputs are:
  *  - "metamask-ETH"
  *  - "metamask-BSC-BSC:0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+ *  - "token-pocket-BSC-BSC:0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
  * Returns "wallet and network" separately, even if the wallet is dashed inside.
  *
  */
 
 export function splitWalletNetwork(input: string): string[] {
-  const res = input?.split('-') || [];
-  return res.splice(0, 2);
+  const removedAddressInput = input?.split(':')[0] || '';
+  const splittedInput = removedAddressInput.split('-');
+  const network = splittedInput[splittedInput.length - 1];
+
+  const remainingInput = splittedInput
+    .splice(0, splittedInput.length - 1)
+    .join('-');
+
+  let wallet = '';
+  if (remainingInput.indexOf(`-${network}`) !== -1)
+    wallet = remainingInput.replace(`-${network}`, '');
+  else wallet = remainingInput;
+  return [wallet, network];
 }
 
 /**
