@@ -1525,6 +1525,7 @@ export function checkWaitingForConnectWalletChange(params: {
             const task = q.list.state.tasks[taskId];
             return (
               task.status === Status.BLOCKED &&
+              // TODO double check later
               [BlockReason.WAIT_FOR_CONNECT_WALLET].includes(
                 task.blockedFor?.reason
               )

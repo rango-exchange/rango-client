@@ -97,6 +97,7 @@ class Manager {
   private persistor: Persistor;
   private context: ManagerContext;
   private isPaused: boolean = false;
+  // The client won't get any update on pause, We are using a polling mode to fix this issue for now.
   private syncInterval: NodeJS.Timer | null = null;
 
   /**
@@ -582,7 +583,6 @@ class Manager {
     if (this.isPaused) return;
     this.isPaused = true;
     this.syncInterval = setInterval(() => {
-      console.log('Manager is paused. Syncing state manually ...');
       this.sync();
     }, 5_000);
   }
