@@ -1,4 +1,3 @@
-import { PendingSwap } from '@rango-dev/ui/dist/containers/History/types';
 import {
   WalletTypeAndAddress,
   SwapSavedSettings,
@@ -19,7 +18,12 @@ import { WalletType } from '@rango-dev/wallets-shared';
 import { getRequiredBalanceOfWallet } from './routing';
 import { getRequiredChains, SelectedWallet } from './wallets';
 import { LoadingStatus } from '../store/meta';
-import { SwapButtonState } from '../types';
+import { ConvertedToken, SwapButtonState } from '../types';
+import {
+  PendingSwapNetworkStatus,
+  PendingSwapStep,
+} from '@rango-dev/queue-manager-rango-preset';
+import { PendingSwap } from '@rango-dev/queue-manager-rango-preset';
 
 export function getOutputRatio(
   inputUsdValue: BigNumber,
@@ -187,6 +191,7 @@ export function calculatePendingSwap(
     finishTime: null,
     requestId: bestRoute.requestId || '',
     inputAmount: inputAmount,
+    //@ts-ignore
     wallets,
     status: 'running',
     isPaused: false,
@@ -201,6 +206,7 @@ export function calculatePendingSwap(
     settings: settings,
     simulationResult: simulationResult,
     validateBalanceOrFee,
+    //@ts-ignore
     steps:
       bestRoute.result?.swaps?.map((swap, index) => {
         const swapper = meta.swappers.find(
@@ -345,7 +351,7 @@ export function getMinRequiredSlippage(
   );
   return (
     slippages
-      ?.map((s) => parseFloat(s?.slippage || '0'))
+      ?.map((s) => s?.slippage || 0)
       ?.filter((s) => s > 0)
       ?.sort((a, b) => b - a)
       ?.find(() => true) || null
@@ -549,4 +555,88 @@ export function calcOutputUsdValue(
   const amount = !!outputAmount ? new BigNumber(outputAmount) : ZERO;
 
   return amount.multipliedBy(tokenPrice || 0);
+}
+
+export function isNetworkStatusInWarningState(
+  pendingSwapStep: PendingSwapStep | null
+): boolean {
+  return (
+    !!pendingSwapStep &&
+    pendingSwapStep.networkStatus !== null &&
+    pendingSwapStep.networkStatus !== PendingSwapNetworkStatus.NetworkChanged
+  );
+}
+
+export function getSwapMessages(
+  pendingSwap: PendingSwap,
+  currentStep: PendingSwapStep | null
+): {
+  shortMessage: string;
+  detailedMessage: { content: string; long: boolean };
+} {
+  const textForRemove = 'bellow button or';
+  let message = pendingSwap.extraMessage;
+  let detailedMessage = pendingSwap.extraMessageDetail;
+
+  if (pendingSwap.networkStatusExtraMessageDetail?.includes(textForRemove)) {
+    pendingSwap.networkStatusExtraMessageDetail =
+      pendingSwap.networkStatusExtraMessageDetail.replace(textForRemove, '');
+  }
+
+  const networkWarningState = isNetworkStatusInWarningState(currentStep);
+
+  if (networkWarningState) {
+    message = pendingSwap.networkStatusExtraMessage || '';
+    detailedMessage = pendingSwap.networkStatusExtraMessageDetail || '';
+    switch (currentStep?.networkStatus) {
+      case PendingSwapNetworkStatus.WaitingForConnectingWallet:
+        message = message || 'Waiting for connecting wallet';
+        break;
+      case PendingSwapNetworkStatus.WaitingForQueue:
+        message = message || 'Waiting for other running tasks to be finished';
+        break;
+      case PendingSwapNetworkStatus.WaitingForNetworkChange:
+        message = message || 'Waiting for changing wallet network';
+        break;
+    }
+  }
+  detailedMessage = detailedMessage || '';
+  message = message || '';
+  const isRpc =
+    message?.indexOf('code') !== -1 && message?.indexOf('reason') !== -1;
+
+  return {
+    shortMessage: message,
+    detailedMessage: { content: detailedMessage, long: isRpc },
+  };
+}
+
+export function getLastConvertedTokenInFailedSwap(
+  pendingSwap: PendingSwap
+): ConvertedToken {
+  let resultToken: ConvertedToken = null;
+  if (pendingSwap.status === 'failed') {
+    const lastSuccessStep = pendingSwap.steps
+      .slice()
+      .reverse()
+      .filter((step) => step.status === 'success')[0];
+
+    if (lastSuccessStep) {
+      resultToken = {
+        blockchain: lastSuccessStep.toBlockchain,
+        symbol: lastSuccessStep.toSymbol,
+        outputAmount: lastSuccessStep.outputAmount,
+        address: lastSuccessStep.toSymbolAddress,
+      };
+    }
+  }
+  return resultToken;
+}
+
+export function shouldRetrySwap(pendingSwap: PendingSwap) {
+  return (
+    pendingSwap.status === 'failed' &&
+    !!pendingSwap.finishTime &&
+    new Date().getTime() - parseInt(pendingSwap.finishTime) < 4 * 3600 * 1000
+  );
 }

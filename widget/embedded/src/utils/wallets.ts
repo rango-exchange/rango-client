@@ -441,10 +441,13 @@ export function getSortedTokens(
   return sortTokens(getTokensWithBalance(filteredTokens, balances));
 }
 
-export function tokensAreEqual(tokenA: Token | null, tokenB: Token | null) {
+export function tokensAreEqual(
+  tokenA: Pick<Token, 'blockchain' | 'symbol' | 'address'> | null,
+  tokenB: Pick<Token, 'blockchain' | 'symbol' | 'address'> | null
+) {
   return (
     tokenA?.blockchain === tokenB?.blockchain &&
-    tokenA?.name === tokenB?.name &&
+    tokenA?.symbol === tokenB?.symbol &&
     tokenA?.address === tokenB?.address
   );
 }
