@@ -469,7 +469,13 @@ export function sortWalletsBasedOnState(
     (a, b) =>
       Number(b.state === WalletStatus.CONNECTED) -
         Number(a.state === WalletStatus.CONNECTED) ||
-      Number(b.state === WalletStatus.DISCONNECTED) -
-        Number(a.state === WalletStatus.DISCONNECTED)
+      Number(
+        b.state === WalletStatus.DISCONNECTED ||
+          b.state === WalletStatus.CONNECTING
+      ) -
+        Number(
+          a.state === WalletStatus.DISCONNECTED ||
+            a.state === WalletStatus.CONNECTING
+        )
   );
 }
