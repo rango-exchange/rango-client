@@ -1,7 +1,8 @@
 import { CSSProperties } from '@stitches/react';
 import React from 'react';
 import { containsText } from '../../helper';
-import { LiquiditySource } from '../../types/meta';
+import { styled } from '../../theme';
+import { LiquiditySource, LoadingStatus } from '../../types/meta';
 import { Button } from '../Button';
 import { LiquiditySourceList } from '../LiquiditySourceList';
 import { SecondaryPage } from '../SecondaryPage/SecondaryPage';
@@ -10,7 +11,7 @@ const filterLiquiditySources = (
   liquiditySources: LiquiditySource[],
   searchedFor: string
 ) =>
-  liquiditySources.filter(liquiditySource =>
+  liquiditySources.filter((liquiditySource) =>
     containsText(liquiditySource.title, searchedFor || '')
   );
 export interface PropTypes {
@@ -20,6 +21,7 @@ export interface PropTypes {
   onBack?: () => void;
   hasHeader?: boolean;
   listContainerStyle?: CSSProperties;
+  loadingStatus: LoadingStatus;
 }
 
 export function LiquiditySourcesSelector(props: PropTypes) {
@@ -30,6 +32,7 @@ export function LiquiditySourcesSelector(props: PropTypes) {
     hasHeader,
     listContainerStyle,
     toggleAll,
+    loadingStatus,
   } = props;
 
   return (
@@ -39,17 +42,19 @@ export function LiquiditySourcesSelector(props: PropTypes) {
       title="Liquidity Sources"
       TopButton={
         <Button variant="ghost" type="primary" onClick={toggleAll}>
-          {list.find(item => item.selected) ? 'Deselect all' : 'Select all'}
+          {list.find((item) => item.selected) ? 'Deselect all' : 'Select all'}
         </Button>
       }
       hasHeader={hasHeader}
       onBack={onBack}
     >
-      {searchedFor => (
+      {(searchedFor) => (
         <LiquiditySourceList
           listContainerStyle={listContainerStyle}
           list={filterLiquiditySources(list, searchedFor)}
           onChange={onChange}
+          loadingStatus={loadingStatus}
+          searchedFor={searchedFor}
         />
       )}
     </SecondaryPage>

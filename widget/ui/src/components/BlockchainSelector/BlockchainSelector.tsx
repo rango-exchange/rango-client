@@ -2,18 +2,17 @@ import React from 'react';
 import { BlockchainMeta } from 'rango-sdk';
 import { BlockchainsList } from '../BlockchainsList';
 import { SecondaryPage } from '../SecondaryPage/SecondaryPage';
-import { Alert } from '../Alert';
 import { Spinner } from '../Spinner';
 import { styled } from '../../theme';
 import { CSSProperties } from '@stitches/react';
 import { containsText } from '../../helper';
-import { Typography } from '../Typography';
+import { LoadingStatus } from '../../types/meta';
+import { LoadingFailedAlert } from '../Alert/LoadingFailedAlert';
+import { NotFoundAlert } from '../Alert/NotFoundAlert';
+import { LoaderContainer } from '../TokenSelector/TokenSelector';
 
 const ListContainer = styled('div', {
   height: '450px',
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
 });
 
 const filterBlockchains = (list: BlockchainMeta[], searchedFor: string) =>
@@ -22,8 +21,6 @@ const filterBlockchains = (list: BlockchainMeta[], searchedFor: string) =>
       containsText(blockchain.name, searchedFor) ||
       containsText(blockchain.displayName, searchedFor)
   );
-
-export type LoadingStatus = 'loading' | 'success' | 'failed';
 
 export interface PropTypes {
   type?: 'Source' | 'Destination';
@@ -65,20 +62,14 @@ export function BlockchainSelector(props: PropTypes) {
         return (
           <ListContainer style={listContainerStyle} key="1">
             {loadingStatus === 'loading' && (
-              <div>
+              <LoaderContainer>
                 <Spinner size={24} />
-              </div>
+              </LoaderContainer>
             )}
-            {loadingStatus === 'failed' && (
-              <Alert type="error">
-                <Typography variant="body2">
-                  Error connecting server, please reload the app and try again
-                </Typography>
-              </Alert>
-            )}
+            {loadingStatus === 'failed' && <LoadingFailedAlert />}
             {loadingStatus === 'success' && (
               <>
-                {filteredBlockchains.length > 0 ? (
+                {filteredBlockchains.length ? (
                   <BlockchainsList
                     list={filteredBlockchains}
                     selected={selected}
@@ -87,7 +78,10 @@ export function BlockchainSelector(props: PropTypes) {
                     onChange={onChange}
                   />
                 ) : (
-                  <Alert>{`${searchedFor} not found`}</Alert>
+                  <NotFoundAlert
+                    catergory="Blockchain"
+                    searchedFor={searchedFor}
+                  />
                 )}
               </>
             )}

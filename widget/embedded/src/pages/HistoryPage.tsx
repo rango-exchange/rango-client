@@ -21,7 +21,7 @@ export function HistoryPage() {
       groupBy={groupSwapsByDate}
       onSwapClick={requestId => {
         setSelectedSwap(requestId);
-        navigate(navigationRoutes.swaps + `/${requestId}`);
+        navigate(navigationRoutes.swaps + `/${requestId}`, { replace: true });
       }}
       onBack={navigateBackFrom.bind(null, navigationRoutes.swaps)}
     />

@@ -5,6 +5,7 @@ import { Token } from 'rango-sdk';
 import { useNavigateBack } from '../hooks/useNavigateBack';
 import { navigationRoutes } from '../constants/navigationRoutes';
 import { tokensAreEqual } from '../utils/wallets';
+import { useMetaStore } from '../store/meta';
 
 interface PropTypes {
   type: 'from' | 'to';
@@ -46,6 +47,7 @@ export function SelectTokenPage(props: PropTypes) {
   const toToken = useBestRouteStore.use.toToken();
   const setFromToken = useBestRouteStore.use.setFromToken();
   const setToToken = useBestRouteStore.use.setToToken();
+  const loadingMetaStatus = useMetaStore.use.loadingStatus();
 
   return (
     <TokenSelector
@@ -58,6 +60,7 @@ export function SelectTokenPage(props: PropTypes) {
         navigateBackFrom(navigationRoutes.fromToken);
       }}
       onBack={navigateBackFrom.bind(null, navigationRoutes.fromToken)}
+      loadingStatus={loadingMetaStatus}
     />
   );
 }

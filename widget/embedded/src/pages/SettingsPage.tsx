@@ -30,6 +30,8 @@ export function SettingsPage({ supportedSwappers }: PropTypes) {
 
   const infiniteApprove = useSettingsStore.use.infiniteApprove();
   const toggleInfiniteApprove = useSettingsStore.use.toggleInfiniteApprove();
+  const loadingMetaStatus = useMetaStore.use.loadingStatus();
+
   const uniqueSwappersGroups: Array<{
     title: string;
     logo: string;
@@ -93,6 +95,7 @@ export function SettingsPage({ supportedSwappers }: PropTypes) {
       onThemeChange={setTheme}
       infiniteApprove={infiniteApprove}
       toggleInfiniteApprove={toggleInfiniteApprove}
+      loadingStatus={loadingMetaStatus}
     />
   );
 }

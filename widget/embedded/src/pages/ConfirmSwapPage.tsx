@@ -38,6 +38,7 @@ export function ConfirmSwapPage() {
   const { navigateBackFrom } = useNavigateBack();
   const bestRoute = useBestRouteStore.use.bestRoute();
   const fetchingBestRoute = useBestRouteStore.use.loading();
+  const fetchingBestRouteFailed = useBestRouteStore.use.error();
   const setSelectedSwap = useUiStore.use.setSelectedSwap();
   const { blockchains, tokens } = useMetaStore.use.meta();
   const accounts = useWalletsStore.use.accounts();
@@ -46,6 +47,12 @@ export function ConfirmSwapPage() {
   const setSelectedWallet = useWalletsStore.use.setSelectedWallet();
   const slippage = useSettingsStore.use.slippage();
   const customSlippage = useSettingsStore.use.customSlippage();
+
+  const bestRouteloadingStatus = fetchingBestRoute
+    ? 'loading'
+    : fetchingBestRouteFailed
+    ? 'failed'
+    : 'success';
 
   const { manager } = useManager();
   const { loading, errors, warnings, confirmSwap } = useConfirmSwap();
@@ -130,7 +137,7 @@ export function ConfirmSwapPage() {
             usdValue={calcOutputUsdValue(fromAmount, firstStep?.from.usdPrice)}
             amount={fromAmount}
             label={t('From')}
-            loadingStatus={'success'}
+            loadingStatus={bestRouteloadingStatus}
           />
           <Spacer size={12} direction="vertical" />
           <TokenPreview
@@ -145,7 +152,7 @@ export function ConfirmSwapPage() {
             usdValue={calcOutputUsdValue(toAmount, lastStep?.to.usdPrice)}
             amount={toAmount}
             label={t('To')}
-            loadingStatus={'success'}
+            loadingStatus={bestRouteloadingStatus}
           />
         </>
       }
