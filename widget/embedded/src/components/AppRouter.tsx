@@ -59,6 +59,7 @@ export function AppRouter({
     clearDisconnectedWallet: props.clearDisconnectedWallet,
     disconnectedWallet: props.disconnectedWallet,
     evmChains,
+    notifier: () => {},
   });
 
   return (
