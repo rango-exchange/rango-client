@@ -3,7 +3,7 @@ import React from 'react';
 import { ChangeSlippageButton } from '../ChangeSlippageButton';
 
 interface PropTypes {
-  minRequiredSlippage: number | null;
+  minRequiredSlippage: string | null;
 }
 
 export function MinRequiredSlippage({ minRequiredSlippage }: PropTypes) {
