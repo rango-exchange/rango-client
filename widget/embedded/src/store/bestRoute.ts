@@ -272,7 +272,7 @@ const bestRoute = (
           loading: false,
         });
       });
-  }, 1500);
+  }, 600);
 
   useBestRouteStore.subscribe(
     (state) => ({
