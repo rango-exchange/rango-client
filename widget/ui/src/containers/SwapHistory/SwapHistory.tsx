@@ -293,6 +293,7 @@ export function SwapHistory(props: PropTypes) {
                   <StepDetail
                     logo={step.fromLogo}
                     symbol={step.fromSymbol}
+                    // @ts-ignore
                     chainLogo={step.fromBlockchainLogo}
                     blockchain={step.fromBlockchain}
                     amount={pendingSwap.inputAmount}
@@ -302,16 +303,29 @@ export function SwapHistory(props: PropTypes) {
               )}
               <Line />
               <SwapperContainer>
-                <SwapperLogo src={step.swapperLogo} alt={step.swapperId} />
+                <SwapperLogo
+                  // @ts-ignore
+                  src={step.swapperLogo}
+                  alt={step.swapperId}
+                />
                 <div>
                   <Typography ml={4} variant="caption">
-                    {step.swapperType} from {step.fromSymbol} to {step.toSymbol}
+                    {
+                      // @ts-ignore
+                      step.swapperType
+                    }{' '}
+                    from {step.fromSymbol} to {step.toSymbol}
                     via {step.swapperId}
                   </Typography>
                   <Fee>
                     <GasIcon />
                     <Typography ml={4} variant="caption">
-                      ${step.feeInUsd} estimated gas fee
+                      $
+                      {
+                        // @ts-ignore
+                        step.feeInUsd
+                      }{' '}
+                      estimated gas fee
                     </Typography>
                   </Fee>
                 </div>
@@ -368,9 +382,10 @@ export function SwapHistory(props: PropTypes) {
               <StepDetail
                 logo={step.toLogo}
                 symbol={step.toSymbol}
+                // @ts-ignore
                 chainLogo={step.toBlockchainLogo}
                 blockchain={step.toBlockchain}
-                amount={step.outputAmount}
+                amount={step.outputAmount || ''}
               />
             </StepContainer>
           ))}
