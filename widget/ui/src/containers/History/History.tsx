@@ -1,9 +1,9 @@
 import React, { PropsWithChildren } from 'react';
+import { Divider } from '../../components';
 import { SecondaryPage } from '../../components/SecondaryPage';
 import { SwapDetail } from '../../components/SwapDetail';
 import { Typography } from '../../components/Typography';
 import { containsText } from '../../helper';
-import { groupingOfSwaps } from '../../helper/swaps';
 import { styled } from '../../theme';
 import { PendingSwap } from './types';
 
@@ -16,11 +16,18 @@ const BodyError = styled('div', {
 const ErrorMsg = styled(Typography, {
   color: '$error',
 });
+
+const Group = styled('div', {
+  '.group-title': {
+    textTransform: 'uppercase',
+  },
+});
+
 const filteredHistory = (
   list: PendingSwap[],
   searchedFor: string
 ): PendingSwap[] => {
-  return list.filter((swap) => {
+  return list.filter(swap => {
     const firstStep = swap.steps[0];
     const lastStep = swap.steps[swap.steps.length - 1];
     return (
@@ -32,39 +39,52 @@ const filteredHistory = (
     );
   });
 };
-const Group = styled('div', {
-  marginBottom: '$24',
-  paddingRight: '$8',
-  maxHeight: '600px',
-});
-const GroupTitle = styled(Typography, {
-  color: '$neutrals500',
-});
 
+export type GroupBy = (
+  list: PendingSwap[]
+) => {
+  title: string;
+  swaps: PendingSwap[];
+}[];
 export interface PropTypes {
   list: PendingSwap[];
   onBack: () => void;
   onSwapClick: (requestId: string) => void;
+  groupBy?: GroupBy;
 }
 const SwapsGroup = (props: Omit<PropTypes, 'onBack'>) => {
-  const { list, onSwapClick } = props;
-  const swapsInGroup = groupingOfSwaps(list);
+  const { list, onSwapClick, groupBy } = props;
+  const groups = groupBy ? groupBy(list) : [{ title: 'History', swaps: list }];
 
   return (
     <>
-      {swapsInGroup.map((group, index) => (
-        <Group key={index}>
-          <GroupTitle variant="body2">{group.title}</GroupTitle>
-          {group.swaps.map((swap: PendingSwap, index: number) => (
-            <SwapDetail
-              key={index}
-              swap={swap}
-              status={swap.status}
-              onClick={onSwapClick}
-            />
-          ))}
-        </Group>
-      ))}
+      {groups
+        .filter(group => group.swaps.length > 0)
+        .map((group, index) => (
+          <>
+            <Group key={index}>
+              <Typography
+                variant="body2"
+                color="neutrals600"
+                className="group-title"
+              >
+                {group.title}
+              </Typography>
+              {group.swaps.map((swap: PendingSwap, index: number) => (
+                <>
+                  <SwapDetail
+                    key={index}
+                    swap={swap}
+                    status={swap.status}
+                    onClick={onSwapClick}
+                  />
+                  <Divider size={12} />
+                </>
+              ))}
+            </Group>
+            <Divider size={24} />
+          </>
+        ))}
     </>
   );
 };
@@ -73,6 +93,7 @@ export function History({
   list = [],
   onBack,
   onSwapClick,
+  groupBy,
 }: PropsWithChildren<PropTypes>) {
   return (
     <SecondaryPage
@@ -81,10 +102,14 @@ export function History({
       textFieldPlaceholder="Search By Blockchain Or Token"
       title="Swaps"
     >
-      {(searchedFor) => {
+      {searchedFor => {
         const filterSwaps = filteredHistory(list, searchedFor);
         return filterSwaps.length ? (
-          <SwapsGroup list={filterSwaps} onSwapClick={onSwapClick} />
+          <SwapsGroup
+            list={filterSwaps}
+            onSwapClick={onSwapClick}
+            groupBy={groupBy}
+          />
         ) : (
           <BodyError>
             <ErrorMsg variant="caption">Not Found</ErrorMsg>

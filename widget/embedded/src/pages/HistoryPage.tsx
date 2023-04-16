@@ -6,6 +6,7 @@ import { navigationRoutes } from '../constants/navigationRoutes';
 import { useNavigateBack } from '../hooks/useNavigateBack';
 import { getPendingSwaps } from '../utils/queue';
 import { useUiStore } from '../store/ui';
+import { groupSwapsByDate } from '../utils/date';
 
 export function HistoryPage() {
   const setSelectedSwap = useUiStore.use.setSelectedSwap();
@@ -16,10 +17,9 @@ export function HistoryPage() {
 
   return (
     <History
-      //todo: move PendingSwap type to rango-types
-      //@ts-ignore
       list={pendingSwaps}
-      onSwapClick={(requestId) => {
+      groupBy={groupSwapsByDate}
+      onSwapClick={requestId => {
         setSelectedSwap(requestId);
         navigate(navigationRoutes.swaps + `/${requestId}`);
       }}
