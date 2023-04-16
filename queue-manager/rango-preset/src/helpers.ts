@@ -510,7 +510,6 @@ export async function isNetworkMatchedForTransaction(
   providers: Providers
 ): Promise<boolean> {
   if (isWalletNull(wallet)) {
-    console.warn('wallet object is null');
     return false;
   }
   const fromBlockChain = getCurrentBlockchainOfOrNull(swap, step);
@@ -871,7 +870,6 @@ export function singTransaction(
       .signAndSendTx(evmApprovalTransaction, walletAddress, null)
       .then(
         (hash) => {
-          console.debug('transaction of approval minted successfully', hash);
           const approveUrl = getEvmApproveUrl(
             hash,
             getCurrentBlockchainOf(swap, currentStep),
@@ -891,7 +889,7 @@ export function singTransaction(
 
         (error) => {
           if (swap.status === 'failed') return;
-          console.debug('error in approving', error);
+
           const { extraMessage, extraMessageDetail, extraMessageErrorCode } =
             prettifyErrorMessage(error);
           if (
@@ -954,7 +952,6 @@ export function singTransaction(
       .signAndSendTx(tronApprovalTransaction, walletAddress, null)
       .then(
         (hash) => {
-          console.debug('transaction of approval minted successfully', hash);
           const approveUrl = getTronApproveUrl(hash);
           setStepTransactionIds(
             actions,
@@ -970,7 +967,7 @@ export function singTransaction(
 
         (error) => {
           if (swap.status === 'failed') return;
-          console.debug('error in approving', error);
+
           const { extraMessage, extraMessageDetail, extraMessageErrorCode } =
             prettifyErrorMessage(error);
           if (
@@ -1033,7 +1030,6 @@ export function singTransaction(
       .signAndSendTx(starknetApprovalTransaction, walletAddress, null)
       .then(
         (hash) => {
-          console.debug('transaction of approval minted successfully', hash);
           const approveUrl = getStarknetApproveUrl(hash);
           setStepTransactionIds(
             actions,
@@ -1049,7 +1045,7 @@ export function singTransaction(
 
         (error) => {
           if (swap.status === 'failed') return;
-          console.debug('error in approving', error);
+
           const { extraMessage, extraMessageDetail, extraMessageErrorCode } =
             prettifyErrorMessage(error);
           if (

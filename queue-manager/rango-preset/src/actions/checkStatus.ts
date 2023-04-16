@@ -209,7 +209,6 @@ async function checkApprovalStatus({
       });
     }
   } catch (e) {
-    console.error('Failed to check getApprovedAmount', e);
     isApproved = false;
   }
   if (isApproved) {
