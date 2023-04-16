@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/ui",
-  "version": "0.1.10-next.96",
+  "version": "0.1.10-next.97",
   "license": "MIT",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -20,8 +20,8 @@
     "build-storybook": "build-storybook"
   },
   "peerDependencies": {
-    "react": ">=16",
-    "queue-manager-rango-preset": "*"
+    "queue-manager-rango-preset": "*",
+    "react": ">=16"
   },
   "husky": {
     "hooks": {
