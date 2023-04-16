@@ -1,1 +1,1 @@
-export { History } from './History';
+export { History, GroupBy } from './History';

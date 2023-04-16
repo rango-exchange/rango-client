@@ -27,3 +27,5 @@ export * from './Radio';
 export * from './TokenList';
 export * from './common';
 export * from './Drawer';
+export * from './Header';
+export * from './Divider';

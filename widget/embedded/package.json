@@ -35,6 +35,7 @@
     "@rango-dev/wallets-shared": "^0.1.11-next.84",
     "bignumber.js": "^9.1.1",
     "copy-to-clipboard": "^3.3.3",
+    "dayjs": "^1.11.7",
     "i18next": "^22.4.11",
     "i18next-browser-languagedetector": "^7.0.1",
     "i18next-http-backend": "^2.1.1",
