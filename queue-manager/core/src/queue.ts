@@ -303,8 +303,6 @@ class Queue {
    *
    */
   public next(params: NextParams) {
-    console.log('[next]', this.state, params);
-
     this.check();
 
     const currentActiveTask = this.getActiveTask();
@@ -326,20 +324,12 @@ class Queue {
       return;
     }
 
-    if (activeTaskState.status === Status.FAILED) {
-      console.log('Task has been failed. It can not be proceed.');
+    if (
+      [Status.FAILED, Status.CANCELED, Status.RUNNING].includes(
+        activeTaskState.status
+      )
+    )
       return;
-    }
-
-    if (activeTaskState.status === Status.CANCELED) {
-      console.log('Task has been canceled. It can not be proceed.');
-      return;
-    }
-
-    if (activeTaskState.status === Status.RUNNING) {
-      console.log('Task is running. It can not be proceed.');
-      return;
-    }
 
     if (
       activeTaskState.status === Status.PENDING ||
@@ -356,7 +346,6 @@ class Queue {
       execute({
         context: this.getContext(params),
         next: () => {
-          console.log('[execute][next]', params);
           this.markCurrentTaskAsFinished(params);
         },
         retry: () => {
@@ -456,8 +445,6 @@ class Queue {
     execute({
       context: this.getContext(params),
       next: () => {
-        console.log('[force run][execute][next]', params);
-
         /*
           NOTE:
             When running `forceRun`, the status of task can be `BLOCKED`
@@ -499,10 +486,7 @@ class Queue {
     const activeTaskIndex = this.state.activeTaskIndex;
     const activeTask = this.tasks[activeTaskIndex];
 
-    if (!activeTask) {
-      console.log("It seems this queue has been finished. Task doesn't exist.");
-      return;
-    }
+    if (!activeTask) return;
 
     const activeTaskState = this.state.tasks[activeTask.id];
     if (activeTaskState.status === Status.RUNNING) {
@@ -518,8 +502,6 @@ class Queue {
       };
       this.events.onUpdate(updatedTaskEvent);
       this.next(params);
-    } else {
-      console.log('There is no running task.');
     }
   }
 
@@ -533,10 +515,7 @@ class Queue {
   public resume(params: NextParams) {
     const activeTaskIndex = this.state.activeTaskIndex;
     const activeTask = this.tasks[activeTaskIndex];
-    if (!activeTask) {
-      console.log("It seems this queue has been finished. Task doesn't exist.");
-      return;
-    }
+    if (!activeTask) return;
 
     const activeTaskState = this.state.tasks[activeTask.id];
     if (activeTaskState.status === Status.RUNNING) {
@@ -545,12 +524,6 @@ class Queue {
       });
       this.next(params);
     } else {
-      console.log('There is no running task. restart the queue', {
-        state: this.state.tasks,
-        activeTaskState,
-        activeTask,
-        activeTaskIndex,
-      });
       this.resetState();
       this.next(params);
     }
