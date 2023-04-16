@@ -328,8 +328,9 @@ class Queue {
       [Status.FAILED, Status.CANCELED, Status.RUNNING].includes(
         activeTaskState.status
       )
-    )
+    ) {
       return;
+    }
 
     if (
       activeTaskState.status === Status.PENDING ||
