@@ -85,7 +85,7 @@ const OutputContainer = styled('div', {
 interface PropTypes {
   label: string;
   amount: string;
-  usdValue: BigNumber;
+  usdValue?: BigNumber;
   loadingStatus: LoadingStatus;
   chain: {
     displayName: string;
@@ -120,9 +120,12 @@ export function TokenPreview(props: PropTypes) {
           <Typography variant="body2" color="neutrals800">
             {props.label}
           </Typography>
-          <Typography variant="caption" color="neutrals600">{`$${numberToString(
-            props.usdValue
-          )}`}</Typography>
+          {props.usdValue && (
+            <Typography
+              variant="caption"
+              color="neutrals600"
+            >{`$${numberToString(props.usdValue)}`}</Typography>
+          )}
         </div>
         <div className="form">
           <Button

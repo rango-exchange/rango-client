@@ -6,12 +6,12 @@ import {
   Typography,
   CheckCircleIcon,
   InfoCircleIcon,
-  CopyIcon,
   Spacer,
-  CheckSquareIcon,
   Button,
   Alert,
   Drawer,
+  Spinner,
+  Divider,
 } from '../../components';
 import { styled } from '../../theme';
 import { PendingSwap } from '../History/types';
@@ -82,10 +82,9 @@ const StyledAnchor = styled('a', {
 
 const SwapInfoContainer = styled('div', {
   display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'start',
-  marginBottom: '16px',
   flexDirection: 'column',
+  paddingBottom: '$16',
+  borderBottom: '1px solid $neutrals300',
 });
 
 const InternalDetailsContainer = styled('div', {
@@ -119,33 +118,44 @@ export const Line = styled('div', {
   borderRadius: 'inherit',
 });
 
-const RequestIdContainer = styled('div', {
-  '.requestId': {
-    cursor: 'pointer',
-    backgroundColor: '$neutrals200',
-    padding: '$4',
+const Row = styled('div', {
+  display: 'flex',
+  justifyContent: 'space-between',
+  alignItems: 'center',
+  fontSize: '$14',
+  padding: '$8 0',
+
+  '.name': {
+    color: '$neutrals600',
+  },
+  '.value': {
     display: 'flex',
-    justifyContent: 'center',
     alignItems: 'center',
-    borderRadius: '$5',
+    color: '$neutrals800',
+  },
+  '.status': {
+    fontWeight: 'bold',
+    textTransform: 'uppercase',
+  },
+  '.status.failed': {
+    color: '$error',
+  },
+  '.status.success': {
+    color: '$success',
   },
 });
 
-const RequestId = styled(Typography, {
-  width: '200px',
+const RequestId = styled('div', {
+  width: '150px',
   whiteSpace: 'nowrap',
   overflow: 'hidden',
   textOverflow: 'ellipsis',
-  color: '$primary !important',
-  '@sm': {
-    width: 'auto',
-  },
 });
 
-const CancelButtonContainer = styled('div', {
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
+const ExtraDetails = styled('div', {
+  padding: '$8 0',
+  color: '$neutrals600',
+  fontSize: '$12',
 });
 
 const StepContainer = styled('div', {
@@ -163,31 +173,6 @@ const StepContainer = styled('div', {
   },
 });
 
-const SwapStatusContainer = styled('div', {
-  width: '100%',
-  display: 'flex',
-  justifyContent: 'space-between',
-  alignItems: 'center',
-  paddingBottom: '$8',
-});
-
-const SwapStatus = styled(Typography, {
-  fontWeight: '$600',
-  variants: {
-    status: {
-      running: {
-        color: '$primary !important',
-      },
-      success: {
-        color: '$success500 !important',
-      },
-      failed: { color: '$error500 !important' },
-    },
-  },
-});
-
-const DateContainer = styled('div', { paddingBottom: '$8' });
-
 type PropTypes = {
   pendingSwap: PendingSwap;
   onCopy: (requestId: string) => void;
@@ -196,6 +181,7 @@ type PropTypes = {
   onCancel: (requestId: string) => void;
   onRetry?: () => void;
   date: string;
+  previewInputs?: React.ReactNode;
 } & SwapMessagesPropTypes;
 
 export function SwapHistory(props: PropTypes) {
@@ -207,6 +193,7 @@ export function SwapHistory(props: PropTypes) {
     onCancel,
     date,
     onRetry,
+    previewInputs,
     ...extraMessageProps
   } = props;
   const [showDrawer, setShowDrawer] = useState(false);
@@ -215,181 +202,175 @@ export function SwapHistory(props: PropTypes) {
     <SecondaryPage title="Swap Details" textField={false} onBack={onBack}>
       <div style={{ overflow: 'hidden' }}>
         <SwapInfoContainer>
-          <RequestIdContainer
-            style={{
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-              marginBottom: '8px',
-            }}
-          >
-            <Typography variant="body1"> Request ID :</Typography>
+          <Row>
+            <div className="name">Request ID:</div>
             <div
-              className="requestId"
+              className="value requestId"
               onClick={onCopy.bind(null, pendingSwap?.requestId)}
             >
-              <RequestId variant="body1">{pendingSwap?.requestId}</RequestId>
-              <Spacer size={12} />
-              {isCopied ? (
-                <CheckSquareIcon color="success" size={18} />
-              ) : (
-                <CopyIcon color="primary" size={18} />
+              <RequestId>{pendingSwap?.requestId}</RequestId>
+              <Spacer size={4} />
+              <Button type="primary" variant="ghost" size="compact">
+                {isCopied ? 'Copied!' : 'Copy'}
+              </Button>
+            </div>
+          </Row>
+          <Row>
+            <div className="name">Status:</div>
+            <div className={`value status ${pendingSwap?.status || ''}`}>
+              {pendingSwap?.status}
+              {pendingSwap?.status === 'running' && (
+                <Spinner size={16} color="primary" />
               )}
             </div>
-          </RequestIdContainer>
-          <SwapStatusContainer>
-            <div>
-              <Typography variant="body1">Status:</Typography>
-              &nbsp;
-              <SwapStatus variant="body1" status={pendingSwap?.status}>
-                {pendingSwap?.status}
-              </SwapStatus>
-            </div>
-            {pendingSwap?.status === 'running' && (
-              <CancelButtonContainer>
-                <Button
-                  variant="contained"
-                  size="small"
-                  type="error"
-                  onClick={setShowDrawer.bind(null, true)}
-                >
-                  Cancel
-                </Button>
-              </CancelButtonContainer>
-            )}
-            {!!onRetry && (
-              <CancelButtonContainer>
-                <Button
-                  variant="contained"
-                  size="small"
-                  type="primary"
-                  onClick={onRetry}
-                >
-                  Try again
-                </Button>
-              </CancelButtonContainer>
-            )}
-          </SwapStatusContainer>
-          <DateContainer>
-            <Typography variant="body2">{date}</Typography>
-          </DateContainer>
-          {extraMessageProps.shortMessage && (
-            <SwapMessages {...extraMessageProps} />
-          )}
+          </Row>
+          <ExtraDetails>{date}</ExtraDetails>
         </SwapInfoContainer>
-        <div style={{ overflow: 'auto', position: 'relative' }}>
-          {pendingSwap?.steps.map((step, index) => (
-            <StepContainer
-              key={index}
-              hasNotStarted={step.status === 'created'}
-              isRunning={
-                step.status != 'failed' &&
-                step.status != 'success' &&
-                step.status != 'created'
-              }
-            >
-              {index === 0 && (
-                <RelativeContainer>
-                  <StepDetail
-                    logo={step.fromLogo}
-                    symbol={step.fromSymbol}
-                    // @ts-ignore
-                    chainLogo={step.fromBlockchainLogo}
-                    blockchain={step.fromBlockchain}
-                    amount={pendingSwap.inputAmount}
-                  />
-                  <Dot />
-                </RelativeContainer>
-              )}
-              <Line />
-              <SwapperContainer>
-                <SwapperLogo
+        <Divider size={16} />
+
+        {previewInputs}
+
+        {extraMessageProps.shortMessage && (
+          <>
+            <Divider size={32} />
+            <SwapMessages {...extraMessageProps} />
+          </>
+        )}
+
+        <Divider size={32} />
+
+        {pendingSwap?.steps.map((step, index) => (
+          <StepContainer
+            key={index}
+            hasNotStarted={step.status === 'created'}
+            isRunning={
+              step.status != 'failed' &&
+              step.status != 'success' &&
+              step.status != 'created'
+            }
+          >
+            {index === 0 && (
+              <RelativeContainer>
+                <StepDetail
+                  logo={step.fromLogo}
+                  symbol={step.fromSymbol}
                   // @ts-ignore
-                  src={step.swapperLogo}
-                  alt={step.swapperId}
+                  chainLogo={step.fromBlockchainLogo}
+                  blockchain={step.fromBlockchain}
+                  amount={pendingSwap.inputAmount}
                 />
-                <div>
+                <Dot />
+              </RelativeContainer>
+            )}
+            <Line />
+            <SwapperContainer>
+              <SwapperLogo
+                // @ts-ignore
+                src={step.swapperLogo}
+                alt={step.swapperId}
+              />
+              <div>
+                <Typography ml={4} variant="caption">
+                  {
+                    // @ts-ignore
+                    step.swapperType
+                  }{' '}
+                  from {step.fromSymbol} to {step.toSymbol}
+                  via {step.swapperId}
+                </Typography>
+                <Fee>
+                  <GasIcon />
                   <Typography ml={4} variant="caption">
+                    $
                     {
                       // @ts-ignore
-                      step.swapperType
+                      step.feeInUsd
                     }{' '}
-                    from {step.fromSymbol} to {step.toSymbol}
-                    via {step.swapperId}
+                    estimated gas fee
                   </Typography>
-                  <Fee>
-                    <GasIcon />
-                    <Typography ml={4} variant="caption">
-                      $
-                      {
-                        // @ts-ignore
-                        step.feeInUsd
-                      }{' '}
-                      estimated gas fee
-                    </Typography>
-                  </Fee>
-                </div>
-              </SwapperContainer>
-              <div
-                style={{
-                  display: 'flex',
-                }}
-              >
-                <InternalDetailsContainer>
-                  <Line />
-                  {!!step.explorerUrl && (
-                    <div>
-                      {step.explorerUrl.map((item, index) => (
-                        <InternalDetail key={index}>
-                          <DescriptionContainer>
-                            <CheckCircleIcon color="success" />
-                            <Description variant="body2">
-                              {!item.description ? (
-                                <b>View transaction</b>
-                              ) : (
-                                <b>
-                                  {item.description
-                                    .substring(0, 1)
-                                    .toUpperCase()}
-                                  {item.description.substring(1)}
-                                </b>
-                              )}
-                            </Description>
-                          </DescriptionContainer>
-                          <StyledAnchor
-                            href={item.url}
-                            target="_blank"
-                            rel="noreferrer"
-                            key={index}
-                          >
-                            TX-Link
-                          </StyledAnchor>
-                        </InternalDetail>
-                      ))}
-                      {step.status === 'failed' && (
-                        <InternalDetail>
-                          <DescriptionContainer>
-                            <InfoCircleIcon color="error" />
-                            <Error variant="body2">Step failed</Error>
-                          </DescriptionContainer>
-                        </InternalDetail>
-                      )}
-                    </div>
-                  )}
-                </InternalDetailsContainer>
+                </Fee>
               </div>
-              {index + 1 === pendingSwap.steps.length && <ArrowDown />}
-              <StepDetail
-                logo={step.toLogo}
-                symbol={step.toSymbol}
-                // @ts-ignore
-                chainLogo={step.toBlockchainLogo}
-                blockchain={step.toBlockchain}
-                amount={step.outputAmount || ''}
-              />
-            </StepContainer>
-          ))}
-        </div>
+            </SwapperContainer>
+            <div
+              style={{
+                display: 'flex',
+              }}
+            >
+              <InternalDetailsContainer>
+                <Line />
+                {!!step.explorerUrl && (
+                  <div>
+                    {step.explorerUrl.map((item, index) => (
+                      <InternalDetail key={index}>
+                        <DescriptionContainer>
+                          <CheckCircleIcon color="success" />
+                          <Description variant="body2">
+                            {!item.description ? (
+                              <b>View transaction</b>
+                            ) : (
+                              <b>
+                                {item.description.substring(0, 1).toUpperCase()}
+                                {item.description.substring(1)}
+                              </b>
+                            )}
+                          </Description>
+                        </DescriptionContainer>
+                        <StyledAnchor
+                          href={item.url}
+                          target="_blank"
+                          rel="noreferrer"
+                          key={index}
+                        >
+                          TX-Link
+                        </StyledAnchor>
+                      </InternalDetail>
+                    ))}
+                    {step.status === 'failed' && (
+                      <InternalDetail>
+                        <DescriptionContainer>
+                          <InfoCircleIcon color="error" />
+                          <Error variant="body2">Step failed</Error>
+                        </DescriptionContainer>
+                      </InternalDetail>
+                    )}
+                  </div>
+                )}
+              </InternalDetailsContainer>
+            </div>
+            {index + 1 === pendingSwap.steps.length && <ArrowDown />}
+            <StepDetail
+              logo={step.toLogo}
+              symbol={step.toSymbol}
+              // @ts-ignore
+              chainLogo={step.toBlockchainLogo}
+              blockchain={step.toBlockchain}
+              amount={step.outputAmount || ''}
+            />
+          </StepContainer>
+        ))}
+
+        <Divider size={32} />
+
+        {pendingSwap?.status === 'running' && (
+          <Button
+            variant="outlined"
+            fullWidth
+            type="error"
+            onClick={setShowDrawer.bind(null, true)}
+          >
+            Cancel
+          </Button>
+        )}
+        {!!onRetry && (
+          <Button
+            variant="contained"
+            fullWidth
+            type="primary"
+            onClick={onRetry}
+          >
+            Try again
+          </Button>
+        )}
       </div>
       <Drawer
         onClose={setShowDrawer.bind(null, false)}
