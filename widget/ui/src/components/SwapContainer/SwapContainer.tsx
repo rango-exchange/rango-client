@@ -3,24 +3,18 @@ import React, { PropsWithChildren } from 'react';
 import { styled } from '../../theme';
 
 const MainContainer = styled('div', {
-  borderRadius: '$10',
-  maxWidth: '512px',
-  boxShadow: '$s',
-  minWidth: '375px',
-  width: '100%',
-  backgroundColor: '$background',
-  height: 'fit-content',
+  position: 'relative',
   display: 'flex',
   flexDirection: 'column',
-  alignItems: 'end',
+  borderRadius: '$10',
+  boxShadow: '$s',
+  width: '100%',
+  minWidth: '375px',
+  maxWidth: '512px',
+  maxHeight: '100%',
   padding: '$16',
   boxSizing: 'border-box',
-  position: 'relative',
-});
-
-const ContentContainer = styled('div', {
-  width: '100%',
-  // maxHeight: '600px',
+  backgroundColor: '$background',
 });
 
 export interface PropTypes {
@@ -32,7 +26,7 @@ export function SwapContainer(props: PropsWithChildren<PropTypes>) {
 
   return (
     <MainContainer style={style} id="swap-box">
-      <ContentContainer>{children}</ContentContainer>
+      {children}
     </MainContainer>
   );
 }

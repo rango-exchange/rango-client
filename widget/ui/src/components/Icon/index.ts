@@ -24,6 +24,7 @@ export { AngleDownIcon } from './AngleDownIcon';
 export { AngleLeftIcon } from './AngleLeftIcon';
 export { DownloadIcon } from './DownloadIcon';
 export { ChevronRightIcon } from './ChevronRightIcon';
+export { ArrowRightIcon } from './ArrowRightIcon';
 
 export { RetryRightIcon } from './RetryRightIcon';
 export { RetryLeftIcon } from './RetryLeftIcon';

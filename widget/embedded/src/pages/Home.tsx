@@ -5,10 +5,10 @@ import {
   styled,
   Typography,
   VerticalSwapIcon,
+  Header,
 } from '@rango-dev/ui';
 import React, { useState } from 'react';
 import { useInRouterContext, useNavigate } from 'react-router-dom';
-import { Header } from '../components/Header';
 import { TokenInfo } from '../components/TokenInfo';
 import { fetchBestRoute, useBestRouteStore } from '../store/bestRoute';
 import { BottomLogo } from '../components/BottomLogo';
@@ -34,6 +34,7 @@ import {
   totalArrivalTime,
 } from '../utils/numbers';
 import BigNumber from 'bignumber.js';
+import { HeaderButtons } from '../components/HeaderButtons';
 
 const Container = styled('div', {
   display: 'flex',
@@ -98,7 +99,7 @@ export function Home(props: PropTypes) {
     setToChain(fromChain);
     setToToken(fromToken);
     setInputAmount(outputAmount?.toString() || '');
-    setCount((prev) => prev + 1);
+    setCount(prev => prev + 1);
   };
 
   const errorMessage =
@@ -115,8 +116,9 @@ export function Home(props: PropTypes) {
 
   const highValueLoss = outputRatioHasWarning(inputUsdValue, outToInRatio);
 
-  const { fromAmountRangeError, recommendation, swap } =
-    LimitErrorMessage(bestRoute);
+  const { fromAmountRangeError, recommendation, swap } = LimitErrorMessage(
+    bestRoute
+  );
 
   const priceImpactCanNotBeComputed = !canComputePriceImpact(
     bestRoute,
@@ -146,9 +148,7 @@ export function Home(props: PropTypes) {
     <Container>
       <Header
         title={title}
-        titleSize={titleSize}
-        titleWeight={titleWeight}
-        onClickRefresh={fetchBestRoute}
+        suffix={<HeaderButtons onClickRefresh={fetchBestRoute} />}
       />
       <FromContainer>
         <TokenInfo
