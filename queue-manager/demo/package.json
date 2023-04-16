@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/queue-manager-demo",
-  "version": "0.1.11-next.81",
+  "version": "0.1.11-next.82",
   "license": "MIT",
   "private": true,
   "source": "public/index.html",
