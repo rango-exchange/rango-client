@@ -34,17 +34,19 @@ export function shadeColor(color: string, percent: number) {
   return '#' + RR + GG + BB;
 }
 
-
-export function debounce (fn, time) {
-  let timeoutId
-  return wrapper
-  function wrapper (...args) {
+export function debounce<T extends (...args: Parameters<T>) => ReturnType<T>>(
+  fn: T,
+  time: number
+) {
+  let timeoutId: ReturnType<typeof setTimeout> | null;
+  return wrapper;
+  function wrapper(...args: Parameters<T>) {
     if (timeoutId) {
-      clearTimeout(timeoutId)
+      clearTimeout(timeoutId);
     }
     timeoutId = setTimeout(() => {
-      timeoutId = null
-      fn(...args)
-    }, time)
+      timeoutId = null;
+      fn(...args);
+    }, time);
   }
 }
