@@ -79,7 +79,7 @@ export async function executeTransaction(
   */
   const needsToBlockQueue = isNeedBlockQueueForParallel(currentStep);
 
-  if (needsToBlockQueue && !isClaimed && context.claimedBy) {
+  if (needsToBlockQueue && !isClaimed) {
     const blockedFor = {
       reason: BlockReason.DEPENDS_ON_OTHER_QUEUES,
       description: 'Waiting for other swaps to complete',
