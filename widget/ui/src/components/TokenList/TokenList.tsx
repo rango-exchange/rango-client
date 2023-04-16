@@ -76,22 +76,20 @@ export function TokenList(props: PropTypes) {
   );
 
   return (
-    <div style={{ height: '450px' }}>
-      <VirtualizedList
-        Item={({ index, style }) => (
-          <TokenItem
-            token={tokens[index]}
-            style={style}
-            onClick={changeSelected}
-            selected={isSelected(tokens[index])}
-          />
-        )}
-        hasNextPage={hasNextPage}
-        itemCount={tokens.length}
-        loadNextPage={loadNextPage}
-        innerElementType={innerElementType}
-        size={56}
-      />
-    </div>
+    <VirtualizedList
+      Item={({ index, style }) => (
+        <TokenItem
+          token={tokens[index]}
+          style={style}
+          onClick={changeSelected}
+          selected={isSelected(tokens[index])}
+        />
+      )}
+      hasNextPage={hasNextPage}
+      itemCount={tokens.length}
+      loadNextPage={loadNextPage}
+      innerElementType={innerElementType}
+      size={56}
+    />
   );
 }

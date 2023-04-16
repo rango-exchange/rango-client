@@ -42,7 +42,7 @@ export function Wallet(props: PropTypes) {
   return (
     <ExtendedButton
       type={state === WalletState.CONNECTED ? 'primary' : undefined}
-      disabled={!state}
+      disabled={state == WalletState.CONNECTING}
       onClick={() => {
         if (state === WalletState.NOT_INSTALLED) {
           window.open(detectInstallLink(installLink), '_blank');

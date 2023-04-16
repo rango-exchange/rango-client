@@ -1,10 +1,16 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { navigationRoutes } from '../constants/navigationRoutes';
 import useCopyToClipboard from '../hooks/useCopyToClipboard';
 import { useManager } from '@rango-dev/queue-manager-react';
 import { useNavigateBack } from '../hooks/useNavigateBack';
 import { getPendingSwaps } from '../utils/queue';
-import { SwapHistory } from '@rango-dev/ui';
+import {
+  SecondaryPage,
+  Spinner,
+  SwapHistory,
+  Alert,
+  styled,
+} from '@rango-dev/ui';
 import { useUiStore } from '../store/ui';
 import {
   cancelSwap,
@@ -29,6 +35,9 @@ import { TokenPreview } from '../components/TokenPreview';
 import { Spacer } from '@rango-dev/ui';
 import { numberToString } from '../utils/numbers';
 import { t } from 'i18next';
+import { LoaderContainer } from './WalletsPage';
+
+const PlaceholderContainer = styled('div', { height: '450px' });
 
 export function SwapDetailsPage() {
   const selectedSwapRequestId = useUiStore.use.selectedSwapRequestId();
@@ -39,6 +48,14 @@ export function SwapDetailsPage() {
   const [isCopied, handleCopy] = useCopyToClipboard(2000);
   const { manager } = useManager();
 
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setLoading(false);
+    }, 5000);
+  }, []);
+
   const pendingSwaps = getPendingSwaps(manager);
   const selectedSwap = pendingSwaps.find(
     ({ swap }) => swap.requestId === selectedSwapRequestId
@@ -48,9 +65,29 @@ export function SwapDetailsPage() {
     const swap = manager?.get(selectedSwap?.id!);
     if (swap) cancelSwap(swap);
   };
-
   const swap = selectedSwap?.swap;
-  if (!swap) return null;
+
+  const SwapDetailsPlaceholder = () => (
+    <SecondaryPage
+      title="Swap Details"
+      textField={false}
+      onBack={navigateBackFrom.bind(null, navigationRoutes.swapDetails)}
+    >
+      <PlaceholderContainer>
+        {loading ? (
+          <LoaderContainer>
+            <Spinner size={24} />
+          </LoaderContainer>
+        ) : (
+          <Alert
+            type="secondary"
+            title={`Swap with request ID = ${selectedSwapRequestId} not found.`}
+          />
+        )}
+      </PlaceholderContainer>
+    </SecondaryPage>
+  );
+  if (!swap) return <SwapDetailsPlaceholder />;
 
   const firstStep = swap.steps[0];
   const lastStep = swap.steps[swap.steps.length - 1];
@@ -84,9 +121,8 @@ export function SwapDetailsPage() {
       ? connect.bind(null, currentStepWallet.walletType, currentStepBlockchain)
       : undefined;
 
-  const lastConvertedTokenInFailedSwap = getLastConvertedTokenInFailedSwap(
-    swap
-  );
+  const lastConvertedTokenInFailedSwap =
+    getLastConvertedTokenInFailedSwap(swap);
 
   return (
     <SwapHistory

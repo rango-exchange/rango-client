@@ -18,3 +18,5 @@ export interface LiquiditySource {
   type: 'BRIDGE' | 'AGGREGATOR' | 'DEX';
   selected: boolean;
 }
+
+export type LoadingStatus = 'loading' | 'success' | 'failed';

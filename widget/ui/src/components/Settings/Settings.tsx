@@ -4,10 +4,11 @@ import { AngleRightIcon } from '../Icon';
 import { SecondaryPage } from '../SecondaryPage/SecondaryPage';
 import { Typography } from '../Typography';
 import { Chip } from '../Chip';
-import { LiquiditySource } from '../../types/meta';
+import { LiquiditySource, LoadingStatus } from '../../types/meta';
 import { TextField } from '../TextField';
 import { Radio } from '../Radio';
 import { Switch } from '../Switch';
+import { Button } from '../Button';
 
 const BaseContainer = styled('div', {
   borderRadius: '$5',
@@ -71,6 +72,7 @@ export interface PropTypes {
   onBack: () => void;
   infiniteApprove: boolean;
   toggleInfiniteApprove: (infinite: boolean) => void;
+  loadingStatus: LoadingStatus;
 }
 
 export function Settings(props: PropTypes) {
@@ -89,6 +91,7 @@ export function Settings(props: PropTypes) {
     onThemeChange,
     toggleInfiniteApprove,
     infiniteApprove,
+    loadingStatus,
   } = props;
 
   const [selectedSlippage, setSelectedSlippage] = useState(
@@ -167,16 +170,32 @@ export function Settings(props: PropTypes) {
         <Typography variant="body1">Infinite Approval</Typography>
         <Switch checked={infiniteApprove} onChange={toggleInfiniteApprove} />
       </InfiniteContainer>
-      <LiquiditySourceContainer onClick={onLiquiditySourcesClick}>
-        <Typography variant="body1">Liquidity Sources</Typography>
-        <LiquiditySourceNumber>
-          <Typography variant="body2" color="neutrals800">
-            {liquiditySources.length !== selectedLiquiditySources.length
-              ? `${selectedLiquiditySources.length} / ${liquiditySources.length}`
-              : liquiditySources.length}
-          </Typography>
-          <StyledAngleRight />
-        </LiquiditySourceNumber>
+      <LiquiditySourceContainer>
+        <Button
+          onClick={onLiquiditySourcesClick}
+          align="start"
+          variant="ghost"
+          loading={loadingStatus === 'loading'}
+          suffix={
+            <LiquiditySourceNumber>
+              {loadingStatus === 'success' && (
+                <Typography variant="body2" color="neutrals800">
+                  {liquiditySources.length !== selectedLiquiditySources.length
+                    ? `${selectedLiquiditySources.length} / ${liquiditySources.length}`
+                    : liquiditySources.length}
+                </Typography>
+              )}
+              {loadingStatus === 'failed' && (
+                <Typography variant="body2" color="$error500">
+                  Loading failed
+                </Typography>
+              )}
+              <StyledAngleRight />
+            </LiquiditySourceNumber>
+          }
+        >
+          <Typography variant="body1">Liquidity Sources</Typography>
+        </Button>
       </LiquiditySourceContainer>
     </>
   );

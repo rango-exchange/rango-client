@@ -188,3 +188,6 @@ useWalletsStore.subscribe(
     equalityFn: shallow,
   }
 );
+
+export const fetchingBalanceSelector = (state: WalletsStore) =>
+  !!state.balances.find((wallet) => wallet.loading);

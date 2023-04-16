@@ -15,6 +15,9 @@ import { useUiStore } from '../store/ui';
 import { useNavigateBack } from '../hooks/useNavigateBack';
 import { navigationRoutes } from '../constants/navigationRoutes';
 import { useTranslation } from 'react-i18next';
+import { useMetaStore } from '../store/meta';
+import { Spinner } from '@rango-dev/ui';
+import { LoadingFailedAlert } from '@rango-dev/ui';
 
 interface PropTypes {
   supportedWallets: 'all' | WalletType[];
@@ -28,6 +31,14 @@ const ListContainer = styled('div', {
   height: '450px',
   alignContent: 'baseline',
   padding: '0.5rem',
+});
+
+export const LoaderContainer = styled('div', {
+  display: 'flex',
+  justifyContent: 'center',
+  width: '100%',
+  position: 'absolute',
+  top: '50%',
 });
 
 const AlertContainer = styled('div', {
@@ -50,6 +61,7 @@ export function WalletsPage({ supportedWallets, multiWallets }: PropTypes) {
   const [walletErrorMessage, setWalletErrorMessage] = useState('');
   const toggleConnectWalletsButton =
     useUiStore.use.toggleConnectWalletsButton();
+  const loadingMetaStatus = useMetaStore.use.loadingStatus();
   const { t } = useTranslation();
 
   const onSelectWallet = async (type: WalletType) => {
@@ -104,14 +116,21 @@ export function WalletsPage({ supportedWallets, multiWallets }: PropTypes) {
             <Alert type="error">{walletErrorMessage}</Alert>
           </AlertContainer>
         )}
+        {loadingMetaStatus === 'loading' && (
+          <LoaderContainer className="loader">
+            <Spinner size={24} />
+          </LoaderContainer>
+        )}
+        {loadingMetaStatus === 'failed' && <LoadingFailedAlert />}
         <ListContainer>
-          {sortedWallets.map((wallet, index) => (
-            <Wallet
-              {...wallet}
-              key={`${index}-${wallet.type}`}
-              onClick={onSelectWallet}
-            />
-          ))}
+          {loadingMetaStatus === 'success' &&
+            sortedWallets.map((wallet, index) => (
+              <Wallet
+                {...wallet}
+                key={`${index}-${wallet.type}`}
+                onClick={onSelectWallet}
+              />
+            ))}
         </ListContainer>
       </>
     </SecondaryPage>

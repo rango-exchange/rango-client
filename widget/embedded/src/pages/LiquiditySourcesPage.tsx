@@ -11,6 +11,7 @@ interface PropTypes {
 }
 export function LiquiditySourcePage({ supportedSwappers }: PropTypes) {
   const swappers = useMetaStore.use.meta().swappers;
+  const loadingMetaStatus = useMetaStore.use.loadingStatus();
   const toggleLiquiditySource = useSettingsStore.use.toggleLiquiditySource();
   const disabledLiquiditySources =
     useSettingsStore.use.disabledLiquiditySources();
@@ -59,6 +60,7 @@ export function LiquiditySourcePage({ supportedSwappers }: PropTypes) {
         toggleLiquiditySource(liquiditySource.title)
       }
       onBack={navigateBackFrom.bind(null, navigationRoutes.liquiditySources)}
+      loadingStatus={loadingMetaStatus}
     />
   );
 }
