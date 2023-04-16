@@ -9,11 +9,14 @@ import {
 } from '@rango-dev/ui';
 import { useNavigate } from 'react-router-dom';
 import { navigationRoutes } from '../constants/navigationRoutes';
-import { PropTypes } from './Header';
 
 const ButtonsContainer = styled('div', {
   display: 'flex',
 });
+
+interface PropTypes {
+  onClickRefresh: () => void;
+}
 
 export function HeaderButtons(props: PropTypes) {
   const { onClickRefresh } = props;

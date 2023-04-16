@@ -68,7 +68,7 @@ interface PropTypes {
   titleWeight?: number;
 }
 export function Home(props: PropTypes) {
-  const { title = 'SWAP', titleSize = 18, titleWeight = 600 } = props;
+  const { title = 'SWAP' } = props;
 
   const isRouterInContext = useInRouterContext();
   const navigate = useNavigate();
