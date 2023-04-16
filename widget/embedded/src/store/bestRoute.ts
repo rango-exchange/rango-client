@@ -21,7 +21,7 @@ import {
 import { useWalletsStore } from './wallets';
 import { TokenWithBalance } from '../pages/SelectTokenPage';
 import { PendingSwap } from '@rango-dev/queue-manager-rango-preset/dist/shared';
-import { debounce } from 'lodash';
+import { debounce } from '../utils/common';
 const getUsdValue = (token: Token | null, amount: string) =>
   new BigNumber(amount || ZERO).multipliedBy(token?.usdPrice || 0);
 
