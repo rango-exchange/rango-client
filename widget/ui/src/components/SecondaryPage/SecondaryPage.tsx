@@ -26,7 +26,6 @@ export type PropTypes = (
 const ContentContainer = styled('div', {
   overflowY: 'auto',
   overflowX: 'hidden',
-  paddingTop: '$16',
 });
 
 export function SecondaryPage(props: PropTypes) {

@@ -11,11 +11,11 @@ const groupLiquiditySources = (
   liquiditySources: LiquiditySource[]
 ): { [key in 'bridge' | 'exchange']: LiquiditySource[] } => ({
   bridge: liquiditySources.filter(
-    (liquiditySource) =>
+    liquiditySource =>
       liquiditySource.type === 'BRIDGE' || liquiditySource.type === 'AGGREGATOR'
   ),
   exchange: liquiditySources.filter(
-    (liquiditySource) => liquiditySource.type === 'DEX'
+    liquiditySource => liquiditySource.type === 'DEX'
   ),
 });
 
@@ -25,8 +25,6 @@ const LiquiditySourceType = styled('div', {
   justifyContent: 'space-between',
   alignItems: 'center',
   top: '0',
-  marginTop: '$8',
-  marginBottom: '$8',
   backgroundColor: '$background',
   zIndex: '9999',
   paddingTop: '$8',
@@ -48,24 +46,22 @@ export interface PropTypes {
 export function LiquiditySourceList(props: PropTypes) {
   const { list, onChange, listContainerStyle } = props;
 
-  const [selected, setSelected] = useState(
-    list.filter((item) => item.selected)
-  );
+  const [selected, setSelected] = useState(list.filter(item => item.selected));
 
   const changeLiquiditySources = (clickedItem: LiquiditySource) => {
     clickedItem.selected = !clickedItem.selected;
-    setSelected((prevState) => {
+    setSelected(prevState => {
       if (clickedItem.selected) return [...prevState, clickedItem];
-      return prevState.filter((item) => item.title != clickedItem.title);
+      return prevState.filter(item => item.title != clickedItem.title);
     });
     onChange(clickedItem);
   };
 
   const isSelected = (liquiditySource: LiquiditySource) =>
-    !!selected.find((item) => liquiditySource.title === item.title);
+    !!selected.find(item => liquiditySource.title === item.title);
 
   useEffect(() => {
-    setSelected(list.filter((item) => item.selected));
+    setSelected(list.filter(item => item.selected));
   }, [list]);
 
   const sections = groupLiquiditySources(list);
@@ -79,7 +75,7 @@ export function LiquiditySourceList(props: PropTypes) {
   const totalSelectedExchanges = exchanges.filter(isSelected).length;
 
   return (
-    <div style={{ height: '450px', ...listContainerStyle }}>
+    <div style={listContainerStyle}>
       <div>
         <LiquiditySourceType>
           <Typography variant="h5">Bridges</Typography>
