@@ -4,6 +4,7 @@ import { styled } from '../../theme';
 import { Button } from '../Button';
 import { ArrowRightIcon } from '../Icon';
 import { Spacer } from '../Spacer';
+import { Spinner } from '../Spinner';
 import { Token } from './Token';
 
 const Container = styled('div', {
@@ -25,90 +26,21 @@ const Container = styled('div', {
     fontSize: '$12',
   },
 
-  '.status.failed': {
+  '&.running': {
+    color: '$foreground',
+  },
+  '&.failed,&.success': {
+    color: '$neutrals600',
+  },
+
+  '&.failed .status': {
     color: '$error',
   },
-  '.status.success': {
+  '&.success .status': {
     color: '$success',
   },
 });
 
-const ButtonContainer = styled('div', {
-  paddingTop: '$8',
-});
-
-const SwapContainer = styled('div', {
-  display: 'flex',
-  justifyContent: 'space-between',
-  '@md': {
-    padding: '$12',
-  },
-  '&:hover': {
-    borderColor: '$primary',
-  },
-
-  variants: {
-    status: {
-      failed: {
-        borderColor: '$error',
-      },
-      running: {
-        borderColor: '$neutrals400',
-      },
-      success: {
-        borderColor: '$success',
-      },
-    },
-  },
-});
-const Arrow = styled('div', {
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-});
-const Line = styled('div', {
-  height: '0',
-  width: '$20',
-  border: '1px dashed $foreground',
-  borderRadius: 'inherit',
-  '@md': {
-    width: '$36',
-  },
-  '@lg': {
-    width: '$48',
-  },
-});
-const Dot = styled('div', {
-  width: '$6',
-  height: '$6',
-  backgroundColor: '$foreground',
-  borderRadius: '50%',
-  '@lg': {
-    width: '$8',
-    height: '$8',
-  },
-});
-const ArrowRight = styled('div', {
-  width: '0px',
-  height: '0px',
-  borderTop: '5px solid transparent',
-  borderBottom: '5px solid transparent',
-  borderLeft: '5px solid $foreground',
-});
-const StatusContainer = styled('div', {
-  position: 'absolute',
-  right: '-8px',
-  top: '30%',
-  background: '$background',
-  borderRadius: '50%',
-  display: 'flex',
-  justifyContent: 'center',
-
-  '@md': {
-    top: '40%',
-    right: '-8px',
-  },
-});
 export interface PropTypes {
   swap: PendingSwap;
   status: 'running' | 'failed' | 'success';
@@ -130,7 +62,7 @@ export function SwapDetail({
       fullWidth
       onClick={onClick.bind(null, swap.requestId)}
     >
-      <Container>
+      <Container className={`${status}`}>
         <div className="info">
           <Token
             data={{
@@ -165,7 +97,13 @@ export function SwapDetail({
             }}
           />
         </div>
-        <div className={`status ${status}`}>{status}</div>
+        <div className={`status`}>
+          {status === 'running' ? (
+            <Spinner size={24} color="primary" />
+          ) : (
+            status
+          )}
+        </div>
       </Container>
     </Button>
   );
