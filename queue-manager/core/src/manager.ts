@@ -206,7 +206,6 @@ class Manager {
       });
 
       if (q.status === Status.RUNNING && this.shouldExecute()) {
-        console.log('[INIT] Try to resume');
         list.resume({
           context: this.getContext(),
         });
@@ -426,7 +425,6 @@ class Manager {
 
     // adding initial tasks
     def.run.forEach((action) => {
-      console.log('action', action);
       list.createTask(action);
     });
 
@@ -465,12 +463,9 @@ class Manager {
 
     for (const [, q] of Array.from(this.queues)) {
       if (q.status === Status.PENDING) {
-        console.log('There is a pending queue. Run it.');
         q.actions.run();
       }
     }
-
-    console.log('There is no pending queue.');
   }
 
   /**
@@ -487,7 +482,6 @@ class Manager {
 
     for (const [, q] of Array.from(this.queues)) {
       if (q.status === Status.RUNNING) {
-        console.log("Found a running queue. Let's resume the queue.", q);
         q.list.resume({
           context: this.getContext(),
         });
@@ -517,10 +511,6 @@ class Manager {
 
     for (const [, q] of Array.from(this.queues)) {
       if (q.status === Status.BLOCKED) {
-        console.log(
-          `[Retry] Found: ${q.list.id}, Running onBlock callback.`,
-          q
-        );
         q.list.checkBlock();
       }
     }
@@ -609,9 +599,6 @@ class Manager {
   }
 
   private shouldExecute() {
-    console.log('[shouldExecute] checking and result is:', {
-      isPaused: this.isPaused,
-    });
     return !this.isPaused;
   }
 }

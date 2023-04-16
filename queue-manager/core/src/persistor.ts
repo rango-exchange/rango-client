@@ -31,20 +31,16 @@ class Persistor {
     const db = await this.db;
     const queueRecord = await db.get(OBJECT_STORE_NAME, queue.id);
     if (queueRecord) {
-      console.log('[Persistor] Queue already exists inside persistor.');
+      // Queue already exists inside persistor.
     } else {
       await db.add(OBJECT_STORE_NAME, queue);
-      console.log('[Persistor] Queue added to IndexedDB successfully.');
     }
   }
   async updateQueue(id: QueueID, queue: UpdatePersistedQueue) {
     const db = await this.db;
     const currentRecord = await db.get(OBJECT_STORE_NAME, id);
 
-    if (!currentRecord) {
-      console.log("[Persistor] Requested queue for update doesn't exist.");
-      return;
-    }
+    if (!currentRecord) return;
 
     const updatedRecord = {
       ...currentRecord,
