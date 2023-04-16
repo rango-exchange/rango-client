@@ -746,6 +746,8 @@ export function onDependsOnOtherQueues(
   const claimerId = claimedBy();
   const isClaimedByAnyQueue = !!claimerId;
 
+  if (claimerId === queue.id) return;
+
   // Check if any queue `claimed` before, if yes, we don't should do anything.
   if (isClaimedByAnyQueue) {
     // We need to keep the latest swap messages
@@ -781,7 +783,7 @@ export function onDependsOnOtherQueues(
     resetClaimedBy: () => {
       reset();
       // TODO: Use key generator
-      retryOn(`${type}-${network}-${address}`, context.notifier, manager);
+      retryOn(`${type}-${network}:${address}`, context.notifier, manager);
     },
   });
 }
