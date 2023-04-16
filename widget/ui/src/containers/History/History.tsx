@@ -6,16 +6,7 @@ import { Typography } from '../../components/Typography';
 import { containsText } from '../../helper';
 import { styled } from '../../theme';
 import { PendingSwap } from './types';
-
-const BodyError = styled('div', {
-  height: '100%',
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-});
-const ErrorMsg = styled(Typography, {
-  color: '$error',
-});
+import { NotFoundAlert } from '../../components/Alert/NotFoundAlert';
 
 const Group = styled('div', {
   '.group-title': {
@@ -23,11 +14,14 @@ const Group = styled('div', {
   },
 });
 
+const Container = styled('div', {
+  height: '450px',
+});
 const filteredHistory = (
   list: PendingSwap[],
   searchedFor: string
 ): PendingSwap[] => {
-  return list.filter(swap => {
+  return list.filter((swap) => {
     const firstStep = swap.steps[0];
     const lastStep = swap.steps[swap.steps.length - 1];
     return (
@@ -40,9 +34,7 @@ const filteredHistory = (
   });
 };
 
-export type GroupBy = (
-  list: PendingSwap[]
-) => {
+export type GroupBy = (list: PendingSwap[]) => {
   title: string;
   swaps: PendingSwap[];
 }[];
@@ -59,7 +51,7 @@ const SwapsGroup = (props: Omit<PropTypes, 'onBack'>) => {
   return (
     <>
       {groups
-        .filter(group => group.swaps.length > 0)
+        .filter((group) => group.swaps.length > 0)
         .map((group, index) => (
           <>
             <Group key={index}>
@@ -99,21 +91,23 @@ export function History({
     <SecondaryPage
       onBack={onBack}
       textField={true}
-      textFieldPlaceholder="Search By Blockchain Or Token"
+      textFieldPlaceholder="Search By Blockchain Or Token Or Request ID"
       title="Swaps"
     >
-      {searchedFor => {
+      {(searchedFor) => {
         const filterSwaps = filteredHistory(list, searchedFor);
-        return filterSwaps.length ? (
-          <SwapsGroup
-            list={filterSwaps}
-            onSwapClick={onSwapClick}
-            groupBy={groupBy}
-          />
-        ) : (
-          <BodyError>
-            <ErrorMsg variant="caption">Not Found</ErrorMsg>
-          </BodyError>
+        return (
+          <Container>
+            {filterSwaps.length ? (
+              <SwapsGroup
+                list={filterSwaps}
+                onSwapClick={onSwapClick}
+                groupBy={groupBy}
+              />
+            ) : (
+              <NotFoundAlert catergory="Swap" />
+            )}
+          </Container>
         );
       }}
     </SecondaryPage>

@@ -1,11 +1,14 @@
 import { CSSProperties } from '@stitches/react';
 import React, { useEffect, useState } from 'react';
 import { styled } from '../../theme';
-import { LiquiditySource } from '../../types/meta';
+import { LiquiditySource, LoadingStatus } from '../../types/meta';
 import { Button } from '../Button/Button';
 import { Spacer } from '../Spacer';
 import { Switch } from '../Switch';
 import { Typography } from '../Typography';
+import { Spinner } from '../Spinner';
+import { LoadingFailedAlert } from '../Alert/LoadingFailedAlert';
+import { NotFoundAlert } from '../Alert/NotFoundAlert';
 
 const groupLiquiditySources = (
   liquiditySources: LiquiditySource[]
@@ -37,14 +40,22 @@ const LiquidityImage = styled('img', {
   marginRight: '$16',
 });
 
+const LoaderContainer = styled('div', {
+  display: 'flex',
+  justifyContent: 'center',
+});
+
 export interface PropTypes {
   list: LiquiditySource[];
   onChange: (liquiditySource: LiquiditySource) => void;
   listContainerStyle?: CSSProperties;
+  loadingStatus: LoadingStatus;
+  searchedFor: string;
 }
 
 export function LiquiditySourceList(props: PropTypes) {
-  const { list, onChange, listContainerStyle } = props;
+  const { list, onChange, listContainerStyle, loadingStatus, searchedFor } =
+    props;
 
   const [selected, setSelected] = useState(list.filter(item => item.selected));
 
@@ -86,14 +97,28 @@ export function LiquiditySourceList(props: PropTypes) {
           </Typography>
         </LiquiditySourceType>
         <Spacer size={12} direction="vertical" />
-        {bridges.map((liquiditySource, index) => (
-          <LiquiditySourceItem
-            liquiditySource={liquiditySource}
-            key={index}
-            selected={isSelected(liquiditySource)}
-            onChange={changeLiquiditySources}
-          />
-        ))}
+        {loadingStatus === 'loading' && (
+          <LoaderContainer>
+            <Spinner size={24} />
+          </LoaderContainer>
+        )}
+        {loadingStatus === 'failed' && <LoadingFailedAlert />}
+        {loadingStatus === 'success' && (
+          <>
+            {bridges.length ? (
+              bridges.map((liquiditySource, index) => (
+                <LiquiditySourceItem
+                  liquiditySource={liquiditySource}
+                  key={index}
+                  selected={isSelected(liquiditySource)}
+                  onChange={changeLiquiditySources}
+                />
+              ))
+            ) : (
+              <NotFoundAlert catergory="Bridge" searchedFor={searchedFor} />
+            )}
+          </>
+        )}
       </div>
       <div>
         <LiquiditySourceType>
@@ -105,14 +130,28 @@ export function LiquiditySourceList(props: PropTypes) {
           </Typography>
         </LiquiditySourceType>
         <Spacer size={12} direction="vertical" />
-        {exchanges.map((liquiditySource, index) => (
-          <LiquiditySourceItem
-            liquiditySource={liquiditySource}
-            key={index}
-            selected={isSelected(liquiditySource)}
-            onChange={changeLiquiditySources}
-          />
-        ))}
+        {loadingStatus === 'loading' && (
+          <LoaderContainer>
+            <Spinner size={24} />
+          </LoaderContainer>
+        )}
+        {loadingStatus === 'failed' && <LoadingFailedAlert />}
+        {loadingStatus == 'success' && (
+          <>
+            {exchanges.length ? (
+              exchanges.map((liquiditySource, index) => (
+                <LiquiditySourceItem
+                  liquiditySource={liquiditySource}
+                  key={index}
+                  selected={isSelected(liquiditySource)}
+                  onChange={changeLiquiditySources}
+                />
+              ))
+            ) : (
+              <NotFoundAlert catergory="Exchange" searchedFor={searchedFor} />
+            )}
+          </>
+        )}
       </div>
     </div>
   );

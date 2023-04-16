@@ -3,7 +3,23 @@ import { containsText } from '../../helper';
 import { SecondaryPage } from '../SecondaryPage/SecondaryPage';
 import { TokenList } from '../TokenList';
 import { TokenWithAmount } from '../TokenList/TokenList';
+import { LoadingStatus } from '../../types/meta';
+import { Spinner } from '../Spinner';
+import { LoadingFailedAlert } from '../Alert/LoadingFailedAlert';
+import { NotFoundAlert } from '../Alert/NotFoundAlert';
+import { styled } from '../../theme';
 
+const Container = styled('div', {
+  height: '450px',
+});
+
+export const LoaderContainer = styled('div', {
+  display: 'flex',
+  justifyContent: 'center',
+  width: '100%',
+  position: 'absolute',
+  top: '50%',
+});
 export interface PropTypes {
   list: TokenWithAmount[];
   type?: 'Source' | 'Destination';
@@ -13,6 +29,7 @@ export interface PropTypes {
   multiSelect?: boolean;
   onBack?: () => void;
   selectedList?: TokenWithAmount[] | 'all';
+  loadingStatus: LoadingStatus;
 }
 
 const filterTokens = (list: TokenWithAmount[], searchedFor: string) =>
@@ -33,6 +50,7 @@ export function TokenSelector(props: PropTypes) {
     multiSelect,
     selectedList,
     onBack,
+    loadingStatus,
   } = props;
 
   return (
@@ -43,16 +61,35 @@ export function TokenSelector(props: PropTypes) {
       hasHeader={hasHeader}
       onBack={onBack}
     >
-      {(searchedFor) => (
-        <TokenList
-          searchedText={searchedFor}
-          list={filterTokens(list, searchedFor)}
-          selected={selected}
-          selectedList={selectedList}
-          multiSelect={multiSelect}
-          onChange={onChange}
-        />
-      )}
+      {(searchedFor) => {
+        const filteredTokens = filterTokens(list, searchedFor);
+        return (
+          <Container>
+            {loadingStatus === 'loading' && (
+              <LoaderContainer>
+                <Spinner size={24} />
+              </LoaderContainer>
+            )}
+            {loadingStatus === 'failed' && <LoadingFailedAlert />}
+            {loadingStatus === 'success' && (
+              <>
+                {filteredTokens.length ? (
+                  <TokenList
+                    searchedText={searchedFor}
+                    list={filteredTokens}
+                    selected={selected}
+                    selectedList={selectedList}
+                    multiSelect={multiSelect}
+                    onChange={onChange}
+                  />
+                ) : (
+                  <NotFoundAlert catergory="Token" searchedFor={searchedFor} />
+                )}
+              </>
+            )}
+          </Container>
+        );
+      }}
     </SecondaryPage>
   );
 }

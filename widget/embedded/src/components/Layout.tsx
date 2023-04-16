@@ -1,11 +1,17 @@
-import { Button, AddWalletIcon, Typography, styled } from '@rango-dev/ui';
+import {
+  Button,
+  AddWalletIcon,
+  Typography,
+  styled,
+  Spinner,
+} from '@rango-dev/ui';
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useWallets } from '@rango-dev/wallets-core';
 import { navigationRoutes } from '../constants/navigationRoutes';
 import { useUiStore } from '../store/ui';
 import { AppRoutes } from './AppRoutes';
-import { useWalletsStore } from '../store/wallets';
+import { fetchingBalanceSelector, useWalletsStore } from '../store/wallets';
 import {
   calculateWalletUsdValue,
   getSelectableWallets,
@@ -14,11 +20,15 @@ import { removeDuplicateFrom } from '../utils/common';
 import { Configs } from '../types';
 import { useTranslation } from 'react-i18next';
 import { useBestRouteStore } from '../store/bestRoute';
+import { useMetaStore } from '../store/meta';
 
 const Header = styled('div', {
   display: 'flex',
   width: '100%',
   justifyContent: 'end',
+  '.balance': {
+    display: 'flex',
+  },
 });
 
 const WalletImage = styled('img', {
@@ -52,6 +62,9 @@ export function Layout({ configs }: LayoutProps) {
   const totalBalance = calculateWalletUsdValue(balances);
   const connectWalletsButtonDisabled =
     useUiStore.use.connectWalletsButtonDisabled();
+  const loadingMetaStatus = useMetaStore.use.loadingStatus();
+  const fetchingBalance = useWalletsStore(fetchingBalanceSelector);
+
   const { t } = useTranslation();
   useEffect(() => {
     setToChain(configs?.toChain || null);
@@ -77,7 +90,6 @@ export function Layout({ configs }: LayoutProps) {
     configs?.fromTokens,
     configs?.toTokens,
   ]);
-
   return (
     <>
       <Header>
@@ -86,6 +98,8 @@ export function Layout({ configs }: LayoutProps) {
           suffix={<AddWalletIcon size={20} />}
           variant="ghost"
           flexContent
+          loading={loadingMetaStatus === 'loading'}
+          disabled={loadingMetaStatus === 'failed'}
           onClick={() => {
             if (!connectWalletsButtonDisabled)
               navigate(navigationRoutes.wallets);
@@ -98,9 +112,14 @@ export function Layout({ configs }: LayoutProps) {
           ) : (
             <></>
           )}
-          <Typography variant="body2">
-            {!accounts?.length ? t('Connect Wallet') : `$${totalBalance || 0}`}
-          </Typography>
+          <div className="balance">
+            <Typography variant="body2">
+              {!fetchingBalance && !accounts?.length
+                ? t('Connect Wallet')
+                : `$${totalBalance || 0}`}
+            </Typography>
+            {fetchingBalance && <Spinner />}
+          </div>
         </Button>
       </Header>
       <AppRoutes configs={configs} />
