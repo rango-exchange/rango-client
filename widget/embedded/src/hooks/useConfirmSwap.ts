@@ -93,6 +93,7 @@ export function useConfirmSwap(): ConfirmSwap {
           meta
         );
 
+        //@ts-ignore
         return newSwap;
       }
       return;
@@ -228,7 +229,7 @@ export function useConfirmSwap(): ConfirmSwap {
           false,
           meta
         );
-
+        //@ts-ignore
         return newSwap;
       } else if (!proceedAnywayRef.current) {
         proceedAnywayRef.current = true;

@@ -345,25 +345,24 @@ export function hasSlippageError(
 
 export function getMinRequiredSlippage(
   route: BestRouteResponse
-): number | null {
+): string | null {
   const slippages = route.result?.swaps.map(
     (slippage) => slippage.recommendedSlippage
   );
   return (
     slippages
-      ?.map((s) => s?.slippage || 0)
-      ?.filter((s) => s > 0)
-      ?.sort((a, b) => b - a)
+      ?.map((s) => s?.slippage || '0')
+      ?.filter((s) => parseFloat(s) > 0)
+      ?.sort((a, b) => parseFloat(b) - parseFloat(a))
       ?.find(() => true) || null
   );
 }
 
 export function hasProperSlippage(
   userSlippage: string,
-  minRequiredSlippage: number | null
+  minRequiredSlippage: string | null
 ) {
   if (!minRequiredSlippage) return true;
-  //@ts-ignore
   return parseFloat(userSlippage) >= parseFloat(minRequiredSlippage);
 }
 
@@ -392,7 +391,7 @@ export function hasEnoughBalanceAndProperSlippage(
   route: BestRouteResponse,
   selectedWallets: SelectedWallet[],
   userSlippage: string,
-  minRequiredSlippage: number | null
+  minRequiredSlippage: string | null
 ): boolean {
   return (
     hasEnoughBalance(route, selectedWallets) &&
