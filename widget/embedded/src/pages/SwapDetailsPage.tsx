@@ -75,8 +75,9 @@ export function SwapDetailsPage() {
       ? connect.bind(null, currentStepWallet.walletType, currentStepBlockchain)
       : undefined;
 
-  const lastConvertedTokenInFailedSwap =
-    getLastConvertedTokenInFailedSwap(swap);
+  const lastConvertedTokenInFailedSwap = getLastConvertedTokenInFailedSwap(
+    swap
+  );
 
   return (
     <SwapHistory
@@ -106,7 +107,7 @@ export function SwapDetailsPage() {
       {...(lastConvertedTokenInFailedSwap && {
         lastConvertedTokenInFailedSwap: {
           blockchain: lastConvertedTokenInFailedSwap.blockchain,
-          outputAmount: lastConvertedTokenInFailedSwap.outputAmount,
+          outputAmount: lastConvertedTokenInFailedSwap.outputAmount || '',
           symbol: lastConvertedTokenInFailedSwap.symbol,
         },
       })}

@@ -1,20 +1,13 @@
 import {
   CosmosTransaction,
   EvmTransaction,
-  SimulationResult,
   SolanaTransaction,
   SwapExplorerUrl,
   SwapperStatusStep,
   Transfer,
 } from 'rango-sdk';
-import {
-  MessageSeverity,
-  PendingSwapNetworkStatus,
-  StepStatus,
-  SwapSavedSettings,
-  SwapStatus,
-  WalletTypeAndAddress,
-} from '../../types/swaps';
+import { PendingSwapNetworkStatus, StepStatus } from '../../types/swaps';
+export { PendingSwap } from '@rango-dev/queue-manager-rango-preset';
 
 export type PendingSwapStep = {
   id: number;
@@ -51,25 +44,4 @@ export type PendingSwapStep = {
   solanaTransaction: SolanaTransaction | null;
   diagnosisUrl: string | null;
   internalSteps: SwapperStatusStep[] | null;
-};
-
-export type PendingSwap = {
-  creationTime: string;
-  finishTime: string | null;
-  requestId: string;
-  inputAmount: string;
-  status: SwapStatus;
-  isPaused: boolean;
-  extraMessage: string | null;
-  extraMessageSeverity: MessageSeverity | null;
-  extraMessageErrorCode: string | null;
-  extraMessageDetail: string | null | undefined;
-  networkStatusExtraMessage: string | null;
-  networkStatusExtraMessageDetail: string | null;
-  lastNotificationTime: string | null;
-  wallets: { [p: string]: WalletTypeAndAddress };
-  settings: SwapSavedSettings;
-  steps: PendingSwapStep[];
-  simulationResult: SimulationResult;
-  validateBalanceOrFee: boolean;
 };
