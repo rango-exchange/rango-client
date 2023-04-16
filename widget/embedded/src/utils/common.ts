@@ -33,3 +33,18 @@ export function shadeColor(color: string, percent: number) {
 
   return '#' + RR + GG + BB;
 }
+
+
+export function debounce (fn, time) {
+  let timeoutId
+  return wrapper
+  function wrapper (...args) {
+    if (timeoutId) {
+      clearTimeout(timeoutId)
+    }
+    timeoutId = setTimeout(() => {
+      timeoutId = null
+      fn(...args)
+    }, time)
+  }
+}
