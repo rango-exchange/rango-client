@@ -25,6 +25,10 @@ import {
   isNetworkStatusInWarningState,
   shouldRetrySwap,
 } from '../utils/swap';
+import { TokenPreview } from '../components/TokenPreview';
+import { Spacer } from '@rango-dev/ui';
+import { numberToString } from '../utils/numbers';
+import { t } from 'i18next';
 
 export function SwapDetailsPage() {
   const selectedSwapRequestId = useUiStore.use.selectedSwapRequestId();
@@ -47,6 +51,11 @@ export function SwapDetailsPage() {
 
   const swap = selectedSwap?.swap;
   if (!swap) return null;
+
+  const firstStep = swap.steps[0];
+  const lastStep = swap.steps[swap.steps.length - 1];
+  const fromAmount = numberToString(swap.inputAmount);
+  const toAmount = numberToString(swap.simulationResult.outputAmount);
 
   const currentStep = getCurrentStep(swap);
 
@@ -82,6 +91,39 @@ export function SwapDetailsPage() {
   return (
     <SwapHistory
       onBack={navigateBackFrom.bind(null, navigationRoutes.swapDetails)}
+      previewInputs={
+        <>
+          <TokenPreview
+            chain={{
+              displayName: firstStep?.fromBlockchain || '',
+              // @ts-ignore
+              logo: firstStep?.fromBlockchainLogo || '',
+            }}
+            token={{
+              symbol: firstStep?.fromSymbol || '',
+              image: firstStep?.fromLogo || '',
+            }}
+            amount={fromAmount}
+            label={t('From')}
+            loadingStatus={'success'}
+          />
+          <Spacer size={12} direction="vertical" />
+          <TokenPreview
+            chain={{
+              displayName: lastStep?.toBlockchain || '',
+              // @ts-ignore
+              logo: lastStep?.toBlockchainLogo || '',
+            }}
+            token={{
+              symbol: lastStep?.toSymbol || '',
+              image: lastStep?.toLogo || '',
+            }}
+            amount={toAmount}
+            label={t('To')}
+            loadingStatus={'success'}
+          />
+        </>
+      }
       //todo: move PendingSwap type to rango-types
       //@ts-ignore
       pendingSwap={swap}
