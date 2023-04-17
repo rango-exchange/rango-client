@@ -277,6 +277,8 @@ const bestRoute = (
       });
   };
 
+  const debouncedFetchBestRoute = debounce(fetchBestRoute, 600);
+
   const bestRouteParamsListener = () => {
     const { fromToken, toToken, inputAmount, inputUsdValue } =
       useBestRouteStore.getState();
@@ -297,7 +299,7 @@ const bestRoute = (
         outputAmount: null,
         outputUsdValue: new BigNumber(0),
       });
-    debounce(fetchBestRoute, 600)();
+    debouncedFetchBestRoute();
   };
 
   useBestRouteStore.subscribe(
