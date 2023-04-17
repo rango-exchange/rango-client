@@ -54,6 +54,13 @@ class Persistor {
 
     return results;
   }
+
+  public async isLoaded() {
+    const db = await this.db;
+    const count = await db.count(OBJECT_STORE_NAME);
+
+    return !!count;
+  }
 }
 
 export default Persistor;
