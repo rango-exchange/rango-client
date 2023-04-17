@@ -30,6 +30,9 @@ export const SvgWithStrokeColor = styled('svg', {
         },
         stroke: '$$color',
       },
+      disabled: {
+        stroke: '$neutrals400',
+      },
     },
   },
 });
