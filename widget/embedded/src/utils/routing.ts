@@ -117,19 +117,22 @@ export function isRouteParametersChanged(
   currentParams: BestRouteParams
 ) {
   return (
-    prevParams.fromChain?.name !== currentParams.fromChain?.name ||
-    prevParams.toChain?.name !== currentParams.toChain?.name ||
-    prevParams.fromToken?.symbol !== currentParams.fromToken?.symbol ||
-    prevParams.toToken?.symbol !== currentParams.toToken?.symbol ||
-    prevParams.fromToken?.blockchain !== currentParams.fromToken?.blockchain ||
-    prevParams.toToken?.blockchain !== currentParams.toToken?.blockchain ||
-    prevParams.fromToken?.address !== currentParams.fromToken?.address ||
-    prevParams.toToken?.address !== currentParams.toToken?.address ||
-    prevParams.inputAmount !== currentParams.inputAmount ||
-    prevParams.slippage !== currentParams.slippage ||
-    prevParams.customSlippage !== currentParams.customSlippage ||
-    prevParams.disabledLiquiditySources?.length !==
-      currentParams.disabledLiquiditySources?.length
+    !!currentParams.fromToken &&
+    !!currentParams.toToken &&
+    (prevParams.fromChain?.name !== currentParams.fromChain?.name ||
+      prevParams.toChain?.name !== currentParams.toChain?.name ||
+      prevParams.fromToken?.symbol !== currentParams.fromToken?.symbol ||
+      prevParams.toToken?.symbol !== currentParams.toToken?.symbol ||
+      prevParams.fromToken?.blockchain !==
+        currentParams.fromToken?.blockchain ||
+      prevParams.toToken?.blockchain !== currentParams.toToken?.blockchain ||
+      prevParams.fromToken?.address !== currentParams.fromToken?.address ||
+      prevParams.toToken?.address !== currentParams.toToken?.address ||
+      prevParams.inputAmount !== currentParams.inputAmount ||
+      prevParams.slippage !== currentParams.slippage ||
+      prevParams.customSlippage !== currentParams.customSlippage ||
+      prevParams.disabledLiquiditySources?.length !==
+        currentParams.disabledLiquiditySources?.length)
   );
 }
 

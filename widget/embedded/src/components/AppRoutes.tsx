@@ -12,6 +12,8 @@ import { WalletsPage } from '../pages/WalletsPage';
 import { SwapDetailsPage } from '../pages/SwapDetailsPage';
 import { Configs } from '../types';
 
+const getAbsolutePath = (path: string) => path.replace('/', '');
+
 interface PropTypes {
   configs?: Configs;
 }
@@ -21,7 +23,7 @@ export function AppRoutes(props: PropTypes) {
 
   return useRoutes([
     {
-      path: navigationRoutes.home,
+      path: getAbsolutePath(navigationRoutes.home),
       element: (
         <Home
           title={configs?.title}
@@ -31,7 +33,7 @@ export function AppRoutes(props: PropTypes) {
       ),
     },
     {
-      path: navigationRoutes.fromChain,
+      path: getAbsolutePath(navigationRoutes.fromChain),
       element: (
         <SelectChainPage
           type="from"
@@ -40,7 +42,7 @@ export function AppRoutes(props: PropTypes) {
       ),
     },
     {
-      path: navigationRoutes.toChain,
+      path: getAbsolutePath(navigationRoutes.toChain),
       element: (
         <SelectChainPage
           type="to"
@@ -49,7 +51,7 @@ export function AppRoutes(props: PropTypes) {
       ),
     },
     {
-      path: navigationRoutes.fromToken + '/*',
+      path: getAbsolutePath(navigationRoutes.fromToken),
       element: (
         <SelectTokenPage
           type="from"
@@ -58,7 +60,7 @@ export function AppRoutes(props: PropTypes) {
       ),
     },
     {
-      path: navigationRoutes.toToken,
+      path: getAbsolutePath(navigationRoutes.toToken),
       element: (
         <SelectTokenPage
           type="to"
@@ -67,26 +69,26 @@ export function AppRoutes(props: PropTypes) {
       ),
     },
     {
-      path: navigationRoutes.settings,
+      path: getAbsolutePath(navigationRoutes.settings),
       element: (
         <SettingsPage supportedSwappers={configs?.liquiditySources || 'all'} />
       ),
     },
     {
-      path: navigationRoutes.liquiditySources,
+      path: getAbsolutePath(navigationRoutes.liquiditySources),
       element: (
         <LiquiditySourcePage
           supportedSwappers={configs?.liquiditySources || 'all'}
         />
       ),
     },
-    { path: navigationRoutes.swaps, element: <HistoryPage /> },
+    { path: getAbsolutePath(navigationRoutes.swaps), element: <HistoryPage /> },
     {
       path: navigationRoutes.swapDetails,
       element: <SwapDetailsPage />,
     },
     {
-      path: navigationRoutes.wallets,
+      path: getAbsolutePath(navigationRoutes.wallets),
       element: (
         <WalletsPage
           supportedWallets={configs?.wallets || 'all'}
@@ -98,6 +100,9 @@ export function AppRoutes(props: PropTypes) {
         />
       ),
     },
-    { path: navigationRoutes.confirmSwap, element: <ConfirmSwapPage /> },
+    {
+      path: getAbsolutePath(navigationRoutes.confirmSwap),
+      element: <ConfirmSwapPage />,
+    },
   ]);
 }
