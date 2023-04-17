@@ -434,6 +434,8 @@ export function createBestRouteRequestBody(
       });
   });
 
+  const filteredBlockchains = selectedWallets.map((wallet) => wallet.chain);
+
   const requestBody: BestRouteRequest = {
     amount: inputAmount.toString(),
     checkPrerequisites,
@@ -451,8 +453,8 @@ export function createBestRouteRequestBody(
     selectedWallets: selectedWalletsMap,
     swapperGroups: disabledLiquiditySources,
     swappersGroupsExclude: true,
-    //@ts-ignore
     slippage: slippage.toString(),
+    ...(checkPrerequisites && { blockchains: filteredBlockchains }),
   };
 
   return requestBody;
