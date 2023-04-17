@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/signer-evm",
-  "version": "0.1.11-next.83",
+  "version": "0.1.11-next.84",
   "license": "MIT",
   "module": "dist/signer-evm.esm.js",
   "main": "dist/index.js",
