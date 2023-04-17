@@ -99,7 +99,7 @@ export function Home(props: PropTypes) {
     setToChain(fromChain);
     setToToken(fromToken);
     setInputAmount(outputAmount?.toString() || '');
-    setCount(prev => prev + 1);
+    setCount((prev) => prev + 1);
   };
 
   const errorMessage =
@@ -116,9 +116,8 @@ export function Home(props: PropTypes) {
 
   const highValueLoss = outputRatioHasWarning(inputUsdValue, outToInRatio);
 
-  const { fromAmountRangeError, recommendation, swap } = LimitErrorMessage(
-    bestRoute
-  );
+  const { fromAmountRangeError, recommendation, swap } =
+    LimitErrorMessage(bestRoute);
 
   const priceImpactCanNotBeComputed = !canComputePriceImpact(
     bestRoute,
@@ -148,7 +147,11 @@ export function Home(props: PropTypes) {
     <Container>
       <Header
         title={title}
-        suffix={<HeaderButtons onClickRefresh={fetchBestRoute} />}
+        suffix={
+          <HeaderButtons
+            onClickRefresh={!!bestRoute ? fetchBestRoute : undefined}
+          />
+        }
       />
       <FromContainer>
         <TokenInfo

@@ -15,7 +15,7 @@ const ButtonsContainer = styled('div', {
 });
 
 interface PropTypes {
-  onClickRefresh: () => void;
+  onClickRefresh?: () => void;
 }
 
 export function HeaderButtons(props: PropTypes) {
@@ -25,7 +25,11 @@ export function HeaderButtons(props: PropTypes) {
   return (
     <ButtonsContainer>
       <Tooltip content="Refresh">
-        <Button variant="ghost" onClick={onClickRefresh}>
+        <Button
+          variant="ghost"
+          onClick={onClickRefresh}
+          disabled={!onClickRefresh}
+        >
           <RetryIcon size={24} />
         </Button>
       </Tooltip>
