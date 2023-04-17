@@ -24,8 +24,14 @@ export type PropTypes = (
 };
 
 const ContentContainer = styled('div', {
-  overflowY: 'auto',
-  overflowX: 'hidden',
+  overflow: 'hidden',
+  display: 'flex',
+  flexDirection: 'column',
+  flex: '1',
+});
+
+const TextFieldContainer = styled('div', {
+  padding: '1px',
 });
 
 export function SecondaryPage(props: PropTypes) {
@@ -40,17 +46,17 @@ export function SecondaryPage(props: PropTypes) {
 
       <ContentContainer>
         {props.textField && (
-          <>
+          <TextFieldContainer>
             <TextField
               size="large"
               prefix={<SearchIcon size={24} />}
               placeholder={props.textFieldPlaceholder}
-              onChange={event => setSearchedFor(event.target.value)}
+              onChange={(event) => setSearchedFor(event.target.value)}
               value={searchedFor}
               autoFocus
             />
             <Divider size={16} />
-          </>
+          </TextFieldContainer>
         )}
         {props.textField && props.children?.(searchedFor)}
         {!props.textField && props.children}

@@ -11,21 +11,32 @@ const MainContainer = styled('div', {
   width: '100%',
   minWidth: '375px',
   maxWidth: '512px',
-  maxHeight: '100%',
+  maxHeight: '595px',
   padding: '$16',
   boxSizing: 'border-box',
   backgroundColor: '$background',
+  variants: {
+    fixedHeight: {
+      true: {
+        height: '595px',
+      },
+      false: {
+        height: 'auto',
+      },
+    },
+  },
 });
 
 export interface PropTypes {
   style?: CSSProperties;
+  fixedHeight?: boolean;
 }
 
 export function SwapContainer(props: PropsWithChildren<PropTypes>) {
-  const { children, style } = props;
+  const { children, style, fixedHeight = true } = props;
 
   return (
-    <MainContainer style={style} id="swap-box">
+    <MainContainer style={style} id="swap-box" fixedHeight={fixedHeight}>
       {children}
     </MainContainer>
   );

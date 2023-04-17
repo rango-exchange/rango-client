@@ -12,7 +12,7 @@ import { NotFoundAlert } from '../Alert/NotFoundAlert';
 import { LoaderContainer } from '../TokenSelector/TokenSelector';
 
 const ListContainer = styled('div', {
-  height: '450px',
+  overflowY: 'auto',
 });
 
 const filterBlockchains = (list: BlockchainMeta[], searchedFor: string) =>
