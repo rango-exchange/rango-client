@@ -7,6 +7,10 @@ import { Typography } from '../../components/Typography';
 import { styled } from '../../theme';
 import { SelectableWallet } from '../../types';
 
+const MainContainer = styled('div', {
+  overflowY: 'auto',
+});
+
 const Section = styled('div', {
   paddingBottom: '$32',
   marginBottom: '$32',
@@ -104,71 +108,73 @@ export function ConfirmSwap(props: PropsWithChildren<PropTypes>) {
         </Footer>
       }
     >
-      <div>
-        {extraMessages || null}
-        <Alerts>
-          {errors?.map((error, index) => (
-            <>
-              <Spacer direction="vertical" />
-              <Alert type="error" key={index}>
-                {error}
-              </Alert>
-            </>
-          ))}
-          {warnings?.map((warning, index) => (
-            <>
-              <Spacer direction="vertical" />
-              <Alert type="warning" key={index}>
-                {warning}
-              </Alert>
-            </>
-          ))}
-        </Alerts>
-      </div>
-      {props.previewInputs || props.previewRoutes ? (
-        <Section>
-          {props.previewInputs}
-          {!!props.previewRoutes ? (
-            <Spacer size={16} direction="vertical" />
-          ) : null}
-          {props.previewRoutes}
-        </Section>
-      ) : null}
-
-      {requiredWallets.map((wallet, index) => {
-        const list = selectableWallets.filter((w) => wallet === w.chain);
-        return (
-          <Container key={index}>
-            <div className="title">
-              <div className="num">{index + 1}</div>
-              <Spacer size={8} />
-              <Typography variant="body2">Your {wallet} Wallet</Typography>
-            </div>
-            {list.length === 0 && (
+      <MainContainer>
+        <div>
+          {extraMessages || null}
+          <Alerts>
+            {errors?.map((error, index) => (
               <>
-                <AlertContainer>
-                  <Alert type="error">
-                    You need to connect a compatible wallet with {wallet}
-                  </Alert>
-                </AlertContainer>
-                {isExperimentalChain?.(wallet) && (
-                  <Button
-                    variant="contained"
-                    type="primary"
-                    align="grow"
-                    onClick={() => handleConnectChain?.(wallet)}
-                  >
-                    {`Add ${wallet} chain to Cosmos wallets`}
-                  </Button>
-                )}
+                <Spacer direction="vertical" />
+                <Alert type="error" key={index}>
+                  {error}
+                </Alert>
               </>
-            )}
-            {list.length != 0 && (
-              <SelectableWalletList list={list} onChange={onChange} />
-            )}
-          </Container>
-        );
-      })}
+            ))}
+            {warnings?.map((warning, index) => (
+              <>
+                <Spacer direction="vertical" />
+                <Alert type="warning" key={index}>
+                  {warning}
+                </Alert>
+              </>
+            ))}
+          </Alerts>
+        </div>
+        {props.previewInputs || props.previewRoutes ? (
+          <Section>
+            {props.previewInputs}
+            {!!props.previewRoutes ? (
+              <Spacer size={16} direction="vertical" />
+            ) : null}
+            {props.previewRoutes}
+          </Section>
+        ) : null}
+
+        {requiredWallets.map((wallet, index) => {
+          const list = selectableWallets.filter((w) => wallet === w.chain);
+          return (
+            <Container key={index}>
+              <div className="title">
+                <div className="num">{index + 1}</div>
+                <Spacer size={8} />
+                <Typography variant="body2">Your {wallet} Wallet</Typography>
+              </div>
+              {list.length === 0 && (
+                <>
+                  <AlertContainer>
+                    <Alert type="error">
+                      You need to connect a compatible wallet with {wallet}
+                    </Alert>
+                  </AlertContainer>
+                  {isExperimentalChain?.(wallet) && (
+                    <Button
+                      variant="contained"
+                      type="primary"
+                      align="grow"
+                      onClick={() => handleConnectChain?.(wallet)}
+                    >
+                      {`Add ${wallet} chain to Cosmos wallets`}
+                    </Button>
+                  )}
+                </>
+              )}
+              {list.length != 0 && (
+                <SelectableWalletList list={list} onChange={onChange} />
+              )}
+            </Container>
+          );
+        })}
+      </MainContainer>
     </SecondaryPage>
   );
 }

@@ -173,6 +173,10 @@ const StepContainer = styled('div', {
   },
 });
 
+const SwapFlowContainer = styled('div', {
+  overflowY: 'auto',
+});
+
 type PropTypes = {
   pendingSwap: PendingSwap;
   onCopy: (requestId: string) => void;
@@ -199,8 +203,36 @@ export function SwapHistory(props: PropTypes) {
   const [showDrawer, setShowDrawer] = useState(false);
 
   return (
-    <SecondaryPage title="Swap Details" textField={false} onBack={onBack}>
-      <div style={{ overflow: 'hidden' }}>
+    <SecondaryPage
+      title="Swap Details"
+      textField={false}
+      onBack={onBack}
+      Footer={
+        <>
+          {pendingSwap?.status === 'running' && (
+            <Button
+              variant="outlined"
+              fullWidth
+              type="error"
+              onClick={setShowDrawer.bind(null, true)}
+            >
+              Cancel
+            </Button>
+          )}
+          {!!onRetry && (
+            <Button
+              variant="contained"
+              fullWidth
+              type="primary"
+              onClick={onRetry}
+            >
+              Try again
+            </Button>
+          )}
+        </>
+      }
+    >
+      <div>
         <SwapInfoContainer>
           <Row>
             <div className="name">Request ID:</div>
@@ -227,14 +259,10 @@ export function SwapHistory(props: PropTypes) {
           <ExtraDetails>{date}</ExtraDetails>
         </SwapInfoContainer>
         <Divider size={16} />
-
-        {previewInputs}
-
+      </div>
+      <SwapFlowContainer>
         {extraMessageProps.shortMessage && (
-          <>
-            <Divider size={32} />
-            <SwapMessages {...extraMessageProps} />
-          </>
+          <SwapMessages {...extraMessageProps} />
         )}
 
         <Divider size={32} />
@@ -350,28 +378,7 @@ export function SwapHistory(props: PropTypes) {
         ))}
 
         <Divider size={32} />
-
-        {pendingSwap?.status === 'running' && (
-          <Button
-            variant="outlined"
-            fullWidth
-            type="error"
-            onClick={setShowDrawer.bind(null, true)}
-          >
-            Cancel
-          </Button>
-        )}
-        {!!onRetry && (
-          <Button
-            variant="contained"
-            fullWidth
-            type="primary"
-            onClick={onRetry}
-          >
-            Try again
-          </Button>
-        )}
-      </div>
+      </SwapFlowContainer>
       <Drawer
         onClose={setShowDrawer.bind(null, false)}
         open={showDrawer}

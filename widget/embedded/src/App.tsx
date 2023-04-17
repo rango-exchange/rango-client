@@ -19,6 +19,8 @@ import QueueManager from './QueueManager';
 import { isEvmBlockchain } from 'rango-sdk';
 import { Configs } from './types';
 import './i18n';
+import { useUiStore } from './store/ui';
+import { navigationRoutes } from './constants/navigationRoutes';
 
 const providers = allProviders();
 
@@ -37,6 +39,7 @@ export function App({ configs }: WidgetProps) {
   const { blockchains } = useMetaStore.use.meta();
   const disconnectWallet = useWalletsStore.use.disconnectWallet();
   const connectWallet = useWalletsStore.use.connectWallet();
+  const currentPage = useUiStore.use.currentPage();
 
   const [lastConnectedWalletWithNetwork, setLastConnectedWalletWithNetwork] =
     useState<string>('');
@@ -92,7 +95,7 @@ export function App({ configs }: WidgetProps) {
     >
       <div id="pageContainer" className={activeTheme}>
         <QueueManager>
-          <SwapContainer>
+          <SwapContainer fixedHeight={currentPage != navigationRoutes.home}>
             <AppRouter
               title={configs?.title}
               titleSize={configs?.titleSize}

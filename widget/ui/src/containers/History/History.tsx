@@ -15,7 +15,7 @@ const Group = styled('div', {
 });
 
 const Container = styled('div', {
-  height: '450px',
+  overflowY: 'auto',
 });
 const filteredHistory = (
   list: PendingSwap[],

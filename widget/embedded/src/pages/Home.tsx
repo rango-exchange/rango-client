@@ -7,7 +7,7 @@ import {
   VerticalSwapIcon,
   Header,
 } from '@rango-dev/ui';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useInRouterContext, useNavigate } from 'react-router-dom';
 import { TokenInfo } from '../components/TokenInfo';
 import { fetchBestRoute, useBestRouteStore } from '../store/bestRoute';
@@ -35,6 +35,7 @@ import {
 } from '../utils/numbers';
 import BigNumber from 'bignumber.js';
 import { HeaderButtons } from '../components/HeaderButtons';
+import { useUiStore } from '../store/ui';
 
 const Container = styled('div', {
   display: 'flex',
@@ -92,6 +93,7 @@ export function Home(props: PropTypes) {
   const bestRouteError = useBestRouteStore.use.error();
   const loadingMetaStatus = useMetaStore.use.loadingStatus();
   const accounts = useWalletsStore.use.accounts();
+  const setCurrentPage = useUiStore.use.setCurrentPage();
 
   const swithFromAndTo = () => {
     setFromChain(toChain);
@@ -99,7 +101,7 @@ export function Home(props: PropTypes) {
     setToChain(fromChain);
     setToToken(fromToken);
     setInputAmount(outputAmount?.toString() || '');
-    setCount(prev => prev + 1);
+    setCount((prev) => prev + 1);
   };
 
   const errorMessage =
@@ -116,9 +118,8 @@ export function Home(props: PropTypes) {
 
   const highValueLoss = outputRatioHasWarning(inputUsdValue, outToInRatio);
 
-  const { fromAmountRangeError, recommendation, swap } = LimitErrorMessage(
-    bestRoute
-  );
+  const { fromAmountRangeError, recommendation, swap } =
+    LimitErrorMessage(bestRoute);
 
   const priceImpactCanNotBeComputed = !canComputePriceImpact(
     bestRoute,
@@ -143,6 +144,12 @@ export function Home(props: PropTypes) {
   const totalFeeInUsd = getTotalFeeInUsd(bestRoute, tokens);
 
   const highFee = hasHighFee(totalFeeInUsd);
+
+  useEffect(() => {
+    setCurrentPage(navigationRoutes.home);
+
+    return setCurrentPage.bind(null, '');
+  }, []);
 
   return (
     <Container>
