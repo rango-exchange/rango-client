@@ -2,10 +2,35 @@ import chalk from 'chalk';
 import { execa } from 'execa';
 import { readFileSync } from 'fs';
 import { join } from 'path';
+import conventionanRecommendBump from 'conventional-recommended-bump';
 import { printDirname } from '../common/utils.mjs';
 import { VERCEL_ORG_ID, VERCEL_PACKAGES, VERCEL_TOKEN } from './config.mjs';
 const root = join(printDirname(), '..', '..');
 
+/**
+ *
+ * Recommend next version based on Angular conventional commits
+ *
+ * @param {string} pkg pacakge name
+ * @return {Promise<{level: number,reason: string, releaseType: 'patch' | 'minor' | 'major',}>}
+ */
+export async function recommendBump(pkg) {
+  return new Promise((resolve, reject) => {
+    conventionanRecommendBump(
+      {
+        preset: `angular`,
+        lernaPackage: pkg,
+      },
+      (error, recommendation) => {
+        if (error) {
+          reject(error);
+        } else {
+          resolve(recommendation);
+        }
+      },
+    );
+  });
+}
 export async function deployProjectsToVercel(pkgs) {
   await Promise.all(pkgs.map((pkg) => deploySingleProjectToVercel(pkg)));
 }
@@ -70,7 +95,7 @@ export async function pushToRemote(branch, remote = 'origin') {
 
   console.log(stdout);
 }
-export async function tagPackages(updatedPackages) {
+export async function tagPackages(updatedPackages, { skipGitTagging }) {
   const tags = updatedPackages.map((pkg) => `${packageNameWithoutScope(pkg.name)}@${pkg.version}`);
   const files = updatedPackages.map((pkg) => join(root, pkg.location, 'package.json'));
 
@@ -80,10 +105,12 @@ export async function tagPackages(updatedPackages) {
 
   // making a publish commit
   await execa('git', ['add', '--', ...files]);
-  await execa('git', ['commit', '-m', message]);
+  await execa('git', ['commit', '-m', message, '-m', `Affected packages: ${tags.join(',')}`]);
 
   // creating annotated tags based on packages
-  await Promise.all(tags.map((tag) => execa('git', ['tag', '-a', tag, '-m', tag])));
+  if (!skipGitTagging) {
+    await Promise.all(tags.map((tag) => execa('git', ['tag', '-a', tag, '-m', tag])));
+  }
 
   return tags;
 }
@@ -100,6 +127,44 @@ export async function increaseVersionForNext(changedPkgs) {
         '--no-git-tag-version',
       ]).then(({ stdout }) => stdout),
     ),
+  );
+
+  // Getting latest packages info to show the updated version.
+  // We only return changed packges, not whole repo.
+  const packages = (await workspacePackages()).filter((pkg) => {
+    return !!changedPkgs.find((changedPkg) => pkg.name === changedPkg.name);
+  });
+
+  return packages;
+}
+
+export async function increaseVersionForMain(changedPkgs) {
+  const nextVersions = {};
+
+  try {
+    await Promise.all(
+      changedPkgs.map(({ name }) =>
+        recommendBump(name).then((recommendation) => {
+          console.log({ name, recommendation });
+          nextVersions[name] = recommendation.releaseType;
+        }),
+      ),
+    );
+  } catch (e) {
+    throw new Error(`Calculating next version failed. details: ${e}`);
+  }
+
+  await Promise.all(
+    changedPkgs.map(({ name }) => {
+      const nextVersion = nextVersions[name];
+      return execa('yarn', [
+        'workspace',
+        name,
+        'version',
+        `--${nextVersion}`,
+        '--no-git-tag-version',
+      ]).then(({ stdout }) => stdout);
+    }),
   );
 
   // Getting latest packages info to show the updated version.
@@ -152,14 +217,29 @@ export function pacakgeJson(location) {
 }
 
 export function detectChannel() {
-  // TODO: support for production
+  console.log('base', getEnvWithFallback('REF'));
+  if (getEnvWithFallback('REF') === 'refs/heads/main') {
+    return 'prod';
+  }
   return 'next';
 }
 
 // TODO: Check for when there is no tag.
-export async function getLastTagHashId() {
-  const { stdout: hash } = await execa('git', ['rev-list', '--max-count', 1, '--tags']);
-  return hash;
+export async function getLastReleasedHashId(useTag = false) {
+  if (useTag) {
+    const { stdout: hash } = await execa('git', ['rev-list', '--max-count', 1, '--tags']);
+    return hash;
+  } else {
+    const { stdout: hash } = await execa('git', [
+      'log',
+      '--grep',
+      '^chore(release): publish',
+      '-n',
+      1,
+      '--pretty=format:%H',
+    ]);
+    return hash;
+  }
 }
 
 export function groupPackagesForDeploy(packages) {
@@ -203,6 +283,6 @@ function packageNameWithoutScope(name) {
 }
 
 // we are adding a fallback, to make sure predefiend VERCEL_PACKAGES always will be true.
-export function getProjectIdFromEnv(name) {
+export function getEnvWithFallback(name) {
   return process.env[name] || 'NOT SET';
 }

@@ -6,8 +6,9 @@ import {
   changed,
   deployProjectsToVercel,
   detectChannel,
-  getLastTagHashId,
+  getLastReleasedHashId,
   groupPackagesForDeploy,
+  increaseVersionForMain,
   increaseVersionForNext,
   logAsSection,
   publishPackages,
@@ -18,11 +19,14 @@ import {
 // TODO: Working directory should be empty.
 async function run() {
   // Detect last relase and what packages has changed since then.
-  const baseCommit = await getLastTagHashId();
+  const channel = detectChannel();
+  const useTagForDetectLastRelease = channel === 'prod';
+  const baseCommit = await getLastReleasedHashId(useTagForDetectLastRelease);
   const changedPkgs = await changed(baseCommit);
 
   // Info logs
   logAsSection('Run...', `at ${baseCommit}`);
+
   console.log(
     changedPkgs.map((pkg) => `- ${pkg.name} (current version: ${pkg.version})`).join('\n'),
   );
@@ -34,12 +38,7 @@ async function run() {
   }
 
   // Run a specific workflow based on channel
-  const channel = detectChannel();
-  if (channel === 'next') {
-    await publishNext(changedPkgs);
-  } else {
-    throw new Error('Channel not detected');
-  }
+  await publish(changedPkgs, channel);
 }
 
 run().catch((e) => {
@@ -49,10 +48,16 @@ run().catch((e) => {
 
 /* -------------- Flows ------------------ */
 
-async function publishNext(changedPkgs) {
+async function publish(changedPkgs, channel) {
   // Versioning
   logAsSection(`Versioning, Start...`, `for ${changedPkgs.length} packages`);
-  const updatedPackages = await increaseVersionForNext(changedPkgs);
+
+  let updatedPackages;
+  if (channel === 'prod') {
+    updatedPackages = await increaseVersionForMain(changedPkgs);
+  } else {
+    updatedPackages = await increaseVersionForNext(changedPkgs);
+  }
 
   logAsSection(`Versioning, Done.`);
   console.log(
@@ -60,26 +65,28 @@ async function publishNext(changedPkgs) {
   );
 
   logAsSection(`Tagging, Start...`, `for ${updatedPackages.length} packages`);
-  const taggedPackages = await tagPackages(updatedPackages);
+  const tagOptions = channel === 'prod' ? { skipGitTagging: false } : { skipGitTagging: true };
+  const taggedPackages = await tagPackages(updatedPackages, tagOptions);
   logAsSection(`Tagging, Done.`);
   console.log({ taggedPackages });
 
   logAsSection(`Pushing tags to remote...`);
-  await pushToRemote('next');
+  const branch = channel === 'prod' ? 'main' : 'next';
+  await pushToRemote(branch);
   logAsSection(`Pushed.`);
 
   // Publish to NPM
   const packages = groupPackagesForDeploy(updatedPackages);
 
   logAsSection(`It's time for building artifacts...`);
-  console.log({ packages });
 
   if (packages.npm.length) {
     logAsSection('NPM Build', `Build npm packages...`);
     await buildPackages(packages.npm);
     logAsSection('NPM Build', `Successfully built.`);
     logAsSection('NPM Publish', 'Publishing npm packages....');
-    await publishPackages(packages.npm);
+    const distTag = channel === 'prod' ? 'latest' : 'next';
+    await publishPackages(packages.npm, distTag);
     logAsSection('NPM Publish', 'Published. Congrats 🎉');
   }
 
