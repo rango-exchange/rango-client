@@ -1,16 +1,32 @@
 import { RouteState } from '../store/bestRoute';
 import { SettingsState } from '../store/settings';
 
-export interface BestRouteParams {
+interface BestRouteStoreParams {
   fromChain?: RouteState['fromChain'];
   toChain?: RouteState['toChain'];
   fromToken?: RouteState['fromToken'];
   toToken?: RouteState['toToken'];
   inputAmount?: RouteState['inputAmount'];
+}
+
+interface SettingsStoreParams {
   slippage?: SettingsState['slippage'];
   customSlippage?: SettingsState['customSlippage'];
   disabledLiquiditySources?: SettingsState['disabledLiquiditySources'];
+  infiniteApprove?: SettingsState['infiniteApprove'];
 }
+
+export type BestRouteEqualityParams =
+  | {
+      store: 'bestRoute';
+      prevState: BestRouteStoreParams;
+      currentState: BestRouteStoreParams;
+    }
+  | {
+      store: 'settings';
+      prevState: SettingsStoreParams;
+      currentState: SettingsStoreParams;
+    };
 
 export enum ConfirmSwapErrorTypes {
   NO_ROUTE,

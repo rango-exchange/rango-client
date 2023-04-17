@@ -17,6 +17,7 @@ import { getBalanceFromWallet } from '../utils/wallets';
 import { useWalletsStore } from '../store/wallets';
 import { useTranslation } from 'react-i18next';
 import { Spacer } from '@rango-dev/ui';
+import { PercentageChange } from './PercentageChange';
 
 type PropTypes = (
   | {
@@ -78,6 +79,13 @@ const Container = styled('div', {
     },
     '.amount': {
       width: '30%',
+    },
+  },
+  '.output-usd': {
+    display: 'flex',
+    div: {
+      display: 'flex',
+      paddingLeft: '$8',
     },
   },
 });
@@ -201,10 +209,18 @@ export function TokenInfo(props: PropTypes) {
               </div>
             </Options>
           ) : (
-            <Typography
-              variant="caption"
-              color="neutrals600"
-            >{`$${numberToString(props.outputUsdValue)}`}</Typography>
+            <div className="output-usd">
+              <PercentageChange
+                inputUsdValue={inputUsdValue}
+                outputUsdValue={props.outputUsdValue}
+              />
+              <div>
+                <Typography
+                  variant="caption"
+                  color="neutrals600"
+                >{`$${numberToString(props.outputUsdValue)}`}</Typography>
+              </div>
+            </div>
           )}
         </div>
         <div className="form">

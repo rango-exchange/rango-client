@@ -6,7 +6,7 @@ import BigNumber from 'bignumber.js';
 import { BestRouteResponse, BlockchainMeta, Token } from 'rango-sdk';
 import { areEqual } from './common';
 import { SelectedWallet } from './wallets';
-import { BestRouteParams } from '../types';
+import { BestRouteEqualityParams } from '../types';
 import { TokenMeta } from '@rango-dev/ui/dist/types/meta';
 import { numberToString } from './numbers';
 import { getUsdFeeOfStep } from './swap';
@@ -112,28 +112,34 @@ export function getRequiredBalanceOfWallet(
   return relatedFeeStatus.requiredAssets;
 }
 
-export function isRouteParametersChanged(
-  prevParams: BestRouteParams,
-  currentParams: BestRouteParams
-) {
-  return (
-    !!currentParams.fromToken &&
-    !!currentParams.toToken &&
-    (prevParams.fromChain?.name !== currentParams.fromChain?.name ||
-      prevParams.toChain?.name !== currentParams.toChain?.name ||
-      prevParams.fromToken?.symbol !== currentParams.fromToken?.symbol ||
-      prevParams.toToken?.symbol !== currentParams.toToken?.symbol ||
-      prevParams.fromToken?.blockchain !==
-        currentParams.fromToken?.blockchain ||
-      prevParams.toToken?.blockchain !== currentParams.toToken?.blockchain ||
-      prevParams.fromToken?.address !== currentParams.fromToken?.address ||
-      prevParams.toToken?.address !== currentParams.toToken?.address ||
-      prevParams.inputAmount !== currentParams.inputAmount ||
-      prevParams.slippage !== currentParams.slippage ||
-      prevParams.customSlippage !== currentParams.customSlippage ||
-      prevParams.disabledLiquiditySources?.length !==
-        currentParams.disabledLiquiditySources?.length)
-  );
+export function isRouteParametersChanged(params: BestRouteEqualityParams) {
+  if (params.store === 'bestRoute') {
+    const { prevState, currentState } = params;
+    return (
+      !!currentState.fromToken &&
+      !!currentState.toToken &&
+      (prevState.fromChain?.name !== currentState.fromChain?.name ||
+        prevState.toChain?.name !== currentState.toChain?.name ||
+        prevState.fromToken?.symbol !== currentState.fromToken?.symbol ||
+        prevState.toToken?.symbol !== currentState.toToken?.symbol ||
+        prevState.fromToken?.blockchain !== prevState.fromToken?.blockchain ||
+        prevState.toToken?.blockchain !== currentState.toToken?.blockchain ||
+        prevState.fromToken?.address !== currentState.fromToken?.address ||
+        prevState.toToken?.address !== currentState.toToken?.address ||
+        prevState.inputAmount !== currentState.inputAmount)
+    );
+  } else if (params.store === 'settings') {
+    const { prevState, currentState } = params;
+    return (
+      prevState.slippage !== currentState.slippage ||
+      prevState.customSlippage !== currentState.customSlippage ||
+      prevState.disabledLiquiditySources?.length !==
+        currentState.disabledLiquiditySources?.length ||
+      prevState.infiniteApprove ||
+      currentState.infiniteApprove
+    );
+  }
+  return false;
 }
 
 export function getBestRouteWithCalculatedFees(
