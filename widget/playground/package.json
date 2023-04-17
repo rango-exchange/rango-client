@@ -6,8 +6,8 @@
   "source": "public/index.html",
   "browserslist": "> 0.5%, last 2 versions, not dead",
   "scripts": {
-    "dev": "parcel -p 3005",
-    "build": "parcel build"
+    "dev": "parcel -p 3005 --cache-dir=.parcel-cache",
+    "build": "parcel build --cache-dir=.parcel-cache"
   },
   "devDependencies": {
     "parcel": "^2.7.0"

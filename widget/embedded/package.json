@@ -10,8 +10,8 @@
   ],
   "browserslist": "> 0.5%, last 2 versions, not dead",
   "scripts": {
-    "dev": "parcel public/index.html -p 3001",
-    "build:app": "parcel build",
+    "dev": "parcel public/index.html -p 3001 --cache-dir=.parcel-cache",
+    "build:app": "parcel build --cache-dir=.parcel-cache",
     "build": "tsdx build --entry ./src/lib.tsx"
   },
   "husky": {
