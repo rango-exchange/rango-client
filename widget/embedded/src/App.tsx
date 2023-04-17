@@ -1,5 +1,5 @@
 import { SwapContainer } from '@rango-dev/ui';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { AppRouter } from './components/AppRouter';
 import { useMetaStore } from './store/meta';
 import './app.css';
@@ -45,6 +45,10 @@ export function App({ config }: WidgetProps) {
   const evmBasedChainNames = blockchains
     .filter(isEvmBlockchain)
     .map((chain) => chain.name);
+
+  useEffect(() => {
+    document.body.style.background = activeTheme?.colors?.background?.value;
+  }, []);
 
   const onUpdateState: EventHandler = (
     type,

@@ -54,7 +54,7 @@ const Head = styled('div', {
   paddingBottom: '$16',
 });
 
-type Theme = 'dark' | 'light' | 'auto';
+export type Theme = 'dark' | 'light' | 'auto';
 
 export interface PropTypes {
   slippages: number[];
