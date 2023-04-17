@@ -49,6 +49,7 @@ export interface RouteState {
   bestRoute: BestRouteResponse | null;
   setBestRoute: (bestRoute: BestRouteResponse | null) => void;
   retry: (pendingSwap: PendingSwap) => void;
+  switchFromAndTo: () => void;
 }
 
 export const useBestRouteStore = createSelectors(
@@ -146,7 +147,6 @@ export const useBestRouteStore = createSelectors(
           toToken: token,
         })),
       setInputAmount: (amount) => {
-        console.log(amount, typeof amount);
         set((state) => ({
           inputAmount: amount,
           ...(!amount && {
@@ -224,6 +224,20 @@ export const useBestRouteStore = createSelectors(
           destinationTokens: sortedDestinationTokens,
         });
       },
+      switchFromAndTo: () =>
+        set((state) => ({
+          fromChain: state.toChain,
+          fromToken: state.toToken,
+          toChain: state.fromChain,
+          toToken: state.fromToken,
+          sourceTokens: state.destinationTokens,
+          destinationTokens: state.sourceTokens,
+          inputAmount: state.outputAmount?.toString() || '',
+          inputUsdValue: getUsdValue(
+            state.toToken,
+            state.outputAmount?.toString() || ''
+          ),
+        })),
     }))
   )
 );
@@ -282,7 +296,7 @@ const bestRoute = (
   const bestRouteParamsListener = () => {
     const { fromToken, toToken, inputAmount, inputUsdValue } =
       useBestRouteStore.getState();
-    if (!inputAmount || inputAmount === '0') return;
+    if (!inputAmount || inputAmount === '0' || inputUsdValue.eq(0)) return;
 
     if (tokensAreEqual(fromToken, toToken))
       return bestRouteStore.setState({
@@ -312,8 +326,15 @@ const bestRoute = (
     }),
     bestRouteParamsListener,
     {
-      equalityFn: (prevState, state) => {
-        if (isRouteParametersChanged(prevState, state)) return false;
+      equalityFn: (prevState, currentState) => {
+        if (
+          isRouteParametersChanged({
+            store: 'bestRoute',
+            prevState,
+            currentState,
+          })
+        )
+          return false;
         else return true;
       },
     }
@@ -324,11 +345,19 @@ const bestRoute = (
       slippage: state.slippage,
       customSlippage: state.customSlippage,
       disabledLiquiditySources: state.disabledLiquiditySources,
+      infiniteApprove: state.infiniteApprove,
     }),
     bestRouteParamsListener,
     {
-      equalityFn: (prevState, state) => {
-        if (isRouteParametersChanged(prevState, state)) return false;
+      equalityFn: (prevState, currentState) => {
+        if (
+          isRouteParametersChanged({
+            store: 'settings',
+            prevState,
+            currentState,
+          })
+        )
+          return false;
         else return true;
       },
     }

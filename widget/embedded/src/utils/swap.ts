@@ -140,7 +140,8 @@ export function getSwapButtonState(
   if (accounts.length == 0) return { title: 'Connect Wallet', disabled: false };
   if (loading) return { title: 'Finding Best Route...', disabled: true };
   else if (inputIsZero) return { title: 'Enter an amount', disabled: true };
-  else if (!bestRoute) return { title: 'Swap', disabled: true };
+  else if (!bestRoute || !bestRoute.result)
+    return { title: 'Swap', disabled: true };
   else if (hasLimitError) return { title: 'Limit Error', disabled: true };
   else if (highValueLoss)
     return { title: 'Price impact is too high!', disabled: true };

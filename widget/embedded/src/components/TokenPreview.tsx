@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import { Button, InfoCircleIcon, styled, Typography } from '@rango-dev/ui';
 import { LoadingStatus } from '../store/meta';
 import { useTranslation } from 'react-i18next';
@@ -37,6 +37,9 @@ const Container = styled('div', {
     justifyContent: 'space-between',
     alignItems: 'center',
     minHeight: '32px',
+    '.usd-value': {
+      paddingLeft: '$8',
+    },
   },
   '.form': {
     display: 'flex',
@@ -95,10 +98,11 @@ interface PropTypes {
     symbol: string;
     image: string;
   };
+  percentageChange?: ReactNode;
 }
 
 export function TokenPreview(props: PropTypes) {
-  const { chain, token, loadingStatus } = props;
+  const { chain, token, loadingStatus, percentageChange } = props;
   const { t } = useTranslation();
 
   const ItemSuffix = (
@@ -120,12 +124,16 @@ export function TokenPreview(props: PropTypes) {
           <Typography variant="body2" color="neutrals800">
             {props.label}
           </Typography>
-          {props.usdValue && (
-            <Typography
-              variant="caption"
-              color="neutrals600"
-            >{`$${numberToString(props.usdValue)}`}</Typography>
-          )}
+          <div>
+            {percentageChange}
+            {props.usdValue && (
+              <Typography
+                variant="caption"
+                color="neutrals600"
+                className="usd-value"
+              >{`$${numberToString(props.usdValue)}`}</Typography>
+            )}
+          </div>
         </div>
         <div className="form">
           <Button
