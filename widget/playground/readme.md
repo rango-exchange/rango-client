@@ -1,3 +1,3 @@
-# Widget Config
+# Widget Playground
 
 
