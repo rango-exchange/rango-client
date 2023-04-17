@@ -4,13 +4,7 @@ import useCopyToClipboard from '../hooks/useCopyToClipboard';
 import { useManager } from '@rango-dev/queue-manager-react';
 import { useNavigateBack } from '../hooks/useNavigateBack';
 import { getPendingSwaps } from '../utils/queue';
-import {
-  SecondaryPage,
-  Spinner,
-  SwapHistory,
-  Alert,
-  styled,
-} from '@rango-dev/ui';
+import { SwapHistory } from '@rango-dev/ui';
 import { useUiStore } from '../store/ui';
 import {
   cancelSwap,
