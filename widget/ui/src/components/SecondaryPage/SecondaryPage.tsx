@@ -28,10 +28,13 @@ const ContentContainer = styled('div', {
   display: 'flex',
   flexDirection: 'column',
   flex: '1',
+  padding: '0 $4',
 });
 
 const TextFieldContainer = styled('div', {
   padding: '1px',
+  overflowY: 'auto',
+  overflowX: 'hidden',
 });
 
 export function SecondaryPage(props: PropTypes) {

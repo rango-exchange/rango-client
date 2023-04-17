@@ -171,7 +171,7 @@ export function Home(props: PropTypes) {
         />
         <SwitchButtonContainer>
           <Button variant="ghost" onClick={swithFromAndTo}>
-            <VerticalSwapIcon size={24} />
+            <VerticalSwapIcon size={32} />
             {isRouterInContext && <SwithFromAndTo count={count} />}
           </Button>
         </SwitchButtonContainer>

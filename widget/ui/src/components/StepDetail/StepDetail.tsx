@@ -69,6 +69,7 @@ const Detail = styled('div', {
 });
 const SubTitle = styled(Typography, {
   color: '$neutrals600',
+  display: 'block',
 });
 export interface PropTypes {
   logo: string;
