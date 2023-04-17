@@ -71,6 +71,7 @@ export const useBestRouteStore = createSelectors(
         set((state) => {
           let outputAmount: BigNumber | null = null;
           let outputUsdValue: BigNumber = ZERO;
+          if (!state.inputAmount || state.inputAmount === '0') return {};
           if (!!bestRoute) {
             outputAmount = !!bestRoute.result?.outputAmount
               ? new BigNumber(bestRoute.result?.outputAmount)
@@ -145,6 +146,7 @@ export const useBestRouteStore = createSelectors(
           toToken: token,
         })),
       setInputAmount: (amount) => {
+        console.log(amount, typeof amount);
         set((state) => ({
           inputAmount: amount,
           ...(!amount && {
@@ -211,7 +213,7 @@ export const useBestRouteStore = createSelectors(
           fromToken,
           inputAmount,
           outputAmount: null,
-          inputUsdValue: new BigNumber(0),
+          inputUsdValue: getUsdValue(fromToken || null, inputAmount),
           outputUsdValue: new BigNumber(0),
           toChain,
           toToken,
@@ -231,11 +233,11 @@ const bestRoute = (
   settingsStore: typeof useSettingsStore
 ) => {
   let abortController: AbortController | null = null;
-  const fetchBestRoute = debounce(() => {
+  const fetchBestRoute = () => {
     const { fromToken, toToken, inputAmount } = bestRouteStore.getState();
     const { slippage, customSlippage, disabledLiquiditySources } =
       settingsStore.getState();
-    if (!fromToken || !toToken || !inputAmount) return;
+    if (!fromToken || !toToken || !inputAmount || inputAmount === '0') return;
     abortController?.abort();
     abortController = new AbortController();
     const userSlippage = !!customSlippage ? customSlippage : slippage;
@@ -249,12 +251,13 @@ const bestRoute = (
       userSlippage,
       false
     );
-    bestRouteStore.setState({
-      loading: true,
-      bestRoute: null,
-      outputAmount: null,
-      outputUsdValue: new BigNumber(0),
-    });
+    if (!bestRouteStore.getState().loading)
+      bestRouteStore.setState({
+        loading: true,
+        bestRoute: null,
+        outputAmount: null,
+        outputUsdValue: new BigNumber(0),
+      });
     httpService
       .getBestRoute(requestBody, {
         signal: abortController.signal,
@@ -272,7 +275,30 @@ const bestRoute = (
           loading: false,
         });
       });
-  }, 600);
+  };
+
+  const bestRouteParamsListener = () => {
+    const { fromToken, toToken, inputAmount, inputUsdValue } =
+      useBestRouteStore.getState();
+    if (!inputAmount || inputAmount === '0') return;
+
+    if (tokensAreEqual(fromToken, toToken))
+      return bestRouteStore.setState({
+        loading: false,
+        bestRoute: null,
+        outputAmount: new BigNumber(inputAmount),
+        outputUsdValue: inputUsdValue,
+      });
+
+    if (!bestRouteStore.getState().loading)
+      bestRouteStore.setState({
+        loading: true,
+        bestRoute: null,
+        outputAmount: null,
+        outputUsdValue: new BigNumber(0),
+      });
+    debounce(fetchBestRoute, 600)();
+  };
 
   useBestRouteStore.subscribe(
     (state) => ({
@@ -282,8 +308,7 @@ const bestRoute = (
       toToken: state.toToken,
       inputAmount: state.inputAmount,
     }),
-
-    fetchBestRoute.bind(null),
+    bestRouteParamsListener,
     {
       equalityFn: (prevState, state) => {
         if (isRouteParametersChanged(prevState, state)) return false;
@@ -298,7 +323,7 @@ const bestRoute = (
       customSlippage: state.customSlippage,
       disabledLiquiditySources: state.disabledLiquiditySources,
     }),
-    fetchBestRoute.bind(null),
+    bestRouteParamsListener,
     {
       equalityFn: (prevState, state) => {
         if (isRouteParametersChanged(prevState, state)) return false;

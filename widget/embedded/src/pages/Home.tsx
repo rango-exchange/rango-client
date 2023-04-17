@@ -155,7 +155,11 @@ export function Home(props: PropTypes) {
     <Container>
       <Header
         title={title}
-        suffix={<HeaderButtons onClickRefresh={fetchBestRoute} />}
+        suffix={
+          <HeaderButtons
+            onClickRefresh={!!bestRoute ? fetchBestRoute : undefined}
+          />
+        }
       />
       <FromContainer>
         <TokenInfo
