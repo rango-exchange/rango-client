@@ -10,11 +10,7 @@ import {
   getSelectableWallets,
   isExperimentalChain,
 } from '../utils/wallets';
-import {
-  calcOutputUsdValue,
-  getTotalFeeInUsd,
-  requiredWallets,
-} from '../utils/swap';
+import { getTotalFeeInUsd, requiredWallets } from '../utils/swap';
 import { decimalNumber, numberToString } from '../utils/numbers';
 import { useMetaStore } from '../store/meta';
 import { Network, WalletType } from '@rango-dev/wallets-shared';
@@ -33,6 +29,7 @@ import { ConfirmSwapErrors } from '../components/ConfirmSwapErrors';
 import { ConfirmSwapWarnings } from '../components/ConfirmSwapWarnings';
 import { ConfirmSwapExtraMessages } from '../components/warnings/ConfirmSwapExtraMessages';
 import { getBestRouteStatus } from '../utils/routing';
+import { PercentageChange } from '../components/PercentageChange';
 
 export function ConfirmSwapPage() {
   const navigate = useNavigate();
@@ -48,6 +45,8 @@ export function ConfirmSwapPage() {
   const setSelectedWallet = useWalletsStore.use.setSelectedWallet();
   const slippage = useSettingsStore.use.slippage();
   const customSlippage = useSettingsStore.use.customSlippage();
+  const inputUsdValue = useBestRouteStore.use.inputUsdValue();
+  const outputUsdValue = useBestRouteStore.use.outputUsdValue();
 
   const bestRouteloadingStatus = getBestRouteStatus(
     fetchingBestRoute,
@@ -134,7 +133,7 @@ export function ConfirmSwapPage() {
               symbol: firstStep?.from.symbol || '',
               image: firstStep?.from.logo || '',
             }}
-            usdValue={calcOutputUsdValue(fromAmount, firstStep?.from.usdPrice)}
+            usdValue={inputUsdValue}
             amount={fromAmount}
             label={t('From')}
             loadingStatus={bestRouteloadingStatus}
@@ -149,10 +148,16 @@ export function ConfirmSwapPage() {
               symbol: lastStep?.to.symbol || '',
               image: lastStep?.to.logo || '',
             }}
-            usdValue={calcOutputUsdValue(toAmount, lastStep?.to.usdPrice)}
+            usdValue={outputUsdValue}
             amount={toAmount}
             label={t('To')}
             loadingStatus={bestRouteloadingStatus}
+            percentageChange={
+              <PercentageChange
+                inputUsdValue={inputUsdValue}
+                outputUsdValue={outputUsdValue}
+              />
+            }
           />
         </>
       }
