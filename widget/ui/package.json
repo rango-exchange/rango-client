@@ -20,7 +20,7 @@
     "build-storybook": "build-storybook"
   },
   "peerDependencies": {
-    "queue-manager-rango-preset": "*",
+    "@rango-dev/queue-manager-rango-preset": "*",
     "react": ">=16"
   },
   "husky": {

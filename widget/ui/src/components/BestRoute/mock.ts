@@ -1,6 +1,8 @@
 import { RoutingResultType } from 'rango-sdk';
 import { BestRouteType } from '../../types/swaps';
 
+// TODO: I used `internalSwaps: []` to fix ts error. fix it by using real data.
+
 export const bestRoute: BestRouteType = {
   from: { blockchain: 'BSC', symbol: 'BNB', address: null },
   to: { blockchain: 'AVAX_CCHAIN', symbol: 'AVAX', address: null },
@@ -11,6 +13,8 @@ export const bestRoute: BestRouteType = {
     outputAmount: '5.685715974132648891',
     swaps: [
       {
+        // TODO: fix this and use real data
+        internalSwaps: [],
         swapperId: 'AnySwap Aggregator',
         swapperType: 'AGGREGATOR',
         swapperLogo: 'https://api.rango.exchange/swappers/multichain.png',
@@ -63,6 +67,7 @@ export const bestRoute: BestRouteType = {
         includesDestinationTx: false,
       },
       {
+        internalSwaps: [],
         swapperId: 'PangolinSwap',
         swapperLogo: 'https://api.rango.exchange/swappers/pangolin.png',
         swapperType: 'DEX',
@@ -164,6 +169,7 @@ export const bestRouteExample2: BestRouteType = {
     outputAmount: '30.983906',
     swaps: [
       {
+        internalSwaps: [],
         maxRequiredSign: 1,
         warnings: [],
         swapperId: 'ParaSwap Bsc',
@@ -263,6 +269,7 @@ export const bestRouteExample2: BestRouteType = {
         includesDestinationTx: false,
       },
       {
+        internalSwaps: [],
         maxRequiredSign: 1,
         warnings: [],
         swapperId: 'Satellite',
@@ -310,6 +317,7 @@ export const bestRouteExample2: BestRouteType = {
         includesDestinationTx: false,
       },
       {
+        internalSwaps: [],
         maxRequiredSign: 1,
         warnings: [],
         swapperId: 'Osmosis',
@@ -403,6 +411,7 @@ export const bestRouteExample2: BestRouteType = {
         includesDestinationTx: false,
       },
       {
+        internalSwaps: [],
         maxRequiredSign: 1,
         warnings: [],
         swapperId: 'Osmosis',
@@ -486,6 +495,7 @@ export const bestRouteExample3: BestRouteType = {
     outputAmount: '5.685715974132648891',
     swaps: [
       {
+        internalSwaps: [],
         maxRequiredSign: 1,
         warnings: [],
         swapperId: 'AnySwap Aggregator',
