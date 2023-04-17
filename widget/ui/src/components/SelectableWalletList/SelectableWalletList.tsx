@@ -69,6 +69,12 @@ const Container = styled('div', {
     },
   },
 });
+
+const StyledWalletAddress = styled(Typography, {
+  overflow: 'hidden',
+  textOverflow: 'ellipsis',
+});
+
 export interface PropTypes {
   list: SelectableWallet[];
   onChange: (w: SelectableWallet) => void;
@@ -102,6 +108,9 @@ export function SelectableWalletList({
           >
             <img src={w.image} alt={w.walletType} width={24} height={24} />
             <Typography variant="body2">{w.name}</Typography>
+            <StyledWalletAddress variant="caption">
+              {w.address}
+            </StyledWalletAddress>
             <Circle checked={checked}>
               <SolidCircle checked={checked} />
             </Circle>
