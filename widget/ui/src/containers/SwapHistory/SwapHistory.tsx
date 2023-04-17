@@ -180,7 +180,7 @@ const SwapFlowContainer = styled('div', {
   overflowY: 'auto',
 });
 
-type PropTypes = {
+export type PropTypes = {
   pendingSwap: PendingSwap;
   onCopy: (requestId: string) => void;
   onBack: () => void;

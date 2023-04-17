@@ -8,6 +8,7 @@ export const walletsInfo: WalletInfo[] = [
     state: WalletState.DISCONNECTED,
     installLink: '',
     type: WalletType.COINBASE,
+    showOnMobile: true,
   },
   {
     image: 'https://app.rango.exchange/wallets/coinbase.svg',
@@ -15,6 +16,7 @@ export const walletsInfo: WalletInfo[] = [
     state: WalletState.CONNECTED,
     installLink: '',
     type: WalletType.COINBASE,
+    showOnMobile: true,
   },
   {
     image: 'https://app.rango.exchange/wallets/coinbase.svg',
@@ -22,12 +24,14 @@ export const walletsInfo: WalletInfo[] = [
     state: WalletState.CONNECTING,
     installLink: '',
     type: WalletType.COINBASE,
+    showOnMobile: true,
   },
   {
     image: 'https://app.rango.exchange/wallets/coinbase.svg',
     name: 'Coinbase',
     state: WalletState.NOT_INSTALLED,
     type: WalletType.COINBASE,
+    showOnMobile: true,
     installLink:
       'https://chrome.google.com/webstore/detail/coinbase-wallet-extension/hnfanknocfeofbddgcijnmhnfnkdnaad?hl=en',
   },
@@ -37,6 +41,7 @@ export const walletsInfo: WalletInfo[] = [
     state: WalletState.DISCONNECTED,
     installLink: '',
     type: WalletType.COINBASE,
+    showOnMobile: true,
   },
   {
     image: 'https://app.rango.exchange/wallets/coinbase.svg',
@@ -44,6 +49,7 @@ export const walletsInfo: WalletInfo[] = [
     state: WalletState.CONNECTED,
     installLink: '',
     type: WalletType.COINBASE,
+    showOnMobile: true,
   },
   {
     image: 'https://app.rango.exchange/wallets/coinbase.svg',
@@ -51,6 +57,7 @@ export const walletsInfo: WalletInfo[] = [
     state: WalletState.DISCONNECTED,
     installLink: '',
     type: WalletType.COINBASE,
+    showOnMobile: true,
   },
   {
     image: 'https://app.rango.exchange/wallets/coinbase.svg',
@@ -58,6 +65,7 @@ export const walletsInfo: WalletInfo[] = [
     state: WalletState.DISCONNECTED,
     installLink: '',
     type: WalletType.COINBASE,
+    showOnMobile: true,
   },
   {
     image: 'https://app.rango.exchange/wallets/coinbase.svg',
@@ -65,6 +73,7 @@ export const walletsInfo: WalletInfo[] = [
     state: WalletState.DISCONNECTED,
     installLink: '',
     type: WalletType.COINBASE,
+    showOnMobile: true,
   },
   {
     image: 'https://app.rango.exchange/wallets/coinbase.svg',
@@ -72,6 +81,7 @@ export const walletsInfo: WalletInfo[] = [
     state: WalletState.DISCONNECTED,
     installLink: '',
     type: WalletType.COINBASE,
+    showOnMobile: true,
   },
   {
     image: 'https://app.rango.exchange/wallets/coinbase.svg',
@@ -79,6 +89,7 @@ export const walletsInfo: WalletInfo[] = [
     state: WalletState.DISCONNECTED,
     installLink: '',
     type: WalletType.COINBASE,
+    showOnMobile: true,
   },
   {
     image: 'https://app.rango.exchange/wallets/coinbase.svg',
@@ -86,6 +97,7 @@ export const walletsInfo: WalletInfo[] = [
     state: WalletState.DISCONNECTED,
     installLink: '',
     type: WalletType.COINBASE,
+    showOnMobile: true,
   },
   {
     image: 'https://app.rango.exchange/wallets/coinbase.svg',
@@ -93,6 +105,7 @@ export const walletsInfo: WalletInfo[] = [
     state: WalletState.DISCONNECTED,
     installLink: '',
     type: WalletType.COINBASE,
+    showOnMobile: true,
   },
   {
     image: 'https://app.rango.exchange/wallets/coinbase.svg',
@@ -100,6 +113,7 @@ export const walletsInfo: WalletInfo[] = [
     state: WalletState.DISCONNECTED,
     installLink: '',
     type: WalletType.COINBASE,
+    showOnMobile: true,
   },
   {
     image: 'https://app.rango.exchange/wallets/coinbase.svg',
@@ -107,6 +121,7 @@ export const walletsInfo: WalletInfo[] = [
     state: WalletState.DISCONNECTED,
     installLink: '',
     type: WalletType.COINBASE,
+    showOnMobile: true,
   },
   {
     image: 'https://app.rango.exchange/wallets/coinbase.svg',
@@ -114,5 +129,6 @@ export const walletsInfo: WalletInfo[] = [
     state: WalletState.DISCONNECTED,
     installLink: '',
     type: WalletType.COINBASE,
+    showOnMobile: true,
   },
 ];

@@ -37,6 +37,7 @@ export function StatusDrawer({
 }: PropTypes) {
   return (
     <Drawer
+      container={document.body}
       content={
         <>
           <Header>

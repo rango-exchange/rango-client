@@ -1,7 +1,8 @@
+// @ts-nocheck
 import { WalletType } from '@rango-dev/wallets-shared';
 import { RoutingResultType } from 'rango-sdk';
 import { BestRouteType } from '../../types/swaps';
-import { SelectableWallet } from './types';
+import { SelectableWallet } from '../../types';
 
 export const bestRoute: BestRouteType = {
   from: { blockchain: 'BSC', symbol: 'BNB', address: null },

@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { RoutingResultType, TransactionType } from 'rango-sdk';
 import { PendingSwap } from '../../containers/History/types';
 
