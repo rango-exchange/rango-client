@@ -27,7 +27,8 @@
     "dev:playground": "node ./scripts/dev-watch/command.mjs --project @rango-dev/widget-playground",
     "lint": "nx run-many --target=lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "publish": "node ./scripts/publish/command.mjs"
+    "publish": "node ./scripts/publish/command.mjs",
+    "release": "node ./scripts/release/command.mjs"
   },
   "dependencies": {
     "@size-limit/preset-small-lib": "^8.1.0",
