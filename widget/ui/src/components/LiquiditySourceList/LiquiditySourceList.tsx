@@ -22,6 +22,16 @@ const groupLiquiditySources = (
   ),
 });
 
+const MainContainer = styled('div', {
+  variants: {
+    loaded: {
+      true: {
+        overflowY: 'auto',
+      },
+    },
+  },
+});
+
 const LiquiditySourceType = styled('div', {
   position: 'sticky',
   display: 'flex',
@@ -88,7 +98,10 @@ export function LiquiditySourceList(props: PropTypes) {
   const totalSelectedExchanges = exchanges.filter(isSelected).length;
 
   return (
-    <div style={listContainerStyle}>
+    <MainContainer
+      style={listContainerStyle}
+      loaded={loadingStatus === 'success'}
+    >
       <div>
         <LiquiditySourceType>
           <Typography variant="h5">Bridges</Typography>
@@ -155,7 +168,7 @@ export function LiquiditySourceList(props: PropTypes) {
           </>
         )}
       </div>
-    </div>
+    </MainContainer>
   );
 }
 

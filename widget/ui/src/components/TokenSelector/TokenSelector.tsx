@@ -10,7 +10,7 @@ import { NotFoundAlert } from '../Alert/NotFoundAlert';
 import { styled } from '../../theme';
 
 const Container = styled('div', {
-  height: '450px',
+  flex: '1',
 });
 
 export const LoaderContainer = styled('div', {

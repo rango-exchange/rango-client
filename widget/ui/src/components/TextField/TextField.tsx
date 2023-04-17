@@ -4,6 +4,7 @@ import { styled } from '../../theme';
 
 const InputContainer = styled('div', {
   backgroundColor: '$background',
+  padding: '1px',
   boxSizing: 'border-box',
   border: '1px solid $neutrals400',
   borderRadius: '$5',
