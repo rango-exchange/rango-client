@@ -19,4 +19,8 @@ And also all the apps published by `prerelase` workflow will be published under 
 
 ### Production relase
 
-TBA
+Release should be triggered manually and then it will automatically published. You only need to run this command on you local machine to release the production:
+
+`yarn run release`
+
+After release (Green pipleline), make sure you will merge `main` into `next` as well. 

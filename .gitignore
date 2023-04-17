@@ -3,6 +3,7 @@
 dist/
 lerna-debug.log
 .vercel
+.npmrc
 
 # dependencies
 node_modules
