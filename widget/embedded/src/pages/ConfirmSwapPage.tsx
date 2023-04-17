@@ -32,13 +32,14 @@ import { ConfirmSwapErrorTypes } from '../types';
 import { ConfirmSwapErrors } from '../components/ConfirmSwapErrors';
 import { ConfirmSwapWarnings } from '../components/ConfirmSwapWarnings';
 import { ConfirmSwapExtraMessages } from '../components/warnings/ConfirmSwapExtraMessages';
+import { getBestRouteStatus } from '../utils/routing';
 
 export function ConfirmSwapPage() {
   const navigate = useNavigate();
   const { navigateBackFrom } = useNavigateBack();
   const bestRoute = useBestRouteStore.use.bestRoute();
   const fetchingBestRoute = useBestRouteStore.use.loading();
-  const fetchingBestRouteFailed = useBestRouteStore.use.error();
+  const fetchingBestRouteError = useBestRouteStore.use.error();
   const setSelectedSwap = useUiStore.use.setSelectedSwap();
   const { blockchains, tokens } = useMetaStore.use.meta();
   const accounts = useWalletsStore.use.accounts();
@@ -48,11 +49,10 @@ export function ConfirmSwapPage() {
   const slippage = useSettingsStore.use.slippage();
   const customSlippage = useSettingsStore.use.customSlippage();
 
-  const bestRouteloadingStatus = fetchingBestRoute
-    ? 'loading'
-    : fetchingBestRouteFailed
-    ? 'failed'
-    : 'success';
+  const bestRouteloadingStatus = getBestRouteStatus(
+    fetchingBestRoute,
+    !!fetchingBestRouteError
+  );
 
   const { manager } = useManager();
   const { loading, errors, warnings, confirmSwap } = useConfirmSwap();
