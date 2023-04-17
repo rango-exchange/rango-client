@@ -2,6 +2,7 @@ import React, { PropsWithChildren, useEffect, useState } from 'react';
 import { styled } from '../../theme';
 import { SelectableWallet } from '../../types';
 import { Typography } from '../Typography';
+import { getConciseAddress } from '../../helper';
 
 const Row = styled('div', {
   display: 'flex',
@@ -70,11 +71,6 @@ const Container = styled('div', {
   },
 });
 
-const StyledWalletAddress = styled(Typography, {
-  overflow: 'hidden',
-  textOverflow: 'ellipsis',
-});
-
 export interface PropTypes {
   list: SelectableWallet[];
   onChange: (w: SelectableWallet) => void;
@@ -108,9 +104,9 @@ export function SelectableWalletList({
           >
             <img src={w.image} alt={w.walletType} width={24} height={24} />
             <Typography variant="body2">{w.name}</Typography>
-            <StyledWalletAddress variant="caption">
-              {w.address}
-            </StyledWalletAddress>
+            <Typography variant="caption">
+              {getConciseAddress(w.address)}
+            </Typography>
             <Circle checked={checked}>
               <SolidCircle checked={checked} />
             </Circle>
