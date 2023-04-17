@@ -1,7 +1,6 @@
 import { CSSProperties } from '@stitches/react';
 import React from 'react';
 import { containsText } from '../../helper';
-import { styled } from '../../theme';
 import { LiquiditySource, LoadingStatus } from '../../types/meta';
 import { Button } from '../Button';
 import { LiquiditySourceList } from '../LiquiditySourceList';
