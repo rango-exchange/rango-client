@@ -24,3 +24,5 @@ Release should be triggered manually and then it will automatically published. Y
 `yarn run release`
 
 After release (Green pipleline), make sure you will merge `main` into `next` as well. 
+
+`git pull && git checkout next && git pull && git merge main && git push`
