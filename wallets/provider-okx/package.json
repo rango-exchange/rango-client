@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/provider-okx",
-  "version": "0.1.11-next.86",
+  "version": "0.1.11-next.87",
   "license": "MIT",
   "module": "dist/provider-okx.esm.js",
   "main": "dist/index.js",
