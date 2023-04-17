@@ -35,9 +35,7 @@ import { TokenPreview } from '../components/TokenPreview';
 import { Spacer } from '@rango-dev/ui';
 import { numberToString } from '../utils/numbers';
 import { t } from 'i18next';
-import { LoaderContainer } from './WalletsPage';
-
-const PlaceholderContainer = styled('div', { height: '450px' });
+import { SwapDetailsPlaceholder } from '../components/SwapDetailsPlaceholder';
 
 export function SwapDetailsPage() {
   const selectedSwapRequestId = useUiStore.use.selectedSwapRequestId();
@@ -67,27 +65,14 @@ export function SwapDetailsPage() {
   };
   const swap = selectedSwap?.swap;
 
-  const SwapDetailsPlaceholder = () => (
-    <SecondaryPage
-      title="Swap Details"
-      textField={false}
-      onBack={navigateBackFrom.bind(null, navigationRoutes.swapDetails)}
-    >
-      <PlaceholderContainer>
-        {loading ? (
-          <LoaderContainer>
-            <Spinner size={24} />
-          </LoaderContainer>
-        ) : (
-          <Alert
-            type="secondary"
-            title={`Swap with request ID = ${selectedSwapRequestId} not found.`}
-          />
-        )}
-      </PlaceholderContainer>
-    </SecondaryPage>
-  );
-  if (!swap) return <SwapDetailsPlaceholder />;
+  if (!swap)
+    return (
+      <SwapDetailsPlaceholder
+        requestId={selectedSwapRequestId || ''}
+        loading={loading}
+        onBack={navigateBackFrom.bind(null, navigationRoutes.swapDetails)}
+      />
+    );
 
   const firstStep = swap.steps[0];
   const lastStep = swap.steps[swap.steps.length - 1];

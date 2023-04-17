@@ -148,3 +148,10 @@ export function getBestRouteWithCalculatedFees(
     result: { ...bestRoute.result, swaps: swapsWithFee },
   };
 }
+
+//todo: refactor bestRoute store and add loadingStatus
+export const getBestRouteStatus = (loading: boolean, error: boolean) => {
+  if (loading) return 'loading';
+  if (error) return 'failed';
+  else return 'success';
+};

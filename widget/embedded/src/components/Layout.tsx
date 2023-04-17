@@ -114,7 +114,7 @@ export function Layout({ configs }: LayoutProps) {
           )}
           <div className="balance">
             <Typography variant="body2">
-              {!fetchingBalance && !accounts?.length
+              {!accounts?.length
                 ? t('Connect Wallet')
                 : `$${totalBalance || 0}`}
             </Typography>
