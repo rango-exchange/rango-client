@@ -28,6 +28,7 @@ import {
 import { TokenPreview } from '../components/TokenPreview';
 import { Spacer } from '@rango-dev/ui';
 import { numberToString } from '../utils/numbers';
+//@ts-ignore
 import { t } from 'i18next';
 import { SwapDetailsPlaceholder } from '../components/SwapDetailsPlaceholder';
 
