@@ -40,6 +40,7 @@ export function TokenItem(props: PropTypes) {
         ...style,
         height: '48px',
         top: `${parseFloat(style?.top as string) + 0}px`,
+        padding: '0 4px',
       }}
     >
       <Button

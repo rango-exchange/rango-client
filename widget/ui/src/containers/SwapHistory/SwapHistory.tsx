@@ -150,6 +150,9 @@ const RequestId = styled('div', {
   whiteSpace: 'nowrap',
   overflow: 'hidden',
   textOverflow: 'ellipsis',
+  '@md': {
+    width: 'auto',
+  },
 });
 
 const ExtraDetails = styled('div', {
@@ -258,9 +261,13 @@ export function SwapHistory(props: PropTypes) {
           </Row>
           <ExtraDetails>{date}</ExtraDetails>
         </SwapInfoContainer>
-        <Divider size={16} />
+        {/* TODO: It was temporarily removed to find a better solution. 
+
+              <Divider size={16} />*/}
       </div>
       <SwapFlowContainer>
+        {/*{previewInputs} */}
+
         {extraMessageProps.shortMessage && (
           <SwapMessages {...extraMessageProps} />
         )}
