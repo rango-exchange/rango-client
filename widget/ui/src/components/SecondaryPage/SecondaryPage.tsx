@@ -33,8 +33,6 @@ const ContentContainer = styled('div', {
 
 const TextFieldContainer = styled('div', {
   padding: '1px',
-  overflowY: 'auto',
-  overflowX: 'hidden',
 });
 
 export function SecondaryPage(props: PropTypes) {
