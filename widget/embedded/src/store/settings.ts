@@ -13,12 +13,14 @@ export interface SettingsState {
   infiniteApprove: boolean;
   disabledLiquiditySources: string[];
   theme: Theme;
+  affiliateRef: string | null;
   setSlippage: (slippage: number) => void;
   setCustomSlippage: (customSlippage: number | null) => void;
   toggleInfiniteApprove: () => void;
   toggleLiquiditySource: (name: string) => void;
   setTheme: (theme: Theme) => void;
   toggleAllLiquiditySources: () => void;
+  setAffiliateRef: (affiliateRef: string | null) => void;
 }
 
 export const useSettingsStore = createSelectors(
@@ -28,6 +30,7 @@ export const useSettingsStore = createSelectors(
         slippage: DEFAULT_SLIPPAGE,
         customSlippage: null,
         infiniteApprove: false,
+        affiliateRef: null,
         disabledLiquiditySources: [],
         theme: 'auto',
         setSlippage: (slippage) =>
@@ -37,6 +40,10 @@ export const useSettingsStore = createSelectors(
         setCustomSlippage: (customSlippage) =>
           set(() => ({
             customSlippage: customSlippage,
+          })),
+        setAffiliateRef: (affiliateRef) =>
+          set(() => ({
+            affiliateRef,
           })),
         toggleAllLiquiditySources: () =>
           set((state) => {

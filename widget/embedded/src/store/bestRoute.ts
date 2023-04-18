@@ -249,7 +249,7 @@ const bestRoute = (
   let abortController: AbortController | null = null;
   const fetchBestRoute = () => {
     const { fromToken, toToken, inputAmount } = bestRouteStore.getState();
-    const { slippage, customSlippage, disabledLiquiditySources } =
+    const { slippage, customSlippage, disabledLiquiditySources, affiliateRef } =
       settingsStore.getState();
     if (!fromToken || !toToken || !inputAmount || inputAmount === '0') return;
     abortController?.abort();
@@ -263,7 +263,8 @@ const bestRoute = (
       [],
       disabledLiquiditySources,
       userSlippage,
-      false
+      false,
+      affiliateRef
     );
     if (!bestRouteStore.getState().loading)
       bestRouteStore.setState({
