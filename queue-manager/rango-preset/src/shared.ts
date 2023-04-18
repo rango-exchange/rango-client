@@ -17,7 +17,6 @@ import {
 
 import { PrettyError } from './shared-errors';
 import BigNumber from 'bignumber.js';
-import { numberToString } from './numbers';
 
 export interface PendingSwapWithQueueID {
   id: string;
@@ -455,9 +454,7 @@ export function calculatePendingSwap(
           // output, fee, timing
           expectedOutputAmountHumanReadable: swap.toAmount,
           outputAmount: '',
-          feeInUsd: meta
-            ? numberToString(getUsdFeeOfStep(swap, meta?.tokens), null, 2)
-            : null,
+          feeInUsd: meta ? getUsdFeeOfStep(swap, meta?.tokens) : null,
           estimatedTimeInSeconds: swap.estimatedTimeInSeconds || null,
 
           // status, tracking
