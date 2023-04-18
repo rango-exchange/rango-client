@@ -30,7 +30,7 @@ export function HeaderButtons(props: PropTypes) {
           onClick={onClickRefresh}
           disabled={!onClickRefresh}
         >
-          <RetryIcon size={24} color={!onClickRefresh ? 'disabled' : 'black'} />
+          <RetryIcon size={24} disabled={!onClickRefresh} />
         </Button>
       </Tooltip>
       <Tooltip content="Transactions History">
