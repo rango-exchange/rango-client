@@ -12,7 +12,6 @@ import {
   SLIPPAGES,
 } from '../constants/swapSettings';
 import { useNavigateBack } from '../hooks/useNavigateBack';
-import type { Theme } from '@rango-dev/ui';
 interface PropTypes {
   supportedSwappers: 'all' | Source[];
 }
@@ -32,11 +31,6 @@ export function SettingsPage({ supportedSwappers }: PropTypes) {
   const infiniteApprove = useSettingsStore.use.infiniteApprove();
   const toggleInfiniteApprove = useSettingsStore.use.toggleInfiniteApprove();
   const loadingMetaStatus = useMetaStore.use.loadingStatus();
-
-  const changeTheme = (theme: Theme) => {
-    setTheme(theme);
-    document.body.style.background = theme === 'dark' ? '#000' : '#fff';
-  };
 
   const uniqueSwappersGroups: Array<{
     title: string;
@@ -98,7 +92,7 @@ export function SettingsPage({ supportedSwappers }: PropTypes) {
       minSlippage={MIN_SLIPPGAE}
       maxSlippage={MAX_SLIPPAGE}
       selectedTheme={theme}
-      onThemeChange={changeTheme}
+      onThemeChange={setTheme}
       infiniteApprove={infiniteApprove}
       toggleInfiniteApprove={toggleInfiniteApprove}
       loadingStatus={loadingMetaStatus}
