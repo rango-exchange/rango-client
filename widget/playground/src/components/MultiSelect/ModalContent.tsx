@@ -25,7 +25,7 @@ type PropTypes =
     }
   | {
       type: 'Sources';
-      selectedList?: Source[];
+      selectedList?: string[];
       list: LiquiditySource[];
       onChange: (sources: Source) => void;
     };
@@ -38,7 +38,7 @@ const getIndex = (list, v, type) => {
     case 'Wallets':
       return list.findIndex((item) => item === v);
     case 'Sources':
-      return list.findIndex((item) => item.title === v.title && item.type === v.type);
+      return list.findIndex((item) => item === v);
   }
 };
 
@@ -56,12 +56,12 @@ export default function ModalContent({ type, list, selectedList, onChange }: Pro
         <ListContainer>
           {filterList(list, searchedFor).map((item, index) => (
             <Button
-              type={isSelect(type === 'Wallets' ? item.type : item) ? 'primary' : undefined}
+              type={isSelect(type === 'Wallets' ? item.type : item.title) ? 'primary' : undefined}
               variant="outlined"
               size="large"
               prefix={<Image src={item.logo} />}
               suffix={
-                isSelect(type === 'Wallets' ? item.type : item) ? <FilledCircle /> : undefined
+                isSelect(type === 'Wallets' ? item.type : item.title) ? <FilledCircle /> : undefined
               }
               align="start"
               onClick={onChange.bind(null, item)}

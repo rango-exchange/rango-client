@@ -5,7 +5,6 @@ import { useMetaStore } from '../store/meta';
 import { useNavigate } from 'react-router-dom';
 import { navigationRoutes } from '../constants/navigationRoutes';
 import { removeDuplicateFrom } from '../utils/common';
-import { Source } from '../types';
 import {
   MAX_SLIPPAGE,
   MIN_SLIPPGAE,
@@ -13,7 +12,7 @@ import {
 } from '../constants/swapSettings';
 import { useNavigateBack } from '../hooks/useNavigateBack';
 interface PropTypes {
-  supportedSwappers?: Source[];
+  supportedSwappers?: string[];
 }
 export function SettingsPage({ supportedSwappers }: PropTypes) {
   const slippage = useSettingsStore.use.slippage();
@@ -56,18 +55,12 @@ export function SettingsPage({ supportedSwappers }: PropTypes) {
     });
   supportedSwappers &&
     uniqueSwappersGroups.filter(
-      (item) =>
-        supportedSwappers.filter(
-          (s) => s.title === item.title && s.type === item.type
-        ).length > 0
+      (item) => supportedSwappers.filter((s) => s === item.title).length > 0
     );
 
   const supportedUniqueSwappersGroups = supportedSwappers
     ? uniqueSwappersGroups.filter(
-        (item) =>
-          supportedSwappers.filter(
-            (s) => s.title === item.title && s.type === item.type
-          ).length > 0
+        (item) => supportedSwappers.filter((s) => s === item.title).length > 0
       )
     : uniqueSwappersGroups;
 

@@ -23,9 +23,9 @@ type PropTypes = (
     }
   | {
       type: 'Sources';
-      value?: Source[];
+      value?: string[];
       list: LiquiditySource[];
-      onChange: (source: Source | 'all' | 'empty') => void;
+      onChange: (source: string | 'all' | 'empty') => void;
     }
 ) & {
   label: string;
@@ -45,7 +45,7 @@ export function MultiSelect({ label, type, modalTitle, list, value, onChange }: 
   const onClose = () => {
     if (!value || !value.length) onChange('all');
     setOpen(false);
-  };  
+  };
   const renderModalContent = () => {
     switch (type) {
       case 'Blockchains':
@@ -65,7 +65,7 @@ export function MultiSelect({ label, type, modalTitle, list, value, onChange }: 
         return (
           <ModalContent
             list={list}
-            onChange={(item) => onChange(item)}
+            onChange={(item) => onChange(item.title)}
             selectedList={value}
             type={type}
           />
@@ -87,9 +87,8 @@ export function MultiSelect({ label, type, modalTitle, list, value, onChange }: 
       case 'Blockchains':
         return value;
       case 'Wallets':
-        return value;
       case 'Sources':
-        return value.title;
+        return value;
     }
   };
   return (

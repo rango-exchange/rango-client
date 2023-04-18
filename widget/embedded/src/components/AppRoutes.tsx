@@ -24,13 +24,7 @@ export function AppRoutes(props: PropTypes) {
   return useRoutes([
     {
       path: getAbsolutePath(navigationRoutes.home),
-      element: (
-        <Home
-          title={config?.title}
-          titleSize={config?.theme?.titleSize}
-          titleWeight={config?.theme?.titleWeight}
-        />
-      ),
+      element: <Home />,
     },
     {
       path: getAbsolutePath(navigationRoutes.fromChain),
@@ -44,42 +38,29 @@ export function AppRoutes(props: PropTypes) {
     {
       path: getAbsolutePath(navigationRoutes.toChain),
       element: (
-        <SelectChainPage
-          type="to"
-          supportedChains={config?.to?.blockchains}
-        />
+        <SelectChainPage type="to" supportedChains={config?.to?.blockchains} />
       ),
     },
     {
       path: getAbsolutePath(navigationRoutes.fromToken),
       element: (
-        <SelectTokenPage
-          type="from"
-          supportedTokens={config?.from?.tokens}
-        />
+        <SelectTokenPage type="from" supportedTokens={config?.from?.tokens} />
       ),
     },
     {
       path: getAbsolutePath(navigationRoutes.toToken),
       element: (
-        <SelectTokenPage
-          type="to"
-          supportedTokens={config?.to?.tokens}
-        />
+        <SelectTokenPage type="to" supportedTokens={config?.to?.tokens} />
       ),
     },
     {
       path: getAbsolutePath(navigationRoutes.settings),
-      element: (
-        <SettingsPage supportedSwappers={config?.liquiditySources} />
-      ),
+      element: <SettingsPage supportedSwappers={config?.liquiditySources} />,
     },
     {
       path: getAbsolutePath(navigationRoutes.liquiditySources),
       element: (
-        <LiquiditySourcePage
-          supportedSwappers={config?.liquiditySources }
-        />
+        <LiquiditySourcePage supportedSwappers={config?.liquiditySources} />
       ),
     },
     { path: getAbsolutePath(navigationRoutes.swaps), element: <HistoryPage /> },

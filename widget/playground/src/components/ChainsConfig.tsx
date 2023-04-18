@@ -51,7 +51,7 @@ export function ChainsConfig({ type }: PropTypes) {
         tokensList = [...tokensList, ...tokens.filter((token) => token.blockchain === chain)];
       }
     }
-    onChangeTokens(tokensList.length ? tokensList : null, type);
+    onChangeTokens(tokensList && tokensList.length ? tokensList : undefined, type);
   };
 
   return (

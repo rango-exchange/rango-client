@@ -20,7 +20,7 @@ export type COLORS =
 interface ConfigState {
   config: WidgetConfig;
   onChangeWallets: (wallets?: WalletType[]) => void;
-  onChangeSources: (sources?: Source[]) => void;
+  onChangeSources: (sources?: string[]) => void;
   onChangeBlockChains: (chains?: string[], type?: Type) => void;
   onChangeTokens: (tokens?: Asset[], type?: Type) => void;
   onChangeBooleansConfig: (name: 'multiWallets' | 'customeAddress', value: boolean) => void;

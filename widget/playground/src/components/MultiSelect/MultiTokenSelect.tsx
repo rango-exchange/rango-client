@@ -105,7 +105,7 @@ export function MultiTokenSelect({ label, modalTitle, list, blockchains, type }:
 
   const onClose = () => {
     if (!!tokens && (!tokens.length || tokens.length === list.length)) {
-      onChangeTokens(null, type);
+      onChangeTokens(undefined, type);
     }
     setOpen(false);
   };
@@ -139,7 +139,7 @@ export function MultiTokenSelect({ label, modalTitle, list, blockchains, type }:
             onCheckedChange={(checked) => {
               if (checked) {
                 setChain('');
-                onChangeTokens(null, type);
+                onChangeTokens(undefined, type);
               } else {
                 onChangeTokens([], type);
                 setChain(blockchains[0].name);
