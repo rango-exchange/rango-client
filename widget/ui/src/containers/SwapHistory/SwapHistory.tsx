@@ -12,6 +12,7 @@ import {
   Drawer,
   Spinner,
   Divider,
+  Image,
 } from '../../components';
 import { styled } from '../../theme';
 import { PendingSwap } from '../History/types';
@@ -41,11 +42,6 @@ export const ErrorMsg = styled(Typography, {
 export const Fee = styled('div', {
   display: 'flex',
   alignItems: 'center',
-});
-
-export const SwapperLogo = styled('img', {
-  width: '$16',
-  height: '$16',
 });
 
 export const RelativeContainer = styled('div', {
@@ -299,12 +295,11 @@ export function SwapHistory(props: PropTypes) {
             )}
             <Line />
             <SwapperContainer>
-              <SwapperLogo
-                src={
-                  // @ts-ignore
-                  step.swapperLogo || ''
-                }
+              <Image
+                // @ts-ignore
+                src={step.swapperLogo}
                 alt={step.swapperId}
+                size={16}
               />
               <div>
                 <Typography ml={4} variant="caption">

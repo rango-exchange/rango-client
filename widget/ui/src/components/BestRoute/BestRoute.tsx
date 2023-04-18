@@ -7,6 +7,7 @@ import { Skeleton } from '../Skeleton';
 import { Spinner } from '../Spinner';
 import { BestRouteResponse } from 'rango-sdk';
 import { Tooltip } from '../Tooltip';
+import { Image } from '../common';
 
 const Container = styled('div', {
   borderRadius: '$5',
@@ -48,10 +49,6 @@ const HR = styled('hr', {
   margin: '$8 0',
 });
 
-const SwapperLogo = styled('img', {
-  width: '$16',
-  height: '$16',
-});
 const RelativeContainer = styled('div', {
   position: 'relative',
 });
@@ -208,7 +205,7 @@ export function BestRoute(props: PropsWithChildren<PropTypes>) {
               )}
               <SwapperContainer>
                 <Line />
-                <SwapperLogo src={swap.swapperLogo} alt={swap.swapperId} />
+                <Image src={swap.swapperLogo} alt={swap.swapperId} size={20} />
                 <Line />
               </SwapperContainer>
 

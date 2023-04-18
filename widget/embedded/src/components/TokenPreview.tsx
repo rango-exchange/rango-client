@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { Spacer } from '@rango-dev/ui';
 import BigNumber from 'bignumber.js';
 import { numberToString } from '../utils/numbers';
+import { Image } from '@rango-dev/ui';
 
 const Box = styled('div', {
   display: 'flex',
@@ -58,11 +59,6 @@ const Container = styled('div', {
       width: '30%',
     },
   },
-});
-
-const StyledImage = styled('img', {
-  width: '$24',
-  maxHeight: '$24',
 });
 
 const ImagePlaceholder = styled('span', {
@@ -142,7 +138,7 @@ export function TokenPreview(props: PropTypes) {
             loading={loadingStatus === 'loading'}
             prefix={
               loadingStatus === 'success' && chain ? (
-                <StyledImage src={chain.logo} />
+                <Image src={chain.logo} size={24} />
               ) : (
                 <ImagePlaceholder />
               )
@@ -162,7 +158,7 @@ export function TokenPreview(props: PropTypes) {
             loading={loadingStatus === 'loading'}
             prefix={
               loadingStatus === 'success' && token ? (
-                <StyledImage src={token.image} />
+                <Image src={token.image} size={24} />
               ) : (
                 <ImagePlaceholder />
               )

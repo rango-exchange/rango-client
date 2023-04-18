@@ -1,6 +1,7 @@
 import React from 'react';
 import { styled } from '../../theme';
 import { Spacer } from '../Spacer';
+import { Image } from '../common';
 
 const TokenContainer = styled('div', {
   display: 'flex',
@@ -14,13 +15,6 @@ const TokenContainer = styled('div', {
 
 const TokenImage = styled('div', {
   position: 'relative',
-  width: '$24',
-  height: '$24',
-
-  img: {
-    width: '100%',
-    display: 'block',
-  },
 
   '.overlay': {
     position: 'absolute',
@@ -30,6 +24,9 @@ const TokenImage = styled('div', {
     height: '$16',
     padding: '$2',
     borderRadius: '50%',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
     backgroundColor: '$background',
     border: '1px solid $neutrals400',
   },
@@ -52,11 +49,12 @@ export function Token(props: PropTypes) {
   return (
     <TokenContainer>
       <TokenImage>
-        <img src={props.data.token.logo} alt="" />
+        <Image src={props.data.token.logo} alt="" size={24} />
         <div className="overlay">
-          <img
+          <Image
             src={props.data.blockchain.logo}
             alt={props.data.blockchain.name}
+            size={12}
           />
         </div>
       </TokenImage>
