@@ -28,7 +28,8 @@
     "lint": "nx run-many --target=lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "publish": "node ./scripts/publish/command.mjs",
-    "release": "node ./scripts/release/command.mjs"
+    "release": "node ./scripts/release/command.mjs",
+    "upgrade-all": "node ./scripts/upgrade-all/command.mjs --project "
   },
   "dependencies": {
     "@size-limit/preset-small-lib": "^8.1.0",
