@@ -20,7 +20,7 @@ import { Spinner } from '@rango-dev/ui';
 import { LoadingFailedAlert } from '@rango-dev/ui';
 
 interface PropTypes {
-  supportedWallets: 'all' | WalletType[];
+  supportedWallets?: WalletType[];
   multiWallets: boolean;
 }
 
@@ -50,7 +50,7 @@ export function WalletsPage({ supportedWallets, multiWallets }: PropTypes) {
   const wallets = getlistWallet(
     state,
     getWalletInfo,
-    supportedWallets === 'all' ? Object.values(WalletType) : supportedWallets
+    supportedWallets || Object.values(WalletType)
   );
   const walletsRef = useRef<WalletInfo[]>();
 

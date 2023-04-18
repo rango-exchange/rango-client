@@ -4,19 +4,21 @@ import { useBestRouteStore } from '../store/bestRoute';
 import { useMetaStore } from '../store/meta';
 import { useNavigateBack } from '../hooks/useNavigateBack';
 import { navigationRoutes } from '../constants/navigationRoutes';
-import { BlockchainMeta } from 'rango-sdk';
 
 interface PropTypes {
   type: 'from' | 'to';
-  supportedChains: 'all' | BlockchainMeta[];
+  supportedChains?: string[];
 }
 
 export function SelectChainPage(props: PropTypes) {
   const { type, supportedChains } = props;
-  const blockchains =
-    supportedChains === 'all'
-      ? useMetaStore.use.meta().blockchains
-      : supportedChains;
+  const blockchains = supportedChains
+    ? useMetaStore.use
+        .meta()
+        .blockchains.filter(
+          (chain) => !supportedChains.includes(chain.name)
+        )
+    : useMetaStore.use.meta().blockchains;
   const loadingStatus = useMetaStore.use.loadingStatus();
   const fromChain = useBestRouteStore.use.fromChain();
   const toChain = useBestRouteStore.use.toChain();

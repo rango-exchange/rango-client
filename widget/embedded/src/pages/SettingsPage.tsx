@@ -13,7 +13,7 @@ import {
 } from '../constants/swapSettings';
 import { useNavigateBack } from '../hooks/useNavigateBack';
 interface PropTypes {
-  supportedSwappers: 'all' | Source[];
+  supportedSwappers?: Source[];
 }
 export function SettingsPage({ supportedSwappers }: PropTypes) {
   const slippage = useSettingsStore.use.slippage();
@@ -45,8 +45,6 @@ export function SettingsPage({ supportedSwappers }: PropTypes) {
     .find((s) => {
       if (s) {
         for (const type of s.types) {
-          if (supportedSwappers !== 'all') {
-          }
           uniqueSwappersGroups.push({
             title: s.swapperGroup,
             logo: s.logo,
@@ -56,7 +54,7 @@ export function SettingsPage({ supportedSwappers }: PropTypes) {
         }
       }
     });
-  supportedSwappers !== 'all' &&
+  supportedSwappers &&
     uniqueSwappersGroups.filter(
       (item) =>
         supportedSwappers.filter(
@@ -64,15 +62,14 @@ export function SettingsPage({ supportedSwappers }: PropTypes) {
         ).length > 0
     );
 
-  const supportedUniqueSwappersGroups =
-    supportedSwappers !== 'all'
-      ? uniqueSwappersGroups.filter(
-          (item) =>
-            supportedSwappers.filter(
-              (s) => s.title === item.title && s.type === item.type
-            ).length > 0
-        )
-      : uniqueSwappersGroups;
+  const supportedUniqueSwappersGroups = supportedSwappers
+    ? uniqueSwappersGroups.filter(
+        (item) =>
+          supportedSwappers.filter(
+            (s) => s.title === item.title && s.type === item.type
+          ).length > 0
+      )
+    : uniqueSwappersGroups;
 
   return (
     <Settings

@@ -2,22 +2,26 @@ import { createTheme } from '@rango-dev/ui';
 import { useState, useEffect, useLayoutEffect } from 'react';
 import { useMetaStore } from '../store/meta';
 import { useSettingsStore } from '../store/settings';
-import { Colors } from '../types';
+import { Theme } from '../types';
 import { shadeColor } from '../utils/common';
 import usePrevious from './usePrevious';
 
 export function useTheme({
-  primary = '#5FA425',
-  background = '#fff',
-  foreground = '#000',
-  error = '#FF0000',
-  warning = '#F5A623',
-  success = '#0070F3',
+  colors: themeColors,
   fontFamily = 'Robot',
   borderRadius = 8,
-}: Colors & { borderRadius?: number; fontFamily?: string }) {
+  mode = 'auto',
+}: Theme) {
   const theme = useSettingsStore.use.theme();
   const fetchMeta = useMetaStore.use.fetchMeta();
+  const setTheme = useSettingsStore.use.setTheme();
+
+  const primary = themeColors?.primary || '#5FA425',
+    background = themeColors?.background || '#fff',
+    foreground = themeColors?.foreground || '#000',
+    error = themeColors?.error || '#FF0000',
+    warning = themeColors?.warning || '#F5A623',
+    success = themeColors?.success || '#0070F3';
   const colors = {
     neutrals200: '#FAFAFA',
     neutrals300: '#f2f2f2',
@@ -86,6 +90,10 @@ export function useTheme({
     (async () => {
       await fetchMeta();
     })();
+
+    useEffect(() => {
+      if (mode !== 'auto') setTheme(mode);
+    }, [mode]);
 
     const switchTheme = (event: MediaQueryListEvent) => {
       if (event.matches) setOSTheme(customeDarkTheme);

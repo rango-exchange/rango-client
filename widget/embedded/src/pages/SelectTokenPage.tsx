@@ -1,7 +1,7 @@
 import React from 'react';
 import { TokenSelector } from '@rango-dev/ui';
 import { useBestRouteStore } from '../store/bestRoute';
-import { Token } from 'rango-sdk';
+import { Asset, Token } from 'rango-sdk';
 import { useNavigateBack } from '../hooks/useNavigateBack';
 import { navigationRoutes } from '../constants/navigationRoutes';
 import { tokensAreEqual } from '../utils/wallets';
@@ -9,7 +9,7 @@ import { useMetaStore } from '../store/meta';
 
 interface PropTypes {
   type: 'from' | 'to';
-  supportedTokens: 'all' | Token[];
+  supportedTokens?: Asset[];
 }
 
 export interface TokenWithBalance extends Token {
@@ -25,23 +25,21 @@ export function SelectTokenPage(props: PropTypes) {
   const { type, supportedTokens } = props;
   const sourceTokens = useBestRouteStore.use.sourceTokens();
   const destinationTokens = useBestRouteStore.use.destinationTokens();
-  const supportedSourceTokens =
-    supportedTokens === 'all'
-      ? sourceTokens
-      : sourceTokens.filter((token) =>
-          supportedTokens.some((supportedToken) =>
-            tokensAreEqual(supportedToken, token)
-          )
-        );
+  const supportedSourceTokens = supportedTokens
+    ? sourceTokens.filter((token) =>
+        supportedTokens.some((supportedToken) =>
+          tokensAreEqual(supportedToken, token)
+        )
+      )
+    : sourceTokens;
 
-  const supportedDestinationTokens =
-    supportedTokens === 'all'
-      ? destinationTokens
-      : destinationTokens.filter((token) =>
-          supportedTokens.some((supportedToken) =>
-            tokensAreEqual(supportedToken, token)
-          )
-        );
+  const supportedDestinationTokens = supportedTokens
+    ? destinationTokens.filter((token) =>
+        supportedTokens.some((supportedToken) =>
+          tokensAreEqual(supportedToken, token)
+        )
+      )
+    : destinationTokens;
 
   const fromToken = useBestRouteStore.use.fromToken();
   const toToken = useBestRouteStore.use.toToken();
