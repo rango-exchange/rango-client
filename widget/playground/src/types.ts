@@ -1,4 +1,5 @@
 import { WalletType } from '@rango-dev/wallets-shared';
+import { Asset } from 'rango-sdk';
 
 export type Wallet = {
   title: string;
@@ -14,3 +15,41 @@ export interface Source {
   title: string;
   type: 'BRIDGE' | 'AGGREGATOR' | 'DEX';
 }
+export type Colors = {
+  background?: string;
+  // inputBackground?: string;
+  // icons?: string;
+  primary?: string;
+  foreground?: string;
+  // text?: string;
+  success?: string;
+  error?: string;
+  warning?: string;
+};
+
+export type Theme = {
+  mode: 'dark' | 'light' | 'auto';
+  fontFamily: string;
+  colors: Colors;
+  borderRadius: number;
+  width: number;
+  height: number;
+};
+export type Support = {
+  blockchain: string | null;
+  token: Asset | null;
+  blockchains: string[] | null;
+  tokens: Asset[] | null;
+};
+
+export type WidgetConfig = {
+  amount: number;
+  from: Support;
+  to: Support;
+  liquiditySources: Source[] | null;
+  wallets: WalletType[] | null;
+  multiWallets: boolean;
+  customeAddress: boolean;
+  languege: string;
+  theme: Theme;
+};

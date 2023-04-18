@@ -91,10 +91,6 @@ export function useTheme({
       await fetchMeta();
     })();
 
-    useEffect(() => {
-      if (mode !== 'auto') setTheme(mode);
-    }, [mode]);
-
     const switchTheme = (event: MediaQueryListEvent) => {
       if (event.matches) setOSTheme(customeDarkTheme);
       else setOSTheme(customeLightTheme);
@@ -116,7 +112,9 @@ export function useTheme({
         .removeEventListener('change', switchTheme);
     };
   }, []);
-
+  useEffect(() => {
+    if (mode !== 'auto') setTheme(mode);
+  }, [mode]);
   const prevFont = usePrevious(fontFamily);
 
   useLayoutEffect(() => {

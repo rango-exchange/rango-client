@@ -10,8 +10,8 @@ import { MultiSelect } from './MultiSelect';
 export function WalletsConfig() {
   const { getWalletInfo } = useWallets();
 
-  const wallets = useConfigStore.use.configs().wallets;
-  const multiWallets = useConfigStore.use.configs().multiWallets;
+  const wallets = useConfigStore.use.config().wallets;
+  const multiWallets = useConfigStore.use.config().multiWallets;
 
   const onChangeWallets = useConfigStore.use.onChangeWallets();
   const onChangeBooleansConfig = useConfigStore.use.onChangeBooleansConfig();
@@ -29,8 +29,7 @@ export function WalletsConfig() {
 
   const onChange = (wallet) => {
     const list = walletList.map((item) => item.type);
-    const value = wallet.type || wallet;
-    const values = onChangeMultiSelects(value, wallets, list, (item) => item === value);
+    const values = onChangeMultiSelects(wallet, wallets, list, (item) => item === wallet);
     onChangeWallets(values);
   };
 

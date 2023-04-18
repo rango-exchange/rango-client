@@ -15,9 +15,7 @@ export function SelectChainPage(props: PropTypes) {
   const blockchains = supportedChains
     ? useMetaStore.use
         .meta()
-        .blockchains.filter(
-          (chain) => !supportedChains.includes(chain.name)
-        )
+        .blockchains.filter((chain) => supportedChains.includes(chain.name))
     : useMetaStore.use.meta().blockchains;
   const loadingStatus = useMetaStore.use.loadingStatus();
   const fromChain = useBestRouteStore.use.fromChain();

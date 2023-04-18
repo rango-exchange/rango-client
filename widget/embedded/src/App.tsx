@@ -25,7 +25,7 @@ import { navigationRoutes } from './constants/navigationRoutes';
 const providers = allProviders();
 
 export type WidgetProps = {
-  config: WidgetConfig;
+  config?: WidgetConfig;
 };
 
 export function App({ config }: WidgetProps) {
@@ -100,7 +100,7 @@ export function App({ config }: WidgetProps) {
             }}
           >
             <AppRouter
-              title={config.title}
+              title={config?.title}
               titleSize={config?.theme?.titleSize}
               titleWeight={config?.theme?.titleWeight}
               lastConnectedWallet={lastConnectedWalletWithNetwork}
