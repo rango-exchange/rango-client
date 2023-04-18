@@ -1,9 +1,15 @@
 import React, { useEffect } from 'react';
 import { Button } from '../Button';
-import { CloseIcon } from '../Icon';
+import {
+  CheckCircleIcon,
+  CloseIcon,
+  InfoCircleIcon,
+  WarningIcon,
+} from '../Icon';
 import { Typography } from '../Typography';
 import { styled, keyframes } from '../../theme';
 import { ToastType, useToast } from './Provider';
+import { Spacer } from '../Spacer';
 const toast_opacity = keyframes({
   from: { opacity: 0 },
   to: { opacity: 1 },
@@ -20,6 +26,12 @@ const Container = styled('div', {
   border: '1px solid $neutrals300',
   position: 'relative',
   margin: '$12 0',
+  background: '$background',
+
+  '.main': {
+    display: 'flex',
+    alignItems: 'center',
+  },
   variants: {
     horizontal: {
       right: {
@@ -34,23 +46,20 @@ const Container = styled('div', {
       },
     },
     type: {
-      default: {
-        background: '$background',
-      },
       primary: {
-        background: '$primary200',
+        color: '$primary200',
       },
       secondary: {
-        background: '$foreground',
+        color: '$foreground',
       },
       success: {
-        background: '$success300',
+        color: '$success300',
       },
       warning: {
-        background: '$warning500',
+        color: '$warning500',
       },
       error: {
-        background: '$error300',
+        color: '$error300',
       },
     },
   },
@@ -66,7 +75,8 @@ export const Toast = ({
   hasClose,
   id,
   horizontal = 'right',
-  type = 'default',
+  type,
+  showIcon,
 }: ToastType & { horizontal: 'left' | 'right' }) => {
   const { removeToast } = useToast();
   useEffect(() => {
@@ -91,16 +101,40 @@ export const Toast = ({
           />
         </ButtonWrapper>
       )}
-      {title && (
-        <>
-          <Typography variant="h6" mb={4}>
-            {title}
-          </Typography>
-          <br />
-        </>
-      )}
 
-      <Typography variant="body2">{message}</Typography>
+      <div className="main">
+        {showIcon && (
+          <>
+            <div
+              style={{
+                width: '32px',
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}
+            >
+              {type === 'success' && <CheckCircleIcon color={type} size={24} />}
+              {type === 'warning' && <WarningIcon color={type} size={24} />}
+              {type === 'error' && <InfoCircleIcon color={type} size={24} />}
+              <Spacer size={8} />
+            </div>
+          </>
+        )}
+        <div>
+          {title && (
+            <>
+              <Typography color={type} variant="h6" mb={4}>
+                {title}
+              </Typography>
+              <br />
+            </>
+          )}
+
+          <Typography color={type} variant="body2">
+            {message}
+          </Typography>
+        </div>
+      </div>
     </Container>
   );
 };
