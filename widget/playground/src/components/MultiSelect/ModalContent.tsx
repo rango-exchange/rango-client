@@ -8,6 +8,7 @@ const ListContainer = styled('div', {
   gap: '.5rem',
   gridTemplateColumns: ' repeat(2, minmax(0, 1fr))',
   maxHeight: 480,
+  overflow: 'auto',
 });
 
 const Image = styled('img', {

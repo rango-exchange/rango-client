@@ -4,7 +4,7 @@ import useCopyToClipboard from '../hooks/useCopyToClipboard';
 import { useManager } from '@rango-dev/queue-manager-react';
 import { useNavigateBack } from '../hooks/useNavigateBack';
 import { getPendingSwaps } from '../utils/queue';
-import { SwapHistory } from '@rango-dev/ui';
+import { SwapHistory, Spacer } from '@rango-dev/ui';
 import { useUiStore } from '../store/ui';
 import {
   cancelSwap,
@@ -26,7 +26,6 @@ import {
   shouldRetrySwap,
 } from '../utils/swap';
 import { TokenPreview } from '../components/TokenPreview';
-import { Spacer } from '@rango-dev/ui';
 import { numberToString } from '../utils/numbers';
 //@ts-ignore
 import { t } from 'i18next';
@@ -112,6 +111,7 @@ export function SwapDetailsPage() {
           <TokenPreview
             chain={{
               displayName: firstStep?.fromBlockchain || '',
+              // @ts-ignore
               logo: firstStep?.fromBlockchainLogo || '',
             }}
             token={{
@@ -126,6 +126,7 @@ export function SwapDetailsPage() {
           <TokenPreview
             chain={{
               displayName: lastStep?.toBlockchain || '',
+              //@ts-ignore
               logo: lastStep?.toBlockchainLogo || '',
             }}
             token={{

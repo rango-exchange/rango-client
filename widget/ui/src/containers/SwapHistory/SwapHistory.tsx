@@ -289,6 +289,7 @@ export function SwapHistory(props: PropTypes) {
                 <StepDetail
                   logo={step.fromLogo}
                   symbol={step.fromSymbol}
+                  // @ts-ignore
                   chainLogo={step.fromBlockchainLogo || ''}
                   blockchain={step.fromBlockchain}
                   amount={pendingSwap.inputAmount}
@@ -299,12 +300,16 @@ export function SwapHistory(props: PropTypes) {
             <Line />
             <SwapperContainer>
               <SwapperLogo
-                src={step.swapperLogo || ''}
+                src={
+                  // @ts-ignore
+                  step.swapperLogo || ''
+                }
                 alt={step.swapperId}
               />
               <div>
                 <Typography ml={4} variant="caption">
                   {
+                    // @ts-ignore
                     step.swapperType
                   }{' '}
                   from {step.fromSymbol} to {step.toSymbol}
@@ -315,6 +320,8 @@ export function SwapHistory(props: PropTypes) {
                   <Typography ml={4} variant="caption">
                     $
                     {
+                      // @ts-ignore
+
                       step.feeInUsd
                     }{' '}
                     estimated gas fee
@@ -372,6 +379,8 @@ export function SwapHistory(props: PropTypes) {
             <StepDetail
               logo={step.toLogo}
               symbol={step.toSymbol}
+              // @ts-ignore
+
               chainLogo={step.toBlockchainLogo || ''}
               blockchain={step.toBlockchain}
               amount={step.outputAmount || ''}
