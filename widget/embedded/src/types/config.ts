@@ -21,8 +21,6 @@ export type Theme = {
   mode?: 'dark' | 'light' | 'auto';
   fontFamily?: string;
   colors?: Colors;
-  titleSize?: number;
-  titleWeight?: number;
   borderRadius?: number;
   width?: number;
   height?: number;
@@ -35,7 +33,6 @@ export type Support = {
 };
 
 export type WidgetConfig = {
-  title?: string;
   amount?: number;
   from?: Support;
   to?: Support;

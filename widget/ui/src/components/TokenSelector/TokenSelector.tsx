@@ -8,6 +8,7 @@ import { Spinner } from '../Spinner';
 import { LoadingFailedAlert } from '../Alert/LoadingFailedAlert';
 import { NotFoundAlert } from '../Alert/NotFoundAlert';
 import { styled } from '../../theme';
+import { Asset } from 'rango-sdk';
 
 const Container = styled('div', {
   flex: '1',
@@ -28,8 +29,8 @@ export interface PropTypes {
   hasHeader?: boolean;
   multiSelect?: boolean;
   onBack?: () => void;
-  selectedList?: TokenWithAmount[] | 'all';
   loadingStatus: LoadingStatus;
+  selectedList?: Asset[];
 }
 
 const filterTokens = (list: TokenWithAmount[], searchedFor: string) =>

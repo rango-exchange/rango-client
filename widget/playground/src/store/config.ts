@@ -19,13 +19,13 @@ export type COLORS =
 
 interface ConfigState {
   config: WidgetConfig;
-  onChangeWallets: (wallets: WalletType[] | null) => void;
-  onChangeSources: (sources: Source[] | null) => void;
-  onChangeBlockChains: (chains: string[] | null, type: Type) => void;
-  onChangeTokens: (tokens: Asset[] | null, type: Type) => void;
+  onChangeWallets: (wallets?: WalletType[]) => void;
+  onChangeSources: (sources?: Source[]) => void;
+  onChangeBlockChains: (chains?: string[], type?: Type) => void;
+  onChangeTokens: (tokens?: Asset[], type?: Type) => void;
   onChangeBooleansConfig: (name: 'multiWallets' | 'customeAddress', value: boolean) => void;
-  onChangeBlockChain: (chain: string | null, type: Type) => void;
-  onChangeToken: (token: Asset | null, type: Type) => void;
+  onChangeBlockChain: (chain?: string, type?: Type) => void;
+  onChangeToken: (token?: Asset, type?: Type) => void;
   onChangeAmount: (amount: number) => void;
   onChangeTheme: (
     name: 'mode' | 'fontFamily' | 'borderRadius' | 'width' | 'height',
@@ -41,19 +41,19 @@ export const useConfigStore = createSelectors(
       config: {
         amount: 0,
         from: {
-          blockchain: null,
-          token: null,
-          blockchains: null,
-          tokens: null,
+          blockchain: undefined,
+          token: undefined,
+          blockchains: undefined,
+          tokens: undefined,
         },
         to: {
-          blockchain: null,
-          token: null,
-          blockchains: null,
-          tokens: null,
+          blockchain: undefined,
+          token: undefined,
+          blockchains: undefined,
+          tokens: undefined,
         },
-        liquiditySources: null,
-        wallets: null,
+        liquiditySources: undefined,
+        wallets: undefined,
         multiWallets: true,
         customeAddress: true,
         languege: 'en',

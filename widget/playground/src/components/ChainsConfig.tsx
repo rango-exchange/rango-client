@@ -32,7 +32,7 @@ export function ChainsConfig({ type }: PropTypes) {
 
   const onChangeBooleansConfig = useConfigStore.use.onChangeBooleansConfig();
 
-  const chains: string[] | null = type === 'Source' ? from?.blockchains : to?.blockchains;
+  const chains = type === 'Source' ? from?.blockchains : to?.blockchains;
 
   const onChangeChains = (blockchain: string) => {
     const tokens = type === 'Source' ? from?.tokens : to?.tokens;

@@ -36,18 +36,18 @@ export type Theme = {
   height: number;
 };
 export type Support = {
-  blockchain: string | null;
-  token: Asset | null;
-  blockchains: string[] | null;
-  tokens: Asset[] | null;
+  blockchain?: string;
+  token?: Asset;
+  blockchains?: string[];
+  tokens?: Asset[];
 };
 
 export type WidgetConfig = {
   amount: number;
   from: Support;
   to: Support;
-  liquiditySources: Source[] | null;
-  wallets: WalletType[] | null;
+  liquiditySources?: Source[];
+  wallets?: WalletType[];
   multiWallets: boolean;
   customeAddress: boolean;
   languege: string;
