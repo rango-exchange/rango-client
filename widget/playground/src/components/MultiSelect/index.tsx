@@ -11,19 +11,19 @@ import ModalContent from './ModalContent';
 type PropTypes = (
   | {
       type: 'Blockchains';
-      value: string[] | null;
+      value?: string[];
       list: BlockchainMeta[];
       onChange: (chain: string | 'all' | 'empty') => void;
     }
   | {
       type: 'Wallets';
-      value: WalletType[] | null;
+      value?: WalletType[];
       list: Wallets;
       onChange: (wallet: WalletType | 'all' | 'empty') => void;
     }
   | {
       type: 'Sources';
-      value: Source[] | null;
+      value?: Source[];
       list: LiquiditySource[];
       onChange: (source: Source | 'all' | 'empty') => void;
     }

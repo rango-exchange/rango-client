@@ -204,6 +204,7 @@ export function TokenInfo({ type }: PropTypes) {
                   : tokens
                 ).filter((token) => token.blockchain === chain?.name)}
                 hasHeader={false}
+                // @ts-ignore
                 selected={token}
                 onChange={(token) => {
                   setModal((prev) => ({

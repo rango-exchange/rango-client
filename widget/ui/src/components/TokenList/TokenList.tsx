@@ -1,6 +1,6 @@
 import React, { forwardRef, useEffect, useState } from 'react';
 import { CommonProps } from 'react-window';
-import { Token } from 'rango-sdk';
+import { Asset, Token } from 'rango-sdk';
 import { VirtualizedList } from '../VirtualizedList/VirtualizedList';
 import { TokenItem } from './TokenItem';
 
@@ -18,7 +18,7 @@ export interface PropTypes {
   searchedText: string;
   onChange: (token: TokenWithAmount) => void;
   multiSelect?: boolean;
-  selectedList?: TokenWithAmount[] | 'all';
+  selectedList?: Asset[];
 }
 
 export function TokenList(props: PropTypes) {
@@ -33,7 +33,6 @@ export function TokenList(props: PropTypes) {
   const isSelected = (token: Token) => {
     if (multiSelect && selectedList) {
       return (
-        selectedList === 'all' ||
         selectedList
           .map((item) => item.symbol + item.address)
           .indexOf(token.symbol + token.address) > -1
