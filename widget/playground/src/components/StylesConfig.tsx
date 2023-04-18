@@ -68,8 +68,8 @@ const Line = styled('div', {
   backgroundColor: '$foreground',
 });
 export function StylesConfig() {
-  const width = useConfigStore.use.config().theme.width;
-  const height = useConfigStore.use.config().theme.height;
+  // const width = useConfigStore.use.config().theme.width;
+  // const height = useConfigStore.use.config().theme.height;
   const language = useConfigStore.use.config().language;
   const borderRadius = useConfigStore.use.config().theme.borderRadius;
   const theme = useConfigStore.use.config().theme.mode;
@@ -87,43 +87,6 @@ export function StylesConfig() {
 
       <Spacer size={12} direction="vertical" />
       <ConfigurationContainer>
-        <GridContent>
-          <div>
-            <TextField
-              size="large"
-              onChange={(e) => onChangeTheme('width', parseInt(e.target.value))}
-              name="width"
-              value={width}
-              label="Width"
-              type="number"
-              suffix="px"
-            />
-          </div>
-          <div>
-            <TextField
-              size="large"
-              onChange={(e) => onChangeTheme('height', parseInt(e.target.value))}
-              name="height"
-              value={height}
-              label="Height"
-              type="number"
-              suffix="px"
-            />
-          </div>
-          <div>
-            <TextField
-              size="large"
-              onChange={(e) => onChangeTheme('borderRadius', parseInt(e.target.value))}
-              name="borderRadius"
-              value={borderRadius}
-              label="Border Radius"
-              type="number"
-              suffix="px"
-            />
-          </div>
-        </GridContent>
-        <Spacer size={20} direction="vertical" />
-
         <GridContent>
           <Select
             label="Choose Language Widget"
@@ -181,6 +144,42 @@ export function StylesConfig() {
           </div>
         </GridContent>
         <Spacer size={24} direction="vertical" />
+        <GridContent>
+          {/* <div>
+            <TextField
+              size="large"
+              onChange={(e) => onChangeTheme('width', parseInt(e.target.value))}
+              name="width"
+              value={width}
+              label="Width"
+              type="number"
+              suffix="px"
+            />
+          </div> */}
+          {/* <div>
+            <TextField
+              size="large"
+              onChange={(e) => onChangeTheme('height', parseInt(e.target.value))}
+              name="height"
+              value={height}
+              label="Height"
+              type="number"
+              suffix="px"
+            />
+          </div> */}
+          <div>
+            <TextField
+              size="large"
+              onChange={(e) => onChangeTheme('borderRadius', parseInt(e.target.value))}
+              name="borderRadius"
+              value={borderRadius}
+              label="Border Radius"
+              type="number"
+              suffix="px"
+            />
+          </div>
+        </GridContent>
+        <Spacer size={20} direction="vertical" />
 
         <hr />
         <Spacer size={24} direction="vertical" />
