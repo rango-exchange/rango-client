@@ -38,7 +38,6 @@ export async function swapUsdcToUsdt(actions) {
       address: '0xc2132d05d31c914a87c6611c10748aeb04b58e8f',
     };
 
-    // @ts-ignore
     const swapResponse = await rangoClient.swap({
       from,
       to,
@@ -47,6 +46,8 @@ export async function swapUsdcToUsdt(actions) {
       toAddress: '0x2702d89c1c8658B49C45dd460DeebCc45fAeC03C',
       disableEstimate: false,
       slippage: '1.0',
+      referrerAddress: null,
+      referrerFee: null,
     });
 
     let hash = await signEvmTx(swapResponse.tx);
