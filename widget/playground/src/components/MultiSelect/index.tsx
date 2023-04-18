@@ -11,19 +11,19 @@ import ModalContent from './ModalContent';
 type PropTypes = (
   | {
       type: 'Blockchains';
-      value: BlockchainMeta[] | 'all';
+      value: string[] | null;
       list: BlockchainMeta[];
-      onChange: (chain: BlockchainMeta | 'all' | 'empty') => void;
+      onChange: (chain: string | 'all' | 'empty') => void;
     }
   | {
       type: 'Wallets';
-      value: WalletType[] | 'all';
+      value: WalletType[] | null;
       list: Wallets;
       onChange: (wallet: WalletType | 'all' | 'empty') => void;
     }
   | {
       type: 'Sources';
-      value: Source[] | 'all';
+      value: Source[] | null;
       list: LiquiditySource[];
       onChange: (source: Source | 'all' | 'empty') => void;
     }
@@ -32,26 +32,20 @@ type PropTypes = (
   modalTitle: string;
 };
 
-export function MultiSelect({
-  label,
-  type,
-  modalTitle,
-  list,
-  value,
-  onChange,
-}: PropTypes) {
+export function MultiSelect({ label, type, modalTitle, list, value, onChange }: PropTypes) {
   const [open, setOpen] = useState<boolean>(false);
   const loadingStatus = useMetaStore.use.loadingStatus();
+  const { blockchains } = useMetaStore.use.meta();
 
   const onClickAction = () => {
-    if (value === 'all') onChange('empty');
+    if (!value) onChange('empty');
     else onChange('all');
   };
 
   const onClose = () => {
-    if (value !== 'all' && !value.length) onChange('all');
+    if (!value || !value.length) onChange('all');
     setOpen(false);
-  };
+  };  
   const renderModalContent = () => {
     switch (type) {
       case 'Blockchains':
@@ -60,8 +54,10 @@ export function MultiSelect({
             list={list}
             hasHeader={false}
             multiSelect
-            selectedList={value}
-            onChange={onChange}
+            selectedList={
+              !value ? 'all' : blockchains.filter((chain) => value.includes(chain.name))
+            }
+            onChange={(blockchain) => onChange(blockchain.name)}
             loadingStatus={loadingStatus}
           />
         );
@@ -78,7 +74,7 @@ export function MultiSelect({
         return (
           <ModalContent
             list={list}
-            onChange={(item) => onChange(item)}
+            onChange={(item) => onChange(item.type)}
             selectedList={value}
             type={type}
           />
@@ -89,7 +85,7 @@ export function MultiSelect({
   const getLabel = (value) => {
     switch (type) {
       case 'Blockchains':
-        return value.name;
+        return value;
       case 'Wallets':
         return value;
       case 'Sources':
@@ -99,7 +95,7 @@ export function MultiSelect({
   return (
     <div>
       <Container label={label} onOpenModal={() => setOpen(true)}>
-        {value === 'all' ? (
+        {!value ? (
           <Chip style={{ margin: 2 }} selected label={`All ${type}`} />
         ) : !value.length ? (
           <Chip style={{ margin: 2 }} selected label="None Selected" />
@@ -119,7 +115,7 @@ export function MultiSelect({
       <Modal
         action={
           <Button type="primary" variant="ghost" onClick={onClickAction}>
-            {value === 'all' ? 'Deselect All' : 'Select All'}
+            {!value ? 'Deselect All' : 'Select All'}
           </Button>
         }
         open={open}

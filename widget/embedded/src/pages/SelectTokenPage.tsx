@@ -33,7 +33,7 @@ export function SelectTokenPage(props: PropTypes) {
       )
     : sourceTokens;
 
-  const supportedDestinationTokens = supportedTokens
+    const supportedDestinationTokens = supportedTokens
     ? destinationTokens.filter((token) =>
         supportedTokens.some((supportedToken) =>
           tokensAreEqual(supportedToken, token)

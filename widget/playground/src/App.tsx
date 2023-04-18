@@ -6,12 +6,12 @@ import { useTheme } from './hook/useTheme';
 
 export function App() {
   const { activeTheme } = useTheme();
-  const configs = useConfigStore.use.configs();
+  const config = useConfigStore.use.config();
 
   return (
     <div className={activeTheme}>
       <Config>
-        <SwapBox configs={configs} />
+        <SwapBox config={config} />
       </Config>
     </div>
   );

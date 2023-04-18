@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   AngleDownIcon,
   BlockchainSelector,
@@ -12,6 +12,7 @@ import {
 import { useMetaStore } from '../store/meta';
 import { useConfigStore } from '../store/config';
 import { Type } from '../types';
+import { tokensAreEqual } from '../helpers';
 
 interface PropTypes {
   type: Type;
@@ -46,31 +47,24 @@ const Label = styled('label', {
 });
 
 export function TokenInfo({ type }: PropTypes) {
-  const toChain = useConfigStore.use.configs().toChain;
-  const fromChain = useConfigStore.use.configs().fromChain;
-  const toToken = useConfigStore.use.configs().toToken;
-  const fromToken = useConfigStore.use.configs().fromToken;
-  const fromAmount = useConfigStore.use.configs().fromAmount;
-  const toChains = useConfigStore.use.configs().toChains;
+  const to = useConfigStore.use.config().to;
+  const from = useConfigStore.use.config().from;
+  const amount = useConfigStore.use.config().amount;
 
-  const fromChains = useConfigStore.use.configs().fromChains;
-  const toTokens = useConfigStore.use.configs().toTokens;
-  const fromTokens = useConfigStore.use.configs().fromTokens;
-
-  const onChangeNumbersConfig = useConfigStore.use.onChangeNumbersConfig();
+  const onChangeAmount = useConfigStore.use.onChangeAmount();
   const onChangeBlockChain = useConfigStore.use.onChangeBlockChain();
   const onChangeToken = useConfigStore.use.onChangeToken();
-
-  const token = type === 'Source' ? fromToken : toToken;
-  const chain = type === 'Source' ? fromChain : toChain;
+  const blockchains = useMetaStore.use.meta().blockchains;
+  const tokens = useMetaStore.use.meta().tokens;
+  const token = tokens.find((t) => tokensAreEqual(t, type === 'Source' ? from.token : to.token));
+  const chain = blockchains.find(
+    (chain) => chain.name === (type === 'Source' ? from.blockchain : to.blockchain),
+  );
+  const supportedChains = type === 'Source' ? from.blockchains : to.blockchains;
+  const supportedTokens = type == 'Source' ? from.tokens : to.tokens;
 
   const [modal, setModal] = useState({ open: false, isChain: false, isToken: false });
   const loadingStatus = useMetaStore.use.loadingStatus();
-  const blockchains = useMetaStore.use.meta().blockchains;
-  const tokens = useMetaStore.use.meta().tokens;
-
-  const supportedChains = type === 'Source' ? fromChains : toChains;
-  const supportedTokens = type == 'Source' ? fromTokens : toTokens;
 
   const ItemSuffix = (
     <div
@@ -83,7 +77,22 @@ export function TokenInfo({ type }: PropTypes) {
       <AngleDownIcon />
     </div>
   );
+  useEffect(() => {
+    if (!!supportedChains && !!chain && !supportedChains.includes(chain?.name)) {
+      onChangeBlockChain(null, type);
+      onChangeToken(null, type);
+    }
+    if (
+      !!supportedTokens &&
+      !!token &&
+      !supportedTokens.filter((t) => tokensAreEqual(t, type === 'Source' ? from.token : to.token))
+        .length
+    ) {
+      onChangeToken(null, type);
+    }
+  }, [supportedChains, supportedTokens, chain]);
 
+  
   return (
     <Container>
       <div>
@@ -146,8 +155,8 @@ export function TokenInfo({ type }: PropTypes) {
       {type !== 'Destination' ? (
         <div>
           <TextField
-            onChange={(e) => onChangeNumbersConfig('fromAmount', parseInt(e.target.value || '0'))}
-            value={fromAmount}
+            onChange={(e) => onChangeAmount(parseInt(e.target.value || '0'))}
+            value={amount}
             label="Default Amount"
             type="number"
             size="large"
@@ -166,27 +175,34 @@ export function TokenInfo({ type }: PropTypes) {
         content={
           modal.isChain ? (
             <BlockchainSelector
-              list={supportedChains === 'all' ? blockchains : supportedChains}
+              list={
+                supportedChains
+                  ? blockchains.filter((chain) => supportedChains.includes(chain.name))
+                  : blockchains
+              }
               hasHeader={false}
               selected={chain}
               onChange={(chain) => {
-                onChangeBlockChain(chain, type);
+                onChangeBlockChain(chain.name, type);
                 onChangeToken(null, type);
                 setModal((prev) => ({
                   ...prev,
                   open: !prev.open,
                 }));
-                
-
               }}
               loadingStatus={loadingStatus}
             />
           ) : (
             modal.isToken && (
               <TokenSelector
-                list={(supportedTokens === 'all' ? tokens : supportedTokens).filter(
-                  (token) => token.blockchain === chain?.name,
-                )}
+                list={(supportedTokens && supportedTokens.length
+                  ? tokens.filter((token) =>
+                      supportedTokens.some((supportedToken) =>
+                        tokensAreEqual(supportedToken, token),
+                      ),
+                    )
+                  : tokens
+                ).filter((token) => token.blockchain === chain?.name)}
                 hasHeader={false}
                 selected={token}
                 onChange={(token) => {

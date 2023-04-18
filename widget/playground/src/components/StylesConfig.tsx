@@ -80,18 +80,15 @@ const Line = styled('div', {
   backgroundColor: '$foreground',
 });
 export function StylesConfig() {
-  const title = useConfigStore.use.configs().title;
-  const width = useConfigStore.use.configs().width;
-  const height = useConfigStore.use.configs().height;
-  const languege = useConfigStore.use.configs().languege;
-  const borderRadius = useConfigStore.use.configs().borderRadius;
-  const theme = useConfigStore.use.configs().theme;
-  const fontFamily = useConfigStore.use.configs().fontFamily;
-  const colors = useConfigStore.use.configs().colors;
-  const titleSize = useConfigStore.use.configs().titleSize;
-  const titleWeight = useConfigStore.use.configs().titleWeight;
-  const onChangeStringsConfig = useConfigStore.use.onChangeStringsConfig();
-  const onChangeNumbersConfig = useConfigStore.use.onChangeNumbersConfig();
+  const width = useConfigStore.use.config().theme.width;
+  const height = useConfigStore.use.config().theme.height;
+  const languege = useConfigStore.use.config().languege;
+  const borderRadius = useConfigStore.use.config().theme.borderRadius;
+  const theme = useConfigStore.use.config().theme.mode;
+  const fontFamily = useConfigStore.use.config().theme.fontFamily;
+  const colors = useConfigStore.use.config().theme.colors;
+
+  const onChangeLanguege = useConfigStore.use.onChangeLanguege();
   const onChangeTheme = useConfigStore.use.onChangeTheme();
   const onChangeColors = useConfigStore.use.onChangeColors();
 
@@ -106,15 +103,7 @@ export function StylesConfig() {
           <div>
             <TextField
               size="large"
-              onChange={(e) => onChangeStringsConfig('title', e.target.value)}
-              value={title}
-              label="Title"
-            />
-          </div>
-          <div>
-            <TextField
-              size="large"
-              onChange={(e) => onChangeNumbersConfig('width', parseInt(e.target.value))}
+              onChange={(e) => onChangeTheme('width', parseInt(e.target.value))}
               name="width"
               value={width}
               label="Width"
@@ -125,10 +114,21 @@ export function StylesConfig() {
           <div>
             <TextField
               size="large"
-              onChange={(e) => onChangeNumbersConfig('height', parseInt(e.target.value))}
+              onChange={(e) => onChangeTheme('height', parseInt(e.target.value))}
               name="height"
               value={height}
               label="Height"
+              type="number"
+              suffix="px"
+            />
+          </div>
+          <div>
+            <TextField
+              size="large"
+              onChange={(e) => onChangeTheme('borderRadius', parseInt(e.target.value))}
+              name="borderRadius"
+              value={borderRadius}
+              label="Border Radius"
               type="number"
               suffix="px"
             />
@@ -143,21 +143,17 @@ export function StylesConfig() {
             name="languege"
             list={LANGUEGES}
             modalTitle="Languages"
-            onChange={(_, value) => onChangeStringsConfig('languege', value)}
+            onChange={(_, value) => onChangeLanguege(value)}
           />
 
-          <div>
-            <TextField
-              size="large"
-              onChange={(e) => onChangeNumbersConfig('borderRadius', parseInt(e.target.value))}
-              name="borderRadius"
-              value={borderRadius}
-              label="Border Radius"
-              type="number"
-              suffix="px"
-            />
-          </div>
-
+          <Select
+            label="Font Family"
+            value={fontFamily}
+            name="fontFamily"
+            list={FONTS}
+            modalTitle="Fonts"
+            onChange={(_, value) => onChangeTheme('fontFamily', value)}
+          />
           <div>
             <Typography variant="body2" mb={4}>
               Theme
@@ -168,8 +164,8 @@ export function StylesConfig() {
                 id={'auto'}
                 label={'Auto'}
                 onCheckedChange={(checked) => {
-                  if (checked) onChangeTheme('auto');
-                  else onChangeTheme('light');
+                  if (checked) onChangeTheme('mode', 'auto');
+                  else onChangeTheme('mode', 'light');
                   setChekedTheme(checked);
                 }}
               />
@@ -186,7 +182,7 @@ export function StylesConfig() {
                     let theme;
                     if (checked) theme = 'dark';
                     else theme = 'light';
-                    onChangeTheme(theme);
+                    onChangeTheme('mode', theme);
                   }
                 }}
               />
@@ -213,42 +209,6 @@ export function StylesConfig() {
           ))}
         </GridContent>
         <Spacer size={24} direction="vertical" />
-
-        <hr />
-        <Spacer size={24} direction="vertical" />
-
-        <GridContent>
-          <Select
-            label="Font Family"
-            value={fontFamily}
-            name="fontFamily"
-            list={FONTS}
-            modalTitle="Fonts"
-            onChange={(_, value) => onChangeStringsConfig('fontFamily', value)}
-          />
-          <div>
-            <TextField
-              size="large"
-              onChange={(e) => onChangeNumbersConfig('titleSize', parseInt(e.target.value))}
-              name="titleSize"
-              value={titleSize}
-              label="Forms Title Size"
-              type="number"
-              suffix="px"
-            />
-          </div>
-          <div>
-            <TextField
-              size="large"
-              onChange={(e) => onChangeNumbersConfig('titleWeight', parseInt(e.target.value))}
-              name="titleWeight"
-              value={titleWeight}
-              label="Titels Weight"
-              type="number"
-              suffix="px"
-            />
-          </div>
-        </GridContent>
       </ConfigurationContainer>
     </div>
   );
