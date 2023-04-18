@@ -31,7 +31,6 @@ import { numberToString } from '../utils/numbers';
 //@ts-ignore
 import { t } from 'i18next';
 import { SwapDetailsPlaceholder } from '../components/SwapDetailsPlaceholder';
-import { WalletType } from '@rango-dev/wallets-shared';
 
 export function SwapDetailsPage() {
   const selectedSwapRequestId = useUiStore.use.selectedSwapRequestId();
