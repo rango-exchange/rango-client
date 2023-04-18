@@ -97,6 +97,7 @@ class Manager {
   private persistor: Persistor;
   private context: ManagerContext;
   private isPaused: boolean = false;
+  private isDataLoaded: boolean = false;
   // The client won't get any update on pause, We are using a polling mode to fix this issue for now.
   private syncInterval: NodeJS.Timer | null = null;
 
@@ -166,6 +167,7 @@ class Manager {
   private async sync() {
     // Reading queues from storage
     const queues = await this.persistor.getAll();
+    this.isDataLoaded = true;
 
     // Reset queues, if anything is exist in memory.
     this.queues = new Map();
@@ -449,6 +451,15 @@ class Manager {
    */
   public getAll() {
     return this.queues;
+  }
+
+  /**
+   * Checks if the indexDB data has been successfully loaded from storage.
+   *
+   * @returns {boolean} true if the indexDB data has been loaded, false otherwise.
+   */
+  public isLoaded() {
+    return this.isDataLoaded;
   }
 
   /**
