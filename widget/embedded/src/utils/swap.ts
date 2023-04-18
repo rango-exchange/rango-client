@@ -313,7 +313,8 @@ export function createBestRouteRequestBody(
   selectedWallets: SelectedWallet[],
   disabledLiquiditySources: string[],
   slippage: number,
-  checkPrerequisites: boolean
+  checkPrerequisites: boolean,
+  affiliateRef: string | null
 ): BestRouteRequest {
   const selectedWalletsMap = selectedWallets.reduce(
     (
@@ -344,6 +345,7 @@ export function createBestRouteRequestBody(
 
   const requestBody: BestRouteRequest = {
     amount: inputAmount.toString(),
+    affiliateRef,
     checkPrerequisites,
     from: {
       address: fromToken.address,
