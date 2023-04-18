@@ -8,7 +8,7 @@ import {
   Typography,
 } from '@rango-dev/ui';
 import React, { useState } from 'react';
-import { LANGUEGES, FONTS } from '../constants';
+import { languageS, FONTS } from '../constants';
 import { COLORS, useConfigStore } from '../store/config';
 import { ConfigurationContainer } from './ChainsConfig';
 import { Select } from './Select';
@@ -70,13 +70,13 @@ const Line = styled('div', {
 export function StylesConfig() {
   const width = useConfigStore.use.config().theme.width;
   const height = useConfigStore.use.config().theme.height;
-  const languege = useConfigStore.use.config().languege;
+  const language = useConfigStore.use.config().language;
   const borderRadius = useConfigStore.use.config().theme.borderRadius;
   const theme = useConfigStore.use.config().theme.mode;
   const fontFamily = useConfigStore.use.config().theme.fontFamily;
   const colors = useConfigStore.use.config().theme.colors;
 
-  const onChangeLanguege = useConfigStore.use.onChangeLanguege();
+  const onChangelanguage = useConfigStore.use.onChangelanguage();
   const onChangeTheme = useConfigStore.use.onChangeTheme();
   const onChangeColors = useConfigStore.use.onChangeColors();
 
@@ -127,11 +127,11 @@ export function StylesConfig() {
         <GridContent>
           <Select
             label="Choose Language Widget"
-            value={languege}
-            name="languege"
-            list={LANGUEGES}
+            value={language}
+            name="language"
+            list={languageS}
             modalTitle="Languages"
-            onChange={(_, value) => onChangeLanguege(value)}
+            onChange={(_, value) => onChangelanguage(value)}
           />
 
           <Select

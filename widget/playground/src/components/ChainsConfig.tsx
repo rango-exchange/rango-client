@@ -26,7 +26,7 @@ export function ChainsConfig({ type }: PropTypes) {
   const from = useConfigStore.use.config().from;
   const to = useConfigStore.use.config().to;
 
-  const customeAddress = useConfigStore.use.config().customeAddress;
+  const customAddress = useConfigStore.use.config().customAddress;
   const onChangeBlockChains = useConfigStore.use.onChangeBlockChains();
   const onChangeTokens = useConfigStore.use.onChangeTokens();
 
@@ -81,10 +81,10 @@ export function ChainsConfig({ type }: PropTypes) {
           <>
             <Spacer direction="vertical" size={12} />
             <Checkbox
-              onCheckedChange={(checked) => onChangeBooleansConfig('customeAddress', checked)}
+              onCheckedChange={(checked) => onChangeBooleansConfig('customAddress', checked)}
               id="custom_address"
               label="Enable Transfer To Custom Address"
-              checked={customeAddress}
+              checked={customAddress}
             />
           </>
         ) : null}

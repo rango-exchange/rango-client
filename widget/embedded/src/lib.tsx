@@ -94,8 +94,8 @@ export const SwapBox: React.FC<WidgetProps> = ({ config }) => {
   }, [config?.wallets]);
 
   useEffect(() => {
-    changeLanguage(config?.languege || 'en');
-  }, [config?.languege]);
+    changeLanguage(config?.language || 'en');
+  }, [config?.language]);
 
   return (
     <Provider
