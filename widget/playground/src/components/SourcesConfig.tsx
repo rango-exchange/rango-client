@@ -9,7 +9,7 @@ import { MultiSelect } from './MultiSelect';
 
 export function SourcesConfig() {
   const swappers = useMetaStore.use.meta().swappers;
-  const liquiditySources = useConfigStore.use.configs().liquiditySources;
+  const liquiditySources = useConfigStore.use.config().liquiditySources;
   const onChangeSources = useConfigStore.use.onChangeSources();
   const uniqueSwappersGroups: Array<LiquiditySource> = [];
   Array.from(new Set(swappers.map((s) => s.swapperGroup)))

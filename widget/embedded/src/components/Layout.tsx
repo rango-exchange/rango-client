@@ -15,6 +15,7 @@ import { fetchingBalanceSelector, useWalletsStore } from '../store/wallets';
 import {
   calculateWalletUsdValue,
   getSelectableWallets,
+  tokensAreEqual,
 } from '../utils/wallets';
 import { removeDuplicateFrom } from '../utils/common';
 import { WidgetConfig } from '../types';
@@ -70,15 +71,12 @@ export function Layout({ config }: LayoutProps) {
     const chain = blockchains.find(
       (chain) => chain.name === config?.to?.blockchain
     );
-    const token = tokens.find(
-      (t) =>
-        t.blockchain === config?.to?.token?.blockchain &&
-        t.address === config?.to?.token?.address &&
-        t.address === config?.to?.token?.address
+    const token = tokens.find((t) =>
+      tokensAreEqual(t, config?.to?.token || null)
     );
     setToChain(chain || null);
     setToToken(token || null);
-  }, [config?.to]);
+  }, [config?.to?.token, config?.to?.blockchain]);
 
   useEffect(() => {
     setInputAmount(config?.amount?.toString() || '');
@@ -88,27 +86,14 @@ export function Layout({ config }: LayoutProps) {
     const chain = blockchains.find(
       (chain) => chain.name === config?.from?.blockchain
     );
-    const token = tokens.find(
-      (t) =>
-        t.blockchain === config?.from?.token?.blockchain &&
-        t.address === config?.from?.token?.address &&
-        t.address === config?.from?.token?.address
+    const token = tokens.find((t) =>
+      tokensAreEqual(t, config?.from?.token || null)
     );
+
     setFromChain(chain || null);
     setFromToken(token || null);
-  }, [config?.from]);
+  }, [config?.from?.token, config?.from?.blockchain]);
 
-  // useEffect(() => {
-  //   setToChain(null);
-  //   setFromChain(null);
-  //   setFromToken(null);
-  //   setToToken(null);
-  // }, [
-  //   config?.fromChains,
-  //   config?.toChains,
-  //   config?.fromTokens,
-  //   config?.toTokens,
-  // ]);
 
   return (
     <>

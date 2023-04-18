@@ -7,7 +7,7 @@ import { Type } from '../types';
 import { MultiSelect } from './MultiSelect';
 import { MultiTokenSelect } from './MultiSelect/MultiTokenSelect';
 import { TokenInfo } from './TokenInfo';
-import { Token } from 'rango-sdk';
+import { Asset, Token } from 'rango-sdk';
 
 interface PropTypes {
   type: Type;
@@ -23,31 +23,35 @@ export const ConfigurationContainer = styled('div', {
 export function ChainsConfig({ type }: PropTypes) {
   const blockchains = useMetaStore.use.meta().blockchains;
   const tokens = useMetaStore.use.meta().tokens;
-  const fromChains = useConfigStore.use.configs().fromChains;
-  const toChains = useConfigStore.use.configs().toChains;
-  const customeAddress = useConfigStore.use.configs().customeAddress;
+  const from = useConfigStore.use.config().from;
+  const to = useConfigStore.use.config().to;
+
+  const customeAddress = useConfigStore.use.config().customeAddress;
   const onChangeBlockChains = useConfigStore.use.onChangeBlockChains();
   const onChangeTokens = useConfigStore.use.onChangeTokens();
-  const fromTokens = useConfigStore.use.configs().fromTokens;
-  const toTokens = useConfigStore.use.configs().toTokens;
 
   const onChangeBooleansConfig = useConfigStore.use.onChangeBooleansConfig();
 
-  const chains = type === 'Source' ? fromChains : toChains;
+  const chains: string[] | null = type === 'Source' ? from?.blockchains : to?.blockchains;
 
-  const onChangeChains = (chain) => {
-    let chains = type === 'Source' ? fromChains : toChains;
-    const tokens = type === 'Source' ? fromTokens : toTokens;
-    chains = onChangeMultiSelects(chain, chains, blockchains, (item) => item.name === chain.name);
-    onChangeBlockChains(chains, type);
+  const onChangeChains = (blockchain: string) => {
+    const tokens = type === 'Source' ? from?.tokens : to?.tokens;
+    const ChainsList = blockchains.map((chain) => chain.name);
+    const values = onChangeMultiSelects(
+      blockchain,
+      chains,
+      ChainsList,
+      (item) => item === blockchain,
+    );
+    onChangeBlockChains(values, type);
 
-    let list: Token[] = [];
-    if (tokens !== 'all' && chains !== 'all') {
-      for (const chain of chains) {
-        list = [...list, ...tokens.filter((token) => token.blockchain === chain?.name)];
+    let tokensList: Asset[] = [];
+    if (tokens && values) {
+      for (const chain of values) {
+        tokensList = [...tokensList, ...tokens.filter((token) => token.blockchain === chain)];
       }
     }
-    onChangeTokens(list.length ? list : 'all', type);
+    onChangeTokens(tokensList.length ? tokensList : null, type);
   };
 
   return (
@@ -59,7 +63,7 @@ export function ChainsConfig({ type }: PropTypes) {
           list={blockchains}
           label="Supported Blockchains"
           type="Blockchains"
-          value={type === 'Source' ? fromChains : toChains}
+          value={type === 'Source' ? from?.blockchains : to?.blockchains}
           onChange={onChangeChains}
           modalTitle="Select Blockchains"
         />
@@ -69,7 +73,9 @@ export function ChainsConfig({ type }: PropTypes) {
           modalTitle="Select Tokens"
           label="Supported Tokens"
           type={type}
-          blockchains={chains === 'all' ? blockchains : chains}
+          blockchains={
+            !chains ? blockchains : blockchains.filter((chain) => chains.includes(chain.name))
+          }
         />
         {type === 'Destination' ? (
           <>

@@ -1,21 +1,11 @@
 import { create } from 'zustand';
-import { BlockchainMeta, Token } from 'rango-sdk';
+import { Asset } from 'rango-sdk';
 import createSelectors from './selectors';
 import { WalletType } from '@rango-dev/wallets-shared';
 import { immer } from 'zustand/middleware/immer';
-import { Source, Type } from '../types';
+import { Source, Type, WidgetConfig } from '../types';
 
-export type StringsName = 'title' | 'languege' | 'fontFamily';
-
-export type NumbersName =
-  | 'width'
-  | 'fromAmount'
-  | 'height'
-  | 'borderRadius'
-  | 'titleSize'
-  | 'titleWeight';
-
-export type THEME = 'dark' | 'light' | 'auto';
+export type Mode = 'dark' | 'light' | 'auto';
 export type COLORS =
   | 'background'
   | 'inputBackground'
@@ -28,114 +18,120 @@ export type COLORS =
   | 'warning';
 
 interface ConfigState {
-  config: 
-  onChangeWallets: (wallets: WalletType[] | 'all') => void;
-  onChangeSources: (sources: Source[] | 'all') => void;
-  onChangeBlockChains: (chains: BlockchainMeta[] | 'all', type: Type) => void;
-  onChangeTokens: (tokens: Token[] | 'all', type: Type) => void;
+  config: WidgetConfig;
+  onChangeWallets: (wallets: WalletType[] | null) => void;
+  onChangeSources: (sources: Source[] | null) => void;
+  onChangeBlockChains: (chains: string[] | null, type: Type) => void;
+  onChangeTokens: (tokens: Asset[] | null, type: Type) => void;
   onChangeBooleansConfig: (name: 'multiWallets' | 'customeAddress', value: boolean) => void;
-  onChangeBlockChain: (chain: BlockchainMeta, type: Type) => void;
-  onChangeToken: (token: Token | null, type: Type) => void;
-  onChangeStringsConfig: (name: StringsName, value: string) => void;
-  onChangeNumbersConfig: (name: NumbersName, value: number) => void;
-  onChangeTheme: (theme: THEME) => void;
+  onChangeBlockChain: (chain: string | null, type: Type) => void;
+  onChangeToken: (token: Asset | null, type: Type) => void;
+  onChangeAmount: (amount: number) => void;
+  onChangeTheme: (
+    name: 'mode' | 'fontFamily' | 'borderRadius' | 'width' | 'height',
+    value: Mode | string | number,
+  ) => void;
   onChangeColors: (name: COLORS, color: string) => void;
+  onChangeLanguege: (value: string) => void;
 }
 
 export const useConfigStore = createSelectors(
   create<ConfigState>()(
     immer((set) => ({
-      configs: {
-        fromChain: null,
-        fromToken: null,
-        toChain: null,
-        toToken: null,
-        fromAmount: 0,
-        fromChains: 'all',
-        fromTokens: 'all',
-        toChains: 'all',
-        toTokens: 'all',
-        liquiditySources: 'all',
-        wallets: 'all',
+      config: {
+        amount: 0,
+        from: {
+          blockchain: null,
+          token: null,
+          blockchains: null,
+          tokens: null,
+        },
+        to: {
+          blockchain: null,
+          token: null,
+          blockchains: null,
+          tokens: null,
+        },
+        liquiditySources: null,
+        wallets: null,
         multiWallets: true,
         customeAddress: true,
-        title: 'SWAP',
-        width: 0,
-        height: 0,
         languege: 'en',
-        borderRadius: 5,
-        theme: 'auto',
-        fontFamily: 'Roboto',
-        titleSize: 18,
-        titleWeight: 600,
-        colors: {
-          background: '#fff',
-          primary: '#5FA425',
-          foreground: '#000',
-          success: '#0070F3',
-          error: '#FF0000',
-          warning: '#F5A623',
+        theme: {
+          mode: 'auto',
+          fontFamily: 'Roboto',
+          borderRadius: 5,
+          width: 0,
+          height: 0,
+          colors: {
+            background: '#fff',
+            primary: '#5FA425',
+            foreground: '#000',
+            success: '#0070F3',
+            error: '#FF0000',
+            warning: '#F5A623',
+          },
         },
       },
       onChangeBlockChains: (chains, type) =>
         set((state) => {
           if (type === 'Source') {
-            state.configs.fromChains = chains;
+            state.config.from.blockchains = chains;
           } else {
-            state.configs.toChains = chains;
+            state.config.to.blockchains = chains;
           }
         }),
       onChangeTokens: (tokens, type) =>
         set((state) => {
           if (type === 'Source') {
-            state.configs.fromTokens = tokens;
+            state.config.from.tokens = tokens;
           } else {
-            state.configs.toTokens = tokens;
+            state.config.from.tokens = tokens;
           }
         }),
       onChangeBlockChain: (chain, type) =>
         set((state) => {
           if (type === 'Source') {
-            state.configs.fromChain = chain;
+            state.config.from.blockchain = chain;
           } else {
-            state.configs.toChain = chain;
+            state.config.to.blockchain = chain;
           }
         }),
       onChangeToken: (token, type) =>
         set((state) => {
           if (type === 'Source') {
-            state.configs.fromToken = token;
+            state.config.from.token = token;
           } else {
-            state.configs.toToken = token;
+            state.config.to.token = token;
           }
         }),
       onChangeWallets: (wallets) =>
         set((state) => {
-          state.configs.wallets = wallets;
+          state.config.wallets = wallets;
         }),
       onChangeSources: (sources) =>
         set((state) => {
-          state.configs.liquiditySources = sources;
+          state.config.liquiditySources = sources;
+        }),
+      onChangeAmount: (amount) =>
+        set((state) => {
+          state.config.amount = amount;
         }),
       onChangeBooleansConfig: (name, value) =>
         set((state) => {
-          state.configs[name] = value;
+          state.config[name] = value;
         }),
-      onChangeStringsConfig: (name, value) =>
+      onChangeLanguege: (value) =>
         set((state) => {
-          state.configs[name] = value;
+          state.config.languege = value;
         }),
-      onChangeNumbersConfig: (name, value) =>
+      onChangeTheme: (name, value) =>
         set((state) => {
-          state.configs[name] = value;
-        }),
-      onChangeTheme: (theme) =>
-        set((state) => {
-          state.configs.theme = theme;
+          state.config.theme[name as string] = value;
         }),
       onChangeColors: (name, color) =>
         set((state) => {
-          state.configs.colors[name] = color;
+          state.config.theme.colors[name] = color;
         }),
     })),
   ),

@@ -19,13 +19,13 @@ const Image = styled('img', {
 type PropTypes =
   | {
       type: 'Wallets';
-      selectedList: WalletType[] | 'all';
+      selectedList: WalletType[] | null;
       list: Wallets;
-      onChange: (wallets: WalletType) => void;
+      onChange: (wallet: { title: string; logo: string; type: WalletType }) => void;
     }
   | {
       type: 'Sources';
-      selectedList: Source[] | 'all';
+      selectedList: Source[] | null;
       list: LiquiditySource[];
       onChange: (sources: Source) => void;
     };
@@ -44,7 +44,7 @@ const getIndex = (list, v, type) => {
 
 export default function ModalContent({ type, list, selectedList, onChange }: PropTypes) {
   const isSelect = (name: string) => {
-    return selectedList === 'all' || getIndex(selectedList, name, type) > -1;
+    return !selectedList || getIndex(selectedList, name, type) > -1;
   };
 
   return (
