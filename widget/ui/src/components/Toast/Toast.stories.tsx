@@ -28,7 +28,6 @@ const Example = () => {
             message: 'This is an example of using Toast',
             title: 'Example',
             hasClose: true,
-            type:'success'
           })
         }
       >

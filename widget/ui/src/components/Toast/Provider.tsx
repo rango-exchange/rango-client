@@ -18,7 +18,8 @@ export type Content = {
   message: string;
   title?: string;
   hasClose?: boolean;
-  type?: 'primary' | 'secondary' | 'success' | 'warning' | 'error' | 'default';
+  type?: 'primary' | 'secondary' | 'success' | 'warning' | 'error';
+  showIcon?: boolean;
 };
 
 export type ToastType = Content & {
