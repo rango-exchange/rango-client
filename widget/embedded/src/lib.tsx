@@ -19,6 +19,8 @@ import { WidgetConfig } from './types';
 import useSelectLanguage from './hooks/useSelectLanguage';
 import './i18n';
 import QueueManager from './QueueManager';
+import { useUiStore } from './store/ui';
+import { navigationRoutes } from './constants/navigationRoutes';
 
 export type WidgetProps = {
   config?: WidgetConfig;
@@ -37,6 +39,7 @@ export const SwapBox: React.FC<WidgetProps> = ({ config }) => {
   const [lastConnectedWalletWithNetwork, setLastConnectedWalletWithNetwork] =
     useState<string>('');
   const [disconnectedWallet, setDisconnectedWallet] = useState<WalletType>();
+  const currentPage = useUiStore.use.currentPage();
 
   const evmBasedChainNames = blockchains
     .filter(isEvmBlockchain)
@@ -103,6 +106,7 @@ export const SwapBox: React.FC<WidgetProps> = ({ config }) => {
       <div id="pageContainer" className={activeTheme}>
         <QueueManager>
           <SwapContainer
+            fixedHeight={currentPage != navigationRoutes.home}
             style={{
               width: config?.theme?.width || 'auto',
               height: config?.theme?.height || 'auto',

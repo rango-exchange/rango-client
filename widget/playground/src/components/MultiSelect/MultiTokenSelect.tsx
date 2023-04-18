@@ -46,6 +46,7 @@ export function MultiTokenSelect({ label, modalTitle, list, blockchains, type }:
   const toTokens = useConfigStore.use.config().to.tokens;
   const onChangeTokens = useConfigStore.use.onChangeTokens();
   const tokens = type === 'Source' ? fromTokens : toTokens;
+  console.log({list});
 
   const onChangeSelectList = (token: Asset) => {
     const select = { ...selectTokens };
@@ -189,7 +190,7 @@ export function MultiTokenSelect({ label, modalTitle, list, blockchains, type }:
                       <Typography variant="body2">All tokens are selected</Typography>
                     </EmptyContent>
                   ) : (
-                    <Content>
+                    <>
                       <Button
                         style={{ alignSelf: 'end' }}
                         type="primary"
@@ -212,7 +213,7 @@ export function MultiTokenSelect({ label, modalTitle, list, blockchains, type }:
                           })
                         }
                       />
-                    </Content>
+                    </>
                   )}
                 </>
               );
