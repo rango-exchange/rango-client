@@ -179,18 +179,25 @@ export async function increaseVersionForMain(changedPkgs) {
 export async function changed(since) {
   const pkgs = await workspacePackages();
   const all = await Promise.all(
-    pkgs.map(({ name, location, version }) =>
-      execa('git', ['log', `${since}..HEAD`, '--oneline', '--', location]).then(
-        ({ stdout: result }) => {
-          return {
-            name,
-            location,
-            version,
-            changed: !!result,
-          };
-        },
-      ),
-    ),
+    pkgs.map(({ name, location, version }) => {
+      let params = [];
+
+      // Releasing for the first time on repo.
+      if (!since) {
+        params = ['log', '--oneline', '--', location];
+      } else {
+        params = ['log', `${since}..HEAD`, '--oneline', '--', location];
+      }
+
+      return execa('git', params).then(({ stdout: result }) => {
+        return {
+          name,
+          location,
+          version,
+          changed: !!result,
+        };
+      });
+    }),
   );
   return all.filter((pkg) => pkg.changed);
 }
