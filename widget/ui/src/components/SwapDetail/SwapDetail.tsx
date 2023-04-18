@@ -6,6 +6,7 @@ import { ArrowRightIcon } from '../Icon';
 import { Spacer } from '../Spacer';
 import { Spinner } from '../Spinner';
 import { Token } from './Token';
+import { limitDecimalPlaces } from '../../helper';
 
 const Container = styled('div', {
   position: 'relative',
@@ -74,7 +75,7 @@ export function SwapDetail({
                 logo: firstStep.fromBlockchainLogo || '',
                 name: firstStep.fromBlockchain,
               },
-              amount: swap.inputAmount,
+              amount: limitDecimalPlaces(swap.inputAmount),
             }}
           />
           <Spacer size={12} />
@@ -91,10 +92,11 @@ export function SwapDetail({
                 logo: lastStep.toBlockchainLogo,
                 name: lastStep.toBlockchain,
               },
-              amount:
+              amount: limitDecimalPlaces(
                 lastStep.outputAmount ||
-                lastStep.expectedOutputAmountHumanReadable ||
-                '',
+                  lastStep.expectedOutputAmountHumanReadable ||
+                  ''
+              ),
             }}
           />
         </div>

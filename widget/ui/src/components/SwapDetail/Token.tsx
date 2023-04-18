@@ -5,6 +5,7 @@ import { Spacer } from '../Spacer';
 const TokenContainer = styled('div', {
   display: 'flex',
   alignItems: 'center',
+  width: '160px',
 
   '& .amount': {
     fontWeight: 'bold',
