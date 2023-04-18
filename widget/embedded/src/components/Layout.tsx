@@ -17,7 +17,7 @@ import {
   getSelectableWallets,
 } from '../utils/wallets';
 import { removeDuplicateFrom } from '../utils/common';
-import { Configs } from '../types';
+import { WidgetConfig } from '../types';
 import { useTranslation } from 'react-i18next';
 import { useBestRouteStore } from '../store/bestRoute';
 import { useMetaStore } from '../store/meta';
@@ -40,10 +40,10 @@ const WalletImage = styled('img', {
 });
 
 export type LayoutProps = {
-  configs?: Configs;
+  config?: WidgetConfig;
 };
 
-export function Layout({ configs }: LayoutProps) {
+export function Layout({ config }: LayoutProps) {
   const navigate = useNavigate();
   const { balances, accounts, selectedWallets } = useWalletsStore();
   const { getWalletInfo } = useWallets();
@@ -52,7 +52,7 @@ export function Layout({ configs }: LayoutProps) {
       (w) => w.image
     )
   );
-
+  const { blockchains, tokens } = useMetaStore.use.meta();
   const setFromChain = useBestRouteStore.use.setFromChain();
   const setFromToken = useBestRouteStore.use.setFromToken();
   const setToChain = useBestRouteStore.use.setToChain();
@@ -67,29 +67,49 @@ export function Layout({ configs }: LayoutProps) {
 
   const { t } = useTranslation();
   useEffect(() => {
-    setToChain(configs?.toChain || null);
-    setToToken(configs?.toToken || null);
-  }, [configs?.toChain, configs?.toToken]);
-  useEffect(() => {
-    setInputAmount(configs?.fromAmount?.toString() || '');
-  }, [configs?.fromAmount]);
+    const chain = blockchains.find(
+      (chain) => chain.name === config?.to?.blockchain
+    );
+    const token = tokens.find(
+      (t) =>
+        t.blockchain === config?.to?.token?.blockchain &&
+        t.address === config?.to?.token?.address &&
+        t.address === config?.to?.token?.address
+    );
+    setToChain(chain || null);
+    setToToken(token || null);
+  }, [config?.to]);
 
   useEffect(() => {
-    setFromToken(configs?.fromToken || null);
-    setFromChain(configs?.fromChain || null);
-  }, [configs?.fromToken, configs?.fromChain]);
+    setInputAmount(config?.amount?.toString() || '');
+  }, [config?.amount]);
 
   useEffect(() => {
-    setToChain(null);
-    setFromChain(null);
-    setFromToken(null);
-    setToToken(null);
-  }, [
-    configs?.fromChains,
-    configs?.toChains,
-    configs?.fromTokens,
-    configs?.toTokens,
-  ]);
+    const chain = blockchains.find(
+      (chain) => chain.name === config?.from?.blockchain
+    );
+    const token = tokens.find(
+      (t) =>
+        t.blockchain === config?.from?.token?.blockchain &&
+        t.address === config?.from?.token?.address &&
+        t.address === config?.from?.token?.address
+    );
+    setFromChain(chain || null);
+    setFromToken(token || null);
+  }, [config?.from]);
+
+  // useEffect(() => {
+  //   setToChain(null);
+  //   setFromChain(null);
+  //   setFromToken(null);
+  //   setToToken(null);
+  // }, [
+  //   config?.fromChains,
+  //   config?.toChains,
+  //   config?.fromTokens,
+  //   config?.toTokens,
+  // ]);
+
   return (
     <>
       <Header>
@@ -122,7 +142,7 @@ export function Layout({ configs }: LayoutProps) {
           </div>
         </Button>
       </Header>
-      <AppRoutes configs={configs} />
+      <AppRoutes config={config} />
     </>
   );
 }

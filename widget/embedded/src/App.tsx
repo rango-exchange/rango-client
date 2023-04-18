@@ -17,7 +17,7 @@ import { globalFont, globalStyles } from './globalStyles';
 import { useTheme } from './hooks/useTheme';
 import QueueManager from './QueueManager';
 import { isEvmBlockchain } from 'rango-sdk';
-import { Configs } from './types';
+import { WidgetConfig } from './types';
 import './i18n';
 import { useUiStore } from './store/ui';
 import { navigationRoutes } from './constants/navigationRoutes';
@@ -25,16 +25,13 @@ import { navigationRoutes } from './constants/navigationRoutes';
 const providers = allProviders();
 
 export type WidgetProps = {
-  configs?: Configs;
+  config: WidgetConfig;
 };
 
-export function App({ configs }: WidgetProps) {
+export function App({ config }: WidgetProps) {
   globalStyles();
-  globalFont(configs?.fontFamily || 'Roboto');
-  const { activeTheme } = useTheme({
-    ...configs?.colors,
-    borderRadius: configs?.borderRadius,
-  });
+  globalFont(config?.theme?.fontFamily || 'Roboto');
+  const { activeTheme } = useTheme({ ...config?.theme });
 
   const { blockchains } = useMetaStore.use.meta();
   const disconnectWallet = useWalletsStore.use.disconnectWallet();
@@ -95,18 +92,24 @@ export function App({ configs }: WidgetProps) {
     >
       <div id="pageContainer" className={activeTheme}>
         <QueueManager>
-          <SwapContainer fixedHeight={currentPage != navigationRoutes.home}>
+          <SwapContainer
+            fixedHeight={currentPage != navigationRoutes.home}
+            style={{
+              width: config?.theme?.width || 'auto',
+              height: config?.theme?.height || 'auto',
+            }}
+          >
             <AppRouter
-              title={configs?.title}
-              titleSize={configs?.titleSize}
-              titleWeight={configs?.titleWeight}
+              title={config.title}
+              titleSize={config?.theme?.titleSize}
+              titleWeight={config?.theme?.titleWeight}
               lastConnectedWallet={lastConnectedWalletWithNetwork}
               disconnectedWallet={disconnectedWallet}
               clearDisconnectedWallet={() => {
                 setDisconnectedWallet(undefined);
               }}
             >
-              <Layout configs={configs} />
+              <Layout config={config} />
             </AppRouter>
           </SwapContainer>
         </QueueManager>

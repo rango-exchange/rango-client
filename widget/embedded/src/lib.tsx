@@ -15,32 +15,25 @@ import { Layout } from './components/Layout';
 import { globalFont, globalStyles } from './globalStyles';
 import { useTheme } from './hooks/useTheme';
 import { isEvmBlockchain } from 'rango-sdk';
-import { Configs } from './types';
-import { useSettingsStore } from './store/settings';
+import { WidgetConfig } from './types';
 import useSelectLanguage from './hooks/useSelectLanguage';
 import './i18n';
 import QueueManager from './QueueManager';
 
 export type WidgetProps = {
-  configs: Configs;
+  config: WidgetConfig;
 };
 
-export const SwapBox: React.FC<WidgetProps> = ({ configs }) => {
+export const SwapBox: React.FC<WidgetProps> = ({ config }) => {
   globalStyles();
-  globalFont(configs?.fontFamily || 'Roboto');
+  globalFont(config?.theme?.fontFamily || 'Roboto');
 
-  const { activeTheme } = useTheme({
-    ...configs.colors,
-    borderRadius: configs?.borderRadius,
-    fontFamily: configs?.fontFamily,
-  });
+  const { activeTheme } = useTheme({ ...config?.theme });
   const { blockchains } = useMetaStore.use.meta();
   const disconnectWallet = useWalletsStore.use.disconnectWallet();
   const connectWallet = useWalletsStore.use.connectWallet();
-  const setTheme = useSettingsStore.use.setTheme();
   const { changeLanguage } = useSelectLanguage();
   const clearConnectedWallet = useWalletsStore.use.clearConnectedWallet();
-
   const [lastConnectedWalletWithNetwork, setLastConnectedWalletWithNetwork] =
     useState<string>('');
   const [disconnectedWallet, setDisconnectedWallet] = useState<WalletType>();
@@ -71,7 +64,6 @@ export const SwapBox: React.FC<WidgetProps> = ({ configs }) => {
         disconnectWallet(type);
       }
     }
-
     if (event === Events.ACCOUNTS && state.connected) {
       const key = `${type}-${state.network}-${value}`;
 
@@ -88,24 +80,19 @@ export const SwapBox: React.FC<WidgetProps> = ({ configs }) => {
   let providers = allProviders();
 
   useEffect(() => {
-    if (configs.theme !== 'auto') setTheme(configs.theme);
-  }, [configs.theme]);
-
-  useEffect(() => {
-    const wallets = configs.wallets;
+    const wallets = config?.wallets;
     clearConnectedWallet();
-    providers =
-      wallets === 'all'
-        ? allProviders()
-        : allProviders().filter((provider) => {
-            const type = provider.config.type;
-            return wallets.find((w) => w === type);
-          });
-  }, [configs?.wallets]);
+    providers = !wallets
+      ? allProviders()
+      : allProviders().filter((provider) => {
+          const type = provider.config.type;
+          return wallets.find((w) => w === type);
+        });
+  }, [config?.wallets]);
 
   useEffect(() => {
-    changeLanguage(configs?.languege);
-  }, [configs?.languege]);
+    changeLanguage(config?.languege || 'en');
+  }, [config?.languege]);
 
   return (
     <Provider
@@ -117,21 +104,21 @@ export const SwapBox: React.FC<WidgetProps> = ({ configs }) => {
         <QueueManager>
           <SwapContainer
             style={{
-              width: configs?.width || 'auto',
-              height: configs?.height || 'auto',
+              width: config?.theme?.width || 'auto',
+              height: config?.theme?.height || 'auto',
             }}
           >
             <AppRouter
-              title={configs.title}
-              titleSize={configs.titleSize}
-              titleWeight={configs.titleWeight}
+              title={config.title}
+              titleSize={config?.theme?.titleSize}
+              titleWeight={config?.theme?.titleWeight}
               lastConnectedWallet={lastConnectedWalletWithNetwork}
               disconnectedWallet={disconnectedWallet}
               clearDisconnectedWallet={() => {
                 setDisconnectedWallet(undefined);
               }}
             >
-              <Layout configs={configs} />
+              <Layout config={config} />
             </AppRouter>
           </SwapContainer>
         </QueueManager>

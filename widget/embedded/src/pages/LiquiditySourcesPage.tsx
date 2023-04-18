@@ -7,7 +7,7 @@ import { useSettingsStore } from '../store/settings';
 import { Source } from '../types';
 import { removeDuplicateFrom } from '../utils/common';
 interface PropTypes {
-  supportedSwappers: 'all' | Source[];
+  supportedSwappers?: Source[];
 }
 export function LiquiditySourcePage({ supportedSwappers }: PropTypes) {
   const swappers = useMetaStore.use.meta().swappers;
@@ -47,7 +47,7 @@ export function LiquiditySourcePage({ supportedSwappers }: PropTypes) {
     <LiquiditySourcesSelector
       toggleAll={toggleAllLiquiditySources}
       list={
-        supportedSwappers !== 'all'
+        supportedSwappers
           ? uniqueSwappersGroups.filter(
               (item) =>
                 supportedSwappers.filter(

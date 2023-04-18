@@ -96,6 +96,7 @@ export function ConfirmSwapPage() {
 
   return (
     <ConfirmSwap
+    // @ts-ignore
       requiredWallets={getRequiredChains(bestRoute)}
       selectableWallets={selectableWallets}
       onBack={navigateBackFrom.bind(null, navigationRoutes.confirmSwap)}
@@ -105,6 +106,7 @@ export function ConfirmSwapPage() {
             manager?.create(
               'swap',
               { swapDetails: swap },
+              // @ts-ignore
               { id: swap.requestId }
             );
             setSelectedSwap(swap.requestId);
