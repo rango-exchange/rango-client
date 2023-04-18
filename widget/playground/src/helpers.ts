@@ -1,5 +1,5 @@
 import { WalletType } from '@rango-dev/wallets-shared';
-import { Token } from 'rango-sdk';
+import { Asset, Token } from 'rango-sdk';
 
 export const excludedWallets = [WalletType.UNKNOWN, WalletType.TERRA_STATION, WalletType.LEAP];
 
@@ -21,10 +21,7 @@ export const onChangeMultiSelects = (value, values, list, findIndex) => {
   }
 };
 
-export function tokensAreEqual(
-  tokenA: Pick<Token, 'blockchain' | 'symbol' | 'address'> | null,
-  tokenB: Pick<Token, 'blockchain' | 'symbol' | 'address'> | null,
-) {
+export function tokensAreEqual(tokenA?: Asset, tokenB?: Asset) {
   return (
     tokenA?.blockchain === tokenB?.blockchain &&
     tokenA?.symbol === tokenB?.symbol &&

@@ -18,14 +18,6 @@ const COLORS = [
     name: 'background',
     label: 'Background',
   },
-  // {
-  //   name: 'inputBackground',
-  //   label: 'Input Background',
-  // },
-  // {
-  //   name: 'icons',
-  //   label: 'Icons',
-  // },
   {
     name: 'primary',
     label: 'Primary Color',
@@ -35,10 +27,6 @@ const COLORS = [
     name: 'foreground',
     label: 'Foreground Color',
   },
-  // {
-  //   name: 'text',
-  //   label: 'Text',
-  // },
   {
     name: 'success',
     label: 'Success',

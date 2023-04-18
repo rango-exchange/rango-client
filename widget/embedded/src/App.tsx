@@ -100,9 +100,6 @@ export function App({ config }: WidgetProps) {
             }}
           >
             <AppRouter
-              title={config?.title}
-              titleSize={config?.theme?.titleSize}
-              titleWeight={config?.theme?.titleWeight}
               lastConnectedWallet={lastConnectedWalletWithNetwork}
               disconnectedWallet={disconnectedWallet}
               clearDisconnectedWallet={() => {

@@ -63,14 +63,8 @@ const Alerts = styled('div', {
   width: '100%',
   paddingTop: '$16',
 });
-interface PropTypes {
-  title?: string;
-  titleSize?: number;
-  titleWeight?: number;
-}
-export function Home(props: PropTypes) {
-  const { title = 'SWAP' } = props;
 
+export function Home() {
   const isRouterInContext = useInRouterContext();
   const navigate = useNavigate();
   const [count, setCount] = useState(0);
@@ -142,7 +136,6 @@ export function Home(props: PropTypes) {
   return (
     <Container>
       <Header
-        title={title}
         suffix={
           <HeaderButtons
             onClickRefresh={!!bestRoute ? fetchBestRoute : undefined}

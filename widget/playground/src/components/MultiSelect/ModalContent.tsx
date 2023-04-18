@@ -19,13 +19,13 @@ const Image = styled('img', {
 type PropTypes =
   | {
       type: 'Wallets';
-      selectedList: WalletType[] | null;
+      selectedList?: WalletType[];
       list: Wallets;
       onChange: (wallet: { title: string; logo: string; type: WalletType }) => void;
     }
   | {
       type: 'Sources';
-      selectedList: Source[] | null;
+      selectedList?: Source[];
       list: LiquiditySource[];
       onChange: (sources: Source) => void;
     };

@@ -21,7 +21,7 @@ import './i18n';
 import QueueManager from './QueueManager';
 
 export type WidgetProps = {
-  config: WidgetConfig;
+  config?: WidgetConfig;
 };
 
 export const SwapBox: React.FC<WidgetProps> = ({ config }) => {
@@ -109,9 +109,6 @@ export const SwapBox: React.FC<WidgetProps> = ({ config }) => {
             }}
           >
             <AppRouter
-              title={config.title}
-              titleSize={config?.theme?.titleSize}
-              titleWeight={config?.theme?.titleWeight}
               lastConnectedWallet={lastConnectedWalletWithNetwork}
               disconnectedWallet={disconnectedWallet}
               clearDisconnectedWallet={() => {

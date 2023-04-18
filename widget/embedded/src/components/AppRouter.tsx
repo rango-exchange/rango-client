@@ -13,15 +13,7 @@ import { UpdateUrl } from './UpdateUrl';
 import { Home } from '../pages/Home';
 import { useMetaStore } from '../store/meta';
 
-interface PropTypes {
-  title?: string;
-  titleSize?: number;
-  titleWeight?: number;
-}
-const Route: React.FC = ({
-  children,
-  ...props
-}: PropTypes & PropsWithChildren) => {
+const Route: React.FC = ({ children }: PropsWithChildren) => {
   const location = useLocation();
   const navigate = useNavigate();
   const ref = useRef(true);
@@ -34,7 +26,7 @@ const Route: React.FC = ({
   }, []);
 
   if (location.pathname === navigationRoutes.confirmSwap && ref.current)
-    return <Home {...props} />;
+    return <Home />;
 
   return <> {children}</>;
 };
@@ -42,12 +34,11 @@ const Route: React.FC = ({
 export function AppRouter({
   children,
   ...props
-}: PropTypes &
-  PropsWithChildren & {
-    lastConnectedWallet: string;
-    disconnectedWallet: WalletType | undefined;
-    clearDisconnectedWallet: () => void;
-  }) {
+}: PropsWithChildren & {
+  lastConnectedWallet: string;
+  disconnectedWallet: WalletType | undefined;
+  clearDisconnectedWallet: () => void;
+}) {
   const isRouterInContext = useInRouterContext();
   const Router = isRouterInContext ? Route : MemoryRouter;
   const { blockchains } = useMetaStore.use.meta();
