@@ -28,3 +28,14 @@ export function tokensAreEqual(tokenA?: Asset, tokenB?: Asset) {
     tokenA?.address === tokenB?.address
   );
 }
+
+export const containsText = (text: string, searchText: string) =>
+  text.toLowerCase().indexOf(searchText.toLowerCase()) > -1;
+
+export const filterTokens = (list: Token[], searchedFor: string) =>
+  list.filter(
+    (token) =>
+      containsText(token.symbol, searchedFor) ||
+      containsText(token.address || '', searchedFor) ||
+      containsText(token.name || '', searchedFor),
+  );

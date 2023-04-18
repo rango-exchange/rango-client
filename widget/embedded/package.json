@@ -29,8 +29,8 @@
   },
   "dependencies": {
     "@rango-dev/provider-all": "^0.1.11-next.84",
-    "@rango-dev/queue-manager-core": "^0.1.10-next.82",
-    "@rango-dev/queue-manager-rango-preset": "^0.1.10-next.102",
+    "@rango-dev/queue-manager-core": "^0.1.11-next.0",
+    "@rango-dev/queue-manager-rango-preset": "^0.1.11-next.2",
     "@rango-dev/queue-manager-react": "^0.1.10-next.76",
     "@rango-dev/ui": "^0.1.10-next.75",
     "@rango-dev/wallets-core": "^0.1.11-next.88",

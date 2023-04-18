@@ -14,7 +14,7 @@ import { Asset, BlockchainMeta, Token } from 'rango-sdk';
 import { Type } from '../../types';
 import { useConfigStore } from '../../store/config';
 import { Container } from './Container';
-import { tokensAreEqual } from '../../helpers';
+import { filterTokens, tokensAreEqual } from '../../helpers';
 
 type PropTypes = {
   list: Token[];
@@ -38,6 +38,8 @@ const Content = styled('div', {
   display: 'flex',
   flexDirection: 'column',
 });
+
+
 export function MultiTokenSelect({ label, modalTitle, list, blockchains, type }: PropTypes) {
   const [open, setOpen] = useState(false);
   const [chain, setChain] = useState<string>('');
@@ -201,7 +203,7 @@ export function MultiTokenSelect({ label, modalTitle, list, blockchains, type }:
                       </Button>
                       <TokenList
                         searchedText={searchedFor}
-                        list={filterList}
+                        list={filterTokens(filterList, searchedFor)}
                         selectedList={tokens}
                         multiSelect
                         onChange={(token) =>

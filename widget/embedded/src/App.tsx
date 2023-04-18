@@ -93,11 +93,17 @@ export function App({ config }: WidgetProps) {
       <div id="pageContainer" className={activeTheme}>
         <QueueManager>
           <SwapContainer
-            fixedHeight={currentPage != navigationRoutes.home}
-            style={{
-              width: config?.theme?.width || 'auto',
-              height: config?.theme?.height || 'auto',
-            }}
+            style={
+              currentPage !== navigationRoutes.home && config?.theme?.height
+                ? {
+                    height: config?.theme?.height,
+                    width: config?.theme?.width || 'auto',
+                  }
+                : {
+                    width: config?.theme?.width || 'auto',
+                  }
+            }
+            fixedHeight={currentPage !== navigationRoutes.home}
           >
             <AppRouter
               lastConnectedWallet={lastConnectedWalletWithNetwork}
