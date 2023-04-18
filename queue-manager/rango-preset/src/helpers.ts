@@ -423,7 +423,7 @@ export const getSwapWalletType = (
   swap: PendingSwap,
   network: Network
 ): WalletType => {
-  return swap.wallets[network]?.walletType as WalletType;
+  return swap.wallets[network]?.walletType;
 };
 
 /**
@@ -542,12 +542,9 @@ export async function isNetworkMatchedForTransaction(
             WalletType.BRAVE,
             WalletType.FRONTIER,
             WalletType.KUCOIN,
-          ].includes(sourceWallet.walletType as WalletType)
+          ].includes(sourceWallet.walletType)
         ) {
-          const provider = getEvmProvider(
-            providers,
-            sourceWallet.walletType as WalletType
-          );
+          const provider = getEvmProvider(providers, sourceWallet.walletType);
           const chainId: number | string | null = await getChainId(provider);
           if (chainId) {
             const blockChain = getBlockChainNameFromId(
@@ -831,7 +828,7 @@ export function singTransaction(
   } = currentStep;
   const sourceWallet = getRelatedWallet(swap, currentStep);
   const walletAddress = getCurrentAddressOf(swap, currentStep);
-  const walletSigners = getSigners(sourceWallet.walletType as WalletType);
+  const walletSigners = getSigners(sourceWallet.walletType);
 
   const onFinish = () => {
     // TODO resetClaimedBy is undefined here

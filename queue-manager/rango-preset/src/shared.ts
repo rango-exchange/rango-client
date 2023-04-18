@@ -176,7 +176,7 @@ export type PendingSwapStep = {
 };
 
 export type WalletTypeAndAddress = {
-  walletType: string;
+  walletType: WalletType;
   address: string;
 };
 
