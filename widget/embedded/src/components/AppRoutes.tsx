@@ -10,25 +10,25 @@ import { SelectTokenPage } from '../pages/SelectTokenPage';
 import { SettingsPage } from '../pages/SettingsPage';
 import { WalletsPage } from '../pages/WalletsPage';
 import { SwapDetailsPage } from '../pages/SwapDetailsPage';
-import { Configs } from '../types';
+import { WidgetConfig } from '../types';
 
 const getAbsolutePath = (path: string) => path.replace('/', '');
 
 interface PropTypes {
-  configs?: Configs;
+  config?: WidgetConfig;
 }
 
 export function AppRoutes(props: PropTypes) {
-  const { configs } = props;
+  const { config } = props;
 
   return useRoutes([
     {
       path: getAbsolutePath(navigationRoutes.home),
       element: (
         <Home
-          title={configs?.title}
-          titleSize={configs?.titleSize}
-          titleWeight={configs?.titleWeight}
+          title={config?.title}
+          titleSize={config?.theme?.titleSize}
+          titleWeight={config?.theme?.titleWeight}
         />
       ),
     },
@@ -37,7 +37,7 @@ export function AppRoutes(props: PropTypes) {
       element: (
         <SelectChainPage
           type="from"
-          supportedChains={configs?.fromChains || 'all'}
+          supportedChains={config?.from?.blockchains}
         />
       ),
     },
@@ -46,7 +46,7 @@ export function AppRoutes(props: PropTypes) {
       element: (
         <SelectChainPage
           type="to"
-          supportedChains={configs?.toChains || 'all'}
+          supportedChains={config?.to?.blockchains}
         />
       ),
     },
@@ -55,7 +55,7 @@ export function AppRoutes(props: PropTypes) {
       element: (
         <SelectTokenPage
           type="from"
-          supportedTokens={configs?.fromTokens || 'all'}
+          supportedTokens={config?.from?.tokens}
         />
       ),
     },
@@ -64,21 +64,21 @@ export function AppRoutes(props: PropTypes) {
       element: (
         <SelectTokenPage
           type="to"
-          supportedTokens={configs?.toTokens || 'all'}
+          supportedTokens={config?.to?.tokens}
         />
       ),
     },
     {
       path: getAbsolutePath(navigationRoutes.settings),
       element: (
-        <SettingsPage supportedSwappers={configs?.liquiditySources || 'all'} />
+        <SettingsPage supportedSwappers={config?.liquiditySources} />
       ),
     },
     {
       path: getAbsolutePath(navigationRoutes.liquiditySources),
       element: (
         <LiquiditySourcePage
-          supportedSwappers={configs?.liquiditySources || 'all'}
+          supportedSwappers={config?.liquiditySources }
         />
       ),
     },
@@ -91,11 +91,11 @@ export function AppRoutes(props: PropTypes) {
       path: getAbsolutePath(navigationRoutes.wallets),
       element: (
         <WalletsPage
-          supportedWallets={configs?.wallets || 'all'}
+          supportedWallets={config?.wallets}
           multiWallets={
-            typeof configs?.multiWallets === 'undefined'
+            typeof config?.multiWallets === 'undefined'
               ? true
-              : configs.multiWallets
+              : config.multiWallets
           }
         />
       ),

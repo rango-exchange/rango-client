@@ -28,41 +28,7 @@ export type COLORS =
   | 'warning';
 
 interface ConfigState {
-  configs: {
-    fromChain: BlockchainMeta | null;
-    fromToken: Token | null;
-    toChain: BlockchainMeta | null;
-    toToken: Token | null;
-    fromAmount: number;
-    fromChains: 'all' | BlockchainMeta[];
-    fromTokens: 'all' | Token[];
-    toChains: 'all' | BlockchainMeta[];
-    toTokens: 'all' | Token[];
-    liquiditySources: 'all' | Source[];
-    wallets: 'all' | WalletType[];
-    multiWallets: boolean;
-    customeAddress: boolean;
-    theme: THEME;
-    title: string;
-    width: number;
-    height: number;
-    languege: string;
-    borderRadius: number;
-    fontFamily: string;
-    titleSize: number;
-    titleWeight: number;
-    colors: {
-      background?: string;
-      // inputBackground?: string;
-      // icons?: string;
-      primary?: string;
-      foreground?: string;
-      // text?: string;
-      success?: string;
-      error?: string;
-      warning?: string;
-    };
-  };
+  config: 
   onChangeWallets: (wallets: WalletType[] | 'all') => void;
   onChangeSources: (sources: Source[] | 'all') => void;
   onChangeBlockChains: (chains: BlockchainMeta[] | 'all', type: Type) => void;
