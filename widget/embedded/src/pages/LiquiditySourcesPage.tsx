@@ -4,10 +4,9 @@ import { navigationRoutes } from '../constants/navigationRoutes';
 import { useNavigateBack } from '../hooks/useNavigateBack';
 import { useMetaStore } from '../store/meta';
 import { useSettingsStore } from '../store/settings';
-import { Source } from '../types';
 import { removeDuplicateFrom } from '../utils/common';
 interface PropTypes {
-  supportedSwappers?: Source[];
+  supportedSwappers?: string[];
 }
 export function LiquiditySourcePage({ supportedSwappers }: PropTypes) {
   const swappers = useMetaStore.use.meta().swappers;
@@ -50,9 +49,7 @@ export function LiquiditySourcePage({ supportedSwappers }: PropTypes) {
         supportedSwappers
           ? uniqueSwappersGroups.filter(
               (item) =>
-                supportedSwappers.filter(
-                  (s) => s.title === item.title && s.type === item.type
-                ).length > 0
+                supportedSwappers.filter((s) => s === item.title).length > 0
             )
           : uniqueSwappersGroups
       }

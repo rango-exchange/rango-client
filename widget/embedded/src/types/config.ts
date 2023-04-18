@@ -1,9 +1,5 @@
 import { Asset } from 'rango-sdk';
 import { WalletType } from '@rango-dev/wallets-shared';
-export interface Source {
-  title: string;
-  type: 'BRIDGE' | 'AGGREGATOR' | 'DEX';
-}
 
 export type Colors = {
   background?: string;
@@ -36,7 +32,7 @@ export type WidgetConfig = {
   amount?: number;
   from?: Support;
   to?: Support;
-  liquiditySources?: Source[];
+  liquiditySources?: string[];
   wallets?: WalletType[];
   multiWallets?: boolean;
   customeAddress?: boolean;

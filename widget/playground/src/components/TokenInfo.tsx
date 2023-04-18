@@ -79,8 +79,8 @@ export function TokenInfo({ type }: PropTypes) {
   );
   useEffect(() => {
     if (!!supportedChains && !!chain && !supportedChains.includes(chain?.name)) {
-      onChangeBlockChain(null, type);
-      onChangeToken(null, type);
+      onChangeBlockChain(undefined, type);
+      onChangeToken(undefined, type);
     }
     if (
       !!supportedTokens &&
@@ -88,7 +88,7 @@ export function TokenInfo({ type }: PropTypes) {
       !supportedTokens.filter((t) => tokensAreEqual(t, type === 'Source' ? from.token : to.token))
         .length
     ) {
-      onChangeToken(null, type);
+      onChangeToken(undefined, type);
     }
   }, [supportedChains, supportedTokens, chain]);
 
@@ -184,7 +184,7 @@ export function TokenInfo({ type }: PropTypes) {
               selected={chain}
               onChange={(chain) => {
                 onChangeBlockChain(chain.name, type);
-                onChangeToken(null, type);
+                onChangeToken(undefined, type);
                 setModal((prev) => ({
                   ...prev,
                   open: !prev.open,
