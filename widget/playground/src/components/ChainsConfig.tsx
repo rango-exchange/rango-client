@@ -7,7 +7,7 @@ import { Type } from '../types';
 import { MultiSelect } from './MultiSelect';
 import { MultiTokenSelect } from './MultiSelect/MultiTokenSelect';
 import { TokenInfo } from './TokenInfo';
-import { Asset, Token } from 'rango-sdk';
+import { Asset } from 'rango-sdk';
 
 interface PropTypes {
   type: Type;
