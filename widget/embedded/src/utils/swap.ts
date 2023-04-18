@@ -1,14 +1,9 @@
-import {
-  WalletTypeAndAddress,
-  SwapSavedSettings,
-} from '@rango-dev/ui/dist/types/swaps';
 import BigNumber from 'bignumber.js';
 import {
   BestRouteRequest,
   BestRouteResponse,
   RecommendedSlippage,
   SwapResult,
-  MetaResponse,
   Token,
 } from 'rango-sdk';
 import { Account } from '../store/wallets';
@@ -174,96 +169,6 @@ export function canComputePriceImpact(
     parseFloat(inputAmount || '0') !== 0 &&
     !!bestRoute.result
   );
-}
-
-export function calculatePendingSwap(
-  inputAmount: string,
-  bestRoute: BestRouteResponse,
-  wallets: { [p: string]: WalletTypeAndAddress },
-  settings: Omit<SwapSavedSettings, 'disabledSwappersIds'>,
-  validateBalanceOrFee: boolean,
-  meta: MetaResponse
-): PendingSwap {
-  const simulationResult = bestRoute.result;
-  if (!simulationResult) throw Error('Simulation result should not be null');
-
-  return {
-    creationTime: new Date().getTime().toString(),
-    finishTime: null,
-    requestId: bestRoute.requestId || '',
-    inputAmount: inputAmount,
-    //@ts-ignore
-    wallets,
-    status: 'running',
-    isPaused: false,
-    extraMessage: null,
-    extraMessageSeverity: null,
-    extraMessageDetail: null,
-    extraMessageErrorCode: null,
-    networkStatusExtraMessage: null,
-    networkStatusExtraMessageDetail: null,
-    lastNotificationTime: null,
-    //@ts-ignore
-    settings: settings,
-    simulationResult: simulationResult,
-    validateBalanceOrFee,
-    //@ts-ignore
-    steps:
-      bestRoute.result?.swaps?.map((swap, index) => {
-        const swapper = meta.swappers.find(
-          (swapper) => swapper.id === swap.swapperId
-        );
-        const swapperType = swapper?.types[0];
-        const fromBlockchain = meta.blockchains.find(
-          (blockchain) => blockchain.name === swap.from.blockchain
-        );
-        const toBlockchain = meta.blockchains.find(
-          (blockchain) => blockchain.name === swap.to.blockchain
-        );
-        return {
-          id: index + 1,
-          fromBlockchain: swap.from.blockchain,
-          fromSymbol: swap.from.symbol,
-          fromSymbolAddress: swap.from.address,
-          fromDecimals: swap.from.decimals,
-          fromAmountPrecision: swap.fromAmountPrecision,
-          fromAmountMinValue: swap.fromAmountMinValue,
-          fromAmountMaxValue: swap.fromAmountMaxValue,
-          toBlockchain: swap.to.blockchain,
-          fromLogo: swap.from.logo,
-          toSymbol: swap.to.symbol,
-          toSymbolAddress: swap.to.address,
-          toDecimals: swap.to.decimals,
-          toLogo: swap.to.logo,
-          startTransactionTime: new Date().getTime(),
-          swapperId: swap.swapperId,
-          feeInUsd: numberToString(getUsdFeeOfStep(swap, meta.tokens), null, 2),
-          expectedOutputAmountHumanReadable: swap.toAmount,
-          outputAmount: '',
-          status: 'created',
-          networkStatus: null,
-          executedTransactionId: null,
-          externalTransactionId: null,
-          explorerUrl: null,
-          trackingCode: null,
-          cosmosTransaction: null,
-          solanaTransaction: null,
-          starknetTransaction: null,
-          starknetApprovalTransaction: null,
-          tronTransaction: null,
-          tronApprovalTransaction: null,
-          evmTransaction: null,
-          evmApprovalTransaction: null,
-          transferTransaction: null,
-          diagnosisUrl: null,
-          internalSteps: null,
-          fromBlockchainLogo: fromBlockchain?.logo || '',
-          toBlockchainLogo: toBlockchain?.logo || '',
-          swapperLogo: swapper?.logo || '',
-          swapperType: swapperType || '',
-        };
-      }) || [],
-  };
 }
 
 export function requiredWallets(route: BestRouteResponse | null) {

@@ -12,7 +12,6 @@ import {
 } from '../types';
 import { PendingSwap } from '@rango-dev/ui/dist/containers/History/types';
 import {
-  calculatePendingSwap,
   createBestRouteRequestBody,
   getBalanceWarnings,
   getMinRequiredSlippage,
@@ -34,6 +33,7 @@ import {
 } from '../utils/routing';
 import { numberToString } from '../utils/numbers';
 import { BestRouteResponse } from 'rango-sdk';
+import { calculatePendingSwap } from '@rango-dev/queue-manager-rango-preset';
 
 type ConfirmSwap = {
   loading: boolean;
@@ -93,7 +93,6 @@ export function useConfirmSwap(): ConfirmSwap {
           meta
         );
 
-        //@ts-ignore
         return newSwap;
       }
       return;
@@ -229,7 +228,6 @@ export function useConfirmSwap(): ConfirmSwap {
           false,
           meta
         );
-        //@ts-ignore
         return newSwap;
       } else if (!proceedAnywayRef.current) {
         proceedAnywayRef.current = true;

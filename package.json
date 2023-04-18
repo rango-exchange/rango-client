@@ -18,7 +18,7 @@
     "build:wallets": "nx run-many --target=build --projects=@rango-dev/signer-*,@rango-dev/wallets-*,@rango-dev/provider-* --exclude @rango-dev/wallets-demo --parallel=5",
     "build:queue-manager": "nx run-many --target=build --projects=@rango-dev/queue-manager-* --exclude=@rango-dev/queue-manager-demo",
     "build:widget": "nx run-many --target=build  --projects=@rango-dev/widget-*",
-    "build": "nx affected --target=build --parallel=3",
+    "build": "nx affected --target=build --parallel=5",
     "dev:ui": "nx run-many --target=storybook --projects=@rango-dev/ui",
     "dev:wallets": "node ./scripts/dev-watch/command.mjs --project @rango-dev/wallets-demo",
     "dev:queue-manager": "node ./scripts/dev-watch/command.mjs --project @rango-dev/queue-manager-demo",
@@ -55,7 +55,8 @@
     "react-dom": "^18.2.0",
     "stream-browserify": "^3.0.0",
     "util": "^0.12.3",
-    "vercel": "^28.16.12"
+    "vercel": "^28.16.12",
+    "npm-run-all": "^4.1.5"
   },
   "resolutions": {
     "react-refresh": "0.9.0"

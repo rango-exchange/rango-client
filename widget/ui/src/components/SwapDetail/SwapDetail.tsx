@@ -71,8 +71,7 @@ export function SwapDetail({
                 symbol: firstStep.fromSymbol,
               },
               blockchain: {
-                // @ts-ignore
-                logo: firstStep.fromBlockchainLogo,
+                logo: firstStep.fromBlockchainLogo || '',
                 name: firstStep.fromBlockchain,
               },
               amount: swap.inputAmount,
