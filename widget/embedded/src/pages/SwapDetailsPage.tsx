@@ -31,6 +31,7 @@ import { numberToString } from '../utils/numbers';
 //@ts-ignore
 import { t } from 'i18next';
 import { SwapDetailsPlaceholder } from '../components/SwapDetailsPlaceholder';
+import { WalletType } from '@rango-dev/wallets-shared';
 
 export function SwapDetailsPage() {
   const selectedSwapRequestId = useUiStore.use.selectedSwapRequestId();
@@ -97,8 +98,8 @@ export function SwapDetailsPage() {
     !!currentStepWallet?.walletType &&
     currentStepNetworkStatus ===
       PendingSwapNetworkStatus.WaitingForNetworkChange &&
-    canSwitchNetworkTo(currentStepWallet?.walletType, currentStepBlockchain)
-      ? connect.bind(null, currentStepWallet.walletType, currentStepBlockchain)
+    canSwitchNetworkTo(currentStepWallet?.walletType as WalletType, currentStepBlockchain)
+      ? connect.bind(null, currentStepWallet.walletType as WalletType, currentStepBlockchain)
       : undefined;
 
   const lastConvertedTokenInFailedSwap =
@@ -112,7 +113,6 @@ export function SwapDetailsPage() {
           <TokenPreview
             chain={{
               displayName: firstStep?.fromBlockchain || '',
-              // @ts-ignore
               logo: firstStep?.fromBlockchainLogo || '',
             }}
             token={{
@@ -127,7 +127,6 @@ export function SwapDetailsPage() {
           <TokenPreview
             chain={{
               displayName: lastStep?.toBlockchain || '',
-              // @ts-ignore
               logo: lastStep?.toBlockchainLogo || '',
             }}
             token={{
@@ -141,7 +140,6 @@ export function SwapDetailsPage() {
         </>
       }
       //todo: move PendingSwap type to rango-types
-      //@ts-ignore
       pendingSwap={swap}
       onCopy={handleCopy}
       isCopied={isCopied}

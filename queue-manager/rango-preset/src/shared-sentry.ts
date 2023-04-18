@@ -1,4 +1,3 @@
-import { WalletType } from '@rango-dev/wallets-shared';
 import * as Sentry from '@sentry/browser';
 import { PendingSwap, PendingSwapStep } from './shared';
 
@@ -6,7 +5,7 @@ export function logRPCError(
   error: unknown,
   swap: PendingSwap,
   currentStep: PendingSwapStep | undefined,
-  walletType: WalletType | undefined
+  walletType: string | undefined
 ): void {
   try {
     Sentry.captureException(error, {

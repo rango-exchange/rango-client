@@ -10,7 +10,9 @@
   ],
   "browserslist": "> 0.5%, last 2 versions, not dead",
   "scripts": {
-    "dev": "parcel public/index.html -p 3001 --cache-dir=.parcel-cache",
+    "watch-tsc": "tsc --watch --noEmit",
+    "parcel": "parcel public/index.html -p 3001 --cache-dir=.parcel-cache",
+    "dev": "npm-run-all --parallel watch-tsc parcel",
     "build:app": "parcel build --cache-dir=.parcel-cache",
     "build": "tsdx build --entry ./src/lib.tsx"
   },

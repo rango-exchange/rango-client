@@ -11,6 +11,7 @@ export {
   PendingSwap,
   EventType,
   SwapProgressNotification,
+  calculatePendingSwap,
 } from './shared';
 export {
   updateSwapStatus,
