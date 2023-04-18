@@ -46,9 +46,11 @@ export function App({ config }: WidgetProps) {
     .filter(isEvmBlockchain)
     .map((chain) => chain.name);
 
+  const themeBackground = activeTheme?.colors?.background?.value;
+
   useEffect(() => {
-    document.body.style.background = activeTheme?.colors?.background?.value;
-  }, []);
+    document.body.style.background = themeBackground;
+  }, [themeBackground]);
 
   const onUpdateState: EventHandler = (
     type,
