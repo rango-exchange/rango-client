@@ -23,7 +23,7 @@ interface ConfigState {
   onChangeSources: (sources?: string[]) => void;
   onChangeBlockChains: (chains?: string[], type?: Type) => void;
   onChangeTokens: (tokens?: Asset[], type?: Type) => void;
-  onChangeBooleansConfig: (name: 'multiWallets' | 'customeAddress', value: boolean) => void;
+  onChangeBooleansConfig: (name: 'multiWallets' | 'customAddress', value: boolean) => void;
   onChangeBlockChain: (chain?: string, type?: Type) => void;
   onChangeToken: (token?: Asset, type?: Type) => void;
   onChangeAmount: (amount: number) => void;
@@ -32,7 +32,7 @@ interface ConfigState {
     value: Mode | string | number,
   ) => void;
   onChangeColors: (name: COLORS, color: string) => void;
-  onChangeLanguege: (value: string) => void;
+  onChangelanguage: (value: string) => void;
 }
 
 export const useConfigStore = createSelectors(
@@ -55,8 +55,8 @@ export const useConfigStore = createSelectors(
         liquiditySources: undefined,
         wallets: undefined,
         multiWallets: true,
-        customeAddress: true,
-        languege: 'en',
+        customAddress: true,
+        language: 'en',
         theme: {
           mode: 'auto',
           fontFamily: 'Roboto',
@@ -121,9 +121,9 @@ export const useConfigStore = createSelectors(
         set((state) => {
           state.config[name] = value;
         }),
-      onChangeLanguege: (value) =>
+      onChangelanguage: (value) =>
         set((state) => {
-          state.config.languege = value;
+          state.config.language = value;
         }),
       onChangeTheme: (name, value) =>
         set((state) => {
