@@ -107,16 +107,16 @@ export const SwapBox: React.FC<WidgetProps> = ({ config }) => {
         <QueueManager>
           <SwapContainer
             fixedHeight={currentPage !== navigationRoutes.home}
-            style={
-              currentPage !== navigationRoutes.home && config?.theme?.height
-                ? {
-                    height: config?.theme?.height,
-                    width: config?.theme?.width || 'auto',
-                  }
-                : {
-                    width: config?.theme?.width || 'auto',
-                  }
-            }
+            // style={
+            //   currentPage !== navigationRoutes.home && config?.theme?.height
+            //     ? {
+            //         height: config?.theme?.height,
+            //         width: config?.theme?.width || 'auto',
+            //       }
+            //     : {
+            //         width: config?.theme?.width || 'auto',
+            //       }
+            // }
           >
             <AppRouter
               lastConnectedWallet={lastConnectedWalletWithNetwork}
