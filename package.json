@@ -45,6 +45,7 @@
     "buffer": "^5.5.0",
     "chalk": "^5.2.0",
     "command-line-args": "^5.2.1",
+    "conventional-changelog-angular": "^5.0.13",
     "conventional-recommended-bump": "^6.1.0",
     "execa": "^7.1.1",
     "nx": "15.9.2",
