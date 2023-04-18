@@ -98,8 +98,8 @@ export function SwapDetailsPage() {
     !!currentStepWallet?.walletType &&
     currentStepNetworkStatus ===
       PendingSwapNetworkStatus.WaitingForNetworkChange &&
-    canSwitchNetworkTo(currentStepWallet?.walletType as WalletType, currentStepBlockchain)
-      ? connect.bind(null, currentStepWallet.walletType as WalletType, currentStepBlockchain)
+    canSwitchNetworkTo(currentStepWallet?.walletType, currentStepBlockchain)
+      ? connect.bind(null, currentStepWallet.walletType, currentStepBlockchain)
       : undefined;
 
   const lastConvertedTokenInFailedSwap =
