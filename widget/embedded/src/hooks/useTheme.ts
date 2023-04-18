@@ -65,6 +65,9 @@ export function useTheme({
     radii: {
       5: `${borderRadius}px`,
     },
+    shadows: {
+      s: '0px 3px 5px 3px #f0f2f5, 0px 6px 10px 3px #f0f2f5, 0px 1px 18px 3px #f0f2f5',
+    },
   });
 
   const customeDarkTheme = createTheme({
@@ -83,6 +86,9 @@ export function useTheme({
     },
     radii: {
       5: `${borderRadius}px`,
+    },
+    shadows: {
+      s: '0px 3px 5px 3px #222, 0px 6px 10px 3px #222, 0px 1px 18px 3px #222',
     },
   });
   const [OSTheme, setOSTheme] = useState(customeLightTheme);

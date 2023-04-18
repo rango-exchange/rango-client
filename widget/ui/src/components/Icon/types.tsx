@@ -2,14 +2,8 @@ import * as React from 'react';
 
 export interface IconProps extends React.SVGAttributes<SVGElement> {
   size?: 12 | 16 | 18 | 20 | 24 | 28 | 32 | 36 | 40;
-  color?:
-    | 'primary'
-    | 'error'
-    | 'warning'
-    | 'success'
-    | 'black'
-    | 'white'
-    | 'disabled';
+  color?: 'primary' | 'error' | 'warning' | 'success' | 'black' | 'white';
+  disabled?: boolean;
 }
 
 export type Icon =
