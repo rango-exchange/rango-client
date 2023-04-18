@@ -29,17 +29,15 @@ export function SourcesConfig() {
       }
     });
   const onChange = (source) => {
-    const list = uniqueSwappersGroups.map((item) => ({
-      title: item.title,
-      type: item.type,
-    }));
+    const SourceList = uniqueSwappersGroups.map((s) => s.title);
 
     const values = onChangeMultiSelects(
       source,
       liquiditySources,
-      list,
-      (item) => item.title === source.title && item.type === source.type,
+      SourceList,
+      (item) => item === source,
     );
+
     onChangeSources(values);
   };
   return (
