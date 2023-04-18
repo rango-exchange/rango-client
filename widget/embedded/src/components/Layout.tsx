@@ -23,6 +23,7 @@ import { useTranslation } from 'react-i18next';
 import { useBestRouteStore } from '../store/bestRoute';
 import { useMetaStore } from '../store/meta';
 import { useSettingsStore } from '../store/settings';
+import { Image } from '@rango-dev/ui';
 
 const Header = styled('div', {
   display: 'flex',
@@ -33,9 +34,7 @@ const Header = styled('div', {
   },
 });
 
-const WalletImage = styled('img', {
-  width: '$24',
-  height: '$24',
+const WalletImageContainer = styled('div', {
   marginLeft: -15,
   marginRight: '$6',
   borderRadius: '99999px',
@@ -116,7 +115,9 @@ export function Layout({ config }: LayoutProps) {
         >
           {connectedWalletsImages?.length ? (
             connectedWalletsImages.map((walletImage, index) => (
-              <WalletImage key={index} src={walletImage} />
+              <WalletImageContainer key={index}>
+                <Image src={walletImage} size={24} />
+              </WalletImageContainer>
             ))
           ) : (
             <></>

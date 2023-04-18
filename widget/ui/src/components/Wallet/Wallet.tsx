@@ -6,11 +6,10 @@ import { WalletInfo, WalletState } from '../../types/wallet';
 import { Button } from '../Button/Button';
 import { Typography } from '../Typography';
 import { State } from './State';
+import { Image } from '../common';
 
-const WalletImage = styled('img', {
-  width: '$24',
-  height: '$24',
-  marginRight: '$12',
+const WalletImageContainer = styled('div', {
+  paddingRight: '$12',
 });
 const Text = styled('div', {
   display: 'flex',
@@ -51,7 +50,11 @@ export function Wallet(props: PropTypes) {
       align="start"
       variant="outlined"
       size="large"
-      prefix={<WalletImage src={image} />}
+      prefix={
+        <WalletImageContainer>
+          <Image src={image} size={24} />
+        </WalletImageContainer>
+      }
       suffix={<State walletState={state} installLink={installLink} />}
     >
       <Text>

@@ -6,6 +6,7 @@ import {
   styled,
   TextField,
   Typography,
+  Image,
 } from '@rango-dev/ui';
 import { useMetaStore } from '../store/meta';
 import { BlockchainMeta, Token } from 'rango-sdk';
@@ -88,11 +89,6 @@ const Container = styled('div', {
       paddingLeft: '$8',
     },
   },
-});
-
-const StyledImage = styled('img', {
-  width: '$24',
-  maxHeight: '$24',
 });
 
 const Options = styled('div', {
@@ -234,7 +230,7 @@ export function TokenInfo(props: PropTypes) {
             loading={loadingStatus === 'loading'}
             prefix={
               loadingStatus === 'success' && chain ? (
-                <StyledImage src={chain.logo} />
+                <Image src={chain.logo} size={24} />
               ) : (
                 <ImagePlaceholder />
               )
@@ -262,7 +258,7 @@ export function TokenInfo(props: PropTypes) {
             loading={loadingStatus === 'loading'}
             prefix={
               loadingStatus === 'success' && token ? (
-                <StyledImage src={token.image} />
+                <Image src={token.image} size={24} />
               ) : (
                 <ImagePlaceholder />
               )

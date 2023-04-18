@@ -1,6 +1,7 @@
 import React, { PropsWithChildren } from 'react';
 import { styled } from '../../theme';
 import { Typography } from '../Typography';
+import { Image } from '../common';
 
 const StepLogoContainer = styled('div', {
   position: 'relative',
@@ -15,11 +16,6 @@ const StepLogoContainer = styled('div', {
     },
   },
 });
-const Logo = styled('img', {
-  width: '$28',
-  height: '$28',
-  borderRadius: '50%',
-});
 
 const ChainLogo = styled('div', {
   position: 'absolute',
@@ -27,15 +23,12 @@ const ChainLogo = styled('div', {
   bottom: -4,
   width: '$16',
   height: '$16',
-  padding: '$2',
   borderRadius: '50%',
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
   backgroundColor: '$background',
   border: '1px solid $neutrals400',
-
-  img: {
-    width: '100%',
-    display: 'block',
-  },
 });
 const StepContainer = styled('div', {
   display: 'flex',
@@ -91,9 +84,9 @@ export function StepDetail({
   return (
     <StepContainer direction={direction}>
       <StepLogoContainer direction={direction}>
-        <Logo src={logo} alt={symbol} />
+        <Image src={logo} alt={symbol} size={28} />
         <ChainLogo>
-          <img src={chainLogo} alt={blockchain} />
+          <Image src={chainLogo} alt={blockchain} size={12} />
         </ChainLogo>
       </StepLogoContainer>
       <Detail pl={direction === 'horizontal'}>
