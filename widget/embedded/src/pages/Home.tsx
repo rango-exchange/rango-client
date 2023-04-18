@@ -136,6 +136,7 @@ export function Home() {
   return (
     <Container>
       <Header
+        title="SWAP"
         suffix={
           <HeaderButtons
             onClickRefresh={!!bestRoute ? fetchBestRoute : undefined}

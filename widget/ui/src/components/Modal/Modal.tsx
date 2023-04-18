@@ -12,7 +12,6 @@ export interface PropTypes {
   content: React.ReactNode;
   action?: React.ReactNode;
   containerStyle?: CSSProperties;
-  contentStyle?: CSSProperties;
 }
 
 const BackDrop = styled('div', {
@@ -48,7 +47,6 @@ const ModalHeader = styled('div', {
   marginBottom: '$16',
 });
 
-const ContentContainer = styled('div', {});
 
 export function Modal(props: PropTypes) {
   const {
@@ -58,7 +56,6 @@ export function Modal(props: PropTypes) {
     onClose,
     containerStyle,
     action,
-    contentStyle,
   } = props;
 
   const handleBackDropClick = (event: React.MouseEvent<HTMLDivElement>) => {
@@ -81,9 +78,7 @@ export function Modal(props: PropTypes) {
                   <CloseIcon size={24} onClick={onClose} />
                 </Row>
               </ModalHeader>
-              <ContentContainer style={contentStyle}>
-                {content}
-              </ContentContainer>
+              {content}
             </ModalContainer>
           </BackDrop>,
           document.body

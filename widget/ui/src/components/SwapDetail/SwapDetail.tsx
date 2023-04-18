@@ -71,6 +71,7 @@ export function SwapDetail({
                 symbol: firstStep.fromSymbol,
               },
               blockchain: {
+                // @ts-ignore
                 logo: firstStep.fromBlockchainLogo || '',
                 name: firstStep.fromBlockchain,
               },
