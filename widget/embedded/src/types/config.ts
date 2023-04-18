@@ -29,6 +29,7 @@ export type Support = {
 };
 
 export type WidgetConfig = {
+  affiliateRef?: string;
   amount?: number;
   from?: Support;
   to?: Support;

@@ -22,6 +22,7 @@ import { WidgetConfig } from '../types';
 import { useTranslation } from 'react-i18next';
 import { useBestRouteStore } from '../store/bestRoute';
 import { useMetaStore } from '../store/meta';
+import { useSettingsStore } from '../store/settings';
 
 const Header = styled('div', {
   display: 'flex',
@@ -59,6 +60,7 @@ export function Layout({ config }: LayoutProps) {
   const setToChain = useBestRouteStore.use.setToChain();
   const setToToken = useBestRouteStore.use.setToToken();
   const setInputAmount = useBestRouteStore.use.setInputAmount();
+  const setAffiliateRef = useSettingsStore.use.setAffiliateRef();
 
   const totalBalance = calculateWalletUsdValue(balances);
   const connectWalletsButtonDisabled =
@@ -94,7 +96,9 @@ export function Layout({ config }: LayoutProps) {
     setFromToken(token || null);
   }, [config?.from?.token, config?.from?.blockchain]);
 
-
+  useEffect(() => {
+    setAffiliateRef(config?.affiliateRef || null);
+  }, [config?.affiliateRef]);
   return (
     <>
       <Header>
