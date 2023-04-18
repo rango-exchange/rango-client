@@ -7,6 +7,7 @@ import {
   TextField,
   Typography,
   Image,
+  Spacer,
 } from '@rango-dev/ui';
 import { useMetaStore } from '../store/meta';
 import { BlockchainMeta, Token } from 'rango-sdk';
@@ -17,7 +18,6 @@ import BigNumber from 'bignumber.js';
 import { getBalanceFromWallet } from '../utils/wallets';
 import { useWalletsStore } from '../store/wallets';
 import { useTranslation } from 'react-i18next';
-import { Spacer } from '@rango-dev/ui';
 import { PercentageChange } from './PercentageChange';
 
 type PropTypes = (
