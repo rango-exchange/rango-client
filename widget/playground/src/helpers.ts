@@ -4,6 +4,8 @@ import { Asset, Token } from 'rango-sdk';
 export const excludedWallets = [WalletType.UNKNOWN, WalletType.TERRA_STATION, WalletType.LEAP];
 
 export const onChangeMultiSelects = (value, values, list, findIndex) => {
+  console.log(value);
+
   if (value === 'empty') return [];
   else if (value === 'all') return null;
   if (!values) {
@@ -16,7 +18,7 @@ export const onChangeMultiSelects = (value, values, list, findIndex) => {
     const index = values.findIndex(findIndex);
     if (index !== -1) values.splice(index, 1);
     else values.push(value);
-    if (values.length === list.length) return 'all';
+    if (values.length === list.length) return undefined;
     else return values;
   }
 };
