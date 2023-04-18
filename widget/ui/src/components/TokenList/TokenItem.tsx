@@ -4,11 +4,10 @@ import { styled } from '../../theme';
 import { Button } from '../Button';
 import { Typography } from '../Typography';
 import { TokenWithAmount } from './TokenList';
+import { Image } from '../common';
 
-const TokenImage = styled('img', {
-  width: '$32',
-  maxHeight: '$32',
-  marginRight: '$16',
+const TokenImageContainer = styled('div', {
+  paddingRight: '$16',
 });
 
 const TokenNameContainer = styled('div', {
@@ -49,7 +48,11 @@ export function TokenItem(props: PropTypes) {
         align="start"
         onClick={onClick.bind(null, token)}
         type={selected ? 'primary' : undefined}
-        prefix={<TokenImage src={token.image} />}
+        prefix={
+          <TokenImageContainer>
+            <Image src={token.image} size={32} />
+          </TokenImageContainer>
+        }
         suffix={
           token.balance?.amount && (
             <TokenAmountContainer>

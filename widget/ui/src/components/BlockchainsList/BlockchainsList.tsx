@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { styled } from '../../theme';
 import { BlockchainMeta } from 'rango-sdk';
 import { Button } from '../Button/Button';
-import { FilledCircle } from '../common';
+import { FilledCircle, Image } from '../common';
 import { Typography } from '../Typography';
 
 export interface PropTypes {
@@ -22,10 +22,8 @@ const ListContainer = styled('div', {
   height: '100%',
 });
 
-const Image = styled('img', {
-  width: '1.5rem',
-  maxHeight: '1.5rem',
-  marginRight: '$4',
+const ImageContainer = styled('div', {
+  paddingRight: '$4',
 });
 
 export function BlockchainsList(props: PropTypes) {
@@ -55,7 +53,11 @@ export function BlockchainsList(props: PropTypes) {
             type={isSelect(blockchain.name) ? 'primary' : undefined}
             variant="outlined"
             size="large"
-            prefix={<Image src={blockchain.logo} />}
+            prefix={
+              <ImageContainer>
+                <Image size={24} src={blockchain.logo} />
+              </ImageContainer>
+            }
             suffix={isSelect(blockchain.name) ? <FilledCircle /> : undefined}
             align="start"
             onClick={changeSelectedBlockchain.bind(null, blockchain)}

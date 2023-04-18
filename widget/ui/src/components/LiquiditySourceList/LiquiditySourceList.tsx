@@ -9,6 +9,7 @@ import { Typography } from '../Typography';
 import { Spinner } from '../Spinner';
 import { LoadingFailedAlert } from '../Alert/LoadingFailedAlert';
 import { NotFoundAlert } from '../Alert/NotFoundAlert';
+import { Image } from '../common';
 
 const groupLiquiditySources = (
   liquiditySources: LiquiditySource[]
@@ -44,10 +45,8 @@ const LiquiditySourceType = styled('div', {
   paddingBottom: '$8',
 });
 
-const LiquidityImage = styled('img', {
-  width: '$20',
-  maxHeight: '$20',
-  marginRight: '$16',
+const LiquidityImageContainer = styled('div', {
+  paddingRight: '$16',
 });
 
 const LoaderContainer = styled('div', {
@@ -185,7 +184,11 @@ const LiquiditySourceItem = ({
     size="large"
     align="start"
     variant="outlined"
-    prefix={<LiquidityImage src={liquiditySource.logo} />}
+    prefix={
+      <LiquidityImageContainer>
+        <Image src={liquiditySource.logo} size={20} />
+      </LiquidityImageContainer>
+    }
     suffix={<Switch checked={selected} />}
     style={{ marginBottom: '12px' }}
     onClick={onChange.bind(null, liquiditySource)}

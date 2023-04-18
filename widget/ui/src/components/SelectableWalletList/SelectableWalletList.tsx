@@ -3,6 +3,7 @@ import { styled } from '../../theme';
 import { SelectableWallet } from '../../types';
 import { Typography } from '../Typography';
 import { getConciseAddress } from '../../helper';
+import { Image } from '../common';
 
 const Row = styled('div', {
   display: 'flex',
@@ -102,7 +103,7 @@ export function SelectableWalletList({
             onClick={onClick.bind(null, w)}
             key={index}
           >
-            <img src={w.image} alt={w.walletType} width={24} height={24} />
+            <Image src={w.image} alt={w.walletType} size={24} />
             <Typography variant="body2">{w.name}</Typography>
             <Typography variant="caption">
               {getConciseAddress(w.address)}
