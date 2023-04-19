@@ -70,21 +70,28 @@ function QueueManager(props: PropsWithChildren<{}>) {
   };
   const allProviders = providers();
   const notifier = (data: SwapProgressNotification) => {
+    const lastStep = data.swap?.steps[data.swap.steps.length - 1];
+    const outputAmount = data.step?.outputAmount || '';
+    const step = data.step || lastStep;
+
     if (
-      data.eventType === 'contract_confirmed' ||
-      data.eventType === 'task_completed'
+      data.eventType === 'task_completed' ||
+      (data.eventType === 'step_completed_with_output' &&
+        lastStep?.id !== data.step?.id) ||
+      !!outputAmount
     ) {
       const fromAccount = accounts.find(
-        (account) => account.chain === data.swap?.steps[0].fromBlockchain
+        (account) => account.chain === step?.fromBlockchain
       );
       const toAccount =
-        data.swap?.steps[0].fromBlockchain !== data.step?.toBlockchain &&
-        accounts.find((account) => account.chain === data.step?.toBlockchain);
+        step?.fromBlockchain !== step?.toBlockchain &&
+        accounts.find((account) => account.chain === step?.toBlockchain);
 
       fromAccount && getOneOFWalletsDetails(fromAccount);
       toAccount && getOneOFWalletsDetails(toAccount);
     }
   };
+
   const context: SwapQueueContext = {
     meta: {
       blockchains: allBlockchains,
