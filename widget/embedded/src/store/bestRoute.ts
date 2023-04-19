@@ -263,7 +263,6 @@ const bestRoute = (
       [],
       disabledLiquiditySources,
       userSlippage,
-      false,
       affiliateRef
     );
     if (!bestRouteStore.getState().loading)
@@ -297,7 +296,8 @@ const bestRoute = (
   const bestRouteParamsListener = () => {
     const { fromToken, toToken, inputAmount, inputUsdValue } =
       useBestRouteStore.getState();
-    if (!inputAmount || inputAmount === '0' || inputUsdValue.eq(0)) return;
+    if (!inputAmount || inputAmount === '0' || inputUsdValue.eq(0))
+      return bestRouteStore.setState({ loading: false });
 
     if (tokensAreEqual(fromToken, toToken))
       return bestRouteStore.setState({

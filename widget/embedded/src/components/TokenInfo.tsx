@@ -132,6 +132,7 @@ export function TokenInfo(props: PropTypes) {
   const bestRoute = useBestRouteStore.use.bestRoute();
   const inputAmount = useBestRouteStore.use.inputAmount();
   const balances = useWalletsStore.use.balances();
+  const fetchingBestRoute = useBestRouteStore.use.loading();
   const navigate = useNavigate();
   const { t } = useTranslation();
 
@@ -307,11 +308,10 @@ export function TokenInfo(props: PropTypes) {
             ) : (
               <OutputContainer>
                 <Typography variant="h4">
-                  {bestRoute
-                    ? `≈ ${numberToString(props.outputAmount)}`
-                    : inputAmount
-                    ? '?'
-                    : '0'}
+                  {fetchingBestRoute && '?'}
+                  {!!bestRoute?.result &&
+                    `≈ ${numberToString(props.outputAmount)}`}
+                  {(!inputAmount || inputAmount === '0') && '0'}
                 </Typography>
               </OutputContainer>
             )}

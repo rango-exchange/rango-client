@@ -19,6 +19,7 @@ import {
   PendingSwapStep,
 } from '@rango-dev/queue-manager-rango-preset';
 import { PendingSwap } from '@rango-dev/queue-manager-rango-preset';
+import { removeDuplicateFrom } from './common';
 
 export function getOutputRatio(
   inputUsdValue: BigNumber,
@@ -128,13 +129,14 @@ export function getSwapButtonState(
   highValueLoss: boolean,
   priceImpactCanNotBeComputed: boolean,
   needsToWarnEthOnPath: boolean,
-  inputIsZero: boolean
+  inputAmount: string
 ): SwapButtonState {
   if (loadingMetaStatus !== 'success')
     return { title: 'Connect Wallet', disabled: true };
   if (accounts.length == 0) return { title: 'Connect Wallet', disabled: false };
   if (loading) return { title: 'Finding Best Route...', disabled: true };
-  else if (inputIsZero) return { title: 'Enter an amount', disabled: true };
+  else if (!inputAmount || inputAmount === '0')
+    return { title: 'Enter an amount', disabled: true };
   else if (!bestRoute || !bestRoute.result)
     return { title: 'Swap', disabled: true };
   else if (hasLimitError) return { title: 'Limit Error', disabled: true };
@@ -313,8 +315,8 @@ export function createBestRouteRequestBody(
   selectedWallets: SelectedWallet[],
   disabledLiquiditySources: string[],
   slippage: number,
-  checkPrerequisites: boolean,
-  affiliateRef: string | null
+  affiliateRef: string | null,
+  initialRoute?: BestRouteResponse
 ): BestRouteRequest {
   const selectedWalletsMap = selectedWallets.reduce(
     (
@@ -341,7 +343,16 @@ export function createBestRouteRequestBody(
       });
   });
 
-  const filteredBlockchains = selectedWallets.map((wallet) => wallet.chain);
+  const checkPrerequisites = !!initialRoute;
+
+  const filteredBlockchains = removeDuplicateFrom(
+    (initialRoute?.result?.swaps || []).reduce(
+      (blockchains: string[], swap) => (
+        blockchains.push(swap.from.blockchain, swap.to.blockchain), blockchains
+      ),
+      []
+    )
+  );
 
   const requestBody: BestRouteRequest = {
     amount: inputAmount.toString(),

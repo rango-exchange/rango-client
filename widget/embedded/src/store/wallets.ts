@@ -142,7 +142,7 @@ export const useWalletsStore = createSelectors(
             }
           });
           return {
-            selectedWallets: selectedWallets,
+            selectedWallets: state.selectedWallets.concat(selectedWallets),
           };
         }),
       setSelectedWallet: (wallet) =>
