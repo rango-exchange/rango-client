@@ -47,6 +47,7 @@ export function ConfirmSwapPage() {
   const customSlippage = useSettingsStore.use.customSlippage();
   const inputUsdValue = useBestRouteStore.use.inputUsdValue();
   const outputUsdValue = useBestRouteStore.use.outputUsdValue();
+  const setInputAmount = useBestRouteStore.use.setInputAmount();
 
   const bestRouteloadingStatus = getBestRouteStatus(
     fetchingBestRoute,
@@ -96,7 +97,6 @@ export function ConfirmSwapPage() {
 
   return (
     <ConfirmSwap
-    // @ts-ignore
       requiredWallets={getRequiredChains(bestRoute)}
       selectableWallets={selectableWallets}
       onBack={navigateBackFrom.bind(null, navigationRoutes.confirmSwap)}
@@ -106,13 +106,13 @@ export function ConfirmSwapPage() {
             manager?.create(
               'swap',
               { swapDetails: swap },
-              // @ts-ignore
               { id: swap.requestId }
             );
             setSelectedSwap(swap.requestId);
             navigate(navigationRoutes.swaps + `/${swap.requestId}`, {
               replace: true,
             });
+            setInputAmount('');
           }
         });
       }}

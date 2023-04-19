@@ -110,7 +110,6 @@ export function Home() {
     outputUsdValue
   );
 
-  const inputIsZero = inputAmount === '0';
   const swapButtonState = getSwapButtonState(
     loadingMetaStatus,
     accounts,
@@ -120,7 +119,7 @@ export function Home() {
     highValueLoss,
     priceImpactCanNotBeComputed,
     needsToWarnEthOnPath,
-    inputIsZero
+    inputAmount
   );
 
   const totalFeeInUsd = getTotalFeeInUsd(bestRoute, tokens);

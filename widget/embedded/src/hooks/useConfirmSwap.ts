@@ -112,8 +112,8 @@ export function useConfirmSwap(): ConfirmSwap {
       selectedWallets,
       disabledLiquiditySources,
       userSlippage,
-      true,
-      affiliateRef
+      affiliateRef,
+      initialRoute
     );
 
     try {
