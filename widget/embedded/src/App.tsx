@@ -1,4 +1,4 @@
-import { SwapContainer } from '@rango-dev/ui';
+import { SwapContainer, ToastProvider } from '@rango-dev/ui';
 import React, { useEffect, useMemo, useState } from 'react';
 import { AppRouter } from './components/AppRouter';
 import { useMetaStore } from './store/meta';
@@ -106,16 +106,20 @@ export function App({ config }: WidgetProps) {
     >
       <div id="pageContainer" className={activeTheme}>
         <QueueManager>
-          <SwapContainer fixedHeight={currentPage !== navigationRoutes.home}>
-            <AppRouter
-              lastConnectedWallet={lastConnectedWalletWithNetwork}
-              disconnectedWallet={disconnectedWallet}
-              clearDisconnectedWallet={() => {
-                setDisconnectedWallet(undefined);
-              }}
-            >
-              <Layout config={config} />
-            </AppRouter>
+          <SwapContainer
+            fixedHeight={currentPage !== navigationRoutes.home}
+          >
+            <ToastProvider>
+              <AppRouter
+                lastConnectedWallet={lastConnectedWalletWithNetwork}
+                disconnectedWallet={disconnectedWallet}
+                clearDisconnectedWallet={() => {
+                  setDisconnectedWallet(undefined);
+                }}
+              >
+                <Layout config={config} />
+              </AppRouter>
+            </ToastProvider>
           </SwapContainer>
         </QueueManager>
       </div>
