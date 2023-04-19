@@ -81,9 +81,9 @@ const TypographyContainer = styled('span', {
       body2: {
         fontSize: '$14',
         fontWeight: '$400',
-        '@lg': {
-          fontSize: '$16',
-        },
+        // '@lg': {
+        //   fontSize: '$14',
+        // },
       },
       body3: {
         fontSize: '$12',

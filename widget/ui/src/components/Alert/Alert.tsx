@@ -72,7 +72,7 @@ export function Alert(props: PropsWithChildren<PropTypes>) {
               {type === 'success' && <CheckCircleIcon color={type} size={24} />}
               {type === 'warning' && <WarningIcon color={type} size={24} />}
               {type === 'error' && <InfoCircleIcon color={type} size={24} />}
-              <Spacer size={8} />
+              <Spacer size={4} />
             </div>
           </>
         )}
@@ -90,7 +90,7 @@ export function Alert(props: PropsWithChildren<PropTypes>) {
               <Typography className="title" variant="title" color={type}>
                 {title}
               </Typography>
-              {!!children && <Spacer size={8} direction="vertical" />}
+              {!!children && <Spacer size={4} direction="vertical" />}
             </>
           )}
           {children}

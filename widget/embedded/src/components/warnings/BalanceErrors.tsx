@@ -36,7 +36,7 @@ export function BalanceErrors({ messages }: PropTypes) {
       <List showListStyle={showListStyle}>
         {messages.map((warning) => (
           <ListItem showListStyle={showListStyle}>
-            <Message variant="body3">- {warning}</Message>
+            <Message variant="body2">{warning}</Message>
           </ListItem>
         ))}
       </List>
