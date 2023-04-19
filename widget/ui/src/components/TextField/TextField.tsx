@@ -77,6 +77,13 @@ const Input = styled('input', {
   '&:disabled': {
     cursor: 'not-allowed',
   },
+  '&::-webkit-outer-spin-button, &::-webkit-inner-spin-button': {
+    '-webkit-appearance': 'none',
+    margin: 0,
+  },
+  '&[type="number"]': {
+    '-moz-appearance': 'textfield',
+  },
 });
 const Label = styled('label', {
   display: 'inline-block',
