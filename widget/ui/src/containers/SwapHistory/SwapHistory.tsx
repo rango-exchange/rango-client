@@ -53,6 +53,7 @@ export const ErrorMsg = styled(Typography, {
 
 export const FeeContainer = styled('div', {
   paddingLeft: '$16',
+  color: '$neutrals800'
 });
 
 export const Fee = styled('div', {
@@ -298,13 +299,13 @@ export function SwapHistory(props: PropTypes) {
               />
 
               <FeeContainer>
-                <Typography variant="caption">
+                <Typography variant="body2">
                   {step.swapperType === 'DEX' ? 'Swap' : 'Bridge'} via{' '}
                   {step.swapperId}
                 </Typography>
                 <Fee>
                   <GasIcon />
-                  <Typography variant="caption">
+                  <Typography variant="body2">
                     &nbsp; ${step.feeInUsd} estimated gas fee
                   </Typography>
                 </Fee>
@@ -325,7 +326,7 @@ export function SwapHistory(props: PropTypes) {
                           <DescriptionContainer>
                             <Divider size={4} />
                             <CheckCircleIcon color="primary" />
-                            <Description variant="body3">
+                            <Description variant="body2">
                               <StyledAnchor
                                 href={item.url}
                                 target="_blank"
@@ -353,7 +354,7 @@ export function SwapHistory(props: PropTypes) {
                     <InternalDetail>
                       <DescriptionContainer>
                         <InfoCircleIcon color="error" />
-                        <Description variant="body3" color="$error500">
+                        <Description variant="body2" color="$error500">
                           Step failed
                         </Description>
                       </DescriptionContainer>
