@@ -36,6 +36,7 @@ import {
 import BigNumber from 'bignumber.js';
 import { HeaderButtons } from '../components/HeaderButtons';
 import { useUiStore } from '../store/ui';
+import { getFormatedBestRoute } from '../utils/routing';
 
 const Container = styled('div', {
   display: 'flex',
@@ -177,7 +178,7 @@ export function Home() {
           <BestRoute
             error={bestRouteError}
             loading={fetchingBestRoute}
-            data={bestRoute}
+            data={getFormatedBestRoute(bestRoute)}
             totalFee={numberToString(totalFeeInUsd, 0, 2)}
             feeWarning={highFee}
             totalTime={secondsToString(totalArrivalTime(bestRoute))}

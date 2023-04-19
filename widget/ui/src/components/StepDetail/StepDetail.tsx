@@ -1,7 +1,6 @@
 import React, { PropsWithChildren } from 'react';
 import { styled } from '../../theme';
 import { Typography } from '../Typography';
-import { Image } from '../common';
 
 const StepLogoContainer = styled('div', {
   position: 'relative',
@@ -16,6 +15,11 @@ const StepLogoContainer = styled('div', {
     },
   },
 });
+const Logo = styled('img', {
+  width: '$28',
+  height: '$28',
+  borderRadius: '50%',
+});
 
 const ChainLogo = styled('div', {
   position: 'absolute',
@@ -23,12 +27,15 @@ const ChainLogo = styled('div', {
   bottom: -4,
   width: '$16',
   height: '$16',
+  padding: '$2',
   borderRadius: '50%',
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
   backgroundColor: '$background',
   border: '1px solid $neutrals400',
+
+  img: {
+    width: '100%',
+    display: 'block',
+  },
 });
 const StepContainer = styled('div', {
   display: 'flex',
@@ -41,6 +48,12 @@ const StepContainer = styled('div', {
         flexDirection: 'column',
         textAlign: 'center',
         justifyContent: 'center',
+      },
+    },
+    success: {
+      true: { filter: 'none' },
+      false: {
+        filter: 'grayscale(100%)',
       },
     },
   },
@@ -63,6 +76,7 @@ const Detail = styled('div', {
 const SubTitle = styled(Typography, {
   color: '$neutrals600',
   display: 'block',
+  paddingLeft: '$8',
 });
 export interface PropTypes {
   logo: string;
@@ -70,30 +84,53 @@ export interface PropTypes {
   amount: string;
   symbol: string;
   blockchain: string;
+  estimatedAmount?: string;
   direction?: 'horizontal' | 'vertical';
+  success?: boolean;
 }
 
-export function StepDetail({
-  logo,
-  chainLogo,
-  amount,
-  symbol,
-  blockchain,
-  direction = 'horizontal',
-}: PropsWithChildren<PropTypes>) {
+export function StepDetail(props: PropsWithChildren<PropTypes>) {
+  const {
+    logo,
+    chainLogo,
+    amount,
+    symbol,
+    blockchain,
+    estimatedAmount,
+    success = true,
+    direction = 'horizontal',
+  } = props;
   return (
-    <StepContainer direction={direction}>
+    <StepContainer direction={direction} success={success}>
       <StepLogoContainer direction={direction}>
-        <Image src={logo} alt={symbol} size={28} />
+        <Logo src={logo} alt={symbol} />
         <ChainLogo>
-          <Image src={chainLogo} alt={blockchain} size={12} />
+          <img src={chainLogo} alt={blockchain} />
         </ChainLogo>
       </StepLogoContainer>
       <Detail pl={direction === 'horizontal'}>
-        <Typography noWrap variant={direction === 'vertical' ? 'body2' : 'h6'}>
-          {amount ? parseFloat(amount).toFixed(2) : '?'} {symbol}
+        {amount && (
+          <Typography
+            noWrap
+            variant={direction === 'vertical' ? 'body2' : 'h6'}
+          >
+            {amount}
+          </Typography>
+        )}
+        {!amount && estimatedAmount && (
+          <Typography
+            noWrap
+            variant={direction === 'vertical' ? 'body2' : 'h6'}
+            color={'$neutrals500'}
+          >
+            {estimatedAmount}
+          </Typography>
+        )}
+        &nbsp;
+        <Typography variant={direction === 'vertical' ? 'body2' : 'h6'} noWrap>
+          {symbol}
         </Typography>
-        <SubTitle noWrap variant="caption" color="neutrals800">
+        <SubTitle noWrap variant="caption" color="$neutrals800">
           on {blockchain}
         </SubTitle>
       </Detail>
