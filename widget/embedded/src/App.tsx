@@ -105,23 +105,26 @@ export function App({ config }: WidgetProps) {
       onUpdateState={onUpdateState}
     >
       <div id="pageContainer" className={activeTheme}>
-        <QueueManager>
-          <SwapContainer
-            // style={
-            //   currentPage !== navigationRoutes.home && config?.theme?.height
-            //     ? {
-            //         height: config?.theme?.height,
-            //         width: config?.theme?.width || 'auto',
-            //       }
-            //     : config?.theme?.width
-            //     ? {
-            //         width: config?.theme?.width || 'auto',
-            //       }
-            //     : undefined
-            // }
-            fixedHeight={currentPage !== navigationRoutes.home}
-          >
-            <ToastProvider>
+        <ToastProvider
+          anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+          container={document.getElementById('swap-box')!}
+        >
+          <QueueManager>
+            <SwapContainer
+              // style={
+              //   currentPage !== navigationRoutes.home && config?.theme?.height
+              //     ? {
+              //         height: config?.theme?.height,
+              //         width: config?.theme?.width || 'auto',
+              //       }
+              //     : config?.theme?.width
+              //     ? {
+              //         width: config?.theme?.width || 'auto',
+              //       }
+              //     : undefined
+              // }
+              fixedHeight={currentPage !== navigationRoutes.home}
+            >
               <AppRouter
                 lastConnectedWallet={lastConnectedWalletWithNetwork}
                 disconnectedWallet={disconnectedWallet}
@@ -131,9 +134,9 @@ export function App({ config }: WidgetProps) {
               >
                 <Layout config={config} />
               </AppRouter>
-            </ToastProvider>
-          </SwapContainer>
-        </QueueManager>
+            </SwapContainer>
+          </QueueManager>
+        </ToastProvider>
       </div>
     </Provider>
   );
