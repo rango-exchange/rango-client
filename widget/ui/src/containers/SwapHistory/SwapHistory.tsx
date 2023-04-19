@@ -157,6 +157,7 @@ const Row = styled('div', {
 });
 
 const RequestId = styled('div', {
+  width: '150px',
   whiteSpace: 'nowrap',
   overflow: 'hidden',
   textOverflow: 'ellipsis',

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { navigationRoutes } from '../constants/navigationRoutes';
 import useCopyToClipboard from '../hooks/useCopyToClipboard';
 import { useManager } from '@rango-dev/queue-manager-react';
@@ -39,14 +39,6 @@ export function SwapDetailsPage() {
   const [isCopied, handleCopy] = useCopyToClipboard(2000);
   const { manager } = useManager();
 
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    setTimeout(() => {
-      setLoading(false);
-    }, 5_000);
-  }, []);
-
   const pendingSwaps = getPendingSwaps(manager);
   const selectedSwap = pendingSwaps.find(
     ({ swap }) => swap.requestId === selectedSwapRequestId
@@ -57,6 +49,7 @@ export function SwapDetailsPage() {
     if (swap) cancelSwap(swap);
   };
   const swap = selectedSwap?.swap;
+  const loading = !manager.isLoaded();
 
   if (!swap)
     return (
