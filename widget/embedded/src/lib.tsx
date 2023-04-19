@@ -1,5 +1,5 @@
 import { SwapContainer } from '@rango-dev/ui';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { AppRouter } from './components/AppRouter';
 import { useMetaStore } from './store/meta';
 import { Events, Provider } from '@rango-dev/wallets-core';
@@ -21,6 +21,7 @@ import './i18n';
 import QueueManager from './QueueManager';
 import { useUiStore } from './store/ui';
 import { navigationRoutes } from './constants/navigationRoutes';
+import { initConfig } from './utils/configs';
 
 export type WidgetProps = {
   config?: WidgetConfig;
@@ -44,6 +45,14 @@ export const SwapBox: React.FC<WidgetProps> = ({ config }) => {
   const evmBasedChainNames = blockchains
     .filter(isEvmBlockchain)
     .map((chain) => chain.name);
+
+  useMemo(() => {
+    if (config?.apiKey) {
+      initConfig({
+        API_KEY: config?.apiKey,
+      });
+    }
+  }, [config]);
 
   const onUpdateState: EventHandler = (
     type,
