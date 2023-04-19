@@ -33,7 +33,7 @@ const ListContainer = styled('div', {
   overflowY: 'auto',
 });
 
-export const LoaderContainer = styled('div', {
+const LoaderContainer = styled('div', {
   display: 'flex',
   justifyContent: 'center',
   width: '100%',
@@ -113,7 +113,7 @@ export function WalletsPage({ supportedWallets, multiWallets }: PropTypes) {
       <>
         {walletErrorMessage && (
           <AlertContainer>
-            <Alert type="error" title={walletErrorMessage}/>
+            <Alert type="error" title={walletErrorMessage} />
           </AlertContainer>
         )}
         {loadingMetaStatus === 'loading' && (

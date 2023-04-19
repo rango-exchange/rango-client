@@ -15,11 +15,14 @@ export function HistoryPage() {
   const { manager } = useManager();
   const pendingSwaps = getPendingSwaps(manager).map(({ swap }) => swap);
 
+  const loading = !manager?.isLoaded();
+
   return (
     <History
       list={pendingSwaps}
       groupBy={groupSwapsByDate}
-      onSwapClick={requestId => {
+      loading={loading}
+      onSwapClick={(requestId) => {
         setSelectedSwap(requestId);
         navigate(navigationRoutes.swaps + `/${requestId}`, { replace: true });
       }}
