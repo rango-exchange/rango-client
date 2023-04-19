@@ -11,6 +11,9 @@ const TokenContainer = styled('div', {
   '& .amount': {
     fontWeight: 'bold',
   },
+  '& .estimated': {
+    color: '$neutrals600',
+  },
 });
 
 const TokenImage = styled('div', {
@@ -43,25 +46,28 @@ interface PropTypes {
       name: string;
     };
     amount: string;
+    estimatedAmount?: string;
   };
 }
 export function Token(props: PropTypes) {
+  const {
+    data: { token, blockchain, amount, estimatedAmount },
+  } = props;
   return (
     <TokenContainer>
       <TokenImage>
-        <Image src={props.data.token.logo} alt="" size={24} />
+        <Image src={token.logo} alt="" size={24} />
         <div className="overlay">
-          <Image
-            src={props.data.blockchain.logo}
-            alt={props.data.blockchain.name}
-            size={12}
-          />
+          <Image src={blockchain.logo} alt={blockchain.name} size={12} />
         </div>
       </TokenImage>
       <Spacer size={8} />
-      <span className="amount">{props.data.amount}</span>
+      {!!amount && <span className="amount">{props.data.amount}</span>}
+      {!amount && estimatedAmount && (
+        <span className="amount estimated">{props.data.estimatedAmount}</span>
+      )}
       <Spacer size={4} />
-      {props.data.token.symbol}
+      {token.symbol}
     </TokenContainer>
   );
 }
