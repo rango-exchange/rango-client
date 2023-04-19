@@ -1,7 +1,7 @@
-import React, { PropsWithChildren } from 'react';
+import React, { PropsWithChildren, useMemo } from 'react';
 import { Provider as ManagerProvider } from '@rango-dev/queue-manager-react';
 import {
-  swapQueueDef,
+  makeQueueDefinition,
   SwapQueueContext,
   checkWaitingForNetworkChange,
 } from '@rango-dev/queue-manager-rango-preset';
@@ -15,6 +15,7 @@ import { useMetaStore } from './store/meta';
 import { useWalletsStore } from './store/wallets';
 import { walletAndSupportedChainsNames } from './utils/wallets';
 import { isEvmBlockchain } from 'rango-sdk';
+import { getConfig } from './utils/configs';
 
 function QueueManager(props: PropsWithChildren<{}>) {
   const {
@@ -26,6 +27,11 @@ function QueueManager(props: PropsWithChildren<{}>) {
     getWalletInfo,
   } = useWallets();
 
+  const swapQueueDef = useMemo(() => {
+    return makeQueueDefinition({
+      API_KEY: getConfig('API_KEY'),
+    });
+  }, []);
   const { blockchains } = useMetaStore.use.meta();
   const balances = useWalletsStore.use.balances();
 
@@ -63,7 +69,7 @@ function QueueManager(props: PropsWithChildren<{}>) {
       blockchains: allBlockchains,
       evmBasedChains: evmBasedChains,
       evmNetworkChainInfo:
-      convertEvmBlockchainMetaToEvmChainInfo(evmBasedChains),
+        convertEvmBlockchainMetaToEvmChainInfo(evmBasedChains),
       getSupportedChainNames,
     },
     getSigners,

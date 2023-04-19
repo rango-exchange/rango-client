@@ -18,12 +18,14 @@ export const useMetaStore = createSelectors(
     loadingStatus: 'loading',
     fetchMeta: async () => {
       try {
-        const response = await httpService.getAllMetadata();
+        const response = await httpService().getAllMetadata();
         const chainThatHasTokenInMetaResponse = removeDuplicateFrom(
-          response.tokens.map((t) => t.blockchain),
+          response.tokens.map((t) => t.blockchain)
         );
         const enabledChains = response.blockchains.filter(
-          (chain) => chain.enabled && chainThatHasTokenInMetaResponse.includes(chain.name),
+          (chain) =>
+            chain.enabled &&
+            chainThatHasTokenInMetaResponse.includes(chain.name)
         );
         response.blockchains = enabledChains.sort((a, b) => a.sort - b.sort);
         set({ meta: response, loadingStatus: 'success' });
@@ -31,5 +33,5 @@ export const useMetaStore = createSelectors(
         set({ loadingStatus: 'failed' });
       }
     },
-  })),
+  }))
 );
