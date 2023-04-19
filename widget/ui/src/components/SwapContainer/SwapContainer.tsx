@@ -11,7 +11,6 @@ const MainContainer = styled('div', {
   width: '100%',
   minWidth: '375px',
   maxWidth: '512px',
-  maxHeight: '595px',
   padding: '$16',
   boxSizing: 'border-box',
   backgroundColor: '$background',
@@ -19,6 +18,7 @@ const MainContainer = styled('div', {
     fixedHeight: {
       true: {
         height: '595px',
+        maxHeight: '595px',
       },
       false: {
         height: 'auto',
@@ -34,7 +34,6 @@ export interface PropTypes {
 
 export function SwapContainer(props: PropsWithChildren<PropTypes>) {
   const { children, style, fixedHeight = true } = props;
-
   return (
     <MainContainer style={style} id="swap-box" fixedHeight={fixedHeight}>
       {children}
