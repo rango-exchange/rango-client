@@ -25,7 +25,7 @@ const Message = styled(Typography, {
   display: 'block',
 });
 
-export function BalanceWarnings({ messages }: PropTypes) {
+export function BalanceErrors({ messages }: PropTypes) {
   const showListStyle = messages.length > 1;
   return (
     <>

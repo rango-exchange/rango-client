@@ -1,7 +1,7 @@
 import React from 'react';
 import { ConfirmSwapError, ConfirmSwapErrorTypes } from '../types';
 import { MinRequiredSlippage } from './warnings/MinRequiredSlippage';
-import { BalanceWarnings } from './warnings/BalanceWarnings';
+import { BalanceErrors } from './warnings/BalanceErrors';
 
 export function ConfirmSwapErrors(errors: ConfirmSwapError[]) {
   return errors.flatMap((error) => {
@@ -22,7 +22,7 @@ export function ConfirmSwapErrors(errors: ConfirmSwapError[]) {
           />
         );
       case ConfirmSwapErrorTypes.INSUFFICIENT_BALANCE:
-        return <BalanceWarnings messages={error.messages} />;
+        return <BalanceErrors messages={error.messages} />;
       default:
         return [];
     }
