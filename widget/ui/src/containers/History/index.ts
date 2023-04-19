@@ -1,1 +1,2 @@
-export { History, GroupBy } from './History';
+export { History } from './History';
+export { SwapsGroup } from './SwapsGroup';

@@ -297,6 +297,7 @@ export function TokenInfo(props: PropTypes) {
                   </span>
                 }
                 value={props.inputAmount || ''}
+                min={0}
                 onChange={
                   props.type === 'From'
                     ? (event) => {

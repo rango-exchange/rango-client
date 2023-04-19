@@ -13,7 +13,7 @@ export const LoaderContainer = styled('div', {
   display: 'flex',
   justifyContent: 'center',
   width: '100%',
-  paddingTop: '5%',
+  paddingTop: '33%',
   flex: 1,
 });
 export interface PropTypes {

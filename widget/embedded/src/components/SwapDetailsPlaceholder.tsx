@@ -1,8 +1,15 @@
 import React from 'react';
 import { SecondaryPage, Spinner, Alert, styled } from '@rango-dev/ui';
-import { LoaderContainer } from '../pages/WalletsPage';
 
 const PlaceholderContainer = styled('div', { height: '450px' });
+
+export const LoaderContainer = styled('div', {
+  display: 'flex',
+  justifyContent: 'center',
+  width: '100%',
+  paddingTop: '33%',
+  flex: 1,
+});
 
 interface PropTypes {
   requestId: string;
