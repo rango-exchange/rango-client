@@ -13,6 +13,7 @@ import { LoaderContainer } from '../TokenSelector/TokenSelector';
 
 const ListContainer = styled('div', {
   overflowY: 'auto',
+  padding: '0 $4',
 });
 
 const filterBlockchains = (list: BlockchainMeta[], searchedFor: string) =>
