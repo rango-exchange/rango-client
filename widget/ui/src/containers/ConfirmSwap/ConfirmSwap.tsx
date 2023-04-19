@@ -124,7 +124,7 @@ export function ConfirmSwap(props: PropsWithChildren<PropTypes>) {
             {warnings?.map((warning, index) => (
               <>
                 <Spacer direction="vertical" />
-                <Alert type="error" key={index} 
+                <Alert type="warning" key={index} 
                   {...(typeof warning === 'string') ? {title: warning} : {children: warning} }/>
               </>
             ))}
