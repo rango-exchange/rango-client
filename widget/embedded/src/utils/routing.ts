@@ -7,10 +7,8 @@ import { BestRouteResponse, BlockchainMeta, Token } from 'rango-sdk';
 import { areEqual } from './common';
 import { SelectedWallet } from './wallets';
 import { BestRouteEqualityParams } from '../types';
-import { TokenMeta } from '@rango-dev/ui/dist/types/meta';
 import { numberToString } from './numbers';
-import { getUsdFeeOfStep } from './swap';
-import { BestRouteWithFee } from '@rango-dev/ui';
+import { PendingSwap } from '@rango-dev/queue-manager-rango-preset';
 
 export function searchParamsToToken(
   tokens: Token[],
@@ -142,19 +140,39 @@ export function isRouteParametersChanged(params: BestRouteEqualityParams) {
   return false;
 }
 
-export function getBestRouteWithCalculatedFees(
-  bestRoute: BestRouteResponse | null,
-  tokens: TokenMeta[]
-): BestRouteWithFee | null {
+export function getFormatedBestRoute(
+  bestRoute: BestRouteResponse | null
+): BestRouteResponse | null {
   if (!bestRoute || !bestRoute.result) return null;
-  const swapsWithFee = (bestRoute?.result?.swaps || []).map((swap) => ({
-    ...swap,
-    feeInUsd: numberToString(getUsdFeeOfStep(swap, tokens), 0, 2),
-  }));
+
+  const formatedSwaps = (bestRoute.result?.swaps || []).map((swap, index) => {
+    if (index === 0)
+      return { ...swap, fromAmount: numberToString(swap.fromAmount, 6, 6) };
+    else return { ...swap, toAmount: numberToString(swap.toAmount, 6, 6) };
+  });
 
   return {
     ...bestRoute,
-    result: { ...bestRoute.result, swaps: swapsWithFee },
+    result: { ...bestRoute.result, swaps: formatedSwaps },
+  };
+}
+
+export function getFormatedPendingSwap(pendingSwap: PendingSwap): PendingSwap {
+  const formatedSteps = pendingSwap.steps.map((step) => ({
+    ...step,
+    feeInUsd: numberToString(step.feeInUsd, 4, 4),
+    outputAmount: numberToString(step.outputAmount, 6, 6),
+    expectedOutputAmountHumanReadable: numberToString(
+      step.expectedOutputAmountHumanReadable,
+      6,
+      6
+    ),
+  }));
+
+  return {
+    ...pendingSwap,
+    inputAmount: numberToString(pendingSwap.inputAmount, 6, 6),
+    steps: formatedSteps,
   };
 }
 
