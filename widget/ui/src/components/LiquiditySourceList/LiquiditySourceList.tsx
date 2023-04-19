@@ -28,6 +28,7 @@ const MainContainer = styled('div', {
     loaded: {
       true: {
         overflowY: 'auto',
+        padding: '0 $4',
       },
     },
   },
