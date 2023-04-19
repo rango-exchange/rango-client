@@ -52,7 +52,7 @@ export const ErrorMsg = styled(Typography, {
 });
 
 export const FeeContainer = styled('div', {
-  paddingLeft: '$4',
+  paddingLeft: '$16',
 });
 
 export const Fee = styled('div', {
@@ -88,8 +88,7 @@ export const ArrowDown = styled('div', {
 
 const StyledAnchor = styled('a', {
   color: '$primary',
-  fontWeight: '$600',
-  marginLeft: '$12',
+  fontWeight: '$600'
 });
 
 const SwapInfoContainer = styled('div', {
@@ -105,7 +104,8 @@ const InternalDetailsContainer = styled('div', {
 
 const InternalDetail = styled('div', {
   display: 'flex',
-  padding: '$10',
+  paddingLeft: '$20',
+  paddingBottom: '$4',
 });
 
 const DescriptionContainer = styled('div', {
@@ -114,8 +114,7 @@ const DescriptionContainer = styled('div', {
 });
 
 const Description = styled(Typography, {
-  color: '$success',
-  marginLeft: '$8',
+  color: '$success'
 });
 
 export const Line = styled('div', {
@@ -171,7 +170,7 @@ const ExtraDetails = styled('div', {
 
 const SwapFlowContainer = styled('div', {
   overflowY: 'auto',
-  paddingTop: '$8',
+  padding: '$8 $4 $2 $4',
 });
 
 export type PropTypes = {
@@ -265,7 +264,7 @@ export function SwapHistory(props: PropTypes) {
           <SwapMessages {...extraMessageProps} />
         )}
 
-        <Divider size={32} />
+        <Divider size={16} />
 
         {pendingSwap?.steps.map((step, index) => (
           <div key={index}>
@@ -294,7 +293,7 @@ export function SwapHistory(props: PropTypes) {
 
               <FeeContainer>
                 <Typography variant="caption">
-                  {step.swapperType} via {step.swapperId}
+                  {step.swapperType === 'DEX' ? 'Swap' : 'Bridge'} via {step.swapperId}
                 </Typography>
                 <Fee>
                   <GasIcon />
@@ -317,28 +316,29 @@ export function SwapHistory(props: PropTypes) {
                       {step.explorerUrl.map((item, index) => (
                         <InternalDetail key={index}>
                           <DescriptionContainer>
-                            <CheckCircleIcon color="success" />
-                            <Description variant="body2">
-                              {!item.description ? (
-                                <b>View transaction</b>
-                              ) : (
-                                <b>
-                                  {item.description
-                                    .substring(0, 1)
-                                    .toUpperCase()}
-                                  {item.description.substring(1)}
-                                </b>
-                              )}
+                            <Divider size={4} />
+                            <CheckCircleIcon color="primary" />
+                            <Description variant="body3">
+                              <StyledAnchor
+                                href={item.url}
+                                target="_blank"
+                                rel="noreferrer"
+                                key={index}
+                              >
+                                {/* <CheckCircleIcon color="success" /> */}
+                                {!item.description ? (
+                                  <b>View transaction</b>
+                                ) : (
+                                  <b>
+                                    {item.description
+                                      .substring(0, 1)
+                                      .toUpperCase()}
+                                    {item.description.substring(1)} Tx
+                                  </b>
+                                )}
+                              </StyledAnchor>
                             </Description>
                           </DescriptionContainer>
-                          <StyledAnchor
-                            href={item.url}
-                            target="_blank"
-                            rel="noreferrer"
-                            key={index}
-                          >
-                            TX-Link
-                          </StyledAnchor>
                         </InternalDetail>
                       ))}
                     </div>
@@ -347,7 +347,7 @@ export function SwapHistory(props: PropTypes) {
                     <InternalDetail>
                       <DescriptionContainer>
                         <InfoCircleIcon color="error" />
-                        <Description variant="body2" color="$error500">
+                        <Description variant="body3" color="$error500">
                           Step failed
                         </Description>
                       </DescriptionContainer>

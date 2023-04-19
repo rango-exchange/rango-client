@@ -33,6 +33,7 @@ export enum ConfirmSwapErrorTypes {
   ROUTE_UPDATED_WITH_HIGH_VALUE_LOSS,
   REQUEST_FAILED,
   INSUFFICIENT_SLIPPAGE,
+  INSUFFICIENT_BALANCE,
 }
 
 export type ConfirmSwapError =
