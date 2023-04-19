@@ -18,7 +18,7 @@ import { useNavigateBack } from '../hooks/useNavigateBack';
 import { TokenPreview } from '../components/TokenPreview';
 // @ts-ignore // TODO: fix error in tsc build
 import { t } from 'i18next';
-import { Spacer, ConfirmSwap, useToast } from '@rango-dev/ui';
+import { Spacer, ConfirmSwap } from '@rango-dev/ui';
 import RoutesOverview from '../components/RoutesOverview';
 import { useManager } from '@rango-dev/queue-manager-react';
 import { useConfirmSwap } from '../hooks/useConfirmSwap';
@@ -49,7 +49,6 @@ export function ConfirmSwapPage() {
   const outputUsdValue = useBestRouteStore.use.outputUsdValue();
   const setInputAmount = useBestRouteStore.use.setInputAmount();
 
-  const { addToast } = useToast();
   const bestRouteloadingStatus = getBestRouteStatus(
     fetchingBestRoute,
     !!fetchingBestRouteError
@@ -109,9 +108,6 @@ export function ConfirmSwapPage() {
               { swapDetails: swap },
               { id: swap.requestId }
             );
-            addToast({
-              message: `Swap process started`,
-            });
             setSelectedSwap(swap.requestId);
             navigate(navigationRoutes.swaps + `/${swap.requestId}`, {
               replace: true,

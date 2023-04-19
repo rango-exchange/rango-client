@@ -4,6 +4,7 @@ import {
   makeQueueDefinition,
   SwapQueueContext,
   checkWaitingForNetworkChange,
+  SwapProgressNotification,
 } from '@rango-dev/queue-manager-rango-preset';
 import { useWallets } from '@rango-dev/wallets-core';
 import {
@@ -16,6 +17,8 @@ import { useWalletsStore } from './store/wallets';
 import { walletAndSupportedChainsNames } from './utils/wallets';
 import { isEvmBlockchain } from 'rango-sdk';
 import { getConfig } from './utils/configs';
+import { useToast } from '@rango-dev/ui';
+import { getMessage, getType } from './utils/queue';
 
 function QueueManager(props: PropsWithChildren<{}>) {
   const {
@@ -34,6 +37,7 @@ function QueueManager(props: PropsWithChildren<{}>) {
   }, []);
   const { blockchains } = useMetaStore.use.meta();
   const balances = useWalletsStore.use.balances();
+  const { addToast } = useToast();
 
   const wallets = {
     blockchains: balances.map((wallet) => ({
@@ -64,6 +68,25 @@ function QueueManager(props: PropsWithChildren<{}>) {
     return walletAndSupportedChainsNames(supportedChains);
   };
   const allProviders = providers();
+  const notifier = (data: SwapProgressNotification) => {
+    if (data.swap) {
+      const firstStep = data.swap.steps[0];
+      const lastStep = data.swap.steps[data.swap.steps.length - 1];
+      const step = data.step || lastStep;
+      const message = getMessage({ ...data, step });
+
+      if (message) {
+        addToast({
+          title: `${firstStep.fromSymbol} -> ${lastStep.toSymbol}`,
+          message,
+          type: getType(step?.status),
+          showIcon: true,
+          hasClose: true,
+        });
+      }
+    }
+  };
+
   const context: SwapQueueContext = {
     meta: {
       blockchains: allBlockchains,
@@ -80,9 +103,7 @@ function QueueManager(props: PropsWithChildren<{}>) {
     switchNetwork,
     connect,
     state,
-    notifier: (message) => {
-      console.log('[notifier]', message);
-    },
+    notifier,
   };
 
   return (

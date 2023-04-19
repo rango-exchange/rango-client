@@ -18,7 +18,7 @@ const toast_opacity = keyframes({
 const Container = styled('div', {
   boxSizing: 'border-box',
   minWidth: 270,
-  maxWidth: 450,
+  maxWidth: 400,
   wordBreak: 'break-all',
   boxShadow: '$xs',
   borderRadius: '$3',
@@ -82,7 +82,7 @@ export const Toast = ({
   useEffect(() => {
     const timer = setTimeout(() => {
       removeToast(id);
-    }, 3000);
+    }, 5000);
 
     return () => {
       clearTimeout(timer);

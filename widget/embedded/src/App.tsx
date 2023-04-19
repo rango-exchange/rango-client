@@ -106,7 +106,7 @@ export function App({ config }: WidgetProps) {
     >
       <div id="pageContainer" className={activeTheme}>
         <ToastProvider
-          anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+          anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
           container={document.getElementById('swap-box')!}
         >
           <QueueManager>
