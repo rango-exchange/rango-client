@@ -88,7 +88,7 @@ export const ArrowDown = styled('div', {
 
 const StyledAnchor = styled('a', {
   color: '$primary',
-  fontWeight: '$600'
+  fontWeight: '$600',
 });
 
 const SwapInfoContainer = styled('div', {
@@ -100,12 +100,14 @@ const SwapInfoContainer = styled('div', {
 
 const InternalDetailsContainer = styled('div', {
   display: 'flex',
+  '.details': {
+    padding: '$8 0',
+  },
 });
 
 const InternalDetail = styled('div', {
   display: 'flex',
-  paddingLeft: '$20',
-  paddingBottom: '$4',
+  margin: '$12 0 $12 $20',
 });
 
 const DescriptionContainer = styled('div', {
@@ -114,7 +116,8 @@ const DescriptionContainer = styled('div', {
 });
 
 const Description = styled(Typography, {
-  color: '$success'
+  color: '$success',
+  paddingLeft: '$4',
 });
 
 export const Line = styled('div', {
@@ -231,10 +234,12 @@ export function SwapHistory(props: PropTypes) {
       <div>
         <SwapInfoContainer>
           <Row>
-            <div className="name">Request Id:
+            <div className="name">
+              Request Id:
               <span
                 className="value requestId"
-                onClick={onCopy.bind(null, pendingSwap?.requestId)}>
+                onClick={onCopy.bind(null, pendingSwap?.requestId)}
+              >
                 <RequestId>{pendingSwap?.requestId}</RequestId>
                 <Spacer size={4} />
                 <Button type="primary" variant="ghost" size="compact">
@@ -293,7 +298,8 @@ export function SwapHistory(props: PropTypes) {
 
               <FeeContainer>
                 <Typography variant="caption">
-                  {step.swapperType === 'DEX' ? 'Swap' : 'Bridge'} via {step.swapperId}
+                  {step.swapperType === 'DEX' ? 'Swap' : 'Bridge'} via{' '}
+                  {step.swapperId}
                 </Typography>
                 <Fee>
                   <GasIcon />
@@ -310,7 +316,7 @@ export function SwapHistory(props: PropTypes) {
             >
               <InternalDetailsContainer>
                 <Line />
-                <div>
+                <div className="details">
                   {!!step.explorerUrl && (
                     <div>
                       {step.explorerUrl.map((item, index) => (
@@ -325,7 +331,6 @@ export function SwapHistory(props: PropTypes) {
                                 rel="noreferrer"
                                 key={index}
                               >
-                                {/* <CheckCircleIcon color="success" /> */}
                                 {!item.description ? (
                                   <b>View transaction</b>
                                 ) : (
@@ -378,10 +383,11 @@ export function SwapHistory(props: PropTypes) {
         anchor="bottom"
         title="Cancel Progress"
         content={
-          <Alert type="warning">    
-            <Typography variant='body2'>
-              Warning: Cancel <u>doesn't revert</u> your transaction if you've already signed and sent a
-              transaction to the blockchain. It only stops next steps from being executed.
+          <Alert type="warning">
+            <Typography variant="body2">
+              Warning: Cancel <u>doesn't revert</u> your transaction if you've
+              already signed and sent a transaction to the blockchain. It only
+              stops next steps from being executed.
             </Typography>
           </Alert>
         }

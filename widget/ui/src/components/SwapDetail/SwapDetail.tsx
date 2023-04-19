@@ -14,7 +14,7 @@ const Container = styled('div', {
   justifyContent: 'space-between',
   alignItems: 'center',
   padding: '$16 0',
-  borderBottom: '1px solid $neutrals300', 
+  borderBottom: '1px solid $neutrals300',
 
   '& > .info': {
     display: 'flex',
@@ -25,13 +25,6 @@ const Container = styled('div', {
     textTransform: 'uppercase',
     fontWeight: 'bold',
     fontSize: '$12',
-  },
-
-  '&.running': {
-    color: '$foreground',
-  },
-  '&.failed,&.success': {
-    color: '$neutrals600',
   },
 
   '&.failed .status': {
@@ -72,7 +65,6 @@ export function SwapDetail({
                 symbol: firstStep.fromSymbol,
               },
               blockchain: {
-                // @ts-ignore
                 logo: firstStep.fromBlockchainLogo || '',
                 name: firstStep.fromBlockchain,
               },
@@ -89,14 +81,12 @@ export function SwapDetail({
                 symbol: lastStep.toSymbol,
               },
               blockchain: {
-                // @ts-ignore
-                logo: lastStep.toBlockchainLogo,
+                logo: lastStep.toBlockchainLogo || '',
                 name: lastStep.toBlockchain,
               },
-              amount: limitDecimalPlaces(
-                lastStep.outputAmount ||
-                  lastStep.expectedOutputAmountHumanReadable ||
-                  ''
+              amount: limitDecimalPlaces(lastStep.outputAmount || ''),
+              estimatedAmount: limitDecimalPlaces(
+                lastStep.expectedOutputAmountHumanReadable || ''
               ),
             }}
           />

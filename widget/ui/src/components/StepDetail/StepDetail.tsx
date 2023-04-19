@@ -121,13 +121,16 @@ export function StepDetail(props: PropsWithChildren<PropTypes>) {
           <Typography
             noWrap
             variant={direction === 'vertical' ? 'body2' : 'title'}
-            color={'$neutrals500'}
+            color={'$neutrals600'}
           >
             {estimatedAmount}
           </Typography>
         )}
         &nbsp;
-        <Typography variant={direction === 'vertical' ? 'body2' : 'title'} noWrap>
+        <Typography
+          variant={direction === 'vertical' ? 'body2' : 'title'}
+          noWrap
+        >
           {symbol}
         </Typography>
         <SubTitle noWrap variant="caption" color="$neutrals800">
