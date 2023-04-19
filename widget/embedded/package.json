@@ -32,7 +32,7 @@
     "@rango-dev/queue-manager-core": "^0.1.11-next.0",
     "@rango-dev/queue-manager-rango-preset": "^0.1.11-next.3",
     "@rango-dev/queue-manager-react": "^0.1.10-next.76",
-    "@rango-dev/ui": "^0.1.11-next.8",
+    "@rango-dev/ui": "^0.1.11-next.9",
     "@rango-dev/wallets-core": "^0.1.11-next.88",
     "@rango-dev/wallets-shared": "^0.1.11-next.84",
     "bignumber.js": "^9.1.1",
