@@ -140,6 +140,7 @@ const Row = styled('div', {
     display: 'flex',
     alignItems: 'center',
     color: '$neutrals800',
+    justifyContent: 'flex-end',
   },
   '.status': {
     fontWeight: 'bold',
@@ -154,7 +155,6 @@ const Row = styled('div', {
 });
 
 const RequestId = styled('div', {
-  width: '150px',
   whiteSpace: 'nowrap',
   overflow: 'hidden',
   textOverflow: 'ellipsis',
@@ -164,9 +164,9 @@ const RequestId = styled('div', {
 });
 
 const ExtraDetails = styled('div', {
-  padding: '$8 0',
+  padding: '0',
   color: '$neutrals600',
-  fontSize: '$12',
+  fontSize: '$10',
 });
 
 const SwapFlowContainer = styled('div', {
@@ -232,28 +232,27 @@ export function SwapHistory(props: PropTypes) {
       <div>
         <SwapInfoContainer>
           <Row>
-            <div className="name">Request ID:</div>
-            <div
-              className="value requestId"
-              onClick={onCopy.bind(null, pendingSwap?.requestId)}
-            >
-              <RequestId>{pendingSwap?.requestId}</RequestId>
-              <Spacer size={4} />
-              <Button type="primary" variant="ghost" size="compact">
-                {isCopied ? 'Copied!' : 'Copy'}
-              </Button>
+            <div className="name">Request Id:
+              <span
+                className="value requestId"
+                onClick={onCopy.bind(null, pendingSwap?.requestId)}>
+                <RequestId>{pendingSwap?.requestId}</RequestId>
+                <Spacer size={4} />
+                <Button type="primary" variant="ghost" size="compact">
+                  {isCopied ? 'Copied!' : 'Copy'}
+                </Button>
+              </span>
+            </div>
+            <div className="name">
+              <span className={`value status ${pendingSwap?.status || ''}`}>
+                {pendingSwap?.status}
+                {pendingSwap?.status === 'running' && (
+                  <Spinner size={16} color="primary" />
+                )}
+              </span>
+              <ExtraDetails>{date}</ExtraDetails>
             </div>
           </Row>
-          <Row>
-            <div className="name">Status:</div>
-            <div className={`value status ${pendingSwap?.status || ''}`}>
-              {pendingSwap?.status}
-              {pendingSwap?.status === 'running' && (
-                <Spinner size={16} color="primary" />
-              )}
-            </div>
-          </Row>
-          <ExtraDetails>{date}</ExtraDetails>
         </SwapInfoContainer>
         {/* TODO: It was temporarily removed to find a better solution. 
 
@@ -295,8 +294,7 @@ export function SwapHistory(props: PropTypes) {
 
               <FeeContainer>
                 <Typography variant="caption">
-                  {step.swapperType} from {step.fromSymbol} to {step.toSymbol}
-                  &nbsp; via {step.swapperId}
+                  {step.swapperType} via {step.swapperId}
                 </Typography>
                 <Fee>
                   <GasIcon />
@@ -380,18 +378,11 @@ export function SwapHistory(props: PropTypes) {
         anchor="bottom"
         title="Cancel Progress"
         content={
-          <Alert type="warning">
-            <p>
-              Warning: Rango <u>neither reverts</u> your transaction&nbsp;
-              <u>nor refunds</u> you if you've already signed and sent a
-              transaction to the blockchain since it's out of Rango's control.
-              Beware that "Cancel" only stops next steps from being executed.
-            </p>
-            <Spacer size={12} direction="vertical" />
-            <p>
-              If you have already signed your transaction to blockchain, you
-              should wait for that to complete or rollback
-            </p>
+          <Alert type="warning">    
+            <Typography variant='body2'>
+              Warning: Cancel <u>doesn't revert</u> your transaction if you've already signed and sent a
+              transaction to the blockchain. It only stops next steps from being executed.
+            </Typography>
           </Alert>
         }
         footer={

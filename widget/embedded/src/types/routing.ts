@@ -44,11 +44,13 @@ export type ConfirmSwapError =
       type: ConfirmSwapErrorTypes.INSUFFICIENT_SLIPPAGE;
       minRequiredSlippage: string | null;
     }
+  | { type: ConfirmSwapErrorTypes.INSUFFICIENT_BALANCE; messages: string[] }
   | {
       type: Exclude<
         ConfirmSwapErrorTypes,
         | ConfirmSwapErrorTypes.REQUEST_FAILED
         | ConfirmSwapErrorTypes.INSUFFICIENT_SLIPPAGE
+        | ConfirmSwapErrorTypes.INSUFFICIENT_BALANCE
       >;
     };
 
@@ -58,12 +60,10 @@ export type ConfirmSwapWarnings =
       newOutputAmount: string;
       percentageChange: string;
     }
-  | { type: ConfirmSwapWarningTypes.INSUFFICIENT_BALANCE; messages: string[] }
   | {
       type: Exclude<
         ConfirmSwapWarningTypes,
-        | ConfirmSwapWarningTypes.ROUTE_AND_OUTPUT_AMOUNT_UPDATED
-        | ConfirmSwapWarningTypes.INSUFFICIENT_BALANCE
+        ConfirmSwapWarningTypes.ROUTE_AND_OUTPUT_AMOUNT_UPDATED
       >;
     };
 
@@ -72,5 +72,4 @@ export enum ConfirmSwapWarningTypes {
   ROUTE_SWAPPERS_UPDATED,
   ROUTE_COINS_UPDATED,
   ROUTE_AND_OUTPUT_AMOUNT_UPDATED,
-  INSUFFICIENT_BALANCE,
 }

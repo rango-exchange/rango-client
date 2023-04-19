@@ -75,7 +75,7 @@ export const SwapMessages: React.FC<PropTypes> = (props) => {
     >
       {!!detailedMessage.content ? (
         <DetailedMessage>
-          <Typography variant="body2">
+          <Typography variant="body3">
             {shouldShowMoreDetailsButton && !expandedMessage
               ? detailedMessage.content.substring(0, allowedNumberOfChars) +
                 (allowedNumberOfChars > 0 ? '...' : '')
@@ -86,28 +86,28 @@ export const SwapMessages: React.FC<PropTypes> = (props) => {
       {!!lastConvertedTokenInFailedSwap && (
         <>
           <p>
-            <Typography variant="body2">
+            <Typography variant="body3">
               Don't worry, your fund is&nbsp;
             </Typography>
-            <SuccessText variant="body2">
+            <SuccessText variant="body3">
               <b>Safe</b>
             </SuccessText>
           </p>
 
           <p>
-            <Typography variant="body2">
+            <Typography variant="body3">
               It is converted to &nbsp;
               <u>{lastConvertedTokenInFailedSwap.outputAmount}</u>
               &nbsp;
             </Typography>
-            <SuccessText variant="body2">
+            <SuccessText variant="body3">
               <b>{lastConvertedTokenInFailedSwap.symbol}&nbsp;</b>
             </SuccessText>
-            <Typography variant="body2">on your&nbsp;</Typography>
-            <SuccessText variant="body2">
+            <Typography variant="body3">on your&nbsp;</Typography>
+            <SuccessText variant="body3">
               <b>{lastConvertedTokenInFailedSwap.blockchain}&nbsp;</b>
             </SuccessText>
-            <Typography variant="body2">wallet</Typography>
+            <Typography variant="body3">wallet</Typography>
           </p>
         </>
       )}

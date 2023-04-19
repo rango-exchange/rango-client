@@ -191,14 +191,10 @@ export function Home() {
           {hasLimitError(bestRoute) && (
             <Alert type="error" title={`${swap?.swapperId} Limit`}>
               <>
-                <Typography variant="body2">{fromAmountRangeError}</Typography>
-                <br />
-                <Typography variant="body2">
-                  Yours: {numberToString(swap?.fromAmount || null)}
+                <Typography variant="body3">{fromAmountRangeError}, Yours: {numberToString(swap?.fromAmount || null)}
                   {swap?.from.symbol}
                 </Typography>
-                <br />
-                <Typography variant="body2">{recommendation}</Typography>
+                <Typography variant="body3">{recommendation}</Typography>
               </>
             </Alert>
           )}
