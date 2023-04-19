@@ -87,7 +87,7 @@ export function Alert(props: PropsWithChildren<PropTypes>) {
         >
           {title && (
             <>
-              <Typography className="title" variant="h7" color={type}>
+              <Typography className="title" variant="title" color={type}>
                 {title}
               </Typography>
               {!!children && <Spacer size={8} direction="vertical" />}

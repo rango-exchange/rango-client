@@ -29,7 +29,7 @@ export function BalanceErrors({ messages }: PropTypes) {
   const showListStyle = messages.length > 1;
   return (
     <>
-      <Typography className="title" variant="h7" color={'error'}>
+      <Typography className="title" variant="title" color={'error'}>
         Insufficent Balance:
       </Typography>
       <Spacer size={8} direction="vertical" />
