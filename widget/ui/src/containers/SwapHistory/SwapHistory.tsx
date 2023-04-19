@@ -25,7 +25,7 @@ import {
 export const SwapperContainer = styled('div', {
   display: 'flex',
   alignItems: 'center',
-  marginLeft: '6px',
+  paddingLeft: '$4',
 });
 
 export const BodyError = styled('div', {
@@ -39,9 +39,28 @@ export const ErrorMsg = styled(Typography, {
   color: '$error',
 });
 
+export const FeeContainer = styled('div', {
+  paddingLeft: '$4',
+});
+
 export const Fee = styled('div', {
   display: 'flex',
   alignItems: 'center',
+});
+
+export const SwapperLogo = styled('div', {
+  variants: {
+    created: {
+      true: {
+        filter: 'grayscale(100%)',
+      },
+    },
+    running: {
+      true: {
+        animation: `${pulse} 2s ease-in-out infinite`,
+      },
+    },
+  },
 });
 
 export const RelativeContainer = styled('div', {
@@ -58,7 +77,7 @@ export const Dot = styled('div', {
   height: '$8',
   backgroundColor: '$foreground',
   borderRadius: '4px',
-  marginLeft: '$8',
+  marginLeft: '11px',
 });
 
 export const ArrowDown = styled('div', {
@@ -67,7 +86,7 @@ export const ArrowDown = styled('div', {
   borderLeft: '5px solid transparent',
   borderRight: '5px solid transparent',
   borderTop: '5px solid $foreground',
-  marginLeft: '$8',
+  marginLeft: '$10',
 });
 
 const StyledAnchor = styled('a', {
@@ -102,14 +121,10 @@ const Description = styled(Typography, {
   marginLeft: '$8',
 });
 
-const Error = styled(Description, {
-  color: '$error',
-});
-
 export const Line = styled('div', {
   width: '0',
   minHeight: '$16',
-  marginLeft: '$12',
+  marginLeft: '14px',
   border: '1px dashed $foreground',
   borderRadius: 'inherit',
 });
@@ -157,23 +172,9 @@ const ExtraDetails = styled('div', {
   fontSize: '$12',
 });
 
-const StepContainer = styled('div', {
-  variants: {
-    hasNotStarted: {
-      true: {
-        filter: 'grayscale(100%)',
-      },
-    },
-    isRunning: {
-      true: {
-        animation: `${pulse} 2s ease-in-out infinite`,
-      },
-    },
-  },
-});
-
 const SwapFlowContainer = styled('div', {
   overflowY: 'auto',
+  paddingTop: '$8',
 });
 
 export type PropTypes = {
@@ -271,21 +272,12 @@ export function SwapHistory(props: PropTypes) {
         <Divider size={32} />
 
         {pendingSwap?.steps.map((step, index) => (
-          <StepContainer
-            key={index}
-            hasNotStarted={step.status === 'created'}
-            isRunning={
-              step.status != 'failed' &&
-              step.status != 'success' &&
-              step.status != 'created'
-            }
-          >
+          <div key={index}>
             {index === 0 && (
               <RelativeContainer>
                 <StepDetail
                   logo={step.fromLogo}
                   symbol={step.fromSymbol}
-                  // @ts-ignore
                   chainLogo={step.fromBlockchainLogo || ''}
                   blockchain={step.fromBlockchain}
                   amount={pendingSwap.inputAmount}
@@ -295,34 +287,30 @@ export function SwapHistory(props: PropTypes) {
             )}
             <Line />
             <SwapperContainer>
-              <Image
-                // @ts-ignore
-                src={step.swapperLogo}
-                alt={step.swapperId}
-                size={16}
-              />
-              <div>
-                <Typography ml={4} variant="caption">
-                  {
-                    // @ts-ignore
-                    step.swapperType
-                  }{' '}
-                  from {step.fromSymbol} to {step.toSymbol}
-                  via {step.swapperId}
+              <SwapperLogo
+                created={step.status === 'created'}
+                running={
+                  !['created', 'success', 'failed'].includes(step.status)
+                }
+              >
+                <Image
+                  src={step.swapperLogo || ''}
+                  alt={step.swapperId}
+                  size={20}
+                />
+              </SwapperLogo>
+              <FeeContainer>
+                <Typography variant="caption">
+                  {step.swapperType} from {step.fromSymbol} to {step.toSymbol}
+                  &nbsp; via {step.swapperId}
                 </Typography>
                 <Fee>
                   <GasIcon />
-                  <Typography ml={4} variant="caption">
-                    $
-                    {
-                      // @ts-ignore
-
-                      step.feeInUsd
-                    }{' '}
-                    estimated gas fee
+                  <Typography variant="caption">
+                    &nbsp; ${step.feeInUsd} estimated gas fee
                   </Typography>
                 </Fee>
-              </div>
+              </FeeContainer>
             </SwapperContainer>
             <div
               style={{
@@ -331,56 +319,62 @@ export function SwapHistory(props: PropTypes) {
             >
               <InternalDetailsContainer>
                 <Line />
-                {!!step.explorerUrl && (
-                  <div>
-                    {step.explorerUrl.map((item, index) => (
-                      <InternalDetail key={index}>
-                        <DescriptionContainer>
-                          <CheckCircleIcon color="success" />
-                          <Description variant="body2">
-                            {!item.description ? (
-                              <b>View transaction</b>
-                            ) : (
-                              <b>
-                                {item.description.substring(0, 1).toUpperCase()}
-                                {item.description.substring(1)}
-                              </b>
-                            )}
-                          </Description>
-                        </DescriptionContainer>
-                        <StyledAnchor
-                          href={item.url}
-                          target="_blank"
-                          rel="noreferrer"
-                          key={index}
-                        >
-                          TX-Link
-                        </StyledAnchor>
-                      </InternalDetail>
-                    ))}
-                    {step.status === 'failed' && (
-                      <InternalDetail>
-                        <DescriptionContainer>
-                          <InfoCircleIcon color="error" />
-                          <Error variant="body2">Step failed</Error>
-                        </DescriptionContainer>
-                      </InternalDetail>
-                    )}
-                  </div>
-                )}
+                <div>
+                  {!!step.explorerUrl && (
+                    <div>
+                      {step.explorerUrl.map((item, index) => (
+                        <InternalDetail key={index}>
+                          <DescriptionContainer>
+                            <CheckCircleIcon color="success" />
+                            <Description variant="body2">
+                              {!item.description ? (
+                                <b>View transaction</b>
+                              ) : (
+                                <b>
+                                  {item.description
+                                    .substring(0, 1)
+                                    .toUpperCase()}
+                                  {item.description.substring(1)}
+                                </b>
+                              )}
+                            </Description>
+                          </DescriptionContainer>
+                          <StyledAnchor
+                            href={item.url}
+                            target="_blank"
+                            rel="noreferrer"
+                            key={index}
+                          >
+                            TX-Link
+                          </StyledAnchor>
+                        </InternalDetail>
+                      ))}
+                    </div>
+                  )}
+                  {step.status === 'failed' && (
+                    <InternalDetail>
+                      <DescriptionContainer>
+                        <InfoCircleIcon color="error" />
+                        <Description variant="body2" color="$error500">
+                          Step failed
+                        </Description>
+                      </DescriptionContainer>
+                    </InternalDetail>
+                  )}
+                </div>
               </InternalDetailsContainer>
             </div>
             {index + 1 === pendingSwap.steps.length && <ArrowDown />}
             <StepDetail
               logo={step.toLogo}
               symbol={step.toSymbol}
-              // @ts-ignore
-
               chainLogo={step.toBlockchainLogo || ''}
               blockchain={step.toBlockchain}
               amount={step.outputAmount || ''}
+              estimatedAmount={step.expectedOutputAmountHumanReadable || ''}
+              success={step.status === 'success'}
             />
-          </StepContainer>
+          </div>
         ))}
 
         <Divider size={32} />

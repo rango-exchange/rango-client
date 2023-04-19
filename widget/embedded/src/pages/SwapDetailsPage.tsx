@@ -4,7 +4,7 @@ import useCopyToClipboard from '../hooks/useCopyToClipboard';
 import { useManager } from '@rango-dev/queue-manager-react';
 import { useNavigateBack } from '../hooks/useNavigateBack';
 import { getPendingSwaps } from '../utils/queue';
-import { SwapHistory, Spacer } from '@rango-dev/ui';
+import { SwapHistory } from '@rango-dev/ui';
 import { useUiStore } from '../store/ui';
 import {
   cancelSwap,
@@ -25,11 +25,10 @@ import {
   isNetworkStatusInWarningState,
   shouldRetrySwap,
 } from '../utils/swap';
-import { TokenPreview } from '../components/TokenPreview';
-import { numberToString } from '../utils/numbers';
 //@ts-ignore
 import { t } from 'i18next';
 import { SwapDetailsPlaceholder } from '../components/SwapDetailsPlaceholder';
+import { getFormatedPendingSwap } from '../utils/routing';
 
 export function SwapDetailsPage() {
   const selectedSwapRequestId = useUiStore.use.selectedSwapRequestId();
@@ -68,11 +67,6 @@ export function SwapDetailsPage() {
       />
     );
 
-  const firstStep = swap.steps[0];
-  const lastStep = swap.steps[swap.steps.length - 1];
-  const fromAmount = numberToString(swap.inputAmount);
-  const toAmount = numberToString(swap.simulationResult.outputAmount);
-
   const currentStep = getCurrentStep(swap);
 
   const currentStepBlockchain = currentStep
@@ -106,12 +100,13 @@ export function SwapDetailsPage() {
   return (
     <SwapHistory
       onBack={navigateBackFrom.bind(null, navigationRoutes.swapDetails)}
+      /* TODO: It was temporarily removed to find a better solution*/
+      /*
       previewInputs={
         <>
           <TokenPreview
             chain={{
               displayName: firstStep?.fromBlockchain || '',
-              // @ts-ignore
               logo: firstStep?.fromBlockchainLogo || '',
             }}
             token={{
@@ -126,7 +121,6 @@ export function SwapDetailsPage() {
           <TokenPreview
             chain={{
               displayName: lastStep?.toBlockchain || '',
-              //@ts-ignore
               logo: lastStep?.toBlockchainLogo || '',
             }}
             token={{
@@ -139,8 +133,8 @@ export function SwapDetailsPage() {
           />
         </>
       }
-      //todo: move PendingSwap type to rango-types
-      pendingSwap={swap}
+      */
+      pendingSwap={getFormatedPendingSwap(swap)}
       onCopy={handleCopy}
       isCopied={isCopied}
       onCancel={onCancel}
