@@ -4,6 +4,8 @@ import {
   makeQueueDefinition,
   SwapQueueContext,
   checkWaitingForNetworkChange,
+  EventType,
+  SwapProgressNotification,
 } from '@rango-dev/queue-manager-rango-preset';
 import { useWallets } from '@rango-dev/wallets-core';
 import {
@@ -32,6 +34,9 @@ function QueueManager(props: PropsWithChildren<{}>) {
       API_KEY: getConfig('API_KEY'),
     });
   }, []);
+  const getOneOFWalletsDetails = useWalletsStore.use.getOneOFWalletsDetails();
+  const accounts = useWalletsStore.use.accounts();
+
   const { blockchains } = useMetaStore.use.meta();
   const balances = useWalletsStore.use.balances();
 
@@ -64,6 +69,22 @@ function QueueManager(props: PropsWithChildren<{}>) {
     return walletAndSupportedChainsNames(supportedChains);
   };
   const allProviders = providers();
+  const notifier = (data: SwapProgressNotification) => {
+    if (
+      data.eventType === 'contract_confirmed' ||
+      data.eventType === 'task_completed'
+    ) {
+      const fromAccount = accounts.find(
+        (account) => account.chain === data.swap?.steps[0].fromBlockchain
+      );
+      const toAccount =
+        data.swap?.steps[0].fromBlockchain !== data.step?.toBlockchain &&
+        accounts.find((account) => account.chain === data.step?.toBlockchain);
+
+      fromAccount && getOneOFWalletsDetails(fromAccount);
+      toAccount && getOneOFWalletsDetails(toAccount);
+    }
+  };
   const context: SwapQueueContext = {
     meta: {
       blockchains: allBlockchains,
@@ -80,9 +101,7 @@ function QueueManager(props: PropsWithChildren<{}>) {
     switchNetwork,
     connect,
     state,
-    notifier: (message) => {
-      console.log('[notifier]', message);
-    },
+    notifier,
   };
 
   return (
