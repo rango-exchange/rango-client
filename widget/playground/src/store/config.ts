@@ -3,7 +3,8 @@ import { Asset } from 'rango-sdk';
 import createSelectors from './selectors';
 import { WalletType } from '@rango-dev/wallets-shared';
 import { immer } from 'zustand/middleware/immer';
-import { Source, Type, WidgetConfig } from '../types';
+import { Type, WidgetConfig } from '../types';
+import { getConfig } from '../configs';
 
 export type Mode = 'dark' | 'light' | 'auto';
 export type COLORS =
@@ -39,6 +40,7 @@ export const useConfigStore = createSelectors(
   create<ConfigState>()(
     immer((set) => ({
       config: {
+        apiKey: getConfig('API_KEY'),
         amount: 0,
         from: {
           blockchain: undefined,

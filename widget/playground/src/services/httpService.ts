@@ -1,9 +1,10 @@
 import { RangoClient } from 'rango-sdk';
+import { getConfig } from '../configs';
 
-// this API key is limited and
-// it is only for test purpose
-const RANGO_PUBLIC_API_KEY = 'c6381a79-2817-4602-83bf-6a641a409e32';
+let rangoClient: RangoClient | undefined = undefined;
 
-export const rango = new RangoClient(
-  (process.env.REACT_APP_API_KEY as string) || RANGO_PUBLIC_API_KEY,
-);
+export const rango = () => {
+  if (rangoClient) return rangoClient;
+  rangoClient = new RangoClient(getConfig('API_KEY'));
+  return rangoClient;
+};
