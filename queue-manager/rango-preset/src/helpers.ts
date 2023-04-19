@@ -847,7 +847,7 @@ export function singTransaction(
       );
 
     // Update swap status
-    const message = `waiting for approval of ${currentStep?.fromSymbol} coin ${
+    const message = `Waiting for approval of ${currentStep?.fromSymbol} coin ${
       sourceWallet.walletType === WalletType.WALLET_CONNECT
         ? 'on your mobile phone'
         : ''
@@ -929,7 +929,7 @@ export function singTransaction(
     return;
   } else if (!!tronApprovalTransaction) {
     // Update swap status
-    const message = `waiting for approval of ${currentStep?.fromSymbol} coin ${
+    const message = `Waiting for approval of ${currentStep?.fromSymbol} coin ${
       sourceWallet.walletType === WalletType.WALLET_CONNECT
         ? 'on your mobile phone'
         : ''
@@ -1007,7 +1007,7 @@ export function singTransaction(
     return;
   } else if (!!starknetApprovalTransaction) {
     // Update swap status
-    const message = `waiting for approval of ${currentStep?.fromSymbol} coin ${
+    const message = `Waiting for approval of ${currentStep?.fromSymbol} coin ${
       sourceWallet.walletType === WalletType.WALLET_CONNECT
         ? 'on your mobile phone'
         : ''
