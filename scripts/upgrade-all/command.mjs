@@ -1,9 +1,6 @@
 import { $ } from 'execa';
-import { join } from 'node:path';
 import commandLineArgs from 'command-line-args';
-import { printDirname } from '../common/utils.mjs';
-
-const cwd = join(printDirname(), '..', '..');
+import { updateVersion } from './utils.mjs';
 
 async function run() {
   const optionDefinitions = [{ name: 'project', type: String }];
@@ -11,8 +8,8 @@ async function run() {
 
   const currentBranch = await $`git branch --show-current`;
   const dist = currentBranch === 'main' ? 'latest' : 'next';
-  
-  console.log(`upgrading to ${project}@${dist}`);
+
+  console.log(`Running upgrade-all for ${project}@${dist} \n`);
 
   if (!project) throw '`project` is required';
 
@@ -31,10 +28,26 @@ async function run() {
     }
   });
 
-  console.log(`Upgrade will be run on: ${dependents}`);
+  if (dependents.length === 0) throw new Error(`It seems ${project} isn't used by any packages.`);
+
+  console.log(`These packages are using ${project}: ${dependents.join(',')} \n`);
+
+  const { stdout: npmInfo } = await $`yarn info ${project}@${dist} --json`;
+  const versions = JSON.parse(npmInfo).data['dist-tags'];
+  const version = versions[dist];
+
+  console.log(`NPM version for ${project} is ${version}. \n`);
+
   await Promise.all(
-    dependents.map((pkg) => $({ cwd })`yarn workspace ${pkg} add ${project}@${dist}`),
+    dependents.map((pkg) =>
+      updateVersion({ path: workspaces[pkg].location }, { name: project, version }),
+    ),
   );
+
+  console.log(`package.json has been updated. Trying to install... \n`);
+
+  const { stdout, stderr } = await $`yarn`;
+  console.log(stdout, stderr);
 }
 
 run().catch((e) => {
