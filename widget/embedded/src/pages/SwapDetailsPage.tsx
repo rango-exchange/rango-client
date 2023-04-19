@@ -49,7 +49,7 @@ export function SwapDetailsPage() {
     if (swap) cancelSwap(swap);
   };
   const swap = selectedSwap?.swap;
-  const loading = !manager.isLoaded();
+  const loading = !manager?.isLoaded();
 
   if (!swap)
     return (
