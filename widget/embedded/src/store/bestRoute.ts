@@ -22,6 +22,7 @@ import { useWalletsStore } from './wallets';
 import { TokenWithBalance } from '../pages/SelectTokenPage';
 import { PendingSwap } from '@rango-dev/queue-manager-rango-preset/dist/shared';
 import { debounce } from '../utils/common';
+import { isPositiveNumber } from '../utils/numbers';
 const getUsdValue = (token: Token | null, amount: string) =>
   new BigNumber(amount || ZERO).multipliedBy(token?.usdPrice || 0);
 
@@ -72,7 +73,7 @@ export const useBestRouteStore = createSelectors(
         set((state) => {
           let outputAmount: BigNumber | null = null;
           let outputUsdValue: BigNumber = ZERO;
-          if (!state.inputAmount || state.inputAmount === '0') return {};
+          if (!isPositiveNumber(state.inputAmount)) return {};
           if (!!bestRoute) {
             outputAmount = !!bestRoute.result?.outputAmount
               ? new BigNumber(bestRoute.result?.outputAmount)
@@ -251,7 +252,7 @@ const bestRoute = (
     const { fromToken, toToken, inputAmount } = bestRouteStore.getState();
     const { slippage, customSlippage, disabledLiquiditySources, affiliateRef } =
       settingsStore.getState();
-    if (!fromToken || !toToken || !inputAmount || inputAmount === '0') return;
+    if (!fromToken || !toToken || !isPositiveNumber(inputAmount)) return;
     abortController?.abort();
     abortController = new AbortController();
     const userSlippage = !!customSlippage ? customSlippage : slippage;
@@ -297,7 +298,7 @@ const bestRoute = (
   const bestRouteParamsListener = () => {
     const { fromToken, toToken, inputAmount, inputUsdValue } =
       useBestRouteStore.getState();
-    if (!inputAmount || inputAmount === '0' || inputUsdValue.eq(0)) return;
+    if (!isPositiveNumber(inputAmount)) return;
 
     if (tokensAreEqual(fromToken, toToken))
       return bestRouteStore.setState({

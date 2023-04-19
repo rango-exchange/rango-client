@@ -91,7 +91,7 @@ export function History({
     <SecondaryPage
       onBack={onBack}
       textField={true}
-      textFieldPlaceholder="Search by Blockchain/Token/Request Id"
+      textFieldPlaceholder="Search by Network, Token or Request Id"
       title="Swaps"
     >
       {(searchedFor) => {

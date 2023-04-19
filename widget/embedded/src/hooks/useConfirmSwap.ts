@@ -198,8 +198,8 @@ export function useConfirmSwap(): ConfirmSwap {
       const enoughBalance = balanceWarnings.length === 0;
 
       if (!enoughBalance)
-        confirmSwapState.warnings.push({
-          type: ConfirmSwapWarningTypes.INSUFFICIENT_BALANCE,
+        confirmSwapState.errors.push({
+          type: ConfirmSwapErrorTypes.INSUFFICIENT_BALANCE,
           messages: balanceWarnings,
         });
 

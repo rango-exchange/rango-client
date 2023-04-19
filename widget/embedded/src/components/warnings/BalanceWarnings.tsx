@@ -1,4 +1,4 @@
-import { styled, Typography } from '@rango-dev/ui';
+import { Spacer, styled, Typography } from '@rango-dev/ui';
 import React from 'react';
 
 interface PropTypes {
@@ -23,18 +23,23 @@ const ListItem = styled('li', {
 
 const Message = styled(Typography, {
   display: 'block',
-  color: '$warning500 !important',
 });
 
 export function BalanceWarnings({ messages }: PropTypes) {
   const showListStyle = messages.length > 1;
   return (
-    <List showListStyle={showListStyle}>
-      {messages.map((warning) => (
-        <ListItem showListStyle={showListStyle}>
-          <Message variant="body2">{warning}</Message>
-        </ListItem>
-      ))}
-    </List>
+    <>
+      <Typography className="title" variant="h7" color={'error'}>
+        Insufficent Balance:
+      </Typography>
+      <Spacer size={8} direction="vertical" />
+      <List showListStyle={showListStyle}>
+        {messages.map((warning) => (
+          <ListItem showListStyle={showListStyle}>
+            <Message variant="body3">- {warning}</Message>
+          </ListItem>
+        ))}
+      </List>
+    </>
   );
 }

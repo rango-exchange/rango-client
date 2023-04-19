@@ -15,6 +15,7 @@ const MainContainer = styled('div', {
   padding: '$16',
   boxSizing: 'border-box',
   backgroundColor: '$background',
+  overflowY: 'auto',
   variants: {
     fixedHeight: {
       true: {

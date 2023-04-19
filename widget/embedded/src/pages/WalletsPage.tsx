@@ -113,7 +113,7 @@ export function WalletsPage({ supportedWallets, multiWallets }: PropTypes) {
       <>
         {walletErrorMessage && (
           <AlertContainer>
-            <Alert type="error">{walletErrorMessage}</Alert>
+            <Alert type="error" title={walletErrorMessage}/>
           </AlertContainer>
         )}
         {loadingMetaStatus === 'loading' && (

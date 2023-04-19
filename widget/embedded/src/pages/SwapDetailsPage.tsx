@@ -45,7 +45,7 @@ export function SwapDetailsPage() {
   useEffect(() => {
     setTimeout(() => {
       setLoading(false);
-    }, 5000);
+    }, 5_000);
   }, []);
 
   const pendingSwaps = getPendingSwaps(manager);
@@ -111,7 +111,6 @@ export function SwapDetailsPage() {
           <TokenPreview
             chain={{
               displayName: firstStep?.fromBlockchain || '',
-              // @ts-ignore
               logo: firstStep?.fromBlockchainLogo || '',
             }}
             token={{
@@ -139,7 +138,6 @@ export function SwapDetailsPage() {
           />
         </>
       }
-      //todo: move PendingSwap type to rango-types
       pendingSwap={swap}
       onCopy={handleCopy}
       isCopied={isCopied}

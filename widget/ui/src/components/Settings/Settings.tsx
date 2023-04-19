@@ -27,13 +27,14 @@ const SlippageChipsContainer = styled('div', {
 const LiquiditySourceContainer = styled(BaseContainer, {
   display: 'flex',
   justifyContent: 'space-between',
-  marginTop: '$32',
+  marginTop: '$16',
   cursor: 'pointer',
 });
+
 const InfiniteContainer = styled(BaseContainer, {
   display: 'flex',
   justifyContent: 'space-between',
-  marginTop: '$32',
+  marginTop: '$16',
 });
 
 const StyledAngleRight = styled(AngleRightIcon, { marginLeft: '$8' });
@@ -45,7 +46,7 @@ const LiquiditySourceNumber = styled('div', {
 });
 
 const ThemesContainer = styled(BaseContainer, {
-  marginTop: '$32',
+  marginTop: '$16',
 });
 const Head = styled('div', {
   display: 'flex',

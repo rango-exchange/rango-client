@@ -67,8 +67,8 @@ export interface PropTypes {
   previewInputs?: ReactNode;
   previewRoutes?: ReactNode;
   confirmButtonTitle: string;
-  errors?: ReactNode[];
-  warnings?: ReactNode[];
+  errors?: (string | ReactNode)[];
+  warnings?: (string | ReactNode)[];
   extraMessages?: ReactNode;
 }
 export function ConfirmSwap(props: PropsWithChildren<PropTypes>) {
@@ -115,17 +115,27 @@ export function ConfirmSwap(props: PropsWithChildren<PropTypes>) {
             {errors?.map((error, index) => (
               <>
                 <Spacer direction="vertical" />
-                <Alert type="error" key={index}>
-                  {error}
-                </Alert>
+                {typeof error === "string" && (
+                  <Alert type="error" key={index} title={error}/>
+                )}
+                {typeof error !== "string" && (
+                  <Alert type="error" key={index}>
+                    {error}
+                  </Alert>
+                )}             
               </>
             ))}
             {warnings?.map((warning, index) => (
               <>
                 <Spacer direction="vertical" />
-                <Alert type="warning" key={index}>
-                  {warning}
-                </Alert>
+                {typeof warning === "string" && (
+                  <Alert type="warning" key={index} title={warning}/>
+                )}
+                {typeof warning !== "string" && (
+                  <Alert type="warning" key={index}>
+                    {warning}
+                  </Alert>
+                )}             
               </>
             ))}
           </Alerts>
@@ -153,7 +163,7 @@ export function ConfirmSwap(props: PropsWithChildren<PropTypes>) {
                 <>
                   <AlertContainer>
                     <Alert type="error">
-                      You need to connect a compatible wallet with {wallet}
+                      You need to connect a compatible wallet with {wallet}.
                     </Alert>
                   </AlertContainer>
                   {isExperimentalChain?.(wallet) && (

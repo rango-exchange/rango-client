@@ -131,3 +131,6 @@ export const decimalNumber = (number = '0', toFixed: number) =>
 
 export const containsText = (text: string, searchText: string) =>
   text.toLowerCase().indexOf(searchText.toLowerCase()) > -1;
+
+export const isPositiveNumber = (text?: string) =>
+  !!text && parseFloat(text) > 0;

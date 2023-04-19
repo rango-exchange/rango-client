@@ -126,6 +126,7 @@ const Row = styled('div', {
   },
   '.value': {
     display: 'flex',
+    justifyContent: 'flex-end',
     alignItems: 'center',
     color: '$neutrals800',
   },
@@ -142,19 +143,19 @@ const Row = styled('div', {
 });
 
 const RequestId = styled('div', {
-  width: '150px',
+  // width: '150px',
   whiteSpace: 'nowrap',
   overflow: 'hidden',
   textOverflow: 'ellipsis',
-  '@md': {
-    width: 'auto',
-  },
+  // '@md': {
+  //   width: 'auto',
+  // },
 });
 
 const ExtraDetails = styled('div', {
-  padding: '$8 0',
+  padding: '0',
   color: '$neutrals600',
-  fontSize: '$12',
+  fontSize: '$10',
 });
 
 const StepContainer = styled('div', {
@@ -234,28 +235,29 @@ export function SwapHistory(props: PropTypes) {
       <div>
         <SwapInfoContainer>
           <Row>
-            <div className="name">Request ID:</div>
-            <div
-              className="value requestId"
-              onClick={onCopy.bind(null, pendingSwap?.requestId)}
-            >
-              <RequestId>{pendingSwap?.requestId}</RequestId>
-              <Spacer size={4} />
-              <Button type="primary" variant="ghost" size="compact">
-                {isCopied ? 'Copied!' : 'Copy'}
-              </Button>
+            <div className="name">Request Id:
+              <span
+                className="value requestId"
+                onClick={onCopy.bind(null, pendingSwap?.requestId)}
+              >
+                <RequestId>{pendingSwap?.requestId}</RequestId>
+                <Spacer size={4} />
+                <Button type="primary" variant="ghost" size="compact">
+                  {isCopied ? 'Copied!' : 'Copy'}
+                </Button>
+              </span>
+            </div>
+            
+            <div className="name">
+              <span className={`value status ${pendingSwap?.status || ''}`}>
+                {pendingSwap?.status}
+                {pendingSwap?.status === 'running' && (
+                  <Spinner size={16} color="primary" />
+                )}
+              </span>
+              <ExtraDetails>{date}</ExtraDetails>
             </div>
           </Row>
-          <Row>
-            <div className="name">Status:</div>
-            <div className={`value status ${pendingSwap?.status || ''}`}>
-              {pendingSwap?.status}
-              {pendingSwap?.status === 'running' && (
-                <Spinner size={16} color="primary" />
-              )}
-            </div>
-          </Row>
-          <ExtraDetails>{date}</ExtraDetails>
         </SwapInfoContainer>
         {/* TODO: It was temporarily removed to find a better solution. 
 
@@ -307,7 +309,6 @@ export function SwapHistory(props: PropTypes) {
                     // @ts-ignore
                     step.swapperType
                   }{' '}
-                  from {step.fromSymbol} to {step.toSymbol}
                   via {step.swapperId}
                 </Typography>
                 <Fee>
