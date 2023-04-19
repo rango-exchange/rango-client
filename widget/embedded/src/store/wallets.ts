@@ -59,13 +59,12 @@ interface WalletsStore {
 
 export const useWalletsStore = createSelectors(
   create<WalletsStore>()(
-    subscribeWithSelector((set) => ({
+    subscribeWithSelector((set, get) => ({
       accounts: [],
       balances: [],
       selectedWallets: [],
       connectWallet: (accounts) => {
-        const getOneOFWalletsDetails =
-          useWalletsStore.getState().getOneOFWalletsDetails;
+        const getOneOFWalletsDetails = get().getOneOFWalletsDetails;
         set((state) => ({
           accounts: state.accounts.concat(accounts),
           balances: state.balances.concat(
@@ -80,9 +79,7 @@ export const useWalletsStore = createSelectors(
             }))
           ),
         }));
-        accounts.forEach(async (account) => {
-          await getOneOFWalletsDetails(account);
-        });
+        accounts.forEach(async (account) => getOneOFWalletsDetails(account));
       },
       disconnectWallet: (walletType) => {
         set((state) => ({
@@ -145,6 +142,14 @@ export const useWalletsStore = createSelectors(
         const tokens = useMetaStore.getState().meta.tokens;
 
         try {
+          set((state) => ({
+            balances: state.balances.map((balance) => {
+              return balance.address === account.address &&
+                balance.chain === account.chain
+                ? { ...balance, loading: true }
+                : balance;
+            }),
+          }));
           const response = await httpService().getWalletsDetails([
             { address: account.address, blockchain: account.chain },
           ]);
