@@ -2,6 +2,7 @@ import React, { useState, useContext, PropsWithChildren } from 'react';
 import { createContext } from 'react';
 import { Toast } from './Toast';
 import { styled } from '../../theme';
+import { createPortal } from 'react-dom';
 
 type ProviderContext = {
   addToast: (content: Content) => void;
@@ -59,11 +60,13 @@ export const ToastProvider = ({
     horizontal: 'right',
     vertical: 'bottom',
   },
+  container,
 }: PropsWithChildren & {
   anchorOrigin?: {
     horizontal: 'left' | 'right';
     vertical: 'bottom' | 'top';
   };
+  container?: Element;
 }) => {
   const [toasts, setToasts] = useState<ToastType[]>([]);
 
@@ -84,18 +87,21 @@ export const ToastProvider = ({
   return (
     <ToastContext.Provider value={api}>
       {children}
-      <Wrapper
-        horizontal={anchorOrigin.horizontal}
-        vertical={anchorOrigin.vertical}
-      >
-        {toasts.map((toast) => (
-          <Toast
-            {...toast}
-            key={toast.id}
-            horizontal={anchorOrigin?.horizontal}
-          />
-        ))}
-      </Wrapper>
+      {createPortal(
+        <Wrapper
+          horizontal={anchorOrigin.horizontal}
+          vertical={anchorOrigin.vertical}
+        >
+          {toasts.map((toast) => (
+            <Toast
+              {...toast}
+              key={toast.id}
+              horizontal={anchorOrigin?.horizontal}
+            />
+          ))}
+        </Wrapper>,
+        container || document.body
+      )}
       <div style={{ position: 'absolute', bottom: 0, right: 0 }}></div>
     </ToastContext.Provider>
   );
