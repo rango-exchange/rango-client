@@ -17,7 +17,7 @@ export const useMetaStore = createSelectors(
     loadingStatus: 'loading',
     fetchMeta: async () => {
       try {
-        const response = await rango.getAllMetadata();
+        const response = await rango().getAllMetadata();
         const chainThatHasTokenInMetaResponse = Array.from(
           new Set(response.tokens.map((t) => t.blockchain)),
         );

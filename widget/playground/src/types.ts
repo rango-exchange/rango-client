@@ -43,6 +43,7 @@ export type Support = {
 };
 
 export type WidgetConfig = {
+  apiKey: string;
   amount: number;
   from: Support;
   to: Support;
