@@ -145,11 +145,11 @@ export function getFormatedBestRoute(
 ): BestRouteResponse | null {
   if (!bestRoute || !bestRoute.result) return null;
 
-  const formatedSwaps = (bestRoute.result?.swaps || []).map((swap, index) => {
-    if (index === 0)
-      return { ...swap, fromAmount: numberToString(swap.fromAmount, 6, 6) };
-    else return { ...swap, toAmount: numberToString(swap.toAmount, 6, 6) };
-  });
+  const formatedSwaps = (bestRoute.result?.swaps || []).map((swap) => ({
+    ...swap,
+    fromAmount: numberToString(swap.fromAmount, 6, 6),
+    toAmount: numberToString(swap.toAmount, 6, 6),
+  }));
 
   return {
     ...bestRoute,
