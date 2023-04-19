@@ -394,17 +394,10 @@ export function SwapHistory(props: PropTypes) {
         title="Cancel Progress"
         content={
           <Alert type="warning">
-            <p>
-              Warning: Rango <u>neither reverts</u> your transaction&nbsp;
-              <u>nor refunds</u> you if you've already signed and sent a
-              transaction to the blockchain since it's out of Rango's control.
-              Beware that "Cancel" only stops next steps from being executed.
-            </p>
-            <Spacer size={12} direction="vertical" />
-            <p>
-              If you have already signed your transaction to blockchain, you
-              should wait for that to complete or rollback
-            </p>
+            <Typography variant='body2'>
+              Warning: Cancel <u>doesn't revert</u> your transaction if you've already signed and sent a
+              transaction to the blockchain. "Cancel", only stops next steps from being executed.
+            </Typography>
           </Alert>
         }
         footer={
