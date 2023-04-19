@@ -117,7 +117,7 @@ export function useConfirmSwap(): ConfirmSwap {
     );
 
     try {
-      const confiremedRoute = await httpService.getBestRoute(requestBody, {
+      const confiremedRoute = await httpService().getBestRoute(requestBody, {
         signal: abortControllerRef.current?.signal,
       });
 

@@ -186,7 +186,8 @@ export function updateSwapStatus({
         : details;
     const walletType = getRelatedWalletOrNull(swap, currentStep!)?.walletType;
     swap.extraMessageSeverity = MessageSeverity.error;
-    httpService
+
+    httpService()
       .reportFailure({
         requestId: swap.requestId,
         step: currentStep?.id || 1,

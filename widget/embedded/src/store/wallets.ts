@@ -81,7 +81,7 @@ export const useWalletsStore = createSelectors(
         }));
         accounts.forEach(async (account) => {
           try {
-            const response = await httpService.getWalletsDetails([
+            const response = await httpService().getWalletsDetails([
               { address: account.address, blockchain: account.chain },
             ]);
             const retrivedBalance = response.wallets[0];

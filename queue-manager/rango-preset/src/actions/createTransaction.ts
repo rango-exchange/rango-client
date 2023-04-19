@@ -69,7 +69,7 @@ export async function createTransaction(
       // Getting transcation from server.
 
       const { transaction } = await throwOnOK(
-        httpService.createTransaction(request)
+        httpService().createTransaction(request)
       );
 
       if (transaction) {
