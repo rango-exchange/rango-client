@@ -2,6 +2,10 @@ import { globalCss } from '@rango-dev/ui';
 
 export const globalStyles = globalCss({
   '*': {
+    boxSizing: 'border-box',
+    margin: 0,
+    padding: 0,
+    listStyleType: 'none',
     '&::-webkit-scrollbar': { width: '$8', height: '$8' },
     '&::-webkit-scrollbar-thumb': {
       backgroundColor: '$neutrals400',
