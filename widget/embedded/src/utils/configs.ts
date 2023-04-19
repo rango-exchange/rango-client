@@ -19,6 +19,12 @@ export function setConfig(name: keyof Configs, value: any) {
 }
 
 export function initConfig(nextConfigs: Configs) {
-  configs = structuredClone(nextConfigs);
+  let clonedConfigs;
+  if (typeof structuredClone === 'function') {
+    clonedConfigs = structuredClone(nextConfigs);
+  } else {
+    clonedConfigs = JSON.parse(JSON.stringify(nextConfigs));
+  }
+  configs = clonedConfigs;
   return configs;
 }
