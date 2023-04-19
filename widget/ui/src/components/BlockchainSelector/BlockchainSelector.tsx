@@ -61,32 +61,34 @@ export function BlockchainSelector(props: PropTypes) {
       {(searchedFor) => {
         const filteredBlockchains = filterBlockchains(list, searchedFor);
         return (
-          <ListContainer style={listContainerStyle} key="1">
+          <>
             {loadingStatus === 'loading' && (
               <LoaderContainer>
                 <Spinner size={24} />
               </LoaderContainer>
             )}
-            {loadingStatus === 'failed' && <LoadingFailedAlert />}
-            {loadingStatus === 'success' && (
-              <>
-                {filteredBlockchains.length ? (
-                  <BlockchainsList
-                    list={filteredBlockchains}
-                    selected={selected}
-                    multiSelect={multiSelect}
-                    selectedList={selectedList}
-                    onChange={onChange}
-                  />
-                ) : (
-                  <NotFoundAlert
-                    catergory="Blockchain"
-                    searchedFor={searchedFor}
-                  />
-                )}
-              </>
-            )}
-          </ListContainer>
+            <ListContainer style={listContainerStyle} key="1">
+              {loadingStatus === 'failed' && <LoadingFailedAlert />}
+              {loadingStatus === 'success' && (
+                <>
+                  {filteredBlockchains.length ? (
+                    <BlockchainsList
+                      list={filteredBlockchains}
+                      selected={selected}
+                      multiSelect={multiSelect}
+                      selectedList={selectedList}
+                      onChange={onChange}
+                    />
+                  ) : (
+                    <NotFoundAlert
+                      catergory="Blockchain"
+                      searchedFor={searchedFor}
+                    />
+                  )}
+                </>
+              )}
+            </ListContainer>
+          </>
         );
       }}
     </SecondaryPage>
