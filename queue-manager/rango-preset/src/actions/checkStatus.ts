@@ -42,7 +42,7 @@ async function checkTransactionStatus({
   let status: TransactionStatusResponse | null = null;
   try {
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    status = await httpService.checkStatus({
+    status = await httpService().checkStatus({
       requestId: swap.requestId,
       txId: txId!,
       step: currentStep.id,
@@ -177,7 +177,7 @@ async function checkApprovalStatus({
   const currentStep = getCurrentStep(swap)!;
   let isApproved = false;
   try {
-    const response = await httpService.checkApproval(
+    const response = await httpService().checkApproval(
       swap.requestId,
       currentStep.executedTransactionId || ''
     );

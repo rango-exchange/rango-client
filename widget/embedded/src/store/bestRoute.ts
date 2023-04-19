@@ -273,7 +273,7 @@ const bestRoute = (
         outputAmount: null,
         outputUsdValue: new BigNumber(0),
       });
-    httpService
+    httpService()
       .getBestRoute(requestBody, {
         signal: abortController.signal,
       })
