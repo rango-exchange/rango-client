@@ -44,7 +44,7 @@ export function SwapDetailsPage() {
   useEffect(() => {
     setTimeout(() => {
       setLoading(false);
-    }, 5000);
+    }, 5_000);
   }, []);
 
   const pendingSwaps = getPendingSwaps(manager);

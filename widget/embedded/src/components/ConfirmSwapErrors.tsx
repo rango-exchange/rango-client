@@ -1,36 +1,28 @@
 import React from 'react';
-import { Typography } from '@rango-dev/ui';
 import { ConfirmSwapError, ConfirmSwapErrorTypes } from '../types';
 import { MinRequiredSlippage } from './warnings/MinRequiredSlippage';
+import { BalanceErrors } from './warnings/BalanceErrors';
 
 export function ConfirmSwapErrors(errors: ConfirmSwapError[]) {
   return errors.flatMap((error) => {
     switch (error.type) {
       case ConfirmSwapErrorTypes.NO_ROUTE:
-        return (
-          <Typography variant="body2">
-            No routes found. Please try again later.
-          </Typography>
-        );
+        return "No routes found. Please try again later."
       case ConfirmSwapErrorTypes.REQUEST_FAILED:
-        return (
-          <Typography variant="body2">{`Failed to confirm swap ${
+        return `Failed to confirm swap ${
             error.status ? `'status': ${error.status})` : ''
-          }, please try again.`}</Typography>
-        );
+          }, please try again.`
 
       case ConfirmSwapErrorTypes.ROUTE_UPDATED_WITH_HIGH_VALUE_LOSS:
-        return (
-          <Typography variant="body2">
-            Route updated and price impact is too high, try again later!
-          </Typography>
-        );
+        return "Route updated and price impact is too high, try again later!"
       case ConfirmSwapErrorTypes.INSUFFICIENT_SLIPPAGE:
         return (
           <MinRequiredSlippage
             minRequiredSlippage={error.minRequiredSlippage}
           />
         );
+      case ConfirmSwapErrorTypes.INSUFFICIENT_BALANCE:
+        return <BalanceErrors messages={error.messages} />;
       default:
         return [];
     }

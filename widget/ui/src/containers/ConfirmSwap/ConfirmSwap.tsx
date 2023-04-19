@@ -54,6 +54,8 @@ const Container = styled('div', {
 
 const Alerts = styled('div', { paddingBottom: '$16' });
 
+type Message = string | ReactNode
+
 export interface PropTypes {
   onBack: () => void;
   onConfirm?: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
@@ -67,8 +69,8 @@ export interface PropTypes {
   previewInputs?: ReactNode;
   previewRoutes?: ReactNode;
   confirmButtonTitle: string;
-  errors?: ReactNode[];
-  warnings?: ReactNode[];
+  errors?: Message[];
+  warnings?: Message[];
   extraMessages?: ReactNode;
 }
 export function ConfirmSwap(props: PropsWithChildren<PropTypes>) {
@@ -115,17 +117,15 @@ export function ConfirmSwap(props: PropsWithChildren<PropTypes>) {
             {errors?.map((error, index) => (
               <>
                 <Spacer direction="vertical" />
-                <Alert type="error" key={index}>
-                  {error}
-                </Alert>
+                <Alert type="error" key={index} 
+                  {...(typeof error === 'string') ? {title: error} : {children: error} }/>
               </>
             ))}
             {warnings?.map((warning, index) => (
               <>
                 <Spacer direction="vertical" />
-                <Alert type="warning" key={index}>
-                  {warning}
-                </Alert>
+                <Alert type="warning" key={index} 
+                  {...(typeof warning === 'string') ? {title: warning} : {children: warning} }/>
               </>
             ))}
           </Alerts>
@@ -153,7 +153,7 @@ export function ConfirmSwap(props: PropsWithChildren<PropTypes>) {
                 <>
                   <AlertContainer>
                     <Alert type="error">
-                      You need to connect a compatible wallet with {wallet}
+                      You need to connect a compatible wallet with {wallet}.
                     </Alert>
                   </AlertContainer>
                   {isExperimentalChain?.(wallet) && (
