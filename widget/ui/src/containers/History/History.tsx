@@ -55,11 +55,7 @@ const SwapsGroup = (props: Omit<PropTypes, 'onBack'>) => {
         .map((group, index) => (
           <>
             <Group key={index}>
-              <Typography
-                variant="body2"
-                color="neutrals600"
-                className="group-title"
-              >
+              <Typography variant="body2" className="group-title">
                 {group.title}
               </Typography>
               {group.swaps.map((swap: PendingSwap, index: number) => (
