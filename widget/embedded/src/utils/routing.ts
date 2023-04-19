@@ -143,7 +143,7 @@ export function isRouteParametersChanged(params: BestRouteEqualityParams) {
 export function getFormatedBestRoute(
   bestRoute: BestRouteResponse | null
 ): BestRouteResponse | null {
-  if (!bestRoute || !bestRoute.result) return null;
+  if (!bestRoute) return null;
 
   const formatedSwaps = (bestRoute.result?.swaps || []).map((swap) => ({
     ...swap,
@@ -153,7 +153,9 @@ export function getFormatedBestRoute(
 
   return {
     ...bestRoute,
-    result: { ...bestRoute.result, swaps: formatedSwaps },
+    ...(bestRoute.result && {
+      result: { ...bestRoute.result, swaps: formatedSwaps },
+    }),
   };
 }
 
