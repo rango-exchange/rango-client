@@ -14,6 +14,7 @@ const InputContainer = styled('div', {
   position: 'relative',
   alignItems: 'center',
   color: '$foreground',
+  overflowX: 'hidden',
   transition: 'border-color ease .3s',
   '&:focus-within': {
     borderColor: '$success',

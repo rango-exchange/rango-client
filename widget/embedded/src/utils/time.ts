@@ -41,12 +41,6 @@ export function timeSince(timeMillis: number): string {
 
 export function getSwapDate(pendingSwap: PendingSwap) {
   return pendingSwap.finishTime
-    ? `Finished ${timeSince(parseInt(pendingSwap.finishTime))} ago @ ${new Date(
-        parseInt(pendingSwap.finishTime)
-      ).toLocaleString()}`
-    : `Started ${timeSince(
-        parseInt(pendingSwap.creationTime)
-      )} ago @ ${new Date(
-        parseInt(pendingSwap.creationTime)
-      ).toLocaleString()}`;
+    ? `${timeSince(parseInt(pendingSwap.finishTime))} ago`
+    : `${timeSince(parseInt(pendingSwap.creationTime))} ago`;
 }

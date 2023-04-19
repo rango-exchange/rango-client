@@ -61,6 +61,10 @@ const TypographyContainer = styled('span', {
           fontSize: '$18',
         },
       },
+      h7: {
+        fontSize: '$14',
+        fontWeight: '$500',
+      },
       body1: {
         fontSize: '$14',
         fontWeight: '$400',
@@ -173,6 +177,7 @@ export interface PropTypes {
     | 'h4'
     | 'h5'
     | 'h6'
+    | 'h7'
     | 'body1'
     | 'body2'
     | 'body3'
