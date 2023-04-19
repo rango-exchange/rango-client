@@ -112,7 +112,9 @@ export function ConfirmSwapPage() {
             navigate(navigationRoutes.swaps + `/${swap.requestId}`, {
               replace: true,
             });
-            setInputAmount('');
+            setTimeout(() => {
+              setInputAmount('');
+            }, 0);
           }
         });
       }}

@@ -26,6 +26,18 @@ export const SwapperContainer = styled('div', {
   display: 'flex',
   alignItems: 'center',
   paddingLeft: '$4',
+  variants: {
+    created: {
+      true: {
+        filter: 'grayscale(100%)',
+      },
+    },
+    running: {
+      true: {
+        animation: `${pulse} 2s ease-in-out infinite`,
+      },
+    },
+  },
 });
 
 export const BodyError = styled('div', {
@@ -46,21 +58,6 @@ export const FeeContainer = styled('div', {
 export const Fee = styled('div', {
   display: 'flex',
   alignItems: 'center',
-});
-
-export const SwapperLogo = styled('div', {
-  variants: {
-    created: {
-      true: {
-        filter: 'grayscale(100%)',
-      },
-    },
-    running: {
-      true: {
-        animation: `${pulse} 2s ease-in-out infinite`,
-      },
-    },
-  },
 });
 
 export const RelativeContainer = styled('div', {
@@ -286,19 +283,16 @@ export function SwapHistory(props: PropTypes) {
               </RelativeContainer>
             )}
             <Line />
-            <SwapperContainer>
-              <SwapperLogo
-                created={step.status === 'created'}
-                running={
-                  !['created', 'success', 'failed'].includes(step.status)
-                }
-              >
-                <Image
-                  src={step.swapperLogo || ''}
-                  alt={step.swapperId}
-                  size={20}
-                />
-              </SwapperLogo>
+            <SwapperContainer
+              created={step.status === 'created'}
+              running={!['created', 'success', 'failed'].includes(step.status)}
+            >
+              <Image
+                src={step.swapperLogo || ''}
+                alt={step.swapperId}
+                size={20}
+              />
+
               <FeeContainer>
                 <Typography variant="caption">
                   {step.swapperType} from {step.fromSymbol} to {step.toSymbol}
