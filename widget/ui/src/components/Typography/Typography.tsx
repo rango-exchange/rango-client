@@ -2,7 +2,7 @@ import { CSSProperties } from '@stitches/react';
 import React, { PropsWithChildren } from 'react';
 import { styled } from '../../theme';
 
-const TypographyContainer = styled('span', {
+const TypographyContainer = styled('p', {
   margin: 0,
   display: 'inline-block',
   variants: {

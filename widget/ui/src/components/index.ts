@@ -29,3 +29,4 @@ export * from './common';
 export * from './Drawer';
 export * from './Header';
 export * from './Divider';
+export * from './Toast';

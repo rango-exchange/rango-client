@@ -100,10 +100,12 @@ const theme = {
   borderWidths: {},
   borderStyles: {},
   radii: {
+    3: '5px',
     5: '8px',
     10: '12px',
   },
   shadows: {
+    xs: '0 5px 10px rgba(0,0,0,.12)',
     s: '0px 3px 5px 3px #f0f2f5, 0px 6px 10px 3px #f0f2f5, 0px 1px 18px 3px #f0f2f5',
   },
   zIndices: {},
