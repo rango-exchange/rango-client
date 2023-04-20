@@ -2,7 +2,7 @@ import { createTheme } from '@rango-dev/ui';
 import { useState, useEffect, useLayoutEffect } from 'react';
 import { useMetaStore } from '../store/meta';
 import { useSettingsStore } from '../store/settings';
-import { Theme } from '../types';
+import { WidgetTheme } from '../types';
 import { shadeColor } from '../utils/common';
 import usePrevious from './usePrevious';
 
@@ -11,7 +11,7 @@ export function useTheme({
   fontFamily = 'Robot',
   borderRadius = 8,
   mode = 'auto',
-}: Theme) {
+}: WidgetTheme) {
   const theme = useSettingsStore.use.theme();
   const fetchMeta = useMetaStore.use.fetchMeta();
   const setTheme = useSettingsStore.use.setTheme();

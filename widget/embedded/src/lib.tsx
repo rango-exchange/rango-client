@@ -15,7 +15,7 @@ import { Layout } from './components/Layout';
 import { globalFont, globalStyles } from './globalStyles';
 import { useTheme } from './hooks/useTheme';
 import { isEvmBlockchain } from 'rango-sdk';
-import { WidgetConfig } from './types';
+import { WidgetTheme, WidgetConfig, WidgetColors, BlockchainAndTokenConfig } from './types';
 import useSelectLanguage from './hooks/useSelectLanguage';
 import './i18n';
 import QueueManager from './QueueManager';
@@ -23,11 +23,14 @@ import { useUiStore } from './store/ui';
 import { navigationRoutes } from './constants/navigationRoutes';
 import { initConfig } from './utils/configs';
 
+
+export {WidgetConfig, WalletType, WidgetTheme, WidgetColors,  BlockchainAndTokenConfig}
+
 export type WidgetProps = {
   config?: WidgetConfig;
 };
 
-export const SwapBox: React.FC<WidgetProps> = ({ config }) => {
+export const Widget: React.FC<WidgetProps> = ({ config }) => {
   globalStyles();
   globalFont(config?.theme?.fontFamily || 'Roboto');
 
@@ -115,18 +118,7 @@ export const SwapBox: React.FC<WidgetProps> = ({ config }) => {
       <div id="pageContainer" className={activeTheme}>
         <QueueManager>
           <SwapContainer
-            fixedHeight={currentPage !== navigationRoutes.home}
-            // style={
-            //   currentPage !== navigationRoutes.home && config?.theme?.height
-            //     ? {
-            //         height: config?.theme?.height,
-            //         width: config?.theme?.width || 'auto',
-            //       }
-            //     : {
-            //         width: config?.theme?.width || 'auto',
-            //       }
-            // }
-          >
+            fixedHeight={currentPage !== navigationRoutes.home}>
             <AppRouter
               lastConnectedWallet={lastConnectedWalletWithNetwork}
               disconnectedWallet={disconnectedWallet}
