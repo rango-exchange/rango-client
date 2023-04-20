@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Provider as ManagerProvider } from '@rango-dev/queue-manager-react';
 import { FlowsList } from './components/FlowsList';
 import { meta } from './flows/rango/mock';
@@ -9,7 +9,8 @@ import { Network, WalletType } from '@rango-dev/wallets-shared';
 import { Wallets } from './components/Wallets';
 import { History } from './components/History';
 import { notifier } from './flows/swap/helpers';
-import { swapQueueDef, SwapQueueContext } from '@rango-dev/queue-manager-rango-preset';
+import { SwapQueueContext, makeQueueDefinition } from '@rango-dev/queue-manager-rango-preset';
+import { getConfig } from './configs';
 const wallet: Wallet = metamaskWallet;
 
 interface PropTypes {
@@ -37,6 +38,12 @@ export function App(props: PropTypes) {
     state,
     notifier,
   };
+
+  const swapQueueDef = useMemo(() => {
+    return makeQueueDefinition({
+      API_KEY: getConfig('API_KEY'),
+    });
+  }, []);
 
   return (
     // @ts-ignore
