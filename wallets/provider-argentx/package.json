@@ -40,7 +40,7 @@
   ],
   "dependencies": {
     "@rango-dev/signer-starknet": "^0.1.11",
-    "@rango-dev/wallets-shared": "^0.1.11-next.84",
+    "@rango-dev/wallets-shared": "^0.1.11",
     "rango-types": "^0.1.28"
   },
   "publishConfig": {
