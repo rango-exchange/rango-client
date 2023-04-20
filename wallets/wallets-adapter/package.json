@@ -42,9 +42,9 @@
     }
   ],
   "dependencies": {
-    "@rango-dev/provider-all": "^0.1.11",
-    "@rango-dev/ui": "^0.1.11",
-    "@rango-dev/wallets-core": "^0.1.11",
+    "@rango-dev/provider-all": "^0.1.12",
+    "@rango-dev/ui": "^0.1.12",
+    "@rango-dev/wallets-core": "^0.1.12",
     "@rango-dev/wallets-shared": "^0.1.11",
     "rango-types": "^0.1.28"
   },
