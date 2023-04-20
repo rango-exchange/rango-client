@@ -13,10 +13,10 @@
     "parcel": "^2.7.0"
   },
   "dependencies": {
-    "@rango-dev/provider-all": "^0.1.11-next.73",
+    "@rango-dev/provider-all": "^0.1.11",
     "@rango-dev/ui": "^0.1.11-next.11",
-    "@rango-dev/wallets-core": "^0.1.11-next.80",
-    "@rango-dev/wallets-shared": "^0.1.11-next.78",
+    "@rango-dev/wallets-core": "^0.1.11",
+    "@rango-dev/wallets-shared": "^0.1.11",
     "@rango-dev/widget-embedded": "^0.1.11-next.22",
     "rango-sdk": "^0.1.20",
     "react": "^18.2.0",
