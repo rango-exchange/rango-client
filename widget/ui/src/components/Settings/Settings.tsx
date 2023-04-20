@@ -108,7 +108,7 @@ export function Settings(props: PropTypes) {
     <>
       <BaseContainer>
         <Head>
-          <Typography variant="body1">Slippage tolerance per swap</Typography>
+          <Typography variant="body2">Slippage tolerance</Typography>
           {customSlippage ? (
             <Typography variant="caption" color="error">
               {customSlippage}% Custom
@@ -168,7 +168,7 @@ export function Settings(props: PropTypes) {
         />
       </ThemesContainer>
       <InfiniteContainer>
-        <Typography variant="body1">Infinite Approval</Typography>
+        <Typography variant="body2">Infinite Approval</Typography>
         <Switch checked={infiniteApprove} onChange={toggleInfiniteApprove} />
       </InfiniteContainer>
       <LiquiditySourceContainer>
@@ -195,7 +195,7 @@ export function Settings(props: PropTypes) {
             </LiquiditySourceNumber>
           }
         >
-          <Typography variant="body1">Liquidity Sources</Typography>
+          <Typography variant="body2">Liquidity Sources</Typography>
         </Button>
       </LiquiditySourceContainer>
     </>
