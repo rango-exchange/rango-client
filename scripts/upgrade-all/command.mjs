@@ -6,7 +6,7 @@ async function run() {
   const optionDefinitions = [{ name: 'project', type: String }];
   const { project } = commandLineArgs(optionDefinitions);
 
-  const currentBranch = await $`git branch --show-current`;
+  const { stdout: currentBranch } = await $`git branch --show-current`;
   const dist = currentBranch === 'main' ? 'latest' : 'next';
 
   console.log(`Running upgrade-all for ${project}@${dist} \n`);
