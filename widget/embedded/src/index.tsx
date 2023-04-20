@@ -11,4 +11,4 @@ root.render(
   </BrowserRouter>
 );
 
-export { SwapBox } from './lib';
+export { Widget } from './lib';
