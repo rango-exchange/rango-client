@@ -4020,24 +4020,6 @@
   dependencies:
     "@babel/runtime" "^7.13.10"
 
-"@rango-dev/ui@^0.1.10-next.75", "@rango-dev/ui@^0.1.10-next.76":
-  version "0.1.10"
-  resolved "https://registry.yarnpkg.com/@rango-dev/ui/-/ui-0.1.10.tgz#3d381bbef108c68a41d9a5a0272f0b7c45baf968"
-  integrity sha512-DO84muK3o9hB8EeWKYKlCA5itNks7vPZ0XU84nLvLgTO/bK/L8Q0iYL1C9K93dwbntu6wli7xAQ6wQXPStYhzg==
-  dependencies:
-    "@radix-ui/react-checkbox" "^1.0.1"
-    "@radix-ui/react-radio-group" "^1.1.1"
-    "@radix-ui/react-switch" "^1.0.1"
-    "@radix-ui/react-tooltip" "^1.0.2"
-    "@rango-dev/wallets-shared" "^0.1.11-next.78"
-    "@stitches/react" "^1.2.8"
-    "@types/react-color" "^3.0.6"
-    rango-sdk "^0.1.20"
-    react-color "^2.19.3"
-    react-virtualized-auto-sizer "^1.0.7"
-    react-window "^1.8.8"
-    react-window-infinite-loader "^1.0.8"
-
 "@reach/router@^1.2.1":
   version "1.3.4"
   resolved "https://registry.yarnpkg.com/@reach/router/-/router-1.3.4.tgz#d2574b19370a70c80480ed91f3da840136d10f8c"
