@@ -23,12 +23,21 @@ const InputContainer = styled('div', {
   variants: {
     size: {
       small: {
+        '& input': {
+          fontSize: '$14',
+        },
         height: '$32',
       },
       medium: {
+        '& input': {
+          fontSize: '$15',
+        },
         height: '$40',
       },
       large: {
+        '& input': {
+          fontSize: '$16',
+        },
         height: '$48',
       },
     },
@@ -70,7 +79,6 @@ const Input = styled('input', {
   border: 'none',
   borderRadius: '$5',
   outline: 'none',
-  fontSize: '$l',
   backgroundColor: 'transparent',
   '-webkit-appearance': 'none',
   margin: 0,
@@ -83,7 +91,7 @@ const Input = styled('input', {
   },
   '&[type="number"]': {
     '-moz-appearance': 'textfield',
-  },
+  }
 });
 const Label = styled('label', {
   display: 'inline-block',
