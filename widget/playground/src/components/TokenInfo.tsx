@@ -217,7 +217,7 @@ export function TokenInfo({ type }: PropTypes) {
             )
           )
         }
-        title={`Select ${type} Network`}
+        title={`Select ${type} blockchain`}
         containerStyle={{ width: '560px', height: '655px' }}></Modal>
     </Container>
   );
