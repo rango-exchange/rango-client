@@ -66,7 +66,9 @@ export const SwapMessages: React.FC<PropTypes> = (props) => {
           <Button
             variant={'outlined'}
             type="primary"
-            onClick={props.switchNetwork}
+            onClick={() => {
+              props?.switchNetwork && props.switchNetwork().catch(() => {})
+            }}
           >
             Change network to {currentStepBlockchain}
           </Button>
