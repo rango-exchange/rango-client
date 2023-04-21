@@ -14,6 +14,21 @@ const MainContainer = styled('div', {
   padding: '$16',
   boxSizing: 'border-box',
   backgroundColor: '$background',
+  '& *': {
+    boxSizing: 'border-box',
+    listStyleType: 'none',
+    '&::-webkit-scrollbar': { width: '$8', height: '$8' },
+    '&::-webkit-scrollbar-thumb': {
+      backgroundColor: '$neutrals400',
+      borderRadius: '$10',
+    },
+    '&::-webkit-scrollbar-thumb:hover': {
+      backgroundColor: '$neutrals500',
+    },
+    '&::-webkit-scrollbar-track': {
+      backgroundColor: '$neutrals300',
+    },
+  },
   variants: {
     fixedHeight: {
       true: {
