@@ -37,7 +37,7 @@ export function LiquiditySourcesSelector(props: PropTypes) {
   return (
     <SecondaryPage
       textField={true}
-      textFieldPlaceholder="Search By Name"
+      textFieldPlaceholder="Search by name"
       title="Liquidity Sources"
       TopButton={
         <Button variant="ghost" type="primary" onClick={toggleAll}>
