@@ -713,9 +713,14 @@ export function onBlockForChangeNetwork(
   if (!!type && !!network) {
     const result = context.switchNetwork(type, network);
     if (result) {
-      result.then(() => {
-        queue.unblock();
-      });
+      result
+        .then(() => {
+          queue.unblock();
+        })
+        .catch((error) => {
+          // ignore switch network errors
+          console.log({ error });
+        });
     }
   }
 }
