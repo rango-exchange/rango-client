@@ -42,9 +42,9 @@ export function TokenSelector(props: PropTypes) {
     <SecondaryPage
       textField={true}
       hasHeader={hasHeader}
-      title={`Select ${type} Token`}
+      title={`Select ${type} token`}
       onBack={onBack}
-      textFieldPlaceholder="Search Token By Name"
+      textFieldPlaceholder="Search tokens by name"
     >
       {(searchedFor) => {
         const filteredTokens = filterTokens(list, searchedFor);

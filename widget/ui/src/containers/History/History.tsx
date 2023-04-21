@@ -37,7 +37,7 @@ export function History(props: PropsWithChildren<PropTypes>) {
     <SecondaryPage
       onBack={onBack}
       textField={true}
-      textFieldPlaceholder="Search by Network, Token or Request ID"
+      textFieldPlaceholder="Search by blockchain, token or request Id"
       title="Swaps"
     >
       {(searchedFor) => {
