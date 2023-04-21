@@ -30,8 +30,8 @@ export function SwapsGroup(props: Omit<PropTypes, 'onBack'>) {
       {groups
         .filter((group) => group.swaps.length > 0)
         .map((group, index) => (
-          <>
-            <Group key={index}>
+          <React.Fragment key={index}>
+            <Group>
               <Typography
                 variant="body2"
                 color="neutrals600"
@@ -39,20 +39,20 @@ export function SwapsGroup(props: Omit<PropTypes, 'onBack'>) {
               >
                 {group.title}
               </Typography>
-              {group.swaps.map((swap: PendingSwap, index: number) => (
-                <>
+              {group.swaps.map((swap: PendingSwap) => (
+                <React.Fragment
+                    key={swap.requestId}>
                   <SwapDetail
-                    key={index}
                     swap={swap}
                     status={swap.status}
                     onClick={onSwapClick}
                   />
                   <Divider size={12} />
-                </>
+                </React.Fragment>
               ))}
             </Group>
             <Divider size={24} />
-          </>
+          </React.Fragment>
         ))}
     </>
   );
