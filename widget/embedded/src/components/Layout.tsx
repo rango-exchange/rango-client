@@ -37,7 +37,9 @@ const Header = styled('div', {
 const WalletImageContainer = styled('div', {
   marginLeft: -15,
   marginRight: '$6',
-  borderRadius: '99999px',
+  '& img': {
+    borderRadius: '50%',
+  }
 });
 
 export type LayoutProps = {
