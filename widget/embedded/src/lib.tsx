@@ -114,7 +114,7 @@ export const Widget: React.FC<WidgetProps> = ({ config }) => {
       providers={providers}
       onUpdateState={onUpdateState}
     >
-      <div id="pageContainer" className={activeTheme}>
+      <div className={activeTheme}>
         <QueueManager>
           <SwapContainer
             fixedHeight={currentPage !== navigationRoutes.home}>
