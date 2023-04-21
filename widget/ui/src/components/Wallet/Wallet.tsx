@@ -10,7 +10,11 @@ import { Image } from '../common';
 
 const WalletImageContainer = styled('div', {
   paddingRight: '$12',
+  '& img': {
+    borderRadius: '50%',
+  },
 });
+
 const Text = styled('div', {
   display: 'flex',
   flexDirection: 'column',
