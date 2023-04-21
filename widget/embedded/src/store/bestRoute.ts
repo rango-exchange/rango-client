@@ -40,6 +40,7 @@ export interface RouteState {
   error: string;
   sourceTokens: Token[];
   destinationTokens: Token[];
+  resetRoute: () => void;
   setFromChain: (
     chain: BlockchainMeta | null,
     setDefaultToken?: boolean
@@ -92,6 +93,14 @@ export const useBestRouteStore = createSelectors(
             }),
           };
         }),
+      resetRoute: () =>
+        set(() => ({
+          loading: true,
+          error: '',
+          bestRoute: null,
+          outputAmount: null,
+          outputUsdValue: new BigNumber(0),
+        })),
       setFromChain: (chain, setDefaultToken) => {
         set((state) => {
           if (state.fromChain?.name === chain?.name) return {};
@@ -250,7 +259,8 @@ const bestRoute = (
 ) => {
   let abortController: AbortController | null = null;
   const fetchBestRoute = () => {
-    const { fromToken, toToken, inputAmount } = bestRouteStore.getState();
+    const { fromToken, toToken, inputAmount, resetRoute } =
+      bestRouteStore.getState();
     const { slippage, customSlippage, disabledLiquiditySources, affiliateRef } =
       settingsStore.getState();
     if (!fromToken || !toToken || !isPositiveNumber(inputAmount)) return;
@@ -267,13 +277,10 @@ const bestRoute = (
       userSlippage,
       affiliateRef
     );
-    if (!bestRouteStore.getState().loading)
-      bestRouteStore.setState({
-        loading: true,
-        bestRoute: null,
-        outputAmount: null,
-        outputUsdValue: new BigNumber(0),
-      });
+
+    if (!bestRouteStore.getState().loading) {
+      resetRoute();
+    }
     httpService()
       .getBestRoute(requestBody, {
         signal: abortController.signal,
@@ -296,7 +303,7 @@ const bestRoute = (
   const debouncedFetchBestRoute = debounce(fetchBestRoute, 600);
 
   const bestRouteParamsListener = () => {
-    const { fromToken, toToken, inputAmount, inputUsdValue } =
+    const { fromToken, toToken, inputAmount, inputUsdValue, resetRoute } =
       useBestRouteStore.getState();
     if (!isPositiveNumber(inputAmount) || inputUsdValue.eq(0))
       return bestRouteStore.setState({ loading: false });
@@ -309,13 +316,7 @@ const bestRoute = (
         outputUsdValue: inputUsdValue,
       });
 
-    if (!bestRouteStore.getState().loading)
-      bestRouteStore.setState({
-        loading: true,
-        bestRoute: null,
-        outputAmount: null,
-        outputUsdValue: new BigNumber(0),
-      });
+    if (!bestRouteStore.getState().loading) resetRoute();
     debouncedFetchBestRoute();
   };
 
