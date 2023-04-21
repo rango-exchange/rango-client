@@ -11,6 +11,7 @@ const Box = styled('div', {
   display: 'flex',
   flexDirection: 'column',
   width: '100%',
+  overflow: 'hidden',
 });
 
 const Container = styled('div', {
@@ -172,7 +173,7 @@ export function TokenPreview(props: PropTypes) {
           <Spacer size={12} />
           <div className="amount">
             <OutputContainer>
-              <Typography variant="h4">{props.amount}</Typography>
+              <Typography variant="h4">{numberToString(props.amount, 6, 6)}</Typography>
             </OutputContainer>
           </div>
         </div>

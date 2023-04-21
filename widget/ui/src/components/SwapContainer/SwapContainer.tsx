@@ -14,6 +14,7 @@ const MainContainer = styled('div', {
   padding: '$16',
   boxSizing: 'border-box',
   backgroundColor: '$background',
+  overflow: 'hidden',
   '& *': {
     boxSizing: 'border-box',
     listStyleType: 'none',
