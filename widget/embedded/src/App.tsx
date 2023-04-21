@@ -13,7 +13,7 @@ import {
 } from './utils/wallets';
 import { useWalletsStore } from './store/wallets';
 import { Layout } from './components/Layout';
-import { globalFont, globalStyles } from './globalStyles';
+import { globalFont } from './globalStyles';
 import { useTheme } from './hooks/useTheme';
 import QueueManager from './QueueManager';
 import { isEvmBlockchain } from 'rango-sdk';
@@ -30,7 +30,6 @@ export type WidgetProps = {
 };
 
 export function App({ config }: WidgetProps) {
-  globalStyles();
   globalFont(config?.theme?.fontFamily || 'Roboto');
   const { activeTheme } = useTheme({ ...config?.theme });
   useMemo(() => {

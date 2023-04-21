@@ -12,7 +12,7 @@ import {
 } from './utils/wallets';
 import { useWalletsStore } from './store/wallets';
 import { Layout } from './components/Layout';
-import { globalFont, globalStyles } from './globalStyles';
+import { globalFont } from './globalStyles';
 import { useTheme } from './hooks/useTheme';
 import { isEvmBlockchain } from 'rango-sdk';
 import { WidgetTheme, WidgetConfig, WidgetColors, BlockchainAndTokenConfig } from './types';
@@ -31,7 +31,6 @@ export type WidgetProps = {
 };
 
 export const Widget: React.FC<WidgetProps> = ({ config }) => {
-  globalStyles();
   globalFont(config?.theme?.fontFamily || 'Roboto');
 
   const { activeTheme } = useTheme({ ...config?.theme });
