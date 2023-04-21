@@ -29,7 +29,7 @@ export function BottomLogo() {
 
   return (
     <Container>
-      <Typography variant="caption">{t('Powered By')}</Typography>
+      <Typography variant="caption" color='$neutrals600'>{t('Powered By')}</Typography>
       <StyledAnchor href="https://rango.exchange" target="_blank">
         <Logo xmlns="http://www.w3.org/2000/svg" viewBox="0 0 33.68 29">
           <defs></defs>

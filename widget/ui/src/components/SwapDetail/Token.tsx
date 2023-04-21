@@ -18,7 +18,9 @@ const TokenContainer = styled('div', {
 
 const TokenImage = styled('div', {
   position: 'relative',
-
+  'img': {
+    borderRadius: '50%',
+  },
   '.overlay': {
     position: 'absolute',
     right: -4,
