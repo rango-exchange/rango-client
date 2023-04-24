@@ -1,5 +1,6 @@
 import { WalletType } from '@rango-dev/wallets-shared';
 import { Asset, Token } from 'rango-sdk';
+import { WidgetConfig } from './types';
 
 export const excludedWallets = [WalletType.UNKNOWN, WalletType.TERRA_STATION, WalletType.LEAP];
 
@@ -39,3 +40,37 @@ export const filterTokens = (list: Token[], searchedFor: string) =>
       containsText(token.address || '', searchedFor) ||
       containsText(token.name || '', searchedFor),
   );
+
+export const syntaxHighlight = (json) => {
+  json = json.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  return json.replace(
+    /("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g,
+    function (match) {
+      var cls = 'string';
+      if (/^"/.test(match)) {
+        if (/:$/.test(match)) {
+          cls = 'key';
+        }
+      }
+      return `<span class="${cls}">${match}</span>`;
+    },
+  );
+};
+
+export const filterObject = (object) => {
+  return Object.fromEntries(
+    Object.entries(object).filter(([key, value]) => key !== 'apiKey' && !!value),
+  );
+};
+
+export const filterConfig = (config) => {
+  const obj = { ...config };
+  if (!Object.keys(filterObject(config.to)).length) {
+    obj.to = undefined;
+  }
+  if (!Object.keys(filterObject(config.from)).length) {
+    obj.from = undefined;
+  }
+
+  return { ...filterObject(obj), theme: filterObject(obj.theme) };
+};
