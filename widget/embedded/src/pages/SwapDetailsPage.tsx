@@ -1,10 +1,9 @@
 import React from 'react';
 import { navigationRoutes } from '../constants/navigationRoutes';
-import useCopyToClipboard from '../hooks/useCopyToClipboard';
 import { useManager } from '@rango-dev/queue-manager-react';
 import { useNavigateBack } from '../hooks/useNavigateBack';
 import { getPendingSwaps } from '../utils/queue';
-import { SwapHistory } from '@rango-dev/ui';
+import { SwapHistory, useCopyToClipboard } from '@rango-dev/ui';
 import { useUiStore } from '../store/ui';
 import {
   cancelSwap,
