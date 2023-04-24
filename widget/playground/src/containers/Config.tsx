@@ -100,7 +100,7 @@ export function Config(props: PropsWithChildren) {
         content={
           <>
             <hr />
-            <Pre> {JSON.stringify(config, null, 2)}</Pre>{' '}
+            <Pre> {JSON.stringify(config, null, 2)}</Pre>
           </>
         }
         title="Export Widget Config"
