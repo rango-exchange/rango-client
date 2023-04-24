@@ -1,5 +1,5 @@
-import React, { PropsWithChildren } from 'react';
-import { Alert, Spacer, styled, Typography } from '@rango-dev/ui';
+import React, { PropsWithChildren, useState } from 'react';
+import { Alert, Button, Modal, Spacer, styled, Typography } from '@rango-dev/ui';
 import { ChainsConfig } from '../components/ChainsConfig';
 import { WalletsConfig } from '../components/WalletsConfig';
 import { SourcesConfig } from '../components/SourcesConfig';
@@ -8,6 +8,8 @@ import { Provider } from '@rango-dev/wallets-core';
 import { allProviders } from '@rango-dev/provider-all';
 import { globalStyles } from '../globalStyles';
 import { useMetaStore } from '../store/meta';
+import { useConfigStore } from '../store/config';
+import useCopyToClipboard from '../hook/useCopyToClipboard';
 
 const providers = allProviders();
 
@@ -32,16 +34,38 @@ const Swap = styled('div', {
   marginTop: 115,
 });
 
+const Header = styled('div', {
+  display: 'flex',
+  justifyContent: 'space-between',
+  alignItems: 'center',
+});
+
+const Pre = styled('pre', {
+  fontSize: '$14',
+  display: 'block',
+  padding: '10px 30px',
+  margin: 0,
+  overflowY: 'scroll',
+});
+
 export function Config(props: PropsWithChildren) {
   globalStyles();
   const loadingStatus = useMetaStore.use.loadingStatus();
+  const [open, setOpen] = useState<boolean>(false);
+  const config = useConfigStore.use.config();
+  const [isCopied, handleCopy] = useCopyToClipboard(2000);
 
   return (
     <Container>
       <Provider providers={providers}>
         <ConfigContent>
           <div>
-            <Typography variant="h1">Configuration</Typography>
+            <Header>
+              <Typography variant="h1">Configuration</Typography>
+              <Button variant="contained" type="primary" onClick={() => setOpen(true)}>
+                Export Config
+              </Button>
+            </Header>
             {loadingStatus === 'failed' && (
               <Alert type="error">
                 Error connecting server, please reload the app and try again
@@ -64,6 +88,24 @@ export function Config(props: PropsWithChildren) {
       <SwapContent>
         <Swap>{props.children}</Swap>
       </SwapContent>
+
+      <Modal
+        open={open}
+        action={
+          <Button type="primary" variant="ghost" onClick={() => handleCopy(JSON.stringify(config))}>
+            {isCopied ? 'Copied!' : 'Copy'}
+          </Button>
+        }
+        onClose={() => setOpen(false)}
+        content={
+          <>
+            <hr />
+            <Pre> {JSON.stringify(config, null, 2)}</Pre>{' '}
+          </>
+        }
+        title="Export Widget Config"
+        containerStyle={{ width: '560px', height: '500px' }}
+      />
     </Container>
   );
 }
