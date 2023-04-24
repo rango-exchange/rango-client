@@ -1,5 +1,5 @@
 import React, { PropsWithChildren, useState } from 'react';
-import { Alert, Button, Modal, Spacer, styled, Typography } from '@rango-dev/ui';
+import { Alert, Button, Modal, Spacer, styled, Typography, useCopyToClipboard } from '@rango-dev/ui';
 import { ChainsConfig } from '../components/ChainsConfig';
 import { WalletsConfig } from '../components/WalletsConfig';
 import { SourcesConfig } from '../components/SourcesConfig';
@@ -9,7 +9,6 @@ import { allProviders } from '@rango-dev/provider-all';
 import { globalStyles } from '../globalStyles';
 import { useMetaStore } from '../store/meta';
 import { useConfigStore } from '../store/config';
-import useCopyToClipboard from '../hook/useCopyToClipboard';
 
 const providers = allProviders();
 
@@ -46,6 +45,7 @@ const Pre = styled('pre', {
   padding: '10px 30px',
   margin: 0,
   overflowY: 'scroll',
+  color:"$foreground"
 });
 
 export function Config(props: PropsWithChildren) {
