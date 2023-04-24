@@ -1,5 +1,13 @@
 import React, { PropsWithChildren, useState } from 'react';
-import { Alert, Button, Modal, Spacer, styled, Typography, useCopyToClipboard } from '@rango-dev/ui';
+import {
+  Alert,
+  Button,
+  Modal,
+  Spacer,
+  styled,
+  Typography,
+  useCopyToClipboard,
+} from '@rango-dev/ui';
 import { ChainsConfig } from '../components/ChainsConfig';
 import { WalletsConfig } from '../components/WalletsConfig';
 import { SourcesConfig } from '../components/SourcesConfig';
@@ -9,6 +17,7 @@ import { allProviders } from '@rango-dev/provider-all';
 import { globalStyles } from '../globalStyles';
 import { useMetaStore } from '../store/meta';
 import { useConfigStore } from '../store/config';
+import { filterConfig, syntaxHighlight } from '../helpers';
 
 const providers = allProviders();
 
@@ -45,7 +54,17 @@ const Pre = styled('pre', {
   padding: '10px 30px',
   margin: 0,
   overflowY: 'scroll',
-  color:"$foreground"
+  color: '$foreground',
+  '.string': {
+    color: '$warning',
+  },
+  '.key': {
+    color: '$success',
+  },
+});
+
+const Link = styled('a', {
+  color: '$primary',
 });
 
 export function Config(props: PropsWithChildren) {
@@ -55,6 +74,8 @@ export function Config(props: PropsWithChildren) {
   const config = useConfigStore.use.config();
   const [isCopied, handleCopy] = useCopyToClipboard(2000);
 
+  const filtered = filterConfig(config);
+
   return (
     <Container>
       <Provider providers={providers}>
@@ -63,7 +84,7 @@ export function Config(props: PropsWithChildren) {
             <Header>
               <Typography variant="h1">Configuration</Typography>
               <Button variant="contained" type="primary" onClick={() => setOpen(true)}>
-                Export Config
+                Exported Config{' '}
               </Button>
             </Header>
             {loadingStatus === 'failed' && (
@@ -92,7 +113,10 @@ export function Config(props: PropsWithChildren) {
       <Modal
         open={open}
         action={
-          <Button type="primary" variant="ghost" onClick={() => handleCopy(JSON.stringify(config))}>
+          <Button
+            type="primary"
+            variant="ghost"
+            onClick={() => handleCopy(JSON.stringify(filtered))}>
             {isCopied ? 'Copied!' : 'Copy'}
           </Button>
         }
@@ -100,11 +124,24 @@ export function Config(props: PropsWithChildren) {
         content={
           <>
             <hr />
-            <Pre> {JSON.stringify(config, null, 2)}</Pre>
+            <Typography variant="body1" mb={12} mt={12}>
+              See full instruction on{' '}
+              <Link
+                href="https://docs.rango.exchange/integration-guide/rango-widget"
+                target="_blank">
+                docs.rango.exchange
+              </Link>
+            </Typography>
+
+            <Pre
+              dangerouslySetInnerHTML={{
+                __html: syntaxHighlight(JSON.stringify(filtered, undefined, 4)),
+              }}
+            />
           </>
         }
-        title="Export Widget Config"
-        containerStyle={{ width: '560px', height: '500px' }}
+        title="Exported Config"
+        containerStyle={{ minWidth: '600px', height: '500px' }}
       />
     </Container>
   );
