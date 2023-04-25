@@ -15,10 +15,14 @@ import {
   Events,
 } from '@rango-dev/queue-manager-core';
 import { ManagerContext, ManagerState } from './types';
+import { useManagerState, initState as initManagerState } from './state';
 
-const ManagerCtx = createContext<{ manager: ManagerContext, state: ManagerState}>({
+const ManagerCtx = createContext<{
+  manager: ManagerContext;
+  state: ManagerState;
+}>({
   manager: undefined,
-  state: undefined
+  state: initManagerState,
 });
 
 interface PropTypes {
@@ -31,6 +35,7 @@ interface PropTypes {
 function Provider(props: PropsWithChildren<PropTypes>) {
   // TODO: this is not a proper way but i don't want to change the context interface atm.
   const [, forceRender] = useState({});
+  const { state, update } = useManagerState();
   const context = useRef(props.context);
 
   const manager = useMemo<Manager>(() => {
@@ -58,6 +63,12 @@ function Provider(props: PropsWithChildren<PropTypes>) {
           if (props.onPersistedDataLoaded) {
             props.onPersistedDataLoaded(manager);
           }
+
+          // This condition will make sure, we only update the `loadedFromPersistor`.
+          // But be aware `onPersistedDataLoaded` is calling after each `sync` which means can be called multiple times.
+          if (!state.loadedFromPersistor) {
+            update('loadedFromPersistor', true);
+          }
         },
         onTaskBlock: () => {
           forceRender({});
@@ -67,10 +78,6 @@ function Provider(props: PropsWithChildren<PropTypes>) {
       isPaused: props.isPaused,
     });
   }, []);
-
-  const state: ManagerState = {
-    isLoaded: manager.isLoaded(),
-  }
 
   useLayoutEffect(() => {
     context.current = props.context;
@@ -94,7 +101,7 @@ function Provider(props: PropsWithChildren<PropTypes>) {
   );
 }
 
-export function useManager(): { manager: ManagerContext, state: ManagerState } {
+export function useManager(): { manager: ManagerContext; state: ManagerState } {
   const context = useContext(ManagerCtx);
   if (!context)
     throw Error('useManager can only be used within the Provider component');
