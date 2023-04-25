@@ -15,7 +15,7 @@ export function HistoryPage() {
   const { manager, state } = useManager();
   const pendingSwaps = getPendingSwaps(manager).map(({ swap }) => swap);
 
-  const loading = !state;
+  const loading = !state.loadedFromPersistor;
 
   return (
     <History
