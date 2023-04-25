@@ -5,7 +5,7 @@ import {
   DB_NAME,
 } from '@rango-dev/queue-manager-core';
 import { v4 as uuid } from 'uuid';
-import { PendingSwap } from './shared';
+import { PendingSwap, PendingSwapStep } from './shared';
 import { SwapActionTypes } from './types';
 
 const MIGRATED_KEY = 'migratedToQueueManager';
@@ -88,6 +88,14 @@ async function migration(): Promise<boolean> {
        * And there is no need to consider them to be run.
        */
       const status = swap.status === 'success' ? Status.SUCCESS : Status.FAILED;
+      if (status === Status.FAILED) {
+        // To make sure last step (current step) of a failed swap has a failed status
+        swap.steps.forEach((step: PendingSwapStep) => {
+          if (!['created', 'failed'].includes(step.status)) {
+            step.status = 'failed';
+          }
+        });
+      }
 
       const convertedSwap: PersistedQueue = {
         id: swap.requestId,
