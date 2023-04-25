@@ -49,7 +49,7 @@ export function SwapDetailsPage() {
     if (swap) cancelSwap(swap);
   };
   const swap = selectedSwap?.swap;
-  const loading = state.loadedFromPersistor;
+  const loading = !state.loadedFromPersistor;
 
   if (!swap)
     return (
