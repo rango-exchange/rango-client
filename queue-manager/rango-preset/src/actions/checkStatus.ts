@@ -56,7 +56,7 @@ async function checkTransactionStatus({
   const outputAmount: string | null =
     status?.outputAmount ||
     (!!currentStep.outputAmount ? currentStep.outputAmount : null);
-  const prevOutputAmount = currentStep.outputAmount;
+  const prevOutputAmount = currentStep.outputAmount || null;
   swap.extraMessage = status?.extraMessage || swap.extraMessage;
   swap.extraMessageSeverity = MessageSeverity.info;
   swap.extraMessageDetail = '';
