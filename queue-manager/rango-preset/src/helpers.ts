@@ -1798,6 +1798,9 @@ export function cancelSwap(
     getStorage: swap.actions.getStorage,
     setStorage: swap.actions.setStorage,
     message: 'Swap canceled by user.',
+    details:
+      "Warning: If you've already signed and sent a transaction, it won't be affected, but next swap steps will not be executed.",
+    nextStatus: 'failed',
     nextStepStatus: 'failed',
     errorCode: 'USER_CANCEL',
   });
