@@ -1728,11 +1728,7 @@ export function retryOn(
   We only run one request at a time (In parallel mode).
   */
 export function isNeedBlockQueueForParallel(step: PendingSwapStep): boolean {
-  return (
-    !!step.evmTransaction ||
-    !!step.evmApprovalTransaction ||
-    !!step.cosmosTransaction
-  );
+  return !!step.evmTransaction || !!step.evmApprovalTransaction;
 }
 
 /*
