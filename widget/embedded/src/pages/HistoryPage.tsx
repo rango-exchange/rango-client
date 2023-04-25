@@ -12,10 +12,10 @@ export function HistoryPage() {
   const setSelectedSwap = useUiStore.use.setSelectedSwap();
   const navigate = useNavigate();
   const { navigateBackFrom } = useNavigateBack();
-  const { manager } = useManager();
+  const { manager, state } = useManager();
   const pendingSwaps = getPendingSwaps(manager).map(({ swap }) => swap);
 
-  const loading = !manager?.isLoaded();
+  const loading = !state;
 
   return (
     <History
