@@ -1630,12 +1630,7 @@ function retryWaitingForOtherQueues(manager: Manager) {
     const isAnyDependsOnOtherQueues = Object.keys(q.list.state.tasks).find(
       (taskId) => {
         const task = q.list.state.tasks[taskId];
-        return (
-          q.status === Status.BLOCKED &&
-          [BlockReason.DEPENDS_ON_OTHER_QUEUES].includes(
-            task.blockedFor?.reason
-          )
-        );
+        return q.status === Status.BLOCKED && task.status === Status.BLOCKED;
       }
     );
     if (isAnyDependsOnOtherQueues && !foundFirstBlockedQueue) {
