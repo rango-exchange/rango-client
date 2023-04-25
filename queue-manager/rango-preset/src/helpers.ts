@@ -1621,6 +1621,35 @@ export function getRunningSwaps(manager: Manager): PendingSwap[] {
 }
 
 /**
+ * If found any blocked tasks that is depended for other queues, runs it.
+ * @param manager
+ */
+function retryWaitingForOtherQueues(manager: Manager) {
+  let foundFirstBlockedQueue = false;
+  manager?.getAll().forEach((q) => {
+    const isAnyDependsOnOtherQueues = Object.keys(q.list.state.tasks).find(
+      (taskId) => {
+        const task = q.list.state.tasks[taskId];
+        return (
+          q.status === Status.BLOCKED &&
+          [BlockReason.DEPENDS_ON_OTHER_QUEUES].includes(
+            task.blockedFor?.reason
+          )
+        );
+      }
+    );
+    if (isAnyDependsOnOtherQueues && !foundFirstBlockedQueue) {
+      foundFirstBlockedQueue = true;
+      const swap = q.list.getStorage()
+        ?.swapDetails as SwapStorage['swapDetails'];
+      if (swap.status === 'running') {
+        q.list.checkBlock();
+      }
+    }
+  });
+}
+
+/**
  *
  * Trying to reset notifications for pending swaps to correct message on page load.
  * We could remove this after supporting auto connect for wallets.
@@ -1755,12 +1784,17 @@ export async function throwOnOK(
   }
 }
 
-export function cancelSwap(swap: QueueInfo): {
+export function cancelSwap(
+  swap: QueueInfo,
+  manager?: Manager
+): {
   swap: PendingSwap;
   step: PendingSwapStep | null;
 } {
+  const { reset } = claimQueue();
   swap.actions.cancel();
-  return updateSwapStatus({
+
+  const updateResult = updateSwapStatus({
     getStorage: swap.actions.getStorage,
     setStorage: swap.actions.setStorage,
     message: 'Swap canceled by user.',
@@ -1770,4 +1804,8 @@ export function cancelSwap(swap: QueueInfo): {
     nextStepStatus: 'failed',
     errorCode: 'USER_CANCEL',
   });
+  reset();
+  if (manager) retryWaitingForOtherQueues(manager);
+
+  return updateResult;
 }
