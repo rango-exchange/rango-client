@@ -4020,6 +4020,14 @@
   dependencies:
     "@babel/runtime" "^7.13.10"
 
+"@rango-dev/queue-manager-rango-preset@^0.1.11":
+  version "0.1.11"
+  resolved "https://registry.yarnpkg.com/@rango-dev/queue-manager-rango-preset/-/queue-manager-rango-preset-0.1.11.tgz#362f8372c153939859870924806f3b0dfc348706"
+  integrity sha512-yQORwvIXsz+ZtTZFfjyuqrp1Vg1MLyFpNHqCi72jyz8n1QtuYQKy2Nrh4z/7ALUgXQm4h2i7Y4Q5KDOqIVN/0g==
+  dependencies:
+    "@sentry/browser" "^6.12.0"
+    uuid "^9.0.0"
+
 "@reach/router@^1.2.1":
   version "1.3.4"
   resolved "https://registry.yarnpkg.com/@reach/router/-/router-1.3.4.tgz#d2574b19370a70c80480ed91f3da840136d10f8c"
