@@ -14,10 +14,11 @@ import {
   QueueDef,
   Events,
 } from '@rango-dev/queue-manager-core';
-import { ManagerContext } from './types';
+import { ManagerContext, ManagerState } from './types';
 
-const ManagerCtx = createContext<{ manager: ManagerContext }>({
+const ManagerCtx = createContext<{ manager: ManagerContext, state: ManagerState}>({
   manager: undefined,
+  state: undefined
 });
 
 interface PropTypes {
@@ -67,6 +68,10 @@ function Provider(props: PropsWithChildren<PropTypes>) {
     });
   }, []);
 
+  const state: ManagerState = {
+    isLoaded: manager.isLoaded(),
+  }
+
   useLayoutEffect(() => {
     context.current = props.context;
   }, [props.context]);
@@ -83,13 +88,13 @@ function Provider(props: PropsWithChildren<PropTypes>) {
   }, [props.isPaused]);
 
   return (
-    <ManagerCtx.Provider value={{ manager }}>
+    <ManagerCtx.Provider value={{ manager, state }}>
       {props.children}
     </ManagerCtx.Provider>
   );
 }
 
-export function useManager(): { manager: ManagerContext } {
+export function useManager(): { manager: ManagerContext, state: ManagerState } {
   const context = useContext(ManagerCtx);
   if (!context)
     throw Error('useManager can only be used within the Provider component');
