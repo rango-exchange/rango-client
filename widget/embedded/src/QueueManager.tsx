@@ -34,7 +34,7 @@ function QueueManager(props: PropsWithChildren<{}>) {
       API_KEY: getConfig('API_KEY'),
     });
   }, []);
-  const getOneOFWalletsDetails = useWalletsStore.use.getOneOFWalletsDetails();
+  const getOneOfWalletsDetails = useWalletsStore.use.getOneOfWalletsDetails();
   const accounts = useWalletsStore.use.accounts();
 
   const { blockchains } = useMetaStore.use.meta();
@@ -87,8 +87,8 @@ function QueueManager(props: PropsWithChildren<{}>) {
         step?.fromBlockchain !== step?.toBlockchain &&
         accounts.find((account) => account.chain === step?.toBlockchain);
 
-      fromAccount && getOneOFWalletsDetails(fromAccount);
-      toAccount && getOneOFWalletsDetails(toAccount);
+      fromAccount && getOneOfWalletsDetails(fromAccount);
+      toAccount && getOneOfWalletsDetails(toAccount);
     }
   };
 
