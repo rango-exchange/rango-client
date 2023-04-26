@@ -51,7 +51,7 @@ export function WalletsConfig() {
           onCheckedChange={(checked) => onChangeBooleansConfig('multiWallets', checked)}
           id="multi_wallets"
           label="Enable Multi Wallets Simultaneously"
-          checked={multiWallets}
+          checked={multiWallets === undefined ? true : multiWallets}
         />
       </ConfigurationContainer>
     </>
