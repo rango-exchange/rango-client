@@ -100,8 +100,10 @@ function claimQueue() {
         ];
       }
     },
-    reset: () => {
-      swapClaimedBy = null;
+    reset: (queue_id?: string) => {
+      if (queue_id && swapClaimedBy)
+        swapClaimedBy = swapClaimedBy.filter((swap) => swap.id !== queue_id);
+      else swapClaimedBy = null;
     },
   };
 }
@@ -802,7 +804,7 @@ export function onDependsOnOtherQueues(
   forceExecute(task.queue_id, {
     claimedBy: claimedBy(),
     resetClaimedBy: () => {
-      reset();
+      reset(task?.queue_id);
       // TODO: Use key generator
       retryOn(`${type}-${network}:${address}`, context.notifier, manager);
     },
