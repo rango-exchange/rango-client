@@ -54,7 +54,7 @@ interface WalletsStore {
   initSelectedWallets: () => void;
   setSelectedWallet: (wallet: SelectableWallet) => void;
   clearConnectedWallet: () => void;
-  getOneOFWalletsDetails: (account: Account) => void;
+  getOneOfWalletsDetails: (account: Account) => void;
 }
 
 export const useWalletsStore = createSelectors(
@@ -64,7 +64,7 @@ export const useWalletsStore = createSelectors(
       balances: [],
       selectedWallets: [],
       connectWallet: (accounts) => {
-        const getOneOFWalletsDetails = get().getOneOFWalletsDetails;
+        const getOneOfWalletsDetails = get().getOneOfWalletsDetails;
         set((state) => ({
           accounts: state.accounts.concat(accounts),
           balances: state.balances.concat(
@@ -79,7 +79,7 @@ export const useWalletsStore = createSelectors(
             }))
           ),
         }));
-        accounts.forEach(async (account) => getOneOFWalletsDetails(account));
+        accounts.forEach(async (account) => getOneOfWalletsDetails(account));
       },
       disconnectWallet: (walletType) => {
         set((state) => ({
@@ -138,18 +138,17 @@ export const useWalletsStore = createSelectors(
           balances: [],
           selectedWallets: [],
         })),
-      getOneOFWalletsDetails: async (account: Account) => {
+      getOneOfWalletsDetails: async (account: Account) => {
         const tokens = useMetaStore.getState().meta.tokens;
-
+        set((state) => ({
+          balances: state.balances.map((balance) => {
+            return balance.address === account.address &&
+              balance.chain === account.chain
+              ? { ...balance, loading: true }
+              : balance;
+          }),
+        }));
         try {
-          set((state) => ({
-            balances: state.balances.map((balance) => {
-              return balance.address === account.address &&
-                balance.chain === account.chain
-                ? { ...balance, loading: true }
-                : balance;
-            }),
-          }));
           const response = await httpService().getWalletsDetails([
             { address: account.address, blockchain: account.chain },
           ]);
