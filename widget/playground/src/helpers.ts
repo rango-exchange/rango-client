@@ -61,17 +61,18 @@ const filterObject = (object) =>
   Object.fromEntries(Object.entries(object).filter(([_, value]) => !!value));
 
 export const filterConfig = (config) => {
-  const copy = JSON.parse(JSON.stringify(config));
-  if (!Object.keys(filterObject(copy.theme.colors)).length) {
-    copy.theme.colors = undefined;
+  const copiedConfig = JSON.parse(JSON.stringify(config));
+
+  if (!Object.keys(filterObject(copiedConfig.theme.colors)).length) {
+    copiedConfig.theme.colors = undefined;
   }
-  for (const key in copy) {
-    if (typeof copy[key] === 'object') {
-      if (!Object.keys(filterObject(copy[key])).length) {
-        copy[key] = undefined;
+  for (const key in copiedConfig) {
+    if (typeof copiedConfig[key] === 'object') {
+      if (!Object.keys(filterObject(copiedConfig[key])).length) {
+        copiedConfig[key] = undefined;
       }
     }
   }
 
-  return copy;
+  return copiedConfig;
 };
