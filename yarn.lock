@@ -4041,35 +4041,6 @@
   resolved "https://registry.yarnpkg.com/@rango-dev/queue-manager-react/-/queue-manager-react-0.1.10.tgz#33c51e9d8814281eda78436993937f79ff7a400c"
   integrity sha512-ZyO9RIFa5XPKN7o3KfO0FN1jmLB4j9TNDx0fu7yqVUm5tX+R4KdgmgkQL0/h8Nbvc1OQUohRLzQvjMvlSXoklQ==
 
-"@rango-dev/widget-embedded@^0.1.12":
-  version "0.1.12"
-  resolved "https://registry.yarnpkg.com/@rango-dev/widget-embedded/-/widget-embedded-0.1.12.tgz#05e3f8e099308719c8060bdaba6750e79883093e"
-  integrity sha512-TRhOoKEV7GcG8dWwePVhBFvRVdH5Liz53RqKfYmBg6rXBP7CswpF+XUDFrfyqd7UmE+4k6HeAlIDWaxlYq5KLw==
-  dependencies:
-    "@rango-dev/provider-all" "^0.1.11"
-    "@rango-dev/queue-manager-core" "^0.1.11"
-    "@rango-dev/queue-manager-rango-preset" "^0.1.11"
-    "@rango-dev/queue-manager-react" "^0.1.10"
-    "@rango-dev/ui" "^0.1.11"
-    "@rango-dev/wallets-core" "^0.1.11"
-    "@rango-dev/wallets-shared" "^0.1.11"
-    bignumber.js "^9.1.1"
-    copy-to-clipboard "^3.3.3"
-    dayjs "^1.11.7"
-    i18next "^22.4.11"
-    i18next-browser-languagedetector "^7.0.1"
-    i18next-http-backend "^2.1.1"
-    immer "^9.0.19"
-    mitt "^3.0.0"
-    parcel "^2.8.0"
-    rango-sdk "^0.1.23"
-    rango-types "^0.1.28"
-    react "^18.2.0"
-    react-dom "^18.2.0"
-    react-i18next "^12.2.0"
-    react-router-dom "^6.8.0"
-    zustand "^4.3.2"
-
 "@reach/router@^1.2.1":
   version "1.3.4"
   resolved "https://registry.yarnpkg.com/@reach/router/-/router-1.3.4.tgz#d2574b19370a70c80480ed91f3da840136d10f8c"
