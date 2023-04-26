@@ -65,6 +65,7 @@ const Pre = styled('pre', {
 
 const Link = styled('a', {
   color: '$primary',
+  paddingLeft: 4,
 });
 
 export function Config(props: PropsWithChildren) {
@@ -84,7 +85,7 @@ export function Config(props: PropsWithChildren) {
             <Header>
               <Typography variant="h1">Configuration</Typography>
               <Button variant="contained" type="primary" onClick={() => setOpen(true)}>
-                Exported Config{' '}
+                Exported Config
               </Button>
             </Header>
             {loadingStatus === 'failed' && (
@@ -125,7 +126,7 @@ export function Config(props: PropsWithChildren) {
           <>
             <hr />
             <Typography variant="body1" mb={12} mt={12}>
-              See full instruction on{' '}
+              See full instruction on
               <Link
                 href="https://docs.rango.exchange/integration-guide/rango-widget"
                 target="_blank">

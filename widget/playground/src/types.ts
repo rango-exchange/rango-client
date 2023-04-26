@@ -28,12 +28,12 @@ export type Colors = {
 };
 
 export type Theme = {
-  mode: 'dark' | 'light' | 'auto';
-  fontFamily: string;
+  mode?: 'dark' | 'light' | 'auto';
+  fontFamily?: string;
   colors: Colors;
-  borderRadius: number;
-  width: number;
-  height: number;
+  borderRadius?: number;
+  width?: number;
+  height?: number;
 };
 export type Support = {
   blockchain?: string;
@@ -44,13 +44,13 @@ export type Support = {
 
 export type WidgetConfig = {
   apiKey: string;
-  amount: number;
+  amount?: number;
   from: Support;
   to: Support;
   liquiditySources?: string[];
   wallets?: WalletType[];
   multiWallets: boolean;
   customAddress: boolean;
-  language: string;
+  language?: string;
   theme: Theme;
 };

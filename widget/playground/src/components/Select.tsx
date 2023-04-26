@@ -40,7 +40,6 @@ const Label = styled('label', {
 export function Select({ label, value, onChange, modalTitle, list, name }: PropTypes) {
   const [open, setOpen] = useState<boolean>(false);
   const search = list.find((item) => item.value === value);
-
   return (
     <div>
       <Label>{label}</Label>
@@ -53,7 +52,7 @@ export function Select({ label, value, onChange, modalTitle, list, name }: PropT
         fullWidth
         align="start"
         size="large">
-        {search?.name}
+        {search?.name || value}
       </Button>
 
       <Modal
@@ -73,7 +72,10 @@ export function Select({ label, value, onChange, modalTitle, list, name }: PropT
                     prefix={item.logo && <Image src={item.logo} />}
                     suffix={item.value === value ? <CheckIcon size={20} /> : undefined}
                     align="start"
-                    onClick={() => onChange(name, item.value)}
+                    onClick={() => {
+                      setOpen(false);
+                      onChange(name, item.value);
+                    }}
                     key={index}>
                     <Typography variant="body2">{item.name}</Typography>
                   </Button>
