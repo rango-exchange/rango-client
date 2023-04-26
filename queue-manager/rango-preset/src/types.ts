@@ -63,7 +63,7 @@ export interface SwapQueueContext extends QueueContext {
   notifier: (data: SwapProgressNotification) => void;
 
   // Dynamically will be added to context.
-  claimedBy?: string;
+  claimedBy?: { id: string; network: string | null }[];
   resetClaimedBy?: () => void;
 }
 

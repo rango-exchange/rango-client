@@ -72,7 +72,7 @@ type WhenTaskBlocked = Parameters<NonNullable<SwapQueueDef['whenTaskBlocked']>>;
 type WhenTaskBlockedEvent = WhenTaskBlocked[0];
 type WhenTaskBlockedMeta = WhenTaskBlocked[1];
 
-let swapClaimedBy: { id: string } | null = null;
+let swapClaimedBy: { id: string; network: string | null }[] | null = null;
 
 /**
  *
@@ -81,11 +81,24 @@ let swapClaimedBy: { id: string } | null = null;
  */
 function claimQueue() {
   return {
-    claimedBy: () => swapClaimedBy?.id,
-    setClaimer: (queue_id: string) => {
-      swapClaimedBy = {
-        id: queue_id,
-      };
+    claimedBy: () => swapClaimedBy,
+    setClaimer: (queue_id: string, network: string | null) => {
+      if (swapClaimedBy) {
+        swapClaimedBy = [
+          ...swapClaimedBy,
+          {
+            id: queue_id,
+            network,
+          },
+        ];
+      } else {
+        swapClaimedBy = [
+          {
+            id: queue_id,
+            network,
+          },
+        ];
+      }
     },
     reset: () => {
       swapClaimedBy = null;
@@ -748,13 +761,30 @@ export function onDependsOnOtherQueues(
     return;
   }
 
-  const claimerId = claimedBy();
-  const isClaimedByAnyQueue = !!claimerId;
+  const claimerSwap = claimedBy();
+  const isClaimedByAnyQueue = !!claimerSwap;
 
-  if (claimerId === queue.id) return;
+  if (claimerSwap?.find((claim) => claim.id === queue.id)) return;
+
+  let task = blockedTasks.find((task) => {
+    return task.queue_id === meta.queue_id;
+  });
+  // If current task isn't available anymore, fallback to first blocked task.
+  if (!task) {
+    const firstBlockedTask = blockedTasks[0];
+    task = firstBlockedTask;
+  }
+  const claimedStorage = task.storage.get() as SwapStorage;
+  const { type, network, address } = getRequiredWallet(
+    claimedStorage.swapDetails
+  );
+
+  const isNetworkedClaimed = claimerSwap?.find(
+    (claim) => claim.network === network
+  );
 
   // Check if any queue `claimed` before, if yes, we don't should do anything.
-  if (isClaimedByAnyQueue) {
+  if (isClaimedByAnyQueue && isNetworkedClaimed) {
     // We need to keep the latest swap messages
     markRunningSwapAsDependsOnOtherQueues({
       getStorage: queue.getStorage.bind(queue),
@@ -766,21 +796,7 @@ export function onDependsOnOtherQueues(
 
   // Prioritize current queue to be run first.
 
-  let task = blockedTasks.find((task) => {
-    return task.queue_id === meta.queue_id;
-  });
-
-  // If current task isn't available anymore, fallback to first blocked task.
-  if (!task) {
-    const firstBlockedTask = blockedTasks[0];
-    task = firstBlockedTask;
-  }
-
-  setClaimer(task.queue_id);
-  const claimedStorage = task.storage.get() as SwapStorage;
-  const { type, network, address } = getRequiredWallet(
-    claimedStorage.swapDetails
-  );
+  setClaimer(task.queue_id, network);
 
   // Run
   forceExecute(task.queue_id, {

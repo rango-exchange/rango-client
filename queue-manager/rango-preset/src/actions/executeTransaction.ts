@@ -38,7 +38,9 @@ export async function executeTransaction(
   const { getStorage, context } = actions;
   const { meta, wallets, providers } = context;
 
-  const isClaimed = context.claimedBy === context._queue?.id;
+  const isClaimed = context.claimedBy?.find(
+    (claim) => claim.id === context._queue?.id
+  );
   const requestBlock: typeof actions.block = (blockedFor) => {
     actions.block(blockedFor);
     if (isClaimed && actions.context.resetClaimedBy) {
