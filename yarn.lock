@@ -4020,10 +4020,10 @@
   dependencies:
     "@babel/runtime" "^7.13.10"
 
-"@rango-dev/queue-manager-core@^0.1.12-next.0":
-  version "0.1.12-next.0"
-  resolved "https://registry.yarnpkg.com/@rango-dev/queue-manager-core/-/queue-manager-core-0.1.12-next.0.tgz#f2166a003414f9931bf86c51f3af1d32d237b453"
-  integrity sha512-cUcCgvdUsVQqwaHDgqVdB4bo9+ZLWhZsFXDECF1svQewPaXoxzi/DJteMLdbl27t7v2/dMdM3zEdoe5Z0V2BIg==
+"@rango-dev/queue-manager-core@^0.1.11":
+  version "0.1.11"
+  resolved "https://registry.yarnpkg.com/@rango-dev/queue-manager-core/-/queue-manager-core-0.1.11.tgz#3ca7c7cc9d3140f89c8adc54ec76ea16f698937b"
+  integrity sha512-XbSApo2OUZqeC+F06UOC+kBCw/6qbU3grqqZmr7X6scOlK9228RLJtaJE+1732hE7FKsSgD8UIP62bnq/f7MvQ==
   dependencies:
     idb "^7.1.1"
     uuid "^9.0.0"
@@ -4036,10 +4036,39 @@
     "@sentry/browser" "^6.12.0"
     uuid "^9.0.0"
 
-"@rango-dev/queue-manager-react@^0.1.11-next.0":
-  version "0.1.11-next.0"
-  resolved "https://registry.yarnpkg.com/@rango-dev/queue-manager-react/-/queue-manager-react-0.1.11-next.0.tgz#dd816a77821b0831ac512d394f6f2ee6a7def44e"
-  integrity sha512-AroeB0IKUCfN1iX8GLSS/Fn6M6Uc5LiUqqg7AxsMGlvWrtOpdQHi6Z7qCIOmD8pJvFh9OjRlN13DgOSLWstgUQ==
+"@rango-dev/queue-manager-react@^0.1.10":
+  version "0.1.10"
+  resolved "https://registry.yarnpkg.com/@rango-dev/queue-manager-react/-/queue-manager-react-0.1.10.tgz#33c51e9d8814281eda78436993937f79ff7a400c"
+  integrity sha512-ZyO9RIFa5XPKN7o3KfO0FN1jmLB4j9TNDx0fu7yqVUm5tX+R4KdgmgkQL0/h8Nbvc1OQUohRLzQvjMvlSXoklQ==
+
+"@rango-dev/widget-embedded@^0.1.12":
+  version "0.1.12"
+  resolved "https://registry.yarnpkg.com/@rango-dev/widget-embedded/-/widget-embedded-0.1.12.tgz#05e3f8e099308719c8060bdaba6750e79883093e"
+  integrity sha512-TRhOoKEV7GcG8dWwePVhBFvRVdH5Liz53RqKfYmBg6rXBP7CswpF+XUDFrfyqd7UmE+4k6HeAlIDWaxlYq5KLw==
+  dependencies:
+    "@rango-dev/provider-all" "^0.1.11"
+    "@rango-dev/queue-manager-core" "^0.1.11"
+    "@rango-dev/queue-manager-rango-preset" "^0.1.11"
+    "@rango-dev/queue-manager-react" "^0.1.10"
+    "@rango-dev/ui" "^0.1.11"
+    "@rango-dev/wallets-core" "^0.1.11"
+    "@rango-dev/wallets-shared" "^0.1.11"
+    bignumber.js "^9.1.1"
+    copy-to-clipboard "^3.3.3"
+    dayjs "^1.11.7"
+    i18next "^22.4.11"
+    i18next-browser-languagedetector "^7.0.1"
+    i18next-http-backend "^2.1.1"
+    immer "^9.0.19"
+    mitt "^3.0.0"
+    parcel "^2.8.0"
+    rango-sdk "^0.1.23"
+    rango-types "^0.1.28"
+    react "^18.2.0"
+    react-dom "^18.2.0"
+    react-i18next "^12.2.0"
+    react-router-dom "^6.8.0"
+    zustand "^4.3.2"
 
 "@reach/router@^1.2.1":
   version "1.3.4"
@@ -17207,17 +17236,7 @@ react-popper@^1.3.7:
     typed-styles "^0.0.7"
     warning "^4.0.2"
 
-react-refresh@^0.11.0:
-  version "0.11.0"
-  resolved "https://registry.yarnpkg.com/react-refresh/-/react-refresh-0.11.0.tgz#77198b944733f0f1f1a90e791de4541f9f074046"
-  integrity sha512-F27qZr8uUqwhWZboondsPx8tnC3Ct3SxZA3V5WyEvujRyyNv0VYPhoBg1gZ8/MV5tubQp76Trw8lTv9hzRBa+A==
-
-react-refresh@^0.14.0:
-  version "0.14.0"
-  resolved "https://registry.yarnpkg.com/react-refresh/-/react-refresh-0.14.0.tgz#4e02825378a5f227079554d4284889354e5f553e"
-  integrity sha512-wViHqhAd8OHeLS/IRMJjTSDHF3U9eWi62F/MledQGPdJGDhodXJ9PBLNGr6WWL7qlH12Mt3TyTpbS+hGXMjCzQ==
-
-react-refresh@^0.9.0:
+react-refresh@0.9.0, react-refresh@^0.11.0, react-refresh@^0.14.0, react-refresh@^0.9.0:
   version "0.9.0"
   resolved "https://registry.yarnpkg.com/react-refresh/-/react-refresh-0.9.0.tgz#71863337adc3e5c2f8a6bfddd12ae3bfe32aafbf"
   integrity sha512-Gvzk7OZpiqKSkxsQvO/mbTN1poglhmAV7gR/DdIrRrSMXraRQQlfikRJOr3Nb9GTMPC5kof948Zy6jJZIFtDvQ==

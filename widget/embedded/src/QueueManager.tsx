@@ -4,7 +4,6 @@ import {
   makeQueueDefinition,
   SwapQueueContext,
   checkWaitingForNetworkChange,
-  EventType,
   SwapProgressNotification,
 } from '@rango-dev/queue-manager-rango-preset';
 import { useWallets } from '@rango-dev/wallets-core';
