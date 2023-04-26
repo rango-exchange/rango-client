@@ -30,7 +30,7 @@
   "dependencies": {
     "@rango-dev/provider-all": "^0.1.12",
     "@rango-dev/queue-manager-core": "^0.1.12-next.0",
-    "@rango-dev/queue-manager-rango-preset": "^0.1.11",
+    "@rango-dev/queue-manager-rango-preset": "^0.1.12-next.2",
     "@rango-dev/queue-manager-react": "^0.1.11-next.0",
     "@rango-dev/ui": "^0.1.12",
     "@rango-dev/wallets-core": "^0.1.12",
