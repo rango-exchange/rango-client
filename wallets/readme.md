@@ -1,6 +1,6 @@
 # Introduction
 
-The libraries in Rango Client Wallets enable you to use the several wallets we support. You can use it to connect to your wallet, get a user account, switch networks, and offer wallet information such as a wallet's name, logo, and supported chains and etc.
+The libraries in Rango Client Wallets enable you to use the several wallets we support. You can use it to connect to your wallet, get accounts, switch networks,get signer, and offer wallet information such as a wallet's name, logo, and supported chains and etc.
 
 # Supported Wallets
 
