@@ -1,4 +1,8 @@
-# Status
+# Introduction
+
+The libraries in Rango Client Wallets enable you to use the several wallets we support. You can use it to connect to your wallet, get a user account, switch networks, and offer wallet information such as a wallet's name, logo, and supported chains and etc.
+
+# Supported Wallets
 
 | Wallet         | Supported Chains                                        | Not Implemented                     | Source                                     |
 | -------------- | ------------------------------------------------------- | ----------------------------------- | ------------------------------------------ |
@@ -23,3 +27,73 @@
 | Trust Wallet   | EVM,Solana                                              | Solana                              | https://trustwallet.com/                   |
 | Wallet Connect | -                                                       | -                                   | -                                          |
 | XDefi          | EVM,Solana,Binance,BTC,LTC,Thorchain,Terra,Doge         | Doge                                | https://www.xdefi.io/                      |
+
+# Installation
+
+Installing the wallets core library is a prerequisite for using wallets:
+
+```
+yarn add @rango-dev/wallets-core
+```
+
+We advise using the library of all providers if you wish to use all the wallets:
+
+```
+yarn add @rango-dev/provider-all
+```
+
+Install the necessary wallets library and submit it to the providers as an array if you wish to use the wallets of your choosing.
+
+# Start Developing
+
+The wallets core provider must be used, and it be included to the App.js file.
+You send providers and blockchains to it:
+
+```js
+import { Provider } from '@rango-dev/wallets-core';
+import { allProviders } from '@rango-dev/provider-all';
+
+const providers = allProviders();
+
+export function App() {
+  const blockchains = [...] // An array of blockchains
+  return (
+    <Provider providers={providers} allBlockChains={blockchains}>
+        ...
+    </Provider>
+  );
+}
+
+```
+
+and now you can use wallets by useWallets.
+
+```js
+import { useWallets } from '@rango-dev/wallets-core';
+
+function example() {
+  const { connect, state, disconnect } = useWallets();
+  const walletState = state('metamask');
+
+  const handleConnectWallet = async () => {
+    if (walletState.connecting) return;
+    try {
+      if (!walletState.connected) {
+        if (walletState.installed) {
+          await connect(type);
+        }
+      } else {
+        disconnect('metamask');
+      }
+    } catch (err) {
+      setError('Error: ' + (err.message || 'Failed to connect wallet'));
+    }
+  };
+
+  return <button onClick={handleConnectWallet}>connect</button>;
+}
+```
+
+# Example
+
+- [**Demo for wallets**]: [Source](https://github.com/rango-exchange/rango-client/tree/next/wallets/demo)
