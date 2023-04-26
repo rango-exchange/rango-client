@@ -4036,10 +4036,36 @@
     "@sentry/browser" "^6.12.0"
     uuid "^9.0.0"
 
+"@rango-dev/queue-manager-rango-preset@^0.1.12-next.4":
+  version "0.1.12-next.4"
+  resolved "https://registry.yarnpkg.com/@rango-dev/queue-manager-rango-preset/-/queue-manager-rango-preset-0.1.12-next.4.tgz#7922ea714cfc6aab7f19046c99826da3be1e87b7"
+  integrity sha512-zp8D5rKgn3QDN/x+YM6DXyGtYKDTX/5cBAzc/paoWv/PhZ00oLMPf0gL6Qhrrk3ZplyhZy85HRXhEdOXS3Uc1g==
+  dependencies:
+    "@sentry/browser" "^6.12.0"
+    uuid "^9.0.0"
+
 "@rango-dev/queue-manager-react@^0.1.10":
   version "0.1.10"
   resolved "https://registry.yarnpkg.com/@rango-dev/queue-manager-react/-/queue-manager-react-0.1.10.tgz#33c51e9d8814281eda78436993937f79ff7a400c"
   integrity sha512-ZyO9RIFa5XPKN7o3KfO0FN1jmLB4j9TNDx0fu7yqVUm5tX+R4KdgmgkQL0/h8Nbvc1OQUohRLzQvjMvlSXoklQ==
+
+"@rango-dev/ui@^0.1.12":
+  version "0.1.12"
+  resolved "https://registry.yarnpkg.com/@rango-dev/ui/-/ui-0.1.12.tgz#1c980737551a13a94323798597fe1ed98020ef70"
+  integrity sha512-cVtqdxccErCSrJOwHZCaq14bbGem64zfn43fwOjD0XbEDsw3fSmdheFaVh+ejEvcxD3nZRjsYadms1jRqPtLtQ==
+  dependencies:
+    "@radix-ui/react-checkbox" "^1.0.1"
+    "@radix-ui/react-radio-group" "^1.1.1"
+    "@radix-ui/react-switch" "^1.0.1"
+    "@radix-ui/react-tooltip" "^1.0.2"
+    "@rango-dev/wallets-shared" "^0.1.11"
+    "@stitches/react" "^1.2.8"
+    "@types/react-color" "^3.0.6"
+    rango-sdk "^0.1.20"
+    react-color "^2.19.3"
+    react-virtualized-auto-sizer "^1.0.7"
+    react-window "^1.8.8"
+    react-window-infinite-loader "^1.0.8"
 
 "@reach/router@^1.2.1":
   version "1.3.4"
