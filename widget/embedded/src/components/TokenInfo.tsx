@@ -225,7 +225,7 @@ export function TokenInfo(props: PropTypes) {
           <Button
             className="selectors"
             onClick={() => {
-              navigate(`/${props.type.toLowerCase()}-chain`);
+              navigate(`${props.type.toLowerCase()}-chain`);
             }}
             variant="outlined"
             disabled={loadingStatus === 'failed'}
@@ -249,7 +249,7 @@ export function TokenInfo(props: PropTypes) {
           <Button
             className="selectors"
             onClick={() => {
-              navigate(`/${props.type.toLowerCase()}-token`);
+              navigate(`${props.type.toLowerCase()}-token`);
             }}
             variant="outlined"
             disabled={
