@@ -23,11 +23,11 @@ export function AppRoutes(props: PropTypes) {
 
   return useRoutes([
     {
-      path: getAbsolutePath(navigationRoutes.home),
+      path: navigationRoutes.home,
       element: <Home />,
     },
     {
-      path: getAbsolutePath(navigationRoutes.fromChain),
+      path: navigationRoutes.fromChain,
       element: (
         <SelectChainPage
           type="from"
@@ -36,40 +36,40 @@ export function AppRoutes(props: PropTypes) {
       ),
     },
     {
-      path: getAbsolutePath(navigationRoutes.toChain),
+      path: navigationRoutes.toChain,
       element: (
         <SelectChainPage type="to" supportedChains={config?.to?.blockchains} />
       ),
     },
     {
-      path: getAbsolutePath(navigationRoutes.fromToken),
+      path: navigationRoutes.fromToken,
       element: (
         <SelectTokenPage type="from" supportedTokens={config?.from?.tokens} />
       ),
     },
     {
-      path: getAbsolutePath(navigationRoutes.toToken),
+      path: navigationRoutes.toToken,
       element: (
         <SelectTokenPage type="to" supportedTokens={config?.to?.tokens} />
       ),
     },
     {
-      path: getAbsolutePath(navigationRoutes.settings),
+      path: navigationRoutes.settings,
       element: <SettingsPage supportedSwappers={config?.liquiditySources} />,
     },
     {
-      path: getAbsolutePath(navigationRoutes.liquiditySources),
+      path: navigationRoutes.liquiditySources,
       element: (
         <LiquiditySourcePage supportedSwappers={config?.liquiditySources} />
       ),
     },
-    { path: getAbsolutePath(navigationRoutes.swaps), element: <HistoryPage /> },
+    { path: navigationRoutes.swaps, element: <HistoryPage /> },
     {
       path: navigationRoutes.swapDetails,
       element: <SwapDetailsPage />,
     },
     {
-      path: getAbsolutePath(navigationRoutes.wallets),
+      path: navigationRoutes.wallets,
       element: (
         <WalletsPage
           supportedWallets={config?.wallets}
