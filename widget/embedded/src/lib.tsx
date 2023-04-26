@@ -15,7 +15,12 @@ import { Layout } from './components/Layout';
 import { globalFont } from './globalStyles';
 import { useTheme } from './hooks/useTheme';
 import { isEvmBlockchain } from 'rango-sdk';
-import { WidgetTheme, WidgetConfig, WidgetColors, BlockchainAndTokenConfig } from './types';
+import {
+  WidgetTheme,
+  WidgetConfig,
+  WidgetColors,
+  BlockchainAndTokenConfig,
+} from './types';
 import useSelectLanguage from './hooks/useSelectLanguage';
 import './i18n';
 import QueueManager from './QueueManager';
@@ -23,8 +28,13 @@ import { useUiStore } from './store/ui';
 import { navigationRoutes } from './constants/navigationRoutes';
 import { initConfig } from './utils/configs';
 
-
-export {WidgetConfig, WalletType, WidgetTheme, WidgetColors,  BlockchainAndTokenConfig}
+export {
+  WidgetConfig,
+  WalletType,
+  WidgetTheme,
+  WidgetColors,
+  BlockchainAndTokenConfig,
+};
 
 export type WidgetProps = {
   config?: WidgetConfig;
@@ -116,8 +126,7 @@ export const Widget: React.FC<WidgetProps> = ({ config }) => {
     >
       <div className={activeTheme}>
         <QueueManager>
-          <SwapContainer
-            fixedHeight={currentPage !== navigationRoutes.home}>
+          <SwapContainer fixedHeight={currentPage !== navigationRoutes.home}>
             <AppRouter
               lastConnectedWallet={lastConnectedWalletWithNetwork}
               disconnectedWallet={disconnectedWallet}
