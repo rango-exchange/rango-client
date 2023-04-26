@@ -160,6 +160,7 @@ export function TokenInfo({ type }: PropTypes) {
             label="Default Amount"
             type="number"
             size="large"
+            placeholder='0'
           />
         </div>
       ) : null}

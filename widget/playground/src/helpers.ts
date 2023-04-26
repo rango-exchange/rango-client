@@ -42,11 +42,11 @@ export const filterTokens = (list: Token[], searchedFor: string) =>
   );
 
 export const syntaxHighlight = (json) => {
-  json = json.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  json.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
   return json.replace(
     /("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g,
     function (match) {
-      var cls = 'string';
+      let cls = 'string';
       if (/^"/.test(match)) {
         if (/:$/.test(match)) {
           cls = 'key';
@@ -57,20 +57,21 @@ export const syntaxHighlight = (json) => {
   );
 };
 
-export const filterObject = (object) => {
-  return Object.fromEntries(
-    Object.entries(object).filter(([key, value]) => key !== 'apiKey' && !!value),
-  );
-};
+const filterObject = (object) =>
+  Object.fromEntries(Object.entries(object).filter(([_, value]) => !!value));
 
 export const filterConfig = (config) => {
-  const obj = { ...config };
-  if (!Object.keys(filterObject(config.to)).length) {
-    obj.to = undefined;
+  const copy = JSON.parse(JSON.stringify(config));
+  if (!Object.keys(filterObject(copy.theme.colors)).length) {
+    copy.theme.colors = undefined;
   }
-  if (!Object.keys(filterObject(config.from)).length) {
-    obj.from = undefined;
+  for (const key in copy) {
+    if (typeof copy[key] === 'object') {
+      if (!Object.keys(filterObject(copy[key])).length) {
+        copy[key] = undefined;
+      }
+    }
   }
 
-  return { ...filterObject(obj), theme: filterObject(obj.theme) };
+  return copy;
 };
