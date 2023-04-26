@@ -4036,14 +4036,6 @@
     "@sentry/browser" "^6.12.0"
     uuid "^9.0.0"
 
-"@rango-dev/queue-manager-rango-preset@^0.1.12-next.4":
-  version "0.1.12-next.4"
-  resolved "https://registry.yarnpkg.com/@rango-dev/queue-manager-rango-preset/-/queue-manager-rango-preset-0.1.12-next.4.tgz#7922ea714cfc6aab7f19046c99826da3be1e87b7"
-  integrity sha512-zp8D5rKgn3QDN/x+YM6DXyGtYKDTX/5cBAzc/paoWv/PhZ00oLMPf0gL6Qhrrk3ZplyhZy85HRXhEdOXS3Uc1g==
-  dependencies:
-    "@sentry/browser" "^6.12.0"
-    uuid "^9.0.0"
-
 "@rango-dev/queue-manager-react@^0.1.10":
   version "0.1.10"
   resolved "https://registry.yarnpkg.com/@rango-dev/queue-manager-react/-/queue-manager-react-0.1.10.tgz#33c51e9d8814281eda78436993937f79ff7a400c"
