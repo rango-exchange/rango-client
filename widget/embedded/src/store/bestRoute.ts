@@ -164,6 +164,7 @@ export const useBestRouteStore = createSelectors(
             outputAmount: new BigNumber(0),
             outputUsdValue: new BigNumber(0),
             bestRoute: null,
+            error: '',
           }),
           ...(!!state.fromToken && {
             inputUsdValue: getUsdValue(state.fromToken, amount),
