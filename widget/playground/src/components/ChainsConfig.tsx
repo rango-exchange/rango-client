@@ -84,7 +84,8 @@ export function ChainsConfig({ type }: PropTypes) {
               onCheckedChange={(checked) => onChangeBooleansConfig('customAddress', checked)}
               id="custom_address"
               label="Enable Transfer To Custom Address"
-              checked={customAddress}
+              checked={customAddress  === undefined ? true : customAddress}
+
             />
           </>
         ) : null}

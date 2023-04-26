@@ -49,8 +49,8 @@ export type WidgetConfig = {
   to: Support;
   liquiditySources?: string[];
   wallets?: WalletType[];
-  multiWallets: boolean;
-  customAddress: boolean;
+  multiWallets?: boolean;
+  customAddress?: boolean;
   language?: string;
   theme: Theme;
 };
