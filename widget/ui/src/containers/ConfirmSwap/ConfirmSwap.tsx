@@ -115,18 +115,18 @@ export function ConfirmSwap(props: PropsWithChildren<PropTypes>) {
           {extraMessages || null}
           <Alerts>
             {errors?.map((error, index) => (
-              <>
+              <React.Fragment key={index}>
                 <Spacer direction="vertical" />
                 <Alert type="error" key={index} 
                   {...(typeof error === 'string') ? {title: error} : {children: error} }/>
-              </>
+              </React.Fragment>
             ))}
             {warnings?.map((warning, index) => (
-              <>
+              <React.Fragment key={index}>
                 <Spacer direction="vertical" />
                 <Alert type="warning" key={index} 
                   {...(typeof warning === 'string') ? {title: warning} : {children: warning} }/>
-              </>
+              </React.Fragment>
             ))}
           </Alerts>
         </div>
