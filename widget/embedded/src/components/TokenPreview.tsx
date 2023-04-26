@@ -173,7 +173,7 @@ export function TokenPreview(props: PropTypes) {
           <Spacer size={12} />
           <div className="amount">
             <OutputContainer>
-              <Typography variant="h4">{numberToString(props.amount, 6, 6)}</Typography>
+              <Typography variant="h4">{props.amount}</Typography>
             </OutputContainer>
           </div>
         </div>

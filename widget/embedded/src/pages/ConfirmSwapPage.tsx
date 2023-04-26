@@ -11,7 +11,7 @@ import {
   isExperimentalChain,
 } from '../utils/wallets';
 import { getTotalFeeInUsd, requiredWallets } from '../utils/swap';
-import { decimalNumber, numberToString } from '../utils/numbers';
+import { numberToString } from '../utils/numbers';
 import { useMetaStore } from '../store/meta';
 import { Network, WalletType } from '@rango-dev/wallets-shared';
 import { useNavigateBack } from '../hooks/useNavigateBack';
@@ -74,8 +74,8 @@ export function ConfirmSwapPage() {
   const lastStep =
     bestRoute?.result?.swaps[bestRoute?.result?.swaps.length - 1];
 
-  const fromAmount = decimalNumber(firstStep?.fromAmount, 3);
-  const toAmount = decimalNumber(lastStep?.toAmount, 3);
+  const fromAmount = numberToString(firstStep?.fromAmount, 4, 6);
+  const toAmount = numberToString(lastStep?.toAmount, 4, 6);
   useEffect(() => {
     initSelectedWallets();
   }, []);
