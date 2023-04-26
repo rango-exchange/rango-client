@@ -9,7 +9,8 @@ export function useNavigateBack() {
 
   const navigateBackFrom = (currentRoute: string) => {
     if (currentRoute === navigationRoutes.swapDetails)
-      return navigate(navigationRoutes.swaps, { replace: true });
+      return navigate('/' + navigationRoutes.swaps, { replace: true });
+
     if (
       !isRouterInContext ||
       (window.history.state && window.history.state.idx > 0)
@@ -30,9 +31,7 @@ export function useNavigateBack() {
       )
         navigate(navigationRoutes.home, { replace: true });
       else if (currentRoute === navigationRoutes.liquiditySources)
-        navigate(navigationRoutes.settings, { replace: true });
-      else if (currentRoute === navigationRoutes.swapDetails)
-        navigate(navigationRoutes.swaps, { replace: true });
+        navigate('/' + navigationRoutes.settings, { replace: true });
     }
   };
 

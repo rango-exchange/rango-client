@@ -24,7 +24,7 @@ export function HistoryPage() {
       loading={loading}
       onSwapClick={(requestId) => {
         setSelectedSwap(requestId);
-        navigate(navigationRoutes.swaps + `/${requestId}`, { replace: true });
+        navigate(`${requestId}`, { replace: true });
       }}
       onBack={navigateBackFrom.bind(null, navigationRoutes.swaps)}
     />
