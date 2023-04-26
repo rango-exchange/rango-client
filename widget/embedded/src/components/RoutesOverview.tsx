@@ -39,11 +39,11 @@ function RoutesOverview(props: PropTypes) {
         {swaps?.map((swap, idx) => {
           const isLast = idx + 1 == swaps.length;
           return (
-            <>
+            <React.Fragment key={idx}>
               <div className="route">{swap.from.symbol}</div>
               <ChevronRightIcon size={12} />
               {isLast ? <div className="route">{swap.to.symbol}</div> : null}
-            </>
+            </React.Fragment>
           );
         })}
       </div>
