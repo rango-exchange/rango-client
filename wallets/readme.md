@@ -96,4 +96,4 @@ function example() {
 
 # Example
 
-- [**Demo for wallets**]: [Source](https://github.com/rango-exchange/rango-client/tree/next/wallets/demo)
+- Demo for wallets: [Source](https://github.com/rango-exchange/rango-client/tree/next/wallets/demo)
