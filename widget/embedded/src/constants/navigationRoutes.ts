@@ -5,7 +5,7 @@ export const navigationRoutes = {
   toChain: 'to-chain',
   toToken: 'to-token',
   settings: 'settings',
-  liquiditySources: 'settings/liquidity-sources',
+  liquiditySources: '/settings/liquidity-sources',
   swaps: 'swaps',
   wallets: 'wallets',
   confirmSwap: 'confirm-swap',
