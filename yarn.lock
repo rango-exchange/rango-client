@@ -4020,45 +4020,6 @@
   dependencies:
     "@babel/runtime" "^7.13.10"
 
-"@rango-dev/queue-manager-core@^0.1.11":
-  version "0.1.11"
-  resolved "https://registry.yarnpkg.com/@rango-dev/queue-manager-core/-/queue-manager-core-0.1.11.tgz#3ca7c7cc9d3140f89c8adc54ec76ea16f698937b"
-  integrity sha512-XbSApo2OUZqeC+F06UOC+kBCw/6qbU3grqqZmr7X6scOlK9228RLJtaJE+1732hE7FKsSgD8UIP62bnq/f7MvQ==
-  dependencies:
-    idb "^7.1.1"
-    uuid "^9.0.0"
-
-"@rango-dev/queue-manager-rango-preset@^0.1.11":
-  version "0.1.11"
-  resolved "https://registry.yarnpkg.com/@rango-dev/queue-manager-rango-preset/-/queue-manager-rango-preset-0.1.11.tgz#362f8372c153939859870924806f3b0dfc348706"
-  integrity sha512-yQORwvIXsz+ZtTZFfjyuqrp1Vg1MLyFpNHqCi72jyz8n1QtuYQKy2Nrh4z/7ALUgXQm4h2i7Y4Q5KDOqIVN/0g==
-  dependencies:
-    "@sentry/browser" "^6.12.0"
-    uuid "^9.0.0"
-
-"@rango-dev/queue-manager-react@^0.1.10":
-  version "0.1.10"
-  resolved "https://registry.yarnpkg.com/@rango-dev/queue-manager-react/-/queue-manager-react-0.1.10.tgz#33c51e9d8814281eda78436993937f79ff7a400c"
-  integrity sha512-ZyO9RIFa5XPKN7o3KfO0FN1jmLB4j9TNDx0fu7yqVUm5tX+R4KdgmgkQL0/h8Nbvc1OQUohRLzQvjMvlSXoklQ==
-
-"@rango-dev/ui@^0.1.12":
-  version "0.1.12"
-  resolved "https://registry.yarnpkg.com/@rango-dev/ui/-/ui-0.1.12.tgz#1c980737551a13a94323798597fe1ed98020ef70"
-  integrity sha512-cVtqdxccErCSrJOwHZCaq14bbGem64zfn43fwOjD0XbEDsw3fSmdheFaVh+ejEvcxD3nZRjsYadms1jRqPtLtQ==
-  dependencies:
-    "@radix-ui/react-checkbox" "^1.0.1"
-    "@radix-ui/react-radio-group" "^1.1.1"
-    "@radix-ui/react-switch" "^1.0.1"
-    "@radix-ui/react-tooltip" "^1.0.2"
-    "@rango-dev/wallets-shared" "^0.1.11"
-    "@stitches/react" "^1.2.8"
-    "@types/react-color" "^3.0.6"
-    rango-sdk "^0.1.20"
-    react-color "^2.19.3"
-    react-virtualized-auto-sizer "^1.0.7"
-    react-window "^1.8.8"
-    react-window-infinite-loader "^1.0.8"
-
 "@reach/router@^1.2.1":
   version "1.3.4"
   resolved "https://registry.yarnpkg.com/@reach/router/-/router-1.3.4.tgz#d2574b19370a70c80480ed91f3da840136d10f8c"
@@ -17225,7 +17186,17 @@ react-popper@^1.3.7:
     typed-styles "^0.0.7"
     warning "^4.0.2"
 
-react-refresh@0.9.0, react-refresh@^0.11.0, react-refresh@^0.14.0, react-refresh@^0.9.0:
+react-refresh@^0.11.0:
+  version "0.11.0"
+  resolved "https://registry.yarnpkg.com/react-refresh/-/react-refresh-0.11.0.tgz#77198b944733f0f1f1a90e791de4541f9f074046"
+  integrity sha512-F27qZr8uUqwhWZboondsPx8tnC3Ct3SxZA3V5WyEvujRyyNv0VYPhoBg1gZ8/MV5tubQp76Trw8lTv9hzRBa+A==
+
+react-refresh@^0.14.0:
+  version "0.14.0"
+  resolved "https://registry.yarnpkg.com/react-refresh/-/react-refresh-0.14.0.tgz#4e02825378a5f227079554d4284889354e5f553e"
+  integrity sha512-wViHqhAd8OHeLS/IRMJjTSDHF3U9eWi62F/MledQGPdJGDhodXJ9PBLNGr6WWL7qlH12Mt3TyTpbS+hGXMjCzQ==
+
+react-refresh@^0.9.0:
   version "0.9.0"
   resolved "https://registry.yarnpkg.com/react-refresh/-/react-refresh-0.9.0.tgz#71863337adc3e5c2f8a6bfddd12ae3bfe32aafbf"
   integrity sha512-Gvzk7OZpiqKSkxsQvO/mbTN1poglhmAV7gR/DdIrRrSMXraRQQlfikRJOr3Nb9GTMPC5kof948Zy6jJZIFtDvQ==
