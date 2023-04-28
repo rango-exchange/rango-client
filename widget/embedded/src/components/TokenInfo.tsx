@@ -37,7 +37,7 @@ const Box = styled('div', {
   display: 'flex',
   flexDirection: 'column',
   width: '100%',
-  overflow: 'hidden'
+  overflow: 'hidden',
 });
 
 const Container = styled('div', {
@@ -132,7 +132,7 @@ export function TokenInfo(props: PropTypes) {
   const setInputAmount = useBestRouteStore.use.setInputAmount();
   const bestRoute = useBestRouteStore.use.bestRoute();
   const inputAmount = useBestRouteStore.use.inputAmount();
-  const balances = useWalletsStore.use.balances();
+  const connectedWallets = useWalletsStore.use.connectedWallets();
   const fetchingBestRoute = useBestRouteStore.use.loading();
   const navigate = useNavigate();
   const { t } = useTranslation();
@@ -141,7 +141,7 @@ export function TokenInfo(props: PropTypes) {
     !!fromChain && !!fromToken
       ? numberToString(
           getBalanceFromWallet(
-            balances,
+            connectedWallets,
             fromChain?.name,
             fromToken?.symbol,
             fromToken?.address
@@ -154,13 +154,13 @@ export function TokenInfo(props: PropTypes) {
     !!fromChain && !!fromToken
       ? numberToString(
           getBalanceFromWallet(
-            balances,
+            connectedWallets,
             fromChain?.name,
             fromToken?.symbol,
             fromToken?.address
           )?.amount || '0',
           getBalanceFromWallet(
-            balances,
+            connectedWallets,
             fromChain?.name,
             fromToken?.symbol,
             fromToken?.address
