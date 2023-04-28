@@ -39,7 +39,6 @@ const Content = styled('div', {
   flexDirection: 'column',
 });
 
-
 export function MultiTokenSelect({ label, modalTitle, list, blockchains, type }: PropTypes) {
   const [open, setOpen] = useState(false);
   const [chain, setChain] = useState<string>('');
@@ -59,13 +58,7 @@ export function MultiTokenSelect({ label, modalTitle, list, blockchains, type }:
         select[chain].splice(index, 1);
       }
     } else {
-      select[chain] = [
-        {
-          blockchain: token.blockchain,
-          address: token.address,
-          symbol: token.symbol,
-        },
-      ];
+      select[chain] = [token];
     }
 
     let values = !!tokens ? [...tokens] : [];
@@ -98,7 +91,12 @@ export function MultiTokenSelect({ label, modalTitle, list, blockchains, type }:
         const index = values.findIndex(
           (v) => v.symbol === item.symbol && v.address === item.address,
         );
-        if (index === -1) values.push(item);
+        if (index === -1)
+          values.push({
+            blockchain: item.blockchain,
+            address: item.address,
+            symbol: item.symbol,
+          });
       }
     }
     setSelectTokens(select);
@@ -139,6 +137,8 @@ export function MultiTokenSelect({ label, modalTitle, list, blockchains, type }:
         action={
           <Checkbox
             onCheckedChange={(checked) => {
+              console.log(type, tokens, checked);
+
               if (checked) {
                 setChain('');
                 onChangeTokens(undefined, type);

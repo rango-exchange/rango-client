@@ -212,7 +212,14 @@ export function TokenInfo({ type }: PropTypes) {
                     ...prev,
                     open: !prev.open,
                   }));
-                  onChangeToken(token, type);
+                  onChangeToken(
+                    {
+                      blockchain: token.blockchain,
+                      address: token.address,
+                      symbol: token.symbol,
+                    },
+                    type,
+                  );
                 }}
               />
             )
