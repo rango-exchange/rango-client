@@ -88,7 +88,7 @@ export const useConfigStore = createSelectors(
           if (type === 'Source') {
             state.config.from.tokens = tokens;
           } else {
-            state.config.from.tokens = tokens;
+            state.config.to.tokens = tokens;
           }
         }),
       onChangeBlockChain: (chain, type) =>
