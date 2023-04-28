@@ -5,8 +5,7 @@ import {
 import BigNumber from 'bignumber.js';
 import { BestRouteResponse, BlockchainMeta, Token } from 'rango-sdk';
 import { areEqual } from './common';
-import { SelectedWallet } from './wallets';
-import { BestRouteEqualityParams } from '../types';
+import { BestRouteEqualityParams, Wallet } from '../types';
 import { numberToString } from './numbers';
 import { PendingSwap } from '@rango-dev/queue-manager-rango-preset';
 
@@ -96,7 +95,7 @@ export function outToRatioHasWarning(
 }
 
 export function getRequiredBalanceOfWallet(
-  selectedWallet: SelectedWallet,
+  selectedWallet: Wallet,
   fee: SimulationValidationStatus[] | null
 ): SimulationAssetAndAmount[] | null {
   if (fee === null) return null;

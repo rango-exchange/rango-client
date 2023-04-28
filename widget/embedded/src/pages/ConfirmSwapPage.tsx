@@ -40,7 +40,7 @@ export function ConfirmSwapPage() {
   const setSelectedSwap = useUiStore.use.setSelectedSwap();
   const { blockchains, tokens } = useMetaStore.use.meta();
   const loadingMetaStatus = useMetaStore.use.loadingStatus();
-  const accounts = useWalletsStore.use.accounts();
+  const connectedWallets = useWalletsStore.use.connectedWallets();
   const selectedWallets = useWalletsStore.use.selectedWallets();
   const initSelectedWallets = useWalletsStore.use.initSelectedWallets();
   const setSelectedWallet = useWalletsStore.use.setSelectedWallet();
@@ -87,7 +87,7 @@ export function ConfirmSwapPage() {
   }, []);
 
   const selectableWallets = getSelectableWallets(
-    accounts,
+    connectedWallets,
     selectedWallets,
     getWalletInfo
   );

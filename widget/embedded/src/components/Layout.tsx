@@ -39,7 +39,7 @@ const WalletImageContainer = styled('div', {
   marginRight: '$6',
   '& img': {
     borderRadius: '50%',
-  }
+  },
 });
 
 export type LayoutProps = {
@@ -48,10 +48,10 @@ export type LayoutProps = {
 
 export function Layout({ config }: LayoutProps) {
   const navigate = useNavigate();
-  const { balances, accounts, selectedWallets } = useWalletsStore();
+  const { connectedWallets, selectedWallets } = useWalletsStore();
   const { getWalletInfo } = useWallets();
   const connectedWalletsImages = removeDuplicateFrom(
-    getSelectableWallets(accounts, selectedWallets, getWalletInfo).map(
+    getSelectableWallets(connectedWallets, selectedWallets, getWalletInfo).map(
       (w) => w.image
     )
   );
@@ -63,7 +63,7 @@ export function Layout({ config }: LayoutProps) {
   const setInputAmount = useBestRouteStore.use.setInputAmount();
   const setAffiliateRef = useSettingsStore.use.setAffiliateRef();
 
-  const totalBalance = calculateWalletUsdValue(balances);
+  const totalBalance = calculateWalletUsdValue(connectedWallets);
   const connectWalletsButtonDisabled =
     useUiStore.use.connectWalletsButtonDisabled();
   const loadingMetaStatus = useMetaStore.use.loadingStatus();
@@ -126,7 +126,7 @@ export function Layout({ config }: LayoutProps) {
           )}
           <div className="balance">
             <Typography variant="body2">
-              {!accounts?.length
+              {!connectedWallets?.length
                 ? t('Connect Wallet')
                 : `$${totalBalance || 0}`}
             </Typography>

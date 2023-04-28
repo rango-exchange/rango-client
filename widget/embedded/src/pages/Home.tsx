@@ -83,7 +83,7 @@ export function Home() {
   const fetchingBestRoute = useBestRouteStore.use.loading();
   const bestRouteError = useBestRouteStore.use.error();
   const loadingMetaStatus = useMetaStore.use.loadingStatus();
-  const accounts = useWalletsStore.use.accounts();
+  const connectedWallets = useWalletsStore.use.connectedWallets();
   const setCurrentPage = useUiStore.use.setCurrentPage();
   const switchFromAndTo = useBestRouteStore.use.switchFromAndTo();
 
@@ -113,7 +113,7 @@ export function Home() {
 
   const swapButtonState = getSwapButtonState(
     loadingMetaStatus,
-    accounts,
+    connectedWallets,
     fetchingBestRoute,
     bestRoute,
     hasLimitError(bestRoute),
@@ -139,7 +139,9 @@ export function Home() {
         title="SWAP"
         suffix={
           <HeaderButtons
-            onClickRefresh={!!bestRoute || bestRouteError ? fetchBestRoute : undefined}
+            onClickRefresh={
+              !!bestRoute || bestRouteError ? fetchBestRoute : undefined
+            }
           />
         }
       />

@@ -105,11 +105,11 @@ export const useBestRouteStore = createSelectors(
         set((state) => {
           if (state.fromChain?.name === chain?.name) return {};
           const tokens = useMetaStore.getState().meta.tokens;
-          const balances = useWalletsStore.getState().balances;
+          const connectedWallets = useWalletsStore.getState().connectedWallets;
           const sortedTokens = getSortedTokens(
             chain,
             tokens,
-            balances,
+            connectedWallets,
             state.destinationTokens
           );
           const fromToken = getDefaultToken(sortedTokens, state.toToken);
@@ -136,11 +136,11 @@ export const useBestRouteStore = createSelectors(
         set((state) => {
           if (state.toChain?.name === chain?.name) return {};
           const tokens = useMetaStore.getState().meta.tokens;
-          const balances = useWalletsStore.getState().balances;
+          const connectedWallets = useWalletsStore.getState().connectedWallets;
           const sortedTokens = getSortedTokens(
             chain,
             tokens,
-            balances,
+            connectedWallets,
             state.destinationTokens
           );
 
@@ -173,7 +173,7 @@ export const useBestRouteStore = createSelectors(
       },
       retry: (pendingSwap) => {
         const { tokens, blockchains } = useMetaStore.getState().meta;
-        const balances = useWalletsStore.getState().balances;
+        const connectedWallets = useWalletsStore.getState().connectedWallets;
         const failedIndex =
           pendingSwap.status === 'failed'
             ? pendingSwap.steps.findIndex((s) => s.status === 'failed')
@@ -210,13 +210,13 @@ export const useBestRouteStore = createSelectors(
         const sortedSourceTokens = getSortedTokens(
           fromChain,
           tokens,
-          balances,
+          connectedWallets,
           []
         );
         const sortedDestinationTokens = getSortedTokens(
           toChain,
           tokens,
-          balances,
+          connectedWallets,
           []
         );
         const inputAmount = pendingSwap.inputAmount;
