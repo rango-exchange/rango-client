@@ -6,22 +6,16 @@ import { httpService } from '../services/httpService';
 import {
   getRequiredChains,
   getTokensWithBalance,
-  isAccountAndBalanceMatched,
+  isAccountAndWalletMatched,
   makeBalanceFor,
-  resetBalanceState,
-  SelectedWallet,
+  resetConnectedWalletState,
   sortTokens,
 } from '../utils/wallets';
 import { useBestRouteStore } from './bestRoute';
 import { useMetaStore } from './meta';
 import createSelectors from './selectors';
 import { shallow } from 'zustand/shallow';
-
-export interface Account {
-  chain: string;
-  address: string;
-  walletType: WalletType;
-}
+import { Wallet } from '../types';
 
 export type TokenBalance = {
   chain: string;
@@ -35,39 +29,33 @@ export type TokenBalance = {
   usdPrice: number | null;
 };
 
-export interface Balance {
+export interface ConnectedWallet extends Wallet {
   balances: TokenBalance[] | null;
-  address: string;
-  chain: string;
   loading: boolean;
-  walletType: WalletType;
   error: boolean;
   explorerUrl: string | null;
 }
 
 interface WalletsStore {
-  accounts: Account[];
-  balances: Balance[];
-  selectedWallets: SelectedWallet[];
-  connectWallet: (accounts: Account[]) => void;
+  connectedWallets: ConnectedWallet[];
+  selectedWallets: Wallet[];
+  connectWallet: (accounts: Wallet[]) => void;
   disconnectWallet: (walletType: WalletType) => void;
   initSelectedWallets: () => void;
   setSelectedWallet: (wallet: SelectableWallet) => void;
   clearConnectedWallet: () => void;
-  getOneOfWalletsDetails: (account: Account) => void;
+  getOneOfWalletsDetails: (account: Wallet) => void;
 }
 
 export const useWalletsStore = createSelectors(
   create<WalletsStore>()(
     subscribeWithSelector((set, get) => ({
-      accounts: [],
-      balances: [],
+      connectedWallets: [],
       selectedWallets: [],
       connectWallet: (accounts) => {
         const getOneOfWalletsDetails = get().getOneOfWalletsDetails;
         set((state) => ({
-          accounts: state.accounts.concat(accounts),
-          balances: state.balances.concat(
+          connectedWallets: state.connectedWallets.concat(
             accounts.map((account) => ({
               balances: [],
               address: account.address,
@@ -83,10 +71,7 @@ export const useWalletsStore = createSelectors(
       },
       disconnectWallet: (walletType) => {
         set((state) => ({
-          accounts: state.accounts.filter(
-            (account) => account.walletType !== walletType
-          ),
-          balances: state.balances.filter(
+          connectedWallets: state.connectedWallets.filter(
             (balance) => balance.walletType !== walletType
           ),
           selectedWallets: state.selectedWallets.filter(
@@ -99,8 +84,8 @@ export const useWalletsStore = createSelectors(
           const requiredChains = getRequiredChains(
             useBestRouteStore.getState().bestRoute
           );
-          const connectedWallets = state.accounts;
-          const selectedWallets: SelectedWallet[] = [];
+          const connectedWallets = state.connectedWallets;
+          const selectedWallets: Wallet[] = [];
           requiredChains.forEach((chain) => {
             const anyWalletSelected = !!state.selectedWallets.find(
               (wallet) => wallet.chain === chain
@@ -134,14 +119,13 @@ export const useWalletsStore = createSelectors(
 
       clearConnectedWallet: () =>
         set(() => ({
-          accounts: [],
-          balances: [],
+          connectedWallets: [],
           selectedWallets: [],
         })),
-      getOneOfWalletsDetails: async (account: Account) => {
+      getOneOfWalletsDetails: async (account: Wallet) => {
         const tokens = useMetaStore.getState().meta.tokens;
         set((state) => ({
-          balances: state.balances.map((balance) => {
+          connectedWallets: state.connectedWallets.map((balance) => {
             return balance.address === account.address &&
               balance.chain === account.chain
               ? { ...balance, loading: true }
@@ -155,18 +139,20 @@ export const useWalletsStore = createSelectors(
           const retrivedBalance = response.wallets[0];
           if (retrivedBalance) {
             set((state) => ({
-              balances: state.balances.map((balance) => {
-                return isAccountAndBalanceMatched(account, balance)
-                  ? makeBalanceFor(account, retrivedBalance, tokens)
-                  : balance;
-              }),
+              connectedWallets: state.connectedWallets.map(
+                (connectedWallet) => {
+                  return isAccountAndWalletMatched(account, connectedWallet)
+                    ? makeBalanceFor(account, retrivedBalance, tokens)
+                    : connectedWallet;
+                }
+              ),
             }));
           } else throw new Error('Wallet not found');
         } catch (error) {
           set((state) => ({
-            balances: state.balances.map((balance) => {
-              return isAccountAndBalanceMatched(account, balance)
-                ? resetBalanceState(balance)
+            connectedWallets: state.connectedWallets.map((balance) => {
+              return isAccountAndWalletMatched(account, balance)
+                ? resetConnectedWalletState(balance)
                 : balance;
             }),
           }));
@@ -177,16 +163,16 @@ export const useWalletsStore = createSelectors(
 );
 
 useWalletsStore.subscribe(
-  (state) => state.balances,
-  (balances) => {
+  (state) => state.connectedWallets,
+  (connectedWallets) => {
     useBestRouteStore.setState(({ sourceTokens, destinationTokens }) => {
       const sourceTokensWithBalance = getTokensWithBalance(
         sourceTokens,
-        balances
+        connectedWallets
       );
       const destinationTokensWithBalance = getTokensWithBalance(
         destinationTokens,
-        balances
+        connectedWallets
       );
       return {
         sourceTokens: sortTokens(sourceTokensWithBalance),
@@ -200,4 +186,4 @@ useWalletsStore.subscribe(
 );
 
 export const fetchingBalanceSelector = (state: WalletsStore) =>
-  !!state.balances.find((wallet) => wallet.loading);
+  !!state.connectedWallets.find((wallet) => wallet.loading);

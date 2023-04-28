@@ -34,13 +34,12 @@ function QueueManager(props: PropsWithChildren<{}>) {
     });
   }, []);
   const getOneOfWalletsDetails = useWalletsStore.use.getOneOfWalletsDetails();
-  const accounts = useWalletsStore.use.accounts();
 
   const { blockchains } = useMetaStore.use.meta();
-  const balances = useWalletsStore.use.balances();
+  const connectedWallets = useWalletsStore.use.connectedWallets();
 
   const wallets = {
-    blockchains: balances.map((wallet) => ({
+    blockchains: connectedWallets.map((wallet) => ({
       accounts: [wallet],
       name: wallet.chain,
     })),
@@ -79,12 +78,12 @@ function QueueManager(props: PropsWithChildren<{}>) {
         lastStep?.id !== data.step?.id) ||
       !!outputAmount
     ) {
-      const fromAccount = accounts.find(
+      const fromAccount = connectedWallets.find(
         (account) => account.chain === step?.fromBlockchain
       );
       const toAccount =
         step?.fromBlockchain !== step?.toBlockchain &&
-        accounts.find((account) => account.chain === step?.toBlockchain);
+        connectedWallets.find((wallet) => wallet.chain === step?.toBlockchain);
 
       fromAccount && getOneOfWalletsDetails(fromAccount);
       toAccount && getOneOfWalletsDetails(toAccount);

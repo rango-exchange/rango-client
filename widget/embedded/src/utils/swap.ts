@@ -6,14 +6,14 @@ import {
   SwapResult,
   Token,
 } from 'rango-sdk';
-import { Account } from '../store/wallets';
+import { ConnectedWallet } from '../store/wallets';
 import { ZERO } from '../constants/numbers';
 import { numberToString } from './numbers';
 import { WalletType } from '@rango-dev/wallets-shared';
 import { getRequiredBalanceOfWallet } from './routing';
-import { getRequiredChains, SelectedWallet } from './wallets';
+import { getRequiredChains } from './wallets';
 import { LoadingStatus } from '../store/meta';
-import { ConvertedToken, SwapButtonState } from '../types';
+import { ConvertedToken, SwapButtonState, Wallet } from '../types';
 import {
   PendingSwapNetworkStatus,
   PendingSwapStep,
@@ -122,7 +122,7 @@ export function LimitErrorMessage(bestRoute: BestRouteResponse | null): {
 
 export function getSwapButtonState(
   loadingMetaStatus: LoadingStatus,
-  accounts: Account[],
+  connectedWallets: ConnectedWallet[],
   loading: boolean,
   bestRoute: BestRouteResponse | null,
   hasLimitError: boolean,
@@ -133,7 +133,8 @@ export function getSwapButtonState(
 ): SwapButtonState {
   if (loadingMetaStatus !== 'success')
     return { title: 'Connect Wallet', disabled: true };
-  if (accounts.length == 0) return { title: 'Connect Wallet', disabled: false };
+  if (connectedWallets.length == 0)
+    return { title: 'Connect Wallet', disabled: false };
   if (loading) return { title: 'Finding Best Route...', disabled: true };
   else if (!inputAmount || inputAmount === '0')
     return { title: 'Enter an amount', disabled: true };
@@ -276,7 +277,7 @@ export function hasProperSlippage(
 
 export function hasEnoughBalance(
   route: BestRouteResponse,
-  selectedWallets: SelectedWallet[]
+  selectedWallets: Wallet[]
 ) {
   const fee = route.validationStatus;
 
@@ -297,7 +298,7 @@ export function hasEnoughBalance(
 
 export function hasEnoughBalanceAndProperSlippage(
   route: BestRouteResponse,
-  selectedWallets: SelectedWallet[],
+  selectedWallets: Wallet[],
   userSlippage: string,
   minRequiredSlippage: string | null
 ): boolean {
@@ -311,8 +312,8 @@ export function createBestRouteRequestBody(
   fromToken: Token,
   toToken: Token,
   inputAmount: string,
-  wallets: Account[],
-  selectedWallets: SelectedWallet[],
+  wallets: ConnectedWallet[],
+  selectedWallets: Wallet[],
   disabledLiquiditySources: string[],
   slippage: number,
   affiliateRef: string | null,
@@ -379,7 +380,7 @@ export function createBestRouteRequestBody(
   return requestBody;
 }
 
-export function getWalletsForNewSwap(selectedWallets: SelectedWallet[]) {
+export function getWalletsForNewSwap(selectedWallets: Wallet[]) {
   const wallets = selectedWallets.reduce(
     (
       selectedWalletsMap: {
@@ -432,7 +433,7 @@ export function isOutputAmountChangedALot(
 
 export function getBalanceWarnings(
   route: BestRouteResponse,
-  selectedWallets: SelectedWallet[]
+  selectedWallets: Wallet[]
 ) {
   const fee = route.validationStatus;
   const requiredWallets = getRequiredChains(route);
