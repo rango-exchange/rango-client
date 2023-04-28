@@ -713,9 +713,14 @@ export function onBlockForChangeNetwork(
   if (!!type && !!network) {
     const result = context.switchNetwork(type, network);
     if (result) {
-      result.then(() => {
-        queue.unblock();
-      });
+      result
+        .then(() => {
+          queue.unblock();
+        })
+        .catch((error) => {
+          // ignore switch network errors
+          console.log({ error });
+        });
     }
   }
 }
@@ -1755,12 +1760,17 @@ export async function throwOnOK(
   }
 }
 
-export function cancelSwap(swap: QueueInfo): {
+export function cancelSwap(
+  swap: QueueInfo,
+  manager?: Manager
+): {
   swap: PendingSwap;
   step: PendingSwapStep | null;
 } {
+  const { reset } = claimQueue();
   swap.actions.cancel();
-  return updateSwapStatus({
+
+  const updateResult = updateSwapStatus({
     getStorage: swap.actions.getStorage,
     setStorage: swap.actions.setStorage,
     message: 'Swap canceled by user.',
@@ -1770,4 +1780,8 @@ export function cancelSwap(swap: QueueInfo): {
     nextStepStatus: 'failed',
     errorCode: 'USER_CANCEL',
   });
+  reset();
+  if (manager) manager?.retry();
+
+  return updateResult;
 }

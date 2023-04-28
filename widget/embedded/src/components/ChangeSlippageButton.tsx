@@ -11,7 +11,7 @@ export function ChangeSlippageButton() {
       type="primary"
       variant="outlined"
       size="small"
-      onClick={() => navigate(navigationRoutes.settings)}
+      onClick={() => navigate('/' + navigationRoutes.settings)}
     >
       Change Slippage
     </Button>

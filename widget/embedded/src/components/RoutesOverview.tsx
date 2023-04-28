@@ -1,9 +1,6 @@
 import React from 'react';
-import { styled } from '@rango-dev/ui';
+import { styled, ChevronRightIcon, GasIcon, Spacer } from '@rango-dev/ui';
 import { BestRouteResponse } from 'rango-sdk';
-import { ChevronRightIcon } from '@rango-dev/ui';
-import { GasIcon } from '@rango-dev/ui';
-import { Spacer } from '@rango-dev/ui';
 
 export const Container = styled('div', {
   display: 'flex',
@@ -39,11 +36,11 @@ function RoutesOverview(props: PropTypes) {
         {swaps?.map((swap, idx) => {
           const isLast = idx + 1 == swaps.length;
           return (
-            <>
+            <React.Fragment key={idx}>
               <div className="route">{swap.from.symbol}</div>
               <ChevronRightIcon size={12} />
               {isLast ? <div className="route">{swap.to.symbol}</div> : null}
-            </>
+            </React.Fragment>
           );
         })}
       </div>

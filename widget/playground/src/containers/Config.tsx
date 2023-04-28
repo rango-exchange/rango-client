@@ -1,5 +1,13 @@
-import React, { PropsWithChildren } from 'react';
-import { Alert, Spacer, styled, Typography } from '@rango-dev/ui';
+import React, { PropsWithChildren, useState } from 'react';
+import {
+  Alert,
+  Button,
+  Modal,
+  Spacer,
+  styled,
+  Typography,
+  useCopyToClipboard,
+} from '@rango-dev/ui';
 import { ChainsConfig } from '../components/ChainsConfig';
 import { WalletsConfig } from '../components/WalletsConfig';
 import { SourcesConfig } from '../components/SourcesConfig';
@@ -8,6 +16,8 @@ import { Provider } from '@rango-dev/wallets-core';
 import { allProviders } from '@rango-dev/provider-all';
 import { globalStyles } from '../globalStyles';
 import { useMetaStore } from '../store/meta';
+import { useConfigStore } from '../store/config';
+import { filterConfig, syntaxHighlight } from '../helpers';
 
 const providers = allProviders();
 
@@ -32,16 +42,52 @@ const Swap = styled('div', {
   marginTop: 115,
 });
 
+const Header = styled('div', {
+  display: 'flex',
+  justifyContent: 'space-between',
+  alignItems: 'center',
+});
+
+const Pre = styled('pre', {
+  fontSize: '$14',
+  display: 'block',
+  padding: '10px 30px',
+  margin: 0,
+  overflowY: 'scroll',
+  color: '$foreground',
+  '.string': {
+    color: '$warning',
+  },
+  '.key': {
+    color: '$success',
+  },
+});
+
+const Link = styled('a', {
+  color: '$primary',
+  paddingLeft: 4,
+});
+
 export function Config(props: PropsWithChildren) {
   globalStyles();
   const loadingStatus = useMetaStore.use.loadingStatus();
+  const [open, setOpen] = useState<boolean>(false);
+  const config = useConfigStore.use.config();
+  const [isCopied, handleCopy] = useCopyToClipboard(2000);
+
+  const filtered = filterConfig(config);
 
   return (
     <Container>
       <Provider providers={providers}>
         <ConfigContent>
           <div>
-            <Typography variant="h1">Configuration</Typography>
+            <Header>
+              <Typography variant="h1">Configuration</Typography>
+              <Button variant="contained" type="primary" onClick={() => setOpen(true)}>
+                Exported Config
+              </Button>
+            </Header>
             {loadingStatus === 'failed' && (
               <Alert type="error">
                 Error connecting server, please reload the app and try again
@@ -64,6 +110,40 @@ export function Config(props: PropsWithChildren) {
       <SwapContent>
         <Swap>{props.children}</Swap>
       </SwapContent>
+
+      <Modal
+        open={open}
+        action={
+          <Button
+            type="primary"
+            variant="ghost"
+            onClick={() => handleCopy(JSON.stringify(filtered))}>
+            {isCopied ? 'Copied!' : 'Copy'}
+          </Button>
+        }
+        onClose={() => setOpen(false)}
+        content={
+          <>
+            <hr />
+            <Typography variant="body1" mb={12} mt={12}>
+              See full instruction on
+              <Link
+                href="https://docs.rango.exchange/integration-guide/rango-widget"
+                target="_blank">
+                docs.rango.exchange
+              </Link>
+            </Typography>
+
+            <Pre
+              dangerouslySetInnerHTML={{
+                __html: syntaxHighlight(JSON.stringify(filtered, undefined, 4)),
+              }}
+            />
+          </>
+        }
+        title="Exported Config"
+        containerStyle={{ minWidth: '600px', height: '500px' }}
+      />
     </Container>
   );
 }

@@ -54,8 +54,8 @@ export function BlockchainSelector(props: PropTypes) {
     <SecondaryPage
       textField={true}
       hasHeader={hasHeader}
-      textFieldPlaceholder="Search Blockchain By Name"
-      title={`Select ${type} Network`}
+      textFieldPlaceholder="Search blockchains by name"
+      title={`Select ${type} Blockchain`}
       onBack={onBack}
     >
       {(searchedFor) => {

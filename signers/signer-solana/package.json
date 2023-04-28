@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/signer-solana",
-  "version": "0.1.11",
+  "version": "0.1.12",
   "license": "MIT",
   "module": "dist/signer-solana.esm.js",
   "main": "dist/index.js",

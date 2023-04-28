@@ -158,7 +158,7 @@ export function MultiTokenSelect({ label, modalTitle, list, blockchains, type }:
           <SecondaryPage
             textField={true}
             hasHeader={false}
-            textFieldPlaceholder="Search Token By Name">
+            textFieldPlaceholder="Search tokens by name">
             {(searchedFor) => {
               const filterList = list.filter((token) => token.blockchain === chain);
 

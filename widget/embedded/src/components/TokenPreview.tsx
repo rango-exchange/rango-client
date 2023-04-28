@@ -11,6 +11,7 @@ const Box = styled('div', {
   display: 'flex',
   flexDirection: 'column',
   width: '100%',
+  overflow: 'hidden',
 });
 
 const Container = styled('div', {

@@ -54,17 +54,17 @@ interface WalletsStore {
   initSelectedWallets: () => void;
   setSelectedWallet: (wallet: SelectableWallet) => void;
   clearConnectedWallet: () => void;
+  getOneOfWalletsDetails: (account: Account) => void;
 }
 
 export const useWalletsStore = createSelectors(
   create<WalletsStore>()(
-    subscribeWithSelector((set) => ({
+    subscribeWithSelector((set, get) => ({
       accounts: [],
       balances: [],
       selectedWallets: [],
       connectWallet: (accounts) => {
-        const tokens = useMetaStore.getState().meta.tokens;
-
+        const getOneOfWalletsDetails = get().getOneOfWalletsDetails;
         set((state) => ({
           accounts: state.accounts.concat(accounts),
           balances: state.balances.concat(
@@ -79,31 +79,7 @@ export const useWalletsStore = createSelectors(
             }))
           ),
         }));
-        accounts.forEach(async (account) => {
-          try {
-            const response = await httpService().getWalletsDetails([
-              { address: account.address, blockchain: account.chain },
-            ]);
-            const retrivedBalance = response.wallets[0];
-            if (retrivedBalance) {
-              set((state) => ({
-                balances: state.balances.map((balance) => {
-                  return isAccountAndBalanceMatched(account, balance)
-                    ? makeBalanceFor(account, retrivedBalance, tokens)
-                    : balance;
-                }),
-              }));
-            } else throw new Error('Wallet not found');
-          } catch (error) {
-            set((state) => ({
-              balances: state.balances.map((balance) => {
-                return isAccountAndBalanceMatched(account, balance)
-                  ? resetBalanceState(balance)
-                  : balance;
-              }),
-            }));
-          }
-        });
+        accounts.forEach(async (account) => getOneOfWalletsDetails(account));
       },
       disconnectWallet: (walletType) => {
         set((state) => ({
@@ -162,6 +138,40 @@ export const useWalletsStore = createSelectors(
           balances: [],
           selectedWallets: [],
         })),
+      getOneOfWalletsDetails: async (account: Account) => {
+        const tokens = useMetaStore.getState().meta.tokens;
+        set((state) => ({
+          balances: state.balances.map((balance) => {
+            return balance.address === account.address &&
+              balance.chain === account.chain
+              ? { ...balance, loading: true }
+              : balance;
+          }),
+        }));
+        try {
+          const response = await httpService().getWalletsDetails([
+            { address: account.address, blockchain: account.chain },
+          ]);
+          const retrivedBalance = response.wallets[0];
+          if (retrivedBalance) {
+            set((state) => ({
+              balances: state.balances.map((balance) => {
+                return isAccountAndBalanceMatched(account, balance)
+                  ? makeBalanceFor(account, retrivedBalance, tokens)
+                  : balance;
+              }),
+            }));
+          } else throw new Error('Wallet not found');
+        } catch (error) {
+          set((state) => ({
+            balances: state.balances.map((balance) => {
+              return isAccountAndBalanceMatched(account, balance)
+                ? resetBalanceState(balance)
+                : balance;
+            }),
+          }));
+        }
+      },
     }))
   )
 );

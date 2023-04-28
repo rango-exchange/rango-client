@@ -12,11 +12,11 @@ export const secondsToString = (s: number): string => {
 };
 
 export const numberToString = (
-  number: BigNumber | string | null,
+  number: BigNumber | string | null | undefined,
   minDecimals: number | null = null,
   maxDecimals: number | null = null
 ): string => {
-  if (number === null) return '';
+  if (number === null || number === undefined) return '';
   if (number === '') return '';
   const n = new BigNumber(number);
   const roundingMode = 1;
@@ -125,9 +125,6 @@ export const rawFees = (data: BestRouteResponse): string =>
   )
     .reduce((partialSum, a) => partialSum + parseFloat(a.fee.amount), 0)
     .toFixed(3);
-
-export const decimalNumber = (number = '0', toFixed: number) =>
-  parseFloat(number).toFixed(toFixed);
 
 export const containsText = (text: string, searchText: string) =>
   text.toLowerCase().indexOf(searchText.toLowerCase()) > -1;

@@ -92,7 +92,6 @@ export function TokenInfo({ type }: PropTypes) {
     }
   }, [supportedChains, supportedTokens, chain]);
 
-  
   return (
     <Container>
       <div>
@@ -155,11 +154,13 @@ export function TokenInfo({ type }: PropTypes) {
       {type !== 'Destination' ? (
         <div>
           <TextField
-            onChange={(e) => onChangeAmount(parseInt(e.target.value || '0'))}
+            onChange={(e) => onChangeAmount(parseFloat(e.target.value || '0'))}
             value={amount}
             label="Default Amount"
             type="number"
             size="large"
+            placeholder="0"
+            min={0}
           />
         </div>
       ) : null}
@@ -217,7 +218,7 @@ export function TokenInfo({ type }: PropTypes) {
             )
           )
         }
-        title={`Select ${type} Network`}
+        title={`Select ${type} blockchain`}
         containerStyle={{ width: '560px', height: '655px' }}></Modal>
     </Container>
   );

@@ -6,6 +6,8 @@ interface PropTypes {
 }
 
 const List = styled('ul', {
+  padding: 0,
+  margin: 0,
   variants: {
     showListStyle: {
       true: { paddingLeft: '$24' },
@@ -34,8 +36,8 @@ export function BalanceErrors({ messages }: PropTypes) {
       </Typography>
       <Spacer size={8} direction="vertical" />
       <List showListStyle={showListStyle}>
-        {messages.map((warning) => (
-          <ListItem showListStyle={showListStyle}>
+        {messages.map((warning, index) => (
+          <ListItem showListStyle={showListStyle} key={index}>
             <Message variant="body2">{warning}</Message>
           </ListItem>
         ))}

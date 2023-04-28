@@ -90,7 +90,7 @@ export function StylesConfig() {
         <GridContent>
           <Select
             label="Choose Language Widget"
-            value={language}
+            value={language || 'Choose Language'}
             name="language"
             list={languageS}
             modalTitle="Languages"
@@ -99,7 +99,7 @@ export function StylesConfig() {
 
           <Select
             label="Font Family"
-            value={fontFamily}
+            value={fontFamily || 'Choose Fontfamily'}
             name="fontFamily"
             list={FONTS}
             modalTitle="Fonts"
@@ -175,6 +175,7 @@ export function StylesConfig() {
               value={borderRadius}
               label="Border Radius"
               type="number"
+              placeholder="0"
               suffix="px"
             />
           </div>
@@ -189,7 +190,7 @@ export function StylesConfig() {
             <ColorPicker
               place="top"
               key={color.name}
-              color={colors[color.name]}
+              color={colors[color.name] || `Choose Color`}
               label={color.label}
               onChangeColor={(c) => onChangeColors(color.name as COLORS, c.hex)}
             />

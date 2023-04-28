@@ -139,7 +139,7 @@ export function Home() {
         title="SWAP"
         suffix={
           <HeaderButtons
-            onClickRefresh={!!bestRoute ? fetchBestRoute : undefined}
+            onClickRefresh={!!bestRoute || bestRouteError ? fetchBestRoute : undefined}
           />
         }
       />

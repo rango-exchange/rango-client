@@ -45,20 +45,31 @@ export function UpdateUrl() {
   }, []);
 
   useEffect(() => {
-    let fromChainString = '',
-      fromTokenString = '',
-      toChainString = '',
-      toTokenString = '',
-      fromAmount = '';
-    if (
-      loadingStatus !== 'success' &&
-      location.pathname != navigationRoutes.confirmSwap
-    ) {
-      fromChainString = searchParamsRef.current[SearchParams.FROM_CHAIN];
-      fromTokenString = searchParamsRef.current[SearchParams.FROM_TOKEN];
-      toChainString = searchParamsRef.current[SearchParams.TO_CHAIN];
-      toTokenString = searchParamsRef.current[SearchParams.TO_TOKEN];
-      fromAmount = searchParamsRef.current[SearchParams.FROM_AMOUNT];
+    if (!firstRender.current) {
+      let fromChainString = '',
+        fromTokenString = '',
+        toChainString = '',
+        toTokenString = '',
+        fromAmount = '';
+      if (loadingStatus !== 'success') {
+        fromChainString = searchParamsRef.current[SearchParams.FROM_CHAIN];
+        fromTokenString = searchParamsRef.current[SearchParams.FROM_TOKEN];
+        toChainString = searchParamsRef.current[SearchParams.TO_CHAIN];
+        toTokenString = searchParamsRef.current[SearchParams.TO_TOKEN];
+        fromAmount =
+          searchParamsRef.current[SearchParams.FROM_AMOUNT] || inputAmount;
+      } else {
+        if (location.state === 'redirect') return;
+        fromChainString = fromChain?.name || '';
+        fromTokenString =
+          (fromToken?.symbol || '') +
+          (fromToken?.address ? `--${fromToken?.address}` : '');
+        toChainString = toChain?.name || '';
+        toTokenString =
+          (toToken?.symbol || '') +
+          (toToken?.address ? `--${toToken?.address}` : '');
+        fromAmount = inputAmount;
+      }
       setSearchParams(
         {
           ...(fromChainString && {
@@ -76,50 +87,8 @@ export function UpdateUrl() {
         { replace: true }
       );
     }
-    if (!firstRender.current) {
-      let fromChainString = '',
-        fromTokenString = '',
-        toChainString = '',
-        toTokenString = '',
-        fromAmount = '';
-      if (loadingStatus !== 'success') {
-        fromChainString = searchParamsRef.current[SearchParams.FROM_CHAIN];
-        fromTokenString = searchParamsRef.current[SearchParams.FROM_TOKEN];
-        toChainString = searchParamsRef.current[SearchParams.TO_CHAIN];
-        toTokenString = searchParamsRef.current[SearchParams.TO_TOKEN];
-        fromAmount = searchParamsRef.current[SearchParams.FROM_AMOUNT];
-      } else {
-        if (location.state === 'redirect') return;
-        fromChainString = fromChain?.name || '';
-        fromTokenString =
-          (fromToken?.symbol || '') +
-          (fromToken?.address ? `--${fromToken?.address}` : '');
-        toChainString = toChain?.name || '';
-        toTokenString =
-          (toToken?.symbol || '') +
-          (toToken?.address ? `--${toToken?.address}` : '');
-        fromAmount = inputAmount;
-
-        setSearchParams(
-          {
-            ...(fromChainString && {
-              [SearchParams.FROM_CHAIN]: fromChainString,
-            }),
-            ...(fromTokenString && {
-              [SearchParams.FROM_TOKEN]: fromTokenString,
-            }),
-            ...(toChainString && { [SearchParams.TO_CHAIN]: toChainString }),
-            ...(toTokenString && { [SearchParams.TO_TOKEN]: toTokenString }),
-            ...(fromAmount && {
-              [SearchParams.FROM_AMOUNT]: fromAmount.toString(),
-            }),
-          },
-          { replace: true }
-        );
-      }
-    }
     firstRender.current = false;
-  }, [location.pathname, inputAmount]);
+  }, [location.pathname, inputAmount, fromChain, fromToken, toChain, toToken]);
 
   useEffect(() => {
     if (loadingStatus === 'success') {

@@ -4,6 +4,7 @@ import {
   Typography,
   styled,
   Spinner,
+  Image,
 } from '@rango-dev/ui';
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -23,7 +24,6 @@ import { useTranslation } from 'react-i18next';
 import { useBestRouteStore } from '../store/bestRoute';
 import { useMetaStore } from '../store/meta';
 import { useSettingsStore } from '../store/settings';
-import { Image } from '@rango-dev/ui';
 
 const Header = styled('div', {
   display: 'flex',
@@ -37,7 +37,9 @@ const Header = styled('div', {
 const WalletImageContainer = styled('div', {
   marginLeft: -15,
   marginRight: '$6',
-  borderRadius: '99999px',
+  '& img': {
+    borderRadius: '50%',
+  },
 });
 
 export type LayoutProps = {

@@ -4,8 +4,6 @@ import { Asset, Token } from 'rango-sdk';
 export const excludedWallets = [WalletType.UNKNOWN, WalletType.TERRA_STATION, WalletType.LEAP];
 
 export const onChangeMultiSelects = (value, values, list, findIndex) => {
-  console.log(value);
-
   if (value === 'empty') return [];
   else if (value === 'all') return null;
   if (!values) {
@@ -41,3 +39,39 @@ export const filterTokens = (list: Token[], searchedFor: string) =>
       containsText(token.address || '', searchedFor) ||
       containsText(token.name || '', searchedFor),
   );
+
+export const syntaxHighlight = (json) => {
+  json.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  return json.replace(
+    /("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g,
+    function (match) {
+      let cls = 'string';
+      if (/^"/.test(match)) {
+        if (/:$/.test(match)) {
+          cls = 'key';
+        }
+      }
+      return `<span class="${cls}">${match}</span>`;
+    },
+  );
+};
+
+const filterObject = (object) =>
+  Object.fromEntries(Object.entries(object).filter(([_, value]) => !!value));
+
+export const filterConfig = (config) => {
+  const copiedConfig = JSON.parse(JSON.stringify(config));
+
+  if (!Object.keys(filterObject(copiedConfig.theme.colors)).length) {
+    copiedConfig.theme.colors = undefined;
+  }
+  for (const key in copiedConfig) {
+    if (typeof copiedConfig[key] === 'object') {
+      if (!Object.keys(filterObject(copiedConfig[key])).length) {
+        copiedConfig[key] = undefined;
+      }
+    }
+  }
+
+  return copiedConfig;
+};

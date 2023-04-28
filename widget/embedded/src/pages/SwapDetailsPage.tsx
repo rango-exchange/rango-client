@@ -1,10 +1,9 @@
 import React from 'react';
 import { navigationRoutes } from '../constants/navigationRoutes';
-import useCopyToClipboard from '../hooks/useCopyToClipboard';
 import { useManager } from '@rango-dev/queue-manager-react';
 import { useNavigateBack } from '../hooks/useNavigateBack';
 import { getPendingSwaps } from '../utils/queue';
-import { SwapHistory } from '@rango-dev/ui';
+import { SwapHistory, useCopyToClipboard } from '@rango-dev/ui';
 import { useUiStore } from '../store/ui';
 import {
   cancelSwap,
@@ -37,7 +36,7 @@ export function SwapDetailsPage() {
   const navigate = useNavigate();
   const { navigateBackFrom } = useNavigateBack();
   const [isCopied, handleCopy] = useCopyToClipboard(2000);
-  const { manager } = useManager();
+  const { manager, state } = useManager();
 
   const pendingSwaps = getPendingSwaps(manager);
   const selectedSwap = pendingSwaps.find(
@@ -49,7 +48,7 @@ export function SwapDetailsPage() {
     if (swap) cancelSwap(swap);
   };
   const swap = selectedSwap?.swap;
-  const loading = !manager?.isLoaded();
+  const loading = !state.loadedFromPersistor;
 
   if (!swap)
     return (

@@ -3,6 +3,7 @@ import { Config } from './containers/Config';
 import { Widget } from '@rango-dev/widget-embedded';
 import { useConfigStore } from './store/config';
 import { useTheme } from './hook/useTheme';
+import { Route, Routes } from 'react-router-dom';
 
 export function App() {
   const { activeTheme } = useTheme();
@@ -11,7 +12,9 @@ export function App() {
   return (
     <div className={activeTheme}>
       <Config>
-        <Widget config={config} />
+        <Routes>
+          <Route path="/*" element={<Widget config={config} />} />
+        </Routes>
       </Config>
     </div>
   );
