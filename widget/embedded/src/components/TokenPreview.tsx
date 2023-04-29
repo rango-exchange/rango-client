@@ -1,11 +1,16 @@
 import React, { ReactNode } from 'react';
-import { Button, InfoCircleIcon, styled, Typography } from '@rango-dev/ui';
+import {
+  Button,
+  InfoCircleIcon,
+  styled,
+  Typography,
+  Spacer,
+  Image,
+} from '@rango-dev/ui';
 import { LoadingStatus } from '../store/meta';
 import { useTranslation } from 'react-i18next';
-import { Spacer } from '@rango-dev/ui';
 import BigNumber from 'bignumber.js';
 import { numberToString } from '../utils/numbers';
-import { Image } from '@rango-dev/ui';
 
 const Box = styled('div', {
   display: 'flex',
