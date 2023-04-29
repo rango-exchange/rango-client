@@ -1,9 +1,6 @@
 import React from 'react';
-import { styled } from '@rango-dev/ui';
+import { styled, ChevronRightIcon, GasIcon, Spacer } from '@rango-dev/ui';
 import { BestRouteResponse } from 'rango-sdk';
-import { ChevronRightIcon } from '@rango-dev/ui';
-import { GasIcon } from '@rango-dev/ui';
-import { Spacer } from '@rango-dev/ui';
 
 export const Container = styled('div', {
   display: 'flex',
