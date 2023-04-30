@@ -19,10 +19,20 @@ export const config = {
 
 async function waitInterval(instance: any) {
   return new Promise<any>((resolve) => {
+    let count = 1;
     const interval = setInterval(async () => {
-      resolve(instance.extension.getLastStates());
-      clearInterval(interval);
-    }, 2000);
+      const state = instance.extension.getLastStates();
+      if (state.type === 'WALLET_CONNECTED') {
+        resolve(state);
+        clearInterval(interval);
+      } else {
+        count++;
+      }
+      if (count > 3) {
+        resolve(state);
+        clearInterval(interval);
+      }
+    }, 3000);
   });
 }
 
@@ -32,7 +42,10 @@ export const connect: Connect = async ({ instance }) => {
   let chainId = '';
   await instance.connect(ConnectType.EXTENSION, TERRA_STATION_WALLET_ID);
   await instance.refetchStates();
-  const { network, wallet } = await waitInterval(instance);
+  const { network, wallet, type } = await waitInterval(instance);
+  if (type === 'INITIALIZING') {
+    throw new Error('Please unlock your Terra Station extension first.');
+  }
   chainId = network.chainID;
   accounts = [wallet.terraAddress];
   return { accounts, chainId };
@@ -44,7 +57,7 @@ export const subscribe: Subscribe = ({
   updateChainId,
 }) => {
   instance.states().subscribe({
-    next: (value: any) => {      
+    next: (value: any) => {
       if (value.status === 'WALLET_CONNECTED') {
         const accounts = value.wallets.map(
           ({ terraAddress }: any) => terraAddress
@@ -73,7 +86,8 @@ export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
         'https://chrome.google.com/webstore/detail/station-wallet/aiifbnbfobpmeekipheeijimdpnlpgpp',
       FIREFOX:
         'https://addons.mozilla.org/en-US/firefox/addon/terra-station-wallet/?utm_source=addons.mozilla.org',
-      DEFAULT: 'https://classic-docs.terra.money/docs/learn/terra-station/download/terra-station-desktop.html',
+      DEFAULT:
+        'https://classic-docs.terra.money/docs/learn/terra-station/download/terra-station-desktop.html',
     },
     color: '#4A21EF',
     supportedChains: allBlockChains.filter((blockchainMeta) =>
