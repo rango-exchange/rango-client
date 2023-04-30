@@ -44,9 +44,11 @@
       "limit": "10 KB"
     }
   ],
+  "devDependencies": {
+    "@terra-money/wallet-controller": "^3.11.2"
+  },
   "dependencies": {
     "@rango-dev/wallets-shared": "^0.1.11",
-    "@terra-money/wallet-controller": "^3.11.2",
     "rango-types": "^0.1.22",
     "@rango-dev/signer-terra": "^0.1.12"
   },

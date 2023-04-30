@@ -35,6 +35,8 @@ export const executeCosmosTransaction = async (
   cosmosTx: CosmosTransaction,
   cosmosProvider: Keplr
 ): Promise<string> => {
+  console.log({ cosmosTx }, { cosmosProvider });
+
   if (!cosmosProvider) throw SignerError.AssertionFailed('wallet is null!');
   try {
     const {
@@ -60,7 +62,8 @@ export const executeCosmosTransaction = async (
       );
     if (!sequence)
       throw SignerError.AssertionFailed('sequence is undefined from server');
-
+ console.log('signType', signType);
+ 
     if (signType === 'AMINO') {
       const signDoc = makeSignDoc(
         msgsWithoutType as any,
@@ -71,6 +74,8 @@ export const executeCosmosTransaction = async (
         sequence
       );
       let signOptions = {};
+      console.log(cosmosTx,"cosmosTx", signDoc);
+      
       if (
         cosmosTx.data.chainId === 'osmosis-1' &&
         fee?.amount[0]?.amount === '0'
@@ -85,10 +90,16 @@ export const executeCosmosTransaction = async (
           signDoc,
           signOptions as KeplrSignOptions
         );
+
+        console.log('signResponse', signResponse);
       } catch (err) {
+        console.log('signResponse erro', err);
+
         throw new SignerError(SignerErrorCode.SIGN_TX_ERROR, undefined, err);
       }
       let signedTx;
+      console.log('hi', cosmosTx.data);
+      
       if (cosmosTx.data.protoMsgs.length > 0) {
         signedTx = cosmos.tx.v1beta1.TxRaw.encode({
           bodyBytes: cosmos.tx.v1beta1.TxBody.encode({
@@ -98,6 +109,7 @@ export const executeCosmosTransaction = async (
             })),
             memo: signResponse.signed.memo,
           }).finish(),
+          
           authInfoBytes: cosmos.tx.v1beta1.AuthInfo.encode({
             signerInfos: [
               {
@@ -126,10 +138,14 @@ export const executeCosmosTransaction = async (
           }).finish(),
           signatures: [Buffer.from(signResponse.signature.signature, 'base64')],
         }).finish();
+        console.log("signedTx", signedTx);
+
       } else {
         try {
           signedTx = makeStdTx(signResponse.signed, signResponse.signature);
         } catch (err) {
+          console.log("signedTx error", err);
+
           throw new SignerError(SignerErrorCode.SIGN_TX_ERROR, undefined, err);
         }
       }
@@ -138,6 +154,8 @@ export const executeCosmosTransaction = async (
         signedTx,
         BroadcastMode.Async
       );
+      console.log('result', result);
+      
       return uint8ArrayToHex(result);
     } else if (signType === 'DIRECT') {
       const sendingSigner = cosmosProvider?.getOfflineSigner(chainId);

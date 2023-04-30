@@ -89,7 +89,7 @@ export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
       DEFAULT:
         'https://classic-docs.terra.money/docs/learn/terra-station/download/terra-station-desktop.html',
     },
-    color: '#4A21EF',
+    color: '#ffffff',
     supportedChains: allBlockChains.filter((blockchainMeta) =>
       ['TERRA_CLASSIC', 'TERRA'].includes(blockchainMeta.name)
     ),
