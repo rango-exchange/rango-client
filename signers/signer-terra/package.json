@@ -38,8 +38,10 @@
       "limit": "10 KB"
     }
   ],
+  "devDependencies": {
+    "@terra-money/terra.js": "^3.1.7"
+  },
   "dependencies": {
-    "@terra-money/terra.js": "^3.1.7",
     "long": "^5.2.1",
     "rango-types": "^0.1.28"
   },
