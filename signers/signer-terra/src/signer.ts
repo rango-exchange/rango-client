@@ -16,12 +16,8 @@ export class DefaultTerraSigner implements GenericSigner<CosmosTransaction> {
     chainId: string | null
   ): Promise<string> {
     if (!chainId) throw Error('ChainId is required');
-    const { signature } = await this.provider.signArbitrary(
-      chainId,
-      address,
-      msg
-    );
-    return signature;
+    const { result } = await this.provider.signBytes(msg, address);
+    return result.signature;
   }
 
   async signAndSendTx(tx: CosmosTransaction): Promise<string> {
