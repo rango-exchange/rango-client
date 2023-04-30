@@ -1,4 +1,4 @@
-import { NetworkInfo, WalletController ,getChainOptions} from '@terra-money/wallet-controller';
+import { NetworkInfo, WalletController } from '@terra-money/wallet-controller';
 
 export const TERRA_STATION_WALLET_ID = 'station';
 
