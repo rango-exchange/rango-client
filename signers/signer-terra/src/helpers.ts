@@ -26,7 +26,6 @@ function cosmosTxToTerraTx(tx: CosmosTransaction): CreateTxOptions {
     const tmpCoinsFee = tx.data.fee.amount.map(
       (item) => new Coin(item.denom, item.amount)
     );
-    // let coins = Coins()
     tmpStdFee = new Fee(parseInt(tx.data.fee.gas), tmpCoinsFee);
   }
 
@@ -64,8 +63,6 @@ export class TerraMessageGeneralJsonSerializable extends JSONSerializable<
   toAmino(): any {
     return this.toData();
   }
-  // TODO: Change signer to Terra signer
-
   toProto(): any {
     return this.toData();
   }
