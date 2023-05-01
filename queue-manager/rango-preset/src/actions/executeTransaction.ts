@@ -73,22 +73,6 @@ export async function executeTransaction(
     return;
   }
 
-  /* 
-  For avoiding conflict by making too many requests to wallet, we need to make sure
-  We only run one request at a time (In parallel mode).
-  */
-  const needsToBlockQueue = isNeedBlockQueueForParallel(currentStep);
-
-  if (needsToBlockQueue && !isClaimed) {
-    const blockedFor = {
-      reason: BlockReason.DEPENDS_ON_OTHER_QUEUES,
-      description: 'Waiting for other swaps to complete',
-      details: {},
-    };
-    requestBlock(blockedFor);
-    return;
-  }
-
   /* Wallet should be on correct network */
   const networkMatched = await isNetworkMatchedForTransaction(
     swap,
@@ -114,6 +98,22 @@ export async function executeTransaction(
       details: 'Wallet network changed successfully',
       status: PendingSwapNetworkStatus.NetworkChanged,
     });
+  }
+
+  /* 
+  For avoiding conflict by making too many requests to wallet, we need to make sure
+  We only run one request at a time (In parallel mode).
+  */
+  const needsToBlockQueue = isNeedBlockQueueForParallel(currentStep);
+
+  if (needsToBlockQueue && !isClaimed) {
+    const blockedFor = {
+      reason: BlockReason.DEPENDS_ON_OTHER_QUEUES,
+      description: 'Waiting for other swaps to complete',
+      details: {},
+    };
+    requestBlock(blockedFor);
+    return;
   }
 
   // All the conditions are met. We can safely send the tx to wallet for sign.
