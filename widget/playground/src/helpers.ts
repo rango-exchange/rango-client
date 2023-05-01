@@ -1,6 +1,6 @@
 import { WalletType } from '@rango-dev/wallets-shared';
 import { Asset, Token } from 'rango-sdk';
-import { WidgetConfig } from './types';
+import { WidgetConfig, Theme, Support } from './types';
 
 export const excludedWallets = [WalletType.UNKNOWN, WalletType.TERRA_STATION, WalletType.LEAP];
 
@@ -57,10 +57,10 @@ export const syntaxHighlight = (json) => {
   );
 };
 
-const filterObject = (object) =>
+const filterObject = (object: keyof WidgetConfig) =>
   Object.fromEntries(Object.entries(object).filter(([_, value]) => !!value));
 
-export const filterConfig = (config) => {
+export const filterConfig = (config: WidgetConfig | Theme | Support) => {
   const copiedConfig = { ...config };
   for (const key in config) {
     if (typeof config[key] === 'object' && !Array.isArray(config[key]) && !!config[key]) {
