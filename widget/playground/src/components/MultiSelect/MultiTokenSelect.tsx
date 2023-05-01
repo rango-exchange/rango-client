@@ -137,8 +137,6 @@ export function MultiTokenSelect({ label, modalTitle, list, blockchains, type }:
         action={
           <Checkbox
             onCheckedChange={(checked) => {
-              console.log(type, tokens, checked);
-
               if (checked) {
                 setChain('');
                 onChangeTokens(undefined, type);
