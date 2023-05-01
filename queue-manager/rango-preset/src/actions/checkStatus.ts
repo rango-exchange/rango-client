@@ -53,6 +53,9 @@ async function checkTransactionStatus({
     return;
   }
 
+  // If user cancel swap during check status api call, we should ignore check status response
+  if (currentStep?.status === 'failed') return;
+
   const outputAmount: string | null =
     status?.outputAmount ||
     (!!currentStep.outputAmount ? currentStep.outputAmount : null);
@@ -166,13 +169,6 @@ async function checkApprovalStatus({
   SwapQueueContext
 >): Promise<void> {
   const swap = getStorage().swapDetails as SwapStorage['swapDetails'];
-  // double check it after fixing parallel
-  // const onFinish = () => {
-  //   // TODO resetClaimedBy is undefined here
-  //   if (context.resetClaimedBy) {
-  //     context.resetClaimedBy();
-  //   }
-  // };
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const currentStep = getCurrentStep(swap)!;
   let isApproved = false;
@@ -181,6 +177,9 @@ async function checkApprovalStatus({
       swap.requestId,
       currentStep.executedTransactionId || ''
     );
+    // If user cancel swap during check status api call, we should ignore check approval response
+    if (currentStep?.status === 'failed') return;
+
     isApproved = response.isApproved;
     if (!isApproved && response.txStatus === 'failed') {
       // approve transaction failed on
