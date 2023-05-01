@@ -79,7 +79,7 @@ let swapClaimedBy: { id: string } | null = null;
  * We simply use module-level variable to keep track of which queue has claimed the execution of parallel runnings.
  *
  */
-function claimQueue() {
+export function claimQueue() {
   return {
     claimedBy: () => swapClaimedBy?.id,
     setClaimer: (queue_id: string) => {

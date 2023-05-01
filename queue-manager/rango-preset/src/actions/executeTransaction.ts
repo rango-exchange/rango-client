@@ -1,5 +1,6 @@
 import { ExecuterActions } from '@rango-dev/queue-manager-core';
 import {
+  ERROR_MESSAGE_DEPENDS_ON_OTHER_QUEUES,
   ERROR_MESSAGE_WAIT_FOR_CHANGE_NETWORK,
   ERROR_MESSAGE_WAIT_FOR_WALLET_DESCRIPTION,
   ERROR_MESSAGE_WAIT_FOR_WALLET_DESCRIPTION_WRONG_WALLET,
@@ -14,6 +15,7 @@ import {
   resetNetworkStatus,
   getRequiredWallet,
   isNeedBlockQueueForParallel,
+  claimQueue,
 } from '../helpers';
 import { getCurrentBlockchainOf, PendingSwapNetworkStatus } from '../shared';
 import {
@@ -37,6 +39,7 @@ export async function executeTransaction(
 ): Promise<void> {
   const { getStorage, context } = actions;
   const { meta, wallets, providers } = context;
+  const { claimedBy } = claimQueue();
 
   const isClaimed = context.claimedBy === context._queue?.id;
   const requestBlock: typeof actions.block = (blockedFor) => {
@@ -81,7 +84,18 @@ export async function executeTransaction(
     meta,
     providers
   );
-  if (!networkMatched) {
+  const claimerId = claimedBy();
+  const isClaimedByAnyQueue = !!claimerId && !isClaimed;
+  if (isClaimedByAnyQueue && !networkMatched) {
+    const details = ERROR_MESSAGE_DEPENDS_ON_OTHER_QUEUES;
+
+    const blockedFor = {
+      reason: BlockReason.DEPENDS_ON_OTHER_QUEUES,
+      details: details,
+    };
+    requestBlock(blockedFor);
+    return;
+  } else if (!networkMatched) {
     const fromBlockchain = getCurrentBlockchainOf(swap, currentStep);
     const details = ERROR_MESSAGE_WAIT_FOR_CHANGE_NETWORK(fromBlockchain);
 
@@ -109,7 +123,7 @@ export async function executeTransaction(
   if (needsToBlockQueue && !isClaimed) {
     const blockedFor = {
       reason: BlockReason.DEPENDS_ON_OTHER_QUEUES,
-      description: 'Waiting for other swaps to complete',
+      description: ERROR_MESSAGE_DEPENDS_ON_OTHER_QUEUES,
       details: {},
     };
     requestBlock(blockedFor);
