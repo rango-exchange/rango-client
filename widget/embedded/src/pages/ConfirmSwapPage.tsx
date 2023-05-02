@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useBestRouteStore } from '../store/bestRoute';
 import { useWalletsStore } from '../store/wallets';
@@ -49,7 +49,7 @@ export function ConfirmSwapPage() {
   const inputUsdValue = useBestRouteStore.use.inputUsdValue();
   const outputUsdValue = useBestRouteStore.use.outputUsdValue();
   const setInputAmount = useBestRouteStore.use.setInputAmount();
-
+  const [dbErrorMessage, setDbErrorMessage] = useState<string>('');
   const bestRouteloadingStatus = getBestRouteStatus(
     fetchingBestRoute,
     !!fetchingBestRouteError
@@ -106,21 +106,25 @@ export function ConfirmSwapPage() {
       requiredWallets={getRequiredChains(bestRoute)}
       selectableWallets={selectableWallets}
       onBack={navigateBackFrom.bind(null, navigationRoutes.confirmSwap)}
-      onConfirm={() => {
-        confirmSwap?.().then((swap) => {
+      onConfirm={async () => {
+        confirmSwap?.().then(async (swap) => {
           if (swap) {
-            manager?.create(
-              'swap',
-              { swapDetails: swap },
-              { id: swap.requestId }
-            );
-            setSelectedSwap(swap.requestId);
-            navigate('/' + navigationRoutes.swaps + `/${swap.requestId}`, {
-              replace: true,
-            });
-            setTimeout(() => {
-              setInputAmount('');
-            }, 0);
+            try {
+              await manager?.create(
+                'swap',
+                { swapDetails: swap },
+                { id: swap.requestId }
+              );
+              setSelectedSwap(swap.requestId);
+              navigate('/' + navigationRoutes.swaps + `/${swap.requestId}`, {
+                replace: true,
+              });
+              setTimeout(() => {
+                setInputAmount('');
+              }, 0);
+            } catch (e) {
+              setDbErrorMessage('Error: ' + (e as any)?.message);
+            }
           }
         });
       }}
@@ -186,7 +190,11 @@ export function ConfirmSwapPage() {
         />
       }
       loading={fetchingConfirmedRoute}
-      errors={ConfirmSwapErrors(errors)}
+      errors={
+        dbErrorMessage
+          ? [dbErrorMessage, ...ConfirmSwapErrors(errors)]
+          : ConfirmSwapErrors(errors)
+      }
       warnings={ConfirmSwapWarnings(warnings)}
       extraMessages={
         <>
