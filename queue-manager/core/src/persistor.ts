@@ -27,6 +27,16 @@ class Persistor {
       },
     });
   }
+
+  async hasError() {
+    try {
+      await this.db;
+      return false;
+    } catch {
+      return true;
+    }
+  }
+
   async insertQueue(queue: PersistedQueue) {
     const db = await this.db;
     const queueRecord = await db.get(OBJECT_STORE_NAME, queue.id);

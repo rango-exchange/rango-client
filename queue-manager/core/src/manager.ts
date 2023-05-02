@@ -164,54 +164,56 @@ class Manager {
    *
    */
   private async sync() {
-    // Reading queues from storage
-    const queues = await this.persistor.getAll();
+    const hasError = await this.persistor.hasError();
+    if (!hasError) {
+      // Reading queues from storage
+      const queues = await this.persistor.getAll();
 
-    // Reset queues, if anything is exist in memory.
-    this.queues = new Map();
+      // Reset queues, if anything is exist in memory.
+      this.queues = new Map();
 
-    // Brings them into memory
-    queues.forEach((q) => {
-      const list = this.createQueue({
-        queue_id: q.id,
-        queue_name: q.name,
-      });
-      this.add(q.id, {
-        list,
-        createdAt: q.createdAt,
-        name: q.name,
-        status: q.status,
-        actions: {
-          run: () => {
-            list.next({
-              context: this.getContext(),
-            });
-          },
-          cancel: () => {
-            list.cancel();
-          },
-          setStorage: (...args) => {
-            list.setStorage(...args);
-          },
-          getStorage: () => {
-            return list.getStorage();
-          },
-        },
-      });
-
-      list.initTasks({
-        state: q.state,
-        tasks: q.tasks,
-        storage: q.storage || {},
-      });
-
-      if (q.status === Status.RUNNING && this.shouldExecute()) {
-        list.resume({
-          context: this.getContext(),
+      // Brings them into memory
+      queues.forEach((q) => {
+        const list = this.createQueue({
+          queue_id: q.id,
+          queue_name: q.name,
         });
-      }
-    });
+        this.add(q.id, {
+          list,
+          createdAt: q.createdAt,
+          name: q.name,
+          status: q.status,
+          actions: {
+            run: () => {
+              list.next({
+                context: this.getContext(),
+              });
+            },
+            cancel: () => {
+              list.cancel();
+            },
+            setStorage: (...args) => {
+              list.setStorage(...args);
+            },
+            getStorage: () => {
+              return list.getStorage();
+            },
+          },
+        });
 
+        list.initTasks({
+          state: q.state,
+          tasks: q.tasks,
+          storage: q.storage || {},
+        });
+
+        if (q.status === Status.RUNNING && this.shouldExecute()) {
+          list.resume({
+            context: this.getContext(),
+          });
+        }
+      });
+    }
     // Trigger an event to let the subscribers we are done here.
     this.events.onPersistedDataLoaded(this);
   }
@@ -376,9 +378,14 @@ class Manager {
     storage: QueueStorage,
     options?: { id?: QueueID }
   ) {
+    const hasError = await this.persistor.hasError();
+    if (hasError) {
+      throw new Error('Firefox does not support indexedDB in private mode.');
+    }
     if (!this.queuesDefs.has(name)) {
       throw new Error('You need to add a queue definition first.');
     }
+
     const def = this.queuesDefs.get(name)!;
     const queue_id: QueueID = options?.id || uuidv4();
     const createdAt = Date.now();
