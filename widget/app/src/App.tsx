@@ -8,9 +8,15 @@ export function App() {
 
   const configParam = searchParams.get('config');
 
-  const config: WidgetConfig | undefined = configParam
-    ? JSON.parse(configParam)
-    : undefined;
+  let config: WidgetConfig | undefined = undefined;
+
+  if (!!configParam) {
+    try {
+      config = JSON.parse(configParam);
+    } catch (error) {
+      console.error('Widget config param is invalid!');
+    }
+  }
 
   if (!!config) configRef.current = config;
 
