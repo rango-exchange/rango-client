@@ -9,6 +9,7 @@ import { TextField } from '../TextField';
 import { Radio } from '../Radio';
 import { Switch } from '../Switch';
 import { Button } from '../Button';
+import { useLanguage } from '../../providers/i18nprovider';
 
 const BaseContainer = styled('div', {
   borderRadius: '$5',
@@ -98,20 +99,23 @@ export function Settings(props: PropTypes) {
   const [selectedSlippage, setSelectedSlippage] = useState(
     props.selectedSlippage
   );
+  const { translate, changeLanguage } = useLanguage();
 
   const changeSlippage = (slippage: number) => {
     setSelectedSlippage(slippage);
     onSlippageChange(slippage);
   };
-
   const PageContent = (
     <>
       <BaseContainer>
+        <Button onClick={() => changeLanguage('tr')}>change language to tr</Button>
+        <Button onClick={() => changeLanguage('en')}>change language to en</Button>
+
         <Head>
-          <Typography variant="body2">Slippage tolerance</Typography>
+          <Typography variant="body2">{translate('Slippage tolerance')}</Typography>
           {customSlippage ? (
             <Typography variant="caption" color="error">
-              {customSlippage}% Custom
+              {customSlippage}% Customt
             </Typography>
           ) : undefined}
         </Head>

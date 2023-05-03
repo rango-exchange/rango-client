@@ -10,5 +10,8 @@
   "Token": "Token",
   "Source": "Source",
   "Destination": "Destination",
-  "Select Wallet": "Connect Your Wallet"
+  "Select Wallet": "Connect Your Wallet",
+  "Bridges": "Bridges",
+  "Exchanges": "Exchanges",
+  "Slippage tolerance": "Slippage tolerance"
 }

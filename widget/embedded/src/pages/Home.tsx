@@ -6,6 +6,7 @@ import {
   Typography,
   VerticalSwapIcon,
   Header,
+  useLanguage,
 } from '@rango-dev/ui';
 import React, { useEffect, useState } from 'react';
 import { useInRouterContext, useNavigate } from 'react-router-dom';
@@ -86,6 +87,7 @@ export function Home() {
   const accounts = useWalletsStore.use.accounts();
   const setCurrentPage = useUiStore.use.setCurrentPage();
   const switchFromAndTo = useBestRouteStore.use.switchFromAndTo();
+  const { translate } = useLanguage();
 
   const errorMessage =
     loadingMetaStatus === 'failed'
@@ -136,10 +138,12 @@ export function Home() {
   return (
     <Container>
       <Header
-        title="SWAP"
+        title={translate('SWAP')}
         suffix={
           <HeaderButtons
-            onClickRefresh={!!bestRoute || bestRouteError ? fetchBestRoute : undefined}
+            onClickRefresh={
+              !!bestRoute || bestRouteError ? fetchBestRoute : undefined
+            }
           />
         }
       />
@@ -216,7 +220,7 @@ export function Home() {
             }
           }}
         >
-          {swapButtonState.title}
+          {translate(swapButtonState.title)}
         </Button>
         <BottomLogo />
       </Footer>

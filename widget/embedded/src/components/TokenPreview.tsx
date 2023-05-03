@@ -6,9 +6,9 @@ import {
   Typography,
   Spacer,
   Image,
+  useLanguage,
 } from '@rango-dev/ui';
 import { LoadingStatus } from '../store/meta';
-import { useTranslation } from 'react-i18next';
 import BigNumber from 'bignumber.js';
 import { numberToString } from '../utils/numbers';
 
@@ -105,7 +105,7 @@ interface PropTypes {
 
 export function TokenPreview(props: PropTypes) {
   const { chain, token, loadingStatus, percentageChange } = props;
-  const { t } = useTranslation();
+  const { translate } = useLanguage();
 
   const ItemSuffix = (
     <div
@@ -155,7 +155,7 @@ export function TokenPreview(props: PropTypes) {
           >
             {loadingStatus === 'success' && chain
               ? chain.displayName
-              : t('Chain')}
+              : translate('Chain')}
           </Button>
           <Spacer size={12} />
           <Button
@@ -173,7 +173,7 @@ export function TokenPreview(props: PropTypes) {
             size="large"
             align="start"
           >
-            {loadingStatus === 'success' && token ? token.symbol : t('Token')}
+            {loadingStatus === 'success' && token ? token.symbol : translate('Token')}
           </Button>
           <Spacer size={12} />
           <div className="amount">

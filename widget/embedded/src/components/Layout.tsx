@@ -4,6 +4,7 @@ import {
   Typography,
   styled,
   Spinner,
+  useLanguage,
 } from '@rango-dev/ui';
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -19,7 +20,6 @@ import {
 } from '../utils/wallets';
 import { removeDuplicateFrom } from '../utils/common';
 import { WidgetConfig } from '../types';
-import { useTranslation } from 'react-i18next';
 import { useBestRouteStore } from '../store/bestRoute';
 import { useMetaStore } from '../store/meta';
 import { useSettingsStore } from '../store/settings';
@@ -69,7 +69,7 @@ export function Layout({ config }: LayoutProps) {
   const loadingMetaStatus = useMetaStore.use.loadingStatus();
   const fetchingBalance = useWalletsStore(fetchingBalanceSelector);
 
-  const { t } = useTranslation();
+  const { translate } = useLanguage();
   useEffect(() => {
     const chain = blockchains.find(
       (chain) => chain.name === config?.to?.blockchain
@@ -127,7 +127,7 @@ export function Layout({ config }: LayoutProps) {
           <div className="balance">
             <Typography variant="body2">
               {!accounts?.length
-                ? t('Connect Wallet')
+                ? translate('Connect Wallet')
                 : `$${totalBalance || 0}`}
             </Typography>
             {fetchingBalance && <Spinner />}

@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { DecoratorFn } from '@storybook/react';
 
 import { lightTheme, darkTheme, styled } from '../src/theme';
 import { globalCss } from '@stitches/react';
-
+import { I18nProvider, useLanguage } from '../src/providers/i18nprovider';
 // https://storybook.js.org/docs/react/writing-stories/parameters#global-parameters
 export const parameters = {
   // https://storybook.js.org/docs/react/essentials/actions#automatically-matching-args
@@ -47,24 +47,33 @@ export const withTheme: DecoratorFn = (StoryFn, context) => {
   globalStyles();
   const theme = context.parameters.theme || context.globals.theme;
   const storyTheme = theme === 'dark' ? darkTheme : lightTheme;
+  const { changeLanguage } = useLanguage();
+  const { locale } = context.globals;
+
+  useEffect(() => {
+    changeLanguage(locale);
+  }, [locale]);
+
   switch (theme) {
     case 'side-by-side': {
       return (
-        <>
+        <I18nProvider>
           <ThemeBlock position="left" className={lightTheme}>
             <StoryFn />
           </ThemeBlock>
           <ThemeBlock position="right" className={darkTheme}>
             <StoryFn />
           </ThemeBlock>
-        </>
+        </I18nProvider>
       );
     }
     default: {
       return (
-        <ThemeBlock position="fill" className={storyTheme}>
-          <StoryFn />
-        </ThemeBlock>
+        <I18nProvider>
+          <ThemeBlock position="fill" className={storyTheme}>
+            <StoryFn />
+          </ThemeBlock>
+        </I18nProvider>
       );
     }
   }
@@ -81,6 +90,18 @@ export const globalTypes = {
         { value: 'light', icon: 'circlehollow', title: 'light' },
         { value: 'dark', icon: 'circle', title: 'dark' },
         { value: 'side-by-side', icon: 'sidebar', title: 'side by side' },
+      ],
+      showName: true,
+    },
+  },
+  locale: {
+    name: 'Locale',
+    description: 'Internationalization locale',
+    toolbar: {
+      icon: 'globe',
+      items: [
+        { value: 'en', title: 'English' },
+        { value: 'tr', title: 'Turkish' },
       ],
       showName: true,
     },

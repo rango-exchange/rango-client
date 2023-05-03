@@ -8,6 +8,7 @@ import {
   Typography,
   Image,
   Spacer,
+  useLanguage,
 } from '@rango-dev/ui';
 import { useMetaStore } from '../store/meta';
 import { BlockchainMeta, Token } from 'rango-sdk';
@@ -17,7 +18,6 @@ import { numberToString } from '../utils/numbers';
 import BigNumber from 'bignumber.js';
 import { getBalanceFromWallet } from '../utils/wallets';
 import { useWalletsStore } from '../store/wallets';
-import { useTranslation } from 'react-i18next';
 import { PercentageChange } from './PercentageChange';
 
 type PropTypes = (
@@ -135,7 +135,7 @@ export function TokenInfo(props: PropTypes) {
   const balances = useWalletsStore.use.balances();
   const fetchingBestRoute = useBestRouteStore.use.loading();
   const navigate = useNavigate();
-  const { t } = useTranslation();
+  const { translate } = useLanguage();
 
   const tokenBalance =
     !!fromChain && !!fromToken
@@ -186,7 +186,7 @@ export function TokenInfo(props: PropTypes) {
       <Container type={props.type === 'From' ? 'filled' : 'outlined'}>
         <div className="head">
           <Typography variant="body2" color="neutrals800">
-            {t(type)}
+            {translate(type)}
           </Typography>
           {props.type === 'From' ? (
             <Options>
@@ -197,12 +197,12 @@ export function TokenInfo(props: PropTypes) {
                     setInputAmount(tokenBalanceReal.split(',').join(''));
                 }}
               >
-                <Typography variant="body3" color="neutrals600">{`${t(
+                <Typography variant="body3" color="neutrals600">{`${translate(
                   'Balance'
                 )}: ${tokenBalance} ${fromToken?.symbol || ''}`}</Typography>
                 <Spacer size={4} />
                 <Button type="primary" variant="ghost" size="compact">
-                  {t('Max')}
+                  {translate('Max')}
                 </Button>
               </div>
             </Options>
@@ -243,7 +243,7 @@ export function TokenInfo(props: PropTypes) {
           >
             {loadingStatus === 'success' && chain
               ? chain.displayName
-              : t('Chain')}
+              : translate('Chain')}
           </Button>
           <Spacer size={12} />
           <Button
@@ -269,7 +269,7 @@ export function TokenInfo(props: PropTypes) {
             size="large"
             align="start"
           >
-            {loadingStatus === 'success' && token ? token.symbol : t('Token')}
+            {loadingStatus === 'success' && token ? token.symbol : translate('Token')}
           </Button>
           <Spacer size={12} />
           <div className="amount">

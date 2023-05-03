@@ -1,4 +1,4 @@
-import { SwapContainer } from '@rango-dev/ui';
+import { I18nProvider, SwapContainer } from '@rango-dev/ui';
 import React, { useEffect, useMemo, useState } from 'react';
 import { AppRouter } from './components/AppRouter';
 import { useMetaStore } from './store/meta';
@@ -18,7 +18,6 @@ import { useTheme } from './hooks/useTheme';
 import QueueManager from './QueueManager';
 import { isEvmBlockchain } from 'rango-sdk';
 import { WidgetConfig } from './types';
-import './i18n';
 import { useUiStore } from './store/ui';
 import { navigationRoutes } from './constants/navigationRoutes';
 import { initConfig } from './utils/configs';
@@ -44,7 +43,6 @@ export function App({ config }: WidgetProps) {
   const disconnectWallet = useWalletsStore.use.disconnectWallet();
   const connectWallet = useWalletsStore.use.connectWallet();
   const currentPage = useUiStore.use.currentPage();
-
   const [lastConnectedWalletWithNetwork, setLastConnectedWalletWithNetwork] =
     useState<string>('');
   const [disconnectedWallet, setDisconnectedWallet] = useState<WalletType>();
@@ -103,21 +101,23 @@ export function App({ config }: WidgetProps) {
       providers={providers}
       onUpdateState={onUpdateState}
     >
-      <div id="pageContainer" className={activeTheme}>
-        <QueueManager>
-          <SwapContainer fixedHeight={currentPage !== navigationRoutes.home}>
-            <AppRouter
-              lastConnectedWallet={lastConnectedWalletWithNetwork}
-              disconnectedWallet={disconnectedWallet}
-              clearDisconnectedWallet={() => {
-                setDisconnectedWallet(undefined);
-              }}
-            >
-              <Layout config={config} />
-            </AppRouter>
-          </SwapContainer>
-        </QueueManager>
-      </div>
+      <I18nProvider >
+        <div id="pageContainer" className={activeTheme}>
+          <QueueManager>
+            <SwapContainer fixedHeight={currentPage !== navigationRoutes.home}>
+              <AppRouter
+                lastConnectedWallet={lastConnectedWalletWithNetwork}
+                disconnectedWallet={disconnectedWallet}
+                clearDisconnectedWallet={() => {
+                  setDisconnectedWallet(undefined);
+                }}
+              >
+                <Layout config={config} />
+              </AppRouter>
+            </SwapContainer>
+          </QueueManager>
+        </div>
+      </I18nProvider>
     </Provider>
   );
 }

@@ -10,6 +10,7 @@ import { Spinner } from '../Spinner';
 import { LoadingFailedAlert } from '../Alert/LoadingFailedAlert';
 import { NotFoundAlert } from '../Alert/NotFoundAlert';
 import { Image } from '../common';
+import { useLanguage } from '../../providers/i18nprovider';
 
 const groupLiquiditySources = (
   liquiditySources: LiquiditySource[]
@@ -96,7 +97,7 @@ export function LiquiditySourceList(props: PropTypes) {
   // TODO: This is not performant
   const totalSelectedBridges = bridges.filter(isSelected).length;
   const totalSelectedExchanges = exchanges.filter(isSelected).length;
-
+  const { translate } = useLanguage();
   return (
     <MainContainer
       style={listContainerStyle}
@@ -104,7 +105,7 @@ export function LiquiditySourceList(props: PropTypes) {
     >
       <div>
         <LiquiditySourceType>
-          <Typography variant="h5">Bridges</Typography>
+          <Typography variant="h5">{translate("Bridges")}</Typography>
           <Typography variant="body1" color="neutrals800">
             {totalSelectedBridges === totalBridges
               ? totalBridges
@@ -137,7 +138,7 @@ export function LiquiditySourceList(props: PropTypes) {
       </div>
       <div>
         <LiquiditySourceType>
-          <Typography variant="h5">Exchanges</Typography>
+          <Typography variant="h5">{translate('Exchanges')}</Typography>
           <Typography variant="body1" color="neutrals800">
             {totalSelectedExchanges === totalExchanges
               ? totalExchanges
