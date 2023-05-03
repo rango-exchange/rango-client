@@ -103,7 +103,7 @@ export function App({ config }: WidgetProps) {
       providers={providers}
       onUpdateState={onUpdateState}
     >
-      <div id="pageContainer" className={activeTheme}>
+      <div id="swap-container" className={activeTheme}>
         <QueueManager>
           <SwapContainer fixedHeight={currentPage !== navigationRoutes.home}>
             <AppRouter
