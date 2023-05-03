@@ -296,6 +296,8 @@ export function groupPackagesForDeploy(packages) {
       // If getVercelProjectId returns undefined, it's possible to be added as npm package
       // So here we are making sure it's not a private package and can be published using npm
       output.npm.push(pkg);
+    }else{
+      console.log(`${pkg.name} isn't neither NPM nor Vercel`)
     }
   });
 
