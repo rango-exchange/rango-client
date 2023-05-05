@@ -7,6 +7,43 @@ import { printDirname } from '../common/utils.mjs';
 import { VERCEL_ORG_ID, VERCEL_PACKAGES, VERCEL_TOKEN } from './config.mjs';
 const root = join(printDirname(), '..', '..');
 
+export async function generateChangelog(pkg, { saveToFile } = { saveToFile: true }) {
+  const changelogPath = `${pkg.location}/CHANGELOG.md`;
+  const command = [
+    'conventional-changelog',
+    '-p',
+    'angular',
+    '-t',
+    `${packageNameWithoutScope(pkg.name)}@`,
+    '-k',
+    pkg.location,
+    '--commit-path',
+    pkg.location,
+  ];
+
+  if (saveToFile) {
+    command.push('-i', changelogPath, '-s');
+  }
+
+  const { stdout: bin } = await execa('yarn', ['bin', 'conventional-changelog']);
+  const { stdout } = await execa(bin, command);
+
+  return stdout;
+}
+
+export async function makeGithubRelease(updatedPkg) {
+  const notes = await generateChangelog(updatedPkg, {
+    saveToFile: false,
+  });
+  const tag = generateTagName(updatedPkg);
+  await execa('gh', ['release', 'create', tag, '--target', 'main', '--notes', notes]);
+}
+
+export async function addChangelogsToStage(updatedPackages) {
+  const files = updatedPackages.map((pkg) => join(root, pkg.location, 'CHANGELOG.md'));
+  await execa('git', ['add', '--', ...files]);
+}
+
 /**
  *
  * Recommend next version based on Angular conventional commits
@@ -95,8 +132,9 @@ export async function pushToRemote(branch, remote = 'origin') {
 
   console.log(stdout);
 }
+
 export async function tagPackages(updatedPackages, { skipGitTagging }) {
-  const tags = updatedPackages.map((pkg) => `${packageNameWithoutScope(pkg.name)}@${pkg.version}`);
+  const tags = updatedPackages.map(generateTagName);
   const files = updatedPackages.map((pkg) => join(root, pkg.location, 'package.json'));
 
   const subject = `chore(release): publish\n\n`;
@@ -180,16 +218,12 @@ export async function changed(since) {
   const pkgs = await workspacePackages();
   const all = await Promise.all(
     pkgs.map(({ name, location, version }) => {
-      let params = [];
-
-      // Releasing for the first time on repo.
+      let command = ['log', `${since}..HEAD`, '--oneline', '--', location];
       if (!since) {
-        params = ['log', '--oneline', '--', location];
-      } else {
-        params = ['log', `${since}..HEAD`, '--oneline', '--', location];
+        command = ['log', '--oneline', '--', location];
       }
 
-      return execa('git', params).then(({ stdout: result }) => {
+      return execa('git', command).then(({ stdout: result }) => {
         return {
           name,
           location,
@@ -292,4 +326,8 @@ function packageNameWithoutScope(name) {
 // we are adding a fallback, to make sure predefiend VERCEL_PACKAGES always will be true.
 export function getEnvWithFallback(name) {
   return process.env[name] || 'NOT SET';
+}
+
+export function generateTagName(pkg) {
+  return `${packageNameWithoutScope(pkg.name)}@${pkg.version}`;
 }
