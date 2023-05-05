@@ -2,15 +2,18 @@
 'use strict';
 
 import {
+  addChangelogsToStage,
   buildPackages,
   changed,
   deployProjectsToVercel,
   detectChannel,
+  generateChangelog,
   getLastReleasedHashId,
   groupPackagesForDeploy,
   increaseVersionForMain,
   increaseVersionForNext,
   logAsSection,
+  makeGithubRelease,
   publishPackages,
   pushToRemote,
   tagPackages,
@@ -64,12 +67,24 @@ async function publish(changedPkgs, channel) {
     updatedPackages.map((pkg) => `- ${pkg.name} (next version: ${pkg.version})`).join('\n'),
   );
 
+  // Changelog & Github Release
+  if (channel === 'prod') {
+    logAsSection(`Generating changelog, Start...`);
+    await Promise.all(updatedPackages.map(generateChangelog));
+    await addChangelogsToStage(updatedPackages);
+
+    await Promise.all(updatedPackages.map(makeGithubRelease));
+    logAsSection(`Changelog generated.`);
+  }
+
+  // Git tag
   logAsSection(`Tagging, Start...`, `for ${updatedPackages.length} packages`);
   const tagOptions = channel === 'prod' ? { skipGitTagging: false } : { skipGitTagging: true };
   const taggedPackages = await tagPackages(updatedPackages, tagOptions);
   logAsSection(`Tagging, Done.`);
   console.log({ taggedPackages });
 
+  // Push changes
   logAsSection(`Pushing tags to remote...`);
   const branch = channel === 'prod' ? 'main' : 'next';
   await pushToRemote(branch);
