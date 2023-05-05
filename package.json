@@ -47,8 +47,10 @@
     "chalk": "^5.2.0",
     "command-line-args": "^5.2.1",
     "conventional-changelog-angular": "^5.0.13",
+    "conventional-changelog-cli": "^2.2.2",
     "conventional-recommended-bump": "^6.1.0",
     "execa": "^7.1.1",
+    "npm-run-all": "^4.1.5",
     "nx": "15.9.2",
     "prettier": "^2.7.1",
     "punycode": "^1.4.1",
@@ -56,8 +58,7 @@
     "react-dom": "^18.2.0",
     "stream-browserify": "^3.0.0",
     "util": "^0.12.3",
-    "vercel": "^28.16.12",
-    "npm-run-all": "^4.1.5"
+    "vercel": "^28.16.12"
   },
   "resolutions": {
     "react-refresh": "0.9.0"
