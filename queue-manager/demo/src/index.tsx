@@ -10,15 +10,12 @@ const providers = allProviders();
 
 function AppContainer() {
   const [connectedWallets, setConnectedWallets] = useState<WalletType[]>([]);
-  console.log("connected", connectedWallets);
-
   return (
     <WalletsProvider
       providers={providers}
       allBlockChains={walletsAndSupportedChains}
       onUpdateState={(type, event, value, coreState) => {
         if (event === Events.ACCOUNTS && coreState.connected) {
-          console.log({ type, event });
           if (coreState.connected) {
             if (!connectedWallets.includes(type)) {
               const nextState = [...connectedWallets];
