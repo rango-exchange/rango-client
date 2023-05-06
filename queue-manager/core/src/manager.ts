@@ -164,8 +164,7 @@ class Manager {
    *
    */
   private async sync() {
-    const hasError = await this.persistor.hasError();
-    if (!hasError) {
+    try {
       // Reading queues from storage
       const queues = await this.persistor.getAll();
 
@@ -213,7 +212,10 @@ class Manager {
           });
         }
       });
+    } catch (e) {
+      console.log(`IndexDB Error: ${e}`);
     }
+
     // Trigger an event to let the subscribers we are done here.
     this.events.onPersistedDataLoaded(this);
   }
@@ -378,66 +380,66 @@ class Manager {
     storage: QueueStorage,
     options?: { id?: QueueID }
   ) {
-    const hasError = await this.persistor.hasError();
-    if (hasError) {
-      throw new Error('Firefox does not support indexedDB in private mode.');
-    }
     if (!this.queuesDefs.has(name)) {
       throw new Error('You need to add a queue definition first.');
     }
 
-    const def = this.queuesDefs.get(name)!;
-    const queue_id: QueueID = options?.id || uuidv4();
-    const createdAt = Date.now();
-    const list = this.createQueue({
-      queue_id: queue_id,
-      queue_name: name,
-    });
-    list.setStorage(storage);
+    try {
+      const def = this.queuesDefs.get(name)!;
+      const queue_id: QueueID = options?.id || uuidv4();
+      const createdAt = Date.now();
+      const list = this.createQueue({
+        queue_id: queue_id,
+        queue_name: name,
+      });
+      list.setStorage(storage);
 
-    const createdQueue = this.add(queue_id, {
-      list,
-      createdAt,
-      name,
-      status: Status.PENDING,
-      actions: {
-        run: () => {
-          list.next({
-            context: this.getContext(),
-          });
+      const createdQueue = this.add(queue_id, {
+        list,
+        createdAt,
+        name,
+        status: Status.PENDING,
+        actions: {
+          run: () => {
+            list.next({
+              context: this.getContext(),
+            });
+          },
+          cancel: () => {
+            list.cancel();
+          },
+          setStorage: (...args) => {
+            list.setStorage(...args);
+          },
+          getStorage: () => {
+            return list.getStorage();
+          },
         },
-        cancel: () => {
-          list.cancel();
-        },
-        setStorage: (...args) => {
-          list.setStorage(...args);
-        },
-        getStorage: () => {
-          return list.getStorage();
-        },
-      },
-    });
+      });
 
-    // Persist initial queue
-    // Note: we need to first insert the queue, and then it can be updated by internal events.
-    await this.persistor.insertQueue({
-      id: queue_id,
-      createdAt,
-      name: createdQueue.name,
-      status: createdQueue.status,
-      tasks: list.tasks,
-      state: list.state,
-      storage: list.getStorage(),
-    });
+      // Persist initial queue
+      // Note: we need to first insert the queue, and then it can be updated by internal events.
+      await this.persistor.insertQueue({
+        id: queue_id,
+        createdAt,
+        name: createdQueue.name,
+        status: createdQueue.status,
+        tasks: list.tasks,
+        state: list.state,
+        storage: list.getStorage(),
+      });
 
-    // adding initial tasks
-    def.run.forEach((action) => {
-      list.createTask(action);
-    });
+      // adding initial tasks
+      def.run.forEach((action) => {
+        list.createTask(action);
+      });
 
-    // After creating a new queue, try to run.
-    this.execute();
-    return queue_id;
+      // After creating a new queue, try to run.
+      this.execute();
+      return queue_id;
+    } catch (e) {
+      throw new Error((e as any)?.message);
+    }
   }
 
   /**
