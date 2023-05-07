@@ -4025,6 +4025,43 @@
   dependencies:
     "@babel/runtime" "^7.13.10"
 
+"@rango-dev/queue-manager-rango-preset@^0.1.11", "@rango-dev/queue-manager-rango-preset@^0.1.12":
+  version "0.1.12"
+  resolved "https://registry.yarnpkg.com/@rango-dev/queue-manager-rango-preset/-/queue-manager-rango-preset-0.1.12.tgz#24dc377cbac640a2e3b30aed4e5809bb4af6b0e0"
+  integrity sha512-mVMRLEg0JhF0excXE83I1y5X+5RTaf0nb17kJzfvIesOffw7c/8rWQTSpjnbRA5xUcgZVCyS1oMWEDxgEJZokQ==
+  dependencies:
+    "@sentry/browser" "^6.12.0"
+    uuid "^9.0.0"
+
+"@rango-dev/widget-embedded@^0.1.13":
+  version "0.1.15"
+  resolved "https://registry.yarnpkg.com/@rango-dev/widget-embedded/-/widget-embedded-0.1.15.tgz#e2226ca5f4faa1f1f5f61ef6d0e8e3cfaf4286fc"
+  integrity sha512-7RQ0cjWJHPabJ279PqBVe0tJ0+dlF6fsemqK5FZ4wpHDoffjNHmC3rzWLZ27Xhlrmg7Ie6O4uDBQvhPtm1+kEw==
+  dependencies:
+    "@rango-dev/provider-all" "^0.1.12"
+    "@rango-dev/queue-manager-core" "^0.1.12"
+    "@rango-dev/queue-manager-rango-preset" "^0.1.12"
+    "@rango-dev/queue-manager-react" "^0.1.11"
+    "@rango-dev/ui" "^0.1.13"
+    "@rango-dev/wallets-core" "^0.1.12"
+    "@rango-dev/wallets-shared" "^0.1.11"
+    bignumber.js "^9.1.1"
+    copy-to-clipboard "^3.3.3"
+    dayjs "^1.11.7"
+    i18next "^22.4.11"
+    i18next-browser-languagedetector "^7.0.1"
+    i18next-http-backend "^2.1.1"
+    immer "^9.0.19"
+    mitt "^3.0.0"
+    parcel "^2.8.0"
+    rango-sdk "^0.1.23"
+    rango-types "^0.1.28"
+    react "^18.2.0"
+    react-dom "^18.2.0"
+    react-i18next "^12.2.0"
+    react-router-dom "^6.8.0"
+    zustand "^4.3.2"
+
 "@reach/router@^1.2.1":
   version "1.3.4"
   resolved "https://registry.yarnpkg.com/@reach/router/-/router-1.3.4.tgz#d2574b19370a70c80480ed91f3da840136d10f8c"
@@ -8863,7 +8900,7 @@ conventional-commits-filter@^2.0.7:
     lodash.ismatch "^4.4.0"
     modify-values "^1.0.0"
 
-conventional-commits-parser@^3.2.0:
+conventional-commits-parser@^3.2.0, conventional-commits-parser@^3.2.4:
   version "3.2.4"
   resolved "https://registry.yarnpkg.com/conventional-commits-parser/-/conventional-commits-parser-3.2.4.tgz#a7d3b77758a202a9b2293d2112a8d8052c740972"
   integrity sha512-nK7sAtfi+QXbxHCYfhpZsfRtaitZLIA6889kFIouLvz6repszQDgxBu7wf2WbU+Dco7sAnNCJYERCwt54WPC2Q==
