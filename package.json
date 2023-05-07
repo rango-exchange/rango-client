@@ -48,6 +48,8 @@
     "command-line-args": "^5.2.1",
     "conventional-changelog-angular": "^5.0.13",
     "conventional-changelog-cli": "^2.2.2",
+    "conventional-commits-filter": "^2.0.7",
+    "conventional-commits-parser": "^3.2.4",
     "conventional-recommended-bump": "^6.1.0",
     "execa": "^7.1.1",
     "npm-run-all": "^4.1.5",
