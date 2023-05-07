@@ -20,6 +20,7 @@ export async function makeConnection(options: {
 }): Promise<any> {
   const { provider, chainId = 1 } = options;
 
+
   const ethProvider =
     provider ||
     (await EthereumProvider.init({
