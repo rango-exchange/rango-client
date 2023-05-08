@@ -26,7 +26,7 @@ const ManagerCtx = createContext<{
 });
 
 interface PropTypes {
-  queuesDefs: QueueDef<any>[];
+  queuesDefs: QueueDef<any, any, any>[];
   context: Context;
   onPersistedDataLoaded?: Events['onPersistedDataLoaded'];
   isPaused?: boolean;
