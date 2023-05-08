@@ -1,0 +1,32 @@
+{
+  "name": "@rango-dev/widget-iframe",
+  "version": "0.1.0",
+  "license": "MIT",
+  "private": true,
+  "source": "public/index.html",
+  "browserslist": "> 0.5%, last 2 versions, not dead",
+  "scripts": {
+    "dev": "parcel -p 3002 --cache-dir=.parcel-cache",
+    "build": "parcel build --cache-dir=.parcel-cache"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "tsdx lint"
+    }
+  },
+  "prettier": {
+    "printWidth": 80,
+    "semi": true,
+    "singleQuote": true,
+    "trailingComma": "es5"
+  },
+  "devDependencies": {
+    "parcel": "^2.7.0"
+  },
+  "dependencies": {
+    "@rango-dev/widget-embedded": "0.1.16-next.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^6.8.0"
+  }
+}
