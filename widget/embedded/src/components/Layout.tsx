@@ -71,31 +71,35 @@ export function Layout({ config }: LayoutProps) {
 
   const { t } = useTranslation();
   useEffect(() => {
-    const chain = blockchains.find(
-      (chain) => chain.name === config?.to?.blockchain
-    );
-    const token = tokens.find((t) =>
-      tokensAreEqual(t, config?.to?.token || null)
-    );
-    setToChain(chain || null);
-    setToToken(token || null);
-  }, [config?.to?.token, config?.to?.blockchain]);
+    if (loadingMetaStatus === 'success') {
+      const chain = blockchains.find(
+        (chain) => chain.name === config?.to?.blockchain
+      );
+      const token = tokens.find((t) =>
+        tokensAreEqual(t, config?.to?.token || null)
+      );
+      setToChain(chain || null);
+      setToToken(token || null);
+    }
+  }, [config?.to?.token, config?.to?.blockchain, loadingMetaStatus]);
 
   useEffect(() => {
     setInputAmount(config?.amount?.toString() || '');
   }, [config?.amount]);
 
   useEffect(() => {
-    const chain = blockchains.find(
-      (chain) => chain.name === config?.from?.blockchain
-    );
-    const token = tokens.find((t) =>
-      tokensAreEqual(t, config?.from?.token || null)
-    );
+    if (loadingMetaStatus === 'success') {
+      const chain = blockchains.find(
+        (chain) => chain.name === config?.from?.blockchain
+      );
+      const token = tokens.find((t) =>
+        tokensAreEqual(t, config?.from?.token || null)
+      );
 
-    setFromChain(chain || null);
-    setFromToken(token || null);
-  }, [config?.from?.token, config?.from?.blockchain]);
+      setFromChain(chain || null);
+      setFromToken(token || null);
+    }
+  }, [config?.from?.token, config?.from?.blockchain, loadingMetaStatus]);
 
   useEffect(() => {
     setAffiliateRef(config?.affiliateRef || null);
