@@ -2,6 +2,7 @@ import { SelectableWallet } from '@rango-dev/ui';
 import { WalletType } from '@rango-dev/wallets-shared';
 import { create } from 'zustand';
 import { subscribeWithSelector } from 'zustand/middleware';
+import { shallow } from 'zustand/shallow';
 import { httpService } from '../services/httpService';
 import {
   getRequiredChains,
@@ -14,7 +15,6 @@ import {
 import { useBestRouteStore } from './bestRoute';
 import { useMetaStore } from './meta';
 import createSelectors from './selectors';
-import { shallow } from 'zustand/shallow';
 import { Wallet } from '../types';
 
 export type TokenBalance = {
