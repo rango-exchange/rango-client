@@ -1,6 +1,6 @@
-import { Widget, WidgetConfig } from '@rango-dev/widget-embedded';
 import React, { useRef } from 'react';
 import { Route, Routes, useSearchParams } from 'react-router-dom';
+import { Widget, WidgetConfig } from '@rango-dev/widget-embedded';
 
 export function App() {
   const [searchParams] = useSearchParams();
