@@ -46,7 +46,6 @@ export function App(props: PropTypes) {
   }, []);
 
   return (
-    // @ts-ignore
     <ManagerProvider queuesDefs={[swapQueueDef]} context={queueContext}>
       <Wallets />
       <h2>Flows</h2>
