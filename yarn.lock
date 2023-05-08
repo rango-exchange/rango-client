@@ -4025,14 +4025,6 @@
   dependencies:
     "@babel/runtime" "^7.13.10"
 
-"@rango-dev/queue-manager-rango-preset@^0.1.11", "@rango-dev/queue-manager-rango-preset@^0.1.12":
-  version "0.1.12"
-  resolved "https://registry.yarnpkg.com/@rango-dev/queue-manager-rango-preset/-/queue-manager-rango-preset-0.1.12.tgz#24dc377cbac640a2e3b30aed4e5809bb4af6b0e0"
-  integrity sha512-mVMRLEg0JhF0excXE83I1y5X+5RTaf0nb17kJzfvIesOffw7c/8rWQTSpjnbRA5xUcgZVCyS1oMWEDxgEJZokQ==
-  dependencies:
-    "@sentry/browser" "^6.12.0"
-    uuid "^9.0.0"
-
 "@rango-dev/widget-embedded@^0.1.13":
   version "0.1.15"
   resolved "https://registry.yarnpkg.com/@rango-dev/widget-embedded/-/widget-embedded-0.1.15.tgz#e2226ca5f4faa1f1f5f61ef6d0e8e3cfaf4286fc"
