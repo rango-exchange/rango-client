@@ -42,7 +42,7 @@ const globalStyles = globalCss({
     fontFamily: 'Roboto',
   },
 });
-//@ts-ignore
+
 export const withTheme: Decorator = (StoryFn, context) => {
   globalStyles();
   const theme = context.parameters.theme || context.globals.theme;
