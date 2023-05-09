@@ -61,10 +61,11 @@ export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
     img: 'https://raw.githubusercontent.com/rango-exchange/rango-types/main/assets/icons/wallets/argentx.svg',
     installLink: {
       CHROME:
-        'https://chrome.google.com/webstore/detail/station-wallet/aiifbnbfobpmeekipheeijimdpnlpgpp',
+        'https://chrome.google.com/webstore/detail/argent-x/dlcobpjiigpikoobohmabehhmhfoodbb',
       BRAVE:
-        'https://chrome.google.com/webstore/detail/station-wallet/aiifbnbfobpmeekipheeijimdpnlpgpp',
-      DEFAULT: 'https://station.terra.money/',
+        'https://chrome.google.com/webstore/detail/argent-x/dlcobpjiigpikoobohmabehhmhfoodbb',
+      FIREFOX: 'https://addons.mozilla.org/en-GB/firefox/addon/argent-x',
+      DEFAULT: 'https://www.argent.xyz',
     },
 
     color: '#96e7ed',

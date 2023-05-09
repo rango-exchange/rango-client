@@ -42,19 +42,13 @@ export function getStateWallet(state: WalletState): WalletStatus {
   }
 }
 
-export const excludedWallets = [
-  WalletType.UNKNOWN,
-  WalletType.TERRA_STATION,
-  WalletType.LEAP,
-];
+export const excludedWallets = [WalletType.UNKNOWN, WalletType.LEAP];
 
 export function getlistWallet(
   getState: (type: WalletType) => WalletState,
   getWalletInfo: (type: WalletType) => WalletInfo,
   list: WalletType[]
 ): ModalWalletInfo[] {
-  const excludedWallets = [WalletType.UNKNOWN, WalletType.LEAP];
-
   return list
     .filter((wallet) => !excludedWallets.includes(wallet))
     .map((type) => {
@@ -108,7 +102,7 @@ export function prepareAccountsForWalletStore(
 
   const supportedChains = supportedChainNames || [];
 
-  accounts.forEach(account => {
+  accounts.forEach((account) => {
     const { address, network } = readAccountAddress(account);
 
     const hasLimitation = supportedChains.length > 0;
@@ -139,7 +133,7 @@ export function prepareAccountsForWalletStore(
         evmBasedChains.includes(chain)
       );
 
-      evmChainsSupportedByWallet.forEach(network => {
+      evmChainsSupportedByWallet.forEach((network) => {
         // EVM addresses are not case sensetive.
         // Some wallets like Binance-chain return some letters in uppercase which produces bugs in our wallet state.
         addAccount(network, address.toLowerCase());
@@ -155,7 +149,7 @@ export function prepareAccountsForWalletStore(
 export function getRequiredChains(route: BestRouteResponse | null) {
   const wallets: string[] = [];
 
-  route?.result?.swaps.forEach(swap => {
+  route?.result?.swaps.forEach((swap) => {
     const currentStepFromBlockchain = swap.from.blockchain;
     const currentStepToBlockchain = swap.to.blockchain;
     let lastAddedWallet = wallets[wallets.length - 1];
@@ -256,7 +250,7 @@ export function makeBalanceFor(
     explorerUrl,
     walletType: wallet.walletType,
     balances:
-      balances?.map(tokenBalance => ({
+      balances?.map((tokenBalance) => ({
         chain,
         symbol: tokenBalance.asset.symbol,
         ticker: tokenBalance.asset.symbol,
@@ -361,7 +355,7 @@ export const getUsdPrice = (
   allTokens: Token[]
 ): number | null => {
   const token = allTokens?.find(
-    t =>
+    (t) =>
       t.blockchain === blockchain &&
       t.symbol?.toUpperCase() === symbol?.toUpperCase() &&
       t.address === address

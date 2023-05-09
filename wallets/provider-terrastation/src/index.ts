@@ -70,10 +70,10 @@ export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
       CHROME:
         'https://chrome.google.com/webstore/detail/terra-station/aiifbnbfobpmeekipheeijimdpnlpgpp',
       BRAVE:
-        'https://chrome.google.com/webstore/detail/safepal-extension-wallet/lgmpcpglpngdoalbgeoldeajfclnhafa',
+        'https://chrome.google.com/webstore/detail/station-wallet/aiifbnbfobpmeekipheeijimdpnlpgpp',
       FIREFOX:
-        'https://addons.mozilla.org/en-US/firefox/addon/safepal-extension-wallet',
-      DEFAULT: 'https://www.safepal.com/download',
+        'https://addons.mozilla.org/en-US/firefox/addon/terra-station-wallet/?utm_source=addons.mozilla.org',
+      DEFAULT: 'https://classic-docs.terra.money/docs/learn/terra-station/download/terra-station-desktop.html',
     },
     color: '#4A21EF',
     supportedChains: allBlockChains.filter((blockchainMeta) =>
