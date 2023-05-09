@@ -5394,11 +5394,6 @@
   resolved "https://registry.yarnpkg.com/@tootallnate/once/-/once-1.1.2.tgz#ccb91445360179a04e7fe6aff78c00ffc1eeaf82"
   integrity sha512-RbzJvlNzmRq5c3O09UipeuXno4tA1FE6ikOjxZK0tuxVv3412l64l5t1W5pj4+rJq9vpkm/kwiR07aZXnsKPxw==
 
-"@tootallnate/once@2":
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/@tootallnate/once/-/once-2.0.0.tgz#f544a148d3ab35801c1f633a7441fd87c2e484bf"
-  integrity sha512-XCuKFP5PS55gnMVu3dty8KPatLqUoy/ZYzDzAGCQ8JNFCkLXzmI7vNHCR+XpbZaMWQK/vQubr7PkYq8g470J/A==
-
 "@trysound/sax@0.2.0":
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/@trysound/sax/-/sax-0.2.0.tgz#cccaab758af56761eb7bf37af6f03f326dd798ad"
@@ -15415,6 +15410,11 @@ mlly@^1.1.0, mlly@^1.1.1:
     pkg-types "^1.0.2"
     ufo "^1.1.1"
 
+mobile-detect@^1.4.5:
+  version "1.4.5"
+  resolved "https://registry.yarnpkg.com/mobile-detect/-/mobile-detect-1.4.5.tgz#da393c3c413ca1a9bcdd9ced653c38281c0fb6ad"
+  integrity sha512-yc0LhH6tItlvfLBugVUEtgawwFU2sIe+cSdmRJJCTMZ5GEJyLxNyC/NIOAOGk67Fa8GNpOttO3Xz/1bHpXFD/g==
+
 modify-values@^1.0.0:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/modify-values/-/modify-values-1.0.1.tgz#b3939fa605546474e3e3e3c63d64bd43b4ee6022"
@@ -17328,15 +17328,15 @@ rango-sdk@^0.1.23:
     rango-types "^0.1.28"
     uuid-random "^1.3.2"
 
+rango-types@^0.1.22, rango-types@^0.1.28:
+  version "0.1.28"
+  resolved "https://registry.yarnpkg.com/rango-types/-/rango-types-0.1.28.tgz#931ddf57e38115fab6f85cb5f6bacb3fb46c20eb"
+  integrity sha512-pZtblD2JvH6nB26TKW/6ySTwVlxYRJksMC6UIDfpmpn/6g/LHf3RxAGkrltC1wzdmGP1QxAUWOeq4JJv2lAFtQ==
+
 rango-types@^0.1.23:
   version "0.1.23"
   resolved "https://registry.yarnpkg.com/rango-types/-/rango-types-0.1.23.tgz#3b3ad12fba7120838deb1b016ad16754da13deec"
   integrity sha512-Q2E/17IOCMULYvF0siey87Qjlx7r4VGZeHrPxraHmI0RXbVqB+p2G7t3nTEZT8ex2VChRu8SAQCRhgYAr/5K7A==
-
-rango-types@^0.1.28:
-  version "0.1.28"
-  resolved "https://registry.yarnpkg.com/rango-types/-/rango-types-0.1.28.tgz#931ddf57e38115fab6f85cb5f6bacb3fb46c20eb"
-  integrity sha512-pZtblD2JvH6nB26TKW/6ySTwVlxYRJksMC6UIDfpmpn/6g/LHf3RxAGkrltC1wzdmGP1QxAUWOeq4JJv2lAFtQ==
 
 raw-body@2.5.1:
   version "2.5.1"
