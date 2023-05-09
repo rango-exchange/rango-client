@@ -5,13 +5,13 @@ import {
   Subscribe,
   WalletInfo,
 } from '@rango-dev/wallets-shared';
-import { terraStation as terraStation_instance } from './helpers';
+import { station as station_instance } from './helpers';
 import signer from './signer';
 import { ConnectType } from '@terra-money/wallet-controller';
 import { BlockchainMeta, SignerFactory } from 'rango-types';
 
-const WALLET = WalletType.TERRA_STATION;
-const TERRA_STATION_WALLET_ID = 'station';
+const WALLET = WalletType.STATION;
+const STATION_WALLET_ID = 'station';
 
 export const config = {
   type: WALLET,
@@ -36,15 +36,15 @@ async function waitInterval(instance: any) {
   });
 }
 
-export const getInstance = terraStation_instance;
+export const getInstance = station_instance;
 export const connect: Connect = async ({ instance, meta }) => {
   let accounts: string[] = [];
   let chainId = '';
-  await instance.connect(ConnectType.EXTENSION, TERRA_STATION_WALLET_ID);
+  await instance.connect(ConnectType.EXTENSION, STATION_WALLET_ID);
   await instance.refetchStates();
   const { network, wallet, type } = await waitInterval(instance);
   if (type === 'INITIALIZING') {
-    throw new Error('Please unlock your Terra Station extension first.');
+    throw new Error('Please unlock your Station wallet first.');
   }
   chainId = network.chainID;
   const foundChain = meta.find((m) => m.chainId === chainId);
@@ -83,8 +83,8 @@ export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
   allBlockChains
 ) => {
   return {
-    name: 'Terra Station',
-    img: 'https://raw.githubusercontent.com/rango-exchange/rango-types/main/assets/icons/wallets/terra-station.png',
+    name: 'Station',
+    img: 'https://raw.githubusercontent.com/rango-exchange/rango-types/main/assets/icons/wallets/station.svg',
     installLink: {
       CHROME:
         'https://chrome.google.com/webstore/detail/terra-station/aiifbnbfobpmeekipheeijimdpnlpgpp',
