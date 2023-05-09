@@ -4,7 +4,7 @@ const projectId = 'f5196d081862c6f2b81c04520ea9301c';
 // const relayUrl = 'wss://relay.walletconnect.com';
 
 export function supportsForSwitchNetworkRequest(provider: any): boolean {
-  const wallets = ['metamask'];
+  const wallets = ['metamask', 'safepal'];
   const connectedWallet = provider.session.peer.metadata
     ? provider.session.peer.metadata.name
     : '';
@@ -33,8 +33,16 @@ export async function makeConnection(options: {
         'eth_sign',
         'personal_sign',
         'eth_signTypedData',
+        'wallet_switchEthereumChain',
+        'wallet_addEthereumChain',
       ],
-      events: ['chainChanged', 'accountsChanged'],
+      events: [
+        'chainChanged',
+        'accountsChanged',
+        'message',
+        'connect',
+        'disconnect',
+      ],
       qrModalOptions: {
         explorerAllowList: [],
         explorerDenyList: [],

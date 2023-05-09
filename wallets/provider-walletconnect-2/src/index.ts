@@ -96,11 +96,17 @@ export const subscribe: Subscribe = ({
     updateChainId(chainId);
   });
 
-  instance.on('disconnect', (error: any, _payload: any) => {
+  instance.on('session_event', (error: any, payload: any) => {
     if (error) {
       throw error;
     }
+    // Get updated accounts and chainId
+    const { accounts, chainId } = payload.params[0];
+    updateAccounts(accounts);
+    updateChainId(chainId);
+  });
 
+  instance.on('disconnect', () => {
     disconnect();
   });
 };
