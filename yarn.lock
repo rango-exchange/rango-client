@@ -4098,13 +4098,6 @@
     long "^5.2.1"
     rango-types "^0.1.28"
 
-"@rango-dev/signer-terra@^0.1.13-next.0":
-  version "0.1.13-next.0"
-  resolved "https://registry.yarnpkg.com/@rango-dev/signer-terra/-/signer-terra-0.1.13-next.0.tgz#3e1d8bab4b65a1338a2c4571fcae6276e970a759"
-  integrity sha512-v1DN0qE5tCYUBxCcbdp+YxrT8cpDVDzV/Z7T+vtojMtkFG0g8eeas0JMELNRUw/CsgeF3DLoAu0ewTOocTs8oA==
-  dependencies:
-    rango-types "^0.1.28"
-
 "@rango-dev/wallets-adapter@^0.1.12":
   version "0.1.13"
   resolved "https://registry.yarnpkg.com/@rango-dev/wallets-adapter/-/wallets-adapter-0.1.13.tgz#b1e76c69723594249d768b2881e92aa703ee32e3"
