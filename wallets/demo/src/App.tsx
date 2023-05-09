@@ -20,7 +20,6 @@ export function App() {
         const res = await client.getAllMetadata();
         setBlockChains(res.blockchains);
       } catch (e) {
-        console.log('failed on connect.', e);
         setError(e.message);
       }
       setLoading(false);
