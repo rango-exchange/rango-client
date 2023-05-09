@@ -56,7 +56,7 @@
     "@rango-dev/provider-okx": "^0.1.12",
     "@rango-dev/provider-phantom": "^0.1.12",
     "@rango-dev/provider-safepal": "^0.1.12",
-    "@rango-dev/provider-terrastation": "^0.1.11-next.72",
+    "@rango-dev/provider-station": "^0.1.11-next.74",
     "@rango-dev/provider-tokenpocket": "^0.1.12",
     "@rango-dev/provider-tron-link": "^0.1.12",
     "@rango-dev/provider-trustwallet": "^0.1.12",

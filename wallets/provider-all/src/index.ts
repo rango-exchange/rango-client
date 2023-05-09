@@ -20,7 +20,7 @@ import * as tronLink from '@rango-dev/provider-tron-link';
 import * as kucoin from '@rango-dev/provider-kucoin-wallet';
 import * as leapCosmos from '@rango-dev/provider-leap-cosmos';
 import * as frontier from '@rango-dev/provider-frontier';
-import * as terrastation from '@rango-dev/provider-terrastation';
+import * as station from '@rango-dev/provider-station';
 
 export const allProviders = () => [
   binance,
@@ -45,5 +45,5 @@ export const allProviders = () => [
   kucoin,
   leapCosmos,
   frontier,
-  terrastation,
+  station,
 ];
