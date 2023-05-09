@@ -22,7 +22,7 @@ const walletConnectChainIds: Record<number, NetworkInfo> = {
 
 let controller: any;
 
-export function terraStation() {
+export function station() {
   const terra = window.terraWallets;
   if (!controller) {
     // @ts-ignore

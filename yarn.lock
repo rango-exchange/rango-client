@@ -4078,6 +4078,15 @@
     "@rango-dev/wallets-shared" "^0.1.11"
     rango-types "^0.1.28"
 
+"@rango-dev/provider-terrastation@^0.1.11-next.72":
+  version "0.1.11-next.72"
+  resolved "https://registry.yarnpkg.com/@rango-dev/provider-terrastation/-/provider-terrastation-0.1.11-next.72.tgz#db1df213288b0b76f155ee3fa4e5882043bbbb38"
+  integrity sha512-BVzps1RZQNcHBnd5I8HjsFJvhgs+UjL2l8XuK2RZhld7nn32h6sC80bU4USJQV8jG/Ty5inz/IuOqDflfC8D0A==
+  dependencies:
+    "@rango-dev/signer-terra" "^0.1.13-next.0"
+    "@rango-dev/wallets-shared" "^0.1.11"
+    rango-types "^0.1.22"
+
 "@rango-dev/queue-manager-rango-preset@^0.1.11", "@rango-dev/queue-manager-rango-preset@^0.1.12":
   version "0.1.12"
   resolved "https://registry.yarnpkg.com/@rango-dev/queue-manager-rango-preset/-/queue-manager-rango-preset-0.1.12.tgz#24dc377cbac640a2e3b30aed4e5809bb4af6b0e0"
