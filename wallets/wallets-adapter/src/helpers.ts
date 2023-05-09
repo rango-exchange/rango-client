@@ -36,11 +36,7 @@ export function getlistWallet(
   getWalletInfo: (type: WalletType) => WalletInfo,
   list: WalletType[]
 ): ModalWalletInfo[] {
-  const excludedWallets = [
-    WalletType.UNKNOWN,
-    WalletType.TERRA_STATION,
-    WalletType.LEAP,
-  ];
+  const excludedWallets = [WalletType.UNKNOWN, WalletType.LEAP];
 
   return list
     .filter((wallet) => !excludedWallets.includes(wallet))
