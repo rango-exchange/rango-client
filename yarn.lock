@@ -4118,6 +4118,13 @@
     "@rango-dev/wallets-shared" "^0.1.11"
     rango-types "^0.1.28"
 
+"@rango-dev/wallets-shared@^0.1.11":
+  version "0.1.12"
+  resolved "https://registry.yarnpkg.com/@rango-dev/wallets-shared/-/wallets-shared-0.1.12.tgz#a6af676823c81bb54c51d2cad4ebfcb5c506d843"
+  integrity sha512-Lninbnp53o2O9tw0I1Ae2X4/2jBqc76UNam9RXhVGrKuZIjhModLFJm+2Xb1UlP+NQAiUttJ+d0DeLdD2Ij/vg==
+  dependencies:
+    rango-types "^0.1.28"
+
 "@rango-dev/widget-embedded@0.1.16-next.0":
   version "0.1.16-next.0"
   resolved "https://registry.yarnpkg.com/@rango-dev/widget-embedded/-/widget-embedded-0.1.16-next.0.tgz#cdbf1ae4fd32e3f1d4bf59edd8d29b95e38b1986"

@@ -2,7 +2,7 @@ import { WalletType } from '@rango-dev/wallets-shared';
 import { Asset, Token } from 'rango-sdk';
 import { WidgetConfig, Theme, Support } from './types';
 
-export const excludedWallets = [WalletType.UNKNOWN, WalletType.TERRA_STATION, WalletType.LEAP];
+export const excludedWallets = [WalletType.UNKNOWN, WalletType.STATION, WalletType.LEAP];
 
 export const onChangeMultiSelects = (value, values, list, findIndex) => {
   if (value === 'empty') return [];

@@ -49,7 +49,7 @@
   },
   "dependencies": {
     "@rango-dev/signer-terra": "^0.1.13-next.0",
-    "@rango-dev/wallets-shared": "^0.1.11",
+    "@rango-dev/wallets-shared": "^0.1.13-next.0",
     "rango-types": "^0.1.22"
   },
   "publishConfig": {
