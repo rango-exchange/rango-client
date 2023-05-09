@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/provider-station",
-  "version": "0.1.11-next.73",
+  "version": "0.1.11-next.74",
   "license": "MIT",
   "module": "dist/provider-station.esm.js",
   "main": "dist/index.js",
