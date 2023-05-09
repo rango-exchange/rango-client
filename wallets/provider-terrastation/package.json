@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/provider-terrastation",
-  "version": "0.1.11-next.71",
+  "version": "0.1.11-next.72",
   "license": "MIT",
   "module": "dist/provider-terrastation.esm.js",
   "main": "dist/index.js",
