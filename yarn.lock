@@ -4032,6 +4032,112 @@
   dependencies:
     "@babel/runtime" "^7.13.10"
 
+"@rango-dev/provider-all@^0.1.12":
+  version "0.1.13"
+  resolved "https://registry.yarnpkg.com/@rango-dev/provider-all/-/provider-all-0.1.13.tgz#1b486752a497ad00c453d44532ccb8db537730d8"
+  integrity sha512-cSpmokgp1+tAEGD2iFpzFNbrRl6A/lwagw2fSNORaIadfLjw7H+Pb9QhLw4ZRkqZ1DuLF1zKiNOLCmoSXOFQ+w==
+  dependencies:
+    "@rango-dev/provider-argentx" "^0.1.12"
+    "@rango-dev/provider-binance-chain-wallet" "^0.1.12"
+    "@rango-dev/provider-brave" "^0.1.12"
+    "@rango-dev/provider-clover" "^0.1.12"
+    "@rango-dev/provider-coin98" "^0.1.11"
+    "@rango-dev/provider-coinbase" "^0.1.12"
+    "@rango-dev/provider-cosmostation" "^0.1.11"
+    "@rango-dev/provider-exodus" "^0.1.12"
+    "@rango-dev/provider-frontier" "^0.1.12"
+    "@rango-dev/provider-keplr" "^0.1.12"
+    "@rango-dev/provider-kucoin-wallet" "^0.1.12"
+    "@rango-dev/provider-leap-cosmos" "^0.1.12"
+    "@rango-dev/provider-math-wallet" "^0.1.12"
+    "@rango-dev/provider-metamask" "^0.1.12"
+    "@rango-dev/provider-okx" "^0.1.12"
+    "@rango-dev/provider-phantom" "^0.1.12"
+    "@rango-dev/provider-safepal" "^0.1.12"
+    "@rango-dev/provider-tokenpocket" "^0.1.12"
+    "@rango-dev/provider-tron-link" "^0.1.12"
+    "@rango-dev/provider-trustwallet" "^0.1.12"
+    "@rango-dev/provider-walletconnect" "^0.1.12"
+    "@rango-dev/provider-xdefi" "^0.1.12"
+
+"@rango-dev/provider-argentx@^0.1.12":
+  version "0.1.13"
+  resolved "https://registry.yarnpkg.com/@rango-dev/provider-argentx/-/provider-argentx-0.1.13.tgz#20650e9c21bad9241b7cf2160083532f53605954"
+  integrity sha512-et/l9muhOxGgPUhFuu+gOupNv/ebp8QpnCJ9GvQsDByTQ3eZGFIYzgusT0m9YD4PnHNfl0qATaXYAkyYL4dxVQ==
+  dependencies:
+    "@rango-dev/signer-starknet" "^0.1.11"
+    "@rango-dev/wallets-shared" "^0.1.11"
+    rango-types "^0.1.28"
+
+"@rango-dev/provider-kucoin-wallet@^0.1.12":
+  version "0.1.13"
+  resolved "https://registry.yarnpkg.com/@rango-dev/provider-kucoin-wallet/-/provider-kucoin-wallet-0.1.13.tgz#3689cdf4e7ba21fe588082d5a03ccb64d20205f3"
+  integrity sha512-7kj0wLicuUTQqcC3GcnZpPUajSw2VCAfLVDOUrRWn+8ZZTW9smdPAAUMySoZT5CaczXcw7crRQOAAFDOnFq+Nw==
+  dependencies:
+    "@rango-dev/signer-evm" "^0.1.11"
+    "@rango-dev/wallets-shared" "^0.1.11"
+    rango-types "^0.1.28"
+
+"@rango-dev/queue-manager-rango-preset@^0.1.11", "@rango-dev/queue-manager-rango-preset@^0.1.12":
+  version "0.1.12"
+  resolved "https://registry.yarnpkg.com/@rango-dev/queue-manager-rango-preset/-/queue-manager-rango-preset-0.1.12.tgz#24dc377cbac640a2e3b30aed4e5809bb4af6b0e0"
+  integrity sha512-mVMRLEg0JhF0excXE83I1y5X+5RTaf0nb17kJzfvIesOffw7c/8rWQTSpjnbRA5xUcgZVCyS1oMWEDxgEJZokQ==
+  dependencies:
+    "@sentry/browser" "^6.12.0"
+    uuid "^9.0.0"
+
+"@rango-dev/signer-cosmos@^0.1.11":
+  version "0.1.12"
+  resolved "https://registry.yarnpkg.com/@rango-dev/signer-cosmos/-/signer-cosmos-0.1.12.tgz#6c0a5e2e56fa0056cebb33445c74862e834f7eb9"
+  integrity sha512-LOXn1gWWU/qSPfx1EUlGhVy+3fFaVz7Rtsi4evUtzXzMj4J02diiyPiE1j3OK83fAgUQkrFyos+1sJloULxE6A==
+  dependencies:
+    "@cosmjs/launchpad" "^0.27.1"
+    "@cosmjs/stargate" "^0.29.4"
+    "@keplr-wallet/cosmos" "^0.9.12"
+    cosmjs-types "^0.5.2"
+    long "^5.2.1"
+    rango-types "^0.1.28"
+
+"@rango-dev/wallets-adapter@^0.1.12":
+  version "0.1.13"
+  resolved "https://registry.yarnpkg.com/@rango-dev/wallets-adapter/-/wallets-adapter-0.1.13.tgz#b1e76c69723594249d768b2881e92aa703ee32e3"
+  integrity sha512-C5Z5zyMT4dAYPop8SNbYmqHrk2OiflLlZW99w6HPD7vpcRpMKwWoiudjn7RqGEuz572L3WUJqieFu4xRhJdVSQ==
+  dependencies:
+    "@rango-dev/provider-all" "^0.1.12"
+    "@rango-dev/ui" "^0.1.12"
+    "@rango-dev/wallets-core" "^0.1.12"
+    "@rango-dev/wallets-shared" "^0.1.11"
+    rango-types "^0.1.28"
+
+"@rango-dev/widget-embedded@0.1.16-next.0":
+  version "0.1.16-next.0"
+  resolved "https://registry.yarnpkg.com/@rango-dev/widget-embedded/-/widget-embedded-0.1.16-next.0.tgz#cdbf1ae4fd32e3f1d4bf59edd8d29b95e38b1986"
+  integrity sha512-LeE1Y/KPZ3SMw8gWeszOk4GVwKsGgqxKAa1n/3kyhlUue+8o7w2Ws0aYfPguYZOHji6kpkI0IPWhpNuVu4xTZA==
+  dependencies:
+    "@rango-dev/provider-all" "^0.1.12"
+    "@rango-dev/queue-manager-core" "^0.1.12"
+    "@rango-dev/queue-manager-rango-preset" "^0.1.12"
+    "@rango-dev/queue-manager-react" "^0.1.11"
+    "@rango-dev/ui" "^0.1.13"
+    "@rango-dev/wallets-core" "^0.1.12"
+    "@rango-dev/wallets-shared" "^0.1.11"
+    bignumber.js "^9.1.1"
+    copy-to-clipboard "^3.3.3"
+    dayjs "^1.11.7"
+    i18next "^22.4.11"
+    i18next-browser-languagedetector "^7.0.1"
+    i18next-http-backend "^2.1.1"
+    immer "^9.0.19"
+    mitt "^3.0.0"
+    parcel "^2.8.0"
+    rango-sdk "^0.1.23"
+    rango-types "^0.1.28"
+    react "^18.2.0"
+    react-dom "^18.2.0"
+    react-i18next "^12.2.0"
+    react-router-dom "^6.8.0"
+    zustand "^4.3.2"
+
 "@rango-dev/widget-embedded@^0.1.13":
   version "0.1.15"
   resolved "https://registry.yarnpkg.com/@rango-dev/widget-embedded/-/widget-embedded-0.1.15.tgz#e2226ca5f4faa1f1f5f61ef6d0e8e3cfaf4286fc"
