@@ -1,27 +1,21 @@
 {
-  "name": "@rango-dev/provider-terrastation",
-  "version": "0.1.11-next.70",
+  "name": "@rango-dev/signer-terra",
+  "version": "0.1.12",
   "license": "MIT",
-  "module": "dist/provider-terrastation.esm.js",
+  "module": "dist/signer-terra.esm.js",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
   "files": [
     "dist",
     "src"
   ],
-  "engines": {
-    "node": ">=10"
-  },
   "scripts": {
-    "start": "tsdx watch",
-    "build": "tsdx build",
-    "test": "tsdx test --passWithNoTests",
+    "dev": "tsdx watch",
+    "build": "tsdx build  --tsconfig ./tsconfig.json",
+    "test": "tsdx test",
     "lint": "tsdx lint",
     "size": "size-limit",
     "analyze": "size-limit --why"
-  },
-  "peerDependencies": {
-    "react": ">=16"
   },
   "husky": {
     "hooks": {
@@ -36,20 +30,18 @@
   },
   "size-limit": [
     {
-      "path": "dist/provider-terrastation.cjs.production.min.js",
+      "path": "dist/signer-cosmos.cjs.production.min.js",
       "limit": "10 KB"
     },
     {
-      "path": "dist/provider-terrastation.esm.js",
+      "path": "dist/signer-cosmos.esm.js",
       "limit": "10 KB"
     }
   ],
   "dependencies": {
-    "@rango-dev/wallets-shared": "^0.1.11",
     "@terra-money/terra.js": "^3.1.7",
-    "@terra-money/wallet-controller": "^3.11.2",
-    "rango-types": "^0.1.22",
-    "@rango-dev/signer-terra": "^0.1.12"
+    "long": "^5.2.1",
+    "rango-types": "^0.1.28"
   },
   "publishConfig": {
     "access": "public"

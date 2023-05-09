@@ -1,10 +1,8 @@
-import { DefaultCosmosSigner } from '@rango-dev/signer-cosmos';
+import { DefaultTerraSigner } from '@rango-dev/signer-terra';
 import { SignerFactory, TransactionType as TxType } from 'rango-types';
-
-// TODO: Change signer to Terra signer  
 
 export default function getSigners(provider: any): SignerFactory {
   const signers = new SignerFactory();
-  signers.registerSigner(TxType.COSMOS, new DefaultCosmosSigner(provider));
+  signers.registerSigner(TxType.COSMOS, new DefaultTerraSigner(provider));
   return signers;
 }
