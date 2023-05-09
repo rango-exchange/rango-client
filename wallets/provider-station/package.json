@@ -1,8 +1,8 @@
 {
-  "name": "@rango-dev/provider-terrastation",
+  "name": "@rango-dev/provider-station",
   "version": "0.1.11-next.72",
   "license": "MIT",
-  "module": "dist/provider-terrastation.esm.js",
+  "module": "dist/provider-station.esm.js",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
   "files": [
@@ -36,11 +36,11 @@
   },
   "size-limit": [
     {
-      "path": "dist/provider-terrastation.cjs.production.min.js",
+      "path": "dist/provider-station.cjs.production.min.js",
       "limit": "10 KB"
     },
     {
-      "path": "dist/provider-terrastation.esm.js",
+      "path": "dist/provider-station.esm.js",
       "limit": "10 KB"
     }
   ],
