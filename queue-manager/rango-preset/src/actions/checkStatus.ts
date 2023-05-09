@@ -28,6 +28,7 @@ async function checkTransactionStatus({
   next,
   schedule,
   retry,
+  failed,
   context,
 }: ExecuterActions<
   SwapStorage,
@@ -132,14 +133,17 @@ async function checkTransactionStatus({
   } else if (currentStep.status === 'failed') {
     swap.extraMessage = 'Transaction failed in blockchain';
     swap.extraMessageSeverity = MessageSeverity.error;
-    swap.extraMessageDetail = '';
+    swap.extraMessageDetail = status?.extraMessage || '';
+    swap.status = 'failed';
+    swap.finishTime = new Date().getTime().toString();
   }
 
   // Sync data with storage
   setStorage({ ...getStorage(), swapDetails: swap });
 
-  if (
-    status?.status === 'failed' ||
+  if (status?.status === 'failed') {
+    failed();
+  } else if (
     status?.status === 'success' ||
     (status?.status === 'running' && !!status.newTx)
   ) {
@@ -198,7 +202,6 @@ async function checkApprovalStatus({
         ...updateResult,
       });
       failed();
-      // onFinish();
     } else if (!isApproved) {
       // it is needed to set notification after reloading the page
       context.notifier({
