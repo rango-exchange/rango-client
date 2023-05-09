@@ -37,7 +37,7 @@ async function waitInterval(instance: any) {
 }
 
 export const getInstance = terraStation_instance;
-export const connect: Connect = async ({ instance }) => {
+export const connect: Connect = async ({ instance, meta }) => {
   let accounts: string[] = [];
   let chainId = '';
   await instance.connect(ConnectType.EXTENSION, TERRA_STATION_WALLET_ID);
@@ -47,6 +47,12 @@ export const connect: Connect = async ({ instance }) => {
     throw new Error('Please unlock your Terra Station extension first.');
   }
   chainId = network.chainID;
+  const foundChain = meta.find((m) => m.chainId === chainId);
+  if (!foundChain) {
+    throw new Error(
+      "We don't support this chain. Please try with another chain"
+    );
+  }
   accounts = [wallet.terraAddress];
   return { accounts, chainId };
 };
