@@ -61,7 +61,7 @@ const ButtonContainer = styled('button', {
         },
       },
       outlined: {
-        backgroundColor: '$background',
+        backgroundColor: '$surfaceBackground',
         border: 1,
         borderStyle: 'solid',
         borderColor: '$neutrals400',

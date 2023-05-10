@@ -16,6 +16,7 @@ const Container = styled('div', {
   alignItems: 'center',
   minHeight: 126,
   justifyContent: 'space-between',
+  backgroundColor: '$surfaceBackground',
 });
 
 const ErrorMsg = styled(Typography, {

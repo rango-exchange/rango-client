@@ -25,6 +25,9 @@ export type Colors = {
   success?: string;
   error?: string;
   warning?: string;
+  surfaceBackground?: string;
+  surfaceForeground?: string;
+  neutrals?: string;
 };
 
 export type Theme = {

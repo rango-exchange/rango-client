@@ -19,6 +19,10 @@ const theme = {
     primary700: '#396216',
     primary800: '#26420F',
     primary900: '#132107',
+
+    surfaceBackground: '#fff',
+    surfaceForeground: '#000',
+
     neutrals200: '#FAFAFA',
     neutrals300: '#EAEAEA',
     neutrals400: '#999999',
@@ -27,6 +31,7 @@ const theme = {
     neutrals700: '#444444',
     neutrals800: '#333333',
     neutrals900: '#111111',
+
     background: '#fff',
     foreground: '#000',
     success: '#0070F3',
@@ -154,8 +159,12 @@ export const darkTheme = createTheme({
     neutrals700: '#999999',
     neutrals800: '#EAEAEA',
     neutrals900: '#FAFAFA',
+    
     foreground: '#fff',
     background: '#000',
+
+    surfaceBackground: '#000',
+    surfaceForeground: '#fff',
   },
   shadows: {
     s: '0px 3px 5px 3px #222, 0px 6px 10px 3px #222, 0px 1px 18px 3px #222',

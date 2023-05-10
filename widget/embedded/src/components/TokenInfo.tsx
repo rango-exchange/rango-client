@@ -52,6 +52,7 @@ const Container = styled('div', {
       },
       outlined: {
         border: '1px solid $neutrals300',
+        backgroundColor: '$surfaceBackground',
       },
     },
   },
@@ -113,7 +114,7 @@ const OutputContainer = styled('div', {
   windth: '100%',
   height: '$48',
   borderRadius: '$5',
-  backgroundColor: '$background',
+  backgroundColor: '$surfaceBackground',
   border: '1px solid transparent',
   position: 'relative',
   display: 'flex',
