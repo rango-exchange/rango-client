@@ -1,7 +1,6 @@
 import {
   CanSwitchNetwork,
   Connect,
-  Network,
   Subscribe,
   SwitchNetwork,
   WalletInfo,
@@ -21,7 +20,6 @@ const WALLET = WalletType.ENKRYPT;
 
 export const config = {
   type: WALLET,
-  defaultNetwork: Network.ETHEREUM,
 };
 
 export const connect: Connect = async ({ instance }) => {
