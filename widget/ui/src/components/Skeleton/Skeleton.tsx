@@ -12,7 +12,7 @@ const waveSquares = keyframes({
 
 const SkeletonContainer = styled('div', {
   borderRadius: '$5',
-  backgroundColor: '$neutrals300',
+  backgroundColor: '$neutrals100',
   background: `linear-gradient(to right, rgba(130, 130, 130, 0.2) 8%, rgba(130, 130, 130, 0.3) 18%, rgba(130, 130, 130, 0.2) 33%)`,
   backgroundSize: '800px 100px',
   animation: `${waveSquares} 2s infinite ease-out`,

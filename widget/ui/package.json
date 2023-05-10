@@ -80,7 +80,8 @@
     "react-color": "^2.19.3",
     "react-virtualized-auto-sizer": "^1.0.7",
     "react-window": "^1.8.8",
-    "react-window-infinite-loader": "^1.0.8"
+    "react-window-infinite-loader": "^1.0.8",
+    "rgb-hex": "^4.0.1"
   },
   "publishConfig": {
     "access": "public"

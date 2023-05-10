@@ -3,7 +3,7 @@ import { useState, useEffect, useLayoutEffect } from 'react';
 import { useMetaStore } from '../store/meta';
 import { useSettingsStore } from '../store/settings';
 import { WidgetTheme } from '../types';
-import { shadeColor } from '../utils/common';
+import { GenerateRangeColors } from '../utils/common';
 import usePrevious from './usePrevious';
 
 export function useTheme({
@@ -15,59 +15,36 @@ export function useTheme({
   const theme = useSettingsStore.use.theme();
   const fetchMeta = useMetaStore.use.fetchMeta();
   const setTheme = useSettingsStore.use.setTheme();
+  const light = themeColors?.light;
+  const dark = themeColors?.dark;
+  const neutrals = light?.neutrals || '#fafafa';
+  const background = light?.background || '#fff';
+  const foreground = light?.foreground || '#000';
 
-  const primary = themeColors?.primary || '#5FA425',
-    background = themeColors?.background || '#fff',
-    foreground = themeColors?.foreground || '#000',
-    error = themeColors?.error || '#FF0000',
-    warning = themeColors?.warning || '#F5A623',
-    success = themeColors?.success || '#0070F3',
-    surfaceBackground = themeColors?.surfaceBackground || '#ffffff',
-    surfaceForeground = themeColors?.surfaceForeground || '#000000',
-    neutrals = themeColors?.neutrals || '#FDFDFD';
-  const colors = {
-    neutrals200: neutrals,
-    neutrals300: shadeColor(neutrals, -5),
-    neutrals400: shadeColor(neutrals, -10),
-    neutrals500: shadeColor(neutrals, -20),
-    neutrals600: shadeColor(neutrals, -30),
-    neutrals700: shadeColor(neutrals, -40),
-    neutrals800: shadeColor(neutrals, -60),
-    neutrals900: shadeColor(neutrals, -70),
+  const darkColors = {
+    ...GenerateRangeColors(dark?.primary, 'primary', 'dark'),
+    ...GenerateRangeColors(dark?.error, 'error', 'dark'),
+    ...GenerateRangeColors(dark?.warning, 'warning', 'dark'),
+    ...GenerateRangeColors(dark?.success, 'success', 'dark'),
+    ...GenerateRangeColors(dark?.neutrals, 'neutrals', 'dark'),
+    surface: dark?.surface,
+    background: dark?.background,
+    foreground: dark?.foreground,
+  };
 
-    surfaceForeground,
-    surfaceBackground,
-    primary,
-    primary100: shadeColor(primary, 15),
-    primary200: shadeColor(primary, -10),
-    primary300: shadeColor(primary, -15),
-    primary400: shadeColor(primary, -20),
-    primary500: shadeColor(primary, -25),
-    primary600: shadeColor(primary, -30),
-    primary700: shadeColor(primary, -35),
-    primary800: shadeColor(primary, -40),
-    primary900: shadeColor(primary, -45),
+  const lightColors = {
+    surface: light?.surface || '#fff',
+    ...GenerateRangeColors(light?.primary || '#5FA425', 'primary', 'light'),
+    ...GenerateRangeColors(light?.error || '#FF0000', 'error', 'light'),
+    ...GenerateRangeColors(light?.warning || '#F5A623', 'warning', 'light'),
+    ...GenerateRangeColors(light?.success || '#0070F3', 'success', 'light'),
+    ...GenerateRangeColors(neutrals, 'neutrals', 'light'),
     background,
     foreground,
-    error,
-    error100: shadeColor(error, 50),
-    error300: shadeColor(error, -10),
-    error500: shadeColor(error, -20),
-    error700: shadeColor(error, -30),
-    warning,
-    warning100: shadeColor(warning, 50),
-    warning300: shadeColor(warning, -10),
-    warning500: shadeColor(warning, -20),
-    warning700: shadeColor(warning, -30),
-    success,
-    success100: shadeColor(success, 50),
-    success300: shadeColor(success, -10),
-    success500: shadeColor(success, -20),
-    success700: shadeColor(success, -30),
   };
 
   const customeLightTheme = createTheme({
-    colors,
+    colors: lightColors,
     radii: {
       5: `${borderRadius}px`,
     },
@@ -78,21 +55,12 @@ export function useTheme({
 
   const customeDarkTheme = createTheme({
     colors: {
-      ...colors,
-      neutrals900: neutrals,
-      neutrals800: shadeColor(neutrals, -5),
-      neutrals700: shadeColor(neutrals, -10),
-      neutrals600: shadeColor(neutrals, -20),
-      neutrals500: shadeColor(neutrals, -30),
-      neutrals400: shadeColor(neutrals, -40),
-      neutrals300: shadeColor(neutrals, -60),
-      neutrals200: shadeColor(neutrals, -70),
-
+      ...lightColors,
+      ...GenerateRangeColors('#111111', 'neutrals', 'dark'),
       foreground: background,
       background: foreground,
-
-      surfaceForeground: surfaceBackground,
-      surfaceBackground: surfaceForeground,
+      surface: '#000',
+      ...JSON.parse(JSON.stringify(darkColors)),
     },
     radii: {
       5: `${borderRadius}px`,

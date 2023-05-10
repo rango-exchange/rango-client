@@ -12,11 +12,16 @@ export default {
       options: ['top', 'bottom', 'left', 'right'],
       defaultValue: 'top',
     },
+    placeholder: {
+      name: 'placeholder',
+      control: { type: 'text' },
+      defaultValue: 'Choose a color',
+    },
   },
 } as ComponentMeta<typeof ColorPicker>;
 
 export const Main = (args: PropTypes) => {
-  const [color, setColor] = useState<string>('#5FA425');
+  const [color, setColor] = useState<string | undefined>('#5FA425');
   return (
     <div
       style={{
@@ -29,7 +34,9 @@ export const Main = (args: PropTypes) => {
       <ColorPicker
         {...args}
         color={color}
-        onChangeColor={(color) => setColor(color.hex)}
+        onChangeColor={(color) => {
+          console.log(color);
+          setColor(color)}}
       />
     </div>
   );

@@ -11,12 +11,12 @@ import { Image } from '../common';
 
 const Container = styled('div', {
   borderRadius: '$5',
-  border: '1px solid $neutrals300',
+  border: '1px solid $neutrals100',
   display: 'flex',
   alignItems: 'center',
   minHeight: 126,
   justifyContent: 'space-between',
-  backgroundColor: '$surfaceBackground',
+  backgroundColor: '$surface',
 });
 
 const ErrorMsg = styled(Typography, {
@@ -90,7 +90,7 @@ export const pulse = keyframes({
 });
 
 const GasContainer = styled('div', {
-  backgroundColor: '$neutrals300',
+  backgroundColor: '$neutrals100',
   borderRadius: '5px',
   margin: '$4',
   display: 'flex',

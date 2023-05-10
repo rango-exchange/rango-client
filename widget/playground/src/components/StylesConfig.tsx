@@ -1,4 +1,5 @@
 import {
+  Button,
   Checkbox,
   ColorPicker,
   Spacer,
@@ -15,31 +16,28 @@ import { Select } from './Select';
 
 const COLORS = [
   {
-    name: 'background',
-    label: 'Background',
+    name: 'primary',
+    label: 'Primary',
   },
   {
-    name: 'primary',
-    label: 'Primary Color',
+    name: 'background',
+    label: 'Background',
   },
 
   {
     name: 'foreground',
-    label: 'Foreground Color',
+    label: 'Foreground',
   },
 
   {
+    name: 'surface',
+    label: 'Surface',
+  },
+  {
     name: 'neutrals',
-    label: 'Neutrals Color',
+    label: 'Neutrals',
   },
-  {
-    name: 'surfaceBackground',
-    label: 'Surface Background Color',
-  },
-  {
-    name: 'surfaceForeground',
-    label: 'Surface Foreground Color',
-  },
+
   {
     name: 'success',
     label: 'Success',
@@ -53,6 +51,59 @@ const COLORS = [
     label: 'Warning',
   },
 ];
+
+const themes = [
+  {
+    dark: {
+      foreground: '#fff',
+      background: '#000',
+      surface: '#000',
+      primary: '#5FA425',
+    },
+    light: {
+      background: '#fff',
+      foreground: '#000',
+      neutrals: '#fafafa',
+
+      surface: '#fff',
+      primary: '#5FA425',
+      error: '#FF0000',
+      warning: '#F5A623',
+      success: '#0070F3',
+    },
+  },
+  {
+    dark: {
+      primary: '#502f82ff',
+      neutrals: '#24203dff',
+      surface: '#24203dff',
+      success: '#9b6de2ff',
+    },
+    light: {
+      background: '#fcfaffff',
+      primary: '#31007aff',
+      foreground: '#120f29ff',
+      surface: '#ffffffff',
+      success: '#653ba3ff',
+    },
+  },
+  {
+    dark: {
+      background: '#110114ff',
+      success: '#9535bdff',
+      surface: '#2d2a2dff',
+      primary: '#d400cbff',
+    },
+    light: {
+      background: '#fffeffff',
+      primary: '#d400cbff',
+      foreground: '#2f0146ff',
+      success: '#9535bdff',
+      surface: '#f5f1f7ff',
+      neutrals: '#eae5eaff',
+    },
+  },
+];
 const GridContent = styled('div', {
   display: 'grid',
   gridTemplateColumns: '1fr',
@@ -64,7 +115,12 @@ const GridContent = styled('div', {
     gridTemplateColumns: '1fr 1fr 1fr',
   },
 });
-
+const ModeContainer = styled('div', {
+  display: 'flex',
+  justifyContent: 'center',
+  position: 'relative',
+  alignItems: 'center',
+});
 const ThemeContainer = styled('div', {
   borderColor: '$neutrals600',
   color: '$neutrals500',
@@ -80,9 +136,16 @@ const Line = styled('div', {
   width: 1,
   backgroundColor: '$foreground',
 });
+
+const Circle = styled('div', {
+  width: 32,
+  height: 32,
+  borderRadius: 16,
+});
 export function StylesConfig() {
   // const width = useConfigStore.use.config().theme.width;
   // const height = useConfigStore.use.config().theme.height;
+  const [mode, setMode] = useState<'light' | 'dark'>('light');
   const language = useConfigStore.use.config().language;
   const borderRadius = useConfigStore.use.config().theme.borderRadius;
   const theme = useConfigStore.use.config().theme.mode;
@@ -92,6 +155,7 @@ export function StylesConfig() {
   const onChangelanguage = useConfigStore.use.onChangelanguage();
   const onChangeTheme = useConfigStore.use.onChangeTheme();
   const onChangeColors = useConfigStore.use.onChangeColors();
+  const onSelectTheme = useConfigStore.use.onSelectTheme();
 
   const [checkedTheme, setChekedTheme] = useState<boolean>(true);
 
@@ -197,6 +261,52 @@ export function StylesConfig() {
         <Spacer size={20} direction="vertical" />
 
         <hr />
+
+        <Spacer size={24} direction="vertical" />
+        <ModeContainer>
+          <Button
+            fullWidth
+            onClick={() => setMode('light')}
+            type="success"
+            variant={mode === 'light' ? 'contained' : 'outlined'}>
+            Light
+          </Button>
+          <Spacer size={24} direction="horizontal" />
+          <Button
+            fullWidth
+            onClick={() => setMode('dark')}
+            type="success"
+            variant={mode === 'dark' ? 'contained' : 'outlined'}>
+            Dark
+          </Button>
+        </ModeContainer>
+        <Spacer size={24} direction="vertical" />
+
+        <GridContent>
+          {themes.map((theme) => (
+            <Button type='success' variant="outlined" onClick={() => onSelectTheme(theme)}>
+              <ModeContainer>
+                <Circle
+                  style={{
+                    backgroundColor: theme.light.success,
+                  }}
+                />
+                <Circle
+                  style={{
+                    backgroundColor: theme.light.foreground,
+                    zIndex: 10,
+                  }}
+                />
+                <Circle
+                  style={{
+                    backgroundColor: theme.light.primary,
+                    position: 'absolute',
+                  }}
+                />
+              </ModeContainer>
+            </Button>
+          ))}
+        </GridContent>
         <Spacer size={24} direction="vertical" />
 
         <GridContent>
@@ -204,12 +314,15 @@ export function StylesConfig() {
             <ColorPicker
               place="top"
               key={color.name}
-              color={colors[color.name] || `Choose Color`}
+              placeholder="Choose Color"
+              color={colors[mode][color.name]}
               label={color.label}
-              onChangeColor={(c) => onChangeColors(color.name as COLORS, c.hex)}
+              onChangeColor={(c) => onChangeColors(color.name as COLORS, mode, c)}
             />
           ))}
         </GridContent>
+        <Spacer size={20} direction="vertical" />
+
         <Spacer size={24} direction="vertical" />
       </ConfigurationContainer>
     </div>
