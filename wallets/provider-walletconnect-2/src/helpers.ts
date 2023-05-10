@@ -53,13 +53,24 @@ export async function makeConnection(options: {
     }));
 
   return new Promise((resolve, reject) => {
-    (async () => {
-      await ethProvider
-        .connect()
-        .then(() => {
-          resolve(ethProvider);
-        })
-        .catch(reject);
-    })();
+    if (ethProvider.session) {
+      (async () => {
+        await ethProvider
+          .enable()
+          .then(() => {
+            resolve(ethProvider);
+          })
+          .catch(reject);
+      })();
+    } else {
+      (async () => {
+        await ethProvider
+          .connect()
+          .then(() => {
+            resolve(ethProvider);
+          })
+          .catch(reject);
+      })();
+    }
   });
 }

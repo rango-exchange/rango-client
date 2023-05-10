@@ -123,9 +123,11 @@ export const switchNetwork: SwitchNetwork = async ({
 export const canSwitchNetworkTo: CanSwitchNetwork = canSwitchNetworkToEvm;
 
 export const disconnect: Disconnect = async ({ instance, destroyInstance }) => {
-  if (instance && instance.session) {
+  if (instance) {
     await instance.disconnect();
-    destroyInstance();
+    if (!instance.session) {
+      destroyInstance();
+    }
   }
 };
 
