@@ -34,6 +34,7 @@ export const getInstance: GetInstance = async ({
   network,
   currentProvider,
   meta,
+  force,
 }) => {
   // If `network` is provided, trying to get chainId
   const evm_chain_info = convertEvmBlockchainMetaToEvmChainInfo(
@@ -45,6 +46,7 @@ export const getInstance: GetInstance = async ({
   const nextInstance = await makeConnection({
     provider: currentProvider,
     chainId: requestedChainId,
+    force,
   });
   return nextInstance;
 };
@@ -116,7 +118,7 @@ export const switchNetwork: SwitchNetwork = async ({
   newInstance,
 }) => {
   if (!!newInstance) {
-    await newInstance({ network });
+    await newInstance({ force: true, network });
   }
 };
 

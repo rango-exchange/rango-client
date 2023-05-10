@@ -17,8 +17,9 @@ export function supportsForSwitchNetworkRequest(provider: any): boolean {
 export async function makeConnection(options: {
   chainId?: number;
   provider: any;
+  force?: boolean;
 }): Promise<any> {
-  const { provider, chainId = 1 } = options;
+  const { provider, chainId = 1, force = false } = options;
 
   const ethProvider =
     provider ||
@@ -53,7 +54,7 @@ export async function makeConnection(options: {
     }));
 
   return new Promise((resolve, reject) => {
-    if (ethProvider.session) {
+    if (ethProvider.session && ethProvider.accounts?.length && !force) {
       (async () => {
         await ethProvider
           .enable()
