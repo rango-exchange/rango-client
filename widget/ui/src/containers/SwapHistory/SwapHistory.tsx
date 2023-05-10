@@ -96,7 +96,7 @@ const SwapInfoContainer = styled('div', {
   display: 'flex',
   flexDirection: 'column',
   paddingBottom: '$16',
-  borderBottom: '1px solid $neutrals300',
+  borderBottom: '1px solid $neutrals100',
 });
 
 const InternalDetailsContainer = styled('div', {

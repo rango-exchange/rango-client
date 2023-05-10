@@ -14,7 +14,7 @@ const Container = styled('div', {
   justifyContent: 'space-between',
   alignItems: 'center',
   padding: '$16 0',
-  borderBottom: '1px solid $neutrals300',
+  borderBottom: '1px solid $neutrals100',
 
   '& > .info': {
     display: 'flex',

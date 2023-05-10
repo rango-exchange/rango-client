@@ -46,7 +46,7 @@ const TooltipContent = styled(RadixTooltip.Content, {
         color: '$white',
       },
       gray: {
-        backgroundColor: '$neutrals300',
+        backgroundColor: '$neutrals100',
         color: '$black',
       },
       black: {
@@ -76,7 +76,7 @@ const TooltipArrow = styled(RadixTooltip.Arrow, {
         fill: '$success',
       },
       gray: {
-        fill: '$neutrals300',
+        fill: '$neutrals100',
       },
       black: {
         fill: '$black',

@@ -48,11 +48,11 @@ const Container = styled('div', {
   variants: {
     type: {
       filled: {
-        backgroundColor: '$neutrals300',
+        backgroundColor: '$neutrals100',
       },
       outlined: {
-        border: '1px solid $neutrals300',
-        backgroundColor: '$surfaceBackground',
+        border: '1px solid $neutrals100',
+        backgroundColor: '$surface',
       },
     },
   },
@@ -106,7 +106,7 @@ const Options = styled('div', {
 const ImagePlaceholder = styled('span', {
   width: '24px',
   height: '24px',
-  backgroundColor: '$neutrals300',
+  backgroundColor: '$neutrals100',
   borderRadius: '99999px',
 });
 
@@ -114,7 +114,7 @@ const OutputContainer = styled('div', {
   windth: '100%',
   height: '$48',
   borderRadius: '$5',
-  backgroundColor: '$surfaceBackground',
+  backgroundColor: '$surface',
   border: '1px solid transparent',
   position: 'relative',
   display: 'flex',
