@@ -12,11 +12,13 @@ export type COLORS =
   | 'inputBackground'
   | 'icons'
   | 'primary'
-  | 'secondary'
   | 'text'
   | 'success'
   | 'error'
-  | 'warning';
+  | 'warning'
+  | 'surfaceBackground'
+  | 'surfaceForeground'
+  | 'neutrals';
 
 interface ConfigState {
   config: WidgetConfig;
@@ -72,6 +74,9 @@ export const useConfigStore = createSelectors(
             success: undefined,
             error: undefined,
             warning: undefined,
+            surfaceBackground: undefined,
+            surfaceForeground: undefined,
+            neutrals: undefined,
           },
         },
       },

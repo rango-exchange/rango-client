@@ -9,6 +9,10 @@ import { WalletType } from '@rango-dev/wallets-shared';
  * @property {string} success
  * @property {string} error
  * @property {string} warning
+ * @property {string} surfaceBackground
+ * @property {string} surfaceForeground
+ * @property {string} neutrals
+
  */
 export type WidgetColors = {
   background?: string;
@@ -17,6 +21,9 @@ export type WidgetColors = {
   success?: string;
   error?: string;
   warning?: string;
+  surfaceBackground?: string;
+  surfaceForeground?: string;
+  neutrals?: string;
 };
 
 /**

@@ -3,7 +3,7 @@ import React, { PropsWithChildren, RefObject } from 'react';
 import { styled } from '../../theme';
 
 const InputContainer = styled('div', {
-  backgroundColor: '$background',
+  backgroundColor: '$surfaceBackground',
   padding: '1px',
   boxSizing: 'border-box',
   border: '1px solid $neutrals400',

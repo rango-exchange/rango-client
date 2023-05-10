@@ -21,16 +21,22 @@ export function useTheme({
     foreground = themeColors?.foreground || '#000',
     error = themeColors?.error || '#FF0000',
     warning = themeColors?.warning || '#F5A623',
-    success = themeColors?.success || '#0070F3';
+    success = themeColors?.success || '#0070F3',
+    surfaceBackground = themeColors?.surfaceBackground || '#ffffff',
+    surfaceForeground = themeColors?.surfaceForeground || '#000000',
+    neutrals = themeColors?.neutrals || '#FDFDFD';
   const colors = {
-    neutrals200: '#FAFAFA',
-    neutrals300: '#f2f2f2',
-    neutrals400: '#dedede',
-    neutrals500: '#cccccc',
-    neutrals600: '#acacac',
-    neutrals700: '#444444',
-    neutrals800: '#333333',
-    neutrals900: '#111111',
+    neutrals200: neutrals,
+    neutrals300: shadeColor(neutrals, -5),
+    neutrals400: shadeColor(neutrals, -10),
+    neutrals500: shadeColor(neutrals, -20),
+    neutrals600: shadeColor(neutrals, -30),
+    neutrals700: shadeColor(neutrals, -40),
+    neutrals800: shadeColor(neutrals, -60),
+    neutrals900: shadeColor(neutrals, -70),
+
+    surfaceForeground,
+    surfaceBackground,
     primary,
     primary100: shadeColor(primary, 15),
     primary200: shadeColor(primary, -10),
@@ -73,16 +79,20 @@ export function useTheme({
   const customeDarkTheme = createTheme({
     colors: {
       ...colors,
-      neutrals200: '#111111',
-      neutrals300: '#333333',
-      neutrals400: '#444444',
-      neutrals500: '#acacac',
-      neutrals600: '#cccccc',
-      neutrals700: '#dedede',
-      neutrals800: '#f2f2f2',
-      neutrals900: '#FAFAFA',
+      neutrals900: neutrals,
+      neutrals800: shadeColor(neutrals, -5),
+      neutrals700: shadeColor(neutrals, -10),
+      neutrals600: shadeColor(neutrals, -20),
+      neutrals500: shadeColor(neutrals, -30),
+      neutrals400: shadeColor(neutrals, -40),
+      neutrals300: shadeColor(neutrals, -60),
+      neutrals200: shadeColor(neutrals, -70),
+
       foreground: background,
       background: foreground,
+
+      surfaceForeground: surfaceBackground,
+      surfaceBackground: surfaceForeground,
     },
     radii: {
       5: `${borderRadius}px`,
@@ -92,6 +102,7 @@ export function useTheme({
     },
   });
   const [OSTheme, setOSTheme] = useState(customeLightTheme);
+
   useEffect(() => {
     (async () => {
       await fetchMeta();

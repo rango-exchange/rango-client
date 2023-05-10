@@ -78,7 +78,7 @@ const OutputContainer = styled('div', {
   windth: '100%',
   height: '$48',
   borderRadius: '$5',
-  backgroundColor: '$background',
+  backgroundColor: '$surfaceBackground',
   border: '1px solid transparent',
   position: 'relative',
   display: 'flex',

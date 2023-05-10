@@ -21,7 +21,7 @@ const ChipCointainer = styled('div', {
   variants: {
     selected: {
       true: { backgroundColor: '$success', color: '$background' },
-      false: { backgroundColor: '$background' },
+      false: { backgroundColor: '$surfaceBackground' },
     },
   },
 });
