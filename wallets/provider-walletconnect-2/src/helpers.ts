@@ -18,16 +18,16 @@ export async function makeConnection(options: {
   chainId?: number;
   provider: any;
 }): Promise<any> {
-  const { provider, chainId } = options;
+  const { provider, chainId = 1 } = options;
 
   const ethProvider =
     provider ||
     (await EthereumProvider.init({
       projectId, // REQUIRED your projectId
-      chains: [chainId || 1],
+      chains: [chainId],
       // REQUIRED chain ids
       showQrModal: true, // REQUIRED set to "true" to use @web3modal/standalone,
-      methods: [
+      optionalMethods: [
         'eth_sendTransaction',
         'eth_signTransaction',
         'eth_sign',
@@ -43,7 +43,15 @@ export async function makeConnection(options: {
         },
       },
     }));
-  await ethProvider.connect();
 
-  return ethProvider;
+  return new Promise((resolve, reject) => {
+    (async () => {
+      await ethProvider
+        .connect()
+        .then(() => {
+          resolve(ethProvider);
+        })
+        .catch(reject);
+    })();
+  });
 }

@@ -1,4 +1,4 @@
-import { makeConnection, supportsForSwitchNetworkRequest } from './helpers';
+import { makeConnection } from './helpers';
 import {
   WalletType,
   CanSwitchNetwork,
@@ -8,15 +8,12 @@ import {
   Subscribe,
   SwitchNetwork,
   WalletConfig,
-  convertEvmBlockchainMetaToEvmChainInfo,
   canSwitchNetworkToEvm,
-  switchOrAddNetworkForMetamaskCompatibleWallets,
   WalletInfo,
   getBlockChainNameFromId,
   Network,
-  chooseInstance,
+  convertEvmBlockchainMetaToEvmChainInfo,
 } from '@rango-dev/wallets-shared';
-import { formatJsonRpcRequest } from '@walletconnect/jsonrpc-utils';
 import signer from './signer';
 import {
   SignerFactory,
@@ -62,25 +59,19 @@ export const connect: Connect = async ({ instance }) => {
   };
 };
 
-export const subscribe: Subscribe = async ({
+export const subscribe: Subscribe = ({
   instance,
   updateChainId,
   updateAccounts,
   disconnect,
   meta,
+  connect,
 }) => {
   instance?.on('chainChanged', (chainId: string) => {
     const network = getBlockChainNameFromId(chainId, meta) || Network.Unknown;
-    const targetInstance = chooseInstance(instance, meta, network);
-    targetInstance
-      .request({ method: 'eth_requestAccounts' })
-      .then(() => console.log(77777777777))
-      .catch((err: unknown) => {
-        console.log({ err });
-      });
 
     updateChainId(chainId);
-    connect(network as any);
+    connect(network);
   });
   // Subscribe to connection events
   instance.on('connect', (error: any, payload: any) => {
@@ -88,8 +79,6 @@ export const subscribe: Subscribe = async ({
       throw error;
     }
 
-    console.log('payload'); // Get provided accounts and chainId
-    console.log(payload); // Get provided accounts and chainId
     const { accounts, chainId } = payload.params[0];
 
     updateAccounts(accounts);
@@ -100,8 +89,6 @@ export const subscribe: Subscribe = async ({
     if (error) {
       throw error;
     }
-    console.log('ssssddd'); // Get provided accounts and chainId
-    console.log(payload);
 
     // Get updated accounts and chainId
     const { accounts, chainId } = payload.params[0];
@@ -114,40 +101,16 @@ export const subscribe: Subscribe = async ({
       throw error;
     }
 
-    console.log('_payload');
-    console.log(_payload);
-
     disconnect();
   });
 };
 
 export const switchNetwork: SwitchNetwork = async ({
-  instance,
-  meta,
   network,
   newInstance,
 }) => {
-  const evm_chain_info = convertEvmBlockchainMetaToEvmChainInfo(
-    meta as EvmBlockchainMeta[]
-  );
-
-  if (supportsForSwitchNetworkRequest(instance)) {
-    const simulatedWeb3Instance = {
-      request: (payload: any): Promise<any> => {
-        const rpcRequest = formatJsonRpcRequest(payload.method, payload.params);
-        return instance.sendCustomRequest(rpcRequest);
-      },
-    };
-
-    await switchOrAddNetworkForMetamaskCompatibleWallets(
-      simulatedWeb3Instance,
-      network,
-      evm_chain_info
-    );
-  } else {
-    if (!!newInstance) {
-      await newInstance({ force: true, network });
-    }
+  if (!!newInstance) {
+    await newInstance({ network });
   }
 };
 
@@ -167,7 +130,7 @@ export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
 ) => {
   const evms = evmBlockchains(allBlockChains);
   return {
-    name: 'WalletConnect',
+    name: 'WalletConnect2',
     img: 'https://raw.githubusercontent.com/rango-exchange/rango-types/main/assets/icons/wallets/walletconnect.svg',
     installLink: '',
     color: '#b2dbff',

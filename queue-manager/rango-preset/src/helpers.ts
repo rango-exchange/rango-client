@@ -808,7 +808,7 @@ export function isRequiredWalletConnected(
 
   const matched = connectedAccounts.some((account) => {
     const { address: accountAddress } = readAccountAddress(account);
-    return address === accountAddress;
+    return address.toLocaleLowerCase() === accountAddress.toLocaleLowerCase();
   });
   return { ok: matched, reason: 'account_miss_match' };
 }

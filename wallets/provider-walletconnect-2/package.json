@@ -41,11 +41,8 @@
   "dependencies": {
     "@rango-dev/signer-evm": "^0.1.11",
     "@rango-dev/wallets-shared": "^0.1.11",
-    "@walletconnect/jsonrpc-utils": "^1.0.4",
-    "@walletconnect/sign-client": "^2.7.2",
     "@web3modal/standalone": "^2.3.7",
     "@walletconnect/ethereum-provider": "^2.7.2",
-    "@walletconnect/universal-provider": "^2.7.2",
     "rango-types": "^0.1.28"
   },
   "publishConfig": {
