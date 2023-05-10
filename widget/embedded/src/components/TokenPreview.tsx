@@ -27,10 +27,10 @@ const Container = styled('div', {
   variants: {
     type: {
       filled: {
-        backgroundColor: '$neutrals100',
+        backgroundColor: '$neutral100',
       },
       outlined: {
-        border: '1px solid $neutrals100',
+        border: '1px solid $neutral100',
       },
     },
   },
@@ -70,7 +70,7 @@ const Container = styled('div', {
 const ImagePlaceholder = styled('span', {
   width: '24px',
   height: '24px',
-  backgroundColor: '$neutrals100',
+  backgroundColor: '$neutral100',
   borderRadius: '99999px',
 });
 
@@ -123,7 +123,7 @@ export function TokenPreview(props: PropTypes) {
     <Box>
       <Container type={'outlined'}>
         <div className="head">
-          <Typography variant="body2" color="neutrals800">
+          <Typography variant="body2" color="neutral800">
             {props.label}
           </Typography>
           <div>
@@ -131,7 +131,7 @@ export function TokenPreview(props: PropTypes) {
             {props.usdValue && (
               <Typography
                 variant="caption"
-                color="neutrals600"
+                color="neutral600"
                 className="usd-value"
               >{`$${numberToString(props.usdValue)}`}</Typography>
             )}

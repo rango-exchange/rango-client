@@ -8,8 +8,8 @@ const MainContainer = styled('div', {
   width: '100%',
   padding: '$16',
   borderRadius: '$5',
-  backgroundColor: '$neutrals100',
-  color: '$neutrals800',
+  backgroundColor: '$neutral100',
+  color: '$neutral800',
 
   '.main': {
     display: 'flex',

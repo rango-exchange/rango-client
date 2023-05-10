@@ -46,17 +46,17 @@ const ButtonContainer = styled('button', {
     },
     variant: {
       contained: {
-        backgroundColor: '$neutrals100',
+        backgroundColor: '$neutral100',
         color: '$foreground',
         border: 0,
         '&:hover': {
-          backgroundColor: '$neutrals200',
+          backgroundColor: '$neutral200',
         },
         '&:disabled': {
-          background: '$neutrals400',
+          background: '$neutral400',
         },
         '&:disabled:hover': {
-          background: '$neutrals400',
+          background: '$neutral400',
           transform: 'unset',
         },
       },
@@ -64,23 +64,23 @@ const ButtonContainer = styled('button', {
         backgroundColor: '$surface',
         border: 1,
         borderStyle: 'solid',
-        borderColor: '$neutrals400',
+        borderColor: '$neutral400',
         color: '$foreground',
         '&:hover': {
-          borderColor: '$neutrals600',
+          borderColor: '$neutral600',
         },
         '&:disabled': {
-          borderColor: '$neutrals400',
-          color: '$neutrals400',
+          borderColor: '$neutral400',
+          color: '$neutral400',
         },
       },
       ghost: {
         color: '$foreground',
         '&:hover': {
-          backgroundColor: '$neutrals200',
+          backgroundColor: '$neutral200',
         },
         '&:disabled': {
-          color: '$neutrals400 !important',
+          color: '$neutral400',
         },
         background: 'transparent',
         border: 0,
@@ -128,19 +128,19 @@ const ButtonContainer = styled('button', {
       type: 'primary',
       variant: 'outlined',
       css: {
-        color: '$primary !important',
+        color: '$primary',
         borderColor: '$primary',
         '&:hover': {
-          color: '$primary700 !important',
-          borderColor: '$primary700 !important',
+          color: '$primary700',
+          borderColor: '$primary700',
         },
         '&:visited': {
-          color: '$primary900 !important',
-          borderColor: '$primary900 !important',
+          color: '$primary900',
+          borderColor: '$primary900',
         },
         '&:focus': {
-          color: '$primary600 !important',
-          borderColor: '$primary600 !important',
+          color: '$primary600',
+          borderColor: '$primary600',
         },
       },
     },
@@ -167,7 +167,7 @@ const ButtonContainer = styled('button', {
         [`.${darkTheme} &`]: {
           $$color: '$colors$foreground',
         },
-        color: '$$color !important',
+        color: '$$color',
         '&:hover': {
           background: '$error300',
         },
@@ -183,19 +183,19 @@ const ButtonContainer = styled('button', {
       type: 'error',
       variant: 'outlined',
       css: {
-        color: '$error !important',
+        color: '$error',
         borderColor: '$error',
         '&:hover': {
-          color: '$error300 !important',
-          borderColor: '$error300 !important',
+          color: '$error300',
+          borderColor: '$error300',
         },
         '&:visited': {
-          color: '$error700 !important',
-          borderColor: '$error700 !important',
+          color: '$error700',
+          borderColor: '$error700',
         },
         '&:focus': {
-          color: '$error700 !important',
-          borderColor: '$error700 !important',
+          color: '$error700',
+          borderColor: '$error700',
         },
       },
     },
@@ -224,7 +224,7 @@ const ButtonContainer = styled('button', {
         [`.${darkTheme} &`]: {
           $$color: '$colors$foreground',
         },
-        color: '$$color !important',
+        color: '$$color',
         '&:hover': {
           background: '$warning300',
         },
@@ -240,19 +240,19 @@ const ButtonContainer = styled('button', {
       type: 'warning',
       variant: 'outlined',
       css: {
-        color: '$warning !important',
+        color: '$warning',
         borderColor: '$warning',
         '&:hover': {
-          color: '$warning300 !important',
-          borderColor: '$warning300 !important',
+          color: '$warning300',
+          borderColor: '$warning300',
         },
         '&:visited': {
-          color: '$warning700 !important',
-          borderColor: '$warning700 !important',
+          color: '$warning700',
+          borderColor: '$warning700',
         },
         '&:focus': {
-          color: '$warning700 !important',
-          borderColor: '$warning700 !important',
+          color: '$warning700',
+          borderColor: '$warning700',
         },
       },
     },
@@ -281,7 +281,7 @@ const ButtonContainer = styled('button', {
         [`.${darkTheme} &`]: {
           $$color: '$colors$foreground',
         },
-        color: '$$color !important',
+        color: '$$color',
         '&:hover': {
           background: '$success300',
         },
@@ -297,19 +297,19 @@ const ButtonContainer = styled('button', {
       type: 'success',
       variant: 'outlined',
       css: {
-        color: '$success !important',
+        color: '$success',
         borderColor: '$success',
         '&:hover': {
-          color: '$success300 !important',
-          borderColor: '$success300 !important',
+          color: '$success300',
+          borderColor: '$success300',
         },
         '&:visited': {
-          color: '$success700 !important',
-          borderColor: '$success700 !important',
+          color: '$success700',
+          borderColor: '$success700',
         },
         '&:focus': {
-          color: '$success700 !important',
-          borderColor: '$success700 !important',
+          color: '$success700',
+          borderColor: '$success700',
         },
       },
     },

@@ -10,8 +10,7 @@ import { WalletType } from '@rango-dev/wallets-shared';
  * @property {string} error
  * @property {string} warning
  * @property {string} surface
- * @property {string} surfaceForeground
- * @property {string} neutrals
+ * @property {string} neutral
 
  */
 export type WidgetColors = {
@@ -22,7 +21,7 @@ export type WidgetColors = {
   error?: string;
   warning?: string;
   surface?: string;
-  neutrals?: string;
+  neutral?: string;
 };
 
 /**
@@ -39,6 +38,7 @@ export type WidgetColors = {
  * specifies the radius of the corners of a widget.
  * @property {number} width - The `width` property is a number that represents the width of the widget.
  * @property {number} height - The `height` property is a number that specifies the height of the widget.
+ * @property {boolean} singleTheme - The `singleTheme` property is a boolean that specifies the theme is support dark and light or only light.
  */
 export type WidgetTheme = {
   mode?: 'auto' | 'light' | 'dark';
@@ -47,6 +47,7 @@ export type WidgetTheme = {
   borderRadius?: number;
   width?: number;
   height?: number;
+  singleTheme?: boolean;
 };
 
 /**

@@ -14,7 +14,7 @@ const Circle = styled('div', {
   width: 12,
   height: 12,
   borderRadius: 6,
-  border: '1px solid $neutrals400',
+  border: '1px solid $neutral400',
   position: 'absolute',
   top: 12,
   right: 12,
@@ -24,7 +24,7 @@ const Circle = styled('div', {
         borderColor: '$success',
       },
       false: {
-        borderColor: '$neutrals400',
+        borderColor: '$neutral400',
       },
     },
   },
@@ -40,7 +40,7 @@ const SolidCircle = styled('div', {
         backgroundColor: '$success',
       },
       false: {
-        backgroundColor: '$neutrals400',
+        backgroundColor: '$neutral400',
       },
     },
   },
@@ -65,8 +65,8 @@ const Container = styled('div', {
         color: '$success',
       },
       false: {
-        borderColor: '$neutrals400',
-        color: '$neutrals400',
+        borderColor: '$neutral400',
+        color: '$neutral400',
       },
     },
   },

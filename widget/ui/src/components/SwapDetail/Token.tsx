@@ -12,7 +12,7 @@ const TokenContainer = styled('div', {
     fontWeight: 'bold',
   },
   '& .estimated': {
-    color: '$neutrals600',
+    color: '$neutral600',
   },
 });
 
@@ -33,7 +33,7 @@ const TokenImage = styled('div', {
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '$background',
-    border: '1px solid $neutrals400',
+    border: '1px solid $neutral400',
   },
 });
 

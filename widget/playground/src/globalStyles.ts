@@ -4,13 +4,13 @@ export const globalStyles = globalCss({
   '*': {
     '&::-webkit-scrollbar': { width: '$8' },
     '&::-webkit-scrollbar-thumb': {
-      backgroundColor: '$neutrals400',
+      backgroundColor: '$neutral400',
     },
     '&::-webkit-scrollbar-thumb:hover': {
-      backgroundColor: '$neutrals500',
+      backgroundColor: '$neutral500',
     },
     '&::-webkit-scrollbar-track': {
-      backgroundColor: '$neutrals100',
+      backgroundColor: '$neutral100',
     },
   },
 });

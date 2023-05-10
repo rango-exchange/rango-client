@@ -10,7 +10,7 @@ const Container = styled('div', {
 });
 
 const Color = styled('div', {
-  border: '1px solid $neutrals100',
+  border: '1px solid $neutral100',
   borderRadius: '$5',
   width: '$32',
   height: '$32',
@@ -45,7 +45,7 @@ const Popover = styled('div', {
 export interface PropTypes {
   color?: string;
   place: 'top' | 'bottom' | 'left' | 'right';
-  onChangeColor: (color: string | undefined) => void;
+  onChangeColor: (color?: string) => void;
   label?: string;
   placeholder?: string;
 }

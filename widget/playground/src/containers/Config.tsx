@@ -24,7 +24,7 @@ const providers = allProviders();
 const Container = styled('div', {
   display: 'flex',
   justifyContent: 'center',
-  backgroundColor: '$neutrals100',
+  backgroundColor: '$neutral100',
 });
 const SwapContent = styled('div', {
   width: '100%',

@@ -8,8 +8,8 @@ export const Container = styled('div', {
   justifyContent: 'space-between',
   padding: '$8',
   borderRadius: '$5',
-  backgroundColor: '$neutrals100',
-  color: '$neutrals800',
+  backgroundColor: '$neutral100',
+  color: '$neutral800',
   fontSize: '$12',
 
   '.routes': {

@@ -20,14 +20,14 @@ const MainContainer = styled('div', {
     listStyleType: 'none',
     '&::-webkit-scrollbar': { width: '$8', height: '$8' },
     '&::-webkit-scrollbar-thumb': {
-      backgroundColor: '$neutrals400',
+      backgroundColor: '$neutral400',
       borderRadius: '$10',
     },
     '&::-webkit-scrollbar-thumb:hover': {
-      backgroundColor: '$neutrals500',
+      backgroundColor: '$neutral500',
     },
     '&::-webkit-scrollbar-track': {
-      backgroundColor: '$neutrals100',
+      backgroundColor: '$neutral100',
     },
   },
   variants: {

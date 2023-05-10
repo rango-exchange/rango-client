@@ -26,8 +26,7 @@ export type Colors = {
   error?: string;
   warning?: string;
   surface?: string;
-  surfaceForeground?: string;
-  neutrals?: string;
+  neutral?: string;
 };
 
 export type Theme = {
@@ -37,6 +36,7 @@ export type Theme = {
   borderRadius?: number;
   width?: number;
   height?: number;
+  singleTheme?: boolean;
 };
 export type Support = {
   blockchain?: string;

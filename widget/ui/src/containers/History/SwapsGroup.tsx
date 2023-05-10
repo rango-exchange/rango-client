@@ -34,7 +34,7 @@ export function SwapsGroup(props: Omit<PropTypes, 'onBack'>) {
             <Group>
               <Typography
                 variant="body2"
-                color="neutrals600"
+                color="neutral600"
                 className="group-title"
               >
                 {group.title}

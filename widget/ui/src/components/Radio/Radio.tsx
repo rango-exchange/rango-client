@@ -32,10 +32,10 @@ const StyledItem = styled(RadioGroup.Item, {
   borderRadius: '100%',
   cursor: 'pointer',
   backgroundColor: '$background',
-  border: '1px solid $neutrals400',
+  border: '1px solid $neutral400',
 
   '&:hover': {
-    borderColor: '$neutrals600',
+    borderColor: '$neutral600',
   },
 });
 

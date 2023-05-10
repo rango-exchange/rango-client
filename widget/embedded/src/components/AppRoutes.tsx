@@ -55,7 +55,7 @@ export function AppRoutes(props: PropTypes) {
     },
     {
       path: navigationRoutes.settings,
-      element: <SettingsPage supportedSwappers={config?.liquiditySources} />,
+      element: <SettingsPage singleTheme= {config?.theme?.singleTheme} supportedSwappers={config?.liquiditySources} />,
     },
     {
       path: navigationRoutes.liquiditySources,
