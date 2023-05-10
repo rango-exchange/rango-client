@@ -21,7 +21,22 @@ export function scheduleNextStep({
 }: ExecuterActions<SwapStorage, SwapActionTypes, SwapQueueContext>): void {
   const swap = getStorage().swapDetails;
   const currentStep = getCurrentStep(swap);
+  const isFailed = swap.steps.find((step) => step.status === 'failed');
+
   if (!!currentStep) {
+    if (isFailed) {
+      swap.status = 'failed';
+      swap.finishTime = new Date().getTime().toString();
+      setStorage({ ...getStorage(), swapDetails: swap });
+      context.notifier({
+        eventType: 'task_failed',
+        swap: swap,
+        step: null,
+      });
+      failed();
+      return;
+    }
+
     if (isTxAlreadyCreated(swap, currentStep)) {
       schedule(SwapActionTypes.EXECUTE_TRANSACTION);
       return next();
@@ -40,7 +55,6 @@ export function scheduleNextStep({
     schedule(SwapActionTypes.CREATE_TRANSACTION);
     next();
   } else {
-    const isFailed = swap.steps.find((step) => step.status === 'failed');
     swap.status = isFailed ? 'failed' : 'success';
     swap.finishTime = new Date().getTime().toString();
 
