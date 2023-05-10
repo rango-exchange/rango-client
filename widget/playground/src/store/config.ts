@@ -5,6 +5,7 @@ import { WalletType } from '@rango-dev/wallets-shared';
 import { immer } from 'zustand/middleware/immer';
 import { Type, WidgetConfig } from '../types';
 import { getConfig } from '../configs';
+import { Colors } from '../types';
 
 export type Mode = 'dark' | 'light' | 'auto';
 export type COLORS =
@@ -16,7 +17,7 @@ export type COLORS =
   | 'success'
   | 'error'
   | 'warning'
-  | 'surfaceBackground'
+  | 'surface'
   | 'surfaceForeground'
   | 'neutrals';
 
@@ -34,7 +35,8 @@ interface ConfigState {
     name: 'mode' | 'fontFamily' | 'borderRadius' | 'width' | 'height',
     value: Mode | string | number,
   ) => void;
-  onChangeColors: (name: COLORS, color: string) => void;
+  onChangeColors: (name: COLORS, type: string, color?: string) => void;
+  onSelectTheme: (colors: { light: Colors; dark: Colors }) => void;
   onChangelanguage: (value: string) => void;
 }
 
@@ -68,15 +70,28 @@ export const useConfigStore = createSelectors(
           width: undefined,
           height: undefined,
           colors: {
-            background: undefined,
-            primary: undefined,
-            foreground: undefined,
-            success: undefined,
-            error: undefined,
-            warning: undefined,
-            surfaceBackground: undefined,
-            surfaceForeground: undefined,
-            neutrals: undefined,
+            dark: {
+              background: undefined,
+              primary: undefined,
+              foreground: undefined,
+              success: undefined,
+              error: undefined,
+              warning: undefined,
+              surface: undefined,
+              surfaceForeground: undefined,
+              neutrals: undefined,
+            },
+            light: {
+              background: undefined,
+              primary: undefined,
+              foreground: undefined,
+              success: undefined,
+              error: undefined,
+              warning: undefined,
+              surface: undefined,
+              surfaceForeground: undefined,
+              neutrals: undefined,
+            },
           },
         },
       },
@@ -136,9 +151,13 @@ export const useConfigStore = createSelectors(
         set((state) => {
           state.config.theme[name as string] = value;
         }),
-      onChangeColors: (name, color) =>
+      onChangeColors: (name, type, color) =>
         set((state) => {
-          state.config.theme.colors[name] = color;
+          state.config.theme.colors[type][name] = color;
+        }),
+      onSelectTheme: (colors) =>
+        set((state) => {
+          state.config.theme.colors = colors;
         }),
     })),
   ),

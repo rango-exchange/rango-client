@@ -21,7 +21,7 @@ interface PropTypes {
 const ImagePlaceholder = styled('span', {
   width: '24px',
   height: '24px',
-  backgroundColor: '$neutrals300',
+  backgroundColor: '$neutrals100',
   borderRadius: '99999px',
 });
 const StyledImage = styled('img', {

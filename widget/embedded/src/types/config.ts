@@ -9,7 +9,7 @@ import { WalletType } from '@rango-dev/wallets-shared';
  * @property {string} success
  * @property {string} error
  * @property {string} warning
- * @property {string} surfaceBackground
+ * @property {string} surface
  * @property {string} surfaceForeground
  * @property {string} neutrals
 
@@ -21,8 +21,7 @@ export type WidgetColors = {
   success?: string;
   error?: string;
   warning?: string;
-  surfaceBackground?: string;
-  surfaceForeground?: string;
+  surface?: string;
   neutrals?: string;
 };
 
@@ -44,7 +43,7 @@ export type WidgetColors = {
 export type WidgetTheme = {
   mode?: 'auto' | 'light' | 'dark';
   fontFamily?: string;
-  colors?: WidgetColors;
+  colors?: { light: WidgetColors; dark: WidgetColors };
   borderRadius?: number;
   width?: number;
   height?: number;

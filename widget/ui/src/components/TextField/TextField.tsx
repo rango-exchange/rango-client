@@ -3,7 +3,7 @@ import React, { PropsWithChildren, RefObject } from 'react';
 import { styled } from '../../theme';
 
 const InputContainer = styled('div', {
-  backgroundColor: '$surfaceBackground',
+  backgroundColor: '$surface',
   padding: '1px',
   boxSizing: 'border-box',
   border: '1px solid $neutrals400',
@@ -43,7 +43,7 @@ const InputContainer = styled('div', {
     },
     disabled: {
       true: {
-        backgroundColor: '$neutrals300',
+        backgroundColor: '$neutrals100',
         cursor: 'not-allowed',
         filter: 'grayscale(100%)',
       },

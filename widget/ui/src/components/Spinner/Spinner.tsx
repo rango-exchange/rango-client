@@ -10,7 +10,7 @@ const spin = keyframes({
 const SpinnerContainer = styled('div', {
   borderRadius: '50%',
   position: 'relative',
-  border: `2px solid $neutrals300`,
+  border: `2px solid $neutrals100`,
   borderRight: `2px solid`,
   animation: `${spin} 1.5s linear infinite`,
   margin: `0px $8`,

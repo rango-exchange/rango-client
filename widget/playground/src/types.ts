@@ -25,7 +25,7 @@ export type Colors = {
   success?: string;
   error?: string;
   warning?: string;
-  surfaceBackground?: string;
+  surface?: string;
   surfaceForeground?: string;
   neutrals?: string;
 };
@@ -33,7 +33,7 @@ export type Colors = {
 export type Theme = {
   mode?: 'dark' | 'light' | 'auto';
   fontFamily?: string;
-  colors: Colors;
+  colors: { light: Colors; dark: Colors };
   borderRadius?: number;
   width?: number;
   height?: number;

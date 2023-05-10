@@ -46,7 +46,7 @@ const ButtonContainer = styled('button', {
     },
     variant: {
       contained: {
-        backgroundColor: '$neutrals300',
+        backgroundColor: '$neutrals100',
         color: '$foreground',
         border: 0,
         '&:hover': {
@@ -61,7 +61,7 @@ const ButtonContainer = styled('button', {
         },
       },
       outlined: {
-        backgroundColor: '$surfaceBackground',
+        backgroundColor: '$surface',
         border: 1,
         borderStyle: 'solid',
         borderColor: '$neutrals400',
@@ -70,7 +70,7 @@ const ButtonContainer = styled('button', {
           borderColor: '$neutrals600',
         },
         '&:disabled': {
-          borderColor: '$neutrals300',
+          borderColor: '$neutrals400',
           color: '$neutrals400',
         },
       },

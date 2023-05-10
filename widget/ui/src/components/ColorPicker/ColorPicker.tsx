@@ -1,14 +1,16 @@
 import React, { useState } from 'react';
-import { ChromePicker, ColorResult } from 'react-color';
+import { ChromePicker } from 'react-color';
 import { styled } from '../../theme';
 import { Button } from '../Button';
+import { CloseIcon } from '../Icon';
+import rgbHex from 'rgb-hex';
 
 const Container = styled('div', {
   position: 'relative',
 });
 
 const Color = styled('div', {
-  border: '1px solid $neutrals300',
+  border: '1px solid $neutrals100',
   borderRadius: '$5',
   width: '$32',
   height: '$32',
@@ -41,13 +43,11 @@ const Popover = styled('div', {
   },
 });
 export interface PropTypes {
-  color: string;
+  color?: string;
   place: 'top' | 'bottom' | 'left' | 'right';
-  onChangeColor: (
-    color: ColorResult,
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => void;
+  onChangeColor: (color: string | undefined) => void;
   label?: string;
+  placeholder?: string;
 }
 
 const Label = styled('label', {
@@ -57,7 +57,13 @@ const Label = styled('label', {
   color: '$foreground',
 });
 
-export function ColorPicker({ color, onChangeColor, label, place }: PropTypes) {
+export function ColorPicker({
+  color,
+  onChangeColor,
+  label,
+  place,
+  placeholder,
+}: PropTypes) {
   const [displayColorPicker, setDisplayColorPicker] = useState<boolean>(false);
 
   return (
@@ -69,15 +75,33 @@ export function ColorPicker({ color, onChangeColor, label, place }: PropTypes) {
         fullWidth
         align="start"
         size="large"
+        suffix={
+          color && (
+            <div
+              onClick={(e) => {
+                e.stopPropagation();
+                onChangeColor(undefined);
+              }}
+            >
+              <CloseIcon size={20} />
+            </div>
+          )
+        }
         onClick={() => setDisplayColorPicker((prev) => !prev)}
       >
-        {color}
+        {color || placeholder}
       </Button>
 
       {displayColorPicker && (
         <Popover place={place}>
           <Cover onClick={() => setDisplayColorPicker(false)} />
-          <ChromePicker color={color} onChange={onChangeColor} />
+          <ChromePicker
+            color={color}
+            onChange={(c) => {
+              const color = '#' + rgbHex(c.rgb.r, c.rgb.g, c.rgb.b, c.rgb.a);
+              onChangeColor(color);
+            }}
+          />
         </Popover>
       )}
     </Container>

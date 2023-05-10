@@ -39,7 +39,7 @@ const Container = styled('div', {
     alignItems: 'center',
   },
   '.num': {
-    backgroundColor: '$neutrals300',
+    backgroundColor: '$neutrals100',
     display: 'inline-flex',
     width: '24px',
     height: '24px',

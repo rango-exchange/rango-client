@@ -8,7 +8,7 @@ const MainContainer = styled('div', {
   width: '100%',
   padding: '$16',
   borderRadius: '$5',
-  backgroundColor: '$neutrals300',
+  backgroundColor: '$neutrals100',
   color: '$neutrals800',
 
   '.main': {
