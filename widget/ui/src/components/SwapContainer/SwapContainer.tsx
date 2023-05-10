@@ -27,7 +27,7 @@ const MainContainer = styled('div', {
       backgroundColor: '$neutrals500',
     },
     '&::-webkit-scrollbar-track': {
-      backgroundColor: '$neutrals300',
+      backgroundColor: '$neutrals100',
     },
   },
   variants: {

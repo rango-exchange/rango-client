@@ -12,7 +12,7 @@ import { Button } from '../Button';
 
 const BaseContainer = styled('div', {
   borderRadius: '$5',
-  backgroundColor: '$neutrals300',
+  backgroundColor: '$neutrals100',
   padding: '$16',
 });
 
