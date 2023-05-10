@@ -30,7 +30,7 @@ const ChainLogo = styled('div', {
   padding: '$2',
   borderRadius: '50%',
   backgroundColor: '$background',
-  border: '1px solid $neutrals400',
+  border: '1px solid $neutral400',
 
   img: {
     width: '100%',
@@ -74,7 +74,7 @@ const Detail = styled('div', {
   },
 });
 const SubTitle = styled(Typography, {
-  color: '$neutrals600',
+  color: '$neutral600',
   display: 'block',
   paddingLeft: '$8',
 });
@@ -121,7 +121,7 @@ export function StepDetail(props: PropsWithChildren<PropTypes>) {
           <Typography
             noWrap
             variant={direction === 'vertical' ? 'body2' : 'title'}
-            color={'$neutrals600'}
+            color={'$neutral600'}
           >
             {estimatedAmount}
           </Typography>
@@ -133,7 +133,7 @@ export function StepDetail(props: PropsWithChildren<PropTypes>) {
         >
           {symbol}
         </Typography>
-        <SubTitle noWrap variant="caption" color="$neutrals800">
+        <SubTitle noWrap variant="caption" color="$neutral800">
           on {blockchain}
         </SubTitle>
       </Detail>

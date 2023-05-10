@@ -18,8 +18,7 @@ export type COLORS =
   | 'error'
   | 'warning'
   | 'surface'
-  | 'surfaceForeground'
-  | 'neutrals';
+  | 'neutral';
 
 interface ConfigState {
   config: WidgetConfig;
@@ -32,10 +31,10 @@ interface ConfigState {
   onChangeToken: (token?: Asset, type?: Type) => void;
   onChangeAmount: (amount: number) => void;
   onChangeTheme: (
-    name: 'mode' | 'fontFamily' | 'borderRadius' | 'width' | 'height',
-    value: Mode | string | number,
+    name: 'mode' | 'fontFamily' | 'borderRadius' | 'width' | 'height' | 'singleTheme',
+    value: Mode | string | number | boolean,
   ) => void;
-  onChangeColors: (name: COLORS, type: string, color?: string) => void;
+  onChangeColors: (name: COLORS, mode: 'light' | 'dark', color?: string) => void;
   onSelectTheme: (colors: { light: Colors; dark: Colors }) => void;
   onChangelanguage: (value: string) => void;
 }
@@ -69,6 +68,7 @@ export const useConfigStore = createSelectors(
           borderRadius: undefined,
           width: undefined,
           height: undefined,
+          singleTheme: undefined,
           colors: {
             dark: {
               background: undefined,
@@ -78,8 +78,7 @@ export const useConfigStore = createSelectors(
               error: undefined,
               warning: undefined,
               surface: undefined,
-              surfaceForeground: undefined,
-              neutrals: undefined,
+              neutral: undefined,
             },
             light: {
               background: undefined,
@@ -89,8 +88,7 @@ export const useConfigStore = createSelectors(
               error: undefined,
               warning: undefined,
               surface: undefined,
-              surfaceForeground: undefined,
-              neutrals: undefined,
+              neutral: undefined,
             },
           },
         },
@@ -151,9 +149,9 @@ export const useConfigStore = createSelectors(
         set((state) => {
           state.config.theme[name as string] = value;
         }),
-      onChangeColors: (name, type, color) =>
+      onChangeColors: (name, mode, color) =>
         set((state) => {
-          state.config.theme.colors[type][name] = color;
+          state.config.theme.colors[mode][name] = color;
         }),
       onSelectTheme: (colors) =>
         set((state) => {

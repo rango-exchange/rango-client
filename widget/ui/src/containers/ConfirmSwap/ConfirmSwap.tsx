@@ -14,7 +14,7 @@ const MainContainer = styled('div', {
 const Section = styled('div', {
   paddingBottom: '$32',
   marginBottom: '$32',
-  borderBottom: '1px solid $neutrals400',
+  borderBottom: '1px solid $neutral400',
 });
 
 const Footer = styled('div', {
@@ -39,14 +39,14 @@ const Container = styled('div', {
     alignItems: 'center',
   },
   '.num': {
-    backgroundColor: '$neutrals100',
+    backgroundColor: '$neutral100',
     display: 'inline-flex',
     width: '24px',
     height: '24px',
-    color: '$neutrals800',
+    color: '$neutral800',
     borderRadius: '50%',
     fontSize: '$14',
-    border: '1px solid $neutrals400',
+    border: '1px solid $neutral400',
     justifyContent: 'center',
     alignItems: 'center',
   },
