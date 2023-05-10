@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/widget-embedded",
-  "version": "0.1.16-next.5",
+  "version": "0.1.16-next.6",
   "license": "MIT",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -34,7 +34,6 @@
     "bignumber.js": "^9.1.1",
     "copy-to-clipboard": "^3.3.3",
     "dayjs": "^1.11.7",
-    "values.js": "2.1.1",
     "i18next": "^22.4.11",
     "i18next-browser-languagedetector": "^7.0.1",
     "i18next-http-backend": "^2.1.1",
@@ -47,6 +46,7 @@
     "react-dom": "^18.2.0",
     "react-i18next": "^12.2.0",
     "react-router-dom": "^6.8.0",
+    "values.js": "2.1.1",
     "zustand": "^4.3.2"
   },
   "publishConfig": {
