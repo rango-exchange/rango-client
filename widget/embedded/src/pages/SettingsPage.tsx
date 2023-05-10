@@ -13,8 +13,9 @@ import {
 import { useNavigateBack } from '../hooks/useNavigateBack';
 interface PropTypes {
   supportedSwappers?: string[];
+  singleTheme?: boolean;
 }
-export function SettingsPage({ supportedSwappers }: PropTypes) {
+export function SettingsPage({ supportedSwappers, singleTheme }: PropTypes) {
   const slippage = useSettingsStore.use.slippage();
   const setSlippage = useSettingsStore.use.setSlippage();
   const disabledLiquiditySources =
@@ -77,6 +78,7 @@ export function SettingsPage({ supportedSwappers }: PropTypes) {
       selectedLiquiditySources={supportedUniqueSwappersGroups.filter(
         (s) => s.selected
       )}
+      singleTheme={singleTheme}
       customSlippage={customSlippage || NaN}
       onCustomSlippageChange={setCustomSlippage}
       minSlippage={MIN_SLIPPGAE}

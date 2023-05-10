@@ -12,7 +12,7 @@ import { Button } from '../Button';
 
 const BaseContainer = styled('div', {
   borderRadius: '$5',
-  backgroundColor: '$neutrals100',
+  backgroundColor: '$neutral100',
   padding: '$16',
 });
 
@@ -74,6 +74,7 @@ export interface PropTypes {
   infiniteApprove: boolean;
   toggleInfiniteApprove: (infinite: boolean) => void;
   loadingStatus: LoadingStatus;
+  singleTheme?: boolean;
 }
 
 export function Settings(props: PropTypes) {
@@ -93,6 +94,7 @@ export function Settings(props: PropTypes) {
     toggleInfiniteApprove,
     infiniteApprove,
     loadingStatus,
+    singleTheme,
   } = props;
 
   const [selectedSlippage, setSelectedSlippage] = useState(
@@ -153,20 +155,22 @@ export function Settings(props: PropTypes) {
           />
         </SlippageChipsContainer>
       </BaseContainer>
-      <ThemesContainer>
-        <Title variant="body2">Theme</Title>
-        <Radio
-          value={selectedTheme}
-          options={[
-            { value: 'dark', label: 'Dark' },
-            { value: 'light', label: 'Light' },
-            { value: 'auto', label: 'Auto' },
-          ]}
-          onChange={(value) => onThemeChange(value as Theme)}
-          direction="horizontal"
-          style={{ marginTop: '$24' }}
-        />
-      </ThemesContainer>
+      {!singleTheme && (
+        <ThemesContainer>
+          <Title variant="body2">Theme</Title>
+          <Radio
+            value={selectedTheme}
+            options={[
+              { value: 'dark', label: 'Dark' },
+              { value: 'light', label: 'Light' },
+              { value: 'auto', label: 'Auto' },
+            ]}
+            onChange={(value) => onThemeChange(value as Theme)}
+            direction="horizontal"
+            style={{ marginTop: '$24' }}
+          />
+        </ThemesContainer>
+      )}
       <InfiniteContainer>
         <Typography variant="body2">Infinite Approval</Typography>
         <Switch checked={infiniteApprove} onChange={toggleInfiniteApprove} />
@@ -180,7 +184,7 @@ export function Settings(props: PropTypes) {
           suffix={
             <LiquiditySourceNumber>
               {loadingStatus === 'success' && (
-                <Typography variant="body2" color="neutrals800">
+                <Typography variant="body2" color="neutral800">
                   {liquiditySources.length !== selectedLiquiditySources.length
                     ? `${selectedLiquiditySources.length} / ${liquiditySources.length}`
                     : liquiditySources.length}

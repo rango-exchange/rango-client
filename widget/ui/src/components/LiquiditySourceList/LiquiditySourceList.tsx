@@ -105,7 +105,7 @@ export function LiquiditySourceList(props: PropTypes) {
       <div>
         <LiquiditySourceType>
           <Typography variant="h5">Bridges</Typography>
-          <Typography variant="body1" color="neutrals800">
+          <Typography variant="body1" color="neutral800">
             {totalSelectedBridges === totalBridges
               ? totalBridges
               : `${totalSelectedBridges} / ${totalBridges}`}
@@ -138,7 +138,7 @@ export function LiquiditySourceList(props: PropTypes) {
       <div>
         <LiquiditySourceType>
           <Typography variant="h5">Exchanges</Typography>
-          <Typography variant="body1" color="neutrals800">
+          <Typography variant="body1" color="neutral800">
             {totalSelectedExchanges === totalExchanges
               ? totalExchanges
               : `${totalSelectedExchanges} / ${totalExchanges}`}

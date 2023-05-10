@@ -48,10 +48,10 @@ const Container = styled('div', {
   variants: {
     type: {
       filled: {
-        backgroundColor: '$neutrals100',
+        backgroundColor: '$neutral100',
       },
       outlined: {
-        border: '1px solid $neutrals100',
+        border: '1px solid $neutral100',
         backgroundColor: '$surface',
       },
     },
@@ -106,7 +106,7 @@ const Options = styled('div', {
 const ImagePlaceholder = styled('span', {
   width: '24px',
   height: '24px',
-  backgroundColor: '$neutrals100',
+  backgroundColor: '$neutral100',
   borderRadius: '99999px',
 });
 
@@ -186,7 +186,7 @@ export function TokenInfo(props: PropTypes) {
     <Box>
       <Container type={props.type === 'From' ? 'filled' : 'outlined'}>
         <div className="head">
-          <Typography variant="body2" color="neutrals800">
+          <Typography variant="body2" color="neutral800">
             {t(type)}
           </Typography>
           {props.type === 'From' ? (
@@ -198,7 +198,7 @@ export function TokenInfo(props: PropTypes) {
                     setInputAmount(tokenBalanceReal.split(',').join(''));
                 }}
               >
-                <Typography variant="body3" color="neutrals600">{`${t(
+                <Typography variant="body3" color="neutral600">{`${t(
                   'Balance'
                 )}: ${tokenBalance} ${fromToken?.symbol || ''}`}</Typography>
                 <Spacer size={4} />
@@ -216,7 +216,7 @@ export function TokenInfo(props: PropTypes) {
               <div>
                 <Typography
                   variant="caption"
-                  color="neutrals600"
+                  color="neutral600"
                 >{`$${numberToString(props.outputUsdValue)}`}</Typography>
               </div>
             </div>
@@ -294,7 +294,7 @@ export function TokenInfo(props: PropTypes) {
                   >
                     <Typography
                       variant="caption"
-                      color="neutrals800"
+                      color="neutral800"
                     >{`$${numberToString(inputUsdValue)}`}</Typography>
                   </span>
                 }

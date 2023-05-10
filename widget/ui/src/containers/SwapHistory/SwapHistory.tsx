@@ -53,7 +53,7 @@ export const ErrorMsg = styled(Typography, {
 
 export const FeeContainer = styled('div', {
   paddingLeft: '$16',
-  color: '$neutrals800'
+  color: '$neutral800'
 });
 
 export const Fee = styled('div', {
@@ -96,7 +96,7 @@ const SwapInfoContainer = styled('div', {
   display: 'flex',
   flexDirection: 'column',
   paddingBottom: '$16',
-  borderBottom: '1px solid $neutrals100',
+  borderBottom: '1px solid $neutral100',
 });
 
 const InternalDetailsContainer = styled('div', {
@@ -137,12 +137,12 @@ const Row = styled('div', {
   padding: '$8 0',
 
   '.name': {
-    color: '$neutrals600',
+    color: '$neutral600',
   },
   '.value': {
     display: 'flex',
     alignItems: 'center',
-    color: '$neutrals800',
+    color: '$neutral800',
     justifyContent: 'flex-end',
   },
   '.status': {
@@ -169,7 +169,7 @@ const RequestId = styled('div', {
 
 const ExtraDetails = styled('div', {
   padding: '0',
-  color: '$neutrals600',
+  color: '$neutral600',
   fontSize: '$10',
 });
 
