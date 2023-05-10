@@ -14,11 +14,11 @@
     "process": "^0.11.10"
   },
   "dependencies": {
-    "@rango-dev/provider-all": "^0.1.12",
-    "@rango-dev/queue-manager-core": "^0.1.11",
-    "@rango-dev/queue-manager-rango-preset": "^0.1.11",
+    "@rango-dev/provider-all": "^0.1.14-next.3",
+    "@rango-dev/queue-manager-core": "^0.1.13-next.0",
+    "@rango-dev/queue-manager-rango-preset": "^0.1.13-next.1",
     "@rango-dev/queue-manager-react": "^0.1.10",
-    "@rango-dev/wallets-core": "^0.1.12",
+    "@rango-dev/wallets-core": "^0.1.14-next.0",
     "@rango-dev/wallets-shared": "^0.1.11",
     "bignumber.js": "^9.1.1",
     "ethers": "^5.7.2",
