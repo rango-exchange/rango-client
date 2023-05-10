@@ -27,6 +27,19 @@ const COLORS = [
     name: 'foreground',
     label: 'Foreground Color',
   },
+
+  {
+    name: 'neutrals',
+    label: 'Neutrals Color',
+  },
+  {
+    name: 'surfaceBackground',
+    label: 'Surface Background Color',
+  },
+  {
+    name: 'surfaceForeground',
+    label: 'Surface Foreground Color',
+  },
   {
     name: 'success',
     label: 'Success',
