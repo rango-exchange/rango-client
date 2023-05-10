@@ -4275,6 +4275,22 @@
     "@rango-dev/wallets-shared" "^0.1.11"
     rango-types "^0.1.28"
 
+"@rango-dev/queue-manager-core@^0.1.12":
+  version "0.1.12"
+  resolved "https://registry.yarnpkg.com/@rango-dev/queue-manager-core/-/queue-manager-core-0.1.12.tgz#e36e6ae24dc96198e1d82436432971e87f4ae294"
+  integrity sha512-CPvXLEVsMGrQiRG/KCyD/aFwa6yqtOt81Qn342DBVhpdX16plYjbTvbkCmFSuA5iTYJsx1PEPH3PFnqTt49SSQ==
+  dependencies:
+    idb "^7.1.1"
+    uuid "^9.0.0"
+
+"@rango-dev/queue-manager-rango-preset@^0.1.12":
+  version "0.1.12"
+  resolved "https://registry.yarnpkg.com/@rango-dev/queue-manager-rango-preset/-/queue-manager-rango-preset-0.1.12.tgz#24dc377cbac640a2e3b30aed4e5809bb4af6b0e0"
+  integrity sha512-mVMRLEg0JhF0excXE83I1y5X+5RTaf0nb17kJzfvIesOffw7c/8rWQTSpjnbRA5xUcgZVCyS1oMWEDxgEJZokQ==
+  dependencies:
+    "@sentry/browser" "^6.12.0"
+    uuid "^9.0.0"
+
 "@rango-dev/signer-cosmos@^0.1.11":
   version "0.1.12"
   resolved "https://registry.yarnpkg.com/@rango-dev/signer-cosmos/-/signer-cosmos-0.1.12.tgz#6c0a5e2e56fa0056cebb33445c74862e834f7eb9"
@@ -4287,7 +4303,7 @@
     long "^5.2.1"
     rango-types "^0.1.28"
 
-"@rango-dev/ui@^0.1.12":
+"@rango-dev/ui@^0.1.12", "@rango-dev/ui@^0.1.13":
   version "0.1.13"
   resolved "https://registry.yarnpkg.com/@rango-dev/ui/-/ui-0.1.13.tgz#2703283017e4dbccbb8ab350bb090016beff9442"
   integrity sha512-kfkBPbH4XDZGmIP3qQ9DwllRr4q7sascpVlboW9KpWcFap7uryWY2ETLXzxZ2y2MMCRIvIyOaM6N+Zy787KZoQ==
@@ -4331,6 +4347,35 @@
   integrity sha512-Lninbnp53o2O9tw0I1Ae2X4/2jBqc76UNam9RXhVGrKuZIjhModLFJm+2Xb1UlP+NQAiUttJ+d0DeLdD2Ij/vg==
   dependencies:
     rango-types "^0.1.28"
+
+"@rango-dev/widget-embedded@0.1.16-next.4":
+  version "0.1.16-next.4"
+  resolved "https://registry.yarnpkg.com/@rango-dev/widget-embedded/-/widget-embedded-0.1.16-next.4.tgz#3639be7b72106b23d9f14f670e66064e7ec6314d"
+  integrity sha512-qfMJ4XuiQj0S8LziX98nD4aqVywl2cd8eVVeeQ03p87skkQRvkz3wYYdd8XUYb33ROicXM4c/VXuyXaKSUma6A==
+  dependencies:
+    "@rango-dev/provider-all" "^0.1.12"
+    "@rango-dev/queue-manager-core" "^0.1.12"
+    "@rango-dev/queue-manager-rango-preset" "^0.1.12"
+    "@rango-dev/queue-manager-react" "^0.1.11"
+    "@rango-dev/ui" "^0.1.13"
+    "@rango-dev/wallets-core" "^0.1.12"
+    "@rango-dev/wallets-shared" "^0.1.13-next.0"
+    bignumber.js "^9.1.1"
+    copy-to-clipboard "^3.3.3"
+    dayjs "^1.11.7"
+    i18next "^22.4.11"
+    i18next-browser-languagedetector "^7.0.1"
+    i18next-http-backend "^2.1.1"
+    immer "^9.0.19"
+    mitt "^3.0.0"
+    parcel "^2.8.0"
+    rango-sdk "^0.1.23"
+    rango-types "^0.1.28"
+    react "^18.2.0"
+    react-dom "^18.2.0"
+    react-i18next "^12.2.0"
+    react-router-dom "^6.8.0"
+    zustand "^4.3.2"
 
 "@reach/router@^1.2.1":
   version "1.3.4"
