@@ -6,7 +6,7 @@ const InputContainer = styled('div', {
   backgroundColor: '$surface',
   padding: '1px',
   boxSizing: 'border-box',
-  border: '1px solid $neutrals400',
+  border: '1px solid $neutral400',
   borderRadius: '$5',
   height: '$48',
   display: 'flex',
@@ -43,7 +43,7 @@ const InputContainer = styled('div', {
     },
     disabled: {
       true: {
-        backgroundColor: '$neutrals100',
+        backgroundColor: '$neutral100',
         cursor: 'not-allowed',
         filter: 'grayscale(100%)',
       },

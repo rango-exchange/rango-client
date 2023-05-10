@@ -34,8 +34,8 @@ const COLORS = [
     label: 'Surface',
   },
   {
-    name: 'neutrals',
-    label: 'Neutrals',
+    name: 'neutral',
+    label: 'neutral',
   },
 
   {
@@ -63,7 +63,7 @@ const themes = [
     light: {
       background: '#fff',
       foreground: '#000',
-      neutrals: '#fafafa',
+      neutral: '#fafafa',
 
       surface: '#fff',
       primary: '#5FA425',
@@ -75,7 +75,7 @@ const themes = [
   {
     dark: {
       primary: '#502f82ff',
-      neutrals: '#24203dff',
+      neutral: '#24203dff',
       surface: '#24203dff',
       success: '#9b6de2ff',
     },
@@ -100,7 +100,55 @@ const themes = [
       foreground: '#2f0146ff',
       success: '#9535bdff',
       surface: '#f5f1f7ff',
-      neutrals: '#eae5eaff',
+      neutral: '#eae5eaff',
+    },
+  },
+  {
+    dark: {
+      primary: '#353038ff',
+      neutral: '#353038ff',
+      surface: '#353038ff',
+      success: '#ef1cffff',
+      background: '#252028ff',
+      foreground: '#88818cff',
+    },
+  },
+  {
+    dark: {
+      foreground: '#fff',
+      background: '#171721ff',
+      surface: '#1c1c28ff',
+      primary: '#7720e9ff',
+      neutral: '#1c1c28ff',
+      success: '#c193fdff',
+    },
+    light: {
+      background: '#fff',
+      foreground: '#171721ff',
+      neutral: '#f9fafbff',
+      surface: '#f9fafbff',
+      primary: '#7f1fffff',
+      success: '#7f1fffff',
+    },
+  },
+  {
+    dark: {
+      background: '#0c1536ff',
+      primary: '#6c5be0ff',
+      foreground: '#c4d1fdff',
+      success: '#4030faff',
+      surface: '#13164eff',
+      neutral: '#181c63ff',
+    },
+  },
+  {
+    dark: {
+      background: '#0c0f12ff',
+      primary: '#e0c072ff',
+      foreground: '#e0c072ff',
+      success: '#e9dcbeff',
+      surface: '#12171cff',
+      neutral: '#202327ff',
     },
   },
 ];
@@ -122,8 +170,8 @@ const ModeContainer = styled('div', {
   alignItems: 'center',
 });
 const ThemeContainer = styled('div', {
-  borderColor: '$neutrals600',
-  color: '$neutrals500',
+  borderColor: '$neutral600',
+  color: '$neutral500',
   border: '1px solid',
   height: '$48',
   borderRadius: '$5',
@@ -145,13 +193,14 @@ const Circle = styled('div', {
 export function StylesConfig() {
   // const width = useConfigStore.use.config().theme.width;
   // const height = useConfigStore.use.config().theme.height;
-  const [mode, setMode] = useState<'light' | 'dark'>('light');
   const language = useConfigStore.use.config().language;
   const borderRadius = useConfigStore.use.config().theme.borderRadius;
   const theme = useConfigStore.use.config().theme.mode;
   const fontFamily = useConfigStore.use.config().theme.fontFamily;
   const colors = useConfigStore.use.config().theme.colors;
+  const singleTheme = useConfigStore.use.config().theme.singleTheme;
 
+  const [mode, setMode] = useState<'light' | 'dark'>(!theme || theme === 'auto' ? 'light' : theme);
   const onChangelanguage = useConfigStore.use.onChangelanguage();
   const onChangeTheme = useConfigStore.use.onChangeTheme();
   const onChangeColors = useConfigStore.use.onChangeColors();
@@ -189,6 +238,7 @@ export function StylesConfig() {
             </Typography>
             <ThemeContainer>
               <Checkbox
+                disabled={singleTheme}
                 checked={checkedTheme}
                 id={'auto'}
                 label={'Auto'}
@@ -207,7 +257,7 @@ export function StylesConfig() {
               <Switch
                 checked={theme === 'dark'}
                 onChange={(checked) => {
-                  if (!checkedTheme) {
+                  if (!checkedTheme && !singleTheme) {
                     let theme;
                     if (checked) theme = 'dark';
                     else theme = 'light';
@@ -261,12 +311,25 @@ export function StylesConfig() {
         <Spacer size={20} direction="vertical" />
 
         <hr />
+        <Spacer size={24} direction="vertical" />
 
+        <Checkbox
+          onCheckedChange={(checked) => {
+            onChangeTheme('singleTheme', checked);
+          }}
+          id="single_theme"
+          label="Single Theme"
+          checked={singleTheme}
+        />
         <Spacer size={24} direction="vertical" />
         <ModeContainer>
           <Button
             fullWidth
-            onClick={() => setMode('light')}
+            onClick={() => {
+              onChangeTheme('mode', 'light');
+              setMode('light');
+            }}
+            disabled={singleTheme && mode === 'dark'}
             type="success"
             variant={mode === 'light' ? 'contained' : 'outlined'}>
             Light
@@ -274,7 +337,11 @@ export function StylesConfig() {
           <Spacer size={24} direction="horizontal" />
           <Button
             fullWidth
-            onClick={() => setMode('dark')}
+            disabled={singleTheme && mode === 'light'}
+            onClick={() => {
+              onChangeTheme('mode', 'dark');
+              setMode('dark');
+            }}
             type="success"
             variant={mode === 'dark' ? 'contained' : 'outlined'}>
             Dark
@@ -284,22 +351,45 @@ export function StylesConfig() {
 
         <GridContent>
           {themes.map((theme) => (
-            <Button type='success' variant="outlined" onClick={() => onSelectTheme(theme)}>
+            <Button
+              type="success"
+              variant="outlined"
+              onClick={() => {
+                if (theme.dark && !theme.light) {
+                  onChangeTheme('mode', 'dark');
+                  setMode('dark');
+                  onChangeTheme('singleTheme', true);
+
+                  onSelectTheme({ ...theme, light: {} });
+                } else if (theme.light && !theme.dark) {
+                  onChangeTheme('mode', 'light');
+                  setMode('light');
+                  onChangeTheme('singleTheme', true);
+
+                  onSelectTheme({ ...theme, dark: {} });
+                } else if (theme.dark && theme.light) {
+                  onChangeTheme('mode', 'light');
+                  setMode('light');
+                  onChangeTheme('singleTheme', false);
+
+                  onSelectTheme(theme);
+                }
+              }}>
               <ModeContainer>
                 <Circle
                   style={{
-                    backgroundColor: theme.light.success,
+                    backgroundColor: theme?.light?.success || theme?.dark?.success,
                   }}
                 />
                 <Circle
                   style={{
-                    backgroundColor: theme.light.foreground,
-                    zIndex: 10,
+                    backgroundColor: theme?.light?.foreground || theme?.dark?.foreground,
+                    zIndex: 1,
                   }}
                 />
                 <Circle
                   style={{
-                    backgroundColor: theme.light.primary,
+                    backgroundColor: theme?.light?.primary || theme?.dark?.foreground,
                     position: 'absolute',
                   }}
                 />

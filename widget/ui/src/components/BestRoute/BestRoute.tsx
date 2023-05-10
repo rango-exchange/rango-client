@@ -11,7 +11,7 @@ import { Image } from '../common';
 
 const Container = styled('div', {
   borderRadius: '$5',
-  border: '1px solid $neutrals100',
+  border: '1px solid $neutral100',
   display: 'flex',
   alignItems: 'center',
   minHeight: 126,
@@ -46,7 +46,7 @@ const Line = styled('div', {
 
 const HR = styled('hr', {
   width: '100%',
-  border: '1px solid $neutrals400',
+  border: '1px solid $neutral400',
   margin: '$8 0',
 });
 
@@ -90,7 +90,7 @@ export const pulse = keyframes({
 });
 
 const GasContainer = styled('div', {
-  backgroundColor: '$neutrals100',
+  backgroundColor: '$neutral100',
   borderRadius: '5px',
   margin: '$4',
   display: 'flex',

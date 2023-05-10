@@ -66,7 +66,7 @@ export function TokenItem(props: PropTypes) {
       >
         <TokenNameContainer>
           <Typography variant="body1">{token.symbol}</Typography>
-          <Typography variant="caption" color="neutrals600">
+          <Typography variant="caption" color="neutral600">
             {token.name}
           </Typography>
         </TokenNameContainer>

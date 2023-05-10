@@ -33,7 +33,7 @@ export const SvgWithStrokeColor = styled('svg', {
     },
     disabled: {
       true: {
-        stroke: '$neutrals400',
+        stroke: '$neutral400',
       },
     },
   },
@@ -72,7 +72,7 @@ export const SvgWithFillColor = styled('svg', {
     },
     disabled: {
       true: {
-        stroke: '$neutrals400',
+        stroke: '$neutral400',
       },
     },
   },
