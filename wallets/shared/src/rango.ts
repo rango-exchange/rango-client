@@ -42,6 +42,7 @@ export const uint8ArrayToHex = (buffer: Uint8Array): string => {
 export enum WalletType {
   META_MASK = 'metamask',
   WALLET_CONNECT = 'wallet-connect',
+  WALLET_CONNECT_2 = 'wallet-connect-2',
   TRUST_WALLET = 'trust-wallet',
   KEPLR = 'keplr',
   PHANTOM = 'phantom',
