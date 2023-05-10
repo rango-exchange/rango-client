@@ -1,1 +1,3 @@
-# @rango-dev/queue-manager-core 
+# @rango-dev/queue-manager-core doc
+ 
+
