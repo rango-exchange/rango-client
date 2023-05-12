@@ -1,6 +1,5 @@
 import { RangoClient } from 'rango-sdk-basic';
 import { connect, signEvmTx, switchNetwork } from '../wallet';
-import { QueueDef } from '@rango-dev/queue-manager-core';
 
 const RANGO_API_KEY = '4a624ab5-16ff-4f96-90b7-ab00ddfc342c';
 const rangoClient = new RangoClient(RANGO_API_KEY);
