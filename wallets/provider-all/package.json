@@ -61,7 +61,8 @@
     "@rango-dev/provider-tron-link": "^0.1.14-next.0",
     "@rango-dev/provider-trustwallet": "^0.1.14-next.0",
     "@rango-dev/provider-walletconnect": "^0.1.14-next.0",
-    "@rango-dev/provider-xdefi": "^0.1.14-next.0"
+    "@rango-dev/provider-xdefi": "^0.1.14-next.0",
+    "@rango-dev/provider-enkrypt": "^0.1.0"
   },
   "publishConfig": {
     "access": "public"

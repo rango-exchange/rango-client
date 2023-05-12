@@ -4044,6 +4044,80 @@
     long "^5.2.1"
     rango-types "^0.1.28"
 
+"@rango-dev/ui@^0.1.12", "@rango-dev/ui@^0.1.13":
+  version "0.1.13"
+  resolved "https://registry.yarnpkg.com/@rango-dev/ui/-/ui-0.1.13.tgz#2703283017e4dbccbb8ab350bb090016beff9442"
+  integrity sha512-kfkBPbH4XDZGmIP3qQ9DwllRr4q7sascpVlboW9KpWcFap7uryWY2ETLXzxZ2y2MMCRIvIyOaM6N+Zy787KZoQ==
+  dependencies:
+    "@radix-ui/react-checkbox" "^1.0.1"
+    "@radix-ui/react-radio-group" "^1.1.1"
+    "@radix-ui/react-switch" "^1.0.1"
+    "@radix-ui/react-tooltip" "^1.0.2"
+    "@rango-dev/wallets-shared" "^0.1.11"
+    "@stitches/react" "^1.2.8"
+    "@types/react-color" "^3.0.6"
+    rango-sdk "^0.1.20"
+    react-color "^2.19.3"
+    react-virtualized-auto-sizer "^1.0.7"
+    react-window "^1.8.8"
+    react-window-infinite-loader "^1.0.8"
+
+"@rango-dev/wallets-adapter@^0.1.12":
+  version "0.1.13"
+  resolved "https://registry.yarnpkg.com/@rango-dev/wallets-adapter/-/wallets-adapter-0.1.13.tgz#b1e76c69723594249d768b2881e92aa703ee32e3"
+  integrity sha512-C5Z5zyMT4dAYPop8SNbYmqHrk2OiflLlZW99w6HPD7vpcRpMKwWoiudjn7RqGEuz572L3WUJqieFu4xRhJdVSQ==
+  dependencies:
+    "@rango-dev/provider-all" "^0.1.12"
+    "@rango-dev/ui" "^0.1.12"
+    "@rango-dev/wallets-core" "^0.1.12"
+    "@rango-dev/wallets-shared" "^0.1.11"
+    rango-types "^0.1.28"
+
+"@rango-dev/wallets-core@^0.1.12":
+  version "0.1.13"
+  resolved "https://registry.yarnpkg.com/@rango-dev/wallets-core/-/wallets-core-0.1.13.tgz#14e37f0d28e506fe0042bf5b24d53047705137c1"
+  integrity sha512-mgPtOAF7g5t3CPrpu5Av8a6+opIIO4BBMxxAIdQ49wuwNqcFfEk2wfcScKpdT1kv7/R6YKsjU6vH1HoHDd9Alw==
+  dependencies:
+    "@rango-dev/wallets-shared" "^0.1.11"
+    "@walletconnect/ethereum-provider" "1.8.0"
+    rango-types "^0.1.28"
+
+"@rango-dev/wallets-shared@^0.1.11":
+  version "0.1.12"
+  resolved "https://registry.yarnpkg.com/@rango-dev/wallets-shared/-/wallets-shared-0.1.12.tgz#a6af676823c81bb54c51d2cad4ebfcb5c506d843"
+  integrity sha512-Lninbnp53o2O9tw0I1Ae2X4/2jBqc76UNam9RXhVGrKuZIjhModLFJm+2Xb1UlP+NQAiUttJ+d0DeLdD2Ij/vg==
+  dependencies:
+    rango-types "^0.1.28"
+
+"@rango-dev/widget-embedded@^0.1.13":
+  version "0.1.15"
+  resolved "https://registry.yarnpkg.com/@rango-dev/widget-embedded/-/widget-embedded-0.1.15.tgz#e2226ca5f4faa1f1f5f61ef6d0e8e3cfaf4286fc"
+  integrity sha512-7RQ0cjWJHPabJ279PqBVe0tJ0+dlF6fsemqK5FZ4wpHDoffjNHmC3rzWLZ27Xhlrmg7Ie6O4uDBQvhPtm1+kEw==
+  dependencies:
+    "@rango-dev/provider-all" "^0.1.12"
+    "@rango-dev/queue-manager-core" "^0.1.12"
+    "@rango-dev/queue-manager-rango-preset" "^0.1.12"
+    "@rango-dev/queue-manager-react" "^0.1.11"
+    "@rango-dev/ui" "^0.1.13"
+    "@rango-dev/wallets-core" "^0.1.12"
+    "@rango-dev/wallets-shared" "^0.1.11"
+    bignumber.js "^9.1.1"
+    copy-to-clipboard "^3.3.3"
+    dayjs "^1.11.7"
+    i18next "^22.4.11"
+    i18next-browser-languagedetector "^7.0.1"
+    i18next-http-backend "^2.1.1"
+    immer "^9.0.19"
+    mitt "^3.0.0"
+    parcel "^2.8.0"
+    rango-sdk "^0.1.23"
+    rango-types "^0.1.28"
+    react "^18.2.0"
+    react-dom "^18.2.0"
+    react-i18next "^12.2.0"
+    react-router-dom "^6.8.0"
+    zustand "^4.3.2"
+
 "@reach/router@^1.2.1":
   version "1.3.4"
   resolved "https://registry.yarnpkg.com/@reach/router/-/router-1.3.4.tgz#d2574b19370a70c80480ed91f3da840136d10f8c"
