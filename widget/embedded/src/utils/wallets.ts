@@ -226,8 +226,7 @@ export function isAccountAndWalletMatched(
 ) {
   return (
     account.address === connectedWallet.address &&
-    account.chain === connectedWallet.chain &&
-    account.walletType === connectedWallet.walletType
+    account.chain === connectedWallet.chain
   );
 }
 
