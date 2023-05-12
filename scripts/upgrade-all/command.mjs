@@ -16,7 +16,6 @@ async function run() {
     console.log(`Dist channel: ${dist}`);
 
     await Promise.all(packages.map((project) => upgradeDepndendentsOf(project, dist)));
-    return;
   } else {
     console.log(`Running upgrade-all for ${project} \n`);
     console.log(`Dist channel: ${dist}`);
