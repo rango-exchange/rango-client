@@ -12,7 +12,7 @@ async function run() {
   if (!project) {
     console.log(`you didn't specify any "project". So we will check all the workspace packages.`);
     const packages = await getAllPackages();
-    console.log(`All packages (without clients/demos): ${packages.length}`);
+    console.log(`All packages (with clients/demos): ${packages.length}`);
     console.log(`Dist channel: ${dist}`);
 
     await Promise.all(packages.map((project) => upgradeDepndendentsOf(project, dist)));
