@@ -55,17 +55,19 @@ export const useWalletsStore = createSelectors(
       connectWallet: (accounts) => {
         const getOneOfWalletsDetails = get().getOneOfWalletsDetails;
         set((state) => ({
-          connectedWallets: state.connectedWallets.concat(
-            accounts.map((account) => ({
-              balances: [],
-              address: account.address,
-              chain: account.chain,
-              loading: true,
-              walletType: account.walletType,
-              error: false,
-              explorerUrl: null,
-            }))
-          ),
+          connectedWallets: state.connectedWallets
+            .filter((wallet) => wallet.walletType !== accounts[0].walletType)
+            .concat(
+              accounts.map((account) => ({
+                balances: [],
+                address: account.address,
+                chain: account.chain,
+                loading: true,
+                walletType: account.walletType,
+                error: false,
+                explorerUrl: null,
+              }))
+            ),
         }));
         accounts.forEach(async (account) => getOneOfWalletsDetails(account));
       },

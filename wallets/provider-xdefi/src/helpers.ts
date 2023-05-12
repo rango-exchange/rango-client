@@ -15,7 +15,7 @@ export function xdefi() {
   if (xfi.thorchain) instances.set(Network.THORCHAIN, xfi.thorchain);
   if (xfi.bitcoincash) instances.set(Network.BCH, xfi.bitcoincash);
   if (xfi.binance) instances.set(Network.BINANCE, xfi.binance);
-  if (ethereum.__XDEFI) instances.set(Network.ETHEREUM, ethereum);
+  if (ethereum?.__XDEFI) instances.set(Network.ETHEREUM, ethereum);
   if (xfi.dogecoin) instances.set(Network.DOGE, xfi.dogecoin);
   if (xfi.solana) instances.set(Network.SOLANA, xfi.solana);
 

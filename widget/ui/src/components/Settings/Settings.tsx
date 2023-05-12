@@ -60,7 +60,7 @@ type Theme = 'dark' | 'light' | 'auto';
 export interface PropTypes {
   slippages: number[];
   selectedSlippage: number;
-  customSlippage: number;
+  customSlippage: number | null;
   maxSlippage: number;
   minSlippage: number;
   liquiditySources: LiquiditySource[];
@@ -134,7 +134,7 @@ export function Settings(props: PropTypes) {
           ))}
           <TextField
             type="number"
-            value={customSlippage}
+            value={customSlippage || ''}
             onChange={(event) => {
               const parsedValue = parseFloat(event.target.value);
               if (
