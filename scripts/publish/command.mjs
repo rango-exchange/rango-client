@@ -3,10 +3,12 @@
 
 import {
   addChangelogsToStage,
+  addUpdatedPackageJsonToStage,
   buildPackages,
   changed,
   deployProjectsToVercel,
   detectChannel,
+  exportNx,
   generateChangelog,
   getLastReleasedHashId,
   groupPackagesForDeploy,
@@ -14,10 +16,14 @@ import {
   increaseVersionForNext,
   logAsSection,
   makeGithubRelease,
+  packageNamesToPackagesWithInfo,
   publishPackages,
   pushToRemote,
   tagPackages,
 } from './utils.mjs';
+import { Graph } from '../common/graph/index.mjs';
+import { nxToGraph } from '../common/graph/helpers.mjs';
+import { execa } from 'execa';
 
 // TODO: Working directory should be empty.
 async function run() {
@@ -40,8 +46,33 @@ async function run() {
     process.exit(0);
   }
 
-  // Run a specific workflow based on channel
-  await publish(changedPkgs, channel);
+  const nxGraph = await exportNx();
+  const graph = new Graph();
+  nxToGraph(nxGraph, graph);
+  graph.onlyAffected(changedPkgs.map((pkg) => pkg.name));
+  const sortedList = graph.sort();
+  const sortedPackagesToPublish = await packageNamesToPackagesWithInfo([...sortedList]);
+
+  console.log('Packages will be published, in this order:\n', sortedPackagesToPublish);
+
+  const updatedPackages = [];
+  for (const pkg of sortedPackagesToPublish) {
+    const updatedPkg = await publish(pkg, channel);
+    updatedPackages.push(updatedPkg);
+  }
+
+  // Add updated dependencies
+  await addUpdatedPackageJsonToStage(sortedPackagesToPublish);
+
+  // Git tag & commit
+  logAsSection(`Git Tagging..`);
+  const tagOptions = channel === 'prod' ? { skipGitTagging: false } : { skipGitTagging: true };
+  await tagPackages(updatedPackages, tagOptions);
+
+  logAsSection(`Pushing tags to remote...`);
+  const branch = channel === 'prod' ? 'main' : 'next';
+  await pushToRemote(branch);
+  logAsSection(`Pushed.`);
 }
 
 run().catch((e) => {
@@ -51,67 +82,55 @@ run().catch((e) => {
 
 /* -------------- Flows ------------------ */
 
-async function publish(changedPkgs, channel) {
-  // Versioning
-  logAsSection(`Versioning, Start...`, `for ${changedPkgs.length} packages`);
+// TODO: add yarn.lock
+async function publish(changedPkg, channel) {
+  // TODO: If affected pkg, commit a fix: upgrade pkg
+  console.log('Publish:', `${changedPkg.name} (${channel})`);
 
+  // 1. Version
   let updatedPackages;
   if (channel === 'prod') {
-    updatedPackages = await increaseVersionForMain(changedPkgs);
+    updatedPackages = await increaseVersionForMain([changedPkg]);
   } else {
-    updatedPackages = await increaseVersionForNext(changedPkgs);
+    updatedPackages = await increaseVersionForNext([changedPkg]);
   }
-
-  logAsSection(`Versioning, Done.`);
   console.log(
-    updatedPackages.map((pkg) => `- ${pkg.name} (next version: ${pkg.version})`).join('\n'),
+    updatedPackages
+      .map((pkg) => `[x] Versioninig: ${pkg.name} (next version: ${pkg.version})`)
+      .join('\n'),
   );
 
-  // Changelog & Github Release
+  // 2. Changelog & Github Release
   if (channel === 'prod') {
-    logAsSection(`Generating changelog, Start...`);
     await Promise.all(updatedPackages.map(generateChangelog));
     await addChangelogsToStage(updatedPackages);
 
     await Promise.all(updatedPackages.map(makeGithubRelease));
-    logAsSection(`Changelog generated.`);
+    logAsSection(`[x] Github Release & Changelog generated.`);
   }
 
-  // Git tag
-  logAsSection(`Tagging, Start...`, `for ${updatedPackages.length} packages`);
-  const tagOptions = channel === 'prod' ? { skipGitTagging: false } : { skipGitTagging: true };
-  const taggedPackages = await tagPackages(updatedPackages, tagOptions);
-  logAsSection(`Tagging, Done.`);
-  console.log({ taggedPackages });
-
-  // Push changes
-  logAsSection(`Pushing tags to remote...`);
-  const branch = channel === 'prod' ? 'main' : 'next';
-  await pushToRemote(branch);
-  logAsSection(`Pushed.`);
-
-  // Publish to NPM
+  // 3. Build & Publish on NPM
   const packages = groupPackagesForDeploy(updatedPackages);
-
-  logAsSection(`It's time for building artifacts...`);
-
   if (packages.npm.length) {
-    logAsSection('NPM Build', `Build npm packages...`);
     await buildPackages(packages.npm);
-    logAsSection('NPM Build', `Successfully built.`);
-    logAsSection('NPM Publish', 'Publishing npm packages....');
+    logAsSection('[x] Build for NPM');
     const distTag = channel === 'prod' ? 'latest' : 'next';
     await publishPackages(packages.npm, distTag);
-    logAsSection('NPM Publish', 'Published. Congrats 🎉');
+    logAsSection('[x] Publish on NPM');
   }
 
-  // Publish to Vercel
+  // 4. Publish to Vercel
   if (packages.vercel.length) {
-    logAsSection(`Build clients & deploy to vercel...`);
     // TODO: This is not a good solution, because it will build the package itself twice.
     await buildPackages(packages.vercel);
-    logAsSection('Dependency', `Successfully built.`);
+    logAsSection('[x] Build for VERCEL');
     await deployProjectsToVercel(packages.vercel);
-    logAsSection(`We are good. Done.`);
+    logAsSection('[x] Deploy to VERCEL');
   }
+
+  // 6. Yarn upgrade-all
+  await execa('yarn', ['upgrade-all', changedPkg.name]);
+  logAsSection('[x] Upgrade all package users.');
+
+  return updatedPackages[0];
 }

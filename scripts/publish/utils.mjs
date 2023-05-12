@@ -5,6 +5,7 @@ import { join } from 'path';
 import conventionanRecommendBump from 'conventional-recommended-bump';
 import { printDirname } from '../common/utils.mjs';
 import { VERCEL_ORG_ID, VERCEL_PACKAGES, VERCEL_TOKEN } from './config.mjs';
+import { importJson } from '../common/graph/helpers.mjs';
 const root = join(printDirname(), '..', '..');
 
 export async function generateChangelog(pkg, { saveToFile } = { saveToFile: true }) {
@@ -42,6 +43,18 @@ export async function makeGithubRelease(updatedPkg) {
 export async function addChangelogsToStage(updatedPackages) {
   const files = updatedPackages.map((pkg) => join(root, pkg.location, 'CHANGELOG.md'));
   await execa('git', ['add', '--', ...files]);
+}
+
+export async function addUpdatedPackageJsonToStage(packages) {
+  const files = packages.map((pkg) => join(root, pkg.location, 'package.json'));
+  files.push(join(root, 'yarn.lock'));
+  await execa('git', ['add', '--', ...files]);
+}
+
+export async function packageNamesToPackagesWithInfo(names) {
+  console.log({ names });
+  const allPackages = await workspacePackages();
+  return names.map((pkgName) => allPackages.find((pkg) => pkg.name === pkgName));
 }
 
 /**
@@ -115,9 +128,16 @@ export async function publishPackages(updatedPkgs, dist = 'next') {
 
 export async function buildPackages(updatedPkgs) {
   const projects = updatedPkgs.map((pkg) => pkg.name).join(',');
-  const ps = execa('yarn', ['nx', 'run-many', '--projects', projects, '--target', 'build']);
-  ps.stdout.pipe(process.stdout);
-  return ps;
+  console.log(`Running build for ${projects}. It takes some time..`);
+  const { failed, stderr } = await execa('yarn', [
+    'nx',
+    'run-many',
+    '--projects',
+    projects,
+    '--target',
+    'build',
+  ]);
+  if (failed) console.error(stderr);
 }
 
 export async function pushToRemote(branch, remote = 'origin') {
@@ -296,8 +316,6 @@ export function groupPackagesForDeploy(packages) {
       // If getVercelProjectId returns undefined, it's possible to be added as npm package
       // So here we are making sure it's not a private package and can be published using npm
       output.npm.push(pkg);
-    }else{
-      console.log(`${pkg.name} isn't neither NPM nor Vercel`)
     }
   });
 
@@ -332,4 +350,13 @@ export function getEnvWithFallback(name) {
 
 export function generateTagName(pkg) {
   return `${packageNameWithoutScope(pkg.name)}@${pkg.version}`;
+}
+
+export async function exportNx() {
+  const filename = '__output__.json';
+  const filepath = join(root, filename);
+  await execa('yarn', ['nx', 'graph', '--file', filename]);
+  const nxGraph = await importJson(filepath);
+  await execa('rm', ['-f', filename]);
+  return nxGraph;
 }
