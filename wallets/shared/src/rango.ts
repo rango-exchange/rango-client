@@ -65,6 +65,7 @@ export enum WalletType {
   LEAP_COSMOS = 'leap-cosmos',
   STATION = 'station',
   UNKNOWN = 'unknown',
+  ENKRYPT = 'enkrypt',
 }
 
 export enum Network {
