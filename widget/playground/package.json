@@ -14,10 +14,10 @@
   },
   "dependencies": {
     "@rango-dev/provider-all": "^0.1.14-next.4",
-    "@rango-dev/ui": "^0.1.14-next.1",
+    "@rango-dev/ui": "^0.1.14-next.0",
     "@rango-dev/wallets-core": "^0.1.14-next.0",
     "@rango-dev/wallets-shared": "^0.1.13-next.0",
-    "@rango-dev/widget-embedded": "^0.1.16-next.8",
+    "@rango-dev/widget-embedded": "^0.1.16-next.10",
     "rango-sdk": "^0.1.20",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
