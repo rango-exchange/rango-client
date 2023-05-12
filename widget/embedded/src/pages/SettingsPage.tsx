@@ -79,7 +79,7 @@ export function SettingsPage({ supportedSwappers, singleTheme }: PropTypes) {
         (s) => s.selected
       )}
       singleTheme={singleTheme}
-      customSlippage={customSlippage || NaN}
+      customSlippage={customSlippage}
       onCustomSlippageChange={setCustomSlippage}
       minSlippage={MIN_SLIPPGAE}
       maxSlippage={MAX_SLIPPAGE}
