@@ -4,6 +4,7 @@ on:
     branches:
       - 'main'
       - 'next'
+      - 'chore/deploy-widget-on-vercel'
 
 jobs:
   publish:
@@ -45,3 +46,4 @@ jobs:
           VERCEL_PROJECT_Q: ${{ secrets.VERCEL_PROJECT_Q }}
           VERCEL_PROJECT_WALLET_ADAPTER: ${{ secrets.VERCEL_PROJECT_WALLET_ADAPTER }}
           VERCEL_PROJECT_WIDGET_CONFIG: ${{ secrets.VERCEL_PROJECT_WIDGET_CONFIG }}
+          VERCEL_PROJECT_WIDGET_APP: ${{ secrets.VERCEL_PROJECT_WIDGET_APP }}
