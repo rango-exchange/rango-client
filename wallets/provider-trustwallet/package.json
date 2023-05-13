@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/provider-trustwallet",
-  "version": "0.1.14-next.1",
+  "version": "0.1.14-next.10",
   "license": "MIT",
   "module": "dist/provider-trustwallet.esm.js",
   "main": "dist/index.js",
