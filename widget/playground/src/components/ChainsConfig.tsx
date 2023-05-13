@@ -1,4 +1,4 @@
-import { Checkbox, Spacer, styled, Typography } from '@rango-dev/ui';
+import { Checkbox, Divider, styled, Typography } from '@rango-dev/ui';
 import React from 'react';
 import { onChangeMultiSelects } from '../helpers';
 import { useConfigStore } from '../store/config';
@@ -56,8 +56,8 @@ export function ChainsConfig({ type }: PropTypes) {
 
   return (
     <div>
-      <Typography variant="h4">{type} Form</Typography>
-      <Spacer size={12} direction="vertical" />
+      <Typography variant="h6">{type} Form</Typography>
+      <Divider size={12} />
       <ConfigurationContainer>
         <MultiSelect
           list={blockchains}
@@ -67,7 +67,7 @@ export function ChainsConfig({ type }: PropTypes) {
           onChange={onChangeChains}
           modalTitle="Select Blockchains"
         />
-        <Spacer size={24} direction={'vertical'} />
+        <Divider size={32} />
         <MultiTokenSelect
           list={tokens}
           modalTitle="Select Tokens"
@@ -79,17 +79,16 @@ export function ChainsConfig({ type }: PropTypes) {
         />
         {type === 'Destination' ? (
           <>
-            <Spacer direction="vertical" size={12} />
+            <Divider size={16} />
             <Checkbox
               onCheckedChange={(checked) => onChangeBooleansConfig('customAddress', checked)}
               id="custom_address"
               label="Enable Transfer To Custom Address"
-              checked={customAddress  === undefined ? true : customAddress}
-
+              checked={customAddress === undefined ? true : customAddress}
             />
           </>
         ) : null}
-        <Spacer size={24} direction={'vertical'} />
+        <Divider size={32} />
 
         <TokenInfo type={type} />
       </ConfigurationContainer>

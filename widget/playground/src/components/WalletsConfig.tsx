@@ -1,4 +1,4 @@
-import { Checkbox, Spacer, Typography } from '@rango-dev/ui';
+import { Checkbox, Divider, Typography } from '@rango-dev/ui';
 import { useWallets } from '@rango-dev/wallets-core';
 import { WalletType } from '@rango-dev/wallets-shared';
 import React from 'react';
@@ -35,8 +35,8 @@ export function WalletsConfig() {
 
   return (
     <>
-      <Typography variant="h4">Wallet</Typography>
-      <Spacer size={12} direction="vertical" />
+      <Typography variant="h6">Wallet</Typography>
+      <Divider size={12} />
       <ConfigurationContainer>
         <MultiSelect
           label="Supported Wallets"
@@ -46,7 +46,7 @@ export function WalletsConfig() {
           value={wallets}
           onChange={onChange}
         />
-        <Spacer direction="vertical" size={12} />
+        <Divider size={24} />
         <Checkbox
           onCheckedChange={(checked) => onChangeBooleansConfig('multiWallets', checked)}
           id="multi_wallets"
