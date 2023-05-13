@@ -13,7 +13,7 @@
     "@rango-dev/provider-all": "^0.1.14-next.10",
     "@rango-dev/wallets-adapter": "^0.1.14-next.10",
     "parcel": "^2.8.0",
-    "rango-sdk": "^0.1.20",
+    "rango-sdk": "^0.1.26",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
