@@ -185,7 +185,20 @@ async function checkApprovalStatus({
     if (currentStep?.status === 'failed') return;
 
     isApproved = response.isApproved;
-    if (!isApproved && response.txStatus === 'failed') {
+    if (
+      !isApproved &&
+      (response.txStatus === 'failed' || response.txStatus === 'success')
+    ) {
+      let message, details;
+      if (response.txStatus === 'failed') {
+        message = 'Approve transaction failed';
+        details = 'Smart contract approval failed in blockchain.';
+      } else {
+        message = 'Not enough approval';
+        if (response.requiredApprovedAmount && response.currentApprovedAmount)
+          details = `Required approval: ${response.requiredApprovedAmount}, current approval: ${response.currentApprovedAmount}`;
+        else details = `You still don't have enough approval for this swap.`;
+      }
       // approve transaction failed on
       // we should fail the whole swap
       const updateResult = updateSwapStatus({
@@ -194,11 +207,11 @@ async function checkApprovalStatus({
         nextStatus: 'failed',
         nextStepStatus: 'failed',
         errorCode: 'SEND_TX_FAILED',
-        message: 'Approve transaction failed',
-        details: 'Smart contract approval failed in blockchain.',
+        message: message,
+        details: details,
       });
       context.notifier({
-        eventType: 'smart_contract_call_failed',
+        eventType: 'smart_contract_call_failed', // TODO better event type
         ...updateResult,
       });
       failed();
