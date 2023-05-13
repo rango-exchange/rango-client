@@ -44,7 +44,7 @@
     "@rango-dev/wallets-shared": "^0.1.13-next.10",
     "@solana/web3.js": "^1.67.2",
     "bs58": "^5.0.0",
-    "rango-types": "^0.1.28"
+    "rango-types": "^0.1.31"
   },
   "publishConfig": {
     "access": "public"

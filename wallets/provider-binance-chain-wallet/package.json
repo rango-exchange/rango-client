@@ -42,7 +42,7 @@
     "@binance-chain/javascript-sdk": "^4.1.1",
     "@rango-dev/signer-evm": "^0.1.12",
     "@rango-dev/wallets-shared": "^0.1.13-next.10",
-    "rango-types": "^0.1.28"
+    "rango-types": "^0.1.31"
   },
   "publishConfig": {
     "access": "public"
