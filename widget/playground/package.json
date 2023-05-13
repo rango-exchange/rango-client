@@ -18,7 +18,7 @@
     "@rango-dev/wallets-core": "^0.1.14-next.10",
     "@rango-dev/wallets-shared": "^0.1.13-next.10",
     "@rango-dev/widget-embedded": "^0.1.16-next.11",
-    "rango-sdk": "^0.1.20",
+    "rango-sdk": "^0.1.26",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.10.0",
