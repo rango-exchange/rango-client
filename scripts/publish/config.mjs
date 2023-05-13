@@ -7,5 +7,6 @@ export const VERCEL_PACKAGES = {
   [`${scope}/wallets-demo`]: getEnvWithFallback('VERCEL_PROJECT_WALLETS'),
   [`${scope}/queue-manager-demo`]: getEnvWithFallback('VERCEL_PROJECT_Q'),
   [`${scope}/wallets-adapter-demo`]: getEnvWithFallback('VERCEL_PROJECT_WALLET_ADAPTER'),
-  [`${scope}/widget-app`]: getEnvWithFallback('VERCEL_PROJECT_WIDGET_CONFIG'),
+  [`${scope}/widget-playground`]: getEnvWithFallback('VERCEL_PROJECT_WIDGET_CONFIG'),
+  [`${scope}/widget-app`]: getEnvWithFallback('VERCEL_PROJECT_WIDGET_APP'),
 };
