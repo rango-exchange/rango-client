@@ -122,9 +122,15 @@ async function publish(changedPkg, channel) {
   // 4. Publish to Vercel
   if (packages.vercel.length) {
     // TODO: This is not a good solution, because it will build the package itself twice.
-    await buildPackages(packages.vercel);
+    await buildPackages(packages.vercel).catch((e) => {
+      console.log('[-] BUILD FAILED. Ignore it to workflow run the rest of tasks.');
+      console.log(e);
+    });
     logAsSection('[x] Build for VERCEL');
-    await deployProjectsToVercel(packages.vercel);
+    await deployProjectsToVercel(packages.vercel).catch((e) => {
+      console.log('[-] DEPLOY FAILED. Ignore it to workflow run the rest of tasks.');
+      console.log(e);
+    });
     logAsSection('[x] Deploy to VERCEL');
   }
 
