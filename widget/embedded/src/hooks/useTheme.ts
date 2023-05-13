@@ -7,7 +7,7 @@ import usePrevious from './usePrevious';
 
 export function useTheme({
   colors: themeColors,
-  fontFamily = 'Robot',
+  fontFamily = 'Roboto',
   borderRadius = 8,
   mode = 'auto',
 }: WidgetTheme) {

@@ -35,7 +35,7 @@ export function useTheme() {
     foreground,
   };
 
-  const customeLightTheme = createTheme({
+  const customLightTheme = createTheme({
     colors: lightColors,
     shadows: {
       s: `0px 3px 5px 3px ${light?.neutral || '#f0f2f5'} ,0px 6px 10px 3px ${
@@ -44,7 +44,7 @@ export function useTheme() {
     },
   });
 
-  const customeDarkTheme = createTheme({
+  const customDarkTheme = createTheme({
     colors: {
       ...lightColors,
       ...generateRangeColors('neutral', 'dark', '#111111'),
@@ -83,17 +83,17 @@ export function useTheme() {
   }, []);
 
   const getActiveTheme = () => {
-    if (mode === 'auto') return OSTheme === 'dark' ? customeDarkTheme : customeLightTheme;
-    else return mode === 'dark' ? customeDarkTheme : customeLightTheme;
+    if (mode === 'auto') return OSTheme === 'dark' ? customDarkTheme : customLightTheme;
+    else return mode === 'dark' ? customDarkTheme : customLightTheme;
   };
 
   useLayoutEffect(() => {
     const { classList } = document.body;
-    if (mode === 'auto') classList.add(customeLightTheme);
-    else if (mode === 'dark') classList.add(customeDarkTheme);
+    if (mode === 'auto') classList.add(customLightTheme);
+    else if (mode === 'dark') classList.add(customDarkTheme);
     else {
-      classList.add(customeLightTheme);
-      classList.remove(customeDarkTheme);
+      classList.add(customLightTheme);
+      classList.remove(customDarkTheme);
     }
   }, [mode, OSTheme]);
 

@@ -19,11 +19,13 @@ const CheckboxRoot = styled(RadixCheckbox.Root, {
   justifyContent: 'center',
   marginRight: '$2',
   backgroundColor: '$neutral-100',
+  cursor: 'pointer',
 });
 const Label = styled('label', {
   color: '$foreground',
   fontSize: '$m',
   marginLeft: '$8',
+  cursor: 'pointer',
 });
 
 export interface PropTypes {

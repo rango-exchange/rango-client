@@ -27,6 +27,7 @@ const ImagePlaceholder = styled('span', {
 const StyledImage = styled('img', {
   width: '24px',
 });
+
 const Container = styled('div', {
   display: 'grid',
   position: 'relative',
@@ -38,7 +39,10 @@ const Container = styled('div', {
   '@lg': {
     gridTemplateColumns: '1fr 1fr 1fr',
   },
+  borderTop: '1px solid $neutral100',
+  paddingTop: '$16',
 });
+
 const Label = styled('label', {
   display: 'inline-block',
   fontSize: '$14',
@@ -95,7 +99,7 @@ export function TokenInfo({ type }: PropTypes) {
   return (
     <Container>
       <div>
-        <Label>Default Blockchains</Label>
+        <Label>Default Blockchain</Label>
 
         <Button
           variant="outlined"
