@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { BlockchainSelector, Button, Chip, CloseIcon, Modal } from '@rango-dev/ui';
 import { LiquiditySource } from '@rango-dev/ui/dist/types/meta';
-import { Source, Wallets } from '../../types';
+import { Wallets } from '../../types';
 import { WalletType } from '@rango-dev/wallets-shared';
 import { BlockchainMeta } from 'rango-sdk';
 import { useMetaStore } from '../../store/meta';
@@ -104,7 +104,7 @@ export function MultiSelect({ label, type, modalTitle, list, value, onChange }: 
               style={{ margin: 2 }}
               selected
               label={getLabel(v)}
-              suffix={<CloseIcon />}
+              suffix={<CloseIcon color="$foreground" />}
               onClick={() => onChange(v)}
             />
           ))

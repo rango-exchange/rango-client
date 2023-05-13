@@ -2,6 +2,7 @@ import React, { PropsWithChildren, useState } from 'react';
 import {
   Alert,
   Button,
+  Divider,
   Modal,
   Spacer,
   styled,
@@ -26,26 +27,25 @@ const Container = styled('div', {
   justifyContent: 'center',
   backgroundColor: '$neutral100',
 });
-const SwapContent = styled('div', {
-  width: '100%',
-});
+const SwapContent = styled('div', {});
 const ConfigContent = styled('div', {
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'end',
-  width: '100%',
 });
 
 const Swap = styled('div', {
   position: 'sticky',
   top: 0,
-  marginTop: 115,
+  marginTop: 32,
+  flexBasis: '512px',
 });
 
 const Header = styled('div', {
   display: 'flex',
   justifyContent: 'space-between',
   alignItems: 'center',
+  padding: '$32 0',
 });
 
 const Pre = styled('pre', {
@@ -83,9 +83,15 @@ export function Config(props: PropsWithChildren) {
         <ConfigContent>
           <div>
             <Header>
-              <Typography variant="h1">Configuration</Typography>
+              <div>
+                <Typography variant="h4">Customize your widget</Typography>
+                <Divider size={8} />
+                <Typography variant="body2" color="$neutral600">
+                  You can customize the theme and config how your widget should works
+                </Typography>
+              </div>
               <Button variant="contained" type="primary" onClick={() => setOpen(true)}>
-                Exported Config
+                Export Config
               </Button>
             </Header>
             {loadingStatus === 'failed' && (
@@ -95,13 +101,13 @@ export function Config(props: PropsWithChildren) {
             )}
             <Spacer size={20} direction="vertical" />
             <ChainsConfig type="Source" />
-            <Spacer size={24} direction="vertical" />
+            <Divider size={32} />
             <ChainsConfig type="Destination" />
-            <Spacer size={24} direction="vertical" />
+            <Divider size={32} />
             <WalletsConfig />
-            <Spacer size={24} direction="vertical" />
+            <Divider size={32} />
             <SourcesConfig />
-            <Spacer size={24} direction="vertical" />
+            <Divider size={32} />
             <StylesConfig />
           </div>
         </ConfigContent>

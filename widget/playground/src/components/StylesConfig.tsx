@@ -2,6 +2,7 @@ import {
   Button,
   Checkbox,
   ColorPicker,
+  Divider,
   Spacer,
   styled,
   Switch,
@@ -35,7 +36,7 @@ const COLORS = [
   },
   {
     name: 'neutral',
-    label: 'neutral',
+    label: 'Neutral',
   },
 
   {
@@ -190,9 +191,12 @@ const Circle = styled('div', {
   height: 32,
   borderRadius: 16,
 });
+
+const FieldName = styled(Typography, {
+  color: '$neutral700',
+});
+
 export function StylesConfig() {
-  // const width = useConfigStore.use.config().theme.width;
-  // const height = useConfigStore.use.config().theme.height;
   const language = useConfigStore.use.config().language;
   const borderRadius = useConfigStore.use.config().theme.borderRadius;
   const theme = useConfigStore.use.config().theme.mode;
@@ -210,13 +214,13 @@ export function StylesConfig() {
 
   return (
     <div>
-      <Typography variant="h4">Style</Typography>
+      <Typography variant="h4">Styles</Typography>
 
-      <Spacer size={12} direction="vertical" />
+      <Divider size={12} />
       <ConfigurationContainer>
         <GridContent>
           <Select
-            label="Choose Language Widget"
+            label="Language"
             value={language || 'Choose Language'}
             name="language"
             list={languageS}
@@ -225,17 +229,17 @@ export function StylesConfig() {
           />
 
           <Select
-            label="Font Family"
-            value={fontFamily || 'Choose Fontfamily'}
+            label="Font Face"
+            value={fontFamily || 'Choose Font Face'}
             name="fontFamily"
             list={FONTS}
             modalTitle="Fonts"
             onChange={(_, value) => onChangeTheme('fontFamily', value)}
           />
           <div>
-            <Typography variant="body2" mb={4}>
+            <FieldName variant="body2" mb={4}>
               Theme
-            </Typography>
+            </FieldName>
             <ThemeContainer>
               <Checkbox
                 disabled={singleTheme}
@@ -271,30 +275,8 @@ export function StylesConfig() {
             </ThemeContainer>
           </div>
         </GridContent>
-        <Spacer size={24} direction="vertical" />
+        <Divider size={24} />
         <GridContent>
-          {/* <div>
-            <TextField
-              size="large"
-              onChange={(e) => onChangeTheme('width', parseInt(e.target.value))}
-              name="width"
-              value={width}
-              label="Width"
-              type="number"
-              suffix="px"
-            />
-          </div> */}
-          {/* <div>
-            <TextField
-              size="large"
-              onChange={(e) => onChangeTheme('height', parseInt(e.target.value))}
-              name="height"
-              value={height}
-              label="Height"
-              type="number"
-              suffix="px"
-            />
-          </div> */}
           <div>
             <TextField
               size="large"
@@ -308,10 +290,10 @@ export function StylesConfig() {
             />
           </div>
         </GridContent>
-        <Spacer size={20} direction="vertical" />
+        <Divider size={20} />
 
         <hr />
-        <Spacer size={24} direction="vertical" />
+        <Divider size={24} />
 
         <Checkbox
           onCheckedChange={(checked) => {
@@ -321,7 +303,8 @@ export function StylesConfig() {
           label="Single Theme"
           checked={singleTheme}
         />
-        <Spacer size={24} direction="vertical" />
+        <Divider size={24} />
+
         <ModeContainer>
           <Button
             fullWidth
@@ -334,7 +317,8 @@ export function StylesConfig() {
             variant={mode === 'light' ? 'contained' : 'outlined'}>
             Light
           </Button>
-          <Spacer size={24} direction="horizontal" />
+          <Divider size={24} />
+
           <Button
             fullWidth
             disabled={singleTheme && mode === 'light'}
@@ -347,7 +331,7 @@ export function StylesConfig() {
             Dark
           </Button>
         </ModeContainer>
-        <Spacer size={24} direction="vertical" />
+        <Divider size={24} />
 
         <GridContent>
           {themes.map((theme) => (
@@ -397,7 +381,7 @@ export function StylesConfig() {
             </Button>
           ))}
         </GridContent>
-        <Spacer size={24} direction="vertical" />
+        <Divider size={24} />
 
         <GridContent>
           {COLORS.map((color) => (
@@ -411,9 +395,8 @@ export function StylesConfig() {
             />
           ))}
         </GridContent>
-        <Spacer size={20} direction="vertical" />
-
-        <Spacer size={24} direction="vertical" />
+        <Divider size={20} />
+        <Divider size={24} />
       </ConfigurationContainer>
     </div>
   );

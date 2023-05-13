@@ -1,4 +1,4 @@
-import { Spacer, Typography } from '@rango-dev/ui';
+import { Divider, Typography } from '@rango-dev/ui';
 import { LiquiditySource } from '@rango-dev/ui/dist/types/meta';
 import React from 'react';
 import { onChangeMultiSelects } from '../helpers';
@@ -42,8 +42,8 @@ export function SourcesConfig() {
   };
   return (
     <>
-      <Typography variant="h4">Liquidity sources</Typography>
-      <Spacer size={12} direction="vertical" />
+      <Typography variant="h6">Liquidity sources</Typography>
+      <Divider size={24} />
       <ConfigurationContainer>
         <MultiSelect
           label="Supported Sources"

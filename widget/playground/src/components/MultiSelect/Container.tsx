@@ -1,5 +1,5 @@
 import React, { PropsWithChildren } from 'react';
-import { Button, InfoCircleIcon, Spacer, styled, Typography } from '@rango-dev/ui';
+import { Button, Divider, InfoCircleIcon, Spacer, styled, Typography } from '@rango-dev/ui';
 import { useMetaStore } from '../../store/meta';
 type PropTypes = {
   label: string;
@@ -10,6 +10,8 @@ const Head = styled('div', {
   display: 'flex',
   justifyContent: 'space-between',
   alignItems: 'center',
+  borderBottom: '1px solid $neutral100',
+  paddingBottom: '$8',
 });
 
 const Body = styled('div', {
@@ -17,36 +19,29 @@ const Body = styled('div', {
   overflow: 'hidden auto',
 });
 
-const Row = styled('div', {
-  display: 'flex',
-  flexWrap: 'wrap',
-  maxHeight: 120,
-  overflow: 'auto',
-});
-
 export function Container({ label, onOpenModal, children }: PropsWithChildren<PropTypes>) {
   const loadingStatus = useMetaStore.use.loadingStatus();
 
   return (
-    <div>
+    <>
       <Head>
-        <Typography noWrap variant="h6">
+        <Typography noWrap variant="body2" color="neutral700">
           {label}
         </Typography>
 
         <Button
           onClick={onOpenModal}
-          variant="contained"
+          variant="ghost"
           loading={loadingStatus === 'loading'}
           disabled={loadingStatus === 'failed'}
           size="small"
           suffix={loadingStatus === 'failed' && <InfoCircleIcon color="error" size={24} />}
           type="primary">
-          Change
+          Select
         </Button>
       </Head>
-      <Spacer size={16} direction="vertical" />
+      <Divider size={16} />
       <Body>{children}</Body>
-    </div>
+    </>
   );
 }
