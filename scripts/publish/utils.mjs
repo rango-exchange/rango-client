@@ -52,7 +52,6 @@ export async function addUpdatedPackageJsonToStage(packages) {
 }
 
 export async function packageNamesToPackagesWithInfo(names) {
-  console.log({ names });
   const allPackages = await workspacePackages();
   return names.map((pkgName) => allPackages.find((pkg) => pkg.name === pkgName));
 }
