@@ -23,26 +23,12 @@ export function scheduleNextStep({
   const currentStep = getCurrentStep(swap);
   const isFailed = swap.steps.find((step) => step.status === 'failed');
 
-  if (!!currentStep) {
-    if (isFailed) {
-      swap.status = 'failed';
-      swap.finishTime = new Date().getTime().toString();
-      setStorage({ ...getStorage(), swapDetails: swap });
-      context.notifier({
-        eventType: 'task_failed',
-        swap: swap,
-        step: null,
-      });
-      failed();
-      return;
-    }
-
+  if (!!currentStep && !isFailed) {
     if (isTxAlreadyCreated(swap, currentStep)) {
       schedule(SwapActionTypes.EXECUTE_TRANSACTION);
       return next();
     }
 
-    // TODO double check it after approval changes
     if (currentStep?.executedTransactionId) {
       schedule(SwapActionTypes.CHECK_TRANSACTION_STATUS);
       return next();
