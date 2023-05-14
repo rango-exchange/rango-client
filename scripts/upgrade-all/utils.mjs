@@ -2,6 +2,7 @@ import fs from 'node:fs/promises';
 import { join } from 'node:path';
 import { $ } from 'execa';
 import { printDirname } from '../common/utils.mjs';
+import { packageVersionOnNPM } from '../common/npm.mjs';
 
 const cwd = join(printDirname(), '..', '..');
 
@@ -57,9 +58,7 @@ export async function upgradeDepndendentsOf(project, dist) {
 
   console.log(`These packages are using ${project}: ${dependents.join(',')} \n`);
 
-  const { stdout: npmInfo } = await $`yarn info ${project}@${dist} --json`;
-  const versions = JSON.parse(npmInfo).data['dist-tags'];
-  const version = versions[dist];
+  const version = await packageVersionOnNPM(project, dist);
 
   console.log(`NPM version for ${project} is ${version}. \n`);
 
