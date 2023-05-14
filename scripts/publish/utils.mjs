@@ -191,7 +191,7 @@ export async function increaseVersionForNext(changedPkgs) {
           '--no-git-tag-version',
         ]).then(({ stdout }) => stdout);
       };
-      return checkVersionAndIncrease;
+      return checkVersionAndIncrease();
     }),
   );
 
@@ -235,7 +235,7 @@ export async function increaseVersionForMain(changedPkgs) {
         ]).then(({ stdout }) => stdout);
       };
 
-      return checkVersionAndIncrease;
+      return checkVersionAndIncrease();
     }),
   );
 
