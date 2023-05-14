@@ -94,6 +94,9 @@ async function publish(changedPkg, channel) {
   } else {
     updatedPackages = await increaseVersionForNext([changedPkg]);
   }
+
+  console.log('[debug] updatedPackages', updatedPackages);
+  console.log('[debug] changedPkg', changedPkg);
   console.log(
     updatedPackages
       .map((pkg) => `[x] Versioninig: ${pkg.name} (next version: ${pkg.version})`)
