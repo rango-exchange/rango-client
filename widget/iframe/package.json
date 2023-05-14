@@ -1,0 +1,28 @@
+{
+  "name": "@rango-dev/widget-iframe",
+  "version": "0.1.0",
+  "license": "MIT",
+  "private": true,
+  "source": "index.ts",
+  "browserslist": "> 0.5%, last 2 versions, not dead",
+  "scripts": {
+    "build": "parcel build"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "tsdx lint"
+    }
+  },
+  "prettier": {
+    "printWidth": 80,
+    "semi": true,
+    "singleQuote": true,
+    "trailingComma": "es5"
+  },
+  "devDependencies": {
+    "parcel": "^2.7.0"
+  },
+  "dependencies": {
+    "@rango-dev/widget-embedded": "^0.1.16-next.11"
+  }
+}

@@ -21,8 +21,10 @@ export function App() {
   if (!!config) configRef.current = config;
 
   return (
-    <Routes>
-      <Route path="/*" element={<Widget config={configRef.current} />} />
-    </Routes>
+    <div style={{ padding: '40px' }}>
+      <Routes>
+        <Route path="/*" element={<Widget config={configRef.current} />} />
+      </Routes>
+    </div>
   );
 }
