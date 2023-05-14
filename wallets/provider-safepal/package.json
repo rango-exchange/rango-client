@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/provider-safepal",
-  "version": "0.1.14-next.10",
+  "version": "0.1.14-next.14",
   "license": "MIT",
   "module": "dist/provider-safepal.esm.js",
   "main": "dist/index.js",
@@ -39,9 +39,9 @@
     }
   ],
   "dependencies": {
-    "@rango-dev/signer-evm": "^0.1.12",
-    "@rango-dev/signer-solana": "^0.1.12",
-    "@rango-dev/wallets-shared": "^0.1.13-next.10",
+    "@rango-dev/signer-evm": "^0.1.13-next.4",
+    "@rango-dev/signer-solana": "^0.1.13-next.4",
+    "@rango-dev/wallets-shared": "^0.1.13-next.15",
     "rango-types": "^0.1.31"
   },
   "publishConfig": {
