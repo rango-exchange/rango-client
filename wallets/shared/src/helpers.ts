@@ -220,3 +220,4 @@ export function detectMobileScreens(): boolean {
     navigator.userAgent
   );
 }
+
