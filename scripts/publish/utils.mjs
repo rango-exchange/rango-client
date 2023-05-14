@@ -6,6 +6,7 @@ import conventionanRecommendBump from 'conventional-recommended-bump';
 import { printDirname } from '../common/utils.mjs';
 import { VERCEL_ORG_ID, VERCEL_PACKAGES, VERCEL_TOKEN } from './config.mjs';
 import { importJson } from '../common/graph/helpers.mjs';
+import { overrideNPMVersionOnLocal } from '../common/npm.mjs';
 const root = join(printDirname(), '..', '..');
 
 export async function generateChangelog(pkg, { saveToFile } = { saveToFile: true }) {
@@ -173,17 +174,22 @@ export async function tagPackages(updatedPackages, { skipGitTagging }) {
 }
 
 export async function increaseVersionForNext(changedPkgs) {
+  const dist = 'next';
   await Promise.all(
-    changedPkgs.map(({ name }) =>
-      execa('yarn', [
-        'workspace',
-        name,
-        'version',
-        '--preid=next',
-        '--prerelease',
-        '--no-git-tag-version',
-      ]).then(({ stdout }) => stdout),
-    ),
+    changedPkgs.map(({ name }) => {
+      const checkVersionAndIncrease = async () => {
+        await overrideNPMVersionOnLocal(name, dist);
+        return await execa('yarn', [
+          'workspace',
+          name,
+          'version',
+          '--preid=next',
+          '--prerelease',
+          '--no-git-tag-version',
+        ]).then(({ stdout }) => stdout);
+      };
+      return checkVersionAndIncrease;
+    }),
   );
 
   // Getting latest packages info to show the updated version.
@@ -197,6 +203,7 @@ export async function increaseVersionForNext(changedPkgs) {
 
 export async function increaseVersionForMain(changedPkgs) {
   const nextVersions = {};
+  const dist = 'latest';
 
   try {
     await Promise.all(
@@ -213,14 +220,19 @@ export async function increaseVersionForMain(changedPkgs) {
 
   await Promise.all(
     changedPkgs.map(({ name }) => {
-      const nextVersion = nextVersions[name];
-      return execa('yarn', [
-        'workspace',
-        name,
-        'version',
-        `--${nextVersion}`,
-        '--no-git-tag-version',
-      ]).then(({ stdout }) => stdout);
+      const checkVersionAndIncrease = async () => {
+        await overrideNPMVersionOnLocal(name, dist);
+        const nextVersion = nextVersions[name];
+        return await execa('yarn', [
+          'workspace',
+          name,
+          'version',
+          `--${nextVersion}`,
+          '--no-git-tag-version',
+        ]).then(({ stdout }) => stdout);
+      };
+
+      return checkVersionAndIncrease;
     }),
   );
 
