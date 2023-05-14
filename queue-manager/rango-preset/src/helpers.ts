@@ -494,9 +494,13 @@ export function getRequiredWallet(swap: PendingSwap): {
  */
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 async function getChainId(provider: any): Promise<string | number | null> {
-  const chainId: number | string | null =
-    (await provider.request({ method: 'eth_chainId' })) || provider?.chainId;
-  return chainId;
+  try {
+    const chainId: number | string | null =
+      (await provider.request({ method: 'eth_chainId' })) || provider?.chainId;
+    return chainId;
+  } catch {
+    return provider?.chainId;
+  }
 }
 
 /**
@@ -809,7 +813,7 @@ export function isRequiredWalletConnected(
 
   const matched = connectedAccounts.some((account) => {
     const { address: accountAddress } = readAccountAddress(account);
-    return address === accountAddress;
+    return address.toLocaleLowerCase() === accountAddress.toLocaleLowerCase();
   });
   return { ok: matched, reason: 'account_miss_match' };
 }
