@@ -27,12 +27,20 @@ export async function readPackageJson(project) {
 }
 
 export async function packageVersionOnNPM(project, dist) {
-  const { stdout: npmInfo } = await $`yarn info ${project}@${dist} --json`;
-  const versions = JSON.parse(npmInfo).data['dist-tags'];
-  const version = versions[dist];
+  let version;
 
   const { content, update } = await readPackageJson(project);
   const local_version = content.version;
+
+  if (content.private) {
+    console.log(`[info] local_version as npm_version because it is a private package.`);
+    version = local_version;
+  } else {
+    const { stdout: npmInfo } = await $`yarn info ${project}@${dist} --json`;
+    const versions = JSON.parse(npmInfo).data['dist-tags'];
+    version = versions[dist];
+  }
+
   // update pkg json
   content.version = version;
   await update(content);
