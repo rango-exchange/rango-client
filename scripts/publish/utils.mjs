@@ -178,7 +178,10 @@ export async function increaseVersionForNext(changedPkgs) {
   await Promise.all(
     changedPkgs.map(({ name }) => {
       const checkVersionAndIncrease = async () => {
-        await overrideNPMVersionOnLocal(name, dist);
+        const versions = await overrideNPMVersionOnLocal(name, dist);
+        console.log(
+          `Checking local & npm versions for ${name}@${dist}: \n local: ${versions.local_version} \n npm: ${versions.npm_version}`,
+        );
         return await execa('yarn', [
           'workspace',
           name,
