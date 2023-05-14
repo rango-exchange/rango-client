@@ -7,7 +7,7 @@
   "browserslist": "> 0.5%, last 2 versions, not dead",
   "scripts": {
     "dev": "parcel -p 3002 --cache-dir=.parcel-cache",
-    "build": "parcel build --cache-dir=.parcel-cache"
+    "build": "parcel build --cache-dir=.parcel-cache && cp ./vercel.json ./dist"
   },
   "husky": {
     "hooks": {
@@ -28,6 +28,5 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.8.0"
-  },
-  "homepage": "."
+  }
 }
