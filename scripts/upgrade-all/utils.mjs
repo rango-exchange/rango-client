@@ -58,13 +58,16 @@ export async function upgradeDepndendentsOf(project, dist) {
 
   console.log(`These packages are using ${project}: ${dependents.join(',')} \n`);
 
-  const version = await packageVersionOnNPM(project, dist);
+  const versions = await packageVersionOnNPM(project, dist);
 
-  console.log(`NPM version for ${project} is ${version}. \n`);
+  console.log(`NPM version for ${project} is ${versions.npm_version}. \n`);
 
   await Promise.all(
     dependents.map((pkg) =>
-      updateVersion({ path: workspaces[pkg].location }, { name: project, version }),
+      updateVersion(
+        { path: workspaces[pkg].location },
+        { name: project, version: versions.npm_version },
+      ),
     ),
   );
 }
