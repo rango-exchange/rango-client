@@ -68,6 +68,7 @@ export type EventType =
   | 'check_tx_status'
   | 'check_approve_tx_status'
   | 'transfer_rejected'
+  | 'transfer_failed'
   | 'calling_smart_contract'
   | 'smart_contract_called'
   | 'smart_contract_call_failed'
