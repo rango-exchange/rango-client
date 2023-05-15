@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/queue-manager-react",
-  "version": "0.1.12-next.13",
+  "version": "0.1.12",
   "license": "MIT",
   "module": "dist/queue-manager-react.esm.js",
   "main": "dist/index.js",
