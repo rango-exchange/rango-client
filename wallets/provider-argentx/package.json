@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/provider-argentx",
-  "version": "0.1.14-next.16",
+  "version": "0.1.14",
   "license": "MIT",
   "module": "dist/provider-argentx.esm.js",
   "main": "dist/index.js",
@@ -39,8 +39,8 @@
     }
   ],
   "dependencies": {
-    "@rango-dev/signer-starknet": "^0.1.13-next.7",
-    "@rango-dev/wallets-shared": "^0.1.13-next.16",
+    "@rango-dev/signer-starknet": "^0.1.12",
+    "@rango-dev/wallets-shared": "^0.1.13",
     "rango-types": "^0.1.32"
   },
   "publishConfig": {
