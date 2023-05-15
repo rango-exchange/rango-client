@@ -917,7 +917,6 @@ export function singTransaction(
               sourceWallet?.walletType
             );
           }
-
           const updateResult = updateSwapStatus({
             getStorage,
             setStorage,
@@ -928,7 +927,10 @@ export function singTransaction(
             errorCode: extraMessageErrorCode,
           });
           notifier({
-            eventType: 'contract_rejected',
+            eventType:
+              extraMessageErrorCode === 'REJECTED_BY_USER'
+                ? 'contract_rejected'
+                : 'smart_contract_call_failed',
             ...updateResult,
           });
 
@@ -1006,7 +1008,10 @@ export function singTransaction(
             errorCode: extraMessageErrorCode,
           });
           notifier({
-            eventType: 'contract_rejected',
+            eventType:
+              extraMessageErrorCode === 'REJECTED_BY_USER'
+                ? 'contract_rejected'
+                : 'smart_contract_call_failed',
             ...updateResult,
           });
 
@@ -1084,7 +1089,10 @@ export function singTransaction(
             errorCode: extraMessageErrorCode,
           });
           notifier({
-            eventType: 'contract_rejected',
+            eventType:
+              extraMessageErrorCode === 'REJECTED_BY_USER'
+                ? 'contract_rejected'
+                : 'smart_contract_call_failed',
             ...updateResult,
           });
 
@@ -1154,7 +1162,10 @@ export function singTransaction(
               errorCode: extraMessageErrorCode,
             });
             notifier({
-              eventType: 'transfer_rejected',
+              eventType:
+                extraMessageErrorCode === 'REJECTED_BY_USER'
+                  ? 'transfer_rejected'
+                  : 'transfer_failed',
               ...updateResult,
             });
             failed();
@@ -1221,7 +1232,10 @@ export function singTransaction(
               errorCode: extraMessageErrorCode,
             });
             notifier({
-              eventType: 'smart_contract_call_failed',
+              eventType:
+                extraMessageErrorCode === 'REJECTED_BY_USER'
+                  ? 'contract_rejected'
+                  : 'smart_contract_call_failed',
               ...updateResult,
             });
 

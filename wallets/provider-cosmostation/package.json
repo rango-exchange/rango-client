@@ -42,7 +42,7 @@
     "@rango-dev/signer-cosmos": "^0.1.13-next.15",
     "@rango-dev/signer-evm": "^0.1.13-next.4",
     "@rango-dev/wallets-shared": "^0.1.13-next.15",
-    "rango-types": "^0.1.31"
+    "rango-types": "^0.1.32"
   },
   "publishConfig": {
     "access": "public"
