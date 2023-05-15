@@ -494,9 +494,13 @@ export function getRequiredWallet(swap: PendingSwap): {
  */
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 async function getChainId(provider: any): Promise<string | number | null> {
-  const chainId: number | string | null =
-    (await provider.request({ method: 'eth_chainId' })) || provider?.chainId;
-  return chainId;
+  try {
+    const chainId: number | string | null =
+      (await provider.request({ method: 'eth_chainId' })) || provider?.chainId;
+    return chainId;
+  } catch {
+    return provider?.validateChainId()[1];
+  }
 }
 
 /**
