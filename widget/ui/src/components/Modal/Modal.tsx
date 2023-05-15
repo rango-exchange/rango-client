@@ -24,6 +24,8 @@ const BackDrop = styled('div', {
   width: '100vw',
   height: '100vh',
   backgroundColor: 'rgba(0,0,0,.1)',
+  zIndex: 10,
+
 });
 
 const ModalContainer = styled('div', {
@@ -32,8 +34,7 @@ const ModalContainer = styled('div', {
   padding: '$16 $16',
   display: 'flex',
   flexDirection: 'column',
-  boxShadow: '$s',
-  zIndex: 10,
+  zIndex: 20,
 });
 const Row = styled('div', {
   display: 'flex',
