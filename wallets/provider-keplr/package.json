@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/provider-keplr",
-  "version": "0.1.14-next.14",
+  "version": "0.1.14-next.15",
   "license": "MIT",
   "module": "dist/provider-keplr.esm.js",
   "main": "dist/index.js",
@@ -39,8 +39,8 @@
     }
   ],
   "dependencies": {
-    "@rango-dev/signer-cosmos": "^0.1.13-next.15",
-    "@rango-dev/wallets-shared": "^0.1.13-next.15",
+    "@rango-dev/signer-cosmos": "^0.1.13-next.16",
+    "@rango-dev/wallets-shared": "^0.1.13-next.16",
     "rango-types": "^0.1.32"
   },
   "devDependencies": {
