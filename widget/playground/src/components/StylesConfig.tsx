@@ -53,7 +53,7 @@ const COLORS = [
   },
 ];
 
-const themes = [
+const customThemes = [
   {
     dark: {
       foreground: '#fff',
@@ -196,6 +196,27 @@ const FieldName = styled(Typography, {
   color: '$neutral700',
 });
 
+const defaultColors = {
+  dark: {
+    foreground: '#fff',
+    background: '#000',
+    surface: '#000',
+    primary: '#5FA425',
+    error: '#FF0000',
+    warning: '#F5A623',
+    success: '#0070F3',
+  },
+  light: {
+    background: '#fff',
+    foreground: '#000',
+    neutral: '#fafafa',
+    surface: '#fff',
+    primary: '#5FA425',
+    error: '#FF0000',
+    warning: '#F5A623',
+    success: '#0070F3',
+  },
+};
 export function StylesConfig() {
   const language = useConfigStore.use.config().language;
   const borderRadius = useConfigStore.use.config().theme.borderRadius;
@@ -306,71 +327,72 @@ export function StylesConfig() {
         <Divider size={24} />
 
         <ModeContainer>
-          <Button
-            fullWidth
-            onClick={() => {
-              onChangeTheme('mode', 'light');
-              setMode('light');
-            }}
-            disabled={singleTheme && mode === 'dark'}
-            type="success"
-            variant={mode === 'light' ? 'contained' : 'outlined'}>
-            Light
-          </Button>
-          <Spacer size={24} />
-
-          <Button
-            fullWidth
-            disabled={singleTheme && mode === 'light'}
-            onClick={() => {
-              onChangeTheme('mode', 'dark');
-              setMode('dark');
-            }}
-            type="success"
-            variant={mode === 'dark' ? 'contained' : 'outlined'}>
-            Dark
-          </Button>
+          {!(singleTheme && mode === 'dark') && (
+            <Button
+              fullWidth
+              onClick={() => {
+                onChangeTheme('mode', 'light');
+                setMode('light');
+              }}
+              type="success"
+              variant={mode === 'light' ? 'contained' : 'outlined'}>
+              Light
+            </Button>
+          )}
+          {!singleTheme && <Spacer size={24} direction="horizontal" />}
+          {!(singleTheme && mode === 'light') && (
+            <Button
+              fullWidth
+              onClick={() => {
+                onChangeTheme('mode', 'dark');
+                setMode('dark');
+              }}
+              type="success"
+              variant={mode === 'dark' ? 'contained' : 'outlined'}>
+              Dark
+            </Button>
+          )}
         </ModeContainer>
         <Divider size={24} />
 
         <GridContent>
-          {themes.map((theme) => (
+          {customThemes.map((t) => (
             <Button
               type="success"
               variant="outlined"
               onClick={() => {
-                if (theme.dark && !theme.light) {
+                if (t.dark && !t.light) {
                   onChangeTheme('mode', 'dark');
                   setMode('dark');
                   onChangeTheme('singleTheme', true);
 
-                  onSelectTheme({ ...theme, light: {} });
-                } else if (theme.light && !theme.dark) {
+                  onSelectTheme({ ...t, light: {} });
+                } else if (t.light && !t.dark) {
                   onChangeTheme('mode', 'light');
                   setMode('light');
                   onChangeTheme('singleTheme', true);
 
-                  onSelectTheme({ ...theme, dark: {} });
-                } else if (theme.dark && theme.light) {
+                  onSelectTheme({ ...t, dark: {} });
+                } else if (t.dark && t.light) {
                   onChangeTheme('singleTheme', false);
-                  onSelectTheme(theme);
+                  onSelectTheme(t);
                 }
               }}>
               <ModeContainer>
                 <Circle
                   style={{
-                    backgroundColor: theme?.light?.success || theme?.dark?.success,
+                    backgroundColor: t?.light?.success || t?.dark?.success,
                   }}
                 />
                 <Circle
                   style={{
-                    backgroundColor: theme?.light?.foreground || theme?.dark?.foreground,
+                    backgroundColor: t?.light?.foreground || t?.dark?.foreground,
                     zIndex: 1,
                   }}
                 />
                 <Circle
                   style={{
-                    backgroundColor: theme?.light?.primary || theme?.dark?.foreground,
+                    backgroundColor: t?.light?.primary || t?.dark?.primary,
                     position: 'absolute',
                   }}
                 />
@@ -386,7 +408,7 @@ export function StylesConfig() {
               place="top"
               key={color.name}
               placeholder="Choose Color"
-              color={colors[mode][color.name]}
+              color={colors[mode][color.name] || defaultColors[mode][color.name]}
               label={color.label}
               onChangeColor={(c) => onChangeColors(color.name as COLORS, mode, c)}
             />
