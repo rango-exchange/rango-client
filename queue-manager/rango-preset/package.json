@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/queue-manager-rango-preset",
-  "version": "0.1.13-next.13",
+  "version": "0.1.13-next.14",
   "license": "MIT",
   "module": "dist/queue-manager-rango-preset.esm.js",
   "main": "dist/index.js",

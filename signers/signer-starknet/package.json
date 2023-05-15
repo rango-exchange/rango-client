@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/signer-starknet",
-  "version": "0.1.13-next.5",
+  "version": "0.1.13-next.7",
   "license": "MIT",
   "module": "dist/signer-starknet.esm.js",
   "main": "dist/index.js",

@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/wallets-adapter",
-  "version": "0.1.14-next.7",
+  "version": "0.1.14-next.8",
   "license": "MIT",
   "module": "dist/wallets-adapter.esm.js",
   "main": "dist/index.js",
@@ -42,10 +42,10 @@
     }
   ],
   "dependencies": {
-    "@rango-dev/provider-all": "^0.1.14-next.13",
+    "@rango-dev/provider-all": "^0.1.14-next.14",
     "@rango-dev/ui": "^0.1.14-next.7",
-    "@rango-dev/wallets-core": "^0.1.14-next.13",
-    "@rango-dev/wallets-shared": "^0.1.13-next.15",
+    "@rango-dev/wallets-core": "^0.1.14-next.14",
+    "@rango-dev/wallets-shared": "^0.1.13-next.16",
     "rango-types": "^0.1.32"
   },
   "publishConfig": {
