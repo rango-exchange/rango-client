@@ -9,7 +9,8 @@ import { importJson } from '../common/graph/helpers.mjs';
 import { overrideNPMVersionOnLocal } from '../common/npm.mjs';
 const root = join(printDirname(), '..', '..');
 
-export async function generateChangelog(pkg, { saveToFile } = { saveToFile: true }) {
+export async function generateChangelog(pkg, options) {
+  const { saveToFile } = options;
   const changelogPath = `${pkg.location}/CHANGELOG.md`;
   const command = [
     'conventional-changelog',

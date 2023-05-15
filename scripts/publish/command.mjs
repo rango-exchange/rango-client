@@ -103,7 +103,7 @@ async function publish(changedPkg, channel) {
 
   // 2. Changelog & Github Release
   if (channel === 'prod') {
-    await Promise.all(updatedPackages.map(generateChangelog));
+    await Promise.all(updatedPackages.map((pkg) => generateChangelog(pkg, { saveToFile: true })));
     await addChangelogsToStage(updatedPackages);
 
     await Promise.all(updatedPackages.map(makeGithubRelease));
