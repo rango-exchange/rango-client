@@ -39,6 +39,7 @@ jobs:
         env:
           REF: ${{ github.ref }}
           BASE_REF: ${{ github.event.pull_request.base.ref }}
+          GH_TOKEN: ${{ github.token }}
           VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
           VERCEL_PROJECT_WALLETS: ${{ secrets.VERCEL_PROJECT_WALLETS }}
