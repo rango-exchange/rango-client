@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/signer-terra",
-  "version": "0.1.13-next.7",
+  "version": "0.1.19",
   "license": "MIT",
   "module": "dist/signer-terra.esm.js",
   "main": "dist/index.js",
