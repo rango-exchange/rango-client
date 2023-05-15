@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/provider-all",
-  "version": "0.1.14",
+  "version": "0.1.14-next.15",
   "license": "MIT",
   "module": "dist/provider-all.esm.js",
   "main": "dist/index.js",
@@ -57,7 +57,7 @@
     "@rango-dev/provider-okx": "^0.1.13",
     "@rango-dev/provider-phantom": "^0.1.14",
     "@rango-dev/provider-safepal": "^0.1.13",
-    "@rango-dev/provider-station": "^0.1.11-next.73",
+    "@rango-dev/provider-station": "^0.1.12-next.16",
     "@rango-dev/provider-tokenpocket": "^0.1.14",
     "@rango-dev/provider-tron-link": "^0.1.14",
     "@rango-dev/provider-trustwallet": "^0.1.13",
