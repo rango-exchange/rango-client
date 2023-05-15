@@ -42,7 +42,7 @@ export function useTheme({
     foreground,
   };
 
-  const customeLightTheme = createTheme({
+  const customLightTheme = createTheme({
     colors: lightColors,
     radii: {
       5: `${borderRadius}px`,
@@ -54,7 +54,7 @@ export function useTheme({
     },
   });
 
-  const customeDarkTheme = createTheme({
+  const customDarkTheme = createTheme({
     colors: {
       ...lightColors,
       ...generateRangeColors('neutral', 'dark', '#111111'),
@@ -114,8 +114,8 @@ export function useTheme({
 
   const getActiveTheme = () => {
     if (theme === 'auto')
-      return OSTheme === 'dark' ? customeDarkTheme : customeLightTheme;
-    else return theme === 'dark' ? customeDarkTheme : customeLightTheme;
+      return OSTheme === 'dark' ? customDarkTheme : customLightTheme;
+    else return theme === 'dark' ? customDarkTheme : customLightTheme;
   };
 
   return { activeTheme: getActiveTheme() };
