@@ -1,1 +1,1 @@
-# @rango-dev/signer-terra doc
+# @rango-dev/signer-terra
