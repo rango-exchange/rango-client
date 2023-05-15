@@ -30,6 +30,9 @@ export async function generateChangelog(pkg, { saveToFile } = { saveToFile: true
   const { stdout: bin } = await execa('yarn', ['bin', 'conventional-changelog']);
   const { stdout } = await execa(bin, command);
 
+  console.log('[debug]', command);
+  console.log('[debug]', bin);
+  console.log('[debug]', stdout);
   return stdout;
 }
 
