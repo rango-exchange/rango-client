@@ -10,7 +10,7 @@ import {
   Typography,
 } from '@rango-dev/ui';
 import React, { useState } from 'react';
-import { languageS, FONTS } from '../constants';
+import { FONTS } from '../constants';
 import { COLORS, useConfigStore } from '../store/config';
 import { ConfigurationContainer } from './ChainsConfig';
 import { Select } from './Select';
@@ -226,7 +226,7 @@ export function StylesConfig() {
   const singleTheme = useConfigStore.use.config().theme.singleTheme;
 
   const [mode, setMode] = useState<'light' | 'dark'>(!theme || theme === 'auto' ? 'light' : theme);
-  const onChangelanguage = useConfigStore.use.onChangelanguage();
+  // const onChangelanguage = useConfigStore.use.onChangelanguage();
   const onChangeTheme = useConfigStore.use.onChangeTheme();
   const onChangeColors = useConfigStore.use.onChangeColors();
   const onSelectTheme = useConfigStore.use.onSelectTheme();
@@ -240,14 +240,14 @@ export function StylesConfig() {
       <Divider size={12} />
       <ConfigurationContainer>
         <GridContent>
-          <Select
-            label="Language"
+          {/* <Select
+            label="Choose Language Widget"
             value={language || 'Choose Language'}
             name="language"
-            list={languageS}
+            list={LANGUAGES}
             modalTitle="Languages"
             onChange={(_, value) => onChangelanguage(value)}
-          />
+          /> */}
 
           <Select
             label="Font Face"
@@ -295,9 +295,6 @@ export function StylesConfig() {
               </Typography>
             </ThemeContainer>
           </div>
-        </GridContent>
-        <Divider size={24} />
-        <GridContent>
           <div>
             <TextField
               size="large"
@@ -311,7 +308,44 @@ export function StylesConfig() {
             />
           </div>
         </GridContent>
-        <Divider size={20} />
+        {/* <Spacer size={24} direction="vertical" />
+        <GridContent>
+         <div>
+            <TextField
+              size="large"
+              onChange={(e) => onChangeTheme('width', parseInt(e.target.value))}
+              name="width"
+              value={width}
+              label="Width"
+              type="number"
+              suffix="px"
+            />
+          </div> 
+          <div>
+            <TextField
+              size="large"
+              onChange={(e) => onChangeTheme('height', parseInt(e.target.value))}
+              name="height"
+              value={height}
+              label="Height"
+              type="number"
+              suffix="px"
+            />
+          </div> 
+          <div>
+            <TextField
+              size="large"
+              onChange={(e) => onChangeTheme('borderRadius', parseInt(e.target.value))}
+              name="borderRadius"
+              value={borderRadius}
+              label="Border Radius"
+              type="number"
+              placeholder="0"
+              suffix="px"
+            />
+          </div>
+        </GridContent>*/}
+        <Spacer size={20} direction="vertical" />
 
         <hr />
         <Divider size={24} />
