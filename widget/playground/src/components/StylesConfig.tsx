@@ -317,7 +317,7 @@ export function StylesConfig() {
             variant={mode === 'light' ? 'contained' : 'outlined'}>
             Light
           </Button>
-          <Divider size={24} />
+          <Spacer size={24} />
 
           <Button
             fullWidth

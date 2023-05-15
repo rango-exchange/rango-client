@@ -27,18 +27,20 @@ const Container = styled('div', {
   justifyContent: 'center',
   backgroundColor: '$neutral100',
 });
-const SwapContent = styled('div', {});
+const SwapContent = styled('div', {
+  flexBasis: '512px',
+});
 const ConfigContent = styled('div', {
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'end',
+  paddingRight: '$24',
 });
 
 const Swap = styled('div', {
   position: 'sticky',
   top: 0,
   marginTop: 32,
-  flexBasis: '512px',
 });
 
 const Header = styled('div', {
@@ -112,7 +114,6 @@ export function Config(props: PropsWithChildren) {
           </div>
         </ConfigContent>
       </Provider>
-      <Spacer size={24} />
       <SwapContent>
         <Swap>{props.children}</Swap>
       </SwapContent>
