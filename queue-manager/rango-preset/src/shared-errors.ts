@@ -41,7 +41,7 @@ export class PrettyError extends Error {
   static isPrettyError(obj: unknown): obj is PrettyError {
     return (
       obj instanceof PrettyError ||
-      Object.prototype.hasOwnProperty('_isPrettyError')
+      Object.prototype.hasOwnProperty.call(obj, '_isPrettyError')
     );
   }
 
