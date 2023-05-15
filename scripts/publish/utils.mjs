@@ -31,6 +31,7 @@ export async function generateChangelog(pkg, { saveToFile } = { saveToFile: true
   const { stdout } = await execa(bin, command);
 
   console.log('[debug]', command);
+  console.log('[debug] saveToFile', saveToFile);
   console.log('[debug]', bin);
   console.log('[debug]', stdout);
   return stdout;
