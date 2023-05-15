@@ -55,7 +55,7 @@ const Pre = styled('pre', {
   display: 'block',
   padding: '10px 30px',
   margin: 0,
-  overflowY: 'scroll',
+  overflowY: 'auto',
   color: '$foreground',
   '.string': {
     color: '$warning',
