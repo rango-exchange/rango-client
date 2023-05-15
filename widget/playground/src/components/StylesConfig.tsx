@@ -352,10 +352,7 @@ export function StylesConfig() {
 
                   onSelectTheme({ ...theme, dark: {} });
                 } else if (theme.dark && theme.light) {
-                  onChangeTheme('mode', 'light');
-                  setMode('light');
                   onChangeTheme('singleTheme', false);
-
                   onSelectTheme(theme);
                 }
               }}>
