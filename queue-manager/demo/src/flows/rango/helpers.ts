@@ -584,7 +584,7 @@ export const walletsAndSupportedChainsMetaSelector = (blockchains: AllBlockchain
     ),
 
     [WalletType.TOKEN_POCKET]: evmBlockchains,
-    [WalletType.TERRA_STATION]: [],
+    [WalletType.STATION]: [],
     [WalletType.LEAP]: [],
     [WalletType.MATH]: [...evmBlockchains, ...solanaBlockchain],
     [WalletType.SAFEPAL]: [
