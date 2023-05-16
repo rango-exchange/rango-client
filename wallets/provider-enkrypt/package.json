@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/provider-enkrypt",
-  "version": "0.1.1-next.1",
+  "version": "0.1.1-next.4",
   "license": "MIT",
   "module": "dist/provider-enkrypt.esm.js",
   "main": "dist/index.js",
@@ -39,8 +39,8 @@
     }
   ],
   "dependencies": {
-    "@rango-dev/signer-evm": "^0.1.12",
-    "@rango-dev/wallets-shared": "^0.1.13-next.10",
+    "@rango-dev/signer-evm": "^0.1.13-next.4",
+    "@rango-dev/wallets-shared": "^0.1.13-next.15",
     "rango-types": "^0.1.28"
   },
   "publishConfig": {
