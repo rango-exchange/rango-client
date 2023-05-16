@@ -534,6 +534,7 @@ export async function isNetworkMatchedForTransaction(
             WalletType.BINANCE_CHAIN,
             WalletType.XDEFI,
             WalletType.WALLET_CONNECT,
+            WalletType.WALLET_CONNECT_2,
             WalletType.TRUST_WALLET,
             WalletType.COIN98,
             WalletType.EXODUS,
@@ -858,7 +859,8 @@ export function singTransaction(
 
     // Update swap status
     const message = `Waiting for approval of ${currentStep?.fromSymbol} coin ${
-      sourceWallet.walletType === WalletType.WALLET_CONNECT
+      sourceWallet.walletType === WalletType.WALLET_CONNECT ||
+      sourceWallet.walletType === WalletType.WALLET_CONNECT_2
         ? 'on your mobile phone'
         : ''
     }`;
@@ -1106,7 +1108,8 @@ export function singTransaction(
     ? 'Transaction is expired. Please try again'
     : 'executing transaction';
   const executeDetails = `${
-    sourceWallet.walletType === WalletType.WALLET_CONNECT
+    sourceWallet.walletType === WalletType.WALLET_CONNECT ||
+    sourceWallet.walletType === WalletType.WALLET_CONNECT_2
       ? 'Check your mobile phone'
       : ''
   }`;

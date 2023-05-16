@@ -101,14 +101,25 @@ class Wallet<InstanceType = any> {
         return eagerConnection;
       }
       if (networkChanged && !!this.actions.switchNetwork) {
-        await this.actions.switchNetwork({
-          instance: this.provider,
-          meta: this.meta,
-          // TODO: Fix type error
-          // @ts-ignore
-          network: requestedNetwork,
-          newInstance: this.tryGetInstance.bind(this),
-        });
+        if (this.options.config.type === WalletType.WALLET_CONNECT_2) {
+          const instance = await this.actions.getInstance({
+            meta: this.meta,
+            // TODO: Fix type error
+            // @ts-ignore
+            network: requestedNetwork,
+          });
+          this.setProvider(null);
+          this.setProvider(instance);
+        } else {
+          await this.actions.switchNetwork({
+            instance: this.provider,
+            meta: this.meta,
+            // TODO: Fix type error
+            // @ts-ignore
+            network: requestedNetwork,
+            newInstance: this.tryGetInstance.bind(this),
+          });
+        }
 
         return {
           // Only network has been changed, so we reuse accounts from what we have already.

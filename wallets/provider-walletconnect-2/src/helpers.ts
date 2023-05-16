@@ -57,7 +57,7 @@ export async function makeConnection(options: {
     if (ethProvider.session && ethProvider.accounts?.length && !force) {
       (async () => {
         await ethProvider
-          .enable()
+          .connect()
           .then(() => {
             resolve(ethProvider);
           })
