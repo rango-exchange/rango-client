@@ -23,6 +23,7 @@ import * as frontier from '@rango-dev/provider-frontier';
 import * as station from '@rango-dev/provider-station';
 // import * as walletconnect2 from '@rango-dev/provider-walletconnect-2';
 import * as enkrypt from '@rango-dev/provider-enkrypt';
+import * as walletconnect2 from '@rango-dev/provider-walletconnect-2';
 
 export const allProviders = () => [
   binance,
@@ -50,4 +51,5 @@ export const allProviders = () => [
   station,
   // walletconnect2
   enkrypt,
+  walletconnect2
 ];
