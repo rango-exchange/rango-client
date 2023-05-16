@@ -499,7 +499,7 @@ async function getChainId(provider: any): Promise<string | number | null> {
       (await provider.request({ method: 'eth_chainId' })) || provider?.chainId;
     return chainId;
   } catch {
-    return provider?.validateChainId()[1];
+    return provider?.chainId;
   }
 }
 
