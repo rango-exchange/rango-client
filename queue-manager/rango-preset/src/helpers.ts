@@ -547,6 +547,7 @@ export async function isNetworkMatchedForTransaction(
             WalletType.BRAVE,
             WalletType.FRONTIER,
             WalletType.KUCOIN,
+            WalletType.ENKRYPT,
           ].includes(sourceWallet.walletType)
         ) {
           const provider = getEvmProvider(providers, sourceWallet.walletType);

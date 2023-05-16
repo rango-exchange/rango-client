@@ -26,5 +26,6 @@ declare global {
     leap: any;
     frontier: any;
     terraWallets: any;
+    enkrypt: any;
   }
 }

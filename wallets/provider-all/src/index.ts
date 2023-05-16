@@ -22,6 +22,7 @@ import * as leapCosmos from '@rango-dev/provider-leap-cosmos';
 import * as frontier from '@rango-dev/provider-frontier';
 import * as station from '@rango-dev/provider-station';
 // import * as walletconnect2 from '@rango-dev/provider-walletconnect-2';
+import * as enkrypt from '@rango-dev/provider-enkrypt';
 
 export const allProviders = () => [
   binance,
@@ -48,4 +49,5 @@ export const allProviders = () => [
   frontier,
   station,
   // walletconnect2
+  enkrypt,
 ];
