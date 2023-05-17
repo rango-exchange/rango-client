@@ -10,6 +10,7 @@
   ],
   "browserslist": "> 0.5%, last 2 versions, not dead",
   "scripts": {
+    "dev": "tsdx watch --tsconfig ./tsconfig.json",
     "build": "tsdx build --tsconfig ./tsconfig.json"
   },
   "husky": {

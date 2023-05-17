@@ -7,8 +7,8 @@ import {
   WalletState,
   WalletType,
 } from '@rango-dev/wallets-shared';
-import { PendingSwap, SwapProgressNotification, Wallet } from './shared';
-import { EvmBlockchainMeta, SignerFactory } from 'rango-types';
+import { SwapProgressNotification, Wallet } from './shared';
+import { EvmBlockchainMeta, PendingSwap, SignerFactory } from 'rango-types';
 
 export type SwapQueueDef = QueueDef<
   SwapStorage,

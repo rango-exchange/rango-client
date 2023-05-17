@@ -14,12 +14,12 @@ import { getRequiredBalanceOfWallet } from './routing';
 import { getRequiredChains } from './wallets';
 import { LoadingStatus } from '../store/meta';
 import { ConvertedToken, SwapButtonState, Wallet } from '../types';
+import { removeDuplicateFrom } from './common';
 import {
+  PendingSwap,
   PendingSwapNetworkStatus,
   PendingSwapStep,
-} from '@rango-dev/queue-manager-rango-preset';
-import { PendingSwap } from '@rango-dev/queue-manager-rango-preset';
-import { removeDuplicateFrom } from './common';
+} from 'rango-types';
 
 export function getOutputRatio(
   inputUsdValue: BigNumber,

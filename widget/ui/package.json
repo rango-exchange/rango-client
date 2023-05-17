@@ -9,7 +9,7 @@
     "src"
   ],
   "scripts": {
-    "dev": "tsdx watch",
+    "dev": "tsdx watch  --tsconfig ./tsconfig.json",
     "build": "tsdx build  --tsconfig ./tsconfig.json",
     "test": "tsdx test --passWithNoTests",
     "lint": "tsdx lint",
@@ -20,7 +20,6 @@
     "build-storybook": "build-storybook"
   },
   "peerDependencies": {
-    "@rango-dev/queue-manager-rango-preset": "*",
     "react": ">=16"
   },
   "husky": {
@@ -77,6 +76,7 @@
     "@stitches/react": "^1.2.8",
     "@types/react-color": "^3.0.6",
     "rango-sdk": "^0.1.27",
+    "rango-types": "^0.1.32",
     "react-color": "^2.19.3",
     "react-virtualized-auto-sizer": "^1.0.7",
     "react-window": "^1.8.8",

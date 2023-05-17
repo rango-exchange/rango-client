@@ -1,4 +1,4 @@
-import { PendingSwap } from '@rango-dev/queue-manager-rango-preset';
+import { PendingSwap } from 'rango-types';
 import React from 'react';
 import { Typography, SwapDetail, Divider } from '../../components';
 import { styled } from '../../theme';
@@ -57,3 +57,4 @@ export function SwapsGroup(props: Omit<PropTypes, 'onBack'>) {
     </>
   );
 }
+

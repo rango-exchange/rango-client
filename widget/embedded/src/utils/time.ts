@@ -1,4 +1,4 @@
-import { PendingSwap } from '@rango-dev/queue-manager-rango-preset';
+import { PendingSwap } from 'rango-types';
 
 export function timeSince(timeMillis: number): string {
   const seconds = Math.floor((new Date().getTime() - timeMillis) / 1000);

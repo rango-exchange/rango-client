@@ -15,7 +15,7 @@ import {
   Image,
 } from '../../components';
 import { styled } from '../../theme';
-import { PendingSwap } from '../History/types';
+import { PendingSwap } from 'rango-types';
 import { pulse } from '../../components/BestRoute/BestRoute';
 import {
   SwapMessages,

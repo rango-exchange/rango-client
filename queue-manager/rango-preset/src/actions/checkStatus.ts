@@ -12,9 +12,10 @@ import {
   updateSwapStatus,
 } from '../helpers';
 import { SwapActionTypes, SwapQueueContext, SwapStorage } from '../types';
-import { getNextStep, MessageSeverity } from '../shared';
+import { getNextStep } from '../shared';
 import { TransactionStatusResponse } from 'rango-sdk';
 import { httpService } from '../services';
+import { MessageSeverity } from 'rango-types';
 
 const INTERVAL_FOR_CHECK = 3_000;
 

@@ -1,8 +1,8 @@
-import { PendingSwap } from '@rango-dev/queue-manager-rango-preset';
 import dayjs from 'dayjs';
 import { GroupBy } from '@rango-dev/ui';
+import { PendingSwap } from 'rango-types';
 
-export const groupSwapsByDate: GroupBy = swaps => {
+export const groupSwapsByDate: GroupBy = (swaps) => {
   const output: Map<
     string,
     {
@@ -48,7 +48,7 @@ export const groupSwapsByDate: GroupBy = swaps => {
   ]);
 
   const now = dayjs();
-  swaps.forEach(swap => {
+  swaps.forEach((swap) => {
     const swapDate = dayjs(Number(swap.creationTime));
     if (now.isSame(swapDate, 'day')) output.get('today')?.swaps.push(swap);
     else if (now.isSame(swapDate, 'week')) output.get('week')?.swaps.push(swap);

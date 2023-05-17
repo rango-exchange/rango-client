@@ -1,5 +1,4 @@
 import React, { PropsWithChildren } from 'react';
-import { PendingSwap } from '../../containers/History/types';
 import { styled } from '../../theme';
 import { Button } from '../Button';
 import { ArrowRightIcon } from '../Icon';
@@ -7,6 +6,7 @@ import { Spacer } from '../Spacer';
 import { Spinner } from '../Spinner';
 import { Token } from './Token';
 import { limitDecimalPlaces } from '../../helper';
+import { PendingSwap } from 'rango-types'
 
 const Container = styled('div', {
   position: 'relative',

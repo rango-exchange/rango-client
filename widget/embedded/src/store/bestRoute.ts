@@ -20,9 +20,9 @@ import {
 } from '../utils/wallets';
 import { useWalletsStore } from './wallets';
 import { TokenWithBalance } from '../pages/SelectTokenPage';
-import { PendingSwap } from '@rango-dev/queue-manager-rango-preset/dist/shared';
 import { debounce } from '../utils/common';
 import { isPositiveNumber } from '../utils/numbers';
+import { PendingSwap } from 'rango-types';
 
 const getUsdValue = (token: Token | null, amount: string) =>
   new BigNumber(amount || ZERO).multipliedBy(token?.usdPrice || 0);

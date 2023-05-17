@@ -17,13 +17,14 @@ import {
   isNeedBlockQueueForParallel,
   claimQueue,
 } from '../helpers';
-import { getCurrentBlockchainOf, PendingSwapNetworkStatus } from '../shared';
+import { getCurrentBlockchainOf } from '../shared';
 import {
   BlockReason,
   SwapActionTypes,
   SwapQueueContext,
   SwapStorage,
 } from '../types';
+import { PendingSwapNetworkStatus } from 'rango-types';
 
 /**
  * Excecute a created transaction.

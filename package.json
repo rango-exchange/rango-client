@@ -6,7 +6,6 @@
     "node": ">=14"
   },
   "workspaces": [
-    "examples/*",
     "widget/*",
     "queue-manager/*",
     "wallets/*",

@@ -10,7 +10,6 @@ import {
   ConfirmSwapWarnings,
   PendingSwapSettings,
 } from '../types';
-import { PendingSwap } from '@rango-dev/ui/dist/containers/History/types';
 import {
   createBestRouteRequestBody,
   getBalanceWarnings,
@@ -34,6 +33,7 @@ import {
 import { numberToString } from '../utils/numbers';
 import { BestRouteResponse } from 'rango-sdk';
 import { calculatePendingSwap } from '@rango-dev/queue-manager-rango-preset';
+import { PendingSwap } from 'rango-types';
 
 type ConfirmSwap = {
   loading: boolean;

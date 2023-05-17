@@ -5,8 +5,8 @@ import {
   DB_NAME,
 } from '@rango-dev/queue-manager-core';
 import { v4 as uuid } from 'uuid';
-import { PendingSwap } from './shared';
 import { SwapActionTypes } from './types';
+import { PendingSwap } from 'rango-types';
 
 const MIGRATED_KEY = 'migratedToQueueManager';
 

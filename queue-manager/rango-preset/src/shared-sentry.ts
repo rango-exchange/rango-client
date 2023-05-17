@@ -1,6 +1,6 @@
 import * as Sentry from '@sentry/browser';
-import { PendingSwap, PendingSwapStep } from './shared';
 import { WalletType } from '@rango-dev/wallets-shared';
+import { PendingSwap, PendingSwapStep } from 'rango-types';
 
 export function logRPCError(
   error: unknown,

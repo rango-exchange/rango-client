@@ -7,7 +7,6 @@ import { SwapHistory, useCopyToClipboard } from '@rango-dev/ui';
 import { useUiStore } from '../store/ui';
 import {
   cancelSwap,
-  PendingSwapNetworkStatus,
 } from '@rango-dev/queue-manager-rango-preset';
 import { useWallets } from '@rango-dev/wallets-core';
 import {
@@ -28,6 +27,8 @@ import {
 import { t } from 'i18next';
 import { SwapDetailsPlaceholder } from '../components/SwapDetailsPlaceholder';
 import { getFormatedPendingSwap } from '../utils/routing';
+import { PendingSwapNetworkStatus } from 'rango-types';
+import { WalletType } from '@rango-dev/wallets-shared';
 
 export function SwapDetailsPage() {
   const selectedSwapRequestId = useUiStore.use.selectedSwapRequestId();
@@ -82,8 +83,8 @@ export function SwapDetailsPage() {
     !!currentStepWallet?.walletType &&
     currentStepNetworkStatus ===
       PendingSwapNetworkStatus.WaitingForNetworkChange &&
-    canSwitchNetworkTo(currentStepWallet?.walletType, currentStepBlockchain)
-      ? connect.bind(null, currentStepWallet.walletType, currentStepBlockchain)
+    canSwitchNetworkTo(currentStepWallet?.walletType as WalletType, currentStepBlockchain)
+      ? connect.bind(null, currentStepWallet.walletType as WalletType, currentStepBlockchain)
       : undefined;
 
   const lastConvertedTokenInFailedSwap =

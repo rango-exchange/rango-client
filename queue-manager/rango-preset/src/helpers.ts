@@ -48,12 +48,6 @@ import {
   getStarknetApproveUrl,
   getTronApproveUrl,
   getRelatedWalletOrNull,
-  MessageSeverity,
-  PendingSwap,
-  PendingSwapNetworkStatus,
-  PendingSwapStep,
-  StepStatus,
-  SwapStatus,
   Wallet,
   SwapProgressNotification,
   getRelatedWallet,
@@ -66,7 +60,16 @@ import {
   prettifyErrorMessage,
 } from './shared-errors';
 import { httpService } from './services';
-import { APIErrorCode, SignerErrorCode } from 'rango-types/lib';
+import {
+  APIErrorCode,
+  MessageSeverity,
+  PendingSwap,
+  PendingSwapNetworkStatus,
+  PendingSwapStep,
+  SignerErrorCode,
+  StepStatus,
+  SwapStatus,
+} from 'rango-types';
 
 type WhenTaskBlocked = Parameters<NonNullable<SwapQueueDef['whenTaskBlocked']>>;
 type WhenTaskBlockedEvent = WhenTaskBlocked[0];
@@ -424,7 +427,7 @@ export const getSwapWalletType = (
   swap: PendingSwap,
   network: Network
 ): WalletType => {
-  return swap.wallets[network]?.walletType;
+  return swap.wallets[network]?.walletType as WalletType;
 };
 
 /**
@@ -548,9 +551,12 @@ export async function isNetworkMatchedForTransaction(
             WalletType.FRONTIER,
             WalletType.KUCOIN,
             WalletType.ENKRYPT,
-          ].includes(sourceWallet.walletType)
+          ].includes(sourceWallet.walletType as WalletType)
         ) {
-          const provider = getEvmProvider(providers, sourceWallet.walletType);
+          const provider = getEvmProvider(
+            providers,
+            sourceWallet.walletType as WalletType
+          );
           const chainId: number | string | null = await getChainId(provider);
           if (chainId) {
             const blockChain = getBlockChainNameFromId(
@@ -839,7 +845,7 @@ export function singTransaction(
   } = currentStep;
   const sourceWallet = getRelatedWallet(swap, currentStep);
   const walletAddress = getCurrentAddressOf(swap, currentStep);
-  const walletSigners = getSigners(sourceWallet.walletType);
+  const walletSigners = getSigners(sourceWallet.walletType as WalletType);
 
   const onFinish = () => {
     // TODO resetClaimedBy is undefined here
@@ -914,7 +920,7 @@ export function singTransaction(
               error.root,
               swap,
               currentStep,
-              sourceWallet?.walletType
+              sourceWallet?.walletType as WalletType
             );
           }
           const updateResult = updateSwapStatus({
@@ -994,7 +1000,7 @@ export function singTransaction(
               error.root,
               swap,
               currentStep,
-              sourceWallet?.walletType
+              sourceWallet?.walletType as WalletType
             );
           }
 
@@ -1075,7 +1081,7 @@ export function singTransaction(
               error.root,
               swap,
               currentStep,
-              sourceWallet?.walletType
+              sourceWallet?.walletType as WalletType
             );
           }
 
@@ -1219,7 +1225,7 @@ export function singTransaction(
                 error.root,
                 swap,
                 currentStep,
-                sourceWallet?.walletType
+                sourceWallet?.walletType as WalletType
               );
             }
             const updateResult = updateSwapStatus({
@@ -1430,7 +1436,7 @@ export function singTransaction(
                 error.root,
                 swap,
                 currentStep,
-                sourceWallet?.walletType
+                sourceWallet?.walletType as WalletType
               );
             }
             const updateResult = updateSwapStatus({
@@ -1498,7 +1504,7 @@ export function singTransaction(
                 error.root,
                 swap,
                 currentStep,
-                sourceWallet?.walletType
+                sourceWallet?.walletType as WalletType
               );
             }
             const updateResult = updateSwapStatus({

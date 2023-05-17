@@ -3,14 +3,15 @@ import { Spinner } from '../../components';
 import { SecondaryPage } from '../../components/SecondaryPage';
 import { containsText } from '../../helper';
 import { styled } from '../../theme';
-import { PendingSwap } from './types';
 import { NotFoundAlert } from '../../components/Alert/NotFoundAlert';
 import { LoaderContainer } from '../../components/TokenSelector/TokenSelector';
 import { SwapsGroup, PropTypes as SwapsGroupPropTypes } from './SwapsGroup';
+import { PendingSwap } from 'rango-types'
 
 const Container = styled('div', {
   overflowY: 'auto',
 });
+
 const filteredHistory = (
   list: PendingSwap[],
   searchedFor: string
