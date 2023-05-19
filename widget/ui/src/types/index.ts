@@ -1,3 +1,3 @@
 export * from './wallet';
 
-export { BestRouteWithFee } from './swaps';
+export type { BestRouteWithFee } from './swaps';

@@ -7,7 +7,7 @@ import {
   Transfer,
 } from 'rango-sdk';
 import { PendingSwapNetworkStatus, StepStatus } from '../../types/swaps';
-export { PendingSwap } from '@rango-dev/queue-manager-rango-preset';
+export type { PendingSwap } from '@rango-dev/queue-manager-rango-preset';
 
 export type PendingSwapStep = {
   id: number;
