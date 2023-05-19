@@ -2,9 +2,7 @@
 
 import { PropertyValue, CreateStitches } from '@stitches/react';
 import { DefaultThemeMap } from '@stitches/react/types/config';
-
-// Solution: (https://github.com/stitchesjs/stitches/issues/833#issuecomment-950707025)
-const { createStitches } = require('@stitches/react');
+import { createStitches } from '@stitches/react';
 
 /* ----------------------- Values ----------------------- */
 
@@ -107,8 +105,7 @@ const theme = {
     10: '12px',
   },
   shadows: {
-    s:
-      '0px 3px 5px 3px #f0f2f5, 0px 6px 10px 3px #f0f2f5, 0px 1px 18px 3px #f0f2f5',
+    s: '0px 3px 5px 3px #f0f2f5, 0px 6px 10px 3px #f0f2f5, 0px 1px 18px 3px #f0f2f5',
   },
   zIndices: {},
   transitions: {},
@@ -128,23 +125,18 @@ const utils = {
 
 const typedCreateStiches = createStitches as CreateStitches;
 
-// Note: it seems there is a bug on tsdx and when it compiles the code, it goes through an error
-// We can directly check it with `tsc` to see if the error is correct or not.
-// We `ignore` it for now, to get safety check on VSCode.
-// @ts-ignore
-export const { styled, css, createTheme, keyframes, globalCss } =
-  typedCreateStiches<
-    '',
-    typeof media,
-    typeof theme,
-    DefaultThemeMap,
-    // TODO: Make `utils` typesafe as well.
-    {}
-  >({
-    media,
-    theme,
-    utils,
-  });
+export const { styled, css, createTheme, keyframes, globalCss } = typedCreateStiches<
+  '',
+  typeof media,
+  typeof theme,
+  DefaultThemeMap,
+  // TODO: Make `utils` typesafe as well.
+  {}
+>({
+  media,
+  theme,
+  utils,
+});
 
 export const lightTheme = createTheme({});
 
