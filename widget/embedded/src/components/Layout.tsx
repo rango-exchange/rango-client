@@ -19,11 +19,11 @@ import {
 } from '../utils/wallets';
 import { removeDuplicateFrom } from '../utils/common';
 import { WidgetConfig } from '../types';
-import { useTranslation } from 'react-i18next';
 import { useBestRouteStore } from '../store/bestRoute';
 import { useMetaStore } from '../store/meta';
 import { useSettingsStore } from '../store/settings';
 import { Image } from '@rango-dev/ui';
+import { Trans } from '@lingui/react';
 
 const Header = styled('div', {
   display: 'flex',
@@ -52,7 +52,7 @@ export function Layout({ config }: LayoutProps) {
   const { getWalletInfo } = useWallets();
   const connectedWalletsImages = removeDuplicateFrom(
     getSelectableWallets(connectedWallets, selectedWallets, getWalletInfo).map(
-      (w) => w.image
+      w => w.image
     )
   );
   const { blockchains, tokens } = useMetaStore.use.meta();
@@ -64,18 +64,16 @@ export function Layout({ config }: LayoutProps) {
   const setAffiliateRef = useSettingsStore.use.setAffiliateRef();
 
   const totalBalance = calculateWalletUsdValue(connectedWallets);
-  const connectWalletsButtonDisabled =
-    useUiStore.use.connectWalletsButtonDisabled();
+  const connectWalletsButtonDisabled = useUiStore.use.connectWalletsButtonDisabled();
   const loadingMetaStatus = useMetaStore.use.loadingStatus();
   const fetchingBalance = useWalletsStore(fetchingBalanceSelector);
 
-  const { t } = useTranslation();
   useEffect(() => {
     if (loadingMetaStatus === 'success') {
       const chain = blockchains.find(
-        (chain) => chain.name === config?.to?.blockchain
+        chain => chain.name === config?.to?.blockchain
       );
-      const token = tokens.find((t) =>
+      const token = tokens.find(t =>
         tokensAreEqual(t, config?.to?.token || null)
       );
       setToChain(chain || null);
@@ -90,9 +88,9 @@ export function Layout({ config }: LayoutProps) {
   useEffect(() => {
     if (loadingMetaStatus === 'success') {
       const chain = blockchains.find(
-        (chain) => chain.name === config?.from?.blockchain
+        chain => chain.name === config?.from?.blockchain
       );
-      const token = tokens.find((t) =>
+      const token = tokens.find(t =>
         tokensAreEqual(t, config?.from?.token || null)
       );
 
@@ -130,9 +128,11 @@ export function Layout({ config }: LayoutProps) {
           )}
           <div className="balance">
             <Typography variant="body2">
-              {!connectedWallets?.length
-                ? t('Connect Wallet')
-                : `$${totalBalance || 0}`}
+              {!connectedWallets?.length ? (
+                <Trans id={'Connect Wallet'}>Connect Wallet</Trans>
+              ) : (
+                `$${totalBalance || 0}`
+              )}
             </Typography>
             {fetchingBalance && <Spinner />}
           </div>

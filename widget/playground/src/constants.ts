@@ -5,9 +5,9 @@ export const LANGUAGES = [
     value: 'en',
   },
   {
-    name: 'Turkish',
-    logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b4/Flag_of_Turkey.svg/800px-Flag_of_Turkey.svg.png',
-    value: 'tr',
+    name: 'Česky',
+    logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/cb/Flag_of_the_Czech_Republic.svg/125px-Flag_of_the_Czech_Republic.svg.png',
+    value: 'cs',
   },
 ];
 

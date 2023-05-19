@@ -1,6 +1,6 @@
 import { ConfirmSwapWarningTypes, ConfirmSwapWarnings } from '../types';
-
-export function ConfirmSwapWarnings(warnings: ConfirmSwapWarnings[]) {
+// @ts-ignore
+export function ConfirmSwapWarning(warnings: ConfirmSwapWarnings[]) {
   return warnings.flatMap((warning) => {
     switch (warning.type) {
       case ConfirmSwapWarningTypes.ROUTE_UPDATED:

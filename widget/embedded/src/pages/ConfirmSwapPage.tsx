@@ -26,7 +26,7 @@ import { useSettingsStore } from '../store/settings';
 import { useUiStore } from '../store/ui';
 import { ConfirmSwapErrorTypes } from '../types';
 import { ConfirmSwapErrors } from '../components/ConfirmSwapErrors';
-import { ConfirmSwapWarnings } from '../components/ConfirmSwapWarnings';
+import { ConfirmSwapWarning } from '../components/ConfirmSwapWarnings';
 import { ConfirmSwapExtraMessages } from '../components/warnings/ConfirmSwapExtraMessages';
 import { getBestRouteStatus } from '../utils/routing';
 import { PercentageChange } from '../components/PercentageChange';
@@ -149,7 +149,7 @@ export function ConfirmSwapPage() {
             }}
             usdValue={inputUsdValue}
             amount={fromAmount}
-            label={t('From')}
+            label={'From'}
             loadingStatus={
               loadingMetaStatus !== 'success'
                 ? loadingMetaStatus
@@ -168,7 +168,7 @@ export function ConfirmSwapPage() {
             }}
             usdValue={outputUsdValue}
             amount={toAmount}
-            label={t('To')}
+            label={'To'}
             loadingStatus={
               loadingMetaStatus !== 'success'
                 ? loadingMetaStatus
@@ -192,10 +192,11 @@ export function ConfirmSwapPage() {
       loading={fetchingConfirmedRoute}
       errors={
         dbErrorMessage
+        // @ts-ignore
           ? [dbErrorMessage, ...ConfirmSwapErrors(errors)]
           : ConfirmSwapErrors(errors)
       }
-      warnings={ConfirmSwapWarnings(warnings)}
+      warnings={ConfirmSwapWarning(warnings)}
       extraMessages={
         <>
           {loadingMetaStatus === 'failed' && <LoadingFailedAlert />}

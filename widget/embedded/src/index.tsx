@@ -21,13 +21,14 @@ import {
   WidgetColors,
   BlockchainAndTokenConfig,
 } from './types';
-import useSelectLanguage from './hooks/useSelectLanguage';
-import './i18n';
 import QueueManager from './QueueManager';
 import { useUiStore } from './store/ui';
 import { navigationRoutes } from './constants/navigationRoutes';
 import { initConfig } from './utils/configs';
 
+import { i18n } from '@lingui/core';
+import { I18nProvider } from '@lingui/react';
+import { dynamicActivate } from './i18n';
 export {
   WidgetConfig,
   WalletType,
@@ -47,16 +48,17 @@ export const Widget: React.FC<WidgetProps> = ({ config }) => {
   const { blockchains } = useMetaStore.use.meta();
   const disconnectWallet = useWalletsStore.use.disconnectWallet();
   const connectWallet = useWalletsStore.use.connectWallet();
-  const { changeLanguage } = useSelectLanguage();
   const clearConnectedWallet = useWalletsStore.use.clearConnectedWallet();
-  const [lastConnectedWalletWithNetwork, setLastConnectedWalletWithNetwork] =
-    useState<string>('');
+  const [
+    lastConnectedWalletWithNetwork,
+    setLastConnectedWalletWithNetwork,
+  ] = useState<string>('');
   const [disconnectedWallet, setDisconnectedWallet] = useState<WalletType>();
   const currentPage = useUiStore.use.currentPage();
 
   const evmBasedChainNames = blockchains
     .filter(isEvmBlockchain)
-    .map((chain) => chain.name);
+    .map(chain => chain.name);
 
   useMemo(() => {
     if (config?.apiKey) {
@@ -75,8 +77,9 @@ export const Widget: React.FC<WidgetProps> = ({ config }) => {
   ) => {
     if (event === Events.ACCOUNTS) {
       if (value) {
-        const supportedChainNames: Network[] | null =
-          walletAndSupportedChainsNames(supportedChains);
+        const supportedChainNames:
+          | Network[]
+          | null = walletAndSupportedChainsNames(supportedChains);
         const data = prepareAccountsForWalletStore(
           type,
           value,
@@ -108,37 +111,39 @@ export const Widget: React.FC<WidgetProps> = ({ config }) => {
     clearConnectedWallet();
     providers = !wallets
       ? allProviders()
-      : allProviders().filter((provider) => {
+      : allProviders().filter(provider => {
           const type = provider.config.type;
-          return wallets.find((w) => w === type);
+          return wallets.find(w => w === type);
         });
   }, [config?.wallets]);
 
   useEffect(() => {
-    changeLanguage(config?.language || 'en');
+    dynamicActivate(config?.language || 'en');
   }, [config?.language]);
 
   return (
-    <Provider
-      allBlockChains={blockchains}
-      providers={providers}
-      onUpdateState={onUpdateState}
-    >
-      <div id="swap-container" className={activeTheme}>
-        <QueueManager>
-          <SwapContainer fixedHeight={currentPage !== navigationRoutes.home}>
-            <AppRouter
-              lastConnectedWallet={lastConnectedWalletWithNetwork}
-              disconnectedWallet={disconnectedWallet}
-              clearDisconnectedWallet={() => {
-                setDisconnectedWallet(undefined);
-              }}
-            >
-              <Layout config={config} />
-            </AppRouter>
-          </SwapContainer>
-        </QueueManager>
-      </div>
-    </Provider>
+    <I18nProvider i18n={i18n}>
+      <Provider
+        allBlockChains={blockchains}
+        providers={providers}
+        onUpdateState={onUpdateState}
+      >
+        <div id="swap-container" className={activeTheme}>
+          <QueueManager>
+            <SwapContainer fixedHeight={currentPage !== navigationRoutes.home}>
+              <AppRouter
+                lastConnectedWallet={lastConnectedWalletWithNetwork}
+                disconnectedWallet={disconnectedWallet}
+                clearDisconnectedWallet={() => {
+                  setDisconnectedWallet(undefined);
+                }}
+              >
+                <Layout config={config} />
+              </AppRouter>
+            </SwapContainer>
+          </QueueManager>
+        </div>
+      </Provider>
+    </I18nProvider>
   );
 };

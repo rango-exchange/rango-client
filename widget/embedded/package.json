@@ -10,7 +10,9 @@
   ],
   "browserslist": "> 0.5%, last 2 versions, not dead",
   "scripts": {
-    "build": "tsdx build --tsconfig ./tsconfig.json"
+    "build": "yarn compile && yarn extract && tsdx build --tsconfig ./tsconfig.json",
+    "extract": "lingui extract",
+    "compile": "lingui compile"
   },
   "husky": {
     "hooks": {
@@ -24,6 +26,8 @@
     "trailingComma": "es5"
   },
   "dependencies": {
+    "@lingui/core": "^4.1.2",
+    "@lingui/react": "^4.1.2",
     "@rango-dev/provider-all": "^0.1.14-next.14",
     "@rango-dev/queue-manager-core": "^0.1.13-next.15",
     "@rango-dev/queue-manager-rango-preset": "^0.1.13-next.14",
@@ -34,9 +38,6 @@
     "bignumber.js": "^9.1.1",
     "copy-to-clipboard": "^3.3.3",
     "dayjs": "^1.11.7",
-    "i18next": "^22.4.11",
-    "i18next-browser-languagedetector": "^7.0.1",
-    "i18next-http-backend": "^2.1.1",
     "immer": "^9.0.19",
     "mitt": "^3.0.0",
     "parcel": "^2.8.0",
@@ -44,12 +45,17 @@
     "rango-types": "^0.1.32",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-i18next": "^12.2.0",
     "react-router-dom": "^6.8.0",
     "values.js": "2.1.1",
     "zustand": "^4.3.2"
   },
   "publishConfig": {
     "access": "public"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.21.8",
+    "@lingui/cli": "^4.1.2",
+    "@lingui/loader": "^4.1.2",
+    "@lingui/macro": "^4.1.2"
   }
 }

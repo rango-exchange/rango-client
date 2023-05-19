@@ -7,7 +7,7 @@ import {
   TextField,
   Typography,
   Image,
-  Spacer,
+  Divider,
 } from '@rango-dev/ui';
 import { useMetaStore } from '../store/meta';
 import { BlockchainMeta, Token } from 'rango-sdk';
@@ -17,8 +17,8 @@ import { numberToString } from '../utils/numbers';
 import BigNumber from 'bignumber.js';
 import { getBalanceFromWallet } from '../utils/wallets';
 import { useWalletsStore } from '../store/wallets';
-import { useTranslation } from 'react-i18next';
 import { PercentageChange } from './PercentageChange';
+import { Trans } from '@lingui/react';
 
 type PropTypes = (
   | {
@@ -136,7 +136,6 @@ export function TokenInfo(props: PropTypes) {
   const connectedWallets = useWalletsStore.use.connectedWallets();
   const fetchingBestRoute = useBestRouteStore.use.loading();
   const navigate = useNavigate();
-  const { t } = useTranslation();
 
   const tokenBalance =
     !!fromChain && !!fromToken
@@ -187,7 +186,7 @@ export function TokenInfo(props: PropTypes) {
       <Container type={props.type === 'From' ? 'filled' : 'outlined'}>
         <div className="head">
           <Typography variant="body2" color="neutral800">
-            {t(type)}
+            <Trans id={type}>type</Trans>
           </Typography>
           {props.type === 'From' ? (
             <Options>
@@ -198,12 +197,13 @@ export function TokenInfo(props: PropTypes) {
                     setInputAmount(tokenBalanceReal.split(',').join(''));
                 }}
               >
-                <Typography variant="body3" color="neutral600">{`${t(
-                  'Balance'
-                )}: ${tokenBalance} ${fromToken?.symbol || ''}`}</Typography>
-                <Spacer size={4} />
+                <Typography variant="body3" color="neutral600">
+                  <Trans id={'Balance'}>Balance</Trans>
+                  {`: ${tokenBalance} ${fromToken?.symbol || ''}`}
+                </Typography>
+                <Divider size={4} />
                 <Button type="primary" variant="ghost" size="compact">
-                  {t('Max')}
+                  <Trans id={'Max'}>Max</Trans>
                 </Button>
               </div>
             </Options>
@@ -242,11 +242,13 @@ export function TokenInfo(props: PropTypes) {
             align="start"
             size="large"
           >
-            {loadingStatus === 'success' && chain
-              ? chain.displayName
-              : t('Chain')}
+            {loadingStatus === 'success' && chain ? (
+              chain.displayName
+            ) : (
+              <Trans id={'Chain'}>Chain</Trans>
+            )}
           </Button>
-          <Spacer size={12} />
+          <Divider size={12} />
           <Button
             className="selectors"
             onClick={() => {
@@ -270,9 +272,13 @@ export function TokenInfo(props: PropTypes) {
             size="large"
             align="start"
           >
-            {loadingStatus === 'success' && token ? token.symbol : t('Token')}
+            {loadingStatus === 'success' && token ? (
+              token.symbol
+            ) : (
+              <Trans id={'Token'}>Token</Trans>
+            )}
           </Button>
-          <Spacer size={12} />
+          <Divider size={12} />
           <div className="amount">
             {props.type === 'From' ? (
               <TextField
@@ -302,7 +308,7 @@ export function TokenInfo(props: PropTypes) {
                 min={0}
                 onChange={
                   props.type === 'From'
-                    ? (event) => {
+                    ? event => {
                         props.onAmountChange(event.target.value);
                       }
                     : undefined

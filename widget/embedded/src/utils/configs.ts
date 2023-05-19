@@ -20,6 +20,7 @@ export function setConfig(name: keyof Configs, value: any) {
 
 export function initConfig(nextConfigs: Configs) {
   let clonedConfigs;
+  let structuredClone;
   if (typeof structuredClone === 'function') {
     clonedConfigs = structuredClone(nextConfigs);
   } else {

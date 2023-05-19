@@ -4,11 +4,10 @@ import {
   InfoCircleIcon,
   styled,
   Typography,
-  Spacer,
   Image,
+  Divider,
 } from '@rango-dev/ui';
 import { LoadingStatus } from '../store/meta';
-import { useTranslation } from 'react-i18next';
 import BigNumber from 'bignumber.js';
 import { numberToString } from '../utils/numbers';
 
@@ -105,7 +104,6 @@ interface PropTypes {
 
 export function TokenPreview(props: PropTypes) {
   const { chain, token, loadingStatus, percentageChange } = props;
-  const { t } = useTranslation();
 
   const ItemSuffix = (
     <div
@@ -153,11 +151,9 @@ export function TokenPreview(props: PropTypes) {
             align="start"
             size="large"
           >
-            {loadingStatus === 'success' && chain
-              ? chain.displayName
-              : t('Chain')}
+            {loadingStatus === 'success' && chain ? chain.displayName : 'Chain'}
           </Button>
-          <Spacer size={12} />
+          <Divider size={12} />
           <Button
             className="selectors"
             variant="outlined"
@@ -173,9 +169,9 @@ export function TokenPreview(props: PropTypes) {
             size="large"
             align="start"
           >
-            {loadingStatus === 'success' && token ? token.symbol : t('Token')}
+            {loadingStatus === 'success' && token ? token.symbol : 'Token'}
           </Button>
-          <Spacer size={12} />
+          <Divider size={12} />
           <div className="amount">
             <OutputContainer>
               <Typography variant="h4">{props.amount}</Typography>
