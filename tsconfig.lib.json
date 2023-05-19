@@ -1,0 +1,10 @@
+{
+  "extends": "./tsconfig.base.json",
+  "compilerOptions": {
+    "emitDeclarationOnly": true,
+    // output .d.ts declaration files for consumers
+    "declaration": true,
+    // stricter type-checking for stronger correctness. Recommended by TS
+    "strict": true
+  }
+}
