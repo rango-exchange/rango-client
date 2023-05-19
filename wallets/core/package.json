@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/wallets-core",
-  "version": "0.1.13",
+  "version": "0.1.14-next.15",
   "license": "MIT",
   "module": "dist/wallets-core.esm.js",
   "main": "dist/index.js",
