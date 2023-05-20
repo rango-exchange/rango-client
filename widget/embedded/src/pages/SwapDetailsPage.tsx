@@ -109,7 +109,7 @@ export function SwapDetailsPage() {
             label={t('From')}
             loadingStatus={'success'}
           />
-          <Divider size={12} direction="vertical" />
+          <Divider size={12} />
           <TokenPreview
             chain={{
               displayName: lastStep?.toBlockchain || '',

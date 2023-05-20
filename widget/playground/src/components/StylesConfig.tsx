@@ -236,7 +236,7 @@ export function StylesConfig() {
     <div>
       <Typography variant="h4">Styles</Typography>
 
-      <Divider size={12} direction="vertical" />
+      <Divider size={12} />
       <ConfigurationContainer>
         <GridContent>
           {/* <Select
@@ -347,7 +347,7 @@ export function StylesConfig() {
         <Divider size={20} direction="vertical" />
 
         <hr />
-        <Divider size={24} direction="vertical" />
+        <Divider size={24} />
 
         <Checkbox
           onCheckedChange={(checked) => {
@@ -357,7 +357,7 @@ export function StylesConfig() {
           label="Single Theme"
           checked={singleTheme}
         />
-        <Divider size={24} direction="vertical" />
+        <Divider size={24} />
         <ModeContainer>
           {!(singleTheme && mode === 'dark') && (
             <Button
@@ -385,7 +385,7 @@ export function StylesConfig() {
             </Button>
           )}
         </ModeContainer>
-        <Divider size={24} direction="vertical" />
+        <Divider size={24} />
 
         <GridContent>
           {customThemes.map((t) => (
@@ -432,7 +432,7 @@ export function StylesConfig() {
             </Button>
           ))}
         </GridContent>
-        <Divider size={24} direction="vertical" />
+        <Divider size={24} />
 
         <GridContent>
           {COLORS.map((color) => (
@@ -446,7 +446,7 @@ export function StylesConfig() {
             />
           ))}
         </GridContent>
-        <Divider size={24} direction="vertical" />
+        <Divider size={24} />
       </ConfigurationContainer>
     </div>
   );

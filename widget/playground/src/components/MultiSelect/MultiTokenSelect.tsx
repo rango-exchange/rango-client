@@ -182,7 +182,7 @@ export function MultiTokenSelect({ label, modalTitle, list, blockchains, type }:
                       </>
                     ))}
                   </Row>
-                  <Divider direction="vertical" />
+                  <Divider />
 
                   {!tokens ? (
                     <EmptyContent>

@@ -16,7 +16,7 @@ export function MinRequiredSlippage({ minRequiredSlippage }: PropTypes) {
       We recommend you to increase slippage to at least &nbsp;
       {minRequiredSlippage}
       &nbsp; for this route.
-      <Divider size={8} direction="vertical" />
+      <Divider size={8}/>
       <ChangeSlippageButton />
     </StyledMessage>
   );

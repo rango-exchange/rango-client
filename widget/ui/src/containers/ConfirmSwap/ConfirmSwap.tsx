@@ -54,7 +54,7 @@ const Container = styled('div', {
 
 const Alerts = styled('div', { paddingBottom: '$16' });
 
-type Message = string | ReactNode
+type Message = string | ReactNode;
 
 export interface PropTypes {
   onBack: () => void;
@@ -116,16 +116,26 @@ export function ConfirmSwap(props: PropsWithChildren<PropTypes>) {
           <Alerts>
             {errors?.map((error, index) => (
               <React.Fragment key={index}>
-                <Divider direction="vertical" />
-                <Alert type="error" key={index} 
-                  {...(typeof error === 'string') ? {title: error} : {children: error} }/>
+                <Divider />
+                <Alert
+                  type="error"
+                  key={index}
+                  {...(typeof error === 'string'
+                    ? { title: error }
+                    : { children: error })}
+                />
               </React.Fragment>
             ))}
             {warnings?.map((warning, index) => (
               <React.Fragment key={index}>
-                <Divider direction="vertical" />
-                <Alert type="warning" key={index} 
-                  {...(typeof warning === 'string') ? {title: warning} : {children: warning} }/>
+                <Divider />
+                <Alert
+                  type="warning"
+                  key={index}
+                  {...(typeof warning === 'string'
+                    ? { title: warning }
+                    : { children: warning })}
+                />
               </React.Fragment>
             ))}
           </Alerts>
@@ -133,15 +143,13 @@ export function ConfirmSwap(props: PropsWithChildren<PropTypes>) {
         {props.previewInputs || props.previewRoutes ? (
           <Section>
             {props.previewInputs}
-            {!!props.previewRoutes ? (
-              <Divider size={16} direction="vertical" />
-            ) : null}
+            {!!props.previewRoutes ? <Divider size={16} /> : null}
             {props.previewRoutes}
           </Section>
         ) : null}
 
         {requiredWallets.map((wallet, index) => {
-          const list = selectableWallets.filter((w) => wallet === w.chain);
+          const list = selectableWallets.filter(w => wallet === w.chain);
           return (
             <Container key={index}>
               <div className="title">

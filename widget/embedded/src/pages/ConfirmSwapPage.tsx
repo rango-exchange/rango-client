@@ -66,14 +66,14 @@ export function ConfirmSwapPage() {
   const selectedSlippage = customSlippage || slippage;
 
   const showHighSlippageWarning = !errors.find(
-    (error) => error.type === ConfirmSwapErrorTypes.INSUFFICIENT_SLIPPAGE
+    error => error.type === ConfirmSwapErrorTypes.INSUFFICIENT_SLIPPAGE
   );
 
   const { getWalletInfo, connect } = useWallets();
   const confirmDisabled =
     fetchingBestRoute ||
-    !requiredWallets(bestRoute).every((chain) =>
-      selectedWallets.map((wallet) => wallet.chain).includes(chain)
+    !requiredWallets(bestRoute).every(chain =>
+      selectedWallets.map(wallet => wallet.chain).includes(chain)
     );
 
   const firstStep = bestRoute?.result?.swaps[0];
@@ -94,8 +94,10 @@ export function ConfirmSwapPage() {
 
   const handleConnectChain = (wallet: string) => {
     const network = wallet as Network;
-    getKeplrCompatibleConnectedWallets(selectableWallets).forEach(
-      (compatibleWallet: WalletType) => connect?.(compatibleWallet, network)
+    getKeplrCompatibleConnectedWallets(
+      selectableWallets
+    ).forEach((compatibleWallet: WalletType) =>
+      connect?.(compatibleWallet, network)
     );
   };
 
@@ -107,7 +109,7 @@ export function ConfirmSwapPage() {
       selectableWallets={selectableWallets}
       onBack={navigateBackFrom.bind(null, navigationRoutes.confirmSwap)}
       onConfirm={async () => {
-        confirmSwap?.().then(async (swap) => {
+        confirmSwap?.().then(async swap => {
           if (swap) {
             try {
               await manager?.create(
@@ -128,10 +130,10 @@ export function ConfirmSwapPage() {
           }
         });
       }}
-      onChange={(wallet) => setSelectedWallet(wallet)}
+      onChange={wallet => setSelectedWallet(wallet)}
       confirmDisabled={loadingMetaStatus !== 'success' || confirmDisabled}
-      handleConnectChain={(wallet) => handleConnectChain(wallet)}
-      isExperimentalChain={(wallet) =>
+      handleConnectChain={wallet => handleConnectChain(wallet)}
+      isExperimentalChain={wallet =>
         getKeplrCompatibleConnectedWallets(selectableWallets).length > 0
           ? isExperimentalChain(blockchains, wallet)
           : false
@@ -156,7 +158,7 @@ export function ConfirmSwapPage() {
                 : bestRouteloadingStatus
             }
           />
-          <Divider size={12} direction="vertical" />
+          <Divider size={12} />
           <TokenPreview
             chain={{
               displayName: lastStep?.to.blockchain || '',
@@ -200,7 +202,7 @@ export function ConfirmSwapPage() {
         <>
           {loadingMetaStatus === 'failed' && <LoadingFailedAlert />}
           {loadingMetaStatus === 'failed' && showHighSlippageWarning && (
-            <Divider direction="vertical" />
+            <Divider />
           )}
           {showHighSlippageWarning && (
             <ConfirmSwapExtraMessages selectedSlippage={selectedSlippage} />
