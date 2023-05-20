@@ -4,6 +4,7 @@ import {
   Typography,
   styled,
   Spinner,
+  Image,
 } from '@rango-dev/ui';
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -23,7 +24,6 @@ import { useTranslation } from 'react-i18next';
 import { useBestRouteStore } from '../store/bestRoute';
 import { useMetaStore } from '../store/meta';
 import { useSettingsStore } from '../store/settings';
-import { Image } from '@rango-dev/ui';
 
 const Header = styled('div', {
   display: 'flex',
@@ -52,7 +52,7 @@ export function Layout({ config }: LayoutProps) {
   const { getWalletInfo } = useWallets();
   const connectedWalletsImages = removeDuplicateFrom(
     getSelectableWallets(connectedWallets, selectedWallets, getWalletInfo).map(
-      (w) => w.image
+      w => w.image
     )
   );
   const { blockchains, tokens } = useMetaStore.use.meta();
@@ -64,8 +64,7 @@ export function Layout({ config }: LayoutProps) {
   const setAffiliateRef = useSettingsStore.use.setAffiliateRef();
 
   const totalBalance = calculateWalletUsdValue(connectedWallets);
-  const connectWalletsButtonDisabled =
-    useUiStore.use.connectWalletsButtonDisabled();
+  const connectWalletsButtonDisabled = useUiStore.use.connectWalletsButtonDisabled();
   const loadingMetaStatus = useMetaStore.use.loadingStatus();
   const fetchingBalance = useWalletsStore(fetchingBalanceSelector);
 
@@ -73,9 +72,9 @@ export function Layout({ config }: LayoutProps) {
   useEffect(() => {
     if (loadingMetaStatus === 'success') {
       const chain = blockchains.find(
-        (chain) => chain.name === config?.to?.blockchain
+        chain => chain.name === config?.to?.blockchain
       );
-      const token = tokens.find((t) =>
+      const token = tokens.find(t =>
         tokensAreEqual(t, config?.to?.token || null)
       );
       setToChain(chain || null);
@@ -90,9 +89,9 @@ export function Layout({ config }: LayoutProps) {
   useEffect(() => {
     if (loadingMetaStatus === 'success') {
       const chain = blockchains.find(
-        (chain) => chain.name === config?.from?.blockchain
+        chain => chain.name === config?.from?.blockchain
       );
-      const token = tokens.find((t) =>
+      const token = tokens.find(t =>
         tokensAreEqual(t, config?.from?.token || null)
       );
 

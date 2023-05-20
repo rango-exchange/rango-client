@@ -1,5 +1,5 @@
 import React, { PropsWithChildren, ReactNode } from 'react';
-import { Alert, Spacer } from '../../components';
+import { Alert, Divider } from '../../components';
 import { Button } from '../../components/Button';
 import { SecondaryPage } from '../../components/SecondaryPage/SecondaryPage';
 import { SelectableWalletList } from '../../components/SelectableWalletList';
@@ -116,14 +116,14 @@ export function ConfirmSwap(props: PropsWithChildren<PropTypes>) {
           <Alerts>
             {errors?.map((error, index) => (
               <React.Fragment key={index}>
-                <Spacer direction="vertical" />
+                <Divider direction="vertical" />
                 <Alert type="error" key={index} 
                   {...(typeof error === 'string') ? {title: error} : {children: error} }/>
               </React.Fragment>
             ))}
             {warnings?.map((warning, index) => (
               <React.Fragment key={index}>
-                <Spacer direction="vertical" />
+                <Divider direction="vertical" />
                 <Alert type="warning" key={index} 
                   {...(typeof warning === 'string') ? {title: warning} : {children: warning} }/>
               </React.Fragment>
@@ -134,7 +134,7 @@ export function ConfirmSwap(props: PropsWithChildren<PropTypes>) {
           <Section>
             {props.previewInputs}
             {!!props.previewRoutes ? (
-              <Spacer size={16} direction="vertical" />
+              <Divider size={16} direction="vertical" />
             ) : null}
             {props.previewRoutes}
           </Section>
@@ -146,7 +146,7 @@ export function ConfirmSwap(props: PropsWithChildren<PropTypes>) {
             <Container key={index}>
               <div className="title">
                 <div className="num">{index + 1}</div>
-                <Spacer size={8} />
+                <Divider size={8} />
                 <Typography variant="body2">Your {wallet} Wallet</Typography>
               </div>
               {list.length === 0 && (

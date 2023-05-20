@@ -1,5 +1,5 @@
 import React from 'react';
-import { styled, ChevronRightIcon, GasIcon, Spacer } from '@rango-dev/ui';
+import { styled, ChevronRightIcon, GasIcon, Divider } from '@rango-dev/ui';
 import { BestRouteResponse } from 'rango-sdk';
 
 export const Container = styled('div', {
@@ -47,7 +47,7 @@ function RoutesOverview(props: PropTypes) {
       {props.totalFee ? (
         <div className="fee">
           <GasIcon size={12} />
-          <Spacer size={4} />${props.totalFee}
+          <Divider size={4} />${props.totalFee}
         </div>
       ) : null}
     </Container>

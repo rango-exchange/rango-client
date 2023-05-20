@@ -1,4 +1,4 @@
-import { Spacer, Typography, styled } from '@rango-dev/ui';
+import { Divider, Typography, styled } from '@rango-dev/ui';
 import React from 'react';
 import { ChangeSlippageButton } from '../ChangeSlippageButton';
 
@@ -16,7 +16,7 @@ export function MinRequiredSlippage({ minRequiredSlippage }: PropTypes) {
       We recommend you to increase slippage to at least &nbsp;
       {minRequiredSlippage}
       &nbsp; for this route.
-      <Spacer size={8} direction="vertical" />
+      <Divider size={8} direction="vertical" />
       <ChangeSlippageButton />
     </StyledMessage>
   );

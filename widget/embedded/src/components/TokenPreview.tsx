@@ -4,7 +4,7 @@ import {
   InfoCircleIcon,
   styled,
   Typography,
-  Spacer,
+  Divider,
   Image,
 } from '@rango-dev/ui';
 import { LoadingStatus } from '../store/meta';
@@ -157,7 +157,7 @@ export function TokenPreview(props: PropTypes) {
               ? chain.displayName
               : t('Chain')}
           </Button>
-          <Spacer size={12} />
+          <Divider size={12} />
           <Button
             className="selectors"
             variant="outlined"
@@ -175,7 +175,7 @@ export function TokenPreview(props: PropTypes) {
           >
             {loadingStatus === 'success' && token ? token.symbol : t('Token')}
           </Button>
-          <Spacer size={12} />
+          <Divider size={12} />
           <div className="amount">
             <OutputContainer>
               <Typography variant="h4">{props.amount}</Typography>

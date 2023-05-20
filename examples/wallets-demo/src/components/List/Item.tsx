@@ -7,7 +7,7 @@ import {
   HorizontalSwapIcon,
   InfoCircleIcon,
   SignatureIcon,
-  Spacer,
+  Divider,
   Spinner,
   Tooltip,
   Typography,
@@ -109,7 +109,7 @@ function Item({ type, info }: { type: WalletType; info: WalletInfo }) {
                 <Tooltip content="Only default network is supported for this wallet." color="gray">
                   <InfoCircleIcon size={24} color="success" />
                 </Tooltip>
-                <Spacer size={12} />
+                <Divider size={12} />
               </>
             )}
             <div
@@ -174,7 +174,7 @@ function Item({ type, info }: { type: WalletType; info: WalletInfo }) {
             onClick={handleConnectWallet}>
             {!walletState.installed ? 'Install' : walletState.connected ? 'Disconnect' : 'Connect'}
           </Button>
-          <Spacer size={12} />
+          <Divider size={12} />
           <Button
             fullWidth
             disabled={!walletState.connected || !canSwitchNetwork}
@@ -192,7 +192,7 @@ function Item({ type, info }: { type: WalletType; info: WalletInfo }) {
             onClick={handleSigner}>
             Sign
           </Button>
-          <Spacer size={12} />
+          <Divider size={12} />
           <Button
             fullWidth
             disabled={!walletState.connected}

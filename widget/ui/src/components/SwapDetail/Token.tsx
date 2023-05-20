@@ -1,6 +1,6 @@
 import React from 'react';
 import { styled } from '../../theme';
-import { Spacer } from '../Spacer';
+import { Divider } from '../Divider';
 import { Image } from '../common';
 
 const TokenContainer = styled('div', {
@@ -63,12 +63,12 @@ export function Token(props: PropTypes) {
           <Image src={blockchain.logo} alt={blockchain.name} size={12} />
         </div>
       </TokenImage>
-      <Spacer size={8} />
+      <Divider size={8} />
       {!!amount && <span className="amount">{props.data.amount}</span>}
       {!amount && estimatedAmount && (
         <span className="amount estimated">{props.data.estimatedAmount}</span>
       )}
-      <Spacer size={4} />
+      <Divider size={4} />
       {token.symbol}
     </TokenContainer>
   );

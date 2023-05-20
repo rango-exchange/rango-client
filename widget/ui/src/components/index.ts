@@ -6,7 +6,6 @@ export * from './Icon';
 export * from './Modal';
 export * from './SecondaryPage';
 export * from './SelectableWalletList';
-export * from './Spacer';
 export * from './Spinner';
 export * from './StepDetail';
 export * from './SwapContainer';

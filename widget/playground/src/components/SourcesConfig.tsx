@@ -12,11 +12,11 @@ export function SourcesConfig() {
   const liquiditySources = useConfigStore.use.config().liquiditySources;
   const onChangeSources = useConfigStore.use.onChangeSources();
   const uniqueSwappersGroups: Array<LiquiditySource> = [];
-  Array.from(new Set(swappers.map((s) => s.swapperGroup)))
-    .map((swapperGroup) => {
-      return swappers.find((s) => s.swapperGroup === swapperGroup);
+  Array.from(new Set(swappers.map(s => s.swapperGroup)))
+    .map(swapperGroup => {
+      return swappers.find(s => s.swapperGroup === swapperGroup);
     })
-    .find((s) => {
+    .find(s => {
       if (s) {
         for (const type of s.types) {
           uniqueSwappersGroups.push({
@@ -28,14 +28,14 @@ export function SourcesConfig() {
         }
       }
     });
-  const onChange = (source) => {
-    const SourceList = uniqueSwappersGroups.map((s) => s.title);
+  const onChange = source => {
+    const SourceList = uniqueSwappersGroups.map(s => s.title);
 
     const values = onChangeMultiSelects(
       source,
       liquiditySources,
       SourceList,
-      (item) => item === source,
+      item => item === source,
     );
 
     onChangeSources(values);

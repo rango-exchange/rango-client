@@ -6,12 +6,11 @@ import {
   Typography,
   CheckCircleIcon,
   InfoCircleIcon,
-  Spacer,
+  Divider,
   Button,
   Alert,
   Drawer,
   Spinner,
-  Divider,
   Image,
 } from '../../components';
 import { styled } from '../../theme';
@@ -243,7 +242,7 @@ export function SwapHistory(props: PropTypes) {
                 onClick={onCopy.bind(null, pendingSwap?.requestId)}
               >
                 <RequestId>{pendingSwap?.requestId}</RequestId>
-                <Spacer size={4} />
+                <Divider size={4} />
                 <Button type="primary" variant="ghost" size="compact">
                   {isCopied ? 'Copied!' : 'Copy'}
                 </Button>
@@ -408,7 +407,7 @@ export function SwapHistory(props: PropTypes) {
             >
               Skip
             </Button>
-            <Spacer size={16} />
+            <Divider size={16} />
             <Button
               variant="contained"
               type="error"

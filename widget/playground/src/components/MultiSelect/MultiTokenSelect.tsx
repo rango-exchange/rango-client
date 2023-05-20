@@ -5,7 +5,7 @@ import {
   Chip,
   Modal,
   SecondaryPage,
-  Spacer,
+  Divider,
   styled,
   TokenList,
   Typography,
@@ -182,7 +182,7 @@ export function MultiTokenSelect({ label, modalTitle, list, blockchains, type }:
                       </>
                     ))}
                   </Row>
-                  <Spacer direction="vertical" />
+                  <Divider direction="vertical" />
 
                   {!tokens ? (
                     <EmptyContent>
