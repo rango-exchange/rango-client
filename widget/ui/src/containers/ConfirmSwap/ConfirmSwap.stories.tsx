@@ -6,10 +6,9 @@ import { exampleFor5Wallets, wallets } from './mock';
 export default {
   title: 'Containers/ConfirmSwap',
   component: ConfirmSwap,
-  argTypes: {
-    requiredWallets: {
-      defaultValue: ['BSC', 'OSMOSIS'],
-    },
+  args: {
+    requiredWallets: ['BSC', 'OSMOSIS'],
+    confirmButtonTitle:'confirm'
   },
 } as Meta<typeof ConfirmSwap>;
 

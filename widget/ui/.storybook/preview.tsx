@@ -1,6 +1,5 @@
 import React from 'react';
 import { Decorator } from '@storybook/react';
-
 import { lightTheme, darkTheme, styled } from '../src/theme';
 import { globalCss } from '@stitches/react';
 
@@ -8,6 +7,12 @@ import { globalCss } from '@stitches/react';
 export const parameters = {
   // https://storybook.js.org/docs/react/essentials/actions#automatically-matching-args
   actions: { argTypesRegex: '^on.*' },
+  docs: {
+    story: {
+      iframeHeight: 300,
+      inline: false,
+    },
+  },
 };
 
 const ThemeBlock = styled('div', {

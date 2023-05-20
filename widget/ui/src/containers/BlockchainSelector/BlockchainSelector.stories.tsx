@@ -15,10 +15,6 @@ export default {
     type: {
       name: 'type',
       defaultValue: 'Source',
-      table: {
-        type: { summary: 'string' },
-        defaultValue: { summary: 'Source' },
-      },
       control: {
         type: 'select',
         options: ['Source', 'Destination'],

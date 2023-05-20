@@ -71,9 +71,9 @@ export function SwapDetail({
               amount: limitDecimalPlaces(swap.inputAmount),
             }}
           />
-          <Divider size={12} />
+          <Divider size={12} direction="horizontal" />
           <ArrowRightIcon size={12} />
-          <Divider size={12} />
+          <Divider size={12} direction="horizontal" />
           <Token
             data={{
               token: {

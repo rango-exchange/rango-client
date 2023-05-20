@@ -72,7 +72,7 @@ export function Alert(props: PropsWithChildren<PropTypes>) {
               {type === 'success' && <CheckCircleIcon color={type} size={24} />}
               {type === 'warning' && <WarningIcon color={type} size={24} />}
               {type === 'error' && <InfoCircleIcon color={type} size={24} />}
-              <Divider size={4} />
+              <Divider size={4} direction='horizontal' />
             </div>
           </>
         )}

@@ -149,12 +149,12 @@ export function ConfirmSwap(props: PropsWithChildren<PropTypes>) {
         ) : null}
 
         {requiredWallets.map((wallet, index) => {
-          const list = selectableWallets.filter(w => wallet === w.chain);
+          const list = selectableWallets.filter((w) => wallet === w.chain);
           return (
             <Container key={index}>
               <div className="title">
                 <div className="num">{index + 1}</div>
-                <Divider size={8} />
+                <Divider size={8} direction="horizontal" />
                 <Typography variant="body2">Your {wallet} Wallet</Typography>
               </div>
               {list.length === 0 && (
