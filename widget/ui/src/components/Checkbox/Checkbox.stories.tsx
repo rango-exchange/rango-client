@@ -1,10 +1,14 @@
 import React from 'react';
-import { ComponentMeta } from '@storybook/react';
+import { Meta } from '@storybook/react';
 import { Checkbox, PropTypes } from './Checkbox';
 
 export default {
   title: 'Components/Checkbox',
   component: Checkbox,
+  args: {
+    label: 'I am a checkbox',
+    defaultChecked: true,
+  },
   argTypes: {
     label: {
       name: 'label',
@@ -17,6 +21,6 @@ export default {
       defaultValue: true,
     },
   },
-} as ComponentMeta<typeof Checkbox>;
+} as Meta<typeof Checkbox>;
 
 export const Main = (props: PropTypes) => <Checkbox {...props} id="test" />;

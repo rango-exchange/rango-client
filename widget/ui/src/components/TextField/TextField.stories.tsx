@@ -1,5 +1,5 @@
 import React from 'react';
-import { ComponentMeta } from '@storybook/react';
+import { Meta } from '@storybook/react';
 
 import { TextField, PropTypes } from './TextField';
 import { SearchIcon } from '../Icon';
@@ -8,6 +8,7 @@ export default {
   title: 'Components/Text Field',
 
   component: TextField,
+
   argTypes: {
     disabled: {
       name: 'disabled',
@@ -18,7 +19,7 @@ export default {
       type: 'string',
     },
   },
-} as ComponentMeta<typeof TextField>;
+} as Meta<typeof TextField>;
 
 export const Main = (args: PropTypes) => <TextField {...args} />;
 

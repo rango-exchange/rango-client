@@ -1,5 +1,5 @@
 import React from 'react';
-import { ComponentMeta } from '@storybook/react';
+import { Meta } from '@storybook/react';
 import { ConfirmSwap, PropTypes } from './ConfirmSwap';
 import { exampleFor5Wallets, wallets } from './mock';
 
@@ -11,7 +11,7 @@ export default {
       defaultValue: ['BSC', 'OSMOSIS'],
     },
   },
-} as ComponentMeta<typeof ConfirmSwap>;
+} as Meta<typeof ConfirmSwap>;
 
 export const Main = (props: PropTypes) => (
   <ConfirmSwap {...props} selectableWallets={wallets} />

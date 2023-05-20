@@ -1,27 +1,21 @@
 import React from 'react';
-import { ComponentMeta } from '@storybook/react';
+import { Meta } from '@storybook/react';
 
 import { PropTypes, Wallet } from './Wallet';
 import { WalletState } from '../../types/wallet';
 
 export default {
-  title: 'Wallet chip',
+  title: 'Components/Wallet chip',
   component: Wallet,
+  args: {
+    name: 'Coinbase',
+    image: 'https://app.rango.exchange/wallets/coinbase.svg',
+  },
   argTypes: {
-    title: {
-      name: 'title',
-      type: 'string',
-      defaultValue: 'Coinbase',
-    },
     image: {
       name: 'image',
       type: 'string',
       defaultValue: 'https://app.rango.exchange/wallets/coinbase.svg',
-    },
-    disabled: {
-      name: 'disabled',
-      type: 'boolean',
-      defaultValue: false,
     },
     state: {
       name: 'wallet state',
@@ -31,6 +25,6 @@ export default {
       options: Object.values(WalletState),
     },
   },
-} as ComponentMeta<typeof Wallet>;
+} as Meta<typeof Wallet>;
 
 export const Main = (args: PropTypes) => <Wallet {...args}></Wallet>;

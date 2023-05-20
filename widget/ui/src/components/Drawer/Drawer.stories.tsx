@@ -1,10 +1,15 @@
 import React, { useState } from 'react';
-import { ComponentMeta } from '@storybook/react';
+import { Meta } from '@storybook/react';
 import { Drawer, PropTypes } from './Drawer';
 
 export default {
   name: 'Components/Drawer',
   component: Drawer,
+  args: {
+    anchor: 'bottom',
+    title: 'I`m Drawer',
+    container: document.body,
+  },
   argTypes: {
     anchor: {
       name: 'anchor',
@@ -13,19 +18,14 @@ export default {
       defaultValue: 'bottom',
     },
   },
-} as ComponentMeta<typeof Drawer>;
+} as Meta<typeof Drawer>;
 
 export const Main = (args: PropTypes) => {
   const [open, setOpen] = useState<boolean>(false);
   return (
     <div>
       <button onClick={() => setOpen(true)}>Open Drawer</button>
-      <Drawer
-        {...args}
-        open={open}
-        title="I'm Drawer"
-        onClose={() => setOpen(false)}
-      />
+      <Drawer {...args} open={open} onClose={() => setOpen(false)} />
     </div>
   );
 };
@@ -47,9 +47,7 @@ export const BottomAnchor = (args: PropTypes) => {
       <Drawer
         {...args}
         open={open}
-        title="I'm Drawer"
         onClose={() => setOpen(false)}
-        anchor="bottom"
         content={
           <div>
             {Array.from({ length: 50 }, (_, index) => (
@@ -70,7 +68,6 @@ export const LeftAnchor = (args: PropTypes) => {
       <Drawer
         {...args}
         open={open}
-        title="I'm Drawer"
         onClose={() => setOpen(false)}
         anchor="left"
         content={

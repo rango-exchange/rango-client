@@ -1,11 +1,14 @@
 import React from 'react';
-import { ComponentMeta } from '@storybook/react';
+import { Meta } from '@storybook/react';
 import { SwapDetail, PropTypes } from './SwapDetail';
 import { swap } from './mock';
 
 export default {
   title: 'Components/Swap Detail',
   component: SwapDetail,
+  args:{
+    status:'running'
+  },
   argTypes: {
     status: {
       name: 'status',
@@ -14,6 +17,6 @@ export default {
       defaultValue: 'running',
     },
   },
-} as ComponentMeta<typeof SwapDetail>;
+} as Meta<typeof SwapDetail>;
 
 export const Main = (props: PropTypes) => <SwapDetail {...props} swap={swap} />;

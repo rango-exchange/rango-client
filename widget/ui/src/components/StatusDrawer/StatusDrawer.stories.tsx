@@ -1,11 +1,16 @@
 import React, { useState } from 'react';
-import { ComponentMeta } from '@storybook/react';
+import { Meta } from '@storybook/react';
 import { StatusDrawer, PropTypes } from './StatusDrawer';
 import { SwapContainer } from '../SwapContainer';
 
 export default {
   name: 'Components/StatusDrawer',
   component: StatusDrawer,
+  args: {
+    status: 'success',
+    title: 'Swap successful',
+    subtitle: 'There are now 0.0493 BNB in 0x542...C2Df wallet on BSC chain.',
+  },
   argTypes: {
     status: {
       name: 'status',
@@ -25,7 +30,7 @@ export default {
         'There are now 0.0493 BNB in 0x542...C2Df wallet on BSC chain.',
     },
   },
-} as ComponentMeta<typeof StatusDrawer>;
+} as Meta<typeof StatusDrawer>;
 
 export const Main = (args: PropTypes) => {
   const [open, setOpen] = useState<boolean>(false);

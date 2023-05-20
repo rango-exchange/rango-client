@@ -1,14 +1,17 @@
 import { styled } from '../../theme';
 import React, { useState } from 'react';
-import { AngleRightIcon } from '../Icon';
-import { SecondaryPage } from '../SecondaryPage/SecondaryPage';
-import { Typography } from '../Typography';
-import { Chip } from '../Chip';
+
 import { LiquiditySource, LoadingStatus } from '../../types/meta';
-import { TextField } from '../TextField';
-import { Radio } from '../Radio';
-import { Switch } from '../Switch';
-import { Button } from '../Button';
+import {
+  AngleRightIcon,
+  Button,
+  Chip,
+  Radio,
+  SecondaryPage,
+  Switch,
+  TextField,
+  Typography,
+} from '../../components';
 
 const BaseContainer = styled('div', {
   borderRadius: '$5',

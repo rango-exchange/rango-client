@@ -1,5 +1,5 @@
 import React from 'react';
-import { ComponentMeta } from '@storybook/react';
+import { Meta } from '@storybook/react';
 
 import { History, PropTypes } from './History';
 import { pendingSwap } from './mock';
@@ -7,7 +7,7 @@ import { pendingSwap } from './mock';
 export default {
   title: 'Containers/History',
   component: History,
-} as ComponentMeta<typeof History>;
+} as Meta<typeof History>;
 
 export const Main = (props: PropTypes) => (
   <History {...props} list={pendingSwap} />

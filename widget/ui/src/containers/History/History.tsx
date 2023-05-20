@@ -5,8 +5,8 @@ import { containsText } from '../../helper';
 import { styled } from '../../theme';
 import { PendingSwap } from './types';
 import { NotFoundAlert } from '../../components/Alert/NotFoundAlert';
-import { LoaderContainer } from '../../components/TokenSelector/TokenSelector';
 import { SwapsGroup, PropTypes as SwapsGroupPropTypes } from './SwapsGroup';
+import { LoaderContainer } from '../TokenSelector/TokenSelector';
 
 const Container = styled('div', {
   overflowY: 'auto',

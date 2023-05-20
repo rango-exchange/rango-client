@@ -1,5 +1,5 @@
 import React from 'react';
-import { ComponentMeta } from '@storybook/react';
+import { Meta } from '@storybook/react';
 
 import { Tooltip, PropTypes } from './Tooltip';
 import { AddWalletIcon } from '../Icon';
@@ -7,6 +7,11 @@ import { AddWalletIcon } from '../Icon';
 export default {
   title: 'Components/Tooltip',
   component: Tooltip,
+  args: {
+    content: 'I am a tooltip',
+    side: 'top',
+    color: 'gray',
+  },
   argTypes: {
     content: {
       name: 'content',
@@ -34,7 +39,7 @@ export default {
       defaultValue: 'gray',
     },
   },
-} as ComponentMeta<typeof Tooltip>;
+} as Meta<typeof Tooltip>;
 
 export const Main = (props: PropTypes) => (
   <div

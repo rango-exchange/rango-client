@@ -1,13 +1,14 @@
 import React from 'react';
 import { containsText } from '../../helper';
-import { SecondaryPage } from '../SecondaryPage/SecondaryPage';
-import { TokenList } from '../TokenList';
-import { TokenWithAmount } from '../TokenList/TokenList';
+
 import { LoadingStatus } from '../../types/meta';
-import { Spinner } from '../Spinner';
-import { LoadingFailedAlert } from '../Alert/LoadingFailedAlert';
-import { NotFoundAlert } from '../Alert/NotFoundAlert';
 import { styled } from '../../theme';
+import { NotFoundAlert } from '../../components/Alert/NotFoundAlert';
+import { LoadingFailedAlert, SecondaryPage, Spinner } from '../../components';
+import {
+  TokenList,
+  TokenWithAmount,
+} from '../../components/TokenList/TokenList';
 
 export const LoaderContainer = styled('div', {
   display: 'flex',
