@@ -16,7 +16,7 @@ import { Provider } from '@rango-dev/wallets-core';
 import { allProviders } from '@rango-dev/provider-all';
 import { globalStyles } from '../globalStyles';
 import { useMetaStore } from '../store/meta';
-import { useConfigStore } from '../store/config';
+import { initialConfig, useConfigStore } from '../store/config';
 import { filterConfig, syntaxHighlight } from '../helpers';
 
 const providers = allProviders();
@@ -76,7 +76,7 @@ export function Config(props: PropsWithChildren) {
   const config = useConfigStore.use.config();
   const [isCopied, handleCopy] = useCopyToClipboard(2000);
 
-  const filtered = filterConfig(config);
+  const filteredConfig = filterConfig(config, initialConfig);
 
   return (
     <Container>
@@ -123,7 +123,7 @@ export function Config(props: PropsWithChildren) {
           <Button
             type="primary"
             variant="ghost"
-            onClick={() => handleCopy(JSON.stringify(filtered))}>
+            onClick={() => handleCopy(JSON.stringify(filteredConfig))}>
             {isCopied ? 'Copied!' : 'Copy'}
           </Button>
         }
@@ -141,9 +141,11 @@ export function Config(props: PropsWithChildren) {
             </Typography>
 
             <Pre
-              dangerouslySetInnerHTML={{
-                __html: syntaxHighlight(JSON.stringify(filtered, undefined, 4)),
-              }}
+              {...(!!filteredConfig && {
+                dangerouslySetInnerHTML: {
+                  __html: syntaxHighlight(JSON.stringify(filteredConfig, undefined, 4)),
+                },
+              })}
             />
           </>
         }

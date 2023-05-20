@@ -6,7 +6,7 @@
   "source": "index.ts",
   "browserslist": "> 0.5%, last 2 versions, not dead",
   "scripts": {
-    "build": "parcel build"
+    "build": "parcel build --no-source-maps"
   },
   "husky": {
     "hooks": {
