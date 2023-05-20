@@ -7,7 +7,7 @@ import {
   TextField,
   Typography,
   Image,
-  Spacer,
+  Divider,
 } from '@rango-dev/ui';
 import { useMetaStore } from '../store/meta';
 import { BlockchainMeta, Token } from 'rango-sdk';
@@ -201,7 +201,7 @@ export function TokenInfo(props: PropTypes) {
                 <Typography variant="body3" color="neutral600">{`${t(
                   'Balance'
                 )}: ${tokenBalance} ${fromToken?.symbol || ''}`}</Typography>
-                <Spacer size={4} />
+                <Divider size={4} />
                 <Button type="primary" variant="ghost" size="compact">
                   {t('Max')}
                 </Button>
@@ -246,7 +246,7 @@ export function TokenInfo(props: PropTypes) {
               ? chain.displayName
               : t('Chain')}
           </Button>
-          <Spacer size={12} />
+          <Divider size={12} />
           <Button
             className="selectors"
             onClick={() => {
@@ -272,7 +272,7 @@ export function TokenInfo(props: PropTypes) {
           >
             {loadingStatus === 'success' && token ? token.symbol : t('Token')}
           </Button>
-          <Spacer size={12} />
+          <Divider size={12} />
           <div className="amount">
             {props.type === 'From' ? (
               <TextField

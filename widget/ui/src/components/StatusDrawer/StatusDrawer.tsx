@@ -3,7 +3,7 @@ import { styled } from '../../theme';
 import { Button } from '../Button';
 import { Drawer } from '../Drawer';
 import { CheckCircleIcon, InfoCircleIcon, WarningIcon } from '../Icon';
-import { Spacer } from '../Spacer';
+import { Divider } from '../Divider';
 import { Typography } from '../Typography';
 
 export interface PropTypes {
@@ -60,7 +60,7 @@ export function StatusDrawer({
               {status === 'success' ? 'Cancel' : 'See detailes'}
             </Button>
           )}
-          <Spacer size={16} />
+          <Divider size={16} />
           <Button
             fullWidth
             onClick={onSubmit}

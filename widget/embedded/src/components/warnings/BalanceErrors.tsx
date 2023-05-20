@@ -1,4 +1,4 @@
-import { Spacer, styled, Typography } from '@rango-dev/ui';
+import { Divider, styled, Typography } from '@rango-dev/ui';
 import React from 'react';
 
 interface PropTypes {
@@ -34,7 +34,7 @@ export function BalanceErrors({ messages }: PropTypes) {
       <Typography className="title" variant="title" color={'error'}>
         Insufficent Balance:
       </Typography>
-      <Spacer size={8} direction="vertical" />
+      <Divider size={8} direction="vertical" />
       <List showListStyle={showListStyle}>
         {messages.map((warning, index) => (
           <ListItem showListStyle={showListStyle} key={index}>

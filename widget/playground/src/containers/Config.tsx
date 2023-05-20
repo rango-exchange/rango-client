@@ -2,9 +2,8 @@ import React, { PropsWithChildren, useState } from 'react';
 import {
   Alert,
   Button,
-  Divider,
   Modal,
-  Spacer,
+  Divider,
   styled,
   Typography,
   useCopyToClipboard,
@@ -101,7 +100,7 @@ export function Config(props: PropsWithChildren) {
                 Error connecting server, please reload the app and try again
               </Alert>
             )}
-            <Spacer size={20} direction="vertical" />
+            <Divider size={20} direction="vertical" />
             <ChainsConfig type="Source" />
             <Divider size={32} />
             <ChainsConfig type="Destination" />

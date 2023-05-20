@@ -3,7 +3,7 @@ import { PendingSwap } from '../../containers/History/types';
 import { styled } from '../../theme';
 import { Button } from '../Button';
 import { ArrowRightIcon } from '../Icon';
-import { Spacer } from '../Spacer';
+import { Divider } from '../Divider';
 import { Spinner } from '../Spinner';
 import { Token } from './Token';
 import { limitDecimalPlaces } from '../../helper';
@@ -71,9 +71,9 @@ export function SwapDetail({
               amount: limitDecimalPlaces(swap.inputAmount),
             }}
           />
-          <Spacer size={12} />
+          <Divider size={12} />
           <ArrowRightIcon size={12} />
-          <Spacer size={12} />
+          <Divider size={12} />
           <Token
             data={{
               token: {

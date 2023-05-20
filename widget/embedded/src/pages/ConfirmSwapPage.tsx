@@ -18,7 +18,7 @@ import { useNavigateBack } from '../hooks/useNavigateBack';
 import { TokenPreview } from '../components/TokenPreview';
 // @ts-ignore // TODO: fix error in tsc build
 import { t } from 'i18next';
-import { Spacer, ConfirmSwap, LoadingFailedAlert } from '@rango-dev/ui';
+import { Divider, ConfirmSwap, LoadingFailedAlert } from '@rango-dev/ui';
 import RoutesOverview from '../components/RoutesOverview';
 import { useManager } from '@rango-dev/queue-manager-react';
 import { useConfirmSwap } from '../hooks/useConfirmSwap';
@@ -156,7 +156,7 @@ export function ConfirmSwapPage() {
                 : bestRouteloadingStatus
             }
           />
-          <Spacer size={12} direction="vertical" />
+          <Divider size={12} direction="vertical" />
           <TokenPreview
             chain={{
               displayName: lastStep?.to.blockchain || '',
@@ -200,7 +200,7 @@ export function ConfirmSwapPage() {
         <>
           {loadingMetaStatus === 'failed' && <LoadingFailedAlert />}
           {loadingMetaStatus === 'failed' && showHighSlippageWarning && (
-            <Spacer direction="vertical" />
+            <Divider direction="vertical" />
           )}
           {showHighSlippageWarning && (
             <ConfirmSwapExtraMessages selectedSlippage={selectedSlippage} />
