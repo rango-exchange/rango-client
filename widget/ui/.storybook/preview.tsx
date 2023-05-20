@@ -1,5 +1,5 @@
 import React from 'react';
-import { DecoratorFn } from '@storybook/react';
+import { Decorator } from '@storybook/react';
 
 import { lightTheme, darkTheme, styled } from '../src/theme';
 import { globalCss } from '@stitches/react';
@@ -42,8 +42,8 @@ const globalStyles = globalCss({
     fontFamily: 'Roboto',
   },
 });
-
-export const withTheme: DecoratorFn = (StoryFn, context) => {
+//@ts-ignore
+export const withTheme: Decorator = (StoryFn, context) => {
   globalStyles();
   const theme = context.parameters.theme || context.globals.theme;
   const storyTheme = theme === 'dark' ? darkTheme : lightTheme;
