@@ -272,9 +272,9 @@ export function StylesConfig() {
                   setChekedTheme(checked);
                 }}
               />
-              <Divider size={12} />
+              <Divider size={12} direction='horizontal' />
               <Line />
-              <Divider size={12} />
+              <Divider size={12} direction='horizontal' />
               <Typography variant="caption" mr={4}>
                 Light
               </Typography>

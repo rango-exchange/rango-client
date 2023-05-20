@@ -13,10 +13,6 @@ export default {
     searchedText: {
       type: 'string',
       defaultValue: '',
-      table: {
-        type: { summary: 'string' },
-        defaultValue: { summary: '' },
-      },
       control: {
         type: 'text',
       },

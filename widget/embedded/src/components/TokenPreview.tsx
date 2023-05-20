@@ -157,7 +157,7 @@ export function TokenPreview(props: PropTypes) {
               ? chain.displayName
               : t('Chain')}
           </Button>
-          <Divider size={12} />
+          <Divider size={12} direction="horizontal" />
           <Button
             className="selectors"
             variant="outlined"
@@ -175,7 +175,7 @@ export function TokenPreview(props: PropTypes) {
           >
             {loadingStatus === 'success' && token ? token.symbol : t('Token')}
           </Button>
-          <Divider size={12} />
+          <Divider size={12} direction="horizontal" />
           <div className="amount">
             <OutputContainer>
               <Typography variant="h4">{props.amount}</Typography>

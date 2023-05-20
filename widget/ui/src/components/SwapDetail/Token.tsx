@@ -18,7 +18,7 @@ const TokenContainer = styled('div', {
 
 const TokenImage = styled('div', {
   position: 'relative',
-  'img': {
+  img: {
     borderRadius: '50%',
   },
   '.overlay': {
@@ -63,12 +63,12 @@ export function Token(props: PropTypes) {
           <Image src={blockchain.logo} alt={blockchain.name} size={12} />
         </div>
       </TokenImage>
-      <Divider size={8} />
+      <Divider size={8} direction="horizontal" />
       {!!amount && <span className="amount">{props.data.amount}</span>}
       {!amount && estimatedAmount && (
         <span className="amount estimated">{props.data.estimatedAmount}</span>
       )}
-      <Divider size={4} />
+      <Divider size={4} direction="horizontal" />
       {token.symbol}
     </TokenContainer>
   );
