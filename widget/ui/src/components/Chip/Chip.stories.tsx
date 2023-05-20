@@ -1,22 +1,46 @@
 import React from 'react';
-import { ComponentMeta } from '@storybook/react';
+import { Meta } from '@storybook/react';
 
 import { Chip, PropTypes } from './Chip';
 
 export default {
-  title: 'Chip',
+  title: 'Components/Chip',
   component: Chip,
-} as ComponentMeta<typeof Chip>;
+  args: {
+    label: 'chip',
+    selected: true,
+  },
+  argTypes: {
+    label: {
+      name: 'label',
+      defaultValue: 'chip',
+      table: {
+        type: { summary: 'string' },
+        defaultValue: { summary: 'chip' },
+      },
+      control: {
+        type: 'text',
+      },
+    },
+    selected: {
+      name: 'selected',
+      control: { type: 'boolean' },
+      table: {
+        type: { summary: 'boolean' },
+      },
+      defaultValue: true,
+    },
+  },
+} as Meta<typeof Chip>;
 
-export const Main = (args: PropTypes) => <Chip {...args} label="chip" />;
+export const Main = (args: PropTypes) => <Chip {...args} />;
 
 export const ChipWithPrefix = (args: PropTypes) => (
   <Chip
     {...args}
-    label="chip"
     prefix={
       <img
-        src="	https://api.rango.exchange/blockchains/binance.svg"
+        src="https://api.rango.exchange/blockchains/binance.svg"
         style={{ width: '20px' }}
       />
     }
@@ -26,7 +50,6 @@ export const ChipWithPrefix = (args: PropTypes) => (
 export const ChipWithSuffix = (args: PropTypes) => (
   <Chip
     {...args}
-    label="chip"
     suffix={
       <img
         src="	https://api.rango.exchange/blockchains/binance.svg"

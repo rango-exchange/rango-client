@@ -2,9 +2,8 @@ import { CSSProperties } from '@stitches/react';
 import React from 'react';
 import { containsText } from '../../helper';
 import { LiquiditySource, LoadingStatus } from '../../types/meta';
-import { Button } from '../Button';
-import { LiquiditySourceList } from '../LiquiditySourceList';
-import { SecondaryPage } from '../SecondaryPage/SecondaryPage';
+import { Button, SecondaryPage } from '../../components';
+import { LiquiditySourceList } from '../../components/LiquiditySourceList';
 
 const filterLiquiditySources = (
   liquiditySources: LiquiditySource[],

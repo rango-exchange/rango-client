@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
-import { ComponentMeta } from '@storybook/react';
+import { Meta } from '@storybook/react';
 import { ColorPicker, PropTypes } from './ColorPicker';
 
 export default {
   title: 'Components/ColorPicker',
   component: ColorPicker,
+  args: {
+    place: 'top',
+  },
   argTypes: {
     place: {
       name: 'place',
@@ -18,7 +21,7 @@ export default {
       defaultValue: 'Choose a color',
     },
   },
-} as ComponentMeta<typeof ColorPicker>;
+} as Meta<typeof ColorPicker>;
 
 export const Main = (args: PropTypes) => {
   const [color, setColor] = useState<string | undefined>('#5FA425');

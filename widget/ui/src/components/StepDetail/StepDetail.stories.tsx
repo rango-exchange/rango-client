@@ -1,10 +1,17 @@
 import React from 'react';
-import { ComponentMeta } from '@storybook/react';
+import { Meta } from '@storybook/react';
 import { StepDetail, PropTypes } from './StepDetail';
 
 export default {
   title: 'Components/StepDetail',
   component: StepDetail,
+  args: {
+    logo: 'https://api.rango.exchange/tokens/COSMOS/JUNO.png',
+    chainLogo: 'https://api.rango.exchange/swappers/osmosis.png',
+    amount: '1',
+    symbol: 'JUNO',
+    blockchain: 'OSMOSIS',
+  },
   argTypes: {
     logo: {
       name: 'logo',
@@ -32,6 +39,6 @@ export default {
       defaultValue: 'OSMOSIS',
     },
   },
-} as ComponentMeta<typeof StepDetail>;
+} as Meta<typeof StepDetail>;
 
 export const Main = (props: PropTypes) => <StepDetail {...props} />;

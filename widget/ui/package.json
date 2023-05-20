@@ -13,8 +13,8 @@
     "bundle": "esbuild src/index.ts --bundle --minify --keep-names --sourcemap --outdir=dist --platform=node --format=esm --packages=external",
     "build": "yarn type-checking && yarn bundle",
     "type-checking": "tsc --declaration --emitDeclarationOnly",
-    "storybook": "start-storybook -p 3000",
-    "build-storybook": "build-storybook"
+    "storybook": "storybook dev -p 3000",
+    "build-storybook": "storybook build"
   },
   "peerDependencies": {
     "@rango-dev/queue-manager-rango-preset": "*",
@@ -23,11 +23,12 @@
   "devDependencies": {
     "@babel/core": "^7.20.2",
     "@size-limit/preset-small-lib": "^8.1.0",
-    "@storybook/addon-essentials": "^6.5.13",
+    "@storybook/addon-essentials": "^7.0.9",
     "@storybook/addon-info": "^5.3.21",
-    "@storybook/addon-links": "^6.5.13",
-    "@storybook/addons": "^6.5.13",
-    "@storybook/react": "^6.5.13",
+    "@storybook/addon-links": "^7.0.9",
+    "@storybook/addons": "^7.0.9",
+    "@storybook/react": "^7.0.9",
+    "@storybook/react-webpack5": "^7.0.9",
     "@types/react": "^18.0.25",
     "@types/react-dom": "^18.0.8",
     "@types/react-virtualized-auto-sizer": "^1.0.1",
@@ -39,6 +40,7 @@
     "react-dom": "^18.2.0",
     "react-is": "^18.2.0",
     "size-limit": "^8.1.0",
+    "storybook": "^7.0.9",
     "tsdx": "^0.14.1",
     "tslib": "^2.4.1",
     "typescript": "^4.8.4"

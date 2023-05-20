@@ -1,7 +1,16 @@
-import { ComponentMeta } from '@storybook/react';
-import { SecondaryPage } from './SecondaryPage';
+import { Meta } from '@storybook/react';
+import { PropTypes, SecondaryPage } from './SecondaryPage';
+import React from 'react';
 
 export default {
   title: 'Components/Secondary Page',
   component: SecondaryPage,
-} as ComponentMeta<typeof SecondaryPage>;
+  args:{
+    textField:true,
+    textFieldPlaceholder:'Search',
+    title:'Secondary Page'
+  }
+} as Meta<typeof SecondaryPage>;
+
+
+export const Main = (args: PropTypes) => <SecondaryPage {...args} />;

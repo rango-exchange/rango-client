@@ -1,14 +1,14 @@
 import React from 'react';
 import { BlockchainMeta } from 'rango-sdk';
-import { BlockchainsList } from '../BlockchainsList';
-import { SecondaryPage } from '../SecondaryPage/SecondaryPage';
-import { Spinner } from '../Spinner';
+import { BlockchainsList } from '../../components/BlockchainsList';
+import { SecondaryPage } from '../../components/SecondaryPage/SecondaryPage';
+import { Spinner } from '../../components/Spinner';
 import { styled } from '../../theme';
 import { CSSProperties } from '@stitches/react';
 import { containsText } from '../../helper';
 import { LoadingStatus } from '../../types/meta';
-import { LoadingFailedAlert } from '../Alert/LoadingFailedAlert';
-import { NotFoundAlert } from '../Alert/NotFoundAlert';
+import { LoadingFailedAlert } from '../../components/Alert/LoadingFailedAlert';
+import { NotFoundAlert } from '../../components/Alert/NotFoundAlert';
 import { LoaderContainer } from '../TokenSelector/TokenSelector';
 
 const ListContainer = styled('div', {

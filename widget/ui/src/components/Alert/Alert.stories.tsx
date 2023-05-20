@@ -1,22 +1,43 @@
 import React from 'react';
-import { ComponentMeta } from '@storybook/react';
 import { Alert } from '.';
 import { PropTypes } from './Alert';
+import { Meta } from '@storybook/react';
+import { Typography } from '../Typography';
 
 export default {
-  title: 'Alert',
+  title: 'Components/Alert',
   component: Alert,
+  args: {
+    type: 'success',
+    title: 'Alert Title',
+    footer: <Typography variant='body1'>It's a Alert!</Typography>
+  },
   argTypes: {
     type: {
+      name: 'type',
       defaultValue: 'success',
+      table: {
+        type: { summary: 'string' },
+        defaultValue: { summary: 'success' },
+      },
+      control: {
+        type: 'select',
+        options: ['primary', 'secondary', 'success', 'warning', 'error'],
+      },
     },
+
     title: {
+      name: 'title',
       defaultValue: 'Alert Title',
-    },
-    description: {
-      defaultValue: 'Alert description ...',
+      table: {
+        type: { summary: 'string' },
+        defaultValue: { summary: 'Alert Title' },
+      },
+      control: {
+        type: 'text',
+      },
     },
   },
-} as ComponentMeta<typeof Alert>;
+} as Meta<typeof Alert>;
 
 export const Main = (args: PropTypes) => <Alert {...args} />;

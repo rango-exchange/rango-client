@@ -1,5 +1,5 @@
 import React from 'react';
-import { ComponentMeta } from '@storybook/react';
+import { Meta } from '@storybook/react';
 
 import { Button, PropTypes } from './Button';
 import { AddWalletIcon } from '../Icon';
@@ -7,6 +7,11 @@ import { AddWalletIcon } from '../Icon';
 export default {
   title: 'Components/Button',
   component: Button,
+  args: {
+    variant: 'contained',
+    size: 'medium',
+    type: 'primary',
+  },
   argTypes: {
     variant: {
       name: 'variant',
@@ -26,7 +31,7 @@ export default {
     },
     size: {
       name: 'size',
-      control: { type: 'radio' },
+      control: { type: 'select' },
       options: ['small', 'medium', 'large', 'compact'],
       defaultValue: 'medium',
     },
@@ -35,7 +40,7 @@ export default {
       control: { type: 'boolean' },
     },
   },
-} as ComponentMeta<typeof Button>;
+} as Meta<typeof Button>;
 
 export const Main = (props: PropTypes) => (
   <Button {...props}>I'm a button</Button>

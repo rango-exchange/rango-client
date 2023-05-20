@@ -1,17 +1,16 @@
 import React from 'react';
-import { ComponentMeta } from '@storybook/react';
+import { Meta } from '@storybook/react';
 import { TokenSelector, PropTypes } from './TokenSelector';
-import { tokensMeta } from '../TokenList/mockData';
+import { tokensMeta } from '../../components/TokenList/mockData';
 
 export default {
-  title: 'Token Selector',
+  title: 'Containers/Token Selector',
   component: TokenSelector,
-  argTypes: {
-    type: {
-      defaultValue: 'Source',
-    },
+  args: {
+    type: 'Source',
+    loadingStatus: 'success',
   },
-} as ComponentMeta<typeof TokenSelector>;
+} as Meta<typeof TokenSelector>;
 
 export const Main = (args: PropTypes) => (
   <TokenSelector {...args} list={tokensMeta} selected={tokensMeta[0]} />

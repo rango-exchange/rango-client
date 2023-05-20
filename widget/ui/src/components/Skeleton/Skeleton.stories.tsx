@@ -1,10 +1,14 @@
-import { ComponentMeta } from '@storybook/react';
+import { Meta } from '@storybook/react';
 import React from 'react';
 import { Skeleton, PropTypes } from './Skeleton';
 
 export default {
   title: 'Components/Skeleton',
   component: Skeleton,
+  args: {
+    width: 20,
+    height: 20,
+  },
   argTypes: {
     width: {
       name: 'width',
@@ -19,6 +23,6 @@ export default {
       defaultValue: 20,
     },
   },
-} as ComponentMeta<typeof Skeleton>;
+} as Meta<typeof Skeleton>;
 
 export const Main = (props: PropTypes) => <Skeleton {...props} />;

@@ -1,12 +1,12 @@
 import React from 'react';
-import { ComponentMeta } from '@storybook/react';
 import { BestRoute, PropTypes } from './BestRoute';
 import { bestRoute, bestRouteExample2, bestRouteExample3 } from './mock';
+import { Meta } from '@storybook/react';
 
 export default {
   title: 'Components/Best Route',
   component: BestRoute,
-} as ComponentMeta<typeof BestRoute>;
+} as Meta<typeof BestRoute>;
 
 export const Main = (props: PropTypes) => (
   <div style={{ maxWidth: 512 }}>
