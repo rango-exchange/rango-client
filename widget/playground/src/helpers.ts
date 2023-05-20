@@ -1,6 +1,7 @@
 import { WalletType } from '@rango-dev/wallets-shared';
 import { Asset, Token } from 'rango-sdk';
-import { WidgetConfig, Theme, Support } from './types';
+import { WidgetConfig } from './types';
+import subtractObject from 'subtract-object';
 
 export const excludedWallets = [WalletType.UNKNOWN, WalletType.STATION, WalletType.LEAP];
 
@@ -57,21 +58,26 @@ export const syntaxHighlight = (json) => {
   );
 };
 
-const filterObject = (object: keyof WidgetConfig) =>
-  Object.fromEntries(Object.entries(object).filter(([_, value]) => !!value));
-
-export const filterConfig = (config: WidgetConfig | Theme | Support) => {
-  const copiedConfig = { ...config };
-  for (const key in config) {
-    if (typeof config[key] === 'object' && !Array.isArray(config[key]) && !!config[key]) {
-      if (!Object.keys(filterObject(copiedConfig[key])).length) {
-        copiedConfig[key] = undefined;
-      } else {
-        copiedConfig[key] = { ...copiedConfig[key], ...filterConfig(copiedConfig[key]) };
-        if (!Object.keys(filterObject(copiedConfig[key])).length) copiedConfig[key] = undefined;
-      }
+export function clearEmpties<T extends Record<string, any>>(obj: T): T {
+  for (const key in obj) {
+    if (!obj[key] || typeof obj[key] !== 'object') {
+      continue;
+    }
+    clearEmpties(obj[key]);
+    if ((Array.isArray(obj[key]) && !obj[key].length) || Object.keys(obj[key]).length === 0) {
+      delete obj[key];
     }
   }
+  return obj;
+}
 
-  return copiedConfig;
-};
+export function filterConfig(
+  config: WidgetConfig,
+  initialConfig: WidgetConfig,
+): Partial<WidgetConfig> {
+  const userSelectedConfig = clearEmpties(subtractObject(initialConfig, config));
+
+  if (!userSelectedConfig.apiKey) userSelectedConfig.apiKey = config.apiKey;
+
+  return userSelectedConfig;
+}

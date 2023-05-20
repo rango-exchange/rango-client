@@ -4327,6 +4327,30 @@
   dependencies:
     "@babel/runtime" "^7.13.10"
 
+"@rango-dev/provider-enkrypt@^0.1.0":
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/@rango-dev/provider-enkrypt/-/provider-enkrypt-0.1.1.tgz#8326093dc190c4c60bd22b092e6976ae354b37c3"
+  integrity sha512-fLB/Eb/mPVKcUPFQ7ajEr0ECPEjLQQ9axGU6/R21vB07mJHJIdFDCozNMVy4xRNVpysf21aDlr74t2mJPI566g==
+  dependencies:
+    "@rango-dev/signer-evm" "^0.1.13"
+    "@rango-dev/wallets-shared" "^0.1.13"
+    rango-types "^0.1.28"
+
+"@rango-dev/signer-evm@^0.1.13":
+  version "0.1.13"
+  resolved "https://registry.yarnpkg.com/@rango-dev/signer-evm/-/signer-evm-0.1.13.tgz#54199a078a089ea0451bde757a6849fbc70bb5fb"
+  integrity sha512-LjVnpm/OK0ft8ct0Hr5hRHqgsz7YiqoYOz7Xi5SXrrsm3XwR0TbBA2sdw7z2Ynvigp0DRenrTHV0ymU4BA6k8Q==
+  dependencies:
+    ethers "^5.7.2"
+    rango-types "^0.1.32"
+
+"@rango-dev/wallets-shared@^0.1.13":
+  version "0.1.13"
+  resolved "https://registry.yarnpkg.com/@rango-dev/wallets-shared/-/wallets-shared-0.1.13.tgz#e9822ca5f4c33eb014978887c2212288af02d68b"
+  integrity sha512-O/2Pb76Xs7kj3nfzXCNn6zQmWOESnOB59thfSvALqJSc86w8u17TuhN8rbSnlNMyMLUOo0VKHFngsGuVAvfP4w==
+  dependencies:
+    rango-types "^0.1.32"
+
 "@reach/router@^1.2.1":
   version "1.3.4"
   resolved "https://registry.yarnpkg.com/@reach/router/-/router-1.3.4.tgz#d2574b19370a70c80480ed91f3da840136d10f8c"
@@ -16682,6 +16706,11 @@ rango-types@^0.1.32:
   resolved "https://registry.yarnpkg.com/rango-types/-/rango-types-0.1.32.tgz#40220e0950e612957afd5787814c0164017c7b20"
   integrity sha512-GyNjAGoGNAESBR47n3oaEURP7V+Wp9La2vdYK772uE8Z8Pura3k/5cx5OUOF8/tAqnPGgHE+8r5R6lQDvGLmjg==
 
+rango-types@^0.1.32:
+  version "0.1.32"
+  resolved "https://registry.yarnpkg.com/rango-types/-/rango-types-0.1.32.tgz#40220e0950e612957afd5787814c0164017c7b20"
+  integrity sha512-GyNjAGoGNAESBR47n3oaEURP7V+Wp9La2vdYK772uE8Z8Pura3k/5cx5OUOF8/tAqnPGgHE+8r5R6lQDvGLmjg==
+
 raw-body@2.5.1:
   version "2.5.1"
   resolved "https://registry.yarnpkg.com/raw-body/-/raw-body-2.5.1.tgz#fe1b1628b181b700215e5fd42389f98b71392857"
@@ -18530,6 +18559,11 @@ style-to-object@^0.4.1:
   integrity sha512-HFpbb5gr2ypci7Qw+IOhnP2zOU7e77b+rzM+wTzXzfi1PrtBCX0E7Pk4wL4iTLnhzZ+JgEGAhX81ebTg/aYjQw==
   dependencies:
     inline-style-parser "0.1.1"
+
+subtract-object@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/subtract-object/-/subtract-object-1.1.0.tgz#a26bb771e4b861f230bf38aa6cec4b861533261d"
+  integrity sha512-b6J++yZCkkmP1PODlbhjy3MNHOEkzIynZfqU6KeTzgBcFHB4KgqFPf0AMU1U8he7FQa2wq6/k3MjqObcovU28w==
 
 superstruct@^0.14.2:
   version "0.14.2"
