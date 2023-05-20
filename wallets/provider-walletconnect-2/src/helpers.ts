@@ -45,19 +45,25 @@ export async function makeConnection(options: {
         'disconnect',
       ],
       qrModalOptions: {
-        explorerAllowList: [],
-        explorerDenyList: [],
+        // explorerAllowList: [],
+        // explorerDenyList: [],
         themeVariables: {
           '--w3m-z-index': '999999999',
         },
       },
     }));
 
+  const matchKeyChain =
+    Object.keys(ethProvider.signer.namespaces['eip155'].rpcMap)[0] ==
+    ethProvider.chainId;
+
   return new Promise((resolve, reject) => {
-    if (ethProvider.session && ethProvider.accounts?.length && !force) {
+    if (ethProvider.accounts?.length && !force && matchKeyChain) {
       (async () => {
+        // TODO: check why in some cases enable() doesn't work well
         await ethProvider
           .connect()
+          // .enable()
           .then(() => {
             resolve(ethProvider);
           })
