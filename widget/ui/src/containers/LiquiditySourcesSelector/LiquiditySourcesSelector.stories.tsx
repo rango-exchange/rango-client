@@ -1,15 +1,18 @@
 import React from 'react';
-import { ComponentMeta } from '@storybook/react';
+import { Meta } from '@storybook/react';
 import {
   LiquiditySourcesSelector,
   PropTypes,
 } from './LiquiditySourcesSelector';
-import { liquiditySources } from '../LiquiditySourceList/mockData';
+import { liquiditySources } from '../../components/LiquiditySourceList/mockData';
 
 export default {
-  title: 'Liquidity Sources Selector',
+  title: 'Containers/Liquidity Sources Selector',
   component: LiquiditySourcesSelector,
-} as ComponentMeta<typeof LiquiditySourcesSelector>;
+  args: {
+    loadingStatus: 'success',
+  },
+} as Meta<typeof LiquiditySourcesSelector>;
 
 export const Main = (args: PropTypes) => (
   <LiquiditySourcesSelector {...args} list={liquiditySources} />

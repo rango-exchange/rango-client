@@ -1,10 +1,14 @@
-import { ComponentMeta } from '@storybook/react';
+import { Meta } from '@storybook/react';
 import React from 'react';
 import { Spinner, PropTypes } from './Spinner';
 
 export default {
   title: 'Components/Spinner',
   component: Spinner,
+  args: {
+    color: 'primary',
+    size: 16,
+  },
   argTypes: {
     color: {
       name: 'color',
@@ -20,6 +24,6 @@ export default {
       defaultValue: 16,
     },
   },
-} as ComponentMeta<typeof Spinner>;
+} as Meta<typeof Spinner>;
 
 export const Main = (props: PropTypes) => <Spinner {...props} />;

@@ -1,5 +1,5 @@
 import React from 'react';
-import { ComponentMeta } from '@storybook/react';
+import { Meta } from '@storybook/react';
 
 import { Typography, PropTypes } from './Typography';
 
@@ -34,7 +34,7 @@ export default {
       control: { type: 'boolean' },
     },
   },
-} as ComponentMeta<typeof Typography>;
+} as Meta<typeof Typography>;
 
 export const Main = (props: PropTypes) => (
   <div>

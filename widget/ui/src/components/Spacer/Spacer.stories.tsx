@@ -1,4 +1,4 @@
-import { ComponentMeta } from '@storybook/react';
+import { Meta } from '@storybook/react';
 import React from 'react';
 import { Typography } from '../Typography';
 import { Spacer, PropTypes } from './Spacer';
@@ -6,6 +6,10 @@ import { Spacer, PropTypes } from './Spacer';
 export default {
   title: 'Components/Spacer',
   component: Spacer,
+  args: {
+    size: 12,
+    direction: 'horizontal',
+  },
   argTypes: {
     size: {
       name: 'size',
@@ -20,7 +24,7 @@ export default {
       defaultValue: 'horizontal',
     },
   },
-} as ComponentMeta<typeof Spacer>;
+} as Meta<typeof Spacer>;
 
 export const Main = (props: PropTypes) => (
   <div style={{ display: props.direction === 'horizontal' ? 'flex' : 'block' }}>
