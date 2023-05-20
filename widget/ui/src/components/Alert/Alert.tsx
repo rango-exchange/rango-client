@@ -90,7 +90,7 @@ export function Alert(props: PropsWithChildren<PropTypes>) {
               <Typography className="title" variant="title" color={type}>
                 {title}
               </Typography>
-              {!!children && <Divider size={4} direction="vertical" />}
+              {!!children && <Divider size={4} />}
             </>
           )}
           {children}

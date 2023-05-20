@@ -40,7 +40,7 @@ export function Container({ label, onOpenModal, children }: PropsWithChildren<Pr
           Select
         </Button>
       </Head>
-      <Divider size={16} direction="vertical" />
+      <Divider size={16} />
       <Body>{children}</Body>
     </>
   );

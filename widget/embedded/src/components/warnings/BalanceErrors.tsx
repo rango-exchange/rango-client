@@ -34,7 +34,7 @@ export function BalanceErrors({ messages }: PropTypes) {
       <Typography className="title" variant="title" color={'error'}>
         Insufficent Balance:
       </Typography>
-      <Divider size={8} direction="vertical" />
+      <Divider size={8} />
       <List showListStyle={showListStyle}>
         {messages.map((warning, index) => (
           <ListItem showListStyle={showListStyle} key={index}>
