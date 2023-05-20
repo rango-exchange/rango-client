@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { styled } from '../../theme';
 import { LiquiditySource, LoadingStatus } from '../../types/meta';
 import { Button } from '../Button/Button';
-import { Spacer } from '../Spacer';
+import { Divider } from '../Divider';
 import { Switch } from '../Switch';
 import { Typography } from '../Typography';
 import { Spinner } from '../Spinner';
@@ -111,7 +111,7 @@ export function LiquiditySourceList(props: PropTypes) {
               : `${totalSelectedBridges} / ${totalBridges}`}
           </Typography>
         </LiquiditySourceType>
-        <Spacer size={12} direction="vertical" />
+        <Divider size={12} direction="vertical" />
         {loadingStatus === 'loading' && (
           <LoaderContainer>
             <Spinner size={24} />
@@ -144,7 +144,7 @@ export function LiquiditySourceList(props: PropTypes) {
               : `${totalSelectedExchanges} / ${totalExchanges}`}
           </Typography>
         </LiquiditySourceType>
-        <Spacer size={12} direction="vertical" />
+        <Divider size={12} direction="vertical" />
         {loadingStatus === 'loading' && (
           <LoaderContainer>
             <Spinner size={24} />

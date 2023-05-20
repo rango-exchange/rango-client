@@ -3,7 +3,6 @@ import {
   Checkbox,
   ColorPicker,
   Divider,
-  Spacer,
   styled,
   Switch,
   TextField,
@@ -237,7 +236,7 @@ export function StylesConfig() {
     <div>
       <Typography variant="h4">Styles</Typography>
 
-      <Divider size={12} />
+      <Divider size={12} direction="vertical" />
       <ConfigurationContainer>
         <GridContent>
           {/* <Select
@@ -273,9 +272,9 @@ export function StylesConfig() {
                   setChekedTheme(checked);
                 }}
               />
-              <Spacer size={12} />
+              <Divider size={12} />
               <Line />
-              <Spacer size={12} />
+              <Divider size={12} />
               <Typography variant="caption" mr={4}>
                 Light
               </Typography>
@@ -345,10 +344,10 @@ export function StylesConfig() {
             />
           </div>
         </GridContent>*/}
-        <Spacer size={20} direction="vertical" />
+        <Divider size={20} direction="vertical" />
 
         <hr />
-        <Divider size={24} />
+        <Divider size={24} direction="vertical" />
 
         <Checkbox
           onCheckedChange={(checked) => {
@@ -358,8 +357,7 @@ export function StylesConfig() {
           label="Single Theme"
           checked={singleTheme}
         />
-        <Divider size={24} />
-
+        <Divider size={24} direction="vertical" />
         <ModeContainer>
           {!(singleTheme && mode === 'dark') && (
             <Button
@@ -373,7 +371,7 @@ export function StylesConfig() {
               Light
             </Button>
           )}
-          {!singleTheme && <Spacer size={24} direction="horizontal" />}
+          {!singleTheme && <Divider size={24} direction="horizontal" />}
           {!(singleTheme && mode === 'light') && (
             <Button
               fullWidth
@@ -387,7 +385,7 @@ export function StylesConfig() {
             </Button>
           )}
         </ModeContainer>
-        <Divider size={24} />
+        <Divider size={24} direction="vertical" />
 
         <GridContent>
           {customThemes.map((t) => (
@@ -434,7 +432,7 @@ export function StylesConfig() {
             </Button>
           ))}
         </GridContent>
-        <Divider size={24} />
+        <Divider size={24} direction="vertical" />
 
         <GridContent>
           {COLORS.map((color) => (
@@ -448,8 +446,7 @@ export function StylesConfig() {
             />
           ))}
         </GridContent>
-        <Divider size={20} />
-        <Divider size={24} />
+        <Divider size={24} direction="vertical" />
       </ConfigurationContainer>
     </div>
   );

@@ -1,5 +1,5 @@
 import React, { PropsWithChildren } from 'react';
-import { Button, Divider, InfoCircleIcon, Spacer, styled, Typography } from '@rango-dev/ui';
+import { Button, InfoCircleIcon, Divider, styled, Typography } from '@rango-dev/ui';
 import { useMetaStore } from '../../store/meta';
 type PropTypes = {
   label: string;
@@ -40,7 +40,7 @@ export function Container({ label, onOpenModal, children }: PropsWithChildren<Pr
           Select
         </Button>
       </Head>
-      <Divider size={16} />
+      <Divider size={16} direction="vertical" />
       <Body>{children}</Body>
     </>
   );

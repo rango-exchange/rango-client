@@ -2,7 +2,7 @@ import React, { PropsWithChildren, ReactNode } from 'react';
 import { CheckCircleIcon, InfoCircleIcon, WarningIcon } from '../Icon';
 import { Typography } from '../Typography';
 import { styled } from '../../theme';
-import { Spacer } from '../Spacer';
+import { Divider } from '../Divider';
 
 const MainContainer = styled('div', {
   width: '100%',
@@ -72,7 +72,7 @@ export function Alert(props: PropsWithChildren<PropTypes>) {
               {type === 'success' && <CheckCircleIcon color={type} size={24} />}
               {type === 'warning' && <WarningIcon color={type} size={24} />}
               {type === 'error' && <InfoCircleIcon color={type} size={24} />}
-              <Spacer size={4} />
+              <Divider size={4} />
             </div>
           </>
         )}
@@ -90,7 +90,7 @@ export function Alert(props: PropsWithChildren<PropTypes>) {
               <Typography className="title" variant="title" color={type}>
                 {title}
               </Typography>
-              {!!children && <Spacer size={4} direction="vertical" />}
+              {!!children && <Divider size={4} direction="vertical" />}
             </>
           )}
           {children}
