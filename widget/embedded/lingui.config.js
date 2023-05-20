@@ -4,7 +4,7 @@ module.exports = {
   sourceLocale: "en",
   catalogs: [
     {
-      path: "../../locales/{locale}",
+      path: "<rootDir>/src/locales/{locale}",
       include: ["<rootDir>"],
       exclude: ["**/node_modules/**"],
     },

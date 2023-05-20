@@ -16,7 +16,7 @@ export const defaultLocale = 'en';
 const loadCatalog = async locale => {
   return import(
     /* webpackMode: "lazy", webpackChunkName: "i18n-[index]" */
-    `../../locales/${locale}.js`
+    `<rootDir>/src/locales/${locale}.js`
   );
 };
 

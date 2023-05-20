@@ -1,1 +1,1 @@
-/*eslint-disable*/module.exports={messages:JSON.parse("{\"Powered By\":\"Powered By\",\"Connect Wallet\":\"Connect Wallet\",\"Balance\":\"Balance\",\"Max\":\"Max\",\"Chain\":\"Chain\",\"Token\":\"Token\"}")};
+/*eslint-disable*/module.exports={messages:JSON.parse("{}")};
