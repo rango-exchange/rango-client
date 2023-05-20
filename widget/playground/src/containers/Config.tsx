@@ -100,7 +100,7 @@ export function Config(props: PropsWithChildren) {
                 Error connecting server, please reload the app and try again
               </Alert>
             )}
-            <Divider size={20} direction="vertical" />
+            <Divider size={20} />
             <ChainsConfig type="Source" />
             <Divider size={32} />
             <ChainsConfig type="Destination" />

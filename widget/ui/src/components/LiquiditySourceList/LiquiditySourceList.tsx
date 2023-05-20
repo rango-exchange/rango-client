@@ -111,7 +111,7 @@ export function LiquiditySourceList(props: PropTypes) {
               : `${totalSelectedBridges} / ${totalBridges}`}
           </Typography>
         </LiquiditySourceType>
-        <Divider size={12} direction="vertical" />
+        <Divider size={12} />
         {loadingStatus === 'loading' && (
           <LoaderContainer>
             <Spinner size={24} />
@@ -144,7 +144,7 @@ export function LiquiditySourceList(props: PropTypes) {
               : `${totalSelectedExchanges} / ${totalExchanges}`}
           </Typography>
         </LiquiditySourceType>
-        <Divider size={12} direction="vertical" />
+        <Divider size={12} />
         {loadingStatus === 'loading' && (
           <LoaderContainer>
             <Spinner size={24} />
