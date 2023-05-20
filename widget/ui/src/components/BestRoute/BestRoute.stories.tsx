@@ -10,18 +10,28 @@ export default {
 
 export const Main = (props: PropTypes) => (
   <div style={{ maxWidth: 512 }}>
-    <BestRoute {...props} data={bestRoute} />
+    <BestRoute {...props} data={bestRoute} totalFee="0.28" totalTime="10:45" />
   </div>
 );
 export const With4Step = (props: PropTypes) => (
   <div style={{ maxWidth: 512 }}>
-    <BestRoute {...props} data={bestRouteExample2} />
+    <BestRoute
+      {...props}
+      data={bestRouteExample2}
+      totalFee="0.28"
+      totalTime="10:45"
+    />
   </div>
 );
 
 export const With2Step = (props: PropTypes) => (
   <div style={{ maxWidth: 512 }}>
-    <BestRoute {...props} data={bestRouteExample3} />
+    <BestRoute
+      {...props}
+      data={bestRouteExample3}
+      totalFee="0.28"
+      totalTime="10:45"
+    />
   </div>
 );
 export const WithError = (props: PropTypes) => (

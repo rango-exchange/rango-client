@@ -47,7 +47,7 @@ function RoutesOverview(props: PropTypes) {
       {props.totalFee ? (
         <div className="fee">
           <GasIcon size={12} />
-          <Divider size={4} />${props.totalFee}
+          <Divider size={4} direction="horizontal" />${props.totalFee}
         </div>
       ) : null}
     </Container>

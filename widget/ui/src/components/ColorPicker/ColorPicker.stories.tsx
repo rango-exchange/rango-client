@@ -6,7 +6,7 @@ export default {
   title: 'Components/ColorPicker',
   component: ColorPicker,
   args: {
-    place: 'top',
+    place: 'left',
   },
   argTypes: {
     place: {
@@ -28,7 +28,7 @@ export const Main = (args: PropTypes) => {
   return (
     <div
       style={{
-        height: 600,
+        height: 400,
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',

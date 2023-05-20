@@ -52,7 +52,7 @@ export const ErrorMsg = styled(Typography, {
 
 export const FeeContainer = styled('div', {
   paddingLeft: '$16',
-  color: '$neutral800'
+  color: '$neutral800',
 });
 
 export const Fee = styled('div', {
@@ -242,7 +242,7 @@ export function SwapHistory(props: PropTypes) {
                 onClick={onCopy.bind(null, pendingSwap?.requestId)}
               >
                 <RequestId>{pendingSwap?.requestId}</RequestId>
-                <Divider size={4} />
+                <Divider size={4} direction="horizontal" />
                 <Button type="primary" variant="ghost" size="compact">
                   {isCopied ? 'Copied!' : 'Copy'}
                 </Button>
@@ -407,7 +407,7 @@ export function SwapHistory(props: PropTypes) {
             >
               Skip
             </Button>
-            <Divider size={16} />
+            <Divider size={16} direction="horizontal" />
             <Button
               variant="contained"
               type="error"

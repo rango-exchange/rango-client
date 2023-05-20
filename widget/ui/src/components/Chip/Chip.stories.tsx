@@ -14,10 +14,6 @@ export default {
     label: {
       name: 'label',
       defaultValue: 'chip',
-      table: {
-        type: { summary: 'string' },
-        defaultValue: { summary: 'chip' },
-      },
       control: {
         type: 'text',
       },
@@ -25,9 +21,6 @@ export default {
     selected: {
       name: 'selected',
       control: { type: 'boolean' },
-      table: {
-        type: { summary: 'boolean' },
-      },
       defaultValue: true,
     },
   },

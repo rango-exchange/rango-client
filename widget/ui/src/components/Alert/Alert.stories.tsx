@@ -16,10 +16,6 @@ export default {
     type: {
       name: 'type',
       defaultValue: 'success',
-      table: {
-        type: { summary: 'string' },
-        defaultValue: { summary: 'success' },
-      },
       control: {
         type: 'select',
         options: ['primary', 'secondary', 'success', 'warning', 'error'],
@@ -29,10 +25,6 @@ export default {
     title: {
       name: 'title',
       defaultValue: 'Alert Title',
-      table: {
-        type: { summary: 'string' },
-        defaultValue: { summary: 'Alert Title' },
-      },
       control: {
         type: 'text',
       },

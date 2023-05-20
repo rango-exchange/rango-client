@@ -60,7 +60,7 @@ export function StatusDrawer({
               {status === 'success' ? 'Cancel' : 'See detailes'}
             </Button>
           )}
-          <Divider size={16} />
+          <Divider size={16} direction='horizontal' />
           <Button
             fullWidth
             onClick={onSubmit}
