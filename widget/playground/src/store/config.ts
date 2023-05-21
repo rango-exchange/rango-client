@@ -166,7 +166,7 @@ export const useConfigStore = createSelectors(
           set({ config: initialConfig });
         },
       })),
-      { name: 'user-conf' },
+      { name: 'user-config' },
     ),
   ),
 );
