@@ -34,7 +34,7 @@ export const pendingSwap: PendingSwap = {
       {
         swapperId: 'Osmosis',
         swapperType: 'DEX',
-        swapperLogo: '',
+        swapperLogo: 'https://api.rango.exchange/swappers/osmosis.png',
         from: {
           symbol: 'JUNO',
           logo: 'https://api.rango.exchange/tokens/COSMOS/JUNO.png',
@@ -171,7 +171,7 @@ export const pendingSwap: PendingSwap = {
       toLogo: 'https://api.rango.exchange/i/mJQPS2',
       startTransactionTime: 1673164519916,
       swapperId: 'Osmosis',
-      swapperLogo: '',
+      swapperLogo: 'https://api.rango.exchange/swappers/osmosis.png',
       expectedOutputAmountHumanReadable: '1.540670',
       outputAmount: '1.540658',
       status: 'running',
