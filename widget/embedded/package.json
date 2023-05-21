@@ -10,9 +10,7 @@
   ],
   "browserslist": "> 0.5%, last 2 versions, not dead",
   "scripts": {
-    "build": "yarn compile && yarn extract && tsdx build --tsconfig ./tsconfig.json",
-    "extract": "lingui extract",
-    "compile": "lingui compile"
+    "build": "tsdx build --tsconfig ./tsconfig.json"
   },
   "husky": {
     "hooks": {
