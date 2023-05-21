@@ -52,6 +52,6 @@ export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
       DEFAULT: 'https://www.keplr.app',
     },
     color: '#3898e5',
-    supportedChains: cosmos.filter((blockchainMeta) => !!blockchainMeta.info),
+    supportedChains: cosmos.filter((blockchainMeta) => !!blockchainMeta.chainId),
   };
 };

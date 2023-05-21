@@ -4,6 +4,7 @@ import List from './components/List';
 import { allProviders } from '@rango-dev/provider-all';
 import { RangoClient } from 'rango-sdk';
 import { InfoCircleIcon, Spinner, Typography } from '@rango-dev/ui';
+import { normalizeMetaData } from './helper';
 
 const providers = allProviders();
 
@@ -18,7 +19,7 @@ export function App() {
     const getAllBlockchains = async () => {
       try {
         const res = await client.getAllMetadata();
-        setBlockChains(res.blockchains);
+        setBlockChains(normalizeMetaData(res.blockchains));
       } catch (e) {
         setError(e.message);
       }

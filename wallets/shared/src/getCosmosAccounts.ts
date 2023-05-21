@@ -1,13 +1,9 @@
-import {
-  BlockchainMeta,
-  CosmosBlockchainMeta,
-  CosmosChainInfo,
-} from 'rango-types';
+import { BlockchainMeta, CosmosBlockchainMeta } from 'rango-types';
 import { deepCopy } from './helpers';
 import { Connect, ProviderConnectResult } from './rango';
 import { Keplr as InstanceType } from '@keplr-wallet/types';
 
-export interface CosmosInfo extends Omit<CosmosChainInfo, 'experimental'> {
+export interface CosmosInfo extends Omit<CosmosBlockchainMeta, 'experimental'> {
   chainId: string;
 }
 
@@ -22,13 +18,13 @@ interface CosmosBlockchainMetaWithChainId
 
 const getCosmosMainChainsIds = (blockchains: CosmosBlockchainMeta[]) =>
   blockchains
-    .filter((blockchain) => !blockchain.info?.experimental)
+    .filter((blockchain) => !blockchain.experimental)
     .map((blockchain) => blockchain.chainId)
     .filter((chainId): chainId is string => !!chainId);
 
 const getCosmosMiscChainsIds = (blockchains: CosmosBlockchainMeta[]) =>
   blockchains
-    .filter((blockchain) => blockchain.info?.experimental)
+    .filter((blockchain) => blockchain.experimental)
     .map((blockchain) => blockchain.chainId)
     .filter((chainId): chainId is string => !!chainId);
 
@@ -36,7 +32,6 @@ export const getCosmosExperimentalChainInfo = (
   blockchains: CosmosBlockchainMeta[]
 ) =>
   blockchains
-    .filter((blockchain) => !!blockchain.info)
     .filter(
       (blockchain): blockchain is CosmosBlockchainMetaWithChainId =>
         !!blockchain.chainId
@@ -46,7 +41,7 @@ export const getCosmosExperimentalChainInfo = (
         cosmosExperimentalChainsInfo: CosmosExperimentalChainsInfo,
         blockchain
       ) => {
-        const info = deepCopy(blockchain.info) as CosmosChainInfo;
+        const info = deepCopy(blockchain) as CosmosBlockchainMeta;
         info.stakeCurrency.coinImageUrl =
           window.location.origin + info.stakeCurrency.coinImageUrl;
         info.currencies = info.currencies.map((currency) => ({

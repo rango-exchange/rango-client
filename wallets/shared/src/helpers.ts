@@ -100,11 +100,11 @@ export const convertEvmBlockchainMetaToEvmChainInfo = (
       blockchainMeta
     ) => (
       (evmNetWorksChainInfo[blockchainMeta.name] = {
-        chainName: blockchainMeta.info.chainName,
+        chainName: blockchainMeta.chainName,
         chainId: blockchainMeta.chainId,
-        nativeCurrency: blockchainMeta.info.nativeCurrency,
-        rpcUrls: blockchainMeta.info.rpcUrls,
-        blockExplorerUrls: blockchainMeta.info.blockExplorerUrls,
+        nativeCurrency: blockchainMeta.nativeCurrency,
+        rpcUrls: blockchainMeta.rpcUrls,
+        blockExplorerUrls: blockchainMeta.blockExplorerUrls,
       }),
       evmNetWorksChainInfo
     ),
@@ -220,4 +220,3 @@ export function detectMobileScreens(): boolean {
     navigator.userAgent
   );
 }
-
