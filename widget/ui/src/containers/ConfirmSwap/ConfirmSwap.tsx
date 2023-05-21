@@ -89,6 +89,7 @@ export function ConfirmSwap(props: PropsWithChildren<PropTypes>) {
     warnings,
     extraMessages,
   } = props;
+console.log(props);
 
   return (
     <SecondaryPage
