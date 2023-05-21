@@ -43,11 +43,7 @@ interface WalletsStore {
   connectWallet: (accounts: Wallet[]) => void;
   disconnectWallet: (walletType: WalletType) => void;
   initSelectedWallets: () => void;
-  setSelectedWallet: (
-    wallet:
-      | SelectableWallet
-      | { chain: string; address: string; walletType?: WalletType }
-  ) => void;
+  setSelectedWallet: (wallet: SelectableWallet | Wallet) => void;
   clearConnectedWallet: () => void;
   getOneOfWalletsDetails: (account: Wallet) => void;
   setCustomDestination: (customDestination: string) => void;
@@ -123,7 +119,7 @@ export const useWalletsStore = createSelectors(
             .concat({
               chain: wallet.chain,
               address: wallet.address,
-              walletType: wallet?.walletType,
+              walletType: wallet.walletType,
             }),
         })),
       setCustomDestination: (customDestination) =>
