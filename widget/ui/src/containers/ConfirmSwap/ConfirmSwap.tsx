@@ -63,7 +63,7 @@ export interface PropTypes {
   loading?: boolean;
   requiredWallets: string[];
   selectableWallets: SelectableWallet[];
-  onChange: (w: SelectableWallet | { chain: string; address: string }) => void;
+  onChange: (w: SelectableWallet | { chain: string; address: string,walletType: string }) => void;
   isExperimentalChain?: (wallet: string) => boolean;
   handleConnectChain?: (wallet: string) => void;
   previewInputs?: ReactNode;
@@ -103,6 +103,8 @@ export function ConfirmSwap(props: PropsWithChildren<PropTypes>) {
   } = props;
 console.log(props);
 
+  console.log('>>>>>>>>>>', props);
+
   return (
     <SecondaryPage
       textField={false}
@@ -119,7 +121,10 @@ console.log(props);
             disabled={
               confirmDisabled ||
               (!!customDestination &&
-                !isValidCustomDestination(requiredWallets[requiredWallets.length - 1], customDestination))
+                !isValidCustomDestination(
+                  requiredWallets[requiredWallets.length - 1],
+                  customDestination,
+                ))
             }>
             {confirmButtonTitle}
           </ConfirmButton>
@@ -231,14 +236,16 @@ console.log(props);
                           onChange({
                             chain: wallet,
                             address: e.target.value,
+                            walletType: '',
                           });
                         }}
                       />
-                      {!!customDestination && !isValidCustomDestination(wallet, customDestination) && (
-                        <AlertContainer>
-                          <Alert type="error">Not a valid {wallet} address.</Alert>
-                        </AlertContainer>
-                      )}
+                      {!!customDestination &&
+                        !isValidCustomDestination(wallet, customDestination) && (
+                          <AlertContainer>
+                            <Alert type="error">Not a valid {wallet} address.</Alert>
+                          </AlertContainer>
+                        )}
                     </>
                   )}
                 </>
