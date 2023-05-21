@@ -174,7 +174,7 @@ export const bestRouteExample2: BestRouteType = {
         warnings: [],
         swapperId: 'ParaSwap Bsc',
         swapperType: 'DEX',
-        swapperLogo: 'https://api.rango.exchange/swappers/para-swap.png',
+        swapperLogo: 'https://api.rango.exchange/swappers/paraswap.svg',
 
         from: {
           symbol: 'USDC',

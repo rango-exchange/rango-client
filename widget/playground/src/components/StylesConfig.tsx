@@ -307,7 +307,7 @@ export function StylesConfig() {
             />
           </div>
         </GridContent>
-        {/* <Spacer size={24} direction="vertical" />
+        {/* <Divider size={24} direction="vertical" />
         <GridContent>
          <div>
             <TextField
