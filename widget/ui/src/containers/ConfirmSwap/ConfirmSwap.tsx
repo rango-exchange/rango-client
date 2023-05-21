@@ -76,7 +76,8 @@ export interface PropTypes {
   checkedDestination: boolean;
   setDestinationChain: (chain: string) => void;
   setCustomDestination: (customDestination: string) => void;
-  customDestinationEnabled?: boolean
+  customDestinationEnabled?: boolean;
+  isValidCustomDestination: (blockchain: string, address: string) => boolean;
 }
 export function ConfirmSwap(props: PropsWithChildren<PropTypes>) {
   const {
@@ -98,6 +99,7 @@ export function ConfirmSwap(props: PropsWithChildren<PropTypes>) {
     checkedDestination,
     setDestinationChain,
     customDestinationEnabled = true,
+    isValidCustomDestination,
   } = props;
 console.log(props);
 
@@ -114,7 +116,11 @@ console.log(props);
             type="primary"
             variant="contained"
             onClick={onConfirm}
-            disabled={confirmDisabled}>
+            disabled={
+              confirmDisabled ||
+              (!!customDestination &&
+                !isValidCustomDestination(requiredWallets[requiredWallets.length - 1], customDestination))
+            }>
             {confirmButtonTitle}
           </ConfirmButton>
         </Footer>
@@ -216,17 +222,24 @@ console.log(props);
                   <Divider />
 
                   {checkedDestination && (
-                    <TextField
-                      placeholder="Your destination address"
-                      value={customDestination}
-                      onChange={(e) => {
-                        setCustomDestination(e.target.value);
-                        onChange({
-                          chain: wallet,
-                          address: e.target.value,
-                        });
-                      }}
-                    />
+                    <>
+                      <TextField
+                        placeholder="Your destination address"
+                        value={customDestination}
+                        onChange={(e) => {
+                          setCustomDestination(e.target.value);
+                          onChange({
+                            chain: wallet,
+                            address: e.target.value,
+                          });
+                        }}
+                      />
+                      {!!customDestination && !isValidCustomDestination(wallet, customDestination) && (
+                        <AlertContainer>
+                          <Alert type="error">Not a valid {wallet} address.</Alert>
+                        </AlertContainer>
+                      )}
+                    </>
                   )}
                 </>
               )}

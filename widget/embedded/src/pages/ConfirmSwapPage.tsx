@@ -31,7 +31,11 @@ import { ConfirmSwapExtraMessages } from '../components/warnings/ConfirmSwapExtr
 import { getBestRouteStatus } from '../utils/routing';
 import { PercentageChange } from '../components/PercentageChange';
 
-export function ConfirmSwapPage({ customDestinationEnabled }: { customDestinationEnabled?: boolean }) {
+export function ConfirmSwapPage({
+  customDestinationEnabled,
+}: {
+  customDestinationEnabled?: boolean;
+}) {
   const navigate = useNavigate();
   const { navigateBackFrom } = useNavigateBack();
   const bestRoute = useBestRouteStore.use.bestRoute();
@@ -118,6 +122,12 @@ export function ConfirmSwapPage({ customDestinationEnabled }: { customDestinatio
       setCustomDestination={setCustomDestination}
       customDestination={customDestination}
       customDestinationEnabled={customDestinationEnabled}
+      isValidCustomDestination={(blockchain, address) => {
+        const regex =
+          blockchains.find((chain) => chain.name === blockchain)
+            ?.addressPatterns || [];
+        return regex.filter((r) => new RegExp(r).test(address)).length > 0;
+      }}
       checkedDestination={!!destinationChain}
       setDestinationChain={setDestinationChain}
       onBack={navigateBackFrom.bind(null, navigationRoutes.confirmSwap)}
