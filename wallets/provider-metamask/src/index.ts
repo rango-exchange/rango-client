@@ -1,5 +1,5 @@
 import {
-  WalletType,
+  WalletTypes,
   WalletInfo,
   CanSwitchNetwork,
   Connect,
@@ -14,7 +14,7 @@ import { metamask as metamask_instance } from './helpers';
 import signer from './signer';
 import { SignerFactory, evmBlockchains, BlockchainMeta } from 'rango-types';
 
-const WALLET = WalletType.META_MASK;
+const WALLET = WalletTypes.META_MASK;
 
 export const config = {
   type: WALLET,

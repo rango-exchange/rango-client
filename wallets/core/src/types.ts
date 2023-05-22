@@ -7,7 +7,7 @@ import {
 import { SignerFactory, BlockchainMeta } from 'rango-types';
 
 export type State = {
-  [key in WalletType]?: WalletState;
+  [key: string]: WalletState | undefined;
 };
 
 export type ConnectResult = {

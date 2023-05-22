@@ -4,7 +4,7 @@ import {
   Subscribe,
   getEvmAccounts,
   Network,
-  WalletType,
+  WalletTypes,
   WalletInfo,
 } from '@rango-dev/wallets-shared';
 import {
@@ -15,7 +15,7 @@ import {
 import signer from './signer';
 import { SignerFactory, BlockchainMeta, isEvmBlockchain } from 'rango-types';
 
-const WALLET = WalletType.BINANCE_CHAIN;
+const WALLET = WalletTypes.BINANCE_CHAIN;
 
 export const config = {
   type: WALLET,

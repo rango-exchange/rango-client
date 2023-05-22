@@ -4,7 +4,7 @@ import {
   Subscribe,
   SwitchNetwork,
   WalletInfo,
-  WalletType,
+  WalletTypes,
   canSwitchNetworkToEvm,
   getEvmAccounts,
   subscribeToEvm,
@@ -16,7 +16,7 @@ import signer from './signer';
 
 export const getInstance = enkrypt_instance;
 
-const WALLET = WalletType.ENKRYPT;
+const WALLET = WalletTypes.ENKRYPT;
 
 export const config = {
   type: WALLET,

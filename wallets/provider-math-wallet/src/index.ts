@@ -1,6 +1,6 @@
 import {
   Network,
-  WalletType,
+  WalletTypes,
   CanSwitchNetwork,
   Connect,
   ProviderConnectResult,
@@ -22,7 +22,7 @@ import {
   BlockchainMeta,
 } from 'rango-types';
 
-const WALLET = WalletType.MATH;
+const WALLET = WalletTypes.MATH;
 
 export const config = {
   type: WALLET,

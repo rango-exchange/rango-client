@@ -1,6 +1,6 @@
 import {
   Network,
-  WalletType,
+  WalletTypes,
   CanSwitchNetwork,
   Connect,
   Subscribe,
@@ -15,7 +15,7 @@ import signer from './signer';
 // https://github.com/0xs34n/starknet.js
 // https://github.com/argentlabs/argent-x#-usage-with-your-dapp
 
-const WALLET = WalletType.ARGENTX;
+const WALLET = WalletTypes.ARGENTX;
 const MAINNET_CHAIN_ID = 'SN_MAIN';
 
 export const config = {

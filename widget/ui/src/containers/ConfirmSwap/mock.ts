@@ -31,8 +31,7 @@ export const bestRoute: BestRouteType = {
         to: {
           symbol: 'WETH.E',
           logo: 'https://api.rango.exchange/i/j9xgdC',
-          blockchainLogo:
-            'https://api.rango.exchange/blockchains/avax_cchain.svg',
+          blockchainLogo: 'https://api.rango.exchange/blockchains/avax_cchain.svg',
 
           address: '0x49d5c2bdffac6ce2bfdb6640f4f80f226bc10bab',
           blockchain: 'AVAX_CCHAIN',
@@ -73,8 +72,7 @@ export const bestRoute: BestRouteType = {
           blockchain: 'AVAX_CCHAIN',
           decimals: 18,
           usdPrice: 1329.24,
-          blockchainLogo:
-            'https://api.rango.exchange/blockchains/avax_cchain.svg',
+          blockchainLogo: 'https://api.rango.exchange/blockchains/avax_cchain.svg',
         },
         to: {
           symbol: 'AVAX',
@@ -83,8 +81,7 @@ export const bestRoute: BestRouteType = {
           blockchain: 'AVAX_CCHAIN',
           decimals: 18,
           usdPrice: 12.5,
-          blockchainLogo:
-            'https://api.rango.exchange/blockchains/avax_cchain.svg',
+          blockchainLogo: 'https://api.rango.exchange/blockchains/avax_cchain.svg',
         },
         fromAmount: '0.062064305934309070',
         fromAmountPrecision: null,
@@ -153,14 +150,14 @@ export const bestRoute: BestRouteType = {
 
 export const wallets: SelectableWallet[] = [
   {
-    walletType: WalletType.META_MASK,
+    walletType: WalletTypes.META_MASK,
     address: '0x5423e28219d6d568dcf62a8134d623e6f4a1c2df',
     image: 'https://app.rango.exchange/wallets/metamask.svg',
     chain: 'BSC',
     selected: false,
   },
   {
-    walletType: WalletType.OKX,
+    walletType: WalletTypes.OKX,
     address: '0x2702d89c1c8658b49c45dd460deebcc45faec03c',
     image: 'https://app.rango.exchange/wallets/okx.png',
     chain: 'BSC',
@@ -168,7 +165,7 @@ export const wallets: SelectableWallet[] = [
   },
 
   {
-    walletType: WalletType.KEPLR,
+    walletType: WalletTypes.KEPLR,
     address: 'osmo1unf2rcytjxfpz8x8ar63h4qeftadptg5t0nqcl',
     image: 'https://app.rango.exchange/wallets/keplr.png',
     chain: 'OSMOSIS',
@@ -178,35 +175,35 @@ export const wallets: SelectableWallet[] = [
 
 export const exampleFor5Wallets: SelectableWallet[] = [
   {
-    walletType: WalletType.META_MASK,
+    walletType: WalletTypes.META_MASK,
     address: '0x5423e28219d6d568dcf62a8134d623e6f4a1c2df',
     image: 'https://app.rango.exchange/wallets/metamask.svg',
     selected: false,
     chain: 'BSC',
   },
   {
-    walletType: WalletType.OKX,
+    walletType: WalletTypes.OKX,
     address: '0x2702d89c1c8658b49c45dd460deebcc45faec03c',
     image: 'https://app.rango.exchange/wallets/okx.png',
     selected: false,
     chain: 'BSC',
   },
   {
-    walletType: WalletType.EXODUS,
+    walletType: WalletTypes.EXODUS,
     address: '0x2702d89c1c8658b49c45dd460deebcc45faec03c',
     image: 'https://app.rango.exchange/wallets/exodus.png',
     selected: false,
     chain: 'BSC',
   },
   {
-    walletType: WalletType.MATH,
+    walletType: WalletTypes.MATH,
     address: '0x2702d89c1c8658b49c45dd460deebcc45faec03c',
     image: 'https://app.rango.exchange/wallets/math-wallet.png',
     selected: false,
     chain: 'BSC',
   },
   {
-    walletType: WalletType.CLOVER,
+    walletType: WalletTypes.CLOVER,
     address: '0x2702d89c1c8658b49c45dd460deebcc45faec03c',
     image: 'https://app.rango.exchange/wallets/clover.jpeg',
     selected: false,
@@ -214,7 +211,7 @@ export const exampleFor5Wallets: SelectableWallet[] = [
   },
 
   {
-    walletType: WalletType.KEPLR,
+    walletType: WalletTypes.KEPLR,
     address: 'osmo1unf2rcytjxfpz8x8ar63h4qeftadptg5t0nqcl',
     image: 'https://app.rango.exchange/wallets/keplr.png',
     selected: false,

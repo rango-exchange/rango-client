@@ -1,5 +1,5 @@
 import {
-  WalletType,
+  WalletTypes,
   CanSwitchNetwork,
   Connect,
   Subscribe,
@@ -10,7 +10,7 @@ import signer from './signer';
 import { ConnectType } from '@terra-money/wallet-controller';
 import { BlockchainMeta, SignerFactory } from 'rango-types';
 
-const WALLET = WalletType.STATION;
+const WALLET = WalletTypes.STATION;
 const STATION_WALLET_ID = 'station';
 
 export const config = {

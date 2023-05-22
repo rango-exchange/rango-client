@@ -1,6 +1,6 @@
 import {
   Network,
-  WalletType,
+  WalletTypes,
   CanSwitchNetwork,
   Connect,
   Subscribe,
@@ -23,7 +23,7 @@ import {
   solanaBlockchain,
 } from 'rango-types';
 
-const WALLET = WalletType.FRONTIER;
+const WALLET = WalletTypes.FRONTIER;
 
 export const config = {
   type: WALLET,

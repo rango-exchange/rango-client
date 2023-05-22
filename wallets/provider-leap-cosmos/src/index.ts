@@ -1,6 +1,6 @@
 import {
   Network,
-  WalletType,
+  WalletTypes,
   Connect,
   Subscribe,
   getCosmosAccounts,
@@ -10,7 +10,7 @@ import { leap_cosmos_instance, getSupportedChains } from './helpers';
 import signer from './signer';
 import { SignerFactory, cosmosBlockchains, BlockchainMeta } from 'rango-types';
 
-const WALLET = WalletType.LEAP_COSMOS;
+const WALLET = WalletTypes.LEAP_COSMOS;
 
 export const config = {
   type: WALLET,

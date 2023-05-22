@@ -1,6 +1,6 @@
 import {
   Network,
-  WalletType,
+  WalletTypes,
   canSwitchNetworkToEvm,
   chooseInstance,
   getEvmAccounts,
@@ -24,7 +24,7 @@ import {
   solanaBlockchain,
 } from 'rango-types';
 
-const WALLET = WalletType.BRAVE;
+const WALLET = WalletTypes.BRAVE;
 
 export const config = {
   type: WALLET,

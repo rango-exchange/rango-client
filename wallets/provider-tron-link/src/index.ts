@@ -1,7 +1,7 @@
 import { Subscribe } from '@rango-dev/wallets-shared';
 import {
   Network,
-  WalletType,
+  WalletTypes,
   CanSwitchNetwork,
   Connect,
   WalletInfo,
@@ -12,7 +12,7 @@ import { SignerFactory, BlockchainMeta, tronBlockchain } from 'rango-types';
 
 // https://docs.tronlink.org/dapp/start-developing
 // https://developers.tron.network/docs/tronlink-events
-const WALLET = WalletType.TRON_LINK;
+const WALLET = WalletTypes.TRON_LINK;
 
 export const config = {
   type: WALLET,

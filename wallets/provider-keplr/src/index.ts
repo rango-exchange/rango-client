@@ -1,6 +1,6 @@
 import {
   Network,
-  WalletType,
+  WalletTypes,
   Connect,
   Subscribe,
   getCosmosAccounts,
@@ -10,7 +10,7 @@ import { keplr as keplrInstance } from './helpers';
 import signer from './signer';
 import { SignerFactory, cosmosBlockchains, BlockchainMeta } from 'rango-types';
 
-const WALLET = WalletType.KEPLR;
+const WALLET = WalletTypes.KEPLR;
 
 export const config = {
   type: WALLET,

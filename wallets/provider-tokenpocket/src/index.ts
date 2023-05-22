@@ -1,5 +1,5 @@
 import {
-  WalletType,
+  WalletTypes,
   CanSwitchNetwork,
   Connect,
   Subscribe,
@@ -14,7 +14,7 @@ import { tokenpocket as tokenpocket_instance } from './helpers';
 import signer from './signer';
 import { SignerFactory, BlockchainMeta, evmBlockchains } from 'rango-types';
 
-const WALLET = WalletType.TOKEN_POCKET;
+const WALLET = WalletTypes.TOKEN_POCKET;
 
 export const config = {
   type: WALLET,

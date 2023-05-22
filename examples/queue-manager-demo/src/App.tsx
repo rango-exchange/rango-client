@@ -18,7 +18,7 @@ interface PropTypes {
 }
 
 export function App(props: PropTypes) {
-  const { providers, getSigners, state, canSwitchNetworkTo, connect } = useWallets();
+  const { providers, getSigners, state, canSwitchNetworkTo, connect, getWalletInfo } = useWallets();
 
   const switchNetwork = (wallet: WalletType, network: Network) => {
     if (!canSwitchNetworkTo(wallet, network)) {
@@ -27,6 +27,9 @@ export function App(props: PropTypes) {
     return connect(wallet, network);
   };
 
+  const isMobileWallet = (walletType: WalletType): boolean =>
+    !!getWalletInfo(walletType).mobileWallet;
+
   const allProviders = providers();
   const queueContext: SwapQueueContext = {
     meta,
@@ -34,9 +37,11 @@ export function App(props: PropTypes) {
     wallets: wallet,
     providers: allProviders,
     switchNetwork,
+    canSwitchNetworkTo,
     connect,
     state,
     notifier,
+    isMobileWallet,
   };
 
   const swapQueueDef = useMemo(() => {
