@@ -4,6 +4,7 @@ import { WalletInfo } from '../../types/wallet';
 import { Modal } from '../Modal';
 import { WalletType } from '@rango-dev/wallets-shared';
 import { Wallet } from '../Wallet';
+import { useLingui } from '@lingui/react';
 
 export interface PropTypes {
   open: boolean;
@@ -21,6 +22,7 @@ const ModalContent = styled('div', {
 
 export function ConnectWalletsModal(props: PropTypes) {
   const { open, list, onSelect, onClose } = props;
+  const { i18n } = useLingui();
 
   const Content = (
     <ModalContent>
@@ -32,7 +34,7 @@ export function ConnectWalletsModal(props: PropTypes) {
 
   return (
     <Modal
-      title="Connect Wallets"
+      title={i18n.t('Connect Wallets')}
       open={open}
       content={Content}
       onClose={onClose}

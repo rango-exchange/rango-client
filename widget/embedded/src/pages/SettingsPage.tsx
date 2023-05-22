@@ -10,6 +10,8 @@ import {
   MIN_SLIPPGAE,
   SLIPPAGES,
 } from '../constants/swapSettings';
+import { i18n } from '@lingui/core';
+
 import { useNavigateBack } from '../hooks/useNavigateBack';
 interface PropTypes {
   supportedSwappers?: string[];
@@ -79,6 +81,7 @@ export function SettingsPage({ supportedSwappers, singleTheme }: PropTypes) {
         (s) => s.selected
       )}
       singleTheme={singleTheme}
+      changeLanguages={(lng) => i18n.activate(lng)}
       customSlippage={customSlippage}
       onCustomSlippageChange={setCustomSlippage}
       minSlippage={MIN_SLIPPGAE}

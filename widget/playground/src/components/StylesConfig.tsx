@@ -10,7 +10,7 @@ import {
   Typography,
 } from '@rango-dev/ui';
 import React, { useState } from 'react';
-import { FONTS } from '../constants';
+import { FONTS, LANGUAGES } from '../constants';
 import { COLORS, useConfigStore } from '../store/config';
 import { ConfigurationContainer } from './ChainsConfig';
 import { Select } from './Select';
@@ -226,7 +226,7 @@ export function StylesConfig() {
   const singleTheme = useConfigStore.use.config().theme.singleTheme;
 
   const [mode, setMode] = useState<'light' | 'dark'>(!theme || theme === 'auto' ? 'light' : theme);
-  // const onChangelanguage = useConfigStore.use.onChangelanguage();
+  const onChangelanguage = useConfigStore.use.onChangelanguage();
   const onChangeTheme = useConfigStore.use.onChangeTheme();
   const onChangeColors = useConfigStore.use.onChangeColors();
   const onSelectTheme = useConfigStore.use.onSelectTheme();
@@ -240,14 +240,14 @@ export function StylesConfig() {
       <Divider size={12} />
       <ConfigurationContainer>
         <GridContent>
-          {/* <Select
+          <Select
             label="Choose Language Widget"
             value={language || 'Choose Language'}
             name="language"
             list={LANGUAGES}
             modalTitle="Languages"
             onChange={(_, value) => onChangelanguage(value)}
-          /> */}
+          />
 
           <Select
             label="Font Face"

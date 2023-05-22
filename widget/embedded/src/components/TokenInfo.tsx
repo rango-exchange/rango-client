@@ -18,7 +18,6 @@ import BigNumber from 'bignumber.js';
 import { getBalanceFromWallet } from '../utils/wallets';
 import { useWalletsStore } from '../store/wallets';
 import { PercentageChange } from './PercentageChange';
-import { Trans } from '@lingui/react';
 
 type PropTypes = (
   | {
@@ -186,7 +185,7 @@ export function TokenInfo(props: PropTypes) {
       <Container type={props.type === 'From' ? 'filled' : 'outlined'}>
         <div className="head">
           <Typography variant="body2" color="neutral800">
-            <Trans id={type}>type</Trans>
+             type 
           </Typography>
           {props.type === 'From' ? (
             <Options>
@@ -198,12 +197,12 @@ export function TokenInfo(props: PropTypes) {
                 }}
               >
                 <Typography variant="body3" color="neutral600">
-                  <Trans id={'Balance'}>Balance</Trans>
+                 Balance
                   {`: ${tokenBalance} ${fromToken?.symbol || ''}`}
                 </Typography>
                 <Divider size={4} />
                 <Button type="primary" variant="ghost" size="compact">
-                  <Trans id={'Max'}>Max</Trans>
+                  Max
                 </Button>
               </div>
             </Options>
@@ -245,7 +244,7 @@ export function TokenInfo(props: PropTypes) {
             {loadingStatus === 'success' && chain ? (
               chain.displayName
             ) : (
-              <Trans id={'Chain'}>Chain</Trans>
+             "Chain"
             )}
           </Button>
           <Divider size={12} />
@@ -275,7 +274,7 @@ export function TokenInfo(props: PropTypes) {
             {loadingStatus === 'success' && token ? (
               token.symbol
             ) : (
-              <Trans id={'Token'}>Token</Trans>
+             'Token'
             )}
           </Button>
           <Divider size={12} />

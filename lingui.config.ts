@@ -10,5 +10,10 @@ module.exports = {
       include: ['<rootDir>/widget/embedded/src'],
       exclude: ['**/node_modules/**'],
     },
+    {
+      path: '<rootDir>/translations/ui/{locale}',
+      include: ['<rootDir>/widget/ui/src'],
+      exclude: ['**/node_modules/**'],
+    },
   ],
 };

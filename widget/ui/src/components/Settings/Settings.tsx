@@ -75,6 +75,7 @@ export interface PropTypes {
   toggleInfiniteApprove: (infinite: boolean) => void;
   loadingStatus: LoadingStatus;
   singleTheme?: boolean;
+  changeLanguages: (lng: string) => void;
 }
 
 export function Settings(props: PropTypes) {
@@ -95,6 +96,7 @@ export function Settings(props: PropTypes) {
     infiniteApprove,
     loadingStatus,
     singleTheme,
+    changeLanguages,
   } = props;
 
   const [selectedSlippage, setSelectedSlippage] = useState(
@@ -115,7 +117,9 @@ export function Settings(props: PropTypes) {
             <Typography variant="caption" color="error">
               {customSlippage}% Custom
             </Typography>
-          ) : undefined}
+          ) : (
+            undefined
+          )}
         </Head>
         <SlippageChipsContainer>
           {slippages.map((slippage, index) => (
@@ -135,7 +139,7 @@ export function Settings(props: PropTypes) {
           <TextField
             type="number"
             value={customSlippage || ''}
-            onChange={(event) => {
+            onChange={event => {
               const parsedValue = parseFloat(event.target.value);
               if (
                 !parsedValue ||
@@ -165,7 +169,7 @@ export function Settings(props: PropTypes) {
               { value: 'light', label: 'Light' },
               { value: 'auto', label: 'Auto' },
             ]}
-            onChange={(value) => onThemeChange(value as Theme)}
+            onChange={value => onThemeChange(value as Theme)}
             direction="horizontal"
             style={{ marginTop: '$24' }}
           />
@@ -174,6 +178,10 @@ export function Settings(props: PropTypes) {
       <InfiniteContainer>
         <Typography variant="body2">Infinite Approval</Typography>
         <Switch checked={infiniteApprove} onChange={toggleInfiniteApprove} />
+      </InfiniteContainer>
+      <InfiniteContainer>
+        <Button onClick={() => changeLanguages('en')}>en</Button>
+        <Button onClick={() => changeLanguages('cs')}>cs</Button>
       </InfiniteContainer>
       <LiquiditySourceContainer>
         <Button

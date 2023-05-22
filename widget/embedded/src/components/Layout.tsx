@@ -23,7 +23,6 @@ import { useBestRouteStore } from '../store/bestRoute';
 import { useMetaStore } from '../store/meta';
 import { useSettingsStore } from '../store/settings';
 import { Image } from '@rango-dev/ui';
-import { Trans } from '@lingui/react';
 
 const Header = styled('div', {
   display: 'flex',
@@ -129,7 +128,7 @@ export function Layout({ config }: LayoutProps) {
           <div className="balance">
             <Typography variant="body2">
               {!connectedWallets?.length ? (
-                <Trans id={'Connect Wallet'}>Connect Wallet</Trans>
+                'Connect Wallet'
               ) : (
                 `$${totalBalance || 0}`
               )}

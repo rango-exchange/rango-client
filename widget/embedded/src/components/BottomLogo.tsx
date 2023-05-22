@@ -1,7 +1,6 @@
 import React from 'react';
-import { styled } from '@rango-dev/ui/';
-import { Typography } from '@rango-dev/ui';
-import { Trans } from '@lingui/react';
+import { styled, Typography } from '@rango-dev/ui/';
+import { useLingui } from '@lingui/react';
 
 const Container = styled('div', {
   display: 'flex',
@@ -25,10 +24,11 @@ const StyledAnchor = styled('a', {
 });
 
 export function BottomLogo() {
+  const { i18n } = useLingui();
   return (
     <Container>
       <Typography variant="caption" color="$neutral600">
-        <Trans id={'Powered By'}>Powered By</Trans>
+        {i18n.t('Powered By')}
       </Typography>
       <StyledAnchor href="https://rango.exchange" target="_blank">
         <Logo xmlns="http://www.w3.org/2000/svg" viewBox="0 0 33.68 29">

@@ -6,6 +6,7 @@ import { SelectableWalletList } from '../../components/SelectableWalletList';
 import { Typography } from '../../components/Typography';
 import { styled } from '../../theme';
 import { SelectableWallet } from '../../types';
+import { useLingui } from '@lingui/react';
 
 const MainContainer = styled('div', {
   overflowY: 'auto',
@@ -54,7 +55,7 @@ const Container = styled('div', {
 
 const Alerts = styled('div', { paddingBottom: '$16' });
 
-type Message = string | ReactNode
+type Message = string | ReactNode;
 
 export interface PropTypes {
   onBack: () => void;
@@ -89,11 +90,12 @@ export function ConfirmSwap(props: PropsWithChildren<PropTypes>) {
     warnings,
     extraMessages,
   } = props;
+  const { i18n } = useLingui();
 
   return (
     <SecondaryPage
       textField={false}
-      title="Confirm Swap"
+      title={i18n.t('Confirm Swap')}
       onBack={onBack}
       Footer={
         <Footer>
@@ -117,15 +119,25 @@ export function ConfirmSwap(props: PropsWithChildren<PropTypes>) {
             {errors?.map((error, index) => (
               <React.Fragment key={index}>
                 <Spacer direction="vertical" />
-                <Alert type="error" key={index} 
-                  {...(typeof error === 'string') ? {title: error} : {children: error} }/>
+                <Alert
+                  type="error"
+                  key={index}
+                  {...(typeof error === 'string'
+                    ? { title: error }
+                    : { children: error })}
+                />
               </React.Fragment>
             ))}
             {warnings?.map((warning, index) => (
               <React.Fragment key={index}>
                 <Spacer direction="vertical" />
-                <Alert type="warning" key={index} 
-                  {...(typeof warning === 'string') ? {title: warning} : {children: warning} }/>
+                <Alert
+                  type="warning"
+                  key={index}
+                  {...(typeof warning === 'string'
+                    ? { title: warning }
+                    : { children: warning })}
+                />
               </React.Fragment>
             ))}
           </Alerts>

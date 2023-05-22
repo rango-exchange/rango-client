@@ -20,25 +20,25 @@ msgstr "Poháněno"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/Layout.tsx:132
-msgid "Connect Wallet"
-msgstr ""
+#~ msgid "Connect Wallet"
+#~ msgstr ""
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/TokenInfo.tsx:201
-msgid "Balance"
-msgstr ""
+#~ msgid "Balance"
+#~ msgstr ""
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/TokenInfo.tsx:206
-msgid "Max"
-msgstr ""
+#~ msgid "Max"
+#~ msgstr ""
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/TokenInfo.tsx:248
-msgid "Chain"
-msgstr ""
+#~ msgid "Chain"
+#~ msgstr ""
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/TokenInfo.tsx:278
-msgid "Token"
-msgstr ""
+#~ msgid "Token"
+#~ msgstr ""

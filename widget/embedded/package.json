@@ -50,10 +50,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "devDependencies": {
-    "@babel/core": "^7.21.8",
-    "@lingui/cli": "^4.1.2",
-    "@lingui/loader": "^4.1.2",
-    "@lingui/macro": "^4.1.2"
-  }
+  "devDependencies": {}
 }

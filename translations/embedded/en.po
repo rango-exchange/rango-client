@@ -20,25 +20,25 @@ msgstr "Powered By"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/Layout.tsx:132
-msgid "Connect Wallet"
-msgstr "Connect Wallet"
+#~ msgid "Connect Wallet"
+#~ msgstr "Connect Wallet"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/TokenInfo.tsx:201
-msgid "Balance"
-msgstr "Balance"
+#~ msgid "Balance"
+#~ msgstr "Balance"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/TokenInfo.tsx:206
-msgid "Max"
-msgstr "Max"
+#~ msgid "Max"
+#~ msgstr "Max"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/TokenInfo.tsx:248
-msgid "Chain"
-msgstr "Chain"
+#~ msgid "Chain"
+#~ msgstr "Chain"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/TokenInfo.tsx:278
-msgid "Token"
-msgstr "Token"
+#~ msgid "Token"
+#~ msgstr "Token"

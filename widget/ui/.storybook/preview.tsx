@@ -3,6 +3,15 @@ import { DecoratorFn } from '@storybook/react';
 
 import { lightTheme, darkTheme, styled } from '../src/theme';
 import { globalCss } from '@stitches/react';
+import { i18n } from '@lingui/core';
+import { I18nProvider } from '@lingui/react';
+import { messages as enMessages } from '../../../translations/ui/en';
+import { messages as csMessages } from '../../../translations/ui/cs';
+i18n.load({
+  en: enMessages,
+  cs: csMessages,
+});
+i18n.activate('en');
 
 // https://storybook.js.org/docs/react/writing-stories/parameters#global-parameters
 export const parameters = {
@@ -50,21 +59,23 @@ export const withTheme: DecoratorFn = (StoryFn, context) => {
   switch (theme) {
     case 'side-by-side': {
       return (
-        <>
+        <I18nProvider i18n={i18n}>
           <ThemeBlock position="left" className={lightTheme}>
             <StoryFn />
           </ThemeBlock>
           <ThemeBlock position="right" className={darkTheme}>
             <StoryFn />
           </ThemeBlock>
-        </>
+        </I18nProvider>
       );
     }
     default: {
       return (
-        <ThemeBlock position="fill" className={storyTheme}>
-          <StoryFn />
-        </ThemeBlock>
+        <I18nProvider i18n={i18n}>
+          <ThemeBlock position="fill" className={storyTheme}>
+            <StoryFn />
+          </ThemeBlock>
+        </I18nProvider>
       );
     }
   }

@@ -21,6 +21,7 @@ import {
   SwapMessages,
   PropTypes as SwapMessagesPropTypes,
 } from './SwapMessages';
+import { useLingui } from '@lingui/react';
 
 export const SwapperContainer = styled('div', {
   display: 'flex',
@@ -53,7 +54,7 @@ export const ErrorMsg = styled(Typography, {
 
 export const FeeContainer = styled('div', {
   paddingLeft: '$16',
-  color: '$neutral800'
+  color: '$neutral800',
 });
 
 export const Fee = styled('div', {
@@ -202,10 +203,11 @@ export function SwapHistory(props: PropTypes) {
     ...extraMessageProps
   } = props;
   const [showDrawer, setShowDrawer] = useState(false);
+  const { i18n } = useLingui();
 
   return (
     <SecondaryPage
-      title="Swap Details"
+      title={i18n.t('Swap Details')}
       textField={false}
       onBack={onBack}
       Footer={
