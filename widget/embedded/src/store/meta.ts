@@ -3,6 +3,7 @@ import { MetaResponse } from 'rango-sdk';
 import { httpService } from '../services/httpService';
 import createSelectors from './selectors';
 import { removeDuplicateFrom } from '../utils/common';
+import { normalizeMetaData } from '../utils/wallets';
 
 export type LoadingStatus = 'loading' | 'success' | 'failed';
 
@@ -22,12 +23,15 @@ export const useMetaStore = createSelectors(
         const chainThatHasTokenInMetaResponse = removeDuplicateFrom(
           response.tokens.map((t) => t.blockchain)
         );
+        response.blockchains = normalizeMetaData(response.blockchains);
         const enabledChains = response.blockchains.filter(
           (chain) =>
             chain.enabled &&
             chainThatHasTokenInMetaResponse.includes(chain.name)
         );
-        response.blockchains = enabledChains.sort((a, b) => a.sort - b.sort);
+        response.blockchains = enabledChains.sort((a, b) =>
+          a.sort && b.sort ? a.sort - b.sort : 0
+        );
         set({ meta: response, loadingStatus: 'success' });
       } catch (error) {
         set({ loadingStatus: 'failed' });

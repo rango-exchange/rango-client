@@ -22,6 +22,7 @@ export const connect: Connect = async ({ instance, network, meta }) => {
   const supportedChains = await getSupportedChains(instance);
   const leapBlockchainMeta = meta.filter(
     (chain) =>
+      chain.enabled &&
       (supportedChains.includes(chain.name.toLowerCase()) ||
         chain.name === network)
   );
@@ -56,6 +57,8 @@ export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
       DEFAULT: 'https://www.leapwallet.io/cosmos',
     },
     color: 'black',
-    supportedChains: cosmos.filter((blockchainMeta) => !!blockchainMeta.chainId),
+    supportedChains: cosmos.filter(
+      (blockchainMeta) => !!blockchainMeta.chainId
+    ),
   };
 };

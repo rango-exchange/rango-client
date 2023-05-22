@@ -20,7 +20,7 @@ import {
   Token,
   WalletDetail,
 } from 'rango-sdk';
-import { isCosmosBlockchain } from 'rango-types';
+import { BlockchainMetaBase, isCosmosBlockchain } from 'rango-types';
 import { readAccountAddress } from '@rango-dev/wallets-core';
 import { ConnectedWallet, TokenBalance } from '../store/wallets';
 import { numberToString } from './numbers';
@@ -477,4 +477,19 @@ export function sortWalletsBasedOnState(
             a.state === WalletStatus.CONNECTING
         )
   );
+}
+
+export function normalizeMetaData(
+  allblockchains: BlockchainMetaBase[]
+): BlockchainMeta[] {
+  const normalizedData = allblockchains.map((chain) => {
+    if (chain.info) {
+      const filteredData = { ...chain, ...chain.info };
+      const { info, ...rest } = filteredData;
+      return rest;
+    }
+    return chain;
+  });
+
+  return normalizedData as BlockchainMeta[];
 }

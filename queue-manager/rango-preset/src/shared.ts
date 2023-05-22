@@ -263,12 +263,8 @@ export const getEvmApproveUrl = (
   if (!evmBlochain) {
     throw Error(`unsupported network: ${network} for getting approve url.`);
   }
-
-  if (evmBlochain.info.transactionUrl)
-    return evmBlochain.info.transactionUrl.replace(
-      '{txHash}',
-      tx.toLowerCase()
-    );
+  if (evmBlochain.transactionUrl)
+    return evmBlochain.transactionUrl.replace('{txHash}', tx.toLowerCase());
 
   throw Error(`Explorer url for ${network} is not implemented`);
 };

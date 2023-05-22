@@ -1,3 +1,4 @@
+// @ts-nocheck
 // import { PropTypes } from './BlockchainsList';
 
 import { BlockchainMeta, TransactionType } from 'rango-sdk';

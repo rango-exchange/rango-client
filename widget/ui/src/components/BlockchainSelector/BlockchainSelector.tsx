@@ -20,7 +20,7 @@ const filterBlockchains = (list: BlockchainMeta[], searchedFor: string) =>
   list.filter(
     (blockchain) =>
       containsText(blockchain.name, searchedFor) ||
-      containsText(blockchain.displayName, searchedFor)
+      containsText(blockchain.displayName as string, searchedFor),
   );
 
 export interface PropTypes {
@@ -56,8 +56,7 @@ export function BlockchainSelector(props: PropTypes) {
       hasHeader={hasHeader}
       textFieldPlaceholder="Search blockchains by name"
       title={`Select ${type} Blockchain`}
-      onBack={onBack}
-    >
+      onBack={onBack}>
       {(searchedFor) => {
         const filteredBlockchains = filterBlockchains(list, searchedFor);
         return (
@@ -80,10 +79,7 @@ export function BlockchainSelector(props: PropTypes) {
                       onChange={onChange}
                     />
                   ) : (
-                    <NotFoundAlert
-                      catergory="Blockchain"
-                      searchedFor={searchedFor}
-                    />
+                    <NotFoundAlert catergory="Blockchain" searchedFor={searchedFor} />
                   )}
                 </>
               )}
