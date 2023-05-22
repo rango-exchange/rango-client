@@ -1,5 +1,12 @@
 import React from 'react';
-import { Button, FilledCircle, SecondaryPage, styled, Typography } from '@rango-dev/ui';
+import {
+  Button,
+  FilledCircle,
+  NotFoundAlert,
+  SecondaryPage,
+  styled,
+  Typography,
+} from '@rango-dev/ui';
 import { WalletType } from '@rango-dev/wallets-shared';
 import { Source, Wallets } from '../../types';
 import { LiquiditySource } from '@rango-dev/ui/dist/types/meta';
@@ -53,25 +60,42 @@ export default function ModalContent({ type, list, selectedList, onChange }: Pro
       textField={true}
       hasHeader={false}
       textFieldPlaceholder={`Search ${type} By Name`}>
-      {(searchedFor) => (
-        <ListContainer>
-          {filterList(list, searchedFor).map((item, index) => (
-            <Button
-              type={isSelect(type === 'Wallets' ? item.type : item.title) ? 'primary' : undefined}
-              variant="outlined"
-              size="large"
-              prefix={<Image src={item.logo} />}
-              suffix={
-                isSelect(type === 'Wallets' ? item.type : item.title) ? <FilledCircle /> : undefined
-              }
-              align="start"
-              onClick={onChange.bind(null, item)}
-              key={index}>
-              <Typography variant="body2">{item.title}</Typography>
-            </Button>
-          ))}
-        </ListContainer>
-      )}
+      {(searchedFor) => {
+        const filteredList = filterList(list, searchedFor);
+        return (
+          <>
+            {!!filteredList.length && (
+              <ListContainer>
+                {filteredList.map((item, index) => (
+                  <Button
+                    type={
+                      isSelect(type === 'Wallets' ? item.type : item.title) ? 'primary' : undefined
+                    }
+                    variant="outlined"
+                    size="large"
+                    prefix={<Image src={item.logo} />}
+                    suffix={
+                      isSelect(type === 'Wallets' ? item.type : item.title) ? (
+                        <FilledCircle />
+                      ) : undefined
+                    }
+                    align="start"
+                    onClick={onChange.bind(null, item)}
+                    key={index}>
+                    <Typography variant="body2">{item.title}</Typography>
+                  </Button>
+                ))}
+              </ListContainer>
+            )}
+            {!filteredList.length && (
+              <NotFoundAlert
+                catergory={type.endsWith('s') ? type.substring(0, type.length - 1) : type}
+                searchedFor={searchedFor}
+              />
+            )}
+          </>
+        );
+      }}
     </SecondaryPage>
   );
 }

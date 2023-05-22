@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { Fragment, useState } from 'react';
 import {
   Button,
   Checkbox,
   Chip,
   Modal,
+  NotFoundAlert,
   SecondaryPage,
   Divider,
   styled,
@@ -114,11 +115,12 @@ export function MultiTokenSelect({ label, modalTitle, list, blockchains, type }:
       <Container label={label} onOpenModal={() => setOpen(true)}>
         {!!tokens && tokens.length ? (
           <>
-            {[...tokens].splice(0, 10).map((v) => (
+            {[...tokens].splice(0, 10).map((v, index) => (
               <Chip
                 style={{ margin: 2 }}
                 selected
                 label={v.symbol + ' ' + '(' + v.blockchain + ')'}
+                key={index}
               />
             ))}
             <Chip
@@ -159,12 +161,13 @@ export function MultiTokenSelect({ label, modalTitle, list, blockchains, type }:
             textFieldPlaceholder="Search tokens by name">
             {(searchedFor) => {
               const filterList = list.filter((token) => token.blockchain === chain);
+              const filteredTokens = filterTokens(filterList, searchedFor);
 
               return (
                 <>
                   <Row>
-                    {blockchains.map((blockchain) => (
-                      <>
+                    {blockchains.map((blockchain, index) => (
+                      <Fragment key={index}>
                         <Button
                           size="small"
                           style={{
@@ -179,7 +182,7 @@ export function MultiTokenSelect({ label, modalTitle, list, blockchains, type }:
                           onClick={() => setChain(blockchain.name)}>
                           {blockchain.name}
                         </Button>
-                      </>
+                      </Fragment>
                     ))}
                   </Row>
                   <Divider />
@@ -199,19 +202,24 @@ export function MultiTokenSelect({ label, modalTitle, list, blockchains, type }:
                           ? 'Deselect All'
                           : 'Select All'}
                       </Button>
-                      <TokenList
-                        searchedText={searchedFor}
-                        list={filterTokens(filterList, searchedFor)}
-                        selectedList={tokens}
-                        multiSelect
-                        onChange={(token) =>
-                          onChangeSelectList({
-                            blockchain: token.blockchain,
-                            address: token.address,
-                            symbol: token.symbol,
-                          })
-                        }
-                      />
+                      {!!filteredTokens.length && (
+                        <TokenList
+                          searchedText={searchedFor}
+                          list={filteredTokens}
+                          selectedList={tokens}
+                          multiSelect
+                          onChange={(token) =>
+                            onChangeSelectList({
+                              blockchain: token.blockchain,
+                              address: token.address,
+                              symbol: token.symbol,
+                            })
+                          }
+                        />
+                      )}
+                      {!filteredTokens.length && (
+                        <NotFoundAlert searchedFor={searchedFor} catergory="Token" />
+                      )}
                     </>
                   )}
                 </>

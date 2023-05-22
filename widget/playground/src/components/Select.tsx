@@ -7,7 +7,7 @@ import {
   styled,
   Typography,
 } from '@rango-dev/ui';
-import React, { useState } from 'react';
+import React, { Fragment, useState } from 'react';
 
 interface PropTypes {
   onChange: (name: string, value: string) => void;
@@ -65,7 +65,7 @@ export function Select({ label, value, onChange, modalTitle, list, name }: PropT
             textFieldPlaceholder={`Search ${modalTitle} By Name`}>
             {(searchedFor) =>
               filterList(list, searchedFor).map((item, index) => (
-                <>
+                <Fragment key={index}>
                   <Button
                     variant="ghost"
                     size="large"
@@ -75,12 +75,11 @@ export function Select({ label, value, onChange, modalTitle, list, name }: PropT
                     onClick={() => {
                       setOpen(false);
                       onChange(name, item.value);
-                    }}
-                    key={index}>
+                    }}>
                     <Typography variant="body2">{item.name}</Typography>
                   </Button>
                   <hr />
-                </>
+                </Fragment>
               ))
             }
           </SecondaryPage>
