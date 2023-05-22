@@ -1,6 +1,6 @@
 import {
   Network,
-  WalletType,
+  WalletTypes,
   CanSwitchNetwork,
   Connect,
   ProviderConnectResult,
@@ -24,7 +24,7 @@ import {
 } from 'rango-types';
 import signer from './signer';
 
-const WALLET = WalletType.COINBASE;
+const WALLET = WalletTypes.COINBASE;
 
 export const config = {
   type: WALLET,

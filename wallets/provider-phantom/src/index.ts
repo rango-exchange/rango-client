@@ -1,6 +1,6 @@
 import {
   Network,
-  WalletType,
+  WalletTypes,
   CanSwitchNetwork,
   Connect,
   Subscribe,
@@ -11,7 +11,7 @@ import { phantom as phantom_instance } from './helpers';
 import signer from './signer';
 import { SignerFactory, BlockchainMeta, solanaBlockchain } from 'rango-types';
 
-const WALLET = WalletType.PHANTOM;
+const WALLET = WalletTypes.PHANTOM;
 
 export const config = {
   type: WALLET,

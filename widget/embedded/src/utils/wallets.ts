@@ -7,6 +7,7 @@ import {
   WalletType,
   detectInstallLink,
   WalletInfo,
+  WalletTypes,
 } from '@rango-dev/wallets-shared';
 
 import {
@@ -42,7 +43,7 @@ export function getStateWallet(state: WalletState): WalletStatus {
   }
 }
 
-export const excludedWallets = [WalletType.UNKNOWN, WalletType.LEAP];
+export const excludedWallets = [WalletTypes.LEAP];
 
 export function getlistWallet(
   getState: (type: WalletType) => WalletState,
@@ -50,7 +51,7 @@ export function getlistWallet(
   list: WalletType[]
 ): ModalWalletInfo[] {
   return list
-    .filter((wallet) => !excludedWallets.includes(wallet))
+    .filter((wallet) => !excludedWallets.includes(wallet as WalletTypes))
     .map((type) => {
       const {
         name,
@@ -377,7 +378,7 @@ export const getKeplrCompatibleConnectedWallets = (
   selectableWallets: SelectableWallet[]
 ): WalletType[] => {
   const connectedWalletTypes = new Set(
-    selectableWallets.map((a: any) => a.walletType.toString())
+    selectableWallets.map((a: any) => a.WalletType.toString())
   );
 
   return KEPLR_COMPATIBLE_WALLETS.filter((compatibleWallet) =>

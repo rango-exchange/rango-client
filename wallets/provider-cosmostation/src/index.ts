@@ -1,6 +1,6 @@
 import {
   Network,
-  WalletType,
+  WalletTypes,
   CanSwitchNetwork,
   Connect,
   ProviderConnectResult,
@@ -25,7 +25,7 @@ import {
   cosmosBlockchains,
 } from 'rango-types';
 
-const WALLET = WalletType.COSMOSTATION;
+const WALLET = WalletTypes.COSMOSTATION;
 
 export const config = {
   type: WALLET,

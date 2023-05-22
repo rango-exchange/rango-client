@@ -52,6 +52,9 @@ function QueueManager(props: PropsWithChildren<{}>) {
     return connect(wallet, network);
   };
 
+  const isMobileWallet = (walletType: WalletType): boolean =>
+    !!getWalletInfo(walletType).mobileWallet;
+
   // TODO: this code copy & pasted from rango, should be refactored.
   const allBlockchains = blockchains
     .filter((blockchain) => blockchain.enabled)
@@ -103,9 +106,11 @@ function QueueManager(props: PropsWithChildren<{}>) {
     //@ts-ignore
     wallets,
     providers: allProviders,
+    canSwitchNetworkTo,
     switchNetwork,
     connect,
     state,
+    isMobileWallet,
     notifier,
   };
 

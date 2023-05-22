@@ -1,5 +1,5 @@
 import {
-  WalletType,
+  WalletTypes,
   CanSwitchNetwork,
   Connect,
   Subscribe,
@@ -14,7 +14,7 @@ import { trustWallet as trustwallet_instance } from './helpers';
 import signer from './signer';
 import { SignerFactory, evmBlockchains, BlockchainMeta } from 'rango-types';
 
-const WALLET = WalletType.TRUST_WALLET;
+const WALLET = WalletTypes.TRUST_WALLET;
 
 export const config = {
   type: WALLET,

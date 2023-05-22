@@ -1,6 +1,6 @@
-import React from "react";
-import { useWallets } from "@rango-dev/wallets-core";
-import { WalletType } from "@rango-dev/wallets-shared";
+import React from 'react';
+import { useWallets } from '@rango-dev/wallets-core';
+import { WalletType } from '@rango-dev/wallets-shared';
 
 function Wallets() {
   const { connect, providers, state, disconnect } = useWallets();
@@ -11,12 +11,12 @@ function Wallets() {
       <h3>Available Wallets</h3>
       <div className="wallets">
         {list.map((type) => {
-          const wallet_type = type as WalletType;
+          const wallet_type = type;
           const wallet_state = state(wallet_type);
           return (
             <div className="wallet">
               <h5>{wallet_type}</h5>
-              <p>Address: {wallet_state.accounts?.join(",")}</p>
+              <p>Address: {wallet_state.accounts?.join(',')}</p>
               <button
                 onClick={() => {
                   if (wallet_state.connected) {
@@ -24,9 +24,8 @@ function Wallets() {
                   } else {
                     connect(wallet_type);
                   }
-                }}
-              >
-                {wallet_state.connected ? "Disconnect" : "Connect"}
+                }}>
+                {wallet_state.connected ? 'Disconnect' : 'Connect'}
               </button>
             </div>
           );

@@ -3,6 +3,7 @@ import {
   Meta,
   Network,
   WalletType,
+  WalletTypes,
   XDEFI_WALLET_SUPPORTED_NATIVE_CHAINS,
 } from '@rango-dev/wallets-shared';
 
@@ -558,60 +559,59 @@ export const walletsAndSupportedChainsMetaSelector = (blockchains: AllBlockchain
   const solanaBlockchain = blockchainsArray.filter(isSolanaBlockchain);
   const cosmosBlockchains = blockchainsArray.filter(isCosmosBlockchain);
   return {
-    [WalletType.BINANCE_CHAIN]: blockchainsArray.filter((blockchainMeta) =>
+    [WalletTypes.BINANCE_CHAIN]: blockchainsArray.filter((blockchainMeta) =>
       BINANCE_CHAIN_WALLET_SUPPORTED_CHAINS.includes(blockchainMeta.name as Network),
     ),
-    [WalletType.META_MASK]: evmBlockchains,
-    [WalletType.COINBASE]: [...evmBlockchains, ...solanaBlockchain],
-    [WalletType.KEPLR]: cosmosBlockchains.filter((blockchainMeta) => !!blockchainMeta.info),
-    [WalletType.PHANTOM]: solanaBlockchain,
-    [WalletType.XDEFI]: blockchainsArray.filter((blockchainMeta) =>
+    [WalletTypes.META_MASK]: evmBlockchains,
+    [WalletTypes.COINBASE]: [...evmBlockchains, ...solanaBlockchain],
+    [WalletTypes.KEPLR]: cosmosBlockchains.filter((blockchainMeta) => !!blockchainMeta.info),
+    [WalletTypes.PHANTOM]: solanaBlockchain,
+    [WalletTypes.XDEFI]: blockchainsArray.filter((blockchainMeta) =>
       [
         ...XDEFI_WALLET_SUPPORTED_EVM_CHAINS,
         ...XDEFI_WALLET_SUPPORTED_NATIVE_CHAINS,
         Network.SOLANA,
       ].includes(blockchainMeta.name as Network),
     ),
-    [WalletType.WALLET_CONNECT]: evmBlockchains,
-    [WalletType.TRUST_WALLET]: evmBlockchains,
-    [WalletType.COIN98]: [...evmBlockchains, ...solanaBlockchain],
-    [WalletType.OKX]: blockchainsArray.filter((blockchainMeta) =>
+    [WalletTypes.WALLET_CONNECT]: evmBlockchains,
+    [WalletTypes.TRUST_WALLET]: evmBlockchains,
+    [WalletTypes.COIN98]: [...evmBlockchains, ...solanaBlockchain],
+    [WalletTypes.OKX]: blockchainsArray.filter((blockchainMeta) =>
       OKX_WALLET_SUPPORTED_CHAINS.includes(blockchainMeta.name as Network),
     ),
 
-    [WalletType.EXODUS]: blockchainsArray.filter((blockchainMeta) =>
+    [WalletTypes.EXODUS]: blockchainsArray.filter((blockchainMeta) =>
       EXODUS_WALLET_SUPPORTED_CHAINS.includes(blockchainMeta.name as Network),
     ),
 
-    [WalletType.TOKEN_POCKET]: evmBlockchains,
-    [WalletType.STATION]: [],
-    [WalletType.LEAP]: [],
-    [WalletType.MATH]: [...evmBlockchains, ...solanaBlockchain],
-    [WalletType.SAFEPAL]: [
+    [WalletTypes.TOKEN_POCKET]: evmBlockchains,
+    [WalletTypes.STATION]: [],
+    [WalletTypes.LEAP]: [],
+    [WalletTypes.MATH]: [...evmBlockchains, ...solanaBlockchain],
+    [WalletTypes.SAFEPAL]: [
       ...evmBlockchains,
       ...solanaBlockchain,
       // ...blockchainsArray.filter((blockchainMeta) =>
       //   SAFEPAL_SUPPORTED_NATIVE_CHAINS.includes(blockchainMeta.name),
       // ),
     ],
-    [WalletType.CLOVER]: [...evmBlockchains, ...solanaBlockchain],
-    [WalletType.COSMOSTATION]: [
+    [WalletTypes.CLOVER]: [...evmBlockchains, ...solanaBlockchain],
+    [WalletTypes.COSMOSTATION]: [
       ...evmBlockchains,
       ...cosmosBlockchains.filter((blockchainMeta) => !!blockchainMeta.info),
     ],
-    [WalletType.BRAVE]: [...evmBlockchains, ...solanaBlockchain],
-    [WalletType.UNKNOWN]: [],
+    [WalletTypes.BRAVE]: [...evmBlockchains, ...solanaBlockchain],
   };
 };
 
 export const walletsAndSupportedChainsNamesSelector = (blockchains) => {
   const walletsAndSupportedChainsMeta = walletsAndSupportedChainsMetaSelector(blockchains);
   if (!walletsAndSupportedChainsMeta) return null;
-  const walletsAndSupportedChainsNames: { [type in WalletType]?: Network[] } = {};
+  const walletsAndSupportedChainsNames: { [type: WalletType]: Network[] | undefined } = {};
   for (const key in walletsAndSupportedChainsMeta) {
-    walletsAndSupportedChainsNames[key as WalletType] = walletsAndSupportedChainsMeta[
-      key as WalletType
-    ].map((blockchainMeta) => blockchainMeta.name);
+    walletsAndSupportedChainsNames[key] = walletsAndSupportedChainsMeta[key].map(
+      (blockchainMeta) => blockchainMeta.name,
+    );
   }
   return walletsAndSupportedChainsNames;
 };

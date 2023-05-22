@@ -1,5 +1,5 @@
 import { WalletInfo, WalletState } from '../../types/wallet';
-import { WalletType } from '@rango-dev/wallets-shared';
+import { WalletTypes } from '@rango-dev/wallets-shared';
 
 export const walletsInfo: WalletInfo[] = [
   {
@@ -7,7 +7,7 @@ export const walletsInfo: WalletInfo[] = [
     name: 'Coinbase',
     state: WalletState.DISCONNECTED,
     installLink: '',
-    type: WalletType.COINBASE,
+    type: WalletTypes.COINBASE,
     showOnMobile: true,
   },
   {
@@ -15,7 +15,7 @@ export const walletsInfo: WalletInfo[] = [
     name: 'Coinbase',
     state: WalletState.CONNECTED,
     installLink: '',
-    type: WalletType.COINBASE,
+    type: WalletTypes.COINBASE,
     showOnMobile: true,
   },
   {
@@ -23,14 +23,14 @@ export const walletsInfo: WalletInfo[] = [
     name: 'Coinbase',
     state: WalletState.CONNECTING,
     installLink: '',
-    type: WalletType.COINBASE,
+    type: WalletTypes.COINBASE,
     showOnMobile: true,
   },
   {
     image: 'https://app.rango.exchange/wallets/coinbase.svg',
     name: 'Coinbase',
     state: WalletState.NOT_INSTALLED,
-    type: WalletType.COINBASE,
+    type: WalletTypes.COINBASE,
     showOnMobile: true,
     installLink:
       'https://chrome.google.com/webstore/detail/coinbase-wallet-extension/hnfanknocfeofbddgcijnmhnfnkdnaad?hl=en',
@@ -40,7 +40,7 @@ export const walletsInfo: WalletInfo[] = [
     name: 'Coinbase',
     state: WalletState.DISCONNECTED,
     installLink: '',
-    type: WalletType.COINBASE,
+    type: WalletTypes.COINBASE,
     showOnMobile: true,
   },
   {
@@ -48,7 +48,7 @@ export const walletsInfo: WalletInfo[] = [
     name: 'Coinbase',
     state: WalletState.CONNECTED,
     installLink: '',
-    type: WalletType.COINBASE,
+    type: WalletTypes.COINBASE,
     showOnMobile: true,
   },
   {
@@ -56,7 +56,7 @@ export const walletsInfo: WalletInfo[] = [
     name: 'Coinbase',
     state: WalletState.DISCONNECTED,
     installLink: '',
-    type: WalletType.COINBASE,
+    type: WalletTypes.COINBASE,
     showOnMobile: true,
   },
   {
@@ -64,7 +64,7 @@ export const walletsInfo: WalletInfo[] = [
     name: 'Coinbase',
     state: WalletState.DISCONNECTED,
     installLink: '',
-    type: WalletType.COINBASE,
+    type: WalletTypes.COINBASE,
     showOnMobile: true,
   },
   {
@@ -72,7 +72,7 @@ export const walletsInfo: WalletInfo[] = [
     name: 'Coinbase',
     state: WalletState.DISCONNECTED,
     installLink: '',
-    type: WalletType.COINBASE,
+    type: WalletTypes.COINBASE,
     showOnMobile: true,
   },
   {
@@ -80,7 +80,7 @@ export const walletsInfo: WalletInfo[] = [
     name: 'Coinbase',
     state: WalletState.DISCONNECTED,
     installLink: '',
-    type: WalletType.COINBASE,
+    type: WalletTypes.COINBASE,
     showOnMobile: true,
   },
   {
@@ -88,7 +88,7 @@ export const walletsInfo: WalletInfo[] = [
     name: 'Coinbase',
     state: WalletState.DISCONNECTED,
     installLink: '',
-    type: WalletType.COINBASE,
+    type: WalletTypes.COINBASE,
     showOnMobile: true,
   },
   {
@@ -96,7 +96,7 @@ export const walletsInfo: WalletInfo[] = [
     name: 'Coinbase',
     state: WalletState.DISCONNECTED,
     installLink: '',
-    type: WalletType.COINBASE,
+    type: WalletTypes.COINBASE,
     showOnMobile: true,
   },
   {
@@ -104,7 +104,7 @@ export const walletsInfo: WalletInfo[] = [
     name: 'Coinbase',
     state: WalletState.DISCONNECTED,
     installLink: '',
-    type: WalletType.COINBASE,
+    type: WalletTypes.COINBASE,
     showOnMobile: true,
   },
   {
@@ -112,7 +112,7 @@ export const walletsInfo: WalletInfo[] = [
     name: 'Coinbase',
     state: WalletState.DISCONNECTED,
     installLink: '',
-    type: WalletType.COINBASE,
+    type: WalletTypes.COINBASE,
     showOnMobile: true,
   },
   {
@@ -120,7 +120,7 @@ export const walletsInfo: WalletInfo[] = [
     name: 'Coinbase',
     state: WalletState.DISCONNECTED,
     installLink: '',
-    type: WalletType.COINBASE,
+    type: WalletTypes.COINBASE,
     showOnMobile: true,
   },
   {
@@ -128,7 +128,7 @@ export const walletsInfo: WalletInfo[] = [
     name: 'Coinbase',
     state: WalletState.DISCONNECTED,
     installLink: '',
-    type: WalletType.COINBASE,
+    type: WalletTypes.COINBASE,
     showOnMobile: true,
   },
 ];

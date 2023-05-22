@@ -4,6 +4,7 @@ import {
   evmChainsToRpcMap,
   Network,
   WalletType,
+  WalletTypes,
 } from '@rango-dev/wallets-shared';
 import { State, WalletProvider, WalletProviders } from './types';
 import { Options, State as WalletState } from './wallet';
@@ -86,13 +87,13 @@ export function connectedWallets(providersState: State): WalletType[] {
       return wallet_state?.connected;
     })
     .map(([type]) => {
-      return type as WalletType;
+      return type;
     });
 }
 
 export function availableWallets(providersState: State): WalletType[] {
   return Object.entries(providersState).map(([type]) => {
-    return type as WalletType;
+    return type;
   });
 }
 
@@ -126,7 +127,7 @@ export function needsCheckInstallation(options: Options) {
 */
 
 export function isWalletDerivedFromWalletConnect(wallet_type: WalletType) {
-  return wallet_type === WalletType.WALLET_CONNECT;
+  return wallet_type === WalletTypes.WALLET_CONNECT;
 }
 
 export function getComptaibleProvider(

@@ -39,7 +39,9 @@ export const uint8ArrayToHex = (buffer: Uint8Array): string => {
   return Buffer.from(buffer).toString('hex');
 };
 
-export enum WalletType {
+export type WalletType = string;
+
+export enum WalletTypes {
   META_MASK = 'metamask',
   WALLET_CONNECT = 'wallet-connect',
   TRUST_WALLET = 'trust-wallet',
@@ -64,7 +66,6 @@ export enum WalletType {
   LEAP = 'leap',
   LEAP_COSMOS = 'leap-cosmos',
   STATION = 'station',
-  UNKNOWN = 'unknown',
   ENKRYPT = 'enkrypt',
 }
 
@@ -135,8 +136,8 @@ export const XDEFI_WALLET_SUPPORTED_NATIVE_CHAINS = [
 ];
 
 export const KEPLR_COMPATIBLE_WALLETS = [
-  WalletType.KEPLR,
-  WalletType.COSMOSTATION,
+  WalletTypes.KEPLR,
+  WalletTypes.COSMOSTATION,
 ];
 
 export type Asset = {
@@ -256,6 +257,7 @@ export type WalletInfo = {
   color: string;
   supportedChains: BlockchainMeta[];
   showOnMobile?: boolean;
+  mobileWallet?: boolean;
 };
 
 export interface Wallet {

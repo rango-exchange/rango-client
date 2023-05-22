@@ -1,7 +1,7 @@
 import {
   getBlockChainNameFromId,
   Network,
-  WalletType,
+  WalletTypes,
   CanSwitchNetwork,
   Connect,
   ProviderConnectResult,
@@ -22,7 +22,7 @@ import signer from './signer';
 import { SignerFactory, BlockchainMeta } from 'rango-types';
 
 const DEFAULT_NETWORK = Network.ETHEREUM;
-const WALLET = WalletType.XDEFI;
+const WALLET = WalletTypes.XDEFI;
 
 export const config = {
   type: WALLET,
