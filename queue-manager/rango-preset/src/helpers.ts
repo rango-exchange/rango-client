@@ -44,9 +44,7 @@ import {
   EventType,
   getCurrentBlockchainOf,
   getCurrentBlockchainOfOrNull,
-  getEvmApproveUrl,
-  getStarknetApproveUrl,
-  getTronApproveUrl,
+  getScannerUrl,
   getRelatedWalletOrNull,
   MessageSeverity,
   PendingSwap,
@@ -223,7 +221,7 @@ export function setStepTransactionIds(
   txId: string | null,
   notifier: SwapQueueContext['notifier'],
   eventType?: EventType,
-  approveUrl?: string
+  explorerUrl?: { url?: string; description?: string }
 ): void {
   const swap = getStorage().swapDetails;
   swap.hasAlreadyProceededToSign = null;
@@ -231,12 +229,12 @@ export function setStepTransactionIds(
   const currentStep = getCurrentStep(swap)!;
   currentStep.executedTransactionId = txId;
   currentStep.executedTransactionTime = new Date().getTime().toString();
-  if (!!approveUrl)
+  if (!!explorerUrl?.url)
     currentStep.explorerUrl = [
       ...(currentStep.explorerUrl || []),
       {
-        url: approveUrl,
-        description: `approve`,
+        url: explorerUrl.url,
+        description: explorerUrl.description || 'Tx Hash',
       },
     ];
   if (eventType === 'check_tx_status') {
@@ -852,17 +850,17 @@ export function singTransaction(
       .signAndSendTx(evmApprovalTransaction, walletAddress, null)
       .then(
         (hash) => {
-          const approveUrl = getEvmApproveUrl(
+          const approveUrl = getScannerUrl(
             hash,
             getCurrentBlockchainOf(swap, currentStep),
-            meta.evmBasedChains
+            meta.blockchains
           );
           setStepTransactionIds(
             actions,
             hash,
             notifier,
             'check_approve_tx_status',
-            approveUrl
+            { url: approveUrl, description: 'approve' }
           );
           schedule(SwapActionTypes.CHECK_TRANSACTION_STATUS);
           next();
@@ -934,13 +932,17 @@ export function singTransaction(
       .signAndSendTx(tronApprovalTransaction, walletAddress, null)
       .then(
         (hash) => {
-          const approveUrl = getTronApproveUrl(hash);
+          const approveUrl = getScannerUrl(
+            hash,
+            Network.TRON,
+            meta.blockchains
+          );
           setStepTransactionIds(
             actions,
             hash,
             notifier,
             'check_approve_tx_status',
-            approveUrl
+            { url: approveUrl, description: 'approve' }
           );
           schedule(SwapActionTypes.CHECK_TRANSACTION_STATUS);
           next();
@@ -1013,13 +1015,17 @@ export function singTransaction(
       .signAndSendTx(starknetApprovalTransaction, walletAddress, null)
       .then(
         (hash) => {
-          const approveUrl = getStarknetApproveUrl(hash);
+          const approveUrl = getScannerUrl(
+            hash,
+            Network.STARKNET,
+            meta.blockchains
+          );
           setStepTransactionIds(
             actions,
             hash,
             notifier,
             'check_approve_tx_status',
-            approveUrl
+            { url: approveUrl, description: 'approve' }
           );
           schedule(SwapActionTypes.CHECK_TRANSACTION_STATUS);
           next();
@@ -1160,8 +1166,15 @@ export function singTransaction(
         .getSigner(TransactionType.EVM)
         .signAndSendTx(evmTransaction, walletAddress, null)
         .then(
-          (id) => {
-            setStepTransactionIds(actions, id, notifier, 'check_tx_status');
+          (hash) => {
+            const explorerUrl = getScannerUrl(
+              hash,
+              getCurrentBlockchainOf(swap, currentStep),
+              meta.blockchains
+            );
+            setStepTransactionIds(actions, hash, notifier, 'check_tx_status', {
+              url: explorerUrl,
+            });
             schedule(SwapActionTypes.CHECK_TRANSACTION_STATUS);
             next();
             onFinish();
@@ -1231,9 +1244,15 @@ export function singTransaction(
         .getSigner(TransactionType.COSMOS)
         .signAndSendTx(cosmosTransaction, walletAddress, null)
         .then(
-          // todo
-          (id: string | null) => {
-            setStepTransactionIds(actions, id, notifier, 'check_tx_status');
+          (hash: string) => {
+            const explorerUrl = getScannerUrl(
+              hash,
+              getCurrentBlockchainOf(swap, currentStep),
+              meta.blockchains
+            );
+            setStepTransactionIds(actions, hash, notifier, 'check_tx_status', {
+              url: explorerUrl,
+            });
             schedule(SwapActionTypes.CHECK_TRANSACTION_STATUS);
             next();
             onFinish();
@@ -1339,8 +1358,15 @@ export function singTransaction(
         .getSigner(TransactionType.TRON)
         .signAndSendTx(tronTransaction, walletAddress, null)
         .then(
-          (id) => {
-            setStepTransactionIds(actions, id, notifier, 'check_tx_status');
+          (hash) => {
+            const explorerUrl = getScannerUrl(
+              hash,
+              Network.TRON,
+              meta.blockchains
+            );
+            setStepTransactionIds(actions, hash, notifier, 'check_tx_status', {
+              url: explorerUrl,
+            });
             schedule(SwapActionTypes.CHECK_TRANSACTION_STATUS);
             next();
             onFinish();
@@ -1407,8 +1433,15 @@ export function singTransaction(
         .getSigner(TransactionType.STARKNET)
         .signAndSendTx(starknetTransaction, walletAddress, null)
         .then(
-          (id) => {
-            setStepTransactionIds(actions, id, notifier, 'check_tx_status');
+          (hash) => {
+            const explorerUrl = getScannerUrl(
+              hash,
+              Network.STARKNET,
+              meta.blockchains
+            );
+            setStepTransactionIds(actions, hash, notifier, 'check_tx_status', {
+              url: explorerUrl,
+            });
             schedule(SwapActionTypes.CHECK_TRANSACTION_STATUS);
             next();
             onFinish();

@@ -15,6 +15,7 @@ import { SwapActionTypes, SwapQueueContext, SwapStorage } from '../types';
 import { getNextStep, MessageSeverity } from '../shared';
 import { TransactionStatusResponse } from 'rango-sdk';
 import { httpService } from '../services';
+import { providers } from 'ethers';
 
 const INTERVAL_FOR_CHECK = 3_000;
 
@@ -41,6 +42,19 @@ async function checkTransactionStatus({
   const txId = currentStep.executedTransactionId;
 
   let status: TransactionStatusResponse | null = null;
+
+  // console.log('checkTransactionStatus', txId);
+  // try {
+  //   const ethereum = (window as any).ethereum;
+  //   const web3provider = new providers.Web3Provider(ethereum);
+  //   const tx = await web3provider.getTransaction(txId!);
+  //   console.log({ tx });
+  //   const receipt = await tx.wait();
+  //   console.log({ receipt });
+  // } catch (err) {
+  //   console.log({ err }, err?.replacement);
+  // }
+
   try {
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     status = await httpService().checkStatus({
