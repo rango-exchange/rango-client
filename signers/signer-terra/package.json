@@ -2,8 +2,8 @@
   "name": "@rango-dev/signer-terra",
   "version": "0.1.21-next.0",
   "license": "MIT",
-  "module": "dist/signer-terra.esm.js",
-  "main": "dist/index.js",
+  "type": "module",
+  "module": "dist/index.js",
   "typings": "dist/index.d.ts",
   "files": [
     "dist",
@@ -11,33 +11,8 @@
   ],
   "scripts": {
     "dev": "tsdx watch",
-    "build": "tsdx build  --tsconfig ./tsconfig.json",
-    "test": "tsdx test",
-    "lint": "tsdx lint",
-    "size": "size-limit",
-    "analyze": "size-limit --why"
+    "build": "node ../../scripts/build/command.mjs --path signers/signer-terra"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "tsdx lint"
-    }
-  },
-  "prettier": {
-    "printWidth": 80,
-    "semi": true,
-    "singleQuote": true,
-    "trailingComma": "es5"
-  },
-  "size-limit": [
-    {
-      "path": "dist/signer-terra.cjs.production.min.js",
-      "limit": "10 KB"
-    },
-    {
-      "path": "dist/signer-terra.esm.js",
-      "limit": "10 KB"
-    }
-  ],
   "dependencies": {
     "@terra-money/terra.js": "^3.1.7",
     "rango-types": "^0.1.32"

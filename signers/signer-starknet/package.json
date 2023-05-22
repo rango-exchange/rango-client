@@ -2,8 +2,8 @@
   "name": "@rango-dev/signer-starknet",
   "version": "0.1.15-next.0",
   "license": "MIT",
-  "module": "dist/signer-starknet.esm.js",
-  "main": "dist/index.js",
+  "type": "module",
+  "module": "dist/index.js",
   "typings": "dist/index.d.ts",
   "files": [
     "dist",
@@ -11,33 +11,13 @@
   ],
   "scripts": {
     "dev": "tsdx watch",
-    "build": "tsdx build  --tsconfig ./tsconfig.json",
-    "test": "tsdx test",
-    "lint": "tsdx lint",
-    "size": "size-limit",
-    "analyze": "size-limit --why"
+    "build": "node ../../scripts/build/command.mjs --path signers/signer-starknet"
   },
   "husky": {
     "hooks": {
       "pre-commit": "tsdx lint"
     }
   },
-  "prettier": {
-    "printWidth": 80,
-    "semi": true,
-    "singleQuote": true,
-    "trailingComma": "es5"
-  },
-  "size-limit": [
-    {
-      "path": "dist/signer-starknet.cjs.production.min.js",
-      "limit": "10 KB"
-    },
-    {
-      "path": "dist/signer-starknet.esm.js",
-      "limit": "10 KB"
-    }
-  ],
   "dependencies": {
     "rango-types": "^0.1.32"
   },
