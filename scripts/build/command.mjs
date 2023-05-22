@@ -1,28 +1,31 @@
 import commandLineArgs from 'command-line-args';
 import * as esbuild from 'esbuild';
+import { $ } from 'execa';
 import { join } from 'path';
-import { packageNamesToPackagesWithInfo, printDirname } from '../common/utils.mjs';
+import process from 'process';
+import { printDirname } from '../common/utils.mjs';
 
 const root = join(printDirname(), '..', '..');
 
 async function run() {
-  const optionDefinitions = [{ name: 'project', type: String }];
-  const { project } = commandLineArgs(optionDefinitions);
+  const optionDefinitions = [{ name: 'path', type: String }];
+  const { path } = commandLineArgs(optionDefinitions);
 
-  if (!project) {
+  if (!path) {
     throw new Error('You need to specify package name.');
   }
 
-  const packages = await packageNamesToPackagesWithInfo([project]);
-  if (!packages.length) {
-    throw new Error('Make sure you are passing correct package name.');
-  }
-  const pkg = packages[0];
-  const entryPoint = `${root}/${pkg.location}/src/index.ts`;
+  const pkgPath = `${root}/${path}`;
+  const entryPoint = `${pkgPath}/src/index.ts`;
 
-  console.log(`[build] Running for ${project}`);
-  await esbuild.build({
-    //  --outdir=dist
+  console.log(`[build] Running for ${path}`);
+
+  const typeCheckingTask = await $({
+    cwd: pkgPath,
+    stderr: process.stderr,
+    stdout: process.stdout,
+  })`tsc --declaration --emitDeclarationOnly`;
+  const esbuildTask = esbuild.build({
     bundle: true,
     minify: true,
     keepNames: true,
@@ -30,10 +33,14 @@ async function run() {
     platform: 'node',
     format: 'esm',
     packages: 'external',
-    outdir: `${pkg.location}/dist`,
+    outdir: `${pkgPath}/dist`,
     entryPoints: [entryPoint],
   });
-  console.log(`[build] ${project} built successfully.`);
+  await Promise.all([typeCheckingTask, esbuildTask]);
+  console.log(`[build] ${path} built successfully.`);
 }
 
-run();
+run().catch((e) => {
+  console.error(e);
+  process.exit(1);
+});
