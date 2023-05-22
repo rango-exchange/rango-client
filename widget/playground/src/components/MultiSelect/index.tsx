@@ -99,13 +99,14 @@ export function MultiSelect({ label, type, modalTitle, list, value, onChange }: 
         ) : !value.length ? (
           <Chip style={{ margin: 2 }} selected label="None Selected" />
         ) : (
-          value.map((v) => (
+          value.map((v, index) => (
             <Chip
               style={{ margin: 2 }}
               selected
               label={getLabel(v)}
               suffix={<CloseIcon color="$foreground" />}
               onClick={() => onChange(v)}
+              key={index}
             />
           ))
         )}
