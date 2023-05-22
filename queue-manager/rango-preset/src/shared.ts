@@ -1,7 +1,6 @@
 import { Network, WalletType } from '@rango-dev/wallets-shared';
 import {
   CosmosTransaction,
-  EvmBlockchainMeta,
   EvmTransaction,
   SimulationResult,
   SolanaTransaction,
@@ -13,11 +12,18 @@ import {
   MetaResponse,
   Token,
   SwapResult,
+  BlockchainMeta,
 } from 'rango-sdk';
 
 import { PrettyError } from './shared-errors';
 import BigNumber from 'bignumber.js';
 import { numberToString } from './numbers';
+import {
+  isCosmosBlockchain,
+  isEvmBlockchain,
+  isStarknetBlockchain,
+  isTronBlockchain,
+} from 'rango-types';
 
 export interface PendingSwapWithQueueID {
   id: string;
@@ -251,40 +257,31 @@ export const getCurrentBlockchainOf = (
   return blockchain as Network;
 };
 
-export const getEvmApproveUrl = (
-  tx: string,
+const getBlockchainMetaExplorerBaseUrl = (
+  blockchainMeta: BlockchainMeta
+): string | undefined => {
+  if (isCosmosBlockchain(blockchainMeta))
+    return blockchainMeta.info?.explorerUrlToTx;
+  else if (
+    isEvmBlockchain(blockchainMeta) ||
+    isStarknetBlockchain(blockchainMeta) ||
+    isTronBlockchain(blockchainMeta)
+  )
+    return blockchainMeta.info.transactionUrl;
+  return;
+};
+
+export const getScannerUrl = (
+  txHash: string,
   network: Network,
-  evmBasedBlockchains: EvmBlockchainMeta[]
-): string => {
-  const evmBlochain = evmBasedBlockchains.find(
-    (blockchain) => blockchain.name === network
-  );
-
-  if (!evmBlochain) {
-    throw Error(`unsupported network: ${network} for getting approve url.`);
-  }
-
-  if (evmBlochain.info.transactionUrl)
-    return evmBlochain.info.transactionUrl.replace(
-      '{txHash}',
-      tx.toLowerCase()
-    );
-
-  throw Error(`Explorer url for ${network} is not implemented`);
-};
-
-export const getStarknetApproveUrl = (tx: string): string => {
-  return 'https://starkscan.co/tx/{txHash}'.replace(
-    '{txHash}',
-    tx.toLowerCase()
-  );
-};
-
-export const getTronApproveUrl = (tx: string): string => {
-  return 'https://tronscan.org/#/transaction/{txHash}'.replace(
-    '{txHash}',
-    tx.toLowerCase()
-  );
+  blockchainMetaMap: { [key: string]: BlockchainMeta }
+): string | undefined => {
+  const blockchainMeta = blockchainMetaMap[network];
+  const baseUrl = getBlockchainMetaExplorerBaseUrl(blockchainMeta);
+  if (!baseUrl) return;
+  if (baseUrl.indexOf('/{txHash}') !== -1)
+    return baseUrl.replace('{txHash}', txHash?.toLowerCase());
+  return `${baseUrl}/${txHash?.toLowerCase()}`;
 };
 
 export function getNextStep(
