@@ -10,7 +10,7 @@
     "src"
   ],
   "scripts": {
-    "dev": "tsdx watch",
+    "dev": "tsdx watch --tsconfig ./tsconfig.json",
     "build": "tsdx build --tsconfig ./tsconfig.json",
     "analyze": "size-limit --why",
     "clean": "rimraf dist",
