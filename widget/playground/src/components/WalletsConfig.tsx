@@ -1,7 +1,7 @@
+import React from 'react';
 import { Checkbox, Divider, Typography } from '@rango-dev/ui';
 import { useWallets } from '@rango-dev/wallets-core';
-import { WalletType } from '@rango-dev/wallets-shared';
-import React from 'react';
+import { WalletTypes } from '@rango-dev/wallets-shared';
 import { excludedWallets, onChangeMultiSelects } from '../helpers';
 import { useConfigStore } from '../store/config';
 import { ConfigurationContainer } from './ChainsConfig';
@@ -16,7 +16,7 @@ export function WalletsConfig() {
   const onChangeWallets = useConfigStore.use.onChangeWallets();
   const onChangeBooleansConfig = useConfigStore.use.onChangeBooleansConfig();
 
-  const walletList = Object.values(WalletType)
+  const walletList = Object.values(WalletTypes)
     .filter((wallet) => !excludedWallets.includes(wallet))
     .map((type) => {
       const { name: title, img: logo } = getWalletInfo(type);

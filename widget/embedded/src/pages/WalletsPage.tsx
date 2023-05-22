@@ -8,7 +8,11 @@ import {
 } from '@rango-dev/ui';
 import React, { useEffect, useRef, useState } from 'react';
 import { getlistWallet, sortWalletsBasedOnState } from '../utils/wallets';
-import { WalletType, detectMobileScreens } from '@rango-dev/wallets-shared';
+import {
+  WalletType,
+  WalletTypes,
+  detectMobileScreens,
+} from '@rango-dev/wallets-shared';
 import { useWallets } from '@rango-dev/wallets-core';
 
 import { useUiStore } from '../store/ui';
@@ -50,7 +54,7 @@ export function WalletsPage({ supportedWallets, multiWallets }: PropTypes) {
   const wallets = getlistWallet(
     state,
     getWalletInfo,
-    supportedWallets || Object.values(WalletType)
+    supportedWallets || Object.values(WalletTypes)
   );
   const walletsRef = useRef<WalletInfo[]>();
 

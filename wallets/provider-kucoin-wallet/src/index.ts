@@ -1,5 +1,5 @@
 import {
-  WalletType,
+  WalletTypes,
   CanSwitchNetwork,
   Connect,
   Subscribe,
@@ -18,7 +18,7 @@ import {
 import signer from './signer';
 import { SignerFactory, BlockchainMeta } from 'rango-types';
 
-const WALLET = WalletType.KUCOIN;
+const WALLET = WalletTypes.KUCOIN;
 
 export const config = {
   type: WALLET,

@@ -1,7 +1,7 @@
 import {
   getBlockChainNameFromId,
   Network,
-  WalletType,
+  WalletTypes,
   canSwitchNetworkToEvm,
   chooseInstance,
   getEvmAccounts,
@@ -22,7 +22,7 @@ import {
   BlockchainMeta,
 } from 'rango-types';
 
-const WALLET = WalletType.COIN98;
+const WALLET = WalletTypes.COIN98;
 
 export const config = {
   type: WALLET,

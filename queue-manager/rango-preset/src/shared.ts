@@ -338,7 +338,7 @@ export function getRelatedWallet(
   const wallet = walletKV?.v || null;
 
   const walletType = wallet?.walletType;
-  if (walletType === WalletType.UNKNOWN || wallet === null)
+  if (wallet === null)
     throw PrettyError.AssertionFailed(
       `Wallet for source ${blockchain} not passed: walletType: ${walletType}`
     );

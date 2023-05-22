@@ -1,6 +1,6 @@
 import {
   Network,
-  WalletType,
+  WalletTypes,
   CanSwitchNetwork,
   Connect,
   ProviderConnectResult,
@@ -21,7 +21,7 @@ import {
 import signer from './signer';
 import { SignerFactory, isEvmBlockchain, BlockchainMeta } from 'rango-types';
 
-const WALLET = WalletType.OKX;
+const WALLET = WalletTypes.OKX;
 
 export const config = {
   type: WALLET,

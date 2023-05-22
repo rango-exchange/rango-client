@@ -58,7 +58,7 @@ function makeEventHandler(dispatcher: any, onUpdateState?: WalletEventHandler) {
 
 function useInitializers(onChangeState: WalletEventHandler) {
   const availableWallets = useRef<{
-    [key in WalletType]?: Wallet;
+    [key: string]: Wallet | undefined;
   }>({});
 
   function updater(wallet: {
@@ -91,7 +91,7 @@ function Provider(props: ProviderProps) {
   );
   // const providersRef = useRef<{ [type in WalletType]?: any }>({});
 
-  const listOfProviders = props.providers;  
+  const listOfProviders = props.providers;
   const wallets = checkWalletProviders(listOfProviders);
   const api: ProviderContext = {
     // TODO: Fix type error

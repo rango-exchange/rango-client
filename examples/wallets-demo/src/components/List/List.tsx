@@ -1,22 +1,22 @@
 import React from 'react';
 import { useWallets } from '@rango-dev/wallets-core';
-import { sortWalletsBasedOnState, WalletInfo, WalletType } from '@rango-dev/wallets-shared';
+import { sortWalletsBasedOnState, WalletInfo, WalletTypes } from '@rango-dev/wallets-shared';
 import Item from './Item';
 import './styles.css';
-const excludedWallets = [WalletType.UNKNOWN, WalletType.LEAP];
+const excludedWallets = [WalletTypes.LEAP];
 
 function List() {
   const { state, getWalletInfo } = useWallets();
   const allWallets = sortWalletsBasedOnState(
-    Object.keys(WalletType)
-      .filter((i) => !excludedWallets.includes(WalletType[i]))
+    Object.keys(WalletTypes)
+      .filter((i) => !excludedWallets.includes(WalletTypes[i]))
       .map((type) => {
-        const walletState = state(WalletType[type]);
+        const walletState = state(WalletTypes[type]);
         const connected = walletState.connected;
         const installed = walletState.installed;
-        const info = getWalletInfo(WalletType[type]);
+        const info = getWalletInfo(WalletTypes[type]);
         return {
-          type: WalletType[type],
+          type: WalletTypes[type],
           connected,
           extensionAvailable: installed,
           info,

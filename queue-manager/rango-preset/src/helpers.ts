@@ -330,10 +330,7 @@ export function markRunningSwapAsSwitchingNetwork({
   const { type } = getRequiredWallet(swap);
   const fromBlockchain = getCurrentBlockchainOf(swap, currentStep);
   const reason = `Change ${type} wallet network to ${fromBlockchain}`;
-  let metamaskMessage = '';
-  if (type === WalletType.META_MASK)
-    metamaskMessage = `(Networks -> Select '${fromBlockchain}' network.)`;
-  const reasonDetail = `Please change your ${type} wallet network to ${fromBlockchain}. ${metamaskMessage}`;
+  const reasonDetail = `Please change your ${type} wallet network to ${fromBlockchain}.`;
 
   const currentTime = new Date();
   swap.lastNotificationTime = currentTime.getTime().toString();
@@ -512,7 +509,8 @@ export async function isNetworkMatchedForTransaction(
   step: PendingSwapStep,
   wallet: Wallet | null,
   meta: Meta,
-  providers: Providers
+  providers: Providers,
+  canSwitchNetworkTo: (type: string, network: Network) => boolean
 ): Promise<boolean> {
   if (isWalletNull(wallet)) {
     return false;
@@ -528,28 +526,7 @@ export async function isNetworkMatchedForTransaction(
     try {
       const sourceWallet = swap.wallets[fromBlockChain];
       if (sourceWallet) {
-        if (
-          [
-            WalletType.META_MASK,
-            WalletType.BINANCE_CHAIN,
-            WalletType.XDEFI,
-            WalletType.WALLET_CONNECT,
-            WalletType.TRUST_WALLET,
-            WalletType.COIN98,
-            WalletType.EXODUS,
-            WalletType.OKX,
-            WalletType.COINBASE,
-            WalletType.TOKEN_POCKET,
-            WalletType.MATH,
-            WalletType.SAFEPAL,
-            WalletType.COSMOSTATION,
-            WalletType.CLOVER,
-            WalletType.BRAVE,
-            WalletType.FRONTIER,
-            WalletType.KUCOIN,
-            WalletType.ENKRYPT,
-          ].includes(sourceWallet.walletType)
-        ) {
+        if (canSwitchNetworkTo(sourceWallet.walletType, fromBlockChain)) {
           const provider = getEvmProvider(providers, sourceWallet.walletType);
           const chainId: number | string | null = await getChainId(provider);
           if (chainId) {
@@ -822,7 +799,7 @@ export function singTransaction(
   actions: ExecuterActions<SwapStorage, SwapActionTypes, SwapQueueContext>
 ): void {
   const { getStorage, setStorage, failed, next, schedule, context } = actions;
-  const { meta, getSigners, notifier } = context;
+  const { meta, getSigners, notifier, isMobileWallet } = context;
   const swap = getStorage().swapDetails;
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const currentStep = getCurrentStep(swap)!;
@@ -840,6 +817,7 @@ export function singTransaction(
   const sourceWallet = getRelatedWallet(swap, currentStep);
   const walletAddress = getCurrentAddressOf(swap, currentStep);
   const walletSigners = getSigners(sourceWallet.walletType);
+  const mobileWallet = isMobileWallet(sourceWallet.walletType);
 
   const onFinish = () => {
     // TODO resetClaimedBy is undefined here
@@ -858,9 +836,7 @@ export function singTransaction(
 
     // Update swap status
     const message = `Waiting for approval of ${currentStep?.fromSymbol} coin ${
-      sourceWallet.walletType === WalletType.WALLET_CONNECT
-        ? 'on your mobile phone'
-        : ''
+      mobileWallet ? 'on your mobile phone' : ''
     }`;
     const updateResult = updateSwapStatus({
       getStorage,
@@ -942,9 +918,7 @@ export function singTransaction(
   } else if (!!tronApprovalTransaction) {
     // Update swap status
     const message = `Waiting for approval of ${currentStep?.fromSymbol} coin ${
-      sourceWallet.walletType === WalletType.WALLET_CONNECT
-        ? 'on your mobile phone'
-        : ''
+      mobileWallet ? 'on your mobile phone' : ''
     }`;
     const updateResult = updateSwapStatus({
       getStorage,
@@ -1023,9 +997,7 @@ export function singTransaction(
   } else if (!!starknetApprovalTransaction) {
     // Update swap status
     const message = `Waiting for approval of ${currentStep?.fromSymbol} coin ${
-      sourceWallet.walletType === WalletType.WALLET_CONNECT
-        ? 'on your mobile phone'
-        : ''
+      mobileWallet ? 'on your mobile phone' : ''
     }`;
     const updateResult = updateSwapStatus({
       getStorage,
@@ -1113,12 +1085,7 @@ export function singTransaction(
   const executeMessage = hasAlreadyProceededToSign
     ? 'Transaction is expired. Please try again'
     : 'executing transaction';
-  const executeDetails = `${
-    sourceWallet.walletType === WalletType.WALLET_CONNECT
-      ? 'Check your mobile phone'
-      : ''
-  }`;
-
+  const executeDetails = mobileWallet ? 'Check your mobile phone' : '';
   if (!!transferTransaction) {
     const updateResult = updateSwapStatus({
       getStorage,
@@ -1265,38 +1232,6 @@ export function singTransaction(
       failed();
       onFinish();
     } else {
-      // If keplr wallet is executing contracts on terra, throw error. keplr doesn't support transfer or execute contracts. only IBC messages are supported
-      if (
-        (currentStep?.swapperId.toString() === 'TerraSwap' ||
-          (currentStep?.swapperId.toString() === 'ThorChain' &&
-            currentStep?.fromBlockchain === Network.TERRA) ||
-          (currentStep?.swapperId.toString() === 'Terra Bridge' &&
-            currentStep.fromBlockchain === Network.TERRA)) && // here we must allow ibc on terrastatus
-        sourceWallet.walletType === WalletType.KEPLR
-      ) {
-        const { extraMessage, extraMessageDetail, extraMessageErrorCode } =
-          prettifyErrorMessage(
-            'Keplr only supports IBC Transactions on Terra. ' +
-              'Using Terra Bridge, TerraSwap and THORChain is not possible with Keplr. Please use TerraStation or Leap wallet'
-          );
-        const updateResult = updateSwapStatus({
-          getStorage,
-          setStorage,
-          nextStatus: 'failed',
-          nextStepStatus: 'failed',
-          message: extraMessage,
-          details: extraMessageDetail,
-          errorCode: extraMessageErrorCode,
-        });
-        notifier({
-          eventType: 'smart_contract_call_failed',
-          ...updateResult,
-        });
-        failed();
-        onFinish();
-        return;
-      }
-
       walletSigners
         .getSigner(TransactionType.COSMOS)
         .signAndSendTx(cosmosTransaction, walletAddress, null)

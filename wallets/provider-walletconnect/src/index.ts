@@ -1,6 +1,6 @@
 import { makeConnection, supportsForSwitchNetworkRequest } from './helpers';
 import {
-  WalletType,
+  WalletTypes,
   CanSwitchNetwork,
   Connect,
   Disconnect,
@@ -22,7 +22,7 @@ import {
   evmBlockchains,
 } from 'rango-types';
 
-const WALLET = WalletType.WALLET_CONNECT;
+const WALLET = WalletTypes.WALLET_CONNECT;
 
 export const config: WalletConfig = {
   type: WALLET,
@@ -173,5 +173,6 @@ export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
     color: '#b2dbff',
     supportedChains: evms,
     showOnMobile: true,
+    mobileWallet: true,
   };
 };

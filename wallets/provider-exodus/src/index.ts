@@ -1,6 +1,6 @@
 import {
   Network,
-  WalletType,
+  WalletTypes,
   canSwitchNetworkToEvm,
   chooseInstance,
   getEvmAccounts,
@@ -25,7 +25,7 @@ import {
   BlockchainMeta,
 } from 'rango-types';
 
-const WALLET = WalletType.EXODUS;
+const WALLET = WalletTypes.EXODUS;
 
 export const config = {
   type: WALLET,

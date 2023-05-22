@@ -51,6 +51,7 @@ export interface SwapQueueContext extends QueueContext {
   wallets: Wallet | null;
   providers: Providers;
   getSigners: (type: WalletType) => SignerFactory;
+  canSwitchNetworkTo: (type: WalletType, network: Network) => boolean;
   switchNetwork: (
     wallet: WalletType,
     network: Network
@@ -60,6 +61,7 @@ export interface SwapQueueContext extends QueueContext {
     network: Network
   ) => Promise<ConnectResult> | undefined;
   state: (type: WalletType) => WalletState;
+  isMobileWallet: (type: WalletType) => boolean;
   notifier: (data: SwapProgressNotification) => void;
 
   // Dynamically will be added to context.

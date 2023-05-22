@@ -1,4 +1,9 @@
-import { WalletInfo, WalletState, WalletType } from '@rango-dev/wallets-shared';
+import {
+  WalletInfo,
+  WalletState,
+  WalletType,
+  WalletTypes,
+} from '@rango-dev/wallets-shared';
 import { ModalState, State } from './types';
 import {
   WalletInfo as ModalWalletInfo,
@@ -36,10 +41,10 @@ export function getlistWallet(
   getWalletInfo: (type: WalletType) => WalletInfo,
   list: WalletType[]
 ): ModalWalletInfo[] {
-  const excludedWallets = [WalletType.UNKNOWN, WalletType.LEAP];
+  const excludedWallets = [WalletTypes.LEAP];
 
   return list
-    .filter((wallet) => !excludedWallets.includes(wallet))
+    .filter((wallet) => !excludedWallets.includes(wallet as WalletTypes))
     .map((type) => {
       const {
         name,
