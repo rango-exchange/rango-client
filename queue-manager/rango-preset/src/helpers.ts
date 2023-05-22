@@ -92,6 +92,23 @@ export function claimQueue() {
 }
 
 /**
+ *
+ * We use module-level variable to keep track of
+ * map of transactions hash to the TransactionResponse
+ *
+ */
+let swapTransactionToResponseMap: { [id: string]: any } = {};
+export function useTransactionsResponse() {
+  return {
+    getTransactionResponseByHash: (hash: string) =>
+      swapTransactionToResponseMap[hash],
+    setTransactionResponseByHash: (hash: string, response: any) => {
+      swapTransactionToResponseMap[hash] = response;
+    },
+  };
+}
+
+/**
  * Sample inputs are:
  *  - "metamask-ETH"
  *  - "metamask-BSC-BSC:0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
@@ -126,6 +143,33 @@ export const getCurrentStep = (swap: PendingSwap): PendingSwapStep | null => {
       (step) => step.status !== 'failed' && step.status !== 'success'
     ) || null
   );
+};
+
+export const getCurrentStepTxType = (
+  currentStep: PendingSwapStep
+): TransactionType | undefined => {
+  const {
+    evmTransaction,
+    evmApprovalTransaction,
+    cosmosTransaction,
+    solanaTransaction,
+    transferTransaction,
+    starknetApprovalTransaction,
+    starknetTransaction,
+    tronApprovalTransaction,
+    tronTransaction,
+  } = currentStep;
+  return (
+    evmTransaction ||
+    evmApprovalTransaction ||
+    cosmosTransaction ||
+    solanaTransaction ||
+    transferTransaction ||
+    starknetApprovalTransaction ||
+    starknetTransaction ||
+    tronApprovalTransaction ||
+    tronTransaction
+  )?.type;
 };
 
 /**
@@ -234,7 +278,7 @@ export function setStepTransactionIds(
       ...(currentStep.explorerUrl || []),
       {
         url: explorerUrl.url,
-        description: explorerUrl.description || 'Tx Hash',
+        description: explorerUrl.description || 'Main',
       },
     ];
   if (eventType === 'check_tx_status') {
@@ -791,6 +835,7 @@ export function isRequiredWalletConnected(
 export function singTransaction(
   actions: ExecuterActions<SwapStorage, SwapActionTypes, SwapQueueContext>
 ): void {
+  const { setTransactionResponseByHash } = useTransactionsResponse();
   const { getStorage, setStorage, failed, next, schedule, context } = actions;
   const { meta, getSigners, notifier, isMobileWallet } = context;
   const swap = getStorage().swapDetails;
@@ -820,13 +865,6 @@ export function singTransaction(
   };
 
   if (!!evmApprovalTransaction) {
-    const spenderContract = evmApprovalTransaction?.to;
-
-    if (!spenderContract)
-      throw PrettyError.AssertionFailed(
-        'contract address is null for checking approval'
-      );
-
     // Update swap status
     const message = `Waiting for approval of ${currentStep?.fromSymbol} coin ${
       mobileWallet ? 'on your mobile phone' : ''
@@ -849,7 +887,7 @@ export function singTransaction(
       .getSigner(TransactionType.EVM)
       .signAndSendTx(evmApprovalTransaction, walletAddress, null)
       .then(
-        (hash) => {
+        ({ hash, response }) => {
           const approveUrl = getScannerUrl(
             hash,
             getCurrentBlockchainOf(swap, currentStep),
@@ -860,8 +898,9 @@ export function singTransaction(
             hash,
             notifier,
             'check_approve_tx_status',
-            { url: approveUrl, description: 'approve' }
+            { url: approveUrl, description: 'Approve' }
           );
+          setTransactionResponseByHash(hash, response);
           schedule(SwapActionTypes.CHECK_TRANSACTION_STATUS);
           next();
           onFinish();
@@ -931,7 +970,7 @@ export function singTransaction(
       .getSigner(TransactionType.TRON)
       .signAndSendTx(tronApprovalTransaction, walletAddress, null)
       .then(
-        (hash) => {
+        ({ hash }) => {
           const approveUrl = getScannerUrl(
             hash,
             Network.TRON,
@@ -942,7 +981,7 @@ export function singTransaction(
             hash,
             notifier,
             'check_approve_tx_status',
-            { url: approveUrl, description: 'approve' }
+            { url: approveUrl, description: 'Approve' }
           );
           schedule(SwapActionTypes.CHECK_TRANSACTION_STATUS);
           next();
@@ -1014,7 +1053,7 @@ export function singTransaction(
       .getSigner(TransactionType.STARKNET)
       .signAndSendTx(starknetApprovalTransaction, walletAddress, null)
       .then(
-        (hash) => {
+        ({ hash }) => {
           const approveUrl = getScannerUrl(
             hash,
             Network.STARKNET,
@@ -1025,7 +1064,7 @@ export function singTransaction(
             hash,
             notifier,
             'check_approve_tx_status',
-            { url: approveUrl, description: 'approve' }
+            { url: approveUrl, description: 'Approve' }
           );
           schedule(SwapActionTypes.CHECK_TRANSACTION_STATUS);
           next();
@@ -1110,8 +1149,8 @@ export function singTransaction(
         .getSigner(TransactionType.TRANSFER)
         .signAndSendTx(transferTransaction, walletAddress, null)
         .then(
-          (txId) => {
-            setStepTransactionIds(actions, txId, notifier, 'check_tx_status');
+          ({ hash }) => {
+            setStepTransactionIds(actions, hash, notifier, 'check_tx_status');
             schedule(SwapActionTypes.CHECK_TRANSACTION_STATUS);
             next();
             onFinish();
@@ -1166,7 +1205,7 @@ export function singTransaction(
         .getSigner(TransactionType.EVM)
         .signAndSendTx(evmTransaction, walletAddress, null)
         .then(
-          (hash) => {
+          async ({ hash, response }) => {
             const explorerUrl = getScannerUrl(
               hash,
               getCurrentBlockchainOf(swap, currentStep),
@@ -1174,7 +1213,9 @@ export function singTransaction(
             );
             setStepTransactionIds(actions, hash, notifier, 'check_tx_status', {
               url: explorerUrl,
+              description: 'Swap',
             });
+            setTransactionResponseByHash(hash, response);
             schedule(SwapActionTypes.CHECK_TRANSACTION_STATUS);
             next();
             onFinish();
@@ -1244,7 +1285,7 @@ export function singTransaction(
         .getSigner(TransactionType.COSMOS)
         .signAndSendTx(cosmosTransaction, walletAddress, null)
         .then(
-          (hash: string) => {
+          ({ hash }) => {
             const explorerUrl = getScannerUrl(
               hash,
               getCurrentBlockchainOf(swap, currentStep),
@@ -1252,6 +1293,7 @@ export function singTransaction(
             );
             setStepTransactionIds(actions, hash, notifier, 'check_tx_status', {
               url: explorerUrl,
+              description: 'Swap',
             });
             schedule(SwapActionTypes.CHECK_TRANSACTION_STATUS);
             next();
@@ -1305,8 +1347,8 @@ export function singTransaction(
         .getSigner(TransactionType.SOLANA)
         .signAndSendTx(tx, walletAddress, null)
         .then(
-          (txId) => {
-            setStepTransactionIds(actions, txId, notifier, 'check_tx_status');
+          ({ hash }) => {
+            setStepTransactionIds(actions, hash, notifier, 'check_tx_status');
             schedule(SwapActionTypes.CHECK_TRANSACTION_STATUS);
             next();
             onFinish();
@@ -1358,7 +1400,7 @@ export function singTransaction(
         .getSigner(TransactionType.TRON)
         .signAndSendTx(tronTransaction, walletAddress, null)
         .then(
-          (hash) => {
+          ({ hash }) => {
             const explorerUrl = getScannerUrl(
               hash,
               Network.TRON,
@@ -1366,6 +1408,7 @@ export function singTransaction(
             );
             setStepTransactionIds(actions, hash, notifier, 'check_tx_status', {
               url: explorerUrl,
+              description: 'Swap',
             });
             schedule(SwapActionTypes.CHECK_TRANSACTION_STATUS);
             next();
@@ -1433,7 +1476,7 @@ export function singTransaction(
         .getSigner(TransactionType.STARKNET)
         .signAndSendTx(starknetTransaction, walletAddress, null)
         .then(
-          (hash) => {
+          ({ hash }) => {
             const explorerUrl = getScannerUrl(
               hash,
               Network.STARKNET,
@@ -1441,6 +1484,7 @@ export function singTransaction(
             );
             setStepTransactionIds(actions, hash, notifier, 'check_tx_status', {
               url: explorerUrl,
+              description: 'Swap',
             });
             schedule(SwapActionTypes.CHECK_TRANSACTION_STATUS);
             next();

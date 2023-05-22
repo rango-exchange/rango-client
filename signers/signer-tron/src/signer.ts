@@ -20,14 +20,15 @@ export class DefaultTronSigner implements GenericSigner<TronTransaction> {
     throw SignerError.UnimplementedError('signMessage');
   }
 
-  async signAndSendTx(tx: TronTransaction): Promise<string> {
+  async signAndSendTx(tx: TronTransaction): Promise<{ hash: string }> {
     try {
       const transaction = DefaultTronSigner.buildTx(tx);
       const signedTxn = await this.provider.tronWeb.trx.sign(transaction);
       const receipt = await this.provider.tronWeb.trx.sendRawTransaction(
         signedTxn
       );
-      return receipt?.transaction?.txID;
+      const hash = receipt?.transaction?.txID;
+      return { hash };
     } catch (error) {
       throw new SignerError(SignerErrorCode.SEND_TX_ERROR, undefined, error);
     }

@@ -22,12 +22,12 @@ export class DefaultStarknetSigner
     throw SignerError.UnimplementedError('signMessage');
   }
 
-  async signAndSendTx(tx: StarknetTransaction): Promise<string> {
+  async signAndSendTx(tx: StarknetTransaction): Promise<{ hash: string }> {
     try {
       const { transaction_hash } = await this.provider.account.execute(
         tx.calls
       );
-      return transaction_hash;
+      return { hash: transaction_hash };
     } catch (error) {
       throw new SignerError(SignerErrorCode.SEND_TX_ERROR, undefined, error);
     }

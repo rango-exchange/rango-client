@@ -20,7 +20,7 @@ export class CustomTransferSigner implements GenericSigner<Transfer> {
     throw SignerError.UnimplementedError('signMessage');
   }
 
-  async signAndSendTx(tx: Transfer): Promise<string> {
+  async signAndSendTx(tx: Transfer): Promise<{ hash: string }> {
     const { blockchain } = tx.asset;
 
     // Everything except ETH
@@ -43,7 +43,7 @@ export class CustomTransferSigner implements GenericSigner<Transfer> {
       asset,
     } = tx;
 
-    return xdefiTransfer(
+    const hash = await xdefiTransfer(
       blockchain,
       asset.ticker,
       from,
@@ -54,5 +54,6 @@ export class CustomTransferSigner implements GenericSigner<Transfer> {
       method,
       memo
     );
+    return { hash };
   }
 }

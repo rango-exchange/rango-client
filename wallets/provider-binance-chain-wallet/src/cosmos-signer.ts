@@ -73,7 +73,8 @@ export class CustomCosmosSigner implements GenericSigner<CosmosTransaction> {
     throw SignerError.UnimplementedError('signMessage');
   }
 
-  async signAndSendTx(tx: CosmosTransaction): Promise<string> {
-    return await executeCosmosMessage(this.provider, tx);
+  async signAndSendTx(tx: CosmosTransaction): Promise<{ hash: string }> {
+    const hash = await executeCosmosMessage(this.provider, tx);
+    return { hash };
   }
 }
