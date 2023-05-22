@@ -250,7 +250,7 @@ export function StylesConfig() {
 
   return (
     <div>
-      <Typography variant="h4">Styles</Typography>
+      <Typography variant="h6">Styles</Typography>
 
       <Divider size={12} />
       <ConfigurationContainer>
@@ -407,10 +407,11 @@ export function StylesConfig() {
         <Divider size={24} />
 
         <GridContent>
-          {customThemes.map((t) => (
+          {customThemes.map((t, index) => (
             <Button
               type="success"
               variant="outlined"
+              key={index}
               onClick={() => {
                 if (t.dark && !t.light) {
                   onChangeTheme('mode', 'dark');

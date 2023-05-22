@@ -81,3 +81,36 @@ export function filterConfig(config: WidgetConfig, initialConfig: WidgetConfig) 
 
   return { userSelectedConfig, filteredConfigForExport };
 }
+
+export function getIframeCode(config: string) {
+  //TODO: update iframe script source address
+  return `<div id="rango-widget-root"></div>
+<script src="iframe.bundle.min.js"></script>
+<script defer type="text/javascript">
+
+const config = ${config}
+              
+rangoWidget.init(config)
+
+</script>
+`;
+}
+
+export function getEmbeddedCode(config: string) {
+  return `import { Widget, WidgetConfig } from "@rango-dev/widget-embedded";
+
+export default function App() {
+
+const config = ${config}
+              
+return (
+    <div className="App">
+        <Widget config={config} />
+    </div>
+);
+}
+`;
+}
+
+
+

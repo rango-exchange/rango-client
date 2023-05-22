@@ -1,13 +1,5 @@
 import React, { PropsWithChildren, useState } from 'react';
-import {
-  Alert,
-  Button,
-  Modal,
-  Divider,
-  styled,
-  Typography,
-  useCopyToClipboard,
-} from '@rango-dev/ui';
+import { Alert, Button, Divider, styled, Typography } from '@rango-dev/ui';
 import { ChainsConfig } from '../components/ChainsConfig';
 import { WalletsConfig } from '../components/WalletsConfig';
 import { SourcesConfig } from '../components/SourcesConfig';
@@ -17,7 +9,8 @@ import { allProviders } from '@rango-dev/provider-all';
 import { globalStyles } from '../globalStyles';
 import { useMetaStore } from '../store/meta';
 import { initialConfig, useConfigStore } from '../store/config';
-import { filterConfig, syntaxHighlight } from '../helpers';
+import { ExportConfigModal } from '../components/ExportConfigModal';
+import { filterConfig } from '../helpers';
 
 const providers = allProviders();
 
@@ -84,35 +77,13 @@ const ResetButton = styled(HeaderButton, {
   marginLeft: '$8',
 });
 
-const Pre = styled('pre', {
-  fontSize: '$14',
-  display: 'block',
-  padding: '10px 30px',
-  margin: 0,
-  overflowY: 'auto',
-  color: '$foreground',
-  '.string': {
-    color: '$warning',
-  },
-  '.key': {
-    color: '$success',
-  },
-});
-
-const Link = styled('a', {
-  color: '$primary',
-  paddingLeft: 4,
-});
-
 export function Config(props: PropsWithChildren) {
   globalStyles();
   const loadingStatus = useMetaStore.use.loadingStatus();
   const [open, setOpen] = useState<boolean>(false);
   const config = useConfigStore.use.config();
   const resetConfig = useConfigStore.use.resetConfig();
-  const [isCopied, handleCopy] = useCopyToClipboard(2000);
-
-  const { filteredConfigForExport, userSelectedConfig } = filterConfig(config, initialConfig);
+  const { userSelectedConfig } = filterConfig(config, initialConfig);
 
   const resetButtonDisabled = !Object.entries(userSelectedConfig).length;
 
@@ -164,42 +135,7 @@ export function Config(props: PropsWithChildren) {
       <SwapContent>
         <Swap>{props.children}</Swap>
       </SwapContent>
-
-      <Modal
-        open={open}
-        action={
-          <Button
-            type="primary"
-            variant="ghost"
-            onClick={() => handleCopy(JSON.stringify(filteredConfigForExport))}>
-            {isCopied ? 'Copied!' : 'Copy'}
-          </Button>
-        }
-        onClose={() => setOpen(false)}
-        content={
-          <>
-            <hr />
-            <Typography variant="body1" mb={12} mt={12}>
-              See full instruction on
-              <Link
-                href="https://docs.rango.exchange/integration-guide/rango-widget"
-                target="_blank">
-                docs.rango.exchange
-              </Link>
-            </Typography>
-
-            <Pre
-              {...(!!filteredConfigForExport && {
-                dangerouslySetInnerHTML: {
-                  __html: syntaxHighlight(JSON.stringify(filteredConfigForExport, undefined, 4)),
-                },
-              })}
-            />
-          </>
-        }
-        title="Exported Config"
-        containerStyle={{ minWidth: '600px', height: '500px' }}
-      />
+      <ExportConfigModal open={open} onClose={setOpen.bind(null, false)} config={config} />
     </Container>
   );
 }
