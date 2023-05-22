@@ -378,7 +378,9 @@ export const getKeplrCompatibleConnectedWallets = (
   selectableWallets: SelectableWallet[]
 ): WalletType[] => {
   const connectedWalletTypes = new Set(
-    selectableWallets.map((a: any) => a.WalletType.toString())
+    selectableWallets.map((wallet) => {
+      return wallet.walletType;
+    })
   );
 
   return KEPLR_COMPATIBLE_WALLETS.filter((compatibleWallet) =>
