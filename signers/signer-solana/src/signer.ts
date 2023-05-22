@@ -58,9 +58,10 @@ export class DefaultSolanaSigner implements GenericSigner<SolanaTransaction> {
     }
   }
 
-  async signAndSendTx(tx: SolanaTransaction): Promise<string> {
+  async signAndSendTx(tx: SolanaTransaction): Promise<{ hash: string }> {
     try {
-      return await executeSolanaTransaction(tx, this.provider);
+      const hash = await executeSolanaTransaction(tx, this.provider);
+      return { hash };
     } catch (error) {
       throw new SignerError(SignerErrorCode.SEND_TX_ERROR, undefined, error);
     }

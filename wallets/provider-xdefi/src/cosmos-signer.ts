@@ -15,14 +15,14 @@ export class CustomCosmosSigner implements GenericSigner<CosmosTransaction> {
     throw SignerError.UnimplementedError('signMessage');
   }
 
-  async signAndSendTx(tx: CosmosTransaction): Promise<string> {
+  async signAndSendTx(tx: CosmosTransaction): Promise<{ hash: string }> {
     if (tx.rawTransfer === null)
       throw SignerError.AssertionFailed('rawTransfer obj can not be null');
 
     const from = tx.fromWalletAddress;
     const { method, memo, recipient, decimals, amount, asset } = tx.rawTransfer;
     const blockchain = tx.blockChain;
-    return xdefiTransfer(
+    const hash = await xdefiTransfer(
       blockchain,
       asset.ticker,
       from,
@@ -33,5 +33,6 @@ export class CustomCosmosSigner implements GenericSigner<CosmosTransaction> {
       method,
       memo
     );
+    return { hash };
   }
 }
