@@ -2,6 +2,7 @@ import { ExecuterActions } from '@rango-dev/queue-manager-core';
 import {
   delay,
   getCurrentStep,
+  getCurrentStepTxType,
   isCosmosTransaction,
   isEvmTransaction,
   isSolanaTransaction,
@@ -10,12 +11,14 @@ import {
   isTronTransaction,
   resetNetworkStatus,
   updateSwapStatus,
+  useTransactionsResponse,
 } from '../helpers';
 import { SwapActionTypes, SwapQueueContext, SwapStorage } from '../types';
-import { getNextStep, MessageSeverity } from '../shared';
-import { TransactionStatusResponse } from 'rango-sdk';
+import { getNextStep, getRelatedWallet, MessageSeverity } from '../shared';
+import { Transaction, TransactionStatusResponse } from 'rango-sdk';
 import { httpService } from '../services';
-import { providers } from 'ethers';
+import { GenericSigner } from 'rango-types';
+import { prettifyErrorMessage } from '../shared-errors';
 
 const INTERVAL_FOR_CHECK = 3_000;
 
@@ -39,21 +42,56 @@ async function checkTransactionStatus({
   const swap = getStorage().swapDetails;
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const currentStep = getCurrentStep(swap)!;
-  const txId = currentStep.executedTransactionId;
+  let txId = currentStep.executedTransactionId;
 
   let status: TransactionStatusResponse | null = null;
+  let signer: GenericSigner<Transaction> | null = null;
+  const { getTransactionResponseByHash, setTransactionResponseByHash } =
+    useTransactionsResponse();
 
-  // console.log('checkTransactionStatus', txId);
-  // try {
-  //   const ethereum = (window as any).ethereum;
-  //   const web3provider = new providers.Web3Provider(ethereum);
-  //   const tx = await web3provider.getTransaction(txId!);
-  //   console.log({ tx });
-  //   const receipt = await tx.wait();
-  //   console.log({ receipt });
-  // } catch (err) {
-  //   console.log({ err }, err?.replacement);
-  // }
+  try {
+    const txType = getCurrentStepTxType(currentStep);
+    const sourceWallet = getRelatedWallet(swap, currentStep);
+    if (txType && sourceWallet)
+      signer = context.getSigners(sourceWallet.walletType).getSigner(txType);
+  } catch (error) {
+    // wallet is not connected yet
+    // no need to do anything
+  }
+
+  try {
+    // if wallet is connected, try to get transaction reciept
+    if (signer?.wait) {
+      const txResponse = getTransactionResponseByHash(txId!);
+      console.log('checking transaction reciept', { signer, txResponse });
+      const { hash: updatedTxHash, response: updatedTxResponse } =
+        await signer.wait(txId!, txResponse);
+      console.log({ updatedTxHash, updatedTxResponse });
+      if (updatedTxHash !== txId) {
+        currentStep.executedTransactionId =
+          updatedTxHash || currentStep.executedTransactionId;
+        txId = currentStep.executedTransactionId;
+        if (updatedTxHash && updatedTxResponse)
+          setTransactionResponseByHash(updatedTxHash, updatedTxResponse);
+      }
+    }
+  } catch (error) {
+    const { extraMessage, extraMessageDetail, extraMessageErrorCode } =
+      prettifyErrorMessage(error);
+    const updateResult = updateSwapStatus({
+      getStorage,
+      setStorage,
+      nextStatus: 'failed',
+      nextStepStatus: 'failed',
+      message: extraMessage,
+      details: extraMessageDetail,
+      errorCode: extraMessageErrorCode,
+    });
+    context?.notifier({
+      eventType: 'task_failed',
+      ...updateResult,
+    });
+  }
 
   try {
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion

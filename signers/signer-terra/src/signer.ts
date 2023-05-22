@@ -20,7 +20,8 @@ export class DefaultTerraSigner implements GenericSigner<CosmosTransaction> {
     return result.signature;
   }
 
-  async signAndSendTx(tx: CosmosTransaction): Promise<string> {
-    return await executeTerraTransaction(tx, this.provider);
+  async signAndSendTx(tx: CosmosTransaction): Promise<{ hash: string }> {
+    const hash = await executeTerraTransaction(tx, this.provider);
+    return { hash };
   }
 }

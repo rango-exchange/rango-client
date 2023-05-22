@@ -1,13 +1,18 @@
-import { TransactionRequest } from '@ethersproject/abstract-provider';
+import {
+  TransactionRequest,
+  TransactionResponse,
+} from '@ethersproject/abstract-provider';
 import { GenericSigner, SignerError, SignerErrorCode } from 'rango-types';
 import { EvmTransaction } from 'rango-types/lib/api/main';
 import { providers } from 'ethers';
 
 export class DefaultEvmSigner implements GenericSigner<EvmTransaction> {
   private signer: providers.JsonRpcSigner;
+  private provider: providers.Web3Provider;
 
   constructor(provider: providers.ExternalProvider) {
-    this.signer = new providers.Web3Provider(provider).getSigner();
+    this.provider = new providers.Web3Provider(provider);
+    this.signer = this.provider.getSigner();
   }
 
   async signMessage(msg: string): Promise<string> {
@@ -22,7 +27,7 @@ export class DefaultEvmSigner implements GenericSigner<EvmTransaction> {
     tx: EvmTransaction,
     address: string,
     chainId: string | null
-  ): Promise<string> {
+  ): Promise<{ hash: string; response: TransactionResponse }> {
     try {
       const transaction = DefaultEvmSigner.buildTx(tx);
       const signerChainId = await this.signer.getChainId();
@@ -47,7 +52,8 @@ export class DefaultEvmSigner implements GenericSigner<EvmTransaction> {
           `Signer address: '${signerAddress.toLowerCase()}' doesn't match with required address: '${address.toLowerCase()}' for tx.`
         );
       }
-      return (await this.signer.sendTransaction(transaction)).hash;
+      const response = await this.signer.sendTransaction(transaction);
+      return { hash: response.hash, response };
     } catch (error) {
       let message = undefined;
       if (
@@ -70,6 +76,32 @@ export class DefaultEvmSigner implements GenericSigner<EvmTransaction> {
         );
       }
       throw new SignerError(SignerErrorCode.SEND_TX_ERROR, message, error);
+    }
+  }
+
+  async wait(
+    txHash: string,
+    txResponse?: TransactionResponse,
+    confirmations?: number | undefined
+  ): Promise<{ hash: string; response?: TransactionResponse }> {
+    try {
+      if (!!txResponse) {
+        await txResponse?.wait(confirmations);
+        return { hash: txHash };
+      }
+      if (!this.provider) return { hash: txHash }; // wallet not connected yet
+      const tx = await this.provider.getTransaction(txHash);
+      console.log({ tx });
+      if (!tx) throw Error('Transaction Not found'); // TODO fix it
+      const receipt = await tx.wait(confirmations);
+      console.log({ receipt });
+      return { hash: txHash };
+    } catch (err) {
+      console.log({ err });
+      if (err?.code === 'TRANSACTION_REPLACED' && err?.replacement) {
+        return { hash: err?.replacement?.hash, response: err?.replacement };
+      }
+      throw err;
     }
   }
 

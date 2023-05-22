@@ -20,7 +20,7 @@ export class CustomSolanaSigner implements GenericSigner<SolanaTransaction> {
     throw SignerError.UnimplementedError('signMessage');
   }
 
-  async signAndSendTx(tx: SolanaTransaction): Promise<string> {
+  async signAndSendTx(tx: SolanaTransaction): Promise<{ hash: string }> {
     const DefaultSolanaSigner: SolanaWeb3Signer = async (
       solanaWeb3Transaction: Transaction | VersionedTransaction
     ) => {
@@ -40,6 +40,6 @@ export class CustomSolanaSigner implements GenericSigner<SolanaTransaction> {
       tx,
       DefaultSolanaSigner
     );
-    return hash;
+    return { hash };
   }
 }

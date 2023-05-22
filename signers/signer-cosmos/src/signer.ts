@@ -25,7 +25,8 @@ export class DefaultCosmosSigner implements GenericSigner<CosmosTransaction> {
     return signature;
   }
 
-  async signAndSendTx(tx: CosmosTransaction): Promise<string> {
-    return await executeCosmosTransaction(tx, this.provider);
+  async signAndSendTx(tx: CosmosTransaction): Promise<{ hash: string }> {
+    const hash = await executeCosmosTransaction(tx, this.provider);
+    return { hash };
   }
 }
