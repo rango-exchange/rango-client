@@ -1,4 +1,4 @@
-import { RangoWidget } from './src/rangoWidget';
+import { RangoWidget } from './main';
 
 const rangoWidget = new RangoWidget();
 
