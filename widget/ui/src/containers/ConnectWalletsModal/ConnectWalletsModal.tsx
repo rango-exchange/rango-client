@@ -9,6 +9,7 @@ export interface PropTypes {
   list: WalletInfo[];
   onSelect: (walletType: WalletType) => void;
   onClose: () => void;
+  error?: string;
 }
 
 const ModalContent = styled('div', {
