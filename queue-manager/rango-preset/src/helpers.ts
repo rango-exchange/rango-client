@@ -509,8 +509,7 @@ export async function isNetworkMatchedForTransaction(
   step: PendingSwapStep,
   wallet: Wallet | null,
   meta: Meta,
-  providers: Providers,
-  canSwitchNetworkTo: (type: string, network: Network) => boolean
+  providers: Providers
 ): Promise<boolean> {
   if (isWalletNull(wallet)) {
     return false;
@@ -526,29 +525,25 @@ export async function isNetworkMatchedForTransaction(
     try {
       const sourceWallet = swap.wallets[fromBlockChain];
       if (sourceWallet) {
-        if (canSwitchNetworkTo(sourceWallet.walletType, fromBlockChain)) {
-          const provider = getEvmProvider(providers, sourceWallet.walletType);
-          const chainId: number | string | null = await getChainId(provider);
-          if (chainId) {
-            const blockChain = getBlockChainNameFromId(
-              chainId,
-              Object.entries(meta.blockchains).map(
-                ([, blockchainMeta]) => blockchainMeta
-              )
-            );
-            if (
-              blockChain &&
-              blockChain.toLowerCase() === fromBlockChain.toLowerCase()
+        const provider = getEvmProvider(providers, sourceWallet.walletType);
+        const chainId: number | string | null = await getChainId(provider);
+        if (chainId) {
+          const blockChain = getBlockChainNameFromId(
+            chainId,
+            Object.entries(meta.blockchains).map(
+              ([, blockchainMeta]) => blockchainMeta
             )
-              return true;
-            if (
-              blockChain &&
-              blockChain.toLowerCase() !== fromBlockChain.toLowerCase()
-            )
-              return false;
-          }
-        } else {
-          return true;
+          );
+          if (
+            blockChain &&
+            blockChain.toLowerCase() === fromBlockChain.toLowerCase()
+          )
+            return true;
+          if (
+            blockChain &&
+            blockChain.toLowerCase() !== fromBlockChain.toLowerCase()
+          )
+            return false;
         }
       }
     } catch (e) {

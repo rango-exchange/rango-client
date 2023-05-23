@@ -106,7 +106,6 @@ function QueueManager(props: PropsWithChildren<{}>) {
     //@ts-ignore
     wallets,
     providers: allProviders,
-    canSwitchNetworkTo,
     switchNetwork,
     connect,
     state,
