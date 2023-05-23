@@ -259,12 +259,12 @@ async function checkApprovalStatus({
         setStorage,
         nextStatus: 'failed',
         nextStepStatus: 'failed',
-        errorCode: 'SEND_TX_FAILED',
+        errorCode: 'INSUFFICIENT_APPROVE',
         message: message,
         details: details,
       });
       context.notifier({
-        eventType: 'smart_contract_call_failed', // TODO better event type
+        eventType: 'not_enough_approval',
         ...updateResult,
       });
       failed();
