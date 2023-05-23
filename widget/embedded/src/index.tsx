@@ -28,13 +28,7 @@ import { useUiStore } from './store/ui';
 import { navigationRoutes } from './constants/navigationRoutes';
 import { initConfig } from './utils/configs';
 
-export {
-  WidgetConfig,
-  WalletType,
-  WidgetTheme,
-  WidgetColors,
-  BlockchainAndTokenConfig,
-};
+export { WidgetConfig, WidgetTheme, WidgetColors, BlockchainAndTokenConfig };
 
 export type WidgetProps = {
   config?: WidgetConfig;

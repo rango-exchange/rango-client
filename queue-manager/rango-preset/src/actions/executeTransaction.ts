@@ -38,7 +38,7 @@ export async function executeTransaction(
   actions: ExecuterActions<SwapStorage, SwapActionTypes, SwapQueueContext>
 ): Promise<void> {
   const { getStorage, context } = actions;
-  const { meta, wallets, providers, canSwitchNetworkTo } = context;
+  const { meta, wallets, providers } = context;
   const { claimedBy } = claimQueue();
 
   const isClaimed = context.claimedBy === context._queue?.id;
@@ -82,8 +82,7 @@ export async function executeTransaction(
     currentStep,
     wallets,
     meta,
-    providers,
-    canSwitchNetworkTo
+    providers
   );
   const claimerId = claimedBy();
   const isClaimedByAnyQueue = !!claimerId && !isClaimed;
