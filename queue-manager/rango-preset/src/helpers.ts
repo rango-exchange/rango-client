@@ -53,7 +53,6 @@ import {
   StepStatus,
   SwapStatus,
   Wallet,
-  SwapProgressNotification,
   getRelatedWallet,
   getCurrentAddressOf,
 } from './shared';
@@ -299,7 +298,7 @@ export function setStepTransactionIds(
       ...(currentStep.explorerUrl || []),
       {
         url: explorerUrl.url,
-        description: explorerUrl.description || 'Main',
+        description: explorerUrl.description || null,
       },
     ];
   if (eventType === 'check_tx_status') {
@@ -318,18 +317,6 @@ export function setStepTransactionIds(
   });
   if (!!eventType)
     notifier({ eventType: eventType, swap: swap, step: currentStep });
-}
-
-export function getSwapNotitfication(
-  eventType: EventType,
-  updateResult: { swap: PendingSwap; step: PendingSwapStep | null }
-): SwapProgressNotification {
-  if (updateResult.swap.hasAlreadyProceededToSign) {
-    return {
-      eventType: 'transaction_expired',
-      ...updateResult,
-    };
-  } else return { eventType, ...updateResult };
 }
 
 /**
@@ -889,6 +876,7 @@ export function singTransaction(
 
   let nextStatus: SwapStatus | undefined,
     nextStepStatus: StepStatus,
+    eventType: EventType,
     message: string,
     details: string;
 
@@ -902,12 +890,14 @@ export function singTransaction(
       'Waiting for approve transaction to be mined and confirmed successfully';
     nextStepStatus = 'waitingForApproval';
     nextStatus = undefined;
+    eventType = 'confirm_approve_contract';
   } else {
     if (hasAlreadyProceededToSign) {
       message = 'Transaction is expired. Please try again.';
       nextStepStatus = 'failed';
       nextStatus = 'failed';
       details = '';
+      eventType = 'transaction_expired';
     } else {
       message = 'Executing transaction ...';
       nextStepStatus = 'running';
@@ -917,6 +907,9 @@ export function singTransaction(
           ? 'Check your mobile phone!'
           : ''
       }`;
+      eventType = isSmartContractCall
+        ? 'calling_smart_contract'
+        : 'confirm_transfer';
     }
   }
 
@@ -932,18 +925,12 @@ export function singTransaction(
       : hasAlreadyProceededToSign,
     errorCode: hasAlreadyProceededToSign ? 'TX_EXPIRED' : undefined,
   });
+  notifier({
+    eventType,
+    ...updateResult,
+  });
 
-  const notification = getSwapNotitfication(
-    isApproval
-      ? 'confirm_approve_contract'
-      : isSmartContractCall
-      ? 'calling_smart_contract'
-      : 'confirm_transfer',
-    updateResult
-  );
-  notifier(notification);
-
-  if (notification.eventType === 'transaction_expired') {
+  if (hasAlreadyProceededToSign) {
     failed();
     onFinish();
     return;
@@ -976,15 +963,17 @@ export function singTransaction(
 
       const { extraMessage, extraMessageDetail, extraMessageErrorCode } =
         prettifyErrorMessage(error);
+
+      // if it is an rpc error with details, send the log to sentry
       if (
         error &&
         error?.root &&
         error?.root?.message &&
         error?.root?.code &&
         error?.root?.reason
-      ) {
+      )
         logRPCError(error.root, swap, currentStep, sourceWallet?.walletType);
-      }
+
       const updateResult = updateSwapStatus({
         getStorage,
         setStorage,
@@ -994,16 +983,16 @@ export function singTransaction(
         details: extraMessageDetail,
         errorCode: extraMessageErrorCode,
       });
+      const eventType =
+        extraMessageErrorCode === 'REJECTED_BY_USER'
+          ? 'contract_rejected'
+          : isSmartContractCall
+          ? 'smart_contract_call_failed'
+          : 'transfer_failed';
       notifier({
-        eventType:
-          extraMessageErrorCode === 'REJECTED_BY_USER'
-            ? 'contract_rejected'
-            : isSmartContractCall
-            ? 'smart_contract_call_failed'
-            : 'transfer_failed',
+        eventType,
         ...updateResult,
       });
-
       failed();
       onFinish();
     }
