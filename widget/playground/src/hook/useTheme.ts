@@ -38,8 +38,9 @@ export function useTheme() {
   const customLightTheme = createTheme({
     colors: lightColors,
     shadows: {
-      s: `0px 3px 5px 3px ${light?.neutral || '#f0f2f5'} ,0px 6px 10px 3px ${light?.neutral ||
-        '#f0f2f5'}, 0px 1px 18px 3px ${light?.neutral || '#f0f2f5'}`,
+      s: `0px 3px 5px 3px ${light?.neutral || '#f0f2f5'} ,0px 6px 10px 3px ${
+        light?.neutral || '#f0f2f5'
+      }, 0px 1px 18px 3px ${light?.neutral || '#f0f2f5'}`,
     },
   });
 
@@ -54,8 +55,9 @@ export function useTheme() {
     },
 
     shadows: {
-      s: `0px 3px 5px 3px ${dark?.neutral || '#222'}, 0px 6px 10px 3px ${dark?.neutral ||
-        '#222'}, 0px 1px 18px 3px ${dark?.neutral || '#222'}`,
+      s: `0px 3px 5px 3px ${dark?.neutral || '#222'}, 0px 6px 10px 3px ${
+        dark?.neutral || '#222'
+      }, 0px 1px 18px 3px ${dark?.neutral || '#222'}`,
     },
   });
   const [OSTheme, setOSTheme] = useState('light');
@@ -91,10 +93,13 @@ export function useTheme() {
 
     if (classNames?.length && classNames?.length > 1) {
       body.removeAttribute('class');
-      body.classList.add(classNames.find(c => c.search('font') !== -1) || '');
+      const searchedClassName = classNames.find((c) => c.search('font') !== -1);
+      if (searchedClassName) body.classList.add(searchedClassName);
     }
-    if (mode === 'auto') body.classList.add(customLightTheme);
-    else if (mode === 'dark') body.classList.add(customDarkTheme);
+    if (mode === 'auto') {
+      if (OSTheme === 'light') body.classList.add(customLightTheme);
+      else body.classList.add(customDarkTheme);
+    } else if (mode === 'dark') body.classList.add(customDarkTheme);
     else body.classList.add(customLightTheme);
   }, [mode, OSTheme, customLightTheme, customDarkTheme]);
 

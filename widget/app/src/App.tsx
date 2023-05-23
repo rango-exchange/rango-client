@@ -12,7 +12,11 @@ export function App() {
 
   if (!!configParam) {
     try {
-      config = JSON.parse(configParam);
+      config = JSON.parse(configParam, (_, value) => {
+        if (typeof value === 'string' && value[0] === '$') {
+          return value.replace('$', '#');
+        } else return value;
+      });
     } catch (error) {
       console.error('Widget config param is invalid!');
     }
@@ -21,7 +25,7 @@ export function App() {
   if (!!config) configRef.current = config;
 
   return (
-    <div style={{ padding: '40px' }}>
+    <div style={{ padding: '20px' }}>
       <Routes>
         <Route path="/*" element={<Widget config={configRef.current} />} />
       </Routes>

@@ -10,11 +10,11 @@ export const getIframePlaceholder = ({
       id="widget-placeholder"
     >
       <div
-        style="padding: 40px; display: flex; justify-content: center; width: 100%; height: 100%"
+        style="padding: 20px; display: flex; justify-content: center; width: 100%; height: 100%"
         }
       >
         <div
-          style="width: 512px; height: 450px; min-width: 375px; border-radius: 12px; background-color: ${background}; display: flex; justify-content: center; align-items: center;"
+          style="width: 100%; height: 450px; min-width: 375px; border-radius: 12px; background-color: ${background}; display: flex; justify-content: center; align-items: center;"
         >
           <style>
             @keyframes pulse {

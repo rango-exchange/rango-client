@@ -24,7 +24,14 @@ const providers = allProviders();
 const Container = styled('div', {
   display: 'flex',
   justifyContent: 'center',
+  alignItems: 'center',
   backgroundColor: '$neutral100',
+  flexDirection: 'column',
+  padding: '0 $24',
+  '@lg': {
+    flexDirection: 'row',
+    alignItems: 'unset',
+  },
 });
 const SwapContent = styled('div', {
   flexBasis: '512px',
@@ -33,20 +40,48 @@ const ConfigContent = styled('div', {
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'end',
-  paddingRight: '$24',
+  '@lg': {
+    paddingRight: '$24',
+    marginBottom: '$32',
+  },
 });
 
 const Swap = styled('div', {
   position: 'sticky',
-  top: 0,
-  marginTop: 32,
+  top: '$32',
+  margin: '$32 0',
 });
 
 const Header = styled('div', {
   display: 'flex',
   justifyContent: 'space-between',
-  alignItems: 'center',
+  alignItems: 'start',
+  flexDirection: 'column',
   padding: '$32 0',
+  '@sm': {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+});
+
+const Description = styled(Typography, {
+  paddingRight: '$24',
+});
+
+const HeaderButtonsContainer = styled('div', {
+  paddingTop: '$16',
+  display: 'flex',
+  '@sm': {
+    paddingTop: '0',
+  },
+});
+
+const HeaderButton = styled(Button, {
+  minWidth: 'max-content',
+});
+
+const ResetButton = styled(HeaderButton, {
+  marginLeft: '$8',
 });
 
 const Pre = styled('pre', {
@@ -74,9 +109,12 @@ export function Config(props: PropsWithChildren) {
   const loadingStatus = useMetaStore.use.loadingStatus();
   const [open, setOpen] = useState<boolean>(false);
   const config = useConfigStore.use.config();
+  const resetConfig = useConfigStore.use.resetConfig();
   const [isCopied, handleCopy] = useCopyToClipboard(2000);
 
-  const filteredConfig = filterConfig(config, initialConfig);
+  const { filteredConfigForExport, userSelectedConfig } = filterConfig(config, initialConfig);
+
+  const resetButtonDisabled = !Object.entries(userSelectedConfig).length;
 
   return (
     <Container>
@@ -87,13 +125,23 @@ export function Config(props: PropsWithChildren) {
               <div>
                 <Typography variant="h4">Customize your widget</Typography>
                 <Divider size={8} />
-                <Typography variant="body2" color="$neutral600">
+                <Description variant="body2" color="$neutral600">
                   You can customize the theme and config how your widget should works
-                </Typography>
+                </Description>
               </div>
-              <Button variant="contained" type="primary" onClick={() => setOpen(true)}>
-                Export Config
-              </Button>
+              <HeaderButtonsContainer>
+                <HeaderButton variant="contained" type="primary" onClick={() => setOpen(true)}>
+                  Export Config
+                </HeaderButton>
+                <Divider size={16} />
+                <ResetButton
+                  variant="outlined"
+                  type="error"
+                  disabled={resetButtonDisabled}
+                  onClick={resetConfig.bind(null)}>
+                  Reset Config
+                </ResetButton>
+              </HeaderButtonsContainer>
             </Header>
             {loadingStatus === 'failed' && (
               <Alert type="error">
@@ -123,7 +171,7 @@ export function Config(props: PropsWithChildren) {
           <Button
             type="primary"
             variant="ghost"
-            onClick={() => handleCopy(JSON.stringify(filteredConfig))}>
+            onClick={() => handleCopy(JSON.stringify(filteredConfigForExport))}>
             {isCopied ? 'Copied!' : 'Copy'}
           </Button>
         }
@@ -141,9 +189,9 @@ export function Config(props: PropsWithChildren) {
             </Typography>
 
             <Pre
-              {...(!!filteredConfig && {
+              {...(!!filteredConfigForExport && {
                 dangerouslySetInnerHTML: {
-                  __html: syntaxHighlight(JSON.stringify(filteredConfig, undefined, 4)),
+                  __html: syntaxHighlight(JSON.stringify(filteredConfigForExport, undefined, 4)),
                 },
               })}
             />

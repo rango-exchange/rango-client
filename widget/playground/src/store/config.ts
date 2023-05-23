@@ -38,6 +38,7 @@ interface ConfigState {
   onChangeColors: (name: COLORS, mode: 'light' | 'dark', color?: string) => void;
   onSelectTheme: (colors: { light: Colors; dark: Colors }) => void;
   onChangelanguage: (value: string) => void;
+  resetConfig: () => void;
 }
 
 export const initialConfig: WidgetConfig = {
@@ -161,6 +162,9 @@ export const useConfigStore = createSelectors(
           set((state) => {
             state.config.theme.colors = colors;
           }),
+        resetConfig: () => {
+          set({ config: initialConfig });
+        },
       })),
       { name: 'user-conf' },
     ),
