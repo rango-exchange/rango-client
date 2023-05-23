@@ -2,7 +2,7 @@ import { Meta } from '@storybook/react';
 import { ConfirmSwap, PropTypes } from './ConfirmSwap';
 import { exampleFor5Wallets, wallets, bestRoute } from './mock';
 import React from 'react';
-import { Button, styled, Typography, Divider, Image, GasIcon } from '@rango-dev/ui';
+import { Button, Typography, Divider, Image, GasIcon, styled } from '../../';
 import { BestRouteResponse } from 'rango-sdk';
 import { ChevronRightIcon } from '../../components';
 const Box = styled('div', {
