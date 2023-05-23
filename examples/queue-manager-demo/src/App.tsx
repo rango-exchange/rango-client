@@ -37,7 +37,6 @@ export function App(props: PropTypes) {
     wallets: wallet,
     providers: allProviders,
     switchNetwork,
-    canSwitchNetworkTo,
     connect,
     state,
     notifier,
