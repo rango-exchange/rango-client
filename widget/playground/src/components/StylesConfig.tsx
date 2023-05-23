@@ -176,9 +176,25 @@ const ThemeContainer = styled('div', {
   height: '$48',
   borderRadius: '$5',
   display: 'flex',
-  justifyContent: 'center',
+  justifyContent: 'space-evenly',
   alignItems: 'center',
 });
+
+const ThemeSwitchAndLables = styled('div', {
+  display: 'flex',
+  alignItems: 'center',
+});
+
+const ThemeSwitchContainer = styled('div', {
+  padding: '0 $16',
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  '@lg': {
+    padding: '0',
+  },
+});
+
 const Line = styled('div', {
   height: '100%',
   width: 1,
@@ -272,26 +288,29 @@ export function StylesConfig() {
                   setChekedTheme(checked);
                 }}
               />
-              <Divider size={12} direction='horizontal' />
+
               <Line />
-              <Divider size={12} direction='horizontal' />
-              <Typography variant="caption" mr={4}>
-                Light
-              </Typography>
-              <Switch
-                checked={theme === 'dark'}
-                onChange={(checked) => {
-                  if (!checkedTheme && !singleTheme) {
-                    let theme;
-                    if (checked) theme = 'dark';
-                    else theme = 'light';
-                    onChangeTheme('mode', theme);
-                  }
-                }}
-              />
-              <Typography variant="caption" ml={4}>
-                Dark
-              </Typography>
+              <ThemeSwitchAndLables>
+                <Typography variant="caption" mr={4}>
+                  Light
+                </Typography>
+                <ThemeSwitchContainer>
+                  <Switch
+                    checked={theme === 'dark'}
+                    onChange={(checked) => {
+                      if (!checkedTheme && !singleTheme) {
+                        let theme;
+                        if (checked) theme = 'dark';
+                        else theme = 'light';
+                        onChangeTheme('mode', theme);
+                      }
+                    }}
+                  />
+                </ThemeSwitchContainer>
+                <Typography variant="caption" ml={4}>
+                  Dark
+                </Typography>
+              </ThemeSwitchAndLables>
             </ThemeContainer>
           </div>
           <div>

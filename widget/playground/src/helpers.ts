@@ -71,13 +71,13 @@ export function clearEmpties<T extends Record<string, any>>(obj: T): T {
   return obj;
 }
 
-export function filterConfig(
-  config: WidgetConfig,
-  initialConfig: WidgetConfig,
-): Partial<WidgetConfig> {
-  const userSelectedConfig = clearEmpties(subtractObject(initialConfig, config));
+export function filterConfig(config: WidgetConfig, initialConfig: WidgetConfig) {
+  const userSelectedConfig = clearEmpties(
+    subtractObject(JSON.parse(JSON.stringify(initialConfig)), JSON.parse(JSON.stringify(config))),
+  );
 
-  if (!userSelectedConfig.apiKey) userSelectedConfig.apiKey = config.apiKey;
+  const filteredConfigForExport = Object.assign({}, userSelectedConfig);
+  if (!filteredConfigForExport.apiKey) filteredConfigForExport.apiKey = config.apiKey;
 
-  return userSelectedConfig;
+  return { userSelectedConfig, filteredConfigForExport };
 }

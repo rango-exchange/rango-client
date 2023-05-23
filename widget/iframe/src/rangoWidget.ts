@@ -1,20 +1,17 @@
 import { WidgetConfig } from '@rango-dev/widget-embedded';
 import { commonStyles, defaultStyles } from './constants';
 import { getIframePlaceholder } from './iframePlaceholder';
-import { convertHexToRGB } from './utils';
 import { WIDGET_IFRAME_URL } from './config';
 import { PlaceholderStyles } from './types';
 
 export class RangoWidget {
   private createConfigParams(configuration: WidgetConfig): string {
     const configParams = JSON.stringify(configuration, (key, value) => {
-      // Take # out of the url parameters, and use rgb colors instead of hex colors.
+      // Take # out of the url parameters
       if (typeof value === 'string' && value[0] === '#') {
-        const rgb = convertHexToRGB(value);
-        return rgb;
+        return value.replace('#', '$');
       } else return value;
     });
-
     return configParams;
   }
 
@@ -67,6 +64,7 @@ export class RangoWidget {
   public init(configuration?: WidgetConfig): void {
     const widgetRoot = window.document.getElementById('rango-widget-root');
     if (!!widgetRoot) {
+      widgetRoot.style.width = '100%';
       const iframeWidget = this.createIframeNode(configuration);
       const placeholderStyles = this.getPlaceholderStyles(configuration);
       widgetRoot.insertAdjacentHTML(

@@ -34,6 +34,11 @@ const Header = styled('div', {
   },
 });
 
+const WalletImages = styled('div', {
+  display: 'flex',
+  paddingLeft: '12px',
+});
+
 const WalletImageContainer = styled('div', {
   marginLeft: -15,
   marginRight: '$6',
@@ -117,16 +122,18 @@ export function Layout({ config }: LayoutProps) {
             if (!connectWalletsButtonDisabled)
               navigate(navigationRoutes.wallets);
           }}
+          prefix={
+            connectedWalletsImages?.length ? (
+              <WalletImages>
+                {connectedWalletsImages.map((walletImage, index) => (
+                  <WalletImageContainer key={index}>
+                    <Image src={walletImage} size={24} />
+                  </WalletImageContainer>
+                ))}
+              </WalletImages>
+            ) : null
+          }
         >
-          {connectedWalletsImages?.length ? (
-            connectedWalletsImages.map((walletImage, index) => (
-              <WalletImageContainer key={index}>
-                <Image src={walletImage} size={24} />
-              </WalletImageContainer>
-            ))
-          ) : (
-            <></>
-          )}
           <div className="balance">
             <Typography variant="body2">
               {!connectedWallets?.length
