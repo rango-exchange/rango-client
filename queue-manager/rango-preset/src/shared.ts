@@ -84,6 +84,7 @@ export type EventType =
   | 'waiting_for_change_wallet_account'
   | 'network_changed'
   | 'not_enough_balance'
+  | 'not_enough_approval'
   | 'waiting_for_queue'
   | 'check_fee_failed'
   | 'route_failed_to_find'
