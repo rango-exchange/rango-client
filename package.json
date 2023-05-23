@@ -19,6 +19,7 @@
     "build:wallets": "nx run-many --target=build --projects=@rango-dev/signer-*,@rango-dev/wallets-*,@rango-dev/provider-* --exclude @rango-dev/wallets-demo --parallel=5",
     "build:queue-manager": "nx run-many --target=build --projects=@rango-dev/queue-manager-* --exclude=@rango-dev/queue-manager-demo",
     "build:widget": "nx run-many --target=build  --projects=@rango-dev/widget-*",
+    "build:iframe": "nx run-many --target=build  --projects=@rango-dev/widget-iframe",
     "build": "nx affected --target=build --parallel=3",
     "build:non-demo": "nx affected --target=build --parallel=3 --exclude=@rango-dev/queue-manager-demo,@rango-dev/wallets-demo,@rango-dev/wallets-adapter-demo,@rango-dev/widget-app,@rango-dev/widget-playground",
     "dev:ui": "nx run-many --target=storybook --projects=@rango-dev/ui",
