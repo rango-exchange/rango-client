@@ -63,7 +63,7 @@ export interface PropTypes {
   loading?: boolean;
   requiredWallets: string[];
   selectableWallets: SelectableWallet[];
-  onChange: (w: SelectableWallet | { chain: string; address: string,walletType: string }) => void;
+  onChange: (w: SelectableWallet | { chain: string; address: string; walletType: string }) => void;
   isExperimentalChain?: (wallet: string) => boolean;
   handleConnectChain?: (wallet: string) => void;
   previewInputs?: ReactNode;
@@ -102,8 +102,6 @@ export function ConfirmSwap(props: PropsWithChildren<PropTypes>) {
     isValidCustomDestination,
   } = props;
 console.log(props);
-
-  console.log('>>>>>>>>>>', props);
 
   return (
     <SecondaryPage
@@ -178,7 +176,8 @@ console.log(props);
                 <Typography variant="body2">Your {wallet} Wallet</Typography>
               </div>
               {list.length === 0 &&
-                (index < requiredWallets.length - 1 ||
+                (requiredWallets.length === 1 ||
+                  index < requiredWallets.length - 1 ||
                   (index === requiredWallets.length - 1 && !checkedDestination)) && (
                   <>
                     <AlertContainer>
@@ -233,11 +232,14 @@ console.log(props);
                         value={customDestination}
                         onChange={(e) => {
                           setCustomDestination(e.target.value);
-                          onChange({
-                            chain: wallet,
-                            address: e.target.value,
-                            walletType: '',
-                          });
+                          // {
+                          //   requiredWallets.length > 1 &&
+                          //     onChange({
+                          //       chain: wallet,
+                          //       address: e.target.value,
+                          //       walletType: '',
+                          //     });
+                          // }
                         }}
                       />
                       {!!customDestination &&

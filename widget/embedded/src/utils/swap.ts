@@ -371,7 +371,7 @@ export function createBestRouteRequestBody(
       symbol: toToken.symbol,
     },
     connectedWallets,
-    destination,
+    destination: destination || undefined,
     selectedWallets: selectedWalletsMap,
     swapperGroups: disabledLiquiditySources,
     swappersGroupsExclude: true,

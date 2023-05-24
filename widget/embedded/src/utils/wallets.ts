@@ -173,6 +173,8 @@ export function getSelectableWallets(
 ): SelectableWallet[] {
   const selectableWallets = connectedWallets.map(
     (connectedWallet: ConnectedWallet) => {
+      console.log({destinationChain}, connectedWallet.chain);
+      
       return {
         address: connectedWallet.address,
         walletType: connectedWallet.walletType,
