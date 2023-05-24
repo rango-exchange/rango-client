@@ -10,7 +10,12 @@ import {
   getSelectableWallets,
   isExperimentalChain,
 } from '../utils/wallets';
-import { getTotalFeeInUsd, requiredWallets } from '../utils/swap';
+import {
+  confirmSwapDisabled,
+  getTotalFeeInUsd,
+  isValidCustomDestination,
+  requiredWallets,
+} from '../utils/swap';
 import { numberToString } from '../utils/numbers';
 import { useMetaStore } from '../store/meta';
 import { Network, WalletType } from '@rango-dev/wallets-shared';
@@ -81,20 +86,6 @@ export function ConfirmSwapPage({
   );
 
   const { getWalletInfo, connect } = useWallets();
-  const confirmDisabled =
-    fetchingBestRoute ||
-    (!destinationChain &&
-      !requiredWallets(bestRoute).every((chain) =>
-        selectedWallets.map((wallet) => wallet.chain).includes(chain)
-      )) ||
-    (!!destinationChain && !customDestination) ||
-    (!!destinationChain &&
-      !!customDestination &&
-      !requiredWallets(bestRoute)
-        .filter((chain) => chain !== destinationChain)
-        .every((chain) =>
-          selectedWallets.map((wallet) => wallet.chain).includes(chain)
-        ));
 
   const firstStep = bestRoute?.result?.swaps[0];
   const lastStep =
@@ -115,7 +106,6 @@ export function ConfirmSwapPage({
     getWalletInfo,
     requiredWallets(bestRoute).length === 1 ? '' : destinationChain
   );
-  
 
   const handleConnectChain = (wallet: string) => {
     const network = wallet as Network;
@@ -135,12 +125,7 @@ export function ConfirmSwapPage({
       setCustomDestination={setCustomDestination}
       customDestination={customDestination}
       customDestinationEnabled={customDestinationEnabled}
-      isValidCustomDestination={(blockchain, address) => {
-        const regex =
-          blockchains.find((chain) => chain.name === blockchain)
-            ?.addressPatterns || [];
-        return regex.filter((r) => new RegExp(r).test(address)).length > 0;
-      }}
+      isValidCustomDestination={isValidCustomDestination}
       checkedDestination={!!destinationChain}
       setDestinationChain={setDestinationChain}
       onBack={navigateBackFrom.bind(null, navigationRoutes.confirmSwap)}
@@ -166,10 +151,19 @@ export function ConfirmSwapPage({
           }
         });
       }}
-      onChange={wallet => setSelectedWallet(wallet)}
-      confirmDisabled={loadingMetaStatus !== 'success' || confirmDisabled}
-      handleConnectChain={wallet => handleConnectChain(wallet)}
-      isExperimentalChain={wallet =>
+      onChange={(wallet) => setSelectedWallet(wallet)}
+      confirmDisabled={
+        loadingMetaStatus !== 'success' ||
+        confirmSwapDisabled(
+          fetchingBestRoute,
+          destinationChain,
+          customDestination,
+          bestRoute,
+          selectableWallets
+        )
+      }
+      handleConnectChain={(wallet) => handleConnectChain(wallet)}
+      isExperimentalChain={(wallet) =>
         getKeplrCompatibleConnectedWallets(selectableWallets).length > 0
           ? isExperimentalChain(blockchains, wallet)
           : false

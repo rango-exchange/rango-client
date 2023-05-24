@@ -12,7 +12,7 @@ import { numberToString } from './numbers';
 import { WalletType } from '@rango-dev/wallets-shared';
 import { getRequiredBalanceOfWallet } from './routing';
 import { getRequiredChains } from './wallets';
-import { LoadingStatus } from '../store/meta';
+import { LoadingStatus, useMetaStore } from '../store/meta';
 import { ConvertedToken, SwapButtonState, Wallet } from '../types';
 import {
   PendingSwapNetworkStatus,
@@ -561,5 +561,39 @@ export function shouldRetrySwap(pendingSwap: PendingSwap) {
     pendingSwap.status === 'failed' &&
     !!pendingSwap.finishTime &&
     new Date().getTime() - parseInt(pendingSwap.finishTime) < 4 * 3600 * 1000
+  );
+}
+export function isValidCustomDestination(
+  blockchain: string,
+  address: string
+): boolean {
+  const blockchains = useMetaStore.getState().meta.blockchains;
+  const regex =
+    blockchains.find((chain) => chain.name === blockchain)?.addressPatterns ||
+    [];
+  return regex.filter((r) => new RegExp(r).test(address)).length > 0;
+}
+
+export function confirmSwapDisabled(
+  fetching: boolean,
+  destinationChain: string,
+  customDestination: string,
+  bestRoute: BestRouteResponse | null,
+  selectedWallets: Wallet[]
+) {
+  return (
+    fetching ||
+    (!destinationChain &&
+      !requiredWallets(bestRoute).every((chain) =>
+        selectedWallets.map((wallet) => wallet.chain).includes(chain)
+      )) ||
+    (!!destinationChain && !customDestination) ||
+    (!!destinationChain &&
+      !!customDestination &&
+      !requiredWallets(bestRoute)
+        .filter((chain) => chain !== destinationChain)
+        .every((chain) =>
+          selectedWallets.map((wallet) => wallet.chain).includes(chain)
+        ))
   );
 }
