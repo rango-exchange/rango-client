@@ -26,3 +26,5 @@ export function debounce(fn: Function, time: number) {
     }, time);
   }
 }
+
+

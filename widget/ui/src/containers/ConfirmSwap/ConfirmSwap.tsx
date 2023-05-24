@@ -63,7 +63,7 @@ export interface PropTypes {
   loading?: boolean;
   requiredWallets: string[];
   selectableWallets: SelectableWallet[];
-  onChange: (w: SelectableWallet | { chain: string; address: string; walletType: string }) => void;
+  onChange: (w: SelectableWallet) => void;
   isExperimentalChain?: (wallet: string) => boolean;
   handleConnectChain?: (wallet: string) => void;
   previewInputs?: ReactNode;
@@ -232,14 +232,6 @@ console.log(props);
                         value={customDestination}
                         onChange={(e) => {
                           setCustomDestination(e.target.value);
-                          // {
-                          //   requiredWallets.length > 1 &&
-                          //     onChange({
-                          //       chain: wallet,
-                          //       address: e.target.value,
-                          //       walletType: '',
-                          //     });
-                          // }
                         }}
                       />
                       {!!customDestination &&
