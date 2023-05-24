@@ -13,7 +13,7 @@
     "parcel": "^2.7.0"
   },
   "dependencies": {
-    "@rango-dev/provider-all": "^0.1.14-next.15",
+    "@rango-dev/provider-all": "^0.1.14-next.16",
     "@rango-dev/ui": "^0.1.14-next.12",
     "@rango-dev/wallets-core": "^0.1.14-next.16",
     "@rango-dev/wallets-shared": "^0.1.13-next.18",

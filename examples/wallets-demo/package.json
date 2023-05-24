@@ -10,7 +10,7 @@
     "build": "parcel build --cache-dir=.parcel-cache"
   },
   "dependencies": {
-    "@rango-dev/provider-all": "^0.1.14-next.15",
+    "@rango-dev/provider-all": "^0.1.14-next.16",
     "@rango-dev/ui": "^0.1.14-next.12",
     "@rango-dev/wallets-core": "^0.1.14-next.16",
     "parcel": "^2.8.0",
