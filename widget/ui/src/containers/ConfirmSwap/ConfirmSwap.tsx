@@ -1,4 +1,4 @@
-import React, { PropsWithChildren, ReactNode, useState } from 'react';
+import React, { PropsWithChildren, ReactNode } from 'react';
 import { Alert, Checkbox, Divider, TextField } from '../../components';
 import { Button } from '../../components/Button';
 import { SecondaryPage } from '../../components/SecondaryPage/SecondaryPage';
@@ -63,7 +63,7 @@ export interface PropTypes {
   loading?: boolean;
   requiredWallets: string[];
   selectableWallets: SelectableWallet[];
-  onChange: (w: SelectableWallet) => void;
+  onChange: (w: SelectableWallet | { chain: string; address: string }) => void;
   isExperimentalChain?: (wallet: string) => boolean;
   handleConnectChain?: (wallet: string) => void;
   previewInputs?: ReactNode;
@@ -73,11 +73,12 @@ export interface PropTypes {
   warnings?: Message[];
   extraMessages?: ReactNode;
   customDestination?: string;
+  checkedDestination: boolean;
+  setDestinationChain: (chain: string) => void;
   setCustomDestination: (customDestination: string) => void;
+  customDestinationEnabled?: boolean
 }
 export function ConfirmSwap(props: PropsWithChildren<PropTypes>) {
-  const [checkedDestination, setCheckedDestination] = useState<boolean>(false);
-
   const {
     onBack,
     loading,
@@ -94,6 +95,9 @@ export function ConfirmSwap(props: PropsWithChildren<PropTypes>) {
     extraMessages,
     customDestination,
     setCustomDestination,
+    checkedDestination,
+    setDestinationChain,
+    customDestinationEnabled = true,
   } = props;
 console.log(props);
 
@@ -162,40 +166,49 @@ console.log(props);
                 <Divider size={8} direction="horizontal" />
                 <Typography variant="body2">Your {wallet} Wallet</Typography>
               </div>
-              {list.length === 0 && index !== requiredWallets.length - 1 && (
-                <>
-                  <AlertContainer>
-                    <Alert type="error">
-                      You need to connect a compatible wallet with {wallet}.
-                    </Alert>
-                  </AlertContainer>
-                  {isExperimentalChain?.(wallet) && (
-                    <Button
-                      variant="contained"
-                      type="primary"
-                      align="grow"
-                      onClick={() => handleConnectChain?.(wallet)}>
-                      {`Add ${wallet} chain to Cosmos wallets`}
-                    </Button>
-                  )}
-                </>
+              {list.length === 0 &&
+                (index < requiredWallets.length - 1 ||
+                  (index === requiredWallets.length - 1 && !checkedDestination)) && (
+                  <>
+                    <AlertContainer>
+                      <Alert type="error">
+                        You need to connect a compatible wallet with {wallet}.
+                      </Alert>
+                    </AlertContainer>
+                    {isExperimentalChain?.(wallet) && (
+                      <Button
+                        variant="contained"
+                        type="primary"
+                        align="grow"
+                        onClick={() => handleConnectChain?.(wallet)}>
+                        {`Add ${wallet} chain to Cosmos wallets`}
+                      </Button>
+                    )}
+                  </>
+                )}
+              {list.length != 0 && (
+                <SelectableWalletList
+                  list={list}
+                  onChange={(w) => {
+                    onChange(w);
+                    setDestinationChain('');
+                    setCustomDestination('');
+                  }}
+                />
               )}
-              {list.length != 0 && <SelectableWalletList list={list} onChange={onChange} />}
-              {index === requiredWallets.length - 1 && (
+              {index === requiredWallets.length - 1 && customDestinationEnabled && (
                 <>
                   <Divider />
                   <Checkbox
                     label={`Choose a custom ${wallet} address`}
                     checked={checkedDestination}
                     onCheckedChange={(checked) => {
-                      setCheckedDestination(checked);
-                      if (!checked && list.length) onChange(list[0]);
-                      else {
-                        const i = list.findIndex((item) => item.selected);
-                        onChange({
-                          ...list[i],
-                          selected: false,
-                        });
+                      if (!checked) {
+                        setDestinationChain('');
+                        setCustomDestination('');
+                        list.length && onChange(list[0]);
+                      } else {
+                        setDestinationChain(wallet);
                       }
                     }}
                     id={'custom_destination'}
@@ -209,7 +222,7 @@ console.log(props);
                       onChange={(e) => {
                         setCustomDestination(e.target.value);
                         onChange({
-                          ...list[0],
+                          chain: wallet,
                           address: e.target.value,
                         });
                       }}
