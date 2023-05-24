@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/widget-iframe",
-  "version": "0.1.1-next.1",
+  "version": "0.1.1-next.2",
   "license": "MIT",
   "private": true,
   "source": "src/index.ts",
@@ -23,6 +23,6 @@
     "parcel": "^2.7.0"
   },
   "dependencies": {
-    "@rango-dev/widget-embedded": "^0.1.16-next.22"
+    "@rango-dev/widget-embedded": "^0.1.16-next.23"
   }
 }
