@@ -145,33 +145,6 @@ export const getCurrentStep = (swap: PendingSwap): PendingSwapStep | null => {
   );
 };
 
-export const getCurrentStepTxType = (
-  currentStep: PendingSwapStep
-): TransactionType | undefined => {
-  const {
-    evmTransaction,
-    evmApprovalTransaction,
-    cosmosTransaction,
-    solanaTransaction,
-    transferTransaction,
-    starknetApprovalTransaction,
-    starknetTransaction,
-    tronApprovalTransaction,
-    tronTransaction,
-  } = currentStep;
-  return (
-    evmTransaction ||
-    evmApprovalTransaction ||
-    cosmosTransaction ||
-    solanaTransaction ||
-    transferTransaction ||
-    starknetApprovalTransaction ||
-    starknetTransaction ||
-    tronApprovalTransaction ||
-    tronTransaction
-  )?.type;
-};
-
 export const getCurrentStepTx = (
   currentStep: PendingSwapStep
 ): Transaction | null => {
@@ -197,6 +170,12 @@ export const getCurrentStepTx = (
     tronApprovalTransaction ||
     tronTransaction
   );
+};
+
+export const getCurrentStepTxType = (
+  currentStep: PendingSwapStep
+): TransactionType | undefined => {
+  return getCurrentStepTx(currentStep)?.type;
 };
 
 export const isApprovalCurrentStepTx = (
@@ -887,7 +866,7 @@ export function singTransaction(
   const sourceWallet = getRelatedWallet(swap, currentStep);
   const walletAddress = getCurrentAddressOf(swap, currentStep);
   const walletSigners = getSigners(sourceWallet.walletType);
-  const mobileWallet = isMobileWallet(sourceWallet.walletType);
+  const currentStepBlockchain = getCurrentBlockchainOf(swap, currentStep);
 
   const onFinish = () => {
     // TODO resetClaimedBy is undefined here
@@ -898,7 +877,6 @@ export function singTransaction(
 
   const tx = getCurrentStepTx(currentStep);
   const txType = tx?.type;
-  // const txType = getCurrentStepTxType(currentStep);
   const isApproval = isApprovalCurrentStepTx(currentStep);
   const isSmartContractCall = [
     TransactionType.EVM,
@@ -909,48 +887,50 @@ export function singTransaction(
   const hasAlreadyProceededToSign =
     typeof swap.hasAlreadyProceededToSign === 'boolean';
 
-  const approvalMessage = `Waiting for approval of ${
-    currentStep?.fromSymbol
-  } coin ${
-    sourceWallet.walletType === WalletType.WALLET_CONNECT
-      ? 'on your mobile phone!'
-      : ''
-  }`;
-  const executeMessage = hasAlreadyProceededToSign
-    ? 'Transaction is expired. Please try again.'
-    : 'Executing transaction ...';
+  let nextStatus: SwapStatus | undefined,
+    nextStepStatus: StepStatus,
+    message: string,
+    details: string;
 
-  const approvalDetails =
-    'Waiting for approve transaction to be mined and confirmed successfully';
-  const executeDetails = `${
-    sourceWallet.walletType === WalletType.WALLET_CONNECT
-      ? 'Check your mobile phone!'
-      : ''
-  }`;
+  if (isApproval) {
+    message = `Waiting for approval of ${currentStep?.fromSymbol} coin ${
+      sourceWallet.walletType === WalletType.WALLET_CONNECT
+        ? 'on your mobile phone!'
+        : ''
+    }`;
+    details =
+      'Waiting for approve transaction to be mined and confirmed successfully';
+    nextStepStatus = 'waitingForApproval';
+    nextStatus = undefined;
+  } else {
+    if (hasAlreadyProceededToSign) {
+      message = 'Transaction is expired. Please try again.';
+      nextStepStatus = 'failed';
+      nextStatus = 'failed';
+      details = '';
+    } else {
+      message = 'Executing transaction ...';
+      nextStepStatus = 'running';
+      nextStatus = 'running';
+      details = `${
+        sourceWallet.walletType === WalletType.WALLET_CONNECT
+          ? 'Check your mobile phone!'
+          : ''
+      }`;
+    }
+  }
 
   const updateResult = updateSwapStatus({
     getStorage,
     setStorage,
-    nextStepStatus: isApproval
-      ? 'waitingForApproval'
-      : hasAlreadyProceededToSign
-      ? 'failed'
-      : 'running',
-    nextStatus: isApproval
-      ? undefined
-      : hasAlreadyProceededToSign
-      ? 'failed'
-      : 'running',
-    message: isApproval ? approvalMessage : executeMessage,
-    details: isApproval ? approvalDetails : executeDetails,
+    nextStepStatus,
+    nextStatus,
+    message: message,
+    details: details,
     hasAlreadyProceededToSign: isApproval
       ? undefined
       : hasAlreadyProceededToSign,
-    errorCode: isApproval
-      ? undefined
-      : hasAlreadyProceededToSign
-      ? 'TX_EXPIRED'
-      : undefined,
+    errorCode: hasAlreadyProceededToSign ? 'TX_EXPIRED' : undefined,
   });
 
   const notification = getSwapNotitfication(
@@ -966,68 +946,68 @@ export function singTransaction(
   if (notification.eventType === 'transaction_expired') {
     failed();
     onFinish();
-  } else {
-    const signer = walletSigners.getSigner(txType!);
-    signer.signAndSendTx(tx!, walletAddress, null).then(
-      ({ hash, response }) => {
-        const explorerUrl = getScannerUrl(
-          hash,
-          getCurrentBlockchainOf(swap, currentStep),
-          meta.blockchains
-        );
-        setStepTransactionIds(
-          actions,
-          hash,
-          notifier,
-          isApproval ? 'check_approve_tx_status' : 'check_tx_status',
-          explorerUrl
-            ? { url: explorerUrl, description: isApproval ? 'Approve' : 'Swap' }
-            : undefined
-        );
-        // response used for evm transactions to get receipt and track replaced
-        response && setTransactionResponseByHash(hash, response);
-        schedule(SwapActionTypes.CHECK_TRANSACTION_STATUS);
-        next();
-        onFinish();
-      },
-      (error) => {
-        if (swap.status === 'failed') return;
-
-        const { extraMessage, extraMessageDetail, extraMessageErrorCode } =
-          prettifyErrorMessage(error);
-        if (
-          error &&
-          error?.root &&
-          error?.root?.message &&
-          error?.root?.code &&
-          error?.root?.reason
-        ) {
-          logRPCError(error.root, swap, currentStep, sourceWallet?.walletType);
-        }
-        const updateResult = updateSwapStatus({
-          getStorage,
-          setStorage,
-          nextStatus: 'failed',
-          nextStepStatus: 'failed',
-          message: extraMessage,
-          details: extraMessageDetail,
-          errorCode: extraMessageErrorCode,
-        });
-        notifier({
-          eventType:
-            extraMessageErrorCode === 'REJECTED_BY_USER'
-              ? 'contract_rejected'
-              : isSmartContractCall
-              ? 'smart_contract_call_failed'
-              : 'transfer_failed',
-          ...updateResult,
-        });
-
-        failed();
-        onFinish();
-      }
-    );
+    return;
   }
+  const signer = walletSigners.getSigner(txType!);
+  signer.signAndSendTx(tx!, walletAddress, null).then(
+    ({ hash, response }) => {
+      const explorerUrl = getScannerUrl(
+        hash,
+        currentStepBlockchain,
+        meta.blockchains
+      );
+      setStepTransactionIds(
+        actions,
+        hash,
+        notifier,
+        isApproval ? 'check_approve_tx_status' : 'check_tx_status',
+        explorerUrl
+          ? { url: explorerUrl, description: isApproval ? 'Approve' : 'Swap' }
+          : undefined
+      );
+      // response used for evm transactions to get receipt and track replaced
+      response && setTransactionResponseByHash(hash, response);
+      schedule(SwapActionTypes.CHECK_TRANSACTION_STATUS);
+      next();
+      onFinish();
+    },
+    (error) => {
+      if (swap.status === 'failed') return;
+
+      const { extraMessage, extraMessageDetail, extraMessageErrorCode } =
+        prettifyErrorMessage(error);
+      if (
+        error &&
+        error?.root &&
+        error?.root?.message &&
+        error?.root?.code &&
+        error?.root?.reason
+      ) {
+        logRPCError(error.root, swap, currentStep, sourceWallet?.walletType);
+      }
+      const updateResult = updateSwapStatus({
+        getStorage,
+        setStorage,
+        nextStatus: 'failed',
+        nextStepStatus: 'failed',
+        message: extraMessage,
+        details: extraMessageDetail,
+        errorCode: extraMessageErrorCode,
+      });
+      notifier({
+        eventType:
+          extraMessageErrorCode === 'REJECTED_BY_USER'
+            ? 'contract_rejected'
+            : isSmartContractCall
+            ? 'smart_contract_call_failed'
+            : 'transfer_failed',
+        ...updateResult,
+      });
+
+      failed();
+      onFinish();
+    }
+  );
 }
 
 export function checkWaitingForConnectWalletChange(params: {
