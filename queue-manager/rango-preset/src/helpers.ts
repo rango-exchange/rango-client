@@ -896,6 +896,7 @@ export function singTransaction(
   const currentStep = getCurrentStep(swap)!;
 
   const sourceWallet = getRelatedWallet(swap, currentStep);
+  const mobileWallet = isMobileWallet(sourceWallet?.walletType);
   const walletAddress = getCurrentAddressOf(swap, currentStep);
   const walletSigners = getSigners(sourceWallet.walletType);
   const currentStepBlockchain = getCurrentBlockchainOf(swap, currentStep);
@@ -927,9 +928,7 @@ export function singTransaction(
 
   if (isApproval) {
     message = `Waiting for approval of ${currentStep?.fromSymbol} coin ${
-      sourceWallet.walletType === WalletType.WALLET_CONNECT
-        ? 'on your mobile phone!'
-        : ''
+      mobileWallet ? 'on your mobile phone!' : ''
     }`;
     details =
       'Waiting for approve transaction to be mined and confirmed successfully';
@@ -946,11 +945,7 @@ export function singTransaction(
     message = 'Executing transaction ...';
     nextStepStatus = 'running';
     nextStatus = 'running';
-    details = `${
-      sourceWallet.walletType === WalletType.WALLET_CONNECT
-        ? 'Check your mobile phone!'
-        : ''
-    }`;
+    details = `${mobileWallet ? 'Check your mobile phone!' : ''}`;
     eventType = isSmartContractCall
       ? 'calling_smart_contract'
       : 'confirm_transfer';
