@@ -4,21 +4,13 @@ import {
   getCurrentStep,
   getCurrentStepTxType,
   resetNetworkStatus,
+  setCurrentStepTx,
   updateSwapStatus,
   useTransactionsResponse,
 } from '../helpers';
 import { SwapActionTypes, SwapQueueContext, SwapStorage } from '../types';
 import { getNextStep, getRelatedWallet, MessageSeverity } from '../shared';
-import {
-  Transaction,
-  TransactionStatusResponse,
-  isEvmTransaction,
-  isCosmosTransaction,
-  isSolanaTransaction,
-  isTransferTransaction,
-  isTronTransaction,
-  isStarknetTransaction,
-} from 'rango-sdk';
+import { Transaction, TransactionStatusResponse } from 'rango-sdk';
 import { httpService } from '../services';
 import { GenericSigner } from 'rango-types';
 import { prettifyErrorMessage } from '../shared-errors';
@@ -137,35 +129,7 @@ async function checkTransactionStatus({
     currentStep.status = 'created';
     currentStep.executedTransactionId = null;
     currentStep.executedTransactionTime = null;
-    currentStep.transferTransaction = null;
-    currentStep.cosmosTransaction = null;
-    currentStep.evmTransaction = null;
-    currentStep.solanaTransaction = null;
-    currentStep.evmApprovalTransaction = null;
-    currentStep.starknetApprovalTransaction = null;
-    currentStep.starknetTransaction = null;
-    currentStep.tronApprovalTransaction = null;
-    currentStep.tronTransaction = null;
-
-    if (isEvmTransaction(newTransaction)) {
-      if (newTransaction.isApprovalTx)
-        currentStep.evmApprovalTransaction = newTransaction;
-      else currentStep.evmTransaction = newTransaction;
-    } else if (isCosmosTransaction(newTransaction)) {
-      currentStep.cosmosTransaction = newTransaction;
-    } else if (isSolanaTransaction(newTransaction)) {
-      currentStep.solanaTransaction = newTransaction;
-    } else if (isTransferTransaction(newTransaction)) {
-      currentStep.transferTransaction = newTransaction;
-    } else if (isStarknetTransaction(newTransaction)) {
-      if (newTransaction.isApprovalTx)
-        currentStep.starknetApprovalTransaction = newTransaction;
-      else currentStep.starknetTransaction = newTransaction;
-    } else if (isTronTransaction(newTransaction)) {
-      if (newTransaction.isApprovalTx)
-        currentStep.tronApprovalTransaction = newTransaction;
-      else currentStep.tronTransaction = newTransaction;
-    }
+    setCurrentStepTx(currentStep, newTransaction);
   }
 
   if (prevOutputAmount === null && outputAmount !== null)
