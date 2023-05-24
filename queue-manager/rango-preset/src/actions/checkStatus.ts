@@ -64,10 +64,8 @@ async function checkTransactionStatus({
     // if wallet is connected, try to get transaction reciept
     if (signer?.wait) {
       const txResponse = getTransactionResponseByHash(txId!);
-      console.log('checking transaction reciept', { signer, txResponse });
       const { hash: updatedTxHash, response: updatedTxResponse } =
         await signer.wait(txId!, txResponse);
-      console.log({ updatedTxHash, updatedTxResponse });
       if (updatedTxHash !== txId) {
         currentStep.executedTransactionId =
           updatedTxHash || currentStep.executedTransactionId;

@@ -891,26 +891,24 @@ export function singTransaction(
     nextStepStatus = 'waitingForApproval';
     nextStatus = undefined;
     eventType = 'confirm_approve_contract';
+  } else if (hasAlreadyProceededToSign) {
+    message = 'Transaction is expired. Please try again.';
+    nextStepStatus = 'failed';
+    nextStatus = 'failed';
+    details = '';
+    eventType = 'transaction_expired';
   } else {
-    if (hasAlreadyProceededToSign) {
-      message = 'Transaction is expired. Please try again.';
-      nextStepStatus = 'failed';
-      nextStatus = 'failed';
-      details = '';
-      eventType = 'transaction_expired';
-    } else {
-      message = 'Executing transaction ...';
-      nextStepStatus = 'running';
-      nextStatus = 'running';
-      details = `${
-        sourceWallet.walletType === WalletType.WALLET_CONNECT
-          ? 'Check your mobile phone!'
-          : ''
-      }`;
-      eventType = isSmartContractCall
-        ? 'calling_smart_contract'
-        : 'confirm_transfer';
-    }
+    message = 'Executing transaction ...';
+    nextStepStatus = 'running';
+    nextStatus = 'running';
+    details = `${
+      sourceWallet.walletType === WalletType.WALLET_CONNECT
+        ? 'Check your mobile phone!'
+        : ''
+    }`;
+    eventType = isSmartContractCall
+      ? 'calling_smart_contract'
+      : 'confirm_transfer';
   }
 
   const updateResult = updateSwapStatus({
