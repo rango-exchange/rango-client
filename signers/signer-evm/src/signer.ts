@@ -91,16 +91,14 @@ export class DefaultEvmSigner implements GenericSigner<EvmTransaction> {
       }
       if (!this.provider) return { hash: txHash }; // wallet not connected yet
       const tx = await this.provider.getTransaction(txHash);
-      console.log({ tx });
-      if (!tx) throw Error('Transaction Not found'); // TODO fix it
-      const receipt = await tx.wait(confirmations);
-      console.log({ receipt });
+      if (!tx)
+        throw Error(`Transaction hash '${txHash}' not found in blockchain.`);
+      await tx.wait(confirmations);
       return { hash: txHash };
     } catch (err) {
-      console.log({ err });
-      if (err?.code === 'TRANSACTION_REPLACED' && err?.replacement) {
-        return { hash: err?.replacement?.hash, response: err?.replacement };
-      }
+      const error = err as any; // TODO find a proper type
+      if (error?.code === 'TRANSACTION_REPLACED' && error?.replacement)
+        return { hash: error?.replacement?.hash, response: error?.replacement };
       throw err;
     }
   }
