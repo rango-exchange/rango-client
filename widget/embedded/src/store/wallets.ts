@@ -43,7 +43,7 @@ interface WalletsStore {
   connectWallet: (accounts: Wallet[]) => void;
   disconnectWallet: (walletType: WalletType) => void;
   initSelectedWallets: () => void;
-  setSelectedWallet: (wallet: SelectableWallet | Wallet) => void;
+  setSelectedWallet: (wallet: SelectableWallet) => void;
   clearConnectedWallet: () => void;
   getOneOfWalletsDetails: (account: Wallet) => void;
   setCustomDestination: (customDestination: string) => void;
@@ -124,7 +124,7 @@ export const useWalletsStore = createSelectors(
         })),
       setCustomDestination: (customDestination) =>
         set(() => ({
-          customDestination: customDestination,
+          customDestination,
         })),
       clearConnectedWallet: () =>
         set(() => ({
