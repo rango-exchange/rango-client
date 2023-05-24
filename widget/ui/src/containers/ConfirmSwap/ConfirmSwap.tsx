@@ -1,5 +1,5 @@
-import React, { PropsWithChildren, ReactNode } from 'react';
-import { Alert, Divider } from '../../components';
+import React, { PropsWithChildren, ReactNode, useState } from 'react';
+import { Alert, Checkbox, Divider, TextField } from '../../components';
 import { Button } from '../../components/Button';
 import { SecondaryPage } from '../../components/SecondaryPage/SecondaryPage';
 import { SelectableWalletList } from '../../components/SelectableWalletList';
@@ -72,8 +72,12 @@ export interface PropTypes {
   errors?: Message[];
   warnings?: Message[];
   extraMessages?: ReactNode;
+  customDestination?: string;
+  setCustomDestination: (customDestination: string) => void;
 }
 export function ConfirmSwap(props: PropsWithChildren<PropTypes>) {
+  const [checkedDestination, setCheckedDestination] = useState<boolean>(false);
+
   const {
     onBack,
     loading,
@@ -88,6 +92,8 @@ export function ConfirmSwap(props: PropsWithChildren<PropTypes>) {
     errors,
     warnings,
     extraMessages,
+    customDestination,
+    setCustomDestination,
   } = props;
 console.log(props);
 
@@ -104,13 +110,11 @@ console.log(props);
             type="primary"
             variant="contained"
             onClick={onConfirm}
-            disabled={confirmDisabled}
-          >
+            disabled={confirmDisabled}>
             {confirmButtonTitle}
           </ConfirmButton>
         </Footer>
-      }
-    >
+      }>
       <MainContainer>
         <div>
           {extraMessages || null}
@@ -158,7 +162,7 @@ console.log(props);
                 <Divider size={8} direction="horizontal" />
                 <Typography variant="body2">Your {wallet} Wallet</Typography>
               </div>
-              {list.length === 0 && (
+              {list.length === 0 && index !== requiredWallets.length - 1 && (
                 <>
                   <AlertContainer>
                     <Alert type="error">
@@ -170,15 +174,48 @@ console.log(props);
                       variant="contained"
                       type="primary"
                       align="grow"
-                      onClick={() => handleConnectChain?.(wallet)}
-                    >
+                      onClick={() => handleConnectChain?.(wallet)}>
                       {`Add ${wallet} chain to Cosmos wallets`}
                     </Button>
                   )}
                 </>
               )}
-              {list.length != 0 && (
-                <SelectableWalletList list={list} onChange={onChange} />
+              {list.length != 0 && <SelectableWalletList list={list} onChange={onChange} />}
+              {index === requiredWallets.length - 1 && (
+                <>
+                  <Divider />
+                  <Checkbox
+                    label={`Choose a custom ${wallet} address`}
+                    checked={checkedDestination}
+                    onCheckedChange={(checked) => {
+                      setCheckedDestination(checked);
+                      if (!checked && list.length) onChange(list[0]);
+                      else {
+                        const i = list.findIndex((item) => item.selected);
+                        onChange({
+                          ...list[i],
+                          selected: false,
+                        });
+                      }
+                    }}
+                    id={'custom_destination'}
+                  />
+                  <Divider />
+
+                  {checkedDestination && (
+                    <TextField
+                      placeholder="Your destination address"
+                      value={customDestination}
+                      onChange={(e) => {
+                        setCustomDestination(e.target.value);
+                        onChange({
+                          ...list[0],
+                          address: e.target.value,
+                        });
+                      }}
+                    />
+                  )}
+                </>
               )}
             </Container>
           );

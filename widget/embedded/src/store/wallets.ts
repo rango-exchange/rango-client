@@ -39,12 +39,14 @@ export interface ConnectedWallet extends Wallet {
 interface WalletsStore {
   connectedWallets: ConnectedWallet[];
   selectedWallets: Wallet[];
+  customDestination: string;
   connectWallet: (accounts: Wallet[]) => void;
   disconnectWallet: (walletType: WalletType) => void;
   initSelectedWallets: () => void;
   setSelectedWallet: (wallet: SelectableWallet) => void;
   clearConnectedWallet: () => void;
   getOneOfWalletsDetails: (account: Wallet) => void;
+  setCustomDestination: (customDestination: string) => void;
 }
 
 export const useWalletsStore = createSelectors(
@@ -52,6 +54,7 @@ export const useWalletsStore = createSelectors(
     subscribeWithSelector((set, get) => ({
       connectedWallets: [],
       selectedWallets: [],
+      customDestination: '',
       connectWallet: (accounts) => {
         const getOneOfWalletsDetails = get().getOneOfWalletsDetails;
         set((state) => ({
@@ -118,7 +121,10 @@ export const useWalletsStore = createSelectors(
               walletType: wallet.walletType,
             }),
         })),
-
+      setCustomDestination: (customDestination) =>
+        set(() => ({
+          customDestination: customDestination,
+        })),
       clearConnectedWallet: () =>
         set(() => ({
           connectedWallets: [],

@@ -42,6 +42,8 @@ export function ConfirmSwapPage() {
   const loadingMetaStatus = useMetaStore.use.loadingStatus();
   const connectedWallets = useWalletsStore.use.connectedWallets();
   const selectedWallets = useWalletsStore.use.selectedWallets();
+  const customDestination = useWalletsStore.use.customDestination();
+  const setCustomDestination = useWalletsStore.use.setCustomDestination();
   const initSelectedWallets = useWalletsStore.use.initSelectedWallets();
   const setSelectedWallet = useWalletsStore.use.setSelectedWallet();
   const slippage = useSettingsStore.use.slippage();
@@ -107,6 +109,8 @@ export function ConfirmSwapPage() {
     <ConfirmSwap
       requiredWallets={getRequiredChains(bestRoute)}
       selectableWallets={selectableWallets}
+      setCustomDestination={setCustomDestination}
+      customDestination={customDestination}
       onBack={navigateBackFrom.bind(null, navigationRoutes.confirmSwap)}
       onConfirm={async () => {
         confirmSwap?.().then(async swap => {
