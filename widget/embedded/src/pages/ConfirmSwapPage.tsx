@@ -31,7 +31,7 @@ import { ConfirmSwapExtraMessages } from '../components/warnings/ConfirmSwapExtr
 import { getBestRouteStatus } from '../utils/routing';
 import { PercentageChange } from '../components/PercentageChange';
 
-export function ConfirmSwapPage() {
+export function ConfirmSwapPage({ customDestinationEnabled }: { customDestinationEnabled?: boolean }) {
   const navigate = useNavigate();
   const { navigateBackFrom } = useNavigateBack();
   const bestRoute = useBestRouteStore.use.bestRoute();
@@ -56,6 +56,7 @@ export function ConfirmSwapPage() {
     fetchingBestRoute,
     !!fetchingBestRouteError
   );
+  const [destinationChain, setDestinationChain] = useState<string>('');
 
   const { manager } = useManager();
   const {
@@ -86,12 +87,17 @@ export function ConfirmSwapPage() {
   const toAmount = numberToString(lastStep?.toAmount, 4, 6);
   useEffect(() => {
     initSelectedWallets();
+    if (!!customDestination) {
+      const chains = requiredWallets(bestRoute);
+      setDestinationChain(chains[chains.length - 1]);
+    }
   }, []);
 
   const selectableWallets = getSelectableWallets(
     connectedWallets,
     selectedWallets,
-    getWalletInfo
+    getWalletInfo,
+    destinationChain
   );
 
   const handleConnectChain = (wallet: string) => {
@@ -111,6 +117,9 @@ export function ConfirmSwapPage() {
       selectableWallets={selectableWallets}
       setCustomDestination={setCustomDestination}
       customDestination={customDestination}
+      customDestinationEnabled={customDestinationEnabled}
+      checkedDestination={!!destinationChain}
+      setDestinationChain={setDestinationChain}
       onBack={navigateBackFrom.bind(null, navigationRoutes.confirmSwap)}
       onConfirm={async () => {
         confirmSwap?.().then(async swap => {

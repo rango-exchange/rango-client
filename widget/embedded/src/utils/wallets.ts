@@ -168,21 +168,27 @@ type Blockchain = { name: string; accounts: ConnectedWallet[] };
 export function getSelectableWallets(
   connectedWallets: ConnectedWallet[],
   selectedWallets: Wallet[],
-  getWalletInfo: (type: WalletType) => WalletInfo
+  getWalletInfo: (type: WalletType) => WalletInfo,
+  destinationChain: string
 ): SelectableWallet[] {
   const selectableWallets: SelectableWallet[] = connectedWallets.map(
-    (connectedWallet) => ({
-      address: connectedWallet.address,
-      walletType: connectedWallet.walletType,
-      chain: connectedWallet.chain,
-      image: getWalletInfo(connectedWallet.walletType).img,
-      name: getWalletInfo(connectedWallet.walletType).name,
-      selected: !!selectedWallets.find(
-        (selectedWallet) =>
-          selectedWallet.chain === connectedWallet.chain &&
-          selectedWallet.walletType === connectedWallet.walletType
-      ),
-    })
+    (connectedWallet) => {
+      return {
+        address: connectedWallet.address,
+        walletType: connectedWallet.walletType,
+        chain: connectedWallet.chain,
+        image: getWalletInfo(connectedWallet.walletType).img,
+        name: getWalletInfo(connectedWallet.walletType).name,
+        selected:
+          destinationChain === connectedWallet.chain
+            ? false
+            : !!selectedWallets.find(
+                (selectedWallet) =>
+                  selectedWallet.chain === connectedWallet.chain &&
+                  selectedWallet.walletType === connectedWallet.walletType
+              ),
+      };
+    }
   );
 
   return selectableWallets;

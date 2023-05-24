@@ -77,17 +77,17 @@ export interface PropTypes {
   onChange: (w: SelectableWallet) => void;
 }
 
-export function SelectableWalletList({ list, onChange}: PropsWithChildren<PropTypes>) {
-  const [active, setActive] = useState<string>(list.find(item => item.selected)?.walletType || '');
-  console.log({active}, {list});
-  
+export function SelectableWalletList({ list, onChange }: PropsWithChildren<PropTypes>) {
+  const [active, setActive] = useState<string>(
+    list.find((item) => item.selected)?.walletType || '',
+  );
   const onClick = (w: SelectableWallet) => {
     setActive(w.walletType);
     onChange(w);
   };
 
   useEffect(() => {
-    setActive(list.find(item => item.selected)?.walletType || '');
+    setActive(list.find((item) => item.selected)?.walletType || '');
   }, [list]);
 
   return (
@@ -99,9 +99,7 @@ export function SelectableWalletList({ list, onChange}: PropsWithChildren<PropTy
             <Image src={w.image} alt={w.walletType} size={24} />
             <Typography variant="body2">{w.name}</Typography>
             <Typography variant="caption">{getConciseAddress(w.address)}</Typography>
-            <Circle checked={checked}>
-              <SolidCircle checked={checked} />
-            </Circle>
+            <Circle checked={checked}>{checked && <SolidCircle checked={checked} />}</Circle>
           </Container>
         );
       })}

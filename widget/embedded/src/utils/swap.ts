@@ -317,7 +317,8 @@ export function createBestRouteRequestBody(
   disabledLiquiditySources: string[],
   slippage: number,
   affiliateRef: string | null,
-  initialRoute?: BestRouteResponse
+  initialRoute?: BestRouteResponse,
+  destination?: string
 ): BestRouteRequest {
   const selectedWalletsMap = selectedWallets.reduce(
     (
@@ -370,6 +371,7 @@ export function createBestRouteRequestBody(
       symbol: toToken.symbol,
     },
     connectedWallets,
+    destination,
     selectedWallets: selectedWalletsMap,
     swapperGroups: disabledLiquiditySources,
     swappersGroupsExclude: true,

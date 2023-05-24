@@ -27,7 +27,7 @@ interface ConfigState {
   onChangeSources: (sources?: string[]) => void;
   onChangeBlockChains: (chains?: string[], type?: Type) => void;
   onChangeTokens: (tokens?: Asset[], type?: Type) => void;
-  onChangeBooleansConfig: (name: 'multiWallets' | 'customAddress', value: boolean) => void;
+  onChangeBooleansConfig: (name: 'multiWallets' | 'customDestination', value: boolean) => void;
   onChangeBlockChain: (chain?: string, type?: Type) => void;
   onChangeToken: (token?: Asset, type?: Type) => void;
   onChangeAmount: (amount: number) => void;

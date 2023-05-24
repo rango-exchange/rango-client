@@ -1,4 +1,4 @@
-import { Divider, styled, Typography } from '@rango-dev/ui';
+import { Divider, styled, Typography, Checkbox } from '@rango-dev/ui';
 import React from 'react';
 import { onChangeMultiSelects } from '../helpers';
 import { useConfigStore } from '../store/config';
@@ -26,11 +26,11 @@ export function ChainsConfig({ type }: PropTypes) {
   const from = useConfigStore.use.config().from;
   const to = useConfigStore.use.config().to;
 
-  // const customAddress = useConfigStore.use.config().customAddress;
+  const customDestination = useConfigStore.use.config().customDestination;
   const onChangeBlockChains = useConfigStore.use.onChangeBlockChains();
   const onChangeTokens = useConfigStore.use.onChangeTokens();
 
-  // const onChangeBooleansConfig = useConfigStore.use.onChangeBooleansConfig();
+  const onChangeBooleansConfig = useConfigStore.use.onChangeBooleansConfig();
 
   const chains = type === 'Source' ? from?.blockchains : to?.blockchains;
 
@@ -77,18 +77,18 @@ export function ChainsConfig({ type }: PropTypes) {
             !chains ? blockchains : blockchains.filter((chain) => chains.includes(chain.name))
           }
         />
-        {/* {type === 'Destination' ? (
+        {type === 'Destination' ? (
           <>
             <Divider size={16} />
             <Checkbox
-              onCheckedChange={(checked) => onChangeBooleansConfig('customAddress', checked)}
+              onCheckedChange={(checked) => onChangeBooleansConfig('customDestination', checked)}
               id="custom_address"
               label="Enable Transfer To Custom Address"
-              checked={customAddress === undefined ? true : customAddress}
+              checked={customDestination === undefined ? true : customDestination}
             />
           </>
-        ) : null} */}
-        <Divider size={24} direction={'vertical'} />
+        ) : null}
+        <Divider size={24} direction='vertical' />
 
         <TokenInfo type={type} />
       </ConfigurationContainer>
