@@ -1,16 +1,14 @@
 import { ExecuterActions } from '@rango-dev/queue-manager-core';
 import { SwapActionTypes, SwapQueueContext, SwapStorage } from '../types';
-import { getCurrentStep, updateSwapStatus, throwOnOK } from '../helpers';
-import { prettifyErrorMessage } from '../shared-errors';
 import {
-  CreateTransactionRequest,
-  isCosmosTransaction,
-  isEvmTransaction,
-  isSolanaTransaction,
-  isTransferTransaction,
-  isStarknetTransaction,
-  isTronTransaction,
-} from 'rango-sdk';
+  getCurrentStep,
+  updateSwapStatus,
+  throwOnOK,
+  getCurrentStepTx,
+  setCurrentStepTx,
+} from '../helpers';
+import { prettifyErrorMessage } from '../shared-errors';
+import { CreateTransactionRequest } from 'rango-sdk';
 import { httpService } from '../services';
 
 /**
@@ -27,30 +25,9 @@ export async function createTransaction(
   const swap = getStorage().swapDetails;
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const currentStep = getCurrentStep(swap)!;
+  const transaction = getCurrentStepTx(currentStep);
 
-  const {
-    evmTransaction,
-    cosmosTransaction,
-    transferTransaction,
-    evmApprovalTransaction,
-    solanaTransaction,
-    tronTransaction,
-    tronApprovalTransaction,
-    starknetTransaction,
-    starknetApprovalTransaction,
-  } = currentStep;
-
-  if (
-    !evmTransaction &&
-    !evmApprovalTransaction &&
-    !tronTransaction &&
-    !tronApprovalTransaction &&
-    !starknetTransaction &&
-    !starknetApprovalTransaction &&
-    !cosmosTransaction &&
-    !transferTransaction &&
-    !solanaTransaction
-  ) {
+  if (!transaction) {
     const request: CreateTransactionRequest = {
       requestId: swap.requestId,
       step: currentStep.id,
@@ -70,27 +47,7 @@ export async function createTransaction(
         httpService().createTransaction(request)
       );
 
-      if (transaction) {
-        if (isEvmTransaction(transaction)) {
-          if (transaction.isApprovalTx)
-            currentStep.evmApprovalTransaction = transaction;
-          else currentStep.evmTransaction = transaction;
-        } else if (isCosmosTransaction(transaction)) {
-          currentStep.cosmosTransaction = transaction;
-        } else if (isSolanaTransaction(transaction)) {
-          currentStep.solanaTransaction = transaction;
-        } else if (isTransferTransaction(transaction)) {
-          currentStep.transferTransaction = transaction;
-        } else if (isStarknetTransaction(transaction)) {
-          if (transaction.isApprovalTx)
-            currentStep.starknetApprovalTransaction = transaction;
-          else currentStep.starknetTransaction = transaction;
-        } else if (isTronTransaction(transaction)) {
-          if (transaction.isApprovalTx)
-            currentStep.tronApprovalTransaction = transaction;
-          else currentStep.tronTransaction = transaction;
-        }
-      }
+      if (transaction) setCurrentStepTx(currentStep, transaction);
 
       setStorage({ ...getStorage(), swapDetails: swap });
       schedule(SwapActionTypes.EXECUTE_TRANSACTION);
