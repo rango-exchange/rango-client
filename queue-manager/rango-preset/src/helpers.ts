@@ -25,6 +25,12 @@ import {
   TransactionType,
   EvmBlockchainMeta,
   CreateTransactionResponse,
+  isEvmTransaction,
+  isCosmosTransaction,
+  isSolanaTransaction,
+  isTronTransaction,
+  isStarknetTransaction,
+  isTransferTransaction,
 } from 'rango-sdk';
 
 import {
@@ -168,6 +174,47 @@ export const getCurrentStepTx = (
     tronApprovalTransaction ||
     tronTransaction
   );
+};
+
+/**
+ *
+ * Set current step transaction
+ *
+ */
+export const setCurrentStepTx = (
+  currentStep: PendingSwapStep,
+  transaction: Transaction
+): PendingSwapStep => {
+  currentStep.transferTransaction = null;
+  currentStep.cosmosTransaction = null;
+  currentStep.evmTransaction = null;
+  currentStep.solanaTransaction = null;
+  currentStep.evmApprovalTransaction = null;
+  currentStep.starknetApprovalTransaction = null;
+  currentStep.starknetTransaction = null;
+  currentStep.tronApprovalTransaction = null;
+  currentStep.tronTransaction = null;
+
+  if (isEvmTransaction(transaction)) {
+    if (transaction.isApprovalTx)
+      currentStep.evmApprovalTransaction = transaction;
+    else currentStep.evmTransaction = transaction;
+  } else if (isCosmosTransaction(transaction)) {
+    currentStep.cosmosTransaction = transaction;
+  } else if (isSolanaTransaction(transaction)) {
+    currentStep.solanaTransaction = transaction;
+  } else if (isTransferTransaction(transaction)) {
+    currentStep.transferTransaction = transaction;
+  } else if (isStarknetTransaction(transaction)) {
+    if (transaction.isApprovalTx)
+      currentStep.starknetApprovalTransaction = transaction;
+    else currentStep.starknetTransaction = transaction;
+  } else if (isTronTransaction(transaction)) {
+    if (transaction.isApprovalTx)
+      currentStep.tronApprovalTransaction = transaction;
+    else currentStep.tronTransaction = transaction;
+  }
+  return currentStep;
 };
 
 /**
