@@ -78,6 +78,7 @@ export interface PropTypes {
   setCustomDestination: (customDestination: string) => void;
   customDestinationEnabled?: boolean;
   isValidCustomDestination: (blockchain: string, address: string) => boolean;
+  isWalletRequired?: boolean;
 }
 export function ConfirmSwap(props: PropsWithChildren<PropTypes>) {
   const {
@@ -100,8 +101,8 @@ export function ConfirmSwap(props: PropsWithChildren<PropTypes>) {
     setDestinationChain,
     customDestinationEnabled = true,
     isValidCustomDestination,
+    isWalletRequired,
   } = props;
-console.log(props);
 
   return (
     <SecondaryPage
@@ -138,9 +139,7 @@ console.log(props);
                 <Alert
                   type="error"
                   key={index}
-                  {...(typeof error === 'string'
-                    ? { title: error }
-                    : { children: error })}
+                  {...(typeof error === 'string' ? { title: error } : { children: error })}
                 />
               </React.Fragment>
             ))}
@@ -150,9 +149,7 @@ console.log(props);
                 <Alert
                   type="warning"
                   key={index}
-                  {...(typeof warning === 'string'
-                    ? { title: warning }
-                    : { children: warning })}
+                  {...(typeof warning === 'string' ? { title: warning } : { children: warning })}
                 />
               </React.Fragment>
             ))}
@@ -165,7 +162,6 @@ console.log(props);
             {props.previewRoutes}
           </Section>
         ) : null}
-
         {requiredWallets.map((wallet, index) => {
           const list = selectableWallets.filter((w) => wallet === w.chain);
           return (
@@ -176,9 +172,7 @@ console.log(props);
                 <Typography variant="body2">Your {wallet} Wallet</Typography>
               </div>
               {list.length === 0 &&
-                (requiredWallets.length === 1 ||
-                  index < requiredWallets.length - 1 ||
-                  (index === requiredWallets.length - 1 && !checkedDestination)) && (
+                (isWalletRequired || (!isWalletRequired && !checkedDestination)) && (
                   <>
                     <AlertContainer>
                       <Alert type="error">
