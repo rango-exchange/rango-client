@@ -14,7 +14,6 @@ import {
   confirmSwapDisabled,
   getTotalFeeInUsd,
   isValidCustomDestination,
-  requiredWallets,
 } from '../utils/swap';
 import { numberToString } from '../utils/numbers';
 import { useMetaStore } from '../store/meta';
@@ -23,11 +22,7 @@ import { useNavigateBack } from '../hooks/useNavigateBack';
 import { TokenPreview } from '../components/TokenPreview';
 // @ts-ignore // TODO: fix error in tsc build
 import { t } from 'i18next';
-import {
-  Divider,
-  ConfirmSwap,
-  LoadingFailedAlert,
-} from '@rango-dev/ui';
+import { Divider, ConfirmSwap, LoadingFailedAlert } from '@rango-dev/ui';
 import RoutesOverview from '../components/RoutesOverview';
 import { useManager } from '@rango-dev/queue-manager-react';
 import { useConfirmSwap } from '../hooks/useConfirmSwap';
@@ -82,7 +77,7 @@ export function ConfirmSwapPage({
   const selectedSlippage = customSlippage || slippage;
 
   const showHighSlippageWarning = !errors.find(
-    error => error.type === ConfirmSwapErrorTypes.INSUFFICIENT_SLIPPAGE
+    (error) => error.type === ConfirmSwapErrorTypes.INSUFFICIENT_SLIPPAGE
   );
 
   const { getWalletInfo, connect } = useWallets();
@@ -99,20 +94,23 @@ export function ConfirmSwapPage({
       setCustomDestination('');
     }
   }, []);
+  const lastStepToBlockchain =
+    bestRoute?.result?.swaps[bestRoute?.result?.swaps.length - 1].to.blockchain;
+  const isWalletRequired = !!bestRoute?.result?.swaps.find(
+    (swap) => swap.from.blockchain === lastStepToBlockchain
+  );
 
   const selectableWallets = getSelectableWallets(
     connectedWallets,
     selectedWallets,
     getWalletInfo,
-    requiredWallets(bestRoute).length === 1 ? '' : destinationChain
+    isWalletRequired ? '' : destinationChain
   );
 
   const handleConnectChain = (wallet: string) => {
     const network = wallet as Network;
-    getKeplrCompatibleConnectedWallets(
-      selectableWallets
-    ).forEach((compatibleWallet: WalletType) =>
-      connect?.(compatibleWallet, network)
+    getKeplrCompatibleConnectedWallets(selectableWallets).forEach(
+      (compatibleWallet: WalletType) => connect?.(compatibleWallet, network)
     );
   };
 
@@ -130,7 +128,7 @@ export function ConfirmSwapPage({
       setDestinationChain={setDestinationChain}
       onBack={navigateBackFrom.bind(null, navigationRoutes.confirmSwap)}
       onConfirm={async () => {
-        confirmSwap?.().then(async swap => {
+        confirmSwap?.().then(async (swap) => {
           if (swap) {
             try {
               await manager?.create(
@@ -151,6 +149,7 @@ export function ConfirmSwapPage({
           }
         });
       }}
+      isWalletRequired={isWalletRequired}
       onChange={(wallet) => setSelectedWallet(wallet)}
       confirmDisabled={
         loadingMetaStatus !== 'success' ||
