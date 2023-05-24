@@ -91,7 +91,7 @@ export type BlockchainAndTokenConfig = {
  * include values like `"metamask"`, `"kepler"`, or `"phantom"`.
  * @property {boolean} multiWallets - The `multiWallets` property is a boolean value that indicates
  * whether the widget should allow the user to select multiple wallets for the transaction.
- * @property {boolean} customAddress - A boolean value indicating whether the user can input a custom
+ * @property {boolean} customDestination - A boolean value indicating whether the user can input a custom
  * address for the transaction. If set to true, the widget will allow the user to input a custom
  * address for the destination.
  * @property {string} language - The language property is an optional string that specifies the
@@ -110,7 +110,7 @@ export type WidgetConfig = {
   liquiditySources?: string[];
   wallets?: WalletType[];
   multiWallets?: boolean;
-  customAddress?: boolean;
+  customDestination?: boolean;
   language?: string;
   theme?: WidgetTheme;
 };
