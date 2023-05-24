@@ -44,6 +44,7 @@ async function checkTransactionStatus({
   const currentStep = getCurrentStep(swap)!;
   let txId = currentStep.executedTransactionId;
 
+  let getTxReceiptFailed = false;
   let status: TransactionStatusResponse | null = null;
   let signer: GenericSigner<Transaction> | null = null;
   const { getTransactionResponseByHash, setTransactionResponseByHash } =
@@ -91,7 +92,9 @@ async function checkTransactionStatus({
       eventType: 'task_failed',
       ...updateResult,
     });
-    // TODO CALL CHECK STATUS ONCE HERE
+    getTxReceiptFailed = true;
+    // We shouldn't return here, because we need to trigger check status job in backend.
+    // This is not a ui requirement but the backend one.
   }
 
   try {
@@ -107,8 +110,10 @@ async function checkTransactionStatus({
     return;
   }
 
-  // If user cancel swap during check status api call, we should ignore check status response
-  if (currentStep?.status === 'failed') return;
+  // If user cancel swap during check status api call,
+  // or getting transaction receipt failed,
+  // we should ignore check status response and return
+  if (currentStep?.status === 'failed' || getTxReceiptFailed) return;
 
   const outputAmount: string | null =
     status?.outputAmount ||
