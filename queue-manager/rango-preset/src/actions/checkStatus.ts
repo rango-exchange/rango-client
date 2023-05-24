@@ -20,7 +20,7 @@ import { httpService } from '../services';
 import { GenericSigner } from 'rango-types';
 import { prettifyErrorMessage } from '../shared-errors';
 
-const INTERVAL_FOR_CHECK = 3_000;
+const INTERVAL_FOR_CHECK = 5_000;
 
 /**
  * Subscribe to status of swap transaction by checking from server periodically.
@@ -91,6 +91,7 @@ async function checkTransactionStatus({
       eventType: 'task_failed',
       ...updateResult,
     });
+    // TODO CALL CHECK STATUS ONCE HERE
   }
 
   try {
