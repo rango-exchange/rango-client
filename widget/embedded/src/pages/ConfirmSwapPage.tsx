@@ -18,7 +18,11 @@ import { useNavigateBack } from '../hooks/useNavigateBack';
 import { TokenPreview } from '../components/TokenPreview';
 // @ts-ignore // TODO: fix error in tsc build
 import { t } from 'i18next';
-import { Divider, ConfirmSwap, LoadingFailedAlert } from '@rango-dev/ui';
+import {
+  Divider,
+  ConfirmSwap,
+  LoadingFailedAlert,
+} from '@rango-dev/ui';
 import RoutesOverview from '../components/RoutesOverview';
 import { useManager } from '@rango-dev/queue-manager-react';
 import { useConfirmSwap } from '../hooks/useConfirmSwap';
@@ -79,9 +83,18 @@ export function ConfirmSwapPage({
   const { getWalletInfo, connect } = useWallets();
   const confirmDisabled =
     fetchingBestRoute ||
-    !requiredWallets(bestRoute).every(chain =>
-      selectedWallets.map(wallet => wallet.chain).includes(chain)
-    );
+    (!destinationChain &&
+      !requiredWallets(bestRoute).every((chain) =>
+        selectedWallets.map((wallet) => wallet.chain).includes(chain)
+      )) ||
+    (!!destinationChain && !customDestination) ||
+    (!!destinationChain &&
+      !!customDestination &&
+      !requiredWallets(bestRoute)
+        .filter((chain) => chain !== destinationChain)
+        .every((chain) =>
+          selectedWallets.map((wallet) => wallet.chain).includes(chain)
+        ));
 
   const firstStep = bestRoute?.result?.swaps[0];
   const lastStep =
@@ -92,8 +105,7 @@ export function ConfirmSwapPage({
   useEffect(() => {
     initSelectedWallets();
     if (!!customDestination) {
-      const chains = requiredWallets(bestRoute);
-      setDestinationChain(chains[chains.length - 1]);
+      setCustomDestination('');
     }
   }, []);
 
@@ -101,8 +113,9 @@ export function ConfirmSwapPage({
     connectedWallets,
     selectedWallets,
     getWalletInfo,
-    destinationChain
+    requiredWallets(bestRoute).length === 1 ? '' : destinationChain
   );
+  
 
   const handleConnectChain = (wallet: string) => {
     const network = wallet as Network;
