@@ -12,32 +12,10 @@
   "scripts": {
     "dev": "tsdx watch",
     "build": "tsdx build  --tsconfig ./tsconfig.json",
-    "test": "tsdx test",
-    "lint": "tsdx lint",
-    "size": "size-limit",
-    "analyze": "size-limit --why"
+    "clean": "rimraf dist",
+    "format": "prettier --write '{.,src}/**/*.{ts,tsx}'",
+    "lint": "eslint \"**/*.{ts,tsx}\""
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "tsdx lint"
-    }
-  },
-  "prettier": {
-    "printWidth": 80,
-    "semi": true,
-    "singleQuote": true,
-    "trailingComma": "es5"
-  },
-  "size-limit": [
-    {
-      "path": "dist/wallets-shared.cjs.production.min.js",
-      "limit": "10 KB"
-    },
-    {
-      "path": "dist/wallets-shared.esm.js",
-      "limit": "10 KB"
-    }
-  ],
   "dependencies": {
     "rango-types": "^0.1.32"
   },

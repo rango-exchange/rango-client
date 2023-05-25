@@ -15,35 +15,13 @@
   "scripts": {
     "start": "tsdx watch",
     "build": "tsdx build",
-    "test": "tsdx test --passWithNoTests",
-    "lint": "tsdx lint",
-    "size": "size-limit",
-    "analyze": "size-limit --why"
+    "clean": "rimraf dist",
+    "format": "prettier --write '{.,src}/**/*.{ts,tsx}'",
+    "lint": "eslint \"**/*.{ts,tsx}\""
   },
   "peerDependencies": {
     "react": ">=16"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "tsdx lint"
-    }
-  },
-  "prettier": {
-    "printWidth": 80,
-    "semi": true,
-    "singleQuote": true,
-    "trailingComma": "es5"
-  },
-  "size-limit": [
-    {
-      "path": "dist/provider-station.cjs.production.min.js",
-      "limit": "10 KB"
-    },
-    {
-      "path": "dist/provider-station.esm.js",
-      "limit": "10 KB"
-    }
-  ],
   "dependencies": {
     "@rango-dev/signer-terra": "^0.1.21-next.1",
     "@rango-dev/wallets-shared": "^0.1.14",

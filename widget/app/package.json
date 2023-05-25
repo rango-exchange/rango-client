@@ -8,18 +8,9 @@
   "scripts": {
     "dev": "parcel -p 3002 --cache-dir=.parcel-cache",
     "build": "parcel build --cache-dir=.parcel-cache && cp ./vercel.json ./dist",
-    "clean": "rimraf .parcel-cache && rimraf dist"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "tsdx lint"
-    }
-  },
-  "prettier": {
-    "printWidth": 80,
-    "semi": true,
-    "singleQuote": true,
-    "trailingComma": "es5"
+    "clean": "rimraf .parcel-cache && rimraf dist",
+    "format": "prettier --write '{.,src}/**/*.{ts,tsx}'",
+    "lint": "eslint \"**/*.{ts,tsx}\""
   },
   "devDependencies": {
     "parcel": "^2.7.0"

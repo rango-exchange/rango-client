@@ -12,18 +12,9 @@
   "browserslist": "> 0.5%, last 2 versions, not dead",
   "scripts": {
     "build": "node ../../scripts/build/command.mjs --path widget/embedded",
-    "clean": "rimraf dist"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "tsdx lint"
-    }
-  },
-  "prettier": {
-    "printWidth": 80,
-    "semi": true,
-    "singleQuote": true,
-    "trailingComma": "es5"
+    "clean": "rimraf dist",
+    "format": "prettier --write '{.,src}/**/*.{ts,tsx}'",
+    "lint": "eslint \"**/*.{ts,tsx}\""
   },
   "dependencies": {
     "@rango-dev/provider-all": "^0.1.22-next.0",
