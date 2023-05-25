@@ -19,6 +19,12 @@ jobs:
           node-version: '18'
           cache: 'yarn'
 
+      - name: Restore cache
+        uses: actions/cache@v3
+        with:
+          path: '**/node_modules'
+          key: ${{ runner.os }}-${{ hashFiles('**/yarn.lock') }}
+
       - name: Git
         run: |
           git config --global user.name 'github-actions[bot]'
