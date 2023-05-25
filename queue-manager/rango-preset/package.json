@@ -12,11 +12,10 @@
   "scripts": {
     "dev": "tsdx watch",
     "build": "tsdx build --tsconfig ./tsconfig.json",
-    "test": "tsdx test",
-    "lint": "tsdx lint",
-    "size": "size-limit",
     "analyze": "size-limit --why",
-    "clean": "rimraf dist"
+    "clean": "rimraf dist",
+    "format": "prettier --write '{.,src}/**/*.{ts,tsx}'",
+    "lint": "eslint \"**/*.{ts,tsx}\""
   },
   "peerDependencies": {
     "@rango-dev/queue-manager-core": "*",
@@ -29,27 +28,6 @@
     "rango-types": "*",
     "uuid": "*"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "tsdx lint"
-    }
-  },
-  "prettier": {
-    "printWidth": 80,
-    "semi": true,
-    "singleQuote": true,
-    "trailingComma": "es5"
-  },
-  "size-limit": [
-    {
-      "path": "dist/queue-manager-rango-preset.cjs.production.min.js",
-      "limit": "10 KB"
-    },
-    {
-      "path": "dist/queue-manager-rango-preset.esm.js",
-      "limit": "10 KB"
-    }
-  ],
   "devDependencies": {
     "@types/uuid": "^8.3.4"
   },

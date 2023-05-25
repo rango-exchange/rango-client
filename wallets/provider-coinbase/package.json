@@ -12,32 +12,10 @@
   "scripts": {
     "start": "tsdx watch",
     "build": "tsdx build  --tsconfig ./tsconfig.json",
-    "test": "tsdx test --passWithNoTests",
-    "lint": "tsdx lint",
-    "size": "size-limit",
-    "analyze": "size-limit --why"
+    "clean": "rimraf dist",
+    "format": "prettier --write '{.,src}/**/*.{ts,tsx}'",
+    "lint": "eslint \"**/*.{ts,tsx}\""
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "tsdx lint"
-    }
-  },
-  "prettier": {
-    "printWidth": 80,
-    "semi": true,
-    "singleQuote": true,
-    "trailingComma": "es5"
-  },
-  "size-limit": [
-    {
-      "path": "dist/provider-coinbase.cjs.production.min.js",
-      "limit": "10 KB"
-    },
-    {
-      "path": "dist/provider-coinbase.esm.js",
-      "limit": "10 KB"
-    }
-  ],
   "dependencies": {
     "@rango-dev/signer-evm": "^0.1.15-next.1",
     "@rango-dev/signer-solana": "^0.1.15-next.0",

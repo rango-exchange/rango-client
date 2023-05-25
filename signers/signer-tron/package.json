@@ -12,7 +12,9 @@
   "scripts": {
     "dev": "tsdx watch",
     "build": "node ../../scripts/build/command.mjs --path signers/signer-tron",
-    "clean": "rimraf dist"
+    "clean": "rimraf dist",
+    "format": "prettier --write '{.,src}/**/*.{ts,tsx}'",
+    "lint": "eslint \"**/*.{ts,tsx}\""
   },
   "dependencies": {
     "rango-types": "^0.1.32"
