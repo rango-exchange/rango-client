@@ -16,7 +16,9 @@
     "type-checking": "tsc --declaration --emitDeclarationOnly",
     "storybook": "storybook dev -p 3000",
     "build-storybook": "storybook build",
-    "clean": "rimraf dist"
+    "clean": "rimraf dist",
+    "format": "prettier --write '{.,src}/**/*.{ts,tsx}'",
+    "lint": "eslint \"**/*.{ts,tsx}\""
   },
   "peerDependencies": {
     "@rango-dev/queue-manager-rango-preset": "*",

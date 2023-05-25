@@ -7,18 +7,9 @@
   "browserslist": "> 0.5%, last 2 versions, not dead",
   "scripts": {
     "build": "parcel build --no-source-maps --cache-dir=.parcel-cache",
-    "clean": "rimraf .parcel-cache && rimraf dist"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "tsdx lint"
-    }
-  },
-  "prettier": {
-    "printWidth": 80,
-    "semi": true,
-    "singleQuote": true,
-    "trailingComma": "es5"
+    "clean": "rimraf .parcel-cache && rimraf dist",
+    "format": "prettier --write '{.,src}/**/*.{ts,tsx}'",
+    "lint": "eslint \"**/*.{ts,tsx}\""
   },
   "devDependencies": {
     "parcel": "^2.7.0"

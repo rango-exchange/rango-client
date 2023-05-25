@@ -8,7 +8,9 @@
   "scripts": {
     "dev": "parcel -p 3005 --cache-dir=.parcel-cache",
     "build": "parcel build --cache-dir=.parcel-cache && cp ./vercel.json ./dist",
-    "clean": "rimraf .parcel-cache && rimraf dist"
+    "clean": "rimraf .parcel-cache && rimraf dist",
+    "format": "prettier --write '{.,src}/**/*.{ts,tsx}'",
+    "lint": "eslint \"**/*.{ts,tsx}\""
   },
   "devDependencies": {
     "parcel": "^2.7.0"
