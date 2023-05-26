@@ -103,5 +103,5 @@ export function useTheme() {
     else body.classList.add(customLightTheme);
   }, [mode, OSTheme, customLightTheme, customDarkTheme]);
 
-  return { activeTheme: getActiveTheme() };
+  return { activeStyle: getActiveTheme(), activeTheme: mode === 'auto' ? OSTheme : mode };
 }

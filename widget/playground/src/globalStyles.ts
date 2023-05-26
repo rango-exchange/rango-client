@@ -2,7 +2,7 @@ import { globalCss } from '@rango-dev/ui';
 
 export const globalStyles = globalCss({
   '*': {
-    '&::-webkit-scrollbar': { width: '$8' },
+    '&::-webkit-scrollbar': { width: '$8', height: '$8' },
     '&::-webkit-scrollbar-thumb': {
       backgroundColor: '$neutral400',
     },
@@ -11,6 +11,9 @@ export const globalStyles = globalCss({
     },
     '&::-webkit-scrollbar-track': {
       backgroundColor: '$neutral100',
+    },
+    '&::-webkit-scrollbar-corner': {
+      backgroundColor: '$neutral200',
     },
   },
 });

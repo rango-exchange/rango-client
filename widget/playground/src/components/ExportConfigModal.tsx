@@ -1,24 +1,55 @@
-import React, { useState } from 'react';
+import React, { Fragment, useState } from 'react';
 import {
   Button,
   CheckSquareIcon,
   CopyIcon,
+  Divider,
   Modal,
-  Spacer,
   Typography,
-  css,
+  config,
   styled,
   useCopyToClipboard,
 } from '@rango-dev/ui';
+import { CSS } from '@stitches/react';
 import { PrismLight as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { javascript, jsx } from 'react-syntax-highlighter/dist/esm/languages/prism';
 import { atomDark as dark, prism } from 'react-syntax-highlighter/dist/esm/styles/prism';
-import stringifyObject from 'stringify-object';
 import { WidgetConfig } from '../types';
-import { filterConfig, getEmbeddedCode, getIframeCode } from '../helpers';
+import {
+  capitalizeTheFirstLetter,
+  filterConfig,
+  formatConfig,
+  getEmbeddedCode,
+  getIframeCode,
+} from '../helpers';
+import { initialConfig } from '../store/config';
+import { useTheme } from '../hook/useTheme';
 
 SyntaxHighlighter.registerLanguage('javascript', javascript);
 SyntaxHighlighter.registerLanguage('jsx', jsx);
+
+type ExportType = 'embedded' | 'iframe' | 'config';
+type Language = 'jsx' | 'javascript';
+
+const typesOfCodeBlocks: {
+  [key in ExportType]: {
+    language: Language;
+    generateCode: (config: string) => string;
+  };
+} = {
+  embedded: {
+    language: 'jsx',
+    generateCode: (config) => getEmbeddedCode(config),
+  },
+  iframe: {
+    language: 'javascript',
+    generateCode: (config) => getIframeCode(config),
+  },
+  config: {
+    language: 'javascript',
+    generateCode: (config) => config,
+  },
+};
 
 const Link = styled('a', {
   color: '$primary',
@@ -26,6 +57,7 @@ const Link = styled('a', {
 });
 
 const ButtonsContainer = styled('div', {
+  paddingTop: '$12',
   paddingBottom: '$8',
   display: 'flex',
   justifyItems: 'center',
@@ -41,12 +73,15 @@ const CopyCodeBlockButton = styled(Button, {
 
 const CodeBlockContainer = styled('div', { position: 'relative', height: '60%' });
 
-const modalContainerStyles = css({
-  width: '90%',
-});
+const modalContainerStyles: CSS<typeof config> = {
+  height: '600px',
+  width: '95%',
+  '@md': { width: '80%' },
+  '@lg': { width: '70%' },
+};
 
 interface CodeBlockProps {
-  language: 'javascript' | 'jsx';
+  language: Language;
   theme: any;
   children: string;
 }
@@ -81,76 +116,55 @@ interface ExportConfigModalProps {
 export function ExportConfigModal(props: ExportConfigModalProps) {
   const { open, onClose, config } = props;
 
-  const [isCopied, handleCopy] = useCopyToClipboard(2000);
+  const { activeTheme } = useTheme();
 
-  const filtered = filterConfig(config);
+  const { filteredConfigForExport } = filterConfig(config, initialConfig);
 
-  const [selected, setSelected] = useState<'embedded' | 'i-frame'>('embedded');
+  const formatedConfig = formatConfig(filteredConfigForExport);
 
-  const syntaxHighlighterTheme = config.theme.mode === 'dark' ? dark : prism;
+  const [selected, setSelected] = useState<ExportType>('embedded');
+
+  const syntaxHighlighterTheme = activeTheme === 'dark' ? dark : prism;
 
   return (
     <Modal
       open={open}
-      action={
-        <Button type="primary" variant="ghost" onClick={() => handleCopy(JSON.stringify(filtered))}>
-          {isCopied ? 'Copied!' : 'Copy Config'}
-        </Button>
-      }
       onClose={onClose}
       content={
         <>
-          <ButtonsContainer>
-            <Button
-              type={selected === 'embedded' ? 'primary' : undefined}
-              onClick={setSelected.bind(null, 'embedded')}>
-              embedded
-            </Button>
-            <Spacer size={8} direction="horizontal" />
-            <Button
-              onClick={setSelected.bind(null, 'i-frame')}
-              type={selected === 'i-frame' ? 'primary' : undefined}>
-              i-frame
-            </Button>
-          </ButtonsContainer>
-          <hr />
           <Typography variant="body1" mb={8} mt={12}>
             See full instruction on
             <Link href="https://docs.rango.exchange/integration-guide/rango-widget" target="_blank">
               docs.rango.exchange
             </Link>
           </Typography>
-          {selected === 'embedded' && (
-            <Typography variant="body1" mb={8} mt={8}>
-              See more examples
-              <Link href="https://github.com/rango-exchange/widget-examples" target="_blank">
-                https://github.com/rango-exchange/widget-examples
-              </Link>
-            </Typography>
-          )}
+          <Typography variant="body1" mb={12} mt={8}>
+            See more examples
+            <Link href="https://github.com/rango-exchange/widget-examples" target="_blank">
+              https://github.com/rango-exchange/widget-examples
+            </Link>
+          </Typography>
+          <hr />
+          <ButtonsContainer>
+            {Object.keys(typesOfCodeBlocks).map((type, index) => (
+              <Fragment key={index}>
+                <Button
+                  type={selected === type ? 'primary' : undefined}
+                  onClick={setSelected.bind(null, type as ExportType)}>
+                  {capitalizeTheFirstLetter(type)}
+                </Button>
+                <Divider size={8} direction="horizontal" />
+              </Fragment>
+            ))}
+          </ButtonsContainer>
 
-          {selected === 'i-frame' && (
-            <CodeBlock language="javascript" theme={syntaxHighlighterTheme}>
-              {getIframeCode(
-                stringifyObject(JSON.parse(JSON.stringify(filtered)), {
-                  indent: '  ',
-                }),
-              )}
-            </CodeBlock>
-          )}
-          {selected === 'embedded' && (
-            <CodeBlock language="jsx" theme={syntaxHighlighterTheme}>
-              {getEmbeddedCode(
-                stringifyObject(JSON.parse(JSON.stringify(filtered)), {
-                  indent: '  ',
-                }),
-              )}
-            </CodeBlock>
-          )}
+          <CodeBlock language={typesOfCodeBlocks[selected].language} theme={syntaxHighlighterTheme}>
+            {typesOfCodeBlocks[selected].generateCode(formatedConfig)}
+          </CodeBlock>
         </>
       }
-      title="Exported Config"
-      containerStyle={{ width: '600px', height: '600px' }}
+      title="Exported Code"
+      containerStyle={modalContainerStyles}
     />
   );
 }

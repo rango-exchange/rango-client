@@ -125,7 +125,7 @@ const utils = {
 
 const typedCreateStiches = createStitches as CreateStitches;
 
-export const { styled, css, createTheme, keyframes, globalCss } = typedCreateStiches<
+export const { styled, css, createTheme, keyframes, globalCss, config } = typedCreateStiches<
   '',
   typeof media,
   typeof theme,

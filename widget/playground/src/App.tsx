@@ -6,11 +6,11 @@ import { useTheme } from './hook/useTheme';
 import { Route, Routes } from 'react-router-dom';
 
 export function App() {
-  const { activeTheme } = useTheme();
+  const { activeStyle } = useTheme();
   const config = useConfigStore.use.config();
 
   return (
-    <div className={activeTheme}>
+    <div className={activeStyle}>
       <Config>
         <Routes>
           <Route path="/*" element={<Widget config={config} />} />
