@@ -2,6 +2,7 @@ import { WalletTypes } from '@rango-dev/wallets-shared';
 import { Asset, Token } from 'rango-sdk';
 import { WidgetConfig } from './types';
 import subtractObject from 'subtract-object';
+import stringifyObject from 'stringify-object';
 
 export const excludedWallets = [WalletTypes.STATION, WalletTypes.LEAP];
 
@@ -73,7 +74,10 @@ export function clearEmpties<T extends Record<string, any>>(obj: T): T {
 
 export function filterConfig(config: WidgetConfig, initialConfig: WidgetConfig) {
   const userSelectedConfig = clearEmpties(
-    subtractObject(JSON.parse(JSON.stringify(initialConfig)), JSON.parse(JSON.stringify(config))),
+    subtractObject(
+      JSON.parse(JSON.stringify(initialConfig)) as WidgetConfig,
+      JSON.parse(JSON.stringify(config)),
+    ) as WidgetConfig,
   );
 
   const filteredConfigForExport = Object.assign({}, userSelectedConfig);
@@ -85,12 +89,12 @@ export function filterConfig(config: WidgetConfig, initialConfig: WidgetConfig) 
 export function getIframeCode(config: string) {
   //TODO: update iframe script source address
   return `<div id="rango-widget-root"></div>
-<script src="iframe.bundle.min.js"></script>
+<script src="https://api.rango.exchange/static/widget/iframe.bundle.min.js"></script>
 <script defer type="text/javascript">
 
-const config = ${config}
+  const config = ${insertAt(config, '  ', config.lastIndexOf('}'))}
               
-rangoWidget.init(config)
+  rangoWidget.init(config)
 
 </script>
 `;
@@ -101,16 +105,37 @@ export function getEmbeddedCode(config: string) {
 
 export default function App() {
 
-const config = ${config}
+  const config = ${insertAt(config, '  ', config.lastIndexOf('}'))}
               
-return (
+  return (
     <div className="App">
-        <Widget config={config} />
+      <Widget config={config} />
     </div>
-);
+  );
 }
 `;
 }
 
+export function capitalizeTheFirstLetter(str: string): string {
+  return str.charAt(0).toUpperCase() + str.slice(1);
+}
 
+export function insertAt(originalString: string, insertedString: string, index: number): string {
+  return originalString.slice(0, index).concat(insertedString).concat(originalString.slice(index));
+}
 
+export function formatConfig(config: WidgetConfig) {
+  const indentation = '    ';
+  let formatedConfig: string = stringifyObject(config, {
+    indent: indentation,
+  });
+
+  formatedConfig = insertAt(
+    formatedConfig,
+    `// This API key is only for test purpose. Don't use it in production.
+    `,
+    formatedConfig.indexOf('apiKey'),
+  );
+
+  return formatedConfig;
+}

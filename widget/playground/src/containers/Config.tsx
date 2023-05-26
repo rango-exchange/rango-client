@@ -8,9 +8,8 @@ import { Provider } from '@rango-dev/wallets-core';
 import { allProviders } from '@rango-dev/provider-all';
 import { globalStyles } from '../globalStyles';
 import { useMetaStore } from '../store/meta';
-import { initialConfig, useConfigStore } from '../store/config';
+import { useConfigStore } from '../store/config';
 import { ExportConfigModal } from '../components/ExportConfigModal';
-import { filterConfig } from '../helpers';
 
 const providers = allProviders();
 
@@ -83,9 +82,6 @@ export function Config(props: PropsWithChildren) {
   const [open, setOpen] = useState<boolean>(false);
   const config = useConfigStore.use.config();
   const resetConfig = useConfigStore.use.resetConfig();
-  const { userSelectedConfig } = filterConfig(config, initialConfig);
-
-  const resetButtonDisabled = !Object.entries(userSelectedConfig).length;
 
   return (
     <Container>
@@ -102,14 +98,10 @@ export function Config(props: PropsWithChildren) {
               </div>
               <HeaderButtonsContainer>
                 <HeaderButton variant="contained" type="primary" onClick={() => setOpen(true)}>
-                  Export Config
+                  Export Code
                 </HeaderButton>
                 <Divider size={16} />
-                <ResetButton
-                  variant="outlined"
-                  type="error"
-                  disabled={resetButtonDisabled}
-                  onClick={resetConfig.bind(null)}>
+                <ResetButton variant="outlined" type="error" onClick={resetConfig.bind(null)}>
                   Reset Config
                 </ResetButton>
               </HeaderButtonsContainer>

@@ -1,7 +1,7 @@
-import { CSSProperties } from '@stitches/react';
+import { CSS } from '@stitches/react';
 import React, { useEffect } from 'react';
 import { createPortal } from 'react-dom';
-import { styled } from '../../theme';
+import { config, styled } from '../../theme';
 import { CloseIcon } from '../Icon/CloseIcon';
 import { Typography } from '../Typography';
 
@@ -11,7 +11,7 @@ export interface PropTypes {
   onClose: () => void;
   content: React.ReactNode;
   action?: React.ReactNode;
-  containerStyle?: CSSProperties;
+  containerStyle?: CSS<typeof config>;
 }
 
 const BackDrop = styled('div', {
@@ -25,7 +25,6 @@ const BackDrop = styled('div', {
   height: '100vh',
   backgroundColor: 'rgba(0,0,0,.1)',
   zIndex: 10,
-
 });
 
 const ModalContainer = styled('div', {
@@ -48,16 +47,8 @@ const ModalHeader = styled('div', {
   marginBottom: '$16',
 });
 
-
 export function Modal(props: PropTypes) {
-  const {
-    title,
-    content,
-    open,
-    onClose,
-    containerStyle,
-    action,
-  } = props;
+  const { title, content, open, onClose, containerStyle, action } = props;
 
   const handleBackDropClick = (event: React.MouseEvent<HTMLDivElement>) => {
     if (event.target === event.currentTarget) onClose();
@@ -71,7 +62,7 @@ export function Modal(props: PropTypes) {
       {open &&
         createPortal(
           <BackDrop onClick={handleBackDropClick}>
-            <ModalContainer style={containerStyle}>
+            <ModalContainer css={containerStyle}>
               <ModalHeader>
                 <Typography variant="h4">{title}</Typography>
                 <Row>
@@ -82,7 +73,7 @@ export function Modal(props: PropTypes) {
               {content}
             </ModalContainer>
           </BackDrop>,
-          document.body
+          document.body,
         )}
     </>
   );
