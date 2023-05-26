@@ -13,6 +13,7 @@
     "lint": "eslint \"**/*.{ts,tsx}\" --ignore-path ../../.eslintignore"
   },
   "devDependencies": {
+    "@types/stringify-object": "^4.0.2",
     "parcel": "^2.7.0"
   },
   "dependencies": {
@@ -25,9 +26,9 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.10.0",
-    "subtract-object": "^1.1.0",
     "react-syntax-highlighter": "^15.5.0",
     "stringify-object": "^5.0.0",
+    "subtract-object": "^1.1.0",
     "zustand": "^4.3.2"
   },
   "gitHead": "a4584c2a3341fe23e033a9ff2db0f201b0a6278c"
