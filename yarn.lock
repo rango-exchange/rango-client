@@ -17272,20 +17272,15 @@ rango-sdk@^0.1.27:
     rango-types "^0.1.32"
     uuid-random "^1.3.2"
 
-rango-types@^0.1.22, rango-types@^0.1.28:
-  version "0.1.28"
-  resolved "https://registry.yarnpkg.com/rango-types/-/rango-types-0.1.28.tgz#931ddf57e38115fab6f85cb5f6bacb3fb46c20eb"
-  integrity sha512-pZtblD2JvH6nB26TKW/6ySTwVlxYRJksMC6UIDfpmpn/6g/LHf3RxAGkrltC1wzdmGP1QxAUWOeq4JJv2lAFtQ==
-
 rango-types@^0.1.32:
   version "0.1.32"
   resolved "https://registry.yarnpkg.com/rango-types/-/rango-types-0.1.32.tgz#40220e0950e612957afd5787814c0164017c7b20"
   integrity sha512-GyNjAGoGNAESBR47n3oaEURP7V+Wp9La2vdYK772uE8Z8Pura3k/5cx5OUOF8/tAqnPGgHE+8r5R6lQDvGLmjg==
 
-rango-types@^0.1.33:
-  version "0.1.33"
-  resolved "https://registry.yarnpkg.com/rango-types/-/rango-types-0.1.33.tgz#ff0d580aedf501724c13c89db515563e615b526f"
-  integrity sha512-QvytqySQLTCBKwI5ChaA1hjBHP4qXc/V3TSLW74ttJwp1/PDWxwigIXGfyZrAlzxXdDJrIdYJsag0tLFApwbEg==
+rango-types@^0.1.34:
+  version "0.1.34"
+  resolved "https://registry.yarnpkg.com/rango-types/-/rango-types-0.1.34.tgz#e8108b70f34677c85d036d64605babc56391cbe6"
+  integrity sha512-nV+5SJjikhrQy9wHZKjYh9rExNZoAjyibV8ZBy3HBffFgevuHn9+ZhP3oAlc074FNNwSvqnvhvPA4/efmPpL8g==
 
 raw-body@2.5.1:
   version "2.5.1"
