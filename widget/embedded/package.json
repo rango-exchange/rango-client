@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/widget-embedded",
-  "version": "0.1.20-next.1",
+  "version": "0.1.20-next.3",
   "license": "MIT",
   "type": "module",
   "main": "dist/index.js",
@@ -17,13 +17,13 @@
     "lint": "eslint \"**/*.{ts,tsx}\" --ignore-path ../../.eslintignore"
   },
   "dependencies": {
-    "@rango-dev/provider-all": "^0.1.22-next.0",
-    "@rango-dev/queue-manager-core": "^0.1.15-next.1",
-    "@rango-dev/queue-manager-rango-preset": "^0.1.15-next.0",
-    "@rango-dev/queue-manager-react": "^0.1.14-next.0",
-    "@rango-dev/ui": "^0.1.16-next.0",
-    "@rango-dev/wallets-core": "^0.1.16-next.1",
-    "@rango-dev/wallets-shared": "^0.1.14",
+    "@rango-dev/provider-all": "^0.1.22-next.2",
+    "@rango-dev/queue-manager-core": "^0.1.15-next.2",
+    "@rango-dev/queue-manager-rango-preset": "^0.1.15-next.3",
+    "@rango-dev/queue-manager-react": "^0.1.14-next.3",
+    "@rango-dev/ui": "^0.1.16-next.3",
+    "@rango-dev/wallets-core": "^0.1.16-next.3",
+    "@rango-dev/wallets-shared": "^0.1.15-next.2",
     "bignumber.js": "^9.1.1",
     "copy-to-clipboard": "^3.3.3",
     "dayjs": "^1.11.7",

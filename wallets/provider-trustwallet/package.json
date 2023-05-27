@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/provider-trustwallet",
-  "version": "0.1.16-next.1",
+  "version": "0.1.16-next.3",
   "license": "MIT",
   "module": "dist/provider-trustwallet.esm.js",
   "main": "dist/index.js",
@@ -17,8 +17,8 @@
     "lint": "eslint \"**/*.{ts,tsx}\" --ignore-path ../../.eslintignore"
   },
   "dependencies": {
-    "@rango-dev/signer-evm": "^0.1.15-next.1",
-    "@rango-dev/wallets-shared": "^0.1.14",
+    "@rango-dev/signer-evm": "^0.1.15-next.3",
+    "@rango-dev/wallets-shared": "^0.1.15-next.2",
     "rango-types": "^0.1.32"
   },
   "publishConfig": {
