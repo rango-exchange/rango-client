@@ -15,6 +15,7 @@ export function watch(params) {
     console.log(headStyle('watch'), stdout);
   });
   watcher.stdout.on('data', (d) => {
+    console.log(d);
     const [command, data] = parseCommand(d);
     if (command === 'build' && data != project) {
       const build_command = `${nx} run ${data}:build`;

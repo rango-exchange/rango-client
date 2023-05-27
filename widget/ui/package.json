@@ -15,7 +15,8 @@
     "build": "node ../../scripts/build/command.mjs --path widget/ui",
     "type-checking": "tsc --declaration --emitDeclarationOnly",
     "storybook": "storybook dev -p 3000",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "clean": "rimraf dist"
   },
   "peerDependencies": {
     "@rango-dev/queue-manager-rango-preset": "*",

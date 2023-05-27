@@ -11,7 +11,8 @@
   ],
   "scripts": {
     "dev": "tsdx watch",
-    "build": "node ../../scripts/build/command.mjs --path signers/signer-starknet"
+    "build": "node ../../scripts/build/command.mjs --path signers/signer-starknet",
+    "clean": "rimraf dist"
   },
   "husky": {
     "hooks": {

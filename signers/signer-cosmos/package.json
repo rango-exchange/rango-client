@@ -11,7 +11,8 @@
   ],
   "scripts": {
     "dev": "tsdx watch",
-    "build": "node ../../scripts/build/command.mjs --path signers/signer-cosmos"
+    "build": "node ../../scripts/build/command.mjs --path signers/signer-cosmos",
+    "clean": "rimraf dist"
   },
   "dependencies": {
     "@cosmjs/launchpad": "^0.27.1",
