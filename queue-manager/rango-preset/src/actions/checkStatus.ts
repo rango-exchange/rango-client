@@ -3,19 +3,22 @@ import {
   delay,
   getCurrentStep,
   getCurrentStepTxType,
-  isCosmosTransaction,
-  isEvmTransaction,
-  isSolanaTransaction,
-  isStarknetTransaction,
-  isTrasnferTransaction,
-  isTronTransaction,
   resetNetworkStatus,
   updateSwapStatus,
   useTransactionsResponse,
 } from '../helpers';
 import { SwapActionTypes, SwapQueueContext, SwapStorage } from '../types';
 import { getNextStep, getRelatedWallet, MessageSeverity } from '../shared';
-import { Transaction, TransactionStatusResponse } from 'rango-sdk';
+import {
+  Transaction,
+  TransactionStatusResponse,
+  isEvmTransaction,
+  isCosmosTransaction,
+  isSolanaTransaction,
+  isTransferTransaction,
+  isTronTransaction,
+  isStarknetTransaction,
+} from 'rango-sdk';
 import { httpService } from '../services';
 import { GenericSigner } from 'rango-types';
 import { prettifyErrorMessage } from '../shared-errors';
@@ -152,7 +155,7 @@ async function checkTransactionStatus({
       currentStep.cosmosTransaction = newTransaction;
     } else if (isSolanaTransaction(newTransaction)) {
       currentStep.solanaTransaction = newTransaction;
-    } else if (isTrasnferTransaction(newTransaction)) {
+    } else if (isTransferTransaction(newTransaction)) {
       currentStep.transferTransaction = newTransaction;
     } else if (isStarknetTransaction(newTransaction)) {
       if (newTransaction.isApprovalTx)

@@ -21,12 +21,6 @@ import {
 import { Providers, readAccountAddress } from '@rango-dev/wallets-core';
 
 import {
-  TronTransaction,
-  StarknetTransaction,
-  CosmosTransaction,
-  EvmTransaction,
-  SolanaTransaction,
-  Transfer as TransferTransaction,
   Transaction,
   TransactionType,
   EvmBlockchainMeta,
@@ -144,6 +138,11 @@ export const getCurrentStep = (swap: PendingSwap): PendingSwapStep | null => {
   );
 };
 
+/**
+ *
+ * Returns current step transaction
+ *
+ */
 export const getCurrentStepTx = (
   currentStep: PendingSwapStep
 ): Transaction | null => {
@@ -171,12 +170,22 @@ export const getCurrentStepTx = (
   );
 };
 
+/**
+ *
+ * Returns current step transaction type
+ *
+ */
 export const getCurrentStepTxType = (
   currentStep: PendingSwapStep
 ): TransactionType | undefined => {
   return getCurrentStepTx(currentStep)?.type;
 };
 
+/**
+ *
+ * Returns a boolean indicating that current step is an approval tx or not.
+ *
+ */
 export const isApprovalCurrentStepTx = (
   currentStep: PendingSwapStep
 ): boolean => {
@@ -280,6 +289,11 @@ export function updateSwapStatus({
   };
 }
 
+/**
+ *
+ * Set current step transaction hash, update pending swap status, and notify user if needed
+ *
+ */
 export function setStepTransactionIds(
   { getStorage, setStorage }: ExecuterActions<SwapStorage, SwapActionTypes>,
   txId: string | null,
@@ -444,22 +458,6 @@ export function markRunningSwapAsDependsOnOtherQueues({
 export function delay(ms: number): Promise<unknown> {
   return new Promise((res) => setTimeout(res, ms));
 }
-
-export const isEvmTransaction = (tx: Transaction): tx is EvmTransaction =>
-  tx.type === TransactionType.EVM;
-
-export const isCosmosTransaction = (tx: Transaction): tx is CosmosTransaction =>
-  tx.type === TransactionType.COSMOS;
-export const isSolanaTransaction = (tx: Transaction): tx is SolanaTransaction =>
-  tx.type === TransactionType.SOLANA;
-export const isTrasnferTransaction = (
-  tx: Transaction
-): tx is TransferTransaction => tx.type === TransactionType.TRANSFER;
-export const isStarknetTransaction = (
-  tx: Transaction
-): tx is StarknetTransaction => tx.type === TransactionType.STARKNET;
-export const isTronTransaction = (tx: Transaction): tx is TronTransaction =>
-  tx.type === TransactionType.TRON;
 
 /**
  *
