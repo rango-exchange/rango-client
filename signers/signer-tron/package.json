@@ -14,7 +14,7 @@
     "build": "node ../../scripts/build/command.mjs --path signers/signer-tron",
     "clean": "rimraf dist",
     "format": "prettier --write '{.,src}/**/*.{ts,tsx}'",
-    "lint": "eslint \"**/*.{ts,tsx}\""
+    "lint": "eslint \"**/*.{ts,tsx}\" --ignore-path ../../.eslintignore"
   },
   "dependencies": {
     "rango-types": "^0.1.32"
