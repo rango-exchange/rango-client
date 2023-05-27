@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/signer-cosmos",
-  "version": "0.1.13",
+  "version": "0.1.14",
   "license": "MIT",
   "module": "dist/signer-cosmos.esm.js",
   "main": "dist/index.js",
