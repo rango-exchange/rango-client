@@ -30,11 +30,6 @@ export async function generateChangelog(pkg, options) {
 
   const { stdout: bin } = await execa('yarn', ['bin', 'conventional-changelog']);
   const { stdout } = await execa(bin, command);
-
-  console.log('[debug]', command);
-  console.log('[debug] saveToFile', saveToFile);
-  console.log('[debug]', bin);
-  console.log('[debug]', stdout);
   return stdout;
 }
 
@@ -44,17 +39,6 @@ export async function makeGithubRelease(updatedPkg) {
   });
   const tag = generateTagName(updatedPkg);
   await execa('gh', ['release', 'create', tag, '--target', 'main', '--notes', notes]);
-}
-
-export async function addChangelogsToStage(updatedPackages) {
-  const files = updatedPackages.map((pkg) => join(root, pkg.location, 'CHANGELOG.md'));
-  await execa('git', ['add', '--', ...files]);
-}
-
-export async function addUpdatedPackageJsonToStage(packages) {
-  const files = packages.map((pkg) => join(root, pkg.location, 'package.json'));
-  files.push(join(root, 'yarn.lock'));
-  await execa('git', ['add', '--', ...files]);
 }
 
 export async function packageNamesToPackagesWithInfo(names) {
@@ -158,16 +142,15 @@ export async function pushToRemote(branch, remote = 'origin') {
   console.log(stdout);
 }
 
-export async function tagPackages(updatedPackages, { skipGitTagging }) {
+export async function tagPackagesAndCommit(updatedPackages, { skipGitTagging }) {
   const tags = updatedPackages.map(generateTagName);
-  const files = updatedPackages.map((pkg) => join(root, pkg.location, 'package.json'));
 
   const subject = `chore(release): publish\n\n`;
   const list = tags.map((tag) => `- ${tag}`).join('\n');
   const message = subject + list;
 
   // making a publish commit
-  await execa('git', ['add', '--', ...files]);
+  await execa('git', ['add', '.']);
   await execa('git', ['commit', '-m', message, '-m', `Affected packages: ${tags.join(',')}`]);
 
   // creating annotated tags based on packages
@@ -217,7 +200,7 @@ export async function increaseVersionForMain(changedPkgs) {
     await Promise.all(
       changedPkgs.map(({ name }) =>
         recommendBump(name).then((recommendation) => {
-          console.log({ name, recommendation });
+          console.log(`::debug::${{ name, recommendation }}`);
           nextVersions[name] = recommendation.releaseType;
         }),
       ),
