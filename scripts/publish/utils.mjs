@@ -1,9 +1,8 @@
 import chalk from 'chalk';
 import { execa } from 'execa';
-import { readFileSync } from 'fs';
 import { join } from 'path';
 import conventionanRecommendBump from 'conventional-recommended-bump';
-import { printDirname } from '../common/utils.mjs';
+import { packageNameWithoutScope, printDirname, workspacePackages } from '../common/utils.mjs';
 import { VERCEL_ORG_ID, VERCEL_PACKAGES, VERCEL_TOKEN } from './config.mjs';
 import { importJson } from '../common/graph/helpers.mjs';
 import { overrideNPMVersionOnLocal } from '../common/npm.mjs';
@@ -257,27 +256,6 @@ export async function changed(since) {
   );
   return all.filter((pkg) => pkg.changed);
 }
-export async function workspacePackages() {
-  const { stdout } = await execa('yarn', ['workspaces', 'info']);
-  const result = JSON.parse(stdout);
-  const packagesName = Object.keys(result);
-  const output = packagesName.map((name) => {
-    const pkgJson = pacakgeJson(result[name].location);
-    return {
-      name,
-      location: result[name].location,
-      version: pkgJson.version,
-      private: pkgJson.private || false,
-    };
-  });
-  return output;
-}
-
-export function pacakgeJson(location) {
-  const fullPath = join(root, location, 'package.json');
-  const file = readFileSync(fullPath);
-  return JSON.parse(file);
-}
 
 export function detectChannel() {
   console.log('base', getEnvWithFallback('REF'));
@@ -337,13 +315,6 @@ export function logAsSection(title, sub = '') {
   console.log(message);
 }
 
-/*
-  Convert:
-  @hello-wrold/a-b -> a-b
-*/
-function packageNameWithoutScope(name) {
-  return name.replace(/@.+\//, '');
-}
 
 // we are adding a fallback, to make sure predefiend VERCEL_PACKAGES always will be true.
 export function getEnvWithFallback(name) {
