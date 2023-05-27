@@ -14,7 +14,6 @@ import {
   increaseVersionForNext,
   logAsSection,
   makeGithubRelease,
-  packageNamesToPackagesWithInfo,
   publishPackages,
   pushToRemote,
   tagPackagesAndCommit,
@@ -23,6 +22,7 @@ import { Graph } from '../common/graph/index.mjs';
 import { nxToGraph } from '../common/graph/helpers.mjs';
 import { execa, $ } from 'execa';
 import { performance } from 'node:perf_hooks';
+import { packageNamesToPackagesWithInfo } from '../common/utils.mjs';
 
 // TODO: Working directory should be empty.
 async function run() {
