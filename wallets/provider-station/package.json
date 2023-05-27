@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/provider-station",
-  "version": "0.1.19-next.0",
+  "version": "0.1.19-next.1",
   "license": "MIT",
   "module": "dist/provider-station.esm.js",
   "main": "dist/index.js",
@@ -45,7 +45,7 @@
     }
   ],
   "dependencies": {
-    "@rango-dev/signer-terra": "^0.1.21-next.0",
+    "@rango-dev/signer-terra": "^0.1.21-next.1",
     "@rango-dev/wallets-shared": "^0.1.14",
     "@terra-money/wallet-controller": "^3.11.2",
     "rango-types": "^0.1.22"

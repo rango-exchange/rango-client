@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/provider-cosmostation",
-  "version": "0.1.16-next.0",
+  "version": "0.1.16-next.1",
   "license": "MIT",
   "module": "dist/provider-cosmostation.esm.js",
   "main": "dist/index.js",
@@ -39,8 +39,8 @@
     }
   ],
   "dependencies": {
-    "@rango-dev/signer-cosmos": "^0.1.15-next.0",
-    "@rango-dev/signer-evm": "^0.1.14",
+    "@rango-dev/signer-cosmos": "^0.1.15-next.1",
+    "@rango-dev/signer-evm": "^0.1.15-next.1",
     "@rango-dev/wallets-shared": "^0.1.14",
     "rango-types": "^0.1.32"
   },
