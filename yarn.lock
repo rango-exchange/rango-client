@@ -17723,6 +17723,11 @@ select@^1.1.2:
   resolved "https://registry.yarnpkg.com/select/-/select-1.1.2.tgz#0e7350acdec80b1108528786ec1d4418d11b396d"
   integrity sha512-OwpTSOfy6xSs1+pwcNrv0RBMOzI39Lp3qQKUTPVVPRjCdNa5JH/oPRiqsesIskK8TVgmRiHwO4KXlV2Li9dANA==
 
+semver-parser@^4.1.4:
+  version "4.1.4"
+  resolved "https://registry.yarnpkg.com/semver-parser/-/semver-parser-4.1.4.tgz#152c172b9df80a5b826c66fb47080656c691f5e3"
+  integrity sha512-U0IqwT7n99QS5/L8erhYGXBiiZH4M8t6YIlUuloY+mZpXkQOmH0V7Xf5oMytTpasjCjJCbrfysK01fIRbyDyrQ==
+
 "semver@2 || 3 || 4 || 5", semver@^5.4.1, semver@^5.5.0, semver@^5.6.0, semver@^5.7.0, semver@^5.7.1:
   version "5.7.1"
   resolved "https://registry.yarnpkg.com/semver/-/semver-5.7.1.tgz#a954f931aeba508d307bbf069eff0c01c96116f7"
