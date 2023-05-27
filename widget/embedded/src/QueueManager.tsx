@@ -59,7 +59,7 @@ function QueueManager(props: PropsWithChildren<{}>) {
   const allBlockchains = blockchains
     .filter((blockchain) => blockchain.enabled)
     .reduce(
-      (blockchainsObj, blockchain) => (
+      (blockchainsObj: any, blockchain) => (
         (blockchainsObj[blockchain.name] = blockchain), blockchainsObj
       ),
       {}
