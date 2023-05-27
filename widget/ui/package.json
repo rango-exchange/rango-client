@@ -2,6 +2,7 @@
   "name": "@rango-dev/ui",
   "version": "0.1.16-next.0",
   "license": "MIT",
+  "type": "module",
   "module": "dist/index.js",
   "typings": "dist/index.d.ts",
   "files": [
@@ -11,7 +12,7 @@
   "scripts": {
     "dev": "yarn bundle --watch",
     "bundle": "esbuild src/index.ts --bundle --minify --keep-names --sourcemap --outdir=dist --platform=node --format=esm --packages=external",
-    "build": "yarn type-checking && yarn bundle",
+    "build": "node ../../scripts/build/command.mjs --path widget/ui",
     "type-checking": "tsc --declaration --emitDeclarationOnly",
     "storybook": "storybook dev -p 3000",
     "build-storybook": "storybook build"

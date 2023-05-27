@@ -2,6 +2,7 @@
   "name": "@rango-dev/widget-embedded",
   "version": "0.1.20-next.0",
   "license": "MIT",
+  "type": "module",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
   "files": [
@@ -10,7 +11,7 @@
   ],
   "browserslist": "> 0.5%, last 2 versions, not dead",
   "scripts": {
-    "build": "tsdx build --tsconfig ./tsconfig.json"
+    "build": "node ../../scripts/build/command.mjs --path widget/embedded"
   },
   "husky": {
     "hooks": {
