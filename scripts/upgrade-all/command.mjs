@@ -3,8 +3,11 @@ import commandLineArgs from 'command-line-args';
 import { getAllPackages, upgradeDepndendentsOf } from './utils.mjs';
 
 async function run() {
-  const optionDefinitions = [{ name: 'project', type: String }];
-  const { project } = commandLineArgs(optionDefinitions);
+  const optionDefinitions = [
+    { name: 'project', type: String },
+    { name: 'no-install', type: Boolean, defaultOption: false },
+  ];
+  const { project, noInstall } = commandLineArgs(optionDefinitions, { camelCase: true });
 
   const { stdout: currentBranch } = await $`git branch --show-current`;
   const dist = currentBranch === 'main' ? 'latest' : 'next';
@@ -24,8 +27,10 @@ async function run() {
 
   console.log(`package.json has been updated. Trying to install... \n`);
 
-  const { stdout, stderr } = await $`yarn`;
-  console.log(stdout, stderr);
+  if (!noInstall) {
+    const { stdout, stderr } = await $`yarn`;
+    console.log(stdout, stderr);
+  }
 }
 
 run().catch((e) => {
