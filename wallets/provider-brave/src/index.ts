@@ -19,9 +19,9 @@ import {
   SignerFactory,
   isEvmBlockchain,
   isSolanaBlockchain,
-  BlockchainMeta,
   evmBlockchains,
   solanaBlockchain,
+  ProviderMeta,
 } from 'rango-types';
 
 const WALLET = WalletTypes.BRAVE;
@@ -70,19 +70,12 @@ export const connect: Connect = async ({ instance, meta }) => {
     }
   }
 
-  if (numberOfEmptyWallets === instance.size)
-    throw new Error(emptyWalletCustomErrorMessage);
+  if (numberOfEmptyWallets === instance.size) throw new Error(emptyWalletCustomErrorMessage);
 
   return results;
 };
 
-export const subscribe: Subscribe = ({
-  instance,
-  updateAccounts,
-  meta,
-  state,
-  updateChainId,
-}) => {
+export const subscribe: Subscribe = ({ instance, updateAccounts, meta, state, updateChainId }) => {
   const evm_instance = chooseInstance(instance, meta, Network.ETHEREUM);
   const sol_instance = chooseInstance(instance, meta, Network.SOLANA);
 
@@ -91,8 +84,7 @@ export const subscribe: Subscribe = ({
       .filter(isEvmBlockchain)
       .find((blockchain) => blockchain.name === Network.ETHEREUM)?.chainId;
     if (state.connected) {
-      if (state.network != Network.ETHEREUM && eth_chainId)
-        updateChainId(eth_chainId);
+      if (state.network != Network.ETHEREUM && eth_chainId) updateChainId(eth_chainId);
       updateAccounts(addresses);
     }
   });
@@ -102,8 +94,7 @@ export const subscribe: Subscribe = ({
   });
 
   sol_instance?.on('accountChanged', async () => {
-    if (state.network != Network.SOLANA)
-      updateChainId(meta.filter(isSolanaBlockchain)[0].chainId);
+    if (state.network != Network.SOLANA) updateChainId(meta.filter(isSolanaBlockchain)[0].chainId);
     const response = await sol_instance.connect();
     const account: string = response.publicKey.toString();
     updateAccounts([account]);
@@ -116,9 +107,7 @@ export const canSwitchNetworkTo: CanSwitchNetwork = canSwitchNetworkToEvm;
 
 export const getSigners: (provider: any) => SignerFactory = signer;
 
-export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
-  allBlockChains
-) => {
+export const getWalletInfo: (allBlockChains: ProviderMeta[]) => WalletInfo = (allBlockChains) => {
   const evms = evmBlockchains(allBlockChains);
   const solana = solanaBlockchain(allBlockChains);
   return {

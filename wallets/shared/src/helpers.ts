@@ -1,4 +1,4 @@
-import { EvmBlockchainMeta } from 'rango-types';
+import { BlockchainMeta, EvmProviderMeta, ProviderMeta } from 'rango-types';
 import {
   EvmNetworksChainInfo,
   AddEthereumChainParameter,
@@ -36,8 +36,7 @@ export function deepCopy(obj: any): any {
   if (obj instanceof Object) {
     copy = {} as any;
     for (const attr in obj) {
-      if (Object.prototype.hasOwnProperty.call(obj, attr))
-        copy[attr] = deepCopy(obj[attr]);
+      if (Object.prototype.hasOwnProperty.call(obj, attr)) copy[attr] = deepCopy(obj[attr]);
     }
     return copy;
   }
@@ -48,7 +47,7 @@ export function deepCopy(obj: any): any {
 export async function switchOrAddNetworkForMetamaskCompatibleWallets(
   instance: any,
   network: Network,
-  evmNetworksChainInfo: EvmNetworksChainInfo
+  evmNetworksChainInfo: EvmNetworksChainInfo,
 ) {
   const targetChain = evmNetworksChainInfo[network];
 
@@ -58,13 +57,14 @@ export async function switchOrAddNetworkForMetamaskCompatibleWallets(
       params: [{ chainId: targetChain?.chainId }],
     });
   } catch (switchError) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     // @ts-ignore
     // To resolve this error: Catch clause variable type annotation must be any or unknown if specified
     const error = switchError as { code: number };
 
     if (!targetChain) {
       throw new Error(
-        `It seems you don't have ${network} network on your wallet. Please add it manually.`
+        `It seems you don't have ${network} network on your wallet. Please add it manually.`,
       );
     } else if (error.code === 4902 || !error.code) {
       // Note: on WalletConnect `code` is undefined so we have to use !switchError.code as fallback.
@@ -78,10 +78,7 @@ export async function switchOrAddNetworkForMetamaskCompatibleWallets(
   }
 }
 
-export function timeout<T = any>(
-  forPromise: Promise<any>,
-  time: number
-): Promise<T> {
+export function timeout<T = any>(forPromise: Promise<any>, time: number): Promise<T> {
   const timeoutPromise = new Promise((_, reject) => {
     setTimeout(() => {
       reject('Timeout!');
@@ -91,29 +88,22 @@ export function timeout<T = any>(
   return Promise.race([forPromise, timeoutPromise]);
 }
 
-export const convertEvmBlockchainMetaToEvmChainInfo = (
-  evmBlockchains: EvmBlockchainMeta[]
-) =>
+export const convertEvmBlockchainMetaToEvmChainInfo = (evmBlockchains: EvmProviderMeta[]) =>
   evmBlockchains.reduce(
-    (
-      evmNetWorksChainInfo: { [key: string]: AddEthereumChainParameter },
-      blockchainMeta
-    ) => (
+    (evmNetWorksChainInfo: { [key: string]: AddEthereumChainParameter }, blockchainMeta) => (
       (evmNetWorksChainInfo[blockchainMeta.name] = {
-        chainName: blockchainMeta.info.chainName,
+        chainName: blockchainMeta.chainName,
         chainId: blockchainMeta.chainId,
-        nativeCurrency: blockchainMeta.info.nativeCurrency,
-        rpcUrls: blockchainMeta.info.rpcUrls,
-        blockExplorerUrls: blockchainMeta.info.blockExplorerUrls,
+        nativeCurrency: blockchainMeta.nativeCurrency,
+        rpcUrls: blockchainMeta.rpcUrls,
+        blockExplorerUrls: blockchainMeta.blockExplorerUrls,
       }),
       evmNetWorksChainInfo
     ),
-    {}
+    {},
   );
 
-export const evmChainsToRpcMap = (
-  evmNetworkChainInfo: EvmNetworksChainInfo
-) => {
+export const evmChainsToRpcMap = (evmNetworkChainInfo: EvmNetworksChainInfo) => {
   return Object.fromEntries(
     new Map(
       Object.keys(evmNetworkChainInfo).map((chainName) => {
@@ -122,22 +112,18 @@ export const evmChainsToRpcMap = (
         // This `if` is only used for satisfying typescript,
         // Because we iterating over Object.keys(EVM_NETWORKS_CHAIN_INFO)
         // And obviously it cannot be `undefined` and always has a value.
-        if (!!info) {
+        if (info) {
           return [parseInt(info.chainId), info.rpcUrls[0]];
         }
         return [0, ''];
-      })
-    )
+      }),
+    ),
   );
 };
 
 export const getSolanaAccounts: Connect = async ({ instance }) => {
   // Asking for account from wallet.
-  try {
-    var solanaResponse = await instance.connect();
-  } catch (e) {
-    throw e;
-  }
+  const solanaResponse = await instance.connect();
 
   const account = solanaResponse.publicKey.toString();
   return {
@@ -146,14 +132,11 @@ export const getSolanaAccounts: Connect = async ({ instance }) => {
   };
 };
 
-export function getCoinbaseInstance(
-  lookingFor: 'coinbase' | 'metamask' = 'coinbase'
-) {
+export function getCoinbaseInstance(lookingFor: 'coinbase' | 'metamask' = 'coinbase') {
   const { ethereum, coinbaseSolana } = window;
   const instances = new Map();
-  if (!!ethereum) {
-    const checker =
-      lookingFor === 'metamask' ? 'isMetaMask' : 'isCoinbaseWallet';
+  if (ethereum) {
+    const checker = lookingFor === 'metamask' ? 'isMetaMask' : 'isCoinbaseWallet';
 
     // If only Coinbase Wallet is installed
     if (lookingFor === 'coinbase' && ethereum[checker]) {
@@ -167,8 +150,7 @@ export function getCoinbaseInstance(
       instances.set(Network.ETHEREUM, ethInstance);
     }
   }
-  if (!!coinbaseSolana && lookingFor === 'coinbase')
-    instances.set(Network.SOLANA, coinbaseSolana);
+  if (!!coinbaseSolana && lookingFor === 'coinbase') instances.set(Network.SOLANA, coinbaseSolana);
 
   if (instances.size === 0) return null;
 
@@ -181,7 +163,7 @@ export function sortWalletsBasedOnState(wallets: Wallet[]): Wallet[] {
   return wallets.sort(
     (a, b) =>
       Number(b.connected) - Number(a.connected) ||
-      Number(b.extensionAvailable) - Number(a.extensionAvailable)
+      Number(b.extensionAvailable) - Number(a.extensionAvailable),
   );
 }
 
@@ -216,8 +198,18 @@ export function detectInstallLink(install: InstallObjects | string): string {
 }
 
 export function detectMobileScreens(): boolean {
-  return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
-    navigator.userAgent
-  );
+  return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
 }
 
+export function normalizeMetaData(allblockchains: BlockchainMeta[]): ProviderMeta[] {
+  const normalizedData = allblockchains.map((chain) => {
+    if (chain.info) {
+      const filteredData = { ...chain, ...chain.info };
+      const { info, ...rest } = filteredData;
+      return rest;
+    }
+    return chain;
+  });
+
+  return normalizedData as ProviderMeta[];
+}

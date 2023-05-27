@@ -32,7 +32,7 @@ import {
   isRouteSwappersUpdated,
 } from '../utils/routing';
 import { numberToString } from '../utils/numbers';
-import { BestRouteResponse } from 'rango-sdk';
+import { BestRouteResponse, MetaResponse } from 'rango-sdk';
 import { calculatePendingSwap } from '@rango-dev/queue-manager-rango-preset';
 
 type ConfirmSwap = {
@@ -58,12 +58,11 @@ export function useConfirmSwap(): ConfirmSwap {
   const meta = useMetaStore.use.meta();
   const customSlippage = useSettingsStore.use.customSlippage();
   const slippage = useSettingsStore.use.slippage();
-  const disabledLiquiditySources =
-    useSettingsStore.use.disabledLiquiditySources();
+  const disabledLiquiditySources = useSettingsStore.use.disabledLiquiditySources();
   const userSlippage = customSlippage || slippage;
   const proceedAnywayRef = useRef(false);
   const confiremedRouteRef = useRef<BestRouteResponse | null>(null);
-  let abortControllerRef = useRef<AbortController | null>(null);
+  const abortControllerRef = useRef<AbortController | null>(null);
 
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState<ConfirmSwapError[]>([]);
@@ -94,7 +93,7 @@ export function useConfirmSwap(): ConfirmSwap {
           getWalletsForNewSwap(selectedWallets),
           swapSettings,
           false,
-          meta
+          meta as MetaResponse,
         );
 
         return newSwap;
@@ -116,7 +115,7 @@ export function useConfirmSwap(): ConfirmSwap {
       userSlippage,
       affiliateRef,
       initialRoute,
-      destination
+      destination,
     );
 
     try {
@@ -130,14 +129,12 @@ export function useConfirmSwap(): ConfirmSwap {
 
       if (
         !confiremedRoute.result ||
-        !new BigNumber(confiremedRoute.requestAmount).isEqualTo(
-          new BigNumber(inputAmount || '-1')
-        )
+        !new BigNumber(confiremedRoute.requestAmount).isEqualTo(new BigNumber(inputAmount || '-1'))
       ) {
         setErrors((prevState) =>
           prevState.concat({
             type: ConfirmSwapErrorTypes.NO_ROUTE,
-          })
+          }),
         );
         return;
       }
@@ -152,13 +149,10 @@ export function useConfirmSwap(): ConfirmSwap {
       if (routeChanged) {
         setBestRoute(confiremedRoute);
         const newRouteOutputUsdValue = new BigNumber(
-          confiremedRoute.result?.outputAmount || '0'
+          confiremedRoute.result?.outputAmount || '0',
         ).multipliedBy(toToken.usdPrice || 0);
 
-        const outputRatio = getOutputRatio(
-          inputUsdValue,
-          newRouteOutputUsdValue
-        );
+        const outputRatio = getOutputRatio(inputUsdValue, newRouteOutputUsdValue);
         const highValueLoss = outputRatioHasWarning(inputUsdValue, outputRatio);
 
         if (highValueLoss)
@@ -168,16 +162,14 @@ export function useConfirmSwap(): ConfirmSwap {
         else if (isOutputAmountChangedALot(initialRoute, confiremedRoute))
           confirmSwapState.warnings.push({
             type: ConfirmSwapWarningTypes.ROUTE_AND_OUTPUT_AMOUNT_UPDATED,
-            newOutputAmount: numberToString(
-              getRouteOutputAmount(confiremedRoute)
-            ),
+            newOutputAmount: numberToString(getRouteOutputAmount(confiremedRoute)),
             percentageChange: numberToString(
               getPercentageChange(
                 getRouteOutputAmount(initialRoute),
-                getRouteOutputAmount(confiremedRoute)
+                getRouteOutputAmount(confiremedRoute),
               ),
               null,
-              2
+              2,
             ),
           });
         else if (isRouteInternalCoinsUpdated(initialRoute, confiremedRoute))
@@ -194,10 +186,7 @@ export function useConfirmSwap(): ConfirmSwap {
           });
       }
 
-      const balanceWarnings = getBalanceWarnings(
-        confiremedRoute,
-        selectedWallets
-      );
+      const balanceWarnings = getBalanceWarnings(confiremedRoute, selectedWallets);
       const enoughBalance = balanceWarnings.length === 0;
 
       if (!enoughBalance)
@@ -232,7 +221,7 @@ export function useConfirmSwap(): ConfirmSwap {
           getWalletsForNewSwap(selectedWallets),
           swapSettings,
           false,
-          meta
+          meta as MetaResponse,
         );
         return newSwap;
       } else if (!proceedAnywayRef.current) {

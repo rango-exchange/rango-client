@@ -9,7 +9,7 @@ import {
 } from '@rango-dev/wallets-shared';
 import { phantom as phantom_instance } from './helpers';
 import signer from './signer';
-import { SignerFactory, BlockchainMeta, solanaBlockchain } from 'rango-types';
+import { SignerFactory, solanaBlockchain, ProviderMeta } from 'rango-types';
 
 const WALLET = WalletTypes.PHANTOM;
 
@@ -36,16 +36,13 @@ export const canSwitchNetworkTo: CanSwitchNetwork = () => false;
 
 export const getSigners: (provider: any) => SignerFactory = signer;
 
-export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
-  allBlockChains
-) => {
+export const getWalletInfo: (allBlockChains: ProviderMeta[]) => WalletInfo = (allBlockChains) => {
   const solana = solanaBlockchain(allBlockChains);
   return {
     name: 'Phantom',
     img: 'https://raw.githubusercontent.com/rango-exchange/rango-types/main/assets/icons/wallets/phantom.svg',
     installLink: {
-      CHROME:
-        'https://chrome.google.com/webstore/detail/phantom/bfnaelmomeimhlpmgjnjophhpkkoljpa',
+      CHROME: 'https://chrome.google.com/webstore/detail/phantom/bfnaelmomeimhlpmgjnjophhpkkoljpa',
 
       DEFAULT: 'https://phantom.app/',
     },

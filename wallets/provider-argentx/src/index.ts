@@ -6,7 +6,7 @@ import {
   Subscribe,
   WalletInfo,
 } from '@rango-dev/wallets-shared';
-import { SignerFactory, BlockchainMeta, starknetBlockchain } from 'rango-types';
+import { SignerFactory, starknetBlockchain, ProviderMeta } from 'rango-types';
 import { argentx as argentx_instances } from './helpers';
 import signer from './signer';
 
@@ -32,16 +32,14 @@ export const connect: Connect = async ({ instance }) => {
     throw new Error('Error connecting ArgentX');
   }
   if (instance?.chainId !== MAINNET_CHAIN_ID)
-    throw new Error(
-      `Please switch to Mainnet, current network is ${instance?.chainId}`
-    );
-  return { accounts: !!r ? r : [], chainId: Network.STARKNET };
+    throw new Error(`Please switch to Mainnet, current network is ${instance?.chainId}`);
+  return { accounts: r ? r : [], chainId: Network.STARKNET };
 };
 
 export const subscribe: Subscribe = ({ instance, state, updateAccounts }) => {
   instance?.on('accountsChanged', (accounts: any) => {
     if (state.connected) {
-      if (!!instance) {
+      if (instance) {
         updateAccounts(accounts, Network.STARKNET);
       }
     }
@@ -52,18 +50,14 @@ export const canSwitchNetworkTo: CanSwitchNetwork = () => false;
 
 export const getSigners: (provider: any) => SignerFactory = signer;
 
-export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
-  allBlockChains
-) => {
+export const getWalletInfo: (allBlockChains: ProviderMeta[]) => WalletInfo = (allBlockChains) => {
   const starknet = starknetBlockchain(allBlockChains);
   return {
     name: 'ArgentX',
     img: 'https://raw.githubusercontent.com/rango-exchange/rango-types/main/assets/icons/wallets/argentx.svg',
     installLink: {
-      CHROME:
-        'https://chrome.google.com/webstore/detail/argent-x/dlcobpjiigpikoobohmabehhmhfoodbb',
-      BRAVE:
-        'https://chrome.google.com/webstore/detail/argent-x/dlcobpjiigpikoobohmabehhmhfoodbb',
+      CHROME: 'https://chrome.google.com/webstore/detail/argent-x/dlcobpjiigpikoobohmabehhmhfoodbb',
+      BRAVE: 'https://chrome.google.com/webstore/detail/argent-x/dlcobpjiigpikoobohmabehhmhfoodbb',
       FIREFOX: 'https://addons.mozilla.org/en-GB/firefox/addon/argent-x',
       DEFAULT: 'https://www.argent.xyz',
     },

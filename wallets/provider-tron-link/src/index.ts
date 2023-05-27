@@ -8,7 +8,7 @@ import {
 } from '@rango-dev/wallets-shared';
 import { tronLink as tronLink_instance } from './helpers';
 import signer from './signer';
-import { SignerFactory, BlockchainMeta, tronBlockchain } from 'rango-types';
+import { SignerFactory, tronBlockchain, ProviderMeta } from 'rango-types';
 
 // https://docs.tronlink.org/dapp/start-developing
 // https://developers.tron.network/docs/tronlink-events
@@ -28,27 +28,22 @@ export const connect: Connect = async ({ instance }) => {
     if (!r) {
       throw new Error('Please unlock your TronLink extension first.');
     }
-    if (r.code === 200) {
-    } else if (!!r?.code && !!r.message) {
+    if (!!r?.code && !!r.message && r.code !== 200) {
       throw new Error(r.message);
     }
   }
   const address = instance.tronWeb.address.fromHex(
-    (await instance.tronWeb.trx.getAccount()).address.toString()
+    (await instance.tronWeb.trx.getAccount()).address.toString(),
   );
   // TODO check connected network
-  return { accounts: !!address ? [address] : [], chainId: Network.TRON };
+  return { accounts: address ? [address] : [], chainId: Network.TRON };
 };
 
 export const subscribe: Subscribe = ({ updateAccounts, disconnect }) => {
   window.addEventListener('message', (e) => {
-    if (
-      e.data.isTronLink &&
-      e.data.message &&
-      e.data.message.action == 'accountsChanged'
-    ) {
+    if (e.data.isTronLink && e.data.message && e.data.message.action == 'accountsChanged') {
       const account = e?.data?.message?.data?.address;
-      if (!!account) {
+      if (account) {
         updateAccounts([account]);
       } else {
         disconnect();
@@ -61,18 +56,14 @@ export const canSwitchNetworkTo: CanSwitchNetwork = () => false;
 
 export const getSigners: (provider: any) => SignerFactory = signer;
 
-export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
-  allBlockChains
-) => {
+export const getWalletInfo: (allBlockChains: ProviderMeta[]) => WalletInfo = (allBlockChains) => {
   const tron = tronBlockchain(allBlockChains);
   return {
     name: 'TronLink',
     img: 'https://raw.githubusercontent.com/rango-exchange/rango-types/main/assets/icons/wallets/tronlink.png',
     installLink: {
-      CHROME:
-        'https://chrome.google.com/webstore/detail/tronlink/ibnejdfjmmkpcnlpebklmnkoeoihofec',
-      BRAVE:
-        'https://chrome.google.com/webstore/detail/tronlink/ibnejdfjmmkpcnlpebklmnkoeoihofec',
+      CHROME: 'https://chrome.google.com/webstore/detail/tronlink/ibnejdfjmmkpcnlpebklmnkoeoihofec',
+      BRAVE: 'https://chrome.google.com/webstore/detail/tronlink/ibnejdfjmmkpcnlpebklmnkoeoihofec',
       DEFAULT: 'https://www.tronlink.org',
     },
     color: '#96e7ed',

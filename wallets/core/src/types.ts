@@ -1,10 +1,16 @@
 import { PropsWithChildren } from 'react';
-import { Network, WalletType, WalletInfo } from '@rango-dev/wallets-shared';
 import {
-  EventHandler as WalletEventHandler,
-  State as WalletState,
-} from './wallet';
-import { SignerFactory, BlockchainMeta } from 'rango-types';
+  Network,
+  WalletType,
+  WalletInfo,
+  GetInstanceOptions,
+  Connect,
+  Subscribe,
+  SwitchNetwork,
+  CanSwitchNetwork,
+} from '@rango-dev/wallets-shared';
+import { EventHandler as WalletEventHandler, State as WalletState } from './wallet';
+import { ProviderMeta, SignerFactory } from 'rango-types';
 
 export type State = {
   [key: string]: WalletState | undefined;
@@ -31,7 +37,7 @@ export type ProviderContext = {
 
 export type ProviderProps = PropsWithChildren<{
   onUpdateState?: WalletEventHandler;
-  allBlockChains?: BlockchainMeta[];
+  allBlockChains?: ProviderMeta[];
   providers: WalletProvider[];
 }>;
 
@@ -49,49 +55,12 @@ export type ProviderConnectResult = {
   chainId: string;
 };
 
-export type GetInstanceOptions = {
-  network?: Network;
-  currentProvider: any;
-  meta: BlockchainMeta[];
-  force?: boolean;
-};
-export type GetInstance =
-  | (() => any)
-  | ((options: GetInstanceOptions) => Promise<any>);
+export type GetInstance = (() => any) | ((options: GetInstanceOptions) => Promise<any>);
 export type TryGetInstance =
   | (() => any)
   | ((options: Pick<GetInstanceOptions, 'force' | 'network'>) => Promise<any>);
-export type Connect = (options: {
-  instance: any;
-  network?: Network;
-  meta: BlockchainMeta[];
-}) => Promise<ProviderConnectResult | ProviderConnectResult[]>;
 
-export type Disconnect = (options: {
-  instance: any;
-  destroyInstance: () => void;
-}) => Promise<void>;
-export type Subscribe = (options: {
-  instance: any;
-  state: WalletState;
-  meta: BlockchainMeta[];
-  updateChainId: (chainId: string) => void;
-  updateAccounts: (accounts: string[], chainId?: string) => void;
-  connect: (network?: Network) => void;
-  disconnect: () => void;
-}) => void;
-
-export type SwitchNetwork = (options: {
-  instance: any;
-  network: Network;
-  meta: BlockchainMeta[];
-  newInstance?: TryGetInstance;
-}) => Promise<void>;
-
-export type CanSwitchNetwork = (options: {
-  network: Network;
-  meta: BlockchainMeta[];
-}) => boolean;
+export type Disconnect = (options: { instance: any; destroyInstance: () => void }) => Promise<void>;
 
 export interface WalletActions {
   connect: Connect;
@@ -105,7 +74,7 @@ export interface WalletActions {
   switchNetwork?: SwitchNetwork;
   getSigners: (provider: any) => SignerFactory;
   canSwitchNetworkTo?: CanSwitchNetwork;
-  getWalletInfo(allBlockChains: BlockchainMeta[]): WalletInfo;
+  getWalletInfo(allBlockChains: ProviderMeta[]): WalletInfo;
 }
 
 export interface WalletConfig {

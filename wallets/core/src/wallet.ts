@@ -2,22 +2,18 @@ import {
   getBlockChainNameFromId,
   Network,
   WalletType,
+  GetInstanceOptions,
 } from '@rango-dev/wallets-shared';
 import { accountAddressesWithNetwork, needsCheckInstallation } from './helpers';
-import {
-  Events,
-  GetInstanceOptions,
-  WalletActions,
-  WalletConfig,
-} from './types';
-import { BlockchainMeta } from 'rango-types';
+import { Events, WalletActions, WalletConfig } from './types';
+import { ProviderMeta } from 'rango-types';
 
 export type EventHandler = (
   type: WalletType,
   event: Events,
   value: any,
   coreState: State,
-  supportedChains: BlockchainMeta[]
+  supportedChains: ProviderMeta[],
 ) => void;
 
 export interface State {
@@ -38,7 +34,7 @@ class Wallet<InstanceType = any> {
   private actions: WalletActions;
   private state: State;
   private options: Options;
-  private meta: BlockchainMeta[];
+  private meta: ProviderMeta[];
   public provider: InstanceType | null;
 
   constructor(options: Options, actions: WalletActions) {
@@ -89,12 +85,10 @@ class Wallet<InstanceType = any> {
     // If a network hasn't been provided and also we have `lastNetwork`
     // We will use lastNetwork to make sure we will not
     // Ask the user to switch his network wrongly.
-    const requestedNetwork =
-      network || currentNetwork || this.options.config.defaultNetwork;
+    const requestedNetwork = network || currentNetwork || this.options.config.defaultNetwork;
 
-    if (!!eagerConnection) {
-      const networkChanged =
-        currentNetwork !== requestedNetwork && !!requestedNetwork;
+    if (eagerConnection) {
+      const networkChanged = currentNetwork !== requestedNetwork && !!requestedNetwork;
 
       // Reuse current connection if nothing has changed and we already have the connection in memory.
       if (currentNetwork === requestedNetwork) {
@@ -105,6 +99,7 @@ class Wallet<InstanceType = any> {
           instance: this.provider,
           meta: this.meta,
           // TODO: Fix type error
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           // @ts-ignore
           network: requestedNetwork,
           newInstance: this.tryGetInstance.bind(this),
@@ -159,26 +154,18 @@ class Wallet<InstanceType = any> {
       const accounts = connectResult.flatMap((blockchain) => {
         const chainId = blockchain.chainId || Network.Unknown;
         // Try to map chainId with a Network, if not found, we use chainId directly.
-        const network =
-          getBlockChainNameFromId(chainId, this.meta) || Network.Unknown;
+        const network = getBlockChainNameFromId(chainId, this.meta) || Network.Unknown;
         // TODO: second parameter should be `string` when we decided to open source the package.
-        return accountAddressesWithNetwork(
-          blockchain.accounts,
-          network as Network
-        );
+        return accountAddressesWithNetwork(blockchain.accounts, network as Network);
       });
       // Typescript can not detect we are filtering out null values:(
       nextAccounts = accounts.filter(Boolean) as string[];
       nextNetwork = requestedNetwork || this.options.config.defaultNetwork;
     } else {
       const chainId = connectResult.chainId || Network.Unknown;
-      const network =
-        getBlockChainNameFromId(chainId, this.meta) || Network.Unknown;
+      const network = getBlockChainNameFromId(chainId, this.meta) || Network.Unknown;
       // We fallback to current active network if `chainId` not provided.
-      nextAccounts = accountAddressesWithNetwork(
-        connectResult.accounts,
-        network as Network
-      );
+      nextAccounts = accountAddressesWithNetwork(connectResult.accounts, network as Network);
       nextNetwork = network as Network;
     }
 
@@ -213,7 +200,7 @@ class Wallet<InstanceType = any> {
   getSigners(provider: any) {
     return this.actions.getSigners(provider);
   }
-  getWalletInfo(allBlockChains: BlockchainMeta[]) {
+  getWalletInfo(allBlockChains: ProviderMeta[]) {
     return this.actions.getWalletInfo(allBlockChains);
   }
   canSwitchNetworkTo(network: Network) {
@@ -248,8 +235,7 @@ class Wallet<InstanceType = any> {
         updateAccounts: (accounts, chainId) => {
           let network = this.state.network;
           if (chainId) {
-            network =
-              getBlockChainNameFromId(chainId, this.meta) || Network.Unknown;
+            network = getBlockChainNameFromId(chainId, this.meta) || Network.Unknown;
           }
 
           const nextAccounts = accountAddressesWithNetwork(accounts, network);
@@ -260,9 +246,7 @@ class Wallet<InstanceType = any> {
           }
         },
         updateChainId: (chainId) => {
-          const network = !!chainId
-            ? getBlockChainNameFromId(chainId, this.meta)
-            : Network.Unknown;
+          const network = chainId ? getBlockChainNameFromId(chainId, this.meta) : Network.Unknown;
           this.updateState({
             network,
           });
@@ -271,7 +255,7 @@ class Wallet<InstanceType = any> {
     }
   }
 
-  setMeta(value: BlockchainMeta[]) {
+  setMeta(value: ProviderMeta[]) {
     this.meta = value;
   }
 
@@ -314,13 +298,7 @@ class Wallet<InstanceType = any> {
 
     const state = this.getState();
     updates.forEach(([name, value]) => {
-      this.options.handler(
-        this.options.config.type,
-        name,
-        value,
-        state,
-        this.meta
-      );
+      this.options.handler(this.options.config.type, name, value, state, this.meta);
     });
   }
 
@@ -341,13 +319,7 @@ class Wallet<InstanceType = any> {
       installed: value,
     });
   }
-  private async tryGetInstance({
-    network,
-    force,
-  }: {
-    network?: Network;
-    force?: boolean;
-  }) {
+  private async tryGetInstance({ network, force }: { network?: Network; force?: boolean }) {
     let instance = null;
     // For switching network on Trust Wallet (WalletConnect),
     // We only kill the session (and not restting the whole state)

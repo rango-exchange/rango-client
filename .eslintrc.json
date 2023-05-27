@@ -14,5 +14,8 @@
   "parserOptions": {
     "ecmaVersion": "latest",
     "sourceType": "module"
+  },
+  "rules": {
+    "@typescript-eslint/ban-ts-comment": "off"
   }
 }

@@ -1,20 +1,11 @@
 import { QueueStorage, QueueDef } from '@rango-dev/queue-manager-core';
 import { QueueContext } from '@rango-dev/queue-manager-core/dist/queue';
 import { ConnectResult, Providers } from '@rango-dev/wallets-core';
-import {
-  Meta,
-  Network,
-  WalletState,
-  WalletType,
-} from '@rango-dev/wallets-shared';
+import { Meta, Network, WalletState, WalletType } from '@rango-dev/wallets-shared';
 import { PendingSwap, SwapProgressNotification, Wallet } from './shared';
-import { EvmBlockchainMeta, SignerFactory } from 'rango-types';
+import { EvmProviderMeta, SignerFactory } from 'rango-types';
 
-export type SwapQueueDef = QueueDef<
-  SwapStorage,
-  SwapActionTypes,
-  SwapQueueContext
->;
+export type SwapQueueDef = QueueDef<SwapStorage, SwapActionTypes, SwapQueueContext>;
 
 export interface SwapStorage extends QueueStorage {
   swapDetails: PendingSwap;
@@ -28,10 +19,7 @@ export enum SwapActionTypes {
   CHECK_TRANSACTION_STATUS = 'CHECK_TRANSACTION_STATUS',
 }
 
-export type GetCurrentAddress = (
-  type: WalletType,
-  network: Network
-) => string | undefined;
+export type GetCurrentAddress = (type: WalletType, network: Network) => string | undefined;
 
 export enum BlockReason {
   WAIT_FOR_CONNECT_WALLET = 'waiting_for_connecting_wallet',
@@ -51,14 +39,8 @@ export interface SwapQueueContext extends QueueContext {
   wallets: Wallet | null;
   providers: Providers;
   getSigners: (type: WalletType) => SignerFactory;
-  switchNetwork: (
-    wallet: WalletType,
-    network: Network
-  ) => Promise<ConnectResult> | undefined;
-  connect: (
-    wallet: WalletType,
-    network: Network
-  ) => Promise<ConnectResult> | undefined;
+  switchNetwork: (wallet: WalletType, network: Network) => Promise<ConnectResult> | undefined;
+  connect: (wallet: WalletType, network: Network) => Promise<ConnectResult> | undefined;
   state: (type: WalletType) => WalletState;
   isMobileWallet: (type: WalletType) => boolean;
   notifier: (data: SwapProgressNotification) => void;
@@ -72,6 +54,6 @@ export interface UseQueueManagerParams {
   lastConnectedWallet: string;
   disconnectedWallet: WalletType | undefined;
   clearDisconnectedWallet: () => void;
-  evmChains: EvmBlockchainMeta[];
+  evmChains: EvmProviderMeta[];
   notifier: SwapQueueContext['notifier'];
 }

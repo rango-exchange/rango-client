@@ -18,11 +18,11 @@ import { cosmostation as cosmostation_instance } from './helpers';
 import signer from './signer';
 import {
   SignerFactory,
-  BlockchainMeta,
   evmBlockchains,
   isEvmBlockchain,
   isCosmosBlockchain,
   cosmosBlockchains,
+  ProviderMeta,
 } from 'rango-types';
 
 const WALLET = WalletTypes.COSMOSTATION;
@@ -92,9 +92,7 @@ export const subscribe: Subscribe = ({
 
 export const getSigners: (provider: any) => SignerFactory = signer;
 
-export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
-  allBlockChains
-) => {
+export const getWalletInfo: (allBlockChains: ProviderMeta[]) => WalletInfo = (allBlockChains) => {
   const evms = evmBlockchains(allBlockChains);
   const cosmos = cosmosBlockchains(allBlockChains);
   return {

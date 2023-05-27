@@ -3,16 +3,17 @@ import {
   SimulationValidationStatus,
 } from '@rango-dev/ui/dist/types/swaps';
 import BigNumber from 'bignumber.js';
-import { BestRouteResponse, BlockchainMeta, Token } from 'rango-sdk';
+import { BestRouteResponse, Token } from 'rango-sdk';
 import { areEqual } from './common';
 import { BestRouteEqualityParams, Wallet } from '../types';
 import { numberToString } from './numbers';
 import { PendingSwap } from '@rango-dev/queue-manager-rango-preset';
+import { ProviderMeta } from 'rango-types';
 
 export function searchParamsToToken(
   tokens: Token[],
   searchParams: string | null,
-  chain: BlockchainMeta | null
+  chain: ProviderMeta | null,
 ): Token | null {
   if (!chain) return null;
   return (
@@ -34,47 +35,30 @@ export function searchParamsToToken(
 }
 
 export function getBestRouteToTokenUsdPrice(
-  bestRoute: BestRouteResponse | null
+  bestRoute: BestRouteResponse | null,
 ): number | null | undefined {
-  return bestRoute?.result?.swaps[bestRoute?.result?.swaps.length - 1].to
-    .usdPrice;
+  return bestRoute?.result?.swaps[bestRoute?.result?.swaps.length - 1].to.usdPrice;
 }
 
-export function isNumberOfSwapsChanged(
-  route1: BestRouteResponse,
-  route2: BestRouteResponse
-) {
+export function isNumberOfSwapsChanged(route1: BestRouteResponse, route2: BestRouteResponse) {
   const route1Swaps = route1.result?.swaps || [];
   const route2Swaps = route2.result?.swaps || [];
   return route1Swaps.length !== route2Swaps.length;
 }
 
-export function isRouteSwappersUpdated(
-  route1: BestRouteResponse,
-  route2: BestRouteResponse
-) {
-  const route1Swappers =
-    route1.result?.swaps.map((swap) => swap.swapperId) || [];
-  const route2Swappers =
-    route2.result?.swaps.map((swap) => swap.swapperId) || [];
+export function isRouteSwappersUpdated(route1: BestRouteResponse, route2: BestRouteResponse) {
+  const route1Swappers = route1.result?.swaps.map((swap) => swap.swapperId) || [];
+  const route2Swappers = route2.result?.swaps.map((swap) => swap.swapperId) || [];
   return !areEqual(route1Swappers, route2Swappers);
 }
 
-export function isRouteInternalCoinsUpdated(
-  route1: BestRouteResponse,
-  route2: BestRouteResponse
-) {
-  const route1InternalCoins =
-    route1.result?.swaps.map((swap) => swap.to.symbol) || [];
-  const route2InternalCoins =
-    route2.result?.swaps.map((swap) => swap.to.symbol) || [];
+export function isRouteInternalCoinsUpdated(route1: BestRouteResponse, route2: BestRouteResponse) {
+  const route1InternalCoins = route1.result?.swaps.map((swap) => swap.to.symbol) || [];
+  const route2InternalCoins = route2.result?.swaps.map((swap) => swap.to.symbol) || [];
   return !areEqual(route1InternalCoins, route2InternalCoins);
 }
 
-export function isRouteChanged(
-  route1: BestRouteResponse,
-  route2: BestRouteResponse
-): boolean {
+export function isRouteChanged(route1: BestRouteResponse, route2: BestRouteResponse): boolean {
   return (
     isNumberOfSwapsChanged(route1, route2) ||
     isRouteSwappersUpdated(route1, route2) ||
@@ -82,10 +66,7 @@ export function isRouteChanged(
   );
 }
 
-export function outToRatioHasWarning(
-  fromUsdValue: BigNumber | null,
-  outToInRatio: BigNumber | 0
-) {
+export function outToRatioHasWarning(fromUsdValue: BigNumber | null, outToInRatio: BigNumber | 0) {
   return (
     (parseInt(outToInRatio?.toFixed(2) || '0') <= -10 &&
       (fromUsdValue === null || fromUsdValue.gte(new BigNumber(200)))) ||
@@ -96,14 +77,13 @@ export function outToRatioHasWarning(
 
 export function getRequiredBalanceOfWallet(
   selectedWallet: Wallet,
-  fee: SimulationValidationStatus[] | null
+  fee: SimulationValidationStatus[] | null,
 ): SimulationAssetAndAmount[] | null {
   if (fee === null) return null;
   const relatedFeeStatus = fee
     ?.find((item) => item.blockchain === selectedWallet.chain)
     ?.wallets.find(
-      (wallet) =>
-        wallet.address?.toLowerCase() === selectedWallet.address.toLowerCase()
+      (wallet) => wallet.address?.toLowerCase() === selectedWallet.address.toLowerCase(),
     );
   if (!relatedFeeStatus) return null;
   return relatedFeeStatus.requiredAssets;
@@ -140,7 +120,7 @@ export function isRouteParametersChanged(params: BestRouteEqualityParams) {
 }
 
 export function getFormatedBestRoute(
-  bestRoute: BestRouteResponse | null
+  bestRoute: BestRouteResponse | null,
 ): BestRouteResponse | null {
   if (!bestRoute) return null;
 
@@ -163,11 +143,7 @@ export function getFormatedPendingSwap(pendingSwap: PendingSwap): PendingSwap {
     ...step,
     feeInUsd: numberToString(step.feeInUsd, 4, 4),
     outputAmount: numberToString(step.outputAmount, 6, 6),
-    expectedOutputAmountHumanReadable: numberToString(
-      step.expectedOutputAmountHumanReadable,
-      6,
-      6
-    ),
+    expectedOutputAmountHumanReadable: numberToString(step.expectedOutputAmountHumanReadable, 6, 6),
   }));
 
   return {

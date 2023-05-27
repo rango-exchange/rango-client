@@ -18,8 +18,8 @@ import {
   SignerFactory,
   isEvmBlockchain,
   evmBlockchains,
-  BlockchainMeta,
   solanaBlockchain,
+  ProviderMeta,
 } from 'rango-types';
 
 const WALLET = WalletTypes.CLOVER;
@@ -49,23 +49,18 @@ export const connect: Connect = async ({ instance, meta }) => {
   return results;
 };
 
-export const subscribe: Subscribe = ({
-  instance,
-  updateAccounts,
-  state,
-  meta,
-}) => {
+export const subscribe: Subscribe = ({ instance, updateAccounts, state, meta }) => {
   const ethInstance = chooseInstance(instance, meta, Network.ETHEREUM);
   const solanaInstance = chooseInstance(instance, meta, Network.SOLANA);
   ethInstance?.on('accountsChanged', async (addresses: string[]) => {
     if (state.connected) {
-      if (!!ethInstance) {
+      if (ethInstance) {
         const eth_chainId = meta
           .filter(isEvmBlockchain)
           .find((blockchain) => blockchain.name === Network.ETHEREUM)?.chainId;
         updateAccounts(addresses, eth_chainId);
       }
-      if (!!solanaInstance) {
+      if (solanaInstance) {
         const solanaAccount = await solanaInstance.getAccount();
         updateAccounts([solanaAccount], Network.SOLANA);
       }
@@ -74,11 +69,7 @@ export const subscribe: Subscribe = ({
 };
 
 export const switchNetwork: SwitchNetwork = async (options) => {
-  const instance = chooseInstance(
-    options.instance,
-    options.meta,
-    options.network
-  );
+  const instance = chooseInstance(options.instance, options.meta, options.network);
   return switchNetworkForEvm({
     ...options,
     instance,
@@ -89,9 +80,7 @@ export const canSwitchNetworkTo: CanSwitchNetwork = canSwitchNetworkToEvm;
 
 export const getSigners: (provider: any) => SignerFactory = signer;
 
-export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
-  allBlockChains
-) => {
+export const getWalletInfo: (allBlockChains: ProviderMeta[]) => WalletInfo = (allBlockChains) => {
   const evms = evmBlockchains(allBlockChains);
   const solana = solanaBlockchain(allBlockChains);
   return {

@@ -11,12 +11,9 @@ import {
   WalletInfo,
   Network,
 } from '@rango-dev/wallets-shared';
-import {
-  getKucoinInstance as kucoin_instance,
-  KUCOIN_WALLET_SUPPORTED_CHAINS,
-} from './helpers';
+import { getKucoinInstance as kucoin_instance, KUCOIN_WALLET_SUPPORTED_CHAINS } from './helpers';
 import signer from './signer';
-import { SignerFactory, BlockchainMeta } from 'rango-types';
+import { SignerFactory, ProviderMeta } from 'rango-types';
 
 const WALLET = WalletTypes.KUCOIN;
 
@@ -46,9 +43,7 @@ export const canSwitchNetworkTo: CanSwitchNetwork = canSwitchNetworkToEvm;
 
 export const getSigners: (provider: any) => SignerFactory = signer;
 
-export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
-  allBlockChains
-) => {
+export const getWalletInfo: (allBlockChains: ProviderMeta[]) => WalletInfo = (allBlockChains) => {
   return {
     name: 'KuCoin',
     img: 'https://raw.githubusercontent.com/rango-exchange/rango-types/main/assets/icons/wallets/kucoin.png',
@@ -61,7 +56,7 @@ export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
       DEFAULT: 'https://kuwallet.com/',
     },
     supportedChains: allBlockChains.filter((blockchainMeta) =>
-      KUCOIN_WALLET_SUPPORTED_CHAINS.includes(blockchainMeta.name as Network)
+      KUCOIN_WALLET_SUPPORTED_CHAINS.includes(blockchainMeta.name as Network),
     ),
   };
 };

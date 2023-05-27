@@ -34,7 +34,9 @@ export const Main = (args: PropTypes) => (
   <SwapContainer>
     <BlockchainSelector
       {...args}
+      //@ts-ignore
       list={blockchainMeta}
+      //@ts-ignore
       selected={blockchainMeta[0]}
     />
   </SwapContainer>

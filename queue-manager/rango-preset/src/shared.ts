@@ -1,7 +1,6 @@
 import { Network, WalletType } from '@rango-dev/wallets-shared';
 import {
   CosmosTransaction,
-  EvmBlockchainMeta,
   EvmTransaction,
   SimulationResult,
   SolanaTransaction,
@@ -14,7 +13,7 @@ import {
   Token,
   SwapResult,
 } from 'rango-sdk';
-
+import { EvmProviderMeta } from 'rango-types';
 import { PrettyError } from './shared-errors';
 import BigNumber from 'bignumber.js';
 import { numberToString } from './numbers';
@@ -90,13 +89,7 @@ export type SwapSavedSettings = {
   infiniteApprove?: boolean;
 };
 
-type InternalStepState =
-  | 'PENDING'
-  | 'CREATED'
-  | 'WAITING'
-  | 'SIGNED'
-  | 'SUCCESSED'
-  | 'FAILED';
+type InternalStepState = 'PENDING' | 'CREATED' | 'WAITING' | 'SIGNED' | 'SUCCESSED' | 'FAILED';
 
 export type SwapperStatusStep = {
   name: string;
@@ -214,7 +207,7 @@ export type PendingSwap = {
 
 export const getCurrentBlockchainOfOrNull = (
   swap: PendingSwap,
-  step: PendingSwapStep
+  step: PendingSwapStep,
 ): Network | null => {
   try {
     return getCurrentBlockchainOf(swap, step);
@@ -223,10 +216,7 @@ export const getCurrentBlockchainOfOrNull = (
   }
 };
 
-export const getCurrentBlockchainOf = (
-  swap: PendingSwap,
-  step: PendingSwapStep
-): Network => {
+export const getCurrentBlockchainOf = (swap: PendingSwap, step: PendingSwapStep): Network => {
   const b1 =
     step.evmTransaction?.blockChain ||
     step.evmApprovalTransaction?.blockChain ||
@@ -236,15 +226,13 @@ export const getCurrentBlockchainOf = (
     step.tronApprovalTransaction?.blockChain ||
     step.cosmosTransaction?.blockChain ||
     step.solanaTransaction?.blockChain;
-  if (!!b1) return b1 as Network;
+  if (b1) return b1 as Network;
 
   const transferAddress = step.transferTransaction?.fromWalletAddress;
   if (!transferAddress) throw PrettyError.BlockchainMissing();
 
   const blockchain =
-    Object.keys(swap.wallets).find(
-      (b) => swap.wallets[b]?.address === transferAddress
-    ) || null;
+    Object.keys(swap.wallets).find((b) => swap.wallets[b]?.address === transferAddress) || null;
   if (blockchain == null) throw PrettyError.BlockchainMissing();
 
   // TODO: check why it returns string
@@ -254,49 +242,35 @@ export const getCurrentBlockchainOf = (
 export const getEvmApproveUrl = (
   tx: string,
   network: Network,
-  evmBasedBlockchains: EvmBlockchainMeta[]
+  evmBasedBlockchains: EvmProviderMeta[],
 ): string => {
-  const evmBlochain = evmBasedBlockchains.find(
-    (blockchain) => blockchain.name === network
-  );
+  const evmBlochain = evmBasedBlockchains.find((blockchain) => blockchain.name === network);
 
   if (!evmBlochain) {
     throw Error(`unsupported network: ${network} for getting approve url.`);
   }
 
-  if (evmBlochain.info.transactionUrl)
-    return evmBlochain.info.transactionUrl.replace(
-      '{txHash}',
-      tx.toLowerCase()
-    );
+  if (evmBlochain.transactionUrl)
+    return evmBlochain.transactionUrl.replace('{txHash}', tx.toLowerCase());
 
   throw Error(`Explorer url for ${network} is not implemented`);
 };
 
 export const getStarknetApproveUrl = (tx: string): string => {
-  return 'https://starkscan.co/tx/{txHash}'.replace(
-    '{txHash}',
-    tx.toLowerCase()
-  );
+  return 'https://starkscan.co/tx/{txHash}'.replace('{txHash}', tx.toLowerCase());
 };
 
 export const getTronApproveUrl = (tx: string): string => {
-  return 'https://tronscan.org/#/transaction/{txHash}'.replace(
-    '{txHash}',
-    tx.toLowerCase()
-  );
+  return 'https://tronscan.org/#/transaction/{txHash}'.replace('{txHash}', tx.toLowerCase());
 };
 
 export function getNextStep(
   swap: PendingSwap,
-  currentStep: PendingSwapStep
+  currentStep: PendingSwapStep,
 ): PendingSwapStep | null {
   return (
     swap.steps.find(
-      (step) =>
-        step.status !== 'failed' &&
-        step.status !== 'success' &&
-        step.id !== currentStep.id
+      (step) => step.status !== 'failed' && step.status !== 'success' && step.id !== currentStep.id,
     ) || null
   );
 }
@@ -304,10 +278,7 @@ export function getNextStep(
 /**
  * Returns the wallet address, based on the current step of `PendingSwap`.
  */
-export const getCurrentAddressOf = (
-  swap: PendingSwap,
-  step: PendingSwapStep
-): string => {
+export const getCurrentAddressOf = (swap: PendingSwap, step: PendingSwapStep): string => {
   const result =
     swap.wallets[step.evmTransaction?.blockChain || ''] ||
     swap.wallets[step.evmApprovalTransaction?.blockChain || ''] ||
@@ -327,7 +298,7 @@ export const getCurrentAddressOf = (
 
 export function getRelatedWallet(
   swap: PendingSwap,
-  currentStep: PendingSwapStep
+  currentStep: PendingSwapStep,
 ): WalletTypeAndAddress {
   const walletAddress = getCurrentAddressOf(swap, currentStep);
   const walletKV =
@@ -340,14 +311,14 @@ export function getRelatedWallet(
   const walletType = wallet?.walletType;
   if (wallet === null)
     throw PrettyError.AssertionFailed(
-      `Wallet for source ${blockchain} not passed: walletType: ${walletType}`
+      `Wallet for source ${blockchain} not passed: walletType: ${walletType}`,
     );
   return wallet;
 }
 
 export function getRelatedWalletOrNull(
   swap: PendingSwap,
-  currentStep: PendingSwapStep
+  currentStep: PendingSwapStep,
 ): WalletTypeAndAddress | null {
   try {
     return getRelatedWallet(swap, currentStep);
@@ -360,21 +331,18 @@ export const getUsdPrice = (
   blockchain: string,
   symbol: string,
   address: string | null,
-  allTokens: Token[]
+  allTokens: Token[],
 ): number | null => {
   const token = allTokens?.find(
     (t) =>
       t.blockchain === blockchain &&
       t.symbol?.toUpperCase() === symbol?.toUpperCase() &&
-      t.address === address
+      t.address === address,
   );
   return token?.usdPrice || null;
 };
 
-export function getUsdFeeOfStep(
-  step: SwapResult,
-  allTokens: Token[]
-): BigNumber {
+export function getUsdFeeOfStep(step: SwapResult, allTokens: Token[]): BigNumber {
   let totalFeeInUsd = new BigNumber(0);
   for (let i = 0; i < step.fee.length; i++) {
     const fee = step.fee[i];
@@ -384,11 +352,9 @@ export function getUsdFeeOfStep(
       fee.asset.blockchain,
       fee.asset.symbol,
       fee.asset.address,
-      allTokens
+      allTokens,
     );
-    totalFeeInUsd = totalFeeInUsd.plus(
-      new BigNumber(fee.amount).multipliedBy(unitPrice || 0)
-    );
+    totalFeeInUsd = totalFeeInUsd.plus(new BigNumber(fee.amount).multipliedBy(unitPrice || 0));
   }
 
   return totalFeeInUsd;
@@ -400,7 +366,7 @@ export function calculatePendingSwap(
   wallets: { [p: string]: WalletTypeAndAddress },
   settings: SwapSavedSettings,
   validateBalanceOrFee: boolean,
-  meta: MetaResponse | null
+  meta: MetaResponse | null,
 ): PendingSwap {
   const simulationResult = bestRoute.result;
   if (!simulationResult) throw Error('Simulation result should not be null');
@@ -456,9 +422,7 @@ export function calculatePendingSwap(
           // output, fee, timing
           expectedOutputAmountHumanReadable: swap.toAmount,
           outputAmount: '',
-          feeInUsd: meta
-            ? numberToString(getUsdFeeOfStep(swap, meta?.tokens), null, 8)
-            : null,
+          feeInUsd: meta ? numberToString(getUsdFeeOfStep(swap, meta?.tokens), null, 8) : null,
           estimatedTimeInSeconds: swap.estimatedTimeInSeconds || null,
 
           // status, tracking

@@ -24,7 +24,9 @@ export const Main = (args: PropTypes) => {
   return (
     <BlockchainsList
       {...args}
+      //@ts-ignore
       list={blockchainMeta}
+      //@ts-ignore
       selected={blockchainMeta[0]}
     />
   );

@@ -12,7 +12,7 @@ import {
 } from '@rango-dev/wallets-shared';
 import { trustWallet as trustwallet_instance } from './helpers';
 import signer from './signer';
-import { SignerFactory, evmBlockchains, BlockchainMeta } from 'rango-types';
+import { SignerFactory, evmBlockchains, ProviderMeta } from 'rango-types';
 
 const WALLET = WalletTypes.TRUST_WALLET;
 
@@ -39,9 +39,7 @@ export const canSwitchNetworkTo: CanSwitchNetwork = canSwitchNetworkToEvm;
 
 export const getSigners: (provider: any) => SignerFactory = signer;
 
-export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
-  allBlockChains
-) => {
+export const getWalletInfo: (allBlockChains: ProviderMeta[]) => WalletInfo = (allBlockChains) => {
   const evms = evmBlockchains(allBlockChains);
   return {
     name: 'Trust Wallet',

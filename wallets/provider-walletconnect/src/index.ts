@@ -15,12 +15,7 @@ import {
 } from '@rango-dev/wallets-shared';
 import { formatJsonRpcRequest } from '@walletconnect/jsonrpc-utils';
 import signer from './signer';
-import {
-  SignerFactory,
-  EvmBlockchainMeta,
-  BlockchainMeta,
-  evmBlockchains,
-} from 'rango-types';
+import { SignerFactory, evmBlockchains, EvmProviderMeta, ProviderMeta } from 'rango-types';
 
 const WALLET = WalletTypes.WALLET_CONNECT;
 
@@ -30,15 +25,9 @@ export const config: WalletConfig = {
   isAsyncInstance: true,
 };
 
-export const getInstance: GetInstance = async ({
-  network,
-  currentProvider,
-  meta,
-}) => {
+export const getInstance: GetInstance = async ({ network, currentProvider, meta }) => {
   // If `network` is provided, trying to get chainId
-  const evm_chain_info = convertEvmBlockchainMetaToEvmChainInfo(
-    meta as EvmBlockchainMeta[]
-  );
+  const evm_chain_info = convertEvmBlockchainMetaToEvmChainInfo(meta as EvmProviderMeta[]);
   const info = network ? evm_chain_info[network] : undefined;
   const requestedChainId = info?.chainId ? parseInt(info?.chainId) : undefined;
 
@@ -99,15 +88,8 @@ export const subscribe: Subscribe = async ({
   });
 };
 
-export const switchNetwork: SwitchNetwork = async ({
-  instance,
-  meta,
-  network,
-  newInstance,
-}) => {
-  const evm_chain_info = convertEvmBlockchainMetaToEvmChainInfo(
-    meta as EvmBlockchainMeta[]
-  );
+export const switchNetwork: SwitchNetwork = async ({ instance, meta, network, newInstance }) => {
+  const evm_chain_info = convertEvmBlockchainMetaToEvmChainInfo(meta as EvmProviderMeta[]);
 
   /* 
      There are two methods for switch network
@@ -130,7 +112,7 @@ export const switchNetwork: SwitchNetwork = async ({
     await switchOrAddNetworkForMetamaskCompatibleWallets(
       simulatedWeb3Instance,
       network,
-      evm_chain_info
+      evm_chain_info,
     );
   } else {
     // Kill the old session, make a new session with requested network.
@@ -142,7 +124,7 @@ export const switchNetwork: SwitchNetwork = async ({
 
     await instance.killSession();
 
-    if (!!newInstance) {
+    if (newInstance) {
       await newInstance({ force: true, network });
     }
   }
@@ -162,9 +144,7 @@ export const disconnect: Disconnect = async ({ instance, destroyInstance }) => {
 
 export const getSigners: (provider: any) => SignerFactory = signer;
 
-export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
-  allBlockChains
-) => {
+export const getWalletInfo: (allBlockChains: ProviderMeta[]) => WalletInfo = (allBlockChains) => {
   const evms = evmBlockchains(allBlockChains);
   return {
     name: 'WalletConnect',

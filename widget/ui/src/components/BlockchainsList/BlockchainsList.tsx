@@ -1,16 +1,16 @@
 import React, { useState } from 'react';
 import { styled } from '../../theme';
-import { BlockchainMeta } from 'rango-sdk';
+import { ProviderMeta } from 'rango-types';
 import { Button } from '../Button/Button';
 import { FilledCircle, Image } from '../common';
 import { Typography } from '../Typography';
 
 export interface PropTypes {
-  list: BlockchainMeta[];
-  selected?: BlockchainMeta | null;
-  onChange: (blockchain: BlockchainMeta) => void;
+  list: ProviderMeta[];
+  selected?: ProviderMeta | null;
+  onChange: (blockchain: ProviderMeta) => void;
   multiSelect?: boolean;
-  selectedList?: BlockchainMeta[] | 'all';
+  selectedList?: ProviderMeta[] | 'all';
 }
 
 const ListContainer = styled('div', {
@@ -30,17 +30,14 @@ export function BlockchainsList(props: PropTypes) {
   const { list, onChange, multiSelect, selectedList } = props;
   const [selected, setSelected] = useState(props.selected);
 
-  const changeSelectedBlockchain = (blockchain: BlockchainMeta) => {
+  const changeSelectedBlockchain = (blockchain: ProviderMeta) => {
     setSelected(blockchain);
     onChange(blockchain);
   };
 
   const isSelect = (name: string) => {
     if (multiSelect && selectedList) {
-      return (
-        selectedList === 'all' ||
-        selectedList.findIndex((item) => name === item.name) > -1
-      );
+      return selectedList === 'all' || selectedList.findIndex((item) => name === item.name) > -1;
     }
     return name === selected?.name;
   };
@@ -61,8 +58,7 @@ export function BlockchainsList(props: PropTypes) {
             suffix={isSelect(blockchain.name) ? <FilledCircle /> : undefined}
             align="start"
             onClick={changeSelectedBlockchain.bind(null, blockchain)}
-            key={index}
-          >
+            key={index}>
             <Typography variant="body2">{blockchain.displayName}</Typography>
           </Button>
         );

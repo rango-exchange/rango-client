@@ -1,13 +1,9 @@
-import {
-  BlockchainMeta,
-  CosmosBlockchainMeta,
-  CosmosChainInfo,
-} from 'rango-types';
 import { deepCopy } from './helpers';
 import { Connect, ProviderConnectResult } from './rango';
 import { Keplr as InstanceType } from '@keplr-wallet/types';
+import { CosmosProviderMeta, ProviderMeta } from 'rango-types';
 
-export interface CosmosInfo extends Omit<CosmosChainInfo, 'experimental'> {
+export interface CosmosInfo extends Omit<CosmosProviderMeta, 'experimental'> {
   chainId: string;
 }
 
@@ -15,61 +11,47 @@ export type CosmosExperimentalChainsInfo = {
   [k: string]: { id: string; info: CosmosInfo; experimental: boolean };
 };
 
-interface CosmosBlockchainMetaWithChainId
-  extends Omit<CosmosBlockchainMeta, 'chainId'> {
+interface CosmosBlockchainMetaWithChainId extends Omit<CosmosProviderMeta, 'chainId'> {
   chainId: string;
 }
 
-const getCosmosMainChainsIds = (blockchains: CosmosBlockchainMeta[]) =>
+const getCosmosMainChainsIds = (blockchains: CosmosProviderMeta[]) =>
   blockchains
-    .filter((blockchain) => !blockchain.info?.experimental)
+    .filter((blockchain) => !blockchain?.experimental)
     .map((blockchain) => blockchain.chainId)
     .filter((chainId): chainId is string => !!chainId);
 
-const getCosmosMiscChainsIds = (blockchains: CosmosBlockchainMeta[]) =>
+const getCosmosMiscChainsIds = (blockchains: CosmosProviderMeta[]) =>
   blockchains
-    .filter((blockchain) => blockchain.info?.experimental)
+    .filter((blockchain) => blockchain?.experimental)
     .map((blockchain) => blockchain.chainId)
     .filter((chainId): chainId is string => !!chainId);
 
-export const getCosmosExperimentalChainInfo = (
-  blockchains: CosmosBlockchainMeta[]
-) =>
+export const getCosmosExperimentalChainInfo = (blockchains: CosmosProviderMeta[]) =>
   blockchains
-    .filter((blockchain) => !!blockchain.info)
-    .filter(
-      (blockchain): blockchain is CosmosBlockchainMetaWithChainId =>
-        !!blockchain.chainId
-    )
-    .reduce(
-      (
-        cosmosExperimentalChainsInfo: CosmosExperimentalChainsInfo,
-        blockchain
-      ) => {
-        const info = deepCopy(blockchain.info) as CosmosChainInfo;
-        info.stakeCurrency.coinImageUrl =
-          window.location.origin + info.stakeCurrency.coinImageUrl;
-        info.currencies = info.currencies.map((currency) => ({
-          ...currency,
-          coinImageUrl: window.location.origin + currency.coinImageUrl,
-        }));
-        info.feeCurrencies = info.feeCurrencies.map((currency) => ({
-          ...currency,
-          coinImageUrl: window.location.origin + currency.coinImageUrl,
-        }));
-        if (!info.gasPriceStep) delete info.gasPriceStep;
-        const { experimental, ...otherProperties } = info;
-        return (
-          (cosmosExperimentalChainsInfo[blockchain.name] = {
-            id: blockchain.chainId,
-            info: { ...otherProperties, chainId: blockchain.chainId },
-            experimental: experimental,
-          }),
-          cosmosExperimentalChainsInfo
-        );
-      },
-      {}
-    );
+    .filter((blockchain): blockchain is CosmosBlockchainMetaWithChainId => !!blockchain.chainId)
+    .reduce((cosmosExperimentalChainsInfo: CosmosExperimentalChainsInfo, blockchain) => {
+      const info = deepCopy(blockchain) as CosmosProviderMeta;
+      info.stakeCurrency.coinImageUrl = window.location.origin + info.stakeCurrency.coinImageUrl;
+      info.currencies = info.currencies.map((currency) => ({
+        ...currency,
+        coinImageUrl: window.location.origin + currency.coinImageUrl,
+      }));
+      info.feeCurrencies = info.feeCurrencies.map((currency) => ({
+        ...currency,
+        coinImageUrl: window.location.origin + currency.coinImageUrl,
+      }));
+      if (!info.gasPriceStep) delete info.gasPriceStep;
+      const { experimental, ...otherProperties } = info;
+      return (
+        (cosmosExperimentalChainsInfo[blockchain.name] = {
+          id: blockchain.chainId,
+          info: { ...otherProperties, chainId: blockchain.chainId },
+          experimental: experimental,
+        }),
+        cosmosExperimentalChainsInfo
+      );
+    }, {});
 
 async function getMainAccounts({
   desiredChainIds,
@@ -88,9 +70,7 @@ async function getMainAccounts({
       };
     })
     .filter(Boolean);
-  const accountsPromises = offlineSigners.map(({ signer }) =>
-    signer.getAccounts()
-  );
+  const accountsPromises = offlineSigners.map(({ signer }) => signer.getAccounts());
   const availableAccountForChains = await Promise.allSettled(accountsPromises);
   const resolvedAccounts: ProviderConnectResult[] = [];
   availableAccountForChains.forEach((result, index) => {
@@ -98,9 +78,7 @@ async function getMainAccounts({
 
     const accounts = result.value;
     const { chainId } = offlineSigners[index];
-    const addresses = accounts.map(
-      (account: { address: any }) => account.address
-    );
+    const addresses = accounts.map((account: { address: any }) => account.address);
 
     resolvedAccounts.push({ accounts: addresses, chainId });
   });
@@ -114,9 +92,9 @@ async function tryRequestMiscAccounts({
 }: {
   excludedChain?: string;
   instance: InstanceType;
-  meta: BlockchainMeta[];
+  meta: ProviderMeta[];
 }): Promise<ProviderConnectResult[]> {
-  const offlineSigners = getCosmosMiscChainsIds(meta as CosmosBlockchainMeta[])
+  const offlineSigners = getCosmosMiscChainsIds(meta as CosmosProviderMeta[])
     .filter((id) => id !== excludedChain)
     .map((chainId) => {
       const signer = instance.getOfflineSigner(chainId);
@@ -125,9 +103,7 @@ async function tryRequestMiscAccounts({
         chainId,
       };
     });
-  const accountsPromises = offlineSigners.map(({ signer }) =>
-    signer.getAccounts()
-  );
+  const accountsPromises = offlineSigners.map(({ signer }) => signer.getAccounts());
   const availableAccountForChains = await Promise.allSettled(accountsPromises);
 
   const resolvedAccounts: ProviderConnectResult[] = [];
@@ -144,31 +120,23 @@ async function tryRequestMiscAccounts({
   return resolvedAccounts;
 }
 
-export const getCosmosAccounts: Connect = async ({
-  instance,
-  network,
-  meta,
-}) => {
+export const getCosmosAccounts: Connect = async ({ instance, network, meta }) => {
   const chainInfo = network
-    ? getCosmosExperimentalChainInfo(meta as CosmosBlockchainMeta[])[network]
+    ? getCosmosExperimentalChainInfo(meta as CosmosProviderMeta[])[network]
     : null;
 
   if (!!network && !chainInfo) {
-    throw new Error(
-      `You need to add ${network} to "COSMOS_EXPERIMENTAL_CHAINS_INFO" first.`
-    );
+    throw new Error(`You need to add ${network} to "COSMOS_EXPERIMENTAL_CHAINS_INFO" first.`);
   }
 
   // Asking for connect to wallet.
-  if (!!chainInfo) {
+  if (chainInfo) {
     await instance.experimentalSuggestChain(chainInfo.info);
   }
 
   // Getting main chains + target network
-  let desiredChainIds: string[] = getCosmosMainChainsIds(
-    meta as CosmosBlockchainMeta[]
-  );
-  if (!!chainInfo) {
+  let desiredChainIds: string[] = getCosmosMainChainsIds(meta as CosmosProviderMeta[]);
+  if (chainInfo) {
     desiredChainIds.push(chainInfo!.id);
   }
   desiredChainIds = Array.from(new Set(desiredChainIds)).filter(Boolean);
@@ -180,7 +148,7 @@ export const getCosmosAccounts: Connect = async ({
     instance,
   });
 
-  const exclude = !!chainInfo ? chainInfo.id : undefined;
+  const exclude = chainInfo ? chainInfo.id : undefined;
   const miscAccounts = exclude
     ? await tryRequestMiscAccounts({
         instance,

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Provider } from '@rango-dev/wallets-core';
+import { normalizeMetaData } from '@rango-dev/wallets-shared';
 import List from './components/List';
 import { allProviders } from '@rango-dev/provider-all';
 import { RangoClient } from 'rango-sdk';
@@ -18,7 +19,7 @@ export function App() {
     const getAllBlockchains = async () => {
       try {
         const res = await client.getAllMetadata();
-        setBlockChains(res.blockchains);
+        setBlockChains(normalizeMetaData(res.blockchains));
       } catch (e) {
         setError(e.message);
       }

@@ -10,11 +10,7 @@ import {
   getSelectableWallets,
   isExperimentalChain,
 } from '../utils/wallets';
-import {
-  confirmSwapDisabled,
-  getTotalFeeInUsd,
-  isValidCustomDestination,
-} from '../utils/swap';
+import { confirmSwapDisabled, getTotalFeeInUsd, isValidCustomDestination } from '../utils/swap';
 import { numberToString } from '../utils/numbers';
 import { useMetaStore } from '../store/meta';
 import { Network, WalletType } from '@rango-dev/wallets-shared';
@@ -60,57 +56,48 @@ export function ConfirmSwapPage({
   const outputUsdValue = useBestRouteStore.use.outputUsdValue();
   const setInputAmount = useBestRouteStore.use.setInputAmount();
   const [dbErrorMessage, setDbErrorMessage] = useState<string>('');
-  const bestRouteloadingStatus = getBestRouteStatus(
-    fetchingBestRoute,
-    !!fetchingBestRouteError
-  );
+  const bestRouteloadingStatus = getBestRouteStatus(fetchingBestRoute, !!fetchingBestRouteError);
   const [destinationChain, setDestinationChain] = useState<string>('');
 
   const { manager } = useManager();
-  const {
-    loading: fetchingConfirmedRoute,
-    errors,
-    warnings,
-    confirmSwap,
-  } = useConfirmSwap();
+  const { loading: fetchingConfirmedRoute, errors, warnings, confirmSwap } = useConfirmSwap();
 
   const selectedSlippage = customSlippage || slippage;
 
   const showHighSlippageWarning = !errors.find(
-    (error) => error.type === ConfirmSwapErrorTypes.INSUFFICIENT_SLIPPAGE
+    (error) => error.type === ConfirmSwapErrorTypes.INSUFFICIENT_SLIPPAGE,
   );
 
   const { getWalletInfo, connect } = useWallets();
 
   const firstStep = bestRoute?.result?.swaps[0];
-  const lastStep =
-    bestRoute?.result?.swaps[bestRoute?.result?.swaps.length - 1];
+  const lastStep = bestRoute?.result?.swaps[bestRoute?.result?.swaps.length - 1];
 
   const fromAmount = numberToString(firstStep?.fromAmount, 4, 6);
   const toAmount = numberToString(lastStep?.toAmount, 4, 6);
   useEffect(() => {
     initSelectedWallets();
-    if (!!customDestination) {
+    if (customDestination) {
       setCustomDestination('');
     }
   }, []);
   const lastStepToBlockchain =
     bestRoute?.result?.swaps[bestRoute?.result?.swaps.length - 1].to.blockchain;
   const isWalletRequired = !!bestRoute?.result?.swaps.find(
-    (swap) => swap.from.blockchain === lastStepToBlockchain
+    (swap) => swap.from.blockchain === lastStepToBlockchain,
   );
 
   const selectableWallets = getSelectableWallets(
     connectedWallets,
     selectedWallets,
     getWalletInfo,
-    isWalletRequired ? '' : destinationChain
+    isWalletRequired ? '' : destinationChain,
   );
 
   const handleConnectChain = (wallet: string) => {
     const network = wallet as Network;
-    getKeplrCompatibleConnectedWallets(selectableWallets).forEach(
-      (compatibleWallet: WalletType) => connect?.(compatibleWallet, network)
+    getKeplrCompatibleConnectedWallets(selectableWallets).forEach((compatibleWallet: WalletType) =>
+      connect?.(compatibleWallet, network),
     );
   };
 
@@ -131,11 +118,9 @@ export function ConfirmSwapPage({
         confirmSwap?.().then(async (swap) => {
           if (swap) {
             try {
-              await manager?.create(
-                'swap',
-                { swapDetails: swap },
-                { id: swap.requestId }
-              );
+              console.log(11111);
+              await manager?.create('swap', { swapDetails: swap }, { id: swap.requestId });
+              console.log(22222);
               setSelectedSwap(swap.requestId);
               navigate('/' + navigationRoutes.swaps + `/${swap.requestId}`, {
                 replace: true,
@@ -144,6 +129,7 @@ export function ConfirmSwapPage({
                 setInputAmount('');
               }, 0);
             } catch (e) {
+              console.log('eeeeeeeee');
               setDbErrorMessage('Error: ' + (e as any)?.message);
             }
           }
@@ -158,7 +144,7 @@ export function ConfirmSwapPage({
           destinationChain,
           customDestination,
           bestRoute,
-          selectableWallets
+          selectableWallets,
         )
       }
       handleConnectChain={(wallet) => handleConnectChain(wallet)}
@@ -182,9 +168,7 @@ export function ConfirmSwapPage({
             amount={fromAmount}
             label={t('From')}
             loadingStatus={
-              loadingMetaStatus !== 'success'
-                ? loadingMetaStatus
-                : bestRouteloadingStatus
+              loadingMetaStatus !== 'success' ? loadingMetaStatus : bestRouteloadingStatus
             }
           />
           <Divider size={12} />
@@ -201,47 +185,33 @@ export function ConfirmSwapPage({
             amount={toAmount}
             label={t('To')}
             loadingStatus={
-              loadingMetaStatus !== 'success'
-                ? loadingMetaStatus
-                : bestRouteloadingStatus
+              loadingMetaStatus !== 'success' ? loadingMetaStatus : bestRouteloadingStatus
             }
             percentageChange={
-              <PercentageChange
-                inputUsdValue={inputUsdValue}
-                outputUsdValue={outputUsdValue}
-              />
+              <PercentageChange inputUsdValue={inputUsdValue} outputUsdValue={outputUsdValue} />
             }
           />
         </>
       }
       previewRoutes={
-        <RoutesOverview
-          routes={bestRoute}
-          totalFee={numberToString(totalFeeInUsd, 0, 2)}
-        />
+        <RoutesOverview routes={bestRoute} totalFee={numberToString(totalFeeInUsd, 0, 2)} />
       }
       loading={fetchingConfirmedRoute}
       errors={
-        dbErrorMessage
-          ? [dbErrorMessage, ...ConfirmSwapErrors(errors)]
-          : ConfirmSwapErrors(errors)
+        dbErrorMessage ? [dbErrorMessage, ...ConfirmSwapErrors(errors)] : ConfirmSwapErrors(errors)
       }
       warnings={ConfirmSwapWarnings(warnings)}
       extraMessages={
         <>
           {loadingMetaStatus === 'failed' && <LoadingFailedAlert />}
-          {loadingMetaStatus === 'failed' && showHighSlippageWarning && (
-            <Divider />
-          )}
+          {loadingMetaStatus === 'failed' && showHighSlippageWarning && <Divider />}
           {showHighSlippageWarning && (
             <ConfirmSwapExtraMessages selectedSlippage={selectedSlippage} />
           )}
         </>
       }
       confirmButtonTitle={
-        warnings.length > 0 || errors.length > 0
-          ? 'Proceed anyway!'
-          : 'Confirm swap!'
+        warnings.length > 0 || errors.length > 0 ? 'Proceed anyway!' : 'Confirm swap!'
       }
     />
   );

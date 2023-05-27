@@ -1,5 +1,5 @@
 import React from 'react';
-import { BlockchainMeta } from 'rango-sdk';
+import { ProviderMeta } from 'rango-types';
 import { BlockchainsList } from '../../components/BlockchainsList';
 import { SecondaryPage } from '../../components/SecondaryPage/SecondaryPage';
 import { Spinner } from '../../components/Spinner';
@@ -16,24 +16,24 @@ const ListContainer = styled('div', {
   padding: '0 $4',
 });
 
-const filterBlockchains = (list: BlockchainMeta[], searchedFor: string) =>
+const filterBlockchains = (list: ProviderMeta[], searchedFor: string) =>
   list.filter(
     (blockchain) =>
       containsText(blockchain.name, searchedFor) ||
-      containsText(blockchain.displayName, searchedFor)
+      containsText(blockchain.displayName as string, searchedFor),
   );
 
 export interface PropTypes {
   type?: 'Source' | 'Destination';
-  list: BlockchainMeta[];
-  selected?: BlockchainMeta | null;
-  onChange: (blockchain: BlockchainMeta) => void;
+  list: ProviderMeta[];
+  selected?: ProviderMeta | null;
+  onChange: (blockchain: ProviderMeta) => void;
   onBack?: () => void;
   loadingStatus: LoadingStatus;
   hasHeader?: boolean;
   listContainerStyle?: CSSProperties;
   multiSelect?: boolean;
-  selectedList?: BlockchainMeta[] | 'all';
+  selectedList?: ProviderMeta[] | 'all';
 }
 
 export function BlockchainSelector(props: PropTypes) {
@@ -56,8 +56,7 @@ export function BlockchainSelector(props: PropTypes) {
       hasHeader={hasHeader}
       textFieldPlaceholder="Search blockchains by name"
       title={`Select ${type} Blockchain`}
-      onBack={onBack}
-    >
+      onBack={onBack}>
       {(searchedFor) => {
         const filteredBlockchains = filterBlockchains(list, searchedFor);
         return (
@@ -80,10 +79,7 @@ export function BlockchainSelector(props: PropTypes) {
                       onChange={onChange}
                     />
                   ) : (
-                    <NotFoundAlert
-                      catergory="Blockchain"
-                      searchedFor={searchedFor}
-                    />
+                    <NotFoundAlert catergory="Blockchain" searchedFor={searchedFor} />
                   )}
                 </>
               )}

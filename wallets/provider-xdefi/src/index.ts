@@ -19,7 +19,7 @@ import { SUPPORTED_ETH_CHAINS } from './constants';
 
 import { getNonEvmAccounts, xdefi as xdefi_instances } from './helpers';
 import signer from './signer';
-import { SignerFactory, BlockchainMeta } from 'rango-types';
+import { SignerFactory, ProviderMeta } from 'rango-types';
 
 const DEFAULT_NETWORK = Network.ETHEREUM;
 const WALLET = WalletTypes.XDEFI;
@@ -48,12 +48,7 @@ export const connect: Connect = async ({ instance, meta }) => {
   return [evmResult, ...nonEvmResults, solanaAccounts as ProviderConnectResult];
 };
 
-export const subscribe: Subscribe = ({
-  instance,
-  meta,
-  updateChainId,
-  connect,
-}) => {
+export const subscribe: Subscribe = ({ instance, meta, updateChainId, connect }) => {
   const eth = chooseInstance(instance, meta, Network.ETHEREUM);
   eth?.on('chainChanged', (chainId: string) => {
     const network = getBlockChainNameFromId(chainId, meta) || Network.Unknown;
@@ -79,9 +74,7 @@ export const canSwitchNetworkTo: CanSwitchNetwork = canSwitchNetworkToEvm;
 
 export const getSigners: (provider: any) => SignerFactory = signer;
 
-export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
-  allBlockChains
-) => ({
+export const getWalletInfo: (allBlockChains: ProviderMeta[]) => WalletInfo = (allBlockChains) => ({
   name: 'XDefi',
   img: 'https://raw.githubusercontent.com/rango-exchange/rango-types/main/assets/icons/wallets/xdefi.png',
   installLink: {
@@ -93,10 +86,8 @@ export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
   },
   color: '#0646c7',
   supportedChains: allBlockChains.filter((blockchainMeta) =>
-    [
-      ...SUPPORTED_ETH_CHAINS,
-      ...XDEFI_WALLET_SUPPORTED_NATIVE_CHAINS,
-      Network.SOLANA,
-    ].includes(blockchainMeta.name as Network)
+    [...SUPPORTED_ETH_CHAINS, ...XDEFI_WALLET_SUPPORTED_NATIVE_CHAINS, Network.SOLANA].includes(
+      blockchainMeta.name as Network,
+    ),
   ),
 });

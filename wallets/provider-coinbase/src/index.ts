@@ -17,10 +17,10 @@ import { getSolanaAccounts } from './helpers';
 import {
   SignerFactory,
   isEvmBlockchain,
-  BlockchainMeta,
   evmBlockchains,
   solanaBlockchain,
   isSolanaBlockchain,
+  ProviderMeta,
 } from 'rango-types';
 import signer from './signer';
 
@@ -51,31 +51,21 @@ export const connect: Connect = async ({ instance, meta }) => {
 };
 
 export const subscribe: Subscribe = (options) => {
-  const ethInstance = chooseInstance(
-    options.instance,
-    options.meta,
-    Network.ETHEREUM
-  );
-  const solanaInstance = chooseInstance(
-    options.instance,
-    options.meta,
-    Network.SOLANA
-  );
+  const ethInstance = chooseInstance(options.instance, options.meta, Network.ETHEREUM);
+  const solanaInstance = chooseInstance(options.instance, options.meta, Network.SOLANA);
   const { connect, updateAccounts, state, updateChainId, meta } = options;
   ethInstance?.on('accountsChanged', (addresses: string[]) => {
     const eth_chainId = meta
       .filter(isEvmBlockchain)
       .find((blockchain) => blockchain.name === Network.ETHEREUM)?.chainId;
     if (state.connected) {
-      if (state.network != Network.ETHEREUM && eth_chainId)
-        updateChainId(eth_chainId);
+      if (state.network != Network.ETHEREUM && eth_chainId) updateChainId(eth_chainId);
       updateAccounts(addresses);
     }
   });
 
   solanaInstance?.on('accountChanged', async (publicKey: string) => {
-    if (state.network != Network.SOLANA)
-      updateChainId(meta.filter(isSolanaBlockchain)[0].chainId);
+    if (state.network != Network.SOLANA) updateChainId(meta.filter(isSolanaBlockchain)[0].chainId);
     const network = Network.SOLANA;
     if (publicKey) {
       const account = publicKey.toString();
@@ -91,9 +81,7 @@ export const canSwitchNetworkTo: CanSwitchNetwork = canSwitchNetworkToEvm;
 
 export const getSigners: (provider: any) => SignerFactory = signer;
 
-export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
-  allBlockChains
-) => {
+export const getWalletInfo: (allBlockChains: ProviderMeta[]) => WalletInfo = (allBlockChains) => {
   const evms = evmBlockchains(allBlockChains);
   const solana = solanaBlockchain(allBlockChains);
   return {

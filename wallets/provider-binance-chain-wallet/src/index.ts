@@ -13,7 +13,7 @@ import {
   BINANCE_CHAIN_WALLET_SUPPORTED_CHAINS,
 } from './helpers';
 import signer from './signer';
-import { SignerFactory, BlockchainMeta, isEvmBlockchain } from 'rango-types';
+import { SignerFactory, isEvmBlockchain, ProviderMeta } from 'rango-types';
 
 const WALLET = WalletTypes.BINANCE_CHAIN;
 
@@ -34,13 +34,7 @@ export const connect: Connect = async ({ instance }) => {
   return accounts;
 };
 
-export const subscribe: Subscribe = ({
-  instance,
-  state,
-  meta,
-  updateChainId,
-  updateAccounts,
-}) => {
+export const subscribe: Subscribe = ({ instance, state, meta, updateChainId, updateAccounts }) => {
   instance?.on('accountsChanged', async (addresses: string[]) => {
     if (state.connected) {
       const accounts = await accountsForActiveWallet(instance, addresses[0]);
@@ -65,9 +59,7 @@ export const canSwitchNetworkTo: CanSwitchNetwork = () => false;
 
 export const getSigners: (provider: any) => SignerFactory = signer;
 
-export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
-  allBlockChains
-) => ({
+export const getWalletInfo: (allBlockChains: ProviderMeta[]) => WalletInfo = (allBlockChains) => ({
   name: 'Binance',
   img: 'https://raw.githubusercontent.com/rango-exchange/rango-types/main/assets/icons/wallets/binance.svg',
   installLink: {
@@ -80,8 +72,6 @@ export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
   },
   color: '#2b2e35',
   supportedChains: allBlockChains.filter((blockchainMeta) =>
-    BINANCE_CHAIN_WALLET_SUPPORTED_CHAINS.includes(
-      blockchainMeta.name as Network
-    )
+    BINANCE_CHAIN_WALLET_SUPPORTED_CHAINS.includes(blockchainMeta.name as Network),
   ),
 });

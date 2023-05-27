@@ -15,12 +15,7 @@ import {
 import { coin98 as coin98_instances } from './helpers';
 import { getSolanaAccounts } from './helpers';
 import signer from './signer';
-import {
-  SignerFactory,
-  evmBlockchains,
-  solanaBlockchain,
-  BlockchainMeta,
-} from 'rango-types';
+import { SignerFactory, evmBlockchains, solanaBlockchain, ProviderMeta } from 'rango-types';
 
 const WALLET = WalletTypes.COIN98;
 
@@ -46,12 +41,7 @@ export const connect: Connect = async ({ instance, meta }) => {
   ];
 };
 
-export const subscribe: Subscribe = ({
-  instance,
-  meta,
-  updateChainId,
-  connect,
-}) => {
+export const subscribe: Subscribe = ({ instance, meta, updateChainId, connect }) => {
   const eth = chooseInstance(instance, meta, Network.ETHEREUM);
   eth?.on('chainChanged', (chainId: string) => {
     const network = getBlockChainNameFromId(chainId, meta) || Network.Unknown;
@@ -79,11 +69,7 @@ export const subscribe: Subscribe = ({
 };
 
 export const switchNetwork: SwitchNetwork = async (options) => {
-  const instance = chooseInstance(
-    options.instance,
-    options.meta,
-    options.network
-  );
+  const instance = chooseInstance(options.instance, options.meta, options.network);
   return switchNetworkForEvm({
     ...options,
     instance,
@@ -94,9 +80,7 @@ export const canSwitchNetworkTo: CanSwitchNetwork = canSwitchNetworkToEvm;
 
 export const getSigners: (provider: any) => SignerFactory = signer;
 
-export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
-  allBlockChains
-) => {
+export const getWalletInfo: (allBlockChains: ProviderMeta[]) => WalletInfo = (allBlockChains) => {
   const evms = evmBlockchains(allBlockChains);
   const solana = solanaBlockchain(allBlockChains);
   return {
