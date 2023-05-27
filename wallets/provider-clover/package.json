@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/provider-clover",
-  "version": "0.1.16-next.3",
+  "version": "0.1.16-next.4",
   "license": "MIT",
   "module": "dist/provider-clover.esm.js",
   "main": "dist/index.js",
@@ -17,9 +17,9 @@
     "lint": "eslint \"**/*.{ts,tsx}\" --ignore-path ../../.eslintignore"
   },
   "dependencies": {
-    "@rango-dev/signer-evm": "^0.1.15-next.3",
+    "@rango-dev/signer-evm": "^0.1.15-next.4",
     "@rango-dev/signer-solana": "^0.1.15-next.3",
-    "@rango-dev/wallets-shared": "^0.1.15-next.2",
+    "@rango-dev/wallets-shared": "^0.1.15-next.3",
     "rango-types": "^0.1.37"
   },
   "publishConfig": {

@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/provider-binance-chain-wallet",
-  "version": "0.1.16-next.3",
+  "version": "0.1.16-next.4",
   "license": "MIT",
   "module": "dist/provider-binance-chain-wallet.esm.js",
   "main": "dist/index.js",
@@ -18,8 +18,8 @@
   },
   "dependencies": {
     "@binance-chain/javascript-sdk": "^4.1.1",
-    "@rango-dev/signer-evm": "^0.1.15-next.3",
-    "@rango-dev/wallets-shared": "^0.1.15-next.2",
+    "@rango-dev/signer-evm": "^0.1.15-next.4",
+    "@rango-dev/wallets-shared": "^0.1.15-next.3",
     "rango-types": "^0.1.37"
   },
   "publishConfig": {
