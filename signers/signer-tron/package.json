@@ -17,7 +17,7 @@
     "lint": "eslint \"**/*.{ts,tsx}\" --ignore-path ../../.eslintignore"
   },
   "dependencies": {
-    "rango-types": "^0.1.35"
+    "rango-types": "^0.1.37"
   },
   "publishConfig": {
     "access": "public"
