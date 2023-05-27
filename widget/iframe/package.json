@@ -9,7 +9,7 @@
     "build": "parcel build --no-source-maps --cache-dir=.parcel-cache",
     "clean": "rimraf .parcel-cache && rimraf dist",
     "format": "prettier --write '{.,src}/**/*.{ts,tsx}'",
-    "lint": "eslint \"**/*.{ts,tsx}\""
+    "lint": "eslint \"**/*.{ts,tsx}\" --ignore-path ../../.eslintignore"
   },
   "devDependencies": {
     "parcel": "^2.7.0"

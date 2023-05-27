@@ -15,7 +15,7 @@
     "analyze": "size-limit --why",
     "clean": "rimraf dist",
     "format": "prettier --write '{.,src}/**/*.{ts,tsx}'",
-    "lint": "eslint \"**/*.{ts,tsx}\""
+    "lint": "eslint \"**/*.{ts,tsx}\" --ignore-path ../../.eslintignore"
   },
   "devDependencies": {
     "@types/uuid": "^8.3.4"
