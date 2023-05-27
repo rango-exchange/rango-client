@@ -15,20 +15,13 @@ import { Layout } from './components/Layout';
 import { globalFont } from './globalStyles';
 import { useTheme } from './hooks/useTheme';
 import { isEvmBlockchain } from 'rango-sdk';
-import {
-  WidgetTheme,
-  WidgetConfig,
-  WidgetColors,
-  BlockchainAndTokenConfig,
-} from './types';
+import { WidgetConfig } from './types';
 import useSelectLanguage from './hooks/useSelectLanguage';
 import './i18n';
 import QueueManager from './QueueManager';
 import { useUiStore } from './store/ui';
 import { navigationRoutes } from './constants/navigationRoutes';
 import { initConfig } from './utils/configs';
-
-export { WidgetConfig, WidgetTheme, WidgetColors, BlockchainAndTokenConfig };
 
 export type WidgetProps = {
   config?: WidgetConfig;
