@@ -11,7 +11,8 @@
   ],
   "browserslist": "> 0.5%, last 2 versions, not dead",
   "scripts": {
-    "build": "node ../../scripts/build/command.mjs --path widget/embedded"
+    "build": "node ../../scripts/build/command.mjs --path widget/embedded",
+    "clean": "rimraf dist"
   },
   "husky": {
     "hooks": {

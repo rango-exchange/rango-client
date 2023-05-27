@@ -6,7 +6,8 @@
   "source": "src/index.ts",
   "browserslist": "> 0.5%, last 2 versions, not dead",
   "scripts": {
-    "build": "parcel build --no-source-maps"
+    "build": "parcel build --no-source-maps --cache-dir=.parcel-cache",
+    "clean": "rimraf .parcel-cache && rimraf dist"
   },
   "husky": {
     "hooks": {

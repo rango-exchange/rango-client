@@ -15,7 +15,8 @@
     "test": "tsdx test --passWithNoTests",
     "lint": "tsdx lint",
     "size": "size-limit",
-    "analyze": "size-limit --why"
+    "analyze": "size-limit --why",
+    "clean": "rimraf dist"
   },
   "peerDependencies": {
     "@rango-dev/queue-manager-core": "*",
