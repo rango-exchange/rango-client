@@ -163,7 +163,7 @@ export function ExportConfigModal(props: ExportConfigModalProps) {
           </CodeBlock>
         </>
       }
-      title="Exported Code"
+      title="Export Code"
       containerStyle={modalContainerStyles}
     />
   );
