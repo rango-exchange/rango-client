@@ -15,7 +15,8 @@
     "test": "tsdx test --passWithNoTests",
     "lint": "tsdx lint",
     "size": "size-limit",
-    "analyze": "size-limit --why"
+    "analyze": "size-limit --why",
+    "clean": "rimraf dist"
   },
   "peerDependencies": {
     "@types/react": "^17.0.0 || ^18.0.0",

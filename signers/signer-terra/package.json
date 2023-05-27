@@ -11,7 +11,8 @@
   ],
   "scripts": {
     "dev": "tsdx watch",
-    "build": "node ../../scripts/build/command.mjs --path signers/signer-terra"
+    "build": "node ../../scripts/build/command.mjs --path signers/signer-terra",
+    "clean": "rimraf dist"
   },
   "dependencies": {
     "@terra-money/terra.js": "^3.1.7",

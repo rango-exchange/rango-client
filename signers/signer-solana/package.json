@@ -11,7 +11,8 @@
   ],
   "scripts": {
     "dev": "tsdx watch",
-    "build": "node ../../scripts/build/command.mjs --path signers/signer-solana"
+    "build": "node ../../scripts/build/command.mjs --path signers/signer-solana",
+    "clean": "rimraf dist"
   },
   "dependencies": {
     "@solana/web3.js": "^1.67.2",

@@ -11,7 +11,8 @@
   ],
   "scripts": {
     "dev": "tsdx watch",
-    "build": "node ../../scripts/build/command.mjs --path signers/signer-evm"
+    "build": "node ../../scripts/build/command.mjs --path signers/signer-evm",
+    "clean": "rimraf dist"
   },
   "dependencies": {
     "ethers": "^5.7.2",

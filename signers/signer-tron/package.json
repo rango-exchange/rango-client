@@ -11,7 +11,8 @@
   ],
   "scripts": {
     "dev": "tsdx watch",
-    "build": "node ../../scripts/build/command.mjs --path signers/signer-tron"
+    "build": "node ../../scripts/build/command.mjs --path signers/signer-tron",
+    "clean": "rimraf dist"
   },
   "dependencies": {
     "rango-types": "^0.1.32"
