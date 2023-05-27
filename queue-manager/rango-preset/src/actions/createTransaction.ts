@@ -1,18 +1,16 @@
 import { ExecuterActions } from '@rango-dev/queue-manager-core';
 import { SwapActionTypes, SwapQueueContext, SwapStorage } from '../types';
+import { getCurrentStep, updateSwapStatus, throwOnOK } from '../helpers';
+import { prettifyErrorMessage } from '../shared-errors';
 import {
-  getCurrentStep,
+  CreateTransactionRequest,
   isCosmosTransaction,
   isEvmTransaction,
   isSolanaTransaction,
-  isTrasnferTransaction,
+  isTransferTransaction,
   isStarknetTransaction,
   isTronTransaction,
-  updateSwapStatus,
-  throwOnOK,
-} from '../helpers';
-import { prettifyErrorMessage } from '../shared-errors';
-import { CreateTransactionRequest } from 'rango-sdk';
+} from 'rango-sdk';
 import { httpService } from '../services';
 
 /**
@@ -81,7 +79,7 @@ export async function createTransaction(
           currentStep.cosmosTransaction = transaction;
         } else if (isSolanaTransaction(transaction)) {
           currentStep.solanaTransaction = transaction;
-        } else if (isTrasnferTransaction(transaction)) {
+        } else if (isTransferTransaction(transaction)) {
           currentStep.transferTransaction = transaction;
         } else if (isStarknetTransaction(transaction)) {
           if (transaction.isApprovalTx)
