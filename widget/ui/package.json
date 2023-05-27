@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/ui",
-  "version": "0.1.15",
+  "version": "0.1.16-next.0",
   "license": "MIT",
   "module": "dist/index.js",
   "typings": "dist/index.d.ts",

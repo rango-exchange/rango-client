@@ -39,8 +39,8 @@
     }
   ],
   "dependencies": {
-    "@rango-dev/signer-evm": "^0.1.13",
-    "@rango-dev/signer-solana": "^0.1.13",
+    "@rango-dev/signer-evm": "^0.1.14",
+    "@rango-dev/signer-solana": "^0.1.15-next.0",
     "@rango-dev/wallets-shared": "^0.1.14",
     "rango-types": "^0.1.32"
   },
