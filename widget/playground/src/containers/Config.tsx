@@ -101,7 +101,7 @@ export function Config(props: PropsWithChildren) {
                   Export Code
                 </HeaderButton>
                 <Divider size={16} />
-                <ResetButton variant="outlined" type="error" onClick={resetConfig.bind(null)}>
+                <ResetButton variant="outlined" type="warning" onClick={resetConfig.bind(null)}>
                   Reset Config
                 </ResetButton>
               </HeaderButtonsContainer>
