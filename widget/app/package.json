@@ -10,7 +10,7 @@
     "build": "parcel build --cache-dir=.parcel-cache && cp ./vercel.json ./dist",
     "clean": "rimraf .parcel-cache && rimraf dist",
     "format": "prettier --write '{.,src}/**/*.{ts,tsx}'",
-    "lint": "eslint \"**/*.{ts,tsx}\""
+    "lint": "eslint \"**/*.{ts,tsx}\" --ignore-path ../../.eslintignore"
   },
   "devDependencies": {
     "parcel": "^2.7.0"
