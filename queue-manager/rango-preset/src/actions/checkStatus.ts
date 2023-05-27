@@ -9,7 +9,13 @@ import {
   useTransactionsResponse,
 } from '../helpers';
 import { SwapActionTypes, SwapQueueContext, SwapStorage } from '../types';
-import { getNextStep, getRelatedWallet, MessageSeverity } from '../shared';
+import {
+  getCurrentBlockchainOf,
+  getNextStep,
+  getRelatedWallet,
+  getScannerUrl,
+  MessageSeverity,
+} from '../shared';
 import { Transaction, TransactionStatusResponse } from 'rango-sdk';
 import { httpService } from '../services';
 import { GenericSigner } from 'rango-types';
@@ -29,12 +35,9 @@ async function checkTransactionStatus({
   retry,
   failed,
   context,
-}: ExecuterActions<
-  SwapStorage,
-  SwapActionTypes,
-  SwapQueueContext
->): Promise<void> {
+}: ExecuterActions<SwapStorage, SwapActionTypes, SwapQueueContext>): Promise<void> {
   const swap = getStorage().swapDetails;
+  const { meta } = context;
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const currentStep = getCurrentStep(swap)!;
   let txId = currentStep.executedTransactionId;
@@ -42,8 +45,7 @@ async function checkTransactionStatus({
   let getTxReceiptFailed = false;
   let status: TransactionStatusResponse | null = null;
   let signer: GenericSigner<Transaction> | null = null;
-  const { getTransactionResponseByHash, setTransactionResponseByHash } =
-    useTransactionsResponse();
+  const { getTransactionResponseByHash, setTransactionResponseByHash } = useTransactionsResponse();
 
   try {
     const txType = getCurrentStepTxType(currentStep);
@@ -59,19 +61,33 @@ async function checkTransactionStatus({
     // if wallet is connected, try to get transaction reciept
     if (signer?.wait) {
       const txResponse = getTransactionResponseByHash(txId!);
-      const { hash: updatedTxHash, response: updatedTxResponse } =
-        await signer.wait(txId!, txResponse);
+      const { hash: updatedTxHash, response: updatedTxResponse } = await signer.wait(
+        txId!,
+        txResponse,
+      );
       if (updatedTxHash !== txId) {
-        currentStep.executedTransactionId =
-          updatedTxHash || currentStep.executedTransactionId;
+        currentStep.executedTransactionId = updatedTxHash || currentStep.executedTransactionId;
+        const currentStepBlockchain = getCurrentBlockchainOf(swap, currentStep);
+        const explorerUrl = getScannerUrl(
+          currentStep.executedTransactionId!,
+          currentStepBlockchain,
+          meta.blockchains,
+        );
+        if (explorerUrl) {
+          if (currentStep.explorerUrl && currentStep.explorerUrl?.length >= 1) {
+            currentStep.explorerUrl[currentStep.explorerUrl.length - 1] = {
+              url: explorerUrl,
+              description: 'Replaced Swap',
+            };
+          }
+        }
         txId = currentStep.executedTransactionId;
         if (updatedTxHash && updatedTxResponse)
           setTransactionResponseByHash(updatedTxHash, updatedTxResponse);
       }
     }
   } catch (error) {
-    const { extraMessage, extraMessageDetail, extraMessageErrorCode } =
-      prettifyErrorMessage(error);
+    const { extraMessage, extraMessageDetail, extraMessageErrorCode } = prettifyErrorMessage(error);
     const updateResult = updateSwapStatus({
       getStorage,
       setStorage,
@@ -106,26 +122,25 @@ async function checkTransactionStatus({
   // If user cancel swap during check status api call,
   // or getting transaction receipt failed,
   // we should ignore check status response and return
-  if (currentStep?.status === 'failed' || getTxReceiptFailed) return;
+  if (getTxReceiptFailed) return failed();
+  if (currentStep?.status === 'failed') return;
 
   const outputAmount: string | null =
-    status?.outputAmount ||
-    (!!currentStep.outputAmount ? currentStep.outputAmount : null);
+    status?.outputAmount || (currentStep.outputAmount ? currentStep.outputAmount : null);
   const prevOutputAmount = currentStep.outputAmount || null;
   swap.extraMessage = status?.extraMessage || swap.extraMessage;
   swap.extraMessageSeverity = MessageSeverity.info;
   swap.extraMessageDetail = '';
 
   currentStep.status = status?.status || currentStep.status;
-  currentStep.diagnosisUrl =
-    status?.diagnosisUrl || currentStep.diagnosisUrl || null;
+  currentStep.diagnosisUrl = status?.diagnosisUrl || currentStep.diagnosisUrl || null;
   currentStep.outputAmount = outputAmount || currentStep.outputAmount;
   currentStep.explorerUrl = status?.explorerUrl || currentStep.explorerUrl;
   currentStep.internalSteps = status?.steps || null;
 
   const newTransaction = status?.newTx;
 
-  if (!!newTransaction) {
+  if (newTransaction) {
     currentStep.status = 'created';
     currentStep.executedTransactionId = null;
     currentStep.executedTransactionTime = null;
@@ -150,7 +165,7 @@ async function checkTransactionStatus({
   if (currentStep.status === 'success') {
     const nextStep = getNextStep(swap, currentStep);
     swap.extraMessageDetail = '';
-    swap.extraMessage = !!nextStep
+    swap.extraMessage = nextStep
       ? `starting next step: ${nextStep.swapperId}: ${nextStep.fromBlockchain} -> ${nextStep.toBlockchain}`
       : '';
   } else if (currentStep.status === 'failed') {
@@ -166,10 +181,7 @@ async function checkTransactionStatus({
 
   if (status?.status === 'failed') {
     failed();
-  } else if (
-    status?.status === 'success' ||
-    (status?.status === 'running' && !!status.newTx)
-  ) {
+  } else if (status?.status === 'success' || (status?.status === 'running' && !!status.newTx)) {
     schedule(SwapActionTypes.SCHEDULE_NEXT_STEP);
     next();
   } else {
@@ -190,32 +202,92 @@ async function checkApprovalStatus({
   retry,
   failed,
   context,
-}: ExecuterActions<
-  SwapStorage,
-  SwapActionTypes,
-  SwapQueueContext
->): Promise<void> {
+}: ExecuterActions<SwapStorage, SwapActionTypes, SwapQueueContext>): Promise<void> {
   const swap = getStorage().swapDetails as SwapStorage['swapDetails'];
-  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  const currentStep = getCurrentStep(swap)!;
+  const { meta } = context;
+  const { getTransactionResponseByHash, setTransactionResponseByHash } = useTransactionsResponse();
+
+  const currentStep = getCurrentStep(swap);
+  if (!currentStep) {
+    console.log('ignore check status, current step is null');
+    return;
+  }
+
+  let txId = currentStep.executedTransactionId;
+
+  let signer: GenericSigner<Transaction> | null = null;
+  try {
+    const txType = getCurrentStepTxType(currentStep);
+    const sourceWallet = getRelatedWallet(swap, currentStep);
+    if (txType && sourceWallet)
+      signer = context.getSigners(sourceWallet.walletType).getSigner(txType);
+  } catch (error) {
+    // wallet is not connected yet
+    // no need to do anything
+  }
+
+  try {
+    // if wallet is connected, try to get transaction reciept
+    if (signer?.wait) {
+      const txResponse = getTransactionResponseByHash(txId!);
+      const { hash: updatedTxHash, response: updatedTxResponse } = await signer.wait(
+        txId!,
+        txResponse,
+      );
+      if (updatedTxHash !== txId) {
+        currentStep.executedTransactionId = updatedTxHash || currentStep.executedTransactionId;
+        const currentStepBlockchain = getCurrentBlockchainOf(swap, currentStep);
+        const explorerUrl = getScannerUrl(
+          currentStep.executedTransactionId!,
+          currentStepBlockchain,
+          meta.blockchains,
+        );
+        if (explorerUrl) {
+          if (currentStep.explorerUrl && currentStep.explorerUrl?.length >= 1) {
+            currentStep.explorerUrl[currentStep.explorerUrl.length - 1] = {
+              url: explorerUrl,
+              description: 'Replaced Approve',
+            };
+          }
+        }
+        txId = currentStep.executedTransactionId;
+        if (updatedTxHash && updatedTxResponse)
+          setTransactionResponseByHash(updatedTxHash, updatedTxResponse);
+      }
+    }
+  } catch (error) {
+    const { extraMessage, extraMessageDetail, extraMessageErrorCode } = prettifyErrorMessage(error);
+    const updateResult = updateSwapStatus({
+      getStorage,
+      setStorage,
+      nextStatus: 'failed',
+      nextStepStatus: 'failed',
+      message: extraMessage,
+      details: extraMessageDetail,
+      errorCode: extraMessageErrorCode,
+    });
+    context?.notifier({
+      eventType: 'task_failed',
+      ...updateResult,
+    });
+    return failed();
+  }
+
   let isApproved = false;
   try {
     const response = await httpService().checkApproval(
       swap.requestId,
-      currentStep.executedTransactionId || ''
+      currentStep.executedTransactionId || '',
     );
     // If user cancel swap during check status api call, we should ignore check approval response
     if (currentStep?.status === 'failed') return;
 
     isApproved = response.isApproved;
-    if (
-      !isApproved &&
-      (response.txStatus === 'failed' || response.txStatus === 'success')
-    ) {
+    if (!isApproved && (response.txStatus === 'failed' || response.txStatus === 'success')) {
       let message, details;
       if (response.txStatus === 'failed') {
         message = 'Approve transaction failed';
-        details = 'Smart contract approval failed in blockchain.';
+        details = 'Smart contract approval tx failed in blockchain.';
       } else {
         message = 'Not enough approval';
         if (response.requiredApprovedAmount && response.currentApprovedAmount)
@@ -288,11 +360,14 @@ async function checkApprovalStatus({
  *
  */
 export async function checkStatus(
-  actions: ExecuterActions<SwapStorage, SwapActionTypes, SwapQueueContext>
+  actions: ExecuterActions<SwapStorage, SwapActionTypes, SwapQueueContext>,
 ): Promise<void> {
   const swap = actions.getStorage().swapDetails;
-  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  const currentStep = getCurrentStep(swap)!;
+  const currentStep = getCurrentStep(swap);
+  if (!currentStep) {
+    console.log('ignore check status, current step is null', swap.requestId);
+    return;
+  }
 
   // Reset network status
   // Because when check status is on `loading` or `failed` status, it shows previous message that isn't related to current state.
