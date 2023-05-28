@@ -19,7 +19,7 @@
   "dependencies": {
     "@ethersproject/abstract-provider": "^5.7.0",
     "ethers": "^5.7.2",
-    "rango-types": "^0.1.37"
+    "rango-types": "^0.1.38"
   },
   "publishConfig": {
     "access": "public"
