@@ -23,7 +23,7 @@
     "@walletconnect/client": "^1.8.0",
     "@walletconnect/jsonrpc-utils": "^1.0.4",
     "@walletconnect/qrcode-modal": "^1.8.0",
-    "rango-types": "^0.1.37"
+    "rango-types": "^0.1.38"
   },
   "publishConfig": {
     "access": "public"
