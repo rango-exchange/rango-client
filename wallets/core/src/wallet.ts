@@ -92,7 +92,7 @@ class Wallet<InstanceType = any> {
     const requestedNetwork =
       network || currentNetwork || this.options.config.defaultNetwork;
 
-    if (!!eagerConnection) {
+    if (eagerConnection) {
       const networkChanged =
         currentNetwork !== requestedNetwork && !!requestedNetwork;
 
@@ -105,6 +105,7 @@ class Wallet<InstanceType = any> {
           instance: this.provider,
           meta: this.meta,
           // TODO: Fix type error
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
           // @ts-ignore
           network: requestedNetwork,
           newInstance: this.tryGetInstance.bind(this),
@@ -219,10 +220,12 @@ class Wallet<InstanceType = any> {
   canSwitchNetworkTo(network: Network) {
     const switchTo = this.actions.canSwitchNetworkTo;
     if (!switchTo) return false;
+    // const instance = this.tryGetInstance({ network });
 
     return switchTo({
       network,
       meta: this.meta,
+      // instance,
     });
   }
 
@@ -237,7 +240,6 @@ class Wallet<InstanceType = any> {
 
   setProvider(value: any) {
     this.provider = value;
-
     if (!!value && !!this.actions.subscribe) {
       this.actions.subscribe({
         instance: value,
@@ -260,7 +262,7 @@ class Wallet<InstanceType = any> {
           }
         },
         updateChainId: (chainId) => {
-          const network = !!chainId
+          const network = chainId
             ? getBlockChainNameFromId(chainId, this.meta)
             : Network.Unknown;
           this.updateState({
@@ -353,19 +355,25 @@ class Wallet<InstanceType = any> {
     // We only kill the session (and not restting the whole state)
     // So we are relying on this.provider for achieving this functionality.
     this.setProvider(null);
-
     if (this.options.config.isAsyncInstance) {
       // Trying to connect
       const instanceOptions: GetInstanceOptions = {
         currentProvider: this.provider,
         meta: this.meta,
         force: force || false,
+        updateChainId: (chainId) => {
+          const network = chainId
+            ? getBlockChainNameFromId(chainId, this.meta)
+            : Network.Unknown;
+          this.updateState({
+            network,
+          });
+        },
       };
 
       if (network) {
         instanceOptions.network = network;
       }
-
       instance = await this.actions.getInstance(instanceOptions);
     } else {
       instance = this.actions.getInstance();

@@ -56,7 +56,12 @@ function useQueueManager(params: UseQueueManagerParams): void {
         manager,
         notifier: params.notifier,
       });
-      retryOn(params.lastConnectedWallet, params.notifier, manager);
+      retryOn(
+        params.lastConnectedWallet,
+        params.notifier,
+        manager,
+        params.canSwitchNetworkTo
+      );
     }
   }, [params.lastConnectedWallet]);
 

@@ -194,6 +194,7 @@ export type GetInstanceOptions = {
   currentProvider: any;
   meta: BlockchainMeta[];
   force?: boolean;
+  updateChainId: (chainId: number | string) => void;
 };
 
 export type TryGetInstance =

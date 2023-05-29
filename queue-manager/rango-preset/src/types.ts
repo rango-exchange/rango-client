@@ -55,6 +55,7 @@ export interface SwapQueueContext extends QueueContext {
     wallet: WalletType,
     network: Network
   ) => Promise<ConnectResult> | undefined;
+  canSwitchNetworkTo: (type: WalletType, network: Network) => boolean;
   connect: (
     wallet: WalletType,
     network: Network
@@ -74,4 +75,5 @@ export interface UseQueueManagerParams {
   clearDisconnectedWallet: () => void;
   evmChains: EvmBlockchainMeta[];
   notifier: SwapQueueContext['notifier'];
+  canSwitchNetworkTo: (type: WalletType, network: Network) => boolean;
 }

@@ -5,7 +5,7 @@ const BRIDGE_URL = 'https://bridge.walletconnect.org';
 
 export function supportsForSwitchNetworkRequest(provider: any): boolean {
   const wallets = ['metamask'];
-  const connectedWallet = provider.peerMeta ? provider.peerMeta.name : '';
+  const connectedWallet = provider?.peerMeta?.name || '';
 
   return wallets.some((wallet) => {
     return connectedWallet.toLowerCase().includes(wallet);
@@ -38,7 +38,9 @@ export function makeConnection(options: {
       // If `force` is true, Creating a new instance,
       // Otherwise try to use old connection if availabe
       // (returns null if there is no old connection)
-      let currentProvider = force ? new WalletConnectClient(clientOptions) : provider;
+      let currentProvider = force
+        ? new WalletConnectClient(clientOptions)
+        : provider;
       const hasProvider = !!currentProvider;
       const onCloseModal = () => {
         reject(new Error('QRCode modal has been closed.'));

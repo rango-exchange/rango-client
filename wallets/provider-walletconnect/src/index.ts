@@ -9,7 +9,6 @@ import {
   SwitchNetwork,
   WalletConfig,
   convertEvmBlockchainMetaToEvmChainInfo,
-  canSwitchNetworkToEvm,
   switchOrAddNetworkForMetamaskCompatibleWallets,
   WalletInfo,
 } from '@rango-dev/wallets-shared';
@@ -30,11 +29,8 @@ export const config: WalletConfig = {
   isAsyncInstance: true,
 };
 
-export const getInstance: GetInstance = async ({
-  network,
-  currentProvider,
-  meta,
-}) => {
+export const getInstance: GetInstance = async (options) => {
+  const { network, currentProvider, meta, updateChainId } = options;
   // If `network` is provided, trying to get chainId
   const evm_chain_info = convertEvmBlockchainMetaToEvmChainInfo(
     meta as EvmBlockchainMeta[]
@@ -46,6 +42,8 @@ export const getInstance: GetInstance = async ({
     provider: currentProvider,
     chainId: requestedChainId,
   });
+
+  if (options.force && requestedChainId) updateChainId?.(requestedChainId);
 
   return nextInstance;
 };
@@ -142,13 +140,15 @@ export const switchNetwork: SwitchNetwork = async ({
 
     await instance.killSession();
 
-    if (!!newInstance) {
+    if (newInstance) {
       await newInstance({ force: true, network });
     }
   }
 };
 
-export const canSwitchNetworkTo: CanSwitchNetwork = canSwitchNetworkToEvm;
+export const canSwitchNetworkTo: CanSwitchNetwork = () => {
+  return false;
+};
 
 export const disconnect: Disconnect = async ({ instance, destroyInstance }) => {
   if (instance && instance.peerMeta) {

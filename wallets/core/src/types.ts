@@ -54,7 +54,9 @@ export type GetInstanceOptions = {
   currentProvider: any;
   meta: BlockchainMeta[];
   force?: boolean;
+  updateChainId: (chainId: number | string) => void;
 };
+
 export type GetInstance =
   | (() => any)
   | ((options: GetInstanceOptions) => Promise<any>);
@@ -91,6 +93,7 @@ export type SwitchNetwork = (options: {
 export type CanSwitchNetwork = (options: {
   network: Network;
   meta: BlockchainMeta[];
+  // instance: any;
 }) => boolean;
 
 export interface WalletActions {
