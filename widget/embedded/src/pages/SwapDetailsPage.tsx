@@ -24,14 +24,12 @@ import {
   isNetworkStatusInWarningState,
   shouldRetrySwap,
 } from '../utils/swap';
-//@ts-ignore
-import { t } from 'i18next';
 import { SwapDetailsPlaceholder } from '../components/SwapDetailsPlaceholder';
 import { getFormatedPendingSwap } from '../utils/routing';
 
 export function SwapDetailsPage() {
   const selectedSwapRequestId = useUiStore.use.selectedSwapRequestId();
-  const { canSwitchNetworkTo, connect } = useWallets();
+  const { canSwitchNetworkTo, connect, getWalletInfo } = useWallets();
   const retry = useBestRouteStore.use.retry();
   const navigate = useNavigate();
   const { navigateBackFrom } = useNavigateBack();
@@ -44,6 +42,7 @@ export function SwapDetailsPage() {
   );
 
   const onCancel = () => {
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion, @typescript-eslint/no-non-null-asserted-optional-chain
     const swap = manager?.get(selectedSwap?.id!);
     if (swap) cancelSwap(swap);
   };
@@ -77,14 +76,20 @@ export function SwapDetailsPage() {
 
   const shouldRetry = shouldRetrySwap(swap);
 
-  const switchNetwork =
-    !!currentStepBlockchain &&
-    !!currentStepWallet?.walletType &&
+  const isMobileWallet = (walletType: string): boolean =>
+    !!getWalletInfo(walletType)?.mobileWallet;
+
+  const showSwitchNetwork =
     currentStepNetworkStatus ===
       PendingSwapNetworkStatus.WaitingForNetworkChange &&
-    canSwitchNetworkTo(currentStepWallet?.walletType, currentStepBlockchain)
-      ? connect.bind(null, currentStepWallet.walletType, currentStepBlockchain)
-      : undefined;
+    !!currentStepBlockchain &&
+    !!currentStepWallet?.walletType &&
+    (isMobileWallet(currentStepWallet.walletType) ||
+      canSwitchNetworkTo(currentStepWallet.walletType, currentStepBlockchain));
+
+  const switchNetwork = showSwitchNetwork
+    ? connect.bind(null, currentStepWallet.walletType, currentStepBlockchain)
+    : undefined;
 
   const lastConvertedTokenInFailedSwap =
     getLastConvertedTokenInFailedSwap(swap);
