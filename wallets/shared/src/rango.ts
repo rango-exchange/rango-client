@@ -241,6 +241,7 @@ export type SwitchNetwork = (options: {
 export type CanSwitchNetwork = (options: {
   network: Network;
   meta: BlockchainMeta[];
+  provider: any;
 }) => boolean;
 
 export type InstallObjects = {
