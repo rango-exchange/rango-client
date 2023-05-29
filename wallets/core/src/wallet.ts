@@ -217,7 +217,7 @@ class Wallet<InstanceType = any> {
   getWalletInfo(allBlockChains: BlockchainMeta[]) {
     return this.actions.getWalletInfo(allBlockChains);
   }
-  canSwitchNetworkTo(network: Network) {
+  canSwitchNetworkTo(network: Network, provider: any) {
     const switchTo = this.actions.canSwitchNetworkTo;
     if (!switchTo) return false;
     // const instance = this.tryGetInstance({ network });
@@ -225,7 +225,7 @@ class Wallet<InstanceType = any> {
     return switchTo({
       network,
       meta: this.meta,
-      // instance,
+      provider,
     });
   }
 

@@ -11,6 +11,7 @@ import {
   convertEvmBlockchainMetaToEvmChainInfo,
   switchOrAddNetworkForMetamaskCompatibleWallets,
   WalletInfo,
+  canSwitchNetworkToEvm,
 } from '@rango-dev/wallets-shared';
 import { formatJsonRpcRequest } from '@walletconnect/jsonrpc-utils';
 import signer from './signer';
@@ -146,7 +147,14 @@ export const switchNetwork: SwitchNetwork = async ({
   }
 };
 
-export const canSwitchNetworkTo: CanSwitchNetwork = () => {
+export const canSwitchNetworkTo: CanSwitchNetwork = ({
+  network,
+  meta,
+  provider,
+}) => {
+  if (supportsForSwitchNetworkRequest(provider)) {
+    return canSwitchNetworkToEvm({ network, meta, provider });
+  }
   return false;
 };
 

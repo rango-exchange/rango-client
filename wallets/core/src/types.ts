@@ -93,7 +93,7 @@ export type SwitchNetwork = (options: {
 export type CanSwitchNetwork = (options: {
   network: Network;
   meta: BlockchainMeta[];
-  // instance: any;
+  provider: any;
 }) => boolean;
 
 export interface WalletActions {
