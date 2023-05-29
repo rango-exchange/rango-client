@@ -96,7 +96,7 @@ export function claimQueue() {
  * map of transactions hash to the TransactionResponse
  *
  */
-let swapTransactionToResponseMap: { [id: string]: any } = {};
+const swapTransactionToResponseMap: { [id: string]: any } = {};
 export function useTransactionsResponse() {
   return {
     getTransactionResponseByHash: (hash: string) =>
@@ -286,7 +286,7 @@ export function updateSwapStatus({
   const currentStep = getCurrentStep(swap);
   if (!!nextStepStatus && !!currentStep) currentStep.status = nextStepStatus;
 
-  if (!!nextStatus) swap.status = nextStatus;
+  if (nextStatus) swap.status = nextStatus;
   swap.hasAlreadyProceededToSign = hasAlreadyProceededToSign;
   if (!!nextStatus && ['failed', 'success'].includes(nextStatus))
     swap.finishTime = new Date().getTime().toString();
@@ -354,7 +354,7 @@ export function setStepTransactionIds(
   const currentStep = getCurrentStep(swap)!;
   currentStep.executedTransactionId = txId;
   currentStep.executedTransactionTime = new Date().getTime().toString();
-  if (!!explorerUrl?.url)
+  if (explorerUrl?.url)
     currentStep.explorerUrl = [
       ...(currentStep.explorerUrl || []),
       {
@@ -376,7 +376,7 @@ export function setStepTransactionIds(
     ...getStorage(),
     swapDetails: swap,
   });
-  if (!!eventType)
+  if (eventType)
     notifier({ eventType: eventType, swap: swap, step: currentStep });
 }
 
@@ -613,7 +613,7 @@ export async function isNetworkMatchedForTransaction(
   if (!fromBlockChain) return false;
 
   if (
-    !!meta.evmBasedChains.find(
+    meta.evmBasedChains.find(
       (evmBlochain) => evmBlochain.name === fromBlockChain
     )
   ) {
@@ -783,16 +783,18 @@ export function onBlockForChangeNetwork(
   // Try to auto switch
   const { type, network } = getRequiredWallet(swap);
   if (!!type && !!network) {
-    const result = context.switchNetwork(type, network);
-    if (result) {
-      result
-        .then(() => {
-          queue.unblock();
-        })
-        .catch((error) => {
-          // ignore switch network errors
-          console.log({ error });
-        });
+    if (context.canSwitchNetworkTo(type, network)) {
+      const result = context.switchNetwork(type, network);
+      if (result) {
+        result
+          .then(() => {
+            queue.unblock();
+          })
+          .catch((error) => {
+            // ignore switch network errors
+            console.log({ error });
+          });
+      }
     }
   }
 }
@@ -860,7 +862,12 @@ export function onDependsOnOtherQueues(
     resetClaimedBy: () => {
       reset();
       // TODO: Use key generator
-      retryOn(`${type}-${network}:${address}`, context.notifier, manager);
+      retryOn(
+        `${type}-${network}:${address}`,
+        context.notifier,
+        manager,
+        context.canSwitchNetworkTo
+      );
     },
   });
 }
@@ -1147,7 +1154,7 @@ export function checkWaitingForNetworkChange(manager?: Manager): void {
  */
 export function getRunningSwaps(manager: Manager): PendingSwap[] {
   const queues = manager?.getAll() || new Map<QueueName, QueueInfo>();
-  let result: PendingSwap[] = [];
+  const result: PendingSwap[] = [];
   queues.forEach((q) => {
     // retry only on affected queues
     const queueStorage = q.list.getStorage() as SwapStorage | undefined;
@@ -1204,6 +1211,7 @@ export function retryOn(
   wallet_network: string,
   notifier: SwapQueueContext['notifier'],
   manager?: Manager,
+  canSwitchNetworkTo?: (type: WalletType, network: Network) => boolean,
   options = { fallbackToOnlyWallet: true }
 ): void {
   const [wallet, network] = splitWalletNetwork(wallet_network);
@@ -1258,7 +1266,9 @@ export function retryOn(
     finalQueueToBeRun = onlyWalletMatched[0];
   }
 
-  finalQueueToBeRun?.checkBlock();
+  if (!canSwitchNetworkTo?.(wallet, network as Network))
+    finalQueueToBeRun?.unblock();
+  else finalQueueToBeRun?.checkBlock();
 }
 
 /* 
@@ -1276,17 +1286,13 @@ For backward compatibilty with server and sdk, we use this wrapper to reject the
 export async function throwOnOK(
   rawResponse: Promise<CreateTransactionResponse>
 ): Promise<CreateTransactionResponse> {
-  try {
-    const responseBody = await rawResponse;
-    if (!responseBody.ok || !responseBody.transaction) {
-      throw PrettyError.CreateTransaction(
-        responseBody.error || 'bad response from create tx endpoint'
-      );
-    }
-    return responseBody;
-  } catch (e) {
-    throw e;
+  const responseBody = await rawResponse;
+  if (!responseBody.ok || !responseBody.transaction) {
+    throw PrettyError.CreateTransaction(
+      responseBody.error || 'bad response from create tx endpoint'
+    );
   }
+  return responseBody;
 }
 
 export function cancelSwap(
