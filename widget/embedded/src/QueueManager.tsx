@@ -18,7 +18,7 @@ import { walletAndSupportedChainsNames } from './utils/wallets';
 import { isEvmBlockchain } from 'rango-sdk';
 import { getConfig } from './utils/configs';
 
-function QueueManager(props: PropsWithChildren<{}>) {
+function QueueManager(props: PropsWithChildren) {
   const {
     providers,
     getSigners,
@@ -103,10 +103,12 @@ function QueueManager(props: PropsWithChildren<{}>) {
     },
     getSigners,
     //todo: remove Network type
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     //@ts-ignore
     wallets,
     providers: allProviders,
     switchNetwork,
+    canSwitchNetworkTo,
     connect,
     state,
     isMobileWallet,
@@ -120,8 +122,7 @@ function QueueManager(props: PropsWithChildren<{}>) {
       onPersistedDataLoaded={(manager) => {
         checkWaitingForNetworkChange(manager);
       }}
-      isPaused={false}
-    >
+      isPaused={false}>
       {props.children}
     </ManagerProvider>
   );

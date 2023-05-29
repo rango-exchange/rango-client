@@ -5,6 +5,7 @@ import { WalletType } from '@rango-dev/wallets-shared';
 import { isEvmBlockchain } from 'rango-types';
 import { UpdateUrl } from './UpdateUrl';
 import { useMetaStore } from '../store/meta';
+import { useWallets } from '@rango-dev/wallets-core';
 
 export function AppRouter({
   children,
@@ -17,6 +18,7 @@ export function AppRouter({
   const isRouterInContext = useInRouterContext();
   const Router = isRouterInContext ? Fragment : MemoryRouter;
   const { blockchains } = useMetaStore.use.meta();
+  const { canSwitchNetworkTo } = useWallets();
 
   const evmChains = blockchains.filter(isEvmBlockchain);
 
@@ -25,7 +27,10 @@ export function AppRouter({
     clearDisconnectedWallet: props.clearDisconnectedWallet,
     disconnectedWallet: props.disconnectedWallet,
     evmChains,
-    notifier: () => {},
+    notifier: () => {
+      // ?
+    },
+    canSwitchNetworkTo,
   });
 
   return (
