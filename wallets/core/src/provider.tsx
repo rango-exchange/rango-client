@@ -95,6 +95,7 @@ function Provider(props: ProviderProps) {
   const wallets = checkWalletProviders(listOfProviders);
   const api: ProviderContext = {
     // TODO: Fix type error
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     async connect(type, network) {
       const wallet = wallets.get(type);
@@ -125,7 +126,7 @@ function Provider(props: ProviderProps) {
       connectedWallets(providersState).forEach((type) => {
         const wallet = wallets.get(type);
 
-        if (!!wallet) {
+        if (wallet) {
           const ref = addWalletRef(wallet);
           disconnect_promises.push(ref.disconnect());
         }
@@ -143,13 +144,15 @@ function Provider(props: ProviderProps) {
       }
 
       const ref = addWalletRef(wallet);
-      return ref.canSwitchNetworkTo ? ref.canSwitchNetworkTo(network) : false;
+      return ref.canSwitchNetworkTo
+        ? ref.canSwitchNetworkTo(network, ref.provider)
+        : false;
     },
     providers() {
       const providers: { [type in WalletType]?: any } = {};
       availableWallets(providersState).forEach((type) => {
         const wallet = wallets.get(type);
-        if (!!wallet) {
+        if (wallet) {
           const ref = addWalletRef(wallet);
           providers[type] = ref.provider;
         }
@@ -193,7 +196,7 @@ function Provider(props: ProviderProps) {
     wallets.forEach((wallet) => {
       const ref = addWalletRef(wallet);
       const runOnInit = () => {
-        if (!!ref.onInit) {
+        if (ref.onInit) {
           ref.onInit();
         }
       };
@@ -220,7 +223,7 @@ function Provider(props: ProviderProps) {
 
   useEffect(() => {
     const allBlockChains = props.allBlockChains;
-    if (!!allBlockChains) {
+    if (allBlockChains) {
       wallets.forEach((wallet) => {
         const ref = addWalletRef(wallet);
         const supportedChains = ref.getWalletInfo(
