@@ -18,6 +18,7 @@ import { globalStyles } from '../globalStyles';
 import { useMetaStore } from '../store/meta';
 import { initialConfig, useConfigStore } from '../store/config';
 import { filterConfig, syntaxHighlight } from '../helpers';
+import { ProvidersConfig } from '../components/ProvidersConfig';
 
 const providers = allProviders();
 
@@ -155,6 +156,9 @@ export function Config(props: PropsWithChildren) {
             <Divider size={32} />
             <WalletsConfig />
             <Divider size={32} />
+            <ProvidersConfig />
+            <Divider size={32} />
+
             <SourcesConfig />
             <Divider size={32} />
             <StylesConfig />

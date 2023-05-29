@@ -233,7 +233,7 @@ const defaultColors = {
   },
 };
 export function StylesConfig() {
-  const language = useConfigStore.use.config().language;
+  // const language = useConfigStore.use.config().language;
   const borderRadius = useConfigStore.use.config().theme.borderRadius;
   const theme = useConfigStore.use.config().theme.mode;
   const fontFamily = useConfigStore.use.config().theme.fontFamily;

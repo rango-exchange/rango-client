@@ -11,15 +11,17 @@ import { SettingsPage } from '../pages/SettingsPage';
 import { WalletsPage } from '../pages/WalletsPage';
 import { SwapDetailsPage } from '../pages/SwapDetailsPage';
 import { WidgetConfig } from '../types';
+import { WalletProvider } from '@rango-dev/wallets-core';
 
 const getAbsolutePath = (path: string) => path.replace('/', '');
 
 interface PropTypes {
   config?: WidgetConfig;
+  providers: WalletProvider[];
 }
 
 export function AppRoutes(props: PropTypes) {
-  const { config } = props;
+  const { config, providers } = props;
 
   return useRoutes([
     {
@@ -55,7 +57,12 @@ export function AppRoutes(props: PropTypes) {
     },
     {
       path: navigationRoutes.settings,
-      element: <SettingsPage singleTheme= {config?.theme?.singleTheme} supportedSwappers={config?.liquiditySources} />,
+      element: (
+        <SettingsPage
+          singleTheme={config?.theme?.singleTheme}
+          supportedSwappers={config?.liquiditySources}
+        />
+      ),
     },
     {
       path: navigationRoutes.liquiditySources,
@@ -72,7 +79,7 @@ export function AppRoutes(props: PropTypes) {
       path: navigationRoutes.wallets,
       element: (
         <WalletsPage
-          supportedWallets={config?.wallets}
+          providers={providers}
           multiWallets={
             typeof config?.multiWallets === 'undefined'
               ? true

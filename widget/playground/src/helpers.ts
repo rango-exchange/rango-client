@@ -1,8 +1,8 @@
-import { WalletTypes } from '@rango-dev/wallets-shared';
+import { WalletState, WalletTypes } from '@rango-dev/wallets-shared';
 import { Asset, Token } from 'rango-sdk';
 import { WidgetConfig } from './types';
 import subtractObject from 'subtract-object';
-
+import { WalletState as WalletStatus } from '@rango-dev/ui';
 export const excludedWallets = [WalletTypes.STATION, WalletTypes.LEAP];
 
 export const onChangeMultiSelects = (value, values, list, findIndex) => {
@@ -81,3 +81,16 @@ export function filterConfig(config: WidgetConfig, initialConfig: WidgetConfig) 
 
   return { userSelectedConfig, filteredConfigForExport };
 }
+
+export const getStateWallet = (state: WalletState): WalletStatus => {
+  switch (true) {
+    case state.connected:
+      return WalletStatus.CONNECTED;
+    case state.connecting:
+      return WalletStatus.CONNECTING;
+    case !state.installed:
+      return WalletStatus.NOT_INSTALLED;
+    default:
+      return WalletStatus.DISCONNECTED;
+  }
+};

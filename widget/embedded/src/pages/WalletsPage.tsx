@@ -8,12 +8,8 @@ import {
 } from '@rango-dev/ui';
 import React, { useEffect, useRef, useState } from 'react';
 import { getlistWallet, sortWalletsBasedOnState } from '../utils/wallets';
-import {
-  WalletType,
-  WalletTypes,
-  detectMobileScreens,
-} from '@rango-dev/wallets-shared';
-import { useWallets } from '@rango-dev/wallets-core';
+import { WalletType, detectMobileScreens } from '@rango-dev/wallets-shared';
+import { WalletProvider, useWallets } from '@rango-dev/wallets-core';
 
 import { useUiStore } from '../store/ui';
 import { useNavigateBack } from '../hooks/useNavigateBack';
@@ -24,7 +20,7 @@ import { Spinner } from '@rango-dev/ui';
 import { LoadingFailedAlert } from '@rango-dev/ui';
 
 interface PropTypes {
-  supportedWallets?: WalletType[];
+  providers: WalletProvider[];
   multiWallets: boolean;
 }
 
@@ -48,14 +44,11 @@ const LoaderContainer = styled('div', {
 const AlertContainer = styled('div', {
   paddingBottom: '$16',
 });
-export function WalletsPage({ supportedWallets, multiWallets }: PropTypes) {
+export function WalletsPage({ providers, multiWallets }: PropTypes) {
   const { navigateBackFrom } = useNavigateBack();
   const { state, disconnect, getWalletInfo, connect } = useWallets();
-  const wallets = getlistWallet(
-    state,
-    getWalletInfo,
-    supportedWallets || Object.values(WalletTypes)
-  );
+  const wallets = getlistWallet(state, getWalletInfo, providers);
+
   const walletsRef = useRef<WalletInfo[]>();
 
   let sortedWallets = detectMobileScreens()

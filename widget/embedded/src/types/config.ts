@@ -1,5 +1,6 @@
 import { Asset } from 'rango-sdk';
 import { WalletType } from '@rango-dev/wallets-shared';
+import { WalletProvider } from '@rango-dev/wallets-core';
 
 /**
  * The above type defines a set of optional color properties for a widget.
@@ -100,7 +101,11 @@ export type BlockchainAndTokenConfig = {
  * @property {WidgetTheme} theme - The `theme` property is a part of the `WidgetConfig` type and is
  * used to specify the visual theme of the widget. It is of type `WidgetTheme`, which is an interface
  * that defines the various properties of the theme, such as colors, fonts, and others.
+ * @property {WalletProvider[]} externalProviders - The `externalProviders` property is a part of the `WidgetConfig` type
+ * and allows you to use your own providers.
  */
+
+
 export type WidgetConfig = {
   apiKey: string;
   affiliateRef?: string;
@@ -113,4 +118,5 @@ export type WidgetConfig = {
   customAddress?: boolean;
   language?: string;
   theme?: WidgetTheme;
+  externalProviders?: WalletProvider[];
 };

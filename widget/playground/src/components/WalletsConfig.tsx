@@ -1,6 +1,6 @@
 import React from 'react';
 import { Checkbox, Divider, Typography } from '@rango-dev/ui';
-import { useWallets } from '@rango-dev/wallets-core';
+import { WalletProvider, useWallets } from '@rango-dev/wallets-core';
 import { WalletTypes } from '@rango-dev/wallets-shared';
 import { excludedWallets, onChangeMultiSelects } from '../helpers';
 import { useConfigStore } from '../store/config';
@@ -9,6 +9,7 @@ import { MultiSelect } from './MultiSelect';
 
 export function WalletsConfig() {
   const { getWalletInfo } = useWallets();
+  const externalProviders = useConfigStore.use.config().externalProviders;
 
   const wallets = useConfigStore.use.config().wallets;
   const multiWallets = useConfigStore.use.config().multiWallets;
@@ -16,16 +17,25 @@ export function WalletsConfig() {
   const onChangeWallets = useConfigStore.use.onChangeWallets();
   const onChangeBooleansConfig = useConfigStore.use.onChangeBooleansConfig();
 
-  const walletList = Object.values(WalletTypes)
-    .filter((wallet) => !excludedWallets.includes(wallet))
-    .map((type) => {
-      const { name: title, img: logo } = getWalletInfo(type);
-      return {
-        title,
-        logo,
-        type,
-      };
-    });
+  const walletList = externalProviders
+    ? externalProviders.map((provider: WalletProvider) => {
+        const { name: title, img: logo } = getWalletInfo(provider.config.type);
+        return {
+          title,
+          logo,
+          type: provider.config.type,
+        };
+      })
+    : Object.values(WalletTypes)
+        .filter((wallet) => !excludedWallets.includes(wallet))
+        .map((type) => {
+          const { name: title, img: logo } = getWalletInfo(type);
+          return {
+            title,
+            logo,
+            type,
+          };
+        });
 
   const onChange = (wallet) => {
     const list = walletList.map((item) => item.type);

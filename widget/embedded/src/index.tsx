@@ -95,22 +95,22 @@ export const Widget: React.FC<WidgetProps> = ({ config }) => {
       setLastConnectedWalletWithNetwork(key);
     }
   };
-  let providers = allProviders();
+  const providers = !config?.wallets
+    ? config?.externalProviders || allProviders()
+    : //@ts-ignore
+      (config?.externalProviders || allProviders()).filter((provider) => {
+        const type = provider.config.type;
+        return config.wallets || [].find((w) => w === type);
+      });
 
   useEffect(() => {
-    const wallets = config?.wallets;
     clearConnectedWallet();
-    providers = !wallets
-      ? allProviders()
-      : allProviders().filter((provider) => {
-          const type = provider.config.type;
-          return wallets.find((w) => w === type);
-        });
-  }, [config?.wallets]);
+  }, [config?.wallets, config?.externalProviders]);
 
   useEffect(() => {
     changeLanguage(config?.language || 'en');
   }, [config?.language]);
+
 
   return (
     <Provider
@@ -128,7 +128,10 @@ export const Widget: React.FC<WidgetProps> = ({ config }) => {
                 setDisconnectedWallet(undefined);
               }}
             >
-              <Layout config={config} />
+              <Layout
+                config={config}
+                providers={config?.externalProviders || allProviders()}
+              />
             </AppRouter>
           </SwapContainer>
         </QueueManager>

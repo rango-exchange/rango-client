@@ -22,7 +22,7 @@ import {
   WalletDetail,
 } from 'rango-sdk';
 import { isCosmosBlockchain } from 'rango-types';
-import { readAccountAddress } from '@rango-dev/wallets-core';
+import { WalletProvider, readAccountAddress } from '@rango-dev/wallets-core';
 import { ConnectedWallet, TokenBalance } from '../store/wallets';
 import { numberToString } from './numbers';
 import BigNumber from 'bignumber.js';
@@ -48,9 +48,10 @@ export const excludedWallets = [WalletTypes.LEAP];
 export function getlistWallet(
   getState: (type: WalletType) => WalletState,
   getWalletInfo: (type: WalletType) => WalletInfo,
-  list: WalletType[]
+  providers: WalletProvider[]
 ): ModalWalletInfo[] {
-  return list
+  return providers
+    .map((provider: WalletProvider) => provider.config.type)
     .filter((wallet) => !excludedWallets.includes(wallet as WalletTypes))
     .map((type) => {
       const {

@@ -24,6 +24,7 @@ import { useTranslation } from 'react-i18next';
 import { useBestRouteStore } from '../store/bestRoute';
 import { useMetaStore } from '../store/meta';
 import { useSettingsStore } from '../store/settings';
+import { WalletProvider } from '@rango-dev/wallets-core';
 
 const Header = styled('div', {
   display: 'flex',
@@ -49,9 +50,10 @@ const WalletImageContainer = styled('div', {
 
 export type LayoutProps = {
   config?: WidgetConfig;
+  providers: WalletProvider[]
 };
 
-export function Layout({ config }: LayoutProps) {
+export function Layout({ config, providers }: LayoutProps) {
   const navigate = useNavigate();
   const { connectedWallets, selectedWallets } = useWalletsStore();
   const { getWalletInfo } = useWallets();
@@ -144,7 +146,7 @@ export function Layout({ config }: LayoutProps) {
           </div>
         </Button>
       </Header>
-      <AppRoutes config={config} />
+      <AppRoutes config={config} providers={providers}/>
     </>
   );
 }

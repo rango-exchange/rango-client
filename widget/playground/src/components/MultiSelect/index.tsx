@@ -104,7 +104,7 @@ export function MultiSelect({ label, type, modalTitle, list, value, onChange }: 
               style={{ margin: 2 }}
               selected
               label={getLabel(v)}
-              suffix={<CloseIcon color="$foreground" />}
+              suffix={<CloseIcon />}
               onClick={() => onChange(v)}
             />
           ))
