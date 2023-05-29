@@ -220,7 +220,6 @@ class Wallet<InstanceType = any> {
   canSwitchNetworkTo(network: Network, provider: any) {
     const switchTo = this.actions.canSwitchNetworkTo;
     if (!switchTo) return false;
-    // const instance = this.tryGetInstance({ network });
 
     return switchTo({
       network,
