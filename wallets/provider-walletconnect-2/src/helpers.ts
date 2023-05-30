@@ -16,54 +16,51 @@ export function supportsForSwitchNetworkRequest(provider: any): boolean {
 
 export async function makeConnection(options: {
   chainId?: number;
-  provider: any;
   force?: boolean;
 }): Promise<any> {
-  const { provider, chainId = 1, force = false } = options;
+  const { chainId = 1, force = false } = options;
 
-  const ethProvider =
-    provider ||
-    (await EthereumProvider.init({
-      projectId, // REQUIRED your projectId
-      chains: [chainId],
-      // REQUIRED chain ids
-      showQrModal: true, // REQUIRED set to "true" to use @web3modal/standalone,
-      optionalMethods: [
-        'eth_sendTransaction',
-        'eth_signTransaction',
-        'eth_sign',
-        'personal_sign',
-        'eth_signTypedData',
-        'wallet_switchEthereumChain',
-        'wallet_addEthereumChain',
-      ],
-      events: [
-        'chainChanged',
-        'accountsChanged',
-        'message',
-        'connect',
-        'disconnect',
-      ],
-      qrModalOptions: {
-        // explorerAllowList: [],
-        // explorerDenyList: [],
-        themeVariables: {
-          '--w3m-z-index': '999999999',
-        },
+  const ethProvider = await EthereumProvider.init({
+    projectId, // REQUIRED your projectId
+    chains: [chainId],
+    // REQUIRED chain ids
+    showQrModal: true, // REQUIRED set to "true" to use @web3modal/standalone,
+    optionalMethods: [
+      'eth_sendTransaction',
+      'eth_signTransaction',
+      'eth_sign',
+      'personal_sign',
+      'eth_signTypedData',
+      'wallet_switchEthereumChain',
+      'wallet_addEthereumChain',
+    ],
+    events: [
+      'chainChanged',
+      'accountsChanged',
+      'message',
+      'connect',
+      'disconnect',
+    ],
+    qrModalOptions: {
+      // explorerAllowList: [],
+      // explorerDenyList: [],
+      themeVariables: {
+        '--w3m-z-index': '999999999',
       },
-    }));
+    },
+  });
 
-  const matchKeyChain =
-    Object.keys(ethProvider.signer.namespaces['eip155'].rpcMap)[0] ==
-    ethProvider.chainId;
+  const pairingTopic = ethProvider.signer.client.pairing.getAll({
+    active: true,
+  })[0]?.topic;
 
   return new Promise((resolve, reject) => {
-    if (ethProvider.accounts?.length && !force && matchKeyChain) {
+    if (pairingTopic && !force) {
       (async () => {
-        // TODO: check why in some cases enable() doesn't work well
-        await ethProvider
-          .connect()
-          // .enable()
+        await ethProvider.signer.client
+          .connect({
+            pairingTopic,
+          })
           .then(() => {
             resolve(ethProvider);
           })
