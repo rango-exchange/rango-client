@@ -1,4 +1,4 @@
-import { makeConnection } from './helpers';
+import { makeConnection, supportsForSwitchNetworkRequest } from './helpers';
 import {
   WalletTypes,
   CanSwitchNetwork,
@@ -15,7 +15,12 @@ import {
   convertEvmBlockchainMetaToEvmChainInfo,
 } from '@rango-dev/wallets-shared';
 import signer from './signer';
-import { SignerFactory, EvmBlockchainMeta, BlockchainMeta, evmBlockchains } from 'rango-types';
+import {
+  SignerFactory,
+  EvmBlockchainMeta,
+  BlockchainMeta,
+  evmBlockchains,
+} from 'rango-types';
 
 const WALLET = WalletTypes.WALLET_CONNECT_2;
 
@@ -25,9 +30,12 @@ export const config: WalletConfig = {
   isAsyncInstance: true,
 };
 
-export const getInstance: GetInstance = async ({ network, currentProvider, meta, force }) => {
+export const getInstance: GetInstance = async (options) => {
+  const { network, currentProvider, meta, force, updateChainId } = options;
   // If `network` is provided, trying to get chainId
-  const evm_chain_info = convertEvmBlockchainMetaToEvmChainInfo(meta as EvmBlockchainMeta[]);
+  const evm_chain_info = convertEvmBlockchainMetaToEvmChainInfo(
+    meta as EvmBlockchainMeta[]
+  );
   const info = network ? evm_chain_info[network] : undefined;
   const requestedChainId = info?.chainId ? parseInt(info?.chainId) : undefined;
 
@@ -37,10 +45,12 @@ export const getInstance: GetInstance = async ({ network, currentProvider, meta,
   });
 
   if (currentProvider) {
-    await currentProvider.signer.client.disconnect({
+    await nextInstance.signer.client.disconnect({
       topic: currentProvider.signer.session?.topic,
     });
   }
+
+  if (force && requestedChainId) updateChainId?.(requestedChainId);
 
   return nextInstance;
 };
@@ -59,7 +69,6 @@ export const subscribe: Subscribe = ({
   instance,
   updateChainId,
   updateAccounts,
-  disconnect,
   meta,
   connect,
 }) => {
@@ -102,19 +111,32 @@ export const subscribe: Subscribe = ({
     updateChainId(chainId);
   });
 
-  instance.on('disconnect', () => {
-    disconnect();
+  instance.on('disconnect', ({ data: topic }: any) => {
+    instance?.signer.client.disconnect({
+      topic,
+    });
   });
 };
 
-export const switchNetwork: SwitchNetwork = async ({ network, newInstance }) => {
+export const switchNetwork: SwitchNetwork = async ({
+  network,
+  newInstance,
+}) => {
   if (newInstance) {
     await newInstance({ force: true, network });
   }
 };
 
-export const canSwitchNetworkTo: CanSwitchNetwork = canSwitchNetworkToEvm;
-
+export const canSwitchNetworkTo: CanSwitchNetwork = ({
+  network,
+  meta,
+  provider,
+}) => {
+  if (supportsForSwitchNetworkRequest(provider)) {
+    return canSwitchNetworkToEvm({ network, meta, provider });
+  }
+  return false;
+};
 export const disconnect: Disconnect = async ({ instance, destroyInstance }) => {
   if (instance) {
     await instance.disconnect();
@@ -126,7 +148,9 @@ export const disconnect: Disconnect = async ({ instance, destroyInstance }) => {
 
 export const getSigners: (provider: any) => SignerFactory = signer;
 
-export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (allBlockChains) => {
+export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
+  allBlockChains
+) => {
   const evms = evmBlockchains(allBlockChains);
   return {
     name: 'WalletConnect2',
@@ -135,5 +159,6 @@ export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
     color: '#b2dbff',
     supportedChains: evms,
     showOnMobile: true,
+    mobileWallet: true,
   };
 };

@@ -58,7 +58,7 @@ export async function makeConnection(options: {
   })[lastIndex]?.topic;
 
   return new Promise((resolve, reject) => {
-    if (pairingTopic && ethProvider.accounts?.length && !force) {
+    if (pairingTopic && !force) {
       (async () => {
         await ethProvider.signer.client
           .connect({
