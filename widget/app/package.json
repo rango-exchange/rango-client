@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/widget-app",
-  "version": "0.1.3-next.12",
+  "version": "0.1.3-next.13",
   "license": "MIT",
   "private": true,
   "source": "public/index.html",
