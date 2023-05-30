@@ -11,7 +11,6 @@
   ],
   "scripts": {
     "dev": "yarn bundle --watch",
-    "bundle": "esbuild src/index.ts --bundle --minify --keep-names --sourcemap --outdir=dist --platform=node --format=esm --packages=external",
     "build": "node ../../scripts/build/command.mjs --path widget/ui",
     "type-checking": "tsc --declaration --emitDeclarationOnly",
     "storybook": "storybook dev -p 3000",
