@@ -1,12 +1,9 @@
-name: Publish
+name: Deploy
 on:
-  push:
-    branches:
-      - 'main'
-      - 'next'
+  workflow_dispatch:
 
 jobs:
-  publish:
+  deploy-it:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -24,13 +21,6 @@ jobs:
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
 
-      - name: Auth
-        run: |
-          echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> .npmrc
-          npm whoami
-        env:
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-
       - name: Restore cache
         uses: actions/cache@v3
         with:
@@ -40,9 +30,16 @@ jobs:
       - name: Install packages
         run: yarn install --frozen-lockfile
 
-      - name: Build, Version & Publish packages
-        run: yarn run publish
+      - name: Deploy packages
+        run: yarn run deploy
         env:
           REF: ${{ github.ref }}
           BASE_REF: ${{ github.event.pull_request.base.ref }}
           GH_TOKEN: ${{ github.token }}
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          VERCEL_PROJECT_WALLETS: ${{ secrets.VERCEL_PROJECT_WALLETS }}
+          VERCEL_PROJECT_Q: ${{ secrets.VERCEL_PROJECT_Q }}
+          VERCEL_PROJECT_WALLET_ADAPTER: ${{ secrets.VERCEL_PROJECT_WALLET_ADAPTER }}
+          VERCEL_PROJECT_WIDGET_CONFIG: ${{ secrets.VERCEL_PROJECT_WIDGET_CONFIG }}
+          VERCEL_PROJECT_WIDGET_APP: ${{ secrets.VERCEL_PROJECT_WIDGET_APP }}  
