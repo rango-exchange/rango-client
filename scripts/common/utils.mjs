@@ -3,6 +3,7 @@ import { fileURLToPath } from 'url';
 import { readFileSync } from 'fs';
 import { join } from 'path';
 import { execa } from 'execa';
+import process from 'node:process';
 
 const root = join(printDirname(), '..', '..');
 
@@ -36,7 +37,9 @@ export function pacakgeJson(location) {
 
 export async function packageNamesToPackagesWithInfo(names) {
   const allPackages = await workspacePackages();
-  return names.map((pkgName) => allPackages.find((pkg) => pkg.name === pkgName));
+  return names.map((pkgName) =>
+    allPackages.find((pkg) => pkg.name === pkgName)
+  );
 }
 
 /*
@@ -45,4 +48,9 @@ export async function packageNamesToPackagesWithInfo(names) {
 */
 export function packageNameWithoutScope(name) {
   return name.replace(/@.+\//, '');
+}
+
+// we are adding a fallback, to make sure predefiend VERCEL_PACKAGES always will be true.
+export function getEnvWithFallback(name) {
+  return process.env[name] || 'NOT SET';
 }
