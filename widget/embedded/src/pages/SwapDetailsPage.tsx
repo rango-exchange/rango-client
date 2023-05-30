@@ -9,7 +9,6 @@ import {
   cancelSwap,
   PendingSwapNetworkStatus,
 } from '@rango-dev/queue-manager-rango-preset';
-import { useWallets } from '@rango-dev/wallets-core';
 import {
   getCurrentBlockchainOfOrNull,
   getCurrentStep,
@@ -28,10 +27,18 @@ import {
 import { t } from 'i18next';
 import { SwapDetailsPlaceholder } from '../components/SwapDetailsPlaceholder';
 import { getFormatedPendingSwap } from '../utils/routing';
+import { ProviderContext } from '@rango-dev/wallets-core';
+import useCustomWallets from '../hooks/useCustomWallets';
 
-export function SwapDetailsPage() {
+export function SwapDetailsPage({
+  manageExternalWallets,
+}: {
+  manageExternalWallets?:()=> ProviderContext;
+}) {
   const selectedSwapRequestId = useUiStore.use.selectedSwapRequestId();
-  const { canSwitchNetworkTo, connect } = useWallets();
+  const { canSwitchNetworkTo, connect } = useCustomWallets(
+    manageExternalWallets
+  );
   const retry = useBestRouteStore.use.retry();
   const navigate = useNavigate();
   const { navigateBackFrom } = useNavigateBack();

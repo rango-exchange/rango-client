@@ -6,7 +6,6 @@ import {
   checkWaitingForNetworkChange,
   SwapProgressNotification,
 } from '@rango-dev/queue-manager-rango-preset';
-import { useWallets } from '@rango-dev/wallets-core';
 import {
   convertEvmBlockchainMetaToEvmChainInfo,
   Network,
@@ -17,8 +16,12 @@ import { useWalletsStore } from './store/wallets';
 import { walletAndSupportedChainsNames } from './utils/wallets';
 import { isEvmBlockchain } from 'rango-sdk';
 import { getConfig } from './utils/configs';
+import useCustomWallets from './hooks/useCustomWallets';
+import { ProviderContext } from '@rango-dev/wallets-core';
 
-function QueueManager(props: PropsWithChildren<{}>) {
+function QueueManager(
+  props: PropsWithChildren<{ manageExternalWallets?:()=> ProviderContext }>
+) {
   const {
     providers,
     getSigners,
@@ -26,7 +29,7 @@ function QueueManager(props: PropsWithChildren<{}>) {
     connect,
     canSwitchNetworkTo,
     getWalletInfo,
-  } = useWallets();
+  } = useCustomWallets(props.manageExternalWallets);
 
   const swapQueueDef = useMemo(() => {
     return makeQueueDefinition({

@@ -1,6 +1,6 @@
 import { Asset } from 'rango-sdk';
 import { WalletType } from '@rango-dev/wallets-shared';
-import { WalletProvider } from '@rango-dev/wallets-core';
+import { ProviderContext, WalletProvider } from '@rango-dev/wallets-core';
 
 /**
  * The above type defines a set of optional color properties for a widget.
@@ -105,7 +105,6 @@ export type BlockchainAndTokenConfig = {
  * and allows you to use your own providers.
  */
 
-
 export type WidgetConfig = {
   apiKey: string;
   affiliateRef?: string;
@@ -119,4 +118,5 @@ export type WidgetConfig = {
   language?: string;
   theme?: WidgetTheme;
   externalProviders?: WalletProvider[];
+  manageExternalWallets?: () => ProviderContext;
 };

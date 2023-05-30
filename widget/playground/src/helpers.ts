@@ -19,6 +19,7 @@ export const onChangeMultiSelects = (value, values, list, findIndex) => {
     if (index !== -1) values.splice(index, 1);
     else values.push(value);
     if (values.length === list.length) return undefined;
+    if (!values.length) return undefined;
     else return values;
   }
 };

@@ -3,7 +3,6 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { AppRouter } from './components/AppRouter';
 import { useMetaStore } from './store/meta';
 import { Events, Provider } from '@rango-dev/wallets-core';
-import { allProviders } from '@rango-dev/provider-all';
 import { EventHandler } from '@rango-dev/wallets-core/dist/wallet';
 import { Network, WalletType } from '@rango-dev/wallets-shared';
 import {
@@ -27,6 +26,7 @@ import QueueManager from './QueueManager';
 import { useUiStore } from './store/ui';
 import { navigationRoutes } from './constants/navigationRoutes';
 import { initConfig } from './utils/configs';
+import { getProviders } from './utils/common';
 
 export { WidgetConfig, WidgetTheme, WidgetColors, BlockchainAndTokenConfig };
 
@@ -95,31 +95,23 @@ export const Widget: React.FC<WidgetProps> = ({ config }) => {
       setLastConnectedWalletWithNetwork(key);
     }
   };
-  const providers = !config?.wallets
-    ? config?.externalProviders || allProviders()
-    : //@ts-ignore
-      (config?.externalProviders || allProviders()).filter((provider) => {
-        const type = provider.config.type;
-        return config.wallets || [].find((w) => w === type);
-      });
-
-  useEffect(() => {
-    clearConnectedWallet();
-  }, [config?.wallets, config?.externalProviders]);
 
   useEffect(() => {
     changeLanguage(config?.language || 'en');
   }, [config?.language]);
 
+  useEffect(() => {
+    clearConnectedWallet();
+  }, [config?.wallets, config?.externalProviders]);
 
   return (
     <Provider
       allBlockChains={blockchains}
-      providers={providers}
+      providers={getProviders(config?.wallets, config?.externalProviders)}
       onUpdateState={onUpdateState}
     >
       <div id="swap-container" className={activeTheme}>
-        <QueueManager>
+        <QueueManager manageExternalWallets={config?.manageExternalWallets}>
           <SwapContainer fixedHeight={currentPage !== navigationRoutes.home}>
             <AppRouter
               lastConnectedWallet={lastConnectedWalletWithNetwork}
@@ -130,7 +122,10 @@ export const Widget: React.FC<WidgetProps> = ({ config }) => {
             >
               <Layout
                 config={config}
-                providers={config?.externalProviders || allProviders()}
+                providers={getProviders(
+                  config?.wallets,
+                  config?.externalProviders
+                )}
               />
             </AppRouter>
           </SwapContainer>

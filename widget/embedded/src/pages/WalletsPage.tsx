@@ -9,7 +9,7 @@ import {
 import React, { useEffect, useRef, useState } from 'react';
 import { getlistWallet, sortWalletsBasedOnState } from '../utils/wallets';
 import { WalletType, detectMobileScreens } from '@rango-dev/wallets-shared';
-import { WalletProvider, useWallets } from '@rango-dev/wallets-core';
+import { ProviderContext, WalletProvider } from '@rango-dev/wallets-core';
 
 import { useUiStore } from '../store/ui';
 import { useNavigateBack } from '../hooks/useNavigateBack';
@@ -18,10 +18,12 @@ import { useTranslation } from 'react-i18next';
 import { useMetaStore } from '../store/meta';
 import { Spinner } from '@rango-dev/ui';
 import { LoadingFailedAlert } from '@rango-dev/ui';
+import useCustomWallets from '../hooks/useCustomWallets';
 
 interface PropTypes {
   providers: WalletProvider[];
   multiWallets: boolean;
+  manageExternalWallets?: ()=>ProviderContext;
 }
 
 const ListContainer = styled('div', {
@@ -44,9 +46,15 @@ const LoaderContainer = styled('div', {
 const AlertContainer = styled('div', {
   paddingBottom: '$16',
 });
-export function WalletsPage({ providers, multiWallets }: PropTypes) {
+export function WalletsPage({
+  providers,
+  multiWallets,
+  manageExternalWallets,
+}: PropTypes) {
   const { navigateBackFrom } = useNavigateBack();
-  const { state, disconnect, getWalletInfo, connect } = useWallets();
+  const { state, disconnect, getWalletInfo, connect } = useCustomWallets(
+    manageExternalWallets
+  );
   const wallets = getlistWallet(state, getWalletInfo, providers);
 
   const walletsRef = useRef<WalletInfo[]>();

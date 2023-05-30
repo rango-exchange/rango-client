@@ -7,7 +7,7 @@ import { persist } from 'zustand/middleware';
 import { Type, WidgetConfig } from '../types';
 import { getConfig } from '../configs';
 import { Colors } from '../types';
-import { WalletProvider } from '@rango-dev/wallets-core';
+import { ProviderContext, WalletProvider } from '@rango-dev/wallets-core';
 
 export type Mode = 'dark' | 'light' | 'auto';
 export type COLORS =
@@ -42,6 +42,7 @@ interface ConfigState {
   onSelectTheme: (colors: { light: Colors; dark: Colors }) => void;
   onChangelanguage: (value: string) => void;
   resetConfig: () => void;
+  onChangeManageExternalWallets: (manageExternalWallets?:()=> ProviderContext) => void;
 }
 
 export const initialConfig: WidgetConfig = {
@@ -65,6 +66,7 @@ export const initialConfig: WidgetConfig = {
   customAddress: undefined,
   language: undefined,
   externalProviders: undefined,
+  manageExternalWallets: undefined,
   theme: {
     mode: 'auto',
     fontFamily: undefined,
@@ -125,6 +127,10 @@ export const useConfigStore = createSelectors(
             } else {
               state.config.to.blockchain = chain;
             }
+          }),
+        onChangeManageExternalWallets: (manageExternalWallets) =>
+          set((state) => {
+            state.config.manageExternalWallets = manageExternalWallets;
           }),
         onChangeToken: (token, type) =>
           set((state) => {

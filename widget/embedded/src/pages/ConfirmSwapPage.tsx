@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useBestRouteStore } from '../store/bestRoute';
 import { useWalletsStore } from '../store/wallets';
-import { useWallets } from '@rango-dev/wallets-core';
 import { navigationRoutes } from '../constants/navigationRoutes';
 import {
   getKeplrCompatibleConnectedWallets,
@@ -30,8 +29,14 @@ import { ConfirmSwapWarnings } from '../components/ConfirmSwapWarnings';
 import { ConfirmSwapExtraMessages } from '../components/warnings/ConfirmSwapExtraMessages';
 import { getBestRouteStatus } from '../utils/routing';
 import { PercentageChange } from '../components/PercentageChange';
+import useCustomWallets from '../hooks/useCustomWallets';
+import { ProviderContext } from '@rango-dev/wallets-core';
 
-export function ConfirmSwapPage() {
+export function ConfirmSwapPage({
+  manageExternalWallets,
+}: {
+  manageExternalWallets?:()=> ProviderContext;
+}) {
   const navigate = useNavigate();
   const { navigateBackFrom } = useNavigateBack();
   const bestRoute = useBestRouteStore.use.bestRoute();
@@ -66,14 +71,14 @@ export function ConfirmSwapPage() {
   const selectedSlippage = customSlippage || slippage;
 
   const showHighSlippageWarning = !errors.find(
-    error => error.type === ConfirmSwapErrorTypes.INSUFFICIENT_SLIPPAGE
+    (error) => error.type === ConfirmSwapErrorTypes.INSUFFICIENT_SLIPPAGE
   );
 
-  const { getWalletInfo, connect } = useWallets();
+  const { getWalletInfo, connect } = useCustomWallets(manageExternalWallets);
   const confirmDisabled =
     fetchingBestRoute ||
-    !requiredWallets(bestRoute).every(chain =>
-      selectedWallets.map(wallet => wallet.chain).includes(chain)
+    !requiredWallets(bestRoute).every((chain) =>
+      selectedWallets.map((wallet) => wallet.chain).includes(chain)
     );
 
   const firstStep = bestRoute?.result?.swaps[0];
@@ -94,10 +99,8 @@ export function ConfirmSwapPage() {
 
   const handleConnectChain = (wallet: string) => {
     const network = wallet as Network;
-    getKeplrCompatibleConnectedWallets(
-      selectableWallets
-    ).forEach((compatibleWallet: WalletType) =>
-      connect?.(compatibleWallet, network)
+    getKeplrCompatibleConnectedWallets(selectableWallets).forEach(
+      (compatibleWallet: WalletType) => connect?.(compatibleWallet, network)
     );
   };
 
@@ -109,7 +112,7 @@ export function ConfirmSwapPage() {
       selectableWallets={selectableWallets}
       onBack={navigateBackFrom.bind(null, navigationRoutes.confirmSwap)}
       onConfirm={async () => {
-        confirmSwap?.().then(async swap => {
+        confirmSwap?.().then(async (swap) => {
           if (swap) {
             try {
               await manager?.create(
@@ -130,10 +133,10 @@ export function ConfirmSwapPage() {
           }
         });
       }}
-      onChange={wallet => setSelectedWallet(wallet)}
+      onChange={(wallet) => setSelectedWallet(wallet)}
       confirmDisabled={loadingMetaStatus !== 'success' || confirmDisabled}
-      handleConnectChain={wallet => handleConnectChain(wallet)}
-      isExperimentalChain={wallet =>
+      handleConnectChain={(wallet) => handleConnectChain(wallet)}
+      isExperimentalChain={(wallet) =>
         getKeplrCompatibleConnectedWallets(selectableWallets).length > 0
           ? isExperimentalChain(blockchains, wallet)
           : false

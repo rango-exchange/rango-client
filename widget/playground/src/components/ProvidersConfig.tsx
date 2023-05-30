@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Button,
   ConnectWalletsModal,
@@ -12,9 +12,8 @@ import {
 import { useWallets, WalletProvider } from '@rango-dev/wallets-core';
 import { useConfigStore } from '../store/config';
 import { ConfigurationContainer } from './ChainsConfig';
-import { MultiSelect } from './MultiSelect';
 import { allProviders } from '@rango-dev/provider-all';
-import { WalletInfo, WalletTypes } from '@rango-dev/wallets-shared';
+import { WalletType } from '@rango-dev/wallets-shared';
 import { useMetaStore } from '../store/meta';
 import ModalContent from './MultiSelect/ModalContent';
 import { getStateWallet, onChangeMultiSelects } from '../helpers';
@@ -40,14 +39,19 @@ export function ProvidersConfig() {
   const [openProviderModal, setOpenProviderModal] = useState<boolean>(false);
   const [openWalletsModal, setOpenWalletsModal] = useState<boolean>(false);
   const loadingStatus = useMetaStore.use.loadingStatus();
+  const selectedWallets = useConfigStore.use.config().wallets;
+  const [walletMessage, setWalletErrorMessage] = useState('');
 
-  const { state, getWalletInfo } = useWallets();
+  const { connect, disconnect, state, getWalletInfo } = useWallets();
 
   const externalProviders = useConfigStore.use.config().externalProviders;
   const onChangeProviders = useConfigStore.use.onChangeProviders();
-  const providers = allProviders();
 
-  const list = providers.map((provider: WalletProvider) => {
+  const onChangeManageExternalWallets = useConfigStore.use.onChangeManageExternalWallets();
+
+  const providersList = allProviders();
+
+  const list = providersList.map((provider: WalletProvider) => {
     const { name: title, img: logo } = getWalletInfo(provider.config.type);
     return {
       title,
@@ -60,21 +64,26 @@ export function ProvidersConfig() {
     ? externalProviders.map((provider: WalletProvider) => provider.config.type)
     : undefined;
 
-  const wallets = (externalProviders || providers).map((provider: WalletProvider) => {
-    const type = provider.config.type;
-    const { name, img: image, installLink, showOnMobile } = getWalletInfo(type);
-    return {
-      state: getStateWallet(state(type)),
-      installLink,
-      name,
-      image,
-      type,
-      showOnMobile: !!showOnMobile,
-    };
-  });
+  const wallets = (externalProviders || providersList)
+    .map((provider: WalletProvider) => {
+      const type = provider.config.type;
+      const { name, img: image, installLink, showOnMobile } = getWalletInfo(type);
+      return {
+        state: getStateWallet(state(type)),
+        installLink,
+        name,
+        image,
+        type,
+        showOnMobile: !!showOnMobile,
+      };
+    })
+    .filter((w) => {
+      const type = w.type;
+      return !!selectedWallets ? selectedWallets.find((w) => w === type) : w;
+    });
 
   const onChange = (provider) => {
-    const list = providers.map((item) => item.config.type);
+    const list = providersList.map((item) => item.config.type);
     const selected = externalProviders?.map((item) => item.config.type);
     let values = onChangeMultiSelects(provider, selected, list, (item) => item === provider);
     if (values)
@@ -88,6 +97,26 @@ export function ProvidersConfig() {
   const onClickAction = () => {
     if (!externalProviders) onChange('empty');
     else onChange('all');
+  };
+
+  useEffect(() => {
+    if (!!externalProviders) setHasExternalProvider(true);
+    else setHasExternalProvider(false);
+  }, [externalProviders]);
+
+  const onSelectWallet = async (type: WalletType) => {
+    const wallet = state(type);
+    try {
+      if (wallet.connected) {
+        await disconnect(type);
+      } else {
+        await connect(type);
+      }
+    } catch (e) {
+      if (e instanceof Error) {
+        setWalletErrorMessage('Error: ' + e.message);
+      }
+    }
   };
 
   return (
@@ -105,6 +134,11 @@ export function ProvidersConfig() {
             onChange={(checked) => {
               if (!checked) {
                 onChangeProviders(undefined);
+                onChangeManageExternalWallets(undefined);
+              } else {
+                onChangeProviders(providersList);
+
+                onChangeManageExternalWallets(useWallets);
               }
               setHasExternalProvider(checked);
             }}
@@ -142,9 +176,8 @@ export function ProvidersConfig() {
           onClose={() => {
             setOpenWalletsModal(false);
           }}
-          onSelect={(walletType: string) => {
-            console.log(walletType);
-          }}
+          onSelect={onSelectWallet}
+          error={walletMessage}
         />
 
         <Modal

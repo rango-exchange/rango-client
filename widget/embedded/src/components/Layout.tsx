@@ -8,7 +8,6 @@ import {
 } from '@rango-dev/ui';
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useWallets } from '@rango-dev/wallets-core';
 import { navigationRoutes } from '../constants/navigationRoutes';
 import { useUiStore } from '../store/ui';
 import { AppRoutes } from './AppRoutes';
@@ -25,6 +24,7 @@ import { useBestRouteStore } from '../store/bestRoute';
 import { useMetaStore } from '../store/meta';
 import { useSettingsStore } from '../store/settings';
 import { WalletProvider } from '@rango-dev/wallets-core';
+import useCustomWallets from '../hooks/useCustomWallets';
 
 const Header = styled('div', {
   display: 'flex',
@@ -56,7 +56,7 @@ export type LayoutProps = {
 export function Layout({ config, providers }: LayoutProps) {
   const navigate = useNavigate();
   const { connectedWallets, selectedWallets } = useWalletsStore();
-  const { getWalletInfo } = useWallets();
+  const { getWalletInfo } = useCustomWallets(config?.manageExternalWallets);
   const connectedWalletsImages = removeDuplicateFrom(
     getSelectableWallets(connectedWallets, selectedWallets, getWalletInfo).map(
       w => w.image

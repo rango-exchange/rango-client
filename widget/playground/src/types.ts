@@ -1,4 +1,4 @@
-import { WalletProvider } from '@rango-dev/wallets-core';
+import { ProviderContext, WalletProvider } from '@rango-dev/wallets-core';
 import { WalletType } from '@rango-dev/wallets-shared';
 import { Asset } from 'rango-sdk';
 
@@ -58,5 +58,5 @@ export type WidgetConfig = {
   language?: string;
   theme: Theme;
   externalProviders?: WalletProvider[];
-  
+  manageExternalWallets?: () => ProviderContext;
 };

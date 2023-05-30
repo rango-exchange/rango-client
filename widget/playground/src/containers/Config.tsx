@@ -20,8 +20,6 @@ import { initialConfig, useConfigStore } from '../store/config';
 import { filterConfig, syntaxHighlight } from '../helpers';
 import { ProvidersConfig } from '../components/ProvidersConfig';
 
-const providers = allProviders();
-
 const Container = styled('div', {
   display: 'flex',
   justifyContent: 'center',
@@ -116,6 +114,7 @@ export function Config(props: PropsWithChildren) {
   const { filteredConfigForExport, userSelectedConfig } = filterConfig(config, initialConfig);
 
   const resetButtonDisabled = !Object.entries(userSelectedConfig).length;
+  const providers = allProviders();
 
   return (
     <Container>
