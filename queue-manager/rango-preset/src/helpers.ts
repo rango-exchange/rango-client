@@ -93,16 +93,27 @@ export function claimQueue() {
 /**
  *
  * We use module-level variable to keep track of
- * map of transactions hash to the TransactionResponse
+ * map of transactions hash to the TransactionResponse and ...
  *
  */
-const swapTransactionToResponseMap: { [id: string]: any } = {};
-export function useTransactionsResponse() {
+type TransactionData = {
+  response?: any; // e.g. TransactionResponse in case of EVM transactions
+  receiptReceived?: boolean; // e.g. is TransactionReceipt ready in case of EVM transactions
+};
+const swapTransactionToDataMap: { [id: string]: TransactionData } = {};
+export function useTransactionsData() {
   return {
-    getTransactionResponseByHash: (hash: string) =>
-      swapTransactionToResponseMap[hash],
-    setTransactionResponseByHash: (hash: string, response: any) => {
-      swapTransactionToResponseMap[hash] = response;
+    getTransactionDataByHash: (hash: string) =>
+      swapTransactionToDataMap[hash] || {},
+    setTransactionDataByHash: (hash: string, data: TransactionData) => {
+      const r = swapTransactionToDataMap[hash];
+      if (!r) swapTransactionToDataMap[hash] = {};
+      swapTransactionToDataMap[hash].response =
+        data.response || swapTransactionToDataMap[hash].response;
+      swapTransactionToDataMap[hash].receiptReceived =
+        data.receiptReceived ||
+        swapTransactionToDataMap[hash].receiptReceived ||
+        false;
     },
   };
 }
@@ -895,7 +906,7 @@ export function isRequiredWalletConnected(
 export function singTransaction(
   actions: ExecuterActions<SwapStorage, SwapActionTypes, SwapQueueContext>
 ): void {
-  const { setTransactionResponseByHash } = useTransactionsResponse();
+  const { setTransactionDataByHash } = useTransactionsData();
   const { getStorage, setStorage, failed, next, schedule, context } = actions;
   const { meta, getSigners, notifier, isMobileWallet } = context;
   const swap = getStorage().swapDetails;
@@ -998,7 +1009,7 @@ export function singTransaction(
           : undefined
       );
       // response used for evm transactions to get receipt and track replaced
-      response && setTransactionResponseByHash(hash, response);
+      response && setTransactionDataByHash(hash, { response });
       schedule(SwapActionTypes.CHECK_TRANSACTION_STATUS);
       next();
       onFinish();
