@@ -49,13 +49,16 @@ export async function makeConnection(options: {
       },
     },
   });
-
+  const lastIndex =
+    ethProvider.signer.client.pairing.getAll({
+      active: true,
+    }).length - 1;
   const pairingTopic = ethProvider.signer.client.pairing.getAll({
     active: true,
-  })[0]?.topic;
+  })[lastIndex]?.topic;
 
   return new Promise((resolve, reject) => {
-    if (pairingTopic && !force) {
+    if (pairingTopic && ethProvider.accounts?.length && !force) {
       (async () => {
         await ethProvider.signer.client
           .connect({
