@@ -1,16 +1,12 @@
 import { BlockchainMeta, EvmBlockchainMeta } from 'rango-types';
 
-export const IS_DEV =
-  !process.env.NODE_ENV || process.env.NODE_ENV === 'development';
+export const IS_DEV = !process.env.NODE_ENV || process.env.NODE_ENV === 'development';
 
 export const getBlockChainNameFromId = (
   chainId: string | number,
-  blockchains: BlockchainMeta[]
+  blockchains: BlockchainMeta[],
 ): Network | null => {
-  chainId =
-    typeof chainId === 'string' && chainId.startsWith('0x')
-      ? parseInt(chainId)
-      : chainId;
+  chainId = typeof chainId === 'string' && chainId.startsWith('0x') ? parseInt(chainId) : chainId;
 
   // Sometimes providers are passing `Network` as chainId.
   // If chainId is a `Network`, we return itself.
@@ -30,10 +26,8 @@ export const getBlockChainNameFromId = (
   );
 };
 
-export const getBlockchainChainIdByName = (
-  netwok: Network,
-  allBlockChains: AllBlockchains
-) => allBlockChains[netwok]?.chainId || null;
+export const getBlockchainChainIdByName = (netwok: Network, allBlockChains: AllBlockchains) =>
+  allBlockChains[netwok]?.chainId || null;
 
 export const uint8ArrayToHex = (buffer: Uint8Array): string => {
   return Buffer.from(buffer).toString('hex');
@@ -68,6 +62,7 @@ export enum WalletTypes {
   LEAP_COSMOS = 'leap-cosmos',
   STATION = 'station',
   ENKRYPT = 'enkrypt',
+  TAHO = 'taho',
 }
 
 export enum Networks {
@@ -136,10 +131,7 @@ export const XDEFI_WALLET_SUPPORTED_NATIVE_CHAINS = [
   Networks.BINANCE,
 ];
 
-export const KEPLR_COMPATIBLE_WALLETS = [
-  WalletTypes.KEPLR,
-  WalletTypes.COSMOSTATION,
-];
+export const KEPLR_COMPATIBLE_WALLETS = [WalletTypes.KEPLR, WalletTypes.COSMOSTATION];
 
 export type Asset = {
   blockchain: Network;
@@ -202,9 +194,7 @@ export type TryGetInstance =
   | (() => any)
   | ((options: Pick<GetInstanceOptions, 'force' | 'network'>) => Promise<any>);
 
-export type GetInstance =
-  | (() => any)
-  | ((options: GetInstanceOptions) => Promise<any>);
+export type GetInstance = (() => any) | ((options: GetInstanceOptions) => Promise<any>);
 
 export type ProviderConnectResult = {
   accounts: string[];
@@ -217,10 +207,7 @@ export type Connect = (options: {
   meta: BlockchainMeta[];
 }) => Promise<ProviderConnectResult | ProviderConnectResult[]>;
 
-export type Disconnect = (options: {
-  instance: any;
-  destroyInstance: () => void;
-}) => Promise<void>;
+export type Disconnect = (options: { instance: any; destroyInstance: () => void }) => Promise<void>;
 
 export type Subscribe = (options: {
   instance: any;
