@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/provider-cosmostation",
-  "version": "0.1.16-next.7",
+  "version": "0.1.16-next.8",
   "license": "MIT",
   "type": "module",
   "module": "dist/index.js",
@@ -16,9 +16,9 @@
     "lint": "eslint \"**/*.{ts,tsx}\" --ignore-path ../../.eslintignore"
   },
   "dependencies": {
-    "@rango-dev/signer-cosmos": "^0.1.15-next.5",
-    "@rango-dev/signer-evm": "^0.1.15-next.4",
-    "@rango-dev/wallets-shared": "^0.1.15-next.5",
+    "@rango-dev/signer-cosmos": "^0.1.15-next.6",
+    "@rango-dev/signer-evm": "^0.1.15-next.6",
+    "@rango-dev/wallets-shared": "^0.1.15-next.7",
     "rango-types": "^0.1.38"
   },
   "publishConfig": {

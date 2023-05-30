@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/queue-manager-react",
-  "version": "0.1.14-next.5",
+  "version": "0.1.14-next.6",
   "license": "MIT",
   "type": "module",
   "module": "dist/index.js",

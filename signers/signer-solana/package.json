@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/signer-solana",
-  "version": "0.1.15-next.5",
+  "version": "0.1.15-next.6",
   "license": "MIT",
   "type": "module",
   "module": "dist/index.js",
