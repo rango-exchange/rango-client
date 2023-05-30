@@ -52,5 +52,4 @@ export const allProviders = () => [
   enkrypt,
   walletconnect2,
   taho,
-  walletconnect2,
 ];

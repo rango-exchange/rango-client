@@ -15,12 +15,7 @@ import {
   switchOrAddNetworkForMetamaskCompatibleWallets,
 } from '@rango-dev/wallets-shared';
 import signer from './signer';
-import {
-  SignerFactory,
-  EvmBlockchainMeta,
-  BlockchainMeta,
-  evmBlockchains,
-} from 'rango-types';
+import { SignerFactory, EvmBlockchainMeta, BlockchainMeta, evmBlockchains } from 'rango-types';
 
 const WALLET = WalletTypes.WALLET_CONNECT_2;
 
@@ -33,9 +28,7 @@ export const config: WalletConfig = {
 export const getInstance: GetInstance = async (options) => {
   const { network, meta, force, updateChainId } = options;
   // If `network` is provided, trying to get chainId
-  const evm_chain_info = convertEvmBlockchainMetaToEvmChainInfo(
-    meta as EvmBlockchainMeta[]
-  );
+  const evm_chain_info = convertEvmBlockchainMetaToEvmChainInfo(meta as EvmBlockchainMeta[]);
   const info = network ? evm_chain_info[network] : undefined;
   const requestedChainId = info?.chainId ? parseInt(info?.chainId) : undefined;
 
@@ -168,9 +161,7 @@ export const disconnect: Disconnect = async ({ instance, destroyInstance }) => {
 
 export const getSigners: (provider: any) => SignerFactory = signer;
 
-export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
-  allBlockChains
-) => {
+export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (allBlockChains) => {
   const evms = evmBlockchains(allBlockChains);
   return {
     name: 'WalletConnect',
