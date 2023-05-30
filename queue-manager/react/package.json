@@ -10,7 +10,6 @@
     "src"
   ],
   "scripts": {
-    "dev": "tsdx watch",
     "build": "node ../../scripts/build/command.mjs --path queue-manager/react",
     "clean": "rimraf dist",
     "format": "prettier --write '{.,src}/**/*.{ts,tsx}'",

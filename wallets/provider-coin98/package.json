@@ -2,17 +2,15 @@
   "name": "@rango-dev/provider-coin98",
   "version": "0.1.16-next.6",
   "license": "MIT",
-  "module": "dist/provider-coin98.esm.js",
-  "main": "dist/index.js",
-  "typings": "dist/index.d.ts",
   "type": "module",
+  "module": "dist/index.js",
+  "typings": "dist/index.d.ts",
   "files": [
     "dist",
     "src"
   ],
   "scripts": {
-    "start": "tsdx watch",
-    "build": "tsdx build  --tsconfig ./tsconfig.json",
+    "build": "node ../../scripts/build/command.mjs --path wallets/provider-coin98",
     "clean": "rimraf dist",
     "format": "prettier --write '{.,src}/**/*.{ts,tsx}'",
     "lint": "eslint \"**/*.{ts,tsx}\" --ignore-path ../../.eslintignore"

@@ -10,7 +10,6 @@
     "src"
   ],
   "scripts": {
-    "dev": "tsdx watch",
     "build": "node ../../scripts/build/command.mjs --path queue-manager/core",
     "analyze": "size-limit --why",
     "clean": "rimraf dist",
