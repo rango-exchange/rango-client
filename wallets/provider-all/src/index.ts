@@ -50,6 +50,7 @@ export const allProviders = () => [
   frontier,
   station,
   enkrypt,
+  walletconnect2,
   taho,
   walletconnect2,
 ];
