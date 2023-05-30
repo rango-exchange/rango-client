@@ -2,8 +2,12 @@ import chalk from 'chalk';
 import { execa } from 'execa';
 import { join } from 'path';
 import conventionanRecommendBump from 'conventional-recommended-bump';
-import { packageNameWithoutScope, printDirname, workspacePackages } from '../common/utils.mjs';
-import { VERCEL_ORG_ID, VERCEL_PACKAGES, VERCEL_TOKEN } from './config.mjs';
+import {
+  getEnvWithFallback,
+  packageNameWithoutScope,
+  printDirname,
+  workspacePackages,
+} from '../common/utils.mjs';
 import { importJson } from '../common/graph/helpers.mjs';
 import { overrideNPMVersionOnLocal } from '../common/npm.mjs';
 const root = join(printDirname(), '..', '..');
@@ -27,7 +31,10 @@ export async function generateChangelog(pkg, options) {
     command.push('-i', changelogPath, '-s');
   }
 
-  const { stdout: bin } = await execa('yarn', ['bin', 'conventional-changelog']);
+  const { stdout: bin } = await execa('yarn', [
+    'bin',
+    'conventional-changelog',
+  ]);
   const { stdout } = await execa(bin, command);
   return stdout;
 }
@@ -37,12 +44,22 @@ export async function makeGithubRelease(updatedPkg) {
     saveToFile: false,
   });
   const tag = generateTagName(updatedPkg);
-  await execa('gh', ['release', 'create', tag, '--target', 'main', '--notes', notes]);
+  await execa('gh', [
+    'release',
+    'create',
+    tag,
+    '--target',
+    'main',
+    '--notes',
+    notes,
+  ]);
 }
 
 export async function packageNamesToPackagesWithInfo(names) {
   const allPackages = await workspacePackages();
-  return names.map((pkgName) => allPackages.find((pkg) => pkg.name === pkgName));
+  return names.map((pkgName) =>
+    allPackages.find((pkg) => pkg.name === pkgName)
+  );
 }
 
 /**
@@ -65,49 +82,18 @@ export async function recommendBump(pkg) {
         } else {
           resolve(recommendation);
         }
-      },
+      }
     );
   });
-}
-export async function deployProjectsToVercel(pkgs) {
-  await Promise.all(pkgs.map((pkg) => deploySingleProjectToVercel(pkg)));
-}
-export async function deploySingleProjectToVercel(pkg) {
-  const deployTo = detectChannel() === 'prod' ? 'production' : 'preview';
-
-  const env = {
-    VERCEL_ORG_ID: VERCEL_ORG_ID,
-    VERCEL_PROJECT_ID: getVercelProjectId(pkg.name),
-  };
-
-  console.log(`start deplyoing ${pkg.name}...`);
-
-  await execa(
-    'yarn',
-    [
-      'vercel',
-      'pull',
-      '--cwd',
-      pkg.location,
-      '--environment',
-      deployTo,
-      '--token',
-      VERCEL_TOKEN,
-      '--yes',
-    ],
-    { env },
-  );
-  await execa('yarn', ['vercel', 'build', '--cwd', pkg.location, '--token', VERCEL_TOKEN], { env });
-  await execa('yarn', ['vercel', pkg.location, '--prebuilt', '--token', VERCEL_TOKEN], { env });
-
-  console.log(`${pkg.name} deployed.`);
 }
 
 export async function publishPackages(updatedPkgs, dist = 'next') {
   const result = await Promise.all(
     updatedPkgs.map(({ location }) =>
-      execa('yarn', ['publish', location, '--tag', dist]).then(({ stdout }) => stdout),
-    ),
+      execa('yarn', ['publish', location, '--tag', dist]).then(
+        ({ stdout }) => stdout
+      )
+    )
   );
 
   console.log('Published...');
@@ -141,7 +127,10 @@ export async function pushToRemote(branch, remote = 'origin') {
   console.log(stdout);
 }
 
-export async function tagPackagesAndCommit(updatedPackages, { skipGitTagging }) {
+export async function tagPackagesAndCommit(
+  updatedPackages,
+  { skipGitTagging }
+) {
   const tags = updatedPackages.map(generateTagName);
 
   const subject = `chore(release): publish\n\n`;
@@ -150,11 +139,19 @@ export async function tagPackagesAndCommit(updatedPackages, { skipGitTagging }) 
 
   // making a publish commit
   await execa('git', ['add', '.']);
-  await execa('git', ['commit', '-m', message, '-m', `Affected packages: ${tags.join(',')}`]);
+  await execa('git', [
+    'commit',
+    '-m',
+    message,
+    '-m',
+    `Affected packages: ${tags.join(',')}`,
+  ]);
 
   // creating annotated tags based on packages
   if (!skipGitTagging) {
-    await Promise.all(tags.map((tag) => execa('git', ['tag', '-a', tag, '-m', tag])));
+    await Promise.all(
+      tags.map((tag) => execa('git', ['tag', '-a', tag, '-m', tag]))
+    );
   }
 
   return tags;
@@ -167,7 +164,7 @@ export async function increaseVersionForNext(changedPkgs) {
       const checkVersionAndIncrease = async () => {
         const versions = await overrideNPMVersionOnLocal(name, dist);
         console.log(
-          `Checking local & npm versions for ${name}@${dist}: \n local: ${versions.local_version} \n npm: ${versions.npm_version}`,
+          `Checking local & npm versions for ${name}@${dist}: \n local: ${versions.local_version} \n npm: ${versions.npm_version}`
         );
         return await execa('yarn', [
           'workspace',
@@ -179,7 +176,7 @@ export async function increaseVersionForNext(changedPkgs) {
         ]).then(({ stdout }) => stdout);
       };
       return checkVersionAndIncrease();
-    }),
+    })
   );
 
   // Getting latest packages info to show the updated version.
@@ -201,8 +198,8 @@ export async function increaseVersionForMain(changedPkgs) {
         recommendBump(name).then((recommendation) => {
           console.log(`::debug::${{ name, recommendation }}`);
           nextVersions[name] = recommendation.releaseType;
-        }),
-      ),
+        })
+      )
     );
   } catch (e) {
     throw new Error(`Calculating next version failed. details: ${e}`);
@@ -223,7 +220,7 @@ export async function increaseVersionForMain(changedPkgs) {
       };
 
       return checkVersionAndIncrease();
-    }),
+    })
   );
 
   // Getting latest packages info to show the updated version.
@@ -252,7 +249,7 @@ export async function changed(since) {
           changed: !!result,
         };
       });
-    }),
+    })
   );
   return all.filter((pkg) => pkg.changed);
 }
@@ -268,7 +265,12 @@ export function detectChannel() {
 // TODO: Check for when there is no tag.
 export async function getLastReleasedHashId(useTag = false) {
   if (useTag) {
-    const { stdout: hash } = await execa('git', ['rev-list', '--max-count', 1, '--tags']);
+    const { stdout: hash } = await execa('git', [
+      'rev-list',
+      '--max-count',
+      1,
+      '--tags',
+    ]);
     return hash;
   } else {
     const { stdout: hash } = await execa('git', [
@@ -283,29 +285,6 @@ export async function getLastReleasedHashId(useTag = false) {
   }
 }
 
-export function groupPackagesForDeploy(packages) {
-  const output = {
-    npm: [],
-    vercel: [],
-  };
-
-  packages.forEach((pkg) => {
-    if (!!getVercelProjectId(pkg.name)) {
-      output.vercel.push(pkg);
-    } else if (!pkg.private) {
-      // If getVercelProjectId returns undefined, it's possible to be added as npm package
-      // So here we are making sure it's not a private package and can be published using npm
-      output.npm.push(pkg);
-    }
-  });
-
-  return output;
-}
-
-export function getVercelProjectId(packageName) {
-  return VERCEL_PACKAGES[packageName];
-}
-
 export function logAsSection(title, sub = '') {
   let message = chalk.bgBlue.white.bold(title);
   if (!!sub) {
@@ -313,12 +292,6 @@ export function logAsSection(title, sub = '') {
     message += sub;
   }
   console.log(message);
-}
-
-
-// we are adding a fallback, to make sure predefiend VERCEL_PACKAGES always will be true.
-export function getEnvWithFallback(name) {
-  return process.env[name] || 'NOT SET';
 }
 
 export function generateTagName(pkg) {
