@@ -27,5 +27,6 @@ declare global {
     frontier: any;
     terraWallets: any;
     enkrypt: any;
+    tally: any;
   }
 }
