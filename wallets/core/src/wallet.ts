@@ -3,6 +3,7 @@ import {
   Network,
   Networks,
   WalletType,
+  WalletTypes,
 } from '@rango-dev/wallets-shared';
 import { accountAddressesWithNetwork, needsCheckInstallation } from './helpers';
 import {
@@ -351,7 +352,9 @@ class Wallet<InstanceType = any> {
     // For switching network on Trust Wallet (WalletConnect),
     // We only kill the session (and not restting the whole state)
     // So we are relying on this.provider for achieving this functionality.
-    this.setProvider(null);
+    if (this.options.config.type !== WalletTypes.WALLET_CONNECT_2) {
+      this.setProvider(null);
+    }
     if (this.options.config.isAsyncInstance) {
       // Trying to connect
       const instanceOptions: GetInstanceOptions = {
@@ -383,7 +386,9 @@ class Wallet<InstanceType = any> {
       const error_message = `It seems your selected wallet (${this.options.config.type}) isn't installed.`;
       throw new Error(error_message);
     }
-
+    if (this.options.config.type === WalletTypes.WALLET_CONNECT_2) {
+      this.setProvider(null);
+    }
     this.setProvider(instance);
     return instance;
   }
