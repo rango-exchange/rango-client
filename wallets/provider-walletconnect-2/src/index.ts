@@ -44,10 +44,16 @@ export const getInstance: GetInstance = async ({
   const requestedChainId = info?.chainId ? parseInt(info?.chainId) : undefined;
 
   const nextInstance = await makeConnection({
-    provider: currentProvider,
     chainId: requestedChainId,
     force,
   });
+
+  if (currentProvider) {
+    await currentProvider.signer.client.disconnect({
+      topic: currentProvider.signer.session?.topic,
+    });
+  }
+
   return nextInstance;
 };
 
