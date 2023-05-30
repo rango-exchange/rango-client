@@ -2,17 +2,15 @@
   "name": "@rango-dev/provider-cosmostation",
   "version": "0.1.16-next.7",
   "license": "MIT",
-  "module": "dist/provider-cosmostation.esm.js",
-  "main": "dist/index.js",
-  "typings": "dist/index.d.ts",
   "type": "module",
+  "module": "dist/index.js",
+  "typings": "dist/index.d.ts",
   "files": [
     "dist",
     "src"
   ],
   "scripts": {
-    "start": "tsdx watch",
-    "build": "tsdx build  --tsconfig ./tsconfig.json",
+    "build": "node ../../scripts/build/command.mjs --path wallets/provider-cosmostation",
     "clean": "rimraf dist",
     "format": "prettier --write '{.,src}/**/*.{ts,tsx}'",
     "lint": "eslint \"**/*.{ts,tsx}\" --ignore-path ../../.eslintignore"

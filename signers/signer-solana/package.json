@@ -10,7 +10,6 @@
     "src"
   ],
   "scripts": {
-    "dev": "tsdx watch",
     "build": "node ../../scripts/build/command.mjs --path signers/signer-solana",
     "clean": "rimraf dist",
     "format": "prettier --write '{.,src}/**/*.{ts,tsx}'",
