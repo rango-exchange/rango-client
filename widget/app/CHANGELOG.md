@@ -1,3 +1,7 @@
+# [0.3.0](https://github.com/rango-exchange/rango-client/compare/widget-app@0.2.0...widget-app@0.3.0) (2023-05-30)
+
+
+
 # [0.2.0](https://github.com/rango-exchange/rango-client/compare/widget-app@0.1.2...widget-app@0.2.0) (2023-05-30)
 
 
