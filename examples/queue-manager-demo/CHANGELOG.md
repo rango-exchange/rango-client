@@ -1,3 +1,7 @@
+# [0.2.0](https://github.com/rango-exchange/rango-client/compare/queue-manager-demo@0.1.17...queue-manager-demo@0.2.0) (2023-05-30)
+
+
+
 ## [0.1.17](https://github.com/rango-exchange/rango-client/compare/queue-manager-demo@0.1.16...queue-manager-demo@0.1.17) (2023-05-15)
 
 

@@ -1,3 +1,12 @@
+# [0.2.0](https://github.com/rango-exchange/rango-client/compare/widget-playground@0.1.19...widget-playground@0.2.0) (2023-05-30)
+
+
+### Bug Fixes
+
+* images and preview of confirm  swap, completed ([5da81f4](https://github.com/rango-exchange/rango-client/commit/5da81f4a76dda4d76f794d7042c9e39d8846e3ba))
+
+
+
 ## [0.1.19](https://github.com/rango-exchange/rango-client/compare/widget-playground@0.1.18...widget-playground@0.1.19) (2023-05-15)
 
 
