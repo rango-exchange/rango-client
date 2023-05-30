@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/provider-all",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "license": "MIT",
   "type": "module",
   "module": "dist/index.js",
@@ -16,14 +16,14 @@
     "lint": "eslint \"**/*.{ts,tsx}\" --ignore-path ../../.eslintignore"
   },
   "dependencies": {
-    "@rango-dev/provider-argentx": "^0.2.0",
-    "@rango-dev/provider-binance-chain-wallet": "^0.2.0",
-    "@rango-dev/provider-brave": "^0.2.0",
-    "@rango-dev/provider-clover": "^0.2.0",
+    "@rango-dev/provider-argentx": "^0.3.0",
+    "@rango-dev/provider-binance-chain-wallet": "^0.3.0",
+    "@rango-dev/provider-brave": "^0.3.0",
+    "@rango-dev/provider-clover": "^0.3.0",
     "@rango-dev/provider-coin98": "^0.2.0",
-    "@rango-dev/provider-coinbase": "^0.2.0",
-    "@rango-dev/provider-cosmostation": "^0.2.0",
-    "@rango-dev/provider-enkrypt": "^0.1.2",
+    "@rango-dev/provider-coinbase": "^0.3.0",
+    "@rango-dev/provider-cosmostation": "^0.3.0",
+    "@rango-dev/provider-enkrypt": "^0.3.0",
     "@rango-dev/provider-exodus": "^0.2.0",
     "@rango-dev/provider-frontier": "^0.2.0",
     "@rango-dev/provider-keplr": "^0.2.0",
@@ -34,12 +34,12 @@
     "@rango-dev/provider-okx": "^0.2.0",
     "@rango-dev/provider-phantom": "^0.2.0",
     "@rango-dev/provider-safepal": "^0.2.0",
-    "@rango-dev/provider-station": "^0.2.0",
-    "@rango-dev/provider-tokenpocket": "^0.2.0",
-    "@rango-dev/provider-tron-link": "^0.2.0",
-    "@rango-dev/provider-trustwallet": "^0.2.0",
-    "@rango-dev/provider-walletconnect": "^0.2.0",
-    "@rango-dev/provider-xdefi": "^0.2.0"
+    "@rango-dev/provider-station": "^0.3.0",
+    "@rango-dev/provider-tokenpocket": "^0.3.0",
+    "@rango-dev/provider-tron-link": "^0.3.0",
+    "@rango-dev/provider-trustwallet": "^0.3.0",
+    "@rango-dev/provider-walletconnect": "^0.3.0",
+    "@rango-dev/provider-xdefi": "^0.3.0"
   },
   "publishConfig": {
     "access": "public"
