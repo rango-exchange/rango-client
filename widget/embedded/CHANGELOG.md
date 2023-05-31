@@ -1,3 +1,25 @@
+# [0.5.0](https://github.com/rango-exchange/rango-client/compare/widget-embedded@0.4.0...widget-embedded@0.5.0) (2023-05-31)
+
+
+
+# [0.4.0](https://github.com/rango-exchange/rango-client/compare/widget-embedded@0.3.0...widget-embedded@0.4.0) (2023-05-31)
+
+
+
+# [0.3.0](https://github.com/rango-exchange/rango-client/compare/widget-embedded@0.2.0...widget-embedded@0.3.0) (2023-05-30)
+
+
+
+# [0.2.0](https://github.com/rango-exchange/rango-client/compare/widget-embedded@0.1.19...widget-embedded@0.2.0) (2023-05-30)
+
+
+### Bug Fixes
+
+* fix bug of duplicate modals for wallet connect ([efb5482](https://github.com/rango-exchange/rango-client/commit/efb54827fd51e6c6c8f42c6abf33c3d7610755e8))
+* Some functions were transferred to helper ([7d5756f](https://github.com/rango-exchange/rango-client/commit/7d5756fc476728e84b16300102918542520983a7))
+
+
+
 ## [0.1.19](https://github.com/rango-exchange/rango-client/compare/widget-embedded@0.1.18...widget-embedded@0.1.19) (2023-05-15)
 
 
