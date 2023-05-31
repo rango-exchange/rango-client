@@ -2,7 +2,7 @@ import { WidgetConfig } from '@rango-dev/widget-embedded';
 import { commonStyles } from './styles';
 
 // Actual app that will be loaded inside the iframe.
-const WIDGET_URL = process.env.WIDGET_URL;
+const WIDGET_URL = 'https://widget.rango.exchange/';
 const DEFAULT_CONTAINER_ID = 'rango-widget-container';
 
 export class RangoWidget {

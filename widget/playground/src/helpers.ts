@@ -40,7 +40,7 @@ export const filterTokens = (list: Token[], searchedFor: string) =>
     (token) =>
       containsText(token.symbol, searchedFor) ||
       containsText(token.address || '', searchedFor) ||
-      containsText(token.name || '', searchedFor),
+      containsText(token.name || '', searchedFor)
   );
 
 export const syntaxHighlight = (json) => {
@@ -55,7 +55,7 @@ export const syntaxHighlight = (json) => {
         }
       }
       return `<span class="${cls}">${match}</span>`;
-    },
+    }
   );
 };
 
@@ -65,31 +65,38 @@ export function clearEmpties<T extends Record<string, any>>(obj: T): T {
       continue;
     }
     clearEmpties(obj[key]);
-    if ((Array.isArray(obj[key]) && !obj[key].length) || Object.keys(obj[key]).length === 0) {
+    if (
+      (Array.isArray(obj[key]) && !obj[key].length) ||
+      Object.keys(obj[key]).length === 0
+    ) {
       delete obj[key];
     }
   }
   return obj;
 }
 
-export function filterConfig(config: WidgetConfig, initialConfig: WidgetConfig) {
+export function filterConfig(
+  config: WidgetConfig,
+  initialConfig: WidgetConfig
+) {
   const userSelectedConfig = clearEmpties(
     subtractObject(
       JSON.parse(JSON.stringify(initialConfig)) as WidgetConfig,
-      JSON.parse(JSON.stringify(config)),
-    ) as WidgetConfig,
+      JSON.parse(JSON.stringify(config))
+    ) as WidgetConfig
   );
 
   const filteredConfigForExport = Object.assign({}, userSelectedConfig);
-  if (!filteredConfigForExport.apiKey) filteredConfigForExport.apiKey = config.apiKey;
+  if (!filteredConfigForExport.apiKey)
+    filteredConfigForExport.apiKey = config.apiKey;
 
   return { userSelectedConfig, filteredConfigForExport };
 }
 
 export function getIframeCode(config: string) {
   //TODO: update iframe script source address
-  return `<div id="rango-widget-root"></div>
-<script src="https://api.rango.exchange/static/widget/iframe.bundle.min.js"></script>
+  return `<div id="rango-widget-container"></div>
+<script src="https://api.rango.exchange/widget/iframe.bundle.min.js"></script>
 <script defer type="text/javascript">
 
   const config = ${insertAt(config, '  ', config.lastIndexOf('}'))}
@@ -120,8 +127,15 @@ export function capitalizeTheFirstLetter(str: string): string {
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
-export function insertAt(originalString: string, insertedString: string, index: number): string {
-  return originalString.slice(0, index).concat(insertedString).concat(originalString.slice(index));
+export function insertAt(
+  originalString: string,
+  insertedString: string,
+  index: number
+): string {
+  return originalString
+    .slice(0, index)
+    .concat(insertedString)
+    .concat(originalString.slice(index));
 }
 
 export function formatConfig(config: WidgetConfig) {
@@ -134,7 +148,7 @@ export function formatConfig(config: WidgetConfig) {
     formatedConfig,
     `// This API key is only for test purpose. Don't use it in production.
     `,
-    formatedConfig.indexOf('apiKey'),
+    formatedConfig.indexOf('apiKey')
   );
 
   return formatedConfig;
