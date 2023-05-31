@@ -17,12 +17,12 @@
     "lint": "eslint \"**/*.{ts,tsx}\" --ignore-path ../../.eslintignore"
   },
   "dependencies": {
-    "@rango-dev/provider-all": "^0.3.0",
-    "@rango-dev/queue-manager-core": "^0.3.0",
+    "@rango-dev/provider-all": "^0.4.0",
+    "@rango-dev/queue-manager-core": "^0.4.0",
     "@rango-dev/queue-manager-rango-preset": "^0.3.0",
-    "@rango-dev/queue-manager-react": "^0.3.0",
+    "@rango-dev/queue-manager-react": "^0.4.0",
     "@rango-dev/ui": "^0.3.0",
-    "@rango-dev/wallets-core": "^0.3.0",
+    "@rango-dev/wallets-core": "^0.4.0",
     "@rango-dev/wallets-shared": "^0.3.0",
     "bignumber.js": "^9.1.1",
     "copy-to-clipboard": "^3.3.3",
