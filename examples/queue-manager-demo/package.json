@@ -18,7 +18,7 @@
     "@rango-dev/provider-all": "^0.3.0",
     "@rango-dev/queue-manager-rango-preset": "^0.3.0",
     "@rango-dev/queue-manager-react": "^0.3.0",
-    "@rango-dev/wallets-core": "^0.2.0",
+    "@rango-dev/wallets-core": "^0.3.0",
     "@rango-dev/wallets-shared": "^0.3.0",
     "bignumber.js": "^9.1.1",
     "ethers": "^5.7.2",
