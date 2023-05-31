@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/widget-playground",
-  "version": "0.1.20-next.17",
+  "version": "0.1.20-next.18",
   "license": "MIT",
   "private": true,
   "source": "public/index.html",
