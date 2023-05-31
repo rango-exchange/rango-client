@@ -93,7 +93,7 @@ export function calculatePendingSwap(
         fromBlockchain: s.from.blockchain,
         fromSymbol: s.from.symbol,
         fromSymbolAddress:
-          NETWORKS_FOR_1INCH.includes(s.from.blockchain) &&
+          NETWORKS_FOR_1INCH.includes(s.from.blockchain as Networks) &&
           SWAPPER_ONE_INCH_LIST.includes(s.swapperId) &&
           (!s.from.address || s.from.address.length === 0)
             ? null
@@ -106,10 +106,11 @@ export function calculatePendingSwap(
         fromLogo: s.from.logo,
         toSymbol: s.to.symbol,
         toSymbolAddress:
-          NETWORKS_FOR_1INCH.includes(s.to.blockchain) &&
+          NETWORKS_FOR_1INCH.includes(s.to.blockchain as Networks) &&
           SWAPPER_ONE_INCH_LIST.includes(s.swapperId) &&
-          NETWORK_TO_NATIVE_SYMBOL_MAP_FOR_1INCH.get(s.to.blockchain) ===
-            s.to.symbol &&
+          NETWORK_TO_NATIVE_SYMBOL_MAP_FOR_1INCH.get(
+            s.to.blockchain as Networks
+          ) === s.to.symbol &&
           (!s.to.address || s.to.address.length === 0)
             ? null
             : s.to.address,
