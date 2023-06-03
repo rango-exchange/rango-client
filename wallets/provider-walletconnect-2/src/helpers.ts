@@ -67,7 +67,17 @@ export async function makeConnection(options: {
           .then(() => {
             resolve(ethProvider);
           })
-          .catch(reject);
+          .catch(async () => {
+            await ethProvider.disconnect().catch(() => {
+              // nothing to do
+            });
+            await ethProvider
+              .connect()
+              .then(() => {
+                resolve(ethProvider);
+              })
+              .catch(reject);
+          });
       })();
     } else {
       (async () => {
