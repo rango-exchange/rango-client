@@ -71,6 +71,7 @@ export const subscribe: Subscribe = ({
   updateAccounts,
   meta,
   connect,
+  disconnect,
 }) => {
   instance?.on('chainChanged', (chainId: string) => {
     const network = getBlockChainNameFromId(chainId, meta) || Network.Unknown;
@@ -111,10 +112,14 @@ export const subscribe: Subscribe = ({
     updateChainId(chainId);
   });
 
-  instance.on('disconnect', ({ data: topic }: any) => {
-    instance?.signer.client.disconnect({
-      topic,
-    });
+  instance.on('disconnect', async ({ data: topic }: any) => {
+    try {
+      await instance?.signer.client.disconnect({
+        topic,
+      });
+    } finally {
+      disconnect();
+    }
   });
 };
 
@@ -139,8 +144,12 @@ export const canSwitchNetworkTo: CanSwitchNetwork = ({
 };
 export const disconnect: Disconnect = async ({ instance, destroyInstance }) => {
   if (instance) {
-    await instance.disconnect();
-    if (!instance.session) {
+    try {
+      await instance.disconnect();
+      if (!instance.session) {
+        destroyInstance();
+      }
+    } catch {
       destroyInstance();
     }
   }
