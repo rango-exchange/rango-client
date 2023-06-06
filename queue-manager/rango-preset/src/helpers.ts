@@ -485,9 +485,7 @@ export function markRunningSwapAsSwitchingNetwork({
 export function markRunningSwapAsDependsOnOtherQueues({
   getStorage,
   setStorage,
-}: Pick<ExecuterActions, 'getStorage' | 'setStorage'> & {
-  notifier: SwapQueueContext['notifier'];
-}):
+}: Pick<ExecuterActions, 'getStorage' | 'setStorage'>):
   | {
       swap: PendingSwap;
       step: PendingSwapStep;
@@ -849,7 +847,6 @@ export function onDependsOnOtherQueues(
     markRunningSwapAsDependsOnOtherQueues({
       getStorage: queue.getStorage.bind(queue),
       setStorage: queue.setStorage.bind(queue),
-      notifier: context.notifier,
     });
     return;
   }
@@ -880,7 +877,6 @@ export function onDependsOnOtherQueues(
       // TODO: Use key generator
       retryOn(
         `${type}-${network}:${address}`,
-        context.notifier,
         manager,
         context.canSwitchNetworkTo
       );
@@ -1082,7 +1078,6 @@ export function checkWaitingForConnectWalletChange(params: {
   wallet_network: string;
   manager?: Manager;
   evmChains: EvmBlockchainMeta[];
-  notifier: SwapQueueContext['notifier'];
 }): void {
   const { wallet_network, evmChains, manager } = params;
   const [wallet, network] = splitWalletNetwork(wallet_network);
@@ -1245,7 +1240,6 @@ export function resetRunningSwapNotifsOnPageLoad(runningSwaps: PendingSwap[]) {
  */
 export function retryOn(
   wallet_network: string,
-  notifier: SwapQueueContext['notifier'],
   manager?: Manager,
   canSwitchNetworkTo?: (type: WalletType, network: Network) => boolean,
   options = { fallbackToOnlyWallet: true }
@@ -1294,7 +1288,6 @@ export function retryOn(
         markRunningSwapAsDependsOnOtherQueues({
           getStorage: currentQueue.getStorage.bind(currentQueue),
           setStorage: currentQueue.setStorage.bind(currentQueue),
-          notifier: notifier,
         });
       }
     }

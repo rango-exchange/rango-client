@@ -11,7 +11,6 @@ import {
   PendingSwap,
   PendingSwapNetworkStatus,
   PendingSwapStep,
-  SwapProgressNotification,
   Wallet,
 } from './shared';
 import { EvmBlockchainMeta, SignerFactory } from 'rango-types';
@@ -68,7 +67,6 @@ export interface SwapQueueContext extends QueueContext {
   ) => Promise<ConnectResult> | undefined;
   state: (type: WalletType) => WalletState;
   isMobileWallet: (type: WalletType) => boolean;
-  notifier: (data: SwapProgressNotification) => void;
 
   // Dynamically will be added to context.
   claimedBy?: string;
@@ -80,7 +78,6 @@ export interface UseQueueManagerParams {
   disconnectedWallet: WalletType | undefined;
   clearDisconnectedWallet: () => void;
   evmChains: EvmBlockchainMeta[];
-  notifier: SwapQueueContext['notifier'];
   canSwitchNetworkTo: (type: WalletType, network: Network) => boolean;
 }
 

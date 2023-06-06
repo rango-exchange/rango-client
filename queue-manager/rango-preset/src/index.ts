@@ -4,12 +4,12 @@ import { swapQueueDef } from './queueDef';
 
 export { PrettyError, prettifyErrorMessage } from './shared-errors';
 export type { SwapQueueContext, SwapStorage } from './types';
+export { MainEvents } from './types';
 export type {
   PendingSwapWithQueueID,
   PendingSwapStep,
   PendingSwap,
   EventType,
-  SwapProgressNotification,
 } from './shared';
 export {
   getCurrentBlockchainOfOrNull,
