@@ -1,5 +1,5 @@
 import React from 'react';
-import { styled } from '@rango-dev/ui/';
+import { styled } from '@rango-dev/ui';
 import { Typography } from '@rango-dev/ui';
 import { useTranslation } from 'react-i18next';
 

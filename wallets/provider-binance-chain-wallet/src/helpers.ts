@@ -1,9 +1,11 @@
 import { Network, ProviderConnectResult } from '@rango-dev/wallets-shared';
 import { RequestedAccount } from './types';
 import {
-  SignInputOutput,
   SendMsg,
-} from '@binance-chain/javascript-sdk/lib/types';
+  SignInputOutput,
+} from '@binance-chain/javascript-sdk/lib/types/index.js';
+
+// import { SendMsg } from '@binance-chain/javascript-sdk/lib/types';
 
 export function binance() {
   const { BinanceChain } = window;

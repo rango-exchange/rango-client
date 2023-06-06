@@ -14,7 +14,7 @@ import { useWalletsStore } from './store/wallets';
 import { Layout } from './components/Layout';
 import { globalFont } from './globalStyles';
 import { useTheme } from './hooks/useTheme';
-import { isEvmBlockchain } from 'rango-sdk';
+import RangoSDK from 'rango-sdk';
 import { WidgetConfig } from './types';
 import useSelectLanguage from './hooks/useSelectLanguage';
 import './i18n';
@@ -42,7 +42,7 @@ export const Widget: React.FC<WidgetProps> = ({ config }) => {
   const currentPage = useUiStore.use.currentPage();
 
   const evmBasedChainNames = blockchains
-    .filter(isEvmBlockchain)
+    .filter(RangoSDK.isEvmBlockchain)
     .map((chain) => chain.name);
 
   useMemo(() => {
@@ -109,8 +109,7 @@ export const Widget: React.FC<WidgetProps> = ({ config }) => {
     <Provider
       allBlockChains={blockchains}
       providers={providers}
-      onUpdateState={onUpdateState}
-    >
+      onUpdateState={onUpdateState}>
       <div id="swap-container" className={activeTheme}>
         <QueueManager>
           <SwapContainer fixedHeight={currentPage !== navigationRoutes.home}>
@@ -119,8 +118,7 @@ export const Widget: React.FC<WidgetProps> = ({ config }) => {
               disconnectedWallet={disconnectedWallet}
               clearDisconnectedWallet={() => {
                 setDisconnectedWallet(undefined);
-              }}
-            >
+              }}>
               <Layout config={config} />
             </AppRouter>
           </SwapContainer>

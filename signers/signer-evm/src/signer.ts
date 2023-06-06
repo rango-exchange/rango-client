@@ -1,8 +1,15 @@
-import { TransactionRequest, TransactionResponse } from '@ethersproject/abstract-provider';
-import { GenericSigner, SignerError, SignerErrorCode } from 'rango-types';
+import {
+  TransactionRequest,
+  TransactionResponse,
+} from '@ethersproject/abstract-provider';
+import type { GenericSigner } from 'rango-types';
 import { EvmTransaction } from 'rango-types/lib/api/main';
 import { providers } from 'ethers';
 import { cleanEvmError } from './helper';
+import Rango from 'rango-types';
+
+// For cjs compatibility.
+const { SignerError, SignerErrorCode } = Rango;
 
 export class DefaultEvmSigner implements GenericSigner<EvmTransaction> {
   private signer: providers.JsonRpcSigner;
@@ -24,7 +31,7 @@ export class DefaultEvmSigner implements GenericSigner<EvmTransaction> {
   async signAndSendTx(
     tx: EvmTransaction,
     address: string,
-    chainId: string | null,
+    chainId: string | null
   ): Promise<{ hash: string; response: TransactionResponse }> {
     try {
       const transaction = DefaultEvmSigner.buildTx(tx);
@@ -37,13 +44,17 @@ export class DefaultEvmSigner implements GenericSigner<EvmTransaction> {
       ) {
         throw new SignerError(
           SignerErrorCode.UNEXPECTED_BEHAVIOUR,
-          `Signer chainId: '${signerChainId}' doesn't match with required chainId: '${chainId}' for tx.`,
+          `Signer chainId: '${signerChainId}' doesn't match with required chainId: '${chainId}' for tx.`
         );
       }
-      if (!!signerAddress && !!address && signerAddress.toLowerCase() !== address.toLowerCase()) {
+      if (
+        !!signerAddress &&
+        !!address &&
+        signerAddress.toLowerCase() !== address.toLowerCase()
+      ) {
         throw new SignerError(
           SignerErrorCode.UNEXPECTED_BEHAVIOUR,
-          `Signer address: '${signerAddress.toLowerCase()}' doesn't match with required address: '${address.toLowerCase()}' for tx.`,
+          `Signer address: '${signerAddress.toLowerCase()}' doesn't match with required address: '${address.toLowerCase()}' for tx.`
         );
       }
       const response = await this.signer.sendTransaction(transaction);
@@ -56,7 +67,7 @@ export class DefaultEvmSigner implements GenericSigner<EvmTransaction> {
   async wait(
     txHash: string,
     txResponse?: TransactionResponse,
-    confirmations?: number | undefined,
+    confirmations?: number | undefined
   ): Promise<{ hash: string; response?: TransactionResponse }> {
     try {
       if (txResponse) {
@@ -65,7 +76,8 @@ export class DefaultEvmSigner implements GenericSigner<EvmTransaction> {
       }
       if (!this.provider) return { hash: txHash }; // wallet not connected yet
       const tx = await this.provider.getTransaction(txHash);
-      if (!tx) throw Error(`Transaction hash '${txHash}' not found in blockchain.`);
+      if (!tx)
+        throw Error(`Transaction hash '${txHash}' not found in blockchain.`);
       await tx.wait(confirmations);
       return { hash: txHash };
     } catch (err) {

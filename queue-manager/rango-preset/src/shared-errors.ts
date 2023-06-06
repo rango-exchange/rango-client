@@ -1,15 +1,17 @@
-import {
+import type {
   APIErrorCode,
-  SignerError,
-  SignerErrorCode,
-  isAPIErrorCode,
-  isSignerErrorCode,
+  SignerErrorCode as SignerErrorCodeType,
 } from 'rango-types';
+import Rango from 'rango-types';
+
+// For cjs compatibility.
+const { SignerErrorCode, SignerError, isSignerErrorCode, isAPIErrorCode } =
+  Rango;
 
 export type ErrorDetail = {
   extraMessage: string;
   extraMessageDetail?: string | null | undefined;
-  extraMessageErrorCode: SignerErrorCode | APIErrorCode | null;
+  extraMessageErrorCode: SignerErrorCodeType | APIErrorCode | null;
 };
 
 const ERROR_ASSERTION_FAILED = 'Assertion failed (Unexpected behaviour)';
@@ -119,7 +121,7 @@ export function mapAppErrorCodesToAPIErrorCode(
     if (!errorCode) return defaultErrorCode;
     if (isAPIErrorCode(errorCode)) return errorCode;
     if (isSignerErrorCode(errorCode)) {
-      const t: { [key in SignerErrorCode]: APIErrorCode } = {
+      const t: { [key in SignerErrorCodeType]: APIErrorCode } = {
         [SignerErrorCode.REJECTED_BY_USER]: 'USER_REJECT',
         [SignerErrorCode.SIGN_TX_ERROR]: 'CALL_WALLET_FAILED',
         [SignerErrorCode.SEND_TX_ERROR]: 'SEND_TX_FAILED',

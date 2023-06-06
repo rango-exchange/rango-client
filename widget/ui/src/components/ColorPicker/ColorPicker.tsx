@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
-import { ChromePicker } from 'react-color';
 import { styled } from '../../theme';
 import { Button } from '../Button';
 import { CloseIcon } from '../Icon';
 import rgbHex from 'rgb-hex';
+import ReactColor from 'react-color';
+
+const { ChromePicker } = ReactColor;
 
 const Container = styled('div', {
   position: 'relative',
@@ -81,14 +83,12 @@ export function ColorPicker({
               onClick={(e) => {
                 e.stopPropagation();
                 onChangeColor(undefined);
-              }}
-            >
+              }}>
               <CloseIcon size={20} />
             </div>
           )
         }
-        onClick={() => setDisplayColorPicker((prev) => !prev)}
-      >
+        onClick={() => setDisplayColorPicker((prev) => !prev)}>
         {color || placeholder}
       </Button>
 

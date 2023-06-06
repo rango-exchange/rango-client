@@ -1,4 +1,4 @@
-import { GenericSigner, CosmosTransaction } from 'rango-types';
+import type { GenericSigner, CosmosTransaction } from 'rango-types';
 import { executeTerraTransaction } from './helpers';
 
 type TerraExternalProvider = any;
