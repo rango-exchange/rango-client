@@ -15,12 +15,11 @@ import {
   mathWallet as mathWallet_instance,
 } from './helpers';
 import signer from './signer';
-import {
-  SignerFactory,
-  evmBlockchains,
-  solanaBlockchain,
-  BlockchainMeta,
-} from 'rango-types';
+import type { SignerFactory, BlockchainMeta } from 'rango-types';
+
+import Rango from 'rango-types';
+
+const { evmBlockchains, solanaBlockchain } = Rango;
 
 const WALLET = WalletTypes.MATH;
 
