@@ -1,10 +1,14 @@
-import { GenericSigner, SignerError, Transfer } from 'rango-types';
+import type { GenericSigner, Transfer } from 'rango-types';
 import { xdefiTransfer } from './helpers';
 import {
   Network,
   XDEFI_WALLET_SUPPORTED_NATIVE_CHAINS,
   getNetworkInstance,
 } from '@rango-dev/wallets-shared';
+import Rango from 'rango-types';
+
+// For cjs compatibility.
+const { SignerError } = Rango;
 
 // TODO - replace with real type
 // tslint:disable-next-line: no-any

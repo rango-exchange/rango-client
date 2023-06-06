@@ -1,10 +1,15 @@
-import { GenericSigner, SignerError, SolanaTransaction } from 'rango-types';
+import type { GenericSigner, SolanaTransaction } from 'rango-types';
 import { PublicKey, Transaction, VersionedTransaction } from '@solana/web3.js';
 import bs58 from 'bs58';
 import {
   SolanaWeb3Signer,
   generalSolanaTransactionExecutor,
 } from '@rango-dev/signer-solana';
+
+import Rango from 'rango-types';
+
+// For cjs compatibility.
+const { SignerError } = Rango;
 
 // TODO - replace with real type
 // tslint:disable-next-line: no-any

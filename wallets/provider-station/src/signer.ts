@@ -1,6 +1,9 @@
 import { DefaultTerraSigner } from '@rango-dev/signer-terra';
-import { DefaultSignerFactory } from 'rango-types';
-import { SignerFactory, TransactionType as TxType } from 'rango-types';
+import type { SignerFactory } from 'rango-types';
+import Rango from 'rango-types';
+
+// For cjs compatibility.
+const { DefaultSignerFactory, TransactionType: TxType } = Rango;
 
 export default function getSigners(provider: any): SignerFactory {
   const signers = new DefaultSignerFactory();

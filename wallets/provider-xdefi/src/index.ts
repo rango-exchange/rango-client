@@ -19,7 +19,7 @@ import { SUPPORTED_ETH_CHAINS } from './constants';
 
 import { getNonEvmAccounts, xdefi as xdefi_instances } from './helpers';
 import signer from './signer';
-import { SignerFactory, BlockchainMeta } from 'rango-types';
+import type { SignerFactory, BlockchainMeta } from 'rango-types';
 
 const DEFAULT_NETWORK = Network.ETHEREUM;
 const WALLET = WalletTypes.XDEFI;
