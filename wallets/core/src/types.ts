@@ -4,7 +4,7 @@ import {
   EventHandler as WalletEventHandler,
   State as WalletState,
 } from './wallet';
-import { SignerFactory, BlockchainMeta } from 'rango-types';
+import type { SignerFactory, BlockchainMeta } from 'rango-types';
 
 export type State = {
   [key: string]: WalletState | undefined;

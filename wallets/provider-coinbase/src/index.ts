@@ -14,15 +14,18 @@ import {
   WalletInfo,
 } from '@rango-dev/wallets-shared';
 import { getSolanaAccounts } from './helpers';
-import {
-  SignerFactory,
-  isEvmBlockchain,
-  BlockchainMeta,
+import type { SignerFactory, BlockchainMeta } from 'rango-types';
+import signer from './signer';
+
+import Rango from 'rango-types';
+
+// For cjs compatibility.
+const {
   evmBlockchains,
   solanaBlockchain,
   isSolanaBlockchain,
-} from 'rango-types';
-import signer from './signer';
+  isEvmBlockchain,
+} = Rango;
 
 const WALLET = WalletTypes.COINBASE;
 

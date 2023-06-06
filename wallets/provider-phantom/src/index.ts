@@ -9,7 +9,11 @@ import {
 } from '@rango-dev/wallets-shared';
 import { phantom as phantom_instance } from './helpers';
 import signer from './signer';
-import { SignerFactory, BlockchainMeta, solanaBlockchain } from 'rango-types';
+import { SignerFactory, BlockchainMeta } from 'rango-types';
+
+import Rango from 'rango-types';
+
+const { solanaBlockchain } = Rango;
 
 const WALLET = WalletTypes.PHANTOM;
 
