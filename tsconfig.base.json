@@ -22,6 +22,7 @@
     // ESBuild
     "isolatedModules": true,
     // interop between ESM and CJS modules. Recommended by TS
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true
   }
 }

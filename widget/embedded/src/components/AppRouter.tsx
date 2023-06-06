@@ -2,10 +2,13 @@ import React, { Fragment, PropsWithChildren } from 'react';
 import { MemoryRouter, useInRouterContext } from 'react-router';
 import { useQueueManager } from '@rango-dev/queue-manager-rango-preset';
 import { WalletType } from '@rango-dev/wallets-shared';
-import { isEvmBlockchain } from 'rango-types';
 import { UpdateUrl } from './UpdateUrl';
 import { useMetaStore } from '../store/meta';
 import { useWallets } from '@rango-dev/wallets-core';
+import Rango from 'rango-types';
+
+// For cjs compatibility.
+const { isEvmBlockchain } = Rango;
 
 export function AppRouter({
   children,

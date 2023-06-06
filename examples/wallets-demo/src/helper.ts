@@ -1,13 +1,21 @@
 import { readAccountAddress } from '@rango-dev/wallets-core';
 import { Network } from '@rango-dev/wallets-shared';
-import { BlockchainMeta, isEvmBlockchain } from 'rango-types';
-export type Blockchain = { name: Network; accounts: { address: string; isConnected: boolean }[] };
+import type { BlockchainMeta } from 'rango-types';
+import Rango from 'rango-types';
+
+// For cjs compatibility.
+const { isEvmBlockchain } = Rango;
+
+export type Blockchain = {
+  name: Network;
+  accounts: { address: string; isConnected: boolean }[];
+};
 
 export function prepareAccounts(
   accounts: string[],
   connectedNetwork: Network | null,
   evmBasedChains: string[],
-  supportedChainNames: Network[] | null,
+  supportedChainNames: Network[] | null
 ): Blockchain[] {
   const result = {} as { [type in Network]: Blockchain };
 
@@ -36,14 +44,15 @@ export function prepareAccounts(
     const hasLimitation = supportedChains.length > 0;
     const isSupported = supportedChains.includes(network);
     const isUnknown = network === Network.Unknown;
-    const notSupportedNetworkByWallet = hasLimitation && !isSupported && !isUnknown;
+    const notSupportedNetworkByWallet =
+      hasLimitation && !isSupported && !isUnknown;
     if (notSupportedNetworkByWallet) return;
 
     const isEvmBasedChain = evmBasedChains.includes(network);
 
     if (isEvmBasedChain) {
       const evmChainsSupportedByWallet = supportedChains.filter((chain) =>
-        evmBasedChains.includes(chain),
+        evmBasedChains.includes(chain)
       );
       evmChainsSupportedByWallet.forEach((network) => {
         addAccount(network, address.toLowerCase());
@@ -56,10 +65,14 @@ export function prepareAccounts(
   return Object.values(result);
 }
 
-export function walletAndSupportedChainsNames(supportedChains: BlockchainMeta[]): Network[] | null {
+export function walletAndSupportedChainsNames(
+  supportedChains: BlockchainMeta[]
+): Network[] | null {
   if (!supportedChains) return null;
   let walletAndSupportedChainsNames: string[] = [];
-  walletAndSupportedChainsNames = supportedChains.map((blockchainMeta) => blockchainMeta.name);
+  walletAndSupportedChainsNames = supportedChains.map(
+    (blockchainMeta) => blockchainMeta.name
+  );
 
   return walletAndSupportedChainsNames as Network[];
 }

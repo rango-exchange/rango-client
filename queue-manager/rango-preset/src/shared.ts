@@ -18,12 +18,15 @@ import {
 import { PrettyError } from './shared-errors';
 import BigNumber from 'bignumber.js';
 import { numberToString } from './numbers';
-import {
+import Rango from 'rango-types';
+
+// For cjs compatibility.
+const {
   isCosmosBlockchain,
   isEvmBlockchain,
   isStarknetBlockchain,
   isTronBlockchain,
-} from 'rango-types';
+} = Rango;
 
 export interface PendingSwapWithQueueID {
   id: string;
