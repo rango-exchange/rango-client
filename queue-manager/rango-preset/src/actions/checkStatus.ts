@@ -18,7 +18,7 @@ import {
 } from '../shared';
 import { Transaction, TransactionStatusResponse } from 'rango-sdk';
 import { httpService } from '../services';
-import { GenericSigner } from 'rango-types';
+import type { GenericSigner } from 'rango-types';
 import { prettifyErrorMessage } from '../shared-errors';
 
 const INTERVAL_FOR_CHECK = 5_000;

@@ -8,8 +8,9 @@ import {
   InstallObjects,
 } from './rango';
 
-export { isAddress as isEvmAddress } from 'ethers/lib/utils';
+export { isAddress as isEvmAddress } from 'ethers/lib/utils.js';
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function deepCopy(obj: any): any {
   let copy;
 
@@ -58,6 +59,7 @@ export async function switchOrAddNetworkForMetamaskCompatibleWallets(
       params: [{ chainId: targetChain?.chainId }],
     });
   } catch (switchError) {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     // To resolve this error: Catch clause variable type annotation must be any or unknown if specified
     const error = switchError as { code: number };
@@ -133,11 +135,7 @@ export const evmChainsToRpcMap = (
 
 export const getSolanaAccounts: Connect = async ({ instance }) => {
   // Asking for account from wallet.
-  try {
-    var solanaResponse = await instance.connect();
-  } catch (e) {
-    throw e;
-  }
+  const solanaResponse = await instance.connect();
 
   const account = solanaResponse.publicKey.toString();
   return {
@@ -220,4 +218,3 @@ export function detectMobileScreens(): boolean {
     navigator.userAgent
   );
 }
-

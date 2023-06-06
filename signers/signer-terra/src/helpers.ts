@@ -1,7 +1,7 @@
-import { JSONSerializable } from '@terra-money/terra.js/dist/util/json';
+import { JSONSerializable } from '@terra-money/terra.js/dist/util/json.js';
 import { Coin, CreateTxOptions, Msg as TerraMsg } from '@terra-money/terra.js';
-import { Fee } from '@terra-money/terra.js/dist/core';
-import { CosmosTransaction } from 'rango-types';
+import { Fee } from '@terra-money/terra.js/dist/core/index.js';
+import type { CosmosTransaction } from 'rango-types';
 
 export const executeTerraTransaction = async (
   cosmosTx: CosmosTransaction,

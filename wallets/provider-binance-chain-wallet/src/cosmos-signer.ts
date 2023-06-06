@@ -1,6 +1,6 @@
 import { BncClient, Transaction } from '@binance-chain/javascript-sdk';
 import { StdSignMsg } from '@binance-chain/javascript-sdk/lib/types';
-import { getPublicKey } from '@binance-chain/javascript-sdk/lib/crypto';
+import { getPublicKey } from '@binance-chain/javascript-sdk/lib/crypto/index.js';
 import { cosmosMessageToBCSendMsg } from './helpers';
 import {
   CosmosTransaction,

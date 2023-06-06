@@ -1,6 +1,10 @@
-import { SignerError, SignerErrorCode } from 'rango-types';
+import type { SignerError as SignerErrorType } from 'rango-types';
+import Rango from 'rango-types';
 
-export const cleanEvmError = (error: any): SignerError => {
+// For cjs compatibility.
+const { SignerError, SignerErrorCode } = Rango;
+
+export const cleanEvmError = (error: any): SignerErrorType => {
   let message = undefined;
   if (
     error &&
@@ -15,7 +19,11 @@ export const cleanEvmError = (error: any): SignerError => {
     Object.prototype.hasOwnProperty.call(error, 'message') &&
     (error as any)?.code === -32603
   ) {
-    return new SignerError(SignerErrorCode.SEND_TX_ERROR, undefined, (error as any).message);
+    return new SignerError(
+      SignerErrorCode.SEND_TX_ERROR,
+      undefined,
+      (error as any).message
+    );
   }
   return new SignerError(SignerErrorCode.SEND_TX_ERROR, message, error);
 };
