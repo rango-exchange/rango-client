@@ -23,7 +23,7 @@
     "@rango-dev/signer-evm": "^0.5.0",
     "@rango-dev/signer-solana": "^0.5.0",
     "@rango-dev/wallets-shared": "^0.5.0",
-    "rango-types": "^0.1.38"
+    "rango-types": "^0.1.39"
   },
   "publishConfig": {
     "access": "public"
