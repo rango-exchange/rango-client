@@ -66,6 +66,7 @@ export class DefaultEvmSigner implements GenericSigner<EvmTransaction> {
 
   async wait(
     txHash: string,
+    _chainId: string,
     txResponse?: TransactionResponse,
     confirmations?: number | undefined
   ): Promise<{ hash: string; response?: TransactionResponse }> {

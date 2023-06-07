@@ -1,4 +1,5 @@
-import { NetworkInfo, WalletController } from '@terra-money/wallet-controller';
+import type { NetworkInfo } from '@terra-money/wallet-controller';
+import { WalletController } from '@terra-money/wallet-controller';
 
 export const TERRA_STATION_WALLET_ID = 'station';
 
@@ -25,6 +26,7 @@ let controller: any;
 export function station() {
   const terra = window.terraWallets;
   if (!controller) {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     controller = new WalletController({
       defaultNetwork: mainnet,
