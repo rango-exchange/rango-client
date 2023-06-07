@@ -1,11 +1,11 @@
-import { Network, ProviderConnectResult } from '@rango-dev/wallets-shared';
+import { Networks, ProviderConnectResult } from '@rango-dev/wallets-shared';
 
 export function okx_instance() {
   const { okxwallet } = window;
   if (!okxwallet) return null;
   const instances = new Map();
-  if (okxwallet) instances.set(Network.ETHEREUM, okxwallet);
-  if (okxwallet.solana) instances.set(Network.SOLANA, okxwallet.solana);
+  if (okxwallet) instances.set(Networks.ETHEREUM, okxwallet);
+  if (okxwallet.solana) instances.set(Networks.SOLANA, okxwallet.solana);
 
   return instances;
 }
@@ -13,16 +13,16 @@ export function okx_instance() {
 export async function getSolanaAccounts(
   instance: any
 ): Promise<ProviderConnectResult[]> {
-  const solanaInstance = await instance.get(Network.SOLANA);
+  const solanaInstance = await instance.get(Networks.SOLANA);
   const results: ProviderConnectResult[] = [];
 
-  if (!!solanaInstance) {
+  if (solanaInstance) {
     const solanaResponse = await solanaInstance.connect();
     const account = solanaResponse.publicKey.toString();
 
     results.push({
       accounts: account ? [account] : [],
-      chainId: Network.SOLANA,
+      chainId: Networks.SOLANA,
     });
   }
 
@@ -30,21 +30,21 @@ export async function getSolanaAccounts(
 }
 
 export const OKX_WALLET_SUPPORTED_CHAINS = [
-  Network.ETHEREUM,
-  Network.BTC,
-  Network.BSC,
-  Network.TRON,
-  Network.SOLANA,
-  Network.POLYGON,
-  Network.FANTOM,
-  Network.ARBITRUM,
-  Network.OPTIMISM,
-  Network.CRONOS,
-  Network.BOBA,
-  Network.GNOSIS,
-  Network.MOONBEAM,
-  Network.MOONRIVER,
-  Network.HARMONY,
-  Network.LTC,
-  Network.AVAX_CCHAIN,
+  Networks.ETHEREUM,
+  Networks.BTC,
+  Networks.BSC,
+  Networks.TRON,
+  Networks.SOLANA,
+  Networks.POLYGON,
+  Networks.FANTOM,
+  Networks.ARBITRUM,
+  Networks.OPTIMISM,
+  Networks.CRONOS,
+  Networks.BOBA,
+  Networks.GNOSIS,
+  Networks.MOONBEAM,
+  Networks.MOONRIVER,
+  Networks.HARMONY,
+  Networks.LTC,
+  Networks.AVAX_CCHAIN,
 ];

@@ -3,6 +3,7 @@ import {
   EvmNetworksChainInfo,
   AddEthereumChainParameter,
   Network,
+  Networks,
   Connect,
   Wallet,
   InstallObjects,
@@ -124,7 +125,7 @@ export const evmChainsToRpcMap = (
         // This `if` is only used for satisfying typescript,
         // Because we iterating over Object.keys(EVM_NETWORKS_CHAIN_INFO)
         // And obviously it cannot be `undefined` and always has a value.
-        if (!!info) {
+        if (info) {
           return [parseInt(info.chainId), info.rpcUrls[0]];
         }
         return [0, ''];
@@ -140,7 +141,7 @@ export const getSolanaAccounts: Connect = async ({ instance }) => {
   const account = solanaResponse.publicKey.toString();
   return {
     accounts: [account],
-    chainId: Network.SOLANA,
+    chainId: Networks.SOLANA,
   };
 };
 
@@ -149,28 +150,28 @@ export function getCoinbaseInstance(
 ) {
   const { ethereum, coinbaseSolana } = window;
   const instances = new Map();
-  if (!!ethereum) {
+  if (ethereum) {
     const checker =
       lookingFor === 'metamask' ? 'isMetaMask' : 'isCoinbaseWallet';
 
     // If only Coinbase Wallet is installed
     if (lookingFor === 'coinbase' && ethereum[checker]) {
-      instances.set(Network.ETHEREUM, ethereum);
+      instances.set(Networks.ETHEREUM, ethereum);
     }
     // If Coinbase Wallet and Metamask is installed at the same time.
     else if (ethereum.providers?.length) {
       const ethInstance = ethereum.providers.find((provider: any) => {
         return provider[checker];
       });
-      instances.set(Network.ETHEREUM, ethInstance);
+      instances.set(Networks.ETHEREUM, ethInstance);
     }
   }
   if (!!coinbaseSolana && lookingFor === 'coinbase')
-    instances.set(Network.SOLANA, coinbaseSolana);
+    instances.set(Networks.SOLANA, coinbaseSolana);
 
   if (instances.size === 0) return null;
 
-  if (lookingFor === 'metamask') return instances.get(Network.ETHEREUM);
+  if (lookingFor === 'metamask') return instances.get(Networks.ETHEREUM);
 
   return instances;
 }

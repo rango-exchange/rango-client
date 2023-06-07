@@ -1,5 +1,5 @@
 import { readAccountAddress } from '@rango-dev/wallets-core';
-import { Network } from '@rango-dev/wallets-shared';
+import { Network, Networks } from '@rango-dev/wallets-shared';
 import type { BlockchainMeta } from 'rango-types';
 import { isEvmBlockchain } from 'rango-types';
 
@@ -23,7 +23,7 @@ export function prepareAccounts(
       isConnected,
     };
 
-    if (!!result[network]) {
+    if (result[network]) {
       result[network].accounts.push(newAccount);
     } else {
       result[network] = {
@@ -40,7 +40,7 @@ export function prepareAccounts(
 
     const hasLimitation = supportedChains.length > 0;
     const isSupported = supportedChains.includes(network);
-    const isUnknown = network === Network.Unknown;
+    const isUnknown = network === Networks.Unknown;
     const notSupportedNetworkByWallet =
       hasLimitation && !isSupported && !isUnknown;
     if (notSupportedNetworkByWallet) return;
@@ -71,7 +71,7 @@ export function walletAndSupportedChainsNames(
     (blockchainMeta) => blockchainMeta.name
   );
 
-  return walletAndSupportedChainsNames as Network[];
+  return walletAndSupportedChainsNames;
 }
 
 export const evmBasedChainsSelector = (blockchains: BlockchainMeta[]) =>

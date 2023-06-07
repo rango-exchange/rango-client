@@ -8,6 +8,7 @@ import {
   detectInstallLink,
   WalletInfo,
   WalletTypes,
+  Networks,
 } from '@rango-dev/wallets-shared';
 
 import {
@@ -77,7 +78,7 @@ export function walletAndSupportedChainsNames(
   if (!supportedChains) return null;
   let walletAndSupportedChainsNames: Network[] = [];
   walletAndSupportedChainsNames = supportedChains.map(
-    (blockchainMeta) => blockchainMeta.name as Network
+    (blockchainMeta) => blockchainMeta.name
   );
 
   return walletAndSupportedChainsNames;
@@ -108,7 +109,7 @@ export function prepareAccountsForWalletStore(
 
     const hasLimitation = supportedChains.length > 0;
     const isSupported = supportedChains.includes(network);
-    const isUnknown = network === Network.Unknown;
+    const isUnknown = network === Networks.Unknown;
     const notSupportedNetworkByWallet =
       hasLimitation && !isSupported && !isUnknown;
 
@@ -121,7 +122,7 @@ export function prepareAccountsForWalletStore(
     // Example: showing our evm compatible netwrok when the uknown network is evem.
     // Otherwise, we stop executing this function.
     const isUknownAndEvmBased =
-      network === Network.Unknown && isEvmAddress(address);
+      network === Networks.Unknown && isEvmAddress(address);
     if (isUnknown && !isUknownAndEvmBased) return;
 
     const isEvmBasedChain = evmBasedChains.includes(network);

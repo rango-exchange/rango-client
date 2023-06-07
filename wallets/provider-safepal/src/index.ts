@@ -1,5 +1,5 @@
 import {
-  Network,
+  Networks,
   WalletTypes,
   CanSwitchNetwork,
   Connect,
@@ -26,12 +26,12 @@ const WALLET = WalletTypes.SAFEPAL;
 
 export const config = {
   type: WALLET,
-  defaultNetwork: Network.ETHEREUM,
+  defaultNetwork: Networks.ETHEREUM,
 };
 
 export const getInstance = safepal_instance;
 export const connect: Connect = async ({ instance, meta }) => {
-  const ethInstance = chooseInstance(instance, meta, Network.ETHEREUM);
+  const ethInstance = chooseInstance(instance, meta, Networks.ETHEREUM);
 
   let results: ProviderConnectResult[] = [];
 
@@ -50,7 +50,7 @@ export const subscribe: Subscribe = (options) => {
   const ethInstance = chooseInstance(
     options.instance,
     options.meta,
-    Network.ETHEREUM
+    Networks.ETHEREUM
   );
 
   if (ethInstance) {

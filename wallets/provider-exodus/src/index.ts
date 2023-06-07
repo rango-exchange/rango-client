@@ -1,5 +1,4 @@
 import {
-  Network,
   WalletTypes,
   canSwitchNetworkToEvm,
   chooseInstance,
@@ -11,6 +10,7 @@ import {
   Subscribe,
   SwitchNetwork,
   WalletInfo,
+  Networks,
 } from '@rango-dev/wallets-shared';
 import {
   exodus_instances,
@@ -30,12 +30,12 @@ const WALLET = WalletTypes.EXODUS;
 export const config = {
   type: WALLET,
   // TODO: Get from evm networks
-  defaultNetwork: Network.ETHEREUM,
+  defaultNetwork: Networks.ETHEREUM,
 };
 export const getInstance = exodus_instances;
 
 export const connect: Connect = async ({ instance, meta }) => {
-  const evm_instance = chooseInstance(instance, meta, Network.ETHEREUM);
+  const evm_instance = chooseInstance(instance, meta, Networks.ETHEREUM);
   let results: ProviderConnectResult[] = [];
 
   if (evm_instance) {
@@ -52,29 +52,29 @@ export const subscribe: Subscribe = (options) => {
   const ethInstance = chooseInstance(
     options.instance,
     options.meta,
-    Network.ETHEREUM
+    Networks.ETHEREUM
   );
   const solanaInstance = chooseInstance(
     options.instance,
     options.meta,
-    Network.SOLANA
+    Networks.SOLANA
   );
   const { connect, updateAccounts, state, updateChainId, meta } = options;
   ethInstance?.on('accountsChanged', (addresses: string[]) => {
     const eth_chainId = meta
       .filter(isEvmBlockchain)
-      .find((blockchain) => blockchain.name === Network.ETHEREUM)?.chainId;
+      .find((blockchain) => blockchain.name === Networks.ETHEREUM)?.chainId;
     if (state.connected) {
-      if (state.network != Network.ETHEREUM && eth_chainId)
+      if (state.network != Networks.ETHEREUM && eth_chainId)
         updateChainId(eth_chainId);
       updateAccounts(addresses);
     }
   });
 
   solanaInstance?.on('accountChanged', async (publicKey: string) => {
-    if (state.network != Network.SOLANA)
+    if (state.network != Networks.SOLANA)
       updateChainId(meta.filter(isSolanaBlockchain)[0].chainId);
-    const network = Network.SOLANA;
+    const network = Networks.SOLANA;
     if (publicKey) {
       const account = publicKey.toString();
       updateAccounts([account]);
@@ -114,6 +114,6 @@ export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
   },
   color: '#8f70fa',
   supportedChains: allBlockChains.filter((blockchainMeta) =>
-    EXODUS_WALLET_SUPPORTED_CHAINS.includes(blockchainMeta.name as Network)
+    EXODUS_WALLET_SUPPORTED_CHAINS.includes(blockchainMeta.name as Networks)
   ),
 });

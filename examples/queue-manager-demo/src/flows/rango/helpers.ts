@@ -1,7 +1,7 @@
 import {
   AllBlockchains,
-  Meta,
   Network,
+  Networks,
   WalletType,
   WalletTypes,
   XDEFI_WALLET_SUPPORTED_NATIVE_CHAINS,
@@ -24,7 +24,6 @@ import {
   NETWORK_TO_NATIVE_SYMBOL_MAP_FOR_1INCH,
   OKX_WALLET_SUPPORTED_CHAINS,
   PendingSwap,
-  PendingSwapNetworkStatus,
   PendingSwapStep,
   RawAccounts,
   SwapperStatusResponse,
@@ -33,7 +32,6 @@ import {
   TokenMeta,
   TransactionName,
   UserWalletBlockchain,
-  Wallet,
   WalletTypeAndAddress,
 } from './types';
 import { BigNumber } from 'bignumber.js';
@@ -55,7 +53,8 @@ const url = 'https://api.rango.exchange';
 
 export const BASE_URL = url;
 export const RANGO_COOKIE_HEADER = 'X-Rango-Id';
-export const RANGO_DAPP_ID_QUERY = 'apiKey=4a624ab5-16ff-4f96-90b7-ab00ddfc342c';
+export const RANGO_DAPP_ID_QUERY =
+  'apiKey=4a624ab5-16ff-4f96-90b7-ab00ddfc342c';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 declare const navigator: any;
@@ -65,7 +64,7 @@ export function calculatePendingSwap(
   bestRoute: BestRoute,
   wallets: { [p: string]: WalletTypeAndAddress },
   settings: SwapSavedSettings,
-  validateBalanceOrFee: boolean,
+  validateBalanceOrFee: boolean
 ): PendingSwap {
   const simulationResult = bestRoute.result;
   if (!simulationResult) throw Error('Simulation result should not be null');
@@ -109,7 +108,8 @@ export function calculatePendingSwap(
         toSymbolAddress:
           NETWORKS_FOR_1INCH.includes(s.to.blockchain) &&
           SWAPPER_ONE_INCH_LIST.includes(s.swapperId) &&
-          NETWORK_TO_NATIVE_SYMBOL_MAP_FOR_1INCH.get(s.to.blockchain) === s.to.symbol &&
+          NETWORK_TO_NATIVE_SYMBOL_MAP_FOR_1INCH.get(s.to.blockchain) ===
+            s.to.symbol &&
           (!s.to.address || s.to.address.length === 0)
             ? null
             : s.to.address,
@@ -143,7 +143,8 @@ export function getCookieId(): string {
     return cookieId;
   }
   const value =
-    Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+    Math.random().toString(36).substring(2, 15) +
+    Math.random().toString(36).substring(2, 15);
   window.localStorage.setItem(key, value);
   return value;
 }
@@ -157,9 +158,11 @@ export const getBestRoute = async (
   signal: AbortSignal | undefined,
   selectedWallets?: { [p: string]: string },
   swappersGroupsBlackList?: string[],
-  blockchainsWhiteList?: Network[],
+  blockchainsWhiteList?: Network[]
 ): Promise<BestRoute | null> => {
-  const connectedWallets: UserWalletBlockchain[] = (rawAccounts?.blockchains || []).map((b) => ({
+  const connectedWallets: UserWalletBlockchain[] = (
+    rawAccounts?.blockchains || []
+  ).map((b) => ({
     blockchain: b.name,
     addresses: Array.from(new Set(b.accounts.map((a) => a.address))),
   }));
@@ -216,7 +219,7 @@ export const urlToToken = (s: string | null): TokenMeta | null => {
     // symbol: ps2[1], // this doesnt work for USDT.E (on avax) AVAX.WETH.E--0x49d5c2bdffac6ce2bfdb6640f4f80f226bc10bab
     symbol: ps2.slice(1).join('.'),
     image: UNKNOWN_COIN_IMAGE,
-    blockchain: ps2[0] as Network,
+    blockchain: ps2[0] as Networks,
     address: ps1.length === 2 ? decodeURIComponent(ps1[1]) : null,
     usdPrice: null,
     isSecondaryCoin: false,
@@ -227,7 +230,9 @@ export const urlToToken = (s: string | null): TokenMeta | null => {
   };
 };
 
-export async function checkApproved(requestId: string): Promise<CheckApprovalResponse> {
+export async function checkApproved(
+  requestId: string
+): Promise<CheckApprovalResponse> {
   const url = `${BASE_URL}/tx/${requestId}/check-approval?${RANGO_DAPP_ID_QUERY}`;
   const response = await fetch(url, {
     method: 'GET',
@@ -237,7 +242,10 @@ export async function checkApproved(requestId: string): Promise<CheckApprovalRes
     },
   });
 
-  if ((!!response.status && (response.status < 200 || response.status >= 400)) || !response.ok) {
+  if (
+    (!!response.status && (response.status < 200 || response.status >= 400)) ||
+    !response.ok
+  ) {
     const apiError = ERROR_COMMUNICATING_WITH_API(ApiMethodName.CheckApproval);
     throw PrettyError.BadStatusCode(apiError, response.status);
   }
@@ -248,7 +256,7 @@ export async function checkApproved(requestId: string): Promise<CheckApprovalRes
 export async function checkSwapStatus(
   requestId: string,
   txId: string,
-  step: number,
+  step: number
 ): Promise<SwapperStatusResponse | null> {
   const url = `${BASE_URL}/tx/check-status?${RANGO_DAPP_ID_QUERY}`;
   const body: CheckTxStatusRequest = { step, txId, requestId };
@@ -262,8 +270,13 @@ export async function checkSwapStatus(
     body: JSON.stringify(body),
   });
 
-  if ((!!response.status && (response.status < 200 || response.status >= 400)) || !response.ok) {
-    const apiError = ERROR_COMMUNICATING_WITH_API(ApiMethodName.CheckingTransactionStatus);
+  if (
+    (!!response.status && (response.status < 200 || response.status >= 400)) ||
+    !response.ok
+  ) {
+    const apiError = ERROR_COMMUNICATING_WITH_API(
+      ApiMethodName.CheckingTransactionStatus
+    );
     throw PrettyError.BadStatusCode(apiError, response.status);
   }
 
@@ -279,14 +292,17 @@ export const ERROR_ASSERTION_FAILED = 'Assertion failed (Unexpected behaviour)';
 export const ERROR_COMMUNICATING_WITH_API = (apiMethodName: ApiMethodName) =>
   `Unexpected response from API (${apiMethodName})`;
 
-export const ERROR_DESCRIPTION_UNSUPPORTED_TRANSACTION = (method: string, walletType: WalletType) =>
-  `method: ${method} call is unsupported for wallet ${walletType}`;
+export const ERROR_DESCRIPTION_UNSUPPORTED_TRANSACTION = (
+  method: string,
+  walletType: WalletType
+) => `method: ${method} call is unsupported for wallet ${walletType}`;
 
 export const ERROR_SIGNING_TRANSACTION = (transactionName: TransactionName) =>
   `Error sending ${transactionName}`;
 export const ERROR_REJECTING_TRANSACTION = 'User rejected the message signing';
 
-export const ERROR_CREATE_TRANSACTION = 'Create transaction failed in Rango Server';
+export const ERROR_CREATE_TRANSACTION =
+  'Create transaction failed in Rango Server';
 export const ERROR_INPUT_WALLET_NOT_FOUND = 'Input wallet not found';
 
 export const DEFAULT_WALLET_INJECTION_ERROR =
@@ -324,15 +340,32 @@ export class PrettyError extends Error {
   }
 
   static AssertionFailed(m: string): PrettyError {
-    return new PrettyError('CLIENT_UNEXPECTED_BEHAVIOUR', ERROR_ASSERTION_FAILED, m);
+    return new PrettyError(
+      'CLIENT_UNEXPECTED_BEHAVIOUR',
+      ERROR_ASSERTION_FAILED,
+      m
+    );
   }
 
-  static BadStatusCode(message: string, statusCode: number | string): PrettyError {
-    return new PrettyError('TX_FAIL', message, null, `status code = ${statusCode}`);
+  static BadStatusCode(
+    message: string,
+    statusCode: number | string
+  ): PrettyError {
+    return new PrettyError(
+      'TX_FAIL',
+      message,
+      null,
+      `status code = ${statusCode}`
+    );
   }
 
   static CreateTransaction(detail: string): PrettyError {
-    return new PrettyError('FETCH_TX_FAILED', ERROR_CREATE_TRANSACTION, null, detail);
+    return new PrettyError(
+      'FETCH_TX_FAILED',
+      ERROR_CREATE_TRANSACTION,
+      null,
+      detail
+    );
   }
 
   static WalletMissing(): PrettyError {
@@ -340,7 +373,7 @@ export class PrettyError extends Error {
       'CLIENT_UNEXPECTED_BEHAVIOUR',
       ERROR_INPUT_WALLET_NOT_FOUND,
       null,
-      'Server requested for a blockchain or address not selected by user',
+      'Server requested for a blockchain or address not selected by user'
     );
   }
 
@@ -349,24 +382,27 @@ export class PrettyError extends Error {
       'CLIENT_UNEXPECTED_BEHAVIOUR',
       ERROR_INPUT_WALLET_NOT_FOUND,
       null,
-      'Server requested for a blockchain or address not selected by user',
+      'Server requested for a blockchain or address not selected by user'
     );
   }
 }
 
 export function getNextStep(
   swap: PendingSwap,
-  currentStep: PendingSwapStep,
+  currentStep: PendingSwapStep
 ): PendingSwapStep | null {
   return (
     swap.steps.find(
-      (step) => step.status !== 'failed' && step.status !== 'success' && step.id !== currentStep.id,
+      (step) =>
+        step.status !== 'failed' &&
+        step.status !== 'success' &&
+        step.id !== currentStep.id
     ) || null
   );
 }
 
 export async function createTransaction(
-  request: CreateTransactionRequest,
+  request: CreateTransactionRequest
 ): Promise<CreateTransactionResponse> {
   const url = `${BASE_URL}/tx/create?${RANGO_DAPP_ID_QUERY}`;
   try {
@@ -379,15 +415,21 @@ export async function createTransaction(
       body: JSON.stringify(request),
     });
 
-    if ((!!response.status && (response.status < 200 || response.status >= 400)) || !response.ok) {
+    if (
+      (!!response.status &&
+        (response.status < 200 || response.status >= 400)) ||
+      !response.ok
+    ) {
       throw PrettyError.CreateTransaction(
-        `Error creating the transaction, status code: ${response.status}`,
+        `Error creating the transaction, status code: ${response.status}`
       );
     }
 
     const result: CreateTransactionResponse = await response.json();
     if (!result.ok || !result.transaction)
-      throw PrettyError.CreateTransaction(result.error || 'bad response from create tx endpoint');
+      throw PrettyError.CreateTransaction(
+        result.error || 'bad response from create tx endpoint'
+      );
 
     return result;
   } catch (error: any) {
@@ -422,23 +464,28 @@ export const prettifyErrorMessage = (obj: unknown): ErrorDetail => {
 export const getEvmApproveUrl = (
   tx: string,
   network: Network,
-  evmBasedBlockchains: EvmBlockchainMeta[],
+  evmBasedBlockchains: EvmBlockchainMeta[]
 ): string => {
-  const evmBlochain = evmBasedBlockchains.find((blockchain) => blockchain.name === network);
+  const evmBlochain = evmBasedBlockchains.find(
+    (blockchain) => blockchain.name === network
+  );
 
   if (!evmBlochain) {
     throw Error(`unsupported network: ${network} for getting approve url.`);
   }
 
   if (evmBlochain.info.transactionUrl)
-    return evmBlochain.info.transactionUrl.replace('{txHash}', tx.toLowerCase());
+    return evmBlochain.info.transactionUrl.replace(
+      '{txHash}',
+      tx.toLowerCase()
+    );
 
   throw Error(`Explorer url for ${network} is not implemented`);
 };
 
 export const getCurrentBlockchainOfOrNull = (
   swap: PendingSwap,
-  step: PendingSwapStep,
+  step: PendingSwapStep
 ): Network | null => {
   try {
     return getCurrentBlockchainOf(swap, step);
@@ -447,23 +494,28 @@ export const getCurrentBlockchainOfOrNull = (
   }
 };
 
-export const getCurrentBlockchainOf = (swap: PendingSwap, step: PendingSwapStep): Network => {
+export const getCurrentBlockchainOf = (
+  swap: PendingSwap,
+  step: PendingSwapStep
+): Network => {
   const b1 =
     step.evmTransaction?.blockChain ||
     step.evmApprovalTransaction?.blockChain ||
     step.cosmosTransaction?.blockChain ||
     step.solanaTransaction?.blockChain;
-  if (!!b1) return b1 as Network;
+  if (b1) return b1;
 
   const transferAddress = step.transferTransaction?.fromWalletAddress;
   if (!transferAddress) throw PrettyError.BlockchainMissing();
 
   const blockchain =
-    Object.keys(swap.wallets).find((b) => swap.wallets[b]?.address === transferAddress) || null;
+    Object.keys(swap.wallets).find(
+      (b) => swap.wallets[b]?.address === transferAddress
+    ) || null;
   if (blockchain == null) throw PrettyError.BlockchainMissing();
 
   // TODO: check why it returns string
-  return blockchain as Network;
+  return blockchain;
 };
 
 export interface ConvertToFullAccountInfo {
@@ -474,9 +526,10 @@ export function convertRawAccountToFullAccount(
   wallet: WalletType,
   accounts: string[],
   connectedNetwork: Network | null,
-  info: ConvertToFullAccountInfo,
+  info: ConvertToFullAccountInfo
 ): Blockchain[] {
-  const { evmBasedChainsNames: evmBasedChains, supportedChainsByWallets } = info;
+  const { evmBasedChainsNames: evmBasedChains, supportedChainsByWallets } =
+    info;
   const result = {} as { [type in Network]: Blockchain };
 
   function addAccount(network: Network, address: string) {
@@ -491,7 +544,7 @@ export function convertRawAccountToFullAccount(
       explorerUrl: null,
     };
 
-    if (!!result[network]) {
+    if (result[network]) {
       result[network].accounts.push(newAccount);
     } else {
       result[network] = {
@@ -508,8 +561,9 @@ export function convertRawAccountToFullAccount(
 
     const hasLimitation = supportedChains.length > 0;
     const isSupported = supportedChains.includes(network);
-    const isUnknown = network === Network.Unknown;
-    const notSupportedNetworkByWallet = hasLimitation && !isSupported && !isUnknown;
+    const isUnknown = network === Networks.Unknown;
+    const notSupportedNetworkByWallet =
+      hasLimitation && !isSupported && !isUnknown;
 
     // Here we check given `network` is not supported by wallet
     // And also the network is known.
@@ -519,7 +573,8 @@ export function convertRawAccountToFullAccount(
     // pattern and act on it.
     // Example: showing our evm compatible netwrok when the uknown network is evem.
     // Otherwise, we stop executing this function.
-    const isUknownAndEvmBased = network === Network.Unknown && ethers.utils.isAddress(address);
+    const isUknownAndEvmBased =
+      network === Networks.Unknown && ethers.utils.isAddress(address);
     if (isUnknown && !isUknownAndEvmBased) return;
 
     const isEvmBasedChain = evmBasedChains.includes(network);
@@ -529,7 +584,7 @@ export function convertRawAccountToFullAccount(
       // all evm chains are not supported in wallets, so we are adding
       // only to those that are supported by wallet.
       const evmChainsSupportedByWallet = supportedChains.filter((chain) =>
-        evmBasedChains.includes(chain),
+        evmBasedChains.includes(chain)
       );
 
       evmChainsSupportedByWallet.forEach((network) => {
@@ -551,37 +606,45 @@ export const evmBasedChainsNamesSelector = (blockchains: AllBlockchains) =>
     .filter(isEvmBlockchain)
     .map((blockchainMeta) => blockchainMeta.name);
 
-export const walletsAndSupportedChainsMetaSelector = (blockchains: AllBlockchains): any | null => {
+export const walletsAndSupportedChainsMetaSelector = (
+  blockchains: AllBlockchains
+): any | null => {
   // TODO WalletsAndSupportedChains can't find model for return type
   if (Object.entries(blockchains).length === 0) return null;
-  const blockchainsArray = Object.entries(blockchains).map(([, blockchainMeta]) => blockchainMeta);
+  const blockchainsArray = Object.entries(blockchains).map(
+    ([, blockchainMeta]) => blockchainMeta
+  );
   const evmBlockchains = blockchainsArray.filter(isEvmBlockchain);
   const solanaBlockchain = blockchainsArray.filter(isSolanaBlockchain);
   const cosmosBlockchains = blockchainsArray.filter(isCosmosBlockchain);
   return {
     [WalletTypes.BINANCE_CHAIN]: blockchainsArray.filter((blockchainMeta) =>
-      BINANCE_CHAIN_WALLET_SUPPORTED_CHAINS.includes(blockchainMeta.name as Network),
+      BINANCE_CHAIN_WALLET_SUPPORTED_CHAINS.includes(
+        blockchainMeta.name as Networks
+      )
     ),
     [WalletTypes.META_MASK]: evmBlockchains,
     [WalletTypes.COINBASE]: [...evmBlockchains, ...solanaBlockchain],
-    [WalletTypes.KEPLR]: cosmosBlockchains.filter((blockchainMeta) => !!blockchainMeta.info),
+    [WalletTypes.KEPLR]: cosmosBlockchains.filter(
+      (blockchainMeta) => !!blockchainMeta.info
+    ),
     [WalletTypes.PHANTOM]: solanaBlockchain,
     [WalletTypes.XDEFI]: blockchainsArray.filter((blockchainMeta) =>
       [
         ...XDEFI_WALLET_SUPPORTED_EVM_CHAINS,
         ...XDEFI_WALLET_SUPPORTED_NATIVE_CHAINS,
-        Network.SOLANA,
-      ].includes(blockchainMeta.name as Network),
+        Networks.SOLANA,
+      ].includes(blockchainMeta.name as Networks)
     ),
     [WalletTypes.WALLET_CONNECT]: evmBlockchains,
     [WalletTypes.TRUST_WALLET]: evmBlockchains,
     [WalletTypes.COIN98]: [...evmBlockchains, ...solanaBlockchain],
     [WalletTypes.OKX]: blockchainsArray.filter((blockchainMeta) =>
-      OKX_WALLET_SUPPORTED_CHAINS.includes(blockchainMeta.name as Network),
+      OKX_WALLET_SUPPORTED_CHAINS.includes(blockchainMeta.name as Networks)
     ),
 
     [WalletTypes.EXODUS]: blockchainsArray.filter((blockchainMeta) =>
-      EXODUS_WALLET_SUPPORTED_CHAINS.includes(blockchainMeta.name as Network),
+      EXODUS_WALLET_SUPPORTED_CHAINS.includes(blockchainMeta.name as Networks)
     ),
 
     [WalletTypes.TOKEN_POCKET]: evmBlockchains,
@@ -605,18 +668,25 @@ export const walletsAndSupportedChainsMetaSelector = (blockchains: AllBlockchain
 };
 
 export const walletsAndSupportedChainsNamesSelector = (blockchains) => {
-  const walletsAndSupportedChainsMeta = walletsAndSupportedChainsMetaSelector(blockchains);
+  const walletsAndSupportedChainsMeta =
+    walletsAndSupportedChainsMetaSelector(blockchains);
   if (!walletsAndSupportedChainsMeta) return null;
-  const walletsAndSupportedChainsNames: { [type: WalletType]: Network[] | undefined } = {};
+  const walletsAndSupportedChainsNames: {
+    [type: WalletType]: Network[] | undefined;
+  } = {};
   for (const key in walletsAndSupportedChainsMeta) {
-    walletsAndSupportedChainsNames[key] = walletsAndSupportedChainsMeta[key].map(
-      (blockchainMeta) => blockchainMeta.name,
-    );
+    walletsAndSupportedChainsNames[key] = walletsAndSupportedChainsMeta[
+      key
+    ].map((blockchainMeta) => blockchainMeta.name);
   }
   return walletsAndSupportedChainsNames;
 };
 
-export async function requestSwap(input: string, from: TokenMeta, to: TokenMeta) {
+export async function requestSwap(
+  input: string,
+  from: TokenMeta,
+  to: TokenMeta
+) {
   const inputAmount = input;
   const amount = new BigNumber(inputAmount);
   const rawAccounts = sampleRawAccounts;
@@ -641,7 +711,7 @@ export async function requestSwap(input: string, from: TokenMeta, to: TokenMeta)
     signal,
     selectedWallets,
     swappersGroupsBlackList,
-    blockchainsWhiteList,
+    blockchainsWhiteList
   );
 
   if (!bestRoute) {
@@ -654,7 +724,7 @@ export async function requestSwap(input: string, from: TokenMeta, to: TokenMeta)
     disabledSwappersGroups: [],
   };
   const wallets: { [p: string]: WalletTypeAndAddress } = {};
-  if (!!rawAccounts) {
+  if (rawAccounts) {
     rawAccounts.blockchains.forEach((item) => {
       // We know there is only one account.
       wallets[item.name] = item.accounts[0];
@@ -666,7 +736,7 @@ export async function requestSwap(input: string, from: TokenMeta, to: TokenMeta)
     bestRoute,
     wallets,
     settings,
-    false,
+    false
   );
 
   return newSwap;
@@ -676,7 +746,7 @@ export function logRPCError(
   error: unknown,
   swap: PendingSwap,
   currentStep: PendingSwapStep | undefined,
-  walletType: WalletType | undefined,
+  walletType: WalletType | undefined
 ) {
   try {
     // Sending to sentry
