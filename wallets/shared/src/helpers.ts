@@ -1,4 +1,4 @@
-import type { EvmBlockchainMeta } from 'rango-types';
+import { EvmBlockchainMeta } from 'rango-types';
 import {
   EvmNetworksChainInfo,
   AddEthereumChainParameter,

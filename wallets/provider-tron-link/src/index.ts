@@ -8,11 +8,7 @@ import {
 } from '@rango-dev/wallets-shared';
 import { tronLink as tronLink_instance } from './helpers';
 import signer from './signer';
-import { SignerFactory, BlockchainMeta } from 'rango-types';
-
-import Rango from 'rango-types';
-
-const { tronBlockchain } = Rango;
+import { SignerFactory, BlockchainMeta, tronBlockchain } from 'rango-types';
 
 // https://docs.tronlink.org/dapp/start-developing
 // https://developers.tron.network/docs/tronlink-events
@@ -32,7 +28,8 @@ export const connect: Connect = async ({ instance }) => {
     if (!r) {
       throw new Error('Please unlock your TronLink extension first.');
     }
-    if (!!r?.code && r.code !== 200 && !!r.message) {
+    if (r.code === 200) {
+    } else if (!!r?.code && !!r.message) {
       throw new Error(r.message);
     }
   }

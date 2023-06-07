@@ -12,11 +12,7 @@ import {
 } from '@rango-dev/wallets-shared';
 import { tokenpocket as tokenpocket_instance } from './helpers';
 import signer from './signer';
-import type { SignerFactory, BlockchainMeta } from 'rango-types';
-
-import Rango from 'rango-types';
-
-const { evmBlockchains } = Rango;
+import { SignerFactory, BlockchainMeta, evmBlockchains } from 'rango-types';
 
 const WALLET = WalletTypes.TOKEN_POCKET;
 

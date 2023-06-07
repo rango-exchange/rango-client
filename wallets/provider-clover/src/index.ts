@@ -14,12 +14,13 @@ import {
 } from '@rango-dev/wallets-shared';
 import { getNonEvmAccounts, clover as clover_instance } from './helpers';
 import signer from './signer';
-import type { SignerFactory, BlockchainMeta } from 'rango-types';
-
-import Rango from 'rango-types';
-
-// For cjs compatibility.
-const { isEvmBlockchain, evmBlockchains, solanaBlockchain } = Rango;
+import {
+  SignerFactory,
+  isEvmBlockchain,
+  evmBlockchains,
+  BlockchainMeta,
+  solanaBlockchain,
+} from 'rango-types';
 
 const WALLET = WalletTypes.CLOVER;
 

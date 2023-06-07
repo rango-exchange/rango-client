@@ -16,16 +16,14 @@ import {
 } from '@rango-dev/wallets-shared';
 import { cosmostation as cosmostation_instance } from './helpers';
 import signer from './signer';
-import { SignerFactory, BlockchainMeta } from 'rango-types';
-
-import Rango from 'rango-types';
-
-const {
+import {
+  SignerFactory,
+  BlockchainMeta,
   evmBlockchains,
   isEvmBlockchain,
   isCosmosBlockchain,
   cosmosBlockchains,
-} = Rango;
+} from 'rango-types';
 
 const WALLET = WalletTypes.COSMOSTATION;
 
