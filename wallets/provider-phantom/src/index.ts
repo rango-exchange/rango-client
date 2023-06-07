@@ -1,5 +1,5 @@
 import {
-  Network,
+  Networks,
   WalletTypes,
   CanSwitchNetwork,
   Connect,
@@ -22,7 +22,7 @@ export const connect: Connect = getSolanaAccounts;
 
 export const subscribe: Subscribe = ({ instance, updateAccounts, connect }) => {
   instance?.on('accountChanged', async (publicKey: string) => {
-    const network = Network.SOLANA;
+    const network = Networks.SOLANA;
     if (publicKey) {
       const account = publicKey.toString();
       updateAccounts([account]);

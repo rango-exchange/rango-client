@@ -1,4 +1,8 @@
-import { Network, ProviderConnectResult } from '@rango-dev/wallets-shared';
+import {
+  Network,
+  Networks,
+  ProviderConnectResult,
+} from '@rango-dev/wallets-shared';
 
 type Provider = Map<Network, any>;
 
@@ -9,10 +13,10 @@ export function safepal() {
   if (!isSafePal) return null;
 
   if (!!safepal && safepal.isSafePalWallet)
-    instances.set(Network.SOLANA, safepal);
+    instances.set(Networks.SOLANA, safepal);
 
   if (safepalProvider && safepalProvider)
-    instances.set(Network.ETHEREUM, safepalProvider);
+    instances.set(Networks.ETHEREUM, safepalProvider);
 
   if (instances.size === 0) return null;
 
@@ -22,17 +26,17 @@ export function safepal() {
 export async function getNonEvmAccounts(
   instances: Provider
 ): Promise<ProviderConnectResult[]> {
-  const solanaInstance = instances.get(Network.SOLANA);
+  const solanaInstance = instances.get(Networks.SOLANA);
   const results: ProviderConnectResult[] = [];
 
-  if (!!solanaInstance) {
+  if (solanaInstance) {
     const solanaResponse = await solanaInstance.connect();
 
     const solanaAccounts: string = solanaResponse.publicKey.toString();
 
     results.push({
       accounts: [solanaAccounts],
-      chainId: Network.SOLANA,
+      chainId: Networks.SOLANA,
     });
   }
 

@@ -77,7 +77,7 @@ export function readAccountAddress(addressWithNetwork: string): {
   const [network, address] = addressWithNetwork.split(':');
 
   return {
-    network: network as Network,
+    network: network,
     address,
   };
 }

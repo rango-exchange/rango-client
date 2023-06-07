@@ -15,6 +15,7 @@ import {
   getBlockChainNameFromId,
   Meta,
   Network,
+  Networks,
   WalletState,
   WalletType,
 } from '@rango-dev/wallets-shared';
@@ -554,7 +555,7 @@ export function isWalletNull(wallet: Wallet | null): boolean {
 export function getEvmProvider(providers: Providers, type: WalletType): any {
   if (type && providers[type]) {
     // we need this because provider can return an instance or a map of instances, so what you are doing here is try to detect that.
-    if (providers[type].size) return providers[type].get(Network.ETHEREUM);
+    if (providers[type].size) return providers[type].get(Networks.ETHEREUM);
 
     return providers[type];
   }
@@ -1277,8 +1278,7 @@ export function retryOn(
     finalQueueToBeRun = onlyWalletMatched[0];
   }
 
-  if (!canSwitchNetworkTo?.(wallet, network as Network))
-    finalQueueToBeRun?.unblock();
+  if (!canSwitchNetworkTo?.(wallet, network)) finalQueueToBeRun?.unblock();
   else finalQueueToBeRun?.checkBlock();
 }
 

@@ -1,5 +1,4 @@
 import {
-  Network,
   WalletTypes,
   CanSwitchNetwork,
   Connect,
@@ -20,19 +19,20 @@ import {
 } from './helpers';
 import signer from './signer';
 import { SignerFactory, isEvmBlockchain, BlockchainMeta } from 'rango-types';
+import { Networks } from '@rango-dev/wallets-shared';
 
 const WALLET = WalletTypes.OKX;
 
 export const config = {
   type: WALLET,
-  defaultNetwork: Network.ETHEREUM,
+  defaultNetwork: Networks.ETHEREUM,
 };
 
 export const getInstance = okx_instance;
 export const connect: Connect = async ({ instance, meta }) => {
   let results: ProviderConnectResult[] = [];
 
-  const evm_instance = chooseInstance(instance, meta, Network.ETHEREUM);
+  const evm_instance = chooseInstance(instance, meta, Networks.ETHEREUM);
 
   if (evm_instance) {
     const evm = await getEvmAccounts(evm_instance);
@@ -47,12 +47,12 @@ export const connect: Connect = async ({ instance, meta }) => {
 };
 
 export const subscribe: Subscribe = ({ instance, updateAccounts, meta }) => {
-  const ethInstance = chooseInstance(instance, meta, Network.ETHEREUM);
+  const ethInstance = chooseInstance(instance, meta, Networks.ETHEREUM);
 
   ethInstance?.on('accountsChanged', async (addresses: string[]) => {
     const eth_chainId = meta
       .filter(isEvmBlockchain)
-      .find((blockchain) => blockchain.name === Network.ETHEREUM)?.chainId;
+      .find((blockchain) => blockchain.name === Networks.ETHEREUM)?.chainId;
 
     updateAccounts(addresses, eth_chainId);
     const [{ accounts, chainId }] = await getSolanaAccounts(instance);
@@ -91,6 +91,6 @@ export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
   },
   color: 'white',
   supportedChains: allBlockChains.filter((blockchainMeta) =>
-    OKX_WALLET_SUPPORTED_CHAINS.includes(blockchainMeta.name as Network)
+    OKX_WALLET_SUPPORTED_CHAINS.includes(blockchainMeta.name as Networks)
   ),
 });

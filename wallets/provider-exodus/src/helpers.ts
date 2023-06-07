@@ -1,4 +1,4 @@
-import { Network, ProviderConnectResult } from '@rango-dev/wallets-shared';
+import { Networks, ProviderConnectResult } from '@rango-dev/wallets-shared';
 
 export function exodus_instances() {
   const { exodus } = window;
@@ -6,24 +6,24 @@ export function exodus_instances() {
   if (!exodus) return null;
 
   const instances = new Map();
-  if (exodus.ethereum) instances.set(Network.ETHEREUM, exodus.ethereum);
-  if (exodus.solana) instances.set(Network.SOLANA, exodus.solana);
+  if (exodus.ethereum) instances.set(Networks.ETHEREUM, exodus.ethereum);
+  if (exodus.solana) instances.set(Networks.SOLANA, exodus.solana);
   return instances;
 }
 
 export async function getSolanaAccounts(
   instance: any
 ): Promise<ProviderConnectResult[]> {
-  const solanaInstance = await instance.get(Network.SOLANA);
+  const solanaInstance = await instance.get(Networks.SOLANA);
   const results: ProviderConnectResult[] = [];
 
-  if (!!solanaInstance) {
+  if (solanaInstance) {
     const solanaResponse = await solanaInstance.connect();
     const account = solanaResponse.publicKey.toString();
 
     results.push({
       accounts: account ? [account] : [],
-      chainId: Network.SOLANA,
+      chainId: Networks.SOLANA,
     });
   }
 
@@ -31,10 +31,10 @@ export async function getSolanaAccounts(
 }
 
 export const EXODUS_WALLET_SUPPORTED_CHAINS = [
-  Network.SOLANA,
-  Network.ETHEREUM,
-  Network.BSC,
-  Network.POLYGON,
-  Network.AVAX_CCHAIN,
-  Network.BINANCE,
+  Networks.SOLANA,
+  Networks.ETHEREUM,
+  Networks.BSC,
+  Networks.POLYGON,
+  Networks.AVAX_CCHAIN,
+  Networks.BINANCE,
 ];

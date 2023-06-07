@@ -1,6 +1,6 @@
 import {
   getBlockChainNameFromId,
-  Network,
+  Networks,
   WalletTypes,
   canSwitchNetworkToEvm,
   chooseInstance,
@@ -27,13 +27,13 @@ const WALLET = WalletTypes.COIN98;
 export const config = {
   type: WALLET,
   // TODO: Get from evm networks
-  defaultNetwork: Network.ETHEREUM,
+  defaultNetwork: Networks.ETHEREUM,
 };
 export const getInstance = coin98_instances;
 
 export const connect: Connect = async ({ instance, meta }) => {
-  const evm_instance = chooseInstance(instance, meta, Network.ETHEREUM);
-  const sol_instance = chooseInstance(instance, meta, Network.SOLANA);
+  const evm_instance = chooseInstance(instance, meta, Networks.ETHEREUM);
+  const sol_instance = chooseInstance(instance, meta, Networks.SOLANA);
   const evm = await getEvmAccounts(evm_instance);
   const { accounts: solanaAccounts } = await getSolanaAccounts(sol_instance);
 
@@ -41,7 +41,7 @@ export const connect: Connect = async ({ instance, meta }) => {
     evm,
     {
       accounts: solanaAccounts,
-      chainId: Network.SOLANA,
+      chainId: Networks.SOLANA,
     },
   ];
 };
@@ -52,9 +52,9 @@ export const subscribe: Subscribe = ({
   updateChainId,
   connect,
 }) => {
-  const eth = chooseInstance(instance, meta, Network.ETHEREUM);
+  const eth = chooseInstance(instance, meta, Networks.ETHEREUM);
   eth?.on('chainChanged', (chainId: string) => {
-    const network = getBlockChainNameFromId(chainId, meta) || Network.Unknown;
+    const network = getBlockChainNameFromId(chainId, meta) || Networks.Unknown;
     const targetInstance = chooseInstance(instance, meta, network);
     targetInstance
       .request({ method: 'eth_requestAccounts' })

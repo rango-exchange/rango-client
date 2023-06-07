@@ -243,7 +243,7 @@ export const getCurrentBlockchainOf = (
     step.tronApprovalTransaction?.blockChain ||
     step.cosmosTransaction?.blockChain ||
     step.solanaTransaction?.blockChain;
-  if (!!b1) return b1 as Network;
+  if (b1) return b1;
 
   const transferAddress = step.transferTransaction?.fromWalletAddress;
   if (!transferAddress) throw PrettyError.BlockchainMissing();
@@ -254,8 +254,7 @@ export const getCurrentBlockchainOf = (
     ) || null;
   if (blockchain == null) throw PrettyError.BlockchainMissing();
 
-  // TODO: check why it returns string
-  return blockchain as Network;
+  return blockchain;
 };
 
 const getBlockchainMetaExplorerBaseUrl = (

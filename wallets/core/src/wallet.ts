@@ -1,6 +1,7 @@
 import {
   getBlockChainNameFromId,
   Network,
+  Networks,
   WalletType,
 } from '@rango-dev/wallets-shared';
 import { accountAddressesWithNetwork, needsCheckInstallation } from './helpers';
@@ -158,29 +159,26 @@ class Wallet<InstanceType = any> {
     let nextNetwork: Network | null | undefined = null;
     if (Array.isArray(connectResult)) {
       const accounts = connectResult.flatMap((blockchain) => {
-        const chainId = blockchain.chainId || Network.Unknown;
+        const chainId = blockchain.chainId || Networks.Unknown;
         // Try to map chainId with a Network, if not found, we use chainId directly.
         const network =
-          getBlockChainNameFromId(chainId, this.meta) || Network.Unknown;
+          getBlockChainNameFromId(chainId, this.meta) || Networks.Unknown;
         // TODO: second parameter should be `string` when we decided to open source the package.
-        return accountAddressesWithNetwork(
-          blockchain.accounts,
-          network as Network
-        );
+        return accountAddressesWithNetwork(blockchain.accounts, network);
       });
       // Typescript can not detect we are filtering out null values:(
       nextAccounts = accounts.filter(Boolean) as string[];
       nextNetwork = requestedNetwork || this.options.config.defaultNetwork;
     } else {
-      const chainId = connectResult.chainId || Network.Unknown;
+      const chainId = connectResult.chainId || Networks.Unknown;
       const network =
-        getBlockChainNameFromId(chainId, this.meta) || Network.Unknown;
+        getBlockChainNameFromId(chainId, this.meta) || Networks.Unknown;
       // We fallback to current active network if `chainId` not provided.
       nextAccounts = accountAddressesWithNetwork(
         connectResult.accounts,
-        network as Network
+        network
       );
-      nextNetwork = network as Network;
+      nextNetwork = network;
     }
 
     if (nextAccounts.length > 0) {
@@ -250,7 +248,7 @@ class Wallet<InstanceType = any> {
           let network = this.state.network;
           if (chainId) {
             network =
-              getBlockChainNameFromId(chainId, this.meta) || Network.Unknown;
+              getBlockChainNameFromId(chainId, this.meta) || Networks.Unknown;
           }
 
           const nextAccounts = accountAddressesWithNetwork(accounts, network);
@@ -263,7 +261,7 @@ class Wallet<InstanceType = any> {
         updateChainId: (chainId) => {
           const network = chainId
             ? getBlockChainNameFromId(chainId, this.meta)
-            : Network.Unknown;
+            : Networks.Unknown;
           this.updateState({
             network,
           });
@@ -363,7 +361,7 @@ class Wallet<InstanceType = any> {
         updateChainId: (chainId) => {
           const network = chainId
             ? getBlockChainNameFromId(chainId, this.meta)
-            : Network.Unknown;
+            : Networks.Unknown;
           this.updateState({
             network,
           });
