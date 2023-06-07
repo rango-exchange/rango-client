@@ -5,8 +5,6 @@ import {
   SignInputOutput,
 } from '@binance-chain/javascript-sdk/lib/types/index.js';
 
-// import { SendMsg } from '@binance-chain/javascript-sdk/lib/types';
-
 export function binance() {
   const { BinanceChain } = window;
   if (!!BinanceChain) {

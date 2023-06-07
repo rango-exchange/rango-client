@@ -27,7 +27,7 @@ async function run() {
   })`tsc --declaration --emitDeclarationOnly`;
   const esbuildTask = esbuild.build({
     bundle: true,
-    // minify: true,
+    minify: true,
     keepNames: true,
     sourcemap: true,
     platform: 'node',
