@@ -75,7 +75,7 @@ export function AppRoutes(props: PropTypes) {
       path: navigationRoutes.swapDetails,
       element: (
         <SwapDetailsPage
-          manageExternalWallets={config?.manageExternalWallets}
+          manageExternalProviders={config?.manageExternalProviders}
         />
       ),
     },
@@ -83,7 +83,7 @@ export function AppRoutes(props: PropTypes) {
       path: navigationRoutes.wallets,
       element: (
         <WalletsPage
-          manageExternalWallets={config?.manageExternalWallets}
+          manageExternalProviders={config?.manageExternalProviders}
           providers={providers}
           multiWallets={
             typeof config?.multiWallets === 'undefined'
@@ -97,7 +97,7 @@ export function AppRoutes(props: PropTypes) {
       path: getAbsolutePath(navigationRoutes.confirmSwap),
       element: (
         <ConfirmSwapPage
-          manageExternalWallets={config?.manageExternalWallets}
+          manageExternalProviders={config?.manageExternalProviders}
         />
       ),
     },

@@ -31,13 +31,13 @@ import { ProviderContext } from '@rango-dev/wallets-core';
 import useCustomWallets from '../hooks/useCustomWallets';
 
 export function SwapDetailsPage({
-  manageExternalWallets,
+  manageExternalProviders,
 }: {
-  manageExternalWallets?:()=> ProviderContext;
+  manageExternalProviders?: ProviderContext;
 }) {
   const selectedSwapRequestId = useUiStore.use.selectedSwapRequestId();
   const { canSwitchNetworkTo, connect } = useCustomWallets(
-    manageExternalWallets
+    manageExternalProviders
   );
   const retry = useBestRouteStore.use.retry();
   const navigate = useNavigate();

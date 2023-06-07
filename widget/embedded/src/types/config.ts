@@ -118,5 +118,5 @@ export type WidgetConfig = {
   language?: string;
   theme?: WidgetTheme;
   externalProviders?: WalletProvider[];
-  manageExternalWallets?: () => ProviderContext;
+  manageExternalProviders?: ProviderContext;
 };

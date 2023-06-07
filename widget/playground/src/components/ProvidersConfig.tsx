@@ -17,6 +17,7 @@ import { WalletType } from '@rango-dev/wallets-shared';
 import { useMetaStore } from '../store/meta';
 import ModalContent from './MultiSelect/ModalContent';
 import { getStateWallet, onChangeMultiSelects } from '../helpers';
+import { useExternalProvidersStore } from '../store/externalProviders';
 
 const Head = styled('div', {
   display: 'flex',
@@ -42,17 +43,17 @@ export function ProvidersConfig() {
   const selectedWallets = useConfigStore.use.config().wallets;
   const [walletMessage, setWalletErrorMessage] = useState('');
 
-  const { connect, disconnect, state, getWalletInfo } = useWallets();
+  const walletsContext = useWallets();
 
-  const externalProviders = useConfigStore.use.config().externalProviders;
-  const onChangeProviders = useConfigStore.use.onChangeProviders();
-
-  const onChangeManageExternalWallets = useConfigStore.use.onChangeManageExternalWallets();
+  const external = useExternalProvidersStore.use.external();
+  const onChangeProviders = useExternalProvidersStore.use.onChangeProviders();
+  const onChangeManageExternalproviders =
+    useExternalProvidersStore.use.onChangeManageExternalproviders();
 
   const providersList = allProviders();
 
   const list = providersList.map((provider: WalletProvider) => {
-    const { name: title, img: logo } = getWalletInfo(provider.config.type);
+    const { name: title, img: logo } = walletsContext.getWalletInfo(provider.config.type);
     return {
       title,
       logo,
@@ -60,16 +61,16 @@ export function ProvidersConfig() {
     };
   });
 
-  const selectedProviders = externalProviders
-    ? externalProviders.map((provider: WalletProvider) => provider.config.type)
-    : undefined;
+  const selectedProviders = external.providers?.map(
+    (provider: WalletProvider) => provider.config.type,
+  );
 
-  const wallets = (externalProviders || providersList)
+  const wallets = (external.providers || providersList)
     .map((provider: WalletProvider) => {
       const type = provider.config.type;
-      const { name, img: image, installLink, showOnMobile } = getWalletInfo(type);
+      const { name, img: image, installLink, showOnMobile } = walletsContext.getWalletInfo(type);
       return {
-        state: getStateWallet(state(type)),
+        state: getStateWallet(walletsContext.state(type)),
         installLink,
         name,
         image,
@@ -84,7 +85,7 @@ export function ProvidersConfig() {
 
   const onChange = (provider) => {
     const list = providersList.map((item) => item.config.type);
-    const selected = externalProviders?.map((item) => item.config.type);
+    const selected = external.providers?.map((item) => item.config.type);
     let values = onChangeMultiSelects(provider, selected, list, (item) => item === provider);
     if (values)
       values = allProviders().filter((provider) => {
@@ -95,22 +96,17 @@ export function ProvidersConfig() {
   };
 
   const onClickAction = () => {
-    if (!externalProviders) onChange('empty');
+    if (!external.providers) onChange('empty');
     else onChange('all');
   };
 
-  useEffect(() => {
-    if (!!externalProviders) setHasExternalProvider(true);
-    else setHasExternalProvider(false);
-  }, [externalProviders]);
-
   const onSelectWallet = async (type: WalletType) => {
-    const wallet = state(type);
+    const wallet = walletsContext.state(type);
     try {
       if (wallet.connected) {
-        await disconnect(type);
+        await walletsContext.disconnect(type);
       } else {
-        await connect(type);
+        await walletsContext.connect(type);
       }
     } catch (e) {
       if (e instanceof Error) {
@@ -134,11 +130,10 @@ export function ProvidersConfig() {
             onChange={(checked) => {
               if (!checked) {
                 onChangeProviders(undefined);
-                onChangeManageExternalWallets(undefined);
+                onChangeManageExternalproviders(undefined);
               } else {
                 onChangeProviders(providersList);
-
-                onChangeManageExternalWallets(useWallets);
+                onChangeManageExternalproviders(walletsContext);
               }
               setHasExternalProvider(checked);
             }}
@@ -188,7 +183,7 @@ export function ProvidersConfig() {
           }
           open={openProviderModal}
           onClose={() => {
-            if (!externalProviders || !externalProviders.length) onChange('all');
+            if (!external.providers || !external.providers.length) onChange('all');
             setOpenProviderModal(false);
           }}
           content={

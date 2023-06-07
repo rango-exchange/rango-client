@@ -20,7 +20,7 @@ import useCustomWallets from './hooks/useCustomWallets';
 import { ProviderContext } from '@rango-dev/wallets-core';
 
 function QueueManager(
-  props: PropsWithChildren<{ manageExternalWallets?:()=> ProviderContext }>
+  props: PropsWithChildren<{ manageExternalProviders?: ProviderContext }>
 ) {
   const {
     providers,
@@ -29,7 +29,7 @@ function QueueManager(
     connect,
     canSwitchNetworkTo,
     getWalletInfo,
-  } = useCustomWallets(props.manageExternalWallets);
+  } = useCustomWallets(props.manageExternalProviders);
 
   const swapQueueDef = useMemo(() => {
     return makeQueueDefinition({

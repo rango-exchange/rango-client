@@ -33,9 +33,9 @@ import useCustomWallets from '../hooks/useCustomWallets';
 import { ProviderContext } from '@rango-dev/wallets-core';
 
 export function ConfirmSwapPage({
-  manageExternalWallets,
+  manageExternalProviders,
 }: {
-  manageExternalWallets?:()=> ProviderContext;
+  manageExternalProviders?: ProviderContext;
 }) {
   const navigate = useNavigate();
   const { navigateBackFrom } = useNavigateBack();
@@ -74,7 +74,7 @@ export function ConfirmSwapPage({
     (error) => error.type === ConfirmSwapErrorTypes.INSUFFICIENT_SLIPPAGE
   );
 
-  const { getWalletInfo, connect } = useCustomWallets(manageExternalWallets);
+  const { getWalletInfo, connect } = useCustomWallets(manageExternalProviders);
   const confirmDisabled =
     fetchingBestRoute ||
     !requiredWallets(bestRoute).every((chain) =>

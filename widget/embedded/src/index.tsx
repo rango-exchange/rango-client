@@ -111,7 +111,7 @@ export const Widget: React.FC<WidgetProps> = ({ config }) => {
       onUpdateState={onUpdateState}
     >
       <div id="swap-container" className={activeTheme}>
-        <QueueManager manageExternalWallets={config?.manageExternalWallets}>
+        <QueueManager manageExternalProviders={config?.manageExternalProviders}>
           <SwapContainer fixedHeight={currentPage !== navigationRoutes.home}>
             <AppRouter
               lastConnectedWallet={lastConnectedWalletWithNetwork}

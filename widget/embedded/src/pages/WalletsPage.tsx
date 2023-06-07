@@ -23,7 +23,7 @@ import useCustomWallets from '../hooks/useCustomWallets';
 interface PropTypes {
   providers: WalletProvider[];
   multiWallets: boolean;
-  manageExternalWallets?: ()=>ProviderContext;
+  manageExternalProviders?: ProviderContext;
 }
 
 const ListContainer = styled('div', {
@@ -49,11 +49,11 @@ const AlertContainer = styled('div', {
 export function WalletsPage({
   providers,
   multiWallets,
-  manageExternalWallets,
+  manageExternalProviders,
 }: PropTypes) {
   const { navigateBackFrom } = useNavigateBack();
   const { state, disconnect, getWalletInfo, connect } = useCustomWallets(
-    manageExternalWallets
+    manageExternalProviders
   );
   const wallets = getlistWallet(state, getWalletInfo, providers);
 

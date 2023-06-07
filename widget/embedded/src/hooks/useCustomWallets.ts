@@ -1,62 +1,50 @@
 import { ProviderContext } from '@rango-dev/wallets-core';
 import { useWallets } from '@rango-dev/wallets-core';
-import { Network } from '@rango-dev/wallets-shared';
+import { Network, WalletTypes } from '@rango-dev/wallets-shared';
+import { useEffect } from 'react';
 
-const useCustomWallets = (manageExternalWallets?: () => ProviderContext) => {
+const useCustomWallets = (manageExternalProviders?: ProviderContext) => {
   const wallets = useWallets();
-  const manageWallets = manageExternalWallets && manageExternalWallets();
-  console.log('manage externall wallets', manageWallets);
 
   const connect = async (type: string, network?: Network) => {
-    if (!!manageWallets) return await manageWallets.connect(type, network);
+    if (!!manageExternalProviders)
+      await manageExternalProviders.connect(type, network);
     return await wallets.connect(type, network);
   };
   const disconnect = (type: string) => {
     wallets.disconnect(type);
-    if (!!manageWallets) manageWallets.disconnect(type);
+    if (!!manageExternalProviders) manageExternalProviders.disconnect(type);
   };
   const disconnectAll = () => {
     wallets.disconnectAll();
-    if (!!manageWallets) manageWallets.disconnectAll();
+    if (!!manageExternalProviders) manageExternalProviders.disconnectAll();
   };
 
   const state = (type: string) => {
-    if (!!manageWallets) {
-      console.log('state', manageWallets.state(type));
+    if (!!manageExternalProviders) {
+      console.log('state', manageExternalProviders.state(type));
 
-      return manageWallets.state(type);
+      return manageExternalProviders.state(type);
     }
     return wallets.state(type);
   };
-  const canSwitchNetworkTo = (type: string, network: Network) => {
-    if (!!manageWallets) return manageWallets.canSwitchNetworkTo(type, network);
-    return wallets.canSwitchNetworkTo(type, network);
-  };
 
-  const providers = () => {
-    if (!!manageWallets) return manageWallets.providers();
-    return wallets.providers();
-  };
-
-  const getSigners = (type: string) => {
-    if (!!manageWallets) return manageWallets.getSigners(type);
-    return wallets.getSigners(type);
-  };
-
-  const getWalletInfo = (type: string) => {
-    if (!!manageWallets) return manageWallets.getWalletInfo(type);
-    return wallets.getWalletInfo(type);
-  };
+  useEffect(() => {
+    console.log(
+      'manage externall wallets',
+      manageExternalProviders?.state(WalletTypes.META_MASK)
+    );
+  }, [manageExternalProviders]);
 
   return {
     connect,
     disconnect,
     disconnectAll,
     state,
-    canSwitchNetworkTo,
-    providers,
-    getSigners,
-    getWalletInfo,
+    canSwitchNetworkTo: wallets.canSwitchNetworkTo,
+    providers: wallets.providers,
+    getSigners: wallets.getSigners,
+    getWalletInfo: wallets.getWalletInfo,
   };
 };
 

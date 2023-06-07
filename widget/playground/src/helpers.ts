@@ -1,8 +1,8 @@
 import { WalletState, WalletTypes } from '@rango-dev/wallets-shared';
 import { Asset, Token } from 'rango-sdk';
-import { WidgetConfig } from './types';
 import subtractObject from 'subtract-object';
 import { WalletState as WalletStatus } from '@rango-dev/ui';
+import { WidgetConfig } from '@rango-dev/widget-embedded';
 export const excludedWallets = [WalletTypes.STATION, WalletTypes.LEAP];
 
 export const onChangeMultiSelects = (value, values, list, findIndex) => {

@@ -56,7 +56,7 @@ export type LayoutProps = {
 export function Layout({ config, providers }: LayoutProps) {
   const navigate = useNavigate();
   const { connectedWallets, selectedWallets } = useWalletsStore();
-  const { getWalletInfo } = useCustomWallets(config?.manageExternalWallets);
+  const { getWalletInfo } = useCustomWallets(config?.manageExternalProviders);
   const connectedWalletsImages = removeDuplicateFrom(
     getSelectableWallets(connectedWallets, selectedWallets, getWalletInfo).map(
       w => w.image
