@@ -4447,6 +4447,22 @@
   dependencies:
     "@babel/runtime" "^7.13.10"
 
+"@rango-dev/signer-evm@^0.1.15-next.4":
+  version "0.1.15-next.6"
+  resolved "https://registry.yarnpkg.com/@rango-dev/signer-evm/-/signer-evm-0.1.15-next.6.tgz#2b2f60c2af0938907d83394a2dcbd2fa8c383b50"
+  integrity sha512-JTZAjEkRZ3CObBVPY4c4UQkcP/YyJPUCBw94PACC2dZpiFefP23UEm7ieK9vk/SoW+YPBBnCgh7DojSFfd85cA==
+  dependencies:
+    "@ethersproject/abstract-provider" "^5.7.0"
+    ethers "^5.7.2"
+    rango-types "^0.1.38"
+
+"@rango-dev/wallets-shared@^0.1.15-next.3":
+  version "0.1.15-next.7"
+  resolved "https://registry.yarnpkg.com/@rango-dev/wallets-shared/-/wallets-shared-0.1.15-next.7.tgz#5996b665afa88dec5fb2fc8b1d0e2f850e898956"
+  integrity sha512-+J9OToxy1o00QTTXFrrXOeZGGnSN7syz8ngg5/xSmwnkWdE3RG1wrgx2Bjo5mmQ3UvJhffAiEtOjVkmWClseJQ==
+  dependencies:
+    rango-types "^0.1.38"
+
 "@reach/router@^1.2.1":
   version "1.3.4"
   resolved "https://registry.yarnpkg.com/@reach/router/-/router-1.3.4.tgz#d2574b19370a70c80480ed91f3da840136d10f8c"
@@ -17272,15 +17288,15 @@ rango-sdk@^0.1.30:
     rango-types "^0.1.38"
     uuid-random "^1.3.2"
 
+rango-types@^0.1.37, rango-types@^0.1.39:
+  version "0.1.39"
+  resolved "https://registry.yarnpkg.com/rango-types/-/rango-types-0.1.39.tgz#64d9e5f5077ed738b5f19cb3ad3a5c9b9a8afda8"
+  integrity sha512-UMpxG51Q/xjjW6JKPblwFZbeQSt7emuhxEgD19T4hd0PzJu0lJWA17Lltv8z2TO7fSaHv0aCOYX6SQm06oUDLQ==
+
 rango-types@^0.1.38:
   version "0.1.38"
   resolved "https://registry.yarnpkg.com/rango-types/-/rango-types-0.1.38.tgz#e204df207f4c8baff80a655a8e99106d10e42df9"
   integrity sha512-99eYs/NzKvHZuZBc9mOpaU4v1GTkdkXa/saKep/fU+QK1a36ytFqoh8kS8bBJ4HBiJ+Cq51H/GoqFB8kgrtlLg==
-
-rango-types@^0.1.39:
-  version "0.1.39"
-  resolved "https://registry.yarnpkg.com/rango-types/-/rango-types-0.1.39.tgz#64d9e5f5077ed738b5f19cb3ad3a5c9b9a8afda8"
-  integrity sha512-UMpxG51Q/xjjW6JKPblwFZbeQSt7emuhxEgD19T4hd0PzJu0lJWA17Lltv8z2TO7fSaHv0aCOYX6SQm06oUDLQ==
 
 raw-body@2.5.1:
   version "2.5.1"

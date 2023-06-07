@@ -57,6 +57,4 @@ export type WidgetConfig = {
   customDestination?: boolean;
   language?: string;
   theme: Theme;
-  externalProviders?: WalletProvider[];
-
 };

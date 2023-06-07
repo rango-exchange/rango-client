@@ -114,5 +114,4 @@ export type WidgetConfig = {
   customDestination?: boolean;
   language?: string;
   theme?: WidgetTheme;
-  externalProviders?: WalletProvider[];
 };
