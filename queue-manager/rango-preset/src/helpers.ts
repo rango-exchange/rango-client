@@ -395,6 +395,13 @@ export function setStepTransactionIds(
     swap: swap,
     step: currentStep,
   });
+
+  notifier({
+    eventType: 'check_tx',
+    isApprovalTx,
+    swap: swap,
+    step: currentStep,
+  });
 }
 
 /**
@@ -1343,6 +1350,19 @@ export function cancelSwap(
     nextStepStatus: 'failed',
     errorCode: 'USER_CANCEL',
   });
+
+  notifier({
+    eventType: 'canceled',
+    swap: updateResult.swap,
+    step: updateResult.step,
+  });
+
+  notifier({
+    eventType: 'failed',
+    swap: updateResult.swap,
+    step: updateResult.step,
+  });
+
   reset();
   if (manager) manager?.retry();
 

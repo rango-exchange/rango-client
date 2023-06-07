@@ -38,6 +38,8 @@ export function scheduleNextStep({
 
     setStorage({ ...getStorage(), swapDetails: swap });
 
+    notifier({ eventType: 'started', swap, step: currentStep });
+
     schedule(SwapActionTypes.CREATE_TRANSACTION);
     next();
   } else {

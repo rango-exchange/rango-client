@@ -182,9 +182,16 @@ export type StepEventType =
       | 'waiting_for_change_wallet_account'
     );
 
+export type RouteExecutionMessageSeverity =
+  | 'error'
+  | 'success'
+  | 'warning'
+  | 'info';
+
 type Event<T extends StepEventType, U extends Record<string, unknown> = {}> = {
   eventType: T;
   message: string;
+  messageSeverity: RouteExecutionMessageSeverity;
 } & U;
 
 export type RouteEvent =

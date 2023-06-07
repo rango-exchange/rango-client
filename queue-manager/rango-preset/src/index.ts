@@ -3,7 +3,18 @@ import { SwapQueueDef } from './types';
 import { swapQueueDef } from './queueDef';
 
 export { PrettyError, prettifyErrorMessage } from './shared-errors';
-export type { SwapQueueContext, SwapStorage } from './types';
+export type {
+  SwapQueueContext,
+  SwapStorage,
+  RouteExecutionEvents,
+  Route,
+  Step,
+  RouteEvent,
+  RouteEventType,
+  StepEventType,
+  StepEvent,
+  RouteExecutionMessageSeverity,
+} from './types';
 export { MainEvents } from './types';
 export type {
   PendingSwapWithQueueID,

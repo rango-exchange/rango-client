@@ -194,6 +194,7 @@ async function checkTransactionStatus({
     swap.extraMessage = nextStep
       ? `starting next step: ${nextStep.swapperId}: ${nextStep.fromBlockchain} -> ${nextStep.toBlockchain}`
       : '';
+    notifier({ eventType: 'succeeded', swap, step: currentStep });
   } else if (currentStep.status === 'failed') {
     swap.extraMessage = 'Transaction failed in blockchain';
     swap.extraMessageSeverity = MessageSeverity.error;
