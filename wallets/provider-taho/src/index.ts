@@ -9,9 +9,13 @@ import {
   switchNetworkForEvm,
   SwitchNetwork,
   canSwitchNetworkToEvm,
+  Network,
 } from '@rango-dev/wallets-shared';
-import { SignerFactory, BlockchainMeta, evmBlockchains } from 'rango-types';
-import { taho as taho_instances } from './helpers';
+import { SignerFactory, BlockchainMeta } from 'rango-types';
+import {
+  TAHO_WALLET_SUPPORTED_CHAINS,
+  taho as taho_instances,
+} from './helpers';
 import signer from './signer';
 
 const WALLET = WalletTypes.TAHO;
@@ -41,7 +45,6 @@ export const getSigners: (provider: any) => SignerFactory = signer;
 export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
   allBlockChains
 ) => {
-  const evms = evmBlockchains(allBlockChains);
   return {
     name: 'Taho',
     img: 'https://raw.githubusercontent.com/rango-exchange/rango-types/main/assets/icons/wallets/taho.svg',
@@ -53,6 +56,8 @@ export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
       DEFAULT: 'https://taho.xyz',
     },
     color: '#ffffff',
-    supportedChains: evms,
+    supportedChains: allBlockChains.filter((blockchainMeta) =>
+      TAHO_WALLET_SUPPORTED_CHAINS.includes(blockchainMeta.name as Network)
+    ),
   };
 };
