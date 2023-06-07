@@ -21,7 +21,7 @@ import {
   Token,
   WalletDetail,
 } from 'rango-sdk';
-import { isCosmosBlockchain } from 'rango-types';
+import Rango from 'rango-types';
 import { readAccountAddress } from '@rango-dev/wallets-core';
 import { ConnectedWallet, TokenBalance } from '../store/wallets';
 import { numberToString } from './numbers';
@@ -29,6 +29,8 @@ import BigNumber from 'bignumber.js';
 import { TokenWithBalance } from '../pages/SelectTokenPage';
 import { ZERO } from '../constants/numbers';
 import { Wallet } from '../types';
+
+const { isCosmosBlockchain } = Rango;
 
 export function getStateWallet(state: WalletState): WalletStatus {
   switch (true) {
@@ -172,7 +174,7 @@ export function getSelectableWallets(
   destinationChain?: string
 ): SelectableWallet[] {
   const selectableWallets = connectedWallets.map(
-    (connectedWallet: ConnectedWallet) => {      
+    (connectedWallet: ConnectedWallet) => {
       return {
         address: connectedWallet.address,
         walletType: connectedWallet.walletType,
@@ -325,13 +327,13 @@ export const calculateWalletUsdValue = (connectedWallet: ConnectedWallet[]) => {
 };
 
 function numberWithThousandSeperator(number: string | number): string {
-  var parts = number.toString().split('.');
+  const parts = number.toString().split('.');
   parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
   return parts.join('.');
 }
 
 export const sortTokens = (tokens: TokenWithBalance[]): TokenWithBalance[] => {
-  let walletConnected = !!tokens.some((token) => token.balance);
+  const walletConnected = !!tokens.some((token) => token.balance);
   if (!walletConnected) {
     return tokens
       .filter((token) => !token.address)
