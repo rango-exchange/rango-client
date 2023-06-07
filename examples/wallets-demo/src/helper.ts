@@ -1,10 +1,7 @@
 import { readAccountAddress } from '@rango-dev/wallets-core';
 import { Network } from '@rango-dev/wallets-shared';
 import type { BlockchainMeta } from 'rango-types';
-import Rango from 'rango-types';
-
-// For cjs compatibility.
-const { isEvmBlockchain } = Rango;
+import { isEvmBlockchain } from 'rango-types';
 
 export type Blockchain = {
   name: Network;

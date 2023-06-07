@@ -1,8 +1,5 @@
 import type { SignerError as SignerErrorType } from 'rango-types';
-import Rango from 'rango-types';
-
-// For cjs compatibility.
-const { SignerError, SignerErrorCode } = Rango;
+import { SignerError, SignerErrorCode } from 'rango-types';
 
 export const cleanEvmError = (error: any): SignerErrorType => {
   let message = undefined;

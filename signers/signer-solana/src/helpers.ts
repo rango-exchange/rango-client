@@ -10,10 +10,7 @@ import type {
   SignerError as SignerErrorType,
 } from 'rango-types';
 import { SolanaExternalProvider } from './signer';
-import Rango from 'rango-types';
-
-// For cjs compatibility.
-const { SignerError, SignerErrorCode } = Rango;
+import { SignerError, SignerErrorCode } from 'rango-types';
 
 async function retryPromise<Type>(
   promise: Promise<Type>,

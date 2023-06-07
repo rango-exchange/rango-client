@@ -16,10 +16,7 @@ import { useMetaStore } from './store/meta';
 import { useWalletsStore } from './store/wallets';
 import { walletAndSupportedChainsNames } from './utils/wallets';
 import { getConfig } from './utils/configs';
-import Rango from 'rango-types';
-
-// For cjs compatibility.
-const { isEvmBlockchain } = Rango;
+import { isEvmBlockchain } from 'rango-types';
 
 function QueueManager(props: PropsWithChildren) {
   const {
