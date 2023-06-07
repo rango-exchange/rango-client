@@ -21,7 +21,7 @@ import {
   Token,
   WalletDetail,
 } from 'rango-sdk';
-import Rango from 'rango-types';
+import { isCosmosBlockchain } from 'rango-types';
 import { readAccountAddress } from '@rango-dev/wallets-core';
 import { ConnectedWallet, TokenBalance } from '../store/wallets';
 import { numberToString } from './numbers';
@@ -29,8 +29,6 @@ import BigNumber from 'bignumber.js';
 import { TokenWithBalance } from '../pages/SelectTokenPage';
 import { ZERO } from '../constants/numbers';
 import { Wallet } from '../types';
-
-const { isCosmosBlockchain } = Rango;
 
 export function getStateWallet(state: WalletState): WalletStatus {
   switch (true) {

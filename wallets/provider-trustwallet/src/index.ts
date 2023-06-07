@@ -12,11 +12,7 @@ import {
 } from '@rango-dev/wallets-shared';
 import { trustWallet as trustwallet_instance } from './helpers';
 import signer from './signer';
-import type { SignerFactory, BlockchainMeta } from 'rango-types';
-import Rango from 'rango-types';
-
-// For cjs compatibility.
-const { evmBlockchains } = Rango;
+import { SignerFactory, evmBlockchains, BlockchainMeta } from 'rango-types';
 
 const WALLET = WalletTypes.TRUST_WALLET;
 
