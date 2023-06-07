@@ -14,11 +14,7 @@ import {
 } from './helpers';
 import signer from './signer';
 import type { SignerFactory, BlockchainMeta } from 'rango-types';
-
-import Rango from 'rango-types';
-
-// For cjs compatibility.
-const { isEvmBlockchain } = Rango;
+import { isEvmBlockchain } from 'rango-types';
 
 const WALLET = WalletTypes.BINANCE_CHAIN;
 

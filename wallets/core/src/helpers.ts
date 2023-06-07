@@ -9,10 +9,7 @@ import {
 import { State, WalletProvider, WalletProviders } from './types';
 import { Options, State as WalletState } from './wallet';
 import type { BlockchainMeta } from 'rango-types';
-import Rango from 'rango-types';
-
-// For cjs compatibility.
-const { isEvmBlockchain } = Rango;
+import { isEvmBlockchain } from 'rango-types';
 
 export function choose(wallets: any[], type: WalletType): any | null {
   return wallets.find((wallet) => wallet.type === type) || null;

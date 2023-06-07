@@ -2,11 +2,12 @@ import type {
   APIErrorCode,
   SignerErrorCode as SignerErrorCodeType,
 } from 'rango-types';
-import Rango from 'rango-types';
-
-// For cjs compatibility.
-const { SignerErrorCode, SignerError, isSignerErrorCode, isAPIErrorCode } =
-  Rango;
+import {
+  SignerErrorCode,
+  SignerError,
+  isSignerErrorCode,
+  isAPIErrorCode,
+} from 'rango-types';
 
 export type ErrorDetail = {
   extraMessage: string;
