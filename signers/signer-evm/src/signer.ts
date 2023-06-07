@@ -6,10 +6,7 @@ import type { GenericSigner } from 'rango-types';
 import { EvmTransaction } from 'rango-types/lib/api/main';
 import { providers } from 'ethers';
 import { cleanEvmError } from './helper';
-import Rango from 'rango-types';
-
-// For cjs compatibility.
-const { SignerError, SignerErrorCode } = Rango;
+import { SignerError, SignerErrorCode } from 'rango-types';
 
 export class DefaultEvmSigner implements GenericSigner<EvmTransaction> {
   private signer: providers.JsonRpcSigner;

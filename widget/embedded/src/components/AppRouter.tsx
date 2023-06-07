@@ -5,10 +5,7 @@ import { WalletType } from '@rango-dev/wallets-shared';
 import { UpdateUrl } from './UpdateUrl';
 import { useMetaStore } from '../store/meta';
 import { useWallets } from '@rango-dev/wallets-core';
-import Rango from 'rango-types';
-
-// For cjs compatibility.
-const { isEvmBlockchain } = Rango;
+import { isEvmBlockchain } from 'rango-types';
 
 export function AppRouter({
   children,
