@@ -15,12 +15,12 @@ import {
 import { coin98 as coin98_instances } from './helpers';
 import { getSolanaAccounts } from './helpers';
 import signer from './signer';
-import type { SignerFactory, BlockchainMeta } from 'rango-types';
-
-import Rango from 'rango-types';
-
-// For cjs compatibility.
-const { evmBlockchains, solanaBlockchain } = Rango;
+import {
+  SignerFactory,
+  evmBlockchains,
+  solanaBlockchain,
+  BlockchainMeta,
+} from 'rango-types';
 
 const WALLET = WalletTypes.COIN98;
 

@@ -2,12 +2,12 @@ import { BncClient, Transaction } from '@binance-chain/javascript-sdk';
 import { StdSignMsg } from '@binance-chain/javascript-sdk/lib/types';
 import { getPublicKey } from '@binance-chain/javascript-sdk/lib/crypto/index.js';
 import { cosmosMessageToBCSendMsg } from './helpers';
-import type { CosmosTransaction, GenericSigner } from 'rango-types';
-
-import Rango from 'rango-types';
-
-// For cjs compatibility.
-const { SignerError, SignerErrorCode } = Rango;
+import {
+  CosmosTransaction,
+  GenericSigner,
+  SignerError,
+  SignerErrorCode,
+} from 'rango-types';
 
 export const executeCosmosMessage = async (
   cosmosProvider: any,

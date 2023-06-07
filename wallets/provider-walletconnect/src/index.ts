@@ -15,15 +15,12 @@ import {
 } from '@rango-dev/wallets-shared';
 import { formatJsonRpcRequest } from '@walletconnect/jsonrpc-utils';
 import signer from './signer';
-import type {
+import {
   SignerFactory,
   EvmBlockchainMeta,
   BlockchainMeta,
+  evmBlockchains,
 } from 'rango-types';
-
-import Rango from 'rango-types';
-
-const { evmBlockchains } = Rango;
 
 const WALLET = WalletTypes.WALLET_CONNECT;
 

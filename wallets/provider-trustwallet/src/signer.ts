@@ -1,10 +1,10 @@
 import { DefaultEvmSigner } from '@rango-dev/signer-evm';
 import { Network, getNetworkInstance } from '@rango-dev/wallets-shared';
-import type { SignerFactory } from 'rango-types';
-import Rango from 'rango-types';
-
-// For cjs compatibility.
-const { DefaultSignerFactory, TransactionType: TxType } = Rango;
+import {
+  DefaultSignerFactory,
+  SignerFactory,
+  TransactionType as TxType,
+} from 'rango-types';
 
 export default function getSigners(provider: any): SignerFactory {
   const ethProvider = getNetworkInstance(provider, Network.ETHEREUM);

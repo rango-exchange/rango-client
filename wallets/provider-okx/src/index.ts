@@ -19,11 +19,7 @@ import {
   OKX_WALLET_SUPPORTED_CHAINS,
 } from './helpers';
 import signer from './signer';
-import type { SignerFactory, BlockchainMeta } from 'rango-types';
-
-import Rango from 'rango-types';
-
-const { isEvmBlockchain } = Rango;
+import { SignerFactory, isEvmBlockchain, BlockchainMeta } from 'rango-types';
 
 const WALLET = WalletTypes.OKX;
 

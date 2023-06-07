@@ -15,17 +15,14 @@ import {
 } from '@rango-dev/wallets-shared';
 import { brave as brave_instances } from './helpers';
 import signer from './signer';
-import type { SignerFactory, BlockchainMeta } from 'rango-types';
-
-import Rango from 'rango-types';
-
-// For cjs compatibility.
-const {
+import {
+  SignerFactory,
   isEvmBlockchain,
   isSolanaBlockchain,
+  BlockchainMeta,
   evmBlockchains,
   solanaBlockchain,
-} = Rango;
+} from 'rango-types';
 
 const WALLET = WalletTypes.BRAVE;
 

@@ -10,7 +10,7 @@ import {
   WalletActions,
   WalletConfig,
 } from './types';
-import type { BlockchainMeta } from 'rango-types';
+import { BlockchainMeta } from 'rango-types';
 
 export type EventHandler = (
   type: WalletType,
