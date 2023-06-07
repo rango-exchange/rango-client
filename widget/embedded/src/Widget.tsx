@@ -14,7 +14,7 @@ import { useWalletsStore } from './store/wallets';
 import { Layout } from './components/Layout';
 import { globalFont } from './globalStyles';
 import { useTheme } from './hooks/useTheme';
-import RangoSDK from 'rango-sdk';
+import { isEvmBlockchain } from 'rango-sdk';
 import { WidgetConfig } from './types';
 import useSelectLanguage from './hooks/useSelectLanguage';
 import './i18n';
@@ -42,7 +42,7 @@ export const Widget: React.FC<WidgetProps> = ({ config }) => {
   const currentPage = useUiStore.use.currentPage();
 
   const evmBasedChainNames = blockchains
-    .filter(RangoSDK.isEvmBlockchain)
+    .filter(isEvmBlockchain)
     .map((chain) => chain.name);
 
   useMemo(() => {
