@@ -18,12 +18,11 @@ import {
   getSolanaAccounts,
 } from './helpers';
 import signer from './signer';
-import {
-  SignerFactory,
-  isEvmBlockchain,
-  isSolanaBlockchain,
-  BlockchainMeta,
-} from 'rango-types';
+import type { SignerFactory, BlockchainMeta } from 'rango-types';
+import Rango from 'rango-types';
+
+// For cjs compatibility.
+const { isEvmBlockchain, isSolanaBlockchain } = Rango;
 
 const WALLET = WalletTypes.EXODUS;
 

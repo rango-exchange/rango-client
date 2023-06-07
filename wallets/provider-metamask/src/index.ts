@@ -12,7 +12,11 @@ import {
 } from '@rango-dev/wallets-shared';
 import { metamask as metamask_instance } from './helpers';
 import signer from './signer';
-import { SignerFactory, evmBlockchains, BlockchainMeta } from 'rango-types';
+import { SignerFactory, BlockchainMeta } from 'rango-types';
+import Rango from 'rango-types';
+
+// For cjs compatibility.
+const { evmBlockchains } = Rango;
 
 const WALLET = WalletTypes.META_MASK;
 
