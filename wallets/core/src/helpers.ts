@@ -1,4 +1,4 @@
-import { Network, WalletType, WalletTypes } from '@rango-dev/wallets-shared';
+import { Network, WalletType } from '@rango-dev/wallets-shared';
 import { State, WalletProvider, WalletProviders } from './types';
 import { Options, State as WalletState } from './wallet';
 
@@ -117,7 +117,3 @@ export function needsCheckInstallation(options: Options) {
   WalletConnect instance is not compatible with ethers.providers.Web3Provider,
   Here we are returning a comptable instance, instead of the original one.  
 */
-
-export function isWalletDerivedFromWalletConnect(wallet_type: WalletType) {
-  return wallet_type === WalletTypes.WALLET_CONNECT;
-}
