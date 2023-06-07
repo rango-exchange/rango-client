@@ -1,10 +1,10 @@
 import {
-  Network,
   WalletTypes,
   CanSwitchNetwork,
   Connect,
   Subscribe,
   WalletInfo,
+  Networks,
 } from '@rango-dev/wallets-shared';
 import { SignerFactory, BlockchainMeta, starknetBlockchain } from 'rango-types';
 import { argentx as argentx_instances } from './helpers';
@@ -20,7 +20,7 @@ const MAINNET_CHAIN_ID = 'SN_MAIN';
 
 export const config = {
   type: WALLET,
-  defaultNetwork: Network.STARKNET,
+  defaultNetwork: Networks.STARKNET,
 };
 
 export const getInstance = argentx_instances;
@@ -35,14 +35,14 @@ export const connect: Connect = async ({ instance }) => {
     throw new Error(
       `Please switch to Mainnet, current network is ${instance?.chainId}`
     );
-  return { accounts: !!r ? r : [], chainId: Network.STARKNET };
+  return { accounts: r ? r : [], chainId: Networks.STARKNET };
 };
 
 export const subscribe: Subscribe = ({ instance, state, updateAccounts }) => {
   instance?.on('accountsChanged', (accounts: any) => {
     if (state.connected) {
-      if (!!instance) {
-        updateAccounts(accounts, Network.STARKNET);
+      if (instance) {
+        updateAccounts(accounts, Networks.STARKNET);
       }
     }
   });

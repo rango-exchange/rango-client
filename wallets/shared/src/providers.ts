@@ -1,4 +1,10 @@
-import { Network, CanSwitchNetwork, Subscribe, SwitchNetwork } from './rango';
+import {
+  Network,
+  CanSwitchNetwork,
+  Subscribe,
+  SwitchNetwork,
+  Networks,
+} from './rango';
 import { convertEvmBlockchainMetaToEvmChainInfo } from './helpers';
 import { switchOrAddNetworkForMetamaskCompatibleWallets } from './helpers';
 import type { BlockchainMeta } from 'rango-types';
@@ -44,7 +50,7 @@ export const switchNetworkForEvm: SwitchNetwork = async ({
   meta,
 }) => {
   const evmBlockchains = meta.filter(isEvmBlockchain);
-  const evmInstance = getNetworkInstance(instance, Network.ETHEREUM);
+  const evmInstance = getNetworkInstance(instance, Networks.ETHEREUM);
   await switchOrAddNetworkForMetamaskCompatibleWallets(
     evmInstance,
     network,
@@ -65,7 +71,7 @@ export function getEthChainsInstance(
 ): Network | null {
   if (!network) return null;
   const evmBlockchains = evmNetworkNames(meta);
-  return evmBlockchains.includes(network) ? Network.ETHEREUM : null;
+  return evmBlockchains.includes(network) ? Networks.ETHEREUM : null;
 }
 
 function isEvmNetwork(network: Network | null, meta: BlockchainMeta[]) {
@@ -80,7 +86,7 @@ export function chooseInstance(
   network?: Network | null
 ) {
   // If there is no `network` we fallback to default network.
-  network = network || Network.ETHEREUM;
+  network = network || Networks.ETHEREUM;
   const instance_network_name = isEvmNetwork(network, meta)
     ? getEthChainsInstance(network, meta)
     : network;

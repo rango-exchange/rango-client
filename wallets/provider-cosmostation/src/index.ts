@@ -1,5 +1,5 @@
 import {
-  Network,
+  Networks,
   WalletTypes,
   CanSwitchNetwork,
   Connect,
@@ -29,13 +29,13 @@ const WALLET = WalletTypes.COSMOSTATION;
 
 export const config = {
   type: WALLET,
-  defaultNetwork: Network.ETHEREUM,
+  defaultNetwork: Networks.ETHEREUM,
 };
 
 export const getInstance = cosmostation_instance;
 export const connect: Connect = async ({ instance, meta }) => {
-  const ethInstance = chooseInstance(instance, meta, Network.ETHEREUM);
-  const cosmosInstance = chooseInstance(instance, meta, Network.COSMOS);
+  const ethInstance = chooseInstance(instance, meta, Networks.ETHEREUM);
+  const cosmosInstance = chooseInstance(instance, meta, Networks.COSMOS);
 
   const results: ProviderConnectResult[] = [];
 
@@ -49,7 +49,7 @@ export const connect: Connect = async ({ instance, meta }) => {
     const comsmosResult = await getCosmosAccounts({
       instance: cosmosInstance,
       meta: cosmosBlockchainMeta,
-      network: Network.COSMOS,
+      network: Networks.COSMOS,
     });
     if (Array.isArray(comsmosResult)) results.push(...comsmosResult);
     else results.push(comsmosResult);
@@ -71,7 +71,7 @@ export const subscribe: Subscribe = ({
   connect,
   disconnect,
 }) => {
-  const ethInstance = instance.get(Network.ETHEREUM);
+  const ethInstance = instance.get(Networks.ETHEREUM);
   const EvmBlockchainMeta = meta.filter(isEvmBlockchain);
 
   subscribeToEvm({

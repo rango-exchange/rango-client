@@ -3,9 +3,9 @@ import {
   Connect,
   Subscribe,
   getEvmAccounts,
-  Network,
   WalletTypes,
   WalletInfo,
+  Networks,
 } from '@rango-dev/wallets-shared';
 import {
   accountsForActiveWallet,
@@ -20,7 +20,7 @@ const WALLET = WalletTypes.BINANCE_CHAIN;
 
 export const config = {
   type: WALLET,
-  defaultNetwork: Network.ETHEREUM,
+  defaultNetwork: Networks.ETHEREUM,
 };
 
 export const getInstance = binance_instance;
@@ -82,7 +82,7 @@ export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
   color: '#2b2e35',
   supportedChains: allBlockChains.filter((blockchainMeta) =>
     BINANCE_CHAIN_WALLET_SUPPORTED_CHAINS.includes(
-      blockchainMeta.name as Network
+      blockchainMeta.name as Networks
     )
   ),
 });

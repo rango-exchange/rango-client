@@ -17,10 +17,9 @@ import {
 } from '../utils/swap';
 import { numberToString } from '../utils/numbers';
 import { useMetaStore } from '../store/meta';
-import { Network, WalletType } from '@rango-dev/wallets-shared';
+import { WalletType } from '@rango-dev/wallets-shared';
 import { useNavigateBack } from '../hooks/useNavigateBack';
 import { TokenPreview } from '../components/TokenPreview';
-// @ts-ignore // TODO: fix error in tsc build
 import { t } from 'i18next';
 import { Divider, ConfirmSwap, LoadingFailedAlert } from '@rango-dev/ui';
 import RoutesOverview from '../components/RoutesOverview';
@@ -90,7 +89,7 @@ export function ConfirmSwapPage({
   const toAmount = numberToString(lastStep?.toAmount, 4, 6);
   useEffect(() => {
     initSelectedWallets();
-    if (!!customDestination) {
+    if (customDestination) {
       setCustomDestination('');
     }
   }, []);
@@ -108,7 +107,7 @@ export function ConfirmSwapPage({
   );
 
   const handleConnectChain = (wallet: string) => {
-    const network = wallet as Network;
+    const network = wallet;
     getKeplrCompatibleConnectedWallets(selectableWallets).forEach(
       (compatibleWallet: WalletType) => connect?.(compatibleWallet, network)
     );

@@ -1,6 +1,5 @@
 import {
   getBlockChainNameFromId,
-  Network,
   WalletTypes,
   CanSwitchNetwork,
   Connect,
@@ -14,6 +13,7 @@ import {
   getSolanaAccounts,
   XDEFI_WALLET_SUPPORTED_NATIVE_CHAINS,
   WalletInfo,
+  Networks,
 } from '@rango-dev/wallets-shared';
 import { SUPPORTED_ETH_CHAINS } from './constants';
 
@@ -21,7 +21,7 @@ import { getNonEvmAccounts, xdefi as xdefi_instances } from './helpers';
 import signer from './signer';
 import { SignerFactory, BlockchainMeta } from 'rango-types';
 
-const DEFAULT_NETWORK = Network.ETHEREUM;
+const DEFAULT_NETWORK = Networks.ETHEREUM;
 const WALLET = WalletTypes.XDEFI;
 
 export const config = {
@@ -32,8 +32,8 @@ export const config = {
 export const getInstance = xdefi_instances;
 
 export const connect: Connect = async ({ instance, meta }) => {
-  const ethInstance = chooseInstance(instance, meta, Network.ETHEREUM);
-  const solInstance = chooseInstance(instance, meta, Network.SOLANA);
+  const ethInstance = chooseInstance(instance, meta, Networks.ETHEREUM);
+  const solInstance = chooseInstance(instance, meta, Networks.SOLANA);
   if (!ethInstance || !ethInstance.__XDEFI) {
     throw new Error("Please 'Prioritise' XDEFI and refresh the page.");
   }
@@ -54,9 +54,9 @@ export const subscribe: Subscribe = ({
   updateChainId,
   connect,
 }) => {
-  const eth = chooseInstance(instance, meta, Network.ETHEREUM);
+  const eth = chooseInstance(instance, meta, Networks.ETHEREUM);
   eth?.on('chainChanged', (chainId: string) => {
-    const network = getBlockChainNameFromId(chainId, meta) || Network.Unknown;
+    const network = getBlockChainNameFromId(chainId, meta) || Networks.Unknown;
     /*
       TODO:
       We are calling `connect` here because signer can't detect
@@ -96,7 +96,7 @@ export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
     [
       ...SUPPORTED_ETH_CHAINS,
       ...XDEFI_WALLET_SUPPORTED_NATIVE_CHAINS,
-      Network.SOLANA,
-    ].includes(blockchainMeta.name as Network)
+      Networks.SOLANA,
+    ].includes(blockchainMeta.name as Networks)
   ),
 });

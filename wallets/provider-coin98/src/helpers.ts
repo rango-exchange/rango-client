@@ -1,4 +1,4 @@
-import { Network } from '@rango-dev/wallets-shared';
+import { Networks } from '@rango-dev/wallets-shared';
 
 export function coin98() {
   const { coin98, ethereum } = window;
@@ -8,9 +8,9 @@ export function coin98() {
   const instances = new Map();
 
   // When disabled overring metamask
-  if (coin98.provider) instances.set(Network.ETHEREUM, coin98.provider);
-  if (ethereum && ethereum.isCoin98) instances.set(Network.ETHEREUM, ethereum);
-  if (coin98.sol) instances.set(Network.SOLANA, coin98.sol);
+  if (coin98.provider) instances.set(Networks.ETHEREUM, coin98.provider);
+  if (ethereum && ethereum.isCoin98) instances.set(Networks.ETHEREUM, ethereum);
+  if (coin98.sol) instances.set(Networks.SOLANA, coin98.sol);
 
   return instances;
 }

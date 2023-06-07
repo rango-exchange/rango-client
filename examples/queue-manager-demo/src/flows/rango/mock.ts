@@ -1,5 +1,5 @@
 import { WalletsAndSupportedChains } from '@rango-dev/wallets-core';
-import { Meta, Network, WalletTypes } from '@rango-dev/wallets-shared';
+import { Meta, Networks, WalletTypes } from '@rango-dev/wallets-shared';
 import { RawAccounts, Wallet } from './types';
 
 const evmAddress = '0x2702d89c1c8658b49c45dd460deebcc45faec03c';
@@ -38,7 +38,7 @@ export const sampleRawAccounts: RawAccounts = (() => {
   });
   const cosmos = [
     {
-      name: Network.COSMOS,
+      name: Networks.COSMOS,
       accounts: [
         {
           address: cosmosAddress,
@@ -1660,7 +1660,8 @@ export const metamaskWallet = {
           walletType: 'metamask',
           isConnected: false,
           error: false,
-          explorerUrl: 'https://bscscan.com/address/0x2702d89c1c8658b49c45dd460deebcc45faec03c',
+          explorerUrl:
+            'https://bscscan.com/address/0x2702d89c1c8658b49c45dd460deebcc45faec03c',
         },
       ],
     },
@@ -1674,7 +1675,8 @@ export const metamaskWallet = {
           walletType: 'metamask',
           isConnected: true,
           error: true,
-          explorerUrl: 'https://polygonscan.com/address/0x2702d89c1c8658b49c45dd460deebcc45faec03c',
+          explorerUrl:
+            'https://polygonscan.com/address/0x2702d89c1c8658b49c45dd460deebcc45faec03c',
         },
       ],
     },
@@ -2074,7 +2076,8 @@ export const metamaskWallet = {
           walletType: 'metamask',
           isConnected: false,
           error: false,
-          explorerUrl: 'https://etherscan.io/address/0x2702d89c1c8658b49c45dd460deebcc45faec03c',
+          explorerUrl:
+            'https://etherscan.io/address/0x2702d89c1c8658b49c45dd460deebcc45faec03c',
         },
       ],
     },
@@ -2419,7 +2422,8 @@ export const metamaskWallet = {
           walletType: 'metamask',
           isConnected: false,
           error: false,
-          explorerUrl: 'https://snowtrace.io/address/0x2702d89c1c8658b49c45dd460deebcc45faec03c',
+          explorerUrl:
+            'https://snowtrace.io/address/0x2702d89c1c8658b49c45dd460deebcc45faec03c',
         },
       ],
     },
@@ -2577,7 +2581,8 @@ export const metamaskWallet = {
           walletType: 'metamask',
           isConnected: false,
           error: false,
-          explorerUrl: 'https://arbiscan.io/address/0x2702d89c1c8658b49c45dd460deebcc45faec03c',
+          explorerUrl:
+            'https://arbiscan.io/address/0x2702d89c1c8658b49c45dd460deebcc45faec03c',
         },
       ],
     },
@@ -2911,7 +2916,8 @@ export const metamaskWallet = {
           walletType: 'metamask',
           isConnected: false,
           error: false,
-          explorerUrl: 'https://ftmscan.com/address/0x2702d89c1c8658b49c45dd460deebcc45faec03c',
+          explorerUrl:
+            'https://ftmscan.com/address/0x2702d89c1c8658b49c45dd460deebcc45faec03c',
         },
       ],
     },
@@ -3089,7 +3095,8 @@ export const metamaskWallet = {
           walletType: 'metamask',
           isConnected: false,
           error: false,
-          explorerUrl: 'https://cronoscan.com/address/0x2702d89c1c8658b49c45dd460deebcc45faec03c',
+          explorerUrl:
+            'https://cronoscan.com/address/0x2702d89c1c8658b49c45dd460deebcc45faec03c',
         },
       ],
     },
@@ -3169,7 +3176,8 @@ export const metamaskWallet = {
           walletType: 'metamask',
           isConnected: false,
           error: false,
-          explorerUrl: 'https://hecoinfo.com/address/0x2702d89c1c8658b49c45dd460deebcc45faec03c',
+          explorerUrl:
+            'https://hecoinfo.com/address/0x2702d89c1c8658b49c45dd460deebcc45faec03c',
         },
       ],
     },
@@ -3424,7 +3432,8 @@ export const metamaskWallet = {
           walletType: 'metamask',
           isConnected: false,
           error: true,
-          explorerUrl: 'https://evm.evmos.org/address/0x2702d89c1c8658b49c45dd460deebcc45faec03c',
+          explorerUrl:
+            'https://evm.evmos.org/address/0x2702d89c1c8658b49c45dd460deebcc45faec03c',
         },
       ],
     },
@@ -3590,7 +3599,8 @@ export const metamaskWallet = {
           walletType: 'metamask',
           isConnected: false,
           error: false,
-          explorerUrl: 'https://bobascan.com//address/0x2702d89c1c8658b49c45dd460deebcc45faec03c',
+          explorerUrl:
+            'https://bobascan.com//address/0x2702d89c1c8658b49c45dd460deebcc45faec03c',
         },
       ],
     },
@@ -5172,7 +5182,8 @@ export const walletsAndSupportedChains = {
         rest: 'https://lcd-emoney.keplr.app',
         cosmostationLcdUrl: 'https://lcd-emoney.cosmostation.io',
         cosmostationApiUrl: 'https://api-emoney.cosmostation.io',
-        cosmostationDenomTracePath: '/ibc/applications/transfer/v1beta1/denom_traces/',
+        cosmostationDenomTracePath:
+          '/ibc/applications/transfer/v1beta1/denom_traces/',
         mintScanName: 'emoney',
         chainName: 'e-Money',
         stakeCurrency: {
@@ -5545,7 +5556,8 @@ export const walletsAndSupportedChains = {
         rest: 'https://lcd-iov.keplr.app',
         cosmostationLcdUrl: 'https://lcd-iov.cosmostation.io',
         cosmostationApiUrl: 'https://api-iov.cosmostation.io',
-        cosmostationDenomTracePath: '/ibc/applications/transfer/v1beta1/denom_traces/',
+        cosmostationDenomTracePath:
+          '/ibc/applications/transfer/v1beta1/denom_traces/',
         mintScanName: 'starname',
         chainName: 'Starname',
         stakeCurrency: {
@@ -5766,7 +5778,8 @@ export const walletsAndSupportedChains = {
           },
         ],
         features: ['stargate', 'ibc-transfer', 'no-legacy-stdTx', 'ibc-go'],
-        explorerUrlToTx: 'https://explorer.desmos.network/transactions/{txHash}',
+        explorerUrlToTx:
+          'https://explorer.desmos.network/transactions/{txHash}',
         gasPriceStep: null,
       },
     },
@@ -6030,7 +6043,9 @@ export const walletsAndSupportedChains = {
     {
       name: 'BTC',
       defaultDecimals: 8,
-      addressPatterns: ['^[13][a-km-zA-HJ-NP-Z1-9]{25,34}$|^(bc1)[0-9A-Za-z]{39,59}$'],
+      addressPatterns: [
+        '^[13][a-km-zA-HJ-NP-Z1-9]{25,34}$|^(bc1)[0-9A-Za-z]{39,59}$',
+      ],
       feeAssets: [{ blockchain: 'BTC', symbol: 'BTC', address: null }],
       logo: 'https://api.rango.exchange/blockchains/btc.svg',
       displayName: 'Bitcoin',
@@ -6060,7 +6075,9 @@ export const walletsAndSupportedChains = {
     {
       name: 'BCH',
       defaultDecimals: 8,
-      addressPatterns: ['^[13][a-km-zA-HJ-NP-Z1-9]{25,34}$|^[0-9A-Za-z]{42,42}$'],
+      addressPatterns: [
+        '^[13][a-km-zA-HJ-NP-Z1-9]{25,34}$|^[0-9A-Za-z]{42,42}$',
+      ],
       feeAssets: [{ blockchain: 'BCH', symbol: 'BCH', address: null }],
       logo: 'https://api.rango.exchange/blockchains/bch.svg',
       displayName: 'Bitcoin Cash',
@@ -7543,7 +7560,9 @@ export const walletsAndSupportedChains = {
     {
       name: 'BTC',
       defaultDecimals: 8,
-      addressPatterns: ['^[13][a-km-zA-HJ-NP-Z1-9]{25,34}$|^(bc1)[0-9A-Za-z]{39,59}$'],
+      addressPatterns: [
+        '^[13][a-km-zA-HJ-NP-Z1-9]{25,34}$|^(bc1)[0-9A-Za-z]{39,59}$',
+      ],
       feeAssets: [{ blockchain: 'BTC', symbol: 'BTC', address: null }],
       logo: 'https://api.rango.exchange/blockchains/btc.svg',
       displayName: 'Bitcoin',
@@ -10472,7 +10491,8 @@ export const walletsAndSupportedChains = {
         rest: 'https://lcd-emoney.keplr.app',
         cosmostationLcdUrl: 'https://lcd-emoney.cosmostation.io',
         cosmostationApiUrl: 'https://api-emoney.cosmostation.io',
-        cosmostationDenomTracePath: '/ibc/applications/transfer/v1beta1/denom_traces/',
+        cosmostationDenomTracePath:
+          '/ibc/applications/transfer/v1beta1/denom_traces/',
         mintScanName: 'emoney',
         chainName: 'e-Money',
         stakeCurrency: {
@@ -10845,7 +10865,8 @@ export const walletsAndSupportedChains = {
         rest: 'https://lcd-iov.keplr.app',
         cosmostationLcdUrl: 'https://lcd-iov.cosmostation.io',
         cosmostationApiUrl: 'https://api-iov.cosmostation.io',
-        cosmostationDenomTracePath: '/ibc/applications/transfer/v1beta1/denom_traces/',
+        cosmostationDenomTracePath:
+          '/ibc/applications/transfer/v1beta1/denom_traces/',
         mintScanName: 'starname',
         chainName: 'Starname',
         stakeCurrency: {
@@ -11066,7 +11087,8 @@ export const walletsAndSupportedChains = {
           },
         ],
         features: ['stargate', 'ibc-transfer', 'no-legacy-stdTx', 'ibc-go'],
-        explorerUrlToTx: 'https://explorer.desmos.network/transactions/{txHash}',
+        explorerUrlToTx:
+          'https://explorer.desmos.network/transactions/{txHash}',
         gasPriceStep: null,
       },
     },
@@ -11858,7 +11880,8 @@ export const meta = {
         {
           blockchain: 'STARKNET',
           symbol: 'ETH',
-          address: '0x049d36570d4e46f48e99674bd3fcc84644ddd6b96f7c741b1562b82f9e004dc7',
+          address:
+            '0x049d36570d4e46f48e99674bd3fcc84644ddd6b96f7c741b1562b82f9e004dc7',
         },
       ],
       logo: 'https://api.rango.exchange/blockchains/starknet.svg',
@@ -12265,7 +12288,9 @@ export const meta = {
     BTC: {
       name: 'BTC',
       defaultDecimals: 8,
-      addressPatterns: ['^[13][a-km-zA-HJ-NP-Z1-9]{25,34}$|^(bc1)[0-9A-Za-z]{39,59}$'],
+      addressPatterns: [
+        '^[13][a-km-zA-HJ-NP-Z1-9]{25,34}$|^(bc1)[0-9A-Za-z]{39,59}$',
+      ],
       feeAssets: [{ blockchain: 'BTC', symbol: 'BTC', address: null }],
       logo: 'https://api.rango.exchange/blockchains/btc.svg',
       displayName: 'Bitcoin',
@@ -12662,7 +12687,8 @@ export const meta = {
         rest: 'https://lcd-emoney.keplr.app',
         cosmostationLcdUrl: 'https://lcd-emoney.cosmostation.io',
         cosmostationApiUrl: 'https://api-emoney.cosmostation.io',
-        cosmostationDenomTracePath: '/ibc/applications/transfer/v1beta1/denom_traces/',
+        cosmostationDenomTracePath:
+          '/ibc/applications/transfer/v1beta1/denom_traces/',
         mintScanName: 'emoney',
         chainName: 'e-Money',
         stakeCurrency: {
@@ -12751,7 +12777,9 @@ export const meta = {
     BCH: {
       name: 'BCH',
       defaultDecimals: 8,
-      addressPatterns: ['^[13][a-km-zA-HJ-NP-Z1-9]{25,34}$|^[0-9A-Za-z]{42,42}$'],
+      addressPatterns: [
+        '^[13][a-km-zA-HJ-NP-Z1-9]{25,34}$|^[0-9A-Za-z]{42,42}$',
+      ],
       feeAssets: [{ blockchain: 'BCH', symbol: 'BCH', address: null }],
       logo: 'https://api.rango.exchange/blockchains/bch.svg',
       displayName: 'Bitcoin Cash',
@@ -13109,7 +13137,8 @@ export const meta = {
         rest: 'https://lcd-iov.keplr.app',
         cosmostationLcdUrl: 'https://lcd-iov.cosmostation.io',
         cosmostationApiUrl: 'https://api-iov.cosmostation.io',
-        cosmostationDenomTracePath: '/ibc/applications/transfer/v1beta1/denom_traces/',
+        cosmostationDenomTracePath:
+          '/ibc/applications/transfer/v1beta1/denom_traces/',
         mintScanName: 'starname',
         chainName: 'Starname',
         stakeCurrency: {
@@ -13330,7 +13359,8 @@ export const meta = {
           },
         ],
         features: ['stargate', 'ibc-transfer', 'no-legacy-stdTx', 'ibc-go'],
-        explorerUrlToTx: 'https://explorer.desmos.network/transactions/{txHash}',
+        explorerUrlToTx:
+          'https://explorer.desmos.network/transactions/{txHash}',
         gasPriceStep: null,
       },
     },
