@@ -1,4 +1,4 @@
-import type { BlockchainMeta, EvmBlockchainMeta } from 'rango-types';
+import { BlockchainMeta, EvmBlockchainMeta } from 'rango-types';
 
 export const IS_DEV =
   !process.env.NODE_ENV || process.env.NODE_ENV === 'development';

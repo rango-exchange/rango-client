@@ -1,9 +1,5 @@
-import type { CosmosTransaction, GenericSigner } from 'rango-types';
+import { CosmosTransaction, GenericSigner, SignerError } from 'rango-types';
 import { xdefiTransfer } from './helpers';
-
-import Rango from 'rango-types';
-
-const { SignerError } = Rango;
 
 // TODO - replace with real type
 // tslint:disable-next-line: no-any

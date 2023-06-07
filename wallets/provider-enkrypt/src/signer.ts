@@ -1,10 +1,6 @@
 import { DefaultEvmSigner } from '@rango-dev/signer-evm';
-import type { SignerFactory } from 'rango-types';
-
-import Rango from 'rango-types';
-
-// For cjs compatibility.
-const { DefaultSignerFactory, TransactionType: TxType } = Rango;
+import { DefaultSignerFactory } from 'rango-types';
+import { SignerFactory, TransactionType as TxType } from 'rango-types';
 
 export default function getSigners(provider: any): SignerFactory {
   const signers = new DefaultSignerFactory();

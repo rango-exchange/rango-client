@@ -14,16 +14,14 @@ import {
 import type { ProviderConnectResult } from '@rango-dev/wallets-shared';
 import { frontier as frontier_instance, getSolanaAccounts } from './helpers';
 import signer from './signer';
-import type { SignerFactory, BlockchainMeta } from 'rango-types';
-
-import Rango from 'rango-types';
-
-const {
+import {
+  SignerFactory,
   isEvmBlockchain,
+  BlockchainMeta,
   evmBlockchains,
   isSolanaBlockchain,
   solanaBlockchain,
-} = Rango;
+} from 'rango-types';
 
 const WALLET = WalletTypes.FRONTIER;
 

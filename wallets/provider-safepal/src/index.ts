@@ -15,11 +15,12 @@ import {
 } from '@rango-dev/wallets-shared';
 import { getNonEvmAccounts, safepal as safepal_instance } from './helpers';
 import signer from './signer';
-import { SignerFactory, BlockchainMeta } from 'rango-types';
-
-import Rango from 'rango-types';
-
-const { evmBlockchains, solanaBlockchain } = Rango;
+import {
+  SignerFactory,
+  BlockchainMeta,
+  evmBlockchains,
+  solanaBlockchain,
+} from 'rango-types';
 
 const WALLET = WalletTypes.SAFEPAL;
 

@@ -6,14 +6,9 @@ import {
   Subscribe,
   WalletInfo,
 } from '@rango-dev/wallets-shared';
-import type { SignerFactory, BlockchainMeta } from 'rango-types';
+import { SignerFactory, BlockchainMeta, starknetBlockchain } from 'rango-types';
 import { argentx as argentx_instances } from './helpers';
 import signer from './signer';
-
-import Rango from 'rango-types';
-
-// For cjs compatibility.
-const { starknetBlockchain } = Rango;
 
 // https://www.starknetjs.com/docs/API/signer
 // https://github.com/apibara/starknet-react
