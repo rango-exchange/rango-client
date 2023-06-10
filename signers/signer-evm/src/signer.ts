@@ -5,7 +5,7 @@ import {
 import type { GenericSigner } from 'rango-types';
 import { EvmTransaction } from 'rango-types/lib/api/main';
 import { providers } from 'ethers';
-import { cleanEvmError } from './helper';
+import { cleanEvmError, getTenderlyError } from './helper';
 import { SignerError, SignerErrorCode } from 'rango-types';
 
 const waitMs = (ms: number) =>
@@ -142,6 +142,16 @@ export class DefaultEvmSigner implements GenericSigner<EvmTransaction> {
       const error = err as any; // TODO find a proper type
       if (error?.code === 'TRANSACTION_REPLACED' && error?.replacement)
         return { hash: error?.replacement?.hash, response: error?.replacement };
+      else if (error?.code === 'CALL_EXCEPTION') {
+        const tError = await getTenderlyError(chainId, txHash);
+        if (!!tError)
+          // TODO different Signer Error Code
+          throw new SignerError(
+            SignerErrorCode.SEND_TX_ERROR,
+            'Trannsaction failed in blockchain',
+            tError
+          );
+      }
       throw cleanEvmError(error);
     }
   }
