@@ -9,7 +9,7 @@ import {
   switchNetworkForEvm,
   SwitchNetwork,
   canSwitchNetworkToEvm,
-  Network,
+  Networks,
 } from '@rango-dev/wallets-shared';
 import { SignerFactory, BlockchainMeta } from 'rango-types';
 import {
@@ -57,7 +57,7 @@ export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
     },
     color: '#ffffff',
     supportedChains: allBlockChains.filter((blockchainMeta) =>
-      TAHO_WALLET_SUPPORTED_CHAINS.includes(blockchainMeta.name as Network)
+      TAHO_WALLET_SUPPORTED_CHAINS.includes(blockchainMeta.name as Networks)
     ),
   };
 };
