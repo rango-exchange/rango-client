@@ -10,6 +10,7 @@ import { globalStyles } from '../globalStyles';
 import { useMetaStore } from '../store/meta';
 import { useConfigStore } from '../store/config';
 import { ExportConfigModal } from '../components/ExportConfigModal';
+import { useWallets } from '@rango-dev/widget-embedded';
 
 const providers = allProviders();
 
@@ -86,6 +87,7 @@ export function Config(props: PropsWithChildren) {
   const [open, setOpen] = useState<boolean>(false);
   const config = useConfigStore.use.config();
   const resetConfig = useConfigStore.use.resetConfig();
+  const { state, connect, disconnect } = useWallets();
 
   return (
     <Container>
@@ -132,6 +134,36 @@ export function Config(props: PropsWithChildren) {
             <SourcesConfig />
             <Divider size={32} />
             <StylesConfig />
+            <Divider size={32} />
+            Metamask as External Wallets: <br />
+            <Button
+              type="primary"
+              onClick={() => {
+                if (state('metamask').connected) {
+                  disconnect('metamask');
+                } else {
+                  connect('metamask');
+                }
+              }}>
+              {state('metamask').connected
+                ? 'disconnect metamsk'
+                : 'connect metamsk'}
+            </Button>
+            <Divider size={32} />
+            Phantom as External Wallets: <br />
+            <Button
+              type="primary"
+              onClick={() => {
+                if (state('phantom').connected) {
+                  disconnect('phantom');
+                } else {
+                  connect('phantom');
+                }
+              }}>
+              {state('phantom').connected
+                ? 'disconnect phantom'
+                : 'connect phantom'}
+            </Button>
           </div>
         </ConfigContent>
       </Provider>
