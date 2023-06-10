@@ -1,6 +1,5 @@
 import { Asset } from 'rango-sdk';
 import { WalletType } from '@rango-dev/wallets-shared';
-import { WalletProvider } from '@rango-dev/wallets-core';
 
 /**
  * The above type defines a set of optional color properties for a widget.
