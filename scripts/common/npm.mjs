@@ -32,7 +32,9 @@ export async function packageVersionOnNPM(project, dist) {
   const local_version = content.version;
 
   if (content.private) {
-    console.log(`[info] local_version as npm_version because it is a private package.`);
+    console.log(
+      `[info] local_version as npm_version because it is a private package.`
+    );
     return {
       npm_version: local_version,
       local_version,
@@ -40,7 +42,11 @@ export async function packageVersionOnNPM(project, dist) {
   }
 
   // Continue if it's not a private package.
-  const { stdout: npmInfo } = await $`yarn info ${project}@${dist} --json`;
+  const { stdout: npmInfo, stderr } =
+    await $`yarn info ${project}@${dist} --json`;
+  if (!!stderr) {
+    throw new Error(stderr);
+  }
   const versions = JSON.parse(npmInfo).data['dist-tags'];
 
   // Fallback to local version, if package isn't published on NPM yet.
@@ -56,15 +62,15 @@ export async function packageVersionOnNPM(project, dist) {
     console.log(
       `::debug::latest: ${latest_version}, dist: ${dist_version}, result: ${compareSemVer(
         dist_version,
-        latest_version,
-      )} cond: ${compareSemVer(dist_version, latest_version) > 0} `,
+        latest_version
+      )} cond: ${compareSemVer(dist_version, latest_version) > 0} `
     );
     // compareSemVer returns 1 if dist_version is greater than latest_version.
     if (compareSemVer(dist_version, latest_version) > 0) {
       npm_version = dist_version;
     } else {
       console.log(
-        `[info] latest version: ${latest_version}, ${dist} version: ${dist_version}. we use latest version because it's greater that ${dist_version}`,
+        `[info] latest version: ${latest_version}, ${dist} version: ${dist_version}. we use latest version because it's greater that ${dist_version}`
       );
       npm_version = latest_version;
     }
