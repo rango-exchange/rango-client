@@ -2,11 +2,12 @@ import { ExecuterActions } from '@rango-dev/queue-manager-core';
 import {
   delay,
   getCurrentStep,
+  getCurrentStepTx,
   getCurrentStepTxType,
   resetNetworkStatus,
   setCurrentStepTx,
   updateSwapStatus,
-  useTransactionsData,
+  inMemoryTransactionsData,
 } from '../helpers';
 import { SwapActionTypes, SwapQueueContext, SwapStorage } from '../types';
 import {
@@ -46,13 +47,14 @@ async function checkTransactionStatus({
   const currentStep = getCurrentStep(swap)!;
 
   if (!currentStep?.executedTransactionId) return;
+  const tx = getCurrentStepTx(currentStep);
   let txId = currentStep.executedTransactionId;
 
   let getTxReceiptFailed = false;
   let status: TransactionStatusResponse | null = null;
   let signer: GenericSigner<Transaction> | null = null;
   const { getTransactionDataByHash, setTransactionDataByHash } =
-    useTransactionsData();
+    inMemoryTransactionsData();
 
   try {
     const txType = getCurrentStepTxType(currentStep);
@@ -69,8 +71,11 @@ async function checkTransactionStatus({
     const { response: txResponse, receiptReceived } =
       getTransactionDataByHash(txId);
     if (signer?.wait && !receiptReceived) {
+      const chainId =
+        (tx?.blockChain && meta.blockchains?.[tx?.blockChain]?.chainId) ||
+        undefined;
       const { hash: updatedTxHash, response: updatedTxResponse } =
-        await signer.wait(txId, txResponse);
+        await signer.wait(txId, chainId, txResponse);
       if (updatedTxHash !== txId) {
         currentStep.executedTransactionId =
           updatedTxHash || currentStep.executedTransactionId;
@@ -229,13 +234,14 @@ async function checkApprovalStatus({
   const swap = getStorage().swapDetails as SwapStorage['swapDetails'];
   const { meta } = context;
   const { getTransactionDataByHash, setTransactionDataByHash } =
-    useTransactionsData();
+    inMemoryTransactionsData();
 
   const currentStep = getCurrentStep(swap);
   if (!currentStep) {
     console.log('ignore check status, current step is null');
     return;
   }
+  const tx = getCurrentStepTx(currentStep);
 
   if (!currentStep?.executedTransactionId) return;
   let txId = currentStep.executedTransactionId;
@@ -256,8 +262,11 @@ async function checkApprovalStatus({
       getTransactionDataByHash(txId);
     // if wallet is connected, try to get transaction reciept
     if (signer?.wait && !receiptReceived) {
+      const chainId =
+        (tx?.blockChain && meta.blockchains?.[tx?.blockChain]?.chainId) ||
+        undefined;
       const { hash: updatedTxHash, response: updatedTxResponse } =
-        await signer.wait(txId, txResponse);
+        await signer.wait(txId, chainId, txResponse);
       if (updatedTxHash !== txId) {
         currentStep.executedTransactionId =
           updatedTxHash || currentStep.executedTransactionId;

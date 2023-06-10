@@ -26,12 +26,6 @@ import {
   TransactionType,
   EvmBlockchainMeta,
   CreateTransactionResponse,
-  isEvmTransaction,
-  isCosmosTransaction,
-  isSolanaTransaction,
-  isTronTransaction,
-  isStarknetTransaction,
-  isTransferTransaction,
 } from 'rango-sdk';
 
 import {
@@ -102,7 +96,7 @@ type TransactionData = {
   receiptReceived?: boolean; // e.g. is TransactionReceipt ready in case of EVM transactions
 };
 const swapTransactionToDataMap: { [id: string]: TransactionData } = {};
-export function useTransactionsData() {
+export function inMemoryTransactionsData() {
   return {
     getTransactionDataByHash: (hash: string) =>
       swapTransactionToDataMap[hash] || {},
@@ -207,24 +201,36 @@ export const setCurrentStepTx = (
   currentStep.tronApprovalTransaction = null;
   currentStep.tronTransaction = null;
 
-  if (isEvmTransaction(transaction)) {
-    if (transaction.isApprovalTx)
-      currentStep.evmApprovalTransaction = transaction;
-    else currentStep.evmTransaction = transaction;
-  } else if (isCosmosTransaction(transaction)) {
-    currentStep.cosmosTransaction = transaction;
-  } else if (isSolanaTransaction(transaction)) {
-    currentStep.solanaTransaction = transaction;
-  } else if (isTransferTransaction(transaction)) {
-    currentStep.transferTransaction = transaction;
-  } else if (isStarknetTransaction(transaction)) {
-    if (transaction.isApprovalTx)
-      currentStep.starknetApprovalTransaction = transaction;
-    else currentStep.starknetTransaction = transaction;
-  } else if (isTronTransaction(transaction)) {
-    if (transaction.isApprovalTx)
-      currentStep.tronApprovalTransaction = transaction;
-    else currentStep.tronTransaction = transaction;
+  const txType = transaction.type;
+  switch (txType) {
+    case TransactionType.EVM:
+      if (transaction.isApprovalTx)
+        currentStep.evmApprovalTransaction = transaction;
+      else currentStep.evmTransaction = transaction;
+      break;
+    case TransactionType.TRON:
+      if (transaction.isApprovalTx)
+        currentStep.tronApprovalTransaction = transaction;
+      else currentStep.tronTransaction = transaction;
+      break;
+    case TransactionType.STARKNET:
+      if (transaction.isApprovalTx)
+        currentStep.starknetApprovalTransaction = transaction;
+      else currentStep.starknetTransaction = transaction;
+      break;
+    case TransactionType.COSMOS:
+      currentStep.cosmosTransaction = transaction;
+      break;
+    case TransactionType.SOLANA:
+      currentStep.solanaTransaction = transaction;
+      break;
+    case TransactionType.TRANSFER:
+      currentStep.transferTransaction = transaction;
+      break;
+    default:
+      ((x: never) => {
+        throw new Error(`${x} was unhandled!`);
+      })(txType);
   }
   return currentStep;
 };
@@ -907,7 +913,7 @@ export function isRequiredWalletConnected(
 export function singTransaction(
   actions: ExecuterActions<SwapStorage, SwapActionTypes, SwapQueueContext>
 ): void {
-  const { setTransactionDataByHash } = useTransactionsData();
+  const { setTransactionDataByHash } = inMemoryTransactionsData();
   const { getStorage, setStorage, failed, next, schedule, context } = actions;
   const { meta, getSigners, notifier, isMobileWallet } = context;
   const swap = getStorage().swapDetails;
@@ -935,6 +941,27 @@ export function singTransaction(
     TransactionType.STARKNET,
     TransactionType.TRON,
   ].includes(txType!);
+
+  if (!tx || !txType) {
+    const extraMessage = 'Unexpected Error: tx is null!';
+    const updateResult = updateSwapStatus({
+      getStorage,
+      setStorage,
+      nextStatus: 'failed',
+      nextStepStatus: 'failed',
+      message: extraMessage,
+      details: undefined,
+      errorCode: 'CLIENT_UNEXPECTED_BEHAVIOUR',
+    });
+    notifier({
+      eventType: 'transfer_failed',
+      ...updateResult,
+    });
+    failed();
+    return onFinish();
+  }
+
+  const chainId = meta.blockchains?.[tx.blockChain]?.chainId;
 
   const hasAlreadyProceededToSign =
     typeof swap.hasAlreadyProceededToSign === 'boolean';
@@ -992,8 +1019,8 @@ export function singTransaction(
     onFinish();
     return;
   }
-  const signer = walletSigners.getSigner(txType!);
-  signer.signAndSendTx(tx!, walletAddress, null).then(
+  const signer = walletSigners.getSigner(txType);
+  signer.signAndSendTx(tx, walletAddress, chainId).then(
     ({ hash, response }) => {
       const explorerUrl = getScannerUrl(
         hash,
