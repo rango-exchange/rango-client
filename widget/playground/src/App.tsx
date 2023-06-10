@@ -1,21 +1,36 @@
 import React from 'react';
 import { Config } from './containers/Config';
-import { Widget } from '@rango-dev/widget-embedded';
+import { Widget, WidgetWallets } from '@rango-dev/widget-embedded';
 import { useConfigStore } from './store/config';
 import { useTheme } from './hook/useTheme';
 import { Route, Routes } from 'react-router-dom';
+import * as phantom from '@rango-dev/provider-phantom';
 
 export function App() {
   const { activeStyle } = useTheme();
   const config = useConfigStore.use.config();
+  const externalWallets = ['metamask', phantom];
 
   return (
     <div className={activeStyle}>
-      <Config>
-        <Routes>
-          <Route path="/*" element={<Widget config={config} />} />
-        </Routes>
-      </Config>
+      <WidgetWallets config={externalWallets}>
+        <Config>
+          <Routes>
+            <Route
+              path="/*"
+              element={
+                <Widget
+                  config={{
+                    ...config,
+                    wallets: externalWallets,
+                  }}
+                  externalWallets={true}
+                />
+              }
+            />
+          </Routes>
+        </Config>
+      </WidgetWallets>
     </div>
   );
 }
