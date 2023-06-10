@@ -3,12 +3,14 @@ import {
   convertEvmBlockchainMetaToEvmChainInfo,
   evmChainsToRpcMap,
   Network,
+  WalletConfig,
   WalletType,
   WalletTypes,
 } from '@rango-dev/wallets-shared';
-import { State, WalletProvider, WalletProviders } from './types';
-import { Options, State as WalletState } from './wallet';
+import { State, WalletActions, WalletProvider, WalletProviders } from './types';
+import Wallet, { Options, State as WalletState } from './wallet';
 import { BlockchainMeta, isEvmBlockchain } from 'rango-types';
+import { Persistor } from './persistor';
 
 export function choose(wallets: any[], type: WalletType): any | null {
   return wallets.find((wallet) => wallet.type === type) || null;
@@ -51,17 +53,11 @@ export function state_reducer(state: State, action: any) {
   return state;
 }
 
-export function formatAddressWithNetwork(
-  address: string,
-  network?: Network | null
-) {
+export function formatAddressWithNetwork(address: string, network?: Network | null) {
   return `${network || ''}:${address}`;
 }
 
-export function accountAddressesWithNetwork(
-  addresses: string[] | null,
-  network?: Network | null
-) {
+export function accountAddressesWithNetwork(addresses: string[] | null, network?: Network | null) {
   if (!addresses) return [];
 
   return addresses.map((address) => {
@@ -133,13 +129,11 @@ export function isWalletDerivedFromWalletConnect(wallet_type: WalletType) {
 export function getComptaibleProvider(
   supportedChains: BlockchainMeta[],
   provider: any,
-  type: WalletType
+  type: WalletType,
 ) {
   if (isWalletDerivedFromWalletConnect(type)) {
     const evmBlockchains = supportedChains.filter(isEvmBlockchain);
-    const rpcUrls = evmChainsToRpcMap(
-      convertEvmBlockchainMetaToEvmChainInfo(evmBlockchains)
-    );
+    const rpcUrls = evmChainsToRpcMap(convertEvmBlockchainMetaToEvmChainInfo(evmBlockchains));
     return new WalletConnectProvider({
       qrcode: false,
       rpc: rpcUrls,
@@ -148,4 +142,60 @@ export function getComptaibleProvider(
     });
   }
   return provider;
+}
+
+const LASTE_CONNECTED_WALLETS = 'last-connected-wallets';
+
+export async function persistWallet(type: WalletType) {
+  const persistor = new Persistor<string[]>();
+  const wallets = persistor.getItem(LASTE_CONNECTED_WALLETS);
+  if (wallets) persistor.setItem(LASTE_CONNECTED_WALLETS, wallets.concat(type));
+  else persistor.setItem(LASTE_CONNECTED_WALLETS, [type]);
+}
+
+export function removeWalletFromPersist(type: WalletType) {
+  const persistor = new Persistor<string[]>();
+  const wallets = persistor.getItem(LASTE_CONNECTED_WALLETS);
+  if (wallets)
+    persistor.setItem(
+      LASTE_CONNECTED_WALLETS,
+      wallets.filter((wallet) => wallet !== type),
+    );
+}
+
+export function clearPersistStorage() {
+  const persistor = new Persistor<string[]>();
+  const wallets = persistor.getItem(LASTE_CONNECTED_WALLETS);
+  if (wallets) persistor.removeItem(LASTE_CONNECTED_WALLETS);
+}
+
+export async function autoConnect(
+  wallets: WalletProviders,
+  addWalletRef: (wallet: { actions: WalletActions; config: WalletConfig }) => Wallet<any>,
+) {
+  const persistor = new Persistor<string[]>();
+  const lastConnectedWallets = persistor.getItem(LASTE_CONNECTED_WALLETS);
+  if (lastConnectedWallets && lastConnectedWallets.length) {
+    const connect_promises: { walletType: WalletType; connect: () => Promise<any> }[] = [];
+    lastConnectedWallets.forEach((walletType) => {
+      const wallet = wallets.get(walletType);
+
+      if (!!wallet) {
+        const ref = addWalletRef(wallet);
+        connect_promises.push({ walletType, connect: ref.connect });
+      }
+    });
+    const starterPromise = Promise.resolve(null);
+    await connect_promises.reduce(
+      (promise, { connect, walletType }) =>
+        promise.then(() =>
+          connect()
+            .then()
+            .catch(() => {
+              removeWalletFromPersist(walletType);
+            }),
+        ),
+      starterPromise,
+    );
+  }
 }

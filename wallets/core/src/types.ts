@@ -1,9 +1,6 @@
 import { PropsWithChildren } from 'react';
 import { Network, WalletType, WalletInfo } from '@rango-dev/wallets-shared';
-import {
-  EventHandler as WalletEventHandler,
-  State as WalletState,
-} from './wallet';
+import { EventHandler as WalletEventHandler, State as WalletState } from './wallet';
 import { SignerFactory, BlockchainMeta } from 'rango-types';
 
 export type State = {
@@ -33,6 +30,7 @@ export type ProviderProps = PropsWithChildren<{
   onUpdateState?: WalletEventHandler;
   allBlockChains?: BlockchainMeta[];
   providers: WalletProvider[];
+  autoConnect?: boolean;
 }>;
 
 export enum Events {
@@ -55,9 +53,7 @@ export type GetInstanceOptions = {
   meta: BlockchainMeta[];
   force?: boolean;
 };
-export type GetInstance =
-  | (() => any)
-  | ((options: GetInstanceOptions) => Promise<any>);
+export type GetInstance = (() => any) | ((options: GetInstanceOptions) => Promise<any>);
 export type TryGetInstance =
   | (() => any)
   | ((options: Pick<GetInstanceOptions, 'force' | 'network'>) => Promise<any>);
@@ -67,10 +63,7 @@ export type Connect = (options: {
   meta: BlockchainMeta[];
 }) => Promise<ProviderConnectResult | ProviderConnectResult[]>;
 
-export type Disconnect = (options: {
-  instance: any;
-  destroyInstance: () => void;
-}) => Promise<void>;
+export type Disconnect = (options: { instance: any; destroyInstance: () => void }) => Promise<void>;
 export type Subscribe = (options: {
   instance: any;
   state: WalletState;
@@ -88,10 +81,7 @@ export type SwitchNetwork = (options: {
   newInstance?: TryGetInstance;
 }) => Promise<void>;
 
-export type CanSwitchNetwork = (options: {
-  network: Network;
-  meta: BlockchainMeta[];
-}) => boolean;
+export type CanSwitchNetwork = (options: { network: Network; meta: BlockchainMeta[] }) => boolean;
 
 export interface WalletActions {
   connect: Connect;

@@ -6,10 +6,7 @@ import { Events, Provider } from '@rango-dev/wallets-core';
 import { allProviders } from '@rango-dev/provider-all';
 import { EventHandler } from '@rango-dev/wallets-core/dist/wallet';
 import { Network, WalletType } from '@rango-dev/wallets-shared';
-import {
-  prepareAccountsForWalletStore,
-  walletAndSupportedChainsNames,
-} from './utils/wallets';
+import { prepareAccountsForWalletStore, walletAndSupportedChainsNames } from './utils/wallets';
 import { useWalletsStore } from './store/wallets';
 import { Layout } from './components/Layout';
 import { globalFont } from './globalStyles';
@@ -36,14 +33,11 @@ export const Widget: React.FC<WidgetProps> = ({ config }) => {
   const connectWallet = useWalletsStore.use.connectWallet();
   const { changeLanguage } = useSelectLanguage();
   const clearConnectedWallet = useWalletsStore.use.clearConnectedWallet();
-  const [lastConnectedWalletWithNetwork, setLastConnectedWalletWithNetwork] =
-    useState<string>('');
+  const [lastConnectedWalletWithNetwork, setLastConnectedWalletWithNetwork] = useState<string>('');
   const [disconnectedWallet, setDisconnectedWallet] = useState<WalletType>();
   const currentPage = useUiStore.use.currentPage();
 
-  const evmBasedChainNames = blockchains
-    .filter(isEvmBlockchain)
-    .map((chain) => chain.name);
+  const evmBasedChainNames = blockchains.filter(isEvmBlockchain).map((chain) => chain.name);
 
   useMemo(() => {
     if (config?.apiKey) {
@@ -53,13 +47,7 @@ export const Widget: React.FC<WidgetProps> = ({ config }) => {
     }
   }, [config]);
 
-  const onUpdateState: EventHandler = (
-    type,
-    event,
-    value,
-    state,
-    supportedChains
-  ) => {
+  const onUpdateState: EventHandler = (type, event, value, state, supportedChains) => {
     if (event === Events.ACCOUNTS) {
       if (value) {
         const supportedChainNames: Network[] | null =
@@ -68,7 +56,7 @@ export const Widget: React.FC<WidgetProps> = ({ config }) => {
           type,
           value,
           evmBasedChainNames,
-          supportedChainNames
+          supportedChainNames,
         );
         connectWallet(data);
       } else {
@@ -110,7 +98,7 @@ export const Widget: React.FC<WidgetProps> = ({ config }) => {
       allBlockChains={blockchains}
       providers={providers}
       onUpdateState={onUpdateState}
-    >
+      autoConnect={true}>
       <div id="swap-container" className={activeTheme}>
         <QueueManager>
           <SwapContainer fixedHeight={currentPage !== navigationRoutes.home}>
@@ -119,8 +107,7 @@ export const Widget: React.FC<WidgetProps> = ({ config }) => {
               disconnectedWallet={disconnectedWallet}
               clearDisconnectedWallet={() => {
                 setDisconnectedWallet(undefined);
-              }}
-            >
+              }}>
               <Layout config={config} />
             </AppRouter>
           </SwapContainer>

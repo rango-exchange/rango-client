@@ -1,25 +1,18 @@
-import React, {
-  createContext,
-  useContext,
-  useEffect,
-  useReducer,
-  useRef,
-} from 'react';
+import React, { createContext, useContext, useEffect, useReducer, useRef } from 'react';
 
 import {
+  autoConnect,
   availableWallets,
   checkWalletProviders,
+  clearPersistStorage,
   connectedWallets,
   defaultWalletState,
   getComptaibleProvider,
+  persistWallet,
+  removeWalletFromPersist,
   state_reducer,
 } from './helpers';
-import {
-  ProviderProps,
-  ProviderContext,
-  WalletActions,
-  WalletConfig,
-} from './types';
+import { ProviderProps, ProviderContext, WalletActions, WalletConfig } from './types';
 import { WalletType } from '@rango-dev/wallets-shared';
 
 import Wallet, { EventHandler as WalletEventHandler } from './wallet';
@@ -36,13 +29,7 @@ const WalletContext = createContext<ProviderContext>({});
   we are using this function.
 */
 function makeEventHandler(dispatcher: any, onUpdateState?: WalletEventHandler) {
-  const handler: WalletEventHandler = (
-    type,
-    name,
-    value,
-    coreState,
-    supportedChains
-  ) => {
+  const handler: WalletEventHandler = (type, name, value, coreState, supportedChains) => {
     const action = { type: 'new_state', wallet: type, name, value };
     // Update state
     dispatcher(action);
@@ -56,15 +43,12 @@ function makeEventHandler(dispatcher: any, onUpdateState?: WalletEventHandler) {
   return handler;
 }
 
-function useInitializers(onChangeState: WalletEventHandler) {
+export function useInitializers(onChangeState: WalletEventHandler) {
   const availableWallets = useRef<{
     [key: string]: Wallet | undefined;
   }>({});
 
-  function updater(wallet: {
-    actions: WalletActions;
-    config: WalletConfig;
-  }): Wallet {
+  function updater(wallet: { actions: WalletActions; config: WalletConfig }): Wallet {
     const type = wallet.config.type;
     // We only update, if there is no instance available.
     if (typeof availableWallets.current[type] === 'undefined') {
@@ -73,7 +57,7 @@ function useInitializers(onChangeState: WalletEventHandler) {
           config: wallet.config,
           handler: onChangeState,
         },
-        wallet.actions
+        wallet.actions,
       );
     }
 
@@ -86,9 +70,7 @@ function useInitializers(onChangeState: WalletEventHandler) {
 function Provider(props: ProviderProps) {
   const [providersState, dispatch] = useReducer(state_reducer, {});
 
-  const addWalletRef = useInitializers(
-    makeEventHandler(dispatch, props.onUpdateState)
-  );
+  const addWalletRef = useInitializers(makeEventHandler(dispatch, props.onUpdateState));
   // const providersRef = useRef<{ [type in WalletType]?: any }>({});
 
   const listOfProviders = props.providers;
@@ -104,6 +86,7 @@ function Provider(props: ProviderProps) {
 
       const ref = addWalletRef(wallet);
       const result = await ref.connect(network);
+      if (props.autoConnect) persistWallet(type);
 
       return result;
     },
@@ -115,6 +98,7 @@ function Provider(props: ProviderProps) {
 
       const ref = addWalletRef(wallet);
       await ref.disconnect();
+      if (props.autoConnect) removeWalletFromPersist(type);
     },
     async disconnectAll() {
       const disconnect_promises: Promise<any>[] = [];
@@ -130,7 +114,7 @@ function Provider(props: ProviderProps) {
           disconnect_promises.push(ref.disconnect());
         }
       });
-
+      if (props.autoConnect) clearPersistStorage();
       return await Promise.allSettled(disconnect_promises);
     },
     state(type) {
@@ -175,14 +159,8 @@ function Provider(props: ProviderProps) {
         throw new Error(`You should add ${type} to provider first.`);
       }
       const ref = addWalletRef(wallet);
-      const supportedChains = ref.getWalletInfo(
-        props.allBlockChains || []
-      ).supportedChains;
-      const provider = getComptaibleProvider(
-        supportedChains,
-        ref.provider,
-        type
-      );
+      const supportedChains = ref.getWalletInfo(props.allBlockChains || []).supportedChains;
+      const provider = getComptaibleProvider(supportedChains, ref.provider, type);
       const result = ref.getSigners(provider);
 
       return result;
@@ -199,10 +177,7 @@ function Provider(props: ProviderProps) {
       };
 
       const initWhenPageIsReady = (event: Event) => {
-        if (
-          event.target &&
-          (event.target as Document).readyState === 'complete'
-        ) {
+        if (event.target && (event.target as Document).readyState === 'complete') {
           runOnInit();
 
           document.removeEventListener('readystatechange', initWhenPageIsReady);
@@ -223,9 +198,7 @@ function Provider(props: ProviderProps) {
     if (!!allBlockChains) {
       wallets.forEach((wallet) => {
         const ref = addWalletRef(wallet);
-        const supportedChains = ref.getWalletInfo(
-          props.allBlockChains || []
-        ).supportedChains;
+        const supportedChains = ref.getWalletInfo(props.allBlockChains || []).supportedChains;
         ref.setMeta(supportedChains);
       });
     }
@@ -238,17 +211,22 @@ function Provider(props: ProviderProps) {
     });
   }, [props.onUpdateState]);
 
-  return (
-    <WalletContext.Provider value={api}>
-      {props.children}
-    </WalletContext.Provider>
-  );
+  useEffect(() => {
+    const shouldTryAutoConnect =
+      props.allBlockChains && props.allBlockChains.length && props.autoConnect;
+    if (shouldTryAutoConnect) {
+      (async () => {
+        await autoConnect(wallets, addWalletRef);
+      })();
+    }
+  }, [props.autoConnect, props.allBlockChains]);
+
+  return <WalletContext.Provider value={api}>{props.children}</WalletContext.Provider>;
 }
 
 export function useWallets(): ProviderContext {
   const context = useContext(WalletContext);
-  if (!context)
-    throw Error('useWallet can only be used within the Provider component');
+  if (!context) throw Error('useWallet can only be used within the Provider component');
   return context;
 }
 
