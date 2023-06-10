@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/provider-keplr",
-  "version": "0.5.1-next.1",
+  "version": "0.5.1-next.7",
   "license": "MIT",
   "type": "module",
   "module": "./dist/index.js",
