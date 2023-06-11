@@ -6,6 +6,7 @@ import subtractObject from 'subtract-object';
 import stringifyObject from 'stringify-object';
 import { WidgetConfig } from '@rango-dev/widget-embedded';
 
+import { WalletState } from '@rango-dev/ui';
 export const excludedWallets = [WalletTypes.STATION, WalletTypes.LEAP];
 
 export const onChangeMultiSelects = (
@@ -13,9 +14,9 @@ export const onChangeMultiSelects = (
   values: any[] | undefined,
   list: any[],
   findIndex: (item: string) => boolean
-) => {
+): string[] | undefined | 'all' => {
   if (value === 'empty') return [];
-  else if (value === 'all') return null;
+  else if (value === 'all') return undefined;
   if (!values) {
     values = [...list];
     const index = list.findIndex(findIndex);
@@ -160,3 +161,20 @@ export function formatConfig(config: WidgetConfig) {
 
   return formatedConfig;
 }
+
+export const getStateWallet = (state: {
+  connected: boolean;
+  connecting: boolean;
+  installed: boolean;
+}): WalletState => {
+  switch (true) {
+    case state.connected:
+      return WalletState.CONNECTED;
+    case state.connecting:
+      return WalletState.CONNECTING;
+    case !state.installed:
+      return WalletState.NOT_INSTALLED;
+    default:
+      return WalletState.DISCONNECTED;
+  }
+};

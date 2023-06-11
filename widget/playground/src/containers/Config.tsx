@@ -1,16 +1,26 @@
 import React, { PropsWithChildren, useState } from 'react';
-import { Alert, Button, Divider, styled, Typography } from '@rango-dev/ui';
+import {
+  Alert,
+  Button,
+  ConnectWalletsModal,
+  Divider,
+  styled,
+  Typography,
+} from '@rango-dev/ui';
 import { ChainsConfig } from '../components/ChainsConfig';
 import { WalletsConfig } from '../components/WalletsConfig';
 import { SourcesConfig } from '../components/SourcesConfig';
 import { StylesConfig } from '../components/StylesConfig';
-import { Provider } from '@rango-dev/wallets-core';
+import { Provider, ProviderInterface } from '@rango-dev/wallets-core';
 import { allProviders } from '@rango-dev/provider-all';
 import { globalStyles } from '../globalStyles';
 import { useMetaStore } from '../store/meta';
 import { useConfigStore } from '../store/config';
 import { ExportConfigModal } from '../components/ExportConfigModal';
 import { useWallets } from '@rango-dev/widget-embedded';
+import { Container as WalletContainer } from '../components/MultiSelect/Container';
+import { WalletType, WalletTypes } from '@rango-dev/wallets-shared';
+import { excludedWallets, getStateWallet } from '../helpers';
 
 const providers = allProviders();
 
@@ -87,7 +97,50 @@ export function Config(props: PropsWithChildren) {
   const [open, setOpen] = useState<boolean>(false);
   const config = useConfigStore.use.config();
   const resetConfig = useConfigStore.use.resetConfig();
-  const { state, connect, disconnect } = useWallets();
+  const { state, connect, disconnect, getWalletInfo } = useWallets();
+  const [openWalletsModal, setOpenWalletsModal] = useState<boolean>(false);
+  const wallets = useConfigStore.use.config().wallets;
+  const [walletMessage, setWalletErrorMessage] = useState('');
+
+  const connectableWalletsList = (
+    wallets ||
+    Object.values(WalletTypes).filter(
+      (wallet) => !excludedWallets.includes(wallet)
+    )
+  ).map((w) => {
+    const type =
+      typeof w !== 'string' ? (w as ProviderInterface).config.type : w;
+
+    const {
+      name,
+      img: image,
+      installLink,
+      showOnMobile,
+    } = getWalletInfo(type as string);
+    return {
+      state: getStateWallet(state(type as WalletType)),
+      installLink,
+      name,
+      image,
+      type,
+      showOnMobile: !!showOnMobile,
+    };
+  });
+
+  const onSelectWallet = async (type: WalletType) => {
+    const wallet = state(type);
+    try {
+      if (wallet.connected) {
+        await disconnect(type);
+      } else {
+        await connect(type);
+      }
+    } catch (e) {
+      if (e instanceof Error) {
+        setWalletErrorMessage('Error: ' + e.message);
+      }
+    }
+  };
 
   return (
     <Container>
@@ -119,6 +172,20 @@ export function Config(props: PropsWithChildren) {
                 </ResetButton>
               </HeaderButtonsContainer>
             </Header>
+            <WalletContainer
+              label="Connect/Disconnect To Wallets"
+              titleBtn="Connect/Disconnect"
+              onOpenModal={() => setOpenWalletsModal(true)}
+            />
+            <ConnectWalletsModal
+              list={connectableWalletsList}
+              open={openWalletsModal}
+              onClose={() => {
+                setOpenWalletsModal(false);
+              }}
+              onSelect={onSelectWallet}
+              error={walletMessage}
+            />
             {loadingStatus === 'failed' && (
               <Alert type="error">
                 Error connecting server, please reload the app and try again
@@ -135,35 +202,6 @@ export function Config(props: PropsWithChildren) {
             <Divider size={32} />
             <StylesConfig />
             <Divider size={32} />
-            Metamask as External Wallets: <br />
-            <Button
-              type="primary"
-              onClick={() => {
-                if (state('metamask').connected) {
-                  disconnect('metamask');
-                } else {
-                  connect('metamask');
-                }
-              }}>
-              {state('metamask').connected
-                ? 'disconnect metamsk'
-                : 'connect metamsk'}
-            </Button>
-            <Divider size={32} />
-            Phantom as External Wallets: <br />
-            <Button
-              type="primary"
-              onClick={() => {
-                if (state('phantom').connected) {
-                  disconnect('phantom');
-                } else {
-                  connect('phantom');
-                }
-              }}>
-              {state('phantom').connected
-                ? 'disconnect phantom'
-                : 'connect phantom'}
-            </Button>
           </div>
         </ConfigContent>
       </Provider>
