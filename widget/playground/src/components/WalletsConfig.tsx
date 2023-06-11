@@ -13,7 +13,6 @@ export function WalletsConfig() {
   const allWallets = useConfigStore.use.config().wallets;
   const wallets = allWallets?.filter((w) => typeof w === 'string');
   const providers = allWallets?.filter((w) => typeof w !== 'string');
-
   const multiWallets = useConfigStore.use.config().multiWallets;
 
   const onChangeWallets = useConfigStore.use.onChangeWallets();
@@ -79,9 +78,7 @@ export function WalletsConfig() {
           checked={multiWallets === undefined ? true : multiWallets}
         />
         <Divider size={24} />
-
         <ProvidersMultiSelect list={walletList} />
-        <Divider size={24} />
       </ConfigurationContainer>
     </>
   );
