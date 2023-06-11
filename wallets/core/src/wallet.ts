@@ -210,8 +210,10 @@ class Wallet<InstanceType = any> {
     }
   }
 
-  getSigners(provider: any) {
-    return this.actions.getSigners(provider);
+  getSigners(provider: any, supportedChains?: BlockchainMeta[]) {
+    return supportedChains
+      ? this.actions.getSigners(provider, supportedChains)
+      : this.actions.getSigners(provider);
   }
   getWalletInfo(allBlockChains: BlockchainMeta[]) {
     return this.actions.getWalletInfo(allBlockChains);

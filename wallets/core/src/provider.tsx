@@ -11,7 +11,7 @@ import {
   checkWalletProviders,
   connectedWallets,
   defaultWalletState,
-  getComptaibleProvider,
+  isWalletDerivedFromWalletConnect,
   state_reducer,
 } from './helpers';
 import {
@@ -181,12 +181,10 @@ function Provider(props: ProviderProps) {
       const supportedChains = ref.getWalletInfo(
         props.allBlockChains || []
       ).supportedChains;
-      const provider = getComptaibleProvider(
-        supportedChains,
-        ref.provider,
-        type
-      );
-      const result = ref.getSigners(provider);
+      const provider = ref.provider;
+      const result = isWalletDerivedFromWalletConnect(type)
+        ? ref.getSigners(provider, supportedChains)
+        : ref.getSigners(provider);
 
       return result;
     },

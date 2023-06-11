@@ -7091,17 +7091,7 @@
     "@walletconnect/types" "^1.8.0"
     "@walletconnect/utils" "^1.8.0"
 
-"@walletconnect/jsonrpc-http-connection@^1.0.2":
-  version "1.0.6"
-  resolved "https://registry.yarnpkg.com/@walletconnect/jsonrpc-http-connection/-/jsonrpc-http-connection-1.0.6.tgz#48c41cf3e5ac9add9425420b345615dc438594cd"
-  integrity sha512-/3zSqDi7JDN06E4qm0NmVYMitngXfh21UWwy8zeJcBeJc+Jcs094EbLsIxtziIIKTCCbT88lWuTjl1ZujxN7cw==
-  dependencies:
-    "@walletconnect/jsonrpc-utils" "^1.0.6"
-    "@walletconnect/safe-json" "^1.0.1"
-    cross-fetch "^3.1.4"
-    tslib "1.14.1"
-
-"@walletconnect/jsonrpc-http-connection@^1.0.7":
+"@walletconnect/jsonrpc-http-connection@^1.0.2", "@walletconnect/jsonrpc-http-connection@^1.0.7":
   version "1.0.7"
   resolved "https://registry.yarnpkg.com/@walletconnect/jsonrpc-http-connection/-/jsonrpc-http-connection-1.0.7.tgz#a6973569b8854c22da707a759d241e4f5c2d5a98"
   integrity sha512-qlfh8fCfu8LOM9JRR9KE0s0wxP6ZG9/Jom8M0qsoIQeKF3Ni0FyV4V1qy/cc7nfI46SLQLSl4tgWSfLiE1swyQ==
@@ -7111,7 +7101,7 @@
     cross-fetch "^3.1.4"
     tslib "1.14.1"
 
-"@walletconnect/jsonrpc-provider@1.0.13", "@walletconnect/jsonrpc-provider@^1.0.13":
+"@walletconnect/jsonrpc-provider@1.0.13", "@walletconnect/jsonrpc-provider@^1.0.13", "@walletconnect/jsonrpc-provider@^1.0.5":
   version "1.0.13"
   resolved "https://registry.yarnpkg.com/@walletconnect/jsonrpc-provider/-/jsonrpc-provider-1.0.13.tgz#9a74da648d015e1fffc745f0c7d629457f53648b"
   integrity sha512-K73EpThqHnSR26gOyNEL+acEex3P7VWZe6KE12ZwKzAt2H4e5gldZHbjsu2QR9cLeJ8AXuO7kEMOIcRv1QEc7g==
@@ -7120,16 +7110,7 @@
     "@walletconnect/safe-json" "^1.0.2"
     tslib "1.14.1"
 
-"@walletconnect/jsonrpc-provider@^1.0.5":
-  version "1.0.10"
-  resolved "https://registry.yarnpkg.com/@walletconnect/jsonrpc-provider/-/jsonrpc-provider-1.0.10.tgz#8351a06b70faa8f8c0e77dc2c6d9b0190d17d407"
-  integrity sha512-g0ffPSpY3P6GqGjWGHsr3yqvQUhj7q2k6pAikoXv5XTXWaJRzFvrlbFkSgxziXsBrwrMZn0qvPufvpN4mMZ5FA==
-  dependencies:
-    "@walletconnect/jsonrpc-utils" "^1.0.6"
-    "@walletconnect/safe-json" "^1.0.1"
-    tslib "1.14.1"
-
-"@walletconnect/jsonrpc-types@1.0.3", "@walletconnect/jsonrpc-types@^1.0.3":
+"@walletconnect/jsonrpc-types@1.0.3", "@walletconnect/jsonrpc-types@^1.0.1", "@walletconnect/jsonrpc-types@^1.0.3":
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/@walletconnect/jsonrpc-types/-/jsonrpc-types-1.0.3.tgz#65e3b77046f1a7fa8347ae02bc1b841abe6f290c"
   integrity sha512-iIQ8hboBl3o5ufmJ8cuduGad0CQm3ZlsHtujv9Eu16xq89q+BG7Nh5VLxxUgmtpnrePgFkTwXirCTkwJH1v+Yw==
@@ -7137,7 +7118,7 @@
     keyvaluestorage-interface "^1.0.0"
     tslib "1.14.1"
 
-"@walletconnect/jsonrpc-types@^1.0.1", "@walletconnect/jsonrpc-types@^1.0.2":
+"@walletconnect/jsonrpc-types@^1.0.2":
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/@walletconnect/jsonrpc-types/-/jsonrpc-types-1.0.2.tgz#b79519f679cd6a5fa4a1bea888f27c1916689a20"
   integrity sha512-CZe8tjJX73OWdHjrBHy7HtAapJ2tT0Q3TYhPBhRxi3643lwPIQWC9En45ldY14TZwgSewkbZ0FtGBZK0G7Bbyg==
