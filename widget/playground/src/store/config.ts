@@ -4,9 +4,10 @@ import createSelectors from './selectors';
 import { WalletType } from '@rango-dev/wallets-shared';
 import { immer } from 'zustand/middleware/immer';
 import { persist } from 'zustand/middleware';
-import { Type, WidgetConfig } from '../types';
+import { Type } from '../types';
 import { getConfig } from '../configs';
-import { Colors } from '../types';
+import { WidgetColors, WidgetConfig } from '@rango-dev/widget-embedded';
+import { ProviderInterface } from '@rango-dev/wallets-core';
 
 export type Mode = 'dark' | 'light' | 'auto';
 export type COLORS =
@@ -23,20 +24,33 @@ export type COLORS =
 
 interface ConfigState {
   config: WidgetConfig;
-  onChangeWallets: (wallets?: WalletType[]) => void;
+  onChangeWallets: (wallets?: (WalletType | ProviderInterface)[]) => void;
   onChangeSources: (sources?: string[]) => void;
   onChangeBlockChains: (chains?: string[], type?: Type) => void;
   onChangeTokens: (tokens?: Asset[], type?: Type) => void;
-  onChangeBooleansConfig: (name: 'multiWallets' | 'customDestination', value: boolean) => void;
+  onChangeBooleansConfig: (
+    name: 'multiWallets' | 'customDestination',
+    value: boolean
+  ) => void;
   onChangeBlockChain: (chain?: string, type?: Type) => void;
   onChangeToken: (token?: Asset, type?: Type) => void;
   onChangeAmount: (amount: number) => void;
   onChangeTheme: (
-    name: 'mode' | 'fontFamily' | 'borderRadius' | 'width' | 'height' | 'singleTheme',
-    value: Mode | string | number | boolean,
+    name:
+      | 'mode'
+      | 'fontFamily'
+      | 'borderRadius'
+      | 'width'
+      | 'height'
+      | 'singleTheme',
+    value: Mode | string | number | boolean
   ) => void;
-  onChangeColors: (name: COLORS, mode: 'light' | 'dark', color?: string) => void;
-  onSelectTheme: (colors: { light: Colors; dark: Colors }) => void;
+  onChangeColors: (
+    name: COLORS,
+    mode: 'light' | 'dark',
+    color?: string
+  ) => void;
+  onSelectTheme: (colors: { light: WidgetColors; dark: WidgetColors }) => void;
   onChangelanguage: (value: string) => void;
   resetConfig: () => void;
 }
@@ -59,7 +73,7 @@ export const initialConfig: WidgetConfig = {
   liquiditySources: undefined,
   wallets: undefined,
   multiWallets: undefined,
-  customAddress: undefined,
+  customDestination: undefined,
   language: undefined,
   theme: {
     mode: 'auto',
@@ -101,33 +115,33 @@ export const useConfigStore = createSelectors(
         onChangeBlockChains: (chains, type) =>
           set((state) => {
             if (type === 'Source') {
-              state.config.from.blockchains = chains;
+              state.config.from!.blockchains = chains;
             } else {
-              state.config.to.blockchains = chains;
+              state.config.to!.blockchains = chains;
             }
           }),
         onChangeTokens: (tokens, type) =>
           set((state) => {
             if (type === 'Source') {
-              state.config.from.tokens = tokens;
+              state.config.from!.tokens = tokens;
             } else {
-              state.config.to.tokens = tokens;
+              state.config.to!.tokens = tokens;
             }
           }),
         onChangeBlockChain: (chain, type) =>
           set((state) => {
             if (type === 'Source') {
-              state.config.from.blockchain = chain;
+              state.config.from!.blockchain = chain;
             } else {
-              state.config.to.blockchain = chain;
+              state.config.to!.blockchain = chain;
             }
           }),
         onChangeToken: (token, type) =>
           set((state) => {
             if (type === 'Source') {
-              state.config.from.token = token;
+              state.config.from!.token = token;
             } else {
-              state.config.to.token = token;
+              state.config.to!.token = token;
             }
           }),
         onChangeWallets: (wallets) =>
@@ -152,21 +166,21 @@ export const useConfigStore = createSelectors(
           }),
         onChangeTheme: (name, value) =>
           set((state) => {
-            state.config.theme[name as string] = value;
+            state.config.theme![name] = value;
           }),
         onChangeColors: (name, mode, color) =>
           set((state) => {
-            state.config.theme.colors[mode][name] = color;
+            state.config.theme!.colors![mode][name] = color;
           }),
         onSelectTheme: (colors) =>
           set((state) => {
-            state.config.theme.colors = colors;
+            state.config.theme!.colors = colors;
           }),
         resetConfig: () => {
           set({ config: initialConfig });
         },
       })),
-      { name: 'user-config' },
-    ),
-  ),
+      { name: 'user-config' }
+    )
+  )
 );
