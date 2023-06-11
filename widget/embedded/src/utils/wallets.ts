@@ -93,13 +93,18 @@ export function prepareAccountsForWalletStore(
   const result: Wallet[] = [];
 
   function addAccount(network: Network, address: string) {
-    const newAccount: Wallet = {
-      address,
-      chain: network,
-      walletType: wallet,
-    };
+    const accountForChainAlreadyExists = !!result.find(
+      (account) => account.chain === network
+    );
+    if (!accountForChainAlreadyExists) {
+      const newAccount: Wallet = {
+        address,
+        chain: network,
+        walletType: wallet,
+      };
 
-    result.push(newAccount);
+      result.push(newAccount);
+    }
   }
 
   const supportedChains = supportedChainNames || [];
@@ -234,7 +239,8 @@ export function isAccountAndWalletMatched(
 ) {
   return (
     account.address === connectedWallet.address &&
-    account.chain === connectedWallet.chain
+    account.chain === connectedWallet.chain &&
+    account.walletType === connectedWallet.walletType
   );
 }
 
