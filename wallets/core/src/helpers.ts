@@ -149,7 +149,9 @@ const LASTE_CONNECTED_WALLETS = 'last-connected-wallets';
 export async function persistWallet(type: WalletType) {
   const persistor = new Persistor<string[]>();
   const wallets = persistor.getItem(LASTE_CONNECTED_WALLETS);
-  if (wallets) persistor.setItem(LASTE_CONNECTED_WALLETS, wallets.concat(type));
+  const walletAlreadyPersisted = !!wallets?.find((wallet) => wallet === type);
+  if (wallets && !walletAlreadyPersisted)
+    persistor.setItem(LASTE_CONNECTED_WALLETS, wallets.concat(type));
   else persistor.setItem(LASTE_CONNECTED_WALLETS, [type]);
 }
 
@@ -182,7 +184,7 @@ export async function autoConnect(
 
       if (!!wallet) {
         const ref = addWalletRef(wallet);
-        connect_promises.push({ walletType, connect: ref.connect });
+        connect_promises.push({ walletType, connect: ref.connect.bind(ref) });
       }
     });
     const starterPromise = Promise.resolve(null);
@@ -191,9 +193,7 @@ export async function autoConnect(
         promise.then(() =>
           connect()
             .then()
-            .catch(() => {
-              removeWalletFromPersist(walletType);
-            }),
+            .catch(() => removeWalletFromPersist(walletType)),
         ),
       starterPromise,
     );
