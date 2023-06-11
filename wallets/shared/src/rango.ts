@@ -45,6 +45,7 @@ export type Network = string;
 export enum WalletTypes {
   META_MASK = 'metamask',
   WALLET_CONNECT = 'wallet-connect',
+  WALLET_CONNECT_2 = 'wallet-connect-2',
   TRUST_WALLET = 'trust-wallet',
   KEPLR = 'keplr',
   PHANTOM = 'phantom',
