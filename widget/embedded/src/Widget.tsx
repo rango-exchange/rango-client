@@ -1,4 +1,4 @@
-import { SwapContainer } from '@rango-dev/ui';
+import { SwapContainer, styled } from '@rango-dev/ui';
 import React, { useEffect, useMemo, useState } from 'react';
 import { AppRouter } from './components/AppRouter';
 import { useMetaStore } from './store/meta';
@@ -22,6 +22,13 @@ import QueueManager from './QueueManager';
 import { useUiStore } from './store/ui';
 import { navigationRoutes } from './constants/navigationRoutes';
 import { initConfig } from './utils/configs';
+
+const MainContainer = styled('div', {
+  width: '100%',
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+});
 
 export type WidgetProps = {
   config?: WidgetConfig;
@@ -110,7 +117,7 @@ export const Widget: React.FC<WidgetProps> = ({ config }) => {
       allBlockChains={blockchains}
       providers={providers}
       onUpdateState={onUpdateState}>
-      <div id="swap-container" className={activeTheme}>
+      <MainContainer id="swap-container" className={activeTheme}>
         <QueueManager>
           <SwapContainer fixedHeight={currentPage !== navigationRoutes.home}>
             <AppRouter
@@ -123,7 +130,7 @@ export const Widget: React.FC<WidgetProps> = ({ config }) => {
             </AppRouter>
           </SwapContainer>
         </QueueManager>
-      </div>
+      </MainContainer>
     </Provider>
   );
 };

@@ -26,7 +26,11 @@ const Container = styled('div', {
   },
 });
 const SwapContent = styled('div', {
-  flexBasis: '512px',
+  width: '100%',
+  '@lg': {
+    width: 'auto',
+    flexBasis: '512px',
+  },
 });
 const ConfigContent = styled('div', {
   display: 'flex',
@@ -93,15 +97,22 @@ export function Config(props: PropsWithChildren) {
                 <Typography variant="h4">Customize your widget</Typography>
                 <Divider size={8} />
                 <Description variant="body2" color="$neutral600">
-                  You can customize the theme and config how your widget should works
+                  You can customize the theme and config how your widget should
+                  works
                 </Description>
               </div>
               <HeaderButtonsContainer>
-                <HeaderButton variant="contained" type="primary" onClick={() => setOpen(true)}>
+                <HeaderButton
+                  variant="contained"
+                  type="primary"
+                  onClick={() => setOpen(true)}>
                   Export Code
                 </HeaderButton>
                 <Divider size={16} />
-                <ResetButton variant="outlined" type="warning" onClick={resetConfig.bind(null)}>
+                <ResetButton
+                  variant="outlined"
+                  type="warning"
+                  onClick={resetConfig.bind(null)}>
                   Reset Config
                 </ResetButton>
               </HeaderButtonsContainer>
@@ -127,7 +138,11 @@ export function Config(props: PropsWithChildren) {
       <SwapContent>
         <Swap>{props.children}</Swap>
       </SwapContent>
-      <ExportConfigModal open={open} onClose={setOpen.bind(null, false)} config={config} />
+      <ExportConfigModal
+        open={open}
+        onClose={setOpen.bind(null, false)}
+        config={config}
+      />
     </Container>
   );
 }

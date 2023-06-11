@@ -134,11 +134,10 @@ export const useWalletsStore = createSelectors(
       getOneOfWalletsDetails: async (account: Wallet) => {
         const tokens = useMetaStore.getState().meta.tokens;
         set((state) => ({
-          connectedWallets: state.connectedWallets.map((balance) => {
-            return balance.address === account.address &&
-              balance.chain === account.chain
-              ? { ...balance, loading: true }
-              : balance;
+          connectedWallets: state.connectedWallets.map((wallet) => {
+            return isAccountAndWalletMatched(account, wallet)
+              ? { ...wallet, loading: true }
+              : wallet;
           }),
         }));
         try {
