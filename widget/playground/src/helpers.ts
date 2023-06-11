@@ -1,12 +1,19 @@
 import { WalletTypes } from '@rango-dev/wallets-shared';
 import { Asset, Token } from 'rango-sdk';
-import { WidgetConfig } from './types';
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
 import subtractObject from 'subtract-object';
 import stringifyObject from 'stringify-object';
+import { WidgetConfig } from '@rango-dev/widget-embedded';
 
 export const excludedWallets = [WalletTypes.STATION, WalletTypes.LEAP];
 
-export const onChangeMultiSelects = (value, values, list, findIndex) => {
+export const onChangeMultiSelects = (
+  value: string,
+  values: any[] | undefined,
+  list: any[],
+  findIndex: (item: string) => boolean
+) => {
   if (value === 'empty') return [];
   else if (value === 'all') return null;
   if (!values) {
@@ -19,7 +26,7 @@ export const onChangeMultiSelects = (value, values, list, findIndex) => {
     const index = values.findIndex(findIndex);
     if (index !== -1) values.splice(index, 1);
     else values.push(value);
-    if (values.length === list.length) return undefined;
+    if (values.length === list.length) return 'all';
     else return values;
   }
 };
@@ -43,11 +50,11 @@ export const filterTokens = (list: Token[], searchedFor: string) =>
       containsText(token.name || '', searchedFor)
   );
 
-export const syntaxHighlight = (json) => {
+export const syntaxHighlight = (json: string) => {
   json.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
   return json.replace(
-    /("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g,
-    function (match) {
+    /("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\\-]?\d+)?)/g,
+    function (match: string) {
       let cls = 'string';
       if (/^"/.test(match)) {
         if (/:$/.test(match)) {
