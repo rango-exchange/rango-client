@@ -180,7 +180,10 @@ export const useConfigStore = createSelectors(
           set({ config: initialConfig });
         },
       })),
-      { name: 'user-config' }
+      {
+        name: 'user-config',
+        partialize: (state) => ({ wallets: state.config.wallets }),
+      }
     )
   )
 );
