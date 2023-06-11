@@ -12,6 +12,7 @@ import Wallet, { Options, State as WalletState } from './wallet';
 import type { BlockchainMeta } from 'rango-types';
 import { isEvmBlockchain } from 'rango-types';
 import { Persistor } from './persistor';
+import { LASTE_CONNECTED_WALLETS } from './constants';
 
 export function choose(wallets: any[], type: WalletType): any | null {
   return wallets.find((wallet) => wallet.type === type) || null;
@@ -153,8 +154,6 @@ export function getComptaibleProvider(
   return provider;
 }
 
-const LASTE_CONNECTED_WALLETS = 'last-connected-wallets';
-
 export async function persistWallet(type: WalletType) {
   const persistor = new Persistor<string[]>();
   const wallets = persistor.getItem(LASTE_CONNECTED_WALLETS);
@@ -202,15 +201,13 @@ export async function autoConnect(
         connect_promises.push({ walletType, connect: ref.connect.bind(ref) });
       }
     });
-    const starterPromise = Promise.resolve(null);
-    await connect_promises.reduce(
-      (promise, { connect, walletType }) =>
-        promise.then(() =>
-          connect()
-            .then()
-            .catch(() => removeWalletFromPersist(walletType))
-        ),
-      starterPromise
-    );
+
+    for (const { connect, walletType } of connect_promises) {
+      try {
+        await connect();
+      } catch (error) {
+        removeWalletFromPersist(walletType);
+      }
+    }
   }
 }
