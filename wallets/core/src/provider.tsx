@@ -7,11 +7,15 @@ import React, {
 } from 'react';
 
 import {
+  autoConnect,
   availableWallets,
   checkWalletProviders,
+  clearPersistStorage,
   connectedWallets,
   defaultWalletState,
   getComptaibleProvider,
+  persistWallet,
+  removeWalletFromPersist,
   state_reducer,
 } from './helpers';
 import {
@@ -105,6 +109,7 @@ function Provider(props: ProviderProps) {
 
       const ref = addWalletRef(wallet);
       const result = await ref.connect(network);
+      if (props.autoConnect) persistWallet(type);
 
       return result;
     },
@@ -116,6 +121,7 @@ function Provider(props: ProviderProps) {
 
       const ref = addWalletRef(wallet);
       await ref.disconnect();
+      if (props.autoConnect) removeWalletFromPersist(type);
     },
     async disconnectAll() {
       const disconnect_promises: Promise<any>[] = [];
@@ -132,6 +138,7 @@ function Provider(props: ProviderProps) {
         }
       });
 
+      if (props.autoConnect) clearPersistStorage();
       return await Promise.allSettled(disconnect_promises);
     },
     state(type) {
@@ -240,6 +247,16 @@ function Provider(props: ProviderProps) {
       ref.setHandler(makeEventHandler(dispatch, props.onUpdateState));
     });
   }, [props.onUpdateState]);
+
+  useEffect(() => {
+    const shouldTryAutoConnect =
+      props.allBlockChains && props.allBlockChains.length && props.autoConnect;
+    if (shouldTryAutoConnect) {
+      (async () => {
+        await autoConnect(wallets, addWalletRef);
+      })();
+    }
+  }, [props.autoConnect, props.allBlockChains]);
 
   return (
     <WalletContext.Provider value={api}>

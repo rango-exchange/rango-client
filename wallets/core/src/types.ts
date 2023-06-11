@@ -33,6 +33,7 @@ export type ProviderProps = PropsWithChildren<{
   onUpdateState?: WalletEventHandler;
   allBlockChains?: BlockchainMeta[];
   providers: WalletProvider[];
+  autoConnect?: boolean;
 }>;
 
 export enum Events {

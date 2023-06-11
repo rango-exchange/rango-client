@@ -3,13 +3,15 @@ import {
   convertEvmBlockchainMetaToEvmChainInfo,
   evmChainsToRpcMap,
   Network,
+  WalletConfig,
   WalletType,
   WalletTypes,
 } from '@rango-dev/wallets-shared';
-import { State, WalletProvider, WalletProviders } from './types';
-import { Options, State as WalletState } from './wallet';
+import { State, WalletActions, WalletProvider, WalletProviders } from './types';
+import Wallet, { Options, State as WalletState } from './wallet';
 import type { BlockchainMeta } from 'rango-types';
 import { isEvmBlockchain } from 'rango-types';
+import { Persistor } from './persistor';
 
 export function choose(wallets: any[], type: WalletType): any | null {
   return wallets.find((wallet) => wallet.type === type) || null;
@@ -149,4 +151,66 @@ export function getComptaibleProvider(
     });
   }
   return provider;
+}
+
+const LASTE_CONNECTED_WALLETS = 'last-connected-wallets';
+
+export async function persistWallet(type: WalletType) {
+  const persistor = new Persistor<string[]>();
+  const wallets = persistor.getItem(LASTE_CONNECTED_WALLETS);
+  const walletAlreadyPersisted = !!wallets?.find((wallet) => wallet === type);
+  if (wallets && !walletAlreadyPersisted)
+    persistor.setItem(LASTE_CONNECTED_WALLETS, wallets.concat(type));
+  else persistor.setItem(LASTE_CONNECTED_WALLETS, [type]);
+}
+
+export function removeWalletFromPersist(type: WalletType) {
+  const persistor = new Persistor<string[]>();
+  const wallets = persistor.getItem(LASTE_CONNECTED_WALLETS);
+  if (wallets)
+    persistor.setItem(
+      LASTE_CONNECTED_WALLETS,
+      wallets.filter((wallet) => wallet !== type)
+    );
+}
+
+export function clearPersistStorage() {
+  const persistor = new Persistor<string[]>();
+  const wallets = persistor.getItem(LASTE_CONNECTED_WALLETS);
+  if (wallets) persistor.removeItem(LASTE_CONNECTED_WALLETS);
+}
+
+export async function autoConnect(
+  wallets: WalletProviders,
+  addWalletRef: (wallet: {
+    actions: WalletActions;
+    config: WalletConfig;
+  }) => Wallet<any>
+) {
+  const persistor = new Persistor<string[]>();
+  const lastConnectedWallets = persistor.getItem(LASTE_CONNECTED_WALLETS);
+  if (lastConnectedWallets && lastConnectedWallets.length) {
+    const connect_promises: {
+      walletType: WalletType;
+      connect: () => Promise<any>;
+    }[] = [];
+    lastConnectedWallets.forEach((walletType) => {
+      const wallet = wallets.get(walletType);
+
+      if (!!wallet) {
+        const ref = addWalletRef(wallet);
+        connect_promises.push({ walletType, connect: ref.connect.bind(ref) });
+      }
+    });
+    const starterPromise = Promise.resolve(null);
+    await connect_promises.reduce(
+      (promise, { connect, walletType }) =>
+        promise.then(() =>
+          connect()
+            .then()
+            .catch(() => removeWalletFromPersist(walletType))
+        ),
+      starterPromise
+    );
+  }
 }
