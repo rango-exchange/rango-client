@@ -1,27 +1,30 @@
 {
   "name": "@rango-dev/provider-walletconnect-2",
-  "version": "0.1.13",
+  "version": "0.5.1-next.0",
   "license": "MIT",
-  "module": "dist/provider-walletconnect-2.esm.js",
-  "main": "dist/index.js",
+  "type": "module",
+  "module": "./dist/index.js",
+  "main": "./dist/index.js",
+  "exports": {
+    ".": "./dist/index.js"
+  },
   "typings": "dist/index.d.ts",
   "files": [
     "dist",
     "src"
   ],
   "scripts": {
-    "start": "tsdx watch",
-    "build": "tsdx build  --tsconfig ./tsconfig.json",
+    "build": "node ../../scripts/build/command.mjs --path wallets/provider-walletconnect-2",
     "clean": "rimraf dist",
     "format": "prettier --write '{.,src}/**/*.{ts,tsx}'",
     "lint": "eslint \"**/*.{ts,tsx}\" --ignore-path ../../.eslintignore"
   },
   "dependencies": {
-    "@rango-dev/signer-evm": "^0.1.15-next.4",
-    "@rango-dev/wallets-shared": "^0.1.15-next.3",
+    "@rango-dev/signer-evm": "^0.5.1-next.0",
+    "@rango-dev/wallets-shared": "^0.5.0",
     "@web3modal/standalone": "^2.3.7",
     "@walletconnect/ethereum-provider": "^2.7.2",
-    "rango-types": "^0.1.37"
+    "rango-types": "^0.1.39"
   },
   "publishConfig": {
     "access": "public"

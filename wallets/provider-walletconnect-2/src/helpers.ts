@@ -1,7 +1,6 @@
 import { EthereumProvider } from '@walletconnect/ethereum-provider';
 
-const projectId = 'f5196d081862c6f2b81c04520ea9301c';
-// const relayUrl = 'wss://relay.walletconnect.com';
+const PROJECT_ID = 'f5196d081862c6f2b81c04520ea9301c';
 
 export function supportsForSwitchNetworkRequest(provider: any): boolean {
   const wallets = ['metamask'];
@@ -21,7 +20,7 @@ export async function makeConnection(options: {
   const { chainId = 1, force = false } = options;
 
   const ethProvider = await EthereumProvider.init({
-    projectId, // REQUIRED your projectId
+    projectId: PROJECT_ID, // REQUIRED your projectId
     chains: [chainId],
     // REQUIRED chain ids
     showQrModal: true, // REQUIRED set to "true" to use @web3modal/standalone,
@@ -42,8 +41,6 @@ export async function makeConnection(options: {
       'disconnect',
     ],
     qrModalOptions: {
-      // explorerAllowList: [],
-      // explorerDenyList: [],
       themeVariables: {
         '--w3m-z-index': '999999999',
       },
