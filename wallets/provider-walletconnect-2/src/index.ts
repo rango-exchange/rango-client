@@ -21,6 +21,7 @@ import {
   BlockchainMeta,
   evmBlockchains,
 } from 'rango-types';
+import { SessionTypes } from '@walletconnect/types';
 
 const WALLET = WalletTypes.WALLET_CONNECT_2;
 
@@ -43,12 +44,15 @@ export const getInstance: GetInstance = async (options) => {
     chainId: requestedChainId,
     force,
   });
-
-  if (currentProvider) {
-    await nextInstance.signer.client.disconnect({
-      topic: currentProvider.signer.session?.topic,
-    });
-  }
+  console.log(currentProvider);
+  const getAllSessions = nextInstance.signer.client.session.getAll();
+  getAllSessions.forEach((session: SessionTypes.Struct, index: number) => {
+    if (index < getAllSessions.length - 1) {
+      nextInstance.signer.client.disconnect({
+        topic: session?.topic,
+      });
+    }
+  });
 
   if (force && requestedChainId) updateChainId?.(requestedChainId);
 
@@ -74,6 +78,7 @@ export const subscribe: Subscribe = ({
   disconnect,
 }) => {
   instance?.on('chainChanged', (chainId: string) => {
+    console.log('111111111');
     const network = getBlockChainNameFromId(chainId, meta) || Networks.Unknown;
 
     updateChainId(chainId);

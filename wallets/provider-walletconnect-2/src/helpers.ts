@@ -1,10 +1,11 @@
 import { EthereumProvider } from '@walletconnect/ethereum-provider';
+import { SessionTypes } from '@walletconnect/types';
 
 const PROJECT_ID = 'f5196d081862c6f2b81c04520ea9301c';
 
 export function supportsForSwitchNetworkRequest(provider: any): boolean {
   const wallets = ['metamask'];
-  const connectedWallet = provider.session.peer.metadata
+  const connectedWallet = provider?.session?.peer?.metadata
     ? provider.session.peer.metadata.name
     : '';
 
@@ -55,13 +56,39 @@ export async function makeConnection(options: {
   })[lastIndex]?.topic;
 
   return new Promise((resolve, reject) => {
-    if (pairingTopic && !force) {
+    if (pairingTopic && ethProvider.accounts?.length) {
       (async () => {
         await ethProvider.signer.client
           .connect({
             pairingTopic,
+            requiredNamespaces: force
+              ? {
+                  eip155: {
+                    methods: [
+                      'eth_sendTransaction',
+                      'eth_signTransaction',
+                      'eth_sign',
+                      'personal_sign',
+                      'eth_signTypedData',
+                    ],
+                    chains: [`eip155:${chainId}`],
+                    events: ['chainChanged', 'accountsChanged'],
+                  },
+                }
+              : undefined,
           })
-          .then(() => {
+          .then(async (res) => {
+            if (force) {
+              const getAllSessions = ethProvider.signer.client.session.getAll();
+              getAllSessions.forEach((session: SessionTypes.Struct) => {
+                (ethProvider as any).signer.client.disconnect({
+                  topic: session?.topic,
+                });
+              });
+              const { approval } = res;
+              await approval();
+              ethProvider.signer.setDefaultChain(`eip155:${chainId}`);
+            }
             resolve(ethProvider);
           })
           .catch(async () => {
