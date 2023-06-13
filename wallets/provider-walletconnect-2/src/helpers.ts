@@ -36,6 +36,9 @@ export async function makeConnection(options: {
     projectId: PROJECT_ID,
   });
 
+  provider.on('display_uri', (uri: string) => {
+    walletConnectModal.openModal({ uri });
+  });
   const lastIndex =
     provider.client.pairing.getAll({
       active: true,
