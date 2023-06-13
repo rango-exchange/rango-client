@@ -12,9 +12,14 @@ import {
 } from '@rango-dev/ui';
 import { CSS } from '@stitches/react';
 import { PrismLight as SyntaxHighlighter } from 'react-syntax-highlighter';
-import { javascript, jsx } from 'react-syntax-highlighter/dist/esm/languages/prism';
-import { atomDark as dark, prism } from 'react-syntax-highlighter/dist/esm/styles/prism';
-import { WidgetConfig } from '../types';
+import {
+  javascript,
+  jsx,
+} from 'react-syntax-highlighter/dist/esm/languages/prism';
+import {
+  atomDark as dark,
+  prism,
+} from 'react-syntax-highlighter/dist/esm/styles/prism';
 import {
   capitalizeTheFirstLetter,
   filterConfig,
@@ -24,6 +29,7 @@ import {
 } from '../helpers';
 import { initialConfig } from '../store/config';
 import { useTheme } from '../hook/useTheme';
+import { WidgetConfig } from '@rango-dev/widget-embedded';
 
 SyntaxHighlighter.registerLanguage('javascript', javascript);
 SyntaxHighlighter.registerLanguage('jsx', jsx);
@@ -71,7 +77,10 @@ const CopyCodeBlockButton = styled(Button, {
   top: '$16',
 });
 
-const CodeBlockContainer = styled('div', { position: 'relative', height: '60%' });
+const CodeBlockContainer = styled('div', {
+  position: 'relative',
+  height: '60%',
+});
 
 const modalContainerStyles: CSS<typeof config> = {
   height: '600px',
@@ -94,7 +103,11 @@ function CodeBlock(props: CodeBlockProps) {
   return (
     <CodeBlockContainer>
       <CopyCodeBlockButton onClick={handleCopy.bind(null, children)}>
-        {isCopied ? <CheckSquareIcon size={20} color="success" /> : <CopyIcon size={20} />}
+        {isCopied ? (
+          <CheckSquareIcon size={20} color="success" />
+        ) : (
+          <CopyIcon size={20} />
+        )}
       </CopyCodeBlockButton>
       <SyntaxHighlighter
         showLineNumbers
@@ -134,13 +147,17 @@ export function ExportConfigModal(props: ExportConfigModalProps) {
         <>
           <Typography variant="body1" mb={8} mt={12}>
             See full instruction on
-            <Link href="https://docs.rango.exchange/integration-guide/rango-widget" target="_blank">
+            <Link
+              href="https://docs.rango.exchange/integration-guide/rango-widget"
+              target="_blank">
               docs.rango.exchange
             </Link>
           </Typography>
           <Typography variant="body1" mb={12} mt={8}>
             See more examples
-            <Link href="https://github.com/rango-exchange/widget-examples" target="_blank">
+            <Link
+              href="https://github.com/rango-exchange/widget-examples"
+              target="_blank">
               https://github.com/rango-exchange/widget-examples
             </Link>
           </Typography>
@@ -158,7 +175,9 @@ export function ExportConfigModal(props: ExportConfigModalProps) {
             ))}
           </ButtonsContainer>
 
-          <CodeBlock language={typesOfCodeBlocks[selected].language} theme={syntaxHighlighterTheme}>
+          <CodeBlock
+            language={typesOfCodeBlocks[selected].language}
+            theme={syntaxHighlighterTheme}>
             {typesOfCodeBlocks[selected].generateCode(formatedConfig)}
           </CodeBlock>
         </>
