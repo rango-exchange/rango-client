@@ -1,4 +1,7 @@
-import { makeConnection, supportsForSwitchNetworkRequest } from './helpers';
+import {
+  makeConnection,
+  // supportsForSwitchNetworkRequest
+} from './helpers';
 import {
   WalletTypes,
   CanSwitchNetwork,
