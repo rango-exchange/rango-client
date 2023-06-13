@@ -8,11 +8,11 @@ import {
   Subscribe,
   SwitchNetwork,
   WalletConfig,
-  canSwitchNetworkToEvm,
   WalletInfo,
   getBlockChainNameFromId,
   Networks,
   convertEvmBlockchainMetaToEvmChainInfo,
+  switchOrAddNetworkForMetamaskCompatibleWallets,
 } from '@rango-dev/wallets-shared';
 import signer from './signer';
 import {
@@ -21,7 +21,6 @@ import {
   BlockchainMeta,
   evmBlockchains,
 } from 'rango-types';
-import { SessionTypes } from '@walletconnect/types';
 
 const WALLET = WalletTypes.WALLET_CONNECT_2;
 
@@ -32,7 +31,7 @@ export const config: WalletConfig = {
 };
 
 export const getInstance: GetInstance = async (options) => {
-  const { network, currentProvider, meta, force, updateChainId } = options;
+  const { network, meta, force, updateChainId } = options;
   // If `network` is provided, trying to get chainId
   const evm_chain_info = convertEvmBlockchainMetaToEvmChainInfo(
     meta as EvmBlockchainMeta[]
@@ -44,15 +43,6 @@ export const getInstance: GetInstance = async (options) => {
     chainId: requestedChainId,
     force,
   });
-  console.log(currentProvider);
-  const getAllSessions = nextInstance.signer.client.session.getAll();
-  getAllSessions.forEach((session: SessionTypes.Struct, index: number) => {
-    if (index < getAllSessions.length - 1) {
-      nextInstance.signer.client.disconnect({
-        topic: session?.topic,
-      });
-    }
-  });
 
   if (force && requestedChainId) updateChainId?.(requestedChainId);
 
@@ -60,8 +50,8 @@ export const getInstance: GetInstance = async (options) => {
 };
 
 export const connect: Connect = async ({ instance }) => {
-  const accounts = instance.accounts;
-  const chainId = instance.chainId;
+  const accounts = await instance.enable();
+  const chainId = await instance.request({ method: 'eth_chainId' });
 
   return {
     accounts,
@@ -97,6 +87,7 @@ export const subscribe: Subscribe = ({
   });
 
   instance.on('session_update', (error: any, payload: any) => {
+    console.log(3333);
     if (error) {
       throw error;
     }
@@ -105,9 +96,15 @@ export const subscribe: Subscribe = ({
     const { accounts, chainId } = payload.params[0];
     updateAccounts(accounts);
     updateChainId(chainId);
+  });
+
+  instance.on('session_ping', ({ id, topic }: any) => {
+    console.log('session_ping', id, topic);
   });
 
   instance.on('session_event', (error: any, payload: any) => {
+    console.log(4444);
+
     if (error) {
       throw error;
     }
@@ -117,36 +114,45 @@ export const subscribe: Subscribe = ({
     updateChainId(chainId);
   });
 
-  instance.on('disconnect', async ({ data: topic }: any) => {
-    try {
-      await instance?.signer.client.disconnect({
-        topic,
-      });
-    } finally {
-      disconnect();
-    }
+  instance.on('disconnect', async () => {
+    // console.log('topic')
+    // console.log(topic)
+    // try {
+    //   await instance?.client.disconnect({
+    //     topic,
+    //   });
+    // } finally {
+    disconnect();
+    // }
   });
 };
 
 export const switchNetwork: SwitchNetwork = async ({
   network,
   newInstance,
+  instance,
+  meta,
 }) => {
-  if (newInstance) {
+  const evm_chain_info = convertEvmBlockchainMetaToEvmChainInfo(
+    meta as EvmBlockchainMeta[]
+  );
+  if (supportsForSwitchNetworkRequest(instance)) {
+    /*
+       `switchOrAddNetworkForMetamaskCompatibleWallets` needs a web3-provider interface.
+      And uses `request` method. Here we are making something it can use.
+     */
+
+    await switchOrAddNetworkForMetamaskCompatibleWallets(
+      instance,
+      network,
+      evm_chain_info
+    );
+  } else if (newInstance) {
     await newInstance({ force: true, network });
   }
 };
 
-export const canSwitchNetworkTo: CanSwitchNetwork = ({
-  network,
-  meta,
-  provider,
-}) => {
-  if (supportsForSwitchNetworkRequest(provider)) {
-    return canSwitchNetworkToEvm({ network, meta, provider });
-  }
-  return false;
-};
+export const canSwitchNetworkTo: CanSwitchNetwork = () => false;
 export const disconnect: Disconnect = async ({ instance, destroyInstance }) => {
   if (instance) {
     try {

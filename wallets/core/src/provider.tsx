@@ -11,6 +11,7 @@ import {
   checkWalletProviders,
   connectedWallets,
   defaultWalletState,
+  getComptaibleProvider,
   state_reducer,
 } from './helpers';
 import {
@@ -180,8 +181,12 @@ function Provider(props: ProviderProps) {
       const supportedChains = ref.getWalletInfo(
         props.allBlockChains || []
       ).supportedChains;
-      const provider = ref.provider;
-      const result = ref.getSigners(provider, supportedChains);
+      const provider = getComptaibleProvider(
+        supportedChains,
+        ref.provider,
+        type
+      );
+      const result = ref.getSigners(provider);
       return result;
     },
   };

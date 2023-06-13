@@ -1,6 +1,15 @@
-import { Network, WalletType } from '@rango-dev/wallets-shared';
+import WalletConnectProvider from '@walletconnect/ethereum-provider';
+import {
+  convertEvmBlockchainMetaToEvmChainInfo,
+  evmChainsToRpcMap,
+  Network,
+  WalletType,
+  WalletTypes,
+} from '@rango-dev/wallets-shared';
 import { State, WalletProvider, WalletProviders } from './types';
 import { Options, State as WalletState } from './wallet';
+import type { BlockchainMeta } from 'rango-types';
+import { isEvmBlockchain } from 'rango-types';
 
 export function choose(wallets: any[], type: WalletType): any | null {
   return wallets.find((wallet) => wallet.type === type) || null;
@@ -117,3 +126,26 @@ export function needsCheckInstallation(options: Options) {
   WalletConnect instance is not compatible with ethers.providers.Web3Provider,
   Here we are returning a comptable instance, instead of the original one.  
 */
+export function isWalletDerivedFromWalletConnect(wallet_type: WalletType) {
+  return wallet_type === WalletTypes.WALLET_CONNECT;
+}
+export function getComptaibleProvider(
+  supportedChains: BlockchainMeta[],
+  provider: any,
+  type: WalletType
+) {
+  if (isWalletDerivedFromWalletConnect(type)) {
+    const evmBlockchains = supportedChains.filter(isEvmBlockchain);
+    const rpcUrls = evmChainsToRpcMap(
+      convertEvmBlockchainMetaToEvmChainInfo(evmBlockchains)
+    );
+    console.log(rpcUrls);
+    return new WalletConnectProvider({
+      qrcode: false,
+      rpc: rpcUrls,
+      connector: provider,
+      chainId: provider.chainId,
+    });
+  }
+  return provider;
+}
