@@ -23,7 +23,6 @@
     "@rango-dev/signer-evm": "^0.5.1-next.0",
     "@rango-dev/wallets-shared": "^0.5.1-next.9",
     "@web3modal/standalone": "^2.3.7",
-    "@walletconnect/ethereum-provider": "^2.7.2",
     "rango-types": "^0.1.39",
     "@walletconnect/universal-provider": "2.8.0"
   },
