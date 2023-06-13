@@ -165,55 +165,65 @@ export type Route = Pick<
 
 export type SwapEvent = RouteEvent | StepEvent;
 
-export type RouteEventType = 'started' | 'failed' | 'succeeded';
-export type StepEventType =
-  | RouteEventType
-  | (
-      | 'create_tx'
-      | 'send_tx'
-      | 'tx_sent'
-      | 'approval_tx_succeeded'
-      | 'check_tx'
-      | 'output_revealed'
-      | 'canceled'
-      | 'waiting_for_queue'
-      | 'waiting_for_wallet_connect'
-      | 'waiting_for_network_change'
-      | 'waiting_for_change_wallet_account'
-    );
+export enum RouteEventTypes {
+  STARTED = 'started',
+  FAILED = 'failed',
+  SUCCEEDED = 'succeeded',
+}
 
-export type RouteExecutionMessageSeverity =
-  | 'error'
-  | 'success'
-  | 'warning'
-  | 'info';
+export enum StepEventTypes {
+  STARTED = 'started',
+  FAILED = 'failed',
+  SUCCEEDED = 'succeeded',
+  CREATE_TX = 'create_tx',
+  SEND_TX = 'send_tx',
+  TX_SENT = 'tx_sent',
+  APPROVAL_TX_SUCCEEDED = 'approval_tx_succeeded',
+  CHECK_TX = 'check_tx',
+  OUTPUT_REVEALED = 'output_revealed',
+  CANCELED = 'canceled',
+  WAITING_FOR_QUEUE = 'waiting_for_queue',
+  WAITING_FOR_WALLET_CONNECT = 'waiting_for_wallet_connect',
+  WAITING_FOR_NETWORK_CHANGE = 'waiting_for_network_change',
+  WAITING_FOR_CHANGE_WALLET_ACCOUNT = 'waiting_for_change_wallet_account',
+}
 
-type Event<T extends StepEventType, U extends Record<string, unknown> = {}> = {
+export enum RouteExecutionMessageSeverity {
+  ERROR = 'error',
+  SUCCESS = 'success',
+  WARNING = 'warning',
+  INFO = 'info',
+}
+
+type Event<
+  T extends StepEventTypes | RouteEventTypes,
+  U extends Record<string, unknown> = {}
+> = {
   eventType: T;
   message: string;
   messageSeverity: RouteExecutionMessageSeverity;
 } & U;
 
 export type RouteEvent =
-  | Event<'started'>
-  | Event<'failed', { reason?: string }>
-  | Event<'succeeded', { outputAmount: string }>;
+  | Event<RouteEventTypes.STARTED>
+  | Event<RouteEventTypes.FAILED, { reason?: string }>
+  | Event<RouteEventTypes.SUCCEEDED, { outputAmount: string }>;
 
 export type StepEvent =
-  | RouteEvent
-  | (
-      | Event<'create_tx'>
-      | Event<'send_tx', { isApprovalTx: boolean }>
-      | Event<'tx_sent', { isApprovalTx: boolean }>
-      | Event<'approval_tx_succeeded'>
-      | Event<'check_tx', { isApprovalTx: boolean }>
-      | Event<'output_revealed'>
-      | Event<'canceled'>
-      | Event<'waiting_for_queue'>
-      | Event<'waiting_for_wallet_connect'>
-      | Event<'waiting_for_network_change'>
-      | Event<'waiting_for_change_wallet_account'>
-    );
+  | Event<StepEventTypes.STARTED>
+  | Event<StepEventTypes.FAILED, { reason?: string }>
+  | Event<StepEventTypes.SUCCEEDED, { outputAmount: string }>
+  | Event<StepEventTypes.CREATE_TX>
+  | Event<StepEventTypes.SEND_TX, { isApprovalTx: boolean }>
+  | Event<StepEventTypes.TX_SENT, { isApprovalTx: boolean }>
+  | Event<StepEventTypes.APPROVAL_TX_SUCCEEDED>
+  | Event<StepEventTypes.CHECK_TX, { isApprovalTx: boolean }>
+  | Event<StepEventTypes.OUTPUT_REVEALED>
+  | Event<StepEventTypes.CANCELED>
+  | Event<StepEventTypes.WAITING_FOR_QUEUE>
+  | Event<StepEventTypes.WAITING_FOR_WALLET_CONNECT>
+  | Event<StepEventTypes.WAITING_FOR_NETWORK_CHANGE>
+  | Event<StepEventTypes.WAITING_FOR_CHANGE_WALLET_ACCOUNT>;
 
 export type RouteExecutionEvents = {
   [MainEvents.RouteEvent]: { route: Route; event: RouteEvent };

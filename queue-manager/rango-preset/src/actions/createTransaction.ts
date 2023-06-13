@@ -1,5 +1,10 @@
 import { ExecuterActions } from '@rango-dev/queue-manager-core';
-import { SwapActionTypes, SwapQueueContext, SwapStorage } from '../types';
+import {
+  StepEventTypes,
+  SwapActionTypes,
+  SwapQueueContext,
+  SwapStorage,
+} from '../types';
 import {
   getCurrentStep,
   updateSwapStatus,
@@ -20,7 +25,7 @@ import { notifier } from '../services/eventEmitter';
  *
  */
 export async function createTransaction(
-  actions: ExecuterActions<SwapStorage, SwapActionTypes, SwapQueueContext>,
+  actions: ExecuterActions<SwapStorage, SwapActionTypes, SwapQueueContext>
 ): Promise<void> {
   const { setStorage, getStorage, next, schedule } = actions;
   const swap = getStorage().swapDetails;
@@ -29,7 +34,7 @@ export async function createTransaction(
   const transaction = getCurrentStepTx(currentStep);
 
   if (!transaction) {
-    notifier({ eventType: 'create_tx', swap, step: currentStep });
+    notifier({ eventType: StepEventTypes.CREATE_TX, swap, step: currentStep });
     const request: CreateTransactionRequest = {
       requestId: swap.requestId,
       step: currentStep.id,
@@ -45,7 +50,9 @@ export async function createTransaction(
     try {
       // Getting transcation from server.
 
-      const { transaction } = await throwOnOK(httpService().createTransaction(request));
+      const { transaction } = await throwOnOK(
+        httpService().createTransaction(request)
+      );
 
       if (transaction) setCurrentStepTx(currentStep, transaction);
 
@@ -67,7 +74,7 @@ export async function createTransaction(
         errorCode: 'FETCH_TX_FAILED',
       });
       notifier({
-        eventType: 'failed',
+        eventType: StepEventTypes.FAILED,
         reason: 'fetch tx failed',
         ...updateResult,
       });

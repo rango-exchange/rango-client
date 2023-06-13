@@ -6,7 +6,7 @@ import {
 } from '@rango-dev/queue-manager-core';
 import {
   BlockReason,
-  StepEventType,
+  StepEventTypes,
   SwapActionTypes,
   SwapQueueContext,
   SwapQueueDef,
@@ -390,14 +390,14 @@ export function setStepTransactionIds(
   });
 
   notifier({
-    eventType: 'tx_sent',
+    eventType: StepEventTypes.TX_SENT,
     isApprovalTx,
     swap: swap,
     step: currentStep,
   });
 
   notifier({
-    eventType: 'check_tx',
+    eventType: StepEventTypes.CHECK_TX,
     isApprovalTx,
     swap: swap,
     step: currentStep,
@@ -507,7 +507,7 @@ export function markRunningSwapAsDependsOnOtherQueues({
   currentStep.networkStatus = PendingSwapNetworkStatus.WaitingForQueue;
 
   notifier({
-    eventType: 'waiting_for_queue',
+    eventType: StepEventTypes.WAITING_FOR_QUEUE,
     swap,
     step: currentStep,
   });
@@ -749,8 +749,8 @@ export function onBlockForConnectWallet(
     notifier({
       eventType:
         reason === 'account_miss_match'
-          ? 'waiting_for_change_wallet_account'
-          : 'waiting_for_wallet_connect',
+          ? StepEventTypes.WAITING_FOR_CHANGE_WALLET_ACCOUNT
+          : StepEventTypes.WAITING_FOR_WALLET_CONNECT,
       swap: swap,
       step: currentStep,
     });
@@ -795,7 +795,7 @@ export function onBlockForChangeNetwork(
 
   if (result) {
     notifier({
-      eventType: 'waiting_for_network_change',
+      eventType: StepEventTypes.WAITING_FOR_NETWORK_CHANGE,
       swap: result.swap,
       step: result.step,
     });
@@ -964,7 +964,7 @@ export function singTransaction(
 
   let nextStatus: SwapStatus | undefined,
     nextStepStatus: StepStatus,
-    eventType: StepEventType,
+    eventType: StepEventTypes,
     message: string,
     details: string;
 
@@ -976,19 +976,19 @@ export function singTransaction(
       'Waiting for approve transaction to be mined and confirmed successfully';
     nextStepStatus = 'waitingForApproval';
     nextStatus = undefined;
-    eventType = 'send_tx';
+    eventType = StepEventTypes.SEND_TX;
   } else if (hasAlreadyProceededToSign) {
     message = 'Transaction is expired. Please try again.';
     nextStepStatus = 'failed';
     nextStatus = 'failed';
     details = '';
-    eventType = 'failed';
+    eventType = StepEventTypes.FAILED;
   } else {
     message = 'Executing transaction ...';
     nextStepStatus = 'running';
     nextStatus = 'running';
     details = `${mobileWallet ? 'Check your mobile phone!' : ''}`;
-    eventType = 'send_tx';
+    eventType = StepEventTypes.SEND_TX;
   }
 
   const updateResult = updateSwapStatus({
@@ -1071,7 +1071,7 @@ export function singTransaction(
       });
 
       notifier({
-        eventType: 'failed',
+        eventType: StepEventTypes.FAILED,
         reason: '',
         ...updateResult,
       });
@@ -1137,7 +1137,7 @@ export function checkWaitingForConnectWalletChange(params: {
 
           if (result) {
             notifier({
-              eventType: 'waiting_for_network_change',
+              eventType: StepEventTypes.WAITING_FOR_NETWORK_CHANGE,
               swap: result.swap,
               step: result.step,
             });
@@ -1214,15 +1214,13 @@ export function resetRunningSwapNotifsOnPageLoad(runningSwaps: PendingSwap[]) {
   runningSwaps.forEach((swap) => {
     const currentStep = getCurrentStep(swap);
     let eventType:
-      | Extract<
-          StepEventType,
-          'waiting_for_queue' | 'waiting_for_wallet_connect'
-        >
+      | StepEventTypes.WAITING_FOR_QUEUE
+      | StepEventTypes.WAITING_FOR_WALLET_CONNECT
       | undefined;
     if (currentStep?.networkStatus === PendingSwapNetworkStatus.WaitingForQueue)
-      eventType = 'waiting_for_queue';
+      eventType = StepEventTypes.WAITING_FOR_QUEUE;
     else if (swap?.status === 'running') {
-      eventType = 'waiting_for_wallet_connect';
+      eventType = StepEventTypes.WAITING_FOR_WALLET_CONNECT;
     }
     if (!!eventType && !!notifier) {
       notifier({
@@ -1352,13 +1350,13 @@ export function cancelSwap(
   });
 
   notifier({
-    eventType: 'canceled',
+    eventType: StepEventTypes.CANCELED,
     swap: updateResult.swap,
     step: updateResult.step,
   });
 
   notifier({
-    eventType: 'failed',
+    eventType: StepEventTypes.FAILED,
     swap: updateResult.swap,
     step: updateResult.step,
   });

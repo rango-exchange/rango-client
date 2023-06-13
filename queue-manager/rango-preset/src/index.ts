@@ -10,12 +10,10 @@ export type {
   Route,
   Step,
   RouteEvent,
-  RouteEventType,
-  StepEventType,
   StepEvent,
   RouteExecutionMessageSeverity,
 } from './types';
-export { MainEvents } from './types';
+export { MainEvents, StepEventTypes, RouteEventTypes } from './types';
 export type {
   PendingSwapWithQueueID,
   PendingSwapStep,

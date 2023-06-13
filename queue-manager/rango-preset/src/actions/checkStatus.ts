@@ -9,7 +9,12 @@ import {
   updateSwapStatus,
   inMemoryTransactionsData,
 } from '../helpers';
-import { SwapActionTypes, SwapQueueContext, SwapStorage } from '../types';
+import {
+  StepEventTypes,
+  SwapActionTypes,
+  SwapQueueContext,
+  SwapStorage,
+} from '../types';
 import {
   getCurrentBlockchainOf,
   getNextStep,
@@ -119,7 +124,7 @@ async function checkTransactionStatus({
     });
 
     notifier({
-      eventType: 'failed',
+      eventType: StepEventTypes.FAILED,
       reason: extraMessage,
       ...updateResult,
     });
@@ -174,14 +179,14 @@ async function checkTransactionStatus({
 
   if (prevOutputAmount === null && outputAmount !== null)
     notifier({
-      eventType: 'output_revealed',
+      eventType: StepEventTypes.OUTPUT_REVEALED,
       swap: swap,
       step: currentStep,
     });
   else if (prevOutputAmount === null && outputAmount === null) {
     // it is needed to set notification after reloading the page
     notifier({
-      eventType: 'check_tx',
+      eventType: StepEventTypes.CHECK_TX,
       isApprovalTx: false,
       swap: swap,
       step: currentStep,
@@ -194,7 +199,7 @@ async function checkTransactionStatus({
     swap.extraMessage = nextStep
       ? `starting next step: ${nextStep.swapperId}: ${nextStep.fromBlockchain} -> ${nextStep.toBlockchain}`
       : '';
-    notifier({ eventType: 'succeeded', swap, step: currentStep });
+    notifier({ eventType: StepEventTypes.SUCCEEDED, swap, step: currentStep });
   } else if (currentStep.status === 'failed') {
     swap.extraMessage = 'Transaction failed in blockchain';
     swap.extraMessageSeverity = MessageSeverity.error;
@@ -314,7 +319,7 @@ async function checkApprovalStatus({
       errorCode: extraMessageErrorCode,
     });
     notifier({
-      eventType: 'failed',
+      eventType: StepEventTypes.FAILED,
       reason: extraMessage,
       ...updateResult,
     });
@@ -358,7 +363,7 @@ async function checkApprovalStatus({
       });
 
       notifier({
-        eventType: 'failed',
+        eventType: StepEventTypes.FAILED,
         reason: 'not enough approval',
         ...updateResult,
       });
@@ -367,7 +372,7 @@ async function checkApprovalStatus({
     } else if (!isApproved) {
       // it is needed to set notification after reloading the page
       notifier({
-        eventType: 'check_tx',
+        eventType: StepEventTypes.CHECK_TX,
         isApprovalTx: true,
         swap,
         step: currentStep,
@@ -393,7 +398,7 @@ async function checkApprovalStatus({
     });
 
     notifier({
-      eventType: 'approval_tx_succeeded',
+      eventType: StepEventTypes.APPROVAL_TX_SUCCEEDED,
       swap: swap,
       step: currentStep,
     });
