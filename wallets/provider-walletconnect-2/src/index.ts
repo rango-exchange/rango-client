@@ -42,9 +42,22 @@ export const getInstance: GetInstance = async (options) => {
   const nextInstance = await makeConnection({
     chainId: requestedChainId,
     force,
+    meta,
   });
 
-  if (force && requestedChainId) updateChainId?.(requestedChainId);
+  if (force && requestedChainId) {
+    // Disconnect any redundant sessions except for the last one
+    const sessions = nextInstance.client.session.getAll();
+    sessions.forEach(({ topic }: { topic: string }, index: number) => {
+      if (index < sessions.length - 1) {
+        nextInstance.client.disconnect({
+          topic,
+        });
+      }
+    });
+
+    updateChainId?.(requestedChainId);
+  }
 
   return nextInstance;
 };
@@ -115,15 +128,7 @@ export const subscribe: Subscribe = ({
   });
 
   instance.on('disconnect', async () => {
-    // console.log('topic')
-    // console.log(topic)
-    // try {
-    //   await instance?.client.disconnect({
-    //     topic,
-    //   });
-    // } finally {
     disconnect();
-    // }
   });
 };
 
@@ -138,8 +143,7 @@ export const switchNetwork: SwitchNetwork = async ({
   );
   if (supportsForSwitchNetworkRequest(instance)) {
     /*
-       `switchOrAddNetworkForMetamaskCompatibleWallets` needs a web3-provider interface.
-      And uses `request` method. Here we are making something it can use.
+       `switchOrAddNetworkForMetamaskCompatibleWallets` uses `request` method. Here we are making something it can use.
      */
 
     await switchOrAddNetworkForMetamaskCompatibleWallets(
@@ -156,13 +160,22 @@ export const canSwitchNetworkTo: CanSwitchNetwork = () => false;
 export const disconnect: Disconnect = async ({ instance, destroyInstance }) => {
   if (instance) {
     try {
+      // Disconnect the instance and remove any pairing sessions
       await instance.disconnect();
-      if (!instance.session) {
-        destroyInstance();
-      }
+      const pairingSessions = instance.client.pairing.getAll();
+      pairingSessions.forEach(({ topic }: { topic: string }) => {
+        try {
+          instance.client.disconnect({
+            topic,
+          });
+        } catch {
+          // do nothing
+        }
+      });
     } catch {
-      destroyInstance();
+      // do nothing
     }
+    destroyInstance();
   }
 };
 
