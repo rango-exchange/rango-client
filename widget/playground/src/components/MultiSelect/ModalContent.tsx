@@ -42,12 +42,12 @@ type PropTypes =
       onChange: (sources: Source) => void;
     };
 
-const filterList = (list, searchedFor: string) =>
+const filterList = (list: Wallets | LiquiditySource[], searchedFor: string) =>
   list.filter((item: { title: string }) =>
     item.title.toLowerCase().includes(searchedFor.toLowerCase())
   );
 
-const getIndex = (list, v, type) => {
+const getIndex = (list: string[], v: string, type: 'Wallets' | 'Sources') => {
   switch (type) {
     case 'Wallets':
       return list.findIndex((item) => item === v);

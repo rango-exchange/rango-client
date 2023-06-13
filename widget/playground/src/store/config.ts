@@ -182,7 +182,34 @@ export const useConfigStore = createSelectors(
       })),
       {
         name: 'user-config',
-        partialize: (state) => ({ wallets: state.config.wallets }),
+        storage: {
+          getItem: (name) => {
+            const str = localStorage.getItem(name);
+            const storage = JSON.parse(str as string);
+
+            return {
+              state: {
+                ...storage.state,
+                config: {
+                  ...storage.state.config,
+                  wallets: storage.state.config.wallets?.filter(
+                    (wallet: WalletType | ProviderInterface) =>
+                      typeof wallet === 'string'
+                  ),
+                },
+              },
+            };
+          },
+          setItem: (name, newValue) => {
+            const str = JSON.stringify({
+              state: {
+                ...newValue.state,
+              },
+            });
+            localStorage.setItem(name, str);
+          },
+          removeItem: (name) => localStorage.removeItem(name),
+        },
       }
     )
   )
