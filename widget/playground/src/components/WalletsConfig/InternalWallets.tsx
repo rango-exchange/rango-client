@@ -1,22 +1,17 @@
 import React from 'react';
-import { Checkbox, Divider, Typography } from '@rango-dev/ui';
 import { ProviderInterface, useWallets } from '@rango-dev/wallets-core';
 import { WalletTypes, WalletType } from '@rango-dev/wallets-shared';
-import { excludedWallets, onChangeMultiSelects } from '../helpers';
-import { useConfigStore } from '../store/config';
-import { ConfigurationContainer } from './ChainsConfig';
-import { MultiSelect } from './MultiSelect';
-import { ProvidersMultiSelect } from './MultiSelect/providers';
+import { excludedWallets, onChangeMultiSelects } from '../../helpers';
+import { useConfigStore } from '../../store/config';
+import { MultiSelect } from '../MultiSelect';
 
-export function WalletsConfig() {
+export function InternalWallets() {
   const { getWalletInfo } = useWallets();
   const allWallets = useConfigStore.use.config().wallets;
   const wallets = allWallets?.filter((w) => typeof w === 'string');
   const providers = allWallets?.filter((w) => typeof w !== 'string');
-  const multiWallets = useConfigStore.use.config().multiWallets;
 
   const onChangeWallets = useConfigStore.use.onChangeWallets();
-  const onChangeBooleansConfig = useConfigStore.use.onChangeBooleansConfig();
 
   const walletList = Object.values(WalletTypes)
     .filter((wallet) => !excludedWallets.includes(wallet))
@@ -56,30 +51,13 @@ export function WalletsConfig() {
   };
 
   return (
-    <>
-      <Typography variant="h6">Wallet</Typography>
-      <Divider size={12} />
-      <ConfigurationContainer>
-        <MultiSelect
-          label="Supported Wallets"
-          type="Wallets"
-          modalTitle="Select Wallets"
-          list={walletList}
-          value={wallets as WalletType[]}
-          onChange={onChange}
-        />
-        <Divider size={24} />
-        <Checkbox
-          onCheckedChange={(checked: boolean) =>
-            onChangeBooleansConfig('multiWallets', checked)
-          }
-          id="multi_wallets"
-          label="Enable Multi Wallets Simultaneously"
-          checked={multiWallets === undefined ? true : multiWallets}
-        />
-        <Divider size={24} />
-        <ProvidersMultiSelect list={walletList} />
-      </ConfigurationContainer>
-    </>
+    <MultiSelect
+      label="Supported Wallets"
+      type="Wallets"
+      modalTitle="Select Wallets"
+      list={walletList}
+      value={wallets as WalletType[]}
+      onChange={onChange}
+    />
   );
 }

@@ -8,7 +8,6 @@ import { Route, Routes } from 'react-router-dom';
 export function App() {
   const { activeStyle } = useTheme();
   const config = useConfigStore.use.config();
-
   return (
     <div className={activeStyle}>
       <WidgetWallets config={config.wallets}>

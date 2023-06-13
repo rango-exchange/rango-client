@@ -84,9 +84,13 @@ export function clearEmpties<T extends Record<string, any>>(obj: T): T {
 }
 
 export function filterConfig(
-  config: WidgetConfig,
+  WidgetConfig: WidgetConfig,
   initialConfig: WidgetConfig
 ) {
+  const config = {
+    ...WidgetConfig,
+    wallets: WidgetConfig.wallets?.filter((w) => typeof w === 'string'),
+  };
   const userSelectedConfig = clearEmpties(
     subtractObject(
       JSON.parse(JSON.stringify(initialConfig)) as WidgetConfig,
@@ -95,6 +99,7 @@ export function filterConfig(
   );
 
   const filteredConfigForExport = Object.assign({}, userSelectedConfig);
+
   if (!filteredConfigForExport.apiKey)
     filteredConfigForExport.apiKey = config.apiKey;
 
@@ -158,6 +163,13 @@ export function formatConfig(config: WidgetConfig) {
     `,
     formatedConfig.indexOf('apiKey')
   );
+  if (!!config.wallets)
+    formatedConfig = insertAt(
+      formatedConfig,
+      `// You can add your external wallet to wallets
+    `,
+      formatedConfig.indexOf('wallets')
+    );
 
   return formatedConfig;
 }
