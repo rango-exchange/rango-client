@@ -14,7 +14,7 @@ export const onChangeMultiSelects = (
   values: any[] | undefined,
   list: any[],
   findIndex: (item: string) => boolean
-): string[] | undefined | 'all' => {
+): string[] | undefined => {
   if (value === 'empty') return [];
   else if (value === 'all') return undefined;
   if (!values) {
@@ -27,7 +27,7 @@ export const onChangeMultiSelects = (
     const index = values.findIndex(findIndex);
     if (index !== -1) values.splice(index, 1);
     else values.push(value);
-    if (values.length === list.length) return 'all';
+    if (values.length === list.length) return undefined;
     else return values;
   }
 };
@@ -89,7 +89,9 @@ export function filterConfig(
 ) {
   const config = {
     ...WidgetConfig,
-    wallets: WidgetConfig.wallets?.filter((w) => typeof w === 'string'),
+    wallets: WidgetConfig.wallets?.filter(
+      (wallet) => typeof wallet === 'string'
+    ),
   };
   const userSelectedConfig = clearEmpties(
     subtractObject(

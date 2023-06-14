@@ -10,7 +10,7 @@ export function App() {
   const config = useConfigStore.use.config();
   return (
     <div className={activeStyle}>
-      <WidgetWallets config={config.wallets}>
+      <WidgetWallets>
         <Config>
           <Routes>
             <Route

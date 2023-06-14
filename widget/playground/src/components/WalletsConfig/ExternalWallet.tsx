@@ -3,9 +3,7 @@ import { Button, Divider, Switch, Typography, styled } from '@rango-dev/ui';
 import { WalletType, WalletTypes } from '@rango-dev/wallets-shared';
 import { ProviderInterface } from '@rango-dev/wallets-core';
 import { useConfigStore } from '../../store/config';
-import * as metamask from '@rango-dev/provider-metamask';
 import { useWallets } from '@rango-dev/widget-embedded';
-import { excludedWallets } from '../../helpers';
 
 const Head = styled('div', {
   display: 'flex',
@@ -26,27 +24,20 @@ export function ExternalWallet() {
   const { state, connect, disconnect } = useWallets();
 
   const onChangeExternalWallet = (checked: boolean) => {
-    let selectedWallets: (WalletType | ProviderInterface)[] = [
-      ...(!wallets
-        ? Object.values(WalletTypes)
-            .filter((wallet) => !excludedWallets.includes(wallet))
-            .filter((item) => {
-              return item !== WalletTypes.META_MASK;
-            })
-            .map((item) => item)
-        : wallets),
-    ];
+    let selectedWallets: (WalletType | ProviderInterface)[] = !!wallets
+      ? [...wallets]
+      : [];
     if (checked) {
-      const walletIndex = selectedWallets.findIndex(
-        (w) => typeof w === 'string' && w === WalletTypes.META_MASK
+      const index = selectedWallets.findIndex(
+        (wallet) => wallet === WalletTypes.META_MASK
       );
-      if (walletIndex !== -1) selectedWallets.splice(walletIndex, 1);
-      selectedWallets = [...selectedWallets, metamask];
+      if (index !== -1) selectedWallets.splice(index, 1);
+      selectedWallets = [...selectedWallets, WalletTypes.META_MASK];
     } else {
-      const providerIndex = selectedWallets.findIndex(
-        (w) => typeof w !== 'string' && w.config.type === WalletTypes.META_MASK
-      );
-      if (providerIndex !== -1) selectedWallets.splice(providerIndex, 1);
+      if (state('metamask').connected) disconnect(WalletTypes.META_MASK);
+      if (selectedWallets.length === 1) {
+        selectedWallets = [];
+      }
     }
 
     setExternalWallet(checked);
@@ -55,9 +46,12 @@ export function ExternalWallet() {
 
   useEffect(() => {
     const providerIndex = wallets?.findIndex(
-      (w) => typeof w !== 'string' && w.config.type === WalletTypes.META_MASK
+      (wallet) => wallet === WalletTypes.META_MASK
     );
-    if (!providerIndex || providerIndex === -1) setExternalWallet(false);
+
+    if (providerIndex === -1) {
+      setExternalWallet(false);
+    }
   }, [wallets]);
 
   return (

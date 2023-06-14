@@ -31,13 +31,12 @@ export function SourcesConfig() {
   const onChange = (source: string) => {
     const SourceList = uniqueSwappersGroups.map((s) => s.title);
 
-    let values = onChangeMultiSelects(
+    const values = onChangeMultiSelects(
       source,
       liquiditySources,
       SourceList,
       (item: string) => item === source
     );
-    values = values === 'all' ? undefined : values;
 
     onChangeSources(values);
   };
