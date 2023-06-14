@@ -37,13 +37,12 @@ export function ChainsConfig({ type }: PropTypes) {
   const onChangeChains = (blockchain: string) => {
     const tokens = type === 'Source' ? from?.tokens : to?.tokens;
     const ChainsList = blockchains.map((chain) => chain.name);
-    let values = onChangeMultiSelects(
+    const values = onChangeMultiSelects(
       blockchain,
       chains,
       ChainsList,
       (item: string) => item === blockchain
     );
-    values = values === 'all' ? undefined : values;
     onChangeBlockChains(values, type);
 
     let tokensList: Asset[] = [];

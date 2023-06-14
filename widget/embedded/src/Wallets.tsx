@@ -27,11 +27,11 @@ export const WidgetContext = createContext<WidgetContextInterface>({
 
 export function WidgetWallets(
   props: PropsWithChildren<{
-    config: WidgetConfig['wallets'];
+    providers?: WidgetConfig['wallets'];
   }>
 ) {
   const { blockchains } = useMetaStore.use.meta();
-  const { providers } = useWalletProviders(props.config);
+  const { providers } = useWalletProviders(props.providers);
   const disconnectWallet = useWalletsStore.use.disconnectWallet();
   const connectWallet = useWalletsStore.use.connectWallet();
   const onConnectWalletHandler = useRef<OnConnectHandler>();
@@ -82,7 +82,6 @@ export function WidgetWallets(
         console.warn(`onConnectWallet handler hasn't been set. Are you sure?`);
     }
   };
-
   return (
     <WidgetContext.Provider
       value={{
