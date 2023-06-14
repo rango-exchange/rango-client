@@ -15,6 +15,6 @@ export function useWalletProviders(providers: WidgetConfig['wallets']) {
   }, [providers]);
 
   return {
-    generateProviders,
+    providers: generateProviders,
   };
 }
