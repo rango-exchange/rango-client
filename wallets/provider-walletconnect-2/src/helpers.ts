@@ -1,8 +1,8 @@
 import UniversalProvider from '@walletconnect/universal-provider';
 import { Web3Modal } from '@web3modal/standalone';
 const PROJECT_ID = 'f5196d081862c6f2b81c04520ea9301c';
-const CHAINS = [1, 56];
-
+// const CHAINS = [1, 56];
+// const DEFAULT_COSMOS_METHODS = ['cosmos_signDirect', 'cosmos_signAmino'];
 const walletConnectModal = new Web3Modal({
   projectId: PROJECT_ID,
   walletConnectVersion: 2,
@@ -18,117 +18,29 @@ export function supportsForSwitchNetworkRequest(provider: any): boolean {
     ? provider.session.peer.metadata.name
     : '';
 
-// export async function makeConnection(options: {
-//   chainId?: string;
-// }): Promise<any> {
-//   const { chainId } = options;
-
-//   // const ethProvider = await EthereumProvider.init({
-//   //   projectId, // REQUIRED your projectId
-//   //   chains: [chainId],
-//   //   // REQUIRED chain ids
-//   //   showQrModal: true, // REQUIRED set to "true" to use @web3modal/standalone,
-//   //   optionalMethods: [
-//   //     'eth_sendTransaction',
-//   //     'eth_signTransaction',
-//   //     'eth_sign',
-//   //     'personal_sign',
-//   //     'eth_signTypedData',
-//   //     'wallet_switchEthereumChain',
-//   //     'wallet_addEthereumChain',
-//   //   ],
-//   //   events: [
-//   //     'chainChanged',
-//   //     'accountsChanged',
-//   //     'message',
-//   //     'connect',
-//   //     'disconnect',
-//   //   ],
-//   //   qrModalOptions: {
-//   //     // explorerAllowList: [],
-//   //     // explorerDenyList: [],
-//   //     themeVariables: {
-//   //       '--w3m-z-index': '999999999',
-//   //     },
-//   //   },
-//   // });
-
-//   const provider = await UniversalProvider.init({
-//     projectId,
-//     logger: 'debug',
-//     relayUrl: 'wss://relay.walletconnect.com',
-//   });
-//   console.log('here 57', provider);
-
-//   const web3Modal = new Web3Modal({
-//     projectId,
-//     walletConnectVersion: 2,
-//   });
-//   web3Modal.openModal({ uri: provider.uri });
-//   // await provider.enable().catch(console.log);
-
-//   console.log('here 61');
-
-//   // const lastIndex =
-//   //   cosmosProvider.signer.client.pairing.getAll({
-//   //     active: true,
-//   //   }).length - 1;
-//   // const pairingTopic  13-06-2023= cosmosProvider.signer.client.pairing.getAll({
-//   //   active: true,
-//   // })[lastIndex]?.topic;
-
-//   return new Promise((resolve, reject) => {
-//     (async () => {
-//       console.log('74');
-
-//       await provider
-//         .connect({
-//           namespaces: {
-//             cosmos: {
-//               methods: DEFAULT_COSMOS_METHODS,
-//               chains: chainId ? [chainId] : [],
-//               events: ['chainChanged', 'accountsChanged'],
-//             },
-//           },
-//         })
-//         .then(() => {
-//           console.log('here 85');
-
-//           resolve(provider);
-//         })
-//         .catch(reject);
-//     })();
-//   });
-// }
-
-// import { ethers } from "ethers";
-import UniversalProvider from '@walletconnect/universal-provider';
-import { Web3Modal } from '@web3modal/standalone';
-const PROJECT_ID = 'f5196d081862c6f2b81c04520ea9301c';
-
-const walletConnectModal = new Web3Modal({
-  projectId: PROJECT_ID,
-  walletConnectVersion: 2,
-  themeVariables: {
-    '--w3m-z-index': '999999999',
-  },
-});
-const relayUrl = 'wss://relay.walletconnect.com';
+  return wallets.some((wallet) => {
+    return connectedWallet.toLowerCase().includes(wallet);
+  });
+}
 
 export async function makeConnection(options: {
   chainId?: number;
   force?: boolean;
 }): Promise<any> {
-  const { chainId = 1, force = false } = options;
-  const filteredChains = CHAINS.filter((chain) => chain !== chainId);
-  const filteredEIPChains = filteredChains.map((chain) => `eip155:${chain}`);
+  const { force = false } = options;
+  // const filteredChains = CHAINS.filter((chain) => chain !== chainId);
+  // const filteredEIPChains = filteredChains.map((chain) => `eip155:${chain}`);
 
   const provider = await UniversalProvider.init({
     relayUrl,
     projectId: PROJECT_ID,
   });
 
+  console.log('provider', provider);
+
   provider.on('display_uri', (uri: string) => {
+    console.log('uri', uri);
+
     walletConnectModal.openModal({ uri });
   });
   const lastIndex =
@@ -138,26 +50,32 @@ export async function makeConnection(options: {
   const pairingTopic = provider.client.pairing.getAll({
     active: true,
   })[lastIndex]?.topic;
+  console.log('pairingTopic', pairingTopic);
 
   //  create sub providers for each namespace/chain
   try {
     await provider.connect({
       namespaces: {
-        eip155: {
-          methods: [
-            'eth_sendTransaction',
-            'eth_signTransaction',
-            'eth_sign',
-            'personal_sign',
-            'eth_signTypedData',
-            'wallet_addEthereumChain',
-            'wallet_switchEthereumChain',
-          ],
-          chains: [`eip155:${chainId}`].concat(filteredEIPChains),
-          events: ['chainChanged', 'accountsChanged'],
-          // rpcMap: {
-          //   [chainId]: `https://rpc.walletconnect.com?chainId=eip155:${chainId}&projectId=f5196d081862c6f2b81c04520ea9301c`,
-          // },
+        // eip155: {
+        //   methods: [
+        //     'eth_sendTransaction',
+        //     'eth_signTransaction',
+        //     'eth_sign',
+        //     'personal_sign',
+        //     'eth_signTypedData',
+        //     'wallet_addEthereumChain',
+        //     'wallet_switchEthereumChain',
+        //   ],
+        //   chains: [`eip155:${chainId}`].concat(filteredEIPChains),
+        //   events: ['chainChanged', 'accountsChanged'],
+        //   // rpcMap: {
+        //   //   [chainId]: `https://rpc.walletconnect.com?chainId=eip155:${chainId}&projectId=f5196d081862c6f2b81c04520ea9301c`,
+        //   // },
+        // },
+        cosmos: {
+          chains: ['cosmos:cosmoshub-4'],
+          methods: ['cosmos_signDirect'],
+          events: ['accountsChanged', 'chainChanged'],
         },
       },
       pairingTopic: pairingTopic, // optional topic to connect to

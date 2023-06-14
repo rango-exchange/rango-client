@@ -7,7 +7,7 @@ import {
 } from '@rango-dev/wallets-shared';
 import Item from './Item';
 import './styles.css';
-const excludedWallets = [WalletTypes.LEAP, WalletTypes.WALLET_CONNECT_2];
+const excludedWallets = [WalletTypes.LEAP, WalletTypes.WALLET_CONNECT];
 
 function List() {
   const { state, getWalletInfo } = useWallets();
