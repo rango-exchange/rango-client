@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/provider-safepal",
-  "version": "0.5.1-next.7",
+  "version": "0.5.1-next.8",
   "license": "MIT",
   "type": "module",
   "module": "./dist/index.js",
