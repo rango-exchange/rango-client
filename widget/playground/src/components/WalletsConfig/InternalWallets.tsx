@@ -1,17 +1,17 @@
 import React from 'react';
-import { ProviderInterface, useWallets } from '@rango-dev/wallets-core';
+import { useWallets } from '@rango-dev/wallets-core';
 import { WalletTypes, WalletType } from '@rango-dev/wallets-shared';
 import { excludedWallets, onChangeMultiSelects } from '../../helpers';
 import { useConfigStore } from '../../store/config';
 import { MultiSelect } from '../MultiSelect';
 
-export function InternalWallets() {
+export function InternalWallets({
+  onChangeWallets,
+}: {
+  onChangeWallets: (values: WalletType[] | undefined) => void;
+}) {
   const { getWalletInfo } = useWallets();
-  const allWallets = useConfigStore.use.config().wallets;
-  const wallets = allWallets?.filter((w) => typeof w === 'string');
-  const providers = allWallets?.filter((w) => typeof w !== 'string');
-
-  const onChangeWallets = useConfigStore.use.onChangeWallets();
+  const wallets = useConfigStore.use.config().wallets;
 
   const walletList = Object.values(WalletTypes)
     .filter((wallet) => !excludedWallets.includes(wallet))
@@ -26,28 +26,14 @@ export function InternalWallets() {
 
   const onChange = (wallet: WalletType) => {
     const list = walletList.map((item) => item.type);
-    const values =
-      onChangeMultiSelects(
-        wallet,
-        wallets,
-        list,
-        (item: WalletType) => item === wallet
-      ) || [];
-    const p =
-      providers?.filter(
-        (p) => !values.includes((p as ProviderInterface).config.type)
-      ) || [];
-    if (wallet === 'all' || values === 'all') {
-      onChangeWallets(undefined);
-      return;
-    } else if (wallet === 'empty') {
-      onChangeWallets(p);
-      return;
-    }
+    const values = onChangeMultiSelects(
+      wallet,
+      wallets,
+      list,
+      (item: WalletType) => item === wallet
+    );
 
-    const result = [...p, ...values];
-
-    onChangeWallets(!result.length ? undefined : result);
+    onChangeWallets(values);
   };
 
   return (

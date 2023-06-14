@@ -4,16 +4,17 @@ import { useWalletsStore } from '../store/wallets';
 import { WidgetConfig } from '../types';
 import { matchAndGenerateProviders } from '../utils/providers';
 
-export function useWalletProviders(config: WidgetConfig['wallets']) {
+export function useWalletProviders(providers: WidgetConfig['wallets']) {
   const clearConnectedWallet = useWalletsStore.use.clearConnectedWallet();
-  let providers: ProviderInterface[] = matchAndGenerateProviders(config);
+  let generateProviders: ProviderInterface[] =
+    matchAndGenerateProviders(providers);
 
   useEffect(() => {
     clearConnectedWallet();
-    providers = matchAndGenerateProviders(config);
-  }, [config]);
+    generateProviders = matchAndGenerateProviders(providers);
+  }, [providers]);
 
   return {
-    providers,
+    generateProviders,
   };
 }

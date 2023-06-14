@@ -86,7 +86,7 @@ export function Widget(props: PropsWithChildren<WidgetProps>) {
   const { externalWallets = false } = props;
   if (!externalWallets) {
     return (
-      <WidgetWallets config={props.config?.wallets}>
+      <WidgetWallets providers={props.config?.wallets}>
         <Main {...props} />
       </WidgetWallets>
     );
