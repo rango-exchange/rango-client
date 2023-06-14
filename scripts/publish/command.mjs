@@ -156,14 +156,21 @@ async function publish(changedPkg, channel) {
   }
 
   // 5. Yarn upgrade-all
+  performance.mark('start-upgrade-all');
   const { stdout: upgradeStdOut } = await execa('yarn', [
     'upgrade-all',
     changedPkg.name,
     '--no-install',
   ]);
+  performance.mark('end-upgrade-all');
+  const duration_upgrade = performance.measure(
+    'upgrade-all',
+    'start-upgrade-all',
+    'end-upgrade-all'
+  ).duration;
   console.log(`::debug::yarn upgrade-all ${changedPkg.name} '--no-install'`);
   console.log(`::debug::${upgradeStdOut}`);
-  logAsSection('[x] Upgrade all package users.');
+  logAsSection(`[x] Upgrade all package users. ${duration_upgrade}ms`);
 
   performance.mark(`end-publish-${changedPkg.name}`);
   const duration_publish = performance.measure(
