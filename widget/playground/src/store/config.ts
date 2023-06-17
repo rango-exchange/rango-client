@@ -34,14 +34,23 @@ interface ConfigState {
   onChangeToken: (token?: Asset, type?: Type) => void;
   onChangeAmount: (amount: number) => void;
   onChangeTheme: (
-    name:
-      | 'mode'
-      | 'fontFamily'
-      | 'borderRadius'
-      | 'width'
-      | 'height'
-      | 'singleTheme',
-    value: Mode | string | number | boolean
+    params:
+      | {
+          name: 'mode';
+          value?: Mode;
+        }
+      | {
+          name: 'borderRadius' | 'height' | 'width';
+          value?: number;
+        }
+      | {
+          name: 'fontFamily';
+          value: string;
+        }
+      | {
+          name: 'singleTheme';
+          value?: boolean;
+        }
   ) => void;
   onChangeColors: (
     name: COLORS,
@@ -163,25 +172,18 @@ export const useConfigStore = createSelectors(
           set((state) => {
             state.config.language = value;
           }),
-        onChangeTheme: (name, value) =>
+        onChangeTheme: ({ name, value }) =>
           set((state) => {
             if (state.config.theme && state.config.theme[name]) {
-              switch (name) {
-                case 'mode':
-                  state.config.theme[name] = value as Mode;
-                  return;
-                case 'borderRadius':
-                case 'height':
-                case 'width':
-                  state.config.theme[name] = value as number;
-                  return;
-                case 'fontFamily':
-                  state.config.theme[name] = value as string;
-                  return;
-                case 'singleTheme':
-                  state.config.theme[name] = value as boolean;
-                  return;
-              }
+              if (name === 'mode') state.config.theme[name] = value;
+              else if (
+                name === 'borderRadius' ||
+                name === 'height' ||
+                name === 'width'
+              )
+                state.config.theme[name] = value;
+              else if (name === 'fontFamily') state.config.theme[name] = value;
+              else if (name === 'singleTheme') state.config.theme[name] = value;
             }
           }),
         onChangeColors: (name, mode, color) =>
