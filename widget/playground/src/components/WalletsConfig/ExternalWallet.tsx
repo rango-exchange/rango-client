@@ -85,7 +85,7 @@ export function ExternalWallet() {
               connect('metamask');
             }
           }}>
-          {state('metamask').connected
+          {externalWallets && state('metamask').connected
             ? 'disconnect metamsk'
             : 'connect metamsk'}
         </Button>

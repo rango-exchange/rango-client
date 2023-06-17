@@ -7,7 +7,7 @@ import { matchAndGenerateProviders } from '../utils/providers';
 export function useWalletProviders(providers: WidgetConfig['wallets']) {
   const clearConnectedWallet = useWalletsStore.use.clearConnectedWallet();
   let generateProviders: ProviderInterface[] =
-    matchAndGenerateProviders(providers);
+    matchAndGenerateProviders(undefined);
 
   useEffect(() => {
     clearConnectedWallet();
