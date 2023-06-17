@@ -1,5 +1,6 @@
 import { Asset } from 'rango-sdk';
 import { WalletType } from '@rango-dev/wallets-shared';
+import { ProviderInterface } from '@rango-dev/wallets-core';
 
 /**
  * The above type defines a set of optional color properties for a widget.
@@ -108,7 +109,7 @@ export type WidgetConfig = {
   from?: BlockchainAndTokenConfig;
   to?: BlockchainAndTokenConfig;
   liquiditySources?: string[];
-  wallets?: WalletType[];
+  wallets?: (WalletType | ProviderInterface)[];
   multiWallets?: boolean;
   customDestination?: boolean;
   language?: string;

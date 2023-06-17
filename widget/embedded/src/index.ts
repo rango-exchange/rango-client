@@ -6,6 +6,8 @@ import {
 } from './types';
 import { WidgetProps, Widget } from './Widget';
 import { WalletType } from '@rango-dev/wallets-shared';
+import { WidgetWallets } from './Wallets';
+import { useWallets } from '@rango-dev/wallets-core';
 
 export type {
   WidgetConfig,
@@ -15,4 +17,5 @@ export type {
   BlockchainAndTokenConfig,
   WidgetProps,
 };
-export { Widget };
+export { Widget, WidgetWallets };
+export { useWallets };
