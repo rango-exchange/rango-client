@@ -7,12 +7,18 @@ import {
   WalletType,
   WalletTypes,
 } from '@rango-dev/wallets-shared';
-import { State, WalletActions, WalletProvider, WalletProviders } from './types';
+import {
+  State,
+  WalletActions,
+  ProviderInterface,
+  WalletProviders,
+} from './types';
 import Wallet, { Options, State as WalletState } from './wallet';
 import type { BlockchainMeta } from 'rango-types';
 import { isEvmBlockchain } from 'rango-types';
 import { Persistor } from './persistor';
 import { LASTE_CONNECTED_WALLETS } from './constants';
+import type { EventHandler as WalletEventHandler } from './wallet';
 
 export function choose(wallets: any[], type: WalletType): any | null {
   return wallets.find((wallet) => wallet.type === type) || null;
@@ -80,7 +86,7 @@ export function readAccountAddress(addressWithNetwork: string): {
   const [network, address] = addressWithNetwork.split(':');
 
   return {
-    network: network,
+    network,
     address,
   };
 }
@@ -101,7 +107,9 @@ export function availableWallets(providersState: State): WalletType[] {
   });
 }
 
-export function checkWalletProviders(list: WalletProvider[]): WalletProviders {
+export function checkWalletProviders(
+  list: ProviderInterface[]
+): WalletProviders {
   const wallets: WalletProviders = new Map();
 
   list.forEach((provider) => {
@@ -210,4 +218,33 @@ export async function autoConnect(
       }
     }
   }
+}
+/*
+  Our event handler includes an internal state updater, and a notifier
+  for the outside listener.
+  On creating first wallet refrence, and on chaning `props.onUpdateState`
+  we are using this function.
+*/
+export function makeEventHandler(
+  dispatcher: any,
+  onUpdateState?: WalletEventHandler
+) {
+  const handler: WalletEventHandler = (
+    type,
+    name,
+    value,
+    coreState,
+    supportedChains
+  ) => {
+    const action = { type: 'new_state', wallet: type, name, value };
+    // Update state
+    dispatcher(action);
+
+    // Giving the event to the outside listener
+    if (onUpdateState) {
+      onUpdateState(type, name, value, coreState, supportedChains);
+    }
+  };
+
+  return handler;
 }
