@@ -18,7 +18,7 @@ import {
   SignerFactory,
   isEvmBlockchain,
   evmBlockchains,
-  BlockchainMeta,
+  ProviderMeta,
   solanaBlockchain,
 } from 'rango-types';
 
@@ -89,7 +89,7 @@ export const canSwitchNetworkTo: CanSwitchNetwork = canSwitchNetworkToEvm;
 
 export const getSigners: (provider: any) => SignerFactory = signer;
 
-export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
+export const getWalletInfo: (allBlockChains: ProviderMeta[]) => WalletInfo = (
   allBlockChains
 ) => {
   const evms = evmBlockchains(allBlockChains);

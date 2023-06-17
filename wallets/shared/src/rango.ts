@@ -1,11 +1,11 @@
-import { BlockchainMeta, EvmBlockchainMeta } from 'rango-types';
+import { EvmProviderMeta, ProviderMeta } from 'rango-types';
 
 export const IS_DEV =
   !process.env.NODE_ENV || process.env.NODE_ENV === 'development';
 
 export const getBlockChainNameFromId = (
   chainId: string | number,
-  blockchains: BlockchainMeta[]
+  blockchains: ProviderMeta[]
 ): Network | null => {
   chainId =
     typeof chainId === 'string' && chainId.startsWith('0x')
@@ -148,7 +148,7 @@ export type Asset = {
   address: string | null;
 };
 
-export type AllBlockchains = { [key: string]: BlockchainMeta };
+export type AllBlockchains = { [key: string]: ProviderMeta };
 
 export type AddEthereumChainParameter = {
   chainId: string; // A 0x-prefixed hexadecimal string
@@ -169,7 +169,7 @@ export interface Meta {
   blockchains: AllBlockchains;
   evmNetworkChainInfo: EvmNetworksChainInfo;
   getSupportedChainNames: (type: WalletType) => Network[] | null;
-  evmBasedChains: EvmBlockchainMeta[];
+  evmBasedChains: EvmProviderMeta[];
 }
 
 // core
@@ -194,7 +194,7 @@ export interface WalletConfig {
 export type GetInstanceOptions = {
   network?: Network;
   currentProvider: any;
-  meta: BlockchainMeta[];
+  meta: ProviderMeta[];
   force?: boolean;
   updateChainId: (chainId: number | string) => void;
 };
@@ -215,7 +215,7 @@ export type ProviderConnectResult = {
 export type Connect = (options: {
   instance: any;
   network?: Network;
-  meta: BlockchainMeta[];
+  meta: ProviderMeta[];
 }) => Promise<ProviderConnectResult | ProviderConnectResult[]>;
 
 export type Disconnect = (options: {
@@ -226,7 +226,7 @@ export type Disconnect = (options: {
 export type Subscribe = (options: {
   instance: any;
   state: WalletState;
-  meta: BlockchainMeta[];
+  meta: ProviderMeta[];
   updateChainId: (chainId: string) => void;
   updateAccounts: (accounts: string[], chainId?: string) => void;
   connect: (network?: Network) => void;
@@ -236,13 +236,13 @@ export type Subscribe = (options: {
 export type SwitchNetwork = (options: {
   instance: any;
   network: Network;
-  meta: BlockchainMeta[];
+  meta: ProviderMeta[];
   newInstance?: TryGetInstance;
 }) => Promise<void>;
 
 export type CanSwitchNetwork = (options: {
   network: Network;
-  meta: BlockchainMeta[];
+  meta: ProviderMeta[];
   provider: any;
 }) => boolean;
 
@@ -259,7 +259,7 @@ export type WalletInfo = {
   img: string;
   installLink: InstallObjects | string;
   color: string;
-  supportedChains: BlockchainMeta[];
+  supportedChains: ProviderMeta[];
   showOnMobile?: boolean;
   mobileWallet?: boolean;
 };

@@ -29,13 +29,12 @@ export function VirtualizedList(props: PropsWithChildren<PropTypes>) {
 
   return (
     <AutoSizer>
-      {({ width, height }) => (
+      {({ width, height }: any) => (
         <InfiniteLoader
           isItemLoaded={isItemLoaded}
           itemCount={hasNextPage ? itemCount + 1 : itemCount}
           loadMoreItems={loadNextPage}
-          threshold={1}
-        >
+          threshold={1}>
           {({ onItemsRendered, ref }) => {
             return (
               <List
@@ -45,8 +44,7 @@ export function VirtualizedList(props: PropsWithChildren<PropTypes>) {
                 itemCount={itemCount}
                 height={height || 0}
                 width={width || 0}
-                onItemsRendered={onItemsRendered}
-              >
+                onItemsRendered={onItemsRendered}>
                 {({ index, style }) =>
                   isItemLoaded(index) ? (
                     <Item index={index} style={style as CSSProperties} />

@@ -9,10 +9,8 @@ import {
   Transfer as TransferTransaction,
   AmountRestrictionType,
   BestRouteResponse,
-  MetaResponse,
   Token,
   SwapResult,
-  BlockchainMeta,
 } from 'rango-sdk';
 
 import { PrettyError } from './shared-errors';
@@ -23,7 +21,9 @@ import {
   isEvmBlockchain,
   isStarknetBlockchain,
   isTronBlockchain,
+  ProviderMeta,
 } from 'rango-types';
+import { ModifiedMetaResponse } from './types';
 
 export interface PendingSwapWithQueueID {
   id: string;
@@ -258,23 +258,23 @@ export const getCurrentBlockchainOf = (
 };
 
 const getBlockchainMetaExplorerBaseUrl = (
-  blockchainMeta: BlockchainMeta
+  blockchainMeta: ProviderMeta
 ): string | undefined => {
   if (isCosmosBlockchain(blockchainMeta))
-    return blockchainMeta.info?.explorerUrlToTx;
+    return blockchainMeta?.explorerUrlToTx;
   else if (
     isEvmBlockchain(blockchainMeta) ||
     isStarknetBlockchain(blockchainMeta) ||
     isTronBlockchain(blockchainMeta)
   )
-    return blockchainMeta.info.transactionUrl;
+    return blockchainMeta.transactionUrl;
   return;
 };
 
 export const getScannerUrl = (
   txHash: string,
   network: Network,
-  blockchainMetaMap: { [key: string]: BlockchainMeta }
+  blockchainMetaMap: { [key: string]: ProviderMeta }
 ): string | undefined => {
   const blockchainMeta = blockchainMetaMap[network];
   const baseUrl = getBlockchainMetaExplorerBaseUrl(blockchainMeta);
@@ -397,7 +397,7 @@ export function calculatePendingSwap(
   wallets: { [p: string]: WalletTypeAndAddress },
   settings: SwapSavedSettings,
   validateBalanceOrFee: boolean,
-  meta: MetaResponse | null
+  meta: ModifiedMetaResponse | null
 ): PendingSwap {
   const simulationResult = bestRoute.result;
   if (!simulationResult) throw Error('Simulation result should not be null');

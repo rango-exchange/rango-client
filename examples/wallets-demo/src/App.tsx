@@ -4,6 +4,7 @@ import List from './components/List';
 import { allProviders } from '@rango-dev/provider-all';
 import { RangoClient } from 'rango-sdk';
 import { InfoCircleIcon, Spinner, Typography } from '@rango-dev/ui';
+import { normalizeMetaData } from '@rango-dev/wallets-shared';
 
 const providers = allProviders();
 
@@ -18,7 +19,7 @@ export function App() {
     const getAllBlockchains = async () => {
       try {
         const res = await client.getAllMetadata();
-        setBlockChains(res.blockchains);
+        setBlockChains(normalizeMetaData(res.blockchains));
       } catch (e) {
         setError(e.message);
       }
@@ -31,18 +32,24 @@ export function App() {
     <Provider providers={providers} allBlockChains={blockchains}>
       {!process.env.REACT_APP_API_KEY && (
         <p className="ml-12 warning">
-          <InfoCircleIcon color="warning" size={24} /> Please add REACT_APP_API_KEY into .env
+          <InfoCircleIcon color="warning" size={24} /> Please add
+          REACT_APP_API_KEY into .env
         </p>
       )}
       <div className="flex">
         <h1 className="ml-12">Providers</h1>
         {loading && (
           <div className="flex">
-            <Spinner size={20} /> <Typography variant="caption">Loading...</Typography>
+            <Spinner size={20} />{' '}
+            <Typography variant="caption">Loading...</Typography>
           </div>
         )}
       </div>
-      {!!error && <p className="ml-12 error">Failed Get Blockchains From Server: {error}</p>}
+      {!!error && (
+        <p className="ml-12 error">
+          Failed Get Blockchains From Server: {error}
+        </p>
+      )}
       <List />
     </Provider>
   );

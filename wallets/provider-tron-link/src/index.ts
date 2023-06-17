@@ -8,7 +8,7 @@ import {
 } from '@rango-dev/wallets-shared';
 import { tronLink as tronLink_instance } from './helpers';
 import signer from './signer';
-import { SignerFactory, BlockchainMeta, tronBlockchain } from 'rango-types';
+import { SignerFactory, ProviderMeta, tronBlockchain } from 'rango-types';
 
 // https://docs.tronlink.org/dapp/start-developing
 // https://developers.tron.network/docs/tronlink-events
@@ -60,7 +60,7 @@ export const canSwitchNetworkTo: CanSwitchNetwork = () => false;
 
 export const getSigners: (provider: any) => SignerFactory = signer;
 
-export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
+export const getWalletInfo: (allBlockChains: ProviderMeta[]) => WalletInfo = (
   allBlockChains
 ) => {
   const tron = tronBlockchain(allBlockChains);

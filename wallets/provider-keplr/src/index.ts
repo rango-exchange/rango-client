@@ -8,7 +8,7 @@ import {
 } from '@rango-dev/wallets-shared';
 import { keplr as keplrInstance } from './helpers';
 import signer from './signer';
-import { SignerFactory, cosmosBlockchains, BlockchainMeta } from 'rango-types';
+import { SignerFactory, cosmosBlockchains, ProviderMeta } from 'rango-types';
 
 const WALLET = WalletTypes.KEPLR;
 
@@ -36,7 +36,7 @@ export const subscribe: Subscribe = ({ connect, disconnect }) => {
 
 export const getSigners: (provider: any) => SignerFactory = signer;
 
-export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
+export const getWalletInfo: (allBlockChains: ProviderMeta[]) => WalletInfo = (
   allBlockChains
 ) => {
   const cosmos = cosmosBlockchains(allBlockChains);
@@ -52,6 +52,8 @@ export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
       DEFAULT: 'https://www.keplr.app',
     },
     color: '#3898e5',
-    supportedChains: cosmos.filter((blockchainMeta) => !!blockchainMeta.info),
+    supportedChains: cosmos.filter(
+      (blockchainMeta) => !!blockchainMeta.chainId
+    ),
   };
 };

@@ -6,7 +6,7 @@ import {
   WalletInfo,
   Networks,
 } from '@rango-dev/wallets-shared';
-import { SignerFactory, BlockchainMeta, starknetBlockchain } from 'rango-types';
+import { SignerFactory, ProviderMeta, starknetBlockchain } from 'rango-types';
 import { argentx as argentx_instances } from './helpers';
 import signer from './signer';
 
@@ -52,7 +52,7 @@ export const canSwitchNetworkTo: CanSwitchNetwork = () => false;
 
 export const getSigners: (provider: any) => SignerFactory = signer;
 
-export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
+export const getWalletInfo: (allBlockChains: ProviderMeta[]) => WalletInfo = (
   allBlockChains
 ) => {
   const starknet = starknetBlockchain(allBlockChains);

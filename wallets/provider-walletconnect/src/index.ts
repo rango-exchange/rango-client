@@ -17,9 +17,9 @@ import { formatJsonRpcRequest } from '@walletconnect/jsonrpc-utils';
 import signer from './signer';
 import {
   SignerFactory,
-  EvmBlockchainMeta,
-  BlockchainMeta,
   evmBlockchains,
+  ProviderMeta,
+  EvmProviderMeta,
 } from 'rango-types';
 
 const WALLET = WalletTypes.WALLET_CONNECT;
@@ -34,7 +34,7 @@ export const getInstance: GetInstance = async (options) => {
   const { network, currentProvider, meta, updateChainId } = options;
   // If `network` is provided, trying to get chainId
   const evm_chain_info = convertEvmBlockchainMetaToEvmChainInfo(
-    meta as EvmBlockchainMeta[]
+    meta as EvmProviderMeta[]
   );
   const info = network ? evm_chain_info[network] : undefined;
   const requestedChainId = info?.chainId ? parseInt(info?.chainId) : undefined;
@@ -105,7 +105,7 @@ export const switchNetwork: SwitchNetwork = async ({
   newInstance,
 }) => {
   const evm_chain_info = convertEvmBlockchainMetaToEvmChainInfo(
-    meta as EvmBlockchainMeta[]
+    meta as EvmProviderMeta[]
   );
 
   /* 
@@ -170,7 +170,7 @@ export const disconnect: Disconnect = async ({ instance, destroyInstance }) => {
 
 export const getSigners: (provider: any) => SignerFactory = signer;
 
-export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
+export const getWalletInfo: (allBlockChains: ProviderMeta[]) => WalletInfo = (
   allBlockChains
 ) => {
   const evms = evmBlockchains(allBlockChains);

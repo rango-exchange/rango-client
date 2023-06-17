@@ -18,7 +18,7 @@ import {
   OKX_WALLET_SUPPORTED_CHAINS,
 } from './helpers';
 import signer from './signer';
-import { SignerFactory, isEvmBlockchain, BlockchainMeta } from 'rango-types';
+import { SignerFactory, isEvmBlockchain, ProviderMeta } from 'rango-types';
 import { Networks } from '@rango-dev/wallets-shared';
 
 const WALLET = WalletTypes.OKX;
@@ -76,7 +76,7 @@ export const canSwitchNetworkTo: CanSwitchNetwork = canSwitchNetworkToEvm;
 
 export const getSigners: (provider: any) => SignerFactory = signer;
 
-export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
+export const getWalletInfo: (allBlockChains: ProviderMeta[]) => WalletInfo = (
   allBlockChains
 ) => ({
   name: 'OKX',

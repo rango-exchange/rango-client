@@ -9,7 +9,7 @@ import {
 } from '@rango-dev/wallets-shared';
 import { State, WalletActions, WalletProvider, WalletProviders } from './types';
 import Wallet, { Options, State as WalletState } from './wallet';
-import type { BlockchainMeta } from 'rango-types';
+import type { ProviderMeta } from 'rango-types';
 import { isEvmBlockchain } from 'rango-types';
 import { Persistor } from './persistor';
 import { LASTE_CONNECTED_WALLETS } from './constants';
@@ -135,7 +135,7 @@ export function isWalletDerivedFromWalletConnect(wallet_type: WalletType) {
 }
 
 export function getComptaibleProvider(
-  supportedChains: BlockchainMeta[],
+  supportedChains: ProviderMeta[],
   provider: any,
   type: WalletType
 ) {

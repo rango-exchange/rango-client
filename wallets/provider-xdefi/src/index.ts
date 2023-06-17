@@ -19,7 +19,7 @@ import { SUPPORTED_ETH_CHAINS } from './constants';
 
 import { getNonEvmAccounts, xdefi as xdefi_instances } from './helpers';
 import signer from './signer';
-import { SignerFactory, BlockchainMeta } from 'rango-types';
+import { SignerFactory, ProviderMeta } from 'rango-types';
 
 const DEFAULT_NETWORK = Networks.ETHEREUM;
 const WALLET = WalletTypes.XDEFI;
@@ -79,7 +79,7 @@ export const canSwitchNetworkTo: CanSwitchNetwork = canSwitchNetworkToEvm;
 
 export const getSigners: (provider: any) => SignerFactory = signer;
 
-export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
+export const getWalletInfo: (allBlockChains: ProviderMeta[]) => WalletInfo = (
   allBlockChains
 ) => ({
   name: 'XDefi',

@@ -10,7 +10,7 @@ import {
   Divider,
 } from '@rango-dev/ui';
 import { useMetaStore } from '../store/meta';
-import { BlockchainMeta, Token } from 'rango-sdk';
+import { Token } from 'rango-sdk';
 import { useNavigate } from 'react-router-dom';
 import { useBestRouteStore } from '../store/bestRoute';
 import { numberToString } from '../utils/numbers';
@@ -19,6 +19,7 @@ import { getBalanceFromWallet } from '../utils/wallets';
 import { useWalletsStore } from '../store/wallets';
 import { useTranslation } from 'react-i18next';
 import { PercentageChange } from './PercentageChange';
+import { ProviderMeta } from 'rango-types';
 
 type PropTypes = (
   | {
@@ -31,7 +32,7 @@ type PropTypes = (
       outputAmount: BigNumber | null;
       outputUsdValue: BigNumber | null;
     }
-) & { chain: BlockchainMeta | null; token: Token | null };
+) & { chain: ProviderMeta | null; token: Token | null };
 
 const Box = styled('div', {
   display: 'flex',
@@ -175,8 +176,7 @@ export function TokenInfo(props: PropTypes) {
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
-      }}
-    >
+      }}>
       {loadingStatus === 'failed' && <InfoCircleIcon color="error" size={24} />}
       <AngleDownIcon />
     </div>
@@ -196,8 +196,7 @@ export function TokenInfo(props: PropTypes) {
                 onClick={() => {
                   if (tokenBalance !== '0')
                     setInputAmount(tokenBalanceReal.split(',').join(''));
-                }}
-              >
+                }}>
                 <Typography variant="body3" color="neutral600">{`${t(
                   'Balance'
                 )}: ${tokenBalance} ${fromToken?.symbol || ''}`}</Typography>
@@ -216,8 +215,9 @@ export function TokenInfo(props: PropTypes) {
               <div>
                 <Typography
                   variant="caption"
-                  color="neutral600"
-                >{`$${numberToString(props.outputUsdValue)}`}</Typography>
+                  color="neutral600">{`$${numberToString(
+                  props.outputUsdValue
+                )}`}</Typography>
               </div>
             </div>
           )}
@@ -240,8 +240,7 @@ export function TokenInfo(props: PropTypes) {
             }
             suffix={ItemSuffix}
             align="start"
-            size="large"
-          >
+            size="large">
             {loadingStatus === 'success' && chain
               ? chain.displayName
               : t('Chain')}
@@ -268,8 +267,7 @@ export function TokenInfo(props: PropTypes) {
             }
             suffix={ItemSuffix}
             size="large"
-            align="start"
-          >
+            align="start">
             {loadingStatus === 'success' && token ? token.symbol : t('Token')}
           </Button>
           <Divider size={12} direction="horizontal" />
@@ -290,12 +288,12 @@ export function TokenInfo(props: PropTypes) {
                       position: 'absolute',
                       right: '4px',
                       bottom: '2px',
-                    }}
-                  >
+                    }}>
                     <Typography
                       variant="caption"
-                      color="neutral800"
-                    >{`$${numberToString(inputUsdValue)}`}</Typography>
+                      color="neutral800">{`$${numberToString(
+                      inputUsdValue
+                    )}`}</Typography>
                   </span>
                 }
                 value={props.inputAmount || ''}

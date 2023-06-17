@@ -12,7 +12,7 @@ import {
 } from '@rango-dev/wallets-shared';
 import { tokenpocket as tokenpocket_instance } from './helpers';
 import signer from './signer';
-import { SignerFactory, BlockchainMeta, evmBlockchains } from 'rango-types';
+import { SignerFactory, ProviderMeta, evmBlockchains } from 'rango-types';
 
 const WALLET = WalletTypes.TOKEN_POCKET;
 
@@ -42,7 +42,7 @@ export const canSwitchNetworkTo: CanSwitchNetwork = canSwitchNetworkToEvm;
 
 export const getSigners: (provider: any) => SignerFactory = signer;
 
-export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
+export const getWalletInfo: (allBlockChains: ProviderMeta[]) => WalletInfo = (
   allBlockChains
 ) => {
   const evms = evmBlockchains(allBlockChains);

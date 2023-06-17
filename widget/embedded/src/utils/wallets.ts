@@ -16,13 +16,8 @@ import {
   WalletState as WalletStatus,
   SelectableWallet,
 } from '@rango-dev/ui';
-import {
-  BestRouteResponse,
-  BlockchainMeta,
-  Token,
-  WalletDetail,
-} from 'rango-sdk';
-import { isCosmosBlockchain } from 'rango-types';
+import { BestRouteResponse, Token, WalletDetail } from 'rango-sdk';
+import { isCosmosBlockchain, ProviderMeta } from 'rango-types';
 import { readAccountAddress } from '@rango-dev/wallets-core';
 import { ConnectedWallet, TokenBalance } from '../store/wallets';
 import { numberToString } from './numbers';
@@ -73,7 +68,7 @@ export function getlistWallet(
 }
 
 export function walletAndSupportedChainsNames(
-  supportedChains: BlockchainMeta[]
+  supportedChains: ProviderMeta[]
 ): Network[] | null {
   if (!supportedChains) return null;
   let walletAndSupportedChainsNames: Network[] = [];
@@ -376,7 +371,7 @@ export const getUsdPrice = (
   return token?.usdPrice || null;
 };
 export const isExperimentalChain = (
-  blockchains: BlockchainMeta[],
+  blockchains: ProviderMeta[],
   wallet: string
 ): boolean => {
   const cosmosExperimentalChainInfo = getCosmosExperimentalChainInfo(
@@ -440,7 +435,7 @@ export function getTokensWithBalance(
 }
 
 export function getSortedTokens(
-  chain: BlockchainMeta | null,
+  chain: ProviderMeta | null,
   tokens: Token[],
   connectedWallets: ConnectedWallet[],
   otherChainTokens: TokenWithBalance[]

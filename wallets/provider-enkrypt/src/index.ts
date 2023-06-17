@@ -11,7 +11,7 @@ import {
   switchNetworkForEvm,
 } from '@rango-dev/wallets-shared';
 import { enkrypt as enkrypt_instance } from './helpers';
-import { BlockchainMeta, SignerFactory, evmBlockchains } from 'rango-types';
+import { ProviderMeta, SignerFactory, evmBlockchains } from 'rango-types';
 import signer from './signer';
 
 export const getInstance = enkrypt_instance;
@@ -23,12 +23,13 @@ export const config = {
 };
 
 export const connect: Connect = async ({ instance }) => {
-  let { accounts, chainId } = await getEvmAccounts(instance);
+  const accountDetails = await getEvmAccounts(instance);
+  let accounts = accountDetails.accounts;
   if (accounts.length > 1) accounts = [instance.selectedAddress];
 
   return {
     accounts,
-    chainId,
+    chainId: accountDetails.chainId,
   };
 };
 
@@ -40,7 +41,7 @@ export const canSwitchNetworkTo: CanSwitchNetwork = canSwitchNetworkToEvm;
 
 export const getSigners: (provider: any) => SignerFactory = signer;
 
-export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
+export const getWalletInfo: (allBlockChains: ProviderMeta[]) => WalletInfo = (
   allBlockChains
 ) => {
   const evms = evmBlockchains(allBlockChains);

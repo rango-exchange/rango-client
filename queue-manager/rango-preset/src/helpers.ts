@@ -24,7 +24,6 @@ import { Providers, readAccountAddress } from '@rango-dev/wallets-core';
 import {
   Transaction,
   TransactionType,
-  EvmBlockchainMeta,
   CreateTransactionResponse,
 } from 'rango-sdk';
 
@@ -58,7 +57,11 @@ import {
   prettifyErrorMessage,
 } from './shared-errors';
 import { httpService } from './services';
-import { APIErrorCode, SignerErrorCode } from 'rango-types/lib';
+import {
+  APIErrorCode,
+  EvmProviderMeta,
+  SignerErrorCode,
+} from 'rango-types/lib';
 
 type WhenTaskBlocked = Parameters<NonNullable<SwapQueueDef['whenTaskBlocked']>>;
 type WhenTaskBlockedEvent = WhenTaskBlocked[0];
@@ -1086,7 +1089,7 @@ export function singTransaction(
 export function checkWaitingForConnectWalletChange(params: {
   wallet_network: string;
   manager?: Manager;
-  evmChains: EvmBlockchainMeta[];
+  evmChains: EvmProviderMeta[];
   notifier: SwapQueueContext['notifier'];
 }): void {
   const { wallet_network, evmChains, manager } = params;

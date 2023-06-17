@@ -7,7 +7,7 @@ import {
 } from './rango';
 import { convertEvmBlockchainMetaToEvmChainInfo } from './helpers';
 import { switchOrAddNetworkForMetamaskCompatibleWallets } from './helpers';
-import type { BlockchainMeta } from 'rango-types';
+import type { ProviderMeta } from 'rango-types';
 import { isEvmBlockchain } from 'rango-types';
 
 export async function getEvmAccounts(instance: any) {
@@ -62,19 +62,19 @@ export const canSwitchNetworkToEvm: CanSwitchNetwork = ({ network, meta }) => {
   return evmNetworkNames(meta).includes(network);
 };
 
-export function evmNetworkNames(meta: BlockchainMeta[]) {
+export function evmNetworkNames(meta: ProviderMeta[]) {
   return meta.filter(isEvmBlockchain).map((blockchain) => blockchain.name);
 }
 export function getEthChainsInstance(
   network: Network | null,
-  meta: BlockchainMeta[]
+  meta: ProviderMeta[]
 ): Network | null {
   if (!network) return null;
   const evmBlockchains = evmNetworkNames(meta);
   return evmBlockchains.includes(network) ? Networks.ETHEREUM : null;
 }
 
-function isEvmNetwork(network: Network | null, meta: BlockchainMeta[]) {
+function isEvmNetwork(network: Network | null, meta: ProviderMeta[]) {
   if (!network) return false;
 
   return evmNetworkNames(meta).includes(network);
@@ -82,7 +82,7 @@ function isEvmNetwork(network: Network | null, meta: BlockchainMeta[]) {
 
 export function chooseInstance(
   instances: null | Map<any, any>,
-  meta: BlockchainMeta[],
+  meta: ProviderMeta[],
   network?: Network | null
 ) {
   // If there is no `network` we fallback to default network.

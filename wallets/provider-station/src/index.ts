@@ -8,7 +8,7 @@ import {
 import { station as station_instance } from './helpers';
 import signer from './signer';
 import { ConnectType } from '@terra-money/wallet-controller';
-import { BlockchainMeta, SignerFactory } from 'rango-types';
+import { ProviderMeta, SignerFactory } from 'rango-types';
 
 const WALLET = WalletTypes.STATION;
 const STATION_WALLET_ID = 'station';
@@ -79,7 +79,7 @@ export const canSwitchNetworkTo: CanSwitchNetwork = () => false;
 
 export const getSigners: (provider: any) => SignerFactory = signer;
 
-export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
+export const getWalletInfo: (allBlockChains: ProviderMeta[]) => WalletInfo = (
   allBlockChains
 ) => {
   return {

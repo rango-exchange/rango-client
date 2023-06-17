@@ -17,7 +17,7 @@ import { getNonEvmAccounts, safepal as safepal_instance } from './helpers';
 import signer from './signer';
 import {
   SignerFactory,
-  BlockchainMeta,
+  ProviderMeta,
   evmBlockchains,
   solanaBlockchain,
 } from 'rango-types';
@@ -64,7 +64,7 @@ export const canSwitchNetworkTo: CanSwitchNetwork = canSwitchNetworkToEvm;
 
 export const getSigners: (provider: any) => SignerFactory = signer;
 
-export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
+export const getWalletInfo: (allBlockChains: ProviderMeta[]) => WalletInfo = (
   allBlockChains
 ) => {
   const evms = evmBlockchains(allBlockChains);

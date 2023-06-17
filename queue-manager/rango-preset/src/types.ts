@@ -8,7 +8,8 @@ import {
   WalletType,
 } from '@rango-dev/wallets-shared';
 import { PendingSwap, SwapProgressNotification, Wallet } from './shared';
-import type { EvmBlockchainMeta, SignerFactory } from 'rango-types';
+import type { EvmProviderMeta, ProviderMeta, SignerFactory } from 'rango-types';
+import { MetaResponse } from 'rango-sdk';
 
 export type SwapQueueDef = QueueDef<
   SwapStorage,
@@ -73,7 +74,11 @@ export interface UseQueueManagerParams {
   lastConnectedWallet: string;
   disconnectedWallet: WalletType | undefined;
   clearDisconnectedWallet: () => void;
-  evmChains: EvmBlockchainMeta[];
+  evmChains: EvmProviderMeta[];
   notifier: SwapQueueContext['notifier'];
   canSwitchNetworkTo: (type: WalletType, network: Network) => boolean;
 }
+
+export type ModifiedMetaResponse = Omit<MetaResponse, 'blockchains'> & {
+  blockchains: ProviderMeta[];
+};

@@ -11,14 +11,14 @@ import {
   WalletActions,
   WalletConfig,
 } from './types';
-import { BlockchainMeta } from 'rango-types';
+import { ProviderMeta } from 'rango-types';
 
 export type EventHandler = (
   type: WalletType,
   event: Events,
   value: any,
   coreState: State,
-  supportedChains: BlockchainMeta[]
+  supportedChains: ProviderMeta[]
 ) => void;
 
 export interface State {
@@ -39,7 +39,7 @@ class Wallet<InstanceType = any> {
   private actions: WalletActions;
   private state: State;
   private options: Options;
-  private meta: BlockchainMeta[];
+  private meta: ProviderMeta[];
   public provider: InstanceType | null;
 
   constructor(options: Options, actions: WalletActions) {
@@ -212,7 +212,7 @@ class Wallet<InstanceType = any> {
   getSigners(provider: any) {
     return this.actions.getSigners(provider);
   }
-  getWalletInfo(allBlockChains: BlockchainMeta[]) {
+  getWalletInfo(allBlockChains: ProviderMeta[]) {
     return this.actions.getWalletInfo(allBlockChains);
   }
   canSwitchNetworkTo(network: Network, provider: any) {
@@ -270,7 +270,7 @@ class Wallet<InstanceType = any> {
     }
   }
 
-  setMeta(value: BlockchainMeta[]) {
+  setMeta(value: ProviderMeta[]) {
     this.meta = value;
   }
 

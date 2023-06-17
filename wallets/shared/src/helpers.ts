@@ -1,4 +1,4 @@
-import { EvmBlockchainMeta } from 'rango-types';
+import { BlockchainMeta, EvmProviderMeta, ProviderMeta } from 'rango-types';
 import {
   EvmNetworksChainInfo,
   AddEthereumChainParameter,
@@ -95,7 +95,7 @@ export function timeout<T = any>(
 }
 
 export const convertEvmBlockchainMetaToEvmChainInfo = (
-  evmBlockchains: EvmBlockchainMeta[]
+  evmBlockchains: EvmProviderMeta[]
 ) =>
   evmBlockchains.reduce(
     (
@@ -103,11 +103,11 @@ export const convertEvmBlockchainMetaToEvmChainInfo = (
       blockchainMeta
     ) => (
       (evmNetWorksChainInfo[blockchainMeta.name] = {
-        chainName: blockchainMeta.info.chainName,
+        chainName: blockchainMeta.chainName,
         chainId: blockchainMeta.chainId,
-        nativeCurrency: blockchainMeta.info.nativeCurrency,
-        rpcUrls: blockchainMeta.info.rpcUrls,
-        blockExplorerUrls: blockchainMeta.info.blockExplorerUrls,
+        nativeCurrency: blockchainMeta.nativeCurrency,
+        rpcUrls: blockchainMeta.rpcUrls,
+        blockExplorerUrls: blockchainMeta.blockExplorerUrls,
       }),
       evmNetWorksChainInfo
     ),
@@ -218,4 +218,17 @@ export function detectMobileScreens(): boolean {
   return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
     navigator.userAgent
   );
+}
+
+export function normalizeMetaData(allblockchains: BlockchainMeta[]) {
+  const normalizedData = allblockchains.map((chain) => {
+    if (chain.info) {
+      const filteredData = { ...chain, ...chain.info };
+      const { info, ...rest } = filteredData;
+      return rest;
+    }
+    return chain;
+  });
+
+  return normalizedData as ProviderMeta[];
 }

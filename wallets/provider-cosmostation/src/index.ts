@@ -18,7 +18,7 @@ import { cosmostation as cosmostation_instance } from './helpers';
 import signer from './signer';
 import {
   SignerFactory,
-  BlockchainMeta,
+  ProviderMeta,
   evmBlockchains,
   isEvmBlockchain,
   isCosmosBlockchain,
@@ -92,7 +92,7 @@ export const subscribe: Subscribe = ({
 
 export const getSigners: (provider: any) => SignerFactory = signer;
 
-export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
+export const getWalletInfo: (allBlockChains: ProviderMeta[]) => WalletInfo = (
   allBlockChains
 ) => {
   const evms = evmBlockchains(allBlockChains);

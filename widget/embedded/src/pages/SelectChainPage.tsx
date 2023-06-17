@@ -4,6 +4,7 @@ import { useBestRouteStore } from '../store/bestRoute';
 import { useMetaStore } from '../store/meta';
 import { useNavigateBack } from '../hooks/useNavigateBack';
 import { navigationRoutes } from '../constants/navigationRoutes';
+import { ProviderMeta } from 'rango-types/lib';
 
 interface PropTypes {
   type: 'from' | 'to';
@@ -32,8 +33,8 @@ export function SelectChainPage(props: PropTypes) {
       selected={type === 'from' ? fromChain : toChain}
       loadingStatus={loadingStatus}
       onChange={(chain) => {
-        if (type === 'from') setFromChain(chain, true);
-        else setToChain(chain, true);
+        if (type === 'from') setFromChain(chain as ProviderMeta, true);
+        else setToChain(chain as ProviderMeta, true);
         navigateBackFrom(navigationRoutes.fromChain);
       }}
       onBack={navigateBackFrom.bind(null, navigationRoutes.fromChain)}

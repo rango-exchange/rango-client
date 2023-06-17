@@ -3,16 +3,17 @@ import {
   SimulationValidationStatus,
 } from '@rango-dev/ui/dist/types/swaps';
 import BigNumber from 'bignumber.js';
-import { BestRouteResponse, BlockchainMeta, Token } from 'rango-sdk';
+import { BestRouteResponse, Token } from 'rango-sdk';
 import { areEqual } from './common';
 import { BestRouteEqualityParams, Wallet } from '../types';
 import { numberToString } from './numbers';
 import { PendingSwap } from '@rango-dev/queue-manager-rango-preset';
+import { ProviderMeta } from 'rango-types';
 
 export function searchParamsToToken(
   tokens: Token[],
   searchParams: string | null,
-  chain: BlockchainMeta | null
+  chain: ProviderMeta | null
 ): Token | null {
   if (!chain) return null;
   return (

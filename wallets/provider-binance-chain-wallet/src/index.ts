@@ -13,7 +13,7 @@ import {
   BINANCE_CHAIN_WALLET_SUPPORTED_CHAINS,
 } from './helpers';
 import signer from './signer';
-import type { SignerFactory, BlockchainMeta } from 'rango-types';
+import type { SignerFactory, ProviderMeta } from 'rango-types';
 import { isEvmBlockchain } from 'rango-types';
 
 const WALLET = WalletTypes.BINANCE_CHAIN;
@@ -66,7 +66,7 @@ export const canSwitchNetworkTo: CanSwitchNetwork = () => false;
 
 export const getSigners: (provider: any) => SignerFactory = signer;
 
-export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
+export const getWalletInfo: (allBlockChains: ProviderMeta[]) => WalletInfo = (
   allBlockChains
 ) => ({
   name: 'Binance',

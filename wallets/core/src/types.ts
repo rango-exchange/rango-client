@@ -4,7 +4,7 @@ import {
   EventHandler as WalletEventHandler,
   State as WalletState,
 } from './wallet';
-import { SignerFactory, BlockchainMeta } from 'rango-types';
+import { SignerFactory, ProviderMeta } from 'rango-types';
 
 export type State = {
   [key: string]: WalletState | undefined;
@@ -31,7 +31,7 @@ export type ProviderContext = {
 
 export type ProviderProps = PropsWithChildren<{
   onUpdateState?: WalletEventHandler;
-  allBlockChains?: BlockchainMeta[];
+  allBlockChains?: ProviderMeta[];
   providers: WalletProvider[];
   autoConnect?: boolean;
 }>;
@@ -53,7 +53,7 @@ export type ProviderConnectResult = {
 export type GetInstanceOptions = {
   network?: Network;
   currentProvider: any;
-  meta: BlockchainMeta[];
+  meta: ProviderMeta[];
   force?: boolean;
   updateChainId: (chainId: number | string) => void;
 };
@@ -67,7 +67,7 @@ export type TryGetInstance =
 export type Connect = (options: {
   instance: any;
   network?: Network;
-  meta: BlockchainMeta[];
+  meta: ProviderMeta[];
 }) => Promise<ProviderConnectResult | ProviderConnectResult[]>;
 
 export type Disconnect = (options: {
@@ -77,7 +77,7 @@ export type Disconnect = (options: {
 export type Subscribe = (options: {
   instance: any;
   state: WalletState;
-  meta: BlockchainMeta[];
+  meta: ProviderMeta[];
   updateChainId: (chainId: string) => void;
   updateAccounts: (accounts: string[], chainId?: string) => void;
   connect: (network?: Network) => void;
@@ -87,13 +87,13 @@ export type Subscribe = (options: {
 export type SwitchNetwork = (options: {
   instance: any;
   network: Network;
-  meta: BlockchainMeta[];
+  meta: ProviderMeta[];
   newInstance?: TryGetInstance;
 }) => Promise<void>;
 
 export type CanSwitchNetwork = (options: {
   network: Network;
-  meta: BlockchainMeta[];
+  meta: ProviderMeta[];
   provider: any;
 }) => boolean;
 
@@ -109,7 +109,7 @@ export interface WalletActions {
   switchNetwork?: SwitchNetwork;
   getSigners: (provider: any) => SignerFactory;
   canSwitchNetworkTo?: CanSwitchNetwork;
-  getWalletInfo(allBlockChains: BlockchainMeta[]): WalletInfo;
+  getWalletInfo(allBlockChains: ProviderMeta[]): WalletInfo;
 }
 
 export interface WalletConfig {

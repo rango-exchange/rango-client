@@ -16,7 +16,7 @@ import {
   KUCOIN_WALLET_SUPPORTED_CHAINS,
 } from './helpers';
 import signer from './signer';
-import { SignerFactory, BlockchainMeta } from 'rango-types';
+import { ProviderMeta, SignerFactory } from 'rango-types';
 
 const WALLET = WalletTypes.KUCOIN;
 
@@ -46,7 +46,7 @@ export const canSwitchNetworkTo: CanSwitchNetwork = canSwitchNetworkToEvm;
 
 export const getSigners: (provider: any) => SignerFactory = signer;
 
-export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
+export const getWalletInfo: (allBlockChains: ProviderMeta[]) => WalletInfo = (
   allBlockChains
 ) => {
   return {

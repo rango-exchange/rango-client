@@ -1,4 +1,4 @@
-import { BestRouteResponse, BlockchainMeta } from 'rango-sdk';
+import { BestRouteResponse } from 'rango-sdk';
 import { Token } from 'rango-sdk';
 import { create } from 'zustand';
 import BigNumber from 'bignumber.js';
@@ -23,13 +23,14 @@ import { TokenWithBalance } from '../pages/SelectTokenPage';
 import { PendingSwap } from '@rango-dev/queue-manager-rango-preset/dist/shared';
 import { debounce } from '../utils/common';
 import { isPositiveNumber } from '../utils/numbers';
+import { ProviderMeta } from 'rango-types';
 
 const getUsdValue = (token: Token | null, amount: string) =>
   new BigNumber(amount || ZERO).multipliedBy(token?.usdPrice || 0);
 
 export interface RouteState {
-  fromChain: BlockchainMeta | null;
-  toChain: BlockchainMeta | null;
+  fromChain: ProviderMeta | null;
+  toChain: ProviderMeta | null;
   inputAmount: string;
   inputUsdValue: BigNumber;
   outputAmount: BigNumber | null;
@@ -41,11 +42,8 @@ export interface RouteState {
   sourceTokens: Token[];
   destinationTokens: Token[];
   resetRoute: () => void;
-  setFromChain: (
-    chain: BlockchainMeta | null,
-    setDefaultToken?: boolean
-  ) => void;
-  setToChain: (chian: BlockchainMeta | null, setDefaultToken?: boolean) => void;
+  setFromChain: (chain: ProviderMeta | null, setDefaultToken?: boolean) => void;
+  setToChain: (chian: ProviderMeta | null, setDefaultToken?: boolean) => void;
   setFromToken: (token: Token | null) => void;
   setToToken: (token: Token | null) => void;
   setInputAmount: (amount: string) => void;
