@@ -29,11 +29,6 @@ const MainContainer = styled('div', {
 
 export type WidgetProps = {
   config?: WidgetConfig;
-  /**
-   * If `externalWallets` is `true`, you should add `WidgetWallets` to your app.
-   * @default false
-   */
-  externalWallets?: boolean;
 };
 
 export function Main(props: PropsWithChildren<WidgetProps>) {
@@ -83,8 +78,7 @@ export function Main(props: PropsWithChildren<WidgetProps>) {
 }
 
 export function Widget(props: PropsWithChildren<WidgetProps>) {
-  const { externalWallets = false } = props;
-  if (!externalWallets) {
+  if (!props.config?.externalWallets) {
     return (
       <WidgetWallets providers={props.config?.wallets}>
         <Main {...props} />

@@ -159,8 +159,7 @@ export function Home() {
             onClick={() => {
               switchFromAndTo();
               setCount((prev) => prev + 1);
-            }}
-          >
+            }}>
             <VerticalSwapIcon size={32} />
             {isRouterInContext && <SwithFromAndTo count={count} />}
           </Button>
@@ -216,8 +215,7 @@ export function Home() {
             else {
               navigate(navigationRoutes.confirmSwap, { replace: true });
             }
-          }}
-        >
+          }}>
           {swapButtonState.title}
         </Button>
         <BottomLogo />

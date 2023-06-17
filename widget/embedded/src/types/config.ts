@@ -101,6 +101,9 @@ export type BlockchainAndTokenConfig = {
  * @property {WidgetTheme} theme - The `theme` property is a part of the `WidgetConfig` type and is
  * used to specify the visual theme of the widget. It is of type `WidgetTheme`, which is an interface
  * that defines the various properties of the theme, such as colors, fonts, and others.
+ * @property {boolean} externalWallets
+ * If `externalWallets` is `true`, you should add `WidgetWallets` to your app.
+
  */
 export type WidgetConfig = {
   apiKey: string;
@@ -114,4 +117,5 @@ export type WidgetConfig = {
   customDestination?: boolean;
   language?: string;
   theme?: WidgetTheme;
+  externalWallets?: boolean;
 };
