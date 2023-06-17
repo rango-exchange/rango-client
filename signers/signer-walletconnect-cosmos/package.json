@@ -1,5 +1,5 @@
 {
-  "name": "@rango-dev/provider-walletconnect-2",
+  "name": "@rango-dev/signer-walletconnect-cosmos",
   "version": "0.5.1-next.0",
   "license": "MIT",
   "type": "module",
@@ -14,18 +14,21 @@
     "src"
   ],
   "scripts": {
-    "build": "node ../../scripts/build/command.mjs --path wallets/provider-walletconnect-2",
+    "build": "node ../../scripts/build/command.mjs --path signers/signer-walletconnect-cosmos",
     "clean": "rimraf dist",
     "format": "prettier --write '{.,src}/**/*.{ts,tsx}'",
     "lint": "eslint \"**/*.{ts,tsx}\" --ignore-path ../../.eslintignore"
   },
   "dependencies": {
-    "@rango-dev/signer-evm": "^0.5.1-next.0",
-    "@rango-dev/wallets-shared": "^0.5.1-next.9",
-    "@web3modal/standalone": "^2.3.7",
-    "rango-types": "^0.1.39",
-    "@walletconnect/universal-provider": "2.8.0",
-    "@rango-dev/signer-walletconnect-cosmos": "^0.5.1-next.0"
+    "@cosmjs/launchpad": "^0.27.1",
+    "@cosmjs/stargate": "^0.29.4",
+    "@keplr-wallet/cosmos": "^0.9.12",
+    "cosmjs-types": "^0.5.2",
+    "long": "^5.2.1",
+    "rango-types": "^0.1.39"
+  },
+  "devDependencies": {
+    "@walletconnect/universal-provider": "2.8.0"
   },
   "publishConfig": {
     "access": "public"

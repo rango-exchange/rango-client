@@ -1,8 +1,4 @@
-import {
-  makeConnection,
-  supportsForSwitchNetworkRequest,
-  // supportsForSwitchNetworkRequest
-} from './helpers';
+import { makeConnection, supportsForSwitchNetworkRequest } from './helpers';
 import {
   WalletTypes,
   CanSwitchNetwork,
@@ -17,7 +13,6 @@ import {
   Networks,
   convertEvmBlockchainMetaToEvmChainInfo,
   switchOrAddNetworkForMetamaskCompatibleWallets,
-  // getCosmosExperimentalChainInfo,
 } from '@rango-dev/wallets-shared';
 import signer from './signer';
 import {
@@ -26,7 +21,6 @@ import {
   BlockchainMeta,
   evmBlockchains,
   cosmosBlockchains,
-  // CosmosBlockchainMeta,
 } from 'rango-types';
 
 const WALLET = WalletTypes.WALLET_CONNECT_2;
@@ -43,35 +37,37 @@ export const getInstance: GetInstance = async (options) => {
   const evm_chain_info = convertEvmBlockchainMetaToEvmChainInfo(
     meta as EvmBlockchainMeta[]
   );
-  // const cosmos_chain_info = getCosmosExperimentalChainInfo(
-  //   meta as CosmosBlockchainMeta[]
-  // );
-
-  console.log('>>>network', network);
-
   const info = network ? evm_chain_info[network] : undefined;
   const requestedChainId = info?.chainId ? parseInt(info?.chainId) : undefined;
-  console.log('requestedChainId', requestedChainId);
 
   const nextInstance = await makeConnection({
     chainId: requestedChainId,
     force,
+    meta,
   });
 
-  if (force && requestedChainId) updateChainId?.(requestedChainId);
+  if (force && requestedChainId) {
+    // Disconnect any redundant sessions except for the last one
+    const sessions = nextInstance.client.session.getAll();
+    sessions.forEach(({ topic }: { topic: string }, index: number) => {
+      if (index < sessions.length - 1) {
+        nextInstance.client.disconnect({
+          topic,
+        });
+      }
+    });
+
+    updateChainId?.(requestedChainId);
+  }
 
   return nextInstance;
 };
 
 export const connect: Connect = async ({ instance }) => {
-  console.log('hiiiii', instance);
-
   const accounts = await instance.enable();
-  console.log('hiiiii', accounts);
-
-  const chainId = await instance.request({ method: 'eth_chainId' });
-  console.log(accounts, chainId);
-
+  // const chainId = await instance.request({ method: 'eth_chainId' });
+  const chainId = 'cosmoshub-4';
+  console.log('instance', instance);
   return {
     accounts,
     chainId,
@@ -134,15 +130,7 @@ export const subscribe: Subscribe = ({
   });
 
   instance.on('disconnect', async () => {
-    // console.log('topic')
-    // console.log(topic)
-    // try {
-    //   await instance?.client.disconnect({
-    //     topic,
-    //   });
-    // } finally {
     disconnect();
-    // }
   });
 };
 
@@ -157,8 +145,7 @@ export const switchNetwork: SwitchNetwork = async ({
   );
   if (supportsForSwitchNetworkRequest(instance)) {
     /*
-       `switchOrAddNetworkForMetamaskCompatibleWallets` needs a web3-provider interface.
-      And uses `request` method. Here we are making something it can use.
+       `switchOrAddNetworkForMetamaskCompatibleWallets` uses `request` method. Here we are making something it can use.
      */
 
     await switchOrAddNetworkForMetamaskCompatibleWallets(
@@ -175,13 +162,22 @@ export const canSwitchNetworkTo: CanSwitchNetwork = () => false;
 export const disconnect: Disconnect = async ({ instance, destroyInstance }) => {
   if (instance) {
     try {
+      // Disconnect the instance and remove any pairing sessions
       await instance.disconnect();
-      if (!instance.session) {
-        destroyInstance();
-      }
+      const pairingSessions = instance.client.pairing.getAll();
+      pairingSessions.forEach(({ topic }: { topic: string }) => {
+        try {
+          instance.client.disconnect({
+            topic,
+          });
+        } catch {
+          // do nothing
+        }
+      });
     } catch {
-      destroyInstance();
+      // do nothing
     }
+    destroyInstance();
   }
 };
 

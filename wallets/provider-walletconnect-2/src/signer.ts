@@ -13,7 +13,7 @@
 //   return signers;
 // }
 
-import { DefaultCosmosSigner } from '@rango-dev/signer-cosmos';
+import { DefaultWalletconnectCosmosSigner } from '@rango-dev/signer-walletconnect-cosmos';
 import { Networks, getNetworkInstance } from '@rango-dev/wallets-shared';
 import {
   DefaultSignerFactory,
@@ -26,7 +26,7 @@ export default function getSigners(provider: any): SignerFactory {
   const signers = new DefaultSignerFactory();
   signers.registerSigner(
     TxType.COSMOS,
-    new DefaultCosmosSigner(cosmosProvider)
+    new DefaultWalletconnectCosmosSigner(cosmosProvider)
   );
   return signers;
 }
