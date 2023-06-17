@@ -27,7 +27,7 @@ export const WidgetContext = createContext<WidgetContextInterface>({
 
 export function WidgetWallets(
   props: PropsWithChildren<{
-    providers?: WidgetConfig['wallets'];
+    providers: WidgetConfig['wallets'];
   }>
 ) {
   const { blockchains } = useMetaStore.use.meta();

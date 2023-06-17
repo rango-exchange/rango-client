@@ -29,7 +29,7 @@ interface ConfigState {
   onChangeBlockChains: (chains?: string[], type?: Type) => void;
   onChangeTokens: (tokens?: Asset[], type?: Type) => void;
   onChangeBooleansConfig: (
-    name: 'multiWallets' | 'customDestination',
+    name: 'multiWallets' | 'customDestination' | 'externalWallets',
     value: boolean
   ) => void;
   onChangeBlockChain: (chain?: string, type?: Type) => void;
@@ -58,6 +58,7 @@ interface ConfigState {
 export const initialConfig: WidgetConfig = {
   apiKey: getConfig('API_KEY'),
   amount: undefined,
+  externalWallets: undefined,
   from: {
     blockchain: undefined,
     token: undefined,
@@ -182,6 +183,9 @@ export const useConfigStore = createSelectors(
       })),
       {
         name: 'user-config',
+        partialize: (state) => ({
+          externalWallets: state.config.externalWallets,
+        }),
         storage: {
           getItem: (name) => {
             const str = localStorage.getItem(name);
