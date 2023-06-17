@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { Button, Divider, Switch, Typography, styled } from '@rango-dev/ui';
 import { WalletType, WalletTypes } from '@rango-dev/wallets-shared';
 import { ProviderInterface } from '@rango-dev/wallets-core';
@@ -18,10 +18,11 @@ const Body = styled('div', {
   overflow: 'hidden auto',
 });
 export function ExternalWallet() {
-  const [externalWallet, setExternalWallet] = useState<boolean>(false);
+  const externalWallets = useConfigStore.use.config().externalWallets;
   const wallets = useConfigStore.use.config().wallets;
   const onChangeWallets = useConfigStore.use.onChangeWallets();
   const { state, connect, disconnect } = useWallets();
+  const onChangeBooleansConfig = useConfigStore.use.onChangeBooleansConfig();
 
   const onChangeExternalWallet = (checked: boolean) => {
     let selectedWallets: (WalletType | ProviderInterface)[] = !!wallets
@@ -40,7 +41,7 @@ export function ExternalWallet() {
       }
     }
 
-    setExternalWallet(checked);
+    onChangeBooleansConfig('externalWallets', checked);
     onChangeWallets(!selectedWallets.length ? undefined : selectedWallets);
   };
 
@@ -50,7 +51,7 @@ export function ExternalWallet() {
     );
 
     if (providerIndex === -1) {
-      setExternalWallet(false);
+      onChangeBooleansConfig('externalWallets', false);
     }
   }, [wallets]);
 
@@ -61,7 +62,10 @@ export function ExternalWallet() {
           External Wallets
         </Typography>
 
-        <Switch checked={externalWallet} onChange={onChangeExternalWallet} />
+        <Switch
+          checked={externalWallets ?? false}
+          onChange={onChangeExternalWallet}
+        />
       </Head>
       <Divider size={16} />
       <Body>
@@ -73,7 +77,7 @@ export function ExternalWallet() {
 
         <Button
           type="primary"
-          disabled={!externalWallet}
+          disabled={!externalWallets}
           onClick={() => {
             if (state('metamask').connected) {
               disconnect('metamask');
