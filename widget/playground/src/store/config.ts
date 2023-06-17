@@ -12,15 +12,13 @@ import { ProviderInterface } from '@rango-dev/wallets-core';
 export type Mode = 'dark' | 'light' | 'auto';
 export type COLORS =
   | 'background'
-  | 'inputBackground'
-  | 'icons'
   | 'primary'
-  | 'text'
   | 'success'
   | 'error'
   | 'warning'
   | 'surface'
-  | 'neutral';
+  | 'neutral'
+  | 'foreground';
 
 interface ConfigState {
   config: WidgetConfig;
@@ -58,7 +56,7 @@ interface ConfigState {
 export const initialConfig: WidgetConfig = {
   apiKey: getConfig('API_KEY'),
   amount: undefined,
-  externalWallets: undefined,
+  externalWallets: false,
   from: {
     blockchain: undefined,
     token: undefined,
@@ -116,33 +114,33 @@ export const useConfigStore = createSelectors(
         onChangeBlockChains: (chains, type) =>
           set((state) => {
             if (type === 'Source') {
-              state.config.from!.blockchains = chains;
+              if (state.config.from) state.config.from.blockchains = chains;
             } else {
-              state.config.to!.blockchains = chains;
+              if (state.config.to) state.config.to.blockchains = chains;
             }
           }),
         onChangeTokens: (tokens, type) =>
           set((state) => {
             if (type === 'Source') {
-              state.config.from!.tokens = tokens;
+              if (state.config.from) state.config.from.tokens = tokens;
             } else {
-              state.config.to!.tokens = tokens;
+              if (state.config.to) state.config.to.tokens = tokens;
             }
           }),
         onChangeBlockChain: (chain, type) =>
           set((state) => {
             if (type === 'Source') {
-              state.config.from!.blockchain = chain;
+              if (state.config.from) state.config.from.blockchain = chain;
             } else {
-              state.config.to!.blockchain = chain;
+              if (state.config.to) state.config.to.blockchain = chain;
             }
           }),
         onChangeToken: (token, type) =>
           set((state) => {
             if (type === 'Source') {
-              state.config.from!.token = token;
+              if (state.config.from) state.config.from.token = token;
             } else {
-              state.config.to!.token = token;
+              if (state.config.to) state.config.to.token = token;
             }
           }),
         onChangeWallets: (wallets) =>
@@ -167,15 +165,38 @@ export const useConfigStore = createSelectors(
           }),
         onChangeTheme: (name, value) =>
           set((state) => {
-            state.config.theme![name] = value;
+            if (state.config.theme && state.config.theme[name]) {
+              switch (name) {
+                case 'mode':
+                  state.config.theme[name] = value as Mode;
+                  return;
+                case 'borderRadius':
+                case 'height':
+                case 'width':
+                  state.config.theme[name] = value as number;
+                  return;
+                case 'fontFamily':
+                  state.config.theme[name] = value as string;
+                  return;
+                case 'singleTheme':
+                  state.config.theme[name] = value as boolean;
+                  return;
+              }
+            }
           }),
         onChangeColors: (name, mode, color) =>
           set((state) => {
-            state.config.theme!.colors![mode][name] = color;
+            if (
+              state.config?.theme?.colors &&
+              state.config.theme.colors[mode] &&
+              state.config.theme.colors[mode][name]
+            ) {
+              state.config.theme.colors[mode][name] = color;
+            }
           }),
         onSelectTheme: (colors) =>
           set((state) => {
-            state.config.theme!.colors = colors;
+            if (state.config.theme) state.config.theme.colors = colors;
           }),
         resetConfig: () => {
           set({ config: initialConfig });

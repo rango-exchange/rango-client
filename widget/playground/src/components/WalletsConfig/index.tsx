@@ -7,19 +7,16 @@ import { allProviders } from '@rango-dev/provider-all';
 import { useConfigStore } from '../../store/config';
 import { InternalWallets } from './InternalWallets';
 import { WalletType } from '@rango-dev/wallets-shared';
-import { useWallets } from '@rango-dev/widget-embedded';
 
 const providers = allProviders();
 
 export function WalletsConfig() {
   const multiWallets = useConfigStore.use.config().multiWallets;
-  const { disconnectAll } = useWallets();
 
   const onChangeBooleansConfig = useConfigStore.use.onChangeBooleansConfig();
   const onChangeWallets = useConfigStore.use.onChangeWallets();
 
   const onChange = (values?: WalletType[] | undefined) => {
-    disconnectAll();
     onChangeWallets(values);
   };
   return (
