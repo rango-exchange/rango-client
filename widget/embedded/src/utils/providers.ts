@@ -9,14 +9,14 @@ import { WidgetConfig } from '../types';
  *
  */
 export function matchAndGenerateProviders(
-  config: WidgetConfig['wallets']
+  providers: WidgetConfig['wallets']
 ): ProviderInterface[] {
   const all = allProviders();
 
-  if (config) {
+  if (providers) {
     const selectedProviders: ProviderInterface[] = [];
 
-    config.forEach((requestedProvider) => {
+    providers.forEach((requestedProvider) => {
       // There are two types of provider we get, the first one is only passing the wallet name
       // then we will match the wallet name with our providers (@rango-dev/provider-*).
       // The second way is passing a custom provider which implemented ProviderInterface.
