@@ -13,7 +13,13 @@ export type {
   StepEvent,
   RouteExecutionMessageSeverity,
 } from './types';
-export { MainEvents, StepEventType, RouteEventType } from './types';
+export {
+  MainEvents,
+  StepEventType,
+  RouteEventType,
+  TX_EXECUTION,
+  TX_EXECUTION_BLOCKED,
+} from './types';
 export type {
   PendingSwapWithQueueID,
   PendingSwapStep,

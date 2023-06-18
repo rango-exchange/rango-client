@@ -819,10 +819,7 @@ export function onBlockForChangeNetwork(
     setStorage: queue.setStorage.bind(queue),
   });
 
-  const requiredNetwork = getCurrentBlockchainOfOrNull(
-    result?.swap!,
-    result?.step!
-  );
+  const requiredNetwork = getCurrentBlockchainOfOrNull(swap, currentStep);
 
   const requiredWallet = getRequiredWallet(swap).type;
 
@@ -992,7 +989,12 @@ export function singTransaction(
       errorCode: 'CLIENT_UNEXPECTED_BEHAVIOUR',
     });
     notifier({
-      eventType: 'transfer_failed',
+      event: {
+        eventType: StepEventType.TX_EXECUTION,
+        type: TX_EXECUTION.FAILED,
+        reason: extraMessage,
+        reasonCode: 'CLIENT_UNEXPECTED_BEHAVIOUR',
+      },
       ...updateResult,
     });
     failed();

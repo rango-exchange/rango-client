@@ -2,7 +2,8 @@ import { useEffect } from 'react';
 import {
   useEvents,
   MainEvents,
-  StepEventTypes,
+  StepEventType,
+  TX_EXECUTION,
 } from '@rango-dev/queue-manager-rango-preset';
 import { useWalletsStore } from '../store/wallets';
 
@@ -16,8 +17,9 @@ export function WidgetEvents() {
     widgetEvents.on(MainEvents.StepEvent, (widgetEvent) => {
       const { event, step } = widgetEvent;
       const shouldRefetchBalance =
-        (event.eventType === StepEventTypes.TX_SENT && !event.isApprovalTx) ||
-        event.eventType === StepEventTypes.SUCCEEDED;
+        event.eventType === StepEventType.TX_EXECUTION &&
+        (event.type === TX_EXECUTION.TX_SENT ||
+          event.type === TX_EXECUTION.SUCCEEDED);
 
       if (shouldRefetchBalance) {
         const fromAccount = connectedWallets.find(
