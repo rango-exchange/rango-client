@@ -10,6 +10,7 @@ import {
 import { prettifyErrorMessage } from '../shared-errors';
 import { CreateTransactionRequest } from 'rango-sdk';
 import { httpService } from '../services';
+import { notifier } from '../services/eventEmitter';
 
 /**
  *
@@ -19,15 +20,16 @@ import { httpService } from '../services';
  *
  */
 export async function createTransaction(
-  actions: ExecuterActions<SwapStorage, SwapActionTypes, SwapQueueContext>
+  actions: ExecuterActions<SwapStorage, SwapActionTypes, SwapQueueContext>,
 ): Promise<void> {
-  const { setStorage, getStorage, next, schedule, context } = actions;
+  const { setStorage, getStorage, next, schedule } = actions;
   const swap = getStorage().swapDetails;
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const currentStep = getCurrentStep(swap)!;
   const transaction = getCurrentStepTx(currentStep);
 
   if (!transaction) {
+    notifier({ eventType: 'create_tx', swap, step: currentStep });
     const request: CreateTransactionRequest = {
       requestId: swap.requestId,
       step: currentStep.id,
@@ -43,9 +45,7 @@ export async function createTransaction(
     try {
       // Getting transcation from server.
 
-      const { transaction } = await throwOnOK(
-        httpService().createTransaction(request)
-      );
+      const { transaction } = await throwOnOK(httpService().createTransaction(request));
 
       if (transaction) setCurrentStepTx(currentStep, transaction);
 
@@ -66,8 +66,9 @@ export async function createTransaction(
         details: extraMessageDetail,
         errorCode: 'FETCH_TX_FAILED',
       });
-      context.notifier({
-        eventType: 'task_failed',
+      notifier({
+        eventType: 'failed',
+        reason: 'fetch tx failed',
         ...updateResult,
       });
 

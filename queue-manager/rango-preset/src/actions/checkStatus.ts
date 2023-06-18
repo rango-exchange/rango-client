@@ -21,6 +21,7 @@ import { Transaction, TransactionStatusResponse } from 'rango-sdk';
 import { httpService } from '../services';
 import type { GenericSigner } from 'rango-types';
 import { prettifyErrorMessage } from '../shared-errors';
+import { notifier } from '../services/eventEmitter';
 
 const INTERVAL_FOR_CHECK = 5_000;
 
@@ -116,10 +117,13 @@ async function checkTransactionStatus({
       details: extraMessageDetail,
       errorCode: extraMessageErrorCode,
     });
-    context?.notifier({
-      eventType: 'task_failed',
+
+    notifier({
+      eventType: 'failed',
+      reason: extraMessage,
       ...updateResult,
     });
+
     getTxReceiptFailed = true;
     // We shouldn't return here, because we need to trigger check status job in backend.
     // This is not a ui requirement but the backend one.
@@ -169,15 +173,16 @@ async function checkTransactionStatus({
   }
 
   if (prevOutputAmount === null && outputAmount !== null)
-    context.notifier({
-      eventType: 'step_completed_with_output',
+    notifier({
+      eventType: 'output_revealed',
       swap: swap,
       step: currentStep,
     });
   else if (prevOutputAmount === null && outputAmount === null) {
     // it is needed to set notification after reloading the page
-    context.notifier({
-      eventType: 'check_tx_status',
+    notifier({
+      eventType: 'check_tx',
+      isApprovalTx: false,
       swap: swap,
       step: currentStep,
     });
@@ -307,8 +312,9 @@ async function checkApprovalStatus({
       details: extraMessageDetail,
       errorCode: extraMessageErrorCode,
     });
-    context?.notifier({
-      eventType: 'task_failed',
+    notifier({
+      eventType: 'failed',
+      reason: extraMessage,
       ...updateResult,
     });
     return failed();
@@ -349,16 +355,20 @@ async function checkApprovalStatus({
         message: message,
         details: details,
       });
-      context.notifier({
-        eventType: 'not_enough_approval',
+
+      notifier({
+        eventType: 'failed',
+        reason: 'not enough approval',
         ...updateResult,
       });
+
       failed();
     } else if (!isApproved) {
       // it is needed to set notification after reloading the page
-      context.notifier({
-        eventType: 'check_approve_tx_status',
-        swap: swap,
+      notifier({
+        eventType: 'check_tx',
+        isApprovalTx: true,
+        swap,
         step: currentStep,
       });
     }
@@ -381,8 +391,8 @@ async function checkApprovalStatus({
       swapDetails: swap,
     });
 
-    context.notifier({
-      eventType: 'contract_confirmed',
+    notifier({
+      eventType: 'approval_tx_succeeded',
       swap: swap,
       step: currentStep,
     });

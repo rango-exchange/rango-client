@@ -7,6 +7,7 @@ import {
 } from './helpers';
 import { migrated, migration } from './migration';
 import { UseQueueManagerParams } from './types';
+import { eventEmitter } from './services/eventEmitter';
 
 let isCalled = 0;
 
@@ -78,4 +79,8 @@ function useQueueManager(params: UseQueueManagerParams): void {
   }, [params.disconnectedWallet]);
 }
 
-export { useQueueManager, useMigration };
+function useEvents() {
+  return eventEmitter;
+}
+
+export { useQueueManager, useMigration, useEvents };

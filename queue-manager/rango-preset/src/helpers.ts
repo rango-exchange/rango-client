@@ -6,6 +6,7 @@ import {
 } from '@rango-dev/queue-manager-core';
 import {
   BlockReason,
+  StepEventType,
   SwapActionTypes,
   SwapQueueContext,
   SwapQueueDef,
@@ -36,7 +37,6 @@ import {
 import { Manager } from '@rango-dev/queue-manager-core';
 import { Status } from '@rango-dev/queue-manager-core';
 import {
-  EventType,
   getCurrentBlockchainOf,
   getCurrentBlockchainOfOrNull,
   getScannerUrl,
@@ -59,6 +59,7 @@ import {
 } from './shared-errors';
 import { httpService } from './services';
 import { APIErrorCode, SignerErrorCode } from 'rango-types/lib';
+import { notifier } from './services/eventEmitter';
 
 type WhenTaskBlocked = Parameters<NonNullable<SwapQueueDef['whenTaskBlocked']>>;
 type WhenTaskBlockedEvent = WhenTaskBlocked[0];
@@ -362,8 +363,7 @@ export function updateSwapStatus({
 export function setStepTransactionIds(
   { getStorage, setStorage }: ExecuterActions<SwapStorage, SwapActionTypes>,
   txId: string | null,
-  notifier: SwapQueueContext['notifier'],
-  eventType?: EventType,
+  isApprovalTx: boolean,
   explorerUrl?: { url?: string; description?: string }
 ): void {
   const swap = getStorage().swapDetails;
@@ -380,22 +380,21 @@ export function setStepTransactionIds(
         description: explorerUrl.description || null,
       },
     ];
-  if (eventType === 'check_tx_status') {
-    swap.extraMessage = 'Checking transaction status ...';
-    swap.extraMessageDetail = '';
-    swap.extraMessageSeverity = MessageSeverity.info;
-  } else if (eventType === 'check_approve_tx_status') {
-    swap.extraMessage = 'Checking approve transaction status ...';
-    swap.extraMessageDetail = '';
-    swap.extraMessageSeverity = MessageSeverity.info;
-  }
+  swap.extraMessage = 'Transaction sent ...';
+  swap.extraMessageDetail = '';
+  swap.extraMessageSeverity = MessageSeverity.info;
 
   setStorage({
     ...getStorage(),
     swapDetails: swap,
   });
-  if (eventType)
-    notifier({ eventType: eventType, swap: swap, step: currentStep });
+
+  notifier({
+    eventType: 'tx_sent',
+    isApprovalTx,
+    swap: swap,
+    step: currentStep,
+  });
 }
 
 /**
@@ -486,7 +485,6 @@ export function markRunningSwapAsSwitchingNetwork({
 export function markRunningSwapAsDependsOnOtherQueues({
   getStorage,
   setStorage,
-  notifier,
 }: Pick<ExecuterActions, 'getStorage' | 'setStorage'> & {
   notifier: SwapQueueContext['notifier'];
 }):
@@ -743,11 +741,11 @@ export function onBlockForConnectWallet(
   if (!ok) {
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     const currentStep = getCurrentStep(swap)!;
-    context.notifier({
+    notifier({
       eventType:
         reason === 'account_miss_match'
           ? 'waiting_for_change_wallet_account'
-          : 'waiting_for_connecting_wallet',
+          : 'waiting_for_wallet_connect',
       swap: swap,
       step: currentStep,
     });
@@ -791,7 +789,7 @@ export function onBlockForChangeNetwork(
   });
 
   if (result) {
-    context.notifier({
+    notifier({
       eventType: 'waiting_for_network_change',
       swap: result.swap,
       step: result.step,
@@ -915,7 +913,7 @@ export function singTransaction(
 ): void {
   const { setTransactionDataByHash } = inMemoryTransactionsData();
   const { getStorage, setStorage, failed, next, schedule, context } = actions;
-  const { meta, getSigners, notifier, isMobileWallet } = context;
+  const { meta, getSigners, isMobileWallet } = context;
   const swap = getStorage().swapDetails;
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const currentStep = getCurrentStep(swap)!;
@@ -936,11 +934,6 @@ export function singTransaction(
   const tx = getCurrentStepTx(currentStep);
   const txType = tx?.type;
   const isApproval = isApprovalCurrentStepTx(currentStep);
-  const isSmartContractCall = [
-    TransactionType.EVM,
-    TransactionType.STARKNET,
-    TransactionType.TRON,
-  ].includes(txType!);
 
   if (!tx || !txType) {
     const extraMessage = 'Unexpected Error: tx is null!';
@@ -968,7 +961,7 @@ export function singTransaction(
 
   let nextStatus: SwapStatus | undefined,
     nextStepStatus: StepStatus,
-    eventType: EventType,
+    eventType: StepEventType,
     message: string,
     details: string;
 
@@ -980,21 +973,19 @@ export function singTransaction(
       'Waiting for approve transaction to be mined and confirmed successfully';
     nextStepStatus = 'waitingForApproval';
     nextStatus = undefined;
-    eventType = 'confirm_approve_contract';
+    eventType = 'send_tx';
   } else if (hasAlreadyProceededToSign) {
     message = 'Transaction is expired. Please try again.';
     nextStepStatus = 'failed';
     nextStatus = 'failed';
     details = '';
-    eventType = 'transaction_expired';
+    eventType = 'failed';
   } else {
     message = 'Executing transaction ...';
     nextStepStatus = 'running';
     nextStatus = 'running';
     details = `${mobileWallet ? 'Check your mobile phone!' : ''}`;
-    eventType = isSmartContractCall
-      ? 'calling_smart_contract'
-      : 'confirm_transfer';
+    eventType = 'send_tx';
   }
 
   const updateResult = updateSwapStatus({
@@ -1009,10 +1000,19 @@ export function singTransaction(
       : hasAlreadyProceededToSign,
     errorCode: hasAlreadyProceededToSign ? 'TX_EXPIRED' : undefined,
   });
-  notifier({
-    eventType,
-    ...updateResult,
-  });
+
+  if (eventType === 'failed')
+    notifier({
+      eventType,
+      reason: 'transaction expired',
+      ...updateResult,
+    });
+  else
+    notifier({
+      eventType,
+      isApprovalTx: isApproval,
+      ...updateResult,
+    });
 
   if (hasAlreadyProceededToSign) {
     failed();
@@ -1030,8 +1030,7 @@ export function singTransaction(
       setStepTransactionIds(
         actions,
         hash,
-        notifier,
-        isApproval ? 'check_approve_tx_status' : 'check_tx_status',
+        isApproval,
         explorerUrl
           ? { url: explorerUrl, description: isApproval ? 'Approve' : 'Swap' }
           : undefined
@@ -1067,14 +1066,10 @@ export function singTransaction(
         details: extraMessageDetail,
         errorCode: extraMessageErrorCode,
       });
-      const eventType =
-        extraMessageErrorCode === 'REJECTED_BY_USER'
-          ? 'contract_rejected'
-          : isSmartContractCall
-          ? 'smart_contract_call_failed'
-          : 'transfer_failed';
+
       notifier({
-        eventType,
+        eventType: 'failed',
+        reason: '',
         ...updateResult,
       });
       failed();
@@ -1139,7 +1134,7 @@ export function checkWaitingForConnectWalletChange(params: {
           });
 
           if (result) {
-            params?.notifier({
+            notifier({
               eventType: 'waiting_for_network_change',
               swap: result.swap,
               step: result.step,
@@ -1213,17 +1208,19 @@ export function getRunningSwaps(manager: Manager): PendingSwap[] {
  * @param notifier
  * @returns
  */
-export function resetRunningSwapNotifsOnPageLoad(
-  runningSwaps: PendingSwap[],
-  notifier: SwapQueueContext['notifier']
-) {
+export function resetRunningSwapNotifsOnPageLoad(runningSwaps: PendingSwap[]) {
   runningSwaps.forEach((swap) => {
     const currentStep = getCurrentStep(swap);
-    let eventType: EventType | undefined;
+    let eventType:
+      | Extract<
+          StepEventType,
+          'waiting_for_queue' | 'waiting_for_wallet_connect'
+        >
+      | undefined;
     if (currentStep?.networkStatus === PendingSwapNetworkStatus.WaitingForQueue)
       eventType = 'waiting_for_queue';
     else if (swap?.status === 'running') {
-      eventType = 'waiting_for_connecting_wallet';
+      eventType = 'waiting_for_wallet_connect';
     }
     if (!!eventType && !!notifier) {
       notifier({

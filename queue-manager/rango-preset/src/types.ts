@@ -7,8 +7,14 @@ import {
   WalletState,
   WalletType,
 } from '@rango-dev/wallets-shared';
-import { PendingSwap, SwapProgressNotification, Wallet } from './shared';
-import type { EvmBlockchainMeta, SignerFactory } from 'rango-types';
+import {
+  PendingSwap,
+  PendingSwapNetworkStatus,
+  PendingSwapStep,
+  SwapProgressNotification,
+  Wallet,
+} from './shared';
+import { EvmBlockchainMeta, SignerFactory } from 'rango-types';
 
 export type SwapQueueDef = QueueDef<
   SwapStorage,
@@ -77,3 +83,135 @@ export interface UseQueueManagerParams {
   notifier: SwapQueueContext['notifier'];
   canSwitchNetworkTo: (type: WalletType, network: Network) => boolean;
 }
+
+import {
+  TransactionType,
+  CosmosTransaction,
+  EvmTransaction,
+  SolanaTransaction,
+  SwapperStatusStep,
+  Transfer,
+  StarknetTransaction,
+  TronTransaction,
+} from 'rango-sdk';
+
+export enum MainEvents {
+  RouteEvent = 'routeEvent',
+  StepEvent = 'stepEvent',
+}
+
+export type Step = Pick<
+  PendingSwapStep,
+  | 'diagnosisUrl'
+  | 'estimatedTimeInSeconds'
+  | 'explorerUrl'
+  | 'feeInUsd'
+  | 'executedTransactionId'
+  | 'executedTransactionTime'
+  | 'expectedOutputAmountHumanReadable'
+  | 'fromBlockchain'
+  | 'toBlockchain'
+  | 'fromSymbol'
+  | 'toSymbol'
+  | 'toSymbolAddress'
+  | 'fromSymbolAddress'
+  | 'swapperType'
+  | 'outputAmount'
+  | 'fromAmountMaxValue'
+  | 'fromAmountMinValue'
+  | 'fromAmountPrecision'
+  | 'fromAmountRestrictionType'
+  | 'fromDecimals'
+  | 'status'
+> & { swapperName: string } & (
+    | { transactionType: null }
+    | {
+        transactionType: TransactionType.COSMOS;
+        transaction: CosmosTransaction | null;
+      }
+    | {
+        transactionType: TransactionType.EVM;
+        transaction: EvmTransaction | null;
+        approvalTransaction: EvmTransaction | null;
+        networkStatus: PendingSwapNetworkStatus | null;
+      }
+    | {
+        transactionType: TransactionType.SOLANA;
+        transaction: SolanaTransaction | null;
+        internalSteps: SwapperStatusStep[] | null;
+      }
+    | {
+        transactionType: TransactionType.TRANSFER;
+        transaction: Transfer | null;
+      }
+    | {
+        transactionType: TransactionType.STARKNET;
+        transaction: StarknetTransaction | null;
+        approvalTransaction: StarknetTransaction | null;
+      }
+    | {
+        transactionType: TransactionType.TRON;
+        transaction: TronTransaction | null;
+        approvalTransaction: TronTransaction | null;
+      }
+  );
+
+export type Route = Pick<
+  PendingSwap,
+  | 'creationTime'
+  | 'finishTime'
+  | 'requestId'
+  | 'inputAmount'
+  | 'status'
+  | 'wallets'
+> & { steps: Step[]; slippage: string; infiniteApproval?: boolean };
+
+export type SwapEvent = RouteEvent | StepEvent;
+
+export type RouteEventType = 'started' | 'failed' | 'succeeded';
+export type StepEventType =
+  | RouteEventType
+  | (
+      | 'create_tx'
+      | 'send_tx'
+      | 'tx_sent'
+      | 'approval_tx_succeeded'
+      | 'check_tx'
+      | 'output_revealed'
+      | 'canceled'
+      | 'waiting_for_queue'
+      | 'waiting_for_wallet_connect'
+      | 'waiting_for_network_change'
+      | 'waiting_for_change_wallet_account'
+    );
+
+type Event<T extends StepEventType, U extends Record<string, unknown> = {}> = {
+  eventType: T;
+  message: string;
+} & U;
+
+export type RouteEvent =
+  | Event<'started'>
+  | Event<'failed', { reason?: string }>
+  | Event<'succeeded', { outputAmount: string }>;
+
+export type StepEvent =
+  | RouteEvent
+  | (
+      | Event<'create_tx'>
+      | Event<'send_tx', { isApprovalTx: boolean }>
+      | Event<'tx_sent', { isApprovalTx: boolean }>
+      | Event<'approval_tx_succeeded'>
+      | Event<'check_tx', { isApprovalTx: boolean }>
+      | Event<'output_revealed'>
+      | Event<'canceled'>
+      | Event<'waiting_for_queue'>
+      | Event<'waiting_for_wallet_connect'>
+      | Event<'waiting_for_network_change'>
+      | Event<'waiting_for_change_wallet_account'>
+    );
+
+export type RouteExecutionEvents = {
+  [MainEvents.RouteEvent]: { route: Route; event: RouteEvent };
+  [MainEvents.StepEvent]: { route: Route; step: Step; event: StepEvent };
+};

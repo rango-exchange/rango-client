@@ -30,7 +30,7 @@ export {
   splitWalletNetwork,
   resetRunningSwapNotifsOnPageLoad,
 } from './helpers';
-export { useMigration, useQueueManager } from './hooks';
+export { useMigration, useQueueManager, useEvents } from './hooks';
 
 export function makeQueueDefinition(configs: Configs): SwapQueueDef {
   initConfig(configs);

@@ -1,6 +1,7 @@
 import { ExecuterActions } from '@rango-dev/queue-manager-core';
 import { SwapActionTypes, SwapQueueContext, SwapStorage } from '../types';
 import { getCurrentStep, isTxAlreadyCreated } from '../helpers';
+import { notifier } from '../services/eventEmitter';
 
 /**
  *
@@ -17,7 +18,6 @@ export function scheduleNextStep({
   failed,
   setStorage,
   getStorage,
-  context,
 }: ExecuterActions<SwapStorage, SwapActionTypes, SwapQueueContext>): void {
   const swap = getStorage().swapDetails;
   const currentStep = getCurrentStep(swap);
@@ -49,8 +49,8 @@ export function scheduleNextStep({
       swapDetails: swap,
     });
 
-    context.notifier({
-      eventType: isFailed ? 'task_failed' : 'task_completed',
+    notifier({
+      eventType: isFailed ? 'failed' : 'succeeded',
       swap: swap,
       step: null,
     });

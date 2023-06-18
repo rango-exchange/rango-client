@@ -97,13 +97,7 @@ export type SwapSavedSettings = {
   infiniteApprove?: boolean;
 };
 
-type InternalStepState =
-  | 'PENDING'
-  | 'CREATED'
-  | 'WAITING'
-  | 'SIGNED'
-  | 'SUCCESSED'
-  | 'FAILED';
+type InternalStepState = 'PENDING' | 'CREATED' | 'WAITING' | 'SIGNED' | 'SUCCESSED' | 'FAILED';
 
 export type SwapperStatusStep = {
   name: string;
@@ -221,7 +215,7 @@ export type PendingSwap = {
 
 export const getCurrentBlockchainOfOrNull = (
   swap: PendingSwap,
-  step: PendingSwapStep
+  step: PendingSwapStep,
 ): Network | null => {
   try {
     return getCurrentBlockchainOf(swap, step);
@@ -230,10 +224,7 @@ export const getCurrentBlockchainOfOrNull = (
   }
 };
 
-export const getCurrentBlockchainOf = (
-  swap: PendingSwap,
-  step: PendingSwapStep
-): Network => {
+export const getCurrentBlockchainOf = (swap: PendingSwap, step: PendingSwapStep): Network => {
   const b1 =
     step.evmTransaction?.blockChain ||
     step.evmApprovalTransaction?.blockChain ||
@@ -249,19 +240,14 @@ export const getCurrentBlockchainOf = (
   if (!transferAddress) throw PrettyError.BlockchainMissing();
 
   const blockchain =
-    Object.keys(swap.wallets).find(
-      (b) => swap.wallets[b]?.address === transferAddress
-    ) || null;
+    Object.keys(swap.wallets).find((b) => swap.wallets[b]?.address === transferAddress) || null;
   if (blockchain == null) throw PrettyError.BlockchainMissing();
 
   return blockchain;
 };
 
-const getBlockchainMetaExplorerBaseUrl = (
-  blockchainMeta: BlockchainMeta
-): string | undefined => {
-  if (isCosmosBlockchain(blockchainMeta))
-    return blockchainMeta.info?.explorerUrlToTx;
+const getBlockchainMetaExplorerBaseUrl = (blockchainMeta: BlockchainMeta): string | undefined => {
+  if (isCosmosBlockchain(blockchainMeta)) return blockchainMeta.info?.explorerUrlToTx;
   else if (
     isEvmBlockchain(blockchainMeta) ||
     isStarknetBlockchain(blockchainMeta) ||
@@ -274,7 +260,7 @@ const getBlockchainMetaExplorerBaseUrl = (
 export const getScannerUrl = (
   txHash: string,
   network: Network,
-  blockchainMetaMap: { [key: string]: BlockchainMeta }
+  blockchainMetaMap: { [key: string]: BlockchainMeta },
 ): string | undefined => {
   const blockchainMeta = blockchainMetaMap[network];
   const baseUrl = getBlockchainMetaExplorerBaseUrl(blockchainMeta);
@@ -286,14 +272,11 @@ export const getScannerUrl = (
 
 export function getNextStep(
   swap: PendingSwap,
-  currentStep: PendingSwapStep
+  currentStep: PendingSwapStep,
 ): PendingSwapStep | null {
   return (
     swap.steps.find(
-      (step) =>
-        step.status !== 'failed' &&
-        step.status !== 'success' &&
-        step.id !== currentStep.id
+      (step) => step.status !== 'failed' && step.status !== 'success' && step.id !== currentStep.id,
     ) || null
   );
 }
@@ -301,10 +284,7 @@ export function getNextStep(
 /**
  * Returns the wallet address, based on the current step of `PendingSwap`.
  */
-export const getCurrentAddressOf = (
-  swap: PendingSwap,
-  step: PendingSwapStep
-): string => {
+export const getCurrentAddressOf = (swap: PendingSwap, step: PendingSwapStep): string => {
   const result =
     swap.wallets[step.evmTransaction?.blockChain || ''] ||
     swap.wallets[step.evmApprovalTransaction?.blockChain || ''] ||
@@ -324,7 +304,7 @@ export const getCurrentAddressOf = (
 
 export function getRelatedWallet(
   swap: PendingSwap,
-  currentStep: PendingSwapStep
+  currentStep: PendingSwapStep,
 ): WalletTypeAndAddress {
   const walletAddress = getCurrentAddressOf(swap, currentStep);
   const walletKV =
@@ -337,14 +317,14 @@ export function getRelatedWallet(
   const walletType = wallet?.walletType;
   if (wallet === null)
     throw PrettyError.AssertionFailed(
-      `Wallet for source ${blockchain} not passed: walletType: ${walletType}`
+      `Wallet for source ${blockchain} not passed: walletType: ${walletType}`,
     );
   return wallet;
 }
 
 export function getRelatedWalletOrNull(
   swap: PendingSwap,
-  currentStep: PendingSwapStep
+  currentStep: PendingSwapStep,
 ): WalletTypeAndAddress | null {
   try {
     return getRelatedWallet(swap, currentStep);
@@ -357,21 +337,18 @@ export const getUsdPrice = (
   blockchain: string,
   symbol: string,
   address: string | null,
-  allTokens: Token[]
+  allTokens: Token[],
 ): number | null => {
   const token = allTokens?.find(
     (t) =>
       t.blockchain === blockchain &&
       t.symbol?.toUpperCase() === symbol?.toUpperCase() &&
-      t.address === address
+      t.address === address,
   );
   return token?.usdPrice || null;
 };
 
-export function getUsdFeeOfStep(
-  step: SwapResult,
-  allTokens: Token[]
-): BigNumber {
+export function getUsdFeeOfStep(step: SwapResult, allTokens: Token[]): BigNumber {
   let totalFeeInUsd = new BigNumber(0);
   for (let i = 0; i < step.fee.length; i++) {
     const fee = step.fee[i];
@@ -381,11 +358,9 @@ export function getUsdFeeOfStep(
       fee.asset.blockchain,
       fee.asset.symbol,
       fee.asset.address,
-      allTokens
+      allTokens,
     );
-    totalFeeInUsd = totalFeeInUsd.plus(
-      new BigNumber(fee.amount).multipliedBy(unitPrice || 0)
-    );
+    totalFeeInUsd = totalFeeInUsd.plus(new BigNumber(fee.amount).multipliedBy(unitPrice || 0));
   }
 
   return totalFeeInUsd;
@@ -397,7 +372,7 @@ export function calculatePendingSwap(
   wallets: { [p: string]: WalletTypeAndAddress },
   settings: SwapSavedSettings,
   validateBalanceOrFee: boolean,
-  meta: MetaResponse | null
+  meta: MetaResponse | null,
 ): PendingSwap {
   const simulationResult = bestRoute.result;
   if (!simulationResult) throw Error('Simulation result should not be null');
@@ -453,9 +428,7 @@ export function calculatePendingSwap(
           // output, fee, timing
           expectedOutputAmountHumanReadable: swap.toAmount,
           outputAmount: '',
-          feeInUsd: meta
-            ? numberToString(getUsdFeeOfStep(swap, meta?.tokens), null, 8)
-            : null,
+          feeInUsd: meta ? numberToString(getUsdFeeOfStep(swap, meta?.tokens), null, 8) : null,
           estimatedTimeInSeconds: swap.estimatedTimeInSeconds || null,
 
           // status, tracking
