@@ -1,9 +1,10 @@
 import { ExecuterActions } from '@rango-dev/queue-manager-core';
 import {
-  StepEventTypes,
+  StepEventType,
   SwapActionTypes,
   SwapQueueContext,
   SwapStorage,
+  TX_EXECUTION,
 } from '../types';
 import {
   getCurrentStep,
@@ -16,6 +17,7 @@ import { prettifyErrorMessage } from '../shared-errors';
 import { CreateTransactionRequest } from 'rango-sdk';
 import { httpService } from '../services';
 import { notifier } from '../services/eventEmitter';
+import { DEFAULT_ERROR_CODE } from '../constants';
 
 /**
  *
@@ -34,7 +36,14 @@ export async function createTransaction(
   const transaction = getCurrentStepTx(currentStep);
 
   if (!transaction) {
-    notifier({ eventType: StepEventTypes.CREATE_TX, swap, step: currentStep });
+    notifier({
+      event: {
+        eventType: StepEventType.TX_EXECUTION,
+        type: TX_EXECUTION.CREATE_TX,
+      },
+      swap,
+      step: currentStep,
+    });
     const request: CreateTransactionRequest = {
       requestId: swap.requestId,
       step: currentStep.id,
@@ -73,9 +82,14 @@ export async function createTransaction(
         details: extraMessageDetail,
         errorCode: 'FETCH_TX_FAILED',
       });
+
       notifier({
-        eventType: StepEventTypes.FAILED,
-        reason: 'fetch tx failed',
+        event: {
+          eventType: StepEventType.TX_EXECUTION,
+          type: TX_EXECUTION.FAILED,
+          reason: extraMessage,
+          reasonCode: updateResult.failureType ?? DEFAULT_ERROR_CODE,
+        },
         ...updateResult,
       });
 

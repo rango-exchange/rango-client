@@ -1,33 +1,32 @@
 import mitt from 'mitt';
 import {
   MainEvents,
+  RemoveNameField,
   Route,
   RouteEvent,
-  RouteEventTypes,
+  RouteEventType,
   RouteExecutionEvents,
   RouteExecutionMessageSeverity,
   Step,
   StepEvent,
-  StepEventTypes,
+  StepEventType,
+  TX_EXECUTION,
+  TX_EXECUTION_BLOCKED,
 } from '../types';
-import { PendingSwap, PendingSwapStep, TransactionType } from 'rango-types/lib';
+import { PendingSwap, PendingSwapStep } from 'rango-types/lib';
 import { getCurrentBlockchainOfOrNull } from '../shared';
+import {
+  getCurrentStepTx,
+  getLastSuccessfulStep,
+  isApprovalCurrentStepTx,
+} from '../helpers';
 
-type Event = {
-  eventType: StepEventTypes;
+type NotifierParams = {
   swap: PendingSwap;
   step: PendingSwapStep | null;
-  reason?: string;
-  isApprovalTx?: boolean;
+} & {
+  event: RemoveNameField<StepEvent, 'message' | 'messageSeverity'>;
 };
-
-function isStepOnApproval(eventType: StepEventTypes) {
-  return [
-    StepEventTypes.SEND_TX,
-    StepEventTypes.TX_SENT,
-    StepEventTypes.CHECK_TX,
-  ].includes(eventType);
-}
 
 function createSteps(swapSteps: PendingSwapStep[]): Step[] {
   return swapSteps.map((swapStep) => {
@@ -54,20 +53,9 @@ function createSteps(swapSteps: PendingSwapStep[]): Step[] {
       fromAmountRestrictionType,
       fromDecimals,
       status: stepStatus,
-      cosmosTransaction,
-      evmTransaction,
-      evmApprovalTransaction,
-      solanaTransaction,
-      starknetTransaction,
-      starknetApprovalTransaction,
-      tronTransaction,
-      tronApprovalTransaction,
-      transferTransaction,
-      networkStatus,
-      internalSteps,
     } = swapStep;
 
-    const baseStep = {
+    const step: Step = {
       diagnosisUrl,
       estimatedTimeInSeconds,
       explorerUrl,
@@ -90,56 +78,8 @@ function createSteps(swapSteps: PendingSwapStep[]): Step[] {
       fromAmountRestrictionType,
       fromDecimals,
       status: stepStatus,
+      transaction: getCurrentStepTx(swapStep),
     };
-
-    let step: Step | undefined;
-
-    if (evmTransaction || evmApprovalTransaction)
-      step = {
-        ...baseStep,
-        transactionType: TransactionType.EVM,
-        transaction: evmTransaction,
-        approvalTransaction: evmApprovalTransaction,
-        networkStatus,
-      };
-    else if (tronTransaction || tronApprovalTransaction)
-      step = {
-        ...baseStep,
-        transactionType: TransactionType.TRON,
-        transaction: tronTransaction,
-        approvalTransaction: tronApprovalTransaction,
-      };
-    else if (starknetTransaction || starknetApprovalTransaction)
-      step = {
-        ...baseStep,
-        transactionType: TransactionType.STARKNET,
-        transaction: starknetTransaction,
-        approvalTransaction: starknetApprovalTransaction,
-      };
-    else if (cosmosTransaction)
-      step = {
-        ...baseStep,
-        transactionType: TransactionType.COSMOS,
-        transaction: cosmosTransaction,
-      };
-    else if (solanaTransaction)
-      step = {
-        ...baseStep,
-        transactionType: TransactionType.SOLANA,
-        transaction: solanaTransaction,
-        internalSteps,
-      };
-    else if (transferTransaction)
-      step = {
-        ...baseStep,
-        transactionType: TransactionType.TRANSFER,
-        transaction: transferTransaction,
-      };
-    else
-      step = {
-        ...baseStep,
-        transactionType: null,
-      };
 
     return step;
   });
@@ -147,7 +87,7 @@ function createSteps(swapSteps: PendingSwapStep[]): Step[] {
 
 function getEventPayload(
   swap: PendingSwap,
-  eventType: StepEventTypes | RouteEventTypes,
+  eventType: StepEventType | RouteEventType,
   swapStep?: PendingSwapStep
 ): { route: Route; step: Step } {
   const {
@@ -187,11 +127,7 @@ function getEventPayload(
         .find((step) => step.status === 'failed');
       if (failedStep) result.step = failedStep;
     } else {
-      const lastSuccessfulStep = routeSteps
-        .slice()
-        .reverse()
-        .find((step) => step.status === 'success');
-
+      const lastSuccessfulStep = getLastSuccessfulStep(routeSteps);
       if (lastSuccessfulStep) result.step = lastSuccessfulStep;
     }
   }
@@ -201,39 +137,24 @@ function getEventPayload(
 
 export const eventEmitter = mitt<RouteExecutionEvents>();
 
-function emitRouteEvent(params: RouteEventParams) {
-  const { event, message, messageSeverity, outputAmount, route } = params;
-  const { eventType } = event;
+function emitRouteEvent(stepEvent: StepEvent, route: Route, step: Step | null) {
   let routeEvent: RouteEvent | undefined;
+  const { eventType } = stepEvent;
   switch (eventType) {
-    case StepEventTypes.STARTED:
-      if (!event.step)
-        routeEvent = {
-          eventType: RouteEventTypes.STARTED,
-          message,
-          messageSeverity,
-        };
+    case StepEventType.STARTED:
+      if (!step)
+        routeEvent = { ...stepEvent, eventType: RouteEventType.STARTED };
 
       break;
-    case StepEventTypes.FAILED:
-      routeEvent = {
-        eventType: RouteEventTypes.FAILED,
-        message,
-        messageSeverity,
-        reason: event.reason,
-      };
+    case StepEventType.TX_EXECUTION:
+      if (stepEvent.type === TX_EXECUTION.FAILED)
+        routeEvent = { ...stepEvent, eventType: RouteEventType.FAILED };
+      else if (stepEvent.type === TX_EXECUTION.SUCCEEDED)
+        if (!step)
+          routeEvent = { ...stepEvent, eventType: RouteEventType.SUCCEEDED };
 
       break;
-    case StepEventTypes.SUCCEEDED:
-      if (!event.step)
-        routeEvent = {
-          eventType: RouteEventTypes.SUCCEEDED,
-          message,
-          messageSeverity,
-          outputAmount,
-        };
 
-      break;
     default:
       break;
   }
@@ -242,142 +163,98 @@ function emitRouteEvent(params: RouteEventParams) {
     eventEmitter.emit(MainEvents.RouteEvent, { event: routeEvent, route });
 }
 
-function emitStepEvent(params: StepEventParams) {
-  const { event, message, messageSeverity, outputAmount, route, step } = params;
-  const { eventType } = event;
-
-  let stepEvent: StepEvent | undefined;
-
-  switch (eventType) {
-    case StepEventTypes.STARTED:
-      if (event.step) {
-        stepEvent = { eventType, message, messageSeverity };
-      }
-      break;
-    case StepEventTypes.FAILED:
-      stepEvent = {
-        eventType,
-        message,
-        messageSeverity,
-        reason: event.reason,
-      };
-      break;
-    case StepEventTypes.SUCCEEDED:
-      if (event.step) {
-        stepEvent = { eventType, message, messageSeverity, outputAmount };
-      }
-      break;
-
-    default:
-      if (isStepOnApproval(eventType))
-        stepEvent = {
-          eventType,
-          message,
-          messageSeverity,
-          isApprovalTx: !!event.isApprovalTx,
-        };
-      break;
-  }
-
-  if (stepEvent)
-    eventEmitter.emit(MainEvents.StepEvent, {
-      event: stepEvent,
-      route,
-      step,
-    });
+function emitStepEvent(stepEvent: StepEvent, route: Route, step: Step) {
+  eventEmitter.emit(MainEvents.StepEvent, { event: stepEvent, route, step });
 }
 
-interface RouteEventParams {
-  event: Event;
-  message: string;
-  messageSeverity: RouteExecutionMessageSeverity;
-  outputAmount: string;
-  route: Route;
-}
-
-interface StepEventParams extends RouteEventParams {
-  step: Step;
-}
-export function notifier(event: Event) {
+export function notifier(params: NotifierParams) {
+  const { event } = params;
   const { eventType } = event;
   const { route, step } = getEventPayload(
-    event.swap,
+    params.swap,
     eventType,
-    event.step ?? undefined
+    params.step ?? undefined
   );
   const fromAsset = `${step.fromBlockchain}.${step.fromSymbol}`;
   const toAsset = `${step.toBlockchain}.${step.toSymbol}`;
   const outputAmount = step.outputAmount ?? '';
-  const currentFromBlockchain = !!event.step
-    ? getCurrentBlockchainOfOrNull(event.swap, event.step)
+  const currentFromBlockchain = !!params.step
+    ? getCurrentBlockchainOfOrNull(params.swap, params.step)
     : null;
   let message = '';
   let messageSeverity: StepEvent['messageSeverity'] =
     RouteExecutionMessageSeverity.INFO;
 
   switch (eventType) {
-    case StepEventTypes.STARTED:
+    case StepEventType.STARTED:
       message = 'Swap process started';
       messageSeverity = RouteExecutionMessageSeverity.SUCCESS;
       break;
-    case StepEventTypes.CREATE_TX:
-      message = 'Please wait while the transaction is created ...';
-      messageSeverity = RouteExecutionMessageSeverity.INFO;
+    case StepEventType.TX_EXECUTION:
+      if (event.type === TX_EXECUTION.CREATE_TX) {
+        message = 'Please wait while the transaction is created ...';
+        messageSeverity = RouteExecutionMessageSeverity.INFO;
+      } else if (event.type === TX_EXECUTION.SEND_TX) {
+        if (params.step && isApprovalCurrentStepTx(params.step))
+          message = `Please confirm '${step.swapperName}' smart contract access to ${fromAsset}`;
+        else message = 'Please confirm transaction request in your wallet';
+        messageSeverity = RouteExecutionMessageSeverity.WARNING;
+      } else if (event.type === TX_EXECUTION.TX_SENT) {
+        message = 'Transaction sent successfully';
+        messageSeverity = RouteExecutionMessageSeverity.INFO;
+      } else if (event.type === TX_EXECUTION.SUCCEEDED) {
+        message = `You received ${outputAmount} ${toAsset}, hooray!`;
+        messageSeverity = RouteExecutionMessageSeverity.SUCCESS;
+      } else if (event.type === TX_EXECUTION.FAILED) {
+        message = `Swap failed: ${
+          params.swap?.extraMessage ?? 'Reason is unknown'
+        }`;
+        messageSeverity = RouteExecutionMessageSeverity.ERROR;
+      }
       break;
-    case StepEventTypes.SEND_TX:
-      if (event.isApprovalTx)
-        message = `Please confirm '${step.swapperName}' smart contract access to ${fromAsset}`;
-      else message = 'Please confirm transaction request in your wallet';
-      messageSeverity = RouteExecutionMessageSeverity.WARNING;
-      break;
-    case StepEventTypes.CHECK_TX:
-      if (event.isApprovalTx)
+    case StepEventType.CHECK_STATUS:
+      if (params.step && isApprovalCurrentStepTx(params.step))
         message = 'Checking approve transacation status ...';
       else message = 'Checking transacation status ...';
       messageSeverity = RouteExecutionMessageSeverity.INFO;
       break;
-    case StepEventTypes.APPROVAL_TX_SUCCEEDED:
+    case StepEventType.APPROVAL_TX_SUCCEEDED:
       message = 'Smart contract called successfully';
       messageSeverity = RouteExecutionMessageSeverity.SUCCESS;
       break;
-    case StepEventTypes.OUTPUT_REVEALED:
-      message = '';
+    case StepEventType.OUTPUT_REVEALED:
+      message = 'Transaction output amount revealed';
       messageSeverity = RouteExecutionMessageSeverity.SUCCESS;
       break;
-    case StepEventTypes.SUCCEEDED:
-      message = `You received ${outputAmount} ${toAsset}, hooray!`;
-      messageSeverity = RouteExecutionMessageSeverity.SUCCESS;
+
+    case StepEventType.TX_EXECUTION_BLOCKED:
+      if (event.type === TX_EXECUTION_BLOCKED.WAITING_FOR_WALLET_CONNECT) {
+        message = 'Please connect your wallet.';
+        messageSeverity = RouteExecutionMessageSeverity.WARNING;
+      } else if (event.type === TX_EXECUTION_BLOCKED.WAITING_FOR_QUEUE) {
+        message = 'Waiting for other swaps to complete';
+        messageSeverity = RouteExecutionMessageSeverity.WARNING;
+      } else if (
+        event.type === TX_EXECUTION_BLOCKED.WAITING_FOR_CHANGE_WALLET_ACCOUNT
+      ) {
+        message = 'Please change your wallet account.';
+        messageSeverity = RouteExecutionMessageSeverity.WARNING;
+      } else if (
+        event.type === TX_EXECUTION_BLOCKED.WAITING_FOR_NETWORK_CHANGE
+      ) {
+        message = `Please change your wallet network to ${currentFromBlockchain}.`;
+        messageSeverity = RouteExecutionMessageSeverity.WARNING;
+      }
       break;
-    case StepEventTypes.FAILED:
-      message = `Swap failed: ${
-        event.swap?.extraMessage ?? 'Reason is unknown'
-      }`;
-      messageSeverity = RouteExecutionMessageSeverity.ERROR;
-      break;
-    case StepEventTypes.CANCELED:
-      message = 'Swap canceled!';
-      messageSeverity = RouteExecutionMessageSeverity.ERROR;
-      break;
-    case StepEventTypes.WAITING_FOR_WALLET_CONNECT:
-      message = 'Please connect your wallet.';
-      messageSeverity = RouteExecutionMessageSeverity.WARNING;
-      break;
-    case StepEventTypes.WAITING_FOR_QUEUE:
-      message = 'Waiting for other swaps to complete';
-      messageSeverity = RouteExecutionMessageSeverity.WARNING;
-      break;
-    case StepEventTypes.WAITING_FOR_CHANGE_WALLET_ACCOUNT:
-      message = 'Please change your wallet account.';
-      messageSeverity = RouteExecutionMessageSeverity.WARNING;
-      break;
-    case StepEventTypes.WAITING_FOR_NETWORK_CHANGE:
-      message = `Please change your wallet network to ${currentFromBlockchain}.`;
-      messageSeverity = RouteExecutionMessageSeverity.WARNING;
-      break;
+
     default:
       break;
   }
 
-  emitRouteEvent({ event, message, messageSeverity, outputAmount, route });
-  emitStepEvent({ event, message, messageSeverity, outputAmount, route, step });
+  emitRouteEvent(
+    { ...event, message, messageSeverity },
+    route,
+    params.step ? step : null
+  );
+  emitStepEvent({ ...event, message, messageSeverity }, route, step);
 }

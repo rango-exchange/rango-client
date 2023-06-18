@@ -7,13 +7,15 @@ import {
   WalletState,
   WalletType,
 } from '@rango-dev/wallets-shared';
-import {
-  PendingSwap,
-  PendingSwapNetworkStatus,
-  PendingSwapStep,
-  Wallet,
-} from './shared';
-import { EvmBlockchainMeta, SignerFactory } from 'rango-types';
+import { APIErrorCode, EvmBlockchainMeta, SignerFactory } from 'rango-types';
+import { Transaction } from 'rango-sdk';
+import { PendingSwap, PendingSwapStep, Wallet } from './shared';
+
+export type RemoveNameField<T, U extends string> = {
+  [Property in keyof T as Exclude<Property, U>]: T[Property];
+};
+
+export type ArrayElement<A> = A extends readonly (infer T)[] ? T : never;
 
 export type SwapQueueDef = QueueDef<
   SwapStorage,
@@ -81,17 +83,6 @@ export interface UseQueueManagerParams {
   canSwitchNetworkTo: (type: WalletType, network: Network) => boolean;
 }
 
-import {
-  TransactionType,
-  CosmosTransaction,
-  EvmTransaction,
-  SolanaTransaction,
-  SwapperStatusStep,
-  Transfer,
-  StarknetTransaction,
-  TronTransaction,
-} from 'rango-sdk';
-
 export enum MainEvents {
   RouteEvent = 'routeEvent',
   StepEvent = 'stepEvent',
@@ -120,38 +111,7 @@ export type Step = Pick<
   | 'fromAmountRestrictionType'
   | 'fromDecimals'
   | 'status'
-> & { swapperName: string } & (
-    | { transactionType: null }
-    | {
-        transactionType: TransactionType.COSMOS;
-        transaction: CosmosTransaction | null;
-      }
-    | {
-        transactionType: TransactionType.EVM;
-        transaction: EvmTransaction | null;
-        approvalTransaction: EvmTransaction | null;
-        networkStatus: PendingSwapNetworkStatus | null;
-      }
-    | {
-        transactionType: TransactionType.SOLANA;
-        transaction: SolanaTransaction | null;
-        internalSteps: SwapperStatusStep[] | null;
-      }
-    | {
-        transactionType: TransactionType.TRANSFER;
-        transaction: Transfer | null;
-      }
-    | {
-        transactionType: TransactionType.STARKNET;
-        transaction: StarknetTransaction | null;
-        approvalTransaction: StarknetTransaction | null;
-      }
-    | {
-        transactionType: TransactionType.TRON;
-        transaction: TronTransaction | null;
-        approvalTransaction: TronTransaction | null;
-      }
-  );
+> & { swapperName: string; transaction: Transaction | null };
 
 export type Route = Pick<
   PendingSwap,
@@ -165,27 +125,34 @@ export type Route = Pick<
 
 export type SwapEvent = RouteEvent | StepEvent;
 
-export enum RouteEventTypes {
+export enum RouteEventType {
   STARTED = 'started',
   FAILED = 'failed',
   SUCCEEDED = 'succeeded',
 }
 
-export enum StepEventTypes {
-  STARTED = 'started',
+export enum TX_EXECUTION {
   FAILED = 'failed',
   SUCCEEDED = 'succeeded',
   CREATE_TX = 'create_tx',
   SEND_TX = 'send_tx',
   TX_SENT = 'tx_sent',
-  APPROVAL_TX_SUCCEEDED = 'approval_tx_succeeded',
-  CHECK_TX = 'check_tx',
-  OUTPUT_REVEALED = 'output_revealed',
-  CANCELED = 'canceled',
+}
+
+export enum TX_EXECUTION_BLOCKED {
   WAITING_FOR_QUEUE = 'waiting_for_queue',
   WAITING_FOR_WALLET_CONNECT = 'waiting_for_wallet_connect',
   WAITING_FOR_NETWORK_CHANGE = 'waiting_for_network_change',
   WAITING_FOR_CHANGE_WALLET_ACCOUNT = 'waiting_for_change_wallet_account',
+}
+
+export enum StepEventType {
+  STARTED = 'started',
+  TX_EXECUTION = 'tx_execution',
+  TX_EXECUTION_BLOCKED = 'tx_execution_blocked',
+  APPROVAL_TX_SUCCEEDED = 'approval_tx_succeeded',
+  CHECK_STATUS = 'check_status',
+  OUTPUT_REVEALED = 'output_revealed',
 }
 
 export enum RouteExecutionMessageSeverity {
@@ -196,34 +163,63 @@ export enum RouteExecutionMessageSeverity {
 }
 
 type Event<
-  T extends StepEventTypes | RouteEventTypes,
-  U extends Record<string, unknown> = {}
+  T extends StepEventType | RouteEventType,
+  U extends Record<string, unknown> = Record<string, unknown>
 > = {
   eventType: T;
   message: string;
   messageSeverity: RouteExecutionMessageSeverity;
 } & U;
 
+type FailedEventPayload = {
+  reason?: string;
+  reasonCode: APIErrorCode;
+};
+
 export type RouteEvent =
-  | Event<RouteEventTypes.STARTED>
-  | Event<RouteEventTypes.FAILED, { reason?: string }>
-  | Event<RouteEventTypes.SUCCEEDED, { outputAmount: string }>;
+  | Event<RouteEventType.STARTED>
+  | Event<RouteEventType.FAILED, FailedEventPayload>
+  | Event<RouteEventType.SUCCEEDED, { outputAmount: string }>;
 
 export type StepEvent =
-  | Event<StepEventTypes.STARTED>
-  | Event<StepEventTypes.FAILED, { reason?: string }>
-  | Event<StepEventTypes.SUCCEEDED, { outputAmount: string }>
-  | Event<StepEventTypes.CREATE_TX>
-  | Event<StepEventTypes.SEND_TX, { isApprovalTx: boolean }>
-  | Event<StepEventTypes.TX_SENT, { isApprovalTx: boolean }>
-  | Event<StepEventTypes.APPROVAL_TX_SUCCEEDED>
-  | Event<StepEventTypes.CHECK_TX, { isApprovalTx: boolean }>
-  | Event<StepEventTypes.OUTPUT_REVEALED>
-  | Event<StepEventTypes.CANCELED>
-  | Event<StepEventTypes.WAITING_FOR_QUEUE>
-  | Event<StepEventTypes.WAITING_FOR_WALLET_CONNECT>
-  | Event<StepEventTypes.WAITING_FOR_NETWORK_CHANGE>
-  | Event<StepEventTypes.WAITING_FOR_CHANGE_WALLET_ACCOUNT>;
+  | Event<StepEventType.STARTED>
+  | Event<
+      StepEventType.TX_EXECUTION,
+      | {
+          type: TX_EXECUTION.SUCCEEDED;
+          outputAmount: string;
+        }
+      | ({
+          type: TX_EXECUTION.FAILED;
+        } & FailedEventPayload)
+      | {
+          type:
+            | TX_EXECUTION.CREATE_TX
+            | TX_EXECUTION.SEND_TX
+            | TX_EXECUTION.TX_SENT;
+        }
+    >
+  | Event<StepEventType.APPROVAL_TX_SUCCEEDED>
+  | Event<StepEventType.CHECK_STATUS>
+  | Event<StepEventType.OUTPUT_REVEALED, { outputAmount: string }>
+  | Event<
+      StepEventType.TX_EXECUTION_BLOCKED,
+      | { type: TX_EXECUTION_BLOCKED.WAITING_FOR_QUEUE }
+      | {
+          type: TX_EXECUTION_BLOCKED.WAITING_FOR_WALLET_CONNECT;
+          requiredWallet?: string;
+          requiredAccount?: string;
+        }
+      | {
+          type: TX_EXECUTION_BLOCKED.WAITING_FOR_CHANGE_WALLET_ACCOUNT;
+          requiredAccount?: string;
+        }
+      | {
+          type: TX_EXECUTION_BLOCKED.WAITING_FOR_NETWORK_CHANGE;
+          currentNetwork?: string;
+          requiredNetwork?: string;
+        }
+    >;
 
 export type RouteExecutionEvents = {
   [MainEvents.RouteEvent]: { route: Route; event: RouteEvent };

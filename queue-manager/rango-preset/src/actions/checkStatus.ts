@@ -10,10 +10,11 @@ import {
   inMemoryTransactionsData,
 } from '../helpers';
 import {
-  StepEventTypes,
+  StepEventType,
   SwapActionTypes,
   SwapQueueContext,
   SwapStorage,
+  TX_EXECUTION,
 } from '../types';
 import {
   getCurrentBlockchainOf,
@@ -27,6 +28,7 @@ import { httpService } from '../services';
 import type { GenericSigner } from 'rango-types';
 import { prettifyErrorMessage } from '../shared-errors';
 import { notifier } from '../services/eventEmitter';
+import { DEFAULT_ERROR_CODE } from '../constants';
 
 const INTERVAL_FOR_CHECK = 5_000;
 
@@ -124,8 +126,12 @@ async function checkTransactionStatus({
     });
 
     notifier({
-      eventType: StepEventTypes.FAILED,
-      reason: extraMessage,
+      event: {
+        eventType: StepEventType.TX_EXECUTION,
+        type: TX_EXECUTION.FAILED,
+        reason: extraMessage,
+        reasonCode: updateResult.failureType ?? DEFAULT_ERROR_CODE,
+      },
       ...updateResult,
     });
 
@@ -179,15 +185,14 @@ async function checkTransactionStatus({
 
   if (prevOutputAmount === null && outputAmount !== null)
     notifier({
-      eventType: StepEventTypes.OUTPUT_REVEALED,
+      event: { eventType: StepEventType.OUTPUT_REVEALED, outputAmount },
       swap: swap,
       step: currentStep,
     });
   else if (prevOutputAmount === null && outputAmount === null) {
     // it is needed to set notification after reloading the page
     notifier({
-      eventType: StepEventTypes.CHECK_TX,
-      isApprovalTx: false,
+      event: { eventType: StepEventType.CHECK_STATUS },
       swap: swap,
       step: currentStep,
     });
@@ -199,7 +204,15 @@ async function checkTransactionStatus({
     swap.extraMessage = nextStep
       ? `starting next step: ${nextStep.swapperId}: ${nextStep.fromBlockchain} -> ${nextStep.toBlockchain}`
       : '';
-    notifier({ eventType: StepEventTypes.SUCCEEDED, swap, step: currentStep });
+    notifier({
+      event: {
+        eventType: StepEventType.TX_EXECUTION,
+        type: TX_EXECUTION.SUCCEEDED,
+        outputAmount: currentStep.outputAmount ?? '',
+      },
+      swap,
+      step: currentStep,
+    });
   } else if (currentStep.status === 'failed') {
     swap.extraMessage = 'Transaction failed in blockchain';
     swap.extraMessageSeverity = MessageSeverity.error;
@@ -319,8 +332,12 @@ async function checkApprovalStatus({
       errorCode: extraMessageErrorCode,
     });
     notifier({
-      eventType: StepEventTypes.FAILED,
-      reason: extraMessage,
+      event: {
+        eventType: StepEventType.TX_EXECUTION,
+        type: TX_EXECUTION.FAILED,
+        reason: extraMessage,
+        reasonCode: updateResult.failureType ?? DEFAULT_ERROR_CODE,
+      },
       ...updateResult,
     });
     return failed();
@@ -363,8 +380,12 @@ async function checkApprovalStatus({
       });
 
       notifier({
-        eventType: StepEventTypes.FAILED,
-        reason: 'not enough approval',
+        event: {
+          eventType: StepEventType.TX_EXECUTION,
+          type: TX_EXECUTION.FAILED,
+          reason: message,
+          reasonCode: updateResult.failureType ?? DEFAULT_ERROR_CODE,
+        },
         ...updateResult,
       });
 
@@ -372,8 +393,7 @@ async function checkApprovalStatus({
     } else if (!isApproved) {
       // it is needed to set notification after reloading the page
       notifier({
-        eventType: StepEventTypes.CHECK_TX,
-        isApprovalTx: true,
+        event: { eventType: StepEventType.CHECK_STATUS },
         swap,
         step: currentStep,
       });
@@ -398,7 +418,7 @@ async function checkApprovalStatus({
     });
 
     notifier({
-      eventType: StepEventTypes.APPROVAL_TX_SUCCEEDED,
+      event: { eventType: StepEventType.APPROVAL_TX_SUCCEEDED },
       swap: swap,
       step: currentStep,
     });

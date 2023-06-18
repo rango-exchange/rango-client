@@ -1,5 +1,5 @@
 import { ExecuterActions } from '@rango-dev/queue-manager-core';
-import { StepEventTypes, SwapActionTypes, SwapStorage } from '../types';
+import { StepEventType, SwapActionTypes, SwapStorage } from '../types';
 import { notifier } from '../services/eventEmitter';
 
 export function start({
@@ -9,7 +9,7 @@ export function start({
 }: ExecuterActions<SwapStorage, SwapActionTypes>): void {
   const swap = getStorage().swapDetails;
 
-  notifier({ eventType: StepEventTypes.STARTED, swap, step: null });
+  notifier({ event: { eventType: StepEventType.STARTED }, swap, step: null });
 
   schedule(SwapActionTypes.SCHEDULE_NEXT_STEP);
   next();
