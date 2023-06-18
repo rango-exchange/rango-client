@@ -1,14 +1,38 @@
 import {
   convertEvmBlockchainMetaToEvmChainInfo,
   evmChainsToRpcMap,
+  Networks,
 } from '@rango-dev/wallets-shared';
+import { ProposalTypes } from '@walletconnect/types';
 import UniversalProvider from '@walletconnect/universal-provider';
 import { Web3Modal } from '@web3modal/standalone';
-import { BlockchainMeta, isEvmBlockchain } from 'rango-types';
+import { ChainId } from 'caip';
+import {
+  BlockchainMeta,
+  cosmosBlockchains,
+  evmBlockchains,
+  isEvmBlockchain,
+} from 'rango-types';
+import {
+  DEFAULT_COSMOS_METHODS,
+  DEFAULT_ETHEREUM_EVENTS,
+  DEFAULT_ETHEREUM_METHODS,
+  DEFAULT_SOLANA_CHAIN_ID,
+  DEFAULT_SOLANA_METHODS,
+  NAMESPACES,
+} from '.';
 
-const PROJECT_ID = 'f5196d081862c6f2b81c04520ea9301c';
+// TODO: Update with real data
+export const DEFAULT_APP_METADATA = {
+  name: 'Rango',
+  description: 'React App for WalletConnect',
+  url: 'https://app.rango.exchange/',
+  icons: ['https://avatars.githubusercontent.com/u/37784886'],
+};
+
+export const PROJECT_ID = 'f5196d081862c6f2b81c04520ea9301c';
 const CHAINS = [1, 10, 56, 100, 137, 42161, 43114, 1313161554];
-const RELAY_URL = 'wss://relay.walletconnect.com';
+export const RELAY_URL = 'wss://relay.walletconnect.com';
 
 // Checks if the provider supports switching networks for wallet types
 export function supportsForSwitchNetworkRequest(
@@ -95,3 +119,93 @@ const walletConnectModal = new Web3Modal({
     '--w3m-z-index': '999999999',
   },
 });
+
+type FinalNamespaces = {
+  [key in NAMESPACES]?: ProposalTypes.BaseRequiredNamespace;
+};
+
+export function generateRequiredNamespace(
+  meta: BlockchainMeta[],
+  network: string
+): FinalNamespaces | undefined {
+  const evm = evmBlockchains(meta);
+  const cosmos = cosmosBlockchains(meta);
+
+  const requiredEvmChain = evm.find((chain) => chain.name === network);
+  const requiredCosmosChain = cosmos.find((chain) => chain.name === network);
+  const requiredSolanaChain = network === Networks.SOLANA;
+  if (requiredEvmChain) {
+    return {
+      [NAMESPACES.ETHEREUM]: {
+        events: DEFAULT_ETHEREUM_EVENTS,
+        methods: DEFAULT_ETHEREUM_METHODS,
+        chains: [
+          new ChainId({
+            namespace: NAMESPACES.ETHEREUM,
+            reference: String(parseInt(requiredEvmChain.chainId)),
+          }).toString(),
+        ],
+      },
+    };
+  } else if (!!requiredCosmosChain) {
+    return {
+      [NAMESPACES.COSMOS]: {
+        events: [],
+        methods: DEFAULT_COSMOS_METHODS,
+        chains: [
+          new ChainId({
+            namespace: NAMESPACES.COSMOS,
+            reference: requiredCosmosChain.chainId!,
+          }).toString(),
+        ],
+      },
+    };
+  } else if (requiredSolanaChain) {
+    return {
+      [NAMESPACES.SOLANA]: {
+        events: [],
+        methods: DEFAULT_SOLANA_METHODS,
+        chains: [`solana:${DEFAULT_SOLANA_CHAIN_ID}`],
+      },
+    };
+  }
+
+  return undefined;
+}
+
+export function generateOptionalNamespace(
+  meta: BlockchainMeta[]
+): FinalNamespaces | undefined {
+  const evm = evmBlockchains(meta);
+  const cosmos = cosmosBlockchains(meta);
+
+  return {
+    [NAMESPACES.ETHEREUM]: {
+      methods: DEFAULT_ETHEREUM_METHODS,
+      events: DEFAULT_ETHEREUM_EVENTS,
+      chains: evm.map((chain) => {
+        return new ChainId({
+          namespace: NAMESPACES.ETHEREUM,
+          reference: String(parseInt(chain.chainId)),
+        }).toString();
+      }),
+    },
+    [NAMESPACES.COSMOS]: {
+      methods: DEFAULT_COSMOS_METHODS,
+      events: [],
+      chains: cosmos
+        .filter((chain) => !!chain.chainId)
+        .map((chain) => {
+          return new ChainId({
+            namespace: NAMESPACES.COSMOS,
+            reference: chain.chainId!,
+          }).toString();
+        }),
+    },
+    [NAMESPACES.SOLANA]: {
+      methods: DEFAULT_SOLANA_METHODS,
+      events: [],
+      chains: [`solana:${DEFAULT_SOLANA_CHAIN_ID}`],
+    },
+  };
+}
