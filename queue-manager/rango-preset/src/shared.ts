@@ -30,12 +30,6 @@ export interface PendingSwapWithQueueID {
   swap: PendingSwap;
 }
 
-export type SwapProgressNotification = {
-  eventType: EventType;
-  swap: PendingSwap | null;
-  step: PendingSwapStep | null;
-};
-
 export type WalletBalance = {
   chain: Network;
   symbol: string;

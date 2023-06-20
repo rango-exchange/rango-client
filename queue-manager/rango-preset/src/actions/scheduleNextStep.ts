@@ -1,6 +1,16 @@
 import { ExecuterActions } from '@rango-dev/queue-manager-core';
-import { SwapActionTypes, SwapQueueContext, SwapStorage } from '../types';
-import { getCurrentStep, isTxAlreadyCreated } from '../helpers';
+import {
+  StepEventType,
+  SwapActionTypes,
+  SwapQueueContext,
+  SwapStorage,
+} from '../types';
+import {
+  getCurrentStep,
+  getLastSuccessfulStep,
+  isTxAlreadyCreated,
+} from '../helpers';
+import { notifier } from '../services/eventEmitter';
 
 /**
  *
@@ -17,7 +27,6 @@ export function scheduleNextStep({
   failed,
   setStorage,
   getStorage,
-  context,
 }: ExecuterActions<SwapStorage, SwapActionTypes, SwapQueueContext>): void {
   const swap = getStorage().swapDetails;
   const currentStep = getCurrentStep(swap);
@@ -38,6 +47,12 @@ export function scheduleNextStep({
 
     setStorage({ ...getStorage(), swapDetails: swap });
 
+    notifier({
+      event: { type: StepEventType.STARTED },
+      swap,
+      step: currentStep,
+    });
+
     schedule(SwapActionTypes.CREATE_TRANSACTION);
     next();
   } else {
@@ -49,8 +64,22 @@ export function scheduleNextStep({
       swapDetails: swap,
     });
 
-    context.notifier({
-      eventType: isFailed ? 'task_failed' : 'task_completed',
+    notifier({
+      ...(isFailed
+        ? {
+            event: {
+              type: StepEventType.FAILED,
+              reason: swap.extraMessage ?? undefined,
+              reasonCode: 'CALL_OR_SEND_FAILED',
+            },
+          }
+        : {
+            event: {
+              type: StepEventType.SUCCEEDED,
+              outputAmount:
+                getLastSuccessfulStep(swap.steps)?.outputAmount ?? '',
+            },
+          }),
       swap: swap,
       step: null,
     });
