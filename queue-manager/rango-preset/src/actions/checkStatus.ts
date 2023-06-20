@@ -14,7 +14,7 @@ import {
   SwapActionTypes,
   SwapQueueContext,
   SwapStorage,
-  TX_EXECUTION,
+  StepExecutionEventStatus,
 } from '../types';
 import {
   getCurrentBlockchainOf,
@@ -127,8 +127,8 @@ async function checkTransactionStatus({
 
     notifier({
       event: {
-        eventType: StepEventType.TX_EXECUTION,
-        type: TX_EXECUTION.FAILED,
+        type: StepEventType.TX_EXECUTION,
+        status: StepExecutionEventStatus.FAILED,
         reason: extraMessage,
         reasonCode: updateResult.failureType ?? DEFAULT_ERROR_CODE,
       },
@@ -185,14 +185,14 @@ async function checkTransactionStatus({
 
   if (prevOutputAmount === null && outputAmount !== null)
     notifier({
-      event: { eventType: StepEventType.OUTPUT_REVEALED, outputAmount },
+      event: { type: StepEventType.OUTPUT_REVEALED, outputAmount },
       swap: swap,
       step: currentStep,
     });
   else if (prevOutputAmount === null && outputAmount === null) {
     // it is needed to set notification after reloading the page
     notifier({
-      event: { eventType: StepEventType.CHECK_STATUS },
+      event: { type: StepEventType.CHECK_STATUS },
       swap: swap,
       step: currentStep,
     });
@@ -206,8 +206,8 @@ async function checkTransactionStatus({
       : '';
     notifier({
       event: {
-        eventType: StepEventType.TX_EXECUTION,
-        type: TX_EXECUTION.SUCCEEDED,
+        type: StepEventType.TX_EXECUTION,
+        status: StepExecutionEventStatus.SUCCEEDED,
         outputAmount: currentStep.outputAmount ?? '',
       },
       swap,
@@ -333,8 +333,8 @@ async function checkApprovalStatus({
     });
     notifier({
       event: {
-        eventType: StepEventType.TX_EXECUTION,
-        type: TX_EXECUTION.FAILED,
+        type: StepEventType.TX_EXECUTION,
+        status: StepExecutionEventStatus.FAILED,
         reason: extraMessage,
         reasonCode: updateResult.failureType ?? DEFAULT_ERROR_CODE,
       },
@@ -381,8 +381,8 @@ async function checkApprovalStatus({
 
       notifier({
         event: {
-          eventType: StepEventType.TX_EXECUTION,
-          type: TX_EXECUTION.FAILED,
+          type: StepEventType.TX_EXECUTION,
+          status: StepExecutionEventStatus.FAILED,
           reason: message,
           reasonCode: updateResult.failureType ?? DEFAULT_ERROR_CODE,
         },
@@ -393,7 +393,7 @@ async function checkApprovalStatus({
     } else if (!isApproved) {
       // it is needed to set notification after reloading the page
       notifier({
-        event: { eventType: StepEventType.CHECK_STATUS },
+        event: { type: StepEventType.CHECK_STATUS },
         swap,
         step: currentStep,
       });
@@ -418,7 +418,7 @@ async function checkApprovalStatus({
     });
 
     notifier({
-      event: { eventType: StepEventType.APPROVAL_TX_SUCCEEDED },
+      event: { type: StepEventType.APPROVAL_TX_SUCCEEDED },
       swap: swap,
       step: currentStep,
     });

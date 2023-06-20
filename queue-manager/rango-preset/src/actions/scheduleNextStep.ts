@@ -4,7 +4,7 @@ import {
   SwapActionTypes,
   SwapQueueContext,
   SwapStorage,
-  TX_EXECUTION,
+  StepExecutionEventStatus,
 } from '../types';
 import {
   getCurrentStep,
@@ -49,7 +49,7 @@ export function scheduleNextStep({
     setStorage({ ...getStorage(), swapDetails: swap });
 
     notifier({
-      event: { eventType: StepEventType.STARTED },
+      event: { type: StepEventType.STARTED },
       swap,
       step: currentStep,
     });
@@ -69,16 +69,16 @@ export function scheduleNextStep({
       ...(isFailed
         ? {
             event: {
-              eventType: StepEventType.TX_EXECUTION,
-              type: TX_EXECUTION.FAILED,
+              type: StepEventType.TX_EXECUTION,
+              status: StepExecutionEventStatus.FAILED,
               reason: swap.extraMessage ?? undefined,
               reasonCode: 'CALL_OR_SEND_FAILED',
             },
           }
         : {
             event: {
-              eventType: StepEventType.TX_EXECUTION,
-              type: TX_EXECUTION.SUCCEEDED,
+              type: StepEventType.TX_EXECUTION,
+              status: StepExecutionEventStatus.SUCCEEDED,
               outputAmount:
                 getLastSuccessfulStep(swap.steps)?.outputAmount ?? '',
             },

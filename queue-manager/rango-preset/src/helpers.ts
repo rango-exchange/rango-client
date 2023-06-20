@@ -12,8 +12,8 @@ import {
   SwapQueueContext,
   SwapQueueDef,
   SwapStorage,
-  TX_EXECUTION,
-  TX_EXECUTION_BLOCKED,
+  StepExecutionEventStatus,
+  StepExecutionBlockedEventStatus,
 } from './types';
 import {
   getBlockChainNameFromId,
@@ -403,15 +403,15 @@ export function setStepTransactionIds(
 
   notifier({
     event: {
-      eventType: StepEventType.TX_EXECUTION,
-      type: TX_EXECUTION.SEND_TX,
+      type: StepEventType.TX_EXECUTION,
+      status: StepExecutionEventStatus.SEND_TX,
     },
     swap: swap,
     step: currentStep,
   });
 
   notifier({
-    event: { eventType: StepEventType.CHECK_STATUS },
+    event: { type: StepEventType.CHECK_STATUS },
     swap: swap,
     step: currentStep,
   });
@@ -521,8 +521,8 @@ export function markRunningSwapAsDependsOnOtherQueues({
 
   notifier({
     event: {
-      eventType: StepEventType.TX_EXECUTION_BLOCKED,
-      type: TX_EXECUTION_BLOCKED.WAITING_FOR_QUEUE,
+      type: StepEventType.TX_EXECUTION_BLOCKED,
+      status: StepExecutionBlockedEventStatus.WAITING_FOR_QUEUE,
     },
     swap,
     step: currentStep,
@@ -765,14 +765,16 @@ export function onBlockForConnectWallet(
     const { type: walletType, address } = getRequiredWallet(swap);
     notifier({
       event: {
-        eventType: StepEventType.TX_EXECUTION_BLOCKED,
+        type: StepEventType.TX_EXECUTION_BLOCKED,
         ...(reason === 'account_miss_match'
           ? {
-              type: TX_EXECUTION_BLOCKED.WAITING_FOR_CHANGE_WALLET_ACCOUNT,
+              status:
+                StepExecutionBlockedEventStatus.WAITING_FOR_CHANGE_WALLET_ACCOUNT,
               requiredAccount: address ?? undefined,
             }
           : {
-              type: TX_EXECUTION_BLOCKED.WAITING_FOR_WALLET_CONNECT,
+              status:
+                StepExecutionBlockedEventStatus.WAITING_FOR_WALLET_CONNECT,
               requiredWallet: walletType ?? undefined,
               requiredAccount: address ?? undefined,
             }),
@@ -830,8 +832,8 @@ export function onBlockForChangeNetwork(
   if (result) {
     notifier({
       event: {
-        eventType: StepEventType.TX_EXECUTION_BLOCKED,
-        type: TX_EXECUTION_BLOCKED.WAITING_FOR_NETWORK_CHANGE,
+        type: StepEventType.TX_EXECUTION_BLOCKED,
+        status: StepExecutionBlockedEventStatus.WAITING_FOR_NETWORK_CHANGE,
         requiredNetwork: requiredNetwork ?? undefined,
         currentNetwork: currentNetwork ?? undefined,
       },
@@ -990,8 +992,8 @@ export function singTransaction(
     });
     notifier({
       event: {
-        eventType: StepEventType.TX_EXECUTION,
-        type: TX_EXECUTION.FAILED,
+        type: StepEventType.TX_EXECUTION,
+        status: StepExecutionEventStatus.FAILED,
         reason: extraMessage,
         reasonCode: 'CLIENT_UNEXPECTED_BEHAVIOUR',
       },
@@ -1010,7 +1012,7 @@ export function singTransaction(
     nextStepStatus: StepStatus,
     message: string,
     details: string,
-    eventSubtype: TX_EXECUTION;
+    eventSubtype: StepExecutionEventStatus;
 
   const eventType = StepEventType.TX_EXECUTION;
 
@@ -1022,19 +1024,19 @@ export function singTransaction(
       'Waiting for approve transaction to be mined and confirmed successfully';
     nextStepStatus = 'waitingForApproval';
     nextStatus = undefined;
-    eventSubtype = TX_EXECUTION.SEND_TX;
+    eventSubtype = StepExecutionEventStatus.SEND_TX;
   } else if (hasAlreadyProceededToSign) {
     message = 'Transaction is expired. Please try again.';
     nextStepStatus = 'failed';
     nextStatus = 'failed';
     details = '';
-    eventSubtype = TX_EXECUTION.FAILED;
+    eventSubtype = StepExecutionEventStatus.FAILED;
   } else {
     message = 'Executing transaction ...';
     nextStepStatus = 'running';
     nextStatus = 'running';
     details = `${mobileWallet ? 'Check your mobile phone!' : ''}`;
-    eventSubtype = TX_EXECUTION.SEND_TX;
+    eventSubtype = StepExecutionEventStatus.SEND_TX;
   }
 
   const updateResult = updateSwapStatus({
@@ -1050,11 +1052,11 @@ export function singTransaction(
     errorCode: hasAlreadyProceededToSign ? 'TX_EXPIRED' : undefined,
   });
 
-  if (eventSubtype === TX_EXECUTION.FAILED) {
+  if (eventSubtype === StepExecutionEventStatus.FAILED) {
     notifier({
       event: {
-        eventType,
-        type: eventSubtype,
+        type: eventType,
+        status: eventSubtype,
         reason: message,
         reasonCode: updateResult.failureType ?? DEFAULT_ERROR_CODE,
       },
@@ -1062,7 +1064,7 @@ export function singTransaction(
     });
   } else
     notifier({
-      event: { eventType, type: eventSubtype },
+      event: { type: eventType, status: eventSubtype },
       ...updateResult,
     });
 
@@ -1114,8 +1116,8 @@ export function singTransaction(
 
       notifier({
         event: {
-          eventType: StepEventType.TX_EXECUTION,
-          type: TX_EXECUTION.FAILED,
+          type: StepEventType.TX_EXECUTION,
+          status: StepExecutionEventStatus.FAILED,
           reason: extraMessage,
           reasonCode: updateResult.failureType ?? DEFAULT_ERROR_CODE,
         },
@@ -1186,8 +1188,9 @@ export function checkWaitingForConnectWalletChange(params: {
           if (result) {
             notifier({
               event: {
-                eventType: StepEventType.TX_EXECUTION_BLOCKED,
-                type: TX_EXECUTION_BLOCKED.WAITING_FOR_NETWORK_CHANGE,
+                type: StepEventType.TX_EXECUTION_BLOCKED,
+                status:
+                  StepExecutionBlockedEventStatus.WAITING_FOR_NETWORK_CHANGE,
                 currentNetwork: network,
                 requiredNetwork: requiredNetwork ?? undefined,
               },
@@ -1268,19 +1271,20 @@ export function resetRunningSwapNotifsOnPageLoad(runningSwaps: PendingSwap[]) {
     const currentStep = getCurrentStep(swap);
     const eventType = StepEventType.TX_EXECUTION_BLOCKED;
     let eventSubtype:
-      | TX_EXECUTION_BLOCKED.WAITING_FOR_QUEUE
-      | TX_EXECUTION_BLOCKED.WAITING_FOR_WALLET_CONNECT
+      | StepExecutionBlockedEventStatus.WAITING_FOR_QUEUE
+      | StepExecutionBlockedEventStatus.WAITING_FOR_WALLET_CONNECT
       | undefined;
     if (currentStep?.networkStatus === PendingSwapNetworkStatus.WaitingForQueue)
-      eventSubtype = TX_EXECUTION_BLOCKED.WAITING_FOR_QUEUE;
+      eventSubtype = StepExecutionBlockedEventStatus.WAITING_FOR_QUEUE;
     else if (swap?.status === 'running') {
-      eventSubtype = TX_EXECUTION_BLOCKED.WAITING_FOR_WALLET_CONNECT;
+      eventSubtype = StepExecutionBlockedEventStatus.WAITING_FOR_WALLET_CONNECT;
     }
     if (!!eventType && !!notifier) {
       notifier({
         event: {
-          eventType,
-          type: eventSubtype ?? TX_EXECUTION_BLOCKED.WAITING_FOR_QUEUE,
+          type: eventType,
+          status:
+            eventSubtype ?? StepExecutionBlockedEventStatus.WAITING_FOR_QUEUE,
         },
         swap: swap,
         step: currentStep,
@@ -1408,8 +1412,8 @@ export function cancelSwap(
 
   notifier({
     event: {
-      eventType: StepEventType.TX_EXECUTION,
-      type: TX_EXECUTION.FAILED,
+      type: StepEventType.TX_EXECUTION,
+      status: StepExecutionEventStatus.FAILED,
       reasonCode: 'USER_CANCEL',
       reason: updateResult.swap.extraMessage ?? undefined,
     },

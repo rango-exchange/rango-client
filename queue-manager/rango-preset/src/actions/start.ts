@@ -9,7 +9,7 @@ export function start({
 }: ExecuterActions<SwapStorage, SwapActionTypes>): void {
   const swap = getStorage().swapDetails;
 
-  notifier({ event: { eventType: StepEventType.STARTED }, swap, step: null });
+  notifier({ event: { type: StepEventType.STARTED }, swap, step: null });
 
   schedule(SwapActionTypes.SCHEDULE_NEXT_STEP);
   next();

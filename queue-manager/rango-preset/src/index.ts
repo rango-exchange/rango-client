@@ -11,14 +11,14 @@ export type {
   Step,
   RouteEvent,
   StepEvent,
-  RouteExecutionMessageSeverity,
+  EventSeverity,
 } from './types';
 export {
   MainEvents,
   StepEventType,
   RouteEventType,
-  TX_EXECUTION,
-  TX_EXECUTION_BLOCKED,
+  StepExecutionEventStatus,
+  StepExecutionBlockedEventStatus,
 } from './types';
 export type {
   PendingSwapWithQueueID,

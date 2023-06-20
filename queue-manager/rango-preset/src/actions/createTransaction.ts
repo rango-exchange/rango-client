@@ -4,7 +4,7 @@ import {
   SwapActionTypes,
   SwapQueueContext,
   SwapStorage,
-  TX_EXECUTION,
+  StepExecutionEventStatus,
 } from '../types';
 import {
   getCurrentStep,
@@ -38,8 +38,8 @@ export async function createTransaction(
   if (!transaction) {
     notifier({
       event: {
-        eventType: StepEventType.TX_EXECUTION,
-        type: TX_EXECUTION.CREATE_TX,
+        type: StepEventType.TX_EXECUTION,
+        status: StepExecutionEventStatus.CREATE_TX,
       },
       swap,
       step: currentStep,
@@ -85,8 +85,8 @@ export async function createTransaction(
 
       notifier({
         event: {
-          eventType: StepEventType.TX_EXECUTION,
-          type: TX_EXECUTION.FAILED,
+          type: StepEventType.TX_EXECUTION,
+          status: StepExecutionEventStatus.FAILED,
           reason: extraMessage,
           reasonCode: updateResult.failureType ?? DEFAULT_ERROR_CODE,
         },

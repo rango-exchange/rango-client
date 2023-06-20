@@ -131,7 +131,7 @@ export enum RouteEventType {
   SUCCEEDED = 'succeeded',
 }
 
-export enum TX_EXECUTION {
+export enum StepExecutionEventStatus {
   FAILED = 'failed',
   SUCCEEDED = 'succeeded',
   CREATE_TX = 'create_tx',
@@ -139,7 +139,7 @@ export enum TX_EXECUTION {
   TX_SENT = 'tx_sent',
 }
 
-export enum TX_EXECUTION_BLOCKED {
+export enum StepExecutionBlockedEventStatus {
   WAITING_FOR_QUEUE = 'waiting_for_queue',
   WAITING_FOR_WALLET_CONNECT = 'waiting_for_wallet_connect',
   WAITING_FOR_NETWORK_CHANGE = 'waiting_for_network_change',
@@ -155,71 +155,75 @@ export enum StepEventType {
   OUTPUT_REVEALED = 'output_revealed',
 }
 
-export enum RouteExecutionMessageSeverity {
+export enum EventSeverity {
   ERROR = 'error',
   SUCCESS = 'success',
   WARNING = 'warning',
   INFO = 'info',
 }
 
-type Event<
+export type Event<
   T extends StepEventType | RouteEventType,
   U extends Record<string, unknown> = Record<string, unknown>
 > = {
-  eventType: T;
+  type: T;
   message: string;
-  messageSeverity: RouteExecutionMessageSeverity;
+  messageSeverity: EventSeverity;
 } & U;
 
-type FailedEventPayload = {
+export type FailedRouteEventPayload = {
   reason?: string;
   reasonCode: APIErrorCode;
 };
 
-export type RouteEvent =
-  | Event<RouteEventType.STARTED>
-  | Event<RouteEventType.FAILED, FailedEventPayload>
-  | Event<RouteEventType.SUCCEEDED, { outputAmount: string }>;
+export type SucceededRouteEventPayload = {
+  outputAmount: string;
+};
+
+export type StepExecutionEventPayload =
+  | {
+      status: StepExecutionEventStatus.SUCCEEDED;
+      outputAmount: string;
+    }
+  | ({
+      status: StepExecutionEventStatus.FAILED;
+    } & FailedRouteEventPayload)
+  | {
+      status:
+        | StepExecutionEventStatus.CREATE_TX
+        | StepExecutionEventStatus.SEND_TX
+        | StepExecutionEventStatus.TX_SENT;
+    };
+
+export type StepBlockedEventPayload =
+  | { status: StepExecutionBlockedEventStatus.WAITING_FOR_QUEUE }
+  | {
+      status: StepExecutionBlockedEventStatus.WAITING_FOR_WALLET_CONNECT;
+      requiredWallet?: string;
+      requiredAccount?: string;
+    }
+  | {
+      status: StepExecutionBlockedEventStatus.WAITING_FOR_CHANGE_WALLET_ACCOUNT;
+      requiredAccount?: string;
+    }
+  | {
+      status: StepExecutionBlockedEventStatus.WAITING_FOR_NETWORK_CHANGE;
+      currentNetwork?: string;
+      requiredNetwork?: string;
+    };
 
 export type StepEvent =
   | Event<StepEventType.STARTED>
-  | Event<
-      StepEventType.TX_EXECUTION,
-      | {
-          type: TX_EXECUTION.SUCCEEDED;
-          outputAmount: string;
-        }
-      | ({
-          type: TX_EXECUTION.FAILED;
-        } & FailedEventPayload)
-      | {
-          type:
-            | TX_EXECUTION.CREATE_TX
-            | TX_EXECUTION.SEND_TX
-            | TX_EXECUTION.TX_SENT;
-        }
-    >
-  | Event<StepEventType.APPROVAL_TX_SUCCEEDED>
+  | Event<StepEventType.TX_EXECUTION_BLOCKED, StepBlockedEventPayload>
+  | Event<StepEventType.TX_EXECUTION, StepExecutionEventPayload>
   | Event<StepEventType.CHECK_STATUS>
-  | Event<StepEventType.OUTPUT_REVEALED, { outputAmount: string }>
-  | Event<
-      StepEventType.TX_EXECUTION_BLOCKED,
-      | { type: TX_EXECUTION_BLOCKED.WAITING_FOR_QUEUE }
-      | {
-          type: TX_EXECUTION_BLOCKED.WAITING_FOR_WALLET_CONNECT;
-          requiredWallet?: string;
-          requiredAccount?: string;
-        }
-      | {
-          type: TX_EXECUTION_BLOCKED.WAITING_FOR_CHANGE_WALLET_ACCOUNT;
-          requiredAccount?: string;
-        }
-      | {
-          type: TX_EXECUTION_BLOCKED.WAITING_FOR_NETWORK_CHANGE;
-          currentNetwork?: string;
-          requiredNetwork?: string;
-        }
-    >;
+  | Event<StepEventType.APPROVAL_TX_SUCCEEDED>
+  | Event<StepEventType.OUTPUT_REVEALED, { outputAmount: string }>;
+
+export type RouteEvent =
+  | Event<RouteEventType.STARTED>
+  | Event<RouteEventType.FAILED, FailedRouteEventPayload>
+  | Event<RouteEventType.SUCCEEDED, SucceededRouteEventPayload>;
 
 export type RouteExecutionEvents = {
   [MainEvents.RouteEvent]: { route: Route; event: RouteEvent };
