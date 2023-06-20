@@ -160,7 +160,6 @@ function emitStepEvent(stepEvent: StepEvent, route: Route, step: Step) {
 }
 
 export function notifier(params: NotifierParams) {
-  console.log({ originalEvent: params.step });
   const { event } = params;
   const { type } = event;
   const { route, step } = getEventPayload(
