@@ -19,6 +19,7 @@ import { useUiStore } from './store/ui';
 import { navigationRoutes } from './constants/navigationRoutes';
 import { initConfig } from './utils/configs';
 import { WidgetContext, WidgetWallets } from './Wallets';
+import { WidgetEvents } from './components/WidgetEvents';
 
 const MainContainer = styled('div', {
   width: '100%',
@@ -62,6 +63,7 @@ export function Main(props: PropsWithChildren<WidgetProps>) {
   return (
     <MainContainer id="swap-container" className={activeTheme}>
       <QueueManager>
+        <WidgetEvents />
         <SwapContainer fixedHeight={currentPage !== navigationRoutes.home}>
           <AppRouter
             lastConnectedWallet={lastConnectedWalletWithNetwork}

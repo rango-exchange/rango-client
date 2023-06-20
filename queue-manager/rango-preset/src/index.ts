@@ -3,13 +3,28 @@ import { SwapQueueDef } from './types';
 import { swapQueueDef } from './queueDef';
 
 export { PrettyError, prettifyErrorMessage } from './shared-errors';
-export type { SwapQueueContext, SwapStorage } from './types';
+export type {
+  SwapQueueContext,
+  SwapStorage,
+  RouteExecutionEvents,
+  Route,
+  Step,
+  RouteEvent,
+  StepEvent,
+  EventSeverity,
+} from './types';
+export {
+  MainEvents,
+  StepEventType,
+  RouteEventType,
+  StepExecutionEventStatus,
+  StepExecutionBlockedEventStatus,
+} from './types';
 export type {
   PendingSwapWithQueueID,
   PendingSwapStep,
   PendingSwap,
   EventType,
-  SwapProgressNotification,
 } from './shared';
 export {
   getCurrentBlockchainOfOrNull,
@@ -29,8 +44,9 @@ export {
   getRunningSwaps,
   splitWalletNetwork,
   resetRunningSwapNotifsOnPageLoad,
+  isApprovalTX,
 } from './helpers';
-export { useMigration, useQueueManager } from './hooks';
+export { useMigration, useQueueManager, useEvents } from './hooks';
 
 export function makeQueueDefinition(configs: Configs): SwapQueueDef {
   initConfig(configs);
