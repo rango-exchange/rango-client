@@ -168,7 +168,10 @@ export const disconnect: Disconnect = async ({ instance, destroyInstance }) => {
   }
 };
 
-export const getSigners: (provider: any) => SignerFactory = signer;
+export const getSigners: (
+  provider: any,
+  supportedChains: BlockchainMeta[]
+) => SignerFactory = signer;
 
 export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
   allBlockChains
