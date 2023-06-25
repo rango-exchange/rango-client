@@ -92,11 +92,13 @@ export async function makeConnection(options: {
         //   events: ['accountsChanged', 'chainChanged'],
         // },
       },
+
       pairingTopic: force ? undefined : pairingTopic,
       skipPairing: force ? false : !!pairingTopic,
     });
   } catch (error) {
     console.log(error);
+    throw new Error((error as any)?.message);
   }
 
   // Closes the WalletConnect modal if it exists
