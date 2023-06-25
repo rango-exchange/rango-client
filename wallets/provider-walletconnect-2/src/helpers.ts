@@ -1,15 +1,17 @@
-// import {
-//   convertEvmBlockchainMetaToEvmChainInfo,
-//   evmChainsToRpcMap,
-// } from '@rango-dev/wallets-shared';
+import {
+  convertEvmBlockchainMetaToEvmChainInfo,
+  evmChainsToRpcMap,
+} from '@rango-dev/wallets-shared';
 import UniversalProvider from '@walletconnect/universal-provider';
 import { Web3Modal } from '@web3modal/standalone';
-import { BlockchainMeta } from 'rango-types';
+import { BlockchainMeta, isEvmBlockchain } from 'rango-types';
 
 const DEFAULT_COSMOS_METHODS = ['cosmos_signDirect', 'cosmos_signAmino'];
 const PROJECT_ID = 'f5196d081862c6f2b81c04520ea9301c';
-// const CHAINS = [1, 10, 56, 100, 137, 42161, 43114, 1313161554];
+const EVM_CHAINS = [1, 10, 56, 100, 137, 42161, 43114, 1313161554];
 const RELAY_URL = 'wss://relay.walletconnect.com';
+
+const COSMOS_CHAINS = ['cosmoshub-4', 'irishub-1'];
 
 // Checks if the provider supports switching networks for wallet types
 export function supportsForSwitchNetworkRequest(
@@ -24,16 +26,18 @@ export function supportsForSwitchNetworkRequest(
 
 // Establishes a connection with the UniversalProvider
 export async function makeConnection(options: {
-  chainId?: number;
+  chainId?: number | string;
   force?: boolean;
   meta: BlockchainMeta[];
 }): Promise<any> {
-  const { force = false } = options;
+  const { force = false, meta, chainId } = options;
 
-  // Filters out the current chain from the available chains
-  // const filteredChains = CHAINS.filter((chain) => chain !== chainId);
-  // const filteredEIPChains = filteredChains.map((chain) => `eip155:${chain}`);
-
+  const filteredEIPChains = EVM_CHAINS.filter((chain) => chain !== chainId).map(
+    (chain) => `eip155:${chain}`
+  );
+  const filteredCOSMOSChains = COSMOS_CHAINS.filter(
+    (chain) => chain !== chainId
+  ).map((chain) => `cosmos:${chain}`);
   // Initializes the UniversalProvider
   const provider = await UniversalProvider.init({
     relayUrl: RELAY_URL,
@@ -41,10 +45,11 @@ export async function makeConnection(options: {
   });
 
   // Extracts the EVM blockchains from the provided meta information
-  // const evmBlockchains = meta.filter(isEvmBlockchain);
-  // const rpcMap = evmChainsToRpcMap(
-  //   convertEvmBlockchainMetaToEvmChainInfo(evmBlockchains)
-  // );
+  const evmBlockchains = meta.filter(isEvmBlockchain);
+  const rpcMap = evmChainsToRpcMap(
+    convertEvmBlockchainMetaToEvmChainInfo(evmBlockchains)
+  );
+  console.log(filteredEIPChains, rpcMap);
 
   // Opens the WalletConnect modal when display_uri event is emitted
   provider.on('display_uri', (uri: string) => {
@@ -75,13 +80,15 @@ export async function makeConnection(options: {
         //   rpcMap,
         // },
         cosmos: {
-          chains: ['cosmos:cosmoshub-4'],
+          chains: chainId
+            ? [`cosmos:${chainId}`, ...filteredCOSMOSChains]
+            : filteredCOSMOSChains,
           methods: DEFAULT_COSMOS_METHODS,
           events: ['accountsChanged', 'chainChanged'],
         },
         // solana: {
         //   methods: ['solana_signTransaction', 'solana_signMessage'],
-        //   chains: ['solana:4sGjMW1sUnHzSxGspuhpqLDx6wiyjNtZ'],
+        //   chains: ['solana:mainnet-beta'],
         //   events: ['accountsChanged', 'chainChanged'],
         // },
       },

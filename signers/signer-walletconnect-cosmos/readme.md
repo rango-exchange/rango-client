@@ -1,1 +1,0 @@
-# @rango-dev/signer-walletconnect-cosmos

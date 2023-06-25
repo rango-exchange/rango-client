@@ -21,6 +21,7 @@ import {
   BlockchainMeta,
   evmBlockchains,
   cosmosBlockchains,
+  solanaBlockchain,
 } from 'rango-types';
 
 const WALLET = WalletTypes.WALLET_CONNECT_2;
@@ -34,9 +35,12 @@ export const config: WalletConfig = {
 export const getInstance: GetInstance = async (options) => {
   const { network, meta, force, updateChainId } = options;
   // If `network` is provided, trying to get chainId
+  const evms = evmBlockchains(meta);
+
   const evm_chain_info = convertEvmBlockchainMetaToEvmChainInfo(
-    meta as EvmBlockchainMeta[]
+    evms as EvmBlockchainMeta[]
   );
+
   const info = network ? evm_chain_info[network] : undefined;
   const requestedChainId = info?.chainId ? parseInt(info?.chainId) : undefined;
 
@@ -66,11 +70,12 @@ export const getInstance: GetInstance = async (options) => {
 export const connect: Connect = async ({ instance }) => {
   const accounts = await instance.enable();
   // const chainId = await instance.request({ method: 'eth_chainId' });
-  const chainId = 'cosmoshub-4';
   console.log('instance', instance);
+  console.log('accounts', accounts);
+
   return {
     accounts,
-    chainId,
+    chainId: 'cosmoshub-4',
   };
 };
 
@@ -82,6 +87,8 @@ export const subscribe: Subscribe = ({
   connect,
   disconnect,
 }) => {
+  console.log('subscribe', instance);
+
   instance?.on('chainChanged', (chainId: string) => {
     console.log('111111111');
     const network = getBlockChainNameFromId(chainId, meta) || Networks.Unknown;
@@ -181,23 +188,25 @@ export const disconnect: Disconnect = async ({ instance, destroyInstance }) => {
   }
 };
 
-export const getSigners: (provider: any) => SignerFactory = signer;
+export const getSigners: (
+  provider: any,
+  supportedChains: BlockchainMeta[]
+) => SignerFactory = signer;
 
 export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
   allBlockChains
 ) => {
   const evms = evmBlockchains(allBlockChains);
-  const cosmos = cosmosBlockchains(allBlockChains);
-
+  const cosmos = cosmosBlockchains(allBlockChains).filter(
+    (blockchainMeta) => !!blockchainMeta.info
+  );
+  const solana = solanaBlockchain(allBlockChains);
   return {
     name: 'WalletConnect',
     img: 'https://raw.githubusercontent.com/rango-exchange/rango-types/main/assets/icons/wallets/walletconnect.svg',
     installLink: '',
     color: '#b2dbff',
-    supportedChains: [
-      ...evms,
-      ...cosmos.filter((blockchainMeta) => !!blockchainMeta.info),
-    ],
+    supportedChains: [...evms, ...solana, ...cosmos],
     showOnMobile: true,
     mobileWallet: true,
   };

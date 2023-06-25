@@ -3110,6 +3110,11 @@
     elliptic "^6.5.3"
     sha.js "^2.4.11"
 
+"@keplr-wallet/simple-fetch@^0.12.12":
+  version "0.12.12"
+  resolved "https://registry.yarnpkg.com/@keplr-wallet/simple-fetch/-/simple-fetch-0.12.12.tgz#aacc5c3f22b7ab2804b39e864725294a32f858fd"
+  integrity sha512-lCOsaI8upMpbusfwJqEK8VIEX77+QE8+8MJVRqoCYwjOTqKGdUH7D1ieZWh+pzvzOnVgedM3lxqdmCvdgU91qw==
+
 "@keplr-wallet/types@^0.11.21":
   version "0.11.52"
   resolved "https://registry.yarnpkg.com/@keplr-wallet/types/-/types-0.11.52.tgz#a4dd652403d2ed5849a58ea7c4595034f7a5a0e3"
@@ -4527,6 +4532,14 @@
   integrity sha512-d0O68AYy/9oeEy1DdC07bz1/ZXX+DqCskRd3i4JzLSTXwefzaepQrKjXC7aNM8lTHjFLDO0pDgaEiQ7jEk+HVg==
   dependencies:
     "@babel/runtime" "^7.13.10"
+
+"@rango-dev/signer-solana@^0.5.0":
+  version "0.5.0"
+  resolved "https://registry.yarnpkg.com/@rango-dev/signer-solana/-/signer-solana-0.5.0.tgz#ba144a6869eba9418967623221a80c137ea9bec5"
+  integrity sha512-GmDxo04CHIsOedj2k4CHFoo5xYQZ2MOnQx0y6Au/wbLhlBU+bg2ZRLtx43u3xylttyeUOTb7xsY36Z/w9gTIIA==
+  dependencies:
+    "@solana/web3.js" "^1.67.2"
+    rango-types "^0.1.38"
 
 "@reach/router@^1.2.1":
   version "1.3.4"

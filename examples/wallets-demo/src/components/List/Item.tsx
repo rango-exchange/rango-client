@@ -23,7 +23,6 @@ import {
   prepareAccounts,
   walletAndSupportedChainsNames,
 } from '../../helper';
-import { TransactionType } from 'rango-sdk';
 
 function Item({ type, info }: { type: WalletType; info: WalletInfo }) {
   const { connect, state, disconnect, canSwitchNetworkTo, getSigners } =
@@ -91,7 +90,7 @@ function Item({ type, info }: { type: WalletType; info: WalletInfo }) {
       const currentChain = info.supportedChains.find(
         (chain) => chain.name === network
       );
-      const txType = currentChain?.type || TransactionType.EVM;
+      const txType = currentChain?.type || network;
       const chainId = currentChain?.chainId || null;
       const result = signers
         .getSigner(txType)
