@@ -176,9 +176,15 @@ export type FailedRouteEventPayload = {
   reasonCode: APIErrorCode;
 };
 
+export type FailedStepEventPayload = FailedRouteEventPayload;
+
 export type SucceededRouteEventPayload = {
   outputAmount: string;
 };
+
+export type SucceededStepEventPayload = SucceededRouteEventPayload;
+
+export type OutputRevealedEventPayload = SucceededRouteEventPayload;
 
 export type StepExecutionEventPayload = {
   status:
@@ -204,20 +210,63 @@ export type StepBlockedEventPayload =
       requiredNetwork?: string;
     };
 
+export type RouteStartedEvent = Event<RouteEventType.STARTED>;
+
+export type RouteFailedEvent = Event<
+  RouteEventType.FAILED,
+  FailedRouteEventPayload
+>;
+
+export type RouteSucceededEvent = Event<
+  RouteEventType.SUCCEEDED,
+  SucceededRouteEventPayload
+>;
+
+export type StepStartedEvent = Event<StepEventType.STARTED>;
+
+export type StepSucceededEvent = Event<
+  StepEventType.SUCCEEDED,
+  SucceededStepEventPayload
+>;
+export type StepFailedEvent = Event<
+  StepEventType.FAILED,
+  FailedStepEventPayload
+>;
+
+export type StepTxExecutionUpdatedEvent = Event<
+  StepEventType.TX_EXECUTION,
+  StepExecutionEventPayload
+>;
+
+export type StepTxExecutionBlockedEvent = Event<
+  StepEventType.TX_EXECUTION_BLOCKED,
+  StepBlockedEventPayload
+>;
+
+export type StepCheckStatusEvent = Event<StepEventType.CHECK_STATUS>;
+
+export type StepApprovalTxSucceededEvent =
+  Event<StepEventType.APPROVAL_TX_SUCCEEDED>;
+
+export type StepOutputRevealedEvent = Event<
+  StepEventType.OUTPUT_REVEALED,
+  OutputRevealedEventPayload
+>;
+
 export type StepEvent =
-  | Event<StepEventType.STARTED>
-  | Event<StepEventType.SUCCEEDED, { outputAmount: string }>
-  | Event<StepEventType.FAILED, FailedRouteEventPayload>
-  | Event<StepEventType.TX_EXECUTION, StepExecutionEventPayload>
-  | Event<StepEventType.TX_EXECUTION_BLOCKED, StepBlockedEventPayload>
-  | Event<StepEventType.CHECK_STATUS>
-  | Event<StepEventType.APPROVAL_TX_SUCCEEDED>
-  | Event<StepEventType.OUTPUT_REVEALED, { outputAmount: string }>;
+  | StepStartedEvent
+  | StepSucceededEvent
+  | StepFailedEvent
+  | StepTxExecutionUpdatedEvent
+  | StepTxExecutionBlockedEvent
+  | StepCheckStatusEvent
+  | StepApprovalTxSucceededEvent
+  | StepOutputRevealedEvent;
 
 export type RouteEvent =
-  | Event<RouteEventType.STARTED>
-  | Event<RouteEventType.FAILED, FailedRouteEventPayload>
-  | Event<RouteEventType.SUCCEEDED, SucceededRouteEventPayload>;
+  | RouteStartedEvent
+  | RouteSucceededEvent
+  | RouteFailedEvent;
 
 export type RouteExecutionEvents = {
   [MainEvents.RouteEvent]: { route: Route; event: RouteEvent };
