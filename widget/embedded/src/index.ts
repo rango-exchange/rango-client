@@ -15,6 +15,21 @@ import {
   StepEvent,
   Route,
   Step,
+  RouteStartedEvent,
+  RouteSucceededEvent,
+  RouteFailedEvent,
+  RouteEventType,
+  StepStartedEvent,
+  StepSucceededEvent,
+  StepFailedEvent,
+  StepTxExecutionUpdatedEvent,
+  StepTxExecutionBlockedEvent,
+  StepCheckStatusEvent,
+  StepApprovalTxSucceededEvent,
+  StepOutputRevealedEvent,
+  StepEventType,
+  StepExecutionEventStatus,
+  StepExecutionBlockedEventStatus,
 } from '@rango-dev/queue-manager-rango-preset';
 
 export type {
@@ -28,6 +43,26 @@ export type {
   StepEvent,
   Route,
   Step,
+  RouteStartedEvent,
+  RouteSucceededEvent,
+  RouteFailedEvent,
+  StepStartedEvent,
+  StepSucceededEvent,
+  StepFailedEvent,
+  StepTxExecutionUpdatedEvent,
+  StepTxExecutionBlockedEvent,
+  StepCheckStatusEvent,
+  StepApprovalTxSucceededEvent,
+  StepOutputRevealedEvent,
 };
-export { Widget, WidgetWallets };
-export { useWallets, useWidgetEvents, MainEvents };
+export {
+  Widget,
+  WidgetWallets,
+  useWallets,
+  useWidgetEvents,
+  MainEvents,
+  RouteEventType,
+  StepEventType,
+  StepExecutionEventStatus,
+  StepExecutionBlockedEventStatus,
+};

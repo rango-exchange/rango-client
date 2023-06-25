@@ -393,7 +393,12 @@ export function setStepTransactionIds(
         description: explorerUrl.description || null,
       },
     ];
-  swap.extraMessage = 'Transaction sent ...';
+
+  const isApproval = isApprovalCurrentStepTx(currentStep);
+
+  if (isApproval) swap.extraMessage = 'Checking approve transaction status ...';
+  else swap.extraMessage = 'Checking transaction status ...';
+
   swap.extraMessageDetail = '';
   swap.extraMessageSeverity = MessageSeverity.info;
 
