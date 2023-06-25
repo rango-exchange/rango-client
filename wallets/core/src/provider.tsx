@@ -1,10 +1,4 @@
-import React, {
-  createContext,
-  useContext,
-  useEffect,
-  useReducer,
-  useRef,
-} from 'react';
+import React, { useEffect, useReducer } from 'react';
 
 import {
   autoConnect,
@@ -16,99 +10,36 @@ import {
   getComptaibleProvider,
   persistWallet,
   removeWalletFromPersist,
+  makeEventHandler,
   state_reducer,
 } from './helpers';
-import {
-  ProviderProps,
-  ProviderContext,
-  WalletActions,
-  WalletConfig,
-} from './types';
+import { ProviderProps, ProviderContext } from './types';
 import { WalletType } from '@rango-dev/wallets-shared';
-
-import Wallet, { EventHandler as WalletEventHandler } from './wallet';
-
-// TODO fix lint problem
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
-const WalletContext = createContext<ProviderContext>({});
-
-/*
-  Our event handler includes an internal state updater, and a notifier
-  for the outside listener.
-  On creating first wallet refrence, and on chaning `props.onUpdateState`
-  we are using this function.
-*/
-function makeEventHandler(dispatcher: any, onUpdateState?: WalletEventHandler) {
-  const handler: WalletEventHandler = (
-    type,
-    name,
-    value,
-    coreState,
-    supportedChains
-  ) => {
-    const action = { type: 'new_state', wallet: type, name, value };
-    // Update state
-    dispatcher(action);
-
-    // Giving the event to the outside listener
-    if (onUpdateState) {
-      onUpdateState(type, name, value, coreState, supportedChains);
-    }
-  };
-
-  return handler;
-}
-
-function useInitializers(onChangeState: WalletEventHandler) {
-  const availableWallets = useRef<{
-    [key: string]: Wallet | undefined;
-  }>({});
-
-  function updater(wallet: {
-    actions: WalletActions;
-    config: WalletConfig;
-  }): Wallet {
-    const type = wallet.config.type;
-    // We only update, if there is no instance available.
-    if (typeof availableWallets.current[type] === 'undefined') {
-      availableWallets.current[type] = new Wallet(
-        {
-          config: wallet.config,
-          handler: onChangeState,
-        },
-        wallet.actions
-      );
-    }
-
-    return availableWallets.current[type]!;
-  }
-
-  return updater;
-}
+import { useInitializers } from './hooks';
+import { WalletContext } from './context';
 
 function Provider(props: ProviderProps) {
   const [providersState, dispatch] = useReducer(state_reducer, {});
 
-  const addWalletRef = useInitializers(
+  // Get (or add) wallet instance (`provider`s will be wraped in a `Wallet`)
+  const getWalletInstance = useInitializers(
     makeEventHandler(dispatch, props.onUpdateState)
   );
-  // const providersRef = useRef<{ [type in WalletType]?: any }>({});
 
+  // Getting providers from props and put all of them in a `Map` with an appropriate interface.
   const listOfProviders = props.providers;
   const wallets = checkWalletProviders(listOfProviders);
+
+  // Final API we put in context and it will be available to use for users.
   const api: ProviderContext = {
-    // TODO: Fix type error
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
     async connect(type, network) {
       const wallet = wallets.get(type);
       if (!wallet) {
         throw new Error(`You should add ${type} to provider first.`);
       }
 
-      const ref = addWalletRef(wallet);
-      const result = await ref.connect(network);
+      const walletInstance = getWalletInstance(wallet);
+      const result = await walletInstance.connect(network);
       if (props.autoConnect) persistWallet(type);
 
       return result;
@@ -119,8 +50,8 @@ function Provider(props: ProviderProps) {
         throw new Error(`You should add ${type} to provider first.`);
       }
 
-      const ref = addWalletRef(wallet);
-      await ref.disconnect();
+      const walletInstance = getWalletInstance(wallet);
+      await walletInstance.disconnect();
       if (props.autoConnect) removeWalletFromPersist(type);
     },
     async disconnectAll() {
@@ -133,8 +64,8 @@ function Provider(props: ProviderProps) {
         const wallet = wallets.get(type);
 
         if (wallet) {
-          const ref = addWalletRef(wallet);
-          disconnect_promises.push(ref.disconnect());
+          const walletInstance = getWalletInstance(wallet);
+          disconnect_promises.push(walletInstance.disconnect());
         }
       });
 
@@ -150,9 +81,9 @@ function Provider(props: ProviderProps) {
         return false;
       }
 
-      const ref = addWalletRef(wallet);
-      return ref.canSwitchNetworkTo
-        ? ref.canSwitchNetworkTo(network, ref.provider)
+      const walletInstance = getWalletInstance(wallet);
+      return walletInstance.canSwitchNetworkTo
+        ? walletInstance.canSwitchNetworkTo(network, walletInstance.provider)
         : false;
     },
     providers() {
@@ -160,8 +91,8 @@ function Provider(props: ProviderProps) {
       availableWallets(providersState).forEach((type) => {
         const wallet = wallets.get(type);
         if (wallet) {
-          const ref = addWalletRef(wallet);
-          providers[type] = ref.provider;
+          const walletInstance = getWalletInstance(wallet);
+          providers[type] = walletInstance.provider;
         }
       });
 
@@ -184,16 +115,16 @@ function Provider(props: ProviderProps) {
       if (!wallet) {
         throw new Error(`You should add ${type} to provider first.`);
       }
-      const ref = addWalletRef(wallet);
-      const supportedChains = ref.getWalletInfo(
+      const walletInstance = getWalletInstance(wallet);
+      const supportedChains = walletInstance.getWalletInfo(
         props.allBlockChains || []
       ).supportedChains;
       const provider = getComptaibleProvider(
         supportedChains,
-        ref.provider,
+        walletInstance.provider,
         type
       );
-      const result = ref.getSigners(provider);
+      const result = walletInstance.getSigners(provider);
 
       return result;
     },
@@ -201,10 +132,10 @@ function Provider(props: ProviderProps) {
 
   useEffect(() => {
     wallets.forEach((wallet) => {
-      const ref = addWalletRef(wallet);
+      const walletInstance = getWalletInstance(wallet);
       const runOnInit = () => {
-        if (ref.onInit) {
-          ref.onInit();
+        if (walletInstance.onInit) {
+          walletInstance.onInit();
         }
       };
 
@@ -232,19 +163,21 @@ function Provider(props: ProviderProps) {
     const allBlockChains = props.allBlockChains;
     if (allBlockChains) {
       wallets.forEach((wallet) => {
-        const ref = addWalletRef(wallet);
-        const supportedChains = ref.getWalletInfo(
+        const walletInstance = getWalletInstance(wallet);
+        const supportedChains = walletInstance.getWalletInfo(
           props.allBlockChains || []
         ).supportedChains;
-        ref.setMeta(supportedChains);
+        walletInstance.setMeta(supportedChains);
       });
     }
   }, [props.allBlockChains]);
 
   useEffect(() => {
     wallets.forEach((wallet) => {
-      const ref = addWalletRef(wallet);
-      ref.setHandler(makeEventHandler(dispatch, props.onUpdateState));
+      const walletInstance = getWalletInstance(wallet);
+      walletInstance.setHandler(
+        makeEventHandler(dispatch, props.onUpdateState)
+      );
     });
   }, [props.onUpdateState]);
 
@@ -253,7 +186,7 @@ function Provider(props: ProviderProps) {
       props.allBlockChains && props.allBlockChains.length && props.autoConnect;
     if (shouldTryAutoConnect) {
       (async () => {
-        await autoConnect(wallets, addWalletRef);
+        await autoConnect(wallets, getWalletInstance);
       })();
     }
   }, [props.autoConnect, props.allBlockChains]);
@@ -263,13 +196,6 @@ function Provider(props: ProviderProps) {
       {props.children}
     </WalletContext.Provider>
   );
-}
-
-export function useWallets(): ProviderContext {
-  const context = useContext(WalletContext);
-  if (!context)
-    throw Error('useWallet can only be used within the Provider component');
-  return context;
 }
 
 export default Provider;

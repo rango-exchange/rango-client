@@ -463,9 +463,3 @@ export const EXODUS_WALLET_SUPPORTED_CHAINS = [
   Networks.AVAX_CCHAIN,
   BNB_SYMBOL,
 ];
-
-export type SwapProgressNotification = {
-  eventType: EventType;
-  swap: PendingSwap | null;
-  step: PendingSwapStep | null;
-};

@@ -1,5 +1,11 @@
 import React, { useState } from 'react';
-import { BlockchainSelector, Button, Chip, CloseIcon, Modal } from '@rango-dev/ui';
+import {
+  BlockchainSelector,
+  Button,
+  Chip,
+  CloseIcon,
+  Modal,
+} from '@rango-dev/ui';
 import { LiquiditySource } from '@rango-dev/ui/dist/types/meta';
 import { Wallets } from '../../types';
 import { WalletType } from '@rango-dev/wallets-shared';
@@ -32,7 +38,14 @@ type PropTypes = (
   modalTitle: string;
 };
 
-export function MultiSelect({ label, type, modalTitle, list, value, onChange }: PropTypes) {
+export function MultiSelect({
+  label,
+  type,
+  modalTitle,
+  list,
+  value,
+  onChange,
+}: PropTypes) {
   const [open, setOpen] = useState<boolean>(false);
   const loadingStatus = useMetaStore.use.loadingStatus();
   const { blockchains } = useMetaStore.use.meta();
@@ -55,7 +68,9 @@ export function MultiSelect({ label, type, modalTitle, list, value, onChange }: 
             hasHeader={false}
             multiSelect
             selectedList={
-              !value ? 'all' : blockchains.filter((chain) => value.includes(chain.name))
+              !value
+                ? 'all'
+                : blockchains.filter((chain) => value.includes(chain.name))
             }
             onChange={(blockchain) => onChange(blockchain.name)}
             loadingStatus={loadingStatus}
@@ -82,15 +97,6 @@ export function MultiSelect({ label, type, modalTitle, list, value, onChange }: 
     }
   };
 
-  const getLabel = (value) => {
-    switch (type) {
-      case 'Blockchains':
-        return value;
-      case 'Wallets':
-      case 'Sources':
-        return value;
-    }
-  };
   return (
     <div>
       <Container label={label} onOpenModal={() => setOpen(true)}>
@@ -103,8 +109,8 @@ export function MultiSelect({ label, type, modalTitle, list, value, onChange }: 
             <Chip
               style={{ margin: 2 }}
               selected
-              label={getLabel(v)}
-              suffix={<CloseIcon color="$foreground" />}
+              label={v}
+              suffix={<CloseIcon color="white" />}
               onClick={() => onChange(v)}
               key={index}
             />

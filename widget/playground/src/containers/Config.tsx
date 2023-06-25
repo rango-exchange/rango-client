@@ -4,14 +4,10 @@ import { ChainsConfig } from '../components/ChainsConfig';
 import { WalletsConfig } from '../components/WalletsConfig';
 import { SourcesConfig } from '../components/SourcesConfig';
 import { StylesConfig } from '../components/StylesConfig';
-import { Provider } from '@rango-dev/wallets-core';
-import { allProviders } from '@rango-dev/provider-all';
 import { globalStyles } from '../globalStyles';
 import { useMetaStore } from '../store/meta';
 import { useConfigStore } from '../store/config';
 import { ExportConfigModal } from '../components/ExportConfigModal';
-
-const providers = allProviders();
 
 const Container = styled('div', {
   display: 'flex',
@@ -89,52 +85,51 @@ export function Config(props: PropsWithChildren) {
 
   return (
     <Container>
-      <Provider providers={providers}>
-        <ConfigContent>
-          <div>
-            <Header>
-              <div>
-                <Typography variant="h4">Customize your widget</Typography>
-                <Divider size={8} />
-                <Description variant="body2" color="$neutral600">
-                  You can customize the theme and config how your widget should
-                  works
-                </Description>
-              </div>
-              <HeaderButtonsContainer>
-                <HeaderButton
-                  variant="contained"
-                  type="primary"
-                  onClick={() => setOpen(true)}>
-                  Export Code
-                </HeaderButton>
-                <Divider size={16} />
-                <ResetButton
-                  variant="outlined"
-                  type="warning"
-                  onClick={resetConfig.bind(null)}>
-                  Reset Config
-                </ResetButton>
-              </HeaderButtonsContainer>
-            </Header>
-            {loadingStatus === 'failed' && (
-              <Alert type="error">
-                Error connecting server, please reload the app and try again
-              </Alert>
-            )}
-            <Divider size={20} />
-            <ChainsConfig type="Source" />
-            <Divider size={32} />
-            <ChainsConfig type="Destination" />
-            <Divider size={32} />
-            <WalletsConfig />
-            <Divider size={32} />
-            <SourcesConfig />
-            <Divider size={32} />
-            <StylesConfig />
-          </div>
-        </ConfigContent>
-      </Provider>
+      <ConfigContent>
+        <div>
+          <Header>
+            <div>
+              <Typography variant="h4">Customize your widget</Typography>
+              <Divider size={8} />
+              <Description variant="body2" color="$neutral600">
+                You can customize the theme and config how your widget should
+                works
+              </Description>
+            </div>
+            <HeaderButtonsContainer>
+              <HeaderButton
+                variant="contained"
+                type="primary"
+                onClick={() => setOpen(true)}>
+                Export Code
+              </HeaderButton>
+              <Divider size={16} />
+              <ResetButton
+                variant="outlined"
+                type="warning"
+                onClick={resetConfig.bind(null)}>
+                Reset Config
+              </ResetButton>
+            </HeaderButtonsContainer>
+          </Header>
+          {loadingStatus === 'failed' && (
+            <Alert type="error">
+              Error connecting server, please reload the app and try again
+            </Alert>
+          )}
+          <Divider size={20} />
+          <ChainsConfig type="Source" />
+          <Divider size={32} />
+          <ChainsConfig type="Destination" />
+          <Divider size={32} />
+          <WalletsConfig />
+          <Divider size={32} />
+          <SourcesConfig />
+          <Divider size={32} />
+          <StylesConfig />
+          <Divider size={32} />
+        </div>
+      </ConfigContent>
       <SwapContent>
         <Swap>{props.children}</Swap>
       </SwapContent>

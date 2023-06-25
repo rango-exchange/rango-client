@@ -9,7 +9,12 @@ import {
   updateSwapStatus,
   inMemoryTransactionsData,
 } from '../helpers';
-import { SwapActionTypes, SwapQueueContext, SwapStorage } from '../types';
+import {
+  StepEventType,
+  SwapActionTypes,
+  SwapQueueContext,
+  SwapStorage,
+} from '../types';
 import {
   getCurrentBlockchainOf,
   getNextStep,
@@ -21,6 +26,8 @@ import { Transaction, TransactionStatusResponse } from 'rango-sdk';
 import { httpService } from '../services';
 import type { GenericSigner } from 'rango-types';
 import { prettifyErrorMessage } from '../shared-errors';
+import { notifier } from '../services/eventEmitter';
+import { DEFAULT_ERROR_CODE } from '../constants';
 
 const INTERVAL_FOR_CHECK = 5_000;
 
@@ -116,10 +123,16 @@ async function checkTransactionStatus({
       details: extraMessageDetail,
       errorCode: extraMessageErrorCode,
     });
-    context?.notifier({
-      eventType: 'task_failed',
+
+    notifier({
+      event: {
+        type: StepEventType.FAILED,
+        reason: extraMessage,
+        reasonCode: updateResult.failureType ?? DEFAULT_ERROR_CODE,
+      },
       ...updateResult,
     });
+
     getTxReceiptFailed = true;
     // We shouldn't return here, because we need to trigger check status job in backend.
     // This is not a ui requirement but the backend one.
@@ -169,15 +182,15 @@ async function checkTransactionStatus({
   }
 
   if (prevOutputAmount === null && outputAmount !== null)
-    context.notifier({
-      eventType: 'step_completed_with_output',
+    notifier({
+      event: { type: StepEventType.OUTPUT_REVEALED, outputAmount },
       swap: swap,
       step: currentStep,
     });
   else if (prevOutputAmount === null && outputAmount === null) {
     // it is needed to set notification after reloading the page
-    context.notifier({
-      eventType: 'check_tx_status',
+    notifier({
+      event: { type: StepEventType.CHECK_STATUS },
       swap: swap,
       step: currentStep,
     });
@@ -189,6 +202,14 @@ async function checkTransactionStatus({
     swap.extraMessage = nextStep
       ? `starting next step: ${nextStep.swapperId}: ${nextStep.fromBlockchain} -> ${nextStep.toBlockchain}`
       : '';
+    notifier({
+      event: {
+        type: StepEventType.SUCCEEDED,
+        outputAmount: currentStep.outputAmount ?? '',
+      },
+      swap,
+      step: currentStep,
+    });
   } else if (currentStep.status === 'failed') {
     swap.extraMessage = 'Transaction failed in blockchain';
     swap.extraMessageSeverity = MessageSeverity.error;
@@ -307,8 +328,12 @@ async function checkApprovalStatus({
       details: extraMessageDetail,
       errorCode: extraMessageErrorCode,
     });
-    context?.notifier({
-      eventType: 'task_failed',
+    notifier({
+      event: {
+        type: StepEventType.FAILED,
+        reason: extraMessage,
+        reasonCode: updateResult.failureType ?? DEFAULT_ERROR_CODE,
+      },
       ...updateResult,
     });
     return failed();
@@ -349,16 +374,22 @@ async function checkApprovalStatus({
         message: message,
         details: details,
       });
-      context.notifier({
-        eventType: 'not_enough_approval',
+
+      notifier({
+        event: {
+          type: StepEventType.FAILED,
+          reason: message,
+          reasonCode: updateResult.failureType ?? DEFAULT_ERROR_CODE,
+        },
         ...updateResult,
       });
+
       failed();
     } else if (!isApproved) {
       // it is needed to set notification after reloading the page
-      context.notifier({
-        eventType: 'check_approve_tx_status',
-        swap: swap,
+      notifier({
+        event: { type: StepEventType.CHECK_STATUS },
+        swap,
         step: currentStep,
       });
     }
@@ -381,8 +412,8 @@ async function checkApprovalStatus({
       swapDetails: swap,
     });
 
-    context.notifier({
-      eventType: 'contract_confirmed',
+    notifier({
+      event: { type: StepEventType.APPROVAL_TX_SUCCEEDED },
       swap: swap,
       step: currentStep,
     });

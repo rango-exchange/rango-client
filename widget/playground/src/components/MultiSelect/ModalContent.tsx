@@ -29,7 +29,11 @@ type PropTypes =
       type: 'Wallets';
       selectedList?: WalletType[];
       list: Wallets;
-      onChange: (wallet: { title: string; logo: string; type: WalletType }) => void;
+      onChange: (wallet: {
+        title: string;
+        logo: string;
+        type: WalletType;
+      }) => void;
     }
   | {
       type: 'Sources';
@@ -38,10 +42,12 @@ type PropTypes =
       onChange: (sources: Source) => void;
     };
 
-const filterList = (list, searchedFor: string) =>
-  list.filter((item) => item.title.toLowerCase().includes(searchedFor.toLowerCase()));
+const filterList = (list: Wallets | LiquiditySource[], searchedFor: string) =>
+  list.filter((item: { title: string }) =>
+    item.title.toLowerCase().includes(searchedFor.toLowerCase())
+  );
 
-const getIndex = (list, v, type) => {
+const getIndex = (list: string[], v: string, type: 'Wallets' | 'Sources') => {
   switch (type) {
     case 'Wallets':
       return list.findIndex((item) => item === v);
@@ -50,7 +56,12 @@ const getIndex = (list, v, type) => {
   }
 };
 
-export default function ModalContent({ type, list, selectedList, onChange }: PropTypes) {
+export default function ModalContent({
+  type,
+  list,
+  selectedList,
+  onChange,
+}: PropTypes) {
   const isSelect = (name: string) => {
     return !selectedList || getIndex(selectedList, name, type) > -1;
   };
@@ -69,7 +80,9 @@ export default function ModalContent({ type, list, selectedList, onChange }: Pro
                 {filteredList.map((item, index) => (
                   <Button
                     type={
-                      isSelect(type === 'Wallets' ? item.type : item.title) ? 'primary' : undefined
+                      isSelect(type === 'Wallets' ? item.type : item.title)
+                        ? 'primary'
+                        : undefined
                     }
                     variant="outlined"
                     size="large"
@@ -89,7 +102,9 @@ export default function ModalContent({ type, list, selectedList, onChange }: Pro
             )}
             {!filteredList.length && (
               <NotFoundAlert
-                catergory={type.endsWith('s') ? type.substring(0, type.length - 1) : type}
+                catergory={
+                  type.endsWith('s') ? type.substring(0, type.length - 1) : type
+                }
                 searchedFor={searchedFor}
               />
             )}
