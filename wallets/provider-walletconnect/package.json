@@ -25,7 +25,6 @@
     "@walletconnect/client": "^1.8.0",
     "@walletconnect/jsonrpc-utils": "^1.0.4",
     "@walletconnect/qrcode-modal": "^1.8.0",
-    "@walletconnect/ethereum-provider": "1.8.0",
     "rango-types": "^0.1.39"
   },
   "publishConfig": {
