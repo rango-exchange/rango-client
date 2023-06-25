@@ -11,7 +11,7 @@ import {
   canSwitchNetworkToEvm,
   WalletInfo,
   getBlockChainNameFromId,
-  Network,
+  Networks,
   convertEvmBlockchainMetaToEvmChainInfo,
 } from '@rango-dev/wallets-shared';
 import signer from './signer';
@@ -74,7 +74,7 @@ export const subscribe: Subscribe = ({
   disconnect,
 }) => {
   instance?.on('chainChanged', (chainId: string) => {
-    const network = getBlockChainNameFromId(chainId, meta) || Network.Unknown;
+    const network = getBlockChainNameFromId(chainId, meta) || Networks.Unknown;
 
     updateChainId(chainId);
     connect(network);
