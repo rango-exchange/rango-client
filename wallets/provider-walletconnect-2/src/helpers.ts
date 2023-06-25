@@ -6,7 +6,11 @@ import UniversalProvider from '@walletconnect/universal-provider';
 import { Web3Modal } from '@web3modal/standalone';
 import { BlockchainMeta, isEvmBlockchain } from 'rango-types';
 
-const DEFAULT_COSMOS_METHODS = ['cosmos_signDirect', 'cosmos_signAmino'];
+const DEFAULT_COSMOS_METHODS = [
+  'cosmos_signDirect',
+  'cosmos_signAmino',
+  'cosmos_getAccounts',
+];
 const PROJECT_ID = 'f5196d081862c6f2b81c04520ea9301c';
 const EVM_CHAINS = [1, 10, 56, 100, 137, 42161, 43114, 1313161554];
 const RELAY_URL = 'wss://relay.walletconnect.com';
