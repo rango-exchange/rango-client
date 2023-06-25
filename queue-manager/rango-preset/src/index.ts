@@ -12,6 +12,17 @@ export type {
   RouteEvent,
   StepEvent,
   EventSeverity,
+  RouteStartedEvent,
+  RouteSucceededEvent,
+  RouteFailedEvent,
+  StepStartedEvent,
+  StepSucceededEvent,
+  StepFailedEvent,
+  StepTxExecutionUpdatedEvent,
+  StepTxExecutionBlockedEvent,
+  StepCheckStatusEvent,
+  StepApprovalTxSucceededEvent,
+  StepOutputRevealedEvent,
 } from './types';
 export {
   MainEvents,
