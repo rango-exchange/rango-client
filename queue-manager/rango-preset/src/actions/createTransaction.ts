@@ -1,5 +1,11 @@
 import { ExecuterActions } from '@rango-dev/queue-manager-core';
-import { SwapActionTypes, SwapQueueContext, SwapStorage } from '../types';
+import {
+  StepEventType,
+  SwapActionTypes,
+  SwapQueueContext,
+  SwapStorage,
+  StepExecutionEventStatus,
+} from '../types';
 import {
   getCurrentStep,
   updateSwapStatus,
@@ -10,6 +16,8 @@ import {
 import { prettifyErrorMessage } from '../shared-errors';
 import { CreateTransactionRequest } from 'rango-sdk';
 import { httpService } from '../services';
+import { notifier } from '../services/eventEmitter';
+import { DEFAULT_ERROR_CODE } from '../constants';
 
 /**
  *
@@ -21,13 +29,21 @@ import { httpService } from '../services';
 export async function createTransaction(
   actions: ExecuterActions<SwapStorage, SwapActionTypes, SwapQueueContext>
 ): Promise<void> {
-  const { setStorage, getStorage, next, schedule, context } = actions;
+  const { setStorage, getStorage, next, schedule } = actions;
   const swap = getStorage().swapDetails;
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const currentStep = getCurrentStep(swap)!;
   const transaction = getCurrentStepTx(currentStep);
 
   if (!transaction) {
+    notifier({
+      event: {
+        type: StepEventType.TX_EXECUTION,
+        status: StepExecutionEventStatus.CREATE_TX,
+      },
+      swap,
+      step: currentStep,
+    });
     const request: CreateTransactionRequest = {
       requestId: swap.requestId,
       step: currentStep.id,
@@ -66,8 +82,13 @@ export async function createTransaction(
         details: extraMessageDetail,
         errorCode: 'FETCH_TX_FAILED',
       });
-      context.notifier({
-        eventType: 'task_failed',
+
+      notifier({
+        event: {
+          type: StepEventType.FAILED,
+          reason: extraMessage,
+          reasonCode: updateResult.failureType ?? DEFAULT_ERROR_CODE,
+        },
         ...updateResult,
       });
 
