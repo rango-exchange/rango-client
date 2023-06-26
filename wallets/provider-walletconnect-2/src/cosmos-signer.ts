@@ -16,8 +16,7 @@ import { getsignedTx, manipulateMsg } from '@rango-dev/signer-cosmos';
 import { TendermintTxTracer } from '@keplr-wallet/cosmos';
 import { simpleFetch } from '@keplr-wallet/simple-fetch';
 import { cosmos } from '@keplr-wallet/cosmos';
-import Long from 'long';
-
+import { formatDirectSignDoc, stringifySignDocValues } from 'cosmos-wallet';
 type CosmosExternalProvider = IUniversalProvider;
 const uint8ArrayToHex = (buffer: Uint8Array): string => {
   return Buffer.from(buffer).toString('hex');
@@ -56,6 +55,7 @@ export class CustomCosmosSigner implements GenericSigner<CosmosTransaction> {
         );
       if (!sequence)
         throw SignerError.AssertionFailed('sequence is undefined from server');
+      console.log({ signType });
 
       if (signType === 'AMINO') {
         const signDoc = makeSignDoc(
@@ -105,9 +105,10 @@ export class CustomCosmosSigner implements GenericSigner<CosmosTransaction> {
         }
         console.log({ getAccounts });
 
-        const pubkey = getAccounts?.find(
-          (account) => account.address === tx.fromWalletAddress
-        )?.pubkey;
+        const pubkey =
+          getAccounts?.find(
+            (account) => account.address === tx.fromWalletAddress
+          )?.pubkey || '';
 
         const bodyBytes = cosmos.tx.v1beta1.TxBody.encode({
           messages: tx.data.protoMsgs.map((m) => ({
@@ -116,44 +117,21 @@ export class CustomCosmosSigner implements GenericSigner<CosmosTransaction> {
           })),
           memo,
         }).finish();
-
-        const authInfoBytes = cosmos.tx.v1beta1.AuthInfo.encode({
-          signerInfos: [
-            {
-              publicKey: {
-                type_url: '/cosmos.crypto.secp256k1.PubKey',
-                value: cosmos.crypto.secp256k1.PubKey.encode({
-                  key: Buffer.from(pubkey || '', 'base64'),
-                }).finish(),
-              },
-              modeInfo: {
-                single: {
-                  mode: cosmos.tx.signing.v1beta1.SignMode
-                    .SIGN_MODE_LEGACY_AMINO_JSON,
-                },
-              },
-              sequence: Long.fromString(sequence),
-            },
-          ],
-
-          fee: {
-            amount: (fee as any).amount as any[],
-            gasLimit: Long.fromString((fee as any).gas),
-          },
-        }).finish();
-        console.log({ bodyBytes }, { authInfoBytes });
-
+        const signDoc = formatDirectSignDoc(
+          fee?.amount || [],
+          pubkey,
+          parseInt(fee?.gas as string),
+          account_number,
+          parseInt(sequence),
+          uint8ArrayToHex(bodyBytes),
+          chainId
+        );
         let signResponse;
         try {
           signResponse = await this.provider.request<AminoSignResponse>({
             method: 'cosmos_signDirect',
             params: {
-              signDoc: {
-                chainId,
-                accountNumber: account_number,
-                authInfoBytes: uint8ArrayToHex(authInfoBytes),
-                bodyBytes: uint8ArrayToHex(bodyBytes),
-              },
+              signDoc: stringifySignDocValues(signDoc),
               signerAddress: tx.fromWalletAddress,
             },
           });

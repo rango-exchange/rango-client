@@ -13,6 +13,7 @@ import {
   Networks,
   convertEvmBlockchainMetaToEvmChainInfo,
   switchOrAddNetworkForMetamaskCompatibleWallets,
+  getCosmosExperimentalChainInfo,
 } from '@rango-dev/wallets-shared';
 import signer from './signer';
 import {
@@ -22,6 +23,7 @@ import {
   evmBlockchains,
   cosmosBlockchains,
   solanaBlockchain,
+  CosmosBlockchainMeta,
 } from 'rango-types';
 
 const WALLET = WalletTypes.WALLET_CONNECT_2;
@@ -41,8 +43,16 @@ export const getInstance: GetInstance = async (options) => {
     evms as EvmBlockchainMeta[]
   );
 
-  const info = network ? evm_chain_info[network] : undefined;
-  const requestedChainId = info?.chainId ? parseInt(info?.chainId) : undefined;
+  const cosmos = cosmosBlockchains(meta);
+
+  const cosmos_chain_info = getCosmosExperimentalChainInfo(
+    cosmos as CosmosBlockchainMeta[]
+  );
+
+  const requestedChainId = network
+    ? parseInt(evm_chain_info[network].chainId) ||
+      cosmos_chain_info[network]?.id
+    : undefined;
 
   const nextInstance = await makeConnection({
     chainId: requestedChainId,
@@ -70,12 +80,9 @@ export const getInstance: GetInstance = async (options) => {
 export const connect: Connect = async ({ instance }) => {
   const accounts = await instance.enable();
   // const chainId = await instance.request({ method: 'eth_chainId' });
-  console.log('instance', instance);
-  console.log('accounts', accounts);
-
   return {
     accounts,
-    chainId: 'cosmoshub-4',
+    chainId: Networks.COSMOS,
   };
 };
 

@@ -30,9 +30,9 @@
     "bs58": "^5.0.0",
     "rango-types": "^0.1.39",
     "@cosmjs/launchpad": "^0.27.1",
-    "long": "^5.2.1",
     "@keplr-wallet/cosmos": "^0.9.12",
-    "@keplr-wallet/simple-fetch": "^0.12.12"
+    "@keplr-wallet/simple-fetch": "^0.12.12",
+    "cosmos-wallet": "^1.2.0"
   },
   "publishConfig": {
     "access": "public"
