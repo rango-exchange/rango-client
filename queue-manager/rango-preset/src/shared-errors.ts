@@ -126,6 +126,7 @@ export function mapAppErrorCodesToAPIErrorCode(
         [SignerErrorCode.REJECTED_BY_USER]: 'USER_REJECT',
         [SignerErrorCode.SIGN_TX_ERROR]: 'CALL_WALLET_FAILED',
         [SignerErrorCode.SEND_TX_ERROR]: 'SEND_TX_FAILED',
+        [SignerErrorCode.TX_FAILED_IN_BLOCKCHAIN]: 'TX_FAILED_IN_BLOCKCHAIN',
         [SignerErrorCode.NOT_IMPLEMENTED]: DEFAULT_ERROR_CODE,
         [SignerErrorCode.OPERATION_UNSUPPORTED]: DEFAULT_ERROR_CODE,
         [SignerErrorCode.UNEXPECTED_BEHAVIOUR]: DEFAULT_ERROR_CODE,
