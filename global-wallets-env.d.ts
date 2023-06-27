@@ -28,5 +28,6 @@ declare global {
     terraWallets: any;
     enkrypt: any;
     tally: any;
+    bitkeep: any;
   }
 }
