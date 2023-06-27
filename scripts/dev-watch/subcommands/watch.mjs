@@ -4,7 +4,7 @@ import { parseCommand, headStyle } from '../utils.mjs';
 
 export function watch(params) {
   const { project, nx, cwd } = params;
-  const command = `${nx} watch --projects=${project} --includeDependentProjects -- echo "[build]\\$NX_PROJECT_NAME"`;
+  const command = `${nx} watch --projects=${project} --includeDependentProjects -- echo "[build]%NX_PROJECT_NAME%"`;
   console.log(headStyle('main'), `Running watch command\n\n`);
 
   const watcher = exec(command, { cwd }, (err, stdout, stderr) => {

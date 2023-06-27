@@ -174,6 +174,7 @@ export const getCurrentStepTx = (
     starknetTransaction,
     tronApprovalTransaction,
     tronTransaction,
+    tonTransaction,
   } = currentStep;
   return (
     evmTransaction ||
@@ -184,7 +185,8 @@ export const getCurrentStepTx = (
     starknetApprovalTransaction ||
     starknetTransaction ||
     tronApprovalTransaction ||
-    tronTransaction
+    tronTransaction ||
+    tonTransaction
   );
 };
 
@@ -206,6 +208,7 @@ export const setCurrentStepTx = (
   currentStep.starknetTransaction = null;
   currentStep.tronApprovalTransaction = null;
   currentStep.tronTransaction = null;
+  currentStep.tonTransaction = null;
 
   const txType = transaction.type;
   switch (txType) {
@@ -232,6 +235,9 @@ export const setCurrentStepTx = (
       break;
     case TransactionType.TRANSFER:
       currentStep.transferTransaction = transaction;
+      break;
+    case TransactionType.TON:
+      currentStep.tonTransaction = transaction;
       break;
     default:
       ((x: never) => {

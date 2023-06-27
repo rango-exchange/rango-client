@@ -17,7 +17,6 @@ export function WidgetEvents() {
   useEffect(() => {
     widgetEvents.on(MainEvents.StepEvent, (widgetEvent) => {
       const { event, step } = widgetEvent;
-      console.log({ event: widgetEvent });
       const shouldRefetchBalance =
         (event.type === StepEventType.TX_EXECUTION &&
           event.status === StepExecutionEventStatus.TX_SENT &&

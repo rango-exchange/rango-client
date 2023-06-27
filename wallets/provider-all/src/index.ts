@@ -23,6 +23,7 @@ import * as frontier from '@rango-dev/provider-frontier';
 import * as station from '@rango-dev/provider-station';
 import * as enkrypt from '@rango-dev/provider-enkrypt';
 import * as taho from '@rango-dev/provider-taho';
+import * as myTonWallet from '@rango-dev/provider-my-ton-wallet';
 
 export const allProviders = () => [
   binance,
@@ -50,4 +51,5 @@ export const allProviders = () => [
   station,
   enkrypt,
   taho,
+  myTonWallet,
 ];

@@ -13,8 +13,11 @@ import {
   StepExecutionEventStatus,
   StepExecutionBlockedEventStatus,
 } from '../types';
-import { PendingSwap, PendingSwapStep } from 'rango-types/lib';
-import { getCurrentBlockchainOfOrNull } from '../shared';
+import {
+  PendingSwap,
+  PendingSwapStep,
+  getCurrentBlockchainOfOrNull,
+} from '../shared';
 import {
   getCurrentStepTx,
   getFailedStep,

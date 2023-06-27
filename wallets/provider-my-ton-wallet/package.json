@@ -1,6 +1,6 @@
 {
-  "name": "@rango-dev/provider-tokenpocket",
-  "version": "0.5.1-next.9",
+  "name": "@rango-dev/provider-my-ton-wallet",
+  "version": "0.1.0",
   "license": "MIT",
   "type": "module",
   "module": "./dist/index.js",
@@ -14,15 +14,15 @@
     "src"
   ],
   "scripts": {
-    "build": "node ../../scripts/build/command.mjs --path wallets/provider-tokenpocket",
+    "build": "node ../../scripts/build/command.mjs --path wallets/provider-my-ton-wallet",
     "clean": "rimraf dist",
     "format": "prettier --write '{.,src}/**/*.{ts,tsx}'",
     "lint": "eslint \"**/*.{ts,tsx}\" --ignore-path ../../.eslintignore"
   },
   "dependencies": {
-    "@rango-dev/signer-evm": "^0.5.1-next.2",
     "@rango-dev/wallets-shared": "^0.5.1-next.10",
-    "rango-types": "^0.1.41"
+    "rango-types": "^0.1.41",
+    "@tonconnect/sdk": "^2.1.3"
   },
   "publishConfig": {
     "access": "public"
