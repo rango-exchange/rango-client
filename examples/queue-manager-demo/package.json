@@ -22,7 +22,7 @@
     "@rango-dev/wallets-shared": "^0.5.1-next.12",
     "bignumber.js": "^9.1.1",
     "ethers": "^5.7.2",
-    "rango-sdk-basic": "^0.1.32",
-    "rango-types": "^0.1.42"
+    "rango-sdk-basic": "^0.1.34",
+    "rango-types": "^0.1.44"
   }
 }
