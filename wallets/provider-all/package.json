@@ -23,6 +23,7 @@
     "@rango-dev/provider-argentx": "^0.5.1-next.10",
     "@rango-dev/provider-binance-chain-wallet": "^0.5.1-next.11",
     "@rango-dev/provider-brave": "^0.5.1-next.11",
+    "@rango-dev/provider-bitkeep": "^0.1.0",
     "@rango-dev/provider-clover": "^0.5.1-next.13",
     "@rango-dev/provider-coin98": "^0.5.1-next.11",
     "@rango-dev/provider-coinbase": "^0.5.1-next.11",
