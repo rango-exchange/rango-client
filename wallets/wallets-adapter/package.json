@@ -23,10 +23,10 @@
     "react": ">=16"
   },
   "dependencies": {
-    "@rango-dev/provider-all": "^0.5.1-next.7",
-    "@rango-dev/ui": "^0.5.1-next.11",
+    "@rango-dev/provider-all": "^0.5.1-next.8",
+    "@rango-dev/ui": "^0.5.1-next.13",
     "@rango-dev/wallets-core": "^0.5.1-next.7",
-    "@rango-dev/wallets-shared": "^0.5.1-next.12",
+    "@rango-dev/wallets-shared": "^0.5.1-next.13",
     "rango-types": "^0.1.44"
   },
   "publishConfig": {
