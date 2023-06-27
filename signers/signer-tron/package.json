@@ -20,7 +20,7 @@
     "lint": "eslint \"**/*.{ts,tsx}\" --ignore-path ../../.eslintignore"
   },
   "dependencies": {
-    "rango-types": "^0.1.42"
+    "rango-types": "^0.1.44"
   },
   "publishConfig": {
     "access": "public"
