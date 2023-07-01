@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/signer-starknet",
-  "version": "0.5.1-next.1",
+  "version": "0.5.1-next.3",
   "license": "MIT",
   "type": "module",
   "module": "./dist/index.js",
@@ -20,7 +20,7 @@
     "lint": "eslint \"**/*.{ts,tsx}\" --ignore-path ../../.eslintignore"
   },
   "dependencies": {
-    "rango-types": "^0.1.39"
+    "rango-types": "^0.1.44"
   },
   "publishConfig": {
     "access": "public"

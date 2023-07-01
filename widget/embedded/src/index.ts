@@ -7,7 +7,11 @@ import {
 import { WidgetProps, Widget } from './Widget';
 import { WalletType } from '@rango-dev/wallets-shared';
 import { WidgetWallets } from './Wallets';
-import { useWallets } from '@rango-dev/wallets-core';
+import {
+  useWallets,
+  ProviderInterface,
+  EventHandler as HandleWalletsUpdate,
+} from '@rango-dev/wallets-core';
 import {
   useEvents as useWidgetEvents,
   MainEvents,
@@ -37,6 +41,7 @@ export type {
   WalletType,
   WidgetTheme,
   WidgetColors,
+  ProviderInterface,
   BlockchainAndTokenConfig,
   WidgetProps,
   RouteEvent,
@@ -54,6 +59,7 @@ export type {
   StepCheckStatusEvent,
   StepApprovalTxSucceededEvent,
   StepOutputRevealedEvent,
+  HandleWalletsUpdate,
 };
 export {
   Widget,
