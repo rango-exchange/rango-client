@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/wallets-shared",
-  "version": "0.5.1-next.10",
+  "version": "0.5.1-next.14",
   "license": "MIT",
   "type": "module",
   "module": "./dist/index.js",
@@ -20,7 +20,7 @@
     "lint": "eslint \"**/*.{ts,tsx}\" --ignore-path ../../.eslintignore"
   },
   "dependencies": {
-    "rango-types": "^0.1.39"
+    "rango-types": "^0.1.44"
   },
   "publishConfig": {
     "access": "public"

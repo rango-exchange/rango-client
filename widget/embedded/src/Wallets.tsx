@@ -28,6 +28,7 @@ export const WidgetContext = createContext<WidgetContextInterface>({
 export function WidgetWallets(
   props: PropsWithChildren<{
     providers: WidgetConfig['wallets'];
+    onUpdateState?: EventHandler;
   }>
 ) {
   const { blockchains } = useMetaStore.use.meta();
@@ -80,6 +81,11 @@ export function WidgetWallets(
       if (!!onConnectWalletHandler.current) onConnectWalletHandler.current(key);
       else
         console.warn(`onConnectWallet handler hasn't been set. Are you sure?`);
+    }
+
+    // propagate updates for Dapps using external wallets
+    if (props.onUpdateState) {
+      props.onUpdateState(type, event, value, state, supportedChains);
     }
   };
   return (

@@ -233,6 +233,9 @@ export const setCurrentStepTx = (
     case TransactionType.TRANSFER:
       currentStep.transferTransaction = transaction;
       break;
+    case TransactionType.TON:
+      currentStep.tonTransaction = transaction;
+      break;
     default:
       ((x: never) => {
         throw new Error(`${x} was unhandled!`);

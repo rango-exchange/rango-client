@@ -19,6 +19,7 @@ import { PrettyError } from './shared-errors';
 import BigNumber from 'bignumber.js';
 import { numberToString } from './numbers';
 import {
+  TonTransaction,
   isCosmosBlockchain,
   isEvmBlockchain,
   isStarknetBlockchain,
@@ -167,6 +168,7 @@ export type PendingSwapStep = {
   tronTransaction: TronTransaction | null;
   starknetApprovalTransaction: StarknetTransaction | null;
   starknetTransaction: StarknetTransaction | null;
+  tonTransaction: TonTransaction | null;
 
   // missing fields in older versions
   // keeping null for backward compatability
@@ -474,6 +476,7 @@ export function calculatePendingSwap(
           cosmosTransaction: null,
           solanaTransaction: null,
           transferTransaction: null,
+          tonTransaction: null,
 
           // front fields
           hasAlreadyProceededToSign: false,
