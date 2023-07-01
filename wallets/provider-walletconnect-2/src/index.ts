@@ -79,11 +79,21 @@ export const getInstance: GetInstance = async (options) => {
 
 export const connect: Connect = async ({ instance }) => {
   const accounts = await instance.enable();
+  const session = instance.session;
+  let cosmosAccounts = session.namespaces.cosmos.accounts;
+  if (cosmosAccounts.length) {
+    cosmosAccounts = cosmosAccounts.map((account: string) => {
+      const acc = account.split(':');
+      return {
+        accounts: [acc[2]],
+        chainId: acc[1],
+      };
+    });
+  }
+  console.log(accounts, cosmosAccounts);
+
   // const chainId = await instance.request({ method: 'eth_chainId' });
-  return {
-    accounts,
-    chainId: Networks.COSMOS,
-  };
+  return cosmosAccounts;
 };
 
 export const subscribe: Subscribe = ({

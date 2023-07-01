@@ -117,6 +117,8 @@ export class CustomCosmosSigner implements GenericSigner<CosmosTransaction> {
           })),
           memo,
         }).finish();
+        console.log({ tx, bodyBytes });
+
         const signDoc = formatDirectSignDoc(
           fee?.amount || [],
           pubkey,

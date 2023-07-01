@@ -15,9 +15,9 @@ const PROJECT_ID = 'f5196d081862c6f2b81c04520ea9301c';
 const EVM_CHAINS = [1, 10, 56, 100, 137, 42161, 43114, 1313161554];
 const RELAY_URL = 'wss://relay.walletconnect.com';
 
-const COSMOS_CHAINS = ['cosmoshub-4', 'irishub-1'];
+const COSMOS_CHAINS = ['juno-1', 'cosmoshub-4', 'osmosis-1'];
 
-// Checks if the provider supports switching networks for wallet types
+// Checks if the provider supportsuswitching networks for wallet types
 export function supportsForSwitchNetworkRequest(
   provider: UniversalProvider
 ): boolean {
@@ -39,9 +39,8 @@ export async function makeConnection(options: {
   const filteredEIPChains = EVM_CHAINS.filter((chain) => chain !== chainId).map(
     (chain) => `eip155:${chain}`
   );
-  const filteredCOSMOSChains = COSMOS_CHAINS.filter(
-    (chain) => chain !== chainId
-  ).map((chain) => `cosmos:${chain}`);
+
+  const filteredCOSMOSChains = COSMOS_CHAINS.map((chain) => `cosmos:${chain}`);
   // Initializes the UniversalProvider
   const provider = await UniversalProvider.init({
     relayUrl: RELAY_URL,
@@ -50,6 +49,7 @@ export async function makeConnection(options: {
 
   // Extracts the EVM blockchains from the provided meta information
   const evmBlockchains = meta.filter(isEvmBlockchain);
+
   const rpcMap = evmChainsToRpcMap(
     convertEvmBlockchainMetaToEvmChainInfo(evmBlockchains)
   );
@@ -84,9 +84,7 @@ export async function makeConnection(options: {
         //   rpcMap,
         // },
         cosmos: {
-          chains: chainId
-            ? [`cosmos:${chainId}`, ...filteredCOSMOSChains]
-            : filteredCOSMOSChains,
+          chains: filteredCOSMOSChains,
           methods: DEFAULT_COSMOS_METHODS,
           events: ['accountsChanged', 'chainChanged'],
         },
