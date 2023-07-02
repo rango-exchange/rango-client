@@ -6,16 +6,16 @@ import UniversalProvider from '@walletconnect/universal-provider';
 import { Web3Modal } from '@web3modal/standalone';
 import { BlockchainMeta, isEvmBlockchain } from 'rango-types';
 
-const DEFAULT_COSMOS_METHODS = [
-  'cosmos_signDirect',
-  'cosmos_signAmino',
-  'cosmos_getAccounts',
-];
+// const DEFAULT_COSMOS_METHODS = [
+//   'cosmos_signDirect',
+//   'cosmos_signAmino',
+//   'cosmos_getAccounts',
+// ];
 const PROJECT_ID = 'f5196d081862c6f2b81c04520ea9301c';
 const EVM_CHAINS = [1, 10, 56, 100, 137, 42161, 43114, 1313161554];
 const RELAY_URL = 'wss://relay.walletconnect.com';
 
-const COSMOS_CHAINS = ['cosmoshub-4', 'irishub-1'];
+// const COSMOS_CHAINS = ['cosmoshub-4', 'irishub-1'];
 
 // Checks if the provider supports switching networks for wallet types
 export function supportsForSwitchNetworkRequest(
@@ -39,9 +39,9 @@ export async function makeConnection(options: {
   const filteredEIPChains = EVM_CHAINS.filter((chain) => chain !== chainId).map(
     (chain) => `eip155:${chain}`
   );
-  const filteredCOSMOSChains = COSMOS_CHAINS.filter(
-    (chain) => chain !== chainId
-  ).map((chain) => `cosmos:${chain}`);
+  // const filteredCOSMOSChains = COSMOS_CHAINS.filter(
+  //   (chain) => chain !== chainId
+  // ).map((chain) => `cosmos:${chain}`);
   // Initializes the UniversalProvider
   const provider = await UniversalProvider.init({
     relayUrl: RELAY_URL,
@@ -83,18 +83,18 @@ export async function makeConnection(options: {
         //   events: ['chainChanged', 'accountsChanged'],
         //   rpcMap,
         // },
-        cosmos: {
-          chains: chainId
-            ? [`cosmos:${chainId}`, ...filteredCOSMOSChains]
-            : filteredCOSMOSChains,
-          methods: DEFAULT_COSMOS_METHODS,
-          events: ['accountsChanged', 'chainChanged'],
-        },
-        // solana: {
-        //   methods: ['solana_signTransaction', 'solana_signMessage'],
-        //   chains: ['solana:mainnet-beta'],
+        // cosmos: {
+        //   chains: chainId
+        //     ? [`cosmos:${chainId}`, ...filteredCOSMOSChains]
+        //     : filteredCOSMOSChains,
+        //   methods: DEFAULT_COSMOS_METHODS,
         //   events: ['accountsChanged', 'chainChanged'],
         // },
+        solana: {
+          methods: ['solana_signTransaction', 'solana_signMessage'],
+          chains: ['solana:4sGjMW1sUnHzSxGspuhpqLDx6wiyjNtZ'],
+          events: ['accountsChanged', 'chainChanged'],
+        },
       },
 
       pairingTopic: force ? undefined : pairingTopic,

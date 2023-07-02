@@ -82,7 +82,7 @@ export const connect: Connect = async ({ instance }) => {
   // const chainId = await instance.request({ method: 'eth_chainId' });
   return {
     accounts,
-    chainId: Networks.COSMOS,
+    chainId: Networks.SOLANA,
   };
 };
 
