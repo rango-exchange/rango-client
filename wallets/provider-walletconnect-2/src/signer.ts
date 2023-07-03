@@ -5,6 +5,7 @@ import {
 } from 'rango-types';
 import { Instance } from '.';
 import EVMSigner from './signers/evm';
+import COSMOSSigner from './signers/cosmos';
 
 export default function getSigners(instance: Instance): SignerFactory {
   console.log('instance', { instance });
@@ -16,6 +17,10 @@ export default function getSigners(instance: Instance): SignerFactory {
   signers.registerSigner(
     TxType.EVM,
     new EVMSigner(instance.client, instance.session)
+  );
+  signers.registerSigner(
+    TxType.COSMOS,
+    new COSMOSSigner(instance.client, instance.session)
   );
   // TODO: add cosmos, solana.
   return signers;

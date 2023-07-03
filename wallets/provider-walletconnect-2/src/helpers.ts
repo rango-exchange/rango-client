@@ -102,10 +102,9 @@ export function generateOptionalNamespace(
   };
 }
 
-export function getChainId(chain: string): number {
-  return chain.includes(NAMESPACES.ETHEREUM)
-    ? Number(chain.split(':')[1])
-    : Number(chain);
+export function getChainId(chain: ChainId): number | string {
+  if (chain.namespace === NAMESPACES.ETHEREUM) return Number(chain.reference);
+  else return chain.reference;
 }
 
 export function getAccountsFromSession(

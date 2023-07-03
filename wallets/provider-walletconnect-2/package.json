@@ -27,7 +27,9 @@
     "@walletconnect/universal-provider": "2.8.0",
     "@web3modal/standalone": "^2.4.3",
     "caip": "^1.1.0",
-    "rango-types": "^0.1.39"
+    "rango-types": "^0.1.39",
+    "cosmos-wallet": "^1.2.0",
+    "@keplr-wallet/simple-fetch": "^0.12.12"
   },
   "devDependencies": {
     "@walletconnect/types": "^2.8.1"

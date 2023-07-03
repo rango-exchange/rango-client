@@ -119,8 +119,10 @@ export async function tryConnect(
   // If `network` is provided, trying to get chainId. Otherwise, fallback to eth.
   const requiredNamespaces = generateRequiredNamespace(
     meta,
-    network || Networks.ETHEREUM
+    network || Networks.COSMOS
   );
+  console.log({ requiredNamespaces, network });
+
   // Otherwise we try to get all of them as optional
   // const optionalNamespaces = generateOptionalNamespace(meta);
 
@@ -129,7 +131,7 @@ export async function tryConnect(
       requiredNamespaces,
       a: {
         meta,
-        network: network || Networks.ETHEREUM,
+        network: network || Networks.COSMOS,
       },
     });
     throw new Error(`Couldn't generate required namespace for ${network}`);
@@ -185,9 +187,15 @@ export function getAccountsFromSession(session: SessionTypes.Struct) {
     .flat()
     .map((account) => {
       const { address, chainId } = new AccountId(account);
+      console.log(
+        'getAccountsFromSession',
+        { address, chainId },
+        getChainId(chainId)
+      );
+
       return {
         accounts: [address],
-        chainId: getChainId(chainId.toString()).toString(),
+        chainId: chainId.reference,
       };
     });
 

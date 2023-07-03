@@ -35,7 +35,7 @@ export const config: WalletConfig = {
   type: WALLET,
   checkInstallation: false,
   isAsyncInstance: true,
-  defaultNetwork: Networks.ETHEREUM,
+  defaultNetwork: Networks.COSMOS,
 };
 
 export const getInstance: GetInstance = async (options) => {
@@ -76,6 +76,7 @@ export const getInstance: GetInstance = async (options) => {
 // {context: 'core'}context: "core"[[Prototype]]: Object {context: 'core/expirer'} 'No matching key. expirer: topic:d6b1eb9c6ac06c2b07a61848bcb7156a4fbb823e76384acc4592f35a9b5e7950'
 export const connect: Connect = async ({ instance, network, meta }) => {
   const { client } = instance as Instance;
+  console.log({ meta, network });
 
   const session = await tryConnect(client, {
     network,
