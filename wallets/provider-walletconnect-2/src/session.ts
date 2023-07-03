@@ -12,8 +12,8 @@ import {
   // generateOptionalNamespace,
   generateRequiredNamespace,
   getChainId,
-  PROJECT_ID,
 } from './helpers';
+import { PROJECT_ID } from './constants';
 
 const PING_TIMEOUT = 10_000;
 
