@@ -1,10 +1,4 @@
-import {
-  DEFAULT_APP_METADATA,
-  generateOptionalNamespace,
-  generateRequiredNamespace,
-  PROJECT_ID,
-  RELAY_URL,
-} from './helpers';
+import { DEFAULT_APP_METADATA, PROJECT_ID, RELAY_URL } from './helpers';
 import {
   WalletTypes,
   CanSwitchNetwork,
@@ -15,7 +9,6 @@ import {
   SwitchNetwork,
   WalletConfig,
   WalletInfo,
-  getBlockChainNameFromId,
   Networks,
 } from '@rango-dev/wallets-shared';
 import signer from './signer';
@@ -25,85 +18,24 @@ import {
   evmBlockchains,
   cosmosBlockchains,
 } from 'rango-types';
-import Client from '@walletconnect/sign-client';
+// import Client from '@walletconnect/sign-client';
 import { SignClient } from '@walletconnect/sign-client/dist/types/client';
-import { Web3Modal } from '@web3modal/standalone';
-import { SessionTypes } from '@walletconnect/types';
-import { AccountId } from 'caip';
-
-/**
- * Web3Modal Config
- */
-const web3Modal = new Web3Modal({
-  projectId: PROJECT_ID,
-  themeMode: 'light',
-  walletConnectVersion: 2,
-});
+import { cleanupSessions, getAccountsFromSession, tryConnect } from './session';
+import { SessionTypes, SignClientTypes } from '@walletconnect/types';
+import Client from '@walletconnect/sign-client';
 
 const WALLET = WalletTypes.WALLET_CONNECT_2;
 
-// cip34 => Cardano
-// eip155 => Evm
-export enum NAMESPACES {
-  ETHEREUM = 'eip155',
-  SOLANA = 'solana',
-  COSMOS = 'cosmos',
-  POLKADOT = 'polkadot',
-  CARDANO = 'cip34',
-  ERLOND = 'elrond',
-  MULTIVERSX = 'multiversx',
+export interface Instance {
+  client: SignClient;
+  session: SessionTypes.Struct | null;
 }
-
-// Refrence: https://docs.walletconnect.com/2.0/advanced/rpc-reference/solana-rpc
-enum SolanaRPCMethods {
-  GET_ACCOUNTS = 'solana_getAccounts',
-  REQUEST_ACCOUNTS = 'solana_requestAccounts',
-  SIGN_TRANSACTION = 'solana_signTransaction',
-  SIGN_MESSAGE = 'solana_signMessage',
-}
-
-// Refrence: https://docs.walletconnect.com/2.0/advanced/rpc-reference/cosmos-rpc
-enum CosmosRPCMethods {
-  GET_ACCOUNTS = 'cosmos_getAccounts',
-  SIGN_DIRECT = 'cosmos_signDirect',
-  SIGN_AMINO = 'cosmos_signAmino',
-}
-
-// Refrence: https://docs.walletconnect.com/2.0/advanced/rpc-reference/ethereum-rpc
-enum EthereumRPCMethods {
-  PERSONAL_SIGN = 'personal_sign',
-  SIGN = 'eth_sign',
-  SIGN_TYPED_DATA = 'eth_signTypedData',
-  SIGN_TRANSACTION = 'eth_signTransaction',
-  SEND_TRANSACTION = 'eth_sendTransaction',
-  SEND_RAW_TRANSACTION = 'eth_sendRawTransaction',
-}
-
-// TODO: Do we need Starknet?
-// enum StarknetRPCMethods {
-//   REQUEST_ADD_INVOKE_TRANSACTION = 'starknet_requestAddInvokeTransaction',
-//   SIGN_TYPED_DATA = 'starknet_signTypedData',
-// }
-
-export const DEFAULT_ETHEREUM_EVENTS = ['chainChanged', 'accountsChanged'];
-export const DEFAULT_ETHEREUM_METHODS = [
-  EthereumRPCMethods.SEND_TRANSACTION,
-  EthereumRPCMethods.SIGN_TRANSACTION,
-];
-export const DEFAULT_SOLANA_METHODS = [SolanaRPCMethods.SIGN_TRANSACTION];
-export const DEFAULT_COSMOS_METHODS = [
-  CosmosRPCMethods.GET_ACCOUNTS,
-  CosmosRPCMethods.SIGN_AMINO,
-  CosmosRPCMethods.SIGN_DIRECT,
-];
-
-// refrence: https://github.com/ChainAgnostic/namespaces/blob/main/solana/caip2.md
-export const DEFAULT_SOLANA_CHAIN_ID = '5eykt4UsFv8P8NJdTREpY1vzqKqZKvdp';
 
 export const config: WalletConfig = {
   type: WALLET,
   checkInstallation: false,
   isAsyncInstance: true,
+  defaultNetwork: Networks.ETHEREUM,
 };
 
 export const getInstance: GetInstance = async (options) => {
@@ -115,9 +47,9 @@ export const getInstance: GetInstance = async (options) => {
 
   // Create a new pair, if exists use the pair.
   // Or use already created.
-  let provider;
+  let provider: SignClient;
   if (force || !currentProvider) {
-    provider = Client.init({
+    provider = await Client.init({
       relayUrl: RELAY_URL,
       projectId: PROJECT_ID,
       metadata: DEFAULT_APP_METADATA,
@@ -131,140 +63,95 @@ export const getInstance: GetInstance = async (options) => {
     (chain) => chain.name === network
   );
   if (force && !!requestedChain?.chainId) {
-    updateChainId?.(requestedChain.chainId);
+    updateChainId(requestedChain.chainId);
   }
 
-  return provider;
+  return {
+    client: provider,
+    session: null,
+  };
 };
 
+// TODO: handle error
+// {context: 'core'}context: "core"[[Prototype]]: Object {context: 'core/expirer'} 'No matching key. expirer: topic:d6b1eb9c6ac06c2b07a61848bcb7156a4fbb823e76384acc4592f35a9b5e7950'
 export const connect: Connect = async ({ instance, network, meta }) => {
-  const client = instance as SignClient;
-  const pairings = client.pairing.getAll({ active: true });
-  const lastPairing =
-    pairings.length > 0 ? pairings[pairings.length - 1] : undefined;
+  const { client } = instance as Instance;
 
-  console.log({ pairings, lastPairing });
+  const session = await tryConnect(client, {
+    network,
+    meta,
+  });
+  // Overriding the value.
+  instance.session = session;
 
-  // If `network` is provided, trying to get chainId. Otherwise, fallback to eth.
-  const requiredNamespaces = network
-    ? generateRequiredNamespace(meta, network)
-    : generateRequiredNamespace(meta, Networks.ETHEREUM);
-
-  // Otherwise we try to get all of them as optional
-  const optionalNamespaces = generateOptionalNamespace(meta);
-
-  console.log({ requiredNamespaces, optionalNamespaces });
-
-  let session: SessionTypes.Struct;
-  try {
-    const { uri, approval } = await client.connect({
-      pairingTopic: lastPairing?.topic,
-      requiredNamespaces,
-      optionalNamespaces,
-    });
-
-    // Open QRCode modal if a URI was returned (i.e. we're not connecting an existing pairing).
-    if (uri) {
-      // Create a flat array of all requested chains across namespaces.
-      const allNamespaces = {
-        ...(requiredNamespaces || {}),
-        ...(optionalNamespaces || {}),
-      };
-
-      const standaloneChains = Object.values(allNamespaces)
-        .map((namespace) => namespace.chains)
-        .flat() as string[];
-
-      web3Modal.openModal({ uri, standaloneChains });
-    }
-
-    session = await approval();
-    console.log('Established session:', session);
-  } catch (e) {
-    console.error(e);
-    throw e;
-  } finally {
-    // close modal in case it was open
-    web3Modal.closeModal();
-  }
-
-  // TODO: I'm not sure this will work as expected on multiple account on a chain.
-  // TODO: chainId is like eip155, do we need to change it?
-  const accounts = Object.values(session.namespaces)
-    .map((namespace) => namespace.accounts)
-    .flat()
-    .map((account) => {
-      const { address, chainId } = new AccountId(account);
-      return {
-        accounts: [address],
-        chainId: chainId.toString(),
-      };
-    });
+  const accounts = getAccountsFromSession(session);
 
   console.log({
     session,
+    accounts,
   });
   return accounts;
 };
 
 export const subscribe: Subscribe = ({
   instance,
-  updateChainId,
-  updateAccounts,
-  meta,
-  connect,
+  // updateChainId,
+  // updateAccounts,
+  // meta,
+  // connect,
   disconnect,
 }) => {
-  instance?.on('chainChanged', (chainId: string) => {
-    console.log('111111111');
-    const network = getBlockChainNameFromId(chainId, meta) || Networks.Unknown;
+  const { client } = instance as Instance;
+  // client?.on('chainChanged', (chainId: string) => {
+  //   console.log('111111111');
+  //   const network = getBlockChainNameFromId(chainId, meta) || Networks.Unknown;
 
-    updateChainId(chainId);
-    connect(network);
-  });
-  // Subscribe to connection events
-  instance.on('connect', (error: any, payload: any) => {
-    if (error) {
-      throw error;
+  //   updateChainId(chainId);
+  //   connect(network);
+  // });
+  // // Subscribe to connection events
+  // client.on('connect', (error: any, payload: any) => {
+  //   if (error) {
+  //     throw error;
+  //   }
+
+  //   const { accounts, chainId } = payload.params[0];
+
+  //   updateAccounts(accounts);
+  //   updateChainId(chainId);
+  // });
+
+  // client.on('session_update', (error: any, payload: any) => {
+  //   console.log(3333);
+  //   if (error) {
+  //     throw error;
+  //   }
+
+  //   // Get updated accounts and chainId
+  //   const { accounts, chainId } = payload.params[0];
+  //   updateAccounts(accounts);
+  //   updateChainId(chainId);
+  // });
+
+  // client.on('session_event', (error: any, payload: any) => {
+  //   if (error) {
+  //     throw error;
+  //   }
+  //   // Get updated accounts and chainId
+  //   const { accounts, chainId } = payload.params[0];
+  //   updateAccounts(accounts);
+  //   updateChainId(chainId);
+  // });
+
+  client.on(
+    'session_delete',
+    async (_event: SignClientTypes.EventArguments['session_delete']) => {
+      console.log('received disconnect event...');
+
+      cleanupSessions(client);
+      disconnect();
     }
-
-    const { accounts, chainId } = payload.params[0];
-
-    updateAccounts(accounts);
-    updateChainId(chainId);
-  });
-
-  instance.on('session_update', (error: any, payload: any) => {
-    console.log(3333);
-    if (error) {
-      throw error;
-    }
-
-    // Get updated accounts and chainId
-    const { accounts, chainId } = payload.params[0];
-    updateAccounts(accounts);
-    updateChainId(chainId);
-  });
-
-  instance.on('session_ping', ({ id, topic }: any) => {
-    console.log('session_ping', id, topic);
-  });
-
-  instance.on('session_event', (error: any, payload: any) => {
-    console.log(4444);
-
-    if (error) {
-      throw error;
-    }
-    // Get updated accounts and chainId
-    const { accounts, chainId } = payload.params[0];
-    updateAccounts(accounts);
-    updateChainId(chainId);
-  });
-
-  instance.on('disconnect', async () => {
-    disconnect();
-  });
+  );
 };
 
 export const switchNetwork: SwitchNetwork = async ({
@@ -276,29 +163,16 @@ export const switchNetwork: SwitchNetwork = async ({
 };
 
 export const canSwitchNetworkTo: CanSwitchNetwork = () => false;
-export const disconnect: Disconnect = async ({ instance, destroyInstance }) => {
-  if (instance) {
-    try {
-      // Disconnect the instance and remove any pairing sessions
-      await instance.disconnect();
-      const pairingSessions = instance.client.pairing.getAll();
-      pairingSessions.forEach(({ topic }: { topic: string }) => {
-        try {
-          instance.client.disconnect({
-            topic,
-          });
-        } catch {
-          // do nothing
-        }
-      });
-    } catch {
-      // do nothing
-    }
-    destroyInstance();
+export const disconnect: Disconnect = async ({ instance }) => {
+  console.log('doing disconnect action...');
+  const { client } = instance as Instance;
+
+  if (client) {
+    cleanupSessions(client);
   }
 };
 
-export const getSigners: (provider: any) => SignerFactory = signer;
+export const getSigners: (provider: Instance) => SignerFactory = signer;
 
 export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
   allBlockChains

@@ -8,13 +8,17 @@ import { providers } from 'ethers';
 import { cleanEvmError } from './helper';
 import { SignerError, SignerErrorCode } from 'rango-types';
 
+type ProviderType = ConstructorParameters<typeof providers.Web3Provider>[0];
+
 export class DefaultEvmSigner implements GenericSigner<EvmTransaction> {
   private signer: providers.JsonRpcSigner;
   private provider: providers.Web3Provider;
 
-  constructor(provider: providers.ExternalProvider) {
+  constructor(provider: ProviderType) {
     this.provider = new providers.Web3Provider(provider);
     this.signer = this.provider.getSigner();
+
+    console.log('[DefaultEvmSigner]', provider, this.provider, this.signer);
   }
 
   async signMessage(msg: string): Promise<string> {
