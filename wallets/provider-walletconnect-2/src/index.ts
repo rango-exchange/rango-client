@@ -1,4 +1,4 @@
-import { DEFAULT_APP_METADATA, PROJECT_ID, RELAY_URL } from './helpers';
+import { DEFAULT_APP_METADATA, PROJECT_ID, RELAY_URL } from './constants';
 import {
   WalletTypes,
   CanSwitchNetwork,
