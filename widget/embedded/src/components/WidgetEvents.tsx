@@ -10,7 +10,7 @@ import { useWalletsStore } from '../store/wallets';
 
 export function WidgetEvents() {
   const connectedWallets = useWalletsStore.use.connectedWallets();
-  const getOneOfWalletsDetails = useWalletsStore.use.getOneOfWalletsDetails();
+  const getWalletsDetails = useWalletsStore.use.getWalletsDetails();
 
   const widgetEvents = useEvents();
 
@@ -20,7 +20,7 @@ export function WidgetEvents() {
       const shouldRefetchBalance =
         (event.type === StepEventType.TX_EXECUTION &&
           event.status === StepExecutionEventStatus.TX_SENT &&
-          isApprovalTX(step)) ||
+          !isApprovalTX(step)) ||
         event.type === StepEventType.SUCCEEDED;
 
       if (shouldRefetchBalance) {
@@ -33,8 +33,8 @@ export function WidgetEvents() {
             (wallet) => wallet.chain === step?.toBlockchain
           );
 
-        fromAccount && getOneOfWalletsDetails(fromAccount);
-        toAccount && getOneOfWalletsDetails(toAccount);
+        fromAccount && getWalletsDetails([fromAccount]);
+        toAccount && getWalletsDetails([toAccount]);
       }
     });
 
