@@ -17,9 +17,26 @@ import { TendermintTxTracer } from '@keplr-wallet/cosmos';
 import { simpleFetch } from '@keplr-wallet/simple-fetch';
 import { cosmos } from '@keplr-wallet/cosmos';
 import { formatDirectSignDoc, stringifySignDocValues } from 'cosmos-wallet';
+
 type CosmosExternalProvider = IUniversalProvider;
 const uint8ArrayToHex = (buffer: Uint8Array): string => {
   return Buffer.from(buffer).toString('hex');
+};
+
+type DirectSignResponse = {
+  signature: {
+    pub_key: {
+      type: string;
+      value: string;
+    };
+    signature: string;
+  };
+  signed: {
+    chainId: string;
+    accountNumber: string;
+    authInfoBytes: string;
+    bodyBytes: string;
+  };
 };
 export class CustomCosmosSigner implements GenericSigner<CosmosTransaction> {
   private provider: CosmosExternalProvider;
@@ -103,8 +120,6 @@ export class CustomCosmosSigner implements GenericSigner<CosmosTransaction> {
         } catch (err) {
           throw new SignerError(SignerErrorCode.SIGN_TX_ERROR, undefined, err);
         }
-        console.log({ getAccounts });
-
         const pubkey =
           getAccounts?.find(
             (account) => account.address === tx.fromWalletAddress
@@ -130,7 +145,7 @@ export class CustomCosmosSigner implements GenericSigner<CosmosTransaction> {
         );
         let signResponse;
         try {
-          signResponse = await this.provider.request<AminoSignResponse>({
+          signResponse = await this.provider.request<DirectSignResponse>({
             method: 'cosmos_signDirect',
             params: {
               signDoc: stringifySignDocValues(signDoc),
@@ -140,14 +155,25 @@ export class CustomCosmosSigner implements GenericSigner<CosmosTransaction> {
         } catch (err) {
           throw new SignerError(SignerErrorCode.SIGN_TX_ERROR, undefined, err);
         }
+        console.log({ signResponse });
+        const signedTx = cosmos.tx.v1beta1.TxRaw.encode({
+          bodyBytes: new TextEncoder().encode(signResponse.signed.bodyBytes),
+          authInfoBytes: new TextEncoder().encode(
+            signResponse.signed.authInfoBytes
+          ),
+          signatures: [Buffer.from(signResponse.signature.signature, 'base64')],
+        }).finish();
+        console.log({ signedTx });
 
-        const signedTx = getsignedTx(tx, signResponse);
         const result = await sendTx(
           chainId,
           signedTx,
           BroadcastMode.Async,
           this.supportedChains
         );
+
+        console.log({ result });
+
         return { hash: uint8ArrayToHex(result) };
       } else {
         throw new SignerError(
