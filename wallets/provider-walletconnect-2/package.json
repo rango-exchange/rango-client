@@ -29,7 +29,8 @@
     "caip": "^1.1.0",
     "rango-types": "^0.1.39",
     "cosmos-wallet": "^1.2.0",
-    "@keplr-wallet/simple-fetch": "^0.12.12"
+    "@keplr-wallet/simple-fetch": "^0.12.12",
+    "bs58": "^5.0.0"
   },
   "devDependencies": {
     "@walletconnect/types": "^2.8.1"

@@ -119,7 +119,7 @@ export async function tryConnect(
   // If `network` is provided, trying to get chainId. Otherwise, fallback to eth.
   const requiredNamespaces = generateRequiredNamespace(
     meta,
-    network || Networks.COSMOS
+    network || Networks.JUNO
   );
   console.log({ requiredNamespaces, network });
 
@@ -131,7 +131,7 @@ export async function tryConnect(
       requiredNamespaces,
       a: {
         meta,
-        network: network || Networks.COSMOS,
+        network: network || Networks.JUNO,
       },
     });
     throw new Error(`Couldn't generate required namespace for ${network}`);
