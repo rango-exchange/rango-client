@@ -96,16 +96,14 @@ function Item({ type, info }: { type: WalletType; info: WalletInfo }) {
       const currentChain = info.supportedChains.find(
         (chain) => chain.name === network
       );
-      const txType = currentChain?.type || TransactionType.EVM;
+      const txType = currentChain?.type || (network as TransactionType);
+      console.log({ txType });
+
       const chainId = currentChain?.chainId || null;
       console.log({ txType, chainId, address });
       const result = signers
         .getSigner(txType)
-        .signMessage(
-          'Hello World',
-          address || 'meow',
-          chainId && String(parseInt(chainId))
-        );
+        .signMessage('Hello World', address || 'meow', chainId);
       result
         .then((signature) => {
           alert(signature);
@@ -150,7 +148,9 @@ function Item({ type, info }: { type: WalletType; info: WalletInfo }) {
       const currentChain = info.supportedChains.find(
         (chain) => chain.name === network
       );
-      const txType = currentChain?.type || TransactionType.COSMOS;
+      const txType = currentChain?.type || (network as TransactionType);
+      console.log({ txType });
+
       const chainId = currentChain?.chainId || null;
       const tx = TX_Solana;
       console.log({ txType, chainId, address });
