@@ -24,7 +24,7 @@ import {
   walletAndSupportedChainsNames,
 } from '../../helper';
 import { TransactionType } from 'rango-sdk';
-import { Tx_Cosmos_Direct } from './mock';
+import { TX_Solana } from './mock';
 
 function Item({ type, info }: { type: WalletType; info: WalletInfo }) {
   const { connect, state, disconnect, canSwitchNetworkTo, getSigners } =
@@ -152,7 +152,7 @@ function Item({ type, info }: { type: WalletType; info: WalletInfo }) {
       console.log({ txType });
 
       const chainId = currentChain?.chainId || null;
-      const tx = Tx_Cosmos_Direct;
+      const tx = TX_Solana;
 
       console.log({ txType, chainId, address });
       const result = signers

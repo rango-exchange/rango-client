@@ -119,7 +119,7 @@ export async function tryConnect(
   // If `network` is provided, trying to get chainId. Otherwise, fallback to eth.
   const requiredNamespaces = generateRequiredNamespace(
     meta,
-    network || Networks.JUNO
+    network || Networks.SOLANA
   );
   console.log({ requiredNamespaces, network });
 
@@ -131,7 +131,7 @@ export async function tryConnect(
       requiredNamespaces,
       a: {
         meta,
-        network: network || Networks.JUNO,
+        network: network || Networks.SOLANA,
       },
     });
     throw new Error(`Couldn't generate required namespace for ${network}`);
@@ -195,7 +195,8 @@ export function getAccountsFromSession(session: SessionTypes.Struct) {
 
       return {
         accounts: [address],
-        chainId: chainId.reference,
+        chainId:
+          chainId.namespace === 'solana' ? Networks.SOLANA : chainId.reference,
       };
     });
 
