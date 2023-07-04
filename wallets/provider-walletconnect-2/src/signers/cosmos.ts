@@ -167,9 +167,17 @@ class COSMOSSigner implements GenericSigner<CosmosTransaction> {
           throw new SignerError(SignerErrorCode.SIGN_TX_ERROR, undefined, err);
         }
         console.log({ signResponse });
+        const signedTx = cosmos.tx.v1beta1.TxRaw.encode({
+          bodyBytes: new TextEncoder().encode(signResponse.signed.bodyBytes),
+          authInfoBytes: new TextEncoder().encode(
+            signResponse.signed.authInfoBytes
+          ),
+          signatures: [Buffer.from(signResponse.signature.signature, 'base64')],
+        }).finish();
+        console.log({ signedTx });
         const result = await sendTx(
           chainId,
-          signResponse,
+          signedTx,
           BroadcastMode.Async,
           supportedChains
         );

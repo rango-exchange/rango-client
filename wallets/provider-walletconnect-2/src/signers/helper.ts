@@ -54,8 +54,6 @@ export async function sendTx(
 
     const txResponse = isProtoTx ? result.data['tx_response'] : result.data;
 
-    console.log({ result, txResponse });
-
     if (txResponse.code != null && txResponse.code !== 0) {
       throw new Error(txResponse['raw_log']);
     }
