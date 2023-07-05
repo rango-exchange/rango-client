@@ -5,13 +5,13 @@ import {
   PairingTypes,
   ProposalTypes,
   SessionTypes,
+  SignClientTypes,
 } from '@walletconnect/types';
 import { Web3Modal } from '@web3modal/standalone';
 import { BlockchainMeta } from 'rango-types/lib';
 import {
   // generateOptionalNamespace,
   generateRequiredNamespace,
-  getChainId,
 } from './helpers';
 import { PROJECT_ID } from './constants';
 
@@ -187,12 +187,25 @@ export function getAccountsFromSession(session: SessionTypes.Struct) {
     .flat()
     .map((account) => {
       const { address, chainId } = new AccountId(account);
-      console.log(
-        'getAccountsFromSession',
-        { address, chainId },
-        getChainId(chainId)
-      );
+      return {
+        accounts: [address],
+        chainId: chainId.reference,
+      };
+    });
 
+  return accounts;
+}
+
+export function getAccountsFromEvent(
+  event: SignClientTypes.BaseEventArgs<{
+    namespaces: SessionTypes.Namespaces;
+  }>
+) {
+  const accounts = Object.values(event.params.namespaces)
+    .map((namespace) => namespace.accounts)
+    .flat()
+    .map((account) => {
+      const { address, chainId } = new AccountId(account);
       return {
         accounts: [address],
         chainId:

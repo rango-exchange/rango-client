@@ -1,4 +1,9 @@
-import { DEFAULT_APP_METADATA, PROJECT_ID, RELAY_URL } from './constants';
+import {
+  DEFAULT_APP_METADATA,
+  EthereumEvents,
+  PROJECT_ID,
+  RELAY_URL,
+} from './constants';
 import {
   WalletTypes,
   CanSwitchNetwork,
@@ -20,8 +25,13 @@ import {
 } from 'rango-types';
 // import Client from '@walletconnect/sign-client';
 import { SignClient } from '@walletconnect/sign-client/dist/types/client';
-import { cleanupSessions, getAccountsFromSession, tryConnect } from './session';
-import { SessionTypes, SignClientTypes } from '@walletconnect/types';
+import {
+  cleanupSessions,
+  getAccountsFromEvent,
+  getAccountsFromSession,
+  tryConnect,
+} from './session';
+import { SessionTypes } from '@walletconnect/types';
 import Client from '@walletconnect/sign-client';
 
 const WALLET = WalletTypes.WALLET_CONNECT_2;
@@ -94,65 +104,45 @@ export const connect: Connect = async ({ instance, network, meta }) => {
   return accounts;
 };
 
+// TODO: we should always check upcoming `topic` from events with what we have in our session.
 export const subscribe: Subscribe = ({
   instance,
-  // updateChainId,
-  // updateAccounts,
-  // meta,
-  // connect,
+  updateChainId,
+  updateAccounts,
   disconnect,
 }) => {
   const { client } = instance as Instance;
-  // client?.on('chainChanged', (chainId: string) => {
-  //   console.log('111111111');
-  //   const network = getBlockChainNameFromId(chainId, meta) || Networks.Unknown;
 
-  //   updateChainId(chainId);
-  //   connect(network);
-  // });
-  // // Subscribe to connection events
-  // client.on('connect', (error: any, payload: any) => {
-  //   if (error) {
-  //     throw error;
-  //   }
+  client.on('session_update', (args) => {
+    console.log(`[session_update]`, args);
+    const allAccounts = getAccountsFromEvent(args);
+    allAccounts.forEach((accountsWithChain) => {
+      updateAccounts(accountsWithChain.accounts, accountsWithChain.chainId);
+    });
+  });
 
-  //   const { accounts, chainId } = payload.params[0];
+  client.on('session_event', (args) => {
+    console.log(`[session_event]`, args);
 
-  //   updateAccounts(accounts);
-  //   updateChainId(chainId);
-  // });
-
-  // client.on('session_update', (error: any, payload: any) => {
-  //   console.log(3333);
-  //   if (error) {
-  //     throw error;
-  //   }
-
-  //   // Get updated accounts and chainId
-  //   const { accounts, chainId } = payload.params[0];
-  //   updateAccounts(accounts);
-  //   updateChainId(chainId);
-  // });
-
-  // client.on('session_event', (error: any, payload: any) => {
-  //   if (error) {
-  //     throw error;
-  //   }
-  //   // Get updated accounts and chainId
-  //   const { accounts, chainId } = payload.params[0];
-  //   updateAccounts(accounts);
-  //   updateChainId(chainId);
-  // });
-
-  client.on(
-    'session_delete',
-    async (_event: SignClientTypes.EventArguments['session_delete']) => {
-      console.log('received disconnect event...');
-
-      cleanupSessions(client);
-      disconnect();
+    if (args.params.event.name === EthereumEvents.ACCOUNTS_CHANGED) {
+      const accounts = args.params.event.data;
+      const chainId = args.params.chainId;
+      updateAccounts(accounts);
+      updateChainId(chainId);
+    } else if (args.params.event.name === EthereumEvents.CHAIN_CHANGED) {
+      const chainId = args.params.chainId;
+      updateChainId(chainId);
+    } else {
+      console.log('[WC2] session_event not supported', args.params.event);
     }
-  );
+  });
+
+  client.on('session_delete', async (event) => {
+    console.log('received disconnect event...', event);
+
+    cleanupSessions(client);
+    disconnect();
+  });
 };
 
 export const switchNetwork: SwitchNetwork = async ({

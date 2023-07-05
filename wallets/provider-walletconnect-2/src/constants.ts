@@ -40,7 +40,16 @@ export enum StarknetRPCMethods {
   SIGN_TYPED_DATA = 'starknet_signTypedData',
 }
 
-export const DEFAULT_ETHEREUM_EVENTS = ['chainChanged', 'accountsChanged'];
+export enum EthereumEvents {
+  CHAIN_CHANGED = 'chainChanged',
+  ACCOUNTS_CHANGED = 'accountsChanged',
+}
+
+export const DEFAULT_ETHEREUM_EVENTS: EthereumEvents[] = [
+  EthereumEvents.CHAIN_CHANGED,
+  EthereumEvents.ACCOUNTS_CHANGED,
+];
+
 export const DEFAULT_ETHEREUM_METHODS = [
   EthereumRPCMethods.PERSONAL_SIGN,
   EthereumRPCMethods.SEND_TRANSACTION,
