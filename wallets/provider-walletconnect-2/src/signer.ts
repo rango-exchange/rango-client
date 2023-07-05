@@ -6,6 +6,7 @@ import {
 import { Instance } from '.';
 import EVMSigner from './signers/evm';
 import COSMOSSigner from './signers/cosmos';
+import SOLANASigner from './signers/solana';
 
 export default function getSigners(instance: Instance): SignerFactory {
   console.log('instance', { instance });
@@ -22,6 +23,11 @@ export default function getSigners(instance: Instance): SignerFactory {
     TxType.COSMOS,
     new COSMOSSigner(instance.client, instance.session)
   );
+  signers.registerSigner(
+    TxType.SOLANA,
+    new SOLANASigner(instance.client, instance.session)
+  );
+
   // TODO: add cosmos, solana.
   return signers;
 }

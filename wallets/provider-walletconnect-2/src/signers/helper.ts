@@ -7,11 +7,14 @@ export async function sendTx(
   mode: 'async' | 'sync' | 'block',
   supportedChains: BlockchainMeta[]
 ): Promise<Uint8Array> {
-  console.log({ chainId });
+  console.log({ chainId, tx, mode });
 
   const cosmos = cosmosBlockchains(supportedChains);
   const chainInfo = cosmos.find((item) => item.chainId === chainId)?.info;
   const isProtoTx = Buffer.isBuffer(tx) || tx instanceof Uint8Array;
+
+  console.log({ chainInfo, isProtoTx });
+
   if (!chainInfo) {
     throw 'Chain info is undefined from server';
   }

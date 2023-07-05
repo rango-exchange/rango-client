@@ -45,7 +45,7 @@ export const config: WalletConfig = {
   type: WALLET,
   checkInstallation: false,
   isAsyncInstance: true,
-  defaultNetwork: Networks.COSMOS,
+  defaultNetwork: Networks.SOLANA,
 };
 
 export const getInstance: GetInstance = async (options) => {

@@ -55,7 +55,10 @@ export const DEFAULT_ETHEREUM_METHODS = [
   EthereumRPCMethods.SEND_TRANSACTION,
   EthereumRPCMethods.SIGN_TRANSACTION,
 ];
-export const DEFAULT_SOLANA_METHODS = [SolanaRPCMethods.SIGN_TRANSACTION];
+export const DEFAULT_SOLANA_METHODS = [
+  SolanaRPCMethods.SIGN_TRANSACTION,
+  SolanaRPCMethods.SIGN_MESSAGE,
+];
 export const DEFAULT_COSMOS_METHODS = [
   CosmosRPCMethods.GET_ACCOUNTS,
   CosmosRPCMethods.SIGN_AMINO,
