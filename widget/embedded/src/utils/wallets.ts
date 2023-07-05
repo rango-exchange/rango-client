@@ -159,12 +159,26 @@ export function getRequiredChains(route: BestRouteResponse | null) {
   route?.result?.swaps.forEach((swap) => {
     const currentStepFromBlockchain = swap.from.blockchain;
     const currentStepToBlockchain = swap.to.blockchain;
-    let lastAddedWallet = wallets[wallets.length - 1];
-    if (currentStepFromBlockchain != lastAddedWallet)
+    if (!wallets.includes(currentStepFromBlockchain)) {
       wallets.push(currentStepFromBlockchain);
-    lastAddedWallet = wallets[wallets.length - 1];
-    if (currentStepToBlockchain != lastAddedWallet)
+    }
+    if (!wallets.includes(currentStepToBlockchain)) {
       wallets.push(currentStepToBlockchain);
+    }
+
+    // Check if internalSwaps array exists
+    if (swap.internalSwaps && Array.isArray(swap.internalSwaps)) {
+      swap.internalSwaps.forEach((internalSwap) => {
+        const internalStepFromBlockchain = internalSwap.from.blockchain;
+        const internalStepToBlockchain = internalSwap.to.blockchain;
+        if (!wallets.includes(internalStepFromBlockchain)) {
+          wallets.push(internalStepFromBlockchain);
+        }
+        if (!wallets.includes(internalStepToBlockchain)) {
+          wallets.push(internalStepToBlockchain);
+        }
+      });
+    }
   });
   return wallets;
 }
