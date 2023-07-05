@@ -39,8 +39,6 @@ class SOLANASigner implements GenericSigner<SolanaTransaction> {
     try {
       const message = base58.encode(new TextEncoder().encode(msg));
       const pubkey = new PublicKey(address);
-      console.log({ message, pubkey });
-
       const { signature } = await this.client.request<{
         signature: string;
       }>({
