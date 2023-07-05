@@ -352,9 +352,19 @@ export function createBestRouteRequestBody(
 
   const filteredBlockchains = removeDuplicateFrom(
     (initialRoute?.result?.swaps || []).reduce(
-      (blockchains: string[], swap) => (
-        blockchains.push(swap.from.blockchain, swap.to.blockchain), blockchains
-      ),
+      (blockchains: string[], swap) => {
+        blockchains.push(swap.from.blockchain, swap.to.blockchain);
+        // Check if internalSwaps array exists
+        if (swap.internalSwaps && Array.isArray(swap.internalSwaps)) {
+          swap.internalSwaps.map((internalSwap) => {
+            blockchains.push(
+              internalSwap.from.blockchain,
+              internalSwap.to.blockchain
+            );
+          });
+        }
+        return blockchains;
+      },
       []
     )
   );
