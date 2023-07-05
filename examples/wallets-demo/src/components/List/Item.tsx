@@ -151,6 +151,24 @@ function Item({ type, info }: { type: WalletType; info: WalletInfo }) {
       );
       const txType = currentChain?.type || TransactionType.COSMOS;
       const chainId = currentChain?.chainId || null;
+      // Ethereum
+      //
+      // const tx = {
+      //   type: 'EVM',
+      //   blockChain: 'ETH',
+      //   isApprovalTx: false,
+      //   from: '0x5423e28219d6d568dcf62a8134d623e6f4a1c2df',
+      //   to: '0x69460570c93f9DE5E2edbC3052bf10125f0Ca22d',
+      //   spender: null,
+      //   data: '0xb17d0e6e00000000000000000000000000000000a521c8deda5b42dba56a3d26f43fc0030000000000000000000000000000000000000000000000000000000000000000000000000000000000000000dac17f958d2ee523a2206206994597c13d831ec700000000000000000000000000000000000000000000000000038d675c4f9800000000000000000000000000000000000000000000000000000000174876e80000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001d7775000000000000000000000000000000000000000000000000000000000000006a00000000000000000000000000000000000000000000000000000000000001a000000000000000000000000000000000000000000000000000000000000000000000000000000000000000005423e28219d6d568dcf62a8134d623e6f4a1c2df00000000000000000000000000000000000000000000000000000000000000010000000000000000000000000000000000000000000000000000000000000020000000000000000000000000216b4b4ba9f3e719726886d34a177484278bfcae000000000000000000000000def171fe48cf0115b1d80b88dc8eab59176fee570000000000000000000000000000000000000000000000000000000000000000000000000000000000000000dac17f958d2ee523a2206206994597c13d831ec7000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000038d675c4f980000000000000000000000000000000000000000000000000000000000000000e000000000000000000000000000000000000000000000000000000000000000e40b86a4c1000000000000000000000000eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee00000000000000000000000000000000000000000000000000038d675c4f980000000000000000000000000000000000000000000000000000000000001d7776000000000000000000000000c02aaa39b223fe8d0a0e5c4f27ead9083c756cc200000000000000000000000000000000000000000000000000000000000000a00000000000000000000000000000000000000000000000000000000000000001000000000000000000004de4e2e5aca8e483a4c057892ee1f03bebc9bfa1f9c200000000000000000000000000000000000000000000000000000000',
+      //   value: '0x38d7ea4c68000',
+      //   gasLimit: '0x4e771',
+      //   gasPrice: null,
+      //   maxPriorityFeePerGas: '996892204',
+      //   maxFeePerGas: '17900932338',
+      //   nonce: null,
+      // };
+
       // sign amino
       // const tx = {
       //   type: 'COSMOS',
@@ -296,7 +314,8 @@ function Item({ type, info }: { type: WalletType; info: WalletInfo }) {
               <>
                 <Tooltip
                   content="Only default network is supported for this wallet."
-                  color="gray">
+                  color="gray"
+                >
                   <InfoCircleIcon size={24} color="success" />
                 </Tooltip>
                 <Divider size={12} direction="horizontal" />
@@ -348,7 +367,8 @@ function Item({ type, info }: { type: WalletType; info: WalletInfo }) {
           name="Network"
           id="Network"
           onChange={(e) => setNetwork(e.target.value)}
-          disabled={!walletState.connected}>
+          disabled={!walletState.connected}
+        >
           <option value="-1" selected>
             Default Chain
           </option>
@@ -363,7 +383,8 @@ function Item({ type, info }: { type: WalletType; info: WalletInfo }) {
             fullWidth
             suffix={walletState.connecting && <Spinner />}
             type="primary"
-            onClick={handleConnectWallet}>
+            onClick={handleConnectWallet}
+          >
             {!walletState.installed
               ? 'Install'
               : walletState.connected
@@ -375,7 +396,8 @@ function Item({ type, info }: { type: WalletType; info: WalletInfo }) {
             fullWidth
             disabled={!walletState.connected || !canSwitchNetwork}
             type="primary"
-            onClick={handleChangeNetwork}>
+            onClick={handleChangeNetwork}
+          >
             Change Network
           </Button>
         </div>
@@ -385,7 +407,8 @@ function Item({ type, info }: { type: WalletType; info: WalletInfo }) {
             disabled={!walletState.connected}
             type="primary"
             suffix={<SignatureIcon size={24} color="white" />}
-            onClick={handleSigner}>
+            onClick={handleSigner}
+          >
             Sign
           </Button>
           <Divider size={12} direction="horizontal" />
@@ -394,7 +417,8 @@ function Item({ type, info }: { type: WalletType; info: WalletInfo }) {
             disabled={!walletState.connected}
             suffix={<HorizontalSwapIcon size={24} color="white" />}
             type="primary"
-            onClick={handleSignSigner}>
+            onClick={handleSignSigner}
+          >
             Swap
           </Button>
         </div>

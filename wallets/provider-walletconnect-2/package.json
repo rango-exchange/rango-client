@@ -20,6 +20,7 @@
     "lint": "eslint \"**/*.{ts,tsx}\" --ignore-path ../../.eslintignore"
   },
   "dependencies": {
+    "@keplr-wallet/simple-fetch": "^0.12.14",
     "@rango-dev/signer-evm": "^0.5.1-next.0",
     "@rango-dev/wallets-shared": "^0.5.1-next.9",
     "@walletconnect/encoding": "^1.0.2",
@@ -27,9 +28,8 @@
     "@walletconnect/universal-provider": "2.8.0",
     "@web3modal/standalone": "^2.4.3",
     "caip": "^1.1.0",
-    "rango-types": "^0.1.39",
     "cosmos-wallet": "^1.2.0",
-    "@keplr-wallet/simple-fetch": "^0.12.12"
+    "rango-types": "^0.1.39"
   },
   "devDependencies": {
     "@walletconnect/types": "^2.8.1"

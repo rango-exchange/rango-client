@@ -3166,10 +3166,10 @@
     elliptic "^6.5.3"
     sha.js "^2.4.11"
 
-"@keplr-wallet/simple-fetch@^0.12.12":
-  version "0.12.13"
-  resolved "https://registry.yarnpkg.com/@keplr-wallet/simple-fetch/-/simple-fetch-0.12.13.tgz#048207c6c335b7bdac4e1a845a2d87868de7ff7b"
-  integrity sha512-3qT5nx4ox6AJ6GM2WFSzSzv88zvyzzjFM+jRONybvDa9Gs3SYo6L/At7ac+m78NqTOMHEXmygGrRw24fLYkUbw==
+"@keplr-wallet/simple-fetch@^0.12.14":
+  version "0.12.14"
+  resolved "https://registry.yarnpkg.com/@keplr-wallet/simple-fetch/-/simple-fetch-0.12.14.tgz#e2a72417690bdd65a944deba22b4930e6784a8e1"
+  integrity sha512-CPAqn1qu8/BKW+1o0xJ7/9GGsPtMAvxWeg9v9uiYLYlDRFlbJ8pJN3rFrfIjvoRA9TnKStFQaU/eHPSgadIHkg==
 
 "@keplr-wallet/types@^0.11.21":
   version "0.11.52"
