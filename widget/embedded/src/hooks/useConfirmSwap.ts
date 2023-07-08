@@ -53,6 +53,7 @@ export function useConfirmSwap(): ConfirmSwap {
   const setBestRoute = useBestRouteStore.use.setBestRoute();
   const inputUsdValue = useBestRouteStore.use.inputUsdValue();
   const affiliateRef = useSettingsStore.use.affiliateRef();
+  const affiliatePercent = useSettingsStore.use.affiliatePercent();
 
   const connectedWallets = useWalletsStore.use.connectedWallets();
   const destination = useWalletsStore.use.customDestination();
@@ -118,6 +119,7 @@ export function useConfirmSwap(): ConfirmSwap {
       disabledLiquiditySources,
       userSlippage,
       affiliateRef,
+      affiliatePercent,
       initialRoute,
       destination
     );
