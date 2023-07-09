@@ -123,3 +123,21 @@ export function getAccountsFromSession(
   });
   return accounts;
 }
+
+export function getChainIdByNetworkName(
+  network: string | undefined,
+  meta: BlockchainMeta[]
+): string | undefined {
+  if (!network) return;
+
+  // Supported chains by us
+  const evm = evmBlockchains(meta);
+  const cosmos = cosmosBlockchains(meta);
+
+  // TODO: how about Solana?
+  const requestedChain = [...evm, ...cosmos].find(
+    (chain) => chain.name === network
+  );
+
+  return requestedChain?.chainId || undefined;
+}

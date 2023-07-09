@@ -84,6 +84,15 @@ export async function executeTransaction(
     meta,
     providers
   );
+
+  console.log('exec', {
+    networkMatched,
+    swap,
+    currentStep,
+    wallets,
+    meta,
+    providers,
+  });
   const claimerId = claimedBy();
   const isClaimedByAnyQueue = !!claimerId && !isClaimed;
   if (isClaimedByAnyQueue && !networkMatched) {
@@ -98,6 +107,14 @@ export async function executeTransaction(
   } else if (!networkMatched) {
     const fromBlockchain = getCurrentBlockchainOf(swap, currentStep);
     const details = ERROR_MESSAGE_WAIT_FOR_CHANGE_NETWORK(fromBlockchain);
+
+    console.log('[executeTransaction]', networkMatched, {
+      swap,
+      currentStep,
+      wallets,
+      meta,
+      providers,
+    });
 
     const blockedFor = {
       reason: BlockReason.WAIT_FOR_NETWORK_CHANGE,

@@ -29,10 +29,14 @@ import {
   cleanupSessions,
   getAccountsFromEvent,
   getAccountsFromSession,
+  getLastSession,
   tryConnect,
+  tryUpdate,
 } from './session';
 import { SessionTypes } from '@walletconnect/types';
 import Client from '@walletconnect/sign-client';
+import { getChainIdByNetworkName } from './helpers';
+import { ChainId } from 'caip';
 
 const WALLET = WalletTypes.WALLET_CONNECT_2;
 
@@ -45,7 +49,7 @@ export const config: WalletConfig = {
   type: WALLET,
   checkInstallation: false,
   isAsyncInstance: true,
-  defaultNetwork: Networks.SOLANA,
+  defaultNetwork: Networks.ETHEREUM,
 };
 
 export const getInstance: GetInstance = async (options) => {
@@ -79,6 +83,23 @@ export const getInstance: GetInstance = async (options) => {
   return {
     client: provider,
     session: null,
+    request: async (params: any) => {
+      if (params.method === 'eth_chainId') {
+        const currentSession = getLastSession(provider);
+        const standaloneChains = Object.values(currentSession.namespaces)
+          .map((namespace) => namespace.chains)
+          .flat() as string[];
+
+        if (standaloneChains.length > 0) {
+          const firstChain = standaloneChains[0];
+          const chainId = new ChainId(firstChain);
+          return chainId.reference;
+        } else {
+          throw new Error(`Couldn't find any chain on namespace`);
+        }
+      }
+      throw new Error('Dissallowed method:', params);
+    },
   };
 };
 
@@ -86,7 +107,9 @@ export const getInstance: GetInstance = async (options) => {
 // {context: 'core'}context: "core"[[Prototype]]: Object {context: 'core/expirer'} 'No matching key. expirer: topic:d6b1eb9c6ac06c2b07a61848bcb7156a4fbb823e76384acc4592f35a9b5e7950'
 export const connect: Connect = async ({ instance, network, meta }) => {
   const { client } = instance as Instance;
-  console.log({ meta, network });
+
+  const requestedChainId = getChainIdByNetworkName(network, meta);
+  console.log({ meta, network, instance, requestedChainId });
 
   const session = await tryConnect(client, {
     network,
@@ -111,6 +134,7 @@ export const subscribe: Subscribe = ({
   updateAccounts,
   disconnect,
 }) => {
+  console.log('subscribe subscribe subscribe');
   const { client } = instance as Instance;
 
   client.on('session_update', (args) => {
@@ -143,6 +167,19 @@ export const subscribe: Subscribe = ({
     cleanupSessions(client);
     disconnect();
   });
+
+  client.on('session_proposal', async (event) => {
+    console.log(
+      'session_proposal session_proposal session_proposal session_proposal session_proposal',
+      event
+    );
+  });
+  client.on('session_request', async (event) => {
+    console.log(
+      'session_request session_request session_request session_request session_request',
+      event
+    );
+  });
 };
 
 export const switchNetwork: SwitchNetwork = async ({
@@ -150,7 +187,8 @@ export const switchNetwork: SwitchNetwork = async ({
   instance,
   meta,
 }) => {
-  connect({ network, instance, meta });
+  console.log('[switch network] request', network);
+  tryUpdate(instance, { network, meta });
 };
 
 export const canSwitchNetworkTo: CanSwitchNetwork = () => false;

@@ -601,8 +601,11 @@ async function getChainId(provider: any): Promise<string | number | null> {
   try {
     const chainId: number | string | null =
       (await provider.request({ method: 'eth_chainId' })) || provider?.chainId;
+
+    console.log('getChainId', { chainId });
     return chainId;
-  } catch {
+  } catch (e) {
+    console.error(e);
     return provider?.chainId;
   }
 }
@@ -622,6 +625,11 @@ export async function isNetworkMatchedForTransaction(
     return false;
   }
   const fromBlockChain = getCurrentBlockchainOfOrNull(swap, step);
+  console.log('[isNetworkMatchedForTransaction/fromBlockChain]', {
+    fromBlockChain,
+    swap,
+    step,
+  });
   if (!fromBlockChain) return false;
 
   if (
@@ -634,6 +642,12 @@ export async function isNetworkMatchedForTransaction(
       if (sourceWallet) {
         const provider = getEvmProvider(providers, sourceWallet.walletType);
         const chainId: number | string | null = await getChainId(provider);
+        console.log('[isNetworkMatchedForTransaction/chainId]', {
+          chainId,
+          provider,
+          sourceWallet,
+        });
+
         if (chainId) {
           const blockChain = getBlockChainNameFromId(
             chainId,
@@ -641,6 +655,8 @@ export async function isNetworkMatchedForTransaction(
               ([, blockchainMeta]) => blockchainMeta
             )
           );
+
+          console.log({ chainId, blockChain, fromBlockChain });
           if (
             blockChain &&
             blockChain.toLowerCase() === fromBlockChain.toLowerCase()
@@ -1097,6 +1113,10 @@ export function checkWaitingForConnectWalletChange(params: {
           const queueInstance = q.list;
           const { type } = getRequiredWallet(swap);
           const description = ERROR_MESSAGE_WAIT_FOR_CHANGE_NETWORK(type);
+          console.log('[checkWaitingForConnectWalletChange]', {
+            swap,
+            description,
+          });
 
           q.list.block({
             reason: {

@@ -1,4 +1,4 @@
-import { AccountId } from 'caip';
+import { AccountId, ChainId } from 'caip';
 import { Networks, timeout } from '@rango-dev/wallets-shared';
 import { SignClient } from '@walletconnect/sign-client/dist/types/client';
 import {
@@ -8,12 +8,13 @@ import {
   SignClientTypes,
 } from '@walletconnect/types';
 import { Web3Modal } from '@web3modal/standalone';
-import { BlockchainMeta } from 'rango-types/lib';
+import { BlockchainMeta, evmBlockchains } from 'rango-types/lib';
 import {
   // generateOptionalNamespace,
   generateRequiredNamespace,
 } from './helpers';
 import { PROJECT_ID } from './constants';
+import { Instance } from '.';
 
 const PING_TIMEOUT = 10_000;
 
@@ -26,7 +27,7 @@ const web3Modal = new Web3Modal({
   walletConnectVersion: 2,
 });
 
-function getLastSession(client: SignClient) {
+export function getLastSession(client: SignClient) {
   return client.session.values[client.session.values.length - 1];
 }
 
@@ -127,19 +128,12 @@ export async function tryConnect(
   // const optionalNamespaces = generateOptionalNamespace(meta);
 
   if (!requiredNamespaces) {
-    console.log({
-      requiredNamespaces,
-      a: {
-        meta,
-        network: network || Networks.SOLANA,
-      },
-    });
     throw new Error(`Couldn't generate required namespace for ${network}`);
   }
 
   let session: SessionTypes.Struct | undefined;
-  console.log({ client });
   const pairing = tryGetPairing(client);
+  console.log('[tryConnect]', { client, pairing });
   if (pairing) {
     console.log(`Trying to restore ${pairing.peerMetadata?.name} pair.`);
     try {
@@ -150,6 +144,8 @@ export async function tryConnect(
     }
   }
 
+  console.log('[tryConnect] check session', { session });
+
   // Connecting for the first time
   // or session couldn't be restored.
   if (!session) {
@@ -157,7 +153,62 @@ export async function tryConnect(
       requiredNamespaces,
       // optionalNamespaces,
     });
+    console.log('[tryConnect] created session', { session });
   }
+
+  return session;
+}
+
+export async function tryUpdate(
+  instance: Instance,
+  params: {
+    network: string;
+    meta: BlockchainMeta[];
+  }
+): Promise<SessionTypes.Struct> {
+  const { client, session } = instance;
+  const { network, meta } = params;
+
+  if (!session) throw new Error('Session must exist!');
+  console.log('[tryUpdate] ', { client, session });
+
+  const sessions = client.session.getAll();
+  const lastSession = sessions[sessions.length - 1];
+
+  const evm = evmBlockchains(meta);
+  const requiredEvmChain = evm.find((chain) => chain.name === network);
+  if (!requiredEvmChain) throw new Error('not found!');
+
+  console.log(
+    '[tryUpdate] requiredEvmChain',
+    lastSession,
+    requiredEvmChain,
+    session
+  );
+
+  const address = '0x2702d89c1c8658b49c45dd460deebcc45faec03c';
+  const chainId = new ChainId({
+    namespace: 'eip155',
+    reference: String(parseInt(requiredEvmChain?.chainId)),
+  }).toString();
+
+  const newNamespace = lastSession.namespaces;
+  newNamespace.eip155.accounts.push(
+    new AccountId({
+      chainId,
+      address: address,
+    }).toString()
+  );
+  newNamespace.eip155.chains?.push(chainId);
+
+  console.log('[tryUpdate] else', {
+    newNamespace,
+  });
+
+  client.update({
+    topic: session.topic,
+    namespaces: newNamespace,
+  });
 
   console.log({ session });
   return session;

@@ -82,6 +82,7 @@ class EVMSigner implements GenericSigner<EvmTransaction> {
     const { address, chainId } = requestedFor;
 
     if (!chainId) {
+      console.log('isNetworkAndAccountExistInSession', requestedFor);
       throw new Error(
         'You need to set your chain for signing message/transaction.'
       );
