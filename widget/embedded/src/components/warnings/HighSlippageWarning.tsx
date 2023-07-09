@@ -1,6 +1,7 @@
 import { Alert } from '@rango-dev/ui';
 import React from 'react';
 import { ChangeSlippageButton } from '../ChangeSlippageButton';
+import { i18n } from '@lingui/core';
 
 interface PropTypes {
   selectedSlippage: number;
@@ -11,8 +12,14 @@ export function HighSlippageWarning(props: PropTypes) {
 
   return (
     <Alert type="warning" footer={<ChangeSlippageButton />}>
-      Caution, your slippage is high (=
-      {selectedSlippage}). Your trade may be front run.
+      {i18n.t(
+        'highSlippage',
+        { selectedSlippage },
+        {
+          message:
+            ' Caution, your slippage is high (={selectedSlippage}). Your trade may be front run.',
+        }
+      )}
     </Alert>
   );
 }

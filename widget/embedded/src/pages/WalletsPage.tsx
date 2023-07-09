@@ -18,7 +18,7 @@ import { useWallets } from '@rango-dev/wallets-core';
 import { useUiStore } from '../store/ui';
 import { useNavigateBack } from '../hooks/useNavigateBack';
 import { navigationRoutes } from '../constants/navigationRoutes';
-import { useTranslation } from 'react-i18next';
+import { i18n } from '@lingui/core';
 import { useMetaStore } from '../store/meta';
 import { Spinner } from '@rango-dev/ui';
 import { LoadingFailedAlert } from '@rango-dev/ui';
@@ -71,7 +71,6 @@ export function WalletsPage({ supportedWallets, multiWallets }: PropTypes) {
   const toggleConnectWalletsButton =
     useUiStore.use.toggleConnectWalletsButton();
   const loadingMetaStatus = useMetaStore.use.loadingStatus();
-  const { t } = useTranslation();
 
   const onSelectWallet = async (type: WalletType) => {
     const wallet = state(type);
@@ -115,7 +114,7 @@ export function WalletsPage({ supportedWallets, multiWallets }: PropTypes) {
 
   return (
     <SecondaryPage
-      title={t('Select Wallet') || ''}
+      title={i18n.t('Select Wallet') || ''}
       textField={false}
       onBack={navigateBackFrom.bind(null, navigationRoutes.wallets)}>
       <>

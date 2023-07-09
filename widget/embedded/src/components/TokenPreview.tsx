@@ -8,7 +8,7 @@ import {
   Image,
 } from '@rango-dev/ui';
 import { LoadingStatus } from '../store/meta';
-import { useTranslation } from 'react-i18next';
+import { i18n } from '@lingui/core';
 import BigNumber from 'bignumber.js';
 import { numberToString } from '../utils/numbers';
 
@@ -105,7 +105,6 @@ interface PropTypes {
 
 export function TokenPreview(props: PropTypes) {
   const { chain, token, loadingStatus, percentageChange } = props;
-  const { t } = useTranslation();
 
   const ItemSuffix = (
     <div
@@ -113,8 +112,7 @@ export function TokenPreview(props: PropTypes) {
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
-      }}
-    >
+      }}>
       {loadingStatus === 'failed' && <InfoCircleIcon color="error" size={24} />}
     </div>
   );
@@ -132,8 +130,9 @@ export function TokenPreview(props: PropTypes) {
               <Typography
                 variant="caption"
                 color="neutral600"
-                className="usd-value"
-              >{`$${numberToString(props.usdValue)}`}</Typography>
+                className="usd-value">{`$${numberToString(
+                props.usdValue
+              )}`}</Typography>
             )}
           </div>
         </div>
@@ -151,11 +150,10 @@ export function TokenPreview(props: PropTypes) {
             }
             suffix={ItemSuffix}
             align="start"
-            size="large"
-          >
+            size="large">
             {loadingStatus === 'success' && chain
               ? chain.displayName
-              : t('Chain')}
+              : i18n.t('Chain')}
           </Button>
           <Divider size={12} direction="horizontal" />
           <Button
@@ -171,9 +169,10 @@ export function TokenPreview(props: PropTypes) {
             }
             suffix={ItemSuffix}
             size="large"
-            align="start"
-          >
-            {loadingStatus === 'success' && token ? token.symbol : t('Token')}
+            align="start">
+            {loadingStatus === 'success' && token
+              ? token.symbol
+              : i18n.t('Token')}
           </Button>
           <Divider size={12} direction="horizontal" />
           <div className="amount">

@@ -1,3 +1,4 @@
+export * from './I18nManager';
 export * from './BestRoute';
 export * from './Button';
 export * from './Checkbox';
