@@ -1,7 +1,7 @@
 import {
   SimulationAssetAndAmount,
   SimulationValidationStatus,
-} from '@rango-dev/ui/dist/types/swaps';
+} from '@rango-dev/ui/dist/widget/ui/src/types/swaps';
 import BigNumber from 'bignumber.js';
 import { BestRouteResponse, BlockchainMeta, Token } from 'rango-sdk';
 import { areEqual } from './common';

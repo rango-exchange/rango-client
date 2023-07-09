@@ -9,7 +9,6 @@ import {
 } from './utils/wallets';
 import { useWalletsStore } from './store/wallets';
 import { isEvmBlockchain } from 'rango-sdk';
-import './i18n';
 import { useWalletProviders } from './hooks/useWalletProviders';
 import { WidgetConfig } from './types';
 import { createContext, useRef } from 'react';

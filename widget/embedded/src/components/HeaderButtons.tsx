@@ -9,6 +9,7 @@ import {
 } from '@rango-dev/ui';
 import { useNavigate } from 'react-router-dom';
 import { navigationRoutes } from '../constants/navigationRoutes';
+import { i18n } from '@lingui/core';
 
 const ButtonsContainer = styled('div', {
   display: 'flex',
@@ -24,28 +25,25 @@ export function HeaderButtons(props: PropTypes) {
 
   return (
     <ButtonsContainer>
-      <Tooltip content="Refresh">
+      <Tooltip content={i18n.t('Refresh')}>
         <Button
           variant="ghost"
           onClick={onClickRefresh}
-          disabled={!onClickRefresh}
-        >
+          disabled={!onClickRefresh}>
           <RetryIcon size={24} disabled={!onClickRefresh} />
         </Button>
       </Tooltip>
-      <Tooltip content="Transactions History">
+      <Tooltip content={i18n.t('Transactions History')}>
         <Button
           variant="ghost"
-          onClick={() => navigate(navigationRoutes.swaps)}
-        >
+          onClick={() => navigate(navigationRoutes.swaps)}>
           <HistoryIcon size={24} />
         </Button>
       </Tooltip>
-      <Tooltip content="Settings">
+      <Tooltip content={i18n.t('Settings')}>
         <Button
           variant="ghost"
-          onClick={() => navigate(navigationRoutes.settings)}
-        >
+          onClick={() => navigate(navigationRoutes.settings)}>
           <SettingsIcon size={24} />
         </Button>
       </Tooltip>

@@ -1,5 +1,6 @@
 import { styled } from '../../theme';
 import React, { useState } from 'react';
+import { i18n } from '@lingui/core';
 
 import { LiquiditySource, LoadingStatus } from '../../types/meta';
 import {
@@ -113,10 +114,12 @@ export function Settings(props: PropTypes) {
     <>
       <BaseContainer>
         <Head>
-          <Typography variant="body2">Slippage tolerance</Typography>
+          <Typography variant="body2">
+            {i18n.t('Slippage tolerance')}
+          </Typography>
           {customSlippage ? (
             <Typography variant="caption" color="error">
-              {customSlippage}% Custom
+              {customSlippage}% {i18n.t('Custom')}
             </Typography>
           ) : undefined}
         </Head>
@@ -160,13 +163,13 @@ export function Settings(props: PropTypes) {
       </BaseContainer>
       {!singleTheme && (
         <ThemesContainer>
-          <Title variant="body2">Theme</Title>
+          <Title variant="body2">{i18n.t('Theme')}</Title>
           <Radio
             value={selectedTheme}
             options={[
-              { value: 'dark', label: 'Dark' },
-              { value: 'light', label: 'Light' },
-              { value: 'auto', label: 'Auto' },
+              { value: 'dark', label: `${i18n.t('Dark')}` },
+              { value: 'light', label: `${i18n.t('Light')}` },
+              { value: 'auto', label: `${i18n.t('Auto')}` },
             ]}
             onChange={(value) => onThemeChange(value as Theme)}
             direction="horizontal"
@@ -175,7 +178,7 @@ export function Settings(props: PropTypes) {
         </ThemesContainer>
       )}
       <InfiniteContainer>
-        <Typography variant="body2">Infinite Approval</Typography>
+        <Typography variant="body2">{i18n.t('Infinite Approval')}</Typography>
         <Switch checked={infiniteApprove} onChange={toggleInfiniteApprove} />
       </InfiniteContainer>
       <LiquiditySourceContainer>
@@ -200,9 +203,8 @@ export function Settings(props: PropTypes) {
               )}
               <StyledAngleRight />
             </LiquiditySourceNumber>
-          }
-        >
-          <Typography variant="body2">Liquidity Sources</Typography>
+          }>
+          <Typography variant="body2">{i18n.t('Liquidity Sources')}</Typography>
         </Button>
       </LiquiditySourceContainer>
     </>
