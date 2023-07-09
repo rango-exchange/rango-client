@@ -24,16 +24,18 @@ import { PendingSwap } from '@rango-dev/queue-manager-rango-preset/dist/shared';
 import { debounce } from '../utils/common';
 import { isPositiveNumber } from '../utils/numbers';
 
-const getUsdValue = (token: Token | null, amount: string) =>
-  new BigNumber(amount || ZERO).multipliedBy(token?.usdPrice || 0);
+const getUsdValue = (token: Token | null, amount: string): BigNumber | null =>
+  token?.usdPrice
+    ? new BigNumber(amount || ZERO).multipliedBy(token?.usdPrice || 0)
+    : null;
 
 export interface RouteState {
   fromChain: BlockchainMeta | null;
   toChain: BlockchainMeta | null;
   inputAmount: string;
-  inputUsdValue: BigNumber;
+  inputUsdValue: BigNumber | null;
   outputAmount: BigNumber | null;
-  outputUsdValue: BigNumber;
+  outputUsdValue: BigNumber | null;
   fromToken: TokenWithBalance | null;
   toToken: TokenWithBalance | null;
   loading: boolean;
@@ -306,7 +308,7 @@ const bestRoute = (
   const bestRouteParamsListener = () => {
     const { fromToken, toToken, inputAmount, inputUsdValue, resetRoute } =
       useBestRouteStore.getState();
-    if (!isPositiveNumber(inputAmount) || inputUsdValue.eq(0))
+    if (!isPositiveNumber(inputAmount) || inputUsdValue?.eq(0))
       return bestRouteStore.setState({ loading: false });
 
     if (tokensAreEqual(fromToken, toToken))
