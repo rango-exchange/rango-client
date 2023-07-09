@@ -4,6 +4,9 @@ lerna-debug.log
 .vercel
 .npmrc
 
+# i18n
+translations/**/*.ts
+
 # dependencies
 node_modules
 .pnp

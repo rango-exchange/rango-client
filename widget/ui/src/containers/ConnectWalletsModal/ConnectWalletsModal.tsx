@@ -3,6 +3,7 @@ import { styled } from '../../theme';
 import { WalletInfo } from '../../types/wallet';
 import { WalletType } from '@rango-dev/wallets-shared';
 import { Modal, Wallet } from '../../components';
+import { i18n } from '@lingui/core';
 
 export interface PropTypes {
   open: boolean;
@@ -32,7 +33,7 @@ export function ConnectWalletsModal(props: PropTypes) {
 
   return (
     <Modal
-      title="Connect Wallets"
+      title={i18n.t('Connect Wallets')}
       open={open}
       content={Content}
       onClose={onClose}

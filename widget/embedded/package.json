@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/widget-embedded",
-  "version": "0.5.1-next.17",
+  "version": "0.5.1-next.21",
   "license": "MIT",
   "type": "module",
   "main": "dist/index.js",
@@ -17,7 +17,7 @@
     "lint": "eslint \"**/*.{ts,tsx}\" --ignore-path ../../.eslintignore"
   },
   "dependencies": {
-    "@rango-dev/provider-all": "^0.5.1-next.9",
+    "@rango-dev/provider-all": "^0.5.1-next.11",
     "@rango-dev/queue-manager-core": "^0.5.1-next.1",
     "@rango-dev/queue-manager-rango-preset": "^0.5.1-next.15",
     "@rango-dev/queue-manager-react": "^0.5.1-next.1",
@@ -27,9 +27,6 @@
     "bignumber.js": "^9.1.1",
     "copy-to-clipboard": "^3.3.3",
     "dayjs": "^1.11.7",
-    "i18next": "^22.4.11",
-    "i18next-browser-languagedetector": "^7.0.1",
-    "i18next-http-backend": "^2.1.1",
     "immer": "^9.0.19",
     "mitt": "^3.0.0",
     "rango-sdk": "^0.1.34",

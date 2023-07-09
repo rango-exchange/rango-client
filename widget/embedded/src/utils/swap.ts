@@ -6,6 +6,7 @@ import {
   SwapResult,
   Token,
 } from 'rango-sdk';
+import { i18n } from '@lingui/core';
 import { ConnectedWallet } from '../store/wallets';
 import { ZERO } from '../constants/numbers';
 import { numberToString } from './numbers';
@@ -132,30 +133,32 @@ export function getSwapButtonState(
   inputAmount: string
 ): SwapButtonState {
   if (loadingMetaStatus !== 'success')
-    return { title: 'Connect Wallet', disabled: true };
+    return { title: `${i18n.t('Connect Wallet')}`, disabled: true };
   if (connectedWallets.length == 0)
-    return { title: 'Connect Wallet', disabled: false };
-  if (loading) return { title: 'Finding Best Route...', disabled: true };
+    return { title: `${i18n.t('Connect Wallet')}`, disabled: false };
+  if (loading)
+    return { title: `${i18n.t('Finding Best Route...')}`, disabled: true };
   else if (!inputAmount || inputAmount === '0')
-    return { title: 'Enter an amount', disabled: true };
+    return { title: `${i18n.t('Enter an amount')}`, disabled: true };
   else if (!bestRoute || !bestRoute.result)
-    return { title: 'Swap', disabled: true };
-  else if (hasLimitError) return { title: 'Limit Error', disabled: true };
+    return { title: `${i18n.t('Swap')}`, disabled: true };
+  else if (hasLimitError)
+    return { title: `${i18n.t('Limit Error')}`, disabled: true };
   else if (highValueLoss)
-    return { title: 'Price impact is too high!', disabled: true };
+    return { title: `${i18n.t('Price impact is too high!')}`, disabled: true };
   else if (priceImpactCanNotBeComputed)
     return {
-      title: 'USD price is unknown, price impact might be high!',
+      title: `${i18n.t('USD price is unknown, price impact might be high!')}`,
       disabled: false,
       hasWarning: true,
     };
   else if (needsToWarnEthOnPath)
     return {
-      title: 'The route goes through Ethereum. Continue?',
+      title: `${i18n.t('The route goes through Ethereum. Continue?')}`,
       disabled: false,
       hasWarning: true,
     };
-  else return { title: 'Swap', disabled: false };
+  else return { title: `${i18n.t('Swap')}`, disabled: false };
 }
 
 export function canComputePriceImpact(
@@ -349,9 +352,19 @@ export function createBestRouteRequestBody(
 
   const filteredBlockchains = removeDuplicateFrom(
     (initialRoute?.result?.swaps || []).reduce(
-      (blockchains: string[], swap) => (
-        blockchains.push(swap.from.blockchain, swap.to.blockchain), blockchains
-      ),
+      (blockchains: string[], swap) => {
+        blockchains.push(swap.from.blockchain, swap.to.blockchain);
+        // Check if internalSwaps array exists
+        if (swap.internalSwaps && Array.isArray(swap.internalSwaps)) {
+          swap.internalSwaps.map((internalSwap) => {
+            blockchains.push(
+              internalSwap.from.blockchain,
+              internalSwap.to.blockchain
+            );
+          });
+        }
+        return blockchains;
+      },
       []
     )
   );
