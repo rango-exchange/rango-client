@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/provider-all",
-  "version": "0.5.1-next.9",
+  "version": "0.5.1-next.11",
   "license": "MIT",
   "type": "module",
   "module": "./dist/index.js",
@@ -45,7 +45,7 @@
     "@rango-dev/provider-tron-link": "^0.5.1-next.12",
     "@rango-dev/provider-trustwallet": "^0.5.1-next.13",
     "@rango-dev/provider-walletconnect": "^0.5.1-next.14",
-    "@rango-dev/provider-xdefi": "^0.5.1-next.13"
+    "@rango-dev/provider-xdefi": "^0.5.1-next.17"
   },
   "publishConfig": {
     "access": "public"
