@@ -23,22 +23,29 @@ import { PendingSwap } from '@rango-dev/queue-manager-rango-preset';
 import { removeDuplicateFrom } from './common';
 
 export function getOutputRatio(
-  inputUsdValue: BigNumber,
-  outputUsdValue: BigNumber
+  inputUsdValue: BigNumber | null,
+  outputUsdValue: BigNumber | null
 ) {
-  if (inputUsdValue.lte(ZERO) || outputUsdValue.lte(ZERO)) return 0;
+  if (
+    !inputUsdValue ||
+    !outputUsdValue ||
+    inputUsdValue.lte(ZERO) ||
+    outputUsdValue.lte(ZERO)
+  )
+    return 0;
   return outputUsdValue.div(inputUsdValue).minus(1).multipliedBy(100);
 }
 
 export function outputRatioHasWarning(
-  inputUsdValue: BigNumber,
+  inputUsdValue: BigNumber | null,
   outputRatio: BigNumber | 0
-) {
+): boolean {
   return (
-    (parseInt(outputRatio.toFixed(2) || '0') <= -10 &&
-      inputUsdValue.gte(new BigNumber(400))) ||
-    (parseInt(outputRatio.toFixed(2) || '0') <= -5 &&
-      inputUsdValue.gte(new BigNumber(1000)))
+    ((parseInt(outputRatio.toFixed(2) || '0') <= -10 &&
+      inputUsdValue?.gte(new BigNumber(400))) ||
+      (parseInt(outputRatio.toFixed(2) || '0') <= -5 &&
+        inputUsdValue?.gte(new BigNumber(1000)))) ??
+    false
   );
 }
 
@@ -164,11 +171,14 @@ export function getSwapButtonState(
 export function canComputePriceImpact(
   bestRoute: BestRouteResponse | null,
   inputAmount: string,
-  inputUsdValue: BigNumber,
-  outputUsdValue: BigNumber
+  inputUsdValue: BigNumber | null,
+  outputUsdValue: BigNumber | null
 ) {
   return !(
-    (inputUsdValue.lte(ZERO) || outputUsdValue.lte(ZERO)) &&
+    (!inputUsdValue ||
+      !outputUsdValue ||
+      inputUsdValue.lte(ZERO) ||
+      outputUsdValue.lte(ZERO)) &&
     !!bestRoute?.result &&
     !!inputAmount &&
     inputAmount !== '0' &&
