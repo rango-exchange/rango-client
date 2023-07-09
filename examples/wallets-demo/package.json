@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/wallets-demo",
-  "version": "0.5.1-next.14",
+  "version": "0.5.1-next.15",
   "license": "MIT",
   "private": true,
   "source": "public/index.html",
