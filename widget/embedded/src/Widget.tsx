@@ -1,4 +1,4 @@
-import { SwapContainer, styled } from '@rango-dev/ui';
+import { SwapContainer, styled, I18nManager } from '@rango-dev/ui';
 import React, {
   PropsWithChildren,
   useContext,
@@ -12,8 +12,6 @@ import { Layout } from './components/Layout';
 import { globalFont } from './globalStyles';
 import { useTheme } from './hooks/useTheme';
 import { WidgetConfig } from './types';
-import useSelectLanguage from './hooks/useSelectLanguage';
-import './i18n';
 import QueueManager from './QueueManager';
 import { useUiStore } from './store/ui';
 import { navigationRoutes } from './constants/navigationRoutes';
@@ -37,7 +35,6 @@ export function Main(props: PropsWithChildren<WidgetProps>) {
   globalFont(config?.theme?.fontFamily || 'Roboto');
 
   const { activeTheme } = useTheme(config?.theme || {});
-  const { changeLanguage } = useSelectLanguage();
   const [lastConnectedWalletWithNetwork, setLastConnectedWalletWithNetwork] =
     useState<string>('');
   const [disconnectedWallet, setDisconnectedWallet] = useState<WalletType>();
@@ -53,29 +50,27 @@ export function Main(props: PropsWithChildren<WidgetProps>) {
   }, [config]);
 
   useEffect(() => {
-    changeLanguage(config?.language || 'en');
-  }, [config?.language]);
-
-  useEffect(() => {
     widgetContext.onConnectWallet(setLastConnectedWalletWithNetwork);
   }, []);
 
   return (
-    <MainContainer id="swap-container" className={activeTheme}>
-      <QueueManager>
-        <WidgetEvents />
-        <SwapContainer fixedHeight={currentPage !== navigationRoutes.home}>
-          <AppRouter
-            lastConnectedWallet={lastConnectedWalletWithNetwork}
-            disconnectedWallet={disconnectedWallet}
-            clearDisconnectedWallet={() => {
-              setDisconnectedWallet(undefined);
-            }}>
-            <Layout config={config} />
-          </AppRouter>
-        </SwapContainer>
-      </QueueManager>
-    </MainContainer>
+    <I18nManager language={config?.language}>
+      <MainContainer id="swap-container" className={activeTheme}>
+        <QueueManager>
+          <WidgetEvents />
+          <SwapContainer fixedHeight={currentPage !== navigationRoutes.home}>
+            <AppRouter
+              lastConnectedWallet={lastConnectedWalletWithNetwork}
+              disconnectedWallet={disconnectedWallet}
+              clearDisconnectedWallet={() => {
+                setDisconnectedWallet(undefined);
+              }}>
+              <Layout config={config} />
+            </AppRouter>
+          </SwapContainer>
+        </QueueManager>
+      </MainContainer>
+    </I18nManager>
   );
 }
 

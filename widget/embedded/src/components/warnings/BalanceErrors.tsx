@@ -1,6 +1,6 @@
 import { Divider, styled, Typography } from '@rango-dev/ui';
 import React from 'react';
-
+import { i18n } from '@lingui/core';
 interface PropTypes {
   messages: string[];
 }
@@ -32,7 +32,7 @@ export function BalanceErrors({ messages }: PropTypes) {
   return (
     <>
       <Typography className="title" variant="title" color={'error'}>
-        Insufficent Balance:
+        {i18n.t('Insufficent Balance:')}
       </Typography>
       <Divider size={8} />
       <List showListStyle={showListStyle}>
