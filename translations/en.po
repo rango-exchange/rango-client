@@ -115,8 +115,8 @@ msgstr "Liquidity Sources"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/Layout.tsx:139
-#: widget/embedded/src/utils/swap.ts:136
-#: widget/embedded/src/utils/swap.ts:138
+#: widget/embedded/src/utils/swap.ts:143
+#: widget/embedded/src/utils/swap.ts:145
 #~ msgid "Connect Wallet"
 #~ msgstr "Connect Wallet"
 
@@ -178,38 +178,38 @@ msgstr "Liquidity Sources"
 #~ msgstr "Select Wallet"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:140
+#: widget/embedded/src/utils/swap.ts:147
 #~ msgid "Finding Best Route..."
 #~ msgstr "Finding Best Route..."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:142
+#: widget/embedded/src/utils/swap.ts:149
 #~ msgid "Enter an amount"
 #~ msgstr "Enter an amount"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:144
-#: widget/embedded/src/utils/swap.ts:161
+#: widget/embedded/src/utils/swap.ts:151
+#: widget/embedded/src/utils/swap.ts:168
 #~ msgid "Swap"
 #~ msgstr "Swap"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:146
+#: widget/embedded/src/utils/swap.ts:153
 #~ msgid "Limit Error"
 #~ msgstr "Limit Error"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:148
+#: widget/embedded/src/utils/swap.ts:155
 #~ msgid "Price impact is too high!"
 #~ msgstr "Price impact is too high!"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:151
+#: widget/embedded/src/utils/swap.ts:158
 #~ msgid "USD price is unknown, price impact might be high!"
 #~ msgstr "USD price is unknown, price impact might be high!"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:157
+#: widget/embedded/src/utils/swap.ts:164
 #~ msgid "The route goes through Ethereum. Continue?"
 #~ msgstr "The route goes through Ethereum. Continue?"
 
