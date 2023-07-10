@@ -5,6 +5,7 @@ import {
   Subscribe,
   WalletInfo,
   Networks,
+  CanEagerConnect,
 } from '@rango-dev/wallets-shared';
 import { SignerFactory, BlockchainMeta, starknetBlockchain } from 'rango-types';
 import { argentx as argentx_instances } from './helpers';
@@ -51,6 +52,9 @@ export const subscribe: Subscribe = ({ instance, state, updateAccounts }) => {
 export const canSwitchNetworkTo: CanSwitchNetwork = () => false;
 
 export const getSigners: (provider: any) => SignerFactory = signer;
+
+export const canEagerConnect: CanEagerConnect = ({ instance }) =>
+  instance.isPreauthorized();
 
 export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
   allBlockChains
