@@ -88,10 +88,16 @@ class EVMSigner implements GenericSigner<EvmTransaction> {
       );
     }
 
+    // TODO: We need to make sure we are using a single format for chain ids, it should be hex or number.
+    // This is a quick fix for evm.
+    const chainIdNumber = chainId.startsWith('0x')
+      ? String(parseInt(chainId))
+      : chainId;
+
     const caipAddress = new AccountId({
       chainId: {
         namespace: NAMESPACE_NAME,
-        reference: chainId,
+        reference: chainIdNumber,
       },
       address,
     });
@@ -103,7 +109,9 @@ class EVMSigner implements GenericSigner<EvmTransaction> {
       console.warn(
         'Available adresses and requested address:',
         addresses,
-        caipAddress.toString()
+        caipAddress.toString(),
+        chainId,
+        address
       );
       throw new Error(
         `Your requested address doesn't exist on your wallect connect session. Please reconnect your wallet.`
@@ -112,10 +120,14 @@ class EVMSigner implements GenericSigner<EvmTransaction> {
 
     const caipChainId = new ChainId({
       namespace: NAMESPACE_NAME,
-      reference: chainId,
+      reference: chainIdNumber,
     });
 
-    return { chainId, address, caipChainId: caipChainId.toString() };
+    return {
+      chainId: chainIdNumber,
+      address,
+      caipChainId: caipChainId.toString(),
+    };
   }
 }
 

@@ -203,6 +203,7 @@ export async function tryUpdate(
 
   console.log('[tryUpdate] else', {
     newNamespace,
+    session,
   });
 
   client.update({
