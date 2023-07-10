@@ -6,7 +6,12 @@ import type { GenericSigner } from 'rango-types';
 import { EvmTransaction } from 'rango-types/lib/api/main';
 import { providers } from 'ethers';
 import { cleanEvmError, getTenderlyError } from './helper';
-import { SignerError, SignerErrorCode } from 'rango-types';
+import {
+  RPCErrorCode as RangoRPCErrorCode,
+  SignerError,
+  SignerErrorCode,
+} from 'rango-types';
+import { RPCErrorCode } from './types';
 
 const waitMs = (ms: number) =>
   new Promise((resolve) => setTimeout(resolve, ms));
@@ -70,6 +75,7 @@ export class DefaultEvmSigner implements GenericSigner<EvmTransaction> {
       if (!!chainId && !!signerChainId && signerChainId !== parseInt(chainId)) {
         throw new SignerError(
           SignerErrorCode.UNEXPECTED_BEHAVIOUR,
+          undefined,
           `Signer chainId: '${signerChainId}' doesn't match with required chainId: '${chainId}' for tx.`
         );
       }
@@ -80,6 +86,7 @@ export class DefaultEvmSigner implements GenericSigner<EvmTransaction> {
       ) {
         throw new SignerError(
           SignerErrorCode.UNEXPECTED_BEHAVIOUR,
+          undefined,
           `Signer address: '${signerAddress.toLowerCase()}' doesn't match with required address: '${address.toLowerCase()}' for tx.`
         );
       }
@@ -140,17 +147,28 @@ export class DefaultEvmSigner implements GenericSigner<EvmTransaction> {
       return { hash: txHash };
     } catch (err) {
       const error = err as any; // TODO find a proper type
-      if (error?.code === 'TRANSACTION_REPLACED' && error?.replacement)
+      if (
+        error?.code === RPCErrorCode.TRANSACTION_REPLACED &&
+        error?.replacement
+      )
         return { hash: error?.replacement?.hash, response: error?.replacement };
-      else if (error?.code === 'CALL_EXCEPTION') {
+      else if (error?.code === RPCErrorCode.CALL_EXCEPTION) {
         const tError = await getTenderlyError(chainId, txHash);
-        if (!!tError)
-          // TODO different Signer Error Code
+        if (!!tError) {
           throw new SignerError(
-            SignerErrorCode.SEND_TX_ERROR,
+            SignerErrorCode.TX_FAILED_IN_BLOCKCHAIN,
             'Trannsaction failed in blockchain',
-            tError
+            tError,
+            RangoRPCErrorCode.CALL_EXCEPTION,
+            error
           );
+        } else {
+          /**
+           * In cases where the is no error returen from tenderly, we could ignore
+           * the error and proceed with check status flow.
+           * */
+          return { hash: txHash };
+        }
       }
       throw cleanEvmError(error);
     }

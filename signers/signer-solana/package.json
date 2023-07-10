@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/signer-solana",
-  "version": "0.5.1-next.3",
+  "version": "0.5.1-next.4",
   "license": "MIT",
   "type": "module",
   "module": "./dist/index.js",
@@ -21,7 +21,7 @@
   },
   "dependencies": {
     "@solana/web3.js": "^1.67.2",
-    "rango-types": "^0.1.44"
+    "rango-types": "^0.1.45"
   },
   "publishConfig": {
     "access": "public"

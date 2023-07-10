@@ -14,7 +14,6 @@ import * as phantom from '@rango-dev/provider-phantom';
 import * as safepal from '@rango-dev/provider-safepal';
 import * as tokenpocket from '@rango-dev/provider-tokenpocket';
 import * as trustwallet from '@rango-dev/provider-trustwallet';
-import * as walletconnect from '@rango-dev/provider-walletconnect';
 import * as argentx from '@rango-dev/provider-argentx';
 import * as tronLink from '@rango-dev/provider-tron-link';
 import * as kucoin from '@rango-dev/provider-kucoin-wallet';
@@ -42,7 +41,6 @@ export const allProviders = () => [
   safepal,
   tokenpocket,
   trustwallet,
-  walletconnect,
   argentx,
   tronLink,
   kucoin,

@@ -1,28 +1,101 @@
+import { getMessageFromCode } from 'eth-rpc-errors';
 import type { SignerError as SignerErrorType } from 'rango-types';
-import { SignerError, SignerErrorCode } from 'rango-types';
+import {
+  RPCErrorCode as RangoRPCErrorCode,
+  SignerError,
+  SignerErrorCode,
+} from 'rango-types';
+import { MetamaskErrorCodes, RPCErrorCode, RPCErrorMessage } from './types';
 
 export const cleanEvmError = (error: any): SignerErrorType => {
-  let message = undefined;
-  if (
-    error &&
-    Object.prototype.hasOwnProperty.call(error, 'message') &&
-    Object.prototype.hasOwnProperty.call(error, 'code') &&
-    Object.prototype.hasOwnProperty.call(error, 'reason')
-  ) {
-    message = `Error sending the tx (code: ${(error as any).code})`;
-  } else if (
-    error &&
-    Object.prototype.hasOwnProperty.call(error, 'code') &&
-    Object.prototype.hasOwnProperty.call(error, 'message') &&
-    (error as any)?.code === -32603
-  ) {
-    return new SignerError(
-      SignerErrorCode.SEND_TX_ERROR,
-      undefined,
-      (error as any).message
-    );
+  if (!error) return new SignerError(SignerErrorCode.SEND_TX_ERROR);
+  if (SignerError.isSignerError(error)) return error;
+  const hasMessage = Object.prototype.hasOwnProperty.call(error, 'message');
+  const hasCode = Object.prototype.hasOwnProperty.call(error, 'code');
+  if (hasMessage && hasCode) {
+    const { message: errorMessage, code: errorCode } = error;
+    // rejection error
+    if (
+      RPCErrorCode.ACTION_REJECTED === errorCode ||
+      MetamaskErrorCodes.provider.userRejectedRequest === errorCode
+    )
+      return new SignerError(
+        SignerErrorCode.REJECTED_BY_USER,
+        undefined,
+        error,
+        RangoRPCErrorCode.REJECTION,
+        error
+      );
+    if (typeof errorCode === 'number') {
+      // provider errors
+      if (Object.values(MetamaskErrorCodes.provider).includes(errorCode)) {
+        const msg = getMessageFromCode(errorCode);
+        return new SignerError(
+          SignerErrorCode.SEND_TX_ERROR,
+          undefined,
+          msg,
+          RangoRPCErrorCode.UNKNOWN_ERROR,
+          error
+        );
+      }
+      // rpc errors
+      else if (Object.values(MetamaskErrorCodes.rpc).includes(errorCode)) {
+        // underpriced errors are sent as internal errors
+        if (
+          errorCode === MetamaskErrorCodes.rpc.internal &&
+          (errorMessage?.includes(RPCErrorMessage.UNDER_PRICED) ||
+            errorMessage?.includes(RPCErrorMessage.REPLACEMENT_FEE_TOO_LOW))
+        )
+          return new SignerError(
+            SignerErrorCode.SEND_TX_ERROR,
+            undefined,
+            'Transaction is underpriced.',
+            RangoRPCErrorCode.UNDER_PRICED,
+            error
+          );
+        // gas limit errors are sent as internal errors
+        if (
+          errorMessage?.includes(RPCErrorMessage.INTRINSIC_GAS_TOO_LOW) ||
+          errorMessage?.includes(RPCErrorMessage.OUT_OF_GAS)
+        )
+          return new SignerError(
+            SignerErrorCode.SEND_TX_ERROR,
+            undefined,
+            'Gas limit is low.',
+            RangoRPCErrorCode.OUT_OF_GAS,
+            error
+          );
+
+        const msg = getMessageFromCode(errorCode);
+        return new SignerError(
+          SignerErrorCode.SEND_TX_ERROR,
+          undefined,
+          msg ?? error,
+          RangoRPCErrorCode.UNKNOWN_ERROR,
+          error
+        );
+      }
+    }
+    switch (errorCode) {
+      case RPCErrorCode.INVALID_ARGUMENT: {
+        const msg = (error.reason || error.message) ?? error;
+        return new SignerError(
+          SignerErrorCode.SEND_TX_ERROR,
+          undefined,
+          msg,
+          RangoRPCErrorCode.UNKNOWN_ERROR,
+          error
+        );
+      }
+    }
   }
-  return new SignerError(SignerErrorCode.SEND_TX_ERROR, message, error);
+  return new SignerError(
+    SignerErrorCode.SEND_TX_ERROR,
+    undefined,
+    error,
+    RangoRPCErrorCode.UNKNOWN_ERROR,
+    error
+  );
 };
 
 interface TenderlyResponse {
