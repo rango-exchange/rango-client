@@ -108,16 +108,10 @@ export function Layout({ config }: LayoutProps) {
   }, [config?.from?.token, config?.from?.blockchain, loadingMetaStatus]);
 
   useEffect(() => {
-    setAffiliateRef(config?.affiliateRef || null);
-  }, [config?.affiliateRef]);
-
-  useEffect(() => {
-    setAffiliatePercent(config?.affiliatePercent || null);
-  }, [config?.affiliatePercent]);
-
-  useEffect(() => {
-    setAffiliateWallets(config?.affiliateWallets);
-  }, [config?.affiliateWallets]);
+    setAffiliateRef(config?.affiliate?.ref);
+    setAffiliatePercent(config?.affiliate?.percent);
+    setAffiliateWallets(config?.affiliate?.wallets);
+  }, [config?.affiliate]);
 
   return (
     <>

@@ -331,7 +331,7 @@ export function createBestRouteRequestBody(
   slippage: number,
   affiliateRef: string | null,
   affiliatePercent: number | null,
-  affiliateWallets?: { [key: string]: string },
+  affiliateWallets: { [key: string]: string } | null,
   initialRoute?: BestRouteResponse,
   destination?: string
 ): BestRouteRequest {
@@ -385,7 +385,7 @@ export function createBestRouteRequestBody(
     amount: inputAmount.toString(),
     affiliateRef,
     affiliatePercent,
-    affiliateWallets,
+    affiliateWallets: affiliateWallets || undefined,
     checkPrerequisites,
     from: {
       address: fromToken.address,

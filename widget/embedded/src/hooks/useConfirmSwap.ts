@@ -52,7 +52,7 @@ export function useConfirmSwap(): ConfirmSwap {
   const initialRoute = useBestRouteStore.use.bestRoute();
   const setBestRoute = useBestRouteStore.use.setBestRoute();
   const inputUsdValue = useBestRouteStore.use.inputUsdValue();
-  const affiliateRef = useSettingsStore.use.affiliateRef();
+  const affiliateRef = useSettingsStore.use.affiliateRef() || null;
   const affiliatePercent = useSettingsStore.use.affiliatePercent();
   const affiliateWallets = useSettingsStore.use.affiliateWallets();
 

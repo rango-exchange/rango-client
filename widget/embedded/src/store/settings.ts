@@ -15,16 +15,18 @@ export interface SettingsState {
   theme: Theme;
   affiliateRef: string | null;
   affiliatePercent: number | null;
-  affiliateWallets: { [key: string]: string };
+  affiliateWallets: { [key: string]: string } | null;
   setSlippage: (slippage: number) => void;
   setCustomSlippage: (customSlippage: number | null) => void;
   toggleInfiniteApprove: () => void;
   toggleLiquiditySource: (name: string) => void;
   setTheme: (theme: Theme) => void;
   toggleAllLiquiditySources: () => void;
-  setAffiliateRef: (affiliateRef: string | null) => void;
-  setAffiliatePercent: (affiliatePercent: number | null) => void;
-  setAffiliateWallets: (affiliateWallets?: { [key: string]: string }) => void;
+  setAffiliateRef: (affiliateRef?: string | null) => void;
+  setAffiliatePercent: (affiliatePercent?: number | null) => void;
+  setAffiliateWallets: (
+    affiliateWallets?: { [key: string]: string } | null
+  ) => void;
 }
 
 export const useSettingsStore = createSelectors(
@@ -36,7 +38,7 @@ export const useSettingsStore = createSelectors(
         infiniteApprove: false,
         affiliateRef: null,
         affiliatePercent: null,
-        affiliateWallets: undefined,
+        affiliateWallets: null,
         disabledLiquiditySources: [],
         theme: 'auto',
         setSlippage: (slippage) =>
