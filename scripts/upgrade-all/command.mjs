@@ -7,18 +7,26 @@ async function run() {
     { name: 'project', type: String },
     { name: 'no-install', type: Boolean, defaultOption: false },
   ];
-  const { project, noInstall } = commandLineArgs(optionDefinitions, { camelCase: true });
+  const { project, noInstall } = commandLineArgs(optionDefinitions, {
+    camelCase: true,
+  });
 
   const { stdout: currentBranch } = await $`git branch --show-current`;
   const dist = currentBranch === 'main' ? 'latest' : 'next';
 
   if (!project) {
-    console.log(`you didn't specify any "project". So we will check all the workspace packages.`);
+    console.log(
+      `you didn't specify any "project". So we will check all the workspace packages.`
+    );
     const packages = await getAllPackages();
     console.log(`All packages (with clients/demos): ${packages.length}`);
     console.log(`Dist channel: ${dist}`);
 
-    await Promise.all(packages.map((project) => upgradeDepndendentsOf(project, dist)));
+    // TODO: using Promise.all to run in parallel will speed up the proccess
+    // but it has lock/unlock issue with fs write/read and can not be used reliably.
+    for (const project of packages) {
+      await upgradeDepndendentsOf(project, dist);
+    }
   } else {
     console.log(`Running upgrade-all for ${project} \n`);
     console.log(`Dist channel: ${dist}`);

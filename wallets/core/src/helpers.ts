@@ -3,13 +3,22 @@ import {
   convertEvmBlockchainMetaToEvmChainInfo,
   evmChainsToRpcMap,
   Network,
+  WalletConfig,
   WalletType,
   WalletTypes,
 } from '@rango-dev/wallets-shared';
-import { State, WalletProvider, WalletProviders } from './types';
-import { Options, State as WalletState } from './wallet';
+import {
+  State,
+  WalletActions,
+  ProviderInterface,
+  WalletProviders,
+} from './types';
+import Wallet, { Options, State as WalletState } from './wallet';
 import type { BlockchainMeta } from 'rango-types';
 import { isEvmBlockchain } from 'rango-types';
+import { Persistor } from './persistor';
+import { LASTE_CONNECTED_WALLETS } from './constants';
+import type { EventHandler as WalletEventHandler } from './wallet';
 
 export function choose(wallets: any[], type: WalletType): any | null {
   return wallets.find((wallet) => wallet.type === type) || null;
@@ -77,7 +86,7 @@ export function readAccountAddress(addressWithNetwork: string): {
   const [network, address] = addressWithNetwork.split(':');
 
   return {
-    network: network,
+    network,
     address,
   };
 }
@@ -98,7 +107,9 @@ export function availableWallets(providersState: State): WalletType[] {
   });
 }
 
-export function checkWalletProviders(list: WalletProvider[]): WalletProviders {
+export function checkWalletProviders(
+  list: ProviderInterface[]
+): WalletProviders {
   const wallets: WalletProviders = new Map();
 
   list.forEach((provider) => {
@@ -148,4 +159,91 @@ export function getComptaibleProvider(
     });
   }
   return provider;
+}
+
+export async function persistWallet(type: WalletType) {
+  const persistor = new Persistor<string[]>();
+  const wallets = persistor.getItem(LASTE_CONNECTED_WALLETS);
+  const walletAlreadyPersisted = !!wallets?.find((wallet) => wallet === type);
+  if (wallets && !walletAlreadyPersisted)
+    persistor.setItem(LASTE_CONNECTED_WALLETS, wallets.concat(type));
+  else persistor.setItem(LASTE_CONNECTED_WALLETS, [type]);
+}
+
+export function removeWalletFromPersist(type: WalletType) {
+  const persistor = new Persistor<string[]>();
+  const wallets = persistor.getItem(LASTE_CONNECTED_WALLETS);
+  if (wallets)
+    persistor.setItem(
+      LASTE_CONNECTED_WALLETS,
+      wallets.filter((wallet) => wallet !== type)
+    );
+}
+
+export function clearPersistStorage() {
+  const persistor = new Persistor<string[]>();
+  const wallets = persistor.getItem(LASTE_CONNECTED_WALLETS);
+  if (wallets) persistor.removeItem(LASTE_CONNECTED_WALLETS);
+}
+
+export async function autoConnect(
+  wallets: WalletProviders,
+  addWalletRef: (wallet: {
+    actions: WalletActions;
+    config: WalletConfig;
+  }) => Wallet<any>
+) {
+  const persistor = new Persistor<string[]>();
+  const lastConnectedWallets = persistor.getItem(LASTE_CONNECTED_WALLETS);
+  if (lastConnectedWallets && lastConnectedWallets.length) {
+    const connect_promises: {
+      walletType: WalletType;
+      connect: () => Promise<any>;
+    }[] = [];
+    lastConnectedWallets.forEach((walletType) => {
+      const wallet = wallets.get(walletType);
+
+      if (!!wallet) {
+        const ref = addWalletRef(wallet);
+        connect_promises.push({ walletType, connect: ref.connect.bind(ref) });
+      }
+    });
+
+    for (const { connect, walletType } of connect_promises) {
+      try {
+        await connect();
+      } catch (error) {
+        removeWalletFromPersist(walletType);
+      }
+    }
+  }
+}
+/*
+  Our event handler includes an internal state updater, and a notifier
+  for the outside listener.
+  On creating first wallet refrence, and on chaning `props.onUpdateState`
+  we are using this function.
+*/
+export function makeEventHandler(
+  dispatcher: any,
+  onUpdateState?: WalletEventHandler
+) {
+  const handler: WalletEventHandler = (
+    type,
+    name,
+    value,
+    coreState,
+    supportedChains
+  ) => {
+    const action = { type: 'new_state', wallet: type, name, value };
+    // Update state
+    dispatcher(action);
+
+    // Giving the event to the outside listener
+    if (onUpdateState) {
+      onUpdateState(type, name, value, coreState, supportedChains);
+    }
+  };
+
+  return handler;
 }

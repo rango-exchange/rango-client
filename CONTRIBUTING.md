@@ -1,3 +1,36 @@
+## Overview
+
+### Queue Manager
+
+The Queue Manager is a library that facilitates efficient management of swaps by creating a queue structure similar to a linked list. It provides various APIs to create and manage queues, such as blocking a queue. The Queue Manager supports the execution of multiple queues simultaneously in parallel.
+
+The folder structure is as follows:
+
+- `/queue-manager/core`: This directory contains the JavaScript implementation of the queue.
+- `/queue-manager/react`: This directory integrates the core functionality with React, unlocking features like automatic re-renders. It makes the queue available to the entire React app using context.
+- `/queue-manager/rango-preset`: This directory houses a comprehensive decentralized exchange (DEX) queue with advanced features such as parallel execution and multi-chain support. It is also integrated with Rango, enabling full-cycle swap functionality, including obtaining quotes, creating transactions, and signing them using wallets
+
+
+### Wallets
+
+We have developed a unified interface for most Web3 wallets, including Bitcoin, EVM, Cosmos, Solana, TON, and more. The library provides a core module that acts as a state manager and provider for the final wallet interface. Each wallet is referred to as a provider and contains the implementation specific to that wallet.
+
+To add all our providers at once, simply pass the `provider-all`. If you only require specific providers, you can add them individually to your project by passing an array of `provider` objects.
+
+For more information about the wallets, refer to the `/wallets/` directory.
+
+
+### Widget
+
+The Widget comprises high-level packages that include a user interface (UI) and different versions of our widget, which serves as a decentralized application (dApp). 
+
+Here is the structure:
+`/widget/ui`: This directory contains our UI components and Storybook for visual development and testing.
+`/widget/embedded`: Our react implementation of the widget. They are publishing as NPM packages.
+`/widget/app`: This directory houses a dApp that imports the embedded widget.
+`/widget/playground`: This directory offers a playground environment where you can test and obtain configurations for our widget.
+`/widget/iframe`: This directory contains a JavaScript class that simplifies the process of adding our iframe-based widget to dApps.
+
 ## Release workflow
 
 A release can be a lib or an app/client release. We are publishing our libs to `npm` and our apps to `vercel`.
@@ -26,3 +59,12 @@ Release should be triggered manually and then it will automatically published. Y
 After release (Green pipleline), make sure you will merge `main` into `next` as well. 
 
 `git pull && git checkout next && git pull && git merge main && git push`
+
+## Translation
+
+First we need to extract the message from our source code using `yarn i18n:extract` and then we should run `yarn i18n:compile` to make a wrapper arround the translation file `.po` to be used inside our app.
+
+### Adding a new language
+
+1. Add to `locales: ['en']` in `lingui.config.ts`
+2. Import and add to `messages` in `widget/ui/src/components/I18nManager/I18nManager.tsx`

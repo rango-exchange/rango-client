@@ -8,6 +8,7 @@ import {
   Header,
 } from '@rango-dev/ui';
 import React, { useEffect, useState } from 'react';
+import { i18n } from '@lingui/core';
 import { useInRouterContext, useNavigate } from 'react-router-dom';
 import { TokenInfo } from '../components/TokenInfo';
 import { fetchBestRoute, useBestRouteStore } from '../store/bestRoute';
@@ -136,7 +137,7 @@ export function Home() {
   return (
     <Container>
       <Header
-        title="SWAP"
+        title={i18n.t('SWAP')}
         suffix={
           <HeaderButtons
             onClickRefresh={
@@ -159,8 +160,7 @@ export function Home() {
             onClick={() => {
               switchFromAndTo();
               setCount((prev) => prev + 1);
-            }}
-          >
+            }}>
             <VerticalSwapIcon size={32} />
             {isRouterInContext && <SwithFromAndTo count={count} />}
           </Button>
@@ -216,8 +216,7 @@ export function Home() {
             else {
               navigate(navigationRoutes.confirmSwap, { replace: true });
             }
-          }}
-        >
+          }}>
           {swapButtonState.title}
         </Button>
         <BottomLogo />

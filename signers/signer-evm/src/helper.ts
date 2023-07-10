@@ -24,3 +24,26 @@ export const cleanEvmError = (error: any): SignerErrorType => {
   }
   return new SignerError(SignerErrorCode.SEND_TX_ERROR, message, error);
 };
+
+interface TenderlyResponse {
+  error_message: string;
+}
+
+export async function getTenderlyError(
+  chainId: string | undefined,
+  txHash: string
+): Promise<string | undefined> {
+  if (!chainId || !txHash) return;
+  const chainIdInt = parseInt(chainId);
+  try {
+    const url = `https://api.tenderly.co/api/v1/public-contract/${chainIdInt}/tx/${txHash}`;
+    const response = await fetch(url, {
+      method: 'GET',
+    });
+    if (!response.ok) return;
+    const data: TenderlyResponse = await response.json();
+    return data?.error_message;
+  } catch (error) {
+    return;
+  }
+}

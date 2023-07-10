@@ -1,14 +1,22 @@
 import { WalletTypes } from '@rango-dev/wallets-shared';
 import { Asset, Token } from 'rango-sdk';
-import { WidgetConfig } from './types';
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
 import subtractObject from 'subtract-object';
 import stringifyObject from 'stringify-object';
+import { WidgetConfig } from '@rango-dev/widget-embedded';
 
+import { WalletState } from '@rango-dev/ui';
 export const excludedWallets = [WalletTypes.STATION, WalletTypes.LEAP];
 
-export const onChangeMultiSelects = (value, values, list, findIndex) => {
+export const onChangeMultiSelects = (
+  value: string,
+  values: any[] | undefined,
+  list: any[],
+  findIndex: (item: string) => boolean
+): string[] | undefined => {
   if (value === 'empty') return [];
-  else if (value === 'all') return null;
+  else if (value === 'all') return undefined;
   if (!values) {
     values = [...list];
     const index = list.findIndex(findIndex);
@@ -43,11 +51,11 @@ export const filterTokens = (list: Token[], searchedFor: string) =>
       containsText(token.name || '', searchedFor)
   );
 
-export const syntaxHighlight = (json) => {
+export const syntaxHighlight = (json: string) => {
   json.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
   return json.replace(
-    /("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g,
-    function (match) {
+    /("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\\-]?\d+)?)/g,
+    function (match: string) {
       let cls = 'string';
       if (/^"/.test(match)) {
         if (/:$/.test(match)) {
@@ -76,9 +84,15 @@ export function clearEmpties<T extends Record<string, any>>(obj: T): T {
 }
 
 export function filterConfig(
-  config: WidgetConfig,
+  WidgetConfig: WidgetConfig,
   initialConfig: WidgetConfig
 ) {
+  const config = {
+    ...WidgetConfig,
+    wallets: WidgetConfig.wallets?.filter(
+      (wallet) => typeof wallet === 'string'
+    ),
+  };
   const userSelectedConfig = clearEmpties(
     subtractObject(
       JSON.parse(JSON.stringify(initialConfig)) as WidgetConfig,
@@ -87,6 +101,7 @@ export function filterConfig(
   );
 
   const filteredConfigForExport = Object.assign({}, userSelectedConfig);
+
   if (!filteredConfigForExport.apiKey)
     filteredConfigForExport.apiKey = config.apiKey;
 
@@ -150,6 +165,30 @@ export function formatConfig(config: WidgetConfig) {
     `,
     formatedConfig.indexOf('apiKey')
   );
+  if (!!config.wallets)
+    formatedConfig = insertAt(
+      formatedConfig,
+      `// You can add your external wallet to wallets
+    `,
+      formatedConfig.indexOf('wallets')
+    );
 
   return formatedConfig;
 }
+
+export const getStateWallet = (state: {
+  connected: boolean;
+  connecting: boolean;
+  installed: boolean;
+}): WalletState => {
+  switch (true) {
+    case state.connected:
+      return WalletState.CONNECTED;
+    case state.connecting:
+      return WalletState.CONNECTING;
+    case !state.installed:
+      return WalletState.NOT_INSTALLED;
+    default:
+      return WalletState.DISCONNECTED;
+  }
+};

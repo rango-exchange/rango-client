@@ -8,8 +8,10 @@ import { Wallet } from './flows/rango/types';
 import { Network, WalletType } from '@rango-dev/wallets-shared';
 import { Wallets } from './components/Wallets';
 import { History } from './components/History';
-import { notifier } from './flows/swap/helpers';
-import { SwapQueueContext, makeQueueDefinition } from '@rango-dev/queue-manager-rango-preset';
+import {
+  SwapQueueContext,
+  makeQueueDefinition,
+} from '@rango-dev/queue-manager-rango-preset';
 import { getConfig } from './configs';
 const wallet: Wallet = metamaskWallet;
 
@@ -18,7 +20,14 @@ interface PropTypes {
 }
 
 export function App(props: PropTypes) {
-  const { providers, getSigners, state, canSwitchNetworkTo, connect, getWalletInfo } = useWallets();
+  const {
+    providers,
+    getSigners,
+    state,
+    canSwitchNetworkTo,
+    connect,
+    getWalletInfo,
+  } = useWallets();
 
   const switchNetwork = (wallet: WalletType, network: Network) => {
     if (!canSwitchNetworkTo(wallet, network)) {
@@ -39,8 +48,8 @@ export function App(props: PropTypes) {
     switchNetwork,
     connect,
     state,
-    notifier,
     isMobileWallet,
+    canSwitchNetworkTo,
   };
 
   const swapQueueDef = useMemo(() => {

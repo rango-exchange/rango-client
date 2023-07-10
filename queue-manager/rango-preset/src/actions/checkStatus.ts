@@ -2,13 +2,19 @@ import { ExecuterActions } from '@rango-dev/queue-manager-core';
 import {
   delay,
   getCurrentStep,
+  getCurrentStepTx,
   getCurrentStepTxType,
   resetNetworkStatus,
   setCurrentStepTx,
   updateSwapStatus,
-  useTransactionsData,
+  inMemoryTransactionsData,
 } from '../helpers';
-import { SwapActionTypes, SwapQueueContext, SwapStorage } from '../types';
+import {
+  StepEventType,
+  SwapActionTypes,
+  SwapQueueContext,
+  SwapStorage,
+} from '../types';
 import {
   getCurrentBlockchainOf,
   getNextStep,
@@ -20,6 +26,8 @@ import { Transaction, TransactionStatusResponse } from 'rango-sdk';
 import { httpService } from '../services';
 import type { GenericSigner } from 'rango-types';
 import { prettifyErrorMessage } from '../shared-errors';
+import { notifier } from '../services/eventEmitter';
+import { DEFAULT_ERROR_CODE } from '../constants';
 
 const INTERVAL_FOR_CHECK = 5_000;
 
@@ -46,13 +54,14 @@ async function checkTransactionStatus({
   const currentStep = getCurrentStep(swap)!;
 
   if (!currentStep?.executedTransactionId) return;
+  const tx = getCurrentStepTx(currentStep);
   let txId = currentStep.executedTransactionId;
 
   let getTxReceiptFailed = false;
   let status: TransactionStatusResponse | null = null;
   let signer: GenericSigner<Transaction> | null = null;
   const { getTransactionDataByHash, setTransactionDataByHash } =
-    useTransactionsData();
+    inMemoryTransactionsData();
 
   try {
     const txType = getCurrentStepTxType(currentStep);
@@ -69,8 +78,11 @@ async function checkTransactionStatus({
     const { response: txResponse, receiptReceived } =
       getTransactionDataByHash(txId);
     if (signer?.wait && !receiptReceived) {
+      const chainId =
+        (tx?.blockChain && meta.blockchains?.[tx?.blockChain]?.chainId) ||
+        undefined;
       const { hash: updatedTxHash, response: updatedTxResponse } =
-        await signer.wait(txId, txResponse);
+        await signer.wait(txId, chainId, txResponse);
       if (updatedTxHash !== txId) {
         currentStep.executedTransactionId =
           updatedTxHash || currentStep.executedTransactionId;
@@ -111,10 +123,16 @@ async function checkTransactionStatus({
       details: extraMessageDetail,
       errorCode: extraMessageErrorCode,
     });
-    context?.notifier({
-      eventType: 'task_failed',
+
+    notifier({
+      event: {
+        type: StepEventType.FAILED,
+        reason: extraMessage,
+        reasonCode: updateResult.failureType ?? DEFAULT_ERROR_CODE,
+      },
       ...updateResult,
     });
+
     getTxReceiptFailed = true;
     // We shouldn't return here, because we need to trigger check status job in backend.
     // This is not a ui requirement but the backend one.
@@ -164,15 +182,15 @@ async function checkTransactionStatus({
   }
 
   if (prevOutputAmount === null && outputAmount !== null)
-    context.notifier({
-      eventType: 'step_completed_with_output',
+    notifier({
+      event: { type: StepEventType.OUTPUT_REVEALED, outputAmount },
       swap: swap,
       step: currentStep,
     });
   else if (prevOutputAmount === null && outputAmount === null) {
     // it is needed to set notification after reloading the page
-    context.notifier({
-      eventType: 'check_tx_status',
+    notifier({
+      event: { type: StepEventType.CHECK_STATUS },
       swap: swap,
       step: currentStep,
     });
@@ -184,6 +202,14 @@ async function checkTransactionStatus({
     swap.extraMessage = nextStep
       ? `starting next step: ${nextStep.swapperId}: ${nextStep.fromBlockchain} -> ${nextStep.toBlockchain}`
       : '';
+    notifier({
+      event: {
+        type: StepEventType.SUCCEEDED,
+        outputAmount: currentStep.outputAmount ?? '',
+      },
+      swap,
+      step: currentStep,
+    });
   } else if (currentStep.status === 'failed') {
     swap.extraMessage = 'Transaction failed in blockchain';
     swap.extraMessageSeverity = MessageSeverity.error;
@@ -229,13 +255,14 @@ async function checkApprovalStatus({
   const swap = getStorage().swapDetails as SwapStorage['swapDetails'];
   const { meta } = context;
   const { getTransactionDataByHash, setTransactionDataByHash } =
-    useTransactionsData();
+    inMemoryTransactionsData();
 
   const currentStep = getCurrentStep(swap);
   if (!currentStep) {
     console.log('ignore check status, current step is null');
     return;
   }
+  const tx = getCurrentStepTx(currentStep);
 
   if (!currentStep?.executedTransactionId) return;
   let txId = currentStep.executedTransactionId;
@@ -256,8 +283,11 @@ async function checkApprovalStatus({
       getTransactionDataByHash(txId);
     // if wallet is connected, try to get transaction reciept
     if (signer?.wait && !receiptReceived) {
+      const chainId =
+        (tx?.blockChain && meta.blockchains?.[tx?.blockChain]?.chainId) ||
+        undefined;
       const { hash: updatedTxHash, response: updatedTxResponse } =
-        await signer.wait(txId, txResponse);
+        await signer.wait(txId, chainId, txResponse);
       if (updatedTxHash !== txId) {
         currentStep.executedTransactionId =
           updatedTxHash || currentStep.executedTransactionId;
@@ -298,8 +328,12 @@ async function checkApprovalStatus({
       details: extraMessageDetail,
       errorCode: extraMessageErrorCode,
     });
-    context?.notifier({
-      eventType: 'task_failed',
+    notifier({
+      event: {
+        type: StepEventType.FAILED,
+        reason: extraMessage,
+        reasonCode: updateResult.failureType ?? DEFAULT_ERROR_CODE,
+      },
       ...updateResult,
     });
     return failed();
@@ -340,16 +374,22 @@ async function checkApprovalStatus({
         message: message,
         details: details,
       });
-      context.notifier({
-        eventType: 'not_enough_approval',
+
+      notifier({
+        event: {
+          type: StepEventType.FAILED,
+          reason: message,
+          reasonCode: updateResult.failureType ?? DEFAULT_ERROR_CODE,
+        },
         ...updateResult,
       });
+
       failed();
     } else if (!isApproved) {
       // it is needed to set notification after reloading the page
-      context.notifier({
-        eventType: 'check_approve_tx_status',
-        swap: swap,
+      notifier({
+        event: { type: StepEventType.CHECK_STATUS },
+        swap,
         step: currentStep,
       });
     }
@@ -372,8 +412,8 @@ async function checkApprovalStatus({
       swapDetails: swap,
     });
 
-    context.notifier({
-      eventType: 'contract_confirmed',
+    notifier({
+      event: { type: StepEventType.APPROVAL_TX_SUCCEEDED },
       swap: swap,
       step: currentStep,
     });

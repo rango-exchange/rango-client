@@ -27,8 +27,6 @@ export function AppRouter({
     clearDisconnectedWallet: props.clearDisconnectedWallet,
     disconnectedWallet: props.disconnectedWallet,
     evmChains,
-    // eslint-disable-next-line @typescript-eslint/no-empty-function
-    notifier: () => {},
     canSwitchNetworkTo,
   });
 
