@@ -13,6 +13,8 @@ import {
   switchNetworkForEvm,
   getCosmosAccounts,
   WalletInfo,
+  CanEagerConnect,
+  canEagerlyConnectToEvm,
 } from '@rango-dev/wallets-shared';
 import { cosmostation as cosmostation_instance } from './helpers';
 import signer from './signer';
@@ -91,6 +93,8 @@ export const subscribe: Subscribe = ({
 };
 
 export const getSigners: (provider: any) => SignerFactory = signer;
+
+export const canEagerConnect: CanEagerConnect = canEagerlyConnectToEvm;
 
 export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
   allBlockChains

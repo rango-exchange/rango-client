@@ -1,15 +1,15 @@
-import React, { useEffect, useReducer } from 'react';
+import React, { useEffect, useReducer, useRef } from 'react';
 
 import {
   autoConnect,
   availableWallets,
   checkWalletProviders,
-  clearPersistStorage,
+  clearPersistance,
   connectedWallets,
   defaultWalletState,
   getComptaibleProvider,
-  persistWallet,
-  removeWalletFromPersist,
+  tryPersistWallet,
+  tryRemoveWalletFromPersistance,
   makeEventHandler,
   state_reducer,
 } from './helpers';
@@ -20,6 +20,7 @@ import { WalletContext } from './context';
 
 function Provider(props: ProviderProps) {
   const [providersState, dispatch] = useReducer(state_reducer, {});
+  const autoConnectInitiated = useRef(false);
 
   // Get (or add) wallet instance (`provider`s will be wraped in a `Wallet`)
   const getWalletInstance = useInitializers(
@@ -37,10 +38,14 @@ function Provider(props: ProviderProps) {
       if (!wallet) {
         throw new Error(`You should add ${type} to provider first.`);
       }
-
       const walletInstance = getWalletInstance(wallet);
       const result = await walletInstance.connect(network);
-      if (props.autoConnect) persistWallet(type);
+      if (props.autoConnect)
+        tryPersistWallet({
+          type,
+          walletActions: wallet.actions,
+          getState: api.state,
+        });
 
       return result;
     },
@@ -52,7 +57,8 @@ function Provider(props: ProviderProps) {
 
       const walletInstance = getWalletInstance(wallet);
       await walletInstance.disconnect();
-      if (props.autoConnect) removeWalletFromPersist(type);
+      if (props.autoConnect)
+        tryRemoveWalletFromPersistance({ type, walletActions: wallet.actions });
     },
     async disconnectAll() {
       const disconnect_promises: Promise<any>[] = [];
@@ -69,7 +75,7 @@ function Provider(props: ProviderProps) {
         }
       });
 
-      if (props.autoConnect) clearPersistStorage();
+      if (props.autoConnect) clearPersistance();
       return await Promise.allSettled(disconnect_promises);
     },
     state(type) {
@@ -183,8 +189,13 @@ function Provider(props: ProviderProps) {
 
   useEffect(() => {
     const shouldTryAutoConnect =
-      props.allBlockChains && props.allBlockChains.length && props.autoConnect;
+      props.allBlockChains &&
+      props.allBlockChains.length &&
+      props.autoConnect &&
+      !autoConnectInitiated.current;
+
     if (shouldTryAutoConnect) {
+      autoConnectInitiated.current = true;
       (async () => {
         await autoConnect(wallets, getWalletInstance);
       })();
