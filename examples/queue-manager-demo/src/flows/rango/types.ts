@@ -297,22 +297,6 @@ export type UserWalletBlockchain = {
   addresses: string[];
 };
 
-export type BestRouteRequest = {
-  from: Asset;
-  to: Asset;
-  amount: string;
-  connectedWallets: UserWalletBlockchain[];
-  selectedWallets: { [p: string]: string };
-  checkPrerequisites: boolean;
-  affiliateRef?: string | null;
-  affiliatePercent?: number;
-  affiliateWallets?: { [key: string]: string };
-  swappers?: string[];
-  blockchains?: Network[];
-  swapperGroups?: string[];
-  swappersGroupsExclude?: boolean;
-};
-
 export type WalletBalance = {
   chain: Network;
   symbol: string;

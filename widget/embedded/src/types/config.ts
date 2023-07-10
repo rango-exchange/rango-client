@@ -53,6 +53,21 @@ export type WidgetTheme = {
 };
 
 /**
+ * The `WidgeAffiliate` defines the properties of a widget affiliate, including affiliateRef, affiliatePercent, and affiliateWallets for best route api.
+ * @property {string | null} ref - To enable dApps to charge affiliate fees and generate income from users' transactions,
+ * the affiliate referral code should be provided. You can create this code by visiting the following link: https://app.rango.exchange/affiliate.
+ * @property {number | null} percent - If you want to change the default affiliate fee percentage, you can provide a new value here.
+ * @property {{ [key: string]: string }} wallets - If you want to change the default affiliate wallet addresses, you can provide new values here.
+ * (Map of route blockchains to affiliate address)
+ */
+
+export type WidgeAffiliate = {
+  ref?: string;
+  percent?: number;
+  wallets?: { [key: string]: string };
+};
+
+/**
  * `BlockchainAndTokenConfig`
  *
  * @property {string} blockchain - This property is optional and represents the default selected blockchain.
@@ -76,13 +91,8 @@ export type BlockchainAndTokenConfig = {
  * and theme.
  *
  * @property {string} apiKey - The API key used to communicate with Rango API
- * @property {{ref?: string; percent?: number; wallets?: { [key: string]: string };}} affiliate 
-    * @property {string | null} ref - To enable dApps to charge affiliate fees and generate income from users' transactions,
-    * the affiliate referral code should be provided. You can create this code by visiting the following link: https://app.rango.exchange/affiliate.
-    * @property {number | null} percent - If you want to change the default affiliate fee percentage, you can provide a new value here.
-    * @property {{ [key: string]: string }} wallets - If you want to change the default affiliate wallet addresses, you can provide new values here.
-    * (Map of route blockchains to affiliate address) 
-* 
+ * @property {WidgeAffiliate} affiliate - * The `WidgeAffiliate` defines the properties of a widget affiliate, 
+ * including affiliateRef, affiliatePercent, and affiliateWallets for best route api.
  * @property {number} amount - The default input amount.
  * @property {BlockchainAndTokenConfig} from - The `from` property is an optional property of type
  * `BlockchainAndTokenConfig` that specifies the default blockchain and token from which the user wants to
@@ -113,11 +123,7 @@ export type BlockchainAndTokenConfig = {
  */
 export type WidgetConfig = {
   apiKey: string;
-  affiliate?: {
-    ref?: string;
-    percent?: number;
-    wallets?: { [key: string]: string };
-  };
+  affiliate?: WidgeAffiliate;
   amount?: number;
   from?: BlockchainAndTokenConfig;
   to?: BlockchainAndTokenConfig;
