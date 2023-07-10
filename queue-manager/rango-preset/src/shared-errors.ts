@@ -71,6 +71,7 @@ export class PrettyError extends Error {
     return new PrettyError(
       'CLIENT_UNEXPECTED_BEHAVIOUR',
       ERROR_ASSERTION_FAILED,
+      null,
       m
     );
   }
