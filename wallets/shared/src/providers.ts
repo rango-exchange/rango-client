@@ -4,6 +4,7 @@ import {
   Subscribe,
   SwitchNetwork,
   Networks,
+  CanEagerConnect,
 } from './rango';
 import { convertEvmBlockchainMetaToEvmChainInfo } from './helpers';
 import { switchOrAddNetworkForMetamaskCompatibleWallets } from './helpers';
@@ -42,6 +43,18 @@ export const subscribeToEvm: Subscribe = ({
   instance?.on('chainChanged', (chainId: string) => {
     updateChainId(chainId);
   });
+};
+
+export const canEagerlyConnectToEvm: CanEagerConnect = async ({ instance }) => {
+  try {
+    const accounts: string[] = await instance.request({
+      method: 'eth_accounts',
+    });
+    if (accounts.length) return true;
+    else return false;
+  } catch (error) {
+    return false;
+  }
 };
 
 export const switchNetworkForEvm: SwitchNetwork = async ({
