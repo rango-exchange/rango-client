@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/signer-terra",
-  "version": "0.5.1-next.5",
+  "version": "0.5.1-next.6",
   "license": "MIT",
   "type": "module",
   "module": "./dist/index.js",
@@ -21,7 +21,7 @@
   },
   "dependencies": {
     "@terra-money/terra.js": "^3.1.7",
-    "rango-types": "^0.1.44"
+    "rango-types": "^0.1.45"
   },
   "publishConfig": {
     "access": "public"

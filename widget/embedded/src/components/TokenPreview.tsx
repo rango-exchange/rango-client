@@ -90,7 +90,7 @@ const OutputContainer = styled('div', {
 interface PropTypes {
   label: string;
   amount: string;
-  usdValue?: BigNumber;
+  usdValue: BigNumber | null;
   loadingStatus: LoadingStatus;
   chain: {
     displayName: string;
