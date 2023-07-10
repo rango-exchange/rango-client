@@ -350,7 +350,11 @@ export function updateSwapStatus({
         step: currentStep?.id || 1,
         eventType: failureType,
         reason: errorReason || '',
-        data: walletType ? { wallet: walletType } : undefined,
+        tags: walletType
+          ? {
+              wallet: walletType,
+            }
+          : undefined,
       })
       .then()
       .catch();
@@ -1105,9 +1109,12 @@ export function singTransaction(
       const { extraMessage, extraMessageDetail, extraMessageErrorCode } =
         prettifyErrorMessage(error);
 
-      // if it is an rpc error with details, send the log to sentry
-      if (error?.root?.message && error?.root?.code && error?.root?.reason)
-        logRPCError(error.root, swap, currentStep, sourceWallet?.walletType);
+      logRPCError(
+        error?.trace?.stack || error?.trace || error?.root || error,
+        swap,
+        currentStep,
+        sourceWallet?.walletType
+      );
 
       const updateResult = updateSwapStatus({
         getStorage,
