@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/provider-bitkeep",
-  "version": "0.1.1-next.2",
+  "version": "0.1.1-next.3",
   "license": "MIT",
   "type": "module",
   "module": "./dist/index.js",
@@ -20,8 +20,8 @@
     "lint": "eslint \"**/*.{ts,tsx}\" --ignore-path ../../.eslintignore"
   },
   "dependencies": {
-    "@rango-dev/signer-evm": "^0.5.1-next.4",
-    "@rango-dev/signer-tron": "^0.5.1-next.3",
+    "@rango-dev/signer-evm": "^0.5.1-next.5",
+    "@rango-dev/signer-tron": "^0.5.1-next.4",
     "@rango-dev/wallets-shared": "^0.5.1-next.14",
     "rango-types": "^0.1.45"
   },
