@@ -17,7 +17,7 @@
     "lint": "eslint \"**/*.{ts,tsx}\" --ignore-path ../../.eslintignore"
   },
   "dependencies": {
-    "@rango-dev/provider-all": "^0.5.1-next.12",
+    "@rango-dev/provider-all": "^0.5.1-next.13",
     "@rango-dev/queue-manager-core": "^0.5.1-next.1",
     "@rango-dev/queue-manager-rango-preset": "^0.5.1-next.15",
     "@rango-dev/queue-manager-react": "^0.5.1-next.1",

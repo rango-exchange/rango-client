@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/widget-iframe",
-  "version": "0.5.1-next.22",
+  "version": "0.5.1-next.23",
   "license": "MIT",
   "private": true,
   "source": "src/index.ts",
