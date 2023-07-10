@@ -305,7 +305,8 @@ export type BestRouteRequest = {
   selectedWallets: { [p: string]: string };
   checkPrerequisites: boolean;
   affiliateRef: string | null;
-  affiliatePercent: string | null;
+  affiliatePercent: number | null;
+  affiliateWallets?: { [key: string]: string };
   swappers?: string[];
   blockchains?: Network[];
   swapperGroups?: string[];

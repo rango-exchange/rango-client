@@ -330,7 +330,8 @@ export function createBestRouteRequestBody(
   disabledLiquiditySources: string[],
   slippage: number,
   affiliateRef: string | null,
-  affiliatePercent: string | null,
+  affiliatePercent: number | null,
+  affiliateWallets?: { [key: string]: string },
   initialRoute?: BestRouteResponse,
   destination?: string
 ): BestRouteRequest {
@@ -383,10 +384,8 @@ export function createBestRouteRequestBody(
   const requestBody: BestRouteRequest = {
     amount: inputAmount.toString(),
     affiliateRef,
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    // TODO: Add affiliatePercent to BestRouteRequest type
     affiliatePercent,
+    affiliateWallets,
     checkPrerequisites,
     from: {
       address: fromToken.address,

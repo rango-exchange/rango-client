@@ -270,6 +270,7 @@ const bestRoute = (
       disabledLiquiditySources,
       affiliateRef,
       affiliatePercent,
+      affiliateWallets,
     } = settingsStore.getState();
     if (!fromToken || !toToken || !isPositiveNumber(inputAmount)) return;
     abortController?.abort();
@@ -284,7 +285,8 @@ const bestRoute = (
       disabledLiquiditySources,
       userSlippage,
       affiliateRef,
-      affiliatePercent
+      affiliatePercent,
+      affiliateWallets
     );
 
     if (!bestRouteStore.getState().loading) {

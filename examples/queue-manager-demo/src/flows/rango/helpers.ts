@@ -180,7 +180,6 @@ export const getBestRoute = async (
     selectedWallets: selectedWallets || {},
     checkPrerequisites: checkPrerequisites,
     affiliateRef: localStorage.getItem('affiliateRef') || null,
-    affiliatePercent: localStorage.getItem('affiliatePercent') || null,
     swapperGroups: swappersGroupsBlackList,
     ...(!!swappersGroupsBlackList && { swappersGroupsExclude: true }),
     blockchains: blockchainsWhiteList,

@@ -109,7 +109,8 @@ export type BlockchainAndTokenConfig = {
 export type WidgetConfig = {
   apiKey: string;
   affiliateRef?: string;
-  affiliatePercent?: string;
+  affiliatePercent?: number;
+  affiliateWallets?: { [key: string]: string };
   amount?: number;
   from?: BlockchainAndTokenConfig;
   to?: BlockchainAndTokenConfig;
