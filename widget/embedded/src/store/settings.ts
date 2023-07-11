@@ -14,6 +14,8 @@ export interface SettingsState {
   disabledLiquiditySources: string[];
   theme: Theme;
   affiliateRef: string | null;
+  affiliatePercent: number | null;
+  affiliateWallets: { [key: string]: string } | null;
   setSlippage: (slippage: number) => void;
   setCustomSlippage: (customSlippage: number | null) => void;
   toggleInfiniteApprove: () => void;
@@ -21,6 +23,10 @@ export interface SettingsState {
   setTheme: (theme: Theme) => void;
   toggleAllLiquiditySources: () => void;
   setAffiliateRef: (affiliateRef: string | null) => void;
+  setAffiliatePercent: (affiliatePercent: number | null) => void;
+  setAffiliateWallets: (
+    affiliateWallets: { [key: string]: string } | null
+  ) => void;
 }
 
 export const useSettingsStore = createSelectors(
@@ -31,6 +37,8 @@ export const useSettingsStore = createSelectors(
         customSlippage: null,
         infiniteApprove: false,
         affiliateRef: null,
+        affiliatePercent: null,
+        affiliateWallets: null,
         disabledLiquiditySources: [],
         theme: 'auto',
         setSlippage: (slippage) =>
@@ -44,6 +52,15 @@ export const useSettingsStore = createSelectors(
         setAffiliateRef: (affiliateRef) =>
           set(() => ({
             affiliateRef,
+          })),
+        setAffiliatePercent: (affiliatePercent) =>
+          set(() => ({
+            affiliatePercent,
+          })),
+
+        setAffiliateWallets: (affiliateWallets) =>
+          set(() => ({
+            affiliateWallets,
           })),
         toggleAllLiquiditySources: () =>
           set((state) => {
