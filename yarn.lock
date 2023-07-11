@@ -3474,15 +3474,6 @@
     "@lingui/message-utils" "4.2.1"
     unraw "^2.0.1"
 
-"@lingui/core@^4.3.0":
-  version "4.3.0"
-  resolved "https://registry.yarnpkg.com/@lingui/core/-/core-4.3.0.tgz#239e9fed6e858185ecfd59355b09678df1335393"
-  integrity sha512-nx9UM3ndYaK9VG6xQpF0OD/n0W35o5EPbiIzxgNvdNzRFtv9l1Z3pBipHXurRuZX0oDepGhVyXFD0ykPDeF7jA==
-  dependencies:
-    "@babel/runtime" "^7.20.13"
-    "@lingui/message-utils" "4.3.0"
-    unraw "^2.0.1"
-
 "@lingui/format-po@4.2.1":
   version "4.2.1"
   resolved "https://registry.yarnpkg.com/@lingui/format-po/-/format-po-4.2.1.tgz#c9e4d9c954025d8d6cf28f7c0e7b45e6dd51d022"
@@ -3500,14 +3491,7 @@
   dependencies:
     "@messageformat/parser" "^5.0.0"
 
-"@lingui/message-utils@4.3.0":
-  version "4.3.0"
-  resolved "https://registry.yarnpkg.com/@lingui/message-utils/-/message-utils-4.3.0.tgz#e5ace0103261e2611c8a86748f7c9711e47e3db7"
-  integrity sha512-UtgO5pm6LpJKqmZctr2R2hT+qicb8UijFDG3dctKGBuwkkwunFZUswOLJ+AxfhaO652Vov/yf5qsymJ6UFXPBA==
-  dependencies:
-    "@messageformat/parser" "^5.0.0"
-
-"@lingui/react@^4.2.1":
+"@lingui/react@4.2.1":
   version "4.2.1"
   resolved "https://registry.yarnpkg.com/@lingui/react/-/react-4.2.1.tgz#33b6919dfa0330a7bccbd6e385473ff7964670f5"
   integrity sha512-6VRKGFzQgEAxChLE5B7Pih7ZqAKS5PWzJtIP6O6amX6uVRxEJBIB/J4BtRNpt25Dz8WXf3C+9sSxskRNWtsZXQ==
