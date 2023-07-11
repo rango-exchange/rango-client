@@ -97,7 +97,10 @@ export type CanSwitchNetwork = (options: {
   provider: any;
 }) => boolean;
 
-export type CanEagerConnect = (options: { instance: any }) => Promise<boolean>;
+export type CanEagerConnect = (options: {
+  instance: any;
+  meta: BlockchainMeta[];
+}) => Promise<boolean>;
 
 export interface WalletActions {
   connect: Connect;

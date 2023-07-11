@@ -218,6 +218,7 @@ class Wallet<InstanceType = any> {
       // Check if we can eagerly connect to the wallet
       const eagerConnection = await canEagerConnect({
         instance: instance,
+        meta: this.meta,
       });
 
       if (eagerConnection) {

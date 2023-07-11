@@ -241,7 +241,7 @@ export async function autoConnect(
         const walletInstance = getWalletInstance(wallet);
         connect_promises.push({
           walletType,
-          eagerConnect: walletInstance.connect.bind(walletInstance),
+          eagerConnect: walletInstance.eagerConnect.bind(walletInstance),
         });
       }
     });
