@@ -11,6 +11,8 @@ import {
   getEvmAccounts,
   switchNetworkForEvm,
   WalletInfo,
+  canEagerlyConnectToEvm,
+  CanEagerConnect,
 } from '@rango-dev/wallets-shared';
 import { getNonEvmAccounts, clover as clover_instance } from './helpers';
 import signer from './signer';
@@ -88,6 +90,13 @@ export const switchNetwork: SwitchNetwork = async (options) => {
 export const canSwitchNetworkTo: CanSwitchNetwork = canSwitchNetworkToEvm;
 
 export const getSigners: (provider: any) => SignerFactory = signer;
+
+export const canEagerConnect: CanEagerConnect = ({ instance, meta }) => {
+  const evm_instance = chooseInstance(instance, meta, Networks.ETHEREUM);
+  if (evm_instance) {
+    return canEagerlyConnectToEvm({ instance: evm_instance, meta });
+  } else return Promise.resolve(false);
+};
 
 export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
   allBlockChains
