@@ -67,6 +67,8 @@ export function Layout({ config }: LayoutProps) {
   const setToToken = useBestRouteStore.use.setToToken();
   const setInputAmount = useBestRouteStore.use.setInputAmount();
   const setAffiliateRef = useSettingsStore.use.setAffiliateRef();
+  const setAffiliatePercent = useSettingsStore.use.setAffiliatePercent();
+  const setAffiliateWallets = useSettingsStore.use.setAffiliateWallets();
 
   const totalBalance = calculateWalletUsdValue(connectedWallets);
   const connectWalletsButtonDisabled =
@@ -106,8 +108,15 @@ export function Layout({ config }: LayoutProps) {
   }, [config?.from?.token, config?.from?.blockchain, loadingMetaStatus]);
 
   useEffect(() => {
-    setAffiliateRef(config?.affiliateRef || null);
-  }, [config?.affiliateRef]);
+    setAffiliateRef(config?.affiliate?.ref ?? null);
+    setAffiliatePercent(config?.affiliate?.percent ?? null);
+    setAffiliateWallets(config?.affiliate?.wallets ?? null);
+  }, [
+    config?.affiliate?.ref,
+    config?.affiliate?.percent,
+    config?.affiliate?.wallets,
+  ]);
+
   return (
     <>
       <Header>
