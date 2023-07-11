@@ -12,7 +12,6 @@ import {
   APIErrorCode,
   ApiMethodName,
   BestRoute,
-  BestRouteRequest,
   BINANCE_CHAIN_WALLET_SUPPORTED_CHAINS,
   Blockchain,
   CheckTxStatusRequest,
@@ -46,7 +45,7 @@ import {
   isEvmBlockchain,
   isSolanaBlockchain,
 } from 'rango-types';
-
+import type { BestRouteRequest } from 'rango-sdk';
 const UNKNOWN_COIN_IMAGE = '/coins/unknown.png';
 const BRAVE_USER_AGENT_HEADER = 'X-Brave';
 const url = 'https://api.rango.exchange';
@@ -179,7 +178,7 @@ export const getBestRoute = async (
     connectedWallets,
     selectedWallets: selectedWallets || {},
     checkPrerequisites: checkPrerequisites,
-    affiliateRef: localStorage.getItem('affiliateRef') || null,
+    affiliateRef: localStorage.getItem('affiliateRef'),
     swapperGroups: swappersGroupsBlackList,
     ...(!!swappersGroupsBlackList && { swappersGroupsExclude: true }),
     blockchains: blockchainsWhiteList,
