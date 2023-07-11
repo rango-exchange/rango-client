@@ -94,7 +94,12 @@ export const subscribe: Subscribe = ({
 
 export const getSigners: (provider: any) => SignerFactory = signer;
 
-export const canEagerConnect: CanEagerConnect = canEagerlyConnectToEvm;
+export const canEagerConnect: CanEagerConnect = ({ instance, meta }) => {
+  const evm_instance = chooseInstance(instance, meta, Networks.ETHEREUM);
+  if (evm_instance) {
+    return canEagerlyConnectToEvm({ instance: evm_instance, meta });
+  } else return Promise.resolve(false);
+};
 
 export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
   allBlockChains
