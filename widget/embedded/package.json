@@ -17,7 +17,8 @@
     "lint": "eslint \"**/*.{ts,tsx}\" --ignore-path ../../.eslintignore"
   },
   "dependencies": {
-    "@lingui/core": "^4.3.0",
+    "@lingui/core": "4.2.1",
+    "@lingui/react": "4.2.1",
     "@rango-dev/provider-all": "^0.7.0",
     "@rango-dev/queue-manager-core": "^0.7.0",
     "@rango-dev/queue-manager-rango-preset": "^0.7.0",
