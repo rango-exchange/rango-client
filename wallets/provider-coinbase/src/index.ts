@@ -12,6 +12,8 @@ import {
   switchNetworkForEvm,
   getCoinbaseInstance as coinbase_instance,
   WalletInfo,
+  CanEagerConnect,
+  canEagerlyConnectToEvm,
 } from '@rango-dev/wallets-shared';
 import { getSolanaAccounts } from './helpers';
 import {
@@ -90,6 +92,13 @@ export const switchNetwork: SwitchNetwork = switchNetworkForEvm;
 export const canSwitchNetworkTo: CanSwitchNetwork = canSwitchNetworkToEvm;
 
 export const getSigners: (provider: any) => SignerFactory = signer;
+
+export const canEagerConnect: CanEagerConnect = ({ instance, meta }) => {
+  const evm_instance = chooseInstance(instance, meta, Networks.ETHEREUM);
+  if (evm_instance) {
+    return canEagerlyConnectToEvm({ instance: evm_instance, meta });
+  } else return Promise.resolve(false);
+};
 
 export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
   allBlockChains

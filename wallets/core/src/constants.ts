@@ -1,1 +1,1 @@
-export const LASTE_CONNECTED_WALLETS = 'last-connected-wallets';
+export const LAST_CONNECTED_WALLETS = 'last-connected-wallets';

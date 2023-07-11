@@ -234,6 +234,11 @@ export type Subscribe = (options: {
   disconnect: () => void;
 }) => void;
 
+export type CanEagerConnect = (options: {
+  instance: any;
+  meta: BlockchainMeta[];
+}) => Promise<boolean>;
+
 export type SwitchNetwork = (options: {
   instance: any;
   network: Network;
