@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/provider-tokenpocket",
-  "version": "0.5.1-next.16",
+  "version": "0.5.1-next.17",
   "license": "MIT",
   "type": "module",
   "module": "./dist/index.js",
@@ -21,7 +21,7 @@
   },
   "dependencies": {
     "@rango-dev/signer-evm": "^0.5.1-next.5",
-    "@rango-dev/wallets-shared": "^0.5.1-next.14",
+    "@rango-dev/wallets-shared": "^0.5.1-next.16",
     "rango-types": "^0.1.45"
   },
   "publishConfig": {
