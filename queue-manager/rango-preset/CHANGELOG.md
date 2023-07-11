@@ -1,3 +1,18 @@
+# [0.6.0](https://github.com/rango-exchange/rango-client/compare/queue-manager-rango-preset@0.5.0...queue-manager-rango-preset@0.6.0) (2023-07-11)
+
+
+### Bug Fixes
+
+* better parsing of evm rpc errors ([f23031a](https://github.com/rango-exchange/rango-client/commit/f23031ae14e6e841ee488591bd1bf58cfa7ca15b))
+* fix signer wait change network issues ([e453db6](https://github.com/rango-exchange/rango-client/commit/e453db6ccf7736e36e5ada0c29502be32254fe9c))
+
+
+### Features
+
+* add widget events and refactor swap execution events ([0d76806](https://github.com/rango-exchange/rango-client/commit/0d7680693dd77439de38cd0b20f263f6ae8cceb0))
+
+
+
 # [0.5.0](https://github.com/rango-exchange/rango-client/compare/queue-manager-rango-preset@0.4.0...queue-manager-rango-preset@0.5.0) (2023-05-31)
 
 

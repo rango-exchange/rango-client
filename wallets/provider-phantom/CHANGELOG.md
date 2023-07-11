@@ -1,3 +1,12 @@
+# [0.6.0](https://github.com/rango-exchange/rango-client/compare/provider-phantom@0.5.0...provider-phantom@0.6.0) (2023-07-11)
+
+
+### Reverts
+
+* Revert "support for rango-types cjs format" ([ed4e050](https://github.com/rango-exchange/rango-client/commit/ed4e050bfc0dcde7aeffa6b0d73b02080a5721eb))
+
+
+
 # [0.5.0](https://github.com/rango-exchange/rango-client/compare/provider-phantom@0.4.0...provider-phantom@0.5.0) (2023-05-31)
 
 
