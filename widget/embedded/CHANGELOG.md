@@ -1,3 +1,13 @@
+# [0.8.0](https://github.com/rango-exchange/rango-client/compare/widget-embedded@0.7.0...widget-embedded@0.8.0) (2023-07-11)
+
+
+### Bug Fixes
+
+* adding lingui to ui and embedded packages ([efed0d6](https://github.com/rango-exchange/rango-client/commit/efed0d6da437bfd472f26a280adc55da1151966a))
+* fix lingui version ([b7de08b](https://github.com/rango-exchange/rango-client/commit/b7de08b457314192665b9d3afa809e63ecd311a8))
+
+
+
 # [0.7.0](https://github.com/rango-exchange/rango-client/compare/widget-embedded@0.6.0...widget-embedded@0.7.0) (2023-07-11)
 
 
