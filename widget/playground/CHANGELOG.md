@@ -1,3 +1,7 @@
+# [0.6.0](https://github.com/rango-exchange/rango-client/compare/widget-playground@0.5.0...widget-playground@0.6.0) (2023-07-11)
+
+
+
 # [0.5.0](https://github.com/rango-exchange/rango-client/compare/widget-playground@0.4.0...widget-playground@0.5.0) (2023-05-31)
 
 

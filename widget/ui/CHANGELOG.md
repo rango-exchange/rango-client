@@ -1,3 +1,12 @@
+# [0.6.0](https://github.com/rango-exchange/rango-client/compare/ui@0.5.0...ui@0.6.0) (2023-07-11)
+
+
+### Features
+
+* setup lingui for multi-language in widget ([a3f1331](https://github.com/rango-exchange/rango-client/commit/a3f1331def487989a5717335b062dd9ef45876ad))
+
+
+
 # [0.5.0](https://github.com/rango-exchange/rango-client/compare/ui@0.4.0...ui@0.5.0) (2023-05-31)
 
 

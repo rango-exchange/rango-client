@@ -1,3 +1,17 @@
+# [0.6.0](https://github.com/rango-exchange/rango-client/compare/wallets-core@0.5.0...wallets-core@0.6.0) (2023-07-11)
+
+
+### Features
+
+* implement wallets auto-connect functionality ([f47d32b](https://github.com/rango-exchange/rango-client/commit/f47d32bb8bbb38a72b961e5eb2ee7e2b985f9f7d))
+
+
+### Reverts
+
+* Revert "support for rango-types cjs format" ([ed4e050](https://github.com/rango-exchange/rango-client/commit/ed4e050bfc0dcde7aeffa6b0d73b02080a5721eb))
+
+
+
 # [0.5.0](https://github.com/rango-exchange/rango-client/compare/wallets-core@0.4.0...wallets-core@0.5.0) (2023-05-31)
 
 

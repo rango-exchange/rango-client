@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/provider-xdefi",
-  "version": "0.5.1-next.21",
+  "version": "0.5.0",
   "license": "MIT",
   "type": "module",
   "module": "./dist/index.js",
@@ -20,9 +20,9 @@
     "lint": "eslint \"**/*.{ts,tsx}\" --ignore-path ../../.eslintignore"
   },
   "dependencies": {
-    "@rango-dev/signer-evm": "^0.5.1-next.5",
-    "@rango-dev/signer-solana": "^0.5.1-next.4",
-    "@rango-dev/wallets-shared": "^0.5.1-next.18",
+    "@rango-dev/signer-evm": "^0.6.0",
+    "@rango-dev/signer-solana": "^0.6.0",
+    "@rango-dev/wallets-shared": "^0.6.0",
     "rango-types": "^0.1.45"
   },
   "publishConfig": {

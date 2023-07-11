@@ -1,3 +1,13 @@
+# [0.6.0](https://github.com/rango-exchange/rango-client/compare/provider-trustwallet@0.5.0...provider-trustwallet@0.6.0) (2023-07-11)
+
+
+### Reverts
+
+* Revert "support for rango-types cjs format" ([ed4e050](https://github.com/rango-exchange/rango-client/commit/ed4e050bfc0dcde7aeffa6b0d73b02080a5721eb))
+* Revert "support for rango-types cjs format" ([4f5f55f](https://github.com/rango-exchange/rango-client/commit/4f5f55f96e8daa329588b932b19c291c30f339c4))
+
+
+
 # [0.5.0](https://github.com/rango-exchange/rango-client/compare/provider-trustwallet@0.4.0...provider-trustwallet@0.5.0) (2023-05-31)
 
 
