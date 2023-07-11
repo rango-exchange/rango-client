@@ -19,7 +19,7 @@
   "dependencies": {
     "@rango-dev/provider-all": "^0.6.0",
     "@rango-dev/ui": "^0.6.0",
-    "@rango-dev/wallets-core": "^0.5.0",
+    "@rango-dev/wallets-core": "^0.6.0",
     "@rango-dev/wallets-shared": "^0.6.0",
     "@rango-dev/widget-embedded": "^0.6.0",
     "rango-sdk": "^0.1.35",
