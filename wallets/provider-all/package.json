@@ -23,9 +23,9 @@
     "@rango-dev/provider-argentx": "^0.6.0",
     "@rango-dev/provider-binance-chain-wallet": "^0.6.0",
     "@rango-dev/provider-bitkeep": "^0.2.0",
-    "@rango-dev/provider-brave": "^0.5.0",
-    "@rango-dev/provider-clover": "^0.5.0",
-    "@rango-dev/provider-coin98": "^0.5.0",
+    "@rango-dev/provider-brave": "^0.6.0",
+    "@rango-dev/provider-clover": "^0.6.0",
+    "@rango-dev/provider-coin98": "^0.6.0",
     "@rango-dev/provider-coinbase": "^0.6.0",
     "@rango-dev/provider-cosmostation": "^0.6.0",
     "@rango-dev/provider-enkrypt": "^0.6.0",
@@ -40,11 +40,11 @@
     "@rango-dev/provider-phantom": "^0.6.0",
     "@rango-dev/provider-safepal": "^0.6.0",
     "@rango-dev/provider-station": "^0.6.0",
-    "@rango-dev/provider-taho": "^0.5.0",
+    "@rango-dev/provider-taho": "^0.6.0",
     "@rango-dev/provider-tokenpocket": "^0.6.0",
-    "@rango-dev/provider-tron-link": "^0.5.0",
+    "@rango-dev/provider-tron-link": "^0.6.0",
     "@rango-dev/provider-trustwallet": "^0.6.0",
-    "@rango-dev/provider-xdefi": "^0.5.0"
+    "@rango-dev/provider-xdefi": "^0.6.0"
   },
   "publishConfig": {
     "access": "public"
