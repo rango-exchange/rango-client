@@ -1,11 +1,18 @@
 import Long from 'long';
 import { BroadcastMode, makeSignDoc, makeStdTx } from '@cosmjs/launchpad';
 import { SigningStargateClient } from '@cosmjs/stargate';
-import { cosmos } from '@keplr-wallet/cosmos';
 import { MsgExecuteContract } from 'cosmjs-types/cosmwasm/wasm/v1/tx.js';
 import { Keplr, KeplrSignOptions } from '@keplr-wallet/types';
 import type { CosmosTransaction } from 'rango-types';
 import { SignerError, SignerErrorCode } from 'rango-types';
+import {
+  AuthInfo,
+  Fee,
+  TxBody,
+  TxRaw,
+} from 'cosmjs-types/cosmos/tx/v1beta1/tx';
+import { SignMode } from 'cosmjs-types/cosmos/tx/signing/v1beta1/signing';
+import { PubKey } from '@keplr-wallet/proto-types/cosmos/crypto/secp256k1/keys';
 
 // todo: unhardcode this.
 // sifchain has some gas price apis. but gaslimits might be hardcoded still
@@ -64,7 +71,7 @@ export const executeCosmosTransaction = async (
 
     if (signType === 'AMINO') {
       const signDoc = makeSignDoc(
-        msgsWithoutType as any,
+        msgsWithoutType,
         fee as any,
         chainId,
         memo || undefined,
@@ -92,21 +99,24 @@ export const executeCosmosTransaction = async (
       let signedTx;
 
       if (cosmosTx.data.protoMsgs.length > 0) {
-        signedTx = cosmos.tx.v1beta1.TxRaw.encode({
-          bodyBytes: cosmos.tx.v1beta1.TxBody.encode({
-            messages: cosmosTx.data.protoMsgs.map((m) => ({
-              type_url: m.type_url,
-              value: new Uint8Array(m.value),
-            })),
-            memo: signResponse.signed.memo,
-          }).finish(),
-
-          authInfoBytes: cosmos.tx.v1beta1.AuthInfo.encode({
+        // based on this link:
+        // https://github.com/chainapsis/keplr-wallet/blob/40211c8dd75ccbdc4c868db9dc22599f4cb952e9/packages/stores/src/account/cosmos.ts#L508
+        signedTx = TxRaw.encode({
+          bodyBytes: TxBody.encode(
+            TxBody.fromPartial({
+              messages: cosmosTx.data.protoMsgs.map((m) => ({
+                typeUrl: m.type_url,
+                value: new Uint8Array(m.value),
+              })),
+              memo: signResponse.signed.memo,
+            })
+          ).finish(),
+          authInfoBytes: AuthInfo.encode({
             signerInfos: [
               {
                 publicKey: {
-                  type_url: '/cosmos.crypto.secp256k1.PubKey',
-                  value: cosmos.crypto.secp256k1.PubKey.encode({
+                  typeUrl: '/cosmos.crypto.secp256k1.PubKey',
+                  value: PubKey.encode({
                     key: Buffer.from(
                       signResponse.signature.pub_key.value,
                       'base64'
@@ -115,17 +125,20 @@ export const executeCosmosTransaction = async (
                 },
                 modeInfo: {
                   single: {
-                    mode: cosmos.tx.signing.v1beta1.SignMode
-                      .SIGN_MODE_LEGACY_AMINO_JSON,
+                    mode: SignMode.SIGN_MODE_LEGACY_AMINO_JSON,
                   },
+                  multi: undefined,
                 },
                 sequence: Long.fromString(signResponse.signed.sequence),
               },
             ],
-            fee: {
-              amount: signResponse.signed.fee.amount as any[],
-              gasLimit: Long.fromString(signResponse.signed.fee.gas),
-            },
+            fee: Fee.fromPartial({
+              amount: signResponse.signed.fee.amount.map((a) => ({
+                denom: a.denom,
+                amount: a.amount,
+              })),
+              gasLimit: signResponse.signed.fee.gas,
+            }),
           }).finish(),
           signatures: [Buffer.from(signResponse.signature.signature, 'base64')],
         }).finish();
@@ -187,7 +200,7 @@ export const executeCosmosTransaction = async (
       }));
       const broadcastTxRes = await sendingStargateClient.signAndBroadcast(
         cosmosTx.fromWalletAddress,
-        msgsWithoutType1 as any,
+        msgsWithoutType1,
         {
           // ...sendingStargateClient.fees.transfer,
           gas: gasLimit,
@@ -214,15 +227,15 @@ function manipulateMsg(m: any): any {
     if (result.value.timeoutTimestamp)
       result.value.timeoutTimestamp = Long.fromString(
         result.value.timeoutTimestamp
-      ) as any;
+      );
     if (!!result.value.timeoutHeight?.revisionHeight)
       result.value.timeoutHeight.revisionHeight = Long.fromString(
         result.value.timeoutHeight.revisionHeight
-      ) as any;
+      );
     if (!!result.value.timeoutHeight?.revisionNumber)
       result.value.timeoutHeight.revisionNumber = Long.fromString(
         result.value.timeoutHeight.revisionNumber
-      ) as any;
+      );
     return result;
   }
   return { ...m };
