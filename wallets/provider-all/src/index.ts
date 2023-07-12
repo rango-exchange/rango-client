@@ -23,6 +23,7 @@ import * as station from '@rango-dev/provider-station';
 import * as enkrypt from '@rango-dev/provider-enkrypt';
 import * as taho from '@rango-dev/provider-taho';
 import * as bitkeep from '@rango-dev/provider-bitkeep';
+import * as braavos from '@rango-dev/provider-braavos';
 
 export const allProviders = () => [
   binance,
@@ -50,4 +51,5 @@ export const allProviders = () => [
   enkrypt,
   taho,
   bitkeep,
+  braavos,
 ];
