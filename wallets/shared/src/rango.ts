@@ -61,6 +61,7 @@ export enum WalletTypes {
   SAFEPAL = 'safepal',
   TOKEN_POCKET = 'token-pocket',
   BRAVE = 'brave',
+  BRAAVOS = 'braavos',
   MATH = 'math',
   EXODUS = 'exodus',
   OKX = 'okx',
