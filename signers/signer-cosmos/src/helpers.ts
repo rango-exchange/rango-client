@@ -1,8 +1,12 @@
 import Long from 'long';
-import { BroadcastMode, makeSignDoc, makeStdTx } from '@cosmjs/launchpad';
 import { SigningStargateClient } from '@cosmjs/stargate';
 import { MsgExecuteContract } from 'cosmjs-types/cosmwasm/wasm/v1/tx.js';
-import { Keplr, KeplrSignOptions } from '@keplr-wallet/types';
+import {
+  BroadcastMode,
+  Keplr,
+  KeplrSignOptions,
+  StdSignDoc,
+} from '@keplr-wallet/types';
 import type { CosmosTransaction } from 'rango-types';
 import { SignerError, SignerErrorCode } from 'rango-types';
 import {
@@ -13,6 +17,7 @@ import {
 } from 'cosmjs-types/cosmos/tx/v1beta1/tx';
 import { SignMode } from 'cosmjs-types/cosmos/tx/signing/v1beta1/signing';
 import { PubKey } from '@keplr-wallet/proto-types/cosmos/crypto/secp256k1/keys';
+import { escapeHTML, sortObjectByKey } from '@keplr-wallet/common';
 
 // todo: unhardcode this.
 // sifchain has some gas price apis. but gaslimits might be hardcoded still
@@ -70,14 +75,16 @@ export const executeCosmosTransaction = async (
       throw SignerError.AssertionFailed('sequence is undefined from server');
 
     if (signType === 'AMINO') {
-      const signDoc = makeSignDoc(
-        msgsWithoutType,
-        fee as any,
-        chainId,
-        memo || undefined,
-        account_number,
-        sequence
-      );
+      const signDocRaw: StdSignDoc = {
+        chain_id: chainId,
+        account_number: account_number?.toString(),
+        sequence: sequence,
+        fee: fee as any,
+        msgs: msgsWithoutType,
+        memo: escapeHTML(memo || ''),
+      };
+      const signDoc = sortObjectByKey(signDocRaw);
+
       let signOptions = {};
       if (
         cosmosTx.data.chainId === 'osmosis-1' &&
@@ -143,11 +150,7 @@ export const executeCosmosTransaction = async (
           signatures: [Buffer.from(signResponse.signature.signature, 'base64')],
         }).finish();
       } else {
-        try {
-          signedTx = makeStdTx(signResponse.signed, signResponse.signature);
-        } catch (err) {
-          throw new SignerError(SignerErrorCode.SIGN_TX_ERROR, undefined, err);
-        }
+        throw new Error('protoMsgs is required in Amino messages');
       }
       const result = await cosmosProvider.sendTx(
         chainId,
