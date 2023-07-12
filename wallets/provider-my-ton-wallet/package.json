@@ -22,7 +22,7 @@
   "dependencies": {
     "@rango-dev/wallets-shared": "^0.5.1-next.10",
     "rango-types": "^0.1.41",
-    "@tonconnect/sdk": "^2.1.3"
+    "@tonconnect/sdk": "^2.1.0"
   },
   "publishConfig": {
     "access": "public"

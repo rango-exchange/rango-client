@@ -6,7 +6,7 @@
   "source": "public/index.html",
   "browserslist": "> 0.5%, last 2 versions, not dead",
   "scripts": {
-    "dev": "parcel -p 3002 --cache-dir=.parcel-cache",
+    "dev": "parcel -p 3000 --cache-dir=.parcel-cache",
     "build": "parcel build --cache-dir=.parcel-cache && cp ./vercel.json ./dist",
     "clean": "rimraf .parcel-cache && rimraf dist",
     "format": "prettier --write '{.,src}/**/*.{ts,tsx}'",

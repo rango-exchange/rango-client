@@ -2,13 +2,27 @@ import {
   WalletTypes,
   CanSwitchNetwork,
   Connect,
-  Subscribe,
   WalletInfo,
+  Networks,
 } from '@rango-dev/wallets-shared';
 import { myTonWallet as myTonWallet_instance } from './helpers';
 import signer from './signer';
 import { SignerFactory, BlockchainMeta, tonBlockchain } from 'rango-types';
-import TonConnect, { toUserFriendlyAddress } from '@tonconnect/sdk';
+import { toUserFriendlyAddress } from '@tonconnect/sdk';
+
+type TonConnectResult = {
+  event: string;
+  id: number;
+  payload?: {
+    items: {
+      address: string;
+      name: string;
+      network: string;
+      publicKey: string;
+      walletStateInit: string;
+    }[];
+  };
+};
 
 const WALLET = WalletTypes.MY_TON_WALLET;
 
@@ -16,30 +30,34 @@ export const config = {
   type: WALLET,
 };
 
-const walletConnectionSource = {
-  jsBridgeKey: 'mytonwallet',
-};
-
-export const connector = new TonConnect({
-  // This is a test manifest and should be replaced with a real manifest after testing.
-  manifestUrl:
-    'https://gist.githubusercontent.com/siandreev/75f1a2ccf2f3b4e2771f6089aeb06d7f/raw/d4986344010ec7a2d1cc8a2a9baa57de37aaccb8/gistfile1.txt',
-});
-
 export const getInstance = myTonWallet_instance;
-export const connect: Connect = async () => {
-  await connector.restoreConnection();
-
-  if (!connector.account) connector.connect(walletConnectionSource);
-  return [];
+export const connect: Connect = async ({ instance }) => {
+  const result: TonConnectResult = await instance.restoreConnection();
+  const accounts = result.payload?.items?.map(({ address }) =>
+    toUserFriendlyAddress(address)
+  );
+  if (accounts) {
+    return { accounts, chainId: Networks.TON };
+  } else {
+    const result: TonConnectResult = await instance.connect(2, {
+      manifestUrl:
+        'https://ton-connect.github.io/demo-dapp//tonconnect-manifest.json',
+      items: [{ name: 'ton_addr' }],
+    });
+    const accounts = result.payload?.items.map(({ address }) =>
+      toUserFriendlyAddress(address)
+    );
+    return { accounts: accounts ?? [], chainId: Networks.TON };
+  }
 };
 
-export const subscribe: Subscribe = ({ updateAccounts }) => {
-  connector.onStatusChange((walletInfo) => {
-    if (walletInfo?.account)
-      updateAccounts([toUserFriendlyAddress(walletInfo?.account.address)]);
-  });
-};
+// export const subscribe: Subscribe = ({ updateAccounts, instance }) => {
+//   instance.listen((walletInfo: any) => {
+//     console.log(walletInfo);
+//     if (walletInfo?.account)
+//       updateAccounts([toUserFriendlyAddress(walletInfo?.account.address)]);
+//   });
+// };
 
 export const canSwitchNetworkTo: CanSwitchNetwork = () => false;
 
