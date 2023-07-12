@@ -3299,7 +3299,7 @@
     long "^4.0.0"
     protobufjs "^6.11.2"
 
-"@keplr-wallet/crypto@0.12.15", "@keplr-wallet/crypto@^0.12.15":
+"@keplr-wallet/crypto@0.12.15":
   version "0.12.15"
   resolved "https://registry.yarnpkg.com/@keplr-wallet/crypto/-/crypto-0.12.15.tgz#bd361d400a1dd90c3156eca890672fb9791db5e6"
   integrity sha512-WEOpFZvDEXgRIx3+LUH3kkMt/+7bT5l/B9RJ3UTXZrgxYvUO/z7hGlCJH5kOHInCC70HHYSRBgbCSM9L4C5o3w==

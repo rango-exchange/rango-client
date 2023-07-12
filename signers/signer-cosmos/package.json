@@ -23,7 +23,6 @@
     "@cosmjs/launchpad": "^0.27.1",
     "@cosmjs/stargate": "^0.31.0",
     "@keplr-wallet/cosmos": "^0.12.15",
-    "@keplr-wallet/crypto": "^0.12.15",
     "cosmjs-types": "^0.8.0",
     "long": "^5.2.1",
     "rango-types": "^0.1.45"
