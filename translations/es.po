@@ -114,7 +114,7 @@ msgstr ""
 #~ msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Layout.tsx:139
+#: widget/embedded/src/components/Layout.tsx:148
 #: widget/embedded/src/utils/swap.ts:143
 #: widget/embedded/src/utils/swap.ts:145
 #~ msgid "Connect Wallet"
