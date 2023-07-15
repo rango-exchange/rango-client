@@ -4,39 +4,60 @@ import createSelectors from './selectors';
 import { WalletType } from '@rango-dev/wallets-shared';
 import { immer } from 'zustand/middleware/immer';
 import { persist } from 'zustand/middleware';
-import { Type, WidgetConfig } from '../types';
+import { Type } from '../types';
 import { getConfig } from '../configs';
-import { Colors } from '../types';
+import { WidgetColors, WidgetConfig } from '@rango-dev/widget-embedded';
+import { ProviderInterface } from '@rango-dev/wallets-core';
 
 export type Mode = 'dark' | 'light' | 'auto';
 export type COLORS =
   | 'background'
-  | 'inputBackground'
-  | 'icons'
   | 'primary'
-  | 'text'
   | 'success'
   | 'error'
   | 'warning'
   | 'surface'
-  | 'neutral';
+  | 'neutral'
+  | 'foreground';
 
 interface ConfigState {
   config: WidgetConfig;
-  onChangeWallets: (wallets?: WalletType[]) => void;
+  onChangeWallets: (wallets?: (WalletType | ProviderInterface)[]) => void;
   onChangeSources: (sources?: string[]) => void;
   onChangeBlockChains: (chains?: string[], type?: Type) => void;
   onChangeTokens: (tokens?: Asset[], type?: Type) => void;
-  onChangeBooleansConfig: (name: 'multiWallets' | 'customDestination', value: boolean) => void;
+  onChangeBooleansConfig: (
+    name: 'multiWallets' | 'customDestination' | 'externalWallets',
+    value: boolean
+  ) => void;
   onChangeBlockChain: (chain?: string, type?: Type) => void;
   onChangeToken: (token?: Asset, type?: Type) => void;
   onChangeAmount: (amount: number) => void;
   onChangeTheme: (
-    name: 'mode' | 'fontFamily' | 'borderRadius' | 'width' | 'height' | 'singleTheme',
-    value: Mode | string | number | boolean,
+    params:
+      | {
+          name: 'mode';
+          value?: Mode;
+        }
+      | {
+          name: 'borderRadius' | 'height' | 'width';
+          value?: number;
+        }
+      | {
+          name: 'fontFamily';
+          value: string;
+        }
+      | {
+          name: 'singleTheme';
+          value?: boolean;
+        }
   ) => void;
-  onChangeColors: (name: COLORS, mode: 'light' | 'dark', color?: string) => void;
-  onSelectTheme: (colors: { light: Colors; dark: Colors }) => void;
+  onChangeColors: (
+    name: COLORS,
+    mode: 'light' | 'dark',
+    color?: string
+  ) => void;
+  onSelectTheme: (colors: { light: WidgetColors; dark: WidgetColors }) => void;
   onChangelanguage: (value: string) => void;
   resetConfig: () => void;
 }
@@ -44,6 +65,7 @@ interface ConfigState {
 export const initialConfig: WidgetConfig = {
   apiKey: getConfig('API_KEY'),
   amount: undefined,
+  externalWallets: false,
   from: {
     blockchain: undefined,
     token: undefined,
@@ -59,7 +81,7 @@ export const initialConfig: WidgetConfig = {
   liquiditySources: undefined,
   wallets: undefined,
   multiWallets: undefined,
-  customAddress: undefined,
+  customDestination: undefined,
   language: undefined,
   theme: {
     mode: 'auto',
@@ -101,33 +123,33 @@ export const useConfigStore = createSelectors(
         onChangeBlockChains: (chains, type) =>
           set((state) => {
             if (type === 'Source') {
-              state.config.from.blockchains = chains;
+              if (state.config.from) state.config.from.blockchains = chains;
             } else {
-              state.config.to.blockchains = chains;
+              if (state.config.to) state.config.to.blockchains = chains;
             }
           }),
         onChangeTokens: (tokens, type) =>
           set((state) => {
             if (type === 'Source') {
-              state.config.from.tokens = tokens;
+              if (state.config.from) state.config.from.tokens = tokens;
             } else {
-              state.config.to.tokens = tokens;
+              if (state.config.to) state.config.to.tokens = tokens;
             }
           }),
         onChangeBlockChain: (chain, type) =>
           set((state) => {
             if (type === 'Source') {
-              state.config.from.blockchain = chain;
+              if (state.config.from) state.config.from.blockchain = chain;
             } else {
-              state.config.to.blockchain = chain;
+              if (state.config.to) state.config.to.blockchain = chain;
             }
           }),
         onChangeToken: (token, type) =>
           set((state) => {
             if (type === 'Source') {
-              state.config.from.token = token;
+              if (state.config.from) state.config.from.token = token;
             } else {
-              state.config.to.token = token;
+              if (state.config.to) state.config.to.token = token;
             }
           }),
         onChangeWallets: (wallets) =>
@@ -150,23 +172,72 @@ export const useConfigStore = createSelectors(
           set((state) => {
             state.config.language = value;
           }),
-        onChangeTheme: (name, value) =>
+        onChangeTheme: ({ name, value }) =>
           set((state) => {
-            state.config.theme[name as string] = value;
+            if (state.config.theme && state.config.theme[name]) {
+              if (name === 'mode') state.config.theme[name] = value;
+              else if (
+                name === 'borderRadius' ||
+                name === 'height' ||
+                name === 'width'
+              )
+                state.config.theme[name] = value;
+              else if (name === 'fontFamily') state.config.theme[name] = value;
+              else if (name === 'singleTheme') state.config.theme[name] = value;
+            }
           }),
         onChangeColors: (name, mode, color) =>
           set((state) => {
-            state.config.theme.colors[mode][name] = color;
+            if (
+              state.config?.theme?.colors &&
+              state.config.theme.colors[mode] &&
+              state.config.theme.colors[mode][name]
+            ) {
+              state.config.theme.colors[mode][name] = color;
+            }
           }),
         onSelectTheme: (colors) =>
           set((state) => {
-            state.config.theme.colors = colors;
+            if (state.config.theme) state.config.theme.colors = colors;
           }),
         resetConfig: () => {
           set({ config: initialConfig });
         },
       })),
-      { name: 'user-config' },
-    ),
-  ),
+      {
+        name: 'user-config',
+        partialize: (state) => ({
+          externalWallets: state.config.externalWallets,
+        }),
+        storage: {
+          getItem: (name) => {
+            const str = localStorage.getItem(name);
+            const storage = JSON.parse(str as string);
+
+            return {
+              state: {
+                ...storage.state,
+                config: {
+                  ...storage.state.config,
+                  wallets: storage.state.config.wallets?.filter(
+                    (wallet: WalletType | ProviderInterface) =>
+                      typeof wallet === 'string'
+                  ),
+                },
+              },
+            };
+          },
+          setItem: (name, newValue) => {
+            const str = JSON.stringify({
+              state: {
+                ...newValue.state,
+              },
+            });
+            localStorage.setItem(name, str);
+          },
+          removeItem: (name) => localStorage.removeItem(name),
+        },
+      }
+    )
+  )
 );

@@ -1,11 +1,14 @@
 import React from 'react';
-import { ProviderProps, Provider } from '@rango-dev/wallets-core';
+import {
+  ProviderProps,
+  Provider,
+  ProviderInterface,
+} from '@rango-dev/wallets-core';
 import Adapter from './adapter';
-import { WalletProvider } from '@rango-dev/wallets-core';
 
 function AdapterProvider({ children, ...props }: ProviderProps) {
   const list = props.providers.map(
-    (provider: WalletProvider) => provider.config.type
+    (provider: ProviderInterface) => provider.config.type
   );
 
   return (

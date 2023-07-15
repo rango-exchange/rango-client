@@ -17,3 +17,5 @@ export const ERROR_MESSAGE_WAIT_FOR_WALLET_DESCRIPTION = (
 export const ERROR_MESSAGE_WAIT_FOR_CHANGE_NETWORK = (
   network: string | null
 ): string => `Please change your network to ${network}.`;
+
+export const DEFAULT_ERROR_CODE = 'CLIENT_UNEXPECTED_BEHAVIOUR';

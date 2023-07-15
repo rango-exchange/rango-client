@@ -17,7 +17,8 @@ import { numberToString } from '../utils/numbers';
 import BigNumber from 'bignumber.js';
 import { getBalanceFromWallet } from '../utils/wallets';
 import { useWalletsStore } from '../store/wallets';
-import { useTranslation } from 'react-i18next';
+import { Trans } from '@lingui/react';
+import { i18n } from '@lingui/core';
 import { PercentageChange } from './PercentageChange';
 
 type PropTypes = (
@@ -136,7 +137,6 @@ export function TokenInfo(props: PropTypes) {
   const connectedWallets = useWalletsStore.use.connectedWallets();
   const fetchingBestRoute = useBestRouteStore.use.loading();
   const navigate = useNavigate();
-  const { t } = useTranslation();
 
   const tokenBalance =
     !!fromChain && !!fromToken
@@ -175,8 +175,7 @@ export function TokenInfo(props: PropTypes) {
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
-      }}
-    >
+      }}>
       {loadingStatus === 'failed' && <InfoCircleIcon color="error" size={24} />}
       <AngleDownIcon />
     </div>
@@ -187,7 +186,11 @@ export function TokenInfo(props: PropTypes) {
       <Container type={props.type === 'From' ? 'filled' : 'outlined'}>
         <div className="head">
           <Typography variant="body2" color="neutral800">
-            {t(type)}
+            {type === 'From' ? (
+              <Trans id="swap from" message="From" />
+            ) : (
+              <Trans id="swap to" message="To" />
+            )}
           </Typography>
           {props.type === 'From' ? (
             <Options>
@@ -196,14 +199,13 @@ export function TokenInfo(props: PropTypes) {
                 onClick={() => {
                   if (tokenBalance !== '0')
                     setInputAmount(tokenBalanceReal.split(',').join(''));
-                }}
-              >
-                <Typography variant="body3" color="neutral600">{`${t(
-                  'Balance'
-                )}: ${tokenBalance} ${fromToken?.symbol || ''}`}</Typography>
+                }}>
+                <Typography variant="body3" color="neutral600">
+                  {i18n.t('Balance')}: {tokenBalance} {fromToken?.symbol || ''}
+                </Typography>
                 <Divider size={4} />
                 <Button type="primary" variant="ghost" size="compact">
-                  {t('Max')}
+                  <Trans id="maximum amount of asset" message="Max" />
                 </Button>
               </div>
             </Options>
@@ -216,8 +218,9 @@ export function TokenInfo(props: PropTypes) {
               <div>
                 <Typography
                   variant="caption"
-                  color="neutral600"
-                >{`$${numberToString(props.outputUsdValue)}`}</Typography>
+                  color="neutral600">{`$${numberToString(
+                  props.outputUsdValue
+                )}`}</Typography>
               </div>
             </div>
           )}
@@ -240,11 +243,10 @@ export function TokenInfo(props: PropTypes) {
             }
             suffix={ItemSuffix}
             align="start"
-            size="large"
-          >
+            size="large">
             {loadingStatus === 'success' && chain
               ? chain.displayName
-              : t('Chain')}
+              : i18n.t('Chain')}
           </Button>
           <Divider size={12} direction="horizontal" />
           <Button
@@ -268,9 +270,10 @@ export function TokenInfo(props: PropTypes) {
             }
             suffix={ItemSuffix}
             size="large"
-            align="start"
-          >
-            {loadingStatus === 'success' && token ? token.symbol : t('Token')}
+            align="start">
+            {loadingStatus === 'success' && token
+              ? token.symbol
+              : i18n.t('Token')}
           </Button>
           <Divider size={12} direction="horizontal" />
           <div className="amount">
@@ -290,12 +293,12 @@ export function TokenInfo(props: PropTypes) {
                       position: 'absolute',
                       right: '4px',
                       bottom: '2px',
-                    }}
-                  >
+                    }}>
                     <Typography
                       variant="caption"
-                      color="neutral800"
-                    >{`$${numberToString(inputUsdValue)}`}</Typography>
+                      color="neutral800">{`$${numberToString(
+                      inputUsdValue
+                    )}`}</Typography>
                   </span>
                 }
                 value={props.inputAmount || ''}

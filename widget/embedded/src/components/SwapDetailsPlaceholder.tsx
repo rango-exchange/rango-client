@@ -1,5 +1,6 @@
 import React from 'react';
 import { SecondaryPage, Spinner, Alert, styled } from '@rango-dev/ui';
+import { i18n } from '@lingui/core';
 
 const PlaceholderContainer = styled('div', { height: '450px' });
 
@@ -21,7 +22,10 @@ export function SwapDetailsPlaceholder(props: PropTypes) {
   const { requestId, loading, onBack } = props;
 
   return (
-    <SecondaryPage title="Swap Details" textField={false} onBack={onBack}>
+    <SecondaryPage
+      title={i18n.t('Swap Details')}
+      textField={false}
+      onBack={onBack}>
       <PlaceholderContainer>
         {loading ? (
           <LoaderContainer>
@@ -30,7 +34,11 @@ export function SwapDetailsPlaceholder(props: PropTypes) {
         ) : (
           <Alert
             type="secondary"
-            title={`Swap with request ID = ${requestId} not found.`}
+            title={i18n.t(
+              'swapNotFound',
+              { requestId },
+              { message: 'Swap with request ID = ${requestId} not found.' }
+            )}
           />
         )}
       </PlaceholderContainer>

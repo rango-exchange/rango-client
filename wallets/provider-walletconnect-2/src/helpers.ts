@@ -1,7 +1,8 @@
 import { Networks } from '@rango-dev/wallets-shared';
-import { ProposalTypes, SessionTypes } from '@walletconnect/types';
+import { ProposalTypes } from '@walletconnect/types';
 import { ChainId } from 'caip';
 import { BlockchainMeta, cosmosBlockchains, evmBlockchains } from 'rango-types';
+
 import {
   DEFAULT_COSMOS_METHODS,
   DEFAULT_ETHEREUM_EVENTS,
@@ -10,6 +11,8 @@ import {
   DEFAULT_SOLANA_METHODS,
   NAMESPACES,
 } from './constants';
+import { getLastSession } from './session';
+import { CosmosMeta } from './types';
 
 type FinalNamespaces = {
   [key in NAMESPACES]?: ProposalTypes.BaseRequiredNamespace;
@@ -86,11 +89,11 @@ export function generateOptionalNamespace(
       methods: DEFAULT_COSMOS_METHODS,
       events: [],
       chains: cosmos
-        .filter((chain) => !!chain.chainId)
+        .filter((chain): chain is CosmosMeta => !!chain.chainId)
         .map((chain) => {
           return new ChainId({
             namespace: NAMESPACES.COSMOS,
-            reference: chain.chainId!,
+            reference: chain.chainId,
           }).toString();
         }),
     },
@@ -102,24 +105,30 @@ export function generateOptionalNamespace(
   };
 }
 
-export function getChainId(chain: ChainId): number | string {
-  if (chain.namespace === NAMESPACES.ETHEREUM) return Number(chain.reference);
-  else return chain.reference;
+export function solanaChainIdToNetworkName(chainId: string): string {
+  return chainId === DEFAULT_SOLANA_CHAIN_ID ? Networks.SOLANA : chainId;
 }
 
-export function getAccountsFromSession(
-  namespace: string,
-  session: SessionTypes.Struct
-): string[] {
-  // match namespaces e.g. eip155 with eip155:1
-  const matchedNamespaceKeys = Object.keys(session.namespaces).filter((key) =>
-    key.includes(namespace)
-  );
-  if (!matchedNamespaceKeys.length) return [];
-  const accounts: string[] = [];
-  matchedNamespaceKeys.forEach((key) => {
-    const accountsForNamespace = session.namespaces[key].accounts;
-    accounts.push(...accountsForNamespace);
-  });
-  return accounts;
+/**
+ *
+ * In `rango-preset` we are working with `window.ethereum.request()`,
+ * this is an interceptor for some RPC methods (e.g. eth_chainId).
+ *
+ */
+export async function simulateRequest(params: any, provider: any) {
+  if (params.method === 'eth_chainId') {
+    const currentSession = getLastSession(provider);
+    const standaloneChains = Object.values(currentSession.namespaces)
+      .map((namespace) => namespace.chains)
+      .flat() as string[];
+
+    if (standaloneChains.length > 0) {
+      const firstChain = standaloneChains[0];
+      const chainId = new ChainId(firstChain);
+      return chainId.reference;
+    } else {
+      throw new Error(`Couldn't find any chain on namespace`);
+    }
+  }
+  throw new Error('Dissallowed method:', params);
 }

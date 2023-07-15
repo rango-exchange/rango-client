@@ -1,10 +1,4 @@
 import {
-  DEFAULT_APP_METADATA,
-  EthereumEvents,
-  PROJECT_ID,
-  RELAY_URL,
-} from './constants';
-import {
   WalletTypes,
   CanSwitchNetwork,
   Connect,
@@ -14,51 +8,48 @@ import {
   SwitchNetwork,
   WalletConfig,
   WalletInfo,
-  Networks,
 } from '@rango-dev/wallets-shared';
+import { SignerFactory, BlockchainMeta } from 'rango-types';
+import type { ISignClient } from '@walletconnect/types';
+import Client from '@walletconnect/sign-client';
+
 import signer from './signer';
 import {
-  SignerFactory,
-  BlockchainMeta,
-  evmBlockchains,
-  cosmosBlockchains,
-} from 'rango-types';
-// import Client from '@walletconnect/sign-client';
-import { SignClient } from '@walletconnect/sign-client/dist/types/client';
-import {
-  cleanupSessions,
+  disconnectSessions,
+  cleanupSingleSession,
   getAccountsFromEvent,
   getAccountsFromSession,
   tryConnect,
+  trySwitchByCreatingNewSession,
 } from './session';
-import { SessionTypes } from '@walletconnect/types';
-import Client from '@walletconnect/sign-client';
+import {
+  DEFAULT_APP_METADATA,
+  DEFAULT_NETWORK,
+  EthereumEvents,
+  PROJECT_ID,
+  RELAY_URL,
+} from './constants';
+import { simulateRequest } from './helpers';
+import type { WCInstance } from './types';
 
 const WALLET = WalletTypes.WALLET_CONNECT_2;
-
-export interface Instance {
-  client: SignClient;
-  session: SessionTypes.Struct | null;
-}
 
 export const config: WalletConfig = {
   type: WALLET,
   checkInstallation: false,
   isAsyncInstance: true,
-  defaultNetwork: Networks.SOLANA,
+  defaultNetwork: DEFAULT_NETWORK,
 };
 
 export const getInstance: GetInstance = async (options) => {
-  const { network, meta, force, updateChainId, currentProvider } = options;
+  const { currentProvider } = options;
 
-  // Supported chains by us
-  const evm = evmBlockchains(meta);
-  const cosmos = cosmosBlockchains(meta);
-
-  // Create a new pair, if exists use the pair.
-  // Or use already created.
-  let provider: SignClient;
-  if (force || !currentProvider) {
+  /*
+    Create a new pair, if exists use the pair,
+    Or use the already created one.
+  */
+  let provider: ISignClient;
+  if (!currentProvider) {
     provider = await Client.init({
       relayUrl: RELAY_URL,
       projectId: PROJECT_ID,
@@ -68,62 +59,53 @@ export const getInstance: GetInstance = async (options) => {
     provider = currentProvider;
   }
 
-  // TODO: how about Solana?
-  const requestedChain = [...evm, ...cosmos].find(
-    (chain) => chain.name === network
-  );
-  if (force && !!requestedChain?.chainId) {
-    updateChainId(requestedChain.chainId);
-  }
-
   return {
     client: provider,
     session: null,
+    request: (params: any) => simulateRequest(params, provider),
   };
 };
 
-// TODO: handle error
-// {context: 'core'}context: "core"[[Prototype]]: Object {context: 'core/expirer'} 'No matching key. expirer: topic:d6b1eb9c6ac06c2b07a61848bcb7156a4fbb823e76384acc4592f35a9b5e7950'
 export const connect: Connect = async ({ instance, network, meta }) => {
-  const { client } = instance as Instance;
-  console.log({ meta, network });
+  const { client } = instance as WCInstance;
 
+  const requestedNetwork = network || DEFAULT_NETWORK;
+
+  // Try to restore the session first, if couldn't, create a new session by showing a modal.
   const session = await tryConnect(client, {
-    network,
+    network: requestedNetwork,
     meta,
   });
-  // Overriding the value.
+  // Override the value (session).
   instance.session = session;
 
   const accounts = getAccountsFromSession(session);
-
-  console.log({
-    session,
-    accounts,
-  });
   return accounts;
 };
 
-// TODO: we should always check upcoming `topic` from events with what we have in our session.
 export const subscribe: Subscribe = ({
   instance,
   updateChainId,
   updateAccounts,
   disconnect,
 }) => {
-  const { client } = instance as Instance;
+  const { client } = instance as WCInstance;
 
+  /**
+   * Session events refrence:
+   * https://docs.walletconnect.com/2.0/specs/clients/sign/session-events
+   */
+
+  // Listen to updating the session by adding a new chain, method, or event
   client.on('session_update', (args) => {
-    console.log(`[session_update]`, args);
     const allAccounts = getAccountsFromEvent(args);
     allAccounts.forEach((accountsWithChain) => {
       updateAccounts(accountsWithChain.accounts, accountsWithChain.chainId);
     });
   });
 
+  // Listen to events triggred by wallet. (e.g. accountsChanged and chainChanged)
   client.on('session_event', (args) => {
-    console.log(`[session_event]`, args);
-
     if (args.params.event.name === EthereumEvents.ACCOUNTS_CHANGED) {
       const accounts = args.params.event.data;
       const chainId = args.params.chainId;
@@ -138,9 +120,8 @@ export const subscribe: Subscribe = ({
   });
 
   client.on('session_delete', async (event) => {
-    console.log('received disconnect event...', event);
-
-    cleanupSessions(client);
+    console.log('[WC2] your wallet has requested to delete session.', event);
+    cleanupSingleSession(client, event.topic);
     disconnect();
   });
 };
@@ -150,26 +131,42 @@ export const switchNetwork: SwitchNetwork = async ({
   instance,
   meta,
 }) => {
-  connect({ network, instance, meta });
+  /**
+   * Wallet connect is a multichain protocol and we can not determine the connected wallet
+   * supports which wallet, `extend`ing session doesn't work during a bug in their utils packages.
+   * So we will try to make a new session with `network` that user needs to switch.
+   */
+  const session = await trySwitchByCreatingNewSession(instance, {
+    network,
+    meta,
+  });
+  instance.session = session;
 };
 
-export const canSwitchNetworkTo: CanSwitchNetwork = () => false;
+/**
+ *
+ * Note:
+ * There is no straight-forward way to detect the wallet supports which blockchain,
+ * So we send request to wallet and expect to be rejected on the wallet if it's not supported.
+ *
+ */
+export const canSwitchNetworkTo: CanSwitchNetwork = () => true;
+
 export const disconnect: Disconnect = async ({ instance }) => {
-  console.log('doing disconnect action...');
-  const { client } = instance as Instance;
+  const { client } = instance as WCInstance;
 
   if (client) {
-    cleanupSessions(client);
+    disconnectSessions(client);
   }
 };
 
-export const getSigners: (provider: Instance) => SignerFactory = signer;
+export const getSigners: (provider: WCInstance) => SignerFactory = signer;
 
 export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
   allBlockChains
 ) => {
   return {
-    name: 'WalletConnect 2',
+    name: 'WalletConnect',
     img: 'https://raw.githubusercontent.com/rango-exchange/rango-types/main/assets/icons/wallets/walletconnect.svg',
     installLink: '',
     color: '#b2dbff',

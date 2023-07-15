@@ -12,11 +12,14 @@ import { CustomTransferSigner } from './utxo-signer';
 export default function getSigners(provider: any): SignerFactory {
   const ethProvider = getNetworkInstance(provider, Networks.ETHEREUM);
   const solProvider = getNetworkInstance(provider, Networks.SOLANA);
-  const cosmosProvider = getNetworkInstance(provider, Networks.COSMOS);
+  const binanceProvider = getNetworkInstance(provider, Networks.BINANCE);
   const signers = new DefaultSignerFactory();
   signers.registerSigner(TxType.EVM, new DefaultEvmSigner(ethProvider));
   signers.registerSigner(TxType.SOLANA, new DefaultSolanaSigner(solProvider));
-  signers.registerSigner(TxType.COSMOS, new CustomCosmosSigner(cosmosProvider));
+  signers.registerSigner(
+    TxType.COSMOS,
+    new CustomCosmosSigner(binanceProvider)
+  );
   // passed provider for transfer as it comprises several signers
   signers.registerSigner(TxType.TRANSFER, new CustomTransferSigner(provider));
   return signers;

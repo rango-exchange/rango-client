@@ -45,7 +45,7 @@ interface WalletsStore {
   initSelectedWallets: () => void;
   setSelectedWallet: (wallet: SelectableWallet) => void;
   clearConnectedWallet: () => void;
-  getOneOfWalletsDetails: (account: Wallet) => void;
+  getWalletsDetails: (accounts: Wallet[], shouldRetry?: boolean) => void;
   setCustomDestination: (customDestination: string) => void;
 }
 
@@ -56,7 +56,7 @@ export const useWalletsStore = createSelectors(
       selectedWallets: [],
       customDestination: '',
       connectWallet: (accounts) => {
-        const getOneOfWalletsDetails = get().getOneOfWalletsDetails;
+        const getWalletsDetails = get().getWalletsDetails;
         set((state) => ({
           connectedWallets: state.connectedWallets
             .filter((wallet) => wallet.walletType !== accounts[0].walletType)
@@ -72,7 +72,7 @@ export const useWalletsStore = createSelectors(
               }))
             ),
         }));
-        accounts.forEach(async (account) => getOneOfWalletsDetails(account));
+        getWalletsDetails(accounts);
       },
       disconnectWallet: (walletType) => {
         set((state) => ({
@@ -131,27 +131,50 @@ export const useWalletsStore = createSelectors(
           connectedWallets: [],
           selectedWallets: [],
         })),
-      getOneOfWalletsDetails: async (account: Wallet) => {
-        const tokens = useMetaStore.getState().meta.tokens;
+      getWalletsDetails: async (accounts, shouldRetry = true) => {
+        const getWalletsDetails = get().getWalletsDetails;
+        const { tokens } = useMetaStore.getState().meta;
         set((state) => ({
-          connectedWallets: state.connectedWallets.map((balance) => {
-            return balance.address === account.address &&
-              balance.chain === account.chain
-              ? { ...balance, loading: true }
-              : balance;
+          connectedWallets: state.connectedWallets.map((wallet) => {
+            return accounts.find((account) =>
+              isAccountAndWalletMatched(account, wallet)
+            )
+              ? { ...wallet, loading: true }
+              : wallet;
           }),
         }));
         try {
-          const response = await httpService().getWalletsDetails([
-            { address: account.address, blockchain: account.chain },
-          ]);
-          const retrivedBalance = response.wallets[0];
+          const data = accounts.map(({ address, chain }) => ({
+            address,
+            blockchain: chain,
+          }));
+          const response = await httpService().getWalletsDetails(data);
+          const retrivedBalance = response.wallets;
           if (retrivedBalance) {
             set((state) => ({
               connectedWallets: state.connectedWallets.map(
                 (connectedWallet) => {
-                  return isAccountAndWalletMatched(account, connectedWallet)
-                    ? makeBalanceFor(account, retrivedBalance, tokens)
+                  const matchedAccount = accounts.find((account) =>
+                    isAccountAndWalletMatched(account, connectedWallet)
+                  );
+                  const retrivedBalanceAccount = retrivedBalance.find(
+                    (balance) =>
+                      balance.address === connectedWallet.address &&
+                      balance.blockChain === connectedWallet.chain
+                  );
+                  if (
+                    retrivedBalanceAccount?.failed &&
+                    matchedAccount &&
+                    shouldRetry
+                  ) {
+                    getWalletsDetails([matchedAccount], false);
+                  }
+                  return matchedAccount && retrivedBalanceAccount
+                    ? makeBalanceFor(
+                        matchedAccount,
+                        retrivedBalanceAccount,
+                        tokens
+                      )
                     : connectedWallet;
                 }
               ),
@@ -160,7 +183,9 @@ export const useWalletsStore = createSelectors(
         } catch (error) {
           set((state) => ({
             connectedWallets: state.connectedWallets.map((balance) => {
-              return isAccountAndWalletMatched(account, balance)
+              return accounts.find((account) =>
+                isAccountAndWalletMatched(account, balance)
+              )
                 ? resetConnectedWalletState(balance)
                 : balance;
             }),

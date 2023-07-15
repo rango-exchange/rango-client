@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/queue-manager-rango-preset",
-  "version": "0.5.1-next.2",
+  "version": "0.5.1-next.15",
   "license": "MIT",
   "type": "module",
   "module": "./dist/index.js",
@@ -37,7 +37,8 @@
   },
   "dependencies": {
     "@sentry/browser": "^6.12.0",
-    "rango-types": "^0.1.39",
+    "mitt": "^3.0.0",
+    "rango-types": "^0.1.44",
     "uuid": "^9.0.0"
   },
   "publishConfig": {

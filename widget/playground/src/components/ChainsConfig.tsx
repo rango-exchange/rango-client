@@ -41,17 +41,23 @@ export function ChainsConfig({ type }: PropTypes) {
       blockchain,
       chains,
       ChainsList,
-      (item) => item === blockchain,
+      (item: string) => item === blockchain
     );
     onChangeBlockChains(values, type);
 
     let tokensList: Asset[] = [];
     if (tokens && values) {
       for (const chain of values) {
-        tokensList = [...tokensList, ...tokens.filter((token) => token.blockchain === chain)];
+        tokensList = [
+          ...tokensList,
+          ...tokens.filter((token) => token.blockchain === chain),
+        ];
       }
     }
-    onChangeTokens(tokensList && tokensList.length ? tokensList : undefined, type);
+    onChangeTokens(
+      tokensList && tokensList.length ? tokensList : undefined,
+      type
+    );
   };
 
   return (
@@ -74,21 +80,27 @@ export function ChainsConfig({ type }: PropTypes) {
           label="Supported Tokens"
           type={type}
           blockchains={
-            !chains ? blockchains : blockchains.filter((chain) => chains.includes(chain.name))
+            !chains
+              ? blockchains
+              : blockchains.filter((chain) => chains.includes(chain.name))
           }
         />
         {type === 'Destination' ? (
           <>
             <Divider size={16} />
             <Checkbox
-              onCheckedChange={(checked) => onChangeBooleansConfig('customDestination', checked)}
+              onCheckedChange={(checked) =>
+                onChangeBooleansConfig('customDestination', checked)
+              }
               id="custom_address"
               label="Enable Transfer To Custom Address"
-              checked={customDestination === undefined ? true : customDestination}
+              checked={
+                customDestination === undefined ? true : customDestination
+              }
             />
           </>
         ) : null}
-        <Divider size={24} direction='vertical' />
+        <Divider size={24} direction="vertical" />
 
         <TokenInfo type={type} />
       </ConfigurationContainer>

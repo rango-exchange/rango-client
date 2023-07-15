@@ -32,7 +32,8 @@ export type ProviderContext = {
 export type ProviderProps = PropsWithChildren<{
   onUpdateState?: WalletEventHandler;
   allBlockChains?: BlockchainMeta[];
-  providers: WalletProvider[];
+  autoConnect?: boolean;
+  providers: ProviderInterface[];
 }>;
 
 export enum Events {
@@ -132,4 +133,4 @@ export type WalletProviders = Map<
   }
 >;
 
-export type WalletProvider = { config: WalletConfig } & WalletActions;
+export type ProviderInterface = { config: WalletConfig } & WalletActions;

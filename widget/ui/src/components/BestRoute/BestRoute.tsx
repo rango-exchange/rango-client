@@ -1,4 +1,5 @@
 import React, { Fragment, PropsWithChildren } from 'react';
+import { i18n } from '@lingui/core';
 import { GasIcon, TimeIcon } from '../../components/Icon';
 import { StepDetail } from '../../components/StepDetail';
 import { Typography } from '../../components/Typography';
@@ -157,22 +158,21 @@ export function BestRoute(props: PropsWithChildren<PropTypes>) {
         </SkeletonContainer>
       ) : (
         <GasContainer>
-          <Tooltip content="Transaction cost (fee)">
+          <Tooltip content={i18n.t('Transaction cost (fee)')}>
             <CostContainer warning={feeWarning}>
               <GasIcon size={20} color={feeWarning ? 'warning' : undefined} />
               <TotalFee
                 mt={4}
                 align="center"
                 variant="caption"
-                warning={feeWarning}
-              >
+                warning={feeWarning}>
                 {error && '-'}
                 {!!data && `$${totalFee}`}
               </TotalFee>
             </CostContainer>
           </Tooltip>
           <HR />
-          <Tooltip content="Time estimate">
+          <Tooltip content={i18n.t('Time estimate')}>
             <CostContainer warning={feeWarning}>
               <TimeIcon size={20} />
               <Typography mt={4} align="center" variant="caption">
@@ -222,7 +222,7 @@ export function BestRoute(props: PropsWithChildren<PropTypes>) {
             </Fragment>
           ))}
         {!!data && !data?.result && (
-          <Typography variant="body2">No routes found</Typography>
+          <Typography variant="body2">{i18n.t('No routes found')}</Typography>
         )}
       </BestRouteContainer>
     </Container>

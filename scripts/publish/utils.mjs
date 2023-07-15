@@ -138,6 +138,13 @@ export async function tagPackagesAndCommit(
   const message = subject + list;
 
   // making a publish commit
+  const { stdout: diffOutput } = await execa('git', ['diff', '--stat']).catch(
+    (e) => {
+      return e;
+    }
+  );
+  console.log(`::debug::git_diff: ${diffOutput}`);
+
   await execa('git', ['add', '.']);
   await execa('git', [
     'commit',
