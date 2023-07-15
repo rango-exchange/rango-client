@@ -3,13 +3,13 @@ import {
   SignerFactory,
   TransactionType as TxType,
 } from 'rango-types';
-import { Instance } from '.';
+
+import { WCInstance } from './types';
 import EVMSigner from './signers/evm';
 import COSMOSSigner from './signers/cosmos';
 import SOLANASigner from './signers/solana';
 
-export default function getSigners(instance: Instance): SignerFactory {
-  console.log('instance', { instance });
+export default function getSigners(instance: WCInstance): SignerFactory {
   if (!instance.session) {
     throw new Error('Session is required for wallet connect signers.');
   }
@@ -28,6 +28,5 @@ export default function getSigners(instance: Instance): SignerFactory {
     new SOLANASigner(instance.client, instance.session)
   );
 
-  // TODO: add cosmos, solana.
   return signers;
 }

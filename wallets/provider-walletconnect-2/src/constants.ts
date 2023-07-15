@@ -1,3 +1,8 @@
+import { Networks } from '@rango-dev/wallets-shared';
+
+export const DEFAULT_NETWORK = Networks.ETHEREUM;
+export const PING_TIMEOUT = 10_000;
+
 // cip34 => Cardano
 // eip155 => Evm
 export enum NAMESPACES {
@@ -66,7 +71,7 @@ export const DEFAULT_COSMOS_METHODS = [
 ];
 
 // refrence: https://github.com/ChainAgnostic/namespaces/blob/main/solana/caip2.md
-export const DEFAULT_SOLANA_CHAIN_ID = '5eykt4UsFv8P8NJdTREpY1vzqKqZKvdp';
+export const DEFAULT_SOLANA_CHAIN_ID = '4sGjMW1sUnHzSxGspuhpqLDx6wiyjNtZ';
 
 // TODO: Update with real data
 export const DEFAULT_APP_METADATA = {

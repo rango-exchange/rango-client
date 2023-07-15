@@ -1,25 +1,24 @@
-import { AccountId, ChainId } from 'caip';
+import { AccountId } from 'caip';
 import { Networks, timeout } from '@rango-dev/wallets-shared';
-import { SignClient } from '@walletconnect/sign-client/dist/types/client';
+import type { SignClient } from '@walletconnect/sign-client/dist/types/client';
 import {
   PairingTypes,
-  ProposalTypes,
   SessionTypes,
   SignClientTypes,
 } from '@walletconnect/types';
 import { Web3Modal } from '@web3modal/standalone';
-import { BlockchainMeta, evmBlockchains } from 'rango-types/lib';
-import {
-  // generateOptionalNamespace,
-  generateRequiredNamespace,
-} from './helpers';
-import { PROJECT_ID } from './constants';
-import { Instance } from '.';
+import { getSdkError } from '@walletconnect/utils';
 
-const PING_TIMEOUT = 10_000;
+import {
+  generateOptionalNamespace,
+  generateRequiredNamespace,
+  solanaChainIdToNetworkName,
+} from './helpers';
+import { PING_TIMEOUT, PROJECT_ID } from './constants';
+import { ConnectParams, CreateSessionParams, WCInstance } from './types';
 
 /**
- * Web3Modal Config
+ * Create a Web3Modal instance
  */
 const web3Modal = new Web3Modal({
   projectId: PROJECT_ID,
@@ -31,11 +30,16 @@ export function getLastSession(client: SignClient) {
   return client.session.values[client.session.values.length - 1];
 }
 
+/**
+ *
+ * Try to ping the wallet, if wallet responded with `pong`, session is a valid and we will use the session.
+ * If the wallet didn't respond during 10 seconds (PING_TIME), we assume the wallet isn't available and we need to create a new session.
+ *
+ */
 export async function restoreSession(
   client: SignClient,
   pairing: PairingTypes.Struct
 ): Promise<SessionTypes.Struct | undefined> {
-  console.log('trying to ping');
   await timeout(
     client.ping({
       topic: pairing.topic,
@@ -43,33 +47,30 @@ export async function restoreSession(
     PING_TIMEOUT
   );
 
-  console.log('calling connect() after pong');
-  await client.connect({
-    pairingTopic: pairing.topic,
-  });
-
   // We assume last session is the correct session, beacuse we are doing clean up and keeps only one pairing/session.
   const session = getLastSession(client);
-  console.log('caleed connect(),', session, client.session, pairing.topic);
-
   return session;
 }
 
+/**
+ *
+ * Getting a  pair of required and optional namespaces then tries to show a modal and connect (pair)
+ * To the wallet.
+ * @param client
+ * @param options
+ * @returns
+ */
 export async function createSession(
   client: SignClient,
-  {
-    requiredNamespaces,
-    optionalNamespaces,
-  }: {
-    requiredNamespaces: ProposalTypes.RequiredNamespaces;
-    optionalNamespaces?: ProposalTypes.OptionalNamespaces;
-  }
+  options: CreateSessionParams
 ): Promise<SessionTypes.Struct> {
+  const { requiredNamespaces, optionalNamespaces, pairingTopic } = options;
+
   try {
     const { uri, approval } = await client.connect({
-      //   pairingTopic: pairing?.topic,
       requiredNamespaces,
       optionalNamespaces,
+      pairingTopic,
     });
 
     // Open QRCode modal if a URI was returned (i.e. we're not connecting an existing pairing).
@@ -88,17 +89,22 @@ export async function createSession(
     }
 
     const session = await approval();
-    console.log('Established session:', session);
     return session;
   } catch (e) {
     console.error(e);
     throw e;
   } finally {
-    // close modal in case it was open
     web3Modal.closeModal();
   }
 }
 
+/**
+ *
+ * A user (client) can have multiple pairings (to different wallets), we are assuming
+ * the last pairing is the active pairing for now. A better UX can be showing a list of pairings
+ * and let the user to choose the right pairing manually. Because we don't have that yet, we will pick up the last one.
+ *
+ */
 export function tryGetPairing(
   client: SignClient
 ): PairingTypes.Struct | undefined {
@@ -109,128 +115,156 @@ export function tryGetPairing(
   return lastPairing;
 }
 
+/**
+ *
+ * Try to restore the session first, if couldn't, create a new session by showing a modal.
+ *
+ */
 export async function tryConnect(
   client: SignClient,
-  params: {
-    network?: string;
-    meta: BlockchainMeta[];
-  }
+  params: ConnectParams
 ): Promise<SessionTypes.Struct> {
   const { network, meta } = params;
-  // If `network` is provided, trying to get chainId. Otherwise, fallback to eth.
-  const requiredNamespaces = generateRequiredNamespace(
-    meta,
-    network || Networks.SOLANA
-  );
-  console.log({ requiredNamespaces, network });
 
-  // Otherwise we try to get all of them as optional
-  // const optionalNamespaces = generateOptionalNamespace(meta);
+  const requiredNamespaces = generateRequiredNamespace(meta, network);
+  /**
+   * We try to get all of our supported chains as optional.
+   * Currently, it only works on Trust Wallet (Note: the response is buggy and only returns eip155 optional namespaces).
+   */
+  const optionalNamespaces = generateOptionalNamespace(meta);
 
   if (!requiredNamespaces) {
     throw new Error(`Couldn't generate required namespace for ${network}`);
   }
 
+  // Check if the user has a session, if yes, restore the session and use it.
   let session: SessionTypes.Struct | undefined;
   const pairing = tryGetPairing(client);
-  console.log('[tryConnect]', { client, pairing });
   if (pairing) {
-    console.log(`Trying to restore ${pairing.peerMetadata?.name} pair.`);
     try {
       session = await restoreSession(client, pairing);
     } catch (e) {
-      await cleanupSessions(client);
-      console.log("Couldn't restore session:", e);
+      await disconnectSessions(client);
     }
   }
 
-  console.log('[tryConnect] check session', { session });
-
-  // Connecting for the first time
-  // or session couldn't be restored.
+  // In case of connecting for the first time or session couldn't be restored, we will create a new session.
   if (!session) {
     session = await createSession(client, {
       requiredNamespaces,
-      // optionalNamespaces,
+      optionalNamespaces,
     });
-    console.log('[tryConnect] created session', { session });
   }
 
   return session;
 }
 
-export async function tryUpdate(
-  instance: Instance,
-  params: {
-    network: string;
-    meta: BlockchainMeta[];
-  }
+/**
+ * Wallet connect is a multichain protocol and we can not determine the connected wallet
+ * supports which wallet, `extend`ing session doesn't work during a bug in their utils packages.
+ * So we will try to make a new session with `network` that user needs to switch.
+ */
+export async function trySwitchByCreatingNewSession(
+  instance: WCInstance,
+  params: ConnectParams
 ): Promise<SessionTypes.Struct> {
   const { client, session } = instance;
   const { network, meta } = params;
 
-  if (!session) throw new Error('Session must exist!');
-  console.log('[tryUpdate] ', { client, session });
+  if (!session) {
+    throw new Error(
+      'For switching network, you need to have an active session!'
+    );
+  }
 
+  // If a session has the chain id in its namespace, we can use that session.
+  const requestedSession = getSessionByChainId(client, network);
+  if (requestedSession) {
+    return requestedSession;
+  }
+
+  // Creating a new session for requested network.
+  const requiredNamespaces = generateRequiredNamespace(meta, network);
+  if (!requiredNamespaces) {
+    throw new Error(`Couldn't generate requiredNamespaces for ${network}`);
+  }
+
+  const createdSession = await createSession(client, { requiredNamespaces });
+
+  return createdSession;
+}
+
+/**
+ *
+ * Looking for a chainId in sessions and return the session if found.
+ *
+ */
+function getSessionByChainId(
+  client: WCInstance['client'],
+  chainId: string
+): SessionTypes.Struct | undefined {
   const sessions = client.session.getAll();
-  const lastSession = sessions[sessions.length - 1];
-
-  const evm = evmBlockchains(meta);
-  const requiredEvmChain = evm.find((chain) => chain.name === network);
-  if (!requiredEvmChain) throw new Error('not found!');
-
-  console.log(
-    '[tryUpdate] requiredEvmChain',
-    lastSession,
-    requiredEvmChain,
-    session
-  );
-
-  const address = '0x2702d89c1c8658b49c45dd460deebcc45faec03c';
-  const chainId = new ChainId({
-    namespace: 'eip155',
-    reference: String(parseInt(requiredEvmChain?.chainId)),
-  }).toString();
-
-  const newNamespace = lastSession.namespaces;
-  newNamespace.eip155.accounts.push(
-    new AccountId({
-      chainId,
-      address: address,
-    }).toString()
-  );
-  newNamespace.eip155.chains?.push(chainId);
-
-  console.log('[tryUpdate] else', {
-    newNamespace,
-    session,
+  const requestedSession = sessions.find((session) => {
+    const accounts = getAccountsFromSession(session);
+    return accounts.find((account) => account.chainId === chainId);
   });
 
-  client.update({
-    topic: session.topic,
-    namespaces: newNamespace,
-  });
-
-  console.log({ session });
-  return session;
+  return requestedSession;
 }
 
-export async function disconnectFromTopic(client: SignClient, topic: string) {
-  client.disconnect({
-    topic: topic,
-    reason: {
-      code: 6000,
-      message: 'User disconnected.',
-    },
-  });
-}
-
-export async function cleanupSessions(client: SignClient) {
+/**
+ *
+ * Try to find sessions with a topic id and expire them.
+ *
+ */
+export async function cleanupSingleSession(client: SignClient, topic: string) {
+  const sessions = client.session.getAll();
   const pairings = client.pairing.getAll();
 
-  for (const pairing of pairings) {
-    client.core.expirer.set(pairing.topic, 0);
+  sessions.forEach((session) => {
+    if (session.topic === topic || session.pairingTopic === topic) {
+      const requestForDeleteTopic =
+        session.pairingTopic === topic ? session.pairingTopic : session.topic;
+      client.core.expirer.set(requestForDeleteTopic, 0);
+    }
+  });
+
+  pairings.forEach((pairing) => {
+    if (pairing.topic === topic) {
+      client.core.expirer.set(topic, 0);
+    }
+  });
+}
+
+/**
+ *
+ * Disconnect means to delete the session on both parties (dApp & wallet) at the same time.
+ *
+ */
+export async function disconnectSessions(client: SignClient) {
+  const allPromises = [];
+
+  const sessions = client.session.getAll();
+  for (const session of sessions) {
+    allPromises.push(
+      client.disconnect({
+        topic: session.topic,
+        reason: getSdkError('USER_DISCONNECTED'),
+      })
+    );
   }
+
+  const pairings = client.pairing.getAll();
+  for (const pairing of pairings) {
+    allPromises.push(
+      client.disconnect({
+        topic: pairing.topic,
+        reason: getSdkError('USER_DISCONNECTED'),
+      })
+    );
+  }
+
+  return await Promise.all(allPromises);
 }
 
 export function getAccountsFromSession(session: SessionTypes.Struct) {
@@ -239,9 +273,12 @@ export function getAccountsFromSession(session: SessionTypes.Struct) {
     .flat()
     .map((account) => {
       const { address, chainId } = new AccountId(account);
+      // Note: Solana has a specific ID, we need to convert it back to network name.
+      // It will return the chain id itslef if it's not that specific ID.
+      const chain = solanaChainIdToNetworkName(chainId.reference);
       return {
         accounts: [address],
-        chainId: chainId.reference,
+        chainId: chain,
       };
     });
 
@@ -266,44 +303,4 @@ export function getAccountsFromEvent(
     });
 
   return accounts;
-}
-
-export type JsonRpcFetchFunc = (
-  method: string,
-  params?: Array<any>
-) => Promise<any>;
-
-export function ethereumJsonRpcFetch(client: SignClient): JsonRpcFetchFunc {
-  return async (method, params) => {
-    switch (method) {
-      case 'eth_requestAccounts':
-      case 'eth_accounts':
-        return [];
-      case 'wallet_switchEthereumChain':
-        return null;
-      case 'eth_chainId':
-        return 1;
-      default:
-        break;
-    }
-
-    const session = getLastSession(client);
-    const chainId = `eip155:1`;
-
-    if (session.namespaces['eip155']?.methods.includes(method)) {
-      return await client.request({
-        chainId,
-        topic: session.topic,
-        request: {
-          method,
-          params,
-        },
-      });
-    }
-    console.log(client, method, params);
-
-    throw new Error(
-      `Your should add ${method} to your 'methods' (for 'requiredNamesapce' or 'optionalNamespace').`
-    );
-  };
 }
