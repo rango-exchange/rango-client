@@ -1,4 +1,4 @@
-import { BestRouteResponse, BlockchainMeta } from 'rango-sdk';
+import { BestRouteRequest, BestRouteResponse, BlockchainMeta } from 'rango-sdk';
 import { Token } from 'rango-sdk';
 import { create } from 'zustand';
 import BigNumber from 'bignumber.js';
@@ -55,6 +55,16 @@ export interface RouteState {
   setBestRoute: (bestRoute: BestRouteResponse | null) => void;
   retry: (pendingSwap: PendingSwap) => void;
   switchFromAndTo: () => void;
+  setConfigContracts: (
+    sourceContract: (chain: string) => string,
+    destinationContract: (chain: string) => string,
+    dataContract: (bestRoute: BestRouteRequest) => string
+  ) => void;
+  configContracts: {
+    sourceContract?: (chain: string) => string;
+    destinationContract?: (chain: string) => string;
+    dataContract?: (bestRoute: BestRouteRequest) => string;
+  };
 }
 
 export const useBestRouteStore = createSelectors(
@@ -73,6 +83,7 @@ export const useBestRouteStore = createSelectors(
       error: '',
       sourceTokens: [],
       destinationTokens: [],
+      configContracts: {},
       setBestRoute: (bestRoute) =>
         set((state) => {
           let outputAmount: BigNumber | null = null;
@@ -173,6 +184,14 @@ export const useBestRouteStore = createSelectors(
           }),
         }));
       },
+      setConfigContracts: (sourceContract, destinationContract, dataContract) =>
+        set(() => ({
+          configContracts: {
+            sourceContract,
+            destinationContract,
+            dataContract,
+          },
+        })),
       retry: (pendingSwap) => {
         const { tokens, blockchains } = useMetaStore.getState().meta;
         const connectedWallets = useWalletsStore.getState().connectedWallets;
@@ -251,6 +270,7 @@ export const useBestRouteStore = createSelectors(
             state.toToken,
             state.outputAmount?.toString() || ''
           ),
+          configContracts: state.configContracts,
         })),
     }))
   )
@@ -262,8 +282,10 @@ const bestRoute = (
 ) => {
   let abortController: AbortController | null = null;
   const fetchBestRoute = () => {
-    const { fromToken, toToken, inputAmount, resetRoute } =
+    const { fromToken, toToken, inputAmount, resetRoute, configContracts } =
       bestRouteStore.getState();
+    const { sourceContract, destinationContract, dataContract } =
+      configContracts;
     const {
       slippage,
       customSlippage,
@@ -276,6 +298,13 @@ const bestRoute = (
     abortController?.abort();
     abortController = new AbortController();
     const userSlippage = !!customSlippage ? customSlippage : slippage;
+    const srcContract = sourceContract
+      ? sourceContract(fromToken.blockchain)
+      : null;
+    const destContract = destinationContract
+      ? destinationContract(toToken.blockchain)
+      : null;
+
     const requestBody = createBestRouteRequestBody(
       fromToken,
       toToken,
@@ -286,8 +315,14 @@ const bestRoute = (
       userSlippage,
       affiliateRef,
       affiliatePercent,
-      affiliateWallets
+      affiliateWallets,
+      srcContract,
+      destContract
     );
+
+    if (dataContract) {
+      requestBody.imMessage = dataContract(requestBody);
+    }
 
     if (!bestRouteStore.getState().loading) {
       resetRoute();

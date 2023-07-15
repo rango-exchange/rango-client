@@ -13,7 +13,9 @@ export function App() {
   if (!!configParam) {
     try {
       config = JSON.parse(configParam, (_, value) => {
-        if (typeof value === 'string' && value[0] === '$') {
+        if (value.isFunction) {
+          return new Function(`return ${value.functionBody}`)();
+        } else if (typeof value === 'string' && value[0] === '$') {
           return value.replace('$', '#');
         } else return value;
       });

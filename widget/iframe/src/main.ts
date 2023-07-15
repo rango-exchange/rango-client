@@ -14,7 +14,9 @@ export class RangoWidget {
       // Take # out of the url parameters
       if (typeof value === 'string' && value[0] === '#') {
         return value.replace('#', '$');
-      } else return value;
+      } else if (typeof value === 'function')
+        return { isFunction: true, functionBody: value.toString() };
+      else return value;
     });
     return configParams;
   }

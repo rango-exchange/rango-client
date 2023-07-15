@@ -55,6 +55,8 @@ export function useConfirmSwap(): ConfirmSwap {
   const affiliateRef = useSettingsStore.use.affiliateRef();
   const affiliatePercent = useSettingsStore.use.affiliatePercent();
   const affiliateWallets = useSettingsStore.use.affiliateWallets();
+  const { sourceContract, destinationContract, dataContract } =
+    useBestRouteStore.use.configContracts();
 
   const connectedWallets = useWalletsStore.use.connectedWallets();
   const destination = useWalletsStore.use.customDestination();
@@ -110,7 +112,12 @@ export function useConfirmSwap(): ConfirmSwap {
     abortControllerRef.current = new AbortController();
 
     setLoading(true);
-
+    const srcContract = sourceContract
+      ? sourceContract(fromToken.blockchain)
+      : null;
+    const destContract = destinationContract
+      ? destinationContract(toToken.blockchain)
+      : null;
     const requestBody = createBestRouteRequestBody(
       fromToken,
       toToken,
@@ -122,9 +129,15 @@ export function useConfirmSwap(): ConfirmSwap {
       affiliateRef,
       affiliatePercent,
       affiliateWallets,
+      srcContract,
+      destContract,
       initialRoute,
       destination
     );
+
+    if (dataContract) {
+      requestBody.imMessage = dataContract(requestBody);
+    }
 
     try {
       const confiremedRoute = await httpService().getBestRoute(requestBody, {

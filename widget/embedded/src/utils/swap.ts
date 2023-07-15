@@ -332,6 +332,8 @@ export function createBestRouteRequestBody(
   affiliateRef: string | null,
   affiliatePercent: number | null,
   affiliateWallets: { [key: string]: string } | null,
+  sourceContract?: string | null,
+  destinationContract?: string | null,
   initialRoute?: BestRouteResponse,
   destination?: string
 ): BestRouteRequest {
@@ -387,6 +389,8 @@ export function createBestRouteRequestBody(
     affiliatePercent: affiliatePercent ?? undefined,
     affiliateWallets: affiliateWallets ?? undefined,
     checkPrerequisites,
+    sourceContract,
+    destinationContract,
     from: {
       address: fromToken.address,
       blockchain: fromToken.blockchain,

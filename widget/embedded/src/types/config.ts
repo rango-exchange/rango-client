@@ -1,4 +1,4 @@
-import { Asset } from 'rango-sdk';
+import { Asset, BestRouteRequest } from 'rango-sdk';
 import { WalletType } from '@rango-dev/wallets-shared';
 import { ProviderInterface } from '@rango-dev/wallets-core';
 import { Language } from '@rango-dev/ui';
@@ -136,4 +136,9 @@ export type WidgetConfig = {
   language?: Language;
   theme?: WidgetTheme;
   externalWallets?: boolean;
+  contracts?: {
+    source: (network: string) => string;
+    destination: (network: string) => string;
+    data: (args: BestRouteRequest) => string;
+  };
 };
