@@ -1,6 +1,6 @@
 import { Networks } from '@rango-dev/wallets-shared';
 
-export const DEFAULT_NETWORK = Networks.ETHEREUM;
+export const DEFAULT_NETWORK = Networks.SOLANA;
 export const PING_TIMEOUT = 10_000;
 
 // cip34 => Cardano

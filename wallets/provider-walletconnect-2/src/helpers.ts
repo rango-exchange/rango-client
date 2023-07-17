@@ -10,6 +10,7 @@ import {
   DEFAULT_SOLANA_CHAIN_ID,
   DEFAULT_SOLANA_METHODS,
   NAMESPACES,
+  PROJECT_ID,
 } from './constants';
 import { getLastSession } from './session';
 import { CosmosMeta } from './types';
@@ -132,3 +133,7 @@ export async function simulateRequest(params: any, provider: any) {
   }
   throw new Error('Dissallowed method:', params);
 }
+
+export const getProviderUrl = (chainId: string) => {
+  return `https://rpc.walletconnect.com/v1/?chainId=solana:${chainId}&projectId=${PROJECT_ID}`;
+};
