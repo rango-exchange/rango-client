@@ -1,0 +1,1 @@
+export { BottomLogo } from './BottomLogo';

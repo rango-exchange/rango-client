@@ -21,7 +21,12 @@ import { useMetaStore } from '../store/meta';
 import { WalletType } from '@rango-dev/wallets-shared';
 import { useNavigateBack } from '../hooks/useNavigateBack';
 import { TokenPreview } from '../components/TokenPreview';
-import { Divider, ConfirmSwap, LoadingFailedAlert } from '@rango-dev/ui';
+import {
+  Divider,
+  ConfirmSwap,
+  LoadingFailedAlert,
+  HighSlippageWarning,
+} from '@rango-dev/ui';
 import RoutesOverview from '../components/RoutesOverview';
 import { useManager } from '@rango-dev/queue-manager-react';
 import { useConfirmSwap } from '../hooks/useConfirmSwap';
@@ -30,7 +35,7 @@ import { useUiStore } from '../store/ui';
 import { ConfirmSwapErrorTypes } from '../types';
 import { ConfirmSwapErrors } from '../components/ConfirmSwapErrors';
 import { ConfirmSwapWarnings } from '../components/ConfirmSwapWarnings';
-import { ConfirmSwapExtraMessages } from '../components/warnings/ConfirmSwapExtraMessages';
+import { HIGH_SLIPPAGE } from '../constants/swapSettings';
 import { getBestRouteStatus } from '../utils/routing';
 import { PercentageChange } from '../components/PercentageChange';
 
@@ -232,9 +237,11 @@ export function ConfirmSwapPage({
           {loadingMetaStatus === 'failed' && showHighSlippageWarning && (
             <Divider />
           )}
-          {showHighSlippageWarning && (
-            <ConfirmSwapExtraMessages selectedSlippage={selectedSlippage} />
-          )}
+          <HighSlippageWarning
+            selectedSlippage={selectedSlippage}
+            highSlippage={selectedSlippage >= HIGH_SLIPPAGE}
+            changeSlippage={() => navigate('/' + navigationRoutes.settings)}
+          />
         </>
       }
       confirmButtonTitle={
