@@ -34,6 +34,11 @@ msgid "No routes found"
 msgstr "No routes found"
 
 #. js-lingui-explicit-id
+#: widget/ui/src/components/ChangeSlippageButton/ChangeSlippageButton.tsx:14
+msgid "Change Slippage"
+msgstr "Change Slippage"
+
+#. js-lingui-explicit-id
 #: widget/ui/src/components/LiquiditySourceList/LiquiditySourceList.tsx:107
 msgid "Bridges"
 msgstr "Bridges"
@@ -89,14 +94,14 @@ msgid "Liquidity Sources"
 msgstr "Liquidity Sources"
 
 #. js-lingui-explicit-id
+#: widget/ui/src/containers/Warnings/BalanceErrors.tsx:36
+msgid "Insufficent Balance:"
+msgstr "Insufficent Balance:"
+
+#. js-lingui-explicit-id
 #: widget/embedded/src/components/BottomLogo.tsx:31
 #~ msgid "Powered By"
 #~ msgstr "Powered By"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/ChangeSlippageButton.tsx:16
-#~ msgid "Change Slippage"
-#~ msgstr "Change Slippage"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/HeaderButtons.tsx:28
@@ -143,27 +148,22 @@ msgstr "Liquidity Sources"
 #~ msgstr "Token"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/warnings/BalanceErrors.tsx:35
-#~ msgid "Insufficent Balance:"
-#~ msgstr "Insufficent Balance:"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/pages/ConfirmSwapPage.tsx:182
+#: widget/embedded/src/pages/ConfirmSwapPage.tsx:187
 #~ msgid "From"
 #~ msgstr "From"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/ConfirmSwapPage.tsx:201
+#: widget/embedded/src/pages/ConfirmSwapPage.tsx:206
 #~ msgid "To"
 #~ msgstr "To"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/ConfirmSwapPage.tsx:242
+#: widget/embedded/src/pages/ConfirmSwapPage.tsx:249
 #~ msgid "Proceed anyway!"
 #~ msgstr "Proceed anyway!"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/ConfirmSwapPage.tsx:243
+#: widget/embedded/src/pages/ConfirmSwapPage.tsx:250
 #~ msgid "Confirm swap!"
 #~ msgstr "Confirm swap!"
 
@@ -214,11 +214,6 @@ msgstr "Liquidity Sources"
 #~ msgstr "The route goes through Ethereum. Continue?"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/warnings/HighSlippageWarning.tsx:15
-#~ msgid "highSlippage"
-#~ msgstr " Caution, your slippage is high (={selectedSlippage}). Your trade may be front run."
-
-#. js-lingui-explicit-id
 #: widget/embedded/src/components/TokenInfo.tsx:190
 #~ msgid "swap from"
 #~ msgstr "From"
@@ -239,6 +234,11 @@ msgstr "Liquidity Sources"
 #~ msgstr "To"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/warnings/MinRequiredSlippage.tsx:17
-#~ msgid "increaseSlippage"
-#~ msgstr "We recommend you to increase slippage to at least {minRequiredSlippage} for this route."
+#: widget/ui/src/containers/Warnings/HighSlippageWarning.tsx:15
+msgid "highSlippage"
+msgstr " Caution, your slippage is high (={selectedSlippage}). Your trade may be front run."
+
+#. js-lingui-explicit-id
+#: widget/ui/src/containers/Warnings/MinRequiredSlippage.tsx:21
+msgid "increaseSlippage"
+msgstr "We recommend you to increase slippage to at least {minRequiredSlippage} for this route."

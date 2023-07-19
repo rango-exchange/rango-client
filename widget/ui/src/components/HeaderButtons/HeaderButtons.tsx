@@ -1,15 +1,7 @@
 import React from 'react';
-import {
-  SettingsIcon,
-  Tooltip,
-  styled,
-  Button,
-  HistoryIcon,
-  RetryIcon,
-} from '@rango-dev/ui';
-import { useNavigate } from 'react-router-dom';
-import { navigationRoutes } from '../constants/navigationRoutes';
 import { i18n } from '@lingui/core';
+import { SettingsIcon, Tooltip, Button, HistoryIcon, RetryIcon } from '..';
+import { styled } from '../../theme';
 
 const ButtonsContainer = styled('div', {
   display: 'flex',
@@ -17,11 +9,12 @@ const ButtonsContainer = styled('div', {
 
 interface PropTypes {
   onClickRefresh?: () => void;
+  onClickHistory?: () => void;
+  onClickSettings?: () => void;
 }
 
 export function HeaderButtons(props: PropTypes) {
-  const { onClickRefresh } = props;
-  const navigate = useNavigate();
+  const { onClickRefresh, onClickHistory, onClickSettings } = props;
 
   return (
     <ButtonsContainer>
@@ -34,16 +27,12 @@ export function HeaderButtons(props: PropTypes) {
         </Button>
       </Tooltip>
       <Tooltip content={i18n.t('Transactions History')}>
-        <Button
-          variant="ghost"
-          onClick={() => navigate(navigationRoutes.swaps)}>
+        <Button variant="ghost" onClick={onClickHistory}>
           <HistoryIcon size={24} />
         </Button>
       </Tooltip>
       <Tooltip content={i18n.t('Settings')}>
-        <Button
-          variant="ghost"
-          onClick={() => navigate(navigationRoutes.settings)}>
+        <Button variant="ghost" onClick={onClickSettings}>
           <SettingsIcon size={24} />
         </Button>
       </Tooltip>

@@ -34,6 +34,11 @@ msgid "No routes found"
 msgstr ""
 
 #. js-lingui-explicit-id
+#: widget/ui/src/components/ChangeSlippageButton/ChangeSlippageButton.tsx:14
+msgid "Change Slippage"
+msgstr ""
+
+#. js-lingui-explicit-id
 #: widget/ui/src/components/LiquiditySourceList/LiquiditySourceList.tsx:107
 msgid "Bridges"
 msgstr ""
@@ -89,13 +94,13 @@ msgid "Liquidity Sources"
 msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/BottomLogo.tsx:31
-#~ msgid "Powered By"
-#~ msgstr ""
+#: widget/ui/src/containers/Warnings/BalanceErrors.tsx:36
+msgid "Insufficent Balance:"
+msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ChangeSlippageButton.tsx:16
-#~ msgid "Change Slippage"
+#: widget/embedded/src/components/BottomLogo.tsx:31
+#~ msgid "Powered By"
 #~ msgstr ""
 
 #. js-lingui-explicit-id
@@ -143,27 +148,22 @@ msgstr ""
 #~ msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/warnings/BalanceErrors.tsx:35
-#~ msgid "Insufficent Balance:"
-#~ msgstr ""
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/pages/ConfirmSwapPage.tsx:182
+#: widget/embedded/src/pages/ConfirmSwapPage.tsx:187
 #~ msgid "From"
 #~ msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/ConfirmSwapPage.tsx:201
+#: widget/embedded/src/pages/ConfirmSwapPage.tsx:206
 #~ msgid "To"
 #~ msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/ConfirmSwapPage.tsx:242
+#: widget/embedded/src/pages/ConfirmSwapPage.tsx:249
 #~ msgid "Proceed anyway!"
 #~ msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/ConfirmSwapPage.tsx:243
+#: widget/embedded/src/pages/ConfirmSwapPage.tsx:250
 #~ msgid "Confirm swap!"
 #~ msgstr ""
 
@@ -214,11 +214,6 @@ msgstr ""
 #~ msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/warnings/HighSlippageWarning.tsx:15
-#~ msgid "highSlippage"
-#~ msgstr ""
-
-#. js-lingui-explicit-id
 #: widget/embedded/src/components/TokenInfo.tsx:190
 #~ msgid "swap from"
 #~ msgstr ""
@@ -239,6 +234,11 @@ msgstr ""
 #~ msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/warnings/MinRequiredSlippage.tsx:17
-#~ msgid "increaseSlippage"
-#~ msgstr ""
+#: widget/ui/src/containers/Warnings/HighSlippageWarning.tsx:15
+msgid "highSlippage"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: widget/ui/src/containers/Warnings/MinRequiredSlippage.tsx:21
+msgid "increaseSlippage"
+msgstr ""
