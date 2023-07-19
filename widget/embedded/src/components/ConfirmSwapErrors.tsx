@@ -1,9 +1,12 @@
 import React from 'react';
+import { BalanceErrors, MinRequiredSlippage } from '@rango-dev/ui';
 import { ConfirmSwapError, ConfirmSwapErrorTypes } from '../types';
-import { MinRequiredSlippage } from './warnings/MinRequiredSlippage';
-import { BalanceErrors } from './warnings/BalanceErrors';
+import { useNavigate } from 'react-router-dom';
+import { navigationRoutes } from '../constants/navigationRoutes';
 
 export function ConfirmSwapErrors(errors: ConfirmSwapError[]) {
+  const navigate = useNavigate();
+
   return errors.flatMap((error) => {
     switch (error.type) {
       case ConfirmSwapErrorTypes.NO_ROUTE:
@@ -19,6 +22,7 @@ export function ConfirmSwapErrors(errors: ConfirmSwapError[]) {
         return (
           <MinRequiredSlippage
             minRequiredSlippage={error.minRequiredSlippage}
+            changeSlippage={() => navigate('/' + navigationRoutes.settings)}
           />
         );
       case ConfirmSwapErrorTypes.INSUFFICIENT_BALANCE:
