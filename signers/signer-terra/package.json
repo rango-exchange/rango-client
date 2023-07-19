@@ -21,7 +21,7 @@
   },
   "dependencies": {
     "@terra-money/terra.js": "^3.1.7",
-    "rango-types": "^0.1.45"
+    "rango-types": "^0.1.46"
   },
   "publishConfig": {
     "access": "public"
