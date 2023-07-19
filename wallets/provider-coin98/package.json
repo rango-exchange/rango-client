@@ -20,9 +20,9 @@
     "lint": "eslint \"**/*.{ts,tsx}\" --ignore-path ../../.eslintignore"
   },
   "dependencies": {
-    "@rango-dev/signer-evm": "^0.5.1-next.5",
-    "@rango-dev/signer-solana": "^0.5.1-next.4",
-    "@rango-dev/wallets-shared": "^0.8.0",
+    "@rango-dev/signer-evm": "^0.8.1-next.0",
+    "@rango-dev/signer-solana": "^0.8.1-next.0",
+    "@rango-dev/wallets-shared": "^0.8.1-next.1",
     "@solana/web3.js": "^1.67.2",
     "bs58": "^5.0.0",
     "rango-types": "^0.1.46"

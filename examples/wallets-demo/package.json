@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/wallets-demo",
-  "version": "0.5.1-next.23",
+  "version": "0.5.1-next.24",
   "license": "MIT",
   "private": true,
   "source": "public/index.html",
@@ -11,8 +11,8 @@
     "clean": "rimraf .parcel-cache && rimraf dist"
   },
   "dependencies": {
-    "@rango-dev/provider-all": "^0.8.1-next.0",
-    "@rango-dev/ui": "^0.8.1-next.0",
+    "@rango-dev/provider-all": "^0.8.1-next.1",
+    "@rango-dev/ui": "^0.8.1-next.2",
     "@rango-dev/wallets-core": "^0.8.1-next.0",
     "parcel": "^2.8.0",
     "rango-sdk": "^0.1.35",
