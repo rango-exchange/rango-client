@@ -1,20 +1,20 @@
 import {
   Alert,
   BestRoute,
+  BottomLogo,
   Button,
   styled,
   Typography,
   VerticalSwapIcon,
   Header,
+  HeaderButtons,
 } from '@rango-dev/ui';
 import React, { useEffect, useState } from 'react';
 import { i18n } from '@lingui/core';
 import { useInRouterContext, useNavigate } from 'react-router-dom';
 import { TokenInfo } from '../components/TokenInfo';
 import { fetchBestRoute, useBestRouteStore } from '../store/bestRoute';
-import { BottomLogo } from '../components/BottomLogo';
 import { SwithFromAndTo } from '../components/SwitchFromAndTo';
-import { Footer } from '../components/Footer';
 import { navigationRoutes } from '../constants/navigationRoutes';
 import { useMetaStore } from '../store/meta';
 import { useWalletsStore } from '../store/wallets';
@@ -35,7 +35,6 @@ import {
   totalArrivalTime,
 } from '../utils/numbers';
 import BigNumber from 'bignumber.js';
-import { HeaderButtons } from '../components/HeaderButtons';
 import { useUiStore } from '../store/ui';
 import { getFormatedBestRoute } from '../utils/routing';
 
@@ -62,6 +61,13 @@ const BestRouteContainer = styled('div', {
 });
 
 const Alerts = styled('div', {
+  width: '100%',
+  paddingTop: '$16',
+});
+
+const Footer = styled('div', {
+  display: 'flex',
+  flexDirection: 'column',
   width: '100%',
   paddingTop: '$16',
 });
@@ -143,6 +149,8 @@ export function Home() {
             onClickRefresh={
               !!bestRoute || bestRouteError ? fetchBestRoute : undefined
             }
+            onClickHistory={() => navigate(navigationRoutes.swaps)}
+            onClickSettings={() => navigate(navigationRoutes.settings)}
           />
         }
       />
