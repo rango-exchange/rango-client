@@ -1,7 +1,7 @@
 import React from 'react';
-import { styled } from '@rango-dev/ui';
-import { Typography } from '@rango-dev/ui';
 import { i18n } from '@lingui/core';
+import { styled } from '../../theme';
+import { Typography } from '../Typography';
 
 const Container = styled('div', {
   display: 'flex',

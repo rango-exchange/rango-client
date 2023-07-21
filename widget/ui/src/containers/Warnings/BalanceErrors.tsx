@@ -1,4 +1,5 @@
-import { Divider, styled, Typography } from '@rango-dev/ui';
+import { Divider, Typography } from '../../components';
+import { styled } from '../../theme';
 import React from 'react';
 import { i18n } from '@lingui/core';
 interface PropTypes {

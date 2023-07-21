@@ -1,4 +1,4 @@
-import { BlockchainMeta, EvmBlockchainMeta } from 'rango-types';
+import type { BlockchainMeta, EvmBlockchainMeta } from 'rango-types';
 
 export const IS_DEV =
   !process.env.NODE_ENV || process.env.NODE_ENV === 'development';
@@ -61,6 +61,7 @@ export enum WalletTypes {
   SAFEPAL = 'safepal',
   TOKEN_POCKET = 'token-pocket',
   BRAVE = 'brave',
+  BRAAVOS = 'braavos',
   MATH = 'math',
   EXODUS = 'exodus',
   OKX = 'okx',
