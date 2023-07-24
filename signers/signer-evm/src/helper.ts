@@ -120,3 +120,6 @@ export async function getTenderlyError(
     return;
   }
 }
+
+export const waitMs = (ms: number) =>
+  new Promise((resolve) => setTimeout(resolve, ms));

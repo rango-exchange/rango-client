@@ -5,16 +5,13 @@ import {
 import type { GenericSigner } from 'rango-types';
 import { EvmTransaction } from 'rango-types/lib/api/main';
 import { providers } from 'ethers';
-import { cleanEvmError, getTenderlyError } from './helper';
+import { cleanEvmError, getTenderlyError, waitMs } from './helper';
 import {
   RPCErrorCode as RangoRPCErrorCode,
   SignerError,
   SignerErrorCode,
 } from 'rango-types';
 import { RPCErrorCode } from './types';
-
-const waitMs = (ms: number) =>
-  new Promise((resolve) => setTimeout(resolve, ms));
 
 const waitWithMempoolCheck = async (
   provider: providers.Web3Provider,

@@ -56,7 +56,7 @@ async function checkTransactionStatus({
   if (!currentStep?.executedTransactionId) return;
   const tx = getCurrentStepTx(currentStep);
   let txId = currentStep.executedTransactionId;
-
+  let explorerUrlToUpdate = false;
   let getTxReceiptFailed = false;
   let status: TransactionStatusResponse | null = null;
   let signer: GenericSigner<Transaction> | null = null;
@@ -83,15 +83,22 @@ async function checkTransactionStatus({
         undefined;
       const { hash: updatedTxHash, response: updatedTxResponse } =
         await signer.wait(txId, chainId, txResponse);
+      if (updatedTxResponse.isMultiSig) {
+        explorerUrlToUpdate = !updatedTxResponse.hashWasUpdated;
+      }
       if (updatedTxHash !== txId) {
         currentStep.executedTransactionId =
           updatedTxHash || currentStep.executedTransactionId;
         const currentStepBlockchain = getCurrentBlockchainOf(swap, currentStep);
-        const explorerUrl = getScannerUrl(
-          currentStep.executedTransactionId,
-          currentStepBlockchain,
-          meta.blockchains
-        );
+        let explorerUrl: string | undefined;
+        const blockchainsMetaNotEmpty = !!Object.keys(meta.blockchains).length;
+        if (blockchainsMetaNotEmpty) {
+          explorerUrl = getScannerUrl(
+            currentStep.executedTransactionId,
+            currentStepBlockchain,
+            meta.blockchains
+          );
+        }
         if (explorerUrl) {
           if (currentStep.explorerUrl && currentStep.explorerUrl?.length >= 1) {
             currentStep.explorerUrl[currentStep.explorerUrl.length - 1] = {
@@ -110,6 +117,8 @@ async function checkTransactionStatus({
           receiptReceived: true,
         });
       }
+    } else if (!signer) {
+      explorerUrlToUpdate = true;
     }
   } catch (error) {
     const { extraMessage, extraMessageDetail, extraMessageErrorCode } =
@@ -169,7 +178,9 @@ async function checkTransactionStatus({
   currentStep.diagnosisUrl =
     status?.diagnosisUrl || currentStep.diagnosisUrl || null;
   currentStep.outputAmount = outputAmount || currentStep.outputAmount;
-  currentStep.explorerUrl = status?.explorerUrl || currentStep.explorerUrl;
+  currentStep.explorerUrl = !explorerUrlToUpdate
+    ? status?.explorerUrl || currentStep.explorerUrl
+    : null;
   currentStep.internalSteps = status?.steps || null;
 
   const newTransaction = status?.newTx;
@@ -292,11 +303,15 @@ async function checkApprovalStatus({
         currentStep.executedTransactionId =
           updatedTxHash || currentStep.executedTransactionId;
         const currentStepBlockchain = getCurrentBlockchainOf(swap, currentStep);
-        const explorerUrl = getScannerUrl(
-          currentStep.executedTransactionId,
-          currentStepBlockchain,
-          meta.blockchains
-        );
+        let explorerUrl: string | undefined;
+        const blockchainsMetaNotEmpty = !!Object.keys(meta.blockchains).length;
+        if (blockchainsMetaNotEmpty) {
+          explorerUrl = getScannerUrl(
+            currentStep.executedTransactionId,
+            currentStepBlockchain,
+            meta.blockchains
+          );
+        }
         if (explorerUrl) {
           if (currentStep.explorerUrl && currentStep.explorerUrl?.length >= 1) {
             currentStep.explorerUrl[currentStep.explorerUrl.length - 1] = {
