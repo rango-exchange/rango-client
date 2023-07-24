@@ -39,6 +39,7 @@
     "@rango-dev/provider-metamask": "^0.8.1-next.1",
     "@rango-dev/provider-okx": "^0.8.1-next.1",
     "@rango-dev/provider-phantom": "^0.8.1-next.1",
+    "@rango-dev/provider-safe": "^0.1.0",
     "@rango-dev/provider-safepal": "^0.8.1-next.1",
     "@rango-dev/provider-station": "^0.8.1-next.1",
     "@rango-dev/provider-taho": "^0.8.1-next.1",

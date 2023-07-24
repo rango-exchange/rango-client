@@ -59,6 +59,7 @@ export enum WalletTypes {
   COSMOSTATION = 'cosmostation',
   COIN98 = 'coin98',
   SAFEPAL = 'safepal',
+  SAFE = 'safe',
   TOKEN_POCKET = 'token-pocket',
   BRAVE = 'brave',
   BRAAVOS = 'braavos',
