@@ -255,6 +255,10 @@ class Wallet<InstanceType = any> {
       if (!!instance && !this.state.installed) {
         this.setInstalledAs(true);
       }
+    } else if (needsCheckInstallation(this.options)) {
+      this.actions.getInstance().then((data: any) => {
+        if (data) this.setInstalledAs(true);
+      });
     }
   }
 
