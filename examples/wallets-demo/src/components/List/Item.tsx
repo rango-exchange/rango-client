@@ -159,7 +159,7 @@ function Item({ type, info }: { type: WalletType; info: WalletInfo }) {
           <div className="body">
             <img src={info.img} alt={info.name} width={100} />
             <h2 className="my-12">{info.name}</h2>
-            <Typography variant="body2">
+            <Typography variant="body" size="medium">
               {!walletState.installed
                 ? 'The wallet is not installed'
                 : 'The wallet is disconnected'}

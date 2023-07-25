@@ -21,7 +21,7 @@ const TooltipTrigger = styled(RadixTooltip.Trigger, {
   backgroundColor: 'transparent',
 });
 const TooltipContent = styled(RadixTooltip.Content, {
-  borderRadius: '$5',
+  borderRadius: '$xs',
   padding: '$4 $8',
   fontSize: '$14',
   animationDuration: '400ms',

@@ -27,7 +27,7 @@ const StyledAnchor = styled('a', {
 export function BottomLogo() {
   return (
     <Container>
-      <Typography variant="caption" color="$neutral600">
+      <Typography variant="body" size="xsmall" color="$neutral600">
         {i18n.t('Powered By')}
       </Typography>
       <StyledAnchor href="https://rango.exchange" target="_blank">
@@ -40,7 +40,9 @@ export function BottomLogo() {
             </g>
           </g>
         </Logo>
-        <Typography variant="body2">RANGO</Typography>
+        <Typography variant="body" size="medium">
+          RANGO
+        </Typography>
       </StyledAnchor>
     </Container>
   );

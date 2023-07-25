@@ -9,7 +9,7 @@ const CheckboxContainer = styled('div', {
 });
 
 const CheckboxRoot = styled(RadixCheckbox.Root, {
-  borderRadius: '5px',
+  borderRadius: '$xs',
   width: 20,
   padding: 0,
   height: 20,

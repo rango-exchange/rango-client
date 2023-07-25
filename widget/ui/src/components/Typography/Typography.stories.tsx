@@ -38,34 +38,34 @@ export default {
 
 export const Main = (props: PropTypes) => (
   <div>
-    <Typography {...props} variant="h1">
+    <Typography {...props} variant="display" size="small">
       Heading 1
     </Typography>
-    <Typography {...props} variant="h2">
+    <Typography {...props} variant="headline" size="large">
       Heading 2
     </Typography>
-    <Typography {...props} variant="h3">
+    <Typography {...props} variant="headline" size="xsmall">
       Heading 3
     </Typography>
-    <Typography {...props} variant="h4">
+    <Typography {...props} variant="title" size="medium">
       Heading 4
     </Typography>
-    <Typography {...props} variant="h5">
+    <Typography {...props} variant="title" size="xmedium">
       Heading 5
     </Typography>
-    <Typography {...props} variant="h6">
+    <Typography {...props} variant="title" size="small">
       Heading 6
     </Typography>
-    <Typography {...props} variant="body1">
+    <Typography {...props} variant="body" size="medium">
       Body 1
     </Typography>
-    <Typography {...props} variant="body2">
+    <Typography {...props} variant="body" size="medium">
       Body 2
     </Typography>
-    <Typography {...props} variant="body3">
+    <Typography {...props} variant="body" size="small">
       Body 3
     </Typography>
-    <Typography {...props} variant="caption">
+    <Typography {...props} variant="body" size="xsmall">
       Caption
     </Typography>
   </div>

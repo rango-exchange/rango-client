@@ -11,7 +11,7 @@ import { Tooltip } from '../Tooltip';
 import { Image } from '../common';
 
 const Container = styled('div', {
-  borderRadius: '$5',
+  borderRadius: '$xs',
   border: '1px solid $neutral100',
   display: 'flex',
   alignItems: 'center',
@@ -92,7 +92,7 @@ export const pulse = keyframes({
 
 const GasContainer = styled('div', {
   backgroundColor: '$neutral100',
-  borderRadius: '5px',
+  borderRadius: '$xs',
   margin: '$4',
   display: 'flex',
   flexDirection: 'column',
@@ -164,7 +164,8 @@ export function BestRoute(props: PropsWithChildren<PropTypes>) {
               <TotalFee
                 mt={4}
                 align="center"
-                variant="caption"
+                variant="body"
+                size="xsmall"
                 warning={feeWarning}>
                 {error && '-'}
                 {!!data && `$${totalFee}`}
@@ -175,7 +176,7 @@ export function BestRoute(props: PropsWithChildren<PropTypes>) {
           <Tooltip content={i18n.t('Time estimate')}>
             <CostContainer warning={feeWarning}>
               <TimeIcon size={20} />
-              <Typography mt={4} align="center" variant="caption">
+              <Typography mt={4} align="center" variant="body" size="xsmall">
                 {error && '-'}
                 {!!data && `~${totalTime}m`}
               </Typography>
@@ -186,7 +187,11 @@ export function BestRoute(props: PropsWithChildren<PropTypes>) {
       <BestRouteContainer>
         {loading && <Spinner color="primary" />}
 
-        {error && <ErrorMsg variant="caption">{error}</ErrorMsg>}
+        {error && (
+          <ErrorMsg variant="body" size="xsmall">
+            {error}
+          </ErrorMsg>
+        )}
 
         {!!data &&
           data.result?.swaps.map((swap, index) => (
@@ -222,7 +227,9 @@ export function BestRoute(props: PropsWithChildren<PropTypes>) {
             </Fragment>
           ))}
         {!!data && !data?.result && (
-          <Typography variant="body2">{i18n.t('No routes found')}</Typography>
+          <Typography variant="body" size="medium">
+            {i18n.t('No routes found')}
+          </Typography>
         )}
       </BestRouteContainer>
     </Container>

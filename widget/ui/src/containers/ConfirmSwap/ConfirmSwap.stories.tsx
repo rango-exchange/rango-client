@@ -14,7 +14,7 @@ const Box = styled('div', {
 
 const Container = styled('div', {
   boxSizing: 'border-box',
-  borderRadius: '$5',
+  borderRadius: '$xs',
   padding: '$8 $16 $16 $16',
 
   variants: {
@@ -63,7 +63,7 @@ const Container = styled('div', {
 const OutputContainer = styled('div', {
   windth: '100%',
   height: '$48',
-  borderRadius: '$5',
+  borderRadius: '$xs',
   backgroundColor: '$surface',
   border: '1px solid transparent',
   position: 'relative',
@@ -93,12 +93,13 @@ const TokenPreview = ({
   <Box>
     <Container type={'outlined'}>
       <div className="head">
-        <Typography variant="body2" color="neutral800">
+        <Typography variant="body" size="medium" color="neutral800">
           {props.label}
         </Typography>
         <div>
           <Typography
-            variant="caption"
+            variant="body"
+            size="xsmall"
             color="neutral600"
             className="usd-value">{`$${props.usdValue}`}</Typography>
         </div>
@@ -124,7 +125,9 @@ const TokenPreview = ({
         <Divider size={12} direction="horizontal" />
         <div className="amount">
           <OutputContainer>
-            <Typography variant="h4">{props.amount}</Typography>
+            <Typography variant="title" size="medium">
+              {props.amount}
+            </Typography>
           </OutputContainer>
         </div>
       </div>
@@ -136,7 +139,7 @@ const OverviewContainer = styled('div', {
   alignItems: 'center',
   justifyContent: 'space-between',
   padding: '$8',
-  borderRadius: '$5',
+  borderRadius: '$xs',
   backgroundColor: '$neutral100',
   color: '$neutral800',
   fontSize: '$12',
@@ -151,7 +154,10 @@ const OverviewContainer = styled('div', {
   },
 });
 
-const RoutesOverview = (props: { routes: BestRouteResponse; totalFee?: string }) => {
+const RoutesOverview = (props: {
+  routes: BestRouteResponse;
+  totalFee?: string;
+}) => {
   const swaps = props.routes.result?.swaps;
   return (
     <OverviewContainer>

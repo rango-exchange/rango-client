@@ -7,7 +7,7 @@ export const Container = styled('div', {
   alignItems: 'center',
   justifyContent: 'space-between',
   padding: '$8',
-  borderRadius: '$5',
+  borderRadius: '$xs',
   backgroundColor: '$neutral100',
   color: '$neutral800',
   fontSize: '$12',

@@ -21,7 +21,9 @@ export function WalletsConfig() {
   };
   return (
     <>
-      <Typography variant="h6">Wallet</Typography>
+      <Typography variant="title" size="small">
+        Wallet
+      </Typography>
       <Divider size={12} />
       <ConfigurationContainer>
         <Provider providers={providers}>

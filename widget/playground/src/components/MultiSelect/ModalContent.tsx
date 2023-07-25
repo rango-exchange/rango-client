@@ -95,7 +95,9 @@ export default function ModalContent({
                     align="start"
                     onClick={onChange.bind(null, item)}
                     key={index}>
-                    <Typography variant="body2">{item.title}</Typography>
+                    <Typography variant="body" size="medium">
+                      {item.title}
+                    </Typography>
                   </Button>
                 ))}
               </ListContainer>

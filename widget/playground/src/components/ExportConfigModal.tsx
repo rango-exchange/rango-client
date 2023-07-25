@@ -145,7 +145,7 @@ export function ExportConfigModal(props: ExportConfigModalProps) {
       onClose={onClose}
       content={
         <>
-          <Typography variant="body1" mb={8} mt={12}>
+          <Typography variant="body" size="large" mb={8} mt={12}>
             See full instruction on
             <Link
               href="https://docs.rango.exchange/integration-guide/rango-widget"
@@ -153,7 +153,7 @@ export function ExportConfigModal(props: ExportConfigModalProps) {
               docs.rango.exchange
             </Link>
           </Typography>
-          <Typography variant="body1" mb={12} mt={8}>
+          <Typography variant="body" size="large" mb={12} mt={8}>
             See more examples
             <Link
               href="https://github.com/rango-exchange/widget-examples"

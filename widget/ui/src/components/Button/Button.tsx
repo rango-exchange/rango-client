@@ -5,9 +5,9 @@ import { Spinner } from '../Spinner';
 import { Typography } from '../Typography';
 
 const ButtonContainer = styled('button', {
-  borderRadius: '$5',
+  borderRadius: '$xs',
   fontSize: '$16',
-  fontWeight: '$400',
+  fontWeight: '$regular',
   cursor: 'pointer',
   padding: '0 $12',
   display: 'flex',
@@ -409,8 +409,7 @@ export function Button({
           ml={!!prefix}
           mr={!!suffix && !loading}
           flexContent={flexContent}
-          className="_text"
-        >
+          className="_text">
           {children}
         </Content>
       )}

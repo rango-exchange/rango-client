@@ -42,7 +42,9 @@ export function SourcesConfig() {
   };
   return (
     <>
-      <Typography variant="h6">Liquidity sources</Typography>
+      <Typography variant="title" size="medium">
+        Liquidity sources
+      </Typography>
       <Divider size={24} />
       <ConfigurationContainer>
         <MultiSelect

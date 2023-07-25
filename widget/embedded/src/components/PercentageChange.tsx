@@ -24,7 +24,7 @@ export function PercentageChange(props: PropTypes) {
   return (
     <>
       {showPercentageChange && (
-        <Typography variant="caption" color="$error500">
+        <Typography variant="body" size="xsmall" color="$error500">
           {`(${numberToString(percentageChange, 0, 2)}%)`}
         </Typography>
       )}

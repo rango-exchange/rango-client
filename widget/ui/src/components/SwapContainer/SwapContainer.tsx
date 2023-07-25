@@ -6,7 +6,7 @@ const MainContainer = styled('div', {
   position: 'relative',
   display: 'flex',
   flexDirection: 'column',
-  borderRadius: '$10',
+  borderRadius: '$sm',
   boxShadow: '$s',
   width: '100%',
   minWidth: '375px',
@@ -21,7 +21,7 @@ const MainContainer = styled('div', {
     '&::-webkit-scrollbar': { width: '$8', height: '$8' },
     '&::-webkit-scrollbar-thumb': {
       backgroundColor: '$neutral400',
-      borderRadius: '$10',
+      borderRadius: '$sm',
     },
     '&::-webkit-scrollbar-thumb:hover': {
       backgroundColor: '$neutral500',

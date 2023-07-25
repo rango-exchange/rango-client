@@ -21,7 +21,7 @@ const Box = styled('div', {
 
 const Container = styled('div', {
   boxSizing: 'border-box',
-  borderRadius: '$5',
+  borderRadius: '$xs',
   padding: '$8 $16 $16 $16',
 
   variants: {
@@ -77,7 +77,7 @@ const ImagePlaceholder = styled('span', {
 const OutputContainer = styled('div', {
   windth: '100%',
   height: '$48',
-  borderRadius: '$5',
+  borderRadius: '$xs',
   backgroundColor: '$surface',
   border: '1px solid transparent',
   position: 'relative',
@@ -121,14 +121,15 @@ export function TokenPreview(props: PropTypes) {
     <Box>
       <Container type={'outlined'}>
         <div className="head">
-          <Typography variant="body2" color="neutral800">
+          <Typography variant="body" size="medium" color="neutral800">
             {props.label}
           </Typography>
           <div>
             {percentageChange}
             {props.usdValue && (
               <Typography
-                variant="caption"
+                variant="body"
+                size="xsmall"
                 color="neutral600"
                 className="usd-value">{`$${numberToString(
                 props.usdValue
@@ -177,7 +178,9 @@ export function TokenPreview(props: PropTypes) {
           <Divider size={12} direction="horizontal" />
           <div className="amount">
             <OutputContainer>
-              <Typography variant="h4">{props.amount}</Typography>
+              <Typography variant="title" size="medium">
+                {props.amount}
+              </Typography>
             </OutputContainer>
           </div>
         </div>
