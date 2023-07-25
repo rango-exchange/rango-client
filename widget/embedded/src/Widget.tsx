@@ -18,6 +18,7 @@ import { navigationRoutes } from './constants/navigationRoutes';
 import { initConfig } from './utils/configs';
 import { WidgetContext, WidgetWallets } from './Wallets';
 import { WidgetEvents } from './components/WidgetEvents';
+import { useSettingsStore } from './store/settings';
 
 const MainContainer = styled('div', {
   width: '100%',
@@ -50,6 +51,7 @@ export function Main(props: PropsWithChildren<WidgetProps>) {
   }, [config]);
 
   useEffect(() => {
+    useSettingsStore.persist.rehydrate();
     widgetContext.onConnectWallet(setLastConnectedWalletWithNetwork);
   }, []);
 
