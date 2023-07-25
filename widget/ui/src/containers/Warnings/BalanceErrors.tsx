@@ -32,14 +32,20 @@ export function BalanceErrors({ messages }: PropTypes) {
   const showListStyle = messages.length > 1;
   return (
     <>
-      <Typography className="title" variant="title" color={'error'}>
+      <Typography
+        className="title"
+        variant="title"
+        size="small"
+        color={'error'}>
         {i18n.t('Insufficent Balance:')}
       </Typography>
       <Divider size={8} />
       <List showListStyle={showListStyle}>
         {messages.map((warning, index) => (
           <ListItem showListStyle={showListStyle} key={index}>
-            <Message variant="body2">{warning}</Message>
+            <Message variant="body" size="medium">
+              {warning}
+            </Message>
           </ListItem>
         ))}
       </List>

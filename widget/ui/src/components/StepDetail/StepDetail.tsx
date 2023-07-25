@@ -112,8 +112,7 @@ export function StepDetail(props: PropsWithChildren<PropTypes>) {
         {amount && (
           <Typography
             noWrap
-            variant={direction === 'vertical' ? 'body2' : 'title'}
-          >
+            variant={direction === 'vertical' ? 'body2' : 'title'}>
             {amount}
           </Typography>
         )}
@@ -121,19 +120,17 @@ export function StepDetail(props: PropsWithChildren<PropTypes>) {
           <Typography
             noWrap
             variant={direction === 'vertical' ? 'body2' : 'title'}
-            color={'$neutral600'}
-          >
+            color={'$neutral600'}>
             {estimatedAmount}
           </Typography>
         )}
         &nbsp;
         <Typography
           variant={direction === 'vertical' ? 'body2' : 'title'}
-          noWrap
-        >
+          noWrap>
           {symbol}
         </Typography>
-        <SubTitle noWrap variant="caption" color="$neutral800">
+        <SubTitle noWrap variant="body" size="xsmall" color="$neutral800">
           on {blockchain}
         </SubTitle>
       </Detail>

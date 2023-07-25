@@ -22,7 +22,9 @@ interface PropTypes {
   }>;
 }
 const filterList = (list, searchedFor: string) =>
-  list.filter((item) => item.name.toLowerCase().includes(searchedFor.toLowerCase()));
+  list.filter((item) =>
+    item.name.toLowerCase().includes(searchedFor.toLowerCase())
+  );
 const Image = styled('img', {
   width: '24px',
   height: '24px',
@@ -37,7 +39,14 @@ const Label = styled('label', {
   color: '$foreground',
 });
 
-export function Select({ label, value, onChange, modalTitle, list, name }: PropTypes) {
+export function Select({
+  label,
+  value,
+  onChange,
+  modalTitle,
+  list,
+  name,
+}: PropTypes) {
   const [open, setOpen] = useState<boolean>(false);
   const search = list.find((item) => item.value === value);
   return (
@@ -70,13 +79,17 @@ export function Select({ label, value, onChange, modalTitle, list, name }: PropT
                     variant="ghost"
                     size="large"
                     prefix={item.logo && <Image src={item.logo} />}
-                    suffix={item.value === value ? <CheckIcon size={20} /> : undefined}
+                    suffix={
+                      item.value === value ? <CheckIcon size={20} /> : undefined
+                    }
                     align="start"
                     onClick={() => {
                       setOpen(false);
                       onChange(name, item.value);
                     }}>
-                    <Typography variant="body2">{item.name}</Typography>
+                    <Typography variant="body" size="medium">
+                      {item.name}
+                    </Typography>
                   </Button>
                   <hr />
                 </Fragment>

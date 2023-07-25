@@ -88,7 +88,7 @@ export const ArrowDown = styled('div', {
 
 const StyledAnchor = styled('a', {
   color: '$primary',
-  fontWeight: '$600',
+  fontWeight: '$semiBold',
 });
 
 const SwapInfoContainer = styled('div', {
@@ -214,8 +214,7 @@ export function SwapHistory(props: PropTypes) {
               variant="outlined"
               fullWidth
               type="error"
-              onClick={setShowDrawer.bind(null, true)}
-            >
+              onClick={setShowDrawer.bind(null, true)}>
               Cancel
             </Button>
           )}
@@ -224,14 +223,12 @@ export function SwapHistory(props: PropTypes) {
               variant="contained"
               fullWidth
               type="primary"
-              onClick={onRetry}
-            >
+              onClick={onRetry}>
               Try again
             </Button>
           )}
         </>
-      }
-    >
+      }>
       <div>
         <SwapInfoContainer>
           <Row>
@@ -239,8 +236,7 @@ export function SwapHistory(props: PropTypes) {
               Request Id:
               <span
                 className="value requestId"
-                onClick={onCopy.bind(null, pendingSwap?.requestId)}
-              >
+                onClick={onCopy.bind(null, pendingSwap?.requestId)}>
                 <RequestId>{pendingSwap?.requestId}</RequestId>
                 <Divider size={4} direction="horizontal" />
                 <Button type="primary" variant="ghost" size="compact">
@@ -289,8 +285,7 @@ export function SwapHistory(props: PropTypes) {
             <Line />
             <SwapperContainer
               created={step.status === 'created'}
-              running={!['created', 'success', 'failed'].includes(step.status)}
-            >
+              running={!['created', 'success', 'failed'].includes(step.status)}>
               <Image
                 src={step.swapperLogo || ''}
                 alt={step.swapperId}
@@ -298,13 +293,13 @@ export function SwapHistory(props: PropTypes) {
               />
 
               <FeeContainer>
-                <Typography variant="body2">
+                <Typography variant="body" size="medium">
                   {step.swapperType === 'DEX' ? 'Swap' : 'Bridge'} via{' '}
                   {step.swapperId}
                 </Typography>
                 <Fee>
                   <GasIcon />
-                  <Typography variant="body2">
+                  <Typography variant="body" size="medium">
                     &nbsp; ${step.feeInUsd} estimated gas fee
                   </Typography>
                 </Fee>
@@ -313,8 +308,7 @@ export function SwapHistory(props: PropTypes) {
             <div
               style={{
                 display: 'flex',
-              }}
-            >
+              }}>
               <InternalDetailsContainer>
                 <Line />
                 <div className="details">
@@ -325,13 +319,12 @@ export function SwapHistory(props: PropTypes) {
                           <DescriptionContainer>
                             <Divider size={4} />
                             <CheckCircleIcon color="primary" />
-                            <Description variant="body2">
+                            <Description variant="body" size="medium">
                               <StyledAnchor
                                 href={item.url}
                                 target="_blank"
                                 rel="noreferrer"
-                                key={index}
-                              >
+                                key={index}>
                                 {!item.description ? (
                                   <b>View transaction</b>
                                 ) : (
@@ -353,7 +346,10 @@ export function SwapHistory(props: PropTypes) {
                     <InternalDetail>
                       <DescriptionContainer>
                         <InfoCircleIcon color="error" />
-                        <Description variant="body2" color="$error500">
+                        <Description
+                          variant="body"
+                          size="medium"
+                          color="$error500">
                           Step failed
                         </Description>
                       </DescriptionContainer>
@@ -385,7 +381,7 @@ export function SwapHistory(props: PropTypes) {
         title="Cancel Progress"
         content={
           <Alert type="warning">
-            <Typography variant="body2">
+            <Typography variant="body" size="medium">
               Warning: Cancel <u>doesn't revert</u> your transaction if you've
               already signed and sent a transaction to the blockchain. It only
               stops next steps from being executed.
@@ -398,13 +394,11 @@ export function SwapHistory(props: PropTypes) {
               display: 'flex',
               justifyContent: 'center',
               alignItems: 'center',
-            }}
-          >
+            }}>
             <Button
               variant="contained"
               type="success"
-              onClick={setShowDrawer.bind(null, false)}
-            >
+              onClick={setShowDrawer.bind(null, false)}>
               Skip
             </Button>
             <Divider size={16} direction="horizontal" />
@@ -414,8 +408,7 @@ export function SwapHistory(props: PropTypes) {
               onClick={() => {
                 onCancel(pendingSwap.requestId);
                 setShowDrawer(false);
-              }}
-            >
+              }}>
               Cancel progress
             </Button>
           </div>

@@ -17,7 +17,7 @@ export function MinRequiredSlippage({
   changeSlippage,
 }: PropTypes) {
   return (
-    <StyledMessage variant="body2">
+    <StyledMessage variant="body" size="medium">
       {i18n.t(
         'increaseSlippage',
         { minRequiredSlippage },

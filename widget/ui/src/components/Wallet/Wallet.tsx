@@ -59,14 +59,17 @@ export function Wallet(props: PropTypes) {
           <Image src={image} size={24} />
         </WalletImageContainer>
       }
-      suffix={<State walletState={state} installLink={installLink} />}
-    >
+      suffix={<State walletState={state} installLink={installLink} />}>
       <Text>
-        <Typography variant="h5" noWrap={false}>
+        <Typography variant="title" size="xmedium" noWrap={false}>
           {name}
         </Typography>
         {state === WalletState.CONNECTED ? (
-          <Typography variant="caption" noWrap={false} color="primary">
+          <Typography
+            variant="body"
+            size="xsmall"
+            noWrap={false}
+            color="primary">
             Connected
           </Typography>
         ) : null}

@@ -33,15 +33,14 @@ export function SwapsGroup(props: Omit<PropTypes, 'onBack'>) {
           <React.Fragment key={index}>
             <Group>
               <Typography
-                variant="body2"
+                variant="body"
+                size="medium"
                 color="neutral600"
-                className="group-title"
-              >
+                className="group-title">
                 {group.title}
               </Typography>
               {group.swaps.map((swap: PendingSwap) => (
-                <React.Fragment
-                    key={swap.requestId}>
+                <React.Fragment key={swap.requestId}>
                   <SwapDetail
                     swap={swap}
                     status={swap.status}

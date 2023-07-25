@@ -40,8 +40,7 @@ export function TokenItem(props: PropTypes) {
         height: '48px',
         top: `${parseFloat(style?.top as string) + 0}px`,
         padding: '0 4px',
-      }}
-    >
+      }}>
       <Button
         variant="outlined"
         size="large"
@@ -56,17 +55,20 @@ export function TokenItem(props: PropTypes) {
         suffix={
           token.balance?.amount && (
             <TokenAmountContainer>
-              <Typography variant="body2">{token.balance.amount}</Typography>
-              <Typography variant="caption">
+              <Typography variant="body" size="medium">
+                {token.balance.amount}
+              </Typography>
+              <Typography variant="body" size="xsmall">
                 {`${token.balance.usdValue}$`}
               </Typography>
             </TokenAmountContainer>
           )
-        }
-      >
+        }>
         <TokenNameContainer>
-          <Typography variant="body1">{token.symbol}</Typography>
-          <Typography variant="caption" color="neutral600">
+          <Typography variant="body" size="medium">
+            {token.symbol}
+          </Typography>
+          <Typography variant="body" size="xsmall" color="neutral600">
             {token.name}
           </Typography>
         </TokenNameContainer>

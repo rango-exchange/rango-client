@@ -24,7 +24,7 @@ const BackDrop = styled('div', {
   height: '100%',
   zIndex: 9999999,
   backgroundColor: 'rgba(0,0,0,.1)',
-  borderRadius: '$10',
+  borderRadius: '$sm',
 });
 
 const DrawerContainer = styled('div', {
@@ -36,7 +36,7 @@ const DrawerContainer = styled('div', {
   flexDirection: 'column',
   justifyContent: 'space-between',
   zIndex: 9999999,
-  borderRadius: '$10',
+  borderRadius: '$sm',
 
   variants: {
     anchor: {
@@ -110,7 +110,9 @@ export function Drawer(props: PropTypes) {
           <BackDrop onClick={handleBackDropClick}>
             <DrawerContainer anchor={anchor} style={containerStyle}>
               <DrawerHeader>
-                <Typography variant="h6">{title}</Typography>
+                <Typography variant="title" size="small">
+                  {title}
+                </Typography>
                 {showClose && <CloseIcon size={24} onClick={onClose} />}
               </DrawerHeader>
               <Body>{content}</Body>
