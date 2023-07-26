@@ -23,6 +23,7 @@ import * as station from '@rango-dev/provider-station';
 import * as enkrypt from '@rango-dev/provider-enkrypt';
 import * as taho from '@rango-dev/provider-taho';
 import * as bitkeep from '@rango-dev/provider-bitkeep';
+// import * as walletconnect2 from '@rango-dev/provider-walletconnect-2';
 import * as braavos from '@rango-dev/provider-braavos';
 import * as safe from '@rango-dev/provider-safe';
 
@@ -52,6 +53,7 @@ export const allProviders = () => [
   enkrypt,
   taho,
   bitkeep,
+  // walletconnect2,
   braavos,
   safe,
 ];
