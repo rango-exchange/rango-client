@@ -11,9 +11,9 @@
     "clean": "rimraf .parcel-cache && rimraf dist"
   },
   "dependencies": {
-    "@rango-dev/provider-all": "^0.8.1-next.2",
-    "@rango-dev/ui": "^0.8.1-next.2",
-    "@rango-dev/wallets-core": "^0.8.1-next.2",
+    "@rango-dev/provider-all": "^0.8.1-next.3",
+    "@rango-dev/ui": "^0.8.1-next.4",
+    "@rango-dev/wallets-core": "^0.8.1-next.3",
     "parcel": "^2.8.0",
     "rango-sdk": "^0.1.35",
     "rango-types": "^0.1.46",

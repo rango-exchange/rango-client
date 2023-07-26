@@ -5059,19 +5059,6 @@
   dependencies:
     "@babel/runtime" "^7.13.10"
 
-"@rango-dev/queue-manager-core@^0.5.1-next.1":
-  version "0.5.1-next.1"
-  resolved "https://registry.yarnpkg.com/@rango-dev/queue-manager-core/-/queue-manager-core-0.5.1-next.1.tgz#f142552003c2e1e1a4f0dd1e2f3348f722dc8ede"
-  integrity sha512-zof8QjrsYNvnQ2AKJcLdnjy+0ezDfbcZSUjx16u0GifgiZLDXofl9ZIC+PV9oMiqqdoZUurDHNSbJReUU/dfvQ==
-  dependencies:
-    idb "^7.1.1"
-    uuid "^9.0.0"
-
-"@rango-dev/queue-manager-react@^0.5.1-next.1":
-  version "0.5.1-next.1"
-  resolved "https://registry.yarnpkg.com/@rango-dev/queue-manager-react/-/queue-manager-react-0.5.1-next.1.tgz#3add7b94820fe5dcba96a9e9752fe6679dd03dd9"
-  integrity sha512-kAKWyBUqIkeXCoAtPQaNgPnk+hYmZp/ZWQvBt7k2dG26+1w/KM8aiAX7rhtQ1tZ3kaP2N3/9gByLi9KvR5gX9A==
-
 "@reach/router@^1.2.1":
   version "1.3.4"
   resolved "https://registry.yarnpkg.com/@reach/router/-/router-1.3.4.tgz#d2574b19370a70c80480ed91f3da840136d10f8c"
