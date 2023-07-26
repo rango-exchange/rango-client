@@ -13,6 +13,8 @@ import {
 } from 'rango-types';
 import { RPCErrorCode } from './types';
 
+type ProviderType = ConstructorParameters<typeof providers.Web3Provider>[0];
+
 const waitWithMempoolCheck = async (
   provider: providers.Web3Provider,
   tx: TransactionResponse,
@@ -46,7 +48,7 @@ export class DefaultEvmSigner implements GenericSigner<EvmTransaction> {
   private signer: providers.JsonRpcSigner;
   private provider: providers.Web3Provider;
 
-  constructor(provider: providers.ExternalProvider) {
+  constructor(provider: ProviderType) {
     this.provider = new providers.Web3Provider(provider);
     this.signer = this.provider.getSigner();
   }

@@ -54,6 +54,13 @@ export type GetInstanceOptions = {
   network?: Network;
   currentProvider: any;
   meta: BlockchainMeta[];
+  getState: () => WalletState;
+  /**
+   * We always get the instance once and reuse it whenever we needs. By using this option
+   * We can force the library to get a new instance and replace it with the old one.
+   *
+   * Originally, we used this option for wallet connect 1 and its switching network challenge.
+   */
   force?: boolean;
   updateChainId: (chainId: number | string) => void;
 };

@@ -111,6 +111,13 @@ class Wallet<InstanceType = any> {
           newInstance: this.tryGetInstance.bind(this),
         });
 
+        // We assume if we reach here (`switchNetwork` not throwing error), Switch successfully has been done.
+        if (requestedNetwork !== this.state.network) {
+          this.updateState({
+            network,
+          });
+        }
+
         return {
           // Only network has been changed, so we reuse accounts from what we have already.
           accounts: connectionFromState.accounts,
@@ -285,14 +292,7 @@ class Wallet<InstanceType = any> {
             });
           }
         },
-        updateChainId: (chainId) => {
-          const network = chainId
-            ? getBlockChainNameFromId(chainId, this.meta)
-            : Networks.Unknown;
-          this.updateState({
-            network,
-          });
-        },
+        updateChainId: this.updateChainId.bind(this),
       });
     }
   }
@@ -360,6 +360,16 @@ class Wallet<InstanceType = any> {
     });
   }
 
+  private updateChainId(chainId: string | number) {
+    const network = chainId
+      ? getBlockChainNameFromId(chainId, this.meta)
+      : Networks.Unknown;
+
+    this.updateState({
+      network,
+    });
+  }
+
   private setInstalledAs(value: boolean) {
     if (!needsCheckInstallation(this.options) && value === false) return;
 
@@ -385,14 +395,8 @@ class Wallet<InstanceType = any> {
         currentProvider: this.provider,
         meta: this.meta,
         force: force || false,
-        updateChainId: (chainId) => {
-          const network = chainId
-            ? getBlockChainNameFromId(chainId, this.meta)
-            : Networks.Unknown;
-          this.updateState({
-            network,
-          });
-        },
+        updateChainId: this.updateChainId.bind(this),
+        getState: this.getState.bind(this),
       };
 
       if (network) {
