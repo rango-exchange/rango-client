@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/provider-trustwallet",
-  "version": "0.8.1-next.0",
+  "version": "0.8.1-next.1",
   "license": "MIT",
   "type": "module",
   "module": "./dist/index.js",
@@ -21,7 +21,7 @@
   },
   "dependencies": {
     "@rango-dev/signer-evm": "^0.8.1-next.0",
-    "@rango-dev/wallets-shared": "^0.8.1-next.1",
+    "@rango-dev/wallets-shared": "^0.8.1-next.2",
     "rango-types": "^0.1.46"
   },
   "publishConfig": {
