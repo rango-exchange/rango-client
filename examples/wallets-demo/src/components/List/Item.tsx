@@ -78,6 +78,7 @@ function Item({ type, info }: { type: WalletType; info: WalletInfo }) {
         evmBasedChains,
         supportedChainsNames
       ).find((a) => a.accounts.find((b) => b.isConnected));
+
       const signers = getSigners(type);
       const isMatchedNetworkWithAccount = walletState.accounts.find((account) =>
         account?.toLowerCase()?.includes(network?.toLowerCase())
@@ -94,11 +95,12 @@ function Item({ type, info }: { type: WalletType; info: WalletInfo }) {
       const currentChain = info.supportedChains.find(
         (chain) => chain.name === network
       );
-      const txType = currentChain?.type || TransactionType.EVM;
+      const txType = currentChain?.type || (network as TransactionType);
+
       const chainId = currentChain?.chainId || null;
       const result = signers
         .getSigner(txType)
-        .signMessage('Hello World', address!, chainId);
+        .signMessage('Hello World', address || 'meow', chainId);
       result
         .then((signature) => {
           alert(signature);
@@ -107,6 +109,62 @@ function Item({ type, info }: { type: WalletType; info: WalletInfo }) {
           alert(
             'Error' + `(${info.name}): ` + (ex.message || 'Failed to sign')
           );
+          console.log({ ex });
+        });
+    }
+  };
+  const handleSignSigner = () => {
+    if (!walletState.accounts || !walletState.accounts.length) {
+      alert(
+        "You don't currently have an account or you haven't connected to wallet correctly!"
+      );
+    } else {
+      const supportedChainsNames = walletAndSupportedChainsNames(
+        info.supportedChains
+      );
+      const activeAccount = prepareAccounts(
+        walletState.accounts,
+        walletState.network,
+        evmBasedChains,
+        supportedChainsNames
+      ).find((a) => a.accounts.find((b) => b.isConnected));
+
+      const signers = getSigners(type);
+      const isMatchedNetworkWithAccount = walletState.accounts.find((account) =>
+        account?.toLowerCase()?.includes(network?.toLowerCase())
+      );
+      const address =
+        walletState.accounts?.length > 1 && isMatchedNetworkWithAccount
+          ? readAccountAddress(
+              walletState.accounts.find((account) =>
+                account?.toLowerCase()?.includes(network?.toLowerCase())
+              )!
+            ).address
+          : activeAccount?.accounts[0].address;
+
+      const currentChain = info.supportedChains.find(
+        (chain) => chain.name === network
+      );
+      const txType = currentChain?.type || (network as TransactionType);
+
+      const chainId = currentChain?.chainId || null;
+
+      // TODO: Put your transaction
+      const tx = undefined;
+      if (!tx) return;
+
+      const result = signers
+        .getSigner(txType)
+        .signAndSendTx(tx, address || 'meow', chainId);
+      result
+        .then((signature) => {
+          alert(signature);
+        })
+        .catch((ex) => {
+          alert(
+            'Error' + `(${info.name}): ` + (ex.message || 'Failed to sign')
+          );
+          console.log({ ex });
         });
     }
   };
@@ -227,11 +285,7 @@ function Item({ type, info }: { type: WalletType; info: WalletInfo }) {
             disabled={!walletState.connected}
             suffix={<HorizontalSwapIcon size={24} color="white" />}
             type="primary"
-            onClick={() =>
-              alert(
-                'Executing custom transactions is not implemented for the demo yet.'
-              )
-            }>
+            onClick={handleSignSigner}>
             Swap
           </Button>
         </div>

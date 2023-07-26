@@ -7,7 +7,6 @@ import {
   clearPersistance,
   connectedWallets,
   defaultWalletState,
-  getComptaibleProvider,
   tryPersistWallet,
   tryRemoveWalletFromPersistance,
   makeEventHandler,
@@ -122,14 +121,7 @@ function Provider(props: ProviderProps) {
         throw new Error(`You should add ${type} to provider first.`);
       }
       const walletInstance = getWalletInstance(wallet);
-      const supportedChains = walletInstance.getWalletInfo(
-        props.allBlockChains || []
-      ).supportedChains;
-      const provider = getComptaibleProvider(
-        supportedChains,
-        walletInstance.provider,
-        type
-      );
+      const provider = walletInstance.provider;
       const result = walletInstance.getSigners(provider);
 
       return result;

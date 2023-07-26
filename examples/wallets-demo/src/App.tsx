@@ -39,7 +39,7 @@ export function App() {
         <h1 className="ml-12">Providers</h1>
         {loading && (
           <div className="flex">
-            <Spinner size={20} />
+            <Spinner size={20} />{' '}
             <Typography variant="caption">Loading...</Typography>
           </div>
         )}

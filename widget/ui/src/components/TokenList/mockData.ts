@@ -1,3 +1,5 @@
+// eslint-disable-next-line
+// @ts-nocheck
 import { TokenWithAmount } from './TokenList';
 
 export const tokensMeta: TokenWithAmount[] = [
