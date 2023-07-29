@@ -38,35 +38,86 @@ export default {
 
 export const Main = (props: PropTypes) => (
   <div>
-    <Typography {...props} variant="display" size="small">
-      Heading 1
-    </Typography>
-    <Typography {...props} variant="headline" size="large">
-      Heading 2
-    </Typography>
-    <Typography {...props} variant="headline" size="xsmall">
-      Heading 3
-    </Typography>
-    <Typography {...props} variant="title" size="medium">
-      Heading 4
-    </Typography>
-    <Typography {...props} variant="title" size="xmedium">
-      Heading 5
-    </Typography>
-    <Typography {...props} variant="title" size="small">
-      Heading 6
-    </Typography>
-    <Typography {...props} variant="body" size="medium">
-      Body 1
-    </Typography>
-    <Typography {...props} variant="body" size="medium">
-      Body 2
-    </Typography>
-    <Typography {...props} variant="body" size="small">
-      Body 3
-    </Typography>
-    <Typography {...props} variant="body" size="xsmall">
-      Caption
-    </Typography>
+    <div>
+      <Typography {...props} variant="display" size="large">
+        Display Large
+      </Typography>
+      {', '}
+      <Typography {...props} variant="display" size="medium">
+        Display Medium
+      </Typography>
+      {', '}
+      <Typography {...props} variant="display" size="small">
+        Display Small
+      </Typography>
+    </div>
+
+    <div>
+      <Typography {...props} variant="headline" size="large">
+        Headline Large
+      </Typography>
+      {', '}
+      <Typography {...props} variant="headline" size="medium">
+        Headline Medium
+      </Typography>
+      {', '}
+      <Typography {...props} variant="headline" size="small">
+        Headline Small
+      </Typography>
+      {', '}
+      <Typography {...props} variant="headline" size="xsmall">
+        Headline Xsmall
+      </Typography>
+    </div>
+
+    <div>
+      <Typography {...props} variant="title" size="large">
+        Title Large
+      </Typography>
+      {', '}
+      <Typography {...props} variant="title" size="medium">
+        Title Medium
+      </Typography>
+      {', '}
+      <Typography {...props} variant="title" size="xmedium">
+        Title Xmedium
+      </Typography>
+      {', '}
+      <Typography {...props} variant="title" size="small">
+        Title Small
+      </Typography>
+    </div>
+
+    <div>
+      <Typography {...props} variant="lable" size="large">
+        Label Large
+      </Typography>
+      {', '}
+      <Typography {...props} variant="lable" size="medium">
+        Label Medium
+      </Typography>
+      {', '}
+      <Typography {...props} variant="lable" size="small">
+        Label Small
+      </Typography>
+    </div>
+
+    <div>
+      <Typography {...props} variant="body" size="large">
+        Body Large
+      </Typography>
+      {', '}
+      <Typography {...props} variant="body" size="medium">
+        Body Medium
+      </Typography>
+      {', '}
+      <Typography {...props} variant="body" size="small">
+        Body Small
+      </Typography>
+      {', '}
+      <Typography {...props} variant="body" size="xsmall">
+        Body Xsmall
+      </Typography>
+    </div>
   </div>
 );
