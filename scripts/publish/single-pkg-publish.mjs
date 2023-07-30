@@ -17,33 +17,28 @@ export async function publish(changedPkg, channel) {
   performance.mark(`start-publish-${changedPkg.name}`);
 
   // 1. Version
-  let updatedPackages;
+  let updatedPackage;
   if (channel === 'prod') {
-    updatedPackages = await increaseVersionForMain([changedPkg]);
+    const updatedPkgs = await increaseVersionForMain([changedPkg]);
+    updatedPackage = updatedPkgs[0];
   } else {
-    updatedPackages = await increaseVersionForNext([changedPkg]);
+    const updatedPkgs = await increaseVersionForNext([changedPkg]);
+    updatedPackage = updatedPkgs[0];
   }
 
   console.log(
-    updatedPackages
-      .map(
-        (pkg) => `[x] Versioninig: ${pkg.name} (next version: ${pkg.version})`
-      )
-      .join('\n')
+    `[x] Versioninig: ${updatedPackage.name} (next version: ${updatedPackage.version})\n`
   );
 
   // 2. Changelog & Github Release
   if (channel === 'prod') {
-    await Promise.all(
-      updatedPackages.map((pkg) => generateChangelog(pkg, { saveToFile: true }))
-    );
-
-    await Promise.all(updatedPackages.map(makeGithubRelease));
+    await generateChangelog(updatedPackage, { saveToFile: true });
+    await makeGithubRelease(updatedPackage);
     logAsSection(`[x] Github Release & Changelog generated.`);
   }
 
   // 3. Build & Publish on NPM
-  const packages = groupPackagesForDeploy(updatedPackages);
+  const packages = groupPackagesForDeploy([updatedPackage]);
   if (packages.npm.length) {
     performance.mark(`start-publish-build-${changedPkg.name}`);
     await buildPackages(packages.npm);
@@ -71,6 +66,8 @@ export async function publish(changedPkg, channel) {
   const { stdout: upgradeStdOut } = await execa('yarn', [
     'upgrade-all',
     changedPkg.name,
+    '--version',
+    updatedPackage.version,
     '--no-install',
   ]);
   performance.mark('end-upgrade-all');
@@ -92,5 +89,5 @@ export async function publish(changedPkg, channel) {
   console.log(`Execution time: ${duration_publish}ms`);
   console.log(`::endgroup::`);
 
-  return updatedPackages[0];
+  return updatedPackage;
 }

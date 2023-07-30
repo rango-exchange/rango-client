@@ -6,13 +6,20 @@ async function run() {
   const optionDefinitions = [
     { name: 'project', type: String },
     { name: 'no-install', type: Boolean, defaultOption: false },
+    { name: 'version', type: String, defaultOption: '' },
   ];
-  const { project, noInstall } = commandLineArgs(optionDefinitions, {
+  const { project, noInstall, version } = commandLineArgs(optionDefinitions, {
     camelCase: true,
   });
 
   const { stdout: currentBranch } = await $`git branch --show-current`;
   const dist = currentBranch === 'main' ? 'latest' : 'next';
+
+  if (!project && !!version) {
+    throw new Error(
+      `To set a fixed "version," you must provide the "project" parameter. project=${project}, version=${version}`
+    );
+  }
 
   if (!project) {
     console.log(
@@ -30,12 +37,11 @@ async function run() {
   } else {
     console.log(`Running upgrade-all for ${project} \n`);
     console.log(`Dist channel: ${dist}`);
-    await upgradeDepndendentsOf(project, dist);
+    await upgradeDepndendentsOf(project, dist, version);
   }
 
-  console.log(`package.json has been updated. Trying to install... \n`);
-
   if (!noInstall) {
+    console.log(`package.json has been updated. Trying to install... \n`);
     const { stdout, stderr } = await $`yarn`;
     console.log(stdout, stderr);
   }
