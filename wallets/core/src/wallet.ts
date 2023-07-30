@@ -62,7 +62,7 @@ class Wallet<InstanceType = any> {
     }
   }
 
-  async eagerConnection() {
+  private async getConnectionFromState() {
     // Already connected, so we return provider that we have in memory.
 
     // For switching network on Trust Wallet (WalletConnect),
@@ -76,7 +76,6 @@ class Wallet<InstanceType = any> {
       };
     }
 
-    // TODO: call actions.eagerConnection
     return null;
   }
   async connect(network?: Network) {
@@ -85,7 +84,7 @@ class Wallet<InstanceType = any> {
       throw new Error('Connecting...');
     }
 
-    const eagerConnection = await this.eagerConnection();
+    const connectionFromState = await this.getConnectionFromState();
     const currentNetwork = this.state.network;
     // If a network hasn't been provided and also we have `lastNetwork`
     // We will use lastNetwork to make sure we will not
@@ -93,13 +92,13 @@ class Wallet<InstanceType = any> {
     const requestedNetwork =
       network || currentNetwork || this.options.config.defaultNetwork;
 
-    if (eagerConnection) {
+    if (connectionFromState) {
       const networkChanged =
         currentNetwork !== requestedNetwork && !!requestedNetwork;
 
       // Reuse current connection if nothing has changed and we already have the connection in memory.
       if (currentNetwork === requestedNetwork) {
-        return eagerConnection;
+        return connectionFromState;
       }
       if (networkChanged && !!this.actions.switchNetwork) {
         await this.actions.switchNetwork({
@@ -114,7 +113,7 @@ class Wallet<InstanceType = any> {
 
         return {
           // Only network has been changed, so we reuse accounts from what we have already.
-          accounts: eagerConnection.accounts,
+          accounts: connectionFromState.accounts,
           network: requestedNetwork,
           provider: this.provider,
         };
@@ -209,8 +208,31 @@ class Wallet<InstanceType = any> {
     }
   }
 
-  getSigners(provider: any, supportedChains?: BlockchainMeta[]) {
-    return this.actions.getSigners(provider, supportedChains);
+  // This method is only used for auto connection
+  async eagerConnect() {
+    const instance = await this.tryGetInstance({ network: undefined });
+    const { canEagerConnect } = this.actions;
+    const error_message = `can't restore connection for ${this.options.config.type} .`;
+
+    if (canEagerConnect) {
+      // Check if we can eagerly connect to the wallet
+      const eagerConnection = await canEagerConnect({
+        instance: instance,
+      });
+
+      if (eagerConnection) {
+        // Connect to wallet as usual
+        return this.connect();
+      } else {
+        throw new Error(error_message);
+      }
+    } else {
+      throw new Error(error_message);
+    }
+  }
+
+  getSigners(provider: any) {
+    return this.actions.getSigners(provider);
   }
   getWalletInfo(allBlockChains: BlockchainMeta[]) {
     return this.actions.getWalletInfo(allBlockChains);

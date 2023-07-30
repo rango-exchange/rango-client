@@ -14,6 +14,8 @@ import {
   XDEFI_WALLET_SUPPORTED_NATIVE_CHAINS,
   WalletInfo,
   Networks,
+  CanEagerConnect,
+  canEagerlyConnectToEvm,
 } from '@rango-dev/wallets-shared';
 import { SUPPORTED_ETH_CHAINS } from './constants';
 
@@ -78,6 +80,8 @@ export const switchNetwork: SwitchNetwork = switchNetworkForEvm;
 export const canSwitchNetworkTo: CanSwitchNetwork = canSwitchNetworkToEvm;
 
 export const getSigners: (provider: any) => SignerFactory = signer;
+
+export const canEagerConnect: CanEagerConnect = canEagerlyConnectToEvm;
 
 export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
   allBlockChains

@@ -9,6 +9,8 @@ import {
   subscribeToEvm,
   switchNetworkForEvm,
   WalletInfo,
+  CanEagerConnect,
+  canEagerlyConnectToEvm,
 } from '@rango-dev/wallets-shared';
 import { trustWallet as trustwallet_instance } from './helpers';
 import signer from './signer';
@@ -38,6 +40,8 @@ export const switchNetwork: SwitchNetwork = switchNetworkForEvm;
 export const canSwitchNetworkTo: CanSwitchNetwork = canSwitchNetworkToEvm;
 
 export const getSigners: (provider: any) => SignerFactory = signer;
+
+export const canEagerConnect: CanEagerConnect = canEagerlyConnectToEvm;
 
 export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
   allBlockChains

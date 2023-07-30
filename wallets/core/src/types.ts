@@ -97,12 +97,13 @@ export type CanSwitchNetwork = (options: {
   provider: any;
 }) => boolean;
 
+export type CanEagerConnect = (options: { instance: any }) => Promise<boolean>;
+
 export interface WalletActions {
   connect: Connect;
   getInstance: any;
   disconnect?: Disconnect;
   subscribe?: Subscribe;
-  // eagerConnect, // optional?
   // unsubscribe, // coupled to subscribe.
 
   // Optional, but should be provided at the same time.
@@ -112,6 +113,7 @@ export interface WalletActions {
     supportedChains?: BlockchainMeta[]
   ) => SignerFactory;
   canSwitchNetworkTo?: CanSwitchNetwork;
+  canEagerConnect?: CanEagerConnect;
   getWalletInfo(allBlockChains: BlockchainMeta[]): WalletInfo;
 }
 

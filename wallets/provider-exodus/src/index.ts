@@ -11,6 +11,8 @@ import {
   SwitchNetwork,
   WalletInfo,
   Networks,
+  CanEagerConnect,
+  canEagerlyConnectToEvm,
 } from '@rango-dev/wallets-shared';
 import {
   exodus_instances,
@@ -99,6 +101,8 @@ export const switchNetwork: SwitchNetwork = async (options) => {
 export const canSwitchNetworkTo: CanSwitchNetwork = canSwitchNetworkToEvm;
 
 export const getSigners: (provider: any) => SignerFactory = signer;
+
+export const canEagerConnect: CanEagerConnect = canEagerlyConnectToEvm;
 
 export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
   allBlockChains

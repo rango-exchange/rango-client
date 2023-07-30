@@ -12,6 +12,8 @@ import {
   SwitchNetwork,
   WalletInfo,
   getSolanaAccounts,
+  CanEagerConnect,
+  canEagerlyConnectToEvm,
 } from '@rango-dev/wallets-shared';
 import { brave as brave_instances } from './helpers';
 import signer from './signer';
@@ -115,6 +117,8 @@ export const switchNetwork: SwitchNetwork = switchNetworkForEvm;
 export const canSwitchNetworkTo: CanSwitchNetwork = canSwitchNetworkToEvm;
 
 export const getSigners: (provider: any) => SignerFactory = signer;
+
+export const canEagerConnect: CanEagerConnect = canEagerlyConnectToEvm;
 
 export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
   allBlockChains
