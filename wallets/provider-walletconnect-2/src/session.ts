@@ -6,26 +6,17 @@ import {
   SessionTypes,
   SignClientTypes,
 } from '@walletconnect/types';
-import { Web3Modal } from '@web3modal/standalone';
 import { getSdkError } from '@walletconnect/utils';
 
 import {
   generateOptionalNamespace,
   generateRequiredNamespace,
   getChainIdByNetworkName,
+  getModal,
   solanaChainIdToNetworkName,
 } from './helpers';
-import { PING_TIMEOUT, PROJECT_ID } from './constants';
+import { PING_TIMEOUT } from './constants';
 import { ConnectParams, CreateSessionParams, WCInstance } from './types';
-
-/**
- * Create a Web3Modal instance
- */
-const web3Modal = new Web3Modal({
-  projectId: PROJECT_ID,
-  themeMode: 'light',
-  walletConnectVersion: 2,
-});
 
 export function getLastSession(client: SignClient) {
   return client.session.values[client.session.values.length - 1];
@@ -86,7 +77,7 @@ export async function createSession(
         .map((namespace) => namespace.chains)
         .flat() as string[];
 
-      web3Modal.openModal({ uri, standaloneChains });
+      getModal().openModal({ uri, standaloneChains });
     }
 
     const session = await approval();
@@ -95,7 +86,7 @@ export async function createSession(
     console.error(e);
     throw e;
   } finally {
-    web3Modal.closeModal();
+    getModal().closeModal();
   }
 }
 

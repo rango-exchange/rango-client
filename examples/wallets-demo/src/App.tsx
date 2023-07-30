@@ -4,8 +4,13 @@ import List from './components/List';
 import { allProviders } from '@rango-dev/provider-all';
 import { RangoClient } from 'rango-sdk';
 import { InfoCircleIcon, Spinner, Typography } from '@rango-dev/ui';
+import { WC_PROJECT_ID } from './constants';
 
-const providers = allProviders();
+const providers = allProviders({
+  walletconnect2: {
+    WC_PROJECT_ID: WC_PROJECT_ID,
+  },
+});
 
 export function App() {
   const client = new RangoClient(process.env.REACT_APP_API_KEY as string);

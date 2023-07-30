@@ -3,6 +3,7 @@ import { Networks } from '@rango-dev/wallets-shared';
 import { ProposalTypes } from '@walletconnect/types';
 import { ChainId } from 'caip';
 import { BlockchainMeta, cosmosBlockchains, evmBlockchains } from 'rango-types';
+import { Web3Modal } from '@web3modal/standalone';
 
 import {
   DEFAULT_COSMOS_METHODS,
@@ -14,6 +15,20 @@ import {
 } from './constants';
 import { getLastSession } from './session';
 import { CosmosMeta } from './types';
+
+let web3Modal: Web3Modal;
+export function createModalInstance(projectId: string) {
+  if (!web3Modal) {
+    web3Modal = new Web3Modal({
+      projectId,
+      themeMode: 'light',
+      walletConnectVersion: 2,
+    });
+  }
+}
+export function getModal(): Web3Modal {
+  return web3Modal;
+}
 
 type FinalNamespaces = {
   [key in NAMESPACES]?: ProposalTypes.BaseRequiredNamespace;

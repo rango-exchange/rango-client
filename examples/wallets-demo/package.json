@@ -14,6 +14,7 @@
     "@rango-dev/provider-all": "^0.8.1-next.4",
     "@rango-dev/ui": "^0.8.1-next.11",
     "@rango-dev/wallets-core": "^0.8.1-next.4",
+    "@rango-dev/wallets-shared": "^0.8.1-next.4",
     "parcel": "^2.8.0",
     "rango-sdk": "^0.1.35",
     "rango-types": "^0.1.46",
