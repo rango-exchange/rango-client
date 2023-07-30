@@ -1,5 +1,10 @@
 import Long from 'long';
-import { BroadcastMode, makeSignDoc, makeStdTx } from '@cosmjs/launchpad';
+import {
+  AminoSignResponse,
+  BroadcastMode,
+  makeSignDoc,
+  makeStdTx,
+} from '@cosmjs/launchpad';
 import { SigningStargateClient } from '@cosmjs/stargate';
 import { cosmos } from '@keplr-wallet/cosmos';
 import { MsgExecuteContract } from 'cosmjs-types/cosmwasm/wasm/v1/tx.js';
@@ -89,53 +94,7 @@ export const executeCosmosTransaction = async (
       } catch (err) {
         throw new SignerError(SignerErrorCode.SIGN_TX_ERROR, undefined, err);
       }
-      let signedTx;
-
-      if (cosmosTx.data.protoMsgs.length > 0) {
-        signedTx = cosmos.tx.v1beta1.TxRaw.encode({
-          bodyBytes: cosmos.tx.v1beta1.TxBody.encode({
-            messages: cosmosTx.data.protoMsgs.map((m) => ({
-              type_url: m.type_url,
-              value: new Uint8Array(m.value),
-            })),
-            memo: signResponse.signed.memo,
-          }).finish(),
-
-          authInfoBytes: cosmos.tx.v1beta1.AuthInfo.encode({
-            signerInfos: [
-              {
-                publicKey: {
-                  type_url: '/cosmos.crypto.secp256k1.PubKey',
-                  value: cosmos.crypto.secp256k1.PubKey.encode({
-                    key: Buffer.from(
-                      signResponse.signature.pub_key.value,
-                      'base64'
-                    ),
-                  }).finish(),
-                },
-                modeInfo: {
-                  single: {
-                    mode: cosmos.tx.signing.v1beta1.SignMode
-                      .SIGN_MODE_LEGACY_AMINO_JSON,
-                  },
-                },
-                sequence: Long.fromString(signResponse.signed.sequence),
-              },
-            ],
-            fee: {
-              amount: signResponse.signed.fee.amount as any[],
-              gasLimit: Long.fromString(signResponse.signed.fee.gas),
-            },
-          }).finish(),
-          signatures: [Buffer.from(signResponse.signature.signature, 'base64')],
-        }).finish();
-      } else {
-        try {
-          signedTx = makeStdTx(signResponse.signed, signResponse.signature);
-        } catch (err) {
-          throw new SignerError(SignerErrorCode.SIGN_TX_ERROR, undefined, err);
-        }
-      }
+      const signedTx = getsignedTx(cosmosTx, signResponse);
       const result = await cosmosProvider.sendTx(
         chainId,
         signedTx,
@@ -207,7 +166,7 @@ export const executeCosmosTransaction = async (
   }
 };
 
-function manipulateMsg(m: any): any {
+export function manipulateMsg(m: any): any {
   if (!m.__type) return m;
   if (m.__type === 'DirectCosmosIBCTransferMessage') {
     const result = { ...m };
@@ -255,4 +214,58 @@ function manipulateMsgForDirectIBC(m: any): any {
     return result;
   }
   return { ...m };
+}
+
+export function getsignedTx(
+  cosmosTx: CosmosTransaction,
+  signResponse: AminoSignResponse
+) {
+  let signedTx;
+
+  if (cosmosTx.data.protoMsgs.length > 0) {
+    signedTx = cosmos.tx.v1beta1.TxRaw.encode({
+      bodyBytes: cosmos.tx.v1beta1.TxBody.encode({
+        messages: cosmosTx.data.protoMsgs.map((m) => ({
+          type_url: m.type_url,
+          value: new Uint8Array(m.value),
+        })),
+        memo: signResponse.signed.memo,
+      }).finish(),
+
+      authInfoBytes: cosmos.tx.v1beta1.AuthInfo.encode({
+        signerInfos: [
+          {
+            publicKey: {
+              type_url: '/cosmos.crypto.secp256k1.PubKey',
+              value: cosmos.crypto.secp256k1.PubKey.encode({
+                key: Buffer.from(
+                  signResponse.signature.pub_key.value,
+                  'base64'
+                ),
+              }).finish(),
+            },
+            modeInfo: {
+              single: {
+                mode: cosmos.tx.signing.v1beta1.SignMode
+                  .SIGN_MODE_LEGACY_AMINO_JSON,
+              },
+            },
+            sequence: Long.fromString(signResponse.signed.sequence),
+          },
+        ],
+        fee: {
+          amount: signResponse.signed.fee.amount as any[],
+          gasLimit: Long.fromString(signResponse.signed.fee.gas),
+        },
+      }).finish(),
+      signatures: [Buffer.from(signResponse.signature.signature, 'base64')],
+    }).finish();
+  } else {
+    try {
+      signedTx = makeStdTx(signResponse.signed, signResponse.signature);
+    } catch (err) {
+      throw new SignerError(SignerErrorCode.SIGN_TX_ERROR, undefined, err);
+    }
+  }
+  return signedTx;
 }

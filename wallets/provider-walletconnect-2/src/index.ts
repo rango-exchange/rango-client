@@ -45,7 +45,7 @@ export const connect: Connect = async ({ instance }) => {
 
   return {
     accounts,
-    chainId,
+    chainId: 'cosmoshub-4',
   };
 };
 
@@ -57,6 +57,8 @@ export const subscribe: Subscribe = ({
   meta,
   connect,
 }) => {
+  console.log('subscribe', instance);
+
   instance?.on('chainChanged', (chainId: string) => {
     const network = getBlockChainNameFromId(chainId, meta) || Network.Unknown;
 
@@ -125,7 +127,10 @@ export const disconnect: Disconnect = async ({ instance, destroyInstance }) => {
   }
 };
 
-export const getSigners: (provider: any) => SignerFactory = signer;
+export const getSigners: (
+  provider: any,
+  supportedChains: BlockchainMeta[]
+) => SignerFactory = signer;
 
 export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (allBlockChains) => {
   const evms = evmBlockchains(allBlockChains);
