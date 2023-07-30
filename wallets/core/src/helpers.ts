@@ -1,9 +1,4 @@
-import {
-  Network,
-  WalletConfig,
-  WalletType,
-  WalletTypes,
-} from '@rango-dev/wallets-shared';
+import { Network, WalletConfig, WalletType } from '@rango-dev/wallets-shared';
 import {
   State,
   WalletActions,
@@ -126,14 +121,6 @@ export function isAsync(fn: Function) {
 export function needsCheckInstallation(options: Options) {
   const { checkInstallation = true } = options.config;
   return checkInstallation;
-}
-
-/*
-  WalletConnect instance is not compatible with ethers.providers.Web3Provider,
-  Here we are returning a comptable instance, instead of the original one.  
-*/
-export function isWalletDerivedFromWalletConnect(wallet_type: WalletType) {
-  return wallet_type === WalletTypes.WALLET_CONNECT;
 }
 
 export async function tryPersistWallet({

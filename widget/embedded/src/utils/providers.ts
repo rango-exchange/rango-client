@@ -1,5 +1,6 @@
 import { allProviders } from '@rango-dev/provider-all';
 import { ProviderInterface } from '@rango-dev/wallets-core';
+import { WC_PROJECT_ID } from '../constants/widget';
 import { WidgetConfig } from '../types';
 
 /**
@@ -11,7 +12,11 @@ import { WidgetConfig } from '../types';
 export function matchAndGenerateProviders(
   providers: WidgetConfig['wallets']
 ): ProviderInterface[] {
-  const all = allProviders();
+  const all = allProviders({
+    walletconnect2: {
+      WC_PROJECT_ID: WC_PROJECT_ID,
+    },
+  });
 
   if (providers) {
     const selectedProviders: ProviderInterface[] = [];

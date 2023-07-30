@@ -636,7 +636,6 @@ export const walletsAndSupportedChainsMetaSelector = (
         Networks.SOLANA,
       ].includes(blockchainMeta.name as Networks)
     ),
-    [WalletTypes.WALLET_CONNECT]: evmBlockchains,
     [WalletTypes.TRUST_WALLET]: evmBlockchains,
     [WalletTypes.COIN98]: [...evmBlockchains, ...solanaBlockchain],
     [WalletTypes.OKX]: blockchainsArray.filter((blockchainMeta) =>
