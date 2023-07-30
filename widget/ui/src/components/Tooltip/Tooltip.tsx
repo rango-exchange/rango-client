@@ -55,7 +55,7 @@ export function Tooltip({
             sideOffset={20}
             side={side}>
             <TooltipTypography
-              variant="lable"
+              variant="label"
               size="medium"
               color={color || 'neutral900'}>
               {content}

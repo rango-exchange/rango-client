@@ -36,7 +36,7 @@ const ListContainer = styled('div', {
   gap: '$10',
   gridTemplateColumns: ' repeat(3, minmax(0, 1fr))',
   alignContent: 'baseline',
-  padding: '0 $20 $20 $20',
+  padding: '$14 $20 $20',
   overflowY: 'auto',
 });
 
@@ -130,12 +130,7 @@ export function WalletsPage({ supportedWallets, multiWallets }: PropTypes) {
           </LoaderContainer>
         )}
         {loadingMetaStatus === 'failed' && <LoadingFailedAlert />}
-        <Typography
-          variant="title"
-          size="medium"
-          mt={20}
-          mb={15}
-          align="center">
+        <Typography variant="title" size="medium" align="center">
           Choose a wallet to connect.
         </Typography>
         <ListContainer>

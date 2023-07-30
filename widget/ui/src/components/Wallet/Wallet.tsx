@@ -28,7 +28,8 @@ const ExtendedButton = styled('button', {
   alignItems: 'center',
   cursor: 'pointer',
   '&:hover': {
-    backgroundColor: '$secondary100',
+    backgroundColor: '$secondary300',
+    opacity: '0.8',
   },
   variants: {
     selected: {
@@ -77,7 +78,7 @@ export function Wallet(props: PropTypes) {
         </WalletImageContainer>
 
         <Text>
-          <Typography variant="title" size="medium" noWrap={false}>
+          <Typography variant="label" size="medium" noWrap={false}>
             {name}
           </Typography>
 
