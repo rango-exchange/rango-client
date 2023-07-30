@@ -1,116 +1,68 @@
 import * as RadixTooltip from '@radix-ui/react-tooltip';
 import { styled } from '../../theme';
-import React, { PropsWithChildren } from 'react';
+import React, { PropsWithChildren, useState } from 'react';
+import useEventListener from './useEventListener';
+import { Typography } from '../Typography';
 
 export interface PropTypes {
   content: string;
   side?: 'top' | 'right' | 'bottom' | 'left';
-  color?:
-    | 'primary'
-    | 'error'
-    | 'warning'
-    | 'success'
-    | 'gray'
-    | 'white'
-    | 'black';
+  color?: 'primary' | 'error' | 'warning' | 'success' | 'gray';
 }
-const TooltipTrigger = styled(RadixTooltip.Trigger, {
-  border: 0,
-  padding: 0,
-
-  backgroundColor: 'transparent',
-});
-const TooltipContent = styled(RadixTooltip.Content, {
-  borderRadius: '$xs',
-  padding: '$4 $8',
-  fontSize: '$14',
-  animationDuration: '400ms',
-  animationTimingFunction: 'cubic-bezier(0.16, 1, 0.3, 1)',
-  willChange: 'transform, opacity',
-  variants: {
-    color: {
-      primary: {
-        backgroundColor: '$primary',
-        color: '$white',
-      },
-      error: {
-        backgroundColor: '$error',
-        color: '$white',
-      },
-      warning: {
-        backgroundColor: '$warning',
-        color: '$white',
-      },
-      success: {
-        backgroundColor: '$success',
-        color: '$white',
-      },
-      gray: {
-        backgroundColor: '$neutral100',
-        color: '$black',
-      },
-      black: {
-        backgroundColor: '$black',
-        color: '$white',
-      },
-      white: {
-        backgroundColor: '$white',
-        color: '$black',
-      },
-    },
-  },
-});
-const TooltipArrow = styled(RadixTooltip.Arrow, {
-  variants: {
-    color: {
-      primary: {
-        fill: '$primary',
-      },
-      error: {
-        fill: '$error',
-      },
-      warning: {
-        fill: '$warning',
-      },
-      success: {
-        fill: '$success',
-      },
-      gray: {
-        fill: '$neutral100',
-      },
-      black: {
-        fill: '$black',
-      },
-      white: {
-        fill: '$white',
-      },
-    },
-  },
-});
-
-const ChildrenWrapper = styled('div', {
-  display: 'inline-block',
+const TooltipTypography = styled(Typography, {
+  borderRadius: '$md',
+  padding: '$5 $10',
+  boxShadow: '5px 5px 10px 0px rgba(0, 0, 0, 0.10)',
+  backgroundColor: '$surface100',
 });
 
 export function Tooltip({
   children,
   content,
   side = 'top',
-  color = 'gray',
+  color,
 }: PropsWithChildren<PropTypes>) {
+  const [open, setOpen] = useState<boolean>(false);
+  const [{ clientX, clientY }, setPosition] = useState({
+    clientX: 0,
+    clientY: 0,
+  });
+  useEventListener('mousemove', ({ clientX, clientY }) =>
+    setPosition({ clientX, clientY })
+  );
   return (
-    <RadixTooltip.Provider>
-      <RadixTooltip.Root>
-        <TooltipTrigger asChild>
-          <ChildrenWrapper>{children}</ChildrenWrapper>
-        </TooltipTrigger>
-        <RadixTooltip.Portal>
-          <TooltipContent color={color} side={side} sideOffset={5}>
-            {content}
-            <TooltipArrow color={color} />
-          </TooltipContent>
-        </RadixTooltip.Portal>
-      </RadixTooltip.Root>
-    </RadixTooltip.Provider>
+    <>
+      <div
+        style={{ display: 'contents' }}
+        onMouseEnter={() => setOpen(true)}
+        onMouseLeave={() => setOpen(false)}>
+        {children}
+      </div>
+      <RadixTooltip.Provider>
+        <RadixTooltip.Root open={open}>
+          <RadixTooltip.Trigger asChild>
+            <div
+              style={{
+                position: 'fixed',
+                pointerEvents: 'none',
+                top: `${clientY}px`,
+                left: `${clientX}px`,
+              }}
+            />
+          </RadixTooltip.Trigger>
+          <RadixTooltip.Content
+            key={`${clientX}${clientY}`}
+            sideOffset={20}
+            side={side}>
+            <TooltipTypography
+              variant="lable"
+              size="medium"
+              color={color || 'neutral900'}>
+              {content}
+            </TooltipTypography>
+          </RadixTooltip.Content>
+        </RadixTooltip.Root>
+      </RadixTooltip.Provider>
+    </>
   );
 }

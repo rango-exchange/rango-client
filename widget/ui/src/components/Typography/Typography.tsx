@@ -36,62 +36,6 @@ const TypographyContainer = styled('span', {
         whiteSpace: 'nowrap',
       },
     },
-    ml: {
-      2: {
-        marginLeft: '$2',
-      },
-      4: {
-        marginLeft: '$4',
-      },
-      8: {
-        marginLeft: '$8',
-      },
-      12: {
-        marginLeft: '$12',
-      },
-    },
-    mt: {
-      2: {
-        marginTop: '$2',
-      },
-      4: {
-        marginTop: '$4',
-      },
-      8: {
-        marginTop: '$8',
-      },
-      12: {
-        marginTop: '$12',
-      },
-    },
-    mr: {
-      2: {
-        marginRight: '$2',
-      },
-      4: {
-        marginRight: '$4',
-      },
-      8: {
-        marginRight: '$8',
-      },
-      12: {
-        marginRight: '$12',
-      },
-    },
-    mb: {
-      2: {
-        marginBottom: '$2',
-      },
-      4: {
-        marginBottom: '$4',
-      },
-      8: {
-        marginBottom: '$8',
-      },
-      12: {
-        marginBottom: '$12',
-      },
-    },
   },
 
   compoundVariants: [
@@ -269,10 +213,10 @@ export interface PropTypes {
   size: 'large' | 'medium' | 'xmedium' | 'small' | 'xsmall';
   align?: 'center' | 'left' | 'right';
   noWrap?: boolean;
-  mt?: 2 | 4 | 8 | 12;
-  mb?: 2 | 4 | 8 | 12;
-  ml?: 2 | 4 | 8 | 12;
-  mr?: 2 | 4 | 8 | 12;
+  mt?: number;
+  mb?: number;
+  ml?: number;
+  mr?: number;
   className?: string;
   style?: CSSProperties;
   color?: string;
@@ -282,14 +226,26 @@ export function Typography({
   children,
   className,
   color,
+  mt = 0,
+  mb = 0,
+  mr = 0,
+  ml = 0,
   ...props
 }: PropsWithChildren<PropTypes>) {
+  const customMarginCss = {
+    marginTop: `$${mt}`,
+    marginBottom: `$${mb}`,
+    marginRight: `$${mr}`,
+    marginLeft: `$${ml}`,
+  };
   const customCss = color
     ? {
         color: color.startsWith('$') ? color : `$${color}`,
+        ...customMarginCss,
       }
     : {
-        color: '$foreground',
+        color: '$neutral900',
+        ...customMarginCss,
       };
 
   return (

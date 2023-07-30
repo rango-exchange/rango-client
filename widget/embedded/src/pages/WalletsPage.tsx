@@ -5,6 +5,7 @@ import {
   Wallet,
   WalletState,
   WalletInfo,
+  Typography,
 } from '@rango-dev/ui';
 import React, { useEffect, useRef, useState } from 'react';
 import { getlistWallet, sortWalletsBasedOnState } from '../utils/wallets';
@@ -32,10 +33,10 @@ interface PropTypes {
 
 const ListContainer = styled('div', {
   display: 'grid',
-  gap: '.5rem',
-  gridTemplateColumns: ' repeat(2, minmax(0, 1fr))',
+  gap: '$10',
+  gridTemplateColumns: ' repeat(3, minmax(0, 1fr))',
   alignContent: 'baseline',
-  padding: '0.5rem',
+  padding: '0 $20 $20 $20',
   overflowY: 'auto',
 });
 
@@ -129,6 +130,14 @@ export function WalletsPage({ supportedWallets, multiWallets }: PropTypes) {
           </LoaderContainer>
         )}
         {loadingMetaStatus === 'failed' && <LoadingFailedAlert />}
+        <Typography
+          variant="title"
+          size="medium"
+          mt={20}
+          mb={15}
+          align="center">
+          Choose a wallet to connect.
+        </Typography>
         <ListContainer>
           {loadingMetaStatus === 'success' &&
             sortedWallets.map((wallet, index) => (

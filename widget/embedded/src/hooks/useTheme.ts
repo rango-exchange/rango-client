@@ -45,7 +45,7 @@ export function useTheme({
   const customLightTheme = createTheme({
     colors: lightColors,
     radii: {
-      5: `${borderRadius}px`,
+      sm: `${borderRadius}px`,
     },
     shadows: {
       s: `0px 3px 5px 3px ${light?.neutral || '#f0f2f5'} ,0px 6px 10px 3px ${
@@ -64,7 +64,7 @@ export function useTheme({
       ...JSON.parse(JSON.stringify(darkColors)),
     },
     radii: {
-      5: `${borderRadius}px`,
+      sm: `${borderRadius}px`,
     },
     shadows: {
       s: `0px 3px 5px 3px ${dark?.neutral || '#222'}, 0px 6px 10px 3px ${

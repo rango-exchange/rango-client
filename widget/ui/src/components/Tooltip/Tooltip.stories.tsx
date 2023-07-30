@@ -42,14 +42,7 @@ export default {
 } as Meta<typeof Tooltip>;
 
 export const Main = (props: PropTypes) => (
-  <div
-    style={{
-      height: 300,
-      display: 'flex',
-      justifyContent: 'center',
-      alignItems: 'center',
-    }}
-  >
+  <div>
     <Tooltip {...props}>
       <AddWalletIcon size={24} />
     </Tooltip>

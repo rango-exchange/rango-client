@@ -3,13 +3,11 @@ import React from 'react';
 
 import { styled } from '../../theme';
 import { WalletInfo, WalletState } from '../../types/wallet';
-import { Button } from '../Button/Button';
 import { Typography } from '../Typography';
-import { State } from './State';
 import { Image } from '../common';
+import { Tooltip } from '../Tooltip';
 
 const WalletImageContainer = styled('div', {
-  paddingRight: '$12',
   '& img': {
     borderRadius: '50%',
   },
@@ -18,18 +16,26 @@ const WalletImageContainer = styled('div', {
 const Text = styled('div', {
   display: 'flex',
   flexDirection: 'column',
+  marginTop: '$10',
 });
 
-const ExtendedButton = styled(Button, {
+const ExtendedButton = styled('button', {
+  borderRadius: '$xm',
+  padding: '$10',
+  border: '0',
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+  cursor: 'pointer',
+  '&:hover': {
+    backgroundColor: '$secondary100',
+  },
   variants: {
-    type: {
-      primary: {
-        outline: '1px solid $primary',
-        borderColor: '$primary',
-
-        '&:hover': {
-          borderColor: '$primary',
-        },
+    selected: {
+      true: {
+        borderWidth: 1,
+        borderColor: '$secondary',
+        borderStyle: 'solid',
       },
     },
   },
@@ -37,43 +43,53 @@ const ExtendedButton = styled(Button, {
 
 export type PropTypes = WalletInfo & {
   onClick: (walletType: WalletType) => void;
+  selected?: boolean;
 };
 
 export function Wallet(props: PropTypes) {
-  const { name, type, image, state, onClick, installLink } = props;
-
+  const {
+    name,
+    type,
+    image,
+    state,
+    onClick,
+    installLink,
+    selected = false,
+  } = props;
+  const status =
+    state === WalletState.CONNECTED
+      ? { color: 'success', title: 'Connected', toolTip: 'Disconnect' }
+      : state === WalletState.NOT_INSTALLED
+      ? { color: 'link', title: 'Install', toolTip: 'install' }
+      : { color: 'neutral400', title: 'Disconnected', toolTip: 'Connect' };
   return (
-    <ExtendedButton
-      type={state === WalletState.CONNECTED ? 'primary' : undefined}
-      disabled={state == WalletState.CONNECTING}
-      onClick={() => {
-        if (state === WalletState.NOT_INSTALLED) {
-          window.open(detectInstallLink(installLink), '_blank');
-        } else onClick(type);
-      }}
-      align="start"
-      variant="outlined"
-      size="large"
-      prefix={
+    <Tooltip content={status.toolTip} side="bottom">
+      <ExtendedButton
+        disabled={state == WalletState.CONNECTING}
+        selected={selected}
+        onClick={() => {
+          if (state === WalletState.NOT_INSTALLED) {
+            window.open(detectInstallLink(installLink), '_blank');
+          } else onClick(type);
+        }}>
         <WalletImageContainer>
-          <Image src={image} size={24} />
+          <Image src={image} size={35} />
         </WalletImageContainer>
-      }
-      suffix={<State walletState={state} installLink={installLink} />}>
-      <Text>
-        <Typography variant="title" size="xmedium" noWrap={false}>
-          {name}
-        </Typography>
-        {state === WalletState.CONNECTED ? (
+
+        <Text>
+          <Typography variant="title" size="medium" noWrap={false}>
+            {name}
+          </Typography>
+
           <Typography
             variant="body"
             size="xsmall"
             noWrap={false}
-            color="primary">
-            Connected
+            color={status.color}>
+            {status.title}
           </Typography>
-        ) : null}
-      </Text>
-    </ExtendedButton>
+        </Text>
+      </ExtendedButton>
+    </Tooltip>
   );
 }
