@@ -7,18 +7,18 @@ const StyledSwitchRoot = styled(RadixSwitch.Root, {
   boxSizing: 'border-box',
   boxShadow: 'none',
   borderStyle: 'solid',
-  width: '42px',
-  height: '22px',
-  backgroundColor: '$neutral600',
-  borderColor: '$neutral600',
+  width: '24px',
+  height: '16px',
+  backgroundColor: '$surface500',
+  borderColor: '$surface500',
   borderRadius: '99999px',
   position: 'relative',
   padding: '0',
   cursor: 'pointer',
 
   '&[data-state="checked"]': {
-    backgroundColor: '$success',
-    borderColor: '$success',
+    backgroundColor: '$primary',
+    borderColor: '$primary',
   },
   '-webkit-tap-highlight-color': 'rgba(0, 0, 0, 0)',
 });
@@ -28,15 +28,16 @@ const StyledSwitchThumb = styled(RadixSwitch.Thumb, {
   top: '0',
   boxSizing: 'border-box',
   display: 'block',
-  width: '18px',
-  height: '18px',
-  backgroundColor: '$white',
+  width: '12px',
+  height: '12px',
+  backgroundColor: '$neutral100',
+  borderColor: '$secondary100',
   transition: ' transform 300ms',
   borderRadius: '999999px',
   willChange: 'transform',
 
   '&[data-state="checked"]': {
-    transform: 'translateX(20px)',
+    transform: 'translateX(8px)',
   },
 });
 

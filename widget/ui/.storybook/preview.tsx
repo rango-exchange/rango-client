@@ -24,7 +24,7 @@ const ThemeBlock = styled('div', {
   overflow: 'auto',
   boxSizing: 'border-box',
   padding: '1rem',
-  backgroundColor: '$background',
+  backgroundColor: '#fff',
   variants: {
     position: {
       left: {
