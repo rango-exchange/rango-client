@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/provider-safe",
-  "version": "0.1.1-next.2",
+  "version": "0.1.1-next.3",
   "license": "MIT",
   "type": "module",
   "module": "./dist/index.js",
@@ -22,7 +22,7 @@
   "dependencies": {
     "@ethersproject/abstract-provider": "^5.7.0",
     "@rango-dev/signer-evm": "^0.8.1-next.3",
-    "@rango-dev/wallets-shared": "^0.8.1-next.4",
+    "@rango-dev/wallets-shared": "^0.8.1-next.6",
     "@safe-global/safe-apps-provider": "^0.17.0",
     "@safe-global/safe-apps-sdk": "^7.11.0",
     "rango-types": "^0.1.46"

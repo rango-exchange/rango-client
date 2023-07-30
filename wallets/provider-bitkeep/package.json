@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/provider-bitkeep",
-  "version": "0.4.1-next.4",
+  "version": "0.4.1-next.5",
   "license": "MIT",
   "type": "module",
   "module": "./dist/index.js",
@@ -22,7 +22,7 @@
   "dependencies": {
     "@rango-dev/signer-evm": "^0.8.1-next.3",
     "@rango-dev/signer-tron": "^0.8.1-next.0",
-    "@rango-dev/wallets-shared": "^0.8.1-next.4",
+    "@rango-dev/wallets-shared": "^0.8.1-next.6",
     "rango-types": "^0.1.46"
   },
   "publishConfig": {
