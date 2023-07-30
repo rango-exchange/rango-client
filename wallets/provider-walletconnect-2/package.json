@@ -25,6 +25,7 @@
     "@rango-dev/wallets-shared": "^0.8.1-next.4",
     "@walletconnect/encoding": "^1.0.2",
     "@walletconnect/sign-client": "^2.8.1",
+    "@walletconnect/universal-provider": "2.8.0",
     "@walletconnect/utils": "^2.9.1",
     "@web3modal/standalone": "^2.4.3",
     "bs58": "^5.0.0",
