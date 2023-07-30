@@ -1,6 +1,2 @@
 export { DefaultCosmosSigner } from './signer';
-export {
-  executeCosmosTransaction,
-  getsignedTx,
-  manipulateMsg,
-} from './helpers';
+export { executeCosmosTransaction } from './helpers';
