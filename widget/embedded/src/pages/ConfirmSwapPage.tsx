@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useBestRouteStore } from '../store/bestRoute';
 import { useWalletsStore } from '../store/wallets';
 import { useWallets } from '@rango-dev/wallets-core';
+import { i18n } from '@lingui/core';
 import { navigationRoutes } from '../constants/navigationRoutes';
 import {
   getKeplrCompatibleConnectedWallets,
@@ -20,7 +21,6 @@ import { useMetaStore } from '../store/meta';
 import { WalletType } from '@rango-dev/wallets-shared';
 import { useNavigateBack } from '../hooks/useNavigateBack';
 import { TokenPreview } from '../components/TokenPreview';
-import { t } from 'i18next';
 import { Divider, ConfirmSwap, LoadingFailedAlert } from '@rango-dev/ui';
 import RoutesOverview from '../components/RoutesOverview';
 import { useManager } from '@rango-dev/queue-manager-react';
@@ -179,7 +179,7 @@ export function ConfirmSwapPage({
             }}
             usdValue={inputUsdValue}
             amount={fromAmount}
-            label={t('From')}
+            label={i18n.t('From')}
             loadingStatus={
               loadingMetaStatus !== 'success'
                 ? loadingMetaStatus
@@ -198,7 +198,7 @@ export function ConfirmSwapPage({
             }}
             usdValue={outputUsdValue}
             amount={toAmount}
-            label={t('To')}
+            label={i18n.t('To')}
             loadingStatus={
               loadingMetaStatus !== 'success'
                 ? loadingMetaStatus
@@ -239,8 +239,8 @@ export function ConfirmSwapPage({
       }
       confirmButtonTitle={
         warnings.length > 0 || errors.length > 0
-          ? 'Proceed anyway!'
-          : 'Confirm swap!'
+          ? `${i18n.t('Proceed anyway!')}`
+          : `${i18n.t('Confirm swap!')}`
       }
     />
   );

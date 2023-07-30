@@ -59,3 +59,12 @@ Release should be triggered manually and then it will automatically published. Y
 After release (Green pipleline), make sure you will merge `main` into `next` as well. 
 
 `git pull && git checkout next && git pull && git merge main && git push`
+
+## Translation
+
+First we need to extract the message from our source code using `yarn i18n:extract` and then we should run `yarn i18n:compile` to make a wrapper arround the translation file `.po` to be used inside our app.
+
+### Adding a new language
+
+1. Add to `locales: ['en']` in `lingui.config.ts`
+2. Import and add to `messages` in `widget/ui/src/components/I18nManager/I18nManager.tsx`

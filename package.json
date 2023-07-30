@@ -15,7 +15,7 @@
   "scripts": {
     "clean-root": "rimraf .parcel-cache && nx clear-cache",
     "clean": "yarn clean-root && nx run-many --target=clean",
-    "prepare": "husky install",
+    "prepare": "husky install && yarn i18n",
     "build:signers": "nx run-many --target=build --projects=@rango-dev/signer-* --parallel=5",
     "build:wallets": "nx run-many --target=build --projects=@rango-dev/signer-*,@rango-dev/wallets-*,@rango-dev/provider-* --exclude @rango-dev/wallets-demo --parallel=5",
     "build:queue-manager": "nx run-many --target=build --projects=@rango-dev/queue-manager-* --exclude=@rango-dev/queue-manager-demo",
@@ -34,9 +34,13 @@
     "publish": "node ./scripts/publish/command.mjs",
     "deploy": "node ./scripts/deploy/command.mjs",
     "release": "node ./scripts/release/command.mjs",
-    "upgrade-all": "node ./scripts/upgrade-all/command.mjs --project "
+    "upgrade-all": "node ./scripts/upgrade-all/command.mjs --project ",
+    "i18n:extract": "lingui extract",
+    "i18n:compile": "lingui compile --typescript",
+    "i18n": "yarn i18n:extract && yarn i18n:compile"
   },
   "dependencies": {
+    "@lingui/react": "^4.2.1",
     "@size-limit/preset-small-lib": "^8.1.0",
     "husky": "^8.0.3",
     "size-limit": "^8.1.0",
@@ -45,6 +49,8 @@
     "typescript": "^4.9.3"
   },
   "devDependencies": {
+    "@babel/core": "^7.22.5",
+    "@lingui/cli": "^4.2.1",
     "@nrwl/workspace": "^15.9.2",
     "@types/react": "^18.0.26",
     "@types/react-dom": "^18.0.10",
@@ -75,8 +81,10 @@
     "rimraf": "^5.0.1",
     "semver-parser": "^4.1.4",
     "stream-browserify": "^3.0.0",
+    "tty-browserify": "^0.0.1",
     "util": "^0.12.3",
-    "vercel": "^28.16.12"
+    "vercel": "^28.16.12",
+    "vm-browserify": "^1.1.2"
   },
   "resolutions": {
     "react-refresh": "0.9.0"

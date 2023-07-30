@@ -6,7 +6,7 @@
   "module": "./dist/index.js",
   "main": "./dist/index.js",
   "exports": "./dist/index.js",
-  "typings": "dist/index.d.ts",
+  "typings": "dist/widget/ui/src/index.d.ts",
   "files": [
     "dist",
     "src"
