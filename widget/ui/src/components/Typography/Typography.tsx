@@ -99,7 +99,7 @@ const TypographyContainer = styled('span', {
       size: 'large',
       variant: 'display',
       css: {
-        fontSize: '$57',
+        fontSize: '$48',
         fontWeight: '$semiBold',
         lineHeight: '$64',
       },
@@ -108,7 +108,7 @@ const TypographyContainer = styled('span', {
       size: 'medium',
       variant: 'display',
       css: {
-        fontSize: '$45',
+        fontSize: '$40',
         fontWeight: '$semiBold',
         lineHeight: '$52',
       },
@@ -145,7 +145,7 @@ const TypographyContainer = styled('span', {
       size: 'small',
       variant: 'headline',
       css: {
-        fontSize: '$22',
+        fontSize: '$24',
         fontWeight: '$semiBold',
         lineHeight: '$30',
       },
@@ -164,7 +164,7 @@ const TypographyContainer = styled('span', {
       size: 'large',
       variant: 'title',
       css: {
-        fontSize: '$22',
+        fontSize: '$20',
         fontWeight: '$medium',
         lineHeight: '$28',
       },
@@ -219,7 +219,7 @@ const TypographyContainer = styled('span', {
       size: 'small',
       variant: 'lable',
       css: {
-        fontSize: '$11',
+        fontSize: '$10',
         fontWeight: '$medium',
         lineHeight: '$16',
       },

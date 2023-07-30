@@ -13,6 +13,7 @@ const theme = {
     primary700: '#35A468',
 
     secondary: '#7C6DDB',
+    secondary100: '#F2EFF9',
     secondary300: '#E4E0F8',
     secondary700: '#6C5DCB',
 
@@ -28,19 +29,11 @@ const theme = {
 
     surface100: '#FDFDFD',
     surface200: '#F9F9F9',
-    surface300: '#F5F5F5',
-    surface400: '#EEEEEE',
-    surface700: '##DCDCDC',
-
-    surfaceVar: '#F2EFF9',
-    surfaceVar1: '##E4E0F8',
-
-    howerOpacity50: '#E4E0F8',
-    howerOpacity60: '#DCDCDC',
-    howerPurple40: '#DCD5FF',
-    howerPurple20: '#F0EAFF',
-    howerGray40: '#E6E6E6',
-    howerGray20: '#F2F2F2',
+    surface300: '#F2F2F2',
+    surface400: '#F5F5F5',
+    surface500: '#EEEEEE',
+    surface600: '#E6E6E6',
+    surface700: '#DCDCDC',
 
     error: '#FF3B3B',
     error100: '#FFF5F5',
@@ -110,28 +103,27 @@ const theme = {
   },
 
   radii: {
-    xs: '0.313rem',
-    sm: '0.625rem',
-    xm: '0.938rem',
-    md: '1.25rem',
-    xl: '2.5rem',
-    lg: '3.125rem',
+    xs: '5px',
+    sm: '10px',
+    xm: '15px',
+    md: '20px',
+    xl: '40px',
+    lg: '50px',
   },
 
   fontSizes: {
     10: '0.625rem',
-    11: '0.688rem',
     12: '0.75rem',
     14: '0.875rem',
     16: '1rem',
     18: '1.125rem',
     20: '1.25rem',
-    22: '1.375rem',
+    24: '1.5rem',
     28: '1.75rem',
     32: '2rem',
     36: '2.25rem',
-    45: '2.813rem',
-    57: '3.563rem',
+    40: '2.5rem',
+    48: '3rem',
   },
   fonts: {},
   fontWeights: {
