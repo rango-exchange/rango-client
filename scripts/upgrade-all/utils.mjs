@@ -33,11 +33,13 @@ export async function getAllPackages() {
   return pkgs;
 }
 
-/*
+/**
   By passing a project (package) name, this function will go through all workspace 
   and will upgrade the version if any package has `project` inside its `dependency` or `devDependency`. 
-*/
-export async function upgradeDepndendentsOf(project, dist) {
+
+  @param version If set, it will use the passed version, if not, it will get the version from NPM. By default it's an empty string.
+**/
+export async function upgradeDepndendentsOf(project, dist, version) {
   const { stdout: info } = await $`yarn workspaces info`;
   const workspaces = JSON.parse(info);
 
@@ -62,15 +64,22 @@ export async function upgradeDepndendentsOf(project, dist) {
     `These packages are using ${project}: ${dependents.join(',')} \n`
   );
 
-  const versions = await packageVersionOnNPM(project, dist);
-
-  console.log(`NPM version for ${project} is ${versions.npm_version}. \n`);
+  // If set, it will use the passed version, if not, it will get the version from NPM. By default it's an empty string.
+  let project_version;
+  if (!!version) {
+    console.log(`Using fixed version for ${project} which is ${version}. \n`);
+    project_version = version;
+  } else {
+    const versions = await packageVersionOnNPM(project, dist);
+    console.log(`NPM version for ${project} is ${versions.npm_version}. \n`);
+    project_version = versions.npm_version;
+  }
 
   await Promise.all(
     dependents.map((pkg) =>
       updateVersion(
         { path: workspaces[pkg].location },
-        { name: project, version: versions.npm_version }
+        { name: project, version: project_version }
       )
     )
   );
