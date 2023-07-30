@@ -22,7 +22,7 @@ import {
   evmBlockchains,
 } from 'rango-types';
 
-const WALLET = WalletTypes.WALLET_CONNECT;
+const WALLET = 'wallet-connect-1';
 
 export const config: WalletConfig = {
   type: WALLET,

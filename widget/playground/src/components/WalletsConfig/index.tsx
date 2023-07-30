@@ -7,8 +7,13 @@ import { allProviders } from '@rango-dev/provider-all';
 import { useConfigStore } from '../../store/config';
 import { InternalWallets } from './InternalWallets';
 import { WalletType } from '@rango-dev/wallets-shared';
+import { WC_PROJECT_ID } from '../../configs';
 
-const providers = allProviders();
+const providers = allProviders({
+  walletconnect2: {
+    WC_PROJECT_ID: WC_PROJECT_ID,
+  },
+});
 
 export function WalletsConfig() {
   const multiWallets = useConfigStore.use.config().multiWallets;

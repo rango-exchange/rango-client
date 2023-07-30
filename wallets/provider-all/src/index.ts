@@ -23,37 +23,43 @@ import * as station from '@rango-dev/provider-station';
 import * as enkrypt from '@rango-dev/provider-enkrypt';
 import * as taho from '@rango-dev/provider-taho';
 import * as bitkeep from '@rango-dev/provider-bitkeep';
-// import * as walletconnect2 from '@rango-dev/provider-walletconnect-2';
+import * as walletconnect2 from '@rango-dev/provider-walletconnect-2';
 import * as braavos from '@rango-dev/provider-braavos';
 import * as safe from '@rango-dev/provider-safe';
 
-export const allProviders = () => [
-  binance,
-  xdefi,
-  brave,
-  clover,
-  coin98,
-  coinbase,
-  cosmostation,
-  exodus,
-  keplr,
-  mathwallet,
-  metamask,
-  okx,
-  phantom,
-  safepal,
-  tokenpocket,
-  trustwallet,
-  argentx,
-  tronLink,
-  kucoin,
-  leapCosmos,
-  frontier,
-  station,
-  enkrypt,
-  taho,
-  bitkeep,
-  // walletconnect2,
-  braavos,
-  safe,
-];
+type Enviroments = Record<string, Record<string, string>>;
+
+export const allProviders = (enviroments?: Enviroments) => {
+  walletconnect2.init(enviroments?.walletconnect2 || {});
+
+  return [
+    binance,
+    xdefi,
+    brave,
+    clover,
+    coin98,
+    coinbase,
+    cosmostation,
+    exodus,
+    keplr,
+    mathwallet,
+    metamask,
+    okx,
+    phantom,
+    safepal,
+    tokenpocket,
+    trustwallet,
+    argentx,
+    tronLink,
+    kucoin,
+    leapCosmos,
+    frontier,
+    station,
+    enkrypt,
+    taho,
+    bitkeep,
+    walletconnect2,
+    braavos,
+    safe,
+  ];
+};

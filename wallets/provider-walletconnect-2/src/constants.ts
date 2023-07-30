@@ -79,5 +79,4 @@ export const DEFAULT_APP_METADATA = {
   icons: ['https://avatars.githubusercontent.com/u/37784886'],
 };
 
-export const PROJECT_ID = 'f5196d081862c6f2b81c04520ea9301c';
 export const RELAY_URL = 'wss://relay.walletconnect.com';
