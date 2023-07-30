@@ -1,6 +1,5 @@
 import { makeConnection, supportsForSwitchNetworkRequest } from './helpers';
 import {
-  WalletTypes,
   CanSwitchNetwork,
   Connect,
   Disconnect,
