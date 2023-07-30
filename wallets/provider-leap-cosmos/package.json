@@ -21,7 +21,7 @@
   },
   "dependencies": {
     "@rango-dev/signer-cosmos": "^0.5.1-next.1",
-    "@rango-dev/wallets-shared": "^0.5.1-next.10",
+    "@rango-dev/wallets-shared": "^0.5.1-next.11",
     "rango-types": "^0.1.39"
   },
   "publishConfig": {
