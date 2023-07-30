@@ -53,6 +53,7 @@ export class CustomCosmosSigner implements GenericSigner<CosmosTransaction> {
         );
       if (!sequence)
         throw SignerError.AssertionFailed('sequence is undefined from server');
+      console.log({ signType });
 
       const signDoc = makeSignDoc(
         msgsWithoutType as any,

@@ -13,6 +13,7 @@ import {
   Network,
   convertEvmBlockchainMetaToEvmChainInfo,
   switchOrAddNetworkForMetamaskCompatibleWallets,
+  getCosmosExperimentalChainInfo,
 } from '@rango-dev/wallets-shared';
 import signer from './signer';
 import { SignerFactory, EvmBlockchainMeta, BlockchainMeta, evmBlockchains } from 'rango-types';
@@ -45,7 +46,7 @@ export const connect: Connect = async ({ instance }) => {
 
   return {
     accounts,
-    chainId: 'cosmoshub-4',
+    chainId: Networks.COSMOS,
   };
 };
 
