@@ -123,7 +123,7 @@ export const getSigners: (provider: any) => SignerFactory = signer;
 export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (allBlockChains) => {
   const evms = evmBlockchains(allBlockChains);
   return {
-    name: 'WalletConnect2',
+    name: 'WalletConnect',
     img: 'https://raw.githubusercontent.com/rango-exchange/rango-types/main/assets/icons/wallets/walletconnect.svg',
     installLink: '',
     color: '#b2dbff',
