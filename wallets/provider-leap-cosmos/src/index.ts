@@ -5,6 +5,7 @@ import {
   Subscribe,
   getCosmosAccounts,
   WalletInfo,
+  CanEagerConnect,
 } from '@rango-dev/wallets-shared';
 import { leap_cosmos_instance, getSupportedChains } from './helpers';
 import signer from './signer';
@@ -41,6 +42,8 @@ export const subscribe: Subscribe = ({ connect, disconnect }) => {
 };
 
 export const getSigners: (provider: any) => SignerFactory = signer;
+
+export const canEagerConnect: CanEagerConnect = () => Promise.resolve(true);
 
 export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
   allBlockChains
