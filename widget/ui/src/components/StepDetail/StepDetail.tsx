@@ -112,21 +112,24 @@ export function StepDetail(props: PropsWithChildren<PropTypes>) {
         {amount && (
           <Typography
             noWrap
-            variant={direction === 'vertical' ? 'body2' : 'title'}>
+            size="medium"
+            variant={direction === 'vertical' ? 'body' : 'title'}>
             {amount}
           </Typography>
         )}
         {!amount && estimatedAmount && (
           <Typography
             noWrap
-            variant={direction === 'vertical' ? 'body2' : 'title'}
+            size="medium"
+            variant={direction === 'vertical' ? 'body' : 'title'}
             color={'$neutral600'}>
             {estimatedAmount}
           </Typography>
         )}
         &nbsp;
         <Typography
-          variant={direction === 'vertical' ? 'body2' : 'title'}
+          size="medium"
+          variant={direction === 'vertical' ? 'body' : 'title'}
           noWrap>
           {symbol}
         </Typography>
