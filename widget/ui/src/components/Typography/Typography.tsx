@@ -10,7 +10,7 @@ const TypographyContainer = styled('span', {
       display: {},
       headline: {},
       title: {},
-      lable: {},
+      label: {},
       body: {},
     },
     size: {
@@ -199,7 +199,7 @@ const TypographyContainer = styled('span', {
 
     {
       size: 'large',
-      variant: 'lable',
+      variant: 'label',
       css: {
         fontSize: '$14',
         fontWeight: '$medium',
@@ -208,7 +208,7 @@ const TypographyContainer = styled('span', {
     },
     {
       size: 'medium',
-      variant: 'lable',
+      variant: 'label',
       css: {
         fontSize: '$12',
         fontWeight: '$medium',
@@ -217,7 +217,7 @@ const TypographyContainer = styled('span', {
     },
     {
       size: 'small',
-      variant: 'lable',
+      variant: 'label',
       css: {
         fontSize: '$10',
         fontWeight: '$medium',
@@ -265,7 +265,7 @@ const TypographyContainer = styled('span', {
 });
 
 export interface PropTypes {
-  variant: 'display' | 'headline' | 'title' | 'lable' | 'body';
+  variant: 'display' | 'headline' | 'title' | 'label' | 'body';
   size: 'large' | 'medium' | 'xmedium' | 'small' | 'xsmall';
   align?: 'center' | 'left' | 'right';
   noWrap?: boolean;

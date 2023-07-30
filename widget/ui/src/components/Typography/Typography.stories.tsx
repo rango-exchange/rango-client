@@ -89,15 +89,15 @@ export const Main = (props: PropTypes) => (
     </div>
 
     <div>
-      <Typography {...props} variant="lable" size="large">
+      <Typography {...props} variant="label" size="large">
         Label Large
       </Typography>
       {', '}
-      <Typography {...props} variant="lable" size="medium">
+      <Typography {...props} variant="label" size="medium">
         Label Medium
       </Typography>
       {', '}
-      <Typography {...props} variant="lable" size="small">
+      <Typography {...props} variant="label" size="small">
         Label Small
       </Typography>
     </div>
