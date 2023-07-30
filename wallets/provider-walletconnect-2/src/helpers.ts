@@ -1,6 +1,16 @@
 import { EthereumProvider } from '@walletconnect/ethereum-provider';
 
 const PROJECT_ID = 'f5196d081862c6f2b81c04520ea9301c';
+const CHAINS = [1, 56];
+
+const walletConnectModal = new Web3Modal({
+  projectId: PROJECT_ID,
+  walletConnectVersion: 2,
+  themeVariables: {
+    '--w3m-z-index': '999999999',
+  },
+});
+const relayUrl = 'wss://relay.walletconnect.com';
 
 export function supportsForSwitchNetworkRequest(provider: any): boolean {
   const wallets = ['metamask'];

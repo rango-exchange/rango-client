@@ -8,11 +8,11 @@ import {
   Subscribe,
   SwitchNetwork,
   WalletConfig,
-  canSwitchNetworkToEvm,
   WalletInfo,
   getBlockChainNameFromId,
   Network,
   convertEvmBlockchainMetaToEvmChainInfo,
+  switchOrAddNetworkForMetamaskCompatibleWallets,
 } from '@rango-dev/wallets-shared';
 import signer from './signer';
 import { SignerFactory, EvmBlockchainMeta, BlockchainMeta, evmBlockchains } from 'rango-types';
@@ -40,8 +40,8 @@ export const getInstance: GetInstance = async ({ network, currentProvider, meta,
 };
 
 export const connect: Connect = async ({ instance }) => {
-  const accounts = instance.accounts;
-  const chainId = instance.chainId;
+  const accounts = await instance.enable();
+  const chainId = await instance.request({ method: 'eth_chainId' });
 
   return {
     accounts,
@@ -76,6 +76,7 @@ export const subscribe: Subscribe = ({
   });
 
   instance.on('session_update', (error: any, payload: any) => {
+    console.log(3333);
     if (error) {
       throw error;
     }
@@ -86,7 +87,13 @@ export const subscribe: Subscribe = ({
     updateChainId(chainId);
   });
 
+  instance.on('session_ping', ({ id, topic }: any) => {
+    console.log('session_ping', id, topic);
+  });
+
   instance.on('session_event', (error: any, payload: any) => {
+    console.log(4444);
+
     if (error) {
       throw error;
     }
