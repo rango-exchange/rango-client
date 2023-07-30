@@ -20383,6 +20383,11 @@ rango-types@^0.1.46:
   resolved "https://registry.yarnpkg.com/rango-types/-/rango-types-0.1.46.tgz#548fd5c14273254658e8c72e18ac33cb8865f13f"
   integrity sha512-ZezYSugdFAx7B7tI1+zdfYHRYnNlHRf5dBkX8HDZzm9rjtSYP+E8tWzaQ2seNniXi1ldNk8D7SeFwz2NEldPgQ==
 
+rango-types@^0.1.45:
+  version "0.1.45"
+  resolved "https://registry.yarnpkg.com/rango-types/-/rango-types-0.1.45.tgz#6801e2f23e2ebfc598994e1421dc3d3215ad63b1"
+  integrity sha512-bi93re+NL5bg/aVFs3Ni8op9Xe7J6bdICxnyDy+2hVotmNQM4zj4YcjdgPFPgSA2kwWMdBzuLcYISfBR371rYw==
+
 raw-body@2.5.1:
   version "2.5.1"
   resolved "https://registry.yarnpkg.com/raw-body/-/raw-body-2.5.1.tgz#fe1b1628b181b700215e5fd42389f98b71392857"
