@@ -78,14 +78,17 @@ function Item({ type, info }: { type: WalletType; info: WalletInfo }) {
         supportedChainsNames
       ).find((a) => a.accounts.find((b) => b.isConnected));
       const signers = getSigners(type);
+      const isMatchedNetworkWithAccount = walletState.accounts.find((account) =>
+        account?.toLowerCase()?.includes(network?.toLowerCase())
+      );
       const address =
-        (walletState.accounts?.length > 1 &&
-          readAccountAddress(
-            walletState.accounts.find((account) =>
-              account?.toLowerCase()?.includes(network?.toLowerCase())
-            )!
-          ).address) ||
-        activeAccount?.accounts[0].address;
+        walletState.accounts?.length > 1 && isMatchedNetworkWithAccount
+          ? readAccountAddress(
+              walletState.accounts.find((account) =>
+                account?.toLowerCase()?.includes(network?.toLowerCase())
+              )!
+            ).address
+          : activeAccount?.accounts[0].address;
 
       const currentChain = info.supportedChains.find(
         (chain) => chain.name === network

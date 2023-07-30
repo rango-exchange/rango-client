@@ -1,0 +1,31 @@
+{
+  "name": "@rango-dev/provider-bitkeep",
+  "version": "0.1.0",
+  "license": "MIT",
+  "type": "module",
+  "module": "./dist/index.js",
+  "main": "./dist/index.js",
+  "exports": {
+    ".": "./dist/index.js"
+  },
+  "typings": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "src"
+  ],
+  "scripts": {
+    "build": "node ../../scripts/build/command.mjs --path wallets/provider-bitkeep",
+    "clean": "rimraf dist",
+    "format": "prettier --write '{.,src}/**/*.{ts,tsx}'",
+    "lint": "eslint \"**/*.{ts,tsx}\" --ignore-path ../../.eslintignore"
+  },
+  "dependencies": {
+    "@rango-dev/signer-evm": "^0.5.1-next.0",
+    "@rango-dev/signer-tron": "^0.5.1-next.1",
+    "@rango-dev/wallets-shared": "^0.5.1-next.9",
+    "rango-types": "^0.1.39"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
