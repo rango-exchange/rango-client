@@ -1,6 +1,6 @@
 import { makeConnection } from './helpers';
 import {
-  WalletType,
+  WalletTypes,
   CanSwitchNetwork,
   Connect,
   Disconnect,
@@ -15,14 +15,9 @@ import {
   convertEvmBlockchainMetaToEvmChainInfo,
 } from '@rango-dev/wallets-shared';
 import signer from './signer';
-import {
-  SignerFactory,
-  EvmBlockchainMeta,
-  BlockchainMeta,
-  evmBlockchains,
-} from 'rango-types';
+import { SignerFactory, EvmBlockchainMeta, BlockchainMeta, evmBlockchains } from 'rango-types';
 
-const WALLET = WalletType.WALLET_CONNECT_2;
+const WALLET = WalletTypes.WALLET_CONNECT_2;
 
 export const config: WalletConfig = {
   type: WALLET,
@@ -30,16 +25,9 @@ export const config: WalletConfig = {
   isAsyncInstance: true,
 };
 
-export const getInstance: GetInstance = async ({
-  network,
-  currentProvider,
-  meta,
-  force,
-}) => {
+export const getInstance: GetInstance = async ({ network, currentProvider, meta, force }) => {
   // If `network` is provided, trying to get chainId
-  const evm_chain_info = convertEvmBlockchainMetaToEvmChainInfo(
-    meta as EvmBlockchainMeta[]
-  );
+  const evm_chain_info = convertEvmBlockchainMetaToEvmChainInfo(meta as EvmBlockchainMeta[]);
   const info = network ? evm_chain_info[network] : undefined;
   const requestedChainId = info?.chainId ? parseInt(info?.chainId) : undefined;
 
@@ -113,11 +101,8 @@ export const subscribe: Subscribe = ({
   });
 };
 
-export const switchNetwork: SwitchNetwork = async ({
-  network,
-  newInstance,
-}) => {
-  if (!!newInstance) {
+export const switchNetwork: SwitchNetwork = async ({ network, newInstance }) => {
+  if (newInstance) {
     await newInstance({ force: true, network });
   }
 };
@@ -135,9 +120,7 @@ export const disconnect: Disconnect = async ({ instance, destroyInstance }) => {
 
 export const getSigners: (provider: any) => SignerFactory = signer;
 
-export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
-  allBlockChains
-) => {
+export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (allBlockChains) => {
   const evms = evmBlockchains(allBlockChains);
   return {
     name: 'WalletConnect2',

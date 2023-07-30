@@ -4576,91 +4576,17 @@
   dependencies:
     "@lezer/common" "^0.15.0"
 
-"@lingui/babel-plugin-extract-messages@4.2.1":
-  version "4.2.1"
-  resolved "https://registry.yarnpkg.com/@lingui/babel-plugin-extract-messages/-/babel-plugin-extract-messages-4.2.1.tgz#456a5977a805416e145a3f939ce8a16ce4fc8244"
-  integrity sha512-tCFs5q6ktSurf244u1b4rvsLADzHzuwTymeNJi9QdjVedIQ8fVGkExKKW2XpuwM8Dv04TwkcB73Xt+Rg5p24kg==
+"@lit-labs/ssr-dom-shim@^1.0.0", "@lit-labs/ssr-dom-shim@^1.1.0":
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/@lit-labs/ssr-dom-shim/-/ssr-dom-shim-1.1.1.tgz#64df34e2f12e68e78ac57e571d25ec07fa460ca9"
+  integrity sha512-kXOeFbfCm4fFf2A3WwVEeQj55tMZa8c8/f9AKHMobQMkzNUfUj+antR3fRPaZJawsa1aZiP/Da3ndpZrwEe4rQ==
 
-"@lingui/cli@^4.2.1":
-  version "4.2.1"
-  resolved "https://registry.yarnpkg.com/@lingui/cli/-/cli-4.2.1.tgz#ddf292c7059d6985e44016584a0c96f43aa54bfd"
-  integrity sha512-0kKd4EzEq+62aSN5fGbgXa2J0X9ztW7U1nvMJXJHEtVPYAnMtXucSAgQQWtWN3pbwBksppHC18PUU02MkcD70A==
+"@lit/reactive-element@^1.3.0", "@lit/reactive-element@^1.6.0":
+  version "1.6.1"
+  resolved "https://registry.yarnpkg.com/@lit/reactive-element/-/reactive-element-1.6.1.tgz#0d958b6d479d0e3db5fc1132ecc4fa84be3f0b93"
+  integrity sha512-va15kYZr7KZNNPZdxONGQzpUr+4sxVu7V/VG7a8mRfPPXUyhEYj5RzXCQmGrlP3tAh0L3HHm5AjBMFYRqlM9SA==
   dependencies:
-    "@babel/core" "^7.21.0"
-    "@babel/generator" "^7.21.1"
-    "@babel/parser" "^7.21.2"
-    "@babel/runtime" "^7.21.0"
-    "@babel/types" "^7.21.2"
-    "@lingui/babel-plugin-extract-messages" "4.2.1"
-    "@lingui/conf" "4.2.1"
-    "@lingui/core" "4.2.1"
-    "@lingui/format-po" "4.2.1"
-    "@lingui/message-utils" "4.2.1"
-    babel-plugin-macros "^3.0.1"
-    chalk "^4.1.0"
-    chokidar "3.5.1"
-    cli-table "0.3.6"
-    commander "^10.0.0"
-    convert-source-map "^2.0.0"
-    date-fns "^2.16.1"
-    esbuild "^0.17.10"
-    glob "^7.1.4"
-    inquirer "^7.3.3"
-    micromatch "4.0.2"
-    normalize-path "^3.0.0"
-    ora "^5.1.0"
-    pathe "^1.1.0"
-    pkg-up "^3.1.0"
-    pofile "^1.1.4"
-    pseudolocale "^2.0.0"
-    ramda "^0.27.1"
-    source-map "^0.8.0-beta.0"
-
-"@lingui/conf@4.2.1":
-  version "4.2.1"
-  resolved "https://registry.yarnpkg.com/@lingui/conf/-/conf-4.2.1.tgz#a7ed4a162703c040085d7d3c55f54ef83d0de9cf"
-  integrity sha512-y8GNgJpiO3DqOQQJ8xfxdq9dPpG3TJBd7lBajt9pRV2e89GO39UIT3uW5ZSfQaO1VWuZQpkIX8XcJPiKK5uz+A==
-  dependencies:
-    "@babel/runtime" "^7.20.13"
-    chalk "^4.1.0"
-    cosmiconfig "^8.0.0"
-    jest-validate "^29.4.3"
-    jiti "^1.17.1"
-    lodash.get "^4.4.2"
-
-"@lingui/core@4.2.1":
-  version "4.2.1"
-  resolved "https://registry.yarnpkg.com/@lingui/core/-/core-4.2.1.tgz#60026b68143b76a25ae1de129c76e6ecb98b037e"
-  integrity sha512-928PI3fftk/owl1ZPqcK60DgUUktGW5RrMZJdNSxMBpmGtUqOQuj/WW7w69sUFefqsOGOpUY6lR75dwhgqywEA==
-  dependencies:
-    "@babel/runtime" "^7.20.13"
-    "@lingui/message-utils" "4.2.1"
-    unraw "^2.0.1"
-
-"@lingui/format-po@4.2.1":
-  version "4.2.1"
-  resolved "https://registry.yarnpkg.com/@lingui/format-po/-/format-po-4.2.1.tgz#c9e4d9c954025d8d6cf28f7c0e7b45e6dd51d022"
-  integrity sha512-ZyqJn5HAqlr96Z5oZBUx4BQayTXAjMwWYs1UafzeaweqLMuW6FaymBnj1h9mdsXehm9vZrdF7kTMjkLCR1prFA==
-  dependencies:
-    "@lingui/conf" "4.2.1"
-    "@lingui/message-utils" "4.2.1"
-    date-fns "^2.29.3"
-    pofile "^1.1.4"
-
-"@lingui/message-utils@4.2.1":
-  version "4.2.1"
-  resolved "https://registry.yarnpkg.com/@lingui/message-utils/-/message-utils-4.2.1.tgz#586eb273359ada8c5e9e8816db28913b6218158e"
-  integrity sha512-131v+j82uS10gBDyjOBdKmQKKO1dc0nYx3MSUu9RK+EnPItRcaME3LBaJ4UJs5Nb1niZOX2yeMKarGAkvwFyPA==
-  dependencies:
-    "@messageformat/parser" "^5.0.0"
-
-"@lingui/react@^4.2.1":
-  version "4.2.1"
-  resolved "https://registry.yarnpkg.com/@lingui/react/-/react-4.2.1.tgz#33b6919dfa0330a7bccbd6e385473ff7964670f5"
-  integrity sha512-6VRKGFzQgEAxChLE5B7Pih7ZqAKS5PWzJtIP6O6amX6uVRxEJBIB/J4BtRNpt25Dz8WXf3C+9sSxskRNWtsZXQ==
-  dependencies:
-    "@babel/runtime" "^7.20.13"
-    "@lingui/core" "4.2.1"
+    "@lit-labs/ssr-dom-shim" "^1.0.0"
 
 "@lit-labs/ssr-dom-shim@^1.0.0", "@lit-labs/ssr-dom-shim@^1.1.0":
   version "1.1.1"
@@ -17270,10 +17196,10 @@ lodash.debounce@^4.0.8:
   resolved "https://registry.yarnpkg.com/lodash.debounce/-/lodash.debounce-4.0.8.tgz#82d79bff30a67c4005ffd5e2515300ad9ca4d7af"
   integrity sha512-FT1yDzDYEoYWhnSGnpE/4Kj1fLZkDFyqRb7fNt6FdYOSxlUWAtp42Eh6Wb0rGIv/m9Bgo7x4GhQbm5Ys4SG5ow==
 
-lodash.get@^4.4.2:
-  version "4.4.2"
-  resolved "https://registry.yarnpkg.com/lodash.get/-/lodash.get-4.4.2.tgz#2d177f652fa31e939b4438d5341499dfa3825e99"
-  integrity sha512-z+Uw/vLuy6gQe8cfaFWD7p0wVv8fJl3mbzXh33RS+0oW2wvUqiRXiQ69gLWSLpgB5/6sU+r6BlQR0MBILadqTQ==
+lodash.isequal@4.5.0:
+  version "4.5.0"
+  resolved "https://registry.yarnpkg.com/lodash.isequal/-/lodash.isequal-4.5.0.tgz#415c4478f2bcc30120c22ce10ed3226f7d3e18e0"
+  integrity sha512-pDo3lu8Jhfjqls6GkMgpahsF9kCyayhgykjyLMNFTKWrpVdAQtYyB4muAMWozBB4ig/dtWAmsMxLEI8wuz+DYQ==
 
 lodash.isequal@4.5.0:
   version "4.5.0"
@@ -18404,10 +18330,17 @@ modify-values@^1.0.0:
   resolved "https://registry.yarnpkg.com/modify-values/-/modify-values-1.0.1.tgz#b3939fa605546474e3e3e3c63d64bd43b4ee6022"
   integrity sha512-xV2bxeN6F7oYjZWTe/YPAy6MN2M+sL4u/Rlm2AHCIVGfo2p1yGmBHQ6vHehl4bRTZBdHu3TSkWdYgkwpYzAGSw==
 
-moo@^0.5.1:
-  version "0.5.2"
-  resolved "https://registry.yarnpkg.com/moo/-/moo-0.5.2.tgz#f9fe82473bc7c184b0d32e2215d3f6e67278733c"
-  integrity sha512-iSAJLHYKnX41mKcJKjqvnAN9sf0LMDTXDEvFv+ffuRR9a1MIuXLjMNL6EsnDHSkKLTWNqQQ5uo61P4EbU4NU+Q==
+motion@10.15.5:
+  version "10.15.5"
+  resolved "https://registry.yarnpkg.com/motion/-/motion-10.15.5.tgz#d336ddbdd37bc28bb99fbb243fe309df6c685ad6"
+  integrity sha512-ejP6KioN4pigTGxL93APzOnvtLklParL59UQB2T3HWXQBxFcIp5/7YXFmkgiA6pNKKzjvnLhnonRBN5iSFMnNw==
+  dependencies:
+    "@motionone/animation" "^10.15.1"
+    "@motionone/dom" "^10.15.5"
+    "@motionone/svelte" "^10.15.5"
+    "@motionone/types" "^10.15.1"
+    "@motionone/utils" "^10.15.1"
+    "@motionone/vue" "^10.15.5"
 
 motion@10.15.5:
   version "10.15.5"
@@ -21909,18 +21842,12 @@ socks@^2.3.3:
     ip "^2.0.0"
     smart-buffer "^4.2.0"
 
-solc@0.8.15:
-  version "0.8.15"
-  resolved "https://registry.yarnpkg.com/solc/-/solc-0.8.15.tgz#d274dca4d5a8b7d3c9295d4cbdc9291ee1c52152"
-  integrity sha512-Riv0GNHNk/SddN/JyEuFKwbcWcEeho15iyupTSHw5Np6WuXA5D8kEHbyzDHi6sqmvLzu2l+8b1YmL8Ytple+8w==
+sonic-boom@^2.2.1:
+  version "2.8.0"
+  resolved "https://registry.yarnpkg.com/sonic-boom/-/sonic-boom-2.8.0.tgz#c1def62a77425090e6ad7516aad8eb402e047611"
+  integrity sha512-kuonw1YOYYNOve5iHdSahXPOK49GqwA+LZhI6Wz/l0rP57iKyXXIHaRagOBHAPmGwJC6od2Z9zgvZ5loSgMlVg==
   dependencies:
-    command-exists "^1.2.8"
-    commander "^8.1.0"
-    follow-redirects "^1.12.1"
-    js-sha3 "0.8.0"
-    memorystream "^0.3.1"
-    semver "^5.5.0"
-    tmp "0.0.33"
+    atomic-sleep "^1.0.0"
 
 sonic-boom@^2.2.1:
   version "2.8.0"
