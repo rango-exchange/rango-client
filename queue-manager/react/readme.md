@@ -1,1 +1,1 @@
-# @rango-dev/queue-manager-rango-preset
+# @rango-dev/queue-manager-react

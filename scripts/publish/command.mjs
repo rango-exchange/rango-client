@@ -64,6 +64,13 @@ async function run() {
   );
   console.log('::endgroup::');
 
+  console.log(`::group::Check local and npm version to be matched.`);
+  await $`yarn upgrade-all`;
+  const { stdout: upgradeAllStdOut } = await $`yarn upgrade-all`;
+  console.log(upgradeAllStdOut);
+
+  console.log('::endgroup::');
+
   const updatedPackages = [];
   for (const pkg of sortedPackagesToPublish) {
     const updatedPkg = await publish(pkg, channel);
