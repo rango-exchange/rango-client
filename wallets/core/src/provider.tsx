@@ -130,7 +130,7 @@ function Provider(props: ProviderProps) {
         walletInstance.provider,
         type
       );
-      const result = walletInstance.getSigners(provider, supportedChains);
+      const result = walletInstance.getSigners(provider);
 
       return result;
     },
