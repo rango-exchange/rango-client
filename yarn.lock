@@ -11154,11 +11154,6 @@ crc-32@^1.2.0:
   resolved "https://registry.yarnpkg.com/crc-32/-/crc-32-1.2.2.tgz#3cad35a934b8bf71f25ca524b6da51fb7eace2ff"
   integrity sha512-ROmzCKrTnOwybPcJApAA6WBWij23HVfGVNKqqrZpuyZOHqK2CwHSvpGuyt/UNNvaIjEd8X5IFGp4Mh+Ie1IHJQ==
 
-crc-32@^1.2.0:
-  version "1.2.2"
-  resolved "https://registry.yarnpkg.com/crc-32/-/crc-32-1.2.2.tgz#3cad35a934b8bf71f25ca524b6da51fb7eace2ff"
-  integrity sha512-ROmzCKrTnOwybPcJApAA6WBWij23HVfGVNKqqrZpuyZOHqK2CwHSvpGuyt/UNNvaIjEd8X5IFGp4Mh+Ie1IHJQ==
-
 create-ecdh@^4.0.0:
   version "4.0.4"
   resolved "https://registry.yarnpkg.com/create-ecdh/-/create-ecdh-4.0.4.tgz#d6e7f4bffa66736085a0762fd3a632684dabcc4e"
@@ -19700,11 +19695,6 @@ rango-types@^0.1.46:
   version "0.1.46"
   resolved "https://registry.yarnpkg.com/rango-types/-/rango-types-0.1.46.tgz#548fd5c14273254658e8c72e18ac33cb8865f13f"
   integrity sha512-ZezYSugdFAx7B7tI1+zdfYHRYnNlHRf5dBkX8HDZzm9rjtSYP+E8tWzaQ2seNniXi1ldNk8D7SeFwz2NEldPgQ==
-
-rango-types@^0.1.45:
-  version "0.1.45"
-  resolved "https://registry.yarnpkg.com/rango-types/-/rango-types-0.1.45.tgz#6801e2f23e2ebfc598994e1421dc3d3215ad63b1"
-  integrity sha512-bi93re+NL5bg/aVFs3Ni8op9Xe7J6bdICxnyDy+2hVotmNQM4zj4YcjdgPFPgSA2kwWMdBzuLcYISfBR371rYw==
 
 raw-body@2.5.1:
   version "2.5.1"
