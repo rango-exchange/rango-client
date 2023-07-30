@@ -15,8 +15,8 @@
     "@rango-dev/ui": "^0.5.1-next.11",
     "@rango-dev/wallets-core": "^0.5.1-next.6",
     "parcel": "^2.8.0",
-    "rango-sdk": "^0.1.30",
-    "rango-types": "^0.1.39",
+    "rango-sdk": "^0.1.32",
+    "rango-types": "^0.1.42",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   }
