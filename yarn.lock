@@ -5059,6 +5059,35 @@
   dependencies:
     "@babel/runtime" "^7.13.10"
 
+"@rango-dev/provider-walletconnect@^0.8.0":
+  version "0.8.0"
+  resolved "https://registry.yarnpkg.com/@rango-dev/provider-walletconnect/-/provider-walletconnect-0.8.0.tgz#8adbb8c150661e4ea0a350c8577fdd0d995f5f9e"
+  integrity sha512-R5cUCR6ljFCB58MB4PO5cel1gAS1eGqVIv0voxerg/jQ+1UtLMN3xYF5z3UFc/NanExt5HVBhfVHkOpWzKaiYA==
+  dependencies:
+    "@rango-dev/signer-evm" "^0.8.0"
+    "@rango-dev/wallets-shared" "^0.8.0"
+    "@walletconnect/client" "^1.8.0"
+    "@walletconnect/jsonrpc-utils" "^1.0.4"
+    "@walletconnect/qrcode-modal" "^1.8.0"
+    rango-types "^0.1.45"
+
+"@rango-dev/signer-evm@^0.8.0":
+  version "0.8.0"
+  resolved "https://registry.yarnpkg.com/@rango-dev/signer-evm/-/signer-evm-0.8.0.tgz#4d4c67ca0b8b3d4569c1871cf4e41b8faf7def1e"
+  integrity sha512-U1GUN8AUFsd91hReasP2CAKVtirqwedkg1oixBaubeQUfM9+WI7nTSjahHjjGO+p4Gq1asYoRdvl0mM6jk+qoQ==
+  dependencies:
+    "@ethersproject/abstract-provider" "^5.7.0"
+    eth-rpc-errors "^4.0.3"
+    ethers "^5.7.2"
+    rango-types "^0.1.45"
+
+"@rango-dev/wallets-shared@^0.8.0":
+  version "0.8.0"
+  resolved "https://registry.yarnpkg.com/@rango-dev/wallets-shared/-/wallets-shared-0.8.0.tgz#80bce76e1cd2a166d1e478e3a6d6a0694631f83d"
+  integrity sha512-1LpbbjGdhguFGgXkM41tFJWTYeFGJuzyFKI6VZMLvyQ1X2yBZFZPzUz1w7OE8X6Vx1UQzRLJLaRIWCSHognRsw==
+  dependencies:
+    rango-types "^0.1.45"
+
 "@reach/router@^1.2.1":
   version "1.3.4"
   resolved "https://registry.yarnpkg.com/@reach/router/-/router-1.3.4.tgz#d2574b19370a70c80480ed91f3da840136d10f8c"
@@ -19320,7 +19349,7 @@ rango-sdk@^0.1.35:
     rango-types "^0.1.45"
     uuid-random "^1.3.2"
 
-rango-types@^0.1.45:
+rango-types@^0.1.45, rango-types@^0.1.45:
   version "0.1.45"
   resolved "https://registry.yarnpkg.com/rango-types/-/rango-types-0.1.45.tgz#6801e2f23e2ebfc598994e1421dc3d3215ad63b1"
   integrity sha512-bi93re+NL5bg/aVFs3Ni8op9Xe7J6bdICxnyDy+2hVotmNQM4zj4YcjdgPFPgSA2kwWMdBzuLcYISfBR371rYw==

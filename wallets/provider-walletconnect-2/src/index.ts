@@ -26,13 +26,23 @@ import {
   DEFAULT_APP_METADATA,
   DEFAULT_NETWORK,
   EthereumEvents,
-  PROJECT_ID,
   RELAY_URL,
 } from './constants';
-import { simulateRequest } from './helpers';
+import { createModalInstance, simulateRequest } from './helpers';
 import type { WCInstance } from './types';
 
 const WALLET = WalletTypes.WALLET_CONNECT_2;
+
+// TODO: In version 2, It will be moved to constructor.
+type Enviroments = Record<string, string>;
+let envs: Enviroments = {
+  WC_PROJECT_ID: '',
+};
+export const init = (enviroments: Enviroments) => {
+  envs = enviroments;
+
+  createModalInstance(envs.WC_PROJECT_ID);
+};
 
 export const config: WalletConfig = {
   type: WALLET,
@@ -50,9 +60,15 @@ export const getInstance: GetInstance = async (options) => {
   */
   let provider: ISignClient;
   if (!currentProvider) {
+    if (!envs.WC_PROJECT_ID) {
+      throw new Error(
+        'You need to set `WC_PROJECT_ID` in Wallet Connect provider.'
+      );
+    }
+
     provider = await Client.init({
       relayUrl: RELAY_URL,
-      projectId: PROJECT_ID,
+      projectId: envs.WC_PROJECT_ID,
       metadata: DEFAULT_APP_METADATA,
     });
   } else {
