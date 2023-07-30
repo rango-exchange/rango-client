@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/provider-argentx",
-  "version": "0.8.1-next.3",
+  "version": "0.8.1-next.4",
   "license": "MIT",
   "type": "module",
   "module": "./dist/index.js",
