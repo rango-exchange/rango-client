@@ -7,9 +7,10 @@ import {
 } from '@rango-dev/wallets-shared';
 import Item from './Item';
 import './styles.css';
-const excludedWallets = [WalletTypes.LEAP];
+import { Token } from 'rango-sdk';
+const excludedWallets = [WalletTypes.LEAP, WalletTypes.WALLET_CONNECT];
 
-function List() {
+function List({ tokens }: { tokens: Token[] }) {
   const { state, getWalletInfo } = useWallets();
   const allWallets = sortWalletsBasedOnState(
     Object.keys(WalletTypes)
@@ -34,6 +35,7 @@ function List() {
           key={wallet.type}
           type={wallet.type}
           info={wallet.info as WalletInfo}
+          tokens={tokens}
         />
       ))}
     </div>
