@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Provider } from '@rango-dev/wallets-core';
 import List from './components/List';
 import { allProviders } from '@rango-dev/provider-all';
-import { RangoClient } from 'rango-sdk';
+import { BlockchainMeta, RangoClient, Token } from 'rango-sdk';
 import { InfoCircleIcon, Spinner, Typography } from '@rango-dev/ui';
 import { WC_PROJECT_ID } from './constants';
 
@@ -14,8 +14,9 @@ const providers = allProviders({
 
 export function App() {
   const client = new RangoClient(process.env.REACT_APP_API_KEY as string);
-  // Because allBlockChains didn't use the BlockchainMeta type from rango-sdk, we have to use any type
-  const [blockchains, setBlockChains] = useState<any>([]);
+  const [blockchains, setBlockChains] = useState<BlockchainMeta[]>([]);
+  const [tokens, setTokens] = useState<Token[]>([]);
+
   const [error, setError] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(true);
 
@@ -24,6 +25,7 @@ export function App() {
       try {
         const res = await client.getAllMetadata();
         setBlockChains(res.blockchains);
+        setTokens(res.tokens);
       } catch (e) {
         setError(e.message);
       }
@@ -44,7 +46,7 @@ export function App() {
         <h1 className="ml-12">Providers</h1>
         {loading && (
           <div className="flex">
-            <Spinner size={20} />{' '}
+            <Spinner size={20} />
             <Typography variant="caption">Loading...</Typography>
           </div>
         )}
@@ -54,7 +56,7 @@ export function App() {
           Failed Get Blockchains From Server: {error}
         </p>
       )}
-      <List />
+      <List tokens={tokens} />
     </Provider>
   );
 }
