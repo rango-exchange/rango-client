@@ -89,29 +89,26 @@ export function generateOptionalNamespace(
 ): FinalNamespaces | undefined {
   const evm = evmBlockchains(meta);
   const cosmos = cosmosBlockchains(meta);
+  const evmChains = evm.map((chain) => {
+    return new ChainId({
+      namespace: NAMESPACES.ETHEREUM,
+      reference: String(parseInt(chain.chainId)),
+    }).toString();
+  });
+  const cosmosChains = cosmos
+    .filter((chain): chain is CosmosMeta => !!chain.chainId)
+    .map((chain) => {
+      return new ChainId({
+        namespace: NAMESPACES.COSMOS,
+        reference: chain.chainId,
+      }).toString();
+    });
 
-  return {
+  const namespaces: FinalNamespaces = {
     [NAMESPACES.ETHEREUM]: {
       methods: DEFAULT_ETHEREUM_METHODS,
       events: DEFAULT_ETHEREUM_EVENTS,
-      chains: evm.map((chain) => {
-        return new ChainId({
-          namespace: NAMESPACES.ETHEREUM,
-          reference: String(parseInt(chain.chainId)),
-        }).toString();
-      }),
-    },
-    [NAMESPACES.COSMOS]: {
-      methods: DEFAULT_COSMOS_METHODS,
-      events: [],
-      chains: cosmos
-        .filter((chain): chain is CosmosMeta => !!chain.chainId)
-        .map((chain) => {
-          return new ChainId({
-            namespace: NAMESPACES.COSMOS,
-            reference: chain.chainId,
-          }).toString();
-        }),
+      chains: evmChains,
     },
     [NAMESPACES.SOLANA]: {
       methods: DEFAULT_SOLANA_METHODS,
@@ -119,6 +116,16 @@ export function generateOptionalNamespace(
       chains: [`solana:${DEFAULT_SOLANA_CHAIN_ID}`],
     },
   };
+
+  if (cosmosChains.length) {
+    namespaces[NAMESPACES.COSMOS] = {
+      methods: DEFAULT_COSMOS_METHODS,
+      events: [],
+      chains: cosmosChains,
+    };
+  }
+
+  return namespaces;
 }
 
 export function solanaChainIdToNetworkName(chainId: string): string {
