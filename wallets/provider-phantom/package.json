@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/provider-phantom",
-  "version": "0.8.1-next.5",
+  "version": "0.8.1-next.6",
   "license": "MIT",
   "type": "module",
   "module": "./dist/index.js",
@@ -20,8 +20,8 @@
     "lint": "eslint \"**/*.{ts,tsx}\" --ignore-path ../../.eslintignore"
   },
   "dependencies": {
-    "@rango-dev/signer-solana": "^0.8.1-next.0",
-    "@rango-dev/wallets-shared": "^0.8.1-next.6",
+    "@rango-dev/signer-solana": "^0.8.1-next.1",
+    "@rango-dev/wallets-shared": "^0.8.1-next.7",
     "rango-types": "^0.1.46"
   },
   "publishConfig": {
