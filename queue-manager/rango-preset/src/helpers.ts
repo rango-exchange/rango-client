@@ -1093,7 +1093,8 @@ export function singTransaction(
       setStepTransactionIds(
         actions,
         hash,
-        explorerUrl && !response.hashRequiringUpdate
+        explorerUrl &&
+          (!response || (response && !response.hashRequiringUpdate))
           ? { url: explorerUrl, description: isApproval ? 'Approve' : 'Swap' }
           : undefined
       );

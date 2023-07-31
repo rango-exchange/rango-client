@@ -1,1 +1,1 @@
-export const WC_PROJECT_ID = 'f5196d081862c6f2b81c04520ea9301c';
+export const WC_PROJECT_ID = 'e24844c5deb5193c1c14840a7af6a40b';
