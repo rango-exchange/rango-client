@@ -5,11 +5,11 @@ import { Spinner } from '../Spinner';
 import { Typography } from '../Typography';
 
 const ButtonContainer = styled('button', {
-  borderRadius: '$xs',
-  fontSize: '$16',
+  borderRadius: '$xl',
+  fontSize: '$18',
   fontWeight: '$regular',
   cursor: 'pointer',
-  padding: '0 $12',
+  padding: '0 $8',
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
@@ -53,15 +53,15 @@ const ButtonContainer = styled('button', {
           backgroundColor: '$neutral200',
         },
         '&:disabled': {
-          background: '$neutral400',
+          backgroundColor: '$neutral300',
         },
         '&:disabled:hover': {
-          background: '$neutral400',
+          backgroundColor: '$neutral300',
           transform: 'unset',
         },
       },
       outlined: {
-        backgroundColor: '$surface',
+        backgroundColor: '$neutral100',
         border: 1,
         borderStyle: 'solid',
         borderColor: '$neutral400',
@@ -70,8 +70,13 @@ const ButtonContainer = styled('button', {
           borderColor: '$neutral600',
         },
         '&:disabled': {
-          borderColor: '$neutral400',
-          color: '$neutral400',
+          borderColor: '$neutral300',
+          color: '$neutral300',
+        },
+        '&:disabled:hover': {
+          borderColor: '$neutral300',
+          transform: 'unset',
+          color: '$neutral300',
         },
       },
       ghost: {
@@ -80,7 +85,7 @@ const ButtonContainer = styled('button', {
           backgroundColor: '$neutral200',
         },
         '&:disabled': {
-          color: '$neutral400',
+          color: '$neutral300',
         },
         background: 'transparent',
         border: 0,
@@ -112,15 +117,15 @@ const ButtonContainer = styled('button', {
       variant: 'contained',
       css: {
         background: '$primary',
-        color: '$white',
+        color: '$neutral100',
         '&:hover': {
           background: '$primary700',
         },
         '&:visited': {
-          background: '$primary900',
+          background: '$primary',
         },
         '&:focus': {
-          background: '$primary600',
+          background: '$primary',
         },
       },
     },

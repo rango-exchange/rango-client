@@ -63,7 +63,7 @@ export const SvgWithFillColor = styled('svg', {
         fill: '$$color',
       },
       white: {
-        $$color: '$colors$background',
+        $$color: '$colors$neutral100',
         [`.${darkTheme} &`]: {
           $$color: '$colors$foreground',
         },

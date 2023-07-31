@@ -59,6 +59,6 @@ export const WithSuffix = (args: PropTypes) => (
 );
 export const IconButton = (args: PropTypes) => (
   <div>
-    <Button suffix={<AddWalletIcon size={24} color="white" />} {...args} />
+    <Button suffix={<AddWalletIcon size={32} color="white" />} {...args} />
   </div>
 );

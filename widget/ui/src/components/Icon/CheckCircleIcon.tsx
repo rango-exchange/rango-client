@@ -11,26 +11,14 @@ export const CheckCircleIcon: React.FC<IconProps> = ({
     <SvgWithFillColor
       width={size}
       height={size}
-      viewBox="0 0 24 24"
+      viewBox="0 0 32 22"
       color={color}
-      fill="none"
       xmlns="http://www.w3.org/2000/svg"
       className="_icon"
-      {...props}
-    >
+      {...props}>
       <path
-        d="M12 22c5.5 0 10-4.5 10-10S17.5 2 12 2 2 6.5 2 12s4.5 10 10 10Z"
-        strokeWidth={1.5}
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        stroke="#fff"
-      />
-      <path
-        d="m7.75 12 2.83 2.83 5.67-5.66"
-        strokeWidth={1.5}
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        stroke="#fff"
+        transform="translate(-6,-10)"
+        d="M22.5 36.6a14.1 14.1 0 1 1 14.1-14.1 14.116 14.116 0 0 1-14.1 14.1ZM14.57 21.027a1.322 1.322 0 0 0-.91 2.285l5.766 5.444a1.322 1.322 0 0 0 1.851-.048L31.38 18.132a1.322 1.322 0 0 0-1.915-1.824l-9.18 9.616-4.806-4.537a1.322 1.322 0 0 0-.907-.36h-.002Z"
       />
     </SvgWithFillColor>
   );
