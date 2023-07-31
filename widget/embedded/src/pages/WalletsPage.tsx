@@ -28,6 +28,7 @@ import { configWalletsToWalletName } from '../utils/providers';
 interface PropTypes {
   supportedWallets: WidgetConfig['wallets'];
   multiWallets: boolean;
+  config?: WidgetConfig;
 }
 
 const ListContainer = styled('div', {
@@ -53,13 +54,19 @@ const AlertContainer = styled('div', {
 
 const ALL_SUPPORTED_WALLETS = Object.values(WalletTypes);
 
-export function WalletsPage({ supportedWallets, multiWallets }: PropTypes) {
+export function WalletsPage({
+  supportedWallets,
+  multiWallets,
+  config,
+}: PropTypes) {
   const { navigateBackFrom } = useNavigateBack();
   const { state, disconnect, getWalletInfo, connect } = useWallets();
   const wallets = getlistWallet(
     state,
     getWalletInfo,
-    configWalletsToWalletName(supportedWallets) || ALL_SUPPORTED_WALLETS
+    configWalletsToWalletName(supportedWallets, {
+      walletConnectProjectId: config?.walletConnectProjectId,
+    }) || ALL_SUPPORTED_WALLETS
   );
   const walletsRef = useRef<WalletInfo[]>();
 

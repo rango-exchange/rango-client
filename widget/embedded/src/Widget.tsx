@@ -77,7 +77,11 @@ export function Main(props: PropsWithChildren<WidgetProps>) {
 export function Widget(props: PropsWithChildren<WidgetProps>) {
   if (!props.config?.externalWallets) {
     return (
-      <WidgetWallets providers={props.config?.wallets}>
+      <WidgetWallets
+        providers={props.config?.wallets}
+        options={{
+          walletConnectProjectId: props.config?.walletConnectProjectId,
+        }}>
         <Main {...props} />
       </WidgetWallets>
     );

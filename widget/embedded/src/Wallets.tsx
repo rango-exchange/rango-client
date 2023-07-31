@@ -12,6 +12,7 @@ import { isEvmBlockchain } from 'rango-sdk';
 import { useWalletProviders } from './hooks/useWalletProviders';
 import { WidgetConfig } from './types';
 import { createContext, useRef } from 'react';
+import { ProvidersOptions } from './utils/providers';
 
 type OnConnectHandler = (key: string) => void;
 interface WidgetContextInterface {
@@ -27,11 +28,12 @@ export const WidgetContext = createContext<WidgetContextInterface>({
 export function WidgetWallets(
   props: PropsWithChildren<{
     providers: WidgetConfig['wallets'];
+    options?: ProvidersOptions;
     onUpdateState?: EventHandler;
   }>
 ) {
   const { blockchains } = useMetaStore.use.meta();
-  const { providers } = useWalletProviders(props.providers);
+  const { providers } = useWalletProviders(props.providers, props?.options);
   const disconnectWallet = useWalletsStore.use.disconnectWallet();
   const connectWallet = useWalletsStore.use.connectWallet();
   const onConnectWalletHandler = useRef<OnConnectHandler>();

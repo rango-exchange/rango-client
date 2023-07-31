@@ -55,7 +55,12 @@ export function AppRoutes(props: PropTypes) {
     },
     {
       path: navigationRoutes.settings,
-      element: <SettingsPage singleTheme= {config?.theme?.singleTheme} supportedSwappers={config?.liquiditySources} />,
+      element: (
+        <SettingsPage
+          singleTheme={config?.theme?.singleTheme}
+          supportedSwappers={config?.liquiditySources}
+        />
+      ),
     },
     {
       path: navigationRoutes.liquiditySources,
@@ -78,12 +83,15 @@ export function AppRoutes(props: PropTypes) {
               ? true
               : config.multiWallets
           }
+          config={config}
         />
       ),
     },
     {
       path: getAbsolutePath(navigationRoutes.confirmSwap),
-      element: <ConfirmSwapPage  customDestinationEnabled={config?.customDestination}/>,
+      element: (
+        <ConfirmSwapPage customDestinationEnabled={config?.customDestination} />
+      ),
     },
   ]);
 }

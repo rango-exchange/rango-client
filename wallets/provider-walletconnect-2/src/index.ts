@@ -9,7 +9,7 @@ import {
   WalletConfig,
   WalletInfo,
 } from '@rango-dev/wallets-shared';
-import { SignerFactory, BlockchainMeta } from 'rango-types';
+import { SignerFactory, BlockchainMeta, evmBlockchains } from 'rango-types';
 import type { ISignClient } from '@walletconnect/types';
 import Client from '@walletconnect/sign-client';
 
@@ -181,12 +181,13 @@ export const getSigners: (provider: WCInstance) => SignerFactory = signer;
 export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
   allBlockChains
 ) => {
+  const evms = evmBlockchains(allBlockChains);
   return {
     name: 'WalletConnect',
     img: 'https://raw.githubusercontent.com/rango-exchange/rango-types/main/assets/icons/wallets/walletconnect.svg',
     installLink: '',
     color: '#b2dbff',
-    supportedChains: allBlockChains,
+    supportedChains: evms,
     showOnMobile: true,
     mobileWallet: true,
   };

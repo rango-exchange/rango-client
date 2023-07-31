@@ -64,6 +64,7 @@ interface ConfigState {
 
 export const initialConfig: WidgetConfig = {
   apiKey: getConfig('API_KEY'),
+  walletConnectProjectId: getConfig('WC_PROJECT_ID'),
   amount: undefined,
   externalWallets: false,
   from: {

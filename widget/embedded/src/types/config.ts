@@ -125,6 +125,7 @@ export type BlockchainAndTokenConfig = {
  */
 export type WidgetConfig = {
   apiKey: string;
+  walletConnectProjectId?: string;
   affiliate?: WidgeAffiliate;
   amount?: number;
   from?: BlockchainAndTokenConfig;
