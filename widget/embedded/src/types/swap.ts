@@ -1,4 +1,4 @@
-import { SwapSavedSettings } from '@rango-dev/ui/dist/types/swaps';
+import { SwapSavedSettings } from 'rango-types/lib';
 
 export type PendingSwapSettings = Omit<
   SwapSavedSettings,

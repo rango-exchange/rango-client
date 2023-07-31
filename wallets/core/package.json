@@ -1,18 +1,20 @@
 {
   "name": "@rango-dev/wallets-core",
-  "version": "0.1.16-next.6",
+  "version": "0.8.1-next.0",
   "license": "MIT",
-  "module": "dist/wallets-core.esm.js",
-  "main": "dist/index.js",
-  "typings": "dist/index.d.ts",
   "type": "module",
+  "module": "./dist/index.js",
+  "main": "./dist/index.js",
+  "exports": {
+    ".": "./dist/index.js"
+  },
+  "typings": "dist/index.d.ts",
   "files": [
     "dist",
     "src"
   ],
   "scripts": {
-    "start": "tsdx watch",
-    "build": "tsdx build  --tsconfig ./tsconfig.json",
+    "build": "node ../../scripts/build/command.mjs --path wallets/core",
     "clean": "rimraf dist",
     "format": "prettier --write '{.,src}/**/*.{ts,tsx}'",
     "lint": "eslint \"**/*.{ts,tsx}\" --ignore-path ../../.eslintignore"
@@ -23,9 +25,9 @@
     "react-dom": "^17.0.0 || ^18.0.0"
   },
   "dependencies": {
-    "@rango-dev/wallets-shared": "^0.1.15-next.5",
+    "@rango-dev/wallets-shared": "^0.8.1-next.1",
     "@walletconnect/ethereum-provider": "1.8.0",
-    "rango-types": "^0.1.38"
+    "rango-types": "^0.1.46"
   },
   "publishConfig": {
     "access": "public"

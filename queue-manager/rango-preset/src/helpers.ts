@@ -5,16 +5,22 @@ import {
   QueueType,
 } from '@rango-dev/queue-manager-core';
 import {
+  ArrayElement,
   BlockReason,
+  StepEventType,
   SwapActionTypes,
   SwapQueueContext,
   SwapQueueDef,
   SwapStorage,
+  StepExecutionEventStatus,
+  StepExecutionBlockedEventStatus,
+  Step,
 } from './types';
 import {
   getBlockChainNameFromId,
   Meta,
   Network,
+  Networks,
   WalletState,
   WalletType,
 } from '@rango-dev/wallets-shared';
@@ -25,15 +31,10 @@ import {
   TransactionType,
   EvmBlockchainMeta,
   CreateTransactionResponse,
-  isEvmTransaction,
-  isCosmosTransaction,
-  isSolanaTransaction,
-  isTronTransaction,
-  isStarknetTransaction,
-  isTransferTransaction,
 } from 'rango-sdk';
 
 import {
+  DEFAULT_ERROR_CODE,
   ERROR_MESSAGE_WAIT_FOR_CHANGE_NETWORK,
   ERROR_MESSAGE_WAIT_FOR_WALLET,
   ERROR_MESSAGE_WAIT_FOR_WALLET_DESCRIPTION,
@@ -41,7 +42,6 @@ import {
 import { Manager } from '@rango-dev/queue-manager-core';
 import { Status } from '@rango-dev/queue-manager-core';
 import {
-  EventType,
   getCurrentBlockchainOf,
   getCurrentBlockchainOfOrNull,
   getScannerUrl,
@@ -64,6 +64,7 @@ import {
 } from './shared-errors';
 import { httpService } from './services';
 import { APIErrorCode, SignerErrorCode } from 'rango-types/lib';
+import { notifier } from './services/eventEmitter';
 
 type WhenTaskBlocked = Parameters<NonNullable<SwapQueueDef['whenTaskBlocked']>>;
 type WhenTaskBlockedEvent = WhenTaskBlocked[0];
@@ -93,16 +94,27 @@ export function claimQueue() {
 /**
  *
  * We use module-level variable to keep track of
- * map of transactions hash to the TransactionResponse
+ * map of transactions hash to the TransactionResponse and ...
  *
  */
-const swapTransactionToResponseMap: { [id: string]: any } = {};
-export function useTransactionsResponse() {
+type TransactionData = {
+  response?: any; // e.g. TransactionResponse in case of EVM transactions
+  receiptReceived?: boolean; // e.g. is TransactionReceipt ready in case of EVM transactions
+};
+const swapTransactionToDataMap: { [id: string]: TransactionData } = {};
+export function inMemoryTransactionsData() {
   return {
-    getTransactionResponseByHash: (hash: string) =>
-      swapTransactionToResponseMap[hash],
-    setTransactionResponseByHash: (hash: string, response: any) => {
-      swapTransactionToResponseMap[hash] = response;
+    getTransactionDataByHash: (hash: string) =>
+      swapTransactionToDataMap[hash] || {},
+    setTransactionDataByHash: (hash: string, data: TransactionData) => {
+      const r = swapTransactionToDataMap[hash];
+      if (!r) swapTransactionToDataMap[hash] = {};
+      swapTransactionToDataMap[hash].response =
+        data.response || swapTransactionToDataMap[hash].response;
+      swapTransactionToDataMap[hash].receiptReceived =
+        data.receiptReceived ||
+        swapTransactionToDataMap[hash].receiptReceived ||
+        false;
     },
   };
 }
@@ -195,24 +207,39 @@ export const setCurrentStepTx = (
   currentStep.tronApprovalTransaction = null;
   currentStep.tronTransaction = null;
 
-  if (isEvmTransaction(transaction)) {
-    if (transaction.isApprovalTx)
-      currentStep.evmApprovalTransaction = transaction;
-    else currentStep.evmTransaction = transaction;
-  } else if (isCosmosTransaction(transaction)) {
-    currentStep.cosmosTransaction = transaction;
-  } else if (isSolanaTransaction(transaction)) {
-    currentStep.solanaTransaction = transaction;
-  } else if (isTransferTransaction(transaction)) {
-    currentStep.transferTransaction = transaction;
-  } else if (isStarknetTransaction(transaction)) {
-    if (transaction.isApprovalTx)
-      currentStep.starknetApprovalTransaction = transaction;
-    else currentStep.starknetTransaction = transaction;
-  } else if (isTronTransaction(transaction)) {
-    if (transaction.isApprovalTx)
-      currentStep.tronApprovalTransaction = transaction;
-    else currentStep.tronTransaction = transaction;
+  const txType = transaction.type;
+  switch (txType) {
+    case TransactionType.EVM:
+      if (transaction.isApprovalTx)
+        currentStep.evmApprovalTransaction = transaction;
+      else currentStep.evmTransaction = transaction;
+      break;
+    case TransactionType.TRON:
+      if (transaction.isApprovalTx)
+        currentStep.tronApprovalTransaction = transaction;
+      else currentStep.tronTransaction = transaction;
+      break;
+    case TransactionType.STARKNET:
+      if (transaction.isApprovalTx)
+        currentStep.starknetApprovalTransaction = transaction;
+      else currentStep.starknetTransaction = transaction;
+      break;
+    case TransactionType.COSMOS:
+      currentStep.cosmosTransaction = transaction;
+      break;
+    case TransactionType.SOLANA:
+      currentStep.solanaTransaction = transaction;
+      break;
+    case TransactionType.TRANSFER:
+      currentStep.transferTransaction = transaction;
+      break;
+    case TransactionType.TON:
+      currentStep.tonTransaction = transaction;
+      break;
+    default:
+      ((x: never) => {
+        throw new Error(`${x} was unhandled!`);
+      })(txType);
   }
   return currentStep;
 };
@@ -281,9 +308,18 @@ export function updateSwapStatus({
 }): {
   swap: PendingSwap;
   step: PendingSwapStep | null;
+  failureType?: APIErrorCode;
 } {
   const swap = getStorage().swapDetails;
   const currentStep = getCurrentStep(swap);
+  const updatedResult: {
+    swap: PendingSwap;
+    step: PendingSwapStep | null;
+    failureType?: APIErrorCode;
+  } = {
+    swap,
+    step: currentStep,
+  };
   if (!!nextStepStatus && !!currentStep) currentStep.status = nextStepStatus;
 
   if (nextStatus) swap.status = nextStatus;
@@ -305,13 +341,20 @@ export function updateSwapStatus({
     const walletType = getRelatedWalletOrNull(swap, currentStep!)?.walletType;
     swap.extraMessageSeverity = MessageSeverity.error;
 
+    const failureType = mapAppErrorCodesToAPIErrorCode(errorCode);
+    updatedResult.failureType = failureType;
+
     httpService()
       .reportFailure({
         requestId: swap.requestId,
         step: currentStep?.id || 1,
-        eventType: mapAppErrorCodesToAPIErrorCode(errorCode),
+        eventType: failureType,
         reason: errorReason || '',
-        data: walletType ? { wallet: walletType } : undefined,
+        tags: walletType
+          ? {
+              wallet: walletType,
+            }
+          : undefined,
       })
       .then()
       .catch();
@@ -330,10 +373,7 @@ export function updateSwapStatus({
     swapDetails: swap,
   });
 
-  return {
-    swap,
-    step: currentStep,
-  };
+  return updatedResult;
 }
 
 /**
@@ -344,8 +384,6 @@ export function updateSwapStatus({
 export function setStepTransactionIds(
   { getStorage, setStorage }: ExecuterActions<SwapStorage, SwapActionTypes>,
   txId: string | null,
-  notifier: SwapQueueContext['notifier'],
-  eventType?: EventType,
   explorerUrl?: { url?: string; description?: string }
 ): void {
   const swap = getStorage().swapDetails;
@@ -362,22 +400,34 @@ export function setStepTransactionIds(
         description: explorerUrl.description || null,
       },
     ];
-  if (eventType === 'check_tx_status') {
-    swap.extraMessage = 'Checking transaction status ...';
-    swap.extraMessageDetail = '';
-    swap.extraMessageSeverity = MessageSeverity.info;
-  } else if (eventType === 'check_approve_tx_status') {
-    swap.extraMessage = 'Checking approve transaction status ...';
-    swap.extraMessageDetail = '';
-    swap.extraMessageSeverity = MessageSeverity.info;
-  }
+
+  const isApproval = isApprovalCurrentStepTx(currentStep);
+
+  if (isApproval) swap.extraMessage = 'Checking approve transaction status ...';
+  else swap.extraMessage = 'Checking transaction status ...';
+
+  swap.extraMessageDetail = '';
+  swap.extraMessageSeverity = MessageSeverity.info;
 
   setStorage({
     ...getStorage(),
     swapDetails: swap,
   });
-  if (eventType)
-    notifier({ eventType: eventType, swap: swap, step: currentStep });
+
+  notifier({
+    event: {
+      type: StepEventType.TX_EXECUTION,
+      status: StepExecutionEventStatus.TX_SENT,
+    },
+    swap: swap,
+    step: currentStep,
+  });
+
+  notifier({
+    event: { type: StepEventType.CHECK_STATUS },
+    swap: swap,
+    step: currentStep,
+  });
 }
 
 /**
@@ -468,10 +518,7 @@ export function markRunningSwapAsSwitchingNetwork({
 export function markRunningSwapAsDependsOnOtherQueues({
   getStorage,
   setStorage,
-  notifier,
-}: Pick<ExecuterActions, 'getStorage' | 'setStorage'> & {
-  notifier: SwapQueueContext['notifier'];
-}):
+}: Pick<ExecuterActions, 'getStorage' | 'setStorage'>):
   | {
       swap: PendingSwap;
       step: PendingSwapStep;
@@ -486,7 +533,10 @@ export function markRunningSwapAsDependsOnOtherQueues({
   currentStep.networkStatus = PendingSwapNetworkStatus.WaitingForQueue;
 
   notifier({
-    eventType: 'waiting_for_queue',
+    event: {
+      type: StepEventType.TX_EXECUTION_BLOCKED,
+      status: StepExecutionBlockedEventStatus.WAITING_FOR_QUEUE,
+    },
     swap,
     step: currentStep,
   });
@@ -543,7 +593,7 @@ export function isWalletNull(wallet: Wallet | null): boolean {
 export function getEvmProvider(providers: Providers, type: WalletType): any {
   if (type && providers[type]) {
     // we need this because provider can return an instance or a map of instances, so what you are doing here is try to detect that.
-    if (providers[type].size) return providers[type].get(Network.ETHEREUM);
+    if (providers[type].size) return providers[type].get(Networks.ETHEREUM);
 
     return providers[type];
   }
@@ -725,11 +775,23 @@ export function onBlockForConnectWallet(
   if (!ok) {
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     const currentStep = getCurrentStep(swap)!;
-    context.notifier({
-      eventType:
-        reason === 'account_miss_match'
-          ? 'waiting_for_change_wallet_account'
-          : 'waiting_for_connecting_wallet',
+    const { type: walletType, address } = getRequiredWallet(swap);
+    notifier({
+      event: {
+        type: StepEventType.TX_EXECUTION_BLOCKED,
+        ...(reason === 'account_miss_match'
+          ? {
+              status:
+                StepExecutionBlockedEventStatus.WAITING_FOR_CHANGE_WALLET_ACCOUNT,
+              requiredAccount: address ?? undefined,
+            }
+          : {
+              status:
+                StepExecutionBlockedEventStatus.WAITING_FOR_WALLET_CONNECT,
+              requiredWallet: walletType ?? undefined,
+              requiredAccount: address ?? undefined,
+            }),
+      },
       swap: swap,
       step: currentStep,
     });
@@ -772,9 +834,22 @@ export function onBlockForChangeNetwork(
     setStorage: queue.setStorage.bind(queue),
   });
 
+  const requiredNetwork = getCurrentBlockchainOfOrNull(swap, currentStep);
+
+  const requiredWallet = getRequiredWallet(swap).type;
+
+  const currentNetwork = requiredWallet
+    ? context.state(requiredWallet).network
+    : undefined;
+
   if (result) {
-    context.notifier({
-      eventType: 'waiting_for_network_change',
+    notifier({
+      event: {
+        type: StepEventType.TX_EXECUTION_BLOCKED,
+        status: StepExecutionBlockedEventStatus.WAITING_FOR_NETWORK_CHANGE,
+        requiredNetwork: requiredNetwork ?? undefined,
+        currentNetwork: currentNetwork ?? undefined,
+      },
       swap: result.swap,
       step: result.step,
     });
@@ -833,7 +908,6 @@ export function onDependsOnOtherQueues(
     markRunningSwapAsDependsOnOtherQueues({
       getStorage: queue.getStorage.bind(queue),
       setStorage: queue.setStorage.bind(queue),
-      notifier: context.notifier,
     });
     return;
   }
@@ -864,7 +938,6 @@ export function onDependsOnOtherQueues(
       // TODO: Use key generator
       retryOn(
         `${type}-${network}:${address}`,
-        context.notifier,
         manager,
         context.canSwitchNetworkTo
       );
@@ -895,9 +968,9 @@ export function isRequiredWalletConnected(
 export function singTransaction(
   actions: ExecuterActions<SwapStorage, SwapActionTypes, SwapQueueContext>
 ): void {
-  const { setTransactionResponseByHash } = useTransactionsResponse();
+  const { setTransactionDataByHash } = inMemoryTransactionsData();
   const { getStorage, setStorage, failed, next, schedule, context } = actions;
-  const { meta, getSigners, notifier, isMobileWallet } = context;
+  const { meta, getSigners, isMobileWallet } = context;
   const swap = getStorage().swapDetails;
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const currentStep = getCurrentStep(swap)!;
@@ -918,20 +991,40 @@ export function singTransaction(
   const tx = getCurrentStepTx(currentStep);
   const txType = tx?.type;
   const isApproval = isApprovalCurrentStepTx(currentStep);
-  const isSmartContractCall = [
-    TransactionType.EVM,
-    TransactionType.STARKNET,
-    TransactionType.TRON,
-  ].includes(txType!);
+
+  if (!tx || !txType) {
+    const extraMessage = 'Unexpected Error: tx is null!';
+    const updateResult = updateSwapStatus({
+      getStorage,
+      setStorage,
+      nextStatus: 'failed',
+      nextStepStatus: 'failed',
+      message: extraMessage,
+      details: undefined,
+      errorCode: 'CLIENT_UNEXPECTED_BEHAVIOUR',
+    });
+    notifier({
+      event: {
+        type: StepEventType.FAILED,
+        reason: extraMessage,
+        reasonCode: 'CLIENT_UNEXPECTED_BEHAVIOUR',
+      },
+      ...updateResult,
+    });
+    failed();
+    return onFinish();
+  }
+
+  const chainId = meta.blockchains?.[tx.blockChain]?.chainId;
 
   const hasAlreadyProceededToSign =
     typeof swap.hasAlreadyProceededToSign === 'boolean';
 
   let nextStatus: SwapStatus | undefined,
     nextStepStatus: StepStatus,
-    eventType: EventType,
     message: string,
-    details: string;
+    details: string,
+    eventType: StepEventType;
 
   if (isApproval) {
     message = `Waiting for approval of ${currentStep?.fromSymbol} coin ${
@@ -941,21 +1034,19 @@ export function singTransaction(
       'Waiting for approve transaction to be mined and confirmed successfully';
     nextStepStatus = 'waitingForApproval';
     nextStatus = undefined;
-    eventType = 'confirm_approve_contract';
+    eventType = StepEventType.TX_EXECUTION;
   } else if (hasAlreadyProceededToSign) {
     message = 'Transaction is expired. Please try again.';
     nextStepStatus = 'failed';
     nextStatus = 'failed';
     details = '';
-    eventType = 'transaction_expired';
+    eventType = StepEventType.FAILED;
   } else {
     message = 'Executing transaction ...';
     nextStepStatus = 'running';
     nextStatus = 'running';
     details = `${mobileWallet ? 'Check your mobile phone!' : ''}`;
-    eventType = isSmartContractCall
-      ? 'calling_smart_contract'
-      : 'confirm_transfer';
+    eventType = StepEventType.TX_EXECUTION;
   }
 
   const updateResult = updateSwapStatus({
@@ -970,18 +1061,29 @@ export function singTransaction(
       : hasAlreadyProceededToSign,
     errorCode: hasAlreadyProceededToSign ? 'TX_EXPIRED' : undefined,
   });
-  notifier({
-    eventType,
-    ...updateResult,
-  });
+
+  if (eventType === StepEventType.FAILED) {
+    notifier({
+      event: {
+        type: eventType,
+        reason: message,
+        reasonCode: updateResult.failureType ?? DEFAULT_ERROR_CODE,
+      },
+      ...updateResult,
+    });
+  } else
+    notifier({
+      event: { type: eventType, status: StepExecutionEventStatus.SEND_TX },
+      ...updateResult,
+    });
 
   if (hasAlreadyProceededToSign) {
     failed();
     onFinish();
     return;
   }
-  const signer = walletSigners.getSigner(txType!);
-  signer.signAndSendTx(tx!, walletAddress, null).then(
+  const signer = walletSigners.getSigner(txType);
+  signer.signAndSendTx(tx, walletAddress, chainId).then(
     ({ hash, response }) => {
       const explorerUrl = getScannerUrl(
         hash,
@@ -991,14 +1093,12 @@ export function singTransaction(
       setStepTransactionIds(
         actions,
         hash,
-        notifier,
-        isApproval ? 'check_approve_tx_status' : 'check_tx_status',
         explorerUrl
           ? { url: explorerUrl, description: isApproval ? 'Approve' : 'Swap' }
           : undefined
       );
       // response used for evm transactions to get receipt and track replaced
-      response && setTransactionResponseByHash(hash, response);
+      response && setTransactionDataByHash(hash, { response });
       schedule(SwapActionTypes.CHECK_TRANSACTION_STATUS);
       next();
       onFinish();
@@ -1009,15 +1109,12 @@ export function singTransaction(
       const { extraMessage, extraMessageDetail, extraMessageErrorCode } =
         prettifyErrorMessage(error);
 
-      // if it is an rpc error with details, send the log to sentry
-      if (
-        error &&
-        error?.root &&
-        error?.root?.message &&
-        error?.root?.code &&
-        error?.root?.reason
-      )
-        logRPCError(error.root, swap, currentStep, sourceWallet?.walletType);
+      logRPCError(
+        error?.trace?.stack || error?.trace || error?.root || error,
+        swap,
+        currentStep,
+        sourceWallet?.walletType
+      );
 
       const updateResult = updateSwapStatus({
         getStorage,
@@ -1028,14 +1125,13 @@ export function singTransaction(
         details: extraMessageDetail,
         errorCode: extraMessageErrorCode,
       });
-      const eventType =
-        extraMessageErrorCode === 'REJECTED_BY_USER'
-          ? 'contract_rejected'
-          : isSmartContractCall
-          ? 'smart_contract_call_failed'
-          : 'transfer_failed';
+
       notifier({
-        eventType,
+        event: {
+          type: StepEventType.FAILED,
+          reason: extraMessage,
+          reasonCode: updateResult.failureType ?? DEFAULT_ERROR_CODE,
+        },
         ...updateResult,
       });
       failed();
@@ -1048,7 +1144,6 @@ export function checkWaitingForConnectWalletChange(params: {
   wallet_network: string;
   manager?: Manager;
   evmChains: EvmBlockchainMeta[];
-  notifier: SwapQueueContext['notifier'];
 }): void {
   const { wallet_network, evmChains, manager } = params;
   const [wallet, network] = splitWalletNetwork(wallet_network);
@@ -1077,10 +1172,12 @@ export function checkWaitingForConnectWalletChange(params: {
           }
         );
 
+        const requiredNetwork = getCurrentBlockchainOfOrNull(swap, currentStep);
+
         if (
           currentStepRequiredWallet === wallet &&
           hasWaitingForConnect &&
-          getCurrentBlockchainOfOrNull(swap, currentStep) != network
+          requiredNetwork != network
         ) {
           const queueInstance = q.list;
           const { type } = getRequiredWallet(swap);
@@ -1100,8 +1197,14 @@ export function checkWaitingForConnectWalletChange(params: {
           });
 
           if (result) {
-            params?.notifier({
-              eventType: 'waiting_for_network_change',
+            notifier({
+              event: {
+                type: StepEventType.TX_EXECUTION_BLOCKED,
+                status:
+                  StepExecutionBlockedEventStatus.WAITING_FOR_NETWORK_CHANGE,
+                currentNetwork: network,
+                requiredNetwork: requiredNetwork ?? undefined,
+              },
               swap: result.swap,
               step: result.step,
             });
@@ -1174,21 +1277,26 @@ export function getRunningSwaps(manager: Manager): PendingSwap[] {
  * @param notifier
  * @returns
  */
-export function resetRunningSwapNotifsOnPageLoad(
-  runningSwaps: PendingSwap[],
-  notifier: SwapQueueContext['notifier']
-) {
+export function resetRunningSwapNotifsOnPageLoad(runningSwaps: PendingSwap[]) {
   runningSwaps.forEach((swap) => {
     const currentStep = getCurrentStep(swap);
-    let eventType: EventType | undefined;
+    const eventType = StepEventType.TX_EXECUTION_BLOCKED;
+    let eventSubtype:
+      | StepExecutionBlockedEventStatus.WAITING_FOR_QUEUE
+      | StepExecutionBlockedEventStatus.WAITING_FOR_WALLET_CONNECT
+      | undefined;
     if (currentStep?.networkStatus === PendingSwapNetworkStatus.WaitingForQueue)
-      eventType = 'waiting_for_queue';
+      eventSubtype = StepExecutionBlockedEventStatus.WAITING_FOR_QUEUE;
     else if (swap?.status === 'running') {
-      eventType = 'waiting_for_connecting_wallet';
+      eventSubtype = StepExecutionBlockedEventStatus.WAITING_FOR_WALLET_CONNECT;
     }
     if (!!eventType && !!notifier) {
       notifier({
-        eventType,
+        event: {
+          type: eventType,
+          status:
+            eventSubtype ?? StepExecutionBlockedEventStatus.WAITING_FOR_QUEUE,
+        },
         swap: swap,
         step: currentStep,
       });
@@ -1209,7 +1317,6 @@ export function resetRunningSwapNotifsOnPageLoad(
  */
 export function retryOn(
   wallet_network: string,
-  notifier: SwapQueueContext['notifier'],
   manager?: Manager,
   canSwitchNetworkTo?: (type: WalletType, network: Network) => boolean,
   options = { fallbackToOnlyWallet: true }
@@ -1258,7 +1365,6 @@ export function retryOn(
         markRunningSwapAsDependsOnOtherQueues({
           getStorage: currentQueue.getStorage.bind(currentQueue),
           setStorage: currentQueue.setStorage.bind(currentQueue),
-          notifier: notifier,
         });
       }
     }
@@ -1266,8 +1372,7 @@ export function retryOn(
     finalQueueToBeRun = onlyWalletMatched[0];
   }
 
-  if (!canSwitchNetworkTo?.(wallet, network as Network))
-    finalQueueToBeRun?.unblock();
+  if (!canSwitchNetworkTo?.(wallet, network)) finalQueueToBeRun?.unblock();
   else finalQueueToBeRun?.checkBlock();
 }
 
@@ -1315,8 +1420,49 @@ export function cancelSwap(
     nextStepStatus: 'failed',
     errorCode: 'USER_CANCEL',
   });
+
+  notifier({
+    event: {
+      type: StepEventType.FAILED,
+      reasonCode: 'USER_CANCEL',
+      reason: updateResult.swap.extraMessage ?? undefined,
+    },
+
+    swap: updateResult.swap,
+    step: updateResult.step,
+  });
+
   reset();
   if (manager) manager?.retry();
 
   return updateResult;
+}
+
+export function getLastSuccessfulStep<T extends { status: StepStatus }[]>(
+  steps: T
+): ArrayElement<T> | undefined {
+  return steps
+    .slice()
+    .reverse()
+    .find((step) => step.status === 'success') as ArrayElement<T> | undefined;
+}
+
+export function getFailedStep<T extends { status: StepStatus }[]>(
+  steps: T
+): ArrayElement<T> | undefined {
+  return steps
+    .slice()
+    .reverse()
+    .find((step) => step.status === 'failed') as ArrayElement<T> | undefined;
+}
+
+export function isApprovalTX(step: Step): boolean {
+  const { transaction } = step;
+  const approvalTx =
+    (transaction?.type === TransactionType.EVM && transaction.isApprovalTx) ||
+    (transaction?.type === TransactionType.STARKNET &&
+      transaction.isApprovalTx) ||
+    (transaction?.type === TransactionType.TRON && transaction.isApprovalTx);
+
+  return approvalTx;
 }

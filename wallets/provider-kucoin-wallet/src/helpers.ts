@@ -1,4 +1,4 @@
-import { Network } from '@rango-dev/wallets-shared';
+import { Networks } from '@rango-dev/wallets-shared';
 
 export function getKucoinInstance() {
   const { kucoin } = window;
@@ -8,7 +8,7 @@ export function getKucoinInstance() {
 }
 
 export const KUCOIN_WALLET_SUPPORTED_CHAINS = [
-  Network.ETHEREUM,
-  Network.POLYGON,
-  Network.BSC,
+  Networks.ETHEREUM,
+  Networks.POLYGON,
+  Networks.BSC,
 ];

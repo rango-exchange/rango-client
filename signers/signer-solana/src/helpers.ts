@@ -5,8 +5,12 @@ import {
   TransactionInstruction,
   VersionedTransaction,
 } from '@solana/web3.js';
-import { SignerError, SignerErrorCode, SolanaTransaction } from 'rango-types';
+import type {
+  SolanaTransaction,
+  SignerError as SignerErrorType,
+} from 'rango-types';
 import { SolanaExternalProvider } from './signer';
+import { SignerError, SignerErrorCode } from 'rango-types';
 
 async function retryPromise<Type>(
   promise: Promise<Type>,
@@ -184,9 +188,10 @@ export const generalSolanaTransactionExecutor = async (
     if (
       e &&
       SignerError.isSignerError(e) &&
-      (e as SignerError).code === SignerErrorCode.REJECTED_BY_USER
+      (e as SignerErrorType).code === SignerErrorCode.REJECTED_BY_USER
     )
       throw e;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any, no-prototype-builtins
     if (e && (e as any).hasOwnProperty('code') && (e as any).code === 4001)
       throw new SignerError(SignerErrorCode.REJECTED_BY_USER, undefined, e);
 

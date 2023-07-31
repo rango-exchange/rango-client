@@ -7,95 +7,18 @@ const TypographyContainer = styled('span', {
   display: 'inline-block',
   variants: {
     variant: {
-      h1: {
-        fontSize: '$36',
-        fontWeight: '$700',
-        '@md': {
-          fontSize: '$40',
-        },
-        '@lg': {
-          fontSize: '$48',
-        },
-      },
-      h2: {
-        fontSize: '$32',
-        fontWeight: '$700',
-        '@md': {
-          fontSize: '$36',
-        },
-        '@lg': {
-          fontSize: '$40',
-        },
-      },
-      h3: {
-        fontSize: '$20',
-        fontWeight: '$700',
-        '@md': {
-          fontSize: '$24',
-        },
-        '@lg': {
-          fontSize: '$32',
-        },
-      },
-      h4: {
-        fontSize: '$18',
-        fontWeight: '$600',
-        '@md': {
-          fontSize: '$20',
-        },
-        '@lg': {
-          fontSize: '$24',
-        },
-      },
-      h5: {
-        fontSize: '$16',
-        fontWeight: '$600',
-      },
-      h6: {
-        fontSize: '$14',
-        fontWeight: '$500',
-        '@md': {
-          fontSize: '$16',
-        },
-        '@lg': {
-          fontSize: '$18',
-        },
-      },
-      title: {
-        fontSize: '$14',
-        fontWeight: '$500',
-        '@md': {
-          fontSize: '$15',
-        }
-      },
-      body1: {
-        fontSize: '$14',
-        fontWeight: '$400',
-        '@md': {
-          fontSize: '$16',
-        },
-        '@lg': {
-          fontSize: '$18',
-        },
-      },
-      body2: {
-        fontSize: '$14',
-        fontWeight: '$400',
-        // '@lg': {
-        //   fontSize: '$14',
-        // },
-      },
-      body3: {
-        fontSize: '$12',
-        fontWeight: '$400',
-      },
-      caption: {
-        fontSize: '$10',
-        fontWeight: '$400',
-        '@lg': {
-          fontSize: '$12',
-        },
-      },
+      display: {},
+      headline: {},
+      title: {},
+      label: {},
+      body: {},
+    },
+    size: {
+      large: {},
+      medium: {},
+      xmedium: {},
+      small: {},
+      xsmall: {},
     },
     align: {
       center: {
@@ -170,21 +93,180 @@ const TypographyContainer = styled('span', {
       },
     },
   },
+
+  compoundVariants: [
+    {
+      size: 'large',
+      variant: 'display',
+      css: {
+        fontSize: '$48',
+        fontWeight: '$semiBold',
+        lineHeight: '$64',
+      },
+    },
+    {
+      size: 'medium',
+      variant: 'display',
+      css: {
+        fontSize: '$40',
+        fontWeight: '$semiBold',
+        lineHeight: '$52',
+      },
+    },
+    {
+      size: 'small',
+      variant: 'display',
+      css: {
+        fontSize: '$36',
+        fontWeight: '$semiBold',
+        lineHeight: '$44',
+      },
+    },
+
+    {
+      size: 'large',
+      variant: 'headline',
+      css: {
+        fontSize: '$32',
+        fontWeight: '$semiBold',
+        lineHeight: '$40',
+      },
+    },
+    {
+      size: 'medium',
+      variant: 'headline',
+      css: {
+        fontSize: '$28',
+        fontWeight: '$semiBold',
+        lineHeight: '$36',
+      },
+    },
+    {
+      size: 'small',
+      variant: 'headline',
+      css: {
+        fontSize: '$24',
+        fontWeight: '$semiBold',
+        lineHeight: '$30',
+      },
+    },
+    {
+      size: 'xsmall',
+      variant: 'headline',
+      css: {
+        fontSize: '$20',
+        fontWeight: '$semiBold',
+        lineHeight: '$28',
+      },
+    },
+
+    {
+      size: 'large',
+      variant: 'title',
+      css: {
+        fontSize: '$20',
+        fontWeight: '$medium',
+        lineHeight: '$28',
+      },
+    },
+    {
+      size: 'medium',
+      variant: 'title',
+      css: {
+        fontSize: '$18',
+        fontWeight: '$medium',
+        lineHeight: '$26',
+      },
+    },
+    {
+      size: 'xmedium',
+      variant: 'title',
+      css: {
+        fontSize: '$16',
+        fontWeight: '$medium',
+        lineHeight: '$24',
+      },
+    },
+    {
+      size: 'small',
+      variant: 'title',
+      css: {
+        fontSize: '$14',
+        fontWeight: '$medium',
+        lineHeight: '$20',
+      },
+    },
+
+    {
+      size: 'large',
+      variant: 'label',
+      css: {
+        fontSize: '$14',
+        fontWeight: '$medium',
+        lineHeight: '$20',
+      },
+    },
+    {
+      size: 'medium',
+      variant: 'label',
+      css: {
+        fontSize: '$12',
+        fontWeight: '$medium',
+        lineHeight: '$16',
+      },
+    },
+    {
+      size: 'small',
+      variant: 'label',
+      css: {
+        fontSize: '$10',
+        fontWeight: '$medium',
+        lineHeight: '$16',
+      },
+    },
+
+    {
+      size: 'large',
+      variant: 'body',
+      css: {
+        fontSize: '$16',
+        fontWeight: '$regular',
+        lineHeight: '$24',
+      },
+    },
+    {
+      size: 'medium',
+      variant: 'body',
+      css: {
+        fontSize: '$14',
+        fontWeight: '$regular',
+        lineHeight: '$20',
+      },
+    },
+    {
+      size: 'small',
+      variant: 'body',
+      css: {
+        fontSize: '$12',
+        fontWeight: '$regular',
+        lineHeight: '$16',
+      },
+    },
+    {
+      size: 'xsmall',
+      variant: 'body',
+      css: {
+        fontSize: '$10',
+        fontWeight: '$regular',
+        lineHeight: '$12',
+      },
+    },
+  ],
 });
 
 export interface PropTypes {
-  variant:
-    | 'h1'
-    | 'h2'
-    | 'h3'
-    | 'h4'
-    | 'h5'
-    | 'h6'
-    | 'title'
-    | 'body1'
-    | 'body2'
-    | 'body3'
-    | 'caption';
+  variant: 'display' | 'headline' | 'title' | 'label' | 'body';
+  size: 'large' | 'medium' | 'xmedium' | 'small' | 'xsmall';
   align?: 'center' | 'left' | 'right';
   noWrap?: boolean;
   mt?: 2 | 4 | 8 | 12;
@@ -214,8 +296,7 @@ export function Typography({
     <TypographyContainer
       className={`_typography _text ${className || ''}`}
       css={customCss}
-      {...props}
-    >
+      {...props}>
       {children}
     </TypographyContainer>
   );

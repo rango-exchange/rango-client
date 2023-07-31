@@ -1,6 +1,10 @@
 import React from 'react';
 import { useWallets } from '@rango-dev/wallets-core';
-import { sortWalletsBasedOnState, WalletInfo, WalletTypes } from '@rango-dev/wallets-shared';
+import {
+  sortWalletsBasedOnState,
+  WalletInfo,
+  WalletTypes,
+} from '@rango-dev/wallets-shared';
 import Item from './Item';
 import './styles.css';
 const excludedWallets = [WalletTypes.LEAP];
@@ -21,12 +25,16 @@ function List() {
           extensionAvailable: installed,
           info,
         };
-      }),
+      })
   );
   return (
     <div className="row">
       {allWallets.map((wallet) => (
-        <Item key={wallet.type} type={wallet.type} info={wallet.info as WalletInfo} />
+        <Item
+          key={wallet.type}
+          type={wallet.type}
+          info={wallet.info as WalletInfo}
+        />
       ))}
     </div>
   );

@@ -1,5 +1,5 @@
 import {
-  Network,
+  Networks,
   WalletTypes,
   Connect,
   Subscribe,
@@ -14,7 +14,7 @@ const WALLET = WalletTypes.LEAP_COSMOS;
 
 export const config = {
   type: WALLET,
-  defaultNetwork: Network.COSMOS,
+  defaultNetwork: Networks.COSMOS,
 };
 
 export const getInstance = leap_cosmos_instance;

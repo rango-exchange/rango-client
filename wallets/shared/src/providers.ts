@@ -1,7 +1,15 @@
-import { Network, CanSwitchNetwork, Subscribe, SwitchNetwork } from './rango';
+import {
+  Network,
+  CanSwitchNetwork,
+  Subscribe,
+  SwitchNetwork,
+  Networks,
+  CanEagerConnect,
+} from './rango';
 import { convertEvmBlockchainMetaToEvmChainInfo } from './helpers';
 import { switchOrAddNetworkForMetamaskCompatibleWallets } from './helpers';
-import { BlockchainMeta, isEvmBlockchain } from 'rango-types';
+import type { BlockchainMeta } from 'rango-types';
+import { isEvmBlockchain } from 'rango-types';
 
 export async function getEvmAccounts(instance: any) {
   const [accounts, chainId] = await Promise.all([
@@ -37,13 +45,25 @@ export const subscribeToEvm: Subscribe = ({
   });
 };
 
+export const canEagerlyConnectToEvm: CanEagerConnect = async ({ instance }) => {
+  try {
+    const accounts: string[] = await instance.request({
+      method: 'eth_accounts',
+    });
+    if (accounts.length) return true;
+    else return false;
+  } catch (error) {
+    return false;
+  }
+};
+
 export const switchNetworkForEvm: SwitchNetwork = async ({
   instance,
   network,
   meta,
 }) => {
   const evmBlockchains = meta.filter(isEvmBlockchain);
-  const evmInstance = getNetworkInstance(instance, Network.ETHEREUM);
+  const evmInstance = getNetworkInstance(instance, Networks.ETHEREUM);
   await switchOrAddNetworkForMetamaskCompatibleWallets(
     evmInstance,
     network,
@@ -64,7 +84,7 @@ export function getEthChainsInstance(
 ): Network | null {
   if (!network) return null;
   const evmBlockchains = evmNetworkNames(meta);
-  return evmBlockchains.includes(network) ? Network.ETHEREUM : null;
+  return evmBlockchains.includes(network) ? Networks.ETHEREUM : null;
 }
 
 function isEvmNetwork(network: Network | null, meta: BlockchainMeta[]) {
@@ -79,7 +99,7 @@ export function chooseInstance(
   network?: Network | null
 ) {
   // If there is no `network` we fallback to default network.
-  network = network || Network.ETHEREUM;
+  network = network || Networks.ETHEREUM;
   const instance_network_name = isEvmNetwork(network, meta)
     ? getEthChainsInstance(network, meta)
     : network;

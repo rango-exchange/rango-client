@@ -1,28 +1,26 @@
 {
   "name": "@rango-dev/signer-starknet",
-  "version": "0.1.15-next.4",
+  "version": "0.8.1-next.0",
   "license": "MIT",
   "type": "module",
-  "module": "dist/index.js",
+  "module": "./dist/index.js",
+  "main": "./dist/index.js",
+  "exports": {
+    ".": "./dist/index.js"
+  },
   "typings": "dist/index.d.ts",
   "files": [
     "dist",
     "src"
   ],
   "scripts": {
-    "dev": "tsdx watch",
     "build": "node ../../scripts/build/command.mjs --path signers/signer-starknet",
     "clean": "rimraf dist",
     "format": "prettier --write '{.,src}/**/*.{ts,tsx}'",
     "lint": "eslint \"**/*.{ts,tsx}\" --ignore-path ../../.eslintignore"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "tsdx lint"
-    }
-  },
   "dependencies": {
-    "rango-types": "^0.1.38"
+    "rango-types": "^0.1.46"
   },
   "publishConfig": {
     "access": "public"

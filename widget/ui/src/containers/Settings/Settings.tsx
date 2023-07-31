@@ -1,5 +1,6 @@
 import { styled } from '../../theme';
 import React, { useState } from 'react';
+import { i18n } from '@lingui/core';
 
 import { LiquiditySource, LoadingStatus } from '../../types/meta';
 import {
@@ -14,7 +15,7 @@ import {
 } from '../../components';
 
 const BaseContainer = styled('div', {
-  borderRadius: '$5',
+  borderRadius: '$xs',
   backgroundColor: '$neutral100',
   padding: '$16',
 });
@@ -113,10 +114,12 @@ export function Settings(props: PropTypes) {
     <>
       <BaseContainer>
         <Head>
-          <Typography variant="body2">Slippage tolerance</Typography>
+          <Typography variant="body" size="medium">
+            {i18n.t('Slippage tolerance')}
+          </Typography>
           {customSlippage ? (
-            <Typography variant="caption" color="error">
-              {customSlippage}% Custom
+            <Typography variant="body" size="xsmall" color="error">
+              {customSlippage}% {i18n.t('Custom')}
             </Typography>
           ) : undefined}
         </Head>
@@ -147,7 +150,11 @@ export function Settings(props: PropTypes) {
                 onCustomSlippageChange(parsedValue);
             }}
             suffix={
-              customSlippage && <Typography variant="body2">%</Typography>
+              customSlippage && (
+                <Typography variant="body" size="medium">
+                  %
+                </Typography>
+              )
             }
             size="small"
             placeholder="Custom %"
@@ -160,13 +167,15 @@ export function Settings(props: PropTypes) {
       </BaseContainer>
       {!singleTheme && (
         <ThemesContainer>
-          <Title variant="body2">Theme</Title>
+          <Title variant="body" size="medium">
+            {i18n.t('Theme')}
+          </Title>
           <Radio
             value={selectedTheme}
             options={[
-              { value: 'dark', label: 'Dark' },
-              { value: 'light', label: 'Light' },
-              { value: 'auto', label: 'Auto' },
+              { value: 'dark', label: `${i18n.t('Dark')}` },
+              { value: 'light', label: `${i18n.t('Light')}` },
+              { value: 'auto', label: `${i18n.t('Auto')}` },
             ]}
             onChange={(value) => onThemeChange(value as Theme)}
             direction="horizontal"
@@ -175,7 +184,9 @@ export function Settings(props: PropTypes) {
         </ThemesContainer>
       )}
       <InfiniteContainer>
-        <Typography variant="body2">Infinite Approval</Typography>
+        <Typography variant="body" size="medium">
+          {i18n.t('Infinite Approval')}
+        </Typography>
         <Switch checked={infiniteApprove} onChange={toggleInfiniteApprove} />
       </InfiniteContainer>
       <LiquiditySourceContainer>
@@ -187,22 +198,23 @@ export function Settings(props: PropTypes) {
           suffix={
             <LiquiditySourceNumber>
               {loadingStatus === 'success' && (
-                <Typography variant="body2" color="neutral800">
+                <Typography variant="body" size="medium" color="neutral800">
                   {liquiditySources.length !== selectedLiquiditySources.length
                     ? `${selectedLiquiditySources.length} / ${liquiditySources.length}`
                     : liquiditySources.length}
                 </Typography>
               )}
               {loadingStatus === 'failed' && (
-                <Typography variant="body2" color="$error500">
+                <Typography variant="body" size="medium" color="$error500">
                   Loading failed
                 </Typography>
               )}
               <StyledAngleRight />
             </LiquiditySourceNumber>
-          }
-        >
-          <Typography variant="body2">Liquidity Sources</Typography>
+          }>
+          <Typography variant="body" size="medium">
+            {i18n.t('Liquidity Sources')}
+          </Typography>
         </Button>
       </LiquiditySourceContainer>
     </>

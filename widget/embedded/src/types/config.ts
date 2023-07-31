@@ -1,5 +1,7 @@
 import { Asset } from 'rango-sdk';
 import { WalletType } from '@rango-dev/wallets-shared';
+import { ProviderInterface } from '@rango-dev/wallets-core';
+import { Language } from '@rango-dev/ui';
 
 /**
  * The above type defines a set of optional color properties for a widget.
@@ -51,6 +53,23 @@ export type WidgetTheme = {
 };
 
 /**
+ * If you want to charge users fee per transaction, you should
+ * pass `WidgetAffiliate` including affiliateRef, affiliatePercent, and affiliateWallets.
+ * @property {string | null} ref - To enable dApps to charge affiliate fees and generate income from
+ * users' transactions, the affiliate referral code should be provided. You can create this code by
+ * visiting the following link: https://app.rango.exchange/affiliate.
+ * @property {number | null} percent - If you want to change the default affiliate fee percentage,
+ * you can provide a new value here.
+ * @property {{ [key: string]: string }} wallets - If you want to change the default affiliate wallet
+ *  addresses, you can provide new values here. (Map of route blockchains to affiliate address)
+ */
+export type WidgeAffiliate = {
+  ref?: string;
+  percent?: number;
+  wallets?: { [key: string]: string };
+};
+
+/**
  * `BlockchainAndTokenConfig`
  *
  * @property {string} blockchain - This property is optional and represents the default selected blockchain.
@@ -74,8 +93,8 @@ export type BlockchainAndTokenConfig = {
  * and theme.
  *
  * @property {string} apiKey - The API key used to communicate with Rango API
- * @property {string} affiliateRef - The affiliate reference is an optional string property in the
- * WidgetConfig type. It is used to set and track referrals or affiliations for the dApps.
+ * @property {WidgeAffiliate} affiliate - If you want to charge users fee per transaction, you should 
+ * pass `WidgetAffiliate` including affiliateRef, affiliatePercent, and affiliateWallets.
  * @property {number} amount - The default input amount.
  * @property {BlockchainAndTokenConfig} from - The `from` property is an optional property of type
  * `BlockchainAndTokenConfig` that specifies the default blockchain and token from which the user wants to
@@ -100,17 +119,21 @@ export type BlockchainAndTokenConfig = {
  * @property {WidgetTheme} theme - The `theme` property is a part of the `WidgetConfig` type and is
  * used to specify the visual theme of the widget. It is of type `WidgetTheme`, which is an interface
  * that defines the various properties of the theme, such as colors, fonts, and others.
+ * @property {boolean} externalWallets
+ * If `externalWallets` is `true`, you should add `WidgetWallets` to your app.
+
  */
 export type WidgetConfig = {
   apiKey: string;
-  affiliateRef?: string;
+  affiliate?: WidgeAffiliate;
   amount?: number;
   from?: BlockchainAndTokenConfig;
   to?: BlockchainAndTokenConfig;
   liquiditySources?: string[];
-  wallets?: WalletType[];
+  wallets?: (WalletType | ProviderInterface)[];
   multiWallets?: boolean;
   customDestination?: boolean;
-  language?: string;
+  language?: Language;
   theme?: WidgetTheme;
+  externalWallets?: boolean;
 };

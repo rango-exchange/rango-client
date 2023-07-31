@@ -1,6 +1,6 @@
 import { Subscribe } from '@rango-dev/wallets-shared';
 import {
-  Network,
+  Networks,
   WalletTypes,
   CanSwitchNetwork,
   Connect,
@@ -16,7 +16,7 @@ const WALLET = WalletTypes.TRON_LINK;
 
 export const config = {
   type: WALLET,
-  defaultNetwork: Network.TRON,
+  defaultNetwork: Networks.TRON,
 };
 
 export const getInstance = tronLink_instance;
@@ -28,8 +28,7 @@ export const connect: Connect = async ({ instance }) => {
     if (!r) {
       throw new Error('Please unlock your TronLink extension first.');
     }
-    if (r.code === 200) {
-    } else if (!!r?.code && !!r.message) {
+    if (!!r?.code && !!r.message) {
       throw new Error(r.message);
     }
   }
@@ -37,7 +36,7 @@ export const connect: Connect = async ({ instance }) => {
     (await instance.tronWeb.trx.getAccount()).address.toString()
   );
   // TODO check connected network
-  return { accounts: !!address ? [address] : [], chainId: Network.TRON };
+  return { accounts: address ? [address] : [], chainId: Networks.TRON };
 };
 
 export const subscribe: Subscribe = ({ updateAccounts, disconnect }) => {
@@ -48,7 +47,7 @@ export const subscribe: Subscribe = ({ updateAccounts, disconnect }) => {
       e.data.message.action == 'accountsChanged'
     ) {
       const account = e?.data?.message?.data?.address;
-      if (!!account) {
+      if (account) {
         updateAccounts([account]);
       } else {
         disconnect();

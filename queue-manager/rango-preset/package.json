@@ -1,18 +1,21 @@
 {
   "name": "@rango-dev/queue-manager-rango-preset",
-  "version": "0.1.15-next.6",
+  "version": "0.8.1-next.0",
   "license": "MIT",
-  "module": "dist/queue-manager-rango-preset.esm.js",
-  "main": "dist/index.js",
-  "typings": "dist/index.d.ts",
   "type": "module",
+  "module": "./dist/index.js",
+  "main": "./dist/index.js",
+  "exports": {
+    ".": "./dist/index.js"
+  },
+  "typings": "dist/index.d.ts",
   "files": [
     "dist",
     "src"
   ],
   "scripts": {
     "dev": "tsdx watch --tsconfig ./tsconfig.json",
-    "build": "tsdx build --tsconfig ./tsconfig.json",
+    "build": "node ../../scripts/build/command.mjs --path queue-manager/rango-preset",
     "analyze": "size-limit --why",
     "clean": "rimraf dist",
     "format": "prettier --write '{.,src}/**/*.{ts,tsx}'",
@@ -34,7 +37,8 @@
   },
   "dependencies": {
     "@sentry/browser": "^6.12.0",
-    "rango-types": "^0.1.38",
+    "mitt": "^3.0.0",
+    "rango-types": "^0.1.46",
     "uuid": "^9.0.0"
   },
   "publishConfig": {

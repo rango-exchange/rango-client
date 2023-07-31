@@ -8,6 +8,7 @@ import {
   detectInstallLink,
   WalletInfo,
   WalletTypes,
+  Networks,
 } from '@rango-dev/wallets-shared';
 
 import {
@@ -77,7 +78,7 @@ export function walletAndSupportedChainsNames(
   if (!supportedChains) return null;
   let walletAndSupportedChainsNames: Network[] = [];
   walletAndSupportedChainsNames = supportedChains.map(
-    (blockchainMeta) => blockchainMeta.name as Network
+    (blockchainMeta) => blockchainMeta.name
   );
 
   return walletAndSupportedChainsNames;
@@ -92,13 +93,18 @@ export function prepareAccountsForWalletStore(
   const result: Wallet[] = [];
 
   function addAccount(network: Network, address: string) {
-    const newAccount: Wallet = {
-      address,
-      chain: network,
-      walletType: wallet,
-    };
+    const accountForChainAlreadyExists = !!result.find(
+      (account) => account.chain === network
+    );
+    if (!accountForChainAlreadyExists) {
+      const newAccount: Wallet = {
+        address,
+        chain: network,
+        walletType: wallet,
+      };
 
-    result.push(newAccount);
+      result.push(newAccount);
+    }
   }
 
   const supportedChains = supportedChainNames || [];
@@ -108,7 +114,7 @@ export function prepareAccountsForWalletStore(
 
     const hasLimitation = supportedChains.length > 0;
     const isSupported = supportedChains.includes(network);
-    const isUnknown = network === Network.Unknown;
+    const isUnknown = network === Networks.Unknown;
     const notSupportedNetworkByWallet =
       hasLimitation && !isSupported && !isUnknown;
 
@@ -121,7 +127,7 @@ export function prepareAccountsForWalletStore(
     // Example: showing our evm compatible netwrok when the uknown network is evem.
     // Otherwise, we stop executing this function.
     const isUknownAndEvmBased =
-      network === Network.Unknown && isEvmAddress(address);
+      network === Networks.Unknown && isEvmAddress(address);
     if (isUnknown && !isUknownAndEvmBased) return;
 
     const isEvmBasedChain = evmBasedChains.includes(network);
@@ -153,12 +159,26 @@ export function getRequiredChains(route: BestRouteResponse | null) {
   route?.result?.swaps.forEach((swap) => {
     const currentStepFromBlockchain = swap.from.blockchain;
     const currentStepToBlockchain = swap.to.blockchain;
-    let lastAddedWallet = wallets[wallets.length - 1];
-    if (currentStepFromBlockchain != lastAddedWallet)
+    if (!wallets.includes(currentStepFromBlockchain)) {
       wallets.push(currentStepFromBlockchain);
-    lastAddedWallet = wallets[wallets.length - 1];
-    if (currentStepToBlockchain != lastAddedWallet)
+    }
+    if (!wallets.includes(currentStepToBlockchain)) {
       wallets.push(currentStepToBlockchain);
+    }
+
+    // Check if internalSwaps array exists
+    if (swap.internalSwaps && Array.isArray(swap.internalSwaps)) {
+      swap.internalSwaps.forEach((internalSwap) => {
+        const internalStepFromBlockchain = internalSwap.from.blockchain;
+        const internalStepToBlockchain = internalSwap.to.blockchain;
+        if (!wallets.includes(internalStepFromBlockchain)) {
+          wallets.push(internalStepFromBlockchain);
+        }
+        if (!wallets.includes(internalStepToBlockchain)) {
+          wallets.push(internalStepToBlockchain);
+        }
+      });
+    }
   });
   return wallets;
 }
@@ -172,7 +192,7 @@ export function getSelectableWallets(
   destinationChain?: string
 ): SelectableWallet[] {
   const selectableWallets = connectedWallets.map(
-    (connectedWallet: ConnectedWallet) => {      
+    (connectedWallet: ConnectedWallet) => {
       return {
         address: connectedWallet.address,
         walletType: connectedWallet.walletType,
@@ -233,7 +253,8 @@ export function isAccountAndWalletMatched(
 ) {
   return (
     account.address === connectedWallet.address &&
-    account.chain === connectedWallet.chain
+    account.chain === connectedWallet.chain &&
+    account.walletType === connectedWallet.walletType
   );
 }
 
@@ -325,13 +346,13 @@ export const calculateWalletUsdValue = (connectedWallet: ConnectedWallet[]) => {
 };
 
 function numberWithThousandSeperator(number: string | number): string {
-  var parts = number.toString().split('.');
+  const parts = number.toString().split('.');
   parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
   return parts.join('.');
 }
 
 export const sortTokens = (tokens: TokenWithBalance[]): TokenWithBalance[] => {
-  let walletConnected = !!tokens.some((token) => token.balance);
+  const walletConnected = !!tokens.some((token) => token.balance);
   if (!walletConnected) {
     return tokens
       .filter((token) => !token.address)

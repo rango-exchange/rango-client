@@ -2,9 +2,10 @@ import Long from 'long';
 import { BroadcastMode, makeSignDoc, makeStdTx } from '@cosmjs/launchpad';
 import { SigningStargateClient } from '@cosmjs/stargate';
 import { cosmos } from '@keplr-wallet/cosmos';
-import { MsgExecuteContract } from 'cosmjs-types/cosmwasm/wasm/v1/tx';
+import { MsgExecuteContract } from 'cosmjs-types/cosmwasm/wasm/v1/tx.js';
 import { Keplr, KeplrSignOptions } from '@keplr-wallet/types';
-import { CosmosTransaction, SignerError, SignerErrorCode } from 'rango-types';
+import type { CosmosTransaction } from 'rango-types';
+import { SignerError, SignerErrorCode } from 'rango-types';
 
 // todo: unhardcode this.
 // sifchain has some gas price apis. but gaslimits might be hardcoded still

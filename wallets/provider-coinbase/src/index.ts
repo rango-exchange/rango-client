@@ -1,5 +1,5 @@
 import {
-  Network,
+  Networks,
   WalletTypes,
   CanSwitchNetwork,
   Connect,
@@ -12,6 +12,8 @@ import {
   switchNetworkForEvm,
   getCoinbaseInstance as coinbase_instance,
   WalletInfo,
+  CanEagerConnect,
+  canEagerlyConnectToEvm,
 } from '@rango-dev/wallets-shared';
 import { getSolanaAccounts } from './helpers';
 import {
@@ -28,7 +30,7 @@ const WALLET = WalletTypes.COINBASE;
 
 export const config = {
   type: WALLET,
-  defaultNetwork: Network.ETHEREUM,
+  defaultNetwork: Networks.ETHEREUM,
 };
 
 export const getInstance = coinbase_instance;
@@ -37,7 +39,7 @@ export const connect: Connect = async ({ instance, meta }) => {
   // after opening the browser, wallet is locked, and don't give us accounts and chainId
   // on `check` phase, so `network` will be null. For this case we need to get chainId
   // whenever we are requesting accounts.
-  const evm_instance = chooseInstance(instance, meta, Network.ETHEREUM);
+  const evm_instance = chooseInstance(instance, meta, Networks.ETHEREUM);
   let results: ProviderConnectResult[] = [];
 
   if (evm_instance) {
@@ -54,29 +56,29 @@ export const subscribe: Subscribe = (options) => {
   const ethInstance = chooseInstance(
     options.instance,
     options.meta,
-    Network.ETHEREUM
+    Networks.ETHEREUM
   );
   const solanaInstance = chooseInstance(
     options.instance,
     options.meta,
-    Network.SOLANA
+    Networks.SOLANA
   );
   const { connect, updateAccounts, state, updateChainId, meta } = options;
   ethInstance?.on('accountsChanged', (addresses: string[]) => {
     const eth_chainId = meta
       .filter(isEvmBlockchain)
-      .find((blockchain) => blockchain.name === Network.ETHEREUM)?.chainId;
+      .find((blockchain) => blockchain.name === Networks.ETHEREUM)?.chainId;
     if (state.connected) {
-      if (state.network != Network.ETHEREUM && eth_chainId)
+      if (state.network != Networks.ETHEREUM && eth_chainId)
         updateChainId(eth_chainId);
       updateAccounts(addresses);
     }
   });
 
   solanaInstance?.on('accountChanged', async (publicKey: string) => {
-    if (state.network != Network.SOLANA)
+    if (state.network != Networks.SOLANA)
       updateChainId(meta.filter(isSolanaBlockchain)[0].chainId);
-    const network = Network.SOLANA;
+    const network = Networks.SOLANA;
     if (publicKey) {
       const account = publicKey.toString();
       updateAccounts([account]);
@@ -90,6 +92,13 @@ export const switchNetwork: SwitchNetwork = switchNetworkForEvm;
 export const canSwitchNetworkTo: CanSwitchNetwork = canSwitchNetworkToEvm;
 
 export const getSigners: (provider: any) => SignerFactory = signer;
+
+export const canEagerConnect: CanEagerConnect = ({ instance, meta }) => {
+  const evm_instance = chooseInstance(instance, meta, Networks.ETHEREUM);
+  if (evm_instance) {
+    return canEagerlyConnectToEvm({ instance: evm_instance, meta });
+  } else return Promise.resolve(false);
+};
 
 export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
   allBlockChains

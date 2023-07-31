@@ -1,18 +1,18 @@
-import { Network, ProviderConnectResult } from '@rango-dev/wallets-shared';
+import { Networks, ProviderConnectResult } from '@rango-dev/wallets-shared';
 
 export async function getSolanaAccounts(
   instance: any
 ): Promise<ProviderConnectResult[]> {
-  const solanaInstance = await instance.get(Network.SOLANA);
+  const solanaInstance = await instance.get(Networks.SOLANA);
   const results: ProviderConnectResult[] = [];
 
-  if (!!solanaInstance) {
+  if (solanaInstance) {
     await solanaInstance.connect();
     const account = solanaInstance.publicKey.toString();
 
     results.push({
       accounts: account ? [account] : [],
-      chainId: Network.SOLANA,
+      chainId: Networks.SOLANA,
     });
   }
 

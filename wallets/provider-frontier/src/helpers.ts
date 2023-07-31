@@ -1,12 +1,12 @@
-import { Network, ProviderConnectResult } from '@rango-dev/wallets-shared';
+import { Networks, ProviderConnectResult } from '@rango-dev/wallets-shared';
 
 export function frontier() {
   const { frontier } = window;
   if (!frontier) return null;
 
   const instances = new Map();
-  if (frontier?.ethereum) instances.set(Network.ETHEREUM, frontier?.ethereum);
-  if (frontier?.solana) instances.set(Network.SOLANA, frontier?.solana);
+  if (frontier?.ethereum) instances.set(Networks.ETHEREUM, frontier?.ethereum);
+  if (frontier?.solana) instances.set(Networks.SOLANA, frontier?.solana);
 
   return instances;
 }
@@ -14,16 +14,16 @@ export function frontier() {
 export async function getSolanaAccounts(
   instance: any
 ): Promise<ProviderConnectResult[]> {
-  const solanaInstance = await instance.get(Network.SOLANA);
+  const solanaInstance = await instance.get(Networks.SOLANA);
   const results: ProviderConnectResult[] = [];
 
-  if (!!solanaInstance) {
+  if (solanaInstance) {
     await solanaInstance.connect();
     const account = solanaInstance.publicKey.toString();
 
     results.push({
       accounts: account ? [account] : [],
-      chainId: Network.SOLANA,
+      chainId: Networks.SOLANA,
     });
   }
 

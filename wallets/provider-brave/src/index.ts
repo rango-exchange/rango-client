@@ -1,5 +1,5 @@
 import {
-  Network,
+  Networks,
   WalletTypes,
   canSwitchNetworkToEvm,
   chooseInstance,
@@ -12,6 +12,8 @@ import {
   SwitchNetwork,
   WalletInfo,
   getSolanaAccounts,
+  CanEagerConnect,
+  canEagerlyConnectToEvm,
 } from '@rango-dev/wallets-shared';
 import { brave as brave_instances } from './helpers';
 import signer from './signer';
@@ -28,14 +30,14 @@ const WALLET = WalletTypes.BRAVE;
 
 export const config = {
   type: WALLET,
-  defaultNetwork: Network.ETHEREUM,
+  defaultNetwork: Networks.ETHEREUM,
 };
 
 export const getInstance = brave_instances;
 
 export const connect: Connect = async ({ instance, meta }) => {
-  const evm_instance = chooseInstance(instance, meta, Network.ETHEREUM);
-  const sol_instance = chooseInstance(instance, meta, Network.SOLANA);
+  const evm_instance = chooseInstance(instance, meta, Networks.ETHEREUM);
+  const sol_instance = chooseInstance(instance, meta, Networks.SOLANA);
   const results: ProviderConnectResult[] = [];
   const emptyWalletErrorCode = -32603;
   const emptyWalletCustomErrorMessage = 'Please create or import a wallet';
@@ -83,15 +85,15 @@ export const subscribe: Subscribe = ({
   state,
   updateChainId,
 }) => {
-  const evm_instance = chooseInstance(instance, meta, Network.ETHEREUM);
-  const sol_instance = chooseInstance(instance, meta, Network.SOLANA);
+  const evm_instance = chooseInstance(instance, meta, Networks.ETHEREUM);
+  const sol_instance = chooseInstance(instance, meta, Networks.SOLANA);
 
   evm_instance?.on('accountsChanged', (addresses: string[]) => {
     const eth_chainId = meta
       .filter(isEvmBlockchain)
-      .find((blockchain) => blockchain.name === Network.ETHEREUM)?.chainId;
+      .find((blockchain) => blockchain.name === Networks.ETHEREUM)?.chainId;
     if (state.connected) {
-      if (state.network != Network.ETHEREUM && eth_chainId)
+      if (state.network != Networks.ETHEREUM && eth_chainId)
         updateChainId(eth_chainId);
       updateAccounts(addresses);
     }
@@ -102,7 +104,7 @@ export const subscribe: Subscribe = ({
   });
 
   sol_instance?.on('accountChanged', async () => {
-    if (state.network != Network.SOLANA)
+    if (state.network != Networks.SOLANA)
       updateChainId(meta.filter(isSolanaBlockchain)[0].chainId);
     const response = await sol_instance.connect();
     const account: string = response.publicKey.toString();
@@ -115,6 +117,13 @@ export const switchNetwork: SwitchNetwork = switchNetworkForEvm;
 export const canSwitchNetworkTo: CanSwitchNetwork = canSwitchNetworkToEvm;
 
 export const getSigners: (provider: any) => SignerFactory = signer;
+
+export const canEagerConnect: CanEagerConnect = ({ instance, meta }) => {
+  const evm_instance = chooseInstance(instance, meta, Networks.ETHEREUM);
+  if (evm_instance) {
+    return canEagerlyConnectToEvm({ instance: evm_instance, meta });
+  } else return Promise.resolve(false);
+};
 
 export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
   allBlockChains

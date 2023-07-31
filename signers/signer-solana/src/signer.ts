@@ -1,9 +1,4 @@
-import {
-  GenericSigner,
-  SignerError,
-  SignerErrorCode,
-  SolanaTransaction,
-} from 'rango-types';
+import type { GenericSigner, SolanaTransaction } from 'rango-types';
 
 import { executeSolanaTransaction } from './helpers';
 import {
@@ -13,6 +8,8 @@ import {
   TransactionSignature,
   VersionedTransaction,
 } from '@solana/web3.js';
+
+import { SignerError, SignerErrorCode } from 'rango-types';
 
 // https://github.com/solana-labs/wallet-adapter/blob/01c6316ce0725e0a075d6adb237bbcb4128e76ad/packages/wallets/phantom/src/adapter.ts#L30
 export interface SolanaExternalProvider {

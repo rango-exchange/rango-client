@@ -1,14 +1,15 @@
 import {
   WalletType,
   Network,
+  Networks,
   EvmTransaction,
   CosmosTransaction,
   TransferTransaction,
   SolanaTransaction,
   Asset,
   Transaction,
-} from "@rango-dev/wallets-shared";
-import BigNumber from "bignumber.js";
+} from '@rango-dev/wallets-shared';
+import BigNumber from 'bignumber.js';
 
 export type WalletTypeAndAddress = {
   walletType: WalletType;
@@ -16,13 +17,13 @@ export type WalletTypeAndAddress = {
 };
 
 export enum MessageSeverity {
-  error = "error",
-  warning = "warning",
-  info = "info",
-  success = "success",
+  error = 'error',
+  warning = 'warning',
+  info = 'info',
+  success = 'success',
 }
 
-export type SwapStatus = "running" | "failed" | "success";
+export type SwapStatus = 'running' | 'failed' | 'success';
 
 export type SwapSavedSettings = {
   slippage: string;
@@ -31,31 +32,31 @@ export type SwapSavedSettings = {
 };
 
 export type SwapperId =
-  | "ThorChain"
-  | "OneInchEth"
-  | "Binance Bridge"
-  | "OneInchBsc"
-  | "OneInchPolygon"
-  | "Terra Bridge"
-  | "TerraSwap"
-  | "Osmosis"
-  | "Lido"
-  | "PoS Bridge"
-  | "Wormhole";
+  | 'ThorChain'
+  | 'OneInchEth'
+  | 'Binance Bridge'
+  | 'OneInchBsc'
+  | 'OneInchPolygon'
+  | 'Terra Bridge'
+  | 'TerraSwap'
+  | 'Osmosis'
+  | 'Lido'
+  | 'PoS Bridge'
+  | 'Wormhole';
 
 export type StepStatus =
-  | "created"
-  | "running"
-  | "failed"
-  | "success"
-  | "waitingForApproval"
-  | "approved";
+  | 'created'
+  | 'running'
+  | 'failed'
+  | 'success'
+  | 'waitingForApproval'
+  | 'approved';
 
 export enum PendingSwapNetworkStatus {
-  WaitingForConnectingWallet = "waitingForConnectingWallet",
-  WaitingForQueue = "waitingForQueue",
-  WaitingForNetworkChange = "waitingForNetworkChange",
-  NetworkChanged = "networkChanged",
+  WaitingForConnectingWallet = 'waitingForConnectingWallet',
+  WaitingForQueue = 'waitingForQueue',
+  WaitingForNetworkChange = 'waitingForNetworkChange',
+  NetworkChanged = 'networkChanged',
 }
 
 export type SwapExplorerUrl = {
@@ -64,12 +65,12 @@ export type SwapExplorerUrl = {
 };
 
 type InternalStepState =
-  | "PENDING"
-  | "CREATED"
-  | "WAITING"
-  | "SIGNED"
-  | "SUCCESSED"
-  | "FAILED";
+  | 'PENDING'
+  | 'CREATED'
+  | 'WAITING'
+  | 'SIGNED'
+  | 'SUCCESSED'
+  | 'FAILED';
 
 export type SwapperStatusStep = {
   name: string;
@@ -118,7 +119,7 @@ export type SwapResultAsset = {
   usdPrice: number | null;
 };
 
-export type ExpenseType = "FROM_SOURCE_WALLET" | "DECREASE_FROM_OUTPUT";
+export type ExpenseType = 'FROM_SOURCE_WALLET' | 'DECREASE_FROM_OUTPUT';
 
 export type SwapFee = {
   asset: Asset;
@@ -165,7 +166,7 @@ export type SwapResult = {
   to: SwapResultAsset;
   fromAmount: string;
   fromAmountPrecision: number | null;
-  fromAmountRestrictionType: "EXCLUSIVE" | "INCLUSIVE";
+  fromAmountRestrictionType: 'EXCLUSIVE' | 'INCLUSIVE';
   fromAmountMinValue: number | null;
   fromAmountMaxValue: number | null;
   toAmount: string;
@@ -205,9 +206,9 @@ export type PendingSwap = {
 };
 export type Amount = { amount: string; decimals: number };
 export type WalletRequiredAssetReason =
-  | "FEE"
-  | "INPUT_ASSET"
-  | "FEE_AND_INPUT_ASSET";
+  | 'FEE'
+  | 'INPUT_ASSET'
+  | 'FEE_AND_INPUT_ASSET';
 
 export type SimulationAssetAndAmount = {
   asset: Asset;
@@ -240,15 +241,15 @@ export type BestRoute = {
   diagnosisMessages: string[];
 };
 
-export const SWAPPER_ONE_INCH_ETH = "OneInchEth";
-export const SWAPPER_ONE_INCH_BSC = "OneInchBsc";
-export const SWAPPER_ONE_INCH_POLYGON = "OneInchPolygon";
-export const SWAPPER_TERRA_BRIDGE = "Terra Bridge";
-export const SWAPPER_LIDO = "Lido";
-export const SWAPPER_TERRA_SWAP = "TerraSwap";
-export const SWAPPER_THORCHAIN = "ThorChain";
-export const SWAPPER_BINANCE_BRIDGE = "Binance Bridge";
-export const SWAPPER_OSMOSIS = "Osmosis";
+export const SWAPPER_ONE_INCH_ETH = 'OneInchEth';
+export const SWAPPER_ONE_INCH_BSC = 'OneInchBsc';
+export const SWAPPER_ONE_INCH_POLYGON = 'OneInchPolygon';
+export const SWAPPER_TERRA_BRIDGE = 'Terra Bridge';
+export const SWAPPER_LIDO = 'Lido';
+export const SWAPPER_TERRA_SWAP = 'TerraSwap';
+export const SWAPPER_THORCHAIN = 'ThorChain';
+export const SWAPPER_BINANCE_BRIDGE = 'Binance Bridge';
+export const SWAPPER_OSMOSIS = 'Osmosis';
 
 export const SWAPPER_ONE_INCH_LIST = [
   SWAPPER_ONE_INCH_ETH,
@@ -257,18 +258,18 @@ export const SWAPPER_ONE_INCH_LIST = [
 ];
 
 export const NETWORKS_FOR_1INCH = [
-  Network.POLYGON,
-  Network.ETHEREUM,
-  Network.BSC,
+  Networks.POLYGON,
+  Networks.ETHEREUM,
+  Networks.BSC,
 ];
 
-export const BNB_SYMBOL = "BNB";
-export const MATIC_SYMBOL = "MATIC";
+export const BNB_SYMBOL = 'BNB';
+export const MATIC_SYMBOL = 'MATIC';
 
 export const NETWORK_TO_NATIVE_SYMBOL_MAP_FOR_1INCH = new Map([
-  [Network.ETHEREUM, Network.ETHEREUM],
-  [Network.BSC, BNB_SYMBOL],
-  [Network.POLYGON, MATIC_SYMBOL],
+  [Networks.ETHEREUM, Networks.ETHEREUM],
+  [Networks.BSC, BNB_SYMBOL],
+  [Networks.POLYGON, MATIC_SYMBOL],
 ]);
 
 export type TokenMeta = {
@@ -294,20 +295,6 @@ export type RawAccounts = {
 export type UserWalletBlockchain = {
   blockchain: string;
   addresses: string[];
-};
-
-export type BestRouteRequest = {
-  from: Asset;
-  to: Asset;
-  amount: string;
-  connectedWallets: UserWalletBlockchain[];
-  selectedWallets: { [p: string]: string };
-  checkPrerequisites: boolean;
-  affiliateRef: string | null;
-  swappers?: string[];
-  blockchains?: Network[];
-  swapperGroups?: string[];
-  swappersGroupsExclude?: boolean;
 };
 
 export type WalletBalance = {
@@ -336,30 +323,30 @@ export type Blockchain = { name: Network; accounts: Account[] };
 export type Wallet = { blockchains: Blockchain[] };
 
 export type EventType =
-  | "swap_started"
-  | "confirm_contract"
-  | "confirm_transfer"
-  | "task_failed"
-  | "task_completed"
-  | "task_canceled"
-  | "task_paused"
-  | "contract_confirmed"
-  | "contract_rejected"
-  | "transfer_confirmed"
-  | "transfer_rejected"
-  | "calling_smart_contract"
-  | "smart_contract_called"
-  | "smart_contract_call_failed"
-  | "step_completed_with_output"
-  | "waiting_for_network_change"
-  | "waiting_for_connecting_wallet"
-  | "network_changed"
-  | "not_enough_balance"
-  | "check_fee_failed"
-  | "route_failed_to_find";
+  | 'swap_started'
+  | 'confirm_contract'
+  | 'confirm_transfer'
+  | 'task_failed'
+  | 'task_completed'
+  | 'task_canceled'
+  | 'task_paused'
+  | 'contract_confirmed'
+  | 'contract_rejected'
+  | 'transfer_confirmed'
+  | 'transfer_rejected'
+  | 'calling_smart_contract'
+  | 'smart_contract_called'
+  | 'smart_contract_call_failed'
+  | 'step_completed_with_output'
+  | 'waiting_for_network_change'
+  | 'waiting_for_connecting_wallet'
+  | 'network_changed'
+  | 'not_enough_balance'
+  | 'check_fee_failed'
+  | 'route_failed_to_find';
 
 export type SwapperStatusResponse = {
-  status: "running" | "failed" | "success" | null;
+  status: 'running' | 'failed' | 'success' | null;
   extraMessage: string | null;
   timestamp: number;
   outputAmount: BigNumber | null;
@@ -377,23 +364,23 @@ export type CheckTxStatusRequest = {
 };
 
 export enum ApiMethodName {
-  RequestingSwapTransaction = "Requesting Swap Transaction",
-  CreatingSwap = "Creating Swap",
-  CheckingTransactionStatus = "Checking transaction status",
-  CreateTransaction = "Create Transaction",
-  CheckApproval = "Check TX Approval",
-  GettingSwapDetail = "Getting Swap Detail",
-  GettingUserLimits = "Getting user limits",
+  RequestingSwapTransaction = 'Requesting Swap Transaction',
+  CreatingSwap = 'Creating Swap',
+  CheckingTransactionStatus = 'Checking transaction status',
+  CreateTransaction = 'Create Transaction',
+  CheckApproval = 'Check TX Approval',
+  GettingSwapDetail = 'Getting Swap Detail',
+  GettingUserLimits = 'Getting user limits',
 }
 
 export type APIErrorCode =
-  | "TX_FAIL"
-  | "FETCH_TX_FAILED"
-  | "USER_REJECT"
-  | "CALL_WALLET_FAILED"
-  | "SEND_TX_FAILED"
-  | "CALL_OR_SEND_FAILED"
-  | "CLIENT_UNEXPECTED_BEHAVIOUR";
+  | 'TX_FAIL'
+  | 'FETCH_TX_FAILED'
+  | 'USER_REJECT'
+  | 'CALL_WALLET_FAILED'
+  | 'SEND_TX_FAILED'
+  | 'CALL_OR_SEND_FAILED'
+  | 'CLIENT_UNEXPECTED_BEHAVIOUR';
 
 export type ErrorDetail = {
   extraMessage: string;
@@ -402,9 +389,9 @@ export type ErrorDetail = {
 };
 
 export enum TransactionName {
-  GenericTransaction = "transaction",
-  SendingOneInchTransaction = "1inch transaction",
-  Approval = "approve transaction",
+  GenericTransaction = 'transaction',
+  SendingOneInchTransaction = '1inch transaction',
+  Approval = 'approve transaction',
 }
 
 export type UserSettings = {
@@ -430,41 +417,35 @@ export type CreateTransactionResponse = {
 };
 
 export const OKX_WALLET_SUPPORTED_CHAINS = [
-  Network.ETHEREUM,
-  Network.BTC,
-  Network.BSC,
-  Network.TRON,
-  Network.SOLANA,
-  Network.POLYGON,
-  Network.FANTOM,
-  Network.ARBITRUM,
-  Network.OPTIMISM,
-  Network.CRONOS,
-  Network.BOBA,
-  Network.GNOSIS,
-  Network.MOONBEAM,
-  Network.MOONRIVER,
-  Network.HARMONY,
-  Network.LTC,
-  Network.AVAX_CCHAIN,
+  Networks.ETHEREUM,
+  Networks.BTC,
+  Networks.BSC,
+  Networks.TRON,
+  Networks.SOLANA,
+  Networks.POLYGON,
+  Networks.FANTOM,
+  Networks.ARBITRUM,
+  Networks.OPTIMISM,
+  Networks.CRONOS,
+  Networks.BOBA,
+  Networks.GNOSIS,
+  Networks.MOONBEAM,
+  Networks.MOONRIVER,
+  Networks.HARMONY,
+  Networks.LTC,
+  Networks.AVAX_CCHAIN,
 ];
 
 export const BINANCE_CHAIN_WALLET_SUPPORTED_CHAINS = [
-  Network.ETHEREUM,
-  Network.BSC,
-  Network.BINANCE,
+  Networks.ETHEREUM,
+  Networks.BSC,
+  Networks.BINANCE,
 ];
 export const EXODUS_WALLET_SUPPORTED_CHAINS = [
-  Network.SOLANA,
-  Network.ETHEREUM,
-  Network.BSC,
-  Network.POLYGON,
-  Network.AVAX_CCHAIN,
+  Networks.SOLANA,
+  Networks.ETHEREUM,
+  Networks.BSC,
+  Networks.POLYGON,
+  Networks.AVAX_CCHAIN,
   BNB_SYMBOL,
 ];
-
-export type SwapProgressNotification = {
-  eventType: EventType;
-  swap: PendingSwap | null;
-  step: PendingSwapStep | null;
-};

@@ -1,16 +1,19 @@
 {
   "name": "@rango-dev/signer-terra",
-  "version": "0.1.21-next.5",
+  "version": "0.8.1-next.0",
   "license": "MIT",
   "type": "module",
-  "module": "dist/index.js",
+  "module": "./dist/index.js",
+  "main": "./dist/index.js",
+  "exports": {
+    ".": "./dist/index.js"
+  },
   "typings": "dist/index.d.ts",
   "files": [
     "dist",
     "src"
   ],
   "scripts": {
-    "dev": "tsdx watch",
     "build": "node ../../scripts/build/command.mjs --path signers/signer-terra",
     "clean": "rimraf dist",
     "format": "prettier --write '{.,src}/**/*.{ts,tsx}'",
@@ -18,7 +21,7 @@
   },
   "dependencies": {
     "@terra-money/terra.js": "^3.1.7",
-    "rango-types": "^0.1.38"
+    "rango-types": "^0.1.46"
   },
   "publishConfig": {
     "access": "public"

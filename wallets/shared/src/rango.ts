@@ -1,4 +1,4 @@
-import { BlockchainMeta, EvmBlockchainMeta } from 'rango-types';
+import type { BlockchainMeta, EvmBlockchainMeta } from 'rango-types';
 
 export const IS_DEV =
   !process.env.NODE_ENV || process.env.NODE_ENV === 'development';
@@ -14,19 +14,19 @@ export const getBlockChainNameFromId = (
 
   // Sometimes providers are passing `Network` as chainId.
   // If chainId is a `Network`, we return itself.
-  const allNetworks = Object.values(Network) as string[];
-  if (allNetworks.includes(String(chainId))) return chainId as Network;
+  const allNetworks = Object.values(Networks) as string[];
+  if (allNetworks.includes(String(chainId))) return chainId as Networks;
 
-  if (chainId === 'Binance-Chain-Tigris') return Network.BINANCE;
+  if (chainId === 'Binance-Chain-Tigris') return Networks.BINANCE;
   return (
-    (blockchains
+    blockchains
       .filter((blockchainMeta) => !!blockchainMeta.chainId)
       .find((blockchainMeta) => {
         const blockchainChainId = blockchainMeta.chainId?.startsWith('0x')
           ? parseInt(blockchainMeta.chainId)
           : blockchainMeta.chainId;
         return blockchainChainId == chainId;
-      })?.name as Network) || null
+      })?.name || null
   );
 };
 
@@ -40,6 +40,7 @@ export const uint8ArrayToHex = (buffer: Uint8Array): string => {
 };
 
 export type WalletType = string;
+export type Network = string;
 
 export enum WalletTypes {
   META_MASK = 'metamask',
@@ -48,6 +49,7 @@ export enum WalletTypes {
   KEPLR = 'keplr',
   PHANTOM = 'phantom',
   BINANCE_CHAIN = 'binance-chain',
+  BITKEEP = 'bitkeep',
   TRON_LINK = 'tron-link',
   COINBASE = 'coinbase',
   XDEFI = 'xdefi',
@@ -59,6 +61,7 @@ export enum WalletTypes {
   SAFEPAL = 'safepal',
   TOKEN_POCKET = 'token-pocket',
   BRAVE = 'brave',
+  BRAAVOS = 'braavos',
   MATH = 'math',
   EXODUS = 'exodus',
   OKX = 'okx',
@@ -67,9 +70,10 @@ export enum WalletTypes {
   LEAP_COSMOS = 'leap-cosmos',
   STATION = 'station',
   ENKRYPT = 'enkrypt',
+  TAHO = 'taho',
 }
 
-export enum Network {
+export enum Networks {
   BTC = 'BTC',
   BSC = 'BSC',
   LTC = 'LTC',
@@ -128,11 +132,11 @@ export enum Network {
 }
 
 export const XDEFI_WALLET_SUPPORTED_NATIVE_CHAINS = [
-  Network.BTC,
-  Network.LTC,
-  Network.THORCHAIN,
-  Network.BCH,
-  Network.BINANCE,
+  Networks.BTC,
+  Networks.LTC,
+  Networks.THORCHAIN,
+  Networks.BCH,
+  Networks.BINANCE,
 ];
 
 export const KEPLR_COMPATIBLE_WALLETS = [
@@ -230,6 +234,11 @@ export type Subscribe = (options: {
   connect: (network?: Network) => void;
   disconnect: () => void;
 }) => void;
+
+export type CanEagerConnect = (options: {
+  instance: any;
+  meta: BlockchainMeta[];
+}) => Promise<boolean>;
 
 export type SwitchNetwork = (options: {
   instance: any;

@@ -20,12 +20,15 @@ declare global {
     safepalProvider: any;
     trustwallet: any;
     okxwallet: any;
-    starknet: any;
+    starknet_argentX: any;
+    starknet_braavos: any;
     tronLink: any;
     kucoin: any;
     leap: any;
     frontier: any;
     terraWallets: any;
     enkrypt: any;
+    tally: any;
+    bitkeep: any;
   }
 }

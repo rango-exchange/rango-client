@@ -1,9 +1,6 @@
-import {
-  GenericSigner,
-  SignerError,
-  SignerErrorCode,
-  StarknetTransaction,
-} from 'rango-types';
+import type { GenericSigner, StarknetTransaction } from 'rango-types';
+
+import { SignerError, SignerErrorCode } from 'rango-types';
 
 // TODO - replace with real type
 // tslint:disable-next-line: no-any

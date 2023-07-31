@@ -1,5 +1,5 @@
 import {
-  Network,
+  Networks,
   WalletTypes,
   CanSwitchNetwork,
   Connect,
@@ -11,6 +11,8 @@ import {
   getEvmAccounts,
   switchNetworkForEvm,
   WalletInfo,
+  canEagerlyConnectToEvm,
+  CanEagerConnect,
 } from '@rango-dev/wallets-shared';
 import { getNonEvmAccounts, clover as clover_instance } from './helpers';
 import signer from './signer';
@@ -26,12 +28,12 @@ const WALLET = WalletTypes.CLOVER;
 
 export const config = {
   type: WALLET,
-  defaultNetwork: Network.ETHEREUM,
+  defaultNetwork: Networks.ETHEREUM,
 };
 
 export const getInstance = clover_instance;
 export const connect: Connect = async ({ instance, meta }) => {
-  const ethInstance = chooseInstance(instance, meta, Network.ETHEREUM);
+  const ethInstance = chooseInstance(instance, meta, Networks.ETHEREUM);
 
   let results: ProviderConnectResult[] = [];
 
@@ -55,19 +57,19 @@ export const subscribe: Subscribe = ({
   state,
   meta,
 }) => {
-  const ethInstance = chooseInstance(instance, meta, Network.ETHEREUM);
-  const solanaInstance = chooseInstance(instance, meta, Network.SOLANA);
+  const ethInstance = chooseInstance(instance, meta, Networks.ETHEREUM);
+  const solanaInstance = chooseInstance(instance, meta, Networks.SOLANA);
   ethInstance?.on('accountsChanged', async (addresses: string[]) => {
     if (state.connected) {
-      if (!!ethInstance) {
+      if (ethInstance) {
         const eth_chainId = meta
           .filter(isEvmBlockchain)
-          .find((blockchain) => blockchain.name === Network.ETHEREUM)?.chainId;
+          .find((blockchain) => blockchain.name === Networks.ETHEREUM)?.chainId;
         updateAccounts(addresses, eth_chainId);
       }
-      if (!!solanaInstance) {
+      if (solanaInstance) {
         const solanaAccount = await solanaInstance.getAccount();
-        updateAccounts([solanaAccount], Network.SOLANA);
+        updateAccounts([solanaAccount], Networks.SOLANA);
       }
     }
   });
@@ -88,6 +90,13 @@ export const switchNetwork: SwitchNetwork = async (options) => {
 export const canSwitchNetworkTo: CanSwitchNetwork = canSwitchNetworkToEvm;
 
 export const getSigners: (provider: any) => SignerFactory = signer;
+
+export const canEagerConnect: CanEagerConnect = ({ instance, meta }) => {
+  const evm_instance = chooseInstance(instance, meta, Networks.ETHEREUM);
+  if (evm_instance) {
+    return canEagerlyConnectToEvm({ instance: evm_instance, meta });
+  } else return Promise.resolve(false);
+};
 
 export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
   allBlockChains

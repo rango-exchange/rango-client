@@ -1,5 +1,5 @@
 import {
-  Network,
+  Networks,
   WalletTypes,
   CanSwitchNetwork,
   Connect,
@@ -9,6 +9,8 @@ import {
   getEvmAccounts,
   subscribeToEvm,
   WalletInfo,
+  CanEagerConnect,
+  canEagerlyConnectToEvm,
 } from '@rango-dev/wallets-shared';
 import {
   getNonEvmAccounts,
@@ -26,12 +28,12 @@ const WALLET = WalletTypes.MATH;
 
 export const config = {
   type: WALLET,
-  defaultNetwork: Network.ETHEREUM,
+  defaultNetwork: Networks.ETHEREUM,
 };
 
 export const getInstance = mathWallet_instance;
 export const connect: Connect = async ({ instance, meta }) => {
-  const ethInstance = chooseInstance(instance, meta, Network.ETHEREUM);
+  const ethInstance = chooseInstance(instance, meta, Networks.ETHEREUM);
 
   let results: ProviderConnectResult[] = [];
 
@@ -50,7 +52,7 @@ export const subscribe: Subscribe = (options) => {
   const ethInstance = chooseInstance(
     options.instance,
     options.meta,
-    Network.ETHEREUM
+    Networks.ETHEREUM
   );
 
   if (ethInstance) {
@@ -62,6 +64,12 @@ export const canSwitchNetworkTo: CanSwitchNetwork = () => false;
 
 export const getSigners: (provider: any) => SignerFactory = signer;
 
+export const canEagerConnect: CanEagerConnect = ({ instance, meta }) => {
+  const evm_instance = chooseInstance(instance, meta, Networks.ETHEREUM);
+  if (evm_instance) {
+    return canEagerlyConnectToEvm({ instance: evm_instance, meta });
+  } else return Promise.resolve(false);
+};
 export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
   allBlockChains
 ) => {

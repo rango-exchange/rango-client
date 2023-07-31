@@ -55,8 +55,7 @@ export const SwapMessages: React.FC<PropTypes> = (props) => {
           <Button
             variant="outlined"
             type="primary"
-            onClick={setExpandedMessage.bind(null, (prevState) => !prevState)}
-          >
+            onClick={setExpandedMessage.bind(null, (prevState) => !prevState)}>
             Show more details
           </Button>
         ),
@@ -67,17 +66,15 @@ export const SwapMessages: React.FC<PropTypes> = (props) => {
             variant={'outlined'}
             type="primary"
             onClick={() => {
-              props?.switchNetwork && props.switchNetwork().catch(() => {})
-            }}
-          >
+              props?.switchNetwork && props.switchNetwork();
+            }}>
             Change network to {currentStepBlockchain}
           </Button>
         ),
-      })}
-    >
+      })}>
       {!!detailedMessage.content ? (
         <DetailedMessage>
-          <Typography variant="body2">
+          <Typography variant="body" size="medium">
             {shouldShowMoreDetailsButton && !expandedMessage
               ? detailedMessage.content.substring(0, allowedNumberOfChars) +
                 (allowedNumberOfChars > 0 ? '...' : '')
@@ -88,28 +85,32 @@ export const SwapMessages: React.FC<PropTypes> = (props) => {
       {!!lastConvertedTokenInFailedSwap && (
         <>
           <p>
-            <Typography variant="body2">
+            <Typography variant="body" size="medium">
               Don't worry, your fund is&nbsp;
             </Typography>
-            <SuccessText variant="body2">
+            <SuccessText variant="body" size="medium">
               <b>Safe</b>
             </SuccessText>
           </p>
 
           <p>
-            <Typography variant="body2">
+            <Typography variant="body" size="medium">
               It is converted to &nbsp;
               <u>{lastConvertedTokenInFailedSwap.outputAmount}</u>
               &nbsp;
             </Typography>
-            <SuccessText variant="body2">
+            <SuccessText variant="body" size="medium">
               <b>{lastConvertedTokenInFailedSwap.symbol}&nbsp;</b>
             </SuccessText>
-            <Typography variant="body2">on your&nbsp;</Typography>
-            <SuccessText variant="body2">
+            <Typography variant="body" size="medium">
+              on your&nbsp;
+            </Typography>
+            <SuccessText variant="body" size="medium">
               <b>{lastConvertedTokenInFailedSwap.blockchain}&nbsp;</b>
             </SuccessText>
-            <Typography variant="body2">wallet</Typography>
+            <Typography variant="body" size="medium">
+              wallet
+            </Typography>
           </p>
         </>
       )}

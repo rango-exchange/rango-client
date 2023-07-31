@@ -10,7 +10,7 @@ import {
 } from '@rango-dev/ui';
 import React, { useState } from 'react';
 import { FONTS } from '../constants';
-import { COLORS, useConfigStore } from '../store/config';
+import { COLORS, Mode, useConfigStore } from '../store/config';
 import { ConfigurationContainer } from './ChainsConfig';
 import { Select } from './Select';
 
@@ -174,7 +174,7 @@ const ThemeContainer = styled('div', {
   color: '$neutral500',
   border: '1px solid',
   height: '$48',
-  borderRadius: '$5',
+  borderRadius: '$xs',
   display: 'flex',
   justifyContent: 'space-evenly',
   alignItems: 'center',
@@ -233,14 +233,16 @@ const defaultColors = {
   },
 };
 export function StylesConfig() {
-  const language = useConfigStore.use.config().language;
-  const borderRadius = useConfigStore.use.config().theme.borderRadius;
-  const theme = useConfigStore.use.config().theme.mode;
-  const fontFamily = useConfigStore.use.config().theme.fontFamily;
-  const colors = useConfigStore.use.config().theme.colors;
-  const singleTheme = useConfigStore.use.config().theme.singleTheme;
+  // const language = useConfigStore.use.config().language;
+  const borderRadius = useConfigStore.use.config().theme?.borderRadius;
+  const theme = useConfigStore.use.config().theme?.mode;
+  const fontFamily = useConfigStore.use.config().theme?.fontFamily;
+  const colors = useConfigStore.use.config().theme?.colors;
+  const singleTheme = useConfigStore.use.config().theme?.singleTheme;
 
-  const [mode, setMode] = useState<'light' | 'dark'>(!theme || theme === 'auto' ? 'light' : theme);
+  const [mode, setMode] = useState<'light' | 'dark'>(
+    !theme || theme === 'auto' ? 'light' : theme
+  );
   // const onChangelanguage = useConfigStore.use.onChangelanguage();
   const onChangeTheme = useConfigStore.use.onChangeTheme();
   const onChangeColors = useConfigStore.use.onChangeColors();
@@ -250,7 +252,9 @@ export function StylesConfig() {
 
   return (
     <div>
-      <Typography variant="h6">Styles</Typography>
+      <Typography variant="title" size="medium">
+        Styles
+      </Typography>
 
       <Divider size={12} />
       <ConfigurationContainer>
@@ -270,10 +274,12 @@ export function StylesConfig() {
             name="fontFamily"
             list={FONTS}
             modalTitle="Fonts"
-            onChange={(_, value) => onChangeTheme('fontFamily', value)}
+            onChange={(_, value) =>
+              onChangeTheme({ name: 'fontFamily', value })
+            }
           />
           <div>
-            <FieldName variant="body2" mb={4}>
+            <FieldName variant="body" size="medium" mb={4}>
               Theme
             </FieldName>
             <ThemeContainer>
@@ -283,15 +289,15 @@ export function StylesConfig() {
                 id={'auto'}
                 label={'Auto'}
                 onCheckedChange={(checked) => {
-                  if (checked) onChangeTheme('mode', 'auto');
-                  else onChangeTheme('mode', 'light');
+                  if (checked) onChangeTheme({ name: 'mode', value: 'auto' });
+                  else onChangeTheme({ name: 'mode', value: 'light' });
                   setChekedTheme(checked);
                 }}
               />
 
               <Line />
               <ThemeSwitchAndLables>
-                <Typography variant="caption" mr={4}>
+                <Typography variant="body" size="xsmall" mr={4}>
                   Light
                 </Typography>
                 <ThemeSwitchContainer>
@@ -302,12 +308,12 @@ export function StylesConfig() {
                         let theme;
                         if (checked) theme = 'dark';
                         else theme = 'light';
-                        onChangeTheme('mode', theme);
+                        onChangeTheme({ name: 'mode', value: theme as Mode });
                       }
                     }}
                   />
                 </ThemeSwitchContainer>
-                <Typography variant="caption" ml={4}>
+                <Typography variant="body" size="xsmall" ml={4}>
                   Dark
                 </Typography>
               </ThemeSwitchAndLables>
@@ -316,7 +322,12 @@ export function StylesConfig() {
           <div>
             <TextField
               size="large"
-              onChange={(e) => onChangeTheme('borderRadius', parseInt(e.target.value))}
+              onChange={(e) =>
+                onChangeTheme({
+                  name: 'borderRadius',
+                  value: parseInt(e.target.value),
+                })
+              }
               name="borderRadius"
               value={borderRadius}
               label="Border Radius"
@@ -370,7 +381,7 @@ export function StylesConfig() {
 
         <Checkbox
           onCheckedChange={(checked) => {
-            onChangeTheme('singleTheme', checked);
+            onChangeTheme({ name: 'singleTheme', value: checked });
           }}
           id="single_theme"
           label="Single Theme"
@@ -382,7 +393,7 @@ export function StylesConfig() {
             <Button
               fullWidth
               onClick={() => {
-                onChangeTheme('mode', 'light');
+                onChangeTheme({ name: 'mode', value: 'light' });
                 setMode('light');
               }}
               type="success"
@@ -395,7 +406,7 @@ export function StylesConfig() {
             <Button
               fullWidth
               onClick={() => {
-                onChangeTheme('mode', 'dark');
+                onChangeTheme({ name: 'mode', value: 'dark' });
                 setMode('dark');
               }}
               type="success"
@@ -414,19 +425,19 @@ export function StylesConfig() {
               key={index}
               onClick={() => {
                 if (t.dark && !t.light) {
-                  onChangeTheme('mode', 'dark');
+                  onChangeTheme({ name: 'mode', value: 'dark' });
                   setMode('dark');
-                  onChangeTheme('singleTheme', true);
+                  onChangeTheme({ name: 'singleTheme', value: true });
 
                   onSelectTheme({ ...t, light: {} });
                 } else if (t.light && !t.dark) {
-                  onChangeTheme('mode', 'light');
+                  onChangeTheme({ name: 'mode', value: 'light' });
                   setMode('light');
-                  onChangeTheme('singleTheme', true);
+                  onChangeTheme({ name: 'singleTheme', value: true });
 
                   onSelectTheme({ ...t, dark: {} });
                 } else if (t.dark && t.light) {
-                  onChangeTheme('singleTheme', false);
+                  onChangeTheme({ name: 'singleTheme', value: false });
                   onSelectTheme(t);
                 }
               }}>
@@ -438,7 +449,8 @@ export function StylesConfig() {
                 />
                 <Circle
                   style={{
-                    backgroundColor: t?.light?.foreground || t?.dark?.foreground,
+                    backgroundColor:
+                      t?.light?.foreground || t?.dark?.foreground,
                     zIndex: 1,
                   }}
                 />
@@ -460,9 +472,13 @@ export function StylesConfig() {
               place="top"
               key={color.name}
               placeholder="Choose Color"
-              color={colors[mode][color.name] || defaultColors[mode][color.name]}
+              color={
+                colors[mode][color.name] || defaultColors[mode][color.name]
+              }
               label={color.label}
-              onChangeColor={(c) => onChangeColors(color.name as COLORS, mode, c)}
+              onChangeColor={(c) =>
+                onChangeColors(color.name as COLORS, mode, c)
+              }
             />
           ))}
         </GridContent>

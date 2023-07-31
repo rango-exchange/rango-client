@@ -1,11 +1,12 @@
 import {
-  Network,
+  Networks,
   WalletTypes,
   CanSwitchNetwork,
   Connect,
   Subscribe,
   getSolanaAccounts,
   WalletInfo,
+  CanEagerConnect,
 } from '@rango-dev/wallets-shared';
 import { phantom as phantom_instance } from './helpers';
 import signer from './signer';
@@ -22,7 +23,7 @@ export const connect: Connect = getSolanaAccounts;
 
 export const subscribe: Subscribe = ({ instance, updateAccounts, connect }) => {
   instance?.on('accountChanged', async (publicKey: string) => {
-    const network = Network.SOLANA;
+    const network = Networks.SOLANA;
     if (publicKey) {
       const account = publicKey.toString();
       updateAccounts([account]);
@@ -35,6 +36,15 @@ export const subscribe: Subscribe = ({ instance, updateAccounts, connect }) => {
 export const canSwitchNetworkTo: CanSwitchNetwork = () => false;
 
 export const getSigners: (provider: any) => SignerFactory = signer;
+
+export const canEagerConnect: CanEagerConnect = async ({ instance }) => {
+  try {
+    const result = await instance.connect({ onlyIfTrusted: true });
+    return !!result;
+  } catch (error) {
+    return false;
+  }
+};
 
 export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
   allBlockChains

@@ -1,25 +1,32 @@
 {
   "name": "@rango-dev/signer-evm",
-  "version": "0.1.15-next.4",
+  "version": "0.8.1-next.0",
   "license": "MIT",
   "type": "module",
-  "module": "dist/index.js",
+  "module": "./dist/index.js",
+  "main": "./dist/index.js",
+  "exports": {
+    ".": "./dist/index.js"
+  },
   "typings": "dist/index.d.ts",
   "files": [
     "dist",
     "src"
   ],
   "scripts": {
-    "dev": "tsdx watch",
     "build": "node ../../scripts/build/command.mjs --path signers/signer-evm",
     "clean": "rimraf dist",
     "format": "prettier --write '{.,src}/**/*.{ts,tsx}'",
-    "lint": "eslint \"**/*.{ts,tsx}\" --ignore-path ../../.eslintignore"
+    "lint": "eslint \"**/*.{ts,tsx}\" --ignore-path ../../.eslintignore",
+    "test": "vitest",
+    "test:watch": "vitest --watch",
+    "test:coverage": "vitest run --coverage"
   },
   "dependencies": {
     "@ethersproject/abstract-provider": "^5.7.0",
+    "eth-rpc-errors": "^4.0.3",
     "ethers": "^5.7.2",
-    "rango-types": "^0.1.38"
+    "rango-types": "^0.1.46"
   },
   "publishConfig": {
     "access": "public"

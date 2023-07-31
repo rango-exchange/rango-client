@@ -1,4 +1,8 @@
-import { Network, ProviderConnectResult } from '@rango-dev/wallets-shared';
+import {
+  Network,
+  Networks,
+  ProviderConnectResult,
+} from '@rango-dev/wallets-shared';
 import { SUPPORTED_ETH_CHAINS, SUPPORTED_NETWORKS } from './constants';
 import { SignerError, SignerErrorCode } from 'rango-types';
 
@@ -10,28 +14,30 @@ export function xdefi() {
   if (!xfi) return null;
 
   const instances = new Map();
-  if (xfi.bitcoin) instances.set(Network.BTC, xfi.bitcoin);
-  if (xfi.litecoin) instances.set(Network.LTC, xfi.litecoin);
-  if (xfi.thorchain) instances.set(Network.THORCHAIN, xfi.thorchain);
-  if (xfi.bitcoincash) instances.set(Network.BCH, xfi.bitcoincash);
-  if (xfi.binance) instances.set(Network.BINANCE, xfi.binance);
-  if (ethereum?.__XDEFI) instances.set(Network.ETHEREUM, ethereum);
-  if (xfi.dogecoin) instances.set(Network.DOGE, xfi.dogecoin);
-  if (xfi.solana) instances.set(Network.SOLANA, xfi.solana);
+  if (xfi.bitcoin) instances.set(Networks.BTC, xfi.bitcoin);
+  if (xfi.litecoin) instances.set(Networks.LTC, xfi.litecoin);
+  if (xfi.thorchain) instances.set(Networks.THORCHAIN, xfi.thorchain);
+  if (xfi.bitcoincash) instances.set(Networks.BCH, xfi.bitcoincash);
+  if (xfi.binance) instances.set(Networks.BINANCE, xfi.binance);
+  if (ethereum?.__XDEFI) instances.set(Networks.ETHEREUM, ethereum);
+  if (xfi.dogecoin) instances.set(Networks.DOGE, xfi.dogecoin);
+  if (xfi.solana) instances.set(Networks.SOLANA, xfi.solana);
 
   return instances;
 }
 
 export function getEthChainsInstance(netowrk: Network | null): Network | null {
   if (!netowrk) return null;
-  return SUPPORTED_ETH_CHAINS.includes(netowrk) ? Network.ETHEREUM : null;
+  return SUPPORTED_ETH_CHAINS.includes(netowrk as Networks)
+    ? Networks.ETHEREUM
+    : null;
 }
 
 export async function getNonEvmAccounts(
   instances: Provider
 ): Promise<ProviderConnectResult[]> {
   const nonEvmNetworks = SUPPORTED_NETWORKS.filter(
-    (net: Network) => net !== Network.ETHEREUM
+    (net: Network) => net !== Networks.ETHEREUM
   );
   const promises: Promise<ProviderConnectResult>[] = nonEvmNetworks.map(
     (network: Network) => {
@@ -43,7 +49,7 @@ export async function getNonEvmAccounts(
             params: [],
           },
           (error: any, accounts: any) => {
-            if (!!error) {
+            if (error) {
               reject(error);
               return error;
             }

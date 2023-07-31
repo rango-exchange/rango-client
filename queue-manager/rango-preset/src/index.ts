@@ -3,18 +3,46 @@ import { SwapQueueDef } from './types';
 import { swapQueueDef } from './queueDef';
 
 export { PrettyError, prettifyErrorMessage } from './shared-errors';
-export { SwapQueueContext, SwapStorage } from './types';
+export type {
+  SwapQueueContext,
+  SwapStorage,
+  RouteExecutionEvents,
+  Route,
+  Step,
+  RouteEvent,
+  StepEvent,
+  EventSeverity,
+  RouteStartedEvent,
+  RouteSucceededEvent,
+  RouteFailedEvent,
+  StepStartedEvent,
+  StepSucceededEvent,
+  StepFailedEvent,
+  StepTxExecutionUpdatedEvent,
+  StepTxExecutionBlockedEvent,
+  StepCheckStatusEvent,
+  StepApprovalTxSucceededEvent,
+  StepOutputRevealedEvent,
+} from './types';
 export {
+  MainEvents,
+  StepEventType,
+  RouteEventType,
+  StepExecutionEventStatus,
+  StepExecutionBlockedEventStatus,
+} from './types';
+export type {
   PendingSwapWithQueueID,
+  PendingSwapStep,
+  PendingSwap,
+  EventType,
+} from './shared';
+export {
   getCurrentBlockchainOfOrNull,
   getRelatedWalletOrNull,
   getRelatedWallet,
   MessageSeverity,
-  PendingSwapStep,
   PendingSwapNetworkStatus,
-  PendingSwap,
-  EventType,
-  SwapProgressNotification,
   calculatePendingSwap,
 } from './shared';
 export {
@@ -27,8 +55,9 @@ export {
   getRunningSwaps,
   splitWalletNetwork,
   resetRunningSwapNotifsOnPageLoad,
+  isApprovalTX,
 } from './helpers';
-export { useMigration, useQueueManager } from './hooks';
+export { useMigration, useQueueManager, useEvents } from './hooks';
 
 export function makeQueueDefinition(configs: Configs): SwapQueueDef {
   initConfig(configs);

@@ -1,27 +1,29 @@
 {
   "name": "@rango-dev/provider-coinbase",
-  "version": "0.1.16-next.6",
+  "version": "0.8.1-next.1",
   "license": "MIT",
-  "module": "dist/provider-coinbase.esm.js",
-  "main": "dist/index.js",
-  "typings": "dist/index.d.ts",
   "type": "module",
+  "module": "./dist/index.js",
+  "main": "./dist/index.js",
+  "exports": {
+    ".": "./dist/index.js"
+  },
+  "typings": "dist/index.d.ts",
   "files": [
     "dist",
     "src"
   ],
   "scripts": {
-    "start": "tsdx watch",
-    "build": "tsdx build  --tsconfig ./tsconfig.json",
+    "build": "node ../../scripts/build/command.mjs --path wallets/provider-coinbase",
     "clean": "rimraf dist",
     "format": "prettier --write '{.,src}/**/*.{ts,tsx}'",
     "lint": "eslint \"**/*.{ts,tsx}\" --ignore-path ../../.eslintignore"
   },
   "dependencies": {
-    "@rango-dev/signer-evm": "^0.1.15-next.4",
-    "@rango-dev/signer-solana": "^0.1.15-next.5",
-    "@rango-dev/wallets-shared": "^0.1.15-next.5",
-    "rango-types": "^0.1.38"
+    "@rango-dev/signer-evm": "^0.8.1-next.0",
+    "@rango-dev/signer-solana": "^0.8.1-next.0",
+    "@rango-dev/wallets-shared": "^0.8.1-next.1",
+    "rango-types": "^0.1.46"
   },
   "publishConfig": {
     "access": "public"

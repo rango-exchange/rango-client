@@ -1,5 +1,6 @@
 import { CSSProperties } from '@stitches/react';
 import React, { useEffect, useState } from 'react';
+import { i18n } from '@lingui/core';
 import { styled } from '../../theme';
 import { LiquiditySource, LoadingStatus } from '../../types/meta';
 import { Button } from '../Button/Button';
@@ -100,12 +101,13 @@ export function LiquiditySourceList(props: PropTypes) {
   return (
     <MainContainer
       style={listContainerStyle}
-      loaded={loadingStatus === 'success'}
-    >
+      loaded={loadingStatus === 'success'}>
       <div>
         <LiquiditySourceType>
-          <Typography variant="h5">Bridges</Typography>
-          <Typography variant="body1" color="neutral800">
+          <Typography variant="title" size="xmedium">
+            {i18n.t('Bridges')}
+          </Typography>
+          <Typography variant="body" size="medium" color="neutral800">
             {totalSelectedBridges === totalBridges
               ? totalBridges
               : `${totalSelectedBridges} / ${totalBridges}`}
@@ -137,8 +139,10 @@ export function LiquiditySourceList(props: PropTypes) {
       </div>
       <div>
         <LiquiditySourceType>
-          <Typography variant="h5">Exchanges</Typography>
-          <Typography variant="body1" color="neutral800">
+          <Typography variant="title" size="xmedium">
+            {i18n.t('Exchanges')}
+          </Typography>
+          <Typography variant="body" size="medium" color="neutral800">
             {totalSelectedExchanges === totalExchanges
               ? totalExchanges
               : `${totalSelectedExchanges} / ${totalExchanges}`}
@@ -192,8 +196,9 @@ const LiquiditySourceItem = ({
     }
     suffix={<Switch checked={selected} />}
     style={{ marginBottom: '12px' }}
-    onClick={onChange.bind(null, liquiditySource)}
-  >
-    <Typography variant="body1">{liquiditySource.title}</Typography>
+    onClick={onChange.bind(null, liquiditySource)}>
+    <Typography variant="body" size="medium">
+      {liquiditySource.title}
+    </Typography>
   </Button>
 );

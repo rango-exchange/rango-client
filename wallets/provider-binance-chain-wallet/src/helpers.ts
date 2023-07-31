@@ -1,13 +1,17 @@
-import { Network, ProviderConnectResult } from '@rango-dev/wallets-shared';
+import {
+  Network,
+  Networks,
+  ProviderConnectResult,
+} from '@rango-dev/wallets-shared';
 import { RequestedAccount } from './types';
 import {
-  SignInputOutput,
   SendMsg,
-} from '@binance-chain/javascript-sdk/lib/types';
+  SignInputOutput,
+} from '@binance-chain/javascript-sdk/lib/types/index.js';
 
 export function binance() {
   const { BinanceChain } = window;
-  if (!!BinanceChain) {
+  if (BinanceChain) {
     if (BinanceChain.isCoin98) {
       return null;
     }
@@ -19,13 +23,13 @@ export function binance() {
 export function addressTypeToNetwork(type: string): Network {
   switch (type) {
     case 'eth':
-      return Network.ETHEREUM;
+      return Networks.ETHEREUM;
     case 'bbc-mainnet':
-      return Network.BINANCE;
+      return Networks.BINANCE;
     case 'bsc-mainnet':
-      return Network.BSC;
+      return Networks.BSC;
     default:
-      return Network.Unknown;
+      return Networks.Unknown;
   }
 }
 export function getAllAccounts(
@@ -124,7 +128,7 @@ export async function accountsForActiveWallet(
 }
 
 export const BINANCE_CHAIN_WALLET_SUPPORTED_CHAINS = [
-  Network.ETHEREUM,
-  Network.BSC,
-  Network.BINANCE,
+  Networks.ETHEREUM,
+  Networks.BSC,
+  Networks.BINANCE,
 ];

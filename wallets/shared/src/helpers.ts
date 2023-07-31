@@ -1,15 +1,17 @@
-import { EvmBlockchainMeta } from 'rango-types';
+import type { EvmBlockchainMeta } from 'rango-types';
 import {
   EvmNetworksChainInfo,
   AddEthereumChainParameter,
   Network,
+  Networks,
   Connect,
   Wallet,
   InstallObjects,
 } from './rango';
 
-export { isAddress as isEvmAddress } from 'ethers/lib/utils';
+export { isAddress as isEvmAddress } from 'ethers/lib/utils.js';
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function deepCopy(obj: any): any {
   let copy;
 
@@ -58,6 +60,7 @@ export async function switchOrAddNetworkForMetamaskCompatibleWallets(
       params: [{ chainId: targetChain?.chainId }],
     });
   } catch (switchError) {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     // To resolve this error: Catch clause variable type annotation must be any or unknown if specified
     const error = switchError as { code: number };
@@ -122,7 +125,7 @@ export const evmChainsToRpcMap = (
         // This `if` is only used for satisfying typescript,
         // Because we iterating over Object.keys(EVM_NETWORKS_CHAIN_INFO)
         // And obviously it cannot be `undefined` and always has a value.
-        if (!!info) {
+        if (info) {
           return [parseInt(info.chainId), info.rpcUrls[0]];
         }
         return [0, ''];
@@ -133,16 +136,12 @@ export const evmChainsToRpcMap = (
 
 export const getSolanaAccounts: Connect = async ({ instance }) => {
   // Asking for account from wallet.
-  try {
-    var solanaResponse = await instance.connect();
-  } catch (e) {
-    throw e;
-  }
+  const solanaResponse = await instance.connect();
 
   const account = solanaResponse.publicKey.toString();
   return {
     accounts: [account],
-    chainId: Network.SOLANA,
+    chainId: Networks.SOLANA,
   };
 };
 
@@ -151,28 +150,28 @@ export function getCoinbaseInstance(
 ) {
   const { ethereum, coinbaseSolana } = window;
   const instances = new Map();
-  if (!!ethereum) {
+  if (ethereum) {
     const checker =
       lookingFor === 'metamask' ? 'isMetaMask' : 'isCoinbaseWallet';
 
     // If only Coinbase Wallet is installed
     if (lookingFor === 'coinbase' && ethereum[checker]) {
-      instances.set(Network.ETHEREUM, ethereum);
+      instances.set(Networks.ETHEREUM, ethereum);
     }
     // If Coinbase Wallet and Metamask is installed at the same time.
     else if (ethereum.providers?.length) {
       const ethInstance = ethereum.providers.find((provider: any) => {
         return provider[checker];
       });
-      instances.set(Network.ETHEREUM, ethInstance);
+      instances.set(Networks.ETHEREUM, ethInstance);
     }
   }
   if (!!coinbaseSolana && lookingFor === 'coinbase')
-    instances.set(Network.SOLANA, coinbaseSolana);
+    instances.set(Networks.SOLANA, coinbaseSolana);
 
   if (instances.size === 0) return null;
 
-  if (lookingFor === 'metamask') return instances.get(Network.ETHEREUM);
+  if (lookingFor === 'metamask') return instances.get(Networks.ETHEREUM);
 
   return instances;
 }
@@ -220,4 +219,3 @@ export function detectMobileScreens(): boolean {
     navigator.userAgent
   );
 }
-

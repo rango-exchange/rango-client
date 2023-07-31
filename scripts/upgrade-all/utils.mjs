@@ -18,7 +18,9 @@ export async function updateVersion(target, upgrade) {
   } else if (updatedPkgJson['devDependencies'][name]) {
     updatedPkgJson['devDependencies'][name] = `^${version}`;
   } else {
-    throw new Error(`${name} not found, neither dependencies or devDependencies.`);
+    throw new Error(
+      `${name} not found, neither dependencies or devDependencies.`
+    );
   }
 
   await fs.writeFile(pkgPath, JSON.stringify(updatedPkgJson, null, 2));
@@ -56,7 +58,9 @@ export async function upgradeDepndendentsOf(project, dist) {
     return;
   }
 
-  console.log(`These packages are using ${project}: ${dependents.join(',')} \n`);
+  console.log(
+    `These packages are using ${project}: ${dependents.join(',')} \n`
+  );
 
   const versions = await packageVersionOnNPM(project, dist);
 
@@ -66,8 +70,8 @@ export async function upgradeDepndendentsOf(project, dist) {
     dependents.map((pkg) =>
       updateVersion(
         { path: workspaces[pkg].location },
-        { name: project, version: versions.npm_version },
-      ),
-    ),
+        { name: project, version: versions.npm_version }
+      )
+    )
   );
 }

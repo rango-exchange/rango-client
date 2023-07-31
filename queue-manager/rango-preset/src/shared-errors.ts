@@ -1,15 +1,19 @@
-import {
+import type {
   APIErrorCode,
-  SignerError,
-  SignerErrorCode,
-  isAPIErrorCode,
-  isSignerErrorCode,
+  SignerErrorCode as SignerErrorCodeType,
 } from 'rango-types';
+import {
+  SignerErrorCode,
+  SignerError,
+  isSignerErrorCode,
+  isAPIErrorCode,
+} from 'rango-types';
+import { DEFAULT_ERROR_CODE } from './constants';
 
 export type ErrorDetail = {
   extraMessage: string;
   extraMessageDetail?: string | null | undefined;
-  extraMessageErrorCode: SignerErrorCode | APIErrorCode | null;
+  extraMessageErrorCode: SignerErrorCodeType | APIErrorCode | null;
 };
 
 const ERROR_ASSERTION_FAILED = 'Assertion failed (Unexpected behaviour)';
@@ -67,6 +71,7 @@ export class PrettyError extends Error {
     return new PrettyError(
       'CLIENT_UNEXPECTED_BEHAVIOUR',
       ERROR_ASSERTION_FAILED,
+      null,
       m
     );
   }
@@ -114,24 +119,24 @@ export class PrettyError extends Error {
 export function mapAppErrorCodesToAPIErrorCode(
   errorCode: string | null
 ): APIErrorCode {
-  const defaultErrorCode = 'CLIENT_UNEXPECTED_BEHAVIOUR';
   try {
-    if (!errorCode) return defaultErrorCode;
+    if (!errorCode) return DEFAULT_ERROR_CODE;
     if (isAPIErrorCode(errorCode)) return errorCode;
     if (isSignerErrorCode(errorCode)) {
-      const t: { [key in SignerErrorCode]: APIErrorCode } = {
+      const t: { [key in SignerErrorCodeType]: APIErrorCode } = {
         [SignerErrorCode.REJECTED_BY_USER]: 'USER_REJECT',
         [SignerErrorCode.SIGN_TX_ERROR]: 'CALL_WALLET_FAILED',
         [SignerErrorCode.SEND_TX_ERROR]: 'SEND_TX_FAILED',
-        [SignerErrorCode.NOT_IMPLEMENTED]: defaultErrorCode,
-        [SignerErrorCode.OPERATION_UNSUPPORTED]: defaultErrorCode,
-        [SignerErrorCode.UNEXPECTED_BEHAVIOUR]: defaultErrorCode,
+        [SignerErrorCode.TX_FAILED_IN_BLOCKCHAIN]: 'TX_FAILED_IN_BLOCKCHAIN',
+        [SignerErrorCode.NOT_IMPLEMENTED]: DEFAULT_ERROR_CODE,
+        [SignerErrorCode.OPERATION_UNSUPPORTED]: DEFAULT_ERROR_CODE,
+        [SignerErrorCode.UNEXPECTED_BEHAVIOUR]: DEFAULT_ERROR_CODE,
       };
       return t[errorCode];
     }
-    return defaultErrorCode;
+    return DEFAULT_ERROR_CODE;
   } catch (err) {
-    return defaultErrorCode;
+    return DEFAULT_ERROR_CODE;
   }
 }
 

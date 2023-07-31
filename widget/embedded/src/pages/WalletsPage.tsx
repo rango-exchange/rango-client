@@ -18,13 +18,15 @@ import { useWallets } from '@rango-dev/wallets-core';
 import { useUiStore } from '../store/ui';
 import { useNavigateBack } from '../hooks/useNavigateBack';
 import { navigationRoutes } from '../constants/navigationRoutes';
-import { useTranslation } from 'react-i18next';
+import { i18n } from '@lingui/core';
 import { useMetaStore } from '../store/meta';
 import { Spinner } from '@rango-dev/ui';
 import { LoadingFailedAlert } from '@rango-dev/ui';
+import { WidgetConfig } from '../types';
+import { configWalletsToWalletName } from '../utils/providers';
 
 interface PropTypes {
-  supportedWallets?: WalletType[];
+  supportedWallets: WidgetConfig['wallets'];
   multiWallets: boolean;
 }
 
@@ -48,13 +50,16 @@ const LoaderContainer = styled('div', {
 const AlertContainer = styled('div', {
   paddingBottom: '$16',
 });
+
+const ALL_SUPPORTED_WALLETS = Object.values(WalletTypes);
+
 export function WalletsPage({ supportedWallets, multiWallets }: PropTypes) {
   const { navigateBackFrom } = useNavigateBack();
   const { state, disconnect, getWalletInfo, connect } = useWallets();
   const wallets = getlistWallet(
     state,
     getWalletInfo,
-    supportedWallets || Object.values(WalletTypes)
+    configWalletsToWalletName(supportedWallets) || ALL_SUPPORTED_WALLETS
   );
   const walletsRef = useRef<WalletInfo[]>();
 
@@ -66,7 +71,6 @@ export function WalletsPage({ supportedWallets, multiWallets }: PropTypes) {
   const toggleConnectWalletsButton =
     useUiStore.use.toggleConnectWalletsButton();
   const loadingMetaStatus = useMetaStore.use.loadingStatus();
-  const { t } = useTranslation();
 
   const onSelectWallet = async (type: WalletType) => {
     const wallet = state(type);
@@ -110,10 +114,9 @@ export function WalletsPage({ supportedWallets, multiWallets }: PropTypes) {
 
   return (
     <SecondaryPage
-      title={t('Select Wallet') || ''}
+      title={i18n.t('Select Wallet') || ''}
       textField={false}
-      onBack={navigateBackFrom.bind(null, navigationRoutes.wallets)}
-    >
+      onBack={navigateBackFrom.bind(null, navigationRoutes.wallets)}>
       <>
         {walletErrorMessage && (
           <AlertContainer>

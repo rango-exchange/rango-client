@@ -1,4 +1,4 @@
-import { openDB, DBSchema, IDBPDatabase } from 'idb';
+import type { DBSchema, IDBPDatabase } from 'idb';
 
 import { QueueID } from './manager';
 import { PersistedQueue } from './types';
@@ -21,13 +21,18 @@ interface Database extends DBSchema {
 class Persistor {
   db: Promise<IDBPDatabase<Database>>;
   constructor() {
-    this.db = openDB<Database>(DB_NAME, VERSION, {
-      upgrade(db) {
-        db.createObjectStore(OBJECT_STORE_NAME, { keyPath: 'id' });
-      },
-    });
+    this.db = import('idb')
+      .then((idb) => {
+        return idb.openDB<Database>(DB_NAME, VERSION, {
+          upgrade(db) {
+            db.createObjectStore(OBJECT_STORE_NAME, { keyPath: 'id' });
+          },
+        });
+      })
+      .catch(() => {
+        throw new Error("Couldn't load idb.");
+      });
   }
-
 
   async insertQueue(queue: PersistedQueue) {
     const db = await this.db;

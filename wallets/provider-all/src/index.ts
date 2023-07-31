@@ -14,7 +14,6 @@ import * as phantom from '@rango-dev/provider-phantom';
 import * as safepal from '@rango-dev/provider-safepal';
 import * as tokenpocket from '@rango-dev/provider-tokenpocket';
 import * as trustwallet from '@rango-dev/provider-trustwallet';
-import * as walletconnect from '@rango-dev/provider-walletconnect';
 import * as argentx from '@rango-dev/provider-argentx';
 import * as tronLink from '@rango-dev/provider-tron-link';
 import * as kucoin from '@rango-dev/provider-kucoin-wallet';
@@ -22,6 +21,9 @@ import * as leapCosmos from '@rango-dev/provider-leap-cosmos';
 import * as frontier from '@rango-dev/provider-frontier';
 import * as station from '@rango-dev/provider-station';
 import * as enkrypt from '@rango-dev/provider-enkrypt';
+import * as taho from '@rango-dev/provider-taho';
+import * as bitkeep from '@rango-dev/provider-bitkeep';
+import * as braavos from '@rango-dev/provider-braavos';
 
 export const allProviders = () => [
   binance,
@@ -40,7 +42,6 @@ export const allProviders = () => [
   safepal,
   tokenpocket,
   trustwallet,
-  walletconnect,
   argentx,
   tronLink,
   kucoin,
@@ -48,4 +49,7 @@ export const allProviders = () => [
   frontier,
   station,
   enkrypt,
+  taho,
+  bitkeep,
+  braavos,
 ];

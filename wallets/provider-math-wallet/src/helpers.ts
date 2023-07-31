@@ -1,4 +1,8 @@
-import { Network, ProviderConnectResult } from '@rango-dev/wallets-shared';
+import {
+  Network,
+  Networks,
+  ProviderConnectResult,
+} from '@rango-dev/wallets-shared';
 
 type Provider = Map<Network, any>;
 
@@ -6,10 +10,10 @@ export function mathWallet() {
   const instances = new Map();
   const { solana, ethereum } = window;
 
-  if (!!solana && solana.isMathWallet) instances.set(Network.SOLANA, solana);
+  if (!!solana && solana.isMathWallet) instances.set(Networks.SOLANA, solana);
 
   if (ethereum && ethereum.isMathWallet)
-    instances.set(Network.ETHEREUM, ethereum);
+    instances.set(Networks.ETHEREUM, ethereum);
 
   if (instances.size === 0) return null;
 
@@ -20,10 +24,10 @@ export async function getNonEvmAccounts(
   instances: Provider
 ): Promise<ProviderConnectResult[]> {
   // Getting Solana accounts
-  const solanaInstance = instances.get(Network.SOLANA);
+  const solanaInstance = instances.get(Networks.SOLANA);
   const results: ProviderConnectResult[] = [];
 
-  if (!!solanaInstance) {
+  if (solanaInstance) {
     // Asking for account from wallet.
     const solanaResponse = await solanaInstance.connect();
 
@@ -31,7 +35,7 @@ export async function getNonEvmAccounts(
 
     results.push({
       accounts: [solanaAccounts],
-      chainId: Network.SOLANA,
+      chainId: Networks.SOLANA,
     });
   }
 

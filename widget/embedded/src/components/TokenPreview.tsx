@@ -8,7 +8,7 @@ import {
   Image,
 } from '@rango-dev/ui';
 import { LoadingStatus } from '../store/meta';
-import { useTranslation } from 'react-i18next';
+import { i18n } from '@lingui/core';
 import BigNumber from 'bignumber.js';
 import { numberToString } from '../utils/numbers';
 
@@ -21,7 +21,7 @@ const Box = styled('div', {
 
 const Container = styled('div', {
   boxSizing: 'border-box',
-  borderRadius: '$5',
+  borderRadius: '$xs',
   padding: '$8 $16 $16 $16',
 
   variants: {
@@ -77,7 +77,7 @@ const ImagePlaceholder = styled('span', {
 const OutputContainer = styled('div', {
   windth: '100%',
   height: '$48',
-  borderRadius: '$5',
+  borderRadius: '$xs',
   backgroundColor: '$surface',
   border: '1px solid transparent',
   position: 'relative',
@@ -90,7 +90,7 @@ const OutputContainer = styled('div', {
 interface PropTypes {
   label: string;
   amount: string;
-  usdValue?: BigNumber;
+  usdValue: BigNumber | null;
   loadingStatus: LoadingStatus;
   chain: {
     displayName: string;
@@ -105,7 +105,6 @@ interface PropTypes {
 
 export function TokenPreview(props: PropTypes) {
   const { chain, token, loadingStatus, percentageChange } = props;
-  const { t } = useTranslation();
 
   const ItemSuffix = (
     <div
@@ -113,8 +112,7 @@ export function TokenPreview(props: PropTypes) {
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
-      }}
-    >
+      }}>
       {loadingStatus === 'failed' && <InfoCircleIcon color="error" size={24} />}
     </div>
   );
@@ -123,17 +121,19 @@ export function TokenPreview(props: PropTypes) {
     <Box>
       <Container type={'outlined'}>
         <div className="head">
-          <Typography variant="body2" color="neutral800">
+          <Typography variant="body" size="medium" color="neutral800">
             {props.label}
           </Typography>
           <div>
             {percentageChange}
             {props.usdValue && (
               <Typography
-                variant="caption"
+                variant="body"
+                size="xsmall"
                 color="neutral600"
-                className="usd-value"
-              >{`$${numberToString(props.usdValue)}`}</Typography>
+                className="usd-value">{`$${numberToString(
+                props.usdValue
+              )}`}</Typography>
             )}
           </div>
         </div>
@@ -151,11 +151,10 @@ export function TokenPreview(props: PropTypes) {
             }
             suffix={ItemSuffix}
             align="start"
-            size="large"
-          >
+            size="large">
             {loadingStatus === 'success' && chain
               ? chain.displayName
-              : t('Chain')}
+              : i18n.t('Chain')}
           </Button>
           <Divider size={12} direction="horizontal" />
           <Button
@@ -171,14 +170,17 @@ export function TokenPreview(props: PropTypes) {
             }
             suffix={ItemSuffix}
             size="large"
-            align="start"
-          >
-            {loadingStatus === 'success' && token ? token.symbol : t('Token')}
+            align="start">
+            {loadingStatus === 'success' && token
+              ? token.symbol
+              : i18n.t('Token')}
           </Button>
           <Divider size={12} direction="horizontal" />
           <div className="amount">
             <OutputContainer>
-              <Typography variant="h4">{props.amount}</Typography>
+              <Typography variant="title" size="medium">
+                {props.amount}
+              </Typography>
             </OutputContainer>
           </div>
         </div>

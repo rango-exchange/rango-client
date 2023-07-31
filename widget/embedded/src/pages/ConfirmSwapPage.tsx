@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useBestRouteStore } from '../store/bestRoute';
 import { useWalletsStore } from '../store/wallets';
 import { useWallets } from '@rango-dev/wallets-core';
+import { i18n } from '@lingui/core';
 import { navigationRoutes } from '../constants/navigationRoutes';
 import {
   getKeplrCompatibleConnectedWallets,
@@ -17,12 +18,15 @@ import {
 } from '../utils/swap';
 import { numberToString } from '../utils/numbers';
 import { useMetaStore } from '../store/meta';
-import { Network, WalletType } from '@rango-dev/wallets-shared';
+import { WalletType } from '@rango-dev/wallets-shared';
 import { useNavigateBack } from '../hooks/useNavigateBack';
 import { TokenPreview } from '../components/TokenPreview';
-// @ts-ignore // TODO: fix error in tsc build
-import { t } from 'i18next';
-import { Divider, ConfirmSwap, LoadingFailedAlert } from '@rango-dev/ui';
+import {
+  Divider,
+  ConfirmSwap,
+  LoadingFailedAlert,
+  HighSlippageWarning,
+} from '@rango-dev/ui';
 import RoutesOverview from '../components/RoutesOverview';
 import { useManager } from '@rango-dev/queue-manager-react';
 import { useConfirmSwap } from '../hooks/useConfirmSwap';
@@ -31,7 +35,7 @@ import { useUiStore } from '../store/ui';
 import { ConfirmSwapErrorTypes } from '../types';
 import { ConfirmSwapErrors } from '../components/ConfirmSwapErrors';
 import { ConfirmSwapWarnings } from '../components/ConfirmSwapWarnings';
-import { ConfirmSwapExtraMessages } from '../components/warnings/ConfirmSwapExtraMessages';
+import { HIGH_SLIPPAGE } from '../constants/swapSettings';
 import { getBestRouteStatus } from '../utils/routing';
 import { PercentageChange } from '../components/PercentageChange';
 
@@ -90,7 +94,7 @@ export function ConfirmSwapPage({
   const toAmount = numberToString(lastStep?.toAmount, 4, 6);
   useEffect(() => {
     initSelectedWallets();
-    if (!!customDestination) {
+    if (customDestination) {
       setCustomDestination('');
     }
   }, []);
@@ -108,7 +112,7 @@ export function ConfirmSwapPage({
   );
 
   const handleConnectChain = (wallet: string) => {
-    const network = wallet as Network;
+    const network = wallet;
     getKeplrCompatibleConnectedWallets(selectableWallets).forEach(
       (compatibleWallet: WalletType) => connect?.(compatibleWallet, network)
     );
@@ -180,7 +184,7 @@ export function ConfirmSwapPage({
             }}
             usdValue={inputUsdValue}
             amount={fromAmount}
-            label={t('From')}
+            label={i18n.t('From')}
             loadingStatus={
               loadingMetaStatus !== 'success'
                 ? loadingMetaStatus
@@ -199,7 +203,7 @@ export function ConfirmSwapPage({
             }}
             usdValue={outputUsdValue}
             amount={toAmount}
-            label={t('To')}
+            label={i18n.t('To')}
             loadingStatus={
               loadingMetaStatus !== 'success'
                 ? loadingMetaStatus
@@ -233,15 +237,17 @@ export function ConfirmSwapPage({
           {loadingMetaStatus === 'failed' && showHighSlippageWarning && (
             <Divider />
           )}
-          {showHighSlippageWarning && (
-            <ConfirmSwapExtraMessages selectedSlippage={selectedSlippage} />
-          )}
+          <HighSlippageWarning
+            selectedSlippage={selectedSlippage}
+            highSlippage={selectedSlippage >= HIGH_SLIPPAGE}
+            changeSlippage={() => navigate('/' + navigationRoutes.settings)}
+          />
         </>
       }
       confirmButtonTitle={
         warnings.length > 0 || errors.length > 0
-          ? 'Proceed anyway!'
-          : 'Confirm swap!'
+          ? `${i18n.t('Proceed anyway!')}`
+          : `${i18n.t('Confirm swap!')}`
       }
     />
   );

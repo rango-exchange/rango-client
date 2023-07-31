@@ -20,7 +20,7 @@ import {
 } from '../utils/wallets';
 import { removeDuplicateFrom } from '../utils/common';
 import { WidgetConfig } from '../types';
-import { useTranslation } from 'react-i18next';
+import { i18n } from '@lingui/core';
 import { useBestRouteStore } from '../store/bestRoute';
 import { useMetaStore } from '../store/meta';
 import { useSettingsStore } from '../store/settings';
@@ -57,7 +57,7 @@ export function Layout({ config }: LayoutProps) {
   const { getWalletInfo } = useWallets();
   const connectedWalletsImages = removeDuplicateFrom(
     getSelectableWallets(connectedWallets, selectedWallets, getWalletInfo).map(
-      w => w.image
+      (w) => w.image
     )
   );
   const { blockchains, tokens } = useMetaStore.use.meta();
@@ -67,19 +67,21 @@ export function Layout({ config }: LayoutProps) {
   const setToToken = useBestRouteStore.use.setToToken();
   const setInputAmount = useBestRouteStore.use.setInputAmount();
   const setAffiliateRef = useSettingsStore.use.setAffiliateRef();
+  const setAffiliatePercent = useSettingsStore.use.setAffiliatePercent();
+  const setAffiliateWallets = useSettingsStore.use.setAffiliateWallets();
 
   const totalBalance = calculateWalletUsdValue(connectedWallets);
-  const connectWalletsButtonDisabled = useUiStore.use.connectWalletsButtonDisabled();
+  const connectWalletsButtonDisabled =
+    useUiStore.use.connectWalletsButtonDisabled();
   const loadingMetaStatus = useMetaStore.use.loadingStatus();
   const fetchingBalance = useWalletsStore(fetchingBalanceSelector);
 
-  const { t } = useTranslation();
   useEffect(() => {
     if (loadingMetaStatus === 'success') {
       const chain = blockchains.find(
-        chain => chain.name === config?.to?.blockchain
+        (chain) => chain.name === config?.to?.blockchain
       );
-      const token = tokens.find(t =>
+      const token = tokens.find((t) =>
         tokensAreEqual(t, config?.to?.token || null)
       );
       setToChain(chain || null);
@@ -94,9 +96,9 @@ export function Layout({ config }: LayoutProps) {
   useEffect(() => {
     if (loadingMetaStatus === 'success') {
       const chain = blockchains.find(
-        chain => chain.name === config?.from?.blockchain
+        (chain) => chain.name === config?.from?.blockchain
       );
-      const token = tokens.find(t =>
+      const token = tokens.find((t) =>
         tokensAreEqual(t, config?.from?.token || null)
       );
 
@@ -106,8 +108,15 @@ export function Layout({ config }: LayoutProps) {
   }, [config?.from?.token, config?.from?.blockchain, loadingMetaStatus]);
 
   useEffect(() => {
-    setAffiliateRef(config?.affiliateRef || null);
-  }, [config?.affiliateRef]);
+    setAffiliateRef(config?.affiliate?.ref ?? null);
+    setAffiliatePercent(config?.affiliate?.percent ?? null);
+    setAffiliateWallets(config?.affiliate?.wallets ?? null);
+  }, [
+    config?.affiliate?.ref,
+    config?.affiliate?.percent,
+    config?.affiliate?.wallets,
+  ]);
+
   return (
     <>
       <Header>
@@ -132,12 +141,11 @@ export function Layout({ config }: LayoutProps) {
                 ))}
               </WalletImages>
             ) : null
-          }
-        >
+          }>
           <div className="balance">
-            <Typography variant="body2">
+            <Typography variant="body" size="medium">
               {!connectedWallets?.length
-                ? t('Connect Wallet')
+                ? i18n.t('Connect Wallet')
                 : `$${totalBalance || 0}`}
             </Typography>
             {fetchingBalance && <Spinner />}

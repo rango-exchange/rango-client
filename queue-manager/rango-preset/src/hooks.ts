@@ -7,6 +7,7 @@ import {
 } from './helpers';
 import { migrated, migration } from './migration';
 import { UseQueueManagerParams } from './types';
+import { eventEmitter } from './services/eventEmitter';
 
 let isCalled = 0;
 
@@ -54,14 +55,8 @@ function useQueueManager(params: UseQueueManagerParams): void {
         evmChains: params.evmChains,
         wallet_network: params.lastConnectedWallet,
         manager,
-        notifier: params.notifier,
       });
-      retryOn(
-        params.lastConnectedWallet,
-        params.notifier,
-        manager,
-        params.canSwitchNetworkTo
-      );
+      retryOn(params.lastConnectedWallet, manager, params.canSwitchNetworkTo);
     }
   }, [params.lastConnectedWallet]);
 
@@ -78,4 +73,8 @@ function useQueueManager(params: UseQueueManagerParams): void {
   }, [params.disconnectedWallet]);
 }
 
-export { useQueueManager, useMigration };
+function useEvents() {
+  return eventEmitter;
+}
+
+export { useQueueManager, useMigration, useEvents };

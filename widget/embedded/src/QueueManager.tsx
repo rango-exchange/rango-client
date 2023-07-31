@@ -4,7 +4,6 @@ import {
   makeQueueDefinition,
   SwapQueueContext,
   checkWaitingForNetworkChange,
-  SwapProgressNotification,
 } from '@rango-dev/queue-manager-rango-preset';
 import { useWallets } from '@rango-dev/wallets-core';
 import {
@@ -15,8 +14,8 @@ import {
 import { useMetaStore } from './store/meta';
 import { useWalletsStore } from './store/wallets';
 import { walletAndSupportedChainsNames } from './utils/wallets';
-import { isEvmBlockchain } from 'rango-sdk';
 import { getConfig } from './utils/configs';
+import { isEvmBlockchain } from 'rango-types';
 
 function QueueManager(props: PropsWithChildren) {
   const {
@@ -33,7 +32,6 @@ function QueueManager(props: PropsWithChildren) {
       API_KEY: getConfig('API_KEY'),
     });
   }, []);
-  const getOneOfWalletsDetails = useWalletsStore.use.getOneOfWalletsDetails();
 
   const { blockchains } = useMetaStore.use.meta();
   const connectedWallets = useWalletsStore.use.connectedWallets();
@@ -70,28 +68,6 @@ function QueueManager(props: PropsWithChildren) {
     return walletAndSupportedChainsNames(supportedChains);
   };
   const allProviders = providers();
-  const notifier = (data: SwapProgressNotification) => {
-    const lastStep = data.swap?.steps[data.swap.steps.length - 1];
-    const outputAmount = data.step?.outputAmount || '';
-    const step = data.step || lastStep;
-
-    if (
-      data.eventType === 'task_completed' ||
-      (data.eventType === 'step_completed_with_output' &&
-        lastStep?.id !== data.step?.id) ||
-      !!outputAmount
-    ) {
-      const fromAccount = connectedWallets.find(
-        (account) => account.chain === step?.fromBlockchain
-      );
-      const toAccount =
-        step?.fromBlockchain !== step?.toBlockchain &&
-        connectedWallets.find((wallet) => wallet.chain === step?.toBlockchain);
-
-      fromAccount && getOneOfWalletsDetails(fromAccount);
-      toAccount && getOneOfWalletsDetails(toAccount);
-    }
-  };
 
   const context: SwapQueueContext = {
     meta: {
@@ -112,7 +88,6 @@ function QueueManager(props: PropsWithChildren) {
     connect,
     state,
     isMobileWallet,
-    notifier,
   };
 
   return (

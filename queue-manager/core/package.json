@@ -1,18 +1,20 @@
 {
   "name": "@rango-dev/queue-manager-core",
-  "version": "0.1.15-next.4",
+  "version": "0.5.1-next.1",
   "license": "MIT",
-  "module": "dist/queue-manager-core.esm.js",
-  "main": "dist/index.js",
-  "typings": "dist/index.d.ts",
   "type": "module",
+  "module": "./dist/index.js",
+  "main": "./dist/index.js",
+  "exports": {
+    ".": "./dist/index.js"
+  },
+  "typings": "dist/index.d.ts",
   "files": [
     "dist",
     "src"
   ],
   "scripts": {
-    "dev": "tsdx watch",
-    "build": "tsdx build  --tsconfig ./tsconfig.json",
+    "build": "node ../../scripts/build/command.mjs --path queue-manager/core",
     "analyze": "size-limit --why",
     "clean": "rimraf dist",
     "format": "prettier --write '{.,src}/**/*.{ts,tsx}'",

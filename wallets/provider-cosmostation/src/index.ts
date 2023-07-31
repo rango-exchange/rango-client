@@ -1,5 +1,5 @@
 import {
-  Network,
+  Networks,
   WalletTypes,
   CanSwitchNetwork,
   Connect,
@@ -13,6 +13,8 @@ import {
   switchNetworkForEvm,
   getCosmosAccounts,
   WalletInfo,
+  CanEagerConnect,
+  canEagerlyConnectToEvm,
 } from '@rango-dev/wallets-shared';
 import { cosmostation as cosmostation_instance } from './helpers';
 import signer from './signer';
@@ -29,13 +31,13 @@ const WALLET = WalletTypes.COSMOSTATION;
 
 export const config = {
   type: WALLET,
-  defaultNetwork: Network.ETHEREUM,
+  defaultNetwork: Networks.ETHEREUM,
 };
 
 export const getInstance = cosmostation_instance;
 export const connect: Connect = async ({ instance, meta }) => {
-  const ethInstance = chooseInstance(instance, meta, Network.ETHEREUM);
-  const cosmosInstance = chooseInstance(instance, meta, Network.COSMOS);
+  const ethInstance = chooseInstance(instance, meta, Networks.ETHEREUM);
+  const cosmosInstance = chooseInstance(instance, meta, Networks.COSMOS);
 
   const results: ProviderConnectResult[] = [];
 
@@ -49,7 +51,7 @@ export const connect: Connect = async ({ instance, meta }) => {
     const comsmosResult = await getCosmosAccounts({
       instance: cosmosInstance,
       meta: cosmosBlockchainMeta,
-      network: Network.COSMOS,
+      network: Networks.COSMOS,
     });
     if (Array.isArray(comsmosResult)) results.push(...comsmosResult);
     else results.push(comsmosResult);
@@ -71,7 +73,7 @@ export const subscribe: Subscribe = ({
   connect,
   disconnect,
 }) => {
-  const ethInstance = instance.get(Network.ETHEREUM);
+  const ethInstance = instance.get(Networks.ETHEREUM);
   const EvmBlockchainMeta = meta.filter(isEvmBlockchain);
 
   subscribeToEvm({
@@ -91,6 +93,13 @@ export const subscribe: Subscribe = ({
 };
 
 export const getSigners: (provider: any) => SignerFactory = signer;
+
+export const canEagerConnect: CanEagerConnect = ({ instance, meta }) => {
+  const evm_instance = chooseInstance(instance, meta, Networks.ETHEREUM);
+  if (evm_instance) {
+    return canEagerlyConnectToEvm({ instance: evm_instance, meta });
+  } else return Promise.resolve(false);
+};
 
 export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
   allBlockChains

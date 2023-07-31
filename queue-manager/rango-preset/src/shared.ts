@@ -19,6 +19,7 @@ import { PrettyError } from './shared-errors';
 import BigNumber from 'bignumber.js';
 import { numberToString } from './numbers';
 import {
+  TonTransaction,
   isCosmosBlockchain,
   isEvmBlockchain,
   isStarknetBlockchain,
@@ -29,12 +30,6 @@ export interface PendingSwapWithQueueID {
   id: string;
   swap: PendingSwap;
 }
-
-export type SwapProgressNotification = {
-  eventType: EventType;
-  swap: PendingSwap | null;
-  step: PendingSwapStep | null;
-};
 
 export type WalletBalance = {
   chain: Network;
@@ -173,6 +168,7 @@ export type PendingSwapStep = {
   tronTransaction: TronTransaction | null;
   starknetApprovalTransaction: StarknetTransaction | null;
   starknetTransaction: StarknetTransaction | null;
+  tonTransaction: TonTransaction | null;
 
   // missing fields in older versions
   // keeping null for backward compatability
@@ -243,7 +239,7 @@ export const getCurrentBlockchainOf = (
     step.tronApprovalTransaction?.blockChain ||
     step.cosmosTransaction?.blockChain ||
     step.solanaTransaction?.blockChain;
-  if (!!b1) return b1 as Network;
+  if (b1) return b1;
 
   const transferAddress = step.transferTransaction?.fromWalletAddress;
   if (!transferAddress) throw PrettyError.BlockchainMissing();
@@ -254,8 +250,7 @@ export const getCurrentBlockchainOf = (
     ) || null;
   if (blockchain == null) throw PrettyError.BlockchainMissing();
 
-  // TODO: check why it returns string
-  return blockchain as Network;
+  return blockchain;
 };
 
 const getBlockchainMetaExplorerBaseUrl = (
@@ -481,6 +476,7 @@ export function calculatePendingSwap(
           cosmosTransaction: null,
           solanaTransaction: null,
           transferTransaction: null,
+          tonTransaction: null,
 
           // front fields
           hasAlreadyProceededToSign: false,
