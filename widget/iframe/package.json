@@ -11,9 +11,7 @@
     "format": "prettier --write '{.,src}/**/*.{ts,tsx}'",
     "lint": "eslint \"**/*.{ts,tsx}\" --ignore-path ../../.eslintignore"
   },
-  "devDependencies": {
-    "parcel": "^2.7.0"
-  },
+  "devDependencies": {},
   "dependencies": {
     "@rango-dev/widget-embedded": "^0.8.1-next.13"
   }

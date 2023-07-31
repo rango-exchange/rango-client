@@ -14,9 +14,7 @@
     "src"
   ],
   "scripts": {
-    "dev": "tsdx watch --tsconfig ./tsconfig.json",
     "build": "node ../../scripts/build/command.mjs --path queue-manager/rango-preset",
-    "analyze": "size-limit --why",
     "clean": "rimraf dist",
     "format": "prettier --write '{.,src}/**/*.{ts,tsx}'",
     "lint": "eslint \"**/*.{ts,tsx}\" --ignore-path ../../.eslintignore"
