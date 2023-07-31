@@ -1,3 +1,17 @@
+# [0.9.0](https://github.com/rango-exchange/rango-client/compare/provider-walletconnect@0.8.0...provider-walletconnect@0.9.0) (2023-07-31)
+
+
+### Bug Fixes
+
+* remove unused variable ([3cc52ad](https://github.com/rango-exchange/rango-client/commit/3cc52adf2b33471e159bae016e71b0c14457d3f7))
+
+
+### Features
+
+* add project id as a external value ([0c80404](https://github.com/rango-exchange/rango-client/commit/0c80404a8cacb6c5b0338dea1e416b0b11db254b))
+
+
+
 # [0.7.0](https://github.com/rango-exchange/rango-client/compare/provider-walletconnect@0.6.0...provider-walletconnect@0.7.0) (2023-07-11)
 
 

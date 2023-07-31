@@ -1,3 +1,13 @@
+# [0.9.0](https://github.com/rango-exchange/rango-client/compare/queue-manager-rango-preset@0.8.0...queue-manager-rango-preset@0.9.0) (2023-07-31)
+
+
+### Features
+
+* Get Wallet Connect project id from config ([9fb30b4](https://github.com/rango-exchange/rango-client/commit/9fb30b4b1a83e2005bbf42553298f24b1e278e1c))
+* support safe wallet ([d04cbcd](https://github.com/rango-exchange/rango-client/commit/d04cbcd2a612755563512d9dff6f2312088d8b4d))
+
+
+
 # [0.7.0](https://github.com/rango-exchange/rango-client/compare/queue-manager-rango-preset@0.6.0...queue-manager-rango-preset@0.7.0) (2023-07-11)
 
 

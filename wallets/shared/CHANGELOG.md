@@ -1,3 +1,15 @@
+# [0.9.0](https://github.com/rango-exchange/rango-client/compare/wallets-shared@0.8.0...wallets-shared@0.9.0) (2023-07-31)
+
+
+### Features
+
+* add project id as a external value ([0c80404](https://github.com/rango-exchange/rango-client/commit/0c80404a8cacb6c5b0338dea1e416b0b11db254b))
+* support braavos wallet ([fb38ebe](https://github.com/rango-exchange/rango-client/commit/fb38ebef00a33b92cabf506c88ef83d8c77cce84))
+* Support for WalletConnect 2 ([faedef0](https://github.com/rango-exchange/rango-client/commit/faedef0b5e6fc3c5ef881cbbe4ec05334cc1c910))
+* support safe wallet ([d04cbcd](https://github.com/rango-exchange/rango-client/commit/d04cbcd2a612755563512d9dff6f2312088d8b4d))
+
+
+
 # [0.7.0](https://github.com/rango-exchange/rango-client/compare/wallets-shared@0.6.0...wallets-shared@0.7.0) (2023-07-11)
 
 
