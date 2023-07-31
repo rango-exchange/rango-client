@@ -173,7 +173,7 @@ msgstr ""
 #~ msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/WalletsPage.tsx:117
+#: widget/embedded/src/pages/WalletsPage.tsx:124
 #~ msgid "Select Wallet"
 #~ msgstr ""
 
