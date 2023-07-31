@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/provider-all",
-  "version": "0.8.1-next.6",
+  "version": "0.8.1-next.7",
   "license": "MIT",
   "type": "module",
   "module": "./dist/index.js",
@@ -46,7 +46,7 @@
     "@rango-dev/provider-tokenpocket": "^0.8.1-next.6",
     "@rango-dev/provider-tron-link": "^0.8.1-next.6",
     "@rango-dev/provider-trustwallet": "^0.8.1-next.6",
-    "@rango-dev/provider-walletconnect-2": "^0.1.1-next.3",
+    "@rango-dev/provider-walletconnect-2": "^0.1.1-next.4",
     "@rango-dev/provider-xdefi": "^0.8.1-next.6"
   },
   "publishConfig": {
