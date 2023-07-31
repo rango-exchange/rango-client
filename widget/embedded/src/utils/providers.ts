@@ -1,7 +1,10 @@
 import { allProviders } from '@rango-dev/provider-all';
 import { ProviderInterface } from '@rango-dev/wallets-core';
-import { WC_PROJECT_ID } from '../constants/widget';
 import { WidgetConfig } from '../types';
+
+export interface ProvidersOptions {
+  walletConnectProjectId?: WidgetConfig['walletConnectProjectId'];
+}
 
 /**
  *
@@ -10,11 +13,12 @@ import { WidgetConfig } from '../types';
  *
  */
 export function matchAndGenerateProviders(
-  providers: WidgetConfig['wallets']
+  providers: WidgetConfig['wallets'],
+  options?: ProvidersOptions
 ): ProviderInterface[] {
   const all = allProviders({
     walletconnect2: {
-      WC_PROJECT_ID: WC_PROJECT_ID,
+      WC_PROJECT_ID: options?.walletConnectProjectId || '',
     },
   });
 
@@ -48,9 +52,10 @@ export function matchAndGenerateProviders(
 }
 
 export function configWalletsToWalletName(
-  config: WidgetConfig['wallets']
+  config: WidgetConfig['wallets'],
+  options?: ProvidersOptions
 ): string[] {
-  const providers = matchAndGenerateProviders(config);
+  const providers = matchAndGenerateProviders(config, options);
   const names = providers.map((provider) => {
     return provider.config.type;
   });

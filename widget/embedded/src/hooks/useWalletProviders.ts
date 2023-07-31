@@ -2,16 +2,26 @@ import { ProviderInterface } from '@rango-dev/wallets-core';
 import { useEffect } from 'react';
 import { useWalletsStore } from '../store/wallets';
 import { WidgetConfig } from '../types';
-import { matchAndGenerateProviders } from '../utils/providers';
+import {
+  matchAndGenerateProviders,
+  ProvidersOptions,
+} from '../utils/providers';
 
-export function useWalletProviders(providers: WidgetConfig['wallets']) {
+export function useWalletProviders(
+  providers: WidgetConfig['wallets'],
+  options?: ProvidersOptions
+) {
   const clearConnectedWallet = useWalletsStore.use.clearConnectedWallet();
-  let generateProviders: ProviderInterface[] =
-    matchAndGenerateProviders(undefined);
+  let generateProviders: ProviderInterface[] = matchAndGenerateProviders(
+    undefined,
+    options
+  );
 
   useEffect(() => {
     clearConnectedWallet();
-    generateProviders = matchAndGenerateProviders(providers);
+    generateProviders = matchAndGenerateProviders(providers, {
+      walletConnectProjectId: options?.walletConnectProjectId,
+    });
   }, [providers]);
 
   return {

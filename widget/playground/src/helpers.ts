@@ -105,6 +105,10 @@ export function filterConfig(
   if (!filteredConfigForExport.apiKey)
     filteredConfigForExport.apiKey = config.apiKey;
 
+  if (!filteredConfigForExport.walletConnectProjectId)
+    filteredConfigForExport.walletConnectProjectId =
+      config.walletConnectProjectId;
+
   return { userSelectedConfig, filteredConfigForExport };
 }
 
@@ -165,6 +169,15 @@ export function formatConfig(config: WidgetConfig) {
     `,
     formatedConfig.indexOf('apiKey')
   );
+
+  formatedConfig = insertAt(
+    formatedConfig,
+    `// This project id is only for test purpose. Don't use it in production.
+    // Get your Wallet Connect project id from https://cloud.walletconnect.com/
+    `,
+    formatedConfig.indexOf('walletConnectProjectId')
+  );
+
   if (!!config.wallets)
     formatedConfig = insertAt(
       formatedConfig,
