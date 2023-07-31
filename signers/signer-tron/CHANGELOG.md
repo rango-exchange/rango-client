@@ -1,3 +1,11 @@
+# [0.7.0](https://github.com/rango-exchange/rango-client/compare/signer-tron@0.6.0...signer-tron@0.7.0) (2023-07-11)
+
+
+
+# [0.6.0](https://github.com/rango-exchange/rango-client/compare/signer-tron@0.5.0...signer-tron@0.6.0) (2023-07-11)
+
+
+
 # [0.5.0](https://github.com/rango-exchange/rango-client/compare/signer-tron@0.4.0...signer-tron@0.5.0) (2023-05-31)
 
 

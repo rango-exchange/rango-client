@@ -1,3 +1,18 @@
+# [0.7.0](https://github.com/rango-exchange/rango-client/compare/signer-evm@0.6.0...signer-evm@0.7.0) (2023-07-11)
+
+
+
+# [0.6.0](https://github.com/rango-exchange/rango-client/compare/signer-evm@0.5.0...signer-evm@0.6.0) (2023-07-11)
+
+
+### Bug Fixes
+
+* better parsing of evm rpc errors ([f23031a](https://github.com/rango-exchange/rango-client/commit/f23031ae14e6e841ee488591bd1bf58cfa7ca15b))
+* fix signer wait change network issues ([e453db6](https://github.com/rango-exchange/rango-client/commit/e453db6ccf7736e36e5ada0c29502be32254fe9c))
+* show tenderly error on call exception ([c218f49](https://github.com/rango-exchange/rango-client/commit/c218f49f3330706d9262b0cf3ec8e293e91e3729))
+
+
+
 # [0.5.0](https://github.com/rango-exchange/rango-client/compare/signer-evm@0.4.0...signer-evm@0.5.0) (2023-05-31)
 
 

@@ -3734,7 +3734,7 @@
   dependencies:
     "@messageformat/parser" "^5.0.0"
 
-"@lingui/react@^4.2.1":
+"@lingui/react@4.2.1":
   version "4.2.1"
   resolved "https://registry.yarnpkg.com/@lingui/react/-/react-4.2.1.tgz#33b6919dfa0330a7bccbd6e385473ff7964670f5"
   integrity sha512-6VRKGFzQgEAxChLE5B7Pih7ZqAKS5PWzJtIP6O6amX6uVRxEJBIB/J4BtRNpt25Dz8WXf3C+9sSxskRNWtsZXQ==

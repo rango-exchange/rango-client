@@ -54,6 +54,8 @@
     "typescript": "^4.8.4"
   },
   "dependencies": {
+    "@lingui/core": "4.2.1",
+    "@lingui/react": "4.2.1",
     "@radix-ui/react-checkbox": "^1.0.1",
     "@radix-ui/react-radio-group": "^1.1.1",
     "@radix-ui/react-switch": "^1.0.1",
