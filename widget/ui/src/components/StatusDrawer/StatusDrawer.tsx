@@ -48,9 +48,13 @@ export function StatusDrawer({
             ) : (
               <WarningIcon color="warning" size={24} />
             )}
-            <Typography variant="h6">{title}</Typography>
+            <Typography variant="title" size="small">
+              {title}
+            </Typography>
           </Header>
-          <Typography variant="body2">{subtitle}</Typography>
+          <Typography variant="body" size="small">
+            {subtitle}
+          </Typography>
         </>
       }
       footer={
@@ -60,13 +64,12 @@ export function StatusDrawer({
               {status === 'success' ? 'Cancel' : 'See detailes'}
             </Button>
           )}
-          <Divider size={16} direction='horizontal' />
+          <Divider size={16} direction="horizontal" />
           <Button
             fullWidth
             onClick={onSubmit}
             variant="contained"
-            type="primary"
-          >
+            type="primary">
             {status === 'success'
               ? 'Done'
               : status === 'continue'

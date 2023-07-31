@@ -10,7 +10,11 @@ export default {
   args: {
     type: 'success',
     title: 'Alert Title',
-    footer: <Typography variant='body1'>It's a Alert!</Typography>
+    footer: (
+      <Typography variant="body" size="medium">
+        It's a Alert!
+      </Typography>
+    ),
   },
   argTypes: {
     type: {

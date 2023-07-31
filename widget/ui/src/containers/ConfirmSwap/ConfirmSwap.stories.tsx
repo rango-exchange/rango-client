@@ -93,12 +93,13 @@ const TokenPreview = ({
   <Box>
     <Container type={'outlined'}>
       <div className="head">
-        <Typography variant="body2" color="neutral800">
+        <Typography variant="body" size="small" color="neutral800">
           {props.label}
         </Typography>
         <div>
           <Typography
-            variant="caption"
+            variant="body"
+            size="xsmall"
             color="neutral600"
             className="usd-value">{`$${props.usdValue}`}</Typography>
         </div>
@@ -124,7 +125,9 @@ const TokenPreview = ({
         <Divider size={12} direction="horizontal" />
         <div className="amount">
           <OutputContainer>
-            <Typography variant="h4">{props.amount}</Typography>
+            <Typography variant="title" size="medium">
+              {props.amount}
+            </Typography>
           </OutputContainer>
         </div>
       </div>
@@ -151,7 +154,10 @@ const OverviewContainer = styled('div', {
   },
 });
 
-const RoutesOverview = (props: { routes: BestRouteResponse; totalFee?: string }) => {
+const RoutesOverview = (props: {
+  routes: BestRouteResponse;
+  totalFee?: string;
+}) => {
   const swaps = props.routes.result?.swaps;
   return (
     <OverviewContainer>

@@ -32,7 +32,9 @@ export function Header(props: PropsWithChildren<PropTypes>) {
         </BackButton>
       ) : null}
       {props.prefix}
-      <Typography variant="h4">{props.title}</Typography>
+      <Typography variant="title" size="medium">
+        {props.title}
+      </Typography>
       {props.suffix || <div></div>}
     </HeaderContainer>
   );

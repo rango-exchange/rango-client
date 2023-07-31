@@ -45,7 +45,9 @@ export function App() {
         {loading && (
           <div className="flex">
             <Spinner size={20} />{' '}
-            <Typography variant="caption">Loading...</Typography>
+            <Typography variant="body" size="xsmall">
+              Loading...
+            </Typography>
           </div>
         )}
       </div>
