@@ -1,3 +1,20 @@
+# [0.8.0](https://github.com/rango-exchange/rango-client/compare/wallets-demo@0.7.0...wallets-demo@0.8.0) (2023-07-11)
+
+
+
+# [0.7.0](https://github.com/rango-exchange/rango-client/compare/wallets-demo@0.6.0...wallets-demo@0.7.0) (2023-07-11)
+
+
+
+# [0.6.0](https://github.com/rango-exchange/rango-client/compare/wallets-demo@0.5.0...wallets-demo@0.6.0) (2023-07-11)
+
+
+### Features
+
+* add bitkeep wallet ([c02c3df](https://github.com/rango-exchange/rango-client/commit/c02c3dfd236070295eada74aeb97514f8dacd0ed))
+
+
+
 # [0.5.0](https://github.com/rango-exchange/rango-client/compare/wallets-demo@0.4.0...wallets-demo@0.5.0) (2023-05-31)
 
 

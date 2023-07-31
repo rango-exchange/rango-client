@@ -1,3 +1,20 @@
+# [0.8.0](https://github.com/rango-exchange/rango-client/compare/widget-app@0.7.0...widget-app@0.8.0) (2023-07-11)
+
+
+
+# [0.7.0](https://github.com/rango-exchange/rango-client/compare/widget-app@0.6.0...widget-app@0.7.0) (2023-07-11)
+
+
+
+# [0.6.0](https://github.com/rango-exchange/rango-client/compare/widget-app@0.5.0...widget-app@0.6.0) (2023-07-11)
+
+
+### Bug Fixes
+
+* better parsing of evm rpc errors ([f23031a](https://github.com/rango-exchange/rango-client/commit/f23031ae14e6e841ee488591bd1bf58cfa7ca15b))
+
+
+
 # [0.5.0](https://github.com/rango-exchange/rango-client/compare/widget-app@0.4.0...widget-app@0.5.0) (2023-05-31)
 
 

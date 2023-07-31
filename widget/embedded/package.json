@@ -24,6 +24,8 @@
     "@rango-dev/ui": "^0.8.1-next.12",
     "@rango-dev/wallets-core": "^0.8.1-next.5",
     "@rango-dev/wallets-shared": "^0.8.1-next.6",
+    "@lingui/core": "4.2.1",
+    "@lingui/react": "4.2.1",
     "bignumber.js": "^9.1.1",
     "copy-to-clipboard": "^3.3.3",
     "dayjs": "^1.11.7",
