@@ -252,7 +252,9 @@ export function StylesConfig() {
 
   return (
     <div>
-      <Typography variant="h6">Styles</Typography>
+      <Typography variant="title" size="small">
+        Styles
+      </Typography>
 
       <Divider size={12} />
       <ConfigurationContainer>
@@ -277,7 +279,7 @@ export function StylesConfig() {
             }
           />
           <div>
-            <FieldName variant="body2" mb={4}>
+            <FieldName variant="body" size="small" mb={4}>
               Theme
             </FieldName>
             <ThemeContainer>
@@ -295,7 +297,7 @@ export function StylesConfig() {
 
               <Line />
               <ThemeSwitchAndLables>
-                <Typography variant="caption" mr={4}>
+                <Typography variant="body" size="xsmall" mr={4}>
                   Light
                 </Typography>
                 <ThemeSwitchContainer>
@@ -311,7 +313,7 @@ export function StylesConfig() {
                     }}
                   />
                 </ThemeSwitchContainer>
-                <Typography variant="caption" ml={4}>
+                <Typography variant="body" size="xsmall" ml={4}>
                   Dark
                 </Typography>
               </ThemeSwitchAndLables>

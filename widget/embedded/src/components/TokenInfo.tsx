@@ -185,7 +185,7 @@ export function TokenInfo(props: PropTypes) {
     <Box>
       <Container type={props.type === 'From' ? 'filled' : 'outlined'}>
         <div className="head">
-          <Typography variant="body2" color="neutral800">
+          <Typography variant="body" size="small" color="neutral800">
             {type === 'From' ? (
               <Trans id="swap from" message="From" />
             ) : (
@@ -200,7 +200,7 @@ export function TokenInfo(props: PropTypes) {
                   if (tokenBalance !== '0')
                     setInputAmount(tokenBalanceReal.split(',').join(''));
                 }}>
-                <Typography variant="body3" color="neutral600">
+                <Typography variant="body" size="small" color="neutral600">
                   {i18n.t('Balance')}: {tokenBalance} {fromToken?.symbol || ''}
                 </Typography>
                 <Divider size={4} />
@@ -217,7 +217,8 @@ export function TokenInfo(props: PropTypes) {
               />
               <div>
                 <Typography
-                  variant="caption"
+                  variant="body"
+                  size="xsmall"
                   color="neutral600">{`$${numberToString(
                   props.outputUsdValue
                 )}`}</Typography>
@@ -295,7 +296,8 @@ export function TokenInfo(props: PropTypes) {
                       bottom: '2px',
                     }}>
                     <Typography
-                      variant="caption"
+                      variant="body"
+                      size="xsmall"
                       color="neutral800">{`$${numberToString(
                       inputUsdValue
                     )}`}</Typography>
@@ -313,7 +315,7 @@ export function TokenInfo(props: PropTypes) {
               />
             ) : (
               <OutputContainer>
-                <Typography variant="h4">
+                <Typography variant="title" size="medium">
                   {fetchingBestRoute && '?'}
                   {!!bestRoute?.result &&
                     `≈ ${numberToString(props.outputAmount)}`}

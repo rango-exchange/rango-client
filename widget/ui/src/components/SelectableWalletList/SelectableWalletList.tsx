@@ -77,9 +77,12 @@ export interface PropTypes {
   onChange: (w: SelectableWallet) => void;
 }
 
-export function SelectableWalletList({ list, onChange }: PropsWithChildren<PropTypes>) {
+export function SelectableWalletList({
+  list,
+  onChange,
+}: PropsWithChildren<PropTypes>) {
   const [active, setActive] = useState<string>(
-    list.find((item) => item.selected)?.walletType || '',
+    list.find((item) => item.selected)?.walletType || ''
   );
   const onClick = (w: SelectableWallet) => {
     setActive(w.walletType);
@@ -95,11 +98,20 @@ export function SelectableWalletList({ list, onChange }: PropsWithChildren<PropT
       {list.map((w, index) => {
         const checked = active === w.walletType;
         return (
-          <Container checked={checked} onClick={onClick.bind(null, w)} key={index}>
+          <Container
+            checked={checked}
+            onClick={onClick.bind(null, w)}
+            key={index}>
             <Image src={w.image} alt={w.walletType} size={24} />
-            <Typography variant="body2">{w.name}</Typography>
-            <Typography variant="caption">{getConciseAddress(w.address)}</Typography>
-            <Circle checked={checked}>{checked && <SolidCircle checked={checked} />}</Circle>
+            <Typography variant="body" size="small">
+              {w.name}
+            </Typography>
+            <Typography variant="body" size="xsmall">
+              {getConciseAddress(w.address)}
+            </Typography>
+            <Circle checked={checked}>
+              {checked && <SolidCircle checked={checked} />}
+            </Circle>
           </Container>
         );
       })}

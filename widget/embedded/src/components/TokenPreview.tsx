@@ -121,14 +121,15 @@ export function TokenPreview(props: PropTypes) {
     <Box>
       <Container type={'outlined'}>
         <div className="head">
-          <Typography variant="body2" color="neutral800">
+          <Typography variant="body" size="small" color="neutral800">
             {props.label}
           </Typography>
           <div>
             {percentageChange}
             {props.usdValue && (
               <Typography
-                variant="caption"
+                variant="body"
+                size="xsmall"
                 color="neutral600"
                 className="usd-value">{`$${numberToString(
                 props.usdValue
@@ -177,7 +178,9 @@ export function TokenPreview(props: PropTypes) {
           <Divider size={12} direction="horizontal" />
           <div className="amount">
             <OutputContainer>
-              <Typography variant="h4">{props.amount}</Typography>
+              <Typography variant="title" size="medium">
+                {props.amount}
+              </Typography>
             </OutputContainer>
           </div>
         </div>

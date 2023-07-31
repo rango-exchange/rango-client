@@ -59,12 +59,12 @@ msgid "Settings"
 msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/ui/src/components/LiquiditySourceList/LiquiditySourceList.tsx:107
+#: widget/ui/src/components/LiquiditySourceList/LiquiditySourceList.tsx:108
 msgid "Bridges"
 msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/ui/src/components/LiquiditySourceList/LiquiditySourceList.tsx:140
+#: widget/ui/src/components/LiquiditySourceList/LiquiditySourceList.tsx:143
 msgid "Exchanges"
 msgstr ""
 
@@ -114,7 +114,7 @@ msgid "Liquidity Sources"
 msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/ui/src/containers/Warnings/BalanceErrors.tsx:36
+#: widget/ui/src/containers/Warnings/BalanceErrors.tsx:40
 msgid "Insufficent Balance:"
 msgstr ""
 
@@ -136,14 +136,14 @@ msgstr ""
 #~ msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/TokenInfo.tsx:249
-#: widget/embedded/src/components/TokenPreview.tsx:156
+#: widget/embedded/src/components/TokenInfo.tsx:250
+#: widget/embedded/src/components/TokenPreview.tsx:157
 #~ msgid "Chain"
 #~ msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/TokenInfo.tsx:276
-#: widget/embedded/src/components/TokenPreview.tsx:175
+#: widget/embedded/src/components/TokenInfo.tsx:277
+#: widget/embedded/src/components/TokenPreview.tsx:176
 #~ msgid "Token"
 #~ msgstr ""
 

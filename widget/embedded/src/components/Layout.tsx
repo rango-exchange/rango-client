@@ -143,7 +143,7 @@ export function Layout({ config }: LayoutProps) {
             ) : null
           }>
           <div className="balance">
-            <Typography variant="body2">
+            <Typography variant="body" size="small">
               {!connectedWallets?.length
                 ? i18n.t('Connect Wallet')
                 : `$${totalBalance || 0}`}

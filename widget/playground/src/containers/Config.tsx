@@ -89,9 +89,11 @@ export function Config(props: PropsWithChildren) {
         <div>
           <Header>
             <div>
-              <Typography variant="h4">Customize your widget</Typography>
+              <Typography variant="title" size="medium">
+                Customize your widget
+              </Typography>
               <Divider size={8} />
-              <Description variant="body2" color="$neutral600">
+              <Description variant="body" size="small" color="$neutral600">
                 You can customize the theme and config how your widget should
                 works
               </Description>

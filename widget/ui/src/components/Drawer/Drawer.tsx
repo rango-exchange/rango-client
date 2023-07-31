@@ -110,7 +110,9 @@ export function Drawer(props: PropTypes) {
           <BackDrop onClick={handleBackDropClick}>
             <DrawerContainer anchor={anchor} style={containerStyle}>
               <DrawerHeader>
-                <Typography variant="h6">{title}</Typography>
+                <Typography variant="title" size="small">
+                  {title}
+                </Typography>
                 {showClose && <CloseIcon size={24} onClick={onClose} />}
               </DrawerHeader>
               <Body>{content}</Body>
