@@ -1,3 +1,12 @@
+# [0.11.0](https://github.com/rango-exchange/rango-client/compare/widget-app@0.8.0...widget-app@0.11.0) (2023-08-01)
+
+
+### Features
+
+* Get Wallet Connect project id from config ([9fb30b4](https://github.com/rango-exchange/rango-client/commit/9fb30b4b1a83e2005bbf42553298f24b1e278e1c))
+
+
+
 # [0.9.0](https://github.com/rango-exchange/rango-client/compare/widget-app@0.8.0...widget-app@0.9.0) (2023-07-31)
 
 
