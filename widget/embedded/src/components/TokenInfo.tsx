@@ -2,7 +2,7 @@ import React from 'react';
 import {
   AngleDownIcon,
   Button,
-  InfoCircleIcon,
+  InfoRegularIcon,
   styled,
   TextField,
   Typography,
@@ -176,7 +176,9 @@ export function TokenInfo(props: PropTypes) {
         justifyContent: 'center',
         alignItems: 'center',
       }}>
-      {loadingStatus === 'failed' && <InfoCircleIcon color="error" size={24} />}
+      {loadingStatus === 'failed' && (
+        <InfoRegularIcon color="error" size={24} />
+      )}
       <AngleDownIcon />
     </div>
   );

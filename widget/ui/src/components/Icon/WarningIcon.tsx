@@ -1,36 +1,16 @@
 import * as React from 'react';
 import { IconProps } from './types';
-import { SvgWithStrokeColor } from './common';
+import { SvgWithFillColor } from './common';
 
-export const WarningIcon: React.FC<IconProps> = ({
-  size = 16,
-  color,
-  ...props
-}) => {
+export const WarningIcon: React.FC<IconProps> = (props) => {
   return (
-    <SvgWithStrokeColor
-      width={size}
-      height={size}
-      viewBox="0 0 24 24"
-      color={color}
-      fill="none"
+    <SvgWithFillColor
+      viewBox="0 0 32 33"
       xmlns="http://www.w3.org/2000/svg"
       className="_icon"
-      {...props}
-    >
-      <path
-        d="M12 9v5M12 21.41H5.94c-3.47 0-4.92-2.48-3.24-5.51l3.12-5.62L8.76 5c1.78-3.21 4.7-3.21 6.48 0l2.94 5.29 3.12 5.62c1.68 3.03.22 5.51-3.24 5.51H12v-.01Z"
-        strokeWidth={1.5}
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-      <path
-        d="M11.994 17h.01"
-        strokeWidth={2}
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </SvgWithStrokeColor>
+      {...props}>
+      <path d="M28.4527 28.9401H3.54772C3.13764 28.9401 2.74432 28.7773 2.45414 28.4876C2.16395 28.1978 2.00061 27.8047 2 27.3947C2.0004 27.1256 2.06991 26.8611 2.20188 26.6266L14.6532 4.82399C14.7539 4.64734 14.8884 4.49229 15.0491 4.36773C15.2098 4.24316 15.3934 4.15152 15.5896 4.09806C15.7857 4.04461 15.9905 4.03038 16.1922 4.0562C16.3939 4.08202 16.5884 4.14737 16.7648 4.24852C17.0054 4.38447 17.2043 4.58342 17.3403 4.82399L29.7916 26.6359C29.928 26.8713 29.9999 27.1385 30 27.4105C30.0001 27.6826 29.9283 27.9498 29.792 28.1853C29.6557 28.4207 29.4596 28.616 29.2236 28.7514C28.9877 28.8868 28.7201 28.9574 28.4481 28.9563L28.4527 28.9401ZM14.5906 23.3479V26.1324H17.4052V23.3479H14.5906ZM14.449 11.9314L15.2264 21.8581H16.7555L17.5468 11.9453L14.449 11.9314Z" />
+    </SvgWithFillColor>
   );
 };
 

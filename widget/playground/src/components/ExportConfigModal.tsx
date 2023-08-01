@@ -1,7 +1,7 @@
 import React, { Fragment, useState } from 'react';
 import {
   Button,
-  CheckSquareIcon,
+  CheckCircleIcon,
   CopyIcon,
   Divider,
   Modal,
@@ -104,7 +104,7 @@ function CodeBlock(props: CodeBlockProps) {
     <CodeBlockContainer>
       <CopyCodeBlockButton onClick={handleCopy.bind(null, children)}>
         {isCopied ? (
-          <CheckSquareIcon size={20} color="success" />
+          <CheckCircleIcon size={20} color="success" />
         ) : (
           <CopyIcon size={20} />
         )}

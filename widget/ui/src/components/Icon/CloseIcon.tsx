@@ -1,9 +1,19 @@
-import { styled } from '../../theme';
-import { AddIcon } from './AddIcon';
+import * as React from 'react';
+import { SvgWithFillColor } from './common';
+import { IconProps } from './types';
 
-export const CloseIcon = styled(AddIcon, {
-  transform: 'rotate(45deg)',
-  cursor: 'pointer',
-});
+export const CloseIcon: React.FC<IconProps> = (props) => {
+  return (
+    <SvgWithFillColor
+      viewBox="0 0 16 16"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      className="_icon"
+      {...props}>
+      <path d="M15.2685 16C15.0753 16.0011 14.8897 15.9252 14.7524 15.7892L0.215688 1.24644C0.0313824 1.0619 -0.0406537 0.793124 0.0268384 0.541203C0.0943305 0.289141 0.290967 0.0924154 0.542935 0.0248956C0.794732 -0.0426241 1.06339 0.0294403 1.24788 0.213822L15.7846 14.7565C15.9222 14.893 15.9996 15.0789 15.9996 15.2728C15.9996 15.4668 15.9222 15.6526 15.7846 15.7891C15.6474 15.9252 15.4618 16.0011 15.2685 16Z" />
+      <path d="M0.731066 16C0.537839 16.0011 0.352234 15.9252 0.21497 15.7891C0.07739 15.6526 0 15.4668 0 15.2728C0 15.0789 0.07739 14.893 0.21497 14.7565L14.7517 0.213822C14.9362 0.0294411 15.2049 -0.0426242 15.4567 0.0248955C15.7086 0.0924152 15.9053 0.289133 15.9728 0.541203C16.0403 0.793104 15.9682 1.06187 15.7839 1.24644L1.24717 15.7892C1.10991 15.9252 0.924305 16.0011 0.731066 16Z" />
+    </SvgWithFillColor>
+  );
+};
 
 CloseIcon.toString = () => '._icon';

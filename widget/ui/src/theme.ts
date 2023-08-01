@@ -42,9 +42,9 @@ const theme = {
     warning100: '#FFF0CC',
     warning200: '#FFDFBB',
 
-    info: '#FF8800',
-    info100: '#FFF0CC',
-    info200: '#FFDFBB',
+    info: '#AF8EF3',
+    info100: '#ECE4FF',
+    info200: '#E1D3FF',
 
     link: '#3568D4',
     link100: '#9CCFFF',
@@ -152,6 +152,7 @@ const theme = {
     8: '8px',
     12: '12px',
     16: '16px',
+    18: '18px',
     20: '20px',
     24: '24px',
     28: '28px',

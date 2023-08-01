@@ -3,7 +3,7 @@ import {
   AngleDownIcon,
   BlockchainSelector,
   Button,
-  InfoCircleIcon,
+  InfoRegularIcon,
   Modal,
   styled,
   TextField,
@@ -60,14 +60,21 @@ export function TokenInfo({ type }: PropTypes) {
   const onChangeToken = useConfigStore.use.onChangeToken();
   const blockchains = useMetaStore.use.meta().blockchains;
   const tokens = useMetaStore.use.meta().tokens;
-  const token = tokens.find((t) => tokensAreEqual(t, type === 'Source' ? from.token : to.token));
+  const token = tokens.find((t) =>
+    tokensAreEqual(t, type === 'Source' ? from.token : to.token)
+  );
   const chain = blockchains.find(
-    (chain) => chain.name === (type === 'Source' ? from.blockchain : to.blockchain),
+    (chain) =>
+      chain.name === (type === 'Source' ? from.blockchain : to.blockchain)
   );
   const supportedChains = type === 'Source' ? from.blockchains : to.blockchains;
   const supportedTokens = type == 'Source' ? from.tokens : to.tokens;
 
-  const [modal, setModal] = useState({ open: false, isChain: false, isToken: false });
+  const [modal, setModal] = useState({
+    open: false,
+    isChain: false,
+    isToken: false,
+  });
   const loadingStatus = useMetaStore.use.loadingStatus();
 
   const ItemSuffix = (
@@ -77,20 +84,27 @@ export function TokenInfo({ type }: PropTypes) {
         justifyContent: 'center',
         alignItems: 'center',
       }}>
-      {loadingStatus === 'failed' && <InfoCircleIcon color="error" size={24} />}
+      {loadingStatus === 'failed' && (
+        <InfoRegularIcon color="error" size={24} />
+      )}
       <AngleDownIcon />
     </div>
   );
   useEffect(() => {
-    if (!!supportedChains && !!chain && !supportedChains.includes(chain?.name)) {
+    if (
+      !!supportedChains &&
+      !!chain &&
+      !supportedChains.includes(chain?.name)
+    ) {
       onChangeBlockChain(undefined, type);
       onChangeToken(undefined, type);
     }
     if (
       !!supportedTokens &&
       !!token &&
-      !supportedTokens.filter((t) => tokensAreEqual(t, type === 'Source' ? from.token : to.token))
-        .length
+      !supportedTokens.filter((t) =>
+        tokensAreEqual(t, type === 'Source' ? from.token : to.token)
+      ).length
     ) {
       onChangeToken(undefined, type);
     }
@@ -182,7 +196,9 @@ export function TokenInfo({ type }: PropTypes) {
             <BlockchainSelector
               list={
                 supportedChains
-                  ? blockchains.filter((chain) => supportedChains.includes(chain.name))
+                  ? blockchains.filter((chain) =>
+                      supportedChains.includes(chain.name)
+                    )
                   : blockchains
               }
               hasHeader={false}
@@ -203,13 +219,12 @@ export function TokenInfo({ type }: PropTypes) {
                 list={(supportedTokens && supportedTokens.length
                   ? tokens.filter((token) =>
                       supportedTokens.some((supportedToken) =>
-                        tokensAreEqual(supportedToken, token),
-                      ),
+                        tokensAreEqual(supportedToken, token)
+                      )
                     )
                   : tokens
                 ).filter((token) => token.blockchain === chain?.name)}
                 hasHeader={false}
-                // @ts-ignore
                 selected={token}
                 onChange={(token) => {
                   setModal((prev) => ({
@@ -222,7 +237,7 @@ export function TokenInfo({ type }: PropTypes) {
                       address: token.address,
                       symbol: token.symbol,
                     },
-                    type,
+                    type
                   );
                 }}
               />

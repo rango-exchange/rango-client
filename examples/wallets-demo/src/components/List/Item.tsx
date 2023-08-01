@@ -11,7 +11,7 @@ import './styles.css';
 import {
   Button,
   HorizontalSwapIcon,
-  InfoCircleIcon,
+  InfoRegularIcon,
   SignatureIcon,
   Divider,
   Spinner,
@@ -188,7 +188,7 @@ function Item({ type, info }: { type: WalletType; info: WalletInfo }) {
                 <Tooltip
                   content="Only default network is supported for this wallet."
                   color="gray">
-                  <InfoCircleIcon size={24} color="success" />
+                  <InfoRegularIcon size={24} color="success" />
                 </Tooltip>
                 <Divider size={12} direction="horizontal" />
               </>
@@ -228,7 +228,7 @@ function Item({ type, info }: { type: WalletType; info: WalletInfo }) {
 
         {error && (
           <p className="error-msg">
-            <InfoCircleIcon color="error" size={16} />
+            <InfoRegularIcon color="error" size={16} />
             {error}
           </p>
         )}

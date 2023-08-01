@@ -23,7 +23,10 @@ export function HeaderButtons(props: PropTypes) {
           variant="ghost"
           onClick={onClickRefresh}
           disabled={!onClickRefresh}>
-          <RetryIcon size={24} disabled={!onClickRefresh} />
+          <RetryIcon
+            size={24}
+            color={(!onClickRefresh && 'gray') || undefined}
+          />
         </Button>
       </Tooltip>
       <Tooltip content={i18n.t('Transactions History')}>

@@ -1,7 +1,7 @@
 import React, { ReactNode } from 'react';
 import {
   Button,
-  InfoCircleIcon,
+  InfoRegularIcon,
   styled,
   Typography,
   Divider,
@@ -113,7 +113,9 @@ export function TokenPreview(props: PropTypes) {
         justifyContent: 'center',
         alignItems: 'center',
       }}>
-      {loadingStatus === 'failed' && <InfoCircleIcon color="error" size={24} />}
+      {loadingStatus === 'failed' && (
+        <InfoRegularIcon color="error" size={24} />
+      )}
     </div>
   );
 

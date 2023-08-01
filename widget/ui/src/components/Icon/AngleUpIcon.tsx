@@ -2,28 +2,17 @@ import * as React from 'react';
 import { IconProps } from './types';
 import { SvgWithStrokeColor } from './common';
 
-export const AngleUpIcon: React.FC<IconProps> = ({
-  size = 16,
-  color,
-  ...props
-}) => {
+export const AngleUpIcon: React.FC<IconProps> = (props) => {
   return (
     <SvgWithStrokeColor
-      width={size}
-      height={size}
-      fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 24 24"
-      color={color}
-      className="_icon"
-      {...props}
-    >
+      viewBox={`0 0 32 32`}
+      fill="none"
+      {...props}>
       <path
-        d="M19.92 15.05 13.4 8.53c-.77-.77-2.03-.77-2.8 0l-6.52 6.52"
-        strokeWidth={1.5}
-        strokeMiterlimit={10}
-        strokeLinecap="round"
-        strokeLinejoin="round"
+        d="M24 20L16 12L8 20"
+        stroke-linecap="round"
+        stroke-linejoin="round"
       />
     </SvgWithStrokeColor>
   );

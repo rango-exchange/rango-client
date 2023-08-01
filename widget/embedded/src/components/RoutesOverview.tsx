@@ -1,5 +1,5 @@
 import React from 'react';
-import { styled, ChevronRightIcon, GasIcon, Divider } from '@rango-dev/ui';
+import { styled, AngleRightIcon, GasIcon, Divider } from '@rango-dev/ui';
 import { BestRouteResponse } from 'rango-sdk';
 
 export const Container = styled('div', {
@@ -38,7 +38,7 @@ function RoutesOverview(props: PropTypes) {
           return (
             <React.Fragment key={idx}>
               <div className="route">{swap.from.symbol}</div>
-              <ChevronRightIcon size={12} />
+              <AngleRightIcon size={12} />
               {isLast ? <div className="route">{swap.to.symbol}</div> : null}
             </React.Fragment>
           );

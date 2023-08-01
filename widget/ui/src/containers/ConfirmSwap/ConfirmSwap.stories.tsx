@@ -4,7 +4,7 @@ import { exampleFor5Wallets, wallets, bestRoute } from './mock';
 import React from 'react';
 import { Button, Typography, Divider, Image, GasIcon, styled } from '../../';
 import { BestRouteResponse } from 'rango-sdk';
-import { ChevronRightIcon } from '../../components';
+import { AngleRightIcon } from '../../components';
 const Box = styled('div', {
   display: 'flex',
   flexDirection: 'column',
@@ -167,7 +167,7 @@ const RoutesOverview = (props: {
           return (
             <React.Fragment key={idx}>
               <div className="route">{swap.from.symbol}</div>
-              <ChevronRightIcon size={12} />
+              <AngleRightIcon size={12} />
               {isLast ? <div className="route">{swap.to.symbol}</div> : null}
             </React.Fragment>
           );

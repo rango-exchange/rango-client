@@ -24,12 +24,12 @@ msgid "Transaction cost (fee)"
 msgstr "Transaction cost (fee)"
 
 #. js-lingui-explicit-id
-#: widget/ui/src/components/BestRoute/BestRoute.tsx:175
+#: widget/ui/src/components/BestRoute/BestRoute.tsx:176
 msgid "Time estimate"
 msgstr "Time estimate"
 
 #. js-lingui-explicit-id
-#: widget/ui/src/components/BestRoute/BestRoute.tsx:225
+#: widget/ui/src/components/BestRoute/BestRoute.tsx:231
 msgid "No routes found"
 msgstr "No routes found"
 
@@ -49,12 +49,12 @@ msgid "Refresh"
 msgstr "Refresh"
 
 #. js-lingui-explicit-id
-#: widget/ui/src/components/HeaderButtons/HeaderButtons.tsx:29
+#: widget/ui/src/components/HeaderButtons/HeaderButtons.tsx:32
 msgid "Transactions History"
 msgstr "Transactions History"
 
 #. js-lingui-explicit-id
-#: widget/ui/src/components/HeaderButtons/HeaderButtons.tsx:34
+#: widget/ui/src/components/HeaderButtons/HeaderButtons.tsx:37
 msgid "Settings"
 msgstr "Settings"
 
@@ -84,32 +84,32 @@ msgid "Custom"
 msgstr "Custom"
 
 #. js-lingui-explicit-id
-#: widget/ui/src/containers/Settings/Settings.tsx:166
+#: widget/ui/src/containers/Settings/Settings.tsx:171
 msgid "Theme"
 msgstr "Theme"
 
 #. js-lingui-explicit-id
-#: widget/ui/src/containers/Settings/Settings.tsx:170
+#: widget/ui/src/containers/Settings/Settings.tsx:176
 msgid "Dark"
 msgstr "Dark"
 
 #. js-lingui-explicit-id
-#: widget/ui/src/containers/Settings/Settings.tsx:171
+#: widget/ui/src/containers/Settings/Settings.tsx:177
 msgid "Light"
 msgstr "Light"
 
 #. js-lingui-explicit-id
-#: widget/ui/src/containers/Settings/Settings.tsx:172
+#: widget/ui/src/containers/Settings/Settings.tsx:178
 msgid "Auto"
 msgstr "Auto"
 
 #. js-lingui-explicit-id
-#: widget/ui/src/containers/Settings/Settings.tsx:181
+#: widget/ui/src/containers/Settings/Settings.tsx:188
 msgid "Infinite Approval"
 msgstr "Infinite Approval"
 
 #. js-lingui-explicit-id
-#: widget/ui/src/containers/Settings/Settings.tsx:207
+#: widget/ui/src/containers/Settings/Settings.tsx:216
 msgid "Liquidity Sources"
 msgstr "Liquidity Sources"
 
@@ -131,19 +131,19 @@ msgstr "Insufficent Balance:"
 #~ msgstr "Swap Details"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/TokenInfo.tsx:204
+#: widget/embedded/src/components/TokenInfo.tsx:206
 #~ msgid "Balance"
 #~ msgstr "Balance"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/TokenInfo.tsx:250
-#: widget/embedded/src/components/TokenPreview.tsx:157
+#: widget/embedded/src/components/TokenInfo.tsx:252
+#: widget/embedded/src/components/TokenPreview.tsx:159
 #~ msgid "Chain"
 #~ msgstr "Chain"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/TokenInfo.tsx:277
-#: widget/embedded/src/components/TokenPreview.tsx:176
+#: widget/embedded/src/components/TokenInfo.tsx:279
+#: widget/embedded/src/components/TokenPreview.tsx:178
 #~ msgid "Token"
 #~ msgstr "Token"
 
@@ -214,12 +214,12 @@ msgstr "Insufficent Balance:"
 #~ msgstr "The route goes through Ethereum. Continue?"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/TokenInfo.tsx:190
+#: widget/embedded/src/components/TokenInfo.tsx:192
 #~ msgid "swap from"
 #~ msgstr "From"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/TokenInfo.tsx:208
+#: widget/embedded/src/components/TokenInfo.tsx:210
 #~ msgid "maximum amount of asset"
 #~ msgstr "Max"
 
@@ -229,7 +229,7 @@ msgstr "Insufficent Balance:"
 #~ msgstr "Swap with request ID = ${requestId} not found."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/TokenInfo.tsx:192
+#: widget/embedded/src/components/TokenInfo.tsx:194
 #~ msgid "swap to"
 #~ msgstr "To"
 

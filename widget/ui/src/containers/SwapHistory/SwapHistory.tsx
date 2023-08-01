@@ -5,7 +5,7 @@ import {
   GasIcon,
   Typography,
   CheckCircleIcon,
-  InfoCircleIcon,
+  InfoRegularIcon,
   Divider,
   Button,
   Alert,
@@ -345,7 +345,7 @@ export function SwapHistory(props: PropTypes) {
                   {step.status === 'failed' && (
                     <InternalDetail>
                       <DescriptionContainer>
-                        <InfoCircleIcon color="error" />
+                        <InfoRegularIcon color="error" />
                         <Description
                           variant="body"
                           size="small"

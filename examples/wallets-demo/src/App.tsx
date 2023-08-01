@@ -3,7 +3,7 @@ import { Provider } from '@rango-dev/wallets-core';
 import List from './components/List';
 import { allProviders } from '@rango-dev/provider-all';
 import { RangoClient } from 'rango-sdk';
-import { InfoCircleIcon, Spinner, Typography } from '@rango-dev/ui';
+import { InfoRegularIcon, Spinner, Typography } from '@rango-dev/ui';
 import { WC_PROJECT_ID } from './constants';
 
 const providers = allProviders({
@@ -36,7 +36,7 @@ export function App() {
     <Provider providers={providers} allBlockChains={blockchains} autoConnect>
       {!process.env.REACT_APP_API_KEY && (
         <p className="ml-12 warning">
-          <InfoCircleIcon color="warning" size={24} /> Please add
+          <InfoRegularIcon color="warning" size={24} /> Please add
           REACT_APP_API_KEY into .env
         </p>
       )}

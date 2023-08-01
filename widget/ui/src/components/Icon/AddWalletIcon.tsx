@@ -2,22 +2,14 @@ import * as React from 'react';
 import { SvgWithFillColor } from './common';
 import { IconProps } from './types';
 
-export const AddWalletIcon: React.FC<IconProps> = ({
-  size = 16,
-  color,
-  ...props
-}) => {
+export const AddWalletIcon: React.FC<IconProps> = (props) => {
   return (
     <SvgWithFillColor
-      width={size}
-      height={size}
       viewBox="0 0 24 24"
-      color={color}
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       className="_icon"
-      {...props}
-    >
+      {...props}>
       <path
         fillRule="evenodd"
         clipRule="evenodd"

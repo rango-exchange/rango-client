@@ -1,7 +1,7 @@
 import React, { PropsWithChildren } from 'react';
 import {
   Button,
-  InfoCircleIcon,
+  InfoRegularIcon,
   Divider,
   styled,
   Typography,
@@ -49,7 +49,7 @@ export function Container({
           size="small"
           suffix={
             loadingStatus === 'failed' && (
-              <InfoCircleIcon color="error" size={24} />
+              <InfoRegularIcon color="error" size={24} />
             )
           }
           type="primary">

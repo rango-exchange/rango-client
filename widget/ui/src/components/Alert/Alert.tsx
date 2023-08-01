@@ -1,5 +1,5 @@
 import React, { PropsWithChildren, ReactNode } from 'react';
-import { CheckCircleIcon, InfoCircleIcon, WarningIcon } from '../Icon';
+import { CheckCircleIcon, InfoRegularIcon, WarningIcon } from '../Icon';
 import { Typography } from '../Typography';
 import { styled } from '../../theme';
 import { Divider } from '../Divider';
@@ -70,7 +70,7 @@ export function Alert(props: PropsWithChildren<PropTypes>) {
               }}>
               {type === 'success' && <CheckCircleIcon color={type} size={24} />}
               {type === 'warning' && <WarningIcon color={type} size={24} />}
-              {type === 'error' && <InfoCircleIcon color={type} size={24} />}
+              {type === 'error' && <InfoRegularIcon color={type} size={24} />}
               <Divider size={4} direction="horizontal" />
             </div>
           </>

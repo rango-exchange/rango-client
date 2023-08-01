@@ -15,7 +15,17 @@ export default {
     color: {
       name: 'color',
       control: { type: 'select' },
-      options: ['primary', 'error', 'warning', 'success', 'black', 'white'],
+      options: [
+        'primary',
+        'secondary',
+        'error',
+        'warning',
+        'success',
+        'black',
+        'white',
+        'gray',
+        'info',
+      ],
     },
 
     size: {

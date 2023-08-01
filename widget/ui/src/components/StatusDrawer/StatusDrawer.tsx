@@ -2,7 +2,7 @@ import React from 'react';
 import { styled } from '../../theme';
 import { Button } from '../Button';
 import { Drawer } from '../Drawer';
-import { CheckCircleIcon, InfoCircleIcon, WarningIcon } from '../Icon';
+import { CheckCircleIcon, InfoRegularIcon, WarningIcon } from '../Icon';
 import { Divider } from '../Divider';
 import { Typography } from '../Typography';
 
@@ -44,7 +44,7 @@ export function StatusDrawer({
             {status === 'success' ? (
               <CheckCircleIcon color="success" size={24} />
             ) : status === 'failed' ? (
-              <InfoCircleIcon color="error" size={24} />
+              <InfoRegularIcon color="error" size={24} />
             ) : (
               <WarningIcon color="warning" size={24} />
             )}
