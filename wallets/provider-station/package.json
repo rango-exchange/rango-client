@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/provider-station",
-  "version": "0.8.1-next.6",
+  "version": "0.9.0",
   "license": "MIT",
   "type": "module",
   "module": "./dist/index.js",
@@ -23,8 +23,8 @@
     "react": ">=16"
   },
   "dependencies": {
-    "@rango-dev/signer-terra": "^0.8.1-next.1",
-    "@rango-dev/wallets-shared": "^0.8.1-next.7",
+    "@rango-dev/signer-terra": "^0.9.0",
+    "@rango-dev/wallets-shared": "^0.9.0",
     "@terra-money/wallet-controller": "^3.11.2",
     "rango-types": "^0.1.46"
   },
