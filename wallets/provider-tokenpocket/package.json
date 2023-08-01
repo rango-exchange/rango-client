@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/provider-tokenpocket",
-  "version": "0.11.0",
+  "version": "0.12.0",
   "license": "MIT",
   "type": "module",
   "module": "./dist/index.js",
@@ -20,8 +20,8 @@
     "lint": "eslint \"**/*.{ts,tsx}\" --ignore-path ../../.eslintignore"
   },
   "dependencies": {
-    "@rango-dev/signer-evm": "^0.11.0",
-    "@rango-dev/wallets-shared": "^0.11.0",
+    "@rango-dev/signer-evm": "^0.12.0",
+    "@rango-dev/wallets-shared": "^0.12.0",
     "rango-types": "^0.1.46"
   },
   "publishConfig": {
