@@ -1,3 +1,7 @@
+# [0.6.0](https://github.com/rango-exchange/rango-client/compare/provider-walletconnect-2@0.5.0...provider-walletconnect-2@0.6.0) (2023-08-01)
+
+
+
 # 0.2.0 (2023-07-31)
 
 

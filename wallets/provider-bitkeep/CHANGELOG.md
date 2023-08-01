@@ -1,3 +1,7 @@
+# [0.9.0](https://github.com/rango-exchange/rango-client/compare/provider-bitkeep@0.8.0...provider-bitkeep@0.9.0) (2023-08-01)
+
+
+
 # [0.5.0](https://github.com/rango-exchange/rango-client/compare/provider-bitkeep@0.4.0...provider-bitkeep@0.5.0) (2023-07-31)
 
 
