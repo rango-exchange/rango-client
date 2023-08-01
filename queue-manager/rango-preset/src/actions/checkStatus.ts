@@ -83,7 +83,7 @@ async function checkTransactionStatus({
         undefined;
       const { hash: updatedTxHash, response: updatedTxResponse } =
         await signer.wait(txId, chainId, txResponse);
-      if (updatedTxResponse.isMultiSig) {
+      if (updatedTxResponse?.isMultiSig) {
         explorerUrlToUpdate = !updatedTxResponse.hashWasUpdated;
       }
       if (updatedTxHash !== txId) {
