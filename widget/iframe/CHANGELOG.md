@@ -1,3 +1,7 @@
+# [0.9.0](https://github.com/rango-exchange/rango-client/compare/widget-iframe@0.8.0...widget-iframe@0.9.0) (2023-07-31)
+
+
+
 # [0.8.0](https://github.com/rango-exchange/rango-client/compare/widget-iframe@0.7.0...widget-iframe@0.8.0) (2023-07-11)
 
 

@@ -1,3 +1,13 @@
+# [0.9.0](https://github.com/rango-exchange/rango-client/compare/ui@0.8.0...ui@0.9.0) (2023-07-31)
+
+
+### Features
+
+* add project id as a external value ([0c80404](https://github.com/rango-exchange/rango-client/commit/0c80404a8cacb6c5b0338dea1e416b0b11db254b))
+* Support for WalletConnect 2 ([faedef0](https://github.com/rango-exchange/rango-client/commit/faedef0b5e6fc3c5ef881cbbe4ec05334cc1c910))
+
+
+
 # [0.8.0](https://github.com/rango-exchange/rango-client/compare/ui@0.7.0...ui@0.8.0) (2023-07-11)
 
 

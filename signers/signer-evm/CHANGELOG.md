@@ -1,3 +1,13 @@
+# [0.9.0](https://github.com/rango-exchange/rango-client/compare/signer-evm@0.8.0...signer-evm@0.9.0) (2023-07-31)
+
+
+### Features
+
+* Support for WalletConnect 2 ([faedef0](https://github.com/rango-exchange/rango-client/commit/faedef0b5e6fc3c5ef881cbbe4ec05334cc1c910))
+* support safe wallet ([d04cbcd](https://github.com/rango-exchange/rango-client/commit/d04cbcd2a612755563512d9dff6f2312088d8b4d))
+
+
+
 # [0.7.0](https://github.com/rango-exchange/rango-client/compare/signer-evm@0.6.0...signer-evm@0.7.0) (2023-07-11)
 
 

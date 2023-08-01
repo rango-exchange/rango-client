@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/provider-walletconnect",
-  "version": "0.8.1-next.7",
+  "version": "0.9.0",
   "license": "MIT",
   "type": "module",
   "module": "./dist/index.js",
