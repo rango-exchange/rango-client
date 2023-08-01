@@ -23,6 +23,9 @@ export function createModalInstance(projectId: string) {
       projectId,
       themeMode: 'light',
       walletConnectVersion: 2,
+      themeVariables: {
+        '--w3m-z-index': '999999999',
+      },
     });
   }
 }
