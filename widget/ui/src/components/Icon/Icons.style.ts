@@ -40,6 +40,10 @@ export const SvgWithStrokeColor = styled('svg', {
         width: '$12',
         height: '$12',
       },
+      14: {
+        width: '$14',
+        height: '$14',
+      },
       16: {
         width: '$16',
         height: '$16',
@@ -114,6 +118,10 @@ export const SvgWithFillColor = styled('svg', {
       12: {
         width: '$12',
         height: '$12',
+      },
+      14: {
+        width: '$14',
+        height: '$14',
       },
       16: {
         width: '$16',

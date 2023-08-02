@@ -1,5 +1,5 @@
 import React from 'react';
-import { Icon, IconProps } from './types';
+import { Icon, IconProps } from './Icons.type';
 import * as Icons from '.';
 import { Meta } from '@storybook/react';
 import { styled } from '../../theme';
@@ -31,7 +31,7 @@ export default {
     size: {
       name: 'size',
       control: { type: 'select' },
-      options: [16, 18, 20, 24, 28, 32, 36, 40],
+      options: [12, 14, 16, 18, 20, 24, 28, 32, 36, 40],
       defaultValue: 16,
     },
   },

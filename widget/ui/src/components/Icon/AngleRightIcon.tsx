@@ -1,16 +1,17 @@
 import * as React from 'react';
-import { IconProps } from './types';
-import { SvgWithStrokeColor } from './common';
+import { IconProps } from './Icons.type';
+import { SvgWithStrokeColor } from './Icons.style';
 
 export const AngleRightIcon: React.FC<IconProps> = (props) => {
   return (
     <SvgWithStrokeColor
       xmlns="http://www.w3.org/2000/svg"
-      viewBox={`0 0 32 32`}
+      viewBox={`0 0 10 18`}
       fill="none"
       {...props}>
       <path
-        d="M12 24L20 16L12 8"
+        xmlns="http://www.w3.org/2000/svg"
+        d="M1 17L9 9L1 1"
         stroke-linecap="round"
         stroke-linejoin="round"
       />

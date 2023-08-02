@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { SvgWithStrokeColor } from './common';
-import { IconProps } from './types';
+import { SvgWithStrokeColor } from './Icons.style';
+import { IconProps } from './Icons.type';
 
 export const SearchIcon: React.FC<IconProps> = (props) => {
   return (

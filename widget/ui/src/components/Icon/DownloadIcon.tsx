@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { IconProps } from './types';
-import { SvgWithStrokeColor } from './common';
+import { IconProps } from './Icons.type';
+import { SvgWithStrokeColor } from './Icons.style';
 
 export const DownloadIcon: React.FC<IconProps> = (props) => {
   return (

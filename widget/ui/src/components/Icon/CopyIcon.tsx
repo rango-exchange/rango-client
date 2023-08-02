@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { SvgWithFillColor } from './common';
-import { IconProps } from './types';
+import { SvgWithFillColor } from './Icons.style';
+import { IconProps } from './Icons.type';
 
 export const CopyIcon: React.FC<IconProps> = (props) => {
   return (
