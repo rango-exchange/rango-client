@@ -73,7 +73,7 @@ const colorShade = (col: string, amt: number) => {
 export const generateRangeColors = (
   name: string,
   mode: 'light' | 'dark',
-  color?: string,
+  color?: string
 ) => {
   let colors = { [name]: color };
   if (color) {

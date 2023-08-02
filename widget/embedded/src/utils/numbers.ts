@@ -3,6 +3,7 @@ import { BestRouteResponse } from 'rango-sdk';
 
 export const percentToString = (p: number, fractions = 0): string =>
   (p * 100).toFixed(fractions);
+
 export const secondsToString = (s: number): string => {
   const seconds = (s % 60).toString().padStart(2, '0');
   const minutes = parseInt((s / 60).toString())
@@ -87,6 +88,7 @@ export const convertBigNumberToHex = (
 
 export const uint8ArrayToHex = (buffer: Uint8Array): string => {
   // buffer is an ArrayBuffer
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
   return [...buffer].map((x) => x.toString(16).padStart(2, '0')).join('');
 };

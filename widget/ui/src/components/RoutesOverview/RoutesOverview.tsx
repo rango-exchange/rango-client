@@ -1,5 +1,6 @@
 import React from 'react';
-import { styled, ChevronRightIcon, GasIcon, Divider } from '@rango-dev/ui';
+import { ChevronRightIcon, GasIcon, Divider } from '..';
+import { styled } from '../../theme';
 import { BestRouteResponse } from 'rango-sdk';
 
 export const Container = styled('div', {
@@ -26,7 +27,7 @@ interface PropTypes {
   routes: BestRouteResponse | null;
   totalFee?: string;
 }
-function RoutesOverview(props: PropTypes) {
+export function RoutesOverview(props: PropTypes) {
   if (!props.routes) return null;
 
   const swaps = props.routes.result?.swaps;
@@ -53,5 +54,3 @@ function RoutesOverview(props: PropTypes) {
     </Container>
   );
 }
-
-export default RoutesOverview;

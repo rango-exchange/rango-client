@@ -1,5 +1,5 @@
 import React from 'react';
-import { SecondaryPage, Spinner, Alert, styled } from '@rango-dev/ui';
+import { SecondaryPage, Spinner, Alert, styled } from '../..';
 import { i18n } from '@lingui/core';
 
 const PlaceholderContainer = styled('div', { height: '450px' });
