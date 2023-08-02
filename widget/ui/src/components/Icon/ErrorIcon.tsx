@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { IconProps } from './Icons.type';
-import { SvgWithFillColor } from './Icons.style';
+import { IconProps } from './Icons.types';
+import { SvgWithFillColor } from './Icons.styles';
 
 export const ErrorIcon: React.FC<IconProps> = (props) => {
   return (

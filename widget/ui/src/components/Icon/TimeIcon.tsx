@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { IconProps } from './Icons.type';
-import { selectColor } from './Icons.style';
+import { IconProps } from './Icons.types';
+import { selectColor } from './Icons.styles';
 import { styled } from '../../theme';
 
 const Path = styled('path', {});

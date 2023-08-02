@@ -1,5 +1,5 @@
 import React from 'react';
-import { Icon, IconProps } from './Icons.type';
+import { Icon, IconProps } from './Icons.types';
 import * as Icons from '.';
 import { Meta } from '@storybook/react';
 import { styled } from '../../theme';

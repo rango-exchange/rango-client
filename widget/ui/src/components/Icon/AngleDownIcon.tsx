@@ -1,6 +1,6 @@
 import React from 'react';
-import { IconProps } from './Icons.type';
-import { SvgWithStrokeColor } from './Icons.style';
+import { IconProps } from './Icons.types';
+import { SvgWithStrokeColor } from './Icons.styles';
 
 export const AngleDownIcon: React.FC<IconProps> = (props) => {
   return (
