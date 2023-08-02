@@ -1,3 +1,5 @@
+import { Token } from 'rango-sdk';
+
 export type TokenMeta = {
   blockchain: string;
   symbol: string;
@@ -20,3 +22,10 @@ export interface LiquiditySource {
 }
 
 export type LoadingStatus = 'loading' | 'success' | 'failed';
+
+export interface TokenWithBalance extends Token {
+  balance?: {
+    amount: string;
+    usdValue: string;
+  };
+}

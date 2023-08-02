@@ -1,9 +1,10 @@
-import { useEffect, useRef } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import React, { useEffect, useRef, useState } from 'react';
+import { useInRouterContext, useSearchParams } from 'react-router-dom';
+import { styled, Button, VerticalSwapIcon } from '@rango-dev/ui';
 import { SearchParams } from '../constants/searchParams';
 import { useBestRouteStore } from '../store/bestRoute';
 
-export function SwithFromAndTo({ count }: { count: number }) {
+function SwithFromAndTo({ count }: { count: number }) {
   const firstRender = useRef(true);
   const [searchParams, setSearchParams] = useSearchParams();
   const outputAmount = useBestRouteStore.use.outputAmount();
@@ -19,7 +20,9 @@ export function SwithFromAndTo({ count }: { count: number }) {
         ...(toTokenString && { [SearchParams.FROM_TOKEN]: toTokenString }),
         ...(fromChainString && { [SearchParams.TO_CHAIN]: fromChainString }),
         ...(fromTokenString && { [SearchParams.TO_TOKEN]: fromTokenString }),
-        ...(outputAmount && { [SearchParams.FROM_AMOUNT]: outputAmount.toString() }),
+        ...(outputAmount && {
+          [SearchParams.FROM_AMOUNT]: outputAmount.toString(),
+        }),
       });
     } else {
       firstRender.current = false;
@@ -27,4 +30,31 @@ export function SwithFromAndTo({ count }: { count: number }) {
   }, [count]);
 
   return null;
+}
+
+const SwitchButtonContainer = styled('div', {
+  position: 'absolute',
+  bottom: '-12px',
+  left: '50%',
+  transform: 'translate(-50%, 10%)',
+});
+
+export function SwithFromAndToButton() {
+  const switchFromAndTo = useBestRouteStore.use.switchFromAndTo();
+  const isRouterInContext = useInRouterContext();
+  const [count, setCount] = useState(0);
+
+  return (
+    <SwitchButtonContainer>
+      <Button
+        variant="ghost"
+        onClick={() => {
+          switchFromAndTo();
+          setCount((prev) => prev + 1);
+        }}>
+        <VerticalSwapIcon size={32} />
+        {isRouterInContext && <SwithFromAndTo count={count} />}
+      </Button>
+    </SwitchButtonContainer>
+  );
 }

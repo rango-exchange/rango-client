@@ -6,11 +6,9 @@ import {
   Typography,
   Divider,
   Image,
-} from '@rango-dev/ui';
-import { LoadingStatus } from '../store/meta';
+} from '../..';
 import { i18n } from '@lingui/core';
-import BigNumber from 'bignumber.js';
-import { numberToString } from '../utils/numbers';
+import { LoadingStatus } from '../../types/meta';
 
 const Box = styled('div', {
   display: 'flex',
@@ -90,7 +88,7 @@ const OutputContainer = styled('div', {
 interface PropTypes {
   label: string;
   amount: string;
-  usdValue: BigNumber | null;
+  usdValue: string | null;
   loadingStatus: LoadingStatus;
   chain: {
     displayName: string;
@@ -130,9 +128,7 @@ export function TokenPreview(props: PropTypes) {
               <Typography
                 variant="caption"
                 color="neutral600"
-                className="usd-value">{`$${numberToString(
-                props.usdValue
-              )}`}</Typography>
+                className="usd-value">{`$${props.usdValue}`}</Typography>
             )}
           </div>
         </div>
