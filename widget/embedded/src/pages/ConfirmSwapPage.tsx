@@ -13,6 +13,7 @@ import {
 } from '../utils/wallets';
 import {
   confirmSwapDisabled,
+  getPercentageChange,
   getTotalFeeInUsd,
   isValidCustomDestination,
 } from '../utils/swap';
@@ -20,14 +21,15 @@ import { numberToString } from '../utils/numbers';
 import { useMetaStore } from '../store/meta';
 import { WalletType } from '@rango-dev/wallets-shared';
 import { useNavigateBack } from '../hooks/useNavigateBack';
-import { TokenPreview } from '../components/TokenPreview';
 import {
   Divider,
   ConfirmSwap,
   LoadingFailedAlert,
   HighSlippageWarning,
+  PercentageChange,
+  RoutesOverview,
+  TokenPreview,
 } from '@rango-dev/ui';
-import RoutesOverview from '../components/RoutesOverview';
 import { useManager } from '@rango-dev/queue-manager-react';
 import { useConfirmSwap } from '../hooks/useConfirmSwap';
 import { useSettingsStore } from '../store/settings';
@@ -37,7 +39,6 @@ import { ConfirmSwapErrors } from '../components/ConfirmSwapErrors';
 import { ConfirmSwapWarnings } from '../components/ConfirmSwapWarnings';
 import { HIGH_SLIPPAGE } from '../constants/swapSettings';
 import { getBestRouteStatus } from '../utils/routing';
-import { PercentageChange } from '../components/PercentageChange';
 
 export function ConfirmSwapPage({
   customDestinationEnabled,
@@ -120,6 +121,14 @@ export function ConfirmSwapPage({
 
   const totalFeeInUsd = getTotalFeeInUsd(bestRoute, tokens);
 
+  const percentageChange =
+    !inputUsdValue || !outputUsdValue || !outputUsdValue.gt(0)
+      ? null
+      : getPercentageChange(
+          inputUsdValue.toNumber(),
+          outputUsdValue.toNumber()
+        );
+
   return (
     <ConfirmSwap
       requiredWallets={getRequiredChains(bestRoute)}
@@ -182,7 +191,7 @@ export function ConfirmSwapPage({
               symbol: firstStep?.from.symbol || '',
               image: firstStep?.from.logo || '',
             }}
-            usdValue={inputUsdValue}
+            usdValue={inputUsdValue ? numberToString(inputUsdValue) : null}
             amount={fromAmount}
             label={i18n.t('From')}
             loadingStatus={
@@ -201,7 +210,7 @@ export function ConfirmSwapPage({
               symbol: lastStep?.to.symbol || '',
               image: lastStep?.to.logo || '',
             }}
-            usdValue={outputUsdValue}
+            usdValue={outputUsdValue ? numberToString(outputUsdValue) : null}
             amount={toAmount}
             label={i18n.t('To')}
             loadingStatus={
@@ -210,10 +219,12 @@ export function ConfirmSwapPage({
                 : bestRouteloadingStatus
             }
             percentageChange={
-              <PercentageChange
-                inputUsdValue={inputUsdValue}
-                outputUsdValue={outputUsdValue}
-              />
+              !percentageChange ? null : (
+                <PercentageChange
+                  percentageChange={numberToString(percentageChange, 0, 2)}
+                  showPercentageChange={!!percentageChange?.lt(0)}
+                />
+              )
             }
           />
         </>

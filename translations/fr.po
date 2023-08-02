@@ -59,6 +59,11 @@ msgid "Settings"
 msgstr ""
 
 #. js-lingui-explicit-id
+#: widget/ui/src/components/HeaderLayout/HeaderLayout.tsx:78
+msgid "Connect Wallet"
+msgstr ""
+
+#. js-lingui-explicit-id
 #: widget/ui/src/components/LiquiditySourceList/LiquiditySourceList.tsx:107
 msgid "Bridges"
 msgstr ""
@@ -69,8 +74,30 @@ msgid "Exchanges"
 msgstr ""
 
 #. js-lingui-explicit-id
+#: widget/ui/src/components/SwapDetailsPlaceholder/SwapDetailsPlaceholder.tsx:26
+msgid "Swap Details"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: widget/ui/src/components/TokenPreview/TokenPreview.tsx:152
+#: widget/ui/src/containers/TokenInfo/TokenInfo.tsx:233
+msgid "Chain"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: widget/ui/src/components/TokenPreview/TokenPreview.tsx:171
+#: widget/ui/src/containers/TokenInfo/TokenInfo.tsx:258
+msgid "Token"
+msgstr ""
+
+#. js-lingui-explicit-id
 #: widget/ui/src/containers/ConnectWalletsModal/ConnectWalletsModal.tsx:36
 msgid "Connect Wallets"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: widget/ui/src/containers/HomePanel/HomePanel.tsx:129
+msgid "SWAP"
 msgstr ""
 
 #. js-lingui-explicit-id
@@ -114,62 +141,33 @@ msgid "Liquidity Sources"
 msgstr ""
 
 #. js-lingui-explicit-id
+#: widget/ui/src/containers/TokenInfo/TokenInfo.tsx:192
+msgid "Balance"
+msgstr ""
+
+#. js-lingui-explicit-id
 #: widget/ui/src/containers/Warnings/BalanceErrors.tsx:36
 msgid "Insufficent Balance:"
 msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Layout.tsx:148
-#: widget/embedded/src/utils/swap.ts:143
-#: widget/embedded/src/utils/swap.ts:145
-#~ msgid "Connect Wallet"
-#~ msgstr ""
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetailsPlaceholder.tsx:26
-#~ msgid "Swap Details"
-#~ msgstr ""
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/TokenInfo.tsx:204
-#~ msgid "Balance"
-#~ msgstr ""
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/TokenInfo.tsx:249
-#: widget/embedded/src/components/TokenPreview.tsx:156
-#~ msgid "Chain"
-#~ msgstr ""
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/TokenInfo.tsx:276
-#: widget/embedded/src/components/TokenPreview.tsx:175
-#~ msgid "Token"
-#~ msgstr ""
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/pages/ConfirmSwapPage.tsx:187
+#: widget/embedded/src/pages/ConfirmSwapPage.tsx:196
 #~ msgid "From"
 #~ msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/ConfirmSwapPage.tsx:206
+#: widget/embedded/src/pages/ConfirmSwapPage.tsx:215
 #~ msgid "To"
 #~ msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/ConfirmSwapPage.tsx:249
+#: widget/embedded/src/pages/ConfirmSwapPage.tsx:260
 #~ msgid "Proceed anyway!"
 #~ msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/ConfirmSwapPage.tsx:250
+#: widget/embedded/src/pages/ConfirmSwapPage.tsx:261
 #~ msgid "Confirm swap!"
-#~ msgstr ""
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/pages/Home.tsx:146
-#~ msgid "SWAP"
 #~ msgstr ""
 
 #. js-lingui-explicit-id
@@ -214,28 +212,28 @@ msgstr ""
 #~ msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/TokenInfo.tsx:190
-#~ msgid "swap from"
-#~ msgstr ""
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/TokenInfo.tsx:208
-#~ msgid "maximum amount of asset"
-#~ msgstr ""
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetailsPlaceholder.tsx:37
-#~ msgid "swapNotFound"
-#~ msgstr ""
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/TokenInfo.tsx:192
-#~ msgid "swap to"
-#~ msgstr ""
-
-#. js-lingui-explicit-id
 #: widget/ui/src/containers/Warnings/HighSlippageWarning.tsx:21
 msgid "highSlippage"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: widget/ui/src/containers/TokenInfo/TokenInfo.tsx:178
+msgid "swap from"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: widget/ui/src/containers/TokenInfo/TokenInfo.tsx:196
+msgid "maximum amount of asset"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: widget/ui/src/components/SwapDetailsPlaceholder/SwapDetailsPlaceholder.tsx:37
+msgid "swapNotFound"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: widget/ui/src/containers/TokenInfo/TokenInfo.tsx:180
+msgid "swap to"
 msgstr ""
 
 #. js-lingui-explicit-id

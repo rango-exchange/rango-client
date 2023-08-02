@@ -59,6 +59,11 @@ msgid "Settings"
 msgstr "Settings"
 
 #. js-lingui-explicit-id
+#: widget/ui/src/components/HeaderLayout/HeaderLayout.tsx:78
+msgid "Connect Wallet"
+msgstr "Connect Wallet"
+
+#. js-lingui-explicit-id
 #: widget/ui/src/components/LiquiditySourceList/LiquiditySourceList.tsx:107
 msgid "Bridges"
 msgstr "Bridges"
@@ -69,9 +74,31 @@ msgid "Exchanges"
 msgstr "Exchanges"
 
 #. js-lingui-explicit-id
+#: widget/ui/src/components/SwapDetailsPlaceholder/SwapDetailsPlaceholder.tsx:26
+msgid "Swap Details"
+msgstr "Swap Details"
+
+#. js-lingui-explicit-id
+#: widget/ui/src/components/TokenPreview/TokenPreview.tsx:152
+#: widget/ui/src/containers/TokenInfo/TokenInfo.tsx:233
+msgid "Chain"
+msgstr "Chain"
+
+#. js-lingui-explicit-id
+#: widget/ui/src/components/TokenPreview/TokenPreview.tsx:171
+#: widget/ui/src/containers/TokenInfo/TokenInfo.tsx:258
+msgid "Token"
+msgstr "Token"
+
+#. js-lingui-explicit-id
 #: widget/ui/src/containers/ConnectWalletsModal/ConnectWalletsModal.tsx:36
 msgid "Connect Wallets"
 msgstr "Connect Wallets"
+
+#. js-lingui-explicit-id
+#: widget/ui/src/containers/HomePanel/HomePanel.tsx:129
+msgid "SWAP"
+msgstr "SWAP"
 
 #. js-lingui-explicit-id
 #: widget/ui/src/containers/Settings/Settings.tsx:118
@@ -114,63 +141,34 @@ msgid "Liquidity Sources"
 msgstr "Liquidity Sources"
 
 #. js-lingui-explicit-id
+#: widget/ui/src/containers/TokenInfo/TokenInfo.tsx:192
+msgid "Balance"
+msgstr "Balance"
+
+#. js-lingui-explicit-id
 #: widget/ui/src/containers/Warnings/BalanceErrors.tsx:36
 msgid "Insufficent Balance:"
 msgstr "Insufficent Balance:"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Layout.tsx:148
-#: widget/embedded/src/utils/swap.ts:143
-#: widget/embedded/src/utils/swap.ts:145
-#~ msgid "Connect Wallet"
-#~ msgstr "Connect Wallet"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetailsPlaceholder.tsx:26
-#~ msgid "Swap Details"
-#~ msgstr "Swap Details"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/TokenInfo.tsx:204
-#~ msgid "Balance"
-#~ msgstr "Balance"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/TokenInfo.tsx:249
-#: widget/embedded/src/components/TokenPreview.tsx:156
-#~ msgid "Chain"
-#~ msgstr "Chain"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/TokenInfo.tsx:276
-#: widget/embedded/src/components/TokenPreview.tsx:175
-#~ msgid "Token"
-#~ msgstr "Token"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/pages/ConfirmSwapPage.tsx:187
+#: widget/embedded/src/pages/ConfirmSwapPage.tsx:196
 #~ msgid "From"
 #~ msgstr "From"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/ConfirmSwapPage.tsx:206
+#: widget/embedded/src/pages/ConfirmSwapPage.tsx:215
 #~ msgid "To"
 #~ msgstr "To"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/ConfirmSwapPage.tsx:249
+#: widget/embedded/src/pages/ConfirmSwapPage.tsx:260
 #~ msgid "Proceed anyway!"
 #~ msgstr "Proceed anyway!"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/ConfirmSwapPage.tsx:250
+#: widget/embedded/src/pages/ConfirmSwapPage.tsx:261
 #~ msgid "Confirm swap!"
 #~ msgstr "Confirm swap!"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/pages/Home.tsx:146
-#~ msgid "SWAP"
-#~ msgstr "SWAP"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/pages/WalletsPage.tsx:124
@@ -214,29 +212,29 @@ msgstr "Insufficent Balance:"
 #~ msgstr "The route goes through Ethereum. Continue?"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/TokenInfo.tsx:190
-#~ msgid "swap from"
-#~ msgstr "From"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/TokenInfo.tsx:208
-#~ msgid "maximum amount of asset"
-#~ msgstr "Max"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetailsPlaceholder.tsx:37
-#~ msgid "swapNotFound"
-#~ msgstr "Swap with request ID = ${requestId} not found."
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/TokenInfo.tsx:192
-#~ msgid "swap to"
-#~ msgstr "To"
-
-#. js-lingui-explicit-id
 #: widget/ui/src/containers/Warnings/HighSlippageWarning.tsx:21
 msgid "highSlippage"
 msgstr " Caution, your slippage is high (={selectedSlippage}). Your trade may be front run."
+
+#. js-lingui-explicit-id
+#: widget/ui/src/containers/TokenInfo/TokenInfo.tsx:178
+msgid "swap from"
+msgstr "From"
+
+#. js-lingui-explicit-id
+#: widget/ui/src/containers/TokenInfo/TokenInfo.tsx:196
+msgid "maximum amount of asset"
+msgstr "Max"
+
+#. js-lingui-explicit-id
+#: widget/ui/src/components/SwapDetailsPlaceholder/SwapDetailsPlaceholder.tsx:37
+msgid "swapNotFound"
+msgstr "Swap with request ID = ${requestId} not found."
+
+#. js-lingui-explicit-id
+#: widget/ui/src/containers/TokenInfo/TokenInfo.tsx:180
+msgid "swap to"
+msgstr "To"
 
 #. js-lingui-explicit-id
 #: widget/ui/src/containers/Warnings/MinRequiredSlippage.tsx:21

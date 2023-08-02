@@ -8,31 +8,44 @@ import {
   Typography,
   Image,
   Divider,
-} from '@rango-dev/ui';
-import { useMetaStore } from '../store/meta';
-import { BlockchainMeta, Token } from 'rango-sdk';
-import { useNavigate } from 'react-router-dom';
-import { useBestRouteStore } from '../store/bestRoute';
-import { numberToString } from '../utils/numbers';
-import BigNumber from 'bignumber.js';
-import { getBalanceFromWallet } from '../utils/wallets';
-import { useWalletsStore } from '../store/wallets';
+  PercentageChange,
+  ConnectedWallet,
+} from '../..';
+import { BestRouteResponse, BlockchainMeta, Token } from 'rango-sdk';
 import { Trans } from '@lingui/react';
 import { i18n } from '@lingui/core';
-import { PercentageChange } from './PercentageChange';
+import { TokenWithBalance } from '../../types/meta';
 
 type PropTypes = (
   | {
       type: 'From';
-      inputAmount: string;
       onAmountChange: (amount: string) => void;
     }
   | {
       type: 'To';
-      outputAmount: BigNumber | null;
-      outputUsdValue: BigNumber | null;
+      outputAmount: string;
+      outputUsdValue: string;
+      percentageChange: string;
+      showPercentageChange: boolean;
     }
-) & { chain: BlockchainMeta | null; token: Token | null };
+) & {
+  chain: BlockchainMeta | null;
+  token: Token | null;
+  loadingStatus: 'loading' | 'success' | 'failed';
+  fromChain: BlockchainMeta | null;
+  toChain: BlockchainMeta | null;
+  inputUsdValue: string;
+  fromToken: TokenWithBalance | null;
+  setInputAmount: (amount: string) => void;
+  connectedWallets: ConnectedWallet[];
+  inputAmount: string;
+  bestRoute: BestRouteResponse | null;
+  fetchingBestRoute: boolean;
+  onChainClick: () => void;
+  onTokenClick: () => void;
+  tokenBalanceReal: string;
+  tokenBalance: string;
+};
 
 const Box = styled('div', {
   display: 'flex',
@@ -125,49 +138,24 @@ const OutputContainer = styled('div', {
 });
 
 export function TokenInfo(props: PropTypes) {
-  const { type, chain, token } = props;
-  const loadingStatus = useMetaStore.use.loadingStatus();
-  const fromChain = useBestRouteStore.use.fromChain();
-  const toChain = useBestRouteStore.use.toChain();
-  const inputUsdValue = useBestRouteStore.use.inputUsdValue();
-  const fromToken = useBestRouteStore.use.fromToken();
-  const setInputAmount = useBestRouteStore.use.setInputAmount();
-  const bestRoute = useBestRouteStore.use.bestRoute();
-  const inputAmount = useBestRouteStore.use.inputAmount();
-  const connectedWallets = useWalletsStore.use.connectedWallets();
-  const fetchingBestRoute = useBestRouteStore.use.loading();
-  const navigate = useNavigate();
-
-  const tokenBalance =
-    !!fromChain && !!fromToken
-      ? numberToString(
-          getBalanceFromWallet(
-            connectedWallets,
-            fromChain?.name,
-            fromToken?.symbol,
-            fromToken?.address
-          )?.amount || '0',
-          8
-        )
-      : '0';
-
-  const tokenBalanceReal =
-    !!fromChain && !!fromToken
-      ? numberToString(
-          getBalanceFromWallet(
-            connectedWallets,
-            fromChain?.name,
-            fromToken?.symbol,
-            fromToken?.address
-          )?.amount || '0',
-          getBalanceFromWallet(
-            connectedWallets,
-            fromChain?.name,
-            fromToken?.symbol,
-            fromToken?.address
-          )?.decimal
-        )
-      : '0';
+  const {
+    type,
+    chain,
+    token,
+    loadingStatus,
+    fromChain,
+    toChain,
+    fromToken,
+    setInputAmount,
+    inputUsdValue,
+    inputAmount,
+    bestRoute,
+    fetchingBestRoute,
+    onChainClick,
+    onTokenClick,
+    tokenBalanceReal,
+    tokenBalance,
+  } = props;
 
   const ItemSuffix = (
     <div
@@ -183,7 +171,7 @@ export function TokenInfo(props: PropTypes) {
 
   return (
     <Box>
-      <Container type={props.type === 'From' ? 'filled' : 'outlined'}>
+      <Container type={type === 'From' ? 'filled' : 'outlined'}>
         <div className="head">
           <Typography variant="body2" color="neutral800">
             {type === 'From' ? (
@@ -192,7 +180,7 @@ export function TokenInfo(props: PropTypes) {
               <Trans id="swap to" message="To" />
             )}
           </Typography>
-          {props.type === 'From' ? (
+          {type === 'From' ? (
             <Options>
               <div
                 className="balance"
@@ -212,15 +200,13 @@ export function TokenInfo(props: PropTypes) {
           ) : (
             <div className="output-usd">
               <PercentageChange
-                inputUsdValue={inputUsdValue}
-                outputUsdValue={props.outputUsdValue}
+                percentageChange={props.percentageChange}
+                showPercentageChange={props.showPercentageChange}
               />
               <div>
                 <Typography
                   variant="caption"
-                  color="neutral600">{`$${numberToString(
-                  props.outputUsdValue
-                )}`}</Typography>
+                  color="neutral600">{`$${props.outputUsdValue}`}</Typography>
               </div>
             </div>
           )}
@@ -228,9 +214,7 @@ export function TokenInfo(props: PropTypes) {
         <div className="form">
           <Button
             className="selectors"
-            onClick={() => {
-              navigate(`${props.type.toLowerCase()}-chain`);
-            }}
+            onClick={onChainClick}
             variant="outlined"
             disabled={loadingStatus === 'failed'}
             loading={loadingStatus === 'loading'}
@@ -251,9 +235,7 @@ export function TokenInfo(props: PropTypes) {
           <Divider size={12} direction="horizontal" />
           <Button
             className="selectors"
-            onClick={() => {
-              navigate(`${props.type.toLowerCase()}-token`);
-            }}
+            onClick={onTokenClick}
             variant="outlined"
             disabled={
               loadingStatus === 'failed' ||
@@ -277,7 +259,7 @@ export function TokenInfo(props: PropTypes) {
           </Button>
           <Divider size={12} direction="horizontal" />
           <div className="amount">
-            {props.type === 'From' ? (
+            {type === 'From' ? (
               <TextField
                 type="number"
                 size="large"
@@ -296,15 +278,13 @@ export function TokenInfo(props: PropTypes) {
                     }}>
                     <Typography
                       variant="caption"
-                      color="neutral800">{`$${numberToString(
-                      inputUsdValue
-                    )}`}</Typography>
+                      color="neutral800">{`$${inputUsdValue}`}</Typography>
                   </span>
                 }
-                value={props.inputAmount || ''}
+                value={inputAmount || ''}
                 min={0}
                 onChange={
-                  props.type === 'From'
+                  type === 'From'
                     ? (event) => {
                         props.onAmountChange(event.target.value);
                       }
@@ -315,8 +295,7 @@ export function TokenInfo(props: PropTypes) {
               <OutputContainer>
                 <Typography variant="h4">
                   {fetchingBestRoute && '?'}
-                  {!!bestRoute?.result &&
-                    `≈ ${numberToString(props.outputAmount)}`}
+                  {!!bestRoute?.result && `≈ ${props.outputAmount}`}
                   {(!inputAmount || inputAmount === '0') && '0'}
                 </Typography>
               </OutputContainer>

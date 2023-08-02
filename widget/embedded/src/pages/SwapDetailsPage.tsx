@@ -3,7 +3,11 @@ import { navigationRoutes } from '../constants/navigationRoutes';
 import { useManager } from '@rango-dev/queue-manager-react';
 import { useNavigateBack } from '../hooks/useNavigateBack';
 import { getPendingSwaps } from '../utils/queue';
-import { SwapHistory, useCopyToClipboard } from '@rango-dev/ui';
+import {
+  SwapHistory,
+  useCopyToClipboard,
+  SwapDetailsPlaceholder,
+} from '@rango-dev/ui';
 import { useUiStore } from '../store/ui';
 import {
   cancelSwap,
@@ -24,7 +28,6 @@ import {
   isNetworkStatusInWarningState,
   shouldRetrySwap,
 } from '../utils/swap';
-import { SwapDetailsPlaceholder } from '../components/SwapDetailsPlaceholder';
 import { getFormatedPendingSwap } from '../utils/routing';
 
 export function SwapDetailsPage() {
