@@ -25,7 +25,6 @@ import * as taho from '@rango-dev/provider-taho';
 import * as bitkeep from '@rango-dev/provider-bitkeep';
 import * as walletconnect2 from '@rango-dev/provider-walletconnect-2';
 import * as braavos from '@rango-dev/provider-braavos';
-import * as safe from '@rango-dev/provider-safe';
 
 type Enviroments = Record<string, Record<string, string>>;
 
@@ -42,7 +41,6 @@ export const allProviders = (enviroments?: Enviroments) => {
     trustwallet,
     binance,
     enkrypt,
-    safe,
     xdefi,
     clover,
     safepal,
