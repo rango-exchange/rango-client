@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/provider-all",
-  "version": "0.14.0",
+  "version": "0.14.1-next.0",
   "license": "MIT",
   "type": "module",
   "module": "./dist/index.js",
@@ -22,7 +22,7 @@
   "dependencies": {
     "@rango-dev/provider-argentx": "^0.14.0",
     "@rango-dev/provider-binance-chain-wallet": "^0.14.0",
-    "@rango-dev/provider-bitkeep": "^0.10.0",
+    "@rango-dev/provider-bitkeep": "^0.10.1-next.0",
     "@rango-dev/provider-braavos": "^0.7.0",
     "@rango-dev/provider-brave": "^0.14.0",
     "@rango-dev/provider-clover": "^0.14.0",

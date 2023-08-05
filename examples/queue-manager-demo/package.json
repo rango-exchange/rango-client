@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/queue-manager-demo",
-  "version": "0.11.0",
+  "version": "0.11.1-next.0",
   "license": "MIT",
   "private": true,
   "source": "public/index.html",
@@ -15,7 +15,7 @@
     "rango-sdk": "^0.1.35"
   },
   "dependencies": {
-    "@rango-dev/provider-all": "^0.14.0",
+    "@rango-dev/provider-all": "^0.14.1-next.0",
     "@rango-dev/queue-manager-rango-preset": "^0.14.0",
     "@rango-dev/queue-manager-react": "^0.14.0",
     "@rango-dev/wallets-core": "^0.14.0",
