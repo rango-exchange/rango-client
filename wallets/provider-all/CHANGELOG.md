@@ -1,3 +1,12 @@
+# [0.14.0](https://github.com/rango-exchange/rango-client/compare/provider-all@0.13.0...provider-all@0.14.0) (2023-08-03)
+
+
+### Bug Fixes
+
+* disable safe on provider-all since it breaks the CRA ([32092c0](https://github.com/rango-exchange/rango-client/commit/32092c01b320f58495a1d43bd5cee0d05cc1e8d9))
+
+
+
 # [0.13.0](https://github.com/rango-exchange/rango-client/compare/provider-all@0.12.0...provider-all@0.13.0) (2023-08-01)
 
 
