@@ -64,7 +64,9 @@ export function Modal(props: PropTypes) {
           <BackDrop onClick={handleBackDropClick}>
             <ModalContainer css={containerStyle}>
               <ModalHeader>
-                <Typography variant="h4">{title}</Typography>
+                <Typography variant="title" size="medium">
+                  {title}
+                </Typography>
                 <Row>
                   {action}
                   <CloseIcon size={24} onClick={onClose} />
@@ -73,7 +75,7 @@ export function Modal(props: PropTypes) {
               {content}
             </ModalContainer>
           </BackDrop>,
-          document.body,
+          document.body
         )}
     </>
   );
