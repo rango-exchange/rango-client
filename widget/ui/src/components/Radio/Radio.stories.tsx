@@ -1,6 +1,7 @@
 import React from 'react';
 import { Meta } from '@storybook/react';
-import { PropTypes, Radio } from './Radio';
+import { Radio } from './Radio';
+import { PropTypes } from './Radio.types';
 
 export default {
   title: 'Components/Radio',
