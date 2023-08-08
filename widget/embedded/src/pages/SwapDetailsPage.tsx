@@ -13,7 +13,7 @@ import {
   cancelSwap,
   PendingSwapNetworkStatus,
 } from '@rango-dev/queue-manager-rango-preset';
-import { useWallets } from '@rango-dev/wallets-core';
+import { useWallets } from '@rango-dev/wallets-react';
 import {
   getCurrentBlockchainOfOrNull,
   getCurrentStep,

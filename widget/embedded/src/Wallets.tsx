@@ -1,7 +1,7 @@
 import React, { PropsWithChildren } from 'react';
 import { useMetaStore } from './store/meta';
-import { Events, Provider } from '@rango-dev/wallets-core';
-import { EventHandler } from '@rango-dev/wallets-core';
+import { Events, Provider } from '@rango-dev/wallets-react';
+import type { EventHandler } from '@rango-dev/wallets-react';
 import { Network } from '@rango-dev/wallets-shared';
 import {
   prepareAccountsForWalletStore,

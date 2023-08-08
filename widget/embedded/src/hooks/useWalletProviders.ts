@@ -1,4 +1,4 @@
-import { ProviderInterface } from '@rango-dev/wallets-core';
+import { ProviderInterface } from '@rango-dev/wallets-react';
 import { useEffect } from 'react';
 import { useWalletsStore } from '../store/wallets';
 import { WidgetConfig } from '../types';
