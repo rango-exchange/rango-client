@@ -42,15 +42,19 @@ const theme = {
     warning100: '#FFF0CC',
     warning200: '#FFDFBB',
 
-    info: '#FF8800',
-    info100: '#FFF0CC',
-    info200: '#FFDFBB',
+    info: '#A27FED',
+    info100: '#ECE4FF',
+    info200: '#E1D3FF',
 
     link: '#3568D4',
     link100: '#9CCFFF',
 
     success: '#06C270',
     success100: '#BDECD7',
+
+    background: '#fff',
+    foreground: '#000',
+
     //These should be removed
     primary100: '#FF0000',
     primary200: '#FF0000',
@@ -60,8 +64,6 @@ const theme = {
     primary800: '#FF0000',
     primary900: '#FF0000',
     surface: '#FF0000',
-    background: '#FF0000',
-    foreground: '#FF0000',
     success300: '#FF0000',
     success500: '#FF0000',
     success700: '#FF0000',
