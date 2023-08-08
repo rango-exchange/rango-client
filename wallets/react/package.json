@@ -1,6 +1,6 @@
 {
-  "name": "@rango-dev/wallets-adapter",
-  "version": "0.12.1-next.1",
+  "name": "@rango-dev/wallets-react",
+  "version": "0.1.0",
   "license": "MIT",
   "type": "module",
   "module": "./dist/index.js",
@@ -14,18 +14,18 @@
     "src"
   ],
   "scripts": {
-    "build": "node ../../scripts/build/command.mjs --path wallets/wallets-adapter",
+    "build": "node ../../scripts/build/command.mjs --path wallets/react",
     "clean": "rimraf dist",
     "format": "prettier --write '{.,src}/**/*.{ts,tsx}'",
     "lint": "eslint \"**/*.{ts,tsx}\" --ignore-path ../../.eslintignore"
   },
   "peerDependencies": {
-    "react": ">=16"
+    "@types/react": "^17.0.0 || ^18.0.0",
+    "react": "^17.0.0 || ^18.0.0",
+    "react-dom": "^17.0.0 || ^18.0.0"
   },
   "dependencies": {
-    "@rango-dev/provider-all": "^0.14.1-next.0",
-    "@rango-dev/ui": "^0.14.1-next.0",
-    "@rango-dev/wallets-react": "^0.1.0",
+    "@rango-dev/wallets-core": "^0.14.0",
     "@rango-dev/wallets-shared": "^0.14.0",
     "rango-types": "^0.1.46"
   },

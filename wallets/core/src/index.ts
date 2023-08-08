@@ -1,5 +1,6 @@
-export * from './helpers';
-export { default as Provider } from './provider';
-export { useWallets } from './hooks';
-export type { EventHandler } from './wallet';
+export type { EventHandler, State, Options } from './wallet';
 export * from './types';
+
+export { Persistor } from './persistor';
+export * from './helpers';
+export { default } from './wallet';

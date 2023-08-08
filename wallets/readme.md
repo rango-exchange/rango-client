@@ -4,13 +4,13 @@ A single interface for Web 3.0 wallets that seamlessly integrates 20+ wallets, b
 
 # Getting Started
 
-First, you need to add `@rango-dev/wallets-core` to your project
+First, you need to add `@rango-dev/wallets-react` to your project
 
 ```
-yarn add @rango-dev/wallets-core
+yarn add @rango-dev/wallets-react
 
 # or using NPM
-npm install @rango-dev/wallets-core
+npm install @rango-dev/wallets-react
 ```
 
 You can only add some specific wallets you need or add all of them at once using:
@@ -27,14 +27,14 @@ yarn add @rango-dev/provider-metamask
 yarn add @rango-dev/provider-phantom
 ```
 
-Then you need to pass them as a list to `wallets-core`. see next section.
+Then you need to pass them as a list to `wallets-react`. see next section.
 
 # Usage
 
 After adding the dependencies, you can use them. Using all supported wallets (`provider-all`):
 
 ```js
-import { Provider } from '@rango-dev/wallets-core';
+import { Provider } from '@rango-dev/wallets-react';
 import { allProviders } from '@rango-dev/provider-all';
 
 const providers = allProviders();
@@ -53,7 +53,7 @@ export function App() {
 or some specific wallets:
 
 ```js
-import { Provider } from '@rango-dev/wallets-core';
+import { Provider } from '@rango-dev/wallets-react';
 import * as metamask from '@rango-dev/provider-metamask';
 import * as phantom from '@rango-dev/provider-phantom';
 
@@ -73,7 +73,7 @@ export function App() {
 and now you can access to wallets by using `useWallets`.
 
 ```js
-import { useWallets } from '@rango-dev/wallets-core';
+import { useWallets } from '@rango-dev/wallets-react';
 
 function Example() {
   const { connect, state, disconnect } = useWallets();
@@ -103,7 +103,7 @@ function Example() {
 With the use of auto-connect, after reloading the app, wallet provider will automatically attempt to connect to the last connected wallets. To use the auto-connect feature, you need to pass the `autoConnect` property to wallet provider:
 
 ```js
-import { Provider } from '@rango-dev/wallets-core';
+import { Provider } from '@rango-dev/wallets-react';
 import { allProviders } from '@rango-dev/provider-all';
 
 const providers = allProviders();

@@ -1,5 +1,5 @@
 import { ConnectWalletsModal } from '@rango-dev/ui';
-import { useWallets } from '@rango-dev/wallets-core';
+import { useWallets } from '@rango-dev/wallets-react';
 import { WalletType } from '@rango-dev/wallets-shared';
 import React, { useState } from 'react';
 import { getlistWallet } from './helpers';

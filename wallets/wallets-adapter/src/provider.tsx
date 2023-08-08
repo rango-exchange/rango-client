@@ -3,7 +3,7 @@ import {
   ProviderProps,
   Provider,
   ProviderInterface,
-} from '@rango-dev/wallets-core';
+} from '@rango-dev/wallets-react';
 import Adapter from './adapter';
 
 function AdapterProvider({ children, ...props }: ProviderProps) {

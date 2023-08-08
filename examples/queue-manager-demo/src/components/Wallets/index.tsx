@@ -1,10 +1,8 @@
 import React from 'react';
-import { useWallets } from '@rango-dev/wallets-core';
-import { WalletType } from '@rango-dev/wallets-shared';
+import { useWallets } from '@rango-dev/wallets-react';
 
 function Wallets() {
   const { connect, providers, state, disconnect } = useWallets();
-  // @ts-ignore
   const list = Object.keys(providers());
   return (
     <div>

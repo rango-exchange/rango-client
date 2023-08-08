@@ -4,7 +4,7 @@ import { useQueueManager } from '@rango-dev/queue-manager-rango-preset';
 import { WalletType } from '@rango-dev/wallets-shared';
 import { UpdateUrl } from './UpdateUrl';
 import { useMetaStore } from '../store/meta';
-import { useWallets } from '@rango-dev/wallets-core';
+import { useWallets } from '@rango-dev/wallets-react';
 import { isEvmBlockchain } from 'rango-types';
 
 export function AppRouter({

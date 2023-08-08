@@ -1,4 +1,4 @@
-import { Providers } from '@rango-dev/wallets-core';
+import { Providers } from '@rango-dev/wallets-react';
 import { Network, WalletType, WalletInfo } from '@rango-dev/wallets-shared';
 import { SignerFactory } from 'rango-types';
 export interface State {

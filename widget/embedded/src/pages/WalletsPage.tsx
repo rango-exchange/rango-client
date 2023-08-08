@@ -13,7 +13,7 @@ import {
   WalletTypes,
   detectMobileScreens,
 } from '@rango-dev/wallets-shared';
-import { useWallets } from '@rango-dev/wallets-core';
+import { useWallets } from '@rango-dev/wallets-react';
 
 import { useUiStore } from '../store/ui';
 import { useNavigateBack } from '../hooks/useNavigateBack';
