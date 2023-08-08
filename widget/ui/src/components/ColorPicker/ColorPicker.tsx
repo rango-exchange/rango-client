@@ -13,7 +13,7 @@ const Container = styled('div', {
 
 const Color = styled('div', {
   border: '1px solid $neutral100',
-  borderRadius: '$5',
+  borderRadius: '$xs',
   width: '$32',
   height: '$32',
 });

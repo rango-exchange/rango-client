@@ -19,28 +19,31 @@ export function useTheme({
   const neutral = light?.neutral || '#fafafa';
   const background = light?.background || '#fff';
   const foreground = light?.foreground || '#000';
+  const darkColors = !!dark
+    ? {
+        ...generateRangeColors('primary', 'dark', dark?.primary),
+        ...generateRangeColors('error', 'dark', dark?.error),
+        ...generateRangeColors('warning', 'dark', dark?.warning),
+        ...generateRangeColors('success', 'dark', dark?.success),
+        ...generateRangeColors('neutral', 'dark', dark?.neutral),
+        surface: dark?.surface,
+        background: dark?.background,
+        foreground: dark?.foreground,
+      }
+    : {};
 
-  const darkColors = {
-    ...generateRangeColors('primary', 'dark', dark?.primary),
-    ...generateRangeColors('error', 'dark', dark?.error),
-    ...generateRangeColors('warning', 'dark', dark?.warning),
-    ...generateRangeColors('success', 'dark', dark?.success),
-    ...generateRangeColors('neutral', 'dark', dark?.neutral),
-    surface: dark?.surface,
-    background: dark?.background,
-    foreground: dark?.foreground,
-  };
-
-  const lightColors = {
-    surface: light?.surface || '#fff',
-    ...generateRangeColors('primary', 'light', light?.primary || '#5FA425'),
-    ...generateRangeColors('error', 'light', light?.error || '#FF0000'),
-    ...generateRangeColors('warning', 'light', light?.warning || '#F5A623'),
-    ...generateRangeColors('success', 'light', light?.success || '#0070F3'),
-    ...generateRangeColors('neutral', 'light', neutral),
-    background,
-    foreground,
-  };
+  const lightColors = !!light
+    ? {
+        surface: light?.surface || '#fff',
+        ...generateRangeColors('primary', 'light', light?.primary || '#5FA425'),
+        ...generateRangeColors('error', 'light', light?.error || '#FF0000'),
+        ...generateRangeColors('warning', 'light', light?.warning || '#F5A623'),
+        ...generateRangeColors('success', 'light', light?.success || '#0070F3'),
+        ...generateRangeColors('neutral', 'light', neutral),
+        background,
+        foreground,
+      }
+    : {};
 
   const customLightTheme = createTheme({
     colors: lightColors,
@@ -64,7 +67,7 @@ export function useTheme({
       ...JSON.parse(JSON.stringify(darkColors)),
     },
     radii: {
-      sm: `${borderRadius}px`,
+      xs: `${borderRadius}px`,
     },
     shadows: {
       s: `0px 3px 5px 3px ${dark?.neutral || '#222'}, 0px 6px 10px 3px ${

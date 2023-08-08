@@ -15,7 +15,7 @@ import {
 } from '../../components';
 
 const BaseContainer = styled('div', {
-  borderRadius: '$5',
+  borderRadius: '$xs',
   backgroundColor: '$neutral100',
   padding: '$16',
 });

@@ -14,6 +14,7 @@ const theme = {
 
     secondary: '#7C6DDB',
     secondary100: '#F2EFF9',
+    secondary200: '#A27FED',
     secondary300: '#E4E0F8',
     secondary700: '#6C5DCB',
 

@@ -14,7 +14,7 @@ const Box = styled('div', {
 
 const Container = styled('div', {
   boxSizing: 'border-box',
-  borderRadius: '$5',
+  borderRadius: '$xs',
   padding: '$8 $16 $16 $16',
 
   variants: {
@@ -63,7 +63,7 @@ const Container = styled('div', {
 const OutputContainer = styled('div', {
   windth: '100%',
   height: '$48',
-  borderRadius: '$5',
+  borderRadius: '$xs',
   backgroundColor: '$surface',
   border: '1px solid transparent',
   position: 'relative',
@@ -139,7 +139,7 @@ const OverviewContainer = styled('div', {
   alignItems: 'center',
   justifyContent: 'space-between',
   padding: '$8',
-  borderRadius: '$5',
+  borderRadius: '$xs',
   backgroundColor: '$neutral100',
   color: '$neutral800',
   fontSize: '$12',

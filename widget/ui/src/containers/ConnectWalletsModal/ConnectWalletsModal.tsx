@@ -1,8 +1,7 @@
 import React from 'react';
 import { styled } from '../../theme';
-import { WalletInfo } from '../../types/wallet';
 import { WalletType } from '@rango-dev/wallets-shared';
-import { Modal, Wallet } from '../../components';
+import { Modal, Wallet, WalletInfo } from '../../components';
 import { i18n } from '@lingui/core';
 
 export interface PropTypes {

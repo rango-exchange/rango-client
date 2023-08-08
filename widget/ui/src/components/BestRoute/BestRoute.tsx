@@ -11,7 +11,7 @@ import { Tooltip } from '../Tooltip';
 import { Image } from '../common';
 
 const Container = styled('div', {
-  borderRadius: '$5',
+  borderRadius: '$xs',
   border: '1px solid $neutral100',
   display: 'flex',
   alignItems: 'center',

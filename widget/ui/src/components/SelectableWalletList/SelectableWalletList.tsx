@@ -1,9 +1,9 @@
 import React, { PropsWithChildren, useEffect, useState } from 'react';
 import { styled } from '../../theme';
-import { SelectableWallet } from '../../types';
 import { Typography } from '../Typography';
 import { getConciseAddress } from '../../helper';
 import { Image } from '../common';
+import { SelectableWallet } from '../Wallet';
 
 const Row = styled('div', {
   display: 'flex',
@@ -47,7 +47,7 @@ const SolidCircle = styled('div', {
 });
 const Container = styled('div', {
   border: '1.5px solid',
-  borderRadius: '$5',
+  borderRadius: '$xs',
   padding: '$12',
   flexBasis: 'calc(33.33% - 10px)',
   margin: 5,

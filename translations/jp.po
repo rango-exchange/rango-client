@@ -24,12 +24,12 @@ msgid "Transaction cost (fee)"
 msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/ui/src/components/BestRoute/BestRoute.tsx:175
+#: widget/ui/src/components/BestRoute/BestRoute.tsx:176
 msgid "Time estimate"
 msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/ui/src/components/BestRoute/BestRoute.tsx:225
+#: widget/ui/src/components/BestRoute/BestRoute.tsx:231
 msgid "No routes found"
 msgstr ""
 
@@ -84,32 +84,32 @@ msgid "Custom"
 msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/ui/src/containers/Settings/Settings.tsx:166
+#: widget/ui/src/containers/Settings/Settings.tsx:171
 msgid "Theme"
 msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/ui/src/containers/Settings/Settings.tsx:170
+#: widget/ui/src/containers/Settings/Settings.tsx:176
 msgid "Dark"
 msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/ui/src/containers/Settings/Settings.tsx:171
+#: widget/ui/src/containers/Settings/Settings.tsx:177
 msgid "Light"
 msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/ui/src/containers/Settings/Settings.tsx:172
+#: widget/ui/src/containers/Settings/Settings.tsx:178
 msgid "Auto"
 msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/ui/src/containers/Settings/Settings.tsx:181
+#: widget/ui/src/containers/Settings/Settings.tsx:188
 msgid "Infinite Approval"
 msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/ui/src/containers/Settings/Settings.tsx:207
+#: widget/ui/src/containers/Settings/Settings.tsx:216
 msgid "Liquidity Sources"
 msgstr ""
 
@@ -173,7 +173,7 @@ msgstr ""
 #~ msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/WalletsPage.tsx:117
+#: widget/embedded/src/pages/WalletsPage.tsx:118
 #~ msgid "Select Wallet"
 #~ msgstr ""
 

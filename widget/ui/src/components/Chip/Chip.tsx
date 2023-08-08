@@ -6,7 +6,7 @@ const ChipCointainer = styled('div', {
   display: 'inline-flex',
   justifyContent: 'center',
   alignItems: 'center',
-  borderRadius: '$5',
+  borderRadius: '$xs',
   padding: '$4 $8',
   height: '32',
   fontSize: '$14',
