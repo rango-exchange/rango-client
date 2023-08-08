@@ -23,7 +23,7 @@ import {
   WalletDetail,
 } from 'rango-sdk';
 import { isCosmosBlockchain } from 'rango-types';
-import { readAccountAddress } from '@rango-dev/wallets-core';
+import { readAccountAddress } from '@rango-dev/wallets-react';
 import { ConnectedWallet, TokenBalance } from '../store/wallets';
 import { numberToString } from './numbers';
 import BigNumber from 'bignumber.js';

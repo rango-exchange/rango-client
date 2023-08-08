@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { Button, Divider, Switch, Typography, styled } from '@rango-dev/ui';
 import { WalletType, WalletTypes } from '@rango-dev/wallets-shared';
-import { ProviderInterface } from '@rango-dev/wallets-core';
+import { ProviderInterface } from '@rango-dev/wallets-react';
 import { useConfigStore } from '../../store/config';
 import { useWallets } from '@rango-dev/widget-embedded';
 

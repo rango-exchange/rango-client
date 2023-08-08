@@ -11,7 +11,7 @@ import {
   useWallets,
   ProviderInterface,
   EventHandler as HandleWalletsUpdate,
-} from '@rango-dev/wallets-core';
+} from '@rango-dev/wallets-react';
 import {
   useEvents as useWidgetEvents,
   MainEvents,
