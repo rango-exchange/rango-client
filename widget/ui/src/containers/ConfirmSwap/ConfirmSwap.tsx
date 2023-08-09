@@ -1,11 +1,16 @@
 import React, { PropsWithChildren, ReactNode } from 'react';
-import { Alert, Checkbox, Divider, TextField } from '../../components';
+import {
+  Alert,
+  Checkbox,
+  Divider,
+  SelectableWallet,
+  TextField,
+} from '../../components';
 import { Button } from '../../components/Button';
 import { SecondaryPage } from '../../components/SecondaryPage/SecondaryPage';
 import { SelectableWalletList } from '../../components/SelectableWalletList';
 import { Typography } from '../../components/Typography';
 import { styled } from '../../theme';
-import { SelectableWallet } from '../../types';
 
 const MainContainer = styled('div', {
   overflowY: 'auto',

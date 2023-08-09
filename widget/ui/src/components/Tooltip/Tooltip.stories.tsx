@@ -1,7 +1,8 @@
 import React from 'react';
 import { Meta } from '@storybook/react';
 
-import { Tooltip, PropTypes } from './Tooltip';
+import { Tooltip } from './Tooltip';
+import { PropTypes } from './Tooltip.types';
 import { AddWalletIcon } from '../Icon';
 
 export default {
@@ -10,7 +11,6 @@ export default {
   args: {
     content: 'I am a tooltip',
     side: 'top',
-    color: 'gray',
   },
   argTypes: {
     content: {
@@ -27,29 +27,13 @@ export default {
     color: {
       name: 'color',
       control: { type: 'select' },
-      options: [
-        'primary',
-        'error',
-        'warning',
-        'success',
-        'black',
-        'white',
-        'gray',
-      ],
-      defaultValue: 'gray',
+      options: ['primary', 'error', 'warning', 'success'],
     },
   },
 } as Meta<typeof Tooltip>;
 
 export const Main = (props: PropTypes) => (
-  <div
-    style={{
-      height: 300,
-      display: 'flex',
-      justifyContent: 'center',
-      alignItems: 'center',
-    }}
-  >
+  <div>
     <Tooltip {...props}>
       <AddWalletIcon size={24} />
     </Tooltip>

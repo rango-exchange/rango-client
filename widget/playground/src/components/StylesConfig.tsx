@@ -174,7 +174,7 @@ const ThemeContainer = styled('div', {
   color: '$neutral500',
   border: '1px solid',
   height: '$48',
-  borderRadius: '$5',
+  borderRadius: '$xs',
   display: 'flex',
   justifyContent: 'space-evenly',
   alignItems: 'center',

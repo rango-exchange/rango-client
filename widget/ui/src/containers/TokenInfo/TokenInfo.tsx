@@ -56,7 +56,7 @@ const Box = styled('div', {
 
 const Container = styled('div', {
   boxSizing: 'border-box',
-  borderRadius: '$5',
+  borderRadius: '$xs',
   padding: '$8 $16 $16 $16',
 
   variants: {
@@ -127,7 +127,7 @@ const ImagePlaceholder = styled('span', {
 const OutputContainer = styled('div', {
   windth: '100%',
   height: '$48',
-  borderRadius: '$5',
+  borderRadius: '$xs',
   backgroundColor: '$surface',
   border: '1px solid transparent',
   position: 'relative',
