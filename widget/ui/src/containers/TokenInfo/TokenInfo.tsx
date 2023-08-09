@@ -1,20 +1,12 @@
-import React from 'react';
-import {
-  AngleDownIcon,
-  Button,
-  InfoCircleIcon,
-  styled,
-  TextField,
-  Typography,
-  Image,
-  Divider,
-  PercentageChange,
-  ConnectedWallet,
-} from '../..';
-import { BestRouteResponse, BlockchainMeta, Token } from 'rango-sdk';
-import { Trans } from '@lingui/react';
+import type { ConnectedWallet } from '../..';
+import type { TokenWithBalance } from '../../types/meta';
+import type { BestRouteResponse, BlockchainMeta, Token } from 'rango-sdk';
+
 import { i18n } from '@lingui/core';
-import { TokenWithBalance } from '../../types/meta';
+import { Trans } from '@lingui/react';
+import React from 'react';
+
+import { Button, Divider, Image, styled, TextField, Typography } from '../..';
 
 type PropTypes = (
   | {
@@ -113,16 +105,6 @@ const Container = styled('div', {
   },
 });
 
-const Options = styled('div', {
-  display: 'flex',
-  justifyContent: 'flex-end',
-
-  '.balance': {
-    display: 'flex',
-    alignItems: 'center',
-  },
-});
-
 const ImagePlaceholder = styled('span', {
   width: '24px',
   height: '24px',
@@ -149,34 +131,13 @@ export function TokenInfo(props: PropTypes) {
     chain,
     token,
     loadingStatus,
-    fromChain,
-    toChain,
     fromToken,
-    setInputAmount,
     inputUsdValue,
     inputAmount,
     bestRoute,
     fetchingBestRoute,
-    onChainClick,
-    onTokenClick,
-    tokenBalanceReal,
     tokenBalance,
   } = props;
-
-  const ItemSuffix = (
-    <div
-      style={{
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-      }}>
-      {loadingStatus === 'failed' && <InfoCircleIcon color="error" size={24} />}
-      <AngleDownIcon />
-    </div>
-  );
-
-  let y = 1;
-  y = 2;
 
   return (
     <Box>
@@ -201,8 +162,12 @@ export function TokenInfo(props: PropTypes) {
             alignSelf: 'stretch',
           }}>
           <Typography variant="body" size="xsmall" color="$neutral400">
-            Balance: 0.087
+            {i18n.t('Balance')}: {tokenBalance}
+            {fromToken?.symbol || ''}
           </Typography>
+          <Button type="primary" variant="ghost" size="compact">
+            <Trans id="maximum amount of asset" message="Max" />
+          </Button>
         </div>
       </div>
       <Divider direction="horizontal" size={4} />
@@ -254,7 +219,13 @@ export function TokenInfo(props: PropTypes) {
                     height: '35px',
                     alignItems: 'flex-start',
                     gap: '-10px',
-                  }}></div>
+                  }}>
+                  {loadingStatus === 'success' && token ? (
+                    <Image src={token.image} size={24} />
+                  ) : (
+                    <ImagePlaceholder />
+                  )}
+                </div>
               </div>
               <div
                 style={{
@@ -264,10 +235,14 @@ export function TokenInfo(props: PropTypes) {
                   flex: '1 0 0',
                 }}>
                 <Typography variant="title" size="medium">
-                  DAI
+                  {loadingStatus === 'success' && token
+                    ? token.symbol
+                    : i18n.t('Token')}
                 </Typography>
                 <Typography variant="body" size="medium" color="$neutral400">
-                  Ethereum
+                  {loadingStatus === 'success' && chain
+                    ? chain.displayName
+                    : i18n.t('Chain')}
                 </Typography>
               </div>
             </div>
@@ -280,7 +255,70 @@ export function TokenInfo(props: PropTypes) {
               alignItems: 'center',
               gap: '10px',
               alignSelf: 'stretch',
-            }}></div>
+            }}>
+            <div
+              style={{
+                display: 'flex',
+                height: '46px',
+                flexDirection: 'column',
+                justifyContent: 'center',
+                alignItems: 'flex-end',
+                flex: '1 0 0',
+              }}>
+              <div
+                style={{
+                  display: 'flex',
+                  height: '26px',
+                  flexDirection: 'column',
+                  justifyContent: 'center',
+                  flexShrink: '0',
+                  alignSelf: 'stretch',
+                }}>
+                {type === 'From' ? (
+                  <TextField
+                    type="number"
+                    style={{
+                      textAlign: 'right',
+                    }}
+                    size="large"
+                    autoFocus
+                    placeholder="0"
+                    value={inputAmount || ''}
+                    min={0}
+                    onChange={
+                      type === 'From'
+                        ? (event) => {
+                            props.onAmountChange(event.target.value);
+                          }
+                        : undefined
+                    }
+                  />
+                ) : (
+                  <OutputContainer>
+                    <Typography variant="title" size="medium">
+                      {fetchingBestRoute && '?'}
+                      {!!bestRoute?.result && `≈ ${props.outputAmount}`}
+                      {(!inputAmount || inputAmount === '0') && '0'}
+                    </Typography>
+                  </OutputContainer>
+                )}
+              </div>
+              <div
+                style={{
+                  display: 'flex',
+                  justifyContent: 'flex-end',
+                  alignItems: 'center',
+                  gap: '2px',
+                  alignSelf: 'stretch',
+                }}>
+                <Typography
+                  variant="body"
+                  size="medium"
+                  align="right"
+                  color="neutral400">{`$${inputUsdValue}`}</Typography>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
       <Container type={props.type === 'From' ? 'filled' : 'outlined'}>
@@ -292,134 +330,6 @@ export function TokenInfo(props: PropTypes) {
               <Trans id="swap to" message="To" />
             )}
           </Typography>
-          {props.type === 'From' ? (
-            y === 5 ? (
-              <Options>
-                <div
-                  className="balance"
-                  onClick={() => {
-                    if (tokenBalance !== '0')
-                      setInputAmount(tokenBalanceReal.split(',').join(''));
-                  }}>
-                  <Typography variant="body" size="small" color="neutral600">
-                    {i18n.t('Balance')}: {tokenBalance}{' '}
-                    {fromToken?.symbol || ''}
-                  </Typography>
-                  <Divider size={4} />
-                  <Button type="primary" variant="ghost" size="compact">
-                    <Trans id="maximum amount of asset" message="Max" />
-                  </Button>
-                </div>
-              </Options>
-            ) : null
-          ) : (
-            <div className="output-usd">
-              <PercentageChange
-                percentageChange={props.percentageChange}
-                showPercentageChange={props.showPercentageChange}
-              />
-              <div>
-                <Typography
- variant="body"
- size="xsmall"                  color="neutral600">{`$${props.outputUsdValue}`}</Typography>
-              </div>
-            </div>
-          )}
-        </div>
-        <div className="form">
-          {y === 5 && (
-            <Button
-              className="selectors"
-              onClick={() => {
-                navigate(`${props.type.toLowerCase()}-chain`);
-              }}
-              variant="outlined"
-              disabled={loadingStatus === 'failed'}
-              loading={loadingStatus === 'loading'}
-              prefix={
-                loadingStatus === 'success' && chain ? (
-                  <Image src={chain.logo} size={24} />
-                ) : (
-                  <ImagePlaceholder />
-                )
-              }
-              suffix={ItemSuffix}
-              align="start"
-              size="large">
-              {loadingStatus === 'success' && chain
-                ? chain.displayName
-                : i18n.t('Chaiddddddddddddddddn')}
-            </Button>
-          )}
-          <Divider size={12} direction="horizontal" />
-          <Button
-            className="selectors"
-            onClick={onTokenClick}
-            variant="outlined"
-            disabled={
-              loadingStatus === 'failed' ||
-              (type === 'From' && !fromChain) ||
-              (type === 'To' && !toChain)
-            }
-            loading={loadingStatus === 'loading'}
-            prefix={
-              loadingStatus === 'success' && token ? (
-                <Image src={token.image} size={24} />
-              ) : (
-                <ImagePlaceholder />
-              )
-            }
-            suffix={ItemSuffix}
-            size="large"
-            align="start">
-            {loadingStatus === 'success' && token
-              ? token.symbol
-              : i18n.t('Token')}
-          </Button>
-          <Divider size={12} direction="horizontal" />
-          <div className="amount">
-            {type === 'From' ? (
-              <TextField
-                type="number"
-                size="large"
-                autoFocus
-                placeholder="0"
-                style={{
-                  position: 'relative',
-                  backgroundColor: '$background !important',
-                }}
-                suffix={
-                  <span
-                    style={{
-                      position: 'absolute',
-                      right: '4px',
-                      bottom: '2px',
-                    }}>
-                    <Typography
- variant="body"
- size="xsmall"                      color="neutral800">{`$${inputUsdValue}`}</Typography>
-                  </span>
-                }
-                value={inputAmount || ''}
-                min={0}
-                onChange={
-                  type === 'From'
-                    ? (event) => {
-                        props.onAmountChange(event.target.value);
-                      }
-                    : undefined
-                }
-              />
-            ) : (
-              <OutputContainer>
-                <Typography variant="title" size="medium">
-                  {fetchingBestRoute && '?'}
-                  {!!bestRoute?.result && `≈ ${props.outputAmount}`}
-                  {(!inputAmount || inputAmount === '0') && '0'}
-                </Typography>
-              </OutputContainer>
-            )}
-          </div>
         </div>
       </Container>
     </Box>

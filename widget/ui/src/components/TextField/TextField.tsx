@@ -1,12 +1,12 @@
-import React, { PropsWithChildren, RefObject } from 'react';
+import type { PropsWithChildren, RefObject } from 'react';
+
+import React from 'react';
 
 import { styled } from '../../theme';
 
 const InputContainer = styled('div', {
-  backgroundColor: '$surface',
   padding: '1px',
   boxSizing: 'border-box',
-  border: '1px solid $neutral400',
   borderRadius: '$xs',
   height: '$48',
   display: 'flex',
@@ -16,10 +16,6 @@ const InputContainer = styled('div', {
   color: '$foreground',
   overflowX: 'hidden',
   transition: 'border-color ease .3s',
-  '&:focus-within': {
-    borderColor: '$success',
-    outline: '1px solid $success',
-  },
   variants: {
     size: {
       small: {
@@ -113,43 +109,40 @@ export type PropTypes = {
       | undefined;
   };
 
-export const TextField = React.forwardRef(
-  (
-    props: PropsWithChildren<PropTypes>,
-    ref:
-      | RefObject<HTMLInputElement>
-      | ((instance: HTMLInputElement | null) => void)
-      | null
-      | undefined
-  ) => {
-    const { label, prefix, suffix, children, size, style, ...inputAttributes } =
-      props;
-    return (
-      <>
-        {label && (
-          <Label
-            className="_text"
-            {...(inputAttributes.id && { htmlFor: inputAttributes.id })}>
-            {label}
-          </Label>
-        )}
-        <InputContainer
-          disabled={inputAttributes.disabled}
-          prefix={!!prefix}
-          suffix={!!suffix}
-          size={size}
-          style={style}
-          className="_text">
-          {prefix || null}
-          <Input
-            className="_text"
-            {...inputAttributes}
-            spellCheck={false}
-            ref={ref}
-          />
-          {suffix || null}
-        </InputContainer>
-      </>
-    );
-  }
-);
+export const TextField = React.forwardRef(function TextFieldComponent(
+  props: PropsWithChildren<PropTypes>,
+  ref:
+    | RefObject<HTMLInputElement>
+    | ((instance: HTMLInputElement | null) => void)
+    | null
+    | undefined
+) {
+  const { label, prefix, suffix, size, style, ...inputAttributes } = props;
+  return (
+    <>
+      {label && (
+        <Label
+          className="_text"
+          {...(inputAttributes.id && { htmlFor: inputAttributes.id })}>
+          {label}
+        </Label>
+      )}
+      <InputContainer
+        disabled={inputAttributes.disabled}
+        prefix={!!prefix}
+        suffix={!!suffix}
+        size={size}
+        style={style}
+        className="_text">
+        {prefix || null}
+        <Input
+          className="_text"
+          {...inputAttributes}
+          spellCheck={false}
+          ref={ref}
+        />
+        {suffix || null}
+      </InputContainer>
+    </>
+  );
+});
