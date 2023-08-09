@@ -122,7 +122,7 @@ export function ConfirmSwap(props: PropsWithChildren<PropTypes>) {
               (!!customDestination &&
                 !isValidCustomDestination(
                   requiredWallets[requiredWallets.length - 1],
-                  customDestination,
+                  customDestination
                 ))
             }>
             {confirmButtonTitle}
@@ -139,7 +139,9 @@ export function ConfirmSwap(props: PropsWithChildren<PropTypes>) {
                 <Alert
                   type="error"
                   key={index}
-                  {...(typeof error === 'string' ? { title: error } : { children: error })}
+                  {...(typeof error === 'string'
+                    ? { title: error }
+                    : { children: error })}
                 />
               </React.Fragment>
             ))}
@@ -149,7 +151,9 @@ export function ConfirmSwap(props: PropsWithChildren<PropTypes>) {
                 <Alert
                   type="warning"
                   key={index}
-                  {...(typeof warning === 'string' ? { title: warning } : { children: warning })}
+                  {...(typeof warning === 'string'
+                    ? { title: warning }
+                    : { children: warning })}
                 />
               </React.Fragment>
             ))}
@@ -169,10 +173,13 @@ export function ConfirmSwap(props: PropsWithChildren<PropTypes>) {
               <div className="title">
                 <div className="num">{index + 1}</div>
                 <Divider size={8} direction="horizontal" />
-                <Typography variant="body2">Your {wallet} Wallet</Typography>
+                <Typography variant="body" size="small">
+                  Your {wallet} Wallet
+                </Typography>
               </div>
               {list.length === 0 &&
-                (isWalletRequired || (!isWalletRequired && !checkedDestination)) && (
+                (isWalletRequired ||
+                  (!isWalletRequired && !checkedDestination)) && (
                   <>
                     <AlertContainer>
                       <Alert type="error">
@@ -200,44 +207,50 @@ export function ConfirmSwap(props: PropsWithChildren<PropTypes>) {
                   }}
                 />
               )}
-              {index === requiredWallets.length - 1 && customDestinationEnabled && (
-                <>
-                  <Divider />
-                  <Checkbox
-                    label={`Choose a custom ${wallet} address`}
-                    checked={checkedDestination}
-                    onCheckedChange={(checked) => {
-                      if (!checked) {
-                        setDestinationChain('');
-                        setCustomDestination('');
-                        list.length && onChange(list[0]);
-                      } else {
-                        setDestinationChain(wallet);
-                      }
-                    }}
-                    id={'custom_destination'}
-                  />
-                  <Divider />
+              {index === requiredWallets.length - 1 &&
+                customDestinationEnabled && (
+                  <>
+                    <Divider />
+                    <Checkbox
+                      label={`Choose a custom ${wallet} address`}
+                      checked={checkedDestination}
+                      onCheckedChange={(checked) => {
+                        if (!checked) {
+                          setDestinationChain('');
+                          setCustomDestination('');
+                          list.length && onChange(list[0]);
+                        } else {
+                          setDestinationChain(wallet);
+                        }
+                      }}
+                      id={'custom_destination'}
+                    />
+                    <Divider />
 
-                  {checkedDestination && (
-                    <>
-                      <TextField
-                        placeholder="Your destination address"
-                        value={customDestination}
-                        onChange={(e) => {
-                          setCustomDestination(e.target.value);
-                        }}
-                      />
-                      {!!customDestination &&
-                        !isValidCustomDestination(wallet, customDestination) && (
-                          <AlertContainer>
-                            <Alert type="error">Not a valid {wallet} address.</Alert>
-                          </AlertContainer>
-                        )}
-                    </>
-                  )}
-                </>
-              )}
+                    {checkedDestination && (
+                      <>
+                        <TextField
+                          placeholder="Your destination address"
+                          value={customDestination}
+                          onChange={(e) => {
+                            setCustomDestination(e.target.value);
+                          }}
+                        />
+                        {!!customDestination &&
+                          !isValidCustomDestination(
+                            wallet,
+                            customDestination
+                          ) && (
+                            <AlertContainer>
+                              <Alert type="error">
+                                Not a valid {wallet} address.
+                              </Alert>
+                            </AlertContainer>
+                          )}
+                      </>
+                    )}
+                  </>
+                )}
             </Container>
           );
         })}

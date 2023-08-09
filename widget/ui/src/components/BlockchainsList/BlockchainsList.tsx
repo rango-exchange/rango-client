@@ -61,9 +61,10 @@ export function BlockchainsList(props: PropTypes) {
             suffix={isSelect(blockchain.name) ? <FilledCircle /> : undefined}
             align="start"
             onClick={changeSelectedBlockchain.bind(null, blockchain)}
-            key={index}
-          >
-            <Typography variant="body2">{blockchain.displayName}</Typography>
+            key={index}>
+            <Typography variant="body" size="small">
+              {blockchain.displayName}
+            </Typography>
           </Button>
         );
       })}
