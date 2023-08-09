@@ -1,4 +1,4 @@
-import { BlockchainMeta } from 'rango-types';
+import type { BlockchainMeta } from 'rango-types';
 
 export const supportedChains: BlockchainMeta[] = [
   {

@@ -1,12 +1,10 @@
-import {
-  DefaultSignerFactory,
-  SignerFactory,
-  TransactionType as TxType,
-} from 'rango-types';
+import type { WCInstance } from './types';
+import type { SignerFactory } from 'rango-types';
 
-import { WCInstance } from './types';
-import EVMSigner from './signers/evm';
+import { DefaultSignerFactory, TransactionType as TxType } from 'rango-types';
+
 import COSMOSSigner from './signers/cosmos';
+import EVMSigner from './signers/evm';
 import SOLANASigner from './signers/solana';
 
 export default function getSigners(instance: WCInstance): SignerFactory {

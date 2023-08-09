@@ -1,14 +1,14 @@
 const template = (variables, options) => {
   return options.tpl`
   import React, {createElement} from 'react';
-  import type {SvgIconProps} from '../components/SvgIcon';
+  import type {SvgIconPropsWithChildren} from '../components/SvgIcon';
   import {SvgIcon} from '../components/SvgIcon';
   
     ${variables.imports};
   
     ${variables.interfaces};
     
-    function ${variables.componentName}(props: Omit<SvgIconProps, 'type'>){
+    function ${variables.componentName}(props: SvgIconPropsWithChildren){
       return createElement(SvgIcon, props, ${variables.jsx})
     }
     

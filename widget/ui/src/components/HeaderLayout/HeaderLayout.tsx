@@ -1,15 +1,18 @@
-import {
-  Button,
-  AddWalletIcon,
-  Typography,
-  styled,
-  Spinner,
-  Image,
-} from '../..';
-import React, { PropsWithChildren } from 'react';
+import type { LoadingStatus } from '../../types/meta';
+import type { ConnectedWallet } from '../../types/wallet';
+import type { PropsWithChildren } from 'react';
+
 import { i18n } from '@lingui/core';
-import { LoadingStatus } from '../../types/meta';
-import { ConnectedWallet } from '../../types/wallet';
+import React from 'react';
+
+import {
+  AddWalletIcon,
+  Button,
+  Image,
+  Spinner,
+  styled,
+  Typography,
+} from '../..';
 
 const Container = styled('div', {
   display: 'flex',
@@ -65,7 +68,7 @@ export function HeaderLayout({
             connectedWalletsImages?.length ? (
               <WalletImages>
                 {connectedWalletsImages.map((walletImage, index) => (
-                  <WalletImageContainer key={index}>
+                  <WalletImageContainer key={`wallet-image-${index}`}>
                     <Image src={walletImage} size={24} />
                   </WalletImageContainer>
                 ))}
@@ -73,10 +76,10 @@ export function HeaderLayout({
             ) : null
           }>
           <div className="balance">
-            <Typography variant="body2">
+            <Typography variant="body" size="small">
               {!connectedWallets?.length
                 ? i18n.t('Connect Wallet')
-                : `$${totalBalance || 0}`}
+                : `$${totalBalance || '0'}`}
             </Typography>
             {fetchingBalance && <Spinner />}
           </div>

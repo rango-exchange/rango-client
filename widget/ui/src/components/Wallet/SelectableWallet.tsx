@@ -1,8 +1,9 @@
+import type { SelectablePropTypes } from './Wallet.types';
+
 import React from 'react';
 
-import { SelectablePropTypes } from './Wallet.types';
-import { WalletButton } from './Wallet.styles';
 import Content from './Content';
+import { WalletButton } from './Wallet.styles';
 
 function SelectableWallet(props: SelectablePropTypes) {
   return (
