@@ -67,12 +67,11 @@ export function Alert(props: PropsWithChildren<PropTypes>) {
                 display: 'flex',
                 justifyContent: 'center',
                 alignItems: 'center',
-              }}
-            >
+              }}>
               {type === 'success' && <CheckCircleIcon color={type} size={24} />}
               {type === 'warning' && <WarningIcon color={type} size={24} />}
               {type === 'error' && <InfoCircleIcon color={type} size={24} />}
-              <Divider size={4} direction='horizontal' />
+              <Divider size={4} direction="horizontal" />
             </div>
           </>
         )}
@@ -83,11 +82,14 @@ export function Alert(props: PropsWithChildren<PropTypes>) {
             alignItems: 'start',
             flexDirection: 'column',
             width: '100%',
-          }}
-        >
+          }}>
           {title && (
             <>
-              <Typography className="title" variant="title" color={type}>
+              <Typography
+                className="title"
+                variant="title"
+                size="small"
+                color={type}>
                 {title}
               </Typography>
               {!!children && <Divider size={4} />}

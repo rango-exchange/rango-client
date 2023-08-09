@@ -62,7 +62,9 @@ export function ChainsConfig({ type }: PropTypes) {
 
   return (
     <div>
-      <Typography variant="h6">{type} Form</Typography>
+      <Typography variant="title" size="small">
+        {type} Form
+      </Typography>
       <Divider size={12} />
       <ConfigurationContainer>
         <MultiSelect

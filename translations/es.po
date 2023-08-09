@@ -69,7 +69,7 @@ msgid "Bridges"
 msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/ui/src/components/LiquiditySourceList/LiquiditySourceList.tsx:140
+#: widget/ui/src/components/LiquiditySourceList/LiquiditySourceList.tsx:143
 msgid "Exchanges"
 msgstr ""
 

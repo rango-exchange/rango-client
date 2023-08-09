@@ -40,7 +40,13 @@ const Content = styled('div', {
   flexDirection: 'column',
 });
 
-export function MultiTokenSelect({ label, modalTitle, list, blockchains, type }: PropTypes) {
+export function MultiTokenSelect({
+  label,
+  modalTitle,
+  list,
+  blockchains,
+  type,
+}: PropTypes) {
   const [open, setOpen] = useState(false);
   const [chain, setChain] = useState<string>('');
   const [selectTokens, setSelectTokens] = useState({});
@@ -52,7 +58,9 @@ export function MultiTokenSelect({ label, modalTitle, list, blockchains, type }:
   const onChangeSelectList = (token: Asset) => {
     const select = { ...selectTokens };
     if (select[chain]) {
-      const index = select[chain].findIndex((item) => tokensAreEqual(item, token));
+      const index = select[chain].findIndex((item) =>
+        tokensAreEqual(item, token)
+      );
       if (index === -1) {
         select[chain].push(token);
       } else {
@@ -62,9 +70,9 @@ export function MultiTokenSelect({ label, modalTitle, list, blockchains, type }:
       select[chain] = [token];
     }
 
-    let values = !!tokens ? [...tokens] : [];
+    const values = !!tokens ? [...tokens] : [];
     const index = values.findIndex(
-      (item) => item.symbol === token.symbol && item.address === token.address,
+      (item) => item.symbol === token.symbol && item.address === token.address
     );
     if (index === -1) {
       values.push(token);
@@ -76,13 +84,16 @@ export function MultiTokenSelect({ label, modalTitle, list, blockchains, type }:
   };
 
   const onClickSelectAll = (listOfToken) => {
-    let values = !!tokens ? [...tokens] : [];
+    const values = !!tokens ? [...tokens] : [];
     const select = selectTokens;
-    if (selectTokens[chain] && selectTokens[chain].length === listOfToken.length) {
+    if (
+      selectTokens[chain] &&
+      selectTokens[chain].length === listOfToken.length
+    ) {
       select[chain] = [];
       for (const item of listOfToken) {
         const index = values.findIndex(
-          (v) => v.symbol === item.symbol && v.address === item.address,
+          (v) => v.symbol === item.symbol && v.address === item.address
         );
         if (index !== -1) values.splice(index, 1);
       }
@@ -90,7 +101,7 @@ export function MultiTokenSelect({ label, modalTitle, list, blockchains, type }:
       for (const item of listOfToken) {
         select[chain] = listOfToken;
         const index = values.findIndex(
-          (v) => v.symbol === item.symbol && v.address === item.address,
+          (v) => v.symbol === item.symbol && v.address === item.address
         );
         if (index === -1)
           values.push({
@@ -160,7 +171,9 @@ export function MultiTokenSelect({ label, modalTitle, list, blockchains, type }:
             hasHeader={false}
             textFieldPlaceholder="Search tokens by name">
             {(searchedFor) => {
-              const filterList = list.filter((token) => token.blockchain === chain);
+              const filterList = list.filter(
+                (token) => token.blockchain === chain
+              );
               const filteredTokens = filterTokens(filterList, searchedFor);
 
               return (
@@ -177,7 +190,9 @@ export function MultiTokenSelect({ label, modalTitle, list, blockchains, type }:
                             margin: '0 8px 8px 0',
                           }}
                           disabled={!tokens}
-                          type={chain === blockchain.name ? 'primary' : undefined}
+                          type={
+                            chain === blockchain.name ? 'primary' : undefined
+                          }
                           variant="outlined"
                           onClick={() => setChain(blockchain.name)}>
                           {blockchain.name}
@@ -189,7 +204,9 @@ export function MultiTokenSelect({ label, modalTitle, list, blockchains, type }:
 
                   {!tokens ? (
                     <EmptyContent>
-                      <Typography variant="body2">All tokens are selected</Typography>
+                      <Typography variant="body" size="small">
+                        All tokens are selected
+                      </Typography>
                     </EmptyContent>
                   ) : (
                     <>
@@ -198,7 +215,8 @@ export function MultiTokenSelect({ label, modalTitle, list, blockchains, type }:
                         type="primary"
                         variant="ghost"
                         onClick={() => onClickSelectAll(filterList)}>
-                        {!!selectTokens[chain] && selectTokens[chain].length === filterList.length
+                        {!!selectTokens[chain] &&
+                        selectTokens[chain].length === filterList.length
                           ? 'Deselect All'
                           : 'Select All'}
                       </Button>
@@ -218,7 +236,10 @@ export function MultiTokenSelect({ label, modalTitle, list, blockchains, type }:
                         />
                       )}
                       {!filteredTokens.length && (
-                        <NotFoundAlert searchedFor={searchedFor} catergory="Token" />
+                        <NotFoundAlert
+                          searchedFor={searchedFor}
+                          catergory="Token"
+                        />
                       )}
                     </>
                   )}
@@ -228,7 +249,11 @@ export function MultiTokenSelect({ label, modalTitle, list, blockchains, type }:
           </SecondaryPage>
         }
         title={modalTitle}
-        containerStyle={{ width: '560px', maxHeight: '775px', minHeight: '665px' }}
+        containerStyle={{
+          width: '560px',
+          maxHeight: '775px',
+          minHeight: '665px',
+        }}
       />
     </div>
   );
