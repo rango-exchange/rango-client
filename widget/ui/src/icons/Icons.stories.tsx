@@ -1,12 +1,12 @@
 import React from 'react';
-import { Icon, IconProps } from './types';
+import { SvgIconProps } from '../components/SvgIcon';
 import * as Icons from '.';
+import { styled } from '../theme';
 import { Meta } from '@storybook/react';
-import { styled } from '../../theme';
 
 export default {
-  title: 'Components/Icons (Deprecated)',
-  component: Icons.AngleRightIcon,
+  title: 'Components/Icons',
+  component: Icons.AngleDown,
   args: {
     size: 16,
     color: 'black',
@@ -15,7 +15,17 @@ export default {
     color: {
       name: 'color',
       control: { type: 'select' },
-      options: ['primary', 'error', 'warning', 'success', 'black', 'white'],
+      options: [
+        'primary',
+        'secondary',
+        'error',
+        'warning',
+        'success',
+        'black',
+        'white',
+        'gray',
+        'info',
+      ],
     },
 
     size: {
@@ -25,7 +35,7 @@ export default {
       defaultValue: 16,
     },
   },
-} as Meta<typeof Icons.AngleRightIcon>;
+} as Meta<any>;
 
 const Container = styled('div', {
   display: 'grid',
@@ -33,10 +43,12 @@ const Container = styled('div', {
   gap: 15,
 });
 
-export const Main = (props: IconProps) => (
+export const Main = (props: SvgIconProps) => (
   <Container>
     {Object.keys(Icons).map((icon) => {
-      const Component = Icons[icon as Icon];
+      // eslint-disable-next-line
+      // @ts-ignore
+      const Component = Icons[icon];
       return (
         <div>
           <Component {...props} />
