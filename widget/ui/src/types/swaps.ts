@@ -1,10 +1,11 @@
-import {
+import type {
   BestRouteResponse,
   BlockchainValidationStatus,
   SimulationResult,
   SwapResult,
   WalletRequiredAssets,
 } from 'rango-sdk';
+
 export type SwapStatus = 'running' | 'failed' | 'success';
 export type MessageSeverity = 'error' | 'warning' | 'info' | 'success';
 

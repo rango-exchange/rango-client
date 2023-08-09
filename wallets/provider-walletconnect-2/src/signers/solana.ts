@@ -1,15 +1,16 @@
-import { SignClient } from '@walletconnect/sign-client/dist/types/client';
-import { SessionTypes } from '@walletconnect/types';
-import { AccountId, ChainId } from 'caip';
+import type { SolanaWeb3Signer } from '@rango-dev/signer-solana';
+import type { Transaction, VersionedTransaction } from '@solana/web3.js';
+import type { SignClient } from '@walletconnect/sign-client/dist/types/client';
+import type { SessionTypes } from '@walletconnect/types';
 import type { GenericSigner, SolanaTransaction } from 'rango-types';
-import { SignerError, SignerErrorCode } from 'rango-types';
-import { NAMESPACES, SolanaRPCMethods } from '../constants';
-import {
-  SolanaWeb3Signer,
-  generalSolanaTransactionExecutor,
-} from '@rango-dev/signer-solana';
-import { PublicKey, Transaction, VersionedTransaction } from '@solana/web3.js';
+
+import { generalSolanaTransactionExecutor } from '@rango-dev/signer-solana';
+import { PublicKey } from '@solana/web3.js';
 import base58 from 'bs58';
+import { AccountId, ChainId } from 'caip';
+import { SignerError, SignerErrorCode } from 'rango-types';
+
+import { NAMESPACES, SolanaRPCMethods } from '../constants';
 
 const NAMESPACE_NAME = NAMESPACES.SOLANA;
 class SOLANASigner implements GenericSigner<SolanaTransaction> {
@@ -101,15 +102,19 @@ class SOLANASigner implements GenericSigner<SolanaTransaction> {
   }) {
     const { address, chainId } = requestedFor;
 
-    // TODO: solana chain id in supported blockchains("mainnet-beta") is different from solana chain id is here ("5eykt4UsFv8P8NJdTREpY1vzqKqZKvdp")
-    //# Solana Mainnet
-    // solana:5eykt4UsFv8P8NJdTREpY1vzqKqZKvd
-    // refrence: https://github.com/ChainAgnostic/namespaces/blob/main/solana/caip2.md
+    /*
+     *  TODO: solana chain id in supported blockchains("mainnet-beta") is different from solana chain id is here ("5eykt4UsFv8P8NJdTREpY1vzqKqZKvdp")
+     * # Solana Mainnet
+     *  solana:5eykt4UsFv8P8NJdTREpY1vzqKqZKvd
+     *  refrence: https://github.com/ChainAgnostic/namespaces/blob/main/solana/caip2.md
+     */
 
     let solana_chain_id = chainId;
     this.session.namespaces[NAMESPACE_NAME]?.accounts.map((account) => {
       const sol_account = account.split(':');
-      if (sol_account[2] === address) solana_chain_id = sol_account[1];
+      if (sol_account[2] === address) {
+        solana_chain_id = sol_account[1];
+      }
     });
 
     if (!solana_chain_id) {

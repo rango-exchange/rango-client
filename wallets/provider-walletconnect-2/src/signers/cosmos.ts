@@ -1,20 +1,20 @@
-import { SignClient } from '@walletconnect/sign-client/dist/types/client';
-import { SessionTypes } from '@walletconnect/types';
-import { AccountId, ChainId } from 'caip';
-import type { GenericSigner } from 'rango-types';
-import { SignerError, CosmosTransaction, SignerErrorCode } from 'rango-types';
-import { CosmosRPCMethods, NAMESPACES } from '../constants';
+import type { AminoSignResponse } from '@cosmjs/launchpad';
+import type { SignClient } from '@walletconnect/sign-client/dist/types/client';
+import type { SessionTypes } from '@walletconnect/types';
+import type { CosmosTransaction, GenericSigner } from 'rango-types';
+
+import { BroadcastMode, makeSignDoc } from '@cosmjs/launchpad';
+import { cosmos } from '@keplr-wallet/cosmos';
 import { getsignedTx, manipulateMsg } from '@rango-dev/signer-cosmos';
-import {
-  AminoSignResponse,
-  BroadcastMode,
-  makeSignDoc,
-} from '@cosmjs/launchpad';
+import { uint8ArrayToHex } from '@rango-dev/wallets-shared';
+import { AccountId, ChainId } from 'caip';
+import { formatDirectSignDoc, stringifySignDocValues } from 'cosmos-wallet';
+import { SignerError, SignerErrorCode } from 'rango-types';
+
+import { CosmosRPCMethods, NAMESPACES } from '../constants';
+
 import { sendTx } from './helper';
 import { supportedChains } from './mock';
-import { uint8ArrayToHex } from '@rango-dev/wallets-shared';
-import { cosmos } from '@keplr-wallet/cosmos';
-import { formatDirectSignDoc, stringifySignDocValues } from 'cosmos-wallet';
 
 const NAMESPACE_NAME = NAMESPACES.COSMOS;
 type DirectSignResponse = {
@@ -64,14 +64,17 @@ class COSMOSSigner implements GenericSigner<CosmosTransaction> {
         __type: undefined,
         '@type': undefined,
       }));
-      if (!chainId)
+      if (!chainId) {
         throw SignerError.AssertionFailed('chainId is undefined from server');
-      if (!account_number)
+      }
+      if (!account_number) {
         throw SignerError.AssertionFailed(
           'account_number is undefined from server'
         );
-      if (!sequence)
+      }
+      if (!sequence) {
         throw SignerError.AssertionFailed('sequence is undefined from server');
+      }
 
       if (signType === 'AMINO') {
         const signDoc = makeSignDoc(
@@ -185,15 +188,17 @@ class COSMOSSigner implements GenericSigner<CosmosTransaction> {
         console.log({ result });
 
         return { hash: uint8ArrayToHex(result) };
-      } else {
-        throw new SignerError(
-          SignerErrorCode.OPERATION_UNSUPPORTED,
-          `Sign type for cosmos not supported, type: ${signType}`
-        );
       }
+      throw new SignerError(
+        SignerErrorCode.OPERATION_UNSUPPORTED,
+        `Sign type for cosmos not supported, type: ${signType}`
+      );
     } catch (err) {
-      if (SignerError.isSignerError(err)) throw err;
-      else throw new SignerError(SignerErrorCode.SEND_TX_ERROR, undefined, err);
+      if (SignerError.isSignerError(err)) {
+        throw err;
+      } else {
+        throw new SignerError(SignerErrorCode.SEND_TX_ERROR, undefined, err);
+      }
     }
   }
 

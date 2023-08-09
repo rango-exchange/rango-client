@@ -1,2 +1,2 @@
 export { SvgIcon } from './SvgIcon';
-export type { SvgIconProps } from './SvgIcon.types';
+export type { SvgIconPropsWithChildren, SvgIconProps } from './SvgIcon.types';

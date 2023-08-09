@@ -1,4 +1,5 @@
 import React from 'react';
+
 import { Typography } from '..';
 
 interface PropTypes {
@@ -12,7 +13,7 @@ export function PercentageChange(props: PropTypes) {
   return (
     <>
       {showPercentageChange && (
-        <Typography variant="caption" color="$error500">
+        <Typography variant="title" size="small" color="$error500">
           {`(${percentageChange}%)`}
         </Typography>
       )}
