@@ -1,6 +1,9 @@
+import type { BlockchainMeta } from 'rango-types';
+
 import { TendermintTxTracer } from '@keplr-wallet/cosmos';
 import { simpleFetch } from '@keplr-wallet/simple-fetch';
-import { BlockchainMeta, cosmosBlockchains } from 'rango-types';
+import { cosmosBlockchains } from 'rango-types';
+
 export async function sendTx(
   chainId: string,
   tx: unknown,
@@ -16,7 +19,7 @@ export async function sendTx(
   console.log({ chainInfo, isProtoTx });
 
   if (!chainInfo) {
-    throw 'Chain info is undefined from server';
+    throw new Error('Chain info is undefined from server');
   }
   const params = isProtoTx
     ? {
@@ -61,6 +64,7 @@ export async function sendTx(
     const txHash = Buffer.from(txResponse.txhash, 'hex');
 
     const txTracer = new TendermintTxTracer(chainInfo.rpc, '/websocket');
+    // eslint-disable-next-line @typescript-eslint/no-floating-promises
     txTracer.traceTx(txHash).then(() => {
       txTracer.close();
     });

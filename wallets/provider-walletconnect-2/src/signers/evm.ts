@@ -1,9 +1,11 @@
-import { SignClient } from '@walletconnect/sign-client/dist/types/client';
-import { SessionTypes } from '@walletconnect/types';
-import { AccountId, ChainId } from 'caip';
+import type { SignClient } from '@walletconnect/sign-client/dist/types/client';
+import type { SessionTypes } from '@walletconnect/types';
 import type { GenericSigner } from 'rango-types';
-import { EvmTransaction } from 'rango-types/lib/api/main';
+import type { EvmTransaction } from 'rango-types/lib/api/main';
+
 import * as encoding from '@walletconnect/encoding';
+import { AccountId, ChainId } from 'caip';
+
 import { EthereumRPCMethods, NAMESPACES } from '../constants';
 
 const NAMESPACE_NAME = NAMESPACES.ETHEREUM;
@@ -45,8 +47,10 @@ class EVMSigner implements GenericSigner<EvmTransaction> {
       },
     });
 
-    // TODO: We can also verify the signature here
-    // Check web-examples: dapps/react-dapp-v2/src/contexts/JsonRpcContext.tsx
+    /*
+     * TODO: We can also verify the signature here
+     * Check web-examples: dapps/react-dapp-v2/src/contexts/JsonRpcContext.tsx
+     */
 
     return signature;
   }
@@ -88,8 +92,10 @@ class EVMSigner implements GenericSigner<EvmTransaction> {
       );
     }
 
-    // TODO: We need to make sure we are using a single format for chain ids, it should be hex or number.
-    // This is a quick fix for evm.
+    /*
+     * TODO: We need to make sure we are using a single format for chain ids, it should be hex or number.
+     * This is a quick fix for evm.
+     */
     const chainIdNumber = chainId.startsWith('0x')
       ? String(parseInt(chainId))
       : chainId;

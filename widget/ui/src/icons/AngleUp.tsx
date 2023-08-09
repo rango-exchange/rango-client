@@ -1,7 +1,10 @@
+import type { SvgIconPropsWithChildren } from '../components/SvgIcon';
+
 import React, { createElement } from 'react';
-import type { SvgIconProps } from '../components/SvgIcon';
+
 import { SvgIcon } from '../components/SvgIcon';
-function SvgAngleUp(props: Omit<SvgIconProps, 'type'>) {
+
+function SvgAngleUp(props: SvgIconPropsWithChildren) {
   return createElement(
     SvgIcon,
     props,

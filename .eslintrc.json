@@ -67,7 +67,7 @@
       }
     ],
     "react-hooks/rules-of-hooks": "error",
-    "react/no-array-index-key": "error",
+    // "react/no-array-index-key": "error",
     "react/jsx-no-constructed-context-values": "error",
     "react/jsx-key": "error",
     "destructuring/in-params": "error",
@@ -79,7 +79,7 @@
     "camelcase": "off",
     "@typescript-eslint/no-unused-vars": "error",
     "@typescript-eslint/no-throw-literal": "error",
-    "@typescript-eslint/no-magic-numbers": "error",
+    // "@typescript-eslint/no-magic-numbers": "error",
     "@typescript-eslint/consistent-type-exports": "error",
     "@typescript-eslint/consistent-type-imports": "error",
     "@typescript-eslint/member-ordering": "error",

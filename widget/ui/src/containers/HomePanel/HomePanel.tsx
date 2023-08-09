@@ -1,19 +1,21 @@
+import type { ConnectedWallet } from '../..';
+import type { LoadingStatus, TokenWithBalance } from '../../types/meta';
+import type { BestRouteResponse, BlockchainMeta, SwapResult } from 'rango-sdk';
+
+import { i18n } from '@lingui/core';
+import React from 'react';
+
 import {
   Alert,
   BestRoute,
   BottomLogo,
   Button,
-  styled,
-  Typography,
   Header,
   HeaderButtons,
+  styled,
   TokenInfo,
-  ConnectedWallet,
+  Typography,
 } from '../..';
-import React from 'react';
-import { i18n } from '@lingui/core';
-import { BestRouteResponse, BlockchainMeta, SwapResult } from 'rango-sdk';
-import { LoadingStatus, TokenWithBalance } from '../../types/meta';
 
 const Container = styled('div', {
   display: 'flex',
@@ -203,10 +205,12 @@ export function HomePanel({
           {hasLimitError(bestRoute) && (
             <Alert type="error" title={`${swap?.swapperId} Limit`}>
               <>
-                <Typography variant="body2">
+                <Typography variant="body" size="small">
                   {`${fromAmountRangeError}, Yours: ${swapFromAmount} ${swap?.from.symbol}`}
                 </Typography>
-                <Typography variant="body2">{recommendation}</Typography>
+                <Typography variant="body" size="small">
+                  {recommendation}
+                </Typography>
               </>
             </Alert>
           )}
