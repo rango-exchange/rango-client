@@ -49,9 +49,15 @@ type PropTypes = (
 
 const Box = styled('div', {
   display: 'flex',
+  width: '350px',
+  height: '101px',
+  padding: '15px',
   flexDirection: 'column',
-  width: '100%',
-  overflow: 'hidden',
+  alignItems: 'flex-start',
+  gap: '5px',
+  flexShrink: 0,
+  borderRadius: '15px',
+  background: 'var(--surfaces-on-widget, #F9F9F9)',
 });
 
 const Container = styled('div', {
@@ -169,9 +175,115 @@ export function TokenInfo(props: PropTypes) {
     </div>
   );
 
+  let y = 1;
+  y = 2;
+
   return (
     <Box>
-      <Container type={type === 'From' ? 'filled' : 'outlined'}>
+      <div
+        style={{
+          display: 'flex',
+          height: '16px',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          flexShrink: '0',
+          alignSelf: 'stretch',
+        }}>
+        <Typography variant="body" size="small" color="$neutral400">
+          From
+        </Typography>
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'flex-end',
+            alignItems: 'center',
+            gap: '5px',
+            alignSelf: 'stretch',
+          }}>
+          <Typography variant="body" size="xsmall" color="$neutral400">
+            Balance: 0.087
+          </Typography>
+        </div>
+      </div>
+      <Divider direction="horizontal" size={4} />
+      <div
+        style={{
+          display: 'flex',
+          height: '50px',
+          alignItems: 'center',
+          gap: '170px',
+          flexShrink: '0',
+          alignSelf: 'stretch',
+        }}>
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            flex: '1 0 0',
+            alignSelf: 'stretch',
+          }}>
+          <div
+            style={{
+              display: 'flex',
+              width: '180px',
+              padding: '2px 5px',
+              flexDirection: 'column',
+              alignItems: 'flex-start',
+              gap: '10px',
+              alignSelf: 'stretch',
+            }}>
+            <div
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '10px',
+                alignSelf: 'stretch',
+              }}>
+              <div
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '-35px',
+                  alignSelf: 'stretch',
+                }}>
+                <div
+                  style={{
+                    display: 'flex',
+                    width: '35px',
+                    height: '35px',
+                    alignItems: 'flex-start',
+                    gap: '-10px',
+                  }}></div>
+              </div>
+              <div
+                style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'flex-start',
+                  flex: '1 0 0',
+                }}>
+                <Typography variant="title" size="medium">
+                  DAI
+                </Typography>
+                <Typography variant="body" size="medium" color="$neutral400">
+                  Ethereum
+                </Typography>
+              </div>
+            </div>
+          </div>
+          <div
+            style={{
+              display: 'flex',
+              width: '140px',
+              justifyContent: 'flex-end',
+              alignItems: 'center',
+              gap: '10px',
+              alignSelf: 'stretch',
+            }}></div>
+        </div>
+      </div>
+      <Container type={props.type === 'From' ? 'filled' : 'outlined'}>
         <div className="head">
           <Typography variant="body" size="small" color="neutral800">
             {type === 'From' ? (
@@ -180,23 +292,26 @@ export function TokenInfo(props: PropTypes) {
               <Trans id="swap to" message="To" />
             )}
           </Typography>
-          {type === 'From' ? (
-            <Options>
-              <div
-                className="balance"
-                onClick={() => {
-                  if (tokenBalance !== '0')
-                    setInputAmount(tokenBalanceReal.split(',').join(''));
-                }}>
-                <Typography variant="body" size="small" color="neutral600">
-                  {i18n.t('Balance')}: {tokenBalance} {fromToken?.symbol || ''}
-                </Typography>
-                <Divider size={4} />
-                <Button type="primary" variant="ghost" size="compact">
-                  <Trans id="maximum amount of asset" message="Max" />
-                </Button>
-              </div>
-            </Options>
+          {props.type === 'From' ? (
+            y === 5 ? (
+              <Options>
+                <div
+                  className="balance"
+                  onClick={() => {
+                    if (tokenBalance !== '0')
+                      setInputAmount(tokenBalanceReal.split(',').join(''));
+                  }}>
+                  <Typography variant="body" size="small" color="neutral600">
+                    {i18n.t('Balance')}: {tokenBalance}{' '}
+                    {fromToken?.symbol || ''}
+                  </Typography>
+                  <Divider size={4} />
+                  <Button type="primary" variant="ghost" size="compact">
+                    <Trans id="maximum amount of asset" message="Max" />
+                  </Button>
+                </div>
+              </Options>
+            ) : null
           ) : (
             <div className="output-usd">
               <PercentageChange
@@ -212,26 +327,30 @@ export function TokenInfo(props: PropTypes) {
           )}
         </div>
         <div className="form">
-          <Button
-            className="selectors"
-            onClick={onChainClick}
-            variant="outlined"
-            disabled={loadingStatus === 'failed'}
-            loading={loadingStatus === 'loading'}
-            prefix={
-              loadingStatus === 'success' && chain ? (
-                <Image src={chain.logo} size={24} />
-              ) : (
-                <ImagePlaceholder />
-              )
-            }
-            suffix={ItemSuffix}
-            align="start"
-            size="large">
-            {loadingStatus === 'success' && chain
-              ? chain.displayName
-              : i18n.t('Chain')}
-          </Button>
+          {y === 5 && (
+            <Button
+              className="selectors"
+              onClick={() => {
+                navigate(`${props.type.toLowerCase()}-chain`);
+              }}
+              variant="outlined"
+              disabled={loadingStatus === 'failed'}
+              loading={loadingStatus === 'loading'}
+              prefix={
+                loadingStatus === 'success' && chain ? (
+                  <Image src={chain.logo} size={24} />
+                ) : (
+                  <ImagePlaceholder />
+                )
+              }
+              suffix={ItemSuffix}
+              align="start"
+              size="large">
+              {loadingStatus === 'success' && chain
+                ? chain.displayName
+                : i18n.t('Chaiddddddddddddddddn')}
+            </Button>
+          )}
           <Divider size={12} direction="horizontal" />
           <Button
             className="selectors"
