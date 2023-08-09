@@ -7,7 +7,7 @@ import { Divider } from '../Divider';
 const MainContainer = styled('div', {
   width: '100%',
   padding: '$16',
-  borderRadius: '$5',
+  borderRadius: '$xs',
   backgroundColor: '$neutral100',
   color: '$neutral800',
 

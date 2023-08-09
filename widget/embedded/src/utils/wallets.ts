@@ -31,7 +31,7 @@ import { TokenWithBalance } from '../pages/SelectTokenPage';
 import { ZERO } from '../constants/numbers';
 import { Wallet } from '../types';
 
-export function getStateWallet(state: WalletState): WalletStatus {
+export function mapStatusToWalletState(state: WalletState): WalletStatus {
   switch (true) {
     case state.connected:
       return WalletStatus.CONNECTED;
@@ -54,20 +54,14 @@ export function getlistWallet(
   return list
     .filter((wallet) => !excludedWallets.includes(wallet as WalletTypes))
     .map((type) => {
-      const {
-        name,
-        img: image,
-        installLink,
-        showOnMobile,
-      } = getWalletInfo(type);
-      const state = getStateWallet(getState(type));
+      const { name, img: image, installLink } = getWalletInfo(type);
+      const state = mapStatusToWalletState(getState(type));
       return {
-        name,
+        title: name,
         image,
-        installLink: detectInstallLink(installLink),
+        link: detectInstallLink(installLink),
         state,
         type,
-        showOnMobile: typeof showOnMobile === 'undefined' ? false : true,
       };
     });
 }

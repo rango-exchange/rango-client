@@ -7,7 +7,7 @@ const InputContainer = styled('div', {
   padding: '1px',
   boxSizing: 'border-box',
   border: '1px solid $neutral400',
-  borderRadius: '$5',
+  borderRadius: '$xs',
   height: '$48',
   display: 'flex',
   flexGrow: 1,
@@ -77,7 +77,7 @@ const Input = styled('input', {
   flexGrow: 1,
   width: '100%',
   border: 'none',
-  borderRadius: '$5',
+  borderRadius: '$xs',
   outline: 'none',
   backgroundColor: 'transparent',
   '-webkit-appearance': 'none',
@@ -91,7 +91,7 @@ const Input = styled('input', {
   },
   '&[type="number"]': {
     '-moz-appearance': 'textfield',
-  }
+  },
 });
 const Label = styled('label', {
   display: 'inline-block',
@@ -129,8 +129,7 @@ export const TextField = React.forwardRef(
         {label && (
           <Label
             className="_text"
-            {...(inputAttributes.id && { htmlFor: inputAttributes.id })}
-          >
+            {...(inputAttributes.id && { htmlFor: inputAttributes.id })}>
             {label}
           </Label>
         )}
@@ -140,8 +139,7 @@ export const TextField = React.forwardRef(
           suffix={!!suffix}
           size={size}
           style={style}
-          className="_text"
-        >
+          className="_text">
           {prefix || null}
           <Input
             className="_text"
