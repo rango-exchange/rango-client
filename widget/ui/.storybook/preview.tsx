@@ -2,7 +2,7 @@ import React from 'react';
 import { Decorator } from '@storybook/react';
 import { lightTheme, darkTheme, styled } from '../src/theme';
 import { globalCss } from '@stitches/react';
-import { I18nManager } from '../dist';
+import { I18nManager } from '../src';
 
 // https://storybook.js.org/docs/react/writing-stories/parameters#global-parameters
 export const parameters = {
