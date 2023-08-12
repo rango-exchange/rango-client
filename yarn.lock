@@ -7641,6 +7641,31 @@
   resolved "https://registry.yarnpkg.com/@walletconnect/mobile-registry/-/mobile-registry-1.4.0.tgz#502cf8ab87330841d794819081e748ebdef7aee5"
   integrity sha512-ZtKRio4uCZ1JUF7LIdecmZt7FOLnX72RPSY7aUVu7mj7CSfxDwUn6gBuK6WGtH+NZCldBqDl5DenI5fFSvkKYw==
 
+"@walletconnect/modal-core@2.6.1":
+  version "2.6.1"
+  resolved "https://registry.yarnpkg.com/@walletconnect/modal-core/-/modal-core-2.6.1.tgz#bc76055d0b644a2d4b98024324825c108a700905"
+  integrity sha512-f2hYlJ5pwzGvjyaZ6BoGR5uiMgXzWXt6w6ktt1N8lmY6PiYp8whZgqx2hTxVWwVlsGnaIfh6UHp1hGnANx0eTQ==
+  dependencies:
+    valtio "1.11.0"
+
+"@walletconnect/modal-ui@2.6.1":
+  version "2.6.1"
+  resolved "https://registry.yarnpkg.com/@walletconnect/modal-ui/-/modal-ui-2.6.1.tgz#200c54c8dfe3c71321abb2724e18bb357dfd6371"
+  integrity sha512-RFUOwDAMijSK8B7W3+KoLKaa1l+KEUG0LCrtHqaB0H0cLnhEGdLR+kdTdygw+W8+yYZbkM5tXBm7MlFbcuyitA==
+  dependencies:
+    "@walletconnect/modal-core" "2.6.1"
+    lit "2.7.6"
+    motion "10.16.2"
+    qrcode "1.5.3"
+
+"@walletconnect/modal@^2.6.1":
+  version "2.6.1"
+  resolved "https://registry.yarnpkg.com/@walletconnect/modal/-/modal-2.6.1.tgz#066fdbfcff83b58c8a9da66ab4af0eb93e3626de"
+  integrity sha512-G84tSzdPKAFk1zimgV7JzIUFT5olZUVtI3GcOk77OeLYjlMfnDT23RVRHm5EyCrjkptnvpD0wQScXePOFd2Xcw==
+  dependencies:
+    "@walletconnect/modal-core" "2.6.1"
+    "@walletconnect/modal-ui" "2.6.1"
+
 "@walletconnect/qrcode-modal@^1.8.0":
   version "1.8.0"
   resolved "https://registry.yarnpkg.com/@walletconnect/qrcode-modal/-/qrcode-modal-1.8.0.tgz#ddd6f5c9b7ee52c16adf9aacec2a3eac4994caea"
@@ -7807,32 +7832,6 @@
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/@web3-storage/multipart-parser/-/multipart-parser-1.0.0.tgz#6b69dc2a32a5b207ba43e556c25cc136a56659c4"
   integrity sha512-BEO6al7BYqcnfX15W2cnGR+Q566ACXAT9UQykORCWW80lmkpWsnEob6zJS1ZVBKsSJC8+7vJkHwlp+lXG1UCdw==
-
-"@web3modal/core@2.4.3":
-  version "2.4.3"
-  resolved "https://registry.yarnpkg.com/@web3modal/core/-/core-2.4.3.tgz#ea6d3911e52a132c70defb7584f869d09a8af974"
-  integrity sha512-7Z/sDe9RIYQ2k9ITcxgEa/u7FvlI76vcVVZn9UY4ISivefqrH4JAS3GX4JmVNUUlovwuiZdyqBv4llAQOMK6Rg==
-  dependencies:
-    buffer "6.0.3"
-    valtio "1.10.5"
-
-"@web3modal/standalone@^2.4.3":
-  version "2.4.3"
-  resolved "https://registry.yarnpkg.com/@web3modal/standalone/-/standalone-2.4.3.tgz#98aaa65eba725c34d5be9078ef04b4e9b769d0f3"
-  integrity sha512-5ATXBoa4GGm+TIUSsKWsfWCJunv1XevOizpgTFhqyeGgRDmWhqsz9UIPzH/1mk+g0iJ/xqMKs5F6v9D2QeKxag==
-  dependencies:
-    "@web3modal/core" "2.4.3"
-    "@web3modal/ui" "2.4.3"
-
-"@web3modal/ui@2.4.3":
-  version "2.4.3"
-  resolved "https://registry.yarnpkg.com/@web3modal/ui/-/ui-2.4.3.tgz#986c6bed528dccab679c734ff531e42f6605c5b2"
-  integrity sha512-J989p8CdtEhI9gZHf/rZ/WFqYlrAHWw9GmAhFoiNODwjAp0BoG/uoaPiijJMchXdngihZOjLGCQwDXU16DHiKg==
-  dependencies:
-    "@web3modal/core" "2.4.3"
-    lit "2.7.5"
-    motion "10.16.2"
-    qrcode "1.5.3"
 
 "@webassemblyjs/ast@1.11.6", "@webassemblyjs/ast@^1.11.5":
   version "1.11.6"
@@ -15761,10 +15760,10 @@ lit-html@^2.7.0:
   dependencies:
     "@types/trusted-types" "^2.0.2"
 
-lit@2.7.5:
-  version "2.7.5"
-  resolved "https://registry.yarnpkg.com/lit/-/lit-2.7.5.tgz#60bc82990cfad169d42cd786999356dcf79b035f"
-  integrity sha512-i/cH7Ye6nBDUASMnfwcictBnsTN91+aBjXoTHF2xARghXScKxpD4F4WYI+VLXg9lqbMinDfvoI7VnZXjyHgdfQ==
+lit@2.7.6:
+  version "2.7.6"
+  resolved "https://registry.yarnpkg.com/lit/-/lit-2.7.6.tgz#810007b876ed43e0c70124de91831921598b1665"
+  integrity sha512-1amFHA7t4VaaDe+vdQejSVBklwtH9svGoG6/dZi9JhxtJBBlqY5D1RV7iLUYY0trCqQc4NfhYYZilZiVHt7Hxg==
   dependencies:
     "@lit/reactive-element" "^1.6.0"
     lit-element "^3.3.0"
@@ -22244,10 +22243,10 @@ validate-npm-package-license@^3.0.1:
     spdx-correct "^3.0.0"
     spdx-expression-parse "^3.0.0"
 
-valtio@1.10.5:
-  version "1.10.5"
-  resolved "https://registry.yarnpkg.com/valtio/-/valtio-1.10.5.tgz#7852125e3b774b522827d96bd9c76d285c518678"
-  integrity sha512-jTp0k63VXf4r5hPoaC6a6LCG4POkVSh629WLi1+d5PlajLsbynTMd7qAgEiOSPxzoX5iNvbN7iZ/k/g29wrNiQ==
+valtio@1.11.0:
+  version "1.11.0"
+  resolved "https://registry.yarnpkg.com/valtio/-/valtio-1.11.0.tgz#c029dcd17a0f99d2fbec933721fe64cfd32a31ed"
+  integrity sha512-65Yd0yU5qs86b5lN1eu/nzcTgQ9/6YnD6iO+DDaDbQLn1Zv2w12Gwk43WkPlUBxk5wL/6cD5YMFf7kj6HZ1Kpg==
   dependencies:
     proxy-compare "2.5.1"
     use-sync-external-store "1.2.0"

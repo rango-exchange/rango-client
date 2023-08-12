@@ -79,12 +79,22 @@
     "camelcase": "off",
     "@typescript-eslint/no-unused-vars": "error",
     "@typescript-eslint/no-throw-literal": "error",
-    "@typescript-eslint/no-magic-numbers": "error",
+    "@typescript-eslint/no-magic-numbers": [
+      "error",
+      {
+        "ignore": [0, 1]
+      }
+    ],
     "@typescript-eslint/consistent-type-exports": "error",
     "@typescript-eslint/consistent-type-imports": "error",
     "@typescript-eslint/member-ordering": "error",
     "@typescript-eslint/no-floating-promises": "error",
-    "@typescript-eslint/no-misused-promises": "error",
+    "@typescript-eslint/no-misused-promises": [
+      "error",
+      {
+        "checksVoidReturn": false
+      }
+    ],
     "@typescript-eslint/no-mixed-enums": "error",
     "@typescript-eslint/no-unnecessary-type-assertion": "error",
     "@typescript-eslint/prefer-enum-initializers": "error",
