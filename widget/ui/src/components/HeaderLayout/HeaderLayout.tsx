@@ -5,14 +5,8 @@ import type { PropsWithChildren } from 'react';
 import { i18n } from '@lingui/core';
 import React from 'react';
 
-import {
-  AddWalletIcon,
-  Button,
-  Image,
-  Spinner,
-  styled,
-  Typography,
-} from '../..';
+import { AddWalletIcon, Button, Image, Spinner, Typography } from '../..';
+import { styled } from '../../theme';
 
 const Container = styled('div', {
   display: 'flex',
@@ -67,8 +61,8 @@ export function HeaderLayout({
           prefix={
             connectedWalletsImages?.length ? (
               <WalletImages>
-                {connectedWalletsImages.map((walletImage, index) => (
-                  <WalletImageContainer key={`wallet-image-${index}`}>
+                {connectedWalletsImages.map((walletImage) => (
+                  <WalletImageContainer key={`wallet-image-${walletImage}`}>
                     <Image src={walletImage} size={24} />
                   </WalletImageContainer>
                 ))}
