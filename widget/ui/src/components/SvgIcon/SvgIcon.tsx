@@ -1,10 +1,13 @@
+import type { SvgIconPropsWithChildren } from './SvgIcon.types';
+
 import React from 'react';
+
 import { SvgWithColor } from './SvgIcon.style';
-import { SvgIconPropsWithChildren } from './SvgIcon.types';
 
 export function SvgIcon(props: SvgIconPropsWithChildren) {
+  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
   const { size = 16, color, children } = props;
-  const originalSvgProps = children.props;
+  const originalSvgProps = children?.props;
   const commonProps = {
     ...originalSvgProps,
     width: size,
@@ -14,6 +17,6 @@ export function SvgIcon(props: SvgIconPropsWithChildren) {
   };
 
   return (
-    <SvgWithColor {...commonProps}>{children.props.children}</SvgWithColor>
+    <SvgWithColor {...commonProps}>{children?.props.children}</SvgWithColor>
   );
 }

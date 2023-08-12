@@ -1,7 +1,14 @@
 export interface SvgIconProps {
   size?: number;
-  color: string;
+  color:
+    | 'primary'
+    | 'secondary'
+    | 'error'
+    | 'warning'
+    | 'success'
+    | 'black'
+    | 'white';
 }
 export type SvgIconPropsWithChildren = SvgIconProps & {
-  children: React.ReactElement;
+  children?: React.ReactElement;
 };
