@@ -1,20 +1,22 @@
+import type { ConnectedWallet } from '../..';
+import type { TokenWithBalance } from '../../types/meta';
+import type { BestRouteResponse, BlockchainMeta, Token } from 'rango-sdk';
+
+import { i18n } from '@lingui/core';
+import { Trans } from '@lingui/react';
 import React from 'react';
+
 import {
   AngleDownIcon,
   Button,
+  Divider,
+  Image,
   InfoCircleIcon,
-  styled,
+  PercentageChange,
   TextField,
   Typography,
-  Image,
-  Divider,
-  PercentageChange,
-  ConnectedWallet,
 } from '../..';
-import { BestRouteResponse, BlockchainMeta, Token } from 'rango-sdk';
-import { Trans } from '@lingui/react';
-import { i18n } from '@lingui/core';
-import { TokenWithBalance } from '../../types/meta';
+import { styled } from '../../theme';
 
 type PropTypes = (
   | {
@@ -185,8 +187,9 @@ export function TokenInfo(props: PropTypes) {
               <div
                 className="balance"
                 onClick={() => {
-                  if (tokenBalance !== '0')
+                  if (tokenBalance !== '0') {
                     setInputAmount(tokenBalanceReal.split(',').join(''));
+                  }
                 }}>
                 <Typography variant="body" size="small" color="neutral600">
                   {i18n.t('Balance')}: {tokenBalance} {fromToken?.symbol || ''}
@@ -205,8 +208,9 @@ export function TokenInfo(props: PropTypes) {
               />
               <div>
                 <Typography
- variant="body"
- size="xsmall"                  color="neutral600">{`$${props.outputUsdValue}`}</Typography>
+                  variant="body"
+                  size="xsmall"
+                  color="neutral600">{`$${props.outputUsdValue}`}</Typography>
               </div>
             </div>
           )}
@@ -277,8 +281,9 @@ export function TokenInfo(props: PropTypes) {
                       bottom: '2px',
                     }}>
                     <Typography
- variant="body"
- size="xsmall"                      color="neutral800">{`$${inputUsdValue}`}</Typography>
+                      variant="body"
+                      size="xsmall"
+                      color="neutral800">{`$${inputUsdValue}`}</Typography>
                   </span>
                 }
                 value={inputAmount || ''}
