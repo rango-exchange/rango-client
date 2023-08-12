@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { readAccountAddress, useWallets } from '@rango-dev/wallets-core';
+import { readAccountAddress, useWallets } from '@rango-dev/wallets-react';
 import {
   Network,
   WalletType,

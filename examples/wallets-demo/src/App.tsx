@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Provider } from '@rango-dev/wallets-core';
+import { Provider } from '@rango-dev/wallets-react';
 import List from './components/List';
 import { allProviders } from '@rango-dev/provider-all';
 import { RangoClient } from 'rango-sdk';

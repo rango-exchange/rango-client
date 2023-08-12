@@ -1,6 +1,6 @@
 import React from 'react';
 import { Checkbox, Divider, Typography } from '@rango-dev/ui';
-import { Provider } from '@rango-dev/wallets-core';
+import { Provider } from '@rango-dev/wallets-react';
 import { ConfigurationContainer } from '../ChainsConfig';
 import { ExternalWallet } from './ExternalWallet';
 import { allProviders } from '@rango-dev/provider-all';

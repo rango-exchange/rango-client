@@ -6,13 +6,18 @@ import React, {
 } from 'react';
 import { ProviderContext } from './types';
 import { defaultState, state_reducer } from './helpers';
-import { useWallets } from '@rango-dev/wallets-core';
+import { useWallets } from '@rango-dev/wallets-react';
 import Modal from './modal';
 import { WalletType } from '@rango-dev/wallets-shared';
+
+// eslint-disable-next-line
 // @ts-ignore
 const AdapterContext = createContext<ProviderContext>({});
 
-function Adapter({ children, list }: PropsWithChildren<{ list: WalletType[] }>) {
+function Adapter({
+  children,
+  list,
+}: PropsWithChildren<{ list: WalletType[] }>) {
   const [modalState, dispatch] = useReducer(state_reducer, defaultState);
   const {
     disconnectAll,

@@ -1,6 +1,6 @@
 import { QueueStorage, QueueDef } from '@rango-dev/queue-manager-core';
 import { QueueContext } from '@rango-dev/queue-manager-core/dist/queue';
-import { ConnectResult, Providers } from '@rango-dev/wallets-core';
+import { ConnectResult, Providers } from '@rango-dev/wallets-react';
 import {
   Meta,
   Network,

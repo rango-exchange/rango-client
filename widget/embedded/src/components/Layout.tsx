@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { HeaderLayout } from '@rango-dev/ui';
-import { useWallets } from '@rango-dev/wallets-core';
+import { useWallets } from '@rango-dev/wallets-react';
 import { navigationRoutes } from '../constants/navigationRoutes';
 import { useUiStore } from '../store/ui';
 import { AppRoutes } from './AppRoutes';

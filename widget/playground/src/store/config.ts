@@ -7,7 +7,7 @@ import { persist } from 'zustand/middleware';
 import { Type } from '../types';
 import { getConfig } from '../configs';
 import { WidgetColors, WidgetConfig } from '@rango-dev/widget-embedded';
-import { ProviderInterface } from '@rango-dev/wallets-core';
+import { ProviderInterface } from '@rango-dev/wallets-react';
 
 export type Mode = 'dark' | 'light' | 'auto';
 export type COLORS =

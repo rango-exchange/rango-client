@@ -1,6 +1,6 @@
 import { Asset } from 'rango-sdk';
 import { WalletType } from '@rango-dev/wallets-shared';
-import { ProviderInterface } from '@rango-dev/wallets-core';
+import { ProviderInterface } from '@rango-dev/wallets-react';
 import { Language } from '@rango-dev/ui';
 
 /**

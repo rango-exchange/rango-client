@@ -1,4 +1,4 @@
-import { readAccountAddress } from '@rango-dev/wallets-core';
+import { readAccountAddress } from '@rango-dev/wallets-react';
 import { Network, Networks } from '@rango-dev/wallets-shared';
 import type { BlockchainMeta } from 'rango-types';
 import { isEvmBlockchain } from 'rango-types';
