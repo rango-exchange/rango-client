@@ -1,4 +1,5 @@
 import React, { useEffect, useReducer, useRef } from 'react';
+import { WalletType } from '@rango-dev/wallets-shared';
 
 import {
   autoConnect,
@@ -13,7 +14,6 @@ import {
   state_reducer,
 } from './helpers';
 import { ProviderProps, ProviderContext } from './types';
-import { WalletType } from '@rango-dev/wallets-shared';
 import { useInitializers } from './hooks';
 import { WalletContext } from './context';
 

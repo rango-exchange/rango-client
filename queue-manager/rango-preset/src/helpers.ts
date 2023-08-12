@@ -24,7 +24,7 @@ import {
   WalletState,
   WalletType,
 } from '@rango-dev/wallets-shared';
-import { Providers, readAccountAddress } from '@rango-dev/wallets-core';
+import { Providers, readAccountAddress } from '@rango-dev/wallets-react';
 
 import {
   Transaction,

@@ -1,5 +1,5 @@
 import React from 'react';
-import { useWallets } from '@rango-dev/wallets-core';
+import { useWallets } from '@rango-dev/wallets-react';
 import {
   sortWalletsBasedOnState,
   WalletInfo,

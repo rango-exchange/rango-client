@@ -1,5 +1,5 @@
 import React from 'react';
-import { useWallets } from '@rango-dev/wallets-core';
+import { useWallets } from '@rango-dev/wallets-react';
 import { WalletTypes, WalletType } from '@rango-dev/wallets-shared';
 import { excludedWallets, onChangeMultiSelects } from '../../helpers';
 import { useConfigStore } from '../../store/config';

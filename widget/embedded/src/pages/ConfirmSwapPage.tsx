@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useBestRouteStore } from '../store/bestRoute';
 import { useWalletsStore } from '../store/wallets';
-import { useWallets } from '@rango-dev/wallets-core';
+import { useWallets } from '@rango-dev/wallets-react';
 import { i18n } from '@lingui/core';
 import { navigationRoutes } from '../constants/navigationRoutes';
 import {
