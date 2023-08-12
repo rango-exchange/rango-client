@@ -59,12 +59,12 @@ msgid "Settings"
 msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/ui/src/components/HeaderLayout/HeaderLayout.tsx:78
+#: widget/ui/src/components/HeaderLayout/HeaderLayout.tsx:81
 msgid "Connect Wallet"
 msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/ui/src/components/LiquiditySourceList/LiquiditySourceList.tsx:107
+#: widget/ui/src/components/LiquiditySourceList/LiquiditySourceList.tsx:108
 msgid "Bridges"
 msgstr ""
 
@@ -79,24 +79,24 @@ msgid "Swap Details"
 msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/ui/src/components/TokenPreview/TokenPreview.tsx:152
+#: widget/ui/src/components/TokenPreview/TokenPreview.tsx:153
 #: widget/ui/src/containers/TokenInfo/TokenInfo.tsx:233
 msgid "Chain"
 msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/ui/src/components/TokenPreview/TokenPreview.tsx:171
+#: widget/ui/src/components/TokenPreview/TokenPreview.tsx:172
 #: widget/ui/src/containers/TokenInfo/TokenInfo.tsx:258
 msgid "Token"
 msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/ui/src/containers/ConnectWalletsModal/ConnectWalletsModal.tsx:36
+#: widget/ui/src/containers/ConnectWalletsModal/ConnectWalletsModal.tsx:35
 msgid "Connect Wallets"
 msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/ui/src/containers/HomePanel/HomePanel.tsx:129
+#: widget/ui/src/containers/HomePanel/HomePanel.tsx:131
 msgid "SWAP"
 msgstr ""
 
@@ -146,7 +146,7 @@ msgid "Balance"
 msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/ui/src/containers/Warnings/BalanceErrors.tsx:36
+#: widget/ui/src/containers/Warnings/BalanceErrors.tsx:40
 msgid "Insufficent Balance:"
 msgstr ""
 
@@ -171,7 +171,7 @@ msgstr ""
 #~ msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/WalletsPage.tsx:124
+#: widget/embedded/src/pages/WalletsPage.tsx:118
 #~ msgid "Select Wallet"
 #~ msgstr ""
 

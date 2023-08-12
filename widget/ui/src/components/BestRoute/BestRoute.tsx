@@ -1,14 +1,17 @@
-import React, { Fragment, PropsWithChildren } from 'react';
+import type { BestRouteResponse } from 'rango-sdk';
+import type { PropsWithChildren } from 'react';
+
 import { i18n } from '@lingui/core';
+import React, { Fragment } from 'react';
+
 import { GasIcon, TimeIcon } from '../../components/Icon';
 import { StepDetail } from '../../components/StepDetail';
 import { Typography } from '../../components/Typography';
 import { keyframes, styled } from '../../theme';
+import { Image } from '../common';
 import { Skeleton } from '../Skeleton';
 import { Spinner } from '../Spinner';
-import { BestRouteResponse } from 'rango-sdk';
 import { Tooltip } from '../Tooltip';
-import { Image } from '../common';
 
 const Container = styled('div', {
   borderRadius: '$xs',
@@ -195,7 +198,7 @@ export function BestRoute(props: PropsWithChildren<PropTypes>) {
 
         {!!data &&
           data.result?.swaps.map((swap, index) => (
-            <Fragment key={index}>
+            <Fragment key={swap.swapperId}>
               {index === 0 && (
                 <RelativeContainer>
                   <StepDetail

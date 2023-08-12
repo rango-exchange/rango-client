@@ -1,5 +1,8 @@
-import { CSSProperties } from '@stitches/react';
-import React, { PropsWithChildren, HTMLAttributes } from 'react';
+import type { CSSProperties } from '@stitches/react';
+import type { HTMLAttributes, PropsWithChildren } from 'react';
+
+import React from 'react';
+
 import { darkTheme, styled } from '../../theme';
 import { Spinner } from '../Spinner';
 import { Typography } from '../Typography';
