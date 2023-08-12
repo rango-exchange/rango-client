@@ -1,7 +1,7 @@
 import { darkTheme, styled } from '../../theme';
 
 export const SvgWithColor = styled('svg', {
-  color: '$foreground',
+  color: '$neutral900',
   variants: {
     color: {
       primary: {
@@ -20,16 +20,16 @@ export const SvgWithColor = styled('svg', {
         color: '$success',
       },
       black: {
-        $$color: '$colors$neutral100',
-        [`.${darkTheme} &`]: {
-          $$color: '$colors$neutral900',
-        },
-        stroke: '$$color',
-      },
-      white: {
         $$color: '$colors$neutral900',
         [`.${darkTheme} &`]: {
           $$color: '$colors$neutral100',
+        },
+        color: '$$color',
+      },
+      white: {
+        $$color: '$colors$neutral100',
+        [`.${darkTheme} &`]: {
+          $$color: '$colors$neutral900',
         },
         color: '$$color',
       },
