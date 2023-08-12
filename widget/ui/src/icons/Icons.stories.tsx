@@ -1,12 +1,15 @@
+import type { SvgIconProps } from '../components/SvgIcon';
+import type { Meta } from '@storybook/react';
+
 import React from 'react';
-import { SvgIconProps } from '../components/SvgIcon';
-import * as Icons from '.';
+
 import { styled } from '../theme';
-import { Meta } from '@storybook/react';
+
+import * as Icons from '.';
 
 export default {
   title: 'Components/Icons',
-  component: Icons.AngleDown,
+  component: Icons.AutoTheme,
   args: {
     size: 16,
     color: 'black',
@@ -31,6 +34,7 @@ export default {
     size: {
       name: 'size',
       control: { type: 'select' },
+      // eslint-disable-next-line @typescript-eslint/no-magic-numbers
       options: [16, 18, 20, 24, 28, 32, 36, 40],
       defaultValue: 16,
     },
@@ -50,7 +54,7 @@ export const Main = (props: SvgIconProps) => (
       // @ts-ignore
       const Component = Icons[icon];
       return (
-        <div>
+        <div key={icon}>
           <Component {...props} />
           <p> {icon}</p>
         </div>

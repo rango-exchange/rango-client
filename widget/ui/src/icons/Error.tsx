@@ -8,12 +8,11 @@ function SvgError(props: SvgIconPropsWithChildren) {
   return createElement(
     SvgIcon,
     props,
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30" fill="none">
-      <rect width={30} height={30} rx={15} fill="#FFD7D7" />
+    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path
         fillRule="evenodd"
         clipRule="evenodd"
-        d="M15 5.5C9.756 5.5 5.5 9.756 5.5 15C5.5 20.244 9.756 24.5 15 24.5C20.244 24.5 24.5 20.244 24.5 15C24.5 9.756 20.244 5.5 15 5.5ZM14.05 19.75V17.85H15.95V19.75H14.05ZM14.05 10.25V15.95H15.95V10.25H14.05Z"
+        d="M12 0C5.376 0 0 5.376 0 12C0 18.624 5.376 24 12 24C18.624 24 24 18.624 24 12C24 5.376 18.624 0 12 0ZM10.8 18V15.6H13.2V18H10.8ZM10.8 6V13.2H13.2V6H10.8Z"
         fill="currentColor"
       />
     </svg>

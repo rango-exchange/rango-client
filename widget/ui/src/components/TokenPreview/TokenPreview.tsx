@@ -1,14 +1,11 @@
-import React, { ReactNode } from 'react';
-import {
-  Button,
-  InfoCircleIcon,
-  styled,
-  Typography,
-  Divider,
-  Image,
-} from '../..';
+import type { LoadingStatus } from '../../types/meta';
+import type { ReactNode } from 'react';
+
 import { i18n } from '@lingui/core';
-import { LoadingStatus } from '../../types/meta';
+import React from 'react';
+
+import { Button, Divider, Image, InfoCircleIcon, Typography } from '../..';
+import { styled } from '../../theme';
 
 const Box = styled('div', {
   display: 'flex',
