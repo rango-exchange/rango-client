@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/provider-walletconnect-2",
-  "version": "0.7.1-next.0",
+  "version": "0.7.1-next.1",
   "license": "MIT",
   "type": "module",
   "module": "./dist/index.js",
@@ -23,7 +23,7 @@
     "@cosmjs/launchpad": "^0.27.1",
     "@keplr-wallet/cosmos": "^0.9.12",
     "@keplr-wallet/simple-fetch": "^0.12.14",
-    "@rango-dev/signer-cosmos": "^0.14.0",
+    "@rango-dev/signer-cosmos": "^0.14.1-next.0",
     "@rango-dev/signer-evm": "^0.14.0",
     "@rango-dev/signer-solana": "^0.14.0",
     "@rango-dev/wallets-shared": "^0.14.0",
