@@ -1,13 +1,11 @@
+import type { StdSignMsg } from '@binance-chain/javascript-sdk/lib/types';
+import type { CosmosTransaction, GenericSigner } from 'rango-types';
+
 import { BncClient, Transaction } from '@binance-chain/javascript-sdk';
-import { StdSignMsg } from '@binance-chain/javascript-sdk/lib/types';
 import { getPublicKey } from '@binance-chain/javascript-sdk/lib/crypto/index.js';
+import { SignerError, SignerErrorCode } from 'rango-types';
+
 import { cosmosMessageToBCSendMsg } from './helpers';
-import {
-  CosmosTransaction,
-  GenericSigner,
-  SignerError,
-  SignerErrorCode,
-} from 'rango-types';
 
 export const executeCosmosMessage = async (
   cosmosProvider: any,
@@ -23,12 +21,21 @@ export const executeCosmosMessage = async (
       bncClient.useDefaultBroadcastDelegate();
 
       const { chainId, account_number, sequence, memo, source } = tx.data;
-      if (!chainId) throw Error('ChainId is undefined from server');
-      if (!account_number)
+      if (!chainId) {
+        throw Error('ChainId is undefined from server');
+      }
+      if (!account_number) {
         throw Error('account_number is undefined from server');
-      if (!sequence) throw Error('Sequence is undefined from server');
-      if (!memo) throw Error('Memo is undefined from server');
-      if (!source) throw Error('Source is undefined from server');
+      }
+      if (!sequence) {
+        throw Error('Sequence is undefined from server');
+      }
+      if (!memo) {
+        throw Error('Memo is undefined from server');
+      }
+      if (!source) {
+        throw Error('Source is undefined from server');
+      }
 
       const sendmsg = cosmosMessageToBCSendMsg(tx.data.msgs[0]);
       const data: StdSignMsg = {
@@ -59,8 +66,10 @@ export const executeCosmosMessage = async (
   });
 };
 
-// TODO - replace with real type
-// tslint:disable-next-line: no-any
+/*
+ * TODO - replace with real type
+ * tslint:disable-next-line: no-any
+ */
 type CosmosExternalProvider = any;
 
 export class CustomCosmosSigner implements GenericSigner<CosmosTransaction> {
