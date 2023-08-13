@@ -66,49 +66,40 @@ type Coin = {
 type InputOutput = { address: string; coins: Coin[] };
 
 type MsgSend = {
-  __type: string;
   inputs: InputOutput[];
   outputs: InputOutput[];
   aminoPrefix: string;
 };
 
-function isMsgSend(msg: { __type: string }): msg is MsgSend {
-  return msg.__type === 'MsgSend';
-}
+export function cosmosMessageToBCSendMsg(msg: MsgSend): SendMsg {
+  const msgCopy = msg;
 
-export function cosmosMessageToBCSendMsg(msg: { __type: string }): SendMsg {
-  if (isMsgSend(msg)) {
-    const msgCopy = msg;
-
-    if (msgCopy.inputs.length !== 1) {
-      throw Error('Multi input coins for binance chain not supported');
-    }
-    if (msgCopy.outputs.length !== 1) {
-      throw Error('Multi output coins for binance chain not supported');
-    }
-    if (msgCopy.inputs[0].coins.length !== 1) {
-      throw Error('Multi input coins for binance chain not supported');
-    }
-    if (msgCopy.outputs[0].coins.length !== 1) {
-      throw Error('Multi output coins for binance chain not supported');
-    }
-
-    const outputs: SignInputOutput[] = [
-      {
-        address: msgCopy.outputs[0].address,
-        coins: [
-          {
-            denom: msgCopy.outputs[0].coins[0].denom.toUpperCase(),
-            amount: parseInt(msgCopy.outputs[0].coins[0].amount),
-          },
-        ],
-      },
-    ];
-
-    return new SendMsg(msgCopy.inputs[0].address, outputs);
+  if (msgCopy.inputs.length !== 1) {
+    throw Error('Multi input coins for binance chain not supported');
+  }
+  if (msgCopy.outputs.length !== 1) {
+    throw Error('Multi output coins for binance chain not supported');
+  }
+  if (msgCopy.inputs[0].coins.length !== 1) {
+    throw Error('Multi input coins for binance chain not supported');
+  }
+  if (msgCopy.outputs[0].coins.length !== 1) {
+    throw Error('Multi output coins for binance chain not supported');
   }
 
-  throw Error(`Cosmos message with type ${msg.__type} not supported`);
+  const outputs: SignInputOutput[] = [
+    {
+      address: msgCopy.outputs[0].address,
+      coins: [
+        {
+          denom: msgCopy.outputs[0].coins[0].denom.toUpperCase(),
+          amount: parseInt(msgCopy.outputs[0].coins[0].amount),
+        },
+      ],
+    },
+  ];
+
+  return new SendMsg(msgCopy.inputs[0].address, outputs);
 }
 
 export async function accountsForActiveWallet(
