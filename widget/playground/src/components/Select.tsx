@@ -1,12 +1,11 @@
 import {
-  AngleDownIcon,
   Button,
-  CheckIcon,
   Modal,
   SecondaryPage,
   styled,
   Typography,
 } from '@rango-dev/ui';
+import { AngleDownIcon, CheckIcon } from '@rango-dev/ui/src/components/Icon';
 import React, { Fragment, useState } from 'react';
 
 interface PropTypes {
@@ -73,27 +72,32 @@ export function Select({
             hasHeader={false}
             textFieldPlaceholder={`Search ${modalTitle} By Name`}>
             {(searchedFor) =>
-              filterList(list, searchedFor).map((item, index) => (
-                <Fragment key={index}>
-                  <Button
-                    variant="ghost"
-                    size="large"
-                    prefix={item.logo && <Image src={item.logo} />}
-                    suffix={
-                      item.value === value ? <CheckIcon size={20} /> : undefined
-                    }
-                    align="start"
-                    onClick={() => {
-                      setOpen(false);
-                      onChange(name, item.value);
-                    }}>
-                    <Typography variant="body" size="small">
-                      {item.name}
-                    </Typography>
-                  </Button>
-                  <hr />
-                </Fragment>
-              ))
+              filterList(list, searchedFor).map((item, index) => {
+                const key = `item-${index}`;
+                return (
+                  <Fragment key={key}>
+                    <Button
+                      variant="ghost"
+                      size="large"
+                      prefix={item.logo && <Image src={item.logo} />}
+                      suffix={
+                        item.value === value ? (
+                          <CheckIcon size={20} />
+                        ) : undefined
+                      }
+                      align="start"
+                      onClick={() => {
+                        setOpen(false);
+                        onChange(name, item.value);
+                      }}>
+                      <Typography variant="body" size="small">
+                        {item.name}
+                      </Typography>
+                    </Button>
+                    <hr />
+                  </Fragment>
+                );
+              })
             }
           </SecondaryPage>
         }

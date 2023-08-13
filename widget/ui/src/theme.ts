@@ -114,8 +114,8 @@ const theme = {
     sm: '10px',
     xm: '15px',
     md: '20px',
-    xl: '40px',
-    lg: '50px',
+    xl: '35px',
+    lg: '40px',
   },
 
   fontSizes: {
@@ -125,6 +125,7 @@ const theme = {
     16: '1rem',
     18: '1.125rem',
     20: '1.25rem',
+    22: '1.375rem',
     24: '1.5rem',
     28: '1.75rem',
     32: '2rem',
@@ -160,6 +161,7 @@ const theme = {
     8: '8px',
     12: '12px',
     16: '16px',
+    18: '18px',
     20: '20px',
     24: '24px',
     28: '28px',

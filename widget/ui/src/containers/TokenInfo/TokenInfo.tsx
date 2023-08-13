@@ -7,15 +7,14 @@ import { Trans } from '@lingui/react';
 import React from 'react';
 
 import {
-  AngleDownIcon,
   Button,
   Divider,
   Image,
-  InfoCircleIcon,
   PercentageChange,
   TextField,
   Typography,
 } from '../..';
+import { AngleDownIcon, InfoCircleIcon } from '../../components/Icon';
 import { styled } from '../../theme';
 
 type PropTypes = (

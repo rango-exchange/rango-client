@@ -7,12 +7,16 @@ module.exports = {
     check: true // type-check stories during Storybook build
   },
 
+  features: {
+    storyStoreV7: true
+  },
   framework: {
     name: getAbsolutePath("@storybook/react-webpack5"),
     options: {}
   },
   docs: {
-    autodocs: true
+    autodocs: true,
+    reactDocgen: false
   }
 };
 /**

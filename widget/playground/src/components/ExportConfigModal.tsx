@@ -1,16 +1,18 @@
-import React, { Fragment, useState } from 'react';
+import type { config } from '@rango-dev/ui';
+import type { WidgetConfig } from '@rango-dev/widget-embedded';
+import type { CSS } from '@stitches/react';
+
 import {
   Button,
-  CheckSquareIcon,
   CopyIcon,
   Divider,
   Modal,
-  Typography,
-  config,
   styled,
+  Typography,
   useCopyToClipboard,
 } from '@rango-dev/ui';
-import { CSS } from '@stitches/react';
+import { CheckCircleIcon } from '@rango-dev/ui/src/components/Icon';
+import React, { Fragment, useState } from 'react';
 import { PrismLight as SyntaxHighlighter } from 'react-syntax-highlighter';
 import {
   javascript,
@@ -20,6 +22,7 @@ import {
   atomDark as dark,
   prism,
 } from 'react-syntax-highlighter/dist/esm/styles/prism';
+
 import {
   capitalizeTheFirstLetter,
   filterConfig,
@@ -27,9 +30,8 @@ import {
   getEmbeddedCode,
   getIframeCode,
 } from '../helpers';
-import { initialConfig } from '../store/config';
 import { useTheme } from '../hook/useTheme';
-import { WidgetConfig } from '@rango-dev/widget-embedded';
+import { initialConfig } from '../store/config';
 
 SyntaxHighlighter.registerLanguage('javascript', javascript);
 SyntaxHighlighter.registerLanguage('jsx', jsx);
@@ -89,6 +91,7 @@ const modalContainerStyles: CSS<typeof config> = {
   '@lg': { width: '70%' },
 };
 
+const RESET_INTERVAL = 2_000;
 interface CodeBlockProps {
   language: Language;
   theme: any;
@@ -98,13 +101,13 @@ interface CodeBlockProps {
 function CodeBlock(props: CodeBlockProps) {
   const { language, theme, children } = props;
 
-  const [isCopied, handleCopy] = useCopyToClipboard(2000);
+  const [isCopied, handleCopy] = useCopyToClipboard(RESET_INTERVAL);
 
   return (
     <CodeBlockContainer>
       <CopyCodeBlockButton onClick={handleCopy.bind(null, children)}>
         {isCopied ? (
-          <CheckSquareIcon size={20} color="success" />
+          <CheckCircleIcon size={20} color="success" />
         ) : (
           <CopyIcon size={20} />
         )}
@@ -163,16 +166,20 @@ export function ExportConfigModal(props: ExportConfigModalProps) {
           </Typography>
           <hr />
           <ButtonsContainer>
-            {Object.keys(typesOfCodeBlocks).map((type, index) => (
-              <Fragment key={index}>
-                <Button
-                  type={selected === type ? 'primary' : undefined}
-                  onClick={setSelected.bind(null, type as ExportType)}>
-                  {capitalizeTheFirstLetter(type)}
-                </Button>
-                <Divider size={8} direction="horizontal" />
-              </Fragment>
-            ))}
+            {Object.keys(typesOfCodeBlocks).map((type, index) => {
+              const key = `block-${index}`;
+
+              return (
+                <Fragment key={key}>
+                  <Button
+                    type={selected === type ? 'primary' : undefined}
+                    onClick={setSelected.bind(null, type as ExportType)}>
+                    {capitalizeTheFirstLetter(type)}
+                  </Button>
+                  <Divider size={8} direction="horizontal" />
+                </Fragment>
+              );
+            })}
           </ButtonsContainer>
 
           <CodeBlock

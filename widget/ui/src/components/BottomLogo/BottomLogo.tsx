@@ -8,7 +8,6 @@ const Container = styled('div', {
   width: '100%',
   justifyContent: 'end',
   alignItems: 'center',
-  paddingTop: '$16',
 });
 
 const Logo = styled('svg', {

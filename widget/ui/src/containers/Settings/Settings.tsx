@@ -1,10 +1,9 @@
-import { styled } from '../../theme';
-import React, { useState } from 'react';
-import { i18n } from '@lingui/core';
+import type { LiquiditySource, LoadingStatus } from '../../types/meta';
 
-import { LiquiditySource, LoadingStatus } from '../../types/meta';
+import { i18n } from '@lingui/core';
+import React, { useState } from 'react';
+
 import {
-  AngleRightIcon,
   Button,
   Chip,
   Radio,
@@ -13,6 +12,8 @@ import {
   TextField,
   Typography,
 } from '../../components';
+import { AngleRightIcon } from '../../components/Icon';
+import { styled } from '../../theme';
 
 const BaseContainer = styled('div', {
   borderRadius: '$xs',
@@ -124,20 +125,25 @@ export function Settings(props: PropTypes) {
           ) : undefined}
         </Head>
         <SlippageChipsContainer>
-          {slippages.map((slippage, index) => (
-            <Chip
-              key={index}
-              onClick={() => {
-                if (customSlippage) onCustomSlippageChange(null);
-                changeSlippage(slippage);
-              }}
-              selected={!customSlippage && slippage === selectedSlippage}
-              label={`${slippage.toString()}%`}
-              style={{
-                marginRight: '8px',
-              }}
-            />
-          ))}
+          {slippages.map((slippage, index) => {
+            const key = `slippage-${index}`;
+            return (
+              <Chip
+                key={key}
+                onClick={() => {
+                  if (customSlippage) {
+                    onCustomSlippageChange(null);
+                  }
+                  changeSlippage(slippage);
+                }}
+                selected={!customSlippage && slippage === selectedSlippage}
+                label={`${slippage.toString()}%`}
+                style={{
+                  marginRight: '8px',
+                }}
+              />
+            );
+          })}
           <TextField
             type="number"
             value={customSlippage || ''}
@@ -146,8 +152,9 @@ export function Settings(props: PropTypes) {
               if (
                 !parsedValue ||
                 (parsedValue >= minSlippage && parsedValue <= maxSlippage)
-              )
+              ) {
                 onCustomSlippageChange(parsedValue);
+              }
             }}
             suffix={
               customSlippage && (

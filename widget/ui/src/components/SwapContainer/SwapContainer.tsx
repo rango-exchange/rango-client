@@ -6,14 +6,14 @@ const MainContainer = styled('div', {
   position: 'relative',
   display: 'flex',
   flexDirection: 'column',
-  borderRadius: '$10',
-  boxShadow: '$s',
   width: '100%',
+  borderRadius: '$xl',
+  boxShadow: '15px 15px 15px 0px rgba(0, 0, 0, 0.05)',
+
   minWidth: '375px',
   maxWidth: '512px',
-  padding: '$16',
   boxSizing: 'border-box',
-  backgroundColor: '$background',
+  backgroundColor: '$surface100',
   overflow: 'hidden',
   '& *': {
     boxSizing: 'border-box',

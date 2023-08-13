@@ -145,7 +145,7 @@ const TypographyContainer = styled('span', {
       size: 'small',
       variant: 'headline',
       css: {
-        fontSize: '$24',
+        fontSize: '$22',
         fontWeight: '$semiBold',
         lineHeight: '$30',
       },

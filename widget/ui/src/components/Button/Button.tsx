@@ -1,5 +1,8 @@
-import { CSSProperties } from '@stitches/react';
-import React, { PropsWithChildren, HTMLAttributes } from 'react';
+import type { CSSProperties } from '@stitches/react';
+import type { HTMLAttributes, PropsWithChildren } from 'react';
+
+import React from 'react';
+
 import { darkTheme, styled } from '../../theme';
 import { Spinner } from '../Spinner';
 import { Typography } from '../Typography';
@@ -34,6 +37,9 @@ const ButtonContainer = styled('button', {
     size: {
       compact: {},
       free: {},
+      xsmall: {
+        height: '$24',
+      },
       small: {
         height: '$32',
       },
@@ -75,7 +81,7 @@ const ButtonContainer = styled('button', {
         },
       },
       ghost: {
-        color: '$foreground',
+        color: '$neutral600',
         '&:hover': {
           backgroundColor: '$neutral200',
         },
@@ -376,7 +382,7 @@ const Content = styled('div', {
 export interface PropTypes
   extends Omit<HTMLAttributes<HTMLButtonElement>, 'prefix'> {
   onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
-  size?: 'small' | 'medium' | 'large' | 'compact' | 'free';
+  size?: 'xsmall' | 'small' | 'medium' | 'large' | 'compact' | 'free';
   variant?: 'contained' | 'outlined' | 'ghost';
   type?: 'primary' | 'error' | 'warning' | 'success';
   prefix?: React.ReactNode;

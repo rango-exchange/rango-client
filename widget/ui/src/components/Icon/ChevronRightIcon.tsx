@@ -18,8 +18,7 @@ export const ChevronRightIcon = React.forwardRef<SVGSVGElement, IconProps>(
         strokeLinejoin="round"
         className="_icon"
         {...props}
-        ref={forwardedRef}
-      >
+        ref={forwardedRef}>
         <polyline points="9 18 15 12 9 6"></polyline>
       </SvgWithStrokeColor>
     );

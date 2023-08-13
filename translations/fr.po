@@ -14,7 +14,7 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. js-lingui-explicit-id
-#: widget/ui/src/components/Alert/LoadingFailedAlert.tsx:10
+#: widget/ui/src/components/Alert/LoadingFailedAlert.tsx:13
 msgid " Error connecting server, please reload the app and try again."
 msgstr ""
 
@@ -34,33 +34,13 @@ msgid "No routes found"
 msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/ui/src/components/BottomLogo/BottomLogo.tsx:31
+#: widget/ui/src/components/BottomLogo/BottomLogo.tsx:30
 msgid "Powered By"
 msgstr ""
 
 #. js-lingui-explicit-id
 #: widget/ui/src/components/ChangeSlippageButton/ChangeSlippageButton.tsx:14
 msgid "Change Slippage"
-msgstr ""
-
-#. js-lingui-explicit-id
-#: widget/ui/src/components/HeaderButtons/HeaderButtons.tsx:21
-msgid "Refresh"
-msgstr ""
-
-#. js-lingui-explicit-id
-#: widget/ui/src/components/HeaderButtons/HeaderButtons.tsx:29
-msgid "Transactions History"
-msgstr ""
-
-#. js-lingui-explicit-id
-#: widget/ui/src/components/HeaderButtons/HeaderButtons.tsx:34
-msgid "Settings"
-msgstr ""
-
-#. js-lingui-explicit-id
-#: widget/ui/src/components/HeaderLayout/HeaderLayout.tsx:75
-msgid "Connect Wallet"
 msgstr ""
 
 #. js-lingui-explicit-id
@@ -79,14 +59,14 @@ msgid "Swap Details"
 msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/ui/src/components/TokenPreview/TokenPreview.tsx:150
-#: widget/ui/src/containers/TokenInfo/TokenInfo.tsx:237
+#: widget/ui/src/components/TokenPreview/TokenPreview.tsx:151
+#: widget/ui/src/containers/TokenInfo/TokenInfo.tsx:236
 msgid "Chain"
 msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/ui/src/components/TokenPreview/TokenPreview.tsx:169
-#: widget/ui/src/containers/TokenInfo/TokenInfo.tsx:262
+#: widget/ui/src/components/TokenPreview/TokenPreview.tsx:170
+#: widget/ui/src/containers/TokenInfo/TokenInfo.tsx:261
 msgid "Token"
 msgstr ""
 
@@ -96,52 +76,52 @@ msgid "Connect Wallets"
 msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/ui/src/containers/HomePanel/HomePanel.tsx:131
+#: widget/ui/src/containers/HomePanel/HomePanel.tsx:129
 msgid "SWAP"
 msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/ui/src/containers/Settings/Settings.tsx:118
+#: widget/ui/src/containers/Settings/Settings.tsx:119
 msgid "Slippage tolerance"
 msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/ui/src/containers/Settings/Settings.tsx:122
+#: widget/ui/src/containers/Settings/Settings.tsx:123
 msgid "Custom"
 msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/ui/src/containers/Settings/Settings.tsx:171
+#: widget/ui/src/containers/Settings/Settings.tsx:178
 msgid "Theme"
 msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/ui/src/containers/Settings/Settings.tsx:176
+#: widget/ui/src/containers/Settings/Settings.tsx:183
 msgid "Dark"
 msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/ui/src/containers/Settings/Settings.tsx:177
+#: widget/ui/src/containers/Settings/Settings.tsx:184
 msgid "Light"
 msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/ui/src/containers/Settings/Settings.tsx:178
+#: widget/ui/src/containers/Settings/Settings.tsx:185
 msgid "Auto"
 msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/ui/src/containers/Settings/Settings.tsx:188
+#: widget/ui/src/containers/Settings/Settings.tsx:195
 msgid "Infinite Approval"
 msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/ui/src/containers/Settings/Settings.tsx:216
+#: widget/ui/src/containers/Settings/Settings.tsx:223
 msgid "Liquidity Sources"
 msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/ui/src/containers/TokenInfo/TokenInfo.tsx:195
+#: widget/ui/src/containers/TokenInfo/TokenInfo.tsx:194
 msgid "Balance"
 msgstr ""
 
@@ -149,6 +129,33 @@ msgstr ""
 #: widget/ui/src/containers/Warnings/BalanceErrors.tsx:40
 msgid "Insufficent Balance:"
 msgstr ""
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/HeaderButtons/HomeButtons.tsx:36
+#~ msgid "Refresh"
+#~ msgstr ""
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/HeaderButtons/HomeButtons.tsx:44
+#~ msgid "Notifications"
+#~ msgstr ""
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/HeaderButtons/HomeButtons.tsx:49
+#~ msgid "Settings"
+#~ msgstr ""
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/HeaderButtons/HomeButtons.tsx:54
+#~ msgid "Transactions History"
+#~ msgstr ""
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/HeaderButtons/WalletButton.tsx:9
+#: widget/embedded/src/utils/swap.ts:143
+#: widget/embedded/src/utils/swap.ts:145
+#~ msgid "Connect Wallet"
+#~ msgstr ""
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/pages/ConfirmSwapPage.tsx:196
@@ -171,7 +178,19 @@ msgstr ""
 #~ msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/WalletsPage.tsx:118
+#: widget/embedded/src/pages/HistoryPage.tsx:28
+#~ msgid "History"
+#~ msgstr ""
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/Home.tsx:170
+#: widget/embedded/src/utils/swap.ts:151
+#: widget/embedded/src/utils/swap.ts:168
+#~ msgid "Swap"
+#~ msgstr ""
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/WalletsPage.tsx:122
 #~ msgid "Select Wallet"
 #~ msgstr ""
 
@@ -183,12 +202,6 @@ msgstr ""
 #. js-lingui-explicit-id
 #: widget/embedded/src/utils/swap.ts:149
 #~ msgid "Enter an amount"
-#~ msgstr ""
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:151
-#: widget/embedded/src/utils/swap.ts:168
-#~ msgid "Swap"
 #~ msgstr ""
 
 #. js-lingui-explicit-id
@@ -217,12 +230,12 @@ msgid "highSlippage"
 msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/ui/src/containers/TokenInfo/TokenInfo.tsx:180
+#: widget/ui/src/containers/TokenInfo/TokenInfo.tsx:179
 msgid "swap from"
 msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/ui/src/containers/TokenInfo/TokenInfo.tsx:199
+#: widget/ui/src/containers/TokenInfo/TokenInfo.tsx:198
 msgid "maximum amount of asset"
 msgstr ""
 
@@ -232,7 +245,7 @@ msgid "swapNotFound"
 msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/ui/src/containers/TokenInfo/TokenInfo.tsx:182
+#: widget/ui/src/containers/TokenInfo/TokenInfo.tsx:181
 msgid "swap to"
 msgstr ""
 

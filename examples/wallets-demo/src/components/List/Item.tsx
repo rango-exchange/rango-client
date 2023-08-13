@@ -1,29 +1,27 @@
-import React, { useState } from 'react';
-import { readAccountAddress, useWallets } from '@rango-dev/wallets-core';
-import {
+import type {
   Network,
-  WalletType,
-  detectInstallLink,
   WalletInfo,
-  Networks,
+  WalletType,
 } from '@rango-dev/wallets-shared';
+import type { TransactionType } from 'rango-sdk';
+
 import './styles.css';
+
+import { Button, Divider, Spinner, Tooltip, Typography } from '@rango-dev/ui';
 import {
-  Button,
   HorizontalSwapIcon,
   InfoCircleIcon,
   SignatureIcon,
-  Divider,
-  Spinner,
-  Tooltip,
-  Typography,
-} from '@rango-dev/ui';
+} from '@rango-dev/ui/src/components/Icon';
+import { readAccountAddress, useWallets } from '@rango-dev/wallets-core';
+import { detectInstallLink, Networks } from '@rango-dev/wallets-shared';
+import React, { useState } from 'react';
+
 import {
   evmBasedChainsSelector,
   prepareAccounts,
   walletAndSupportedChainsNames,
 } from '../../helper';
-import { TransactionType } from 'rango-sdk';
 
 function Item({ type, info }: { type: WalletType; info: WalletInfo }) {
   const { connect, state, disconnect, canSwitchNetworkTo, getSigners } =
@@ -33,7 +31,9 @@ function Item({ type, info }: { type: WalletType; info: WalletInfo }) {
   const [error, setError] = useState<string>('');
   const evmBasedChains = evmBasedChainsSelector(info.supportedChains);
   const handleConnectWallet = async () => {
-    if (walletState.connecting) return;
+    if (walletState.connecting) {
+      return;
+    }
     try {
       if (!walletState.connected) {
         if (walletState.installed) {
@@ -44,7 +44,7 @@ function Item({ type, info }: { type: WalletType; info: WalletInfo }) {
           window.open(detectInstallLink(info.installLink), '_blank');
         }
       } else {
-        disconnect(type);
+        void disconnect(type);
       }
     } catch (err) {
       setError('Error: ' + (err.message || 'Failed to connect wallet'));
@@ -151,7 +151,9 @@ function Item({ type, info }: { type: WalletType; info: WalletInfo }) {
 
       // TODO: Put your transaction
       const tx = undefined;
-      if (!tx) return;
+      if (!tx) {
+        return;
+      }
 
       const result = signers
         .getSigner(txType)
@@ -205,9 +207,13 @@ function Item({ type, info }: { type: WalletType; info: WalletInfo }) {
           <>
             <h4 className="mt-8">Accounts: </h4>
             <div className="account_box">
-              {walletState?.accounts?.map((account) => (
-                <div className="account">{account}</div>
-              ))}
+              {walletState?.accounts?.map((account) => {
+                return (
+                  <div className="account" key={account}>
+                    {account}
+                  </div>
+                );
+              })}
             </div>
             <div className="mt-10">
               <h4>Chain: </h4>
