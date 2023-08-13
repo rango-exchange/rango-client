@@ -35,7 +35,7 @@ export function SwapDetailsPlaceholder(props: PropTypes) {
           </LoaderContainer>
         ) : (
           <Alert
-            type="secondary"
+            type="error"
             title={i18n.t(
               'swapNotFound',
               { requestId },

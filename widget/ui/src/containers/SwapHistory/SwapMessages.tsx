@@ -1,10 +1,14 @@
+/* eslint-disable @typescript-eslint/no-magic-numbers */
 import React, { useState } from 'react';
+
 import { Alert, Button, Typography } from '../../components';
 import { styled } from '../../theme';
 
 const getAlertType = (messageType: PropTypes['type']) => {
-  if (!messageType || messageType === 'info') return 'secondary';
-  else return messageType;
+  if (!messageType || messageType === 'info') {
+    return 'info';
+  }
+  return messageType;
 };
 
 const DetailedMessage = styled('div', {
@@ -89,7 +93,7 @@ export const SwapMessages: React.FC<PropTypes> = (props) => {
         <>
           <p>
             <Typography variant="body" size="small">
-              Don't worry, your fund is&nbsp;
+              Do not worry, your fund is&nbsp;
             </Typography>
             <SuccessText variant="body" size="small">
               <b>Safe</b>

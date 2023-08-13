@@ -14,7 +14,7 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. js-lingui-explicit-id
-#: widget/ui/src/components/Alert/LoadingFailedAlert.tsx:9
+#: widget/ui/src/components/Alert/LoadingFailedAlert.tsx:10
 msgid " Error connecting server, please reload the app and try again."
 msgstr ""
 
