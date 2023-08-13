@@ -1,55 +1,28 @@
-import React, { PropsWithChildren } from 'react';
-import { styled } from '../../theme';
-import * as RadixCheckbox from '@radix-ui/react-checkbox';
-import { CheckIcon } from '../Icon';
+import type { PropTypes } from './Checkbox.types';
+import type { PropsWithChildren } from 'react';
 
-const CheckboxContainer = styled('div', {
-  display: 'flex',
-  alignItems: 'center',
-});
+import React from 'react';
 
-const CheckboxRoot = styled(RadixCheckbox.Root, {
-  borderRadius: '5px',
-  width: 20,
-  padding: 0,
-  height: 20,
-  border: '1px solid $foreground',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  marginRight: '$2',
-  backgroundColor: '$neutral-100',
-  cursor: 'pointer',
-});
-const Label = styled('label', {
-  color: '$foreground',
-  fontSize: '$m',
-  marginLeft: '$8',
-  cursor: 'pointer',
-});
+import { Done } from '../../icons';
+import { Divider } from '../Divider';
 
-export interface PropTypes {
-  id: string;
-  defaultChecked?: boolean;
-  label: string;
-  checked?: boolean;
-  onCheckedChange?: (checked: boolean) => void;
-  disabled?: boolean;
-  name?: string;
-}
+import {
+  CheckboxContainer,
+  CheckboxIndicator,
+  CheckboxRoot,
+  Label,
+} from './Checkbox.styles';
 
-export function Checkbox({
-  label,
-  id,
-  ...props
-}: PropsWithChildren<PropTypes>) {
+export function Checkbox(props: PropsWithChildren<PropTypes>) {
+  const { id, label, ...otherProps } = props;
   return (
     <CheckboxContainer>
-      <CheckboxRoot id={id} {...props}>
-        <RadixCheckbox.Indicator>
-          <CheckIcon size={20} />
-        </RadixCheckbox.Indicator>
+      <CheckboxRoot id={id} {...otherProps}>
+        <CheckboxIndicator>
+          <Done color="white" size={12} />
+        </CheckboxIndicator>
       </CheckboxRoot>
+      <Divider direction="horizontal" size={8} />
       <Label className="_text" htmlFor={id}>
         {label}
       </Label>
