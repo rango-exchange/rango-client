@@ -1,12 +1,11 @@
-import React, { PropsWithChildren } from 'react';
-import {
-  Button,
-  InfoCircleIcon,
-  Divider,
-  styled,
-  Typography,
-} from '@rango-dev/ui';
+import type { PropsWithChildren } from 'react';
+
+import { Button, Divider, styled, Typography } from '@rango-dev/ui';
+import { InfoCircleIcon } from '@rango-dev/ui/src/components/Icon';
+import React from 'react';
+
 import { useMetaStore } from '../../store/meta';
+
 type PropTypes = {
   label: string;
   onOpenModal: () => void;

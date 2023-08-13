@@ -1,12 +1,17 @@
-import React, { PropsWithChildren } from 'react';
+import type { PropTypes as SwapsGroupPropTypes } from './SwapsGroup';
+import type { PendingSwap } from './types';
+import type { PropsWithChildren } from 'react';
+
+import React from 'react';
+
 import { Spinner } from '../../components';
+import { NotFoundAlert } from '../../components/Alert/NotFoundAlert';
 import { SecondaryPage } from '../../components/SecondaryPage';
 import { containsText } from '../../helper';
 import { styled } from '../../theme';
-import { PendingSwap } from './types';
-import { NotFoundAlert } from '../../components/Alert/NotFoundAlert';
-import { SwapsGroup, PropTypes as SwapsGroupPropTypes } from './SwapsGroup';
 import { LoaderContainer } from '../TokenSelector/TokenSelector';
+
+import { SwapsGroup } from './SwapsGroup';
 
 const Container = styled('div', {
   overflowY: 'auto',
@@ -30,6 +35,9 @@ const filteredHistory = (
 
 export type PropTypes = SwapsGroupPropTypes & { loading: boolean };
 
+/**
+ * @deprecated will be removed in v2
+ */
 export function History(props: PropsWithChildren<PropTypes>) {
   const { list = [], onBack, onSwapClick, groupBy, loading } = props;
 
@@ -38,8 +46,7 @@ export function History(props: PropsWithChildren<PropTypes>) {
       onBack={onBack}
       textField={true}
       textFieldPlaceholder="Search by blockchain, token or request Id"
-      title="Swaps"
-    >
+      title="Swaps">
       {(searchedFor) => {
         const filterSwaps = filteredHistory(list, searchedFor);
         return (

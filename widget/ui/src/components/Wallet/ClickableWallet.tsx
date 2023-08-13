@@ -1,12 +1,15 @@
+import type { WalletPropTypes } from './Wallet.types';
+
 import { detectInstallLink } from '@rango-dev/wallets-shared';
 import React from 'react';
 
-import { WalletPropTypes, WalletState } from './Wallet.types';
-import { Typography } from '../Typography';
 import { Image } from '../common';
 import { Tooltip } from '../Tooltip';
+import { Typography } from '../Typography';
+
 import { makeInfo } from './Wallet.helpers';
-import { WalletButton, Text, WalletImageContainer } from './Wallet.styles';
+import { Text, WalletButton, WalletImageContainer } from './Wallet.styles';
+import { WalletState } from './Wallet.types';
 
 function Wallet(props: WalletPropTypes) {
   const { title, type, image, onClick } = props;
@@ -19,7 +22,9 @@ function Wallet(props: WalletPropTypes) {
         onClick={() => {
           if (props.state === WalletState.NOT_INSTALLED) {
             window.open(detectInstallLink(props.link), '_blank');
-          } else onClick(type);
+          } else {
+            onClick(type);
+          }
         }}>
         <WalletImageContainer>
           <Image src={image} size={35} />

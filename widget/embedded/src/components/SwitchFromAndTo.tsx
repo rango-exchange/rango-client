@@ -1,6 +1,8 @@
+import { Button, styled } from '@rango-dev/ui';
+import { VerticalSwapIcon } from '@rango-dev/ui/src/components/Icon';
 import React, { useEffect, useRef, useState } from 'react';
 import { useInRouterContext, useSearchParams } from 'react-router-dom';
-import { styled, Button, VerticalSwapIcon } from '@rango-dev/ui';
+
 import { SearchParams } from '../constants/searchParams';
 import { useBestRouteStore } from '../store/bestRoute';
 

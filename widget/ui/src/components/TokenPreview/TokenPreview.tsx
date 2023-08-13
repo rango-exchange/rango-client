@@ -4,8 +4,9 @@ import type { ReactNode } from 'react';
 import { i18n } from '@lingui/core';
 import React from 'react';
 
-import { Button, Divider, Image, InfoCircleIcon, Typography } from '../..';
+import { Button, Divider, Image, Typography } from '../..';
 import { styled } from '../../theme';
+import { InfoCircleIcon } from '../Icon';
 
 const Box = styled('div', {
   display: 'flex',

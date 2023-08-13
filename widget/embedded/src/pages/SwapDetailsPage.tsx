@@ -1,34 +1,35 @@
-import React from 'react';
-import { navigationRoutes } from '../constants/navigationRoutes';
-import { useManager } from '@rango-dev/queue-manager-react';
-import { useNavigateBack } from '../hooks/useNavigateBack';
-import { getPendingSwaps } from '../utils/queue';
-import {
-  SwapHistory,
-  useCopyToClipboard,
-  SwapDetailsPlaceholder,
-} from '@rango-dev/ui';
-import { useUiStore } from '../store/ui';
 import {
   cancelSwap,
-  PendingSwapNetworkStatus,
-} from '@rango-dev/queue-manager-rango-preset';
-import { useWallets } from '@rango-dev/wallets-core';
-import {
   getCurrentBlockchainOfOrNull,
   getCurrentStep,
   getRelatedWalletOrNull,
+  PendingSwapNetworkStatus,
 } from '@rango-dev/queue-manager-rango-preset';
-import { getSwapDate } from '../utils/time';
+import { useManager } from '@rango-dev/queue-manager-react';
+import {
+  SwapDetailsPlaceholder,
+  SwapHistory,
+  useCopyToClipboard,
+} from '@rango-dev/ui';
+import { useWallets } from '@rango-dev/wallets-core';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
+
+import { navigationRoutes } from '../constants/navigationRoutes';
+import { useNavigateBack } from '../hooks/useNavigateBack';
 import { useBestRouteStore } from '../store/bestRoute';
+import { useUiStore } from '../store/ui';
+import { getPendingSwaps } from '../utils/queue';
+import { getFormatedPendingSwap } from '../utils/routing';
 import {
   getLastConvertedTokenInFailedSwap,
   getSwapMessages,
   isNetworkStatusInWarningState,
   shouldRetrySwap,
 } from '../utils/swap';
-import { getFormatedPendingSwap } from '../utils/routing';
+import { getSwapDate } from '../utils/time';
+
+const RESET_INTERVAL = 2_000;
 
 export function SwapDetailsPage() {
   const selectedSwapRequestId = useUiStore.use.selectedSwapRequestId();
@@ -36,7 +37,7 @@ export function SwapDetailsPage() {
   const retry = useBestRouteStore.use.retry();
   const navigate = useNavigate();
   const { navigateBackFrom } = useNavigateBack();
-  const [isCopied, handleCopy] = useCopyToClipboard(2000);
+  const [isCopied, handleCopy] = useCopyToClipboard(RESET_INTERVAL);
   const { manager, state } = useManager();
 
   const pendingSwaps = getPendingSwaps(manager);
@@ -47,12 +48,14 @@ export function SwapDetailsPage() {
   const onCancel = () => {
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion, @typescript-eslint/no-non-null-asserted-optional-chain
     const swap = manager?.get(selectedSwap?.id!);
-    if (swap) cancelSwap(swap);
+    if (swap) {
+      cancelSwap(swap);
+    }
   };
   const swap = selectedSwap?.swap;
   const loading = !state.loadedFromPersistor;
 
-  if (!swap)
+  if (!swap) {
     return (
       <SwapDetailsPlaceholder
         requestId={selectedSwapRequestId || ''}
@@ -60,6 +63,7 @@ export function SwapDetailsPage() {
         onBack={navigateBackFrom.bind(null, navigationRoutes.swapDetails)}
       />
     );
+  }
 
   const currentStep = getCurrentStep(swap);
 
@@ -102,38 +106,38 @@ export function SwapDetailsPage() {
       onBack={navigateBackFrom.bind(null, navigationRoutes.swapDetails)}
       /* TODO: It was temporarily removed to find a better solution*/
       /*
-      previewInputs={
-        <>
-          <TokenPreview
-            chain={{
-              displayName: firstStep?.fromBlockchain || '',
-              logo: firstStep?.fromBlockchainLogo || '',
-            }}
-            token={{
-              symbol: firstStep?.fromSymbol || '',
-              image: firstStep?.fromLogo || '',
-            }}
-            amount={fromAmount}
-            label={t('From')}
-            loadingStatus={'success'}
-          />
-          <Divider size={12} />
-          <TokenPreview
-            chain={{
-              displayName: lastStep?.toBlockchain || '',
-              logo: lastStep?.toBlockchainLogo || '',
-            }}
-            token={{
-              symbol: lastStep?.toSymbol || '',
-              image: lastStep?.toLogo || '',
-            }}
-            amount={toAmount}
-            label={t('To')}
-            loadingStatus={'success'}
-          />
-        </>
-      }
-      */
+       *previewInputs={
+       *  <>
+       *    <TokenPreview
+       *      chain={{
+       *        displayName: firstStep?.fromBlockchain || '',
+       *        logo: firstStep?.fromBlockchainLogo || '',
+       *      }}
+       *      token={{
+       *        symbol: firstStep?.fromSymbol || '',
+       *        image: firstStep?.fromLogo || '',
+       *      }}
+       *      amount={fromAmount}
+       *      label={t('From')}
+       *      loadingStatus={'success'}
+       *    />
+       *    <Divider size={12} />
+       *    <TokenPreview
+       *      chain={{
+       *        displayName: lastStep?.toBlockchain || '',
+       *        logo: lastStep?.toBlockchainLogo || '',
+       *      }}
+       *      token={{
+       *        symbol: lastStep?.toSymbol || '',
+       *        image: lastStep?.toLogo || '',
+       *      }}
+       *      amount={toAmount}
+       *      label={t('To')}
+       *      loadingStatus={'success'}
+       *    />
+       *  </>
+       *}
+       */
       pendingSwap={getFormatedPendingSwap(swap)}
       onCopy={handleCopy}
       isCopied={isCopied}

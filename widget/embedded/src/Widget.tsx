@@ -1,23 +1,20 @@
-import { SwapContainer, styled, I18nManager } from '@rango-dev/ui';
-import React, {
-  PropsWithChildren,
-  useContext,
-  useEffect,
-  useMemo,
-  useState,
-} from 'react';
+import type { WidgetConfig } from './types';
+import type { WalletType } from '@rango-dev/wallets-shared';
+import type { PropsWithChildren } from 'react';
+
+import { I18nManager, styled, SwapContainer } from '@rango-dev/ui';
+import React, { useContext, useEffect, useMemo, useState } from 'react';
+
 import { AppRouter } from './components/AppRouter';
-import { WalletType } from '@rango-dev/wallets-shared';
-import { Layout } from './components/Layout';
+import { AppRoutes } from './components/AppRoutes';
+import { WidgetEvents } from './components/WidgetEvents';
+import { navigationRoutes } from './constants/navigationRoutes';
 import { globalFont } from './globalStyles';
 import { useTheme } from './hooks/useTheme';
-import { WidgetConfig } from './types';
 import QueueManager from './QueueManager';
 import { useUiStore } from './store/ui';
-import { navigationRoutes } from './constants/navigationRoutes';
 import { initConfig } from './utils/configs';
 import { WidgetContext, WidgetWallets } from './Wallets';
-import { WidgetEvents } from './components/WidgetEvents';
 
 const MainContainer = styled('div', {
   width: '100%',
@@ -65,7 +62,7 @@ export function Main(props: PropsWithChildren<WidgetProps>) {
               clearDisconnectedWallet={() => {
                 setDisconnectedWallet(undefined);
               }}>
-              <Layout config={config} />
+              <AppRoutes config={config} />
             </AppRouter>
           </SwapContainer>
         </QueueManager>

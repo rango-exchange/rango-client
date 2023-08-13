@@ -16,8 +16,7 @@ export const AngleRightIcon: React.FC<IconProps> = ({
       viewBox="0 0 24 24"
       color={color}
       className="_icon"
-      {...props}
-    >
+      {...props}>
       <path
         d="m8.91 19.92 6.52-6.52c.77-.77.77-2.03 0-2.8L8.91 4.08"
         strokeWidth={1.5}

@@ -11,7 +11,6 @@ import {
   BottomLogo,
   Button,
   Header,
-  HeaderButtons,
   TokenInfo,
   Typography,
 } from '../..';
@@ -85,12 +84,12 @@ interface HomePanelProps {
   showPercentageChange: boolean;
 }
 
+/**
+ * @deprecated Will be removed in v2
+ */
 export function HomePanel({
   bestRoute,
   bestRouteError,
-  fetchBestRoute,
-  onClickHistory,
-  onClickSettings,
   fromChain,
   toChain,
   fromToken,
@@ -127,18 +126,7 @@ export function HomePanel({
 }: HomePanelProps) {
   return (
     <Container>
-      <Header
-        title={i18n.t('SWAP')}
-        suffix={
-          <HeaderButtons
-            onClickRefresh={
-              !!bestRoute || bestRouteError ? fetchBestRoute : undefined
-            }
-            onClickHistory={onClickHistory}
-            onClickSettings={onClickSettings}
-          />
-        }
-      />
+      <Header title={i18n.t('SWAP')} suffix={<></>} />
       <FromContainer>
         <>
           <TokenInfo

@@ -1,26 +1,28 @@
+import type { WidgetConfig } from '../types';
+import type { WalletInfo } from '@rango-dev/ui';
+import type { WalletType } from '@rango-dev/wallets-shared';
+
+import { i18n } from '@lingui/core';
 import {
   Alert,
+  LoadingFailedAlert,
   SecondaryPage,
+  Spinner,
   styled,
+  Typography,
   Wallet,
   WalletState,
-  WalletInfo,
-  Typography,
 } from '@rango-dev/ui';
-import React, { useEffect, useRef, useState } from 'react';
-import { getlistWallet, sortWalletsBasedOnState } from '../utils/wallets';
-import { WalletType, WalletTypes } from '@rango-dev/wallets-shared';
 import { useWallets } from '@rango-dev/wallets-core';
+import { WalletTypes } from '@rango-dev/wallets-shared';
+import React, { useEffect, useRef, useState } from 'react';
 
-import { useUiStore } from '../store/ui';
-import { useNavigateBack } from '../hooks/useNavigateBack';
 import { navigationRoutes } from '../constants/navigationRoutes';
-import { i18n } from '@lingui/core';
+import { useNavigateBack } from '../hooks/useNavigateBack';
 import { useMetaStore } from '../store/meta';
-import { Spinner } from '@rango-dev/ui';
-import { LoadingFailedAlert } from '@rango-dev/ui';
-import { WidgetConfig } from '../types';
+import { useUiStore } from '../store/ui';
 import { configWalletsToWalletName } from '../utils/providers';
+import { getlistWallet, sortWalletsBasedOnState } from '../utils/wallets';
 
 interface PropTypes {
   supportedWallets: WidgetConfig['wallets'];
@@ -76,7 +78,9 @@ export function WalletsPage({
   const onSelectWallet = async (type: WalletType) => {
     const wallet = state(type);
     try {
-      if (walletErrorMessage) setWalletErrorMessage('');
+      if (walletErrorMessage) {
+        setWalletErrorMessage('');
+      }
       if (wallet.connected) {
         await disconnect(type);
       } else {
@@ -98,7 +102,7 @@ export function WalletsPage({
         (wallet) => wallet.state === WalletState.CONNECTING
       ) || [];
     for (const wallet of connectingWallets) {
-      disconnect(wallet.type);
+      void disconnect(wallet.type);
     }
   };
   useEffect(() => {
@@ -139,7 +143,9 @@ export function WalletsPage({
               <Wallet
                 {...wallet}
                 key={`${index}-${wallet.type}`}
-                onClick={onSelectWallet}
+                onClick={(type) => {
+                  void onSelectWallet(type);
+                }}
               />
             ))}
         </ListContainer>

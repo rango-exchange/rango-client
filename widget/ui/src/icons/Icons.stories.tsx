@@ -9,7 +9,7 @@ import * as Icons from '.';
 
 export default {
   title: 'Components/Icons',
-  component: Icons.AutoTheme,
+  component: Icons.AutoThemeIcon,
   args: {
     size: 16,
     color: 'black',
