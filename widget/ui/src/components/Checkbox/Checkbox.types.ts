@@ -7,7 +7,7 @@ type RadixCheckboxProps = Pick<
 
 interface ComponentProps {
   id: string;
-  label: string;
+  label?: string;
 }
 
 export type PropTypes = RadixCheckboxProps & ComponentProps;

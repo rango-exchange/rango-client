@@ -1,14 +1,13 @@
-import React from 'react';
-import { containsText } from '../../helper';
+import type { TokenWithAmount } from '../../components/TokenList/TokenList.types';
+import type { LoadingStatus } from '../../types/meta';
 
-import { LoadingStatus } from '../../types/meta';
-import { styled } from '../../theme';
-import { NotFoundAlert } from '../../components/Alert/NotFoundAlert';
+import React from 'react';
+
 import { LoadingFailedAlert, SecondaryPage, Spinner } from '../../components';
-import {
-  TokenList,
-  TokenWithAmount,
-} from '../../components/TokenList/TokenList';
+import { NotFoundAlert } from '../../components/Alert/NotFoundAlert';
+import { TokenList } from '../../components/TokenList/TokenList';
+import { containsText } from '../../helper';
+import { styled } from '../../theme';
 
 export const LoaderContainer = styled('div', {
   display: 'flex',
@@ -45,8 +44,7 @@ export function TokenSelector(props: PropTypes) {
       hasHeader={hasHeader}
       title={`Select ${type} token`}
       onBack={onBack}
-      textFieldPlaceholder="Search tokens by name"
-    >
+      textFieldPlaceholder="Search tokens by name">
       {(searchedFor) => {
         const filteredTokens = filterTokens(list, searchedFor);
 

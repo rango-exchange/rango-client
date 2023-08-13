@@ -1,6 +1,9 @@
+import type { PropTypes } from './LiquiditySourceList.types';
+import type { Meta } from '@storybook/react';
+
 import React from 'react';
-import { Meta } from '@storybook/react';
-import { LiquiditySourceList, PropTypes } from './LiquiditySourceList';
+
+import { LiquiditySourceList } from './LiquiditySourceList';
 import { liquiditySources } from './mockData';
 
 export default {

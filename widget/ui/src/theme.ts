@@ -11,13 +11,16 @@ const theme = {
   colors: {
     primary: '#4BBA7E',
     primary300: '#9FCEB5',
+    primary500: '#4BBA7E',
     primary700: '#35A468',
 
     secondary: '#7C6DDB',
     secondary100: '#F2EFF9',
-    secondary200: '#A27FED',
+    secondary200: '#F0EAFF',
     secondary300: '#E4E0F8',
-    secondary700: '#6C5DCB',
+    secondary400: '#DCD5FF',
+    secondary500: '#7C6DDB',
+    secondary600: '#6C5DCB',
 
     neutral100: '#FDFDFD',
     neutral200: '#F6F6F6',
@@ -68,7 +71,6 @@ const theme = {
     primary100: '#FF0000',
     primary200: '#FF0000',
     primary400: '#FF0000',
-    primary500: '#FF0000',
     primary600: '#FF0000',
     primary800: '#FF0000',
     primary900: '#FF0000',

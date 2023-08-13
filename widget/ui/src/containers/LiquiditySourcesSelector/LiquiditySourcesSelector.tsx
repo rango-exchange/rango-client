@@ -1,9 +1,12 @@
-import { CSSProperties } from '@stitches/react';
+import type { LiquiditySource } from '../../components/LiquiditySourceList/LiquiditySourceList.types';
+import type { LoadingStatus } from '../../types/meta';
+import type { CSSProperties } from '@stitches/react';
+
 import React from 'react';
-import { containsText } from '../../helper';
-import { LiquiditySource, LoadingStatus } from '../../types/meta';
+
 import { Button, SecondaryPage } from '../../components';
 import { LiquiditySourceList } from '../../components/LiquiditySourceList';
+import { containsText } from '../../helper';
 
 const filterLiquiditySources = (
   liquiditySources: LiquiditySource[],
@@ -44,10 +47,10 @@ export function LiquiditySourcesSelector(props: PropTypes) {
         </Button>
       }
       hasHeader={hasHeader}
-      onBack={onBack}
-    >
+      onBack={onBack}>
       {(searchedFor) => (
         <LiquiditySourceList
+          catergory="Bridge"
           listContainerStyle={listContainerStyle}
           list={filterLiquiditySources(list, searchedFor)}
           onChange={onChange}

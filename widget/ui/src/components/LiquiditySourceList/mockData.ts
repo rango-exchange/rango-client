@@ -1,4 +1,4 @@
-import { LiquiditySource } from '../../types/meta';
+import type { LiquiditySource } from './LiquiditySourceList.types';
 
 export const liquiditySources: LiquiditySource[] = [
   {

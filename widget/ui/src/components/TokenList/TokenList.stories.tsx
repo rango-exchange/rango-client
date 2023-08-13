@@ -1,7 +1,10 @@
+import type { PropTypes } from './TokenList.types';
+import type { Meta } from '@storybook/react';
+
 import React from 'react';
-import { Meta } from '@storybook/react';
-import { TokenList, PropTypes } from './TokenList';
+
 import { tokensMeta } from './mockData';
+import { TokenList } from './TokenList';
 
 export default {
   title: 'Components/Token List',

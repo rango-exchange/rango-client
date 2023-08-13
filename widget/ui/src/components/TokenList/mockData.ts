@@ -1,7 +1,7 @@
 // TODO: fix ts errors
 // eslint-disable-next-line
 // @ts-nocheck
-import { TokenWithAmount } from './TokenList';
+import type { TokenWithAmount } from './TokenList';
 
 export const tokensMeta: TokenWithAmount[] = [
   {
@@ -9,6 +9,10 @@ export const tokensMeta: TokenWithAmount[] = [
     symbol: 'BTC',
     image: 'https://api.rango.exchange/i/VTDf13',
     address: 'TN3W4H6rK2ce4vX9YnFQHwKENnHjoxb3m9',
+    balance: {
+      amount: '525.176',
+      usdValue: '525.19',
+    },
     usdPrice: 30412.85212694868,
     decimals: 8,
     name: 'Bitcoin',

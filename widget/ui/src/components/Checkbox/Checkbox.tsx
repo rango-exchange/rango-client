@@ -22,10 +22,14 @@ export function Checkbox(props: PropsWithChildren<PropTypes>) {
           <Done color="white" size={12} />
         </CheckboxIndicator>
       </CheckboxRoot>
-      <Divider direction="horizontal" size={8} />
-      <Label className="_text" htmlFor={id}>
-        {label}
-      </Label>
+      {label && (
+        <>
+          <Divider direction="horizontal" size={8} />
+          <Label className="_text" htmlFor={id}>
+            {label}
+          </Label>
+        </>
+      )}
     </CheckboxContainer>
   );
 }

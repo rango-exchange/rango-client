@@ -1,6 +1,6 @@
-// import { PropTypes } from './BlockchainsList';
+import type { BlockchainMeta } from 'rango-sdk';
 
-import { BlockchainMeta, TransactionType } from 'rango-sdk';
+import { TransactionType } from 'rango-sdk';
 
 export const blockchainMeta: BlockchainMeta[] = [
   {
@@ -628,7 +628,8 @@ export const blockchainMeta: BlockchainMeta[] = [
       {
         blockchain: 'STARKNET',
         symbol: 'ETH',
-        address: '0x49d36570d4e46f48e99674bd3fcc84644ddd6b96f7c741b1562b82f9e004dc7',
+        address:
+          '0x49d36570d4e46f48e99674bd3fcc84644ddd6b96f7c741b1562b82f9e004dc7',
       },
     ],
     logo: 'https://api.rango.exchange/blockchains/starknet.svg',
@@ -1199,7 +1200,9 @@ export const blockchainMeta: BlockchainMeta[] = [
   {
     name: 'BTC',
     defaultDecimals: 8,
-    addressPatterns: ['^[13][a-km-zA-HJ-NP-Z1-9]{25,34}$|^(bc1)[0-9A-Za-z]{39,59}$'],
+    addressPatterns: [
+      '^[13][a-km-zA-HJ-NP-Z1-9]{25,34}$|^(bc1)[0-9A-Za-z]{39,59}$',
+    ],
     feeAssets: [
       {
         blockchain: 'BTC',
@@ -1679,7 +1682,8 @@ export const blockchainMeta: BlockchainMeta[] = [
       rest: 'https://lcd-emoney.keplr.app',
       cosmostationLcdUrl: 'https://lcd-emoney.cosmostation.io',
       cosmostationApiUrl: 'https://api-emoney.cosmostation.io',
-      cosmostationDenomTracePath: '/ibc/applications/transfer/v1beta1/denom_traces/',
+      cosmostationDenomTracePath:
+        '/ibc/applications/transfer/v1beta1/denom_traces/',
       mintScanName: 'emoney',
       chainName: 'e-Money',
       stakeCurrency: {
@@ -2986,7 +2990,8 @@ export const blockchainMeta: BlockchainMeta[] = [
       rpc: 'https://mainnet-rpc-router.axelar-dev.workers.dev/chain/axelar',
       rest: 'https://axelar-lcd.quickapi.com',
       cosmostationLcdUrl: 'https://axelar-lcd.quickapi.com',
-      cosmostationApiUrl: 'https://mainnet-rpc-router.axelar-dev.workers.dev/chain/axelar',
+      cosmostationApiUrl:
+        'https://mainnet-rpc-router.axelar-dev.workers.dev/chain/axelar',
       cosmostationDenomTracePath: '/ibc/apps/transfer/v1/denom_traces/',
       mintScanName: 'axelar',
       chainName: 'Axelar',
@@ -3427,7 +3432,8 @@ export const blockchainMeta: BlockchainMeta[] = [
       },
       rpcUrls: ['https://bobabeam.boba.network'],
       blockExplorerUrls: ['https://blockexplorer.bobabeam.boba.network'],
-      addressUrl: 'https://blockexplorer.bobabeam.boba.network/address/{wallet}',
+      addressUrl:
+        'https://blockexplorer.bobabeam.boba.network/address/{wallet}',
       transactionUrl: 'https://blockexplorer.bobabeam.boba.network/tx/{txHash}',
     },
   },
