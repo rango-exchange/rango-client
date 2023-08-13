@@ -1,13 +1,9 @@
-import {
-  Network,
-  Networks,
-  ProviderConnectResult,
-} from '@rango-dev/wallets-shared';
-import { RequestedAccount } from './types';
-import {
-  SendMsg,
-  SignInputOutput,
-} from '@binance-chain/javascript-sdk/lib/types/index.js';
+import type { RequestedAccount } from './types';
+import type { SignInputOutput } from '@binance-chain/javascript-sdk/lib/types/index.js';
+import type { Network, ProviderConnectResult } from '@rango-dev/wallets-shared';
+
+import { SendMsg } from '@binance-chain/javascript-sdk/lib/types/index.js';
+import { Networks } from '@rango-dev/wallets-shared';
 
 export function binance() {
   const { BinanceChain } = window;
@@ -84,14 +80,18 @@ export function cosmosMessageToBCSendMsg(msg: { __type: string }): SendMsg {
   if (isMsgSend(msg)) {
     const msgCopy = msg;
 
-    if (msgCopy.inputs.length !== 1)
+    if (msgCopy.inputs.length !== 1) {
       throw Error('Multi input coins for binance chain not supported');
-    if (msgCopy.outputs.length !== 1)
+    }
+    if (msgCopy.outputs.length !== 1) {
       throw Error('Multi output coins for binance chain not supported');
-    if (msgCopy.inputs[0].coins.length !== 1)
+    }
+    if (msgCopy.inputs[0].coins.length !== 1) {
       throw Error('Multi input coins for binance chain not supported');
-    if (msgCopy.outputs[0].coins.length !== 1)
+    }
+    if (msgCopy.outputs[0].coins.length !== 1) {
       throw Error('Multi output coins for binance chain not supported');
+    }
 
     const outputs: SignInputOutput[] = [
       {
@@ -108,9 +108,7 @@ export function cosmosMessageToBCSendMsg(msg: { __type: string }): SendMsg {
     return new SendMsg(msgCopy.inputs[0].address, outputs);
   }
 
-  throw Error(
-    `Cosmos message with type ${msg.__type} not supported in Terra Station`
-  );
+  throw Error(`Cosmos message with type ${msg.__type} not supported`);
 }
 
 export async function accountsForActiveWallet(
