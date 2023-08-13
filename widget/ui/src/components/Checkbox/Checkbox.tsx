@@ -3,7 +3,7 @@ import type { PropsWithChildren } from 'react';
 
 import React from 'react';
 
-import { Done } from '../../icons';
+import { DoneIcon } from '../../icons';
 import { Divider } from '../Divider';
 
 import {
@@ -19,7 +19,7 @@ export function Checkbox(props: PropsWithChildren<PropTypes>) {
     <CheckboxContainer>
       <CheckboxRoot id={id} {...otherProps}>
         <CheckboxIndicator>
-          <Done color="white" size={12} />
+          <DoneIcon color="white" size={12} />
         </CheckboxIndicator>
       </CheckboxRoot>
       <Divider direction="horizontal" size={8} />

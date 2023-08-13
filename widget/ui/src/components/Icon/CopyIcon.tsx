@@ -15,8 +15,7 @@ export const CopyIcon: React.FC<IconProps> = ({
       color={color}
       xmlns="http://www.w3.org/2000/svg"
       className="_icon"
-      {...props}
-    >
+      {...props}>
       <g id="Text-files">
         <path
           d="M53.9791489,9.1429005H50.010849c-0.0826988,0-0.1562004,0.0283995-0.2331009,0.0469999V5.0228

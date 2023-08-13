@@ -70,6 +70,7 @@
     "react/no-array-index-key": "error",
     "react/jsx-no-constructed-context-values": "error",
     "react/jsx-key": "error",
+    "react/no-unescaped-entities": "off",
     "destructuring/in-params": "error",
     "destructuring/in-methods-params": "error",
     // These rules will be override by @typescript-eslint
@@ -79,12 +80,22 @@
     "camelcase": "off",
     "@typescript-eslint/no-unused-vars": "error",
     "@typescript-eslint/no-throw-literal": "error",
-    "@typescript-eslint/no-magic-numbers": "error",
+    "@typescript-eslint/no-magic-numbers": [
+      "error",
+      {
+        "ignore": [0, 1]
+      }
+    ],
     "@typescript-eslint/consistent-type-exports": "error",
     "@typescript-eslint/consistent-type-imports": "error",
     "@typescript-eslint/member-ordering": "error",
     "@typescript-eslint/no-floating-promises": "error",
-    "@typescript-eslint/no-misused-promises": "error",
+    "@typescript-eslint/no-misused-promises": [
+      "error",
+      {
+        "checksVoidReturn": false
+      }
+    ],
     "@typescript-eslint/no-mixed-enums": "error",
     "@typescript-eslint/no-unnecessary-type-assertion": "error",
     "@typescript-eslint/prefer-enum-initializers": "error",
