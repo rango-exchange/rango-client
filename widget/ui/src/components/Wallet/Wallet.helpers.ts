@@ -1,4 +1,6 @@
-import { Info, WalletState } from './Wallet.types';
+import type { Info } from './Wallet.types';
+
+import { WalletState } from './Wallet.types';
 
 export function makeInfo(state: WalletState): Info {
   switch (state) {

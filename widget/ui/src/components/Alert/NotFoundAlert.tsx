@@ -1,4 +1,5 @@
 import React from 'react';
+
 import { Alert } from './Alert';
 
 interface PropTypes {
@@ -6,11 +7,14 @@ interface PropTypes {
   searchedFor?: string;
 }
 
+/**
+ * @deprecated Please use the Alert directly.
+ */
 export function NotFoundAlert(props: PropTypes) {
   const { catergory, searchedFor } = props;
   return (
     <Alert
-      type="secondary"
+      type="error"
       title={`${catergory} ${
         searchedFor ? "'" + searchedFor + "'" : ''
       } not found.`}
