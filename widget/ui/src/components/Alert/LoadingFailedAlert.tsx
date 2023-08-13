@@ -1,7 +1,11 @@
-import React from 'react';
 import { i18n } from '@lingui/core';
+import React from 'react';
+
 import { Alert } from './Alert';
 
+/**
+ * @deprecated Please use the Alert directly.
+ */
 export function LoadingFailedAlert() {
   return (
     <Alert

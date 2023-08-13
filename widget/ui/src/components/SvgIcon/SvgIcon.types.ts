@@ -7,7 +7,9 @@ export interface SvgIconProps {
     | 'warning'
     | 'success'
     | 'black'
-    | 'white';
+    | 'white'
+    | 'info'
+    | 'gray';
 }
 export type SvgIconPropsWithChildren = SvgIconProps & {
   children?: React.ReactElement;
