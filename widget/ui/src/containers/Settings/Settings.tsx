@@ -7,7 +7,6 @@ import {
   Button,
   Chip,
   Radio,
-  SecondaryPage,
   Switch,
   TextField,
   Typography,
@@ -89,7 +88,6 @@ export function Settings(props: PropTypes) {
     liquiditySources,
     onSlippageChange,
     onLiquiditySourcesClick,
-    onBack,
     customSlippage,
     onCustomSlippageChange,
     maxSlippage,
@@ -111,7 +109,7 @@ export function Settings(props: PropTypes) {
     onSlippageChange(slippage);
   };
 
-  const PageContent = (
+  return (
     <>
       <BaseContainer>
         <Head>
@@ -225,11 +223,5 @@ export function Settings(props: PropTypes) {
         </Button>
       </LiquiditySourceContainer>
     </>
-  );
-
-  return (
-    <SecondaryPage title="Settings" textField={false} onBack={onBack}>
-      {PageContent}
-    </SecondaryPage>
   );
 }

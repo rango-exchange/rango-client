@@ -1,47 +1,22 @@
-import { CSSProperties } from '@stitches/react';
+import type { PropTypes } from './Chip.types';
+
 import React from 'react';
-import { styled } from '../../theme';
 
-const ChipCointainer = styled('div', {
-  display: 'inline-flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-  borderRadius: '$xs',
-  padding: '$4 $8',
-  height: '32',
-  fontSize: '$14',
-  cursor: 'pointer',
-  transition: 'all 0.35s',
-  color: '$foreground',
+import { Typography } from '../Typography';
 
-  '&:hover': {
-    backgroundColor: '$success700',
-    color: '$background',
-  },
-  variants: {
-    selected: {
-      true: { backgroundColor: '$success', color: '$background' },
-      false: { backgroundColor: '$surface' },
-    },
-  },
-});
-
-export interface PropTypes {
-  label: string;
-  selected?: boolean;
-  onClick?: React.MouseEventHandler<HTMLDivElement>;
-  className?: string;
-  style?: CSSProperties;
-  prefix?: React.ReactNode;
-  suffix?: React.ReactNode;
-}
+import { ChipCointainer } from './Chip.styles';
 
 export function Chip(props: PropTypes) {
   const { label, selected, prefix, suffix, onClick, style } = props;
   return (
     <ChipCointainer selected={selected} onClick={onClick} style={style}>
       {prefix || null}
-      {label}
+      <Typography
+        color={selected ? 'neutral900' : 'neutral600'}
+        variant="body"
+        size="medium">
+        {label}
+      </Typography>
       {suffix || null}
     </ChipCointainer>
   );
