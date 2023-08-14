@@ -81,42 +81,37 @@ msgid "SWAP"
 msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/ui/src/containers/Settings/Settings.tsx:119
-msgid "Slippage tolerance"
-msgstr ""
-
-#. js-lingui-explicit-id
-#: widget/ui/src/containers/Settings/Settings.tsx:123
+#: widget/ui/src/containers/Settings/Settings.tsx:127
 msgid "Custom"
 msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/ui/src/containers/Settings/Settings.tsx:178
+#: widget/ui/src/containers/Settings/Settings.tsx:182
 msgid "Theme"
 msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/ui/src/containers/Settings/Settings.tsx:183
+#: widget/ui/src/containers/Settings/Settings.tsx:187
 msgid "Dark"
 msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/ui/src/containers/Settings/Settings.tsx:184
+#: widget/ui/src/containers/Settings/Settings.tsx:188
 msgid "Light"
 msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/ui/src/containers/Settings/Settings.tsx:185
+#: widget/ui/src/containers/Settings/Settings.tsx:189
 msgid "Auto"
 msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/ui/src/containers/Settings/Settings.tsx:195
+#: widget/ui/src/containers/Settings/Settings.tsx:199
 msgid "Infinite Approval"
 msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/ui/src/containers/Settings/Settings.tsx:223
+#: widget/ui/src/containers/Settings/Settings.tsx:227
 msgid "Liquidity Sources"
 msgstr ""
 
@@ -131,27 +126,37 @@ msgid "Insufficent Balance:"
 msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/HeaderButtons/HomeButtons.tsx:36
+#: widget/embedded/src/components/HeaderButtons/CancelButton.tsx:13
+#~ msgid "Cancel"
+#~ msgstr ""
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/SettingsPage.tsx:77
+#~ msgid "Setting"
+#~ msgstr ""
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/HeaderButtons/HomeButtons.tsx:25
 #~ msgid "Refresh"
 #~ msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/HeaderButtons/HomeButtons.tsx:44
+#: widget/embedded/src/components/HeaderButtons/HomeButtons.tsx:34
 #~ msgid "Notifications"
 #~ msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/HeaderButtons/HomeButtons.tsx:49
+#: widget/embedded/src/components/HeaderButtons/HomeButtons.tsx:42
 #~ msgid "Settings"
 #~ msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/HeaderButtons/HomeButtons.tsx:54
+#: widget/embedded/src/components/HeaderButtons/HomeButtons.tsx:47
 #~ msgid "Transactions History"
 #~ msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/HeaderButtons/WalletButton.tsx:9
+#: widget/embedded/src/components/HeaderButtons/WalletButton.tsx:11
 #: widget/embedded/src/utils/swap.ts:143
 #: widget/embedded/src/utils/swap.ts:145
 #~ msgid "Connect Wallet"
@@ -222,6 +227,11 @@ msgstr ""
 #. js-lingui-explicit-id
 #: widget/embedded/src/utils/swap.ts:164
 #~ msgid "The route goes through Ethereum. Continue?"
+#~ msgstr ""
+
+#. js-lingui-explicit-id
+#: widget/ui/src/containers/Settings/Settings.tsx:119
+#~ msgid "Slippage tolerance"
 #~ msgstr ""
 
 #. js-lingui-explicit-id
