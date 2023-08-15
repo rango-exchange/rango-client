@@ -1,0 +1,31 @@
+{
+  "name": "@rango-dev/provider-mytonwallet",
+  "version": "0.1.0",
+  "license": "MIT",
+  "type": "module",
+  "module": "./dist/index.js",
+  "main": "./dist/index.js",
+  "exports": {
+    ".": "./dist/index.js"
+  },
+  "typings": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "src"
+  ],
+  "scripts": {
+    "build": "node ../../scripts/build/command.mjs --path wallets/provider-mytonwallet",
+    "clean": "rimraf dist",
+    "format": "prettier --write '{.,src}/**/*.{ts,tsx}'",
+    "lint": "eslint \"**/*.{ts,tsx}\" --ignore-path ../../.eslintignore"
+  },
+  "dependencies": {
+    "@rango-dev/wallets-shared": "^0.5.1-next.18",
+    "@rango-dev/signer-ton": "^0.1.0",
+    "rango-types": "^0.1.45",
+    "@tonconnect/sdk": "^2.1.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

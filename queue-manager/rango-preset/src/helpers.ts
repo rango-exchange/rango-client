@@ -174,6 +174,7 @@ export const getCurrentStepTx = (
     starknetTransaction,
     tronApprovalTransaction,
     tronTransaction,
+    tonTransaction,
   } = currentStep;
   return (
     evmTransaction ||
@@ -184,7 +185,8 @@ export const getCurrentStepTx = (
     starknetApprovalTransaction ||
     starknetTransaction ||
     tronApprovalTransaction ||
-    tronTransaction
+    tronTransaction ||
+    tonTransaction
   );
 };
 
@@ -206,6 +208,7 @@ export const setCurrentStepTx = (
   currentStep.starknetTransaction = null;
   currentStep.tronApprovalTransaction = null;
   currentStep.tronTransaction = null;
+  currentStep.tonTransaction = null;
 
   const txType = transaction.type;
   switch (txType) {
@@ -712,6 +715,7 @@ export const isTxAlreadyCreated = (
     swap.wallets[step.starknetApprovalTransaction?.blockChain || ''] ||
     swap.wallets[step.cosmosTransaction?.blockChain || ''] ||
     swap.wallets[step.solanaTransaction?.blockChain || ''] ||
+    swap.wallets[step.tonTransaction?.blockChain || ''] ||
     step.transferTransaction?.fromWalletAddress ||
     null;
 
