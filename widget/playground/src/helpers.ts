@@ -7,7 +7,11 @@ import stringifyObject from 'stringify-object';
 import { WidgetConfig } from '@rango-dev/widget-embedded';
 
 import { WalletState } from '@rango-dev/ui';
-export const excludedWallets = [WalletTypes.STATION, WalletTypes.LEAP];
+export const excludedWallets = [
+  WalletTypes.STATION,
+  WalletTypes.LEAP,
+  WalletTypes.SAFE,
+];
 
 export const onChangeMultiSelects = (
   value: string,
