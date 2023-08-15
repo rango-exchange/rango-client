@@ -38,7 +38,10 @@ export function App() {
   }, []);
 
   return (
-    <Provider providers={providers} allBlockChains={blockchains} autoConnect>
+    <Provider
+      providers={providers}
+      allBlockChains={blockchains}
+      autoConnect={false}>
       {!process.env.REACT_APP_API_KEY && (
         <p className="ml-12 warning">
           <InfoCircleIcon color="warning" size={24} /> Please add

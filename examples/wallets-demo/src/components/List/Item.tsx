@@ -3,7 +3,7 @@ import type {
   WalletInfo,
   WalletType,
 } from '@rango-dev/wallets-shared';
-import type { Token, TransactionType } from 'rango-sdk';
+import type { Token } from 'rango-sdk';
 
 import {
   Button,
@@ -119,9 +119,12 @@ function Item({
       const currentChain = info.supportedChains.find(
         (chain) => chain.name === network
       );
-      const txType = currentChain?.type || (network as TransactionType);
-
+      const txType = currentChain?.type;
       const chainId = currentChain?.chainId || null;
+      if (!txType) {
+        alert('Error in detecting tx type.');
+        return;
+      }
       const result = signers
         .getSigner(txType)
         .signMessage('Hello World', address || 'meow', chainId);
