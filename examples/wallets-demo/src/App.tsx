@@ -1,9 +1,12 @@
-import React, { useEffect, useState } from 'react';
-import { Provider } from '@rango-dev/wallets-react';
-import List from './components/List';
+import type { BlockchainMeta, Token } from 'rango-sdk';
+
 import { allProviders } from '@rango-dev/provider-all';
-import { BlockchainMeta, RangoClient, Token } from 'rango-sdk';
 import { InfoCircleIcon, Spinner, Typography } from '@rango-dev/ui';
+import { Provider } from '@rango-dev/wallets-react';
+import { RangoClient } from 'rango-sdk';
+import React, { useEffect, useState } from 'react';
+
+import List from './components/List';
 import { WC_PROJECT_ID } from './constants';
 
 const providers = allProviders({
@@ -27,11 +30,11 @@ export function App() {
         setBlockChains(res.blockchains);
         setTokens(res.tokens);
       } catch (e) {
-        setError(e.message);
+        setError(e instanceof Error ? e.message : JSON.stringify(e));
       }
       setLoading(false);
     };
-    getAllBlockchains();
+    void getAllBlockchains();
   }, []);
 
   return (
