@@ -72,6 +72,7 @@ export enum WalletTypes {
   STATION = 'station',
   ENKRYPT = 'enkrypt',
   TAHO = 'taho',
+  MY_TON_WALLET = 'mytonwallet',
 }
 
 export enum Networks {
@@ -127,6 +128,7 @@ export enum Networks {
   KONSTELLATION = 'KONSTELLATION',
   UMEE = 'UMEE',
   STARKNET = 'STARKNET',
+  TON = 'TON',
 
   // Using instead of null
   Unknown = 'Unkown',
