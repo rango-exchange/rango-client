@@ -81,37 +81,42 @@ msgid "SWAP"
 msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/ui/src/containers/Settings/Settings.tsx:127
+#: widget/ui/src/containers/Settings/Settings.tsx:117
+msgid "Slippage tolerance"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: widget/ui/src/containers/Settings/Settings.tsx:121
 msgid "Custom"
 msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/ui/src/containers/Settings/Settings.tsx:182
+#: widget/ui/src/containers/Settings/Settings.tsx:176
 msgid "Theme"
 msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/ui/src/containers/Settings/Settings.tsx:187
+#: widget/ui/src/containers/Settings/Settings.tsx:181
 msgid "Dark"
 msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/ui/src/containers/Settings/Settings.tsx:188
+#: widget/ui/src/containers/Settings/Settings.tsx:182
 msgid "Light"
 msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/ui/src/containers/Settings/Settings.tsx:189
+#: widget/ui/src/containers/Settings/Settings.tsx:183
 msgid "Auto"
 msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/ui/src/containers/Settings/Settings.tsx:199
+#: widget/ui/src/containers/Settings/Settings.tsx:193
 msgid "Infinite Approval"
 msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/ui/src/containers/Settings/Settings.tsx:227
+#: widget/ui/src/containers/Settings/Settings.tsx:221
 msgid "Liquidity Sources"
 msgstr ""
 
@@ -126,13 +131,13 @@ msgid "Insufficent Balance:"
 msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/HeaderButtons/CancelButton.tsx:13
-#~ msgid "Cancel"
+#: widget/embedded/src/pages/SettingsPage.tsx:141
+#~ msgid "Slippage tolerance per swap"
 #~ msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/SettingsPage.tsx:77
-#~ msgid "Setting"
+#: widget/embedded/src/components/HeaderButtons/CancelButton.tsx:13
+#~ msgid "Cancel"
 #~ msgstr ""
 
 #. js-lingui-explicit-id
@@ -195,6 +200,11 @@ msgstr ""
 #~ msgstr ""
 
 #. js-lingui-explicit-id
+#: widget/embedded/src/pages/SettingsPage.tsx:136
+#~ msgid "Setting"
+#~ msgstr ""
+
+#. js-lingui-explicit-id
 #: widget/embedded/src/pages/WalletsPage.tsx:122
 #~ msgid "Select Wallet"
 #~ msgstr ""
@@ -227,11 +237,6 @@ msgstr ""
 #. js-lingui-explicit-id
 #: widget/embedded/src/utils/swap.ts:164
 #~ msgid "The route goes through Ethereum. Continue?"
-#~ msgstr ""
-
-#. js-lingui-explicit-id
-#: widget/ui/src/containers/Settings/Settings.tsx:119
-#~ msgid "Slippage tolerance"
 #~ msgstr ""
 
 #. js-lingui-explicit-id
