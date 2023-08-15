@@ -1,43 +1,35 @@
-import { darkTheme, styled } from '../../theme';
+import { styled } from '../../theme';
 
 export const SvgWithColor = styled('svg', {
-  color: '$neutral700',
+  color: '$icons_primary',
   variants: {
     color: {
       primary: {
-        color: '$primary',
+        color: '$icons_primary',
       },
       secondary: {
-        color: '$secondary',
+        color: '$icons_secondary',
       },
       error: {
-        color: '$error',
+        color: '$status_error-foreground',
       },
       warning: {
-        color: '$warning',
+        color: '$status_warning-foreground',
       },
       success: {
-        color: '$success',
-      },
-      black: {
-        $$color: '$colors$neutral700',
-        [`.${darkTheme} &`]: {
-          $$color: '$colors$neutral100',
-        },
-        color: '$$color',
-      },
-      white: {
-        $$color: '$colors$neutral100',
-        [`.${darkTheme} &`]: {
-          $$color: '$colors$neutral700',
-        },
-        color: '$$color',
+        color: '$status_success-foreground',
       },
       info: {
-        color: '$info',
+        color: '$status_info-foreground',
       },
-      gray: {
-        color: '$neutral400',
+      progressing: {
+        color: '$ cicons_progressing',
+      },
+      disable: {
+        color: '$icons_primary-variant',
+      },
+      active: {
+        color: '$icons_active',
       },
     },
   },

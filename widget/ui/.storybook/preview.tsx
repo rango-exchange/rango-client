@@ -24,7 +24,7 @@ const ThemeBlock = styled('div', {
   overflow: 'auto',
   boxSizing: 'border-box',
   padding: '1rem',
-  backgroundColor: '$neutral100',
+  backgroundColor: '$surface_widget-background',
   variants: {
     position: {
       left: {

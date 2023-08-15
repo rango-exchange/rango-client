@@ -6,10 +6,10 @@ export interface SvgIconProps {
     | 'error'
     | 'warning'
     | 'success'
-    | 'black'
-    | 'white'
     | 'info'
-    | 'gray';
+    | 'progressing'
+    | 'disable'
+    | 'active';
 }
 export type SvgIconPropsWithChildren = SvgIconProps & {
   children?: React.ReactElement;

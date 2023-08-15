@@ -24,10 +24,10 @@ export default {
         'error',
         'warning',
         'success',
-        'black',
-        'white',
-        'gray',
         'info',
+        'progressing',
+        'disable',
+        'active',
       ],
     },
 
