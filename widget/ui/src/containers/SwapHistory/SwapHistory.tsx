@@ -241,7 +241,7 @@ export function SwapHistory(props: PropTypes) {
                 onClick={onCopy.bind(null, pendingSwap?.requestId)}>
                 <RequestId>{pendingSwap?.requestId}</RequestId>
                 <Divider size={4} direction="horizontal" />
-                <Button type="primary" variant="ghost" size="compact">
+                <Button type="primary" variant="ghost" size="small">
                   {isCopied ? 'Copied!' : 'Copy'}
                 </Button>
               </span>

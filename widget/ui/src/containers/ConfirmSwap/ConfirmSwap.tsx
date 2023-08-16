@@ -1,11 +1,9 @@
-import React, { PropsWithChildren, ReactNode } from 'react';
-import {
-  Alert,
-  Checkbox,
-  Divider,
-  SelectableWallet,
-  TextField,
-} from '../../components';
+import type { SelectableWallet } from '../../components';
+import type { PropsWithChildren, ReactNode } from 'react';
+
+import React from 'react';
+
+import { Alert, Checkbox, Divider, TextField } from '../../components';
 import { Button } from '../../components/Button';
 import { SecondaryPage } from '../../components/SecondaryPage/SecondaryPage';
 import { SelectableWalletList } from '../../components/SelectableWalletList';
@@ -138,30 +136,35 @@ export function ConfirmSwap(props: PropsWithChildren<PropTypes>) {
         <div>
           {extraMessages || null}
           <Alerts>
-            {errors?.map((error, index) => (
-              <React.Fragment key={index}>
-                <Divider />
-                <Alert
-                  type="error"
-                  key={index}
-                  {...(typeof error === 'string'
-                    ? { title: error }
-                    : { children: error })}
-                />
-              </React.Fragment>
-            ))}
-            {warnings?.map((warning, index) => (
-              <React.Fragment key={index}>
-                <Divider />
-                <Alert
-                  type="warning"
-                  key={index}
-                  {...(typeof warning === 'string'
-                    ? { title: warning }
-                    : { children: warning })}
-                />
-              </React.Fragment>
-            ))}
+            {errors?.map((error, index) => {
+              const key = `error-${index}`;
+
+              return (
+                <React.Fragment key={key}>
+                  <Divider />
+                  <Alert
+                    type="error"
+                    {...(typeof error === 'string'
+                      ? { title: error }
+                      : { children: error })}
+                  />
+                </React.Fragment>
+              );
+            })}
+            {warnings?.map((warning, index) => {
+              const key = `warning-${index}`;
+              return (
+                <React.Fragment key={key}>
+                  <Divider />
+                  <Alert
+                    type="warning"
+                    {...(typeof warning === 'string'
+                      ? { title: warning }
+                      : { children: warning })}
+                  />
+                </React.Fragment>
+              );
+            })}
           </Alerts>
         </div>
         {props.previewInputs || props.previewRoutes ? (
@@ -173,8 +176,10 @@ export function ConfirmSwap(props: PropsWithChildren<PropTypes>) {
         ) : null}
         {requiredWallets.map((wallet, index) => {
           const list = selectableWallets.filter((w) => wallet === w.chain);
+          const key = `wallet-${index}`;
+
           return (
-            <Container key={index}>
+            <Container key={key}>
               <div className="title">
                 <div className="num">{index + 1}</div>
                 <Divider size={8} direction="horizontal" />
@@ -195,7 +200,6 @@ export function ConfirmSwap(props: PropsWithChildren<PropTypes>) {
                       <Button
                         variant="contained"
                         type="primary"
-                        align="grow"
                         onClick={() => handleConnectChain?.(wallet)}>
                         {`Add ${wallet} chain to Cosmos wallets`}
                       </Button>

@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
+import ReactColor from 'react-color';
+import rgbHex from 'rgb-hex';
+
 import { styled } from '../../theme';
 import { Button } from '../Button';
 import { CloseIcon } from '../Icon';
-import rgbHex from 'rgb-hex';
-import ReactColor from 'react-color';
 
 const { ChromePicker } = ReactColor;
 
@@ -75,7 +76,6 @@ export function ColorPicker({
         variant="outlined"
         prefix={<Color style={{ backgroundColor: color }} />}
         fullWidth
-        align="start"
         size="large"
         suffix={
           color && (

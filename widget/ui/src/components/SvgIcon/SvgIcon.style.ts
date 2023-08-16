@@ -1,7 +1,6 @@
 import { darkTheme, styled } from '../../theme';
 
 export const SvgWithColor = styled('svg', {
-  color: '$neutral700',
   variants: {
     color: {
       primary: {
