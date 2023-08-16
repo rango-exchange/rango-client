@@ -22,7 +22,7 @@
   "dependencies": {
     "@rango-dev/provider-argentx": "^0.15.1-next.1",
     "@rango-dev/provider-binance-chain-wallet": "^0.15.1-next.1",
-    "@rango-dev/provider-bitkeep": "^0.11.1-next.0",
+    "@rango-dev/provider-bitget": "^0.11.1-next.1",
     "@rango-dev/provider-braavos": "^0.8.1-next.1",
     "@rango-dev/provider-brave": "^0.15.1-next.1",
     "@rango-dev/provider-clover": "^0.15.1-next.1",
