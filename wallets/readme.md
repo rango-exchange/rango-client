@@ -131,7 +131,7 @@ For better user experience, wallet provider tries to connect to a wallet only wh
 | -------------- | ------------------------------------------------------- | ------------------------------------ | -------------------- | ------------------------------------------ |
 | ArgentX        | Starknet                                                | -                                    | &check;              | https://www.argent.xyz/                    |
 | Binance Wallet | Binance,BSC,ETH                                         | -                                    | &cross;              | https://www.bnbchain.org/en/binance-wallet |
-| Bitkeep        | EVM,Tron,Solana,Cosmos,Starknet,Aptos,Arweave           | Solana,Cosmos,Starknet,Aptos,Arweave | &check;              | https://bitkeep.com/                       |
+| Bitget         | EVM,Tron,Solana,Cosmos,Starknet,Aptos,Arweave           | Solana,Cosmos,Starknet,Aptos,Arweave | &check;              | https://web3.bitget.com/                   |
 | Braavos        | Starknet                                                | -                                    | &check;              | https://braavos.app/                       |
 | Brave          | EVM, Solana                                             | -                                    | &check;              | https://brave.com/wallet/                  |
 | Clover         | EVM, Solana,Polkadot,Kadena,Aptos,BTC,Doge              | Polkadot,Kadena,Aptos,BTC,Doge       | &check;              | https://wallet.clover.finance              |
@@ -141,8 +141,8 @@ For better user experience, wallet provider tries to connect to a wallet only wh
 | Enkrypt        | EVM                                                     | BTC,Fantom,Cardano,Algorand          | &check;              | https://www.enkrypt.com/                   |
 | Exodus         | BTC,ETH,BSC,Fantom,Cardano,Polygon,Solana,Avax,Algorand | BTC,Fantom,Cardano,Algorand          | &check;              | https://www.exodus.com/                    |
 | Frontier       | EVM,Solana,Cosmos,Polkadot                              | Cosmos,Polkadot                      | &check;              | https://frontier.xyz/                      |
+| Halo           | -                                                       | -                                    | &cross;              | https://halo.social/                       |
 | Keplr          | Cosmos                                                  | -                                    | &cross;              | https://www.keplr.app/                     |
-| Kucoin         | -                                                       | -                                    | &cross;              | https://kuwallet.com/                      |
 | Leap Cosmos    | Cosmos                                                  | Cosmos                               | &cross;              | https://www.leapwallet.io/cosmos           |
 | Math Wallet    | BTC,EVM,Solana,Aptos,Tron,Polkadot,Cosmos               | BTC,Aptos,Tron,Polkadot,Cosmos       | &check;              | https://mathwallet.org/en-us/              |
 | Metamask       | EVM                                                     | -                                    | &check;              | -                                          |
