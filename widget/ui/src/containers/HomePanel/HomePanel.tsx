@@ -207,7 +207,6 @@ export function HomePanel({
       <Footer>
         <Button
           type="primary"
-          align="grow"
           size="large"
           disabled={swapButtonDisabled}
           onClick={swapButtonClick}>

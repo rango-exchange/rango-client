@@ -65,6 +65,6 @@ export const Label = styled('label', {
   cursor: 'pointer',
   color: '$foreground',
   '& > span': {
-    display: 'bloc',
+    display: 'block',
   },
 });

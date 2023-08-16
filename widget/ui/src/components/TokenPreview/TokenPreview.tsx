@@ -144,7 +144,6 @@ export function TokenPreview(props: PropTypes) {
               )
             }
             suffix={ItemSuffix}
-            align="start"
             size="large">
             {loadingStatus === 'success' && chain
               ? chain.displayName
@@ -163,8 +162,7 @@ export function TokenPreview(props: PropTypes) {
               )
             }
             suffix={ItemSuffix}
-            size="large"
-            align="start">
+            size="large">
             {loadingStatus === 'success' && token
               ? token.symbol
               : i18n.t('Token')}

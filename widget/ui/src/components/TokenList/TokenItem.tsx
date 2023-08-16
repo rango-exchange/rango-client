@@ -1,10 +1,13 @@
-import { Token } from 'rango-sdk';
-import React, { CSSProperties } from 'react';
+import type { TokenWithAmount } from './TokenList';
+import type { Token } from 'rango-sdk';
+import type { CSSProperties } from 'react';
+
+import React from 'react';
+
 import { styled } from '../../theme';
 import { Button } from '../Button';
-import { Typography } from '../Typography';
-import { TokenWithAmount } from './TokenList';
 import { Image } from '../common';
+import { Typography } from '../Typography';
 
 const TokenImageContainer = styled('div', {
   paddingRight: '$16',
@@ -44,7 +47,6 @@ export function TokenItem(props: PropTypes) {
       <Button
         variant="outlined"
         size="large"
-        align="start"
         onClick={onClick.bind(null, token)}
         type={selected ? 'primary' : undefined}
         prefix={

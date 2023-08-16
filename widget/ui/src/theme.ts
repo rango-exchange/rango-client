@@ -113,7 +113,7 @@ const theme = {
     xs: '5px',
     sm: '10px',
     xm: '15px',
-    md: '20px',
+    md: '25px',
     xl: '35px',
     lg: '40px',
   },

@@ -199,7 +199,6 @@ export function Settings(props: PropTypes) {
       <LiquiditySourceContainer>
         <Button
           onClick={onLiquiditySourcesClick}
-          align="start"
           variant="ghost"
           loading={loadingStatus === 'loading'}
           suffix={
