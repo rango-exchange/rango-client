@@ -1,7 +1,9 @@
-import React from 'react';
-import { Meta } from '@storybook/react';
+import type { PropTypes } from './Typography.types';
+import type { Meta } from '@storybook/react';
 
-import { Typography, PropTypes } from './Typography';
+import React from 'react';
+
+import { Typography } from './Typography';
 
 export default {
   title: 'Components/Typography',
@@ -34,7 +36,7 @@ export default {
       control: { type: 'boolean' },
     },
   },
-} as Meta<typeof Typography>;
+} satisfies Meta<typeof Typography>;
 
 export const Main = (props: PropTypes) => (
   <div>
