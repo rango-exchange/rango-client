@@ -6,7 +6,7 @@ import { SvgWithColor } from './SvgIcon.style';
 
 export function SvgIcon(props: SvgIconPropsWithChildren) {
   // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-  const { size = 16, color, children } = props;
+  const { size = '1em', color, children } = props;
   const originalSvgProps = children?.props;
   const commonProps = {
     ...originalSvgProps,

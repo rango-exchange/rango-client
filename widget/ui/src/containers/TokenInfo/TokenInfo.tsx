@@ -194,7 +194,7 @@ export function TokenInfo(props: PropTypes) {
                   {i18n.t('Balance')}: {tokenBalance} {fromToken?.symbol || ''}
                 </Typography>
                 <Divider size={4} />
-                <Button type="primary" variant="ghost" size="compact">
+                <Button type="primary" variant="ghost" size="small">
                   <Trans id="maximum amount of asset" message="Max" />
                 </Button>
               </div>
@@ -229,7 +229,6 @@ export function TokenInfo(props: PropTypes) {
               )
             }
             suffix={ItemSuffix}
-            align="start"
             size="large">
             {loadingStatus === 'success' && chain
               ? chain.displayName
@@ -254,8 +253,7 @@ export function TokenInfo(props: PropTypes) {
               )
             }
             suffix={ItemSuffix}
-            size="large"
-            align="start">
+            size="large">
             {loadingStatus === 'success' && token
               ? token.symbol
               : i18n.t('Token')}

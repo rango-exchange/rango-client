@@ -259,7 +259,6 @@ export function Home() {
         <Footer>
           <Button
             type="primary"
-            align="grow"
             size="large"
             disabled={swapButtonState.disabled}
             onClick={() => {

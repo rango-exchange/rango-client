@@ -1,12 +1,16 @@
-import React, { PropsWithChildren } from 'react';
-import { PendingSwap } from '../../containers/History/types';
+import type { PendingSwap } from '../../containers/History/types';
+import type { PropsWithChildren } from 'react';
+
+import React from 'react';
+
+import { limitDecimalPlaces } from '../../helper';
 import { styled } from '../../theme';
 import { Button } from '../Button';
-import { ArrowRightIcon } from '../Icon';
 import { Divider } from '../Divider';
+import { ArrowRightIcon } from '../Icon';
 import { Spinner } from '../Spinner';
+
 import { Token } from './Token';
-import { limitDecimalPlaces } from '../../helper';
 
 const Container = styled('div', {
   position: 'relative',
@@ -52,10 +56,8 @@ export function SwapDetail({
   return (
     <Button
       variant="ghost"
-      size="free"
       fullWidth
-      onClick={onClick.bind(null, swap.requestId)}
-    >
+      onClick={onClick.bind(null, swap.requestId)}>
       <Container className={`${status}`}>
         <div className="info">
           <Token
