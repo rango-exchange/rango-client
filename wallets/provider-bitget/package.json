@@ -1,6 +1,6 @@
 {
-  "name": "@rango-dev/provider-kucoin-wallet",
-  "version": "0.15.1-next.0",
+  "name": "@rango-dev/provider-bitget",
+  "version": "0.11.1-next.0",
   "license": "MIT",
   "type": "module",
   "module": "./dist/index.js",
@@ -14,13 +14,14 @@
     "src"
   ],
   "scripts": {
-    "build": "node ../../scripts/build/command.mjs --path wallets/provider-kucoin-wallet",
+    "build": "node ../../scripts/build/command.mjs --path wallets/provider-bitget",
     "clean": "rimraf dist",
     "format": "prettier --write '{.,src}/**/*.{ts,tsx}'",
     "lint": "eslint \"**/*.{ts,tsx}\" --ignore-path ../../.eslintignore"
   },
   "dependencies": {
     "@rango-dev/signer-evm": "^0.15.0",
+    "@rango-dev/signer-tron": "^0.15.0",
     "@rango-dev/wallets-shared": "^0.15.1-next.0",
     "rango-types": "^0.1.46"
   },
