@@ -12,12 +12,18 @@ export const getBlockChainNameFromId = (
       ? parseInt(chainId)
       : chainId;
 
-  // Sometimes providers are passing `Network` as chainId.
-  // If chainId is a `Network`, we return itself.
+  /*
+   * Sometimes providers are passing `Network` as chainId.
+   * If chainId is a `Network`, we return itself.
+   */
   const allNetworks = Object.values(Networks) as string[];
-  if (allNetworks.includes(String(chainId))) return chainId as Networks;
+  if (allNetworks.includes(String(chainId))) {
+    return chainId as Networks;
+  }
 
-  if (chainId === 'Binance-Chain-Tigris') return Networks.BINANCE;
+  if (chainId === 'Binance-Chain-Tigris') {
+    return Networks.BINANCE;
+  }
   return (
     blockchains
       .filter((blockchainMeta) => !!blockchainMeta.chainId)
@@ -49,7 +55,7 @@ export enum WalletTypes {
   KEPLR = 'keplr',
   PHANTOM = 'phantom',
   BINANCE_CHAIN = 'binance-chain',
-  BITKEEP = 'bitkeep',
+  BITGET = 'bitget',
   TRON_LINK = 'tron-link',
   COINBASE = 'coinbase',
   XDEFI = 'xdefi',
@@ -66,7 +72,7 @@ export enum WalletTypes {
   MATH = 'math',
   EXODUS = 'exodus',
   OKX = 'okx',
-  KUCOIN = 'kucoin',
+  HALO = 'halo',
   LEAP = 'leap',
   LEAP_COSMOS = 'leap-cosmos',
   STATION = 'station',

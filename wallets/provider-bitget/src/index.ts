@@ -1,38 +1,37 @@
-import {
-  WalletTypes,
+import type {
+  CanEagerConnect,
   CanSwitchNetwork,
   Connect,
+  ProviderConnectResult,
   Subscribe,
-  WalletInfo,
-  getEvmAccounts,
-  subscribeToEvm,
-  switchNetworkForEvm,
   SwitchNetwork,
+  WalletInfo,
+} from '@rango-dev/wallets-shared';
+import type { BlockchainMeta, SignerFactory } from 'rango-types';
+
+import {
+  canEagerlyConnectToEvm,
   canSwitchNetworkToEvm,
   chooseInstance,
+  getEvmAccounts,
   Networks,
-  ProviderConnectResult,
-  CanEagerConnect,
-  canEagerlyConnectToEvm,
+  subscribeToEvm,
+  switchNetworkForEvm,
+  WalletTypes,
 } from '@rango-dev/wallets-shared';
-import {
-  SignerFactory,
-  BlockchainMeta,
-  evmBlockchains,
-  isEvmBlockchain,
-  tronBlockchain,
-} from 'rango-types';
-import { bitKeepInstances } from './helpers';
+import { evmBlockchains, isEvmBlockchain, tronBlockchain } from 'rango-types';
+
+import { bitgetInstances } from './helpers';
 import signer from './signer';
 
-const WALLET = WalletTypes.BITKEEP;
+const WALLET = WalletTypes.BITGET;
 
 export const config = {
   type: WALLET,
   defaultNetwork: Networks.ETHEREUM,
 };
 
-export const getInstance = bitKeepInstances;
+export const getInstance = bitgetInstances;
 
 export const connect: Connect = async ({ instance, meta }) => {
   const ethInstance = chooseInstance(instance, meta, Networks.ETHEREUM);
@@ -105,11 +104,12 @@ export const switchNetwork: SwitchNetwork = switchNetworkForEvm;
 
 export const canSwitchNetworkTo: CanSwitchNetwork = canSwitchNetworkToEvm;
 
-export const canEagerConnect: CanEagerConnect = ({ instance, meta }) => {
+export const canEagerConnect: CanEagerConnect = async ({ instance, meta }) => {
   const evm_instance = chooseInstance(instance, meta, Networks.ETHEREUM);
   if (evm_instance) {
     return canEagerlyConnectToEvm({ instance: evm_instance, meta });
-  } else return Promise.resolve(false);
+  }
+  return Promise.resolve(false);
 };
 export const getSigners: (provider: any) => SignerFactory = signer;
 
@@ -119,14 +119,14 @@ export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
   const evms = evmBlockchains(allBlockChains);
   const tron = tronBlockchain(allBlockChains);
   return {
-    name: 'Bitkeep',
-    img: 'https://raw.githubusercontent.com/rango-exchange/rango-types/main/assets/icons/wallets/bitkeep.png',
+    name: 'Bitget',
+    img: 'https://raw.githubusercontent.com/rango-exchange/rango-types/main/assets/icons/wallets/bitget.svg',
     installLink: {
       CHROME:
         'https://chrome.google.com/webstore/detail/bitkeep-crypto-nft-wallet/jiidiaalihmmhddjgbnbgdfflelocpak',
       BRAVE:
         'https://chrome.google.com/webstore/detail/bitkeep-crypto-nft-wallet/jiidiaalihmmhddjgbnbgdfflelocpak',
-      DEFAULT: 'https://bitkeep.com/en/download?type=2',
+      DEFAULT: 'https://web3.bitget.com/en/wallet-download?type=1',
     },
     color: '#ffffff',
     supportedChains: [...evms, ...tron],

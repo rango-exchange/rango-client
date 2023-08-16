@@ -33,7 +33,7 @@
     "@rango-dev/provider-exodus": "^0.15.1-next.0",
     "@rango-dev/provider-frontier": "^0.15.1-next.0",
     "@rango-dev/provider-keplr": "^0.15.1-next.0",
-    "@rango-dev/provider-kucoin-wallet": "^0.15.1-next.0",
+    "@rango-dev/provider-halo": "^0.15.1-next.0",
     "@rango-dev/provider-leap-cosmos": "^0.15.1-next.0",
     "@rango-dev/provider-math-wallet": "^0.15.1-next.0",
     "@rango-dev/provider-metamask": "^0.15.1-next.0",
