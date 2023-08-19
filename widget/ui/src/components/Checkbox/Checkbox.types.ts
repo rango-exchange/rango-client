@@ -5,9 +5,13 @@ type RadixCheckboxProps = Pick<
   'defaultChecked' | 'checked' | 'disabled' | 'name' | 'onCheckedChange'
 >;
 
-interface ComponentProps {
+interface WithLabelProps {
   id: string;
   label: string;
 }
+interface ComponentProps {
+  id?: never;
+  label?: never;
+}
 
-export type PropTypes = RadixCheckboxProps & ComponentProps;
+export type PropTypes = RadixCheckboxProps & (ComponentProps | WithLabelProps);

@@ -15,6 +15,7 @@ import {
 
 export function Checkbox(props: PropsWithChildren<PropTypes>) {
   const { id, label, ...otherProps } = props;
+  const hasLabel = id && label;
   return (
     <CheckboxContainer>
       <CheckboxRoot id={id} {...otherProps}>
@@ -22,10 +23,14 @@ export function Checkbox(props: PropsWithChildren<PropTypes>) {
           <DoneIcon color="white" size={12} />
         </CheckboxIndicator>
       </CheckboxRoot>
-      <Divider direction="horizontal" size={8} />
-      <Label className="_text" htmlFor={id}>
-        {label}
-      </Label>
+      {hasLabel ? (
+        <>
+          <Divider direction="horizontal" size={8} />
+          <Label className="_text" htmlFor={id}>
+            {label}
+          </Label>
+        </>
+      ) : null}
     </CheckboxContainer>
   );
 }
