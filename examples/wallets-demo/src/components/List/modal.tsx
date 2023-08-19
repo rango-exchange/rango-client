@@ -1,33 +1,37 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { useWallets } from '@rango-dev/wallets-core';
-import { Networks, WalletType, isEvmAddress } from '@rango-dev/wallets-shared';
-import './styles.css';
+import type { WalletType } from '@rango-dev/wallets-shared';
+import type {
+  Asset,
+  BestRouteRequest,
+  BestRouteResponse,
+  Token,
+  TransactionType,
+} from 'rango-sdk';
+
 import {
   BestRoute,
   Button,
   Divider,
   Modal,
-  Typography,
   styled,
+  Typography,
 } from '@rango-dev/ui';
-
-import { SwapComponent } from '../Swap';
+import { useWallets } from '@rango-dev/wallets-react';
+import { isEvmAddress, Networks } from '@rango-dev/wallets-shared';
 import {
-  Asset,
-  BestRouteRequest,
-  BestRouteResponse,
-  RangoClient,
-  Token,
-  TransactionStatus,
-  TransactionType,
   isCosmosBlockchain,
   isEvmBlockchain,
   isSolanaBlockchain,
   isStarknetBlockchain,
   isTronBlockchain,
+  RangoClient,
+  TransactionStatus,
 } from 'rango-sdk';
+import React, { useEffect, useRef, useState } from 'react';
 
 import { swaps } from '../../constants';
+import { SwapComponent } from '../Swap';
+import './styles.css';
+
 type Props = {
   type: WalletType;
   open: boolean;
@@ -92,7 +96,7 @@ function SignModal({ type, open, onClose, tokens }: Props) {
           resetStates();
         } else if (step <= (bestRoute.result?.swaps.length || 1)) {
           setHash('');
-          createTx(bestRoute, step + 1);
+          createTx(bestRoute, step + 1).catch((error) => console.log(error));
           setStep((prev) => prev + 1);
         }
         alert('Well Done, The swap was successful!');
@@ -106,14 +110,17 @@ function SignModal({ type, open, onClose, tokens }: Props) {
     }
   };
 
-  const canSwitchNetwork = (network) =>
+  const canSwitchNetwork = (network: string) =>
     network !== Networks.Unknown && canSwitchNetworkTo(type, network);
-  const handleChangeNetwork = async (network) => {
+
+  const handleChangeNetwork = async (network: string) => {
     if (canSwitchNetwork(network)) {
       try {
         await connect(type, network);
       } catch (err) {
-        setError('Error: ' + (err.message || 'Failed to connect wallet'));
+        setError(
+          'Error: ' + ((err as any).message || 'Failed to connect wallet')
+        );
       }
     }
   };
@@ -172,7 +179,9 @@ function SignModal({ type, open, onClose, tokens }: Props) {
         );
         setLoadingSwap(false);
       } else {
-        createTx(bestRoute, step);
+        createTx(bestRoute, step).catch((e) => {
+          console.log(e);
+        });
       }
     } catch (error) {
       setError(`Error requesting bestRoute: ${error}`);
@@ -210,12 +219,15 @@ function SignModal({ type, open, onClose, tokens }: Props) {
           let chainId: string | null = null;
           for (const account of addresses) {
             const [chain, walletAddress] = account.split(':');
-            if (chain === bestRoute.from.blockchain) address = walletAddress;
+            if (chain === bestRoute.from.blockchain) {
+              address = walletAddress;
+            }
           }
 
           blockchains.map((blockchain) => {
-            if (blockchain.name === bestRoute.from.blockchain)
+            if (blockchain.name === bestRoute.from.blockchain) {
               chainId = blockchain.chainId;
+            }
           });
 
           const { hash } = await signers
@@ -224,7 +236,11 @@ function SignModal({ type, open, onClose, tokens }: Props) {
 
           setHash(hash);
         } catch (e) {
-          setError(`Error requesting create transaction: ${e.message}`);
+          setError(
+            `Error requesting create transaction: ${
+              e instanceof Error ? e.message : e
+            }`
+          );
           setLoadingSwap(false);
         }
       }
@@ -252,24 +268,32 @@ function SignModal({ type, open, onClose, tokens }: Props) {
   useEffect(() => {
     let allAdresses: string[] = [];
     accounts?.map((account) => {
-      const [_, address] = account.split(':');
+      const [, address] = account.split(':');
       if (!!isEvmAddress(address)) {
         allAdresses = [
           ...allAdresses,
           ...blockchains.map((chain) => `${chain.name}:${address}`),
         ];
-      } else allAdresses = [...allAdresses, account];
+      } else {
+        allAdresses = [...allAdresses, account];
+      }
     });
     setAddresses(allAdresses);
   }, []);
 
   useEffect(() => {
-    if (!!hash)
-      timer.current = setInterval(() => checkStatus(), INTERVAL_FOR_CHECK);
+    if (!!hash) {
+      timer.current = setInterval(
+        async () => checkStatus(),
+        INTERVAL_FOR_CHECK
+      );
+    }
   }, [hash]);
 
   useEffect(() => {
-    if (loadingSwap && bestRoute) createTx(bestRoute, step);
+    if (loadingSwap && bestRoute) {
+      void createTx(bestRoute, step);
+    }
   }, [network]);
 
   return (

@@ -85,7 +85,7 @@
     "@typescript-eslint/no-magic-numbers": [
       "error",
       {
-        "ignore": [0, 1]
+        "ignore": [0, 1, 2]
       }
     ],
     "@typescript-eslint/consistent-type-exports": "error",

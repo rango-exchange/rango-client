@@ -1,8 +1,11 @@
+import type { WalletType } from '@rango-dev/wallets-shared';
+
 import { ConnectWalletsModal } from '@rango-dev/ui';
 import { useWallets } from '@rango-dev/wallets-react';
-import { WalletType } from '@rango-dev/wallets-shared';
 import React, { useState } from 'react';
+
 import { getlistWallet } from './helpers';
+
 export interface PropTypes {
   open: boolean;
   onClose: () => void;
