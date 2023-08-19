@@ -1,6 +1,7 @@
-import React from 'react';
+import type { BlockchainMeta, Token } from 'rango-sdk';
+
 import { ArrowRightIcon, Image, styled, Typography } from '@rango-dev/ui';
-import { BlockchainMeta, Token } from 'rango-sdk';
+import React from 'react';
 
 interface swap {
   blockchain?: BlockchainMeta;

@@ -1,29 +1,31 @@
-import React, { useState } from 'react';
-import { readAccountAddress, useWallets } from '@rango-dev/wallets-react';
-import {
+import type {
   Network,
-  WalletType,
-  detectInstallLink,
   WalletInfo,
-  Networks,
+  WalletType,
 } from '@rango-dev/wallets-shared';
-import './styles.css';
+import type { Token } from 'rango-sdk';
+
 import {
   Button,
+  Divider,
   HorizontalSwapIcon,
   InfoCircleIcon,
   SignatureIcon,
-  Divider,
   Spinner,
   Tooltip,
   Typography,
 } from '@rango-dev/ui';
+import { readAccountAddress, useWallets } from '@rango-dev/wallets-react';
+import { detectInstallLink, Networks } from '@rango-dev/wallets-shared';
+import React, { useState } from 'react';
+import './styles.css';
+
 import {
   evmBasedChainsSelector,
   prepareAccounts,
   walletAndSupportedChainsNames,
 } from '../../helper';
-import { Token, TransactionType } from 'rango-sdk';
+
 import SignModal from './modal';
 
 function Item({
@@ -43,7 +45,9 @@ function Item({
   const [error, setError] = useState<string>('');
   const evmBasedChains = evmBasedChainsSelector(info.supportedChains);
   const handleConnectWallet = async () => {
-    if (walletState.connecting) return;
+    if (walletState.connecting) {
+      return;
+    }
     try {
       if (!walletState.connected) {
         if (walletState.installed) {
@@ -54,10 +58,14 @@ function Item({
           window.open(detectInstallLink(info.installLink), '_blank');
         }
       } else {
-        disconnect(type);
+        void disconnect(type);
       }
     } catch (err) {
-      setError('Error: ' + (err.message || 'Failed to connect wallet'));
+      if (err instanceof Error) {
+        setError('Error: ' + err.message);
+      } else {
+        setError('Error: Failed to connect wallet');
+      }
     }
   };
   const canSwitchNetwork =
@@ -69,7 +77,11 @@ function Item({
         setError('');
         setNetwork(result.network || Networks.Unknown);
       } catch (err) {
-        setError('Error: ' + (err.message || 'Failed to connect wallet'));
+        if (err instanceof Error) {
+          setError('Error: ' + err.message);
+        } else {
+          setError('Error: Failed to connect wallet');
+        }
       }
     }
   };
@@ -96,18 +108,23 @@ function Item({
       const address =
         walletState.accounts?.length > 1 && isMatchedNetworkWithAccount
           ? readAccountAddress(
-              walletState.accounts.find((account) =>
-                account?.toLowerCase()?.includes(network?.toLowerCase())
-              )!
+              walletState.accounts
+                .find((account) =>
+                  account?.toLowerCase()?.includes(network?.toLowerCase())
+                )
+                ?.toLowerCase() || ''
             ).address
           : activeAccount?.accounts[0].address;
 
       const currentChain = info.supportedChains.find(
         (chain) => chain.name === network
       );
-      const txType = currentChain?.type || (network as TransactionType);
-
+      const txType = currentChain?.type;
       const chainId = currentChain?.chainId || null;
+      if (!txType) {
+        alert('Error in detecting tx type.');
+        return;
+      }
       const result = signers
         .getSigner(txType)
         .signMessage('Hello World', address || 'meow', chainId);
@@ -162,7 +179,9 @@ function Item({
             <h4 className="mt-8">Accounts: </h4>
             <div className="account_box">
               {walletState?.accounts?.map((account) => (
-                <div className="account">{account}</div>
+                <div className="account" key={account}>
+                  {account}
+                </div>
               ))}
             </div>
             <div className="mt-10">
