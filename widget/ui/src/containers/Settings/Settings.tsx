@@ -6,7 +6,7 @@ import React, { useState } from 'react';
 import {
   Button,
   Chip,
-  Radio,
+  RadioGroup,
   SecondaryPage,
   Switch,
   TextField,
@@ -177,7 +177,7 @@ export function Settings(props: PropTypes) {
           <Title variant="body" size="small">
             {i18n.t('Theme')}
           </Title>
-          <Radio
+          <RadioGroup
             value={selectedTheme}
             options={[
               { value: 'dark', label: `${i18n.t('Dark')}` },
