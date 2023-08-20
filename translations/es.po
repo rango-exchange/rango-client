@@ -44,12 +44,12 @@ msgid "Change Slippage"
 msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/ui/src/components/LiquiditySourceList/LiquiditySourceList.tsx:108
+#: widget/ui/src/components/LiquiditySourceList/LiquiditySourceList.tsx:112
 msgid "Bridges"
 msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/ui/src/components/LiquiditySourceList/LiquiditySourceList.tsx:143
+#: widget/ui/src/components/LiquiditySourceList/LiquiditySourceList.tsx:151
 msgid "Exchanges"
 msgstr ""
 
@@ -59,14 +59,14 @@ msgid "Swap Details"
 msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/ui/src/components/TokenPreview/TokenPreview.tsx:151
-#: widget/ui/src/containers/TokenInfo/TokenInfo.tsx:236
+#: widget/ui/src/components/TokenPreview/TokenPreview.tsx:150
+#: widget/ui/src/containers/TokenInfo/TokenInfo.tsx:235
 msgid "Chain"
 msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/ui/src/components/TokenPreview/TokenPreview.tsx:170
-#: widget/ui/src/containers/TokenInfo/TokenInfo.tsx:261
+#: widget/ui/src/components/TokenPreview/TokenPreview.tsx:168
+#: widget/ui/src/containers/TokenInfo/TokenInfo.tsx:259
 msgid "Token"
 msgstr ""
 
@@ -116,7 +116,7 @@ msgid "Infinite Approval"
 msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/ui/src/containers/Settings/Settings.tsx:223
+#: widget/ui/src/containers/Settings/Settings.tsx:222
 msgid "Liquidity Sources"
 msgstr ""
 
@@ -131,27 +131,32 @@ msgid "Insufficent Balance:"
 msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/HeaderButtons/HomeButtons.tsx:36
+#: widget/embedded/src/components/HeaderButtons/CancelButton.tsx:13
+#~ msgid "Cancel"
+#~ msgstr ""
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/HeaderButtons/HomeButtons.tsx:25
 #~ msgid "Refresh"
 #~ msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/HeaderButtons/HomeButtons.tsx:44
+#: widget/embedded/src/components/HeaderButtons/HomeButtons.tsx:34
 #~ msgid "Notifications"
 #~ msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/HeaderButtons/HomeButtons.tsx:49
+#: widget/embedded/src/components/HeaderButtons/HomeButtons.tsx:42
 #~ msgid "Settings"
 #~ msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/HeaderButtons/HomeButtons.tsx:54
+#: widget/embedded/src/components/HeaderButtons/HomeButtons.tsx:47
 #~ msgid "Transactions History"
 #~ msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/HeaderButtons/WalletButton.tsx:9
+#: widget/embedded/src/components/HeaderButtons/WalletButton.tsx:11
 #: widget/embedded/src/utils/swap.ts:143
 #: widget/embedded/src/utils/swap.ts:145
 #~ msgid "Connect Wallet"
