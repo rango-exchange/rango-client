@@ -1,31 +1,34 @@
-import {
-  Networks,
-  WalletTypes,
+import type {
+  CanEagerConnect,
   CanSwitchNetwork,
   Connect,
   ProviderConnectResult,
   Subscribe,
   SwitchNetwork,
+  WalletInfo,
+} from '@rango-dev/wallets-shared';
+import type { BlockchainMeta, SignerFactory } from 'rango-types';
+
+import {
+  canEagerlyConnectToEvm,
   canSwitchNetworkToEvm,
   chooseInstance,
+  getCosmosAccounts,
   getEvmAccounts,
+  Networks,
   subscribeToEvm,
   switchNetworkForEvm,
-  getCosmosAccounts,
-  WalletInfo,
-  CanEagerConnect,
-  canEagerlyConnectToEvm,
+  WalletTypes,
 } from '@rango-dev/wallets-shared';
+import {
+  cosmosBlockchains,
+  evmBlockchains,
+  isCosmosBlockchain,
+  isEvmBlockchain,
+} from 'rango-types';
+
 import { cosmostation as cosmostation_instance } from './helpers';
 import signer from './signer';
-import {
-  SignerFactory,
-  BlockchainMeta,
-  evmBlockchains,
-  isEvmBlockchain,
-  isCosmosBlockchain,
-  cosmosBlockchains,
-} from 'rango-types';
 
 const WALLET = WalletTypes.COSMOSTATION;
 
@@ -53,8 +56,11 @@ export const connect: Connect = async ({ instance, meta }) => {
       meta: cosmosBlockchainMeta,
       network: Networks.COSMOS,
     });
-    if (Array.isArray(comsmosResult)) results.push(...comsmosResult);
-    else results.push(comsmosResult);
+    if (Array.isArray(comsmosResult)) {
+      results.push(...comsmosResult);
+    } else {
+      results.push(comsmosResult);
+    }
   }
 
   return results;
@@ -94,11 +100,12 @@ export const subscribe: Subscribe = ({
 
 export const getSigners: (provider: any) => SignerFactory = signer;
 
-export const canEagerConnect: CanEagerConnect = ({ instance, meta }) => {
+export const canEagerConnect: CanEagerConnect = async ({ instance, meta }) => {
   const evm_instance = chooseInstance(instance, meta, Networks.ETHEREUM);
   if (evm_instance) {
     return canEagerlyConnectToEvm({ instance: evm_instance, meta });
-  } else return Promise.resolve(false);
+  }
+  return Promise.resolve(false);
 };
 
 export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
@@ -108,7 +115,7 @@ export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
   const cosmos = cosmosBlockchains(allBlockChains);
   return {
     name: 'Cosmostation',
-    img: 'https://raw.githubusercontent.com/rango-exchange/rango-types/main/assets/icons/wallets/cosmostation.png',
+    img: 'https://raw.githubusercontent.com/rango-exchange/rango-assets/main/wallets/cosmostation/icon.svg',
     installLink: {
       CHROME:
         'https://chrome.google.com/webstore/detail/cosmostation/fpkhgmpbidmiogeglndfbkegfdlnajnf',

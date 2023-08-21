@@ -1,31 +1,32 @@
-import {
-  Networks,
-  WalletTypes,
-  CanSwitchNetwork,
-  Connect,
-  Subscribe,
-  WalletInfo,
-  getEvmAccounts,
-  SwitchNetwork,
-  switchNetworkForEvm,
-  canSwitchNetworkToEvm,
-  chooseInstance,
-  canEagerlyConnectToEvm,
-} from '@rango-dev/wallets-shared';
 import type {
   CanEagerConnect,
+  CanSwitchNetwork,
+  Connect,
   ProviderConnectResult,
+  Subscribe,
+  SwitchNetwork,
+  WalletInfo,
 } from '@rango-dev/wallets-shared';
-import { frontier as frontier_instance, getSolanaAccounts } from './helpers';
-import signer from './signer';
+import type { BlockchainMeta, SignerFactory } from 'rango-types';
+
 import {
-  SignerFactory,
-  isEvmBlockchain,
-  BlockchainMeta,
+  canEagerlyConnectToEvm,
+  canSwitchNetworkToEvm,
+  chooseInstance,
+  getEvmAccounts,
+  Networks,
+  switchNetworkForEvm,
+  WalletTypes,
+} from '@rango-dev/wallets-shared';
+import {
   evmBlockchains,
+  isEvmBlockchain,
   isSolanaBlockchain,
   solanaBlockchain,
 } from 'rango-types';
+
+import { frontier as frontier_instance, getSolanaAccounts } from './helpers';
+import signer from './signer';
 
 const WALLET = WalletTypes.FRONTIER;
 
@@ -68,15 +69,17 @@ export const subscribe: Subscribe = (options) => {
       .filter(isEvmBlockchain)
       .find((blockchain) => blockchain.name === Networks.ETHEREUM)?.chainId;
     if (state.connected) {
-      if (state.network != Networks.ETHEREUM && eth_chainId)
+      if (state.network != Networks.ETHEREUM && eth_chainId) {
         updateChainId(eth_chainId);
+      }
       updateAccounts(addresses);
     }
   });
 
   solanaInstance?.on('accountChanged', async (publicKey: string) => {
-    if (state.network != Networks.SOLANA)
+    if (state.network != Networks.SOLANA) {
       updateChainId(meta.filter(isSolanaBlockchain)[0].chainId);
+    }
     const network = Networks.SOLANA;
     if (publicKey) {
       const account = publicKey.toString();
@@ -102,11 +105,12 @@ export const canSwitchNetworkTo: CanSwitchNetwork = canSwitchNetworkToEvm;
 
 export const getSigners: (provider: any) => SignerFactory = signer;
 
-export const canEagerConnect: CanEagerConnect = ({ instance, meta }) => {
+export const canEagerConnect: CanEagerConnect = async ({ instance, meta }) => {
   const evm_instance = chooseInstance(instance, meta, Networks.ETHEREUM);
   if (evm_instance) {
     return canEagerlyConnectToEvm({ instance: evm_instance, meta });
-  } else return Promise.resolve(false);
+  }
+  return Promise.resolve(false);
 };
 
 export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
@@ -117,7 +121,7 @@ export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
 
   return {
     name: 'Frontier',
-    img: 'https://raw.githubusercontent.com/rango-exchange/rango-types/main/assets/icons/wallets/frontier.png',
+    img: 'https://raw.githubusercontent.com/rango-exchange/rango-assets/main/wallets/frontier/icon.svg',
     installLink: {
       CHROME:
         'https://chrome.google.com/webstore/detail/frontier-wallet/kppfdiipphfccemcignhifpjkapfbihd',

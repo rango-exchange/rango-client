@@ -1,23 +1,23 @@
-import {
-  WalletTypes,
+import type {
+  CanEagerConnect,
   CanSwitchNetwork,
   Connect,
+  GetInstance,
   Subscribe,
+  SwitchNetwork,
   WalletInfo,
+} from '@rango-dev/wallets-shared';
+import type { BlockchainMeta, SignerFactory } from 'rango-types';
+
+import {
+  canEagerlyConnectToEvm,
+  canSwitchNetworkToEvm,
   subscribeToEvm,
   switchNetworkForEvm,
-  SwitchNetwork,
-  canSwitchNetworkToEvm,
-  GetInstance,
-  CanEagerConnect,
-  canEagerlyConnectToEvm,
+  WalletTypes,
 } from '@rango-dev/wallets-shared';
-import {
-  SignerFactory,
-  BlockchainMeta,
-  evmBlockchains,
-  isEvmBlockchain,
-} from 'rango-types';
+import { evmBlockchains, isEvmBlockchain } from 'rango-types';
+
 import { getSafeInstance } from './helpers';
 import signer from './signer';
 
@@ -78,7 +78,7 @@ export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
   const evms = evmBlockchains(allBlockChains);
   return {
     name: 'Safe',
-    img: 'https://raw.githubusercontent.com/rango-exchange/rango-types/main/assets/icons/wallets/safe.svg',
+    img: 'https://raw.githubusercontent.com/rango-exchange/rango-assets/main/wallets/safe/icon.svg',
     installLink: {
       DEFAULT: 'https://app.safe.global/',
     },

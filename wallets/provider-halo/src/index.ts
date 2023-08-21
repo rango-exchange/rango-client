@@ -57,7 +57,7 @@ export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
 ) => {
   return {
     name: 'Halo',
-    img: 'https://raw.githubusercontent.com/rango-exchange/rango-types/main/assets/icons/wallets/halo.svg',
+    img: 'https://raw.githubusercontent.com/rango-exchange/rango-assets/main/wallets/halo/icon.svg',
     color: '#b2dbff',
     installLink: {
       CHROME:

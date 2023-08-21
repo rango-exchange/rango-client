@@ -1,20 +1,24 @@
-import {
-  WalletTypes,
+import type {
+  CanEagerConnect,
   CanSwitchNetwork,
   Connect,
   Subscribe,
   WalletInfo,
-  Networks,
-  CanEagerConnect,
 } from '@rango-dev/wallets-shared';
-import { SignerFactory, BlockchainMeta, starknetBlockchain } from 'rango-types';
+import type { BlockchainMeta, SignerFactory } from 'rango-types';
+
+import { Networks, WalletTypes } from '@rango-dev/wallets-shared';
+import { starknetBlockchain } from 'rango-types';
+
 import { argentx as argentx_instances } from './helpers';
 import signer from './signer';
 
-// https://www.starknetjs.com/docs/API/signer
-// https://github.com/apibara/starknet-react
-// https://github.com/0xs34n/starknet.js
-// https://github.com/argentlabs/argent-x#-usage-with-your-dapp
+/*
+ * https://www.starknetjs.com/docs/API/signer
+ * https://github.com/apibara/starknet-react
+ * https://github.com/0xs34n/starknet.js
+ * https://github.com/argentlabs/argent-x#-usage-with-your-dapp
+ */
 
 const WALLET = WalletTypes.ARGENTX;
 const MAINNET_CHAIN_ID = 'SN_MAIN';
@@ -32,10 +36,11 @@ export const connect: Connect = async ({ instance }) => {
   if (!r || !instance.isConnected || r?.length === 0) {
     throw new Error('Error connecting ArgentX');
   }
-  if (instance?.chainId !== MAINNET_CHAIN_ID)
+  if (instance?.chainId !== MAINNET_CHAIN_ID) {
     throw new Error(
       `Please switch to Mainnet, current network is ${instance?.chainId}`
     );
+  }
   return { accounts: r ? r : [], chainId: Networks.STARKNET };
 };
 
@@ -62,7 +67,7 @@ export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
   const starknet = starknetBlockchain(allBlockChains);
   return {
     name: 'ArgentX',
-    img: 'https://raw.githubusercontent.com/rango-exchange/rango-types/main/assets/icons/wallets/argentx.svg',
+    img: 'https://raw.githubusercontent.com/rango-exchange/rango-assets/main/wallets/argentx/icon.svg',
     installLink: {
       CHROME:
         'https://chrome.google.com/webstore/detail/argent-x/dlcobpjiigpikoobohmabehhmhfoodbb',
