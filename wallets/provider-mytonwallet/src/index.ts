@@ -1,17 +1,20 @@
-import {
-  WalletTypes,
+import type { TonProvider } from './types';
+import type {
+  CanEagerConnect,
   CanSwitchNetwork,
   Connect,
   WalletInfo,
-  Networks,
-  CanEagerConnect,
 } from '@rango-dev/wallets-shared';
-import { SignerFactory, BlockchainMeta, tonBlockchain } from 'rango-types';
+import type { BlockchainMeta, SignerFactory } from 'rango-types';
+
+import { Networks, WalletTypes } from '@rango-dev/wallets-shared';
 import { toUserFriendlyAddress } from '@tonconnect/sdk/';
+import { tonBlockchain } from 'rango-types';
+
+import { TONCONNECT_MANIFEST_URL } from './constants';
 import { myTonWallet as myTonWallet_instance } from './helpers';
 import signer from './signer';
-import { TonProvider, isTonAddressItemReply } from './types';
-import { TONCONNECT_MANIFEST_URL } from './constants';
+import { isTonAddressItemReply } from './types';
 
 const WALLET = WalletTypes.MY_TON_WALLET;
 
@@ -31,6 +34,7 @@ export const connect: Connect = async ({ instance }) => {
       .map((item) => toUserFriendlyAddress(item.address));
 
     return { accounts, chainId: Networks.TON };
+    // eslint-disable-next-line no-else-return
   } else {
     const result = await tonInstance.connect(2, {
       manifestUrl: TONCONNECT_MANIFEST_URL,
@@ -42,11 +46,10 @@ export const connect: Connect = async ({ instance }) => {
         ?.filter(isTonAddressItemReply)
         .map((item) => toUserFriendlyAddress(item.address));
       return { accounts: accounts, chainId: Networks.TON };
-    } else {
-      throw new Error(
-        result.payload?.message || 'error connecting to MyTonWallet'
-      );
     }
+    throw new Error(
+      result.payload?.message || 'error connecting to MyTonWallet'
+    );
   }
 };
 
@@ -58,9 +61,8 @@ export const canEagerConnect: CanEagerConnect = async ({ instance }) => {
     if ('items' in result.payload) {
       const accounts = result.payload?.items;
       return !!(accounts && accounts.length);
-    } else {
-      return false;
     }
+    return false;
   } catch (error) {
     return false;
   }
@@ -76,7 +78,7 @@ export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
   const ton = tonBlockchain(allBlockChains);
   return {
     name: 'MyTonWallet',
-    img: 'https://raw.githubusercontent.com/rango-exchange/rango-types/291374d3f0587e92cf5e43586e2761084b8ccc66/assets/icons/wallets/mytonwallet.svg',
+    img: 'https://raw.githubusercontent.com/rango-exchange/rango-assets/main/wallets/mytonwallet/icon.svg',
     installLink: {
       CHROME:
         'https://chrome.google.com/webstore/detail/mytonwallet-%C2%B7-my-ton-wall/fldfpgipfncgndfolcbkdeeknbbbnhcc',

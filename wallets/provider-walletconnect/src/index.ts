@@ -1,5 +1,4 @@
-import { makeConnection, supportsForSwitchNetworkRequest } from './helpers';
-import {
+import type {
   CanSwitchNetwork,
   Connect,
   Disconnect,
@@ -7,19 +6,24 @@ import {
   Subscribe,
   SwitchNetwork,
   WalletConfig,
+  WalletInfo,
+} from '@rango-dev/wallets-shared';
+import type {
+  BlockchainMeta,
+  EvmBlockchainMeta,
+  SignerFactory,
+} from 'rango-types';
+
+import {
+  canSwitchNetworkToEvm,
   convertEvmBlockchainMetaToEvmChainInfo,
   switchOrAddNetworkForMetamaskCompatibleWallets,
-  WalletInfo,
-  canSwitchNetworkToEvm,
 } from '@rango-dev/wallets-shared';
 import { formatJsonRpcRequest } from '@walletconnect/jsonrpc-utils';
+import { evmBlockchains } from 'rango-types';
+
+import { makeConnection, supportsForSwitchNetworkRequest } from './helpers';
 import signer from './signer';
-import {
-  SignerFactory,
-  EvmBlockchainMeta,
-  BlockchainMeta,
-  evmBlockchains,
-} from 'rango-types';
 
 const WALLET = 'wallet-connect-1';
 
@@ -43,7 +47,9 @@ export const getInstance: GetInstance = async (options) => {
     chainId: requestedChainId,
   });
 
-  if (options.force && requestedChainId) updateChainId?.(requestedChainId);
+  if (options.force && requestedChainId) {
+    updateChainId?.(requestedChainId);
+  }
 
   return nextInstance;
 };
@@ -88,6 +94,7 @@ export const subscribe: Subscribe = async ({
     updateChainId(chainId);
   });
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   instance.on('disconnect', (error: any, _payload: any) => {
     if (error) {
       throw error;
@@ -107,19 +114,19 @@ export const switchNetwork: SwitchNetwork = async ({
     meta as EvmBlockchainMeta[]
   );
 
-  /* 
-     There are two methods for switch network
-     1. Wallet supports `wallet_switchEthereumChain` rpc method. like Metamask
-     2. Kill the current session and making a new session with new chain.
+  /*
+   *There are two methods for switch network
+   *1. Wallet supports `wallet_switchEthereumChain` rpc method. like Metamask
+   *2. Kill the current session and making a new session with new chain.
    */
   if (supportsForSwitchNetworkRequest(instance)) {
-    /* 
-       `switchOrAddNetworkForMetamaskCompatibleWallets` needs a web3-provider interface.
-      And uses `request` method. Here we are making something it can use.
+    /*
+     *`switchOrAddNetworkForMetamaskCompatibleWallets` needs a web3-provider interface.
+     *And uses `request` method. Here we are making something it can use.
      */
 
     const simulatedWeb3Instance = {
-      request: (payload: any): Promise<any> => {
+      request: async (payload: any): Promise<any> => {
         const rpcRequest = formatJsonRpcRequest(payload.method, payload.params);
         return instance.sendCustomRequest(rpcRequest);
       },
@@ -133,9 +140,11 @@ export const switchNetwork: SwitchNetwork = async ({
   } else {
     // Kill the old session, make a new session with requested network.
 
-    // Remove `discconect` listener, because it will reset the state
-    // But we decided to show user is connect to wallet and
-    // Only kill the session and instance.
+    /*
+     * Remove `discconect` listener, because it will reset the state
+     * But we decided to show user is connect to wallet and
+     * Only kill the session and instance.
+     */
     instance.off('disconnect');
 
     await instance.killSession();
@@ -175,7 +184,7 @@ export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
   const evms = evmBlockchains(allBlockChains);
   return {
     name: 'WalletConnect',
-    img: 'https://raw.githubusercontent.com/rango-exchange/rango-types/main/assets/icons/wallets/walletconnect.svg',
+    img: 'https://raw.githubusercontent.com/rango-exchange/rango-assets/main/wallets/walletconnect/icon.svg',
     installLink: '',
     color: '#b2dbff',
     supportedChains: evms,

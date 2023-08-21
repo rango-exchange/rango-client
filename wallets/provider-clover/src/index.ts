@@ -1,28 +1,27 @@
-import {
-  Networks,
-  WalletTypes,
+import type {
+  CanEagerConnect,
   CanSwitchNetwork,
   Connect,
   ProviderConnectResult,
   Subscribe,
   SwitchNetwork,
+  WalletInfo,
+} from '@rango-dev/wallets-shared';
+import type { BlockchainMeta, SignerFactory } from 'rango-types';
+
+import {
+  canEagerlyConnectToEvm,
   canSwitchNetworkToEvm,
   chooseInstance,
   getEvmAccounts,
+  Networks,
   switchNetworkForEvm,
-  WalletInfo,
-  canEagerlyConnectToEvm,
-  CanEagerConnect,
+  WalletTypes,
 } from '@rango-dev/wallets-shared';
-import { getNonEvmAccounts, clover as clover_instance } from './helpers';
+import { evmBlockchains, isEvmBlockchain, solanaBlockchain } from 'rango-types';
+
+import { clover as clover_instance, getNonEvmAccounts } from './helpers';
 import signer from './signer';
-import {
-  SignerFactory,
-  isEvmBlockchain,
-  evmBlockchains,
-  BlockchainMeta,
-  solanaBlockchain,
-} from 'rango-types';
 
 const WALLET = WalletTypes.CLOVER;
 
@@ -91,11 +90,12 @@ export const canSwitchNetworkTo: CanSwitchNetwork = canSwitchNetworkToEvm;
 
 export const getSigners: (provider: any) => SignerFactory = signer;
 
-export const canEagerConnect: CanEagerConnect = ({ instance, meta }) => {
+export const canEagerConnect: CanEagerConnect = async ({ instance, meta }) => {
   const evm_instance = chooseInstance(instance, meta, Networks.ETHEREUM);
   if (evm_instance) {
     return canEagerlyConnectToEvm({ instance: evm_instance, meta });
-  } else return Promise.resolve(false);
+  }
+  return Promise.resolve(false);
 };
 
 export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
@@ -105,7 +105,7 @@ export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
   const solana = solanaBlockchain(allBlockChains);
   return {
     name: 'Clover',
-    img: 'https://raw.githubusercontent.com/rango-exchange/rango-types/main/assets/icons/wallets/clover.jpeg',
+    img: 'https://raw.githubusercontent.com/rango-exchange/rango-assets/main/wallets/clover/icon.svg',
     installLink: {
       CHROME:
         'https://chrome.google.com/webstore/detail/clover-wallet/nhnkbkgjikgcigadomkphalanndcapjk',

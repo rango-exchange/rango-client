@@ -1,19 +1,24 @@
-import {
+import type {
   CanEagerConnect,
   CanSwitchNetwork,
   Connect,
   Subscribe,
   SwitchNetwork,
   WalletInfo,
-  WalletTypes,
+} from '@rango-dev/wallets-shared';
+import type { BlockchainMeta, SignerFactory } from 'rango-types';
+
+import {
   canEagerlyConnectToEvm,
   canSwitchNetworkToEvm,
   getEvmAccounts,
   subscribeToEvm,
   switchNetworkForEvm,
+  WalletTypes,
 } from '@rango-dev/wallets-shared';
+import { evmBlockchains } from 'rango-types';
+
 import { enkrypt as enkrypt_instance } from './helpers';
-import { BlockchainMeta, SignerFactory, evmBlockchains } from 'rango-types';
 import signer from './signer';
 
 export const getInstance = enkrypt_instance;
@@ -28,7 +33,9 @@ export const connect: Connect = async ({ instance }) => {
   const result = await getEvmAccounts(instance);
   const { chainId } = result;
   let { accounts } = result;
-  if (accounts.length > 1) accounts = [instance.selectedAddress];
+  if (accounts.length > 1) {
+    accounts = [instance.selectedAddress];
+  }
 
   return {
     accounts,
@@ -52,7 +59,7 @@ export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
   const evms = evmBlockchains(allBlockChains);
   return {
     name: 'Enkrypt',
-    img: 'https://raw.githubusercontent.com/rango-exchange/rango-types/main/assets/icons/wallets/enkrypt.svg',
+    img: 'https://raw.githubusercontent.com/rango-exchange/rango-assets/main/wallets/enkrypt/icon.svg',
     installLink: {
       CHROME:
         'https://chrome.google.com/webstore/detail/enkrypt/kkpllkodjeloidieedojogacfhpaihoh',

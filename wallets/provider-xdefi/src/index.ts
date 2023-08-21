@@ -1,27 +1,30 @@
-import {
-  getBlockChainNameFromId,
-  WalletTypes,
+import type {
+  CanEagerConnect,
   CanSwitchNetwork,
   Connect,
   ProviderConnectResult,
   Subscribe,
   SwitchNetwork,
+  WalletInfo,
+} from '@rango-dev/wallets-shared';
+import type { BlockchainMeta, SignerFactory } from 'rango-types';
+
+import {
+  canEagerlyConnectToEvm,
   canSwitchNetworkToEvm,
   chooseInstance,
+  getBlockChainNameFromId,
   getEvmAccounts,
-  switchNetworkForEvm,
   getSolanaAccounts,
-  XDEFI_WALLET_SUPPORTED_NATIVE_CHAINS,
-  WalletInfo,
   Networks,
-  CanEagerConnect,
-  canEagerlyConnectToEvm,
+  switchNetworkForEvm,
+  WalletTypes,
+  XDEFI_WALLET_SUPPORTED_NATIVE_CHAINS,
 } from '@rango-dev/wallets-shared';
-import { SUPPORTED_ETH_CHAINS } from './constants';
 
+import { SUPPORTED_ETH_CHAINS } from './constants';
 import { getNonEvmAccounts, xdefi as xdefi_instances } from './helpers';
 import signer from './signer';
-import { SignerFactory, BlockchainMeta } from 'rango-types';
 
 const DEFAULT_NETWORK = Networks.ETHEREUM;
 const WALLET = WalletTypes.XDEFI;
@@ -60,16 +63,18 @@ export const subscribe: Subscribe = ({
   eth?.on('chainChanged', (chainId: string) => {
     const network = getBlockChainNameFromId(chainId, meta) || Networks.Unknown;
     /*
-      TODO:
-      We are calling `connect` here because signer can't detect
-      currect network, I guess the bug is in our signer and it 
-      gets the wrong network by calling a wrong method or something.
-      Anyways, this works for now, maybe we can reconsider it in future
-      Whenever we refactored the signer code as well.  
-    */
+     *TODO:
+     *We are calling `connect` here because signer can't detect
+     *currect network, I guess the bug is in our signer and it
+     *gets the wrong network by calling a wrong method or something.
+     *Anyways, this works for now, maybe we can reconsider it in future
+     *Whenever we refactored the signer code as well.
+     */
 
-    //  we need to update `network` first, if not, it will goes through
-    // the switching network and will open unneccessary pop ups.
+    /*
+     *  we need to update `network` first, if not, it will goes through
+     * the switching network and will open unneccessary pop ups.
+     */
     updateChainId(chainId);
     connect(network);
   });
@@ -81,17 +86,18 @@ export const canSwitchNetworkTo: CanSwitchNetwork = canSwitchNetworkToEvm;
 
 export const getSigners: (provider: any) => SignerFactory = signer;
 
-export const canEagerConnect: CanEagerConnect = ({ instance, meta }) => {
+export const canEagerConnect: CanEagerConnect = async ({ instance, meta }) => {
   const evm_instance = chooseInstance(instance, meta, Networks.ETHEREUM);
   if (evm_instance) {
     return canEagerlyConnectToEvm({ instance: evm_instance, meta });
-  } else return Promise.resolve(false);
+  }
+  return Promise.resolve(false);
 };
 export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
   allBlockChains
 ) => ({
   name: 'XDefi',
-  img: 'https://raw.githubusercontent.com/rango-exchange/rango-types/main/assets/icons/wallets/xdefi.png',
+  img: 'https://raw.githubusercontent.com/rango-exchange/rango-assets/main/wallets/xdefi/icon.svg',
   installLink: {
     CHROME:
       'https://chrome.google.com/webstore/detail/xdefi-wallet/hmeobnfnfcmdkdcmlblgagmfpfboieaf',
