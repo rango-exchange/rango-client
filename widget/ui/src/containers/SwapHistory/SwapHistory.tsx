@@ -386,18 +386,8 @@ export function SwapHistory(props: PropTypes) {
       <Drawer
         onClose={setShowDrawer.bind(null, false)}
         open={showDrawer}
-        showClose={true}
         anchor="bottom"
         title="Cancel Progress"
-        content={
-          <Alert type="warning">
-            <Typography variant="body" size="small">
-              Warning: Cancel <u>doesn't revert</u> your transaction if you've
-              already signed and sent a transaction to the blockchain. It only
-              stops next steps from being executed.
-            </Typography>
-          </Alert>
-        }
         footer={
           <div
             style={{
@@ -423,8 +413,15 @@ export function SwapHistory(props: PropTypes) {
             </Button>
           </div>
         }
-        container={document.getElementById('swap-box')}
-      />
+        container={document.getElementById('swap-box')}>
+        <Alert type="warning">
+          <Typography variant="body" size="small">
+            Warning: Cancel <u>doesn't revert</u> your transaction if you've
+            already signed and sent a transaction to the blockchain. It only
+            stops next steps from being executed.
+          </Typography>
+        </Alert>
+      </Drawer>
     </SecondaryPage>
   );
 }

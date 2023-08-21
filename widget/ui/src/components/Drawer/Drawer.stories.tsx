@@ -1,6 +1,9 @@
+import type { PropTypes } from './Drawer.types';
+import type { Meta } from '@storybook/react';
+
 import React, { useState } from 'react';
-import { Meta } from '@storybook/react';
-import { Drawer, PropTypes } from './Drawer';
+
+import { Drawer } from './Drawer';
 
 export default {
   name: 'Components/Drawer',
@@ -8,7 +11,6 @@ export default {
   args: {
     anchor: 'bottom',
     title: 'I`m Drawer',
-    container: document.body,
   },
   argTypes: {
     anchor: {
@@ -44,18 +46,13 @@ export const BottomAnchor = (args: PropTypes) => {
   return (
     <div>
       <button onClick={() => setOpen(true)}>Open Drawer</button>
-      <Drawer
-        {...args}
-        open={open}
-        onClose={() => setOpen(false)}
-        content={
-          <div>
-            {Array.from({ length: 50 }, (_, index) => (
-              <div>Test {index}</div>
-            ))}
-          </div>
-        }
-      />
+      <Drawer {...args} open={open} onClose={() => setOpen(false)}>
+        <div>
+          {Array.from({ length: 50 }, (_, index) => (
+            <div key={index}>Test {index}</div>
+          ))}
+        </div>
+      </Drawer>
     </div>
   );
 };
@@ -69,15 +66,13 @@ export const LeftAnchor = (args: PropTypes) => {
         {...args}
         open={open}
         onClose={() => setOpen(false)}
-        anchor="left"
-        content={
-          <div>
-            {Array.from({ length: 50 }, (_, index) => (
-              <span>Test {index} </span>
-            ))}
-          </div>
-        }
-      />
+        anchor="left">
+        <div>
+          {Array.from({ length: 50 }, (_, index) => (
+            <span key={index}>Test {index} </span>
+          ))}
+        </div>
+      </Drawer>
     </div>
   );
 };

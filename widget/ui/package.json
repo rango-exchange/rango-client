@@ -69,7 +69,8 @@
     "react-virtualized-auto-sizer": "^1.0.7",
     "react-window": "^1.8.8",
     "react-window-infinite-loader": "^1.0.8",
-    "rgb-hex": "^4.0.1"
+    "rgb-hex": "^4.0.1",
+    "@radix-ui/react-collapsible": "^1.0.3"
   },
   "publishConfig": {
     "access": "public"

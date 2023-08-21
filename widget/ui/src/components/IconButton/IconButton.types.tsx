@@ -4,4 +4,5 @@ export type PropTypes = {
   size?: ButtonPropTypes['size'];
   type?: ButtonPropTypes['type'];
   variant?: ButtonPropTypes['variant'];
+  onClick?: ButtonPropTypes['onClick'];
 };
