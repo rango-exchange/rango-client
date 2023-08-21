@@ -168,6 +168,7 @@ export const theme = {
     32: '32px',
     36: '36px',
     40: '40px',
+    45: '45px',
     48: '48px',
   },
   borderWidths: {},
