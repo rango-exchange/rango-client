@@ -1,5 +1,8 @@
-import { CSSProperties } from '@stitches/react';
-import React, { PropsWithChildren } from 'react';
+import type { CSSProperties } from '@stitches/react';
+import type { PropsWithChildren } from 'react';
+
+import React from 'react';
+
 import { styled } from '../../theme';
 
 const MainContainer = styled('div', {
@@ -21,7 +24,7 @@ const MainContainer = styled('div', {
     '&::-webkit-scrollbar': { width: '$8', height: '$8' },
     '&::-webkit-scrollbar-thumb': {
       backgroundColor: '$neutral400',
-      borderRadius: '$10',
+      borderRadius: '$sm',
     },
     '&::-webkit-scrollbar-thumb:hover': {
       backgroundColor: '$neutral500',
