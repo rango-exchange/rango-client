@@ -30,3 +30,5 @@ export * from './Tooltip';
 export * from './Typography';
 export * from './Wallet';
 export * from './Radio';
+export * from './PriceImpact';
+export * from './ChainToken';
