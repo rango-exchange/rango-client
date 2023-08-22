@@ -1,2 +1,2 @@
 export { MessageBox } from './DefaultMessageBox';
-export { CollapsableMessageBox } from './CollapsableMessageBox';
+export { CollapsibleMessageBox } from './CollapsibleMessageBox';

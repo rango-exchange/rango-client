@@ -1,4 +1,4 @@
-import type { IconHighlight } from '../MessageBox/MessageBox.styles';
+import type { IconHighlight } from './MessageBox.styles';
 import type * as Stitches from '@stitches/react';
 
 type BaseProps = Stitches.VariantProps<typeof IconHighlight>;

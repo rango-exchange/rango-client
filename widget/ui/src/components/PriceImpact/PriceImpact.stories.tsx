@@ -1,4 +1,4 @@
-import type { PropTypes } from './PriceImpact.types';
+import type { PriceImpactProps } from './PriceImpact.types';
 import type { Meta } from '@storybook/react';
 
 import React from 'react';
@@ -18,4 +18,4 @@ const meta: Meta<typeof PriceImpact> = {
 
 export default meta;
 
-export const Main = (args: PropTypes) => <PriceImpact {...args} />;
+export const Main = (args: PriceImpactProps) => <PriceImpact {...args} />;
