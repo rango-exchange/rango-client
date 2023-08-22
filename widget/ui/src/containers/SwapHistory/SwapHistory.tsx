@@ -14,15 +14,26 @@ import {
   StepDetail,
   Typography,
 } from '../../components';
-import { pulse } from '../../components/BestRoute/BestRoute';
 import {
   CheckCircleIcon,
   GasIcon,
   InfoCircleIcon,
 } from '../../components/Icon';
-import { styled } from '../../theme';
+import { keyframes, styled } from '../../theme';
 
 import { SwapMessages } from './SwapMessages';
+
+export const pulse = keyframes({
+  '0%': {
+    opacity: 1,
+  },
+  '50%': {
+    opacity: 0.3,
+  },
+  '100%': {
+    opacity: 1,
+  },
+});
 
 export const SwapperContainer = styled('div', {
   display: 'flex',
