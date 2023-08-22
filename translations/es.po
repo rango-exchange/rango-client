@@ -19,21 +19,6 @@ msgid " Error connecting server, please reload the app and try again."
 msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/ui/src/components/BestRoute/BestRoute.tsx:161
-msgid "Transaction cost (fee)"
-msgstr ""
-
-#. js-lingui-explicit-id
-#: widget/ui/src/components/BestRoute/BestRoute.tsx:176
-msgid "Time estimate"
-msgstr ""
-
-#. js-lingui-explicit-id
-#: widget/ui/src/components/BestRoute/BestRoute.tsx:231
-msgid "No routes found"
-msgstr ""
-
-#. js-lingui-explicit-id
 #: widget/ui/src/components/BottomLogo/BottomLogo.tsx:30
 msgid "Powered By"
 msgstr ""
@@ -76,7 +61,7 @@ msgid "Connect Wallets"
 msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/ui/src/containers/HomePanel/HomePanel.tsx:129
+#: widget/ui/src/containers/HomePanel/HomePanel.tsx:131
 msgid "SWAP"
 msgstr ""
 
@@ -227,6 +212,21 @@ msgstr ""
 #. js-lingui-explicit-id
 #: widget/embedded/src/utils/swap.ts:164
 #~ msgid "The route goes through Ethereum. Continue?"
+#~ msgstr ""
+
+#. js-lingui-explicit-id
+#: widget/ui/src/components/BestRoute/BestRoute.tsx:161
+#~ msgid "Transaction cost (fee)"
+#~ msgstr ""
+
+#. js-lingui-explicit-id
+#: widget/ui/src/components/BestRoute/BestRoute.tsx:176
+#~ msgid "Time estimate"
+#~ msgstr ""
+
+#. js-lingui-explicit-id
+#: widget/ui/src/components/BestRoute/BestRoute.tsx:231
+#~ msgid "No routes found"
 #~ msgstr ""
 
 #. js-lingui-explicit-id

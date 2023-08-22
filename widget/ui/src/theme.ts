@@ -15,8 +15,9 @@ export const theme = {
 
     secondary: '#7C6DDB',
     secondary100: '#F2EFF9',
-    secondary200: '#A27FED',
+    secondary200: '#F0EAFF',
     secondary300: '#E4E0F8',
+    secondary400: '#DCD5FF',
     secondary700: '#6C5DCB',
 
     neutral100: '#FDFDFD',
@@ -90,6 +91,7 @@ export const theme = {
     25: '1.563rem',
     30: '1.875rem',
     40: '2.5rem',
+    46: '2.875rem',
     50: '3.125rem',
     60: '3.75rem',
     70: '4.375rem',

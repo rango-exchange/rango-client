@@ -2,14 +2,14 @@ import type { Meta, StoryObj } from '@storybook/react';
 
 import React from 'react';
 
-import { CollapsableMessageBox } from './CollapsableMessageBox';
+import { CollapsibleMessageBox } from './CollapsibleMessageBox';
 
-const meta: Meta<typeof CollapsableMessageBox> = {
-  component: CollapsableMessageBox,
+const meta: Meta<typeof CollapsibleMessageBox> = {
+  component: CollapsibleMessageBox,
 };
 
 export default meta;
-type Story = StoryObj<typeof CollapsableMessageBox>;
+type Story = StoryObj<typeof CollapsibleMessageBox>;
 
 export const Main: Story = {
   args: {

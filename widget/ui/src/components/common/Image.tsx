@@ -39,5 +39,3 @@ export function Image(props: PropTypes) {
     </ImageContainer>
   );
 }
-
-Image.toString = () => '.image-container';

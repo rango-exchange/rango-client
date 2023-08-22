@@ -1,237 +1,198 @@
-import React, { Fragment, PropsWithChildren } from 'react';
-import { i18n } from '@lingui/core';
-import { GasIcon, TimeIcon } from '../../components/Icon';
-import { StepDetail } from '../../components/StepDetail';
+import type { BestRouteProps } from './BestRoute.types';
+
+import React, { useState } from 'react';
+
 import { Typography } from '../../components/Typography';
-import { keyframes, styled } from '../../theme';
-import { Skeleton } from '../Skeleton';
-import { Spinner } from '../Spinner';
-import { BestRouteResponse } from 'rango-sdk';
-import { Tooltip } from '../Tooltip';
+import {
+  ChevronDownIcon,
+  ChevronRightIcon,
+  GasIcon,
+  InfoIcon,
+  InProgressIcon,
+  TimeIcon,
+} from '../../icons';
 import { Image } from '../common';
+import { Divider } from '../Divider';
+import { StepDetails } from '../StepDetails';
+import { TokenAmount } from '../TokenAmount/TokenAmount';
+import { Tooltip } from '../Tooltip';
 
-const Container = styled('div', {
-  borderRadius: '$xs',
-  border: '1px solid $neutral100',
-  display: 'flex',
-  alignItems: 'center',
-  minHeight: 126,
-  justifyContent: 'space-between',
-  backgroundColor: '$surface',
-});
+import {
+  Chains,
+  Content,
+  HorizontalSeparator,
+  IconContainer,
+  RouteContainer,
+  Separator,
+  SummaryContainer,
+} from './BestRoute.styles';
 
-const ErrorMsg = styled(Typography, {
-  color: '$error',
-});
-const BestRouteContainer = styled('div', {
-  display: 'flex',
-  alignItems: 'center',
-  margin: '0 auto',
-  overflowX: 'auto',
-  overflowY: 'hidden',
-  alignSelf: 'stretch',
-  padding: '$4',
-  '@md': {
-    padding: '$8',
-  },
-});
-const Line = styled('div', {
-  height: '0',
-  width: '$20',
-  border: '1px dashed $foreground',
-  borderRadius: 'inherit',
-  '@lg': {
-    width: '$32',
-  },
-});
+export function BestRoute(props: BestRouteProps) {
+  const {
+    steps,
+    totalFee,
+    totalTime,
+    tag,
+    input,
+    output,
+    percentageChange,
+    warningLevel,
+    type,
+    recommended = true,
+  } = props;
 
-const HR = styled('hr', {
-  width: '100%',
-  border: '1px solid $neutral400',
-  margin: '$8 0',
-});
+  const numberOfSteps = steps.length;
 
-const RelativeContainer = styled('div', {
-  position: 'relative',
-});
-const Dot = styled('div', {
-  width: '$6',
-  height: '$6',
-  backgroundColor: '$foreground',
-  position: 'absolute',
-  top: '45%',
-  right: -5,
-  marginLeft: '$8',
-  borderRadius: '50%',
-  '@md': {
-    width: '$8',
-    height: '$8',
-    right: -8,
-    top: '45%',
-  },
-});
-const ArrowRight = styled('div', {
-  width: '0px',
-  height: '0px',
-  borderTop: '5px solid transparent',
-  borderBottom: '5px solid transparent',
-  borderLeft: '5px solid $foreground',
-});
+  const [expanded, setExpanded] = useState(false);
 
-export const pulse = keyframes({
-  '0%': {
-    opacity: 1,
-  },
-  '50%': {
-    opacity: 0.3,
-  },
-  '100%': {
-    opacity: 1,
-  },
-});
-
-const GasContainer = styled('div', {
-  backgroundColor: '$neutral100',
-  borderRadius: '5px',
-  margin: '$4',
-  display: 'flex',
-  flexDirection: 'column',
-  justifyContent: 'center',
-  alignItems: 'center',
-  padding: '$4',
-  '@md': {
-    padding: '$8',
-    margin: '$8',
-  },
-});
-
-const CostContainer = styled('div', {
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'center',
-  variants: {
-    warning: {
-      true: {
-        animation: `${pulse} 2s ease-in-out infinite`,
-      },
-    },
-  },
-});
-
-const TotalFee = styled(Typography, {
-  variants: {
-    warning: {
-      true: {
-        color: '$warning300',
-      },
-    },
-  },
-});
-
-const SkeletonContainer = styled('div', {
-  padding: '$4',
-  '@md': {
-    padding: '$8',
-  },
-});
-const SwapperContainer = styled('div', {
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-});
-
-export interface PropTypes {
-  data: BestRouteResponse | null;
-  totalFee: string;
-  feeWarning: boolean;
-  totalTime: string;
-  loading?: boolean;
-  error?: string;
-}
-export function BestRoute(props: PropsWithChildren<PropTypes>) {
-  const { data, loading, error, totalFee, feeWarning, totalTime } = props;
   return (
-    <Container>
-      {loading ? (
-        <SkeletonContainer>
-          <Skeleton width={48} height={94} />
-        </SkeletonContainer>
-      ) : (
-        <GasContainer>
-          <Tooltip content={i18n.t('Transaction cost (fee)')}>
-            <CostContainer warning={feeWarning}>
-              <GasIcon size={20} color={feeWarning ? 'warning' : undefined} />
-              <TotalFee
-                mt={4}
-                align="center"
-                variant="body"
-                size="xsmall"
-                warning={feeWarning}>
-                {error && '-'}
-                {!!data && `$${totalFee}`}
-              </TotalFee>
-            </CostContainer>
-          </Tooltip>
-          <HR />
-          <Tooltip content={i18n.t('Time estimate')}>
-            <CostContainer warning={feeWarning}>
-              <TimeIcon size={20} />
-              <Typography mt={4} align="center" variant="body" size="xsmall">
-                {error && '-'}
-                {!!data && `~${totalTime}m`}
+    <>
+      <SummaryContainer recommended={recommended} basic={type === 'basic'}>
+        <div className="summary">
+          <div className="cost-and-time">
+            <div className="cost-and-time__item">
+              <div className="icon">
+                <GasIcon size={12} color={'gray'} />
+              </div>
+              <Typography ml={2} align="center" variant="body" size="small">
+                {`$${totalFee}`}
               </Typography>
-            </CostContainer>
-          </Tooltip>
-        </GasContainer>
-      )}
-      <BestRouteContainer>
-        {loading && <Spinner color="primary" />}
+            </div>
+            <Separator />
+            <div className="cost-and-time__item">
+              <div className="icon">
+                <TimeIcon size={12} color="gray" />
+              </div>
+              <Typography ml={2} align="center" variant="body" size="small">
+                {`${totalTime} min`}
+              </Typography>
+            </div>
+            <Separator />
+            <div className="cost-and-time__item">
+              <div className="icon">
+                {/*TODO: replace with layers icon */}
+                <InProgressIcon size={12} />
+              </div>
+              <Typography ml={2} align="center" variant="body" size="small">
+                {numberOfSteps}
+              </Typography>
+            </div>
+            {tag}
+          </div>
 
-        {error && (
-          <ErrorMsg variant="body" size="xsmall">
-            {error}
-          </ErrorMsg>
-        )}
-
-        {!!data &&
-          data.result?.swaps.map((swap, index) => (
-            <Fragment key={index}>
-              {index === 0 && (
-                <RelativeContainer>
-                  <StepDetail
-                    direction="vertical"
-                    logo={swap.from.logo}
-                    symbol={swap.from.symbol}
-                    chainLogo={swap.from.blockchainLogo}
-                    blockchain={swap.from.blockchain}
-                    amount={swap.fromAmount}
-                  />
-                  <Dot />
-                </RelativeContainer>
-              )}
-              <SwapperContainer>
-                <Line />
-                <Image src={swap.swapperLogo} alt={swap.swapperId} size={20} />
-                <Line />
-              </SwapperContainer>
-
-              {index + 1 === data.result?.swaps.length && <ArrowRight />}
-              <StepDetail
-                direction="vertical"
-                logo={swap.to.logo}
-                symbol={swap.to.symbol}
-                chainLogo={swap.to.blockchainLogo}
-                blockchain={swap.to.blockchain}
-                amount={swap.toAmount}
+          {type === 'basic' && (
+            <div className="basic-info">
+              <InfoIcon size={16} color="gray" />
+              <Typography size="small" variant="body">
+                {`${input.value} ${steps[0].from.token.displayName} = ${
+                  output.value
+                } ${steps[steps.length - 1].to.token.displayName}`}
+              </Typography>
+              <Typography
+                color="$neutral400"
+                ml={2}
+                size="xsmall"
+                variant="body">
+                {`($${output.usdValue})`}
+              </Typography>
+            </div>
+          )}
+          {type === 'list-item' && (
+            <TokenAmount
+              type="output"
+              direction="vertical"
+              price={{ value: output.value, usdValue: output.usdValue }}
+              token={{
+                displayName: steps[numberOfSteps - 1].to.token.displayName,
+                image: steps[numberOfSteps - 1].to.token.image,
+              }}
+              chain={{ image: steps[numberOfSteps - 1].to.chain.image }}
+              percentageChange={percentageChange}
+              warningLevel={warningLevel}
+            />
+          )}
+          {type === 'swap-preview' && (
+            <>
+              <Divider size={4} />
+              <TokenAmount
+                type="input"
+                price={{ value: input.value, usdValue: input.usdValue }}
+                token={{
+                  displayName: steps[0].from.token.displayName,
+                  image: steps[0].from.token.image,
+                }}
+                chain={{ image: steps[0].from.chain.image }}
               />
-            </Fragment>
-          ))}
-        {!!data && !data?.result && (
-          <Typography variant="body" size="small">
-            {i18n.t('No routes found')}
-          </Typography>
-        )}
-      </BestRouteContainer>
-    </Container>
+              <Separator css={{ height: '$16', marginLeft: '14px' }} />
+              <TokenAmount
+                type="output"
+                price={{ value: output.value, usdValue: output.usdValue }}
+                token={{
+                  displayName: steps[numberOfSteps - 1].to.token.displayName,
+                  image: steps[numberOfSteps - 1].to.token.image,
+                }}
+                chain={{ image: steps[numberOfSteps - 1].to.chain.image }}
+                percentageChange={percentageChange}
+                warningLevel={warningLevel}
+              />
+              <Divider size={4} />
+            </>
+          )}
+        </div>
+      </SummaryContainer>
+      <RouteContainer
+        recommended={recommended}
+        open={expanded}
+        onOpenChange={setExpanded}>
+        <Chains onClick={setExpanded.bind(null, (prevState) => !prevState)}>
+          <div>
+            {steps.map((step, index) => {
+              const key = `item-${index}`;
+              return (
+                <React.Fragment key={key}>
+                  <Tooltip content={step.from.chain.displayName}>
+                    <Image src={step.from.chain.image} size={16} />
+                  </Tooltip>
+                  {index === numberOfSteps - 1 && (
+                    <>
+                      <IconContainer>
+                        <ChevronRightIcon size={12} color="gray" />
+                      </IconContainer>
+                      <Tooltip content={step.to.chain.displayName}>
+                        <Image src={step.to.chain.image} size={16} />
+                      </Tooltip>
+                    </>
+                  )}
+                  {index !== numberOfSteps - 1 && (
+                    <IconContainer>
+                      <ChevronRightIcon size={12} color="gray" />
+                    </IconContainer>
+                  )}
+                </React.Fragment>
+              );
+            })}
+          </div>
+          <IconContainer orientation={expanded ? 'up' : 'down'}>
+            <ChevronDownIcon size={12} color="gray" />
+          </IconContainer>
+        </Chains>
+        <Content open={expanded}>
+          <HorizontalSeparator />
+          <div className="steps-details">
+            {steps.map((step, index) => {
+              const key = `item-${index}`;
+              return (
+                <StepDetails
+                  type="route-details"
+                  key={key}
+                  step={step}
+                  hasSeparator={index !== steps.length - 1}
+                />
+              );
+            })}
+          </div>
+        </Content>
+      </RouteContainer>
+    </>
   );
 }

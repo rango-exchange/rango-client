@@ -1,4 +1,4 @@
-import type { PropTypes } from './PriceImpact.types';
+import type { PriceImpactProps } from './PriceImpact.types';
 
 import React from 'react';
 
@@ -6,7 +6,7 @@ import { Typography } from '..';
 
 import { Container } from './PriceImpact.styles';
 
-export function PriceImpact(props: PropTypes) {
+export function PriceImpact(props: PriceImpactProps) {
   const { size, outputUsdValue, percentageChange, warningLevel } = props;
 
   let percentageChangeColor = '';
