@@ -14,17 +14,17 @@ const MainContainer = styled('div', {
   boxShadow: '15px 15px 15px 0px rgba(0, 0, 0, 0.05)',
 
   minWidth: '375px',
-  maxWidth: '512px',
+  maxWidth: '390px',
   boxSizing: 'border-box',
   backgroundColor: '$surface100',
   overflow: 'hidden',
   '& *': {
     boxSizing: 'border-box',
     listStyleType: 'none',
-    '&::-webkit-scrollbar': { width: '$8', height: '$8' },
+    '&::-webkit-scrollbar': { width: 2, height: '$8' },
     '&::-webkit-scrollbar-thumb': {
-      backgroundColor: '$neutral400',
       borderRadius: '$sm',
+      backgroundColor: '$neutral300',
     },
     '&::-webkit-scrollbar-thumb:hover': {
       backgroundColor: '$neutral500',

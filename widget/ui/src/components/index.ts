@@ -20,7 +20,7 @@ export * from './SelectableWalletList';
 export * from './Spinner';
 export * from './StepDetail';
 export * from './SwapContainer';
-export * from './SwapDetail';
+export * from './SwapListItem';
 export * from './SwapDetailsPlaceholder';
 export * from './Switch';
 export * from './TextField';

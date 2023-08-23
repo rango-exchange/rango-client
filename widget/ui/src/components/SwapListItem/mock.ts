@@ -1,6 +1,10 @@
+/* eslint-disable @typescript-eslint/no-magic-numbers */
+// TODO: fix ts errors
+// eslint-disable-next-line
 // @ts-nocheck
+import type { PendingSwap } from '../../containers/History/types';
+
 import { RoutingResultType, TransactionType } from 'rango-sdk';
-import { PendingSwap } from '../../containers/History/types';
 
 export const swap: PendingSwap = {
   creationTime: '1673164511955',
