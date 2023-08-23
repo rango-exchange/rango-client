@@ -19,7 +19,7 @@ msgid " Error connecting server, please reload the app and try again."
 msgstr " Error connecting server, please reload the app and try again."
 
 #. js-lingui-explicit-id
-#: widget/ui/src/components/BottomLogo/BottomLogo.tsx:30
+#: widget/ui/src/components/BottomLogo/BottomLogo.tsx:14
 msgid "Powered By"
 msgstr "Powered By"
 
@@ -56,12 +56,12 @@ msgid "Token"
 msgstr "Token"
 
 #. js-lingui-explicit-id
-#: widget/ui/src/containers/ConnectWalletsModal/ConnectWalletsModal.tsx:35
+#: widget/ui/src/containers/ConnectWalletsModal/ConnectWalletsModal.tsx:30
 msgid "Connect Wallets"
 msgstr "Connect Wallets"
 
 #. js-lingui-explicit-id
-#: widget/ui/src/containers/HomePanel/HomePanel.tsx:131
+#: widget/ui/src/containers/HomePanel/HomePanel.tsx:123
 msgid "SWAP"
 msgstr "SWAP"
 
@@ -116,6 +116,30 @@ msgid "Insufficent Balance:"
 msgstr "Insufficent Balance:"
 
 #. js-lingui-explicit-id
+#: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:34
+#: widget/embedded/src/components/ChainsSection/ChainsSection.tsx:30
+#~ msgid "Select Chain"
+#~ msgstr "Select Chain"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:52
+#: widget/embedded/src/components/TokenList/TokenList.tsx:100
+#~ msgid "No results found"
+#~ msgstr "No results found"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:53
+#: widget/embedded/src/components/TokenList/TokenList.tsx:101
+#~ msgid "Try using different keywords"
+#~ msgstr "Try using different keywords"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/ChainsSection/ChainsSection.tsx:50
+#: widget/embedded/src/components/TypesChain /TypesChain.tsx:32
+#~ msgid "All"
+#~ msgstr "All"
+
+#. js-lingui-explicit-id
 #: widget/embedded/src/components/HeaderButtons/CancelButton.tsx:13
 #~ msgid "Cancel"
 #~ msgstr "Cancel"
@@ -148,6 +172,11 @@ msgstr "Insufficent Balance:"
 #~ msgstr "Connect Wallet"
 
 #. js-lingui-explicit-id
+#: widget/embedded/src/components/TokenList/TokenList.tsx:69
+#~ msgid "Select Token"
+#~ msgstr "Select Token"
+
+#. js-lingui-explicit-id
 #: widget/embedded/src/pages/ConfirmSwapPage.tsx:196
 #~ msgid "From"
 #~ msgstr "From"
@@ -178,6 +207,16 @@ msgstr "Insufficent Balance:"
 #: widget/embedded/src/utils/swap.ts:168
 #~ msgid "Swap"
 #~ msgstr "Swap"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/SelectChainPage.tsx:43
+#~ msgid "Search Chain"
+#~ msgstr "Search Chain"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/SelectSwapItemsPage.tsx:96
+#~ msgid "Search Token"
+#~ msgstr "Search Token"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/pages/WalletsPage.tsx:122

@@ -1,11 +1,13 @@
-import React from 'react';
+import type { Asset, Token } from 'rango-sdk';
+
 import { TokenSelector } from '@rango-dev/ui';
-import { useBestRouteStore } from '../store/bestRoute';
-import { Asset, Token } from 'rango-sdk';
-import { useNavigateBack } from '../hooks/useNavigateBack';
+import React from 'react';
+
 import { navigationRoutes } from '../constants/navigationRoutes';
-import { tokensAreEqual } from '../utils/wallets';
+import { useNavigateBack } from '../hooks/useNavigateBack';
+import { useBestRouteStore } from '../store/bestRoute';
 import { useMetaStore } from '../store/meta';
+import { tokensAreEqual } from '../utils/wallets';
 
 interface PropTypes {
   type: 'from' | 'to';
@@ -18,7 +20,9 @@ export interface TokenWithBalance extends Token {
     usdValue: string;
   };
 }
-
+/**
+ * @deprecated will be removed in v2
+ */
 export function SelectTokenPage(props: PropTypes) {
   const { navigateBackFrom } = useNavigateBack();
 
@@ -33,7 +37,7 @@ export function SelectTokenPage(props: PropTypes) {
       )
     : sourceTokens;
 
-    const supportedDestinationTokens = supportedTokens
+  const supportedDestinationTokens = supportedTokens
     ? destinationTokens.filter((token) =>
         supportedTokens.some((supportedToken) =>
           tokensAreEqual(supportedToken, token)
@@ -53,11 +57,13 @@ export function SelectTokenPage(props: PropTypes) {
       list={type == 'from' ? supportedSourceTokens : supportedDestinationTokens}
       selected={type === 'from' ? fromToken : toToken}
       onChange={(token) => {
-        if (type === 'from') setFromToken(token);
-        else setToToken(token);
-        navigateBackFrom(navigationRoutes.fromToken);
+        if (type === 'from') {
+          setFromToken(token);
+        } else {
+          setToToken(token);
+        }
       }}
-      onBack={navigateBackFrom.bind(null, navigationRoutes.fromToken)}
+      onBack={navigateBackFrom.bind(null, navigationRoutes.home)}
       loadingStatus={loadingMetaStatus}
     />
   );

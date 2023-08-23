@@ -1,16 +1,18 @@
+import type { WidgetConfig } from '../types';
+
 import React from 'react';
 import { useRoutes } from 'react-router-dom';
+
 import { navigationRoutes } from '../constants/navigationRoutes';
 import { ConfirmSwapPage } from '../pages/ConfirmSwapPage';
 import { HistoryPage } from '../pages/HistoryPage';
 import { Home } from '../pages/Home';
 import { LiquiditySourcePage } from '../pages/LiquiditySourcesPage';
 import { SelectChainPage } from '../pages/SelectChainPage';
-import { SelectTokenPage } from '../pages/SelectTokenPage';
+import { SelectSwapItemsPage } from '../pages/SelectSwapItemsPage';
 import { SettingsPage } from '../pages/SettingsPage';
-import { WalletsPage } from '../pages/WalletsPage';
 import { SwapDetailsPage } from '../pages/SwapDetailsPage';
-import { WidgetConfig } from '../types';
+import { WalletsPage } from '../pages/WalletsPage';
 
 const getAbsolutePath = (path: string) => path.replace('/', '');
 
@@ -27,11 +29,31 @@ export function AppRoutes(props: PropTypes) {
       element: <Home />,
     },
     {
+      path: navigationRoutes.fromSwap,
+      element: (
+        <SelectSwapItemsPage
+          type="from"
+          supportedChains={config?.from?.blockchains}
+          supportedTokens={config?.from?.tokens}
+        />
+      ),
+    },
+    {
+      path: navigationRoutes.toSwap,
+      element: (
+        <SelectSwapItemsPage
+          type="to"
+          supportedChains={config?.to?.blockchains}
+          supportedTokens={config?.to?.tokens}
+        />
+      ),
+    },
+    {
       path: navigationRoutes.fromChain,
       element: (
         <SelectChainPage
           type="from"
-          supportedChains={config?.from?.blockchains}
+          supportedChains={config?.to?.blockchains}
         />
       ),
     },
@@ -39,18 +61,6 @@ export function AppRoutes(props: PropTypes) {
       path: navigationRoutes.toChain,
       element: (
         <SelectChainPage type="to" supportedChains={config?.to?.blockchains} />
-      ),
-    },
-    {
-      path: navigationRoutes.fromToken,
-      element: (
-        <SelectTokenPage type="from" supportedTokens={config?.from?.tokens} />
-      ),
-    },
-    {
-      path: navigationRoutes.toToken,
-      element: (
-        <SelectTokenPage type="to" supportedTokens={config?.to?.tokens} />
       ),
     },
     {

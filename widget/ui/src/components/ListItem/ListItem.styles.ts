@@ -3,8 +3,8 @@ import { styled } from '../../theme';
 export const BaseListItem = styled('li', {
   display: 'flex',
   alignItems: 'center',
-  padding: '5px 10px',
-
+  padding: '$10 $5',
+  borderRadius: '$xs',
   '.item-start-container': {
     minWidth: '40px',
     flexShrink: 0,
@@ -20,10 +20,6 @@ export const BaseListItem = styled('li', {
 
     '.item-text-title': {
       fontWeight: 'bold',
-    },
-    '.item-text-description': {
-      color: '$neutral400',
-      fontSize: '$12',
     },
   },
   '.item-end-container': {},
