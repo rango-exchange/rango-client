@@ -5,8 +5,8 @@ import type { WalletType } from '@rango-dev/wallets-shared';
 import { i18n } from '@lingui/core';
 import {
   Alert,
+  Divider,
   LoadingFailedAlert,
-  SecondaryPage,
   Spinner,
   styled,
   Typography,
@@ -17,6 +17,7 @@ import { useWallets } from '@rango-dev/wallets-core';
 import { WalletTypes } from '@rango-dev/wallets-shared';
 import React, { useEffect, useRef, useState } from 'react';
 
+import { Layout } from '../components/Layout';
 import { navigationRoutes } from '../constants/navigationRoutes';
 import { useNavigateBack } from '../hooks/useNavigateBack';
 import { useMetaStore } from '../store/meta';
@@ -35,8 +36,9 @@ const ListContainer = styled('div', {
   gap: '$10',
   gridTemplateColumns: ' repeat(3, minmax(0, 1fr))',
   alignContent: 'baseline',
-  padding: '$15 $20 $20',
+  padding: '$15 $8 $20 0',
   overflowY: 'auto',
+  height: 490,
 });
 
 const LoaderContainer = styled('div', {
@@ -47,8 +49,8 @@ const LoaderContainer = styled('div', {
   top: '50%',
 });
 
-const AlertContainer = styled('div', {
-  paddingBottom: '$16',
+const Container = styled('div', {
+  textAlign: 'center',
 });
 
 const ALL_SUPPORTED_WALLETS = Object.values(WalletTypes);
@@ -118,15 +120,17 @@ export function WalletsPage({
   }, [wallets]);
 
   return (
-    <SecondaryPage
-      title={i18n.t('Select Wallet') || ''}
-      textField={false}
-      onBack={navigateBackFrom.bind(null, navigationRoutes.wallets)}>
-      <>
+    <Layout
+      header={{
+        title: i18n.t('Connect Wallets'),
+        onBack: navigateBackFrom.bind(null, navigationRoutes.wallets),
+      }}>
+      <Container>
         {walletErrorMessage && (
-          <AlertContainer>
+          <>
             <Alert type="error" title={walletErrorMessage} />
-          </AlertContainer>
+            <Divider direction="vertical" size={16} />
+          </>
         )}
         {loadingMetaStatus === 'loading' && (
           <LoaderContainer className="loader">
@@ -134,22 +138,25 @@ export function WalletsPage({
           </LoaderContainer>
         )}
         {loadingMetaStatus === 'failed' && <LoadingFailedAlert />}
-        <Typography variant="title" size="medium" align="center">
+        <Typography variant="title" size="xmedium" align="center">
           Choose a wallet to connect.
         </Typography>
         <ListContainer>
           {loadingMetaStatus === 'success' &&
-            sortedWallets.map((wallet, index) => (
-              <Wallet
-                {...wallet}
-                key={`${index}-${wallet.type}`}
-                onClick={(type) => {
-                  void onSelectWallet(type);
-                }}
-              />
-            ))}
+            sortedWallets.map((wallet, index) => {
+              const key = `wallet-${index}-${wallet.type}`;
+              return (
+                <Wallet
+                  {...wallet}
+                  key={key}
+                  onClick={(type) => {
+                    void onSelectWallet(type);
+                  }}
+                />
+              );
+            })}
         </ListContainer>
-      </>
-    </SecondaryPage>
+      </Container>
+    </Layout>
   );
 }

@@ -18,13 +18,13 @@ export const WalletButton = styled('button', {
   border: '0',
   display: 'flex',
   flexDirection: 'column',
-  backgroundColor: '$surface200',
+  backgroundColor: '$neutral200',
   alignItems: 'center',
   cursor: 'pointer',
-  minWidth: 110,
+  width: 110,
   position: 'relative',
   '&:hover': {
-    backgroundColor: '$secondary300',
+    backgroundColor: '$surface600',
     opacity: '0.8',
   },
   variants: {
