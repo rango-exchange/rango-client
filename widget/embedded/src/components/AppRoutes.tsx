@@ -9,7 +9,7 @@ import { HistoryPage } from '../pages/HistoryPage';
 import { Home } from '../pages/Home';
 import { LiquiditySourcePage } from '../pages/LiquiditySourcesPage';
 import { SelectChainPage } from '../pages/SelectChainPage';
-import { SelectSwapItemsPage } from '../pages/SelectSwapItemsPage';
+import { SelectTokenPage } from '../pages/SelectTokenPage';
 import { SettingsPage } from '../pages/SettingsPage';
 import { SwapDetailsPage } from '../pages/SwapDetailsPage';
 import { WalletsPage } from '../pages/WalletsPage';
@@ -19,41 +19,19 @@ const getAbsolutePath = (path: string) => path.replace('/', '');
 interface PropTypes {
   config?: WidgetConfig;
 }
-
 export function AppRoutes(props: PropTypes) {
   const { config } = props;
-
   return useRoutes([
     {
       path: navigationRoutes.home,
       element: <Home />,
     },
     {
-      path: navigationRoutes.fromSwap,
-      element: (
-        <SelectSwapItemsPage
-          type="from"
-          supportedChains={config?.from?.blockchains}
-          supportedTokens={config?.from?.tokens}
-        />
-      ),
-    },
-    {
-      path: navigationRoutes.toSwap,
-      element: (
-        <SelectSwapItemsPage
-          type="to"
-          supportedChains={config?.to?.blockchains}
-          supportedTokens={config?.to?.tokens}
-        />
-      ),
-    },
-    {
       path: navigationRoutes.fromChain,
       element: (
         <SelectChainPage
           type="from"
-          supportedChains={config?.to?.blockchains}
+          supportedChains={config?.from?.blockchains}
         />
       ),
     },
@@ -61,6 +39,18 @@ export function AppRoutes(props: PropTypes) {
       path: navigationRoutes.toChain,
       element: (
         <SelectChainPage type="to" supportedChains={config?.to?.blockchains} />
+      ),
+    },
+    {
+      path: navigationRoutes.fromToken,
+      element: (
+        <SelectTokenPage type="from" supportedTokens={config?.from?.tokens} />
+      ),
+    },
+    {
+      path: navigationRoutes.toToken,
+      element: (
+        <SelectTokenPage type="to" supportedTokens={config?.to?.tokens} />
       ),
     },
     {
