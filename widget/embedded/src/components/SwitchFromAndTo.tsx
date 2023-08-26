@@ -1,5 +1,5 @@
-import { Button, styled } from '@rango-dev/ui';
-import { VerticalSwapIcon } from '@rango-dev/ui/src/components/Icon';
+import { ReverseIcon, styled } from '@rango-dev/ui';
+// import { VerticalSwapIcon } from '@rango-dev/ui/src/components/Icon';
 import React, { useEffect, useRef, useState } from 'react';
 import { useInRouterContext, useSearchParams } from 'react-router-dom';
 
@@ -41,6 +41,17 @@ const SwitchButtonContainer = styled('div', {
   transform: 'translate(-50%, 10%)',
 });
 
+const StyledButton = styled('div', {
+  borderRadius: '$md',
+  border: '3px solid $neutral100',
+  background: '$surface100',
+  width: '$24',
+  height: '$24',
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+});
+
 export function SwithFromAndToButton() {
   const switchFromAndTo = useBestRouteStore.use.switchFromAndTo();
   const isRouterInContext = useInRouterContext();
@@ -48,15 +59,14 @@ export function SwithFromAndToButton() {
 
   return (
     <SwitchButtonContainer>
-      <Button
-        variant="ghost"
+      <StyledButton
         onClick={() => {
           switchFromAndTo();
           setCount((prev) => prev + 1);
         }}>
-        <VerticalSwapIcon size={32} />
+        <ReverseIcon size={12} />
         {isRouterInContext && <SwithFromAndTo count={count} />}
-      </Button>
+      </StyledButton>
     </SwitchButtonContainer>
   );
 }

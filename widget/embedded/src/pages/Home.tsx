@@ -1,5 +1,13 @@
 import { i18n } from '@lingui/core';
-import { Alert, Button, styled, TokenInfo, Typography } from '@rango-dev/ui';
+import {
+  Alert,
+  // BestRoute,
+  Button,
+  styled,
+  SwapInput,
+  // TokenInfo,
+  Typography,
+} from '@rango-dev/ui';
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -33,6 +41,13 @@ const FromContainer = styled('div', {
   position: 'relative',
 });
 
+const InputsContainer = styled('div', {
+  display: 'flex',
+  flexDirection: 'column',
+  gap: 5,
+  alignSelf: 'stretch',
+});
+
 const BestRouteContainer = styled('div', {
   width: '100%',
   paddingTop: '$16',
@@ -57,7 +72,7 @@ export function Home() {
   const setInputAmount = useBestRouteStore.use.setInputAmount();
   const inputUsdValue = useBestRouteStore.use.inputUsdValue();
   const inputAmount = useBestRouteStore.use.inputAmount();
-  const outputAmount = useBestRouteStore.use.outputAmount();
+  // const outputAmount = useBestRouteStore.use.outputAmount();
   const outputUsdValue = useBestRouteStore.use.outputUsdValue();
   const bestRoute = useBestRouteStore.use.bestRoute();
   const fetchingBestRoute = useBestRouteStore.use.loading();
@@ -112,23 +127,25 @@ export function Home() {
         )
       : '0';
 
-  const tokenBalanceReal =
-    !!fromChain && !!fromToken
-      ? numberToString(
-          getBalanceFromWallet(
-            connectedWallets,
-            fromChain?.name,
-            fromToken?.symbol,
-            fromToken?.address
-          )?.amount || '0',
-          getBalanceFromWallet(
-            connectedWallets,
-            fromChain?.name,
-            fromToken?.symbol,
-            fromToken?.address
-          )?.decimal
-        )
-      : '0';
+  /*
+   * const tokenBalanceReal =
+   *   !!fromChain && !!fromToken
+   *     ? numberToString(
+   *         getBalanceFromWallet(
+   *           connectedWallets,
+   *           fromChain?.name,
+   *           fromToken?.symbol,
+   *           fromToken?.address
+   *         )?.amount || '0',
+   *         getBalanceFromWallet(
+   *           connectedWallets,
+   *           fromChain?.name,
+   *           fromToken?.symbol,
+   *           fromToken?.address
+   *         )?.decimal
+   *       )
+   *     : '0';
+   */
 
   useEffect(() => {
     setCurrentPage(navigationRoutes.home);
@@ -161,52 +178,46 @@ export function Home() {
         ),
       }}>
       <Container>
-        <FromContainer>
-          <TokenInfo
-            type="From"
-            chain={fromChain}
-            token={fromToken}
-            onAmountChange={setInputAmount}
-            inputAmount={inputAmount}
-            fromChain={fromChain}
-            toChain={toChain}
-            loadingStatus={loadingMetaStatus}
-            inputUsdValue={numberToString(inputUsdValue)}
-            fromToken={fromToken}
-            setInputAmount={setInputAmount}
-            connectedWallets={connectedWallets}
-            bestRoute={bestRoute}
-            fetchingBestRoute={fetchingBestRoute}
-            onChainClick={() => navigate(navigationRoutes.fromSwap)}
-            onTokenClick={() => navigate('from-token')}
-            tokenBalanceReal={tokenBalanceReal}
-            tokenBalance={tokenBalance}
+        <InputsContainer>
+          <FromContainer>
+            <SwapInput
+              label="from"
+              onInputChange={setInputAmount}
+              balance={tokenBalance}
+              chain={{
+                displayName: fromChain?.displayName || '',
+                image: fromChain?.logo || '',
+              }}
+              token={{
+                displayName: fromToken?.name || '',
+                image: fromToken?.image || '',
+              }}
+              onClickToken={() => navigate('from-token')}
+              price={{
+                value: inputAmount,
+                usdValue: numberToString(inputUsdValue),
+              }}
+            />
+            <SwithFromAndToButton />
+          </FromContainer>
+          <SwapInput
+            label="to"
+            chain={{
+              displayName: toChain?.displayName || '',
+              image: toChain?.logo || '',
+            }}
+            token={{
+              displayName: toToken?.name || '',
+              image: toToken?.image || '',
+            }}
+            percentageChange={numberToString(percentageChange)}
+            price={{
+              value: inputAmount,
+              usdValue: numberToString(inputUsdValue),
+            }}
+            onClickToken={() => navigate('to-token')}
           />
-          <SwithFromAndToButton />
-        </FromContainer>
-        <TokenInfo
-          type="To"
-          chain={toChain}
-          token={toToken}
-          outputAmount={numberToString(outputAmount)}
-          percentageChange={numberToString(percentageChange)}
-          outputUsdValue={numberToString(outputUsdValue)}
-          fromChain={fromChain}
-          toChain={toChain}
-          loadingStatus={loadingMetaStatus}
-          inputUsdValue={numberToString(inputUsdValue)}
-          fromToken={fromToken}
-          setInputAmount={setInputAmount}
-          connectedWallets={connectedWallets}
-          inputAmount={inputAmount}
-          bestRoute={bestRoute}
-          fetchingBestRoute={fetchingBestRoute}
-          onChainClick={() => navigate(navigationRoutes.toSwap)}
-          onTokenClick={() => navigate('to-token')}
-          tokenBalanceReal={tokenBalanceReal}
-          tokenBalance={tokenBalance}
-          showPercentageChange={!!percentageChange?.lt(0)}
-        />
+          </InputsContainer>
         {showBestRoute && <BestRouteContainer></BestRouteContainer>}
         {(errorMessage || hasLimitError(bestRoute)) && (
           <Alerts>
@@ -232,6 +243,7 @@ export function Home() {
             type="primary"
             size="large"
             disabled={swapButtonState.disabled}
+            fullWidth
             onClick={() => {
               if (swapButtonState.title === 'Connect Wallet') {
                 navigate(navigationRoutes.wallets);
