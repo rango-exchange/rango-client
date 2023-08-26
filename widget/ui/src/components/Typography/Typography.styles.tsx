@@ -217,7 +217,7 @@ export const TypographyContainer = styled('span', {
       variant: 'label',
       css: {
         fontSize: '$10',
-        fontWeight: '$medium',
+        fontWeight: '$regular',
         lineHeight: '$16',
       },
     },

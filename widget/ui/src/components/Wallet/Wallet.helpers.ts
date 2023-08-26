@@ -12,7 +12,7 @@ export function makeInfo(state: WalletState): Info {
       };
     case WalletState.NOT_INSTALLED:
       return {
-        color: 'link',
+        color: 'secondary200',
         description: 'Install',
         tooltipText: 'Install',
       };
@@ -20,7 +20,7 @@ export function makeInfo(state: WalletState): Info {
       return {
         color: 'neutral400',
         description: 'Connecting...',
-        tooltipText: 'Connecting',
+        tooltipText: '',
       };
     case WalletState.DISCONNECTED:
       return {

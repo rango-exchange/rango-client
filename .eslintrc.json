@@ -86,12 +86,6 @@
       }
     ],
     "@typescript-eslint/no-throw-literal": "error",
-    "@typescript-eslint/no-magic-numbers": [
-      "error",
-      {
-        "ignore": [0, 1]
-      }
-    ],
     "@typescript-eslint/consistent-type-exports": "error",
     "@typescript-eslint/consistent-type-imports": "error",
     "@typescript-eslint/member-ordering": "error",
