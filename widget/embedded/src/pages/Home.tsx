@@ -1,3 +1,5 @@
+import type { SwapResult } from 'rango-sdk';
+
 import { i18n } from '@lingui/core';
 import {
   Alert,
@@ -5,9 +7,9 @@ import {
   Button,
   styled,
   SwapInput,
-  // TokenInfo,
   Typography,
 } from '@rango-dev/ui';
+import BigNumber from 'bignumber.js';
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -20,12 +22,18 @@ import { fetchBestRoute, useBestRouteStore } from '../store/bestRoute';
 import { useMetaStore } from '../store/meta';
 import { useUiStore } from '../store/ui';
 import { useWalletsStore } from '../store/wallets';
-import { numberToString } from '../utils/numbers';
+import {
+  numberToString,
+  secondsToString,
+  totalArrivalTime,
+} from '../utils/numbers';
 import {
   canComputePriceImpact,
   getOutputRatio,
   getPercentageChange,
   getSwapButtonState,
+  getTotalFeeInUsd,
+  hasHighFee,
   hasLimitError,
   LimitErrorMessage,
   outputRatioHasWarning,
@@ -51,6 +59,7 @@ const InputsContainer = styled('div', {
 const BestRouteContainer = styled('div', {
   width: '100%',
   paddingTop: '$16',
+  marginBottom: '-36px',
 });
 const Alerts = styled('div', {
   width: '100%',
@@ -62,6 +71,8 @@ const Footer = styled('div', {
 });
 
 const balancePercision = 8;
+const MAX_DECIMAL = 2;
+const MIN_DECIMAL = 0;
 
 export function Home() {
   const navigate = useNavigate();
@@ -72,7 +83,8 @@ export function Home() {
   const setInputAmount = useBestRouteStore.use.setInputAmount();
   const inputUsdValue = useBestRouteStore.use.inputUsdValue();
   const inputAmount = useBestRouteStore.use.inputAmount();
-  // const outputAmount = useBestRouteStore.use.outputAmount();
+  const tokens = useMetaStore.use.meta().tokens;
+  const outputAmount = useBestRouteStore.use.outputAmount();
   const outputUsdValue = useBestRouteStore.use.outputUsdValue();
   const bestRoute = useBestRouteStore.use.bestRoute();
   const fetchingBestRoute = useBestRouteStore.use.loading();
@@ -127,25 +139,23 @@ export function Home() {
         )
       : '0';
 
-  /*
-   * const tokenBalanceReal =
-   *   !!fromChain && !!fromToken
-   *     ? numberToString(
-   *         getBalanceFromWallet(
-   *           connectedWallets,
-   *           fromChain?.name,
-   *           fromToken?.symbol,
-   *           fromToken?.address
-   *         )?.amount || '0',
-   *         getBalanceFromWallet(
-   *           connectedWallets,
-   *           fromChain?.name,
-   *           fromToken?.symbol,
-   *           fromToken?.address
-   *         )?.decimal
-   *       )
-   *     : '0';
-   */
+  const tokenBalanceReal =
+    !!fromChain && !!fromToken
+      ? numberToString(
+          getBalanceFromWallet(
+            connectedWallets,
+            fromChain?.name,
+            fromToken?.symbol,
+            fromToken?.address
+          )?.amount || '0',
+          getBalanceFromWallet(
+            connectedWallets,
+            fromChain?.name,
+            fromToken?.symbol,
+            fromToken?.address
+          )?.decimal
+        )
+      : '0';
 
   useEffect(() => {
     setCurrentPage(navigationRoutes.home);
@@ -160,6 +170,35 @@ export function Home() {
           inputUsdValue.toNumber(),
           outputUsdValue.toNumber()
         );
+
+  const getBestRouteSteps = (swaps: SwapResult[]) => {
+    return swaps.map((swap) => ({
+      swapper: { displayName: swap.swapperId, image: swap.swapperLogo },
+      from: {
+        token: { displayName: swap.from.symbol, image: swap.from.logo },
+        chain: {
+          displayName: swap.from.blockchain,
+          image: swap.from.blockchainLogo,
+        },
+        price: { value: inputAmount },
+      },
+      to: {
+        token: { displayName: swap.to.symbol, image: swap.to.logo },
+        chain: {
+          displayName: swap.to.blockchain,
+          image: swap.to.blockchainLogo,
+        },
+        price: {
+          value: outputAmount
+            ? numberToString(new BigNumber(outputAmount))
+            : numberToString(new BigNumber(0)),
+        },
+      },
+    }));
+  };
+
+  const totalFeeInUsd = getTotalFeeInUsd(bestRoute, tokens);
+  const highFee = hasHighFee(totalFeeInUsd);
 
   return (
     <Layout
@@ -181,7 +220,7 @@ export function Home() {
         <InputsContainer>
           <FromContainer>
             <SwapInput
-              label="from"
+              label="From"
               onInputChange={setInputAmount}
               balance={tokenBalance}
               chain={{
@@ -189,188 +228,74 @@ export function Home() {
                 image: fromChain?.logo || '',
               }}
               token={{
-                displayName: fromToken?.name || '',
+                displayName: fromToken?.symbol || '',
                 image: fromToken?.image || '',
               }}
-              onClickToken={() => navigate('from-token')}
+              onClickToken={() => navigate('from-swap')}
               price={{
                 value: inputAmount,
                 usdValue: numberToString(inputUsdValue),
+              }}
+              disabled={loadingMetaStatus === 'failed'}
+              loading={loadingMetaStatus === 'loading'}
+              onSelectMaxBalance={() => {
+                if (tokenBalance !== '0') {
+                  setInputAmount(tokenBalanceReal.split(',').join(''));
+                }
               }}
             />
             <SwithFromAndToButton />
           </FromContainer>
           <SwapInput
-            label="to"
+            label="To"
             chain={{
               displayName: toChain?.displayName || '',
               image: toChain?.logo || '',
             }}
             token={{
-              displayName: toToken?.name || '',
+              displayName: toToken?.symbol || '',
               image: toToken?.image || '',
             }}
-            percentageChange={numberToString(percentageChange)}
+            percentageChange={
+              !!percentageChange?.lt(0)
+                ? numberToString(percentageChange, MIN_DECIMAL, MAX_DECIMAL)
+                : null
+            }
+            warningLevel={highFee ? 'high' : 'low'}
             price={{
-              value: inputAmount,
-              usdValue: numberToString(inputUsdValue),
+              value: numberToString(outputAmount),
+              usdValue: numberToString(outputUsdValue),
             }}
-            onClickToken={() => navigate('to-token')}
+            onClickToken={() => navigate('to-swap')}
+            disabled={loadingMetaStatus === 'failed'}
+            loading={loadingMetaStatus === 'loading'}
           />
         </InputsContainer>
-        {showBestRoute && (
+        {showBestRoute && bestRoute?.result?.swaps?.length ? (
           <BestRouteContainer>
             <BestRoute
               type="basic"
               recommended={true}
-              input={{ value: '1', usdValue: '30000' }}
-              output={{ value: '3161.441024', usdValue: '26.890' }}
-              steps={[
-                {
-                  swapper: {
-                    displayName: 'MayaProtocol',
-                    image: 'https://api.rango.exchange/swappers/maya.jpg',
-                  },
-                  from: {
-                    token: {
-                      displayName: 'BTC',
-                      image: 'https://api.rango.exchange/tokens/BTC/BTC.png',
-                    },
-                    chain: {
-                      displayName: 'BTC',
-                      image: 'https://api.rango.exchange/tokens/BTC/BTC.png',
-                    },
-                    price: {
-                      value: '1.00000000',
-                    },
-                  },
-                  to: {
-                    chain: {
-                      displayName: 'ETH',
-                      image:
-                        'https://api.rango.exchange/blockchains/ethereum.svg',
-                    },
-                    token: {
-                      displayName: 'ETH',
-
-                      image: 'https://api.rango.exchange/tokens/ETH/ETH.png',
-                    },
-                    price: {
-                      value: '14.863736725876758517',
-                    },
-                  },
-                },
-                {
-                  swapper: {
-                    displayName: 'Satellite',
-                    image: 'https://api.rango.exchange/swappers/satellite.png',
-                  },
-                  from: {
-                    token: {
-                      displayName: 'ETH',
-                      image: 'https://api.rango.exchange/tokens/ETH/ETH.png',
-                    },
-                    chain: {
-                      displayName: 'ETH',
-                      image:
-                        'https://api.rango.exchange/blockchains/ethereum.svg',
-                    },
-                    price: { value: '14.863736725876758517' },
-                  },
-                  to: {
-                    token: {
-                      displayName: 'ETH',
-                      image: 'https://api.rango.exchange/tokens/COSMOS/ETH.png',
-                    },
-                    chain: {
-                      displayName: 'OSMOSIS',
-                      image:
-                        'https://api.rango.exchange/blockchains/osmosis.svg',
-                    },
-                    price: {
-                      value: '14.825674725876758517',
-                    },
-                  },
-                },
-                {
-                  swapper: {
-                    displayName: 'Osmosis',
-                    image: 'https://api.rango.exchange/swappers/osmosis.png',
-                  },
-                  from: {
-                    token: {
-                      displayName: 'ETH',
-                      image: 'https://api.rango.exchange/tokens/COSMOS/ETH.png',
-                    },
-                    chain: {
-                      displayName: 'OSMOSIS',
-                      image:
-                        'https://api.rango.exchange/blockchains/osmosis.svg',
-                    },
-                    price: {
-                      value: '14.825674725876758517',
-                    },
-                  },
-                  to: {
-                    token: {
-                      displayName: 'ATOM',
-                      image:
-                        'https://api.rango.exchange/tokens/COSMOS/ATOM.png',
-                    },
-                    chain: {
-                      displayName: 'OSMOSIS',
-                      image:
-                        'https://api.rango.exchange/blockchains/osmosis.svg',
-                    },
-                    price: {
-                      value: '3161.441024',
-                    },
-                  },
-                },
-                {
-                  swapper: {
-                    displayName: 'IBC',
-                    image: 'https://api.rango.exchange/swappers/IBC.png',
-                  },
-                  from: {
-                    token: {
-                      displayName: 'ATOM',
-                      image:
-                        'https://api.rango.exchange/tokens/COSMOS/ATOM.png',
-                    },
-                    chain: {
-                      displayName: 'OSMOSIS',
-                      image:
-                        'https://api.rango.exchange/blockchains/osmosis.svg',
-                    },
-                    price: {
-                      value: '3161.441024',
-                    },
-                  },
-                  to: {
-                    token: {
-                      displayName: 'ATOM',
-                      image:
-                        'https://api.rango.exchange/tokens/COSMOS/ATOM.png',
-                    },
-                    chain: {
-                      displayName: 'COSMOS',
-                      image:
-                        'https://api.rango.exchange/blockchains/cosmos.svg',
-                    },
-                    price: {
-                      value: '3161.441024',
-                    },
-                  },
-                },
-              ]}
-              percentageChange="7.51"
-              warningLevel="high"
-              totalFee="9.90"
-              totalTime="23:00"
+              input={{
+                value: inputAmount,
+                usdValue: numberToString(inputUsdValue),
+              }}
+              output={{
+                value: numberToString(outputAmount),
+                usdValue: numberToString(outputUsdValue),
+              }}
+              steps={getBestRouteSteps(bestRoute.result.swaps)}
+              percentageChange={numberToString(
+                percentageChange,
+                MIN_DECIMAL,
+                MAX_DECIMAL
+              )}
+              totalFee={numberToString(totalFeeInUsd, MIN_DECIMAL, MAX_DECIMAL)}
+              totalTime={secondsToString(totalArrivalTime(bestRoute))}
             />
           </BestRouteContainer>
-        )}
+        ) : null}
+
         {(errorMessage || hasLimitError(bestRoute)) && (
           <Alerts>
             {errorMessage && <Alert type="error">{errorMessage}</Alert>}

@@ -22,7 +22,7 @@ export function SwapInput(props: SwapInputProps) {
                 mr={4}
                 variant="body"
                 size="xsmall">
-                {props.balance}
+                Balance: {props.balance}
               </Typography>
               <Button
                 variant="contained"
@@ -68,7 +68,7 @@ export function SwapInput(props: SwapInputProps) {
             />
           ) : (
             <Typography variant="body" size="medium" color="$neutral400">
-              {props.price.usdValue}
+              {`$${props.price.usdValue}`}
             </Typography>
           )}
         </div>

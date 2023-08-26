@@ -39,6 +39,7 @@ const SwitchButtonContainer = styled('div', {
   bottom: '-12px',
   left: '50%',
   transform: 'translate(-50%, 10%)',
+  cursor: 'pointer',
 });
 
 const StyledButton = styled('div', {
