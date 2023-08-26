@@ -38,4 +38,5 @@ export const InputAmount = styled(TextField, {
   lineHeight: '$26',
   fontWeight: '$medium',
   direction: 'rtl',
+  width: 140,
 });
