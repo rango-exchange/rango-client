@@ -4,6 +4,7 @@ export const InputContainer = styled('div', {
   borderRadius: '$xs',
   display: 'flex',
   justifyContent: 'center',
+  alignItems: 'center',
   variants: {
     fullWidth: {
       true: {
@@ -146,15 +147,8 @@ export const Input = styled('input', {
   fontWeight: 400,
   border: 'none',
   outline: 'none',
+  width: '100%',
   variants: {
-    fullWidth: {
-      true: {
-        width: '100%',
-      },
-      false: {
-        width: 'fit-content',
-      },
-    },
     prefix: {
       true: { marginLeft: '$10' },
     },

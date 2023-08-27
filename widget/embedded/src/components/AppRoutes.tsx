@@ -1,5 +1,8 @@
+import type { WidgetConfig } from '../types';
+
 import React from 'react';
 import { useRoutes } from 'react-router-dom';
+
 import { navigationRoutes } from '../constants/navigationRoutes';
 import { ConfirmSwapPage } from '../pages/ConfirmSwapPage';
 import { HistoryPage } from '../pages/HistoryPage';
@@ -8,9 +11,9 @@ import { LiquiditySourcePage } from '../pages/LiquiditySourcesPage';
 import { SelectChainPage } from '../pages/SelectChainPage';
 import { SelectTokenPage } from '../pages/SelectTokenPage';
 import { SettingsPage } from '../pages/SettingsPage';
-import { WalletsPage } from '../pages/WalletsPage';
 import { SwapDetailsPage } from '../pages/SwapDetailsPage';
-import { WidgetConfig } from '../types';
+import { ThemePage } from '../pages/ThemePage';
+import { WalletsPage } from '../pages/WalletsPage';
 
 const getAbsolutePath = (path: string) => path.replace('/', '');
 
@@ -67,6 +70,10 @@ export function AppRoutes(props: PropTypes) {
       element: (
         <LiquiditySourcePage supportedSwappers={config?.liquiditySources} />
       ),
+    },
+    {
+      path: navigationRoutes.themes,
+      element: <ThemePage />,
     },
     { path: navigationRoutes.swaps, element: <HistoryPage /> },
     {

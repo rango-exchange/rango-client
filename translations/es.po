@@ -14,12 +14,32 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. js-lingui-explicit-id
+#: widget/ui/src/components/SwapListItem/SwapListItem.helpers.ts:8
+msgid "Failed"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: widget/ui/src/components/SwapListItem/SwapListItem.helpers.ts:10
+msgid "Complete"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: widget/ui/src/components/SwapListItem/SwapListItem.helpers.ts:12
+msgid "In progress"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: widget/ui/src/components/SwapListItem/SwapToken.tsx:71
+msgid "Waiting for bridge transaction"
+msgstr ""
+
+#. js-lingui-explicit-id
 #: widget/ui/src/components/Alert/LoadingFailedAlert.tsx:13
 msgid " Error connecting server, please reload the app and try again."
 msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/ui/src/components/BottomLogo/BottomLogo.tsx:30
+#: widget/ui/src/components/BottomLogo/BottomLogo.tsx:14
 msgid "Powered By"
 msgstr ""
 
@@ -56,53 +76,13 @@ msgid "Token"
 msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/ui/src/containers/ConnectWalletsModal/ConnectWalletsModal.tsx:35
+#: widget/ui/src/containers/ConnectWalletsModal/ConnectWalletsModal.tsx:30
 msgid "Connect Wallets"
 msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/ui/src/containers/HomePanel/HomePanel.tsx:131
+#: widget/ui/src/containers/HomePanel/HomePanel.tsx:123
 msgid "SWAP"
-msgstr ""
-
-#. js-lingui-explicit-id
-#: widget/ui/src/containers/Settings/Settings.tsx:119
-msgid "Slippage tolerance"
-msgstr ""
-
-#. js-lingui-explicit-id
-#: widget/ui/src/containers/Settings/Settings.tsx:123
-msgid "Custom"
-msgstr ""
-
-#. js-lingui-explicit-id
-#: widget/ui/src/containers/Settings/Settings.tsx:178
-msgid "Theme"
-msgstr ""
-
-#. js-lingui-explicit-id
-#: widget/ui/src/containers/Settings/Settings.tsx:183
-msgid "Dark"
-msgstr ""
-
-#. js-lingui-explicit-id
-#: widget/ui/src/containers/Settings/Settings.tsx:184
-msgid "Light"
-msgstr ""
-
-#. js-lingui-explicit-id
-#: widget/ui/src/containers/Settings/Settings.tsx:185
-msgid "Auto"
-msgstr ""
-
-#. js-lingui-explicit-id
-#: widget/ui/src/containers/Settings/Settings.tsx:195
-msgid "Infinite Approval"
-msgstr ""
-
-#. js-lingui-explicit-id
-#: widget/ui/src/containers/Settings/Settings.tsx:222
-msgid "Liquidity Sources"
 msgstr ""
 
 #. js-lingui-explicit-id
@@ -168,20 +148,40 @@ msgstr ""
 #~ msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/HistoryPage.tsx:28
+#: widget/embedded/src/pages/HistoryPage.tsx:77
 #~ msgid "History"
 #~ msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/Home.tsx:170
+#: widget/embedded/src/pages/Home.tsx:152
 #: widget/embedded/src/utils/swap.ts:151
 #: widget/embedded/src/utils/swap.ts:168
 #~ msgid "Swap"
 #~ msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/WalletsPage.tsx:122
-#~ msgid "Select Wallet"
+#: widget/embedded/src/pages/SettingsPage.tsx:172
+#~ msgid "Setting"
+#~ msgstr ""
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/ThemePage.tsx:25
+#~ msgid "Theme"
+#~ msgstr ""
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/ThemePage.tsx:31
+#~ msgid "Dark"
+#~ msgstr ""
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/ThemePage.tsx:32
+#~ msgid "Light"
+#~ msgstr ""
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/ThemePage.tsx:33
+#~ msgid "Auto"
 #~ msgstr ""
 
 #. js-lingui-explicit-id
@@ -215,6 +215,11 @@ msgstr ""
 #~ msgstr ""
 
 #. js-lingui-explicit-id
+#: widget/embedded/src/pages/WalletsPage.tsx:122
+#~ msgid "Select Wallet"
+#~ msgstr ""
+
+#. js-lingui-explicit-id
 #: widget/ui/src/components/BestRoute/BestRoute.tsx:161
 #~ msgid "Transaction cost (fee)"
 #~ msgstr ""
@@ -233,6 +238,10 @@ msgstr ""
 #: widget/ui/src/containers/Warnings/HighSlippageWarning.tsx:21
 msgid "highSlippage"
 msgstr ""
+
+#: widget/embedded/src/components/HeaderButtons/CancelButton.tsx:13
+#~ msgid "Cancel>>>>>>> a2d3e8e5 (chore: fix height layout)"
+#~ msgstr ""
 
 #. js-lingui-explicit-id
 #: widget/ui/src/containers/TokenInfo/TokenInfo.tsx:179

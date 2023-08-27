@@ -3,7 +3,7 @@ import { styled } from '../../theme';
 export const BaseListItem = styled('li', {
   display: 'flex',
   alignItems: 'center',
-  padding: '5px 10px',
+  padding: '10px 5px',
 
   '.item-start-container': {
     minWidth: '40px',
@@ -26,5 +26,9 @@ export const BaseListItem = styled('li', {
       fontSize: '$12',
     },
   },
-  '.item-end-container': {},
+  '.item-end-container': {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
 });
