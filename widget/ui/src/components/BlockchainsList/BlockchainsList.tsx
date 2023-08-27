@@ -27,7 +27,9 @@ const ListContainer = styled('div', {
 const ImageContainer = styled('div', {
   paddingRight: '$4',
 });
-
+/**
+ * @deprecated will be removed in v2
+ */
 export function BlockchainsList(props: PropTypes) {
   const { list, onChange, multiSelect, selectedList } = props;
   const [selected, setSelected] = useState(props.selected);

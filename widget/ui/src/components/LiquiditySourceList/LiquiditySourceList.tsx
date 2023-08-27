@@ -186,7 +186,9 @@ export function LiquiditySourceList(props: PropTypes) {
     </MainContainer>
   );
 }
-
+/**
+ * @deprecated will be removed in v2
+ */
 const LiquiditySourceItem = ({
   liquiditySource,
   selected,

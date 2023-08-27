@@ -1,27 +1,15 @@
-import React, { PropsWithChildren } from 'react';
-import { ReactElementType, VariableSizeList as List } from 'react-window';
-import InfiniteLoader from 'react-window-infinite-loader';
+import type { PropTypes } from './VirtualizedList.types';
+import type { CSSProperties } from '@stitches/react';
+import type { PropsWithChildren } from 'react';
+
+import React from 'react';
 import AutoSizer from 'react-virtualized-auto-sizer';
-import { CSSProperties } from '@stitches/react';
-
-export type VirtualizedListItem = ({
-  index,
-  style,
-}: {
-  index: number;
-  style: CSSProperties | undefined;
-}) => JSX.Element | null;
-
-type PropTypes = {
-  itemCount: number;
-  hasNextPage: boolean;
-  loadNextPage: () => void;
-  Item: VirtualizedListItem;
-  innerElementType: ReactElementType | undefined;
-  size: number;
-};
+import { VariableSizeList as List } from 'react-window';
+import InfiniteLoader from 'react-window-infinite-loader';
 
 export function VirtualizedList(props: PropsWithChildren<PropTypes>) {
+  // TODO:  react/prop-types problem
+  // eslint-disable-next-line react/prop-types
   const { itemCount, hasNextPage, loadNextPage, Item, innerElementType, size } =
     props;
 

@@ -1,9 +1,9 @@
 export const navigationRoutes = {
   home: '/',
-  fromChain: 'from-chain',
-  fromToken: 'from-token',
-  toChain: 'to-chain',
-  toToken: 'to-token',
+  fromSwap: 'from-swap',
+  fromChain: '/from-swap/blockchains',
+  toChain: '/to-swap/blockchains',
+  toSwap: 'to-swap',
   settings: 'settings',
   liquiditySources: '/settings/liquidity-sources',
   themes: '/settings/themes',
