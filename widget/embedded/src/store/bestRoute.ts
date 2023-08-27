@@ -1,28 +1,30 @@
-import { BestRouteResponse, BlockchainMeta } from 'rango-sdk';
-import { Token } from 'rango-sdk';
-import { create } from 'zustand';
+import type { TokenWithBalance } from '../components/TokenList';
+import type { PendingSwap } from '@rango-dev/queue-manager-rango-preset/dist/shared';
+import type { BestRouteResponse, BlockchainMeta, Token } from 'rango-sdk';
+
 import BigNumber from 'bignumber.js';
+import { create } from 'zustand';
+import { subscribeWithSelector } from 'zustand/middleware';
+
 import { ZERO } from '../constants/numbers';
+import { httpService } from '../services/httpService';
+import { debounce } from '../utils/common';
+import { isPositiveNumber } from '../utils/numbers';
 import {
   getBestRouteToTokenUsdPrice,
   isRouteParametersChanged,
 } from '../utils/routing';
-import createSelectors from './selectors';
-import { subscribeWithSelector } from 'zustand/middleware';
-import { httpService } from '../services/httpService';
-import { useSettingsStore } from './settings';
 import { calcOutputUsdValue, createBestRouteRequestBody } from '../utils/swap';
-import { useMetaStore } from './meta';
 import {
   getDefaultToken,
   getSortedTokens,
   tokensAreEqual,
 } from '../utils/wallets';
+
+import { useMetaStore } from './meta';
+import createSelectors from './selectors';
+import { useSettingsStore } from './settings';
 import { useWalletsStore } from './wallets';
-import { TokenWithBalance } from '../pages/SelectTokenPage';
-import { PendingSwap } from '@rango-dev/queue-manager-rango-preset/dist/shared';
-import { debounce } from '../utils/common';
-import { isPositiveNumber } from '../utils/numbers';
 
 const getUsdValue = (token: Token | null, amount: string): BigNumber | null =>
   token?.usdPrice
@@ -43,11 +45,14 @@ export interface RouteState {
   sourceTokens: Token[];
   destinationTokens: Token[];
   resetRoute: () => void;
+  resetToChain: () => void;
+  resetFromChain: () => void;
   setFromChain: (
     chain: BlockchainMeta | null,
     setDefaultToken?: boolean
   ) => void;
   setToChain: (chian: BlockchainMeta | null, setDefaultToken?: boolean) => void;
+
   setFromToken: (token: Token | null) => void;
   setToToken: (token: Token | null) => void;
   setInputAmount: (amount: string) => void;
@@ -77,7 +82,9 @@ export const useBestRouteStore = createSelectors(
         set((state) => {
           let outputAmount: BigNumber | null = null;
           let outputUsdValue: BigNumber = ZERO;
-          if (!isPositiveNumber(state.inputAmount)) return {};
+          if (!isPositiveNumber(state.inputAmount)) {
+            return {};
+          }
           if (!!bestRoute) {
             outputAmount = !!bestRoute.result?.outputAmount
               ? new BigNumber(bestRoute.result?.outputAmount)
@@ -105,7 +112,9 @@ export const useBestRouteStore = createSelectors(
         })),
       setFromChain: (chain, setDefaultToken) => {
         set((state) => {
-          if (state.fromChain?.name === chain?.name) return {};
+          if (state.fromChain?.name === chain?.name) {
+            return {};
+          }
           const tokens = useMetaStore.getState().meta.tokens;
           const connectedWallets = useWalletsStore.getState().connectedWallets;
           const sortedTokens = getSortedTokens(
@@ -136,7 +145,9 @@ export const useBestRouteStore = createSelectors(
         })),
       setToChain: (chain, setDefaultToken) => {
         set((state) => {
-          if (state.toChain?.name === chain?.name) return {};
+          if (state.toChain?.name === chain?.name) {
+            return {};
+          }
           const tokens = useMetaStore.getState().meta.tokens;
           const connectedWallets = useWalletsStore.getState().connectedWallets;
           const sortedTokens = getSortedTokens(
@@ -181,7 +192,9 @@ export const useBestRouteStore = createSelectors(
             ? pendingSwap.steps.findIndex((s) => s.status === 'failed')
             : null;
 
-        if (failedIndex === null || failedIndex < 0) return;
+        if (failedIndex === null || failedIndex < 0) {
+          return;
+        }
 
         const firstStep = pendingSwap.steps[0];
         const lastStep = pendingSwap.steps[pendingSwap.steps.length - 1];
@@ -252,6 +265,17 @@ export const useBestRouteStore = createSelectors(
             state.outputAmount?.toString() || ''
           ),
         })),
+
+      resetFromChain: () =>
+        set(() => ({
+          fromChain: null,
+          sourceTokens: [],
+        })),
+      resetToChain: () =>
+        set(() => ({
+          toChain: null,
+          destinationTokens: [],
+        })),
     }))
   )
 );
@@ -272,7 +296,9 @@ const bestRoute = (
       affiliatePercent,
       affiliateWallets,
     } = settingsStore.getState();
-    if (!fromToken || !toToken || !isPositiveNumber(inputAmount)) return;
+    if (!fromToken || !toToken || !isPositiveNumber(inputAmount)) {
+      return;
+    }
     abortController?.abort();
     abortController = new AbortController();
     const userSlippage = !!customSlippage ? customSlippage : slippage;
@@ -303,7 +329,9 @@ const bestRoute = (
         abortController = null;
       })
       .catch((error) => {
-        if (error.code === 'ERR_CANCELED') return;
+        if (error.code === 'ERR_CANCELED') {
+          return;
+        }
         bestRouteStore.setState({
           error: error.message,
           loading: false,
@@ -311,23 +339,28 @@ const bestRoute = (
       });
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
   const debouncedFetchBestRoute = debounce(fetchBestRoute, 600);
 
   const bestRouteParamsListener = () => {
     const { fromToken, toToken, inputAmount, inputUsdValue, resetRoute } =
       useBestRouteStore.getState();
-    if (!isPositiveNumber(inputAmount) || inputUsdValue?.eq(0))
+    if (!isPositiveNumber(inputAmount) || inputUsdValue?.eq(0)) {
       return bestRouteStore.setState({ loading: false });
+    }
 
-    if (tokensAreEqual(fromToken, toToken))
+    if (tokensAreEqual(fromToken, toToken)) {
       return bestRouteStore.setState({
         loading: false,
         bestRoute: null,
         outputAmount: new BigNumber(inputAmount),
         outputUsdValue: inputUsdValue,
       });
+    }
 
-    if (!bestRouteStore.getState().loading) resetRoute();
+    if (!bestRouteStore.getState().loading) {
+      resetRoute();
+    }
     debouncedFetchBestRoute();
   };
 
@@ -348,9 +381,10 @@ const bestRoute = (
             prevState,
             currentState,
           })
-        )
+        ) {
           return false;
-        else return true;
+        }
+        return true;
       },
     }
   );
@@ -371,9 +405,10 @@ const bestRoute = (
             prevState,
             currentState,
           })
-        )
+        ) {
           return false;
-        else return true;
+        }
+        return true;
       },
     }
   );

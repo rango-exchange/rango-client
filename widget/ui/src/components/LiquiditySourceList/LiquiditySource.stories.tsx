@@ -1,10 +1,13 @@
+import type { PropTypes } from './LiquiditySourceList';
+import type { Meta } from '@storybook/react';
+
 import React from 'react';
-import { Meta } from '@storybook/react';
-import { LiquiditySourceList, PropTypes } from './LiquiditySourceList';
+
+import { LiquiditySourceList } from './LiquiditySourceList';
 import { liquiditySources } from './mockData';
 
 export default {
-  title: 'Components/Liquidity Source List',
+  title: 'Components/Liquidity Source List(Deprecated)',
   component: LiquiditySourceList,
   args: {
     loadingStatus: 'success',
