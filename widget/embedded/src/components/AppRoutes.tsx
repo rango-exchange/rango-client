@@ -7,7 +7,8 @@ import { navigationRoutes } from '../constants/navigationRoutes';
 import { ConfirmSwapPage } from '../pages/ConfirmSwapPage';
 import { HistoryPage } from '../pages/HistoryPage';
 import { Home } from '../pages/Home';
-import { LiquiditySourcePage } from '../pages/LiquiditySourcesPage';
+import { LanguagePage } from '../pages/LanguagePage';
+import { LiquiditySourcePage } from '../pages/LiquiditySourcePage';
 import { SelectBlockchainPage } from '../pages/SelectBlockchainPage';
 import { SelectSwapItemsPage } from '../pages/SelectSwapItemsPage';
 import { SettingsPage } from '../pages/SettingsPage';
@@ -77,14 +78,30 @@ export function AppRoutes(props: PropTypes) {
       ),
     },
     {
-      path: navigationRoutes.liquiditySources,
+      path: navigationRoutes.themes,
+      element: <ThemePage />,
+    },
+    {
+      path: navigationRoutes.languages,
+      element: <LanguagePage />,
+    },
+    {
+      path: navigationRoutes.exchanges,
       element: (
-        <LiquiditySourcePage supportedSwappers={config?.liquiditySources} />
+        <LiquiditySourcePage
+          sourceType="Exchanges"
+          supportedSwappers={config?.liquiditySources}
+        />
       ),
     },
     {
-      path: navigationRoutes.themes,
-      element: <ThemePage />,
+      path: navigationRoutes.bridges,
+      element: (
+        <LiquiditySourcePage
+          sourceType="Bridges"
+          supportedSwappers={config?.liquiditySources}
+        />
+      ),
     },
     { path: navigationRoutes.swaps, element: <HistoryPage /> },
     {

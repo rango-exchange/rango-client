@@ -14,26 +14,6 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. js-lingui-explicit-id
-#: widget/ui/src/components/SwapListItem/SwapListItem.helpers.ts:8
-msgid "Failed"
-msgstr ""
-
-#. js-lingui-explicit-id
-#: widget/ui/src/components/SwapListItem/SwapListItem.helpers.ts:10
-msgid "Complete"
-msgstr ""
-
-#. js-lingui-explicit-id
-#: widget/ui/src/components/SwapListItem/SwapListItem.helpers.ts:12
-msgid "In progress"
-msgstr ""
-
-#. js-lingui-explicit-id
-#: widget/ui/src/components/SwapListItem/SwapToken.tsx:71
-msgid "Waiting for bridge transaction"
-msgstr ""
-
-#. js-lingui-explicit-id
 #: widget/ui/src/components/Alert/LoadingFailedAlert.tsx:13
 msgid " Error connecting server, please reload the app and try again."
 msgstr ""
@@ -61,6 +41,26 @@ msgstr ""
 #. js-lingui-explicit-id
 #: widget/ui/src/components/SwapDetailsPlaceholder/SwapDetailsPlaceholder.tsx:28
 msgid "Swap Details"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: widget/ui/src/components/SwapListItem/SwapListItem.helpers.ts:8
+msgid "Failed"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: widget/ui/src/components/SwapListItem/SwapListItem.helpers.ts:10
+msgid "Complete"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: widget/ui/src/components/SwapListItem/SwapListItem.helpers.ts:12
+msgid "In progress"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: widget/ui/src/components/SwapListItem/SwapToken.tsx:71
+msgid "Waiting for bridge transaction"
 msgstr ""
 
 #. js-lingui-explicit-id
@@ -96,25 +96,35 @@ msgid "Insufficent Balance:"
 msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/SelectChainPage.tsx:42
-#~ msgid "Select chain"
-#~ msgstr ""
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:34
+#: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:67
 #: widget/embedded/src/components/BlockchainsSection/BlockchainsSection.tsx:25
-#~ msgid "Select Chain"
+#~ msgid "Select Blockchain"
 #~ msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:52
-#: widget/embedded/src/components/TokenList/TokenList.tsx:100
+#: widget/embedded/src/pages/LanguagePage.tsx:55
+#~ msgid "Language"
+#~ msgstr ""
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/SelectBlockchainPage.tsx:60
+#~ msgid "Search Chain"
+#~ msgstr ""
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/SelectSwapItemsPage.tsx:110
+#~ msgid "Search Token"
+#~ msgstr ""
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:39
+#: widget/embedded/src/components/TokenList/TokenList.tsx:66
 #~ msgid "No results found"
 #~ msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:53
-#: widget/embedded/src/components/TokenList/TokenList.tsx:101
+#: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:40
+#: widget/embedded/src/components/TokenList/TokenList.tsx:67
 #~ msgid "Try using different keywords"
 #~ msgstr ""
 
@@ -156,7 +166,7 @@ msgstr ""
 #~ msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/TokenList/TokenList.tsx:69
+#: widget/embedded/src/components/TokenList/TokenList.tsx:122
 #~ msgid "Select Token"
 #~ msgstr ""
 
@@ -193,28 +203,18 @@ msgstr ""
 #~ msgstr ""
 
 #. js-lingui-explicit-id
+#: widget/embedded/src/pages/SelectBlockchainPage.tsx:42
+#~ msgid "Select chain"
+#~ msgstr ""
+
+#. js-lingui-explicit-id
 #: widget/embedded/src/pages/SettingsPage.tsx:172
 #~ msgid "Setting"
 #~ msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/ThemePage.tsx:25
+#: widget/embedded/src/pages/ThemePage.tsx:71
 #~ msgid "Theme"
-#~ msgstr ""
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/pages/ThemePage.tsx:31
-#~ msgid "Dark"
-#~ msgstr ""
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/pages/ThemePage.tsx:32
-#~ msgid "Light"
-#~ msgstr ""
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/pages/ThemePage.tsx:33
-#~ msgid "Auto"
 #~ msgstr ""
 
 #. js-lingui-explicit-id
@@ -245,6 +245,27 @@ msgstr ""
 #. js-lingui-explicit-id
 #: widget/embedded/src/utils/swap.ts:164
 #~ msgid "The route goes through Ethereum. Continue?"
+#~ msgstr ""
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:34
+#: widget/embedded/src/components/BlockchainsSection/BlockchainsSection.tsx:25
+#~ msgid "Select Chain"
+#~ msgstr ""
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/ThemePage.tsx:31
+#~ msgid "Dark"
+#~ msgstr ""
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/ThemePage.tsx:32
+#~ msgid "Light"
+#~ msgstr ""
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/ThemePage.tsx:33
+#~ msgid "Auto"
 #~ msgstr ""
 
 #. js-lingui-explicit-id
