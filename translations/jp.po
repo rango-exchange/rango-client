@@ -96,6 +96,34 @@ msgid "Insufficent Balance:"
 msgstr ""
 
 #. js-lingui-explicit-id
+#: widget/embedded/src/pages/SelectChainPage.tsx:42
+#~ msgid "Select chain"
+#~ msgstr ""
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:34
+#: widget/embedded/src/components/BlockchainsSection/BlockchainsSection.tsx:25
+#~ msgid "Select Chain"
+#~ msgstr ""
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:52
+#: widget/embedded/src/components/TokenList/TokenList.tsx:100
+#~ msgid "No results found"
+#~ msgstr ""
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:53
+#: widget/embedded/src/components/TokenList/TokenList.tsx:101
+#~ msgid "Try using different keywords"
+#~ msgstr ""
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/BlockchainsSection/BlockchainsSection.tsx:45
+#~ msgid "All"
+#~ msgstr ""
+
+#. js-lingui-explicit-id
 #: widget/embedded/src/components/HeaderButtons/CancelButton.tsx:13
 #~ msgid "Cancel"
 #~ msgstr ""
@@ -125,6 +153,11 @@ msgstr ""
 #: widget/embedded/src/utils/swap.ts:143
 #: widget/embedded/src/utils/swap.ts:145
 #~ msgid "Connect Wallet"
+#~ msgstr ""
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/TokenList/TokenList.tsx:69
+#~ msgid "Select Token"
 #~ msgstr ""
 
 #. js-lingui-explicit-id

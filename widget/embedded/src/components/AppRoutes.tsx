@@ -8,8 +8,8 @@ import { ConfirmSwapPage } from '../pages/ConfirmSwapPage';
 import { HistoryPage } from '../pages/HistoryPage';
 import { Home } from '../pages/Home';
 import { LiquiditySourcePage } from '../pages/LiquiditySourcesPage';
-import { SelectChainPage } from '../pages/SelectChainPage';
-import { SelectTokenPage } from '../pages/SelectTokenPage';
+import { SelectBlockchainPage } from '../pages/SelectBlockchainPage';
+import { SelectSwapItemsPage } from '../pages/SelectSwapItemsPage';
 import { SettingsPage } from '../pages/SettingsPage';
 import { SwapDetailsPage } from '../pages/SwapDetailsPage';
 import { ThemePage } from '../pages/ThemePage';
@@ -30,30 +30,41 @@ export function AppRoutes(props: PropTypes) {
       element: <Home />,
     },
     {
-      path: navigationRoutes.fromChain,
+      path: navigationRoutes.fromSwap,
       element: (
-        <SelectChainPage
+        <SelectSwapItemsPage
           type="from"
           supportedChains={config?.from?.blockchains}
+          supportedTokens={config?.from?.tokens}
+        />
+      ),
+    },
+    {
+      path: navigationRoutes.toSwap,
+      element: (
+        <SelectSwapItemsPage
+          type="to"
+          supportedChains={config?.to?.blockchains}
+          supportedTokens={config?.to?.tokens}
+        />
+      ),
+    },
+    {
+      path: navigationRoutes.fromChain,
+      element: (
+        <SelectBlockchainPage
+          type="from"
+          supportedChains={config?.to?.blockchains}
         />
       ),
     },
     {
       path: navigationRoutes.toChain,
       element: (
-        <SelectChainPage type="to" supportedChains={config?.to?.blockchains} />
-      ),
-    },
-    {
-      path: navigationRoutes.fromToken,
-      element: (
-        <SelectTokenPage type="from" supportedTokens={config?.from?.tokens} />
-      ),
-    },
-    {
-      path: navigationRoutes.toToken,
-      element: (
-        <SelectTokenPage type="to" supportedTokens={config?.to?.tokens} />
+        <SelectBlockchainPage
+          type="to"
+          supportedChains={config?.to?.blockchains}
+        />
       ),
     },
     {

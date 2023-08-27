@@ -177,7 +177,7 @@ export function Home() {
             connectedWallets={connectedWallets}
             bestRoute={bestRoute}
             fetchingBestRoute={fetchingBestRoute}
-            onChainClick={() => navigate('from-chain')}
+            onChainClick={() => navigate(navigationRoutes.fromSwap)}
             onTokenClick={() => navigate('from-token')}
             tokenBalanceReal={tokenBalanceReal}
             tokenBalance={tokenBalance}
@@ -201,7 +201,7 @@ export function Home() {
           inputAmount={inputAmount}
           bestRoute={bestRoute}
           fetchingBestRoute={fetchingBestRoute}
-          onChainClick={() => navigate('to-chain')}
+          onChainClick={() => navigate(navigationRoutes.toSwap)}
           onTokenClick={() => navigate('to-token')}
           tokenBalanceReal={tokenBalanceReal}
           tokenBalance={tokenBalance}

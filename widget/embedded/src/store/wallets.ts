@@ -1,8 +1,11 @@
-import { SelectableWallet } from '@rango-dev/ui';
-import { WalletType } from '@rango-dev/wallets-shared';
+import type { Wallet } from '../types';
+import type { SelectableWallet } from '@rango-dev/ui';
+import type { WalletType } from '@rango-dev/wallets-shared';
+
 import { create } from 'zustand';
 import { subscribeWithSelector } from 'zustand/middleware';
 import { shallow } from 'zustand/shallow';
+
 import { httpService } from '../services/httpService';
 import {
   getRequiredChains,
@@ -12,10 +15,10 @@ import {
   resetConnectedWalletState,
   sortTokens,
 } from '../utils/wallets';
+
 import { useBestRouteStore } from './bestRoute';
 import { useMetaStore } from './meta';
 import createSelectors from './selectors';
-import { Wallet } from '../types';
 
 export type TokenBalance = {
   chain: string;
@@ -100,12 +103,13 @@ export const useWalletsStore = createSelectors(
               const firstWalletWithMatchedChain = connectedWallets.find(
                 (wallet) => wallet.chain === chain
               );
-              if (!!firstWalletWithMatchedChain)
+              if (!!firstWalletWithMatchedChain) {
                 selectedWallets.push({
                   address: firstWalletWithMatchedChain.address,
                   chain: firstWalletWithMatchedChain.chain,
                   walletType: firstWalletWithMatchedChain.walletType,
                 });
+              }
             }
           });
           return {
@@ -179,7 +183,9 @@ export const useWalletsStore = createSelectors(
                 }
               ),
             }));
-          } else throw new Error('Wallet not found');
+          } else {
+            throw new Error('Wallet not found');
+          }
         } catch (error) {
           set((state) => ({
             connectedWallets: state.connectedWallets.map((balance) => {
