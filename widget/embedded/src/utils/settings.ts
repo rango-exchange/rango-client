@@ -3,9 +3,10 @@ import { useSettingsStore } from '../store/settings';
 
 import { removeDuplicateFrom } from './common';
 
-type LiquiditySourceType = 'BRIDGE' | 'AGGREGATOR' | 'DEX';
+export type LiquiditySourceType = 'BRIDGE' | 'AGGREGATOR' | 'DEX';
 
-type UniqueSwappersGroupType = {
+export type UniqueSwappersGroupType = {
+  id: string;
   title: string;
   logo: string;
   type: LiquiditySourceType;
@@ -39,6 +40,7 @@ export function getUniqueSwappersGroups(
       if (isSupportedSwapper) {
         swapperItem.types.map((swapperTypeItem) => {
           uniqueSupportedSwappersGroups.push({
+            id: swapperItem.swapperGroup,
             title: swapperItem.swapperGroup,
             logo: swapperItem.logo,
             type: swapperTypeItem,
