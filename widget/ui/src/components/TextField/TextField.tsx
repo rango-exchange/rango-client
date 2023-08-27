@@ -46,7 +46,6 @@ function TextFieldComponent(props: PropsWithChildren<PropTypes>, ref?: Ref) {
         <Input
           className="_text"
           {...inputAttributes}
-          fullWidth={fullWidth}
           spellCheck={false}
           prefix={!!prefix}
           suffix={!!suffix}
