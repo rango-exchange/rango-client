@@ -6,6 +6,5 @@ export * from './ConnectWalletsModal';
 export * from './LiquiditySourcesSelector';
 export * from './TokenInfo';
 export * from './TokenSelector';
-export * from './Settings';
 export * from './Warnings';
 export * from './SwapInput';
