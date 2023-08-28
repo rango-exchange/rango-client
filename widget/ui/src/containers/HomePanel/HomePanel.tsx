@@ -7,7 +7,6 @@ import React from 'react';
 
 import {
   Alert,
-  BestRoute,
   BottomLogo,
   Button,
   Header,
@@ -89,7 +88,6 @@ interface HomePanelProps {
  */
 export function HomePanel({
   bestRoute,
-  bestRouteError,
   fromChain,
   toChain,
   fromToken,
@@ -108,19 +106,15 @@ export function HomePanel({
   onChainClick,
   onTokenClick,
   connectedWallets,
-  highFee,
   errorMessage,
   hasLimitError,
   swap,
   fromAmountRangeError,
   recommendation,
-  totalFeeInUsd,
   swithFromAndToComponent,
   percentageChange,
   tokenBalanceReal,
   tokenBalance,
-  totalTime,
-  bestRouteData,
   swapFromAmount,
   showPercentageChange,
 }: HomePanelProps) {
@@ -175,18 +169,7 @@ export function HomePanel({
         tokenBalance={tokenBalance}
         showPercentageChange={showPercentageChange}
       />
-      {showBestRoute && (
-        <BestRouteContainer>
-          <BestRoute
-            error={bestRouteError}
-            loading={fetchingBestRoute}
-            data={bestRouteData}
-            totalFee={totalFeeInUsd}
-            feeWarning={highFee}
-            totalTime={totalTime}
-          />
-        </BestRouteContainer>
-      )}
+      {showBestRoute && <BestRouteContainer></BestRouteContainer>}
       {(errorMessage || hasLimitError(bestRoute)) && (
         <Alerts>
           {errorMessage && <Alert type="error">{errorMessage}</Alert>}
@@ -207,7 +190,6 @@ export function HomePanel({
       <Footer>
         <Button
           type="primary"
-          align="grow"
           size="large"
           disabled={swapButtonDisabled}
           onClick={swapButtonClick}>

@@ -1,6 +1,6 @@
 export interface SvgIconProps {
   size?: number;
-  color:
+  color?:
     | 'primary'
     | 'secondary'
     | 'error'

@@ -1,12 +1,5 @@
 import { i18n } from '@lingui/core';
-import {
-  Alert,
-  BestRoute,
-  Button,
-  styled,
-  TokenInfo,
-  Typography,
-} from '@rango-dev/ui';
+import { Alert, Button, styled, TokenInfo, Typography } from '@rango-dev/ui';
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -19,19 +12,12 @@ import { fetchBestRoute, useBestRouteStore } from '../store/bestRoute';
 import { useMetaStore } from '../store/meta';
 import { useUiStore } from '../store/ui';
 import { useWalletsStore } from '../store/wallets';
-import {
-  numberToString,
-  secondsToString,
-  totalArrivalTime,
-} from '../utils/numbers';
-import { getFormatedBestRoute } from '../utils/routing';
+import { numberToString } from '../utils/numbers';
 import {
   canComputePriceImpact,
   getOutputRatio,
   getPercentageChange,
   getSwapButtonState,
-  getTotalFeeInUsd,
-  hasHighFee,
   hasLimitError,
   LimitErrorMessage,
   outputRatioHasWarning,
@@ -61,7 +47,6 @@ const Footer = styled('div', {
 });
 
 const balancePercision = 8;
-const feePercision = 2;
 
 export function Home() {
   const navigate = useNavigate();
@@ -75,7 +60,6 @@ export function Home() {
   const outputAmount = useBestRouteStore.use.outputAmount();
   const outputUsdValue = useBestRouteStore.use.outputUsdValue();
   const bestRoute = useBestRouteStore.use.bestRoute();
-  const tokens = useMetaStore.use.meta().tokens;
   const fetchingBestRoute = useBestRouteStore.use.loading();
   const bestRouteError = useBestRouteStore.use.error();
   const loadingMetaStatus = useMetaStore.use.loadingStatus();
@@ -92,10 +76,8 @@ export function Home() {
   const { fromAmountRangeError, recommendation, swap } =
     LimitErrorMessage(bestRoute);
 
-  const totalFeeInUsd = getTotalFeeInUsd(bestRoute, tokens);
   const needsToWarnEthOnPath = false;
 
-  const highFee = hasHighFee(totalFeeInUsd);
   const outToInRatio = getOutputRatio(inputUsdValue, outputUsdValue);
   const highValueLoss = outputRatioHasWarning(inputUsdValue, outToInRatio);
 
@@ -195,7 +177,7 @@ export function Home() {
             connectedWallets={connectedWallets}
             bestRoute={bestRoute}
             fetchingBestRoute={fetchingBestRoute}
-            onChainClick={() => navigate('from-chain')}
+            onChainClick={() => navigate(navigationRoutes.fromSwap)}
             onTokenClick={() => navigate('from-token')}
             tokenBalanceReal={tokenBalanceReal}
             tokenBalance={tokenBalance}
@@ -219,24 +201,13 @@ export function Home() {
           inputAmount={inputAmount}
           bestRoute={bestRoute}
           fetchingBestRoute={fetchingBestRoute}
-          onChainClick={() => navigate('to-chain')}
+          onChainClick={() => navigate(navigationRoutes.toSwap)}
           onTokenClick={() => navigate('to-token')}
           tokenBalanceReal={tokenBalanceReal}
           tokenBalance={tokenBalance}
           showPercentageChange={!!percentageChange?.lt(0)}
         />
-        {showBestRoute && (
-          <BestRouteContainer>
-            <BestRoute
-              error={bestRouteError}
-              loading={fetchingBestRoute}
-              data={getFormatedBestRoute(bestRoute)}
-              totalFee={numberToString(totalFeeInUsd, 0, feePercision)}
-              feeWarning={highFee}
-              totalTime={secondsToString(totalArrivalTime(bestRoute))}
-            />
-          </BestRouteContainer>
-        )}
+        {showBestRoute && <BestRouteContainer></BestRouteContainer>}
         {(errorMessage || hasLimitError(bestRoute)) && (
           <Alerts>
             {errorMessage && <Alert type="error">{errorMessage}</Alert>}
@@ -259,7 +230,6 @@ export function Home() {
         <Footer>
           <Button
             type="primary"
-            align="grow"
             size="large"
             disabled={swapButtonState.disabled}
             onClick={() => {

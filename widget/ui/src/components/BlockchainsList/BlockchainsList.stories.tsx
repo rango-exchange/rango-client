@@ -1,10 +1,13 @@
+import type { PropTypes } from './BlockchainsList';
+import type { Meta } from '@storybook/react';
+
 import React from 'react';
-import { Meta } from '@storybook/react';
-import { BlockchainsList, PropTypes } from './BlockchainsList';
+
+import { BlockchainsList } from './BlockchainsList';
 import { blockchainMeta } from './mockData';
 
 export default {
-  title: 'Components/Blockchains List',
+  title: 'Components/Blockchains List (Deprecated)',
   component: BlockchainsList,
   args: {
     searchedText: '',

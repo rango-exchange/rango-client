@@ -1,4 +1,5 @@
 import React from 'react';
+
 import { styled } from '../../theme';
 
 const ImageContainer = styled('div', {
@@ -14,14 +15,27 @@ const ImageContainer = styled('div', {
 
 type PropTypes = {
   size: number;
+  useAsPlaceholder?: boolean;
+  backgroundColor?: string;
 } & React.ImgHTMLAttributes<HTMLImageElement>;
 
 export function Image(props: PropTypes) {
-  const { size, ...otherProps } = props;
+  const {
+    size,
+    useAsPlaceholder,
+    backgroundColor = '$secondary100',
+    ...otherProps
+  } = props;
 
   return (
-    <ImageContainer css={{ width: size + 'px', height: size + 'px' }}>
-      <img className="image" {...otherProps} />
+    <ImageContainer
+      className="image-container"
+      css={{
+        width: size + 'px',
+        height: size + 'px',
+        ...(useAsPlaceholder && { backgroundColor }),
+      }}>
+      {!useAsPlaceholder && <img className="image" {...otherProps} />}
     </ImageContainer>
   );
 }

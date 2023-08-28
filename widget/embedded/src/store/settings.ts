@@ -1,7 +1,9 @@
 import { create } from 'zustand';
 import { persist, subscribeWithSelector } from 'zustand/middleware';
+
 import { DEFAULT_SLIPPAGE } from '../constants/swapSettings';
 import { removeDuplicateFrom } from '../utils/common';
+
 import { useMetaStore } from './meta';
 import createSelectors from './selectors';
 
@@ -69,13 +71,15 @@ export const useSettingsStore = createSelectors(
               swappers.map((swapper) => swapper.swapperGroup)
             );
 
-            if (swappersGroup.length === state.disabledLiquiditySources.length)
+            if (
+              swappersGroup.length === state.disabledLiquiditySources.length
+            ) {
               return { disabledLiquiditySources: [] };
-            else {
-              return {
-                disabledLiquiditySources: swappersGroup,
-              };
             }
+
+            return {
+              disabledLiquiditySources: swappersGroup,
+            };
           }),
         toggleInfiniteApprove: () =>
           set((state) => ({
@@ -83,17 +87,17 @@ export const useSettingsStore = createSelectors(
           })),
         toggleLiquiditySource: (name) =>
           set((state) => {
-            if (state.disabledLiquiditySources.includes(name))
+            if (state.disabledLiquiditySources.includes(name)) {
               return {
                 disabledLiquiditySources: state.disabledLiquiditySources.filter(
                   (liquiditySource) => liquiditySource != name
                 ),
               };
-            else
-              return {
-                disabledLiquiditySources:
-                  state.disabledLiquiditySources.concat(name),
-              };
+            }
+            return {
+              disabledLiquiditySources:
+                state.disabledLiquiditySources.concat(name),
+            };
           }),
         setTheme: (theme) =>
           set(() => ({

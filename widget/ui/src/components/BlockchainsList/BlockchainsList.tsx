@@ -1,6 +1,8 @@
+import type { BlockchainMeta } from 'rango-sdk';
+
 import React, { useState } from 'react';
+
 import { styled } from '../../theme';
-import { BlockchainMeta } from 'rango-sdk';
 import { Button } from '../Button/Button';
 import { FilledCircle, Image } from '../common';
 import { Typography } from '../Typography';
@@ -25,7 +27,9 @@ const ListContainer = styled('div', {
 const ImageContainer = styled('div', {
   paddingRight: '$4',
 });
-
+/**
+ * @deprecated will be removed in v2
+ */
 export function BlockchainsList(props: PropTypes) {
   const { list, onChange, multiSelect, selectedList } = props;
   const [selected, setSelected] = useState(props.selected);
@@ -37,9 +41,10 @@ export function BlockchainsList(props: PropTypes) {
 
   const isSelect = (name: string) => {
     if (multiSelect && selectedList) {
+      const NOT_FOUND_INDEX = -1;
       return (
         selectedList === 'all' ||
-        selectedList.findIndex((item) => name === item.name) > -1
+        selectedList.findIndex((item) => name === item.name) > NOT_FOUND_INDEX
       );
     }
     return name === selected?.name;
@@ -48,6 +53,7 @@ export function BlockchainsList(props: PropTypes) {
   return (
     <ListContainer>
       {list.map((blockchain, index) => {
+        const key = `item-${index}`;
         return (
           <Button
             type={isSelect(blockchain.name) ? 'primary' : undefined}
@@ -59,9 +65,8 @@ export function BlockchainsList(props: PropTypes) {
               </ImageContainer>
             }
             suffix={isSelect(blockchain.name) ? <FilledCircle /> : undefined}
-            align="start"
             onClick={changeSelectedBlockchain.bind(null, blockchain)}
-            key={index}>
+            key={key}>
             <Typography variant="body" size="small">
               {blockchain.displayName}
             </Typography>

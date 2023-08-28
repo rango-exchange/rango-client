@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from 'react';
-import { Provider } from '@rango-dev/wallets-core';
-import List from './components/List';
 import { allProviders } from '@rango-dev/provider-all';
+import { ErrorIcon, Spinner, Typography } from '@rango-dev/ui';
+import { Provider } from '@rango-dev/wallets-core';
 import { RangoClient } from 'rango-sdk';
-import { InfoCircleIcon, Spinner, Typography } from '@rango-dev/ui';
+import React, { useEffect, useState } from 'react';
+
+import List from './components/List';
 import { WC_PROJECT_ID } from './constants';
 
 const providers = allProviders({
@@ -29,15 +30,15 @@ export function App() {
       }
       setLoading(false);
     };
-    getAllBlockchains();
+    void getAllBlockchains();
   }, []);
 
   return (
     <Provider providers={providers} allBlockChains={blockchains} autoConnect>
       {!process.env.REACT_APP_API_KEY && (
         <p className="ml-12 warning">
-          <InfoCircleIcon color="warning" size={24} /> Please add
-          REACT_APP_API_KEY into .env
+          <ErrorIcon color="warning" size={24} /> Please add REACT_APP_API_KEY
+          into .env
         </p>
       )}
       <div className="flex">

@@ -1,28 +1,8 @@
-import * as RadioGroup from '@radix-ui/react-radio-group';
+import * as Radio from '@radix-ui/react-radio-group';
+
 import { styled } from '../../theme';
 
-export const StyledRoot = styled(RadioGroup.Root, {
-  variants: {
-    direction: {
-      horizontal: {
-        display: 'flex',
-        flexDirection: 'row',
-        flexWrap: 'wrap',
-      },
-      vertical: {
-        display: 'grid',
-        gridGap: '$24',
-      },
-    },
-  },
-});
-
-export const ItemContainer = styled('div', {
-  display: 'flex',
-  alignItems: 'center',
-  marginRight: '$8',
-});
-export const StyledItem = styled(RadioGroup.Item, {
+export const StyledItem = styled(Radio.Item, {
   padding: '0',
   width: '16px',
   height: '16px',
@@ -39,11 +19,7 @@ export const StyledItem = styled(RadioGroup.Item, {
   },
 });
 
-export const Container = styled('div', {
-  display: 'flex',
-});
-
-export const StyledIndicator = styled(RadioGroup.Indicator, {
+export const StyledIndicator = styled(Radio.Indicator, {
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
@@ -57,14 +33,5 @@ export const StyledIndicator = styled(RadioGroup.Indicator, {
     height: '8px',
     borderRadius: '50%',
     backgroundColor: '$neutral100',
-  },
-});
-
-export const Label = styled('label', {
-  paddingLeft: '$8',
-  cursor: 'pointer',
-  color: '$foreground',
-  '& > span': {
-    display: 'bloc',
   },
 });
