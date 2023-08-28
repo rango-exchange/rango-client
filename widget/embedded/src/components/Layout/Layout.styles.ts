@@ -7,9 +7,9 @@ export const Container = styled('div', {
 export const Content = styled('div', {
   padding: '$20',
   height: '100%',
-  borderTopRightRadius: '$md',
-  borderTopLeftRadius: '$md',
+  borderRadius: '$md',
   backgroundColor: '$neutral100',
+  position: 'relative',
 });
 
 export const Footer = styled('div', {

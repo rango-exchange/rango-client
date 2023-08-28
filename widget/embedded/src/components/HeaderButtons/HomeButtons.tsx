@@ -22,7 +22,7 @@ export function HomeButtons(props: HomeButtonsPropTypes) {
 
   return (
     <>
-      <Tooltip side="bottom" content={i18n.t('Refresh')}>
+      <Tooltip side="top" content={i18n.t('Refresh')}>
         <HeaderButton
           variant="ghost"
           size="small"
@@ -31,7 +31,7 @@ export function HomeButtons(props: HomeButtonsPropTypes) {
           <RefreshIcon size={18} color={!onClickRefresh ? 'gray' : 'black'} />
         </HeaderButton>
       </Tooltip>
-      <Tooltip side="bottom" content={i18n.t('Notifications')}>
+      <Tooltip side="top" content={i18n.t('Notifications')}>
         <HeaderButton
           size="small"
           variant="ghost"
@@ -39,12 +39,12 @@ export function HomeButtons(props: HomeButtonsPropTypes) {
           <NotificationsIcon size={18} color="black" />
         </HeaderButton>
       </Tooltip>
-      <Tooltip side="bottom" content={i18n.t('Settings')}>
+      <Tooltip side="top" content={i18n.t('Settings')}>
         <HeaderButton size="small" variant="ghost" onClick={onClickSettings}>
           <SettingsIcon size={18} color="black" />
         </HeaderButton>
       </Tooltip>
-      <Tooltip side="bottom" content={i18n.t('Transactions History')}>
+      <Tooltip side="top" content={i18n.t('Transactions History')}>
         <HeaderButton size="small" variant="ghost" onClick={onClickHistory}>
           <TransactionIcon size={18} color="black" />
         </HeaderButton>

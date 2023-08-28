@@ -1,5 +1,6 @@
-import { Typography } from '../Typography';
 import { styled } from '../../theme';
+import { Typography } from '../Typography';
+
 export const TooltipTypography = styled(Typography, {
   borderRadius: '$md',
   padding: '$5 $10',
