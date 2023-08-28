@@ -13,9 +13,9 @@ import {
   Wallet,
   WalletState,
 } from '@rango-dev/ui';
-import { useWallets } from '@rango-dev/wallets-core';
-import { WalletTypes } from '@rango-dev/wallets-shared';
 import React, { useEffect, useRef, useState } from 'react';
+import { WalletTypes } from '@rango-dev/wallets-shared';
+import { useWallets } from '@rango-dev/wallets-react';
 
 import { Layout } from '../components/Layout';
 import { navigationRoutes } from '../constants/navigationRoutes';

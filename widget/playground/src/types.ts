@@ -1,4 +1,3 @@
-import { WalletProvider } from '@rango-dev/wallets-core';
 import { WalletType } from '@rango-dev/wallets-shared';
 export type Wallet = {
   title: string;

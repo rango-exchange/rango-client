@@ -1,13 +1,16 @@
-import { AccountId } from 'caip';
-import { Networks, timeout } from '@rango-dev/wallets-shared';
+import type { ConnectParams, CreateSessionParams, WCInstance } from './types';
 import type { SignClient } from '@walletconnect/sign-client/dist/types/client';
-import {
+import type {
   PairingTypes,
   SessionTypes,
   SignClientTypes,
 } from '@walletconnect/types';
-import { getSdkError } from '@walletconnect/utils';
 
+import { Networks, timeout } from '@rango-dev/wallets-shared';
+import { getSdkError } from '@walletconnect/utils';
+import { AccountId } from 'caip';
+
+import { PING_TIMEOUT } from './constants';
 import {
   generateOptionalNamespace,
   generateRequiredNamespace,
@@ -15,8 +18,6 @@ import {
   getModal,
   solanaChainIdToNetworkName,
 } from './helpers';
-import { PING_TIMEOUT } from './constants';
-import { ConnectParams, CreateSessionParams, WCInstance } from './types';
 
 export function getLastSession(client: SignClient) {
   return client.session.values[client.session.values.length - 1];
@@ -66,6 +67,7 @@ export async function createSession(
     });
 
     // Open QRCode modal if a URI was returned (i.e. we're not connecting an existing pairing).
+    let onCloseModal;
     if (uri) {
       // Create a flat array of all requested chains across namespaces.
       const allNamespaces = {
@@ -77,14 +79,27 @@ export async function createSession(
         .map((namespace) => namespace.chains)
         .flat() as string[];
 
-      getModal().openModal({ uri, standaloneChains });
+      const modal = getModal();
+      void modal.openModal({ uri, standaloneChains });
+
+      onCloseModal = new Promise((_, reject) => {
+        modal.subscribeModal((state) => {
+          // the modal was closed so reject the promise
+          if (!state.open) {
+            reject(new Error('Modal has been closed.'));
+          }
+        });
+      });
     }
 
-    const session = await approval();
-    return session;
-  } catch (e) {
-    console.error(e);
-    throw e;
+    const session = approval();
+
+    if (onCloseModal) {
+      const result = await Promise.race([session, onCloseModal]);
+      // We know onClose only reject a modal and never returns a value.
+      return result as SessionTypes.Struct;
+    }
+    return await session;
   } finally {
     getModal().closeModal();
   }
@@ -266,8 +281,10 @@ export function getAccountsFromSession(session: SessionTypes.Struct) {
     .flat()
     .map((account) => {
       const { address, chainId } = new AccountId(account);
-      // Note: Solana has a specific ID, we need to convert it back to network name.
-      // It will return the chain id itslef if it's not that specific ID.
+      /*
+       * Note: Solana has a specific ID, we need to convert it back to network name.
+       * It will return the chain id itslef if it's not that specific ID.
+       */
       const chain = solanaChainIdToNetworkName(chainId.reference);
       return {
         accounts: [address],

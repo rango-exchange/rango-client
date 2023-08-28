@@ -1,20 +1,25 @@
-import {
-  WalletTypes,
+import type {
+  CanEagerConnect,
   CanSwitchNetwork,
   Connect,
   Subscribe,
   SwitchNetwork,
+  WalletInfo,
+} from '@rango-dev/wallets-shared';
+import type { BlockchainMeta, SignerFactory } from 'rango-types';
+
+import {
+  canEagerlyConnectToEvm,
   canSwitchNetworkToEvm,
   getEvmAccounts,
   subscribeToEvm,
   switchNetworkForEvm,
-  WalletInfo,
-  CanEagerConnect,
-  canEagerlyConnectToEvm,
+  WalletTypes,
 } from '@rango-dev/wallets-shared';
+import { evmBlockchains } from 'rango-types';
+
 import { tokenpocket as tokenpocket_instance } from './helpers';
 import signer from './signer';
-import { SignerFactory, BlockchainMeta, evmBlockchains } from 'rango-types';
 
 const WALLET = WalletTypes.TOKEN_POCKET;
 
@@ -24,10 +29,12 @@ export const config = {
 
 export const getInstance = tokenpocket_instance;
 export const connect: Connect = async ({ instance }) => {
-  // Note: We need to get `chainId` here, because for the first time
-  // after opening the browser, wallet is locked, and don't give us accounts and chainId
-  // on `check` phase, so `network` will be null. For this case we need to get chainId
-  // whenever we are requesting accounts.
+  /*
+   * Note: We need to get `chainId` here, because for the first time
+   * after opening the browser, wallet is locked, and don't give us accounts and chainId
+   * on `check` phase, so `network` will be null. For this case we need to get chainId
+   * whenever we are requesting accounts.
+   */
   const { accounts, chainId } = await getEvmAccounts(instance);
 
   return {
@@ -52,7 +59,7 @@ export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
   const evms = evmBlockchains(allBlockChains);
   return {
     name: 'Token Pocket',
-    img: 'https://raw.githubusercontent.com/rango-exchange/rango-types/main/assets/icons/wallets/tp.png',
+    img: 'https://raw.githubusercontent.com/rango-exchange/rango-assets/main/wallets/tokenpocket/icon.svg',
     color: '#b2dbff',
     installLink: {
       CHROME:

@@ -1,5 +1,6 @@
+import { cancelSwap } from '@rango-dev/queue-manager-rango-preset';
+import { useWallets } from '@rango-dev/wallets-react';
 import {
-  cancelSwap,
   getCurrentBlockchainOfOrNull,
   getCurrentStep,
   getRelatedWalletOrNull,
@@ -11,7 +12,6 @@ import {
   SwapHistory,
   useCopyToClipboard,
 } from '@rango-dev/ui';
-import { useWallets } from '@rango-dev/wallets-core';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 

@@ -1,20 +1,24 @@
-import {
+import type {
   CanSwitchNetwork,
   Connect,
   Subscribe,
-  getEvmAccounts,
-  WalletTypes,
   WalletInfo,
-  Networks,
 } from '@rango-dev/wallets-shared';
+import type { BlockchainMeta, SignerFactory } from 'rango-types';
+
+import {
+  getEvmAccounts,
+  Networks,
+  WalletTypes,
+} from '@rango-dev/wallets-shared';
+import { isEvmBlockchain } from 'rango-types';
+
 import {
   accountsForActiveWallet,
-  binance as binance_instance,
   BINANCE_CHAIN_WALLET_SUPPORTED_CHAINS,
+  binance as binance_instance,
 } from './helpers';
 import signer from './signer';
-import type { SignerFactory, BlockchainMeta } from 'rango-types';
-import { isEvmBlockchain } from 'rango-types';
 
 const WALLET = WalletTypes.BINANCE_CHAIN;
 
@@ -25,10 +29,12 @@ export const config = {
 
 export const getInstance = binance_instance;
 export const connect: Connect = async ({ instance }) => {
-  // Note: We need to get `chainId` here, because for the first time
-  // after opening the browser, wallet is locked, and don't give us accounts and chainId
-  // on `check` phase, so `network` will be null. For this case we need to get chainId
-  // whenever we are requesting accounts.
+  /*
+   * Note: We need to get `chainId` here, because for the first time
+   * after opening the browser, wallet is locked, and don't give us accounts and chainId
+   * on `check` phase, so `network` will be null. For this case we need to get chainId
+   * whenever we are requesting accounts.
+   */
   const evm = await getEvmAccounts(instance);
   const accounts = await accountsForActiveWallet(instance, evm.accounts[0]);
 
@@ -70,7 +76,7 @@ export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
   allBlockChains
 ) => ({
   name: 'Binance',
-  img: 'https://raw.githubusercontent.com/rango-exchange/rango-types/main/assets/icons/wallets/binance.svg',
+  img: 'https://raw.githubusercontent.com/rango-exchange/rango-assets/main/wallets/binance/icon.svg',
   installLink: {
     CHROME:
       'https://chrome.google.com/webstore/detail/binance-chain-wallet/fhbohimaelbohpjbbldcngcnapndodjp',

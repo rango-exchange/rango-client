@@ -15,7 +15,7 @@ The `react` package is a wrapper around queue-manager that makes it easy to use 
 ## Rango-Preset
 
 The `rango-preset` package provides some default values, services, and actions of Rango Exchange to use in Rango. It can be used to quickly get started with Rango without having to write all of the boilerplate code yourself.
-First, you need to add `@rango-dev/wallets-core` to your project
+First, you need to add `@rango-dev/wallets-react` to your project
 
 # Installation
 

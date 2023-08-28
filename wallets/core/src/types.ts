@@ -1,9 +1,5 @@
-import { PropsWithChildren } from 'react';
 import { Network, WalletType, WalletInfo } from '@rango-dev/wallets-shared';
-import {
-  EventHandler as WalletEventHandler,
-  State as WalletState,
-} from './wallet';
+import { State as WalletState } from './wallet';
 import { SignerFactory, BlockchainMeta } from 'rango-types';
 
 export type State = {
@@ -17,24 +13,6 @@ export type ConnectResult = {
 };
 
 export type Providers = { [type in WalletType]?: any };
-
-export type ProviderContext = {
-  connect(type: WalletType, network?: Network): Promise<ConnectResult>;
-  disconnect(type: WalletType): Promise<void>;
-  disconnectAll(): Promise<PromiseSettledResult<any>[]>;
-  state(type: WalletType): WalletState;
-  canSwitchNetworkTo(type: WalletType, network: Network): boolean;
-  providers(): Providers;
-  getSigners(type: WalletType): SignerFactory;
-  getWalletInfo(type: WalletType): WalletInfo;
-};
-
-export type ProviderProps = PropsWithChildren<{
-  onUpdateState?: WalletEventHandler;
-  allBlockChains?: BlockchainMeta[];
-  autoConnect?: boolean;
-  providers: ProviderInterface[];
-}>;
 
 export enum Events {
   CONNECTED = 'connected',
@@ -68,9 +46,11 @@ export type GetInstanceOptions = {
 export type GetInstance =
   | (() => any)
   | ((options: GetInstanceOptions) => Promise<any>);
+
 export type TryGetInstance =
   | (() => any)
   | ((options: Pick<GetInstanceOptions, 'force' | 'network'>) => Promise<any>);
+
 export type Connect = (options: {
   instance: any;
   network?: Network;
@@ -81,6 +61,7 @@ export type Disconnect = (options: {
   instance: any;
   destroyInstance: () => void;
 }) => Promise<void>;
+
 export type Subscribe = (options: {
   instance: any;
   state: WalletState;

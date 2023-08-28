@@ -5,7 +5,7 @@ import type { CosmosTransaction, GenericSigner } from 'rango-types';
 
 import { BroadcastMode, makeSignDoc } from '@cosmjs/launchpad';
 import { cosmos } from '@keplr-wallet/cosmos';
-import { getsignedTx, manipulateMsg } from '@rango-dev/signer-cosmos';
+import { getsignedTx } from '@rango-dev/signer-cosmos';
 import { uint8ArrayToHex } from '@rango-dev/wallets-shared';
 import { AccountId, ChainId } from 'caip';
 import { formatDirectSignDoc, stringifySignDocValues } from 'cosmos-wallet';
@@ -60,7 +60,7 @@ class COSMOSSigner implements GenericSigner<CosmosTransaction> {
       const { memo, sequence, account_number, chainId, msgs, fee, signType } =
         tx.data;
       const msgsWithoutType = msgs.map((m) => ({
-        ...manipulateMsg(m),
+        ...m,
         __type: undefined,
         '@type': undefined,
       }));
@@ -78,7 +78,7 @@ class COSMOSSigner implements GenericSigner<CosmosTransaction> {
 
       if (signType === 'AMINO') {
         const signDoc = makeSignDoc(
-          msgsWithoutType as any,
+          msgsWithoutType,
           fee as any,
           chainId,
           memo || undefined,

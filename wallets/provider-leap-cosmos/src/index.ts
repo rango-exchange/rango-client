@@ -1,14 +1,15 @@
+import type { Connect, Subscribe, WalletInfo } from '@rango-dev/wallets-shared';
+import type { BlockchainMeta, SignerFactory } from 'rango-types';
+
 import {
+  getCosmosAccounts,
   Networks,
   WalletTypes,
-  Connect,
-  Subscribe,
-  getCosmosAccounts,
-  WalletInfo,
 } from '@rango-dev/wallets-shared';
-import { leap_cosmos_instance, getSupportedChains } from './helpers';
+import { cosmosBlockchains } from 'rango-types';
+
+import { getSupportedChains, leap_cosmos_instance } from './helpers';
 import signer from './signer';
-import { SignerFactory, cosmosBlockchains, BlockchainMeta } from 'rango-types';
 
 const WALLET = WalletTypes.LEAP_COSMOS;
 
@@ -48,7 +49,7 @@ export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
   const cosmos = cosmosBlockchains(allBlockChains);
   return {
     name: 'Leap Cosmos',
-    img: 'https://raw.githubusercontent.com/rango-exchange/rango-types/main/assets/icons/wallets/leap-cosmos.png',
+    img: 'https://raw.githubusercontent.com/rango-exchange/rango-assets/main/wallets/leap-cosmos/icon.svg',
     installLink: {
       CHROME:
         'https://chrome.google.com/webstore/detail/leap-cosmos-wallet/fcfcfllfndlomdhbehjjcoimbgofdncg',

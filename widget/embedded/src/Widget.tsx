@@ -15,6 +15,7 @@ import QueueManager from './QueueManager';
 import { useUiStore } from './store/ui';
 import { initConfig } from './utils/configs';
 import { WidgetContext, WidgetWallets } from './Wallets';
+import { useSettingsStore } from './store/settings';
 
 const MainContainer = styled('div', {
   width: '100%',
@@ -47,6 +48,7 @@ export function Main(props: PropsWithChildren<WidgetProps>) {
   }, [config]);
 
   useEffect(() => {
+    useSettingsStore.persist.rehydrate();
     widgetContext.onConnectWallet(setLastConnectedWalletWithNetwork);
   }, []);
 

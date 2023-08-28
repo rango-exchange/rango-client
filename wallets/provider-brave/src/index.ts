@@ -1,30 +1,33 @@
-import {
-  Networks,
-  WalletTypes,
-  canSwitchNetworkToEvm,
-  chooseInstance,
-  getEvmAccounts,
-  switchNetworkForEvm,
+import type {
+  CanEagerConnect,
   CanSwitchNetwork,
   Connect,
   ProviderConnectResult,
   Subscribe,
   SwitchNetwork,
   WalletInfo,
-  getSolanaAccounts,
-  CanEagerConnect,
-  canEagerlyConnectToEvm,
 } from '@rango-dev/wallets-shared';
-import { brave as brave_instances } from './helpers';
-import signer from './signer';
+import type { BlockchainMeta, SignerFactory } from 'rango-types';
+
 import {
-  SignerFactory,
+  canEagerlyConnectToEvm,
+  canSwitchNetworkToEvm,
+  chooseInstance,
+  getEvmAccounts,
+  getSolanaAccounts,
+  Networks,
+  switchNetworkForEvm,
+  WalletTypes,
+} from '@rango-dev/wallets-shared';
+import {
+  evmBlockchains,
   isEvmBlockchain,
   isSolanaBlockchain,
-  BlockchainMeta,
-  evmBlockchains,
   solanaBlockchain,
 } from 'rango-types';
+
+import { brave as brave_instances } from './helpers';
+import signer from './signer';
 
 const WALLET = WalletTypes.BRAVE;
 
@@ -52,7 +55,9 @@ export const connect: Connect = async ({ instance, meta }) => {
       const err = error as { code: number };
       if (err.code === emptyWalletErrorCode) {
         numberOfEmptyWallets += 1;
-      } else throw error;
+      } else {
+        throw error;
+      }
     }
   }
 
@@ -68,12 +73,15 @@ export const connect: Connect = async ({ instance, meta }) => {
       const err = error as { code: number };
       if (err.code === emptyWalletErrorCode) {
         numberOfEmptyWallets += 1;
-      } else throw error;
+      } else {
+        throw error;
+      }
     }
   }
 
-  if (numberOfEmptyWallets === instance.size)
+  if (numberOfEmptyWallets === instance.size) {
     throw new Error(emptyWalletCustomErrorMessage);
+  }
 
   return results;
 };
@@ -93,8 +101,9 @@ export const subscribe: Subscribe = ({
       .filter(isEvmBlockchain)
       .find((blockchain) => blockchain.name === Networks.ETHEREUM)?.chainId;
     if (state.connected) {
-      if (state.network != Networks.ETHEREUM && eth_chainId)
+      if (state.network != Networks.ETHEREUM && eth_chainId) {
         updateChainId(eth_chainId);
+      }
       updateAccounts(addresses);
     }
   });
@@ -104,8 +113,9 @@ export const subscribe: Subscribe = ({
   });
 
   sol_instance?.on('accountChanged', async () => {
-    if (state.network != Networks.SOLANA)
+    if (state.network != Networks.SOLANA) {
       updateChainId(meta.filter(isSolanaBlockchain)[0].chainId);
+    }
     const response = await sol_instance.connect();
     const account: string = response.publicKey.toString();
     updateAccounts([account]);
@@ -118,11 +128,12 @@ export const canSwitchNetworkTo: CanSwitchNetwork = canSwitchNetworkToEvm;
 
 export const getSigners: (provider: any) => SignerFactory = signer;
 
-export const canEagerConnect: CanEagerConnect = ({ instance, meta }) => {
+export const canEagerConnect: CanEagerConnect = async ({ instance, meta }) => {
   const evm_instance = chooseInstance(instance, meta, Networks.ETHEREUM);
   if (evm_instance) {
     return canEagerlyConnectToEvm({ instance: evm_instance, meta });
-  } else return Promise.resolve(false);
+  }
+  return Promise.resolve(false);
 };
 
 export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
@@ -132,7 +143,7 @@ export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
   const solana = solanaBlockchain(allBlockChains);
   return {
     name: 'Brave',
-    img: 'https://raw.githubusercontent.com/rango-exchange/rango-types/main/assets/icons/wallets/brave.png',
+    img: 'https://raw.githubusercontent.com/rango-exchange/rango-assets/main/wallets/brave/icon.svg',
     installLink: {
       DEFAULT: 'https://brave.com/wallet/',
     },

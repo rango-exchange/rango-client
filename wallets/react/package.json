@@ -1,6 +1,6 @@
 {
-  "name": "@rango-dev/provider-bitkeep",
-  "version": "0.10.1-next.0",
+  "name": "@rango-dev/wallets-react",
+  "version": "0.1.1-next.2",
   "license": "MIT",
   "type": "module",
   "module": "./dist/index.js",
@@ -14,15 +14,19 @@
     "src"
   ],
   "scripts": {
-    "build": "node ../../scripts/build/command.mjs --path wallets/provider-bitkeep",
+    "build": "node ../../scripts/build/command.mjs --path wallets/react",
     "clean": "rimraf dist",
     "format": "prettier --write '{.,src}/**/*.{ts,tsx}'",
     "lint": "eslint \"**/*.{ts,tsx}\" --ignore-path ../../.eslintignore"
   },
+  "peerDependencies": {
+    "@types/react": "^17.0.0 || ^18.0.0",
+    "react": "^17.0.0 || ^18.0.0",
+    "react-dom": "^17.0.0 || ^18.0.0"
+  },
   "dependencies": {
-    "@rango-dev/signer-evm": "^0.14.0",
-    "@rango-dev/signer-tron": "^0.14.0",
-    "@rango-dev/wallets-shared": "^0.14.0",
+    "@rango-dev/wallets-core": "^0.15.1-next.1",
+    "@rango-dev/wallets-shared": "^0.15.1-next.1",
     "rango-types": "^0.1.46"
   },
   "publishConfig": {
