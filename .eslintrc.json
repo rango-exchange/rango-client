@@ -77,12 +77,15 @@
     "no-throw-literal": "off",
     "no-magic-numbers": "off",
     "camelcase": "off",
-    "@typescript-eslint/no-unused-vars": "error",
+    "@typescript-eslint/no-unused-vars": [
+      "error",
+      { "ignoreRestSiblings": true }
+    ],
     "@typescript-eslint/no-throw-literal": "error",
     "@typescript-eslint/no-magic-numbers": [
       "error",
       {
-        "ignore": [0, 1]
+        "ignore": [0, 1, 2]
       }
     ],
     "@typescript-eslint/consistent-type-exports": "error",

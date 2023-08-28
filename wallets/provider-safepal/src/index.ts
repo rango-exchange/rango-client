@@ -1,26 +1,26 @@
-import {
-  Networks,
-  WalletTypes,
+import type {
   CanSwitchNetwork,
   Connect,
   ProviderConnectResult,
   Subscribe,
   SwitchNetwork,
+  WalletInfo,
+} from '@rango-dev/wallets-shared';
+import type { BlockchainMeta, SignerFactory } from 'rango-types';
+
+import {
   canSwitchNetworkToEvm,
   chooseInstance,
   getEvmAccounts,
+  Networks,
   subscribeToEvm,
   switchNetworkForEvm,
-  WalletInfo,
+  WalletTypes,
 } from '@rango-dev/wallets-shared';
+import { evmBlockchains, solanaBlockchain } from 'rango-types';
+
 import { getNonEvmAccounts, safepal as safepal_instance } from './helpers';
 import signer from './signer';
-import {
-  SignerFactory,
-  BlockchainMeta,
-  evmBlockchains,
-  solanaBlockchain,
-} from 'rango-types';
 
 const WALLET = WalletTypes.SAFEPAL;
 
@@ -71,7 +71,7 @@ export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
   const solana = solanaBlockchain(allBlockChains);
   return {
     name: 'SafePal',
-    img: 'https://raw.githubusercontent.com/rango-exchange/rango-types/main/assets/icons/wallets/safepal.png',
+    img: 'https://raw.githubusercontent.com/rango-exchange/rango-assets/main/wallets/safepal/icon.svg',
     installLink: {
       CHROME:
         'https://chrome.google.com/webstore/detail/safepal-extension-wallet/lgmpcpglpngdoalbgeoldeajfclnhafa',
