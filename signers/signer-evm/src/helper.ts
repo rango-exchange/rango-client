@@ -1,15 +1,21 @@
-import { getMessageFromCode } from 'eth-rpc-errors';
 import type { SignerError as SignerErrorType } from 'rango-types';
+
+import { getMessageFromCode } from 'eth-rpc-errors';
 import {
   RPCErrorCode as RangoRPCErrorCode,
   SignerError,
   SignerErrorCode,
 } from 'rango-types';
+
 import { MetamaskErrorCodes, RPCErrorCode, RPCErrorMessage } from './types';
 
 export const cleanEvmError = (error: any): SignerErrorType => {
-  if (!error) return new SignerError(SignerErrorCode.SEND_TX_ERROR);
-  if (SignerError.isSignerError(error)) return error;
+  if (!error) {
+    return new SignerError(SignerErrorCode.SEND_TX_ERROR);
+  }
+  if (SignerError.isSignerError(error)) {
+    return error;
+  }
   const hasMessage = Object.prototype.hasOwnProperty.call(error, 'message');
   const hasCode = Object.prototype.hasOwnProperty.call(error, 'code');
   if (hasMessage && hasCode) {
@@ -18,7 +24,7 @@ export const cleanEvmError = (error: any): SignerErrorType => {
     if (
       RPCErrorCode.ACTION_REJECTED === errorCode ||
       MetamaskErrorCodes.provider.userRejectedRequest === errorCode
-    )
+    ) {
       return new SignerError(
         SignerErrorCode.REJECTED_BY_USER,
         undefined,
@@ -26,6 +32,7 @@ export const cleanEvmError = (error: any): SignerErrorType => {
         RangoRPCErrorCode.REJECTION,
         error
       );
+    }
     if (typeof errorCode === 'number') {
       // provider errors
       if (Object.values(MetamaskErrorCodes.provider).includes(errorCode)) {
@@ -45,7 +52,7 @@ export const cleanEvmError = (error: any): SignerErrorType => {
           errorCode === MetamaskErrorCodes.rpc.internal &&
           (errorMessage?.includes(RPCErrorMessage.UNDER_PRICED) ||
             errorMessage?.includes(RPCErrorMessage.REPLACEMENT_FEE_TOO_LOW))
-        )
+        ) {
           return new SignerError(
             SignerErrorCode.SEND_TX_ERROR,
             undefined,
@@ -53,11 +60,12 @@ export const cleanEvmError = (error: any): SignerErrorType => {
             RangoRPCErrorCode.UNDER_PRICED,
             error
           );
+        }
         // gas limit errors are sent as internal errors
         if (
           errorMessage?.includes(RPCErrorMessage.INTRINSIC_GAS_TOO_LOW) ||
           errorMessage?.includes(RPCErrorMessage.OUT_OF_GAS)
-        )
+        ) {
           return new SignerError(
             SignerErrorCode.SEND_TX_ERROR,
             undefined,
@@ -65,6 +73,7 @@ export const cleanEvmError = (error: any): SignerErrorType => {
             RangoRPCErrorCode.OUT_OF_GAS,
             error
           );
+        }
 
         const msg = getMessageFromCode(errorCode);
         return new SignerError(
@@ -106,14 +115,18 @@ export async function getTenderlyError(
   chainId: string | undefined,
   txHash: string
 ): Promise<string | undefined> {
-  if (!chainId || !txHash) return;
+  if (!chainId || !txHash) {
+    return;
+  }
   const chainIdInt = parseInt(chainId);
   try {
     const url = `https://api.tenderly.co/api/v1/public-contract/${chainIdInt}/tx/${txHash}`;
     const response = await fetch(url, {
       method: 'GET',
     });
-    if (!response.ok) return;
+    if (!response.ok) {
+      return;
+    }
     const data: TenderlyResponse = await response.json();
     return data?.error_message;
   } catch (error) {
@@ -121,5 +134,5 @@ export async function getTenderlyError(
   }
 }
 
-export const waitMs = (ms: number) =>
+export const waitMs = async (ms: number) =>
   new Promise((resolve) => setTimeout(resolve, ms));
