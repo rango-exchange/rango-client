@@ -1,13 +1,15 @@
 import { Networks } from '@rango-dev/wallets-shared';
 
-export function getKucoinInstance() {
+export function getHaloInstance() {
   const { kucoin } = window;
-  if (kucoin && kucoin.isKuCoinWallet) return kucoin;
+  if (kucoin && kucoin.isKuCoinWallet) {
+    return kucoin;
+  }
 
   return null;
 }
 
-export const KUCOIN_WALLET_SUPPORTED_CHAINS = [
+export const HALO_WALLET_SUPPORTED_CHAINS = [
   Networks.ETHEREUM,
   Networks.POLYGON,
   Networks.BSC,

@@ -1,26 +1,25 @@
-import {
-  getBlockChainNameFromId,
-  Networks,
-  WalletTypes,
-  canSwitchNetworkToEvm,
-  chooseInstance,
-  getEvmAccounts,
-  switchNetworkForEvm,
+import type {
   CanSwitchNetwork,
   Connect,
   Subscribe,
   SwitchNetwork,
   WalletInfo,
 } from '@rango-dev/wallets-shared';
-import { coin98 as coin98_instances } from './helpers';
-import { getSolanaAccounts } from './helpers';
-import signer from './signer';
+import type { BlockchainMeta, SignerFactory } from 'rango-types';
+
 import {
-  SignerFactory,
-  evmBlockchains,
-  solanaBlockchain,
-  BlockchainMeta,
-} from 'rango-types';
+  canSwitchNetworkToEvm,
+  chooseInstance,
+  getBlockChainNameFromId,
+  getEvmAccounts,
+  Networks,
+  switchNetworkForEvm,
+  WalletTypes,
+} from '@rango-dev/wallets-shared';
+import { evmBlockchains, solanaBlockchain } from 'rango-types';
+
+import { coin98 as coin98_instances, getSolanaAccounts } from './helpers';
+import signer from './signer';
 
 const WALLET = WalletTypes.COIN98;
 
@@ -63,16 +62,18 @@ export const subscribe: Subscribe = ({
         console.log({ err });
       });
     /*
-      TODO:
-      We are calling `connect` here because signer can't detect
-      currect network, I guess the bug is in our signer and it 
-      gets the wrong network by calling a wrong method or something.
-      Anyways, this works for now, maybe we can reconsider it in future
-      Whenever we refactored the signer code as well.  
-    */
+     *TODO:
+     *We are calling `connect` here because signer can't detect
+     *currect network, I guess the bug is in our signer and it
+     *gets the wrong network by calling a wrong method or something.
+     *Anyways, this works for now, maybe we can reconsider it in future
+     *Whenever we refactored the signer code as well.
+     */
 
-    //  we need to update `network` first, if not, it will goes through
-    // the switching network and will open unneccessary pop ups.
+    /*
+     *  we need to update `network` first, if not, it will goes through
+     * the switching network and will open unneccessary pop ups.
+     */
     updateChainId(chainId);
     connect(network);
   });
@@ -101,7 +102,7 @@ export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
   const solana = solanaBlockchain(allBlockChains);
   return {
     name: 'Coin98',
-    img: 'https://raw.githubusercontent.com/rango-exchange/rango-types/main/assets/icons/wallets/coin98.svg',
+    img: 'https://raw.githubusercontent.com/rango-exchange/rango-assets/main/wallets/coin98/icon.svg',
     installLink: {
       CHROME:
         'https://chrome.google.com/webstore/detail/coin98-wallet/aeachknmefphepccionboohckonoeemg',

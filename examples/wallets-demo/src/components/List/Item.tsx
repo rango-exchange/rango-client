@@ -1,39 +1,53 @@
-import React, { useState } from 'react';
-import { readAccountAddress, useWallets } from '@rango-dev/wallets-react';
-import {
+import type {
   Network,
-  WalletType,
-  detectInstallLink,
   WalletInfo,
-  Networks,
+  WalletType,
 } from '@rango-dev/wallets-shared';
-import './styles.css';
+import type { Token } from 'rango-sdk';
+
 import {
   Button,
+  Divider,
   HorizontalSwapIcon,
   InfoCircleIcon,
   SignatureIcon,
-  Divider,
   Spinner,
   Tooltip,
   Typography,
 } from '@rango-dev/ui';
+import { readAccountAddress, useWallets } from '@rango-dev/wallets-react';
+import { detectInstallLink, Networks } from '@rango-dev/wallets-shared';
+import React, { useState } from 'react';
+import './styles.css';
+
 import {
   evmBasedChainsSelector,
   prepareAccounts,
   walletAndSupportedChainsNames,
 } from '../../helper';
-import { TransactionType } from 'rango-sdk';
 
-function Item({ type, info }: { type: WalletType; info: WalletInfo }) {
+import SignModal from './modal';
+
+function Item({
+  type,
+  info,
+  tokens,
+}: {
+  type: WalletType;
+  info: WalletInfo;
+  tokens: Token[];
+}) {
   const { connect, state, disconnect, canSwitchNetworkTo, getSigners } =
     useWallets();
+  const [open, setOpen] = useState<boolean>(false);
   const walletState = state(type);
   const [network, setNetwork] = useState<Network>(Networks.Unknown);
   const [error, setError] = useState<string>('');
   const evmBasedChains = evmBasedChainsSelector(info.supportedChains);
   const handleConnectWallet = async () => {
-    if (walletState.connecting) return;
+    if (walletState.connecting) {
+      return;
+    }
     try {
       if (!walletState.connected) {
         if (walletState.installed) {
@@ -44,10 +58,14 @@ function Item({ type, info }: { type: WalletType; info: WalletInfo }) {
           window.open(detectInstallLink(info.installLink), '_blank');
         }
       } else {
-        disconnect(type);
+        void disconnect(type);
       }
     } catch (err) {
-      setError('Error: ' + (err.message || 'Failed to connect wallet'));
+      if (err instanceof Error) {
+        setError('Error: ' + err.message);
+      } else {
+        setError('Error: Failed to connect wallet');
+      }
     }
   };
   const canSwitchNetwork =
@@ -59,7 +77,11 @@ function Item({ type, info }: { type: WalletType; info: WalletInfo }) {
         setError('');
         setNetwork(result.network || Networks.Unknown);
       } catch (err) {
-        setError('Error: ' + (err.message || 'Failed to connect wallet'));
+        if (err instanceof Error) {
+          setError('Error: ' + err.message);
+        } else {
+          setError('Error: Failed to connect wallet');
+        }
       }
     }
   };
@@ -86,18 +108,23 @@ function Item({ type, info }: { type: WalletType; info: WalletInfo }) {
       const address =
         walletState.accounts?.length > 1 && isMatchedNetworkWithAccount
           ? readAccountAddress(
-              walletState.accounts.find((account) =>
-                account?.toLowerCase()?.includes(network?.toLowerCase())
-              )!
+              walletState.accounts
+                .find((account) =>
+                  account?.toLowerCase()?.includes(network?.toLowerCase())
+                )
+                ?.toLowerCase() || ''
             ).address
           : activeAccount?.accounts[0].address;
 
       const currentChain = info.supportedChains.find(
         (chain) => chain.name === network
       );
-      const txType = currentChain?.type || (network as TransactionType);
-
+      const txType = currentChain?.type;
       const chainId = currentChain?.chainId || null;
+      if (!txType) {
+        alert('Error in detecting tx type.');
+        return;
+      }
       const result = signers
         .getSigner(txType)
         .signMessage('Hello World', address || 'meow', chainId);
@@ -113,61 +140,7 @@ function Item({ type, info }: { type: WalletType; info: WalletInfo }) {
         });
     }
   };
-  const handleSignSigner = () => {
-    if (!walletState.accounts || !walletState.accounts.length) {
-      alert(
-        "You don't currently have an account or you haven't connected to wallet correctly!"
-      );
-    } else {
-      const supportedChainsNames = walletAndSupportedChainsNames(
-        info.supportedChains
-      );
-      const activeAccount = prepareAccounts(
-        walletState.accounts,
-        walletState.network,
-        evmBasedChains,
-        supportedChainsNames
-      ).find((a) => a.accounts.find((b) => b.isConnected));
 
-      const signers = getSigners(type);
-      const isMatchedNetworkWithAccount = walletState.accounts.find((account) =>
-        account?.toLowerCase()?.includes(network?.toLowerCase())
-      );
-      const address =
-        walletState.accounts?.length > 1 && isMatchedNetworkWithAccount
-          ? readAccountAddress(
-              walletState.accounts.find((account) =>
-                account?.toLowerCase()?.includes(network?.toLowerCase())
-              )!
-            ).address
-          : activeAccount?.accounts[0].address;
-
-      const currentChain = info.supportedChains.find(
-        (chain) => chain.name === network
-      );
-      const txType = currentChain?.type || (network as TransactionType);
-
-      const chainId = currentChain?.chainId || null;
-
-      // TODO: Put your transaction
-      const tx = undefined;
-      if (!tx) return;
-
-      const result = signers
-        .getSigner(txType)
-        .signAndSendTx(tx, address || 'meow', chainId);
-      result
-        .then((signature) => {
-          alert(signature);
-        })
-        .catch((ex) => {
-          alert(
-            'Error' + `(${info.name}): ` + (ex.message || 'Failed to sign')
-          );
-          console.log({ ex });
-        });
-    }
-  };
   return (
     <div className="wallet_box">
       <div>
@@ -206,7 +179,9 @@ function Item({ type, info }: { type: WalletType; info: WalletInfo }) {
             <h4 className="mt-8">Accounts: </h4>
             <div className="account_box">
               {walletState?.accounts?.map((account) => (
-                <div className="account">{account}</div>
+                <div className="account" key={account}>
+                  {account}
+                </div>
               ))}
             </div>
             <div className="mt-10">
@@ -285,11 +260,19 @@ function Item({ type, info }: { type: WalletType; info: WalletInfo }) {
             disabled={!walletState.connected}
             suffix={<HorizontalSwapIcon size={24} color="white" />}
             type="primary"
-            onClick={handleSignSigner}>
+            onClick={() => setOpen(true)}>
             Swap
           </Button>
         </div>
       </div>
+      {walletState.connected && (
+        <SignModal
+          tokens={tokens}
+          open={open}
+          onClose={() => setOpen(false)}
+          type={type}
+        />
+      )}
     </div>
   );
 }

@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from 'react';
 import { allProviders } from '@rango-dev/provider-all';
-import WalletsModal from './components/WalletsModal';
-import { RangoClient } from 'rango-sdk';
 import { AdapterProvider } from '@rango-dev/wallets-adapter';
+import { RangoClient } from 'rango-sdk';
+import React, { useEffect, useState } from 'react';
+
+import WalletsModal from './components/WalletsModal';
 import { WC_PROJECT_ID } from './constants';
 
 const providers = allProviders({
@@ -26,7 +27,7 @@ export function App() {
         console.log('failed on connect.', e);
       }
     };
-    getAllBlockchains();
+    void getAllBlockchains();
   }, []);
 
   return (

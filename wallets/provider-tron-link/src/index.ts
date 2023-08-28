@@ -1,17 +1,21 @@
-import { Subscribe } from '@rango-dev/wallets-shared';
-import {
-  Networks,
-  WalletTypes,
+import type {
   CanSwitchNetwork,
   Connect,
+  Subscribe,
   WalletInfo,
 } from '@rango-dev/wallets-shared';
+import type { BlockchainMeta, SignerFactory } from 'rango-types';
+
+import { Networks, WalletTypes } from '@rango-dev/wallets-shared';
+import { tronBlockchain } from 'rango-types';
+
 import { tronLink as tronLink_instance } from './helpers';
 import signer from './signer';
-import { SignerFactory, BlockchainMeta, tronBlockchain } from 'rango-types';
 
-// https://docs.tronlink.org/dapp/start-developing
-// https://developers.tron.network/docs/tronlink-events
+/*
+ * https://docs.tronlink.org/dapp/start-developing
+ * https://developers.tron.network/docs/tronlink-events
+ */
 const WALLET = WalletTypes.TRON_LINK;
 
 export const config = {
@@ -66,7 +70,7 @@ export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
   const tron = tronBlockchain(allBlockChains);
   return {
     name: 'TronLink',
-    img: 'https://raw.githubusercontent.com/rango-exchange/rango-types/main/assets/icons/wallets/tronlink.png',
+    img: 'https://raw.githubusercontent.com/rango-exchange/rango-assets/main/wallets/tronlink/icon.svg',
     installLink: {
       CHROME:
         'https://chrome.google.com/webstore/detail/tronlink/ibnejdfjmmkpcnlpebklmnkoeoihofec',

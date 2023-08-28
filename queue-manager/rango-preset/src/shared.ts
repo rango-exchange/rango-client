@@ -238,7 +238,8 @@ export const getCurrentBlockchainOf = (
     step.tronTransaction?.blockChain ||
     step.tronApprovalTransaction?.blockChain ||
     step.cosmosTransaction?.blockChain ||
-    step.solanaTransaction?.blockChain;
+    step.solanaTransaction?.blockChain ||
+    step.tonTransaction?.blockChain;
   if (b1) return b1;
 
   const transferAddress = step.transferTransaction?.fromWalletAddress;
@@ -310,6 +311,7 @@ export const getCurrentAddressOf = (
     swap.wallets[step.starknetApprovalTransaction?.blockChain || ''] ||
     swap.wallets[step.cosmosTransaction?.blockChain || ''] ||
     swap.wallets[step.solanaTransaction?.blockChain || ''] ||
+    swap.wallets[step.tonTransaction?.blockChain || ''] ||
     (step.transferTransaction?.fromWalletAddress
       ? { address: step.transferTransaction?.fromWalletAddress }
       : null) ||

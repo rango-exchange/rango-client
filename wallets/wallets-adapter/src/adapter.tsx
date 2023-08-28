@@ -1,14 +1,12 @@
-import React, {
-  createContext,
-  PropsWithChildren,
-  useContext,
-  useReducer,
-} from 'react';
-import { ProviderContext } from './types';
-import { defaultState, state_reducer } from './helpers';
+import type { ProviderContext } from './types';
+import type { WalletType } from '@rango-dev/wallets-shared';
+import type { PropsWithChildren } from 'react';
+
 import { useWallets } from '@rango-dev/wallets-react';
+import React, { createContext, useContext, useMemo, useReducer } from 'react';
+
+import { defaultState, state_reducer } from './helpers';
 import Modal from './modal';
-import { WalletType } from '@rango-dev/wallets-shared';
 
 // eslint-disable-next-line
 // @ts-ignore
@@ -26,29 +24,32 @@ function Adapter({
     getWalletInfo,
     providers,
   } = useWallets();
-  const api: ProviderContext = {
-    onOpenModal() {
-      dispatch({ value: true });
-    },
-    onCloseModal() {
-      dispatch({ value: false });
-    },
-    async disconnectAll() {
-      return await disconnectAll();
-    },
-    canSwitchNetworkTo(type, network) {
-      return canSwitchNetworkTo(type, network);
-    },
-    providers() {
-      return providers();
-    },
-    getWalletInfo(type) {
-      return getWalletInfo(type);
-    },
-    getSigners(type) {
-      return getSigners(type);
-    },
-  };
+  const api = useMemo(() => {
+    const providerContext: ProviderContext = {
+      onOpenModal() {
+        dispatch({ value: true });
+      },
+      onCloseModal() {
+        dispatch({ value: false });
+      },
+      async disconnectAll() {
+        return await disconnectAll();
+      },
+      canSwitchNetworkTo(type: string, network: string) {
+        return canSwitchNetworkTo(type, network);
+      },
+      providers() {
+        return providers();
+      },
+      getWalletInfo(type: string) {
+        return getWalletInfo(type);
+      },
+      getSigners(type: string) {
+        return getSigners(type);
+      },
+    };
+    return providerContext;
+  }, []);
   return (
     <AdapterContext.Provider value={api}>
       {children}
@@ -59,10 +60,11 @@ function Adapter({
 
 export function useAdapter(): ProviderContext {
   const context = useContext(AdapterContext);
-  if (!context)
+  if (!context) {
     throw Error(
       'useModalAdapter can only be used within the Provider component'
     );
+  }
   return context;
 }
 

@@ -1,20 +1,25 @@
-import {
-  WalletTypes,
+import type {
+  CanEagerConnect,
   CanSwitchNetwork,
   Connect,
   Subscribe,
   SwitchNetwork,
+  WalletInfo,
+} from '@rango-dev/wallets-shared';
+import type { BlockchainMeta, SignerFactory } from 'rango-types';
+
+import {
+  canEagerlyConnectToEvm,
   canSwitchNetworkToEvm,
   getEvmAccounts,
   subscribeToEvm,
   switchNetworkForEvm,
-  WalletInfo,
-  CanEagerConnect,
-  canEagerlyConnectToEvm,
+  WalletTypes,
 } from '@rango-dev/wallets-shared';
+import { evmBlockchains } from 'rango-types';
+
 import { trustWallet as trustwallet_instance } from './helpers';
 import signer from './signer';
-import { SignerFactory, evmBlockchains, BlockchainMeta } from 'rango-types';
 
 const WALLET = WalletTypes.TRUST_WALLET;
 
@@ -49,7 +54,7 @@ export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
   const evms = evmBlockchains(allBlockChains);
   return {
     name: 'Trust Wallet',
-    img: 'https://raw.githubusercontent.com/rango-exchange/rango-types/main/assets/icons/wallets/trust.png',
+    img: 'https://raw.githubusercontent.com/rango-exchange/rango-assets/main/wallets/trustwallet/icon.svg',
     installLink: {
       CHROME:
         'https://chrome.google.com/webstore/detail/trust-wallet/egjidjbpglichdcondbcbdnbeeppgdph/',

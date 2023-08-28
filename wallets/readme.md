@@ -1,6 +1,6 @@
 # Introduction
 
-A single interface for Web 3.0 wallets that seamlessly integrates 20+ wallets, bringing 50+ blockchains to handle complex tasks such as connecting wallets and performing transactions. 
+A single interface for Web 3.0 wallets that seamlessly integrates 20+ wallets, bringing 50+ blockchains to handle complex tasks such as connecting wallets and performing transactions.
 
 # Getting Started
 
@@ -121,13 +121,9 @@ export function App() {
 
 For better user experience, wallet provider tries to connect to a wallet only when that wallet doesn’t need to open a confirmation pop-up. Please note that only some wallets support this feature for now.
 
-
-
 # Example
 
 - Demo for wallets: [Source](https://github.com/rango-exchange/rango-client/tree/next/wallets/demo)
-
-
 
 # Supported Wallets
 
@@ -135,26 +131,29 @@ For better user experience, wallet provider tries to connect to a wallet only wh
 | -------------- | ------------------------------------------------------- | ------------------------------------ | -------------------- | ------------------------------------------ |
 | ArgentX        | Starknet                                                | -                                    | &check;              | https://www.argent.xyz/                    |
 | Binance Wallet | Binance,BSC,ETH                                         | -                                    | &cross;              | https://www.bnbchain.org/en/binance-wallet |
-| Bitkeep        | EVM,Tron,Solana,Cosmos,Starknet,Aptos,Arweave           | Solana,Cosmos,Starknet,Aptos,Arweave | &check;              | https://bitkeep.com/                       |
+| Bitget         | EVM,Tron,Solana,Cosmos,Starknet,Aptos,Arweave           | Solana,Cosmos,Starknet,Aptos,Arweave | &check;              | https://web3.bitget.com/                   |
 | Braavos        | Starknet                                                | -                                    | &check;              | https://braavos.app/                       |
 | Brave          | EVM, Solana                                             | -                                    | &check;              | https://brave.com/wallet/                  |
 | Clover         | EVM, Solana,Polkadot,Kadena,Aptos,BTC,Doge              | Polkadot,Kadena,Aptos,BTC,Doge       | &check;              | https://wallet.clover.finance              |
 | Coin98         | EVM,Solana,Cosmos,TRON,Ton,Thorchain,Terra,BTC          | Cosmos,TRON,Ton,Thorchain,Terra,BTC  | &cross;              | https://coin98.com/wallet                  |
 | Coinbase       | EVM,Solana                                              | -                                    | &check;              | https://www.coinbase.com/wallet            |
 | Cosmostation   | EVM,Cosmos,Aptos,Sui                                    | Aptos,Sui                            | &check;              | https://cosmostation.io/                   |
+| Enkrypt        | EVM                                                     | BTC,Fantom,Cardano,Algorand          | &check;              | https://www.enkrypt.com/                   |
 | Exodus         | BTC,ETH,BSC,Fantom,Cardano,Polygon,Solana,Avax,Algorand | BTC,Fantom,Cardano,Algorand          | &check;              | https://www.exodus.com/                    |
 | Frontier       | EVM,Solana,Cosmos,Polkadot                              | Cosmos,Polkadot                      | &check;              | https://frontier.xyz/                      |
+| Halo           | -                                                       | -                                    | &cross;              | https://halo.social/                       |
 | Keplr          | Cosmos                                                  | -                                    | &cross;              | https://www.keplr.app/                     |
-| Kucoin         | -                                                       | -                                    | &cross;              | https://kuwallet.com/                      |
 | Leap Cosmos    | Cosmos                                                  | Cosmos                               | &cross;              | https://www.leapwallet.io/cosmos           |
 | Math Wallet    | BTC,EVM,Solana,Aptos,Tron,Polkadot,Cosmos               | BTC,Aptos,Tron,Polkadot,Cosmos       | &check;              | https://mathwallet.org/en-us/              |
 | Metamask       | EVM                                                     | -                                    | &check;              | -                                          |
-| OKX            | -                                                       | -                                    | &check;              | https://www.okx.com/web3                   |
+| OKX            | EVM,Solana,Cosmos                                       | Cosmos                               | &check;              | https://www.okx.com/web3                   |
 | Phantom        | Solana,Ethereum,Polygon                                 | Ethereum,Polygon                     | &check;              | -                                          |
 | Safe           | EVM                                                     | -                                    | &check;              | https://safe.global/                       |
 | SafePal        | EVM,Solana,BTC,Tron,LTC,Doge,Aptos,TON                  | BTC,Tron,LTC,Doge,Aptos,TON          | &cross;              | https://www.safepal.com/                   |
+| Station        | Terra Classic, Terra                                    | -                                    | &cross;              | https://station.terra.money/               |
+| Taho           | ETH,Polygon,Arbitrum,Arbitrum,Avax,Binance,Fantom       | Fantom                               | &cross;              | https://taho.xyz/                          |
 | TokenPocket    | EVM                                                     | -                                    | &check;              | https://extension.tokenpocket.pro/#/       |
-| TronLink       | -                                                       | -                                    | &cross;              | -                                          |
+| TronLink       | Tron                                                    | -                                    | &cross;              | -                                          |
 | Trust Wallet   | EVM,Solana                                              | Solana                               | &check;              | https://trustwallet.com/                   |
-| Wallet Connect | -                                                       | -                                    | &cross;              | -                                          |
+| Wallet Connect | Evm,Solana,Cosmos                                       | Solana,Cosmos                        | &cross;              | -                                          |
 | XDefi          | EVM,Solana,Binance,BTC,LTC,Thorchain,Terra,Doge,Cosmos  | Doge,Cosmos                          | &check;              | https://www.xdefi.io/                      |

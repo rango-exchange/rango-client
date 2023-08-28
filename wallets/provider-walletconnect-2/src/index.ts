@@ -1,5 +1,5 @@
-import {
-  WalletTypes,
+import type { WCInstance } from './types';
+import type {
   CanSwitchNetwork,
   Connect,
   Disconnect,
@@ -9,19 +9,13 @@ import {
   WalletConfig,
   WalletInfo,
 } from '@rango-dev/wallets-shared';
-import { SignerFactory, BlockchainMeta, evmBlockchains } from 'rango-types';
 import type { ISignClient } from '@walletconnect/types';
-import Client from '@walletconnect/sign-client';
+import type { BlockchainMeta, SignerFactory } from 'rango-types';
 
-import signer from './signer';
-import {
-  disconnectSessions,
-  cleanupSingleSession,
-  getAccountsFromEvent,
-  getAccountsFromSession,
-  tryConnect,
-  trySwitchByCreatingNewSession,
-} from './session';
+import { WalletTypes } from '@rango-dev/wallets-shared';
+import Client from '@walletconnect/sign-client';
+import { evmBlockchains } from 'rango-types';
+
 import {
   DEFAULT_APP_METADATA,
   DEFAULT_NETWORK,
@@ -29,7 +23,15 @@ import {
   RELAY_URL,
 } from './constants';
 import { createModalInstance, simulateRequest } from './helpers';
-import type { WCInstance } from './types';
+import {
+  cleanupSingleSession,
+  disconnectSessions,
+  getAccountsFromEvent,
+  getAccountsFromSession,
+  tryConnect,
+  trySwitchByCreatingNewSession,
+} from './session';
+import signer from './signer';
 
 const WALLET = WalletTypes.WALLET_CONNECT_2;
 
@@ -55,9 +57,9 @@ export const getInstance: GetInstance = async (options) => {
   const { currentProvider, getState, meta } = options;
 
   /*
-    Create a new pair, if exists use the pair,
-    Or use the already created one.
-  */
+   *Create a new pair, if exists use the pair,
+   *Or use the already created one.
+   */
   let provider: ISignClient;
   if (!currentProvider) {
     if (!envs.WC_PROJECT_ID) {
@@ -78,7 +80,8 @@ export const getInstance: GetInstance = async (options) => {
   return {
     client: provider,
     session: null,
-    request: (params: any) => simulateRequest(params, provider, meta, getState),
+    request: async (params: any) =>
+      simulateRequest(params, provider, meta, getState),
   };
 };
 
@@ -137,7 +140,7 @@ export const subscribe: Subscribe = ({
 
   client.on('session_delete', async (event) => {
     console.log('[WC2] your wallet has requested to delete session.', event);
-    cleanupSingleSession(client, event.topic);
+    void cleanupSingleSession(client, event.topic);
     disconnect();
   });
 };
@@ -172,7 +175,7 @@ export const disconnect: Disconnect = async ({ instance }) => {
   const { client } = instance as WCInstance;
 
   if (client) {
-    disconnectSessions(client);
+    void disconnectSessions(client);
   }
 };
 
@@ -184,7 +187,7 @@ export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
   const evms = evmBlockchains(allBlockChains);
   return {
     name: 'WalletConnect',
-    img: 'https://raw.githubusercontent.com/rango-exchange/rango-types/main/assets/icons/wallets/walletconnect.svg',
+    img: 'https://raw.githubusercontent.com/rango-exchange/rango-assets/main/wallets/walletconnect/icon.svg',
     installLink: '',
     color: '#b2dbff',
     supportedChains: evms,
