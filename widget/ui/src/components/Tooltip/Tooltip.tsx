@@ -1,8 +1,11 @@
+import type { PropTypes } from './Tooltip.types';
+import type { PropsWithChildren } from 'react';
+
 import * as RadixTooltip from '@radix-ui/react-tooltip';
-import React, { PropsWithChildren, useState } from 'react';
-import useEventListener from './useEventListener';
+import React, { useState } from 'react';
+
 import { TooltipTypography } from './Tooltip.styles';
-import { PropTypes } from './Tooltip.types';
+import useEventListener from './useEventListener';
 
 export function Tooltip({
   children,
@@ -22,8 +25,8 @@ export function Tooltip({
     <>
       <div
         style={{ display: 'contents' }}
-        onMouseEnter={() => setOpen(true)}
-        onMouseLeave={() => setOpen(false)}>
+        onMouseOver={() => setOpen(true)}
+        onMouseOut={() => setOpen(false)}>
         {children}
       </div>
       <RadixTooltip.Provider>
