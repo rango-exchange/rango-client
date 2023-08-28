@@ -14,15 +14,26 @@ import {
   StepDetail,
   Typography,
 } from '../../components';
-import { pulse } from '../../components/BestRoute/BestRoute';
 import {
   CheckCircleIcon,
   GasIcon,
   InfoCircleIcon,
 } from '../../components/Icon';
-import { styled } from '../../theme';
+import { keyframes, styled } from '../../theme';
 
 import { SwapMessages } from './SwapMessages';
+
+export const pulse = keyframes({
+  '0%': {
+    opacity: 1,
+  },
+  '50%': {
+    opacity: 0.3,
+  },
+  '100%': {
+    opacity: 1,
+  },
+});
 
 export const SwapperContainer = styled('div', {
   display: 'flex',
@@ -241,7 +252,7 @@ export function SwapHistory(props: PropTypes) {
                 onClick={onCopy.bind(null, pendingSwap?.requestId)}>
                 <RequestId>{pendingSwap?.requestId}</RequestId>
                 <Divider size={4} direction="horizontal" />
-                <Button type="primary" variant="ghost" size="compact">
+                <Button type="primary" variant="ghost" size="small">
                   {isCopied ? 'Copied!' : 'Copy'}
                 </Button>
               </span>
@@ -386,18 +397,8 @@ export function SwapHistory(props: PropTypes) {
       <Drawer
         onClose={setShowDrawer.bind(null, false)}
         open={showDrawer}
-        showClose={true}
         anchor="bottom"
         title="Cancel Progress"
-        content={
-          <Alert type="warning">
-            <Typography variant="body" size="small">
-              Warning: Cancel <u>doesn't revert</u> your transaction if you've
-              already signed and sent a transaction to the blockchain. It only
-              stops next steps from being executed.
-            </Typography>
-          </Alert>
-        }
         footer={
           <div
             style={{
@@ -423,8 +424,15 @@ export function SwapHistory(props: PropTypes) {
             </Button>
           </div>
         }
-        container={document.getElementById('swap-box')}
-      />
+        container={document.getElementById('swap-box')}>
+        <Alert type="warning">
+          <Typography variant="body" size="small">
+            Warning: Cancel <u>doesn't revert</u> your transaction if you've
+            already signed and sent a transaction to the blockchain. It only
+            stops next steps from being executed.
+          </Typography>
+        </Alert>
+      </Drawer>
     </SecondaryPage>
   );
 }

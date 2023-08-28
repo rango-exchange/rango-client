@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-magic-numbers */
+
 import type { BestRouteResponse } from 'rango-sdk';
 
 import { BigNumber } from 'bignumber.js';
@@ -163,3 +165,17 @@ export const containsText = (text: string, searchText: string) =>
 export const isPositiveNumber = (text?: string) =>
   !!text && parseFloat(text) > 0;
 10;
+
+export function limitDecimalPlaces(
+  numberString: string,
+  maxDecimalPlaces = 4
+): string {
+  const number = parseFloat(numberString);
+  if (isNaN(number)) {
+    return numberString;
+  } // Return the original string if it's not a valid number
+
+  const multiplier = Math.pow(10, maxDecimalPlaces);
+  const roundedNumber = Math.round(number * multiplier) / multiplier;
+  return roundedNumber.toString();
+}

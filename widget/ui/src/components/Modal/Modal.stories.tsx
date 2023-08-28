@@ -1,6 +1,11 @@
+import type { PropTypes } from './Modal.types';
+import type { Meta } from '@storybook/react';
+
 import React, { useState } from 'react';
-import { Meta } from '@storybook/react';
-import { Modal, PropTypes } from './Modal';
+
+import { MessageBox } from '../MessageBox';
+
+import { Modal } from './Modal';
 
 export default {
   name: 'Modal',
@@ -15,7 +20,13 @@ export const Main = (args: PropTypes) => {
   return (
     <div>
       <button onClick={() => setOpen(true)}>Open Modal</button>
-      <Modal {...args} open={open} onClose={() => setOpen(false)} />
+      <Modal {...args} open={open} onClose={() => setOpen(false)}>
+        <MessageBox
+          type="warning"
+          title="Title"
+          description="This is a test text"
+        />
+      </Modal>
     </div>
   );
 };

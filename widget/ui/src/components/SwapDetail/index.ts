@@ -1,1 +1,0 @@
-export { SwapDetail } from './SwapDetail';

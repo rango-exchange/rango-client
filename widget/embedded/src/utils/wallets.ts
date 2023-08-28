@@ -1,35 +1,39 @@
-import {
-  getCosmosExperimentalChainInfo,
-  isEvmAddress,
-  KEPLR_COMPATIBLE_WALLETS,
-  Network,
-  WalletState,
-  WalletType,
-  detectInstallLink,
-  WalletInfo,
-  WalletTypes,
-  Networks,
-} from '@rango-dev/wallets-shared';
-
-import {
+import type { TokenWithBalance } from '../components/TokenList';
+import type { ConnectedWallet, TokenBalance } from '../store/wallets';
+import type { Wallet } from '../types';
+import type {
   WalletInfo as ModalWalletInfo,
-  WalletState as WalletStatus,
   SelectableWallet,
 } from '@rango-dev/ui';
-import {
+import type {
+  Network,
+  WalletInfo,
+  WalletState,
+  WalletType,
+} from '@rango-dev/wallets-shared';
+import type {
   BestRouteResponse,
   BlockchainMeta,
   Token,
   WalletDetail,
 } from 'rango-sdk';
-import { isCosmosBlockchain } from 'rango-types';
+
+import { WalletState as WalletStatus } from '@rango-dev/ui';
 import { readAccountAddress } from '@rango-dev/wallets-core';
-import { ConnectedWallet, TokenBalance } from '../store/wallets';
-import { numberToString } from './numbers';
+import {
+  detectInstallLink,
+  getCosmosExperimentalChainInfo,
+  isEvmAddress,
+  KEPLR_COMPATIBLE_WALLETS,
+  Networks,
+  WalletTypes,
+} from '@rango-dev/wallets-shared';
 import BigNumber from 'bignumber.js';
-import { TokenWithBalance } from '../pages/SelectTokenPage';
+import { isCosmosBlockchain } from 'rango-types';
+
 import { ZERO } from '../constants/numbers';
-import { Wallet } from '../types';
+
+import { numberToString } from './numbers';
 
 export function mapStatusToWalletState(state: WalletState): WalletStatus {
   switch (true) {
@@ -69,7 +73,9 @@ export function getlistWallet(
 export function walletAndSupportedChainsNames(
   supportedChains: BlockchainMeta[]
 ): Network[] | null {
-  if (!supportedChains) return null;
+  if (!supportedChains) {
+    return null;
+  }
   let walletAndSupportedChainsNames: Network[] = [];
   walletAndSupportedChainsNames = supportedChains.map(
     (blockchainMeta) => blockchainMeta.name
@@ -112,31 +118,43 @@ export function prepareAccountsForWalletStore(
     const notSupportedNetworkByWallet =
       hasLimitation && !isSupported && !isUnknown;
 
-    // Here we check given `network` is not supported by wallet
-    // And also the network is known.
-    if (notSupportedNetworkByWallet) return;
+    /*
+     * Here we check given `network` is not supported by wallet
+     * And also the network is known.
+     */
+    if (notSupportedNetworkByWallet) {
+      return;
+    }
 
-    // In some cases we can handle unknown network by checking its address
-    // pattern and act on it.
-    // Example: showing our evm compatible netwrok when the uknown network is evem.
-    // Otherwise, we stop executing this function.
+    /*
+     * In some cases we can handle unknown network by checking its address
+     * pattern and act on it.
+     * Example: showing our evm compatible netwrok when the uknown network is evem.
+     * Otherwise, we stop executing this function.
+     */
     const isUknownAndEvmBased =
       network === Networks.Unknown && isEvmAddress(address);
-    if (isUnknown && !isUknownAndEvmBased) return;
+    if (isUnknown && !isUknownAndEvmBased) {
+      return;
+    }
 
     const isEvmBasedChain = evmBasedChains.includes(network);
 
     // If it's an evm network, we will add the address to all the evm chains.
     if (isEvmBasedChain || isUknownAndEvmBased) {
-      // all evm chains are not supported in wallets, so we are adding
-      // only to those that are supported by wallet.
+      /*
+       * all evm chains are not supported in wallets, so we are adding
+       * only to those that are supported by wallet.
+       */
       const evmChainsSupportedByWallet = supportedChains.filter((chain) =>
         evmBasedChains.includes(chain)
       );
 
       evmChainsSupportedByWallet.forEach((network) => {
-        // EVM addresses are not case sensetive.
-        // Some wallets like Binance-chain return some letters in uppercase which produces bugs in our wallet state.
+        /*
+         * EVM addresses are not case sensetive.
+         * Some wallets like Binance-chain return some letters in uppercase which produces bugs in our wallet state.
+         */
         addAccount(network, address.toLowerCase());
       });
     } else {
@@ -214,12 +232,16 @@ export function getBalanceFromWallet(
   symbol: string,
   address: string | null
 ): TokenBalance | null {
-  if (connectedWallets.length === 0) return null;
+  if (connectedWallets.length === 0) {
+    return null;
+  }
 
   const selectedChainWallets = connectedWallets.filter(
     (wallet) => wallet.chain === chain
   );
-  if (selectedChainWallets.length === 0) return null;
+  if (selectedChainWallets.length === 0) {
+    return null;
+  }
 
   return (
     selectedChainWallets
@@ -305,6 +327,7 @@ export const calculateWalletUsdValue = (connectedWallet: ConnectedWallet[]) => {
     (acc: ConnectedWallet[], current: ConnectedWallet) => {
       return acc.findIndex(
         (i) => i.address === current.address && i.chain === current.chain
+        // eslint-disable-next-line @typescript-eslint/no-magic-numbers
       ) === -1
         ? [...acc, current]
         : acc;
@@ -321,8 +344,9 @@ export const calculateWalletUsdValue = (connectedWallet: ConnectedWallet[]) => {
       uniqueAccountAddresses.add(chain.address);
     }
     uniqueAccountAddresses.forEach((accountAddress) => {
-      if (chain.address === accountAddress)
+      if (chain.address === accountAddress) {
         modifiedWalletBlockchain.accounts.push(chain);
+      }
     });
     return modifiedWalletBlockchain;
   });
@@ -413,6 +437,7 @@ export function getTokensWithBalance(
   tokens: TokenWithBalance[],
   connectedWallets: ConnectedWallet[]
 ): TokenWithBalance[] {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   return tokens.map(({ balance, ...otherProps }) => {
     const tokenAmount = numberToString(
       new BigNumber(
@@ -426,7 +451,7 @@ export function getTokensWithBalance(
     );
 
     let tokenUsdValue = '';
-    if (otherProps.usdPrice)
+    if (otherProps.usdPrice) {
       tokenUsdValue = numberToString(
         new BigNumber(
           getBalanceFromWallet(
@@ -437,6 +462,7 @@ export function getTokensWithBalance(
           )?.amount || ZERO
         ).multipliedBy(otherProps.usdPrice)
       );
+    }
 
     return {
       ...otherProps,
@@ -454,7 +480,9 @@ export function getSortedTokens(
   otherChainTokens: TokenWithBalance[]
 ): TokenWithBalance[] {
   const fromChainEqueulsToToChain = chain?.name === otherChainTokens[0]?.name;
-  if (fromChainEqueulsToToChain) return otherChainTokens;
+  if (fromChainEqueulsToToChain) {
+    return otherChainTokens;
+  }
   const filteredTokens = tokens.filter(
     (token) => token.blockchain === chain?.name
   );
@@ -479,9 +507,13 @@ export function getDefaultToken(
   let selectedToken: TokenWithBalance;
   const firstToken = sortedTokens[0];
   const secondToken = sortedTokens[1];
-  if (sortedTokens.length === 1) selectedToken = firstToken;
-  else if (tokensAreEqual(firstToken, otherToken)) selectedToken = secondToken;
-  else selectedToken = firstToken;
+  if (sortedTokens.length === 1) {
+    selectedToken = firstToken;
+  } else if (tokensAreEqual(firstToken, otherToken)) {
+    selectedToken = secondToken;
+  } else {
+    selectedToken = firstToken;
+  }
   return selectedToken;
 }
 

@@ -8,7 +8,7 @@ function SvgNotificationNumber(props: SvgIconPropsWithChildren) {
   return createElement(
     SvgIcon,
     props,
-    <svg viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg viewBox="0 0 24 25" xmlns="http://www.w3.org/2000/svg">
       <g clipPath="url(#clip0_3736_40162)">
         <path
           d="M24 12.571C24 19.1985 18.6274 24.571 12 24.571C5.37258 24.571 0 19.1985 0 12.571C0 5.94363 5.37258 0.571045 12 0.571045C18.6274 0.571045 24 5.94363 24 12.571Z"

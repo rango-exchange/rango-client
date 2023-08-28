@@ -11,7 +11,7 @@ export { default as DeleteIcon } from './Delete';
 export { default as DoneIcon } from './Done';
 export { default as ErrorIcon } from './Error';
 export { default as ExternalLinkIcon } from './ExternalLink';
-export { default as GassIcon } from './Gass';
+export { default as GasIcon } from './Gas';
 export { default as InProgressIcon } from './InProgress';
 export { default as InfoErrorIcon } from './InfoError';
 export { default as InfoIcon } from './Info';

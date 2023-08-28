@@ -7,7 +7,7 @@ import { createStitches } from '@stitches/react';
 
 /* ----------------------- Values ----------------------- */
 
-const theme = {
+export const theme = {
   colors: {
     primary: '#4BBA7E',
     primary300: '#9FCEB5',
@@ -15,8 +15,9 @@ const theme = {
 
     secondary: '#7C6DDB',
     secondary100: '#F2EFF9',
-    secondary200: '#A27FED',
+    secondary200: '#F0EAFF',
     secondary300: '#E4E0F8',
+    secondary400: '#DCD5FF',
     secondary700: '#6C5DCB',
 
     neutral100: '#FDFDFD',
@@ -90,6 +91,7 @@ const theme = {
     25: '1.563rem',
     30: '1.875rem',
     40: '2.5rem',
+    46: '2.875rem',
     50: '3.125rem',
     60: '3.75rem',
     70: '4.375rem',
@@ -113,7 +115,7 @@ const theme = {
     xs: '5px',
     sm: '10px',
     xm: '15px',
-    md: '20px',
+    md: '25px',
     xl: '35px',
     lg: '40px',
   },
@@ -168,6 +170,7 @@ const theme = {
     32: '32px',
     36: '36px',
     40: '40px',
+    45: '45px',
     48: '48px',
   },
   borderWidths: {},

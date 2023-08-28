@@ -1,81 +1,65 @@
-import { CSS } from '@stitches/react';
+import type { PropTypes } from './Modal.types';
+import type { PropsWithChildren } from 'react';
+
 import React, { useEffect } from 'react';
 import { createPortal } from 'react-dom';
-import { config, styled } from '../../theme';
-import { CloseIcon } from '../Icon/CloseIcon';
+
+import { CloseIcon } from '../../icons';
+import { IconButton } from '../IconButton/IconButton';
 import { Typography } from '../Typography';
 
-export interface PropTypes {
-  title: string;
-  open: boolean;
-  onClose: () => void;
-  content: React.ReactNode;
-  action?: React.ReactNode;
-  containerStyle?: CSS<typeof config>;
-}
+import { BackDrop, Flex, ModalContainer, ModalHeader } from './Modal.styles';
 
-const BackDrop = styled('div', {
-  position: 'fixed',
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-  top: '0',
-  left: '0',
-  width: '100vw',
-  height: '100vh',
-  backgroundColor: 'rgba(0,0,0,.1)',
-  zIndex: 10,
-});
-
-const ModalContainer = styled('div', {
-  backgroundColor: '$background',
-  borderRadius: '$10',
-  padding: '$16 $16',
-  display: 'flex',
-  flexDirection: 'column',
-  zIndex: 20,
-});
-const Row = styled('div', {
-  display: 'flex',
-  alignItems: 'center',
-});
-const ModalHeader = styled('div', {
-  display: 'flex',
-  justifyContent: 'space-between',
-  alignItems: 'center',
-  position: 'relative',
-  marginBottom: '$16',
-});
-
-export function Modal(props: PropTypes) {
-  const { title, content, open, onClose, containerStyle, action } = props;
+export function Modal(props: PropsWithChildren<PropTypes>) {
+  const {
+    title,
+    open,
+    onClose,
+    containerStyle,
+    anchor = 'bottom',
+    container = document.body,
+    prefix,
+    dismissible = true,
+    children,
+    suffix,
+  } = props;
 
   const handleBackDropClick = (event: React.MouseEvent<HTMLDivElement>) => {
-    if (event.target === event.currentTarget) onClose();
+    if (event.target === event.currentTarget && dismissible) {
+      onClose();
+    }
   };
   useEffect(() => {
-    if (open) document.body.style.overflow = 'hidden';
-    else document.body.style.overflow = 'unset';
+    if (open) {
+      container.style.overflow = 'hidden';
+    } else {
+      container.style.overflow = 'unset';
+    }
   }, [open]);
   return (
     <>
       {open &&
         createPortal(
-          <BackDrop onClick={handleBackDropClick}>
-            <ModalContainer css={containerStyle}>
+          <BackDrop onClick={handleBackDropClick} anchor={anchor}>
+            <ModalContainer css={containerStyle} anchor={anchor}>
               <ModalHeader>
-                <Typography variant="title" size="medium">
+                {prefix}
+                <Typography variant="title" size="small">
                   {title}
                 </Typography>
-                <Row>
-                  {action}
-                  <CloseIcon size={24} onClick={onClose} />
-                </Row>
+                <Flex>
+                  {suffix}
+                  {dismissible && (
+                    <IconButton onClick={onClose}>
+                      <CloseIcon color="gray" />
+                    </IconButton>
+                  )}
+                </Flex>
               </ModalHeader>
-              {content}
+              {children}
             </ModalContainer>
           </BackDrop>,
-          document.body
+          container
         )}
     </>
   );

@@ -1,28 +1,52 @@
-import { Meta } from '@storybook/react';
+import type { PropTypes } from './Skeleton.types';
+import type { Meta } from '@storybook/react';
+
 import React from 'react';
-import { Skeleton, PropTypes } from './Skeleton';
+
+import { Divider } from '../Divider';
+import { Typography } from '../Typography';
+
+import { Skeleton } from './Skeleton';
 
 export default {
   title: 'Components/Skeleton',
   component: Skeleton,
   args: {
-    width: 20,
-    height: 20,
+    width: 50,
+    height: 50,
   },
   argTypes: {
-    width: {
-      name: 'width',
-      control: { type: 'select' },
-      options: [20, 24, 36, 48],
-      defaultValue: 20,
+    variant: {
+      name: 'variant',
+      defaultValue: 'rounded',
+      control: {
+        type: 'select',
+        options: ['text', 'circular', 'rectangular', 'rounded'],
+      },
     },
-    height: {
-      name: 'height',
-      control: { type: 'select' },
-      options: [20, 24, 36, 48],
-      defaultValue: 20,
+
+    size: {
+      name: 'size',
+      defaultValue: 'small',
+      control: {
+        type: 'select',
+        options: ['small', 'medium', 'large'],
+      },
     },
   },
 } as Meta<typeof Skeleton>;
 
-export const Main = (props: PropTypes) => <Skeleton {...props} />;
+export const Main = (args: PropTypes) => (
+  <>
+    <Skeleton {...args} height={50} width={50} variant="circular" />
+    <Divider />
+    <Skeleton {...args} variant="text" size="medium" width={200} />
+    <Divider />
+    <Skeleton width={210} height={60} variant="rectangular" />
+    <Divider />
+    <Skeleton {...args} width={210} height={60} variant="rounded" />
+    <Divider />
+    <Typography variant="title" size="small"></Typography>
+    <Skeleton {...args} />
+  </>
+);

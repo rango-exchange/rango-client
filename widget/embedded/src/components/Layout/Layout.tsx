@@ -1,7 +1,7 @@
 import type { PropTypes } from './Layout.types';
 import type { PropsWithChildren } from 'react';
 
-import { BottomLogo, Header } from '@rango-dev/ui';
+import { BottomLogo, Divider, Header } from '@rango-dev/ui';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -44,6 +44,7 @@ export function Layout({
       <Content>{children}</Content>
       {hasFooter && (
         <Footer>
+          <Divider size={12} />
           <BottomLogo />
         </Footer>
       )}
