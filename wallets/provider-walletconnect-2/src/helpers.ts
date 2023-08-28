@@ -1,9 +1,12 @@
-import { WalletState } from '@rango-dev/wallets-shared';
+import type { CosmosMeta } from './types';
+import type { WalletState } from '@rango-dev/wallets-shared';
+import type { ProposalTypes } from '@walletconnect/types';
+import type { BlockchainMeta } from 'rango-types';
+
 import { Networks } from '@rango-dev/wallets-shared';
-import { ProposalTypes } from '@walletconnect/types';
+import { WalletConnectModal } from '@walletconnect/modal';
 import { ChainId } from 'caip';
-import { BlockchainMeta, cosmosBlockchains, evmBlockchains } from 'rango-types';
-import { Web3Modal } from '@web3modal/standalone';
+import { cosmosBlockchains, evmBlockchains } from 'rango-types';
 
 import {
   DEFAULT_COSMOS_METHODS,
@@ -14,22 +17,20 @@ import {
   NAMESPACES,
 } from './constants';
 import { getLastSession } from './session';
-import { CosmosMeta } from './types';
 
-let web3Modal: Web3Modal;
+let web3Modal: WalletConnectModal;
 export function createModalInstance(projectId: string) {
   if (!web3Modal) {
-    web3Modal = new Web3Modal({
+    web3Modal = new WalletConnectModal({
       projectId,
       themeMode: 'light',
-      walletConnectVersion: 2,
       themeVariables: {
-        '--w3m-z-index': '999999999',
+        '--wcm-z-index': '999999999',
       },
     });
   }
 }
-export function getModal(): Web3Modal {
+export function getModal(): WalletConnectModal {
   return web3Modal;
 }
 
@@ -162,14 +163,15 @@ export async function simulateRequest(
 
       if (chainId) {
         return chainId;
-      } else {
-        const firstChain = standaloneChains[0];
-        const chainId = new ChainId(firstChain);
-        return chainId.reference;
       }
-    } else {
-      throw new Error(`Couldn't find any chain on namespace`);
+
+      const firstIndex = 0;
+      const firstChain = standaloneChains[firstIndex];
+      const firstChainId = new ChainId(firstChain);
+      return firstChainId.reference;
     }
+
+    throw new Error(`Couldn't find any chain on namespace`);
   }
   throw new Error('Dissallowed method:', params);
 }
@@ -182,7 +184,9 @@ export function getChainIdByNetworkName(
     (blockchain) => blockchain.name === network
   );
   const chainIdInHex = targetBlockchain?.chainId;
-  if (!chainIdInHex) return undefined;
+  if (!chainIdInHex) {
+    return undefined;
+  }
 
   const chainId = String(parseInt(chainIdInHex));
 

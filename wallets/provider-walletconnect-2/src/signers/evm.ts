@@ -1,10 +1,11 @@
 import type { SignClient } from '@walletconnect/sign-client/dist/types/client';
 import type { SessionTypes } from '@walletconnect/types';
-import type { GenericSigner } from 'rango-types';
 import type { EvmTransaction } from 'rango-types/lib/api/main';
 
+import { cleanEvmError } from '@rango-dev/signer-evm';
 import * as encoding from '@walletconnect/encoding';
 import { AccountId, ChainId } from 'caip';
+import { type GenericSigner } from 'rango-types';
 
 import { EthereumRPCMethods, NAMESPACES } from '../constants';
 
@@ -37,15 +38,20 @@ class EVMSigner implements GenericSigner<EvmTransaction> {
 
     const params = [hexMsg, address];
 
-    // Send message to wallet (using relayer)
-    const signature: string = await this.client.request({
-      topic: this.session.topic,
-      chainId: caipChainId.toString(),
-      request: {
-        method: EthereumRPCMethods.PERSONAL_SIGN,
-        params,
-      },
-    });
+    let signature: string;
+    try {
+      // Send message to wallet (using relayer)
+      signature = await this.client.request({
+        topic: this.session.topic,
+        chainId: caipChainId.toString(),
+        request: {
+          method: EthereumRPCMethods.PERSONAL_SIGN,
+          params,
+        },
+      });
+    } catch (error) {
+      throw cleanEvmError(error);
+    }
 
     /*
      * TODO: We can also verify the signature here
@@ -64,19 +70,21 @@ class EVMSigner implements GenericSigner<EvmTransaction> {
       address,
       chainId,
     });
-
-    const signedTx: string = await this.client.request({
-      topic: this.session.topic,
-      chainId: requestedFor.caipChainId,
-      request: {
-        method: EthereumRPCMethods.SEND_TRANSACTION,
-        params: [tx],
-      },
-    });
-
-    return {
-      hash: signedTx,
-    };
+    try {
+      const hash: string = await this.client.request({
+        topic: this.session.topic,
+        chainId: requestedFor.caipChainId,
+        request: {
+          method: EthereumRPCMethods.SEND_TRANSACTION,
+          params: [tx],
+        },
+      });
+      return {
+        hash,
+      };
+    } catch (error) {
+      throw cleanEvmError(error);
+    }
   }
 
   private isNetworkAndAccountExistInSession(requestedFor: {

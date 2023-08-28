@@ -1,5 +1,5 @@
 import { allProviders } from '@rango-dev/provider-all';
-import { ProviderInterface } from '@rango-dev/wallets-core';
+import { ProviderInterface } from '@rango-dev/wallets-react';
 import { WidgetConfig } from '../types';
 
 export interface ProvidersOptions {

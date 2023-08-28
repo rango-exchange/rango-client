@@ -19,7 +19,6 @@ import type {
 } from 'rango-sdk';
 
 import { WalletState as WalletStatus } from '@rango-dev/ui';
-import { readAccountAddress } from '@rango-dev/wallets-core';
 import {
   detectInstallLink,
   getCosmosExperimentalChainInfo,
@@ -28,6 +27,7 @@ import {
   Networks,
   WalletTypes,
 } from '@rango-dev/wallets-shared';
+import { readAccountAddress } from '@rango-dev/wallets-react';
 import BigNumber from 'bignumber.js';
 import { isCosmosBlockchain } from 'rango-types';
 
@@ -215,10 +215,10 @@ export function getSelectableWallets(
           destinationChain === connectedWallet.chain
             ? false
             : !!selectedWallets.find(
-                (selectedWallet) =>
-                  selectedWallet.chain === connectedWallet.chain &&
-                  selectedWallet.walletType === connectedWallet.walletType
-              ),
+              (selectedWallet) =>
+                selectedWallet.chain === connectedWallet.chain &&
+                selectedWallet.walletType === connectedWallet.walletType
+            ),
       };
     }
   );
@@ -523,14 +523,14 @@ export function sortWalletsBasedOnState(
   return wallets.sort(
     (a, b) =>
       Number(b.state === WalletStatus.CONNECTED) -
-        Number(a.state === WalletStatus.CONNECTED) ||
+      Number(a.state === WalletStatus.CONNECTED) ||
       Number(
         b.state === WalletStatus.DISCONNECTED ||
-          b.state === WalletStatus.CONNECTING
+        b.state === WalletStatus.CONNECTING
       ) -
-        Number(
-          a.state === WalletStatus.DISCONNECTED ||
-            a.state === WalletStatus.CONNECTING
-        )
+      Number(
+        a.state === WalletStatus.DISCONNECTED ||
+        a.state === WalletStatus.CONNECTING
+      )
   );
 }

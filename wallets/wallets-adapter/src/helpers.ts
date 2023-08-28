@@ -1,14 +1,12 @@
-import {
+import type { ModalState, State } from './types';
+import type { WalletInfo as ModalWalletInfo } from '@rango-dev/ui';
+import type {
   WalletInfo,
   WalletState,
   WalletType,
-  WalletTypes,
 } from '@rango-dev/wallets-shared';
-import { ModalState, State } from './types';
-import {
-  WalletInfo as ModalWalletInfo,
-  WalletState as WalletStatus,
-} from '@rango-dev/ui';
+
+import { WalletState as WalletStatus } from '@rango-dev/ui';
 
 export const defaultState: ModalState = {
   open: false,
@@ -41,20 +39,16 @@ export function getlistWallet(
   getWalletInfo: (type: WalletType) => WalletInfo,
   list: WalletType[]
 ): ModalWalletInfo[] {
-  const excludedWallets = [WalletTypes.LEAP];
-
-  return list
-    .filter((wallet) => !excludedWallets.includes(wallet as WalletTypes))
-    .map((type) => {
-      const { name, img: image, installLink } = getWalletInfo(type);
-      const state = getStateWallet(getState(type));
-      return {
-        title: name,
-        image,
-        installLink,
-        state,
-        type,
-        link: installLink,
-      };
-    });
+  return list.map((type) => {
+    const { name, img: image, installLink } = getWalletInfo(type);
+    const state = getStateWallet(getState(type));
+    return {
+      title: name,
+      image,
+      installLink,
+      state,
+      type,
+      link: installLink,
+    };
+  });
 }

@@ -1,9 +1,11 @@
-import React from 'react';
-import {
-  ProviderProps,
-  Provider,
+import type {
   ProviderInterface,
-} from '@rango-dev/wallets-core';
+  ProviderProps,
+} from '@rango-dev/wallets-react';
+
+import { Provider } from '@rango-dev/wallets-react';
+import React from 'react';
+
 import Adapter from './adapter';
 
 function AdapterProvider({ children, ...props }: ProviderProps) {

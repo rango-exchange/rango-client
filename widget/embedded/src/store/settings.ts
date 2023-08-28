@@ -106,6 +106,7 @@ export const useSettingsStore = createSelectors(
       })),
       {
         name: 'user-settings',
+        skipHydration: true,
       }
     )
   )

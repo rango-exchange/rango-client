@@ -1,14 +1,16 @@
-import {
-  WalletTypes,
+import type {
   CanSwitchNetwork,
   Connect,
   Subscribe,
   WalletInfo,
 } from '@rango-dev/wallets-shared';
+import type { BlockchainMeta, SignerFactory } from 'rango-types';
+
+import { WalletTypes } from '@rango-dev/wallets-shared';
+import { ConnectType } from '@terra-money/wallet-controller';
+
 import { station as station_instance } from './helpers';
 import signer from './signer';
-import { ConnectType } from '@terra-money/wallet-controller';
-import { BlockchainMeta, SignerFactory } from 'rango-types';
 
 const WALLET = WalletTypes.STATION;
 const STATION_WALLET_ID = 'station';
@@ -84,7 +86,7 @@ export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
 ) => {
   return {
     name: 'Station',
-    img: 'https://raw.githubusercontent.com/rango-exchange/rango-types/main/assets/icons/wallets/station.svg',
+    img: 'https://raw.githubusercontent.com/rango-exchange/rango-assets/main/wallets/station/icon.svg',
     installLink: {
       CHROME:
         'https://chrome.google.com/webstore/detail/terra-station/aiifbnbfobpmeekipheeijimdpnlpgpp',

@@ -1,6 +1,11 @@
-import { Providers } from '@rango-dev/wallets-core';
-import { Network, WalletType, WalletInfo } from '@rango-dev/wallets-shared';
-import { SignerFactory } from 'rango-types';
+import type { Providers } from '@rango-dev/wallets-react';
+import type {
+  Network,
+  WalletInfo,
+  WalletType,
+} from '@rango-dev/wallets-shared';
+import type { SignerFactory } from 'rango-types';
+
 export interface State {
   connected: boolean;
   connecting: boolean;

@@ -1,7 +1,9 @@
 import { useContext, useRef } from 'react';
 import { WalletContext } from './context';
 import { ProviderContext, WalletActions, WalletConfig } from './types';
-import Wallet, { EventHandler as WalletEventHandler } from './wallet';
+import Wallet, {
+  EventHandler as WalletEventHandler,
+} from '@rango-dev/wallets-core';
 
 /**
  *
