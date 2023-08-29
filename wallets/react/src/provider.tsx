@@ -1,6 +1,7 @@
 import type { ProviderContext, ProviderProps } from './types';
 import type { WalletType } from '@rango-dev/wallets-shared';
 
+import { allSupportedBlockchains } from 'rango-chains';
 import React, { useEffect, useReducer, useRef } from 'react';
 
 import { WalletContext } from './context';
@@ -121,7 +122,9 @@ function Provider(props: ProviderProps) {
        * So, addWalletRef method shouldn't be called in this method
        */
 
-      return wallet.actions.getWalletInfo(props.allBlockChains || []);
+      return wallet.actions.getWalletInfo(
+        props.allBlockChains || allSupportedBlockchains
+      );
     },
     getSigners(type) {
       const wallet = wallets.get(type);
@@ -169,19 +172,10 @@ function Provider(props: ProviderProps) {
   }, []);
 
   useEffect(() => {
-    const allBlockChains = props.allBlockChains;
+    const allBlockChains = props.allBlockChains || allSupportedBlockchains;
     if (allBlockChains) {
       wallets.forEach((wallet) => {
         const walletInstance = getWalletInstance(wallet);
-        const supportedChains = walletInstance.getWalletInfo(
-          props.allBlockChains || []
-        ).supportedBlockchains;
-        console.log(
-          { wallet },
-          { walletInstance },
-          { supportedChains },
-          { allBlockChains }
-        );
         walletInstance.setMeta(allBlockChains);
       });
     }
@@ -198,10 +192,9 @@ function Provider(props: ProviderProps) {
 
   useEffect(() => {
     const shouldTryAutoConnect =
-      props.allBlockChains &&
-      props.allBlockChains.length &&
-      props.autoConnect &&
-      !autoConnectInitiated.current;
+      // props.allBlockChains &&
+      // props.allBlockChains.length &&
+      props.autoConnect && !autoConnectInitiated.current;
 
     if (shouldTryAutoConnect) {
       autoConnectInitiated.current = true;

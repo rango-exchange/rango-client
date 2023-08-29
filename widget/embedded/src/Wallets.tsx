@@ -99,7 +99,7 @@ export function WidgetWallets(
       }}
     >
       <Provider
-        allBlockChains={blockchainMetaStd(blockchains)}
+        // allBlockChains={blockchainMetaStd(blockchains)}
         providers={providers}
         onUpdateState={onUpdateState}
         autoConnect
