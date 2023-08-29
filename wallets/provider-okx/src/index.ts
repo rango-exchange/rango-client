@@ -1,4 +1,5 @@
 import type {
+  BlockchainInfo,
   CanEagerConnect,
   CanSwitchNetwork,
   Connect,
@@ -7,18 +8,18 @@ import type {
   SwitchNetwork,
   WalletInfo,
 } from '@rango-dev/wallets-shared';
-import type { BlockchainMeta, SignerFactory } from 'rango-types';
+import type { SignerFactory } from 'rango-types';
 
 import {
   canEagerlyConnectToEvm,
   canSwitchNetworkToEvm,
   chooseInstance,
+  filterBlockchains,
   getEvmAccounts,
   Networks,
   switchNetworkForEvm,
   WalletTypes,
 } from '@rango-dev/wallets-shared';
-import { isEvmBlockchain } from 'rango-types';
 
 import {
   getSolanaAccounts,
@@ -56,11 +57,7 @@ export const subscribe: Subscribe = ({ instance, updateAccounts, meta }) => {
   const ethInstance = chooseInstance(instance, meta, Networks.ETHEREUM);
 
   ethInstance?.on('accountsChanged', async (addresses: string[]) => {
-    const eth_chainId = meta
-      .filter(isEvmBlockchain)
-      .find((blockchain) => blockchain.name === Networks.ETHEREUM)?.chainId;
-
-    updateAccounts(addresses, eth_chainId);
+    updateAccounts(addresses, Networks.ETHEREUM);
     const [{ accounts, chainId }] = await getSolanaAccounts(instance);
     updateAccounts(accounts, chainId);
   });
@@ -90,21 +87,24 @@ export const canEagerConnect: CanEagerConnect = async ({ instance, meta }) => {
   return Promise.resolve(false);
 };
 
-export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
+export const getWalletInfo: (allBlockChains: BlockchainInfo[]) => WalletInfo = (
   allBlockChains
-) => ({
-  name: 'OKX',
-  img: 'https://raw.githubusercontent.com/rango-exchange/rango-assets/main/wallets/okx/icon.svg',
-  installLink: {
-    CHROME:
-      'https://chrome.google.com/webstore/detail/okx-wallet/mcohilncbfahbmgdjkbpemcciiolgcge',
-    BRAVE:
-      'https://chrome.google.com/webstore/detail/okx-wallet/mcohilncbfahbmgdjkbpemcciiolgcge',
-    FIREFOX: 'https://addons.mozilla.org/en-US/firefox/addon/okexwallet',
-    DEFAULT: 'https://www.okx.com/web3',
-  },
-  color: 'white',
-  supportedChains: allBlockChains.filter((blockchainMeta) =>
-    OKX_WALLET_SUPPORTED_CHAINS.includes(blockchainMeta.name as Networks)
-  ),
-});
+) => {
+  const blockchains = filterBlockchains(allBlockChains, {
+    ids: OKX_WALLET_SUPPORTED_CHAINS,
+  });
+  return {
+    name: 'OKX',
+    img: 'https://raw.githubusercontent.com/rango-exchange/rango-assets/main/wallets/okx/icon.svg',
+    installLink: {
+      CHROME:
+        'https://chrome.google.com/webstore/detail/okx-wallet/mcohilncbfahbmgdjkbpemcciiolgcge',
+      BRAVE:
+        'https://chrome.google.com/webstore/detail/okx-wallet/mcohilncbfahbmgdjkbpemcciiolgcge',
+      FIREFOX: 'https://addons.mozilla.org/en-US/firefox/addon/okexwallet',
+      DEFAULT: 'https://www.okx.com/web3',
+    },
+    color: 'white',
+    supportedBlockchains: blockchains,
+  };
+};

@@ -1,4 +1,5 @@
 import type {
+  BlockchainInfo,
   CanSwitchNetwork,
   Connect,
   Disconnect,
@@ -8,19 +9,15 @@ import type {
   WalletConfig,
   WalletInfo,
 } from '@rango-dev/wallets-shared';
-import type {
-  BlockchainMeta,
-  EvmBlockchainMeta,
-  SignerFactory,
-} from 'rango-types';
+import type { SignerFactory } from 'rango-types';
 
 import {
   canSwitchNetworkToEvm,
   convertEvmBlockchainMetaToEvmChainInfo,
+  filterBlockchains,
   switchOrAddNetworkForMetamaskCompatibleWallets,
 } from '@rango-dev/wallets-shared';
 import { formatJsonRpcRequest } from '@walletconnect/jsonrpc-utils';
-import { evmBlockchains } from 'rango-types';
 
 import { makeConnection, supportsForSwitchNetworkRequest } from './helpers';
 import signer from './signer';
@@ -36,9 +33,7 @@ export const config: WalletConfig = {
 export const getInstance: GetInstance = async (options) => {
   const { network, currentProvider, meta, updateChainId } = options;
   // If `network` is provided, trying to get chainId
-  const evm_chain_info = convertEvmBlockchainMetaToEvmChainInfo(
-    meta as EvmBlockchainMeta[]
-  );
+  const evm_chain_info = convertEvmBlockchainMetaToEvmChainInfo(meta);
   const info = network ? evm_chain_info[network] : undefined;
   const requestedChainId = info?.chainId ? parseInt(info?.chainId) : undefined;
 
@@ -110,9 +105,7 @@ export const switchNetwork: SwitchNetwork = async ({
   network,
   newInstance,
 }) => {
-  const evm_chain_info = convertEvmBlockchainMetaToEvmChainInfo(
-    meta as EvmBlockchainMeta[]
-  );
+  const evm_chain_info = convertEvmBlockchainMetaToEvmChainInfo(meta);
 
   /*
    *There are two methods for switch network
@@ -178,16 +171,18 @@ export const disconnect: Disconnect = async ({ instance, destroyInstance }) => {
 
 export const getSigners: (provider: any) => SignerFactory = signer;
 
-export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
+export const getWalletInfo: (allBlockChains: BlockchainInfo[]) => WalletInfo = (
   allBlockChains
 ) => {
-  const evms = evmBlockchains(allBlockChains);
+  const blockchains = filterBlockchains(allBlockChains, {
+    evm: true,
+  });
   return {
     name: 'WalletConnect',
     img: 'https://raw.githubusercontent.com/rango-exchange/rango-assets/main/wallets/walletconnect/icon.svg',
     installLink: '',
     color: '#b2dbff',
-    supportedChains: evms,
+    supportedBlockchains: blockchains,
     showOnMobile: true,
     mobileWallet: true,
   };

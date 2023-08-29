@@ -1,11 +1,11 @@
-import type { BlockchainMeta, EvmBlockchainMeta } from 'rango-types';
+import type { BlockchainInfo } from 'rango-chains';
 
 export const IS_DEV =
   !process.env.NODE_ENV || process.env.NODE_ENV === 'development';
 
 export const getBlockChainNameFromId = (
   chainId: string | number,
-  blockchains: BlockchainMeta[]
+  blockchains: BlockchainInfo[]
 ): Network | null => {
   chainId =
     typeof chainId === 'string' && chainId.startsWith('0x')
@@ -26,13 +26,13 @@ export const getBlockChainNameFromId = (
   }
   return (
     blockchains
-      .filter((blockchainMeta) => !!blockchainMeta.chainId)
-      .find((blockchainMeta) => {
-        const blockchainChainId = blockchainMeta.chainId?.startsWith('0x')
-          ? parseInt(blockchainMeta.chainId)
-          : blockchainMeta.chainId;
+      .filter((blockchainInfo) => !!blockchainInfo.chainId)
+      .find((blockchainInfo) => {
+        const blockchainChainId = blockchainInfo.chainId?.startsWith('0x')
+          ? parseInt(blockchainInfo.chainId)
+          : blockchainInfo.chainId;
         return blockchainChainId == chainId;
-      })?.name || null
+      })?.id || null
   );
 };
 
@@ -140,14 +140,6 @@ export enum Networks {
   Unknown = 'Unkown',
 }
 
-export const XDEFI_WALLET_SUPPORTED_NATIVE_CHAINS = [
-  Networks.BTC,
-  Networks.LTC,
-  Networks.THORCHAIN,
-  Networks.BCH,
-  Networks.BINANCE,
-];
-
 export const KEPLR_COMPATIBLE_WALLETS = [
   WalletTypes.KEPLR,
   WalletTypes.COSMOSTATION,
@@ -159,7 +151,7 @@ export type Asset = {
   address: string | null;
 };
 
-export type AllBlockchains = { [key: string]: BlockchainMeta };
+export type AllBlockchains = { [key: string]: BlockchainInfo };
 
 export type AddEthereumChainParameter = {
   chainId: string; // A 0x-prefixed hexadecimal string
@@ -178,9 +170,9 @@ export type EvmNetworksChainInfo = { [key: string]: AddEthereumChainParameter };
 
 export interface Meta {
   blockchains: AllBlockchains;
-  evmNetworkChainInfo: EvmNetworksChainInfo;
+  // evmNetworkChainInfo: EvmNetworksChainInfo;
   getSupportedChainNames: (type: WalletType) => Network[] | null;
-  evmBasedChains: EvmBlockchainMeta[];
+  // evmBasedChains: EvmBlockchainMeta[];
 }
 
 // core
@@ -205,7 +197,7 @@ export interface WalletConfig {
 export type GetInstanceOptions = {
   network?: Network;
   currentProvider: any;
-  meta: BlockchainMeta[];
+  meta: BlockchainInfo[];
   force?: boolean;
   updateChainId: (chainId: number | string) => void;
   getState: () => WalletState;
@@ -227,7 +219,7 @@ export type ProviderConnectResult = {
 export type Connect = (options: {
   instance: any;
   network?: Network;
-  meta: BlockchainMeta[];
+  meta: BlockchainInfo[];
 }) => Promise<ProviderConnectResult | ProviderConnectResult[]>;
 
 export type Disconnect = (options: {
@@ -238,7 +230,7 @@ export type Disconnect = (options: {
 export type Subscribe = (options: {
   instance: any;
   state: WalletState;
-  meta: BlockchainMeta[];
+  meta: BlockchainInfo[];
   updateChainId: (chainId: string) => void;
   updateAccounts: (accounts: string[], chainId?: string) => void;
   connect: (network?: Network) => void;
@@ -247,19 +239,19 @@ export type Subscribe = (options: {
 
 export type CanEagerConnect = (options: {
   instance: any;
-  meta: BlockchainMeta[];
+  meta: BlockchainInfo[];
 }) => Promise<boolean>;
 
 export type SwitchNetwork = (options: {
   instance: any;
   network: Network;
-  meta: BlockchainMeta[];
+  meta: BlockchainInfo[];
   newInstance?: TryGetInstance;
 }) => Promise<void>;
 
 export type CanSwitchNetwork = (options: {
   network: Network;
-  meta: BlockchainMeta[];
+  meta: BlockchainInfo[];
   provider: any;
 }) => boolean;
 
@@ -276,7 +268,7 @@ export type WalletInfo = {
   img: string;
   installLink: InstallObjects | string;
   color: string;
-  supportedChains: BlockchainMeta[];
+  supportedBlockchains: BlockchainInfo[];
   showOnMobile?: boolean;
   mobileWallet?: boolean;
 };

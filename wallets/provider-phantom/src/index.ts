@@ -1,18 +1,19 @@
 import type {
+  BlockchainInfo,
   CanEagerConnect,
   CanSwitchNetwork,
   Connect,
   Subscribe,
   WalletInfo,
 } from '@rango-dev/wallets-shared';
-import type { BlockchainMeta, SignerFactory } from 'rango-types';
+import type { SignerFactory } from 'rango-types';
 
 import {
+  filterBlockchains,
   getSolanaAccounts,
   Networks,
   WalletTypes,
 } from '@rango-dev/wallets-shared';
-import { solanaBlockchain } from 'rango-types';
 
 import { phantom as phantom_instance } from './helpers';
 import signer from './signer';
@@ -31,7 +32,7 @@ export const subscribe: Subscribe = ({ instance, updateAccounts, connect }) => {
     const network = Networks.SOLANA;
     if (publicKey) {
       const account = publicKey.toString();
-      updateAccounts([account]);
+      updateAccounts([account], network);
     } else {
       connect(network);
     }
@@ -51,10 +52,12 @@ export const canEagerConnect: CanEagerConnect = async ({ instance }) => {
   }
 };
 
-export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
+export const getWalletInfo: (allBlockChains: BlockchainInfo[]) => WalletInfo = (
   allBlockChains
 ) => {
-  const solana = solanaBlockchain(allBlockChains);
+  const blockchains = filterBlockchains(allBlockChains, {
+    ids: [Networks.SOLANA],
+  });
   return {
     name: 'Phantom',
     img: 'https://raw.githubusercontent.com/rango-exchange/rango-assets/main/wallets/phantom/icon.svg',
@@ -65,6 +68,6 @@ export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
       DEFAULT: 'https://phantom.app/',
     },
     color: '#4d40c6',
-    supportedChains: solana,
+    supportedBlockchains: blockchains,
   };
 };

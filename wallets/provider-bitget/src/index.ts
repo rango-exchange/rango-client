@@ -1,4 +1,5 @@
 import type {
+  BlockchainInfo,
   CanEagerConnect,
   CanSwitchNetwork,
   Connect,
@@ -7,19 +8,19 @@ import type {
   SwitchNetwork,
   WalletInfo,
 } from '@rango-dev/wallets-shared';
-import type { BlockchainMeta, SignerFactory } from 'rango-types';
+import type { SignerFactory } from 'rango-types';
 
 import {
   canEagerlyConnectToEvm,
   canSwitchNetworkToEvm,
   chooseInstance,
+  filterBlockchains,
   getEvmAccounts,
   Networks,
   subscribeToEvm,
   switchNetworkForEvm,
   WalletTypes,
 } from '@rango-dev/wallets-shared';
-import { evmBlockchains, isEvmBlockchain, tronBlockchain } from 'rango-types';
 
 import { bitgetInstances } from './helpers';
 import signer from './signer';
@@ -72,18 +73,15 @@ export const subscribe: Subscribe = ({
   disconnect,
 }) => {
   const ethInstance = instance.get(Networks.ETHEREUM);
-  const evmBlockchainMeta = meta.filter(isEvmBlockchain);
-
   subscribeToEvm({
     instance: ethInstance,
     state,
     updateChainId,
     updateAccounts,
-    meta: evmBlockchainMeta,
+    meta,
     connect,
     disconnect,
   });
-
   window.addEventListener('message', (e) => {
     if (
       e.data.isTronLink &&
@@ -113,11 +111,13 @@ export const canEagerConnect: CanEagerConnect = async ({ instance, meta }) => {
 };
 export const getSigners: (provider: any) => SignerFactory = signer;
 
-export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
+export const getWalletInfo: (allBlockChains: BlockchainInfo[]) => WalletInfo = (
   allBlockChains
 ) => {
-  const evms = evmBlockchains(allBlockChains);
-  const tron = tronBlockchain(allBlockChains);
+  const blockchains = filterBlockchains(allBlockChains, {
+    evm: true,
+    ids: [Networks.TRON],
+  });
   return {
     name: 'Bitget',
     img: 'https://raw.githubusercontent.com/rango-exchange/rango-assets/main/wallets/bitget/icon.svg',
@@ -129,6 +129,6 @@ export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
       DEFAULT: 'https://web3.bitget.com/en/wallet-download?type=1',
     },
     color: '#ffffff',
-    supportedChains: [...evms, ...tron],
+    supportedBlockchains: blockchains,
   };
 };

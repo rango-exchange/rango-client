@@ -1,6 +1,7 @@
+import type { BlockchainInfo } from '@rango-dev/wallets-shared';
 import type { SignClient } from '@walletconnect/sign-client/dist/types/client';
 import type { ProposalTypes, SessionTypes } from '@walletconnect/types';
-import type { BlockchainMeta, CosmosBlockchainMeta } from 'rango-types/lib';
+import type { CosmosBlockchainMeta } from 'rango-types/lib';
 
 export interface WCInstance {
   client: SignClient;
@@ -16,7 +17,7 @@ export interface CreateSessionParams {
 
 export interface ConnectParams {
   network: string;
-  meta: BlockchainMeta[];
+  meta: BlockchainInfo[];
 }
 
 export interface CosmosMeta extends CosmosBlockchainMeta {

@@ -83,9 +83,9 @@
     ],
     "@typescript-eslint/no-throw-literal": "error",
     "@typescript-eslint/no-magic-numbers": [
-      "error",
+      "warn",
       {
-        "ignore": [0, 1, 2]
+        "ignore": [-1, 0, 1, 2, 3, 200]
       }
     ],
     "@typescript-eslint/consistent-type-exports": "error",

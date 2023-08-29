@@ -1,12 +1,17 @@
 import type {
+  BlockchainInfo,
   CanSwitchNetwork,
   Connect,
   Subscribe,
   WalletInfo,
 } from '@rango-dev/wallets-shared';
-import type { BlockchainMeta, SignerFactory } from 'rango-types';
+import type { SignerFactory } from 'rango-types';
 
-import { WalletTypes } from '@rango-dev/wallets-shared';
+import {
+  filterBlockchains,
+  Networks,
+  WalletTypes,
+} from '@rango-dev/wallets-shared';
 import { ConnectType } from '@terra-money/wallet-controller';
 
 import { station as station_instance } from './helpers';
@@ -49,6 +54,7 @@ export const connect: Connect = async ({ instance, meta }) => {
     throw new Error('Please unlock your Station wallet first.');
   }
   chainId = network.chainID;
+  console.log({ chainId }, { meta });
   const foundChain = meta.find((m) => m.chainId === chainId);
   if (!foundChain) {
     throw new Error(
@@ -81,9 +87,12 @@ export const canSwitchNetworkTo: CanSwitchNetwork = () => false;
 
 export const getSigners: (provider: any) => SignerFactory = signer;
 
-export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
+export const getWalletInfo: (allBlockChains: BlockchainInfo[]) => WalletInfo = (
   allBlockChains
 ) => {
+  const blockchains = filterBlockchains(allBlockChains, {
+    ids: [Networks.TERRA],
+  });
   return {
     name: 'Station',
     img: 'https://raw.githubusercontent.com/rango-exchange/rango-assets/main/wallets/station/icon.svg',
@@ -98,8 +107,6 @@ export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
         'https://classic-docs.terra.money/docs/learn/terra-station/download/terra-station-desktop.html',
     },
     color: '#ffffff',
-    supportedChains: allBlockChains.filter((blockchainMeta) =>
-      ['TERRA_CLASSIC', 'TERRA'].includes(blockchainMeta.name)
-    ),
+    supportedBlockchains: blockchains,
   };
 };

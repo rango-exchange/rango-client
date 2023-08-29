@@ -6,16 +6,11 @@ import {
   checkWaitingForNetworkChange,
 } from '@rango-dev/queue-manager-rango-preset';
 import { useWallets } from '@rango-dev/wallets-react';
-import {
-  convertEvmBlockchainMetaToEvmChainInfo,
-  Network,
-  WalletType,
-} from '@rango-dev/wallets-shared';
+import { Network, WalletType } from '@rango-dev/wallets-shared';
 import { useMetaStore } from './store/meta';
 import { useWalletsStore } from './store/wallets';
 import { walletAndSupportedChainsNames } from './utils/wallets';
 import { getConfig } from './utils/configs';
-import { isEvmBlockchain } from 'rango-types';
 
 function QueueManager(props: PropsWithChildren) {
   const {
@@ -62,19 +57,15 @@ function QueueManager(props: PropsWithChildren) {
       ),
       {}
     );
-  const evmBasedChains = blockchains.filter(isEvmBlockchain);
   const getSupportedChainNames = (type: WalletType) => {
-    const { supportedChains } = getWalletInfo(type);
-    return walletAndSupportedChainsNames(supportedChains);
+    const { supportedBlockchains } = getWalletInfo(type);
+    return walletAndSupportedChainsNames(supportedBlockchains);
   };
   const allProviders = providers();
 
   const context: SwapQueueContext = {
     meta: {
       blockchains: allBlockchains,
-      evmBasedChains: evmBasedChains,
-      evmNetworkChainInfo:
-        convertEvmBlockchainMetaToEvmChainInfo(evmBasedChains),
       getSupportedChainNames,
     },
     getSigners,
@@ -97,7 +88,8 @@ function QueueManager(props: PropsWithChildren) {
       onPersistedDataLoaded={(manager) => {
         checkWaitingForNetworkChange(manager);
       }}
-      isPaused={false}>
+      isPaused={false}
+    >
       {props.children}
     </ManagerProvider>
   );

@@ -1,4 +1,5 @@
 import type {
+  BlockchainInfo,
   CanEagerConnect,
   CanSwitchNetwork,
   Connect,
@@ -7,23 +8,18 @@ import type {
   SwitchNetwork,
   WalletInfo,
 } from '@rango-dev/wallets-shared';
-import type { BlockchainMeta, SignerFactory } from 'rango-types';
+import type { SignerFactory } from 'rango-types';
 
 import {
   canEagerlyConnectToEvm,
   canSwitchNetworkToEvm,
   chooseInstance,
+  filterBlockchains,
   getEvmAccounts,
   Networks,
   switchNetworkForEvm,
   WalletTypes,
 } from '@rango-dev/wallets-shared';
-import {
-  evmBlockchains,
-  isEvmBlockchain,
-  isSolanaBlockchain,
-  solanaBlockchain,
-} from 'rango-types';
 
 import { frontier as frontier_instance, getSolanaAccounts } from './helpers';
 import signer from './signer';
@@ -63,27 +59,18 @@ export const subscribe: Subscribe = (options) => {
     options.meta,
     Networks.SOLANA
   );
-  const { connect, updateAccounts, state, updateChainId, meta } = options;
+  const { connect, updateAccounts, state } = options;
   ethInstance?.on('accountsChanged', (addresses: string[]) => {
-    const eth_chainId = meta
-      .filter(isEvmBlockchain)
-      .find((blockchain) => blockchain.name === Networks.ETHEREUM)?.chainId;
     if (state.connected) {
-      if (state.network != Networks.ETHEREUM && eth_chainId) {
-        updateChainId(eth_chainId);
-      }
-      updateAccounts(addresses);
+      updateAccounts(addresses, Networks.ETHEREUM);
     }
   });
 
   solanaInstance?.on('accountChanged', async (publicKey: string) => {
-    if (state.network != Networks.SOLANA) {
-      updateChainId(meta.filter(isSolanaBlockchain)[0].chainId);
-    }
     const network = Networks.SOLANA;
     if (publicKey) {
       const account = publicKey.toString();
-      updateAccounts([account]);
+      updateAccounts([account], network);
     } else {
       connect(network);
     }
@@ -113,11 +100,13 @@ export const canEagerConnect: CanEagerConnect = async ({ instance, meta }) => {
   return Promise.resolve(false);
 };
 
-export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
+export const getWalletInfo: (allBlockChains: BlockchainInfo[]) => WalletInfo = (
   allBlockChains
 ) => {
-  const evms = evmBlockchains(allBlockChains);
-  const solana = solanaBlockchain(allBlockChains);
+  const blockchains = filterBlockchains(allBlockChains, {
+    evm: true,
+    ids: [Networks.SOLANA],
+  });
 
   return {
     name: 'Frontier',
@@ -130,6 +119,6 @@ export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
       DEFAULT: 'https://www.frontier.xyz',
     },
     color: '#4d40c6',
-    supportedChains: [...evms, ...solana],
+    supportedBlockchains: blockchains,
   };
 };

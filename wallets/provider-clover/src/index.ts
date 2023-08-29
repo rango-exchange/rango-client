@@ -1,4 +1,5 @@
 import type {
+  BlockchainInfo,
   CanEagerConnect,
   CanSwitchNetwork,
   Connect,
@@ -7,18 +8,18 @@ import type {
   SwitchNetwork,
   WalletInfo,
 } from '@rango-dev/wallets-shared';
-import type { BlockchainMeta, SignerFactory } from 'rango-types';
+import type { SignerFactory } from 'rango-types';
 
 import {
   canEagerlyConnectToEvm,
   canSwitchNetworkToEvm,
   chooseInstance,
+  filterBlockchains,
   getEvmAccounts,
   Networks,
   switchNetworkForEvm,
   WalletTypes,
 } from '@rango-dev/wallets-shared';
-import { evmBlockchains, isEvmBlockchain, solanaBlockchain } from 'rango-types';
 
 import { clover as clover_instance, getNonEvmAccounts } from './helpers';
 import signer from './signer';
@@ -61,10 +62,7 @@ export const subscribe: Subscribe = ({
   ethInstance?.on('accountsChanged', async (addresses: string[]) => {
     if (state.connected) {
       if (ethInstance) {
-        const eth_chainId = meta
-          .filter(isEvmBlockchain)
-          .find((blockchain) => blockchain.name === Networks.ETHEREUM)?.chainId;
-        updateAccounts(addresses, eth_chainId);
+        updateAccounts(addresses, Networks.ETHEREUM);
       }
       if (solanaInstance) {
         const solanaAccount = await solanaInstance.getAccount();
@@ -98,11 +96,13 @@ export const canEagerConnect: CanEagerConnect = async ({ instance, meta }) => {
   return Promise.resolve(false);
 };
 
-export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
+export const getWalletInfo: (allBlockChains: BlockchainInfo[]) => WalletInfo = (
   allBlockChains
 ) => {
-  const evms = evmBlockchains(allBlockChains);
-  const solana = solanaBlockchain(allBlockChains);
+  const blockchains = filterBlockchains(allBlockChains, {
+    evm: true,
+    ids: [Networks.SOLANA],
+  });
   return {
     name: 'Clover',
     img: 'https://raw.githubusercontent.com/rango-exchange/rango-assets/main/wallets/clover/icon.svg',
@@ -115,6 +115,6 @@ export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
     },
 
     color: '#96e7ed',
-    supportedChains: [...evms, ...solana],
+    supportedBlockchains: blockchains,
   };
 };

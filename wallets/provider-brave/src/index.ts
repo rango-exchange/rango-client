@@ -1,4 +1,5 @@
 import type {
+  BlockchainInfo,
   CanEagerConnect,
   CanSwitchNetwork,
   Connect,
@@ -7,24 +8,19 @@ import type {
   SwitchNetwork,
   WalletInfo,
 } from '@rango-dev/wallets-shared';
-import type { BlockchainMeta, SignerFactory } from 'rango-types';
+import type { SignerFactory } from 'rango-types';
 
 import {
   canEagerlyConnectToEvm,
   canSwitchNetworkToEvm,
   chooseInstance,
+  filterBlockchains,
   getEvmAccounts,
   getSolanaAccounts,
   Networks,
   switchNetworkForEvm,
   WalletTypes,
 } from '@rango-dev/wallets-shared';
-import {
-  evmBlockchains,
-  isEvmBlockchain,
-  isSolanaBlockchain,
-  solanaBlockchain,
-} from 'rango-types';
 
 import { brave as brave_instances } from './helpers';
 import signer from './signer';
@@ -97,14 +93,8 @@ export const subscribe: Subscribe = ({
   const sol_instance = chooseInstance(instance, meta, Networks.SOLANA);
 
   evm_instance?.on('accountsChanged', (addresses: string[]) => {
-    const eth_chainId = meta
-      .filter(isEvmBlockchain)
-      .find((blockchain) => blockchain.name === Networks.ETHEREUM)?.chainId;
     if (state.connected) {
-      if (state.network != Networks.ETHEREUM && eth_chainId) {
-        updateChainId(eth_chainId);
-      }
-      updateAccounts(addresses);
+      updateAccounts(addresses, Networks.ETHEREUM);
     }
   });
 
@@ -113,12 +103,9 @@ export const subscribe: Subscribe = ({
   });
 
   sol_instance?.on('accountChanged', async () => {
-    if (state.network != Networks.SOLANA) {
-      updateChainId(meta.filter(isSolanaBlockchain)[0].chainId);
-    }
     const response = await sol_instance.connect();
     const account: string = response.publicKey.toString();
-    updateAccounts([account]);
+    updateAccounts([account], Networks.SOLANA);
   });
 };
 
@@ -136,11 +123,13 @@ export const canEagerConnect: CanEagerConnect = async ({ instance, meta }) => {
   return Promise.resolve(false);
 };
 
-export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
+export const getWalletInfo: (allBlockChains: BlockchainInfo[]) => WalletInfo = (
   allBlockChains
 ) => {
-  const evms = evmBlockchains(allBlockChains);
-  const solana = solanaBlockchain(allBlockChains);
+  const blockchains = filterBlockchains(allBlockChains, {
+    evm: true,
+    ids: [Networks.SOLANA],
+  });
   return {
     name: 'Brave',
     img: 'https://raw.githubusercontent.com/rango-exchange/rango-assets/main/wallets/brave/icon.svg',
@@ -148,6 +137,6 @@ export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
       DEFAULT: 'https://brave.com/wallet/',
     },
     color: '#ef342f',
-    supportedChains: [...evms, ...solana],
+    supportedBlockchains: blockchains,
   };
 };

@@ -1,15 +1,19 @@
 import type { TonProvider } from './types';
 import type {
+  BlockchainInfo,
   CanEagerConnect,
   CanSwitchNetwork,
   Connect,
   WalletInfo,
 } from '@rango-dev/wallets-shared';
-import type { BlockchainMeta, SignerFactory } from 'rango-types';
+import type { SignerFactory } from 'rango-types';
 
-import { Networks, WalletTypes } from '@rango-dev/wallets-shared';
+import {
+  filterBlockchains,
+  Networks,
+  WalletTypes,
+} from '@rango-dev/wallets-shared';
 import { toUserFriendlyAddress } from '@tonconnect/sdk/';
-import { tonBlockchain } from 'rango-types';
 
 import { TONCONNECT_MANIFEST_URL } from './constants';
 import { myTonWallet as myTonWallet_instance } from './helpers';
@@ -72,10 +76,12 @@ export const canSwitchNetworkTo: CanSwitchNetwork = () => false;
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const getSigners: (provider: any) => SignerFactory = signer;
 
-export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
+export const getWalletInfo: (allBlockChains: BlockchainInfo[]) => WalletInfo = (
   allBlockChains
 ) => {
-  const ton = tonBlockchain(allBlockChains);
+  const blockchains = filterBlockchains(allBlockChains, {
+    ids: [Networks.TON],
+  });
   return {
     name: 'MyTonWallet',
     img: 'https://raw.githubusercontent.com/rango-exchange/rango-assets/main/wallets/mytonwallet/icon.svg',
@@ -85,6 +91,6 @@ export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
       DEFAULT: 'https://mytonwallet.io/',
     },
     color: '#fff',
-    supportedChains: ton,
+    supportedBlockchains: blockchains,
   };
 };

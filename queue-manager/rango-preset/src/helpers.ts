@@ -666,8 +666,8 @@ export async function isNetworkMatchedForTransaction(
   if (!fromBlockChain) return false;
 
   if (
-    meta.evmBasedChains.find(
-      (evmBlochain) => evmBlochain.name === fromBlockChain
+    Object.values(meta.blockchains).find(
+      (blockchain) => blockchain.id === fromBlockChain
     )
   ) {
     try {

@@ -1,4 +1,5 @@
 import type {
+  BlockchainInfo,
   CanEagerConnect,
   CanSwitchNetwork,
   Connect,
@@ -7,18 +8,18 @@ import type {
   SwitchNetwork,
   WalletInfo,
 } from '@rango-dev/wallets-shared';
-import type { BlockchainMeta, SignerFactory } from 'rango-types';
+import type { SignerFactory } from 'rango-types';
 
 import {
   canEagerlyConnectToEvm,
   canSwitchNetworkToEvm,
   chooseInstance,
+  filterBlockchains,
   getEvmAccounts,
   Networks,
   switchNetworkForEvm,
   WalletTypes,
 } from '@rango-dev/wallets-shared';
-import { isEvmBlockchain, isSolanaBlockchain } from 'rango-types';
 
 import {
   exodus_instances,
@@ -61,27 +62,18 @@ export const subscribe: Subscribe = (options) => {
     options.meta,
     Networks.SOLANA
   );
-  const { connect, updateAccounts, state, updateChainId, meta } = options;
+  const { connect, updateAccounts, state } = options;
   ethInstance?.on('accountsChanged', (addresses: string[]) => {
-    const eth_chainId = meta
-      .filter(isEvmBlockchain)
-      .find((blockchain) => blockchain.name === Networks.ETHEREUM)?.chainId;
     if (state.connected) {
-      if (state.network != Networks.ETHEREUM && eth_chainId) {
-        updateChainId(eth_chainId);
-      }
-      updateAccounts(addresses);
+      updateAccounts(addresses, Networks.ETHEREUM);
     }
   });
 
   solanaInstance?.on('accountChanged', async (publicKey: string) => {
-    if (state.network != Networks.SOLANA) {
-      updateChainId(meta.filter(isSolanaBlockchain)[0].chainId);
-    }
     const network = Networks.SOLANA;
     if (publicKey) {
       const account = publicKey.toString();
-      updateAccounts([account]);
+      updateAccounts([account], network);
     } else {
       connect(network);
     }
@@ -112,20 +104,23 @@ export const canEagerConnect: CanEagerConnect = async ({ instance, meta }) => {
   return Promise.resolve(false);
 };
 
-export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
+export const getWalletInfo: (allBlockChains: BlockchainInfo[]) => WalletInfo = (
   allBlockChains
-) => ({
-  name: 'Exodus',
-  img: 'https://raw.githubusercontent.com/rango-exchange/rango-assets/main/wallets/exodus/icon.svg',
-  installLink: {
-    CHROME:
-      'https://chrome.google.com/webstore/detail/exodus-web3-wallet/aholpfdialjgjfhomihkjbmgjidlcdno',
-    BRAVE:
-      'https://chrome.google.com/webstore/detail/exodus-web3-wallet/aholpfdialjgjfhomihkjbmgjidlcdno',
-    DEFAULT: 'https://www.exodus.com/',
-  },
-  color: '#8f70fa',
-  supportedChains: allBlockChains.filter((blockchainMeta) =>
-    EXODUS_WALLET_SUPPORTED_CHAINS.includes(blockchainMeta.name as Networks)
-  ),
-});
+) => {
+  const blockchains = filterBlockchains(allBlockChains, {
+    ids: EXODUS_WALLET_SUPPORTED_CHAINS,
+  });
+  return {
+    name: 'Exodus',
+    img: 'https://raw.githubusercontent.com/rango-exchange/rango-assets/main/wallets/exodus/icon.svg',
+    installLink: {
+      CHROME:
+        'https://chrome.google.com/webstore/detail/exodus-web3-wallet/aholpfdialjgjfhomihkjbmgjidlcdno',
+      BRAVE:
+        'https://chrome.google.com/webstore/detail/exodus-web3-wallet/aholpfdialjgjfhomihkjbmgjidlcdno',
+      DEFAULT: 'https://www.exodus.com/',
+    },
+    color: '#8f70fa',
+    supportedBlockchains: blockchains,
+  };
+};

@@ -1,12 +1,17 @@
-import type { Connect, Subscribe, WalletInfo } from '@rango-dev/wallets-shared';
-import type { BlockchainMeta, SignerFactory } from 'rango-types';
+import type {
+  BlockchainInfo,
+  Connect,
+  Subscribe,
+  WalletInfo,
+} from '@rango-dev/wallets-shared';
+import type { SignerFactory } from 'rango-types';
 
 import {
+  filterBlockchains,
   getCosmosAccounts,
   Networks,
   WalletTypes,
 } from '@rango-dev/wallets-shared';
-import { cosmosBlockchains } from 'rango-types';
 
 import { getSupportedChains, leap_cosmos_instance } from './helpers';
 import signer from './signer';
@@ -23,9 +28,7 @@ export const connect: Connect = async ({ instance, network, meta }) => {
   const supportedChains = await getSupportedChains(instance);
   const leapBlockchainMeta = meta.filter(
     (chain) =>
-      chain.enabled &&
-      (supportedChains.includes(chain.name.toLowerCase()) ||
-        chain.name === network)
+      supportedChains.includes(chain.id.toLowerCase()) || chain.id === network
   );
   const results = await getCosmosAccounts({
     instance,
@@ -43,10 +46,12 @@ export const subscribe: Subscribe = ({ connect, disconnect }) => {
 
 export const getSigners: (provider: any) => SignerFactory = signer;
 
-export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
+export const getWalletInfo: (allBlockChains: BlockchainInfo[]) => WalletInfo = (
   allBlockChains
 ) => {
-  const cosmos = cosmosBlockchains(allBlockChains);
+  const blockchains = filterBlockchains(allBlockChains, {
+    cosmos: true,
+  });
   return {
     name: 'Leap Cosmos',
     img: 'https://raw.githubusercontent.com/rango-exchange/rango-assets/main/wallets/leap-cosmos/icon.svg',
@@ -58,6 +63,6 @@ export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
       DEFAULT: 'https://www.leapwallet.io/cosmos',
     },
     color: 'black',
-    supportedChains: cosmos.filter((blockchainMeta) => !!blockchainMeta.info),
+    supportedBlockchains: blockchains,
   };
 };

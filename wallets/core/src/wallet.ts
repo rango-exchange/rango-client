@@ -4,6 +4,7 @@ import {
   Networks,
   WalletType,
 } from '@rango-dev/wallets-shared';
+import { BlockchainInfo } from 'rango-chains';
 import { accountAddressesWithNetwork, needsCheckInstallation } from './helpers';
 import {
   Events,
@@ -11,14 +12,13 @@ import {
   WalletActions,
   WalletConfig,
 } from './types';
-import { BlockchainMeta } from 'rango-types';
 
 export type EventHandler = (
   type: WalletType,
   event: Events,
   value: any,
   coreState: State,
-  supportedChains: BlockchainMeta[]
+  supportedChains: BlockchainInfo[]
 ) => void;
 
 export interface State {
@@ -39,7 +39,7 @@ class Wallet<InstanceType = any> {
   private actions: WalletActions;
   private state: State;
   private options: Options;
-  private meta: BlockchainMeta[];
+  private meta: BlockchainInfo[];
   public provider: InstanceType | null;
 
   constructor(options: Options, actions: WalletActions) {
@@ -242,7 +242,7 @@ class Wallet<InstanceType = any> {
   getSigners(provider: any) {
     return this.actions.getSigners(provider);
   }
-  getWalletInfo(allBlockChains: BlockchainMeta[]) {
+  getWalletInfo(allBlockChains: BlockchainInfo[]) {
     return this.actions.getWalletInfo(allBlockChains);
   }
   canSwitchNetworkTo(network: Network, provider: any) {
@@ -297,7 +297,7 @@ class Wallet<InstanceType = any> {
     }
   }
 
-  setMeta(value: BlockchainMeta[]) {
+  setMeta(value: BlockchainInfo[]) {
     this.meta = value;
   }
 
@@ -385,7 +385,7 @@ class Wallet<InstanceType = any> {
     force?: boolean;
   }) {
     let instance = null;
-    // For switching network on Trust Wallet (WalletConnect),
+    // For switching network on WalletConnect,
     // We only kill the session (and not restting the whole state)
     // So we are relying on this.provider for achieving this functionality.
     this.setProvider(null);

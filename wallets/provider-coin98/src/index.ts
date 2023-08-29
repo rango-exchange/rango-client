@@ -1,22 +1,23 @@
 import type {
+  BlockchainInfo,
   CanSwitchNetwork,
   Connect,
   Subscribe,
   SwitchNetwork,
   WalletInfo,
 } from '@rango-dev/wallets-shared';
-import type { BlockchainMeta, SignerFactory } from 'rango-types';
+import type { SignerFactory } from 'rango-types';
 
 import {
   canSwitchNetworkToEvm,
   chooseInstance,
+  filterBlockchains,
   getBlockChainNameFromId,
   getEvmAccounts,
   Networks,
   switchNetworkForEvm,
   WalletTypes,
 } from '@rango-dev/wallets-shared';
-import { evmBlockchains, solanaBlockchain } from 'rango-types';
 
 import { coin98 as coin98_instances, getSolanaAccounts } from './helpers';
 import signer from './signer';
@@ -95,11 +96,13 @@ export const canSwitchNetworkTo: CanSwitchNetwork = canSwitchNetworkToEvm;
 
 export const getSigners: (provider: any) => SignerFactory = signer;
 
-export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
+export const getWalletInfo: (allBlockChains: BlockchainInfo[]) => WalletInfo = (
   allBlockChains
 ) => {
-  const evms = evmBlockchains(allBlockChains);
-  const solana = solanaBlockchain(allBlockChains);
+  const blockchains = filterBlockchains(allBlockChains, {
+    evm: true,
+    ids: [Networks.SOLANA],
+  });
   return {
     name: 'Coin98',
     img: 'https://raw.githubusercontent.com/rango-exchange/rango-assets/main/wallets/coin98/icon.svg',
@@ -111,6 +114,6 @@ export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
       DEFAULT: 'https://coin98.com/wallet',
     },
     color: '#1d1c25',
-    supportedChains: [...evms, ...solana],
+    supportedBlockchains: blockchains,
   };
 };

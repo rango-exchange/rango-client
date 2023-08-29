@@ -1,4 +1,5 @@
 import type {
+  BlockchainInfo,
   CanEagerConnect,
   CanSwitchNetwork,
   Connect,
@@ -7,22 +8,22 @@ import type {
   SwitchNetwork,
   WalletInfo,
 } from '@rango-dev/wallets-shared';
-import type { BlockchainMeta, SignerFactory } from 'rango-types';
+import type { SignerFactory } from 'rango-types';
 
 import {
   canEagerlyConnectToEvm,
   canSwitchNetworkToEvm,
   chooseInstance,
+  filterBlockchains,
   getBlockChainNameFromId,
   getEvmAccounts,
   getSolanaAccounts,
   Networks,
   switchNetworkForEvm,
   WalletTypes,
-  XDEFI_WALLET_SUPPORTED_NATIVE_CHAINS,
 } from '@rango-dev/wallets-shared';
 
-import { SUPPORTED_ETH_CHAINS } from './constants';
+import { SUPPORTED_ETH_CHAINS, SUPPORTED_NATIVE_CHAINS } from './constants';
 import { getNonEvmAccounts, xdefi as xdefi_instances } from './helpers';
 import signer from './signer';
 
@@ -93,24 +94,23 @@ export const canEagerConnect: CanEagerConnect = async ({ instance, meta }) => {
   }
   return Promise.resolve(false);
 };
-export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
+export const getWalletInfo: (allBlockChains: BlockchainInfo[]) => WalletInfo = (
   allBlockChains
-) => ({
-  name: 'XDefi',
-  img: 'https://raw.githubusercontent.com/rango-exchange/rango-assets/main/wallets/xdefi/icon.svg',
-  installLink: {
-    CHROME:
-      'https://chrome.google.com/webstore/detail/xdefi-wallet/hmeobnfnfcmdkdcmlblgagmfpfboieaf',
-    BRAVE:
-      'https://chrome.google.com/webstore/detail/xdefi-wallet/hmeobnfnfcmdkdcmlblgagmfpfboieaf',
-    DEFAULT: 'https://xdefi.io/',
-  },
-  color: '#0646c7',
-  supportedChains: allBlockChains.filter((blockchainMeta) =>
-    [
-      ...SUPPORTED_ETH_CHAINS,
-      ...XDEFI_WALLET_SUPPORTED_NATIVE_CHAINS,
-      Networks.SOLANA,
-    ].includes(blockchainMeta.name as Networks)
-  ),
-});
+) => {
+  const blockchains = filterBlockchains(allBlockChains, {
+    ids: [...SUPPORTED_ETH_CHAINS, ...SUPPORTED_NATIVE_CHAINS, Networks.SOLANA],
+  });
+  return {
+    name: 'XDefi',
+    img: 'https://raw.githubusercontent.com/rango-exchange/rango-assets/main/wallets/xdefi/icon.svg',
+    installLink: {
+      CHROME:
+        'https://chrome.google.com/webstore/detail/xdefi-wallet/hmeobnfnfcmdkdcmlblgagmfpfboieaf',
+      BRAVE:
+        'https://chrome.google.com/webstore/detail/xdefi-wallet/hmeobnfnfcmdkdcmlblgagmfpfboieaf',
+      DEFAULT: 'https://xdefi.io/',
+    },
+    color: '#0646c7',
+    supportedBlockchains: blockchains,
+  };
+};

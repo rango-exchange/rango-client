@@ -39,6 +39,7 @@ import { ConfirmSwapErrors } from '../components/ConfirmSwapErrors';
 import { ConfirmSwapWarnings } from '../components/ConfirmSwapWarnings';
 import { HIGH_SLIPPAGE } from '../constants/swapSettings';
 import { getBestRouteStatus } from '../utils/routing';
+import { CosmosBlockchainInfo, blockchainMetaStd } from 'rango-chains';
 
 export function ConfirmSwapPage({
   customDestinationEnabled,
@@ -175,9 +176,14 @@ export function ConfirmSwapPage({
         )
       }
       handleConnectChain={(wallet) => handleConnectChain(wallet)}
-      isExperimentalChain={(wallet) =>
+      isExperimentalChain={(chain) =>
         getKeplrCompatibleConnectedWallets(selectableWallets).length > 0
-          ? isExperimentalChain(blockchains, wallet)
+          ? isExperimentalChain(
+              blockchainMetaStd(blockchains).filter(
+                (it): it is CosmosBlockchainInfo => it.type === 'COSMOS'
+              ),
+              chain
+            )
           : false
       }
       previewInputs={

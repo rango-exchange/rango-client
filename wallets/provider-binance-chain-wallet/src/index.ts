@@ -1,17 +1,18 @@
 import type {
+  BlockchainInfo,
   CanSwitchNetwork,
   Connect,
   Subscribe,
   WalletInfo,
 } from '@rango-dev/wallets-shared';
-import type { BlockchainMeta, SignerFactory } from 'rango-types';
+import type { SignerFactory } from 'rango-types';
 
 import {
+  filterBlockchains,
   getEvmAccounts,
   Networks,
   WalletTypes,
 } from '@rango-dev/wallets-shared';
-import { isEvmBlockchain } from 'rango-types';
 
 import {
   accountsForActiveWallet,
@@ -54,8 +55,8 @@ export const subscribe: Subscribe = ({
 
       for (const account of accounts) {
         const chainId = meta
-          .filter(isEvmBlockchain)
-          .find((blockchain) => blockchain.name === account.chainId)?.chainId;
+          .filter((blockchain) => blockchain.type === 'EVM')
+          .find((blockchain) => blockchain.id === account.chainId)?.chainId;
         const finalChainId = chainId || account.chainId; // use network instead of chain id when it's null
         if (finalChainId && account.accounts) {
           updateAccounts(account.accounts, finalChainId);
@@ -72,23 +73,24 @@ export const canSwitchNetworkTo: CanSwitchNetwork = () => false;
 
 export const getSigners: (provider: any) => SignerFactory = signer;
 
-export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
+export const getWalletInfo: (allBlockChains: BlockchainInfo[]) => WalletInfo = (
   allBlockChains
-) => ({
-  name: 'Binance',
-  img: 'https://raw.githubusercontent.com/rango-exchange/rango-assets/main/wallets/binance/icon.svg',
-  installLink: {
-    CHROME:
-      'https://chrome.google.com/webstore/detail/binance-chain-wallet/fhbohimaelbohpjbbldcngcnapndodjp',
-    BRAVE:
-      'https://chrome.google.com/webstore/detail/binance-chain-wallet/fhbohimaelbohpjbbldcngcnapndodjp',
-    FIREFOX: 'https://addons.mozilla.org/en-US/firefox/addon/binance-chain',
-    DEFAULT: 'https://www.bnbchain.org/en',
-  },
-  color: '#2b2e35',
-  supportedChains: allBlockChains.filter((blockchainMeta) =>
-    BINANCE_CHAIN_WALLET_SUPPORTED_CHAINS.includes(
-      blockchainMeta.name as Networks
-    )
-  ),
-});
+) => {
+  const blockchains = filterBlockchains(allBlockChains, {
+    ids: BINANCE_CHAIN_WALLET_SUPPORTED_CHAINS,
+  });
+  return {
+    name: 'Binance',
+    img: 'https://raw.githubusercontent.com/rango-exchange/rango-assets/main/wallets/binance/icon.svg',
+    installLink: {
+      CHROME:
+        'https://chrome.google.com/webstore/detail/binance-chain-wallet/fhbohimaelbohpjbbldcngcnapndodjp',
+      BRAVE:
+        'https://chrome.google.com/webstore/detail/binance-chain-wallet/fhbohimaelbohpjbbldcngcnapndodjp',
+      FIREFOX: 'https://addons.mozilla.org/en-US/firefox/addon/binance-chain',
+      DEFAULT: 'https://www.bnbchain.org/en',
+    },
+    color: '#2b2e35',
+    supportedBlockchains: blockchains,
+  };
+};

@@ -1,22 +1,55 @@
-import type { EvmBlockchainMeta } from 'rango-types';
-import {
-  EvmNetworksChainInfo,
+import type {
   AddEthereumChainParameter,
-  Network,
-  Networks,
   Connect,
-  Wallet,
+  EvmNetworksChainInfo,
   InstallObjects,
+  Network,
+  Wallet,
 } from './rango';
+import type {
+  BlockchainInfo,
+  CosmosBlockchainInfo,
+  EVMBlockchainInfo,
+} from 'rango-chains';
+
+import { Networks } from './rango';
+
+export type { BlockchainInfo, EvmNetworksChainInfo, CosmosBlockchainInfo };
 
 export { isAddress as isEvmAddress } from 'ethers/lib/utils.js';
+
+export type FilterBlockchainsParams = {
+  evm?: boolean;
+  cosmos?: boolean;
+  ids?: string[];
+};
+
+export const filterBlockchains = (
+  blockchains: BlockchainInfo[],
+  filters: FilterBlockchainsParams
+): BlockchainInfo[] => {
+  const { evm, cosmos, ids } = filters;
+  let result: BlockchainInfo[] = [];
+  if (evm) {
+    result = [...result, ...blockchains.filter((it) => it.type === 'EVM')];
+  }
+  if (cosmos) {
+    result = [...result, ...blockchains.filter((it) => it.type === 'COSMOS')];
+  }
+  if (ids) {
+    blockchains.filter((blockchain) => ids.includes(blockchain.id));
+  }
+  return result;
+};
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function deepCopy(obj: any): any {
   let copy;
 
   // Handle the 3 simple types, and null or undefined
-  if (null == obj || 'object' != typeof obj) return obj;
+  if (null == obj || 'object' != typeof obj) {
+    return obj;
+  }
 
   // Handle Date
   if (obj instanceof Date) {
@@ -38,8 +71,9 @@ export function deepCopy(obj: any): any {
   if (obj instanceof Object) {
     copy = {} as any;
     for (const attr in obj) {
-      if (Object.prototype.hasOwnProperty.call(obj, attr))
+      if (Object.prototype.hasOwnProperty.call(obj, attr)) {
         copy[attr] = deepCopy(obj[attr]);
+      }
     }
     return copy;
   }
@@ -61,8 +95,10 @@ export async function switchOrAddNetworkForMetamaskCompatibleWallets(
     });
   } catch (switchError) {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    // To resolve this error: Catch clause variable type annotation must be any or unknown if specified
+    /*
+     * @ts-ignore
+     * To resolve this error: Catch clause variable type annotation must be any or unknown if specified
+     */
     const error = switchError as { code: number };
 
     if (!targetChain) {
@@ -70,8 +106,10 @@ export async function switchOrAddNetworkForMetamaskCompatibleWallets(
         `It seems you don't have ${network} network on your wallet. Please add it manually.`
       );
     } else if (error.code === 4902 || !error.code) {
-      // Note: on WalletConnect `code` is undefined so we have to use !switchError.code as fallback.
-      // This error code indicates that the chain has not been added to wallet.
+      /*
+       * Note: on WalletConnect `code` is undefined so we have to use !switchError.code as fallback.
+       * This error code indicates that the chain has not been added to wallet.
+       */
       await instance.request({
         method: 'wallet_addEthereumChain',
         params: [targetChain],
@@ -81,7 +119,7 @@ export async function switchOrAddNetworkForMetamaskCompatibleWallets(
   }
 }
 
-export function timeout<T = any>(
+export async function timeout<T = any>(
   forPromise: Promise<any>,
   time: number
 ): Promise<T> {
@@ -95,24 +133,28 @@ export function timeout<T = any>(
 }
 
 export const convertEvmBlockchainMetaToEvmChainInfo = (
-  evmBlockchains: EvmBlockchainMeta[]
+  evmBlockchains: BlockchainInfo[]
 ) =>
-  evmBlockchains.reduce(
-    (
-      evmNetWorksChainInfo: { [key: string]: AddEthereumChainParameter },
-      blockchainMeta
-    ) => (
-      (evmNetWorksChainInfo[blockchainMeta.name] = {
-        chainName: blockchainMeta.info.chainName,
-        chainId: blockchainMeta.chainId,
-        nativeCurrency: blockchainMeta.info.nativeCurrency,
-        rpcUrls: blockchainMeta.info.rpcUrls,
-        blockExplorerUrls: blockchainMeta.info.blockExplorerUrls,
-      }),
-      evmNetWorksChainInfo
-    ),
-    {}
-  );
+  evmBlockchains
+    .filter((it): it is EVMBlockchainInfo => it.type === 'EVM')
+    .reduce(
+      (
+        evmNetWorksChainInfo: { [key: string]: AddEthereumChainParameter },
+        blockchainInfo
+      ) => (
+        (evmNetWorksChainInfo[blockchainInfo.id] = {
+          chainName: blockchainInfo.manifest.name,
+          chainId: blockchainInfo.manifest.chainId,
+          nativeCurrency: blockchainInfo.manifest.nativeCurrency,
+          rpcUrls: blockchainInfo.manifest.rpc,
+          blockExplorerUrls: blockchainInfo.manifest.explorers.map(
+            (it) => it.url
+          ),
+        }),
+        evmNetWorksChainInfo
+      ),
+      {}
+    );
 
 export const evmChainsToRpcMap = (
   evmNetworkChainInfo: EvmNetworksChainInfo
@@ -122,9 +164,11 @@ export const evmChainsToRpcMap = (
       Object.keys(evmNetworkChainInfo).map((chainName) => {
         const info = evmNetworkChainInfo[chainName];
 
-        // This `if` is only used for satisfying typescript,
-        // Because we iterating over Object.keys(EVM_NETWORKS_CHAIN_INFO)
-        // And obviously it cannot be `undefined` and always has a value.
+        /*
+         * This `if` is only used for satisfying typescript,
+         * Because we iterating over Object.keys(EVM_NETWORKS_CHAIN_INFO)
+         * And obviously it cannot be `undefined` and always has a value.
+         */
         if (info) {
           return [parseInt(info.chainId), info.rpcUrls[0]];
         }
@@ -166,12 +210,17 @@ export function getCoinbaseInstance(
       instances.set(Networks.ETHEREUM, ethInstance);
     }
   }
-  if (!!coinbaseSolana && lookingFor === 'coinbase')
+  if (!!coinbaseSolana && lookingFor === 'coinbase') {
     instances.set(Networks.SOLANA, coinbaseSolana);
+  }
 
-  if (instances.size === 0) return null;
+  if (instances.size === 0) {
+    return null;
+  }
 
-  if (lookingFor === 'metamask') return instances.get(Networks.ETHEREUM);
+  if (lookingFor === 'metamask') {
+    return instances.get(Networks.ETHEREUM);
+  }
 
   return instances;
 }
@@ -189,7 +238,9 @@ function isBrave() {
   const nav: any = navigator;
   if (nav.brave && nav.brave.isBrave) {
     nav.brave.isBrave().then((res: boolean) => {
-      if (res) isBrave = true;
+      if (res) {
+        isBrave = true;
+      }
     });
   }
 
@@ -199,19 +250,18 @@ function isBrave() {
 export function detectInstallLink(install: InstallObjects | string): string {
   if (typeof install !== 'object') {
     return install;
-  } else {
-    let link;
-    if (isBrave()) {
-      link = install.BRAVE;
-    } else if (navigator.userAgent?.toLowerCase().indexOf('chrome') !== -1) {
-      link = install.CHROME;
-    } else if (navigator.userAgent?.toLowerCase().indexOf('firefox') !== -1) {
-      link = install.FIREFOX;
-    } else if (navigator.userAgent?.toLowerCase().indexOf('edge') !== -1) {
-      link = install.EDGE;
-    }
-    return link || install.DEFAULT;
   }
+  let link;
+  if (isBrave()) {
+    link = install.BRAVE;
+  } else if (navigator.userAgent?.toLowerCase().indexOf('chrome') !== -1) {
+    link = install.CHROME;
+  } else if (navigator.userAgent?.toLowerCase().indexOf('firefox') !== -1) {
+    link = install.FIREFOX;
+  } else if (navigator.userAgent?.toLowerCase().indexOf('edge') !== -1) {
+    link = install.EDGE;
+  }
+  return link || install.DEFAULT;
 }
 
 export function detectMobileScreens(): boolean {

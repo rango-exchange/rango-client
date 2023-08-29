@@ -1,28 +1,29 @@
-import {
-  Networks,
-  WalletTypes,
+import type {
+  BlockchainInfo,
+  CanEagerConnect,
   CanSwitchNetwork,
   Connect,
   ProviderConnectResult,
   Subscribe,
-  chooseInstance,
-  getEvmAccounts,
-  subscribeToEvm,
   WalletInfo,
-  CanEagerConnect,
-  canEagerlyConnectToEvm,
 } from '@rango-dev/wallets-shared';
+import type { SignerFactory } from 'rango-types';
+
+import {
+  canEagerlyConnectToEvm,
+  chooseInstance,
+  filterBlockchains,
+  getEvmAccounts,
+  Networks,
+  subscribeToEvm,
+  WalletTypes,
+} from '@rango-dev/wallets-shared';
+
 import {
   getNonEvmAccounts,
   mathWallet as mathWallet_instance,
 } from './helpers';
 import signer from './signer';
-import {
-  SignerFactory,
-  evmBlockchains,
-  solanaBlockchain,
-  BlockchainMeta,
-} from 'rango-types';
 
 const WALLET = WalletTypes.MATH;
 
@@ -64,17 +65,20 @@ export const canSwitchNetworkTo: CanSwitchNetwork = () => false;
 
 export const getSigners: (provider: any) => SignerFactory = signer;
 
-export const canEagerConnect: CanEagerConnect = ({ instance, meta }) => {
+export const canEagerConnect: CanEagerConnect = async ({ instance, meta }) => {
   const evm_instance = chooseInstance(instance, meta, Networks.ETHEREUM);
   if (evm_instance) {
     return canEagerlyConnectToEvm({ instance: evm_instance, meta });
-  } else return Promise.resolve(false);
+  }
+  return Promise.resolve(false);
 };
-export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
+export const getWalletInfo: (allBlockChains: BlockchainInfo[]) => WalletInfo = (
   allBlockChains
 ) => {
-  const evms = evmBlockchains(allBlockChains);
-  const solana = solanaBlockchain(allBlockChains);
+  const blockchains = filterBlockchains(allBlockChains, {
+    evm: true,
+    ids: [Networks.SOLANA],
+  });
   return {
     name: 'Math Wallet',
     img: 'https://raw.githubusercontent.com/rango-exchange/rango-assets/main/wallets/math/icon.svg',
@@ -86,6 +90,6 @@ export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
       DEFAULT: 'https://mathwallet.org/en-us/',
     },
     color: '#2b2f25',
-    supportedChains: [...evms, ...solana],
+    supportedBlockchains: blockchains,
   };
 };

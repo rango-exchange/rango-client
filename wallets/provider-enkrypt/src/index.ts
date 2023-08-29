@@ -1,4 +1,5 @@
 import type {
+  BlockchainInfo,
   CanEagerConnect,
   CanSwitchNetwork,
   Connect,
@@ -6,17 +7,17 @@ import type {
   SwitchNetwork,
   WalletInfo,
 } from '@rango-dev/wallets-shared';
-import type { BlockchainMeta, SignerFactory } from 'rango-types';
+import type { SignerFactory } from 'rango-types';
 
 import {
   canEagerlyConnectToEvm,
   canSwitchNetworkToEvm,
+  filterBlockchains,
   getEvmAccounts,
   subscribeToEvm,
   switchNetworkForEvm,
   WalletTypes,
 } from '@rango-dev/wallets-shared';
-import { evmBlockchains } from 'rango-types';
 
 import { enkrypt as enkrypt_instance } from './helpers';
 import signer from './signer';
@@ -53,10 +54,12 @@ export const getSigners: (provider: any) => SignerFactory = signer;
 
 export const canEagerConnect: CanEagerConnect = canEagerlyConnectToEvm;
 
-export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
+export const getWalletInfo: (allBlockChains: BlockchainInfo[]) => WalletInfo = (
   allBlockChains
 ) => {
-  const evms = evmBlockchains(allBlockChains);
+  const blockchains = filterBlockchains(allBlockChains, {
+    evm: true,
+  });
   return {
     name: 'Enkrypt',
     img: 'https://raw.githubusercontent.com/rango-exchange/rango-assets/main/wallets/enkrypt/icon.svg',
@@ -71,6 +74,6 @@ export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
       DEFAULT: 'https://www.enkrypt.com/',
     },
     color: '#fff',
-    supportedChains: evms,
+    supportedBlockchains: blockchains,
   };
 };

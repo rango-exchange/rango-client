@@ -1,17 +1,18 @@
 import type {
+  BlockchainInfo,
   CanEagerConnect,
   CanSwitchNetwork,
   Connect,
-  Networks,
   Subscribe,
   SwitchNetwork,
   WalletInfo,
 } from '@rango-dev/wallets-shared';
-import type { BlockchainMeta, SignerFactory } from 'rango-types';
+import type { SignerFactory } from 'rango-types';
 
 import {
   canEagerlyConnectToEvm,
   canSwitchNetworkToEvm,
+  filterBlockchains,
   getEvmAccounts,
   subscribeToEvm,
   switchNetworkForEvm,
@@ -50,9 +51,12 @@ export const getSigners: (provider: any) => SignerFactory = signer;
 
 export const canEagerConnect: CanEagerConnect = canEagerlyConnectToEvm;
 
-export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
+export const getWalletInfo: (allBlockChains: BlockchainInfo[]) => WalletInfo = (
   allBlockChains
 ) => {
+  const blockchains = filterBlockchains(allBlockChains, {
+    ids: TAHO_WALLET_SUPPORTED_CHAINS,
+  });
   return {
     name: 'Taho',
     img: 'https://raw.githubusercontent.com/rango-exchange/rango-assets/main/wallets/taho/icon.svg',
@@ -64,8 +68,6 @@ export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
       DEFAULT: 'https://taho.xyz',
     },
     color: '#ffffff',
-    supportedChains: allBlockChains.filter((blockchainMeta) =>
-      TAHO_WALLET_SUPPORTED_CHAINS.includes(blockchainMeta.name as Networks)
-    ),
+    supportedBlockchains: blockchains,
   };
 };

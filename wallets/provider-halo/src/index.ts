@@ -1,15 +1,16 @@
 import type {
+  BlockchainInfo,
   CanSwitchNetwork,
   Connect,
-  Networks,
   Subscribe,
   SwitchNetwork,
   WalletInfo,
 } from '@rango-dev/wallets-shared';
-import type { BlockchainMeta, SignerFactory } from 'rango-types';
+import type { SignerFactory } from 'rango-types';
 
 import {
   canSwitchNetworkToEvm,
+  filterBlockchains,
   getEvmAccounts,
   subscribeToEvm,
   switchNetworkForEvm,
@@ -52,9 +53,12 @@ export const canSwitchNetworkTo: CanSwitchNetwork = canSwitchNetworkToEvm;
 
 export const getSigners: (provider: any) => SignerFactory = signer;
 
-export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
+export const getWalletInfo: (allBlockChains: BlockchainInfo[]) => WalletInfo = (
   allBlockChains
 ) => {
+  const blockchains = filterBlockchains(allBlockChains, {
+    ids: HALO_WALLET_SUPPORTED_CHAINS,
+  });
   return {
     name: 'Halo',
     img: 'https://raw.githubusercontent.com/rango-exchange/rango-assets/main/wallets/halo/icon.svg',
@@ -66,8 +70,6 @@ export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
         'https://chrome.google.com/webstore/detail/halo-wallet/nbdpmlhambbdkhkmbfpljckjcmgibalo',
       DEFAULT: 'https://halo.social/',
     },
-    supportedChains: allBlockChains.filter((blockchainMeta) =>
-      HALO_WALLET_SUPPORTED_CHAINS.includes(blockchainMeta.name as Networks)
-    ),
+    supportedBlockchains: blockchains,
   };
 };

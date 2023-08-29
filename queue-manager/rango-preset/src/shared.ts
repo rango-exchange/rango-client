@@ -1,4 +1,4 @@
-import { Network, WalletType } from '@rango-dev/wallets-shared';
+import { BlockchainInfo, Network, WalletType } from '@rango-dev/wallets-shared';
 import {
   CosmosTransaction,
   EvmTransaction,
@@ -12,19 +12,12 @@ import {
   MetaResponse,
   Token,
   SwapResult,
-  BlockchainMeta,
 } from 'rango-sdk';
 
 import { PrettyError } from './shared-errors';
 import BigNumber from 'bignumber.js';
 import { numberToString } from './numbers';
-import {
-  TonTransaction,
-  isCosmosBlockchain,
-  isEvmBlockchain,
-  isStarknetBlockchain,
-  isTronBlockchain,
-} from 'rango-types';
+import { TonTransaction } from 'rango-types';
 
 export interface PendingSwapWithQueueID {
   id: string;
@@ -254,27 +247,13 @@ export const getCurrentBlockchainOf = (
   return blockchain;
 };
 
-const getBlockchainMetaExplorerBaseUrl = (
-  blockchainMeta: BlockchainMeta
-): string | undefined => {
-  if (isCosmosBlockchain(blockchainMeta))
-    return blockchainMeta.info?.explorerUrlToTx;
-  else if (
-    isEvmBlockchain(blockchainMeta) ||
-    isStarknetBlockchain(blockchainMeta) ||
-    isTronBlockchain(blockchainMeta)
-  )
-    return blockchainMeta.info.transactionUrl;
-  return;
-};
-
 export const getScannerUrl = (
   txHash: string,
   network: Network,
-  blockchainMetaMap: { [key: string]: BlockchainMeta }
+  blockchainMetaMap: { [key: string]: BlockchainInfo }
 ): string | undefined => {
   const blockchainMeta = blockchainMetaMap[network];
-  const baseUrl = getBlockchainMetaExplorerBaseUrl(blockchainMeta);
+  const baseUrl = blockchainMeta.transactionUrl;
   if (!baseUrl) return;
   if (baseUrl.indexOf('/{txHash}') !== -1)
     return baseUrl.replace('{txHash}', txHash?.toLowerCase());

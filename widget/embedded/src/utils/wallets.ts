@@ -9,6 +9,8 @@ import {
   WalletInfo,
   WalletTypes,
   Networks,
+  BlockchainInfo,
+  CosmosBlockchainInfo,
 } from '@rango-dev/wallets-shared';
 
 import {
@@ -22,7 +24,6 @@ import {
   Token,
   WalletDetail,
 } from 'rango-sdk';
-import { isCosmosBlockchain } from 'rango-types';
 import { readAccountAddress } from '@rango-dev/wallets-react';
 import { ConnectedWallet, TokenBalance } from '../store/wallets';
 import { numberToString } from './numbers';
@@ -73,12 +74,12 @@ export function getlistWallet(
 }
 
 export function walletAndSupportedChainsNames(
-  supportedChains: BlockchainMeta[]
+  supportedChains: BlockchainInfo[]
 ): Network[] | null {
   if (!supportedChains) return null;
   let walletAndSupportedChainsNames: Network[] = [];
   walletAndSupportedChainsNames = supportedChains.map(
-    (blockchainMeta) => blockchainMeta.name
+    (blockchainMeta) => blockchainMeta.id
   );
 
   return walletAndSupportedChainsNames;
@@ -390,15 +391,12 @@ export const getUsdPrice = (
   return token?.usdPrice || null;
 };
 export const isExperimentalChain = (
-  blockchains: BlockchainMeta[],
-  wallet: string
+  blockchains: CosmosBlockchainInfo[],
+  network: string
 ): boolean => {
-  const cosmosExperimentalChainInfo = getCosmosExperimentalChainInfo(
-    Object.entries(blockchains)
-      .map(([, blockchainMeta]) => blockchainMeta)
-      .filter(isCosmosBlockchain)
-  );
-  return cosmosExperimentalChainInfo && !!cosmosExperimentalChainInfo[wallet];
+  const cosmosExperimentalChainInfo =
+    getCosmosExperimentalChainInfo(blockchains);
+  return cosmosExperimentalChainInfo && !!cosmosExperimentalChainInfo[network];
 };
 
 export const getKeplrCompatibleConnectedWallets = (

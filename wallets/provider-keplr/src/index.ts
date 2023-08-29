@@ -1,12 +1,17 @@
-import type { Connect, Subscribe, WalletInfo } from '@rango-dev/wallets-shared';
-import type { BlockchainMeta, SignerFactory } from 'rango-types';
+import type {
+  BlockchainInfo,
+  Connect,
+  Subscribe,
+  WalletInfo,
+} from '@rango-dev/wallets-shared';
+import type { SignerFactory } from 'rango-types';
 
 import {
+  filterBlockchains,
   getCosmosAccounts,
   Networks,
   WalletTypes,
 } from '@rango-dev/wallets-shared';
-import { cosmosBlockchains } from 'rango-types';
 
 import { keplr as keplrInstance } from './helpers';
 import signer from './signer';
@@ -37,10 +42,12 @@ export const subscribe: Subscribe = ({ connect, disconnect }) => {
 
 export const getSigners: (provider: any) => SignerFactory = signer;
 
-export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
+export const getWalletInfo: (allBlockChains: BlockchainInfo[]) => WalletInfo = (
   allBlockChains
 ) => {
-  const cosmos = cosmosBlockchains(allBlockChains);
+  const blockchains = filterBlockchains(allBlockChains, {
+    cosmos: true,
+  });
   return {
     name: 'Keplr',
     img: 'https://raw.githubusercontent.com/rango-exchange/rango-assets/main/wallets/keplr/icon.svg',
@@ -53,6 +60,6 @@ export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
       DEFAULT: 'https://www.keplr.app',
     },
     color: '#3898e5',
-    supportedChains: cosmos.filter((blockchainMeta) => !!blockchainMeta.info),
+    supportedBlockchains: blockchains,
   };
 };

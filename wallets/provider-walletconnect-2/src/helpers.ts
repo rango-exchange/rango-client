@@ -1,12 +1,9 @@
-import type { CosmosMeta } from './types';
-import type { WalletState } from '@rango-dev/wallets-shared';
+import type { BlockchainInfo, WalletState } from '@rango-dev/wallets-shared';
 import type { ProposalTypes } from '@walletconnect/types';
-import type { BlockchainMeta } from 'rango-types';
 
-import { Networks } from '@rango-dev/wallets-shared';
+import { filterBlockchains, Networks } from '@rango-dev/wallets-shared';
 import { WalletConnectModal } from '@walletconnect/modal';
 import { ChainId } from 'caip';
-import { cosmosBlockchains, evmBlockchains } from 'rango-types';
 
 import {
   DEFAULT_COSMOS_METHODS,
@@ -39,14 +36,14 @@ type FinalNamespaces = {
 };
 
 export function generateRequiredNamespace(
-  meta: BlockchainMeta[],
+  meta: BlockchainInfo[],
   network: string
 ): FinalNamespaces | undefined {
-  const evm = evmBlockchains(meta);
-  const cosmos = cosmosBlockchains(meta);
+  const evm = filterBlockchains(meta, { evm: true });
+  const cosmos = filterBlockchains(meta, { cosmos: true });
 
-  const requiredEvmChain = evm.find((chain) => chain.name === network);
-  const requiredCosmosChain = cosmos.find((chain) => chain.name === network);
+  const requiredEvmChain = evm.find((chain) => chain.id === network);
+  const requiredCosmosChain = cosmos.find((chain) => chain.id === network);
   const requiredSolanaChain = network === Networks.SOLANA;
 
   if (requiredEvmChain) {
@@ -57,7 +54,7 @@ export function generateRequiredNamespace(
         chains: [
           new ChainId({
             namespace: NAMESPACES.ETHEREUM,
-            reference: String(parseInt(requiredEvmChain.chainId)),
+            reference: String(parseInt(requiredEvmChain.chainId!)),
           }).toString(),
         ],
       },
@@ -89,22 +86,22 @@ export function generateRequiredNamespace(
 }
 
 export function generateOptionalNamespace(
-  meta: BlockchainMeta[]
+  meta: BlockchainInfo[]
 ): FinalNamespaces | undefined {
-  const evm = evmBlockchains(meta);
-  const cosmos = cosmosBlockchains(meta);
+  const evm = filterBlockchains(meta, { evm: true });
+  const cosmos = filterBlockchains(meta, { cosmos: true });
   const evmChains = evm.map((chain) => {
     return new ChainId({
       namespace: NAMESPACES.ETHEREUM,
-      reference: String(parseInt(chain.chainId)),
+      reference: String(parseInt(chain.chainId!)),
     }).toString();
   });
   const cosmosChains = cosmos
-    .filter((chain): chain is CosmosMeta => !!chain.chainId)
+    .filter((chain) => !!chain.chainId)
     .map((chain) => {
       return new ChainId({
         namespace: NAMESPACES.COSMOS,
-        reference: chain.chainId,
+        reference: chain.chainId!,
       }).toString();
     });
 
@@ -145,7 +142,7 @@ export function solanaChainIdToNetworkName(chainId: string): string {
 export async function simulateRequest(
   params: any,
   provider: any,
-  meta: BlockchainMeta[],
+  meta: BlockchainInfo[],
   getState: () => WalletState
 ) {
   if (params.method === 'eth_chainId') {
@@ -178,11 +175,9 @@ export async function simulateRequest(
 
 export function getChainIdByNetworkName(
   network: string,
-  meta: BlockchainMeta[]
+  meta: BlockchainInfo[]
 ): string | undefined {
-  const targetBlockchain = meta.find(
-    (blockchain) => blockchain.name === network
-  );
+  const targetBlockchain = meta.find((blockchain) => blockchain.id === network);
   const chainIdInHex = targetBlockchain?.chainId;
   if (!chainIdInHex) {
     return undefined;
