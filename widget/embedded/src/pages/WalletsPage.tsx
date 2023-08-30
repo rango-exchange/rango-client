@@ -4,8 +4,6 @@ import type { WalletType } from '@rango-dev/wallets-shared';
 
 import { i18n } from '@lingui/core';
 import {
-  Alert,
-  Divider,
   LoadingFailedAlert,
   Spinner,
   styled,
@@ -13,11 +11,12 @@ import {
   Wallet,
   WalletState,
 } from '@rango-dev/ui';
-import React, { useEffect, useRef, useState } from 'react';
-import { WalletTypes } from '@rango-dev/wallets-shared';
 import { useWallets } from '@rango-dev/wallets-react';
+import { WalletTypes } from '@rango-dev/wallets-shared';
+import React, { Fragment, useEffect, useRef, useState } from 'react';
 
 import { Layout } from '../components/Layout';
+import { WalletModal } from '../components/WalletModal';
 import { navigationRoutes } from '../constants/navigationRoutes';
 import { useNavigateBack } from '../hooks/useNavigateBack';
 import { useMetaStore } from '../store/meta';
@@ -54,6 +53,7 @@ const Container = styled('div', {
 });
 
 const ALL_SUPPORTED_WALLETS = Object.values(WalletTypes);
+const TIME_TO_CLOSE_MODAL = 3_000;
 
 export function WalletsPage({
   supportedWallets,
@@ -62,6 +62,8 @@ export function WalletsPage({
 }: PropTypes) {
   const { navigateBackFrom } = useNavigateBack();
   const { state, disconnect, getWalletInfo, connect } = useWallets();
+  const [openModal, setOpenModal] = useState<WalletType>('');
+  const [hasError, setHasError] = useState(false);
   const wallets = getlistWallet(
     state,
     getWalletInfo,
@@ -72,7 +74,6 @@ export function WalletsPage({
   const walletsRef = useRef<WalletInfo[]>();
 
   const sortedWallets = sortWalletsBasedOnState(wallets);
-  const [walletErrorMessage, setWalletErrorMessage] = useState('');
   const toggleConnectWalletsButton =
     useUiStore.use.toggleConnectWalletsButton();
   const loadingMetaStatus = useMetaStore.use.loadingStatus();
@@ -80,9 +81,7 @@ export function WalletsPage({
   const onSelectWallet = async (type: WalletType) => {
     const wallet = state(type);
     try {
-      if (walletErrorMessage) {
-        setWalletErrorMessage('');
-      }
+      setHasError(false);
       if (wallet.connected) {
         await disconnect(type);
       } else {
@@ -92,10 +91,14 @@ export function WalletsPage({
         ) {
           return;
         }
+        setOpenModal(type);
         await connect(type);
+        setTimeout(() => {
+          setOpenModal('');
+        }, TIME_TO_CLOSE_MODAL);
       }
     } catch (e) {
-      setWalletErrorMessage('Error: ' + (e as any)?.message);
+      setHasError(true);
     }
   };
   const disconnectConnectingWallets = () => {
@@ -126,12 +129,6 @@ export function WalletsPage({
         onBack: navigateBackFrom.bind(null, navigationRoutes.wallets),
       }}>
       <Container>
-        {walletErrorMessage && (
-          <>
-            <Alert type="error" title={walletErrorMessage} />
-            <Divider direction="vertical" size={16} />
-          </>
-        )}
         {loadingMetaStatus === 'loading' && (
           <LoaderContainer className="loader">
             <Spinner size={24} />
@@ -139,20 +136,30 @@ export function WalletsPage({
         )}
         {loadingMetaStatus === 'failed' && <LoadingFailedAlert />}
         <Typography variant="title" size="xmedium" align="center">
-          Choose a wallet to connect.
+          {i18n.t('Choose a wallet to connect.')}
         </Typography>
         <ListContainer>
           {loadingMetaStatus === 'success' &&
             sortedWallets.map((wallet, index) => {
               const key = `wallet-${index}-${wallet.type}`;
               return (
-                <Wallet
-                  {...wallet}
-                  key={key}
-                  onClick={(type) => {
-                    void onSelectWallet(type);
-                  }}
-                />
+                <Fragment key={key}>
+                  <Wallet
+                    {...wallet}
+                    onClick={(type) => {
+                      void onSelectWallet(type);
+                    }}
+                  />
+                  {openModal === wallet.type && (
+                    <WalletModal
+                      open={openModal === wallet.type}
+                      onClose={() => setOpenModal('')}
+                      image={wallet.image}
+                      state={wallet.state}
+                      error={hasError}
+                    />
+                  )}
+                </Fragment>
               );
             })}
         </ListContainer>
