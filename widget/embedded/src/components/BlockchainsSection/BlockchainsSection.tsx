@@ -56,7 +56,7 @@ export function BlockchainsSection(props: PropTypes) {
 
             <BlockchainsChip onClick={onMoreClick}>
               <Typography variant="body" size="xsmall" color="secondary">
-                {i18n.t(`More +${blockchains.length - 10}`)}
+                {i18n._('More +{count}', { count: blockchains.length - 10 })}
               </Typography>
             </BlockchainsChip>
           </>

@@ -248,9 +248,34 @@ msgstr "Insufficent Balance:"
 #~ msgstr "Swap"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/WalletsPage.tsx:139
-#~ msgid "Choose a wallet to connect."
-#~ msgstr "Choose a wallet to connect."
+#: widget/embedded/src/pages/LanguagePage.tsx:55
+#~ msgid "Language"
+#~ msgstr "Language"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/SelectBlockchainPage.tsx:42
+#~ msgid "Select chain"
+#~ msgstr "Select chain"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/SelectBlockchainPage.tsx:60
+#~ msgid "Search Chain"
+#~ msgstr "Search Chain"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/SelectSwapItemsPage.tsx:110
+#~ msgid "Search Token"
+#~ msgstr "Search Token"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/SettingsPage.tsx:172
+#~ msgid "Setting"
+#~ msgstr "Setting"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/ThemePage.tsx:71
+#~ msgid "Theme"
+#~ msgstr "Theme"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/utils/swap.ts:147
@@ -301,6 +326,11 @@ msgstr "Insufficent Balance:"
 #: widget/ui/src/components/BestRoute/BestRoute.tsx:231
 #~ msgid "No routes found"
 #~ msgstr "No routes found"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/BlockchainsSection/BlockchainsSection.tsx:60
+#~ msgid "moreBlockchains"
+#~ msgstr "More {count}"
 
 #. js-lingui-explicit-id
 #: widget/ui/src/containers/Warnings/HighSlippageWarning.tsx:21
