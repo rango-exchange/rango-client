@@ -17,6 +17,7 @@ type PropTypes = {
   size: number;
   useAsPlaceholder?: boolean;
   backgroundColor?: string;
+  borderRadius?: string;
 } & React.ImgHTMLAttributes<HTMLImageElement>;
 
 export function Image(props: PropTypes) {
@@ -24,6 +25,7 @@ export function Image(props: PropTypes) {
     size,
     useAsPlaceholder,
     backgroundColor = '$secondary100',
+    borderRadius = '$xs',
     ...otherProps
   } = props;
 
@@ -33,7 +35,7 @@ export function Image(props: PropTypes) {
       css={{
         width: size + 'px',
         height: size + 'px',
-        ...(useAsPlaceholder && { backgroundColor }),
+        ...(useAsPlaceholder && { backgroundColor, borderRadius }),
       }}>
       {!useAsPlaceholder && <img className="image" {...otherProps} />}
     </ImageContainer>

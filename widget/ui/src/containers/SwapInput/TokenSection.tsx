@@ -7,7 +7,15 @@ import { Button, ChainToken, Typography } from '../../components';
 import { TokenSectionContainer } from './TokenSection.styles';
 
 export function TokenSection(props: TokenSectionProps) {
-  const { error, chainImage, tokenImage, tokenSymbol, chain, onClick } = props;
+  const {
+    error,
+    chainImage,
+    tokenImage,
+    tokenSymbol,
+    chain,
+    onClick,
+    loading,
+  } = props;
   return (
     <Button
       variant="ghost"
@@ -17,16 +25,16 @@ export function TokenSection(props: TokenSectionProps) {
       <TokenSectionContainer>
         <ChainToken
           size="large"
-          useAsPlaceholder={error}
+          useAsPlaceholder={error || (!loading && (!chainImage || !tokenImage))}
           chainImage={chainImage}
           tokenImage={tokenImage}
         />
         <div className="token-chain-name">
           <Typography variant="title" size="medium">
-            {error ? 'Token' : tokenSymbol}
+            {error || (!loading && !tokenSymbol) ? 'Token' : tokenSymbol}
           </Typography>
           <Typography variant="body" size="medium" color="$neutral400">
-            {error ? 'Chain' : chain}
+            {error || (!loading && !chain) ? 'Chain' : chain}
           </Typography>
         </div>
       </TokenSectionContainer>

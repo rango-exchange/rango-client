@@ -5,4 +5,5 @@ export type TokenSectionProps = {
   chain: string;
   error?: boolean;
   onClick: () => void;
+  loading?: boolean;
 };
