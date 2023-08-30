@@ -23,7 +23,7 @@ import {
   solanaBlockchain,
 } from 'rango-types';
 
-import { getNonEvmAccounts, phantom } from './helpers';
+import { getNonEvmAccounts, phantomInstances } from './helpers';
 import signer from './signer';
 
 const WALLET = WalletTypes.PHANTOM;
@@ -32,7 +32,7 @@ export const config = {
   type: WALLET,
 };
 
-export const getInstance = phantom;
+export const getInstance = phantomInstances;
 
 export const connect: Connect = async ({ instance, meta }) => {
   const ethInstance = chooseInstance(instance, meta, Networks.ETHEREUM);

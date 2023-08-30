@@ -4,15 +4,16 @@ import { Networks } from '@rango-dev/wallets-shared';
 
 type Provider = Map<Network, any>;
 
-export function phantom() {
+export function phantomInstances(): Provider | null {
   const { phantom } = window;
-  const { solana, ethereum } = phantom;
 
   if (!phantom) {
     return null;
   }
 
-  const instances = new Map();
+  const { solana, ethereum } = phantom;
+
+  const instances: Provider = new Map();
 
   if (ethereum && ethereum.isPhantom) {
     instances.set(Networks.ETHEREUM, ethereum);
