@@ -96,27 +96,6 @@ msgid "Insufficent Balance:"
 msgstr "Insufficent Balance:"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:67
-#: widget/embedded/src/components/BlockchainsSection/BlockchainsSection.tsx:25
-#~ msgid "Select Blockchain"
-#~ msgstr "Select Blockchain"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/pages/LanguagePage.tsx:55
-#~ msgid "Language"
-#~ msgstr "Language"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/pages/SelectBlockchainPage.tsx:60
-#~ msgid "Search Chain"
-#~ msgstr "Search Chain"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/pages/SelectSwapItemsPage.tsx:110
-#~ msgid "Search Token"
-#~ msgstr "Search Token"
-
-#. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:39
 #: widget/embedded/src/components/TokenList/TokenList.tsx:66
 #~ msgid "No results found"
@@ -127,6 +106,12 @@ msgstr "Insufficent Balance:"
 #: widget/embedded/src/components/TokenList/TokenList.tsx:67
 #~ msgid "Try using different keywords"
 #~ msgstr "Try using different keywords"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:67
+#: widget/embedded/src/components/BlockchainsSection/BlockchainsSection.tsx:25
+#~ msgid "Select Blockchain"
+#~ msgstr "Select Blockchain"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainsSection/BlockchainsSection.tsx:45
@@ -203,9 +188,24 @@ msgstr "Insufficent Balance:"
 #~ msgstr "Swap"
 
 #. js-lingui-explicit-id
+#: widget/embedded/src/pages/LanguagePage.tsx:55
+#~ msgid "Language"
+#~ msgstr "Language"
+
+#. js-lingui-explicit-id
 #: widget/embedded/src/pages/SelectBlockchainPage.tsx:42
 #~ msgid "Select chain"
 #~ msgstr "Select chain"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/SelectBlockchainPage.tsx:60
+#~ msgid "Search Chain"
+#~ msgstr "Search Chain"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/SelectSwapItemsPage.tsx:110
+#~ msgid "Search Token"
+#~ msgstr "Search Token"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/pages/SettingsPage.tsx:172

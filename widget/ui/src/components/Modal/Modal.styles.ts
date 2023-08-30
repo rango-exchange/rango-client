@@ -1,11 +1,11 @@
 import { styled } from '../../theme';
 
 export const BackDrop = styled('div', {
-  position: 'fixed',
+  position: 'absolute',
   top: '0',
   left: '0',
-  width: '100vw',
-  height: '100vh',
+  width: '100%',
+  height: '100%',
   backgroundColor: 'rgba(0,0,0,.1)',
   zIndex: 10,
   borderRadius: '$sm',

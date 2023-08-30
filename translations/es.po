@@ -96,27 +96,6 @@ msgid "Insufficent Balance:"
 msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:67
-#: widget/embedded/src/components/BlockchainsSection/BlockchainsSection.tsx:25
-#~ msgid "Select Blockchain"
-#~ msgstr ""
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/pages/LanguagePage.tsx:55
-#~ msgid "Language"
-#~ msgstr ""
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/pages/SelectBlockchainPage.tsx:60
-#~ msgid "Search Chain"
-#~ msgstr ""
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/pages/SelectSwapItemsPage.tsx:110
-#~ msgid "Search Token"
-#~ msgstr ""
-
-#. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:39
 #: widget/embedded/src/components/TokenList/TokenList.tsx:66
 #~ msgid "No results found"
@@ -126,6 +105,12 @@ msgstr ""
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:40
 #: widget/embedded/src/components/TokenList/TokenList.tsx:67
 #~ msgid "Try using different keywords"
+#~ msgstr ""
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:67
+#: widget/embedded/src/components/BlockchainsSection/BlockchainsSection.tsx:25
+#~ msgid "Select Blockchain"
 #~ msgstr ""
 
 #. js-lingui-explicit-id
@@ -203,8 +188,23 @@ msgstr ""
 #~ msgstr ""
 
 #. js-lingui-explicit-id
+#: widget/embedded/src/pages/LanguagePage.tsx:55
+#~ msgid "Language"
+#~ msgstr ""
+
+#. js-lingui-explicit-id
 #: widget/embedded/src/pages/SelectBlockchainPage.tsx:42
 #~ msgid "Select chain"
+#~ msgstr ""
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/SelectBlockchainPage.tsx:60
+#~ msgid "Search Chain"
+#~ msgstr ""
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/SelectSwapItemsPage.tsx:110
+#~ msgid "Search Token"
 #~ msgstr ""
 
 #. js-lingui-explicit-id
