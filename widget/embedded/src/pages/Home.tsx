@@ -1,23 +1,39 @@
+import type { SwapResult } from 'rango-sdk';
+
 import { i18n } from '@lingui/core';
-import { Alert, Button, styled, TokenInfo, Typography } from '@rango-dev/ui';
+import {
+  Alert,
+  BestRoute,
+  Button,
+  styled,
+  SwapInput,
+  Typography,
+} from '@rango-dev/ui';
+import BigNumber from 'bignumber.js';
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { HomeButtons } from '../components/HeaderButtons';
 import { Layout } from '../components/Layout';
-import { SwithFromAndToButton } from '../components/SwitchFromAndTo';
+import { SwitchFromAndToButton } from '../components/SwitchFromAndTo';
 import { errorMessages } from '../constants/errors';
 import { navigationRoutes } from '../constants/navigationRoutes';
 import { fetchBestRoute, useBestRouteStore } from '../store/bestRoute';
 import { useMetaStore } from '../store/meta';
 import { useUiStore } from '../store/ui';
 import { useWalletsStore } from '../store/wallets';
-import { numberToString } from '../utils/numbers';
+import {
+  numberToString,
+  secondsToString,
+  totalArrivalTime,
+} from '../utils/numbers';
 import {
   canComputePriceImpact,
   getOutputRatio,
   getPercentageChange,
   getSwapButtonState,
+  getTotalFeeInUsd,
+  hasHighFee,
   hasLimitError,
   LimitErrorMessage,
   outputRatioHasWarning,
@@ -33,9 +49,17 @@ const FromContainer = styled('div', {
   position: 'relative',
 });
 
+const InputsContainer = styled('div', {
+  display: 'flex',
+  flexDirection: 'column',
+  gap: 5,
+  alignSelf: 'stretch',
+});
+
 const BestRouteContainer = styled('div', {
   width: '100%',
   paddingTop: '$16',
+  marginBottom: '-36px',
 });
 const Alerts = styled('div', {
   width: '100%',
@@ -46,7 +70,9 @@ const Footer = styled('div', {
   paddingTop: '$16',
 });
 
-const balancePercision = 8;
+const BALANCE_PRECISION = 8;
+const MAX_DECIMAL = 2;
+const MIN_DECIMAL = 0;
 
 export function Home() {
   const navigate = useNavigate();
@@ -57,6 +83,7 @@ export function Home() {
   const setInputAmount = useBestRouteStore.use.setInputAmount();
   const inputUsdValue = useBestRouteStore.use.inputUsdValue();
   const inputAmount = useBestRouteStore.use.inputAmount();
+  const tokens = useMetaStore.use.meta().tokens;
   const outputAmount = useBestRouteStore.use.outputAmount();
   const outputUsdValue = useBestRouteStore.use.outputUsdValue();
   const bestRoute = useBestRouteStore.use.bestRoute();
@@ -108,7 +135,7 @@ export function Home() {
             fromToken?.symbol,
             fromToken?.address
           )?.amount || '0',
-          balancePercision
+          BALANCE_PRECISION
         )
       : '0';
 
@@ -144,6 +171,35 @@ export function Home() {
           outputUsdValue.toNumber()
         );
 
+  const getBestRouteSteps = (swaps: SwapResult[]) => {
+    return swaps.map((swap) => ({
+      swapper: { displayName: swap.swapperId, image: swap.swapperLogo },
+      from: {
+        token: { displayName: swap.from.symbol, image: swap.from.logo },
+        chain: {
+          displayName: swap.from.blockchain,
+          image: swap.from.blockchainLogo,
+        },
+        price: { value: inputAmount },
+      },
+      to: {
+        token: { displayName: swap.to.symbol, image: swap.to.logo },
+        chain: {
+          displayName: swap.to.blockchain,
+          image: swap.to.blockchainLogo,
+        },
+        price: {
+          value: outputAmount
+            ? numberToString(new BigNumber(outputAmount))
+            : numberToString(new BigNumber(0)),
+        },
+      },
+    }));
+  };
+
+  const totalFeeInUsd = getTotalFeeInUsd(bestRoute, tokens);
+  const highFee = hasHighFee(totalFeeInUsd);
+
   return (
     <Layout
       hasFooter
@@ -161,53 +217,85 @@ export function Home() {
         ),
       }}>
       <Container>
-        <FromContainer>
-          <TokenInfo
-            type="From"
-            chain={fromChain}
-            token={fromToken}
-            onAmountChange={setInputAmount}
-            inputAmount={inputAmount}
-            fromChain={fromChain}
-            toChain={toChain}
-            loadingStatus={loadingMetaStatus}
-            inputUsdValue={numberToString(inputUsdValue)}
-            fromToken={fromToken}
-            setInputAmount={setInputAmount}
-            connectedWallets={connectedWallets}
-            bestRoute={bestRoute}
-            fetchingBestRoute={fetchingBestRoute}
-            onChainClick={() => navigate(navigationRoutes.fromSwap)}
-            onTokenClick={() => navigate('from-token')}
-            tokenBalanceReal={tokenBalanceReal}
-            tokenBalance={tokenBalance}
+        <InputsContainer>
+          <FromContainer>
+            <SwapInput
+              label="From"
+              onInputChange={setInputAmount}
+              balance={tokenBalance}
+              chain={{
+                displayName: fromChain?.displayName || '',
+                image: fromChain?.logo || '',
+              }}
+              token={{
+                displayName: fromToken?.symbol || '',
+                image: fromToken?.image || '',
+              }}
+              onClickToken={() => navigate('from-swap')}
+              price={{
+                value: inputAmount,
+                usdValue: numberToString(inputUsdValue),
+              }}
+              disabled={loadingMetaStatus === 'failed'}
+              loading={loadingMetaStatus === 'loading'}
+              onSelectMaxBalance={() => {
+                if (tokenBalance !== '0') {
+                  setInputAmount(tokenBalanceReal.split(',').join(''));
+                }
+              }}
+            />
+            <SwitchFromAndToButton />
+          </FromContainer>
+          <SwapInput
+            label="To"
+            chain={{
+              displayName: toChain?.displayName || '',
+              image: toChain?.logo || '',
+            }}
+            token={{
+              displayName: toToken?.symbol || '',
+              image: toToken?.image || '',
+            }}
+            percentageChange={
+              !!percentageChange?.lt(0)
+                ? numberToString(percentageChange, MIN_DECIMAL, MAX_DECIMAL)
+                : null
+            }
+            warningLevel={highFee ? 'high' : 'low'}
+            price={{
+              value: numberToString(outputAmount),
+              usdValue: numberToString(outputUsdValue),
+            }}
+            onClickToken={() => navigate('to-swap')}
+            disabled={loadingMetaStatus === 'failed'}
+            loading={loadingMetaStatus === 'loading'}
           />
-          <SwithFromAndToButton />
-        </FromContainer>
-        <TokenInfo
-          type="To"
-          chain={toChain}
-          token={toToken}
-          outputAmount={numberToString(outputAmount)}
-          percentageChange={numberToString(percentageChange)}
-          outputUsdValue={numberToString(outputUsdValue)}
-          fromChain={fromChain}
-          toChain={toChain}
-          loadingStatus={loadingMetaStatus}
-          inputUsdValue={numberToString(inputUsdValue)}
-          fromToken={fromToken}
-          setInputAmount={setInputAmount}
-          connectedWallets={connectedWallets}
-          inputAmount={inputAmount}
-          bestRoute={bestRoute}
-          fetchingBestRoute={fetchingBestRoute}
-          onChainClick={() => navigate(navigationRoutes.toSwap)}
-          onTokenClick={() => navigate('to-token')}
-          tokenBalanceReal={tokenBalanceReal}
-          tokenBalance={tokenBalance}
-          showPercentageChange={!!percentageChange?.lt(0)}
-        />
-        {showBestRoute && <BestRouteContainer></BestRouteContainer>}
+        </InputsContainer>
+        {showBestRoute && bestRoute?.result?.swaps?.length ? (
+          <BestRouteContainer>
+            <BestRoute
+              type="basic"
+              recommended={true}
+              input={{
+                value: inputAmount,
+                usdValue: numberToString(inputUsdValue),
+              }}
+              output={{
+                value: numberToString(outputAmount),
+                usdValue: numberToString(outputUsdValue),
+              }}
+              steps={getBestRouteSteps(bestRoute.result.swaps)}
+              percentageChange={numberToString(
+                percentageChange,
+                MIN_DECIMAL,
+                MAX_DECIMAL
+              )}
+              totalFee={numberToString(totalFeeInUsd, MIN_DECIMAL, MAX_DECIMAL)}
+              totalTime={secondsToString(totalArrivalTime(bestRoute))}
+            />
+          </BestRouteContainer>
+        ) : null}
+
         {(errorMessage || hasLimitError(bestRoute)) && (
           <Alerts>
             {errorMessage && <Alert type="error">{errorMessage}</Alert>}
@@ -232,6 +320,7 @@ export function Home() {
             type="primary"
             size="large"
             disabled={swapButtonState.disabled}
+            fullWidth
             onClick={() => {
               if (swapButtonState.title === 'Connect Wallet') {
                 navigate(navigationRoutes.wallets);
