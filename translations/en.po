@@ -96,27 +96,6 @@ msgid "Insufficent Balance:"
 msgstr "Insufficent Balance:"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:67
-#: widget/embedded/src/components/BlockchainsSection/BlockchainsSection.tsx:25
-#~ msgid "Select Blockchain"
-#~ msgstr "Select Blockchain"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/pages/LanguagePage.tsx:55
-#~ msgid "Language"
-#~ msgstr "Language"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/pages/SelectBlockchainPage.tsx:60
-#~ msgid "Search Chain"
-#~ msgstr "Search Chain"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/pages/SelectSwapItemsPage.tsx:110
-#~ msgid "Search Token"
-#~ msgstr "Search Token"
-
-#. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:39
 #: widget/embedded/src/components/TokenList/TokenList.tsx:66
 #~ msgid "No results found"
@@ -129,9 +108,60 @@ msgstr "Insufficent Balance:"
 #~ msgstr "Try using different keywords"
 
 #. js-lingui-explicit-id
+#: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:67
+#: widget/embedded/src/components/BlockchainsSection/BlockchainsSection.tsx:25
+#~ msgid "Select Blockchain"
+#~ msgstr "Select Blockchain"
+
+#. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainsSection/BlockchainsSection.tsx:45
 #~ msgid "All"
 #~ msgstr "All"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/TokenList/TokenList.tsx:122
+#~ msgid "Select Token"
+#~ msgstr "Select Token"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/WalletModal/WalletModalContent.tsx:29
+#~ msgid "Failed to Connect"
+#~ msgstr "Failed to Connect"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/WalletModal/WalletModalContent.tsx:30
+#~ msgid "Your wallet is not connected. Please try again."
+#~ msgstr "Your wallet is not connected. Please try again."
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/LanguagePage.tsx:55
+#~ msgid "Language"
+#~ msgstr "Language"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/SelectBlockchainPage.tsx:42
+#~ msgid "Select chain"
+#~ msgstr "Select chain"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/SelectBlockchainPage.tsx:60
+#~ msgid "Search Chain"
+#~ msgstr "Search Chain"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/SelectSwapItemsPage.tsx:110
+#~ msgid "Search Token"
+#~ msgstr "Search Token"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/SettingsPage.tsx:172
+#~ msgid "Setting"
+#~ msgstr "Setting"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/ThemePage.tsx:71
+#~ msgid "Theme"
+#~ msgstr "Theme"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/HeaderButtons/CancelButton.tsx:13
@@ -166,9 +196,24 @@ msgstr "Insufficent Balance:"
 #~ msgstr "Connect Wallet"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/TokenList/TokenList.tsx:122
-#~ msgid "Select Token"
-#~ msgstr "Select Token"
+#: widget/embedded/src/components/WalletModal/WalletModalContent.tsx:17
+#~ msgid "Wallet Connected"
+#~ msgstr "Wallet Connected"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/WalletModal/WalletModalContent.tsx:18
+#~ msgid "Your wallet is connected, you can use it to swap."
+#~ msgstr "Your wallet is connected, you can use it to swap."
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/WalletModal/WalletModalContent.tsx:38
+#~ msgid "Connecting to your wallet"
+#~ msgstr "Connecting to your wallet"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/WalletModal/WalletModalContent.tsx:39
+#~ msgid "Click connect in your wallet popup."
+#~ msgstr "Click connect in your wallet popup."
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/pages/ConfirmSwapPage.tsx:196
@@ -203,19 +248,9 @@ msgstr "Insufficent Balance:"
 #~ msgstr "Swap"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/SelectBlockchainPage.tsx:42
-#~ msgid "Select chain"
-#~ msgstr "Select chain"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/pages/SettingsPage.tsx:172
-#~ msgid "Setting"
-#~ msgstr "Setting"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/pages/ThemePage.tsx:71
-#~ msgid "Theme"
-#~ msgstr "Theme"
+#: widget/embedded/src/pages/WalletsPage.tsx:139
+#~ msgid "Choose a wallet to connect."
+#~ msgstr "Choose a wallet to connect."
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/utils/swap.ts:147
@@ -246,27 +281,6 @@ msgstr "Insufficent Balance:"
 #: widget/embedded/src/utils/swap.ts:164
 #~ msgid "The route goes through Ethereum. Continue?"
 #~ msgstr "The route goes through Ethereum. Continue?"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:34
-#: widget/embedded/src/components/BlockchainsSection/BlockchainsSection.tsx:25
-#~ msgid "Select Chain"
-#~ msgstr "Select Chain"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/pages/ThemePage.tsx:31
-#~ msgid "Dark"
-#~ msgstr "Dark"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/pages/ThemePage.tsx:32
-#~ msgid "Light"
-#~ msgstr "Light"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/pages/ThemePage.tsx:33
-#~ msgid "Auto"
-#~ msgstr "Auto"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/pages/WalletsPage.tsx:122
