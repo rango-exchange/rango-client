@@ -31,5 +31,6 @@ declare global {
     tally: any;
     bitkeep: any;
     mytonwallet: any;
+    TronLinkEVM: any;
   }
 }

@@ -5,7 +5,7 @@ import { Networks } from '@rango-dev/wallets-shared';
 type Provider = Map<Network, any>;
 
 export function tronLinkInstances(): Provider | null {
-  const { tronLink, TronLinkEVM }: any = window;
+  const { tronLink, TronLinkEVM } = window;
 
   if (!tronLink) {
     return tronLink;
