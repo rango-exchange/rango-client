@@ -1,15 +1,22 @@
 import type {
   CanSwitchNetwork,
   Connect,
+  ProviderConnectResult,
   Subscribe,
   WalletInfo,
 } from '@rango-dev/wallets-shared';
 import type { BlockchainMeta, SignerFactory } from 'rango-types';
 
-import { Networks, WalletTypes } from '@rango-dev/wallets-shared';
-import { tronBlockchain } from 'rango-types';
+import {
+  canSwitchNetworkToEvm,
+  chooseInstance,
+  getEvmAccounts,
+  Networks,
+  WalletTypes,
+} from '@rango-dev/wallets-shared';
+import { evmBlockchains, isEvmBlockchain, tronBlockchain } from 'rango-types';
 
-import { tronLink as tronLink_instance } from './helpers';
+import { tronLinkInstances } from './helpers';
 import signer from './signer';
 
 /*
@@ -23,27 +30,63 @@ export const config = {
   defaultNetwork: Networks.TRON,
 };
 
-export const getInstance = tronLink_instance;
+export const getInstance = tronLinkInstances;
 
-export const connect: Connect = async ({ instance }) => {
-  let r = undefined;
-  if (!!instance && !instance.ready) {
-    r = await instance.request({ method: 'tron_requestAccounts' });
-    if (!r) {
+export const connect: Connect = async ({ instance, meta }) => {
+  const ethInstance = chooseInstance(instance, meta, Networks.ETHEREUM);
+  const tronInstance = chooseInstance(instance, meta, Networks.TRON);
+
+  const results: ProviderConnectResult[] = [];
+
+  if (ethInstance) {
+    const evmResult = await getEvmAccounts(ethInstance);
+    results.push(evmResult);
+  }
+
+  if (tronInstance && !tronInstance.ready) {
+    const res = await tronInstance.request({ method: 'tron_requestAccounts' });
+    if (!res) {
       throw new Error('Please unlock your TronLink extension first.');
     }
-    if (!!r?.code && !!r.message) {
-      throw new Error(r.message);
+    if (!!res?.code && !!res.message) {
+      throw new Error(res.message);
     }
+
+    // TODO check connected network
+    const address = tronInstance.tronWeb.address.fromHex(
+      (await instance.tronWeb.trx.getAccount()).address.toString()
+    );
+    results.push({
+      accounts: address ? [address] : [],
+      chainId: Networks.TRON,
+    });
   }
-  const address = instance.tronWeb.address.fromHex(
-    (await instance.tronWeb.trx.getAccount()).address.toString()
-  );
-  // TODO check connected network
-  return { accounts: address ? [address] : [], chainId: Networks.TRON };
+
+  return results;
 };
 
-export const subscribe: Subscribe = ({ updateAccounts, disconnect }) => {
+export const subscribe: Subscribe = ({
+  instance,
+  state,
+  updateChainId,
+  updateAccounts,
+  meta,
+  disconnect,
+}) => {
+  const ethInstance = chooseInstance(instance, meta, Networks.ETHEREUM);
+
+  ethInstance?.on('accountsChanged', (addresses: string[]) => {
+    const eth_chainId = meta
+      .filter(isEvmBlockchain)
+      .find((blockchain) => blockchain.name === Networks.ETHEREUM)?.chainId;
+    if (state.connected) {
+      if (state.network != Networks.ETHEREUM && eth_chainId) {
+        updateChainId(eth_chainId);
+      }
+      updateAccounts(addresses);
+    }
+  });
+
   window.addEventListener('message', (e) => {
     if (
       e.data.isTronLink &&
@@ -59,14 +102,14 @@ export const subscribe: Subscribe = ({ updateAccounts, disconnect }) => {
     }
   });
 };
-
-export const canSwitchNetworkTo: CanSwitchNetwork = () => false;
+export const canSwitchNetworkTo: CanSwitchNetwork = canSwitchNetworkToEvm;
 
 export const getSigners: (provider: any) => SignerFactory = signer;
 
 export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
   allBlockChains
 ) => {
+  const evms = evmBlockchains(allBlockChains);
   const tron = tronBlockchain(allBlockChains);
   return {
     name: 'TronLink',
@@ -79,6 +122,6 @@ export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
       DEFAULT: 'https://www.tronlink.org',
     },
     color: '#96e7ed',
-    supportedChains: tron,
+    supportedChains: [...evms, ...tron],
   };
 };
