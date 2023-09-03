@@ -13,6 +13,7 @@ export * from './Divider';
 export * from './Drawer';
 export * from './Header';
 export * from './Modal';
+export * from './MessageBox';
 export * from './PercentageChange';
 export * from './RadioGroup';
 export * from './RoutesOverview';

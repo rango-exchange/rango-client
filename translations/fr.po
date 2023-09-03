@@ -96,24 +96,33 @@ msgid "Insufficent Balance:"
 msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:67
-#: widget/embedded/src/components/BlockchainsSection/BlockchainsSection.tsx:25
-#~ msgid "Select Blockchain"
+#: widget/embedded/src/pages/LanguagePage.tsx:42
+#~ msgid "English"
 #~ msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/LanguagePage.tsx:55
-#~ msgid "Language"
+#: widget/embedded/src/pages/LanguagePage.tsx:49
+#~ msgid "French"
 #~ msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/SelectBlockchainPage.tsx:60
-#~ msgid "Search Chain"
+#: widget/embedded/src/pages/LanguagePage.tsx:56
+#~ msgid "Spanish"
 #~ msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/SelectSwapItemsPage.tsx:110
-#~ msgid "Search Token"
+#: widget/embedded/src/pages/SettingsPage.tsx:100
+#~ msgid "Enabled bridges"
+#~ msgstr ""
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/SettingsPage.tsx:122
+#~ msgid "Enabled exchanges"
+#~ msgstr ""
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/SettingsPage.tsx:158
+#~ msgid "Infinite Approval"
 #~ msgstr ""
 
 #. js-lingui-explicit-id
@@ -126,6 +135,12 @@ msgstr ""
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:40
 #: widget/embedded/src/components/TokenList/TokenList.tsx:67
 #~ msgid "Try using different keywords"
+#~ msgstr ""
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:67
+#: widget/embedded/src/components/BlockchainsSection/BlockchainsSection.tsx:25
+#~ msgid "Select Blockchain"
 #~ msgstr ""
 
 #. js-lingui-explicit-id
@@ -166,8 +181,23 @@ msgstr ""
 #~ msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/TokenList/TokenList.tsx:122
-#~ msgid "Select Token"
+#: widget/embedded/src/components/WalletModal/WalletModalContent.tsx:17
+#~ msgid "Wallet Connected"
+#~ msgstr ""
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/WalletModal/WalletModalContent.tsx:18
+#~ msgid "Your wallet is connected, you can use it to swap."
+#~ msgstr ""
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/WalletModal/WalletModalContent.tsx:38
+#~ msgid "Connecting to your wallet"
+#~ msgstr ""
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/WalletModal/WalletModalContent.tsx:39
+#~ msgid "Click connect in your wallet popup."
 #~ msgstr ""
 
 #. js-lingui-explicit-id
@@ -203,18 +233,50 @@ msgstr ""
 #~ msgstr ""
 
 #. js-lingui-explicit-id
+#: widget/embedded/src/pages/LanguagePage.tsx:66
+#: widget/embedded/src/pages/SettingsPage.tsx:144
+#~ msgid "Language"
+#~ msgstr ""
+
+#. js-lingui-explicit-id
 #: widget/embedded/src/pages/SelectBlockchainPage.tsx:42
 #~ msgid "Select chain"
 #~ msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/SettingsPage.tsx:172
+#: widget/embedded/src/pages/SelectBlockchainPage.tsx:60
+#~ msgid "Search Chain"
+#~ msgstr ""
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/SelectSwapItemsPage.tsx:110
+#~ msgid "Search Token"
+#~ msgstr ""
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/SettingsPage.tsx:151
+#: widget/embedded/src/pages/ThemePage.tsx:76
+#~ msgid "Theme"
+#~ msgstr ""
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/SettingsPage.tsx:173
 #~ msgid "Setting"
 #~ msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/ThemePage.tsx:71
-#~ msgid "Theme"
+#: widget/embedded/src/pages/ThemePage.tsx:49
+#~ msgid "Light"
+#~ msgstr ""
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/ThemePage.tsx:57
+#~ msgid "Dark"
+#~ msgstr ""
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/ThemePage.tsx:65
+#~ msgid "Auto"
 #~ msgstr ""
 
 #. js-lingui-explicit-id
@@ -254,21 +316,6 @@ msgstr ""
 #~ msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/ThemePage.tsx:31
-#~ msgid "Dark"
-#~ msgstr ""
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/pages/ThemePage.tsx:32
-#~ msgid "Light"
-#~ msgstr ""
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/pages/ThemePage.tsx:33
-#~ msgid "Auto"
-#~ msgstr ""
-
-#. js-lingui-explicit-id
 #: widget/embedded/src/pages/WalletsPage.tsx:122
 #~ msgid "Select Wallet"
 #~ msgstr ""
@@ -286,6 +333,16 @@ msgstr ""
 #. js-lingui-explicit-id
 #: widget/ui/src/components/BestRoute/BestRoute.tsx:231
 #~ msgid "No routes found"
+#~ msgstr ""
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/SelectSwapItemsPage.tsx:77
+#~ msgid "SwapItems"
+#~ msgstr ""
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/BlockchainsSection/BlockchainsSection.tsx:60
+#~ msgid "moreBlockchains"
 #~ msgstr ""
 
 #. js-lingui-explicit-id

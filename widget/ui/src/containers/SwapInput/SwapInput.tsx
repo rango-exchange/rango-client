@@ -2,7 +2,13 @@ import type { SwapInputProps } from './SwapInput.types';
 
 import React from 'react';
 
-import { Button, PriceImpact, Typography } from '../../components';
+import {
+  Button,
+  Divider,
+  PriceImpact,
+  Skeleton,
+  Typography,
+} from '../../components';
 
 import { Container, InputAmount } from './SwapInput.styles';
 import { TokenSection } from './TokenSection';
@@ -22,7 +28,7 @@ export function SwapInput(props: SwapInputProps) {
                 mr={4}
                 variant="body"
                 size="xsmall">
-                {props.balance}
+                Balance: {props.balance}
               </Typography>
               <Button
                 variant="contained"
@@ -31,6 +37,11 @@ export function SwapInput(props: SwapInputProps) {
                 onClick={props.onSelectMaxBalance}>
                 Max
               </Button>
+            </div>
+          )}
+          {props.loading && (
+            <div className="balance">
+              <Skeleton variant="text" size="large" width={105} />
             </div>
           )}
         </div>
@@ -43,33 +54,44 @@ export function SwapInput(props: SwapInputProps) {
           chainImage={props.chain.image}
           tokenImage={props.token.image}
           onClick={props.onClickToken}
+          loading={props.loading}
         />
         <div className="amount">
-          <InputAmount
-            disabled={props.disabled}
-            style={{ padding: 0 }}
-            value={props.price.value}
-            type="number"
-            size="large"
-            placeholder="0"
-            variant="ghost"
-            min={0}
-            {...('onInputChange' in props && {
-              onChange: (event) =>
-                props.onInputChange(event.target.value || '0'),
-            })}
-          />
-          {'percentageChange' in props ? (
-            <PriceImpact
-              size="large"
-              outputUsdValue={props.price.usdValue}
-              percentageChange={props.percentageChange}
-              warningLevel={props.warningLevel}
-            />
+          {props.loading ? (
+            <>
+              <Skeleton variant="text" size="large" width={92} />
+              <Divider size={4} />
+              <Skeleton variant="text" size="medium" width={92} />
+            </>
           ) : (
-            <Typography variant="body" size="medium" color="$neutral400">
-              {props.price.usdValue}
-            </Typography>
+            <>
+              <InputAmount
+                disabled={props.disabled}
+                style={{ padding: 0 }}
+                value={props.price.value}
+                type="number"
+                size="large"
+                placeholder="0"
+                variant="ghost"
+                min={0}
+                {...('onInputChange' in props && {
+                  onChange: (event) =>
+                    props.onInputChange(event.target.value || '0'),
+                })}
+              />
+              {'percentageChange' in props ? (
+                <PriceImpact
+                  size="large"
+                  outputUsdValue={props.price.usdValue}
+                  percentageChange={props.percentageChange}
+                  warningLevel={props.warningLevel}
+                />
+              ) : (
+                <Typography variant="body" size="medium" color="$neutral400">
+                  {props.price.usdValue}
+                </Typography>
+              )}
+            </>
           )}
         </div>
       </div>

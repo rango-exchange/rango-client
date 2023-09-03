@@ -10,12 +10,12 @@ import { Container, IconHighlight } from './MessageBox.styles';
 import StatusIcon from './StatusIcon';
 
 export function MessageBox(props: PropsWithChildren<PropTypes>) {
-  const { type, title, description, children } = props;
+  const { type, title, description, children, icon } = props;
 
   return (
     <Container>
       <IconHighlight type={type}>
-        <StatusIcon type={type} />
+        {icon || <StatusIcon type={type} />}
       </IconHighlight>
       <Divider size={4} />
       <Typography

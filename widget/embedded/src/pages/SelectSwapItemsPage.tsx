@@ -73,7 +73,7 @@ export function SelectSwapItemsPage(props: PropTypes) {
     <Layout
       header={{
         onBack: navigateBackFrom.bind(null, navigationRoutes.home),
-        title: i18n.t(`Swap ${type}`),
+        title: i18n.t('Swap {type}', { type }),
       }}>
       <BlockchainsSection
         blockchains={blockchains}

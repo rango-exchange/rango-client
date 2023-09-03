@@ -6,7 +6,7 @@ type BaseProps = Stitches.VariantProps<typeof BackDrop>;
 type BaseAnchor = Exclude<BaseProps['anchor'], object>;
 
 export interface PropTypes {
-  title: string;
+  title?: string;
   open: boolean;
   onClose: () => void;
   anchor?: BaseAnchor;

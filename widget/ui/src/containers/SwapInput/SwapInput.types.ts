@@ -20,15 +20,15 @@ export type BaseProps = {
 };
 
 type FromProps = {
-  label: 'from';
+  label: 'From';
   balance?: string;
   onSelectMaxBalance: () => void;
   onInputChange: (inputAmount: string) => void;
 };
 
 type ToProps = {
-  label: 'to';
-  percentageChange: string;
+  label: 'To';
+  percentageChange: string | null;
   warningLevel: PriceImpactWarningLevel;
 };
 

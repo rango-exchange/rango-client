@@ -154,3 +154,11 @@ export const HorizontalSeparator = styled('div', {
   margin: '0 $15',
   borderTop: '1px solid white',
 });
+
+export const FrameIcon = styled('div', {
+  width: '$16',
+  height: '$16',
+  justifyContent: 'center',
+  alignItems: 'center',
+  display: 'flex',
+});
