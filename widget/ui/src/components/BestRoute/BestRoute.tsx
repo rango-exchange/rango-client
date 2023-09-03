@@ -20,6 +20,7 @@ import { Tooltip } from '../Tooltip';
 import {
   Chains,
   Content,
+  FrameIcon,
   HorizontalSeparator,
   IconContainer,
   RouteContainer,
@@ -82,8 +83,13 @@ export function BestRoute(props: BestRouteProps) {
 
           {type === 'basic' && (
             <div className="basic-info">
-              <InfoIcon size={16} color="gray" />
-              <Typography size="small" variant="body">
+              <FrameIcon>
+                <InfoIcon size={12} color="gray" />
+              </FrameIcon>
+              <Typography
+                size="small"
+                variant="body"
+                style={{ letterSpacing: 0.4 }}>
                 {`${input.value} ${steps[0].from.token.displayName} = ${
                   output.value
                 } ${steps[steps.length - 1].to.token.displayName}`}

@@ -9,4 +9,5 @@ export interface PropTypes {
   type: BaseTypes;
   title: string;
   description?: string | ReactNode;
+  icon?: ReactNode;
 }
