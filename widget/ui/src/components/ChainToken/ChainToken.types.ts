@@ -9,4 +9,5 @@ export type PropTypes = {
   chainImage: string;
   size: NonNullable<BaseSizes>;
   useAsPlaceholder?: boolean;
+  loading?: boolean;
 };
