@@ -7,7 +7,7 @@ export type LiquiditySourceType = 'BRIDGE' | 'AGGREGATOR' | 'DEX';
 
 export type UniqueSwappersGroupType = {
   id: string;
-  title: string;
+  groupTitle: string;
   logo: string;
   type: LiquiditySourceType;
   selected: boolean;
@@ -41,7 +41,7 @@ export function getUniqueSwappersGroups(
         swapperItem.types.map((swapperTypeItem) => {
           uniqueSupportedSwappersGroups.push({
             id: swapperItem.swapperGroup,
-            title: swapperItem.swapperGroup,
+            groupTitle: swapperItem.swapperGroup,
             logo: swapperItem.logo,
             type: swapperTypeItem,
             selected: !disabledLiquiditySources.includes(

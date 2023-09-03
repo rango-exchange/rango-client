@@ -29,6 +29,19 @@ interface PropTypes {
   sourceType: 'Exchanges' | 'Bridges';
 }
 
+interface TitleContainerProps {
+  title: string;
+}
+
+function TitleContainer(props: TitleContainerProps) {
+  const { title } = props;
+  return (
+    <Typography variant="title" size="xmedium" color="neutral900">
+      {title}
+    </Typography>
+  );
+}
+
 const Container = styled('div', {
   height: '100%',
 });
@@ -71,21 +84,22 @@ export function LiquiditySourcePage({
   const toggleAllSources = () => {
     liquiditySources.forEach((sourceItem) => {
       if (hasSelectAll) {
-        toggleLiquiditySource(sourceItem.title);
+        toggleLiquiditySource(sourceItem.groupTitle);
       } else {
         if (!sourceItem.selected) {
-          toggleLiquiditySource(sourceItem.title);
+          toggleLiquiditySource(sourceItem.groupTitle);
         }
       }
     });
   };
 
   const list = liquiditySources.map((sourceItem) => {
-    const { selected, title, logo } = sourceItem;
+    const { selected, groupTitle, logo } = sourceItem;
     return {
       start: <Image src={logo} size={22} />,
-      onClick: () => toggleLiquiditySource(title),
+      onClick: () => toggleLiquiditySource(groupTitle),
       end: <Checkbox checked={selected} />,
+      title: <TitleContainer title={i18n.t(groupTitle)} />,
       ...sourceItem,
     };
   });
@@ -98,7 +112,7 @@ export function LiquiditySourcePage({
   let filteredList = list;
   if (searchedFor) {
     filteredList = list.filter((sourceItem) =>
-      containsText(sourceItem.title, searchedFor)
+      containsText(sourceItem.groupTitle, searchedFor)
     );
   }
 
@@ -121,7 +135,7 @@ export function LiquiditySourcePage({
           fullWidth
           color="light"
           variant="contained"
-          placeholder={`Search ${sourceType}`}
+          placeholder={i18n.t(`Search ${sourceType}`)}
           style={{
             padding: 10,
             borderRadius: 25,
@@ -133,7 +147,9 @@ export function LiquiditySourcePage({
 
         <ListContainer>
           <List
-            type={<ListItemButton id="_" onClick={() => console.log()} />}
+            type={
+              <ListItemButton title="_" id="_" onClick={() => console.log()} />
+            }
             items={filteredList}
           />
         </ListContainer>

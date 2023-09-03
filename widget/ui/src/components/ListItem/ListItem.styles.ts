@@ -6,7 +6,7 @@ export const BaseListItem = styled('li', {
   padding: '$10 $5',
   borderRadius: '$xs',
   '.item-start-container': {
-    minWidth: '40px',
+    paddingRight: '$10',
     flexShrink: 0,
 
     '& svg': {
@@ -20,11 +20,14 @@ export const BaseListItem = styled('li', {
 
     '.item-text-title': {
       fontWeight: 'bold',
+      display: 'flex',
+      alignItems: 'center',
     },
   },
   '.item-end-container': {
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
+    paddingLeft: '$10',
   },
 });

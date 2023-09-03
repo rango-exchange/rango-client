@@ -1,6 +1,12 @@
 import { i18n } from '@lingui/core';
-import { List, Radio, RadioRoot, Typography } from '@rango-dev/ui';
-import React from 'react';
+import {
+  List,
+  ListItemButton,
+  Radio,
+  RadioRoot,
+  Typography,
+} from '@rango-dev/ui';
+import React, { useState } from 'react';
 
 import { Layout } from '../components/Layout';
 import { navigationRoutes } from '../constants/navigationRoutes';
@@ -12,38 +18,43 @@ enum Languages {
   SPANISH = 'spanish',
 }
 
-interface SettingItemPropsTypes {
+interface TitleContainerProps {
   title: string;
 }
 
-function LanguageItemTitle({ title }: SettingItemPropsTypes) {
+function TitleContainer(props: TitleContainerProps) {
+  const { title } = props;
   return (
     <Typography variant="title" size="xmedium" color="neutral900">
-      {i18n.t(title)}
+      {title}
     </Typography>
   );
 }
 
 export function LanguagePage() {
   const { navigateBackFrom } = useNavigateBack();
+  const [language, setLanguage] = useState(Languages.ENGLISH);
 
   const languageList = [
     {
       id: Languages.ENGLISH,
       value: Languages.ENGLISH,
-      title: <LanguageItemTitle title="English" />,
+      title: <TitleContainer title={i18n.t('English')} />,
+      onClick: () => setLanguage(Languages.ENGLISH),
       end: <Radio value={Languages.ENGLISH} />,
     },
     {
       id: Languages.FRENCH,
       value: Languages.FRENCH,
-      title: <LanguageItemTitle title="French" />,
+      title: <TitleContainer title={i18n.t('French')} />,
+      onClick: () => setLanguage(Languages.FRENCH),
       end: <Radio value={Languages.FRENCH} />,
     },
     {
       id: Languages.SPANISH,
       value: Languages.SPANISH,
-      title: <LanguageItemTitle title="Spanish" />,
+      title: <TitleContainer title={i18n.t('Spanish')} />,
+      onClick: () => setLanguage(Languages.SPANISH),
       end: <Radio value={Languages.SPANISH} />,
     },
   ];
@@ -54,8 +65,17 @@ export function LanguagePage() {
         onBack: navigateBackFrom.bind(null, navigationRoutes.settings),
         title: i18n.t('Language'),
       }}>
-      <RadioRoot value={Languages.ENGLISH}>
-        <List items={languageList} />
+      <RadioRoot value={language}>
+        <List
+          type={
+            <ListItemButton
+              title="language"
+              id="_"
+              onClick={() => console.log()}
+            />
+          }
+          items={languageList}
+        />
       </RadioRoot>
     </Layout>
   );
