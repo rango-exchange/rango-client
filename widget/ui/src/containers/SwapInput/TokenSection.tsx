@@ -1,8 +1,15 @@
 import type { TokenSectionProps } from './TokenSection.types';
 
+import { i18n } from '@lingui/core';
 import React from 'react';
 
-import { Button, ChainToken, Typography } from '../../components';
+import {
+  Button,
+  ChainToken,
+  Divider,
+  Skeleton,
+  Typography,
+} from '../../components';
 
 import { TokenSectionContainer } from './TokenSection.styles';
 
@@ -28,14 +35,25 @@ export function TokenSection(props: TokenSectionProps) {
           useAsPlaceholder={error || (!loading && (!chainImage || !tokenImage))}
           chainImage={chainImage}
           tokenImage={tokenImage}
+          loading={loading}
         />
         <div className="token-chain-name">
-          <Typography variant="title" size="medium">
-            {error || (!loading && !tokenSymbol) ? 'Token' : tokenSymbol}
-          </Typography>
-          <Typography variant="body" size="medium" color="$neutral400">
-            {error || (!loading && !chain) ? 'Chain' : chain}
-          </Typography>
+          {loading ? (
+            <>
+              <Skeleton variant="text" size="large" width={92} />
+              <Divider size={4} />
+              <Skeleton variant="text" size="medium" width={92} />
+            </>
+          ) : (
+            <>
+              <Typography variant="title" size="medium">
+                {error ? i18n.t('Token') : tokenSymbol}
+              </Typography>
+              <Typography variant="body" size="medium" color="$neutral400">
+                {error ? i18n.t('Chain') : chain}
+              </Typography>
+            </>
+          )}
         </div>
       </TokenSectionContainer>
     </Button>
