@@ -96,6 +96,37 @@ msgid "Insufficent Balance:"
 msgstr "Insufficent Balance:"
 
 #. js-lingui-explicit-id
+
+#: widget/embedded/src/pages/LanguagePage.tsx:42
+#~ msgid "English"
+#~ msgstr "English"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/LanguagePage.tsx:49
+#~ msgid "French"
+#~ msgstr "French"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/LanguagePage.tsx:56
+#~ msgid "Spanish"
+#~ msgstr "Spanish"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/SettingsPage.tsx:100
+#~ msgid "Enabled bridges"
+#~ msgstr "Enabled bridges"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/SettingsPage.tsx:122
+#~ msgid "Enabled exchanges"
+#~ msgstr "Enabled exchanges"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/SettingsPage.tsx:158
+#~ msgid "Infinite Approval"
+#~ msgstr "Infinite Approval"
+
+#. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:39
 #: widget/embedded/src/components/TokenList/TokenList.tsx:66
 #~ msgid "No results found"
@@ -248,7 +279,8 @@ msgstr "Insufficent Balance:"
 #~ msgstr "Swap"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/LanguagePage.tsx:55
+#: widget/embedded/src/pages/LanguagePage.tsx:66
+#: widget/embedded/src/pages/SettingsPage.tsx:144
 #~ msgid "Language"
 #~ msgstr "Language"
 
@@ -268,14 +300,30 @@ msgstr "Insufficent Balance:"
 #~ msgstr "Search Token"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/SettingsPage.tsx:172
+#: widget/embedded/src/pages/SettingsPage.tsx:151
+#: widget/embedded/src/pages/ThemePage.tsx:76
+#~ msgid "Theme"
+#~ msgstr "Theme"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/SettingsPage.tsx:173
 #~ msgid "Setting"
 #~ msgstr "Setting"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/ThemePage.tsx:71
-#~ msgid "Theme"
-#~ msgstr "Theme"
+#: widget/embedded/src/pages/ThemePage.tsx:49
+#~ msgid "Light"
+#~ msgstr "Light"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/ThemePage.tsx:57
+#~ msgid "Dark"
+#~ msgstr "Dark"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/ThemePage.tsx:65
+#~ msgid "Auto"
+#~ msgstr "Auto"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/utils/swap.ts:147
@@ -306,6 +354,13 @@ msgstr "Insufficent Balance:"
 #: widget/embedded/src/utils/swap.ts:164
 #~ msgid "The route goes through Ethereum. Continue?"
 #~ msgstr "The route goes through Ethereum. Continue?"
+
+#. js-lingui-explicit-id
+
+#: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:34
+#: widget/embedded/src/components/BlockchainsSection/BlockchainsSection.tsx:25
+#~ msgid "Select Chain"
+#~ msgstr "Select Chain"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/pages/WalletsPage.tsx:122

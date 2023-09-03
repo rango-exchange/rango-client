@@ -44,14 +44,15 @@ const Head = styled('div', {
   marginBottom: '10px',
 });
 
-interface SettingItemPropsTypes {
+interface TitleContainerProps {
   title: string;
 }
 
-function SettingItemTitle({ title }: SettingItemPropsTypes) {
+function TitleContainer(props: TitleContainerProps) {
+  const { title } = props;
   return (
     <Typography variant="title" size="xmedium" color="neutral900">
-      {i18n.t(title)}
+      {title}
     </Typography>
   );
 }
@@ -96,7 +97,7 @@ export function SettingsPage({ supportedSwappers, singleTheme }: PropTypes) {
 
   const bridgeItem = {
     id: 'bridge-item',
-    title: <SettingItemTitle title="Enabled bridges" />,
+    title: <TitleContainer title={i18n.t('Enabled bridges')} />,
     end: (
       <>
         {loadingMetaStatus === 'success' && (
@@ -118,7 +119,7 @@ export function SettingsPage({ supportedSwappers, singleTheme }: PropTypes) {
 
   const exchangeItem = {
     id: 'exchange-item',
-    title: <SettingItemTitle title="Enabled exchanges" />,
+    title: <TitleContainer title={i18n.t('Enabled exchanges')} />,
     end: (
       <>
         {loadingMetaStatus === 'success' && (
@@ -140,21 +141,21 @@ export function SettingsPage({ supportedSwappers, singleTheme }: PropTypes) {
 
   const languageItem = {
     id: 'language-item',
-    title: <SettingItemTitle title="Language" />,
+    title: <TitleContainer title={i18n.t('Language')} />,
     end: <ChevronRightIcon color="gray" />,
     onClick: () => navigate(navigationRoutes.languages),
   };
 
   const themeItem = {
     id: 'theme-item',
-    title: <SettingItemTitle title="Theme" />,
+    title: <TitleContainer title={i18n.t('Theme')} />,
     end: <ChevronRightIcon color="gray" />,
     onClick: () => navigate(navigationRoutes.themes),
   };
 
   const infiniteApprovalItem = {
     id: 'infinite-approval-item',
-    title: <SettingItemTitle title="Infinite Approval" />,
+    title: <TitleContainer title={i18n.t('Infinite Approval')} />,
     end: <Switch checked={infiniteApprove} />,
     onClick: toggleInfiniteApprove,
   };
@@ -173,7 +174,7 @@ export function SettingsPage({ supportedSwappers, singleTheme }: PropTypes) {
       }}>
       <BaseContainer>
         <Head>
-          <SettingItemTitle title="Slippage tolerance per swap" />
+          <TitleContainer title="Slippage tolerance per swap" />
           <Divider direction="horizontal" size={4} />
           <InfoIcon color="gray" />
         </Head>
@@ -220,13 +221,12 @@ export function SettingsPage({ supportedSwappers, singleTheme }: PropTypes) {
             }
             size="small"
             placeholder="Custom"
-            style={{}}
           />
         </SlippageChipsContainer>
       </BaseContainer>
 
       <List
-        type={<ListItemButton id="_" onClick={() => console.log()} />}
+        type={<ListItemButton title="_" id="_" onClick={() => console.log()} />}
         items={settingItems}
       />
     </Layout>

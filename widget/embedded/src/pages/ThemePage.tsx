@@ -4,6 +4,7 @@ import {
   DarkModeIcon,
   LightModeIcon,
   List,
+  ListItemButton,
   Radio,
   RadioRoot,
   Typography,
@@ -23,14 +24,15 @@ enum Mode {
   AUTO = 'auto',
 }
 
-interface SettingItemPropsTypes {
+interface TitleContainerProps {
   title: string;
 }
 
-function ThemeItemTitle({ title }: SettingItemPropsTypes) {
+function TitleContainer(props: TitleContainerProps) {
+  const { title } = props;
   return (
     <Typography variant="title" size="xmedium" color="neutral900">
-      {i18n.t(title)}
+      {title}
     </Typography>
   );
 }
@@ -44,21 +46,24 @@ export function ThemePage() {
     {
       id: Mode.LIGHT,
       value: Mode.LIGHT,
-      title: <ThemeItemTitle title="Light" />,
+      title: <TitleContainer title={i18n.t('Light')} />,
+      onClick: () => setTheme(Mode.LIGHT as Theme),
       start: <LightModeIcon color="gray" />,
       end: <Radio value={Mode.LIGHT} />,
     },
     {
       id: Mode.DARK,
       value: Mode.DARK,
-      title: <ThemeItemTitle title="Dark" />,
+      title: <TitleContainer title={i18n.t('Dark')} />,
+      onClick: () => setTheme(Mode.DARK as Theme),
       start: <DarkModeIcon color="gray" />,
       end: <Radio value={Mode.DARK} />,
     },
     {
       id: Mode.AUTO,
       value: Mode.AUTO,
-      title: <ThemeItemTitle title="Auto" />,
+      title: <TitleContainer title={i18n.t('Auto')} />,
+      onClick: () => setTheme(Mode.AUTO as Theme),
       start: <AutoThemeIcon color="gray" />,
       end: <Radio value={Mode.AUTO} />,
     },
@@ -73,7 +78,16 @@ export function ThemePage() {
       <RadioRoot
         onValueChange={(value) => setTheme(value as Theme)}
         value={theme}>
-        <List items={themesList} />
+        <List
+          type={
+            <ListItemButton
+              title="Theme"
+              id="_"
+              onClick={() => console.log()}
+            />
+          }
+          items={themesList}
+        />
       </RadioRoot>
     </Layout>
   );
