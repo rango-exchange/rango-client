@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/wallets-adapter-demo",
-  "version": "0.12.1-next.9",
+  "version": "0.12.1-next.10",
   "license": "MIT",
   "private": true,
   "source": "public/index.html",
@@ -11,8 +11,8 @@
     "clean": "rimraf .parcel-cache && rimraf dist"
   },
   "dependencies": {
-    "@rango-dev/provider-all": "^0.15.1-next.3",
-    "@rango-dev/wallets-adapter": "^0.13.1-next.4",
+    "@rango-dev/provider-all": "^0.15.1-next.4",
+    "@rango-dev/wallets-adapter": "^0.13.1-next.5",
     "rango-sdk": "^0.1.35",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
