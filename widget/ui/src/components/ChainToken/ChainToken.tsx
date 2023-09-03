@@ -26,7 +26,10 @@ export const ChainToken: React.FC<PropTypes> = (props) => {
         <Image
           size={tokenChainSizeMap[size].token}
           src={tokenImage}
-          {...(useAsPlaceholder && { useAsPlaceholder })}
+          {...(useAsPlaceholder && {
+            useAsPlaceholder,
+            borderRadius: '$lg',
+          })}
         />
       )}
       <ChainImageContainer size={size}>
@@ -39,6 +42,7 @@ export const ChainToken: React.FC<PropTypes> = (props) => {
             {...(useAsPlaceholder && {
               useAsPlaceholder,
               backgroundColor: '$secondary300',
+              borderRadius: '$lg',
             })}
           />
         )}

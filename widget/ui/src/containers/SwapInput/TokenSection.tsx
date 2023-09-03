@@ -47,10 +47,12 @@ export function TokenSection(props: TokenSectionProps) {
           ) : (
             <>
               <Typography variant="title" size="medium">
-                {error ? i18n.t('Token') : tokenSymbol}
+                {error || (!loading && !tokenSymbol)
+                  ? i18n.t('Token')
+                  : tokenSymbol}
               </Typography>
               <Typography variant="body" size="medium" color="$neutral400">
-                {error ? i18n.t('Chain') : chain}
+                {error || (!loading && !chain) ? i18n.t('Chain') : chain}
               </Typography>
             </>
           )}
