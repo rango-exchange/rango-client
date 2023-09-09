@@ -1,6 +1,6 @@
 import * as Collapsible from '@radix-ui/react-collapsible';
 
-import { styled } from '../../theme';
+import { darkTheme, styled } from '../../theme';
 import { CollapsibleContent } from '../common/styles';
 
 export const RouteContainer = styled(Collapsible.Root, {
@@ -16,16 +16,14 @@ export const RouteContainer = styled(Collapsible.Root, {
   variants: {
     recommended: {
       true: {
-        backgroundColor: '$secondary300',
-        '&:hover': {
-          backgroundColor: '$secondary400',
+        $$color: '$colors$info300',
+        [`.${darkTheme} &`]: {
+          $$color: '$colors$secondary800',
         },
+        backgroundColor: '$$color',
       },
       false: {
-        backgroundColor: '$surface400',
-        '&:hover': {
-          backgroundColor: '$surface500',
-        },
+        backgroundColor: '$neutral200',
       },
     },
   },
@@ -36,28 +34,34 @@ export const RouteContainer = styled(Collapsible.Root, {
 
 export const SummaryContainer = styled('div', {
   borderRadius: '$xm',
-  border: '1px solid $neutral100',
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'start',
   justifyContent: 'space-between',
-  backgroundColor: '$surface',
-  color: '$neutral900',
+  color: '$foreground',
   cursor: 'pointer',
   boxSizing: 'border-box',
   padding: '$15 $15 $46  $15',
   variants: {
     recommended: {
       true: {
-        backgroundColor: '$secondary100',
+        $$color: '$colors$info100',
+        [`.${darkTheme} &`]: {
+          $$color: '$colors$neutral400',
+        },
+        backgroundColor: '$$color',
         '&:hover': {
-          backgroundColor: '$secondary200',
+          $$color: '$colors$secondary200',
+          [`.${darkTheme} &`]: {
+            $$color: '$colors$secondary700',
+          },
+          backgroundColor: '$$color',
         },
       },
       false: {
         backgroundColor: '$neutral200',
         '&:hover': {
-          backgroundColor: '$surface300',
+          backgroundColor: '$neutral200',
         },
       },
     },
@@ -99,12 +103,11 @@ export const Chains = styled(Collapsible.Trigger, {
   boxSizing: 'border-box',
   cursor: 'pointer',
   border: 'none',
-  backgroundColor: 'transparent',
   variants: {
     error: {
       true: {
         [`& ${Image}`]: {
-          border: '1px $warning solid',
+          border: '1px $warning500 solid',
           borderRadius: '100%',
         },
       },
@@ -113,6 +116,18 @@ export const Chains = styled(Collapsible.Trigger, {
           border: '1px transparent solid',
           borderRadius: '100%',
         },
+      },
+    },
+    recommended: {
+      true: {
+        $$color: '$colors$info300',
+        [`.${darkTheme} &`]: {
+          $$color: '$colors$secondary800',
+        },
+        backgroundColor: '$$color',
+      },
+      false: {
+        backgroundColor: '$neutral400',
       },
     },
   },
@@ -145,14 +160,14 @@ export const Separator = styled('div', {
   height: '$12',
   marginLeft: '$10',
   marginRight: '$10',
-  borderLeft: '1px solid $neutral900',
+  borderLeft: '1px solid $foreground',
 });
 
 export const HorizontalSeparator = styled('div', {
   display: 'flex',
   justifyContent: 'center',
   margin: '0 $15',
-  borderTop: '1px solid white',
+  borderTop: '1px solid $neutral300',
 });
 
 export const FrameIcon = styled('div', {

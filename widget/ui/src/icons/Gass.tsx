@@ -4,7 +4,7 @@ import React, { createElement } from 'react';
 
 import { SvgIcon } from '../components/SvgIcon';
 
-function SvgGas(props: SvgIconPropsWithChildren) {
+function SvgGass(props: SvgIconPropsWithChildren) {
   return createElement(
     SvgIcon,
     props,
@@ -36,4 +36,4 @@ function SvgGas(props: SvgIconPropsWithChildren) {
     </svg>
   );
 }
-export default SvgGas;
+export default SvgGass;

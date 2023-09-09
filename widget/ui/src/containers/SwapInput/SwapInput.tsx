@@ -2,15 +2,9 @@ import type { SwapInputProps } from './SwapInput.types';
 
 import React from 'react';
 
-import {
-  Button,
-  Divider,
-  PriceImpact,
-  Skeleton,
-  Typography,
-} from '../../components';
+import { Divider, PriceImpact, Skeleton, Typography } from '../../components';
 
-import { Container, InputAmount } from './SwapInput.styles';
+import { Container, InputAmount, MaxButton } from './SwapInput.styles';
 import { TokenSection } from './TokenSection';
 
 export function SwapInput(props: SwapInputProps) {
@@ -18,25 +12,26 @@ export function SwapInput(props: SwapInputProps) {
     <Container>
       <div className="label__container">
         <div className="label">
-          <Typography variant="body" size="small" color="$neutral400">
+          <Typography variant="body" size="small" color="$neutral800">
             {props.label}
           </Typography>
           {'balance' in props && (
             <div className="balance">
               <Typography
-                color="$neutral400"
+                color="$neutral800"
                 mr={4}
                 variant="body"
                 size="xsmall">
                 Balance: {props.balance}
               </Typography>
-              <Button
-                variant="contained"
+              <MaxButton
+                variant="default"
                 size="xsmall"
-                type="primary"
                 onClick={props.onSelectMaxBalance}>
-                Max
-              </Button>
+                <Typography variant="body" size="xsmall" color="secondary500">
+                  Max
+                </Typography>
+              </MaxButton>
             </div>
           )}
           {props.loading && (
@@ -75,7 +70,7 @@ export function SwapInput(props: SwapInputProps) {
                 variant="ghost"
                 min={0}
                 {...('onInputChange' in props && {
-                  onChange: (event) =>
+                  onChange: (event: React.ChangeEvent<HTMLInputElement>) =>
                     props.onInputChange(event.target.value || '0'),
                 })}
               />
@@ -87,7 +82,7 @@ export function SwapInput(props: SwapInputProps) {
                   warningLevel={props.warningLevel}
                 />
               ) : (
-                <Typography variant="body" size="medium" color="$neutral400">
+                <Typography variant="body" size="medium" color="$neutral800">
                   {props.price.usdValue}
                 </Typography>
               )}

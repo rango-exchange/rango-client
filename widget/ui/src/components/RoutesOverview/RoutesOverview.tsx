@@ -12,7 +12,7 @@ export const Container = styled('div', {
   justifyContent: 'space-between',
   padding: '$8',
   borderRadius: '$xs',
-  backgroundColor: '$neutral100',
+  backgroundColor: '$background',
   color: '$neutral800',
   fontSize: '$12',
 

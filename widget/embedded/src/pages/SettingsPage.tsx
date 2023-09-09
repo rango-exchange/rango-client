@@ -51,7 +51,7 @@ interface TitleContainerProps {
 function TitleContainer(props: TitleContainerProps) {
   const { title } = props;
   return (
-    <Typography variant="title" size="xmedium" color="neutral900">
+    <Typography variant="title" size="xmedium">
       {title}
     </Typography>
   );
@@ -101,7 +101,7 @@ export function SettingsPage({ supportedSwappers, singleTheme }: PropTypes) {
     end: (
       <>
         {loadingMetaStatus === 'success' && (
-          <Typography variant="body" size="medium" color="neutral900">
+          <Typography variant="body" size="medium">
             {`${totalSelectedBridgeSources} / ${totalBridgeSources}`}
           </Typography>
         )}
@@ -111,7 +111,7 @@ export function SettingsPage({ supportedSwappers, singleTheme }: PropTypes) {
           </Typography>
         )}
         <Divider direction="horizontal" size={8} />
-        <ChevronRightIcon color="gray" />
+        <ChevronRightIcon color="black" />
       </>
     ),
     onClick: () => navigate(navigationRoutes.bridges),
@@ -123,7 +123,7 @@ export function SettingsPage({ supportedSwappers, singleTheme }: PropTypes) {
     end: (
       <>
         {loadingMetaStatus === 'success' && (
-          <Typography variant="body" size="medium" color="neutral900">
+          <Typography variant="body" size="medium">
             {`${totalSelectedExchangeSources} / ${totalExchangeSources}`}
           </Typography>
         )}

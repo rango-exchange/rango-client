@@ -10,9 +10,9 @@ export interface PropTypes {
 }
 
 export const StatusColors = {
-  failed: 'error',
-  running: 'info',
-  success: 'success',
+  failed: 'error500',
+  running: 'info500',
+  success: 'success500',
 };
 
 export interface SwapTokenData {

@@ -41,7 +41,7 @@ export function BlockchainsSection(props: PropTypes) {
                   resetToChain();
                 }
               }}>
-              <Typography variant="body" size="xsmall" color="secondary">
+              <Typography variant="body" size="xsmall" color="secondary500">
                 {i18n.t('All')}
               </Typography>
             </BlockchainsChip>
@@ -55,7 +55,7 @@ export function BlockchainsSection(props: PropTypes) {
             ))}
 
             <BlockchainsChip onClick={onMoreClick}>
-              <Typography variant="body" size="xsmall" color="secondary">
+              <Typography variant="body" size="xsmall" color="secondary500">
                 {i18n._('More +{count}', { count: blockchains.length - 10 })}
               </Typography>
             </BlockchainsChip>

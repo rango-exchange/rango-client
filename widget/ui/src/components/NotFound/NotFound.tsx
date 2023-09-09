@@ -16,7 +16,7 @@ export function NotFound(props: PropTypes) {
       <Typography variant="title" size="medium">
         {props.title}
       </Typography>
-      <Typography variant="body" size="medium" color="neutral600">
+      <Typography variant="body" size="medium" color="neutral900">
         {props.description}
       </Typography>
     </Container>

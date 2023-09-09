@@ -12,7 +12,7 @@ export function Chip(props: PropTypes) {
     <ChipContainer selected={selected} {...otherProps}>
       {prefix || null}
       <Typography
-        color={selected ? 'neutral900' : 'neutral600'}
+        color={!selected ? 'neutral900' : undefined}
         variant="body"
         size="medium">
         {label}

@@ -25,7 +25,7 @@ interface PropTypes {
 const ImagePlaceholder = styled('span', {
   width: '24px',
   height: '24px',
-  backgroundColor: '$neutral100',
+  backgroundColor: '$background',
   borderRadius: '99999px',
 });
 const StyledImage = styled('img', {
@@ -43,7 +43,7 @@ const Container = styled('div', {
   '@lg': {
     gridTemplateColumns: '1fr 1fr 1fr',
   },
-  borderTop: '1px solid $neutral100',
+  borderTop: '1px solid $background',
   paddingTop: '$16',
 });
 

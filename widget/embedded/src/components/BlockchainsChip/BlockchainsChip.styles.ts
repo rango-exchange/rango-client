@@ -3,7 +3,7 @@ import { styled } from '@rango-dev/ui';
 export const Chip = styled('button', {
   padding: '$10',
   borderRadius: '$sm',
-  backgroundColor: '$neutral200',
+  backgroundColor: '$neutral100',
   display: 'flex',
   flexDirection: 'column',
   justifyContent: 'center',
@@ -11,11 +11,11 @@ export const Chip = styled('button', {
   cursor: 'pointer',
   border: 0,
   '&:hover': {
-    backgroundColor: '$surface600',
+    backgroundColor: '$neutral300',
   },
   variants: {
     selected: {
-      true: { outline: '1px solid $secondary' },
+      true: { outline: '1px solid $secondary500' },
       false: { outline: 0 },
     },
   },

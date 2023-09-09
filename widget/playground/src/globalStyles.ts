@@ -10,7 +10,7 @@ export const globalStyles = globalCss({
       backgroundColor: '$neutral500',
     },
     '&::-webkit-scrollbar-track': {
-      backgroundColor: '$neutral100',
+      backgroundColor: '$background',
     },
     '&::-webkit-scrollbar-corner': {
       backgroundColor: '$neutral200',
