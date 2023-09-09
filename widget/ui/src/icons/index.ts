@@ -22,6 +22,7 @@ export { default as NoRouteIcon } from './NoRoute';
 export { default as NextIcon } from './Next';
 export { default as NotificationNumberIcon } from './NotificationNumber';
 export { default as NotificationsIcon } from './Notifications';
+export { default as NumberIcon } from './Number';
 export { default as PinIcon } from './Pin';
 export { default as RefreshIcon } from './Refresh';
 export { default as ReverseIcon } from './Reverse';

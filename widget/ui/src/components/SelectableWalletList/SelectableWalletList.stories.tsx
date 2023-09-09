@@ -1,11 +1,13 @@
-import React from 'react';
-import { Meta } from '@storybook/react';
+import type { PropTypes } from './SelectableWalletList';
+import type { Meta } from '@storybook/react';
 
-import { SelectableWalletList, PropTypes } from './SelectableWalletList';
+import React from 'react';
+
 import { data } from './mock';
+import { SelectableWalletList } from './SelectableWalletList';
 
 export default {
-  title: 'Components/SelectableWalletList',
+  title: 'Components/SelectableWalletList(Deprecated)',
   component: SelectableWalletList,
 } as Meta<typeof SelectableWalletList>;
 

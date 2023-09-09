@@ -16,7 +16,7 @@ const Head = styled('div', {
   display: 'flex',
   justifyContent: 'space-between',
   alignItems: 'center',
-  borderBottom: '1px solid $neutral100',
+  borderBottom: '1px solid $background',
   paddingBottom: '$8',
 });
 

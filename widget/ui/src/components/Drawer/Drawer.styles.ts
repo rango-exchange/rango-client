@@ -13,7 +13,7 @@ export const BackDrop = styled('div', {
 
 export const DrawerContainer = styled('div', {
   position: 'absolute',
-  background: '$neutral100',
+  background: '$background',
   padding: '$10 $20',
   borderRadius: '$sm',
   display: 'flex',

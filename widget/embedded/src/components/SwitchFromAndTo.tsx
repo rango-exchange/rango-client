@@ -43,8 +43,8 @@ const SwitchButtonContainer = styled('div', {
 
 const StyledButton = styled('div', {
   borderRadius: '$md',
-  border: '3px solid $neutral100',
-  background: '$surface100',
+  border: '3px solid $background',
+  background: '$neutral100',
   width: '$24',
   height: '$24',
   display: 'flex',
@@ -64,7 +64,7 @@ export function SwitchFromAndToButton() {
           switchFromAndTo();
           setCount((prev) => prev + 1);
         }}>
-        <ReverseIcon size={12} />
+        <ReverseIcon size={12} color="black" />
         {isRouterInContext && <SwitchFromAndTo count={count} />}
       </StyledButton>
     </SwitchButtonContainer>

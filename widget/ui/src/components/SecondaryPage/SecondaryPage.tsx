@@ -68,7 +68,9 @@ export function SecondaryPage(props: PropTypes) {
               size="large"
               prefix={<SearchIcon size={24} />}
               placeholder={props.textFieldPlaceholder}
-              onChange={(event) => setSearchedFor(event.target.value)}
+              onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+                setSearchedFor(event.target.value)
+              }
               value={searchedFor}
               autoFocus
             />

@@ -2,6 +2,8 @@ import type { Meta, StoryObj } from '@storybook/react';
 
 import React from 'react';
 
+import { Typography } from '../Typography';
+
 import { CollapsibleMessageBox } from './CollapsibleMessageBox';
 
 const meta: Meta<typeof CollapsibleMessageBox> = {
@@ -16,6 +18,10 @@ export const Main: Story = {
     status: 'warning',
     title: 'Title',
     description: 'This is a test text',
-    children: <div>test</div>,
+    children: (
+      <Typography variant="body" size="medium">
+        test
+      </Typography>
+    ),
   },
 };

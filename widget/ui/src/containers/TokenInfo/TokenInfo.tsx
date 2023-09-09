@@ -63,10 +63,10 @@ const Container = styled('div', {
   variants: {
     type: {
       filled: {
-        backgroundColor: '$neutral100',
+        backgroundColor: '$background',
       },
       outlined: {
-        border: '1px solid $neutral100',
+        border: '1px solid $background',
         backgroundColor: '$surface',
       },
     },
@@ -121,7 +121,7 @@ const Options = styled('div', {
 const ImagePlaceholder = styled('span', {
   width: '24px',
   height: '24px',
-  backgroundColor: '$neutral100',
+  backgroundColor: '$background',
   borderRadius: '99999px',
 });
 
@@ -287,7 +287,7 @@ export function TokenInfo(props: PropTypes) {
                 min={0}
                 onChange={
                   type === 'From'
-                    ? (event) => {
+                    ? (event: React.ChangeEvent<HTMLInputElement>) => {
                         props.onAmountChange(event.target.value);
                       }
                     : undefined

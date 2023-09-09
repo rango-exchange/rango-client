@@ -1,4 +1,4 @@
-import { styled } from '../../theme';
+import { darkTheme, styled } from '../../theme';
 
 export const WalletImageContainer = styled('div', {
   '& img': {
@@ -18,20 +18,23 @@ export const WalletButton = styled('button', {
   border: '0',
   display: 'flex',
   flexDirection: 'column',
-  backgroundColor: '$neutral200',
+  backgroundColor: '$neutral100',
   alignItems: 'center',
   cursor: 'pointer',
   width: 110,
   position: 'relative',
   '&:hover': {
-    backgroundColor: '$surface600',
-    opacity: '0.8',
+    $$color: '$colors$info100',
+    [`.${darkTheme} &`]: {
+      $$color: '$colors$neutral400',
+    },
+    backgroundColor: '$$color',
   },
   variants: {
     selected: {
       true: {
         outlineWidth: 1,
-        outlineColor: '$secondary',
+        outlineColor: '$secondary500',
         outlineStyle: 'solid',
       },
     },

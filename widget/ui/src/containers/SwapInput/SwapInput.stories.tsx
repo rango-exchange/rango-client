@@ -6,7 +6,7 @@ import React from 'react';
 import { SwapInput } from './SwapInput';
 
 const meta: Meta<typeof SwapInput> = {
-  title: 'Components/Swap Input',
+  title: 'Containers/Swap Input',
   component: SwapInput,
   args: {
     chain: {

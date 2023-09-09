@@ -13,15 +13,15 @@ export const CheckboxRoot = styled(RadixCheckbox.Root, {
   width: '1rem',
   height: '1rem',
   padding: 0,
-  border: '1px solid $neutral400',
+  border: '1px solid $neutral800',
   backgroundColor: 'transparent',
   cursor: 'pointer',
   '&:hover': {
-    borderColor: '$primary',
+    borderColor: '$secondary600',
   },
   '&[data-state="checked"]': {
-    backgroundColor: '$primary',
-    borderColor: '$primary',
+    backgroundColor: '$secondary600',
+    borderColor: '$secondary600',
   },
 });
 
@@ -32,7 +32,7 @@ export const CheckboxIndicator = styled(RadixCheckbox.CheckboxIndicator, {
 });
 
 export const Label = styled('label', {
-  color: '$t',
+  color: '$foreground',
   fontSize: '$m',
   cursor: 'pointer',
 });

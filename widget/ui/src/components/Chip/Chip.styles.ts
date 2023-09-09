@@ -1,4 +1,4 @@
-import { styled } from '../../theme';
+import { darkTheme, styled } from '../../theme';
 
 export const ChipContainer = styled('button', {
   display: 'inline-flex',
@@ -8,16 +8,20 @@ export const ChipContainer = styled('button', {
   padding: '$5 $15',
   cursor: 'pointer',
   transition: 'all 0.35s',
-  backgroundColor: '$neutral200',
+  backgroundColor: '$neutral100',
   border: 'none',
 
   '&:hover': {
-    backgroundColor: '$surface600',
+    $$color: '$colors$info100',
+    [`.${darkTheme} &`]: {
+      $$color: '$colors$neutral400',
+    },
+    backgroundColor: '$$color',
   },
 
   variants: {
     selected: {
-      true: { border: '1px solid $secondary' },
+      true: { border: '1px solid $secondary500' },
     },
   },
 });

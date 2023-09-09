@@ -10,6 +10,7 @@ export default {
   component: NotFound,
   args: {
     title: 'Not Found!',
+    description: 'Try using different keywords',
   },
 } as Meta<typeof NotFound>;
 
