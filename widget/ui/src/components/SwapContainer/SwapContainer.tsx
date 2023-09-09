@@ -16,7 +16,7 @@ const MainContainer = styled('div', {
   minWidth: '375px',
   maxWidth: '390px',
   boxSizing: 'border-box',
-  backgroundColor: '$surface100',
+  backgroundColor: '$neutral100',
   overflow: 'hidden',
   '& *': {
     boxSizing: 'border-box',
@@ -30,7 +30,7 @@ const MainContainer = styled('div', {
       backgroundColor: '$neutral500',
     },
     '&::-webkit-scrollbar-track': {
-      backgroundColor: '$neutral100',
+      backgroundColor: '$background',
     },
   },
   variants: {

@@ -1,4 +1,4 @@
-import { styled } from '../../theme';
+import { darkTheme, styled } from '../../theme';
 
 export const Container = styled('div', {
   display: 'flex',
@@ -17,7 +17,7 @@ export const Header = styled('div', {
 });
 
 export const Main = styled('button', {
-  background: '$neutral200',
+  backgroundColor: '$neutral100',
   border: 'none',
   width: '100%',
   borderRadius: '$md',
@@ -25,6 +25,10 @@ export const Main = styled('button', {
   padding: 15,
   cursor: 'pointer',
   '&:hover': {
-    backgroundColor: '$surface600',
+    $$color: '$colors$info100',
+    [`.${darkTheme} &`]: {
+      $$color: '$colors$neutral400',
+    },
+    backgroundColor: '$$color',
   },
 });

@@ -17,7 +17,6 @@ function TextFieldComponent(props: PropsWithChildren<PropTypes>, ref?: Ref) {
     style,
     variant,
     fullWidth,
-    color,
     ...inputAttributes
   } = props;
   return (
@@ -39,7 +38,6 @@ function TextFieldComponent(props: PropsWithChildren<PropTypes>, ref?: Ref) {
         fullWidth={fullWidth}
         variant={variant}
         size={size}
-        color={color}
         style={style}
         className="_text">
         {prefix || null}

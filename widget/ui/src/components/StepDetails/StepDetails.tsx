@@ -46,7 +46,7 @@ export function StepDetails(props: StepDetailsProps) {
               ml={4}
               mr={4}
               size="small"
-              color="$neutral600"
+              color="$neutral900"
               variant="body">{`${step.from.price.value} ${step.from.token.displayName}`}</Typography>
             <NextIcon color="gray" />
             <Divider size={4} direction="horizontal" />
@@ -58,7 +58,7 @@ export function StepDetails(props: StepDetailsProps) {
             <Typography
               ml={4}
               size="small"
-              color="$neutral600"
+              color="$neutral900"
               variant="body">{`${step.to.price.value} ${step.to.token.displayName}`}</Typography>
           </div>
           <Alerts pb={!hasSeparator && type === 'route-details'}>

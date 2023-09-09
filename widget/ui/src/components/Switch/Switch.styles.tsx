@@ -1,4 +1,5 @@
 import * as RadixSwitch from '@radix-ui/react-switch';
+
 import { styled } from '../../theme';
 
 export const StyledSwitchRoot = styled(RadixSwitch.Root, {
@@ -7,8 +8,8 @@ export const StyledSwitchRoot = styled(RadixSwitch.Root, {
   borderStyle: 'solid',
   width: '24px',
   height: '16px',
-  backgroundColor: '$surface400',
-  borderColor: '$surface400',
+  backgroundColor: '$neutral800',
+  borderColor: '$neutral800',
   borderRadius: '99999px',
   position: 'relative',
   padding: '0',
@@ -16,12 +17,12 @@ export const StyledSwitchRoot = styled(RadixSwitch.Root, {
   transition: 'all 0.35s',
 
   '&:hover': {
-    backgroundColor: '$secondary100',
-    borderColor: '$secondary100',
+    backgroundColor: '$secondary500',
+    borderColor: '$secondary500',
   },
   '&[data-state="checked"]': {
-    backgroundColor: '$primary',
-    borderColor: '$primary',
+    backgroundColor: '$secondary600',
+    borderColor: '$secondary600',
   },
   '-webkit-tap-highlight-color': 'rgba(0, 0, 0, 0)',
 });
@@ -33,7 +34,7 @@ export const StyledSwitchThumb = styled(RadixSwitch.Thumb, {
   display: 'block',
   width: '12px',
   height: '12px',
-  backgroundColor: '$neutral100',
+  backgroundColor: '$background',
   borderColor: '$secondary100',
   transition: ' transform 300ms',
   borderRadius: '999999px',

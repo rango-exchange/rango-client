@@ -16,7 +16,7 @@ export function Typography({
         color: color.startsWith('$') ? color : `$${color}`,
       }
     : {
-        color: '$neutral900',
+        color: '$foreground',
       };
 
   return (

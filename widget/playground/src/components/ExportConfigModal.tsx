@@ -60,7 +60,7 @@ const typesOfCodeBlocks: {
 };
 
 const Link = styled('a', {
-  color: '$primary',
+  color: '$primary500',
   paddingLeft: 4,
 });
 

@@ -8,7 +8,7 @@ import {
   ChevronRightIcon,
   GasIcon,
   InfoIcon,
-  InProgressIcon,
+  NumberIcon,
   TimeIcon,
 } from '../../icons';
 import { Image } from '../common';
@@ -71,8 +71,7 @@ export function BestRoute(props: BestRouteProps) {
             <Separator />
             <div className="cost-and-time__item">
               <div className="icon">
-                {/*TODO: replace with layers icon */}
-                <InProgressIcon size={12} />
+                <NumberIcon size={16} color="gray" />
               </div>
               <Typography ml={2} align="center" variant="body" size="small">
                 {numberOfSteps}
@@ -95,7 +94,7 @@ export function BestRoute(props: BestRouteProps) {
                 } ${steps[steps.length - 1].to.token.displayName}`}
               </Typography>
               <Typography
-                color="$neutral400"
+                color="$neutral800"
                 ml={2}
                 size="xsmall"
                 variant="body">
@@ -150,7 +149,9 @@ export function BestRoute(props: BestRouteProps) {
         recommended={recommended}
         open={expanded}
         onOpenChange={setExpanded}>
-        <Chains onClick={setExpanded.bind(null, (prevState) => !prevState)}>
+        <Chains
+          recommended={recommended}
+          onClick={setExpanded.bind(null, (prevState) => !prevState)}>
           <div>
             {steps.map((step, index) => {
               const key = `item-${index}`;
@@ -162,7 +163,7 @@ export function BestRoute(props: BestRouteProps) {
                   {index === numberOfSteps - 1 && (
                     <>
                       <IconContainer>
-                        <ChevronRightIcon size={12} color="gray" />
+                        <ChevronRightIcon size={12} color="black" />
                       </IconContainer>
                       <Tooltip content={step.to.chain.displayName}>
                         <Image src={step.to.chain.image} size={16} />
@@ -171,7 +172,7 @@ export function BestRoute(props: BestRouteProps) {
                   )}
                   {index !== numberOfSteps - 1 && (
                     <IconContainer>
-                      <ChevronRightIcon size={12} color="gray" />
+                      <ChevronRightIcon size={12} color="black" />
                     </IconContainer>
                   )}
                 </React.Fragment>
@@ -179,7 +180,7 @@ export function BestRoute(props: BestRouteProps) {
             })}
           </div>
           <IconContainer orientation={expanded ? 'up' : 'down'}>
-            <ChevronDownIcon size={12} color="gray" />
+            <ChevronDownIcon size={12} color="black" />
           </IconContainer>
         </Chains>
         <Content open={expanded}>

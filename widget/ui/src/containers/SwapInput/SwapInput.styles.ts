@@ -1,8 +1,8 @@
-import { TextField } from '../../components';
-import { styled } from '../../theme';
+import { Button, TextField } from '../../components';
+import { darkTheme, styled } from '../../theme';
 
 export const Container = styled('div', {
-  backgroundColor: '$surface100',
+  backgroundColor: '$neutral100',
   borderRadius: '$xm',
   padding: '$15',
   '& .label__container': {
@@ -39,4 +39,11 @@ export const InputAmount = styled(TextField, {
   fontWeight: '$medium',
   textAlign: 'right',
   width: 140,
+});
+export const MaxButton = styled(Button, {
+  $$color: '$colors$info300',
+  [`.${darkTheme} &`]: {
+    $$color: '$colors$secondary800',
+  },
+  backgroundColor: '$$color',
 });

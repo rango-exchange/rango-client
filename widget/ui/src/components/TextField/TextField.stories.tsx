@@ -24,7 +24,6 @@ export default {
   },
   args: {
     variant: 'contained',
-    color: 'dark',
     placeholder: 'test',
     fullWidth: false,
   },

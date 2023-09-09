@@ -34,7 +34,7 @@ export function TokenAmount(props: PropTypes) {
       </div>
       <div className="usd-value">
         {props.type === 'input' && (
-          <Typography mr={4} size="small" variant="body" color="$neutral600">
+          <Typography mr={4} size="small" variant="body" color="$neutral900">
             {`~$${props.price.usdValue}`}
           </Typography>
         )}

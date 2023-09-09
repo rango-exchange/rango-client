@@ -58,8 +58,8 @@ export function Modal(props: PropsWithChildren<PropTypes>) {
                     </IconButton>
                   )}
                 </Flex>
-                <Divider direction="vertical" size={16} />
               </ModalHeader>
+              <Divider direction="vertical" size={16} />
               {children}
             </ModalContainer>
           </BackDrop>,

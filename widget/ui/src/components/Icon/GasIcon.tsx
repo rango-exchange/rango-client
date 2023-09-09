@@ -1,6 +1,9 @@
+/* eslint-disable @typescript-eslint/no-magic-numbers */
+import type { IconProps } from './types';
+
 import * as React from 'react';
+
 import { SvgWithStrokeColor } from './common';
-import { IconProps } from './types';
 
 export const GasIcon: React.FC<IconProps> = ({
   size = 16,

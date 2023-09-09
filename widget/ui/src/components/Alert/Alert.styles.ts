@@ -1,4 +1,4 @@
-import { styled } from '../../theme';
+import { darkTheme, styled } from '../../theme';
 
 export const Container = styled('div', {
   display: 'flex',
@@ -16,7 +16,11 @@ export const Container = styled('div', {
     paddingLeft: '$24',
   },
   '.description': {
-    color: '$neutral600',
+    $$color: '$colors$neutral900',
+    [`.${darkTheme} &`]: {
+      $$color: '$colors$neutral800',
+    },
+    color: '$$color',
     fontSize: '$10',
     lineHeight: '$12',
   },
@@ -31,7 +35,7 @@ export const Container = styled('div', {
       regular: {
         padding: '$5',
         alignItems: 'flex-start',
-        backgroundColor: '$surface400',
+        backgroundColor: '$neutral200',
       },
       alarm: {
         padding: '$5 $10',
@@ -48,28 +52,44 @@ export const Container = styled('div', {
       type: 'warning',
       variant: 'alarm',
       css: {
-        backgroundColor: '$warning100',
+        $$color: '$colors$warning100',
+        [`.${darkTheme} &`]: {
+          $$color: '$colors$warning700',
+        },
+        backgroundColor: '$$color',
       },
     },
     {
       type: 'error',
       variant: 'alarm',
       css: {
-        backgroundColor: '$error100',
+        $$color: '$colors$error100',
+        [`.${darkTheme} &`]: {
+          $$color: '$colors$error700',
+        },
+        backgroundColor: '$$color',
       },
     },
     {
       type: 'info',
       variant: 'alarm',
       css: {
-        backgroundColor: '$info100',
+        $$color: '$colors$info100',
+        [`.${darkTheme} &`]: {
+          $$color: '$colors$info700',
+        },
+        backgroundColor: '$$color',
       },
     },
     {
       type: 'success',
       variant: 'alarm',
       css: {
-        backgroundColor: '$success100',
+        $$color: '$colors$success100',
+        [`.${darkTheme} &`]: {
+          $$color: '$colors$success700',
+        },
+        backgroundColor: '$$color',
       },
     },
   ],
@@ -101,16 +121,32 @@ export const IconHighlight = styled('div', {
   variants: {
     type: {
       success: {
-        backgroundColor: '$success300',
+        $$color: '$colors$success300',
+        [`.${darkTheme} &`]: {
+          $$color: '$colors$success600',
+        },
+        backgroundColor: '$$color',
       },
       warning: {
-        backgroundColor: '$warning300',
+        $$color: '$colors$warning300',
+        [`.${darkTheme} &`]: {
+          $$color: '$colors$warning600',
+        },
+        backgroundColor: '$$color',
       },
       error: {
-        backgroundColor: '$error300',
+        $$color: '$colors$error300',
+        [`.${darkTheme} &`]: {
+          $$color: '$colors$error600',
+        },
+        backgroundColor: '$$color',
       },
       info: {
-        backgroundColor: '$info300',
+        $$color: '$colors$info300',
+        [`.${darkTheme} &`]: {
+          $$color: '$colors$info600',
+        },
+        backgroundColor: '$$color',
       },
     },
   },

@@ -1,4 +1,4 @@
-import { styled, theme } from '../../theme';
+import { darkTheme, styled } from '../../theme';
 
 export const TokenSectionContainer = styled('div', {
   width: '10.625rem',
@@ -9,8 +9,11 @@ export const TokenSectionContainer = styled('div', {
   boxSizing: 'border-box',
   alignItems: 'center',
   '&:hover': {
-    //#rrggbbaa format
-    backgroundColor: `${theme.colors.secondary300}80`,
+    $$color: '$colors$info100',
+    [`.${darkTheme} &`]: {
+      $$color: '$colors$neutral400',
+    },
+    backgroundColor: '$$color',
   },
   '& .token-chain-name': {
     display: 'flex',
