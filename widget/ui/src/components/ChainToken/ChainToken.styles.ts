@@ -9,9 +9,9 @@ export const Container = styled('div', {
 
 export const ChainImageContainer = styled('div', {
   position: 'absolute',
-  border: '0.5px solid $neutral100',
+  border: '0.5px solid $background',
   borderRadius: '100%',
-  backgroundColor: '$neutral100',
+  backgroundColor: '$background',
   variants: {
     size: {
       small: {

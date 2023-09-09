@@ -9,13 +9,14 @@ export const StyledItem = styled(Radio.Item, {
   borderRadius: '100%',
   cursor: 'pointer',
   backgroundColor: 'transparent',
-  border: '1px solid $neutral400',
+  border: '1px solid $neutral800',
 
   '&:hover': {
-    borderColor: '$primary',
+    borderColor: '$secondary600',
   },
   '&[data-state="checked"]': {
-    backgroundColor: '$primary',
+    backgroundColor: '$secondary600',
+    borderColor: '$secondary600',
   },
 });
 
@@ -32,6 +33,6 @@ export const StyledIndicator = styled(Radio.Indicator, {
     width: '8px',
     height: '8px',
     borderRadius: '50%',
-    backgroundColor: '$neutral100',
+    backgroundColor: '$background',
   },
 });

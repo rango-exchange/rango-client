@@ -99,7 +99,7 @@ export function TokenList(props: PropTypes) {
                     {tokens[index].balance?.amount}
                   </Typography>
                   <div />
-                  <Typography variant="body" color="neutral400" size="xsmall">
+                  <Typography variant="body" color="neutral800" size="xsmall">
                     {`$${tokens[index].balance?.usdValue}`}
                   </Typography>
                 </BalanceContainer>

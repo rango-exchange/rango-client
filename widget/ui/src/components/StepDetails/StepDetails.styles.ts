@@ -9,7 +9,7 @@ export const Container = styled('div', {
     type: {
       'route-details': { border: 'none' },
       'route-progress': {
-        backgroundColor: '$surface200',
+        backgroundColor: '$neutral100',
         borderRadius: '$xm',
         padding: '$10 $15',
         marginBottom: '25px',
@@ -17,14 +17,14 @@ export const Container = styled('div', {
     },
     state: {
       default: {
-        borderColor: '$neutral600',
+        borderColor: 'transparent',
       },
-      'in-progress': { borderColor: '$info' },
+      'in-progress': { borderColor: '$info500' },
       completed: {
-        borderColor: '$success',
+        borderColor: '$success500',
       },
-      warning: { borderColor: '$warning' },
-      error: { borderColor: '$error' },
+      warning: { borderColor: '$warning500' },
+      error: { borderColor: '$error500' },
     },
   },
   '& .swapper': {
@@ -66,14 +66,14 @@ export const SwapperImage = styled('div', {
   variants: {
     state: {
       default: {
-        borderColor: '$neutral600',
+        borderColor: 'transparent',
       },
-      'in-progress': { borderColor: '$info' },
+      'in-progress': { borderColor: '$info500' },
       completed: {
-        borderColor: '$success',
+        borderColor: '$success500',
       },
-      warning: { borderColor: '$warning' },
-      error: { borderColor: '$error' },
+      warning: { borderColor: '$warning500' },
+      error: { borderColor: '$error500' },
     },
   },
 });
@@ -116,14 +116,14 @@ export const StepSeparator = styled('div', {
   variants: {
     state: {
       default: {
-        borderColor: '$neutral600',
+        borderColor: 'transparent',
       },
-      'in-progress': { borderColor: '$info' },
+      'in-progress': { borderColor: '$info500' },
       completed: {
-        borderColor: '$success',
+        borderColor: '$success500',
       },
-      warning: { borderColor: '$warning' },
-      error: { borderColor: '$error' },
+      warning: { borderColor: '$warning500' },
+      error: { borderColor: '$error500' },
     },
   },
 });

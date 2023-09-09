@@ -15,5 +15,10 @@ export const Main: Story = {
     price: { value: '1', usdValue: '28,490' },
     percentageChange: '2.21',
     warningLevel: 'low',
+    chain: { image: 'https://api.rango.exchange/swappers/osmosis.png' },
+    token: {
+      image: 'https://api.rango.exchange/tokens/COSMOS/JUNO.png',
+      displayName: 'JUNO',
+    },
   },
 };

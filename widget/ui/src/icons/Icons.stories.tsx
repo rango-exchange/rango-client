@@ -3,6 +3,7 @@ import type { Meta } from '@storybook/react';
 
 import React from 'react';
 
+import { Typography } from '../components/Typography';
 import { styled } from '../theme';
 
 import * as Icons from '.';
@@ -56,7 +57,10 @@ export const Main = (props: SvgIconProps) => (
       return (
         <div key={icon}>
           <Component {...props} />
-          <p> {icon}</p>
+          <div />
+          <Typography variant="label" size="medium">
+            {icon}
+          </Typography>
         </div>
       );
     })}

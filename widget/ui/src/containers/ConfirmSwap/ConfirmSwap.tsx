@@ -241,7 +241,9 @@ export function ConfirmSwap(props: PropsWithChildren<PropTypes>) {
                         <TextField
                           placeholder="Your destination address"
                           value={customDestination}
-                          onChange={(e) => {
+                          onChange={(
+                            e: React.ChangeEvent<HTMLInputElement>
+                          ) => {
                             setCustomDestination(e.target.value);
                           }}
                         />

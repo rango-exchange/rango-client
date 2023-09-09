@@ -61,7 +61,7 @@ export const BodyError = styled('div', {
 });
 
 export const ErrorMsg = styled(Typography, {
-  color: '$error',
+  color: '$error500',
 });
 
 export const FeeContainer = styled('div', {
@@ -101,7 +101,7 @@ export const ArrowDown = styled('div', {
 });
 
 const StyledAnchor = styled('a', {
-  color: '$primary',
+  color: '$primary500',
   fontWeight: '$600',
 });
 
@@ -109,7 +109,7 @@ const SwapInfoContainer = styled('div', {
   display: 'flex',
   flexDirection: 'column',
   paddingBottom: '$16',
-  borderBottom: '1px solid $neutral100',
+  borderBottom: '1px solid $background',
 });
 
 const InternalDetailsContainer = styled('div', {
@@ -130,7 +130,7 @@ const DescriptionContainer = styled('div', {
 });
 
 const Description = styled(Typography, {
-  color: '$success',
+  color: '$success500',
   paddingLeft: '$4',
 });
 
@@ -163,10 +163,10 @@ const Row = styled('div', {
     textTransform: 'uppercase',
   },
   '.status.failed': {
-    color: '$error',
+    color: '$error500',
   },
   '.status.success': {
-    color: '$success',
+    color: '$success500',
   },
 });
 

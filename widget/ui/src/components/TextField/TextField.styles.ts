@@ -1,4 +1,4 @@
-import { styled } from '../../theme';
+import { darkTheme, styled } from '../../theme';
 
 export const InputContainer = styled('div', {
   borderRadius: '$xs',
@@ -25,25 +25,29 @@ export const InputContainer = styled('div', {
     },
     variant: {
       contained: {
-        backgroundColor: '$surface100',
+        backgroundColor: '$neutral100',
         '&:hover': {
-          backgroundColor: '$surface600',
+          $$color: '$colors$info100',
+          [`.${darkTheme} &`]: {
+            $$color: '$colors$neutral400',
+          },
+          backgroundColor: '$$color',
         },
       },
       outlined: {
         backgroundColor: 'transparent',
-        border: '1px solid $surface100',
+        border: '1px solid $neutral100',
         '&:hover': {
-          borderColor: '$surface600',
+          $$color: '$colors$info100',
+          [`.${darkTheme} &`]: {
+            $$color: '$colors$neutral400',
+          },
+          borderColor: '$$color',
         },
       },
       ghost: {
         background: 'transparent',
       },
-    },
-    color: {
-      dark: {},
-      light: {},
     },
 
     disabled: {
@@ -54,85 +58,20 @@ export const InputContainer = styled('div', {
 
   compoundVariants: [
     {
-      color: 'dark',
-      variant: 'contained',
-      css: {
-        backgroundColor: '$surface200',
-        '&:hover': {
-          backgroundColor: '$surface600',
-        },
-      },
-    },
-    {
-      color: 'dark',
-      variant: 'outlined',
-      css: {
-        backgroundColor: 'transparent',
-        border: '1px solid $surface200',
-        '&:hover': {
-          borderColor: '$surface600',
-        },
-      },
-    },
-    {
-      color: 'light',
-      variant: 'contained',
-      css: {
-        backgroundColor: '$surface100',
-        '&:hover': {
-          backgroundColor: '$surface600',
-        },
-      },
-    },
-    {
-      color: 'light',
-      variant: 'outlined',
-      css: {
-        backgroundColor: 'transparent',
-        border: '1px solid $surface100',
-        '&:hover': {
-          borderColor: '$surface600',
-        },
-      },
-    },
-    {
-      color: 'dark',
       variant: 'contained',
       disabled: true,
       css: {
         '&:hover': {
-          backgroundColor: '$surface200',
+          backgroundColor: '$neutral100',
         },
       },
     },
     {
-      color: 'dark',
-      variant: 'outlined',
-      disabled: true,
-
-      css: {
-        '&:hover': {
-          borderColor: '$surface200',
-        },
-      },
-    },
-    {
-      color: 'light',
-      variant: 'contained',
-      disabled: true,
-      css: {
-        '&:hover': {
-          backgroundColor: '$surface100',
-        },
-      },
-    },
-    {
-      color: 'light',
       variant: 'outlined',
       disabled: true,
       css: {
         '&:hover': {
-          borderColor: '$surface100',
+          borderColor: '$neutral100',
         },
       },
     },
@@ -141,7 +80,7 @@ export const InputContainer = styled('div', {
 
 export const Input = styled('input', {
   flexGrow: 1,
-  color: '$neutral900',
+  color: '$foreground',
   fontSize: '$14',
   lineHeight: '$20',
   fontWeight: 400,

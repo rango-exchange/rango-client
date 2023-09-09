@@ -1,4 +1,4 @@
-import { keyframes, styled } from '../../theme';
+import { darkTheme, keyframes, styled } from '../../theme';
 
 const waveSquares = keyframes({
   '0%': {
@@ -8,9 +8,15 @@ const waveSquares = keyframes({
     backgroundPosition: '468px 0',
   },
 });
-
+// #2B3462 -0.15%, rgba(43, 52, 98, 0.20) 99.85%
 export const SkeletonContainer = styled('div', {
-  background: `linear-gradient(90deg, rgb(225, 222, 232) 0%, rgb(242, 239, 249) 50%, rgb(225, 222, 232) 100%)`,
+  $$background:
+    'linear-gradient(90deg, $colors$info300 0%, rgba(200, 226, 255, 0.20) 70%, $colors$info300 100%)',
+  [`.${darkTheme} &`]: {
+    $$background:
+      'linear-gradient(90deg, $colors$secondary600 0%,rgba(43, 52, 98, 0.20) 70%, $colors$secondary600 100%)',
+  },
+  background: '$$background',
   backgroundSize: '800px 100px',
   animation: `${waveSquares} 2s infinite ease-out`,
   variants: {

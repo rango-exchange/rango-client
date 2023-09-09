@@ -57,28 +57,28 @@ export function SwapToken(props: PropTypes) {
       {status === 'running' ? (
         <Layout direction="column">
           <TopSection>
-            <Typography size="xsmall" variant="headline" color="neutral900">
+            <Typography size="xsmall" variant="headline">
               {fromToken.displayName}
             </Typography>
             <Icon>
               <NextIcon size={24} color="black" />
             </Icon>
-            <Typography size="xsmall" variant="headline" color="neutral900">
+            <Typography size="xsmall" variant="headline">
               {toToken.displayName}
             </Typography>
           </TopSection>
-          <Typography size="small" variant="body" color="neutral600">
+          <Typography size="small" variant="body" color="neutral900">
             {i18n.t('Waiting for bridge transaction')}
           </Typography>
         </Layout>
       ) : (
         <Layout direction="row">
           <TokenInfo>
-            <Typography size="xsmall" variant="headline" color="neutral900">
+            <Typography size="xsmall" variant="headline">
               {fromToken.displayName}
             </Typography>
             {!!fromAmount && (
-              <Typography size="small" variant="body" color="neutral600">
+              <Typography size="small" variant="body" color="neutral900">
                 {fromAmount}
               </Typography>
             )}
@@ -87,11 +87,11 @@ export function SwapToken(props: PropTypes) {
             <NextIcon size={24} color="black" />
           </Icon>
           <TokenInfo>
-            <Typography size="xsmall" variant="headline" color="neutral900">
+            <Typography size="xsmall" variant="headline">
               {toToken.displayName}
             </Typography>
 
-            <Typography size="small" variant="body" color="neutral600">
+            <Typography size="small" variant="body" color="neutral900">
               {toAmount || estimatedAmount}
             </Typography>
           </TokenInfo>

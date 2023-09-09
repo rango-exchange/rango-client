@@ -1,19 +1,17 @@
 import React, { useState } from 'react';
-import ReactColor from 'react-color';
+import { ChromePicker } from 'react-color';
 import rgbHex from 'rgb-hex';
 
 import { styled } from '../../theme';
 import { Button } from '../Button';
 import { CloseIcon } from '../Icon';
 
-const { ChromePicker } = ReactColor;
-
 const Container = styled('div', {
   position: 'relative',
 });
 
 const Color = styled('div', {
-  border: '1px solid $neutral100',
+  border: '1px solid $background',
   borderRadius: '$xs',
   width: '$32',
   height: '$32',

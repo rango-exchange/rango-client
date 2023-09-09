@@ -4,39 +4,35 @@ export const SvgWithColor = styled('svg', {
   variants: {
     color: {
       primary: {
-        color: '$primary',
+        color: '$primary500',
       },
       secondary: {
-        color: '$secondary',
+        color: '$secondary500',
       },
       error: {
-        color: '$error',
+        color: '$error500',
       },
       warning: {
-        color: '$warning',
+        color: '$warning500',
       },
       success: {
-        color: '$success',
+        color: '$success500',
       },
       black: {
-        $$color: '$colors$neutral700',
-        [`.${darkTheme} &`]: {
-          $$color: '$colors$neutral100',
-        },
-        color: '$$color',
+        color: '$foreground',
       },
       white: {
-        $$color: '$colors$neutral100',
-        [`.${darkTheme} &`]: {
-          $$color: '$colors$neutral700',
-        },
-        color: '$$color',
+        color: '$background',
       },
       info: {
-        color: '$info',
+        color: '$info500',
       },
       gray: {
-        color: '$neutral400',
+        $$color: '$colors$neutral900',
+        [`.${darkTheme} &`]: {
+          $$color: '$colors$neutral800',
+        },
+        color: '$$color',
       },
     },
   },
