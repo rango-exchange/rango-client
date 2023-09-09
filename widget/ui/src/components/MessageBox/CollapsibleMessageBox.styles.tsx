@@ -1,6 +1,6 @@
 import * as Collapsible from '@radix-ui/react-collapsible';
 
-import { styled } from '../../theme';
+import { darkTheme, styled } from '../../theme';
 
 export const Trigger = styled(Collapsible.Trigger, {
   padding: '$15',
@@ -12,6 +12,10 @@ export const Trigger = styled(Collapsible.Trigger, {
   border: 0,
   width: '100%',
   '&:hover': {
-    backgroundColor: '$surface600',
+    $$color: '$colors$info100',
+    [`.${darkTheme} &`]: {
+      $$color: '$colors$neutral400',
+    },
+    backgroundColor: '$$color',
   },
 });

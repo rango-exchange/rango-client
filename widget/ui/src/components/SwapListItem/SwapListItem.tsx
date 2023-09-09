@@ -22,7 +22,7 @@ export function SwapListItem({
     <Main onClick={onClick.bind(null, requestId)}>
       <Container>
         <Header>
-          <Typography variant="label" size="medium" color="neutral400">
+          <Typography variant="label" size="medium" color="neutral800">
             {formattedDateAndTime(creationTime, onlyShowTime)}
           </Typography>
           <Typography

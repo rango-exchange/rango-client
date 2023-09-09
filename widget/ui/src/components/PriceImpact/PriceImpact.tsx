@@ -11,9 +11,9 @@ export function PriceImpact(props: PriceImpactProps) {
 
   let percentageChangeColor = '';
   if (!outputUsdValue || warningLevel === 'low') {
-    percentageChangeColor = '$warning';
+    percentageChangeColor = '$warning500';
   } else if (warningLevel === 'high') {
-    percentageChangeColor = '$error';
+    percentageChangeColor = '$error500';
   }
 
   return (
@@ -23,7 +23,7 @@ export function PriceImpact(props: PriceImpactProps) {
           mr={4}
           size={size === 'small' ? 'small' : 'medium'}
           variant="body"
-          color={size === 'small' ? '$neutral800' : '$neutral400'}>
+          color={size !== 'small' ? '$neutral800' : undefined}>
           {`~$${outputUsdValue}`}
         </Typography>
       )}

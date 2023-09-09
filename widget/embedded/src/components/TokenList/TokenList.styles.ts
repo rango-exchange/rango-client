@@ -9,7 +9,7 @@ export const Content = styled('div', {
 });
 
 export const Tag = styled('div', {
-  backgroundColor: '$secondary300',
+  backgroundColor: '$neutral400',
   paddingLeft: '$5',
   paddingRight: '$5',
   borderRadius: '$md',

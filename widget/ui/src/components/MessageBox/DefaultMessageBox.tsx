@@ -19,7 +19,7 @@ export function MessageBox(props: PropsWithChildren<PropTypes>) {
       </IconHighlight>
       <Divider size={4} />
       <Typography
-        color={type === 'loading' ? 'info' : type}
+        color={type === 'loading' ? 'info500' : `${type}500`}
         variant="title"
         size="medium">
         {title}

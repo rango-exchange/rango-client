@@ -2,7 +2,7 @@ import type { Type } from './Alert.types';
 
 export const getColor = (type: Type, variant: 'alarm' | 'regular') => {
   if (variant === 'regular') {
-    return 'neutral900';
+    return undefined;
   }
 
   switch (type) {
@@ -10,8 +10,8 @@ export const getColor = (type: Type, variant: 'alarm' | 'regular') => {
     case 'warning':
     case 'error':
     case 'info':
-      return type;
+      return `${type}500`;
     default:
-      return 'neutral900';
+      return undefined;
   }
 };

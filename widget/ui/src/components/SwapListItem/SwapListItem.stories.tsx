@@ -3,7 +3,7 @@ import type { Meta } from '@storybook/react';
 
 import React from 'react';
 
-import { swap } from './mock';
+import { swap, swapTokenData } from './mock';
 import { SwapListItem } from './SwapListItem';
 
 export default {
@@ -27,5 +27,6 @@ export const Main = (props: PropTypes) => (
     {...props}
     requestId={swap.requestId}
     creationTime={swap.creationTime}
+    swapTokenData={swapTokenData}
   />
 );

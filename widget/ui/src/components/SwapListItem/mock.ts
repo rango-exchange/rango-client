@@ -2,6 +2,7 @@
 // TODO: fix ts errors
 // eslint-disable-next-line
 // @ts-nocheck
+import type { SwapTokenData } from './SwapListItem.types';
 import type { PendingSwap } from '../../containers/History/types';
 
 import { RoutingResultType, TransactionType } from 'rango-sdk';
@@ -277,4 +278,27 @@ export const swap: PendingSwap = {
       internalSteps: null,
     },
   ],
+};
+
+export const swapTokenData: SwapTokenData = {
+  from: {
+    token: {
+      image: 'https://api.rango.exchange/tokens/COSMOS/JUNO.png',
+      displayName: 'JUNO',
+    },
+    blockchain: {
+      image: 'https://api.rango.exchange/swappers/osmosis.png',
+    },
+    amount: '1.1',
+  },
+  to: {
+    token: {
+      image: 'https://api.rango.exchange/i/mJQPS2',
+      displayName: 'OSMO',
+    },
+    blockchain: {
+      image: 'https://api.rango.exchange/swappers/osmosis.png',
+    },
+    amount: '0.7',
+  },
 };

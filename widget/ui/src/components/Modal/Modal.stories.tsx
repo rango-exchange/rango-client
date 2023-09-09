@@ -12,6 +12,7 @@ export default {
   component: Modal,
   args: {
     title: 'I`m a modal',
+    container: document.getElementById('storybook-root'),
   },
 } as Meta<typeof Modal>;
 

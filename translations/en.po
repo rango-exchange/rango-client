@@ -65,12 +65,14 @@ msgstr "Waiting for bridge transaction"
 
 #. js-lingui-explicit-id
 #: widget/ui/src/components/TokenPreview/TokenPreview.tsx:150
+#: widget/ui/src/containers/SwapInput/TokenSection.tsx:53
 #: widget/ui/src/containers/TokenInfo/TokenInfo.tsx:235
 msgid "Chain"
 msgstr "Chain"
 
 #. js-lingui-explicit-id
 #: widget/ui/src/components/TokenPreview/TokenPreview.tsx:168
+#: widget/ui/src/containers/SwapInput/TokenSection.tsx:50
 #: widget/ui/src/containers/TokenInfo/TokenInfo.tsx:259
 msgid "Token"
 msgstr "Token"
@@ -96,37 +98,6 @@ msgid "Insufficent Balance:"
 msgstr "Insufficent Balance:"
 
 #. js-lingui-explicit-id
-
-#: widget/embedded/src/pages/LanguagePage.tsx:42
-#~ msgid "English"
-#~ msgstr "English"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/pages/LanguagePage.tsx:49
-#~ msgid "French"
-#~ msgstr "French"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/pages/LanguagePage.tsx:56
-#~ msgid "Spanish"
-#~ msgstr "Spanish"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/pages/SettingsPage.tsx:100
-#~ msgid "Enabled bridges"
-#~ msgstr "Enabled bridges"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/pages/SettingsPage.tsx:122
-#~ msgid "Enabled exchanges"
-#~ msgstr "Enabled exchanges"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/pages/SettingsPage.tsx:158
-#~ msgid "Infinite Approval"
-#~ msgstr "Infinite Approval"
-
-#. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:39
 #: widget/embedded/src/components/TokenList/TokenList.tsx:66
 #~ msgid "No results found"
@@ -150,49 +121,9 @@ msgstr "Insufficent Balance:"
 #~ msgstr "All"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/TokenList/TokenList.tsx:122
-#~ msgid "Select Token"
-#~ msgstr "Select Token"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletModal/WalletModalContent.tsx:29
-#~ msgid "Failed to Connect"
-#~ msgstr "Failed to Connect"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletModal/WalletModalContent.tsx:30
-#~ msgid "Your wallet is not connected. Please try again."
-#~ msgstr "Your wallet is not connected. Please try again."
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/pages/LanguagePage.tsx:55
-#~ msgid "Language"
-#~ msgstr "Language"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/pages/SelectBlockchainPage.tsx:42
-#~ msgid "Select chain"
-#~ msgstr "Select chain"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/pages/SelectBlockchainPage.tsx:60
-#~ msgid "Search Chain"
-#~ msgstr "Search Chain"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/pages/SelectSwapItemsPage.tsx:110
-#~ msgid "Search Token"
-#~ msgstr "Search Token"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/pages/SettingsPage.tsx:172
-#~ msgid "Setting"
-#~ msgstr "Setting"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/pages/ThemePage.tsx:71
-#~ msgid "Theme"
-#~ msgstr "Theme"
+#: widget/embedded/src/components/BlockchainsSection/BlockchainsSection.tsx:59
+#~ msgid "More +{count}"
+#~ msgstr "More +{count}"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/HeaderButtons/CancelButton.tsx:13
@@ -227,22 +158,37 @@ msgstr "Insufficent Balance:"
 #~ msgstr "Connect Wallet"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletModal/WalletModalContent.tsx:17
+#: widget/embedded/src/components/TokenList/TokenList.tsx:122
+#~ msgid "Select Token"
+#~ msgstr "Select Token"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/WalletModal/WalletModalContent.tsx:19
 #~ msgid "Wallet Connected"
 #~ msgstr "Wallet Connected"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletModal/WalletModalContent.tsx:18
+#: widget/embedded/src/components/WalletModal/WalletModalContent.tsx:20
 #~ msgid "Your wallet is connected, you can use it to swap."
 #~ msgstr "Your wallet is connected, you can use it to swap."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletModal/WalletModalContent.tsx:38
+#: widget/embedded/src/components/WalletModal/WalletModalContent.tsx:31
+#~ msgid "Failed to Connect"
+#~ msgstr "Failed to Connect"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/WalletModal/WalletModalContent.tsx:32
+#~ msgid "Your wallet is not connected. Please try again."
+#~ msgstr "Your wallet is not connected. Please try again."
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/WalletModal/WalletModalContent.tsx:40
 #~ msgid "Connecting to your wallet"
 #~ msgstr "Connecting to your wallet"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/WalletModal/WalletModalContent.tsx:39
+#: widget/embedded/src/components/WalletModal/WalletModalContent.tsx:41
 #~ msgid "Click connect in your wallet popup."
 #~ msgstr "Click connect in your wallet popup."
 
@@ -272,11 +218,26 @@ msgstr "Insufficent Balance:"
 #~ msgstr "History"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/Home.tsx:152
+#: widget/embedded/src/pages/Home.tsx:208
 #: widget/embedded/src/utils/swap.ts:151
 #: widget/embedded/src/utils/swap.ts:168
 #~ msgid "Swap"
 #~ msgstr "Swap"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/LanguagePage.tsx:42
+#~ msgid "English"
+#~ msgstr "English"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/LanguagePage.tsx:49
+#~ msgid "French"
+#~ msgstr "French"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/LanguagePage.tsx:56
+#~ msgid "Spanish"
+#~ msgstr "Spanish"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/pages/LanguagePage.tsx:66
@@ -295,15 +256,35 @@ msgstr "Insufficent Balance:"
 #~ msgstr "Search Chain"
 
 #. js-lingui-explicit-id
+#: widget/embedded/src/pages/SelectSwapItemsPage.tsx:76
+#~ msgid "Swap {type}"
+#~ msgstr "Swap {type}"
+
+#. js-lingui-explicit-id
 #: widget/embedded/src/pages/SelectSwapItemsPage.tsx:110
 #~ msgid "Search Token"
 #~ msgstr "Search Token"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/SettingsPage.tsx:100
+#~ msgid "Enabled bridges"
+#~ msgstr "Enabled bridges"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/SettingsPage.tsx:122
+#~ msgid "Enabled exchanges"
+#~ msgstr "Enabled exchanges"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/pages/SettingsPage.tsx:151
 #: widget/embedded/src/pages/ThemePage.tsx:76
 #~ msgid "Theme"
 #~ msgstr "Theme"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/SettingsPage.tsx:158
+#~ msgid "Infinite Approval"
+#~ msgstr "Infinite Approval"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/pages/SettingsPage.tsx:173
@@ -324,6 +305,11 @@ msgstr "Insufficent Balance:"
 #: widget/embedded/src/pages/ThemePage.tsx:65
 #~ msgid "Auto"
 #~ msgstr "Auto"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/WalletsPage.tsx:139
+#~ msgid "Choose a wallet to connect."
+#~ msgstr "Choose a wallet to connect."
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/utils/swap.ts:147
@@ -356,7 +342,6 @@ msgstr "Insufficent Balance:"
 #~ msgstr "The route goes through Ethereum. Continue?"
 
 #. js-lingui-explicit-id
-
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:34
 #: widget/embedded/src/components/BlockchainsSection/BlockchainsSection.tsx:25
 #~ msgid "Select Chain"

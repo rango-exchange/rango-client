@@ -81,7 +81,6 @@ export function HistoryPage() {
           <TextField
             prefix={<SearchIcon />}
             fullWidth
-            color="light"
             variant="contained"
             placeholder="Search Transaction"
             style={{

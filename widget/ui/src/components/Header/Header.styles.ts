@@ -5,7 +5,7 @@ export const Container = styled('div', {
   justifyContent: 'space-between',
   alignItems: 'center',
   padding: '$15 $20',
-  backgroundColor: '$surface100',
+  backgroundColor: '$neutral100',
   position: 'relative',
   borderTopRightRadius: '$md',
   borderTopLeftRadius: '$md',
