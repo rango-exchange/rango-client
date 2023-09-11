@@ -6,7 +6,7 @@ import React from 'react';
 import { Typography } from '../Typography';
 
 import { formattedDateAndTime, getStatus } from './SwapListItem.helpers';
-import { Container, Header, Main } from './SwapListItem.styles';
+import { Container, Date, Header, Main } from './SwapListItem.styles';
 import { StatusColors } from './SwapListItem.types';
 import { SwapToken } from './SwapToken';
 
@@ -22,9 +22,11 @@ export function SwapListItem({
     <Main onClick={onClick.bind(null, requestId)}>
       <Container>
         <Header>
-          <Typography variant="label" size="medium" color="neutral800">
-            {formattedDateAndTime(creationTime, onlyShowTime)}
-          </Typography>
+          <Date>
+            <Typography variant="label" size="medium" color="neutral800">
+              {formattedDateAndTime(creationTime, onlyShowTime)}
+            </Typography>
+          </Date>
           <Typography
             variant="label"
             size="medium"

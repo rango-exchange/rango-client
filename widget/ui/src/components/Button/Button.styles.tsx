@@ -1,6 +1,8 @@
-import { darkTheme, styled } from '../../theme';
+import { darkTheme, keyframes, styled } from '../../theme';
 
 export const ButtonBase = styled('button', {
+  position: 'relative',
+  overflow: 'hidden',
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
@@ -10,10 +12,6 @@ export const ButtonBase = styled('button', {
   borderRadius: '$xs',
   cursor: 'pointer',
   transition: 'all 0.35s',
-
-  '&:active': {
-    transform: 'scale(0.95)',
-  },
 
   variants: {
     size: {
@@ -131,11 +129,21 @@ export const ButtonBase = styled('button', {
           },
           color: '$$color',
         },
+        '&:disabled': {
+          $$color: '$colors$background',
+          [`.${darkTheme} &`]: {
+            $$color: '$colors$foreground',
+          },
+          background: '$neutral800',
+          color: '$$color',
+        },
         '&:visited': {
           background: '$primary500',
         },
-        '&:focus': {
-          background: '$primary500',
+        '&:active': {
+          backgroundColor: '$primary500',
+          backgroundSize: '100%',
+          transition: 'background 0s',
         },
       },
     },
@@ -429,5 +437,29 @@ export const Content = styled('span', {
         paddingRight: '$8',
       },
     },
+  },
+});
+
+const ripple = keyframes({
+  to: {
+    transform: 'scale(2)',
+    opacity: 0.1,
+  },
+});
+
+export const RippleContainer = styled('div', {
+  position: 'absolute',
+  top: '0',
+  right: '0',
+  bottom: '0',
+  left: '0',
+
+  '& span': {
+    transform: 'scale(0)',
+    borderRadius: '100%',
+    position: 'absolute',
+    opacity: '0.75',
+    backgroundColor: '$neutral500',
+    animation: `${ripple} 0.8s linear`,
   },
 });

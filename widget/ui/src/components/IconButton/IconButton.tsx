@@ -12,7 +12,6 @@ function IconButton(props: PropsWithChildren<PropTypes>) {
       {...props}
       style={{
         borderRadius: '100%',
-        padding: '8px',
         lineHeight: 0,
       }}>
       {props.children}

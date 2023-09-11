@@ -88,9 +88,6 @@ export const Input = styled('input', {
   outline: 'none',
   width: '100%',
   variants: {
-    prefix: {
-      true: { marginLeft: '$10' },
-    },
     suffix: {
       true: { marginRight: '$10' },
     },
