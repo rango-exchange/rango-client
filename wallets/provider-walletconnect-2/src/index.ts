@@ -1,10 +1,10 @@
 import type { WCInstance } from './types';
 import type {
-  BlockchainInfo,
   CanSwitchNetwork,
   Connect,
   Disconnect,
   GetInstance,
+  StdBlockchainInfo,
   Subscribe,
   SwitchNetwork,
   WalletConfig,
@@ -181,9 +181,9 @@ export const disconnect: Disconnect = async ({ instance }) => {
 
 export const getSigners: (provider: WCInstance) => SignerFactory = signer;
 
-export const getWalletInfo: (allBlockChains: BlockchainInfo[]) => WalletInfo = (
-  allBlockChains
-) => {
+export const getWalletInfo: (
+  allBlockChains: StdBlockchainInfo[]
+) => WalletInfo = (allBlockChains) => {
   const blockchains = filterBlockchains(allBlockChains, {
     evm: true,
   });

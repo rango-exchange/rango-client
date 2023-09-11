@@ -1,5 +1,5 @@
 import type {
-  BlockchainInfo,
+  StdBlockchainInfo,
   CanEagerConnect,
   CanSwitchNetwork,
   Connect,
@@ -105,9 +105,9 @@ export const canEagerConnect: CanEagerConnect = async ({ instance, meta }) => {
   return Promise.resolve(false);
 };
 
-export const getWalletInfo: (allBlockChains: BlockchainInfo[]) => WalletInfo = (
-  allBlockChains
-) => {
+export const getWalletInfo: (
+  allBlockChains: StdBlockchainInfo[]
+) => WalletInfo = (allBlockChains) => {
   const blockchains = filterBlockchains(allBlockChains, {
     evm: true,
     cosmos: true,

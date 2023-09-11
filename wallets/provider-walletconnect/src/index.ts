@@ -1,5 +1,5 @@
 import type {
-  BlockchainInfo,
+  StdBlockchainInfo,
   CanSwitchNetwork,
   Connect,
   Disconnect,
@@ -171,9 +171,9 @@ export const disconnect: Disconnect = async ({ instance, destroyInstance }) => {
 
 export const getSigners: (provider: any) => SignerFactory = signer;
 
-export const getWalletInfo: (allBlockChains: BlockchainInfo[]) => WalletInfo = (
-  allBlockChains
-) => {
+export const getWalletInfo: (
+  allBlockChains: StdBlockchainInfo[]
+) => WalletInfo = (allBlockChains) => {
   const blockchains = filterBlockchains(allBlockChains, {
     evm: true,
   });

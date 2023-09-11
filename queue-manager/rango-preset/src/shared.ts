@@ -1,4 +1,8 @@
-import { BlockchainInfo, Network, WalletType } from '@rango-dev/wallets-shared';
+import {
+  StdBlockchainInfo,
+  Network,
+  WalletType,
+} from '@rango-dev/wallets-shared';
 import {
   CosmosTransaction,
   EvmTransaction,
@@ -250,7 +254,7 @@ export const getCurrentBlockchainOf = (
 export const getScannerUrl = (
   txHash: string,
   network: Network,
-  blockchainMetaMap: { [key: string]: BlockchainInfo }
+  blockchainMetaMap: { [key: string]: StdBlockchainInfo }
 ): string | undefined => {
   const blockchainMeta = blockchainMetaMap[network];
   const baseUrl = blockchainMeta.transactionUrl;

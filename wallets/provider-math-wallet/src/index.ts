@@ -1,9 +1,9 @@
 import type {
-  BlockchainInfo,
   CanEagerConnect,
   CanSwitchNetwork,
   Connect,
   ProviderConnectResult,
+  StdBlockchainInfo,
   Subscribe,
   WalletInfo,
 } from '@rango-dev/wallets-shared';
@@ -72,9 +72,9 @@ export const canEagerConnect: CanEagerConnect = async ({ instance, meta }) => {
   }
   return Promise.resolve(false);
 };
-export const getWalletInfo: (allBlockChains: BlockchainInfo[]) => WalletInfo = (
-  allBlockChains
-) => {
+export const getWalletInfo: (
+  allBlockChains: StdBlockchainInfo[]
+) => WalletInfo = (allBlockChains) => {
   const blockchains = filterBlockchains(allBlockChains, {
     evm: true,
     ids: [Networks.SOLANA],

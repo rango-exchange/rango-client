@@ -1,9 +1,9 @@
 import type {
-  BlockchainInfo,
   CanEagerConnect,
   CanSwitchNetwork,
   Connect,
   ProviderConnectResult,
+  StdBlockchainInfo,
   Subscribe,
   SwitchNetwork,
   WalletInfo,
@@ -111,9 +111,9 @@ export const canEagerConnect: CanEagerConnect = async ({ instance, meta }) => {
 };
 export const getSigners: (provider: any) => SignerFactory = signer;
 
-export const getWalletInfo: (allBlockChains: BlockchainInfo[]) => WalletInfo = (
-  allBlockChains
-) => {
+export const getWalletInfo: (
+  allBlockChains: StdBlockchainInfo[]
+) => WalletInfo = (allBlockChains) => {
   const blockchains = filterBlockchains(allBlockChains, {
     evm: true,
     ids: [Networks.TRON],

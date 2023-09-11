@@ -1,5 +1,5 @@
 import type {
-  BlockchainInfo,
+  StdBlockchainInfo,
   Connect,
   Subscribe,
   WalletInfo,
@@ -42,9 +42,9 @@ export const subscribe: Subscribe = ({ connect, disconnect }) => {
 
 export const getSigners: (provider: any) => SignerFactory = signer;
 
-export const getWalletInfo: (allBlockChains: BlockchainInfo[]) => WalletInfo = (
-  allBlockChains
-) => {
+export const getWalletInfo: (
+  allBlockChains: StdBlockchainInfo[]
+) => WalletInfo = (allBlockChains) => {
   const blockchains = filterBlockchains(allBlockChains, {
     cosmos: true,
   });

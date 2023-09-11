@@ -1,8 +1,8 @@
 import type {
-  BlockchainInfo,
   CanEagerConnect,
   CanSwitchNetwork,
   Connect,
+  StdBlockchainInfo,
   Subscribe,
   WalletInfo,
 } from '@rango-dev/wallets-shared';
@@ -52,9 +52,9 @@ export const getSigners: (provider: any) => SignerFactory = signer;
 export const canEagerConnect: CanEagerConnect = ({ instance }) =>
   instance.isPreauthorized();
 
-export const getWalletInfo: (allBlockChains: BlockchainInfo[]) => WalletInfo = (
-  allBlockChains
-) => {
+export const getWalletInfo: (
+  allBlockChains: StdBlockchainInfo[]
+) => WalletInfo = (allBlockChains) => {
   const blockchains = filterBlockchains(allBlockChains, {
     ids: [Networks.STARKNET],
   });

@@ -1,8 +1,8 @@
 import type {
-  BlockchainInfo,
   CanSwitchNetwork,
   Connect,
   ProviderConnectResult,
+  StdBlockchainInfo,
   Subscribe,
   SwitchNetwork,
   WalletInfo,
@@ -65,9 +65,9 @@ export const canSwitchNetworkTo: CanSwitchNetwork = canSwitchNetworkToEvm;
 
 export const getSigners: (provider: any) => SignerFactory = signer;
 
-export const getWalletInfo: (allBlockChains: BlockchainInfo[]) => WalletInfo = (
-  allBlockChains
-) => {
+export const getWalletInfo: (
+  allBlockChains: StdBlockchainInfo[]
+) => WalletInfo = (allBlockChains) => {
   const blockchains = filterBlockchains(allBlockChains, {
     evm: true,
     ids: [Networks.SOLANA],

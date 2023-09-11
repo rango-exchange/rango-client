@@ -1,8 +1,8 @@
 import type {
-  BlockchainInfo,
   CanEagerConnect,
   CanSwitchNetwork,
   Connect,
+  StdBlockchainInfo,
   Subscribe,
   SwitchNetwork,
   WalletInfo,
@@ -51,9 +51,9 @@ export const getSigners: (provider: any) => SignerFactory = signer;
 
 export const canEagerConnect: CanEagerConnect = canEagerlyConnectToEvm;
 
-export const getWalletInfo: (allBlockChains: BlockchainInfo[]) => WalletInfo = (
-  allBlockChains
-) => {
+export const getWalletInfo: (
+  allBlockChains: StdBlockchainInfo[]
+) => WalletInfo = (allBlockChains) => {
   const blockchains = filterBlockchains(allBlockChains, {
     ids: TAHO_WALLET_SUPPORTED_CHAINS,
   });

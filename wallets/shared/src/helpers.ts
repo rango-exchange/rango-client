@@ -15,9 +15,9 @@ import type {
 import { Networks } from './rango';
 
 export type {
-  StdBlockchainInfo as BlockchainInfo,
+  StdBlockchainInfo,
   EvmNetworksChainInfo,
-  StdCosmosBlockchainInfo as CosmosBlockchainInfo,
+  StdCosmosBlockchainInfo,
 };
 
 export { isAddress as isEvmAddress } from 'ethers/lib/utils.js';

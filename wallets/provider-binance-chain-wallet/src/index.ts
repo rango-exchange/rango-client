@@ -1,5 +1,5 @@
 import type {
-  BlockchainInfo,
+  StdBlockchainInfo,
   CanSwitchNetwork,
   Connect,
   Subscribe,
@@ -73,9 +73,9 @@ export const canSwitchNetworkTo: CanSwitchNetwork = () => false;
 
 export const getSigners: (provider: any) => SignerFactory = signer;
 
-export const getWalletInfo: (allBlockChains: BlockchainInfo[]) => WalletInfo = (
-  allBlockChains
-) => {
+export const getWalletInfo: (
+  allBlockChains: StdBlockchainInfo[]
+) => WalletInfo = (allBlockChains) => {
   const blockchains = filterBlockchains(allBlockChains, {
     ids: BINANCE_CHAIN_WALLET_SUPPORTED_CHAINS,
   });

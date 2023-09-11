@@ -1,9 +1,9 @@
 import type {
-  BlockchainInfo,
   CanEagerConnect,
   CanSwitchNetwork,
   Connect,
   ProviderConnectResult,
+  StdBlockchainInfo,
   Subscribe,
   SwitchNetwork,
   WalletInfo,
@@ -94,9 +94,9 @@ export const canEagerConnect: CanEagerConnect = async ({ instance, meta }) => {
   }
   return Promise.resolve(false);
 };
-export const getWalletInfo: (allBlockChains: BlockchainInfo[]) => WalletInfo = (
-  allBlockChains
-) => {
+export const getWalletInfo: (
+  allBlockChains: StdBlockchainInfo[]
+) => WalletInfo = (allBlockChains) => {
   const blockchains = filterBlockchains(allBlockChains, {
     ids: [...SUPPORTED_ETH_CHAINS, ...SUPPORTED_NATIVE_CHAINS, Networks.SOLANA],
   });

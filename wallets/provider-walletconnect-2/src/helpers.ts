@@ -1,4 +1,4 @@
-import type { BlockchainInfo, WalletState } from '@rango-dev/wallets-shared';
+import type { StdBlockchainInfo, WalletState } from '@rango-dev/wallets-shared';
 import type { ProposalTypes } from '@walletconnect/types';
 
 import { filterBlockchains, Networks } from '@rango-dev/wallets-shared';
@@ -36,7 +36,7 @@ type FinalNamespaces = {
 };
 
 export function generateRequiredNamespace(
-  meta: BlockchainInfo[],
+  meta: StdBlockchainInfo[],
   network: string
 ): FinalNamespaces | undefined {
   const evm = filterBlockchains(meta, { evm: true });
@@ -86,7 +86,7 @@ export function generateRequiredNamespace(
 }
 
 export function generateOptionalNamespace(
-  meta: BlockchainInfo[]
+  meta: StdBlockchainInfo[]
 ): FinalNamespaces | undefined {
   const evm = filterBlockchains(meta, { evm: true });
   const cosmos = filterBlockchains(meta, { cosmos: true });
@@ -142,7 +142,7 @@ export function solanaChainIdToNetworkName(chainId: string): string {
 export async function simulateRequest(
   params: any,
   provider: any,
-  meta: BlockchainInfo[],
+  meta: StdBlockchainInfo[],
   getState: () => WalletState
 ) {
   if (params.method === 'eth_chainId') {
@@ -175,7 +175,7 @@ export async function simulateRequest(
 
 export function getChainIdByNetworkName(
   network: string,
-  meta: BlockchainInfo[]
+  meta: StdBlockchainInfo[]
 ): string | undefined {
   const targetBlockchain = meta.find((blockchain) => blockchain.id === network);
   const chainIdInHex = targetBlockchain?.chainId;

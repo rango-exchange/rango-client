@@ -1,9 +1,9 @@
 import type { TonProvider } from './types';
 import type {
-  BlockchainInfo,
   CanEagerConnect,
   CanSwitchNetwork,
   Connect,
+  StdBlockchainInfo,
   WalletInfo,
 } from '@rango-dev/wallets-shared';
 import type { SignerFactory } from 'rango-types';
@@ -76,9 +76,9 @@ export const canSwitchNetworkTo: CanSwitchNetwork = () => false;
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const getSigners: (provider: any) => SignerFactory = signer;
 
-export const getWalletInfo: (allBlockChains: BlockchainInfo[]) => WalletInfo = (
-  allBlockChains
-) => {
+export const getWalletInfo: (
+  allBlockChains: StdBlockchainInfo[]
+) => WalletInfo = (allBlockChains) => {
   const blockchains = filterBlockchains(allBlockChains, {
     ids: [Networks.TON],
   });

@@ -9,8 +9,8 @@ import {
   WalletInfo,
   WalletTypes,
   Networks,
-  BlockchainInfo,
-  CosmosBlockchainInfo,
+  StdBlockchainInfo,
+  StdCosmosBlockchainInfo,
 } from '@rango-dev/wallets-shared';
 
 import {
@@ -74,7 +74,7 @@ export function getlistWallet(
 }
 
 export function walletAndSupportedChainsNames(
-  supportedChains: BlockchainInfo[]
+  supportedChains: StdBlockchainInfo[]
 ): Network[] | null {
   if (!supportedChains) return null;
   let walletAndSupportedChainsNames: Network[] = [];
@@ -391,7 +391,7 @@ export const getUsdPrice = (
   return token?.usdPrice || null;
 };
 export const isExperimentalChain = (
-  blockchains: CosmosBlockchainInfo[],
+  blockchains: StdCosmosBlockchainInfo[],
   network: string
 ): boolean => {
   const cosmosExperimentalChainInfo =
