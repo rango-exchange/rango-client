@@ -1,7 +1,6 @@
 import { Network, WalletType, WalletInfo } from '@rango-dev/wallets-shared';
 import { State as WalletState } from './wallet';
-import { SignerFactory } from 'rango-types';
-import { BlockchainInfo } from 'rango-chains';
+import { SignerFactory, StdBlockchainInfo } from 'rango-types';
 
 export type State = {
   [key: string]: WalletState | undefined;
@@ -32,7 +31,7 @@ export type ProviderConnectResult = {
 export type GetInstanceOptions = {
   network?: Network;
   currentProvider: any;
-  meta: BlockchainInfo[];
+  meta: StdBlockchainInfo[];
   getState: () => WalletState;
   /**
    * We always get the instance once and reuse it whenever we needs. By using this option
@@ -55,7 +54,7 @@ export type TryGetInstance =
 export type Connect = (options: {
   instance: any;
   network?: Network;
-  meta: BlockchainInfo[];
+  meta: StdBlockchainInfo[];
 }) => Promise<ProviderConnectResult | ProviderConnectResult[]>;
 
 export type Disconnect = (options: {
@@ -66,7 +65,7 @@ export type Disconnect = (options: {
 export type Subscribe = (options: {
   instance: any;
   state: WalletState;
-  meta: BlockchainInfo[];
+  meta: StdBlockchainInfo[];
   updateChainId: (chainId: string) => void;
   updateAccounts: (accounts: string[], chainId?: string) => void;
   connect: (network?: Network) => void;
@@ -76,19 +75,19 @@ export type Subscribe = (options: {
 export type SwitchNetwork = (options: {
   instance: any;
   network: Network;
-  meta: BlockchainInfo[];
+  meta: StdBlockchainInfo[];
   newInstance?: TryGetInstance;
 }) => Promise<void>;
 
 export type CanSwitchNetwork = (options: {
   network: Network;
-  meta: BlockchainInfo[];
+  meta: StdBlockchainInfo[];
   provider: any;
 }) => boolean;
 
 export type CanEagerConnect = (options: {
   instance: any;
-  meta: BlockchainInfo[];
+  meta: StdBlockchainInfo[];
 }) => Promise<boolean>;
 
 export interface WalletActions {
@@ -103,7 +102,7 @@ export interface WalletActions {
   getSigners: (provider: any) => SignerFactory;
   canSwitchNetworkTo?: CanSwitchNetwork;
   canEagerConnect?: CanEagerConnect;
-  getWalletInfo(allBlockChains: BlockchainInfo[]): WalletInfo;
+  getWalletInfo(allBlockChains: StdBlockchainInfo[]): WalletInfo;
 }
 
 export interface WalletConfig {

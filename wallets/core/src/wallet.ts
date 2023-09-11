@@ -4,7 +4,7 @@ import {
   Networks,
   WalletType,
 } from '@rango-dev/wallets-shared';
-import { BlockchainInfo } from 'rango-chains';
+import { StdBlockchainInfo } from 'rango-types';
 import { accountAddressesWithNetwork, needsCheckInstallation } from './helpers';
 import {
   Events,
@@ -18,7 +18,7 @@ export type EventHandler = (
   event: Events,
   value: any,
   coreState: State,
-  supportedChains: BlockchainInfo[]
+  supportedChains: StdBlockchainInfo[]
 ) => void;
 
 export interface State {
@@ -39,7 +39,7 @@ class Wallet<InstanceType = any> {
   private actions: WalletActions;
   private state: State;
   private options: Options;
-  private meta: BlockchainInfo[];
+  private meta: StdBlockchainInfo[];
   public provider: InstanceType | null;
 
   constructor(options: Options, actions: WalletActions) {
@@ -242,7 +242,7 @@ class Wallet<InstanceType = any> {
   getSigners(provider: any) {
     return this.actions.getSigners(provider);
   }
-  getWalletInfo(allBlockChains: BlockchainInfo[]) {
+  getWalletInfo(allBlockChains: StdBlockchainInfo[]) {
     return this.actions.getWalletInfo(allBlockChains);
   }
   canSwitchNetworkTo(network: Network, provider: any) {
@@ -297,7 +297,7 @@ class Wallet<InstanceType = any> {
     }
   }
 
-  setMeta(value: BlockchainInfo[]) {
+  setMeta(value: StdBlockchainInfo[]) {
     this.meta = value;
   }
 

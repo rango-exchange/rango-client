@@ -6,7 +6,7 @@ import type {
   SwitchNetwork,
 } from './rango';
 
-import { BlockchainInfo, EVMBlockchainInfo } from 'rango-chains';
+import { StdBlockchainInfo, StdEvmBlockchainInfo } from 'rango-types';
 
 import {
   convertEvmBlockchainMetaToEvmChainInfo,
@@ -70,7 +70,8 @@ export const switchNetworkForEvm: SwitchNetwork = async ({
   meta,
 }) => {
   const evmBlockchains = meta.filter(
-    (blockchain): blockchain is EVMBlockchainInfo => blockchain.type === 'EVM'
+    (blockchain): blockchain is StdEvmBlockchainInfo =>
+      blockchain.type === 'EVM'
   );
   const evmInstance = getNetworkInstance(instance, Networks.ETHEREUM);
   await switchOrAddNetworkForMetamaskCompatibleWallets(
@@ -84,14 +85,14 @@ export const canSwitchNetworkToEvm: CanSwitchNetwork = ({ network, meta }) => {
   return evmNetworkNames(meta).includes(network);
 };
 
-export function evmNetworkNames(meta: BlockchainInfo[]) {
+export function evmNetworkNames(meta: StdBlockchainInfo[]) {
   return meta
     .filter((blockchain) => blockchain.type === 'EVM')
     .map((blockchain) => blockchain.id);
 }
 export function getEthChainsInstance(
   network: Network | null,
-  meta: BlockchainInfo[]
+  meta: StdBlockchainInfo[]
 ): Network | null {
   if (!network) {
     return null;
@@ -100,7 +101,7 @@ export function getEthChainsInstance(
   return evmBlockchains.includes(network) ? Networks.ETHEREUM : null;
 }
 
-function isEvmNetwork(network: Network | null, meta: BlockchainInfo[]) {
+function isEvmNetwork(network: Network | null, meta: StdBlockchainInfo[]) {
   if (!network) {
     return false;
   }
@@ -109,7 +110,7 @@ function isEvmNetwork(network: Network | null, meta: BlockchainInfo[]) {
 
 export function chooseInstance(
   instances: null | Map<any, any>,
-  meta: BlockchainInfo[],
+  meta: StdBlockchainInfo[],
   network?: Network | null
 ) {
   // If there is no `network` we fallback to default network.

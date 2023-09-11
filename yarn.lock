@@ -18977,10 +18977,15 @@ rango-sdk@^0.1.35:
     rango-types "^0.1.47"
     uuid-random "^1.3.2"
 
-rango-types@^0.1.45, rango-types@^0.1.46, rango-types@^0.1.47:
+rango-types@^0.1.45, rango-types@^0.1.47:
   version "0.1.47"
   resolved "https://registry.yarnpkg.com/rango-types/-/rango-types-0.1.47.tgz#c8cb07e807fb805628dcf006566aae53bede0689"
   integrity sha512-o9WpuQy3lIEZOKwD08iCimlUVaUeQSkf1vrUVOmcfCb+NjNkm81pgZITIH3z2/Zkdtb/jdC9x8yi0GcvgHCnJQ==
+
+rango-types@^0.1.54:
+  version "0.1.54"
+  resolved "https://registry.yarnpkg.com/rango-types/-/rango-types-0.1.54.tgz#175495e30490c8a2bac16ca555d9413a52182beb"
+  integrity sha512-4qKRk+RFw6ISql5H8egWv1C522NHHd8hzTdSFFxxuFLxdug5phpITGzSEHEDKNjcJguYxkvLNlDmp16wVrmIqQ==
 
 raw-body@2.5.1:
   version "2.5.1"

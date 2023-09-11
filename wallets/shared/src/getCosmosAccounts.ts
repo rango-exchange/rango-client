@@ -1,27 +1,29 @@
 import type { Connect, ProviderConnectResult } from './rango';
 import type { Keplr as InstanceType } from '@keplr-wallet/types';
-import type { BlockchainInfo, CosmosBlockchainInfo } from 'rango-chains';
+import type { StdBlockchainInfo, StdCosmosBlockchainInfo } from 'rango-types';
 import { filterBlockchains } from './helpers';
 
-const getCosmosMainChainsIds = (blockchains: CosmosBlockchainInfo[]) =>
+const getCosmosMainChainsIds = (blockchains: StdCosmosBlockchainInfo[]) =>
   blockchains
+    .filter((blockchain) => !!blockchain.manifest)
     .filter((blockchain) => !blockchain.manifest.experimental)
     .map((blockchain) => blockchain.chainId)
     .filter((chainId): chainId is string => !!chainId);
 
-const getCosmosMiscChainsIds = (blockchains: CosmosBlockchainInfo[]) =>
+const getCosmosMiscChainsIds = (blockchains: StdCosmosBlockchainInfo[]) =>
   blockchains
-    .filter((blockchain) => blockchain.manifest.experimental)
+    .filter((blockchain) => !!blockchain.manifest)
+    .filter((blockchain) => blockchain.manifest?.experimental)
     .map((blockchain) => blockchain.chainId)
     .filter((chainId): chainId is string => !!chainId);
 
 export const getCosmosExperimentalChainInfo = (
-  blockchains: CosmosBlockchainInfo[]
+  blockchains: StdCosmosBlockchainInfo[]
 ): {
-  [key: string]: CosmosBlockchainInfo['manifest'];
+  [key: string]: StdCosmosBlockchainInfo['manifest'];
 } =>
   blockchains
-    .filter((blockchain) => !!blockchain.chainId)
+    .filter((blockchain) => !!blockchain.chainId && !!blockchain.manifest)
     .reduce(
       (obj, cur) => ({
         ...obj,
@@ -75,11 +77,11 @@ async function tryRequestMiscAccounts({
 }: {
   excludedChain?: string;
   instance: InstanceType;
-  meta: BlockchainInfo[];
+  meta: StdBlockchainInfo[];
 }): Promise<ProviderConnectResult[]> {
   const cosmosBlockchains = filterBlockchains(meta, {
     cosmos: true,
-  }) as CosmosBlockchainInfo[];
+  }) as StdCosmosBlockchainInfo[];
   const offlineSigners = getCosmosMiscChainsIds(cosmosBlockchains)
     .filter((id) => id !== excludedChain)
     .map((chainId) => {
@@ -117,7 +119,7 @@ export const getCosmosAccounts: Connect = async ({
 }) => {
   const cosmosBlockchains = filterBlockchains(meta, {
     cosmos: true,
-  }) as CosmosBlockchainInfo[];
+  }) as StdCosmosBlockchainInfo[];
   const chainInfo = network
     ? getCosmosExperimentalChainInfo(cosmosBlockchains)[network]
     : null;

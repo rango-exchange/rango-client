@@ -25,7 +25,7 @@
     "@rango-dev/wallets-shared": "^0.15.1-next.1",
     "@safe-global/safe-apps-provider": "^0.17.0",
     "@safe-global/safe-apps-sdk": "^7.11.0",
-    "rango-types": "^0.1.46"
+    "rango-types": "^0.1.54"
   },
   "publishConfig": {
     "access": "public"

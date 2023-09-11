@@ -13,7 +13,7 @@ import { useWalletProviders } from './hooks/useWalletProviders';
 import { WidgetConfig } from './types';
 import { createContext, useRef } from 'react';
 import { ProvidersOptions } from './utils/providers';
-import { blockchainMetaStd } from 'rango-chains';
+// import { blockchainMetaStd } from 'rango-chains';
 
 type OnConnectHandler = (key: string) => void;
 interface WidgetContextInterface {

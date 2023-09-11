@@ -26,7 +26,7 @@
     "@ethersproject/abstract-provider": "^5.7.0",
     "eth-rpc-errors": "^4.0.3",
     "ethers": "^5.7.2",
-    "rango-types": "^0.1.46"
+    "rango-types": "^0.1.54"
   },
   "publishConfig": {
     "access": "public"

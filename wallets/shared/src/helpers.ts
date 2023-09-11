@@ -7,14 +7,18 @@ import type {
   Wallet,
 } from './rango';
 import type {
-  BlockchainInfo,
-  CosmosBlockchainInfo,
-  EVMBlockchainInfo,
-} from 'rango-chains';
+  StdBlockchainInfo,
+  StdCosmosBlockchainInfo,
+  StdEvmBlockchainInfo,
+} from 'rango-types';
 
 import { Networks } from './rango';
 
-export type { BlockchainInfo, EvmNetworksChainInfo, CosmosBlockchainInfo };
+export type {
+  StdBlockchainInfo as BlockchainInfo,
+  EvmNetworksChainInfo,
+  StdCosmosBlockchainInfo as CosmosBlockchainInfo,
+};
 
 export { isAddress as isEvmAddress } from 'ethers/lib/utils.js';
 
@@ -25,11 +29,11 @@ export type FilterBlockchainsParams = {
 };
 
 export const filterBlockchains = (
-  blockchains: BlockchainInfo[],
+  blockchains: StdBlockchainInfo[],
   filters: FilterBlockchainsParams
-): BlockchainInfo[] => {
+): StdBlockchainInfo[] => {
   const { evm, cosmos, ids } = filters;
-  let result: BlockchainInfo[] = [];
+  let result: StdBlockchainInfo[] = [];
   if (evm) {
     result = [...result, ...blockchains.filter((it) => it.type === 'EVM')];
   }
@@ -133,10 +137,10 @@ export async function timeout<T = any>(
 }
 
 export const convertEvmBlockchainMetaToEvmChainInfo = (
-  evmBlockchains: BlockchainInfo[]
+  evmBlockchains: StdBlockchainInfo[]
 ) =>
   evmBlockchains
-    .filter((it): it is EVMBlockchainInfo => it.type === 'EVM')
+    .filter((it): it is StdEvmBlockchainInfo => it.type === 'EVM')
     .reduce(
       (
         evmNetWorksChainInfo: { [key: string]: AddEthereumChainParameter },
