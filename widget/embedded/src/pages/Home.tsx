@@ -321,6 +321,7 @@ export function Home() {
             size="large"
             disabled={swapButtonState.disabled}
             fullWidth
+            loading={loadingMetaStatus === 'loading'}
             onClick={() => {
               if (swapButtonState.title === 'Connect Wallet') {
                 navigate(navigationRoutes.wallets);

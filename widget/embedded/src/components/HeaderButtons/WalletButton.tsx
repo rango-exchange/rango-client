@@ -4,12 +4,13 @@ import { i18n } from '@lingui/core';
 import { Tooltip, WalletIcon } from '@rango-dev/ui';
 import React from 'react';
 
-import { HeaderButton } from './HeaderButtons.styles';
+import { ConnectedIcon, HeaderButton } from './HeaderButtons.styles';
 
 function WalletButton(props: PropTypes) {
   return (
     <Tooltip side="top" content={i18n.t('Connect Wallet')}>
       <HeaderButton variant="ghost" size="small" onClick={props.onClick}>
+        {props.isConnected && <ConnectedIcon />}
         <WalletIcon size={18} color="black" />
       </HeaderButton>
     </Tooltip>

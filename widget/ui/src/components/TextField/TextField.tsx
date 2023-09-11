@@ -45,7 +45,6 @@ function TextFieldComponent(props: PropsWithChildren<PropTypes>, ref?: Ref) {
           className="_text"
           {...inputAttributes}
           spellCheck={false}
-          prefix={!!prefix}
           suffix={!!suffix}
           ref={ref}
         />
