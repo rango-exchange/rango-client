@@ -11,6 +11,9 @@ const ImageContainer = styled('div', {
     height: '100%',
     objectFit: 'contain',
   },
+  '.circular': {
+    borderRadius: '$lg',
+  },
 });
 
 type PropTypes = {
@@ -18,6 +21,7 @@ type PropTypes = {
   useAsPlaceholder?: boolean;
   backgroundColor?: string;
   borderRadius?: string;
+  type?: 'circular' | 'rectangular';
 } & React.ImgHTMLAttributes<HTMLImageElement>;
 
 export function Image(props: PropTypes) {
@@ -25,9 +29,11 @@ export function Image(props: PropTypes) {
     size,
     useAsPlaceholder,
     backgroundColor = '$secondary100',
-    borderRadius = '$xs',
+    type,
     ...otherProps
   } = props;
+
+  const borderRadius = type === 'circular' ? '$lg' : '$xs';
 
   return (
     <ImageContainer
@@ -37,7 +43,12 @@ export function Image(props: PropTypes) {
         height: size + 'px',
         ...(useAsPlaceholder && { backgroundColor, borderRadius }),
       }}>
-      {!useAsPlaceholder && <img className="image" {...otherProps} />}
+      {!useAsPlaceholder && (
+        <img
+          className={`image ${type === 'circular' ? 'circular' : ''}`}
+          {...otherProps}
+        />
+      )}
     </ImageContainer>
   );
 }

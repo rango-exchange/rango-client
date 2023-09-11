@@ -29,7 +29,7 @@ export const BackDrop = styled('div', {
 export const ModalContainer = styled('div', {
   backgroundColor: '$background',
   padding: '$10 $20',
-  borderRadius: '$sm',
+  borderRadius: '$md',
   display: 'flex',
   flexDirection: 'column',
   zIndex: 9999999,

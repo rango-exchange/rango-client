@@ -6,14 +6,26 @@ import React from 'react';
 import { Spinner } from '../Spinner';
 
 import { ButtonBase, Content } from './Button.styles';
+import Ripple from './Ripple';
 
 export function Button(props: PropsWithChildren<PropTypes>) {
-  const { children, loading, disabled, prefix, suffix, ...otherProps } = props;
+  const {
+    children,
+    loading,
+    disabled,
+    prefix,
+    suffix,
+    onClick,
+    ...otherProps
+  } = props;
 
   return (
-    <ButtonBase disabled={disabled} {...otherProps}>
+    <ButtonBase
+      disabled={!loading && disabled}
+      onClick={loading || disabled ? undefined : onClick}
+      {...otherProps}>
       {loading ? (
-        <Spinner />
+        <Spinner css={{ width: '$24', height: '$24' }} />
       ) : (
         <>
           {prefix}
@@ -25,6 +37,7 @@ export function Button(props: PropsWithChildren<PropTypes>) {
           {suffix}
         </>
       )}
+      {!disabled && !loading && <Ripple />}
     </ButtonBase>
   );
 }

@@ -1,5 +1,6 @@
 export interface PropTypes {
   onClick: () => void;
+  isConnected?: boolean;
 }
 export interface HomeButtonsPropTypes {
   onClickRefresh?: () => void;

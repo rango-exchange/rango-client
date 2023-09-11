@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { navigationRoutes } from '../../constants/navigationRoutes';
 import { useUiStore } from '../../store/ui';
+import { useWalletsStore } from '../../store/wallets';
 import { BackButton, CancelButton, WalletButton } from '../HeaderButtons';
 
 import { Container, Content, Footer } from './Layout.styles';
@@ -16,6 +17,8 @@ export function Layout({
   header,
   hasFooter,
 }: PropsWithChildren<PropTypes>) {
+  const connectedWallets = useWalletsStore.use.connectedWallets();
+
   const connectWalletsButtonDisabled =
     useUiStore.use.connectWalletsButtonDisabled();
   const navigate = useNavigate();
@@ -35,7 +38,10 @@ export function Layout({
           <>
             {header.suffix}
             {header.hasConnectWallet && (
-              <WalletButton onClick={onConnectWallet} />
+              <WalletButton
+                onClick={onConnectWallet}
+                isConnected={!!connectedWallets?.length}
+              />
             )}
             {header.onCancel && <CancelButton onClick={header.onCancel} />}
           </>

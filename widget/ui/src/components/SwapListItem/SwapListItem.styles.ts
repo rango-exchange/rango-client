@@ -20,7 +20,7 @@ export const Main = styled('button', {
   backgroundColor: '$neutral100',
   border: 'none',
   width: '100%',
-  borderRadius: '$md',
+  borderRadius: '$xm',
   gap: 10,
   padding: 15,
   cursor: 'pointer',
@@ -31,4 +31,14 @@ export const Main = styled('button', {
     },
     backgroundColor: '$$color',
   },
+  '&:focus-visible': {
+    backgroundColor: '$surface600',
+    outline: 'none',
+  },
+});
+
+export const Date = styled('div', {
+  display: 'flex',
+  padding: '$2',
+  alignItems: 'flex-start',
 });
