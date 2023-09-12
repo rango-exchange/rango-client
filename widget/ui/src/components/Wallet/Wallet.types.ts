@@ -1,4 +1,4 @@
-import { InstallObjects, WalletType } from '@rango-dev/wallets-shared';
+import type { InstallObjects, WalletType } from '@rango-dev/wallets-shared';
 
 export enum WalletState {
   NOT_INSTALLED = 'not_installed',
@@ -12,17 +12,8 @@ export type WalletInfo = {
   link: InstallObjects | string;
   title: string;
   image: string;
-  type: WalletType;
+  type: string;
 };
-
-export interface SelectableWallet {
-  chain: string;
-  walletType: WalletType;
-  address: string;
-  image: string;
-  selected: boolean;
-  name: string;
-}
 
 export interface Info {
   color: string;
@@ -62,11 +53,13 @@ interface WalletProps {
   image: string;
   type: WalletType;
   onClick: (type: WalletType) => void;
+  selected?: boolean;
+  description?: string;
 }
 
-export type SelectablePropTypes = WalletProps & {
-  selected: boolean;
-  description: string;
-};
-
 export type WalletPropTypes = State & WalletProps;
+
+export type SelectablePropTypes = WalletPropTypes & {
+  selected: boolean;
+  description?: string;
+};

@@ -140,7 +140,7 @@ export enum Networks {
   Unknown = 'Unkown',
 }
 
-export const XDEFI_WALLET_SUPPORTED_NATIVE_CHAINS = [
+export const XDEFI_WALLET_SUPPORTED_NATIVE_CHAINS: string[] = [
   Networks.BTC,
   Networks.LTC,
   Networks.THORCHAIN,
@@ -148,7 +148,7 @@ export const XDEFI_WALLET_SUPPORTED_NATIVE_CHAINS = [
   Networks.BINANCE,
 ];
 
-export const KEPLR_COMPATIBLE_WALLETS = [
+export const KEPLR_COMPATIBLE_WALLETS: string[] = [
   WalletTypes.KEPLR,
   WalletTypes.COSMOSTATION,
 ];

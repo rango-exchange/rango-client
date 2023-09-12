@@ -1,9 +1,11 @@
-import React, { PropsWithChildren, useEffect, useState } from 'react';
-import { styled } from '../../theme';
-import { Typography } from '../Typography';
+import type { PropsWithChildren } from 'react';
+
+import React, { useEffect, useState } from 'react';
+
 import { getConciseAddress } from '../../helper';
+import { styled } from '../../theme';
 import { Image } from '../common';
-import { SelectableWallet } from '../Wallet';
+import { Typography } from '../Typography';
 
 const Row = styled('div', {
   display: 'flex',
@@ -73,8 +75,8 @@ const Container = styled('div', {
 });
 
 export interface PropTypes {
-  list: SelectableWallet[];
-  onChange: (w: SelectableWallet) => void;
+  list: any[];
+  onChange: (w: any) => void;
 }
 
 export function SelectableWalletList({
@@ -84,7 +86,7 @@ export function SelectableWalletList({
   const [active, setActive] = useState<string>(
     list.find((item) => item.selected)?.walletType || ''
   );
-  const onClick = (w: SelectableWallet) => {
+  const onClick = (w: any) => {
     setActive(w.walletType);
     onChange(w);
   };
@@ -101,6 +103,7 @@ export function SelectableWalletList({
           <Container
             checked={checked}
             onClick={onClick.bind(null, w)}
+            // eslint-disable-next-line react/no-array-index-key
             key={index}>
             <Image src={w.image} alt={w.walletType} size={24} />
             <Typography variant="body" size="small">

@@ -1,5 +1,4 @@
 import type { WidgetConfig } from '../types';
-import type { WalletInfo } from '@rango-dev/ui';
 import type { WalletType } from '@rango-dev/wallets-shared';
 
 import { i18n } from '@lingui/core';
@@ -9,20 +8,15 @@ import {
   styled,
   Typography,
   Wallet,
-  WalletState,
 } from '@rango-dev/ui';
-import { useWallets } from '@rango-dev/wallets-react';
-import { WalletTypes } from '@rango-dev/wallets-shared';
-import React, { Fragment, useEffect, useRef, useState } from 'react';
+import React, { Fragment, useState } from 'react';
 
 import { Layout } from '../components/Layout';
 import { WalletModal } from '../components/WalletModal';
 import { navigationRoutes } from '../constants/navigationRoutes';
 import { useNavigateBack } from '../hooks/useNavigateBack';
+import { useWalletList } from '../hooks/useWalletList';
 import { useMetaStore } from '../store/meta';
-import { useUiStore } from '../store/ui';
-import { configWalletsToWalletName } from '../utils/providers';
-import { getlistWallet, sortWalletsBasedOnState } from '../utils/wallets';
 
 interface PropTypes {
   supportedWallets: WidgetConfig['wallets'];
@@ -52,8 +46,7 @@ const Container = styled('div', {
   textAlign: 'center',
 });
 
-const ALL_SUPPORTED_WALLETS = Object.values(WalletTypes);
-const TIME_TO_CLOSE_MODAL = 3_000;
+export const TIME_TO_CLOSE_MODAL = 3_000;
 
 export function WalletsPage({
   supportedWallets,
@@ -61,66 +54,19 @@ export function WalletsPage({
   config,
 }: PropTypes) {
   const { navigateBackFrom } = useNavigateBack();
-  const { state, disconnect, getWalletInfo, connect } = useWallets();
   const [openModal, setOpenModal] = useState<WalletType>('');
-  const [hasError, setHasError] = useState(false);
-  const wallets = getlistWallet(
-    state,
-    getWalletInfo,
-    configWalletsToWalletName(supportedWallets, {
-      walletConnectProjectId: config?.walletConnectProjectId,
-    }) || ALL_SUPPORTED_WALLETS
-  );
-  const walletsRef = useRef<WalletInfo[]>();
+  const { list, handleClick, error } = useWalletList({
+    supportedWallets,
+    multiWallets,
+    config,
+    onBeforeConnect: () =>
+      setTimeout(() => {
+        setOpenModal('');
+      }, TIME_TO_CLOSE_MODAL),
+    onConnect: setOpenModal,
+  });
 
-  const sortedWallets = sortWalletsBasedOnState(wallets);
-  const toggleConnectWalletsButton =
-    useUiStore.use.toggleConnectWalletsButton();
   const loadingMetaStatus = useMetaStore.use.loadingStatus();
-
-  const onSelectWallet = async (type: WalletType) => {
-    const wallet = state(type);
-    try {
-      setHasError(false);
-      if (wallet.connected) {
-        await disconnect(type);
-      } else {
-        if (
-          !multiWallets &&
-          !!wallets.find((w) => w.state === WalletState.CONNECTED)
-        ) {
-          return;
-        }
-        setOpenModal(type);
-        await connect(type);
-        setTimeout(() => {
-          setOpenModal('');
-        }, TIME_TO_CLOSE_MODAL);
-      }
-    } catch (e) {
-      setHasError(true);
-    }
-  };
-  const disconnectConnectingWallets = () => {
-    const connectingWallets =
-      walletsRef.current?.filter(
-        (wallet) => wallet.state === WalletState.CONNECTING
-      ) || [];
-    for (const wallet of connectingWallets) {
-      void disconnect(wallet.type);
-    }
-  };
-  useEffect(() => {
-    toggleConnectWalletsButton();
-    return () => {
-      disconnectConnectingWallets();
-      toggleConnectWalletsButton();
-    };
-  }, []);
-
-  useEffect(() => {
-    walletsRef.current = wallets;
-  }, [wallets]);
 
   return (
     <Layout
@@ -140,14 +86,14 @@ export function WalletsPage({
         </Typography>
         <ListContainer>
           {loadingMetaStatus === 'success' &&
-            sortedWallets.map((wallet, index) => {
+            list.map((wallet, index) => {
               const key = `wallet-${index}-${wallet.type}`;
               return (
                 <Fragment key={key}>
                   <Wallet
                     {...wallet}
                     onClick={(type) => {
-                      void onSelectWallet(type);
+                      void handleClick(type);
                     }}
                   />
                   {openModal === wallet.type && (
@@ -156,7 +102,7 @@ export function WalletsPage({
                       onClose={() => setOpenModal('')}
                       image={wallet.image}
                       state={wallet.state}
-                      error={hasError}
+                      error={!!error}
                     />
                   )}
                 </Fragment>

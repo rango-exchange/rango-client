@@ -78,7 +78,7 @@ export function HistoryPage() {
   return (
     <Layout
       header={{
-        onBack: navigateBackFrom.bind(null, navigationRoutes.swaps),
+        onBack: navigateBackFrom.bind(null, '/' + navigationRoutes.swaps),
         title: i18n.t('History'),
       }}>
       {!isEmpty && (

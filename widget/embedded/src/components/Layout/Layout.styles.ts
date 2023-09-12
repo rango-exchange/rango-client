@@ -3,6 +3,7 @@ import { styled } from '@rango-dev/ui';
 export const Container = styled('div', {
   height: '100%',
   borderRadius: '$xl',
+  overflow: 'hidden',
 });
 export const Content = styled('div', {
   padding: '$20',
