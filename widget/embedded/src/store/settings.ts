@@ -23,7 +23,7 @@ export interface SettingsState {
   toggleInfiniteApprove: () => void;
   toggleLiquiditySource: (name: string) => void;
   setTheme: (theme: Theme) => void;
-  toggleAllLiquiditySources: () => void;
+  toggleAllLiquiditySources: (shouldReset?: boolean) => void;
   setAffiliateRef: (affiliateRef: string | null) => void;
   setAffiliatePercent: (affiliatePercent: number | null) => void;
   setAffiliateWallets: (
@@ -64,8 +64,11 @@ export const useSettingsStore = createSelectors(
           set(() => ({
             affiliateWallets,
           })),
-        toggleAllLiquiditySources: () =>
+        toggleAllLiquiditySources: (shouldReset?: boolean) =>
           set((state) => {
+            if (shouldReset) {
+              return { disabledLiquiditySources: [] };
+            }
             const { swappers } = useMetaStore.getState().meta;
             const swappersGroup = removeDuplicateFrom(
               swappers.map((swapper) => swapper.swapperGroup)

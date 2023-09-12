@@ -8,4 +8,5 @@ export interface PropTypes {
     onCancel?: () => void;
   };
   hasFooter?: boolean;
+  action?: React.ReactNode;
 }

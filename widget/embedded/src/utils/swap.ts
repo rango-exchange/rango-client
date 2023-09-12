@@ -22,14 +22,15 @@ import type {
   Token,
 } from 'rango-sdk';
 
-import { i18n } from '@lingui/core';
 import { PendingSwapNetworkStatus } from '@rango-dev/queue-manager-rango-preset';
 import BigNumber from 'bignumber.js';
 
 import { isValidAddress } from '../components/ConfirmWalletsModal/ConfirmWallets.helpers';
+import { errorMessages } from '../constants/errors';
+import { swapButtonTitles } from '../constants/messages';
 import { ZERO } from '../constants/numbers';
 import { useMetaStore } from '../store/meta';
-import { ConfirmSwapErrorTypes, RouteWarningType } from '../types';
+import { ButtonState, ConfirmSwapErrorTypes, RouteWarningType } from '../types';
 
 import { removeDuplicateFrom } from './common';
 import { numberToString } from './numbers';
@@ -120,24 +121,24 @@ export function LimitErrorMessage(bestRoute: BestRouteResponse | null): {
     fromAmountRangeError = `Required: >= ${numberToString(minimum)} ${
       swap.from.symbol
     }`;
-    recommendation = 'Increase your swap amount';
+    recommendation = errorMessages.bridgeLimitErrors.increaseAmount;
   } else if (isExclusive && !!minimum && minimum.gte(swap.fromAmount)) {
     fromAmountRangeError = `Required: > ${numberToString(minimum)} ${
       swap.from.symbol
     }`;
-    recommendation = 'Increase your swap amount';
+    recommendation = errorMessages.bridgeLimitErrors.increaseAmount;
   }
 
   if (!isExclusive && !!maximum && maximum.lt(swap.fromAmount)) {
     fromAmountRangeError = `Required: <= ${numberToString(maximum)} ${
       swap.from.symbol
     }`;
-    recommendation = 'Decrease your swap amount';
+    recommendation = errorMessages.bridgeLimitErrors.decreaseAmount;
   } else if (isExclusive && !!maximum && maximum.lte(swap.fromAmount)) {
     fromAmountRangeError = `Required: < ${numberToString(maximum)} ${
       swap.from.symbol
     }`;
-    recommendation = 'Decrease your swap amount';
+    recommendation = errorMessages.bridgeLimitErrors.decreaseAmount;
   }
 
   return { swap, fromAmountRangeError, recommendation };
@@ -155,48 +156,61 @@ export function getSwapButtonState(
   inputAmount: string
 ): SwapButtonState {
   if (loadingMetaStatus !== 'success') {
-    return { title: `${i18n.t('Connect Wallet')}`, disabled: true };
+    return {
+      title: swapButtonTitles.connectWallet,
+      state: ButtonState.WAITFORCONNECTING,
+      disabled: true,
+    };
   }
   if (connectedWallets.length == 0) {
-    return { title: `${i18n.t('Connect Wallet')}`, disabled: false };
-  }
-  if (loading) {
-    return { title: `${i18n.t('Finding Best Route...')}`, disabled: true };
-  } else if (!inputAmount || inputAmount === '0') {
-    return { title: `${i18n.t('Enter an amount')}`, disabled: true };
-  } else if (!bestRoute || !bestRoute.result) {
-    return { title: `${i18n.t('Swap')}`, disabled: true };
-  } else if (hasLimitError) {
-    return { title: `${i18n.t('Limit Error')}`, disabled: true };
-  } else if (highValueLoss) {
-    return { title: `${i18n.t('Price impact is too high!')}`, disabled: true };
-  } else if (priceImpactCanNotBeComputed) {
     return {
-      title: `${i18n.t('USD price is unknown, price impact might be high!')}`,
+      title: swapButtonTitles.connectWallet,
+      state: ButtonState.WAITFORCONNECTING,
+      disabled: false,
+    };
+  }
+  if (
+    loading ||
+    !bestRoute ||
+    !bestRoute.result ||
+    hasLimitError ||
+    !inputAmount ||
+    inputAmount === '0'
+  ) {
+    return {
+      title: swapButtonTitles.swap,
+      disabled: true,
+      state: ButtonState.SWAP,
+    };
+  } else if (highValueLoss || priceImpactCanNotBeComputed) {
+    return {
+      title: swapButtonTitles.swapAnyway,
       disabled: false,
       hasWarning: true,
+      state: ButtonState.NEEDTOCONFIRM,
     };
   } else if (needsToWarnEthOnPath) {
     return {
-      title: `${i18n.t('The route goes through Ethereum. Continue?')}`,
+      title: swapButtonTitles.ethRouteWarning,
       disabled: false,
       hasWarning: true,
+      state: ButtonState.WARNING,
     };
   }
-  return { title: `${i18n.t('Swap')}`, disabled: false };
+  return {
+    title: swapButtonTitles.swap,
+    disabled: false,
+    state: ButtonState.SWAP,
+  };
 }
 
 export function canComputePriceImpact(
   bestRoute: BestRouteResponse | null,
   inputAmount: string,
-  inputUsdValue: BigNumber | null,
-  outputUsdValue: BigNumber | null
+  usdValue: BigNumber | null
 ) {
   return !(
-    (!inputUsdValue ||
-      !outputUsdValue ||
-      inputUsdValue.lte(ZERO) ||
-      outputUsdValue.lte(ZERO)) &&
+    (!usdValue || usdValue.lte(ZERO)) &&
     !!bestRoute?.result &&
     !!inputAmount &&
     inputAmount !== '0' &&
@@ -609,6 +623,9 @@ export function getSwapMessages(
         break;
       case PendingSwapNetworkStatus.WaitingForNetworkChange:
         message = message || 'Waiting for changing wallet network';
+        break;
+      default:
+        message = message || '';
         break;
     }
   }
