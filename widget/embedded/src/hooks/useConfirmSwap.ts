@@ -1,16 +1,34 @@
-import { useEffect, useRef, useState } from 'react';
+/* eslint-disable @typescript-eslint/no-magic-numbers */
+import type {
+  ConfirmSwapError,
+  ConfirmSwapWarnings,
+  PendingSwapSettings,
+  Wallet,
+} from '../types';
+import type { PendingSwap } from '@rango-dev/queue-manager-rango-preset';
+import type { BestRouteResponse } from 'rango-sdk';
+
+import { calculatePendingSwap } from '@rango-dev/queue-manager-rango-preset';
+import BigNumber from 'bignumber.js';
+import { useEffect } from 'react';
+
+import { HIGH_SLIPPAGE } from '../constants/swapSettings';
 import { useBestRouteStore } from '../store/bestRoute';
 import { useMetaStore } from '../store/meta';
 import { useSettingsStore } from '../store/settings';
 import { useWalletsStore } from '../store/wallets';
 import {
-  ConfirmSwapError,
   ConfirmSwapErrorTypes,
-  ConfirmSwapWarningTypes,
-  ConfirmSwapWarnings,
-  PendingSwapSettings,
+  RouteWarningType,
+  SlippageWarningType,
 } from '../types';
-
+import { numberToString } from '../utils/numbers';
+import {
+  isNumberOfSwapsChanged,
+  isRouteChanged,
+  isRouteInternalCoinsUpdated,
+  isRouteSwappersUpdated,
+} from '../utils/routing';
 import {
   createBestRouteRequestBody,
   getBalanceWarnings,
@@ -23,250 +41,261 @@ import {
   isOutputAmountChangedALot,
   outputRatioHasWarning,
 } from '../utils/swap';
-import { httpService } from '../services/httpService';
-import BigNumber from 'bignumber.js';
-import {
-  isNumberOfSwapsChanged,
-  isRouteChanged,
-  isRouteInternalCoinsUpdated,
-  isRouteSwappersUpdated,
-} from '../utils/routing';
-import { numberToString } from '../utils/numbers';
-import { BestRouteResponse } from 'rango-sdk';
-import {
-  calculatePendingSwap,
-  PendingSwap,
-} from '@rango-dev/queue-manager-rango-preset';
 
-type ConfirmSwap = {
-  loading: boolean;
-  errors: ConfirmSwapError[];
-  warnings: ConfirmSwapWarnings[];
-  confirmSwap: (() => Promise<PendingSwap | undefined>) | null;
+import { useFetchBestRoute } from './useFetchBestRoute';
+
+export type ConfirmSwapFetchResult = {
+  swap: PendingSwap | null;
+  error: ConfirmSwapError | null;
+  warnings: ConfirmSwapWarnings | null;
 };
 
-export function useConfirmSwap(): ConfirmSwap {
-  const fromToken = useBestRouteStore.use.fromToken();
-  const toToken = useBestRouteStore.use.toToken();
-  const inputAmount = useBestRouteStore.use.inputAmount();
-  const initialRoute = useBestRouteStore.use.bestRoute();
-  const setBestRoute = useBestRouteStore.use.setBestRoute();
-  const inputUsdValue = useBestRouteStore.use.inputUsdValue();
-  const affiliateRef = useSettingsStore.use.affiliateRef();
-  const affiliatePercent = useSettingsStore.use.affiliatePercent();
-  const affiliateWallets = useSettingsStore.use.affiliateWallets();
+export type ConfirmSwap = {
+  loading: boolean;
+  fetch: (params: Params) => Promise<ConfirmSwapFetchResult>;
+  cancelFetch: () => void;
+};
 
-  const connectedWallets = useWalletsStore.use.connectedWallets();
-  const destination = useWalletsStore.use.customDestination();
+type Params = {
+  selectedWallets: Wallet[];
+  customDestination?: string;
+};
 
-  const selectedWallets = useWalletsStore.use.selectedWallets();
-  const meta = useMetaStore.use.meta();
-  const customSlippage = useSettingsStore.use.customSlippage();
-  const slippage = useSettingsStore.use.slippage();
-  const disabledLiquiditySources =
-    useSettingsStore.use.disabledLiquiditySources();
-  const userSlippage = customSlippage || slippage;
-  const proceedAnywayRef = useRef(false);
-  const confiremedRouteRef = useRef<BestRouteResponse | null>(null);
-  const abortControllerRef = useRef<AbortController | null>(null);
+/**
+ * A request can be successful but in body of the response, it can be some case which is considered as failed.
+ */
+function throwErrorIfResponseIsNotValid(
+  response: BestRouteResponse,
+  params: { inputUsdValue: BigNumber | null; outputUsdValue: number | null }
+) {
+  if (!response.result) {
+    throw new Error('Route not found', {
+      cause: {
+        type: ConfirmSwapErrorTypes.NO_ROUTE,
+      },
+    });
+  }
 
-  const [loading, setLoading] = useState(false);
-  const [errors, setErrors] = useState<ConfirmSwapError[]>([]);
-  const [warnings, setWarnings] = useState<ConfirmSwapWarnings[]>([]);
+  const newRouteOutputUsdValue = new BigNumber(
+    response.result?.outputAmount || '0'
+  ).multipliedBy(params.outputUsdValue || 0);
 
-  useEffect(() => {
-    return () => abortControllerRef.current?.abort();
-  }, []);
+  const outputRatio = getOutputRatio(
+    params.inputUsdValue,
+    newRouteOutputUsdValue
+  );
+  const highValueLoss = outputRatioHasWarning(
+    params.inputUsdValue,
+    outputRatio
+  );
 
-  if (!fromToken || !toToken || !inputAmount || !initialRoute)
-    return { loading: false, warnings: [], errors: [], confirmSwap: null };
+  if (highValueLoss) {
+    throw new Error('High value loss for route', {
+      cause: {
+        type: ConfirmSwapErrorTypes.ROUTE_UPDATED_WITH_HIGH_VALUE_LOSS,
+      },
+    });
+  }
 
-  const confirmSwap = async (): Promise<PendingSwap | undefined> => {
-    if (proceedAnywayRef.current) {
-      const swapSettings: PendingSwapSettings = {
-        slippage: userSlippage.toString(),
-        disabledSwappersGroups: disabledLiquiditySources,
+  return response;
+}
+
+function generateWarnings(
+  previousRoute: BestRouteResponse,
+  currentRoute: BestRouteResponse,
+  params: {
+    selectedWallets: Wallet[];
+    userSlippage: number;
+  }
+): ConfirmSwapWarnings {
+  const routeChanged = isRouteChanged(previousRoute, currentRoute);
+  const output: ConfirmSwapWarnings = {
+    balance: null,
+    route: null,
+    slippage: null,
+  };
+
+  if (routeChanged) {
+    if (isOutputAmountChangedALot(previousRoute, currentRoute)) {
+      output.route = {
+        type: RouteWarningType.ROUTE_AND_OUTPUT_AMOUNT_UPDATED,
+        newOutputAmount: numberToString(getRouteOutputAmount(currentRoute)),
+        percentageChange: numberToString(
+          getPercentageChange(
+            getRouteOutputAmount(previousRoute),
+            getRouteOutputAmount(currentRoute)
+          ),
+          null,
+          2
+        ),
       };
+    } else if (isRouteInternalCoinsUpdated(previousRoute, currentRoute)) {
+      output.route = {
+        type: RouteWarningType.ROUTE_COINS_UPDATED,
+      };
+    } else if (isNumberOfSwapsChanged(previousRoute, currentRoute)) {
+      output.route = {
+        type: RouteWarningType.ROUTE_UPDATED,
+      };
+    } else if (isRouteSwappersUpdated(previousRoute, currentRoute)) {
+      output.route = {
+        type: RouteWarningType.ROUTE_SWAPPERS_UPDATED,
+      };
+    }
+  }
 
-      if (errors.length > 0) setErrors([]);
-      if (warnings.length > 0) setWarnings([]);
-      proceedAnywayRef.current = false;
+  const balanceWarnings = getBalanceWarnings(
+    currentRoute,
+    params.selectedWallets
+  );
+  const enoughBalance = balanceWarnings.length === 0;
 
-      if (confiremedRouteRef.current) {
-        const newSwap = calculatePendingSwap(
-          inputAmount.toString(),
-          confiremedRouteRef.current,
-          getWalletsForNewSwap(selectedWallets),
-          swapSettings,
-          false,
-          meta
-        );
+  if (!enoughBalance) {
+    output.balance = {
+      messages: balanceWarnings,
+    };
+  }
 
-        return newSwap;
-      }
-      return;
+  const minRequiredSlippage = getMinRequiredSlippage(previousRoute);
+  const highSlippage = params.userSlippage > HIGH_SLIPPAGE;
+
+  if (!hasProperSlippage(params.userSlippage.toString(), minRequiredSlippage)) {
+    output.slippage = {
+      type: SlippageWarningType.INSUFFICIENT_SLIPPAGE,
+      slippage: minRequiredSlippage,
+    };
+  } else if (highSlippage) {
+    output.slippage = {
+      type: SlippageWarningType.HIGH_SLIPPAGE,
+      slippage: params.userSlippage.toString(),
+    };
+  }
+
+  return output;
+}
+
+export function useConfirmSwap(): ConfirmSwap {
+  const {
+    fromToken,
+    toToken,
+    inputAmount,
+    inputUsdValue,
+    bestRoute: initialRoute,
+  } = useBestRouteStore();
+
+  const {
+    slippage,
+    customSlippage,
+    affiliatePercent,
+    affiliateRef,
+    affiliateWallets,
+    disabledLiquiditySources,
+  } = useSettingsStore();
+  const { connectedWallets, customDestination: customDestinationFromStore } =
+    useWalletsStore();
+
+  const { meta } = useMetaStore();
+
+  const userSlippage = customSlippage || slippage;
+
+  const { fetch: fetchBestRoute, cancelFetch, loading } = useFetchBestRoute();
+
+  useEffect(() => cancelFetch, []);
+
+  const fetch: ConfirmSwap['fetch'] = async (params: Params) => {
+    const selectedWallets = params.selectedWallets;
+    const customDestination =
+      params?.customDestination ?? customDestinationFromStore;
+
+    if (!fromToken || !toToken || !inputAmount || !initialRoute) {
+      return {
+        swap: null,
+        error: null,
+        warnings: null,
+      };
     }
 
-    abortControllerRef.current = new AbortController();
-
-    setLoading(true);
-
-    const requestBody = createBestRouteRequestBody(
+    const requestBody = createBestRouteRequestBody({
       fromToken,
       toToken,
       inputAmount,
-      connectedWallets,
+      wallets: connectedWallets,
       selectedWallets,
       disabledLiquiditySources,
-      userSlippage,
+      slippage: userSlippage,
       affiliateRef,
       affiliatePercent,
       affiliateWallets,
       initialRoute,
-      destination
+      destination: customDestination,
+    });
+
+    let currentRoute: BestRouteResponse;
+    try {
+      currentRoute = await fetchBestRoute(requestBody).then((response) =>
+        throwErrorIfResponseIsNotValid(response, {
+          outputUsdValue: toToken.usdPrice,
+          inputUsdValue,
+        })
+      );
+    } catch (error: any) {
+      if (error?.code === 'ERR_CANCELED') {
+        return {
+          swap: null,
+          error: {
+            type: ConfirmSwapErrorTypes.REQUEST_CANCELED,
+          },
+          warnings: null,
+        };
+      }
+
+      if (error.cause) {
+        return {
+          swap: null,
+          error: {
+            type: error.cause,
+          },
+          warnings: null,
+        };
+      }
+
+      const status = error?.response?.status;
+      return {
+        swap: null,
+        error: {
+          type: ConfirmSwapErrorTypes.REQUEST_FAILED,
+          status: status,
+        },
+        warnings: null,
+      };
+    }
+
+    const swapSettings: PendingSwapSettings = {
+      slippage: userSlippage.toString(),
+      disabledSwappersGroups: disabledLiquiditySources,
+    };
+    const swap = calculatePendingSwap(
+      inputAmount.toString(),
+      currentRoute,
+      getWalletsForNewSwap(selectedWallets),
+      swapSettings,
+      false,
+      meta
     );
 
-    try {
-      const confiremedRoute = await httpService().getBestRoute(requestBody, {
-        signal: abortControllerRef.current?.signal,
-      });
-
-      abortControllerRef.current = null;
-
-      setLoading(false);
-
-      if (
-        !confiremedRoute.result ||
-        !new BigNumber(confiremedRoute.requestAmount).isEqualTo(
-          new BigNumber(inputAmount || '-1')
-        )
-      ) {
-        setErrors((prevState) =>
-          prevState.concat({
-            type: ConfirmSwapErrorTypes.NO_ROUTE,
-          })
-        );
-        return;
-      }
-
-      const confirmSwapState: Omit<ConfirmSwap, 'confirmSwap' | 'loading'> = {
-        errors: [],
-        warnings: [],
-      };
-
-      const routeChanged = isRouteChanged(initialRoute, confiremedRoute!);
-
-      if (routeChanged) {
-        setBestRoute(confiremedRoute);
-        const newRouteOutputUsdValue = new BigNumber(
-          confiremedRoute.result?.outputAmount || '0'
-        ).multipliedBy(toToken.usdPrice || 0);
-
-        const outputRatio = getOutputRatio(
-          inputUsdValue,
-          newRouteOutputUsdValue
-        );
-        const highValueLoss = outputRatioHasWarning(inputUsdValue, outputRatio);
-
-        if (highValueLoss)
-          confirmSwapState.errors.push({
-            type: ConfirmSwapErrorTypes.ROUTE_UPDATED_WITH_HIGH_VALUE_LOSS,
-          });
-        else if (isOutputAmountChangedALot(initialRoute, confiremedRoute))
-          confirmSwapState.warnings.push({
-            type: ConfirmSwapWarningTypes.ROUTE_AND_OUTPUT_AMOUNT_UPDATED,
-            newOutputAmount: numberToString(
-              getRouteOutputAmount(confiremedRoute)
-            ),
-            percentageChange: numberToString(
-              getPercentageChange(
-                getRouteOutputAmount(initialRoute),
-                getRouteOutputAmount(confiremedRoute)
-              ),
-              null,
-              2
-            ),
-          });
-        else if (isRouteInternalCoinsUpdated(initialRoute, confiremedRoute))
-          confirmSwapState.warnings.push({
-            type: ConfirmSwapWarningTypes.ROUTE_COINS_UPDATED,
-          });
-        else if (isNumberOfSwapsChanged(initialRoute, confiremedRoute))
-          confirmSwapState.warnings.push({
-            type: ConfirmSwapWarningTypes.ROUTE_UPDATED,
-          });
-        else if (isRouteSwappersUpdated(initialRoute, confiremedRoute))
-          confirmSwapState.warnings.push({
-            type: ConfirmSwapWarningTypes.ROUTE_SWAPPERS_UPDATED,
-          });
-      }
-
-      const balanceWarnings = getBalanceWarnings(
-        confiremedRoute,
-        selectedWallets
-      );
-      const enoughBalance = balanceWarnings.length === 0;
-
-      if (!enoughBalance)
-        confirmSwapState.errors.push({
-          type: ConfirmSwapErrorTypes.INSUFFICIENT_BALANCE,
-          messages: balanceWarnings,
-        });
-
-      const minRequiredSlippage = getMinRequiredSlippage(initialRoute);
-
-      if (!hasProperSlippage(userSlippage.toString(), minRequiredSlippage))
-        confirmSwapState.errors.push({
-          type: ConfirmSwapErrorTypes.INSUFFICIENT_SLIPPAGE,
-          minRequiredSlippage,
-        });
-
-      const noErrors = confirmSwapState.errors.length === 0;
-      const noWarnings = confirmSwapState.warnings.length === 0;
-
-      if (
-        (noErrors || (!noErrors && proceedAnywayRef.current)) &&
-        (noWarnings || (!noWarnings && proceedAnywayRef.current))
-      ) {
-        const swapSettings: PendingSwapSettings = {
-          slippage: userSlippage.toString(),
-          disabledSwappersGroups: disabledLiquiditySources,
-        };
-
-        const newSwap = calculatePendingSwap(
-          inputAmount.toString(),
-          confiremedRoute,
-          getWalletsForNewSwap(selectedWallets),
-          swapSettings,
-          false,
-          meta
-        );
-        return newSwap;
-      } else if (!proceedAnywayRef.current) {
-        proceedAnywayRef.current = true;
-        setErrors(confirmSwapState.errors);
-        setWarnings(confirmSwapState.warnings);
-        confiremedRouteRef.current = confiremedRoute;
-      }
-      return;
-    } catch (error) {
-      if ((error as any)?.code === 'ERR_CANCELED') {
-        return;
-      }
-
-      const status = (error as any)?.response?.status;
-
-      setLoading(false);
-      setErrors([
-        {
-          type: ConfirmSwapErrorTypes.REQUEST_FAILED,
-          status,
-        },
-      ]);
-
-      return;
-    }
+    return {
+      swap,
+      error: null,
+      warnings: generateWarnings(initialRoute, currentRoute, {
+        selectedWallets,
+        userSlippage,
+      }),
+    };
   };
 
-  return { loading, warnings, errors, confirmSwap };
+  return {
+    loading,
+    fetch,
+    cancelFetch,
+  };
 }

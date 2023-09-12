@@ -1,26 +1,40 @@
-import BigNumber from 'bignumber.js';
-import {
+/* eslint-disable @typescript-eslint/no-magic-numbers */
+import type { LoadingStatus } from '../store/meta';
+import type { ConnectedWallet } from '../store/wallets';
+import type {
+  ConfirmSwapError,
+  ConvertedToken,
+  RouteWarning,
+  SwapButtonState,
+  Wallet,
+} from '../types';
+import type {
+  PendingSwap,
+  PendingSwapStep,
+} from '@rango-dev/queue-manager-rango-preset';
+import type { WalletType } from '@rango-dev/wallets-shared';
+import type {
   BestRouteRequest,
   BestRouteResponse,
+  BlockchainMeta,
   RecommendedSlippage,
   SwapResult,
   Token,
 } from 'rango-sdk';
+
 import { i18n } from '@lingui/core';
-import { ConnectedWallet } from '../store/wallets';
+import { PendingSwapNetworkStatus } from '@rango-dev/queue-manager-rango-preset';
+import BigNumber from 'bignumber.js';
+
+import { isValidAddress } from '../components/ConfirmWalletsModal/ConfirmWallets.helpers';
 import { ZERO } from '../constants/numbers';
+import { useMetaStore } from '../store/meta';
+import { ConfirmSwapErrorTypes, RouteWarningType } from '../types';
+
+import { removeDuplicateFrom } from './common';
 import { numberToString } from './numbers';
-import { WalletType } from '@rango-dev/wallets-shared';
 import { getRequiredBalanceOfWallet } from './routing';
 import { getRequiredChains } from './wallets';
-import { LoadingStatus, useMetaStore } from '../store/meta';
-import { ConvertedToken, SwapButtonState, Wallet } from '../types';
-import {
-  PendingSwapNetworkStatus,
-  PendingSwapStep,
-} from '@rango-dev/queue-manager-rango-preset';
-import { PendingSwap } from '@rango-dev/queue-manager-rango-preset';
-import { removeDuplicateFrom } from './common';
 
 export function getOutputRatio(
   inputUsdValue: BigNumber | null,
@@ -31,8 +45,9 @@ export function getOutputRatio(
     !outputUsdValue ||
     inputUsdValue.lte(ZERO) ||
     outputUsdValue.lte(ZERO)
-  )
+  ) {
     return 0;
+  }
   return outputUsdValue.div(inputUsdValue).minus(1).multipliedBy(100);
 }
 
@@ -61,9 +76,8 @@ export function hasLimitError(bestRoute: BestRouteResponse | null): boolean {
       const isExclusive = swap.fromAmountRestrictionType === 'EXCLUSIVE';
       if (isExclusive) {
         return minimum?.gte(swap.fromAmount) || maximum?.lte(swap.fromAmount);
-      } else {
-        return minimum?.gt(swap.fromAmount) || maximum?.lt(swap.fromAmount);
       }
+      return minimum?.gt(swap.fromAmount) || maximum?.lt(swap.fromAmount);
     }).length > 0
   );
 }
@@ -73,8 +87,9 @@ export function LimitErrorMessage(bestRoute: BestRouteResponse | null): {
   fromAmountRangeError: string;
   recommendation: string;
 } {
-  if (!bestRoute)
+  if (!bestRoute) {
     return { swap: null, fromAmountRangeError: '', recommendation: '' };
+  }
   const swap = (bestRoute?.result?.swaps || []).filter((swap) => {
     const minimum = !!swap.fromAmountMinValue
       ? new BigNumber(swap.fromAmountMinValue)
@@ -85,12 +100,12 @@ export function LimitErrorMessage(bestRoute: BestRouteResponse | null): {
     const isExclusive = swap.fromAmountRestrictionType === 'EXCLUSIVE';
     if (isExclusive) {
       return minimum?.gte(swap.fromAmount) || maximum?.lte(swap.fromAmount);
-    } else {
-      return minimum?.gt(swap.fromAmount) || maximum?.lt(swap.fromAmount);
     }
+    return minimum?.gt(swap.fromAmount) || maximum?.lt(swap.fromAmount);
   })[0];
-  if (!swap)
+  if (!swap) {
     return { swap: null, fromAmountRangeError: '', recommendation: '' };
+  }
   const minimum = !!swap.fromAmountMinValue
     ? new BigNumber(swap.fromAmountMinValue)
     : null;
@@ -139,33 +154,36 @@ export function getSwapButtonState(
   needsToWarnEthOnPath: boolean,
   inputAmount: string
 ): SwapButtonState {
-  if (loadingMetaStatus !== 'success')
+  if (loadingMetaStatus !== 'success') {
     return { title: `${i18n.t('Connect Wallet')}`, disabled: true };
-  if (connectedWallets.length == 0)
+  }
+  if (connectedWallets.length == 0) {
     return { title: `${i18n.t('Connect Wallet')}`, disabled: false };
-  if (loading)
+  }
+  if (loading) {
     return { title: `${i18n.t('Finding Best Route...')}`, disabled: true };
-  else if (!inputAmount || inputAmount === '0')
+  } else if (!inputAmount || inputAmount === '0') {
     return { title: `${i18n.t('Enter an amount')}`, disabled: true };
-  else if (!bestRoute || !bestRoute.result)
+  } else if (!bestRoute || !bestRoute.result) {
     return { title: `${i18n.t('Swap')}`, disabled: true };
-  else if (hasLimitError)
+  } else if (hasLimitError) {
     return { title: `${i18n.t('Limit Error')}`, disabled: true };
-  else if (highValueLoss)
+  } else if (highValueLoss) {
     return { title: `${i18n.t('Price impact is too high!')}`, disabled: true };
-  else if (priceImpactCanNotBeComputed)
+  } else if (priceImpactCanNotBeComputed) {
     return {
       title: `${i18n.t('USD price is unknown, price impact might be high!')}`,
       disabled: false,
       hasWarning: true,
     };
-  else if (needsToWarnEthOnPath)
+  } else if (needsToWarnEthOnPath) {
     return {
       title: `${i18n.t('The route goes through Ethereum. Continue?')}`,
       disabled: false,
       hasWarning: true,
     };
-  else return { title: `${i18n.t('Swap')}`, disabled: false };
+  }
+  return { title: `${i18n.t('Swap')}`, disabled: false };
 }
 
 export function canComputePriceImpact(
@@ -194,11 +212,13 @@ export function requiredWallets(route: BestRouteResponse | null) {
     const currentStepFromBlockchain = swap.from.blockchain;
     const currentStepToBlockchain = swap.to.blockchain;
     let lastAddedWallet = wallets[wallets.length - 1];
-    if (currentStepFromBlockchain != lastAddedWallet)
+    if (currentStepFromBlockchain != lastAddedWallet) {
       wallets.push(currentStepFromBlockchain);
+    }
     lastAddedWallet = wallets[wallets.length - 1];
-    if (currentStepToBlockchain != lastAddedWallet)
+    if (currentStepToBlockchain != lastAddedWallet) {
       wallets.push(currentStepToBlockchain);
+    }
   });
   return wallets;
 }
@@ -225,7 +245,9 @@ export function getUsdFeeOfStep(
   let totalFeeInUsd = ZERO;
   for (let i = 0; i < step.fee.length; i++) {
     const fee = step.fee[i];
-    if (fee.expenseType === 'DECREASE_FROM_OUTPUT') continue;
+    if (fee.expenseType === 'DECREASE_FROM_OUTPUT') {
+      continue;
+    }
 
     const unitPrice = getUsdPrice(
       fee.asset.blockchain,
@@ -255,7 +277,9 @@ export function getTotalFeeInUsd(
 }
 
 export function hasHighFee(totalFeeInUsd: BigNumber | null) {
-  if (!totalFeeInUsd) return false;
+  if (!totalFeeInUsd) {
+    return false;
+  }
   return !totalFeeInUsd.lt(new BigNumber(30));
 }
 
@@ -284,7 +308,9 @@ export function hasProperSlippage(
   userSlippage: string,
   minRequiredSlippage: string | null
 ) {
-  if (!minRequiredSlippage) return true;
+  if (!minRequiredSlippage) {
+    return true;
+  }
   return parseFloat(userSlippage) >= parseFloat(minRequiredSlippage);
 }
 
@@ -294,16 +320,22 @@ export function hasEnoughBalance(
 ) {
   const fee = route.validationStatus;
 
-  if (fee === null || fee.length === 0) return true;
+  if (fee === null || fee.length === 0) {
+    return true;
+  }
 
   for (const wallet of selectedWallets) {
     const requiredAssets = getRequiredBalanceOfWallet(wallet, fee);
-    if (!requiredAssets) continue;
+    if (!requiredAssets) {
+      continue;
+    }
 
     const enoughBalanceInWallet = requiredAssets
       .map((asset) => asset.ok)
       .reduce((previous, current) => previous && current);
-    if (!enoughBalanceInWallet) return false;
+    if (!enoughBalanceInWallet) {
+      return false;
+    }
   }
 
   return true;
@@ -321,21 +353,35 @@ export function hasEnoughBalanceAndProperSlippage(
   );
 }
 
-export function createBestRouteRequestBody(
-  fromToken: Token,
-  toToken: Token,
-  inputAmount: string,
-  wallets: ConnectedWallet[],
-  selectedWallets: Wallet[],
-  disabledLiquiditySources: string[],
-  slippage: number,
-  affiliateRef: string | null,
-  affiliatePercent: number | null,
-  affiliateWallets: { [key: string]: string } | null,
-  initialRoute?: BestRouteResponse,
-  destination?: string
-): BestRouteRequest {
-  const selectedWalletsMap = selectedWallets.reduce(
+export function createBestRouteRequestBody(params: {
+  fromToken: Token;
+  toToken: Token;
+  inputAmount: string;
+  wallets?: Wallet[];
+  selectedWallets?: Wallet[];
+  disabledLiquiditySources: string[];
+  slippage: number;
+  affiliateRef: string | null;
+  affiliatePercent: number | null;
+  affiliateWallets: { [key: string]: string } | null;
+  initialRoute?: BestRouteResponse;
+  destination?: string;
+}): BestRouteRequest {
+  const {
+    fromToken,
+    toToken,
+    inputAmount,
+    wallets,
+    selectedWallets,
+    disabledLiquiditySources,
+    slippage,
+    affiliateRef,
+    affiliatePercent,
+    affiliateWallets,
+    initialRoute,
+    destination,
+  } = params;
+  const selectedWalletsMap = selectedWallets?.reduce(
     (
       selectedWalletsMap: BestRouteRequest['selectedWallets'],
       selectedWallet
@@ -348,16 +394,18 @@ export function createBestRouteRequestBody(
 
   const connectedWallets: BestRouteRequest['connectedWallets'] = [];
 
-  wallets.forEach((wallet) => {
+  wallets?.forEach((wallet) => {
     const chainAndAccounts = connectedWallets.find(
       (connectedWallet) => connectedWallet.blockchain === wallet.chain
     );
-    if (!!chainAndAccounts) chainAndAccounts.addresses.push(wallet.address);
-    else
+    if (!!chainAndAccounts) {
+      chainAndAccounts.addresses.push(wallet.address);
+    } else {
       connectedWallets.push({
         blockchain: wallet.chain,
         addresses: [wallet.address],
       });
+    }
   });
 
   const checkPrerequisites = !!initialRoute;
@@ -398,11 +446,13 @@ export function createBestRouteRequestBody(
       symbol: toToken.symbol,
     },
     connectedWallets,
-    destination: destination || undefined,
-    selectedWallets: selectedWalletsMap,
-    swapperGroups: disabledLiquiditySources,
-    swappersGroupsExclude: true,
+    selectedWallets: selectedWalletsMap ?? {},
     slippage: slippage.toString(),
+    ...(destination && { destination: destination }),
+    ...(disabledLiquiditySources.length > 0 && {
+      swapperGroups: disabledLiquiditySources,
+      swappersGroupsExclude: true,
+    }),
     ...(checkPrerequisites && { blockchains: filteredBlockchains }),
   };
 
@@ -437,7 +487,9 @@ export function getPercentageChange(
   oldValue: string | number | null,
   newValue: string | number | null
 ) {
-  if (!oldValue || !newValue) return null;
+  if (!oldValue || !newValue) {
+    return null;
+  }
   return new BigNumber(newValue)
     .div(new BigNumber(oldValue))
     .minus(1)
@@ -450,12 +502,16 @@ export function isOutputAmountChangedALot(
 ) {
   const oldOutputAmount = getRouteOutputAmount(oldRoute);
   const newOutputAmount = getRouteOutputAmount(newRoute);
-  if (!oldOutputAmount || !newOutputAmount) return false;
+  if (!oldOutputAmount || !newOutputAmount) {
+    return false;
+  }
   const percentageChange = getPercentageChange(
     oldOutputAmount,
     newOutputAmount
   );
-  if (!percentageChange) return true;
+  if (!percentageChange) {
+    return true;
+  }
 
   return percentageChange.toNumber() <= -1;
 }
@@ -489,10 +545,15 @@ export function getBalanceWarnings(
         8
       );
       let reason = '';
-      if (asset.reason === 'FEE') reason = ' for network fee';
-      if (asset.reason === 'INPUT_ASSET') reason = ' for swap';
-      if (asset.reason === 'FEE_AND_INPUT_ASSET')
+      if (asset.reason === 'FEE') {
+        reason = ' for network fee';
+      }
+      if (asset.reason === 'INPUT_ASSET') {
+        reason = ' for swap';
+      }
+      if (asset.reason === 'FEE_AND_INPUT_ASSET') {
         reason = ' for input and network fee';
+      }
       const warningMessage = `Needs ≈ ${requiredAmount} ${symbol}${reason}, but you have ${currentAmount} ${symbol} in your ${asset.asset.blockchain} wallet.`;
       return warningMessage;
     });
@@ -538,6 +599,7 @@ export function getSwapMessages(
   if (networkWarningState) {
     message = pendingSwap.networkStatusExtraMessage || '';
     detailedMessage = pendingSwap.networkStatusExtraMessageDetail || '';
+    // eslint-disable-next-line @typescript-eslint/switch-exhaustiveness-check
     switch (currentStep?.networkStatus) {
       case PendingSwapNetworkStatus.WaitingForConnectingWallet:
         message = message || 'Waiting for connecting wallet';
@@ -603,24 +665,57 @@ export function isValidCustomDestination(
 
 export function confirmSwapDisabled(
   fetching: boolean,
-  destinationChain: string,
+  showCustomDestination: boolean,
   customDestination: string,
   bestRoute: BestRouteResponse | null,
-  selectedWallets: Wallet[]
+  selectedWallets: { walletType: string; chain: string }[],
+  lastStepToBlockchain?: BlockchainMeta
 ) {
   return (
     fetching ||
-    (!destinationChain &&
+    (!showCustomDestination &&
       !requiredWallets(bestRoute).every((chain) =>
         selectedWallets.map((wallet) => wallet.chain).includes(chain)
       )) ||
-    (!!destinationChain && !customDestination) ||
-    (!!destinationChain &&
+    (!!showCustomDestination && !customDestination) ||
+    (!!showCustomDestination &&
       !!customDestination &&
+      lastStepToBlockchain &&
+      !isValidAddress(lastStepToBlockchain, customDestination) &&
       !requiredWallets(bestRoute)
-        .filter((chain) => chain !== destinationChain)
+        .filter((chain) => chain !== lastStepToBlockchain.name)
         .every((chain) =>
           selectedWallets.map((wallet) => wallet.chain).includes(chain)
         ))
   );
+}
+
+export function getRouteWarningMessage(warning: RouteWarning) {
+  switch (warning.type) {
+    case RouteWarningType.ROUTE_UPDATED:
+      return 'Route has been updated.';
+    case RouteWarningType.ROUTE_AND_OUTPUT_AMOUNT_UPDATED:
+      return `Output amount changed to ${warning.newOutputAmount} (${warning.percentageChange}% change).`;
+    case RouteWarningType.ROUTE_SWAPPERS_UPDATED:
+      return 'Route swappers has been updated.';
+    case RouteWarningType.ROUTE_COINS_UPDATED:
+      return 'Route internal coins has been updated.';
+    default:
+      return '';
+  }
+}
+
+export function getConfirmSwapErrorMessage(error: ConfirmSwapError) {
+  switch (error.type) {
+    case ConfirmSwapErrorTypes.NO_ROUTE:
+      return 'No routes found. Please try again later.';
+    case ConfirmSwapErrorTypes.REQUEST_FAILED:
+      return `Failed to confirm swap ${
+        error.status ? `'status': ${error.status})` : ''
+      }, please try again.`;
+    case ConfirmSwapErrorTypes.ROUTE_UPDATED_WITH_HIGH_VALUE_LOSS:
+      return 'Route updated and price impact is too high, try again later!';
+    default:
+      return '';
+  }
 }

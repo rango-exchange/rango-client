@@ -124,9 +124,7 @@ export function AppRoutes(props: PropTypes) {
     },
     {
       path: getAbsolutePath(navigationRoutes.confirmSwap),
-      element: (
-        <ConfirmSwapPage customDestinationEnabled={config?.customDestination} />
-      ),
+      element: <ConfirmSwapPage config={config} />,
     },
   ]);
 }

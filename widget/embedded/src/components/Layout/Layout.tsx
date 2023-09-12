@@ -25,7 +25,7 @@ export function Layout({
 
   const onConnectWallet = () => {
     if (!connectWalletsButtonDisabled) {
-      navigate(navigationRoutes.wallets);
+      navigate('/' + navigationRoutes.wallets);
     }
   };
 

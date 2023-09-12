@@ -1,5 +1,6 @@
-import { RouteState } from '../store/bestRoute';
-import { SettingsState } from '../store/settings';
+/* eslint-disable @typescript-eslint/prefer-enum-initializers */
+import type { RouteState } from '../store/bestRoute';
+import type { SettingsState } from '../store/settings';
 
 interface BestRouteStoreParams {
   fromChain?: RouteState['fromChain'];
@@ -32,8 +33,7 @@ export enum ConfirmSwapErrorTypes {
   NO_ROUTE,
   ROUTE_UPDATED_WITH_HIGH_VALUE_LOSS,
   REQUEST_FAILED,
-  INSUFFICIENT_SLIPPAGE,
-  INSUFFICIENT_BALANCE,
+  REQUEST_CANCELED,
 }
 
 export type ConfirmSwapError =
@@ -42,35 +42,39 @@ export type ConfirmSwapError =
       status?: number;
     }
   | {
-      type: ConfirmSwapErrorTypes.INSUFFICIENT_SLIPPAGE;
-      minRequiredSlippage: string | null;
-    }
-  | { type: ConfirmSwapErrorTypes.INSUFFICIENT_BALANCE; messages: string[] }
-  | {
       type: Exclude<
         ConfirmSwapErrorTypes,
-        | ConfirmSwapErrorTypes.REQUEST_FAILED
-        | ConfirmSwapErrorTypes.INSUFFICIENT_SLIPPAGE
-        | ConfirmSwapErrorTypes.INSUFFICIENT_BALANCE
+        ConfirmSwapErrorTypes.REQUEST_FAILED
       >;
     };
 
-export type ConfirmSwapWarnings =
-  | {
-      type: ConfirmSwapWarningTypes.ROUTE_AND_OUTPUT_AMOUNT_UPDATED;
-      newOutputAmount: string;
-      percentageChange: string;
-    }
-  | {
-      type: Exclude<
-        ConfirmSwapWarningTypes,
-        ConfirmSwapWarningTypes.ROUTE_AND_OUTPUT_AMOUNT_UPDATED
-      >;
-    };
-
-export enum ConfirmSwapWarningTypes {
+export enum RouteWarningType {
   ROUTE_UPDATED,
   ROUTE_SWAPPERS_UPDATED,
   ROUTE_COINS_UPDATED,
   ROUTE_AND_OUTPUT_AMOUNT_UPDATED,
 }
+
+export type RouteWarning =
+  | {
+      type: RouteWarningType.ROUTE_AND_OUTPUT_AMOUNT_UPDATED;
+      newOutputAmount: string;
+      percentageChange: string;
+    }
+  | {
+      type: Exclude<
+        RouteWarningType,
+        RouteWarningType.ROUTE_AND_OUTPUT_AMOUNT_UPDATED
+      >;
+    };
+
+export enum SlippageWarningType {
+  INSUFFICIENT_SLIPPAGE,
+  HIGH_SLIPPAGE,
+}
+
+export type ConfirmSwapWarnings = {
+  route: RouteWarning | null;
+  balance: { messages: string[] } | null;
+  slippage: { type: SlippageWarningType; slippage: string | null } | null;
+};
