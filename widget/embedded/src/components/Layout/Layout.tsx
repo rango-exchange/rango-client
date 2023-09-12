@@ -16,6 +16,7 @@ export function Layout({
   children,
   header,
   hasFooter,
+  action,
 }: PropsWithChildren<PropTypes>) {
   const connectedWallets = useWalletsStore.use.connectedWallets();
 
@@ -50,6 +51,7 @@ export function Layout({
       <Content>{children}</Content>
       {hasFooter && (
         <Footer>
+          {action}
           <Divider size={12} />
           <BottomLogo />
         </Footer>

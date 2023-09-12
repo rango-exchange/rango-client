@@ -7,7 +7,7 @@ import { Typography } from '..';
 import { Container } from './PriceImpact.styles';
 
 export function PriceImpact(props: PriceImpactProps) {
-  const { size, outputUsdValue, percentageChange, warningLevel } = props;
+  const { size, outputUsdValue, percentageChange, warningLevel, error } = props;
 
   let percentageChangeColor = '';
   if (!outputUsdValue || warningLevel === 'low') {
@@ -34,7 +34,8 @@ export function PriceImpact(props: PriceImpactProps) {
         {outputUsdValue &&
           percentageChange &&
           `(${percentageChange}${percentageChange ? '%' : '-'})`}
-        {!outputUsdValue && 'USD price unknown'}
+
+        {!outputUsdValue && error}
       </Typography>
     </Container>
   );

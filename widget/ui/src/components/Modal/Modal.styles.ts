@@ -38,7 +38,7 @@ export const ModalContainer = styled('div', {
     anchor: {
       bottom: {
         width: '100%',
-        maxHeight: '90%',
+        maxHeight: '95%',
       },
       center: { height: '100%' },
     },

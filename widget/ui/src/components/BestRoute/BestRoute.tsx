@@ -194,6 +194,7 @@ export function BestRoute(props: BestRouteProps) {
                   key={key}
                   step={step}
                   hasSeparator={index !== steps.length - 1}
+                  state={step.alerts ? 'error' : undefined}
                 />
               );
             })}

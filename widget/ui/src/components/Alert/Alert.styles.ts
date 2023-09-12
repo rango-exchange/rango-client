@@ -35,7 +35,7 @@ export const Container = styled('div', {
       regular: {
         padding: '$5',
         alignItems: 'flex-start',
-        backgroundColor: '$neutral200',
+        backgroundColor: '$info100',
       },
       alarm: {
         padding: '$5 $10',
@@ -118,6 +118,7 @@ export const IconHighlight = styled('div', {
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
+  alignSelf: 'flex-start',
   variants: {
     type: {
       success: {
