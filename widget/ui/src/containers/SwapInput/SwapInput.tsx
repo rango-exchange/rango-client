@@ -61,7 +61,7 @@ export function SwapInput(props: SwapInputProps) {
           ) : (
             <>
               <InputAmount
-                disabled={props.disabled}
+                disabled={props.disabled || props.label === 'To'}
                 style={{ padding: 0 }}
                 value={props.price.value}
                 type={'onInputChange' in props ? 'number' : 'text'}
@@ -78,6 +78,7 @@ export function SwapInput(props: SwapInputProps) {
                 <PriceImpact
                   size="large"
                   outputUsdValue={props.price.usdValue}
+                  error={props.price.error}
                   percentageChange={props.percentageChange}
                   warningLevel={props.warningLevel}
                 />
@@ -85,7 +86,7 @@ export function SwapInput(props: SwapInputProps) {
                 <Typography
                   variant="body"
                   size="medium"
-                  color="$neutral800"
+                  color={!props.price.error ? '$neutral800' : '$warning500'}
                   style={{
                     width: 140,
                     textAlign: 'right',
@@ -93,7 +94,7 @@ export function SwapInput(props: SwapInputProps) {
                     overflow: 'hidden',
                     textOverflow: 'ellipsis',
                   }}>
-                  {props.price.usdValue}
+                  {props.price.usdValue || props.price.error}
                 </Typography>
               )}
             </>

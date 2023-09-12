@@ -12,6 +12,7 @@ export type BaseProps = {
   price: {
     value: string;
     usdValue?: string;
+    error?: string;
   };
   loading?: boolean;
   error?: boolean;

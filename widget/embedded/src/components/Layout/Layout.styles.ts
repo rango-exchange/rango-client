@@ -6,7 +6,7 @@ export const Container = styled('div', {
   overflow: 'hidden',
 });
 export const Content = styled('div', {
-  padding: '$20',
+  padding: '$20 $20 $10',
   height: '100%',
   borderTopLeftRadius: '$md',
   borderTopRightRadius: '$md',
