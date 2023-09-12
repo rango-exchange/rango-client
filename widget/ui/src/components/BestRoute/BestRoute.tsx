@@ -44,7 +44,7 @@ export function BestRoute(props: BestRouteProps) {
 
   const numberOfSteps = steps.length;
 
-  const [expanded, setExpanded] = useState(false);
+  const [expanded, setExpanded] = useState(props.expanded);
 
   return (
     <>

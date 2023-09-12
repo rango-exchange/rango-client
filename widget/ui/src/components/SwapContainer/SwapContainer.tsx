@@ -33,8 +33,10 @@ const MainContainer = styled('div', {
   variants: {
     fixedHeight: {
       true: {
-        height: '595px',
-        maxHeight: '595px',
+        true: {
+          height: '595px',
+          maxHeight: '595px',
+        },
       },
       false: {
         height: 'auto',

@@ -18,7 +18,8 @@ import { Layout } from '../components/Layout';
 import { SwitchFromAndToButton } from '../components/SwitchFromAndTo';
 import { errorMessages } from '../constants/errors';
 import { navigationRoutes } from '../constants/navigationRoutes';
-import { fetchBestRoute, useBestRouteStore } from '../store/bestRoute';
+import { useSwapInput } from '../hooks/useSwapInput';
+import { useBestRouteStore } from '../store/bestRoute';
 import { useMetaStore } from '../store/meta';
 import { useUiStore } from '../store/ui';
 import { useWalletsStore } from '../store/wallets';
@@ -76,20 +77,30 @@ const MIN_DECIMAL = 0;
 
 export function Home() {
   const navigate = useNavigate();
-  const fromChain = useBestRouteStore.use.fromChain();
-  const fromToken = useBestRouteStore.use.fromToken();
-  const toChain = useBestRouteStore.use.toChain();
-  const toToken = useBestRouteStore.use.toToken();
-  const setInputAmount = useBestRouteStore.use.setInputAmount();
-  const inputUsdValue = useBestRouteStore.use.inputUsdValue();
-  const inputAmount = useBestRouteStore.use.inputAmount();
-  const tokens = useMetaStore.use.meta().tokens;
-  const outputAmount = useBestRouteStore.use.outputAmount();
-  const outputUsdValue = useBestRouteStore.use.outputUsdValue();
-  const bestRoute = useBestRouteStore.use.bestRoute();
-  const fetchingBestRoute = useBestRouteStore.use.loading();
-  const bestRouteError = useBestRouteStore.use.error();
-  const loadingMetaStatus = useMetaStore.use.loadingStatus();
+  const {
+    fetch: refetchBestRoute,
+    loading: fetchingBestRoute,
+    error: bestRouteError,
+  } = useSwapInput();
+  const {
+    fromToken,
+    fromChain,
+    toToken,
+    toChain,
+    setInputAmount,
+    inputAmount,
+    inputUsdValue,
+    outputAmount,
+    outputUsdValue,
+    bestRoute,
+    setRouteWalletConfirmed,
+  } = useBestRouteStore();
+
+  const {
+    meta: { tokens },
+    loadingStatus: loadingMetaStatus,
+  } = useMetaStore();
+
   const connectedWallets = useWalletsStore.use.connectedWallets();
   const setCurrentPage = useUiStore.use.setCurrentPage();
   const errorMessage =
@@ -159,7 +170,7 @@ export function Home() {
 
   useEffect(() => {
     setCurrentPage(navigationRoutes.home);
-
+    setRouteWalletConfirmed(false);
     return setCurrentPage.bind(null, '');
   }, []);
 
@@ -209,7 +220,7 @@ export function Home() {
         suffix: (
           <HomeButtons
             onClickRefresh={
-              !!bestRoute || bestRouteError ? fetchBestRoute : undefined
+              !!bestRoute || bestRouteError ? refetchBestRoute : undefined
             }
             onClickHistory={() => navigate(navigationRoutes.swaps)}
             onClickSettings={() => navigate(navigationRoutes.settings)}
@@ -326,7 +337,7 @@ export function Home() {
               if (swapButtonState.title === 'Connect Wallet') {
                 navigate(navigationRoutes.wallets);
               } else {
-                navigate(navigationRoutes.confirmSwap, { replace: true });
+                navigate(navigationRoutes.confirmSwap);
               }
             }}>
             {swapButtonState.title}
