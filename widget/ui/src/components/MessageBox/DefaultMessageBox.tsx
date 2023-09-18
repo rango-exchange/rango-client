@@ -6,7 +6,7 @@ import React from 'react';
 import { Divider } from '../Divider';
 import { Typography } from '../Typography';
 
-import { Container, IconHighlight } from './MessageBox.styles';
+import { Container, Description, IconHighlight } from './MessageBox.styles';
 import StatusIcon from './StatusIcon';
 
 export function MessageBox(props: PropsWithChildren<PropTypes>) {
@@ -25,15 +25,15 @@ export function MessageBox(props: PropsWithChildren<PropTypes>) {
         {title}
       </Typography>
       <Divider size={16} />
-      <div>
+      <Description>
         {typeof description === 'string' ? (
-          <Typography color="neutral600" variant="body" size="medium">
+          <Typography color="neutral900" variant="body" size="medium">
             {description}
           </Typography>
         ) : (
           description
         )}
-      </div>
+      </Description>
       {children}
     </Container>
   );

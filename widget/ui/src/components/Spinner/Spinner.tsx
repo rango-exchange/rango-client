@@ -1,4 +1,5 @@
 import type { SvgIconProps } from '../SvgIcon';
+import type * as Stitches from '@stitches/react';
 
 import React from 'react';
 
@@ -23,12 +24,13 @@ export interface PropTypes {
   // eslint-disable-next-line @typescript-eslint/no-magic-numbers
   size?: 16 | 20 | 24;
   color?: SvgIconProps['color'];
+  css?: Stitches.CSS;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-magic-numbers
-export function Spinner({ size, color }: PropTypes) {
+export function Spinner(props: PropTypes) {
+  const { size, color, css = {} } = props;
   return (
-    <SpinnerContainer>
+    <SpinnerContainer css={css}>
       <LoadingIcon size={size} color={color} />
     </SpinnerContainer>
   );

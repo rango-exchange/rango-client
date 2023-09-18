@@ -77,7 +77,9 @@ export function TokenList(props: PropTypes) {
             key={`${tokens[index].symbol}${tokens[index].address}`}
             id={`${tokens[index].symbol}${tokens[index].address}`}
             onClick={() => onChange(tokens[index])}
-            start={<Image src={tokens[index].image} size={30} />}
+            start={
+              <Image src={tokens[index].image} size={30} type="circular" />
+            }
             title={
               <Title>
                 <Typography variant="title" size="xmedium">

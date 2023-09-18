@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import SelectableWallet from './SelectableWallet';
+import { SelectableWallet } from './SelectableWallet';
 
 const meta: Meta<typeof SelectableWallet> = {
   component: SelectableWallet,

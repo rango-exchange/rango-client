@@ -27,4 +27,5 @@ export type BestRouteProps = Pick<
   steps: Step[];
   totalFee: string;
   totalTime: string;
+  expanded?: boolean;
 };

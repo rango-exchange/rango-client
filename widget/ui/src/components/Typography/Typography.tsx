@@ -18,7 +18,6 @@ export function Typography({
     : {
         color: '$foreground',
       };
-
   return (
     <TypographyContainer
       className={`_typography _text ${className || ''}`}
@@ -28,5 +27,3 @@ export function Typography({
     </TypographyContainer>
   );
 }
-
-Typography.toString = () => '._typography';

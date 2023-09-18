@@ -1,5 +1,4 @@
 import type { Wallet } from '../types';
-import type { SelectableWallet } from '@rango-dev/ui';
 import type { WalletType } from '@rango-dev/wallets-shared';
 
 import { create } from 'zustand';
@@ -34,19 +33,19 @@ export type TokenBalance = {
 
 export interface ConnectedWallet extends Wallet {
   balances: TokenBalance[] | null;
+  explorerUrl: string | null;
+  selected: boolean;
   loading: boolean;
   error: boolean;
-  explorerUrl: string | null;
 }
 
 interface WalletsStore {
   connectedWallets: ConnectedWallet[];
-  selectedWallets: Wallet[];
   customDestination: string;
   connectWallet: (accounts: Wallet[]) => void;
   disconnectWallet: (walletType: WalletType) => void;
   initSelectedWallets: () => void;
-  setSelectedWallet: (wallet: SelectableWallet) => void;
+  selectWallets: (wallets: { walletType: string; chain: string }[]) => void;
   clearConnectedWallet: () => void;
   getWalletsDetails: (accounts: Wallet[], shouldRetry?: boolean) => void;
   setCustomDestination: (customDestination: string) => void;
@@ -68,10 +67,11 @@ export const useWalletsStore = createSelectors(
                 balances: [],
                 address: account.address,
                 chain: account.chain,
-                loading: true,
-                walletType: account.walletType,
-                error: false,
                 explorerUrl: null,
+                walletType: account.walletType,
+                selected: false,
+                loading: true,
+                error: false,
               }))
             ),
         }));
@@ -82,9 +82,6 @@ export const useWalletsStore = createSelectors(
           connectedWallets: state.connectedWallets.filter(
             (balance) => balance.walletType !== walletType
           ),
-          selectedWallets: state.selectedWallets.filter(
-            (wallet) => wallet.walletType != walletType
-          ),
         }));
       },
       initSelectedWallets: () =>
@@ -93,38 +90,48 @@ export const useWalletsStore = createSelectors(
             useBestRouteStore.getState().bestRoute
           );
           const connectedWallets = state.connectedWallets;
-          const selectedWallets: Wallet[] = [];
+          const selectedWallets: string[] = [];
           requiredChains.forEach((chain) => {
-            const anyWalletSelected = !!state.selectedWallets.find(
-              (wallet) => wallet.chain === chain
+            const anyWalletSelected = !!state.connectedWallets.find(
+              (connectedWallet) =>
+                connectedWallet.chain === chain && connectedWallet.selected
             );
 
             if (!anyWalletSelected) {
               const firstWalletWithMatchedChain = connectedWallets.find(
                 (wallet) => wallet.chain === chain
               );
-              if (!!firstWalletWithMatchedChain) {
-                selectedWallets.push({
-                  address: firstWalletWithMatchedChain.address,
-                  chain: firstWalletWithMatchedChain.chain,
-                  walletType: firstWalletWithMatchedChain.walletType,
-                });
+              if (firstWalletWithMatchedChain) {
+                selectedWallets.push(firstWalletWithMatchedChain.walletType);
               }
             }
           });
           return {
-            selectedWallets: state.selectedWallets.concat(selectedWallets),
+            connectedWallets: state.connectedWallets.map((connectedWallet) => {
+              if (
+                selectedWallets.includes(connectedWallet.walletType) &&
+                !connectedWallet.selected
+              ) {
+                return { ...connectedWallet, selected: true };
+              }
+              return connectedWallet;
+            }),
           };
         }),
-      setSelectedWallet: (wallet) =>
+      selectWallets: (wallets) =>
         set((state) => ({
-          selectedWallets: state.selectedWallets
-            .filter((selectedWallet) => selectedWallet.chain !== wallet.chain)
-            .concat({
-              chain: wallet.chain,
-              address: wallet.address,
-              walletType: wallet.walletType,
-            }),
+          connectedWallets: state.connectedWallets.map((connectedWallet) => {
+            const selected = wallets.find(
+              (wallet) =>
+                wallet.chain === connectedWallet.chain &&
+                wallet.walletType === connectedWallet.walletType &&
+                !connectedWallet.selected
+            );
+            if (selected) {
+              return { ...connectedWallet, selected: true };
+            }
+            return connectedWallet;
+          }),
         })),
       setCustomDestination: (customDestination) =>
         set(() => ({
@@ -153,30 +160,30 @@ export const useWalletsStore = createSelectors(
             blockchain: chain,
           }));
           const response = await httpService().getWalletsDetails(data);
-          const retrivedBalance = response.wallets;
-          if (retrivedBalance) {
+          const retrievedBalance = response.wallets;
+          if (retrievedBalance) {
             set((state) => ({
               connectedWallets: state.connectedWallets.map(
                 (connectedWallet) => {
                   const matchedAccount = accounts.find((account) =>
                     isAccountAndWalletMatched(account, connectedWallet)
                   );
-                  const retrivedBalanceAccount = retrivedBalance.find(
+                  const retrievedBalanceAccount = retrievedBalance.find(
                     (balance) =>
                       balance.address === connectedWallet.address &&
                       balance.blockChain === connectedWallet.chain
                   );
                   if (
-                    retrivedBalanceAccount?.failed &&
+                    retrievedBalanceAccount?.failed &&
                     matchedAccount &&
                     shouldRetry
                   ) {
                     getWalletsDetails([matchedAccount], false);
                   }
-                  return matchedAccount && retrivedBalanceAccount
+                  return matchedAccount && retrievedBalanceAccount
                     ? makeBalanceFor(
                         matchedAccount,
-                        retrivedBalanceAccount,
+                        retrievedBalanceAccount,
                         tokens
                       )
                     : connectedWallet;

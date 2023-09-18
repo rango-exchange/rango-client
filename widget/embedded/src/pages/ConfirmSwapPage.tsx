@@ -1,265 +1,400 @@
+/* eslint-disable @typescript-eslint/no-magic-numbers */
+import type {
+  ConfirmSwap,
+  ConfirmSwapFetchResult,
+} from '../hooks/useConfirmSwap';
+import type { WidgetConfig } from '../types';
+import type { PriceImpactWarningLevel } from '@rango-dev/ui/dist/widget/ui/src/components/PriceImpact/PriceImpact.types';
+
+import { i18n } from '@lingui/core';
+import { useManager } from '@rango-dev/queue-manager-react';
+import {
+  Alert,
+  BestRoute,
+  Button,
+  IconButton,
+  MessageBox,
+  Modal,
+  RefreshIcon,
+  SettingsIcon,
+  styled,
+  Tooltip,
+  Typography,
+  WalletIcon,
+} from '@rango-dev/ui';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useBestRouteStore } from '../store/bestRoute';
-import { useWalletsStore } from '../store/wallets';
-import { useWallets } from '@rango-dev/wallets-react';
-import { i18n } from '@lingui/core';
+
+import { formatBestRoute } from '../components/ConfirmWalletsModal/ConfirmWallets.helpers';
+import { ConfirmWalletsModal } from '../components/ConfirmWalletsModal/ConfirmWalletsModal';
+import { HeaderButton } from '../components/HeaderButtons/HeaderButtons.styles';
+import { Layout } from '../components/Layout';
 import { navigationRoutes } from '../constants/navigationRoutes';
-import {
-  getKeplrCompatibleConnectedWallets,
-  getRequiredChains,
-  getSelectableWallets,
-  isExperimentalChain,
-} from '../utils/wallets';
-import {
-  confirmSwapDisabled,
-  getPercentageChange,
-  getTotalFeeInUsd,
-  isValidCustomDestination,
-} from '../utils/swap';
-import { numberToString } from '../utils/numbers';
-import { useMetaStore } from '../store/meta';
-import { WalletType } from '@rango-dev/wallets-shared';
-import { useNavigateBack } from '../hooks/useNavigateBack';
-import {
-  Divider,
-  ConfirmSwap,
-  LoadingFailedAlert,
-  HighSlippageWarning,
-  PercentageChange,
-  RoutesOverview,
-  TokenPreview,
-} from '@rango-dev/ui';
-import { useManager } from '@rango-dev/queue-manager-react';
+import { HIGHT_PRICE_IMPACT, LOW_PRICE_IMPACT } from '../constants/routing';
 import { useConfirmSwap } from '../hooks/useConfirmSwap';
+import { useBestRouteStore } from '../store/bestRoute';
+import { useMetaStore } from '../store/meta';
 import { useSettingsStore } from '../store/settings';
 import { useUiStore } from '../store/ui';
-import { ConfirmSwapErrorTypes } from '../types';
-import { ConfirmSwapErrors } from '../components/ConfirmSwapErrors';
-import { ConfirmSwapWarnings } from '../components/ConfirmSwapWarnings';
-import { HIGH_SLIPPAGE } from '../constants/swapSettings';
-import { getBestRouteStatus } from '../utils/routing';
+import { useWalletsStore } from '../store/wallets';
+import { SlippageWarningType } from '../types';
+import {
+  numberToString,
+  secondsToString,
+  totalArrivalTime,
+} from '../utils/numbers';
+import {
+  confirmSwapDisabled,
+  getConfirmSwapErrorMessage,
+  getPercentageChange,
+  getRouteWarningMessage,
+  getTotalFeeInUsd,
+} from '../utils/swap';
 
-export function ConfirmSwapPage({
-  customDestinationEnabled,
-}: {
-  customDestinationEnabled?: boolean;
-}) {
+const Container = styled('div', {
+  position: 'relative',
+  width: '100%',
+  height: '593px',
+  '& .title': {
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingBottom: '$10',
+  },
+  '& .icon': {
+    width: '$24',
+    height: '$24',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  '& .buttons': {
+    width: '100%',
+    position: 'absolute',
+    bottom: '$0',
+    display: 'flex',
+    justifyContent: 'space-between',
+    filter: 'drop-shadow(white 0 -10px 10px)',
+  },
+  '& .confirm-button': {
+    flexGrow: 1,
+    paddingRight: '$10',
+  },
+});
+
+type PropTypes = {
+  config?: WidgetConfig;
+};
+
+export function ConfirmSwapPage(props: PropTypes) {
+  const { config } = props;
+  const {
+    bestRoute,
+    inputAmount,
+    outputAmount,
+    inputUsdValue,
+    outputUsdValue,
+    setInputAmount,
+    selectedWallets,
+    routeWalletsConfirmed,
+  } = useBestRouteStore();
   const navigate = useNavigate();
-  const { navigateBackFrom } = useNavigateBack();
-  const bestRoute = useBestRouteStore.use.bestRoute();
-  const fetchingBestRoute = useBestRouteStore.use.loading();
-  const fetchingBestRouteError = useBestRouteStore.use.error();
+  const [showWallets, setShowWallets] = useState(false);
+  const [dbErrorMessage, setDbErrorMessage] = useState<string>('');
+  const [showSlippageWarning, setShowSlippageWarning] = useState(false);
+
+  const { customDestination, connectedWallets } = useWalletsStore();
+  const showWalletsOnInit = !routeWalletsConfirmed;
   const setSelectedSwap = useUiStore.use.setSelectedSwap();
-  const { blockchains, tokens } = useMetaStore.use.meta();
-  const loadingMetaStatus = useMetaStore.use.loadingStatus();
-  const connectedWallets = useWalletsStore.use.connectedWallets();
-  const selectedWallets = useWalletsStore.use.selectedWallets();
-  const customDestination = useWalletsStore.use.customDestination();
-  const setCustomDestination = useWalletsStore.use.setCustomDestination();
-  const initSelectedWallets = useWalletsStore.use.initSelectedWallets();
-  const setSelectedWallet = useWalletsStore.use.setSelectedWallet();
+  const { tokens, blockchains } = useMetaStore.use.meta();
   const slippage = useSettingsStore.use.slippage();
   const customSlippage = useSettingsStore.use.customSlippage();
-  const inputUsdValue = useBestRouteStore.use.inputUsdValue();
-  const outputUsdValue = useBestRouteStore.use.outputUsdValue();
-  const setInputAmount = useBestRouteStore.use.setInputAmount();
-  const [dbErrorMessage, setDbErrorMessage] = useState<string>('');
-  const bestRouteloadingStatus = getBestRouteStatus(
-    fetchingBestRoute,
-    !!fetchingBestRouteError
-  );
-  const [destinationChain, setDestinationChain] = useState<string>('');
-
   const { manager } = useManager();
-  const {
-    loading: fetchingConfirmedRoute,
-    errors,
-    warnings,
-    confirmSwap,
-  } = useConfirmSwap();
-
   const selectedSlippage = customSlippage || slippage;
-
-  const showHighSlippageWarning = !errors.find(
-    (error) => error.type === ConfirmSwapErrorTypes.INSUFFICIENT_SLIPPAGE
+  const {
+    fetch: confirmSwap,
+    loading: fetchingConfirmationRoute,
+    cancelFetch,
+  } = useConfirmSwap();
+  const [confirmSwapResult, setConfirmSwapResult] =
+    useState<ConfirmSwapFetchResult>({
+      swap: null,
+      error: null,
+      warnings: null,
+    });
+  const showBestRoute =
+    !fetchingConfirmationRoute && bestRoute && bestRoute.result;
+  const totalFeeInUsd = getTotalFeeInUsd(bestRoute, tokens);
+  const percentageChange = numberToString(
+    getPercentageChange(
+      inputUsdValue?.toNumber() ?? 0,
+      outputUsdValue?.toNumber() ?? 0
+    ),
+    2,
+    2
   );
+  let warningLevel: PriceImpactWarningLevel = undefined;
+  if (parseFloat(percentageChange) >= HIGHT_PRICE_IMPACT) {
+    warningLevel = 'high';
+  } else if (parseFloat(percentageChange) >= LOW_PRICE_IMPACT) {
+    warningLevel = 'low';
+  }
 
-  const { getWalletInfo, connect } = useWallets();
-
-  const firstStep = bestRoute?.result?.swaps[0];
-  const lastStep =
-    bestRoute?.result?.swaps[bestRoute?.result?.swaps.length - 1];
-
-  const fromAmount = numberToString(firstStep?.fromAmount, 4, 6);
-  const toAmount = numberToString(lastStep?.toAmount, 4, 6);
-  useEffect(() => {
-    initSelectedWallets();
-    if (customDestination) {
-      setCustomDestination('');
-    }
-  }, []);
-  const lastStepToBlockchain =
-    bestRoute?.result?.swaps[bestRoute?.result?.swaps.length - 1].to.blockchain;
-  const isWalletRequired = !!bestRoute?.result?.swaps.find(
-    (swap) => swap.from.blockchain === lastStepToBlockchain
-  );
-
-  const selectableWallets = getSelectableWallets(
-    connectedWallets,
+  const onConfirmSwap: ConfirmSwap['fetch'] = async ({
     selectedWallets,
-    getWalletInfo,
-    isWalletRequired ? '' : destinationChain
-  );
-
-  const handleConnectChain = (wallet: string) => {
-    const network = wallet;
-    getKeplrCompatibleConnectedWallets(selectableWallets).forEach(
-      (compatibleWallet: WalletType) => connect?.(compatibleWallet, network)
-    );
+    customDestination,
+  }) => {
+    const result = await confirmSwap?.({ selectedWallets, customDestination });
+    setConfirmSwapResult(result);
+    return result;
   };
 
-  const totalFeeInUsd = getTotalFeeInUsd(bestRoute, tokens);
-
-  const percentageChange =
-    !inputUsdValue || !outputUsdValue || !outputUsdValue.gt(0)
-      ? null
-      : getPercentageChange(
-          inputUsdValue.toNumber(),
-          outputUsdValue.toNumber()
+  const addNewSwap = async () => {
+    if (confirmSwapResult.swap && routeWalletsConfirmed) {
+      try {
+        await manager?.create(
+          'swap',
+          { swapDetails: confirmSwapResult.swap },
+          { id: confirmSwapResult.swap.requestId }
         );
+        setSelectedSwap(confirmSwapResult.swap.requestId);
+        navigate(
+          '/' + navigationRoutes.swaps + `/${confirmSwapResult.swap.requestId}`,
+          {
+            replace: true,
+          }
+        );
+        setTimeout(() => {
+          setInputAmount('');
+        }, 0);
+      } catch (e) {
+        setDbErrorMessage('Error: ' + (e as any)?.message);
+      }
+    }
+  };
+
+  const onConfirm = async () => {
+    await addNewSwap();
+  };
+
+  const onClick = async () => {
+    if (confirmSwapResult?.warnings?.slippage) {
+      setShowSlippageWarning(true);
+    } else {
+      await onConfirm();
+    }
+  };
+
+  useEffect(() => {
+    if (showWalletsOnInit) {
+      setShowWallets(showWalletsOnInit);
+    }
+  }, [showWalletsOnInit]);
+
+  useEffect(() => {
+    if (!showWalletsOnInit) {
+      confirmSwap({ selectedWallets, customDestination })
+        .then((result) => setConfirmSwapResult(result))
+        .catch((error) => console.log(error));
+    }
+  }, []);
+
+  useEffect(() => {
+    if (!showWallets && !routeWalletsConfirmed) {
+      navigate(navigationRoutes.home, { replace: true });
+    }
+  }, [showWallets, routeWalletsConfirmed]);
+
+  useEffect(() => {
+    const destination = blockchains.find(
+      (blockchain) =>
+        blockchain.name ===
+        bestRoute?.result?.swaps[bestRoute.result.swaps.length - 1].to
+          .blockchain
+    );
+
+    const selectedWalletDisconnected =
+      selectedWallets.length < 1 ||
+      !selectedWallets.every((selectedWallet) =>
+        connectedWallets.find(
+          (connectedWallet) =>
+            selectedWallet.address === connectedWallet.address &&
+            selectedWallet.walletType === connectedWallet.walletType &&
+            selectedWallet.chain === connectedWallet.chain
+        )
+      );
+
+    const routeWalletsChanged = confirmSwapDisabled(
+      fetchingConfirmationRoute,
+      !!customDestination,
+      customDestination,
+      bestRoute,
+      selectedWallets,
+      destination
+    );
+
+    if (selectedWalletDisconnected || routeWalletsChanged) {
+      setShowWallets(true);
+    }
+  }, [bestRoute, connectedWallets.length]);
 
   return (
-    <ConfirmSwap
-      requiredWallets={getRequiredChains(bestRoute)}
-      selectableWallets={selectableWallets}
-      setCustomDestination={setCustomDestination}
-      customDestination={customDestination}
-      customDestinationEnabled={customDestinationEnabled}
-      isValidCustomDestination={isValidCustomDestination}
-      checkedDestination={!!destinationChain}
-      setDestinationChain={setDestinationChain}
-      onBack={navigateBackFrom.bind(null, navigationRoutes.confirmSwap)}
-      onConfirm={async () => {
-        confirmSwap?.().then(async (swap) => {
-          if (swap) {
-            try {
-              await manager?.create(
-                'swap',
-                { swapDetails: swap },
-                { id: swap.requestId }
-              );
-              setSelectedSwap(swap.requestId);
-              navigate('/' + navigationRoutes.swaps + `/${swap.requestId}`, {
-                replace: true,
-              });
-              setTimeout(() => {
-                setInputAmount('');
-              }, 0);
-            } catch (e) {
-              setDbErrorMessage('Error: ' + (e as any)?.message);
+    <Layout
+      header={{
+        title: 'Confirm Swap',
+        onBack: navigate.bind(null, -1),
+        hasConnectWallet: true,
+        suffix: (
+          <Tooltip side="bottom" content={i18n.t('Settings')}>
+            <HeaderButton
+              size="small"
+              variant="ghost"
+              onClick={() => navigate('/' + navigationRoutes.settings)}>
+              <SettingsIcon size={18} color="black" />
+            </HeaderButton>
+          </Tooltip>
+        ),
+      }}>
+      <Modal
+        anchor="bottom"
+        open={showSlippageWarning}
+        prefix={
+          <Button
+            size="small"
+            onClick={() => navigate('/' + navigationRoutes.settings)}>
+            <Typography variant="label" size="medium" color="$neutral500">
+              Change settings
+            </Typography>
+          </Button>
+        }
+        container={document.querySelector('#swap-box') as HTMLDivElement}
+        onClose={setShowSlippageWarning.bind(null, (prevState) => !prevState)}>
+        {confirmSwapResult.warnings?.slippage && (
+          <MessageBox
+            type="warning"
+            title={
+              confirmSwapResult.warnings.slippage.type ===
+              SlippageWarningType.HIGH_SLIPPAGE
+                ? 'High slippage'
+                : 'Low slippage'
             }
-          }
-        });
-      }}
-      isWalletRequired={isWalletRequired}
-      onChange={(wallet) => setSelectedWallet(wallet)}
-      confirmDisabled={
-        loadingMetaStatus !== 'success' ||
-        confirmSwapDisabled(
-          fetchingBestRoute,
-          destinationChain,
-          customDestination,
-          bestRoute,
-          selectableWallets
-        )
-      }
-      handleConnectChain={(wallet) => handleConnectChain(wallet)}
-      isExperimentalChain={(wallet) =>
-        getKeplrCompatibleConnectedWallets(selectableWallets).length > 0
-          ? isExperimentalChain(blockchains, wallet)
-          : false
-      }
-      previewInputs={
-        <>
-          <TokenPreview
-            chain={{
-              displayName: firstStep?.from.blockchain || '',
-              logo: firstStep?.from.blockchainLogo || '',
-            }}
-            token={{
-              symbol: firstStep?.from.symbol || '',
-              image: firstStep?.from.logo || '',
-            }}
-            usdValue={inputUsdValue ? numberToString(inputUsdValue) : null}
-            amount={fromAmount}
-            label={i18n.t('From')}
-            loadingStatus={
-              loadingMetaStatus !== 'success'
-                ? loadingMetaStatus
-                : bestRouteloadingStatus
-            }
-          />
-          <Divider size={12} />
-          <TokenPreview
-            chain={{
-              displayName: lastStep?.to.blockchain || '',
-              logo: lastStep?.to.blockchainLogo || '',
-            }}
-            token={{
-              symbol: lastStep?.to.symbol || '',
-              image: lastStep?.to.logo || '',
-            }}
-            usdValue={outputUsdValue ? numberToString(outputUsdValue) : null}
-            amount={toAmount}
-            label={i18n.t('To')}
-            loadingStatus={
-              loadingMetaStatus !== 'success'
-                ? loadingMetaStatus
-                : bestRouteloadingStatus
-            }
-            percentageChange={
-              !percentageChange ? null : (
-                <PercentageChange
-                  percentageChange={numberToString(percentageChange, 0, 2)}
-                  showPercentageChange={!!percentageChange?.lt(0)}
-                />
-              )
-            }
-          />
-        </>
-      }
-      previewRoutes={
-        <RoutesOverview
-          routes={bestRoute}
-          totalFee={numberToString(totalFeeInUsd, 0, 2)}
+            description={
+              confirmSwapResult.warnings.slippage.type ===
+              SlippageWarningType.HIGH_SLIPPAGE
+                ? i18n.t(
+                    'highSlippage',
+                    { selectedSlippage },
+                    {
+                      message:
+                        ' Caution, your slippage is high (={selectedSlippage}). Your trade may be front run.',
+                    }
+                  )
+                : i18n.t(
+                    'increaseSlippage',
+
+                    {
+                      minRequiredSlippage:
+                        confirmSwapResult.warnings.slippage.slippage,
+                    },
+                    {
+                      message:
+                        'We recommend you to increase slippage to at least {minRequiredSlippage} for this route.',
+                    }
+                  )
+            }>
+            <Button
+              style={{ marginTop: '10px' }}
+              type="primary"
+              variant="contained"
+              fullWidth
+              onClick={onConfirm}>
+              Confirm anyway
+            </Button>
+          </MessageBox>
+        )}
+      </Modal>
+      {showWallets && (
+        <ConfirmWalletsModal
+          open={showWallets}
+          onClose={setShowWallets.bind(null, false)}
+          onCancel={cancelFetch}
+          loading={fetchingConfirmationRoute}
+          onCheckBalance={onConfirmSwap}
+          config={config}
         />
-      }
-      loading={fetchingConfirmedRoute}
-      errors={
-        dbErrorMessage
-          ? [dbErrorMessage, ...ConfirmSwapErrors(errors)]
-          : ConfirmSwapErrors(errors)
-      }
-      warnings={ConfirmSwapWarnings(warnings)}
-      extraMessages={
-        <>
-          {loadingMetaStatus === 'failed' && <LoadingFailedAlert />}
-          {loadingMetaStatus === 'failed' && showHighSlippageWarning && (
-            <Divider />
-          )}
-          <HighSlippageWarning
-            selectedSlippage={selectedSlippage}
-            highSlippage={selectedSlippage >= HIGH_SLIPPAGE}
-            changeSlippage={() => navigate('/' + navigationRoutes.settings)}
+      )}
+      <Container>
+        {confirmSwapResult.error && (
+          <Alert type="error">
+            {getConfirmSwapErrorMessage(confirmSwapResult.error)}
+          </Alert>
+        )}
+        {dbErrorMessage && <Alert type="error" title={dbErrorMessage} />}
+        {confirmSwapResult.warnings?.route && (
+          <Alert type="warning">
+            {getRouteWarningMessage(confirmSwapResult.warnings.route)}
+          </Alert>
+        )}
+
+        <div className="title">
+          <Typography variant="title" size="small">
+            You get
+          </Typography>
+          <Button
+            variant="ghost"
+            disabled={fetchingConfirmationRoute}
+            onClick={async () => {
+              await confirmSwap?.({ selectedWallets });
+              await confirmSwap?.({ selectedWallets });
+            }}>
+            <div className="icon">
+              <RefreshIcon size={16} />
+            </div>
+          </Button>
+        </div>
+        {showBestRoute && (
+          <BestRoute
+            expanded={true}
+            steps={formatBestRoute(bestRoute) ?? []}
+            input={{
+              value: numberToString(inputAmount, 6, 6),
+              usdValue: numberToString(inputUsdValue, 6, 6),
+            }}
+            output={{
+              value: numberToString(outputAmount, 6, 6),
+              usdValue: numberToString(outputUsdValue, 6, 6),
+            }}
+            totalFee={numberToString(totalFeeInUsd, 0, 2)}
+            totalTime={secondsToString(totalArrivalTime(bestRoute))}
+            recommended={true}
+            type="swap-preview"
+            percentageChange={percentageChange}
+            warningLevel={warningLevel}
           />
-        </>
-      }
-      confirmButtonTitle={
-        warnings.length > 0 || errors.length > 0
-          ? `${i18n.t('Proceed anyway!')}`
-          : `${i18n.t('Confirm swap!')}`
-      }
-    />
+        )}
+        <div className="buttons">
+          <div className="confirm-button">
+            <Button
+              variant="contained"
+              type="primary"
+              size="large"
+              fullWidth
+              loading={fetchingConfirmationRoute}
+              onClick={onClick}>
+              Start Swap
+            </Button>
+          </div>
+          <IconButton
+            variant="contained"
+            type="primary"
+            size="large"
+            style={{ width: '48px', height: '48px' }}
+            loading={fetchingConfirmationRoute}
+            onClick={setShowWallets.bind(null, true)}>
+            <WalletIcon size={24} />
+          </IconButton>
+        </div>
+      </Container>
+    </Layout>
   );
 }

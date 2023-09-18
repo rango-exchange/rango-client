@@ -142,6 +142,7 @@ msgstr ""
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/HeaderButtons/HomeButtons.tsx:42
+#: widget/embedded/src/pages/ConfirmSwapPage.tsx:226
 #~ msgid "Settings"
 #~ msgstr ""
 
@@ -152,8 +153,8 @@ msgstr ""
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/HeaderButtons/WalletButton.tsx:11
-#: widget/embedded/src/utils/swap.ts:143
-#: widget/embedded/src/utils/swap.ts:145
+#: widget/embedded/src/utils/swap.ts:158
+#: widget/embedded/src/utils/swap.ts:161
 #~ msgid "Connect Wallet"
 #~ msgstr ""
 
@@ -193,27 +194,7 @@ msgstr ""
 #~ msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/ConfirmSwapPage.tsx:196
-#~ msgid "From"
-#~ msgstr ""
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/pages/ConfirmSwapPage.tsx:215
-#~ msgid "To"
-#~ msgstr ""
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/pages/ConfirmSwapPage.tsx:260
-#~ msgid "Proceed anyway!"
-#~ msgstr ""
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/pages/ConfirmSwapPage.tsx:261
-#~ msgid "Confirm swap!"
-#~ msgstr ""
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/pages/HistoryPage.tsx:77
+#: widget/embedded/src/pages/HistoryPage.tsx:75
 #~ msgid "History"
 #~ msgstr ""
 
@@ -221,6 +202,7 @@ msgstr ""
 #: widget/embedded/src/pages/Home.tsx:208
 #: widget/embedded/src/utils/swap.ts:151
 #: widget/embedded/src/utils/swap.ts:168
+#: widget/embedded/src/utils/swap.ts:186
 #~ msgid "Swap"
 #~ msgstr ""
 
@@ -338,7 +320,57 @@ msgstr ""
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/utils/swap.ts:164
+#~ msgid "Finding Best Route..."
+#~ msgstr ""
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/utils/swap.ts:166
+#~ msgid "Enter an amount"
+#~ msgstr ""
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/utils/swap.ts:170
+#~ msgid "Limit Error"
+#~ msgstr ""
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/utils/swap.ts:172
+#~ msgid "Price impact is too high!"
+#~ msgstr ""
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/utils/swap.ts:175
+#~ msgid "USD price is unknown, price impact might be high!"
+#~ msgstr ""
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/utils/swap.ts:181
 #~ msgid "The route goes through Ethereum. Continue?"
+#~ msgstr ""
+
+#. js-lingui-explicit-id
+#: widget/ui/src/containers/Warnings/BalanceErrors.tsx:40
+#~ msgid "Insufficent Balance:"
+#~ msgstr ""
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/ConfirmSwapPage.tsx:196
+#~ msgid "From"
+#~ msgstr ""
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/ConfirmSwapPage.tsx:215
+#~ msgid "To"
+#~ msgstr ""
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/ConfirmSwapPage.tsx:260
+#~ msgid "Proceed anyway!"
+#~ msgstr ""
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/ConfirmSwapPage.tsx:261
+#~ msgid "Confirm swap!"
 #~ msgstr ""
 
 #. js-lingui-explicit-id

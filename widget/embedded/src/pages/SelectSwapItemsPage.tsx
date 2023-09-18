@@ -2,18 +2,13 @@
 import type { Asset } from 'rango-sdk';
 
 import { i18n } from '@lingui/core';
-import {
-  CloseIcon,
-  Divider,
-  IconButton,
-  SearchIcon,
-  TextField,
-} from '@rango-dev/ui';
+import { Divider } from '@rango-dev/ui';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { BlockchainsSection } from '../components/BlockchainsSection';
 import { Layout } from '../components/Layout';
+import { SearchInput } from '../components/SearchInput';
 import { TokenList } from '../components/TokenList/TokenList';
 import { navigationRoutes } from '../constants/navigationRoutes';
 import { useNavigateBack } from '../hooks/useNavigateBack';
@@ -97,16 +92,9 @@ export function SelectSwapItemsPage(props: PropTypes) {
         }}
       />
       <Divider size={24} />
-      <TextField
+      <SearchInput
         value={searchedFor}
-        prefix={<SearchIcon size={24} color={'black'} />}
-        suffix={
-          !!searchedFor.length && (
-            <IconButton variant="ghost" onClick={() => setSearchedFor('')}>
-              <CloseIcon color="gray" size={10} />
-            </IconButton>
-          )
-        }
+        setValue={setSearchedFor}
         placeholder={i18n.t('Search Token')}
         color="light"
         variant="contained"

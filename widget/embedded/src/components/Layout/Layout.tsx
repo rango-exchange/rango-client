@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { navigationRoutes } from '../../constants/navigationRoutes';
 import { useUiStore } from '../../store/ui';
+import { useWalletsStore } from '../../store/wallets';
 import { BackButton, CancelButton, WalletButton } from '../HeaderButtons';
 
 import { Container, Content, Footer } from './Layout.styles';
@@ -15,14 +16,17 @@ export function Layout({
   children,
   header,
   hasFooter,
+  action,
 }: PropsWithChildren<PropTypes>) {
+  const connectedWallets = useWalletsStore.use.connectedWallets();
+
   const connectWalletsButtonDisabled =
     useUiStore.use.connectWalletsButtonDisabled();
   const navigate = useNavigate();
 
   const onConnectWallet = () => {
     if (!connectWalletsButtonDisabled) {
-      navigate(navigationRoutes.wallets);
+      navigate('/' + navigationRoutes.wallets);
     }
   };
 
@@ -35,7 +39,10 @@ export function Layout({
           <>
             {header.suffix}
             {header.hasConnectWallet && (
-              <WalletButton onClick={onConnectWallet} />
+              <WalletButton
+                onClick={onConnectWallet}
+                isConnected={!!connectedWallets?.length}
+              />
             )}
             {header.onCancel && <CancelButton onClick={header.onCancel} />}
           </>
@@ -44,6 +51,7 @@ export function Layout({
       <Content>{children}</Content>
       {hasFooter && (
         <Footer>
+          {action}
           <Divider size={12} />
           <BottomLogo />
         </Footer>

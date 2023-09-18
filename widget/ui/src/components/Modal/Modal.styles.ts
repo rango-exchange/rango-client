@@ -27,9 +27,10 @@ export const BackDrop = styled('div', {
 });
 
 export const ModalContainer = styled('div', {
-  backgroundColor: '$background',
+  backgroundColor: '$neutral100',
+  width: '100%',
   padding: '$10 $20',
-  borderRadius: '$sm',
+  borderRadius: '$md',
   display: 'flex',
   flexDirection: 'column',
   zIndex: 9999999,
@@ -37,21 +38,23 @@ export const ModalContainer = styled('div', {
     anchor: {
       bottom: {
         width: '100%',
-        maxHeight: '90%',
+        maxHeight: '95%',
       },
-      center: {},
+      center: { height: '100%' },
     },
   },
 });
 export const Flex = styled('div', {
   display: 'flex',
   alignItems: 'center',
+  justifyContent: 'end',
 });
 export const ModalHeader = styled('div', {
   display: 'flex',
   justifyContent: 'space-between',
   alignItems: 'center',
   position: 'relative',
+  paddingBottom: '$16',
   variants: {
     noTitle: {
       true: {

@@ -34,7 +34,7 @@ export const getStateWallet = (state: State): WalletStatus => {
   }
 };
 
-export function getlistWallet(
+export function mapWalletTypesToWalletInfo(
   getState: (type: WalletType) => WalletState,
   getWalletInfo: (type: WalletType) => WalletInfo,
   list: WalletType[]

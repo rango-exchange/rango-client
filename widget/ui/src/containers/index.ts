@@ -1,4 +1,3 @@
-export * from './ConfirmSwap';
 export * from './HomePanel';
 export * from './SwapHistory';
 export * from './BlockchainSelector';

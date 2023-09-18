@@ -1,2 +1,2 @@
 export { default as Wallet } from './ClickableWallet';
-export { default as SelectableWallet } from './SelectableWallet';
+export { SelectableWallet } from './SelectableWallet';

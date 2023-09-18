@@ -1,15 +1,13 @@
 import type { TokenWithBalance } from '../components/TokenList';
 import type { ConnectedWallet, TokenBalance } from '../store/wallets';
 import type { Wallet } from '../types';
-import type {
-  WalletInfo as ModalWalletInfo,
-  SelectableWallet,
-} from '@rango-dev/ui';
+import type { WalletInfo as ModalWalletInfo } from '@rango-dev/ui';
 import type {
   Network,
   WalletInfo,
   WalletState,
   WalletType,
+  WalletTypes,
 } from '@rango-dev/wallets-shared';
 import type {
   BestRouteResponse,
@@ -19,19 +17,19 @@ import type {
 } from 'rango-sdk';
 
 import { WalletState as WalletStatus } from '@rango-dev/ui';
+import { readAccountAddress } from '@rango-dev/wallets-react';
 import {
   detectInstallLink,
   getCosmosExperimentalChainInfo,
   isEvmAddress,
   KEPLR_COMPATIBLE_WALLETS,
   Networks,
-  WalletTypes,
 } from '@rango-dev/wallets-shared';
-import { readAccountAddress } from '@rango-dev/wallets-react';
 import BigNumber from 'bignumber.js';
 import { isCosmosBlockchain } from 'rango-types';
 
 import { ZERO } from '../constants/numbers';
+import { EXCLUDED_WALLETS } from '../constants/wallets';
 
 import { numberToString } from './numbers';
 
@@ -48,15 +46,23 @@ export function mapStatusToWalletState(state: WalletState): WalletStatus {
   }
 }
 
-export const excludedWallets = [WalletTypes.LEAP];
-
-export function getlistWallet(
+export function mapWalletTypesToWalletInfo(
   getState: (type: WalletType) => WalletState,
   getWalletInfo: (type: WalletType) => WalletInfo,
-  list: WalletType[]
+  list: WalletType[],
+  chain?: string
 ): ModalWalletInfo[] {
   return list
-    .filter((wallet) => !excludedWallets.includes(wallet as WalletTypes))
+    .filter((wallet) => !EXCLUDED_WALLETS.includes(wallet as WalletTypes))
+    .filter((wallet) => {
+      if (chain) {
+        const { supportedChains } = getWalletInfo(wallet);
+        return !!supportedChains.find(
+          (supportedChain) => supportedChain.name === chain
+        );
+      }
+      return true;
+    })
     .map((type) => {
       const { name, img: image, installLink } = getWalletInfo(type);
       const state = mapStatusToWalletState(getState(type));
@@ -199,10 +205,9 @@ type Blockchain = { name: string; accounts: ConnectedWallet[] };
 
 export function getSelectableWallets(
   connectedWallets: ConnectedWallet[],
-  selectedWallets: Wallet[],
   getWalletInfo: (type: WalletType) => WalletInfo,
   destinationChain?: string
-): SelectableWallet[] {
+): Wallet[] {
   const selectableWallets = connectedWallets.map(
     (connectedWallet: ConnectedWallet) => {
       return {
@@ -214,11 +219,7 @@ export function getSelectableWallets(
         selected:
           destinationChain === connectedWallet.chain
             ? false
-            : !!selectedWallets.find(
-              (selectedWallet) =>
-                selectedWallet.chain === connectedWallet.chain &&
-                selectedWallet.walletType === connectedWallet.walletType
-            ),
+            : connectedWallet.selected,
       };
     }
   );
@@ -288,6 +289,7 @@ export function makeBalanceFor(
   return {
     address,
     chain,
+    selected: false,
     loading: false,
     error: false,
     explorerUrl,
@@ -420,7 +422,7 @@ export const isExperimentalChain = (
 };
 
 export const getKeplrCompatibleConnectedWallets = (
-  selectableWallets: SelectableWallet[]
+  selectableWallets: Wallet[]
 ): WalletType[] => {
   const connectedWalletTypes = new Set(
     selectableWallets.map((wallet) => {
@@ -517,20 +519,51 @@ export function getDefaultToken(
   return selectedToken;
 }
 
-export function sortWalletsBasedOnState(
+export function sortWalletsBasedOnConnectionState(
   wallets: ModalWalletInfo[]
 ): ModalWalletInfo[] {
   return wallets.sort(
     (a, b) =>
       Number(b.state === WalletStatus.CONNECTED) -
-      Number(a.state === WalletStatus.CONNECTED) ||
+        Number(a.state === WalletStatus.CONNECTED) ||
       Number(
         b.state === WalletStatus.DISCONNECTED ||
-        b.state === WalletStatus.CONNECTING
+          b.state === WalletStatus.CONNECTING
       ) -
-      Number(
-        a.state === WalletStatus.DISCONNECTED ||
-        a.state === WalletStatus.CONNECTING
-      )
+        Number(
+          a.state === WalletStatus.DISCONNECTED ||
+            a.state === WalletStatus.CONNECTING
+        )
   );
+}
+
+export function getConciseAddress(
+  address: string,
+  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+  maxChars = 8,
+  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+  ellipsisLength = 3
+): string {
+  if (address.length < 2 * maxChars + ellipsisLength) {
+    return address;
+  }
+  const start = address.slice(0, maxChars);
+  const end = address.slice(-maxChars);
+  return `${start}${'.'.repeat(ellipsisLength)}${end}`;
+}
+
+export function getAddress({
+  chain,
+  connectedWallets,
+  walletType,
+}: {
+  connectedWallets: ConnectedWallet[];
+  walletType: string;
+  chain: string;
+}): string | undefined {
+  return connectedWallets.find(
+    (connectedWallet) =>
+      connectedWallet.walletType === walletType &&
+      connectedWallet.chain === chain
+  )?.address;
 }

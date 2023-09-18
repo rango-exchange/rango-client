@@ -44,7 +44,7 @@ export function BestRoute(props: BestRouteProps) {
 
   const numberOfSteps = steps.length;
 
-  const [expanded, setExpanded] = useState(false);
+  const [expanded, setExpanded] = useState(props.expanded);
 
   return (
     <>
@@ -194,6 +194,7 @@ export function BestRoute(props: BestRouteProps) {
                   key={key}
                   step={step}
                   hasSeparator={index !== steps.length - 1}
+                  state={step.alerts ? 'error' : undefined}
                 />
               );
             })}

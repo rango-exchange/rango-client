@@ -44,6 +44,9 @@ export function Tooltip({
           <RadixTooltip.Content
             key={`${clientX}${clientY}`}
             sideOffset={20}
+            style={{
+              zIndex: 9999999,
+            }}
             side={side}>
             <TooltipTypography variant="label" size="medium" color={color}>
               {content}

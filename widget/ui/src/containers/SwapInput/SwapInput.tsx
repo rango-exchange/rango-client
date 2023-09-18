@@ -15,7 +15,7 @@ export function SwapInput(props: SwapInputProps) {
           <Typography variant="body" size="small" color="$neutral800">
             {props.label}
           </Typography>
-          {'balance' in props && (
+          {'balance' in props && !props.loading && (
             <div className="balance">
               <Typography
                 color="$neutral800"
@@ -61,10 +61,10 @@ export function SwapInput(props: SwapInputProps) {
           ) : (
             <>
               <InputAmount
-                disabled={props.disabled}
+                disabled={props.disabled || props.label === 'To'}
                 style={{ padding: 0 }}
                 value={props.price.value}
-                type="number"
+                type={'onInputChange' in props ? 'number' : 'text'}
                 size="large"
                 placeholder="0"
                 variant="ghost"
@@ -78,12 +78,23 @@ export function SwapInput(props: SwapInputProps) {
                 <PriceImpact
                   size="large"
                   outputUsdValue={props.price.usdValue}
+                  error={props.price.error}
                   percentageChange={props.percentageChange}
                   warningLevel={props.warningLevel}
                 />
               ) : (
-                <Typography variant="body" size="medium" color="$neutral800">
-                  {props.price.usdValue}
+                <Typography
+                  variant="body"
+                  size="medium"
+                  color={!props.price.error ? '$neutral800' : '$warning500'}
+                  style={{
+                    width: 140,
+                    textAlign: 'right',
+                    whiteSpace: 'nowrap',
+                    overflow: 'hidden',
+                    textOverflow: 'ellipsis',
+                  }}>
+                  {props.price.usdValue || props.price.error}
                 </Typography>
               )}
             </>
