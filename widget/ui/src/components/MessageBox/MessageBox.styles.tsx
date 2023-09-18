@@ -7,6 +7,10 @@ export const Container = styled('div', {
   width: '100%',
 });
 
+export const Description = styled('div', {
+  textAlign: 'center',
+});
+
 export const IconHighlight = styled('div', {
   borderRadius: '50%',
   width: '$45',

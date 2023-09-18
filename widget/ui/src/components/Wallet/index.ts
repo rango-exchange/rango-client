@@ -1,3 +1,3 @@
 export * from './Wallet';
-export type { WalletInfo, SelectableWallet } from './Wallet.types';
+export type { WalletInfo } from './Wallet.types';
 export { WalletState } from './Wallet.types';

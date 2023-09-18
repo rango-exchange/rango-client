@@ -1,4 +1,5 @@
 import type { TokenWithBalance } from '../components/TokenList';
+import type { Wallet } from '../types';
 import type { PendingSwap } from '@rango-dev/queue-manager-rango-preset/dist/shared';
 import type { BestRouteResponse, BlockchainMeta, Token } from 'rango-sdk';
 
@@ -7,14 +8,9 @@ import { create } from 'zustand';
 import { subscribeWithSelector } from 'zustand/middleware';
 
 import { ZERO } from '../constants/numbers';
-import { httpService } from '../services/httpService';
-import { debounce } from '../utils/common';
 import { isPositiveNumber } from '../utils/numbers';
-import {
-  getBestRouteToTokenUsdPrice,
-  isRouteParametersChanged,
-} from '../utils/routing';
-import { calcOutputUsdValue, createBestRouteRequestBody } from '../utils/swap';
+import { getBestRouteToTokenUsdPrice } from '../utils/routing';
+import { calcOutputUsdValue } from '../utils/swap';
 import {
   getDefaultToken,
   getSortedTokens,
@@ -23,7 +19,6 @@ import {
 
 import { useMetaStore } from './meta';
 import createSelectors from './selectors';
-import { useSettingsStore } from './settings';
 import { useWalletsStore } from './wallets';
 
 const getUsdValue = (token: Token | null, amount: string): BigNumber | null =>
@@ -40,10 +35,10 @@ export interface RouteState {
   outputUsdValue: BigNumber | null;
   fromToken: TokenWithBalance | null;
   toToken: TokenWithBalance | null;
-  loading: boolean;
-  error: string;
+  routeWalletsConfirmed: boolean;
   sourceTokens: Token[];
   destinationTokens: Token[];
+  selectedWallets: Wallet[];
   resetRoute: () => void;
   resetToChain: () => void;
   resetFromChain: () => void;
@@ -52,14 +47,15 @@ export interface RouteState {
     setDefaultToken?: boolean
   ) => void;
   setToChain: (chian: BlockchainMeta | null, setDefaultToken?: boolean) => void;
-
   setFromToken: (token: Token | null) => void;
   setToToken: (token: Token | null) => void;
   setInputAmount: (amount: string) => void;
   bestRoute: BestRouteResponse | null;
-  setBestRoute: (bestRoute: BestRouteResponse | null) => void;
+  setRoute: (bestRoute: BestRouteResponse | null) => void;
   retry: (pendingSwap: PendingSwap) => void;
   switchFromAndTo: () => void;
+  setRouteWalletConfirmed: (flag: boolean) => void;
+  setSelectedWallets: (wallets: Wallet[]) => void;
 }
 
 export const useBestRouteStore = createSelectors(
@@ -74,11 +70,11 @@ export const useBestRouteStore = createSelectors(
       toChain: null,
       toToken: null,
       bestRoute: null,
-      loading: false,
-      error: '',
+      routeWalletsConfirmed: false,
       sourceTokens: [],
       destinationTokens: [],
-      setBestRoute: (bestRoute) =>
+      selectedWallets: [],
+      setRoute: (bestRoute) =>
         set((state) => {
           let outputAmount: BigNumber | null = null;
           let outputUsdValue: BigNumber = ZERO;
@@ -104,8 +100,6 @@ export const useBestRouteStore = createSelectors(
         }),
       resetRoute: () =>
         set(() => ({
-          loading: true,
-          error: '',
           bestRoute: null,
           outputAmount: null,
           outputUsdValue: new BigNumber(0),
@@ -177,7 +171,6 @@ export const useBestRouteStore = createSelectors(
             outputAmount: new BigNumber(0),
             outputUsdValue: new BigNumber(0),
             bestRoute: null,
-            error: '',
           }),
           ...(!!state.fromToken && {
             inputUsdValue: getUsdValue(state.fromToken, amount),
@@ -245,8 +238,6 @@ export const useBestRouteStore = createSelectors(
           toChain,
           toToken,
           bestRoute: null,
-          loading: false,
-          error: '',
           sourceTokens: sortedSourceTokens,
           destinationTokens: sortedDestinationTokens,
         });
@@ -276,147 +267,8 @@ export const useBestRouteStore = createSelectors(
           toChain: null,
           destinationTokens: [],
         })),
+      setRouteWalletConfirmed: (flag) => set({ routeWalletsConfirmed: flag }),
+      setSelectedWallets: (wallets) => set({ selectedWallets: wallets }),
     }))
   )
-);
-
-const bestRoute = (
-  bestRouteStore: typeof useBestRouteStore,
-  settingsStore: typeof useSettingsStore
-) => {
-  let abortController: AbortController | null = null;
-  const fetchBestRoute = () => {
-    const { fromToken, toToken, inputAmount, resetRoute } =
-      bestRouteStore.getState();
-    const {
-      slippage,
-      customSlippage,
-      disabledLiquiditySources,
-      affiliateRef,
-      affiliatePercent,
-      affiliateWallets,
-    } = settingsStore.getState();
-    if (!fromToken || !toToken || !isPositiveNumber(inputAmount)) {
-      return;
-    }
-    abortController?.abort();
-    abortController = new AbortController();
-    const userSlippage = !!customSlippage ? customSlippage : slippage;
-    const requestBody = createBestRouteRequestBody(
-      fromToken,
-      toToken,
-      inputAmount,
-      [],
-      [],
-      disabledLiquiditySources,
-      userSlippage,
-      affiliateRef,
-      affiliatePercent,
-      affiliateWallets
-    );
-
-    if (!bestRouteStore.getState().loading) {
-      resetRoute();
-    }
-    httpService()
-      .getBestRoute(requestBody, {
-        signal: abortController.signal,
-      })
-      .then((res) => {
-        const { setBestRoute } = bestRouteStore.getState();
-        setBestRoute(res);
-        bestRouteStore.setState({ loading: false });
-        abortController = null;
-      })
-      .catch((error) => {
-        if (error.code === 'ERR_CANCELED') {
-          return;
-        }
-        bestRouteStore.setState({
-          error: error.message,
-          loading: false,
-        });
-      });
-  };
-
-  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-  const debouncedFetchBestRoute = debounce(fetchBestRoute, 600);
-
-  const bestRouteParamsListener = () => {
-    const { fromToken, toToken, inputAmount, inputUsdValue, resetRoute } =
-      useBestRouteStore.getState();
-    if (!isPositiveNumber(inputAmount) || inputUsdValue?.eq(0)) {
-      return bestRouteStore.setState({ loading: false });
-    }
-
-    if (tokensAreEqual(fromToken, toToken)) {
-      return bestRouteStore.setState({
-        loading: false,
-        bestRoute: null,
-        outputAmount: new BigNumber(inputAmount),
-        outputUsdValue: inputUsdValue,
-      });
-    }
-
-    if (!bestRouteStore.getState().loading) {
-      resetRoute();
-    }
-    debouncedFetchBestRoute();
-  };
-
-  useBestRouteStore.subscribe(
-    (state) => ({
-      fromChain: state.fromChain,
-      fromToken: state.fromToken,
-      toChain: state.toChain,
-      toToken: state.toToken,
-      inputAmount: state.inputAmount,
-    }),
-    bestRouteParamsListener,
-    {
-      equalityFn: (prevState, currentState) => {
-        if (
-          isRouteParametersChanged({
-            store: 'bestRoute',
-            prevState,
-            currentState,
-          })
-        ) {
-          return false;
-        }
-        return true;
-      },
-    }
-  );
-
-  useSettingsStore.subscribe(
-    (state) => ({
-      slippage: state.slippage,
-      customSlippage: state.customSlippage,
-      disabledLiquiditySources: state.disabledLiquiditySources,
-      infiniteApprove: state.infiniteApprove,
-    }),
-    bestRouteParamsListener,
-    {
-      equalityFn: (prevState, currentState) => {
-        if (
-          isRouteParametersChanged({
-            store: 'settings',
-            prevState,
-            currentState,
-          })
-        ) {
-          return false;
-        }
-        return true;
-      },
-    }
-  );
-
-  return { fetchBestRoute };
-};
-
-export const { fetchBestRoute } = bestRoute(
-  useBestRouteStore,
-  useSettingsStore
 );

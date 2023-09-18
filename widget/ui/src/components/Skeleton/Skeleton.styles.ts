@@ -11,7 +11,7 @@ const waveSquares = keyframes({
 // #2B3462 -0.15%, rgba(43, 52, 98, 0.20) 99.85%
 export const SkeletonContainer = styled('div', {
   $$background:
-    'linear-gradient(90deg, $colors$info300 0%, rgba(200, 226, 255, 0.20) 70%, $colors$info300 100%)',
+    'linear-gradient(90deg, $colors$info300 20%, rgba(200, 226, 255, 0.20) 70%, $colors$info300 100%)',
   [`.${darkTheme} &`]: {
     $$background:
       'linear-gradient(90deg, $colors$secondary600 0%,rgba(43, 52, 98, 0.20) 70%, $colors$secondary600 100%)',

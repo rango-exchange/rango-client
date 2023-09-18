@@ -24,20 +24,19 @@ const MainContainer = styled('div', {
     '&::-webkit-scrollbar': { width: 2, height: '$8' },
     '&::-webkit-scrollbar-thumb': {
       borderRadius: '$sm',
-      backgroundColor: '$neutral300',
-    },
-    '&::-webkit-scrollbar-thumb:hover': {
-      backgroundColor: '$neutral500',
     },
     '&::-webkit-scrollbar-track': {
       backgroundColor: '$background',
+      borderRadius: '$sm',
     },
   },
   variants: {
     fixedHeight: {
       true: {
-        height: '595px',
-        maxHeight: '595px',
+        true: {
+          height: '595px',
+          maxHeight: '595px',
+        },
       },
       false: {
         height: 'auto',

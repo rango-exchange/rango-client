@@ -3,11 +3,12 @@ import type { PendingSwapStep } from 'rango-types';
 
 import { i18n } from '@lingui/core';
 import { useManager } from '@rango-dev/queue-manager-react';
-import { Alert, SearchIcon, styled, TextField } from '@rango-dev/ui';
+import { styled } from '@rango-dev/ui';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { Layout } from '../components/Layout';
+import { SearchInput } from '../components/SearchInput';
 import { SwapsGroup } from '../components/SwapsGroup';
 import { navigationRoutes } from '../constants/navigationRoutes';
 import { useNavigateBack } from '../hooks/useNavigateBack';
@@ -23,7 +24,7 @@ const Container = styled('div', {
   gap: 15,
 });
 
-const SwapList = styled('div', {
+const SwapsGroupContainer = styled('div', {
   overflowY: 'auto',
   width: '100%',
   display: 'flex',
@@ -53,58 +54,54 @@ export function HistoryPage() {
   const { manager, state } = useManager();
   const list: PendingSwap[] = getPendingSwaps(manager).map(({ swap }) => swap);
   const [searchedFor, setSearchedFor] = useState<string>('');
-  const [filteredList, setFilteredList] = useState<PendingSwap[]>([]);
   const loading = !state.loadedFromPersistor;
 
-  const filterTransactions = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const searchHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
     setSearchedFor(value);
-    const filtered = list.filter(
-      (swap) =>
-        containsText(swap.inputAmount, value) ||
-        containsText(swap.status, value) ||
-        isStepContainsText(swap.steps, value)
-    );
-    console.log(value);
-    console.log(filtered);
-    setFilteredList(filtered);
   };
+
+  let filteredList = list;
+  if (searchedFor) {
+    filteredList = list.filter(
+      (swap) =>
+        containsText(swap.inputAmount, searchedFor) ||
+        containsText(swap.status, searchedFor) ||
+        isStepContainsText(swap.steps, searchedFor) ||
+        containsText(swap.requestId, searchedFor)
+    );
+  }
+
+  // TODO: Loading page is not designed yet.
+  const isEmpty = loading || (!list?.length && !searchedFor);
 
   return (
     <Layout
       header={{
-        onBack: navigateBackFrom.bind(null, navigationRoutes.swaps),
+        onBack: navigateBackFrom.bind(null, '/' + navigationRoutes.swaps),
         title: i18n.t('History'),
       }}>
-      {!loading && (
+      {!isEmpty && (
         <Container>
-          <TextField
-            prefix={<SearchIcon />}
+          <SearchInput
+            setValue={setSearchedFor}
             fullWidth
             variant="contained"
             placeholder="Search Transaction"
-            style={{
-              padding: 10,
-              borderRadius: 25,
-              alignItems: 'center',
-            }}
-            onChange={filterTransactions}
+            autoFocus
+            onChange={searchHandler}
             value={searchedFor}
           />
-          <SwapList>
-            {list.length ? (
-              <SwapsGroup
-                list={searchedFor ? filteredList : list}
-                onSwapClick={(requestId) => {
-                  setSelectedSwap(requestId);
-                  navigate(`${requestId}`, { replace: true });
-                }}
-                groupBy={groupSwapsByDate}
-              />
-            ) : (
-              <Alert type="info" title="Swap" />
-            )}
-          </SwapList>
+          <SwapsGroupContainer>
+            <SwapsGroup
+              list={filteredList}
+              onSwapClick={(requestId) => {
+                setSelectedSwap(requestId);
+                navigate(`${requestId}`, { replace: true });
+              }}
+              groupBy={groupSwapsByDate}
+            />
+          </SwapsGroupContainer>
         </Container>
       )}
     </Layout>

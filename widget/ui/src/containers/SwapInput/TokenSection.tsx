@@ -27,9 +27,9 @@ export function TokenSection(props: TokenSectionProps) {
     <Button
       variant="ghost"
       style={{ padding: 0 }}
-      disabled={error}
+      disabled={error || loading}
       onClick={onClick}>
-      <TokenSectionContainer>
+      <TokenSectionContainer loading={loading}>
         <ChainToken
           size="large"
           useAsPlaceholder={error || (!loading && (!chainImage || !tokenImage))}
@@ -47,10 +47,12 @@ export function TokenSection(props: TokenSectionProps) {
           ) : (
             <>
               <Typography variant="title" size="medium">
-                {error ? i18n.t('Token') : tokenSymbol}
+                {error || (!loading && !tokenSymbol)
+                  ? i18n.t('Token')
+                  : tokenSymbol}
               </Typography>
               <Typography variant="body" size="medium" color="$neutral800">
-                {error ? i18n.t('Chain') : chain}
+                {error || (!loading && !chain) ? i18n.t('Chain') : chain}
               </Typography>
             </>
           )}
