@@ -47,6 +47,7 @@ const Container = styled('div', {
 });
 
 export const TIME_TO_CLOSE_MODAL = 3_000;
+export const TIME_TO_IGNORE_MODAL = 300;
 
 export function WalletsPage({
   supportedWallets,
@@ -55,15 +56,25 @@ export function WalletsPage({
 }: PropTypes) {
   const { navigateBackFrom } = useNavigateBack();
   const [openModal, setOpenModal] = useState<WalletType>('');
+  let modalTimerId: ReturnType<typeof setTimeout> | null = null;
+
   const { list, handleClick, error } = useWalletList({
     supportedWallets,
     multiWallets,
     config,
-    onBeforeConnect: () =>
+    onBeforeConnect: (type) => {
+      modalTimerId = setTimeout(() => {
+        setOpenModal(type);
+      }, TIME_TO_IGNORE_MODAL);
+    },
+    onConnect: () => {
+      if (modalTimerId) {
+        clearTimeout(modalTimerId);
+      }
       setTimeout(() => {
         setOpenModal('');
-      }, TIME_TO_CLOSE_MODAL),
-    onConnect: setOpenModal,
+      }, TIME_TO_CLOSE_MODAL);
+    },
   });
 
   const loadingMetaStatus = useMetaStore.use.loadingStatus();
