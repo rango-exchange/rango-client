@@ -8,15 +8,21 @@ import {
   Button,
   Checkbox,
   Image,
-  List,
   ListItemButton,
-  styled,
+  NotFound,
   Typography,
 } from '@rango-dev/ui';
 import React, { useState } from 'react';
 
 import { Layout } from '../components/Layout';
 import { SearchInput } from '../components/SearchInput';
+import {
+  LiquiditySourceDivider,
+  LiquiditySourceList,
+  LiquiditySourceSuffix,
+  NotFoundContainer,
+  SettingsContainer,
+} from '../components/SettingsContainer';
 import { navigationRoutes } from '../constants/navigationRoutes';
 import { useNavigateBack } from '../hooks/useNavigateBack';
 import { useSettingsStore } from '../store/settings';
@@ -27,36 +33,6 @@ interface PropTypes {
   supportedSwappers?: string[];
   sourceType: 'Exchanges' | 'Bridges';
 }
-
-interface TitleContainerProps {
-  title: string;
-}
-
-function TitleContainer(props: TitleContainerProps) {
-  const { title } = props;
-  return (
-    <Typography variant="title" size="xmedium" color="neutral900">
-      {title}
-    </Typography>
-  );
-}
-
-const Container = styled('div', {
-  height: '100%',
-});
-
-const ListContainer = styled('div', {
-  paddingTop: '$20',
-  width: '100%',
-  height: '100%',
-  overflow: 'scroll',
-});
-
-const SuffixContainer = styled('div', {
-  width: 80,
-  display: 'flex',
-  justifyContent: 'flex-end',
-});
 
 export function LiquiditySourcePage({
   supportedSwappers,
@@ -104,7 +80,11 @@ export function LiquiditySourcePage({
       start: <Image src={logo} size={22} type="circular" />,
       onClick: () => toggleLiquiditySource(groupTitle),
       end: <Checkbox checked={selected} />,
-      title: <TitleContainer title={i18n.t(groupTitle)} />,
+      title: (
+        <Typography variant="title" size="xmedium">
+          {i18n.t(groupTitle)}
+        </Typography>
+      ),
       ...sourceItem,
     };
   });
@@ -127,16 +107,14 @@ export function LiquiditySourcePage({
         onBack: navigateBackFrom.bind(null, navigationRoutes.settings),
         title: i18n.t(sourceType),
         suffix: (
-          <SuffixContainer>
-            <Button variant="ghost" onClick={toggleAllSources}>
-              <Typography variant="label" size="medium" color="neutral900">
-                {i18n.t(hasSelectAll ? 'Deselect all' : 'Select all')}
-              </Typography>
+          <LiquiditySourceSuffix>
+            <Button variant="ghost" size="xsmall" onClick={toggleAllSources}>
+              {i18n.t(hasSelectAll ? 'Deselect all' : 'Select all')}
             </Button>
-          </SuffixContainer>
+          </LiquiditySourceSuffix>
         ),
       }}>
-      <Container>
+      <SettingsContainer>
         <SearchInput
           value={searchedFor}
           setValue={setSearchedFor}
@@ -147,15 +125,30 @@ export function LiquiditySourcePage({
           onChange={searchHandler}
         />
 
-        <ListContainer>
-          <List
-            type={
-              <ListItemButton title="_" id="_" onClick={() => console.log()} />
-            }
-            items={filteredList}
-          />
-        </ListContainer>
-      </Container>
+        {!filteredList.length && !!searchedFor ? (
+          <NotFoundContainer>
+            <NotFound
+              title={i18n.t('No results found')}
+              description={i18n.t('Try using different keywords')}
+            />
+          </NotFoundContainer>
+        ) : (
+          <LiquiditySourceList>
+            {filteredList.map((sourceItem) => {
+              return (
+                <React.Fragment key={sourceItem.id}>
+                  <ListItemButton
+                    style={{ height: '61px' }}
+                    {...sourceItem}
+                    selected={false}
+                  />
+                  <LiquiditySourceDivider />
+                </React.Fragment>
+              );
+            })}
+          </LiquiditySourceList>
+        )}
+      </SettingsContainer>
     </Layout>
   );
 }

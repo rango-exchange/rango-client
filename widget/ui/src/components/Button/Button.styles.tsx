@@ -89,9 +89,12 @@ export const ButtonBase = styled('button', {
       },
       ghost: {
         backgroundColor: 'transparent',
-        color: '$foreground',
+        color: '$neutral900',
         '&:disabled': {
           color: '$neutral800',
+        },
+        '&:hover': {
+          color: '$secondary500',
         },
       },
       default: {},

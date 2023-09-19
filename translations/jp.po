@@ -93,33 +93,40 @@ msgid "Balance"
 msgstr ""
 
 #. js-lingui-explicit-id
+#: widget/embedded/src/pages/SelectBlockchainPage.tsx:53
+#~ msgid "Search Blockchain"
+#~ msgstr ""
+
+#. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:39
 #: widget/embedded/src/components/SwapsGroup/SwapsGroup.tsx:20
-#: widget/embedded/src/components/TokenList/TokenList.tsx:139
+#: widget/embedded/src/components/TokenList/TokenList.tsx:128
+#: widget/embedded/src/pages/LiquiditySourcePage.tsx:131
 #~ msgid "No results found"
 #~ msgstr ""
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:40
 #: widget/embedded/src/components/SwapsGroup/SwapsGroup.tsx:21
-#: widget/embedded/src/components/TokenList/TokenList.tsx:140
+#: widget/embedded/src/components/TokenList/TokenList.tsx:129
+#: widget/embedded/src/pages/LiquiditySourcePage.tsx:132
 #~ msgid "Try using different keywords"
 #~ msgstr ""
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:68
-#: widget/embedded/src/components/BlockchainsSection/BlockchainsSection.tsx:43
+#: widget/embedded/src/components/BlockchainsSection/BlockchainsSection.tsx:47
 #: widget/embedded/src/pages/SelectBlockchainPage.tsx:42
 #~ msgid "Select Blockchain"
 #~ msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/BlockchainsSection/BlockchainsSection.tsx:63
+#: widget/embedded/src/components/BlockchainsSection/BlockchainsSection.tsx:67
 #~ msgid "All"
 #~ msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/BlockchainsSection/BlockchainsSection.tsx:88
+#: widget/embedded/src/components/BlockchainsSection/BlockchainsSection.tsx:92
 #~ msgid "More +{count}"
 #~ msgstr ""
 
@@ -156,7 +163,27 @@ msgstr ""
 #~ msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/TokenList/TokenList.tsx:273
+#: widget/embedded/src/components/Slippage/Slippage.tsx:32
+#~ msgid "Slippage tolerance per swap"
+#~ msgstr ""
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/Slippage/SlippageTooltipContent.tsx:11
+#~ msgid "Your transaction will be reverted if the price changes unfavorably by more than this percentage"
+#~ msgstr ""
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/Slippage/SlippageTooltipContent.tsx:16
+#~ msgid "Warning"
+#~ msgstr ""
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/Slippage/SlippageTooltipContent.tsx:17
+#~ msgid "This setting is applied per step, e.g. 1Inch, Thorchain, etc. and only that step will be reverted, not the whole transaction"
+#~ msgstr ""
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/TokenList/TokenList.tsx:265
 #~ msgid "Select Token"
 #~ msgstr ""
 
@@ -282,90 +309,95 @@ msgstr ""
 #~ msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/LanguagePage.tsx:42
+#: widget/embedded/src/pages/LanguagePage.tsx:31
 #~ msgid "English"
 #~ msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/LanguagePage.tsx:49
+#: widget/embedded/src/pages/LanguagePage.tsx:42
 #~ msgid "French"
 #~ msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/LanguagePage.tsx:56
+#: widget/embedded/src/pages/LanguagePage.tsx:53
 #~ msgid "Spanish"
 #~ msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/LanguagePage.tsx:66
-#: widget/embedded/src/pages/SettingsPage.tsx:144
+#: widget/embedded/src/pages/LanguagePage.tsx:65
+#: widget/embedded/src/pages/SettingsPage.tsx:111
 #~ msgid "Language"
 #~ msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/LiquiditySourcePage.tsx:146
+#: widget/embedded/src/pages/LiquiditySourcePage.tsx:124
 #~ msgid "Swap {sourceType}"
 #~ msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/SelectBlockchainPage.tsx:53
-#~ msgid "Search Blockchain"
-#~ msgstr ""
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/pages/SelectSwapItemsPage.tsx:94
+#: widget/embedded/src/pages/SelectSwapItemsPage.tsx:96
 #~ msgid "Swap {type}"
 #~ msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/SelectSwapItemsPage.tsx:121
+#: widget/embedded/src/pages/SelectSwapItemsPage.tsx:123
 #~ msgid "Search Token"
 #~ msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/SettingsPage.tsx:100
+#: widget/embedded/src/pages/SettingsPage.tsx:59
 #~ msgid "Enabled bridges"
 #~ msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/SettingsPage.tsx:122
+#: widget/embedded/src/pages/SettingsPage.tsx:85
 #~ msgid "Enabled exchanges"
 #~ msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/SettingsPage.tsx:151
+#: widget/embedded/src/pages/SettingsPage.tsx:122
 #: widget/embedded/src/pages/ThemePage.tsx:76
 #~ msgid "Theme"
 #~ msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/SettingsPage.tsx:158
+#: widget/embedded/src/pages/SettingsPage.tsx:133
 #~ msgid "Infinite Approval"
 #~ msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/SettingsPage.tsx:173
+#: widget/embedded/src/pages/SettingsPage.tsx:150
 #~ msgid "Setting"
 #~ msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/ThemePage.tsx:49
+#: widget/embedded/src/pages/ThemePage.tsx:39
 #~ msgid "Light"
 #~ msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/ThemePage.tsx:57
+#: widget/embedded/src/pages/ThemePage.tsx:51
 #~ msgid "Dark"
 #~ msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/ThemePage.tsx:65
+#: widget/embedded/src/pages/ThemePage.tsx:63
 #~ msgid "Auto"
 #~ msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/WalletsPage.tsx:85
+#: widget/embedded/src/pages/WalletsPage.tsx:96
 #~ msgid "Choose a wallet to connect."
+#~ msgstr ""
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/SelectBlockchainPage.tsx:42
+#~ msgid "Select chain"
+#~ msgstr ""
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/SelectBlockchainPage.tsx:60
+#~ msgid "Search Chain"
 #~ msgstr ""
 
 #. js-lingui-explicit-id
@@ -411,16 +443,6 @@ msgstr ""
 #. js-lingui-explicit-id
 #: widget/embedded/src/pages/ConfirmSwapPage.tsx:261
 #~ msgid "Confirm swap!"
-#~ msgstr ""
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/pages/SelectBlockchainPage.tsx:42
-#~ msgid "Select chain"
-#~ msgstr ""
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/pages/SelectBlockchainPage.tsx:60
-#~ msgid "Search Chain"
 #~ msgstr ""
 
 #. js-lingui-explicit-id
