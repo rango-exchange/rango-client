@@ -3,8 +3,8 @@ import type { RouteState } from '../store/bestRoute';
 import type { SettingsState } from '../store/settings';
 
 interface BestRouteStoreParams {
-  fromChain?: RouteState['fromChain'];
-  toChain?: RouteState['toChain'];
+  fromBlockchain?: RouteState['fromBlockchain'];
+  toBlockchain?: RouteState['toBlockchain'];
   fromToken?: RouteState['fromToken'];
   toToken?: RouteState['toToken'];
   inputAmount?: RouteState['inputAmount'];

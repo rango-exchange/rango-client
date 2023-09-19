@@ -1,7 +1,7 @@
 export enum SearchParams {
-  'FROM_CHAIN' = 'fromChain',
+  'FROM_CHAIN' = 'fromBlockchain',
   'FROM_TOKEN' = 'fromToken',
-  'TO_CHAIN' = 'toChain',
+  'TO_CHAIN' = 'toBlockchain',
   'TO_TOKEN' = 'toToken',
   'FROM_AMOUNT' = 'fromAmount',
 }

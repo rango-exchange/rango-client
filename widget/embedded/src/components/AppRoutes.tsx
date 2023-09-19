@@ -35,8 +35,9 @@ export function AppRoutes(props: PropTypes) {
       element: (
         <SelectSwapItemsPage
           type="from"
-          supportedChains={config?.from?.blockchains}
+          supportedBlockchains={config?.from?.blockchains}
           supportedTokens={config?.from?.tokens}
+          pinnedTokens={config?.pinnedTokens}
         />
       ),
     },
@@ -45,26 +46,27 @@ export function AppRoutes(props: PropTypes) {
       element: (
         <SelectSwapItemsPage
           type="to"
-          supportedChains={config?.to?.blockchains}
+          supportedBlockchains={config?.to?.blockchains}
           supportedTokens={config?.to?.tokens}
+          pinnedTokens={config?.pinnedTokens}
         />
       ),
     },
     {
-      path: navigationRoutes.fromChain,
+      path: navigationRoutes.fromBlockchain,
       element: (
         <SelectBlockchainPage
           type="from"
-          supportedChains={config?.to?.blockchains}
+          supportedBlockchains={config?.to?.blockchains}
         />
       ),
     },
     {
-      path: navigationRoutes.toChain,
+      path: navigationRoutes.toBlockchain,
       element: (
         <SelectBlockchainPage
           type="to"
-          supportedChains={config?.to?.blockchains}
+          supportedBlockchains={config?.to?.blockchains}
         />
       ),
     },

@@ -5,6 +5,7 @@ export interface TokenWithBalance extends Token {
     amount: string;
     usdValue: string;
   };
+  pin?: boolean;
 }
 
 export interface PropTypes {
@@ -16,3 +17,31 @@ export interface PropTypes {
 export interface LoadingTokenListProps {
   size: number;
 }
+
+export interface RenderDescProps {
+  name?: string | null;
+  address: string;
+  url: string;
+  token: TokenWithBalance;
+  customCssForTag: TagCSS;
+  customCssForTagTitle: TitleCSS;
+}
+
+type TagCSS = {
+  [x: string]:
+    | string
+    | {
+        $$color: string;
+      };
+  $$color: string;
+  backgroundColor: string;
+};
+type TitleCSS = {
+  [x: string]:
+    | string
+    | {
+        $$color: string;
+      };
+  $$color: string;
+  color: string;
+};

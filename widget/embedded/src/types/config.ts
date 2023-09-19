@@ -1,7 +1,7 @@
-import { Asset } from 'rango-sdk';
-import { WalletType } from '@rango-dev/wallets-shared';
-import { ProviderInterface } from '@rango-dev/wallets-react';
-import { Language } from '@rango-dev/ui';
+import type { Language } from '@rango-dev/ui';
+import type { ProviderInterface } from '@rango-dev/wallets-react';
+import type { WalletType } from '@rango-dev/wallets-shared';
+import type { Asset } from 'rango-sdk';
 
 /**
  * The above type defines a set of optional color properties for a widget.
@@ -13,7 +13,7 @@ import { Language } from '@rango-dev/ui';
  * @property {string} warning
  * @property {string} surface
  * @property {string} neutral
-
+ *
  */
 export type WidgetColors = {
   background?: string;
@@ -93,7 +93,7 @@ export type BlockchainAndTokenConfig = {
  * and theme.
  *
  * @property {string} apiKey - The API key used to communicate with Rango API
- * @property {WidgeAffiliate} affiliate - If you want to charge users fee per transaction, you should 
+ * @property {WidgeAffiliate} affiliate - If you want to charge users fee per transaction, you should
  * pass `WidgetAffiliate` including affiliateRef, affiliatePercent, and affiliateWallets.
  * @property {number} amount - The default input amount.
  * @property {BlockchainAndTokenConfig} from - The `from` property is an optional property of type
@@ -121,7 +121,8 @@ export type BlockchainAndTokenConfig = {
  * that defines the various properties of the theme, such as colors, fonts, and others.
  * @property {boolean} externalWallets
  * If `externalWallets` is `true`, you should add `WidgetWallets` to your app.
-
+ * @property {Asset} pinnedTokens - The `pinnedTokens` property is an optional array of `Asset` objects that
+ * you could use to pin tokens of your choice to the top of the token list.
  */
 export type WidgetConfig = {
   apiKey: string;
@@ -137,4 +138,5 @@ export type WidgetConfig = {
   language?: Language;
   theme?: WidgetTheme;
   externalWallets?: boolean;
+  pinnedTokens?: Asset[];
 };
