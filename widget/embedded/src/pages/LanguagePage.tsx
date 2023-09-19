@@ -9,6 +9,7 @@ import {
 import React, { useState } from 'react';
 
 import { Layout } from '../components/Layout';
+import { SettingsContainer } from '../components/SettingsContainer';
 import { navigationRoutes } from '../constants/navigationRoutes';
 import { useNavigateBack } from '../hooks/useNavigateBack';
 
@@ -17,20 +18,6 @@ enum Languages {
   FRENCH = 'french',
   SPANISH = 'spanish',
 }
-
-interface TitleContainerProps {
-  title: string;
-}
-
-function TitleContainer(props: TitleContainerProps) {
-  const { title } = props;
-  return (
-    <Typography variant="title" size="xmedium" color="neutral900">
-      {title}
-    </Typography>
-  );
-}
-
 export function LanguagePage() {
   const { navigateBackFrom } = useNavigateBack();
   const [language, setLanguage] = useState(Languages.ENGLISH);
@@ -39,21 +26,33 @@ export function LanguagePage() {
     {
       id: Languages.ENGLISH,
       value: Languages.ENGLISH,
-      title: <TitleContainer title={i18n.t('English')} />,
+      title: (
+        <Typography variant="title" size="xmedium">
+          {i18n.t('English')}
+        </Typography>
+      ),
       onClick: () => setLanguage(Languages.ENGLISH),
       end: <Radio value={Languages.ENGLISH} />,
     },
     {
       id: Languages.FRENCH,
       value: Languages.FRENCH,
-      title: <TitleContainer title={i18n.t('French')} />,
+      title: (
+        <Typography variant="title" size="xmedium">
+          {i18n.t('French')}
+        </Typography>
+      ),
       onClick: () => setLanguage(Languages.FRENCH),
       end: <Radio value={Languages.FRENCH} />,
     },
     {
       id: Languages.SPANISH,
       value: Languages.SPANISH,
-      title: <TitleContainer title={i18n.t('Spanish')} />,
+      title: (
+        <Typography variant="title" size="xmedium">
+          {i18n.t('Spanish')}
+        </Typography>
+      ),
       onClick: () => setLanguage(Languages.SPANISH),
       end: <Radio value={Languages.SPANISH} />,
     },
@@ -65,18 +64,20 @@ export function LanguagePage() {
         onBack: navigateBackFrom.bind(null, navigationRoutes.settings),
         title: i18n.t('Language'),
       }}>
-      <RadioRoot value={language}>
-        <List
-          type={
-            <ListItemButton
-              title="language"
-              id="_"
-              onClick={() => console.log()}
-            />
-          }
-          items={languageList}
-        />
-      </RadioRoot>
+      <SettingsContainer>
+        <RadioRoot value={language}>
+          <List
+            type={
+              <ListItemButton
+                title="language"
+                id="_"
+                onClick={() => console.log()}
+              />
+            }
+            items={languageList}
+          />
+        </RadioRoot>
+      </SettingsContainer>
     </Layout>
   );
 }

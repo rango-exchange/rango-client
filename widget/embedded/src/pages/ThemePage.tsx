@@ -12,6 +12,7 @@ import {
 import React from 'react';
 
 import { Layout } from '../components/Layout';
+import { SettingsContainer } from '../components/SettingsContainer';
 import { navigationRoutes } from '../constants/navigationRoutes';
 import { useNavigateBack } from '../hooks/useNavigateBack';
 import { useSettingsStore } from '../store/settings';
@@ -24,19 +25,6 @@ enum Mode {
   AUTO = 'auto',
 }
 
-interface TitleContainerProps {
-  title: string;
-}
-
-function TitleContainer(props: TitleContainerProps) {
-  const { title } = props;
-  return (
-    <Typography variant="title" size="xmedium" color="neutral900">
-      {title}
-    </Typography>
-  );
-}
-
 export function ThemePage() {
   const { navigateBackFrom } = useNavigateBack();
   const theme = useSettingsStore.use.theme();
@@ -46,7 +34,11 @@ export function ThemePage() {
     {
       id: Mode.LIGHT,
       value: Mode.LIGHT,
-      title: <TitleContainer title={i18n.t('Light')} />,
+      title: (
+        <Typography variant="title" size="xmedium">
+          {i18n.t('Light')}
+        </Typography>
+      ),
       onClick: () => setTheme(Mode.LIGHT as Theme),
       start: <LightModeIcon color="gray" />,
       end: <Radio value={Mode.LIGHT} />,
@@ -54,7 +46,11 @@ export function ThemePage() {
     {
       id: Mode.DARK,
       value: Mode.DARK,
-      title: <TitleContainer title={i18n.t('Dark')} />,
+      title: (
+        <Typography variant="title" size="xmedium">
+          {i18n.t('Dark')}
+        </Typography>
+      ),
       onClick: () => setTheme(Mode.DARK as Theme),
       start: <DarkModeIcon color="gray" />,
       end: <Radio value={Mode.DARK} />,
@@ -62,7 +58,11 @@ export function ThemePage() {
     {
       id: Mode.AUTO,
       value: Mode.AUTO,
-      title: <TitleContainer title={i18n.t('Auto')} />,
+      title: (
+        <Typography variant="title" size="xmedium">
+          {i18n.t('Auto')}
+        </Typography>
+      ),
       onClick: () => setTheme(Mode.AUTO as Theme),
       start: <AutoThemeIcon color="gray" />,
       end: <Radio value={Mode.AUTO} />,
@@ -75,20 +75,22 @@ export function ThemePage() {
         onBack: navigateBackFrom.bind(null, navigationRoutes.settings),
         title: i18n.t('Theme'),
       }}>
-      <RadioRoot
-        onValueChange={(value) => setTheme(value as Theme)}
-        value={theme}>
-        <List
-          type={
-            <ListItemButton
-              title="Theme"
-              id="_"
-              onClick={() => console.log()}
-            />
-          }
-          items={themesList}
-        />
-      </RadioRoot>
+      <SettingsContainer>
+        <RadioRoot
+          onValueChange={(value) => setTheme(value as Theme)}
+          value={theme}>
+          <List
+            type={
+              <ListItemButton
+                title="Theme"
+                id="_"
+                onClick={() => console.log()}
+              />
+            }
+            items={themesList}
+          />
+        </RadioRoot>
+      </SettingsContainer>
     </Layout>
   );
 }

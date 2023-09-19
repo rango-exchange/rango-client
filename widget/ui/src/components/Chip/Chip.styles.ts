@@ -9,7 +9,7 @@ export const ChipContainer = styled('button', {
   cursor: 'pointer',
   transition: 'all 0.35s',
   backgroundColor: '$neutral100',
-  border: 'none',
+  border: '1px solid transparent',
 
   '&:hover': {
     $$color: '$colors$info100',
@@ -17,6 +17,10 @@ export const ChipContainer = styled('button', {
       $$color: '$colors$neutral400',
     },
     backgroundColor: '$$color',
+  },
+
+  '&:focus': {
+    outline: '1px solid gray',
   },
 
   variants: {

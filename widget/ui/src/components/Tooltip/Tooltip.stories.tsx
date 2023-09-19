@@ -1,9 +1,11 @@
+import type { PropTypes } from './Tooltip.types';
+import type { Meta } from '@storybook/react';
+
 import React from 'react';
-import { Meta } from '@storybook/react';
+
+import { AddWalletIcon } from '../Icon';
 
 import { Tooltip } from './Tooltip';
-import { PropTypes } from './Tooltip.types';
-import { AddWalletIcon } from '../Icon';
 
 export default {
   title: 'Components/Tooltip',
