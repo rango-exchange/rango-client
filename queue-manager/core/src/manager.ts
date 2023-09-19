@@ -1,7 +1,11 @@
-import Persistor from './persistor';
-import Queue, { QueueEventHandlers, TaskEvent } from './queue';
-import { QueueStorage, SYNC_POLLING_INTERVAL, Status } from './types';
+import type { QueueEventHandlers, TaskEvent } from './queue';
+import type { QueueStorage } from './types';
+
 import { v4 as uuidv4 } from 'uuid';
+
+import Persistor from './persistor';
+import Queue from './queue';
+import { Status, SYNC_POLLING_INTERVAL } from './types';
 
 export type ManagerContext = object;
 export type QueueName = string;
@@ -67,6 +71,7 @@ export interface Events {
   onUpdateTask: (queue_id: QueueID, event: TaskEvent) => void;
   onStorageUpdate: (queue_id: QueueID, data: QueueStorage) => void;
   onTaskBlock: (queue_id: QueueID) => void;
+  onDeleteQueue: (queue_id: QueueID) => void;
   onPersistedDataLoaded: (manager: Manager) => void;
 }
 
@@ -96,7 +101,7 @@ class Manager {
   private events: Events;
   private persistor: Persistor;
   private context: ManagerContext;
-  private isPaused: boolean = false;
+  private isPaused = false;
   // The client won't get any update on pause, We are using a polling mode to fix this issue for now.
   private syncInterval: NodeJS.Timer | null = null;
 
@@ -104,7 +109,8 @@ class Manager {
    *
    * Making an instance, initilize events, setup a persistor and try to recover the last state of the manager.
    *
-   * */
+   *
+   */
   constructor(options: ManagerOptions) {
     const defaultEventHandlers: Events = {
       onCreateQueue: () => {
@@ -128,6 +134,9 @@ class Manager {
       onPersistedDataLoaded: () => {
         // ..
       },
+      onDeleteQueue: () => {
+        // ...
+      },
     };
 
     if (options.events) {
@@ -145,13 +154,95 @@ class Manager {
 
     this.context = options.context || {};
     this.persistor = new Persistor();
-    this.sync();
+
+    void this.sync();
 
     if (options.isPaused) {
       this.pause();
     }
   }
 
+  // Create a new queue
+  /**
+   *
+   * Create a new queue by client.
+   *
+   * It will do the internal things to make a queue from definitions, and running using Manager.
+   *
+   * Notes:
+   *  - After creating the queue, it will be run automatically.
+   *
+   * @returns an ID for queue so it can be used to get the created queue later by client.
+   *
+   */
+  public async create(
+    name: QueueName,
+    storage: QueueStorage,
+    options?: { id?: QueueID }
+  ) {
+    if (!this.queuesDefs.has(name)) {
+      throw new Error('You need to add a queue definition first.');
+    }
+
+    try {
+      const def = this.queuesDefs.get(name)!;
+      const queue_id: QueueID = options?.id || uuidv4();
+      const createdAt = Date.now();
+      const list = this.createQueue({
+        queue_id: queue_id,
+        queue_name: name,
+      });
+      list.setStorage(storage);
+
+      const createdQueue = this.add(queue_id, {
+        list,
+        createdAt,
+        name,
+        status: Status.PENDING,
+        actions: {
+          run: () => {
+            list.next({
+              context: this.getContext(),
+            });
+          },
+          cancel: () => {
+            list.cancel();
+          },
+          setStorage: (...args) => {
+            list.setStorage(...args);
+          },
+          getStorage: () => {
+            return list.getStorage();
+          },
+        },
+      });
+
+      /*
+       * Persist initial queue
+       * Note: we need to first insert the queue, and then it can be updated by internal events.
+       */
+      await this.persistor.insertQueue({
+        id: queue_id,
+        createdAt,
+        name: createdQueue.name,
+        status: createdQueue.status,
+        tasks: list.tasks,
+        state: list.state,
+        storage: list.getStorage(),
+      });
+
+      // adding initial tasks
+      def.run.forEach((action) => {
+        list.createTask(action);
+      });
+
+      // After creating a new queue, try to run.
+      this.execute();
+      return queue_id;
+    } catch (e) {
+      throw new Error((e as any)?.message);
+    }
+  }
   /**
    *
    * Reading persisted data from storage then brings into memory.
@@ -163,6 +254,155 @@ class Manager {
    *  - Trigger `onPersistedDataLoaded` event when queues recovered from storage.
    *
    */
+
+  /**
+   * Get a queue by its ID.
+   *
+   * @returns An object includes queue and its state in `Manager`.
+   */
+  public get(queue_id: QueueID) {
+    return this.queues.get(queue_id);
+  }
+
+  /**
+   * Get all queues from `Manager`
+   *
+   * @returns a list of queues includes all the queues and their states.
+   */
+  public getAll() {
+    return this.queues;
+  }
+
+  public deleteQueue(queue_id: QueueID) {
+    this.queues.delete(queue_id);
+    void this.persistor.deleteQueue(queue_id);
+  }
+  /**
+   *
+   * Ask from manager to run pending queues.
+   *
+   * It only try to run queues with `PENDING` status and ignore all the other statuses.
+   *
+   */
+  public execute() {
+    if (!this.shouldExecute()) {
+      return;
+    }
+
+    for (const [, q] of Array.from(this.queues)) {
+      if (q.status === Status.PENDING) {
+        q.actions.run();
+      }
+    }
+  }
+
+  /**
+   *
+   * Try to find queues with `RUNNING` status to run them again.
+   *
+   * It's useful for recovering the queue at some certain points
+   * like running a currepted task (reloaded when it was running) or needs manual trigger from UI.
+   *
+   * @returns
+   */
+  public resume() {
+    if (!this.shouldExecute()) {
+      return;
+    }
+
+    for (const [, q] of Array.from(this.queues)) {
+      if (q.status === Status.RUNNING) {
+        q.list.resume({
+          context: this.getContext(),
+        });
+        return;
+      }
+    }
+
+    // If there is no running queue, try to run a new queue.
+    this.execute();
+  }
+
+  /**
+   *
+   * Run all `BLOCKED` queues once again.
+   *
+   * If a queue has `BLOCKED` status and the last task is `BLOCKED` as well,
+   * The task will be run one more time.
+   *
+   * Useful for scenarios like we are blocking the queue under some conditions in task,
+   * We can use this method to ask the queue to run the blocked task one more time and
+   * maybe this time condtions are met and the queue can be proceed.
+   *
+   * @returns
+   */
+  public retry() {
+    if (!this.shouldExecute()) {
+      return;
+    }
+
+    for (const [, q] of Array.from(this.queues)) {
+      if (q.status === Status.BLOCKED) {
+        q.list.checkBlock();
+      }
+    }
+
+    // If there is no running queue, try to run a new queue.
+    this.execute();
+  }
+
+  /**
+   *
+   * Run a blocked task on a specific queue with the ability to pass more data.
+   *
+   * Useful when we have a custom logic for running queue and needs to pass some specific data
+   * to the task and try to run it manually with the provided data.
+   *
+   */
+  public forceExecute(queue_id: string, data?: object) {
+    const queue = this.get(queue_id);
+    let context = this.getContext();
+    if (data) {
+      context = {
+        ...context,
+        ...data,
+      };
+    }
+
+    queue?.list.forceRun({
+      context,
+    });
+  }
+
+  /**
+   * Active readonly mode for manager, it means it doesn't run anythin,
+   * And only can be used to read the data.
+   */
+  public pause() {
+    if (this.isPaused) {
+      return;
+    }
+    this.isPaused = true;
+    this.syncInterval = setInterval(() => {
+      void this.sync();
+    }, SYNC_POLLING_INTERVAL);
+  }
+
+  /**
+   * Activate normal mode which means it will be able to run the queuese as well.
+   */
+  public run() {
+    // If call this method multiple times, it should be run for once.
+    if (this.isPaused) {
+      this.isPaused = false;
+      if (!!this.syncInterval) {
+        clearInterval(this.syncInterval);
+        this.syncInterval = null;
+      }
+      void this.sync();
+    }
+  }
+
   private async sync() {
     try {
       // Reading queues from storage
@@ -227,13 +467,9 @@ class Manager {
    * @returns An instance of `Queue` with wrapped event handlers from Manager.
    *
    */
-  private createQueue({
-    queue_id,
-    queue_name,
-  }: {
-    queue_id: QueueID;
-    queue_name: QueueName;
-  }) {
+  private createQueue(info: { queue_id: QueueID; queue_name: QueueName }) {
+    const { queue_id, queue_name } = info;
+    // eslint-disable-next-line @typescript-eslint/no-this-alias
     const manager = this;
     const def = this.queuesDefs.get(queue_name)!;
     const list = new Queue({
@@ -243,13 +479,17 @@ class Manager {
           this.events.onCreateTask(queue_id, task);
           this.handleUpdate(queue_id);
 
-          if (def.events?.onCreate) def.events.onCreate(task);
+          if (def.events?.onCreate) {
+            def.events.onCreate(task);
+          }
         },
         onUpdate: (task) => {
           this.events.onUpdateTask(queue_id, task);
           this.handleUpdate(queue_id);
 
-          if (def.events?.onUpdate) def.events.onUpdate(task);
+          if (def.events?.onUpdate) {
+            def.events.onUpdate(task);
+          }
         },
         onUpdateListStatus: (status) => {
           this.queues.set(queue_id, {
@@ -262,12 +502,15 @@ class Manager {
 
           // After finishing a queue, try to run other queues.
           this.execute();
-          if (def.events?.onUpdateListStatus)
+          if (def.events?.onUpdateListStatus) {
             def.events.onUpdateListStatus(status);
+          }
         },
         onStorageUpdate: (data) => {
           this.events.onStorageUpdate(queue_id, data);
-          if (def.events?.onStorageUpdate) def.events.onStorageUpdate(data);
+          if (def.events?.onStorageUpdate) {
+            def.events.onStorageUpdate(data);
+          }
           this.handleUpdate(queue_id);
         },
         onBlock: (event) => {
@@ -362,195 +605,6 @@ class Manager {
     return createdQueue;
   }
 
-  // Create a new queue
-  /**
-   *
-   * Create a new queue by client.
-   *
-   * It will do the internal things to make a queue from definitions, and running using Manager.
-   *
-   * Notes:
-   *  - After creating the queue, it will be run automatically.
-   *
-   * @returns an ID for queue so it can be used to get the created queue later by client.
-   *
-   */
-  public async create(
-    name: QueueName,
-    storage: QueueStorage,
-    options?: { id?: QueueID }
-  ) {
-    if (!this.queuesDefs.has(name)) {
-      throw new Error('You need to add a queue definition first.');
-    }
-
-    try {
-      const def = this.queuesDefs.get(name)!;
-      const queue_id: QueueID = options?.id || uuidv4();
-      const createdAt = Date.now();
-      const list = this.createQueue({
-        queue_id: queue_id,
-        queue_name: name,
-      });
-      list.setStorage(storage);
-
-      const createdQueue = this.add(queue_id, {
-        list,
-        createdAt,
-        name,
-        status: Status.PENDING,
-        actions: {
-          run: () => {
-            list.next({
-              context: this.getContext(),
-            });
-          },
-          cancel: () => {
-            list.cancel();
-          },
-          setStorage: (...args) => {
-            list.setStorage(...args);
-          },
-          getStorage: () => {
-            return list.getStorage();
-          },
-        },
-      });
-
-      // Persist initial queue
-      // Note: we need to first insert the queue, and then it can be updated by internal events.
-      await this.persistor.insertQueue({
-        id: queue_id,
-        createdAt,
-        name: createdQueue.name,
-        status: createdQueue.status,
-        tasks: list.tasks,
-        state: list.state,
-        storage: list.getStorage(),
-      });
-
-      // adding initial tasks
-      def.run.forEach((action) => {
-        list.createTask(action);
-      });
-
-      // After creating a new queue, try to run.
-      this.execute();
-      return queue_id;
-    } catch (e) {
-      throw new Error((e as any)?.message);
-    }
-  }
-
-  /**
-   * Get a queue by its ID.
-   *
-   * @returns An object includes queue and its state in `Manager`.
-   */
-  public get(queue_id: QueueID) {
-    return this.queues.get(queue_id);
-  }
-
-  /**
-   * Get all queues from `Manager`
-   *
-   * @returns a list of queues includes all the queues and their states.
-   */
-  public getAll() {
-    return this.queues;
-  }
-
-  /**
-   *
-   * Ask from manager to run pending queues.
-   *
-   * It only try to run queues with `PENDING` status and ignore all the other statuses.
-   *
-   */
-  public execute() {
-    if (!this.shouldExecute()) return;
-
-    for (const [, q] of Array.from(this.queues)) {
-      if (q.status === Status.PENDING) {
-        q.actions.run();
-      }
-    }
-  }
-
-  /**
-   *
-   * Try to find queues with `RUNNING` status to run them again.
-   *
-   * It's useful for recovering the queue at some certain points
-   * like running a currepted task (reloaded when it was running) or needs manual trigger from UI.
-   *
-   * @returns
-   */
-  public resume() {
-    if (!this.shouldExecute()) return;
-
-    for (const [, q] of Array.from(this.queues)) {
-      if (q.status === Status.RUNNING) {
-        q.list.resume({
-          context: this.getContext(),
-        });
-        return;
-      }
-    }
-
-    // If there is no running queue, try to run a new queue.
-    this.execute();
-  }
-
-  /**
-   *
-   * Run all `BLOCKED` queues once again.
-   *
-   * If a queue has `BLOCKED` status and the last task is `BLOCKED` as well,
-   * The task will be run one more time.
-   *
-   * Useful for scenarios like we are blocking the queue under some conditions in task,
-   * We can use this method to ask the queue to run the blocked task one more time and
-   * maybe this time condtions are met and the queue can be proceed.
-   *
-   * @returns
-   */
-  public retry() {
-    if (!this.shouldExecute()) return;
-
-    for (const [, q] of Array.from(this.queues)) {
-      if (q.status === Status.BLOCKED) {
-        q.list.checkBlock();
-      }
-    }
-
-    // If there is no running queue, try to run a new queue.
-    this.execute();
-  }
-
-  /**
-   *
-   * Run a blocked task on a specific queue with the ability to pass more data.
-   *
-   * Useful when we have a custom logic for running queue and needs to pass some specific data
-   * to the task and try to run it manually with the provided data.
-   *
-   */
-  public forceExecute(queue_id: string, data?: object) {
-    const queue = this.get(queue_id);
-    let context = this.getContext();
-    if (data) {
-      context = {
-        ...context,
-        ...data,
-      };
-    }
-
-    queue?.list.forceRun({
-      context,
-    });
-  }
-
   /**
    *
    * Sync in-memory state (of `Manager`) with storage (persist).
@@ -565,7 +619,7 @@ class Manager {
       const status = queue.status;
       const state = queue.list.state;
       const tasks = queue.list.tasks;
-      this.persistor.updateQueue(queue_id, {
+      void this.persistor.updateQueue(queue_id, {
         status,
         state,
         tasks,
@@ -574,35 +628,8 @@ class Manager {
     }
   }
 
-  /**
-   * Active readonly mode for manager, it means it doesn't run anythin,
-   * And only can be used to read the data.
-   */
-  public pause() {
-    if (this.isPaused) return;
-    this.isPaused = true;
-    this.syncInterval = setInterval(() => {
-      this.sync();
-    }, SYNC_POLLING_INTERVAL);
-  }
-
-  /**
-   * Activate normal mode which means it will be able to run the queuese as well.
-   */
-  public run() {
-    // If call this method multiple times, it should be run for once.
-    if (this.isPaused) {
-      this.isPaused = false;
-      if (!!this.syncInterval) {
-        clearInterval(this.syncInterval);
-        this.syncInterval = null;
-      }
-      this.sync();
-    }
-  }
-
   private getContext() {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/ban-ts-comment
     //@ts-ignore
     return this.context?.current || {};
   }
