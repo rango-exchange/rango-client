@@ -47,11 +47,12 @@ export function BlockchainList(props: PropTypes) {
         {blockchains.map((item) => (
           <ListItemButton
             key={`${item.name}-${item.chainId}`}
+            hasDivider
             onClick={() => onChange(item)}
             start={<Image src={item.logo} size={30} />}
             title={
               <Typography variant="title" size="medium">
-                {item.name}
+                {item.displayName}
               </Typography>
             }
             id={item.chainId as string}

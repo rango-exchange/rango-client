@@ -3,27 +3,30 @@ import type { Asset } from 'rango-sdk';
 
 import { i18n } from '@lingui/core';
 import { Divider } from '@rango-dev/ui';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { BlockchainsSection } from '../components/BlockchainsSection';
 import { Layout } from '../components/Layout';
 import { SearchInput } from '../components/SearchInput';
 import { TokenList } from '../components/TokenList/TokenList';
+import { filterTokens } from '../components/TokenList/TokenList.helpers';
 import { navigationRoutes } from '../constants/navigationRoutes';
 import { useNavigateBack } from '../hooks/useNavigateBack';
 import { useBestRouteStore } from '../store/bestRoute';
 import { useMetaStore } from '../store/meta';
+import { useWalletsStore } from '../store/wallets';
 import { tokensAreEqual } from '../utils/wallets';
 
 interface PropTypes {
   type: 'from' | 'to';
-  supportedChains?: string[];
+  supportedBlockchains?: string[];
   supportedTokens?: Asset[];
+  pinnedTokens?: Asset[];
 }
 
 export function SelectSwapItemsPage(props: PropTypes) {
-  const { type, supportedChains, supportedTokens } = props;
+  const { type, supportedBlockchains, supportedTokens, pinnedTokens } = props;
   const navigate = useNavigate();
   const { navigateBackFrom } = useNavigateBack();
   const { tokens } = useMetaStore.use.meta();
@@ -32,14 +35,20 @@ export function SelectSwapItemsPage(props: PropTypes) {
   const [searchedFor, setSearchedFor] = useState<string>('');
   const setFromToken = useBestRouteStore.use.setFromToken();
   const setToToken = useBestRouteStore.use.setToToken();
-  const setToChain = useBestRouteStore.use.setToChain();
-  const setFromChain = useBestRouteStore.use.setFromChain();
-  const toChain = useBestRouteStore.use.toChain();
-  const fromChain = useBestRouteStore.use.fromChain();
-  const blockchains = supportedChains
+  const setToBlockchain = useBestRouteStore.use.setToBlockchain();
+  const setFromBlockchain = useBestRouteStore.use.setFromBlockchain();
+  const toBlockchain = useBestRouteStore.use.toBlockchain();
+  const fromBlockchain = useBestRouteStore.use.fromBlockchain();
+  const connectedWallets = useWalletsStore.use.connectedWallets();
+  const loadingWallet = useWalletsStore.use.loading();
+  const setTokensWithBalance = useMetaStore.use.setTokensWithBalance();
+
+  const blockchains = supportedBlockchains
     ? useMetaStore.use
         .meta()
-        .blockchains.filter((chain) => supportedChains.includes(chain.name))
+        .blockchains.filter((chain) =>
+          supportedBlockchains.includes(chain.name)
+        )
     : useMetaStore.use.meta().blockchains;
   const allTokens = supportedTokens
     ? tokens.filter((token) =>
@@ -64,6 +73,22 @@ export function SelectSwapItemsPage(props: PropTypes) {
 
   const tokensByType =
     type === 'from' ? supportedSourceTokens : supportedDestinationTokens;
+
+  const tokenList = (tokensByType.length ? tokensByType : allTokens).map(
+    (token) => ({
+      ...token,
+      pin: pinnedTokens?.some((pinnedToken) =>
+        tokensAreEqual(pinnedToken, token)
+      ),
+    })
+  );
+
+  useEffect(() => {
+    if (connectedWallets.length && !loadingWallet) {
+      setTokensWithBalance();
+    }
+  }, [connectedWallets, loadingWallet]);
+
   return (
     <Layout
       header={{
@@ -73,20 +98,20 @@ export function SelectSwapItemsPage(props: PropTypes) {
       <BlockchainsSection
         blockchains={blockchains}
         type={type}
-        blockchain={type === 'from' ? fromChain : toChain}
+        blockchain={type === 'from' ? fromBlockchain : toBlockchain}
         onMoreClick={() =>
           navigate(
             type === 'from'
-              ? navigationRoutes.fromChain
-              : navigationRoutes.toChain
+              ? navigationRoutes.fromBlockchain
+              : navigationRoutes.toBlockchain
           )
         }
         onChange={(blockchain) => {
           {
             if (type === 'from') {
-              setFromChain(blockchain, true);
+              setFromBlockchain(blockchain, true);
             } else {
-              setToChain(blockchain, true);
+              setToBlockchain(blockchain, true);
             }
           }
         }}
@@ -94,18 +119,17 @@ export function SelectSwapItemsPage(props: PropTypes) {
       <Divider size={24} />
       <SearchInput
         value={searchedFor}
-        setValue={setSearchedFor}
+        autoFocus
         placeholder={i18n.t('Search Token')}
         color="light"
         variant="contained"
         size="large"
+        setValue={() => setSearchedFor('')}
         onChange={(event) => setSearchedFor(event.target.value)}
       />
       <Divider size={16} />
-
       <TokenList
-        list={tokensByType.length ? tokensByType : allTokens}
-        searchedFor={searchedFor}
+        list={filterTokens(tokenList, searchedFor)}
         onChange={(token) => {
           const blockchain = blockchains.find(
             (chain) => token.blockchain === chain.name
@@ -113,12 +137,12 @@ export function SelectSwapItemsPage(props: PropTypes) {
           if (type === 'from') {
             setFromToken(token);
             if (!!blockchain) {
-              setFromChain(blockchain, true);
+              setFromBlockchain(blockchain, true);
             }
           } else {
             setToToken(token);
             if (!!blockchain) {
-              setToChain(blockchain, true);
+              setToBlockchain(blockchain, true);
             }
           }
           navigateBackFrom(navigationRoutes.fromSwap);

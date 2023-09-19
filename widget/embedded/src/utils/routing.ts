@@ -1,29 +1,35 @@
-import {
+/* eslint-disable @typescript-eslint/no-magic-numbers */
+import type { BestRouteEqualityParams, Wallet } from '../types';
+import type { PendingSwap } from '@rango-dev/queue-manager-rango-preset';
+import type {
   SimulationAssetAndAmount,
   SimulationValidationStatus,
 } from '@rango-dev/ui/dist/widget/ui/src/types/swaps';
+import type { BestRouteResponse, BlockchainMeta, Token } from 'rango-sdk';
+
 import BigNumber from 'bignumber.js';
-import { BestRouteResponse, BlockchainMeta, Token } from 'rango-sdk';
+
 import { areEqual } from './common';
-import { BestRouteEqualityParams, Wallet } from '../types';
 import { numberToString } from './numbers';
-import { PendingSwap } from '@rango-dev/queue-manager-rango-preset';
 
 export function searchParamsToToken(
   tokens: Token[],
   searchParams: string | null,
   chain: BlockchainMeta | null
 ): Token | null {
-  if (!chain) return null;
+  if (!chain) {
+    return null;
+  }
   return (
     tokens.find((token) => {
       const symbolAndAddress = searchParams?.split('--');
-      if (symbolAndAddress?.length === 1)
+      if (symbolAndAddress?.length === 1) {
         return (
           token.symbol === symbolAndAddress[0] &&
           token.address === null &&
           token.blockchain === chain.name
         );
+      }
       return (
         token.symbol === symbolAndAddress?.[0] &&
         token.address === symbolAndAddress?.[1] &&
@@ -98,14 +104,18 @@ export function getRequiredBalanceOfWallet(
   selectedWallet: Wallet,
   fee: SimulationValidationStatus[] | null
 ): SimulationAssetAndAmount[] | null {
-  if (fee === null) return null;
+  if (fee === null) {
+    return null;
+  }
   const relatedFeeStatus = fee
     ?.find((item) => item.blockchain === selectedWallet.chain)
     ?.wallets.find(
       (wallet) =>
         wallet.address?.toLowerCase() === selectedWallet.address.toLowerCase()
     );
-  if (!relatedFeeStatus) return null;
+  if (!relatedFeeStatus) {
+    return null;
+  }
   return relatedFeeStatus.requiredAssets;
 }
 
@@ -115,8 +125,8 @@ export function isRouteParametersChanged(params: BestRouteEqualityParams) {
     return (
       !!currentState.fromToken &&
       !!currentState.toToken &&
-      (prevState.fromChain?.name !== currentState.fromChain?.name ||
-        prevState.toChain?.name !== currentState.toChain?.name ||
+      (prevState.fromBlockchain?.name !== currentState.fromBlockchain?.name ||
+        prevState.toBlockchain?.name !== currentState.toBlockchain?.name ||
         prevState.fromToken?.symbol !== currentState.fromToken?.symbol ||
         prevState.toToken?.symbol !== currentState.toToken?.symbol ||
         prevState.fromToken?.blockchain !== prevState.fromToken?.blockchain ||
@@ -142,7 +152,9 @@ export function isRouteParametersChanged(params: BestRouteEqualityParams) {
 export function getFormatedBestRoute(
   bestRoute: BestRouteResponse | null
 ): BestRouteResponse | null {
-  if (!bestRoute) return null;
+  if (!bestRoute) {
+    return null;
+  }
 
   const formatedSwaps = (bestRoute.result?.swaps || []).map((swap) => ({
     ...swap,
@@ -179,7 +191,11 @@ export function getFormatedPendingSwap(pendingSwap: PendingSwap): PendingSwap {
 
 //todo: refactor bestRoute store and add loadingStatus
 export const getBestRouteStatus = (loading: boolean, error: boolean) => {
-  if (loading) return 'loading';
-  if (error) return 'failed';
-  else return 'success';
+  if (loading) {
+    return 'loading';
+  }
+  if (error) {
+    return 'failed';
+  }
+  return 'success';
 };

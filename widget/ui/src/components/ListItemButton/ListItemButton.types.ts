@@ -5,4 +5,6 @@ export type ListItemButtonProps = Omit<ListItemProps, 'onClick'> & {
   id: string;
   onClick: (id: string) => void;
   style?: CSSProperties;
+  hasDivider?: boolean;
+  selected?: boolean;
 };
