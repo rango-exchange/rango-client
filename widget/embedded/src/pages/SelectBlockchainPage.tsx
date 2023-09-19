@@ -13,28 +13,33 @@ import { useMetaStore } from '../store/meta';
 
 interface PropTypes {
   type: 'from' | 'to';
-  supportedChains?: string[];
+  supportedBlockchains?: string[];
 }
 
 export function SelectBlockchainPage(props: PropTypes) {
-  const { type, supportedChains } = props;
+  const { type, supportedBlockchains } = props;
   const { navigateBackFrom } = useNavigateBack();
   const [searchedFor, setSearchedFor] = useState<string>('');
   const [blockchainCategory, setBlockchainCategory] = useState<string>('ALL');
-  const setToChain = useBestRouteStore.use.setToChain();
-  const setFromChain = useBestRouteStore.use.setFromChain();
+  const setToBlockchain = useBestRouteStore.use.setToBlockchain();
+  const setFromBlockchain = useBestRouteStore.use.setFromBlockchain();
 
-  const blockchains = supportedChains
+  const blockchains = supportedBlockchains
     ? useMetaStore.use
         .meta()
-        .blockchains.filter((chain) => supportedChains.includes(chain.name))
+        .blockchains.filter((chain) =>
+          supportedBlockchains.includes(chain.name)
+        )
     : useMetaStore.use.meta().blockchains;
 
   return (
     <Layout
       header={{
-        onBack: navigateBackFrom.bind(null, navigationRoutes[`${type}Chain`]),
-        title: i18n.t(`Select chain`),
+        onBack: navigateBackFrom.bind(
+          null,
+          navigationRoutes[`${type}Blockchain`]
+        ),
+        title: i18n.t(`Select Blockchain`),
       }}>
       <Divider size={12} />
       <SelectableCategoryList
@@ -44,11 +49,12 @@ export function SelectBlockchainPage(props: PropTypes) {
       <Divider size={24} />
       <SearchInput
         value={searchedFor}
-        setValue={setSearchedFor}
-        placeholder={i18n.t('Search Chain')}
+        autoFocus
+        placeholder={i18n.t('Search Blockchain')}
         color="light"
         variant="contained"
         size="large"
+        setValue={() => setSearchedFor('')}
         onChange={(event) => setSearchedFor(event.target.value)}
       />
       <Divider size={16} />
@@ -59,11 +65,11 @@ export function SelectBlockchainPage(props: PropTypes) {
         blockchainCategory={blockchainCategory}
         onChange={(blockchain) => {
           if (type === 'from') {
-            setFromChain(blockchain, true);
+            setFromBlockchain(blockchain, true);
           } else {
-            setToChain(blockchain, true);
+            setToBlockchain(blockchain, true);
           }
-          navigateBackFrom(navigationRoutes[`${type}Chain`]);
+          navigateBackFrom(navigationRoutes[`${type}Blockchain`]);
         }}
       />
     </Layout>

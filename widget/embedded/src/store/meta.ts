@@ -1,21 +1,41 @@
+import type { TokenWithBalance } from '../components/TokenList';
+import type { MetaResponse } from 'rango-sdk';
+
 import { create } from 'zustand';
-import { MetaResponse } from 'rango-sdk';
+
 import { httpService } from '../services/httpService';
-import createSelectors from './selectors';
 import { removeDuplicateFrom } from '../utils/common';
+import { getTokensWithBalance, sortTokens } from '../utils/wallets';
+
+import createSelectors from './selectors';
+import { useWalletsStore } from './wallets';
 
 export type LoadingStatus = 'loading' | 'success' | 'failed';
 
 export interface MetaState {
-  meta: MetaResponse;
+  meta: MetaResponse & { tokens: TokenWithBalance[] };
   loadingStatus: LoadingStatus;
   fetchMeta: () => Promise<void>;
+  setTokensWithBalance: () => void;
 }
 
 export const useMetaStore = createSelectors(
   create<MetaState>()((set) => ({
     meta: { blockchains: [], popularTokens: [], swappers: [], tokens: [] },
     loadingStatus: 'loading',
+    setTokensWithBalance: () => {
+      const connectedWallets = useWalletsStore.getState().connectedWallets;
+
+      set((state) => ({
+        ...state,
+        meta: {
+          ...state.meta,
+          tokens: sortTokens(
+            getTokensWithBalance(state.meta.tokens, connectedWallets)
+          ),
+        },
+      }));
+    },
     fetchMeta: async () => {
       try {
         const response = await httpService().getAllMetadata();

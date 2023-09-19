@@ -42,6 +42,7 @@ export interface ConnectedWallet extends Wallet {
 interface WalletsStore {
   connectedWallets: ConnectedWallet[];
   customDestination: string;
+  loading: boolean;
   connectWallet: (accounts: Wallet[]) => void;
   disconnectWallet: (walletType: WalletType) => void;
   initSelectedWallets: () => void;
@@ -57,9 +58,11 @@ export const useWalletsStore = createSelectors(
       connectedWallets: [],
       selectedWallets: [],
       customDestination: '',
+      loading: false,
       connectWallet: (accounts) => {
         const getWalletsDetails = get().getWalletsDetails;
         set((state) => ({
+          loading: true,
           connectedWallets: state.connectedWallets
             .filter((wallet) => wallet.walletType !== accounts[0].walletType)
             .concat(
@@ -146,6 +149,7 @@ export const useWalletsStore = createSelectors(
         const getWalletsDetails = get().getWalletsDetails;
         const { tokens } = useMetaStore.getState().meta;
         set((state) => ({
+          loading: true,
           connectedWallets: state.connectedWallets.map((wallet) => {
             return accounts.find((account) =>
               isAccountAndWalletMatched(account, wallet)
@@ -163,6 +167,7 @@ export const useWalletsStore = createSelectors(
           const retrievedBalance = response.wallets;
           if (retrievedBalance) {
             set((state) => ({
+              loading: false,
               connectedWallets: state.connectedWallets.map(
                 (connectedWallet) => {
                   const matchedAccount = accounts.find((account) =>
@@ -195,6 +200,7 @@ export const useWalletsStore = createSelectors(
           }
         } catch (error) {
           set((state) => ({
+            loading: false,
             connectedWallets: state.connectedWallets.map((balance) => {
               return accounts.find((account) =>
                 isAccountAndWalletMatched(account, balance)

@@ -91,9 +91,9 @@ export function Home() {
   } = useSwapInput();
   const {
     fromToken,
-    fromChain,
+    fromBlockchain,
     toToken,
-    toChain,
+    toBlockchain,
     setInputAmount,
     inputAmount,
     inputUsdValue,
@@ -151,11 +151,11 @@ export function Home() {
   );
 
   const tokenBalance =
-    !!fromChain && !!fromToken
+    !!fromBlockchain && !!fromToken
       ? numberToString(
           getBalanceFromWallet(
             connectedWallets,
-            fromChain?.name,
+            fromBlockchain?.name,
             fromToken?.symbol,
             fromToken?.address
           )?.amount || '0',
@@ -164,17 +164,17 @@ export function Home() {
       : '0';
 
   const tokenBalanceReal =
-    !!fromChain && !!fromToken
+    !!fromBlockchain && !!fromToken
       ? numberToString(
           getBalanceFromWallet(
             connectedWallets,
-            fromChain?.name,
+            fromBlockchain?.name,
             fromToken?.symbol,
             fromToken?.address
           )?.amount || '0',
           getBalanceFromWallet(
             connectedWallets,
-            fromChain?.name,
+            fromBlockchain?.name,
             fromToken?.symbol,
             fromToken?.address
           )?.decimal
@@ -300,8 +300,8 @@ export function Home() {
               onInputChange={setInputAmount}
               balance={tokenBalance}
               chain={{
-                displayName: fromChain?.displayName || '',
-                image: fromChain?.logo || '',
+                displayName: fromBlockchain?.displayName || '',
+                image: fromBlockchain?.logo || '',
               }}
               token={{
                 displayName: fromToken?.symbol || '',
@@ -330,8 +330,8 @@ export function Home() {
           <SwapInput
             label="To"
             chain={{
-              displayName: toChain?.displayName || '',
-              image: toChain?.logo || '',
+              displayName: toBlockchain?.displayName || '',
+              image: toBlockchain?.logo || '',
             }}
             token={{
               displayName: toToken?.symbol || '',

@@ -2,10 +2,12 @@ import type { ListItemButtonProps } from './ListItemButton.types';
 
 import React from 'react';
 
+import { ListItem } from '../ListItem/ListItem';
+
 import { BaseListItemButton } from './ListItemButton.styles';
 
 function ListItemButton(props: ListItemButtonProps) {
-  const { onClick, id, ...restProps } = props;
+  const { onClick, id, style, hasDivider, selected, ...restProps } = props;
   const onClickWithKey = () => {
     if (onClick) {
       onClick(id);
@@ -13,10 +15,12 @@ function ListItemButton(props: ListItemButtonProps) {
   };
   return (
     <BaseListItemButton
+      hasDivider={hasDivider}
+      selected={selected}
       onClick={onClickWithKey}
-      aria-label="button"
-      {...restProps}
-    />
+      style={style}>
+      <ListItem {...restProps} />
+    </BaseListItemButton>
   );
 }
 

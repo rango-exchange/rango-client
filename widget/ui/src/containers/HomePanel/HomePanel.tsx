@@ -48,8 +48,8 @@ interface HomePanelProps {
   fetchBestRoute: () => void;
   onClickHistory: () => void;
   onClickSettings: () => void;
-  fromChain: BlockchainMeta | null;
-  toChain: BlockchainMeta | null;
+  fromBlockchain: BlockchainMeta | null;
+  toBlockchain: BlockchainMeta | null;
   fromToken: TokenWithBalance | null;
   toToken: TokenWithBalance | null;
   setInputAmount: (amount: string) => void;
@@ -88,8 +88,8 @@ interface HomePanelProps {
  */
 export function HomePanel({
   bestRoute,
-  fromChain,
-  toChain,
+  fromBlockchain,
+  toBlockchain,
   fromToken,
   toToken,
   setInputAmount,
@@ -125,12 +125,12 @@ export function HomePanel({
         <>
           <TokenInfo
             type="From"
-            chain={fromChain}
+            chain={fromBlockchain}
             token={fromToken}
             onAmountChange={setInputAmount}
             inputAmount={inputAmount}
-            fromChain={fromChain}
-            toChain={toChain}
+            fromBlockchain={fromBlockchain}
+            toBlockchain={toBlockchain}
             loadingStatus={loadingStatus}
             inputUsdValue={inputUsdValue}
             fromToken={fromToken}
@@ -148,13 +148,13 @@ export function HomePanel({
       </FromContainer>
       <TokenInfo
         type="To"
-        chain={toChain}
+        chain={toBlockchain}
         token={toToken}
         outputAmount={outputAmount}
         percentageChange={percentageChange}
         outputUsdValue={outputUsdValue}
-        fromChain={fromChain}
-        toChain={toChain}
+        fromBlockchain={fromBlockchain}
+        toBlockchain={toBlockchain}
         loadingStatus={loadingStatus}
         inputUsdValue={inputUsdValue}
         fromToken={fromToken}
