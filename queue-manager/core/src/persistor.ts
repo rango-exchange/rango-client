@@ -1,7 +1,6 @@
+import type { QueueID } from './manager';
+import type { PersistedQueue } from './types';
 import type { DBSchema, IDBPDatabase } from 'idb';
-
-import { QueueID } from './manager';
-import { PersistedQueue } from './types';
 
 export const DB_NAME = 'queues-manager';
 const OBJECT_STORE_NAME = 'queues';
@@ -22,7 +21,7 @@ class Persistor {
   db: Promise<IDBPDatabase<Database>>;
   constructor() {
     this.db = import('idb')
-      .then((idb) => {
+      .then(async (idb) => {
         return idb.openDB<Database>(DB_NAME, VERSION, {
           upgrade(db) {
             db.createObjectStore(OBJECT_STORE_NAME, { keyPath: 'id' });
@@ -47,7 +46,9 @@ class Persistor {
     const db = await this.db;
     const currentRecord = await db.get(OBJECT_STORE_NAME, id);
 
-    if (!currentRecord) return;
+    if (!currentRecord) {
+      return;
+    }
 
     const updatedRecord = {
       ...currentRecord,
@@ -60,6 +61,14 @@ class Persistor {
     const results = await db.getAll(OBJECT_STORE_NAME);
 
     return results;
+  }
+  async deleteQueue(id: QueueID) {
+    const db = await this.db;
+    const currentRecord = await db.get(OBJECT_STORE_NAME, id);
+
+    if (currentRecord) {
+      await db.delete(OBJECT_STORE_NAME, id);
+    }
   }
 }
 

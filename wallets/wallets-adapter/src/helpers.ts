@@ -40,15 +40,15 @@ export function mapWalletTypesToWalletInfo(
   list: WalletType[]
 ): ModalWalletInfo[] {
   return list.map((type) => {
-    const { name, img: image, installLink } = getWalletInfo(type);
+    const { name, img: image, installLink, showOnMobile } = getWalletInfo(type);
     const state = getStateWallet(getState(type));
     return {
-      title: name,
+      name,
       image,
       installLink,
       state,
       type,
-      link: installLink,
+      showOnMobile: showOnMobile || false,
     };
   });
 }

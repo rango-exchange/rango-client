@@ -14,6 +14,7 @@ import {
   Tooltip,
   Typography,
 } from '@rango-dev/ui';
+import { InfoCircleIcon } from '@rango-dev/ui/src/components/Icon';
 import { readAccountAddress, useWallets } from '@rango-dev/wallets-react';
 import { detectInstallLink, Networks } from '@rango-dev/wallets-shared';
 import React, { useState } from 'react';
