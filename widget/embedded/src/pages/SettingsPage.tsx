@@ -1,61 +1,23 @@
 import { i18n } from '@lingui/core';
 import {
   ChevronRightIcon,
-  Chip,
   Divider,
-  InfoIcon,
   List,
   ListItemButton,
-  styled,
   Switch,
-  TextField,
   Typography,
 } from '@rango-dev/ui';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { Layout } from '../components/Layout';
+import { SettingsContainer } from '../components/SettingsContainer';
+import { Slippage } from '../components/Slippage';
 import { navigationRoutes } from '../constants/navigationRoutes';
-import {
-  MAX_SLIPPAGE,
-  MIN_SLIPPGAE,
-  SLIPPAGES,
-} from '../constants/swapSettings';
 import { useNavigateBack } from '../hooks/useNavigateBack';
 import { useMetaStore } from '../store/meta';
 import { useSettingsStore } from '../store/settings';
 import { getUniqueSwappersGroups } from '../utils/settings';
-
-const BaseContainer = styled('div', {
-  padding: '5px 10px',
-  marginBottom: '30px',
-});
-
-const SlippageChipsContainer = styled('div', {
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'start',
-});
-
-const Head = styled('div', {
-  display: 'flex',
-  justifyContent: 'start',
-  alignItems: 'center',
-  marginBottom: '10px',
-});
-
-interface TitleContainerProps {
-  title: string;
-}
-
-function TitleContainer(props: TitleContainerProps) {
-  const { title } = props;
-  return (
-    <Typography variant="title" size="xmedium">
-      {title}
-    </Typography>
-  );
-}
 
 interface PropTypes {
   supportedSwappers?: string[];
@@ -63,11 +25,6 @@ interface PropTypes {
 }
 
 export function SettingsPage({ supportedSwappers, singleTheme }: PropTypes) {
-  const slippage = useSettingsStore.use.slippage();
-  const setSlippage = useSettingsStore.use.setSlippage();
-  const customSlippage = useSettingsStore.use.customSlippage();
-  const setCustomSlippage = useSettingsStore.use.setCustomSlippage();
-
   const navigate = useNavigate();
   const { navigateBackFrom } = useNavigateBack();
 
@@ -97,7 +54,11 @@ export function SettingsPage({ supportedSwappers, singleTheme }: PropTypes) {
 
   const bridgeItem = {
     id: 'bridge-item',
-    title: <TitleContainer title={i18n.t('Enabled bridges')} />,
+    title: (
+      <Typography variant="title" size="xmedium">
+        {i18n.t('Enabled bridges')}
+      </Typography>
+    ),
     end: (
       <>
         {loadingMetaStatus === 'success' && (
@@ -119,7 +80,11 @@ export function SettingsPage({ supportedSwappers, singleTheme }: PropTypes) {
 
   const exchangeItem = {
     id: 'exchange-item',
-    title: <TitleContainer title={i18n.t('Enabled exchanges')} />,
+    title: (
+      <Typography variant="title" size="xmedium">
+        {i18n.t('Enabled exchanges')}
+      </Typography>
+    ),
     end: (
       <>
         {loadingMetaStatus === 'success' && (
@@ -141,21 +106,33 @@ export function SettingsPage({ supportedSwappers, singleTheme }: PropTypes) {
 
   const languageItem = {
     id: 'language-item',
-    title: <TitleContainer title={i18n.t('Language')} />,
+    title: (
+      <Typography variant="title" size="xmedium">
+        {i18n.t('Language')}
+      </Typography>
+    ),
     end: <ChevronRightIcon color="gray" />,
     onClick: () => navigate(navigationRoutes.languages),
   };
 
   const themeItem = {
     id: 'theme-item',
-    title: <TitleContainer title={i18n.t('Theme')} />,
+    title: (
+      <Typography variant="title" size="xmedium">
+        {i18n.t('Theme')}
+      </Typography>
+    ),
     end: <ChevronRightIcon color="gray" />,
     onClick: () => navigate(navigationRoutes.themes),
   };
 
   const infiniteApprovalItem = {
     id: 'infinite-approval-item',
-    title: <TitleContainer title={i18n.t('Infinite Approval')} />,
+    title: (
+      <Typography variant="title" size="xmedium">
+        {i18n.t('Infinite Approval')}
+      </Typography>
+    ),
     end: <Switch checked={infiniteApprove} />,
     onClick: toggleInfiniteApprove,
   };
@@ -172,63 +149,15 @@ export function SettingsPage({ supportedSwappers, singleTheme }: PropTypes) {
         onBack: navigateBackFrom.bind(null, navigationRoutes.settings),
         title: i18n.t('Setting'),
       }}>
-      <BaseContainer>
-        <Head>
-          <TitleContainer title="Slippage tolerance per swap" />
-          <Divider direction="horizontal" size={4} />
-          <InfoIcon color="gray" />
-        </Head>
-        <SlippageChipsContainer>
-          {SLIPPAGES.map((slippageItem, index) => {
-            const key = `slippage-${index}`;
-            return (
-              <>
-                <Chip
-                  key={key}
-                  onClick={() => {
-                    if (customSlippage) {
-                      setCustomSlippage(null);
-                    }
-                    setSlippage(slippageItem);
-                  }}
-                  selected={!customSlippage && slippageItem === slippage}
-                  label={`${slippageItem.toString()}%`}
-                />
-                <Divider direction="horizontal" size={8} />
-              </>
-            );
-          })}
-          <TextField
-            type="number"
-            variant="contained"
-            value={customSlippage || ''}
-            color="dark"
-            onChange={(event) => {
-              const parsedValue = parseFloat(event.target.value);
-              if (
-                !parsedValue ||
-                (parsedValue >= MIN_SLIPPGAE && parsedValue <= MAX_SLIPPAGE)
-              ) {
-                setCustomSlippage(parsedValue);
-              }
-            }}
-            suffix={
-              customSlippage && (
-                <Typography variant="body" size="small">
-                  %
-                </Typography>
-              )
-            }
-            size="small"
-            placeholder="Custom"
-          />
-        </SlippageChipsContainer>
-      </BaseContainer>
-
-      <List
-        type={<ListItemButton title="_" id="_" onClick={() => console.log()} />}
-        items={settingItems}
-      />
+      <SettingsContainer>
+        <Slippage />
+        <List
+          type={
+            <ListItemButton title="_" id="_" onClick={() => console.log()} />
+          }
+          items={settingItems}
+        />
+      </SettingsContainer>
     </Layout>
   );
 }

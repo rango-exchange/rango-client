@@ -1,7 +1,10 @@
+/* eslint-disable @typescript-eslint/no-magic-numbers */
 import React from 'react';
+
 import { styled } from '../../theme';
 
 const DividerContainer = styled('div', {
+  flexShrink: 0,
   variants: {
     size: {
       4: {},
