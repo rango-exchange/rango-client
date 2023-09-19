@@ -12,10 +12,10 @@ import { navigationRoutes } from './constants/navigationRoutes';
 import { globalFont } from './globalStyles';
 import { useTheme } from './hooks/useTheme';
 import QueueManager from './QueueManager';
+import { useSettingsStore } from './store/settings';
 import { useUiStore } from './store/ui';
 import { initConfig } from './utils/configs';
 import { WidgetContext, WidgetWallets } from './Wallets';
-import { useSettingsStore } from './store/settings';
 
 const MainContainer = styled('div', {
   width: '100%',
@@ -48,7 +48,7 @@ export function Main(props: PropsWithChildren<WidgetProps>) {
   }, [config]);
 
   useEffect(() => {
-    useSettingsStore.persist.rehydrate();
+    void useSettingsStore.persist.rehydrate();
     widgetContext.onConnectWallet(setLastConnectedWalletWithNetwork);
   }, []);
 
