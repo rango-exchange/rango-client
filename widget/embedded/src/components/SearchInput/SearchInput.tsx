@@ -21,7 +21,7 @@ export function SearchInput(props: PropTypes) {
     <TextField
       prefix={
         <IconWrapper>
-          <SearchIcon />
+          <SearchIcon color="black" />
         </IconWrapper>
       }
       suffix={

@@ -1,18 +1,20 @@
-import React, { PropsWithChildren } from 'react';
-import { useMetaStore } from './store/meta';
-import { Events, Provider } from '@rango-dev/wallets-react';
+import type { WidgetConfig } from './types';
+import type { ProvidersOptions } from './utils/providers';
 import type { EventHandler } from '@rango-dev/wallets-react';
-import { Network } from '@rango-dev/wallets-shared';
+import type { Network } from '@rango-dev/wallets-shared';
+import type { PropsWithChildren } from 'react';
+
+import { Events, Provider } from '@rango-dev/wallets-react';
+import { isEvmBlockchain } from 'rango-sdk';
+import React, { createContext, useRef } from 'react';
+
+import { useWalletProviders } from './hooks/useWalletProviders';
+import { useMetaStore } from './store/meta';
+import { useWalletsStore } from './store/wallets';
 import {
   prepareAccountsForWalletStore,
   walletAndSupportedChainsNames,
 } from './utils/wallets';
-import { useWalletsStore } from './store/wallets';
-import { isEvmBlockchain } from 'rango-sdk';
-import { useWalletProviders } from './hooks/useWalletProviders';
-import { WidgetConfig } from './types';
-import { createContext, useRef } from 'react';
-import { ProvidersOptions } from './utils/providers';
 
 type OnConnectHandler = (key: string) => void;
 interface WidgetContextInterface {
@@ -47,12 +49,12 @@ export function WidgetWallets(
     event,
     value,
     state,
-    supportedChains
+    supportedBlockchains
   ) => {
     if (event === Events.ACCOUNTS) {
       if (value) {
         const supportedChainNames: Network[] | null =
-          walletAndSupportedChainsNames(supportedChains);
+          walletAndSupportedChainsNames(supportedBlockchains);
         const data = prepareAccountsForWalletStore(
           type,
           value,
@@ -68,29 +70,33 @@ export function WidgetWallets(
       const key = `${type}-${state.network}-${value}`;
 
       if (state.connected) {
-        if (!!onConnectWalletHandler.current)
+        if (!!onConnectWalletHandler.current) {
           onConnectWalletHandler.current(key);
-        else
+        } else {
           console.warn(
             `onConnectWallet handler hasn't been set. Are you sure?`
           );
+        }
       }
     }
 
     if (event === Events.NETWORK && state.network) {
       const key = `${type}-${state.network}`;
-      if (!!onConnectWalletHandler.current) onConnectWalletHandler.current(key);
-      else
+      if (!!onConnectWalletHandler.current) {
+        onConnectWalletHandler.current(key);
+      } else {
         console.warn(`onConnectWallet handler hasn't been set. Are you sure?`);
+      }
     }
 
     // propagate updates for Dapps using external wallets
     if (props.onUpdateState) {
-      props.onUpdateState(type, event, value, state, supportedChains);
+      props.onUpdateState(type, event, value, state, supportedBlockchains);
     }
   };
   return (
     <WidgetContext.Provider
+      // eslint-disable-next-line react/jsx-no-constructed-context-values
       value={{
         onConnectWallet: (handler) => {
           onConnectWalletHandler.current = handler;

@@ -31,9 +31,9 @@ export function useNavigateBack() {
         ].includes(currentRoute)
       ) {
         navigate(navigationRoutes.home, { replace: true });
-      } else if (currentRoute === navigationRoutes.fromChain) {
+      } else if (currentRoute === navigationRoutes.fromBlockchain) {
         navigate('/' + navigationRoutes.fromSwap, { replace: true });
-      } else if (currentRoute === navigationRoutes.toChain) {
+      } else if (currentRoute === navigationRoutes.toBlockchain) {
         navigate('/' + navigationRoutes.fromSwap, { replace: true });
       } else if (currentRoute === navigationRoutes.liquiditySources) {
         navigate('/' + navigationRoutes.settings, { replace: true });

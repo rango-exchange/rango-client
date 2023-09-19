@@ -77,13 +77,13 @@ export function mapWalletTypesToWalletInfo(
 }
 
 export function walletAndSupportedChainsNames(
-  supportedChains: BlockchainMeta[]
+  supportedBlockchains: BlockchainMeta[]
 ): Network[] | null {
-  if (!supportedChains) {
+  if (!supportedBlockchains) {
     return null;
   }
   let walletAndSupportedChainsNames: Network[] = [];
-  walletAndSupportedChainsNames = supportedChains.map(
+  walletAndSupportedChainsNames = supportedBlockchains.map(
     (blockchainMeta) => blockchainMeta.name
   );
 
@@ -113,13 +113,13 @@ export function prepareAccountsForWalletStore(
     }
   }
 
-  const supportedChains = supportedChainNames || [];
+  const supportedBlockchains = supportedChainNames || [];
 
   accounts.forEach((account) => {
     const { address, network } = readAccountAddress(account);
 
-    const hasLimitation = supportedChains.length > 0;
-    const isSupported = supportedChains.includes(network);
+    const hasLimitation = supportedBlockchains.length > 0;
+    const isSupported = supportedBlockchains.includes(network);
     const isUnknown = network === Networks.Unknown;
     const notSupportedNetworkByWallet =
       hasLimitation && !isSupported && !isUnknown;
@@ -152,7 +152,7 @@ export function prepareAccountsForWalletStore(
        * all evm chains are not supported in wallets, so we are adding
        * only to those that are supported by wallet.
        */
-      const evmChainsSupportedByWallet = supportedChains.filter((chain) =>
+      const evmChainsSupportedByWallet = supportedBlockchains.filter((chain) =>
         evmBasedChains.includes(chain)
       );
 
@@ -481,8 +481,9 @@ export function getSortedTokens(
   connectedWallets: ConnectedWallet[],
   otherChainTokens: TokenWithBalance[]
 ): TokenWithBalance[] {
-  const fromChainEqueulsToToChain = chain?.name === otherChainTokens[0]?.name;
-  if (fromChainEqueulsToToChain) {
+  const fromChainEqueulsToToBlockchain =
+    chain?.name === otherChainTokens[0]?.name;
+  if (fromChainEqueulsToToBlockchain) {
     return otherChainTokens;
   }
   const filteredTokens = tokens.filter(

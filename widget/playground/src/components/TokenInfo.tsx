@@ -71,7 +71,8 @@ export function TokenInfo({ type }: PropTypes) {
     (chain) =>
       chain.name === (type === 'Source' ? from.blockchain : to.blockchain)
   );
-  const supportedChains = type === 'Source' ? from.blockchains : to.blockchains;
+  const supportedBlockchains =
+    type === 'Source' ? from.blockchains : to.blockchains;
   const supportedTokens = type == 'Source' ? from.tokens : to.tokens;
 
   const [modal, setModal] = useState({
@@ -94,9 +95,9 @@ export function TokenInfo({ type }: PropTypes) {
   );
   useEffect(() => {
     if (
-      !!supportedChains &&
+      !!supportedBlockchains &&
       !!chain &&
-      !supportedChains.includes(chain?.name)
+      !supportedBlockchains.includes(chain?.name)
     ) {
       onChangeBlockChain(undefined, type);
       onChangeToken(undefined, type);
@@ -110,7 +111,7 @@ export function TokenInfo({ type }: PropTypes) {
     ) {
       onChangeToken(undefined, type);
     }
-  }, [supportedChains, supportedTokens, chain]);
+  }, [supportedBlockchains, supportedTokens, chain]);
 
   return (
     <Container>
@@ -197,9 +198,9 @@ export function TokenInfo({ type }: PropTypes) {
           modal.isChain ? (
             <BlockchainSelector
               list={
-                supportedChains
+                supportedBlockchains
                   ? blockchains.filter((chain) =>
-                      supportedChains.includes(chain.name)
+                      supportedBlockchains.includes(chain.name)
                     )
                   : blockchains
               }

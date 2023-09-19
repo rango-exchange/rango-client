@@ -4,10 +4,11 @@ import {
   useLocation,
   useSearchParams,
 } from 'react-router-dom';
+
+import { navigationRoutes } from '../constants/navigationRoutes';
+import { SearchParams } from '../constants/searchParams';
 import { useBestRouteStore } from '../store/bestRoute';
 import { useMetaStore } from '../store/meta';
-import { SearchParams } from '../constants/searchParams';
-import { navigationRoutes } from '../constants/navigationRoutes';
 import { useUiStore } from '../store/ui';
 import { searchParamsToToken } from '../utils/routing';
 
@@ -17,13 +18,13 @@ export function UpdateUrl() {
   const location = useLocation();
   const firstRenderSearchParams = useRef(location.search);
   const searchParamsRef = useRef<Record<string, string>>({});
-  const fromChain = useBestRouteStore.use.fromChain();
-  const toChain = useBestRouteStore.use.toChain();
+  const fromBlockchain = useBestRouteStore.use.fromBlockchain();
+  const toBlockchain = useBestRouteStore.use.toBlockchain();
   const fromToken = useBestRouteStore.use.fromToken();
   const toToken = useBestRouteStore.use.toToken();
-  const setFromChain = useBestRouteStore.use.setFromChain();
+  const setFromBlockchain = useBestRouteStore.use.setFromBlockchain();
   const setFromToken = useBestRouteStore.use.setFromToken();
-  const setToChain = useBestRouteStore.use.setToChain();
+  const setToBlockchain = useBestRouteStore.use.setToBlockchain();
   const setToToken = useBestRouteStore.use.setToToken();
   const inputAmount = useBestRouteStore.use.inputAmount();
   const setInputAmount = useBestRouteStore.use.setInputAmount();
@@ -41,7 +42,9 @@ export function UpdateUrl() {
     searchParamsRef.current = params;
     const requestId =
       location.pathname.split(navigationRoutes.swaps + '/')[1] || null;
-    if (requestId) setSelectedSwap(requestId);
+    if (requestId) {
+      setSelectedSwap(requestId);
+    }
   }, []);
 
   useEffect(() => {
@@ -59,12 +62,14 @@ export function UpdateUrl() {
         fromAmount =
           searchParamsRef.current[SearchParams.FROM_AMOUNT] || inputAmount;
       } else {
-        if (location.state === 'redirect') return;
-        fromChainString = fromChain?.name || '';
+        if (location.state === 'redirect') {
+          return;
+        }
+        fromChainString = fromBlockchain?.name || '';
         fromTokenString =
           (fromToken?.symbol || '') +
           (fromToken?.address ? `--${fromToken?.address}` : '');
-        toChainString = toChain?.name || '';
+        toChainString = toBlockchain?.name || '';
         toTokenString =
           (toToken?.symbol || '') +
           (toToken?.address ? `--${toToken?.address}` : '');
@@ -88,7 +93,14 @@ export function UpdateUrl() {
       );
     }
     firstRender.current = false;
-  }, [location.pathname, inputAmount, fromChain, fromToken, toChain, toToken]);
+  }, [
+    location.pathname,
+    inputAmount,
+    fromBlockchain,
+    fromToken,
+    toBlockchain,
+    toToken,
+  ]);
 
   useEffect(() => {
     if (loadingStatus === 'success') {
@@ -97,31 +109,37 @@ export function UpdateUrl() {
       const toChainString = searchParams.get(SearchParams.TO_CHAIN);
       const toTokenString = searchParams.get(SearchParams.TO_TOKEN);
       const fromAmount = searchParams.get(SearchParams.FROM_AMOUNT);
-      const fromChain = blockchains.find(
+      const fromBlockchain = blockchains.find(
         (blockchain) => blockchain.name === fromChainString
       );
       const fromToken = searchParamsToToken(
         tokens,
         fromTokenString,
-        fromChain || null
+        fromBlockchain || null
       );
-      const toChain = blockchains.find(
+      const toBlockchain = blockchains.find(
         (blockchain) => blockchain.name === toChainString
       );
       const toToken = searchParamsToToken(
         tokens,
         toTokenString,
-        toChain || null
+        toBlockchain || null
       );
-      if (!!fromChain) {
-        setFromChain(fromChain);
-        if (!!fromToken) setFromToken(fromToken);
+      if (!!fromBlockchain) {
+        setFromBlockchain(fromBlockchain);
+        if (!!fromToken) {
+          setFromToken(fromToken);
+        }
       }
-      if (!!toChain) {
-        setToChain(toChain);
-        if (!!toToken) setToToken(toToken);
+      if (!!toBlockchain) {
+        setToBlockchain(toBlockchain);
+        if (!!toToken) {
+          setToToken(toToken);
+        }
       }
-      if (fromAmount) setInputAmount(fromAmount);
+      if (fromAmount) {
+        setInputAmount(fromAmount);
+      }
     }
   }, [loadingStatus]);
 
