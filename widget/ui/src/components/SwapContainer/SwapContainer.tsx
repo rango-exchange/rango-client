@@ -21,22 +21,12 @@ const MainContainer = styled('div', {
   '& *': {
     boxSizing: 'border-box',
     listStyleType: 'none',
-    '&::-webkit-scrollbar': { width: 2, height: '$8' },
-    '&::-webkit-scrollbar-thumb': {
-      borderRadius: '$sm',
-    },
-    '&::-webkit-scrollbar-track': {
-      backgroundColor: '$background',
-      borderRadius: '$sm',
-    },
   },
   variants: {
     fixedHeight: {
       true: {
-        true: {
-          height: '595px',
-          maxHeight: '595px',
-        },
+        height: '633px',
+        maxHeight: '633px',
       },
       false: {
         height: 'auto',

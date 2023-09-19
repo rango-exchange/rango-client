@@ -33,8 +33,8 @@ type PropTypes = (
   chain: BlockchainMeta | null;
   token: Token | null;
   loadingStatus: 'loading' | 'success' | 'failed';
-  fromChain: BlockchainMeta | null;
-  toChain: BlockchainMeta | null;
+  fromBlockchain: BlockchainMeta | null;
+  toBlockchain: BlockchainMeta | null;
   inputUsdValue: string;
   fromToken: TokenWithBalance | null;
   setInputAmount: (amount: string) => void;
@@ -144,8 +144,8 @@ export function TokenInfo(props: PropTypes) {
     chain,
     token,
     loadingStatus,
-    fromChain,
-    toChain,
+    fromBlockchain,
+    toBlockchain,
     fromToken,
     setInputAmount,
     inputUsdValue,
@@ -241,8 +241,8 @@ export function TokenInfo(props: PropTypes) {
             variant="outlined"
             disabled={
               loadingStatus === 'failed' ||
-              (type === 'From' && !fromChain) ||
-              (type === 'To' && !toChain)
+              (type === 'From' && !fromBlockchain) ||
+              (type === 'To' && !toBlockchain)
             }
             loading={loadingStatus === 'loading'}
             prefix={

@@ -30,7 +30,7 @@ export function SelectableCategoryList(props: PropTypes) {
             <Skeleton
               key={index}
               variant="rounded"
-              height={65}
+              height={70}
               width={index === 0 ? 45 : 65}
             />
           ))
@@ -63,7 +63,14 @@ export function SelectableCategoryList(props: PropTypes) {
                   <Divider size={12} />
                 </>
               )}
-              <Typography size="xsmall" variant="body">
+              <Typography
+                size="xsmall"
+                variant="body"
+                color={
+                  blockchainCategory === BlockchainCategories.ALL
+                    ? 'secondary500'
+                    : undefined
+                }>
                 {i18n.t(BlockchainCategories[blockchainCategory])}
               </Typography>
             </BlockchainsChip>

@@ -11,12 +11,13 @@ export function LoadingTokenList(props: LoadingTokenListProps) {
       {Array.from(Array(props.size), (e) => (
         <ListItem
           key={e}
+          hasDivider
           start={<Skeleton variant="circular" width={35} height={35} />}
           end={
             <End>
-              <Skeleton variant="text" size="large" width={90} />
+              <Skeleton variant="text" size="large" width={70} />
               <Divider size={4} />
-              <Skeleton variant="text" size="medium" width={60} />
+              <Skeleton variant="text" size="medium" width={50} />
             </End>
           }
           title={

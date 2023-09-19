@@ -10,8 +10,16 @@ export const Chip = styled('button', {
   alignItems: 'center',
   cursor: 'pointer',
   border: 0,
+  '.image-container': {
+    borderRadius: '$xm',
+    overflow: 'hidden',
+  },
   '&:hover': {
-    backgroundColor: '$neutral300',
+    backgroundColor: '$neutral400',
+  },
+  '&:focus-visible': {
+    outline: 0,
+    backgroundColor: '$neutral500',
   },
   variants: {
     selected: {

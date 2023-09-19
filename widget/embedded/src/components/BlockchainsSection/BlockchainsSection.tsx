@@ -3,20 +3,42 @@ import type { PropTypes } from './BlockchainsSection.types';
 
 import { i18n } from '@lingui/core';
 import { Divider, Image, Skeleton, Typography } from '@rango-dev/ui';
-import React from 'react';
+import { type BlockchainMeta } from 'rango-sdk';
+import React, { useEffect, useState } from 'react';
 
 import { useBestRouteStore } from '../../store/bestRoute';
 import { useMetaStore } from '../../store/meta';
 import { BlockchainsChip } from '../BlockchainsChip';
 
+import { sortBlockchains } from './BlockchainSection.helpers';
 import { Container } from './BlockchainsSection.styles';
 
+const MIN = 9;
+const MAX = 10;
+const NUMBER_OF_LOADING = 12;
 export function BlockchainsSection(props: PropTypes) {
   const { blockchains, type, blockchain, onChange, onMoreClick } = props;
+  const sortedBlockchains = sortBlockchains(blockchains);
+  console.log({ blockchain });
 
+  const [selectFromMoreBlockchain, setSelectFromMoreBlockchain] =
+    useState<BlockchainMeta | null>(null);
   const loadingStatus = useMetaStore.use.loadingStatus();
-  const resetToChain = useBestRouteStore.use.resetToChain();
-  const resetFromChain = useBestRouteStore.use.resetFromChain();
+  const resetToBlockchain = useBestRouteStore.use.resetToBlockchain();
+  const resetFromBlockchain = useBestRouteStore.use.resetFromBlockchain();
+  const COUNT_BLOCKCHAINS = !!selectFromMoreBlockchain ? MIN : MAX;
+
+  useEffect(() => {
+    const selectBlockchainFromMore = sortedBlockchains
+      .slice(MAX, sortedBlockchains.length)
+      .find(
+        (item) =>
+          item.chainId === blockchain?.chainId && item.name === blockchain?.name
+      );
+    if (!!selectBlockchainFromMore) {
+      setSelectFromMoreBlockchain(selectBlockchainFromMore);
+    }
+  }, [blockchain]);
 
   return (
     <div>
@@ -27,7 +49,7 @@ export function BlockchainsSection(props: PropTypes) {
       <Divider size={12} />
       <Container>
         {loadingStatus === 'loading' ? (
-          Array.from(Array(12), (e) => (
+          Array.from(Array(NUMBER_OF_LOADING), (e) => (
             <Skeleton key={e} variant="rounded" height={50} />
           ))
         ) : (
@@ -36,27 +58,40 @@ export function BlockchainsSection(props: PropTypes) {
               selected={!blockchain}
               onClick={() => {
                 if (type === 'from') {
-                  resetFromChain();
+                  resetFromBlockchain();
                 } else {
-                  resetToChain();
+                  resetToBlockchain();
                 }
               }}>
               <Typography variant="body" size="xsmall" color="secondary500">
                 {i18n.t('All')}
               </Typography>
             </BlockchainsChip>
-            {blockchains.slice(0, 10).map((chain) => (
+            {!!selectFromMoreBlockchain && (
               <BlockchainsChip
-                selected={!!blockchain && blockchain.chainId === chain.chainId}
-                key={chain.chainId}
-                onClick={() => onChange(chain)}>
-                <Image src={chain.logo} size={30} />
+                selected={
+                  !!selectFromMoreBlockchain &&
+                  selectFromMoreBlockchain.chainId === blockchain?.chainId
+                }
+                key={selectFromMoreBlockchain.chainId}
+                onClick={() => onChange(selectFromMoreBlockchain)}>
+                <Image src={selectFromMoreBlockchain.logo} size={30} />
+              </BlockchainsChip>
+            )}
+            {sortedBlockchains.slice(0, COUNT_BLOCKCHAINS).map((item) => (
+              <BlockchainsChip
+                key={item.chainId}
+                selected={!!blockchain && blockchain.chainId === item.chainId}
+                onClick={() => onChange(item)}>
+                <Image src={item.logo} size={30} />
               </BlockchainsChip>
             ))}
 
             <BlockchainsChip onClick={onMoreClick}>
               <Typography variant="body" size="xsmall" color="secondary500">
-                {i18n._('More +{count}', { count: blockchains.length - 10 })}
+                {i18n._('More +{count}', {
+                  count: sortedBlockchains.length - MAX,
+                })}
               </Typography>
             </BlockchainsChip>
           </>
