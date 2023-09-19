@@ -1,6 +1,14 @@
+import type { ManagerContext, ManagerState } from './types';
+import type {
+  ManagerContext as Context,
+  Events,
+  QueueDef,
+} from '@rango-dev/queue-manager-core';
+import type { PropsWithChildren } from 'react';
+
+import { Manager } from '@rango-dev/queue-manager-core';
 import React, {
   createContext,
-  PropsWithChildren,
   useContext,
   useEffect,
   useLayoutEffect,
@@ -8,14 +16,8 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import {
-  ManagerContext as Context,
-  Manager,
-  QueueDef,
-  Events,
-} from '@rango-dev/queue-manager-core';
-import { ManagerContext, ManagerState } from './types';
-import { useManagerState, initState as initManagerState } from './state';
+
+import { initState as initManagerState, useManagerState } from './state';
 
 const ManagerCtx = createContext<{
   manager: ManagerContext;
@@ -64,13 +66,18 @@ function Provider(props: PropsWithChildren<PropTypes>) {
             props.onPersistedDataLoaded(manager);
           }
 
-          // This condition will make sure, we only update the `loadedFromPersistor`.
-          // But be aware `onPersistedDataLoaded` is calling after each `sync` which means can be called multiple times.
+          /*
+           * This condition will make sure, we only update the `loadedFromPersistor`.
+           * But be aware `onPersistedDataLoaded` is calling after each `sync` which means can be called multiple times.
+           */
           if (!state.loadedFromPersistor) {
             update('loadedFromPersistor', true);
           }
         },
         onTaskBlock: () => {
+          forceRender({});
+        },
+        onDeleteQueue: () => {
           forceRender({});
         },
       },
@@ -94,17 +101,18 @@ function Provider(props: PropsWithChildren<PropTypes>) {
     }
   }, [props.isPaused]);
 
+  const value = useMemo(() => ({ manager, state }), [manager, state]);
+
   return (
-    <ManagerCtx.Provider value={{ manager, state }}>
-      {props.children}
-    </ManagerCtx.Provider>
+    <ManagerCtx.Provider value={value}>{props.children}</ManagerCtx.Provider>
   );
 }
 
 export function useManager(): { manager: ManagerContext; state: ManagerState } {
   const context = useContext(ManagerCtx);
-  if (!context)
+  if (!context) {
     throw Error('useManager can only be used within the Provider component');
+  }
   return context;
 }
 
