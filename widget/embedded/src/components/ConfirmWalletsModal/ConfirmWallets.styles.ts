@@ -66,6 +66,7 @@ export const WalletButton = styled('button', {
   },
 });
 export const Trigger = styled(Collapsible.Trigger, {
+  padding: '$0',
   border: 'none',
   outline: 'none',
   width: '100%',
@@ -105,7 +106,7 @@ export const CollapsibleRoot = styled(Collapsible.Root, {
     selected: {
       true: {
         outlineWidth: 1,
-        outlineColor: '$secondary',
+        outlineColor: '$secondary500',
         outlineStyle: 'solid',
       },
     },

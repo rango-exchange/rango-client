@@ -60,6 +60,9 @@ export interface RouteState {
   switchFromAndTo: () => void;
   setRouteWalletConfirmed: (flag: boolean) => void;
   setSelectedWallets: (wallets: Wallet[]) => void;
+  customDestination: string;
+  setCustomDestination: (address: string) => void;
+  resetRouteWallets: () => void;
 }
 
 export const useBestRouteStore = createSelectors(
@@ -78,6 +81,7 @@ export const useBestRouteStore = createSelectors(
       sourceTokens: [],
       destinationTokens: [],
       selectedWallets: [],
+      customDestination: '',
       setRoute: (bestRoute) =>
         set((state) => {
           let outputAmount: BigNumber | null = null;
@@ -271,8 +275,18 @@ export const useBestRouteStore = createSelectors(
           toBlockchain: null,
           destinationTokens: [],
         })),
-      setRouteWalletConfirmed: (flag) => set({ routeWalletsConfirmed: flag }),
+      setRouteWalletConfirmed: (flag) =>
+        set({
+          routeWalletsConfirmed: flag,
+        }),
       setSelectedWallets: (wallets) => set({ selectedWallets: wallets }),
+      setCustomDestination: (address) => set({ customDestination: address }),
+      resetRouteWallets: () =>
+        set({
+          routeWalletsConfirmed: false,
+          selectedWallets: [],
+          customDestination: '',
+        }),
     }))
   )
 );

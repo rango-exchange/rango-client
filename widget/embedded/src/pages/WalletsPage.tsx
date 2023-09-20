@@ -49,18 +49,12 @@ const Container = styled('div', {
 export const TIME_TO_CLOSE_MODAL = 3_000;
 export const TIME_TO_IGNORE_MODAL = 300;
 
-export function WalletsPage({
-  supportedWallets,
-  multiWallets,
-  config,
-}: PropTypes) {
+export function WalletsPage({ config }: PropTypes) {
   const { navigateBackFrom } = useNavigateBack();
   const [openModal, setOpenModal] = useState<WalletType>('');
   let modalTimerId: ReturnType<typeof setTimeout> | null = null;
 
   const { list, handleClick, error } = useWalletList({
-    supportedWallets,
-    multiWallets,
     config,
     onBeforeConnect: (type) => {
       modalTimerId = setTimeout(() => {

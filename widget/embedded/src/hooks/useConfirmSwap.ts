@@ -12,6 +12,7 @@ import { calculatePendingSwap } from '@rango-dev/queue-manager-rango-preset';
 import BigNumber from 'bignumber.js';
 import { useEffect } from 'react';
 
+import { errorMessages } from '../constants/errors';
 import { HIGH_SLIPPAGE } from '../constants/swapSettings';
 import { useBestRouteStore } from '../store/bestRoute';
 import { useMetaStore } from '../store/meta';
@@ -69,9 +70,10 @@ function throwErrorIfResponseIsNotValid(
   params: { inputUsdValue: BigNumber | null; outputUsdValue: number | null }
 ) {
   if (!response.result) {
-    throw new Error('Route not found', {
+    throw new Error(errorMessages.noRoutesError.title, {
       cause: {
         type: ConfirmSwapErrorTypes.NO_ROUTE,
+        diagnosisMessage: response.diagnosisMessages?.[0],
       },
     });
   }
@@ -129,10 +131,6 @@ function generateWarnings(
           2
         ),
       };
-    } else if (isRouteInternalCoinsUpdated(previousRoute, currentRoute)) {
-      output.route = {
-        type: RouteWarningType.ROUTE_COINS_UPDATED,
-      };
     } else if (isNumberOfSwapsChanged(previousRoute, currentRoute)) {
       output.route = {
         type: RouteWarningType.ROUTE_UPDATED,
@@ -140,6 +138,10 @@ function generateWarnings(
     } else if (isRouteSwappersUpdated(previousRoute, currentRoute)) {
       output.route = {
         type: RouteWarningType.ROUTE_SWAPPERS_UPDATED,
+      };
+    } else if (isRouteInternalCoinsUpdated(previousRoute, currentRoute)) {
+      output.route = {
+        type: RouteWarningType.ROUTE_COINS_UPDATED,
       };
     }
   }
@@ -180,7 +182,9 @@ export function useConfirmSwap(): ConfirmSwap {
     toToken,
     inputAmount,
     inputUsdValue,
+    setRoute,
     bestRoute: initialRoute,
+    customDestination: customDestinationFromStore,
   } = useBestRouteStore();
 
   const {
@@ -191,8 +195,7 @@ export function useConfirmSwap(): ConfirmSwap {
     affiliateWallets,
     disabledLiquiditySources,
   } = useSettingsStore();
-  const { connectedWallets, customDestination: customDestinationFromStore } =
-    useWalletsStore();
+  const { connectedWallets } = useWalletsStore();
 
   const { meta } = useMetaStore();
 
@@ -209,6 +212,7 @@ export function useConfirmSwap(): ConfirmSwap {
 
     if (!fromToken || !toToken || !inputAmount || !initialRoute) {
       return {
+        route: null,
         swap: null,
         error: null,
         warnings: null,
@@ -238,6 +242,7 @@ export function useConfirmSwap(): ConfirmSwap {
           inputUsdValue,
         })
       );
+      setRoute(currentRoute);
     } catch (error: any) {
       if (error?.code === 'ERR_CANCELED') {
         return {
@@ -252,19 +257,15 @@ export function useConfirmSwap(): ConfirmSwap {
       if (error.cause) {
         return {
           swap: null,
-          error: {
-            type: error.cause,
-          },
+          error: error.cause,
           warnings: null,
         };
       }
 
-      const status = error?.response?.status;
       return {
         swap: null,
         error: {
           type: ConfirmSwapErrorTypes.REQUEST_FAILED,
-          status: status,
         },
         warnings: null,
       };
@@ -284,6 +285,7 @@ export function useConfirmSwap(): ConfirmSwap {
     );
 
     return {
+      route: currentRoute,
       swap,
       error: null,
       warnings: generateWarnings(initialRoute, currentRoute, {
