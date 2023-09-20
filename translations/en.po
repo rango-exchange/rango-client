@@ -93,40 +93,60 @@ msgid "Balance"
 msgstr "Balance"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/SelectBlockchainPage.tsx:53
-#~ msgid "Search Blockchain"
-#~ msgstr "Search Blockchain"
+#: widget/embedded/src/constants/errors.ts:33
+#~ msgid "Route updated and price impact is too high, try again later!"
+#~ msgstr "Route updated and price impact is too high, try again later!"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:39
+#: widget/embedded/src/constants/warnings.ts:10
+#~ msgid "Route has been updated."
+#~ msgstr "Route has been updated."
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/constants/warnings.ts:12
+#~ msgid "Output amount changed to {newOutputAmount} ({percentageChange}% change)."
+#~ msgstr "Output amount changed to {newOutputAmount} ({percentageChange}% change)."
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/constants/warnings.ts:20
+#~ msgid "Route swappers has been updated."
+#~ msgstr "Route swappers has been updated."
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/constants/warnings.ts:22
+#~ msgid "Route internal coins has been updated."
+#~ msgstr "Route internal coins has been updated."
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:37
 #: widget/embedded/src/components/SwapsGroup/SwapsGroup.tsx:20
-#: widget/embedded/src/components/TokenList/TokenList.tsx:128
-#: widget/embedded/src/pages/LiquiditySourcePage.tsx:131
+#: widget/embedded/src/components/TokenList/TokenList.tsx:125
+#: widget/embedded/src/pages/LiquiditySourcePage.tsx:135
 #~ msgid "No results found"
 #~ msgstr "No results found"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:40
+#: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:38
 #: widget/embedded/src/components/SwapsGroup/SwapsGroup.tsx:21
-#: widget/embedded/src/components/TokenList/TokenList.tsx:129
-#: widget/embedded/src/pages/LiquiditySourcePage.tsx:132
+#: widget/embedded/src/components/TokenList/TokenList.tsx:126
+#: widget/embedded/src/pages/LiquiditySourcePage.tsx:136
 #~ msgid "Try using different keywords"
 #~ msgstr "Try using different keywords"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:68
-#: widget/embedded/src/components/BlockchainsSection/BlockchainsSection.tsx:47
+#: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:66
+#: widget/embedded/src/components/BlockchainsSection/BlockchainsSection.tsx:45
 #: widget/embedded/src/pages/SelectBlockchainPage.tsx:42
 #~ msgid "Select Blockchain"
 #~ msgstr "Select Blockchain"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/BlockchainsSection/BlockchainsSection.tsx:67
+#: widget/embedded/src/components/BlockchainsSection/BlockchainsSection.tsx:65
 #~ msgid "All"
 #~ msgstr "All"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/BlockchainsSection/BlockchainsSection.tsx:92
+#: widget/embedded/src/components/BlockchainsSection/BlockchainsSection.tsx:90
 #~ msgid "More +{count}"
 #~ msgstr "More +{count}"
 
@@ -147,7 +167,7 @@ msgstr "Balance"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/HeaderButtons/HomeButtons.tsx:42
-#: widget/embedded/src/pages/ConfirmSwapPage.tsx:248
+#: widget/embedded/src/pages/ConfirmSwapPage.tsx:311
 #~ msgid "Settings"
 #~ msgstr "Settings"
 
@@ -183,7 +203,7 @@ msgstr "Balance"
 #~ msgstr "This setting is applied per step, e.g. 1Inch, Thorchain, etc. and only that step will be reverted, not the whole transaction"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/TokenList/TokenList.tsx:265
+#: widget/embedded/src/components/TokenList/TokenList.tsx:262
 #~ msgid "Select Token"
 #~ msgstr "Select Token"
 
@@ -218,78 +238,78 @@ msgstr "Balance"
 #~ msgstr "Click connect in your wallet popup."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/constants/errors.ts:4
+#: widget/embedded/src/constants/errors.ts:8
 #~ msgid "Failed Network, Please retry your swap."
 #~ msgstr "Failed Network, Please retry your swap."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/constants/errors.ts:6
+#: widget/embedded/src/constants/errors.ts:10
 #~ msgid "Please reset your liquidity sources."
 #~ msgstr "Please reset your liquidity sources."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/constants/errors.ts:7
+#: widget/embedded/src/constants/errors.ts:11
 #~ msgid "You have limited the liquidity sources and this might result in Rango finding no routes. Please consider resetting your liquidity sources"
 #~ msgstr "You have limited the liquidity sources and this might result in Rango finding no routes. Please consider resetting your liquidity sources"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/constants/errors.ts:12
+#: widget/embedded/src/constants/errors.ts:16
 #~ msgid "No Routes Found"
 #~ msgstr "No Routes Found"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/constants/errors.ts:17
+#: widget/embedded/src/constants/errors.ts:21
 #~ msgid "Bridge Limit Error: Please increase your amount"
 #~ msgstr "Bridge Limit Error: Please increase your amount"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/constants/errors.ts:18
+#: widget/embedded/src/constants/errors.ts:22
 #~ msgid "Bridge Limit Error: Please decrease your amount"
 #~ msgstr "Bridge Limit Error: Please decrease your amount"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/constants/errors.ts:21
+#: widget/embedded/src/constants/errors.ts:25
 #~ msgid "High Price Impact"
 #~ msgstr "High Price Impact"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/constants/errors.ts:22
+#: widget/embedded/src/constants/errors.ts:26
 #~ msgid "Price impact is too high!"
 #~ msgstr "Price impact is too high!"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/constants/errors.ts:23
+#: widget/embedded/src/constants/errors.ts:27
 #~ msgid "The price impact is significantly higher than the allowed amount. If you are sure, continue, otherwise, change the swap."
 #~ msgstr "The price impact is significantly higher than the allowed amount. If you are sure, continue, otherwise, change the swap."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/constants/errors.ts:26
+#: widget/embedded/src/constants/errors.ts:30
 #~ msgid "Confirm High price impact"
 #~ msgstr "Confirm High price impact"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/constants/errors.ts:29
+#: widget/embedded/src/constants/errors.ts:38
 #~ msgid "USD Price Unknown"
 #~ msgstr "USD Price Unknown"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/constants/errors.ts:30
+#: widget/embedded/src/constants/errors.ts:39
 #~ msgid "USD Price Unknown, Cannot calculate Price Impact."
 #~ msgstr "USD Price Unknown, Cannot calculate Price Impact."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/constants/errors.ts:31
+#: widget/embedded/src/constants/errors.ts:40
 #~ msgid "USD Price Unknown, Cannot calculate Price Impact. The price impact may be higher than usual. Are you sure to continue the Swap?"
 #~ msgstr "USD Price Unknown, Cannot calculate Price Impact. The price impact may be higher than usual. Are you sure to continue the Swap?"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/constants/errors.ts:34
+#: widget/embedded/src/constants/errors.ts:43
 #~ msgid "Confirm USD Price Unknown"
 #~ msgstr "Confirm USD Price Unknown"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/constants/messages.ts:5
-#: widget/embedded/src/pages/Home.tsx:284
+#: widget/embedded/src/pages/Home.tsx:283
 #~ msgid "Swap"
 #~ msgstr "Swap"
 
@@ -325,14 +345,19 @@ msgstr "Balance"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/pages/LanguagePage.tsx:65
-#: widget/embedded/src/pages/SettingsPage.tsx:111
+#: widget/embedded/src/pages/SettingsPage.tsx:113
 #~ msgid "Language"
 #~ msgstr "Language"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/LiquiditySourcePage.tsx:124
+#: widget/embedded/src/pages/LiquiditySourcePage.tsx:127
 #~ msgid "Swap {sourceType}"
 #~ msgstr "Swap {sourceType}"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/SelectBlockchainPage.tsx:53
+#~ msgid "Search Blockchain"
+#~ msgstr "Search Blockchain"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/pages/SelectSwapItemsPage.tsx:96
@@ -345,28 +370,28 @@ msgstr "Balance"
 #~ msgstr "Search Token"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/SettingsPage.tsx:59
+#: widget/embedded/src/pages/SettingsPage.tsx:79
 #~ msgid "Enabled bridges"
 #~ msgstr "Enabled bridges"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/SettingsPage.tsx:85
+#: widget/embedded/src/pages/SettingsPage.tsx:96
 #~ msgid "Enabled exchanges"
 #~ msgstr "Enabled exchanges"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/SettingsPage.tsx:122
+#: widget/embedded/src/pages/SettingsPage.tsx:124
 #: widget/embedded/src/pages/ThemePage.tsx:76
 #~ msgid "Theme"
 #~ msgstr "Theme"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/SettingsPage.tsx:133
+#: widget/embedded/src/pages/SettingsPage.tsx:135
 #~ msgid "Infinite Approval"
 #~ msgstr "Infinite Approval"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/SettingsPage.tsx:150
+#: widget/embedded/src/pages/SettingsPage.tsx:152
 #~ msgid "Setting"
 #~ msgstr "Setting"
 
@@ -386,7 +411,7 @@ msgstr "Balance"
 #~ msgstr "Auto"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/WalletsPage.tsx:96
+#: widget/embedded/src/pages/WalletsPage.tsx:90
 #~ msgid "Choose a wallet to connect."
 #~ msgstr "Choose a wallet to connect."
 

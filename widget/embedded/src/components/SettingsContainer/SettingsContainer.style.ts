@@ -6,9 +6,9 @@ export const SettingsContainer = styled('div', {
 
 export const LiquiditySourceList = styled('ul', {
   padding: '$15 $5 0',
+  height: '502px',
   margin: 0,
   listStyle: 'none',
-  height: '502px',
   overflowY: 'auto',
 });
 
