@@ -6,10 +6,12 @@ export const BackDrop = styled('div', {
   left: '0',
   width: '100%',
   height: '100%',
-  backgroundColor: 'rgba(0,0,0,.1)',
+  backgroundColor: 'rgba(0,0,0,0)',
   zIndex: 10,
   borderRadius: '$sm',
   display: 'flex',
+  overflow: 'hidden',
+  transition: 'background .35s',
 
   variants: {
     anchor: {
@@ -23,6 +25,11 @@ export const BackDrop = styled('div', {
         alignItems: 'center',
       },
     },
+    active: {
+      true: {
+        backgroundColor: 'rgba(0,0,0,.1)',
+      },
+    },
   },
 });
 
@@ -34,6 +41,9 @@ export const ModalContainer = styled('div', {
   display: 'flex',
   flexDirection: 'column',
   zIndex: 9999999,
+  transform: 'translateY(100%)',
+  transition: 'transform .45s ease-in-out',
+
   variants: {
     anchor: {
       bottom: {
@@ -41,6 +51,11 @@ export const ModalContainer = styled('div', {
         maxHeight: '95%',
       },
       center: { height: '100%' },
+    },
+    active: {
+      true: {
+        transform: 'translateY(0)',
+      },
     },
   },
 });
