@@ -276,45 +276,31 @@ export function isAccountAndWalletMatched(
 }
 
 export function makeBalanceFor(
-  wallet: Wallet,
-  retrivedBalance: WalletDetail,
+  retrievedBalance: WalletDetail,
   tokens: Token[]
-): ConnectedWallet {
-  const {
-    address,
-    blockChain: chain,
-    explorerUrl,
-    balances = [],
-  } = retrivedBalance;
-  return {
-    address,
-    chain,
-    selected: false,
-    loading: false,
-    error: false,
-    explorerUrl,
-    walletType: wallet.walletType,
-    balances:
-      balances?.map((tokenBalance) => ({
-        chain,
-        symbol: tokenBalance.asset.symbol,
-        ticker: tokenBalance.asset.symbol,
-        address: tokenBalance.asset.address || null,
-        rawAmount: tokenBalance.amount.amount,
-        decimal: tokenBalance.amount.decimals,
-        amount: new BigNumber(tokenBalance.amount.amount)
-          .shiftedBy(-tokenBalance.amount.decimals)
-          .toFixed(),
-        logo: '',
-        usdPrice:
-          getUsdPrice(
-            chain,
-            tokenBalance.asset.symbol,
-            tokenBalance.asset.address,
-            tokens
-          ) || null,
-      })) || [],
-  };
+): TokenBalance[] {
+  const { blockChain: chain, balances = [] } = retrievedBalance;
+  return (
+    balances?.map((tokenBalance) => ({
+      chain,
+      symbol: tokenBalance.asset.symbol,
+      ticker: tokenBalance.asset.symbol,
+      address: tokenBalance.asset.address || null,
+      rawAmount: tokenBalance.amount.amount,
+      decimal: tokenBalance.amount.decimals,
+      amount: new BigNumber(tokenBalance.amount.amount)
+        .shiftedBy(-tokenBalance.amount.decimals)
+        .toFixed(),
+      logo: '',
+      usdPrice:
+        getUsdPrice(
+          chain,
+          tokenBalance.asset.symbol,
+          tokenBalance.asset.address,
+          tokens
+        ) || null,
+    })) || []
+  );
 }
 
 export function resetConnectedWalletState(
@@ -418,7 +404,10 @@ export const isExperimentalChain = (
       .map(([, blockchainMeta]) => blockchainMeta)
       .filter(isCosmosBlockchain)
   );
-  return cosmosExperimentalChainInfo && !!cosmosExperimentalChainInfo[wallet];
+  return (
+    cosmosExperimentalChainInfo &&
+    cosmosExperimentalChainInfo[wallet]?.experimental
+  );
 };
 
 export const getKeplrCompatibleConnectedWallets = (

@@ -11,7 +11,9 @@ import { useManager } from '@rango-dev/queue-manager-react';
 import {
   Alert,
   BestRoute,
+  BottomLogo,
   Button,
+  Divider,
   IconButton,
   MessageBox,
   Modal,
@@ -23,39 +25,43 @@ import {
   WalletIcon,
 } from '@rango-dev/ui';
 import React, { useEffect, useState } from 'react';
+import { flushSync } from 'react-dom';
 import { useNavigate } from 'react-router-dom';
 
-import { formatBestRoute } from '../components/ConfirmWalletsModal/ConfirmWallets.helpers';
+import {
+  formatBestRoute,
+  getRequiredWallets,
+} from '../components/ConfirmWalletsModal/ConfirmWallets.helpers';
 import { ConfirmWalletsModal } from '../components/ConfirmWalletsModal/ConfirmWalletsModal';
 import { HeaderButton } from '../components/HeaderButtons/HeaderButtons.styles';
 import { Layout } from '../components/Layout';
+import { NoRoutes } from '../components/NoRoutes';
+import { getConfirmSwapErrorMessage } from '../constants/errors';
 import { navigationRoutes } from '../constants/navigationRoutes';
 import { HIGHT_PRICE_IMPACT, LOW_PRICE_IMPACT } from '../constants/routing';
+import { getRouteWarningMessage } from '../constants/warnings';
 import { useConfirmSwap } from '../hooks/useConfirmSwap';
 import { useBestRouteStore } from '../store/bestRoute';
 import { useMetaStore } from '../store/meta';
 import { useSettingsStore } from '../store/settings';
 import { useUiStore } from '../store/ui';
 import { useWalletsStore } from '../store/wallets';
-import { SlippageWarningType } from '../types';
+import {
+  ConfirmSwapErrorTypes,
+  RouteWarningType,
+  SlippageWarningType,
+} from '../types';
 import {
   numberToString,
   secondsToString,
   totalArrivalTime,
 } from '../utils/numbers';
-import {
-  confirmSwapDisabled,
-  getConfirmSwapErrorMessage,
-  getPercentageChange,
-  getRouteWarningMessage,
-  getTotalFeeInUsd,
-} from '../utils/swap';
+import { getPercentageChange, getTotalFeeInUsd } from '../utils/swap';
 
 const Container = styled('div', {
   position: 'relative',
   width: '100%',
-  height: '593px',
-  '& .title': {
+  '& .description': {
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
@@ -70,11 +76,8 @@ const Container = styled('div', {
   },
   '& .buttons': {
     width: '100%',
-    position: 'absolute',
-    bottom: '$0',
     display: 'flex',
     justifyContent: 'space-between',
-    filter: 'drop-shadow(white 0 -10px 10px)',
   },
   '& .confirm-button': {
     flexGrow: 1,
@@ -87,6 +90,7 @@ type PropTypes = {
 };
 
 export function ConfirmSwapPage(props: PropTypes) {
+  //TODO: move component's logics to a custom hook
   const { config } = props;
   const {
     bestRoute,
@@ -97,16 +101,18 @@ export function ConfirmSwapPage(props: PropTypes) {
     setInputAmount,
     selectedWallets,
     routeWalletsConfirmed,
+    setRouteWalletConfirmed,
+    customDestination,
   } = useBestRouteStore();
   const navigate = useNavigate();
-  const [showWallets, setShowWallets] = useState(false);
   const [dbErrorMessage, setDbErrorMessage] = useState<string>('');
   const [showSlippageWarning, setShowSlippageWarning] = useState(false);
 
-  const { customDestination, connectedWallets } = useWalletsStore();
+  const { connectedWallets } = useWalletsStore();
   const showWalletsOnInit = !routeWalletsConfirmed;
+  const [showWallets, setShowWallets] = useState(false);
   const setSelectedSwap = useUiStore.use.setSelectedSwap();
-  const { tokens, blockchains } = useMetaStore.use.meta();
+  const { tokens } = useMetaStore.use.meta();
   const slippage = useSettingsStore.use.slippage();
   const customSlippage = useSettingsStore.use.customSlippage();
   const { manager } = useManager();
@@ -122,8 +128,19 @@ export function ConfirmSwapPage(props: PropTypes) {
       error: null,
       warnings: null,
     });
+  const showNoRouteFound =
+    !fetchingConfirmationRoute &&
+    confirmSwapResult.error &&
+    [
+      ConfirmSwapErrorTypes.NO_ROUTE,
+      ConfirmSwapErrorTypes.REQUEST_FAILED,
+    ].includes(confirmSwapResult.error.type);
   const showBestRoute =
-    !fetchingConfirmationRoute && bestRoute && bestRoute.result;
+    !showNoRouteFound &&
+    !fetchingConfirmationRoute &&
+    bestRoute &&
+    bestRoute.result;
+
   const totalFeeInUsd = getTotalFeeInUsd(bestRoute, tokens);
   const percentageChange = numberToString(
     getPercentageChange(
@@ -177,13 +194,32 @@ export function ConfirmSwapPage(props: PropTypes) {
     await addNewSwap();
   };
 
-  const onClick = async () => {
+  const onStartConfirmSwap = async () => {
     if (confirmSwapResult?.warnings?.slippage) {
       setShowSlippageWarning(true);
     } else {
       await onConfirm();
     }
   };
+
+  const onRefresh = async () => {
+    setConfirmSwapResult({
+      error: null,
+      swap: null,
+      warnings: null,
+    });
+    confirmSwap({ selectedWallets })
+      .then((res) => {
+        setConfirmSwapResult(res);
+      })
+      .catch((error) => console.error(error));
+  };
+
+  useEffect(() => {
+    if (showWalletsOnInit) {
+      cancelFetch();
+    }
+  }, [showWalletsOnInit]);
 
   useEffect(() => {
     if (showWalletsOnInit) {
@@ -195,7 +231,7 @@ export function ConfirmSwapPage(props: PropTypes) {
     if (!showWalletsOnInit) {
       confirmSwap({ selectedWallets, customDestination })
         .then((result) => setConfirmSwapResult(result))
-        .catch((error) => console.log(error));
+        .catch((error) => console.error(error));
     }
   }, []);
 
@@ -206,12 +242,11 @@ export function ConfirmSwapPage(props: PropTypes) {
   }, [showWallets, routeWalletsConfirmed]);
 
   useEffect(() => {
-    const destination = blockchains.find(
-      (blockchain) =>
-        blockchain.name ===
-        bestRoute?.result?.swaps[bestRoute.result.swaps.length - 1].to
-          .blockchain
-    );
+    const routeChanged =
+      confirmSwapResult.warnings?.route?.type &&
+      Object.values(RouteWarningType).includes(
+        confirmSwapResult.warnings?.route?.type
+      );
 
     const selectedWalletDisconnected =
       selectedWallets.length < 1 ||
@@ -224,19 +259,47 @@ export function ConfirmSwapPage(props: PropTypes) {
         )
       );
 
-    const routeWalletsChanged = confirmSwapDisabled(
-      fetchingConfirmationRoute,
-      !!customDestination,
-      customDestination,
-      bestRoute,
-      selectedWallets,
-      destination
-    );
+    let routeWalletsChanged = false;
 
-    if (selectedWalletDisconnected || routeWalletsChanged) {
-      setShowWallets(true);
+    if (routeChanged) {
+      let requiredWallets = getRequiredWallets(bestRoute);
+
+      const lastStepToBlockchain =
+        bestRoute?.result?.swaps[bestRoute.result.swaps.length - 1].to
+          .blockchain;
+
+      const isLastWalletRequired = !!bestRoute?.result?.swaps.find(
+        (swap) => swap.from.blockchain === lastStepToBlockchain
+      );
+
+      if (!isLastWalletRequired) {
+        requiredWallets = requiredWallets.slice(
+          -requiredWallets.length,
+          requiredWallets.length - 1
+        );
+      }
+
+      const allRequiredWalletsSelected = requiredWallets.every(
+        (requiredWallet) =>
+          selectedWallets.find(
+            (selectedWallet) => selectedWallet.chain === requiredWallet
+          )
+      );
+
+      if (!allRequiredWalletsSelected) {
+        routeWalletsChanged = true;
+      }
     }
-  }, [bestRoute, connectedWallets.length]);
+
+    if (bestRoute && (selectedWalletDisconnected || routeWalletsChanged)) {
+      queueMicrotask(() => flushSync(setShowWallets.bind(null, true)));
+      setRouteWalletConfirmed(false);
+    }
+  }, [
+    confirmSwapResult.warnings?.route,
+    selectedWallets.length,
+    connectedWallets.length,
+  ]);
 
   return (
     <Layout
@@ -261,8 +324,9 @@ export function ConfirmSwapPage(props: PropTypes) {
         prefix={
           <Button
             size="small"
+            variant="ghost"
             onClick={() => navigate('/' + navigationRoutes.settings)}>
-            <Typography variant="label" size="medium" color="$neutral500">
+            <Typography variant="label" size="medium" color="$neutral900">
               Change settings
             </Typography>
           </Button>
@@ -302,14 +366,18 @@ export function ConfirmSwapPage(props: PropTypes) {
                     }
                   )
             }>
+            <Divider size={18} />
+            <Divider size={32} />
             <Button
-              style={{ marginTop: '10px' }}
+              size="large"
               type="primary"
               variant="contained"
               fullWidth
               onClick={onConfirm}>
               Confirm anyway
             </Button>
+            <Divider direction="vertical" size={32} />
+            <BottomLogo />
           </MessageBox>
         )}
       </Modal>
@@ -324,34 +392,36 @@ export function ConfirmSwapPage(props: PropTypes) {
         />
       )}
       <Container>
-        {confirmSwapResult.error && (
-          <Alert type="error">
-            {getConfirmSwapErrorMessage(confirmSwapResult.error)}
-          </Alert>
-        )}
-        {dbErrorMessage && <Alert type="error" title={dbErrorMessage} />}
-        {confirmSwapResult.warnings?.route && (
-          <Alert type="warning">
-            {getRouteWarningMessage(confirmSwapResult.warnings.route)}
-          </Alert>
-        )}
-
-        <div className="title">
+        <div className="description">
           <Typography variant="title" size="small">
             You get
           </Typography>
           <Button
+            style={{ padding: '0' }}
             variant="ghost"
             disabled={fetchingConfirmationRoute}
-            onClick={async () => {
-              await confirmSwap?.({ selectedWallets });
-              await confirmSwap?.({ selectedWallets });
-            }}>
+            onClick={onRefresh}>
             <div className="icon">
               <RefreshIcon size={16} />
             </div>
           </Button>
         </div>
+        {dbErrorMessage && (
+          <>
+            <Alert type="error" variant="alarm" title={dbErrorMessage} />
+            <Divider size={12} />
+          </>
+        )}
+        {confirmSwapResult.warnings?.route && (
+          <>
+            <Alert
+              variant="alarm"
+              type="warning"
+              title={getRouteWarningMessage(confirmSwapResult.warnings.route)}
+            />
+            <Divider size={12} />
+          </>
+        )}
         {showBestRoute && (
           <BestRoute
             expanded={true}
@@ -372,6 +442,34 @@ export function ConfirmSwapPage(props: PropTypes) {
             warningLevel={warningLevel}
           />
         )}
+        {showNoRouteFound && (
+          <>
+            <Divider size={12} />
+            <NoRoutes
+              diagnosisMessage={
+                confirmSwapResult.error?.type === ConfirmSwapErrorTypes.NO_ROUTE
+                  ? confirmSwapResult.error.diagnosisMessage
+                  : undefined
+              }
+              error={
+                confirmSwapResult.error?.type ===
+                ConfirmSwapErrorTypes.REQUEST_FAILED
+              }
+              fetch={onRefresh}
+            />
+          </>
+        )}
+        {confirmSwapResult.error?.type ===
+          ConfirmSwapErrorTypes.ROUTE_UPDATED_WITH_HIGH_VALUE_LOSS && (
+          <>
+            <Alert
+              variant="alarm"
+              type="error"
+              title={getConfirmSwapErrorMessage(confirmSwapResult.error)}
+            />
+            <Divider size={12} />
+          </>
+        )}
         <div className="buttons">
           <div className="confirm-button">
             <Button
@@ -380,7 +478,8 @@ export function ConfirmSwapPage(props: PropTypes) {
               size="large"
               fullWidth
               loading={fetchingConfirmationRoute}
-              onClick={onClick}>
+              disabled={!!confirmSwapResult.error}
+              onClick={onStartConfirmSwap}>
               Start Swap
             </Button>
           </div>

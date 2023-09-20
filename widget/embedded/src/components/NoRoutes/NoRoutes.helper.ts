@@ -1,16 +1,14 @@
 import type { Info } from './NoRoutes.types';
-import type { BestRouteResponse } from 'rango-sdk';
 
 import { errorMessages } from '../../constants/errors';
 
 export function makeInfo(
-  data: BestRouteResponse | null,
+  diagnosisMessage: string | null,
   disabledLiquiditySources: string[],
   hasError: boolean,
   toggleAllLiquiditySources: (shouldReset: boolean) => void,
   refetchBestRoute: () => void
 ): Info {
-  const diagnosisMessage = data?.diagnosisMessages?.[0];
   if (hasError) {
     return {
       alert: {

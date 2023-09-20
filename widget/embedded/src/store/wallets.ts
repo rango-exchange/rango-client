@@ -7,7 +7,6 @@ import { shallow } from 'zustand/shallow';
 
 import { httpService } from '../services/httpService';
 import {
-  getRequiredChains,
   getTokensWithBalance,
   isAccountAndWalletMatched,
   makeBalanceFor,
@@ -45,18 +44,15 @@ interface WalletsStore {
   loading: boolean;
   connectWallet: (accounts: Wallet[]) => void;
   disconnectWallet: (walletType: WalletType) => void;
-  initSelectedWallets: () => void;
   selectWallets: (wallets: { walletType: string; chain: string }[]) => void;
   clearConnectedWallet: () => void;
   getWalletsDetails: (accounts: Wallet[], shouldRetry?: boolean) => void;
-  setCustomDestination: (customDestination: string) => void;
 }
 
 export const useWalletsStore = createSelectors(
   create<WalletsStore>()(
     subscribeWithSelector((set, get) => ({
       connectedWallets: [],
-      selectedWallets: [],
       customDestination: '',
       loading: false,
       connectWallet: (accounts) => {
@@ -66,79 +62,77 @@ export const useWalletsStore = createSelectors(
           connectedWallets: state.connectedWallets
             .filter((wallet) => wallet.walletType !== accounts[0].walletType)
             .concat(
-              accounts.map((account) => ({
-                balances: [],
-                address: account.address,
-                chain: account.chain,
-                explorerUrl: null,
-                walletType: account.walletType,
-                selected: false,
-                loading: true,
-                error: false,
-              }))
+              accounts.map((account) => {
+                const shouldMarkWalletAsSelected = !state.connectedWallets.find(
+                  (connectedWallet) =>
+                    connectedWallet.chain === account.chain &&
+                    connectedWallet.selected
+                );
+                return {
+                  balances: [],
+                  address: account.address,
+                  chain: account.chain,
+                  explorerUrl: null,
+                  walletType: account.walletType,
+                  selected: shouldMarkWalletAsSelected,
+                  loading: true,
+                  error: false,
+                };
+              })
             ),
         }));
         getWalletsDetails(accounts);
       },
       disconnectWallet: (walletType) => {
-        set((state) => ({
-          connectedWallets: state.connectedWallets.filter(
-            (balance) => balance.walletType !== walletType
-          ),
-        }));
-      },
-      initSelectedWallets: () =>
         set((state) => {
-          const requiredChains = getRequiredChains(
-            useBestRouteStore.getState().bestRoute
-          );
-          const connectedWallets = state.connectedWallets;
-          const selectedWallets: string[] = [];
-          requiredChains.forEach((chain) => {
-            const anyWalletSelected = !!state.connectedWallets.find(
+          const selectedWallets = state.connectedWallets
+            .filter(
               (connectedWallet) =>
-                connectedWallet.chain === chain && connectedWallet.selected
-            );
-
-            if (!anyWalletSelected) {
-              const firstWalletWithMatchedChain = connectedWallets.find(
-                (wallet) => wallet.chain === chain
-              );
-              if (firstWalletWithMatchedChain) {
-                selectedWallets.push(firstWalletWithMatchedChain.walletType);
-              }
-            }
-          });
+                connectedWallet.selected &&
+                connectedWallet.walletType !== walletType
+            )
+            .map((selectedWallet) => selectedWallet.chain);
           return {
-            connectedWallets: state.connectedWallets.map((connectedWallet) => {
-              if (
-                selectedWallets.includes(connectedWallet.walletType) &&
-                !connectedWallet.selected
-              ) {
+            connectedWallets: state.connectedWallets
+              .filter(
+                (connectedWallet) => connectedWallet.walletType !== walletType
+              )
+              .map((connectedWallet) => {
+                const anyWalletSelectedForBlockchain = selectedWallets.includes(
+                  connectedWallet.chain
+                );
+                if (anyWalletSelectedForBlockchain) {
+                  return connectedWallet;
+                }
+                selectedWallets.push(connectedWallet.chain);
                 return { ...connectedWallet, selected: true };
-              }
-              return connectedWallet;
-            }),
+              }),
           };
-        }),
+        });
+      },
       selectWallets: (wallets) =>
         set((state) => ({
           connectedWallets: state.connectedWallets.map((connectedWallet) => {
-            const selected = wallets.find(
+            const walletSelected = !!wallets.find(
+              (wallet) =>
+                wallet.chain === connectedWallet.chain &&
+                wallet.walletType !== connectedWallet.walletType &&
+                connectedWallet.selected
+            );
+            const walletNotSelected = !!wallets.find(
               (wallet) =>
                 wallet.chain === connectedWallet.chain &&
                 wallet.walletType === connectedWallet.walletType &&
                 !connectedWallet.selected
             );
-            if (selected) {
+            if (walletSelected) {
+              return { ...connectedWallet, selected: false };
+            } else if (walletNotSelected) {
               return { ...connectedWallet, selected: true };
             }
+
             return connectedWallet;
           }),
-        })),
-      setCustomDestination: (customDestination) =>
-        set(() => ({
-          customDestination,
         })),
       clearConnectedWallet: () =>
         set(() => ({
@@ -186,11 +180,14 @@ export const useWalletsStore = createSelectors(
                     getWalletsDetails([matchedAccount], false);
                   }
                   return matchedAccount && retrievedBalanceAccount
-                    ? makeBalanceFor(
-                        matchedAccount,
-                        retrievedBalanceAccount,
-                        tokens
-                      )
+                    ? {
+                        ...connectedWallet,
+                        explorerUrl: retrievedBalanceAccount.explorerUrl,
+                        balances: makeBalanceFor(
+                          retrievedBalanceAccount,
+                          tokens
+                        ),
+                      }
                     : connectedWallet;
                 }
               ),

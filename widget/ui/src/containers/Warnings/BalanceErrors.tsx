@@ -8,21 +8,12 @@ interface PropTypes {
 }
 
 const List = styled('ul', {
-  padding: 0,
+  padding: '$0 $0 $40 $0',
   margin: 0,
-  variants: {
-    showListStyle: {
-      true: { paddingLeft: '$24' },
-    },
-  },
 });
 
 const ListItem = styled('li', {
-  variants: {
-    showListStyle: {
-      true: { listStyleType: 'disc', listStylePosition: 'outside' },
-    },
-  },
+  paddingBottom: '$10',
 });
 
 const Message = styled(Typography, {
@@ -30,15 +21,14 @@ const Message = styled(Typography, {
 });
 
 export function BalanceErrors({ messages }: PropTypes) {
-  const showListStyle = messages.length > 1;
   return (
     <>
-      <List showListStyle={showListStyle}>
+      <List>
         {messages.map((warning, index) => {
           const key = index + warning;
           return (
-            <ListItem showListStyle={showListStyle} key={key}>
-              <Message variant="body" size="medium" color="$neutral500">
+            <ListItem key={key}>
+              <Message variant="body" size="medium" color="$neutral900">
                 {warning}
               </Message>
             </ListItem>

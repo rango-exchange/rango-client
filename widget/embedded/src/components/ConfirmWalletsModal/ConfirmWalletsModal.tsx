@@ -1,5 +1,6 @@
 import type { PropTypes } from './ConfirmWalletsModal.types';
-import type { Wallet } from '../../types';
+import type { ConnectedWallet } from '../../store/wallets';
+import type { ConfirmSwapWarnings, Wallet } from '../../types';
 
 import {
   Alert,
@@ -14,13 +15,14 @@ import {
   Typography,
   WalletIcon,
 } from '@rango-dev/ui';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
+import { getConfirmSwapErrorMessage } from '../../constants/errors';
+import { getRouteWarningMessage } from '../../constants/warnings';
 import { useBestRouteStore } from '../../store/bestRoute';
 import { useMetaStore } from '../../store/meta';
 import { useWalletsStore } from '../../store/wallets';
 import { confirmSwapDisabled } from '../../utils/swap';
-import { getRequiredChains } from '../../utils/wallets';
 
 import { getRequiredWallets, isValidAddress } from './ConfirmWallets.helpers';
 import {
@@ -43,64 +45,33 @@ import { WalletList } from './WalletList';
 const NUMBER_OF_WALLETS_TO_DISPLAY = 2;
 
 export function ConfirmWalletsModal(props: PropTypes) {
+  //TODO: move component's logics to a custom hook
   const { open, onClose, onCancel, onCheckBalance, config, loading } = props;
   const { blockchains } = useMetaStore.use.meta();
   const {
     bestRoute,
     setSelectedWallets: selectRouteWallets,
     setRouteWalletConfirmed,
-  } = useBestRouteStore();
-  const {
-    connectedWallets,
     customDestination,
     setCustomDestination,
-    selectWallets,
-  } = useWalletsStore();
+  } = useBestRouteStore();
+  const { connectedWallets, selectWallets } = useWalletsStore();
 
   const [showMoreWalletFor, setShowMoreWalletFor] = useState('');
   const [balanceWarnings, setBalanceWarnings] = useState<string[]>([]);
+  const [error, setError] = useState('');
+  const [routeWarning, setRouteWarning] = useState<
+    ConfirmSwapWarnings['route'] | null
+  >(null);
   const [destination, setDestination] = useState(customDestination);
-  const [showCustomDestination, setShowCustomDestination] = useState(false);
-  const requiredWallets = getRequiredWallets(bestRoute);
-
-  const initSelectedWallets = () => {
-    const requiredChains = getRequiredChains(bestRoute);
-    const selectedWallets: Wallet[] = [];
-    requiredChains.forEach((chain) => {
-      const firstSelectedWalletWithMatchedChain = connectedWallets.find(
-        (wallet) => wallet.chain === chain && wallet.selected
-      );
-
-      if (firstSelectedWalletWithMatchedChain) {
-        selectedWallets.push({
-          walletType: firstSelectedWalletWithMatchedChain.walletType,
-          address: firstSelectedWalletWithMatchedChain.address,
-          chain: firstSelectedWalletWithMatchedChain.chain,
-        });
-      } else {
-        const firstWalletWithMatchedChain = connectedWallets.find(
-          (wallet) => wallet.chain === chain
-        );
-        if (firstWalletWithMatchedChain) {
-          selectedWallets.push({
-            walletType: firstWalletWithMatchedChain.walletType,
-            address: firstWalletWithMatchedChain.address,
-            chain: firstWalletWithMatchedChain.chain,
-          });
-        }
-      }
-    });
-
-    return selectedWallets;
-  };
-
-  const [selectableWallets, setSelectableWallets] = useState<Wallet[]>(
-    initSelectedWallets().map((item) => ({
-      walletType: item.walletType,
-      chain: item.chain,
-      address: item.address,
-    }))
+  const [showCustomDestination, setShowCustomDestination] = useState(
+    !!customDestination
   );
+  const requiredWallets = getRequiredWallets(bestRoute);
+  const customDestinationEnabled =
+    typeof config?.customDestination === 'undefined'
+      ? true
+      : config.customDestination;
 
   const lastStepToBlockchain = blockchains.find(
     (blockchain) =>
@@ -108,10 +79,19 @@ export function ConfirmWalletsModal(props: PropTypes) {
       bestRoute?.result?.swaps[bestRoute?.result?.swaps.length - 1].to
         .blockchain
   );
-  const isWalletRequired = !!bestRoute?.result?.swaps.find(
-    (swap) => swap.from.blockchain === lastStepToBlockchain?.name
-  );
+  const isWalletRequiredFor = (blockchain: string) =>
+    !!bestRoute?.result?.swaps.find(
+      (swap) => swap.from.blockchain === blockchain
+    );
 
+  const [selectableWallets, setSelectableWallets] = useState<ConnectedWallet[]>(
+    connectedWallets.filter((connectedWallet) => {
+      return (
+        connectedWallet.selected &&
+        requiredWallets.includes(connectedWallet.chain)
+      );
+    })
+  );
   const lastStepToBlockchainMeta = blockchains.find(
     (chain) => chain.name === lastStepToBlockchain?.name
   );
@@ -120,41 +100,78 @@ export function ConfirmWalletsModal(props: PropTypes) {
     !!selectableWallets.find(
       (selectableWallet) =>
         selectableWallet.walletType === walletType &&
-        selectableWallet.chain === chain
+        selectableWallet.chain === chain &&
+        selectableWallet.selected &&
+        (isWalletRequiredFor(chain) ||
+          (!isWalletRequiredFor(chain) && !destination))
     );
+
+  const resetCustomDestination = () => {
+    setShowCustomDestination(false);
+    setDestination('');
+    setSelectableWallets((selectableWallets) => {
+      let anyWalletSelected = false;
+      return selectableWallets.map((selectableWallet) => {
+        if (
+          !anyWalletSelected &&
+          selectableWallet.chain === lastStepToBlockchain?.name
+        ) {
+          anyWalletSelected = true;
+          return {
+            ...selectableWallet,
+            selected: true,
+          };
+        }
+        return selectableWallet;
+      });
+    });
+  };
+
   const onChange = (wallet: Wallet) => {
-    const selected = selectableWallets.find(
-      (selectableWallet) =>
-        selectableWallet.address === wallet.address &&
-        selectableWallet.chain === wallet.chain &&
-        selectableWallet.walletType === wallet.walletType
+    if (showMoreWalletFor) {
+      setShowMoreWalletFor('');
+    }
+    const selected = isSelected(wallet.walletType, wallet.chain);
+    if (selected) {
+      return;
+    }
+    const connectedWallet = connectedWallets.find(
+      (connectedWallet) =>
+        connectedWallet.walletType === wallet.walletType &&
+        connectedWallet.chain === wallet.chain
     );
-    if (!selected) {
-      onCancel();
+
+    if (!connectedWallet) {
+      return;
     }
 
-    if (wallet.address) {
-      setSelectableWallets((wallets) =>
-        wallets
-          .filter((selectableWallet) => selectableWallet.chain !== wallet.chain)
-          .concat({
-            walletType: wallet.walletType,
-            chain: wallet.chain,
-            address: wallet.address,
-          })
-      );
+    onCancel();
+    if (wallet.chain === lastStepToBlockchain?.name && showCustomDestination) {
+      setShowCustomDestination(false);
+      setDestination('');
     }
+    setSelectableWallets((selectableWallets) =>
+      selectableWallets
+        .filter((selectableWallet) => selectableWallet.chain !== wallet.chain)
+        .concat({ ...connectedWallet, selected: true })
+    );
   };
 
   const onConfirmBalance = () => {
-    selectWallets(selectableWallets);
-    selectRouteWallets(selectableWallets);
+    const lastSelectedWallets = selectableWallets.filter(
+      (wallet) => wallet.selected
+    );
+    selectWallets(lastSelectedWallets);
+    selectRouteWallets(lastSelectedWallets);
     setCustomDestination(destination);
     setRouteWalletConfirmed(true);
     onClose();
   };
 
   const onConfirmWallets = async () => {
+    setBalanceWarnings([]);
+    setError('');
+    setRouteWarning(null);
     const selectedWallets = connectedWallets.filter((connectedWallet) =>
       selectableWallets.find(
         (selectableWallet) =>
@@ -167,15 +184,42 @@ export function ConfirmWalletsModal(props: PropTypes) {
       customDestination: destination,
     });
 
-    const warnings = result.warnings?.balance?.messages;
-    setBalanceWarnings(warnings ?? []);
+    const warnings = result.warnings;
+    if (warnings?.balance?.messages) {
+      setBalanceWarnings(warnings.balance.messages);
+    }
+    if (warnings?.route) {
+      setRouteWarning(warnings.route);
+    }
+    if (result.error) {
+      setError(getConfirmSwapErrorMessage(result.error));
+    }
 
-    if (!warnings?.length || 0 > 0) {
+    if (!result.error && (!warnings?.balance?.messages.length || 0 > 0)) {
       onConfirmBalance();
     } else {
-      setBalanceWarnings(warnings ?? []);
+      setBalanceWarnings(warnings?.balance?.messages ?? []);
     }
   };
+
+  useEffect(() => {
+    setSelectableWallets((selectableWallets) =>
+      selectableWallets.concat(
+        connectedWallets.filter((connectedWallet) => {
+          const anyWalletSelected = !!selectableWallets.find(
+            (selectableWallet) =>
+              selectableWallet.chain === connectedWallet.chain
+          );
+
+          return (
+            !anyWalletSelected &&
+            connectedWallet.selected &&
+            requiredWallets.includes(connectedWallet.chain)
+          );
+        })
+      )
+    );
+  }, [connectedWallets.length]);
 
   const modalContainer = document.querySelector('#swap-box') as HTMLDivElement;
   return (
@@ -209,7 +253,6 @@ export function ConfirmWalletsModal(props: PropTypes) {
           type="error"
           description={<BalanceErrors messages={balanceWarnings ?? []} />}>
           <Button
-            style={{ marginBlock: '10px', marginTop: '20px' }}
             variant="outlined"
             size="large"
             type="primary"
@@ -218,6 +261,7 @@ export function ConfirmWalletsModal(props: PropTypes) {
             Proceed anyway
           </Button>
         </MessageBox>
+        <Divider size={12} />
         <BottomLogo />
       </Modal>
       {showMoreWalletFor && (
@@ -237,6 +281,22 @@ export function ConfirmWalletsModal(props: PropTypes) {
       )}
       {!showMoreWalletFor && (
         <>
+          {error && (
+            <>
+              <Alert variant="alarm" type="error" title={error} />
+              <Divider size={12} />
+            </>
+          )}
+          {routeWarning && (
+            <>
+              <Alert
+                variant="alarm"
+                type="warning"
+                title={getRouteWarningMessage(routeWarning)}
+              />
+              <Divider size={12} />
+            </>
+          )}
           {requiredWallets.map((requiredWallet, index) => {
             const blockchain = blockchains.find(
               (blockchain) => blockchain.name === requiredWallet
@@ -251,7 +311,7 @@ export function ConfirmWalletsModal(props: PropTypes) {
                     size="xmedium">{`Your ${blockchain?.displayName} wallets`}</Typography>
                   <Typography
                     variant="label"
-                    color="$neutral500"
+                    color="$neutral900"
                     size="medium">{`You need to connect a ${blockchain?.displayName} wallet.`}</Typography>
                 </Title>
                 <Divider size={24} />
@@ -272,7 +332,7 @@ export function ConfirmWalletsModal(props: PropTypes) {
                 </ListContainer>
                 {index !== requiredWallets.length - 1 && <Divider size={32} />}
                 {index === requiredWallets.length - 1 &&
-                  config?.customDestination && (
+                  customDestinationEnabled && (
                     <>
                       <CustomDestination>
                         <CollapsibleRoot
@@ -280,28 +340,13 @@ export function ConfirmWalletsModal(props: PropTypes) {
                           open={showCustomDestination}
                           onOpenChange={(checked) => {
                             if (!checked) {
-                              setDestination('');
-                              setSelectableWallets((selectableWallets) => {
-                                let found = false;
-                                return selectableWallets.map(
-                                  (selectableWallet) => {
-                                    if (
-                                      !found &&
-                                      selectableWallet.chain ===
-                                        lastStepToBlockchain?.name
-                                    ) {
-                                      found = true;
-                                      return {
-                                        ...selectableWallet,
-                                        selected: true,
-                                      };
-                                    }
-                                    return selectableWallet;
-                                  }
-                                );
-                              });
+                              resetCustomDestination();
                             } else {
-                              if (!isWalletRequired) {
+                              if (
+                                !isWalletRequiredFor(
+                                  lastStepToBlockchain?.name ?? ''
+                                )
+                              ) {
                                 setSelectableWallets((selectableWallets) =>
                                   selectableWallets.map((selectableWallet) => {
                                     if (
@@ -347,6 +392,7 @@ export function ConfirmWalletsModal(props: PropTypes) {
                             <>
                               <Divider size={4} />
                               <StyledTextField
+                                autoFocus
                                 placeholder="Your destination address"
                                 value={destination}
                                 onChange={(e) => {
@@ -367,7 +413,7 @@ export function ConfirmWalletsModal(props: PropTypes) {
                               <Alert
                                 variant="alarm"
                                 type="error"
-                                title={`Address ${destination} doesn't match the blockchain address`}
+                                title={`Address '${destination}' doesn't match the blockchain address pattern.`}
                               />
                             </div>
                           )}

@@ -38,14 +38,11 @@ export enum ConfirmSwapErrorTypes {
 
 export type ConfirmSwapError =
   | {
-      type: ConfirmSwapErrorTypes.REQUEST_FAILED;
-      status?: number;
+      type: ConfirmSwapErrorTypes.NO_ROUTE;
+      diagnosisMessage?: string;
     }
   | {
-      type: Exclude<
-        ConfirmSwapErrorTypes,
-        ConfirmSwapErrorTypes.REQUEST_FAILED
-      >;
+      type: Exclude<ConfirmSwapErrorTypes, ConfirmSwapErrorTypes.NO_ROUTE>;
     };
 
 export enum RouteWarningType {

@@ -9,7 +9,7 @@ export function formatBestRoute(
 ): Step[] | undefined {
   return bestRoute.result?.swaps.map((swap) => {
     return {
-      swapper: { displayName: swap.swapperType, image: swap.swapperLogo },
+      swapper: { displayName: swap.swapperId, image: swap.swapperLogo },
       from: {
         token: { displayName: swap.from.symbol, image: swap.from.logo },
         chain: {

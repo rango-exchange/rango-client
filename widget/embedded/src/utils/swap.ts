@@ -1,13 +1,7 @@
 /* eslint-disable @typescript-eslint/no-magic-numbers */
 import type { LoadingStatus } from '../store/meta';
 import type { ConnectedWallet } from '../store/wallets';
-import type {
-  ConfirmSwapError,
-  ConvertedToken,
-  RouteWarning,
-  SwapButtonState,
-  Wallet,
-} from '../types';
+import type { ConvertedToken, SwapButtonState, Wallet } from '../types';
 import type {
   PendingSwap,
   PendingSwapStep,
@@ -30,7 +24,7 @@ import { errorMessages } from '../constants/errors';
 import { swapButtonTitles } from '../constants/messages';
 import { ZERO } from '../constants/numbers';
 import { useMetaStore } from '../store/meta';
-import { ButtonState, ConfirmSwapErrorTypes, RouteWarningType } from '../types';
+import { ButtonState } from '../types';
 
 import { removeDuplicateFrom } from './common';
 import { numberToString } from './numbers';
@@ -698,41 +692,6 @@ export function confirmSwapDisabled(
     (!!showCustomDestination &&
       !!customDestination &&
       lastStepToBlockchain &&
-      !isValidAddress(lastStepToBlockchain, customDestination) &&
-      !requiredWallets(bestRoute)
-        .filter((chain) => chain !== lastStepToBlockchain.name)
-        .every((chain) =>
-          selectedWallets.map((wallet) => wallet.chain).includes(chain)
-        ))
+      !isValidAddress(lastStepToBlockchain, customDestination))
   );
-}
-
-export function getRouteWarningMessage(warning: RouteWarning) {
-  switch (warning.type) {
-    case RouteWarningType.ROUTE_UPDATED:
-      return 'Route has been updated.';
-    case RouteWarningType.ROUTE_AND_OUTPUT_AMOUNT_UPDATED:
-      return `Output amount changed to ${warning.newOutputAmount} (${warning.percentageChange}% change).`;
-    case RouteWarningType.ROUTE_SWAPPERS_UPDATED:
-      return 'Route swappers has been updated.';
-    case RouteWarningType.ROUTE_COINS_UPDATED:
-      return 'Route internal coins has been updated.';
-    default:
-      return '';
-  }
-}
-
-export function getConfirmSwapErrorMessage(error: ConfirmSwapError) {
-  switch (error.type) {
-    case ConfirmSwapErrorTypes.NO_ROUTE:
-      return 'No routes found. Please try again later.';
-    case ConfirmSwapErrorTypes.REQUEST_FAILED:
-      return `Failed to confirm swap ${
-        error.status ? `'status': ${error.status})` : ''
-      }, please try again.`;
-    case ConfirmSwapErrorTypes.ROUTE_UPDATED_WITH_HIGH_VALUE_LOSS:
-      return 'Route updated and price impact is too high, try again later!';
-    default:
-      return '';
-  }
 }
