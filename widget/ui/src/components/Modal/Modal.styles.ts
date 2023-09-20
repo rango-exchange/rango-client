@@ -54,7 +54,6 @@ export const ModalHeader = styled('div', {
   justifyContent: 'space-between',
   alignItems: 'center',
   position: 'relative',
-  paddingBottom: '$16',
   variants: {
     noTitle: {
       true: {

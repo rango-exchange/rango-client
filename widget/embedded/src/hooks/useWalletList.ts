@@ -1,12 +1,20 @@
 import type { WidgetConfig } from '../types';
+import type { BlockchainMeta } from 'rango-sdk';
 
 import { WalletState } from '@rango-dev/ui';
 import { useWallets } from '@rango-dev/wallets-react';
-import { type WalletType, WalletTypes } from '@rango-dev/wallets-shared';
+import {
+  KEPLR_COMPATIBLE_WALLETS,
+  type WalletType,
+  WalletTypes,
+} from '@rango-dev/wallets-shared';
 import { useEffect, useState } from 'react';
 
+import { useMetaStore } from '../store/meta';
+import { useWalletsStore } from '../store/wallets';
 import { configWalletsToWalletName } from '../utils/providers';
 import {
+  isExperimentalChain,
   mapWalletTypesToWalletInfo,
   sortWalletsBasedOnConnectionState,
 } from '../utils/wallets';
@@ -14,8 +22,6 @@ import {
 const ALL_SUPPORTED_WALLETS = Object.values(WalletTypes);
 
 interface Params {
-  supportedWallets: WidgetConfig['wallets'];
-  multiWallets: boolean;
   config?: WidgetConfig;
   chain?: string;
   onBeforeConnect?: (walletType: string) => void;
@@ -30,6 +36,10 @@ interface Params {
 export function useWalletList(params: Params) {
   const { config, chain, onBeforeConnect, onConnect } = params;
   const { state, disconnect, getWalletInfo, connect } = useWallets();
+  const { connectedWallets } = useWalletsStore();
+  const { blockchains } = useMetaStore().meta;
+  const multiWallets =
+    typeof config?.multiWallets === 'undefined' ? true : config.multiWallets;
 
   /** It can be what has been set by widget config or as a fallback we use all the supported wallets by our library */
   const listAvailableWalletTypes =
@@ -47,6 +57,13 @@ export function useWalletList(params: Params) {
   const sortedWallets = sortWalletsBasedOnConnectionState(wallets);
   const [error, setError] = useState('');
 
+  const isExperimentalChainNotAdded = (walletType: string) =>
+    !connectedWallets.find(
+      (connectedWallet) =>
+        connectedWallet.walletType === walletType &&
+        connectedWallet.chain === chain
+    );
+
   const handleClick = async (type: WalletType) => {
     const wallet = state(type);
     try {
@@ -59,7 +76,7 @@ export function useWalletList(params: Params) {
         const atLeastOneWalletIsConnected = !!wallets.find(
           (w) => w.state === WalletState.CONNECTED
         );
-        if (!config?.multiWallets && atLeastOneWalletIsConnected) {
+        if (!multiWallets && atLeastOneWalletIsConnected) {
           return;
         }
         onBeforeConnect?.(type);
@@ -86,8 +103,22 @@ export function useWalletList(params: Params) {
     };
   }, []);
 
+  const shouldExcludeWallet = (
+    walletType: string,
+    chain: string,
+    blockchains: BlockchainMeta[]
+  ) => {
+    return (
+      isExperimentalChain(blockchains, chain) &&
+      isExperimentalChainNotAdded(walletType) &&
+      !KEPLR_COMPATIBLE_WALLETS.includes(walletType)
+    );
+  };
+
   return {
-    list: sortedWallets,
+    list: sortedWallets.filter(
+      (wallet) => !shouldExcludeWallet(wallet.type, chain ?? '', blockchains)
+    ),
     error,
     handleClick,
   };

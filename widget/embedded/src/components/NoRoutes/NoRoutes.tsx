@@ -18,17 +18,17 @@ import { makeInfo } from './NoRoutes.helper';
 import { Container, Footer, PrefixIcon } from './NoRoutes.styles';
 
 export function NoRoutes(props: PropTypes) {
-  const { data, fetch, error } = props;
+  const { diagnosisMessage, fetch, error } = props;
   const disabledLiquiditySources =
     useSettingsStore.use.disabledLiquiditySources();
   const loadingMetaStatus = useMetaStore.use.loadingStatus();
   const toggleAllLiquiditySources =
     useSettingsStore.use.toggleAllLiquiditySources();
 
-  const hasError = !!error || loadingMetaStatus === 'failed';
+  const hasError = error || loadingMetaStatus === 'failed';
 
   const info = makeInfo(
-    data,
+    diagnosisMessage ?? null,
     disabledLiquiditySources,
     hasError,
     toggleAllLiquiditySources,

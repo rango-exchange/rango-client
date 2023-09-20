@@ -61,7 +61,7 @@ export function StepDetails(props: StepDetailsProps) {
               color="$neutral900"
               variant="body">{`${step.to.price.value} ${step.to.token.displayName}`}</Typography>
           </div>
-          <Alerts pb={!hasSeparator && type === 'route-details'}>
+          <Alerts pb={hasSeparator && type === 'route-details'}>
             {step.alerts}
           </Alerts>
         </div>

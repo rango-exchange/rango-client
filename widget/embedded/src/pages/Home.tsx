@@ -100,7 +100,7 @@ export function Home() {
     outputAmount,
     outputUsdValue,
     bestRoute,
-    setRouteWalletConfirmed,
+    resetRouteWallets,
   } = useBestRouteStore();
 
   const {
@@ -137,7 +137,6 @@ export function Home() {
     inputAmount,
     outputUsdValue
   );
-
   const swapButtonState = getSwapButtonState(
     loadingMetaStatus,
     connectedWallets,
@@ -183,7 +182,7 @@ export function Home() {
 
   useEffect(() => {
     setCurrentPage(navigationRoutes.home);
-    setRouteWalletConfirmed(false);
+    resetRouteWallets();
     return setCurrentPage.bind(null, '');
   }, []);
 
@@ -388,9 +387,9 @@ export function Home() {
           <>
             <Divider size={20} />
             <NoRoutes
-              data={bestRouteData}
+              diagnosisMessage={bestRouteData?.diagnosisMessages?.[0]}
               fetch={refetchBestRoute}
-              error={bestRouteError}
+              error={!!bestRouteError}
             />
           </>
         ) : null}

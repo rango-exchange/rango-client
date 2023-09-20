@@ -5,7 +5,6 @@ import React, { useEffect } from 'react';
 import { createPortal } from 'react-dom';
 
 import { CloseIcon } from '../../icons';
-import { Divider } from '../Divider';
 import { IconButton } from '../IconButton/IconButton';
 import { Typography } from '../Typography';
 
@@ -42,6 +41,7 @@ export function Modal(props: PropsWithChildren<PropTypes>) {
   return (
     <>
       {open &&
+        container &&
         createPortal(
           <BackDrop onClick={handleBackDropClick} anchor={anchor}>
             <ModalContainer css={containerStyle} anchor={anchor}>
@@ -56,12 +56,11 @@ export function Modal(props: PropsWithChildren<PropTypes>) {
                   {suffix}
                   {dismissible && (
                     <IconButton onClick={onClose}>
-                      <CloseIcon color="gray" />
+                      <CloseIcon color="gray" size={14} />
                     </IconButton>
                   )}
                 </Flex>
               </ModalHeader>
-              <Divider direction="vertical" size={16} />
               {children}
             </ModalContainer>
           </BackDrop>,

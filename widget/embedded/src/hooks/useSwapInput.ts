@@ -22,7 +22,8 @@ type UseSwapInput = {
  * we use this hook in home page
  */
 export function useSwapInput(): UseSwapInput {
-  const { fetch: fetchBestRoute, cancelFetch, loading } = useFetchBestRoute();
+  const { fetch: fetchBestRoute, cancelFetch } = useFetchBestRoute();
+  const [loading, setLoading] = useState(false);
   const {
     fromToken,
     toToken,
@@ -48,6 +49,9 @@ export function useSwapInput(): UseSwapInput {
     !isPositiveNumber(inputAmount);
 
   const fetch: UseSwapInput['fetch'] = () => {
+    if (!loading) {
+      setLoading(true);
+    }
     if (!shouldSkipRequest) {
       const requestBody = createBestRouteRequestBody({
         fromToken,
@@ -60,8 +64,12 @@ export function useSwapInput(): UseSwapInput {
         affiliateWallets,
       });
       fetchBestRoute(requestBody)
-        .then((res) => setRoute(res))
+        .then((res) => {
+          setLoading(false);
+          setRoute(res);
+        })
         .catch((error) => {
+          setLoading(false);
           resetRoute();
           if (error?.code !== 'ERR_CANCELED') {
             setError(error.message);
@@ -84,6 +92,7 @@ export function useSwapInput(): UseSwapInput {
       return;
     }
     resetRoute();
+    setLoading(true);
     debouncedFetch();
     return cancelFetch;
   }, [inputAmount]);

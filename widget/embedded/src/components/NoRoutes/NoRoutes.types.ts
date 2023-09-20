@@ -1,9 +1,7 @@
-import type { BestRouteResponse } from 'rango-sdk';
-
 export interface PropTypes {
-  data: BestRouteResponse | null;
   fetch: () => void;
-  error: string;
+  error: boolean;
+  diagnosisMessage?: string;
 }
 
 type AlertAction = {

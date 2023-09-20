@@ -1,4 +1,8 @@
+import type { ConfirmSwapError } from '../types';
+
 import { i18n } from '@lingui/core';
+
+import { ConfirmSwapErrorTypes } from '../types';
 
 export const errorMessages = {
   genericServerError: i18n.t('Failed Network, Please retry your swap.'),
@@ -25,6 +29,11 @@ export const errorMessages = {
     ),
     confirmMessage: i18n.t('Confirm High price impact'),
   },
+  routeUpdatedWithHighValueLoss: {
+    title: i18n.t(
+      'Route updated and price impact is too high, try again later!'
+    ),
+  },
   unknownPriceError: {
     impacTitle: i18n.t('USD Price Unknown'),
     title: i18n.t('USD Price Unknown, Cannot calculate Price Impact.'),
@@ -34,3 +43,16 @@ export const errorMessages = {
     confirmMessage: i18n.t('Confirm USD Price Unknown'),
   },
 };
+
+export function getConfirmSwapErrorMessage(error: ConfirmSwapError) {
+  switch (error.type) {
+    case ConfirmSwapErrorTypes.NO_ROUTE:
+      return error.diagnosisMessage ?? errorMessages.noRoutesError.title;
+    case ConfirmSwapErrorTypes.REQUEST_FAILED:
+      return errorMessages.genericServerError;
+    case ConfirmSwapErrorTypes.ROUTE_UPDATED_WITH_HIGH_VALUE_LOSS:
+      return errorMessages.routeUpdatedWithHighValueLoss.title;
+    default:
+      return '';
+  }
+}
