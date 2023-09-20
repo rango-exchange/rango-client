@@ -25,27 +25,26 @@ export function SelectableCategoryList(props: PropTypes) {
   ) as BlockchainCategories[];
   return (
     <Container>
-      {loadingStatus === 'loading'
-        ? Array.from(Array(5), (_, index) => (
-            <Skeleton
-              key={index}
-              variant="rounded"
-              height={70}
-              width={index === 0 ? 45 : 65}
-            />
-          ))
-        : categories.map((blockchainCategory) => (
-            <BlockchainsChip
-              selected={category === blockchainCategory}
-              key={blockchainCategory}
-              onClick={() => setCategory(blockchainCategory)}>
-              {blockchainCategory !== BlockchainCategories.ALL && (
-                <>
-                  <ImageContent>
-                    {generateBlockchainsLogo(
-                      blockchains,
-                      blockchainCategory
-                    ).map((blockchain, index) =>
+      {loadingStatus === 'loading' &&
+        Array.from(Array(5), (_, index) => (
+          <Skeleton
+            key={index}
+            variant="rounded"
+            height={70}
+            width={index === 0 ? 45 : 65}
+          />
+        ))}
+      {loadingStatus === 'success' &&
+        categories.map((blockchainCategory) => (
+          <BlockchainsChip
+            selected={category === blockchainCategory}
+            key={blockchainCategory}
+            onClick={() => setCategory(blockchainCategory)}>
+            {blockchainCategory !== BlockchainCategories.ALL && (
+              <>
+                <ImageContent>
+                  {generateBlockchainsLogo(blockchains, blockchainCategory).map(
+                    (blockchain, index) =>
                       index === 0 ? (
                         <FirstImage
                           key={`image-${blockchain.name}-${blockchain.chainId}`}
@@ -58,23 +57,23 @@ export function SelectableCategoryList(props: PropTypes) {
                           size={15}
                         />
                       )
-                    )}
-                  </ImageContent>
-                  <Divider size={12} />
-                </>
-              )}
-              <Typography
-                size="xsmall"
-                variant="body"
-                color={
-                  blockchainCategory === BlockchainCategories.ALL
-                    ? 'secondary500'
-                    : undefined
-                }>
-                {i18n.t(BlockchainCategories[blockchainCategory])}
-              </Typography>
-            </BlockchainsChip>
-          ))}
+                  )}
+                </ImageContent>
+                <Divider size={12} />
+              </>
+            )}
+            <Typography
+              size="xsmall"
+              variant="body"
+              color={
+                blockchainCategory === BlockchainCategories.ALL
+                  ? 'secondary500'
+                  : undefined
+              }>
+              {i18n.t(BlockchainCategories[blockchainCategory])}
+            </Typography>
+          </BlockchainsChip>
+        ))}
     </Container>
   );
 }

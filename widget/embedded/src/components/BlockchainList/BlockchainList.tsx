@@ -29,9 +29,7 @@ export function BlockchainList(props: PropTypes) {
   }, [list, searchedFor, blockchainCategory]);
 
   const renderList = () => {
-    if (loadingStatus === 'loading') {
-      return <LoadingBlockchainList />;
-    } else if (!blockchains.length && !!searchedFor) {
+    if (!blockchains.length && !!searchedFor) {
       return (
         <>
           <Divider size={32} />
@@ -68,7 +66,11 @@ export function BlockchainList(props: PropTypes) {
         {i18n.t('Select Blockchain')}
       </Typography>
       <Divider size={4} />
-      <Content>{renderList()}</Content>
+
+      <Content>
+        {loadingStatus === 'loading' && <LoadingBlockchainList />}
+        {loadingStatus === 'success' && renderList()}
+      </Content>
     </div>
   );
 }

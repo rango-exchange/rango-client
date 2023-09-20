@@ -2,7 +2,6 @@
 import type {
   PropTypes,
   RenderDescProps,
-  // RenderDescProps,
   TokenWithBalance,
 } from './TokenList.types';
 import type { CommonProps } from 'react-window';
@@ -118,9 +117,7 @@ export function TokenList(props: PropTypes) {
   }, [list]);
 
   const renderList = () => {
-    if (loadingStatus === 'loading') {
-      return <LoadingTokenList size={PAGE_SIZE} />;
-    } else if (!tokens.length && !!searchedFor) {
+    if (!tokens.length && !!searchedFor) {
       return (
         <>
           <Divider size={32} />
@@ -265,7 +262,8 @@ export function TokenList(props: PropTypes) {
         {i18n.t('Select Token')}
       </Typography>
       <Divider size={4} />
-      <List>{renderList()}</List>
+      {loadingStatus === 'loading' && <LoadingTokenList size={PAGE_SIZE} />}
+      {loadingStatus === 'success' && <List>{renderList()}</List>}
     </div>
   );
 }
