@@ -1,7 +1,7 @@
 import type { PropTypes } from './Modal.types';
 import type { PropsWithChildren } from 'react';
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 
 import { CloseIcon } from '../../icons';
@@ -10,6 +10,8 @@ import { Typography } from '../Typography';
 
 import { BackDrop, Flex, ModalContainer, ModalHeader } from './Modal.styles';
 
+const CLOSED_DELAY = 600;
+const OPEN_DELAY = 10;
 export function Modal(props: PropsWithChildren<PropTypes>) {
   const {
     title,
@@ -23,6 +25,8 @@ export function Modal(props: PropsWithChildren<PropTypes>) {
     children,
     suffix,
   } = props;
+  const [active, setActive] = useState(false);
+  const [isMount, setIsMount] = useState(false);
 
   const handleBackDropClick = (event: React.MouseEvent<HTMLDivElement>) => {
     if (event.target === event.currentTarget && dismissible) {
@@ -32,19 +36,34 @@ export function Modal(props: PropsWithChildren<PropTypes>) {
   useEffect(() => {
     if (container) {
       if (open) {
+        setIsMount(true);
         container.style.overflow = 'hidden';
+        setTimeout(() => {
+          setActive(true);
+        }, OPEN_DELAY);
       } else {
-        container.style.overflow = 'unset';
+        setActive(false);
+        setTimeout(() => {
+          setIsMount(false);
+          container.style.overflow = 'unset';
+        }, CLOSED_DELAY);
       }
     }
   }, [open, container]);
+
   return (
     <>
-      {open &&
+      {isMount &&
         container &&
         createPortal(
-          <BackDrop onClick={handleBackDropClick} anchor={anchor}>
-            <ModalContainer css={containerStyle} anchor={anchor}>
+          <BackDrop
+            active={active}
+            onClick={handleBackDropClick}
+            anchor={anchor}>
+            <ModalContainer
+              active={active}
+              css={containerStyle}
+              anchor={anchor}>
               <ModalHeader noTitle={!title}>
                 {prefix}
                 {title && (

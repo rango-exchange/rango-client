@@ -101,15 +101,13 @@ export function WalletsPage({ config }: PropTypes) {
                       void handleClick(type);
                     }}
                   />
-                  {openModal === wallet.type && (
-                    <WalletModal
-                      open={openModal === wallet.type}
-                      onClose={() => setOpenModal('')}
-                      image={wallet.image}
-                      state={wallet.state}
-                      error={!!error}
-                    />
-                  )}
+                  <WalletModal
+                    open={openModal === wallet.type}
+                    onClose={() => setOpenModal('')}
+                    image={wallet.image}
+                    state={wallet.state}
+                    error={!!error}
+                  />
                 </Fragment>
               );
             })}
