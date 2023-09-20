@@ -19,8 +19,6 @@ const NUMBER_OF_LOADING = 12;
 export function BlockchainsSection(props: PropTypes) {
   const { blockchains, type, blockchain, onChange, onMoreClick } = props;
   const sortedBlockchains = sortBlockchains(blockchains);
-  console.log({ blockchain });
-
   const [selectFromMoreBlockchain, setSelectFromMoreBlockchain] =
     useState<BlockchainMeta | null>(null);
   const loadingStatus = useMetaStore.use.loadingStatus();
@@ -48,11 +46,11 @@ export function BlockchainsSection(props: PropTypes) {
       </Typography>
       <Divider size={12} />
       <Container>
-        {loadingStatus === 'loading' ? (
+        {loadingStatus === 'loading' &&
           Array.from(Array(NUMBER_OF_LOADING), (e) => (
             <Skeleton key={e} variant="rounded" height={50} />
-          ))
-        ) : (
+          ))}
+        {loadingStatus === 'success' && (
           <>
             <BlockchainsChip
               selected={!blockchain}

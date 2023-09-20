@@ -4,6 +4,7 @@ import {
   Divider,
   List,
   ListItemButton,
+  Skeleton,
   Switch,
   Typography,
 } from '@rango-dev/ui';
@@ -52,6 +53,25 @@ export function SettingsPage({ supportedSwappers, singleTheme }: PropTypes) {
     (uniqueItem) => uniqueItem.selected
   ).length;
 
+  const handleEndItem = (totalSelected: number, total: number) => {
+    switch (loadingMetaStatus) {
+      case 'loading':
+        return <Skeleton variant="text" size="medium" width={50} />;
+      case 'failed':
+        return (
+          <Typography variant="body" size="medium" color="$error500">
+            Loading failed
+          </Typography>
+        );
+      default:
+        return (
+          <Typography variant="body" size="medium">
+            {`${totalSelected} / ${total}`}
+          </Typography>
+        );
+    }
+  };
+
   const bridgeItem = {
     id: 'bridge-item',
     title: (
@@ -61,16 +81,7 @@ export function SettingsPage({ supportedSwappers, singleTheme }: PropTypes) {
     ),
     end: (
       <>
-        {loadingMetaStatus === 'success' && (
-          <Typography variant="body" size="medium">
-            {`${totalSelectedBridgeSources} / ${totalBridgeSources}`}
-          </Typography>
-        )}
-        {loadingMetaStatus === 'failed' && (
-          <Typography variant="body" size="medium" color="$error500">
-            Loading failed
-          </Typography>
-        )}
+        {handleEndItem(totalSelectedBridgeSources, totalBridgeSources)}
         <Divider direction="horizontal" size={8} />
         <ChevronRightIcon color="black" />
       </>
@@ -87,16 +98,7 @@ export function SettingsPage({ supportedSwappers, singleTheme }: PropTypes) {
     ),
     end: (
       <>
-        {loadingMetaStatus === 'success' && (
-          <Typography variant="body" size="medium">
-            {`${totalSelectedExchangeSources} / ${totalExchangeSources}`}
-          </Typography>
-        )}
-        {loadingMetaStatus === 'failed' && (
-          <Typography variant="body" size="medium" color="$error500">
-            Loading failed
-          </Typography>
-        )}
+        {handleEndItem(totalSelectedExchangeSources, totalExchangeSources)}
         <Divider direction="horizontal" size={8} />
         <ChevronRightIcon color="gray" />
       </>

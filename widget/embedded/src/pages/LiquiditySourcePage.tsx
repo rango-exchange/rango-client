@@ -15,6 +15,7 @@ import {
 import React, { useState } from 'react';
 
 import { Layout } from '../components/Layout';
+import { LoadingLiquiditySourceList } from '../components/LoadingLiquiditySourceList';
 import { SearchInput } from '../components/SearchInput';
 import {
   LiquiditySourceDivider,
@@ -25,6 +26,7 @@ import {
 } from '../components/SettingsContainer';
 import { navigationRoutes } from '../constants/navigationRoutes';
 import { useNavigateBack } from '../hooks/useNavigateBack';
+import { useMetaStore } from '../store/meta';
 import { useSettingsStore } from '../store/settings';
 import { containsText } from '../utils/numbers';
 import { getUniqueSwappersGroups } from '../utils/settings';
@@ -41,6 +43,7 @@ export function LiquiditySourcePage({
   const [searchedFor, setSearchedFor] = useState<string>('');
   const toggleLiquiditySource = useSettingsStore.use.toggleLiquiditySource();
   const { navigateBackFrom } = useNavigateBack();
+  const loadingMetaStatus = useMetaStore.use.loadingStatus();
 
   const supportedUniqueSwappersGroups: Array<UniqueSwappersGroupType> =
     getUniqueSwappersGroups(supportedSwappers);
@@ -124,6 +127,7 @@ export function LiquiditySourcePage({
           placeholder={i18n.t('Swap {sourceType}', { sourceType })}
           onChange={searchHandler}
         />
+        {loadingMetaStatus === 'loading' && <LoadingLiquiditySourceList />}
 
         {!filteredList.length && !!searchedFor ? (
           <NotFoundContainer>
@@ -133,20 +137,22 @@ export function LiquiditySourcePage({
             />
           </NotFoundContainer>
         ) : (
-          <LiquiditySourceList>
-            {filteredList.map((sourceItem) => {
-              return (
-                <React.Fragment key={sourceItem.id}>
-                  <ListItemButton
-                    style={{ height: '61px' }}
-                    {...sourceItem}
-                    selected={false}
-                  />
-                  <LiquiditySourceDivider />
-                </React.Fragment>
-              );
-            })}
-          </LiquiditySourceList>
+          loadingMetaStatus === 'success' && (
+            <LiquiditySourceList>
+              {filteredList.map((sourceItem) => {
+                return (
+                  <React.Fragment key={sourceItem.id}>
+                    <ListItemButton
+                      style={{ height: '61px' }}
+                      {...sourceItem}
+                      selected={false}
+                    />
+                    <LiquiditySourceDivider />
+                  </React.Fragment>
+                );
+              })}
+            </LiquiditySourceList>
+          )
         )}
       </SettingsContainer>
     </Layout>
