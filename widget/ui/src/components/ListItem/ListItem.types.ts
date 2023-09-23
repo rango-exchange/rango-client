@@ -3,7 +3,9 @@ export type ListItemProps = {
   description?: string | React.ReactElement;
   start?: React.ReactNode;
   end?: React.ReactNode;
-  as?: 'div' | 'li';
+  as?: 'div' | 'li' | 'button';
   onClick?: () => void;
   hasDivider?: boolean;
+  style?: React.CSSProperties;
+  selected?: boolean;
 };

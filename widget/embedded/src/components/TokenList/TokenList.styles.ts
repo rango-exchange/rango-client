@@ -10,12 +10,18 @@ export const Title = styled('div', {
     overflow: 'hidden',
   },
 });
+
 export const List = styled('ul', {
   minHeight: 280,
   padding: 0,
   margin: 0,
   listStyle: 'none',
-  '& li': {
+  overflowY: 'auto',
+});
+
+export const Content = styled('div', {
+  minHeight: 280,
+  '& button': {
     alignItems: 'none',
     '.description': {
       position: 'relative',

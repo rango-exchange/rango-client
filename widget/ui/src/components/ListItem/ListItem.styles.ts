@@ -43,5 +43,9 @@ export const BaseListItem = styled('li', {
         borderBottomLeftRadius: 0,
       },
     },
+    selected: {
+      true: { outline: '1px solid $secondary500' },
+      false: { outline: 0 },
+    },
   },
 });

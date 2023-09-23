@@ -1,9 +1,14 @@
 import { styled } from '@rango-dev/ui';
 
 export const List = styled('ul', {
+  height: 355,
+  overflowY: 'auto',
   padding: 0,
   margin: 0,
   listStyle: 'none',
+});
+
+export const Content = styled('div', {
   height: 355,
   overflowY: 'auto',
   paddingRight: '$5',
@@ -11,8 +16,4 @@ export const List = styled('ul', {
     borderRadius: '$xm',
     overflow: 'hidden',
   },
-});
-
-export const Content = styled('div', {
-  minHeight: 325,
 });

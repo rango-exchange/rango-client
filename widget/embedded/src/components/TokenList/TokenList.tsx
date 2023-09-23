@@ -28,9 +28,9 @@ import { generateRangeColors } from '../../utils/common';
 import { LoadingTokenList } from './LoadingTokenList';
 import {
   BalanceContainer,
+  Content,
   End,
   ImageSection,
-  List,
   Pin,
   Tag,
   TagTitle,
@@ -263,7 +263,7 @@ export function TokenList(props: PropTypes) {
       </Typography>
       <Divider size={4} />
       {loadingStatus === 'loading' && <LoadingTokenList size={PAGE_SIZE} />}
-      {loadingStatus === 'success' && <List>{renderList()}</List>}
+      {loadingStatus === 'success' && <Content>{renderList()}</Content>}
     </div>
   );
 }

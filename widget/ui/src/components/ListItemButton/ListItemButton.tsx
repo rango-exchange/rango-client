@@ -2,24 +2,16 @@ import type { ListItemButtonProps } from './ListItemButton.types';
 
 import React from 'react';
 
-import { ListItem } from '../ListItem/ListItem';
+import { ListItem } from '../ListItem';
 
 import { BaseListItemButton } from './ListItemButton.styles';
 
 function ListItemButton(props: ListItemButtonProps) {
-  const { onClick, id, style, hasDivider, selected, ...restProps } = props;
-  const onClickWithKey = () => {
-    if (onClick) {
-      onClick(id);
-    }
-  };
+  const { onClick, id, ...restProps } = props;
+
   return (
-    <BaseListItemButton
-      hasDivider={hasDivider}
-      selected={selected}
-      onClick={onClickWithKey}
-      style={style}>
-      <ListItem {...restProps} />
+    <BaseListItemButton>
+      <ListItem onClick={() => onClick(id)} as="button" {...restProps} />
     </BaseListItemButton>
   );
 }
