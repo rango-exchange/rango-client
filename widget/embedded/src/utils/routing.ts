@@ -149,14 +149,14 @@ export function isRouteParametersChanged(params: BestRouteEqualityParams) {
   return false;
 }
 
-export function getFormatedBestRoute(
+export function getFormattedBestRoute(
   bestRoute: BestRouteResponse | null
 ): BestRouteResponse | null {
   if (!bestRoute) {
     return null;
   }
 
-  const formatedSwaps = (bestRoute.result?.swaps || []).map((swap) => ({
+  const formattedSwaps = (bestRoute.result?.swaps || []).map((swap) => ({
     ...swap,
     fromAmount: numberToString(swap.fromAmount, 6, 6),
     toAmount: numberToString(swap.toAmount, 6, 6),
@@ -165,13 +165,13 @@ export function getFormatedBestRoute(
   return {
     ...bestRoute,
     ...(bestRoute.result && {
-      result: { ...bestRoute.result, swaps: formatedSwaps },
+      result: { ...bestRoute.result, swaps: formattedSwaps },
     }),
   };
 }
 
-export function getFormatedPendingSwap(pendingSwap: PendingSwap): PendingSwap {
-  const formatedSteps = pendingSwap.steps.map((step) => ({
+export function getFormattedPendingSwap(pendingSwap: PendingSwap): PendingSwap {
+  const formattedSteps = pendingSwap.steps.map((step) => ({
     ...step,
     feeInUsd: numberToString(step.feeInUsd, 4, 4),
     outputAmount: numberToString(step.outputAmount, 6, 6),
@@ -185,7 +185,7 @@ export function getFormatedPendingSwap(pendingSwap: PendingSwap): PendingSwap {
   return {
     ...pendingSwap,
     inputAmount: numberToString(pendingSwap.inputAmount, 6, 6),
-    steps: formatedSteps,
+    steps: formattedSteps,
   };
 }
 

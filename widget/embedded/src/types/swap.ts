@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/prefer-enum-initializers */
 import type { SwapSavedSettings } from 'rango-types/lib';
 
 export type PendingSwapSettings = Omit<
@@ -6,10 +7,10 @@ export type PendingSwapSettings = Omit<
 >;
 
 export enum ButtonState {
-  WAITFORCONNECTING = 'waitForConnecting',
-  SWAP = 'swap',
-  NEEDTOCONFIRM = 'needToConfirm',
-  WARNING = 'warning',
+  WAIT_FOR_CONNECTING,
+  SWAP,
+  NEED_TO_CONFIRM,
+  WARNING,
 }
 
 export type SwapButtonState = (

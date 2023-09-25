@@ -20,7 +20,7 @@ import { useNavigateBack } from '../hooks/useNavigateBack';
 import { useBestRouteStore } from '../store/bestRoute';
 import { useUiStore } from '../store/ui';
 import { getPendingSwaps } from '../utils/queue';
-import { getFormatedPendingSwap } from '../utils/routing';
+import { getFormattedPendingSwap } from '../utils/routing';
 import {
   getLastConvertedTokenInFailedSwap,
   getSwapMessages,
@@ -138,7 +138,7 @@ export function SwapDetailsPage() {
        *  </>
        *}
        */
-      pendingSwap={getFormatedPendingSwap(swap)}
+      pendingSwap={getFormattedPendingSwap(swap)}
       onCopy={handleCopy}
       isCopied={isCopied}
       onCancel={onCancel}

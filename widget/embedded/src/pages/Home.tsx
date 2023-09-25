@@ -32,7 +32,7 @@ import {
   secondsToString,
   totalArrivalTime,
 } from '../utils/numbers';
-import { getFormatedBestRoute } from '../utils/routing';
+import { getFormattedBestRoute } from '../utils/routing';
 import {
   canComputePriceImpact,
   getOutputRatio,
@@ -251,10 +251,11 @@ export function Home() {
 
   const totalFeeInUsd = getTotalFeeInUsd(bestRoute, tokens);
 
-  const bestRouteData = getFormatedBestRoute(bestRoute);
+  const bestRouteData = getFormattedBestRoute(bestRoute);
 
   return (
     <Layout
+      fixedHeight={false}
       hasFooter
       action={
         <Button
@@ -267,9 +268,9 @@ export function Home() {
           }
           fullWidth
           onClick={() => {
-            if (swapButtonState.state === ButtonState.WAITFORCONNECTING) {
+            if (swapButtonState.state === ButtonState.WAIT_FOR_CONNECTING) {
               navigate(navigationRoutes.wallets);
-            } else if (swapButtonState.state === ButtonState.NEEDTOCONFIRM) {
+            } else if (swapButtonState.state === ButtonState.NEED_TO_CONFIRM) {
               setOpenWarningModal(true);
             } else {
               navigate(navigationRoutes.confirmSwap);

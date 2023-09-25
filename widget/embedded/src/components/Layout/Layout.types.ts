@@ -9,4 +9,5 @@ export interface PropTypes {
   };
   hasFooter?: boolean;
   action?: React.ReactNode;
+  fixedHeight?: boolean;
 }

@@ -12,12 +12,8 @@ import { BackButton, CancelButton, WalletButton } from '../HeaderButtons';
 
 import { Container, Content, Footer } from './Layout.styles';
 
-export function Layout({
-  children,
-  header,
-  hasFooter,
-  action,
-}: PropsWithChildren<PropTypes>) {
+export function Layout(props: PropsWithChildren<PropTypes>) {
+  const { children, header, hasFooter, action, fixedHeight = true } = props;
   const connectedWallets = useWalletsStore.use.connectedWallets();
 
   const connectWalletsButtonDisabled =
@@ -31,7 +27,7 @@ export function Layout({
   };
 
   return (
-    <Container>
+    <Container fixedHeight={fixedHeight}>
       <Header
         prefix={<>{header.onBack && <BackButton onClick={header.onBack} />}</>}
         title={header.title}

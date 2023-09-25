@@ -152,14 +152,14 @@ export function getSwapButtonState(
   if (loadingMetaStatus !== 'success') {
     return {
       title: swapButtonTitles.connectWallet,
-      state: ButtonState.WAITFORCONNECTING,
+      state: ButtonState.WAIT_FOR_CONNECTING,
       disabled: true,
     };
   }
   if (connectedWallets.length == 0) {
     return {
       title: swapButtonTitles.connectWallet,
-      state: ButtonState.WAITFORCONNECTING,
+      state: ButtonState.WAIT_FOR_CONNECTING,
       disabled: false,
     };
   }
@@ -181,7 +181,7 @@ export function getSwapButtonState(
       title: swapButtonTitles.swapAnyway,
       disabled: false,
       hasWarning: true,
-      state: ButtonState.NEEDTOCONFIRM,
+      state: ButtonState.NEED_TO_CONFIRM,
     };
   } else if (needsToWarnEthOnPath) {
     return {
