@@ -2,21 +2,22 @@ import type {
   CanEagerConnect,
   CanSwitchNetwork,
   Connect,
+  StdBlockchainInfo,
   Subscribe,
   SwitchNetwork,
   WalletInfo,
 } from '@rango-dev/wallets-shared';
-import type { BlockchainMeta, SignerFactory } from 'rango-types';
+import type { SignerFactory } from 'rango-types';
 
 import {
   canEagerlyConnectToEvm,
   canSwitchNetworkToEvm,
+  filterBlockchains,
   getEvmAccounts,
   subscribeToEvm,
   switchNetworkForEvm,
   WalletTypes,
 } from '@rango-dev/wallets-shared';
-import { evmBlockchains } from 'rango-types';
 
 import { tokenpocket as tokenpocket_instance } from './helpers';
 import signer from './signer';
@@ -53,10 +54,12 @@ export const getSigners: (provider: any) => SignerFactory = signer;
 
 export const canEagerConnect: CanEagerConnect = canEagerlyConnectToEvm;
 
-export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
-  allBlockChains
-) => {
-  const evms = evmBlockchains(allBlockChains);
+export const getWalletInfo: (
+  allBlockChains: StdBlockchainInfo[]
+) => WalletInfo = (allBlockChains) => {
+  const blockchains = filterBlockchains(allBlockChains, {
+    evm: true,
+  });
   return {
     name: 'Token Pocket',
     img: 'https://raw.githubusercontent.com/rango-exchange/rango-assets/main/wallets/tokenpocket/icon.svg',
@@ -68,6 +71,6 @@ export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
         'https://chrome.google.com/webstore/detail/tokenpocket/mfgccjchihfkkindfppnaooecgfneiii',
       DEFAULT: 'https://www.tokenpocket.pro/en/download/app',
     },
-    supportedChains: evms,
+    supportedBlockchains: blockchains,
   };
 };

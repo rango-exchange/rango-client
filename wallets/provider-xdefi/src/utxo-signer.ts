@@ -1,13 +1,16 @@
-import { GenericSigner, SignerError, Transfer } from 'rango-types';
-import { xdefiTransfer } from './helpers';
-import {
-  XDEFI_WALLET_SUPPORTED_NATIVE_CHAINS,
-  getNetworkInstance,
-} from '@rango-dev/wallets-shared';
-import { Networks } from '@rango-dev/wallets-shared';
+import type { Networks } from '@rango-dev/wallets-shared';
+import type { GenericSigner, Transfer } from 'rango-types';
 
-// TODO - replace with real type
-// tslint:disable-next-line: no-any
+import { getNetworkInstance } from '@rango-dev/wallets-shared';
+import { SignerError } from 'rango-types';
+
+import { SUPPORTED_NATIVE_CHAINS } from './constants';
+import { xdefiTransfer } from './helpers';
+
+/*
+ * TODO - replace with real type
+ * tslint:disable-next-line: no-any
+ */
 type TransferExternalProvider = any;
 
 export class CustomTransferSigner implements GenericSigner<Transfer> {
@@ -24,10 +27,11 @@ export class CustomTransferSigner implements GenericSigner<Transfer> {
     const { blockchain } = tx.asset;
 
     // Everything except ETH
-    if (!XDEFI_WALLET_SUPPORTED_NATIVE_CHAINS.includes(blockchain as Networks))
+    if (!SUPPORTED_NATIVE_CHAINS.includes(blockchain as Networks)) {
       throw new Error(
         `blockchain: ${blockchain} transfer not implemented yet.`
       );
+    }
     const transferProvider = getNetworkInstance(this.provider, blockchain);
 
     const {

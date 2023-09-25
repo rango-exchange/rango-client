@@ -1,16 +1,25 @@
+import type {
+  StdBlockchainInfo,
+  StdCosmosBlockchainInfo,
+} from '@rango-dev/wallets-shared';
+
 import { TendermintTxTracer } from '@keplr-wallet/cosmos';
 import { simpleFetch } from '@keplr-wallet/simple-fetch';
-import { BlockchainMeta, cosmosBlockchains } from 'rango-types';
+import { filterBlockchains } from '@rango-dev/wallets-shared';
+
 export async function sendTx(
   chainId: string,
   tx: unknown,
   mode: 'async' | 'sync' | 'block',
-  supportedChains: BlockchainMeta[]
+  supportedChains: StdBlockchainInfo[]
 ): Promise<Uint8Array> {
   console.log({ chainId, tx, mode });
 
-  const cosmos = cosmosBlockchains(supportedChains);
-  const chainInfo = cosmos.find((item) => item.chainId === chainId)?.info;
+  const cosmos = filterBlockchains(supportedChains, {
+    cosmos: true,
+  }) as StdCosmosBlockchainInfo[];
+  const chainInfo = cosmos.find((item) => item.chainId === chainId)?.manifest
+    ?.info;
   const isProtoTx = Buffer.isBuffer(tx) || tx instanceof Uint8Array;
 
   console.log({ chainInfo, isProtoTx });

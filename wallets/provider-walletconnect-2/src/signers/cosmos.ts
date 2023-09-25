@@ -107,6 +107,7 @@ class COSMOSSigner implements GenericSigner<CosmosTransaction> {
           chainId,
           signedTx,
           BroadcastMode.Async,
+          // @ts-ignore TODO FIX HERE
           supportedChains
         );
         return { hash: uint8ArrayToHex(result) };
@@ -182,6 +183,7 @@ class COSMOSSigner implements GenericSigner<CosmosTransaction> {
           chainId,
           signedTx,
           BroadcastMode.Async,
+          // @ts-ignore TODO FIX HERE
           supportedChains
         );
 

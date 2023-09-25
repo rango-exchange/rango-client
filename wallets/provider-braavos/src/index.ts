@@ -2,13 +2,17 @@ import type {
   CanEagerConnect,
   CanSwitchNetwork,
   Connect,
+  StdBlockchainInfo,
   Subscribe,
   WalletInfo,
 } from '@rango-dev/wallets-shared';
-import type { BlockchainMeta, SignerFactory } from 'rango-types';
+import type { SignerFactory } from 'rango-types';
 
-import { Networks, WalletTypes } from '@rango-dev/wallets-shared';
-import { starknetBlockchain } from 'rango-types';
+import {
+  filterBlockchains,
+  Networks,
+  WalletTypes,
+} from '@rango-dev/wallets-shared';
 
 import { getBraavosInstance } from './helpers';
 import signer from './signer';
@@ -48,10 +52,12 @@ export const getSigners: (provider: any) => SignerFactory = signer;
 export const canEagerConnect: CanEagerConnect = ({ instance }) =>
   instance.isPreauthorized();
 
-export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
-  allBlockChains
-) => {
-  const starknet = starknetBlockchain(allBlockChains);
+export const getWalletInfo: (
+  allBlockChains: StdBlockchainInfo[]
+) => WalletInfo = (allBlockChains) => {
+  const blockchains = filterBlockchains(allBlockChains, {
+    ids: [Networks.STARKNET],
+  });
   return {
     name: 'Braavos',
     img: 'https://raw.githubusercontent.com/rango-exchange/rango-assets/main/wallets/braavos/icon.svg',
@@ -66,6 +72,6 @@ export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
     },
 
     color: '#96e7ed',
-    supportedChains: starknet,
+    supportedBlockchains: blockchains,
   };
 };

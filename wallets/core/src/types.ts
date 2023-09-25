@@ -1,6 +1,6 @@
 import { Network, WalletType, WalletInfo } from '@rango-dev/wallets-shared';
 import { State as WalletState } from './wallet';
-import { SignerFactory, BlockchainMeta } from 'rango-types';
+import { SignerFactory, StdBlockchainInfo } from 'rango-types';
 
 export type State = {
   [key: string]: WalletState | undefined;
@@ -31,7 +31,7 @@ export type ProviderConnectResult = {
 export type GetInstanceOptions = {
   network?: Network;
   currentProvider: any;
-  meta: BlockchainMeta[];
+  meta: StdBlockchainInfo[];
   getState: () => WalletState;
   /**
    * We always get the instance once and reuse it whenever we needs. By using this option
@@ -54,7 +54,7 @@ export type TryGetInstance =
 export type Connect = (options: {
   instance: any;
   network?: Network;
-  meta: BlockchainMeta[];
+  meta: StdBlockchainInfo[];
 }) => Promise<ProviderConnectResult | ProviderConnectResult[]>;
 
 export type Disconnect = (options: {
@@ -65,7 +65,7 @@ export type Disconnect = (options: {
 export type Subscribe = (options: {
   instance: any;
   state: WalletState;
-  meta: BlockchainMeta[];
+  meta: StdBlockchainInfo[];
   updateChainId: (chainId: string) => void;
   updateAccounts: (accounts: string[], chainId?: string) => void;
   connect: (network?: Network) => void;
@@ -75,19 +75,19 @@ export type Subscribe = (options: {
 export type SwitchNetwork = (options: {
   instance: any;
   network: Network;
-  meta: BlockchainMeta[];
+  meta: StdBlockchainInfo[];
   newInstance?: TryGetInstance;
 }) => Promise<void>;
 
 export type CanSwitchNetwork = (options: {
   network: Network;
-  meta: BlockchainMeta[];
+  meta: StdBlockchainInfo[];
   provider: any;
 }) => boolean;
 
 export type CanEagerConnect = (options: {
   instance: any;
-  meta: BlockchainMeta[];
+  meta: StdBlockchainInfo[];
 }) => Promise<boolean>;
 
 export interface WalletActions {
@@ -102,7 +102,7 @@ export interface WalletActions {
   getSigners: (provider: any) => SignerFactory;
   canSwitchNetworkTo?: CanSwitchNetwork;
   canEagerConnect?: CanEagerConnect;
-  getWalletInfo(allBlockChains: BlockchainMeta[]): WalletInfo;
+  getWalletInfo(allBlockChains: StdBlockchainInfo[]): WalletInfo;
 }
 
 export interface WalletConfig {

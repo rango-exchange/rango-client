@@ -1,13 +1,17 @@
 import type {
   CanSwitchNetwork,
   Connect,
+  StdBlockchainInfo,
   Subscribe,
   WalletInfo,
 } from '@rango-dev/wallets-shared';
-import type { BlockchainMeta, SignerFactory } from 'rango-types';
+import type { SignerFactory } from 'rango-types';
 
-import { Networks, WalletTypes } from '@rango-dev/wallets-shared';
-import { tronBlockchain } from 'rango-types';
+import {
+  filterBlockchains,
+  Networks,
+  WalletTypes,
+} from '@rango-dev/wallets-shared';
 
 import { tronLink as tronLink_instance } from './helpers';
 import signer from './signer';
@@ -64,10 +68,12 @@ export const canSwitchNetworkTo: CanSwitchNetwork = () => false;
 
 export const getSigners: (provider: any) => SignerFactory = signer;
 
-export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
-  allBlockChains
-) => {
-  const tron = tronBlockchain(allBlockChains);
+export const getWalletInfo: (
+  allBlockChains: StdBlockchainInfo[]
+) => WalletInfo = (allBlockChains) => {
+  const blockchains = filterBlockchains(allBlockChains, {
+    ids: [Networks.TRON],
+  });
   return {
     name: 'TronLink',
     img: 'https://raw.githubusercontent.com/rango-exchange/rango-assets/main/wallets/tronlink/icon.svg',
@@ -79,6 +85,6 @@ export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
       DEFAULT: 'https://www.tronlink.org',
     },
     color: '#96e7ed',
-    supportedChains: tron,
+    supportedBlockchains: blockchains,
   };
 };

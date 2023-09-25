@@ -3,20 +3,21 @@ import type {
   CanSwitchNetwork,
   Connect,
   GetInstance,
+  StdBlockchainInfo,
   Subscribe,
   SwitchNetwork,
   WalletInfo,
 } from '@rango-dev/wallets-shared';
-import type { BlockchainMeta, SignerFactory } from 'rango-types';
+import type { SignerFactory } from 'rango-types';
 
 import {
   canEagerlyConnectToEvm,
   canSwitchNetworkToEvm,
+  filterBlockchains,
   subscribeToEvm,
   switchNetworkForEvm,
   WalletTypes,
 } from '@rango-dev/wallets-shared';
-import { evmBlockchains, isEvmBlockchain } from 'rango-types';
 
 import { getSafeInstance } from './helpers';
 import signer from './signer';
@@ -51,14 +52,12 @@ export const subscribe: Subscribe = ({
   connect,
   disconnect,
 }) => {
-  const evmBlockchainMeta = meta.filter(isEvmBlockchain);
-
   subscribeToEvm({
     instance,
     state,
     updateChainId,
     updateAccounts,
-    meta: evmBlockchainMeta,
+    meta,
     connect,
     disconnect,
   });
@@ -72,10 +71,12 @@ export const getSigners: (provider: any) => SignerFactory = signer;
 
 export const canEagerConnect: CanEagerConnect = canEagerlyConnectToEvm;
 
-export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
-  allBlockChains
-) => {
-  const evms = evmBlockchains(allBlockChains);
+export const getWalletInfo: (
+  allBlockChains: StdBlockchainInfo[]
+) => WalletInfo = (allBlockChains) => {
+  const blockchains = filterBlockchains(allBlockChains, {
+    evm: true,
+  });
   return {
     name: 'Safe',
     img: 'https://raw.githubusercontent.com/rango-exchange/rango-assets/main/wallets/safe/icon.svg',
@@ -83,6 +84,6 @@ export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
       DEFAULT: 'https://app.safe.global/',
     },
     color: '#ffffff',
-    supportedChains: evms,
+    supportedBlockchains: blockchains,
   };
 };

@@ -4,17 +4,17 @@ import type {
   Connect,
   Disconnect,
   GetInstance,
+  StdBlockchainInfo,
   Subscribe,
   SwitchNetwork,
   WalletConfig,
   WalletInfo,
 } from '@rango-dev/wallets-shared';
 import type { ISignClient } from '@walletconnect/types';
-import type { BlockchainMeta, SignerFactory } from 'rango-types';
+import type { SignerFactory } from 'rango-types';
 
-import { WalletTypes } from '@rango-dev/wallets-shared';
+import { filterBlockchains, WalletTypes } from '@rango-dev/wallets-shared';
 import Client from '@walletconnect/sign-client';
-import { evmBlockchains } from 'rango-types';
 
 import {
   DEFAULT_APP_METADATA,
@@ -181,16 +181,18 @@ export const disconnect: Disconnect = async ({ instance }) => {
 
 export const getSigners: (provider: WCInstance) => SignerFactory = signer;
 
-export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
-  allBlockChains
-) => {
-  const evms = evmBlockchains(allBlockChains);
+export const getWalletInfo: (
+  allBlockChains: StdBlockchainInfo[]
+) => WalletInfo = (allBlockChains) => {
+  const blockchains = filterBlockchains(allBlockChains, {
+    evm: true,
+  });
   return {
     name: 'WalletConnect',
     img: 'https://raw.githubusercontent.com/rango-exchange/rango-assets/main/wallets/walletconnect/icon.svg',
     installLink: '',
     color: '#b2dbff',
-    supportedChains: evms,
+    supportedBlockchains: blockchains,
     showOnMobile: true,
     mobileWallet: true,
   };
