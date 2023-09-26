@@ -28,7 +28,7 @@ export function HomeButtons(props: HomeButtonsPropTypes) {
           size="small"
           onClick={onClickRefresh}
           disabled={!onClickRefresh}>
-          <RefreshIcon size={18} color={!onClickRefresh ? 'gray' : 'black'} />
+          <RefreshIcon size={16} color={!onClickRefresh ? 'gray' : 'black'} />
         </HeaderButton>
       </Tooltip>
       <Tooltip side="top" content={i18n.t('Notifications')}>

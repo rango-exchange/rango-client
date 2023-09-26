@@ -9,7 +9,7 @@ import { TokenSection } from './TokenSection';
 
 export function SwapInput(props: SwapInputProps) {
   return (
-    <Container>
+    <Container sharpBottomStyle={props.sharpBottomStyle}>
       <div className="label__container">
         <div className="label">
           <Typography variant="body" size="small" color="$neutral800">
@@ -71,7 +71,7 @@ export function SwapInput(props: SwapInputProps) {
                 min={0}
                 {...('onInputChange' in props && {
                   onChange: (event: React.ChangeEvent<HTMLInputElement>) =>
-                    props.onInputChange(event.target.value || '0'),
+                    props.onInputChange(event.target.value),
                 })}
               />
               {'percentageChange' in props ? (

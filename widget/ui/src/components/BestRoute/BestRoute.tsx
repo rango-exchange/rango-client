@@ -1,6 +1,6 @@
 import type { BestRouteProps } from './BestRoute.types';
 
-import React, { useState } from 'react';
+import React, { useLayoutEffect, useRef, useState } from 'react';
 
 import { Typography } from '../../components/Typography';
 import {
@@ -20,6 +20,7 @@ import { Tooltip } from '../Tooltip';
 import {
   Chains,
   Content,
+  EXPANDABLE_ROUTES_TRANSITION_DURATION,
   FrameIcon,
   HorizontalSeparator,
   IconContainer,
@@ -45,6 +46,15 @@ export function BestRoute(props: BestRouteProps) {
   const numberOfSteps = steps.length;
 
   const [expanded, setExpanded] = useState(props.expanded);
+  const routeRef = useRef<HTMLButtonElement | null>(null);
+
+  useLayoutEffect(() => {
+    if (expanded && routeRef.current) {
+      setTimeout(() => {
+        routeRef?.current?.scrollIntoView({ behavior: 'smooth' });
+      }, EXPANDABLE_ROUTES_TRANSITION_DURATION);
+    }
+  }, [expanded]);
 
   return (
     <>
@@ -118,8 +128,9 @@ export function BestRoute(props: BestRouteProps) {
           )}
           {type === 'swap-preview' && (
             <>
-              <Divider size={4} />
               <TokenAmount
+                direction="horizontal"
+                label="Swap input"
                 type="input"
                 price={{ value: input.value, usdValue: input.usdValue }}
                 token={{
@@ -128,8 +139,17 @@ export function BestRoute(props: BestRouteProps) {
                 }}
                 chain={{ image: steps[0].from.chain.image }}
               />
-              <Separator css={{ height: '$16', marginLeft: '14px' }} />
+              <Separator
+                css={{
+                  height: '$32',
+                  marginLeft: '14px',
+                  position: 'absolute',
+                  top: '85px',
+                }}
+              />
               <TokenAmount
+                direction="horizontal"
+                label="Estimate output"
                 type="output"
                 price={{ value: output.value, usdValue: output.usdValue }}
                 token={{
@@ -144,63 +164,64 @@ export function BestRoute(props: BestRouteProps) {
             </>
           )}
         </div>
-      </SummaryContainer>
-      <RouteContainer
-        recommended={recommended}
-        open={expanded}
-        onOpenChange={setExpanded}>
-        <Chains
+        <RouteContainer
           recommended={recommended}
-          onClick={setExpanded.bind(null, (prevState) => !prevState)}>
-          <div>
-            {steps.map((step, index) => {
-              const key = `item-${index}`;
-              return (
-                <React.Fragment key={key}>
-                  <Tooltip content={step.from.chain.displayName}>
-                    <Image src={step.from.chain.image} size={16} />
-                  </Tooltip>
-                  {index === numberOfSteps - 1 && (
-                    <>
+          open={expanded}
+          onOpenChange={setExpanded}>
+          <Chains
+            ref={(ref) => (routeRef.current = ref)}
+            recommended={recommended}
+            onClick={setExpanded.bind(null, (prevState) => !prevState)}>
+            <div>
+              {steps.map((step, index) => {
+                const key = `item-${index}`;
+                return (
+                  <React.Fragment key={key}>
+                    <Tooltip content={step.from.chain.displayName}>
+                      <Image src={step.from.chain.image} size={16} />
+                    </Tooltip>
+                    {index === numberOfSteps - 1 && (
+                      <>
+                        <IconContainer>
+                          <ChevronRightIcon size={12} color="black" />
+                        </IconContainer>
+                        <Tooltip content={step.to.chain.displayName}>
+                          <Image src={step.to.chain.image} size={16} />
+                        </Tooltip>
+                      </>
+                    )}
+                    {index !== numberOfSteps - 1 && (
                       <IconContainer>
                         <ChevronRightIcon size={12} color="black" />
                       </IconContainer>
-                      <Tooltip content={step.to.chain.displayName}>
-                        <Image src={step.to.chain.image} size={16} />
-                      </Tooltip>
-                    </>
-                  )}
-                  {index !== numberOfSteps - 1 && (
-                    <IconContainer>
-                      <ChevronRightIcon size={12} color="black" />
-                    </IconContainer>
-                  )}
-                </React.Fragment>
-              );
-            })}
-          </div>
-          <IconContainer orientation={expanded ? 'up' : 'down'}>
-            <ChevronDownIcon size={12} color="black" />
-          </IconContainer>
-        </Chains>
-        <Content open={expanded}>
-          <HorizontalSeparator />
-          <div className="steps-details">
-            {steps.map((step, index) => {
-              const key = `item-${index}`;
-              return (
-                <StepDetails
-                  type="route-details"
-                  key={key}
-                  step={step}
-                  hasSeparator={index !== steps.length - 1}
-                  state={step.alerts ? 'error' : undefined}
-                />
-              );
-            })}
-          </div>
-        </Content>
-      </RouteContainer>
+                    )}
+                  </React.Fragment>
+                );
+              })}
+            </div>
+            <IconContainer orientation={expanded ? 'up' : 'down'}>
+              <ChevronDownIcon size={12} color="black" />
+            </IconContainer>
+          </Chains>
+          <Content open={expanded}>
+            <HorizontalSeparator />
+            <div className="steps-details">
+              {steps.map((step, index) => {
+                const key = `item-${index}`;
+                return (
+                  <StepDetails
+                    type="route-details"
+                    key={key}
+                    step={step}
+                    hasSeparator={index !== steps.length - 1}
+                    state={step.alerts ? 'error' : undefined}
+                  />
+                );
+              })}
+            </div>
+          </Content>
+        </RouteContainer>
+      </SummaryContainer>
     </>
   );
 }

@@ -4,6 +4,7 @@ import { i18n } from '@lingui/core';
 import {
   Alert,
   BestRoute,
+  BestRouteSkeleton,
   Button,
   Divider,
   styled,
@@ -48,6 +49,7 @@ import { getBalanceFromWallet } from '../utils/wallets';
 const Container = styled('div', {
   display: 'flex',
   flexDirection: 'column',
+  overflowY: 'visible',
 });
 
 const FromContainer = styled('div', {
@@ -64,7 +66,6 @@ const InputsContainer = styled('div', {
 const BestRouteContainer = styled('div', {
   width: '100%',
   paddingTop: '$2',
-  marginBottom: '-36px',
 });
 
 const FooterStepAlarm = styled('div', {
@@ -255,8 +256,9 @@ export function Home() {
 
   return (
     <Layout
-      hasFooter
-      action={
+      fixedHeight={false}
+      hasLogo
+      footer={
         <Button
           type="primary"
           size="large"
@@ -327,6 +329,7 @@ export function Home() {
             <SwitchFromAndToButton />
           </FromContainer>
           <SwapInput
+            sharpBottomStyle={!!bestRoute?.result || fetchingBestRoute}
             label="To"
             chain={{
               displayName: toBlockchain?.displayName || '',
@@ -358,6 +361,13 @@ export function Home() {
             loading={loadingMetaStatus === 'loading'}
           />
         </InputsContainer>
+        {fetchingBestRoute && (
+          <>
+            <BestRouteContainer>
+              <BestRouteSkeleton type="basic" />
+            </BestRouteContainer>
+          </>
+        )}
         {showBestRoute &&
         !fetchingBestRoute &&
         bestRouteData?.result?.swaps?.length ? (

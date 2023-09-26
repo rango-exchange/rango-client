@@ -17,20 +17,29 @@ export function TokenAmount(props: PropTypes) {
           tokenImage={props.token.image}
           size="medium"
         />
-        <Typography
-          ml={4}
-          size="large"
-          variant="title"
-          style={{ fontWeight: 600 }}>
-          {props.price.value}
-        </Typography>
-        <Typography
-          ml={8}
-          size="large"
-          variant="title"
-          style={{ fontWeight: 400 }}>
-          {props.token.displayName}
-        </Typography>
+        <div>
+          {props.label && (
+            <Typography ml={4} size="xsmall" variant="body" color="$neutral900">
+              {props.label}
+            </Typography>
+          )}
+          <div>
+            <Typography
+              ml={4}
+              size="large"
+              variant="title"
+              style={{ fontWeight: 600 }}>
+              {props.price.value}
+            </Typography>
+            <Typography
+              ml={8}
+              size="large"
+              variant="title"
+              style={{ fontWeight: 400 }}>
+              {props.token.displayName}
+            </Typography>
+          </div>
+        </div>
       </div>
       <div className="usd-value">
         {props.type === 'input' && (
