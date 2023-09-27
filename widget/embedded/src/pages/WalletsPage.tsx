@@ -2,13 +2,7 @@ import type { WidgetConfig } from '../types';
 import type { WalletType } from '@rango-dev/wallets-shared';
 
 import { i18n } from '@lingui/core';
-import {
-  LoadingFailedAlert,
-  Spinner,
-  styled,
-  Typography,
-  Wallet,
-} from '@rango-dev/ui';
+import { styled, Typography, Wallet, WalletState } from '@rango-dev/ui';
 import React, { Fragment, useState } from 'react';
 
 import { Layout } from '../components/Layout';
@@ -32,14 +26,6 @@ const ListContainer = styled('div', {
   padding: '$15 $8 $20 0',
   overflowY: 'auto',
   height: 490,
-});
-
-const LoaderContainer = styled('div', {
-  display: 'flex',
-  justifyContent: 'center',
-  width: '100%',
-  position: 'absolute',
-  top: '50%',
 });
 
 const Container = styled('div', {
@@ -72,6 +58,10 @@ export function WalletsPage({ config }: PropTypes) {
   });
 
   const loadingMetaStatus = useMetaStore.use.loadingStatus();
+  const selectedWallet = list.find((wallet) => wallet.type === openModal);
+  const selectedWalletImage = selectedWallet?.image || '';
+  const selectedWalletState =
+    selectedWallet?.state || WalletState.NOT_INSTALLED;
 
   return (
     <Layout
@@ -80,37 +70,31 @@ export function WalletsPage({ config }: PropTypes) {
         onBack: navigateBackFrom.bind(null, navigationRoutes.wallets),
       }}>
       <Container>
-        {loadingMetaStatus === 'loading' && (
-          <LoaderContainer className="loader">
-            <Spinner size={24} />
-          </LoaderContainer>
-        )}
-        {loadingMetaStatus === 'failed' && <LoadingFailedAlert />}
         <Typography variant="title" size="xmedium" align="center">
           {i18n.t('Choose a wallet to connect.')}
         </Typography>
         <ListContainer>
-          {loadingMetaStatus === 'success' &&
-            list.map((wallet, index) => {
-              const key = `wallet-${index}-${wallet.type}`;
-              return (
-                <Fragment key={key}>
-                  <Wallet
-                    {...wallet}
-                    onClick={(type) => {
-                      void handleClick(type);
-                    }}
-                  />
-                  <WalletModal
-                    open={openModal === wallet.type}
-                    onClose={() => setOpenModal('')}
-                    image={wallet.image}
-                    state={wallet.state}
-                    error={!!error}
-                  />
-                </Fragment>
-              );
-            })}
+          {list.map((wallet, index) => {
+            const key = `wallet-${index}-${wallet.type}`;
+            return (
+              <Fragment key={key}>
+                <Wallet
+                  {...wallet}
+                  onClick={(type) => {
+                    void handleClick(type);
+                  }}
+                  isLoading={loadingMetaStatus === 'loading'}
+                />
+              </Fragment>
+            );
+          })}
+          <WalletModal
+            open={!!openModal}
+            onClose={() => setOpenModal('')}
+            image={selectedWalletImage}
+            state={selectedWalletState}
+            error={error}
+          />
         </ListContainer>
       </Container>
     </Layout>

@@ -29,7 +29,9 @@ export function ModalContent(props: ModalContentProps) {
       <MessageBox
         type="error"
         title={i18n.t('Failed to Connect')}
-        description={i18n.t('Your wallet is not connected. Please try again.')}
+        description={
+          error || i18n.t('Your wallet is not connected. Please try again.')
+        }
       />
     );
   }

@@ -45,3 +45,15 @@ export const WalletButton = styled('button', {
     },
   },
 });
+
+export const LoadingButton = styled('div', {
+  borderRadius: '$xm',
+  padding: '$10 0',
+  border: '0',
+  display: 'flex',
+  flexDirection: 'column',
+  backgroundColor: '$neutral100',
+  alignItems: 'center',
+  justifyContent: 'center',
+  width: 110,
+});
