@@ -3,13 +3,14 @@ import type { PendingSwapStep } from 'rango-types';
 
 import { i18n } from '@lingui/core';
 import { useManager } from '@rango-dev/queue-manager-react';
-import { styled } from '@rango-dev/ui';
+import { Divider, NotFound, styled } from '@rango-dev/ui';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { Layout } from '../components/Layout';
 import { SearchInput } from '../components/SearchInput';
 import { SwapsGroup } from '../components/SwapsGroup';
+import { NotFoundContainer } from '../components/SwapsGroup/SwapsGroup.styles';
 import { navigationRoutes } from '../constants/navigationRoutes';
 import { useNavigateBack } from '../hooks/useNavigateBack';
 import { useUiStore } from '../store/ui';
@@ -21,6 +22,7 @@ const Container = styled('div', {
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'flex-start',
+  height: '100%',
   gap: 15,
 });
 
@@ -71,8 +73,7 @@ export function HistoryPage() {
     );
   }
 
-  // TODO: Loading page is not designed yet.
-  const isEmpty = loading || (!list?.length && !searchedFor);
+  const isEmpty = !filteredList?.length && !loading;
 
   return (
     <Layout
@@ -80,18 +81,29 @@ export function HistoryPage() {
         onBack: navigateBackFrom.bind(null, '/' + navigationRoutes.swaps),
         title: i18n.t('History'),
       }}>
-      {!isEmpty && (
-        <Container>
-          <SearchInput
-            setValue={setSearchedFor}
-            fullWidth
-            variant="contained"
-            placeholder="Search Transaction"
-            autoFocus
-            onChange={searchHandler}
-            value={searchedFor}
-          />
-          <SwapsGroupContainer>
+      <Container>
+        <SearchInput
+          setValue={setSearchedFor}
+          fullWidth
+          variant="contained"
+          placeholder="Search Transaction"
+          autoFocus
+          onChange={searchHandler}
+          value={searchedFor}
+        />
+        <SwapsGroupContainer>
+          {isEmpty && (
+            <NotFoundContainer>
+              <Divider size={32} />
+              <NotFound
+                title={i18n.t('No results found')}
+                description={
+                  searchedFor ? i18n.t('Try using different keywords') : ''
+                }
+              />
+            </NotFoundContainer>
+          )}
+          {!isEmpty && (
             <SwapsGroup
               list={filteredList}
               onSwapClick={(requestId) => {
@@ -99,10 +111,11 @@ export function HistoryPage() {
                 navigate(`${requestId}`, { replace: true });
               }}
               groupBy={groupSwapsByDate}
+              isLoading={loading}
             />
-          </SwapsGroupContainer>
-        </Container>
-      )}
+          )}
+        </SwapsGroupContainer>
+      </Container>
     </Layout>
   );
 }
