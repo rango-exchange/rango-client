@@ -53,3 +53,24 @@ export const Icon = styled('div', {
   justifyContent: 'center',
   alignItems: 'center',
 });
+
+export const LayoutLoading = styled('div', {
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+});
+
+export const IconLoading = styled('div', {
+  display: 'flex',
+  width: '$24',
+  height: '$24',
+  justifyContent: 'center',
+  alignItems: 'center',
+});
+
+export const LoadingContainer = styled('div', {
+  display: 'flex',
+  padding: 0,
+  alignItems: 'center',
+  gap: 25,
+});

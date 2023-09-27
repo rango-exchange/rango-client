@@ -5,18 +5,65 @@ import React from 'react';
 
 import { NextIcon } from '../../icons';
 import { ChainToken } from '../ChainToken';
+import { Divider } from '../Divider';
+import { Skeleton } from '../Skeleton';
 import { Typography } from '../Typography';
 
 import {
   Icon,
+  IconLoading,
   Images,
   Layout,
+  LayoutLoading,
   TokenContainer,
   TokenInfo,
   TopSection,
 } from './SwapToken.styles';
 
 export function SwapToken(props: PropTypes) {
+  if ('isLoading' in props) {
+    return (
+      <TokenContainer>
+        <Images>
+          <div>
+            <ChainToken
+              tokenImage=""
+              chainImage=""
+              size="medium"
+              loading={true}
+            />
+          </div>
+          <div
+            style={{
+              transform: 'translateX(-5px)',
+            }}>
+            <ChainToken
+              tokenImage=""
+              chainImage=""
+              size="medium"
+              loading={true}
+            />
+          </div>
+        </Images>
+        <LayoutLoading>
+          <TokenInfo>
+            <Skeleton variant="text" size="medium" width={76} />
+            <Divider size={8} />
+            <Skeleton variant="text" size="medium" width={60} />
+          </TokenInfo>
+          <IconLoading>
+            <NextIcon size={12} color="gray" />
+          </IconLoading>
+          <TokenInfo>
+            <Skeleton variant="text" size="medium" width={76} />
+            <Divider size={8} />
+            <Skeleton variant="text" size="medium" width={60} />
+          </TokenInfo>
+        </LayoutLoading>
+      </TokenContainer>
+    );
+  }
+
   const {
     data: {
       from: {

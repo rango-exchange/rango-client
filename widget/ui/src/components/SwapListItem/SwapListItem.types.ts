@@ -1,6 +1,6 @@
 export type Status = 'running' | 'failed' | 'success';
 
-export interface PropTypes {
+export interface SwapListItemProps {
   requestId: string;
   creationTime: string;
   status: Status;
@@ -8,6 +8,12 @@ export interface PropTypes {
   swapTokenData: SwapTokenData;
   onlyShowTime?: boolean;
 }
+
+export interface LoadingProps {
+  isLoading: true;
+}
+
+export type PropTypes = SwapListItemProps | LoadingProps;
 
 export const StatusColors = {
   failed: 'error500',
