@@ -5,7 +5,7 @@ export type ListItemProps = {
   end?: React.ReactNode;
   as?: 'div' | 'li' | 'button';
   onClick?: () => void;
+  onKeyUp?: React.KeyboardEventHandler<HTMLLIElement>;
   hasDivider?: boolean;
   style?: React.CSSProperties;
-  selected?: boolean;
 };

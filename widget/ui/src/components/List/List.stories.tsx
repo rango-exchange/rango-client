@@ -115,6 +115,7 @@ function ItemButtonExamples() {
       type={
         <ListItemButton
           id="_"
+          tabIndex="1"
           title="List Item Button"
           onClick={(id) => {
             console.log('clicked on ', {

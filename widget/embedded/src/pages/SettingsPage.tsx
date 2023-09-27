@@ -155,7 +155,12 @@ export function SettingsPage({ supportedSwappers, singleTheme }: PropTypes) {
         <Slippage />
         <List
           type={
-            <ListItemButton title="_" id="_" onClick={() => console.log()} />
+            <ListItemButton
+              tabIndex="0"
+              title="_"
+              id="_"
+              onClick={() => console.log()}
+            />
           }
           items={settingItems}
         />

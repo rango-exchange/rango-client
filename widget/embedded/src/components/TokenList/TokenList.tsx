@@ -28,9 +28,9 @@ import { generateRangeColors } from '../../utils/common';
 import { LoadingTokenList } from './LoadingTokenList';
 import {
   BalanceContainer,
-  Content,
   End,
   ImageSection,
+  List,
   Pin,
   Tag,
   TagTitle,
@@ -166,7 +166,7 @@ export function TokenList(props: PropTypes) {
                 style={{
                   height: style?.height,
                 }}
-                tab-index={index}
+                tabIndex="0"
                 key={`${tokens[index].symbol}${tokens[index].address}`}
                 id={`${tokens[index].symbol}${tokens[index].address}`}
                 hasDivider
@@ -262,8 +262,10 @@ export function TokenList(props: PropTypes) {
         {i18n.t('Select Token')}
       </Typography>
       <Divider size={4} />
-      {loadingStatus === 'loading' && <LoadingTokenList size={PAGE_SIZE} />}
-      {loadingStatus === 'success' && <Content>{renderList()}</Content>}
+      <List>
+        {loadingStatus === 'loading' && <LoadingTokenList size={PAGE_SIZE} />}
+        {loadingStatus === 'success' && renderList()}
+      </List>
     </div>
   );
 }

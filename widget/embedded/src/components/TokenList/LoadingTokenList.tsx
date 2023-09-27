@@ -3,11 +3,11 @@ import type { LoadingTokenListProps } from './TokenList.types';
 import { Divider, ListItem, Skeleton } from '@rango-dev/ui';
 import React from 'react';
 
-import { End, List } from './TokenList.styles';
+import { End } from './TokenList.styles';
 
 export function LoadingTokenList(props: LoadingTokenListProps) {
   return (
-    <List>
+    <>
       {Array.from(Array(props.size), (e) => (
         <ListItem
           key={e}
@@ -29,6 +29,6 @@ export function LoadingTokenList(props: LoadingTokenListProps) {
           }
         />
       ))}
-    </List>
+    </>
   );
 }

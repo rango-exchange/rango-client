@@ -1,18 +1,13 @@
 import { styled } from '../../theme';
 
 export const BaseListItem = styled('li', {
-  width: '100%',
-  borderRadius: '$xs',
   display: 'flex',
   alignItems: 'center',
   padding: '$10 $5',
-  border: 0,
-  backgroundColor: 'transparent',
-
+  borderRadius: '$xs',
   '.item-start-container': {
     paddingRight: '$10',
     flexShrink: 0,
-
     '& svg': {
       display: 'block',
     },
@@ -21,7 +16,6 @@ export const BaseListItem = styled('li', {
     flexGrow: 1,
     flexShrink: 1,
     flexBasis: 'auto',
-    textAlign: 'left',
 
     '.item-text-title': {
       fontWeight: 'bold',
@@ -35,6 +29,7 @@ export const BaseListItem = styled('li', {
     alignItems: 'center',
     paddingLeft: '$10',
   },
+
   variants: {
     hasDivider: {
       true: {
@@ -42,10 +37,6 @@ export const BaseListItem = styled('li', {
         borderBottomRightRadius: 0,
         borderBottomLeftRadius: 0,
       },
-    },
-    selected: {
-      true: { outline: '1px solid $secondary500' },
-      false: { outline: 0 },
     },
   },
 });

@@ -17,11 +17,7 @@ export const List = styled('ul', {
   margin: 0,
   listStyle: 'none',
   overflowY: 'auto',
-});
-
-export const Content = styled('div', {
-  minHeight: 280,
-  '& button': {
+  '& li': {
     alignItems: 'none',
     '.description': {
       position: 'relative',
