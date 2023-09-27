@@ -42,3 +42,20 @@ export const Date = styled('div', {
   padding: '$2',
   alignItems: 'flex-start',
 });
+
+export const LoadingMain = styled('div', {
+  backgroundColor: '$neutral100',
+  border: 'none',
+  width: '100%',
+  borderRadius: '$xm',
+  gap: 10,
+  padding: 15,
+});
+
+export const LoadingContainer = styled('div', {
+  display: 'flex',
+  justifyContent: 'space-between',
+  alignItems: 'flex-start',
+  flexDirection: 'column',
+  gap: 25,
+});

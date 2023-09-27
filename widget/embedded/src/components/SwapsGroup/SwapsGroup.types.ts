@@ -7,7 +7,7 @@ export type GroupBy = (list: PendingSwap[]) => {
 
 export interface PropTypes {
   list: PendingSwap[];
-  onBack: () => void;
   onSwapClick: (requestId: string) => void;
   groupBy?: GroupBy;
+  isLoading: boolean;
 }

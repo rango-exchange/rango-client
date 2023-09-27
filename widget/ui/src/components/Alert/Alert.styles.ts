@@ -11,8 +11,8 @@ export const Container = styled('div', {
     flex: '1 0 0',
   },
 
-  '.title_typography': {
-    textTransform: 'capitalize',
+  '.title_typography:first-letter': {
+    textTransform: 'uppercase',
   },
 
   '.footer': {

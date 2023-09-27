@@ -1,26 +1,58 @@
 import type { PropTypes } from './SwapsGroup.types';
 
-import { i18n } from '@lingui/core';
-import { Divider, NotFound, SwapListItem, Typography } from '@rango-dev/ui';
+import { Divider, SwapListItem, Typography } from '@rango-dev/ui';
 import React from 'react';
 
 import { limitDecimalPlaces } from '../../utils/numbers';
 
-import { Group, NotFoundContainer, SwapList, Time } from './SwapsGroup.styles';
+import { Group, SwapList, Time } from './SwapsGroup.styles';
 
-export function SwapsGroup(props: Omit<PropTypes, 'onBack'>) {
-  const { list, onSwapClick, groupBy } = props;
+export function SwapsGroup(props: PropTypes) {
+  const { list, onSwapClick, groupBy, isLoading } = props;
   const groups = groupBy ? groupBy(list) : [{ title: 'History', swaps: list }];
 
-  if (!list?.length) {
+  if (isLoading) {
+    const swaps = [{}, {}];
+
+    const loadingGroups = [
+      {
+        title: 'Today',
+        swaps,
+      },
+      {
+        title: 'Last month',
+        swaps,
+      },
+    ];
     return (
-      <NotFoundContainer>
-        <Divider size={32} />
-        <NotFound
-          title={i18n.t('No results found')}
-          description={i18n.t('Try using different keywords')}
-        />
-      </NotFoundContainer>
+      <>
+        {loadingGroups.map((group) => (
+          <React.Fragment key={group.title}>
+            <Group>
+              <Time>
+                <Typography
+                  variant="label"
+                  size="medium"
+                  color="neutral800"
+                  className="group-title">
+                  {group.title}
+                </Typography>
+              </Time>
+              <Divider size={4} />
+              <SwapList>
+                {group.swaps.map((_, index) => {
+                  const key = index + group.title;
+                  return (
+                    <React.Fragment key={key}>
+                      <SwapListItem isLoading={true} />
+                    </React.Fragment>
+                  );
+                })}
+              </SwapList>
+            </Group>
+          </React.Fragment>
+        ))}
+      </>
     );
   }
 
