@@ -5,7 +5,7 @@ export interface PropTypes {
   onClose: () => void;
   image: string;
   state: WalletState;
-  error?: boolean;
+  error?: string;
 }
 
 export type ModalContentProps = Pick<PropTypes, 'state' | 'error' | 'image'>;
