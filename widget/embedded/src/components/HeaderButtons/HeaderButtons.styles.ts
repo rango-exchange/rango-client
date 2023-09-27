@@ -1,7 +1,7 @@
 import { Button, darkTheme, styled } from '@rango-dev/ui';
 
 export const HeaderButton = styled(Button, {
-  width: '24px',
+  width: '$24',
   padding: '0',
   position: 'relative',
 });
@@ -17,4 +17,10 @@ export const ConnectedIcon = styled('div', {
   borderRadius: '$lg',
   right: '$4',
   border: '1px solid $surface100',
+});
+
+export const SuffixContainer = styled('div', {
+  display: 'flex',
+  justifyContent: 'flex-end',
+  width: '$40',
 });

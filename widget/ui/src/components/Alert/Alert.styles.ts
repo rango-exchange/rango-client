@@ -11,6 +11,10 @@ export const Container = styled('div', {
     flex: '1 0 0',
   },
 
+  '.title_typography': {
+    textTransform: 'capitalize',
+  },
+
   '.footer': {
     paddingTop: '$5',
     paddingLeft: '$24',
@@ -30,12 +34,13 @@ export const Container = styled('div', {
       warning: {},
       error: {},
       info: {},
+      loading: {},
     },
     variant: {
       regular: {
         padding: '$5',
         alignItems: 'flex-start',
-        backgroundColor: '$info100',
+        backgroundColor: '$neutral400',
       },
       alarm: {
         padding: '$5 $10',
@@ -143,6 +148,13 @@ export const IconHighlight = styled('div', {
         backgroundColor: '$$color',
       },
       info: {
+        $$color: '$colors$info300',
+        [`.${darkTheme} &`]: {
+          $$color: '$colors$info600',
+        },
+        backgroundColor: '$$color',
+      },
+      loading: {
         $$color: '$colors$info300',
         [`.${darkTheme} &`]: {
           $$color: '$colors$info600',

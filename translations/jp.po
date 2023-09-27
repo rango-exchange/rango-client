@@ -428,6 +428,33 @@ msgstr ""
 #. js-lingui-explicit-id
 #: widget/ui/src/containers/Warnings/BalanceErrors.tsx:40
 #~ msgid "Insufficent Balance:"
+#: widget/embedded/src/pages/WalletsPage.tsx:139
+#~ msgid "Choose a wallet to connect."
+#~ msgstr ""
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/utils/swap.ts:147
+#~ msgid "Finding Best Route..."
+#~ msgstr ""
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/utils/swap.ts:149
+#~ msgid "Enter an amount"
+#~ msgstr ""
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/utils/swap.ts:153
+#~ msgid "Limit Error"
+#~ msgstr ""
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/utils/swap.ts:155
+#~ msgid "Price impact is too high!"
+#~ msgstr ""
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/utils/swap.ts:158
+#~ msgid "USD price is unknown, price impact might be high!"
 #~ msgstr ""
 
 #. js-lingui-explicit-id

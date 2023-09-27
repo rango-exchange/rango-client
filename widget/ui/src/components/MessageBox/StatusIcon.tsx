@@ -6,9 +6,9 @@ import {
   CompleteIcon,
   ErrorIcon,
   InfoErrorIcon,
-  LoadingIcon,
   WarningIcon,
 } from '../../icons';
+import { Spinner } from '../Spinner';
 
 function StatusIcon(props: Pick<PropTypes, 'type'>) {
   switch (props.type) {
@@ -19,7 +19,7 @@ function StatusIcon(props: Pick<PropTypes, 'type'>) {
     case 'error':
       return <ErrorIcon color={props.type} size={30} />;
     case 'loading':
-      return <LoadingIcon color="info" size={30} />;
+      return <Spinner color="info" size={30} />;
     default:
       return <InfoErrorIcon color={props.type} size={30} />;
   }

@@ -8,6 +8,7 @@ import {
   InfoErrorIcon,
   WarningIcon,
 } from '../../icons';
+import { Spinner } from '../Spinner';
 
 function AlertIcon(props: Pick<PropTypes, 'type'>) {
   switch (props.type) {
@@ -17,6 +18,8 @@ function AlertIcon(props: Pick<PropTypes, 'type'>) {
       return <WarningIcon color={props.type} size={12} />;
     case 'error':
       return <ErrorIcon color={props.type} size={12} />;
+    case 'loading':
+      return <Spinner color="info" size={12} />;
     default:
       return <InfoErrorIcon color={props.type} size={12} />;
   }

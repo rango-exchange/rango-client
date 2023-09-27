@@ -1,9 +1,14 @@
 import { darkTheme, styled } from '../../theme';
+import { Typography } from '../Typography';
 
 export const WalletImageContainer = styled('div', {
   '& img': {
     borderRadius: '50%',
   },
+});
+
+export const Title = styled(Typography, {
+  textTransform: 'capitalize',
 });
 
 export const Text = styled('div', {

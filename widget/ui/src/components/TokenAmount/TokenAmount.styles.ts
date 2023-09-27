@@ -11,6 +11,9 @@ export const Container = styled('div', {
       },
       horizontal: { flexDirection: 'row', width: '100%' },
     },
+    centerAlign: {
+      true: { alignItems: 'center', justifyContent: 'center' },
+    },
   },
   '& .token-amount': {
     display: 'flex',

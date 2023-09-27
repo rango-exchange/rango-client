@@ -17,6 +17,7 @@ export function Layout({
   header,
   hasFooter,
   action,
+  noPadding,
 }: PropsWithChildren<PropTypes>) {
   const connectedWallets = useWalletsStore.use.connectedWallets();
 
@@ -48,7 +49,7 @@ export function Layout({
           </>
         }
       />
-      <Content>{children}</Content>
+      <Content noPadding={noPadding}>{children}</Content>{' '}
       {hasFooter && (
         <Footer>
           {action}

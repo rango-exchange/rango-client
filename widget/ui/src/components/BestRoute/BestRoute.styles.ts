@@ -68,24 +68,6 @@ export const SummaryContainer = styled('div', {
     basic: { true: { borderTopRightRadius: '0', borderTopLeftRadius: '0' } },
   },
   '& .summary': { width: '100%' },
-  '& .cost-and-time': {
-    borderRadius: '$xs',
-    display: 'flex',
-    justifyContent: 'start',
-    alignItems: 'center',
-    paddingBottom: '$10',
-  },
-  '& .icon': {
-    width: '$16',
-    height: '$16',
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  '& .cost-and-time__item': {
-    display: 'flex',
-    alignItems: 'center',
-  },
   '& .basic-info': {
     paddingTop: '$10',
     display: 'flex',

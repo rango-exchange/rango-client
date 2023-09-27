@@ -11,11 +11,22 @@ import { Container, IconHighlight, Main } from './Alert.styles';
 import AlertIcon from './AlertIcon';
 
 export function Alert(props: PropsWithChildren<PropTypes>) {
-  const { type, title, footer, action, variant = 'regular' } = props;
+  const {
+    type,
+    title,
+    footer,
+    action,
+    containerStyles,
+    variant = 'regular',
+  } = props;
   const isFooterString = typeof footer === 'string';
 
   return (
-    <Container type={type} variant={variant}>
+    <Container
+      className="_alert"
+      style={containerStyles}
+      type={type}
+      variant={variant}>
       <Main variant={variant}>
         <div className="title">
           <IconHighlight type={type}>
@@ -42,3 +53,5 @@ export function Alert(props: PropsWithChildren<PropTypes>) {
     </Container>
   );
 }
+
+Alert.toString = () => '._alert';
