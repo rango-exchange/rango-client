@@ -20,27 +20,29 @@ export function PriceImpact(props: PriceImpactProps) {
     <Container>
       {outputUsdValue && (
         <Typography
-          mr={4}
           size={size === 'small' ? 'small' : 'medium'}
           variant="body"
           color={size !== 'small' ? '$neutral800' : '$neutral900'}>
           {`~$${outputUsdValue}`}
         </Typography>
       )}
-      <Typography
-        size={size === 'small' ? 'small' : 'medium'}
-        variant="body"
-        color={percentageChangeColor}>
-        {outputUsdValue &&
-          percentageChange &&
-          `(${
-            percentageChange.includes('-')
-              ? percentageChange
-              : `-${percentageChange}`
-          }${percentageChange ? '%' : '-'})`}
+      {((outputUsdValue && percentageChange) || !outputUsdValue) && (
+        <Typography
+          size={size === 'small' ? 'small' : 'medium'}
+          variant="body"
+          ml={4}
+          color={percentageChangeColor}>
+          {outputUsdValue &&
+            percentageChange &&
+            `(${
+              percentageChange.includes('-')
+                ? percentageChange
+                : `-${percentageChange}`
+            }${percentageChange ? '%' : '-'})`}
 
-        {!outputUsdValue && error}
-      </Typography>
+          {!outputUsdValue && error}
+        </Typography>
+      )}
     </Container>
   );
 }

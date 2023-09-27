@@ -11,6 +11,7 @@ import { useManager } from '@rango-dev/queue-manager-react';
 import {
   Alert,
   BestRoute,
+  BestRouteSkeleton,
   BottomLogo,
   Button,
   Divider,
@@ -74,14 +75,19 @@ const Container = styled('div', {
     justifyContent: 'center',
     alignItems: 'center',
   },
-  '& .buttons': {
-    width: '100%',
-    display: 'flex',
-    justifyContent: 'space-between',
-  },
+});
+
+const Buttons = styled('div', {
+  width: '100%',
+  display: 'flex',
+  justifyContent: 'space-between',
   '& .confirm-button': {
     flexGrow: 1,
     paddingRight: '$10',
+  },
+  [`& ${IconButton}`]: {
+    width: '$48',
+    height: '$48',
   },
 });
 
@@ -303,6 +309,7 @@ export function ConfirmSwapPage(props: PropTypes) {
 
   return (
     <Layout
+      hasLogo
       header={{
         title: 'Confirm Swap',
         onBack: navigate.bind(null, -1),
@@ -317,7 +324,31 @@ export function ConfirmSwapPage(props: PropTypes) {
             </HeaderButton>
           </Tooltip>
         ),
-      }}>
+      }}
+      footer={
+        <Buttons>
+          <div className="confirm-button">
+            <Button
+              variant="contained"
+              type="primary"
+              size="large"
+              fullWidth
+              loading={fetchingConfirmationRoute}
+              disabled={!!confirmSwapResult.error}
+              onClick={onStartConfirmSwap}>
+              Start Swap
+            </Button>
+          </div>
+          <IconButton
+            variant="contained"
+            type="primary"
+            size="large"
+            loading={fetchingConfirmationRoute}
+            onClick={setShowWallets.bind(null, true)}>
+            <WalletIcon size={24} />
+          </IconButton>
+        </Buttons>
+      }>
       <Modal
         anchor="bottom"
         open={showSlippageWarning}
@@ -391,6 +422,7 @@ export function ConfirmSwapPage(props: PropTypes) {
           config={config}
         />
       )}
+
       <Container>
         <div className="description">
           <Typography variant="title" size="small">
@@ -421,6 +453,9 @@ export function ConfirmSwapPage(props: PropTypes) {
             />
             <Divider size={12} />
           </>
+        )}
+        {fetchingConfirmationRoute && (
+          <BestRouteSkeleton type="swap-preview" expanded />
         )}
         {showBestRoute && (
           <BestRoute
@@ -470,29 +505,6 @@ export function ConfirmSwapPage(props: PropTypes) {
             <Divider size={12} />
           </>
         )}
-        <div className="buttons">
-          <div className="confirm-button">
-            <Button
-              variant="contained"
-              type="primary"
-              size="large"
-              fullWidth
-              loading={fetchingConfirmationRoute}
-              disabled={!!confirmSwapResult.error}
-              onClick={onStartConfirmSwap}>
-              Start Swap
-            </Button>
-          </div>
-          <IconButton
-            variant="contained"
-            type="primary"
-            size="large"
-            style={{ width: '48px', height: '48px' }}
-            loading={fetchingConfirmationRoute}
-            onClick={setShowWallets.bind(null, true)}>
-            <WalletIcon size={24} />
-          </IconButton>
-        </div>
       </Container>
     </Layout>
   );

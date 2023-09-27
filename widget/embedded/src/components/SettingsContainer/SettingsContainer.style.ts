@@ -1,15 +1,15 @@
 import { styled } from '@rango-dev/ui';
 
 export const SettingsContainer = styled('div', {
-  height: '610px',
+  height: '100%',
 });
 
 export const LiquiditySourceList = styled('ul', {
   padding: '$15 $5 0',
-  height: '502px',
   margin: 0,
   listStyle: 'none',
-  overflowY: 'auto',
+  height: '100%',
+  overflowY: 'visible',
 });
 
 export const LiquiditySourceDivider = styled('li', {
@@ -29,5 +29,5 @@ export const NotFoundContainer = styled('div', {
   flexDirection: 'column',
   alignItems: 'center',
   justifyContent: 'center',
-  height: '502px',
+  height: '100%',
 });

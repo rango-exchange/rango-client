@@ -25,13 +25,12 @@ const Container = styled('div', {
 });
 
 const SwapsGroupContainer = styled('div', {
-  overflowY: 'auto',
+  overflowY: 'visible',
   width: '100%',
   display: 'flex',
   flexDirection: 'column',
   gap: 15,
-  height: 440,
-  paddingRight: '$8',
+  height: '100%',
 });
 
 const isStepContainsText = (steps: PendingSwapStep[], value: string) => {
