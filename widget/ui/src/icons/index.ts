@@ -20,6 +20,7 @@ export { default as LinkIcon } from './Link';
 export { default as LoadingIcon } from './Loading';
 export { default as NoRouteIcon } from './NoRoute';
 export { default as NextIcon } from './Next';
+export { default as NoNotificationIcon } from './NoNotification';
 export { default as NotificationNumberIcon } from './NotificationNumber';
 export { default as NotificationsIcon } from './Notifications';
 export { default as NumberIcon } from './Number';
