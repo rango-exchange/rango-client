@@ -10,24 +10,20 @@ import { Container } from './TokenAmount.styles';
 
 export function TokenAmount(props: PropTypes) {
   return (
-    <Container direction={props.direction}>
+    <Container direction={props.direction} centerAlign={props.centerAlign}>
       <div className="token-amount">
         <ChainToken
           chainImage={props.chain.image}
           tokenImage={props.token.image}
           size="medium"
         />
-        <Typography
-          ml={4}
-          size="large"
-          variant="title"
-          style={{ fontWeight: 600 }}>
+        <Typography ml={4} size="xsmall" variant="headline">
           {props.price.value}
         </Typography>
         <Typography
           ml={8}
-          size="large"
-          variant="title"
+          size="xsmall"
+          variant="headline"
           style={{ fontWeight: 400 }}>
           {props.token.displayName}
         </Typography>

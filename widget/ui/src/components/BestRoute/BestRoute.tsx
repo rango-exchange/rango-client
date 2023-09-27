@@ -3,16 +3,10 @@ import type { BestRouteProps } from './BestRoute.types';
 import React, { useState } from 'react';
 
 import { Typography } from '../../components/Typography';
-import {
-  ChevronDownIcon,
-  ChevronRightIcon,
-  GasIcon,
-  InfoIcon,
-  NumberIcon,
-  TimeIcon,
-} from '../../icons';
+import { ChevronDownIcon, ChevronRightIcon, InfoIcon } from '../../icons';
 import { Image } from '../common';
 import { Divider } from '../Divider';
+import { RouteCost } from '../RouteCost';
 import { StepDetails } from '../StepDetails';
 import { TokenAmount } from '../TokenAmount/TokenAmount';
 import { Tooltip } from '../Tooltip';
@@ -33,7 +27,6 @@ export function BestRoute(props: BestRouteProps) {
     steps,
     totalFee,
     totalTime,
-    tag,
     input,
     output,
     percentageChange,
@@ -50,36 +43,7 @@ export function BestRoute(props: BestRouteProps) {
     <>
       <SummaryContainer recommended={recommended} basic={type === 'basic'}>
         <div className="summary">
-          <div className="cost-and-time">
-            <div className="cost-and-time__item">
-              <div className="icon">
-                <GasIcon size={12} color={'gray'} />
-              </div>
-              <Typography ml={2} align="center" variant="body" size="small">
-                {`$${totalFee}`}
-              </Typography>
-            </div>
-            <Separator />
-            <div className="cost-and-time__item">
-              <div className="icon">
-                <TimeIcon size={12} color="gray" />
-              </div>
-              <Typography ml={2} align="center" variant="body" size="small">
-                {`${totalTime} min`}
-              </Typography>
-            </div>
-            <Separator />
-            <div className="cost-and-time__item">
-              <div className="icon">
-                <NumberIcon size={16} color="gray" />
-              </div>
-              <Typography ml={2} align="center" variant="body" size="small">
-                {numberOfSteps}
-              </Typography>
-            </div>
-            {tag}
-          </div>
-
+          <RouteCost fee={totalFee} time={totalTime} steps={numberOfSteps} />
           {type === 'basic' && (
             <div className="basic-info">
               <FrameIcon>

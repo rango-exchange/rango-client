@@ -15,6 +15,12 @@ export const ButtonBase = styled('button', {
 
   variants: {
     size: {
+      xxsmall: {
+        borderRadius: '$xm',
+        fontSize: '$10',
+        lineHeight: '12px',
+        padding: '$4',
+      },
       xsmall: {
         borderRadius: '$xm',
         fontSize: '$12',
