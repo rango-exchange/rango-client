@@ -93,31 +93,6 @@ msgid "Balance"
 msgstr "Balance"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/constants/errors.ts:33
-#~ msgid "Route updated and price impact is too high, try again later!"
-#~ msgstr "Route updated and price impact is too high, try again later!"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/constants/warnings.ts:10
-#~ msgid "Route has been updated."
-#~ msgstr "Route has been updated."
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/constants/warnings.ts:12
-#~ msgid "Output amount changed to {newOutputAmount} ({percentageChange}% change)."
-#~ msgstr "Output amount changed to {newOutputAmount} ({percentageChange}% change)."
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/constants/warnings.ts:20
-#~ msgid "Route swappers has been updated."
-#~ msgstr "Route swappers has been updated."
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/constants/warnings.ts:22
-#~ msgid "Route internal coins has been updated."
-#~ msgstr "Route internal coins has been updated."
-
-#. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:37
 #: widget/embedded/src/components/SwapsGroup/SwapsGroup.tsx:20
 #: widget/embedded/src/components/TokenList/TokenList.tsx:125
@@ -156,23 +131,23 @@ msgstr "Balance"
 #~ msgstr "Cancel"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/HeaderButtons/HomeButtons.tsx:25
+#: widget/embedded/src/components/HeaderButtons/HomeButtons.tsx:30
 #~ msgid "Refresh"
 #~ msgstr "Refresh"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/HeaderButtons/HomeButtons.tsx:34
+#: widget/embedded/src/components/HeaderButtons/HomeButtons.tsx:40
 #~ msgid "Notifications"
 #~ msgstr "Notifications"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/HeaderButtons/HomeButtons.tsx:42
+#: widget/embedded/src/components/HeaderButtons/HomeButtons.tsx:55
 #: widget/embedded/src/pages/ConfirmSwapPage.tsx:311
 #~ msgid "Settings"
 #~ msgstr "Settings"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/HeaderButtons/HomeButtons.tsx:47
+#: widget/embedded/src/components/HeaderButtons/HomeButtons.tsx:60
 #~ msgid "Transactions History"
 #~ msgstr "Transactions History"
 
@@ -288,6 +263,11 @@ msgstr "Balance"
 #~ msgstr "Confirm High price impact"
 
 #. js-lingui-explicit-id
+#: widget/embedded/src/constants/errors.ts:33
+#~ msgid "Route updated and price impact is too high, try again later!"
+#~ msgstr "Route updated and price impact is too high, try again later!"
+
+#. js-lingui-explicit-id
 #: widget/embedded/src/constants/errors.ts:38
 #~ msgid "USD Price Unknown"
 #~ msgstr "USD Price Unknown"
@@ -309,7 +289,7 @@ msgstr "Balance"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/constants/messages.ts:5
-#: widget/embedded/src/pages/Home.tsx:283
+#: widget/embedded/src/pages/Home.tsx:285
 #~ msgid "Swap"
 #~ msgstr "Swap"
 
@@ -322,6 +302,26 @@ msgstr "Balance"
 #: widget/embedded/src/constants/messages.ts:7
 #~ msgid "The route goes through Ethereum. Continue?"
 #~ msgstr "The route goes through Ethereum. Continue?"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/constants/warnings.ts:10
+#~ msgid "Route has been updated."
+#~ msgstr "Route has been updated."
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/constants/warnings.ts:12
+#~ msgid "Output amount changed to {newOutputAmount} ({percentageChange}% change)."
+#~ msgstr "Output amount changed to {newOutputAmount} ({percentageChange}% change)."
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/constants/warnings.ts:20
+#~ msgid "Route swappers has been updated."
+#~ msgstr "Route swappers has been updated."
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/constants/warnings.ts:22
+#~ msgid "Route internal coins has been updated."
+#~ msgstr "Route internal coins has been updated."
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/pages/HistoryPage.tsx:82

@@ -11,7 +11,7 @@ import {
   Typography,
   WarningIcon,
 } from '@rango-dev/ui';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { HomeButtons } from '../components/HeaderButtons';
@@ -116,6 +116,7 @@ export function Home() {
     swap: swapHasError,
     recommendation,
   } = LimitErrorMessage(bestRoute);
+  const layoutRef = useRef<HTMLDivElement>(null);
 
   const showBestRoute =
     !!Number(inputAmount) &&
@@ -255,6 +256,7 @@ export function Home() {
 
   return (
     <Layout
+      ref={layoutRef}
       hasFooter
       action={
         <Button
@@ -283,6 +285,7 @@ export function Home() {
         title: i18n.t('Swap'),
         suffix: (
           <HomeButtons
+            layoutRef={layoutRef.current}
             onClickRefresh={
               !!bestRoute || bestRouteError ? refetchBestRoute : undefined
             }

@@ -2,8 +2,8 @@ import { darkTheme, keyframes, styled } from '../../theme';
 
 export const ButtonBase = styled('button', {
   position: 'relative',
-  overflow: 'hidden',
   display: 'flex',
+  overflow: 'hidden',
   alignItems: 'center',
   justifyContent: 'center',
   fontSize: '$16',

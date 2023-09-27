@@ -12,6 +12,7 @@ import { navigationRoutes } from './constants/navigationRoutes';
 import { globalFont } from './globalStyles';
 import { useTheme } from './hooks/useTheme';
 import QueueManager from './QueueManager';
+import { useNotificationStore } from './store/notification';
 import { useSettingsStore } from './store/settings';
 import { useUiStore } from './store/ui';
 import { initConfig } from './utils/configs';
@@ -49,6 +50,7 @@ export function Main(props: PropsWithChildren<WidgetProps>) {
 
   useEffect(() => {
     void useSettingsStore.persist.rehydrate();
+    void useNotificationStore.persist.rehydrate();
     widgetContext.onConnectWallet(setLastConnectedWalletWithNetwork);
   }, []);
 
