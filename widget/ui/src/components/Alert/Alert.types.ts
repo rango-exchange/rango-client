@@ -1,11 +1,12 @@
-import type { ReactNode } from 'react';
+import type { CSSProperties, ReactNode } from 'react';
 
-export type Type = 'success' | 'warning' | 'error' | 'info';
+export type Type = 'success' | 'warning' | 'error' | 'info' | 'loading';
 
 export interface PropTypes {
   type: Type;
-  title?: string;
+  title?: ReactNode;
   footer?: ReactNode;
   action?: ReactNode;
   variant?: 'alarm' | 'regular';
+  containerStyles?: CSSProperties;
 }

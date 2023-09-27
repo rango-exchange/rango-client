@@ -1,6 +1,7 @@
 import { styled } from '../../theme';
 
 export const Container = styled('div', {
+  width: '100%',
   position: 'relative',
   padding: '0 0.5rem',
   boxSizing: 'border-box',
@@ -12,7 +13,7 @@ export const Container = styled('div', {
         backgroundColor: '$neutral100',
         borderRadius: '$xm',
         padding: '$10 $15',
-        marginBottom: '25px',
+        marginBottom: '15px',
       },
     },
     state: {
@@ -109,9 +110,9 @@ export const StepSeparator = styled('div', {
   margin: '0 $10',
   alignSelf: 'stretch',
   display: 'block',
-  height: '25px',
+  height: '15px',
   position: 'absolute',
-  top: '-26px',
+  top: '-16px',
   left: '16px',
   variants: {
     state: {

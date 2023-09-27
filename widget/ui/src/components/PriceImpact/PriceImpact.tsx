@@ -9,7 +9,7 @@ import { Container } from './PriceImpact.styles';
 export function PriceImpact(props: PriceImpactProps) {
   const { size, outputUsdValue, percentageChange, warningLevel, error } = props;
 
-  let percentageChangeColor = '';
+  let percentageChangeColor = '$neutral900';
   if (!outputUsdValue || warningLevel === 'low') {
     percentageChangeColor = '$warning500';
   } else if (warningLevel === 'high') {
@@ -23,7 +23,7 @@ export function PriceImpact(props: PriceImpactProps) {
           mr={4}
           size={size === 'small' ? 'small' : 'medium'}
           variant="body"
-          color={size !== 'small' ? '$neutral800' : undefined}>
+          color={size !== 'small' ? '$neutral800' : '$neutral900'}>
           {`~$${outputUsdValue}`}
         </Typography>
       )}
@@ -33,7 +33,11 @@ export function PriceImpact(props: PriceImpactProps) {
         color={percentageChangeColor}>
         {outputUsdValue &&
           percentageChange &&
-          `(${percentageChange}${percentageChange ? '%' : '-'})`}
+          `(${
+            percentageChange.includes('-')
+              ? percentageChange
+              : `-${percentageChange}`
+          }${percentageChange ? '%' : '-'})`}
 
         {!outputUsdValue && error}
       </Typography>

@@ -5,7 +5,12 @@ import { Image } from '../common';
 import { Typography } from '../Typography';
 
 import { makeInfo } from './Wallet.helpers';
-import { Text, WalletButton, WalletImageContainer } from './Wallet.styles';
+import {
+  Text,
+  Title,
+  WalletButton,
+  WalletImageContainer,
+} from './Wallet.styles';
 import { type SelectablePropTypes, WalletState } from './Wallet.types';
 
 export function SelectableWallet(props: SelectablePropTypes) {
@@ -27,9 +32,9 @@ export function SelectableWallet(props: SelectablePropTypes) {
       </WalletImageContainer>
 
       <Text>
-        <Typography variant="label" size="medium" noWrap={false}>
+        <Title variant="label" size="medium" noWrap={false}>
           {title}
-        </Typography>
+        </Title>
 
         <Typography
           variant="body"

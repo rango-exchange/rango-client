@@ -430,6 +430,10 @@ msgstr "Balance"
 #~ msgid "Insufficent Balance:"
 #~ msgstr "Insufficent Balance:"
 
+#: widget/embedded/src/pages/WalletsPage.tsx:139
+#~ msgid "Choose a wallet to connect."
+#~ msgstr "Choose a wallet to connect."
+
 #. js-lingui-explicit-id
 #: widget/embedded/src/utils/swap.ts:147
 #~ msgid "Finding Best Route..."

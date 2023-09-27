@@ -4,6 +4,7 @@ import type { SwapInputProps } from 'src/containers/SwapInput/SwapInput.types';
 type BaseProps = Pick<SwapInputProps, 'token' | 'price'> & {
   chain: Pick<SwapInputProps['chain'], 'image'>;
   direction?: 'vertical' | 'horizontal';
+  centerAlign?: boolean;
 };
 
 type InputAmountProps = { type: 'input' };

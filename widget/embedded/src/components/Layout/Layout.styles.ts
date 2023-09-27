@@ -11,6 +11,13 @@ export const Content = styled('div', {
   borderTopRightRadius: '$md',
   backgroundColor: '$background',
   position: 'relative',
+  variants: {
+    noPadding: {
+      true: {
+        padding: '0',
+      },
+    },
+  },
 });
 
 export const Footer = styled('div', {

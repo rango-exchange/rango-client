@@ -1,7 +1,7 @@
 import type { PropTypes } from './Modal.types';
 import type { PropsWithChildren } from 'react';
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 
 import { CloseIcon } from '../../icons';
@@ -27,6 +27,7 @@ export function Modal(props: PropsWithChildren<PropTypes>) {
   } = props;
   const [active, setActive] = useState(false);
   const [isMount, setIsMount] = useState(false);
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const handleBackDropClick = (event: React.MouseEvent<HTMLDivElement>) => {
     if (event.target === event.currentTarget && dismissible) {
@@ -35,20 +36,28 @@ export function Modal(props: PropsWithChildren<PropTypes>) {
   };
   useEffect(() => {
     if (container) {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
       if (open) {
         setIsMount(true);
         container.style.overflow = 'hidden';
-        setTimeout(() => {
+        timeoutRef.current = setTimeout(() => {
           setActive(true);
         }, OPEN_DELAY);
       } else {
         setActive(false);
-        setTimeout(() => {
+        timeoutRef.current = setTimeout(() => {
           setIsMount(false);
           container.style.overflow = 'unset';
         }, CLOSED_DELAY);
       }
     }
+    return () => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+    };
   }, [open, container]);
 
   return (

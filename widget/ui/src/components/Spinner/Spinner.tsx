@@ -22,7 +22,7 @@ const SpinnerContainer = styled('div', {
 
 export interface PropTypes {
   // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-  size?: 16 | 20 | 24;
+  size?: 12 | 16 | 20 | 24 | 30;
   color?: SvgIconProps['color'];
   css?: Stitches.CSS;
 }
