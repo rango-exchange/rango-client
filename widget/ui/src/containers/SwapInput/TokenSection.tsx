@@ -1,25 +1,11 @@
 import type { TokenSectionProps } from './TokenSection.types';
 
 import { i18n } from '@lingui/core';
-import { styled } from '@stitches/react';
 import React from 'react';
 
-import {
-  Button,
-  ChainToken,
-  Divider,
-  Skeleton,
-  Typography,
-} from '../../components';
+import { ChainToken, Divider, Skeleton, Typography } from '../../components';
 
-import { TokenSectionContainer } from './TokenSection.styles';
-
-const Container = styled(Button, {
-  '&:hover': {
-    borderRadius: '$xs',
-    backgroundColor: '$info100',
-  },
-});
+import { Container, TokenSectionContainer } from './TokenSection.styles';
 
 export function TokenSection(props: TokenSectionProps) {
   const {
@@ -32,8 +18,12 @@ export function TokenSection(props: TokenSectionProps) {
     loading,
   } = props;
   return (
-    <Container variant="ghost" disabled={error || loading} onClick={onClick}>
-      <TokenSectionContainer loading={loading}>
+    <Container
+      loading={loading}
+      variant="ghost"
+      disabled={error || loading}
+      onClick={onClick}>
+      <TokenSectionContainer>
         <ChainToken
           size="large"
           useAsPlaceholder={error || (!loading && (!chainImage || !tokenImage))}

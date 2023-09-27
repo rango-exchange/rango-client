@@ -243,7 +243,7 @@ export function WalletList(props: PropTypes) {
         <WalletButton selected={false} onClick={onShowMore.bind(null)}>
           <Typography variant="label" size="medium">
             Show more wallets
-            <Typography variant="label" size="medium" color="$primary">
+            <Typography variant="label" size="medium" color="$secondary500">
               &nbsp;+{numberOfSupportedWallets - (limit ?? 0)}
             </Typography>
           </Typography>

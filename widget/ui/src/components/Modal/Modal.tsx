@@ -5,10 +5,32 @@ import React, { useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 
 import { CloseIcon } from '../../icons';
+import { styled } from '../../theme';
+import { BottomLogo } from '../BottomLogo';
+import { Divider } from '../Divider';
 import { IconButton } from '../IconButton/IconButton';
 import { Typography } from '../Typography';
 
 import { BackDrop, Flex, ModalContainer, ModalHeader } from './Modal.styles';
+
+export const Content = styled('div', {
+  display: 'flex',
+  flexDirection: 'column',
+  flex: 1,
+  padding: '$20 $0 $10 $20',
+  position: 'relative',
+  overflowY: 'auto',
+  overflowX: 'hidden',
+});
+
+export const Footer = styled('div', {
+  '& .footer__content': {
+    padding: '$0 $20',
+  },
+  '& .footer__logo': {
+    padding: '$0 $20 $10 $20',
+  },
+});
 
 const CLOSED_DELAY = 600;
 const OPEN_DELAY = 10;
@@ -24,6 +46,8 @@ export function Modal(props: PropsWithChildren<PropTypes>) {
     dismissible = true,
     children,
     suffix,
+    footer,
+    hasLogo = true,
   } = props;
   const [active, setActive] = useState(false);
   const [isMount, setIsMount] = useState(false);
@@ -83,13 +107,24 @@ export function Modal(props: PropsWithChildren<PropTypes>) {
                 <Flex>
                   {suffix}
                   {dismissible && (
-                    <IconButton onClick={onClose}>
+                    <IconButton onClick={onClose} variant="ghost">
                       <CloseIcon color="gray" size={14} />
                     </IconButton>
                   )}
                 </Flex>
               </ModalHeader>
-              {children}
+              <Content>{children}</Content>
+              {(hasLogo || footer) && (
+                <Footer>
+                  <div className="footer__content">{footer}</div>
+                  {hasLogo && (
+                    <div className="footer__logo">
+                      <Divider size={12} />
+                      <BottomLogo />
+                    </div>
+                  )}
+                </Footer>
+              )}
             </ModalContainer>
           </BackDrop>,
           container

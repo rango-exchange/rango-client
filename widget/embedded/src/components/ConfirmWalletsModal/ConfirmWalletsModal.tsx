@@ -229,6 +229,27 @@ export function ConfirmWalletsModal(props: PropTypes) {
       onClose={onClose}
       dismissible={!showMoreWalletFor}
       container={modalContainer}
+      footer={
+        <ConfirmButton>
+          <Button
+            loading={loading}
+            disabled={confirmSwapDisabled(
+              loading,
+              showCustomDestination,
+              destination,
+              bestRoute,
+              selectableWallets,
+              lastStepToBlockchain
+            )}
+            onClick={onConfirmWallets}
+            variant="contained"
+            type="primary"
+            fullWidth
+            size="large">
+            Confirm
+          </Button>
+        </ConfirmButton>
+      }
       {...(showMoreWalletFor && {
         containerStyle: { padding: '$0' },
         prefix: (
@@ -424,25 +445,6 @@ export function ConfirmWalletsModal(props: PropTypes) {
               </div>
             );
           })}
-          <ConfirmButton>
-            <Button
-              loading={loading}
-              disabled={confirmSwapDisabled(
-                loading,
-                showCustomDestination,
-                destination,
-                bestRoute,
-                selectableWallets,
-                lastStepToBlockchain
-              )}
-              onClick={onConfirmWallets}
-              variant="contained"
-              type="primary"
-              fullWidth
-              size="large">
-              Confirm
-            </Button>
-          </ConfirmButton>
         </>
       )}
     </Modal>

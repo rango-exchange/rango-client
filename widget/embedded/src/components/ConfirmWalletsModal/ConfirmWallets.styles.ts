@@ -115,7 +115,7 @@ export const CollapsibleRoot = styled(Collapsible.Root, {
 
 export const CustomDestinationButton = styled(Button, {
   width: '100%',
-  borderRadius: '$10',
+  borderRadius: '$sm !important',
   padding: '$15 !important',
   justifyContent: 'space-between',
   alignItems: 'center',
@@ -147,11 +147,7 @@ export const ExpandedIcon = styled('div', {
 });
 
 export const ConfirmButton = styled('div', {
-  width: 'calc(100% - 40px)',
-  position: 'absolute',
-  bottom: '$20',
   display: 'flex',
-  filter: 'drop-shadow(white 0 -10px 10px)',
 });
 
 export const StyledTextField = styled(TextField, {
