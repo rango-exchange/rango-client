@@ -55,11 +55,11 @@ interface WalletProps {
   onClick: (type: WalletType) => void;
   selected?: boolean;
   description?: string;
+  isLoading?: boolean;
 }
 
 export type WalletPropTypes = State & WalletProps;
 
 export type SelectablePropTypes = WalletPropTypes & {
   selected: boolean;
-  description?: string;
 };

@@ -167,7 +167,7 @@ export function WalletList(props: PropTypes) {
                 onClose={() => setOpenWalletStateModal('')}
                 image={wallet.image}
                 state={wallet.state}
-                error={!!error}
+                error={error}
               />
             )}
             {!!experimentalChainWallet && (
