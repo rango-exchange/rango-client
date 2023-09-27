@@ -9,7 +9,7 @@ export const Container = styled('div', {
         flexDirection: 'column',
         alignItems: 'start',
       },
-      horizontal: { flexDirection: 'row', width: '100%' },
+      horizontal: { flexDirection: 'row', width: '100%', alignItems: 'end' },
     },
     centerAlign: {
       true: { alignItems: 'center', justifyContent: 'center' },
@@ -18,6 +18,7 @@ export const Container = styled('div', {
   '& .token-amount': {
     display: 'flex',
     justifyContent: 'center',
+    alignItems: 'center',
   },
   '& .usd-value': {
     display: 'flex',

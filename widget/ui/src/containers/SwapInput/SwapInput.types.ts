@@ -17,6 +17,7 @@ export type BaseProps = {
   loading?: boolean;
   error?: boolean;
   disabled?: boolean;
+  sharpBottomStyle?: boolean;
   onClickToken: () => void;
 };
 

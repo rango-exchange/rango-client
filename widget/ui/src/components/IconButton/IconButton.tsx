@@ -10,6 +10,7 @@ function IconButton(props: PropsWithChildren<PropTypes>) {
   const { style, ...otherProps } = props;
   return (
     <Button
+      className="_icon-button"
       {...otherProps}
       style={{
         borderRadius: '100%',
@@ -20,5 +21,7 @@ function IconButton(props: PropsWithChildren<PropTypes>) {
     </Button>
   );
 }
+
+IconButton.toString = () => '._icon-button';
 
 export { IconButton };

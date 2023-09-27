@@ -222,6 +222,7 @@ export function ConfirmWalletsModal(props: PropTypes) {
   }, [connectedWallets.length]);
 
   const modalContainer = document.querySelector('#swap-box') as HTMLDivElement;
+
   return (
     <Modal
       open={open}

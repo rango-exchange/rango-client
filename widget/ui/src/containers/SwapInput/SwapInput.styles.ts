@@ -5,6 +5,14 @@ export const Container = styled('div', {
   backgroundColor: '$neutral100',
   borderRadius: '$xm',
   padding: '$15',
+  variants: {
+    sharpBottomStyle: {
+      true: {
+        borderBottomLeftRadius: '$0',
+        borderBottomRightRadius: '$0',
+      },
+    },
+  },
   '& .label__container': {
     paddingBottom: '$5',
   },

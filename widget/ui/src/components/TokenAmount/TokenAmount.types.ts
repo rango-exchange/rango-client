@@ -5,6 +5,7 @@ type BaseProps = Pick<SwapInputProps, 'token' | 'price'> & {
   chain: Pick<SwapInputProps['chain'], 'image'>;
   direction?: 'vertical' | 'horizontal';
   centerAlign?: boolean;
+  label?: string;
 };
 
 type InputAmountProps = { type: 'input' };

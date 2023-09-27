@@ -2,19 +2,17 @@ import type { WidgetConfig } from './types';
 import type { WalletType } from '@rango-dev/wallets-shared';
 import type { PropsWithChildren } from 'react';
 
-import { I18nManager, styled, SwapContainer } from '@rango-dev/ui';
+import { I18nManager, styled } from '@rango-dev/ui';
 import React, { useContext, useEffect, useMemo, useState } from 'react';
 
 import { AppRouter } from './components/AppRouter';
 import { AppRoutes } from './components/AppRoutes';
 import { WidgetEvents } from './components/WidgetEvents';
-import { navigationRoutes } from './constants/navigationRoutes';
 import { globalFont } from './globalStyles';
 import { useTheme } from './hooks/useTheme';
 import QueueManager from './QueueManager';
 import { useNotificationStore } from './store/notification';
 import { useSettingsStore } from './store/settings';
-import { useUiStore } from './store/ui';
 import { initConfig } from './utils/configs';
 import { WidgetContext, WidgetWallets } from './Wallets';
 
@@ -37,7 +35,6 @@ export function Main(props: PropsWithChildren<WidgetProps>) {
   const [lastConnectedWalletWithNetwork, setLastConnectedWalletWithNetwork] =
     useState<string>('');
   const [disconnectedWallet, setDisconnectedWallet] = useState<WalletType>();
-  const currentPage = useUiStore.use.currentPage();
   const widgetContext = useContext(WidgetContext);
 
   useMemo(() => {
@@ -59,16 +56,14 @@ export function Main(props: PropsWithChildren<WidgetProps>) {
       <MainContainer id="swap-container" className={activeTheme}>
         <QueueManager>
           <WidgetEvents />
-          <SwapContainer fixedHeight={currentPage !== navigationRoutes.home}>
-            <AppRouter
-              lastConnectedWallet={lastConnectedWalletWithNetwork}
-              disconnectedWallet={disconnectedWallet}
-              clearDisconnectedWallet={() => {
-                setDisconnectedWallet(undefined);
-              }}>
-              <AppRoutes config={config} />
-            </AppRouter>
-          </SwapContainer>
+          <AppRouter
+            lastConnectedWallet={lastConnectedWalletWithNetwork}
+            disconnectedWallet={disconnectedWallet}
+            clearDisconnectedWallet={() => {
+              setDisconnectedWallet(undefined);
+            }}>
+            <AppRoutes config={config} />
+          </AppRouter>
         </QueueManager>
       </MainContainer>
     </I18nManager>
