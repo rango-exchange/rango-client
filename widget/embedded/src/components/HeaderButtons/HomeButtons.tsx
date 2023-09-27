@@ -3,6 +3,7 @@ import type { HomeButtonsPropTypes } from './HeaderButtons.types';
 import { i18n } from '@lingui/core';
 import {
   NotificationsIcon,
+  Popover,
   RefreshIcon,
   SettingsIcon,
   Tooltip,
@@ -10,10 +11,14 @@ import {
 } from '@rango-dev/ui';
 import React from 'react';
 
+import { NotificationContent } from '../NotificationContent';
+
 import { HeaderButton } from './HeaderButtons.styles';
+import { UnreadNotificationsBadge } from './UnreadNotificationsBadge';
 
 export function HomeButtons(props: HomeButtonsPropTypes) {
   const {
+    layoutRef,
     onClickRefresh,
     onClickHistory,
     onClickSettings,
@@ -31,13 +36,22 @@ export function HomeButtons(props: HomeButtonsPropTypes) {
           <RefreshIcon size={18} color={!onClickRefresh ? 'gray' : 'black'} />
         </HeaderButton>
       </Tooltip>
+
       <Tooltip side="top" content={i18n.t('Notifications')}>
-        <HeaderButton
-          size="small"
-          variant="ghost"
-          onClick={onClickNotifications}>
-          <NotificationsIcon size={18} color="black" />
-        </HeaderButton>
+        <Popover
+          align="center"
+          collisionBoundary={layoutRef}
+          collisionPadding={{ right: 20, left: 20 }}
+          container={document.getElementById('swap-box') as HTMLElement}
+          content={<NotificationContent />}>
+          <HeaderButton
+            size="small"
+            variant="ghost"
+            onClick={onClickNotifications}>
+            <NotificationsIcon size={18} color="black" />
+            <UnreadNotificationsBadge />
+          </HeaderButton>
+        </Popover>
       </Tooltip>
       <Tooltip side="top" content={i18n.t('Settings')}>
         <HeaderButton size="small" variant="ghost" onClick={onClickSettings}>

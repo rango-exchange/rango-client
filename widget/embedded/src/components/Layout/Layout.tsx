@@ -1,4 +1,4 @@
-import type { PropTypes } from './Layout.types';
+import type { PropTypes, Ref } from './Layout.types';
 import type { PropsWithChildren } from 'react';
 
 import { BottomLogo, Divider, Header } from '@rango-dev/ui';
@@ -12,13 +12,8 @@ import { BackButton, CancelButton, WalletButton } from '../HeaderButtons';
 
 import { Container, Content, Footer } from './Layout.styles';
 
-export function Layout({
-  children,
-  header,
-  hasFooter,
-  action,
-  noPadding,
-}: PropsWithChildren<PropTypes>) {
+function LayoutComponent(props: PropsWithChildren<PropTypes>, ref: Ref) {
+  const { children, header, hasFooter, action, noPadding } = props;
   const connectedWallets = useWalletsStore.use.connectedWallets();
 
   const connectWalletsButtonDisabled =
@@ -32,7 +27,7 @@ export function Layout({
   };
 
   return (
-    <Container>
+    <Container ref={ref}>
       <Header
         prefix={<>{header.onBack && <BackButton onClick={header.onBack} />}</>}
         title={header.title}
@@ -60,3 +55,8 @@ export function Layout({
     </Container>
   );
 }
+
+const Layout = React.forwardRef(LayoutComponent);
+Layout.displayName = 'Layout';
+
+export { Layout };

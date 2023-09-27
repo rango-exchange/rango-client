@@ -7,8 +7,15 @@ type BaseSizes = Exclude<BaseProps['size'], object>;
 type BaseVariants = Exclude<BaseProps['variant'], object>;
 type BaseTypes = Exclude<BaseProps['type'], object>;
 
+export type Ref =
+  | ((instance: HTMLButtonElement | null) => void)
+  | React.RefObject<HTMLButtonElement>
+  | null
+  | undefined;
+
 type ButtonElement = Omit<HTMLAttributes<HTMLButtonElement>, 'prefix'>;
-interface ButtonProps {
+
+export type PropTypes = ButtonElement & {
   size?: BaseSizes;
   variant?: BaseVariants;
   type?: BaseTypes;
@@ -17,6 +24,4 @@ interface ButtonProps {
   prefix?: React.ReactNode;
   suffix?: React.ReactNode;
   fullWidth?: boolean;
-}
-
-export type PropTypes = ButtonElement & ButtonProps;
+};

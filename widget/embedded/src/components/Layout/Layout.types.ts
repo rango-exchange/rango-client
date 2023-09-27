@@ -11,3 +11,9 @@ export interface PropTypes {
   action?: React.ReactNode;
   noPadding?: boolean;
 }
+
+export type Ref =
+  | ((instance: HTMLDivElement | null) => void)
+  | React.RefObject<HTMLDivElement>
+  | null
+  | undefined;
