@@ -1,4 +1,5 @@
 import { styled } from '../../theme';
+import { IconButton } from '../IconButton';
 
 export const BackDrop = styled('div', {
   position: 'absolute',
@@ -34,9 +35,8 @@ export const BackDrop = styled('div', {
 });
 
 export const ModalContainer = styled('div', {
-  backgroundColor: '$neutral100',
+  backgroundColor: '$background',
   width: '100%',
-  padding: '$10 $20',
   borderRadius: '20px',
   display: 'flex',
   flexDirection: 'column',
@@ -63,8 +63,12 @@ export const Flex = styled('div', {
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'end',
+  [`& ${IconButton}`]: {
+    padding: '$5',
+  },
 });
 export const ModalHeader = styled('div', {
+  padding: '$20 $20 $0 $20',
   display: 'flex',
   justifyContent: 'space-between',
   alignItems: 'center',

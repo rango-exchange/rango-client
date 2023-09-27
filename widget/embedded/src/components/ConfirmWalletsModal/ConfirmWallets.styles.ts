@@ -37,7 +37,6 @@ export const ListContainer = styled('div', {
   gap: '$10',
   gridTemplateColumns: ' repeat(3, minmax(0, 1fr))',
   alignContent: 'baseline',
-  paddingRight: '$8',
 });
 
 export const WalletButton = styled('button', {
@@ -95,7 +94,6 @@ export const WalletsContainer = styled('div', {
     gap: '$10',
     gridTemplateColumns: ' repeat(3, minmax(0, 1fr))',
     alignContent: 'baseline',
-    paddingRight: '$8',
   },
 });
 

@@ -12,7 +12,6 @@ import {
   Alert,
   BestRoute,
   BestRouteSkeleton,
-  BottomLogo,
   Button,
   Divider,
   IconButton,
@@ -405,7 +404,6 @@ export function ConfirmSwapPage(props: PropTypes) {
               Confirm anyway
             </Button>
             <Divider direction="vertical" size={32} />
-            <BottomLogo />
           </MessageBox>
         )}
       </Modal>
