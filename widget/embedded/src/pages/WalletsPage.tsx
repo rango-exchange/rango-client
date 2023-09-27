@@ -29,9 +29,8 @@ const ListContainer = styled('div', {
   gap: '$10',
   gridTemplateColumns: ' repeat(3, minmax(0, 1fr))',
   alignContent: 'baseline',
-  padding: '$15 $8 $20 0',
-  overflowY: 'auto',
-  height: 490,
+  paddingTop: '$15',
+  height: '100%',
 });
 
 const LoaderContainer = styled('div', {

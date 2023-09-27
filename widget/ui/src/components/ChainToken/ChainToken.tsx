@@ -21,7 +21,11 @@ export const ChainToken: React.FC<PropTypes> = (props) => {
             }
       }>
       {loading ? (
-        <Skeleton variant="circular" height={35} width={35} />
+        <Skeleton
+          variant="circular"
+          height={tokenChainSizeMap[size].token}
+          width={tokenChainSizeMap[size].token}
+        />
       ) : (
         <Image
           size={tokenChainSizeMap[size].token}
@@ -32,7 +36,11 @@ export const ChainToken: React.FC<PropTypes> = (props) => {
       )}
       <ChainImageContainer size={size}>
         {loading ? (
-          <Skeleton variant="circular" height={16} width={16} />
+          <Skeleton
+            variant="circular"
+            height={tokenChainSizeMap[size].chain}
+            width={tokenChainSizeMap[size].chain}
+          />
         ) : (
           <Image
             size={tokenChainSizeMap[size].chain}

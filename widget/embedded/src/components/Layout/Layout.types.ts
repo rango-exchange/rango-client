@@ -7,9 +7,10 @@ export interface PropTypes {
     onBack?: () => void;
     onCancel?: () => void;
   };
-  hasFooter?: boolean;
-  action?: React.ReactNode;
+  hasLogo?: boolean;
+  footer?: React.ReactNode;
   noPadding?: boolean;
+  fixedHeight?: boolean;
 }
 
 export type Ref =

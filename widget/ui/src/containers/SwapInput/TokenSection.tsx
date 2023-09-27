@@ -1,6 +1,7 @@
 import type { TokenSectionProps } from './TokenSection.types';
 
 import { i18n } from '@lingui/core';
+import { styled } from '@stitches/react';
 import React from 'react';
 
 import {
@@ -13,6 +14,13 @@ import {
 
 import { TokenSectionContainer } from './TokenSection.styles';
 
+const Container = styled(Button, {
+  '&:hover': {
+    borderRadius: '$xs',
+    backgroundColor: '$info100',
+  },
+});
+
 export function TokenSection(props: TokenSectionProps) {
   const {
     error,
@@ -24,11 +32,7 @@ export function TokenSection(props: TokenSectionProps) {
     loading,
   } = props;
   return (
-    <Button
-      variant="ghost"
-      style={{ padding: 0 }}
-      disabled={error || loading}
-      onClick={onClick}>
+    <Container variant="ghost" disabled={error || loading} onClick={onClick}>
       <TokenSectionContainer loading={loading}>
         <ChainToken
           size="large"
@@ -58,6 +62,6 @@ export function TokenSection(props: TokenSectionProps) {
           )}
         </div>
       </TokenSectionContainer>
-    </Button>
+    </Container>
   );
 }

@@ -3,15 +3,18 @@ import * as Collapsible from '@radix-ui/react-collapsible';
 import { darkTheme, styled } from '../../theme';
 import { CollapsibleContent } from '../common/styles';
 
+export const EXPANDABLE_ROUTES_TRANSITION_DURATION = 300;
+
 export const RouteContainer = styled(Collapsible.Root, {
   display: 'flex',
-  position: 'relative',
-  top: '-36px',
+  position: 'absolute',
+  top: 'calc(100% - 36px)',
+  left: '$0',
   flexDirection: 'column',
   alignItems: 'start',
   overflowX: 'auto',
   overflowY: 'hidden',
-  alignSelf: 'stretch',
+  width: '100%',
   borderRadius: '$xm',
   variants: {
     recommended: {
@@ -42,6 +45,7 @@ export const SummaryContainer = styled('div', {
   cursor: 'pointer',
   boxSizing: 'border-box',
   padding: '$15 $15 $46  $15',
+  position: 'relative',
   variants: {
     recommended: {
       true: {
@@ -127,7 +131,7 @@ export const IconContainer = styled('div', {
   justifyContent: 'center',
   alignItems: 'center',
   padding: '$2',
-  transition: 'all 300ms ease',
+  transition: `all ${EXPANDABLE_ROUTES_TRANSITION_DURATION}ms ease`,
   variants: {
     orientation: {
       down: {

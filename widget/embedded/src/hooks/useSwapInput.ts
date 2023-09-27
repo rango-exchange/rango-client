@@ -69,10 +69,10 @@ export function useSwapInput(): UseSwapInput {
           setRoute(res);
         })
         .catch((error) => {
-          setLoading(false);
           resetRoute();
           if (error?.code !== 'ERR_CANCELED') {
             setError(error.message);
+            setLoading(false);
           }
         });
     }
@@ -86,6 +86,7 @@ export function useSwapInput(): UseSwapInput {
 
   useEffect(() => {
     if (!isPositiveNumber(inputAmount) || inputUsdValue?.eq(0)) {
+      setLoading(false);
       return cancelFetch();
     }
     if (shouldSkipRequest) {
