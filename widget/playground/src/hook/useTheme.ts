@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-floating-promises */
 import { createTheme, theme } from '@rango-dev/ui';
 import { useEffect, useLayoutEffect, useState } from 'react';
 
@@ -36,9 +35,10 @@ export function useTheme() {
   const [OSTheme, setOSTheme] = useState('light');
 
   useEffect(() => {
-    (async () => {
+    const fetchData = async () => {
       await fetchMeta();
-    })();
+    };
+    void fetchData();
 
     const switchTheme = (event: MediaQueryListEvent) => {
       if (event.matches) {
