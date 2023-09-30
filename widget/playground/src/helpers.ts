@@ -16,7 +16,7 @@ export const excludedWallets = [
   WalletTypes.WALLET_CONNECT_2,
 ];
 
-const NEGATIVE = -1;
+export const NEGATIVE = -1;
 
 export const onChangeMultiSelects = (
   value: string,

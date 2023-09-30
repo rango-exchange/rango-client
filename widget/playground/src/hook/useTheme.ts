@@ -1,8 +1,8 @@
-/* eslint-disable @typescript-eslint/no-magic-numbers */
 /* eslint-disable @typescript-eslint/no-floating-promises */
 import { createTheme, theme } from '@rango-dev/ui';
 import { useEffect, useLayoutEffect, useState } from 'react';
 
+import { NEGATIVE } from '../helpers';
 import { useConfigStore } from '../store/config';
 import { useMetaStore } from '../store/meta';
 
@@ -78,7 +78,9 @@ export function useTheme() {
 
     if (classNames?.length && classNames?.length > 1) {
       body.removeAttribute('class');
-      const searchedClassName = classNames.find((c) => c.search('font') !== -1);
+      const searchedClassName = classNames.find(
+        (c) => c.search('font') !== NEGATIVE
+      );
       if (searchedClassName) {
         body.classList.add(searchedClassName);
       }
