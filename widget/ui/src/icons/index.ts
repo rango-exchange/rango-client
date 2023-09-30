@@ -29,6 +29,7 @@ export { default as RefreshIcon } from './Refresh';
 export { default as ReverseIcon } from './Reverse';
 export { default as RouteIcon } from './Route';
 export { default as SearchIcon } from './Search';
+export { default as StyleIcon } from './Style';
 export { default as TimeIcon } from './Time';
 export { default as TransactionIcon } from './Transaction';
 export { default as WalletIcon } from './Wallet';

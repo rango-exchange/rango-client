@@ -1,10 +1,11 @@
-import React from 'react';
-import { Config } from './containers/Config';
 import { Widget, WidgetWallets } from '@rango-dev/widget-embedded';
-import { useConfigStore } from './store/config';
-import { useTheme } from './hook/useTheme';
+import React from 'react';
 import { Route, Routes } from 'react-router-dom';
+
 import { WC_PROJECT_ID } from './configs';
+import { ConfigContainer } from './containers/configContainer';
+import { useTheme } from './hook/useTheme';
+import { useConfigStore } from './store/config';
 
 export function App() {
   const { activeStyle } = useTheme();
@@ -18,18 +19,18 @@ export function App() {
           options={{
             walletConnectProjectId: WC_PROJECT_ID,
           }}>
-          <Config>
+          <ConfigContainer>
             <Routes>
               <Route path="/*" element={<Widget config={config} />} />
             </Routes>
-          </Config>
+          </ConfigContainer>
         </WidgetWallets>
       ) : (
-        <Config>
+        <ConfigContainer>
           <Routes>
             <Route path="/*" element={<Widget config={config} />} />
           </Routes>
-        </Config>
+        </ConfigContainer>
       )}
     </div>
   );
