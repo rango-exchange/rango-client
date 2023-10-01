@@ -1,7 +1,6 @@
 import type { ModalPropTypes } from './RouteErrors.types';
 
 import {
-  BottomLogo,
   Button,
   Divider,
   MessageBox,
@@ -97,8 +96,6 @@ export function RouteErrorsModal(props: ModalPropTypes) {
           ? errorMessages.highValueLossError.confirmMessage
           : errorMessages.unknownPriceError.confirmMessage}
       </Button>
-      <Divider size={12} />
-      <BottomLogo />
     </Modal>
   );
 }

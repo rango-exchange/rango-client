@@ -1,8 +1,14 @@
 import type { PropTypes, Ref } from './Layout.types';
 import type { PropsWithChildren } from 'react';
 
-import { BottomLogo, Divider, Header, theme } from '@rango-dev/ui';
-import React, { useEffect, useRef } from 'react';
+import {
+  BottomLogo,
+  Divider,
+  Header,
+  theme,
+  usePaddingRight,
+} from '@rango-dev/ui';
+import React, { useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { navigationRoutes } from '../../constants/navigationRoutes';
@@ -31,43 +37,16 @@ function LayoutComponent(props: PropsWithChildren<PropTypes>, ref: Ref) {
 
   const contentRef = useRef<HTMLDivElement | null>(null);
 
+  usePaddingRight({
+    element: contentRef.current,
+    paddingRight: noPadding ? '0' : theme.sizes[DEFAULT_CONTENT_PADDING],
+  });
+
   const onConnectWallet = () => {
     if (!connectWalletsButtonDisabled) {
       navigate('/' + navigationRoutes.wallets);
     }
   };
-
-  /*
-   * The useEffect employs ResizeObserver to prevent layout shift when the content of the layout overflows.
-   * By implementing this solution, we ensure that there is a constant padding on the right side of the content, regardless of whether or not a scrollbar is present.
-   */
-  useEffect(() => {
-    let resizeObserver: ResizeObserver | null = null;
-    if (contentRef.current) {
-      resizeObserver = new ResizeObserver(() => {
-        if (contentRef.current) {
-          const scrollable =
-            contentRef.current?.scrollHeight > contentRef.current?.clientHeight;
-          if (scrollable) {
-            contentRef.current.style.paddingRight = `${
-              parseInt(theme.sizes[DEFAULT_CONTENT_PADDING]) -
-              (contentRef.current.offsetWidth - contentRef.current.clientWidth)
-            }px`;
-          } else {
-            contentRef.current.style.paddingRight =
-              theme.sizes[DEFAULT_CONTENT_PADDING];
-          }
-        }
-      });
-      resizeObserver.observe(contentRef.current);
-    }
-    return () => {
-      if (contentRef.current) {
-        resizeObserver?.unobserve(contentRef.current);
-      }
-    };
-  }, [contentRef.current]);
-
   return (
     <Container ref={ref} fixedHeight={fixedHeight} id="swap-box">
       <Header

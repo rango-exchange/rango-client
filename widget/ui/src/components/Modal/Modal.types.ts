@@ -11,8 +11,11 @@ export interface PropTypes {
   onClose: () => void;
   anchor?: BaseAnchor;
   dismissible?: boolean;
+  header?: React.ReactNode;
   prefix?: React.ReactNode;
   suffix?: React.ReactNode;
   container?: HTMLElement;
   containerStyle?: Stitches.CSS<typeof config>;
+  footer?: React.ReactNode;
+  hasLogo?: boolean;
 }

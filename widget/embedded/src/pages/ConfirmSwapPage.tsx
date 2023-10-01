@@ -12,7 +12,6 @@ import {
   Alert,
   BestRoute,
   BestRouteSkeleton,
-  BottomLogo,
   Button,
   Divider,
   IconButton,
@@ -309,7 +308,6 @@ export function ConfirmSwapPage(props: PropTypes) {
 
   return (
     <Layout
-      hasLogo
       header={{
         title: 'Confirm Swap',
         onBack: navigate.bind(null, -1),
@@ -407,8 +405,6 @@ export function ConfirmSwapPage(props: PropTypes) {
               onClick={onConfirm}>
               Confirm anyway
             </Button>
-            <Divider direction="vertical" size={32} />
-            <BottomLogo />
           </MessageBox>
         )}
       </Modal>
