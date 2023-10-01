@@ -39,6 +39,10 @@ export const StyledButton = styled(Button, {
   width: '230px',
 });
 
+export const ResetButton = styled(StyledButton, {
+  border: '1px solid $secondary500',
+});
+
 export const Content = styled('div', {
   height: '100%',
   display: 'flex',
