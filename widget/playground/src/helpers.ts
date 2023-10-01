@@ -3,9 +3,9 @@ import type { Asset, Token } from 'rango-sdk';
 
 import { WalletState } from '@rango-dev/ui';
 import { WalletTypes } from '@rango-dev/wallets-shared';
+import stringifyObject from 'stringify-object';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
-import stringifyObject from 'stringify-object';
 import subtractObject from 'subtract-object';
 
 export const excludedWallets = [
@@ -16,7 +16,7 @@ export const excludedWallets = [
   WalletTypes.WALLET_CONNECT_2,
 ];
 
-export const NEGATIVE = -1;
+export const NOT_FOUND = -1;
 
 export const onChangeMultiSelects = (
   value: string,
@@ -37,7 +37,7 @@ export const onChangeMultiSelects = (
   }
   values = [...values];
   const index = values.findIndex(findIndex);
-  if (index !== NEGATIVE) {
+  if (index !== NOT_FOUND) {
     values.splice(index, 1);
   } else {
     values.push(value);
@@ -57,7 +57,7 @@ export function tokensAreEqual(tokenA?: Asset, tokenB?: Asset) {
 }
 
 export const containsText = (text: string, searchText: string) =>
-  text.toLowerCase().indexOf(searchText.toLowerCase()) > NEGATIVE;
+  text.toLowerCase().indexOf(searchText.toLowerCase()) > NOT_FOUND;
 
 export const filterTokens = (list: Token[], searchedFor: string) =>
   list.filter(

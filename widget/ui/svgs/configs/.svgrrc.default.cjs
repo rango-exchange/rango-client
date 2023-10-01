@@ -22,6 +22,7 @@ module.exports = {
   jsxRuntime: 'automatic',
   replaceAttrValues: {
     '#373737': 'currentColor',
+    '#469BF5': 'currentColor',
   },
   template: require('./template/react.cjs'),
   indexTemplate: require('./template/index.cjs'),

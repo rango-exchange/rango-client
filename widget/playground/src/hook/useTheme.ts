@@ -1,7 +1,7 @@
 import { createTheme, theme } from '@rango-dev/ui';
 import { useEffect, useLayoutEffect, useState } from 'react';
 
-import { NEGATIVE } from '../helpers';
+import { NOT_FOUND } from '../helpers';
 import { useConfigStore } from '../store/config';
 import { useMetaStore } from '../store/meta';
 
@@ -79,7 +79,7 @@ export function useTheme() {
     if (classNames?.length && classNames?.length > 1) {
       body.removeAttribute('class');
       const searchedClassName = classNames.find(
-        (c) => c.search('font') !== NEGATIVE
+        (c) => c.search('font') !== NOT_FOUND
       );
       if (searchedClassName) {
         body.classList.add(searchedClassName);

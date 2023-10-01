@@ -16,7 +16,7 @@ export const Container = styled('div', {
 });
 
 export const LeftSide = styled('div', {
-  width: '444px',
+  display: 'flex',
 });
 
 export const Main = styled('div', {
