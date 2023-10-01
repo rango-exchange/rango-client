@@ -1,13 +1,7 @@
 import type { CancelContentProps } from './SwapDetailsModal.types';
 
 import { i18n } from '@lingui/core';
-import {
-  BottomLogo,
-  Button,
-  Divider,
-  MessageBox,
-  Typography,
-} from '@rango-dev/ui';
+import { Button, Divider, MessageBox, Typography } from '@rango-dev/ui';
 import React from 'react';
 
 export const CancelContent = ({ onCancel, onClose }: CancelContentProps) => {
@@ -35,8 +29,6 @@ export const CancelContent = ({ onCancel, onClose }: CancelContentProps) => {
           {i18n.t('No, Continue')}
         </Typography>
       </Button>
-      <Divider size={20} />
-      <BottomLogo />
     </>
   );
 };

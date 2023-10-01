@@ -1,13 +1,7 @@
 import type { DeleteContentProps } from './SwapDetailsModal.types';
 
 import { i18n } from '@lingui/core';
-import {
-  BottomLogo,
-  Button,
-  Divider,
-  MessageBox,
-  Typography,
-} from '@rango-dev/ui';
+import { Button, Divider, MessageBox, Typography } from '@rango-dev/ui';
 import React from 'react';
 
 export const DeleteContent = ({ onDelete, onClose }: DeleteContentProps) => {
@@ -35,8 +29,6 @@ export const DeleteContent = ({ onDelete, onClose }: DeleteContentProps) => {
           {i18n.t('No, Cancel')}
         </Typography>
       </Button>
-      <Divider size={20} />
-      <BottomLogo />
     </>
   );
 };

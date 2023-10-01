@@ -37,7 +37,6 @@ export const ListContainer = styled('div', {
   gap: '$10',
   gridTemplateColumns: ' repeat(3, minmax(0, 1fr))',
   alignContent: 'baseline',
-  paddingRight: '$8',
 });
 
 export const WalletButton = styled('button', {
@@ -46,7 +45,7 @@ export const WalletButton = styled('button', {
   border: '0',
   display: 'flex',
   justifyContent: 'center',
-  backgroundColor: '$neutral200',
+  backgroundColor: '$neutral100',
   alignItems: 'center',
   cursor: 'pointer',
   width: 110,
@@ -89,13 +88,12 @@ export const NavigateBack = styled(IconButton, {
 });
 
 export const WalletsContainer = styled('div', {
-  padding: '$4 $20 $20 $20',
+  paddingTop: '$20',
   '& .wallets-list': {
     display: 'grid',
     gap: '$10',
     gridTemplateColumns: ' repeat(3, minmax(0, 1fr))',
     alignContent: 'baseline',
-    paddingRight: '$8',
   },
 });
 
@@ -115,11 +113,11 @@ export const CollapsibleRoot = styled(Collapsible.Root, {
 
 export const CustomDestinationButton = styled(Button, {
   width: '100%',
-  borderRadius: '$10',
+  borderRadius: '$sm !important',
   padding: '$15 !important',
   justifyContent: 'space-between',
   alignItems: 'center',
-  backgroundColor: '$neutral200 !important',
+  backgroundColor: '$neutral100 !important',
 });
 
 export const CustomDestination = styled('div', {
@@ -147,11 +145,7 @@ export const ExpandedIcon = styled('div', {
 });
 
 export const ConfirmButton = styled('div', {
-  width: 'calc(100% - 40px)',
-  position: 'absolute',
-  bottom: '$20',
   display: 'flex',
-  filter: 'drop-shadow(white 0 -10px 10px)',
 });
 
 export const StyledTextField = styled(TextField, {
@@ -171,3 +165,5 @@ export const CollapsibleContent = styled(Collapsible.Content, {
     },
   },
 });
+
+export const Wallets = styled('div', { overflow: 'visible', width: '100%' });

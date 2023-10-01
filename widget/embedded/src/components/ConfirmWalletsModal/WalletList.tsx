@@ -5,7 +5,6 @@ import type { WalletInfo } from '@rango-dev/ui';
 import type { WalletType } from '@rango-dev/wallets-shared';
 
 import {
-  BottomLogo,
   Button,
   Divider,
   Image,
@@ -194,8 +193,6 @@ export function WalletList(props: PropTypes) {
                     size="large">
                     Confirm
                   </Button>
-                  <Divider size={12} />
-                  <BottomLogo />
                 </MessageBox>
               </Modal>
             )}
@@ -226,7 +223,6 @@ export function WalletList(props: PropTypes) {
                   />
                 )}
                 <Divider direction="vertical" size={32} />
-                <BottomLogo />
               </Modal>
             )}
             <SelectableWallet

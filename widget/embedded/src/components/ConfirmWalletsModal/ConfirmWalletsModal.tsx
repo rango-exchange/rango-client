@@ -5,7 +5,6 @@ import type { ConfirmSwapWarnings, Wallet } from '../../types';
 import {
   Alert,
   BalanceErrors,
-  BottomLogo,
   Button,
   ChevronDownIcon,
   ChevronLeftIcon,
@@ -38,6 +37,7 @@ import {
   StyledTextField,
   Title,
   Trigger,
+  Wallets,
   WalletsContainer,
 } from './ConfirmWallets.styles';
 import { WalletList } from './WalletList';
@@ -105,6 +105,12 @@ export function ConfirmWalletsModal(props: PropTypes) {
         (isWalletRequiredFor(chain) ||
           (!isWalletRequiredFor(chain) && !destination))
     );
+
+  const isAddressMatched =
+    !!destination &&
+    showCustomDestination &&
+    lastStepToBlockchainMeta &&
+    !isValidAddress(lastStepToBlockchainMeta, destination);
 
   const resetCustomDestination = () => {
     setShowCustomDestination(false);
@@ -229,9 +235,32 @@ export function ConfirmWalletsModal(props: PropTypes) {
       onClose={onClose}
       dismissible={!showMoreWalletFor}
       container={modalContainer}
+      {...(!showMoreWalletFor && {
+        footer: (
+          <ConfirmButton>
+            <Button
+              loading={loading}
+              disabled={confirmSwapDisabled(
+                loading,
+                showCustomDestination,
+                destination,
+                bestRoute,
+                selectableWallets,
+                lastStepToBlockchain
+              )}
+              onClick={onConfirmWallets}
+              variant="contained"
+              type="primary"
+              fullWidth
+              size="large">
+              Confirm
+            </Button>
+          </ConfirmButton>
+        ),
+      })}
       {...(showMoreWalletFor && {
         containerStyle: { padding: '$0' },
-        prefix: (
+        header: (
           <ShowMoreHeader>
             <NavigateBack
               variant="ghost"
@@ -262,8 +291,6 @@ export function ConfirmWalletsModal(props: PropTypes) {
             Proceed anyway
           </Button>
         </MessageBox>
-        <Divider size={12} />
-        <BottomLogo />
       </Modal>
       {showMoreWalletFor && (
         <WalletsContainer>
@@ -298,151 +325,125 @@ export function ConfirmWalletsModal(props: PropTypes) {
               <Divider size={12} />
             </>
           )}
-          {requiredWallets.map((requiredWallet, index) => {
-            const blockchain = blockchains.find(
-              (blockchain) => blockchain.name === requiredWallet
-            );
+          <Wallets>
+            {requiredWallets.map((requiredWallet, index) => {
+              const blockchain = blockchains.find(
+                (blockchain) => blockchain.name === requiredWallet
+              );
 
-            const key = `wallet-${index}`;
-            return (
-              <div key={key}>
-                <Title>
-                  <Typography
-                    variant="title"
-                    size="xmedium">{`Your ${blockchain?.displayName} wallets`}</Typography>
-                  <Typography
-                    variant="label"
-                    color="$neutral900"
-                    size="medium">{`You need to connect a ${blockchain?.displayName} wallet.`}</Typography>
-                </Title>
-                <Divider size={24} />
-                <ListContainer>
-                  <WalletList
-                    chain={requiredWallet}
-                    isSelected={isSelected}
-                    selectWallet={onChange}
-                    multiWallets={config?.multiWallets ?? true}
-                    supportedWallets={config?.wallets ?? []}
-                    config={config}
-                    limit={NUMBER_OF_WALLETS_TO_DISPLAY}
-                    onShowMore={setShowMoreWalletFor.bind(
-                      null,
-                      blockchain?.name ?? ''
-                    )}
-                  />
-                </ListContainer>
-                {index !== requiredWallets.length - 1 && <Divider size={32} />}
-                {index === requiredWallets.length - 1 &&
-                  customDestinationEnabled && (
-                    <>
-                      <CustomDestination>
-                        <CollapsibleRoot
-                          selected={showCustomDestination}
-                          open={showCustomDestination}
-                          onOpenChange={(checked) => {
-                            if (!checked) {
-                              resetCustomDestination();
-                            } else {
-                              if (
-                                !isWalletRequiredFor(
-                                  lastStepToBlockchain?.name ?? ''
-                                )
-                              ) {
-                                setSelectableWallets((selectableWallets) =>
-                                  selectableWallets.map((selectableWallet) => {
-                                    if (
-                                      selectableWallet.chain ===
-                                      lastStepToBlockchain?.name
-                                    ) {
-                                      return {
-                                        ...selectableWallet,
-                                        selected: false,
-                                      };
-                                    }
-                                    return selectableWallet;
-                                  })
-                                );
-                              }
+              const key = `wallet-${index}`;
+              const isLastWallet = index !== requiredWallets.length - 1;
+
+              return (
+                <div key={key}>
+                  <Title>
+                    <Typography
+                      variant="title"
+                      size="xmedium">{`Your ${blockchain?.displayName} wallets`}</Typography>
+                    <Typography
+                      variant="label"
+                      color="$neutral900"
+                      size="medium">{`You need to connect a ${blockchain?.displayName} wallet.`}</Typography>
+                  </Title>
+                  <Divider size={24} />
+                  <ListContainer>
+                    <WalletList
+                      chain={requiredWallet}
+                      isSelected={isSelected}
+                      selectWallet={onChange}
+                      multiWallets={config?.multiWallets ?? true}
+                      supportedWallets={config?.wallets ?? []}
+                      config={config}
+                      limit={NUMBER_OF_WALLETS_TO_DISPLAY}
+                      onShowMore={() =>
+                        setShowMoreWalletFor(blockchain?.name ?? '')
+                      }
+                    />
+                  </ListContainer>
+                  {!isLastWallet && <Divider size={32} />}
+                  {isLastWallet && customDestinationEnabled && (
+                    <CustomDestination>
+                      <CollapsibleRoot
+                        selected={showCustomDestination}
+                        open={showCustomDestination}
+                        onOpenChange={(checked) => {
+                          if (!checked) {
+                            resetCustomDestination();
+                          } else {
+                            if (
+                              !isWalletRequiredFor(
+                                lastStepToBlockchain?.name ?? ''
+                              )
+                            ) {
+                              setSelectableWallets((selectableWallets) =>
+                                selectableWallets.map((selectableWallet) => {
+                                  if (
+                                    selectableWallet.chain ===
+                                    lastStepToBlockchain?.name
+                                  ) {
+                                    return {
+                                      ...selectableWallet,
+                                      selected: false,
+                                    };
+                                  }
+                                  return selectableWallet;
+                                })
+                              );
                             }
-                          }}>
-                          <Trigger
-                            onClick={setShowCustomDestination.bind(
-                              null,
-                              (prevState) => !prevState
-                            )}>
-                            <CustomDestinationButton
-                              fullWidth
-                              suffix={
-                                <ExpandedIcon
-                                  orientation={
-                                    showCustomDestination ? 'up' : 'down'
-                                  }>
-                                  <ChevronDownIcon size={10} color="gray" />
-                                </ExpandedIcon>
-                              }>
-                              <div className="button__content">
-                                <WalletIcon size={18} color="info" />
-                                <Divider size={4} direction="horizontal" />
-                                <Typography variant="label" size="medium">
-                                  Send to a different address
-                                </Typography>
-                              </div>
-                            </CustomDestinationButton>
-                          </Trigger>
-                          <CollapsibleContent open={showCustomDestination}>
-                            <>
-                              <Divider size={4} />
-                              <StyledTextField
-                                autoFocus
-                                placeholder="Your destination address"
-                                value={destination}
-                                onChange={(e) => {
-                                  setDestination(e.target.value);
-                                }}
-                              />
-                            </>
-                          </CollapsibleContent>
-                        </CollapsibleRoot>
-                        {!!destination &&
-                          showCustomDestination &&
-                          lastStepToBlockchainMeta &&
-                          !isValidAddress(
-                            lastStepToBlockchainMeta,
-                            destination
-                          ) && (
-                            <div className="alarms">
-                              <Alert
-                                variant="alarm"
-                                type="error"
-                                title={`Address '${destination}' doesn't match the blockchain address pattern.`}
-                              />
+                          }
+                        }}>
+                        <Trigger
+                          onClick={() =>
+                            setShowCustomDestination((prevState) => !prevState)
+                          }>
+                          <CustomDestinationButton
+                            fullWidth
+                            suffix={
+                              <ExpandedIcon
+                                orientation={
+                                  showCustomDestination ? 'up' : 'down'
+                                }>
+                                <ChevronDownIcon size={10} color="gray" />
+                              </ExpandedIcon>
+                            }>
+                            <div className="button__content">
+                              <WalletIcon size={18} color="info" />
+                              <Divider size={4} direction="horizontal" />
+                              <Typography variant="label" size="medium">
+                                Send to a different address
+                              </Typography>
                             </div>
-                          )}
-                      </CustomDestination>
-                    </>
+                          </CustomDestinationButton>
+                        </Trigger>
+                        <CollapsibleContent open={showCustomDestination}>
+                          <>
+                            <Divider size={4} />
+                            <StyledTextField
+                              autoFocus
+                              placeholder="Your destination address"
+                              value={destination}
+                              onChange={(e) => {
+                                setDestination(e.target.value);
+                              }}
+                            />
+                          </>
+                        </CollapsibleContent>
+                      </CollapsibleRoot>
+                      {isAddressMatched && (
+                        <div className="alarms">
+                          <Alert
+                            variant="alarm"
+                            type="error"
+                            title={`Address '${destination}' doesn't match the blockchain address pattern.`}
+                          />
+                        </div>
+                      )}
+                    </CustomDestination>
                   )}
-              </div>
-            );
-          })}
-          <ConfirmButton>
-            <Button
-              loading={loading}
-              disabled={confirmSwapDisabled(
-                loading,
-                showCustomDestination,
-                destination,
-                bestRoute,
-                selectableWallets,
-                lastStepToBlockchain
-              )}
-              onClick={onConfirmWallets}
-              variant="contained"
-              type="primary"
-              fullWidth
-              size="large">
-              Confirm
-            </Button>
-          </ConfirmButton>
+                </div>
+              );
+            })}
+          </Wallets>
         </>
       )}
     </Modal>
