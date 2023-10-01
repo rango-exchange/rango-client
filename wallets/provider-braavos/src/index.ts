@@ -54,7 +54,7 @@ export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
   const starknet = starknetBlockchain(allBlockChains);
   return {
     name: 'Braavos',
-    img: 'https://raw.githubusercontent.com/rango-exchange/rango-assets/main/wallets/braavos/icon.svg',
+    img: 'https://raw.githubusercontent.com/rango-exchange/assets/main/wallets/braavos/icon.svg',
     installLink: {
       CHROME:
         'https://chrome.google.com/webstore/detail/braavos-smart-wallet/jnlgamecbpmbajjfhmmmlhejkemejdma',

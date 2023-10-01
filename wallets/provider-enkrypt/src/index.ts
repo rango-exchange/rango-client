@@ -59,7 +59,7 @@ export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
   const evms = evmBlockchains(allBlockChains);
   return {
     name: 'Enkrypt',
-    img: 'https://raw.githubusercontent.com/rango-exchange/rango-assets/main/wallets/enkrypt/icon.svg',
+    img: 'https://raw.githubusercontent.com/rango-exchange/assets/main/wallets/enkrypt/icon.svg',
     installLink: {
       CHROME:
         'https://chrome.google.com/webstore/detail/enkrypt/kkpllkodjeloidieedojogacfhpaihoh',

@@ -115,7 +115,7 @@ export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
   const cosmos = cosmosBlockchains(allBlockChains);
   return {
     name: 'Cosmostation',
-    img: 'https://raw.githubusercontent.com/rango-exchange/rango-assets/main/wallets/cosmostation/icon.svg',
+    img: 'https://raw.githubusercontent.com/rango-exchange/assets/main/wallets/cosmostation/icon.svg',
     installLink: {
       CHROME:
         'https://chrome.google.com/webstore/detail/cosmostation/fpkhgmpbidmiogeglndfbkegfdlnajnf',

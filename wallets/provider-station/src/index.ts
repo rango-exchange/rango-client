@@ -86,7 +86,7 @@ export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
 ) => {
   return {
     name: 'Station',
-    img: 'https://raw.githubusercontent.com/rango-exchange/rango-assets/main/wallets/station/icon.svg',
+    img: 'https://raw.githubusercontent.com/rango-exchange/assets/main/wallets/station/icon.svg',
     installLink: {
       CHROME:
         'https://chrome.google.com/webstore/detail/terra-station/aiifbnbfobpmeekipheeijimdpnlpgpp',
