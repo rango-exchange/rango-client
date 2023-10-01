@@ -2,7 +2,6 @@ import type { CompleteModalPropTypes } from './SwapDetailsModal.types';
 
 import { i18n } from '@lingui/core';
 import {
-  BottomLogo,
   Button,
   Divider,
   MessageBox,
@@ -97,8 +96,6 @@ export function SwapDetailsCompleteModal(props: CompleteModalPropTypes) {
           {i18n.t('See Details')}
         </Typography>
       </Button>
-      <Divider size={20} />
-      <BottomLogo />
     </Modal>
   );
 }

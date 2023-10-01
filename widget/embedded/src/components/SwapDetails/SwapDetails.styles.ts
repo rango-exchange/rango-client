@@ -1,4 +1,4 @@
-import { Button, styled } from '@rango-dev/ui';
+import { styled } from '@rango-dev/ui';
 
 export const Container = styled('div', {
   display: 'flex',
@@ -6,6 +6,8 @@ export const Container = styled('div', {
   flexDirection: 'column',
   justifyContent: 'center',
   alignItems: 'center',
+  height: '0',
+  flexGrow: 1,
   '& .row': {
     display: 'flex',
     width: '100%',
@@ -50,23 +52,8 @@ export const HeaderDetails = styled('div', {
 export const StepsList = styled('div', {
   padding: '0 $20 $20',
   width: '100%',
-  height: '320px',
   overflow: 'auto',
-  variants: {
-    shouldRetry: {
-      true: {
-        height: '280px',
-      },
-    },
-  },
 });
-
-export const StyledButton = styled(Button, {
-  position: 'absolute',
-  bottom: '$80',
-  width: '350px',
-});
-
 export const Alerts = styled('div', {
   display: 'flex',
   flexDirection: 'column',

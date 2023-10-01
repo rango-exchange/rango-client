@@ -1,4 +1,5 @@
 import { styled } from '../../theme';
+import { IconButton } from '../IconButton';
 
 export const BackDrop = styled('div', {
   position: 'absolute',
@@ -8,7 +9,7 @@ export const BackDrop = styled('div', {
   height: '100%',
   backgroundColor: 'rgba(0,0,0,0)',
   zIndex: 10,
-  borderRadius: '$sm',
+  borderRadius: '20px',
   display: 'flex',
   overflow: 'hidden',
   transition: 'background .35s',
@@ -34,10 +35,9 @@ export const BackDrop = styled('div', {
 });
 
 export const ModalContainer = styled('div', {
-  backgroundColor: '$neutral100',
+  backgroundColor: '$background',
   width: '100%',
-  padding: '$10 $20',
-  borderRadius: '$md',
+  borderRadius: '20px',
   display: 'flex',
   flexDirection: 'column',
   zIndex: 9999999,
@@ -59,12 +59,17 @@ export const ModalContainer = styled('div', {
     },
   },
 });
+
 export const Flex = styled('div', {
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'end',
+  [`& ${IconButton}`]: {
+    padding: '$5',
+  },
 });
 export const ModalHeader = styled('div', {
+  padding: '$20 $20 $0 $20',
   display: 'flex',
   justifyContent: 'space-between',
   alignItems: 'center',
@@ -75,5 +80,25 @@ export const ModalHeader = styled('div', {
         justifyContent: 'flex-end',
       },
     },
+  },
+});
+
+export const Content = styled('div', {
+  display: 'flex',
+  flexDirection: 'column',
+  flex: 1,
+  padding: '$0 $20 $10 $20',
+  backgroundColor: '$background',
+  position: 'relative',
+  overflowY: 'auto',
+  overflowX: 'hidden',
+});
+
+export const Footer = styled('div', {
+  '& .footer__content': {
+    padding: '$0 $20',
+  },
+  '& .footer__logo': {
+    padding: '$0 $20 $10 $20',
   },
 });

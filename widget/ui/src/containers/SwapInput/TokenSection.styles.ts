@@ -1,4 +1,27 @@
+import { Button } from '../../components';
 import { darkTheme, styled } from '../../theme';
+
+export const Container = styled(Button, {
+  variants: {
+    loading: {
+      true: {
+        '&:hover': {
+          background: 'none',
+        },
+      },
+      false: {
+        '&:hover': {
+          borderRadius: '$xs',
+          $$color: '$colors$info100',
+          [`.${darkTheme} &`]: {
+            $$color: '$colors$neutral400',
+          },
+          backgroundColor: '$$color',
+        },
+      },
+    },
+  },
+});
 
 export const TokenSectionContainer = styled('div', {
   width: '10.625rem',
@@ -15,23 +38,5 @@ export const TokenSectionContainer = styled('div', {
     justifyContent: 'center',
     alignItems: 'start',
     paddingLeft: '$10',
-  },
-  variants: {
-    loading: {
-      true: {
-        '&:hover': {
-          background: 'none',
-        },
-      },
-      false: {
-        '&:hover': {
-          $$color: '$colors$info100',
-          [`.${darkTheme} &`]: {
-            $$color: '$colors$neutral400',
-          },
-          backgroundColor: '$$color',
-        },
-      },
-    },
   },
 });

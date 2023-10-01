@@ -58,7 +58,6 @@ import {
   HeaderDetails,
   Separator,
   StepsList,
-  StyledButton,
 } from './SwapDetails.styles';
 
 export function SwapDetails(props: SwapDetailsProps) {
@@ -198,6 +197,7 @@ export function SwapDetails(props: SwapDetailsProps) {
 
   return (
     <Layout
+      noPadding
       header={{
         title: i18n.t('Swap and Bridge'),
         onBack: navigateBackFrom.bind(null, navigationRoutes.swapDetails),
@@ -217,7 +217,24 @@ export function SwapDetails(props: SwapDetailsProps) {
           </SuffixContainer>
         ),
       }}
-      noPadding>
+      footer={
+        shouldRetry &&
+        !showCompletedModal && (
+          <Button
+            fullWidth
+            variant="contained"
+            type="primary"
+            size="large"
+            onClick={() => {
+              retry(swap);
+              setTimeout(() => {
+                navigate(navigationRoutes.home);
+              }, 0);
+            }}>
+            {i18n.t('Try again')}
+          </Button>
+        )
+      }>
       <Container>
         <HeaderDetails>
           <div className="row">
@@ -314,7 +331,7 @@ export function SwapDetails(props: SwapDetailsProps) {
           </Typography>
         </div>
         <Divider size={8} />
-        <StepsList shouldRetry={shouldRetry} ref={listRef}>
+        <StepsList ref={listRef}>
           {steps.map((step, index) => {
             const key = index;
             const state = getStepState(swap.steps[index]);
@@ -337,20 +354,6 @@ export function SwapDetails(props: SwapDetailsProps) {
             );
           })}
         </StepsList>
-        {shouldRetry && !showCompletedModal && (
-          <StyledButton
-            variant="contained"
-            type="primary"
-            size="large"
-            onClick={() => {
-              retry(swap);
-              setTimeout(() => {
-                navigate(navigationRoutes.home);
-              }, 0);
-            }}>
-            {i18n.t('Try again')}
-          </StyledButton>
-        )}
       </Container>
       <SwapDetailsModal
         state={modalState}
