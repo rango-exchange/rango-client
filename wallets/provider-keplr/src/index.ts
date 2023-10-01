@@ -43,7 +43,7 @@ export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
   const cosmos = cosmosBlockchains(allBlockChains);
   return {
     name: 'Keplr',
-    img: 'https://raw.githubusercontent.com/rango-exchange/rango-assets/main/wallets/keplr/icon.svg',
+    img: 'https://raw.githubusercontent.com/rango-exchange/assets/main/wallets/keplr/icon.svg',
     installLink: {
       CHROME:
         'https://chrome.google.com/webstore/detail/keplr/dmkamcknogkgcdfhhbddcghachkejeap',

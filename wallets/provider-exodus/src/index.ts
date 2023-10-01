@@ -116,7 +116,7 @@ export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
   allBlockChains
 ) => ({
   name: 'Exodus',
-  img: 'https://raw.githubusercontent.com/rango-exchange/rango-assets/main/wallets/exodus/icon.svg',
+  img: 'https://raw.githubusercontent.com/rango-exchange/assets/main/wallets/exodus/icon.svg',
   installLink: {
     CHROME:
       'https://chrome.google.com/webstore/detail/exodus-web3-wallet/aholpfdialjgjfhomihkjbmgjidlcdno',

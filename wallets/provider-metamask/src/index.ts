@@ -59,7 +59,7 @@ export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
   const evms = evmBlockchains(allBlockChains);
   return {
     name: 'MetaMask',
-    img: 'https://raw.githubusercontent.com/rango-exchange/rango-assets/main/wallets/metamask/icon.svg',
+    img: 'https://raw.githubusercontent.com/rango-exchange/assets/main/wallets/metamask/icon.svg',
     installLink: {
       CHROME:
         'https://chrome.google.com/webstore/detail/metamask/nkbihfbeogaeaoehlefnkodbefgpgknn?hl=en',

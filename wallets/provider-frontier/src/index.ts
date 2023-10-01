@@ -121,7 +121,7 @@ export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
 
   return {
     name: 'Frontier',
-    img: 'https://raw.githubusercontent.com/rango-exchange/rango-assets/main/wallets/frontier/icon.svg',
+    img: 'https://raw.githubusercontent.com/rango-exchange/assets/main/wallets/frontier/icon.svg',
     installLink: {
       CHROME:
         'https://chrome.google.com/webstore/detail/frontier-wallet/kppfdiipphfccemcignhifpjkapfbihd',
