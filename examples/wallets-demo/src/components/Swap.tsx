@@ -1,6 +1,7 @@
 import type { BlockchainMeta, Token } from 'rango-sdk';
 
-import { ArrowRightIcon, Image, styled, Typography } from '@rango-dev/ui';
+import { Image, styled, Typography } from '@rango-dev/ui';
+import { ArrowRightIcon } from '@rango-dev/ui/src/components/Icon';
 import React from 'react';
 
 interface swap {
@@ -43,13 +44,17 @@ export function SwapComponent(props: PropTypes) {
       {!!from && (
         <Content>
           <Image size={54} src={fromToken?.image} />
-          <Typography variant="body1" mt={12}>
+          <Typography variant="body" mt={12} size="medium">
             {from.token}
           </Typography>
           <div />
-          <Typography variant="body1">from {from.blockchain?.name}</Typography>
+          <Typography variant="body" size="medium">
+            from {from.blockchain?.name}
+          </Typography>
           <div />
-          <Typography variant="body1">{from.amount}</Typography>
+          <Typography variant="body" size="medium">
+            {from.amount}
+          </Typography>
         </Content>
       )}
 
@@ -58,13 +63,17 @@ export function SwapComponent(props: PropTypes) {
       {!!to && (
         <Content>
           <Image size={54} src={toToken?.image} />
-          <Typography variant="body1" mt={12}>
+          <Typography variant="body" size="medium" mt={12}>
             {to.token}
           </Typography>
           <div />
-          <Typography variant="body1">from {to.blockchain?.name}</Typography>
+          <Typography variant="body" size="medium">
+            from {to.blockchain?.name}
+          </Typography>
           <div />
-          <Typography variant="body1">-</Typography>
+          <Typography variant="body" size="medium">
+            -
+          </Typography>
         </Content>
       )}
     </Box>
