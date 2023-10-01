@@ -1,13 +1,22 @@
+import type { WidgetConfig } from '@rango-dev/widget-embedded';
+import type { Asset, Token } from 'rango-sdk';
+
+import { WalletState } from '@rango-dev/ui';
 import { WalletTypes } from '@rango-dev/wallets-shared';
-import { Asset, Token } from 'rango-sdk';
+import stringifyObject from 'stringify-object';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import subtractObject from 'subtract-object';
-import stringifyObject from 'stringify-object';
-import { WidgetConfig } from '@rango-dev/widget-embedded';
 
-import { WalletState } from '@rango-dev/ui';
-export const excludedWallets = [WalletTypes.STATION, WalletTypes.LEAP];
+export const excludedWallets = [
+  WalletTypes.STATION,
+  WalletTypes.LEAP,
+  WalletTypes.SAFE,
+  WalletTypes.MY_TON_WALLET,
+  WalletTypes.WALLET_CONNECT_2,
+];
+
+export const NOT_FOUND = -1;
 
 export const onChangeMultiSelects = (
   value: string,
@@ -15,21 +24,28 @@ export const onChangeMultiSelects = (
   list: any[],
   findIndex: (item: string) => boolean
 ): string[] | undefined => {
-  if (value === 'empty') return [];
-  else if (value === 'all') return undefined;
+  if (value === 'empty') {
+    return [];
+  } else if (value === 'all') {
+    return undefined;
+  }
   if (!values) {
     values = [...list];
     const index = list.findIndex(findIndex);
     values.splice(index, 1);
     return values;
-  } else {
-    values = [...values];
-    const index = values.findIndex(findIndex);
-    if (index !== -1) values.splice(index, 1);
-    else values.push(value);
-    if (values.length === list.length) return undefined;
-    else return values;
   }
+  values = [...values];
+  const index = values.findIndex(findIndex);
+  if (index !== NOT_FOUND) {
+    values.splice(index, 1);
+  } else {
+    values.push(value);
+  }
+  if (values.length === list.length) {
+    return undefined;
+  }
+  return values;
 };
 
 export function tokensAreEqual(tokenA?: Asset, tokenB?: Asset) {
@@ -41,7 +57,7 @@ export function tokensAreEqual(tokenA?: Asset, tokenB?: Asset) {
 }
 
 export const containsText = (text: string, searchText: string) =>
-  text.toLowerCase().indexOf(searchText.toLowerCase()) > -1;
+  text.toLowerCase().indexOf(searchText.toLowerCase()) > NOT_FOUND;
 
 export const filterTokens = (list: Token[], searchedFor: string) =>
   list.filter(
@@ -102,12 +118,14 @@ export function filterConfig(
 
   const filteredConfigForExport = Object.assign({}, userSelectedConfig);
 
-  if (!filteredConfigForExport.apiKey)
+  if (!filteredConfigForExport.apiKey) {
     filteredConfigForExport.apiKey = config.apiKey;
+  }
 
-  if (!filteredConfigForExport.walletConnectProjectId)
+  if (!filteredConfigForExport.walletConnectProjectId) {
     filteredConfigForExport.walletConnectProjectId =
       config.walletConnectProjectId;
+  }
 
   return { userSelectedConfig, filteredConfigForExport };
 }
@@ -178,13 +196,14 @@ export function formatConfig(config: WidgetConfig) {
     formatedConfig.indexOf('walletConnectProjectId')
   );
 
-  if (!!config.wallets)
+  if (!!config.wallets) {
     formatedConfig = insertAt(
       formatedConfig,
       `// You can add your external wallet to wallets
     `,
       formatedConfig.indexOf('wallets')
     );
+  }
 
   return formatedConfig;
 }
