@@ -28,10 +28,10 @@ export const getSteps = ({ swap, ...args }: GetStep): Step[] => {
       index === 0 ? swap.inputAmount : swap.steps[index - 1].outputAmount;
     return {
       from: {
-        token: { displayName: step.fromSymbol, image: step.fromLogo },
+        token: { displayName: step.fromSymbol, image: step.fromLogo || '' },
         chain: {
           displayName: step.fromBlockchain,
-          image: step.fromBlockchainLogo,
+          image: step.fromBlockchainLogo || '',
         },
         price: {
           value: numberToString(
@@ -45,7 +45,7 @@ export const getSteps = ({ swap, ...args }: GetStep): Step[] => {
         token: { displayName: step.toSymbol, image: step.toLogo },
         chain: {
           displayName: step.toBlockchain,
-          image: step.toBlockchainLogo,
+          image: step.toBlockchainLogo || '',
         },
         price: {
           value: numberToString(
@@ -55,7 +55,7 @@ export const getSteps = ({ swap, ...args }: GetStep): Step[] => {
           ),
         },
       },
-      swapper: { displayName: step.swapperId, image: step.swapperLogo },
+      swapper: { displayName: step.swapperId, image: step.swapperLogo || '' },
       alerts: (
         <SwapDetailsAlerts
           step={step}
