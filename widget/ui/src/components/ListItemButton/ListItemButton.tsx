@@ -2,25 +2,25 @@ import type { ListItemButtonProps } from './ListItemButton.types';
 
 import React from 'react';
 
-import { ListItem } from '../ListItem/ListItem';
-
 import { BaseListItemButton } from './ListItemButton.styles';
 
 function ListItemButton(props: ListItemButtonProps) {
-  const { onClick, id, style, hasDivider, selected, ...restProps } = props;
+  const { onClick, id, ...restProps } = props;
   const onClickWithKey = () => {
     if (onClick) {
       onClick(id);
     }
   };
+
   return (
     <BaseListItemButton
-      hasDivider={hasDivider}
-      selected={selected}
       onClick={onClickWithKey}
-      style={style}>
-      <ListItem {...restProps} />
-    </BaseListItemButton>
+      aria-label="button"
+      onKeyUp={(e) => {
+        e.key === 'Enter' && onClickWithKey();
+      }}
+      {...restProps}
+    />
   );
 }
 

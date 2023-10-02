@@ -14,7 +14,7 @@ import React, { useEffect, useState } from 'react';
 import { useMetaStore } from '../../store/meta';
 
 import { filterBlockchains } from './BlockchainList.helpers';
-import { Content, List } from './BlockchainList.styles';
+import { List } from './BlockchainList.styles';
 import { LoadingBlockchainList } from './LoadingBlockchainList';
 
 export function BlockchainList(props: PropTypes) {
@@ -40,24 +40,21 @@ export function BlockchainList(props: PropTypes) {
         </>
       );
     }
-    return (
-      <List>
-        {blockchains.map((item) => (
-          <ListItemButton
-            key={`${item.name}-${item.chainId}`}
-            hasDivider
-            onClick={() => onChange(item)}
-            start={<Image src={item.logo} size={30} />}
-            title={
-              <Typography variant="title" size="medium">
-                {item.displayName}
-              </Typography>
-            }
-            id={item.chainId as string}
-          />
-        ))}
-      </List>
-    );
+    return blockchains.map((item) => (
+      <ListItemButton
+        key={`${item.name}-${item.chainId}`}
+        hasDivider
+        tabIndex="0"
+        onClick={() => onChange(item)}
+        start={<Image src={item.logo} size={30} />}
+        title={
+          <Typography variant="title" size="medium">
+            {item.displayName}
+          </Typography>
+        }
+        id={item.chainId || item.name}
+      />
+    ));
   };
 
   return (
@@ -66,11 +63,10 @@ export function BlockchainList(props: PropTypes) {
         {i18n.t('Select Blockchain')}
       </Typography>
       <Divider size={4} />
-
-      <Content>
+      <List>
         {loadingStatus === 'loading' && <LoadingBlockchainList />}
         {loadingStatus === 'success' && renderList()}
-      </Content>
+      </List>
     </div>
   );
 }

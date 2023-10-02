@@ -143,6 +143,7 @@ export function LiquiditySourcePage({
                 return (
                   <React.Fragment key={sourceItem.id}>
                     <ListItemButton
+                      tabIndex="0"
                       style={{ height: '61px' }}
                       {...sourceItem}
                       selected={false}
