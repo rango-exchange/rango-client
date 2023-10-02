@@ -1,4 +1,4 @@
-import type { PriceImpactWarningLevel } from 'src/components/PriceImpact/PriceImpact.types';
+import type { PriceImpactWarningLevel } from '../../components/PriceImpact/PriceImpact.types';
 
 export type BaseProps = {
   chain: {

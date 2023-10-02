@@ -1,6 +1,6 @@
+import type { SwapInputProps } from '../../containers/SwapInput/SwapInput.types';
 import type { PriceImpactProps } from '../PriceImpact/PriceImpact.types';
 import type { ReactNode } from 'react';
-import type { SwapInputProps } from 'src/containers/SwapInput/SwapInput.types';
 
 type BaseStep = Pick<SwapInputProps, 'chain' | 'token' | 'price'>;
 
