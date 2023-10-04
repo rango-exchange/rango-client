@@ -29,11 +29,11 @@ export function TokenSection(props: TokenSectionProps) {
         />
         <div className="token-chain-name">
           {loading ? (
-            <>
+            <div className="token-chain-name__skeleton">
               <Skeleton variant="text" size="large" width={92} />
-              <Divider size={4} />
+              <Divider size={8} />
               <Skeleton variant="text" size="medium" width={92} />
-            </>
+            </div>
           ) : (
             <>
               <Typography variant="title" size="medium">

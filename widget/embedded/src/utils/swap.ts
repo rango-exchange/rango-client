@@ -23,6 +23,12 @@ import { isValidAddress } from '../components/ConfirmWalletsModal/ConfirmWallets
 import { errorMessages } from '../constants/errors';
 import { swapButtonTitles } from '../constants/messages';
 import { ZERO } from '../constants/numbers';
+import {
+  BALANCE_MAX_DECIMALS,
+  BALANCE_MIN_DECIMALS,
+  TOKEN_AMOUNT_MAX_DECIMALS,
+  TOKEN_AMOUNT_MIN_DECIMALS,
+} from '../constants/routing';
 import { useMetaStore } from '../store/meta';
 import { ButtonState } from '../types';
 
@@ -112,26 +118,34 @@ export function LimitErrorMessage(bestRoute: BestRouteResponse | null): {
   let fromAmountRangeError = '';
   let recommendation = '';
   if (!isExclusive && !!minimum && minimum.gt(swap.fromAmount)) {
-    fromAmountRangeError = `Required: >= ${numberToString(minimum)} ${
-      swap.from.symbol
-    }`;
+    fromAmountRangeError = `Required: >= ${numberToString(
+      minimum,
+      TOKEN_AMOUNT_MIN_DECIMALS,
+      TOKEN_AMOUNT_MAX_DECIMALS
+    )} ${swap.from.symbol}`;
     recommendation = errorMessages.bridgeLimitErrors.increaseAmount;
   } else if (isExclusive && !!minimum && minimum.gte(swap.fromAmount)) {
-    fromAmountRangeError = `Required: > ${numberToString(minimum)} ${
-      swap.from.symbol
-    }`;
+    fromAmountRangeError = `Required: > ${numberToString(
+      minimum,
+      TOKEN_AMOUNT_MIN_DECIMALS,
+      TOKEN_AMOUNT_MAX_DECIMALS
+    )} ${swap.from.symbol}`;
     recommendation = errorMessages.bridgeLimitErrors.increaseAmount;
   }
 
   if (!isExclusive && !!maximum && maximum.lt(swap.fromAmount)) {
-    fromAmountRangeError = `Required: <= ${numberToString(maximum)} ${
-      swap.from.symbol
-    }`;
+    fromAmountRangeError = `Required: <= ${numberToString(
+      maximum,
+      TOKEN_AMOUNT_MIN_DECIMALS,
+      TOKEN_AMOUNT_MAX_DECIMALS
+    )} ${swap.from.symbol}`;
     recommendation = errorMessages.bridgeLimitErrors.decreaseAmount;
   } else if (isExclusive && !!maximum && maximum.lte(swap.fromAmount)) {
-    fromAmountRangeError = `Required: < ${numberToString(maximum)} ${
-      swap.from.symbol
-    }`;
+    fromAmountRangeError = `Required: < ${numberToString(
+      maximum,
+      TOKEN_AMOUNT_MIN_DECIMALS,
+      TOKEN_AMOUNT_MAX_DECIMALS
+    )} ${swap.from.symbol}`;
     recommendation = errorMessages.bridgeLimitErrors.decreaseAmount;
   }
 
@@ -492,14 +506,14 @@ export function getRouteOutputAmount(route: BestRouteResponse | null) {
 }
 
 export function getPercentageChange(
-  oldValue: string | number | null,
-  newValue: string | number | null
+  inputUsdValue: string | number | null,
+  outputUsdValue: string | number | null
 ) {
-  if (!oldValue || !newValue) {
+  if (!inputUsdValue || !outputUsdValue) {
     return null;
   }
-  return new BigNumber(newValue)
-    .div(new BigNumber(oldValue))
+  return new BigNumber(outputUsdValue)
+    .div(new BigNumber(inputUsdValue))
     .minus(1)
     .multipliedBy(100);
 }
@@ -544,13 +558,15 @@ export function getBalanceWarnings(
         new BigNumber(asset.currentAmount.amount).shiftedBy(
           -asset.currentAmount.decimals
         ),
-        8
+        BALANCE_MIN_DECIMALS,
+        BALANCE_MAX_DECIMALS
       );
       const requiredAmount = numberToString(
         new BigNumber(asset.requiredAmount.amount).shiftedBy(
           -asset.requiredAmount.decimals
         ),
-        8
+        BALANCE_MIN_DECIMALS,
+        BALANCE_MAX_DECIMALS
       );
       let reason = '';
       if (asset.reason === 'FEE') {

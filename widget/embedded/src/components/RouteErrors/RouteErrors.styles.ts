@@ -2,7 +2,7 @@ import { styled } from '@rango-dev/ui';
 
 export const Alerts = styled('div', {
   width: '100%',
-  paddingTop: '$16',
+  paddingTop: '$10',
 });
 
 export const Flex = styled('div', {
@@ -24,4 +24,5 @@ export const Item = styled('div', {
 export const Action = styled('div', {
   padding: '$2',
   alignSelf: 'flex-start',
+  cursor: 'pointer',
 });

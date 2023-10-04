@@ -1,6 +1,6 @@
 import type { PropTypes } from './RouteErrors.types';
 
-import { Alert, InfoIcon } from '@rango-dev/ui';
+import { Alert, Divider, InfoIcon } from '@rango-dev/ui';
 import React from 'react';
 
 import { errorMessages } from '../../constants/errors';
@@ -23,37 +23,48 @@ export function RouteErrors(props: PropTypes) {
     totalFeeInUsd,
     outputUsdValue,
     inputUsdValue,
+    loading,
+    extraSpace,
   } = props;
   const error = hasLimitError(bestRoute);
   const { recommendation } = LimitErrorMessage(bestRoute);
 
+  const showWarnings = !error && (highValueLoss || priceImpactCanNotBeComputed);
+  const showAlerts = showWarnings || error;
+
   return (
     <>
-      <Alerts>
-        {!error && (highValueLoss || priceImpactCanNotBeComputed) && (
-          <>
-            <Alert
-              title={
-                highValueLoss
-                  ? errorMessages.highValueLossError.title
-                  : errorMessages.unknownPriceError.title
-              }
-              type={
-                highValueLoss && !!percentageChange?.lt(WARNING_LEVEL_LIMIT)
-                  ? 'error'
-                  : 'warning'
-              }
-              variant="alarm"
-              action={
-                <Action onClick={() => onToggle(true)}>
-                  <InfoIcon size={12} color="gray" />
-                </Action>
-              }
-            />
-          </>
-        )}
-        {error && <Alert type="error" variant="alarm" title={recommendation} />}
-      </Alerts>
+      {(loading || (extraSpace && !showAlerts)) && <Divider size={20} />}
+      {showAlerts && (
+        <Alerts>
+          {showWarnings && (
+            <>
+              <Alert
+                title={
+                  highValueLoss
+                    ? errorMessages.highValueLossError.title
+                    : errorMessages.unknownPriceError.title
+                }
+                type={
+                  highValueLoss && !!percentageChange?.lt(WARNING_LEVEL_LIMIT)
+                    ? 'error'
+                    : 'warning'
+                }
+                variant="alarm"
+                action={
+                  <Action onClick={() => onToggle(true)}>
+                    <InfoIcon size={12} color="gray" />
+                  </Action>
+                }
+              />
+            </>
+          )}
+          {error && (
+            <Alert type="error" variant="alarm" title={recommendation} />
+          )}
+        </Alerts>
+      )}
+
       <RouteErrorsModal
         highValueLoss={highValueLoss}
         open={openModal}

@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-magic-numbers */
 import type { BestRouteEqualityParams, Wallet } from '../types';
 import type { PendingSwap } from '@rango-dev/queue-manager-rango-preset';
+import type { PriceImpactWarningLevel } from '@rango-dev/ui';
 import type {
   SimulationAssetAndAmount,
   SimulationValidationStatus,
@@ -8,6 +9,15 @@ import type {
 import type { BestRouteResponse, BlockchainMeta, Token } from 'rango-sdk';
 
 import BigNumber from 'bignumber.js';
+
+import {
+  GAS_FEE_MAX_DECIMALS,
+  GAS_FEE_MIN_DECIMALS,
+  HIGHT_PRICE_IMPACT,
+  LOW_PRICE_IMPACT,
+  TOKEN_AMOUNT_MAX_DECIMALS,
+  TOKEN_AMOUNT_MIN_DECIMALS,
+} from '../constants/routing';
 
 import { areEqual } from './common';
 import { numberToString } from './numbers';
@@ -149,43 +159,63 @@ export function isRouteParametersChanged(params: BestRouteEqualityParams) {
   return false;
 }
 
-export function getFormatedBestRoute(
+export function getFormattedBestRoute(
   bestRoute: BestRouteResponse | null
 ): BestRouteResponse | null {
   if (!bestRoute) {
     return null;
   }
 
-  const formatedSwaps = (bestRoute.result?.swaps || []).map((swap) => ({
+  const formattedSwaps = (bestRoute.result?.swaps || []).map((swap) => ({
     ...swap,
-    fromAmount: numberToString(swap.fromAmount, 6, 6),
-    toAmount: numberToString(swap.toAmount, 6, 6),
+    fromAmount: numberToString(
+      swap.fromAmount,
+      TOKEN_AMOUNT_MIN_DECIMALS,
+      TOKEN_AMOUNT_MAX_DECIMALS
+    ),
+    toAmount: numberToString(
+      swap.toAmount,
+      TOKEN_AMOUNT_MIN_DECIMALS,
+      TOKEN_AMOUNT_MAX_DECIMALS
+    ),
   }));
 
   return {
     ...bestRoute,
     ...(bestRoute.result && {
-      result: { ...bestRoute.result, swaps: formatedSwaps },
+      result: { ...bestRoute.result, swaps: formattedSwaps },
     }),
   };
 }
 
-export function getFormatedPendingSwap(pendingSwap: PendingSwap): PendingSwap {
-  const formatedSteps = pendingSwap.steps.map((step) => ({
+export function getFormattedPendingSwap(pendingSwap: PendingSwap): PendingSwap {
+  const formattedSteps = pendingSwap.steps.map((step) => ({
     ...step,
-    feeInUsd: numberToString(step.feeInUsd, 4, 4),
-    outputAmount: numberToString(step.outputAmount, 6, 6),
+    feeInUsd: numberToString(
+      step.feeInUsd,
+      GAS_FEE_MIN_DECIMALS,
+      GAS_FEE_MAX_DECIMALS
+    ),
+    outputAmount: numberToString(
+      step.outputAmount,
+      TOKEN_AMOUNT_MIN_DECIMALS,
+      TOKEN_AMOUNT_MAX_DECIMALS
+    ),
     expectedOutputAmountHumanReadable: numberToString(
       step.expectedOutputAmountHumanReadable,
-      6,
-      6
+      TOKEN_AMOUNT_MIN_DECIMALS,
+      TOKEN_AMOUNT_MAX_DECIMALS
     ),
   }));
 
   return {
     ...pendingSwap,
-    inputAmount: numberToString(pendingSwap.inputAmount, 6, 6),
-    steps: formatedSteps,
+    inputAmount: numberToString(
+      pendingSwap.inputAmount,
+      TOKEN_AMOUNT_MIN_DECIMALS,
+      TOKEN_AMOUNT_MAX_DECIMALS
+    ),
+    steps: formattedSteps,
   };
 }
 
@@ -199,3 +229,16 @@ export const getBestRouteStatus = (loading: boolean, error: boolean) => {
   }
   return 'success';
 };
+
+export function getPriceImpactLevel(
+  priceImpact: number
+): PriceImpactWarningLevel {
+  let warningLevel: PriceImpactWarningLevel = undefined;
+  if (priceImpact <= LOW_PRICE_IMPACT && priceImpact > HIGHT_PRICE_IMPACT) {
+    warningLevel = 'low';
+  } else if (priceImpact <= HIGHT_PRICE_IMPACT) {
+    warningLevel = 'high';
+  }
+
+  return warningLevel;
+}

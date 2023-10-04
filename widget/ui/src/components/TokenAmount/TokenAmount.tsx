@@ -23,17 +23,17 @@ export function TokenAmount(props: PropTypes) {
               {props.label}
             </Typography>
           )}
-          <div>
+          <div title={`${props.price.value} ${props.token.displayName}`}>
             <Typography
               ml={4}
-              size="large"
+              size="medium"
               variant="title"
               style={{ fontWeight: 600 }}>
               {props.price.value}
             </Typography>
             <Typography
               ml={8}
-              size="large"
+              size="medium"
               variant="title"
               style={{ fontWeight: 400 }}>
               {props.token.displayName}

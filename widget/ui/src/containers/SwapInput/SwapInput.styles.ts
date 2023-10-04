@@ -47,6 +47,9 @@ export const InputAmount = styled(TextField, {
   fontWeight: '$medium',
   textAlign: 'right',
   width: 140,
+  '&:disabled': {
+    cursor: 'unset',
+  },
 });
 export const MaxButton = styled(Button, {
   $$color: '$colors$info300',

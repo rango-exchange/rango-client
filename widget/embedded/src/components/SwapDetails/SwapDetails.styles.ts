@@ -4,7 +4,6 @@ export const Container = styled('div', {
   display: 'flex',
   width: '100%',
   flexDirection: 'column',
-  justifyContent: 'center',
   alignItems: 'center',
   height: '0',
   flexGrow: 1,
@@ -37,20 +36,13 @@ export const Container = styled('div', {
   },
 });
 
-export const Separator = styled('div', {
-  height: '$12',
-  marginRight: '$10',
-  borderLeft: '1px solid $neutral900',
-  marginLeft: '$14',
-});
-
 export const HeaderDetails = styled('div', {
   width: '100%',
   padding: '0px 15px',
 });
 
 export const StepsList = styled('div', {
-  padding: '0 $20 $20',
+  padding: '$0 $0 $20 $20',
   width: '100%',
   overflow: 'auto',
 });

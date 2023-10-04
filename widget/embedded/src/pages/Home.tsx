@@ -22,6 +22,18 @@ import { RouteErrors } from '../components/RouteErrors';
 import { SwitchFromAndToButton } from '../components/SwitchFromAndTo';
 import { errorMessages } from '../constants/errors';
 import { navigationRoutes } from '../constants/navigationRoutes';
+import {
+  BALANCE_MAX_DECIMALS,
+  BALANCE_MIN_DECIMALS,
+  GAS_FEE_MAX_DECIMALS,
+  GAS_FEE_MIN_DECIMALS,
+  PERCENTAGE_CHANGE_MAX_DECIMALS,
+  PERCENTAGE_CHANGE_MIN_DECIMALS,
+  TOKEN_AMOUNT_MAX_DECIMALS,
+  TOKEN_AMOUNT_MIN_DECIMALS,
+  USD_VALUE_MAX_DECIMALS,
+  USD_VALUE_MIN_DECIMALS,
+} from '../constants/routing';
 import { useSwapInput } from '../hooks/useSwapInput';
 import { useBestRouteStore } from '../store/bestRoute';
 import { useMetaStore } from '../store/meta';
@@ -33,7 +45,7 @@ import {
   secondsToString,
   totalArrivalTime,
 } from '../utils/numbers';
-import { getFormatedBestRoute } from '../utils/routing';
+import { getFormattedBestRoute, getPriceImpactLevel } from '../utils/routing';
 import {
   canComputePriceImpact,
   getOutputRatio,
@@ -76,12 +88,6 @@ const FooterAlert = styled('div', {
   width: '100%',
   display: 'flex',
 });
-
-const BALANCE_PRECISION = 8;
-const TWO_DECIMAL = 2;
-const MAX_DECIMAL = 6;
-const MIN_DECIMAL = 0;
-const WARNING_LEVEL_LIMIT = -10;
 
 export function Home() {
   const navigate = useNavigate();
@@ -160,7 +166,8 @@ export function Home() {
             fromToken?.symbol,
             fromToken?.address
           )?.amount || '0',
-          BALANCE_PRECISION
+          BALANCE_MIN_DECIMALS,
+          BALANCE_MAX_DECIMALS
         )
       : '0';
 
@@ -208,7 +215,11 @@ export function Home() {
         price: {
           value:
             index === 0
-              ? numberToString(inputAmount, MIN_DECIMAL, TWO_DECIMAL)
+              ? numberToString(
+                  inputAmount,
+                  TOKEN_AMOUNT_MIN_DECIMALS,
+                  TOKEN_AMOUNT_MAX_DECIMALS
+                )
               : swap.fromAmount,
         },
       },
@@ -240,7 +251,9 @@ export function Home() {
                   <Divider direction="horizontal" size={8} />
                   <Typography size="xsmall" variant="body" color="neutral900">
                     {`Yours: ${numberToString(
-                      swapHasError?.fromAmount || null
+                      swapHasError?.fromAmount || null,
+                      TOKEN_AMOUNT_MIN_DECIMALS,
+                      TOKEN_AMOUNT_MAX_DECIMALS
                     )} ${swap?.from.symbol}`}
                   </Typography>
                 </FooterAlert>
@@ -253,7 +266,7 @@ export function Home() {
 
   const totalFeeInUsd = getTotalFeeInUsd(bestRoute, tokens);
 
-  const bestRouteData = getFormatedBestRoute(bestRoute);
+  const bestRouteData = getFormattedBestRoute(bestRoute);
 
   return (
     <Layout
@@ -316,9 +329,13 @@ export function Home() {
                 value: inputAmount,
                 usdValue: priceImpactInputCanNotBeComputed
                   ? undefined
-                  : numberToString(inputUsdValue),
+                  : numberToString(
+                      inputUsdValue,
+                      USD_VALUE_MIN_DECIMALS,
+                      USD_VALUE_MAX_DECIMALS
+                    ),
                 error: priceImpactInputCanNotBeComputed
-                  ? errorMessages.unknownPriceError.impacTitle
+                  ? errorMessages.unknownPriceError.impactTitle
                   : undefined,
               }}
               disabled={loadingMetaStatus === 'failed'}
@@ -344,19 +361,31 @@ export function Home() {
             }}
             percentageChange={
               !!percentageChange?.lt(0)
-                ? numberToString(percentageChange, MIN_DECIMAL, TWO_DECIMAL)
+                ? numberToString(
+                    percentageChange,
+                    PERCENTAGE_CHANGE_MIN_DECIMALS,
+                    PERCENTAGE_CHANGE_MAX_DECIMALS
+                  )
                 : null
             }
-            warningLevel={
-              !!percentageChange?.lt(WARNING_LEVEL_LIMIT) ? 'high' : 'low'
-            }
+            warningLevel={getPriceImpactLevel(
+              percentageChange?.toNumber() ?? 0
+            )}
             price={{
-              value: numberToString(outputAmount),
+              value: numberToString(
+                outputAmount,
+                TOKEN_AMOUNT_MIN_DECIMALS,
+                TOKEN_AMOUNT_MAX_DECIMALS
+              ),
               usdValue: priceImpactOutputCanNotBeComputed
                 ? undefined
-                : numberToString(outputUsdValue),
+                : numberToString(
+                    outputUsdValue,
+                    USD_VALUE_MIN_DECIMALS,
+                    USD_VALUE_MAX_DECIMALS
+                  ),
               error: priceImpactOutputCanNotBeComputed
-                ? errorMessages.unknownPriceError.impacTitle
+                ? errorMessages.unknownPriceError.impactTitle
                 : undefined,
             }}
             onClickToken={() => navigate('to-swap')}
@@ -377,20 +406,40 @@ export function Home() {
               type="basic"
               recommended={true}
               input={{
-                value: numberToString(inputAmount, MIN_DECIMAL, MAX_DECIMAL),
-                usdValue: numberToString(inputUsdValue),
+                value: numberToString(
+                  inputAmount,
+                  TOKEN_AMOUNT_MIN_DECIMALS,
+                  TOKEN_AMOUNT_MAX_DECIMALS
+                ),
+                usdValue: numberToString(
+                  inputUsdValue,
+                  USD_VALUE_MIN_DECIMALS,
+                  USD_VALUE_MAX_DECIMALS
+                ),
               }}
               output={{
-                value: numberToString(outputAmount),
-                usdValue: numberToString(outputUsdValue),
+                value: numberToString(
+                  outputAmount,
+                  TOKEN_AMOUNT_MIN_DECIMALS,
+                  TOKEN_AMOUNT_MAX_DECIMALS
+                ),
+                usdValue: numberToString(
+                  outputUsdValue,
+                  USD_VALUE_MIN_DECIMALS,
+                  USD_VALUE_MAX_DECIMALS
+                ),
               }}
               steps={getBestRouteSteps(bestRouteData.result.swaps)}
               percentageChange={numberToString(
                 percentageChange,
-                MIN_DECIMAL,
-                TWO_DECIMAL
+                PERCENTAGE_CHANGE_MIN_DECIMALS,
+                PERCENTAGE_CHANGE_MAX_DECIMALS
               )}
-              totalFee={numberToString(totalFeeInUsd, MIN_DECIMAL, TWO_DECIMAL)}
+              totalFee={numberToString(
+                totalFeeInUsd,
+                GAS_FEE_MIN_DECIMALS,
+                GAS_FEE_MAX_DECIMALS
+              )}
               totalTime={secondsToString(totalArrivalTime(bestRoute))}
             />
           </BestRouteContainer>
@@ -405,21 +454,20 @@ export function Home() {
           </>
         ) : null}
       </Container>
-      {!fetchingBestRoute && (
-        <RouteErrors
-          openModal={openWarningModal}
-          onToggle={setOpenWarningModal}
-          totalFeeInUsd={totalFeeInUsd}
-          outputUsdValue={outputUsdValue}
-          inputUsdValue={inputUsdValue}
-          percentageChange={percentageChange}
-          highValueLoss={highValueLoss}
-          priceImpactCanNotBeComputed={
-            priceImpactInputCanNotBeComputed ||
-            priceImpactOutputCanNotBeComputed
-          }
-        />
-      )}
+      <RouteErrors
+        openModal={openWarningModal}
+        onToggle={setOpenWarningModal}
+        totalFeeInUsd={totalFeeInUsd}
+        outputUsdValue={outputUsdValue}
+        inputUsdValue={inputUsdValue}
+        percentageChange={percentageChange}
+        highValueLoss={highValueLoss}
+        priceImpactCanNotBeComputed={
+          priceImpactInputCanNotBeComputed || priceImpactOutputCanNotBeComputed
+        }
+        loading={fetchingBestRoute || loadingMetaStatus === 'loading'}
+        extraSpace={!!bestRoute?.result || !bestRoute}
+      />
     </Layout>
   );
 }

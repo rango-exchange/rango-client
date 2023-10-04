@@ -2,6 +2,12 @@
 import type { Step } from '@rango-dev/ui/dist/widget/ui/src/components/BestRoute/BestRoute.types';
 import type { BestRouteResponse, BlockchainMeta } from 'rango-sdk';
 
+import {
+  TOKEN_AMOUNT_MAX_DECIMALS,
+  TOKEN_AMOUNT_MIN_DECIMALS,
+  USD_VALUE_MAX_DECIMALS,
+  USD_VALUE_MIN_DECIMALS,
+} from '../../constants/routing';
 import { numberToString } from '../../utils/numbers';
 
 export function formatBestRoute(
@@ -17,8 +23,16 @@ export function formatBestRoute(
           image: swap.from.blockchainLogo,
         },
         price: {
-          value: numberToString(swap.fromAmount, 6, 6),
-          usdValue: numberToString(swap.from.usdPrice?.toString(), 6, 6),
+          value: numberToString(
+            swap.fromAmount,
+            TOKEN_AMOUNT_MIN_DECIMALS,
+            TOKEN_AMOUNT_MAX_DECIMALS
+          ),
+          usdValue: numberToString(
+            swap.from.usdPrice?.toString(),
+            USD_VALUE_MIN_DECIMALS,
+            USD_VALUE_MAX_DECIMALS
+          ),
         },
       },
       to: {
@@ -28,8 +42,16 @@ export function formatBestRoute(
           image: swap.to.blockchainLogo,
         },
         price: {
-          value: numberToString(swap.toAmount, 6, 6),
-          usdValue: numberToString(swap.to.usdPrice?.toString(), 6, 6),
+          value: numberToString(
+            swap.toAmount,
+            TOKEN_AMOUNT_MIN_DECIMALS,
+            TOKEN_AMOUNT_MAX_DECIMALS
+          ),
+          usdValue: numberToString(
+            swap.to.usdPrice?.toString(),
+            USD_VALUE_MIN_DECIMALS,
+            USD_VALUE_MAX_DECIMALS
+          ),
         },
       },
     };
