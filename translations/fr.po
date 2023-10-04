@@ -94,7 +94,7 @@ msgstr ""
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:37
-#: widget/embedded/src/components/TokenList/TokenList.tsx:125
+#: widget/embedded/src/components/TokenList/TokenList.tsx:126
 #: widget/embedded/src/pages/HistoryPage.tsx:99
 #: widget/embedded/src/pages/LiquiditySourcePage.tsx:135
 #~ msgid "No results found"
@@ -102,7 +102,7 @@ msgstr ""
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:38
-#: widget/embedded/src/components/TokenList/TokenList.tsx:126
+#: widget/embedded/src/components/TokenList/TokenList.tsx:127
 #: widget/embedded/src/pages/HistoryPage.tsx:101
 #: widget/embedded/src/pages/LiquiditySourcePage.tsx:136
 #~ msgid "Try using different keywords"
@@ -142,7 +142,7 @@ msgstr ""
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/HeaderButtons/HomeButtons.tsx:56
-#: widget/embedded/src/pages/ConfirmSwapPage.tsx:316
+#: widget/embedded/src/pages/ConfirmSwapPage.tsx:326
 #~ msgid "Settings"
 #~ msgstr ""
 
@@ -185,7 +185,7 @@ msgstr ""
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetails/SwapDetails.Placeholder.tsx:21
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:202
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:231
 #~ msgid "Swap and Bridge"
 #~ msgstr ""
 
@@ -195,32 +195,32 @@ msgstr ""
 #~ msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:192
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:221
 #~ msgid "Transaction was not sent."
 #~ msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:214
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:243
 #~ msgid "Delete"
 #~ msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:234
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:263
 #~ msgid "Try again"
 #~ msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:242
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:271
 #~ msgid "Request ID"
 #~ msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:257
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:286
 #~ msgid "Created at"
 #~ msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:330
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:352
 #~ msgid "Swaps steps"
 #~ msgstr ""
 
@@ -315,7 +315,7 @@ msgstr ""
 #~ msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/TokenList/TokenList.tsx:262
+#: widget/embedded/src/components/TokenList/TokenList.tsx:263
 #~ msgid "Select Token"
 #~ msgstr ""
 
@@ -426,7 +426,7 @@ msgstr ""
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/constants/messages.ts:5
-#: widget/embedded/src/pages/Home.tsx:287
+#: widget/embedded/src/pages/Home.tsx:300
 #~ msgid "Swap"
 #~ msgstr ""
 
