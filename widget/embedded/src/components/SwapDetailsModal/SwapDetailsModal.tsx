@@ -29,6 +29,9 @@ export function SwapDetailsModal(props: ModalPropTypes) {
           title={modalNetworkValues[state].title}
           currentStepWallet={currentStepWallet}
           message={message}
+          showWalletButton={
+            state !== PendingSwapNetworkStatus.WaitingForNetworkChange
+          }
         />
       )}
       {state === 'delete' && (

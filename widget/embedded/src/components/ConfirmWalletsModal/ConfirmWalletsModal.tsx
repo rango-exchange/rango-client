@@ -332,7 +332,7 @@ export function ConfirmWalletsModal(props: PropTypes) {
               );
 
               const key = `wallet-${index}`;
-              const isLastWallet = index !== requiredWallets.length - 1;
+              const isLastWallet = index === requiredWallets.length - 1;
 
               return (
                 <div key={key}>

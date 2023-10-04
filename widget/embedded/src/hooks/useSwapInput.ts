@@ -53,6 +53,7 @@ export function useSwapInput(): UseSwapInput {
       setLoading(true);
     }
     if (!shouldSkipRequest) {
+      resetRoute();
       const requestBody = createBestRouteRequestBody({
         fromToken,
         toToken,
@@ -87,7 +88,8 @@ export function useSwapInput(): UseSwapInput {
   useEffect(() => {
     if (!isPositiveNumber(inputAmount) || inputUsdValue?.eq(0)) {
       setLoading(false);
-      return cancelFetch();
+      cancelFetch();
+      return;
     }
     if (shouldSkipRequest) {
       return;
@@ -97,6 +99,13 @@ export function useSwapInput(): UseSwapInput {
     debouncedFetch();
     return cancelFetch;
   }, [inputAmount]);
+
+  useEffect(() => {
+    if (!shouldSkipRequest) {
+      fetch();
+    }
+    return cancelFetch;
+  }, [disabledLiquiditySources.length]);
 
   return { fetch, loading, error };
 }

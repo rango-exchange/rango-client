@@ -28,6 +28,7 @@ import { generateRangeColors } from '../../utils/common';
 import { LoadingTokenList } from './LoadingTokenList';
 import {
   BalanceContainer,
+  Container,
   End,
   ImageSection,
   List,
@@ -257,13 +258,13 @@ export function TokenList(props: PropTypes) {
   };
 
   return (
-    <div>
+    <Container>
       <Typography variant="label" size="large">
         {i18n.t('Select Token')}
       </Typography>
       <Divider size={4} />
       {loadingStatus === 'loading' && <LoadingTokenList size={PAGE_SIZE} />}
       {loadingStatus === 'success' && <List>{renderList()}</List>}
-    </div>
+    </Container>
   );
 }

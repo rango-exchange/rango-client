@@ -46,7 +46,7 @@ export function Modal(props: PropsWithChildren<PropTypes>) {
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const contentRef = useRef<HTMLDivElement | null>(null);
   usePaddingRight({
-    element: contentRef.current,
+    elementRef: contentRef,
     paddingRight: theme.sizes[DEFAULT_CONTENT_PADDING],
   });
 
@@ -112,9 +112,7 @@ export function Modal(props: PropsWithChildren<PropTypes>) {
                   </Flex>
                 </ModalHeader>
               )}
-              <Content ref={(ref) => (contentRef.current = ref)}>
-                {children}
-              </Content>
+              <Content ref={contentRef}>{children}</Content>
               {(hasLogo || footer) && (
                 <Footer>
                   <div className="footer__content">{footer}</div>

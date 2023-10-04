@@ -13,14 +13,19 @@ import { useNavigate } from 'react-router-dom';
 
 import { errorMessages } from '../../constants/errors';
 import { navigationRoutes } from '../../constants/navigationRoutes';
+import {
+  GAS_FEE_MAX_DECIMALS,
+  GAS_FEE_MIN_DECIMALS,
+  HIGHT_PRICE_IMPACT,
+  PERCENTAGE_CHANGE_MAX_DECIMALS,
+  PERCENTAGE_CHANGE_MIN_DECIMALS,
+  USD_VALUE_MAX_DECIMALS,
+  USD_VALUE_MIN_DECIMALS,
+} from '../../constants/routing';
 import { numberToString } from '../../utils/numbers';
 
 import { Flex } from './RouteErrors.styles';
 import { RouteErrorsModalItem } from './RouteErrorsModalItem';
-
-const WARNING_LEVEL_LIMIT = -10;
-const MAX_DECIMAL = 2;
-const MIN_DECIMAL = 0;
 
 export function RouteErrorsModal(props: ModalPropTypes) {
   const {
@@ -34,19 +39,41 @@ export function RouteErrorsModal(props: ModalPropTypes) {
   } = props;
   const navigate = useNavigate();
   const type =
-    highValueLoss && !!percentageChange?.lt(WARNING_LEVEL_LIMIT)
+    highValueLoss && !!percentageChange?.lt(HIGHT_PRICE_IMPACT)
       ? 'error'
       : 'warning';
   const highValueLossData = [
-    { title: 'Swapping', value: numberToString(inputUsdValue) },
+    {
+      title: 'Swapping',
+      value: numberToString(
+        inputUsdValue,
+        USD_VALUE_MIN_DECIMALS,
+        USD_VALUE_MAX_DECIMALS
+      ),
+    },
     {
       title: 'Gas cost',
-      value: numberToString(totalFeeInUsd, MIN_DECIMAL, MAX_DECIMAL),
+      value: numberToString(
+        totalFeeInUsd,
+        GAS_FEE_MIN_DECIMALS,
+        GAS_FEE_MAX_DECIMALS
+      ),
     },
-    { title: 'Receiving', value: numberToString(outputUsdValue) },
+    {
+      title: 'Receiving',
+      value: numberToString(
+        outputUsdValue,
+        USD_VALUE_MIN_DECIMALS,
+        USD_VALUE_MAX_DECIMALS
+      ),
+    },
     {
       title: 'Price impact',
-      value: numberToString(percentageChange, MIN_DECIMAL, MAX_DECIMAL),
+      value: numberToString(
+        percentageChange,
+        PERCENTAGE_CHANGE_MIN_DECIMALS,
+        PERCENTAGE_CHANGE_MAX_DECIMALS
+      ),
       valueColor: `${type}500`,
     },
   ];
@@ -59,13 +86,13 @@ export function RouteErrorsModal(props: ModalPropTypes) {
       {highValueLoss ? (
         <MessageBox
           type={type}
-          title={errorMessages.highValueLossError.impacTitle}
+          title={errorMessages.highValueLossError.impactTitle}
           description={errorMessages.highValueLossError.description}
         />
       ) : (
         <MessageBox
           type={type}
-          title={errorMessages.unknownPriceError.impacTitle}
+          title={errorMessages.unknownPriceError.impactTitle}
           description={errorMessages.unknownPriceError.description}
         />
       )}

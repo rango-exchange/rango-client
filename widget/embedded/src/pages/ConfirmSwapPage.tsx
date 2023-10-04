@@ -4,7 +4,6 @@ import type {
   ConfirmSwapFetchResult,
 } from '../hooks/useConfirmSwap';
 import type { WidgetConfig } from '../types';
-import type { PriceImpactWarningLevel } from '@rango-dev/ui/dist/widget/ui/src/components/PriceImpact/PriceImpact.types';
 
 import { i18n } from '@lingui/core';
 import { useManager } from '@rango-dev/queue-manager-react';
@@ -38,7 +37,16 @@ import { Layout } from '../components/Layout';
 import { NoRoutes } from '../components/NoRoutes';
 import { getConfirmSwapErrorMessage } from '../constants/errors';
 import { navigationRoutes } from '../constants/navigationRoutes';
-import { HIGHT_PRICE_IMPACT, LOW_PRICE_IMPACT } from '../constants/routing';
+import {
+  GAS_FEE_MAX_DECIMALS,
+  GAS_FEE_MIN_DECIMALS,
+  PERCENTAGE_CHANGE_MAX_DECIMALS,
+  PERCENTAGE_CHANGE_MIN_DECIMALS,
+  TOKEN_AMOUNT_MAX_DECIMALS,
+  TOKEN_AMOUNT_MIN_DECIMALS,
+  USD_VALUE_MAX_DECIMALS,
+  USD_VALUE_MIN_DECIMALS,
+} from '../constants/routing';
 import { getRouteWarningMessage } from '../constants/warnings';
 import { useConfirmSwap } from '../hooks/useConfirmSwap';
 import { useBestRouteStore } from '../store/bestRoute';
@@ -56,6 +64,7 @@ import {
   secondsToString,
   totalArrivalTime,
 } from '../utils/numbers';
+import { getPriceImpactLevel } from '../utils/routing';
 import { getPercentageChange, getTotalFeeInUsd } from '../utils/swap';
 
 const Container = styled('div', {
@@ -117,7 +126,10 @@ export function ConfirmSwapPage(props: PropTypes) {
   const showWalletsOnInit = !routeWalletsConfirmed;
   const [showWallets, setShowWallets] = useState(false);
   const setSelectedSwap = useUiStore.use.setSelectedSwap();
-  const { tokens } = useMetaStore.use.meta();
+  const {
+    meta: { tokens },
+    loadingStatus: loadingMetaStatus,
+  } = useMetaStore();
   const slippage = useSettingsStore.use.slippage();
   const customSlippage = useSettingsStore.use.customSlippage();
   const { manager } = useManager();
@@ -133,6 +145,8 @@ export function ConfirmSwapPage(props: PropTypes) {
       error: null,
       warnings: null,
     });
+  const showSkeleton =
+    fetchingConfirmationRoute || loadingMetaStatus === 'loading';
   const showNoRouteFound =
     !fetchingConfirmationRoute &&
     confirmSwapResult.error &&
@@ -152,15 +166,11 @@ export function ConfirmSwapPage(props: PropTypes) {
       inputUsdValue?.toNumber() ?? 0,
       outputUsdValue?.toNumber() ?? 0
     ),
-    2,
-    2
+    PERCENTAGE_CHANGE_MIN_DECIMALS,
+    PERCENTAGE_CHANGE_MAX_DECIMALS
   );
-  let warningLevel: PriceImpactWarningLevel = undefined;
-  if (parseFloat(percentageChange) >= HIGHT_PRICE_IMPACT) {
-    warningLevel = 'high';
-  } else if (parseFloat(percentageChange) >= LOW_PRICE_IMPACT) {
-    warningLevel = 'low';
-  }
+
+  const warningLevel = getPriceImpactLevel(parseFloat(percentageChange));
 
   const onConfirmSwap: ConfirmSwap['fetch'] = async ({
     selectedWallets,
@@ -450,22 +460,40 @@ export function ConfirmSwapPage(props: PropTypes) {
             <Divider size={12} />
           </>
         )}
-        {fetchingConfirmationRoute && (
-          <BestRouteSkeleton type="swap-preview" expanded />
-        )}
+        {showSkeleton && <BestRouteSkeleton type="swap-preview" expanded />}
         {showBestRoute && (
           <BestRoute
             expanded={true}
             steps={formatBestRoute(bestRoute) ?? []}
             input={{
-              value: numberToString(inputAmount, 6, 6),
-              usdValue: numberToString(inputUsdValue, 6, 6),
+              value: numberToString(
+                inputAmount,
+                TOKEN_AMOUNT_MIN_DECIMALS,
+                TOKEN_AMOUNT_MAX_DECIMALS
+              ),
+              usdValue: numberToString(
+                inputUsdValue,
+                USD_VALUE_MIN_DECIMALS,
+                USD_VALUE_MAX_DECIMALS
+              ),
             }}
             output={{
-              value: numberToString(outputAmount, 6, 6),
-              usdValue: numberToString(outputUsdValue, 6, 6),
+              value: numberToString(
+                outputAmount,
+                TOKEN_AMOUNT_MIN_DECIMALS,
+                TOKEN_AMOUNT_MAX_DECIMALS
+              ),
+              usdValue: numberToString(
+                outputUsdValue,
+                USD_VALUE_MIN_DECIMALS,
+                USD_VALUE_MAX_DECIMALS
+              ),
             }}
-            totalFee={numberToString(totalFeeInUsd, 0, 2)}
+            totalFee={numberToString(
+              totalFeeInUsd,
+              GAS_FEE_MIN_DECIMALS,
+              GAS_FEE_MAX_DECIMALS
+            )}
             totalTime={secondsToString(totalArrivalTime(bestRoute))}
             recommended={true}
             type="swap-preview"

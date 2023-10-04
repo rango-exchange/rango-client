@@ -1,8 +1,8 @@
 import type { PropTypes } from './BestRouteSkeleton.types';
 
 import React from 'react';
-import { NextIcon } from 'src/icons';
 
+import { NextIcon } from '../../icons';
 import { ChainToken } from '../ChainToken';
 import { Divider } from '../Divider';
 import { Skeleton } from '../Skeleton';

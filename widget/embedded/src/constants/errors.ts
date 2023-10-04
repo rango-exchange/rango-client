@@ -22,7 +22,7 @@ export const errorMessages = {
     decreaseAmount: i18n.t('Bridge Limit Error: Please decrease your amount'),
   },
   highValueLossError: {
-    impacTitle: i18n.t('High Price Impact'),
+    impactTitle: i18n.t('High Price Impact'),
     title: i18n.t('Price impact is too high!'),
     description: i18n.t(
       'The price impact is significantly higher than the allowed amount. If you are sure, continue, otherwise, change the swap.'
@@ -35,7 +35,7 @@ export const errorMessages = {
     ),
   },
   unknownPriceError: {
-    impacTitle: i18n.t('USD Price Unknown'),
+    impactTitle: i18n.t('USD Price Unknown'),
     title: i18n.t('USD Price Unknown, Cannot calculate Price Impact.'),
     description: i18n.t(
       'USD Price Unknown, Cannot calculate Price Impact. The price impact may be higher than usual. Are you sure to continue the Swap?'

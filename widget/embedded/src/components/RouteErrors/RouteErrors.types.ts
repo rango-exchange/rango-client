@@ -9,11 +9,13 @@ export interface PropTypes {
   percentageChange: BigNumber | null;
   highValueLoss: boolean;
   priceImpactCanNotBeComputed: boolean;
+  loading: boolean;
+  extraSpace: boolean;
 }
 
 type ModalPropTypesKeys = keyof Omit<
   PropTypes,
-  'priceImpactCanNotBeComputed' | 'openModal'
+  'priceImpactCanNotBeComputed' | 'openModal' | 'extraSpace' | 'loading'
 >;
 
 export type ModalPropTypes = Pick<PropTypes, ModalPropTypesKeys> & {
