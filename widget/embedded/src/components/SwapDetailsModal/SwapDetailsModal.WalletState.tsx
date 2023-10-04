@@ -6,12 +6,8 @@ import React from 'react';
 
 import { WalletContainer } from './SwapDetailsModal.styles';
 
-export const WalletStateContent = ({
-  type,
-  title,
-  currentStepWallet,
-  message,
-}: WalletStateContentProps) => {
+export const WalletStateContent = (props: WalletStateContentProps) => {
+  const { type, title, currentStepWallet, message, showWalletButton } = props;
   const { connect, getWalletInfo, state: walletState } = useWallets();
   const walletType = currentStepWallet?.walletType;
   const isConnected = walletType && walletState(walletType).connected;
@@ -19,7 +15,7 @@ export const WalletStateContent = ({
   return (
     <>
       <MessageBox type={type} title={title} description={message} />
-      {walletType && (
+      {showWalletButton && walletType && (
         <WalletContainer>
           <Wallet
             title={getWalletInfo(walletType).name}

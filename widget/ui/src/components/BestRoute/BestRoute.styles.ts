@@ -7,9 +7,6 @@ export const EXPANDABLE_ROUTES_TRANSITION_DURATION = 300;
 
 export const RouteContainer = styled(Collapsible.Root, {
   display: 'flex',
-  position: 'absolute',
-  top: 'calc(100% - 36px)',
-  left: '$0',
   flexDirection: 'column',
   alignItems: 'start',
   overflowX: 'auto',
@@ -44,7 +41,6 @@ export const SummaryContainer = styled('div', {
   color: '$foreground',
   cursor: 'pointer',
   boxSizing: 'border-box',
-  padding: '$15 $15 $46  $15',
   position: 'relative',
   variants: {
     recommended: {
@@ -71,7 +67,10 @@ export const SummaryContainer = styled('div', {
     },
     basic: { true: { borderTopRightRadius: '0', borderTopLeftRadius: '0' } },
   },
-  '& .summary': { width: '100%' },
+  '& .summary': {
+    width: '100%',
+    padding: '$15 $15 $10 $15',
+  },
   '& .basic-info': {
     paddingTop: '$10',
     display: 'flex',

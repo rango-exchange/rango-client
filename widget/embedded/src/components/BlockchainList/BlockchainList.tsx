@@ -14,7 +14,7 @@ import React, { useEffect, useState } from 'react';
 import { useMetaStore } from '../../store/meta';
 
 import { filterBlockchains } from './BlockchainList.helpers';
-import { Content, List } from './BlockchainList.styles';
+import { Container, List } from './BlockchainList.styles';
 import { LoadingBlockchainList } from './LoadingBlockchainList';
 
 export function BlockchainList(props: PropTypes) {
@@ -61,16 +61,13 @@ export function BlockchainList(props: PropTypes) {
   };
 
   return (
-    <div>
+    <Container>
       <Typography variant="label" size="large">
         {i18n.t('Select Blockchain')}
       </Typography>
       <Divider size={4} />
-
-      <Content>
-        {loadingStatus === 'loading' && <LoadingBlockchainList />}
-        {loadingStatus === 'success' && renderList()}
-      </Content>
-    </div>
+      {loadingStatus === 'loading' && <LoadingBlockchainList />}
+      {loadingStatus === 'success' && renderList()}
+    </Container>
   );
 }

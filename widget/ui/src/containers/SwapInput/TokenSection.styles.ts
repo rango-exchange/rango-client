@@ -39,4 +39,7 @@ export const TokenSectionContainer = styled('div', {
     alignItems: 'start',
     paddingLeft: '$10',
   },
+  '& .token-chain-name__skeleton': {
+    padding: '$5 $0',
+  },
 });

@@ -1,7 +1,9 @@
-import { useEffect } from 'react';
+import type { MutableRefObject } from 'react';
+
+import { useLayoutEffect } from 'react';
 
 type Params = {
-  element: HTMLElement | null;
+  elementRef: MutableRefObject<HTMLElement | null>;
   paddingRight: string;
 };
 
@@ -10,29 +12,30 @@ type Params = {
  * By implementing this solution, we ensure that there is a constant padding on the right side of the content, regardless of whether or not a scrollbar is present.
  */
 export function usePaddingRight(params: Params) {
-  const { element, paddingRight } = params;
-  useEffect(() => {
+  const { elementRef, paddingRight } = params;
+  useLayoutEffect(() => {
     let resizeObserver: ResizeObserver | null = null;
-    if (element) {
+    if (elementRef.current) {
       resizeObserver = new ResizeObserver(() => {
-        if (element) {
-          const scrollable = element.scrollHeight > element.clientHeight;
+        if (elementRef.current) {
+          const scrollable =
+            elementRef.current.scrollHeight > elementRef.current.clientHeight;
           if (scrollable) {
-            element.style.paddingRight = `${
+            elementRef.current.style.paddingRight = `${
               parseInt(paddingRight) -
-              (element.offsetWidth - element.clientWidth)
+              (elementRef.current.offsetWidth - elementRef.current.clientWidth)
             }px`;
           } else {
-            element.style.paddingRight = paddingRight;
+            elementRef.current.style.paddingRight = paddingRight;
           }
         }
       });
-      resizeObserver.observe(element);
+      resizeObserver.observe(elementRef.current);
     }
     return () => {
-      if (element) {
-        resizeObserver?.unobserve(element);
+      if (elementRef.current) {
+        resizeObserver?.unobserve(elementRef.current);
       }
     };
-  }, [element]);
+  }, [elementRef.current]);
 }

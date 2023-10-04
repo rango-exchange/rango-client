@@ -55,7 +55,7 @@ export function SwapInput(props: SwapInputProps) {
           {props.loading ? (
             <>
               <Skeleton variant="text" size="large" width={92} />
-              <Divider size={4} />
+              <Divider size={8} />
               <Skeleton variant="text" size="medium" width={92} />
             </>
           ) : (

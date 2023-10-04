@@ -38,7 +38,7 @@ function LayoutComponent(props: PropsWithChildren<PropTypes>, ref: Ref) {
   const contentRef = useRef<HTMLDivElement | null>(null);
 
   usePaddingRight({
-    element: contentRef.current,
+    elementRef: contentRef,
     paddingRight: noPadding ? '0' : theme.sizes[DEFAULT_CONTENT_PADDING],
   });
 
@@ -65,7 +65,7 @@ function LayoutComponent(props: PropsWithChildren<PropTypes>, ref: Ref) {
           </>
         }
       />
-      <Content noPadding={noPadding} ref={(ref) => (contentRef.current = ref)}>
+      <Content noPadding={noPadding} ref={contentRef}>
         {children}
       </Content>
       {(hasLogo || footer) && (

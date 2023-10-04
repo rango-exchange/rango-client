@@ -46,6 +46,7 @@ export interface ModalNetworkValueTypes {
 export interface WalletStateContentProps extends ModalNetworkValueTypes {
   currentStepWallet: WalletTypeAndAddress | null;
   message: string;
+  showWalletButton: boolean;
 }
 
 export type CancelContentProps = Pick<ModalPropTypes, 'onClose' | 'onCancel'>;

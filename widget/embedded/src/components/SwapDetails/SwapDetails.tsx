@@ -14,20 +14,33 @@ import {
   Divider,
   IconButton,
   RouteCost,
+  RouteSummary,
   StepDetails,
-  TokenAmount,
+  theme,
   Typography,
   useCopyToClipboard,
+  usePaddingRight,
 } from '@rango-dev/ui';
 import { useWallets } from '@rango-dev/wallets-react';
 import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { navigationRoutes } from '../../constants/navigationRoutes';
+import {
+  GAS_FEE_MAX_DECIMALS,
+  GAS_FEE_MIN_DECIMALS,
+  PERCENTAGE_CHANGE_MAX_DECIMALS,
+  PERCENTAGE_CHANGE_MIN_DECIMALS,
+  TOKEN_AMOUNT_MAX_DECIMALS,
+  TOKEN_AMOUNT_MIN_DECIMALS,
+  USD_VALUE_MAX_DECIMALS,
+  USD_VALUE_MIN_DECIMALS,
+} from '../../constants/routing';
 import { useNavigateBack } from '../../hooks/useNavigateBack';
 import { useBestRouteStore } from '../../store/bestRoute';
 import { useMetaStore } from '../../store/meta';
 import { numberToString } from '../../utils/numbers';
+import { getPriceImpactLevel } from '../../utils/routing';
 import {
   getLastConvertedTokenInFailedSwap,
   getPercentageChange,
@@ -44,21 +57,14 @@ import {
 } from '../SwapDetailsModal';
 
 import {
-  AMOUNT_DECIMALS,
-  getPriceImpactWarningLevel,
   getSteps,
   getStepState,
-  MIN_DECIMALS,
-  PERCENT_DECIMALS,
   RESET_INTERVAL,
   SECONDS,
 } from './SwapDetails.helpers';
-import {
-  Container,
-  HeaderDetails,
-  Separator,
-  StepsList,
-} from './SwapDetails.styles';
+import { Container, HeaderDetails, StepsList } from './SwapDetails.styles';
+
+const DEFAULT_CONTENT_PADDING = 20;
 
 export function SwapDetails(props: SwapDetailsProps) {
   const { swap, requestId, onDelete, onCancel: onCancelProps } = props;
@@ -67,12 +73,17 @@ export function SwapDetails(props: SwapDetailsProps) {
   const retry = useBestRouteStore.use.retry();
   const navigate = useNavigate();
   const { navigateBackFrom } = useNavigateBack();
-  const listRef = useRef(null);
+  const listRef = useRef<HTMLDivElement | null>(null);
   const [_, handleCopy] = useCopyToClipboard(RESET_INTERVAL);
   const [modalState, setModalState] = useState<ModalState>(null);
   const [showCompletedModal, setShowCompletedModal] = useState<
     'success' | 'failed' | null
   >(null);
+
+  usePaddingRight({
+    elementRef: listRef,
+    paddingRight: theme.sizes[DEFAULT_CONTENT_PADDING],
+  });
 
   const onCancel = () => {
     onCancelProps();
@@ -142,10 +153,6 @@ export function SwapDetails(props: SwapDetailsProps) {
   const [firstStep, lastStep] = [swap.steps[0], swap.steps[numberOfSteps - 1]];
   const outputAmount =
     lastStep.outputAmount || lastStep.expectedOutputAmountHumanReadable;
-  const percentageChange =
-    swap.inputAmount && outputAmount
-      ? getPercentageChange(swap.inputAmount, outputAmount)
-      : null;
 
   const totalFee = swap.steps.reduce(
     (totalFee, steps) => totalFee + parseFloat(steps.feeInUsd || ''),
@@ -165,7 +172,13 @@ export function SwapDetails(props: SwapDetailsProps) {
 
   const outputUsdValue = numberToString(
     String(
-      parseFloat(numberToString(outputAmount, MIN_DECIMALS, AMOUNT_DECIMALS)) *
+      parseFloat(
+        numberToString(
+          outputAmount,
+          TOKEN_AMOUNT_MIN_DECIMALS,
+          TOKEN_AMOUNT_MAX_DECIMALS
+        )
+      ) *
         (getUsdPrice(
           lastStep.toBlockchain,
           lastStep.toSymbol,
@@ -173,16 +186,32 @@ export function SwapDetails(props: SwapDetailsProps) {
           tokens
         ) || 0)
     ),
-    MIN_DECIMALS,
-    AMOUNT_DECIMALS
+    USD_VALUE_MIN_DECIMALS,
+    USD_VALUE_MAX_DECIMALS
   );
+
+  const inputUsdValue = numberToString(
+    String(
+      parseFloat(swap.inputAmount) *
+        (getUsdPrice(
+          firstStep.fromBlockchain,
+          firstStep.fromSymbol,
+          firstStep.fromSymbolAddress,
+          tokens
+        ) || 0)
+    ),
+    USD_VALUE_MIN_DECIMALS,
+    USD_VALUE_MAX_DECIMALS
+  );
+
+  const percentageChange = getPercentageChange(inputUsdValue, outputUsdValue);
 
   const completeModalDesc =
     showCompletedModal === 'success'
-      ? `You have recieved ${numberToString(
+      ? `You have received ${numberToString(
           outputAmount,
-          MIN_DECIMALS,
-          AMOUNT_DECIMALS
+          TOKEN_AMOUNT_MIN_DECIMALS,
+          TOKEN_AMOUNT_MAX_DECIMALS
         )} ${
           steps[numberOfSteps - 1].to.token.displayName
         } in ${getConciseAddress(
@@ -265,64 +294,53 @@ export function SwapDetails(props: SwapDetailsProps) {
           <RouteCost
             fee={numberToString(
               String(totalFee),
-              AMOUNT_DECIMALS,
-              AMOUNT_DECIMALS
+              GAS_FEE_MIN_DECIMALS,
+              GAS_FEE_MAX_DECIMALS
             )}
             time={minutes}
             steps={numberOfSteps}
           />
-          <TokenAmount
-            direction="horizontal"
-            type="input"
-            price={{
-              value: numberToString(
-                swap.inputAmount,
-                AMOUNT_DECIMALS,
-                AMOUNT_DECIMALS
-              ),
-              usdValue: numberToString(
-                String(
-                  parseFloat(swap.inputAmount) *
-                    (getUsdPrice(
-                      firstStep.fromBlockchain,
-                      firstStep.fromSymbol,
-                      firstStep.fromSymbolAddress,
-                      tokens
-                    ) || 0)
+          <RouteSummary
+            from={{
+              price: {
+                value: numberToString(
+                  swap.inputAmount,
+                  TOKEN_AMOUNT_MIN_DECIMALS,
+                  TOKEN_AMOUNT_MAX_DECIMALS
                 ),
-                MIN_DECIMALS,
-                AMOUNT_DECIMALS
-              ),
+                usdValue: inputUsdValue,
+              },
+              token: {
+                displayName: steps[0].from.token.displayName,
+                image: steps[0].from.token.image,
+              },
+              chain: {
+                image: steps[0].from.chain.image,
+              },
             }}
-            token={{
-              displayName: steps[0].from.token.displayName,
-              image: steps[0].from.token.image,
+            to={{
+              price: {
+                value: numberToString(
+                  outputAmount,
+                  TOKEN_AMOUNT_MIN_DECIMALS,
+                  TOKEN_AMOUNT_MAX_DECIMALS
+                ),
+                usdValue: outputUsdValue,
+              },
+              token: {
+                displayName: steps[numberOfSteps - 1].to.token.displayName,
+                image: steps[numberOfSteps - 1].to.token.image,
+              },
+              chain: { image: steps[numberOfSteps - 1].to.chain.image },
             }}
-            chain={{ image: steps[0].from.chain.image }}
-          />
-          <Separator />
-          <TokenAmount
-            direction="horizontal"
-            type="output"
-            price={{
-              value: numberToString(
-                outputAmount,
-                MIN_DECIMALS,
-                AMOUNT_DECIMALS
-              ),
-              usdValue: outputUsdValue,
-            }}
-            token={{
-              displayName: steps[numberOfSteps - 1].to.token.displayName,
-              image: steps[numberOfSteps - 1].to.token.image,
-            }}
-            chain={{ image: steps[numberOfSteps - 1].to.chain.image }}
             percentageChange={numberToString(
               percentageChange,
-              PERCENT_DECIMALS,
-              PERCENT_DECIMALS
+              PERCENTAGE_CHANGE_MIN_DECIMALS,
+              PERCENTAGE_CHANGE_MAX_DECIMALS
             )}
-            warningLevel={getPriceImpactWarningLevel(percentageChange)}
+            warningLevel={getPriceImpactLevel(
+              percentageChange?.toNumber() ?? 0
+            )}
           />
         </div>
         <div className="title-steps">
@@ -368,12 +386,16 @@ export function SwapDetails(props: SwapDetailsProps) {
         diagnosisUrl={diagnosisUrl}
         onClose={() => setShowCompletedModal(null)}
         status={showCompletedModal}
-        priceValue={numberToString(outputAmount, MIN_DECIMALS, AMOUNT_DECIMALS)}
+        priceValue={numberToString(
+          outputAmount,
+          TOKEN_AMOUNT_MIN_DECIMALS,
+          TOKEN_AMOUNT_MAX_DECIMALS
+        )}
         usdValue={outputUsdValue}
         percentageChange={numberToString(
           percentageChange,
-          PERCENT_DECIMALS,
-          PERCENT_DECIMALS
+          PERCENTAGE_CHANGE_MIN_DECIMALS,
+          PERCENTAGE_CHANGE_MAX_DECIMALS
         )}
         token={{
           displayName: steps[numberOfSteps - 1].to.token.displayName,

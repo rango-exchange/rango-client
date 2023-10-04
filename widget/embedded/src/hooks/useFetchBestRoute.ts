@@ -12,11 +12,11 @@ interface UseFetchBestRoute {
 
 export function useFetchBestRoute(): UseFetchBestRoute {
   const [loading, setLoading] = useState(false);
-  const cancel = () => abortController.current?.abort();
   const abortController = useRef<AbortController | null>(null);
+  const cancel = () => abortController.current?.abort();
 
   const fetch: UseFetchBestRoute['fetch'] = async (requestBody) => {
-    abortController.current?.abort();
+    cancel();
     abortController.current = new AbortController();
 
     setLoading(true);

@@ -19,9 +19,9 @@ import {
   HorizontalSeparator,
   IconContainer,
   RouteContainer,
-  Separator,
   SummaryContainer,
 } from './BestRoute.styles';
+import { RouteSummary } from './RouteSummary';
 
 export function BestRoute(props: BestRouteProps) {
   const {
@@ -92,35 +92,9 @@ export function BestRoute(props: BestRouteProps) {
           )}
           {type === 'swap-preview' && (
             <>
-              <TokenAmount
-                direction="horizontal"
-                label="Swap input"
-                type="input"
-                price={{ value: input.value, usdValue: input.usdValue }}
-                token={{
-                  displayName: steps[0].from.token.displayName,
-                  image: steps[0].from.token.image,
-                }}
-                chain={{ image: steps[0].from.chain.image }}
-              />
-              <Separator
-                css={{
-                  height: '$32',
-                  marginLeft: '14px',
-                  position: 'absolute',
-                  top: '85px',
-                }}
-              />
-              <TokenAmount
-                direction="horizontal"
-                label="Estimated output"
-                type="output"
-                price={{ value: output.value, usdValue: output.usdValue }}
-                token={{
-                  displayName: steps[numberOfSteps - 1].to.token.displayName,
-                  image: steps[numberOfSteps - 1].to.token.image,
-                }}
-                chain={{ image: steps[numberOfSteps - 1].to.chain.image }}
+              <RouteSummary
+                from={steps[0].from}
+                to={steps[numberOfSteps - 1].to}
                 percentageChange={percentageChange}
                 warningLevel={warningLevel}
               />
@@ -141,7 +115,9 @@ export function BestRoute(props: BestRouteProps) {
                 const key = `item-${index}`;
                 return (
                   <React.Fragment key={key}>
-                    <Tooltip content={step.from.chain.displayName}>
+                    <Tooltip
+                      sideOffset={2}
+                      content={step.from.chain.displayName}>
                       <Image src={step.from.chain.image} size={16} />
                     </Tooltip>
                     {index === numberOfSteps - 1 && (
@@ -149,7 +125,9 @@ export function BestRoute(props: BestRouteProps) {
                         <IconContainer>
                           <ChevronRightIcon size={12} color="black" />
                         </IconContainer>
-                        <Tooltip content={step.to.chain.displayName}>
+                        <Tooltip
+                          sideOffset={2}
+                          content={step.to.chain.displayName}>
                           <Image src={step.to.chain.image} size={16} />
                         </Tooltip>
                       </>

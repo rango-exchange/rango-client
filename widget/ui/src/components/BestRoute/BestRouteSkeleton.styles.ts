@@ -22,7 +22,7 @@ export const Container = styled('div', {
     display: 'flex',
   },
   '& .basic-summary': {
-    padding: '$15 $0',
+    padding: '$15 $0 14px $0',
   },
   '& .output': {
     padding: '$6 $0 $15 $0',

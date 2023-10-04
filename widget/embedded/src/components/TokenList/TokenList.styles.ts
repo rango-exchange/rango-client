@@ -1,5 +1,11 @@
 import { styled, Typography } from '@rango-dev/ui';
 
+export const Container = styled('div', {
+  display: 'flex',
+  flexDirection: 'column',
+  flexGrow: 1,
+});
+
 export const Title = styled('div', {
   display: 'flex',
   alignItems: 'center',
@@ -11,7 +17,7 @@ export const Title = styled('div', {
   },
 });
 export const List = styled('ul', {
-  minHeight: 280,
+  flexGrow: 1,
   padding: 0,
   margin: 0,
   listStyle: 'none',
