@@ -316,6 +316,7 @@ export function SwapDetails(props: SwapDetailsProps) {
               },
               chain: {
                 image: steps[0].from.chain.image,
+                displayName: steps[0].from.chain.displayName,
               },
             }}
             to={{
@@ -331,7 +332,10 @@ export function SwapDetails(props: SwapDetailsProps) {
                 displayName: steps[numberOfSteps - 1].to.token.displayName,
                 image: steps[numberOfSteps - 1].to.token.image,
               },
-              chain: { image: steps[numberOfSteps - 1].to.chain.image },
+              chain: {
+                image: steps[numberOfSteps - 1].to.chain.image,
+                displayName: steps[numberOfSteps - 1].to.chain.displayName,
+              },
             }}
             percentageChange={numberToString(
               percentageChange,
