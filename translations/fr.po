@@ -185,7 +185,7 @@ msgstr ""
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetails/SwapDetails.Placeholder.tsx:21
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:231
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:242
 #~ msgid "Swap and Bridge"
 #~ msgstr ""
 
@@ -195,32 +195,32 @@ msgstr ""
 #~ msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:221
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:232
 #~ msgid "Transaction was not sent."
 #~ msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:243
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:254
 #~ msgid "Delete"
 #~ msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:263
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:274
 #~ msgid "Try again"
 #~ msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:271
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:282
 #~ msgid "Request ID"
 #~ msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:286
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:297
 #~ msgid "Created at"
 #~ msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:352
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:363
 #~ msgid "Swaps steps"
 #~ msgstr ""
 
