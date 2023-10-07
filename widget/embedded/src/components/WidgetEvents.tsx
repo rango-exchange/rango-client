@@ -16,7 +16,7 @@ export function WidgetEvents() {
   const connectedWallets = useWalletsStore.use.connectedWallets();
   const getWalletsDetails = useWalletsStore.use.getWalletsDetails();
   const setNotification = useNotificationStore.use.setNotification();
-
+  const setAsRead = useNotificationStore.use.setAsRead();
   const widgetEvents = useEvents();
 
   useEffect(() => {
@@ -42,10 +42,16 @@ export function WidgetEvents() {
         toAccount && getWalletsDetails([toAccount]);
       }
       if (
-        event.type === StepEventType.TX_EXECUTION_BLOCKED &&
-        validBlockedStatuses.includes(event.status)
+        (event.type === StepEventType.TX_EXECUTION_BLOCKED &&
+          validBlockedStatuses.includes(event.status)) ||
+        event.type === StepEventType.FAILED
       ) {
         setNotification(event, route);
+      } else if (
+        event.type === StepEventType.TX_EXECUTION ||
+        event.type === StepEventType.CHECK_STATUS
+      ) {
+        setAsRead(route.requestId);
       }
     });
 
