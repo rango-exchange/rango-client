@@ -83,7 +83,7 @@ const renderDesc = (props: RenderDescProps) => {
 };
 
 export function TokenList(props: PropTypes) {
-  const { list, searchedFor = '', onChange } = props;
+  const { list, searchedFor = '', onChange, selectedBlockchain } = props;
 
   const [tokens, setTokens] = useState<TokenWithBalance[]>(list);
   const loadingStatus = useMetaStore.use.loadingStatus();
@@ -253,6 +253,7 @@ export function TokenList(props: PropTypes) {
         loadNextPage={loadNextPage}
         innerElementType={innerElementType}
         size={60}
+        key={`${selectedBlockchain}-${searchedFor}`}
       />
     );
   };

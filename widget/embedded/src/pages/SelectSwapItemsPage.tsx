@@ -28,6 +28,7 @@ interface PropTypes {
 
 export function SelectSwapItemsPage(props: PropTypes) {
   const { type, supportedBlockchains, supportedTokens, pinnedTokens } = props;
+  const [selectedBlockchain, setSelectedBlockchain] = useState('');
   const navigate = useNavigate();
   const { navigateBackFrom } = useNavigateBack();
   const {
@@ -120,6 +121,7 @@ export function SelectSwapItemsPage(props: PropTypes) {
             } else {
               setToBlockchain(blockchain, true);
             }
+            setSelectedBlockchain(blockchain.name);
           }
         }}
       />
@@ -137,6 +139,8 @@ export function SelectSwapItemsPage(props: PropTypes) {
       <Divider size={16} />
       <TokenList
         list={filterTokens(tokenList, searchedFor)}
+        selectedBlockchain={selectedBlockchain}
+        searchedFor={searchedFor}
         onChange={(token) => {
           const blockchain = blockchains.find(
             (chain) => token.blockchain === chain.name
