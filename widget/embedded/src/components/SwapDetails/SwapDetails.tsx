@@ -39,6 +39,7 @@ import {
 import { useNavigateBack } from '../../hooks/useNavigateBack';
 import { useBestRouteStore } from '../../store/bestRoute';
 import { useMetaStore } from '../../store/meta';
+import { useNotificationStore } from '../../store/notification';
 import { numberToString } from '../../utils/numbers';
 import { getPriceImpactLevel } from '../../utils/routing';
 import {
@@ -90,12 +91,22 @@ export function SwapDetails(props: SwapDetailsProps) {
     setModalState(null);
   };
 
+  const getUnreadNotifications =
+    useNotificationStore.use.getUnreadNotifications();
+  const setAsRead = useNotificationStore.use.setAsRead();
+  const unreadNotifications = getUnreadNotifications();
   const currentStep = getCurrentStep(swap);
   const currentStepNetworkStatus = currentStep?.networkStatus;
 
   useEffect(() => {
-    if (swap.status === 'success' || swap.status === 'failed') {
-      setShowCompletedModal(swap.status);
+    const existNotification = unreadNotifications.find(
+      (n) => n.requestId === swap.requestId
+    );
+    if (existNotification) {
+      if (swap.status === 'success' || swap.status === 'failed') {
+        setShowCompletedModal(swap.status);
+        setAsRead(swap.requestId);
+      }
     }
   }, [swap.status]);
 
@@ -207,7 +218,7 @@ export function SwapDetails(props: SwapDetailsProps) {
   const percentageChange = getPercentageChange(inputUsdValue, outputUsdValue);
 
   const completeModalDesc =
-    showCompletedModal === 'success'
+    swap.status === 'success'
       ? `You have received ${numberToString(
           outputAmount,
           TOKEN_AMOUNT_MIN_DECIMALS,
@@ -389,7 +400,7 @@ export function SwapDetails(props: SwapDetailsProps) {
         open={!!showCompletedModal}
         diagnosisUrl={diagnosisUrl}
         onClose={() => setShowCompletedModal(null)}
-        status={showCompletedModal}
+        status={swap.status === 'success' ? 'success' : 'failed'}
         priceValue={numberToString(
           outputAmount,
           TOKEN_AMOUNT_MIN_DECIMALS,

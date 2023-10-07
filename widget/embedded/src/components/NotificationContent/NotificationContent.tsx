@@ -22,20 +22,15 @@ export function NotificationContent() {
   const navigate = useNavigate();
   const setSelectedSwap = useUiStore.use.setSelectedSwap();
 
-  const getUnreadNotifications =
-    useNotificationStore.use.getUnreadNotifications();
+  const { getUnreadNotifications } = useNotificationStore();
 
   const notifications: Notification[] = getUnreadNotifications();
-
-  const setAsRead = useNotificationStore.use.setAsRead();
-
   const { tokens, blockchains } = useMetaStore.use.meta();
   const sortedNotification = notifications
     .sort((a, b) => b.creationTime - a.creationTime)
     .slice(0, MAX_NOTIFICATIONS_DISPLAYED);
 
   const handleOnClick = (requestId: Notification['requestId']) => {
-    setAsRead(requestId);
     setSelectedSwap(requestId);
     navigate(`/swaps/${requestId}`);
   };

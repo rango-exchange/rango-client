@@ -22,7 +22,7 @@ export interface ModalPropTypes {
 export interface CompleteModalPropTypes {
   open: boolean;
   onClose: () => void;
-  status: 'success' | 'failed' | null;
+  status: 'success' | 'failed';
   priceValue: string;
   usdValue: string;
   percentageChange: string;
