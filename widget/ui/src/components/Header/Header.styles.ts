@@ -7,8 +7,8 @@ export const Container = styled('div', {
   padding: '$15 $20',
   backgroundColor: '$neutral100',
   position: 'relative',
-  borderTopRightRadius: '$md',
-  borderTopLeftRadius: '$md',
+  borderTopRightRadius: '$primary',
+  borderTopLeftRadius: '$primary',
 });
 
 export const Suffix = styled('div', {

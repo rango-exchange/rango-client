@@ -1,22 +1,31 @@
 import { Button, styled } from '@rango-dev/ui';
 
 export const Container = styled('div', {
+  display: 'none',
+  '@lg': {
+    display: 'flex',
+    justifyContent: 'center',
+    backgroundColor: '$neutral400',
+    width: '100%',
+    height: '100vh',
+    padding: '$20',
+    flexDirection: 'row',
+  },
+});
+
+export const MobileSection = styled('div', {
   display: 'flex',
+  height: '100vh',
   justifyContent: 'center',
   alignItems: 'center',
-  backgroundColor: '$neutral400',
-  flexDirection: 'column',
-  width: '100%',
-  height: '100vh',
-  padding: '$20',
   '@lg': {
-    flexDirection: 'row',
-    alignItems: 'unset',
+    display: 'none',
   },
 });
 
 export const LeftSide = styled('div', {
   display: 'flex',
+  fontFamily: '$primary',
 });
 
 export const Main = styled('div', {
@@ -33,6 +42,7 @@ export const HeaderContainer = styled('div', {
   alignItems: 'center',
   display: 'flex',
   padding: '$15',
+  fontFamily: '$primary',
 });
 
 export const StyledButton = styled(Button, {

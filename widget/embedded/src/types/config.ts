@@ -38,6 +38,8 @@ export type WidgetColors = {
  * border color
  * @property {number} borderRadius - `borderRadius` is a property of the `WidgetTheme` type that
  * specifies the radius of the corners of a widget.
+ * @property {number} secondaryBorderRadius - `secondaryBorderRadius` is a property of the `WidgetTheme` type that
+ * specifies the radius of the buttons of a widget.
  * @property {number} width - The `width` property is a number that represents the width of the widget.
  * @property {number} height - The `height` property is a number that specifies the height of the widget.
  * @property {boolean} singleTheme - The `singleTheme` property is a boolean that specifies the theme is support dark and light or only light.
@@ -47,6 +49,7 @@ export type WidgetTheme = {
   fontFamily?: string;
   colors?: { light: WidgetColors; dark: WidgetColors };
   borderRadius?: number;
+  secondaryBorderRadius?: number;
   width?: number;
   height?: number;
   singleTheme?: boolean;
