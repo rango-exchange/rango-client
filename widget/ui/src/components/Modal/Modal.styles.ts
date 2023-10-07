@@ -9,7 +9,7 @@ export const BackDrop = styled('div', {
   height: '100%',
   backgroundColor: 'rgba(0,0,0,0)',
   zIndex: 10,
-  borderRadius: '20px',
+  borderRadius: '$primary',
   display: 'flex',
   overflow: 'hidden',
   transition: 'background .35s',
@@ -37,7 +37,7 @@ export const BackDrop = styled('div', {
 export const ModalContainer = styled('div', {
   backgroundColor: '$background',
   width: '100%',
-  borderRadius: '20px',
+  borderRadius: '$primary',
   display: 'flex',
   flexDirection: 'column',
   zIndex: 9999999,

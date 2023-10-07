@@ -1,25 +1,24 @@
 import type { TabPropTypes } from './SideNavigation.types';
 
-import React, { useState } from 'react';
+import React from 'react';
 
 import { Indicator, Tab, TabsContainer } from './SideNavigation.styles';
 
 const Tabs = (props: TabPropTypes) => {
-  const { variant = 'vertical', tabs, defaultIndex } = props;
-  const [activeTab, setActiveTab] = useState(defaultIndex);
+  const { variant = 'vertical', tabs, onChange, activeLayout } = props;
 
   return (
     <TabsContainer>
       {variant === 'vertical' &&
-        tabs.map((tab, index) => {
-          const isActive = activeTab === index;
+        tabs.map((tab) => {
+          const isActive = activeLayout === tab.id;
           const disabled = tab.disabled;
           return (
             <Tab
               key={tab.title}
               disabled={disabled}
               active={isActive}
-              onClick={!disabled ? () => setActiveTab(index) : undefined}>
+              onClick={!disabled ? () => onChange(tab.id) : undefined}>
               {tab.content}
               {isActive && <Indicator />}
             </Tab>

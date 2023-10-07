@@ -4,6 +4,7 @@ export * from './BestRoute';
 export * from './BottomLogo';
 export * from './Button';
 export * from './IconButton';
+export * from './Collapsible';
 export * from './ChangeSlippageButton';
 export * from './Checkbox';
 export * from './Chip';

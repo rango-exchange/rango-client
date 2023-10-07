@@ -10,7 +10,7 @@ export const Container = styled('div', {
   borderRadius: '20px',
   display: 'flex',
   justifyContent: 'space-between',
-  padding: '$46 0',
+  padding: '$46 0 $30',
   backgroundColor: '$background',
   width: '96px',
   height: '100%',
@@ -35,6 +35,9 @@ export const Tab = styled(Flex, {
     disabled: {
       true: {
         cursor: 'not-allowed',
+        '&:hover': {
+          backgroundColor: 'unset',
+        },
       },
     },
     active: {
@@ -42,6 +45,9 @@ export const Tab = styled(Flex, {
         position: 'relative',
       },
     },
+  },
+  '&:hover': {
+    backgroundColor: '$neutral200',
   },
 });
 
@@ -58,4 +64,12 @@ export const Indicator = styled('div', {
 export const TabsContainer = styled(Flex, {
   flexDirection: 'column',
   width: '100%',
+});
+
+export const StyledAnchor = styled('a', {
+  textDecoration: 'none',
+  padding: '$15 0',
+  '&:hover': {
+    backgroundColor: '$neutral200',
+  },
 });
