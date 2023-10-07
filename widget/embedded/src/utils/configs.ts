@@ -28,3 +28,6 @@ export function initConfig(nextConfigs: Configs) {
   configs = clonedConfigs;
   return configs;
 }
+
+export const DEFAULT_PRIMARY_RADIUS = 20;
+export const DEFAULT_SECONDARY_RADIUS = 25;

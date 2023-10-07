@@ -21,6 +21,7 @@ const MainContainer = styled('div', {
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
+  fontFamily: '$widget',
 });
 
 export type WidgetProps = {
@@ -29,7 +30,7 @@ export type WidgetProps = {
 
 export function Main(props: PropsWithChildren<WidgetProps>) {
   const { config } = props;
-  globalFont(config?.theme?.fontFamily || 'Roboto');
+  globalFont();
 
   const { activeTheme } = useTheme(config?.theme || {});
   const [lastConnectedWalletWithNetwork, setLastConnectedWalletWithNetwork] =

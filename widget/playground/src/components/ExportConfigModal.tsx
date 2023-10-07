@@ -1,6 +1,4 @@
-import type { config } from '@rango-dev/ui';
 import type { WidgetConfig } from '@rango-dev/widget-embedded';
-import type { CSS } from '@stitches/react';
 
 import {
   Button,
@@ -84,13 +82,6 @@ const CodeBlockContainer = styled('div', {
   height: '60%',
 });
 
-const modalContainerStyles: CSS<typeof config> = {
-  height: '600px',
-  width: '95%',
-  '@md': { width: '80%' },
-  '@lg': { width: '70%' },
-};
-
 const RESET_INTERVAL = 2_000;
 interface CodeBlockProps {
   language: Language;
@@ -143,54 +134,48 @@ export function ExportConfigModal(props: ExportConfigModalProps) {
   const syntaxHighlighterTheme = activeTheme === 'dark' ? dark : prism;
 
   return (
-    <Modal
-      open={open}
-      onClose={onClose}
-      content={
-        <>
-          <Typography variant="body" size="medium" mb={8} mt={12}>
-            See full instruction on
-            <Link
-              href="https://docs.rango.exchange/integration-guide/rango-widget"
-              target="_blank">
-              docs.rango.exchange
-            </Link>
-          </Typography>
-          <Typography variant="body" size="medium" mb={12} mt={8}>
-            See more examples
-            <Link
-              href="https://github.com/rango-exchange/widget-examples"
-              target="_blank">
-              https://github.com/rango-exchange/widget-examples
-            </Link>
-          </Typography>
-          <hr />
-          <ButtonsContainer>
-            {Object.keys(typesOfCodeBlocks).map((type, index) => {
-              const key = `block-${index}`;
+    <Modal open={open} onClose={onClose} title="Export Code" anchor="center">
+      <>
+        <Typography variant="body" size="medium" mb={8} mt={12}>
+          See full instruction on
+          <Link
+            href="https://docs.rango.exchange/integration-guide/rango-widget"
+            target="_blank">
+            docs.rango.exchange
+          </Link>
+        </Typography>
+        <Typography variant="body" size="medium" mb={12} mt={8}>
+          See more examples
+          <Link
+            href="https://github.com/rango-exchange/widget-examples"
+            target="_blank">
+            https://github.com/rango-exchange/widget-examples
+          </Link>
+        </Typography>
+        <hr />
+        <ButtonsContainer>
+          {Object.keys(typesOfCodeBlocks).map((type, index) => {
+            const key = `block-${index}`;
 
-              return (
-                <Fragment key={key}>
-                  <Button
-                    type={selected === type ? 'primary' : undefined}
-                    onClick={setSelected.bind(null, type as ExportType)}>
-                    {capitalizeTheFirstLetter(type)}
-                  </Button>
-                  <Divider size={8} direction="horizontal" />
-                </Fragment>
-              );
-            })}
-          </ButtonsContainer>
+            return (
+              <Fragment key={key}>
+                <Button
+                  type={selected === type ? 'primary' : undefined}
+                  onClick={() => setSelected(type as ExportType)}>
+                  {capitalizeTheFirstLetter(type)}
+                </Button>
+                <Divider size={8} direction="horizontal" />
+              </Fragment>
+            );
+          })}
+        </ButtonsContainer>
 
-          <CodeBlock
-            language={typesOfCodeBlocks[selected].language}
-            theme={syntaxHighlighterTheme}>
-            {typesOfCodeBlocks[selected].generateCode(formatedConfig)}
-          </CodeBlock>
-        </>
-      }
-      title="Export Code"
-      containerStyle={modalContainerStyles}
-    />
+        <CodeBlock
+          language={typesOfCodeBlocks[selected].language}
+          theme={syntaxHighlighterTheme}>
+          {typesOfCodeBlocks[selected].generateCode(formatedConfig)}
+        </CodeBlock>
+      </>
+    </Modal>
   );
 }

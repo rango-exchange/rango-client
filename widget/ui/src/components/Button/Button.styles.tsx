@@ -9,40 +9,35 @@ export const ButtonBase = styled('button', {
   fontSize: '$16',
   fontWeight: '$400',
   border: '0',
-  borderRadius: '$xs',
+  borderRadius: '$secondary',
   cursor: 'pointer',
   transition: 'all 0.35s',
 
   variants: {
     size: {
       xxsmall: {
-        borderRadius: '$xm',
         fontSize: '$10',
         lineHeight: '12px',
         padding: '$4',
       },
       xsmall: {
-        borderRadius: '$xm',
         fontSize: '$12',
         lineHeight: '12px',
         padding: '$0 $4',
       },
       small: {
-        borderRadius: '$xm',
         fontSize: '$14',
         fontWeight: '$medium',
         lineHeight: '20px',
         padding: '$4 $4',
       },
       medium: {
-        borderRadius: '$md',
         fontSize: '$16',
         lineHeight: '24px',
         fontWeight: '$medium',
         padding: '$8 $8',
       },
       large: {
-        borderRadius: '$md',
         fontSize: '$18',
         lineHeight: '26px',
         padding: '$12 $24',

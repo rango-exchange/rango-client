@@ -95,6 +95,8 @@ export const theme = {
     md: '25px',
     xl: '35px',
     lg: '40px',
+    primary: '20px',
+    secondary: `$md`,
   },
 
   fontSizes: {
@@ -112,7 +114,10 @@ export const theme = {
     40: '2.5rem',
     48: '3rem',
   },
-  fonts: {},
+  fonts: {
+    primary: 'Roboto',
+    widget: '$primary',
+  },
   fontWeights: {
     regular: 400,
     medium: 500,

@@ -4,8 +4,7 @@ export const Container = styled('div', {
   position: 'relative',
   display: 'flex',
   flexDirection: 'column',
-  //TODO: add radii theme token for 20px
-  borderRadius: '20px',
+  borderRadius: '$primary',
   overflow: 'hidden !important',
   boxShadow: '15px 15px 15px 0px rgba(0, 0, 0, 0.05)',
   width: '95vw',
