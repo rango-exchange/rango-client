@@ -15,8 +15,10 @@ import {
   WalletIcon,
 } from '@rango-dev/ui';
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import { getConfirmSwapErrorMessage } from '../../constants/errors';
+import { navigationRoutes } from '../../constants/navigationRoutes';
 import { getRouteWarningMessage } from '../../constants/warnings';
 import { useBestRouteStore } from '../../store/bestRoute';
 import { useMetaStore } from '../../store/meta';
@@ -51,6 +53,7 @@ export function ConfirmWalletsModal(props: PropTypes) {
   const {
     bestRoute,
     setSelectedWallets: selectRouteWallets,
+    routeWalletsConfirmed,
     setRouteWalletConfirmed,
     customDestination,
     setCustomDestination,
@@ -229,10 +232,16 @@ export function ConfirmWalletsModal(props: PropTypes) {
 
   const modalContainer = document.querySelector('#swap-box') as HTMLDivElement;
 
+  const navigate = useNavigate();
   return (
     <Modal
       open={open}
-      onClose={onClose}
+      onClose={() => {
+        if (!routeWalletsConfirmed) {
+          navigate(navigationRoutes.home, { replace: true });
+        }
+        onClose();
+      }}
       dismissible={!showMoreWalletFor}
       container={modalContainer}
       {...(!showMoreWalletFor && {

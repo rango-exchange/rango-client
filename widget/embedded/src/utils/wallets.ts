@@ -135,19 +135,19 @@ export function prepareAccountsForWalletStore(
     /*
      * In some cases we can handle unknown network by checking its address
      * pattern and act on it.
-     * Example: showing our evm compatible netwrok when the uknown network is evem.
+     * Example: showing our evm compatible network when the unknown network is evm.
      * Otherwise, we stop executing this function.
      */
-    const isUknownAndEvmBased =
+    const isUnknownAndEvmBased =
       network === Networks.Unknown && isEvmAddress(address);
-    if (isUnknown && !isUknownAndEvmBased) {
+    if (isUnknown && !isUnknownAndEvmBased) {
       return;
     }
 
     const isEvmBasedChain = evmBasedChains.includes(network);
 
     // If it's an evm network, we will add the address to all the evm chains.
-    if (isEvmBasedChain || isUknownAndEvmBased) {
+    if (isEvmBasedChain || isUnknownAndEvmBased) {
       /*
        * all evm chains are not supported in wallets, so we are adding
        * only to those that are supported by wallet.
@@ -158,7 +158,7 @@ export function prepareAccountsForWalletStore(
 
       evmChainsSupportedByWallet.forEach((network) => {
         /*
-         * EVM addresses are not case sensetive.
+         * EVM addresses are not case sensitive.
          * Some wallets like Binance-chain return some letters in uppercase which produces bugs in our wallet state.
          */
         addAccount(network, address.toLowerCase());
@@ -311,7 +311,7 @@ export function resetConnectedWalletState(
 
 export const calculateWalletUsdValue = (connectedWallet: ConnectedWallet[]) => {
   const uniqueAccountAddresses = new Set<string | null>();
-  const uniqueBalane: ConnectedWallet[] = connectedWallet?.reduce(
+  const uniqueBalance: ConnectedWallet[] = connectedWallet?.reduce(
     (acc: ConnectedWallet[], current: ConnectedWallet) => {
       return acc.findIndex(
         (i) => i.address === current.address && i.chain === current.chain
@@ -323,7 +323,7 @@ export const calculateWalletUsdValue = (connectedWallet: ConnectedWallet[]) => {
     []
   );
 
-  const modifiedWalletBlockchains = uniqueBalane?.map((chain) => {
+  const modifiedWalletBlockchains = uniqueBalance?.map((chain) => {
     const modifiedWalletBlockchain: Blockchain = {
       name: chain.chain,
       accounts: [],
@@ -348,10 +348,10 @@ export const calculateWalletUsdValue = (connectedWallet: ConnectedWallet[]) => {
       ?.reduce((a, b) => a.plus(b), ZERO) || ZERO
   ).toString();
 
-  return numberWithThousandSeperator(total);
+  return numberWithThousandSeparator(total);
 };
 
-function numberWithThousandSeperator(number: string | number): string {
+function numberWithThousandSeparator(number: string | number): string {
   const parts = number.toString().split('.');
   parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
   return parts.join('.');
@@ -470,9 +470,9 @@ export function getSortedTokens(
   connectedWallets: ConnectedWallet[],
   otherChainTokens: TokenWithBalance[]
 ): TokenWithBalance[] {
-  const fromChainEqueulsToToBlockchain =
+  const fromChainEqualsToToBlockchain =
     chain?.name === otherChainTokens[0]?.name;
-  if (fromChainEqueulsToToBlockchain) {
+  if (fromChainEqualsToToBlockchain) {
     return otherChainTokens;
   }
   const filteredTokens = tokens.filter(

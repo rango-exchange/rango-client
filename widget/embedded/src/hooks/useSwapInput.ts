@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import { useBestRouteStore } from '../store/bestRoute';
 import { useSettingsStore } from '../store/settings';
@@ -41,6 +41,7 @@ export function useSwapInput(): UseSwapInput {
     disabledLiquiditySources,
   } = useSettingsStore();
   const [error, setError] = useState('');
+  const prevDisabledLiquiditySources = useRef(disabledLiquiditySources);
   const userSlippage = customSlippage ?? slippage;
   const hasTokensValue = !fromToken || !toToken;
   const shouldSkipRequest =
@@ -101,9 +102,13 @@ export function useSwapInput(): UseSwapInput {
   }, [inputAmount, shouldSkipRequest]);
 
   useEffect(() => {
-    if (!shouldSkipRequest) {
+    const disabledLiquiditySourceReset =
+      !!prevDisabledLiquiditySources.current.length &&
+      !disabledLiquiditySources.length;
+    if (!shouldSkipRequest && disabledLiquiditySourceReset) {
       fetch();
     }
+    prevDisabledLiquiditySources.current = disabledLiquiditySources;
     return cancelFetch;
   }, [disabledLiquiditySources.length]);
 

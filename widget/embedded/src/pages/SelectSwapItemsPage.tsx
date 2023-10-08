@@ -100,7 +100,12 @@ export function SelectSwapItemsPage(props: PropTypes) {
   return (
     <Layout
       header={{
-        onBack: navigateBackFrom.bind(null, navigationRoutes.home),
+        onBack: () =>
+          navigateBackFrom(
+            type === 'from'
+              ? navigationRoutes.fromSwap
+              : navigationRoutes.toSwap
+          ),
         title: i18n.t('Swap {type}', { type }),
       }}>
       <BlockchainsSection
