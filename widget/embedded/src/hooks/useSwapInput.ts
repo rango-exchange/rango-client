@@ -98,7 +98,7 @@ export function useSwapInput(): UseSwapInput {
     setLoading(true);
     debouncedFetch();
     return cancelFetch;
-  }, [inputAmount]);
+  }, [inputAmount, shouldSkipRequest]);
 
   useEffect(() => {
     if (!shouldSkipRequest) {
