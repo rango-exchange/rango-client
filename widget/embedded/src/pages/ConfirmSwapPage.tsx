@@ -251,12 +251,6 @@ export function ConfirmSwapPage(props: PropTypes) {
   }, []);
 
   useEffect(() => {
-    if (!showWallets && !routeWalletsConfirmed) {
-      navigate(navigationRoutes.home, { replace: true });
-    }
-  }, [showWallets, routeWalletsConfirmed]);
-
-  useEffect(() => {
     const routeChanged =
       confirmSwapResult.warnings?.route?.type &&
       Object.values(RouteWarningType).includes(
@@ -421,7 +415,7 @@ export function ConfirmSwapPage(props: PropTypes) {
       {showWallets && (
         <ConfirmWalletsModal
           open={showWallets}
-          onClose={setShowWallets.bind(null, false)}
+          onClose={() => setShowWallets(false)}
           onCancel={cancelFetch}
           loading={fetchingConfirmationRoute}
           onCheckBalance={onConfirmSwap}
