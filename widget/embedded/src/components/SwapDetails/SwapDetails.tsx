@@ -66,10 +66,8 @@ import {
 import { Container, HeaderDetails, StepsList } from './SwapDetails.styles';
 
 const DEFAULT_CONTENT_PADDING = 20;
-
 export function SwapDetails(props: SwapDetailsProps) {
   const { swap, requestId, onDelete, onCancel: onCancelProps } = props;
-  const { tokens } = useMetaStore.use.meta();
   const { canSwitchNetworkTo, connect, getWalletInfo } = useWallets();
   const retry = useBestRouteStore.use.retry();
   const navigate = useNavigate();
@@ -80,6 +78,9 @@ export function SwapDetails(props: SwapDetailsProps) {
   const [showCompletedModal, setShowCompletedModal] = useState<
     'success' | 'failed' | null
   >(null);
+  const {
+    meta: { tokens },
+  } = useMetaStore();
 
   usePaddingRight({
     elementRef: listRef,
@@ -301,6 +302,7 @@ export function SwapDetails(props: SwapDetailsProps) {
             </Typography>
           </div>
         </HeaderDetails>
+
         <div className="output">
           <RouteCost
             fee={numberToString(
@@ -388,6 +390,7 @@ export function SwapDetails(props: SwapDetailsProps) {
           })}
         </StepsList>
       </Container>
+
       <SwapDetailsModal
         state={modalState}
         onClose={() => setModalState(null)}
