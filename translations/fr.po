@@ -497,12 +497,12 @@ msgstr ""
 #~ msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/SelectSwapItemsPage.tsx:96
+#: widget/embedded/src/pages/SelectSwapItemsPage.tsx:103
 #~ msgid "Swap {type}"
 #~ msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/SelectSwapItemsPage.tsx:123
+#: widget/embedded/src/pages/SelectSwapItemsPage.tsx:130
 #~ msgid "Search Token"
 #~ msgstr ""
 
