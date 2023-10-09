@@ -6,7 +6,12 @@ import type {
   SimulationAssetAndAmount,
   SimulationValidationStatus,
 } from '@rango-dev/ui/dist/widget/ui/src/types/swaps';
-import type { BestRouteResponse, BlockchainMeta, Token } from 'rango-sdk';
+import type {
+  Asset,
+  BestRouteResponse,
+  BlockchainMeta,
+  Token,
+} from 'rango-sdk';
 
 import BigNumber from 'bignumber.js';
 
@@ -241,4 +246,18 @@ export function getPriceImpactLevel(
   }
 
   return warningLevel;
+}
+
+export function findCommonTokens<T extends Asset[], R extends Asset[]>(
+  listA: T,
+  listB: R
+) {
+  const tokenToString = (token: Asset): string =>
+    `${token.symbol}-${token.blockchain}-${token.address ?? ''}`;
+
+  const set = new Set();
+
+  listA.forEach((token) => set.add(tokenToString(token)));
+
+  return listB.filter((token) => set.has(tokenToString(token))) as R;
 }
