@@ -159,6 +159,12 @@ msgstr "Balance"
 #~ msgstr "Connect Wallet"
 
 #. js-lingui-explicit-id
+#: widget/embedded/src/components/LoadingSwapDetails/LoadingSwapDetails.tsx:38
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:365
+#~ msgid "Swaps steps"
+#~ msgstr "Swaps steps"
+
+#. js-lingui-explicit-id
 #: widget/embedded/src/components/NotificationContent/NotificationNotFound.tsx:13
 #~ msgid "You have no notification"
 #~ msgstr "You have no notification"
@@ -184,45 +190,42 @@ msgstr "Balance"
 #~ msgstr "This setting is applied per step, e.g. 1Inch, Thorchain, etc. and only that step will be reverted, not the whole transaction"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.Placeholder.tsx:21
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:242
+#: widget/embedded/src/components/SwapDetails/SwapDetails.Placeholder.tsx:33
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:243
 #~ msgid "Swap and Bridge"
 #~ msgstr "Swap and Bridge"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.Placeholder.tsx:32
-#~ msgid "Not found"
-#~ msgstr "Not found"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:232
-#~ msgid "Transaction was not sent."
-#~ msgstr "Transaction was not sent."
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:254
-#~ msgid "Delete"
-#~ msgstr "Delete"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:274
-#~ msgid "Try again"
-#~ msgstr "Try again"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:282
+#: widget/embedded/src/components/SwapDetails/SwapDetails.Placeholder.tsx:42
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:283
 #~ msgid "Request ID"
 #~ msgstr "Request ID"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:297
+#: widget/embedded/src/components/SwapDetails/SwapDetails.Placeholder.tsx:55
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:298
 #~ msgid "Created at"
 #~ msgstr "Created at"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:363
-#~ msgid "Swaps steps"
-#~ msgstr "Swaps steps"
+#: widget/embedded/src/components/SwapDetails/SwapDetails.Placeholder.tsx:68
+#~ msgid "Not found"
+#~ msgstr "Not found"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:233
+#~ msgid "Transaction was not sent."
+#~ msgstr "Transaction was not sent."
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:255
+#~ msgid "Delete"
+#~ msgstr "Delete"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:275
+#~ msgid "Try again"
+#~ msgstr "Try again"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetailsAlerts/SwapDetailsAlerts.tsx:41
