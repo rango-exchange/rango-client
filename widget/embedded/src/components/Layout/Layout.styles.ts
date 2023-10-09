@@ -25,7 +25,7 @@ export const Content = styled('div', {
   display: 'flex',
   flexDirection: 'column',
   flex: 1,
-  padding: '$20 $0 $10 $20',
+  padding: '$20 $20 $10 $20',
   backgroundColor: '$background',
   position: 'relative',
   overflowY: 'auto',
