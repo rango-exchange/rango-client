@@ -318,7 +318,7 @@ msgstr "Balance"
 #~ msgstr "Network Changed"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/TokenList/TokenList.tsx:263
+#: widget/embedded/src/components/TokenList/TokenList.tsx:264
 #~ msgid "Select Token"
 #~ msgstr "Select Token"
 
@@ -500,12 +500,12 @@ msgstr "Balance"
 #~ msgstr "Search Blockchain"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/SelectSwapItemsPage.tsx:103
+#: widget/embedded/src/pages/SelectSwapItemsPage.tsx:104
 #~ msgid "Swap {type}"
 #~ msgstr "Swap {type}"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/SelectSwapItemsPage.tsx:130
+#: widget/embedded/src/pages/SelectSwapItemsPage.tsx:132
 #~ msgid "Search Token"
 #~ msgstr "Search Token"
 
