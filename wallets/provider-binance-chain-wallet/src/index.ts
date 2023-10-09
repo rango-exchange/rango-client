@@ -76,7 +76,7 @@ export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
   allBlockChains
 ) => ({
   name: 'Binance',
-  img: 'https://raw.githubusercontent.com/rango-exchange/rango-assets/main/wallets/binance/icon.svg',
+  img: 'https://raw.githubusercontent.com/rango-exchange/assets/main/wallets/binance/icon.svg',
   installLink: {
     CHROME:
       'https://chrome.google.com/webstore/detail/binance-chain-wallet/fhbohimaelbohpjbbldcngcnapndodjp',

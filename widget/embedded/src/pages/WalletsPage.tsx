@@ -1,29 +1,16 @@
-import {
-  Alert,
-  SecondaryPage,
-  styled,
-  Wallet,
-  WalletState,
-  WalletInfo,
-} from '@rango-dev/ui';
-import React, { useEffect, useRef, useState } from 'react';
-import { getlistWallet, sortWalletsBasedOnState } from '../utils/wallets';
-import {
-  WalletType,
-  WalletTypes,
-  detectMobileScreens,
-} from '@rango-dev/wallets-shared';
-import { useWallets } from '@rango-dev/wallets-react';
+import type { WidgetConfig } from '../types';
+import type { WalletType } from '@rango-dev/wallets-shared';
 
-import { useUiStore } from '../store/ui';
-import { useNavigateBack } from '../hooks/useNavigateBack';
-import { navigationRoutes } from '../constants/navigationRoutes';
 import { i18n } from '@lingui/core';
+import { styled, Typography, Wallet, WalletState } from '@rango-dev/ui';
+import React, { Fragment, useState } from 'react';
+
+import { Layout } from '../components/Layout';
+import { WalletModal } from '../components/WalletModal';
+import { navigationRoutes } from '../constants/navigationRoutes';
+import { useNavigateBack } from '../hooks/useNavigateBack';
+import { useWalletList } from '../hooks/useWalletList';
 import { useMetaStore } from '../store/meta';
-import { Spinner } from '@rango-dev/ui';
-import { LoadingFailedAlert } from '@rango-dev/ui';
-import { WidgetConfig } from '../types';
-import { configWalletsToWalletName } from '../utils/providers';
 
 interface PropTypes {
   supportedWallets: WidgetConfig['wallets'];
@@ -33,120 +20,82 @@ interface PropTypes {
 
 const ListContainer = styled('div', {
   display: 'grid',
-  gap: '.5rem',
-  gridTemplateColumns: ' repeat(2, minmax(0, 1fr))',
+  gap: '$10',
+  gridTemplateColumns: ' repeat(3, minmax(0, 1fr))',
   alignContent: 'baseline',
-  padding: '0.5rem',
-  overflowY: 'auto',
+  paddingTop: '$15',
+  height: '100%',
 });
 
-const LoaderContainer = styled('div', {
-  display: 'flex',
-  justifyContent: 'center',
-  width: '100%',
-  position: 'absolute',
-  top: '50%',
+const Container = styled('div', {
+  textAlign: 'center',
 });
 
-const AlertContainer = styled('div', {
-  paddingBottom: '$16',
-});
+export const TIME_TO_CLOSE_MODAL = 3_000;
+export const TIME_TO_IGNORE_MODAL = 300;
 
-const ALL_SUPPORTED_WALLETS = Object.values(WalletTypes);
-
-export function WalletsPage({
-  supportedWallets,
-  multiWallets,
-  config,
-}: PropTypes) {
+export function WalletsPage({ config }: PropTypes) {
   const { navigateBackFrom } = useNavigateBack();
-  const { state, disconnect, getWalletInfo, connect } = useWallets();
-  const wallets = getlistWallet(
-    state,
-    getWalletInfo,
-    configWalletsToWalletName(supportedWallets, {
-      walletConnectProjectId: config?.walletConnectProjectId,
-    }) || ALL_SUPPORTED_WALLETS
-  );
-  const walletsRef = useRef<WalletInfo[]>();
+  const [openModal, setOpenModal] = useState<WalletType>('');
+  let modalTimerId: ReturnType<typeof setTimeout> | null = null;
 
-  let sortedWallets = detectMobileScreens()
-    ? wallets.filter((wallet) => wallet.showOnMobile)
-    : wallets;
-  sortedWallets = sortWalletsBasedOnState(sortedWallets);
-  const [walletErrorMessage, setWalletErrorMessage] = useState('');
-  const toggleConnectWalletsButton =
-    useUiStore.use.toggleConnectWalletsButton();
-  const loadingMetaStatus = useMetaStore.use.loadingStatus();
-
-  const onSelectWallet = async (type: WalletType) => {
-    const wallet = state(type);
-    try {
-      if (walletErrorMessage) setWalletErrorMessage('');
-      if (wallet.connected) {
-        await disconnect(type);
-      } else {
-        if (
-          !multiWallets &&
-          !!wallets.find((w) => w.state === WalletState.CONNECTED)
-        ) {
-          return;
-        }
-        await connect(type);
+  const { list, handleClick, error } = useWalletList({
+    config,
+    onBeforeConnect: (type) => {
+      modalTimerId = setTimeout(() => {
+        setOpenModal(type);
+      }, TIME_TO_IGNORE_MODAL);
+    },
+    onConnect: () => {
+      if (modalTimerId) {
+        clearTimeout(modalTimerId);
       }
-    } catch (e) {
-      setWalletErrorMessage('Error: ' + (e as any)?.message);
-    }
-  };
-  const disconnectConnectingWallets = () => {
-    const connectingWallets =
-      walletsRef.current?.filter(
-        (wallet) => wallet.state === WalletState.CONNECTING
-      ) || [];
-    for (const wallet of connectingWallets) {
-      disconnect(wallet.type);
-    }
-  };
-  useEffect(() => {
-    toggleConnectWalletsButton();
-    return () => {
-      disconnectConnectingWallets();
-      toggleConnectWalletsButton();
-    };
-  }, []);
+      setTimeout(() => {
+        setOpenModal('');
+      }, TIME_TO_CLOSE_MODAL);
+    },
+  });
 
-  useEffect(() => {
-    walletsRef.current = wallets;
-  }, [wallets]);
+  const loadingMetaStatus = useMetaStore.use.loadingStatus();
+  const selectedWallet = list.find((wallet) => wallet.type === openModal);
+  const selectedWalletImage = selectedWallet?.image || '';
+  const selectedWalletState =
+    selectedWallet?.state || WalletState.NOT_INSTALLED;
 
   return (
-    <SecondaryPage
-      title={i18n.t('Select Wallet') || ''}
-      textField={false}
-      onBack={navigateBackFrom.bind(null, navigationRoutes.wallets)}>
-      <>
-        {walletErrorMessage && (
-          <AlertContainer>
-            <Alert type="error" title={walletErrorMessage} />
-          </AlertContainer>
-        )}
-        {loadingMetaStatus === 'loading' && (
-          <LoaderContainer className="loader">
-            <Spinner size={24} />
-          </LoaderContainer>
-        )}
-        {loadingMetaStatus === 'failed' && <LoadingFailedAlert />}
+    <Layout
+      header={{
+        title: i18n.t('Connect Wallets'),
+        onBack: navigateBackFrom.bind(null, navigationRoutes.wallets),
+      }}>
+      <Container>
+        <Typography variant="title" size="xmedium" align="center">
+          {i18n.t('Choose a wallet to connect.')}
+        </Typography>
         <ListContainer>
-          {loadingMetaStatus === 'success' &&
-            sortedWallets.map((wallet, index) => (
-              <Wallet
-                {...wallet}
-                key={`${index}-${wallet.type}`}
-                onClick={onSelectWallet}
-              />
-            ))}
+          {list.map((wallet, index) => {
+            const key = `wallet-${index}-${wallet.type}`;
+            return (
+              <Fragment key={key}>
+                <Wallet
+                  {...wallet}
+                  onClick={(type) => {
+                    void handleClick(type);
+                  }}
+                  isLoading={loadingMetaStatus === 'loading'}
+                />
+              </Fragment>
+            );
+          })}
+          <WalletModal
+            open={!!openModal}
+            onClose={() => setOpenModal('')}
+            image={selectedWalletImage}
+            state={selectedWalletState}
+            error={error}
+          />
         </ListContainer>
-      </>
-    </SecondaryPage>
+      </Container>
+    </Layout>
   );
 }

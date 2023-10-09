@@ -1,28 +1,21 @@
+import type { PropTypes } from './Radio.types';
+import type { Meta } from '@storybook/react';
+
+import { Root as RadioRoot } from '@radix-ui/react-radio-group';
 import React from 'react';
-import { Meta } from '@storybook/react';
-import { PropTypes, Radio } from './Radio';
+
+import { Radio } from './Radio';
 
 export default {
   title: 'Components/Radio',
   component: Radio,
   args: {
-    options: [
-      { value: 'one', label: 'One' },
-      { value: 'two', label: 'Two' },
-      { value: 'three', label: 'Three' },
-    ],
-    direction: 'horizontal',
-    defaultValue: 'one',
-  },
-  argTypes: {
-    options: {
-      defaultValue: [
-        { value: 'one', label: 'One' },
-        { value: 'two', label: 'Two' },
-        { value: 'three', label: 'Three' },
-      ],
-    },
+    value: 'test',
   },
 } as Meta<typeof Radio>;
 
-export const Main = (args: PropTypes) => <Radio {...args} />;
+export const Main = (args: PropTypes) => (
+  <RadioRoot>
+    <Radio {...args} />
+  </RadioRoot>
+);

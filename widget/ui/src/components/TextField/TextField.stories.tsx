@@ -1,8 +1,11 @@
-import React from 'react';
-import { Meta } from '@storybook/react';
+import type { PropTypes } from './TextField.types';
+import type { Meta } from '@storybook/react';
 
-import { TextField, PropTypes } from './TextField';
-import { SearchIcon } from '../Icon';
+import React from 'react';
+
+import { SearchIcon } from '../../icons';
+
+import { TextField } from './TextField';
 
 export default {
   title: 'Components/Text Field',
@@ -19,14 +22,19 @@ export default {
       type: 'string',
     },
   },
+  args: {
+    variant: 'contained',
+    placeholder: 'test',
+    fullWidth: false,
+  },
 } as Meta<typeof TextField>;
 
 export const Main = (args: PropTypes) => <TextField {...args} />;
 
 export const WithPrefix = (args: PropTypes) => (
-  <TextField {...args} prefix={<SearchIcon size={20} />} />
+  <TextField {...args} prefix={<SearchIcon size={20} color={'black'} />} />
 );
 
 export const WithSuffix = (args: PropTypes) => (
-  <TextField {...args} suffix={<SearchIcon size={20} />} />
+  <TextField {...args} suffix={<SearchIcon size={20} color={'black'} />} />
 );

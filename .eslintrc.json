@@ -70,6 +70,7 @@
     "react/no-array-index-key": "error",
     "react/jsx-no-constructed-context-values": "error",
     "react/jsx-key": "error",
+    "react/no-unescaped-entities": "off",
     "destructuring/in-params": "error",
     "destructuring/in-methods-params": "error",
     // These rules will be override by @typescript-eslint
@@ -79,7 +80,11 @@
     "camelcase": "off",
     "@typescript-eslint/no-unused-vars": [
       "error",
-      { "ignoreRestSiblings": true }
+      {
+        "varsIgnorePattern": "^_",
+        "argsIgnorePattern": "^_",
+        "ignoreRestSiblings": true
+      }
     ],
     "@typescript-eslint/no-throw-literal": "error",
     "@typescript-eslint/no-magic-numbers": [

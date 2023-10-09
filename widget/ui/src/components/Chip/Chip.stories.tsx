@@ -1,7 +1,8 @@
-import React from 'react';
-import { Meta } from '@storybook/react';
+import type { PropTypes } from './Chip.types';
 
-import { Chip, PropTypes } from './Chip';
+import React from 'react';
+
+import { Chip } from './Chip';
 
 export default {
   title: 'Components/Chip',
@@ -24,7 +25,7 @@ export default {
       defaultValue: true,
     },
   },
-} as Meta<typeof Chip>;
+};
 
 export const Main = (args: PropTypes) => <Chip {...args} />;
 

@@ -1,9 +1,11 @@
-import React, { PropsWithChildren, useEffect, useState } from 'react';
-import { styled } from '../../theme';
-import { SelectableWallet } from '../../types';
-import { Typography } from '../Typography';
+import type { PropsWithChildren } from 'react';
+
+import React, { useEffect, useState } from 'react';
+
 import { getConciseAddress } from '../../helper';
+import { styled } from '../../theme';
 import { Image } from '../common';
+import { Typography } from '../Typography';
 
 const Row = styled('div', {
   display: 'flex',
@@ -47,7 +49,7 @@ const SolidCircle = styled('div', {
 });
 const Container = styled('div', {
   border: '1.5px solid',
-  borderRadius: '$5',
+  borderRadius: '$xs',
   padding: '$12',
   flexBasis: 'calc(33.33% - 10px)',
   margin: 5,
@@ -73,15 +75,18 @@ const Container = styled('div', {
 });
 
 export interface PropTypes {
-  list: SelectableWallet[];
-  onChange: (w: SelectableWallet) => void;
+  list: any[];
+  onChange: (w: any) => void;
 }
 
-export function SelectableWalletList({ list, onChange }: PropsWithChildren<PropTypes>) {
+export function SelectableWalletList({
+  list,
+  onChange,
+}: PropsWithChildren<PropTypes>) {
   const [active, setActive] = useState<string>(
-    list.find((item) => item.selected)?.walletType || '',
+    list.find((item) => item.selected)?.walletType || ''
   );
-  const onClick = (w: SelectableWallet) => {
+  const onClick = (w: any) => {
     setActive(w.walletType);
     onChange(w);
   };
@@ -95,11 +100,21 @@ export function SelectableWalletList({ list, onChange }: PropsWithChildren<PropT
       {list.map((w, index) => {
         const checked = active === w.walletType;
         return (
-          <Container checked={checked} onClick={onClick.bind(null, w)} key={index}>
+          <Container
+            checked={checked}
+            onClick={onClick.bind(null, w)}
+            // eslint-disable-next-line react/no-array-index-key
+            key={index}>
             <Image src={w.image} alt={w.walletType} size={24} />
-            <Typography variant="body2">{w.name}</Typography>
-            <Typography variant="caption">{getConciseAddress(w.address)}</Typography>
-            <Circle checked={checked}>{checked && <SolidCircle checked={checked} />}</Circle>
+            <Typography variant="body" size="small">
+              {w.name}
+            </Typography>
+            <Typography variant="body" size="xsmall">
+              {getConciseAddress(w.address)}
+            </Typography>
+            <Circle checked={checked}>
+              {checked && <SolidCircle checked={checked} />}
+            </Circle>
           </Container>
         );
       })}

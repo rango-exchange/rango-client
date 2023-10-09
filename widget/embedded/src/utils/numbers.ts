@@ -1,5 +1,8 @@
+/* eslint-disable @typescript-eslint/no-magic-numbers */
+
+import type { BestRouteResponse } from 'rango-sdk';
+
 import { BigNumber } from 'bignumber.js';
-import { BestRouteResponse } from 'rango-sdk';
 
 export const percentToString = (p: number, fractions = 0): string =>
   (p * 100).toFixed(fractions);
@@ -17,8 +20,12 @@ export const numberToString = (
   minDecimals: number | null = null,
   maxDecimals: number | null = null
 ): string => {
-  if (number === null || number === undefined) return '';
-  if (number === '') return '';
+  if (number === null || number === undefined) {
+    return '';
+  }
+  if (number === '') {
+    return '';
+  }
   const n = new BigNumber(number);
   const roundingMode = 1;
   let maxI = 1000;
@@ -29,8 +36,10 @@ export const numberToString = (
     }
   }
 
-  if (n.gte(10000)) return n.toFormat(0, roundingMode);
-  if (n.gte(1000))
+  if (n.gte(10000)) {
+    return n.toFormat(0, roundingMode);
+  }
+  if (n.gte(1000)) {
     return n.toFormat(
       Math.min(
         maxI,
@@ -38,7 +47,8 @@ export const numberToString = (
       ),
       roundingMode
     );
-  if (n.gte(100))
+  }
+  if (n.gte(100)) {
     return n.toFormat(
       Math.min(
         maxI,
@@ -46,7 +56,8 @@ export const numberToString = (
       ),
       roundingMode
     );
-  if (n.gte(1))
+  }
+  if (n.gte(1)) {
     return n.toFormat(
       Math.min(
         maxI,
@@ -54,7 +65,8 @@ export const numberToString = (
       ),
       roundingMode
     );
-  if (n.gte(0.01))
+  }
+  if (n.gte(0.01)) {
     return n.toFormat(
       Math.min(
         maxI,
@@ -62,8 +74,9 @@ export const numberToString = (
       ),
       roundingMode
     );
-  for (let i = minDecimals || 4; i < 17; i++)
-    if (n.gte(Math.pow(10, -i)))
+  }
+  for (let i = minDecimals || 4; i < 17; i++) {
+    if (n.gte(Math.pow(10, -i))) {
       return n.toFormat(
         Math.min(
           maxI,
@@ -71,7 +84,11 @@ export const numberToString = (
         ),
         roundingMode
       );
-  if (n.isEqualTo(0)) return '0';
+    }
+  }
+  if (n.isEqualTo(0)) {
+    return '0';
+  }
 
   return n.toFormat(
     Math.min(maxI, Math.min(maxDecimals || 100, Math.max(minDecimals || 0, 8))),
@@ -94,18 +111,32 @@ export const uint8ArrayToHex = (buffer: Uint8Array): string => {
 };
 
 export function dollarToConciseString(num: number | undefined): string {
-  if (!num) return '-';
-  if (num < 1) return ' < 1$';
-  if (num < 1000) return numberToString(new BigNumber(num)) + '$';
-  if (num < 10_000) return parseInt((num / 100).toString()) / 10 + 'K';
-  if (num < 1_000_000) return parseInt((num / 1000).toString()) + 'K';
-  if (num < 100_000_000) return parseInt((num / 100000).toString()) / 10 + 'M';
+  if (!num) {
+    return '-';
+  }
+  if (num < 1) {
+    return ' < 1$';
+  }
+  if (num < 1000) {
+    return numberToString(new BigNumber(num)) + '$';
+  }
+  if (num < 10_000) {
+    return parseInt((num / 100).toString()) / 10 + 'K';
+  }
+  if (num < 1_000_000) {
+    return parseInt((num / 1000).toString()) + 'K';
+  }
+  if (num < 100_000_000) {
+    return parseInt((num / 100000).toString()) / 10 + 'M';
+  }
   return parseInt((num / 1000000).toString()) + 'M';
 }
 
 export function removeExtraDecimals(num: string, maxDecimals: number): string {
   try {
-    if (!num.includes('.')) return num;
+    if (!num.includes('.')) {
+      return num;
+    }
     const [b, f] = num.split('.');
     if (f && f.length > maxDecimals) {
       return `${b}.${f.substring(0, maxDecimals)}`;
@@ -134,3 +165,17 @@ export const containsText = (text: string, searchText: string) =>
 export const isPositiveNumber = (text?: string) =>
   !!text && parseFloat(text) > 0;
 10;
+
+export function limitDecimalPlaces(
+  numberString: string,
+  maxDecimalPlaces = 4
+): string {
+  const number = parseFloat(numberString);
+  if (isNaN(number)) {
+    return numberString;
+  } // Return the original string if it's not a valid number
+
+  const multiplier = Math.pow(10, maxDecimalPlaces);
+  const roundedNumber = Math.round(number * multiplier) / multiplier;
+  return roundedNumber.toString();
+}

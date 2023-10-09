@@ -1,4 +1,4 @@
-import { Token } from 'rango-sdk';
+import type { Token } from 'rango-sdk';
 
 export type TokenMeta = {
   blockchain: string;

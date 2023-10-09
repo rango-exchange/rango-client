@@ -1,79 +1,132 @@
-import { CSS } from '@stitches/react';
-import React, { useEffect } from 'react';
+import type { PropTypes } from './Modal.types';
+import type { PropsWithChildren } from 'react';
+
+import React, { useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
-import { config, styled } from '../../theme';
-import { CloseIcon } from '../Icon/CloseIcon';
+
+import { usePaddingRight } from '../../hooks';
+import { CloseIcon } from '../../icons';
+import { theme } from '../../theme';
+import { BottomLogo } from '../BottomLogo';
+import { Divider } from '../Divider';
+import { IconButton } from '../IconButton/IconButton';
 import { Typography } from '../Typography';
 
-export interface PropTypes {
-  title: string;
-  open: boolean;
-  onClose: () => void;
-  content: React.ReactNode;
-  action?: React.ReactNode;
-  containerStyle?: CSS<typeof config>;
-}
+import {
+  BackDrop,
+  Content,
+  Flex,
+  Footer,
+  ModalContainer,
+  ModalHeader,
+} from './Modal.styles';
 
-const BackDrop = styled('div', {
-  position: 'fixed',
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-  top: '0',
-  left: '0',
-  width: '100vw',
-  height: '100vh',
-  backgroundColor: 'rgba(0,0,0,.1)',
-  zIndex: 10,
-});
+const CLOSED_DELAY = 600;
+const OPEN_DELAY = 10;
+const DEFAULT_CONTENT_PADDING = 20;
 
-const ModalContainer = styled('div', {
-  backgroundColor: '$background',
-  borderRadius: '$10',
-  padding: '$16 $16',
-  display: 'flex',
-  flexDirection: 'column',
-  zIndex: 20,
-});
-const Row = styled('div', {
-  display: 'flex',
-  alignItems: 'center',
-});
-const ModalHeader = styled('div', {
-  display: 'flex',
-  justifyContent: 'space-between',
-  alignItems: 'center',
-  position: 'relative',
-  marginBottom: '$16',
-});
-
-export function Modal(props: PropTypes) {
-  const { title, content, open, onClose, containerStyle, action } = props;
+export function Modal(props: PropsWithChildren<PropTypes>) {
+  const {
+    title,
+    open,
+    onClose,
+    containerStyle,
+    anchor = 'bottom',
+    container = document.body,
+    prefix,
+    header,
+    dismissible = true,
+    children,
+    suffix,
+    footer,
+    hasLogo = true,
+  } = props;
+  const [active, setActive] = useState(false);
+  const [isMount, setIsMount] = useState(false);
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const contentRef = useRef<HTMLDivElement | null>(null);
+  usePaddingRight({
+    elementRef: contentRef,
+    paddingRight: theme.sizes[DEFAULT_CONTENT_PADDING],
+  });
 
   const handleBackDropClick = (event: React.MouseEvent<HTMLDivElement>) => {
-    if (event.target === event.currentTarget) onClose();
+    if (event.target === event.currentTarget && dismissible) {
+      onClose();
+    }
   };
   useEffect(() => {
-    if (open) document.body.style.overflow = 'hidden';
-    else document.body.style.overflow = 'unset';
-  }, [open]);
+    if (container) {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+      if (open) {
+        setIsMount(true);
+        container.style.overflow = 'hidden';
+        timeoutRef.current = setTimeout(() => {
+          setActive(true);
+        }, OPEN_DELAY);
+      } else {
+        setActive(false);
+        timeoutRef.current = setTimeout(() => {
+          setIsMount(false);
+          container.style.overflow = 'unset';
+        }, CLOSED_DELAY);
+      }
+    }
+    return () => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+    };
+  }, [open, container]);
+
   return (
     <>
-      {open &&
+      {isMount &&
+        container &&
         createPortal(
-          <BackDrop onClick={handleBackDropClick}>
-            <ModalContainer css={containerStyle}>
-              <ModalHeader>
-                <Typography variant="h4">{title}</Typography>
-                <Row>
-                  {action}
-                  <CloseIcon size={24} onClick={onClose} />
-                </Row>
-              </ModalHeader>
-              {content}
+          <BackDrop
+            active={active}
+            onClick={handleBackDropClick}
+            anchor={anchor}>
+            <ModalContainer
+              active={active}
+              css={containerStyle}
+              anchor={anchor}>
+              {header ?? (
+                <ModalHeader noTitle={!title}>
+                  {prefix}
+                  {title && (
+                    <Typography variant="title" size="small">
+                      {title}
+                    </Typography>
+                  )}
+                  <Flex>
+                    {suffix}
+                    {dismissible && (
+                      <IconButton onClick={onClose} variant="ghost">
+                        <CloseIcon color="gray" size={14} />
+                      </IconButton>
+                    )}
+                  </Flex>
+                </ModalHeader>
+              )}
+              <Content ref={contentRef}>{children}</Content>
+              {(hasLogo || footer) && (
+                <Footer>
+                  <div className="footer__content">{footer}</div>
+                  {hasLogo && (
+                    <div className="footer__logo">
+                      <Divider size={12} />
+                      <BottomLogo />
+                    </div>
+                  )}
+                </Footer>
+              )}
             </ModalContainer>
           </BackDrop>,
-          document.body,
+          container
         )}
     </>
   );

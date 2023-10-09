@@ -1,4 +1,8 @@
-export const SLIPPAGES = [0.5, 1, 3, 5, 8, 13, 20];
+const LOW = 0.5;
+const MEDIUM = 1;
+const HIGH = 3;
+
+export const SLIPPAGES = [LOW, MEDIUM, HIGH];
 
 export const DEFAULT_SLIPPAGE = 1;
 

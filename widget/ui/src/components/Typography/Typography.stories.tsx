@@ -1,7 +1,9 @@
-import React from 'react';
-import { Meta } from '@storybook/react';
+import type { PropTypes } from './Typography.types';
+import type { Meta } from '@storybook/react';
 
-import { Typography, PropTypes } from './Typography';
+import React from 'react';
+
+import { Typography } from './Typography';
 
 export default {
   title: 'Components/Typography',
@@ -34,39 +36,90 @@ export default {
       control: { type: 'boolean' },
     },
   },
-} as Meta<typeof Typography>;
+} satisfies Meta<typeof Typography>;
 
 export const Main = (props: PropTypes) => (
   <div>
-    <Typography {...props} variant="h1">
-      Heading 1
-    </Typography>
-    <Typography {...props} variant="h2">
-      Heading 2
-    </Typography>
-    <Typography {...props} variant="h3">
-      Heading 3
-    </Typography>
-    <Typography {...props} variant="h4">
-      Heading 4
-    </Typography>
-    <Typography {...props} variant="h5">
-      Heading 5
-    </Typography>
-    <Typography {...props} variant="h6">
-      Heading 6
-    </Typography>
-    <Typography {...props} variant="body1">
-      Body 1
-    </Typography>
-    <Typography {...props} variant="body2">
-      Body 2
-    </Typography>
-    <Typography {...props} variant="body3">
-      Body 3
-    </Typography>
-    <Typography {...props} variant="caption">
-      Caption
-    </Typography>
+    <div>
+      <Typography {...props} variant="display" size="large">
+        Display Large
+      </Typography>
+      {', '}
+      <Typography {...props} variant="display" size="medium">
+        Display Medium
+      </Typography>
+      {', '}
+      <Typography {...props} variant="display" size="small">
+        Display Small
+      </Typography>
+    </div>
+
+    <div>
+      <Typography {...props} variant="headline" size="large">
+        Headline Large
+      </Typography>
+      {', '}
+      <Typography {...props} variant="headline" size="medium">
+        Headline Medium
+      </Typography>
+      {', '}
+      <Typography {...props} variant="headline" size="small">
+        Headline Small
+      </Typography>
+      {', '}
+      <Typography {...props} variant="headline" size="xsmall">
+        Headline Xsmall
+      </Typography>
+    </div>
+
+    <div>
+      <Typography {...props} variant="title" size="large">
+        Title Large
+      </Typography>
+      {', '}
+      <Typography {...props} variant="title" size="medium">
+        Title Medium
+      </Typography>
+      {', '}
+      <Typography {...props} variant="title" size="xmedium">
+        Title Xmedium
+      </Typography>
+      {', '}
+      <Typography {...props} variant="title" size="small">
+        Title Small
+      </Typography>
+    </div>
+
+    <div>
+      <Typography {...props} variant="label" size="large">
+        Label Large
+      </Typography>
+      {', '}
+      <Typography {...props} variant="label" size="medium">
+        Label Medium
+      </Typography>
+      {', '}
+      <Typography {...props} variant="label" size="small">
+        Label Small
+      </Typography>
+    </div>
+
+    <div>
+      <Typography {...props} variant="body" size="large">
+        Body Large
+      </Typography>
+      {', '}
+      <Typography {...props} variant="body" size="medium">
+        Body Medium
+      </Typography>
+      {', '}
+      <Typography {...props} variant="body" size="small">
+        Body Small
+      </Typography>
+      {', '}
+      <Typography {...props} variant="body" size="xsmall">
+        Body Xsmall
+      </Typography>
+    </div>
   </div>
 );

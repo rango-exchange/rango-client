@@ -8,13 +8,13 @@ import type { Token } from 'rango-sdk';
 import {
   Button,
   Divider,
-  HorizontalSwapIcon,
-  InfoCircleIcon,
-  SignatureIcon,
+  InfoErrorIcon,
+  ReverseIcon,
   Spinner,
   Tooltip,
   Typography,
 } from '@rango-dev/ui';
+import { InfoCircleIcon } from '@rango-dev/ui/src/components/Icon';
 import { readAccountAddress, useWallets } from '@rango-dev/wallets-react';
 import { detectInstallLink, Networks } from '@rango-dev/wallets-shared';
 import React, { useState } from 'react';
@@ -158,9 +158,7 @@ function Item({
           <div className="info">
             {walletState.connected && !canSwitchNetwork && (
               <>
-                <Tooltip
-                  content="Only default network is supported for this wallet."
-                  color="gray">
+                <Tooltip content="Only default network is supported for this wallet.">
                   <InfoCircleIcon size={24} color="success" />
                 </Tooltip>
                 <Divider size={12} direction="horizontal" />
@@ -193,7 +191,7 @@ function Item({
           <div className="body">
             <img src={info.img} alt={info.name} width={100} />
             <h2 className="my-12">{info.name}</h2>
-            <Typography variant="body2">
+            <Typography variant="body" size="small">
               {!walletState.installed
                 ? 'The wallet is not installed'
                 : 'The wallet is disconnected'}
@@ -203,7 +201,7 @@ function Item({
 
         {error && (
           <p className="error-msg">
-            <InfoCircleIcon color="error" size={16} />
+            <InfoErrorIcon color="error" size={16} />
             {error}
           </p>
         )}
@@ -250,7 +248,6 @@ function Item({
             fullWidth
             disabled={!walletState.connected}
             type="primary"
-            suffix={<SignatureIcon size={24} color="white" />}
             onClick={handleSigner}>
             Sign
           </Button>
@@ -258,7 +255,7 @@ function Item({
           <Button
             fullWidth
             disabled={!walletState.connected}
-            suffix={<HorizontalSwapIcon size={24} color="white" />}
+            suffix={<ReverseIcon size={24} color="white" />}
             type="primary"
             onClick={() => setOpen(true)}>
             Swap

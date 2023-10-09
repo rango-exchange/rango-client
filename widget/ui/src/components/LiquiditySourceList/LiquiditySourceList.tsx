@@ -1,16 +1,18 @@
-import { CSSProperties } from '@stitches/react';
-import React, { useEffect, useState } from 'react';
+import type { LiquiditySource, LoadingStatus } from '../../types/meta';
+import type { CSSProperties } from '@stitches/react';
+
 import { i18n } from '@lingui/core';
+import React, { useEffect, useState } from 'react';
+
 import { styled } from '../../theme';
-import { LiquiditySource, LoadingStatus } from '../../types/meta';
-import { Button } from '../Button/Button';
-import { Divider } from '../Divider';
-import { Switch } from '../Switch';
-import { Typography } from '../Typography';
-import { Spinner } from '../Spinner';
 import { LoadingFailedAlert } from '../Alert/LoadingFailedAlert';
 import { NotFoundAlert } from '../Alert/NotFoundAlert';
+import { Button } from '../Button/Button';
 import { Image } from '../common';
+import { Divider } from '../Divider';
+import { Spinner } from '../Spinner';
+import { Switch } from '../Switch';
+import { Typography } from '../Typography';
 
 const groupLiquiditySources = (
   liquiditySources: LiquiditySource[]
@@ -75,7 +77,9 @@ export function LiquiditySourceList(props: PropTypes) {
   const changeLiquiditySources = (clickedItem: LiquiditySource) => {
     clickedItem.selected = !clickedItem.selected;
     setSelected((prevState) => {
-      if (clickedItem.selected) return [...prevState, clickedItem];
+      if (clickedItem.selected) {
+        return [...prevState, clickedItem];
+      }
       return prevState.filter((item) => item.title != clickedItem.title);
     });
     onChange(clickedItem);
@@ -104,8 +108,10 @@ export function LiquiditySourceList(props: PropTypes) {
       loaded={loadingStatus === 'success'}>
       <div>
         <LiquiditySourceType>
-          <Typography variant="h5">{i18n.t('Bridges')}</Typography>
-          <Typography variant="body1" color="neutral800">
+          <Typography variant="title" size="xmedium">
+            {i18n.t('Bridges')}
+          </Typography>
+          <Typography variant="body" size="medium" color="neutral800">
             {totalSelectedBridges === totalBridges
               ? totalBridges
               : `${totalSelectedBridges} / ${totalBridges}`}
@@ -121,14 +127,18 @@ export function LiquiditySourceList(props: PropTypes) {
         {loadingStatus === 'success' && (
           <>
             {totalBridges ? (
-              bridges.map((liquiditySource, index) => (
-                <LiquiditySourceItem
-                  liquiditySource={liquiditySource}
-                  key={index}
-                  selected={isSelected(liquiditySource)}
-                  onChange={changeLiquiditySources}
-                />
-              ))
+              bridges.map((liquiditySource, index) => {
+                const key = `item-${index}`;
+
+                return (
+                  <LiquiditySourceItem
+                    liquiditySource={liquiditySource}
+                    key={key}
+                    selected={isSelected(liquiditySource)}
+                    onChange={changeLiquiditySources}
+                  />
+                );
+              })
             ) : (
               <NotFoundAlert catergory="Bridge" searchedFor={searchedFor} />
             )}
@@ -137,8 +147,10 @@ export function LiquiditySourceList(props: PropTypes) {
       </div>
       <div>
         <LiquiditySourceType>
-          <Typography variant="h5">{i18n.t('Exchanges')}</Typography>
-          <Typography variant="body1" color="neutral800">
+          <Typography variant="title" size="xmedium">
+            {i18n.t('Exchanges')}
+          </Typography>
+          <Typography variant="body" size="medium" color="neutral800">
             {totalSelectedExchanges === totalExchanges
               ? totalExchanges
               : `${totalSelectedExchanges} / ${totalExchanges}`}
@@ -154,14 +166,17 @@ export function LiquiditySourceList(props: PropTypes) {
         {loadingStatus == 'success' && (
           <>
             {totalExchanges ? (
-              exchanges.map((liquiditySource, index) => (
-                <LiquiditySourceItem
-                  liquiditySource={liquiditySource}
-                  key={index}
-                  selected={isSelected(liquiditySource)}
-                  onChange={changeLiquiditySources}
-                />
-              ))
+              exchanges.map((liquiditySource, index) => {
+                const key = `item-${index}`;
+                return (
+                  <LiquiditySourceItem
+                    liquiditySource={liquiditySource}
+                    key={key}
+                    selected={isSelected(liquiditySource)}
+                    onChange={changeLiquiditySources}
+                  />
+                );
+              })
             ) : (
               <NotFoundAlert catergory="Exchange" searchedFor={searchedFor} />
             )}
@@ -171,7 +186,9 @@ export function LiquiditySourceList(props: PropTypes) {
     </MainContainer>
   );
 }
-
+/**
+ * @deprecated will be removed in v2
+ */
 const LiquiditySourceItem = ({
   liquiditySource,
   selected,
@@ -183,7 +200,6 @@ const LiquiditySourceItem = ({
 }) => (
   <Button
     size="large"
-    align="start"
     variant="outlined"
     prefix={
       <LiquidityImageContainer>
@@ -193,6 +209,8 @@ const LiquiditySourceItem = ({
     suffix={<Switch checked={selected} />}
     style={{ marginBottom: '12px' }}
     onClick={onChange.bind(null, liquiditySource)}>
-    <Typography variant="body1">{liquiditySource.title}</Typography>
+    <Typography variant="body" size="medium">
+      {liquiditySource.title}
+    </Typography>
   </Button>
 );

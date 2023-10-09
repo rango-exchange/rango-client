@@ -16,8 +16,7 @@ export const VerticalSwapIcon: React.FC<IconProps> = ({
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       className="_icon"
-      {...props}
-    >
+      {...props}>
       <path
         d="m13.82 6.85 3.04 3.04M13.82 17.15V6.85M10.18 17.15l-3.04-3.04M10.18 6.85v10.3"
         strokeWidth={1.5}

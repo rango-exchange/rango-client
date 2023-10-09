@@ -1,4 +1,7 @@
-import React, { ReactNode, useState } from 'react';
+import type { ReactNode } from 'react';
+
+import React, { useState } from 'react';
+
 import { styled } from '../../theme';
 import { Divider } from '../Divider';
 import { Header } from '../Header';
@@ -35,14 +38,27 @@ const TextFieldContainer = styled('div', {
   padding: '1px',
 });
 
+/**
+ * @deprecated will be removed in v2
+ */
 export function SecondaryPage(props: PropTypes) {
-  const { title, Footer, TopButton, onBack, hasHeader = true } = props;
+  const {
+    title,
+    Footer,
+    TopButton,
+    // onBack,
+    hasHeader = true,
+  } = props;
   const [searchedFor, setSearchedFor] = useState('');
 
   return (
     <>
       {hasHeader && (
-        <Header onBack={onBack} title={title || ''} suffix={TopButton} />
+        <Header
+          // onBack={onBack}
+          title={title || ''}
+          suffix={TopButton}
+        />
       )}
 
       <ContentContainer>
@@ -52,7 +68,9 @@ export function SecondaryPage(props: PropTypes) {
               size="large"
               prefix={<SearchIcon size={24} />}
               placeholder={props.textFieldPlaceholder}
-              onChange={(event) => setSearchedFor(event.target.value)}
+              onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+                setSearchedFor(event.target.value)
+              }
               value={searchedFor}
               autoFocus
             />

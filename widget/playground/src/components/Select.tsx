@@ -1,12 +1,11 @@
 import {
-  AngleDownIcon,
   Button,
-  CheckIcon,
   Modal,
   SecondaryPage,
   styled,
   Typography,
 } from '@rango-dev/ui';
+import { AngleDownIcon, CheckIcon } from '@rango-dev/ui/src/components/Icon';
 import React, { Fragment, useState } from 'react';
 
 interface PropTypes {
@@ -22,7 +21,9 @@ interface PropTypes {
   }>;
 }
 const filterList = (list, searchedFor: string) =>
-  list.filter((item) => item.name.toLowerCase().includes(searchedFor.toLowerCase()));
+  list.filter((item) =>
+    item.name.toLowerCase().includes(searchedFor.toLowerCase())
+  );
 const Image = styled('img', {
   width: '24px',
   height: '24px',
@@ -37,7 +38,14 @@ const Label = styled('label', {
   color: '$foreground',
 });
 
-export function Select({ label, value, onChange, modalTitle, list, name }: PropTypes) {
+export function Select({
+  label,
+  value,
+  onChange,
+  modalTitle,
+  list,
+  name,
+}: PropTypes) {
   const [open, setOpen] = useState<boolean>(false);
   const search = list.find((item) => item.value === value);
   return (
@@ -64,23 +72,32 @@ export function Select({ label, value, onChange, modalTitle, list, name }: PropT
             hasHeader={false}
             textFieldPlaceholder={`Search ${modalTitle} By Name`}>
             {(searchedFor) =>
-              filterList(list, searchedFor).map((item, index) => (
-                <Fragment key={index}>
-                  <Button
-                    variant="ghost"
-                    size="large"
-                    prefix={item.logo && <Image src={item.logo} />}
-                    suffix={item.value === value ? <CheckIcon size={20} /> : undefined}
-                    align="start"
-                    onClick={() => {
-                      setOpen(false);
-                      onChange(name, item.value);
-                    }}>
-                    <Typography variant="body2">{item.name}</Typography>
-                  </Button>
-                  <hr />
-                </Fragment>
-              ))
+              filterList(list, searchedFor).map((item, index) => {
+                const key = `item-${index}`;
+                return (
+                  <Fragment key={key}>
+                    <Button
+                      variant="ghost"
+                      size="large"
+                      prefix={item.logo && <Image src={item.logo} />}
+                      suffix={
+                        item.value === value ? (
+                          <CheckIcon size={20} />
+                        ) : undefined
+                      }
+                      align="start"
+                      onClick={() => {
+                        setOpen(false);
+                        onChange(name, item.value);
+                      }}>
+                      <Typography variant="body" size="small">
+                        {item.name}
+                      </Typography>
+                    </Button>
+                    <hr />
+                  </Fragment>
+                );
+              })
             }
           </SecondaryPage>
         }

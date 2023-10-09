@@ -1,7 +1,7 @@
 import type { BlockchainMeta, Token } from 'rango-sdk';
 
 import { allProviders } from '@rango-dev/provider-all';
-import { InfoCircleIcon, Spinner, Typography } from '@rango-dev/ui';
+import { ErrorIcon, Spinner, Typography } from '@rango-dev/ui';
 import { Provider } from '@rango-dev/wallets-react';
 import { RangoClient } from 'rango-sdk';
 import React, { useEffect, useState } from 'react';
@@ -44,8 +44,8 @@ export function App() {
       autoConnect={false}>
       {!process.env.REACT_APP_API_KEY && (
         <p className="ml-12 warning">
-          <InfoCircleIcon color="warning" size={24} /> Please add
-          REACT_APP_API_KEY into .env
+          <ErrorIcon color="warning" size={24} /> Please add REACT_APP_API_KEY
+          into .env
         </p>
       )}
       <div className="flex">
@@ -53,7 +53,9 @@ export function App() {
         {loading && (
           <div className="flex">
             <Spinner size={20} />
-            <Typography variant="caption">Loading...</Typography>
+            <Typography variant="body" size="xsmall">
+              Loading...
+            </Typography>
           </div>
         )}
       </div>

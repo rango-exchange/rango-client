@@ -1,13 +1,16 @@
+import type { Type } from '../types';
+import type { ProviderInterface } from '@rango-dev/wallets-react';
+import type { WalletType } from '@rango-dev/wallets-shared';
+import type { WidgetColors, WidgetConfig } from '@rango-dev/widget-embedded';
+import type { Asset } from 'rango-sdk';
+
 import { create } from 'zustand';
-import { Asset } from 'rango-sdk';
-import createSelectors from './selectors';
-import { WalletType } from '@rango-dev/wallets-shared';
-import { immer } from 'zustand/middleware/immer';
 import { persist } from 'zustand/middleware';
-import { Type } from '../types';
+import { immer } from 'zustand/middleware/immer';
+
 import { getConfig } from '../configs';
-import { WidgetColors, WidgetConfig } from '@rango-dev/widget-embedded';
-import { ProviderInterface } from '@rango-dev/wallets-react';
+
+import createSelectors from './selectors';
 
 export type Mode = 'dark' | 'light' | 'auto';
 export type COLORS =
@@ -40,7 +43,7 @@ interface ConfigState {
           value?: Mode;
         }
       | {
-          name: 'borderRadius' | 'height' | 'width';
+          name: 'borderRadius' | 'secondaryBorderRadius' | 'height' | 'width';
           value?: number;
         }
       | {
@@ -88,6 +91,7 @@ export const initialConfig: WidgetConfig = {
     mode: 'auto',
     fontFamily: undefined,
     borderRadius: undefined,
+    secondaryBorderRadius: undefined,
     width: undefined,
     height: undefined,
     singleTheme: undefined,
@@ -124,33 +128,49 @@ export const useConfigStore = createSelectors(
         onChangeBlockChains: (chains, type) =>
           set((state) => {
             if (type === 'Source') {
-              if (state.config.from) state.config.from.blockchains = chains;
+              if (state.config.from) {
+                state.config.from.blockchains = chains;
+              }
             } else {
-              if (state.config.to) state.config.to.blockchains = chains;
+              if (state.config.to) {
+                state.config.to.blockchains = chains;
+              }
             }
           }),
         onChangeTokens: (tokens, type) =>
           set((state) => {
             if (type === 'Source') {
-              if (state.config.from) state.config.from.tokens = tokens;
+              if (state.config.from) {
+                state.config.from.tokens = tokens;
+              }
             } else {
-              if (state.config.to) state.config.to.tokens = tokens;
+              if (state.config.to) {
+                state.config.to.tokens = tokens;
+              }
             }
           }),
         onChangeBlockChain: (chain, type) =>
           set((state) => {
             if (type === 'Source') {
-              if (state.config.from) state.config.from.blockchain = chain;
+              if (state.config.from) {
+                state.config.from.blockchain = chain;
+              }
             } else {
-              if (state.config.to) state.config.to.blockchain = chain;
+              if (state.config.to) {
+                state.config.to.blockchain = chain;
+              }
             }
           }),
         onChangeToken: (token, type) =>
           set((state) => {
             if (type === 'Source') {
-              if (state.config.from) state.config.from.token = token;
+              if (state.config.from) {
+                state.config.from.token = token;
+              }
             } else {
-              if (state.config.to) state.config.to.token = token;
+              if (state.config.to) {
+                state.config.to.token = token;
+              }
             }
           }),
         onChangeWallets: (wallets) =>
@@ -171,20 +191,25 @@ export const useConfigStore = createSelectors(
           }),
         onChangelanguage: (value) =>
           set((state) => {
-            state.config.language = value;
+            state.config.language = value as WidgetConfig['language'];
           }),
         onChangeTheme: ({ name, value }) =>
           set((state) => {
-            if (state.config.theme && state.config.theme[name]) {
-              if (name === 'mode') state.config.theme[name] = value;
-              else if (
+            if (state.config.theme) {
+              if (name === 'mode') {
+                state.config.theme[name] = value;
+              } else if (
                 name === 'borderRadius' ||
+                name === 'secondaryBorderRadius' ||
                 name === 'height' ||
                 name === 'width'
-              )
+              ) {
                 state.config.theme[name] = value;
-              else if (name === 'fontFamily') state.config.theme[name] = value;
-              else if (name === 'singleTheme') state.config.theme[name] = value;
+              } else if (name === 'fontFamily') {
+                state.config.theme[name] = value;
+              } else if (name === 'singleTheme') {
+                state.config.theme[name] = value;
+              }
             }
           }),
         onChangeColors: (name, mode, color) =>
@@ -199,7 +224,9 @@ export const useConfigStore = createSelectors(
           }),
         onSelectTheme: (colors) =>
           set((state) => {
-            if (state.config.theme) state.config.theme.colors = colors;
+            if (state.config.theme) {
+              state.config.theme.colors = colors;
+            }
           }),
         resetConfig: () => {
           set({ config: initialConfig });

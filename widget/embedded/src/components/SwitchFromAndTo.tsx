@@ -1,10 +1,11 @@
+import { ReverseIcon, styled } from '@rango-dev/ui';
 import React, { useEffect, useRef, useState } from 'react';
 import { useInRouterContext, useSearchParams } from 'react-router-dom';
-import { styled, Button, VerticalSwapIcon } from '@rango-dev/ui';
+
 import { SearchParams } from '../constants/searchParams';
 import { useBestRouteStore } from '../store/bestRoute';
 
-function SwithFromAndTo({ count }: { count: number }) {
+function SwitchFromAndTo({ count }: { count: number }) {
   const firstRender = useRef(true);
   const [searchParams, setSearchParams] = useSearchParams();
   const outputAmount = useBestRouteStore.use.outputAmount();
@@ -37,24 +38,39 @@ const SwitchButtonContainer = styled('div', {
   bottom: '-12px',
   left: '50%',
   transform: 'translate(-50%, 10%)',
+  cursor: 'pointer',
 });
 
-export function SwithFromAndToButton() {
+const StyledButton = styled('div', {
+  borderRadius: '$md',
+  border: '3px solid $background',
+  background: '$neutral100',
+  width: '$24',
+  height: '$24',
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  color: '$foreground',
+  '&:hover': {
+    color: '$secondary500',
+  },
+});
+
+export function SwitchFromAndToButton() {
   const switchFromAndTo = useBestRouteStore.use.switchFromAndTo();
   const isRouterInContext = useInRouterContext();
   const [count, setCount] = useState(0);
 
   return (
     <SwitchButtonContainer>
-      <Button
-        variant="ghost"
+      <StyledButton
         onClick={() => {
           switchFromAndTo();
           setCount((prev) => prev + 1);
         }}>
-        <VerticalSwapIcon size={32} />
-        {isRouterInContext && <SwithFromAndTo count={count} />}
-      </Button>
+        <ReverseIcon size={12} />
+        {isRouterInContext && <SwitchFromAndTo count={count} />}
+      </StyledButton>
     </SwitchButtonContainer>
   );
 }

@@ -1,119 +1,61 @@
+import type { PropTypes } from './Drawer.types';
+import type { PropsWithChildren } from 'react';
+
 import React from 'react';
-import { styled } from '../../theme';
-import { CloseIcon } from '../Icon';
-import { Typography } from '../Typography';
 import { createPortal } from 'react-dom';
 
-export interface PropTypes {
-  title?: string;
-  open: boolean;
-  onClose: () => void;
-  content: React.ReactNode;
-  containerStyle?: React.CSSProperties;
-  anchor?: 'bottom' | 'left' | 'right' | 'top';
-  showClose?: boolean;
-  footer?: React.ReactNode;
-  container: Element | null;
-}
+import { CloseIcon } from '../../icons';
+import { Divider } from '../Divider';
+import { IconButton } from '../IconButton/IconButton';
+import { Typography } from '../Typography';
 
-const BackDrop = styled('div', {
-  position: 'absolute',
-  top: '0',
-  left: '0',
-  width: '100%',
-  height: '100%',
-  zIndex: 9999999,
-  backgroundColor: 'rgba(0,0,0,.1)',
-  borderRadius: '$10',
-});
+import {
+  BackDrop,
+  Body,
+  DrawerContainer,
+  DrawerHeader,
+  Footer,
+} from './Drawer.styles';
 
-const DrawerContainer = styled('div', {
-  position: 'absolute',
-  boxShadow: '$s',
-  background: '$background',
-  padding: '$20',
-  display: 'flex',
-  flexDirection: 'column',
-  justifyContent: 'space-between',
-  zIndex: 9999999,
-  borderRadius: '$10',
-
-  variants: {
-    anchor: {
-      left: {
-        top: 0,
-        left: 0,
-        height: '100%',
-        minWidth: '300px',
-        maxWidth: '90%',
-      },
-      right: {
-        top: 0,
-        right: 0,
-        height: '100%',
-        minWidth: '300px',
-        maxWidth: '90%',
-      },
-      bottom: {
-        bottom: 0,
-        width: '100%',
-        maxHeight: '90%',
-      },
-      top: {
-        top: 0,
-        width: '100%',
-        maxHeight: '90%',
-      },
-    },
-  },
-});
-
-const DrawerHeader = styled('div', {
-  display: 'flex',
-  justifyContent: 'space-between',
-  alignItems: 'center',
-  position: 'relative',
-  marginBottom: '$16',
-});
-
-const Body = styled('div', {
-  overflowY: 'auto',
-  height: '100%',
-});
-const Footer = styled('footer', {
-  width: '100%',
-  marginTop: '$28',
-});
-
-export function Drawer(props: PropTypes) {
+export function Drawer(props: PropsWithChildren<PropTypes>) {
   const {
     title,
-    content,
     open,
     onClose,
-    containerStyle,
     anchor = 'bottom',
-    showClose = false,
+    dismissible = true,
     footer,
-    container,
+    container = document.body,
+    prefix,
+    children,
   } = props;
 
   const handleBackDropClick = (event: React.MouseEvent<HTMLDivElement>) => {
-    if (event.target === event.currentTarget) onClose();
+    if (event.target === event.currentTarget && dismissible) {
+      onClose();
+    }
   };
 
   return (
     <>
-      {open &&
-        container &&
+      {container &&
+        open &&
         createPortal(
           <BackDrop onClick={handleBackDropClick}>
-            <DrawerContainer anchor={anchor} style={containerStyle}>
+            <DrawerContainer anchor={anchor}>
               <DrawerHeader>
-                <Typography variant="h6">{title}</Typography>
-                {showClose && <CloseIcon size={24} onClick={onClose} />}
+                {prefix}
+                <Typography variant="title" size="small">
+                  {title}
+                </Typography>
+                {dismissible && (
+                  <IconButton onClick={onClose}>
+                    <CloseIcon color="gray" />
+                  </IconButton>
+                )}
               </DrawerHeader>
-              <Body>{content}</Body>
+              <Divider size={16} />
+              <Body>{children}</Body>
               <Footer>{footer}</Footer>
             </DrawerContainer>
           </BackDrop>,

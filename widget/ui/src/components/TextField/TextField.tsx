@@ -1,157 +1,60 @@
-import React, { PropsWithChildren, RefObject } from 'react';
+import type { PropTypes, Ref } from './TextField.types';
+import type { PropsWithChildren } from 'react';
 
-import { styled } from '../../theme';
+import React from 'react';
 
-const InputContainer = styled('div', {
-  backgroundColor: '$surface',
-  padding: '1px',
-  boxSizing: 'border-box',
-  border: '1px solid $neutral400',
-  borderRadius: '$5',
-  height: '$48',
-  display: 'flex',
-  flexGrow: 1,
-  position: 'relative',
-  alignItems: 'center',
-  color: '$foreground',
-  overflowX: 'hidden',
-  transition: 'border-color ease .3s',
-  '&:focus-within': {
-    borderColor: '$success',
-    outline: '1px solid $success',
-  },
-  variants: {
-    size: {
-      small: {
-        '& input': {
-          fontSize: '$14',
-        },
-        height: '$32',
-      },
-      medium: {
-        '& input': {
-          fontSize: '$15',
-        },
-        height: '$40',
-      },
-      large: {
-        '& input': {
-          fontSize: '$16',
-        },
-        height: '$48',
-      },
-    },
-    disabled: {
-      true: {
-        backgroundColor: '$neutral100',
-        cursor: 'not-allowed',
-        filter: 'grayscale(100%)',
-      },
-    },
-    prefix: {
-      true: {
-        paddingLeft: '$16',
-      },
-      false: {
-        paddingLeft: '$0',
-      },
-    },
-    suffix: {
-      true: {
-        paddingRight: '$16',
-      },
-      false: {
-        paddingRight: '$0',
-      },
-    },
-  },
-  defaultVariants: {
-    size: 'medium',
-  },
-});
+import { Divider } from '../Divider';
+import { Typography } from '../Typography';
 
-const Input = styled('input', {
-  color: '$foreground',
-  paddingLeft: '$16',
-  paddingRight: '$16',
-  flexGrow: 1,
-  width: '100%',
-  border: 'none',
-  borderRadius: '$5',
-  outline: 'none',
-  backgroundColor: 'transparent',
-  '-webkit-appearance': 'none',
-  margin: 0,
-  '&:disabled': {
-    cursor: 'not-allowed',
-  },
-  '&::-webkit-outer-spin-button, &::-webkit-inner-spin-button': {
-    '-webkit-appearance': 'none',
-    margin: 0,
-  },
-  '&[type="number"]': {
-    '-moz-appearance': 'textfield',
-  }
-});
-const Label = styled('label', {
-  display: 'inline-block',
-  fontSize: '$14',
-  color: '$foreground',
-  marginBottom: '$4',
-});
+import { Input, InputContainer, Label } from './TextField.styles';
 
-export type PropTypes = {
-  label?: string;
-  prefix?: React.ReactNode;
-  suffix?: React.ReactNode;
-  size?: 'small' | 'medium' | 'large';
-} & Omit<React.InputHTMLAttributes<HTMLInputElement>, 'prefix' | 'size'> & {
-    ref?:
-      | ((instance: HTMLInputElement | null) => void)
-      | React.RefObject<HTMLInputElement>
-      | null
-      | undefined;
-  };
-
-export const TextField = React.forwardRef(
-  (
-    props: PropsWithChildren<PropTypes>,
-    ref:
-      | RefObject<HTMLInputElement>
-      | ((instance: HTMLInputElement | null) => void)
-      | null
-      | undefined
-  ) => {
-    const { label, prefix, suffix, children, size, style, ...inputAttributes } =
-      props;
-    return (
-      <>
-        {label && (
+function TextFieldComponent(props: PropsWithChildren<PropTypes>, ref?: Ref) {
+  const {
+    label,
+    prefix,
+    suffix,
+    size = 'small',
+    style,
+    variant,
+    fullWidth,
+    ...inputAttributes
+  } = props;
+  return (
+    <>
+      {label && (
+        <>
           <Label
             className="_text"
-            {...(inputAttributes.id && { htmlFor: inputAttributes.id })}
-          >
-            {label}
+            {...(inputAttributes.id && { htmlFor: inputAttributes.id })}>
+            <Typography variant="label" size="large">
+              {label}
+            </Typography>
           </Label>
-        )}
-        <InputContainer
-          disabled={inputAttributes.disabled}
-          prefix={!!prefix}
-          suffix={!!suffix}
-          size={size}
-          style={style}
+          <Divider direction="vertical" size={4} />
+        </>
+      )}
+      <InputContainer
+        disabled={inputAttributes.disabled}
+        fullWidth={fullWidth}
+        variant={variant}
+        size={size}
+        style={style}
+        className="_text">
+        {prefix || null}
+        <Input
           className="_text"
-        >
-          {prefix || null}
-          <Input
-            className="_text"
-            {...inputAttributes}
-            spellCheck={false}
-            ref={ref}
-          />
-          {suffix || null}
-        </InputContainer>
-      </>
-    );
-  }
-);
+          {...inputAttributes}
+          spellCheck={false}
+          suffix={!!suffix}
+          ref={ref}
+        />
+        {suffix || null}
+      </InputContainer>
+    </>
+  );
+}
+
+const TextField = React.forwardRef(TextFieldComponent);
+TextField.displayName = 'TextField';
+
+export { TextField };

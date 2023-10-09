@@ -1,19 +1,22 @@
-import { Divider, styled, Typography, Checkbox } from '@rango-dev/ui';
+import type { Type } from '../types';
+import type { Asset } from 'rango-sdk';
+
+import { Checkbox, Divider, styled, Typography } from '@rango-dev/ui';
 import React from 'react';
+
 import { onChangeMultiSelects } from '../helpers';
 import { useConfigStore } from '../store/config';
 import { useMetaStore } from '../store/meta';
-import { Type } from '../types';
+
 import { MultiSelect } from './MultiSelect';
 import { MultiTokenSelect } from './MultiSelect/MultiTokenSelect';
 import { TokenInfo } from './TokenInfo';
-import { Asset } from 'rango-sdk';
 
 interface PropTypes {
   type: Type;
 }
 export const ConfigurationContainer = styled('div', {
-  borderRadius: '$10',
+  borderRadius: '$sm',
   maxWidth: '732px',
   boxShadow: '$s',
   padding: '$16',
@@ -62,7 +65,9 @@ export function ChainsConfig({ type }: PropTypes) {
 
   return (
     <div>
-      <Typography variant="h6">{type} Form</Typography>
+      <Typography variant="title" size="small">
+        {type} Form
+      </Typography>
       <Divider size={12} />
       <ConfigurationContainer>
         <MultiSelect

@@ -101,10 +101,11 @@ function Provider(props: PropsWithChildren<PropTypes>) {
     }
   }, [props.isPaused]);
 
-  const value = useMemo(() => ({ manager, state }), [manager, state]);
-
   return (
-    <ManagerCtx.Provider value={value}>{props.children}</ManagerCtx.Provider>
+    // eslint-disable-next-line react/jsx-no-constructed-context-values
+    <ManagerCtx.Provider value={{ manager, state }}>
+      {props.children}
+    </ManagerCtx.Provider>
   );
 }
 

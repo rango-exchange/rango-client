@@ -1,27 +1,19 @@
-import { Divider, Typography } from '../../components';
-import { styled } from '../../theme';
 import React from 'react';
-import { i18n } from '@lingui/core';
+
+import { Typography } from '../../components';
+import { styled } from '../../theme';
+
 interface PropTypes {
   messages: string[];
 }
 
 const List = styled('ul', {
-  padding: 0,
+  padding: '$0 $0 $40 $0',
   margin: 0,
-  variants: {
-    showListStyle: {
-      true: { paddingLeft: '$24' },
-    },
-  },
 });
 
 const ListItem = styled('li', {
-  variants: {
-    showListStyle: {
-      true: { listStyleType: 'disc', listStylePosition: 'outside' },
-    },
-  },
+  paddingBottom: '$10',
 });
 
 const Message = styled(Typography, {
@@ -29,19 +21,19 @@ const Message = styled(Typography, {
 });
 
 export function BalanceErrors({ messages }: PropTypes) {
-  const showListStyle = messages.length > 1;
   return (
     <>
-      <Typography className="title" variant="title" color={'error'}>
-        {i18n.t('Insufficent Balance:')}
-      </Typography>
-      <Divider size={8} />
-      <List showListStyle={showListStyle}>
-        {messages.map((warning, index) => (
-          <ListItem showListStyle={showListStyle} key={index}>
-            <Message variant="body2">{warning}</Message>
-          </ListItem>
-        ))}
+      <List>
+        {messages.map((warning, index) => {
+          const key = index + warning;
+          return (
+            <ListItem key={key}>
+              <Message variant="body" size="medium" color="$neutral900">
+                {warning}
+              </Message>
+            </ListItem>
+          );
+        })}
       </List>
     </>
   );
