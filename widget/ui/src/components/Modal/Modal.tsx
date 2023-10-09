@@ -4,9 +4,7 @@ import type { PropsWithChildren } from 'react';
 import React, { useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 
-import { usePaddingRight } from '../../hooks';
 import { CloseIcon } from '../../icons';
-import { theme } from '../../theme';
 import { BottomLogo } from '../BottomLogo';
 import { Divider } from '../Divider';
 import { IconButton } from '../IconButton/IconButton';
@@ -23,7 +21,6 @@ import {
 
 const CLOSED_DELAY = 600;
 const OPEN_DELAY = 10;
-const DEFAULT_CONTENT_PADDING = 20;
 
 export function Modal(props: PropsWithChildren<PropTypes>) {
   const {
@@ -44,11 +41,6 @@ export function Modal(props: PropsWithChildren<PropTypes>) {
   const [active, setActive] = useState(false);
   const [isMount, setIsMount] = useState(false);
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const contentRef = useRef<HTMLDivElement | null>(null);
-  usePaddingRight({
-    elementRef: contentRef,
-    paddingRight: theme.sizes[DEFAULT_CONTENT_PADDING],
-  });
 
   const handleBackDropClick = (event: React.MouseEvent<HTMLDivElement>) => {
     if (event.target === event.currentTarget && dismissible) {
@@ -112,7 +104,7 @@ export function Modal(props: PropsWithChildren<PropTypes>) {
                   </Flex>
                 </ModalHeader>
               )}
-              <Content ref={contentRef}>{children}</Content>
+              <Content>{children}</Content>
               {(hasLogo || footer) && (
                 <Footer>
                   <div className="footer__content">{footer}</div>
