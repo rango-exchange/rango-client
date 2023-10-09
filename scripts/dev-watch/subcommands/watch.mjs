@@ -1,10 +1,14 @@
 import { exec } from 'node:child_process';
 import process from 'node:process';
+import OS from 'os';
 import { parseCommand, headStyle } from '../utils.mjs';
 
 export function watch(params) {
   const { project, nx, cwd } = params;
-  const command = `${nx} watch --projects=${project} --includeDependentProjects -- echo "[build]\\$NX_PROJECT_NAME"`;
+  const isWindowsOS = OS.platform() === 'win32';
+  const command = `${nx} watch --projects=${project} --includeDependentProjects -- echo "[build]${
+    isWindowsOS ? '%' : '\\$'
+  }NX_PROJECT_NAME${isWindowsOS ? '%' : ''}"`;
   console.log(headStyle('main'), `Running watch command\n\n`);
 
   const watcher = exec(command, { cwd }, (err, stdout, stderr) => {

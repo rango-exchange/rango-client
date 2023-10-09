@@ -13,8 +13,7 @@ export const TimeIcon = React.forwardRef<SVGSVGElement, IconProps>(
         xmlns="http://www.w3.org/2000/svg"
         className="_icon"
         {...props}
-        ref={forwardedRef}
-      >
+        ref={forwardedRef}>
         <circle cx={10} cy={10} r={7.25} strokeWidth={1.5} />
         <path
           fillRule="evenodd"

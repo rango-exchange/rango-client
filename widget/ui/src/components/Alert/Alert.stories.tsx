@@ -1,16 +1,16 @@
+import type { PropTypes } from './Alert.types';
+import type { Meta } from '@storybook/react';
+
 import React from 'react';
+
 import { Alert } from '.';
-import { PropTypes } from './Alert';
-import { Meta } from '@storybook/react';
-import { Typography } from '../Typography';
 
 export default {
   title: 'Components/Alert',
   component: Alert,
   args: {
     type: 'success',
-    title: 'Alert Title',
-    footer: <Typography variant='body1'>It's a Alert!</Typography>
+    title: 'Please reset your liquidity sources.',
   },
   argTypes: {
     type: {
@@ -18,13 +18,13 @@ export default {
       defaultValue: 'success',
       control: {
         type: 'select',
-        options: ['primary', 'secondary', 'success', 'warning', 'error'],
+        options: ['success', 'warning', 'error', 'info'],
       },
     },
 
     title: {
       name: 'title',
-      defaultValue: 'Alert Title',
+      defaultValue: 'Swap transaction successfully',
       control: {
         type: 'text',
       },
@@ -32,4 +32,16 @@ export default {
   },
 } as Meta<typeof Alert>;
 
-export const Main = (args: PropTypes) => <Alert {...args} />;
+export const Main = (args: PropTypes) => (
+  <div style={{ width: 350 }}>
+    <Alert
+      {...args}
+      footer="Transaction was not sent. 38.3493  AVAX on Avalanche remain in your wallet."
+    />
+  </div>
+);
+export const WithoutFooter = (args: PropTypes) => (
+  <div style={{ width: 350 }}>
+    <Alert {...args} variant="alarm" />
+  </div>
+);

@@ -1,19 +1,19 @@
+import type { ConnectedWallet } from '../..';
+import type { LoadingStatus, TokenWithBalance } from '../../types/meta';
+import type { BestRouteResponse, BlockchainMeta, SwapResult } from 'rango-sdk';
+
+import { i18n } from '@lingui/core';
+import React from 'react';
+
 import {
   Alert,
-  BestRoute,
   BottomLogo,
   Button,
-  styled,
-  Typography,
   Header,
-  HeaderButtons,
   TokenInfo,
-  ConnectedWallet,
+  Typography,
 } from '../..';
-import React from 'react';
-import { i18n } from '@lingui/core';
-import { BestRouteResponse, BlockchainMeta, SwapResult } from 'rango-sdk';
-import { LoadingStatus, TokenWithBalance } from '../../types/meta';
+import { styled } from '../../theme';
 
 const Container = styled('div', {
   display: 'flex',
@@ -48,8 +48,8 @@ interface HomePanelProps {
   fetchBestRoute: () => void;
   onClickHistory: () => void;
   onClickSettings: () => void;
-  fromChain: BlockchainMeta | null;
-  toChain: BlockchainMeta | null;
+  fromBlockchain: BlockchainMeta | null;
+  toBlockchain: BlockchainMeta | null;
   fromToken: TokenWithBalance | null;
   toToken: TokenWithBalance | null;
   setInputAmount: (amount: string) => void;
@@ -83,14 +83,13 @@ interface HomePanelProps {
   showPercentageChange: boolean;
 }
 
+/**
+ * @deprecated Will be removed in v2
+ */
 export function HomePanel({
   bestRoute,
-  bestRouteError,
-  fetchBestRoute,
-  onClickHistory,
-  onClickSettings,
-  fromChain,
-  toChain,
+  fromBlockchain,
+  toBlockchain,
   fromToken,
   toToken,
   setInputAmount,
@@ -107,46 +106,31 @@ export function HomePanel({
   onChainClick,
   onTokenClick,
   connectedWallets,
-  highFee,
   errorMessage,
   hasLimitError,
   swap,
   fromAmountRangeError,
   recommendation,
-  totalFeeInUsd,
   swithFromAndToComponent,
   percentageChange,
   tokenBalanceReal,
   tokenBalance,
-  totalTime,
-  bestRouteData,
   swapFromAmount,
   showPercentageChange,
 }: HomePanelProps) {
   return (
     <Container>
-      <Header
-        title={i18n.t('SWAP')}
-        suffix={
-          <HeaderButtons
-            onClickRefresh={
-              !!bestRoute || bestRouteError ? fetchBestRoute : undefined
-            }
-            onClickHistory={onClickHistory}
-            onClickSettings={onClickSettings}
-          />
-        }
-      />
+      <Header title={i18n.t('SWAP')} suffix={<></>} />
       <FromContainer>
         <>
           <TokenInfo
             type="From"
-            chain={fromChain}
+            chain={fromBlockchain}
             token={fromToken}
             onAmountChange={setInputAmount}
             inputAmount={inputAmount}
-            fromChain={fromChain}
-            toChain={toChain}
+            fromBlockchain={fromBlockchain}
+            toBlockchain={toBlockchain}
             loadingStatus={loadingStatus}
             inputUsdValue={inputUsdValue}
             fromToken={fromToken}
@@ -164,13 +148,13 @@ export function HomePanel({
       </FromContainer>
       <TokenInfo
         type="To"
-        chain={toChain}
+        chain={toBlockchain}
         token={toToken}
         outputAmount={outputAmount}
         percentageChange={percentageChange}
         outputUsdValue={outputUsdValue}
-        fromChain={fromChain}
-        toChain={toChain}
+        fromBlockchain={fromBlockchain}
+        toBlockchain={toBlockchain}
         loadingStatus={loadingStatus}
         inputUsdValue={inputUsdValue}
         fromToken={fromToken}
@@ -185,28 +169,19 @@ export function HomePanel({
         tokenBalance={tokenBalance}
         showPercentageChange={showPercentageChange}
       />
-      {showBestRoute && (
-        <BestRouteContainer>
-          <BestRoute
-            error={bestRouteError}
-            loading={fetchingBestRoute}
-            data={bestRouteData}
-            totalFee={totalFeeInUsd}
-            feeWarning={highFee}
-            totalTime={totalTime}
-          />
-        </BestRouteContainer>
-      )}
+      {showBestRoute && <BestRouteContainer></BestRouteContainer>}
       {(errorMessage || hasLimitError(bestRoute)) && (
         <Alerts>
           {errorMessage && <Alert type="error">{errorMessage}</Alert>}
           {hasLimitError(bestRoute) && (
             <Alert type="error" title={`${swap?.swapperId} Limit`}>
               <>
-                <Typography variant="body2">
+                <Typography variant="body" size="small">
                   {`${fromAmountRangeError}, Yours: ${swapFromAmount} ${swap?.from.symbol}`}
                 </Typography>
-                <Typography variant="body2">{recommendation}</Typography>
+                <Typography variant="body" size="small">
+                  {recommendation}
+                </Typography>
               </>
             </Alert>
           )}
@@ -215,7 +190,6 @@ export function HomePanel({
       <Footer>
         <Button
           type="primary"
-          align="grow"
           size="large"
           disabled={swapButtonDisabled}
           onClick={swapButtonClick}>

@@ -59,7 +59,7 @@ export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
   const evms = evmBlockchains(allBlockChains);
   return {
     name: 'Token Pocket',
-    img: 'https://raw.githubusercontent.com/rango-exchange/rango-assets/main/wallets/tokenpocket/icon.svg',
+    img: 'https://raw.githubusercontent.com/rango-exchange/assets/main/wallets/tokenpocket/icon.svg',
     color: '#b2dbff',
     installLink: {
       CHROME:

@@ -34,7 +34,7 @@ export const getStateWallet = (state: State): WalletStatus => {
   }
 };
 
-export function getlistWallet(
+export function mapWalletTypesToWalletInfo(
   getState: (type: WalletType) => WalletState,
   getWalletInfo: (type: WalletType) => WalletInfo,
   list: WalletType[]
@@ -43,9 +43,9 @@ export function getlistWallet(
     const { name, img: image, installLink, showOnMobile } = getWalletInfo(type);
     const state = getStateWallet(getState(type));
     return {
-      name,
+      title: name,
       image,
-      installLink,
+      link: installLink,
       state,
       type,
       showOnMobile: showOnMobile || false,

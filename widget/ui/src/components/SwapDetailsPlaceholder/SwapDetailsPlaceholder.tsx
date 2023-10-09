@@ -1,6 +1,8 @@
-import React from 'react';
-import { SecondaryPage, Spinner, Alert, styled } from '../..';
 import { i18n } from '@lingui/core';
+import React from 'react';
+
+import { Alert, SecondaryPage, Spinner } from '../..';
+import { styled } from '../../theme';
 
 const PlaceholderContainer = styled('div', { height: '450px' });
 
@@ -33,7 +35,7 @@ export function SwapDetailsPlaceholder(props: PropTypes) {
           </LoaderContainer>
         ) : (
           <Alert
-            type="secondary"
+            type="error"
             title={i18n.t(
               'swapNotFound',
               { requestId },

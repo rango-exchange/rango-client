@@ -1,19 +1,22 @@
-import React, { PropsWithChildren, useState } from 'react';
+import type { PropsWithChildren } from 'react';
+
 import { Alert, Button, Divider, styled, Typography } from '@rango-dev/ui';
+import React, { useState } from 'react';
+
 import { ChainsConfig } from '../components/ChainsConfig';
-import { WalletsConfig } from '../components/WalletsConfig';
+import { ExportConfigModal } from '../components/ExportConfigModal';
 import { SourcesConfig } from '../components/SourcesConfig';
 import { StylesConfig } from '../components/StylesConfig';
+import { WalletsConfig } from '../components/WalletsConfig';
 import { globalStyles } from '../globalStyles';
-import { useMetaStore } from '../store/meta';
 import { useConfigStore } from '../store/config';
-import { ExportConfigModal } from '../components/ExportConfigModal';
+import { useMetaStore } from '../store/meta';
 
 const Container = styled('div', {
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
-  backgroundColor: '$neutral100',
+  backgroundColor: '$background',
   flexDirection: 'column',
   padding: '0 $24',
   '@lg': {
@@ -89,9 +92,11 @@ export function Config(props: PropsWithChildren) {
         <div>
           <Header>
             <div>
-              <Typography variant="h4">Customize your widget</Typography>
+              <Typography variant="title" size="medium">
+                Customize your widget
+              </Typography>
               <Divider size={8} />
-              <Description variant="body2" color="$neutral600">
+              <Description variant="body" size="small" color="$neutral600">
                 You can customize the theme and config how your widget should
                 works
               </Description>

@@ -1,21 +1,22 @@
-import { SelectableWallet } from '@rango-dev/ui';
-import { WalletType } from '@rango-dev/wallets-shared';
+import type { Wallet } from '../types';
+import type { WalletType } from '@rango-dev/wallets-shared';
+
 import { create } from 'zustand';
 import { subscribeWithSelector } from 'zustand/middleware';
 import { shallow } from 'zustand/shallow';
+
 import { httpService } from '../services/httpService';
 import {
-  getRequiredChains,
   getTokensWithBalance,
   isAccountAndWalletMatched,
   makeBalanceFor,
   resetConnectedWalletState,
   sortTokens,
 } from '../utils/wallets';
+
 import { useBestRouteStore } from './bestRoute';
 import { useMetaStore } from './meta';
 import createSelectors from './selectors';
-import { Wallet } from '../types';
 
 export type TokenBalance = {
   chain: string;
@@ -31,100 +32,107 @@ export type TokenBalance = {
 
 export interface ConnectedWallet extends Wallet {
   balances: TokenBalance[] | null;
+  explorerUrl: string | null;
+  selected: boolean;
   loading: boolean;
   error: boolean;
-  explorerUrl: string | null;
 }
 
 interface WalletsStore {
   connectedWallets: ConnectedWallet[];
-  selectedWallets: Wallet[];
   customDestination: string;
+  loading: boolean;
   connectWallet: (accounts: Wallet[]) => void;
   disconnectWallet: (walletType: WalletType) => void;
-  initSelectedWallets: () => void;
-  setSelectedWallet: (wallet: SelectableWallet) => void;
+  selectWallets: (wallets: { walletType: string; chain: string }[]) => void;
   clearConnectedWallet: () => void;
   getWalletsDetails: (accounts: Wallet[], shouldRetry?: boolean) => void;
-  setCustomDestination: (customDestination: string) => void;
 }
 
 export const useWalletsStore = createSelectors(
   create<WalletsStore>()(
     subscribeWithSelector((set, get) => ({
       connectedWallets: [],
-      selectedWallets: [],
       customDestination: '',
+      loading: false,
       connectWallet: (accounts) => {
         const getWalletsDetails = get().getWalletsDetails;
         set((state) => ({
+          loading: true,
           connectedWallets: state.connectedWallets
             .filter((wallet) => wallet.walletType !== accounts[0].walletType)
             .concat(
-              accounts.map((account) => ({
-                balances: [],
-                address: account.address,
-                chain: account.chain,
-                loading: true,
-                walletType: account.walletType,
-                error: false,
-                explorerUrl: null,
-              }))
+              accounts.map((account) => {
+                const shouldMarkWalletAsSelected = !state.connectedWallets.find(
+                  (connectedWallet) =>
+                    connectedWallet.chain === account.chain &&
+                    connectedWallet.selected
+                );
+                return {
+                  balances: [],
+                  address: account.address,
+                  chain: account.chain,
+                  explorerUrl: null,
+                  walletType: account.walletType,
+                  selected: shouldMarkWalletAsSelected,
+                  loading: true,
+                  error: false,
+                };
+              })
             ),
         }));
         getWalletsDetails(accounts);
       },
       disconnectWallet: (walletType) => {
-        set((state) => ({
-          connectedWallets: state.connectedWallets.filter(
-            (balance) => balance.walletType !== walletType
-          ),
-          selectedWallets: state.selectedWallets.filter(
-            (wallet) => wallet.walletType != walletType
-          ),
-        }));
-      },
-      initSelectedWallets: () =>
         set((state) => {
-          const requiredChains = getRequiredChains(
-            useBestRouteStore.getState().bestRoute
-          );
-          const connectedWallets = state.connectedWallets;
-          const selectedWallets: Wallet[] = [];
-          requiredChains.forEach((chain) => {
-            const anyWalletSelected = !!state.selectedWallets.find(
-              (wallet) => wallet.chain === chain
-            );
-
-            if (!anyWalletSelected) {
-              const firstWalletWithMatchedChain = connectedWallets.find(
-                (wallet) => wallet.chain === chain
-              );
-              if (!!firstWalletWithMatchedChain)
-                selectedWallets.push({
-                  address: firstWalletWithMatchedChain.address,
-                  chain: firstWalletWithMatchedChain.chain,
-                  walletType: firstWalletWithMatchedChain.walletType,
-                });
-            }
-          });
+          const selectedWallets = state.connectedWallets
+            .filter(
+              (connectedWallet) =>
+                connectedWallet.selected &&
+                connectedWallet.walletType !== walletType
+            )
+            .map((selectedWallet) => selectedWallet.chain);
           return {
-            selectedWallets: state.selectedWallets.concat(selectedWallets),
+            connectedWallets: state.connectedWallets
+              .filter(
+                (connectedWallet) => connectedWallet.walletType !== walletType
+              )
+              .map((connectedWallet) => {
+                const anyWalletSelectedForBlockchain = selectedWallets.includes(
+                  connectedWallet.chain
+                );
+                if (anyWalletSelectedForBlockchain) {
+                  return connectedWallet;
+                }
+                selectedWallets.push(connectedWallet.chain);
+                return { ...connectedWallet, selected: true };
+              }),
           };
-        }),
-      setSelectedWallet: (wallet) =>
+        });
+      },
+      selectWallets: (wallets) =>
         set((state) => ({
-          selectedWallets: state.selectedWallets
-            .filter((selectedWallet) => selectedWallet.chain !== wallet.chain)
-            .concat({
-              chain: wallet.chain,
-              address: wallet.address,
-              walletType: wallet.walletType,
-            }),
-        })),
-      setCustomDestination: (customDestination) =>
-        set(() => ({
-          customDestination,
+          connectedWallets: state.connectedWallets.map((connectedWallet) => {
+            const walletSelected = !!wallets.find(
+              (wallet) =>
+                wallet.chain === connectedWallet.chain &&
+                wallet.walletType !== connectedWallet.walletType &&
+                connectedWallet.selected
+            );
+            const walletNotSelected = !!wallets.find(
+              (wallet) =>
+                wallet.chain === connectedWallet.chain &&
+                wallet.walletType === connectedWallet.walletType &&
+                !connectedWallet.selected
+            );
+            if (walletSelected) {
+              return { ...connectedWallet, selected: false };
+            } else if (walletNotSelected) {
+              return { ...connectedWallet, selected: true };
+            }
+
+            return connectedWallet;
+          }),
         })),
       clearConnectedWallet: () =>
         set(() => ({
@@ -135,6 +143,7 @@ export const useWalletsStore = createSelectors(
         const getWalletsDetails = get().getWalletsDetails;
         const { tokens } = useMetaStore.getState().meta;
         set((state) => ({
+          loading: true,
           connectedWallets: state.connectedWallets.map((wallet) => {
             return accounts.find((account) =>
               isAccountAndWalletMatched(account, wallet)
@@ -149,39 +158,46 @@ export const useWalletsStore = createSelectors(
             blockchain: chain,
           }));
           const response = await httpService().getWalletsDetails(data);
-          const retrivedBalance = response.wallets;
-          if (retrivedBalance) {
+          const retrievedBalance = response.wallets;
+          if (retrievedBalance) {
             set((state) => ({
+              loading: false,
               connectedWallets: state.connectedWallets.map(
                 (connectedWallet) => {
                   const matchedAccount = accounts.find((account) =>
                     isAccountAndWalletMatched(account, connectedWallet)
                   );
-                  const retrivedBalanceAccount = retrivedBalance.find(
+                  const retrievedBalanceAccount = retrievedBalance.find(
                     (balance) =>
                       balance.address === connectedWallet.address &&
                       balance.blockChain === connectedWallet.chain
                   );
                   if (
-                    retrivedBalanceAccount?.failed &&
+                    retrievedBalanceAccount?.failed &&
                     matchedAccount &&
                     shouldRetry
                   ) {
                     getWalletsDetails([matchedAccount], false);
                   }
-                  return matchedAccount && retrivedBalanceAccount
-                    ? makeBalanceFor(
-                        matchedAccount,
-                        retrivedBalanceAccount,
-                        tokens
-                      )
+                  return matchedAccount && retrievedBalanceAccount
+                    ? {
+                        ...connectedWallet,
+                        explorerUrl: retrievedBalanceAccount.explorerUrl,
+                        balances: makeBalanceFor(
+                          retrievedBalanceAccount,
+                          tokens
+                        ),
+                      }
                     : connectedWallet;
                 }
               ),
             }));
-          } else throw new Error('Wallet not found');
+          } else {
+            throw new Error('Wallet not found');
+          }
         } catch (error) {
           set((state) => ({
+            loading: false,
             connectedWallets: state.connectedWallets.map((balance) => {
               return accounts.find((account) =>
                 isAccountAndWalletMatched(account, balance)

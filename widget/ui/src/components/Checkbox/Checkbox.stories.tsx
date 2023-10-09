@@ -1,8 +1,11 @@
-import React from 'react';
-import { Meta } from '@storybook/react';
-import { Checkbox, PropTypes } from './Checkbox';
+import type { PropTypes } from './Checkbox.types';
+import type { Meta } from '@storybook/react';
 
-export default {
+import React from 'react';
+
+import { Checkbox } from './Checkbox';
+
+const meta: Meta<typeof Checkbox> = {
   title: 'Components/Checkbox',
   component: Checkbox,
   args: {
@@ -21,6 +24,10 @@ export default {
       defaultValue: true,
     },
   },
-} as Meta<typeof Checkbox>;
+};
 
-export const Main = (props: PropTypes) => <Checkbox {...props} id="test" />;
+export default meta;
+
+export const Main = (props: PropTypes) => (
+  <Checkbox id="test" label="My checkbox" {...props} />
+);

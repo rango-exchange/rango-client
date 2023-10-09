@@ -120,7 +120,7 @@ export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
   const tron = tronBlockchain(allBlockChains);
   return {
     name: 'Bitget',
-    img: 'https://raw.githubusercontent.com/rango-exchange/rango-assets/main/wallets/bitget/icon.svg',
+    img: 'https://raw.githubusercontent.com/rango-exchange/assets/main/wallets/bitget/icon.svg',
     installLink: {
       CHROME:
         'https://chrome.google.com/webstore/detail/bitkeep-crypto-nft-wallet/jiidiaalihmmhddjgbnbgdfflelocpak',

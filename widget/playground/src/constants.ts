@@ -25,3 +25,15 @@ export const FONTS = [
     value: 'Arial',
   },
 ];
+
+export enum SearchParams {
+  LAYOUT = 'layout',
+}
+
+export enum SIDE_TABS_IDS {
+  FUNCTIONAL = 'functional',
+  STYLE = 'style',
+}
+
+export const DEFAULT_PRIMARY_RADIUS = 20;
+export const DEFAULT_SECONDARY_RADIUS = 25;

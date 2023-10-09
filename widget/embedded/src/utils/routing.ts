@@ -1,29 +1,45 @@
-import {
+/* eslint-disable @typescript-eslint/no-magic-numbers */
+import type { BestRouteEqualityParams, Wallet } from '../types';
+import type { PendingSwap } from '@rango-dev/queue-manager-rango-preset';
+import type { PriceImpactWarningLevel } from '@rango-dev/ui';
+import type {
   SimulationAssetAndAmount,
   SimulationValidationStatus,
 } from '@rango-dev/ui/dist/widget/ui/src/types/swaps';
+import type { BestRouteResponse, BlockchainMeta, Token } from 'rango-sdk';
+
 import BigNumber from 'bignumber.js';
-import { BestRouteResponse, BlockchainMeta, Token } from 'rango-sdk';
+
+import {
+  GAS_FEE_MAX_DECIMALS,
+  GAS_FEE_MIN_DECIMALS,
+  HIGHT_PRICE_IMPACT,
+  LOW_PRICE_IMPACT,
+  TOKEN_AMOUNT_MAX_DECIMALS,
+  TOKEN_AMOUNT_MIN_DECIMALS,
+} from '../constants/routing';
+
 import { areEqual } from './common';
-import { BestRouteEqualityParams, Wallet } from '../types';
 import { numberToString } from './numbers';
-import { PendingSwap } from '@rango-dev/queue-manager-rango-preset';
 
 export function searchParamsToToken(
   tokens: Token[],
   searchParams: string | null,
   chain: BlockchainMeta | null
 ): Token | null {
-  if (!chain) return null;
+  if (!chain) {
+    return null;
+  }
   return (
     tokens.find((token) => {
       const symbolAndAddress = searchParams?.split('--');
-      if (symbolAndAddress?.length === 1)
+      if (symbolAndAddress?.length === 1) {
         return (
           token.symbol === symbolAndAddress[0] &&
           token.address === null &&
           token.blockchain === chain.name
         );
+      }
       return (
         token.symbol === symbolAndAddress?.[0] &&
         token.address === symbolAndAddress?.[1] &&
@@ -98,14 +114,18 @@ export function getRequiredBalanceOfWallet(
   selectedWallet: Wallet,
   fee: SimulationValidationStatus[] | null
 ): SimulationAssetAndAmount[] | null {
-  if (fee === null) return null;
+  if (fee === null) {
+    return null;
+  }
   const relatedFeeStatus = fee
     ?.find((item) => item.blockchain === selectedWallet.chain)
     ?.wallets.find(
       (wallet) =>
         wallet.address?.toLowerCase() === selectedWallet.address.toLowerCase()
     );
-  if (!relatedFeeStatus) return null;
+  if (!relatedFeeStatus) {
+    return null;
+  }
   return relatedFeeStatus.requiredAssets;
 }
 
@@ -115,8 +135,8 @@ export function isRouteParametersChanged(params: BestRouteEqualityParams) {
     return (
       !!currentState.fromToken &&
       !!currentState.toToken &&
-      (prevState.fromChain?.name !== currentState.fromChain?.name ||
-        prevState.toChain?.name !== currentState.toChain?.name ||
+      (prevState.fromBlockchain?.name !== currentState.fromBlockchain?.name ||
+        prevState.toBlockchain?.name !== currentState.toBlockchain?.name ||
         prevState.fromToken?.symbol !== currentState.fromToken?.symbol ||
         prevState.toToken?.symbol !== currentState.toToken?.symbol ||
         prevState.fromToken?.blockchain !== prevState.fromToken?.blockchain ||
@@ -139,47 +159,86 @@ export function isRouteParametersChanged(params: BestRouteEqualityParams) {
   return false;
 }
 
-export function getFormatedBestRoute(
+export function getFormattedBestRoute(
   bestRoute: BestRouteResponse | null
 ): BestRouteResponse | null {
-  if (!bestRoute) return null;
+  if (!bestRoute) {
+    return null;
+  }
 
-  const formatedSwaps = (bestRoute.result?.swaps || []).map((swap) => ({
+  const formattedSwaps = (bestRoute.result?.swaps || []).map((swap) => ({
     ...swap,
-    fromAmount: numberToString(swap.fromAmount, 6, 6),
-    toAmount: numberToString(swap.toAmount, 6, 6),
+    fromAmount: numberToString(
+      swap.fromAmount,
+      TOKEN_AMOUNT_MIN_DECIMALS,
+      TOKEN_AMOUNT_MAX_DECIMALS
+    ),
+    toAmount: numberToString(
+      swap.toAmount,
+      TOKEN_AMOUNT_MIN_DECIMALS,
+      TOKEN_AMOUNT_MAX_DECIMALS
+    ),
   }));
 
   return {
     ...bestRoute,
     ...(bestRoute.result && {
-      result: { ...bestRoute.result, swaps: formatedSwaps },
+      result: { ...bestRoute.result, swaps: formattedSwaps },
     }),
   };
 }
 
-export function getFormatedPendingSwap(pendingSwap: PendingSwap): PendingSwap {
-  const formatedSteps = pendingSwap.steps.map((step) => ({
+export function getFormattedPendingSwap(pendingSwap: PendingSwap): PendingSwap {
+  const formattedSteps = pendingSwap.steps.map((step) => ({
     ...step,
-    feeInUsd: numberToString(step.feeInUsd, 4, 4),
-    outputAmount: numberToString(step.outputAmount, 6, 6),
+    feeInUsd: numberToString(
+      step.feeInUsd,
+      GAS_FEE_MIN_DECIMALS,
+      GAS_FEE_MAX_DECIMALS
+    ),
+    outputAmount: numberToString(
+      step.outputAmount,
+      TOKEN_AMOUNT_MIN_DECIMALS,
+      TOKEN_AMOUNT_MAX_DECIMALS
+    ),
     expectedOutputAmountHumanReadable: numberToString(
       step.expectedOutputAmountHumanReadable,
-      6,
-      6
+      TOKEN_AMOUNT_MIN_DECIMALS,
+      TOKEN_AMOUNT_MAX_DECIMALS
     ),
   }));
 
   return {
     ...pendingSwap,
-    inputAmount: numberToString(pendingSwap.inputAmount, 6, 6),
-    steps: formatedSteps,
+    inputAmount: numberToString(
+      pendingSwap.inputAmount,
+      TOKEN_AMOUNT_MIN_DECIMALS,
+      TOKEN_AMOUNT_MAX_DECIMALS
+    ),
+    steps: formattedSteps,
   };
 }
 
 //todo: refactor bestRoute store and add loadingStatus
 export const getBestRouteStatus = (loading: boolean, error: boolean) => {
-  if (loading) return 'loading';
-  if (error) return 'failed';
-  else return 'success';
+  if (loading) {
+    return 'loading';
+  }
+  if (error) {
+    return 'failed';
+  }
+  return 'success';
 };
+
+export function getPriceImpactLevel(
+  priceImpact: number
+): PriceImpactWarningLevel {
+  let warningLevel: PriceImpactWarningLevel = undefined;
+  if (priceImpact <= LOW_PRICE_IMPACT && priceImpact > HIGHT_PRICE_IMPACT) {
+    warningLevel = 'low';
+  } else if (priceImpact <= HIGHT_PRICE_IMPACT) {
+    warningLevel = 'high';
+  }
+
+  return warningLevel;
+}

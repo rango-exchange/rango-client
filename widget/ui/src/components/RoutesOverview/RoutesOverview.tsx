@@ -1,15 +1,18 @@
+import type { BestRouteResponse } from 'rango-sdk';
+
 import React from 'react';
-import { ChevronRightIcon, GasIcon, Divider } from '..';
+
 import { styled } from '../../theme';
-import { BestRouteResponse } from 'rango-sdk';
+import { Divider } from '../Divider';
+import { AngleRightIcon, GasIcon } from '../Icon';
 
 export const Container = styled('div', {
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'space-between',
   padding: '$8',
-  borderRadius: '$5',
-  backgroundColor: '$neutral100',
+  borderRadius: '$xs',
+  backgroundColor: '$background',
   color: '$neutral800',
   fontSize: '$12',
 
@@ -28,7 +31,9 @@ interface PropTypes {
   totalFee?: string;
 }
 export function RoutesOverview(props: PropTypes) {
-  if (!props.routes) return null;
+  if (!props.routes) {
+    return null;
+  }
 
   const swaps = props.routes.result?.swaps;
   return (
@@ -36,10 +41,11 @@ export function RoutesOverview(props: PropTypes) {
       <div className="routes">
         {swaps?.map((swap, idx) => {
           const isLast = idx + 1 == swaps.length;
+          const key = `swap-${idx}`;
           return (
-            <React.Fragment key={idx}>
+            <React.Fragment key={key}>
               <div className="route">{swap.from.symbol}</div>
-              <ChevronRightIcon size={12} />
+              <AngleRightIcon size={12} />
               {isLast ? <div className="route">{swap.to.symbol}</div> : null}
             </React.Fragment>
           );

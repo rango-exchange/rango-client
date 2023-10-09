@@ -143,7 +143,7 @@ export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
   const solana = solanaBlockchain(allBlockChains);
   return {
     name: 'Brave',
-    img: 'https://raw.githubusercontent.com/rango-exchange/rango-assets/main/wallets/brave/icon.svg',
+    img: 'https://raw.githubusercontent.com/rango-exchange/assets/main/wallets/brave/icon.svg',
     installLink: {
       DEFAULT: 'https://brave.com/wallet/',
     },

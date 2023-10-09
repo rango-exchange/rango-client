@@ -1,7 +1,11 @@
+/* eslint-disable @typescript-eslint/no-magic-numbers */
+import type { Asset, Token } from 'rango-sdk';
+import type { CommonProps } from 'react-window';
+
 import React, { forwardRef, useEffect, useState } from 'react';
-import { CommonProps } from 'react-window';
-import { Asset, Token } from 'rango-sdk';
+
 import { VirtualizedList } from '../VirtualizedList/VirtualizedList';
+
 import { TokenItem } from './TokenItem';
 
 export interface TokenWithAmount extends Token {
@@ -20,7 +24,9 @@ export interface PropTypes {
   multiSelect?: boolean;
   selectedList?: Asset[];
 }
-
+/**
+ * @deprecated will be removed in v2
+ */
 export function TokenList(props: PropTypes) {
   const { list, searchedText, onChange, multiSelect, selectedList } = props;
   const [selected, setSelected] = useState(props.selected);
@@ -58,7 +64,9 @@ export function TokenList(props: PropTypes) {
     setHasNextPage(list.length > tokens.length);
   }, [tokens.length]);
 
+  // eslint-disable-next-line react/display-name
   const innerElementType: React.FC<CommonProps> = forwardRef(
+    // eslint-disable-next-line destructuring/in-params, react/prop-types
     ({ style, ...rest }, ref) => {
       return (
         <div
@@ -66,6 +74,7 @@ export function TokenList(props: PropTypes) {
           ref={ref as any}
           style={{
             ...style,
+            // eslint-disable-next-line react/prop-types
             height: `${parseFloat(style?.height as string) + 8 * 2}px`,
           }}
           {...rest}

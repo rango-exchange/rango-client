@@ -78,7 +78,7 @@ export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
   const evms = evmBlockchains(allBlockChains);
   return {
     name: 'Safe',
-    img: 'https://raw.githubusercontent.com/rango-exchange/rango-assets/main/wallets/safe/icon.svg',
+    img: 'https://raw.githubusercontent.com/rango-exchange/assets/main/wallets/safe/icon.svg',
     installLink: {
       DEFAULT: 'https://app.safe.global/',
     },

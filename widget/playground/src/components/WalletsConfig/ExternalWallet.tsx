@@ -58,7 +58,7 @@ export function ExternalWallet() {
   return (
     <>
       <Head>
-        <Typography noWrap variant="body2" color="neutral700">
+        <Typography noWrap variant="body" size="small" color="neutral700">
           External Wallets
         </Typography>
 
@@ -69,7 +69,7 @@ export function ExternalWallet() {
       </Head>
       <Divider size={16} />
       <Body>
-        <Typography variant="body2">
+        <Typography variant="body" size="small">
           It's a sample using metamask, You can use your own wallet or what we
           alredy implemented, check it out here.
         </Typography>

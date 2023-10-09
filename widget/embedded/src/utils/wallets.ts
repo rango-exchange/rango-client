@@ -1,37 +1,39 @@
-import {
-  getCosmosExperimentalChainInfo,
-  isEvmAddress,
-  KEPLR_COMPATIBLE_WALLETS,
+import type { TokenWithBalance } from '../components/TokenList';
+import type { ConnectedWallet, TokenBalance } from '../store/wallets';
+import type { Wallet } from '../types';
+import type { WalletInfo as ModalWalletInfo } from '@rango-dev/ui';
+import type {
   Network,
+  WalletInfo,
   WalletState,
   WalletType,
-  detectInstallLink,
-  WalletInfo,
   WalletTypes,
-  Networks,
 } from '@rango-dev/wallets-shared';
-
-import {
-  WalletInfo as ModalWalletInfo,
-  WalletState as WalletStatus,
-  SelectableWallet,
-} from '@rango-dev/ui';
-import {
+import type {
   BestRouteResponse,
   BlockchainMeta,
   Token,
   WalletDetail,
 } from 'rango-sdk';
-import { isCosmosBlockchain } from 'rango-types';
-import { readAccountAddress } from '@rango-dev/wallets-react';
-import { ConnectedWallet, TokenBalance } from '../store/wallets';
-import { numberToString } from './numbers';
-import BigNumber from 'bignumber.js';
-import { TokenWithBalance } from '../pages/SelectTokenPage';
-import { ZERO } from '../constants/numbers';
-import { Wallet } from '../types';
 
-export function getStateWallet(state: WalletState): WalletStatus {
+import { WalletState as WalletStatus } from '@rango-dev/ui';
+import { readAccountAddress } from '@rango-dev/wallets-react';
+import {
+  detectInstallLink,
+  getCosmosExperimentalChainInfo,
+  isEvmAddress,
+  KEPLR_COMPATIBLE_WALLETS,
+  Networks,
+} from '@rango-dev/wallets-shared';
+import BigNumber from 'bignumber.js';
+import { isCosmosBlockchain } from 'rango-types';
+
+import { ZERO } from '../constants/numbers';
+import { EXCLUDED_WALLETS } from '../constants/wallets';
+
+import { numberToString } from './numbers';
+
+export function mapStatusToWalletState(state: WalletState): WalletStatus {
   switch (true) {
     case state.connected:
       return WalletStatus.CONNECTED;
@@ -44,40 +46,44 @@ export function getStateWallet(state: WalletState): WalletStatus {
   }
 }
 
-export const excludedWallets = [WalletTypes.LEAP];
-
-export function getlistWallet(
+export function mapWalletTypesToWalletInfo(
   getState: (type: WalletType) => WalletState,
   getWalletInfo: (type: WalletType) => WalletInfo,
-  list: WalletType[]
+  list: WalletType[],
+  chain?: string
 ): ModalWalletInfo[] {
   return list
-    .filter((wallet) => !excludedWallets.includes(wallet as WalletTypes))
+    .filter((wallet) => !EXCLUDED_WALLETS.includes(wallet as WalletTypes))
+    .filter((wallet) => {
+      if (chain) {
+        const { supportedChains } = getWalletInfo(wallet);
+        return !!supportedChains.find(
+          (supportedChain) => supportedChain.name === chain
+        );
+      }
+      return true;
+    })
     .map((type) => {
-      const {
-        name,
-        img: image,
-        installLink,
-        showOnMobile,
-      } = getWalletInfo(type);
-      const state = getStateWallet(getState(type));
+      const { name, img: image, installLink } = getWalletInfo(type);
+      const state = mapStatusToWalletState(getState(type));
       return {
-        name,
+        title: name,
         image,
-        installLink: detectInstallLink(installLink),
+        link: detectInstallLink(installLink),
         state,
         type,
-        showOnMobile: typeof showOnMobile === 'undefined' ? false : true,
       };
     });
 }
 
 export function walletAndSupportedChainsNames(
-  supportedChains: BlockchainMeta[]
+  supportedBlockchains: BlockchainMeta[]
 ): Network[] | null {
-  if (!supportedChains) return null;
+  if (!supportedBlockchains) {
+    return null;
+  }
   let walletAndSupportedChainsNames: Network[] = [];
-  walletAndSupportedChainsNames = supportedChains.map(
+  walletAndSupportedChainsNames = supportedBlockchains.map(
     (blockchainMeta) => blockchainMeta.name
   );
 
@@ -107,42 +113,54 @@ export function prepareAccountsForWalletStore(
     }
   }
 
-  const supportedChains = supportedChainNames || [];
+  const supportedBlockchains = supportedChainNames || [];
 
   accounts.forEach((account) => {
     const { address, network } = readAccountAddress(account);
 
-    const hasLimitation = supportedChains.length > 0;
-    const isSupported = supportedChains.includes(network);
+    const hasLimitation = supportedBlockchains.length > 0;
+    const isSupported = supportedBlockchains.includes(network);
     const isUnknown = network === Networks.Unknown;
     const notSupportedNetworkByWallet =
       hasLimitation && !isSupported && !isUnknown;
 
-    // Here we check given `network` is not supported by wallet
-    // And also the network is known.
-    if (notSupportedNetworkByWallet) return;
+    /*
+     * Here we check given `network` is not supported by wallet
+     * And also the network is known.
+     */
+    if (notSupportedNetworkByWallet) {
+      return;
+    }
 
-    // In some cases we can handle unknown network by checking its address
-    // pattern and act on it.
-    // Example: showing our evm compatible netwrok when the uknown network is evem.
-    // Otherwise, we stop executing this function.
+    /*
+     * In some cases we can handle unknown network by checking its address
+     * pattern and act on it.
+     * Example: showing our evm compatible netwrok when the uknown network is evem.
+     * Otherwise, we stop executing this function.
+     */
     const isUknownAndEvmBased =
       network === Networks.Unknown && isEvmAddress(address);
-    if (isUnknown && !isUknownAndEvmBased) return;
+    if (isUnknown && !isUknownAndEvmBased) {
+      return;
+    }
 
     const isEvmBasedChain = evmBasedChains.includes(network);
 
     // If it's an evm network, we will add the address to all the evm chains.
     if (isEvmBasedChain || isUknownAndEvmBased) {
-      // all evm chains are not supported in wallets, so we are adding
-      // only to those that are supported by wallet.
-      const evmChainsSupportedByWallet = supportedChains.filter((chain) =>
+      /*
+       * all evm chains are not supported in wallets, so we are adding
+       * only to those that are supported by wallet.
+       */
+      const evmChainsSupportedByWallet = supportedBlockchains.filter((chain) =>
         evmBasedChains.includes(chain)
       );
 
       evmChainsSupportedByWallet.forEach((network) => {
-        // EVM addresses are not case sensetive.
-        // Some wallets like Binance-chain return some letters in uppercase which produces bugs in our wallet state.
+        /*
+         * EVM addresses are not case sensetive.
+         * Some wallets like Binance-chain return some letters in uppercase which produces bugs in our wallet state.
+         */
         addAccount(network, address.toLowerCase());
       });
     } else {
@@ -187,10 +205,9 @@ type Blockchain = { name: string; accounts: ConnectedWallet[] };
 
 export function getSelectableWallets(
   connectedWallets: ConnectedWallet[],
-  selectedWallets: Wallet[],
   getWalletInfo: (type: WalletType) => WalletInfo,
   destinationChain?: string
-): SelectableWallet[] {
+): Wallet[] {
   const selectableWallets = connectedWallets.map(
     (connectedWallet: ConnectedWallet) => {
       return {
@@ -202,11 +219,7 @@ export function getSelectableWallets(
         selected:
           destinationChain === connectedWallet.chain
             ? false
-            : !!selectedWallets.find(
-                (selectedWallet) =>
-                  selectedWallet.chain === connectedWallet.chain &&
-                  selectedWallet.walletType === connectedWallet.walletType
-              ),
+            : connectedWallet.selected,
       };
     }
   );
@@ -220,12 +233,16 @@ export function getBalanceFromWallet(
   symbol: string,
   address: string | null
 ): TokenBalance | null {
-  if (connectedWallets.length === 0) return null;
+  if (connectedWallets.length === 0) {
+    return null;
+  }
 
   const selectedChainWallets = connectedWallets.filter(
     (wallet) => wallet.chain === chain
   );
-  if (selectedChainWallets.length === 0) return null;
+  if (selectedChainWallets.length === 0) {
+    return null;
+  }
 
   return (
     selectedChainWallets
@@ -259,44 +276,31 @@ export function isAccountAndWalletMatched(
 }
 
 export function makeBalanceFor(
-  wallet: Wallet,
-  retrivedBalance: WalletDetail,
+  retrievedBalance: WalletDetail,
   tokens: Token[]
-): ConnectedWallet {
-  const {
-    address,
-    blockChain: chain,
-    explorerUrl,
-    balances = [],
-  } = retrivedBalance;
-  return {
-    address,
-    chain,
-    loading: false,
-    error: false,
-    explorerUrl,
-    walletType: wallet.walletType,
-    balances:
-      balances?.map((tokenBalance) => ({
-        chain,
-        symbol: tokenBalance.asset.symbol,
-        ticker: tokenBalance.asset.symbol,
-        address: tokenBalance.asset.address || null,
-        rawAmount: tokenBalance.amount.amount,
-        decimal: tokenBalance.amount.decimals,
-        amount: new BigNumber(tokenBalance.amount.amount)
-          .shiftedBy(-tokenBalance.amount.decimals)
-          .toFixed(),
-        logo: '',
-        usdPrice:
-          getUsdPrice(
-            chain,
-            tokenBalance.asset.symbol,
-            tokenBalance.asset.address,
-            tokens
-          ) || null,
-      })) || [],
-  };
+): TokenBalance[] {
+  const { blockChain: chain, balances = [] } = retrievedBalance;
+  return (
+    balances?.map((tokenBalance) => ({
+      chain,
+      symbol: tokenBalance.asset.symbol,
+      ticker: tokenBalance.asset.symbol,
+      address: tokenBalance.asset.address || null,
+      rawAmount: tokenBalance.amount.amount,
+      decimal: tokenBalance.amount.decimals,
+      amount: new BigNumber(tokenBalance.amount.amount)
+        .shiftedBy(-tokenBalance.amount.decimals)
+        .toFixed(),
+      logo: '',
+      usdPrice:
+        getUsdPrice(
+          chain,
+          tokenBalance.asset.symbol,
+          tokenBalance.asset.address,
+          tokens
+        ) || null,
+    })) || []
+  );
 }
 
 export function resetConnectedWalletState(
@@ -311,6 +315,7 @@ export const calculateWalletUsdValue = (connectedWallet: ConnectedWallet[]) => {
     (acc: ConnectedWallet[], current: ConnectedWallet) => {
       return acc.findIndex(
         (i) => i.address === current.address && i.chain === current.chain
+        // eslint-disable-next-line @typescript-eslint/no-magic-numbers
       ) === -1
         ? [...acc, current]
         : acc;
@@ -327,8 +332,9 @@ export const calculateWalletUsdValue = (connectedWallet: ConnectedWallet[]) => {
       uniqueAccountAddresses.add(chain.address);
     }
     uniqueAccountAddresses.forEach((accountAddress) => {
-      if (chain.address === accountAddress)
+      if (chain.address === accountAddress) {
         modifiedWalletBlockchain.accounts.push(chain);
+      }
     });
     return modifiedWalletBlockchain;
   });
@@ -398,11 +404,14 @@ export const isExperimentalChain = (
       .map(([, blockchainMeta]) => blockchainMeta)
       .filter(isCosmosBlockchain)
   );
-  return cosmosExperimentalChainInfo && !!cosmosExperimentalChainInfo[wallet];
+  return (
+    cosmosExperimentalChainInfo &&
+    cosmosExperimentalChainInfo[wallet]?.experimental
+  );
 };
 
 export const getKeplrCompatibleConnectedWallets = (
-  selectableWallets: SelectableWallet[]
+  selectableWallets: Wallet[]
 ): WalletType[] => {
   const connectedWalletTypes = new Set(
     selectableWallets.map((wallet) => {
@@ -419,6 +428,7 @@ export function getTokensWithBalance(
   tokens: TokenWithBalance[],
   connectedWallets: ConnectedWallet[]
 ): TokenWithBalance[] {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   return tokens.map(({ balance, ...otherProps }) => {
     const tokenAmount = numberToString(
       new BigNumber(
@@ -432,7 +442,7 @@ export function getTokensWithBalance(
     );
 
     let tokenUsdValue = '';
-    if (otherProps.usdPrice)
+    if (otherProps.usdPrice) {
       tokenUsdValue = numberToString(
         new BigNumber(
           getBalanceFromWallet(
@@ -443,6 +453,7 @@ export function getTokensWithBalance(
           )?.amount || ZERO
         ).multipliedBy(otherProps.usdPrice)
       );
+    }
 
     return {
       ...otherProps,
@@ -459,8 +470,11 @@ export function getSortedTokens(
   connectedWallets: ConnectedWallet[],
   otherChainTokens: TokenWithBalance[]
 ): TokenWithBalance[] {
-  const fromChainEqueulsToToChain = chain?.name === otherChainTokens[0]?.name;
-  if (fromChainEqueulsToToChain) return otherChainTokens;
+  const fromChainEqueulsToToBlockchain =
+    chain?.name === otherChainTokens[0]?.name;
+  if (fromChainEqueulsToToBlockchain) {
+    return otherChainTokens;
+  }
   const filteredTokens = tokens.filter(
     (token) => token.blockchain === chain?.name
   );
@@ -485,13 +499,17 @@ export function getDefaultToken(
   let selectedToken: TokenWithBalance;
   const firstToken = sortedTokens[0];
   const secondToken = sortedTokens[1];
-  if (sortedTokens.length === 1) selectedToken = firstToken;
-  else if (tokensAreEqual(firstToken, otherToken)) selectedToken = secondToken;
-  else selectedToken = firstToken;
+  if (sortedTokens.length === 1) {
+    selectedToken = firstToken;
+  } else if (tokensAreEqual(firstToken, otherToken)) {
+    selectedToken = secondToken;
+  } else {
+    selectedToken = firstToken;
+  }
   return selectedToken;
 }
 
-export function sortWalletsBasedOnState(
+export function sortWalletsBasedOnConnectionState(
   wallets: ModalWalletInfo[]
 ): ModalWalletInfo[] {
   return wallets.sort(
@@ -507,4 +525,35 @@ export function sortWalletsBasedOnState(
             a.state === WalletStatus.CONNECTING
         )
   );
+}
+
+export function getConciseAddress(
+  address: string,
+  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+  maxChars = 8,
+  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+  ellipsisLength = 3
+): string {
+  if (address.length < 2 * maxChars + ellipsisLength) {
+    return address;
+  }
+  const start = address.slice(0, maxChars);
+  const end = address.slice(-maxChars);
+  return `${start}${'.'.repeat(ellipsisLength)}${end}`;
+}
+
+export function getAddress({
+  chain,
+  connectedWallets,
+  walletType,
+}: {
+  connectedWallets: ConnectedWallet[];
+  walletType: string;
+  chain: string;
+}): string | undefined {
+  return connectedWallets.find(
+    (connectedWallet) =>
+      connectedWallet.walletType === walletType &&
+      connectedWallet.chain === chain
+  )?.address;
 }

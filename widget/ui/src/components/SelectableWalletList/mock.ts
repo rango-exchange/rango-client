@@ -1,7 +1,6 @@
 import { Networks, WalletTypes } from '@rango-dev/wallets-shared';
-import { SelectableWallet } from '../../types';
 
-export const data: SelectableWallet[] = [
+export const data = [
   {
     chain: Networks.BTC,
     name: Networks.BTC,

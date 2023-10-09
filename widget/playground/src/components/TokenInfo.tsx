@@ -1,18 +1,22 @@
-import React, { useEffect, useState } from 'react';
+import type { Type } from '../types';
+
 import {
-  AngleDownIcon,
   BlockchainSelector,
   Button,
-  InfoCircleIcon,
   Modal,
   styled,
   TextField,
   TokenSelector,
 } from '@rango-dev/ui';
-import { useMetaStore } from '../store/meta';
-import { useConfigStore } from '../store/config';
-import { Type } from '../types';
+import {
+  AngleDownIcon,
+  InfoCircleIcon,
+} from '@rango-dev/ui/src/components/Icon';
+import React, { useEffect, useState } from 'react';
+
 import { tokensAreEqual } from '../helpers';
+import { useConfigStore } from '../store/config';
+import { useMetaStore } from '../store/meta';
 
 interface PropTypes {
   type: Type;
@@ -21,7 +25,7 @@ interface PropTypes {
 const ImagePlaceholder = styled('span', {
   width: '24px',
   height: '24px',
-  backgroundColor: '$neutral100',
+  backgroundColor: '$background',
   borderRadius: '99999px',
 });
 const StyledImage = styled('img', {
@@ -39,7 +43,7 @@ const Container = styled('div', {
   '@lg': {
     gridTemplateColumns: '1fr 1fr 1fr',
   },
-  borderTop: '1px solid $neutral100',
+  borderTop: '1px solid $background',
   paddingTop: '$16',
 });
 
@@ -60,14 +64,22 @@ export function TokenInfo({ type }: PropTypes) {
   const onChangeToken = useConfigStore.use.onChangeToken();
   const blockchains = useMetaStore.use.meta().blockchains;
   const tokens = useMetaStore.use.meta().tokens;
-  const token = tokens.find((t) => tokensAreEqual(t, type === 'Source' ? from.token : to.token));
-  const chain = blockchains.find(
-    (chain) => chain.name === (type === 'Source' ? from.blockchain : to.blockchain),
+  const token = tokens.find((t) =>
+    tokensAreEqual(t, type === 'Source' ? from.token : to.token)
   );
-  const supportedChains = type === 'Source' ? from.blockchains : to.blockchains;
+  const chain = blockchains.find(
+    (chain) =>
+      chain.name === (type === 'Source' ? from.blockchain : to.blockchain)
+  );
+  const supportedBlockchains =
+    type === 'Source' ? from.blockchains : to.blockchains;
   const supportedTokens = type == 'Source' ? from.tokens : to.tokens;
 
-  const [modal, setModal] = useState({ open: false, isChain: false, isToken: false });
+  const [modal, setModal] = useState({
+    open: false,
+    isChain: false,
+    isToken: false,
+  });
   const loadingStatus = useMetaStore.use.loadingStatus();
 
   const ItemSuffix = (
@@ -82,19 +94,24 @@ export function TokenInfo({ type }: PropTypes) {
     </div>
   );
   useEffect(() => {
-    if (!!supportedChains && !!chain && !supportedChains.includes(chain?.name)) {
+    if (
+      !!supportedBlockchains &&
+      !!chain &&
+      !supportedBlockchains.includes(chain?.name)
+    ) {
       onChangeBlockChain(undefined, type);
       onChangeToken(undefined, type);
     }
     if (
       !!supportedTokens &&
       !!token &&
-      !supportedTokens.filter((t) => tokensAreEqual(t, type === 'Source' ? from.token : to.token))
-        .length
+      !supportedTokens.filter((t) =>
+        tokensAreEqual(t, type === 'Source' ? from.token : to.token)
+      ).length
     ) {
       onChangeToken(undefined, type);
     }
-  }, [supportedChains, supportedTokens, chain]);
+  }, [supportedBlockchains, supportedTokens, chain]);
 
   return (
     <Container>
@@ -181,8 +198,10 @@ export function TokenInfo({ type }: PropTypes) {
           modal.isChain ? (
             <BlockchainSelector
               list={
-                supportedChains
-                  ? blockchains.filter((chain) => supportedChains.includes(chain.name))
+                supportedBlockchains
+                  ? blockchains.filter((chain) =>
+                      supportedBlockchains.includes(chain.name)
+                    )
                   : blockchains
               }
               hasHeader={false}
@@ -203,13 +222,12 @@ export function TokenInfo({ type }: PropTypes) {
                 list={(supportedTokens && supportedTokens.length
                   ? tokens.filter((token) =>
                       supportedTokens.some((supportedToken) =>
-                        tokensAreEqual(supportedToken, token),
-                      ),
+                        tokensAreEqual(supportedToken, token)
+                      )
                     )
                   : tokens
                 ).filter((token) => token.blockchain === chain?.name)}
                 hasHeader={false}
-                // @ts-ignore
                 selected={token}
                 onChange={(token) => {
                   setModal((prev) => ({
@@ -222,7 +240,7 @@ export function TokenInfo({ type }: PropTypes) {
                       address: token.address,
                       symbol: token.symbol,
                     },
-                    type,
+                    type
                   );
                 }}
               />

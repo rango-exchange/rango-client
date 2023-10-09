@@ -1,12 +1,11 @@
-import React, { PropsWithChildren } from 'react';
-import {
-  Button,
-  InfoCircleIcon,
-  Divider,
-  styled,
-  Typography,
-} from '@rango-dev/ui';
+import type { PropsWithChildren } from 'react';
+
+import { Button, Divider, styled, Typography } from '@rango-dev/ui';
+import { InfoCircleIcon } from '@rango-dev/ui/src/components/Icon';
+import React from 'react';
+
 import { useMetaStore } from '../../store/meta';
+
 type PropTypes = {
   label: string;
   onOpenModal: () => void;
@@ -17,7 +16,7 @@ const Head = styled('div', {
   display: 'flex',
   justifyContent: 'space-between',
   alignItems: 'center',
-  borderBottom: '1px solid $neutral100',
+  borderBottom: '1px solid $background',
   paddingBottom: '$8',
 });
 
@@ -37,7 +36,7 @@ export function Container({
   return (
     <>
       <Head>
-        <Typography noWrap variant="body2" color="neutral700">
+        <Typography noWrap variant="body" size="small" color="neutral700">
           {label}
         </Typography>
 

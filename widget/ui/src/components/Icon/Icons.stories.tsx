@@ -5,7 +5,7 @@ import { Meta } from '@storybook/react';
 import { styled } from '../../theme';
 
 export default {
-  title: 'Components/Icons',
+  title: 'Components/Icons (Deprecated)',
   component: Icons.AngleRightIcon,
   args: {
     size: 16,

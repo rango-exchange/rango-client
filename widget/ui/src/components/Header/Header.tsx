@@ -1,39 +1,24 @@
-import { styled } from '../../theme';
-import React, { PropsWithChildren } from 'react';
-import { AngleLeftIcon } from '../Icon';
+import type { PropTypes } from './Header.types';
+import type { PropsWithChildren } from 'react';
+
+import React from 'react';
+
 import { Typography } from '../Typography';
-import { Button } from '../Button';
 
-const HeaderContainer = styled('div', {
-  display: 'flex',
-  justifyContent: 'space-between',
-  alignItems: 'center',
-  padding: '$8 0',
-  position: 'relative',
-});
+import { Container, Suffix } from './Header.styles';
 
-const BackButton = styled(Button, {
-  padding: '$8',
-});
-
-interface PropTypes {
-  onBack?: () => void;
-  prefix?: React.ReactNode;
-  suffix?: React.ReactNode;
-  title: string;
-}
-
-export function Header(props: PropsWithChildren<PropTypes>) {
+export function Header({
+  prefix,
+  suffix,
+  title,
+}: PropsWithChildren<PropTypes>) {
   return (
-    <HeaderContainer>
-      {props.onBack ? (
-        <BackButton variant="ghost" size="small" onClick={props.onBack}>
-          <AngleLeftIcon size={24} />
-        </BackButton>
-      ) : null}
-      {props.prefix}
-      <Typography variant="h4">{props.title}</Typography>
-      {props.suffix || <div></div>}
-    </HeaderContainer>
+    <Container>
+      {prefix}
+      <Typography variant="headline" size="small">
+        {title}
+      </Typography>
+      <Suffix>{suffix}</Suffix>
+    </Container>
   );
 }

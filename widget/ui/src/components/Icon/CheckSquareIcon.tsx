@@ -16,8 +16,7 @@ export const CheckSquareIcon: React.FC<IconProps> = ({
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       className="_icon"
-      {...props}
-    >
+      {...props}>
       <path
         d="M9 22h6c5 0 7-2 7-7V9c0-5-2-7-7-7H9C4 2 2 4 2 9v6c0 5 2 7 7 7Z"
         strokeWidth={1.5}

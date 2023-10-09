@@ -115,7 +115,7 @@ export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
   const solana = solanaBlockchain(allBlockChains);
   return {
     name: 'Coinbase',
-    img: 'https://raw.githubusercontent.com/rango-exchange/rango-assets/main/wallets/coinbase/icon.svg',
+    img: 'https://raw.githubusercontent.com/rango-exchange/assets/main/wallets/coinbase/icon.svg',
     installLink: {
       CHROME:
         'https://chrome.google.com/webstore/detail/coinbase-wallet-extension/hnfanknocfeofbddgcijnmhnfnkdnaad',

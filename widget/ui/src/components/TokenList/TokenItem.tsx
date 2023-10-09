@@ -1,10 +1,13 @@
-import { Token } from 'rango-sdk';
-import React, { CSSProperties } from 'react';
+import type { TokenWithAmount } from './TokenList';
+import type { Token } from 'rango-sdk';
+import type { CSSProperties } from 'react';
+
+import React from 'react';
+
 import { styled } from '../../theme';
 import { Button } from '../Button';
-import { Typography } from '../Typography';
-import { TokenWithAmount } from './TokenList';
 import { Image } from '../common';
+import { Typography } from '../Typography';
 
 const TokenImageContainer = styled('div', {
   paddingRight: '$16',
@@ -40,12 +43,10 @@ export function TokenItem(props: PropTypes) {
         height: '48px',
         top: `${parseFloat(style?.top as string) + 0}px`,
         padding: '0 4px',
-      }}
-    >
+      }}>
       <Button
         variant="outlined"
         size="large"
-        align="start"
         onClick={onClick.bind(null, token)}
         type={selected ? 'primary' : undefined}
         prefix={
@@ -56,17 +57,20 @@ export function TokenItem(props: PropTypes) {
         suffix={
           token.balance?.amount && (
             <TokenAmountContainer>
-              <Typography variant="body2">{token.balance.amount}</Typography>
-              <Typography variant="caption">
+              <Typography variant="body" size="small">
+                {token.balance.amount}
+              </Typography>
+              <Typography variant="body" size="xsmall">
                 {`${token.balance.usdValue}$`}
               </Typography>
             </TokenAmountContainer>
           )
-        }
-      >
+        }>
         <TokenNameContainer>
-          <Typography variant="body1">{token.symbol}</Typography>
-          <Typography variant="caption" color="neutral600">
+          <Typography variant="body" size="medium">
+            {token.symbol}
+          </Typography>
+          <Typography variant="body" size="xsmall" color="neutral600">
             {token.name}
           </Typography>
         </TokenNameContainer>

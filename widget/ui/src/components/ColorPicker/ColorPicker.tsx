@@ -1,19 +1,18 @@
 import React, { useState } from 'react';
+import { ChromePicker } from 'react-color';
+import rgbHex from 'rgb-hex';
+
 import { styled } from '../../theme';
 import { Button } from '../Button';
 import { CloseIcon } from '../Icon';
-import rgbHex from 'rgb-hex';
-import ReactColor from 'react-color';
-
-const { ChromePicker } = ReactColor;
 
 const Container = styled('div', {
   position: 'relative',
 });
 
 const Color = styled('div', {
-  border: '1px solid $neutral100',
-  borderRadius: '$5',
+  border: '1px solid $background',
+  borderRadius: '$xs',
   width: '$32',
   height: '$32',
 });
@@ -75,7 +74,6 @@ export function ColorPicker({
         variant="outlined"
         prefix={<Color style={{ backgroundColor: color }} />}
         fullWidth
-        align="start"
         size="large"
         suffix={
           color && (

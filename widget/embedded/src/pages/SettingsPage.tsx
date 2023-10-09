@@ -1,30 +1,31 @@
-import React from 'react';
-import { Settings } from '@rango-dev/ui';
-import { useSettingsStore } from '../store/settings';
-import { useMetaStore } from '../store/meta';
-import { useNavigate } from 'react-router-dom';
-import { navigationRoutes } from '../constants/navigationRoutes';
-import { removeDuplicateFrom } from '../utils/common';
+import { i18n } from '@lingui/core';
 import {
-  MAX_SLIPPAGE,
-  MIN_SLIPPGAE,
-  SLIPPAGES,
-} from '../constants/swapSettings';
+  ChevronRightIcon,
+  Divider,
+  List,
+  ListItemButton,
+  Skeleton,
+  Switch,
+  Typography,
+} from '@rango-dev/ui';
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
+
+import { Layout } from '../components/Layout';
+import { SettingsContainer } from '../components/SettingsContainer';
+import { Slippage } from '../components/Slippage';
+import { navigationRoutes } from '../constants/navigationRoutes';
 import { useNavigateBack } from '../hooks/useNavigateBack';
+import { useMetaStore } from '../store/meta';
+import { useSettingsStore } from '../store/settings';
+import { getUniqueSwappersGroups } from '../utils/settings';
+
 interface PropTypes {
   supportedSwappers?: string[];
   singleTheme?: boolean;
 }
+
 export function SettingsPage({ supportedSwappers, singleTheme }: PropTypes) {
-  const slippage = useSettingsStore.use.slippage();
-  const setSlippage = useSettingsStore.use.setSlippage();
-  const disabledLiquiditySources =
-    useSettingsStore.use.disabledLiquiditySources();
-  const customSlippage = useSettingsStore.use.customSlippage();
-  const setCustomSlippage = useSettingsStore.use.setCustomSlippage();
-  const theme = useSettingsStore.use.theme();
-  const setTheme = useSettingsStore.use.setTheme();
-  const swappers = useMetaStore.use.meta().swappers;
   const navigate = useNavigate();
   const { navigateBackFrom } = useNavigateBack();
 
@@ -32,62 +33,133 @@ export function SettingsPage({ supportedSwappers, singleTheme }: PropTypes) {
   const toggleInfiniteApprove = useSettingsStore.use.toggleInfiniteApprove();
   const loadingMetaStatus = useMetaStore.use.loadingStatus();
 
-  const uniqueSwappersGroups: Array<{
-    title: string;
-    logo: string;
-    type: 'BRIDGE' | 'AGGREGATOR' | 'DEX';
-    selected: boolean;
-  }> = [];
-  removeDuplicateFrom(swappers.map((s) => s.swapperGroup))
-    .map((swapperGroup) => {
-      return swappers.find((s) => s.swapperGroup === swapperGroup);
-    })
-    .find((s) => {
-      if (s) {
-        for (const type of s.types) {
-          uniqueSwappersGroups.push({
-            title: s.swapperGroup,
-            logo: s.logo,
-            type,
-            selected: !disabledLiquiditySources.includes(s.swapperGroup),
-          });
-        }
-      }
-    });
-  supportedSwappers &&
-    uniqueSwappersGroups.filter(
-      (item) => supportedSwappers.filter((s) => s === item.title).length > 0
-    );
+  const supportedUniqueSwappersGroups =
+    getUniqueSwappersGroups(supportedSwappers);
 
-  const supportedUniqueSwappersGroups = supportedSwappers
-    ? uniqueSwappersGroups.filter(
-        (item) => supportedSwappers.filter((s) => s === item.title).length > 0
-      )
-    : uniqueSwappersGroups;
+  const bridgeSources = supportedUniqueSwappersGroups.filter(
+    (uniqueItem) =>
+      uniqueItem.type === 'BRIDGE' || uniqueItem.type === 'AGGREGATOR'
+  );
+  const totalBridgeSources = bridgeSources.length;
+  const totalSelectedBridgeSources = bridgeSources.filter(
+    (uniqueItem) => uniqueItem.selected
+  ).length;
+
+  const exchangeSources = supportedUniqueSwappersGroups.filter(
+    (uniqueItem) => uniqueItem.type === 'DEX'
+  );
+  const totalExchangeSources = exchangeSources.length;
+  const totalSelectedExchangeSources = exchangeSources.filter(
+    (uniqueItem) => uniqueItem.selected
+  ).length;
+
+  const handleEndItem = (totalSelected: number, total: number) => {
+    switch (loadingMetaStatus) {
+      case 'loading':
+        return <Skeleton variant="text" size="medium" width={50} />;
+      case 'failed':
+        return (
+          <Typography variant="body" size="medium" color="$error500">
+            Loading failed
+          </Typography>
+        );
+      default:
+        return (
+          <Typography variant="body" size="medium">
+            {`${totalSelected} / ${total}`}
+          </Typography>
+        );
+    }
+  };
+
+  const bridgeItem = {
+    id: 'bridge-item',
+    title: (
+      <Typography variant="title" size="xmedium">
+        {i18n.t('Enabled bridges')}
+      </Typography>
+    ),
+    end: (
+      <>
+        {handleEndItem(totalSelectedBridgeSources, totalBridgeSources)}
+        <Divider direction="horizontal" size={8} />
+        <ChevronRightIcon color="black" />
+      </>
+    ),
+    onClick: () => navigate(navigationRoutes.bridges),
+  };
+
+  const exchangeItem = {
+    id: 'exchange-item',
+    title: (
+      <Typography variant="title" size="xmedium">
+        {i18n.t('Enabled exchanges')}
+      </Typography>
+    ),
+    end: (
+      <>
+        {handleEndItem(totalSelectedExchangeSources, totalExchangeSources)}
+        <Divider direction="horizontal" size={8} />
+        <ChevronRightIcon color="gray" />
+      </>
+    ),
+    onClick: () => navigate(navigationRoutes.exchanges),
+  };
+
+  const languageItem = {
+    id: 'language-item',
+    title: (
+      <Typography variant="title" size="xmedium">
+        {i18n.t('Language')}
+      </Typography>
+    ),
+    end: <ChevronRightIcon color="gray" />,
+    onClick: () => navigate(navigationRoutes.languages),
+  };
+
+  const themeItem = {
+    id: 'theme-item',
+    title: (
+      <Typography variant="title" size="xmedium">
+        {i18n.t('Theme')}
+      </Typography>
+    ),
+    end: <ChevronRightIcon color="gray" />,
+    onClick: () => navigate(navigationRoutes.themes),
+  };
+
+  const infiniteApprovalItem = {
+    id: 'infinite-approval-item',
+    title: (
+      <Typography variant="title" size="xmedium">
+        {i18n.t('Infinite Approval')}
+      </Typography>
+    ),
+    end: <Switch checked={infiniteApprove} />,
+    onClick: toggleInfiniteApprove,
+  };
+
+  const settingItems = [bridgeItem, exchangeItem, languageItem];
+  if (!singleTheme) {
+    settingItems.push(themeItem);
+  }
+  settingItems.push(infiniteApprovalItem);
 
   return (
-    <Settings
-      slippages={SLIPPAGES}
-      selectedSlippage={slippage}
-      onSlippageChange={(slippage) => setSlippage(slippage)}
-      onLiquiditySourcesClick={() =>
-        navigate(navigationRoutes.liquiditySources)
-      }
-      onBack={navigateBackFrom.bind(null, navigationRoutes.settings)}
-      liquiditySources={supportedUniqueSwappersGroups}
-      selectedLiquiditySources={supportedUniqueSwappersGroups.filter(
-        (s) => s.selected
-      )}
-      singleTheme={singleTheme}
-      customSlippage={customSlippage}
-      onCustomSlippageChange={setCustomSlippage}
-      minSlippage={MIN_SLIPPGAE}
-      maxSlippage={MAX_SLIPPAGE}
-      selectedTheme={theme}
-      onThemeChange={setTheme}
-      infiniteApprove={infiniteApprove}
-      toggleInfiniteApprove={toggleInfiniteApprove}
-      loadingStatus={loadingMetaStatus}
-    />
+    <Layout
+      header={{
+        onBack: navigateBackFrom.bind(null, navigationRoutes.settings),
+        title: i18n.t('Setting'),
+      }}>
+      <SettingsContainer>
+        <Slippage />
+        <List
+          type={
+            <ListItemButton title="_" id="_" onClick={() => console.log()} />
+          }
+          items={settingItems}
+        />
+      </SettingsContainer>
+    </Layout>
   );
 }
