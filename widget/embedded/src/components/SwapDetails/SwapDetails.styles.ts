@@ -42,7 +42,7 @@ export const HeaderDetails = styled('div', {
 });
 
 export const StepsList = styled('div', {
-  padding: '$0 $0 $20 $20',
+  padding: '$0 $20 $20 $20',
   width: '100%',
   overflow: 'auto',
 });
