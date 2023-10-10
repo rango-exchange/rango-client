@@ -16,10 +16,8 @@ import {
   RouteCost,
   RouteSummary,
   StepDetails,
-  theme,
   Typography,
   useCopyToClipboard,
-  usePaddingRight,
 } from '@rango-dev/ui';
 import { useWallets } from '@rango-dev/wallets-react';
 import React, { useEffect, useRef, useState } from 'react';
@@ -65,26 +63,21 @@ import {
 } from './SwapDetails.helpers';
 import { Container, HeaderDetails, StepsList } from './SwapDetails.styles';
 
-const DEFAULT_CONTENT_PADDING = 20;
-
 export function SwapDetails(props: SwapDetailsProps) {
   const { swap, requestId, onDelete, onCancel: onCancelProps } = props;
-  const { tokens } = useMetaStore.use.meta();
   const { canSwitchNetworkTo, connect, getWalletInfo } = useWallets();
   const retry = useBestRouteStore.use.retry();
   const navigate = useNavigate();
   const { navigateBackFrom } = useNavigateBack();
-  const listRef = useRef<HTMLDivElement | null>(null);
   const [_, handleCopy] = useCopyToClipboard(RESET_INTERVAL);
+  const listRef = useRef<HTMLDivElement | null>(null);
   const [modalState, setModalState] = useState<ModalState>(null);
   const [showCompletedModal, setShowCompletedModal] = useState<
     'success' | 'failed' | null
   >(null);
-
-  usePaddingRight({
-    elementRef: listRef,
-    paddingRight: theme.sizes[DEFAULT_CONTENT_PADDING],
-  });
+  const {
+    meta: { tokens },
+  } = useMetaStore();
 
   const onCancel = () => {
     onCancelProps();
@@ -301,6 +294,7 @@ export function SwapDetails(props: SwapDetailsProps) {
             </Typography>
           </div>
         </HeaderDetails>
+
         <div className="output">
           <RouteCost
             fee={numberToString(
@@ -388,6 +382,7 @@ export function SwapDetails(props: SwapDetailsProps) {
           })}
         </StepsList>
       </Container>
+
       <SwapDetailsModal
         state={modalState}
         onClose={() => setModalState(null)}
