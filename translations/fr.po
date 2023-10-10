@@ -142,7 +142,7 @@ msgstr ""
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/HeaderButtons/HomeButtons.tsx:56
-#: widget/embedded/src/pages/ConfirmSwapPage.tsx:326
+#: widget/embedded/src/pages/ConfirmSwapPage.tsx:320
 #~ msgid "Settings"
 #~ msgstr ""
 
@@ -500,12 +500,12 @@ msgstr ""
 #~ msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/SelectSwapItemsPage.tsx:104
+#: widget/embedded/src/pages/SelectSwapItemsPage.tsx:109
 #~ msgid "Swap {type}"
 #~ msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/SelectSwapItemsPage.tsx:132
+#: widget/embedded/src/pages/SelectSwapItemsPage.tsx:137
 #~ msgid "Search Token"
 #~ msgstr ""
 
