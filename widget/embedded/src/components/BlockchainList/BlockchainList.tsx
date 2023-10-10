@@ -41,7 +41,7 @@ export function BlockchainList(props: PropTypes) {
       );
     }
     return (
-      <List>
+      <List key={`${blockchainCategory}-${searchedFor}`}>
         {blockchains.map((item) => (
           <ListItemButton
             key={`${item.name}-${item.chainId}`}

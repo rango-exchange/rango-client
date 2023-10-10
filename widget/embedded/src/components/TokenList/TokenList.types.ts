@@ -12,6 +12,7 @@ export interface PropTypes {
   list: TokenWithBalance[];
   searchedFor?: string;
   onChange: (token: TokenWithBalance) => void;
+  selectedBlockchain?: string;
 }
 
 export interface LoadingTokenListProps {

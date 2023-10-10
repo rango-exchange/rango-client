@@ -1,10 +1,12 @@
 import { useInRouterContext, useNavigate } from 'react-router-dom';
 
 import { navigationRoutes } from '../constants/navigationRoutes';
+import { useBestRouteStore } from '../store/bestRoute';
 
 export function useNavigateBack() {
   const isRouterInContext = useInRouterContext();
   const navigate = useNavigate();
+  const routeWalletsConfirmed = useBestRouteStore.use.routeWalletsConfirmed();
 
   navigationRoutes;
 
@@ -20,6 +22,14 @@ export function useNavigateBack() {
       // eslint-disable-next-line @typescript-eslint/no-magic-numbers
       navigate(-1);
     } else {
+      if (
+        [navigationRoutes.settings, navigationRoutes.wallets].includes(
+          currentRoute
+        ) &&
+        routeWalletsConfirmed
+      ) {
+        return navigate('/' + navigationRoutes.confirmSwap, { replace: true });
+      }
       if (
         [
           navigationRoutes.fromSwap,

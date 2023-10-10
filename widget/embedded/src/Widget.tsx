@@ -25,6 +25,11 @@ const MainContainer = styled('div', {
   justifyContent: 'center',
   alignItems: 'center',
   fontFamily: '$widget',
+  boxSizing: 'border-box',
+  '& *, *::before, *::after': {
+    boxSizing: 'inherit',
+    listStyleType: 'none',
+  },
 });
 
 export type WidgetProps = {

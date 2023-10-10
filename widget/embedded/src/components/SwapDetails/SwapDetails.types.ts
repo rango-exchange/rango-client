@@ -8,5 +8,5 @@ export interface SwapDetailsProps {
 }
 export interface SwapDetailsPlaceholderPropTypes {
   requestId: string;
-  loading: boolean;
+  showSkeleton: boolean;
 }
