@@ -1,4 +1,4 @@
-import { styled } from '../../theme';
+import { darkTheme, styled } from '../../theme';
 
 export const Container = styled('div', {
   display: 'flex',
@@ -21,19 +21,39 @@ export const IconHighlight = styled('div', {
   variants: {
     type: {
       success: {
-        backgroundColor: '$success300',
+        $$color: '$colors$success300',
+        [`.${darkTheme} &`]: {
+          $$color: '$colors$success600',
+        },
+        backgroundColor: '$$color',
       },
       warning: {
-        backgroundColor: '$warning300',
+        $$color: '$colors$warning300',
+        [`.${darkTheme} &`]: {
+          $$color: '$colors$warning600',
+        },
+        backgroundColor: '$$color',
       },
       error: {
-        backgroundColor: '$error300',
+        $$color: '$colors$error300',
+        [`.${darkTheme} &`]: {
+          $$color: '$colors$error600',
+        },
+        backgroundColor: '$$color',
       },
       info: {
-        backgroundColor: '$info300',
+        $$color: '$colors$info300',
+        [`.${darkTheme} &`]: {
+          $$color: '$colors$info600',
+        },
+        backgroundColor: '$$color',
       },
       loading: {
-        backgroundColor: '$info300',
+        $$color: '$colors$info300',
+        [`.${darkTheme} &`]: {
+          $$color: '$colors$info600',
+        },
+        backgroundColor: '$$color',
       },
     },
   },

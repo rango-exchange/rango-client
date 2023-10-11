@@ -1,4 +1,4 @@
-import { styled } from '../../theme';
+import { darkTheme, styled } from '../../theme';
 
 export const BaseListItem = styled('li', {
   width: '100%',
@@ -38,7 +38,12 @@ export const BaseListItem = styled('li', {
   variants: {
     hasDivider: {
       true: {
-        borderBottom: '1px solid $neutral300',
+        borderBottom: '1px solid',
+        $$color: '$colors$neutral300',
+        [`.${darkTheme} &`]: {
+          $$color: '$colors$neutral400',
+        },
+        borderColor: '$$color',
         borderBottomRightRadius: 0,
         borderBottomLeftRadius: 0,
       },

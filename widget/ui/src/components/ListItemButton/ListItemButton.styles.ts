@@ -11,7 +11,7 @@ export const BaseListItemButton = styled('button', {
     outline: 0,
     $$color: '$colors$info100',
     [`.${darkTheme} &`]: {
-      $$color: '$colors$neutral400',
+      $$color: '$colors$info700',
     },
     backgroundColor: '$$color',
   },
@@ -20,7 +20,7 @@ export const BaseListItemButton = styled('button', {
     borderRadius: '$xs',
 
     [`.${darkTheme} &`]: {
-      $$color: '$colors$neutral400',
+      $$color: '$colors$neutral100',
     },
     backgroundColor: '$$color',
     cursor: 'pointer',
@@ -31,7 +31,12 @@ export const BaseListItemButton = styled('button', {
   variants: {
     hasDivider: {
       true: {
-        borderBottom: '1px solid $neutral300',
+        borderBottom: '1px solid',
+        $$color: '$colors$neutral300',
+        [`.${darkTheme} &`]: {
+          $$color: '$colors$neutral400',
+        },
+        borderColor: '$$color',
         borderBottomRightRadius: 0,
         borderBottomLeftRadius: 0,
       },

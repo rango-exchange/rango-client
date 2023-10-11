@@ -11,6 +11,7 @@ import {
 } from '@rango-dev/ui';
 import React from 'react';
 
+import { getContainer } from '../../utils/common';
 import { NotificationContent } from '../NotificationContent';
 
 import { HeaderButton } from './HeaderButtons.styles';
@@ -27,7 +28,10 @@ export function HomeButtons(props: HomeButtonsPropTypes) {
 
   return (
     <>
-      <Tooltip side="top" content={i18n.t('Refresh')}>
+      <Tooltip
+        container={getContainer()}
+        side="top"
+        content={i18n.t('Refresh')}>
         <HeaderButton
           variant="ghost"
           size="small"
@@ -37,12 +41,15 @@ export function HomeButtons(props: HomeButtonsPropTypes) {
         </HeaderButton>
       </Tooltip>
 
-      <Tooltip side="top" content={i18n.t('Notifications')}>
+      <Tooltip
+        container={getContainer()}
+        side="top"
+        content={i18n.t('Notifications')}>
         <Popover
           align="center"
           collisionBoundary={layoutRef}
           collisionPadding={{ right: 20, left: 20 }}
-          container={document.getElementById('swap-box') as HTMLElement}
+          container={getContainer()}
           content={<NotificationContent />}>
           <HeaderButton
             size="small"
@@ -53,12 +60,18 @@ export function HomeButtons(props: HomeButtonsPropTypes) {
           </HeaderButton>
         </Popover>
       </Tooltip>
-      <Tooltip side="top" content={i18n.t('Settings')}>
+      <Tooltip
+        container={getContainer()}
+        side="top"
+        content={i18n.t('Settings')}>
         <HeaderButton size="small" variant="ghost" onClick={onClickSettings}>
           <SettingsIcon size={18} color="black" />
         </HeaderButton>
       </Tooltip>
-      <Tooltip side="top" content={i18n.t('Transactions History')}>
+      <Tooltip
+        container={getContainer()}
+        side="top"
+        content={i18n.t('Transactions History')}>
         <HeaderButton size="small" variant="ghost" onClick={onClickHistory}>
           <TransactionIcon size={18} color="black" />
         </HeaderButton>

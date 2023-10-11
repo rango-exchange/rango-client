@@ -1,9 +1,13 @@
-import { styled } from '@rango-dev/ui';
+import { darkTheme, styled } from '@rango-dev/ui';
 
 export const Chip = styled('button', {
   padding: '$10',
   borderRadius: '$sm',
-  backgroundColor: '$neutral100',
+  $$color: '$colors$neutral100',
+  [`.${darkTheme} &`]: {
+    $$color: '$colors$neutral300',
+  },
+  backgroundColor: '$$color',
   display: 'flex',
   flexDirection: 'column',
   justifyContent: 'center',
@@ -15,11 +19,19 @@ export const Chip = styled('button', {
     overflow: 'hidden',
   },
   '&:hover': {
-    backgroundColor: '$neutral400',
+    $$color: '$colors$info100',
+    [`.${darkTheme} &`]: {
+      $$color: '$colors$neutral100',
+    },
+    backgroundColor: '$$color',
   },
   '&:focus-visible': {
     outline: 0,
-    backgroundColor: '$neutral500',
+    $$color: '$colors$info100',
+    [`.${darkTheme} &`]: {
+      $$color: '$colors$info700',
+    },
+    backgroundColor: '$$color',
   },
   variants: {
     selected: {

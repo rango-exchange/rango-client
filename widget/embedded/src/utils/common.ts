@@ -78,3 +78,6 @@ export const generateRangeColors = (name: string, color: string) => {
   }
   return colors;
 };
+
+export const getContainer = () =>
+  document.getElementById('swap-box') as HTMLElement;

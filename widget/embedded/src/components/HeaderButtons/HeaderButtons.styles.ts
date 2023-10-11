@@ -1,6 +1,6 @@
-import { Button, darkTheme, styled } from '@rango-dev/ui';
+import { darkTheme, IconButton, styled } from '@rango-dev/ui';
 
-export const HeaderButton = styled(Button, {
+export const HeaderButton = styled(IconButton, {
   width: '$24',
   position: 'relative',
   padding: '0',

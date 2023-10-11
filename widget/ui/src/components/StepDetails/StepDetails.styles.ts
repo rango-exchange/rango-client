@@ -1,4 +1,4 @@
-import { styled } from '../../theme';
+import { darkTheme, styled } from '../../theme';
 
 export const Container = styled('div', {
   width: '100%',
@@ -10,7 +10,10 @@ export const Container = styled('div', {
     type: {
       'route-details': { border: 'none' },
       'route-progress': {
-        backgroundColor: '$neutral100',
+        $$color: '$colors$neutral100',
+        [`.${darkTheme} &`]: {
+          $$color: '$colors$neutral300',
+        },
         borderRadius: '$xm',
         padding: '$10 $15',
         marginBottom: '15px',
