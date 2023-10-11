@@ -96,7 +96,7 @@ msgstr ""
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:37
 #: widget/embedded/src/components/TokenList/TokenList.tsx:126
 #: widget/embedded/src/pages/HistoryPage.tsx:99
-#: widget/embedded/src/pages/LiquiditySourcePage.tsx:135
+#: widget/embedded/src/pages/LiquiditySourcePage.tsx:134
 #~ msgid "No results found"
 #~ msgstr ""
 
@@ -104,7 +104,7 @@ msgstr ""
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:38
 #: widget/embedded/src/components/TokenList/TokenList.tsx:127
 #: widget/embedded/src/pages/HistoryPage.tsx:101
-#: widget/embedded/src/pages/LiquiditySourcePage.tsx:136
+#: widget/embedded/src/pages/LiquiditySourcePage.tsx:135
 #~ msgid "Try using different keywords"
 #~ msgstr ""
 
@@ -131,28 +131,28 @@ msgstr ""
 #~ msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/HeaderButtons/HomeButtons.tsx:30
+#: widget/embedded/src/components/HeaderButtons/HomeButtons.tsx:34
 #~ msgid "Refresh"
 #~ msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/HeaderButtons/HomeButtons.tsx:40
+#: widget/embedded/src/components/HeaderButtons/HomeButtons.tsx:47
 #~ msgid "Notifications"
 #~ msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/HeaderButtons/HomeButtons.tsx:56
-#: widget/embedded/src/pages/ConfirmSwapPage.tsx:320
+#: widget/embedded/src/components/HeaderButtons/HomeButtons.tsx:66
+#: widget/embedded/src/pages/ConfirmSwapPage.tsx:324
 #~ msgid "Settings"
 #~ msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/HeaderButtons/HomeButtons.tsx:61
+#: widget/embedded/src/components/HeaderButtons/HomeButtons.tsx:74
 #~ msgid "Transactions History"
 #~ msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/HeaderButtons/WalletButton.tsx:11
+#: widget/embedded/src/components/HeaderButtons/WalletButton.tsx:14
 #: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.helpers.tsx:16
 #: widget/embedded/src/constants/messages.ts:4
 #~ msgid "Connect Wallet"
@@ -170,7 +170,7 @@ msgstr ""
 #~ msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Slippage/Slippage.tsx:32
+#: widget/embedded/src/components/Slippage/Slippage.tsx:33
 #~ msgid "Slippage tolerance per swap"
 #~ msgstr ""
 
@@ -490,7 +490,7 @@ msgstr ""
 #~ msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/LiquiditySourcePage.tsx:127
+#: widget/embedded/src/pages/LiquiditySourcePage.tsx:126
 #~ msgid "Swap {sourceType}"
 #~ msgstr ""
 
@@ -551,7 +551,7 @@ msgstr ""
 #~ msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/WalletsPage.tsx:73
+#: widget/embedded/src/pages/WalletsPage.tsx:74
 #~ msgid "Choose a wallet to connect."
 #~ msgstr ""
 
