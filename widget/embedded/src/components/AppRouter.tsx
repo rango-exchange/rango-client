@@ -17,20 +17,19 @@ import { UpdateUrl } from './UpdateUrl';
 function Route(props: PropsWithChildren) {
   const location = useLocation();
   const navigate = useNavigate();
-  const ref = useRef(true);
+  const firstRender = useRef(true);
+  const paths = location.pathname.split('/');
+  const pathMatched = paths[paths.length - 1] === navigationRoutes.confirmSwap;
+  const shouldRedirectToMainPage = pathMatched && firstRender.current;
 
   useEffect(() => {
-    if (
-      location.pathname === '/' + navigationRoutes.confirmSwap &&
-      ref.current
-    ) {
-      navigate(navigationRoutes.home + location.search, { state: 'redirect' });
+    if (shouldRedirectToMainPage) {
+      navigate('.');
     }
-
-    ref.current = false;
+    firstRender.current = false;
   }, []);
 
-  if (location.pathname === '/' + navigationRoutes.confirmSwap && ref.current) {
+  if (shouldRedirectToMainPage) {
     return <Home />;
   }
 
