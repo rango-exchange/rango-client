@@ -28,4 +28,5 @@ export type BestRouteProps = Pick<
   totalFee: string;
   totalTime: string;
   expanded?: boolean;
+  tooltipContainer?: HTMLElement;
 };

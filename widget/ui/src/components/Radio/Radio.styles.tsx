@@ -1,6 +1,6 @@
 import * as Radio from '@radix-ui/react-radio-group';
 
-import { styled } from '../../theme';
+import { darkTheme, styled } from '../../theme';
 
 export const StyledItem = styled(Radio.Item, {
   padding: '0',
@@ -11,12 +11,13 @@ export const StyledItem = styled(Radio.Item, {
   backgroundColor: 'transparent',
   border: '1px solid $neutral800',
 
-  '&:hover': {
-    borderColor: '$secondary600',
-  },
   '&[data-state="checked"]': {
-    backgroundColor: '$secondary600',
-    borderColor: '$secondary600',
+    $$color: '$colors$secondary500',
+    [`.${darkTheme} &`]: {
+      $$color: '$colors$secondary400',
+    },
+    backgroundColor: '$$color',
+    borderColor: '$$color',
   },
 });
 

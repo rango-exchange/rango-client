@@ -8,19 +8,28 @@ export const ChipContainer = styled('button', {
   padding: '$5 $15',
   cursor: 'pointer',
   transition: 'all 0.35s',
-  backgroundColor: '$neutral100',
   border: '1px solid transparent',
+  $$color: '$colors$neutral100',
+  [`.${darkTheme} &`]: {
+    $$color: '$colors$neutral300',
+  },
+  backgroundColor: '$$color',
 
   '&:hover': {
     $$color: '$colors$info100',
     [`.${darkTheme} &`]: {
-      $$color: '$colors$neutral400',
+      $$color: '$colors$neutral100',
     },
     backgroundColor: '$$color',
   },
 
-  '&:focus': {
-    outline: '1px solid gray',
+  '&:focus-visible': {
+    $$color: '$colors$info100',
+    [`.${darkTheme} &`]: {
+      $$color: '$colors$info700',
+    },
+    backgroundColor: '$$color',
+    outline: 0,
   },
 
   variants: {

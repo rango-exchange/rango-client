@@ -59,6 +59,7 @@ import {
   RouteWarningType,
   SlippageWarningType,
 } from '../types';
+import { getContainer } from '../utils/common';
 import {
   numberToString,
   secondsToString,
@@ -317,7 +318,10 @@ export function ConfirmSwapPage(props: PropTypes) {
         onBack: navigate.bind(null, -1),
         hasConnectWallet: true,
         suffix: (
-          <Tooltip side="bottom" content={i18n.t('Settings')}>
+          <Tooltip
+            container={getContainer()}
+            side="bottom"
+            content={i18n.t('Settings')}>
             <HeaderButton
               size="small"
               variant="ghost"
@@ -458,6 +462,9 @@ export function ConfirmSwapPage(props: PropTypes) {
         {showBestRoute && (
           <BestRoute
             expanded={true}
+            tooltipContainer={
+              document.getElementById('swap-box') as HTMLElement
+            }
             steps={formatBestRoute(bestRoute) ?? []}
             input={{
               value: numberToString(

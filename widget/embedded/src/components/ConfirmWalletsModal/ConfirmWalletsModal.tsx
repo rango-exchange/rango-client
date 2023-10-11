@@ -407,6 +407,7 @@ export function ConfirmWalletsModal(props: PropTypes) {
                           }>
                           <CustomDestinationButton
                             fullWidth
+                            variant="default"
                             suffix={
                               <ExpandedIcon
                                 orientation={

@@ -2,24 +2,28 @@ import { Button } from '../../components';
 import { darkTheme, styled } from '../../theme';
 
 export const Container = styled(Button, {
-  variants: {
-    loading: {
-      true: {
-        '&:hover': {
-          background: 'none',
-        },
-      },
-      false: {
-        '&:hover': {
-          borderRadius: '$xs',
-          $$color: '$colors$info100',
-          [`.${darkTheme} &`]: {
-            $$color: '$colors$neutral400',
-          },
-          backgroundColor: '$$color',
-        },
-      },
+  backgroundColor: 'transparent',
+  color: '$neutral900',
+  '&:disabled': {
+    color: '$neutral800',
+  },
+  '&:focus-visible': {
+    $$color: '$colors$info100',
+    [`.${darkTheme} &`]: {
+      $$color: '$colors$info700',
     },
+    backgroundColor: '$$color !important',
+    outline: 0,
+  },
+  '&:disabled:hover': {
+    backgroundColor: 'transparent',
+  },
+  '&:hover': {
+    $$color: '$colors$info100',
+    [`.${darkTheme} &`]: {
+      $$color: '$colors$neutral400',
+    },
+    backgroundColor: '$$color !important',
   },
 });
 

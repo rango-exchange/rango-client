@@ -52,6 +52,10 @@ export const ButtonBase = styled('button', {
         '&:hover': {
           backgroundColor: '$neutral300',
         },
+        '&:focus-visible': {
+          backgroundColor: '$neutral500',
+          outline: 0,
+        },
         '&:disabled': {
           $$color: '$colors$background',
           [`.${darkTheme} &`]: {
@@ -79,6 +83,10 @@ export const ButtonBase = styled('button', {
         '&:hover': {
           borderColor: '$neutral300',
         },
+        '&:focus-visible': {
+          borderColor: '$neutral500',
+          outline: 0,
+        },
         '&:disabled': {
           borderColor: '$neutral800',
           color: '$neutral800',
@@ -93,6 +101,10 @@ export const ButtonBase = styled('button', {
         color: '$neutral900',
         '&:disabled': {
           color: '$neutral800',
+        },
+        '&:focus-visible': {
+          backgroundColor: '$neutral500',
+          outline: 0,
         },
         '&:hover': {
           color: '$secondary500',
@@ -149,6 +161,10 @@ export const ButtonBase = styled('button', {
           backgroundSize: '100%',
           transition: 'background 0s',
         },
+        '&:focus-visible': {
+          background: '$primary600',
+          outline: 0,
+        },
       },
     },
     {
@@ -161,6 +177,11 @@ export const ButtonBase = styled('button', {
           color: '$primary600',
           borderColor: '$primary600',
         },
+        '&:focus-visible': {
+          color: '$primary600',
+          borderColor: '$primary600',
+          outline: 0,
+        },
       },
     },
     {
@@ -170,6 +191,10 @@ export const ButtonBase = styled('button', {
         color: '$primary500',
         '&:hover': {
           color: '$primary600',
+        },
+        '&:focus-visible': {
+          color: '$primary600',
+          outline: 0,
         },
       },
     },
@@ -184,7 +209,7 @@ export const ButtonBase = styled('button', {
         },
         color: '$$color',
         '&:hover': {
-          background: '$secondary500',
+          background: '$secondary600',
           $$color: '$colors$background',
           [`.${darkTheme} &`]: {
             $$color: '$colors$foreground',
@@ -195,7 +220,12 @@ export const ButtonBase = styled('button', {
           background: '$secondary500',
         },
         '&:focus': {
-          background: '$secondary500',
+          background: '$secondary600',
+          outline: 0,
+        },
+        '&:focus-visible': {
+          background: '$secondary600',
+          outline: 0,
         },
       },
     },
@@ -206,16 +236,22 @@ export const ButtonBase = styled('button', {
         color: '$secondary500',
         borderColor: '$secondary500',
         '&:hover': {
-          color: '$secondary500',
-          borderColor: '$secondary500',
+          color: '$secondary600',
+          borderColor: '$secondary600',
         },
         '&:visited': {
           color: '$secondary500',
           borderColor: '$secondary500',
         },
         '&:focus': {
-          color: '$secondary500',
+          color: '$secondary600',
           borderColor: '$secondary500',
+          outline: 0,
+        },
+        '&:focus-visible': {
+          color: '$secondary600',
+          borderColor: '$secondary500',
+          outline: 0,
         },
       },
     },
@@ -225,13 +261,18 @@ export const ButtonBase = styled('button', {
       css: {
         color: '$secondary500',
         '&:hover': {
-          color: '$secondary500',
+          color: '$secondary600',
         },
         '&:visited': {
           color: '$secondary500',
         },
         '&:focus': {
-          color: '$secondary500',
+          color: '$secondary600',
+          outline: 0,
+        },
+        '&:focus-visible': {
+          color: '$secondary600',
+          outline: 0,
         },
       },
     },
@@ -247,17 +288,19 @@ export const ButtonBase = styled('button', {
         color: '$$color',
         '&:hover': {
           background: '$error500',
-          $$color: '$colors$background',
-          [`.${darkTheme} &`]: {
-            $$color: '$colors$foreground',
-          },
-          color: '$$color',
         },
         '&:visited': {
           background: '$error500',
         },
         '&:focus': {
           background: '$error500',
+        },
+        '&:focus-visible': {
+          $$outline: '$colors$error600',
+          [`.${darkTheme} &`]: {
+            $$outline: '$colors$error300',
+          },
+          outlineColor: '$$outline',
         },
       },
     },
@@ -279,6 +322,14 @@ export const ButtonBase = styled('button', {
           color: '$error500',
           borderColor: '$error500',
         },
+        '&:focus-visible': {
+          $$outline: '$colors$error600',
+          [`.${darkTheme} &`]: {
+            $$outline: '$colors$error300',
+          },
+          color: '$$outline',
+          outlineColor: '$$outline',
+        },
       },
     },
     {
@@ -294,6 +345,14 @@ export const ButtonBase = styled('button', {
         },
         '&:focus': {
           color: '$error500',
+        },
+        '&:focus-visible': {
+          $$outline: '$colors$error600',
+          [`.${darkTheme} &`]: {
+            $$outline: '$colors$error300',
+          },
+          color: '$$outline',
+          outline: 0,
         },
       },
     },
@@ -321,6 +380,13 @@ export const ButtonBase = styled('button', {
         '&:focus': {
           background: '$warning500',
         },
+        '&:focus-visible': {
+          $$outline: '$colors$warning600',
+          [`.${darkTheme} &`]: {
+            $$outline: '$colors$warning300',
+          },
+          outlineColor: '$$outline',
+        },
       },
     },
     {
@@ -341,6 +407,14 @@ export const ButtonBase = styled('button', {
           color: '$warning500',
           borderColor: '$warning500',
         },
+        '&:focus-visible': {
+          $$outline: '$colors$warning600',
+          [`.${darkTheme} &`]: {
+            $$outline: '$colors$warning300',
+          },
+          outlineColor: '$$outline',
+          color: '$$outline',
+        },
       },
     },
     {
@@ -356,6 +430,13 @@ export const ButtonBase = styled('button', {
         },
         '&:focus': {
           color: '$warning500',
+        },
+        '&:focus-visible': {
+          $$outline: '$colors$warning600',
+          [`.${darkTheme} &`]: {
+            $$outline: '$colors$warning300',
+          },
+          color: '$$outline',
         },
       },
     },
@@ -383,6 +464,13 @@ export const ButtonBase = styled('button', {
         '&:focus': {
           background: '$success500',
         },
+        '&:focus-visible': {
+          $$outline: '$colors$success600',
+          [`.${darkTheme} &`]: {
+            $$outline: '$colors$success300',
+          },
+          outlineColor: '$$outline',
+        },
       },
     },
     {
@@ -403,6 +491,14 @@ export const ButtonBase = styled('button', {
           color: '$success500',
           borderColor: '$success500',
         },
+        '&:focus-visible': {
+          $$outline: '$colors$success600',
+          [`.${darkTheme} &`]: {
+            $$outline: '$colors$success300',
+          },
+          outlineColor: '$$outline',
+          color: '$$outline',
+        },
       },
     },
     {
@@ -418,6 +514,14 @@ export const ButtonBase = styled('button', {
         },
         '&:focus': {
           color: '$success500',
+        },
+        '&:focus-visible': {
+          $$outline: '$colors$success600',
+          [`.${darkTheme} &`]: {
+            $$outline: '$colors$success300',
+          },
+          outline: 0,
+          color: '$$outline',
         },
       },
     },

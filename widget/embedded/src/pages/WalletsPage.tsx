@@ -11,6 +11,7 @@ import { navigationRoutes } from '../constants/navigationRoutes';
 import { useNavigateBack } from '../hooks/useNavigateBack';
 import { useWalletList } from '../hooks/useWalletList';
 import { useMetaStore } from '../store/meta';
+import { getContainer } from '../utils/common';
 
 interface PropTypes {
   supportedWallets: WidgetConfig['wallets'];
@@ -79,6 +80,7 @@ export function WalletsPage({ config }: PropTypes) {
               <Fragment key={key}>
                 <Wallet
                   {...wallet}
+                  container={getContainer()}
                   onClick={(type) => {
                     void handleClick(type);
                   }}

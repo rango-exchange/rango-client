@@ -1,6 +1,6 @@
 import * as RadixSwitch from '@radix-ui/react-switch';
 
-import { styled } from '../../theme';
+import { darkTheme, styled } from '../../theme';
 
 export const StyledSwitchRoot = styled(RadixSwitch.Root, {
   boxSizing: 'border-box',
@@ -16,13 +16,13 @@ export const StyledSwitchRoot = styled(RadixSwitch.Root, {
   cursor: 'pointer',
   transition: 'all 0.35s',
 
-  '&:hover': {
-    backgroundColor: '$secondary500',
-    borderColor: '$secondary500',
-  },
   '&[data-state="checked"]': {
-    backgroundColor: '$secondary600',
-    borderColor: '$secondary600',
+    $$color: '$colors$secondary500',
+    [`.${darkTheme} &`]: {
+      $$color: '$colors$secondary400',
+    },
+    backgroundColor: '$$color',
+    borderColor: '$$color',
   },
   '-webkit-tap-highlight-color': 'rgba(0, 0, 0, 0)',
 });

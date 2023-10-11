@@ -8,7 +8,10 @@ import { ConnectedIcon, HeaderButton } from './HeaderButtons.styles';
 
 function WalletButton(props: PropTypes) {
   return (
-    <Tooltip side="top" content={i18n.t('Connect Wallet')}>
+    <Tooltip
+      container={props.container}
+      side="top"
+      content={i18n.t('Connect Wallet')}>
       <HeaderButton variant="ghost" size="small" onClick={props.onClick}>
         {props.isConnected && <ConnectedIcon />}
         <WalletIcon size={18} color="black" />

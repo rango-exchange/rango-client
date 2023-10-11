@@ -18,7 +18,7 @@ export function TokenSection(props: TokenSectionProps) {
     loading,
   } = props;
   return (
-    <Container variant="ghost" disabled={error || loading} onClick={onClick}>
+    <Container variant="default" disabled={error || loading} onClick={onClick}>
       <TokenSectionContainer>
         <ChainToken
           size="large"

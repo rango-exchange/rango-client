@@ -18,7 +18,6 @@ import { Layout } from '../components/Layout';
 import { LoadingLiquiditySourceList } from '../components/LoadingLiquiditySourceList';
 import { SearchInput } from '../components/SearchInput';
 import {
-  LiquiditySourceDivider,
   LiquiditySourceList,
   LiquiditySourceSuffix,
   NotFoundContainer,
@@ -146,8 +145,8 @@ export function LiquiditySourcePage({
                       style={{ height: '61px' }}
                       {...sourceItem}
                       selected={false}
+                      hasDivider
                     />
-                    <LiquiditySourceDivider />
                   </React.Fragment>
                 );
               })}

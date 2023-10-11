@@ -25,11 +25,15 @@ export const InputContainer = styled('div', {
     },
     variant: {
       contained: {
-        backgroundColor: '$neutral100',
+        $$color: '$colors$neutral100',
+        [`.${darkTheme} &`]: {
+          $$color: '$colors$neutral300',
+        },
+        backgroundColor: '$$color',
         '&:hover': {
           $$color: '$colors$info100',
           [`.${darkTheme} &`]: {
-            $$color: '$colors$neutral400',
+            $$color: '$colors$neutral100',
           },
           backgroundColor: '$$color',
         },

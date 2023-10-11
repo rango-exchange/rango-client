@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router-dom';
 import { navigationRoutes } from '../../constants/navigationRoutes';
 import { useUiStore } from '../../store/ui';
 import { useWalletsStore } from '../../store/wallets';
+import { getContainer } from '../../utils/common';
 import { BackButton, CancelButton, WalletButton } from '../HeaderButtons';
 
 import { Container, Content, Footer } from './Layout.styles';
@@ -42,6 +43,7 @@ function LayoutComponent(props: PropsWithChildren<PropTypes>, ref: Ref) {
             {header.suffix}
             {header.hasConnectWallet && (
               <WalletButton
+                container={getContainer()}
                 onClick={onConnectWallet}
                 isConnected={!!connectedWallets?.length}
               />

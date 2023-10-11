@@ -1,4 +1,4 @@
-import { styled } from '@rango-dev/ui';
+import { darkTheme, styled } from '@rango-dev/ui';
 
 export const Container = styled('div', {
   display: 'flex',
@@ -13,7 +13,12 @@ export const Container = styled('div', {
     justifyContent: 'space-between',
     alignItems: 'center',
     padding: '$10 $5',
-    borderBottom: '1px solid $neutral300',
+    borderBottom: '1px solid',
+    $$color: '$colors$neutral300',
+    [`.${darkTheme} &`]: {
+      $$color: '$colors$neutral400',
+    },
+    borderColor: '$$color',
     color: '$neutral500',
   },
   '& .request-id': {
