@@ -10,19 +10,20 @@ export const Layout = styled('div', {
   flexDirection: 'column',
 });
 
-export const GeneralContent = styled('div', {
-  height: '474px',
-  backgroundColor: '$background',
-  borderRadius: '$sm',
-  border: '1px solid $neutral300',
-  padding: '$15',
-});
-
-export const Field = styled('div', {
+export const ExternalSection = styled('div', {
+  borderRadius: '20px',
+  padding: '$20',
   display: 'flex',
   flexDirection: 'column',
+  placeContent: 'center',
+  backgroundColor: '$background',
+  '&.footer': {
+    maxWidth: '$180',
+  },
 });
 
-export const FieldTitle = styled('div', {
+export const SwitchField = styled('div', {
   display: 'flex',
+  justifyContent: 'space-between',
+  alignItems: 'center',
 });

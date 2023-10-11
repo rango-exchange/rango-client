@@ -86,6 +86,7 @@ export const ButtonBase = styled('button', {
         '&:disabled:hover': {
           borderColor: '$neutral800',
           transform: 'unset',
+          color: '$neutral800',
         },
       },
       ghost: {

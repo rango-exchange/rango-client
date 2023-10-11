@@ -13,25 +13,17 @@ export function App() {
 
   return (
     <div className={activeStyle}>
-      {config.externalWallets ? (
-        <WidgetWallets
-          providers={config.wallets}
-          options={{
-            walletConnectProjectId: WC_PROJECT_ID,
-          }}>
-          <ConfigContainer>
-            <Routes>
-              <Route path="/*" element={<Widget config={config} />} />
-            </Routes>
-          </ConfigContainer>
-        </WidgetWallets>
-      ) : (
+      <WidgetWallets
+        providers={config.externalWallets ? config.wallets : []}
+        options={{
+          walletConnectProjectId: WC_PROJECT_ID,
+        }}>
         <ConfigContainer>
           <Routes>
             <Route path="/*" element={<Widget config={config} />} />
           </Routes>
         </ConfigContainer>
-      )}
+      </WidgetWallets>
     </div>
   );
 }

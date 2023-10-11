@@ -8,6 +8,8 @@ import stringifyObject from 'stringify-object';
 // @ts-ignore
 import subtractObject from 'subtract-object';
 
+import { NOT_FOUND } from './constants';
+
 export const excludedWallets = [
   WalletTypes.STATION,
   WalletTypes.LEAP,
@@ -15,8 +17,6 @@ export const excludedWallets = [
   WalletTypes.MY_TON_WALLET,
   WalletTypes.WALLET_CONNECT_2,
 ];
-
-export const NOT_FOUND = -1;
 
 export const onChangeMultiSelects = (
   value: string,
