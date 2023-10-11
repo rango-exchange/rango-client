@@ -25,6 +25,7 @@ export type COLORS =
 
 interface ConfigState {
   config: WidgetConfig;
+  onChangeApiKey: (apiKey: string) => void;
   onChangeWallets: (wallets?: (WalletType | ProviderInterface)[]) => void;
   onChangeSources: (sources?: string[]) => void;
   onChangeBlockChains: (chains?: string[], type?: Type) => void;
@@ -125,6 +126,10 @@ export const useConfigStore = createSelectors(
     persist(
       immer((set) => ({
         config: initialConfig,
+        onChangeApiKey: (apiKey) =>
+          set((state) => {
+            state.config.apiKey = apiKey;
+          }),
         onChangeBlockChains: (chains, type) =>
           set((state) => {
             if (type === 'Source') {
