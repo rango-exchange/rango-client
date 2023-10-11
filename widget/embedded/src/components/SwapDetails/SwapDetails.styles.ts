@@ -61,7 +61,7 @@ export const PlaceholderContainer = styled('div', {
   height: '450px',
   display: 'flex',
   alignItems: 'center',
-  textAlign: 'center',
+  justifyContent: 'center',
 });
 
 export const LoaderContainer = styled('div', {
