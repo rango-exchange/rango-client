@@ -3,9 +3,11 @@ export interface Configs {
   WC_PROJECT_ID: string;
 }
 
-// this API key is limited and
-// it is only for test purpose
-const RANGO_PUBLIC_API_KEY = 'c6381a79-2817-4602-83bf-6a641a409e32';
+/*
+ * this API key is limited and
+ * it is only for test purpose
+ */
+export const RANGO_PUBLIC_API_KEY = 'c6381a79-2817-4602-83bf-6a641a409e32';
 export const WC_PROJECT_ID = 'e24844c5deb5193c1c14840a7af6a40b';
 
 let configs: Configs = {
