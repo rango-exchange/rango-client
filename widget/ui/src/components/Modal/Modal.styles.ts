@@ -7,7 +7,7 @@ export const BackDrop = styled('div', {
   left: '0',
   width: '100%',
   height: '100%',
-  backgroundColor: 'rgba(0,0,0,0)',
+  backgroundColor: 'transparent',
   zIndex: 10,
   borderRadius: '$primary',
   display: 'flex',
@@ -28,7 +28,7 @@ export const BackDrop = styled('div', {
     },
     active: {
       true: {
-        backgroundColor: 'rgba(0,0,0,.1)',
+        backgroundColor: 'color-mix(in srgb, $neutral500 70%, transparent)',
       },
     },
   },

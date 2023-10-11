@@ -51,7 +51,10 @@ export function BestRoute(props: BestRouteProps) {
 
   return (
     <>
-      <SummaryContainer recommended={recommended} basic={type === 'basic'}>
+      <SummaryContainer
+        recommended={recommended}
+        listItem={type === 'list-item'}
+        basic={type === 'basic'}>
         <div className="summary">
           <RouteCost fee={totalFee} time={totalTime} steps={numberOfSteps} />
           {type === 'basic' && (
@@ -116,6 +119,7 @@ export function BestRoute(props: BestRouteProps) {
                 return (
                   <React.Fragment key={key}>
                     <Tooltip
+                      container={props.tooltipContainer}
                       sideOffset={2}
                       content={step.from.chain.displayName}>
                       <Image src={step.from.chain.image} size={16} />
@@ -126,6 +130,7 @@ export function BestRoute(props: BestRouteProps) {
                           <ChevronRightIcon size={12} color="black" />
                         </IconContainer>
                         <Tooltip
+                          container={props.tooltipContainer}
                           sideOffset={2}
                           content={step.to.chain.displayName}>
                           <Image src={step.to.chain.image} size={16} />

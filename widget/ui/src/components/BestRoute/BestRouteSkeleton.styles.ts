@@ -1,7 +1,11 @@
-import { styled } from '../../theme';
+import { darkTheme, styled } from '../../theme';
 
 export const Container = styled('div', {
-  backgroundColor: '$neutral100',
+  $$color: '$colors$neutral100',
+  [`.${darkTheme} &`]: {
+    $$color: '$colors$neutral300',
+  },
+  backgroundColor: '$$color',
   borderBottomLeftRadius: '$xm',
   borderBottomRightRadius: '$xm',
   padding: '$15 ',

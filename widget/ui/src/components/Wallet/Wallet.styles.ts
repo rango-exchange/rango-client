@@ -23,7 +23,11 @@ export const WalletButton = styled('button', {
   border: '0',
   display: 'flex',
   flexDirection: 'column',
-  backgroundColor: '$neutral100',
+  $$color: '$colors$neutral100',
+  [`.${darkTheme} &`]: {
+    $$color: '$colors$neutral300',
+  },
+  backgroundColor: '$$color',
   alignItems: 'center',
   cursor: 'pointer',
   width: 110,
@@ -31,15 +35,27 @@ export const WalletButton = styled('button', {
   '&:hover': {
     $$color: '$colors$info100',
     [`.${darkTheme} &`]: {
-      $$color: '$colors$neutral400',
+      $$color: '$colors$neutral100',
     },
     backgroundColor: '$$color',
+  },
+  '&:focus-visible': {
+    $$color: '$colors$info100',
+    [`.${darkTheme} &`]: {
+      $$color: '$colors$info700',
+    },
+    backgroundColor: '$$color',
+    outline: 0,
   },
   variants: {
     selected: {
       true: {
         outlineWidth: 1,
-        outlineColor: '$secondary500',
+        $$outline: '$colors$secondary500',
+        [`.${darkTheme} &`]: {
+          $$outline: '$colors$secondary400',
+        },
+        outlineColor: '$$outline',
         outlineStyle: 'solid',
       },
     },

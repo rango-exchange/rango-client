@@ -1,6 +1,6 @@
 import * as RadixCheckbox from '@radix-ui/react-checkbox';
 
-import { styled } from '../../theme';
+import { darkTheme, styled } from '../../theme';
 
 export const CheckboxContainer = styled('div', {
   display: 'flex',
@@ -16,12 +16,13 @@ export const CheckboxRoot = styled(RadixCheckbox.Root, {
   border: '1px solid $neutral800',
   backgroundColor: 'transparent',
   cursor: 'pointer',
-  '&:hover': {
-    borderColor: '$secondary600',
-  },
   '&[data-state="checked"]': {
-    backgroundColor: '$secondary600',
-    borderColor: '$secondary600',
+    $$color: '$colors$secondary500',
+    [`.${darkTheme} &`]: {
+      $$color: '$colors$secondary400',
+    },
+    backgroundColor: '$$color',
+    borderColor: '$$color',
   },
 });
 

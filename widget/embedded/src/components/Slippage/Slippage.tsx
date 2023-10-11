@@ -15,6 +15,7 @@ import {
   SLIPPAGES,
 } from '../../constants/swapSettings';
 import { useSettingsStore } from '../../store/settings';
+import { getContainer } from '../../utils/common';
 
 import { BaseContainer, Head, SlippageChipsContainer } from './Slippage.styles';
 import { SlippageTooltipContent } from './SlippageTooltipContent';
@@ -32,7 +33,10 @@ export function Slippage() {
           {i18n.t('Slippage tolerance per swap')}
         </Typography>
         <Divider direction="horizontal" size={4} />
-        <Tooltip side="top" content={<SlippageTooltipContent />}>
+        <Tooltip
+          container={getContainer()}
+          side="top"
+          content={<SlippageTooltipContent />}>
           <InfoIcon color="gray" />
         </Tooltip>
       </Head>

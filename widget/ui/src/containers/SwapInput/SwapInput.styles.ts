@@ -2,7 +2,11 @@ import { Button, TextField } from '../../components';
 import { darkTheme, styled } from '../../theme';
 
 export const Container = styled('div', {
-  backgroundColor: '$neutral100',
+  $$color: '$colors$neutral100',
+  [`.${darkTheme} &`]: {
+    $$color: '$colors$neutral300',
+  },
+  backgroundColor: '$$color',
   borderRadius: '$xm',
   padding: '$15',
   variants: {
@@ -57,4 +61,11 @@ export const MaxButton = styled(Button, {
     $$color: '$colors$secondary800',
   },
   backgroundColor: '$$color',
+  '&:focus-visible': {
+    $$outline: '$colors$info600',
+    [`.${darkTheme} &`]: {
+      $$outline: '$colors$info100',
+    },
+    outlineColor: '$$outline',
+  },
 });

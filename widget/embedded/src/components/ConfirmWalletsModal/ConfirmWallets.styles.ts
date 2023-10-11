@@ -1,6 +1,7 @@
 import * as Collapsible from '@radix-ui/react-collapsible';
 import {
   Button,
+  darkTheme,
   IconButton,
   keyframes,
   styled,
@@ -45,14 +46,31 @@ export const WalletButton = styled('button', {
   border: '0',
   display: 'flex',
   justifyContent: 'center',
-  backgroundColor: '$neutral100',
+  $$color: '$colors$neutral100',
+  [`.${darkTheme} &`]: {
+    $$color: '$colors$neutral300',
+  },
+  backgroundColor: '$$color',
   alignItems: 'center',
   cursor: 'pointer',
   width: 110,
   position: 'relative',
+
   '&:hover': {
-    backgroundColor: '$surface600',
-    opacity: '0.8',
+    $$color: '$colors$info100',
+    [`.${darkTheme} &`]: {
+      $$color: '$colors$neutral100',
+    },
+    backgroundColor: '$$color',
+  },
+
+  '&:focus-visible': {
+    $$color: '$colors$info100',
+    [`.${darkTheme} &`]: {
+      $$color: '$colors$info700',
+    },
+    backgroundColor: '$$color',
+    outline: 0,
   },
   variants: {
     selected: {
@@ -117,7 +135,27 @@ export const CustomDestinationButton = styled(Button, {
   padding: '$15 !important',
   justifyContent: 'space-between',
   alignItems: 'center',
-  backgroundColor: '$neutral100 !important',
+  $$color: '$colors$neutral100',
+  [`.${darkTheme} &`]: {
+    $$color: '$colors$neutral300',
+  },
+  backgroundColor: '$$color',
+
+  '&:hover': {
+    $$color: '$colors$info100',
+    [`.${darkTheme} &`]: {
+      $$color: '$colors$neutral100',
+    },
+    backgroundColor: '$$color',
+  },
+  '&:focus-visible': {
+    $$background: '$colors$info100',
+    [`.${darkTheme} &`]: {
+      $$background: '$colors$info700',
+    },
+    backgroundColor: '$$background',
+    outline: 0,
+  },
 });
 
 export const CustomDestination = styled('div', {

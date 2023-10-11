@@ -36,7 +36,7 @@ function Wallet(props: WalletPropTypes) {
   }
 
   return (
-    <Tooltip content={info.tooltipText} side="top">
+    <Tooltip container={props.container} content={info.tooltipText} side="top">
       <WalletButton
         disabled={props.state == WalletState.CONNECTING}
         onClick={() => {

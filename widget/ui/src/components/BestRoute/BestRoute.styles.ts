@@ -23,7 +23,11 @@ export const RouteContainer = styled(Collapsible.Root, {
         backgroundColor: '$$color',
       },
       false: {
-        backgroundColor: '$neutral200',
+        $$color: '$colors$neutral400',
+        [`.${darkTheme} &`]: {
+          $$color: '$colors$neutral200',
+        },
+        backgroundColor: '$$color',
       },
     },
   },
@@ -47,9 +51,36 @@ export const SummaryContainer = styled('div', {
       true: {
         $$color: '$colors$info100',
         [`.${darkTheme} &`]: {
-          $$color: '$colors$neutral400',
+          $$color: '$colors$secondary600',
         },
         backgroundColor: '$$color',
+        '&:hover': {
+          backgroundColor: '$$color',
+        },
+      },
+      false: {
+        $$color: '$colors$neutral200',
+        [`.${darkTheme} &`]: {
+          $$color: '$colors$neutral500',
+        },
+        backgroundColor: '$$color',
+        '&:hover': {
+          backgroundColor: '$$color',
+        },
+      },
+    },
+    basic: { true: { borderTopRightRadius: '0', borderTopLeftRadius: '0' } },
+    listItem: {
+      true: {},
+      false: {},
+    },
+  },
+
+  compoundVariants: [
+    {
+      listItem: true,
+      recommended: true,
+      css: {
         '&:hover': {
           $$color: '$colors$secondary200',
           [`.${darkTheme} &`]: {
@@ -58,15 +89,21 @@ export const SummaryContainer = styled('div', {
           backgroundColor: '$$color',
         },
       },
-      false: {
-        backgroundColor: '$neutral200',
+    },
+    {
+      listItem: true,
+      recommended: false,
+      css: {
         '&:hover': {
-          backgroundColor: '$neutral200',
+          $$color: '$colors$neutral300',
+          [`.${darkTheme} &`]: {
+            $$color: '$colors$neutral400',
+          },
+          backgroundColor: '$$color',
         },
       },
     },
-    basic: { true: { borderTopRightRadius: '0', borderTopLeftRadius: '0' } },
-  },
+  ],
   '& .summary': {
     width: '100%',
     padding: '$15 $15 $10 $15',
@@ -114,7 +151,11 @@ export const Chains = styled(Collapsible.Trigger, {
         backgroundColor: '$$color',
       },
       false: {
-        backgroundColor: '$neutral400',
+        $$color: '$colors$neutral400',
+        [`.${darkTheme} &`]: {
+          $$color: '$colors$neutral200',
+        },
+        backgroundColor: '$$color',
       },
     },
   },
@@ -154,7 +195,12 @@ export const HorizontalSeparator = styled('div', {
   display: 'flex',
   justifyContent: 'center',
   margin: '0 $15',
-  borderTop: '1px solid $neutral300',
+  borderTop: '1px solid',
+  $$color: '$colors$neutral300',
+  [`.${darkTheme} &`]: {
+    $$color: '$colors$neutral400',
+  },
+  borderColor: '$$color',
 });
 
 export const FrameIcon = styled('div', {

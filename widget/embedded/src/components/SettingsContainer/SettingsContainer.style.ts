@@ -12,12 +12,6 @@ export const LiquiditySourceList = styled('ul', {
   overflowY: 'visible',
 });
 
-export const LiquiditySourceDivider = styled('li', {
-  margin: '0 auto',
-  width: '100%',
-  height: '1px',
-  backgroundColor: '$neutral300',
-});
 export const LiquiditySourceSuffix = styled('div', {
   width: 80,
   display: 'flex',

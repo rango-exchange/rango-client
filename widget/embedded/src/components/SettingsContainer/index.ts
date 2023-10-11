@@ -1,6 +1,5 @@
 export {
   SettingsContainer,
-  LiquiditySourceDivider,
   LiquiditySourceList,
   LiquiditySourceSuffix,
   NotFoundContainer,

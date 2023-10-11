@@ -56,6 +56,7 @@ interface WalletProps {
   selected?: boolean;
   description?: string;
   isLoading?: boolean;
+  container?: HTMLElement;
 }
 
 export type WalletPropTypes = State & WalletProps;

@@ -17,7 +17,11 @@ export const Header = styled('div', {
 });
 
 export const Main = styled('button', {
-  backgroundColor: '$neutral100',
+  $$color: '$colors$neutral100',
+  [`.${darkTheme} &`]: {
+    $$color: '$colors$neutral300',
+  },
+  backgroundColor: '$$color',
   border: 'none',
   width: '100%',
   borderRadius: '$xm',
@@ -27,12 +31,16 @@ export const Main = styled('button', {
   '&:hover': {
     $$color: '$colors$info100',
     [`.${darkTheme} &`]: {
-      $$color: '$colors$neutral400',
+      $$color: '$colors$neutral100',
     },
     backgroundColor: '$$color',
   },
   '&:focus-visible': {
-    backgroundColor: '$surface600',
+    $$color: '$colors$info100',
+    [`.${darkTheme} &`]: {
+      $$color: '$colors$info700',
+    },
+    backgroundColor: '$$color',
     outline: 'none',
   },
 });
@@ -44,7 +52,11 @@ export const Date = styled('div', {
 });
 
 export const LoadingMain = styled('div', {
-  backgroundColor: '$neutral100',
+  $$color: '$colors$neutral100',
+  [`.${darkTheme} &`]: {
+    $$color: '$colors$neutral300',
+  },
+  backgroundColor: '$$color',
   border: 'none',
   width: '100%',
   borderRadius: '$xm',

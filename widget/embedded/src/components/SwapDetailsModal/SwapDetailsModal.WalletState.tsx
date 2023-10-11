@@ -4,6 +4,8 @@ import { MessageBox, Wallet, WalletState } from '@rango-dev/ui';
 import { useWallets } from '@rango-dev/wallets-react';
 import React from 'react';
 
+import { getContainer } from '../../utils/common';
+
 import { WalletContainer } from './SwapDetailsModal.styles';
 
 export const WalletStateContent = (props: WalletStateContentProps) => {
@@ -18,6 +20,7 @@ export const WalletStateContent = (props: WalletStateContentProps) => {
       {showWalletButton && walletType && (
         <WalletContainer>
           <Wallet
+            container={getContainer()}
             title={getWalletInfo(walletType).name}
             image={getWalletInfo(walletType).img}
             type={walletType}
