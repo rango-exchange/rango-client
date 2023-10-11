@@ -2,6 +2,7 @@ import type { PropTypes } from './ConfirmWalletsModal.types';
 import type { ConnectedWallet } from '../../store/wallets';
 import type { ConfirmSwapWarnings, Wallet } from '../../types';
 
+import { i18n } from '@lingui/core';
 import {
   Alert,
   BalanceErrors,
@@ -276,9 +277,13 @@ export function ConfirmWalletsModal(props: PropTypes) {
               onClick={setShowMoreWalletFor.bind(null, '')}>
               <ChevronLeftIcon size={16} />
             </NavigateBack>
-            <Typography
-              variant="headline"
-              size="small">{`Your ${showMoreWalletFor} wallets`}</Typography>
+            <Typography variant="headline" size="small">
+              {i18n.t({
+                id: 'yourWallets',
+                message: 'Your {blockchainName} wallets',
+                values: { blockchainName: showMoreWalletFor },
+              })}
+            </Typography>
           </ShowMoreHeader>
         ),
       })}
@@ -288,7 +293,7 @@ export function ConfirmWalletsModal(props: PropTypes) {
         onClose={setBalanceWarnings.bind(null, [])}
         container={modalContainer}>
         <MessageBox
-          title="Insufficient account balance"
+          title={i18n.t('Insufficient account balance')}
           type="error"
           description={<BalanceErrors messages={balanceWarnings ?? []} />}>
           <Button
@@ -297,7 +302,7 @@ export function ConfirmWalletsModal(props: PropTypes) {
             type="primary"
             fullWidth
             onClick={onConfirmBalance}>
-            Proceed anyway
+            {i18n.t('Proceed anyway')}
           </Button>
         </MessageBox>
       </Modal>
@@ -320,7 +325,7 @@ export function ConfirmWalletsModal(props: PropTypes) {
         <>
           {error && (
             <>
-              <Alert variant="alarm" type="error" title={error} />
+              <Alert variant="alarm" type="error" title={i18n.t(error)} />
               <Divider size={12} />
             </>
           )}
@@ -346,13 +351,24 @@ export function ConfirmWalletsModal(props: PropTypes) {
               return (
                 <div key={key}>
                   <Title>
-                    <Typography
-                      variant="title"
-                      size="xmedium">{`Your ${blockchain?.displayName} wallets`}</Typography>
+                    <Typography variant="title" size="xmedium">
+                      {i18n.t({
+                        id: 'yourWallets',
+                        message: 'Your {blockchainName} wallets',
+                        values: { blockchainName: blockchain?.displayName },
+                      })}
+                    </Typography>
                     <Typography
                       variant="label"
                       color="$neutral900"
-                      size="medium">{`You need to connect a ${blockchain?.displayName} wallet.`}</Typography>
+                      size="medium">
+                      {i18n.t({
+                        id: 'needConnect',
+                        message:
+                          'You need to connect a {blockchainName} wallet.',
+                        values: { blockchainName: blockchain?.displayName },
+                      })}
+                    </Typography>
                   </Title>
                   <Divider size={24} />
                   <ListContainer>
@@ -420,7 +436,7 @@ export function ConfirmWalletsModal(props: PropTypes) {
                               <WalletIcon size={18} color="info" />
                               <Divider size={4} direction="horizontal" />
                               <Typography variant="label" size="medium">
-                                Send to a different address
+                                {i18n.t('Send to a different address')}
                               </Typography>
                             </div>
                           </CustomDestinationButton>
@@ -430,7 +446,7 @@ export function ConfirmWalletsModal(props: PropTypes) {
                             <Divider size={4} />
                             <StyledTextField
                               autoFocus
-                              placeholder="Your destination address"
+                              placeholder={i18n.t('Your destination address')}
                               value={destination}
                               onChange={(e) => {
                                 setDestination(e.target.value);
@@ -444,7 +460,12 @@ export function ConfirmWalletsModal(props: PropTypes) {
                           <Alert
                             variant="alarm"
                             type="error"
-                            title={`Address '${destination}' doesn't match the blockchain address pattern.`}
+                            title={i18n.t({
+                              id: 'addressMatch',
+                              values: { destination },
+                              message:
+                                "Address {destination} doesn't match the blockchain address pattern.",
+                            })}
                           />
                         </div>
                       )}

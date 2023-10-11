@@ -1,5 +1,6 @@
 import type { PropTypes } from './SwapsGroup.types';
 
+import { i18n } from '@lingui/core';
 import { Divider, SwapListItem, Typography } from '@rango-dev/ui';
 import React from 'react';
 
@@ -35,7 +36,7 @@ export function SwapsGroup(props: PropTypes) {
                   size="medium"
                   color="neutral800"
                   className="group-title">
-                  {group.title}
+                  {i18n.t(group.title)}
                 </Typography>
               </Time>
               <Divider size={4} />
@@ -69,7 +70,7 @@ export function SwapsGroup(props: PropTypes) {
                   size="medium"
                   color="neutral800"
                   className="group-title">
-                  {group.title}
+                  {i18n.t(group.title)}
                 </Typography>
               </Time>
               <Divider size={4} />

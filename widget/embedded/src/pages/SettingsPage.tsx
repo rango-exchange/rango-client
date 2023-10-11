@@ -60,7 +60,7 @@ export function SettingsPage({ supportedSwappers, singleTheme }: PropTypes) {
       case 'failed':
         return (
           <Typography variant="body" size="medium" color="$error500">
-            Loading failed
+            {i18n.t('Loading failed')}
           </Typography>
         );
       default:

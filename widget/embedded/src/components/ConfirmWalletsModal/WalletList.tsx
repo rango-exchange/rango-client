@@ -4,6 +4,7 @@ import type { Wallet } from '../../types';
 import type { WalletInfo } from '@rango-dev/ui';
 import type { WalletType } from '@rango-dev/wallets-shared';
 
+import { i18n } from '@lingui/core';
 import {
   Button,
   Divider,
@@ -129,7 +130,11 @@ export function WalletList(props: PropTypes) {
           wallet.state === WalletState.CONNECTED;
 
         const connectedWalletDescription = couldAddExperimentalChain
-          ? `Add ${chain} chain`
+          ? i18n.t({
+              id: 'addChain',
+              message: 'Add {chain} chain',
+              values: { chain },
+            })
           : conciseAddress;
 
         const onClick = () => {
@@ -177,9 +182,18 @@ export function WalletList(props: PropTypes) {
                   setExperimentalChainWallet(null);
                 }}>
                 <MessageBox
-                  title={`Add ${blockchainDisplayName} Chain`}
+                  title={i18n.t({
+                    id: 'addBlockchain',
+                    message: 'Add {blockchainDisplayName} Chain',
+                    values: { blockchainDisplayName },
+                  })}
                   type="warning"
-                  description={`You should connect a ${blockchainDisplayName} supported wallet or choose a different ${blockchainDisplayName} address`}>
+                  description={i18n.t({
+                    id: 'addBlockchainDescription',
+                    message:
+                      'You should connect a {blockchainDisplayName} supported wallet or choose a different {blockchainDisplayName} address',
+                    values: { blockchainDisplayName },
+                  })}>
                   <Divider size={18} />
                   <Divider size={32} />
                   <Button
@@ -191,7 +205,7 @@ export function WalletList(props: PropTypes) {
                     type="primary"
                     fullWidth
                     size="large">
-                    Confirm
+                    {i18n.t('Confirm')}
                   </Button>
                 </MessageBox>
               </Modal>
@@ -204,8 +218,17 @@ export function WalletList(props: PropTypes) {
                 {addingExperimentalChainStatus === 'in-progress' ? (
                   <MessageBox
                     type="loading"
-                    title={`Add ${blockchainDisplayName} Chain`}
-                    description={`You should connect a ${blockchainDisplayName} supported wallet or choose a different ${blockchainDisplayName} address.`}
+                    title={i18n.t({
+                      id: 'addBlockchain',
+                      message: 'Add {blockchainDisplayName} Chain',
+                      values: { blockchainDisplayName },
+                    })}
+                    description={i18n.t({
+                      id: 'addBlockchainDescription',
+                      message:
+                        'You should connect a {blockchainDisplayName} supported wallet or choose a different {blockchainDisplayName} address',
+                      values: { blockchainDisplayName },
+                    })}
                     icon={
                       <LogoContainer>
                         <WalletImageContainer>
@@ -218,8 +241,17 @@ export function WalletList(props: PropTypes) {
                 ) : (
                   <MessageBox
                     type="success"
-                    title={`${blockchainDisplayName} Chain Added`}
-                    description={`${blockchainDisplayName} is added to your wallet, you can use it to swap.`}
+                    title={i18n.t({
+                      id: 'blockchainAdded',
+                      message: '{blockchainDisplayName} Chain Added',
+                      values: { blockchainDisplayName },
+                    })}
+                    description={i18n.t({
+                      id: 'blockchainAddedDescription',
+                      message:
+                        '{blockchainDisplayName} is added to your wallet, you can use it to swap.',
+                      values: { blockchainDisplayName },
+                    })}
                   />
                 )}
                 <Divider direction="vertical" size={32} />
@@ -238,7 +270,7 @@ export function WalletList(props: PropTypes) {
       {shouldShowMoreWallets && (
         <WalletButton selected={false} onClick={onShowMore.bind(null)}>
           <Typography variant="label" size="medium">
-            Show more wallets
+            {i18n.t('Show more wallets')}
             <Typography variant="label" size="medium" color="$primary">
               &nbsp;+{numberOfSupportedWallets - (limit ?? 0)}
             </Typography>

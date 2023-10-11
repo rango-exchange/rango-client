@@ -212,19 +212,36 @@ export function SwapDetails(props: SwapDetailsProps) {
 
   const completeModalDesc =
     swap.status === 'success'
-      ? `You have received ${numberToString(
-          outputAmount,
-          TOKEN_AMOUNT_MIN_DECIMALS,
-          TOKEN_AMOUNT_MAX_DECIMALS
-        )} ${
-          steps[numberOfSteps - 1].to.token.displayName
-        } in ${getConciseAddress(
-          swap.wallets[steps[numberOfSteps - 1].to.chain.displayName]
-            ?.address || ''
-        )} wallet on ${steps[numberOfSteps - 1].to.chain.displayName} chain.`
+      ? i18n.t({
+          id: 'receivedMessage',
+          message:
+            'You have received {amount} {token} in {conciseAddress} wallet on {chain} chain.',
+          values: {
+            amount: numberToString(
+              outputAmount,
+              TOKEN_AMOUNT_MIN_DECIMALS,
+              TOKEN_AMOUNT_MAX_DECIMALS
+            ),
+            token: steps[numberOfSteps - 1].to.token.displayName,
+            conciseAddress: getConciseAddress(
+              swap.wallets[steps[numberOfSteps - 1].to.chain.displayName]
+                ?.address || ''
+            ),
+            chain: steps[numberOfSteps - 1].to.chain.displayName,
+          },
+        })
       : `${i18n.t('Transaction was not sent.')} ${
           lastConvertedTokenInFailedSwap
-            ? `${lastConvertedTokenInFailedSwap.outputAmount}  ${lastConvertedTokenInFailedSwap.symbol} on ${lastConvertedTokenInFailedSwap.blockchain} remain in your wallet`
+            ? i18n.t({
+                id: 'remainSymbol',
+                message:
+                  '{amount} {symbol} on {blockchain} remain in your wallet',
+                values: {
+                  amount: lastConvertedTokenInFailedSwap.outputAmount,
+                  symbol: lastConvertedTokenInFailedSwap.symbol,
+                  blockchain: lastConvertedTokenInFailedSwap.blockchain,
+                },
+              })
             : ''
         }`;
 

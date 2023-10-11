@@ -314,7 +314,7 @@ export function ConfirmSwapPage(props: PropTypes) {
   return (
     <Layout
       header={{
-        title: 'Confirm Swap',
+        title: i18n.t('Confirm Swap'),
         onBack: navigate.bind(null, -1),
         hasConnectWallet: true,
         suffix: (
@@ -342,7 +342,7 @@ export function ConfirmSwapPage(props: PropTypes) {
               loading={fetchingConfirmationRoute}
               disabled={!!confirmSwapResult.error}
               onClick={onStartConfirmSwap}>
-              Start Swap
+              {i18n.t('Start Swap')}
             </Button>
           </div>
           <IconButton
@@ -364,7 +364,7 @@ export function ConfirmSwapPage(props: PropTypes) {
             variant="ghost"
             onClick={() => navigate('/' + navigationRoutes.settings)}>
             <Typography variant="label" size="medium" color="$neutral900">
-              Change settings
+              {i18n.t('Change settings')}
             </Typography>
           </Button>
         }
@@ -376,8 +376,8 @@ export function ConfirmSwapPage(props: PropTypes) {
             title={
               confirmSwapResult.warnings.slippage.type ===
               SlippageWarningType.HIGH_SLIPPAGE
-                ? 'High slippage'
-                : 'Low slippage'
+                ? i18n.t('High slippage')
+                : i18n.t('Low slippage')
             }
             description={
               confirmSwapResult.warnings.slippage.type ===
@@ -411,7 +411,7 @@ export function ConfirmSwapPage(props: PropTypes) {
               variant="contained"
               fullWidth
               onClick={onConfirm}>
-              Confirm anyway
+              {i18n.t('Confirm anyway')}
             </Button>
           </MessageBox>
         )}
@@ -430,7 +430,7 @@ export function ConfirmSwapPage(props: PropTypes) {
       <Container>
         <div className="description">
           <Typography variant="title" size="small">
-            You get
+            {i18n.t('You get')}
           </Typography>
           <Button
             style={{ padding: '0' }}
