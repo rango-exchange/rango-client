@@ -1,5 +1,7 @@
 import type { Info } from './NoRoutes.types';
 
+import { i18n } from '@lingui/core';
+
 import { errorMessages } from '../../constants/errors';
 
 export function makeInfo(
@@ -16,7 +18,7 @@ export function makeInfo(
         text: errorMessages.genericServerError,
         action: {
           onClick: refetchBestRoute,
-          title: 'Retry',
+          title: i18n.t('Retry'),
         },
       },
       description: '',
@@ -37,7 +39,7 @@ export function makeInfo(
         text: errorMessages.liquiditySourcesError.title,
         action: {
           onClick: () => toggleAllLiquiditySources(true),
-          title: 'Reset',
+          title: i18n.t('Reset'),
         },
       },
       description: errorMessages.liquiditySourcesError.description,

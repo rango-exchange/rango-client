@@ -86,7 +86,7 @@ export function HistoryPage() {
           setValue={setSearchedFor}
           fullWidth
           variant="contained"
-          placeholder="Search Transaction"
+          placeholder={i18n.t('Search Transaction')}
           autoFocus
           onChange={searchHandler}
           value={searchedFor}

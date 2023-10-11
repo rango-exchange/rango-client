@@ -250,11 +250,18 @@ export function Home() {
                   </Typography>
                   <Divider direction="horizontal" size={8} />
                   <Typography size="xsmall" variant="body" color="neutral900">
-                    {`Yours: ${numberToString(
-                      swapHasError?.fromAmount || null,
-                      TOKEN_AMOUNT_MIN_DECIMALS,
-                      TOKEN_AMOUNT_MAX_DECIMALS
-                    )} ${swap?.from.symbol}`}
+                    {i18n.t({
+                      id: 'yourSymbol',
+                      message: 'Yours: {amount} {symbol}',
+                      values: {
+                        amount: numberToString(
+                          swapHasError?.fromAmount || null,
+                          TOKEN_AMOUNT_MIN_DECIMALS,
+                          TOKEN_AMOUNT_MAX_DECIMALS
+                        ),
+                        symbol: swap?.from.symbol,
+                      },
+                    })}
                   </Typography>
                 </FooterAlert>
               }
@@ -313,7 +320,8 @@ export function Home() {
         <InputsContainer>
           <FromContainer>
             <SwapInput
-              label="From"
+              label={i18n.t('From')}
+              mode="From"
               onInputChange={setInputAmount}
               balance={tokenBalance}
               chain={{
@@ -350,7 +358,8 @@ export function Home() {
           </FromContainer>
           <SwapInput
             sharpBottomStyle={!!bestRoute?.result || fetchingBestRoute}
-            label="To"
+            label={i18n.t('To')}
+            mode="To"
             chain={{
               displayName: toBlockchain?.displayName || '',
               image: toBlockchain?.logo || '',

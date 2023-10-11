@@ -17,25 +17,22 @@ export type BaseProps = {
   loading?: boolean;
   error?: boolean;
   disabled?: boolean;
+  label: string;
   sharpBottomStyle?: boolean;
   onClickToken: () => void;
 };
 
 type FromProps = {
-  label: 'From';
+  mode: 'From';
   balance?: string;
   onSelectMaxBalance: () => void;
   onInputChange: (inputAmount: string) => void;
 };
 
 type ToProps = {
-  label: 'To';
+  mode: 'To';
   percentageChange: string | null;
   warningLevel: PriceImpactWarningLevel;
 };
 
-type Common = {
-  label: string;
-};
-
-export type SwapInputProps = BaseProps & (FromProps | ToProps | Common);
+export type SwapInputProps = BaseProps & (FromProps | ToProps);

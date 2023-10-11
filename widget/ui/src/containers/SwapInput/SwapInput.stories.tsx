@@ -32,6 +32,7 @@ export const SwapTo = (args: SwapInputProps) => (
   <SwapInput
     {...args}
     label="To"
+    mode="To"
     price={{ value: '2.5', usdValue: '610' }}
     percentageChange="6.4"
     warningLevel="high"
