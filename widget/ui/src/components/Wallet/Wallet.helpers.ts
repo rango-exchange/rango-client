@@ -1,5 +1,7 @@
 import type { Info } from './Wallet.types';
 
+import { i18n } from '@lingui/core';
+
 import { WalletState } from './Wallet.types';
 
 export function makeInfo(state: WalletState): Info {
@@ -7,28 +9,28 @@ export function makeInfo(state: WalletState): Info {
     case WalletState.CONNECTED:
       return {
         color: 'success500',
-        description: 'Connected',
-        tooltipText: 'Disconnect',
+        description: i18n.t('Connected'),
+        tooltipText: i18n.t('Disconnect'),
       };
     case WalletState.NOT_INSTALLED:
       return {
         color: 'info500',
-        description: 'Install',
-        tooltipText: 'Install',
+        description: i18n.t('Install'),
+        tooltipText: i18n.t('Install'),
       };
     case WalletState.CONNECTING:
       return {
         color: 'neutral800',
-        description: 'Connecting...',
-        tooltipText: 'Connecting',
+        description: i18n.t('Connecting...'),
+        tooltipText: i18n.t('Connecting'),
       };
     case WalletState.DISCONNECTED:
       return {
         color: 'neutral800',
-        description: 'Disconnected',
-        tooltipText: 'Connect',
+        description: i18n.t('Disconnected'),
+        tooltipText: i18n.t('Connect'),
       };
     default:
-      throw new Error('you need to pass a correct state to Wallet.');
+      throw new Error(i18n.t('you need to pass a correct state to Wallet.'));
   }
 }

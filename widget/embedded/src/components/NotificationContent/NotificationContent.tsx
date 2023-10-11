@@ -1,5 +1,6 @@
 import type { Notification } from '../../types/notification';
 
+import { i18n } from '@lingui/core';
 import {
   ChainToken,
   ChevronRightIcon,
@@ -72,7 +73,7 @@ export function NotificationContent() {
                 onClick={() => handleOnClick(notificationItem.requestId)}
                 title={
                   <Typography variant="body" size="small" color="$neutral900">
-                    {notificationItem.event.message}
+                    {i18n.t(notificationItem.event.message)}
                   </Typography>
                 }
                 id={notificationItem.requestId}

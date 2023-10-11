@@ -1,5 +1,6 @@
 import type { StepDetailsProps } from './StepDetails.types';
 
+import { i18n } from '@lingui/core';
 import React, { forwardRef, memo, useEffect, useRef } from 'react';
 
 import { ChainToken } from '../../components/ChainToken/ChainToken';
@@ -49,7 +50,16 @@ const StepDetailsComponent = forwardRef<HTMLDivElement, StepDetailsProps>(
             className="swapper__description"
             ml={8}
             size="small"
-            variant="body">{`Swap on ${step.from.chain.displayName} via ${step.swapper.displayName}`}</Typography>
+            variant="body">
+            {i18n.t({
+              id: 'swapperDescription',
+              message: 'Swap on {fromChain} via {swapper}',
+              values: {
+                fromChain: step.from.chain.displayName,
+                swapper: step.swapper.displayName,
+              },
+            })}
+          </Typography>
         </div>
         <div className="step-info">
           <DashedLine invisible={!hasSeparator || type === 'route-progress'} />

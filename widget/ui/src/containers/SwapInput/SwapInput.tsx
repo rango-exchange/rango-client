@@ -1,5 +1,6 @@
 import type { SwapInputProps } from './SwapInput.types';
 
+import { i18n } from '@lingui/core';
 import React from 'react';
 
 import { Divider, PriceImpact, Skeleton, Typography } from '../../components';
@@ -22,14 +23,14 @@ export function SwapInput(props: SwapInputProps) {
                 mr={4}
                 variant="body"
                 size="xsmall">
-                Balance: {props.balance}
+                {i18n.t('Balance')}: {props.balance}
               </Typography>
               <MaxButton
                 variant="default"
                 size="xsmall"
                 onClick={props.onSelectMaxBalance}>
                 <Typography variant="body" size="xsmall" color="secondary500">
-                  Max
+                  {i18n.t('Max')}
                 </Typography>
               </MaxButton>
             </div>
@@ -61,7 +62,7 @@ export function SwapInput(props: SwapInputProps) {
           ) : (
             <>
               <InputAmount
-                disabled={props.disabled || props.label === 'To'}
+                disabled={props.disabled || props.mode === 'To'}
                 style={{ padding: 0 }}
                 value={props.price.value}
                 type={'onInputChange' in props ? 'number' : 'text'}

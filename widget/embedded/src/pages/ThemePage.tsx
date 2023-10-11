@@ -82,7 +82,7 @@ export function ThemePage() {
           <List
             type={
               <ListItemButton
-                title="Theme"
+                title={i18n.t('Theme')}
                 id="_"
                 onClick={() => console.log()}
               />

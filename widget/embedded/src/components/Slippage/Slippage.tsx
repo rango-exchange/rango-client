@@ -82,7 +82,7 @@ export function Slippage() {
               </Typography>
             )
           }
-          placeholder="Custom"
+          placeholder={i18n.t('Custom')}
         />
       </SlippageChipsContainer>
     </BaseContainer>

@@ -16,6 +16,7 @@ import type {
   Token,
 } from 'rango-sdk';
 
+import { i18n } from '@lingui/core';
 import { PendingSwapNetworkStatus } from '@rango-dev/queue-manager-rango-preset';
 import BigNumber from 'bignumber.js';
 
@@ -118,34 +119,62 @@ export function LimitErrorMessage(bestRoute: BestRouteResponse | null): {
   let fromAmountRangeError = '';
   let recommendation = '';
   if (!isExclusive && !!minimum && minimum.gt(swap.fromAmount)) {
-    fromAmountRangeError = `Required: >= ${numberToString(
-      minimum,
-      TOKEN_AMOUNT_MIN_DECIMALS,
-      TOKEN_AMOUNT_MAX_DECIMALS
-    )} ${swap.from.symbol}`;
+    fromAmountRangeError = i18n.t({
+      id: 'requiredEqualMin',
+      message: 'Required: >= {min} {symbol}',
+      values: {
+        min: numberToString(
+          minimum,
+          TOKEN_AMOUNT_MIN_DECIMALS,
+          TOKEN_AMOUNT_MAX_DECIMALS
+        ),
+        symbol: swap.from.symbol,
+      },
+    });
     recommendation = errorMessages.bridgeLimitErrors.increaseAmount;
   } else if (isExclusive && !!minimum && minimum.gte(swap.fromAmount)) {
-    fromAmountRangeError = `Required: > ${numberToString(
-      minimum,
-      TOKEN_AMOUNT_MIN_DECIMALS,
-      TOKEN_AMOUNT_MAX_DECIMALS
-    )} ${swap.from.symbol}`;
+    fromAmountRangeError = i18n.t({
+      id: 'requiredMin',
+      message: 'Required: > {min} {symbol}',
+      values: {
+        min: numberToString(
+          minimum,
+          TOKEN_AMOUNT_MIN_DECIMALS,
+          TOKEN_AMOUNT_MAX_DECIMALS
+        ),
+        symbol: swap.from.symbol,
+      },
+    });
     recommendation = errorMessages.bridgeLimitErrors.increaseAmount;
   }
 
   if (!isExclusive && !!maximum && maximum.lt(swap.fromAmount)) {
-    fromAmountRangeError = `Required: <= ${numberToString(
-      maximum,
-      TOKEN_AMOUNT_MIN_DECIMALS,
-      TOKEN_AMOUNT_MAX_DECIMALS
-    )} ${swap.from.symbol}`;
+    fromAmountRangeError = i18n.t({
+      id: 'requiredEqualMax',
+      message: 'Required: <= {max} {symbol}',
+      values: {
+        max: numberToString(
+          maximum,
+          TOKEN_AMOUNT_MIN_DECIMALS,
+          TOKEN_AMOUNT_MAX_DECIMALS
+        ),
+        symbol: swap.from.symbol,
+      },
+    });
     recommendation = errorMessages.bridgeLimitErrors.decreaseAmount;
   } else if (isExclusive && !!maximum && maximum.lte(swap.fromAmount)) {
-    fromAmountRangeError = `Required: < ${numberToString(
-      maximum,
-      TOKEN_AMOUNT_MIN_DECIMALS,
-      TOKEN_AMOUNT_MAX_DECIMALS
-    )} ${swap.from.symbol}`;
+    fromAmountRangeError = i18n.t({
+      id: 'requiredMax',
+      message: 'Required: < {max} {symbol}',
+      values: {
+        max: numberToString(
+          maximum,
+          TOKEN_AMOUNT_MIN_DECIMALS,
+          TOKEN_AMOUNT_MAX_DECIMALS
+        ),
+        symbol: swap.from.symbol,
+      },
+    });
     recommendation = errorMessages.bridgeLimitErrors.decreaseAmount;
   }
 
@@ -570,15 +599,25 @@ export function getBalanceWarnings(
       );
       let reason = '';
       if (asset.reason === 'FEE') {
-        reason = ' for network fee';
+        reason = i18n.t(' for network fee');
       }
       if (asset.reason === 'INPUT_ASSET') {
-        reason = ' for swap';
+        reason = i18n.t(' for swap');
       }
       if (asset.reason === 'FEE_AND_INPUT_ASSET') {
-        reason = ' for input and network fee';
+        reason = i18n.t(' for input and network fee');
       }
-      const warningMessage = `Needs ≈ ${requiredAmount} ${symbol}${reason}, but you have ${currentAmount} ${symbol} in your ${asset.asset.blockchain} wallet.`;
+      const warningMessage = i18n.t({
+        id: 'balanceWarningMessage',
+        message: `Needs ≈ {requiredAmount} {symbol}{reason}, but you have {currentAmount} {symbol} in your {blockchain} wallet.`,
+        values: {
+          requiredAmount,
+          symbol,
+          reason,
+          currentAmount,
+          blockchain: asset.asset.blockchain,
+        },
+      });
       return warningMessage;
     });
 }
@@ -626,13 +665,14 @@ export function getSwapMessages(
     // eslint-disable-next-line @typescript-eslint/switch-exhaustiveness-check
     switch (currentStep?.networkStatus) {
       case PendingSwapNetworkStatus.WaitingForConnectingWallet:
-        message = message || 'Waiting for connecting wallet';
+        message = message || i18n.t('Waiting for connecting wallet');
         break;
       case PendingSwapNetworkStatus.WaitingForQueue:
-        message = message || 'Waiting for other running tasks to be finished';
+        message =
+          message || i18n.t('Waiting for other running tasks to be finished');
         break;
       case PendingSwapNetworkStatus.WaitingForNetworkChange:
-        message = message || 'Waiting for changing wallet network';
+        message = message || i18n.t('Waiting for changing wallet network');
         break;
       default:
         message = message || '';

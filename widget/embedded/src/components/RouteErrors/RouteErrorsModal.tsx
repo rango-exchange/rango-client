@@ -1,5 +1,6 @@
 import type { ModalPropTypes } from './RouteErrors.types';
 
+import { i18n } from '@lingui/core';
 import {
   Button,
   Divider,
@@ -44,7 +45,7 @@ export function RouteErrorsModal(props: ModalPropTypes) {
       : 'warning';
   const highValueLossData = [
     {
-      title: 'Swapping',
+      title: i18n.t('Swapping'),
       value: numberToString(
         inputUsdValue,
         USD_VALUE_MIN_DECIMALS,
@@ -52,7 +53,7 @@ export function RouteErrorsModal(props: ModalPropTypes) {
       ),
     },
     {
-      title: 'Gas cost',
+      title: i18n.t('Gas cost'),
       value: numberToString(
         totalFeeInUsd,
         GAS_FEE_MIN_DECIMALS,
@@ -60,7 +61,7 @@ export function RouteErrorsModal(props: ModalPropTypes) {
       ),
     },
     {
-      title: 'Receiving',
+      title: i18n.t('Receiving'),
       value: numberToString(
         outputUsdValue,
         USD_VALUE_MIN_DECIMALS,
@@ -68,7 +69,7 @@ export function RouteErrorsModal(props: ModalPropTypes) {
       ),
     },
     {
-      title: 'Price impact',
+      title: i18n.t('Price impact'),
       value: numberToString(
         percentageChange,
         PERCENTAGE_CHANGE_MIN_DECIMALS,
@@ -100,7 +101,7 @@ export function RouteErrorsModal(props: ModalPropTypes) {
         <Flex>
           <Divider size={20} />
           <Typography size="small" variant="title">
-            Details
+            {i18n.t('Details')}
           </Typography>
           <Flex>
             {highValueLossData.map((item, index) => {
