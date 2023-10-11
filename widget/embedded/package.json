@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/widget-embedded",
-  "version": "0.12.1-next.23",
+  "version": "0.12.1-next.24",
   "license": "MIT",
   "type": "module",
   "main": "dist/index.js",
