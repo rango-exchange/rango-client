@@ -49,6 +49,7 @@ export const connect: Connect = async ({ instance, meta }) => {
     if (!res) {
       throw new Error('Please unlock your TronLink extension first.');
     }
+    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
     if (!!res?.code && !!res.message && res.code !== 200) {
       throw new Error(res.message);
     }
@@ -119,7 +120,7 @@ export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
   const evms = evmBlockchains(allBlockChains);
   const tron = tronBlockchain(allBlockChains);
   return {
-    name: 'Bitget',
+    name: 'Bitget Wallet',
     img: 'https://raw.githubusercontent.com/rango-exchange/assets/main/wallets/bitget/icon.svg',
     installLink: {
       CHROME:
