@@ -40,6 +40,7 @@ export const allProviders = (enviroments?: Enviroments) => {
     tronLink,
     trustwallet,
     binance,
+    bitget,
     enkrypt,
     xdefi,
     clover,
@@ -56,7 +57,6 @@ export const allProviders = (enviroments?: Enviroments) => {
     leapCosmos,
     frontier,
     taho,
-    bitget,
     braavos,
     station,
   ];
