@@ -10,8 +10,7 @@ export const Layout = styled('div', {
   flexDirection: 'column',
 });
 
-export const GeneralContent = styled('div', {
-  height: '474px',
+export const GeneralContainer = styled('div', {
   backgroundColor: '$background',
   borderRadius: '$sm',
   border: '1px solid $neutral300',

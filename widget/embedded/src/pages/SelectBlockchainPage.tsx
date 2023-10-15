@@ -1,11 +1,10 @@
 import { i18n } from '@lingui/core';
-import { Divider } from '@rango-dev/ui';
+import { Divider, SelectableCategoryList } from '@rango-dev/ui';
 import React, { useState } from 'react';
 
 import { BlockchainList } from '../components/BlockchainList';
 import { Layout } from '../components/Layout';
 import { SearchInput } from '../components/SearchInput';
-import { SelectableCategoryList } from '../components/SelectableCategoryList';
 import { navigationRoutes } from '../constants/navigationRoutes';
 import { useNavigateBack } from '../hooks/useNavigateBack';
 import { useBestRouteStore } from '../store/bestRoute';
@@ -23,7 +22,10 @@ export function SelectBlockchainPage(props: PropTypes) {
   const [blockchainCategory, setBlockchainCategory] = useState<string>('ALL');
   const setToBlockchain = useBestRouteStore.use.setToBlockchain();
   const setFromBlockchain = useBestRouteStore.use.setFromBlockchain();
-
+  const {
+    meta: { blockchains: allBlockchains },
+    loadingStatus,
+  } = useMetaStore();
   const blockchains = supportedBlockchains
     ? useMetaStore.use
         .meta()
@@ -45,6 +47,8 @@ export function SelectBlockchainPage(props: PropTypes) {
       <SelectableCategoryList
         setCategory={setBlockchainCategory}
         category={blockchainCategory}
+        blockchains={allBlockchains}
+        isLoading={loadingStatus === 'loading'}
       />
       <Divider size={24} />
       <SearchInput

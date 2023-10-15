@@ -1,12 +1,15 @@
 import type { WidgetConfig } from '@rango-dev/widget-embedded';
-import type { Asset, Token } from 'rango-sdk';
+import type { Asset, BlockchainMeta, Token } from 'rango-sdk';
 
-import { WalletState } from '@rango-dev/ui';
+import { BlockchainCategories, WalletState } from '@rango-dev/ui';
 import { WalletTypes } from '@rango-dev/wallets-shared';
+import { TransactionType } from 'rango-sdk';
 import stringifyObject from 'stringify-object';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import subtractObject from 'subtract-object';
+
+import { NOT_FOUND } from './constants';
 
 export const excludedWallets = [
   WalletTypes.STATION,
@@ -15,8 +18,6 @@ export const excludedWallets = [
   WalletTypes.MY_TON_WALLET,
   WalletTypes.WALLET_CONNECT_2,
 ];
-
-export const NOT_FOUND = -1;
 
 export const onChangeMultiSelects = (
   value: string,
@@ -139,7 +140,6 @@ export function getIframeCode(config: string) {
   const config = ${insertAt(config, '  ', config.lastIndexOf('}'))}
               
   rangoWidget.init(config)
-
 </script>
 `;
 }
@@ -224,3 +224,26 @@ export const getStateWallet = (state: {
       return WalletState.DISCONNECTED;
   }
 };
+
+export function getWalletNetworks(chains: BlockchainMeta[]) {
+  const supportedNetworks: Set<BlockchainCategories> = new Set();
+
+  chains.forEach((chain) => {
+    switch (chain.type) {
+      case TransactionType.EVM:
+        supportedNetworks.add(BlockchainCategories.EVM);
+        break;
+      case TransactionType.COSMOS:
+        supportedNetworks.add(BlockchainCategories.COSMOS);
+        break;
+      case TransactionType.TRANSFER:
+        supportedNetworks.add(BlockchainCategories.UTXO);
+        break;
+      default:
+        supportedNetworks.add(BlockchainCategories.OTHER);
+        break;
+    }
+  });
+
+  return Array.from(supportedNetworks);
+}

@@ -1,4 +1,4 @@
-import { styled } from '@rango-dev/ui';
+import { styled } from '../../theme';
 
 export const Container = styled('div', {
   display: 'grid',

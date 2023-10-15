@@ -7,7 +7,7 @@ type RadixCheckboxProps = Pick<
 
 interface WithLabelProps {
   id: string;
-  label: string;
+  label: React.ReactNode;
 }
 interface ComponentProps {
   id?: never;

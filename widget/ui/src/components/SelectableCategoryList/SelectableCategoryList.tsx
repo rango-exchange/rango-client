@@ -2,10 +2,9 @@
 import type { PropTypes } from './SelectableCategoryList.types';
 
 import { i18n } from '@lingui/core';
-import { Divider, Image, Skeleton, Typography } from '@rango-dev/ui';
 import React from 'react';
 
-import { useMetaStore } from '../../store/meta';
+import { Divider, Image, Skeleton, Typography } from '..';
 import { BlockchainsChip } from '../BlockchainsChip';
 
 import { generateBlockchainsLogo } from './SelectableCategoryList.helpers';
@@ -17,15 +16,13 @@ import {
 import { BlockchainCategories } from './SelectableCategoryList.types';
 
 export function SelectableCategoryList(props: PropTypes) {
-  const { setCategory, category } = props;
-  const blockchains = useMetaStore.use.meta().blockchains;
-  const loadingStatus = useMetaStore.use.loadingStatus();
+  const { setCategory, category, blockchains, isLoading } = props;
   const categories = Object.keys(
     BlockchainCategories
   ) as BlockchainCategories[];
   return (
     <Container>
-      {loadingStatus === 'loading' &&
+      {isLoading &&
         Array.from(Array(5), (_, index) => (
           <Skeleton
             key={index}
@@ -34,7 +31,7 @@ export function SelectableCategoryList(props: PropTypes) {
             width={index === 0 ? 45 : 65}
           />
         ))}
-      {loadingStatus === 'success' &&
+      {!isLoading &&
         categories.map((blockchainCategory) => (
           <BlockchainsChip
             selected={category === blockchainCategory}

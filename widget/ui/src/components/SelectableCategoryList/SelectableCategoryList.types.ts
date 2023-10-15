@@ -1,6 +1,10 @@
+import type { BlockchainMeta } from 'rango-sdk';
+
 export interface PropTypes {
   setCategory: (type: string) => void;
   category: string;
+  blockchains: BlockchainMeta[];
+  isLoading?: boolean;
 }
 
 export enum BlockchainCategories {

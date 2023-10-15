@@ -1,13 +1,13 @@
 import type { PropsWithChildren } from 'react';
 
 import { Divider, Typography } from '@rango-dev/ui';
-import React from 'react';
-import { useSearchParams } from 'react-router-dom';
+import React, { useState } from 'react';
 
 import { SideNavigation } from '../../components/SideNavigation';
-import { StyleLayout } from '../../components/StyleLayout';
-import { SearchParams, SIDE_TABS_IDS } from '../../constants';
+import { SIDE_TABS_IDS } from '../../constants';
 import { globalStyles } from '../../globalStyles';
+import { FunctionalLayout } from '../FunctionalLayout';
+import { StyleLayout } from '../StyleLayout';
 
 import { Header } from './ConfigContainer.Header';
 import {
@@ -19,18 +19,23 @@ import {
 } from './ConfigContainer.styles';
 
 export function ConfigContainer(props: PropsWithChildren) {
+  const [activeLayout, setActiveLayout] = useState(SIDE_TABS_IDS.FUNCTIONAL);
   globalStyles();
-  const [searchParams] = useSearchParams();
-  const layoutParams = new URLSearchParams(searchParams.toString());
-  const layoutSelected = layoutParams.get(SearchParams.LAYOUT);
 
   return (
     <>
       <Container>
         <LeftSide>
-          <SideNavigation />
+          <SideNavigation
+            onChange={(id) => setActiveLayout(id)}
+            activeLayout={activeLayout}
+          />
           <Divider direction="horizontal" size={12} />
-          {layoutSelected === SIDE_TABS_IDS.FUNCTIONAL ? null : <StyleLayout />}
+          {activeLayout === SIDE_TABS_IDS.FUNCTIONAL ? (
+            <FunctionalLayout />
+          ) : (
+            <StyleLayout />
+          )}
         </LeftSide>
         <Main>
           <Header />
