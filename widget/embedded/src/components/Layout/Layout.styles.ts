@@ -10,6 +10,7 @@ export const Container = styled('div', {
   width: '95vw',
   maxWidth: '390px',
   maxHeight: '700px',
+  backgroundColor: '$neutral100',
   variants: {
     fixedHeight: {
       true: {
@@ -22,6 +23,8 @@ export const Container = styled('div', {
   },
 });
 export const Content = styled('div', {
+  borderTopLeftRadius: '20px',
+  borderTopRightRadius: '20px',
   display: 'flex',
   flexDirection: 'column',
   flex: 1,

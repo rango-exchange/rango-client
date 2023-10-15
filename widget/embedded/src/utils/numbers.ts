@@ -147,8 +147,9 @@ export function removeExtraDecimals(num: string, maxDecimals: number): string {
   }
 }
 
-export const totalArrivalTime = (data: BestRouteResponse | null) =>
-  data?.result?.swaps?.reduce((a, b) => a + b.estimatedTimeInSeconds, 0) || 0;
+export const totalArrivalTime = (
+  data: { estimatedTimeInSeconds: number | null }[] | undefined
+) => data?.reduce((a, b) => a + (b.estimatedTimeInSeconds ?? 0), 0) || 0;
 
 export const rawFees = (data: BestRouteResponse): string =>
   (

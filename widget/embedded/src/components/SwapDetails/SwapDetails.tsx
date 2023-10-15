@@ -38,7 +38,11 @@ import { useNavigateBack } from '../../hooks/useNavigateBack';
 import { useBestRouteStore } from '../../store/bestRoute';
 import { useMetaStore } from '../../store/meta';
 import { useNotificationStore } from '../../store/notification';
-import { numberToString } from '../../utils/numbers';
+import {
+  numberToString,
+  secondsToString,
+  totalArrivalTime,
+} from '../../utils/numbers';
 import { getPriceImpactLevel } from '../../utils/routing';
 import {
   getLastConvertedTokenInFailedSwap,
@@ -55,12 +59,7 @@ import {
   SwapDetailsModal,
 } from '../SwapDetailsModal';
 
-import {
-  getSteps,
-  getStepState,
-  RESET_INTERVAL,
-  SECONDS,
-} from './SwapDetails.helpers';
+import { getSteps, getStepState, RESET_INTERVAL } from './SwapDetails.helpers';
 import { Container, HeaderDetails, StepsList } from './SwapDetails.styles';
 
 export function SwapDetails(props: SwapDetailsProps) {
@@ -162,13 +161,6 @@ export function SwapDetails(props: SwapDetailsProps) {
     (totalFee, steps) => totalFee + parseFloat(steps.feeInUsd || ''),
     0
   );
-
-  const totalTime = swap.steps.reduce(
-    (totalTime, step) => totalTime + (step.estimatedTimeInSeconds || 0),
-    0
-  );
-
-  const minutes = Math.floor(totalTime / SECONDS);
 
   const diagnosisUrl = swap.steps.find(
     (step) => step.diagnosisUrl
@@ -319,7 +311,7 @@ export function SwapDetails(props: SwapDetailsProps) {
               GAS_FEE_MIN_DECIMALS,
               GAS_FEE_MAX_DECIMALS
             )}
-            time={minutes}
+            time={secondsToString(totalArrivalTime(swap.steps))}
             steps={numberOfSteps}
           />
           <RouteSummary

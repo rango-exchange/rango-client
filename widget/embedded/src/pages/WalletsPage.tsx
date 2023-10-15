@@ -37,14 +37,16 @@ export const TIME_TO_IGNORE_MODAL = 300;
 
 export function WalletsPage({ config }: PropTypes) {
   const { navigateBackFrom } = useNavigateBack();
-  const [openModal, setOpenModal] = useState<WalletType>('');
+  const [openModal, setOpenModal] = useState(false);
+  const [selectedWalletType, setSelectedWalletType] = useState<WalletType>('');
   let modalTimerId: ReturnType<typeof setTimeout> | null = null;
 
   const { list, handleClick, error } = useWalletList({
     config,
     onBeforeConnect: (type) => {
       modalTimerId = setTimeout(() => {
-        setOpenModal(type);
+        setOpenModal(true);
+        setSelectedWalletType(type);
       }, TIME_TO_IGNORE_MODAL);
     },
     onConnect: () => {
@@ -52,13 +54,15 @@ export function WalletsPage({ config }: PropTypes) {
         clearTimeout(modalTimerId);
       }
       setTimeout(() => {
-        setOpenModal('');
+        setOpenModal(false);
       }, TIME_TO_CLOSE_MODAL);
     },
   });
 
   const loadingMetaStatus = useMetaStore.use.loadingStatus();
-  const selectedWallet = list.find((wallet) => wallet.type === openModal);
+  const selectedWallet = list.find(
+    (wallet) => wallet.type === selectedWalletType
+  );
   const selectedWalletImage = selectedWallet?.image || '';
   const selectedWalletState =
     selectedWallet?.state || WalletState.NOT_INSTALLED;
@@ -91,7 +95,7 @@ export function WalletsPage({ config }: PropTypes) {
           })}
           <WalletModal
             open={!!openModal}
-            onClose={() => setOpenModal('')}
+            onClose={() => setOpenModal(false)}
             image={selectedWalletImage}
             state={selectedWalletState}
             error={error}

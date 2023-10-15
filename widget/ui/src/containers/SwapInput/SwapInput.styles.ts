@@ -61,11 +61,4 @@ export const MaxButton = styled(Button, {
     $$color: '$colors$secondary800',
   },
   backgroundColor: '$$color',
-  '&:focus-visible': {
-    $$outline: '$colors$info600',
-    [`.${darkTheme} &`]: {
-      $$outline: '$colors$info100',
-    },
-    outlineColor: '$$outline',
-  },
 });

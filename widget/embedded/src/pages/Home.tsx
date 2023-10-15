@@ -40,6 +40,7 @@ import { useMetaStore } from '../store/meta';
 import { useUiStore } from '../store/ui';
 import { useWalletsStore } from '../store/wallets';
 import { ButtonState } from '../types';
+import { getContainer } from '../utils/common';
 import {
   numberToString,
   secondsToString,
@@ -414,6 +415,7 @@ export function Home() {
             <BestRoute
               type="basic"
               recommended={true}
+              tooltipContainer={getContainer()}
               input={{
                 value: numberToString(
                   inputAmount,
@@ -449,7 +451,9 @@ export function Home() {
                 GAS_FEE_MIN_DECIMALS,
                 GAS_FEE_MAX_DECIMALS
               )}
-              totalTime={secondsToString(totalArrivalTime(bestRoute))}
+              totalTime={secondsToString(
+                totalArrivalTime(bestRoute?.result?.swaps)
+              )}
             />
           </BestRouteContainer>
         ) : showBestRoute && !fetchingBestRoute ? (
