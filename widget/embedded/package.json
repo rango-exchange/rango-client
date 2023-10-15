@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/widget-embedded",
-  "version": "0.12.1-next.26",
+  "version": "0.12.1-next.27",
   "license": "MIT",
   "type": "module",
   "main": "dist/index.js",
@@ -23,7 +23,7 @@
     "@rango-dev/queue-manager-core": "^0.15.1-next.2",
     "@rango-dev/queue-manager-rango-preset": "^0.15.1-next.6",
     "@rango-dev/queue-manager-react": "^0.15.1-next.4",
-    "@rango-dev/ui": "^0.15.1-next.17",
+    "@rango-dev/ui": "^0.15.1-next.18",
     "@rango-dev/wallets-react": "^0.1.1-next.6",
     "@rango-dev/wallets-shared": "^0.15.1-next.4",
     "bignumber.js": "^9.1.1",

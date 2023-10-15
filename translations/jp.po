@@ -157,18 +157,18 @@ msgstr ""
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:66
-#: widget/embedded/src/components/BlockchainsSection/BlockchainsSection.tsx:45
-#: widget/embedded/src/pages/SelectBlockchainPage.tsx:42
+#: widget/embedded/src/components/BlockchainsSection/BlockchainsSection.tsx:50
+#: widget/embedded/src/pages/SelectBlockchainPage.tsx:44
 #~ msgid "Select Blockchain"
 #~ msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/BlockchainsSection/BlockchainsSection.tsx:65
+#: widget/embedded/src/components/BlockchainsSection/BlockchainsSection.tsx:70
 #~ msgid "All"
 #~ msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/BlockchainsSection/BlockchainsSection.tsx:90
+#: widget/embedded/src/components/BlockchainsSection/BlockchainsSection.tsx:95
 #~ msgid "More +{count}"
 #~ msgstr ""
 
@@ -662,7 +662,7 @@ msgstr ""
 #~ msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/SelectBlockchainPage.tsx:53
+#: widget/embedded/src/pages/SelectBlockchainPage.tsx:57
 #~ msgid "Search Blockchain"
 #~ msgstr ""
 
