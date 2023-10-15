@@ -15,7 +15,7 @@ import {
   Typography,
   WalletIcon,
 } from '@rango-dev/ui';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { getConfirmSwapErrorMessage } from '../../constants/errors';
@@ -33,6 +33,7 @@ import {
   ConfirmButton,
   CustomDestination,
   CustomDestinationButton,
+  EXPANDABLE_TRANSITION_DURATION,
   ExpandedIcon,
   ListContainer,
   NavigateBack,
@@ -71,6 +72,8 @@ export function ConfirmWalletsModal(props: PropTypes) {
   const [showCustomDestination, setShowCustomDestination] = useState(
     !!customDestination
   );
+  const customDestinationRef = useRef<HTMLDivElement | null>(null);
+
   const requiredWallets = getRequiredWallets(bestRoute);
   const customDestinationEnabled =
     typeof config?.customDestination === 'undefined'
@@ -231,6 +234,14 @@ export function ConfirmWalletsModal(props: PropTypes) {
     );
   }, [connectedWallets.length]);
 
+  useLayoutEffect(() => {
+    if (showCustomDestination && customDestinationRef.current) {
+      setTimeout(() => {
+        customDestinationRef?.current?.scrollIntoView({ behavior: 'smooth' });
+      }, EXPANDABLE_TRANSITION_DURATION);
+    }
+  }, [showCustomDestination]);
+
   const modalContainer = document.querySelector('#swap-box') as HTMLDivElement;
 
   const navigate = useNavigate();
@@ -389,6 +400,7 @@ export function ConfirmWalletsModal(props: PropTypes) {
                   {isLastWallet && customDestinationEnabled && (
                     <CustomDestination>
                       <CollapsibleRoot
+                        ref={customDestinationRef}
                         selected={showCustomDestination}
                         open={showCustomDestination}
                         onOpenChange={(checked) => {

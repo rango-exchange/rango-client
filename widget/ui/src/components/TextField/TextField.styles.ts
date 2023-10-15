@@ -90,7 +90,6 @@ export const Input = styled('input', {
   fontWeight: 400,
   border: 'none',
   outline: 'none',
-  width: '100%',
   variants: {
     suffix: {
       true: { marginRight: '$10' },
@@ -112,6 +111,9 @@ export const Input = styled('input', {
 
   '&::placeholder, &::-webkit-input-placeholder': {
     color: '$neutral900',
+  },
+  '&:focus-within': {
+    outline: 'none',
   },
 });
 

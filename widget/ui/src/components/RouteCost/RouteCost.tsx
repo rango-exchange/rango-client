@@ -28,8 +28,8 @@ export function RouteCost(props: PropTypes) {
         </div>
         <Typography ml={2} align="center" variant="body" size="small">
           {i18n.t({
-            id: 'timeMin',
-            message: '{time} min',
+            id: 'timeSec',
+            message: '{time} sec',
             values: { time },
           })}
         </Typography>

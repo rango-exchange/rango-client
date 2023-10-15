@@ -87,7 +87,7 @@ export function Modal(props: PropsWithChildren<PropTypes>) {
               css={containerStyle}
               anchor={anchor}>
               {header ?? (
-                <ModalHeader noTitle={!title}>
+                <ModalHeader noTitle={!title && dismissible && !prefix}>
                   {prefix}
                   {title && (
                     <Typography variant="title" size="small">

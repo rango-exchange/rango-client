@@ -2,10 +2,12 @@ import { i18n } from '@lingui/core';
 import {
   ChevronRightIcon,
   Divider,
+  InfoIcon,
   List,
   ListItemButton,
   Skeleton,
   Switch,
+  Tooltip,
   Typography,
 } from '@rango-dev/ui';
 import React from 'react';
@@ -14,10 +16,12 @@ import { useNavigate } from 'react-router-dom';
 import { Layout } from '../components/Layout';
 import { SettingsContainer } from '../components/SettingsContainer';
 import { Slippage } from '../components/Slippage';
+import { SlippageTooltipContainer as TooltipContainer } from '../components/Slippage/Slippage.styles';
 import { navigationRoutes } from '../constants/navigationRoutes';
 import { useNavigateBack } from '../hooks/useNavigateBack';
 import { useMetaStore } from '../store/meta';
 import { useSettingsStore } from '../store/settings';
+import { getContainer } from '../utils/common';
 import { getUniqueSwappersGroups } from '../utils/settings';
 
 interface PropTypes {
@@ -131,9 +135,26 @@ export function SettingsPage({ supportedSwappers, singleTheme }: PropTypes) {
   const infiniteApprovalItem = {
     id: 'infinite-approval-item',
     title: (
-      <Typography variant="title" size="xmedium">
-        {i18n.t('Infinite Approval')}
-      </Typography>
+      <>
+        <Typography variant="title" size="xmedium">
+          {i18n.t('Infinite Approval')}
+        </Typography>
+        <Divider direction="horizontal" size={4} />
+        <Tooltip
+          side="top"
+          container={getContainer()}
+          content={
+            <TooltipContainer>
+              <Typography variant="label" size="medium" color="neutral900">
+                {i18n.t(
+                  "Enabling the 'Infinite Approval' mode grants unrestricted access to smart contracts of DEXes/Bridges, allowing them to utilize the approved token amount without limitations."
+                )}
+              </Typography>
+            </TooltipContainer>
+          }>
+          <InfoIcon color="gray" />
+        </Tooltip>
+      </>
     ),
     end: <Switch checked={infiniteApprove} />,
     onClick: toggleInfiniteApprove,

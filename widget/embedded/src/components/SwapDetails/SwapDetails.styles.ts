@@ -12,7 +12,7 @@ export const Container = styled('div', {
     width: '100%',
     justifyContent: 'space-between',
     alignItems: 'center',
-    padding: '$10 $5',
+    padding: '$10 $20',
     borderBottom: '1px solid',
     $$color: '$colors$neutral300',
     [`.${darkTheme} &`]: {
@@ -43,7 +43,6 @@ export const Container = styled('div', {
 
 export const HeaderDetails = styled('div', {
   width: '100%',
-  padding: '0px 15px',
 });
 
 export const StepsList = styled('div', {

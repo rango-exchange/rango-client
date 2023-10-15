@@ -120,7 +120,8 @@ export function BestRoute(props: BestRouteProps) {
                   <React.Fragment key={key}>
                     <Tooltip
                       container={props.tooltipContainer}
-                      sideOffset={2}
+                      side="bottom"
+                      sideOffset={4}
                       content={step.from.chain.displayName}>
                       <Image src={step.from.chain.image} size={16} />
                     </Tooltip>
@@ -131,7 +132,8 @@ export function BestRoute(props: BestRouteProps) {
                         </IconContainer>
                         <Tooltip
                           container={props.tooltipContainer}
-                          sideOffset={2}
+                          side="bottom"
+                          sideOffset={4}
                           content={step.to.chain.displayName}>
                           <Image src={step.to.chain.image} size={16} />
                         </Tooltip>

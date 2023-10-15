@@ -1,5 +1,15 @@
+import * as RadixTooltip from '@radix-ui/react-tooltip';
+
 import { styled } from '../../theme';
 import { Typography } from '../Typography';
+
+export const TooltipContent = styled(RadixTooltip.Content, {
+  zIndex: '999999',
+});
+
+export const TooltipArrow = styled(RadixTooltip.Arrow, {
+  fill: '$neutral100',
+});
 
 export const TooltipTypography = styled(Typography, {
   borderRadius: '$md',

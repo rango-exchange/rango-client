@@ -7,7 +7,7 @@ import { SlippageTooltipContainer } from './Slippage.styles';
 export function SlippageTooltipContent() {
   return (
     <SlippageTooltipContainer>
-      <Typography variant="label" size="small" color="neutral900">
+      <Typography variant="label" size="medium" color="neutral900">
         {i18n.t(
           'Your transaction will be reverted if the price changes unfavorably by more than this percentage'
         )}
