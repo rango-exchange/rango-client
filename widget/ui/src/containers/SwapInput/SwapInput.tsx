@@ -95,7 +95,9 @@ export function SwapInput(props: SwapInputProps) {
                     overflow: 'hidden',
                     textOverflow: 'ellipsis',
                   }}>
-                  {props.price.usdValue || props.price.error}
+                  {props.price.usdValue
+                    ? `~$${props.price.usdValue}`
+                    : props.price.error}
                 </Typography>
               )}
             </>

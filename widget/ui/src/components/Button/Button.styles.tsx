@@ -63,15 +63,7 @@ export const ButtonBase = styled('button', {
           },
           backgroundColor: '$neutral800',
           color: '$$color',
-        },
-        '&:disabled:hover': {
-          $$color: '$colors$background',
-          [`.${darkTheme} &`]: {
-            $$color: '$colors$foreground',
-          },
-          backgroundColor: '$neutral800',
-          color: '$$color',
-          transform: 'unset',
+          pointerEvents: 'none',
         },
       },
       outlined: {
@@ -90,11 +82,7 @@ export const ButtonBase = styled('button', {
         '&:disabled': {
           borderColor: '$neutral800',
           color: '$neutral800',
-        },
-        '&:disabled:hover': {
-          borderColor: '$neutral800',
-          transform: 'unset',
-          color: '$neutral800',
+          pointerEvents: 'none',
         },
       },
       ghost: {
@@ -102,6 +90,7 @@ export const ButtonBase = styled('button', {
         color: '$neutral900',
         '&:disabled': {
           color: '$neutral800',
+          pointerEvents: 'none',
         },
         '&:focus-visible': {
           backgroundColor: '$neutral500',
@@ -153,6 +142,7 @@ export const ButtonBase = styled('button', {
           },
           background: '$neutral800',
           color: '$$color',
+          pointerEvents: 'none',
         },
         '&:visited': {
           background: '$primary500',

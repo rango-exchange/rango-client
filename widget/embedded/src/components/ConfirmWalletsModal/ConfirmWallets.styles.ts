@@ -8,6 +8,8 @@ import {
   TextField,
 } from '@rango-dev/ui';
 
+export const EXPANDABLE_TRANSITION_DURATION = 300;
+
 const slideDown = keyframes({
   from: {
     height: 0,
@@ -169,7 +171,7 @@ export const CustomDestination = styled('div', {
 });
 
 export const ExpandedIcon = styled('div', {
-  transition: 'all 300ms ease',
+  transition: `all ${EXPANDABLE_TRANSITION_DURATION}ms ease`,
   variants: {
     orientation: {
       down: {
@@ -195,10 +197,10 @@ export const CollapsibleContent = styled(Collapsible.Content, {
   variants: {
     open: {
       true: {
-        animation: `${slideDown} 300ms ease-out`,
+        animation: `${slideDown} ${EXPANDABLE_TRANSITION_DURATION}ms ease-out`,
       },
       false: {
-        animation: `${slideUp} 300ms ease-out`,
+        animation: `${slideUp} ${EXPANDABLE_TRANSITION_DURATION}ms ease-out`,
       },
     },
   },

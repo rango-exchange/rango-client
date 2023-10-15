@@ -462,9 +462,7 @@ export function ConfirmSwapPage(props: PropTypes) {
         {showBestRoute && (
           <BestRoute
             expanded={true}
-            tooltipContainer={
-              document.getElementById('swap-box') as HTMLElement
-            }
+            tooltipContainer={getContainer()}
             steps={formatBestRoute(bestRoute) ?? []}
             input={{
               value: numberToString(
@@ -495,7 +493,9 @@ export function ConfirmSwapPage(props: PropTypes) {
               GAS_FEE_MIN_DECIMALS,
               GAS_FEE_MAX_DECIMALS
             )}
-            totalTime={secondsToString(totalArrivalTime(bestRoute))}
+            totalTime={secondsToString(
+              totalArrivalTime(bestRoute.result?.swaps)
+            )}
             recommended={true}
             type="swap-preview"
             percentageChange={percentageChange}

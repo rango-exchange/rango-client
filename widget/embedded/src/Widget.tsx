@@ -30,6 +30,10 @@ const MainContainer = styled('div', {
     boxSizing: 'inherit',
     listStyleType: 'none',
   },
+  '& *:focus-visible': {
+    outline: '1px $info500 solid',
+    transition: 'none',
+  },
 });
 
 export type WidgetProps = {

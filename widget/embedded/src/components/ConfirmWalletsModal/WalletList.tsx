@@ -19,7 +19,10 @@ import React, { useEffect, useState } from 'react';
 
 import { useWallets } from '../..';
 import { useWalletList } from '../../hooks/useWalletList';
-import { TIME_TO_CLOSE_MODAL } from '../../pages/WalletsPage';
+import {
+  TIME_TO_CLOSE_MODAL,
+  TIME_TO_IGNORE_MODAL,
+} from '../../pages/WalletsPage';
 import { useMetaStore } from '../../store/meta';
 import { useWalletsStore } from '../../store/wallets';
 import { getBlockchainDisplayNameFor } from '../../utils/meta';
@@ -51,12 +54,23 @@ export function WalletList(props: PropTypes) {
   const [addingExperimentalChainStatus, setAddingExperimentalChainStatus] =
     useState<'in-progress' | 'completed' | null>(null);
   const { connect } = useWallets();
+  let modalTimerId: ReturnType<typeof setTimeout> | null = null;
   const { list, error, handleClick } = useWalletList({
     config,
     chain,
-    onBeforeConnect: setOpenWalletStateModal,
-    onConnect: () =>
-      setTimeout(() => setOpenWalletStateModal(''), TIME_TO_CLOSE_MODAL),
+    onBeforeConnect: (type) => {
+      modalTimerId = setTimeout(() => {
+        setOpenWalletStateModal(type);
+      }, TIME_TO_IGNORE_MODAL);
+    },
+    onConnect: () => {
+      if (modalTimerId) {
+        clearTimeout(modalTimerId);
+      }
+      setTimeout(() => {
+        setOpenWalletStateModal('');
+      }, TIME_TO_CLOSE_MODAL);
+    },
   });
   const [sortedList, setSortedList] = useState<WalletInfo[]>(list);
   const numberOfSupportedWallets = list.length;
@@ -165,15 +179,13 @@ export function WalletList(props: PropTypes) {
             : undefined;
         return (
           <>
-            {openWalletStateModal === wallet.type && (
-              <WalletModal
-                open={openWalletStateModal === wallet.type}
-                onClose={() => setOpenWalletStateModal('')}
-                image={wallet.image}
-                state={wallet.state}
-                error={error}
-              />
-            )}
+            <WalletModal
+              open={openWalletStateModal === wallet.type}
+              onClose={() => setOpenWalletStateModal('')}
+              image={wallet.image}
+              state={wallet.state}
+              error={error}
+            />
             {!!experimentalChainWallet && (
               <Modal
                 open={!!experimentalChainWallet && showExperimentalChainModal}

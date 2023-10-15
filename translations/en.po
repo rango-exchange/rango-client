@@ -140,6 +140,11 @@ msgid "Max"
 msgstr "Max"
 
 #. js-lingui-explicit-id
+#: widget/embedded/src/pages/SettingsPage.tsx:147
+#~ msgid "Enabling the 'Infinite Approval' mode grants unrestricted access to smart contracts of DEXes/Bridges, allowing them to utilize the approved token amount without limitations."
+#~ msgstr "Enabling the 'Infinite Approval' mode grants unrestricted access to smart contracts of DEXes/Bridges, allowing them to utilize the approved token amount without limitations."
+
+#. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:37
 #: widget/embedded/src/components/TokenList/TokenList.tsx:126
 #: widget/embedded/src/pages/HistoryPage.tsx:99
@@ -173,32 +178,32 @@ msgstr "Max"
 #~ msgstr "More +{count}"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:296
+#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:307
 #~ msgid "Insufficient account balance"
 #~ msgstr "Insufficient account balance"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:305
+#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:316
 #~ msgid "Proceed anyway"
 #~ msgstr "Proceed anyway"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:439
+#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:451
 #~ msgid "Send to a different address"
 #~ msgstr "Send to a different address"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:449
+#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:461
 #~ msgid "Your destination address"
 #~ msgstr "Your destination address"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:208
+#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:220
 #~ msgid "Confirm"
 #~ msgstr "Confirm"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:273
+#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:285
 #~ msgid "Show more wallets"
 #~ msgstr "Show more wallets"
 
@@ -237,7 +242,7 @@ msgstr "Max"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/LoadingSwapDetails/LoadingSwapDetails.tsx:38
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:374
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:366
 #~ msgid "Swaps steps"
 #~ msgstr "Swaps steps"
 
@@ -308,19 +313,19 @@ msgstr "Max"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetails/SwapDetails.Placeholder.tsx:33
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:252
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:244
 #~ msgid "Swap and Bridge"
 #~ msgstr "Swap and Bridge"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetails/SwapDetails.Placeholder.tsx:42
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:292
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:284
 #~ msgid "Request ID"
 #~ msgstr "Request ID"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetails/SwapDetails.Placeholder.tsx:55
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:307
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:299
 #~ msgid "Created at"
 #~ msgstr "Created at"
 
@@ -330,17 +335,17 @@ msgstr "Max"
 #~ msgstr "Not found"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:233
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:225
 #~ msgid "Transaction was not sent."
 #~ msgstr "Transaction was not sent."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:264
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:256
 #~ msgid "Delete"
 #~ msgstr "Delete"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:284
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:276
 #~ msgid "Try again"
 #~ msgstr "Try again"
 
@@ -647,7 +652,7 @@ msgstr "Max"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/pages/LanguagePage.tsx:65
-#: widget/embedded/src/pages/SettingsPage.tsx:113
+#: widget/embedded/src/pages/SettingsPage.tsx:116
 #~ msgid "Language"
 #~ msgstr "Language"
 
@@ -677,34 +682,34 @@ msgstr "Max"
 #~ msgstr "Search Token"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/SettingsPage.tsx:63
+#: widget/embedded/src/pages/SettingsPage.tsx:66
 #~ msgid "Loading failed"
 #~ msgstr "Loading failed"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/SettingsPage.tsx:79
+#: widget/embedded/src/pages/SettingsPage.tsx:82
 #~ msgid "Enabled bridges"
 #~ msgstr "Enabled bridges"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/SettingsPage.tsx:96
+#: widget/embedded/src/pages/SettingsPage.tsx:99
 #~ msgid "Enabled exchanges"
 #~ msgstr "Enabled exchanges"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/SettingsPage.tsx:124
+#: widget/embedded/src/pages/SettingsPage.tsx:127
 #: widget/embedded/src/pages/ThemePage.tsx:76
 #: widget/embedded/src/pages/ThemePage.tsx:85
 #~ msgid "Theme"
 #~ msgstr "Theme"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/SettingsPage.tsx:135
+#: widget/embedded/src/pages/SettingsPage.tsx:139
 #~ msgid "Infinite Approval"
 #~ msgstr "Infinite Approval"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/SettingsPage.tsx:152
+#: widget/embedded/src/pages/SettingsPage.tsx:171
 #~ msgid "Setting"
 #~ msgstr "Setting"
 
@@ -724,7 +729,7 @@ msgstr "Max"
 #~ msgstr "Auto"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/WalletsPage.tsx:74
+#: widget/embedded/src/pages/WalletsPage.tsx:78
 #~ msgid "Choose a wallet to connect."
 #~ msgstr "Choose a wallet to connect."
 
@@ -885,17 +890,22 @@ msgstr "Max"
 #~ msgstr "More {count}"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:235
+#: widget/ui/src/components/RouteCost/RouteCost.tsx:30
+#~ msgid "timeMin"
+#~ msgstr "{time} min"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:227
 #~ msgid "remainSymbol"
 #~ msgstr "{amount} {symbol} on {blockchain} remain in your wallet"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:244
+#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:256
 #~ msgid "blockchainAdded"
 #~ msgstr "{blockchainDisplayName} Chain Added"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:249
+#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:261
 #~ msgid "blockchainAddedDescription"
 #~ msgstr "{blockchainDisplayName} is added to your wallet, you can use it to swap."
 
@@ -906,18 +916,18 @@ msgstr "Max"
 #~ msgstr "{time} ago"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:185
-#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:221
+#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:197
+#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:233
 #~ msgid "addBlockchain"
 #~ msgstr "Add {blockchainDisplayName} Chain"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:133
+#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:147
 #~ msgid "addChain"
 #~ msgstr "Add {chain} chain"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:463
+#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:475
 #~ msgid "addressMatch"
 #~ msgstr "Address {destination} doesn't match the blockchain address pattern."
 
@@ -947,24 +957,24 @@ msgstr "Max"
 #~ msgstr "Required: >= {min} {symbol}"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:215
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:207
 #~ msgid "receivedMessage"
 #~ msgstr "You have received {amount} {token} in {conciseAddress} wallet on {chain} chain."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:365
+#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:376
 #~ msgid "needConnect"
 #~ msgstr "You need to connect a {blockchainName} wallet."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:191
-#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:226
+#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:203
+#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:238
 #~ msgid "addBlockchainDescription"
 #~ msgstr "You should connect a {blockchainDisplayName} supported wallet or choose a different {blockchainDisplayName} address"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:281
-#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:355
+#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:292
+#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:366
 #~ msgid "yourWallets"
 #~ msgstr "Your {blockchainName} wallets"
 
@@ -980,8 +990,8 @@ msgstr " Caution, your slippage is high (={selectedSlippage}). Your trade may be
 
 #. js-lingui-explicit-id
 #: widget/ui/src/components/RouteCost/RouteCost.tsx:30
-msgid "timeMin"
-msgstr "{time} min"
+msgid "timeSec"
+msgstr "{time} sec"
 
 #: widget/embedded/src/pages/WalletsPage.tsx:139
 #~ msgid "Choose a wallet to connect."
