@@ -1,7 +1,7 @@
 import { createTheme, theme } from '@rango-dev/ui';
 import { useEffect, useLayoutEffect, useState } from 'react';
 
-import { NOT_FOUND } from '../helpers';
+import { NOT_FOUND } from '../constants';
 import { useConfigStore } from '../store/config';
 import { useMetaStore } from '../store/meta';
 

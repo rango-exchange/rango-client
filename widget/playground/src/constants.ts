@@ -37,3 +37,4 @@ export enum SIDE_TABS_IDS {
 
 export const DEFAULT_PRIMARY_RADIUS = 20;
 export const DEFAULT_SECONDARY_RADIUS = 25;
+export const NOT_FOUND = -1;

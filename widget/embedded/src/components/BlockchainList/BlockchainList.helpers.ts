@@ -1,7 +1,7 @@
+import { BlockchainCategories } from '@rango-dev/ui';
 import { type BlockchainMeta, TransactionType } from 'rango-sdk';
 
 import { containsText } from '../../utils/common';
-import { BlockchainCategories } from '../SelectableCategoryList/SelectableCategoryList.types';
 
 export const filterByType = (
   blockchain: BlockchainMeta,

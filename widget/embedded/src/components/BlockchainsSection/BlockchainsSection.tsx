@@ -2,13 +2,18 @@
 import type { PropTypes } from './BlockchainsSection.types';
 
 import { i18n } from '@lingui/core';
-import { Divider, Image, Skeleton, Typography } from '@rango-dev/ui';
+import {
+  BlockchainsChip,
+  Divider,
+  Image,
+  Skeleton,
+  Typography,
+} from '@rango-dev/ui';
 import { type BlockchainMeta } from 'rango-sdk';
 import React, { useEffect, useState } from 'react';
 
 import { useBestRouteStore } from '../../store/bestRoute';
 import { useMetaStore } from '../../store/meta';
-import { BlockchainsChip } from '../BlockchainsChip';
 
 import { sortBlockchains } from './BlockchainSection.helpers';
 import { Container } from './BlockchainsSection.styles';
