@@ -1,6 +1,7 @@
 export * from './I18nManager';
 export * from './Alert';
 export * from './BestRoute';
+export * from './BlockchainsChip';
 export * from './BottomLogo';
 export * from './Button';
 export * from './IconButton';
@@ -21,6 +22,7 @@ export * from './RoutesOverview';
 export * from './SecondaryPage';
 export * from './SelectableWalletList';
 export * from './Wallet';
+export * from './SelectableCategoryList';
 export * from './Spinner';
 export * from './StepDetail';
 export * from './SwapContainer';

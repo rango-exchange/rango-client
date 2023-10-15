@@ -1,7 +1,6 @@
 import type { PropTypes } from './FontSelector.types';
 
 import {
-  ChevronLeftIcon,
   Divider,
   FontIcon,
   ListItemButton,
@@ -12,15 +11,10 @@ import {
 import React, { useState } from 'react';
 
 import { FONTS } from '../../constants';
+import { FieldTitle } from '../../containers/StyleLayout/StyleLayout.styles';
 import { useConfigStore } from '../../store/config';
-import { FieldTitle } from '../StyleLayout/StyleLayout.styles';
 
-import {
-  Container,
-  FontList,
-  Header,
-  StyledButton,
-} from './FontSelector.styles';
+import { FontList, StyledButton } from './FontSelector.styles';
 
 export function FontSelector(props: PropTypes) {
   const { onBack } = props;
@@ -50,15 +44,7 @@ export function FontSelector(props: PropTypes) {
     onBack();
   };
   return (
-    <Container>
-      <Header onClick={onBack}>
-        <ChevronLeftIcon size={12} />
-        <Divider size={4} direction="horizontal" />
-        <Typography size="medium" variant="label" color="neutral900">
-          back
-        </Typography>
-      </Header>
-      <Divider size={12} />
+    <>
       <FontList>
         <FieldTitle>
           <FontIcon size={18} />
@@ -87,6 +73,6 @@ export function FontSelector(props: PropTypes) {
         onClick={handleConfirm}>
         Confirm
       </StyledButton>
-    </Container>
+    </>
   );
 }

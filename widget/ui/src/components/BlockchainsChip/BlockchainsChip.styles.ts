@@ -1,4 +1,4 @@
-import { darkTheme, styled } from '@rango-dev/ui';
+import { darkTheme, styled } from '../../theme';
 
 export const Chip = styled('button', {
   padding: '$10',
