@@ -1,13 +1,7 @@
 import type { WidgetConfig } from '../../types';
 import type { StateCreator } from 'zustand';
 
-const initConfig: WidgetConfig = {
-  apiKey: '',
-
-  from: {
-    blockchains: ['BITCANNA', 'UMEE', 'DESMOS', 'LUMNETWORK'],
-  },
-};
+const initConfig: WidgetConfig = { apiKey: '' };
 
 export type ConfigSlice = {
   config: WidgetConfig;

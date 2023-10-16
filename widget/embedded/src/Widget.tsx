@@ -89,9 +89,12 @@ export function Main(props: PropsWithChildren<WidgetProps>) {
       const token = tokens.find((t) =>
         tokensAreEqual(t, config?.from?.token || null)
       );
-
-      setFromBlockchain(chain || null);
-      setFromToken(token || null);
+      if (chain) {
+        setFromBlockchain(chain);
+        if (token) {
+          setFromToken(token);
+        }
+      }
     }
   }, [config?.from?.token, config?.from?.blockchain, loadingMetaStatus]);
 
@@ -103,8 +106,13 @@ export function Main(props: PropsWithChildren<WidgetProps>) {
       const token = tokens.find((t) =>
         tokensAreEqual(t, config?.to?.token || null)
       );
-      setToBlockchain(chain || null);
-      setToToken(token || null);
+
+      if (chain) {
+        setToBlockchain(chain);
+        if (token) {
+          setToToken(token);
+        }
+      }
     }
   }, [config?.to?.token, config?.to?.blockchain, loadingMetaStatus]);
 

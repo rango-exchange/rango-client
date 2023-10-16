@@ -108,13 +108,20 @@ export const useBestRouteStore = createSelectors(
           };
         });
       },
-      setFromToken: (token) =>
-        set((state) => ({
+      setFromToken: (token) => {
+        const { blockchains } = useMetaStore.getState().meta;
+        const fromBlockchain =
+          blockchains.find(
+            (blockchain) => blockchain.name === token?.blockchain
+          ) ?? null;
+        return set((state) => ({
           fromToken: token,
+          fromBlockchain,
           ...(!!state.inputAmount && {
             inputUsdValue: getUsdValue(token, state.inputAmount),
           }),
-        })),
+        }));
+      },
       setToBlockchain: (chain) => {
         set((state) => {
           if (state.toBlockchain?.name === chain?.name) {
@@ -126,10 +133,17 @@ export const useBestRouteStore = createSelectors(
           };
         });
       },
-      setToToken: (token) =>
-        set(() => ({
+      setToToken: (token) => {
+        const { blockchains } = useMetaStore.getState().meta;
+        const toBlockchain =
+          blockchains.find(
+            (blockchain) => blockchain.name === token?.blockchain
+          ) ?? null;
+        return set(() => ({
           toToken: token,
-        })),
+          toBlockchain,
+        }));
+      },
       setInputAmount: (amount) => {
         set((state) => ({
           inputAmount: amount,

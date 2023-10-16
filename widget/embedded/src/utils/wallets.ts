@@ -470,7 +470,7 @@ export function getTokensBalanceFromWalletAndSort(
   const list =
     connectedWallets.length > 0
       ? getTokensWithBalance(tokens, connectedWallets)
-      : [];
+      : tokens;
   list.sort(
     (tokenA, tokenB) =>
       parseFloat(tokenB.balance?.usdValue || '0') -

@@ -168,22 +168,6 @@ export const createDataSlice: StateCreator<
   fetch: async () => {
     const response = await sdk().getAllMetadata();
 
-    const { from, to } = get().config;
-
-    /**
-     * If `from` and `to` has set in config, we only keep those tokens.
-     * NOTE: We can not shrink the list based on each of them separately because the other side needs all the tokens.
-     */
-    const supportedBlockchainsFromConfig = new Set();
-    if (from && to) {
-      from.blockchains?.forEach((blockchain) => {
-        supportedBlockchainsFromConfig.add(blockchain);
-      });
-      to.blockchains?.forEach((blockchain) => {
-        supportedBlockchainsFromConfig.add(blockchain);
-      });
-    }
-
     const blockchains: BlockchainMeta[] = [];
     const tokens: Token[] = [];
     const popularTokens: Token[] = response.popularTokens;
@@ -198,18 +182,9 @@ export const createDataSlice: StateCreator<
     });
 
     response.blockchains.forEach((blockchain) => {
-      /**
-       * Final list can be shrinked by config options.
-       */
-      const shouldBeIncluded =
-        supportedBlockchainsFromConfig.size > 0
-          ? supportedBlockchainsFromConfig.has(blockchain.name)
-          : true;
-
       if (
         blockchain.enabled &&
-        blockchainsWithAtLeastOneToken.has(blockchain.name) &&
-        shouldBeIncluded
+        blockchainsWithAtLeastOneToken.has(blockchain.name)
       ) {
         blockchains.push(blockchain);
       }
