@@ -90,6 +90,7 @@ export const Trigger = styled(Collapsible.Trigger, {
   outline: 'none',
   width: '100%',
   backgroundColor: 'transparent',
+  fontFamily: 'inherit',
 });
 
 export const ShowMoreHeader = styled('div', {
