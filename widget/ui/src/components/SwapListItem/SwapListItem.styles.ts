@@ -28,6 +28,7 @@ export const Main = styled('button', {
   gap: 10,
   padding: 15,
   cursor: 'pointer',
+  fontFamily: 'inherit',
   '&:hover': {
     $$color: '$colors$info100',
     [`.${darkTheme} &`]: {

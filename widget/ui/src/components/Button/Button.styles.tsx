@@ -12,7 +12,7 @@ export const ButtonBase = styled('button', {
   borderRadius: '$secondary',
   cursor: 'pointer',
   transition: 'all 0.35s',
-
+  fontFamily: 'inherit',
   variants: {
     size: {
       xxsmall: {

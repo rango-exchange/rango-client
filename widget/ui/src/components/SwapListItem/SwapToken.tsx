@@ -104,13 +104,13 @@ export function SwapToken(props: PropTypes) {
       {status === 'running' ? (
         <Layout direction="column">
           <TopSection>
-            <Typography size="xsmall" variant="headline">
+            <Typography size="medium" variant="title">
               {fromToken.displayName}
             </Typography>
             <Icon>
               <NextIcon size={24} color="black" />
             </Icon>
-            <Typography size="xsmall" variant="headline">
+            <Typography size="medium" variant="title">
               {toToken.displayName}
             </Typography>
           </TopSection>
@@ -121,7 +121,7 @@ export function SwapToken(props: PropTypes) {
       ) : (
         <Layout direction="row">
           <TokenInfo>
-            <Typography size="xsmall" variant="headline">
+            <Typography size="medium" variant="title">
               {fromToken.displayName}
             </Typography>
             {!!fromAmount && (
@@ -134,7 +134,7 @@ export function SwapToken(props: PropTypes) {
             <NextIcon size={24} color="black" />
           </Icon>
           <TokenInfo>
-            <Typography size="xsmall" variant="headline">
+            <Typography size="medium" variant="title">
               {toToken.displayName}
             </Typography>
 

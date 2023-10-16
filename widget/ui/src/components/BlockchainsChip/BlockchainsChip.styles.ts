@@ -14,6 +14,7 @@ export const Chip = styled('button', {
   alignItems: 'center',
   cursor: 'pointer',
   border: 0,
+  fontFamily: 'inherit',
   '.image-container': {
     borderRadius: '$xm',
     overflow: 'hidden',
