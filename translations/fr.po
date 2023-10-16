@@ -140,11 +140,6 @@ msgid "Max"
 msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/SettingsPage.tsx:147
-#~ msgid "Enabling the 'Infinite Approval' mode grants unrestricted access to smart contracts of DEXes/Bridges, allowing them to utilize the approved token amount without limitations."
-#~ msgstr ""
-
-#. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:37
 #: widget/embedded/src/components/TokenList/TokenList.tsx:126
 #: widget/embedded/src/pages/HistoryPage.tsx:99
@@ -546,7 +541,7 @@ msgstr ""
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/constants/messages.ts:5
-#: widget/embedded/src/pages/Home.tsx:307
+#: widget/embedded/src/pages/Home.tsx:308
 #~ msgid "Swap"
 #~ msgstr ""
 
@@ -626,12 +621,12 @@ msgstr ""
 #~ msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/Home.tsx:323
+#: widget/embedded/src/pages/Home.tsx:324
 #~ msgid "From"
 #~ msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/Home.tsx:361
+#: widget/embedded/src/pages/Home.tsx:362
 #~ msgid "To"
 #~ msgstr ""
 
@@ -652,7 +647,7 @@ msgstr ""
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/pages/LanguagePage.tsx:65
-#: widget/embedded/src/pages/SettingsPage.tsx:116
+#: widget/embedded/src/pages/SettingsPage.tsx:117
 #~ msgid "Language"
 #~ msgstr ""
 
@@ -682,34 +677,39 @@ msgstr ""
 #~ msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/SettingsPage.tsx:66
+#: widget/embedded/src/pages/SettingsPage.tsx:67
 #~ msgid "Loading failed"
 #~ msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/SettingsPage.tsx:82
+#: widget/embedded/src/pages/SettingsPage.tsx:83
 #~ msgid "Enabled bridges"
 #~ msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/SettingsPage.tsx:99
+#: widget/embedded/src/pages/SettingsPage.tsx:100
 #~ msgid "Enabled exchanges"
 #~ msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/SettingsPage.tsx:127
+#: widget/embedded/src/pages/SettingsPage.tsx:128
 #: widget/embedded/src/pages/ThemePage.tsx:76
 #: widget/embedded/src/pages/ThemePage.tsx:85
 #~ msgid "Theme"
 #~ msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/SettingsPage.tsx:139
+#: widget/embedded/src/pages/SettingsPage.tsx:140
 #~ msgid "Infinite Approval"
 #~ msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/SettingsPage.tsx:171
+#: widget/embedded/src/pages/SettingsPage.tsx:149
+#~ msgid "Enabling the 'Infinite Approval' mode grants unrestricted access to smart contracts of DEXes/Bridges, allowing them to utilize the approved token amount without limitations."
+#~ msgstr ""
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/SettingsPage.tsx:173
 #~ msgid "Setting"
 #~ msgstr ""
 
@@ -994,7 +994,7 @@ msgstr ""
 #~ msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/Home.tsx:253
+#: widget/embedded/src/pages/Home.tsx:254
 #~ msgid "yourSymbol"
 #~ msgstr ""
 
