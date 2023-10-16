@@ -21,6 +21,7 @@ import {
 } from '@rango-dev/ui';
 import React, { forwardRef, useEffect, useState } from 'react';
 
+import { useAppStore } from '../../store/app';
 import { useMetaStore } from '../../store/meta';
 import { useWalletsStore } from '../../store/wallets';
 import { generateRangeColors } from '../../utils/common';
@@ -90,6 +91,7 @@ export function TokenList(props: PropTypes) {
   const [hasNextPage, setHasNextPage] = useState<boolean>(true);
   const loadingWallet = useWalletsStore.use.loading();
   const { blockchains } = useMetaStore.use.meta();
+  const { isTokenPinned } = useAppStore();
 
   // eslint-disable-next-line react/display-name
   const innerElementType: React.FC<CommonProps> = forwardRef((render, ref) => {
@@ -132,27 +134,29 @@ export function TokenList(props: PropTypes) {
     return (
       <VirtualizedList
         Item={({ index, style }) => {
-          const address = tokens[index].address || '';
+          const token = tokens[index];
+
+          const address = token.address || '';
           const blockchain = blockchains.find(
-            (blockchain) => blockchain.name === tokens[index].blockchain
+            (blockchain) => blockchain.name === token.blockchain
           );
           const color = generateRangeColors(
-            tokens[index].symbol,
+            token.symbol,
             blockchain?.color || ''
           );
 
           const customCssForTag = {
-            $$color: color[`${tokens[index].symbol}100`],
+            $$color: color[`${token.symbol}100`],
             [`.${darkTheme} &`]: {
-              $$color: color[`${tokens[index].symbol}900`],
+              $$color: color[`${token.symbol}900`],
             },
             backgroundColor: '$$color',
           };
 
           const customCssForTagTitle = {
-            $$color: color[`${tokens[index].symbol}700`],
+            $$color: color[`${token.symbol}700`],
             [`.${darkTheme} &`]: {
-              $$color: color[`${tokens[index].symbol}100`],
+              $$color: color[`${token.symbol}100`],
             },
             color: '$$color',
           };
@@ -168,14 +172,14 @@ export function TokenList(props: PropTypes) {
                   height: style?.height,
                 }}
                 tab-index={index}
-                key={`${tokens[index].symbol}${tokens[index].address}`}
-                id={`${tokens[index].symbol}${tokens[index].address}`}
+                key={`${token.symbol}${token.address}`}
+                id={`${token.symbol}${token.address}`}
                 hasDivider
                 onClick={() => onChange(tokens[index])}
                 start={
                   <ImageSection>
-                    <Image src={tokens[index].image} size={30} />
-                    {tokens[index].pin && (
+                    <Image src={token.image} size={30} />
+                    {isTokenPinned(token) && (
                       <Pin>
                         <PinIcon size={12} color="gray" />
                       </Pin>
@@ -184,11 +188,11 @@ export function TokenList(props: PropTypes) {
                 }
                 title={
                   blockchain?.type === 'COSMOS' ||
-                  !!tokens[index].name ||
-                  (!tokens[index].name && !address) ? (
+                  !!token.name ||
+                  (!token.name && !address) ? (
                     <Title>
                       <Typography variant="title" size="xmedium">
-                        {tokens[index].symbol}
+                        {token.symbol}
                       </Typography>
                       <Divider direction="horizontal" size={4} />
                       <Tag css={customCssForTag}>
@@ -196,7 +200,7 @@ export function TokenList(props: PropTypes) {
                           variant="body"
                           size="xsmall"
                           css={customCssForTagTitle}>
-                          {tokens[index].blockchain}
+                          {token.blockchain}
                         </TagTitle>
                       </Tag>
                     </Title>
@@ -211,12 +215,12 @@ export function TokenList(props: PropTypes) {
                         token: tokens[index],
                         customCssForTag,
                         customCssForTagTitle,
-                        name: tokens[index].name,
+                        name: token.name,
                         url: blockchain.info.addressUrl
                           .split('{wallet}')
                           .join(address),
                       })
-                    : tokens[index].name || undefined
+                    : token.name || undefined
                 }
                 end={
                   loadingWallet ? (
@@ -229,15 +233,15 @@ export function TokenList(props: PropTypes) {
                     tokens[index]?.balance && (
                       <BalanceContainer>
                         <Typography variant="title" size="small">
-                          {tokens[index].balance?.amount}
+                          {token.balance?.amount}
                         </Typography>
                         <div />
-                        {tokens[index].balance?.usdValue && (
+                        {token.balance?.usdValue && (
                           <Typography
                             variant="body"
                             color="neutral800"
                             size="xsmall">
-                            {`$${tokens[index].balance?.usdValue}`}
+                            {`$${token.balance?.usdValue}`}
                           </Typography>
                         )}
                       </BalanceContainer>

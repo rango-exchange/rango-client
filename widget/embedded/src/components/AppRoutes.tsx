@@ -32,43 +32,19 @@ export function AppRoutes(props: PropTypes) {
     },
     {
       path: navigationRoutes.fromSwap,
-      element: (
-        <SelectSwapItemsPage
-          type="from"
-          supportedBlockchains={config?.from?.blockchains}
-          supportedTokens={config?.from?.tokens}
-          pinnedTokens={config?.pinnedTokens}
-        />
-      ),
+      element: <SelectSwapItemsPage type="source" />,
     },
     {
       path: navigationRoutes.toSwap,
-      element: (
-        <SelectSwapItemsPage
-          type="to"
-          supportedBlockchains={config?.to?.blockchains}
-          supportedTokens={config?.to?.tokens}
-          pinnedTokens={config?.pinnedTokens}
-        />
-      ),
+      element: <SelectSwapItemsPage type="destination" />,
     },
     {
       path: navigationRoutes.fromBlockchain,
-      element: (
-        <SelectBlockchainPage
-          type="from"
-          supportedBlockchains={config?.to?.blockchains}
-        />
-      ),
+      element: <SelectBlockchainPage type="source" />,
     },
     {
       path: navigationRoutes.toBlockchain,
-      element: (
-        <SelectBlockchainPage
-          type="to"
-          supportedBlockchains={config?.to?.blockchains}
-        />
-      ),
+      element: <SelectBlockchainPage type="destination" />,
     },
     {
       path: navigationRoutes.settings,

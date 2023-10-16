@@ -11,6 +11,7 @@ import { WidgetEvents } from './components/WidgetEvents';
 import { globalFont } from './globalStyles';
 import { useTheme } from './hooks/useTheme';
 import QueueManager from './QueueManager';
+import { useAppStore } from './store/app';
 import { useBestRouteStore } from './store/bestRoute';
 import { useMetaStore } from './store/meta';
 import { useNotificationStore } from './store/notification';
@@ -137,12 +138,19 @@ export function Main(props: PropsWithChildren<WidgetProps>) {
 }
 
 export function Widget(props: PropsWithChildren<WidgetProps>) {
+  const { updateConfig, config } = useAppStore();
+  useEffect(() => {
+    if (props.config) {
+      updateConfig(props.config);
+    }
+  }, [props.config]);
+
   if (!props.config?.externalWallets) {
     return (
       <WidgetWallets
-        providers={props.config?.wallets}
+        providers={config?.wallets}
         options={{
-          walletConnectProjectId: props.config?.walletConnectProjectId,
+          walletConnectProjectId: config?.walletConnectProjectId,
         }}>
         <Main {...props} />
       </WidgetWallets>

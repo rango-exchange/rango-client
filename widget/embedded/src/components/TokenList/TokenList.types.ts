@@ -5,7 +5,6 @@ export interface TokenWithBalance extends Token {
     amount: string;
     usdValue: string;
   };
-  pin?: boolean;
 }
 
 export interface PropTypes {
