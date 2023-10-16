@@ -90,6 +90,7 @@ export const Input = styled('input', {
   fontWeight: 400,
   border: 'none',
   outline: 'none',
+  fontFamily: 'inherit',
   variants: {
     suffix: {
       true: { marginRight: '$10' },

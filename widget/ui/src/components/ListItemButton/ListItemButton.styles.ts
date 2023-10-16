@@ -5,6 +5,7 @@ export const BaseListItemButton = styled('button', {
   border: 0,
   width: '100%',
   backgroundColor: 'transparent',
+  fontFamily: 'inherit',
   '&:focus-visible': {
     borderRadius: '$xs',
 

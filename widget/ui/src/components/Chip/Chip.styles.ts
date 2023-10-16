@@ -9,6 +9,7 @@ export const ChipContainer = styled('button', {
   cursor: 'pointer',
   transition: 'all 0.35s',
   border: '1px solid transparent',
+  fontFamily: 'inherit',
   $$color: '$colors$neutral100',
   [`.${darkTheme} &`]: {
     $$color: '$colors$neutral300',
