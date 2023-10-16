@@ -1,6 +1,11 @@
 import type { PropsWithChildren } from 'react';
 
-import { Divider, Typography } from '@rango-dev/ui';
+import {
+  DesktopIcon,
+  Divider,
+  LogoWithTextIcon,
+  Typography,
+} from '@rango-dev/ui';
 import React, { useState } from 'react';
 
 import { SideNavigation } from '../../components/SideNavigation';
@@ -14,7 +19,9 @@ import {
   Container,
   Content,
   LeftSide,
+  LogoIcon,
   Main,
+  MobileContent,
   MobileSection,
 } from './ConfigContainer.styles';
 
@@ -43,9 +50,23 @@ export function ConfigContainer(props: PropsWithChildren) {
         </Main>
       </Container>
       <MobileSection>
-        <Typography size="large" variant="title" align="center">
-          Please use our platform from a desktop computer for full functionality
-        </Typography>
+        <LogoIcon>
+          <LogoWithTextIcon size={94} color="primary" />
+        </LogoIcon>
+        <MobileContent>
+          <DesktopIcon size={228} />
+          <Typography size="small" variant="headline" align="center">
+            Use a Desktop Browser
+          </Typography>
+          <Divider size={8} />
+          <Typography
+            size="medium"
+            variant="body"
+            align="center"
+            color="neutral900">
+            To use the Playground page, You must use the Desktop version
+          </Typography>
+        </MobileContent>
       </MobileSection>
     </>
   );
