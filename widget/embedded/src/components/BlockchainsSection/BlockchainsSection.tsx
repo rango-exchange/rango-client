@@ -18,18 +18,22 @@ import { useMetaStore } from '../../store/meta';
 import { Container } from './BlockchainsSection.styles';
 
 const LIST_SIZE = 10;
+const MAX_ITEMS = LIST_SIZE + 1;
 const NUMBER_OF_LOADING = 12;
 
 export function BlockchainsSection(props: PropTypes) {
   const { blockchains, type, blockchain, onChange, onMoreClick } = props;
   const blockchainsList = usePrepareBlockchainList(blockchains, {
-    limit: LIST_SIZE,
+    limit: blockchains.length === MAX_ITEMS ? MAX_ITEMS : LIST_SIZE,
     selected: blockchain?.name,
   });
 
   const loadingStatus = useMetaStore.use.loadingStatus();
   const resetToBlockchain = useBestRouteStore.use.resetToBlockchain();
   const resetFromBlockchain = useBestRouteStore.use.resetFromBlockchain();
+  const showMoreButton =
+    blockchains.length !== MAX_ITEMS && blockchainsList.more.length;
+
   return (
     <div>
       <Divider size={12} />
@@ -66,7 +70,7 @@ export function BlockchainsSection(props: PropTypes) {
               </BlockchainsChip>
             ))}
 
-            {blockchainsList.more.length ? (
+            {showMoreButton ? (
               <BlockchainsChip onClick={onMoreClick}>
                 <Typography variant="body" size="xsmall" color="secondary500">
                   {i18n._('More +{count}', {

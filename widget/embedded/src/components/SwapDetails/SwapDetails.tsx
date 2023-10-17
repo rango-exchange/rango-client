@@ -75,7 +75,7 @@ export function SwapDetails(props: SwapDetailsProps) {
     'success' | 'failed' | null
   >(null);
   const {
-    meta: { tokens },
+    meta: { tokens, blockchains },
   } = useMetaStore();
 
   const onCancel = () => {
@@ -151,6 +151,7 @@ export function SwapDetails(props: SwapDetailsProps) {
     showNetworkModal: currentStepNetworkStatus,
     setNetworkModal: setModalState,
     message: stepMessage,
+    blockchains,
   });
   const numberOfSteps = steps.length;
   const [firstStep, lastStep] = [swap.steps[0], swap.steps[numberOfSteps - 1]];

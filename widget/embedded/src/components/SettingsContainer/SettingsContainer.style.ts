@@ -2,6 +2,7 @@ import { styled } from '@rango-dev/ui';
 
 export const SettingsContainer = styled('div', {
   height: '100%',
+  overflow: 'hidden',
 });
 
 export const LiquiditySourceList = styled('ul', {
@@ -9,7 +10,7 @@ export const LiquiditySourceList = styled('ul', {
   margin: 0,
   listStyle: 'none',
   height: '100%',
-  overflowY: 'visible',
+  overflowY: 'auto',
 });
 
 export const LiquiditySourceSuffix = styled('div', {
