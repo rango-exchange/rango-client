@@ -9,15 +9,13 @@ import { AppRouter } from './components/AppRouter';
 import { AppRoutes } from './components/AppRoutes';
 import { WidgetEvents } from './components/WidgetEvents';
 import { globalFont } from './globalStyles';
+import { useSyncStoresWithConfig } from './hooks/useSyncStoresWithConfig';
 import { useTheme } from './hooks/useTheme';
 import QueueManager from './QueueManager';
 import { useAppStore } from './store/app';
-import { useBestRouteStore } from './store/bestRoute';
-import { useMetaStore } from './store/meta';
 import { useNotificationStore } from './store/notification';
 import { useSettingsStore } from './store/settings';
 import { initConfig } from './utils/configs';
-import { tokensAreEqual } from './utils/wallets';
 import { WidgetContext, WidgetWallets } from './Wallets';
 
 const MainContainer = styled('div', {
@@ -46,6 +44,7 @@ export function Main(props: PropsWithChildren<WidgetProps>) {
     useState<string>('');
   const [disconnectedWallet, setDisconnectedWallet] = useState<WalletType>();
   const widgetContext = useContext(WidgetContext);
+  useSyncStoresWithConfig(config);
 
   useMemo(() => {
     if (config?.apiKey) {
@@ -60,83 +59,6 @@ export function Main(props: PropsWithChildren<WidgetProps>) {
     void useNotificationStore.persist.rehydrate();
     widgetContext.onConnectWallet(setLastConnectedWalletWithNetwork);
   }, []);
-
-  const {
-    setInputAmount,
-    setToToken,
-    setToBlockchain,
-    setFromBlockchain,
-    setFromToken,
-  } = useBestRouteStore();
-
-  const {
-    meta: { tokens, blockchains },
-    loadingStatus: loadingMetaStatus,
-  } = useMetaStore();
-
-  const { setAffiliateRef, setAffiliatePercent, setAffiliateWallets } =
-    useSettingsStore();
-
-  useEffect(() => {
-    setInputAmount(config?.amount?.toString() || '');
-  }, [config?.amount]);
-
-  useEffect(() => {
-    if (loadingMetaStatus === 'success') {
-      const chain = blockchains.find(
-        (chain) => chain.name === config?.from?.blockchain
-      );
-      const token = tokens.find((t) =>
-        tokensAreEqual(t, config?.from?.token || null)
-      );
-      if (chain) {
-        setFromBlockchain(chain);
-        if (token) {
-          setFromToken(token);
-        }
-      }
-    }
-  }, [
-    config?.from?.token?.symbol,
-    config?.from?.token?.address,
-    config?.from?.blockchain,
-    config?.from?.blockchain,
-    loadingMetaStatus,
-  ]);
-
-  useEffect(() => {
-    if (loadingMetaStatus === 'success') {
-      const chain = blockchains.find(
-        (chain) => chain.name === config?.to?.blockchain
-      );
-      const token = tokens.find((t) =>
-        tokensAreEqual(t, config?.to?.token || null)
-      );
-
-      if (chain) {
-        setToBlockchain(chain);
-        if (token) {
-          setToToken(token);
-        }
-      }
-    }
-  }, [
-    config?.to?.token?.symbol,
-    config?.to?.token?.address,
-    config?.to?.token?.blockchain,
-    config?.to?.blockchain,
-    loadingMetaStatus,
-  ]);
-
-  useEffect(() => {
-    setAffiliateRef(config?.affiliate?.ref ?? null);
-    setAffiliatePercent(config?.affiliate?.percent ?? null);
-    setAffiliateWallets(config?.affiliate?.wallets ?? null);
-  }, [
-    config?.affiliate?.ref,
-    config?.affiliate?.percent,
-    config?.affiliate?.wallets,
-  ]);
 
   return (
     <I18nManager language={config?.language}>
