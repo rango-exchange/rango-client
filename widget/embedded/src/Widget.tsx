@@ -96,7 +96,13 @@ export function Main(props: PropsWithChildren<WidgetProps>) {
         }
       }
     }
-  }, [config?.from?.token, config?.from?.blockchain, loadingMetaStatus]);
+  }, [
+    config?.from?.token?.symbol,
+    config?.from?.token?.address,
+    config?.from?.blockchain,
+    config?.from?.blockchain,
+    loadingMetaStatus,
+  ]);
 
   useEffect(() => {
     if (loadingMetaStatus === 'success') {
@@ -114,7 +120,13 @@ export function Main(props: PropsWithChildren<WidgetProps>) {
         }
       }
     }
-  }, [config?.to?.token, config?.to?.blockchain, loadingMetaStatus]);
+  }, [
+    config?.to?.token?.symbol,
+    config?.to?.token?.address,
+    config?.to?.token?.blockchain,
+    config?.to?.blockchain,
+    loadingMetaStatus,
+  ]);
 
   useEffect(() => {
     setAffiliateRef(config?.affiliate?.ref ?? null);

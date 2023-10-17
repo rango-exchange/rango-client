@@ -105,6 +105,12 @@ export const useBestRouteStore = createSelectors(
 
           return {
             fromBlockchain: chain,
+            ...(state.fromToken && {
+              bestRoute: null,
+              fromToken: null,
+              outputAmount: null,
+              outputUsdValue: null,
+            }),
           };
         });
       },
@@ -130,6 +136,12 @@ export const useBestRouteStore = createSelectors(
 
           return {
             toBlockchain: chain,
+            ...(state.toToken && {
+              bestRoute: null,
+              toToken: null,
+              outputAmount: null,
+              outputUsdValue: null,
+            }),
           };
         });
       },
@@ -223,11 +235,19 @@ export const useBestRouteStore = createSelectors(
 
       resetFromBlockchain: () =>
         set(() => ({
+          fromToken: null,
           fromBlockchain: null,
+          outputAmount: null,
+          outputUsdValue: null,
+          bestRoute: null,
         })),
       resetToBlockchain: () =>
         set(() => ({
+          toToken: null,
           toBlockchain: null,
+          outputAmount: null,
+          outputUsdValue: null,
+          bestRoute: null,
         })),
       setRouteWalletConfirmed: (flag) =>
         set({
