@@ -73,7 +73,7 @@ export function General({
           showValue
           title="Button"
           value={secondaryBorderRadius ?? DEFAULT_SECONDARY_RADIUS}
-          max="50"
+          max="25"
           onChange={handleSecondaryBorderRadius}
         />
       </Field>
