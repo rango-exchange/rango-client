@@ -1,8 +1,8 @@
+import { RANGO_PUBLIC_API_KEY } from '../constants';
+
 export interface Configs {
   API_KEY: string;
 }
-
-const RANGO_PUBLIC_API_KEY = 'c6381a79-2817-4602-83bf-6a641a409e32';
 
 let configs: Configs = {
   API_KEY: RANGO_PUBLIC_API_KEY,
@@ -18,6 +18,9 @@ export function setConfig(name: keyof Configs, value: any) {
   return value;
 }
 
+/**
+ * Getting new configs from params and reset the value of global `configs` with provided param.
+ */
 export function initConfig(nextConfigs: Configs) {
   let clonedConfigs;
   if (typeof structuredClone === 'function') {

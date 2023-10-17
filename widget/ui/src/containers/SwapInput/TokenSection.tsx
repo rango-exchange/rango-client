@@ -22,7 +22,7 @@ export function TokenSection(props: TokenSectionProps) {
       <TokenSectionContainer>
         <ChainToken
           size="large"
-          useAsPlaceholder={error || (!loading && (!chainImage || !tokenImage))}
+          useAsPlaceholder={error}
           chainImage={chainImage}
           tokenImage={tokenImage}
           loading={loading}

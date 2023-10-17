@@ -3,18 +3,14 @@ import type { WalletType } from '@rango-dev/wallets-shared';
 
 import { create } from 'zustand';
 import { subscribeWithSelector } from 'zustand/middleware';
-import { shallow } from 'zustand/shallow';
 
 import { httpService } from '../services/httpService';
 import {
-  getTokensWithBalance,
   isAccountAndWalletMatched,
   makeBalanceFor,
   resetConnectedWalletState,
-  sortTokens,
 } from '../utils/wallets';
 
-import { useBestRouteStore } from './bestRoute';
 import { useMetaStore } from './meta';
 import createSelectors from './selectors';
 
@@ -210,29 +206,6 @@ export const useWalletsStore = createSelectors(
       },
     }))
   )
-);
-
-useWalletsStore.subscribe(
-  (state) => state.connectedWallets,
-  (connectedWallets) => {
-    useBestRouteStore.setState(({ sourceTokens, destinationTokens }) => {
-      const sourceTokensWithBalance = getTokensWithBalance(
-        sourceTokens,
-        connectedWallets
-      );
-      const destinationTokensWithBalance = getTokensWithBalance(
-        destinationTokens,
-        connectedWallets
-      );
-      return {
-        sourceTokens: sortTokens(sourceTokensWithBalance),
-        destinationTokens: sortTokens(destinationTokensWithBalance),
-      };
-    });
-  },
-  {
-    equalityFn: shallow,
-  }
 );
 
 export const fetchingBalanceSelector = (state: WalletsStore) =>

@@ -1,3 +1,5 @@
+import type { WidgetConfig } from '../types';
+
 import { useEffect, useRef } from 'react';
 import {
   createSearchParams,
@@ -7,12 +9,15 @@ import {
 
 import { navigationRoutes } from '../constants/navigationRoutes';
 import { SearchParams } from '../constants/searchParams';
+import { useSyncStoresWithConfig } from '../hooks/useSyncStoresWithConfig';
 import { useBestRouteStore } from '../store/bestRoute';
 import { useMetaStore } from '../store/meta';
 import { useUiStore } from '../store/ui';
 import { searchParamsToToken } from '../utils/routing';
 
-export function UpdateUrl() {
+type Props = { config: WidgetConfig | undefined };
+
+export function UpdateUrl(props: Props) {
   const firstRender = useRef(true);
   const [searchParams, setSearchParams] = useSearchParams();
   const location = useLocation();
@@ -31,6 +36,7 @@ export function UpdateUrl() {
   const loadingStatus = useMetaStore.use.loadingStatus();
   const { blockchains, tokens } = useMetaStore.use.meta();
   const setSelectedSwap = useUiStore.use.setSelectedSwap();
+  useSyncStoresWithConfig(props.config);
 
   useEffect(() => {
     const params: Record<string, string> = {};
