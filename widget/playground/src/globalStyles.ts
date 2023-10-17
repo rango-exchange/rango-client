@@ -1,6 +1,9 @@
 import { globalCss } from '@rango-dev/ui';
 
 export const globalStyles = globalCss({
+  body: {
+    fontFamily: '$primary',
+  },
   '*': {
     '&::-webkit-scrollbar': { width: '$8', height: '$8' },
     '&::-webkit-scrollbar-thumb': {

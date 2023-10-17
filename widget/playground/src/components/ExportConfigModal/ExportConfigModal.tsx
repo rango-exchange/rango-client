@@ -56,7 +56,6 @@ export function ExportConfigModal(props: ExportConfigModalProps) {
         maxHeight: '865px',
         height: '90%',
         padding: '$20',
-        fontFamily: '$primary',
       }}
       hasLogo={false}
       header={

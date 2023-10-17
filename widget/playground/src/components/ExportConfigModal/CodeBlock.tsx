@@ -8,7 +8,11 @@ import {
   jsx,
 } from 'react-syntax-highlighter/dist/esm/languages/prism';
 
-import { CodeBlockContainer, CopyCodeBlockButton } from './CodeBlock.styles';
+import {
+  CodeBlockContainer,
+  CopyCodeBlock,
+  CopyCodeBlockButton,
+} from './CodeBlock.styles';
 
 const RESET_INTERVAL = 2_000;
 
@@ -22,15 +26,17 @@ export function CodeBlock(props: CodeBlockProps) {
 
   return (
     <CodeBlockContainer>
-      <Tooltip content="Copy to clipboard" side="top">
-        <CopyCodeBlockButton
-          type="primary"
-          onClick={() => {
-            handleCopy(children);
-          }}>
-          <CopyIcon size={20} />
-        </CopyCodeBlockButton>
-      </Tooltip>
+      <CopyCodeBlock>
+        <Tooltip content="Copy to clipboard" side="top">
+          <CopyCodeBlockButton
+            type="primary"
+            onClick={() => {
+              handleCopy(children);
+            }}>
+            <CopyIcon size={24} />
+          </CopyCodeBlockButton>
+        </Tooltip>
+      </CopyCodeBlock>
       <SyntaxHighlighter
         showLineNumbers
         language={language}
