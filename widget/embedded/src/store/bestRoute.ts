@@ -11,15 +11,10 @@ import { ZERO } from '../constants/numbers';
 import { isPositiveNumber } from '../utils/numbers';
 import { getBestRouteToTokenUsdPrice } from '../utils/routing';
 import { calcOutputUsdValue } from '../utils/swap';
-import {
-  getDefaultToken,
-  getSortedTokens,
-  tokensAreEqual,
-} from '../utils/wallets';
+import { tokensAreEqual } from '../utils/wallets';
 
 import { useMetaStore } from './meta';
 import createSelectors from './selectors';
-import { useWalletsStore } from './wallets';
 
 const getUsdValue = (token: Token | null, amount: string): BigNumber | null =>
   token?.usdPrice
@@ -36,20 +31,12 @@ export interface RouteState {
   fromToken: TokenWithBalance | null;
   toToken: TokenWithBalance | null;
   routeWalletsConfirmed: boolean;
-  sourceTokens: Token[];
-  destinationTokens: Token[];
   selectedWallets: Wallet[];
   resetRoute: () => void;
   resetToBlockchain: () => void;
   resetFromBlockchain: () => void;
-  setFromBlockchain: (
-    chain: BlockchainMeta | null,
-    setDefaultToken?: boolean
-  ) => void;
-  setToBlockchain: (
-    chian: BlockchainMeta | null,
-    setDefaultToken?: boolean
-  ) => void;
+  setFromBlockchain: (chain: BlockchainMeta | null) => void;
+  setToBlockchain: (chian: BlockchainMeta | null) => void;
 
   setFromToken: (token: Token | null) => void;
   setToToken: (token: Token | null) => void;
@@ -78,8 +65,6 @@ export const useBestRouteStore = createSelectors(
       toToken: null,
       bestRoute: null,
       routeWalletsConfirmed: false,
-      sourceTokens: [],
-      destinationTokens: [],
       selectedWallets: [],
       customDestination: '',
       setRoute: (bestRoute) =>
@@ -112,66 +97,65 @@ export const useBestRouteStore = createSelectors(
           outputAmount: null,
           outputUsdValue: new BigNumber(0),
         })),
-      setFromBlockchain: (chain, setDefaultToken) => {
+      setFromBlockchain: (chain) => {
         set((state) => {
           if (state.fromBlockchain?.name === chain?.name) {
             return {};
           }
-          const tokens = useMetaStore.getState().meta.tokens;
-          const connectedWallets = useWalletsStore.getState().connectedWallets;
-          const sortedTokens = getSortedTokens(
-            chain,
-            tokens,
-            connectedWallets,
-            state.destinationTokens
-          );
-          const fromToken = getDefaultToken(sortedTokens, state.toToken);
+
           return {
             fromBlockchain: chain,
-            sourceTokens: sortedTokens,
-            ...(setDefaultToken && {
-              fromToken,
-            }),
-            ...(!!state.inputAmount && {
-              inputUsdValue: getUsdValue(fromToken, state.inputAmount),
+            ...(state.fromToken && {
+              bestRoute: null,
+              fromToken: null,
+              outputAmount: null,
+              outputUsdValue: null,
             }),
           };
         });
       },
-      setFromToken: (token) =>
-        set((state) => ({
+      setFromToken: (token) => {
+        const { blockchains } = useMetaStore.getState().meta;
+        const fromBlockchain =
+          blockchains.find(
+            (blockchain) => blockchain.name === token?.blockchain
+          ) ?? null;
+        return set((state) => ({
           fromToken: token,
+          fromBlockchain,
           ...(!!state.inputAmount && {
             inputUsdValue: getUsdValue(token, state.inputAmount),
           }),
-        })),
-      setToBlockchain: (chain, setDefaultToken) => {
+        }));
+      },
+      setToBlockchain: (chain) => {
         set((state) => {
           if (state.toBlockchain?.name === chain?.name) {
             return {};
           }
-          const tokens = useMetaStore.getState().meta.tokens;
-          const connectedWallets = useWalletsStore.getState().connectedWallets;
-          const sortedTokens = getSortedTokens(
-            chain,
-            tokens,
-            connectedWallets,
-            state.destinationTokens
-          );
 
           return {
             toBlockchain: chain,
-            destinationTokens: sortedTokens,
-            ...(setDefaultToken && {
-              toToken: getDefaultToken(sortedTokens, state.fromToken),
+            ...(state.toToken && {
+              bestRoute: null,
+              toToken: null,
+              outputAmount: null,
+              outputUsdValue: null,
             }),
           };
         });
       },
-      setToToken: (token) =>
-        set(() => ({
+      setToToken: (token) => {
+        const { blockchains } = useMetaStore.getState().meta;
+        const toBlockchain =
+          blockchains.find(
+            (blockchain) => blockchain.name === token?.blockchain
+          ) ?? null;
+        return set(() => ({
           toToken: token,
-        })),
+          toBlockchain,
+        }));
+      },
       setInputAmount: (amount) => {
         set((state) => ({
           inputAmount: amount,
@@ -187,7 +171,6 @@ export const useBestRouteStore = createSelectors(
       },
       retry: (pendingSwap) => {
         const { tokens, blockchains } = useMetaStore.getState().meta;
-        const connectedWallets = useWalletsStore.getState().connectedWallets;
         const failedIndex =
           pendingSwap.status === 'failed'
             ? pendingSwap.steps.findIndex((s) => s.status === 'failed')
@@ -223,18 +206,7 @@ export const useBestRouteStore = createSelectors(
             address: lastStep.toSymbolAddress,
           })
         );
-        const sortedSourceTokens = getSortedTokens(
-          fromBlockchain,
-          tokens,
-          connectedWallets,
-          []
-        );
-        const sortedDestinationTokens = getSortedTokens(
-          toBlockchain,
-          tokens,
-          connectedWallets,
-          []
-        );
+
         const inputAmount = pendingSwap.inputAmount;
         set({
           fromBlockchain,
@@ -246,8 +218,6 @@ export const useBestRouteStore = createSelectors(
           toBlockchain,
           toToken,
           bestRoute: null,
-          sourceTokens: sortedSourceTokens,
-          destinationTokens: sortedDestinationTokens,
         });
       },
       switchFromAndTo: () =>
@@ -256,8 +226,6 @@ export const useBestRouteStore = createSelectors(
           fromToken: state.toToken,
           toBlockchain: state.fromBlockchain,
           toToken: state.fromToken,
-          sourceTokens: state.destinationTokens,
-          destinationTokens: state.sourceTokens,
           inputAmount: state.outputAmount?.toString() || '',
           inputUsdValue: getUsdValue(
             state.toToken,
@@ -267,13 +235,19 @@ export const useBestRouteStore = createSelectors(
 
       resetFromBlockchain: () =>
         set(() => ({
+          fromToken: null,
           fromBlockchain: null,
-          sourceTokens: [],
+          outputAmount: null,
+          outputUsdValue: null,
+          bestRoute: null,
         })),
       resetToBlockchain: () =>
         set(() => ({
+          toToken: null,
           toBlockchain: null,
-          destinationTokens: [],
+          outputAmount: null,
+          outputUsdValue: null,
+          bestRoute: null,
         })),
       setRouteWalletConfirmed: (flag) =>
         set({

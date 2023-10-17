@@ -428,7 +428,6 @@ export function getTokensWithBalance(
   tokens: TokenWithBalance[],
   connectedWallets: ConnectedWallet[]
 ): TokenWithBalance[] {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   return tokens.map(({ balance, ...otherProps }) => {
     const tokenAmount = numberToString(
       new BigNumber(
@@ -464,6 +463,43 @@ export function getTokensWithBalance(
   });
 }
 
+export function getTokensBalanceFromWalletAndSort(
+  tokens: TokenWithBalance[],
+  connectedWallets: ConnectedWallet[]
+) {
+  const list =
+    connectedWallets.length > 0
+      ? getTokensWithBalance(tokens, connectedWallets)
+      : tokens;
+  list.sort((tokenA, tokenB) => {
+    if (tokenA.balance?.usdValue && tokenB.balance?.usdValue) {
+      return (
+        parseFloat(tokenB.balance.usdValue) -
+        parseFloat(tokenA.balance.usdValue)
+      );
+    }
+
+    if (!tokenA.balance?.usdValue && tokenB.balance?.usdValue) {
+      return 1;
+    }
+
+    if (tokenA.balance?.usdValue && !tokenB.balance?.usdValue) {
+      return -1;
+    }
+
+    if (!tokenA.balance?.usdValue && !tokenB.balance?.usdValue) {
+      return (
+        parseFloat(tokenB.balance?.amount || '0') -
+        parseFloat(tokenA.balance?.amount || '0')
+      );
+    }
+
+    return 0;
+  });
+
+  return list;
+}
+
 export function getSortedTokens(
   chain: BlockchainMeta | null,
   tokens: Token[],
@@ -475,6 +511,7 @@ export function getSortedTokens(
   if (fromChainEqualsToToBlockchain) {
     return otherChainTokens;
   }
+
   const filteredTokens = tokens.filter(
     (token) => token.blockchain === chain?.name
   );
@@ -490,23 +527,6 @@ export function tokensAreEqual(
     tokenA?.symbol === tokenB?.symbol &&
     tokenA?.address === tokenB?.address
   );
-}
-
-export function getDefaultToken(
-  sortedTokens: TokenWithBalance[],
-  otherToken: TokenWithBalance | null
-): TokenWithBalance {
-  let selectedToken: TokenWithBalance;
-  const firstToken = sortedTokens[0];
-  const secondToken = sortedTokens[1];
-  if (sortedTokens.length === 1) {
-    selectedToken = firstToken;
-  } else if (tokensAreEqual(firstToken, otherToken)) {
-    selectedToken = secondToken;
-  } else {
-    selectedToken = firstToken;
-  }
-  return selectedToken;
 }
 
 export function sortWalletsBasedOnConnectionState(

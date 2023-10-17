@@ -1,43 +1,30 @@
-/* eslint-disable @typescript-eslint/no-magic-numbers */
-import type { Asset, Token } from 'rango-sdk';
+import type { BlockchainMeta, Token } from 'rango-sdk';
 
 import { i18n } from '@lingui/core';
 import { Divider } from '@rango-dev/ui';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { BlockchainsSection } from '../components/BlockchainsSection';
 import { Layout } from '../components/Layout';
 import { SearchInput } from '../components/SearchInput';
 import { TokenList } from '../components/TokenList/TokenList';
-import { filterTokens } from '../components/TokenList/TokenList.helpers';
 import { navigationRoutes } from '../constants/navigationRoutes';
 import { useNavigateBack } from '../hooks/useNavigateBack';
+import { useAppStore } from '../store/app';
 import { useBestRouteStore } from '../store/bestRoute';
-import { useMetaStore } from '../store/meta';
 import { useWalletsStore } from '../store/wallets';
-import { findCommonTokens } from '../utils/routing';
-import { tokensAreEqual } from '../utils/wallets';
+import { getTokensBalanceFromWalletAndSort } from '../utils/wallets';
 
 interface PropTypes {
-  type: 'from' | 'to';
-  supportedBlockchains?: string[];
-  supportedTokens?: Asset[];
-  pinnedTokens?: Asset[];
+  type: 'source' | 'destination';
 }
 
 export function SelectSwapItemsPage(props: PropTypes) {
-  const { type, supportedBlockchains, supportedTokens, pinnedTokens } = props;
-  const [selectedBlockchain, setSelectedBlockchain] = useState('');
+  const { type } = props;
   const navigate = useNavigate();
   const { navigateBackFrom } = useNavigateBack();
   const {
-    meta: { tokens },
-    setTokensWithBalance,
-  } = useMetaStore();
-  const {
-    sourceTokens,
-    destinationTokens,
     fromBlockchain,
     toBlockchain,
     setFromToken,
@@ -45,89 +32,69 @@ export function SelectSwapItemsPage(props: PropTypes) {
     setFromBlockchain,
     setToBlockchain,
   } = useBestRouteStore();
-  const { connectedWallets, loading: loadingWallet } = useWalletsStore();
+  const { connectedWallets } = useWalletsStore();
   const [searchedFor, setSearchedFor] = useState<string>('');
 
-  const blockchains = supportedBlockchains
-    ? useMetaStore.use
-        .meta()
-        .blockchains.filter((chain) =>
-          supportedBlockchains.includes(chain.name)
-        )
-    : useMetaStore.use.meta().blockchains;
+  const selectedBlockchain = type === 'source' ? fromBlockchain : toBlockchain;
+  const selectedBlockchainName = selectedBlockchain?.name ?? '';
 
-  const allTokens = supportedTokens
-    ? findCommonTokens(supportedTokens, tokens)
-    : tokens.filter((token) =>
-        new Set(blockchains.map((blockchain) => blockchain.name)).has(
-          token.blockchain
-        )
-      );
+  // Tokens & Blockchains list
+  const blockchains = useAppStore().blockchains({
+    type: type,
+  });
+  const tokens = useAppStore().tokens({
+    type,
+    blockchain: selectedBlockchainName,
+    searchFor: searchedFor,
+  });
+  const tokensList = getTokensBalanceFromWalletAndSort(
+    tokens,
+    connectedWallets
+  );
 
-  const supportedSourceTokens = supportedTokens
-    ? findCommonTokens(supportedTokens, sourceTokens)
-    : sourceTokens;
-
-  const supportedDestinationTokens = supportedTokens
-    ? findCommonTokens(supportedTokens, destinationTokens)
-    : destinationTokens;
-
-  const tokensByType =
-    type === 'from' ? supportedSourceTokens : supportedDestinationTokens;
-
-  let tokenList: Token[] = [];
-
-  const noBlockchainSelected =
-    (type === 'from' && !fromBlockchain) || (type === 'to' && !toBlockchain);
-
-  if (noBlockchainSelected) {
-    tokenList = allTokens;
-  } else if (tokensByType.length) {
-    tokenList = tokensByType.map((token) => ({
-      ...token,
-      pin: pinnedTokens?.some((pinnedToken) =>
-        tokensAreEqual(pinnedToken, token)
-      ),
-    }));
-  }
-
-  useEffect(() => {
-    if (connectedWallets.length && !loadingWallet) {
-      setTokensWithBalance();
+  // Actions
+  const updateBlockchain = (blockchain: BlockchainMeta) => {
+    if (type === 'source') {
+      setFromBlockchain(blockchain);
+    } else {
+      setToBlockchain(blockchain);
     }
-  }, [connectedWallets, loadingWallet]);
+  };
+
+  const updateToken = (token: Token) => {
+    if (type === 'source') {
+      setFromToken(token);
+    } else {
+      setToToken(token);
+    }
+  };
 
   return (
     <Layout
       header={{
         onBack: () =>
           navigateBackFrom(
-            type === 'from'
+            type === 'source'
               ? navigationRoutes.fromSwap
               : navigationRoutes.toSwap
           ),
-        title: i18n.t('Swap {type}', { type }),
+        title: i18n.t('Swap {type}', {
+          type: type === 'source' ? 'from' : 'to',
+        }),
       }}>
       <BlockchainsSection
         blockchains={blockchains}
-        type={type}
-        blockchain={type === 'from' ? fromBlockchain : toBlockchain}
+        type={type == 'source' ? 'from' : 'to'}
+        blockchain={type === 'source' ? fromBlockchain : toBlockchain}
         onMoreClick={() =>
           navigate(
-            type === 'from'
+            type === 'source'
               ? navigationRoutes.fromBlockchain
               : navigationRoutes.toBlockchain
           )
         }
         onChange={(blockchain) => {
-          {
-            if (type === 'from') {
-              setFromBlockchain(blockchain, true);
-            } else {
-              setToBlockchain(blockchain, true);
-            }
-            setSelectedBlockchain(blockchain.name);
-          }
+          updateBlockchain(blockchain);
         }}
       />
       <Divider size={24} />
@@ -143,24 +110,19 @@ export function SelectSwapItemsPage(props: PropTypes) {
       />
       <Divider size={16} />
       <TokenList
-        list={filterTokens(tokenList, searchedFor)}
-        selectedBlockchain={selectedBlockchain}
+        list={tokensList}
+        selectedBlockchain={selectedBlockchainName}
         searchedFor={searchedFor}
         onChange={(token) => {
-          const blockchain = blockchains.find(
+          updateToken(token);
+
+          const tokenBlockchain = blockchains.find(
             (chain) => token.blockchain === chain.name
           );
-          if (type === 'from') {
-            setFromToken(token);
-            if (!!blockchain) {
-              setFromBlockchain(blockchain, true);
-            }
-          } else {
-            setToToken(token);
-            if (!!blockchain) {
-              setToBlockchain(blockchain, true);
-            }
+          if (tokenBlockchain) {
+            updateBlockchain(tokenBlockchain);
           }
+
           navigateBackFrom(navigationRoutes.fromSwap);
         }}
       />

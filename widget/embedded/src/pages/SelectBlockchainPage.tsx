@@ -7,47 +7,41 @@ import { Layout } from '../components/Layout';
 import { SearchInput } from '../components/SearchInput';
 import { navigationRoutes } from '../constants/navigationRoutes';
 import { useNavigateBack } from '../hooks/useNavigateBack';
+import { useAppStore } from '../store/app';
 import { useBestRouteStore } from '../store/bestRoute';
 import { useMetaStore } from '../store/meta';
 
 interface PropTypes {
-  type: 'from' | 'to';
-  supportedBlockchains?: string[];
+  type: 'source' | 'destination';
 }
 
 export function SelectBlockchainPage(props: PropTypes) {
-  const { type, supportedBlockchains } = props;
+  const { type } = props;
   const { navigateBackFrom } = useNavigateBack();
   const [searchedFor, setSearchedFor] = useState<string>('');
   const [blockchainCategory, setBlockchainCategory] = useState<string>('ALL');
   const setToBlockchain = useBestRouteStore.use.setToBlockchain();
   const setFromBlockchain = useBestRouteStore.use.setFromBlockchain();
-  const {
-    meta: { blockchains: allBlockchains },
-    loadingStatus,
-  } = useMetaStore();
-  const blockchains = supportedBlockchains
-    ? useMetaStore.use
-        .meta()
-        .blockchains.filter((chain) =>
-          supportedBlockchains.includes(chain.name)
-        )
-    : useMetaStore.use.meta().blockchains;
+  const { loadingStatus } = useMetaStore();
+
+  const blockchains = useAppStore().blockchains({
+    type: type,
+  });
+  const routeKey = type === 'source' ? 'fromBlockchain' : 'toBlockchain';
 
   return (
     <Layout
       header={{
-        onBack: navigateBackFrom.bind(
-          null,
-          navigationRoutes[`${type}Blockchain`]
-        ),
+        onBack: () => {
+          navigateBackFrom(navigationRoutes[routeKey]);
+        },
         title: i18n.t(`Select Blockchain`),
       }}>
       <Divider size={12} />
       <SelectableCategoryList
         setCategory={setBlockchainCategory}
         category={blockchainCategory}
-        blockchains={allBlockchains}
+        blockchains={blockchains}
         isLoading={loadingStatus === 'loading'}
       />
       <Divider size={24} />
@@ -68,12 +62,13 @@ export function SelectBlockchainPage(props: PropTypes) {
         searchedFor={searchedFor}
         blockchainCategory={blockchainCategory}
         onChange={(blockchain) => {
-          if (type === 'from') {
-            setFromBlockchain(blockchain, true);
+          if (type === 'source') {
+            setFromBlockchain(blockchain);
           } else {
-            setToBlockchain(blockchain, true);
+            setToBlockchain(blockchain);
           }
-          navigateBackFrom(navigationRoutes[`${type}Blockchain`]);
+
+          navigateBackFrom(navigationRoutes[routeKey]);
         }}
       />
     </Layout>
