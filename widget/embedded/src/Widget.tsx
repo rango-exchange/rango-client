@@ -9,7 +9,6 @@ import { AppRouter } from './components/AppRouter';
 import { AppRoutes } from './components/AppRoutes';
 import { WidgetEvents } from './components/WidgetEvents';
 import { globalFont } from './globalStyles';
-import { useSyncStoresWithConfig } from './hooks/useSyncStoresWithConfig';
 import { useTheme } from './hooks/useTheme';
 import QueueManager from './QueueManager';
 import { useAppStore } from './store/app';
@@ -44,7 +43,6 @@ export function Main(props: PropsWithChildren<WidgetProps>) {
     useState<string>('');
   const [disconnectedWallet, setDisconnectedWallet] = useState<WalletType>();
   const widgetContext = useContext(WidgetContext);
-  useSyncStoresWithConfig(config);
 
   useMemo(() => {
     if (config?.apiKey) {
@@ -66,6 +64,7 @@ export function Main(props: PropsWithChildren<WidgetProps>) {
         <QueueManager>
           <WidgetEvents />
           <AppRouter
+            config={config}
             lastConnectedWallet={lastConnectedWalletWithNetwork}
             disconnectedWallet={disconnectedWallet}
             clearDisconnectedWallet={() => {

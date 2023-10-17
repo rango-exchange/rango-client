@@ -145,10 +145,10 @@ export const createDataSlice: StateCreator<
         }
 
         // Check it has an address or not.
-        if (a.address && !b.address) {
+        if (!a.address && b.address) {
           return -1;
         }
-        if (!a.address && b.address) {
+        if (a.address && !b.address) {
           return 1;
         }
 

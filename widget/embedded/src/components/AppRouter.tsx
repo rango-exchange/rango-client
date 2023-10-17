@@ -1,3 +1,4 @@
+import type { WidgetConfig } from '../types';
 import type { WalletType } from '@rango-dev/wallets-shared';
 import type { PropsWithChildren } from 'react';
 
@@ -43,6 +44,7 @@ export function AppRouter({
   lastConnectedWallet: string;
   disconnectedWallet: WalletType | undefined;
   clearDisconnectedWallet: () => void;
+  config: WidgetConfig | undefined;
 }) {
   const isRouterInContext = useInRouterContext();
   const Router = isRouterInContext ? Route : MemoryRouter;
@@ -62,7 +64,7 @@ export function AppRouter({
   return (
     <>
       <Router>{children}</Router>
-      {isRouterInContext && <UpdateUrl />}
+      {isRouterInContext && <UpdateUrl config={props.config} />}
     </>
   );
 }
