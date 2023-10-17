@@ -28,7 +28,10 @@ import { useNavigateBack } from '../hooks/useNavigateBack';
 import { useMetaStore } from '../store/meta';
 import { useSettingsStore } from '../store/settings';
 import { containsText } from '../utils/numbers';
-import { getUniqueSwappersGroups } from '../utils/settings';
+import {
+  getUniqueSwappersGroups,
+  sortLiquiditySourcesByGroupTitle,
+} from '../utils/settings';
 
 interface PropTypes {
   supportedSwappers?: string[];
@@ -76,20 +79,22 @@ export function LiquiditySourcePage({
     });
   };
 
-  const list = liquiditySources.map((sourceItem) => {
-    const { selected, groupTitle, logo } = sourceItem;
-    return {
-      start: <Image src={logo} size={22} type="circular" />,
-      onClick: () => toggleLiquiditySource(groupTitle),
-      end: <Checkbox checked={selected} />,
-      title: (
-        <Typography variant="title" size="xmedium">
-          {i18n.t(groupTitle)}
-        </Typography>
-      ),
-      ...sourceItem,
-    };
-  });
+  const list = liquiditySources
+    .sort(sortLiquiditySourcesByGroupTitle)
+    .map((sourceItem) => {
+      const { selected, groupTitle, logo } = sourceItem;
+      return {
+        start: <Image src={logo} size={22} type="circular" />,
+        onClick: () => toggleLiquiditySource(groupTitle),
+        end: <Checkbox checked={selected} />,
+        title: (
+          <Typography variant="title" size="xmedium">
+            {i18n.t(groupTitle)}
+          </Typography>
+        ),
+        ...sourceItem,
+      };
+    });
 
   const searchHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
@@ -123,7 +128,7 @@ export function LiquiditySourcePage({
           fullWidth
           color="light"
           variant="contained"
-          placeholder={i18n.t('Swap {sourceType}', { sourceType })}
+          placeholder={i18n.t('Search {sourceType}', { sourceType })}
           onChange={searchHandler}
         />
         {loadingMetaStatus === 'loading' && <LoadingLiquiditySourceList />}

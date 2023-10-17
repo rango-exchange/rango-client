@@ -41,6 +41,7 @@ import { useUiStore } from '../store/ui';
 import { useWalletsStore } from '../store/wallets';
 import { ButtonState } from '../types';
 import { getContainer } from '../utils/common';
+import { getBlockchainShortNameFor } from '../utils/meta';
 import {
   numberToString,
   secondsToString,
@@ -112,7 +113,7 @@ export function Home() {
   } = useBestRouteStore();
 
   const {
-    meta: { tokens },
+    meta: { tokens, blockchains },
     loadingStatus: loadingMetaStatus,
   } = useMetaStore();
 
@@ -210,7 +211,8 @@ export function Home() {
       from: {
         token: { displayName: swap.from.symbol, image: swap.from.logo },
         chain: {
-          displayName: swap.from.blockchain,
+          displayName:
+            getBlockchainShortNameFor(swap.from.blockchain, blockchains) ?? '',
           image: swap.from.blockchainLogo,
         },
         price: {
@@ -227,7 +229,8 @@ export function Home() {
       to: {
         token: { displayName: swap.to.symbol, image: swap.to.logo },
         chain: {
-          displayName: swap.to.blockchain,
+          displayName:
+            getBlockchainShortNameFor(swap.to.blockchain, blockchains) ?? '',
           image: swap.to.blockchainLogo,
         },
         price: {

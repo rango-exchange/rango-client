@@ -110,16 +110,18 @@ export function SettingsPage({ supportedSwappers, singleTheme }: PropTypes) {
     onClick: () => navigate(navigationRoutes.exchanges),
   };
 
-  const languageItem = {
-    id: 'language-item',
-    title: (
-      <Typography variant="title" size="xmedium">
-        {i18n.t('Language')}
-      </Typography>
-    ),
-    end: <ChevronRightIcon color="gray" />,
-    onClick: () => navigate(navigationRoutes.languages),
-  };
+  /*
+   * const languageItem = {
+   *   id: 'language-item',
+   *   title: (
+   *     <Typography variant="title" size="xmedium">
+   *       {i18n.t('Language')}
+   *     </Typography>
+   *   ),
+   *   end: <ChevronRightIcon color="gray" />,
+   *   onClick: () => navigate(navigationRoutes.languages),
+   * };
+   */
 
   const themeItem = {
     id: 'theme-item',
@@ -160,7 +162,11 @@ export function SettingsPage({ supportedSwappers, singleTheme }: PropTypes) {
     onClick: toggleInfiniteApprove,
   };
 
-  const settingItems = [bridgeItem, exchangeItem, languageItem];
+  const settingItems = [
+    bridgeItem,
+    exchangeItem,
+    // languageItem
+  ];
   if (!singleTheme) {
     settingItems.push(themeItem);
   }

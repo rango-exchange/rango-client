@@ -2,6 +2,7 @@ import type { getSwapMessages } from '../../utils/swap';
 import type { ModalState } from '../SwapDetailsModal';
 import type { ConnectResult } from '@rango-dev/wallets-react';
 import type {
+  BlockchainMeta,
   PendingSwap,
   PendingSwapNetworkStatus,
   PendingSwapStep,
@@ -22,7 +23,7 @@ export interface FailedAlertsProps {
   message: ReturnType<typeof getSwapMessages>;
 }
 
-export type GetStep = { swap: PendingSwap } & Omit<
-  SwapAlertsProps,
-  'step' | 'hasAlreadyProceededToSign'
->;
+export type GetStep = {
+  swap: PendingSwap;
+  blockchains: BlockchainMeta[];
+} & Omit<SwapAlertsProps, 'step' | 'hasAlreadyProceededToSign'>;

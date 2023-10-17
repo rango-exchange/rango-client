@@ -8,10 +8,12 @@ import {
   USD_VALUE_MAX_DECIMALS,
   USD_VALUE_MIN_DECIMALS,
 } from '../../constants/routing';
+import { getBlockchainShortNameFor } from '../../utils/meta';
 import { numberToString } from '../../utils/numbers';
 
 export function formatBestRoute(
-  bestRoute: BestRouteResponse
+  bestRoute: BestRouteResponse,
+  blockchains: BlockchainMeta[]
 ): Step[] | undefined {
   return bestRoute.result?.swaps.map((swap) => {
     return {
@@ -19,7 +21,8 @@ export function formatBestRoute(
       from: {
         token: { displayName: swap.from.symbol, image: swap.from.logo },
         chain: {
-          displayName: swap.from.blockchain,
+          displayName:
+            getBlockchainShortNameFor(swap.from.blockchain, blockchains) ?? '',
           image: swap.from.blockchainLogo,
         },
         price: {
@@ -38,7 +41,8 @@ export function formatBestRoute(
       to: {
         token: { displayName: swap.to.symbol, image: swap.to.logo },
         chain: {
-          displayName: swap.to.blockchain,
+          displayName:
+            getBlockchainShortNameFor(swap.to.blockchain, blockchains) ?? '',
           image: swap.to.blockchainLogo,
         },
         price: {

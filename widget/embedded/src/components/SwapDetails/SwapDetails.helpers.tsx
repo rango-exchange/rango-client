@@ -8,6 +8,7 @@ import {
   TOKEN_AMOUNT_MAX_DECIMALS,
   TOKEN_AMOUNT_MIN_DECIMALS,
 } from '../../constants/routing';
+import { getBlockchainShortNameFor } from '../../utils/meta';
 import { numberToString } from '../../utils/numbers';
 import { isNetworkStatusInWarningState } from '../../utils/swap';
 import { SwapDetailsAlerts } from '../SwapDetailsAlerts';
@@ -15,17 +16,18 @@ import { SwapDetailsAlerts } from '../SwapDetailsAlerts';
 export const RESET_INTERVAL = 2_000;
 export const SECONDS = 60;
 
-export const getSteps = ({ swap, ...args }: GetStep): Step[] => {
+export const getSteps = ({ swap, blockchains, ...args }: GetStep): Step[] => {
   const hasAlreadyProceededToSign = swap.hasAlreadyProceededToSign !== false;
   return swap.steps.map((step, index) => {
     const amountToConvert =
       index === 0 ? swap.inputAmount : swap.steps[index - 1].outputAmount;
     return {
       from: {
-        token: { displayName: step.fromSymbol, image: step.fromLogo || '' },
+        token: { displayName: step.fromSymbol, image: step.fromLogo ?? '' },
         chain: {
-          displayName: step.fromBlockchain,
-          image: step.fromBlockchainLogo || '',
+          displayName:
+            getBlockchainShortNameFor(step.fromBlockchain, blockchains) ?? '',
+          image: step.fromBlockchainLogo ?? '',
         },
         price: {
           value: numberToString(
@@ -38,8 +40,9 @@ export const getSteps = ({ swap, ...args }: GetStep): Step[] => {
       to: {
         token: { displayName: step.toSymbol, image: step.toLogo },
         chain: {
-          displayName: step.toBlockchain,
-          image: step.toBlockchainLogo || '',
+          displayName:
+            getBlockchainShortNameFor(step.toBlockchain, blockchains) ?? '',
+          image: step.toBlockchainLogo ?? '',
         },
         price: {
           value: numberToString(
@@ -49,7 +52,7 @@ export const getSteps = ({ swap, ...args }: GetStep): Step[] => {
           ),
         },
       },
-      swapper: { displayName: step.swapperId, image: step.swapperLogo || '' },
+      swapper: { displayName: step.swapperId, image: step.swapperLogo ?? '' },
       alerts: (
         <SwapDetailsAlerts
           step={step}
