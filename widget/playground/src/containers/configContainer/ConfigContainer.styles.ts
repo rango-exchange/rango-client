@@ -15,7 +15,6 @@ export const Container = styled('div', {
 
 export const LeftSide = styled('div', {
   display: 'flex',
-  fontFamily: '$primary',
 });
 
 export const Main = styled('div', {
@@ -32,7 +31,6 @@ export const HeaderContainer = styled('div', {
   alignItems: 'center',
   display: 'flex',
   padding: '$15',
-  fontFamily: '$primary',
 });
 
 export const StyledButton = styled(Button, {
@@ -51,11 +49,10 @@ export const Content = styled('div', {
 });
 
 export const MobileSection = styled('div', {
-  fontFamily: '$primary',
   background:
     'linear-gradient(to right bottom, $colors$info100 3%,  $neutral100 94%, $colors$info100 97%)',
   display: 'flex',
-  height: '100vh',
+  minHeight: '100vh',
   flexDirection: 'column',
   justifyContent: 'center',
   alignItems: 'center',
