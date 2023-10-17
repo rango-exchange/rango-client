@@ -128,7 +128,7 @@ export function ConfirmSwapPage(props: PropTypes) {
   const [showWallets, setShowWallets] = useState(false);
   const setSelectedSwap = useUiStore.use.setSelectedSwap();
   const {
-    meta: { tokens },
+    meta: { tokens, blockchains },
     loadingStatus: loadingMetaStatus,
   } = useMetaStore();
   const slippage = useSettingsStore.use.slippage();
@@ -463,7 +463,7 @@ export function ConfirmSwapPage(props: PropTypes) {
           <BestRoute
             expanded={true}
             tooltipContainer={getContainer()}
-            steps={formatBestRoute(bestRoute) ?? []}
+            steps={formatBestRoute(bestRoute, blockchains) ?? []}
             input={{
               value: numberToString(
                 inputAmount,

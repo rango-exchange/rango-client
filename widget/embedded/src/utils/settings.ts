@@ -55,3 +55,18 @@ export function getUniqueSwappersGroups(
 
   return uniqueSupportedSwappersGroups;
 }
+
+export function sortLiquiditySourcesByGroupTitle(
+  a: UniqueSwappersGroupType,
+  b: UniqueSwappersGroupType
+) {
+  if (a.groupTitle < b.groupTitle) {
+    return -1;
+  }
+
+  if (a.groupTitle > b.groupTitle) {
+    return 1;
+  }
+
+  return 0;
+}
