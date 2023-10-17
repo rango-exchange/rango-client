@@ -9,40 +9,27 @@ import {
   Skeleton,
   Typography,
 } from '@rango-dev/ui';
-import { type BlockchainMeta } from 'rango-sdk';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 
+import { usePrepareBlockchainList } from '../../hooks/usePrepareBlockchainList';
 import { useBestRouteStore } from '../../store/bestRoute';
 import { useMetaStore } from '../../store/meta';
 
-import { sortBlockchains } from './BlockchainSection.helpers';
 import { Container } from './BlockchainsSection.styles';
 
-const MIN = 9;
-const MAX = 10;
+const LIST_SIZE = 10;
 const NUMBER_OF_LOADING = 12;
+
 export function BlockchainsSection(props: PropTypes) {
   const { blockchains, type, blockchain, onChange, onMoreClick } = props;
-  const sortedBlockchains = sortBlockchains(blockchains);
-  const [selectFromMoreBlockchain, setSelectFromMoreBlockchain] =
-    useState<BlockchainMeta | null>(null);
+  const blockchainsList = usePrepareBlockchainList(blockchains, {
+    limit: LIST_SIZE,
+    selected: blockchain?.name,
+  });
+
   const loadingStatus = useMetaStore.use.loadingStatus();
   const resetToBlockchain = useBestRouteStore.use.resetToBlockchain();
   const resetFromBlockchain = useBestRouteStore.use.resetFromBlockchain();
-  const COUNT_BLOCKCHAINS = !!selectFromMoreBlockchain ? MIN : MAX;
-
-  useEffect(() => {
-    const selectBlockchainFromMore = sortedBlockchains
-      .slice(MAX, sortedBlockchains.length)
-      .find(
-        (item) =>
-          item.chainId === blockchain?.chainId && item.name === blockchain?.name
-      );
-    if (!!selectBlockchainFromMore) {
-      setSelectFromMoreBlockchain(selectBlockchainFromMore);
-    }
-  }, [blockchain]);
-
   return (
     <div>
       <Divider size={12} />
@@ -70,18 +57,7 @@ export function BlockchainsSection(props: PropTypes) {
                 {i18n.t('All')}
               </Typography>
             </BlockchainsChip>
-            {!!selectFromMoreBlockchain && (
-              <BlockchainsChip
-                selected={
-                  !!selectFromMoreBlockchain &&
-                  selectFromMoreBlockchain.chainId === blockchain?.chainId
-                }
-                key={selectFromMoreBlockchain.chainId}
-                onClick={() => onChange(selectFromMoreBlockchain)}>
-                <Image src={selectFromMoreBlockchain.logo} size={30} />
-              </BlockchainsChip>
-            )}
-            {sortedBlockchains.slice(0, COUNT_BLOCKCHAINS).map((item) => (
+            {blockchainsList.list.map((item) => (
               <BlockchainsChip
                 key={item.chainId}
                 selected={!!blockchain && blockchain.chainId === item.chainId}
@@ -90,13 +66,15 @@ export function BlockchainsSection(props: PropTypes) {
               </BlockchainsChip>
             ))}
 
-            <BlockchainsChip onClick={onMoreClick}>
-              <Typography variant="body" size="xsmall" color="secondary500">
-                {i18n._('More +{count}', {
-                  count: sortedBlockchains.length - MAX,
-                })}
-              </Typography>
-            </BlockchainsChip>
+            {blockchainsList.more.length ? (
+              <BlockchainsChip onClick={onMoreClick}>
+                <Typography variant="body" size="xsmall" color="secondary500">
+                  {i18n._('More +{count}', {
+                    count: blockchainsList.more.length,
+                  })}
+                </Typography>
+              </BlockchainsChip>
+            ) : null}
           </>
         )}
       </Container>
