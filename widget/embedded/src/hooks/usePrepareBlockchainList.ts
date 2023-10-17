@@ -26,6 +26,10 @@ export function usePrepareBlockchainList(
 
   blockchains.sort(sortByMostUsedBlockchains);
 
+  const blockchainsHash = blockchains
+    .map((blockchain) => blockchain.name)
+    .join('-');
+
   return useMemo(() => {
     const list: BlockchainMeta[] = blockchains;
     let more: BlockchainMeta[] = [];
@@ -80,8 +84,7 @@ export function usePrepareBlockchainList(
       list,
       more,
     };
-    //TODO: replace with better solution
-  }, [JSON.stringify(blockchains)]);
+  }, [blockchainsHash]);
 }
 
 function generateSortBySelectedFor(selected: string) {
