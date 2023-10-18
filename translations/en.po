@@ -143,7 +143,7 @@ msgstr "Max"
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:37
 #: widget/embedded/src/components/TokenList/TokenList.tsx:128
 #: widget/embedded/src/pages/HistoryPage.tsx:99
-#: widget/embedded/src/pages/LiquiditySourcePage.tsx:134
+#: widget/embedded/src/pages/LiquiditySourcePage.tsx:139
 #~ msgid "No results found"
 #~ msgstr "No results found"
 
@@ -151,24 +151,24 @@ msgstr "Max"
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:38
 #: widget/embedded/src/components/TokenList/TokenList.tsx:129
 #: widget/embedded/src/pages/HistoryPage.tsx:101
-#: widget/embedded/src/pages/LiquiditySourcePage.tsx:135
+#: widget/embedded/src/pages/LiquiditySourcePage.tsx:140
 #~ msgid "Try using different keywords"
 #~ msgstr "Try using different keywords"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:66
-#: widget/embedded/src/components/BlockchainsSection/BlockchainsSection.tsx:37
+#: widget/embedded/src/components/BlockchainsSection/BlockchainsSection.tsx:41
 #: widget/embedded/src/pages/SelectBlockchainPage.tsx:38
 #~ msgid "Select Blockchain"
 #~ msgstr "Select Blockchain"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/BlockchainsSection/BlockchainsSection.tsx:57
+#: widget/embedded/src/components/BlockchainsSection/BlockchainsSection.tsx:61
 #~ msgid "All"
 #~ msgstr "All"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/BlockchainsSection/BlockchainsSection.tsx:72
+#: widget/embedded/src/components/BlockchainsSection/BlockchainsSection.tsx:76
 #~ msgid "More +{count}"
 #~ msgstr "More +{count}"
 
@@ -237,7 +237,7 @@ msgstr "Max"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/LoadingSwapDetails/LoadingSwapDetails.tsx:38
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:366
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:367
 #~ msgid "Swaps steps"
 #~ msgstr "Swaps steps"
 
@@ -308,19 +308,19 @@ msgstr "Max"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetails/SwapDetails.Placeholder.tsx:33
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:244
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:245
 #~ msgid "Swap and Bridge"
 #~ msgstr "Swap and Bridge"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetails/SwapDetails.Placeholder.tsx:42
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:284
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:285
 #~ msgid "Request ID"
 #~ msgstr "Request ID"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetails/SwapDetails.Placeholder.tsx:55
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:299
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:300
 #~ msgid "Created at"
 #~ msgstr "Created at"
 
@@ -330,17 +330,17 @@ msgstr "Max"
 #~ msgstr "Not found"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:225
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:226
 #~ msgid "Transaction was not sent."
 #~ msgstr "Transaction was not sent."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:256
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:257
 #~ msgid "Delete"
 #~ msgstr "Delete"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:276
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:277
 #~ msgid "Try again"
 #~ msgstr "Try again"
 
@@ -541,7 +541,7 @@ msgstr "Max"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/constants/messages.ts:5
-#: widget/embedded/src/pages/Home.tsx:308
+#: widget/embedded/src/pages/Home.tsx:311
 #~ msgid "Swap"
 #~ msgstr "Swap"
 
@@ -621,12 +621,12 @@ msgstr "Max"
 #~ msgstr "Search Transaction"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/Home.tsx:324
+#: widget/embedded/src/pages/Home.tsx:327
 #~ msgid "From"
 #~ msgstr "From"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/Home.tsx:362
+#: widget/embedded/src/pages/Home.tsx:365
 #~ msgid "To"
 #~ msgstr "To"
 
@@ -647,7 +647,6 @@ msgstr "Max"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/pages/LanguagePage.tsx:65
-#: widget/embedded/src/pages/SettingsPage.tsx:117
 #~ msgid "Language"
 #~ msgstr "Language"
 
@@ -657,9 +656,9 @@ msgstr "Max"
 #~ msgstr "language"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/LiquiditySourcePage.tsx:126
-#~ msgid "Swap {sourceType}"
-#~ msgstr "Swap {sourceType}"
+#: widget/embedded/src/pages/LiquiditySourcePage.tsx:131
+#~ msgid "Search {sourceType}"
+#~ msgstr "Search {sourceType}"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/pages/SelectBlockchainPage.tsx:51
@@ -692,24 +691,24 @@ msgstr "Max"
 #~ msgstr "Enabled exchanges"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/SettingsPage.tsx:128
+#: widget/embedded/src/pages/SettingsPage.tsx:130
 #: widget/embedded/src/pages/ThemePage.tsx:76
 #: widget/embedded/src/pages/ThemePage.tsx:85
 #~ msgid "Theme"
 #~ msgstr "Theme"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/SettingsPage.tsx:140
+#: widget/embedded/src/pages/SettingsPage.tsx:142
 #~ msgid "Infinite Approval"
 #~ msgstr "Infinite Approval"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/SettingsPage.tsx:149
+#: widget/embedded/src/pages/SettingsPage.tsx:151
 #~ msgid "Enabling the 'Infinite Approval' mode grants unrestricted access to smart contracts of DEXes/Bridges, allowing them to utilize the approved token amount without limitations."
 #~ msgstr "Enabling the 'Infinite Approval' mode grants unrestricted access to smart contracts of DEXes/Bridges, allowing them to utilize the approved token amount without limitations."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/SettingsPage.tsx:173
+#: widget/embedded/src/pages/SettingsPage.tsx:179
 #~ msgid "Setting"
 #~ msgstr "Setting"
 
@@ -824,6 +823,11 @@ msgstr "Max"
 #~ msgstr "second"
 
 #. js-lingui-explicit-id
+#: widget/embedded/src/pages/LiquiditySourcePage.tsx:126
+#~ msgid "Swap {sourceType}"
+#~ msgstr "Swap {sourceType}"
+
+#. js-lingui-explicit-id
 #: widget/embedded/src/pages/SelectBlockchainPage.tsx:37
 #~ msgid "Select chain"
 #~ msgstr "Select chain"
@@ -895,7 +899,12 @@ msgstr "Max"
 #~ msgstr "{time} min"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:227
+#: widget/ui/src/components/RouteCost/RouteCost.tsx:30
+#~ msgid "timeSec"
+#~ msgstr "{time} sec"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:228
 #~ msgid "remainSymbol"
 #~ msgstr "{amount} {symbol} on {blockchain} remain in your wallet"
 
@@ -957,7 +966,7 @@ msgstr "Max"
 #~ msgstr "Required: >= {min} {symbol}"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:207
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:208
 #~ msgid "receivedMessage"
 #~ msgstr "You have received {amount} {token} in {conciseAddress} wallet on {chain} chain."
 
@@ -979,7 +988,7 @@ msgstr "Max"
 #~ msgstr "Your {blockchainName} wallets"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/Home.tsx:254
+#: widget/embedded/src/pages/Home.tsx:257
 #~ msgid "yourSymbol"
 #~ msgstr "Yours: {amount} {symbol}"
 
@@ -987,11 +996,6 @@ msgstr "Max"
 #: widget/ui/src/containers/Warnings/HighSlippageWarning.tsx:21
 msgid "highSlippage"
 msgstr " Caution, your slippage is high (={selectedSlippage}). Your trade may be front run."
-
-#. js-lingui-explicit-id
-#: widget/ui/src/components/RouteCost/RouteCost.tsx:30
-msgid "timeSec"
-msgstr "{time} sec"
 
 #: widget/embedded/src/pages/WalletsPage.tsx:139
 #~ msgid "Choose a wallet to connect."
