@@ -11,8 +11,8 @@
     "clean": "rimraf .parcel-cache && rimraf dist"
   },
   "dependencies": {
-    "@rango-dev/provider-all": "^0.15.1-next.8",
-    "@rango-dev/wallets-adapter": "^0.13.1-next.25",
+    "@rango-dev/provider-all": "^0.16.0",
+    "@rango-dev/wallets-adapter": "^0.13.0",
     "rango-sdk": "^0.1.35",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"

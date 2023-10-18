@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/wallets-react",
-  "version": "0.1.1-next.6",
+  "version": "0.2.0",
   "license": "MIT",
   "type": "module",
   "module": "./dist/index.js",
@@ -25,8 +25,8 @@
     "react-dom": "^17.0.0 || ^18.0.0"
   },
   "dependencies": {
-    "@rango-dev/wallets-core": "^0.15.1-next.5",
-    "@rango-dev/wallets-shared": "^0.15.1-next.4",
+    "@rango-dev/wallets-core": "^0.16.0",
+    "@rango-dev/wallets-shared": "^0.16.0",
     "rango-types": "^0.1.46"
   },
   "publishConfig": {

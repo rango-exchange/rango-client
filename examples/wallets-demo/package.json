@@ -11,10 +11,10 @@
     "clean": "rimraf .parcel-cache && rimraf dist"
   },
   "dependencies": {
-    "@rango-dev/provider-all": "^0.15.1-next.8",
-    "@rango-dev/ui": "^0.15.1-next.23",
-    "@rango-dev/wallets-react": "^0.1.1-next.6",
-    "@rango-dev/wallets-shared": "^0.15.1-next.4",
+    "@rango-dev/provider-all": "^0.16.0",
+    "@rango-dev/ui": "^0.16.0",
+    "@rango-dev/wallets-react": "^0.2.0",
+    "@rango-dev/wallets-shared": "^0.16.0",
     "rango-sdk": "^0.1.35",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
