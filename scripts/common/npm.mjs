@@ -3,6 +3,7 @@ import { $ } from 'execa';
 import { join } from 'node:path';
 import { printDirname } from '../common/utils.mjs';
 import { compareSemVer } from 'semver-parser';
+import fetch, { Headers } from 'node-fetch';
 
 const cwd = join(printDirname(), '..', '..');
 
