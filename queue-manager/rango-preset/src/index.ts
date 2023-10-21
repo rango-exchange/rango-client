@@ -1,5 +1,7 @@
-import { Configs, initConfig } from './configs';
-import { SwapQueueDef } from './types';
+import type { Configs } from './configs';
+import type { SwapQueueDef } from './types';
+
+import { initConfig } from './configs';
 import { swapQueueDef } from './queueDef';
 
 export { PrettyError, prettifyErrorMessage } from './shared-errors';
@@ -56,6 +58,7 @@ export {
   splitWalletNetwork,
   resetRunningSwapNotifsOnPageLoad,
   isApprovalTX,
+  getLastSuccessfulStep,
 } from './helpers';
 export { useMigration, useQueueManager, useEvents } from './hooks';
 

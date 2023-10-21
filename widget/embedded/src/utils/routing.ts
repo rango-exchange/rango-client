@@ -13,6 +13,7 @@ import type {
   Token,
 } from 'rango-sdk';
 
+import { getLastSuccessfulStep } from '@rango-dev/queue-manager-rango-preset';
 import BigNumber from 'bignumber.js';
 
 import {
@@ -25,6 +26,7 @@ import {
 } from '../constants/routing';
 
 import { areEqual } from './common';
+import { findBlockchain, findToken } from './meta';
 import { numberToString } from './numbers';
 
 export function searchParamsToToken(
@@ -260,4 +262,60 @@ export function findCommonTokens<T extends Asset[], R extends Asset[]>(
   listA.forEach((token) => set.add(tokenToString(token)));
 
   return listB.filter((token) => set.has(tokenToString(token))) as R;
+}
+
+export function createRetryRoute(
+  pendingSwap: PendingSwap,
+  blockchains: BlockchainMeta[],
+  tokens: Token[]
+): {
+  fromBlockchain: BlockchainMeta | null;
+  fromToken: Token | null;
+  toBlockchain: BlockchainMeta | null;
+  toToken: Token | null;
+  inputAmount: string;
+} {
+  const firstStep = pendingSwap.steps[0];
+  const lastStep = pendingSwap.steps[pendingSwap.steps.length - 1];
+  const lastSuccessfulStep = getLastSuccessfulStep(pendingSwap.steps);
+
+  const toToken = {
+    blockchain: lastStep.toBlockchain,
+    symbol: lastStep.toSymbol,
+    address: lastStep.toSymbolAddress,
+  };
+
+  const fromBlockchainMeta = findBlockchain(
+    lastSuccessfulStep
+      ? lastSuccessfulStep.toBlockchain
+      : firstStep.fromBlockchain,
+    blockchains
+  );
+  const toBlockchainMeta = findBlockchain(lastStep.toBlockchain, blockchains);
+  const fromTokenMeta = findToken(
+    lastSuccessfulStep
+      ? {
+          blockchain: fromBlockchainMeta?.name ?? '',
+          symbol: lastSuccessfulStep.toSymbol,
+          address: lastSuccessfulStep.toSymbolAddress,
+        }
+      : {
+          blockchain: fromBlockchainMeta?.name ?? '',
+          symbol: firstStep.fromSymbol,
+          address: firstStep.fromSymbolAddress,
+        },
+    tokens
+  );
+  const toTokenMeta = findToken(toToken, tokens);
+  const inputAmount = lastSuccessfulStep
+    ? lastSuccessfulStep.outputAmount ?? ''
+    : pendingSwap.inputAmount;
+
+  return {
+    fromBlockchain: fromBlockchainMeta,
+    fromToken: fromTokenMeta,
+    toBlockchain: toBlockchainMeta,
+    toToken: toTokenMeta,
+    inputAmount,
+  };
 }
