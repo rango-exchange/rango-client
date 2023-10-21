@@ -9,9 +9,11 @@ import { subscribeWithSelector } from 'zustand/middleware';
 
 import { ZERO } from '../constants/numbers';
 import { isPositiveNumber } from '../utils/numbers';
-import { getBestRouteToTokenUsdPrice } from '../utils/routing';
+import {
+  createRetryRoute,
+  getBestRouteToTokenUsdPrice,
+} from '../utils/routing';
 import { calcOutputUsdValue } from '../utils/swap';
-import { tokensAreEqual } from '../utils/wallets';
 
 import { useMetaStore } from './meta';
 import createSelectors from './selectors';
@@ -171,49 +173,21 @@ export const useBestRouteStore = createSelectors(
       },
       retry: (pendingSwap) => {
         const { tokens, blockchains } = useMetaStore.getState().meta;
-        const failedIndex =
-          pendingSwap.status === 'failed'
-            ? pendingSwap.steps.findIndex((s) => s.status === 'failed')
-            : null;
 
-        if (failedIndex === null || failedIndex < 0) {
-          return;
-        }
+        const {
+          fromBlockchain,
+          fromToken,
+          toBlockchain,
+          toToken,
+          inputAmount,
+        } = createRetryRoute(pendingSwap, blockchains, tokens);
 
-        const firstStep = pendingSwap.steps[0];
-        const lastStep = pendingSwap.steps[pendingSwap.steps.length - 1];
-        const fromBlockchain =
-          blockchains.find(
-            (blockchain) => blockchain.name === firstStep.fromBlockchain
-          ) || null;
-        const toBlockchain =
-          blockchains.find(
-            (blockchain) => blockchain.name === lastStep.toBlockchain
-          ) || null;
-
-        const fromToken = tokens.find((token) =>
-          tokensAreEqual(token, {
-            blockchain: firstStep.fromBlockchain,
-            symbol: firstStep.fromSymbol,
-            address: firstStep.fromSymbolAddress,
-          })
-        );
-
-        const toToken = tokens.find((token) =>
-          tokensAreEqual(token, {
-            blockchain: lastStep.toBlockchain,
-            symbol: lastStep.toSymbol,
-            address: lastStep.toSymbolAddress,
-          })
-        );
-
-        const inputAmount = pendingSwap.inputAmount;
         set({
           fromBlockchain,
           fromToken,
           inputAmount,
           outputAmount: null,
-          inputUsdValue: getUsdValue(fromToken || null, inputAmount),
+          inputUsdValue: getUsdValue(fromToken ?? null, inputAmount),
           outputUsdValue: new BigNumber(0),
           toBlockchain,
           toToken,
