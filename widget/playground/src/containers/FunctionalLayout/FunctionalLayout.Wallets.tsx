@@ -1,4 +1,4 @@
-import type { WalletSectionProps } from './FunctionalLayout.types';
+import type { WalletType } from '@rango-dev/wallets-shared';
 import type { WidgetConfig } from '@rango-dev/widget-embedded';
 
 import {
@@ -10,10 +10,13 @@ import {
 } from '@rango-dev/ui';
 import { WalletTypes } from '@rango-dev/wallets-shared';
 import { useWallets } from '@rango-dev/widget-embedded';
-import React from 'react';
+import React, { useState } from 'react';
 
 import { MultiSelect } from '../../components/MultiSelect/MultiSelect';
+import { OverlayPanel } from '../../components/OverlayPanel';
+import { SupportedWallets } from '../../components/SupportedWallets';
 import { NOT_FOUND } from '../../constants';
+import { excludedWallets, getWalletNetworks } from '../../helpers';
 import { useConfigStore } from '../../store/config';
 
 import {
@@ -22,14 +25,26 @@ import {
   SwitchField,
 } from './FunctionalLayout.styles';
 
-export function WalletSection(props: WalletSectionProps) {
-  const { onForward, value } = props;
-  const { state, connect, disconnect } = useWallets();
+export function WalletSection() {
+  const [showNextModal, setShowNextModal] = useState(false);
+  const { state, connect, disconnect, getWalletInfo } = useWallets();
   const {
     onChangeWallets,
     onChangeBooleansConfig,
     config: { externalWallets, wallets, multiWallets },
   } = useConfigStore();
+
+  const allWalletList = Object.values(WalletTypes)
+    .filter((wallet) => !excludedWallets.includes(wallet))
+    .map((type) => {
+      const { name: title, img: logo, supportedChains } = getWalletInfo(type);
+      return {
+        title,
+        logo,
+        type,
+        networks: getWalletNetworks(supportedChains),
+      };
+    });
 
   const onChangeExternalWallet = (checked: boolean) => {
     let selectedWallets: WidgetConfig['wallets'] = !!wallets
@@ -55,14 +70,20 @@ export function WalletSection(props: WalletSectionProps) {
     onChangeWallets(!selectedWallets.length ? undefined : selectedWallets);
   };
 
+  const onBack = () => setShowNextModal(false);
+
   return (
     <>
       <MultiSelect
         label="Supported Wallets"
         icon={<WalletIcon />}
         type="Wallets"
-        onClick={onForward}
-        value={value}
+        onClick={() => setShowNextModal(true)}
+        value={
+          wallets?.length === allWalletList.length
+            ? undefined
+            : (wallets as WalletType[])
+        }
       />
       <Divider size={24} />
       <Checkbox
@@ -119,6 +140,17 @@ export function WalletSection(props: WalletSectionProps) {
           </StyledButton>
         </div>
       </ExternalSection>
+      {showNextModal && (
+        <OverlayPanel onBack={onBack}>
+          <SupportedWallets
+            onBack={onBack}
+            configWallets={
+              wallets || allWalletList.map((wallet) => wallet.type)
+            }
+            allWallets={allWalletList}
+          />
+        </OverlayPanel>
+      )}
     </>
   );
 }

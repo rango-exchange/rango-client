@@ -116,13 +116,14 @@ export const useBestRouteStore = createSelectors(
       },
       setFromToken: (token) => {
         const { blockchains } = useMetaStore.getState().meta;
-        const fromBlockchain =
-          blockchains.find(
-            (blockchain) => blockchain.name === token?.blockchain
-          ) ?? null;
         return set((state) => ({
           fromToken: token,
-          fromBlockchain,
+          ...(token && {
+            fromBlockchain:
+              blockchains.find(
+                (blockchain) => blockchain.name === token.blockchain
+              ) ?? null,
+          }),
           ...(!!state.inputAmount && {
             inputUsdValue: getUsdValue(token, state.inputAmount),
           }),
@@ -147,13 +148,14 @@ export const useBestRouteStore = createSelectors(
       },
       setToToken: (token) => {
         const { blockchains } = useMetaStore.getState().meta;
-        const toBlockchain =
-          blockchains.find(
-            (blockchain) => blockchain.name === token?.blockchain
-          ) ?? null;
         return set(() => ({
           toToken: token,
-          toBlockchain,
+          ...(token && {
+            toBlockchain:
+              blockchains.find(
+                (blockchain) => blockchain.name === token.blockchain
+              ) ?? null,
+          }),
         }));
       },
       setInputAmount: (amount) => {

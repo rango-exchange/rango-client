@@ -1,7 +1,7 @@
 import { Collapsible, styled } from '@rango-dev/ui';
 
 export const CollapseContainer = styled(Collapsible, {
-  borderRadius: '$sm',
+  borderRadius: '$xm',
   backgroundColor: '$neutral100',
   border: '1px solid $neutral100',
   '&:hover': {
@@ -15,9 +15,10 @@ export const CollapseHeader = styled('div', {
   alignItems: 'center',
   width: '100%',
   cursor: 'pointer',
-  padding: '$20 $15',
+  padding: '$20 $20',
+  textTransform: 'capitalize',
 });
 
 export const CollapseContent = styled('div', {
-  padding: '0 $15 $20',
+  padding: '0 $20 $20',
 });
