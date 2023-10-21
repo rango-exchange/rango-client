@@ -37,5 +37,6 @@ export { default as TimeIcon } from './Time';
 export { default as TransactionIcon } from './Transaction';
 export { default as WalletIcon } from './Wallet';
 export { default as WarningIcon } from './Warning';
+export { default as ChainsIcon } from './Chains';
 export { default as SettingsIcon } from './Settings';
 export { default as StyleIcon } from './Style';

@@ -9,4 +9,5 @@ export interface PropTypes {
   color?: 'primary' | 'error' | 'warning' | 'success';
   sideOffset?: RadixTooltipContentProps['sideOffset'];
   container?: HTMLElement;
+  open?: boolean;
 }

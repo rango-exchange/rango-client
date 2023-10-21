@@ -1,4 +1,9 @@
 export interface PropTypes {
   onClick: () => void;
-  value?: string;
+  value: { label?: string; logo?: string };
+  title: string;
+  iconTitle?: React.ReactNode;
+  placeholder?: string;
+  hasLogo?: boolean;
+  disabled?: boolean;
 }

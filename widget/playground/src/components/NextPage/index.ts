@@ -1,1 +1,0 @@
-export { NextPage } from './NextPage';

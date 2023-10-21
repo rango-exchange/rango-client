@@ -12,3 +12,16 @@ export const Header = styled('div', {
   alignItems: 'center',
   cursor: 'pointer',
 });
+
+export const Layout = styled('div', {
+  borderRadius: '20px',
+  display: 'flex',
+  padding: '$15',
+  backgroundColor: '$background',
+  width: '338px',
+  height: '100%',
+  flexDirection: 'column',
+  position: 'absolute',
+  top: 0,
+  left: 0,
+});
