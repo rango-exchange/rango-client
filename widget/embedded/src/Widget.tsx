@@ -95,7 +95,9 @@ export function Widget(props: PropsWithChildren<WidgetProps>) {
       <WidgetWallets
         providers={config?.wallets}
         options={{
-          walletConnectProjectId: config?.walletConnectProjectId,
+          walletConnectProjectId:
+            config?.walletConnectProjectId ||
+            props.config?.walletConnectProjectId,
         }}>
         <Main {...props} />
       </WidgetWallets>
