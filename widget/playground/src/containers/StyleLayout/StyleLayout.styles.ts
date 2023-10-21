@@ -8,6 +8,7 @@ export const Layout = styled('div', {
   width: '338px',
   height: '100%',
   flexDirection: 'column',
+  position: 'relative',
 });
 
 export const GeneralContainer = styled('div', {

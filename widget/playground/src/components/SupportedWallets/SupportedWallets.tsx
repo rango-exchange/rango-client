@@ -19,7 +19,7 @@ import React, { useState } from 'react';
 
 import { useConfigStore } from '../../store/config';
 import { useMetaStore } from '../../store/meta';
-import { StyledButton } from '../FontSelector/FontSelector.styles';
+import { StyledButton } from '../SingleList/SingleList.styles';
 
 import {
   HeaderContainer,

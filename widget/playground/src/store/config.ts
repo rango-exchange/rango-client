@@ -49,7 +49,7 @@ interface ConfigState {
         }
       | {
           name: 'fontFamily';
-          value: string;
+          value?: string;
         }
       | {
           name: 'singleTheme';

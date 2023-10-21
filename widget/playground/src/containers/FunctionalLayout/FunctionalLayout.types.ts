@@ -1,6 +1,10 @@
-import type { WalletType } from '@rango-dev/wallets-shared';
+export enum FunctionalCollapseState {
+  FROM = 'from',
+  WALLET = 'wallet',
+  TO = 'to',
+}
 
-export interface WalletSectionProps {
-  onForward: () => void;
-  value?: WalletType[];
+export enum ModalState {
+  DEFAULT_BLOCKCHAIN = 'blockchain',
+  DEFAULT_TOKEN = 'token',
 }

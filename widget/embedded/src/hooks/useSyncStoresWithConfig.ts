@@ -57,7 +57,7 @@ export function useSyncStoresWithConfig(config: WidgetConfig | undefined) {
   }, [
     config?.from?.token?.symbol,
     config?.from?.token?.address,
-    config?.from?.blockchain,
+    config?.from?.token?.blockchain,
     config?.from?.blockchain,
     loadingMetaStatus,
   ]);

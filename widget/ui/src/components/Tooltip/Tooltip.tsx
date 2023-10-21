@@ -17,11 +17,12 @@ export function Tooltip(props: PropsWithChildren<PropTypes>) {
     color,
     sideOffset,
     container,
+    open,
     side = 'top',
   } = props;
   return (
     <RadixTooltip.Provider delayDuration={0}>
-      <RadixTooltip.Root>
+      <RadixTooltip.Root open={open}>
         <RadixTooltip.Trigger asChild>
           <div>{children}</div>
         </RadixTooltip.Trigger>

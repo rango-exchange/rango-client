@@ -8,6 +8,7 @@ export const Layout = styled('div', {
   width: '338px',
   height: '100%',
   flexDirection: 'column',
+  position: 'relative',
 });
 
 export const ExternalSection = styled('div', {
@@ -35,5 +36,21 @@ export const StyledButton = styled(Button, {
         padding: '$5 $20',
       },
     },
+  },
+});
+
+export const FromToContainer = styled('div', {
+  backgroundColor: '$background',
+  borderRadius: '$sm',
+  border: '1px solid $neutral300',
+  padding: '$15 $20',
+});
+
+export const FromAmount = styled('div', {
+  border: '1px solid $neutral300',
+  borderRadius: '$xm',
+  padding: '$2 $5',
+  '&:hover': {
+    borderColor: '$info300',
   },
 });

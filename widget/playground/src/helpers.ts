@@ -247,3 +247,6 @@ export function getWalletNetworks(chains: BlockchainMeta[]) {
 
   return Array.from(supportedNetworks);
 }
+
+export const tokenToString = (token: Asset) =>
+  `${token.symbol}-${token.blockchain}-${token.address ?? ''}`;
