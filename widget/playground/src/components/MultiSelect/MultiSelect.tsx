@@ -1,7 +1,16 @@
 import type { MultiSelectChipProps, PropTypes } from './MultiSelect.types';
 
-import { ChevronRightIcon, Divider, Typography } from '@rango-dev/ui';
-import React from 'react';
+import {
+  ChainsIcon,
+  ChevronRightIcon,
+  Divider,
+  Typography,
+  WalletIcon,
+} from '@rango-dev/ui';
+import React, { useState } from 'react';
+
+import { MultiList } from '../MultiList';
+import { OverlayPanel } from '../OverlayPanel';
 
 import { Label, Select, WalletChip } from './MultiSelect.styles';
 
@@ -18,11 +27,19 @@ const Chip = (props: MultiSelectChipProps) => {
 };
 
 export function MultiSelect(props: PropTypes) {
-  const { label, type, value, onClick, icon } = props;
+  const [showNextModal, setShowNextModal] = useState(false);
+  const { label, type, value, onChange, icon, defaultSelectedItems, list } =
+    props;
   const valueAll = !value;
   const noneSelected = !valueAll && !value.length;
   const hasValue = !valueAll;
   const showMore = hasValue && value.length > MAX_CHIPS;
+  const onBack = () => setShowNextModal(false);
+
+  const handleListChange = (items?: string[]) => {
+    onChange(items);
+    onBack();
+  };
 
   return (
     <>
@@ -35,7 +52,7 @@ export function MultiSelect(props: PropTypes) {
       </Label>
       <Divider size={4} />
       <Select>
-        <div className="field" onClick={onClick}>
+        <div className="field" onClick={() => setShowNextModal(true)}>
           <div className="chips">
             {valueAll && <Chip label={`All ${type}`} />}
             {noneSelected && <Chip label="None Selected" />}
@@ -48,6 +65,24 @@ export function MultiSelect(props: PropTypes) {
           <ChevronRightIcon size={12} />
         </div>
       </Select>
+      {showNextModal && (
+        <OverlayPanel onBack={onBack}>
+          <MultiList
+            defaultSelectedItems={defaultSelectedItems}
+            type={type}
+            list={list}
+            icon={
+              type === 'Blockchains' ? (
+                <ChainsIcon size={24} />
+              ) : (
+                <WalletIcon size={18} />
+              )
+            }
+            onChange={handleListChange}
+            label={`Supported ${type}`}
+          />
+        </OverlayPanel>
+      )}
     </>
   );
 }
