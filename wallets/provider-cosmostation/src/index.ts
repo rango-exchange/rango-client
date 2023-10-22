@@ -34,11 +34,11 @@ const WALLET = WalletTypes.COSMOSTATION;
 
 export const config = {
   type: WALLET,
-  defaultNetwork: Networks.ETHEREUM,
+  defaultNetwork: Networks.COSMOS,
 };
 
 export const getInstance = cosmostation_instance;
-export const connect: Connect = async ({ instance, meta }) => {
+export const connect: Connect = async ({ instance, meta, network }) => {
   const ethInstance = chooseInstance(instance, meta, Networks.ETHEREUM);
   const cosmosInstance = chooseInstance(instance, meta, Networks.COSMOS);
 
@@ -51,10 +51,12 @@ export const connect: Connect = async ({ instance, meta }) => {
 
   if (cosmosInstance) {
     const cosmosBlockchainMeta = meta.filter(isCosmosBlockchain);
+    const requestedNetwork = network || Networks.COSMOS;
+
     const comsmosResult = await getCosmosAccounts({
       instance: cosmosInstance,
       meta: cosmosBlockchainMeta,
-      network: Networks.COSMOS,
+      network: requestedNetwork,
     });
     if (Array.isArray(comsmosResult)) {
       results.push(...comsmosResult);
