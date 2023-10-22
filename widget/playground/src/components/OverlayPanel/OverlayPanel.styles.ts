@@ -24,4 +24,5 @@ export const Layout = styled('div', {
   position: 'absolute',
   top: 0,
   left: 0,
+  zIndex: '1',
 });

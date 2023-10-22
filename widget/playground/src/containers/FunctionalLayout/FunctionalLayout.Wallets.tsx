@@ -10,13 +10,11 @@ import {
 } from '@rango-dev/ui';
 import { WalletTypes } from '@rango-dev/wallets-shared';
 import { useWallets } from '@rango-dev/widget-embedded';
-import React, { useState } from 'react';
+import React from 'react';
 
 import { MultiSelect } from '../../components/MultiSelect/MultiSelect';
-import { OverlayPanel } from '../../components/OverlayPanel';
-import { SupportedWallets } from '../../components/SupportedWallets';
 import { NOT_FOUND } from '../../constants';
-import { excludedWallets, getWalletNetworks } from '../../helpers';
+import { excludedWallets, getCategoryNetworks } from '../../helpers';
 import { useConfigStore } from '../../store/config';
 
 import {
@@ -26,7 +24,6 @@ import {
 } from './FunctionalLayout.styles';
 
 export function WalletSection() {
-  const [showNextModal, setShowNextModal] = useState(false);
   const { state, connect, disconnect, getWalletInfo } = useWallets();
   const {
     onChangeWallets,
@@ -36,13 +33,13 @@ export function WalletSection() {
 
   const allWalletList = Object.values(WalletTypes)
     .filter((wallet) => !excludedWallets.includes(wallet))
-    .map((type) => {
-      const { name: title, img: logo, supportedChains } = getWalletInfo(type);
+    .map((wallet) => {
+      const { name: title, img: logo, supportedChains } = getWalletInfo(wallet);
       return {
         title,
         logo,
-        type,
-        networks: getWalletNetworks(supportedChains),
+        name: wallet,
+        networks: getCategoryNetworks(supportedChains),
       };
     });
 
@@ -70,20 +67,23 @@ export function WalletSection() {
     onChangeWallets(!selectedWallets.length ? undefined : selectedWallets);
   };
 
-  const onBack = () => setShowNextModal(false);
-
   return (
     <>
       <MultiSelect
         label="Supported Wallets"
         icon={<WalletIcon />}
         type="Wallets"
-        onClick={() => setShowNextModal(true)}
         value={
           wallets?.length === allWalletList.length
             ? undefined
             : (wallets as WalletType[])
         }
+        defaultSelectedItems={
+          (wallets as WalletType[]) ||
+          allWalletList.map((wallet) => wallet.name)
+        }
+        list={allWalletList}
+        onChange={(items) => onChangeWallets(items)}
       />
       <Divider size={24} />
       <Checkbox
@@ -140,17 +140,6 @@ export function WalletSection() {
           </StyledButton>
         </div>
       </ExternalSection>
-      {showNextModal && (
-        <OverlayPanel onBack={onBack}>
-          <SupportedWallets
-            onBack={onBack}
-            configWallets={
-              wallets || allWalletList.map((wallet) => wallet.type)
-            }
-            allWallets={allWalletList}
-          />
-        </OverlayPanel>
-      )}
     </>
   );
 }

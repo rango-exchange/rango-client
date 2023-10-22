@@ -63,8 +63,8 @@ export function BlockchainsSection(props: PropTypes) {
             </BlockchainsChip>
             {blockchainsList.list.map((item) => (
               <BlockchainsChip
-                key={item.chainId}
-                selected={!!blockchain && blockchain.chainId === item.chainId}
+                key={item.name}
+                selected={!!blockchain && blockchain.name === item.name}
                 onClick={() => onChange(item)}>
                 <Image src={item.logo} size={30} />
               </BlockchainsChip>

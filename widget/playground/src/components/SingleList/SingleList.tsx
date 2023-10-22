@@ -59,7 +59,7 @@ export function SingleList(props: PropTypes) {
     setVirtualList(list.slice(0, virtualList.length + PAGE_SIZE));
   };
 
-  const emptyList = !virtualList.length && !!searchValue;
+  const resultsNotFound = !virtualList.length && !!searchValue;
 
   return (
     <>
@@ -98,7 +98,7 @@ export function SingleList(props: PropTypes) {
         }}
       />
       <Divider size={12} />
-      {emptyList ? (
+      {resultsNotFound ? (
         <EmptyContainer>
           <NotFound
             title="No results found"
@@ -158,7 +158,7 @@ export function SingleList(props: PropTypes) {
       )}
       <Divider size={32} />
       <Divider size={32} />
-      {!emptyList && (
+      {!resultsNotFound && (
         <StyledButton
           type="primary"
           size="medium"

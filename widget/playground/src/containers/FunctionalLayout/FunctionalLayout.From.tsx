@@ -5,6 +5,7 @@ import React from 'react';
 
 import { useConfigStore } from '../../store/config';
 import { DefaultChainAndToken } from '../DefaultChainAndToken';
+import { SupportedBlockchains } from '../SupportedBlockchains';
 
 import { FromAmount, FromToContainer } from './FunctionalLayout.styles';
 
@@ -20,6 +21,9 @@ export function FromSection() {
 
   return (
     <>
+      <SupportedBlockchains type="Source" />
+      <Divider size={12} />
+
       <FromToContainer>
         <DefaultChainAndToken type="Source" />
         <Divider size={12} />
