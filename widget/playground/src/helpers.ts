@@ -90,10 +90,7 @@ export function clearEmpties<T extends Record<string, any>>(obj: T): T {
       continue;
     }
     clearEmpties(obj[key]);
-    if (
-      (Array.isArray(obj[key]) && !obj[key].length) ||
-      Object.keys(obj[key]).length === 0
-    ) {
+    if (Object.keys(obj[key]).length === 0 && !Array.isArray(obj[key])) {
       delete obj[key];
     }
   }
@@ -110,6 +107,7 @@ export function filterConfig(
       (wallet) => typeof wallet === 'string'
     ),
   };
+
   const userSelectedConfig = clearEmpties(
     subtractObject(
       JSON.parse(JSON.stringify(initialConfig)) as WidgetConfig,
@@ -225,7 +223,7 @@ export const getStateWallet = (state: {
   }
 };
 
-export function getWalletNetworks(chains: BlockchainMeta[]) {
+export function getCategoryNetworks(chains: BlockchainMeta[]) {
   const supportedNetworks: Set<BlockchainCategories> = new Set();
 
   chains.forEach((chain) => {

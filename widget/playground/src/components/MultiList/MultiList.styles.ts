@@ -1,4 +1,4 @@
-import { styled } from '@rango-dev/ui';
+import { ListItemButton, styled } from '@rango-dev/ui';
 
 export const HeaderContainer = styled('div', {
   display: 'flex',
@@ -14,12 +14,16 @@ export const SelectButton = styled('div', {
   padding: '$4',
   display: 'flex',
   justifyContent: 'flex-end',
+  cursor: 'pointer',
+  textTransform: 'capitalize',
 });
-export const WalletList = styled('div', {
+export const CheckList = styled('div', {
   overflow: 'auto',
-  height: '552px',
+  height: '90%',
+  paddingRight: '$5',
+  marginBottom: '$32',
 });
-export const WalletDivider = styled('li', {
+export const ItemDivider = styled('li', {
   margin: '0 auto',
   width: '100%',
   height: '1px',
@@ -32,4 +36,8 @@ export const IconWrapper = styled('div', {
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
+});
+
+export const StyledListItemButton = styled(ListItemButton, {
+  height: '$46',
 });
