@@ -1,17 +1,11 @@
-import {
-  getBlockChainNameFromId,
-  Network,
-  Networks,
-  WalletType,
-} from '@rango-dev/wallets-shared';
+import type { GetInstanceOptions, WalletActions, WalletConfig } from './types';
+import type { Network, WalletType } from '@rango-dev/wallets-shared';
+import type { BlockchainMeta } from 'rango-types';
+
+import { getBlockChainNameFromId, Networks } from '@rango-dev/wallets-shared';
+
 import { accountAddressesWithNetwork, needsCheckInstallation } from './helpers';
-import {
-  Events,
-  GetInstanceOptions,
-  WalletActions,
-  WalletConfig,
-} from './types';
-import { BlockchainMeta } from 'rango-types';
+import { Events } from './types';
 
 export type EventHandler = (
   type: WalletType,
@@ -65,9 +59,11 @@ class Wallet<InstanceType = any> {
   private async getConnectionFromState() {
     // Already connected, so we return provider that we have in memory.
 
-    // For switching network on Trust Wallet (WalletConnect),
-    // We only kill the session (and not restting the whole state)
-    // So we are relying on this.provider for achieving this functionality.
+    /*
+     * For switching network on Trust Wallet (WalletConnect),
+     * We only kill the session (and not restting the whole state)
+     * So we are relying on this.provider for achieving this functionality.
+     */
     if (this.state.connected && !!this.provider) {
       return {
         accounts: this.state.accounts,
@@ -86,9 +82,11 @@ class Wallet<InstanceType = any> {
 
     const connectionFromState = await this.getConnectionFromState();
     const currentNetwork = this.state.network;
-    // If a network hasn't been provided and also we have `lastNetwork`
-    // We will use lastNetwork to make sure we will not
-    // Ask the user to switch his network wrongly.
+    /*
+     * If a network hasn't been provided and also we have `lastNetwork`
+     * We will use lastNetwork to make sure we will not
+     * Ask the user to switch his network wrongly.
+     */
     const requestedNetwork =
       network || currentNetwork || this.options.config.defaultNetwork;
 
@@ -100,7 +98,17 @@ class Wallet<InstanceType = any> {
       if (currentNetwork === requestedNetwork) {
         return connectionFromState;
       }
-      if (networkChanged && !!this.actions.switchNetwork) {
+
+      let canSwitch = true;
+      if (this.actions.canSwitchNetworkTo) {
+        canSwitch = this.actions.canSwitchNetworkTo({
+          provider: this.provider,
+          meta: this.meta,
+          network: requestedNetwork || '',
+        });
+      }
+
+      if (networkChanged && canSwitch && !!this.actions.switchNetwork) {
         await this.actions.switchNetwork({
           instance: this.provider,
           meta: this.meta,
@@ -173,7 +181,7 @@ class Wallet<InstanceType = any> {
         return accountAddressesWithNetwork(blockchain.accounts, network);
       });
       // Typescript can not detect we are filtering out null values:(
-      nextAccounts = accounts.filter(Boolean) as string[];
+      nextAccounts = accounts.filter(Boolean);
       nextNetwork = requestedNetwork || this.options.config.defaultNetwork;
     } else {
       const chainId = connectResult.chainId || Networks.Unknown;
@@ -231,9 +239,8 @@ class Wallet<InstanceType = any> {
       if (eagerConnection) {
         // Connect to wallet as usual
         return this.connect();
-      } else {
-        throw new Error(error_message);
       }
+      throw new Error(error_message);
     } else {
       throw new Error(error_message);
     }
@@ -247,7 +254,9 @@ class Wallet<InstanceType = any> {
   }
   canSwitchNetworkTo(network: Network, provider: any) {
     const switchTo = this.actions.canSwitchNetworkTo;
-    if (!switchTo) return false;
+    if (!switchTo) {
+      return false;
+    }
 
     return switchTo({
       network,
@@ -264,7 +273,9 @@ class Wallet<InstanceType = any> {
       }
     } else if (needsCheckInstallation(this.options)) {
       this.actions.getInstance().then((data: any) => {
-        if (data) this.setInstalledAs(true);
+        if (data) {
+          this.setInstalledAs(true);
+        }
       });
     }
   }
@@ -309,8 +320,10 @@ class Wallet<InstanceType = any> {
     return this.state;
   }
   updateState(states: Partial<State>) {
-    // We will notify handler after updating all the states.
-    // Because when we call `handler` it will has latest states.
+    /*
+     * We will notify handler after updating all the states.
+     * Because when we call `handler` it will has latest states.
+     */
     const updates: [Events, any][] = [];
 
     if (typeof states.connected !== 'undefined') {
@@ -371,7 +384,9 @@ class Wallet<InstanceType = any> {
   }
 
   private setInstalledAs(value: boolean) {
-    if (!needsCheckInstallation(this.options) && value === false) return;
+    if (!needsCheckInstallation(this.options) && value === false) {
+      return;
+    }
 
     this.updateState({
       installed: value,
@@ -385,9 +400,11 @@ class Wallet<InstanceType = any> {
     force?: boolean;
   }) {
     let instance = null;
-    // For switching network on Trust Wallet (WalletConnect),
-    // We only kill the session (and not restting the whole state)
-    // So we are relying on this.provider for achieving this functionality.
+    /*
+     * For switching network on Trust Wallet (WalletConnect),
+     * We only kill the session (and not restting the whole state)
+     * So we are relying on this.provider for achieving this functionality.
+     */
     this.setProvider(null);
     if (this.options.config.isAsyncInstance) {
       // Trying to connect
