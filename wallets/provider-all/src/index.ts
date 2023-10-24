@@ -1,5 +1,4 @@
 import * as argentx from '@rango-dev/provider-argentx';
-import * as binance from '@rango-dev/provider-binance-chain-wallet';
 import * as bitget from '@rango-dev/provider-bitget';
 import * as braavos from '@rango-dev/provider-braavos';
 import * as brave from '@rango-dev/provider-brave';
@@ -18,7 +17,6 @@ import * as metamask from '@rango-dev/provider-metamask';
 import * as okx from '@rango-dev/provider-okx';
 import * as phantom from '@rango-dev/provider-phantom';
 import * as safepal from '@rango-dev/provider-safepal';
-import * as station from '@rango-dev/provider-station';
 import * as taho from '@rango-dev/provider-taho';
 import * as tokenpocket from '@rango-dev/provider-tokenpocket';
 import * as tronLink from '@rango-dev/provider-tron-link';
@@ -39,7 +37,6 @@ export const allProviders = (enviroments?: Enviroments) => {
     argentx,
     tronLink,
     trustwallet,
-    binance,
     bitget,
     enkrypt,
     xdefi,
@@ -58,6 +55,5 @@ export const allProviders = (enviroments?: Enviroments) => {
     frontier,
     taho,
     braavos,
-    station,
   ];
 };
