@@ -29,7 +29,7 @@ const MainContainer = styled('div', {
     listStyleType: 'none',
   },
   '& *:focus-visible': {
-    outline: '1px $info500 solid',
+    outlineColor: '$info500',
     transition: 'none',
   },
 });

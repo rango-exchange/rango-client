@@ -113,7 +113,7 @@ export const Input = styled('input', {
   '&::placeholder, &::-webkit-input-placeholder': {
     color: '$neutral900',
   },
-  '&:focus-within': {
+  '&:focus-visible': {
     outline: 'none',
   },
 });
