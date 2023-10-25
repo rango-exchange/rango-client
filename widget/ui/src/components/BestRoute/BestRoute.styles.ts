@@ -1,6 +1,7 @@
 import * as Collapsible from '@radix-ui/react-collapsible';
 
 import { darkTheme, styled } from '../../theme';
+import { Image } from '../common';
 import { CollapsibleContent } from '../common/styles';
 
 export const EXPANDABLE_ROUTES_TRANSITION_DURATION = 300;
