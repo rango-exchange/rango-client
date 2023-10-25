@@ -97,7 +97,7 @@ export function DefaultChainAndToken({ type }: { type: Type }) {
           <SingleList
             onChange={handleDefaultBlockchainConfirm}
             list={filteredBlockchains.map((chain) => ({
-              name: chain.shortName,
+              name: chain.displayName,
               image: chain.logo,
               value: chain.name,
             }))}

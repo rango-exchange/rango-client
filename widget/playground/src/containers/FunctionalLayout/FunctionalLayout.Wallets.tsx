@@ -118,7 +118,7 @@ export function WalletSection() {
         <Divider size={16} />
         <Typography size="small" variant="body" color="neutral800">
           It's a sample using metamask, You can use your own wallet or what we
-          alredy implemented, check it out here.
+          already implemented, check it out here.
         </Typography>
         <Divider size={16} />
         <div className="footer">
