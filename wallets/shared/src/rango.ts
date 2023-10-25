@@ -151,6 +151,7 @@ export const XDEFI_WALLET_SUPPORTED_NATIVE_CHAINS: string[] = [
 export const KEPLR_COMPATIBLE_WALLETS: string[] = [
   WalletTypes.KEPLR,
   WalletTypes.COSMOSTATION,
+  WalletTypes.LEAP_COSMOS,
 ];
 
 export type Asset = {
