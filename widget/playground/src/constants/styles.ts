@@ -1,0 +1,2 @@
+export const DEFAULT_PRIMARY_RADIUS = 20;
+export const DEFAULT_SECONDARY_RADIUS = 25;
