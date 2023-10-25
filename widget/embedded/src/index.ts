@@ -1,46 +1,53 @@
-import {
-  WidgetTheme,
-  WidgetConfig,
-  WidgetColors,
+import type {
   BlockchainAndTokenConfig,
+  WidgetColors,
+  WidgetColorsKeys,
+  WidgetConfig,
+  WidgetTheme,
 } from './types';
-import { WidgetProps, Widget } from './Widget';
-import { WalletType } from '@rango-dev/wallets-shared';
-import { WidgetWallets } from './Wallets';
-import {
-  useWallets,
-  ProviderInterface,
-  EventHandler as HandleWalletsUpdate,
-} from '@rango-dev/wallets-react';
-import {
-  useEvents as useWidgetEvents,
-  MainEvents,
-  RouteEvent,
-  StepEvent,
+import type { WidgetProps } from './Widget';
+import type {
   Route,
-  Step,
+  RouteEvent,
+  RouteFailedEvent,
   RouteStartedEvent,
   RouteSucceededEvent,
-  RouteFailedEvent,
-  RouteEventType,
+  Step,
+  StepApprovalTxSucceededEvent,
+  StepCheckStatusEvent,
+  StepEvent,
+  StepFailedEvent,
+  StepOutputRevealedEvent,
   StepStartedEvent,
   StepSucceededEvent,
-  StepFailedEvent,
-  StepTxExecutionUpdatedEvent,
   StepTxExecutionBlockedEvent,
-  StepCheckStatusEvent,
-  StepApprovalTxSucceededEvent,
-  StepOutputRevealedEvent,
-  StepEventType,
-  StepExecutionEventStatus,
-  StepExecutionBlockedEventStatus,
+  StepTxExecutionUpdatedEvent,
 } from '@rango-dev/queue-manager-rango-preset';
+import type {
+  EventHandler as HandleWalletsUpdate,
+  ProviderInterface,
+} from '@rango-dev/wallets-react';
+import type { WalletType } from '@rango-dev/wallets-shared';
+
+import {
+  MainEvents,
+  RouteEventType,
+  StepEventType,
+  StepExecutionBlockedEventStatus,
+  StepExecutionEventStatus,
+  useEvents as useWidgetEvents,
+} from '@rango-dev/queue-manager-rango-preset';
+import { useWallets } from '@rango-dev/wallets-react';
+
+import { WidgetWallets } from './Wallets';
+import { Widget } from './Widget';
 
 export type {
   WidgetConfig,
   WalletType,
   WidgetTheme,
   WidgetColors,
+  WidgetColorsKeys,
   ProviderInterface,
   BlockchainAndTokenConfig,
   WidgetProps,

@@ -7,30 +7,22 @@ import { useMetaStore } from '../store/meta';
 
 export function useTheme() {
   const configTheme = useConfigStore.use.config().theme;
-  const configColors = configTheme?.colors;
+  // const configColors = configTheme?.colors;
   const mode = configTheme?.mode;
 
   const fetchMeta = useMetaStore.use.fetchMeta();
-  const light = configColors?.light;
-  const dark = configColors?.dark;
+  /*
+   * const light = configColors?.light;
+   * const dark = configColors?.dark;
+   */
   const colors = theme.colors;
 
   const customLightTheme = createTheme({
     colors,
-    shadows: {
-      s: `0px 3px 5px 3px ${light?.neutral || '#f0f2f5'} ,0px 6px 10px 3px ${
-        light?.neutral || '#f0f2f5'
-      }, 0px 1px 18px 3px ${light?.neutral || '#f0f2f5'}`,
-    },
   });
 
   const customDarkTheme = createTheme({
     colors,
-    shadows: {
-      s: `0px 3px 5px 3px ${dark?.neutral || '#222'}, 0px 6px 10px 3px ${
-        dark?.neutral || '#222'
-      }, 0px 1px 18px 3px ${dark?.neutral || '#222'}`,
-    },
   });
   const [OSTheme, setOSTheme] = useState('light');
 

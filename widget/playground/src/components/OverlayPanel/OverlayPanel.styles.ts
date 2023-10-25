@@ -22,6 +22,7 @@ export const Layout = styled('div', {
   height: '100%',
   flexDirection: 'column',
   position: 'absolute',
+  zIndex: 1,
   top: 0,
   left: 0,
   zIndex: '1',

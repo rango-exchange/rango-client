@@ -24,7 +24,7 @@ import React, { forwardRef, useEffect, useState } from 'react';
 import { useAppStore } from '../../store/app';
 import { useMetaStore } from '../../store/meta';
 import { useWalletsStore } from '../../store/wallets';
-import { generateRangeColors } from '../../utils/common';
+import { generateRangeColors } from '../../utils/colors';
 
 import { LoadingTokenList } from './LoadingTokenList';
 import {

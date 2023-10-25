@@ -8,22 +8,16 @@ import type { Asset } from 'rango-sdk';
  * @property {string} background
  * @property {string} foreground
  * @property {string} primary
- * @property {string} success
- * @property {string} error
- * @property {string} warning
- * @property {string} surface
- * @property {string} neutral
+ * @property {string} secondary
  *
  */
+export type WidgetColorsKeys = keyof WidgetColors;
 export type WidgetColors = {
   background?: string;
   foreground?: string;
-  primary?: string;
-  success?: string;
-  error?: string;
-  warning?: string;
-  surface?: string;
   neutral?: string;
+  primary?: string;
+  secondary?: string;
 };
 
 /**
