@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/wallets-demo",
-  "version": "0.11.1-next.30",
+  "version": "0.11.1-next.31",
   "license": "MIT",
   "private": true,
   "source": "public/index.html",
@@ -12,7 +12,7 @@
   },
   "dependencies": {
     "@rango-dev/provider-all": "^0.17.1-next.0",
-    "@rango-dev/ui": "^0.17.1-next.0",
+    "@rango-dev/ui": "^0.17.1-next.1",
     "@rango-dev/wallets-react": "^0.3.0",
     "@rango-dev/wallets-shared": "^0.17.0",
     "rango-sdk": "^0.1.35",
