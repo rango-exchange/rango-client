@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/provider-cosmostation",
-  "version": "0.17.0",
+  "version": "0.17.1-next.0",
   "license": "MIT",
   "type": "module",
   "module": "./dist/index.js",
