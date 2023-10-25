@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/provider-all",
-  "version": "0.17.1-next.0",
+  "version": "0.17.1-next.1",
   "license": "MIT",
   "type": "module",
   "module": "./dist/index.js",
@@ -27,7 +27,7 @@
     "@rango-dev/provider-clover": "^0.17.0",
     "@rango-dev/provider-coin98": "^0.17.0",
     "@rango-dev/provider-coinbase": "^0.17.0",
-    "@rango-dev/provider-cosmostation": "^0.17.0",
+    "@rango-dev/provider-cosmostation": "^0.17.1-next.0",
     "@rango-dev/provider-enkrypt": "^0.17.0",
     "@rango-dev/provider-exodus": "^0.17.0",
     "@rango-dev/provider-frontier": "^0.17.0",
