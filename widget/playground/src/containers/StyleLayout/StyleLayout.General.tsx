@@ -22,6 +22,7 @@ export function General() {
 
   const onChangeTheme = useConfigStore.use.onChangeTheme();
   const borderRadius = useConfigStore.use.config().theme?.borderRadius;
+
   const secondaryBorderRadius =
     useConfigStore.use.config().theme?.secondaryBorderRadius;
   const fontFamily =

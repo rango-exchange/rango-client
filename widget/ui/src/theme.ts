@@ -9,9 +9,11 @@ import { createStitches } from '@stitches/react';
 
 export const theme = {
   colors: {
+    primary: '#1C3CF1',
     primary500: '#1C3CF1',
     primary600: '#0B27C5',
 
+    secondary: '#469BF5',
     secondary100: '#E9F4FF',
     secondary200: '#D6EAFF',
     secondary300: '#C8E3FF',
@@ -22,6 +24,7 @@ export const theme = {
     secondary800: '#131C49',
     secondary900: '#0E1744',
 
+    neutral: '#E6E6E6',
     neutral100: '#F9F9F9',
     neutral200: '#F6F6F6',
     neutral300: '#F2F2F2',
@@ -174,6 +177,31 @@ const utils = {
   }),
 };
 
+export const darkColors = {
+  secondary: '#2284ED',
+  secondary400: '#469BF5',
+  secondary500: '#2284ED',
+  secondary600: '#2B3462',
+
+  neutral: '#222222',
+  neutral900: '#E9E9E9',
+  neutral800: '#B8B8B8',
+  neutral700: '#F2F2F2',
+  neutral600: '#EEEEEE',
+  neutral500: '#222222',
+  neutral400: '#1B1B1B',
+  neutral300: '#121212',
+  neutral200: '#111111',
+  neutral100: '#101010',
+
+  error500: '#FF5050',
+
+  warning500: '#FF8A20',
+
+  background: '#010101',
+  foreground: '#FDFDFD',
+};
+
 /* ----------------------- End of Values ----------------------- */
 
 const typedCreateStiches = createStitches;
@@ -188,28 +216,7 @@ export const { styled, css, createTheme, keyframes, globalCss, config } =
 export const lightTheme = createTheme({});
 
 export const darkTheme = createTheme({
-  colors: {
-    secondary400: '#469BF5',
-    secondary500: '#2284ED',
-    secondary600: '#2B3462',
-
-    neutral900: '#E9E9E9',
-    neutral800: '#B8B8B8',
-    neutral700: '#F2F2F2',
-    neutral600: '#EEEEEE',
-    neutral500: '#222222',
-    neutral400: '#1B1B1B',
-    neutral300: '#121212',
-    neutral200: '#111111',
-    neutral100: '#101010',
-
-    error500: '#FF5050',
-
-    warning500: '#FF8A20',
-
-    background: '#010101',
-    foreground: '#FDFDFD',
-  },
+  colors: darkColors,
   shadows: {
     s: '0px 3px 5px 3px #222, 0px 6px 10px 3px #222, 0px 1px 18px 3px #222',
   },

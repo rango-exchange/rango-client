@@ -1,7 +1,11 @@
 import type { Type } from '../types';
 import type { ProviderInterface } from '@rango-dev/wallets-react';
 import type { WalletType } from '@rango-dev/wallets-shared';
-import type { WidgetColors, WidgetConfig } from '@rango-dev/widget-embedded';
+import type {
+  WidgetColors,
+  WidgetColorsKeys,
+  WidgetConfig,
+} from '@rango-dev/widget-embedded';
 import type { Asset } from 'rango-sdk';
 
 import { create } from 'zustand';
@@ -13,15 +17,6 @@ import { getConfig } from '../configs';
 import createSelectors from './selectors';
 
 export type Mode = 'dark' | 'light' | 'auto';
-export type COLORS =
-  | 'background'
-  | 'primary'
-  | 'success'
-  | 'error'
-  | 'warning'
-  | 'surface'
-  | 'neutral'
-  | 'foreground';
 
 interface ConfigState {
   config: WidgetConfig;
@@ -57,7 +52,7 @@ interface ConfigState {
         }
   ) => void;
   onChangeColors: (
-    name: COLORS,
+    name: WidgetColorsKeys,
     mode: 'light' | 'dark',
     color?: string
   ) => void;
@@ -98,24 +93,18 @@ export const initialConfig: WidgetConfig = {
     singleTheme: undefined,
     colors: {
       dark: {
-        background: undefined,
         primary: undefined,
-        foreground: undefined,
-        success: undefined,
-        error: undefined,
-        warning: undefined,
-        surface: undefined,
+        secondary: undefined,
         neutral: undefined,
+        background: undefined,
+        foreground: undefined,
       },
       light: {
-        background: undefined,
         primary: undefined,
-        foreground: undefined,
-        success: undefined,
-        error: undefined,
-        warning: undefined,
-        surface: undefined,
+        secondary: undefined,
         neutral: undefined,
+        background: undefined,
+        foreground: undefined,
       },
     },
   },
