@@ -10,7 +10,6 @@ export * from './ChangeSlippageButton';
 export * from './Checkbox';
 export * from './Chip';
 export * from './common';
-export * from './ColorPicker';
 export * from './Divider';
 export * from './Drawer';
 export * from './Header';

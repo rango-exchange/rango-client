@@ -1,7 +1,8 @@
+import type { Mode } from '../store/config';
+
 import {
   Button,
   Checkbox,
-  ColorPicker,
   Divider,
   styled,
   Switch,
@@ -9,9 +10,12 @@ import {
   Typography,
 } from '@rango-dev/ui';
 import React, { useState } from 'react';
+
 import { FONTS } from '../constants';
-import { COLORS, Mode, useConfigStore } from '../store/config';
+import { useConfigStore } from '../store/config';
+
 import { ConfigurationContainer } from './ChainsConfig';
+import { ColorPicker } from './ColorPicker';
 import { Select } from './Select';
 
 const COLORS = [
@@ -289,8 +293,13 @@ export function StylesConfig() {
                 id={'auto'}
                 label={'Auto'}
                 onCheckedChange={(checked) => {
-                  if (checked) onChangeTheme({ name: 'mode', value: 'auto' });
-                  else onChangeTheme({ name: 'mode', value: 'light' });
+                  if (checked) {
+                    onChangeTheme({ name: 'mode', value: 'auto' });
+                  } else {
+                    onChangeTheme({ name: 'mode', value: 'light' });
+                  }
+                  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                  // @ts-ignore
                   setChekedTheme(checked);
                 }}
               />
@@ -306,8 +315,11 @@ export function StylesConfig() {
                     onChange={(checked) => {
                       if (!checkedTheme && !singleTheme) {
                         let theme;
-                        if (checked) theme = 'dark';
-                        else theme = 'light';
+                        if (checked) {
+                          theme = 'dark';
+                        } else {
+                          theme = 'light';
+                        }
                         onChangeTheme({ name: 'mode', value: theme as Mode });
                       }
                     }}
@@ -381,6 +393,8 @@ export function StylesConfig() {
 
         <Checkbox
           onCheckedChange={(checked) => {
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-ignore
             onChangeTheme({ name: 'singleTheme', value: checked });
           }}
           id="single_theme"
@@ -422,6 +436,7 @@ export function StylesConfig() {
             <Button
               type="success"
               variant="outlined"
+              // eslint-disable-next-line react/no-array-index-key
               key={index}
               onClick={() => {
                 if (t.dark && !t.light) {
@@ -473,10 +488,14 @@ export function StylesConfig() {
               key={color.name}
               placeholder="Choose Color"
               color={
+                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                // @ts-ignore
                 colors[mode][color.name] || defaultColors[mode][color.name]
               }
               label={color.label}
               onChangeColor={(c) =>
+                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                // @ts-ignore
                 onChangeColors(color.name as COLORS, mode, c)
               }
             />

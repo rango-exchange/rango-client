@@ -1,10 +1,7 @@
+import { Button, CloseIcon, styled } from '@rango-dev/ui';
 import React, { useState } from 'react';
 import { ChromePicker } from 'react-color';
 import rgbHex from 'rgb-hex';
-
-import { styled } from '../../theme';
-import { Button } from '../Button';
-import { CloseIcon } from '../Icon';
 
 const Container = styled('div', {
   position: 'relative',
@@ -16,6 +13,7 @@ const Color = styled('div', {
   width: '$32',
   height: '$32',
 });
+
 const Cover = styled('div', {
   position: 'fixed',
   top: '0px',
@@ -23,6 +21,7 @@ const Cover = styled('div', {
   bottom: '0px',
   left: '0px',
 });
+
 const Popover = styled('div', {
   position: 'absolute',
   zIndex: '2',
@@ -43,6 +42,7 @@ const Popover = styled('div', {
     },
   },
 });
+
 export interface PropTypes {
   color?: string;
   place: 'top' | 'bottom' | 'left' | 'right';
