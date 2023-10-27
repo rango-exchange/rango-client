@@ -17,6 +17,7 @@ export const excludedWallets = [
   WalletTypes.SAFE,
   WalletTypes.MY_TON_WALLET,
   WalletTypes.WALLET_CONNECT_2,
+  WalletTypes.BINANCE_CHAIN,
 ];
 
 export const onChangeMultiSelects = (
