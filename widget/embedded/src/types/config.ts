@@ -18,6 +18,7 @@ export type WidgetColors = {
   neutral?: string;
   primary?: string;
   secondary?: string;
+  info?: string;
 };
 
 /**

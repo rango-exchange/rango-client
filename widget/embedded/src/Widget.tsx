@@ -12,6 +12,7 @@ import { globalFont } from './globalStyles';
 import { useTheme } from './hooks/useTheme';
 import QueueManager from './QueueManager';
 import { useAppStore } from './store/app';
+import { useMetaStore } from './store/meta';
 import { useNotificationStore } from './store/notification';
 import { useSettingsStore } from './store/settings';
 import { initConfig } from './utils/configs';
@@ -47,6 +48,7 @@ export function Main(props: PropsWithChildren<WidgetProps>) {
     useState<string>('');
   const [disconnectedWallet, setDisconnectedWallet] = useState<WalletType>();
   const widgetContext = useContext(WidgetContext);
+  const fetchMeta = useMetaStore.use.fetchMeta();
 
   useMemo(() => {
     if (config?.apiKey) {
@@ -57,6 +59,7 @@ export function Main(props: PropsWithChildren<WidgetProps>) {
   }, [config]);
 
   useEffect(() => {
+    void fetchMeta();
     void useSettingsStore.persist.rehydrate();
     void useNotificationStore.persist.rehydrate();
     widgetContext.onConnectWallet(setLastConnectedWalletWithNetwork);
@@ -64,7 +67,7 @@ export function Main(props: PropsWithChildren<WidgetProps>) {
 
   return (
     <I18nManager language={config?.language}>
-      <MainContainer id="swap-container" className={activeTheme}>
+      <MainContainer id="swap-container" className={activeTheme()}>
         <QueueManager>
           <WidgetEvents />
           <AppRouter
