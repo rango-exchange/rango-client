@@ -38,6 +38,7 @@
     "@rango-dev/provider-metamask": "^0.17.0",
     "@rango-dev/provider-okx": "^0.17.0",
     "@rango-dev/provider-phantom": "^0.17.0",
+    "@rango-dev/provider-safe": "^0.10.0",
     "@rango-dev/provider-safepal": "^0.17.0",
     "@rango-dev/provider-taho": "^0.17.0",
     "@rango-dev/provider-tokenpocket": "^0.17.0",
