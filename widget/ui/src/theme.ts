@@ -47,6 +47,7 @@ export const theme = {
     warning600: '#38271F',
     warning700: '#1A1412',
 
+    info: '#5BABFF',
     info100: '#E9F3FF',
     info300: '#C8E2FF',
     info500: '#5BABFF',
@@ -213,9 +214,9 @@ export const { styled, css, createTheme, keyframes, globalCss, config } =
     utils,
   });
 
-export const lightTheme = createTheme({});
+export const lightTheme = createTheme('light-theme-ui', {});
 
-export const darkTheme = createTheme({
+export const darkTheme = createTheme('dark-theme-ui', {
   colors: darkColors,
   shadows: {
     s: '0px 3px 5px 3px #222, 0px 6px 10px 3px #222, 0px 1px 18px 3px #222',
