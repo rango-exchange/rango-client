@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/provider-safe",
-  "version": "0.8.1-next.6",
+  "version": "0.10.0",
   "license": "MIT",
   "type": "module",
   "module": "./dist/index.js",

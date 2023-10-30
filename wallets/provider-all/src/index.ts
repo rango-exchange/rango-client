@@ -16,6 +16,7 @@ import * as mathwallet from '@rango-dev/provider-math-wallet';
 import * as metamask from '@rango-dev/provider-metamask';
 import * as okx from '@rango-dev/provider-okx';
 import * as phantom from '@rango-dev/provider-phantom';
+import * as safe from '@rango-dev/provider-safe';
 import * as safepal from '@rango-dev/provider-safepal';
 import * as taho from '@rango-dev/provider-taho';
 import * as tokenpocket from '@rango-dev/provider-tokenpocket';
@@ -30,6 +31,7 @@ export const allProviders = (enviroments?: Enviroments) => {
   walletconnect2.init(enviroments?.walletconnect2 || {});
 
   return [
+    safe,
     metamask,
     walletconnect2,
     keplr,
