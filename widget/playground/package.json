@@ -26,6 +26,7 @@
     "react": "^18.2.0",
     "react-color": "^2.19.3",
     "react-dom": "^18.2.0",
+    "react-color": "^2.19.3",
     "react-router-dom": "^6.10.0",
     "react-syntax-highlighter": "^15.5.0",
     "stringify-object": "^5.0.0",

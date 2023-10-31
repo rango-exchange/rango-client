@@ -40,7 +40,7 @@ export const List = styled('ul', {
         '& a': {
           fontSize: '$12',
           lineHeight: '$16',
-          color: '$neutral800',
+          color: '$neutral600',
           textDecoration: 'none',
         },
       },

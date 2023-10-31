@@ -111,7 +111,7 @@ export const Input = styled('input', {
   },
 
   '&::placeholder, &::-webkit-input-placeholder': {
-    color: '$neutral900',
+    color: '$neutral700',
   },
   '&:focus-visible': {
     outline: 'none',

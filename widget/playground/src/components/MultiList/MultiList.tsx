@@ -160,7 +160,7 @@ export function MultiList(props: MultiListPropTypes) {
                 ? handleAllSelectedClick('deselect')
                 : handleAllSelectedClick('select')
             }>
-            <Typography variant="label" size="medium" color="neutral900">
+            <Typography variant="label" size="medium" color="neutral700">
               {isAllCategorySelected ? 'Deselect all' : 'Select all'}
             </Typography>
           </SelectButton>

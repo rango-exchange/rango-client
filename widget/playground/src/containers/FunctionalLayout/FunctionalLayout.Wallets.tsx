@@ -99,7 +99,7 @@ export function WalletSection() {
             }}
             size="small"
             variant="body"
-            color="neutral900">
+            color="neutral700">
             Enable Multi Wallets Simultaneously
           </Typography>
         }
@@ -116,7 +116,7 @@ export function WalletSection() {
           />
         </SwitchField>
         <Divider size={16} />
-        <Typography size="small" variant="body" color="neutral800">
+        <Typography size="small" variant="body" color="neutral600">
           It's a sample using metamask, You can use your own wallet or what we
           already implemented, check it out here.
         </Typography>

@@ -1,9 +1,12 @@
-import React, { useEffect } from 'react';
-import { Button, Divider, Switch, Typography, styled } from '@rango-dev/ui';
-import { WalletType, WalletTypes } from '@rango-dev/wallets-shared';
-import { ProviderInterface } from '@rango-dev/wallets-react';
-import { useConfigStore } from '../../store/config';
+import type { ProviderInterface } from '@rango-dev/wallets-react';
+import type { WalletType } from '@rango-dev/wallets-shared';
+
+import { Button, Divider, styled, Switch, Typography } from '@rango-dev/ui';
+import { WalletTypes } from '@rango-dev/wallets-shared';
 import { useWallets } from '@rango-dev/widget-embedded';
+import React, { useEffect } from 'react';
+
+import { useConfigStore } from '../../store/config';
 
 const Head = styled('div', {
   display: 'flex',
@@ -32,10 +35,14 @@ export function ExternalWallet() {
       const index = selectedWallets.findIndex(
         (wallet) => wallet === WalletTypes.META_MASK
       );
-      if (index !== -1) selectedWallets.splice(index, 1);
+      if (index !== -1) {
+        selectedWallets.splice(index, 1);
+      }
       selectedWallets = [...selectedWallets, WalletTypes.META_MASK];
     } else {
-      if (state('metamask').connected) disconnect(WalletTypes.META_MASK);
+      if (state('metamask').connected) {
+        void disconnect(WalletTypes.META_MASK);
+      }
       if (selectedWallets.length === 1) {
         selectedWallets = [];
       }
@@ -58,7 +65,7 @@ export function ExternalWallet() {
   return (
     <>
       <Head>
-        <Typography noWrap variant="body" size="small" color="neutral700">
+        <Typography noWrap variant="body" size="small" color="neutral900">
           External Wallets
         </Typography>
 
@@ -80,9 +87,9 @@ export function ExternalWallet() {
           disabled={!externalWallets}
           onClick={() => {
             if (state('metamask').connected) {
-              disconnect('metamask');
+              void disconnect('metamask');
             } else {
-              connect('metamask');
+              void connect('metamask');
             }
           }}>
           {externalWallets && state('metamask').connected

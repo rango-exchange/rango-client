@@ -10,7 +10,7 @@ import { Container, StyledAnchor } from './BottomLogo.styles';
 export function BottomLogo() {
   return (
     <Container>
-      <Typography variant="body" size="xsmall" color="$neutral900">
+      <Typography variant="body" size="xsmall" color="$neutral700">
         {i18n.t('Powered By')}
       </Typography>
       <Divider direction="horizontal" size={8} />
@@ -18,7 +18,7 @@ export function BottomLogo() {
         <Logo size={16} color="gray" />
         <Divider direction="horizontal" size={4} />
 
-        <Typography variant="body" size="xsmall" color="neutral900">
+        <Typography variant="body" size="xsmall" color="neutral700">
           RANGO
         </Typography>
       </StyledAnchor>

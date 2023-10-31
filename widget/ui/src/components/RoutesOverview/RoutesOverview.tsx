@@ -13,7 +13,7 @@ export const Container = styled('div', {
   padding: '$8',
   borderRadius: '$xs',
   backgroundColor: '$background',
-  color: '$neutral800',
+  color: '$neutral600',
   fontSize: '$12',
 
   '.routes': {

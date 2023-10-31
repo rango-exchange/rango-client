@@ -208,12 +208,16 @@ export const useConfigStore = createSelectors(
           }),
         onChangeColors: (name, mode, color) =>
           set((state) => {
-            if (
-              state.config?.theme?.colors &&
-              state.config.theme.colors[mode] &&
-              state.config.theme.colors[mode][name]
-            ) {
-              state.config.theme.colors[mode][name] = color;
+            console.log({ color });
+
+            if (state?.config?.theme?.colors) {
+              state.config.theme.colors = {
+                ...state.config.theme.colors,
+                [mode]: {
+                  ...state?.config?.theme.colors[mode],
+                  [name]: color,
+                },
+              };
             }
           }),
         onSelectTheme: (colors) =>

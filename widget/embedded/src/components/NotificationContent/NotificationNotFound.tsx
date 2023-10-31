@@ -9,7 +9,7 @@ export function NotificationNotFound() {
     <NotFoundContainer>
       <NoNotificationIcon color="secondary" size={26} />
       <Divider size={12} />
-      <Typography variant="body" size="medium" color="neutral900">
+      <Typography variant="body" size="medium" color="neutral700">
         {i18n.t('You have no notification')}
       </Typography>
     </NotFoundContainer>

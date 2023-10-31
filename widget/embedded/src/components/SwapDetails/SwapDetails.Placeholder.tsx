@@ -38,11 +38,11 @@ export function SwapDetailsPlaceholder(props: SwapDetailsPlaceholderPropTypes) {
         <Container>
           <HeaderDetails>
             <div className="row">
-              <Typography variant="label" size="large" color="neutral900">
+              <Typography variant="label" size="large" color="neutral700">
                 {`${i18n.t('Request ID')}:`}
               </Typography>
               <div className="request-id">
-                <Typography variant="label" size="small" color="neutral900">
+                <Typography variant="label" size="small" color="neutral700">
                   <Skeleton width={60} height={10} variant="rounded" />
                 </Typography>
                 <IconButton variant="ghost">
@@ -51,10 +51,10 @@ export function SwapDetailsPlaceholder(props: SwapDetailsPlaceholderPropTypes) {
               </div>
             </div>
             <div className="row">
-              <Typography variant="label" size="large" color="neutral900">
+              <Typography variant="label" size="large" color="neutral700">
                 {`${i18n.t('Created at')}:`}
               </Typography>
-              <Typography variant="label" size="small" color="neutral900">
+              <Typography variant="label" size="small" color="neutral700">
                 <Skeleton width={60} height={10} variant="rounded" />
               </Typography>
             </div>

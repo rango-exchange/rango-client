@@ -73,6 +73,6 @@ export const StepContainer = styled('div', {
 export const StepSeparator = styled('div', {
   width: '0px',
   height: '$20',
-  borderLeft: '1px dashed $neutral900',
+  borderLeft: '1px dashed $neutral700',
   marginLeft: '25px',
 });

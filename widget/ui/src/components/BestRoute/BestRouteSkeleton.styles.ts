@@ -47,7 +47,7 @@ export const Container = styled('div', {
   '& .route-summary__separator': {
     height: '$28',
     marginLeft: '13px',
-    borderLeft: '1px solid $neutral900',
+    borderLeft: '1px solid $neutral700',
   },
   '& .token-amount': {
     display: 'flex',

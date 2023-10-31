@@ -32,9 +32,14 @@ export function customizedThemeTokens(
       ...baseColors,
       ...defaultDarkColors,
     },
+    true,
     colors?.dark
   );
-  const lightColorsWithDefaults = generateColors(baseColors, colors?.light);
+  const lightColorsWithDefaults = generateColors(
+    baseColors,
+    false,
+    colors?.light
+  );
   const hasDefaultDarkColors = Object.keys(darkColorsWithDefaults).length > 0;
   const hasDefaultLightColors = Object.keys(lightColorsWithDefaults).length > 0;
 
@@ -51,19 +56,7 @@ export function customizedThemeTokens(
   }
   if (hasDefaultDarkColors) {
     const tokens = {
-      colors: {
-        ...darkColorsWithDefaults,
-        // Reverse the neutrals shade
-        neutral100: darkColorsWithDefaults.neutral900,
-        neutral200: darkColorsWithDefaults.neutral800,
-        neutral300: darkColorsWithDefaults.neutral700,
-        neutral400: darkColorsWithDefaults.neutral600,
-        neutral500: darkColorsWithDefaults.neutral500,
-        neutral600: darkColorsWithDefaults.neutral400,
-        neutral700: darkColorsWithDefaults.neutral300,
-        neutral800: darkColorsWithDefaults.neutral200,
-        neutral900: darkColorsWithDefaults.neutral100,
-      },
+      colors: darkColorsWithDefaults,
     };
     const id = `${THEME_CLASS_NAME_PREFIX}-dark-${toHash(tokens)}`;
     dark = {

@@ -64,6 +64,7 @@ export const generateRangeColors = (name: string, color: string) => {
 };
 export const generateColors = (
   mainColors: { [x: string]: string },
+  reverseNeutralRange: boolean,
   colors?: WidgetColors
 ) => {
   if (!colors || !Object.entries(colors).length) {
@@ -80,6 +81,21 @@ export const generateColors = (
         listOfColors = {
           ...listOfColors,
           [colorKey]: color,
+        };
+      } else if (colorKey === 'neutral' && reverseNeutralRange) {
+        const range = generateRangeColors(colorKey, color);
+        listOfColors = {
+          ...listOfColors,
+          // Reverse the neutral shade
+          [`${colorKey}100`]: range[`${colorKey}900`],
+          [`${colorKey}200`]: range[`${colorKey}800`],
+          [`${colorKey}300`]: range[`${colorKey}700`],
+          [`${colorKey}400`]: range[`${colorKey}600`],
+          [`${colorKey}500`]: range[`${colorKey}500`],
+          [`${colorKey}600`]: range[`${colorKey}400`],
+          [`${colorKey}700`]: range[`${colorKey}300`],
+          [`${colorKey}800`]: range[`${colorKey}200`],
+          [`${colorKey}900`]: range[`${colorKey}100`],
         };
       } else {
         listOfColors = {

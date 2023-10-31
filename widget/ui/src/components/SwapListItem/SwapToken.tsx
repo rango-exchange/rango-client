@@ -114,7 +114,7 @@ export function SwapToken(props: PropTypes) {
               {toToken.displayName}
             </Typography>
           </TopSection>
-          <Typography size="small" variant="body" color="neutral900">
+          <Typography size="small" variant="body" color="neutral700">
             {i18n.t('Waiting for bridge transaction')}
           </Typography>
         </Layout>
@@ -125,7 +125,7 @@ export function SwapToken(props: PropTypes) {
               {fromToken.displayName}
             </Typography>
             {!!fromAmount && (
-              <Typography size="small" variant="body" color="neutral900">
+              <Typography size="small" variant="body" color="neutral700">
                 {fromAmount}
               </Typography>
             )}
@@ -138,7 +138,7 @@ export function SwapToken(props: PropTypes) {
               {toToken.displayName}
             </Typography>
 
-            <Typography size="small" variant="body" color="neutral900">
+            <Typography size="small" variant="body" color="neutral700">
               {toAmount || estimatedAmount}
             </Typography>
           </TokenInfo>

@@ -22,7 +22,7 @@ export const InputContainer = styled('div', {
         '&:hover': {
           borderColor: '$neutral300',
           '& svg': {
-            color: '$neutral900',
+            color: '$neutral700',
           },
         },
       },

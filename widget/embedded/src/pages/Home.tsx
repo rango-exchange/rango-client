@@ -245,15 +245,15 @@ export function Home() {
               title={recommendation}
               footer={
                 <FooterAlert>
-                  <Typography size="xsmall" variant="body" color="neutral900">
+                  <Typography size="xsmall" variant="body" color="neutral700">
                     {fromAmountRangeError}
                   </Typography>
                   <Divider direction="horizontal" size={8} />
-                  <Typography size="xsmall" variant="body" color="neutral900">
+                  <Typography size="xsmall" variant="body" color="neutral700">
                     |
                   </Typography>
                   <Divider direction="horizontal" size={8} />
-                  <Typography size="xsmall" variant="body" color="neutral900">
+                  <Typography size="xsmall" variant="body" color="neutral700">
                     {i18n.t({
                       id: 'yourSymbol',
                       message: 'Yours: {amount} {symbol}',

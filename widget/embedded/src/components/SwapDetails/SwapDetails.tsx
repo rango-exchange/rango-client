@@ -281,11 +281,11 @@ export function SwapDetails(props: SwapDetailsProps) {
       <Container>
         <HeaderDetails>
           <div className="row">
-            <Typography variant="label" size="large" color="neutral900">
+            <Typography variant="label" size="large" color="neutral700">
               {`${i18n.t('Request ID')}:`}
             </Typography>
             <div className="request-id">
-              <Typography variant="label" size="small" color="neutral900">
+              <Typography variant="label" size="small" color="neutral700">
                 {requestId}
               </Typography>
               <IconButton
@@ -296,10 +296,10 @@ export function SwapDetails(props: SwapDetailsProps) {
             </div>
           </div>
           <div className="row">
-            <Typography variant="label" size="large" color="neutral900">
+            <Typography variant="label" size="large" color="neutral700">
               {`${i18n.t('Created at')}:`}
             </Typography>
-            <Typography variant="label" size="small" color="neutral900">
+            <Typography variant="label" size="small" color="neutral700">
               {swapDate}
             </Typography>
           </div>
