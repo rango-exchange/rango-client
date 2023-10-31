@@ -66,7 +66,7 @@ export const ErrorMsg = styled(Typography, {
 
 export const FeeContainer = styled('div', {
   paddingLeft: '$16',
-  color: '$neutral800',
+  color: '$neutral600',
 });
 
 export const Fee = styled('div', {
@@ -150,12 +150,12 @@ const Row = styled('div', {
   padding: '$8 0',
 
   '.name': {
-    color: '$neutral600',
+    color: '$neutral800',
   },
   '.value': {
     display: 'flex',
     alignItems: 'center',
-    color: '$neutral800',
+    color: '$neutral600',
     justifyContent: 'flex-end',
   },
   '.status': {
@@ -182,7 +182,7 @@ const RequestId = styled('div', {
 
 const ExtraDetails = styled('div', {
   padding: '0',
-  color: '$neutral600',
+  color: '$neutral800',
   fontSize: '$10',
 });
 

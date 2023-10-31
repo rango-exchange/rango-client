@@ -363,7 +363,7 @@ export function ConfirmSwapPage(props: PropTypes) {
             size="small"
             variant="ghost"
             onClick={() => navigate('/' + navigationRoutes.settings)}>
-            <Typography variant="label" size="medium" color="$neutral900">
+            <Typography variant="label" size="medium" color="$neutral700">
               {i18n.t('Change settings')}
             </Typography>
           </Button>

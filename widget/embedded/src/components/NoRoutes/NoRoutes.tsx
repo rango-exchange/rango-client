@@ -47,7 +47,7 @@ export function NoRoutes(props: PropTypes) {
           variant="body"
           size="small"
           align="center"
-          color="neutral900">
+          color="neutral700">
           {info.description}
         </Typography>
       )}

@@ -41,7 +41,7 @@ function ItemPicker(props: PropTypes) {
               <Divider size={4} direction="horizontal" />
             </>
           )}
-          <Typography size="medium" variant="label" color="neutral900">
+          <Typography size="medium" variant="label" color="neutral700">
             {label || placeholder}
           </Typography>
         </Title>

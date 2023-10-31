@@ -70,7 +70,7 @@ export function TokenItem(props: PropTypes) {
           <Typography variant="body" size="medium">
             {token.symbol}
           </Typography>
-          <Typography variant="body" size="xsmall" color="neutral600">
+          <Typography variant="body" size="xsmall" color="neutral800">
             {token.name}
           </Typography>
         </TokenNameContainer>

@@ -1,9 +1,10 @@
-import { Button, styled } from '@rango-dev/ui';
+import { Button, Collapsible, styled } from '@rango-dev/ui';
 
 export const Layout = styled('div', {
   borderRadius: '20px',
   display: 'flex',
   padding: '$15',
+  overflowY: 'auto',
   backgroundColor: '$background',
   width: '338px',
   height: '100%',
@@ -36,7 +37,7 @@ export const Tabs = styled('div', {
 });
 
 export const Tab = styled(Button, {
-  color: '$neutral900',
+  color: '$neutral700',
   backgroundColor: 'transparent',
   '&:hover': {
     backgroundColor: '$info100',
@@ -84,13 +85,14 @@ export const ColorsContent = styled('div', {
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
+  position: 'relative',
 });
 
-export const Color = styled('div', {
-  width: 20,
-  height: 20,
-  borderRadius: 10,
-  margin: 5,
+export const ColoredCircle = styled('div', {
+  width: '$20',
+  height: '$20',
+  borderRadius: '$sm',
+  margin: '$5',
   boxShadow: '0 2px 6px 0 rgba(0, 0, 0, 0.1), 0 4px 10px 0 rgba(0, 0, 0, 0.16)',
   variants: {
     position: {
@@ -125,10 +127,26 @@ export const CustomColors = styled(Button, {
     '.title': {
       color: '$secondary500',
     },
+    '& svg': {
+      color: '$secondary500',
+    },
   },
 });
 
 export const Collapse = styled('div', {
   overflow: 'hidden',
   transition: 'height .3s ease',
+});
+
+export const CustomColorCollapsible = styled(Collapsible, {
+  border: '1px solid $neutral300',
+  borderRadius: '$xm',
+  padding: '$4 $15',
+  cursor: 'pointer',
+  '&:hover': {
+    borderColor: '$info300',
+    '& svg': {
+      color: '$secondary500',
+    },
+  },
 });

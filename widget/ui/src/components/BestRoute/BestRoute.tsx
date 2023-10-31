@@ -71,7 +71,7 @@ export function BestRoute(props: BestRouteProps) {
                 } ${steps[steps.length - 1].to.token.displayName}`}
               </Typography>
               <Typography
-                color="$neutral800"
+                color="$neutral600"
                 ml={2}
                 size="xsmall"
                 variant="body">

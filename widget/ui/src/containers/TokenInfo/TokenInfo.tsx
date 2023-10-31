@@ -174,7 +174,7 @@ export function TokenInfo(props: PropTypes) {
     <Box>
       <Container type={type === 'From' ? 'filled' : 'outlined'}>
         <div className="head">
-          <Typography variant="body" size="small" color="neutral800">
+          <Typography variant="body" size="small" color="neutral600">
             {type === 'From' ? (
               <Trans id="swap from" message="From" />
             ) : (
@@ -190,7 +190,7 @@ export function TokenInfo(props: PropTypes) {
                     setInputAmount(tokenBalanceReal.split(',').join(''));
                   }
                 }}>
-                <Typography variant="body" size="small" color="neutral600">
+                <Typography variant="body" size="small" color="neutral800">
                   {i18n.t('Balance')}: {tokenBalance} {fromToken?.symbol || ''}
                 </Typography>
                 <Divider size={4} />
@@ -209,7 +209,7 @@ export function TokenInfo(props: PropTypes) {
                 <Typography
                   variant="body"
                   size="xsmall"
-                  color="neutral600">{`$${props.outputUsdValue}`}</Typography>
+                  color="neutral800">{`$${props.outputUsdValue}`}</Typography>
               </div>
             </div>
           )}
@@ -280,7 +280,7 @@ export function TokenInfo(props: PropTypes) {
                     <Typography
                       variant="body"
                       size="xsmall"
-                      color="neutral800">{`$${inputUsdValue}`}</Typography>
+                      color="neutral600">{`$${inputUsdValue}`}</Typography>
                   </span>
                 }
                 value={inputAmount || ''}
