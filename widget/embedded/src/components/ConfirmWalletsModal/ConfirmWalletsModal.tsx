@@ -371,7 +371,7 @@ export function ConfirmWalletsModal(props: PropTypes) {
                     </Typography>
                     <Typography
                       variant="label"
-                      color="$neutral900"
+                      color="$neutral700"
                       size="medium">
                       {i18n.t({
                         id: 'needConnect',

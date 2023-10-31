@@ -13,13 +13,13 @@ export function SwapInput(props: SwapInputProps) {
     <Container sharpBottomStyle={props.sharpBottomStyle}>
       <div className="label__container">
         <div className="label">
-          <Typography variant="body" size="small" color="$neutral800">
+          <Typography variant="body" size="small" color="$neutral600">
             {props.label}
           </Typography>
           {'balance' in props && !props.loading && (
             <div className="balance">
               <Typography
-                color="$neutral800"
+                color="$neutral600"
                 mr={4}
                 variant="body"
                 size="xsmall">
@@ -87,7 +87,7 @@ export function SwapInput(props: SwapInputProps) {
                 <Typography
                   variant="body"
                   size="medium"
-                  color={!props.price.error ? '$neutral800' : '$warning500'}
+                  color={!props.price.error ? '$neutral600' : '$warning500'}
                   style={{
                     width: 140,
                     textAlign: 'right',

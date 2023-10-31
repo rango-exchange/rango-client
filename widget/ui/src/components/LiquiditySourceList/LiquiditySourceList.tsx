@@ -111,7 +111,7 @@ export function LiquiditySourceList(props: PropTypes) {
           <Typography variant="title" size="xmedium">
             {i18n.t('Bridges')}
           </Typography>
-          <Typography variant="body" size="medium" color="neutral800">
+          <Typography variant="body" size="medium" color="neutral600">
             {totalSelectedBridges === totalBridges
               ? totalBridges
               : `${totalSelectedBridges} / ${totalBridges}`}
@@ -150,7 +150,7 @@ export function LiquiditySourceList(props: PropTypes) {
           <Typography variant="title" size="xmedium">
             {i18n.t('Exchanges')}
           </Typography>
-          <Typography variant="body" size="medium" color="neutral800">
+          <Typography variant="body" size="medium" color="neutral600">
             {totalSelectedExchanges === totalExchanges
               ? totalExchanges
               : `${totalSelectedExchanges} / ${totalExchanges}`}

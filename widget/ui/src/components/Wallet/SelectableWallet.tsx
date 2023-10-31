@@ -40,7 +40,7 @@ export function SelectableWallet(props: SelectablePropTypes) {
           variant="body"
           size="xsmall"
           noWrap={false}
-          color={state === WalletState.CONNECTED ? 'neutral900' : info.color}>
+          color={state === WalletState.CONNECTED ? 'neutral700' : info.color}>
           {description || info.description}
         </Typography>
       </Text>

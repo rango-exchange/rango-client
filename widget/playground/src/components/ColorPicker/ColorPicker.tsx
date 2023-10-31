@@ -1,107 +1,46 @@
-import { Button, CloseIcon, styled } from '@rango-dev/ui';
-import React, { useState } from 'react';
+import type { PropTypes } from './ColorPicker.types';
+import type { ColorResult } from 'react-color';
+
+import { Button, Popover, Typography } from '@rango-dev/ui';
+import React from 'react';
 import { ChromePicker } from 'react-color';
-import rgbHex from 'rgb-hex';
 
-const Container = styled('div', {
-  position: 'relative',
-});
+import { ColorButton, ColorDiv, Container } from './ColorPickerstyles';
 
-const Color = styled('div', {
-  border: '1px solid $background',
-  borderRadius: '$xs',
-  width: '$32',
-  height: '$32',
-});
-
-const Cover = styled('div', {
-  position: 'fixed',
-  top: '0px',
-  right: '0px',
-  bottom: '0px',
-  left: '0px',
-});
-
-const Popover = styled('div', {
-  position: 'absolute',
-  zIndex: '2',
-  variants: {
-    place: {
-      top: {
-        top: '-241px',
-      },
-      bottom: {},
-      left: {
-        top: '-50%',
-        left: '-225px',
-      },
-      right: {
-        top: '-50%',
-        right: '-225px',
-      },
-    },
-  },
-});
-
-export interface PropTypes {
-  color?: string;
-  place: 'top' | 'bottom' | 'left' | 'right';
-  onChangeColor: (color?: string) => void;
-  label?: string;
-  placeholder?: string;
-}
-
-const Label = styled('label', {
-  display: 'inline-block',
-  fontSize: '$14',
-  marginBottom: '$4',
-  color: '$foreground',
-});
-
-export function ColorPicker({
-  color,
-  onChangeColor,
-  label,
-  place,
-  placeholder,
-}: PropTypes) {
-  const [displayColorPicker, setDisplayColorPicker] = useState<boolean>(false);
-
+function ColorPicker(props: PropTypes) {
+  const { label, placeholder, color, onChangeColor, onReset, resetDisable } =
+    props;
+  const onChange = (c: ColorResult) => {
+    onChangeColor(c.hex);
+  };
   return (
     <Container>
-      <Label className="_text">{label}</Label>
+      <Typography variant="body" size="small" color="neutral700">
+        {label}
+      </Typography>
+      <Popover
+        side="top"
+        content={<ChromePicker color={color} onChange={onChange} />}>
+        <ColorButton
+          size="small"
+          variant="default"
+          prefix={<ColorDiv style={{ backgroundColor: color }} />}>
+          <Typography variant="label" size="medium" color="neutral600">
+            {color || placeholder}
+          </Typography>
+        </ColorButton>
+      </Popover>
       <Button
-        variant="outlined"
-        prefix={<Color style={{ backgroundColor: color }} />}
-        fullWidth
-        size="large"
-        suffix={
-          color && (
-            <div
-              onClick={(e) => {
-                e.stopPropagation();
-                onChangeColor(undefined);
-              }}>
-              <CloseIcon size={20} />
-            </div>
-          )
-        }
-        onClick={() => setDisplayColorPicker((prev) => !prev)}>
-        {color || placeholder}
+        onClick={onReset}
+        disabled={resetDisable}
+        size="small"
+        variant="ghost">
+        <Typography variant="body" size="small" color="neutral600">
+          Reset
+        </Typography>
       </Button>
-
-      {displayColorPicker && (
-        <Popover place={place}>
-          <Cover onClick={() => setDisplayColorPicker(false)} />
-          <ChromePicker
-            color={color}
-            onChange={(c) => {
-              const color = '#' + rgbHex(c.rgb.r, c.rgb.g, c.rgb.b, c.rgb.a);
-              onChangeColor(color);
-            }}
-          />
-        </Popover>
-      )}
     </Container>
   );
 }
+
+export default React.memo(ColorPicker);

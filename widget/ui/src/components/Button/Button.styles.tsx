@@ -61,7 +61,7 @@ export const ButtonBase = styled('button', {
           [`.${darkTheme} &`]: {
             $$color: '$colors$foreground',
           },
-          backgroundColor: '$neutral800',
+          backgroundColor: '$neutral600',
           color: '$$color',
           pointerEvents: 'none',
         },
@@ -80,16 +80,16 @@ export const ButtonBase = styled('button', {
           outline: 0,
         },
         '&:disabled': {
-          borderColor: '$neutral800',
-          color: '$neutral800',
+          borderColor: '$neutral600',
+          color: '$neutral600',
           pointerEvents: 'none',
         },
       },
       ghost: {
         backgroundColor: 'transparent',
-        color: '$neutral900',
+        color: '$neutral700',
         '&:disabled': {
-          color: '$neutral800',
+          color: '$neutral600',
           pointerEvents: 'none',
         },
         '&:focus-visible': {
@@ -140,7 +140,7 @@ export const ButtonBase = styled('button', {
           [`.${darkTheme} &`]: {
             $$color: '$colors$foreground',
           },
-          background: '$neutral800',
+          background: '$neutral600',
           color: '$$color',
           pointerEvents: 'none',
         },

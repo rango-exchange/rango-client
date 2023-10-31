@@ -36,7 +36,7 @@ export function Container({
   return (
     <>
       <Head>
-        <Typography noWrap variant="body" size="small" color="neutral700">
+        <Typography noWrap variant="body" size="small" color="neutral900">
           {label}
         </Typography>
 

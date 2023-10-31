@@ -1,4 +1,4 @@
-import { styled } from '@rango-dev/ui';
+import { darkTheme, styled } from '@rango-dev/ui';
 
 export const Container = styled('div', {
   position: 'relative',
@@ -10,7 +10,11 @@ export const Container = styled('div', {
   width: '95vw',
   maxWidth: '390px',
   maxHeight: '700px',
-  backgroundColor: '$neutral100',
+  $$color: '$colors$neutral100',
+  [`.${darkTheme} &`]: {
+    $$color: '$colors$neutral300',
+  },
+  backgroundColor: '$$color',
   variants: {
     fixedHeight: {
       true: {
@@ -22,6 +26,7 @@ export const Container = styled('div', {
     },
   },
 });
+
 export const Content = styled('div', {
   borderTopLeftRadius: '20px',
   borderTopRightRadius: '20px',

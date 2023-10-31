@@ -117,7 +117,7 @@ export function TokenPreview(props: PropTypes) {
     <Box>
       <Container type={'outlined'}>
         <div className="head">
-          <Typography variant="body" size="small" color="neutral800">
+          <Typography variant="body" size="small" color="neutral600">
             {props.label}
           </Typography>
           <div>
@@ -126,7 +126,7 @@ export function TokenPreview(props: PropTypes) {
               <Typography
                 variant="body"
                 size="xsmall"
-                color="neutral600"
+                color="neutral800"
                 className="usd-value">{`$${props.usdValue}`}</Typography>
             )}
           </div>

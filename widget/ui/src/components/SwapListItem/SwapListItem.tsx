@@ -46,7 +46,7 @@ export function SwapListItem(props: PropsWithChildren<PropTypes>) {
       <Container>
         <Header>
           <Date>
-            <Typography variant="label" size="medium" color="neutral800">
+            <Typography variant="label" size="medium" color="neutral600">
               {formattedDateAndTime(creationTime, onlyShowTime)}
             </Typography>
           </Date>

@@ -3,9 +3,9 @@ import { darkTheme, styled } from '../../theme';
 
 export const Container = styled(Button, {
   backgroundColor: 'transparent',
-  color: '$neutral900',
+  color: '$neutral700',
   '&:disabled': {
-    color: '$neutral800',
+    color: '$neutral600',
   },
   '&:focus-visible': {
     $$color: '$colors$info100',

@@ -1,4 +1,4 @@
-import { darkTheme, styled } from '../../theme';
+import { styled } from '../../theme';
 
 export const SvgWithColor = styled('svg', {
   variants: {
@@ -28,11 +28,7 @@ export const SvgWithColor = styled('svg', {
         color: '$info500',
       },
       gray: {
-        $$color: '$colors$neutral900',
-        [`.${darkTheme} &`]: {
-          $$color: '$colors$neutral800',
-        },
-        color: '$$color',
+        color: '$neutral600',
       },
     },
   },

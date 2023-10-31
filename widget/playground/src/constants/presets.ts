@@ -1,5 +1,8 @@
 import type { Mode } from '../store/config';
-import type { WidgetColors } from '@rango-dev/widget-embedded';
+import type {
+  WidgetColors,
+  WidgetColorsKeys,
+} from '@rango-dev/widget-embedded';
 
 export const TABS: { id: Mode; title: string }[] = [
   {
@@ -216,5 +219,32 @@ export const PRESETS: {
       secondary: '#b0a385',
       neutral: '#5c5f64',
     },
+  },
+];
+
+export const WIDGET_COLORS: { key: WidgetColorsKeys; label: string }[] = [
+  {
+    key: 'primary',
+    label: 'Primary',
+  },
+  {
+    key: 'secondary',
+    label: 'Secondary',
+  },
+  {
+    key: 'neutral',
+    label: 'Neutral',
+  },
+  {
+    key: 'info',
+    label: 'Info',
+  },
+  {
+    key: 'background',
+    label: 'Background',
+  },
+  {
+    key: 'foreground',
+    label: 'Foreground',
   },
 ];
