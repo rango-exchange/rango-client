@@ -34,3 +34,6 @@ export function initConfig(nextConfigs: Configs) {
 
 export const DEFAULT_PRIMARY_RADIUS = 20;
 export const DEFAULT_SECONDARY_RADIUS = 25;
+export const DEFAULT_FONT_FAMILY = 'Roboto';
+
+export const THEME_CLASS_NAME_PREFIX = `theme-widget`;

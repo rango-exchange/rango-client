@@ -55,8 +55,11 @@ export function mapWalletTypesToWalletInfo(
   return list
     .filter((wallet) => !EXCLUDED_WALLETS.includes(wallet as WalletTypes))
     .filter((wallet) => {
+      const { supportedChains, hideWhenNotInstalled } = getWalletInfo(wallet);
+      if (hideWhenNotInstalled && !getState(wallet).installed) {
+        return false;
+      }
       if (chain) {
-        const { supportedChains } = getWalletInfo(wallet);
         return !!supportedChains.find(
           (supportedChain) => supportedChain.name === chain
         );
@@ -202,30 +205,6 @@ export function getRequiredChains(route: BestRouteResponse | null) {
 }
 
 type Blockchain = { name: string; accounts: ConnectedWallet[] };
-
-export function getSelectableWallets(
-  connectedWallets: ConnectedWallet[],
-  getWalletInfo: (type: WalletType) => WalletInfo,
-  destinationChain?: string
-): Wallet[] {
-  const selectableWallets = connectedWallets.map(
-    (connectedWallet: ConnectedWallet) => {
-      return {
-        address: connectedWallet.address,
-        walletType: connectedWallet.walletType,
-        chain: connectedWallet.chain,
-        image: getWalletInfo(connectedWallet.walletType).img,
-        name: getWalletInfo(connectedWallet.walletType).name,
-        selected:
-          destinationChain === connectedWallet.chain
-            ? false
-            : connectedWallet.selected,
-      };
-    }
-  );
-
-  return selectableWallets;
-}
 
 export function getBalanceFromWallet(
   connectedWallets: ConnectedWallet[],
