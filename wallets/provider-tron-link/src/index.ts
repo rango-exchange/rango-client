@@ -27,12 +27,13 @@ export const getInstance = tronLink_instance;
 
 export const connect: Connect = async ({ instance }) => {
   let r = undefined;
+  const SUCCESS_CODE = 200;
   if (!!instance && !instance.ready) {
     r = await instance.request({ method: 'tron_requestAccounts' });
     if (!r) {
       throw new Error('Please unlock your TronLink extension first.');
     }
-    if (!!r?.code && !!r.message) {
+    if (r?.code !== SUCCESS_CODE && !!r.message) {
       throw new Error(r.message);
     }
   }
