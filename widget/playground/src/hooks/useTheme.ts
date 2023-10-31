@@ -3,36 +3,25 @@ import { useEffect, useLayoutEffect, useState } from 'react';
 
 import { NOT_FOUND } from '../constants';
 import { useConfigStore } from '../store/config';
-import { useMetaStore } from '../store/meta';
 
 export function useTheme() {
   const configTheme = useConfigStore.use.config().theme;
-  // const configColors = configTheme?.colors;
   const mode = configTheme?.mode;
 
-  const fetchMeta = useMetaStore.use.fetchMeta();
-  /*
-   * const light = configColors?.light;
-   * const dark = configColors?.dark;
-   */
   const colors = theme.colors;
 
-  const customLightTheme = createTheme({
+  const customLightTheme = createTheme('light-theme-playground', {
     colors,
   });
 
-  const customDarkTheme = createTheme({
+  const customDarkTheme = createTheme('dark-theme-playground', {
     colors,
   });
+
   const [OSTheme, setOSTheme] = useState('light');
 
   useEffect(() => {
-    const fetchData = async () => {
-      await fetchMeta();
-    };
-    void fetchData();
-
-    const switchTheme = (event: MediaQueryListEvent) => {
+    const switchThemeListener = (event: MediaQueryListEvent) => {
       if (event.matches) {
         setOSTheme('dark');
       } else {
@@ -49,11 +38,11 @@ export function useTheme() {
 
     window
       .matchMedia('(prefers-color-scheme: dark)')
-      .addEventListener('change', switchTheme);
+      .addEventListener('change', switchThemeListener);
     return () => {
       window
         .matchMedia('(prefers-color-scheme: dark)')
-        .removeEventListener('change', switchTheme);
+        .removeEventListener('change', switchThemeListener);
     };
   }, []);
 

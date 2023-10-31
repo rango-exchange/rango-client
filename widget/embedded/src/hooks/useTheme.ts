@@ -1,22 +1,20 @@
+/* eslint-disable @typescript-eslint/no-magic-numbers */
 import type { WidgetTheme } from '../types';
 
 import {
   createTheme,
-  darkTheme,
-  lightTheme,
-  darkColors as mainDarkColors,
-  theme as mainTheme,
+  darkTheme as defaultDarkTheme,
+  lightTheme as defaultLightTheme,
 } from '@rango-dev/ui';
 import { useEffect, useState } from 'react';
 
-import { DEFAULT_FONT_FAMILY } from '../constants/fonts';
-import { useMetaStore } from '../store/meta';
 import { useSettingsStore } from '../store/settings';
-import { generateColors } from '../utils/colors';
 import {
+  DEFAULT_FONT_FAMILY,
   DEFAULT_PRIMARY_RADIUS,
   DEFAULT_SECONDARY_RADIUS,
 } from '../utils/configs';
+import { customizedThemeTokens } from '../utils/ui';
 
 export function useTheme(props: WidgetTheme) {
   const {
@@ -26,12 +24,14 @@ export function useTheme(props: WidgetTheme) {
     secondaryBorderRadius = DEFAULT_SECONDARY_RADIUS,
     mode = 'auto',
   } = props;
-  const theme = useSettingsStore.use.theme();
-  const mainColors = mainTheme.colors;
 
-  const fetchMeta = useMetaStore.use.fetchMeta();
+  const [OSTheme, setOSTheme] = useState('light');
+  const theme = useSettingsStore.use.theme();
   const setTheme = useSettingsStore.use.setTheme();
-  const customTheme = createTheme({
+
+  const { dark, light } = customizedThemeTokens(colors);
+
+  const baseTheme = createTheme({
     radii: {
       primary: `${borderRadius}px`,
       secondary: `${secondaryBorderRadius}px`,
@@ -40,49 +40,24 @@ export function useTheme(props: WidgetTheme) {
       widget: fontFamily,
     },
   });
+  const lightThemeClasses = [baseTheme.className, defaultLightTheme.className];
+  const darkThemeClasses = [baseTheme.className, defaultDarkTheme.className];
 
-  const darkColors = generateColors(
-    {
-      ...mainColors,
-      ...mainDarkColors,
-    },
-    colors?.dark
-  );
-  const lightColors = generateColors(mainColors, colors?.light);
-  const customLightTheme = Object.keys(lightColors).length
-    ? createTheme({
-        colors: lightColors,
-      })
-    : lightTheme;
-  const customDarkTheme = Object.keys(darkColors).length
-    ? createTheme({
-        colors: {
-          ...darkColors,
-          neutral100: darkColors.neutral900,
-          neutral200: darkColors.neutral800,
-          neutral300: darkColors.neutral700,
-          neutral400: darkColors.neutral600,
-          neutral500: darkColors.neutral500,
-          neutral600: darkColors.neutral400,
-          neutral700: darkColors.neutral300,
-          neutral800: darkColors.neutral200,
-          neutral900: darkColors.neutral100,
-        },
-      })
-    : darkTheme;
-
-  const lightClassName = `${customTheme.className} ${customLightTheme.className}`;
-  const darkClassName = `${customTheme.className} ${customDarkTheme.className}`;
-
-  const [OSTheme, setOSTheme] = useState('light');
+  /*
+   * If theme has been customized, we will push the customized theme to override the default themes.
+   * To be overridden, it should be last thing that has been pushed.
+   */
+  if (light) {
+    const customizedLightTheme = createTheme(light.id, light.tokens);
+    lightThemeClasses.push(customizedLightTheme.className);
+  }
+  if (dark) {
+    const customizedDarkTheme = createTheme(dark.id, dark.tokens);
+    darkThemeClasses.push(customizedDarkTheme.className);
+  }
 
   useEffect(() => {
-    const fetchData = async () => {
-      await fetchMeta();
-    };
-    void fetchData();
-
-    const switchTheme = (event: MediaQueryListEvent) => {
+    const switchThemeListener = (event: MediaQueryListEvent) => {
       if (event.matches) {
         setOSTheme('dark');
       } else {
@@ -99,13 +74,14 @@ export function useTheme(props: WidgetTheme) {
 
     window
       .matchMedia('(prefers-color-scheme: dark)')
-      .addEventListener('change', switchTheme);
+      .addEventListener('change', switchThemeListener);
     return () => {
       window
         .matchMedia('(prefers-color-scheme: dark)')
-        .removeEventListener('change', switchTheme);
+        .removeEventListener('change', switchThemeListener);
     };
   }, []);
+
   useEffect(() => {
     if (mode !== 'auto') {
       setTheme(mode);
@@ -113,11 +89,13 @@ export function useTheme(props: WidgetTheme) {
   }, [mode]);
 
   const getActiveTheme = () => {
+    const lightClassNames = lightThemeClasses.join(' ');
+    const darkClassNames = darkThemeClasses.join(' ');
     if (theme === 'auto') {
-      return OSTheme === 'dark' ? darkClassName : lightClassName;
+      return OSTheme === 'dark' ? darkClassNames : lightClassNames;
     }
-    return theme === 'dark' ? darkClassName : lightClassName;
+    return theme === 'dark' ? darkClassNames : lightClassNames;
   };
 
-  return { activeTheme: getActiveTheme() };
+  return { activeTheme: getActiveTheme };
 }

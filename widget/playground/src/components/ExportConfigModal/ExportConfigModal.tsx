@@ -19,7 +19,7 @@ import {
 } from 'react-syntax-highlighter/dist/esm/styles/prism';
 
 import { filterConfig, formatConfig } from '../../helpers';
-import { useTheme } from '../../hook/useTheme';
+import { useTheme } from '../../hooks/useTheme';
 import { initialConfig, useConfigStore } from '../../store/config';
 
 import { CodeBlock } from './CodeBlock';

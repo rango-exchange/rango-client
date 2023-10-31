@@ -84,5 +84,6 @@ export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
     },
     color: '#ffffff',
     supportedChains: evms,
+    hideWhenNotInstalled: true,
   };
 };
