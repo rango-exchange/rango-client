@@ -52,7 +52,7 @@ export function SwapDetailsCompleteModal(props: CompleteModalPropTypes) {
           <Typography
             variant="body"
             size="medium"
-            color="neutral900"
+            color="neutral700"
             align="center">
             {description}
           </Typography>

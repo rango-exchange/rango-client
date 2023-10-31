@@ -1,7 +1,7 @@
 import { Button, IconButton, styled } from '@rango-dev/ui';
 
 export const Link = styled('a', {
-  color: '$neutral900',
+  color: '$neutral700',
   padding: 4,
   textDecoration: 'none',
   '&:hover': {
@@ -34,7 +34,7 @@ export const StyledButton = styled(Button, {
   variants: {
     variant: {
       contained: {
-        color: '$neutral800',
+        color: '$neutral600',
         backgroundColor: '$neutral300',
         '&:hover, &:focus': {
           color: '$secondary500',

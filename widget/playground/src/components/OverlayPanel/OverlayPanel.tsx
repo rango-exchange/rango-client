@@ -14,7 +14,7 @@ export function OverlayPanel(props: PropsWithChildren<PropTypes>) {
         <Header onClick={onBack}>
           <ChevronLeftIcon size={12} />
           <Divider size={4} direction="horizontal" />
-          <Typography size="medium" variant="label" color="neutral900">
+          <Typography size="medium" variant="label" color="neutral700">
             back
           </Typography>
         </Header>

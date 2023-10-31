@@ -93,7 +93,7 @@ export function ExportConfigModal(props: ExportConfigModalProps) {
         </APIKeyInputContainer>
         <HelpLinksContainer>
           <LinkContainer>
-            <Typography variant="title" size="xmedium" color="$neutral900">
+            <Typography variant="title" size="xmedium" color="$neutral700">
               <Link
                 href="https://docs.rango.exchange/widget-integration/overview"
                 target="_blank">
@@ -105,7 +105,7 @@ export function ExportConfigModal(props: ExportConfigModalProps) {
             </Typography>
           </LinkContainer>
           <LinkContainer>
-            <Typography variant="title" size="xmedium" color="$neutral900">
+            <Typography variant="title" size="xmedium" color="$neutral700">
               <Link
                 href="https://github.com/rango-exchange/widget-examples"
                 target="_blank">

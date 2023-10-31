@@ -1,4 +1,7 @@
-import React, { PropsWithChildren } from 'react';
+import type { PropsWithChildren } from 'react';
+
+import React from 'react';
+
 import { styled } from '../../theme';
 import { Typography } from '../Typography';
 
@@ -74,7 +77,7 @@ const Detail = styled('div', {
   },
 });
 const SubTitle = styled(Typography, {
-  color: '$neutral600',
+  color: '$neutral800',
   display: 'block',
   paddingLeft: '$8',
 });
@@ -122,7 +125,7 @@ export function StepDetail(props: PropsWithChildren<PropTypes>) {
             noWrap
             variant={direction === 'vertical' ? 'body' : 'title'}
             size="medium"
-            color={'$neutral600'}>
+            color={'$neutral800'}>
             {estimatedAmount}
           </Typography>
         )}
@@ -133,7 +136,7 @@ export function StepDetail(props: PropsWithChildren<PropTypes>) {
           noWrap>
           {symbol}
         </Typography>
-        <SubTitle noWrap variant="body" size="xsmall" color="$neutral800">
+        <SubTitle noWrap variant="body" size="xsmall" color="$neutral600">
           on {blockchain}
         </SubTitle>
       </Detail>

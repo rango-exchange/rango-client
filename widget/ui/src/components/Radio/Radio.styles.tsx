@@ -9,7 +9,7 @@ export const StyledItem = styled(Radio.Item, {
   borderRadius: '100%',
   cursor: 'pointer',
   backgroundColor: 'transparent',
-  border: '1px solid $neutral800',
+  border: '1px solid $neutral600',
 
   '&[data-state="checked"]': {
     $$color: '$colors$secondary500',

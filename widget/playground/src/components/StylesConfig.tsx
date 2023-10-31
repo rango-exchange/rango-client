@@ -174,7 +174,7 @@ const ModeContainer = styled('div', {
   alignItems: 'center',
 });
 const ThemeContainer = styled('div', {
-  borderColor: '$neutral600',
+  borderColor: '$neutral800',
   color: '$neutral500',
   border: '1px solid',
   height: '$48',
@@ -212,7 +212,7 @@ const Circle = styled('div', {
 });
 
 const FieldName = styled(Typography, {
-  color: '$neutral700',
+  color: '$neutral900',
 });
 
 const defaultColors = {

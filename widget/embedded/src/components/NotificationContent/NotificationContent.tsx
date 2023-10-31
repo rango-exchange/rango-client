@@ -72,7 +72,7 @@ export function NotificationContent() {
                 key={notificationItem.requestId}
                 onClick={() => handleOnClick(notificationItem.requestId)}
                 title={
-                  <Typography variant="body" size="small" color="$neutral900">
+                  <Typography variant="body" size="small" color="$neutral700">
                     {i18n.t(notificationItem.event.message)}
                   </Typography>
                 }
