@@ -28,7 +28,7 @@ export function BalanceErrors({ messages }: PropTypes) {
           const key = index + warning;
           return (
             <ListItem key={key}>
-              <Message variant="body" size="medium" color="$neutral900">
+              <Message variant="body" size="medium" color="$neutral700">
                 {warning}
               </Message>
             </ListItem>

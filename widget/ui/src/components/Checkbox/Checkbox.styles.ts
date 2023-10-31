@@ -13,7 +13,7 @@ export const CheckboxRoot = styled(RadixCheckbox.Root, {
   width: '1rem',
   height: '1rem',
   padding: 0,
-  border: '1px solid $neutral800',
+  border: '1px solid $neutral600',
   backgroundColor: 'transparent',
   cursor: 'pointer',
   '&[data-state="checked"]': {

@@ -15,10 +15,10 @@ export const CollapseHeader = styled('div', {
   alignItems: 'center',
   width: '100%',
   cursor: 'pointer',
-  padding: '$20 $20',
+  padding: '$20 $15',
   textTransform: 'capitalize',
 });
 
 export const CollapseContent = styled('div', {
-  padding: '0 $20 $20',
+  padding: '0 $15 $20',
 });

@@ -74,7 +74,7 @@ const StepDetailsComponent = forwardRef<HTMLDivElement, StepDetailsProps>(
                 ml={4}
                 mr={4}
                 size="small"
-                color="$neutral900"
+                color="$neutral700"
                 variant="body">{`${step.from.price.value} ${step.from.token.displayName}`}</Typography>
               <NextIcon color="gray" />
               <Divider size={4} direction="horizontal" />
@@ -86,7 +86,7 @@ const StepDetailsComponent = forwardRef<HTMLDivElement, StepDetailsProps>(
               <Typography
                 ml={4}
                 size="small"
-                color="$neutral900"
+                color="$neutral700"
                 variant="body">{`${isCompleted ? '' : '~'}${
                 step.to.price.value
               } ${step.to.token.displayName}`}</Typography>

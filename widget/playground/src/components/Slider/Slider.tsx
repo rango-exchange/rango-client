@@ -24,7 +24,7 @@ function Slider(props: PropTypes) {
   return (
     <SliderContainer>
       {title && (
-        <Typography size="small" variant="body" color="neutral900">
+        <Typography size="small" variant="body" color="neutral700">
           {title}
         </Typography>
       )}
@@ -45,7 +45,7 @@ function Slider(props: PropTypes) {
               size="small"
               variant="body"
               align="center"
-              color="neutral800">
+              color="neutral600">
               {value || 0}
             </Typography>
           </ValueSection>

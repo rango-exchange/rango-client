@@ -239,7 +239,7 @@ export function TokenList(props: PropTypes) {
                         {token.balance?.usdValue && (
                           <Typography
                             variant="body"
-                            color="neutral800"
+                            color="neutral600"
                             size="xsmall">
                             {`$${token.balance?.usdValue}`}
                           </Typography>

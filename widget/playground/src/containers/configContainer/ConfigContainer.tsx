@@ -63,7 +63,7 @@ export function ConfigContainer(props: PropsWithChildren) {
             size="medium"
             variant="body"
             align="center"
-            color="neutral900">
+            color="neutral700">
             To use the Playground page, You must use the Desktop version
           </Typography>
         </MobileContent>

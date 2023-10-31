@@ -10,7 +10,7 @@ export function RouteErrorsModalItem(props: ModalContentData) {
 
   return (
     <Item>
-      <Typography size="medium" variant="label" color="neutral800">
+      <Typography size="medium" variant="label" color="neutral600">
         {title}
       </Typography>
       <Typography

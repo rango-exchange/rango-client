@@ -15,7 +15,7 @@ export function IconLink(props: IconLinkPropTypes) {
         variant="label"
         size="medium"
         align="center"
-        color={disabled ? 'neutral800' : 'foreground'}>
+        color={disabled ? 'neutral600' : 'foreground'}>
         {label}
       </Typography>
     </IconLabelContaienr>

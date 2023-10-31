@@ -1,12 +1,14 @@
+import type { ContentProps } from './Wallet.types';
+
 import React from 'react';
 
-import { ContentProps } from './Wallet.types';
-import { Typography } from '../Typography';
 import { Image } from '../common';
+import { Typography } from '../Typography';
+
 import { Text, WalletImageContainer } from './Wallet.styles';
 
 function Content(props: ContentProps) {
-  const { image, title, description, descriptionColor = 'neutral600' } = props;
+  const { image, title, description, descriptionColor = 'neutral800' } = props;
   return (
     <>
       <WalletImageContainer>

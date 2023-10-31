@@ -147,7 +147,7 @@ export function SettingsPage({ supportedSwappers, singleTheme }: PropTypes) {
           container={getContainer()}
           content={
             <TooltipContainer>
-              <Typography variant="label" size="medium" color="neutral900">
+              <Typography variant="label" size="medium" color="neutral700">
                 {i18n.t(
                   "Enabling the 'Infinite Approval' mode grants unrestricted access to smart contracts of DEXes/Bridges, allowing them to utilize the approved token amount without limitations."
                 )}
