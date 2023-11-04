@@ -54,3 +54,7 @@ export const FromAmount = styled('div', {
     borderColor: '$info300',
   },
 });
+
+export const IncludeSourceText = styled('div', {
+  paddingLeft: '$24',
+});

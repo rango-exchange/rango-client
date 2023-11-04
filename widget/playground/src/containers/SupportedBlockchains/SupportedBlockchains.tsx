@@ -4,9 +4,9 @@ import { ChainsIcon } from '@rango-dev/ui';
 import React from 'react';
 
 import { MultiSelect } from '../../components/MultiSelect/MultiSelect';
-import { getCategoryNetworks } from '../../helpers';
 import { useConfigStore } from '../../store/config';
 import { useMetaStore } from '../../store/meta';
+import { getCategoryNetworks } from '../../utils/blockchains';
 
 export function SupportedBlockchains({ type }: { type: Type }) {
   const {

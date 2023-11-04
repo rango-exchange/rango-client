@@ -12,7 +12,7 @@ import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { immer } from 'zustand/middleware/immer';
 
-import { getConfig } from '../configs';
+import { getConfig } from '../utils/configs';
 
 import createSelectors from './selectors';
 
@@ -26,7 +26,11 @@ interface ConfigState {
   onChangeBlockChains: (chains?: string[], type?: Type) => void;
   onChangeTokens: (tokens?: Asset[], type?: Type) => void;
   onChangeBooleansConfig: (
-    name: 'multiWallets' | 'customDestination' | 'externalWallets',
+    name:
+      | 'multiWallets'
+      | 'customDestination'
+      | 'externalWallets'
+      | 'includeNewLiquiditySources',
     value: boolean
   ) => void;
   onChangeBlockChain: (chain?: string, type?: Type) => void;
@@ -83,6 +87,7 @@ export const initialConfig: WidgetConfig = {
   multiWallets: undefined,
   customDestination: undefined,
   language: undefined,
+  includeNewLiquiditySources: undefined,
   theme: {
     mode: 'auto',
     fontFamily: undefined,

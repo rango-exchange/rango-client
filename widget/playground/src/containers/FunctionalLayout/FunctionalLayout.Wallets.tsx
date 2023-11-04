@@ -14,8 +14,9 @@ import React from 'react';
 
 import { MultiSelect } from '../../components/MultiSelect/MultiSelect';
 import { NOT_FOUND } from '../../constants';
-import { excludedWallets, getCategoryNetworks } from '../../helpers';
 import { useConfigStore } from '../../store/config';
+import { getCategoryNetworks } from '../../utils/blockchains';
+import { excludedWallets } from '../../utils/common';
 
 import {
   ExternalSection,
