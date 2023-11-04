@@ -42,8 +42,8 @@ export function RouteErrors(props: PropTypes) {
               <Alert
                 title={
                   highValueLoss
-                    ? errorMessages.highValueLossError.title
-                    : errorMessages.unknownPriceError.title
+                    ? errorMessages().highValueLossError.title
+                    : errorMessages().unknownPriceError.title
                 }
                 type={
                   highValueLoss && !!percentageChange?.lt(WARNING_LEVEL_LIMIT)

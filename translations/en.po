@@ -631,27 +631,12 @@ msgstr "Max"
 #~ msgstr "To"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/LanguagePage.tsx:31
-#~ msgid "English"
-#~ msgstr "English"
-
-#. js-lingui-explicit-id
 #: widget/embedded/src/pages/LanguagePage.tsx:42
-#~ msgid "French"
-#~ msgstr "French"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/pages/LanguagePage.tsx:53
-#~ msgid "Spanish"
-#~ msgstr "Spanish"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/pages/LanguagePage.tsx:65
 #~ msgid "Language"
 #~ msgstr "Language"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/LanguagePage.tsx:72
+#: widget/embedded/src/pages/LanguagePage.tsx:49
 #~ msgid "language"
 #~ msgstr "language"
 
@@ -821,6 +806,21 @@ msgstr "Max"
 #: widget/embedded/src/utils/time.ts:64
 #~ msgid "second"
 #~ msgstr "second"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/LanguagePage.tsx:31
+#~ msgid "English"
+#~ msgstr "English"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/LanguagePage.tsx:42
+#~ msgid "French"
+#~ msgstr "French"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/LanguagePage.tsx:53
+#~ msgid "Spanish"
+#~ msgstr "Spanish"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/pages/LiquiditySourcePage.tsx:126
