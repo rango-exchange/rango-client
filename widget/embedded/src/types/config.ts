@@ -121,6 +121,8 @@ export type BlockchainAndTokenConfig = {
  * If `externalWallets` is `true`, you should add `WidgetWallets` to your app.
  * @property {Asset} pinnedTokens - The `pinnedTokens` property is an optional array of `Asset` objects that
  * you could use to pin tokens of your choice to the top of the token list.
+ * @property {boolean} includeNewLiquiditySources - The `includeNewLiquiditySources` property is a boolean value that when you
+ * set it to true, whenever a new liquidity source is added, it will be added to your list as well.
  */
 export type WidgetConfig = {
   apiKey: string;
@@ -137,4 +139,5 @@ export type WidgetConfig = {
   theme?: WidgetTheme;
   externalWallets?: boolean;
   pinnedTokens?: Asset[];
+  includeNewLiquiditySources?: boolean;
 };

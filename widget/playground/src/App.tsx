@@ -2,11 +2,11 @@ import { Widget, WidgetWallets } from '@rango-dev/widget-embedded';
 import React, { useEffect } from 'react';
 import { Route, Routes } from 'react-router-dom';
 
-import { RANGO_PUBLIC_API_KEY, WC_PROJECT_ID } from './configs';
 import { ConfigContainer } from './containers/configContainer';
 import { useTheme } from './hooks/useTheme';
 import { useConfigStore } from './store/config';
 import { useMetaStore } from './store/meta';
+import { RANGO_PUBLIC_API_KEY, WC_PROJECT_ID } from './utils/configs';
 
 export function App() {
   const { activeStyle } = useTheme();

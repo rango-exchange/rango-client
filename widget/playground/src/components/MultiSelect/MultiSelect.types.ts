@@ -1,6 +1,6 @@
 import type { MultiListPropTypes } from '../MultiList/MultiList.types';
 
-export type PropTypes = MultiListPropTypes & {
+export type PropTypes = Omit<MultiListPropTypes, 'showCategory'> & {
   value?: string[];
 };
 
