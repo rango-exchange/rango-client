@@ -1,10 +1,13 @@
 import { RangoClient } from 'rango-sdk';
-import { getConfig } from '../configs';
+
+import { getConfig } from '../utils/configs';
 
 let rangoClient: RangoClient | undefined = undefined;
 
 export const rango = () => {
-  if (rangoClient) return rangoClient;
+  if (rangoClient) {
+    return rangoClient;
+  }
   rangoClient = new RangoClient(getConfig('API_KEY'));
   return rangoClient;
 };

@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { Collapse } from '../../components/Collapse';
 
 import { FromSection } from './FunctionalLayout.From';
+// import { LiquiditiesSection } from './FunctionalLayout.Liquidities';
 import { Layout } from './FunctionalLayout.styles';
 import { ToSection } from './FunctionalLayout.To';
 import { FunctionalCollapseState } from './FunctionalLayout.types';
@@ -44,6 +45,15 @@ export function FunctionalLayout() {
           toggle={handleOpenCollapse(FunctionalCollapseState.WALLET)}>
           <WalletSection />
         </Collapse>
+        {/* 
+        // TODO: uncomment when liquidity source in widget is ready
+        <Divider size={24} />
+        <Collapse
+          title={FunctionalCollapseState.LIQUIDITY_SOURCE}
+          open={openCollapse === FunctionalCollapseState.LIQUIDITY_SOURCE}
+          toggle={handleOpenCollapse(FunctionalCollapseState.LIQUIDITY_SOURCE)}>
+          <LiquiditiesSection />
+        </Collapse> */}
       </>
     </Layout>
   );

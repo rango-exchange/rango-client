@@ -71,15 +71,16 @@ export function MultiSelect(props: PropTypes) {
             defaultSelectedItems={defaultSelectedItems}
             type={type}
             list={list}
+            showCategory={type === 'Wallets' || type === 'Blockchains'}
             icon={
-              type === 'Blockchains' ? (
+              type !== 'Wallets' ? (
                 <ChainsIcon size={24} />
               ) : (
                 <WalletIcon size={18} />
               )
             }
             onChange={handleListChange}
-            label={`Supported ${type}`}
+            label={label}
           />
         </OverlayPanel>
       )}

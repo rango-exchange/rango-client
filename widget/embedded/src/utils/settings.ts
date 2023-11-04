@@ -33,7 +33,7 @@ export function getUniqueSwappersGroups(
       let isSupportedSwapper = true;
       if (supportedSwappers) {
         isSupportedSwapper = supportedSwappers.some(
-          (supportedItem) => supportedItem === swapperItem.title
+          (supportedItem) => supportedItem === swapperItem.swapperGroup
         );
       }
 
