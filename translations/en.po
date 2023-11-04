@@ -231,7 +231,7 @@ msgstr "Max"
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/HeaderButtons/WalletButton.tsx:14
 #: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.helpers.tsx:16
-#: widget/embedded/src/constants/messages.ts:4
+#: widget/embedded/src/constants/messages.ts:5
 #~ msgid "Connect Wallet"
 #~ msgstr "Connect Wallet"
 
@@ -465,93 +465,93 @@ msgstr "Max"
 #~ msgstr "Click connect in your wallet popup."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/constants/errors.ts:8
+#: widget/embedded/src/constants/errors.ts:9
 #~ msgid "Failed Network, Please retry your swap."
 #~ msgstr "Failed Network, Please retry your swap."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/constants/errors.ts:10
+#: widget/embedded/src/constants/errors.ts:11
 #~ msgid "Please reset your liquidity sources."
 #~ msgstr "Please reset your liquidity sources."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/constants/errors.ts:11
+#: widget/embedded/src/constants/errors.ts:12
 #~ msgid "You have limited the liquidity sources and this might result in Rango finding no routes. Please consider resetting your liquidity sources"
 #~ msgstr "You have limited the liquidity sources and this might result in Rango finding no routes. Please consider resetting your liquidity sources"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/constants/errors.ts:16
+#: widget/embedded/src/constants/errors.ts:17
 #~ msgid "No Routes Found"
 #~ msgstr "No Routes Found"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/constants/errors.ts:21
+#: widget/embedded/src/constants/errors.ts:22
 #~ msgid "Bridge Limit Error: Please increase your amount"
 #~ msgstr "Bridge Limit Error: Please increase your amount"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/constants/errors.ts:22
+#: widget/embedded/src/constants/errors.ts:23
 #~ msgid "Bridge Limit Error: Please decrease your amount"
 #~ msgstr "Bridge Limit Error: Please decrease your amount"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/constants/errors.ts:25
+#: widget/embedded/src/constants/errors.ts:26
 #~ msgid "High Price Impact"
 #~ msgstr "High Price Impact"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/constants/errors.ts:26
+#: widget/embedded/src/constants/errors.ts:27
 #~ msgid "Price impact is too high!"
 #~ msgstr "Price impact is too high!"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/constants/errors.ts:27
+#: widget/embedded/src/constants/errors.ts:28
 #~ msgid "The price impact is significantly higher than the allowed amount. If you are sure, continue, otherwise, change the swap."
 #~ msgstr "The price impact is significantly higher than the allowed amount. If you are sure, continue, otherwise, change the swap."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/constants/errors.ts:30
+#: widget/embedded/src/constants/errors.ts:31
 #~ msgid "Confirm High price impact"
 #~ msgstr "Confirm High price impact"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/constants/errors.ts:33
+#: widget/embedded/src/constants/errors.ts:34
 #~ msgid "Route updated and price impact is too high, try again later!"
 #~ msgstr "Route updated and price impact is too high, try again later!"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/constants/errors.ts:38
+#: widget/embedded/src/constants/errors.ts:39
 #~ msgid "USD Price Unknown"
 #~ msgstr "USD Price Unknown"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/constants/errors.ts:39
+#: widget/embedded/src/constants/errors.ts:40
 #~ msgid "USD Price Unknown, Cannot calculate Price Impact."
 #~ msgstr "USD Price Unknown, Cannot calculate Price Impact."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/constants/errors.ts:40
+#: widget/embedded/src/constants/errors.ts:41
 #~ msgid "USD Price Unknown, Cannot calculate Price Impact. The price impact may be higher than usual. Are you sure to continue the Swap?"
 #~ msgstr "USD Price Unknown, Cannot calculate Price Impact. The price impact may be higher than usual. Are you sure to continue the Swap?"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/constants/errors.ts:43
+#: widget/embedded/src/constants/errors.ts:44
 #~ msgid "Confirm USD Price Unknown"
 #~ msgstr "Confirm USD Price Unknown"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/constants/messages.ts:5
+#: widget/embedded/src/constants/messages.ts:6
 #: widget/embedded/src/pages/Home.tsx:311
 #~ msgid "Swap"
 #~ msgstr "Swap"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/constants/messages.ts:6
+#: widget/embedded/src/constants/messages.ts:7
 #~ msgid "Swap anyway"
 #~ msgstr "Swap anyway"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/constants/messages.ts:7
+#: widget/embedded/src/constants/messages.ts:8
 #~ msgid "The route goes through Ethereum. Continue?"
 #~ msgstr "The route goes through Ethereum. Continue?"
 
