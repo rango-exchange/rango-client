@@ -15,7 +15,7 @@ export function makeInfo(
     return {
       alert: {
         type: 'warning',
-        text: errorMessages.genericServerError,
+        text: errorMessages().genericServerError,
         action: {
           onClick: refetchBestRoute,
           title: i18n.t('Retry'),
@@ -36,17 +36,17 @@ export function makeInfo(
     return {
       alert: {
         type: 'warning',
-        text: errorMessages.liquiditySourcesError.title,
+        text: errorMessages().liquiditySourcesError.title,
         action: {
           onClick: () => toggleAllLiquiditySources(true),
           title: i18n.t('Reset'),
         },
       },
-      description: errorMessages.liquiditySourcesError.description,
+      description: errorMessages().liquiditySourcesError.description,
     };
   }
   return {
     alert: null,
-    description: errorMessages.noRoutesError.description,
+    description: errorMessages().noRoutesError.description,
   };
 }

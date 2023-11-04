@@ -631,27 +631,12 @@ msgstr ""
 #~ msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/LanguagePage.tsx:31
-#~ msgid "English"
-#~ msgstr ""
-
-#. js-lingui-explicit-id
 #: widget/embedded/src/pages/LanguagePage.tsx:42
-#~ msgid "French"
-#~ msgstr ""
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/pages/LanguagePage.tsx:53
-#~ msgid "Spanish"
-#~ msgstr ""
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/pages/LanguagePage.tsx:65
 #~ msgid "Language"
 #~ msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/LanguagePage.tsx:72
+#: widget/embedded/src/pages/LanguagePage.tsx:49
 #~ msgid "language"
 #~ msgstr ""
 
@@ -823,8 +808,28 @@ msgstr ""
 #~ msgstr ""
 
 #. js-lingui-explicit-id
+#: widget/embedded/src/pages/LanguagePage.tsx:31
+#~ msgid "English"
+#~ msgstr ""
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/LanguagePage.tsx:42
+#~ msgid "French"
+#~ msgstr ""
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/LanguagePage.tsx:53
+#~ msgid "Spanish"
+#~ msgstr ""
+
+#. js-lingui-explicit-id
 #: widget/embedded/src/pages/LiquiditySourcePage.tsx:126
-#~ msgid "Swap {sourceType}"
+#~ msgid "Swap {sourceType}======="
+#~ msgstr ""
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/LanguagePage.tsx:53
+#~ msgid "Spanish>>>>>>> 97bcc73b (feat: support multi languages)"
 #~ msgstr ""
 
 #. js-lingui-explicit-id
@@ -1018,6 +1023,10 @@ msgstr ""
 
 #: widget/embedded/src/pages/WalletsPage.tsx:139
 #~ msgid "Choose a wallet to connect."
+#~ msgstr ""
+
+#: widget/embedded/src/pages/LanguagePage.tsx:31
+#~ msgid "English"
 #~ msgstr ""
 
 #. js-lingui-explicit-id

@@ -1,20 +1,23 @@
+import { type Language } from '@rango-dev/ui';
 import { create } from 'zustand';
 import { persist, subscribeWithSelector } from 'zustand/middleware';
 
+import { DEFAULT_LANGUAGE } from '../constants/languages';
 import { DEFAULT_SLIPPAGE } from '../constants/swapSettings';
 import { removeDuplicateFrom } from '../utils/common';
 
 import { useMetaStore } from './meta';
 import createSelectors from './selectors';
 
-type Theme = 'auto' | 'dark' | 'light';
+export type ThemeMode = 'auto' | 'dark' | 'light';
 
 export interface SettingsState {
   slippage: number;
   customSlippage: number | null;
   infiniteApprove: boolean;
   disabledLiquiditySources: string[];
-  theme: Theme;
+  theme: ThemeMode;
+  language: Language;
   affiliateRef: string | null;
   affiliatePercent: number | null;
   affiliateWallets: { [key: string]: string } | null;
@@ -22,7 +25,8 @@ export interface SettingsState {
   setCustomSlippage: (customSlippage: number | null) => void;
   toggleInfiniteApprove: () => void;
   toggleLiquiditySource: (name: string) => void;
-  setTheme: (theme: Theme) => void;
+  setTheme: (theme: ThemeMode) => void;
+  setLanguage: (language: Language) => void;
   toggleAllLiquiditySources: (shouldReset?: boolean) => void;
   setAffiliateRef: (affiliateRef: string | null) => void;
   setAffiliatePercent: (affiliatePercent: number | null) => void;
@@ -43,6 +47,7 @@ export const useSettingsStore = createSelectors(
         affiliateWallets: null,
         disabledLiquiditySources: [],
         theme: 'auto',
+        language: DEFAULT_LANGUAGE,
         setSlippage: (slippage) =>
           set(() => ({
             slippage: slippage,
@@ -105,6 +110,10 @@ export const useSettingsStore = createSelectors(
         setTheme: (theme) =>
           set(() => ({
             theme,
+          })),
+        setLanguage: (language) =>
+          set(() => ({
+            language,
           })),
       })),
       {
