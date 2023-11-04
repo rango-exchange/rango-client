@@ -631,27 +631,12 @@ msgstr ""
 #~ msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/LanguagePage.tsx:31
-#~ msgid "English"
-#~ msgstr ""
-
-#. js-lingui-explicit-id
 #: widget/embedded/src/pages/LanguagePage.tsx:42
-#~ msgid "French"
-#~ msgstr ""
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/pages/LanguagePage.tsx:53
-#~ msgid "Spanish"
-#~ msgstr ""
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/pages/LanguagePage.tsx:65
 #~ msgid "Language"
 #~ msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/LanguagePage.tsx:72
+#: widget/embedded/src/pages/LanguagePage.tsx:49
 #~ msgid "language"
 #~ msgstr ""
 
@@ -820,6 +805,21 @@ msgstr ""
 #. js-lingui-explicit-id
 #: widget/embedded/src/utils/time.ts:64
 #~ msgid "second"
+#~ msgstr ""
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/LanguagePage.tsx:31
+#~ msgid "English"
+#~ msgstr ""
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/LanguagePage.tsx:42
+#~ msgid "French"
+#~ msgstr ""
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/LanguagePage.tsx:53
+#~ msgid "Spanish"
 #~ msgstr ""
 
 #. js-lingui-explicit-id

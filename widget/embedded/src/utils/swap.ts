@@ -131,7 +131,7 @@ export function LimitErrorMessage(bestRoute: BestRouteResponse | null): {
         symbol: swap.from.symbol,
       },
     });
-    recommendation = errorMessages.bridgeLimitErrors.increaseAmount;
+    recommendation = errorMessages().bridgeLimitErrors.increaseAmount;
   } else if (isExclusive && !!minimum && minimum.gte(swap.fromAmount)) {
     fromAmountRangeError = i18n.t({
       id: 'requiredMin',
@@ -145,7 +145,7 @@ export function LimitErrorMessage(bestRoute: BestRouteResponse | null): {
         symbol: swap.from.symbol,
       },
     });
-    recommendation = errorMessages.bridgeLimitErrors.increaseAmount;
+    recommendation = errorMessages().bridgeLimitErrors.increaseAmount;
   }
 
   if (!isExclusive && !!maximum && maximum.lt(swap.fromAmount)) {
@@ -161,7 +161,7 @@ export function LimitErrorMessage(bestRoute: BestRouteResponse | null): {
         symbol: swap.from.symbol,
       },
     });
-    recommendation = errorMessages.bridgeLimitErrors.decreaseAmount;
+    recommendation = errorMessages().bridgeLimitErrors.decreaseAmount;
   } else if (isExclusive && !!maximum && maximum.lte(swap.fromAmount)) {
     fromAmountRangeError = i18n.t({
       id: 'requiredMax',
@@ -175,7 +175,7 @@ export function LimitErrorMessage(bestRoute: BestRouteResponse | null): {
         symbol: swap.from.symbol,
       },
     });
-    recommendation = errorMessages.bridgeLimitErrors.decreaseAmount;
+    recommendation = errorMessages().bridgeLimitErrors.decreaseAmount;
   }
 
   return { swap, fromAmountRangeError, recommendation };
@@ -194,14 +194,14 @@ export function getSwapButtonState(
 ): SwapButtonState {
   if (loadingMetaStatus !== 'success') {
     return {
-      title: swapButtonTitles.connectWallet,
+      title: swapButtonTitles().connectWallet,
       state: ButtonState.WAITFORCONNECTING,
       disabled: true,
     };
   }
   if (connectedWallets.length == 0) {
     return {
-      title: swapButtonTitles.connectWallet,
+      title: swapButtonTitles().connectWallet,
       state: ButtonState.WAITFORCONNECTING,
       disabled: false,
     };
@@ -215,27 +215,27 @@ export function getSwapButtonState(
     inputAmount === '0'
   ) {
     return {
-      title: swapButtonTitles.swap,
+      title: swapButtonTitles().swap,
       disabled: true,
       state: ButtonState.SWAP,
     };
   } else if (highValueLoss || priceImpactCanNotBeComputed) {
     return {
-      title: swapButtonTitles.swapAnyway,
+      title: swapButtonTitles().swapAnyway,
       disabled: false,
       hasWarning: true,
       state: ButtonState.NEEDTOCONFIRM,
     };
   } else if (needsToWarnEthOnPath) {
     return {
-      title: swapButtonTitles.ethRouteWarning,
+      title: swapButtonTitles().ethRouteWarning,
       disabled: false,
       hasWarning: true,
       state: ButtonState.WARNING,
     };
   }
   return {
-    title: swapButtonTitles.swap,
+    title: swapButtonTitles().swap,
     disabled: false,
     state: ButtonState.SWAP,
   };

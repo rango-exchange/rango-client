@@ -347,7 +347,7 @@ export function Home() {
                       USD_VALUE_MAX_DECIMALS
                     ),
                 error: priceImpactInputCanNotBeComputed
-                  ? errorMessages.unknownPriceError.impactTitle
+                  ? errorMessages().unknownPriceError.impactTitle
                   : undefined,
               }}
               disabled={loadingMetaStatus === 'failed'}
@@ -398,7 +398,7 @@ export function Home() {
                     USD_VALUE_MAX_DECIMALS
                   ),
               error: priceImpactOutputCanNotBeComputed
-                ? errorMessages.unknownPriceError.impactTitle
+                ? errorMessages().unknownPriceError.impactTitle
                 : undefined,
             }}
             onClickToken={() => navigate('to-swap')}

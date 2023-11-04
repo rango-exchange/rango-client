@@ -40,7 +40,7 @@ export function NoRoutes(props: PropTypes) {
       <NoRouteIcon size={24} color="gray" />
       <Divider size={4} />
       <Typography variant="title" size="small">
-        {errorMessages.noRoutesError.title}
+        {errorMessages().noRoutesError.title}
       </Typography>
       {!!info.description && (
         <Typography

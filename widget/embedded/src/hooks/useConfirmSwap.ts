@@ -70,7 +70,7 @@ function throwErrorIfResponseIsNotValid(
   params: { inputUsdValue: BigNumber | null; outputUsdValue: number | null }
 ) {
   if (!response.result) {
-    throw new Error(errorMessages.noRoutesError.title, {
+    throw new Error(errorMessages().noRoutesError.title, {
       cause: {
         type: ConfirmSwapErrorTypes.NO_ROUTE,
         diagnosisMessage: response.diagnosisMessages?.[0],

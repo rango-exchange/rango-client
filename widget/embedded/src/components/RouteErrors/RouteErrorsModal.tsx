@@ -87,14 +87,14 @@ export function RouteErrorsModal(props: ModalPropTypes) {
       {highValueLoss ? (
         <MessageBox
           type={type}
-          title={errorMessages.highValueLossError.impactTitle}
-          description={errorMessages.highValueLossError.description}
+          title={errorMessages().highValueLossError.impactTitle}
+          description={errorMessages().highValueLossError.description}
         />
       ) : (
         <MessageBox
           type={type}
-          title={errorMessages.unknownPriceError.impactTitle}
-          description={errorMessages.unknownPriceError.description}
+          title={errorMessages().unknownPriceError.impactTitle}
+          description={errorMessages().unknownPriceError.description}
         />
       )}
       {highValueLoss && (
@@ -121,8 +121,8 @@ export function RouteErrorsModal(props: ModalPropTypes) {
           navigate(navigationRoutes.confirmSwap);
         }}>
         {highValueLoss
-          ? errorMessages.highValueLossError.confirmMessage
-          : errorMessages.unknownPriceError.confirmMessage}
+          ? errorMessages().highValueLossError.confirmMessage
+          : errorMessages().unknownPriceError.confirmMessage}
       </Button>
     </Modal>
   );
