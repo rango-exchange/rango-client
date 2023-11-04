@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/widget-playground",
-  "version": "0.12.1-next.52",
+  "version": "0.12.1-next.53",
   "license": "MIT",
   "private": true,
   "source": "public/index.html",
@@ -21,7 +21,7 @@
     "@rango-dev/ui": "^0.17.1-next.9",
     "@rango-dev/wallets-react": "^0.3.1-next.1",
     "@rango-dev/wallets-shared": "^0.17.1-next.0",
-    "@rango-dev/widget-embedded": "^0.14.1-next.13",
+    "@rango-dev/widget-embedded": "^0.14.1-next.14",
     "rango-sdk": "^0.1.35",
     "react": "^18.2.0",
     "react-color": "^2.19.3",
