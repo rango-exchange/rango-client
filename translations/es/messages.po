@@ -940,4 +940,3 @@ msgstr "tuyos billeteras"
 #: widget/embedded/src/pages/Home.tsx:257
 msgid "yourSymbol"
 msgstr "tu símbolo"
-
