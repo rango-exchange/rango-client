@@ -1,6 +1,9 @@
-import React, { useEffect, useReducer, useRef } from 'react';
-import { WalletType } from '@rango-dev/wallets-shared';
+import type { ProviderContext, ProviderProps } from './types';
+import type { WalletType } from '@rango-dev/wallets-shared';
 
+import React, { useEffect, useReducer, useRef } from 'react';
+
+import { WalletContext } from './context';
 import {
   autoConnect,
   availableWallets,
@@ -8,14 +11,12 @@ import {
   clearPersistance,
   connectedWallets,
   defaultWalletState,
-  tryPersistWallet,
-  tryRemoveWalletFromPersistance,
   makeEventHandler,
   state_reducer,
+  tryPersistWallet,
+  tryRemoveWalletFromPersistance,
 } from './helpers';
-import { ProviderProps, ProviderContext } from './types';
 import { useInitializers } from './hooks';
-import { WalletContext } from './context';
 
 function Provider(props: ProviderProps) {
   const [providersState, dispatch] = useReducer(state_reducer, {});
@@ -39,12 +40,13 @@ function Provider(props: ProviderProps) {
       }
       const walletInstance = getWalletInstance(wallet);
       const result = await walletInstance.connect(network);
-      if (props.autoConnect)
+      if (props.autoConnect) {
         tryPersistWallet({
           type,
           walletActions: wallet.actions,
           getState: api.state,
         });
+      }
 
       return result;
     },
@@ -56,15 +58,18 @@ function Provider(props: ProviderProps) {
 
       const walletInstance = getWalletInstance(wallet);
       await walletInstance.disconnect();
-      if (props.autoConnect)
+      if (props.autoConnect) {
         tryRemoveWalletFromPersistance({ type, walletActions: wallet.actions });
+      }
     },
     async disconnectAll() {
       const disconnect_promises: Promise<any>[] = [];
 
-      // When a wallet is initializing, a record will be added to `providersState`
-      // So we use them to know what wallet has been initialized then we need to
-      // filter connected wallets only.
+      /*
+       * When a wallet is initializing, a record will be added to `providersState`
+       * So we use them to know what wallet has been initialized then we need to
+       * filter connected wallets only.
+       */
       connectedWallets(providersState).forEach((type) => {
         const wallet = wallets.get(type);
 
@@ -74,9 +79,23 @@ function Provider(props: ProviderProps) {
         }
       });
 
-      if (props.autoConnect) clearPersistance();
+      if (props.autoConnect) {
+        clearPersistance();
+      }
       return await Promise.allSettled(disconnect_promises);
     },
+
+    async suggestAndConnect(type, network) {
+      const wallet = wallets.get(type);
+      if (!wallet) {
+        throw new Error(`You should add ${type} to provider first.`);
+      }
+      const walletInstance = getWalletInstance(wallet);
+      const result = await walletInstance.suggestAndConnect(network);
+
+      return result;
+    },
+
     state(type) {
       return providersState[type] || defaultWalletState;
     },
@@ -109,8 +128,10 @@ function Provider(props: ProviderProps) {
         throw new Error(`You should add ${type} to provider first.`);
       }
 
-      // Get wallet info could be used in render methods to show wallets data
-      // So, addWalletRef method shouldn't be called in this method
+      /*
+       * Get wallet info could be used in render methods to show wallets data
+       * So, addWalletRef method shouldn't be called in this method
+       */
 
       return wallet.actions.getWalletInfo(props.allBlockChains || []);
     },
@@ -151,8 +172,10 @@ function Provider(props: ProviderProps) {
       // Try to run, maybe it's ready.
       runOnInit();
 
-      // Try again when the page has been completely loaded.
-      // Some of wallets, take some time to be fully injected and loaded.
+      /*
+       * Try again when the page has been completely loaded.
+       * Some of wallets, take some time to be fully injected and loaded.
+       */
       document.addEventListener('readystatechange', initWhenPageIsReady);
     });
   }, []);

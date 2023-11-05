@@ -151,6 +151,7 @@ export const XDEFI_WALLET_SUPPORTED_NATIVE_CHAINS: string[] = [
 export const KEPLR_COMPATIBLE_WALLETS: string[] = [
   WalletTypes.KEPLR,
   WalletTypes.COSMOSTATION,
+  WalletTypes.LEAP_COSMOS,
 ];
 
 export type Asset = {
@@ -255,6 +256,12 @@ export type SwitchNetwork = (options: {
   network: Network;
   meta: BlockchainMeta[];
   newInstance?: TryGetInstance;
+}) => Promise<void>;
+
+export type Suggest = (options: {
+  instance: any;
+  network: Network;
+  meta: BlockchainMeta[];
 }) => Promise<void>;
 
 export type CanSwitchNetwork = (options: {
