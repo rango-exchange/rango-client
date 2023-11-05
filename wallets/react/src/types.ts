@@ -1,10 +1,14 @@
-import { PropsWithChildren } from 'react';
-import { Network, WalletType, WalletInfo } from '@rango-dev/wallets-shared';
-import {
+import type {
   EventHandler as WalletEventHandler,
   State as WalletState,
 } from '@rango-dev/wallets-core';
-import { SignerFactory, BlockchainMeta } from 'rango-types';
+import type {
+  Network,
+  WalletInfo,
+  WalletType,
+} from '@rango-dev/wallets-shared';
+import type { BlockchainMeta, SignerFactory } from 'rango-types';
+import type { PropsWithChildren } from 'react';
 
 export type State = {
   [key: string]: WalletState | undefined;
@@ -27,6 +31,7 @@ export type ProviderContext = {
   providers(): Providers;
   getSigners(type: WalletType): SignerFactory;
   getWalletInfo(type: WalletType): WalletInfo;
+  suggestAndConnect(type: WalletType, network: Network): Promise<ConnectResult>;
 };
 
 export type ProviderProps = PropsWithChildren<{
@@ -98,6 +103,12 @@ export type SwitchNetwork = (options: {
   newInstance?: TryGetInstance;
 }) => Promise<void>;
 
+export type Suggest = (options: {
+  instance: any;
+  network: Network;
+  meta: BlockchainMeta[];
+}) => Promise<void>;
+
 export type CanSwitchNetwork = (options: {
   network: Network;
   meta: BlockchainMeta[];
@@ -117,6 +128,7 @@ export interface WalletActions {
   // unsubscribe, // coupled to subscribe.
 
   // Optional, but should be provided at the same time.
+  suggest?: Suggest;
   switchNetwork?: SwitchNetwork;
   getSigners: (provider: any) => SignerFactory;
   canSwitchNetworkTo?: CanSwitchNetwork;
