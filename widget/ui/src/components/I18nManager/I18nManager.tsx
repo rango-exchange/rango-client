@@ -11,15 +11,15 @@ import React, { useEffect, useReducer } from 'react';
  *  "translations/*": ["../../translations/*"]
  *}
  */
-import { messages as enMessages } from '../../../../../translations/en';
-import { messages as esMessages } from '../../../../../translations/es';
-import { messages as frMessages } from '../../../../../translations/fr';
-import { messages as jpMessages } from '../../../../../translations/jp';
+import { messages as enMessages } from '../../../../../translations/en/messages';
+import { messages as esMessages } from '../../../../../translations/es/messages';
+import { messages as frMessages } from '../../../../../translations/fr/messages';
+import { messages as jaMessages } from '../../../../../translations/ja/messages';
 
 const messages = {
   en: enMessages,
   es: esMessages,
-  jp: jpMessages,
+  ja: jaMessages,
   fr: frMessages,
 };
 
