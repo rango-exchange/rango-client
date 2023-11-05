@@ -39,7 +39,7 @@ export function SwapDetailsPlaceholder(props: PropTypes) {
             title={i18n.t(
               'swapNotFound',
               { requestId },
-              { message: 'Swap with request ID = ${requestId} not found.' }
+              { message: 'Swap with request ID = {requestId} not found.' }
             )}
           />
         )}
