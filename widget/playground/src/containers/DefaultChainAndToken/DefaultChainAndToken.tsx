@@ -23,9 +23,13 @@ export function DefaultChainAndToken({ type }: { type: Type }) {
   } = useMetaStore();
 
   const selectedType = type === 'Source' ? from : to;
-
+  const configTokens = selectedType?.tokens;
   const filteredTokens = selectedType?.blockchain
-    ? tokens.filter((token) => token.blockchain === selectedType.blockchain)
+    ? tokens.filter(
+        (token) =>
+          token.blockchain === selectedType.blockchain &&
+          (!configTokens || configTokens.some((t) => tokensAreEqual(token, t)))
+      )
     : [];
   const chainValue = blockchains.find(
     (chain) => chain.name === selectedType?.blockchain

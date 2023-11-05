@@ -24,6 +24,7 @@ import {
   IconWrapper,
   ItemDivider,
   SelectButton,
+  SelectDeselectText,
   StyledListItemButton,
 } from './MultiList.styles';
 
@@ -55,7 +56,9 @@ export function MultiList(props: MultiListPropTypes) {
   const categoryList =
     category === 'ALL' || !showCategory
       ? filteredList
-      : filteredList.filter((item) => item.networks?.includes(category));
+      : filteredList.filter((item) =>
+          item.supportedNetworks?.includes(category)
+        );
 
   // Handle item selection/unselection
   const handleChangeList = (item: string) => {
@@ -172,9 +175,12 @@ export function MultiList(props: MultiListPropTypes) {
                 ? handleAllSelectedClick('deselect')
                 : handleAllSelectedClick('select')
             }>
-            <Typography variant="label" size="medium" color="neutral700">
+            <SelectDeselectText
+              variant="label"
+              size="medium"
+              color="neutral700">
               {isAllCategorySelected ? 'Deselect all' : 'Select all'}
-            </Typography>
+            </SelectDeselectText>
           </SelectButton>
           <Divider size={12} />
           <CheckList>
@@ -194,6 +200,7 @@ export function MultiList(props: MultiListPropTypes) {
         <StyledButton
           type="primary"
           size="medium"
+          disabled={!selectedItems.length}
           variant="contained"
           onClick={handleConfirm}>
           Confirm
