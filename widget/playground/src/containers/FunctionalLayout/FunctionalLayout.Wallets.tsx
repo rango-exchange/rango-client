@@ -40,7 +40,7 @@ export function WalletSection() {
         title,
         logo,
         name: wallet,
-        networks: getCategoryNetworks(supportedChains),
+        supportedNetworks: getCategoryNetworks(supportedChains),
       };
     });
 
@@ -84,7 +84,7 @@ export function WalletSection() {
           allWalletList.map((wallet) => wallet.name)
         }
         list={allWalletList}
-        onChange={(items) => onChangeWallets(items)}
+        onChange={onChangeWallets}
       />
       <Divider size={24} />
       <Checkbox

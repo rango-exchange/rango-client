@@ -1,4 +1,7 @@
-import type { MultiSelectChipProps, PropTypes } from './MultiSelect.types';
+import type {
+  MuliSelectPropTypes,
+  MultiSelectChipProps,
+} from './MultiSelect.types';
 
 import {
   ChainsIcon,
@@ -11,6 +14,7 @@ import React, { useState } from 'react';
 
 import { MultiList } from '../MultiList';
 import { OverlayPanel } from '../OverlayPanel';
+import { TokensPanel } from '../TokensPanel';
 
 import { Label, Select, WalletChip } from './MultiSelect.styles';
 
@@ -26,25 +30,19 @@ const Chip = (props: MultiSelectChipProps) => {
   );
 };
 
-export function MultiSelect(props: PropTypes) {
+export function MultiSelect(props: MuliSelectPropTypes) {
   const [showNextModal, setShowNextModal] = useState(false);
-  const { label, type, value, onChange, icon, defaultSelectedItems, list } =
-    props;
+  const { label, type, value, list } = props;
   const valueAll = !value;
   const noneSelected = !valueAll && !value.length;
   const hasValue = !valueAll;
   const showMore = hasValue && value.length > MAX_CHIPS;
   const onBack = () => setShowNextModal(false);
 
-  const handleListChange = (items?: string[]) => {
-    onChange(items);
-    onBack();
-  };
-
   return (
     <>
       <Label>
-        {icon}
+        {props.icon}
         <Divider direction="horizontal" size={4} />
         <Typography size="medium" variant="body">
           {label}
@@ -67,21 +65,34 @@ export function MultiSelect(props: PropTypes) {
       </Select>
       {showNextModal && (
         <OverlayPanel onBack={onBack}>
-          <MultiList
-            defaultSelectedItems={defaultSelectedItems}
-            type={type}
-            list={list}
-            showCategory={type === 'Wallets' || type === 'Blockchains'}
-            icon={
-              type !== 'Wallets' ? (
-                <ChainsIcon size={24} />
-              ) : (
-                <WalletIcon size={18} />
-              )
-            }
-            onChange={handleListChange}
-            label={label}
-          />
+          {type !== 'Tokens' ? (
+            <MultiList
+              defaultSelectedItems={props.defaultSelectedItems}
+              type={type}
+              list={list}
+              icon={
+                type === 'Wallets' ? (
+                  <WalletIcon size={18} />
+                ) : (
+                  <ChainsIcon size={24} />
+                )
+              }
+              onChange={(items) => {
+                props.onChange(items);
+                onBack();
+              }}
+              label={`Supported ${type}`}
+            />
+          ) : (
+            <TokensPanel
+              list={list}
+              onChange={(items) => {
+                props.onChange(items);
+                onBack();
+              }}
+              selectedBlockchains={props.selectedBlockchains}
+            />
+          )}
         </OverlayPanel>
       )}
     </>

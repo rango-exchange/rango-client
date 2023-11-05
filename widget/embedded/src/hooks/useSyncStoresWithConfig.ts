@@ -1,7 +1,7 @@
 import type { WidgetConfig } from '../types';
 import type { Asset } from 'rango-sdk';
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
 
 import { useBestRouteStore } from '../store/bestRoute';
 import { useMetaStore } from '../store/meta';
@@ -15,6 +15,10 @@ export function useSyncStoresWithConfig(config: WidgetConfig | undefined) {
     setToBlockchain,
     setFromBlockchain,
     setFromToken,
+    fromToken,
+    toToken,
+    fromBlockchain,
+    toBlockchain,
   } = useBestRouteStore();
 
   const {
@@ -25,6 +29,22 @@ export function useSyncStoresWithConfig(config: WidgetConfig | undefined) {
   const { setAffiliateRef, setAffiliatePercent, setAffiliateWallets } =
     useSettingsStore();
 
+  const fromTokensConfig = useMemo(
+    () => config?.from?.tokens,
+    [config?.from?.tokens]
+  );
+  const fromBlockchainsConfig = useMemo(
+    () => config?.from?.blockchains,
+    [config?.from?.blockchains]
+  );
+  const toTokensConfig = useMemo(
+    () => config?.to?.tokens,
+    [config?.to?.tokens]
+  );
+  const toBlockchainsConfig = useMemo(
+    () => config?.to?.blockchains,
+    [config?.to?.blockchains]
+  );
   const prevConfigFromToken = useRef<Asset | undefined>(undefined);
   const prevConfigToToken = useRef<Asset | undefined>(undefined);
   const prevConfigFromBlockchain = useRef<string | undefined>(undefined);
@@ -61,6 +81,34 @@ export function useSyncStoresWithConfig(config: WidgetConfig | undefined) {
     config?.from?.blockchain,
     loadingMetaStatus,
   ]);
+
+  useEffect(() => {
+    if (fromToken && fromTokensConfig) {
+      if (!fromTokensConfig.some((token) => tokensAreEqual(token, fromToken))) {
+        setFromToken(null);
+      }
+    }
+
+    if (fromBlockchain && fromBlockchainsConfig) {
+      if (!fromBlockchainsConfig.includes(fromBlockchain.name)) {
+        setFromBlockchain(null);
+      }
+    }
+  }, [fromTokensConfig, fromBlockchainsConfig]);
+
+  useEffect(() => {
+    if (toToken && toTokensConfig) {
+      if (!toTokensConfig.some((token) => tokensAreEqual(token, toToken))) {
+        setToToken(null);
+      }
+    }
+
+    if (toBlockchain && toBlockchainsConfig) {
+      if (!toBlockchainsConfig.includes(toBlockchain.name)) {
+        setToBlockchain(null);
+      }
+    }
+  }, [toTokensConfig, toBlockchainsConfig]);
 
   useEffect(() => {
     if (loadingMetaStatus === 'success') {

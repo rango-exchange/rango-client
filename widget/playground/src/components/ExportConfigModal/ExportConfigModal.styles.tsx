@@ -6,6 +6,9 @@ export const Link = styled('a', {
   textDecoration: 'none',
   '&:hover': {
     color: '$secondary500',
+    '& .icon_container > svg': {
+      color: '$secondary500',
+    },
   },
 });
 

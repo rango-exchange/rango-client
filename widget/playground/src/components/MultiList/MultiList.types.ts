@@ -1,16 +1,7 @@
-export interface MultiListPropTypes {
-  type: 'Bridges' | 'DEXs' | 'Blockchains' | 'Wallets';
+import type { CommonListProps } from '../MultiSelect/MultiSelect.types';
+
+export type MultiListPropTypes = {
   label: string;
   icon: React.ReactNode;
-  onChange: (items?: string[]) => void;
-  defaultSelectedItems: string[];
   showCategory?: boolean;
-  list: MapSupportedList[];
-}
-
-export type MapSupportedList = {
-  title: string;
-  logo: string;
-  name: string;
-  networks?: string[];
-};
+} & CommonListProps;
