@@ -11,28 +11,31 @@ import {
 } from '@rango-dev/ui';
 import React from 'react';
 
+import { BLOCKCHAIN_LIST_SIZE } from '../../constants/configs';
 import { usePrepareBlockchainList } from '../../hooks/usePrepareBlockchainList';
 import { useBestRouteStore } from '../../store/bestRoute';
 import { useMetaStore } from '../../store/meta';
 
 import { Container } from './BlockchainsSection.styles';
 
-const LIST_SIZE = 10;
-const MAX_ITEMS = LIST_SIZE + 1;
 const NUMBER_OF_LOADING = 12;
 
 export function BlockchainsSection(props: PropTypes) {
   const { blockchains, type, blockchain, onChange, onMoreClick } = props;
   const blockchainsList = usePrepareBlockchainList(blockchains, {
-    limit: blockchains.length === MAX_ITEMS ? MAX_ITEMS : LIST_SIZE,
+    limit: BLOCKCHAIN_LIST_SIZE,
     selected: blockchain?.name,
   });
 
   const loadingStatus = useMetaStore.use.loadingStatus();
   const resetToBlockchain = useBestRouteStore.use.resetToBlockchain();
   const resetFromBlockchain = useBestRouteStore.use.resetFromBlockchain();
-  const showMoreButton =
-    blockchains.length !== MAX_ITEMS && blockchainsList.more.length;
+  const hasMoreItemsInList = blockchainsList.more.length > 0;
+  /**
+   * When only one item is left on list, we will not show the `More` button and will show the item itself instead.
+   */
+  const onlyOneItemInList = blockchainsList.more.length === 1;
+  const showMoreButton = !onlyOneItemInList && hasMoreItemsInList;
 
   return (
     <div>
@@ -70,8 +73,20 @@ export function BlockchainsSection(props: PropTypes) {
               </BlockchainsChip>
             ))}
 
+            {onlyOneItemInList ? (
+              <BlockchainsChip
+                key={blockchainsList.more[0].name}
+                selected={
+                  !!blockchain &&
+                  blockchain.name === blockchainsList.more[0].name
+                }
+                onClick={() => onChange(blockchainsList.more[0])}>
+                <Image src={blockchainsList.more[0].logo} size={30} />
+              </BlockchainsChip>
+            ) : null}
+
             {showMoreButton ? (
-              <BlockchainsChip onClick={onMoreClick}>
+              <BlockchainsChip onClick={onMoreClick} key="more-blockchains">
                 <Typography variant="body" size="xsmall" color="secondary500">
                   {i18n._('More +{count}', {
                     count: blockchainsList.more.length,

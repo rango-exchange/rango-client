@@ -2,6 +2,7 @@ import { type Language } from '@rango-dev/ui';
 import { create } from 'zustand';
 import { persist, subscribeWithSelector } from 'zustand/middleware';
 
+import { BLOCKCHAIN_LIST_SIZE } from '../constants/configs';
 import { DEFAULT_LANGUAGE } from '../constants/languages';
 import { DEFAULT_SLIPPAGE } from '../constants/swapSettings';
 import { removeDuplicateFrom } from '../utils/common';
@@ -12,6 +13,8 @@ import createSelectors from './selectors';
 export type ThemeMode = 'auto' | 'dark' | 'light';
 
 export interface SettingsState {
+  /** Keeping a history of blockchains that user has selected (in Swap process) */
+  preferredBlockchains: string[];
   slippage: number;
   customSlippage: number | null;
   infiniteApprove: boolean;
@@ -21,6 +24,7 @@ export interface SettingsState {
   affiliateRef: string | null;
   affiliatePercent: number | null;
   affiliateWallets: { [key: string]: string } | null;
+
   setSlippage: (slippage: number) => void;
   setCustomSlippage: (customSlippage: number | null) => void;
   toggleInfiniteApprove: () => void;
@@ -33,12 +37,14 @@ export interface SettingsState {
   setAffiliateWallets: (
     affiliateWallets: { [key: string]: string } | null
   ) => void;
+  addPreferredBlockchain: (blockchain: string) => void;
 }
 
 export const useSettingsStore = createSelectors(
   create<SettingsState>()(
     persist(
-      subscribeWithSelector((set) => ({
+      subscribeWithSelector((set, get) => ({
+        preferredBlockchains: [],
         slippage: DEFAULT_SLIPPAGE,
         customSlippage: null,
         infiniteApprove: false,
@@ -48,6 +54,33 @@ export const useSettingsStore = createSelectors(
         disabledLiquiditySources: [],
         theme: 'auto',
         language: DEFAULT_LANGUAGE,
+        addPreferredBlockchain: (blockchain) => {
+          const currentPreferredBlockchains = get().preferredBlockchains;
+
+          const noNeedToDoAnything = currentPreferredBlockchains.find(
+            (preferredBlockchain, index) => {
+              const isSameBlockchain = preferredBlockchain === blockchain;
+              const isInVisibleList = index <= BLOCKCHAIN_LIST_SIZE - 1;
+
+              return isSameBlockchain && isInVisibleList;
+            }
+          );
+
+          if (noNeedToDoAnything) {
+            return;
+          }
+
+          const nextPreferredBlockchains: string[] =
+            currentPreferredBlockchains.filter((preferredBlockchain) => {
+              const isSameBlockchain = preferredBlockchain === blockchain;
+
+              return !isSameBlockchain;
+            });
+
+          set(() => ({
+            preferredBlockchains: [blockchain, ...nextPreferredBlockchains],
+          }));
+        },
         setSlippage: (slippage) =>
           set(() => ({
             slippage: slippage,
