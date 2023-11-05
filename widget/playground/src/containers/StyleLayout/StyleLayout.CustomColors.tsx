@@ -16,6 +16,7 @@ import { ColorPicker } from '../../components/ColorPicker';
 import { WIDGET_COLORS } from '../../constants';
 import { useConfigStore } from '../../store/config';
 import { getMainColor } from '../../utils/colors';
+import { shallowEqual } from '../../utils/common';
 
 import {
   ColoredCircle,
@@ -44,17 +45,20 @@ const Colors = (props: { mainColor?: string; secondColor?: string }) => {
 };
 
 export function CustomColorsSection(props: CustomColorsTypes) {
-  const { tab, selectedPresets } = props;
+  const { tab, selectedPreset, onResetPreset } = props;
 
   const [openCustomColors, toggleCustomColors] = useState<{
     tab: Mode;
     value: boolean;
   }>({ tab, value: false });
+
   const [openCustomColor, setOpenCustomColor] = useState<string | null>(null);
   const onChangeColors = useConfigStore.use.onChangeColors();
+  const onChangeTheme = useConfigStore.use.onChangeTheme();
   const isAutoTab = tab === 'auto';
 
   const { theme } = useConfigStore.use.config();
+  const [selectedColorTab, setSelectedColorTab] = useState<Mode>(tab);
 
   const isOpenCustomColors =
     tab === openCustomColors.tab && openCustomColors.value;
@@ -70,10 +74,39 @@ export function CustomColorsSection(props: CustomColorsTypes) {
     setOpenCustomColor(null);
   }, [tab]);
 
-  const onResetColor = (name: WidgetColorsKeys, mode: 'light' | 'dark') => {
-    const color = !!selectedPresets ? selectedPresets[mode][name] : undefined;
-    onChangeColors(name, mode, color);
+  const onChangeColor = (
+    name: WidgetColorsKeys,
+    mode: 'light' | 'dark',
+    color?: string
+  ) => {
+    const resetColors = selectedColorTab !== tab;
+    setSelectedColorTab(tab);
+
+    onChangeTheme({ name: 'mode', value: tab });
+    onChangeColors({
+      name,
+      mode,
+      color,
+      singleTheme: !isAutoTab,
+      resetColors,
+    });
   };
+
+  const onResetColor = (name: WidgetColorsKeys, mode: 'light' | 'dark') => {
+    const color = !!selectedPreset ? selectedPreset[mode][name] : undefined;
+    onChangeColor(name, mode, color);
+  };
+
+  useEffect(() => {
+    if (
+      !shallowEqual(theme?.colors?.dark || {}, selectedPreset?.dark || {}) &&
+      !shallowEqual(theme?.colors?.light || {}, selectedPreset?.light || {}) &&
+      selectedColorTab === tab
+    ) {
+      onResetPreset();
+    }
+  }, [theme.colors]);
+
   return (
     <Collapsible
       open={isOpenCustomColors}
@@ -142,14 +175,12 @@ export function CustomColorsSection(props: CustomColorsTypes) {
                   placeholder={widgetColor.label}
                   color={getMainColor(widgetColor.key, tab, theme, 'light')}
                   onChangeColor={(color) =>
-                    onChangeColors(widgetColor.key, 'light', color)
+                    onChangeColor(widgetColor.key, 'light', color)
                   }
                   onReset={() => onResetColor(widgetColor.key, 'light')}
                   resetDisable={
-                    (!!selectedPresets &&
-                      getMainColor(widgetColor.key, tab, theme, 'light') ===
-                        selectedPresets.light[widgetColor.key]) ||
-                    !selectedPresets
+                    getMainColor(widgetColor.key, tab, theme, 'light') ===
+                    selectedPreset?.light[widgetColor.key]
                   }
                 />
                 <Divider size={16} />
@@ -158,13 +189,11 @@ export function CustomColorsSection(props: CustomColorsTypes) {
                   placeholder={widgetColor.label}
                   color={getMainColor(widgetColor.key, tab, theme, 'dark')}
                   onChangeColor={(color) =>
-                    onChangeColors(widgetColor.key, 'dark', color)
+                    onChangeColor(widgetColor.key, 'dark', color)
                   }
                   resetDisable={
-                    (!!selectedPresets &&
-                      getMainColor(widgetColor.key, tab, theme, 'dark') ===
-                        selectedPresets.dark[widgetColor.key]) ||
-                    !selectedPresets
+                    getMainColor(widgetColor.key, tab, theme, 'dark') ===
+                    selectedPreset?.dark[widgetColor.key]
                   }
                   onReset={() => onResetColor(widgetColor.key, 'dark')}
                 />
@@ -175,14 +204,14 @@ export function CustomColorsSection(props: CustomColorsTypes) {
                 placeholder={widgetColor.label}
                 color={getMainColor(widgetColor.key, tab, theme) || ''}
                 onChangeColor={(color) =>
-                  onChangeColors(widgetColor.key, tab, color)
+                  onChangeColor(widgetColor.key, tab, color)
                 }
                 onReset={() => onResetColor(widgetColor.key, tab)}
                 resetDisable={
-                  (!!selectedPresets &&
-                    getMainColor(widgetColor.key, tab, theme) ===
-                      selectedPresets[tab][widgetColor.key]) ||
-                  !selectedPresets
+                  getMainColor(widgetColor.key, tab, theme) ===
+                  (selectedPreset
+                    ? selectedPreset[tab][widgetColor.key]
+                    : undefined)
                 }
               />
             )}
