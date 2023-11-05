@@ -10,7 +10,13 @@ export const Header = styled('div', {
   display: 'flex',
   padding: '$5',
   alignItems: 'center',
+  width: '70px',
   cursor: 'pointer',
+  '&:hover': {
+    '& ._text, svg': {
+      color: '$secondary500',
+    },
+  },
 });
 
 export const Layout = styled('div', {
