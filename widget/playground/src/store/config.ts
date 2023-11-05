@@ -12,6 +12,7 @@ import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { immer } from 'zustand/middleware/immer';
 
+import { DEFAULT_COLORS } from '../constants';
 import { getConfig } from '../utils/configs';
 
 import createSelectors from './selectors';
@@ -55,13 +56,15 @@ interface ConfigState {
           value?: boolean;
         }
   ) => void;
-  onChangeColors: (
-    name: WidgetColorsKeys,
-    mode: 'light' | 'dark',
-    color?: string
-  ) => void;
+  onChangeColors: (props: {
+    name: WidgetColorsKeys;
+    mode: 'light' | 'dark';
+    color?: string;
+    singleTheme?: boolean;
+    resetColors: boolean;
+  }) => void;
   onSelectTheme: (colors: { light: WidgetColors; dark: WidgetColors }) => void;
-  onChangelanguage: (value: string) => void;
+  onChangeLanguage: (value: string) => void;
   resetConfig: () => void;
 }
 
@@ -96,22 +99,7 @@ export const initialConfig: WidgetConfig = {
     width: undefined,
     height: undefined,
     singleTheme: undefined,
-    colors: {
-      dark: {
-        primary: undefined,
-        secondary: undefined,
-        neutral: undefined,
-        background: undefined,
-        foreground: undefined,
-      },
-      light: {
-        primary: undefined,
-        secondary: undefined,
-        neutral: undefined,
-        background: undefined,
-        foreground: undefined,
-      },
-    },
+    colors: DEFAULT_COLORS,
   },
 };
 
@@ -188,7 +176,7 @@ export const useConfigStore = createSelectors(
           set((state) => {
             state.config[name] = value;
           }),
-        onChangelanguage: (value) =>
+        onChangeLanguage: (value) =>
           set((state) => {
             state.config.language = value as WidgetConfig['language'];
           }),
@@ -211,18 +199,35 @@ export const useConfigStore = createSelectors(
               }
             }
           }),
-        onChangeColors: (name, mode, color) =>
+        onChangeColors: ({ name, mode, color, singleTheme, resetColors }) =>
           set((state) => {
-            console.log({ color });
-
-            if (state?.config?.theme?.colors) {
-              state.config.theme.colors = {
-                ...state.config.theme.colors,
-                [mode]: {
-                  ...state?.config?.theme.colors[mode],
-                  [name]: color,
-                },
-              };
+            if (state.config?.theme?.colors) {
+              let themes = { ...state.config.theme, singleTheme };
+              // If the resetColors is true, all the colors should reset to the default state, because the colors are changing in the new tab.
+              if (resetColors) {
+                themes = {
+                  ...themes,
+                  colors: {
+                    ...DEFAULT_COLORS,
+                    [mode]: {
+                      ...DEFAULT_COLORS[mode],
+                      [name]: color,
+                    },
+                  },
+                };
+              } else {
+                themes = {
+                  ...themes,
+                  colors: {
+                    ...state.config.theme.colors,
+                    [mode]: {
+                      ...state?.config?.theme.colors[mode],
+                      [name]: color,
+                    },
+                  },
+                };
+              }
+              state.config.theme = { ...themes };
             }
           }),
         onSelectTheme: (colors) =>
