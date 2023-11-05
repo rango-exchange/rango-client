@@ -18,8 +18,9 @@ export type ColorsTypes = {
 
 export type CustomColorsTypes = {
   tab: Mode;
-  selectedPresets?: {
+  selectedPreset?: {
     light: WidgetColors;
     dark: WidgetColors;
   };
+  onResetPreset: () => void;
 };

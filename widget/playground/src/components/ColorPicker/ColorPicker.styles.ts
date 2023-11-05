@@ -1,10 +1,13 @@
 import { Button, styled } from '@rango-dev/ui';
 
 export const Container = styled('div', {
+  display: 'flex',
+  justifyContent: 'space-around',
+  alignItems: 'center',
   position: 'relative',
 });
 
-export const Color = styled('div', {
+export const ColorContainer = styled('div', {
   border: '1px solid $neutral300',
   borderRadius: '$xs',
   width: '$20',
@@ -22,11 +25,6 @@ export const ColorButton = styled(Button, {
   border: '1px solid $neutral300',
   backgroundColor: 'transparent',
   borderRadius: '$xs',
-});
-
-export const Label = styled('label', {
-  display: 'inline-block',
-  fontSize: '$14',
-  marginBottom: '$4',
-  color: '$foreground',
+  width: 93,
+  justifyContent: 'normal',
 });
