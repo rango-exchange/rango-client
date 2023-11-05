@@ -242,9 +242,15 @@ export const useConfigStore = createSelectors(
       })),
       {
         name: 'user-config',
-        partialize: (state) => ({
-          externalWallets: state.config.externalWallets,
-        }),
+
+        partialize: (state) => {
+          const { externalWallets, ...config } = state.config;
+
+          return {
+            ...state,
+            config,
+          };
+        },
         storage: {
           getItem: (name) => {
             const str = localStorage.getItem(name);
