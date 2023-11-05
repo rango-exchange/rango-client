@@ -55,25 +55,17 @@ class Wallet<InstanceType = any> {
       this.setInstalledAs(true);
     }
   }
-
-  private async getConnectionFromState() {
-    // Already connected, so we return provider that we have in memory.
-
-    /*
-     * For switching network on Trust Wallet (WalletConnect),
-     * We only kill the session (and not restting the whole state)
-     * So we are relying on this.provider for achieving this functionality.
-     */
-    if (this.state.connected && !!this.provider) {
-      return {
-        accounts: this.state.accounts,
-        network: this.state.network,
-        provider: this.provider,
-      };
+  async suggestAndConnect(network: Network) {
+    if (this.actions.suggest) {
+      await this.actions.suggest({
+        instance: this.provider,
+        meta: this.meta,
+        network,
+      });
     }
-
-    return null;
+    return await this.connect(network);
   }
+
   async connect(network?: Network) {
     // If it's connecting, nothing do.
     if (this.state.connecting) {
@@ -371,6 +363,25 @@ class Wallet<InstanceType = any> {
       accounts: null,
       network: null,
     });
+  }
+
+  private async getConnectionFromState() {
+    // Already connected, so we return provider that we have in memory.
+
+    /*
+     * For switching network on Trust Wallet (WalletConnect),
+     * We only kill the session (and not restting the whole state)
+     * So we are relying on this.provider for achieving this functionality.
+     */
+    if (this.state.connected && !!this.provider) {
+      return {
+        accounts: this.state.accounts,
+        network: this.state.network,
+        provider: this.provider,
+      };
+    }
+
+    return null;
   }
 
   private updateChainId(chainId: string | number) {

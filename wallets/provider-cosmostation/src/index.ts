@@ -4,6 +4,7 @@ import type {
   Connect,
   ProviderConnectResult,
   Subscribe,
+  Suggest,
   SwitchNetwork,
   WalletInfo,
 } from '@rango-dev/wallets-shared';
@@ -17,6 +18,7 @@ import {
   getEvmAccounts,
   Networks,
   subscribeToEvm,
+  suggestCosmosChain,
   switchNetworkForEvm,
   WalletTypes,
 } from '@rango-dev/wallets-shared';
@@ -98,6 +100,21 @@ export const subscribe: Subscribe = ({
     disconnect();
     connect();
   });
+};
+
+export const suggest: Suggest = async (options) => {
+  const { instance, meta, network } = options;
+  const cosmosInstance = chooseInstance(instance, meta, Networks.COSMOS);
+
+  if (cosmosInstance) {
+    const cosmosBlockchainMeta = meta.filter(isCosmosBlockchain);
+
+    await suggestCosmosChain({
+      instance: cosmosInstance,
+      meta: cosmosBlockchainMeta,
+      network,
+    });
+  }
 };
 
 export const getSigners: (provider: any) => SignerFactory = signer;

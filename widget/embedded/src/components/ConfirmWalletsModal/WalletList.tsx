@@ -53,7 +53,7 @@ export function WalletList(props: PropTypes) {
     useState(false);
   const [addingExperimentalChainStatus, setAddingExperimentalChainStatus] =
     useState<'in-progress' | 'completed' | null>(null);
-  const { connect } = useWallets();
+  const { suggestAndConnect } = useWallets();
   let modalTimerId: ReturnType<typeof setTimeout> | null = null;
   const { list, error, handleClick } = useWalletList({
     config,
@@ -79,8 +79,12 @@ export function WalletList(props: PropTypes) {
   const addExperimentalChain = async (wallet: Wallet) => {
     setShowExperimentalChainModal(false);
     setAddingExperimentalChainStatus('in-progress');
-    await connect(wallet.walletType, wallet.chain);
-    setAddingExperimentalChainStatus('completed');
+    try {
+      await suggestAndConnect(wallet.walletType, wallet.chain);
+      setAddingExperimentalChainStatus('completed');
+    } catch (e) {
+      setAddingExperimentalChainStatus(null);
+    }
   };
 
   useEffect(() => {

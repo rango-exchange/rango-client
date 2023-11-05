@@ -1,6 +1,10 @@
-import { Network, WalletType, WalletInfo } from '@rango-dev/wallets-shared';
-import { State as WalletState } from './wallet';
-import { SignerFactory, BlockchainMeta } from 'rango-types';
+import type { State as WalletState } from './wallet';
+import type {
+  Network,
+  WalletInfo,
+  WalletType,
+} from '@rango-dev/wallets-shared';
+import type { BlockchainMeta, SignerFactory } from 'rango-types';
 
 export type State = {
   [key: string]: WalletState | undefined;
@@ -79,6 +83,12 @@ export type SwitchNetwork = (options: {
   newInstance?: TryGetInstance;
 }) => Promise<void>;
 
+export type Suggest = (options: {
+  instance: any;
+  network: Network;
+  meta: BlockchainMeta[];
+}) => Promise<void>;
+
 export type CanSwitchNetwork = (options: {
   network: Network;
   meta: BlockchainMeta[];
@@ -98,6 +108,7 @@ export interface WalletActions {
   // unsubscribe, // coupled to subscribe.
 
   // Optional, but should be provided at the same time.
+  suggest?: Suggest;
   switchNetwork?: SwitchNetwork;
   getSigners: (provider: any) => SignerFactory;
   canSwitchNetworkTo?: CanSwitchNetwork;
