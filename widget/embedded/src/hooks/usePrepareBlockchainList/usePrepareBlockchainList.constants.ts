@@ -1,0 +1,1 @@
+export const MOST_USED_BLOCKChAINS = ['ETH', 'COSMOS', 'OSMOSIS'];

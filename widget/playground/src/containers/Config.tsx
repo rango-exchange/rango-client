@@ -6,7 +6,6 @@ import React, { useState } from 'react';
 import { ChainsConfig } from '../components/ChainsConfig';
 import { ExportConfigModal } from '../components/ExportConfigModal';
 import { SourcesConfig } from '../components/SourcesConfig';
-import { StylesConfig } from '../components/StylesConfig';
 import { WalletsConfig } from '../components/WalletsConfig';
 import { globalStyles } from '../globalStyles';
 import { useConfigStore } from '../store/config';
@@ -130,8 +129,6 @@ export function Config(props: PropsWithChildren) {
           <WalletsConfig />
           <Divider size={32} />
           <SourcesConfig />
-          <Divider size={32} />
-          <StylesConfig />
           <Divider size={32} />
         </div>
       </ConfigContent>

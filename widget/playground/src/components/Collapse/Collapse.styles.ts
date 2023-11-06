@@ -6,6 +6,9 @@ export const CollapseContainer = styled(Collapsible, {
   border: '1px solid $neutral100',
   '&:hover': {
     borderColor: '$info300',
+    '& .collapse_header > svg': {
+      color: '$secondary500',
+    },
   },
 });
 

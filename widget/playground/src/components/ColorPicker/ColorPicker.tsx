@@ -5,7 +5,7 @@ import { Button, Popover, Typography } from '@rango-dev/ui';
 import React from 'react';
 import { ChromePicker } from 'react-color';
 
-import { ColorButton, ColorDiv, Container } from './ColorPickerstyles';
+import { ColorButton, ColorContainer, Container } from './ColorPicker.styles';
 
 function ColorPicker(props: PropTypes) {
   const { label, placeholder, color, onChangeColor, onReset, resetDisable } =
@@ -24,7 +24,7 @@ function ColorPicker(props: PropTypes) {
         <ColorButton
           size="small"
           variant="default"
-          prefix={<ColorDiv style={{ backgroundColor: color }} />}>
+          prefix={<ColorContainer style={{ backgroundColor: color }} />}>
           <Typography variant="label" size="medium" color="neutral600">
             {color || placeholder}
           </Typography>

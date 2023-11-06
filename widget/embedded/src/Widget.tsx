@@ -9,6 +9,7 @@ import { AppRouter } from './components/AppRouter';
 import { AppRoutes } from './components/AppRoutes';
 import { WidgetEvents } from './components/WidgetEvents';
 import { globalFont } from './globalStyles';
+import { useLanguage } from './hooks/useLanguage';
 import { useTheme } from './hooks/useTheme';
 import QueueManager from './QueueManager';
 import { useAppStore } from './store/app';
@@ -44,6 +45,8 @@ export function Main(props: PropsWithChildren<WidgetProps>) {
   globalFont();
 
   const { activeTheme } = useTheme(config?.theme || {});
+  const { activeLanguage, changeLanguage } = useLanguage();
+
   const [lastConnectedWalletWithNetwork, setLastConnectedWalletWithNetwork] =
     useState<string>('');
   const [disconnectedWallet, setDisconnectedWallet] = useState<WalletType>();
@@ -65,8 +68,14 @@ export function Main(props: PropsWithChildren<WidgetProps>) {
     widgetContext.onConnectWallet(setLastConnectedWalletWithNetwork);
   }, []);
 
+  useEffect(() => {
+    if (config?.language) {
+      changeLanguage(config.language);
+    }
+  }, [config?.language]);
+
   return (
-    <I18nManager language={config?.language}>
+    <I18nManager language={activeLanguage}>
       <MainContainer id="swap-container" className={activeTheme()}>
         <QueueManager>
           <WidgetEvents />

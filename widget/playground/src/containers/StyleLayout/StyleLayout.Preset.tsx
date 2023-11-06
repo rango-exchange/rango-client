@@ -4,7 +4,7 @@ import type { WidgetColors } from '@rango-dev/widget-embedded';
 import { Button, Divider, Switch, Typography } from '@rango-dev/ui';
 import React, { useState } from 'react';
 
-import { PRESETS } from '../../constants';
+import { DEFAULT_COLORS, PRESETS } from '../../constants';
 import { useConfigStore } from '../../store/config';
 import { shallowEqual } from '../../utils/common';
 
@@ -45,14 +45,13 @@ export function Preset(props: PresetTypes) {
     tab,
     value: false,
   });
-  const [selectedPresets, setSelectPresets] = useState<
-    | {
-        light?: WidgetColors;
-        dark?: WidgetColors;
-      }
-    | undefined
-  >(theme?.colors);
-
+  const [selectedPreset, setSelectedPreset] = useState<{
+    light: WidgetColors;
+    dark: WidgetColors;
+  }>({
+    light: theme?.colors?.light || {},
+    dark: theme?.colors?.dark || {},
+  });
   const isShowMore = showMore.value && tab === showMore.tab;
 
   const onChangeTheme = useConfigStore.use.onChangeTheme();
@@ -80,13 +79,12 @@ export function Preset(props: PresetTypes) {
     light: WidgetColors;
   }) => {
     onSelectTheme(customTheme);
+    setSelectedPreset(customTheme);
     onChangeTheme({ name: 'singleTheme', value: isAutoTab ? undefined : true });
     if (!isAutoTab) {
       onChangeTheme({ name: 'mode', value: tab });
     }
-    setSelectPresets(customTheme);
   };
-
   return (
     <>
       {isAutoTab && (
@@ -172,10 +170,8 @@ export function Preset(props: PresetTypes) {
       <Divider size={4} />
       <CustomColorsSection
         tab={tab}
-        selectedPresets={{
-          light: selectedPresets?.light || {},
-          dark: selectedPresets?.dark || {},
-        }}
+        selectedPreset={selectedPreset}
+        onResetPreset={() => setSelectedPreset(DEFAULT_COLORS)}
       />
     </>
   );

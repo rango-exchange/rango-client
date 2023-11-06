@@ -171,18 +171,20 @@ export function SingleList(props: PropTypes) {
   );
 }
 
-const InnerElementType: React.FC<CommonProps> = forwardRef((render, ref) => {
-  return (
-    <div
-      {...render}
-      ref={ref as ForwardedRef<HTMLDivElement>}
-      style={{
-        ...render.style,
-        height: `${
-          parseFloat(render.style?.height as string) + PADDING_SPACE * 2
-        }px`,
-      }}
-    />
-  );
-});
+export const InnerElementType: React.FC<CommonProps> = forwardRef(
+  (render, ref) => {
+    return (
+      <div
+        {...render}
+        ref={ref as ForwardedRef<HTMLDivElement>}
+        style={{
+          ...render.style,
+          height: `${
+            parseFloat(render.style?.height as string) + PADDING_SPACE * 2
+          }px`,
+        }}
+      />
+    );
+  }
+);
 InnerElementType.displayName = 'InnerElementType';

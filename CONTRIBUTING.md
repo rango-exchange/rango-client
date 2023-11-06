@@ -68,3 +68,11 @@ First we need to extract the message from our source code using `yarn i18n:extra
 
 1. Add to `locales: ['en']` in `lingui.config.ts`
 2. Import and add to `messages` in `widget/ui/src/components/I18nManager/I18nManager.tsx`
+
+
+## Crowdin
+
+Crowdin CLI is command-line tool for management of your localization projects on Crowdin. According to https://crowdin.github.io/crowdin-cli/installation you can install crowdin in os or install globally with command `npm i -g @crowdin/cli`. With Crowdin CLI, you can upload source files by using `yarn i18n:push` and download translations by using `i18n:pull` for keep your localized content up-to-date.
+The language code standard used is ISO 639-1. For more details and a list of codes, please refer to the https://www.loc.gov/standards/iso639-2/php/code_list.php .
+
+In the `crowdin.yml` file, you will find the `project_id` and `api_token` values used for synchronizing translations with Crowdin. These values are read from the environment variables `REACT_APP_CROWDIN_PROJECT_ID` and `REACT_APP_CROWDIN_API_KEY` defined in the `.env` file.

@@ -1,24 +1,7 @@
-interface WalletProps {
-  type: 'Wallets';
-}
+import type { CommonListProps } from '../MultiSelect/MultiSelect.types';
 
-interface BlockchainProps {
-  type: 'Blockchains';
-}
-
-interface CommonProps {
+export type MultiListPropTypes = {
   label: string;
   icon: React.ReactNode;
-  onChange: (items?: string[]) => void;
-  defaultSelectedItems: string[];
-  list: MapSupportedList[];
-}
-
-export type MultiListPropTypes = CommonProps & (BlockchainProps | WalletProps);
-
-export type MapSupportedList = {
-  title: string;
-  logo: string;
-  name: string;
-  networks: string[];
-};
+  showCategory?: boolean;
+} & CommonListProps;

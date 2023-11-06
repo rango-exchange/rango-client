@@ -6,9 +6,9 @@ import React, { useState } from 'react';
 import { ItemPicker } from '../../components/ItemPicker';
 import { OverlayPanel } from '../../components/OverlayPanel';
 import { SingleList } from '../../components/SingleList';
-import { tokensAreEqual, tokenToString } from '../../helpers';
 import { useConfigStore } from '../../store/config';
 import { useMetaStore } from '../../store/meta';
+import { tokensAreEqual, tokenToString } from '../../utils/common';
 import { ModalState } from '../FunctionalLayout/FunctionalLayout.types';
 
 export function DefaultChainAndToken({ type }: { type: Type }) {
@@ -23,9 +23,13 @@ export function DefaultChainAndToken({ type }: { type: Type }) {
   } = useMetaStore();
 
   const selectedType = type === 'Source' ? from : to;
-
+  const configTokens = selectedType?.tokens;
   const filteredTokens = selectedType?.blockchain
-    ? tokens.filter((token) => token.blockchain === selectedType.blockchain)
+    ? tokens.filter(
+        (token) =>
+          token.blockchain === selectedType.blockchain &&
+          (!configTokens || configTokens.some((t) => tokensAreEqual(token, t)))
+      )
     : [];
   const chainValue = blockchains.find(
     (chain) => chain.name === selectedType?.blockchain

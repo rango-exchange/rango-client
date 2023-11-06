@@ -1,4 +1,4 @@
-import { ListItemButton, styled } from '@rango-dev/ui';
+import { ListItemButton, styled, Typography } from '@rango-dev/ui';
 
 export const HeaderContainer = styled('div', {
   display: 'flex',
@@ -16,6 +16,12 @@ export const SelectButton = styled('div', {
   justifyContent: 'flex-end',
   cursor: 'pointer',
   textTransform: 'capitalize',
+});
+
+export const SelectDeselectText = styled(Typography, {
+  '&:hover': {
+    color: '$secondary500',
+  },
 });
 export const CheckList = styled('div', {
   overflow: 'auto',
