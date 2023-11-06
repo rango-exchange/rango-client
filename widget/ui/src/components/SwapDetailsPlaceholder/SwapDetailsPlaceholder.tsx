@@ -36,11 +36,10 @@ export function SwapDetailsPlaceholder(props: PropTypes) {
         ) : (
           <Alert
             type="error"
-            title={i18n.t(
-              'swapNotFound',
-              { requestId },
-              { message: 'Swap with request ID = {requestId} not found.' }
-            )}
+            title={i18n.t({
+              id: 'Swap with request ID = {requestId} not found.',
+              values: { requestId },
+            })}
           />
         )}
       </PlaceholderContainer>

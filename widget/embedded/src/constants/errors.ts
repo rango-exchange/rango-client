@@ -15,8 +15,9 @@ export const errorMessages = () => {
     },
     noRoutesError: {
       title: i18n.t('No Routes Found'),
-      description:
-        "Reasons why Rango couldn't find a route: low liquidity on token, very low input amount or no routes available for the selected input/output token combination.",
+      description: i18n.t(
+        "Reasons why Rango couldn't find a route: low liquidity on token, very low input amount or no routes available for the selected input/output token combination."
+      ),
     },
     bridgeLimitErrors: {
       increaseAmount: i18n.t('Bridge Limit Error: Please increase your amount'),

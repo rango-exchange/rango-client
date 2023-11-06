@@ -1,7 +1,8 @@
-import { Alert } from '../../components/Alert';
-import React from 'react';
-import { ChangeSlippageButton } from '../../components/ChangeSlippageButton';
 import { i18n } from '@lingui/core';
+import React from 'react';
+
+import { Alert } from '../../components/Alert';
+import { ChangeSlippageButton } from '../../components/ChangeSlippageButton';
 
 interface PropTypes {
   selectedSlippage: number;
@@ -18,14 +19,10 @@ export function HighSlippageWarning(props: PropTypes) {
         <Alert
           type="warning"
           footer={<ChangeSlippageButton onClick={changeSlippage} />}>
-          {i18n.t(
-            'highSlippage',
-            { selectedSlippage },
-            {
-              message:
-                ' Caution, your slippage is high (={selectedSlippage}). Your trade may be front run.',
-            }
-          )}
+          {i18n.t({
+            id: ' Caution, your slippage is high (={selectedSlippage}). Your trade may be front run.',
+            values: { selectedSlippage },
+          })}
         </Alert>
       )}
     </>
