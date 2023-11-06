@@ -72,12 +72,12 @@ msgid "Your destination address"
 msgstr "Votre adresse de destination"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:220
+#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:224
 msgid "Confirm"
 msgstr "Valider"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:285
+#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:289
 msgid "Show more wallets"
 msgstr "Afficher plus de portefeuilles"
 
@@ -826,12 +826,12 @@ msgid "remainSymbol"
 msgstr "Symbole restant"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:256
+#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:260
 msgid "blockchainAdded"
 msgstr "blockchainAjouté"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:261
+#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:265
 msgid "blockchainAddedDescription"
 msgstr "format@@0 blockchainAddedDescription"
 
@@ -842,13 +842,13 @@ msgid "timeAgo"
 msgstr "timeAgo"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:197
-#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:233
+#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:201
+#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:237
 msgid "addBlockchain"
 msgstr "ajouterBlockchain"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:147
+#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:151
 msgid "addChain"
 msgstr "addChain"
 
@@ -925,8 +925,8 @@ msgid "needConnect"
 msgstr "needConnecter"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:203
-#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:238
+#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:207
+#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:242
 msgid "addBlockchainDescription"
 msgstr "Ajouter une description de la chaîne de blocs"
 
