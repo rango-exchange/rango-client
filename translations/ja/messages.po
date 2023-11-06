@@ -72,12 +72,12 @@ msgid "Your destination address"
 msgstr "宛先アドレス"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:220
+#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:224
 msgid "Confirm"
 msgstr "確認する"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:285
+#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:289
 msgid "Show more wallets"
 msgstr "ウォレットをもっと表示"
 
@@ -826,12 +826,12 @@ msgid "remainSymbol"
 msgstr "残りのシンボル"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:256
+#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:260
 msgid "blockchainAdded"
 msgstr "blockchainAdded"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:261
+#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:265
 msgid "blockchainAddedDescription"
 msgstr "blockchainAddedDescription"
 
@@ -842,13 +842,13 @@ msgid "timeAgo"
 msgstr "timeAgo"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:197
-#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:233
+#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:201
+#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:237
 msgid "addBlockchain"
 msgstr "addBlockchain"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:147
+#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:151
 msgid "addChain"
 msgstr "addChain"
 
@@ -925,8 +925,8 @@ msgid "needConnect"
 msgstr "needConnect"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:203
-#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:238
+#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:207
+#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:242
 msgid "addBlockchainDescription"
 msgstr "addBlockchainDescription"
 
