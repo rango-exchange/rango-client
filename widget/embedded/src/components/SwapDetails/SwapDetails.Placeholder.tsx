@@ -67,9 +67,8 @@ export function SwapDetailsPlaceholder(props: SwapDetailsPlaceholderPropTypes) {
           <NotFound
             title={i18n.t('Not found')}
             description={i18n.t({
-              id: 'swapNotFound',
+              id: 'Swap with request ID = {requestId} not found.',
               values: { requestId },
-              message: 'Swap with request ID = {requestId} not found.',
             })}
           />
         </PlaceholderContainer>

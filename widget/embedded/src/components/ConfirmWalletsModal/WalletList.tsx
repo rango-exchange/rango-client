@@ -149,8 +149,7 @@ export function WalletList(props: PropTypes) {
 
         const connectedWalletDescription = couldAddExperimentalChain
           ? i18n.t({
-              id: 'addChain',
-              message: 'Add {chain} chain',
+              id: 'Add {chain} chain',
               values: { chain },
             })
           : conciseAddress;
@@ -199,15 +198,12 @@ export function WalletList(props: PropTypes) {
                 }}>
                 <MessageBox
                   title={i18n.t({
-                    id: 'addBlockchain',
-                    message: 'Add {blockchainDisplayName} Chain',
+                    id: 'Add {blockchainDisplayName} Chain',
                     values: { blockchainDisplayName },
                   })}
                   type="warning"
                   description={i18n.t({
-                    id: 'addBlockchainDescription',
-                    message:
-                      'You should connect a {blockchainDisplayName} supported wallet or choose a different {blockchainDisplayName} address',
+                    id: 'You should connect a {blockchainDisplayName} supported wallet or choose a different {blockchainDisplayName} address',
                     values: { blockchainDisplayName },
                   })}>
                   <Divider size={18} />
@@ -235,14 +231,11 @@ export function WalletList(props: PropTypes) {
                   <MessageBox
                     type="loading"
                     title={i18n.t({
-                      id: 'addBlockchain',
-                      message: 'Add {blockchainDisplayName} Chain',
+                      id: 'Add {blockchainDisplayName} Chain',
                       values: { blockchainDisplayName },
                     })}
                     description={i18n.t({
-                      id: 'addBlockchainDescription',
-                      message:
-                        'You should connect a {blockchainDisplayName} supported wallet or choose a different {blockchainDisplayName} address',
+                      id: 'You should connect a {blockchainDisplayName} supported wallet or choose a different {blockchainDisplayName} address',
                       values: { blockchainDisplayName },
                     })}
                     icon={
@@ -258,14 +251,11 @@ export function WalletList(props: PropTypes) {
                   <MessageBox
                     type="success"
                     title={i18n.t({
-                      id: 'blockchainAdded',
-                      message: '{blockchainDisplayName} Chain Added',
+                      id: '{blockchainDisplayName} Chain Added',
                       values: { blockchainDisplayName },
                     })}
                     description={i18n.t({
-                      id: 'blockchainAddedDescription',
-                      message:
-                        '{blockchainDisplayName} is added to your wallet, you can use it to swap.',
+                      id: '{blockchainDisplayName} is added to your wallet, you can use it to swap.',
                       values: { blockchainDisplayName },
                     })}
                   />

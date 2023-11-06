@@ -290,8 +290,7 @@ export function ConfirmWalletsModal(props: PropTypes) {
             </NavigateBack>
             <Typography variant="headline" size="small">
               {i18n.t({
-                id: 'yourWallets',
-                message: 'Your {blockchainName} wallets',
+                id: 'Your {blockchainName} wallets',
                 values: { blockchainName: showMoreWalletFor },
               })}
             </Typography>
@@ -364,8 +363,7 @@ export function ConfirmWalletsModal(props: PropTypes) {
                   <Title>
                     <Typography variant="title" size="xmedium">
                       {i18n.t({
-                        id: 'yourWallets',
-                        message: 'Your {blockchainName} wallets',
+                        id: 'Your {blockchainName} wallets',
                         values: { blockchainName: blockchain?.displayName },
                       })}
                     </Typography>
@@ -374,9 +372,7 @@ export function ConfirmWalletsModal(props: PropTypes) {
                       color="$neutral700"
                       size="medium">
                       {i18n.t({
-                        id: 'needConnect',
-                        message:
-                          'You need to connect a {blockchainName} wallet.',
+                        id: 'You need to connect a {blockchainName} wallet.',
                         values: { blockchainName: blockchain?.displayName },
                       })}
                     </Typography>
@@ -473,10 +469,8 @@ export function ConfirmWalletsModal(props: PropTypes) {
                             variant="alarm"
                             type="error"
                             title={i18n.t({
-                              id: 'addressMatch',
                               values: { destination },
-                              message:
-                                "Address {destination} doesn't match the blockchain address pattern.",
+                              id: "Address {destination} doesn't match the blockchain address pattern.",
                             })}
                           />
                         </div>

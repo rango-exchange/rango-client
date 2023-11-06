@@ -67,13 +67,11 @@ export function timeSince(millisecond: number): string {
 export function getSwapDate(pendingSwap: PendingSwap) {
   return pendingSwap.finishTime
     ? i18n.t({
-        id: 'timeAgo',
-        message: '{time} ago',
+        id: '{time} ago',
         values: { time: timeSince(parseInt(pendingSwap.finishTime)) },
       })
     : i18n.t({
-        id: 'timeAgo',
-        message: '{time} ago',
+        id: '{time} ago',
         values: { time: timeSince(parseInt(pendingSwap.creationTime)) },
       });
 }

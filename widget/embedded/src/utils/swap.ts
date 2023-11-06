@@ -120,8 +120,7 @@ export function LimitErrorMessage(bestRoute: BestRouteResponse | null): {
   let recommendation = '';
   if (!isExclusive && !!minimum && minimum.gt(swap.fromAmount)) {
     fromAmountRangeError = i18n.t({
-      id: 'requiredEqualMin',
-      message: 'Required: >= {min} {symbol}',
+      id: 'Required: >= {min} {symbol}',
       values: {
         min: numberToString(
           minimum,
@@ -134,8 +133,7 @@ export function LimitErrorMessage(bestRoute: BestRouteResponse | null): {
     recommendation = errorMessages().bridgeLimitErrors.increaseAmount;
   } else if (isExclusive && !!minimum && minimum.gte(swap.fromAmount)) {
     fromAmountRangeError = i18n.t({
-      id: 'requiredMin',
-      message: 'Required: > {min} {symbol}',
+      id: 'Required: > {min} {symbol}',
       values: {
         min: numberToString(
           minimum,
@@ -150,8 +148,7 @@ export function LimitErrorMessage(bestRoute: BestRouteResponse | null): {
 
   if (!isExclusive && !!maximum && maximum.lt(swap.fromAmount)) {
     fromAmountRangeError = i18n.t({
-      id: 'requiredEqualMax',
-      message: 'Required: <= {max} {symbol}',
+      id: 'Required: <= {max} {symbol}',
       values: {
         max: numberToString(
           maximum,
@@ -164,8 +161,7 @@ export function LimitErrorMessage(bestRoute: BestRouteResponse | null): {
     recommendation = errorMessages().bridgeLimitErrors.decreaseAmount;
   } else if (isExclusive && !!maximum && maximum.lte(swap.fromAmount)) {
     fromAmountRangeError = i18n.t({
-      id: 'requiredMax',
-      message: 'Required: < {max} {symbol}',
+      id: 'Required: < {max} {symbol}',
       values: {
         max: numberToString(
           maximum,
@@ -608,8 +604,7 @@ export function getBalanceWarnings(
         reason = i18n.t(' for input and network fee');
       }
       const warningMessage = i18n.t({
-        id: 'balanceWarningMessage',
-        message: `Needs ≈ {requiredAmount} {symbol}{reason}, but you have {currentAmount} {symbol} in your {blockchain} wallet.`,
+        id: `Needs ≈ {requiredAmount} {symbol}{reason}, but you have {currentAmount} {symbol} in your {blockchain} wallet.`,
         values: {
           requiredAmount,
           symbol,
