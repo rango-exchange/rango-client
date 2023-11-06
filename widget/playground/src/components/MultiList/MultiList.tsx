@@ -24,11 +24,20 @@ import {
   IconWrapper,
   ItemDivider,
   SelectButton,
+  SelectDeselectText,
   StyledListItemButton,
 } from './MultiList.styles';
 
 export function MultiList(props: MultiListPropTypes) {
-  const { defaultSelectedItems, list, icon, label, type, onChange } = props;
+  const {
+    defaultSelectedItems,
+    list,
+    icon,
+    label,
+    type,
+    onChange,
+    showCategory,
+  } = props;
   const [category, setCategory] = useState<string>('ALL');
   const [searchValue, setSearchValue] = useState('');
   const [selectedItems, setSelectedItems] = useState(
@@ -44,10 +53,12 @@ export function MultiList(props: MultiListPropTypes) {
     : list;
 
   // Filter the list based on selected category
-  const cotegoryList =
-    category === 'ALL'
+  const categoryList =
+    category === 'ALL' || !showCategory
       ? filteredList
-      : filteredList.filter((item) => item.networks.includes(category));
+      : filteredList.filter((item) =>
+          item.supportedNetworks?.includes(category)
+        );
 
   // Handle item selection/unselection
   const handleChangeList = (item: string) => {
@@ -60,15 +71,15 @@ export function MultiList(props: MultiListPropTypes) {
 
   // Select or deselect all items in the category list
   const handleAllSelectedClick = (type: 'select' | 'deselect') => () => {
-    const cotegoryListTypes = cotegoryList.map((c) => c.name);
+    const categoryListTypes = categoryList.map((c) => c.name);
     if (type === 'select') {
       const newSelectedItems = Array.from(
-        new Set([...selectedItems, ...cotegoryListTypes])
+        new Set([...selectedItems, ...categoryListTypes])
       );
       setSelectedItems(newSelectedItems);
     } else {
       const filteredCategories = selectedItems.filter(
-        (item) => !cotegoryListTypes.includes(item)
+        (item) => !categoryListTypes.includes(item)
       );
       setSelectedItems(filteredCategories);
     }
@@ -79,7 +90,7 @@ export function MultiList(props: MultiListPropTypes) {
   };
 
   // Mapping the items to their respective components
-  const items = cotegoryList.map((item) => {
+  const items = categoryList.map((item) => {
     const { logo, title, name } = item;
     return {
       start: <Image src={logo} size={16} type="circular" />,
@@ -96,8 +107,8 @@ export function MultiList(props: MultiListPropTypes) {
 
   const resultsNotFound = !items.length && !!searchValue;
   const isAllCategorySelected = React.useMemo(
-    () => selectDeselectHandler(selectedItems, cotegoryList),
-    [selectedItems, cotegoryList]
+    () => selectDeselectHandler(selectedItems, categoryList),
+    [selectedItems, categoryList]
   );
   return (
     <>
@@ -114,12 +125,16 @@ export function MultiList(props: MultiListPropTypes) {
         </Typography>
       </HeaderContainer>
       <Divider size={20} />
-      <SelectableCategoryList
-        blockchains={blockchains}
-        category={category}
-        setCategory={setCategory}
-      />
-      <Divider size={20} />
+      {showCategory && (
+        <>
+          <SelectableCategoryList
+            blockchains={blockchains}
+            category={category}
+            setCategory={setCategory}
+          />
+          <Divider size={20} />
+        </>
+      )}
       <TextField
         onChange={(e) => setSearchValue(e.target.value)}
         value={searchValue}
@@ -160,9 +175,12 @@ export function MultiList(props: MultiListPropTypes) {
                 ? handleAllSelectedClick('deselect')
                 : handleAllSelectedClick('select')
             }>
-            <Typography variant="label" size="medium" color="neutral700">
+            <SelectDeselectText
+              variant="label"
+              size="medium"
+              color="neutral700">
               {isAllCategorySelected ? 'Deselect all' : 'Select all'}
-            </Typography>
+            </SelectDeselectText>
           </SelectButton>
           <Divider size={12} />
           <CheckList>
@@ -182,6 +200,7 @@ export function MultiList(props: MultiListPropTypes) {
         <StyledButton
           type="primary"
           size="medium"
+          disabled={!selectedItems.length}
           variant="contained"
           onClick={handleConfirm}>
           Confirm

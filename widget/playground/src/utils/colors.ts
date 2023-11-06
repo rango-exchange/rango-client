@@ -11,20 +11,13 @@ export const getMainColor = (
   const isLightTab = tab === 'light';
   const isAutoTab = tab === 'auto';
   if (!!theme?.colors) {
-    const lengthOfDarkThemes = Object.keys(theme?.colors?.dark).length;
-    const lengthOfLightThemes = Object.keys(theme?.colors?.light).length;
-
-    const isDarkColorsOnly = !!lengthOfDarkThemes && !lengthOfLightThemes;
-    const isLightColorsOnly = !!lengthOfLightThemes && !lengthOfDarkThemes;
-    const isLightAndDarkColors = !!lengthOfLightThemes && !!lengthOfDarkThemes;
-
-    if (isAutoTab && isLightAndDarkColors) {
-      return theme?.colors[mode || 'light'][key];
+    if (isAutoTab && !theme.singleTheme) {
+      return (theme?.colors[mode || 'light'] || {})[key];
     }
-    if (isDarkTab && isDarkColorsOnly) {
+    if (isDarkTab && theme.singleTheme && theme?.colors?.dark) {
       return theme?.colors?.dark[key];
     }
-    if (isLightTab && isLightColorsOnly) {
+    if (isLightTab && theme.singleTheme && theme?.colors?.light) {
       return theme?.colors?.light[key];
     }
   }

@@ -1,1 +1,1 @@
-export { SingleList } from './SingleList';
+export { SingleList, InnerElementType } from './SingleList';

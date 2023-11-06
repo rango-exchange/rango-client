@@ -18,9 +18,9 @@ import {
   prism,
 } from 'react-syntax-highlighter/dist/esm/styles/prism';
 
-import { filterConfig, formatConfig } from '../../helpers';
 import { useTheme } from '../../hooks/useTheme';
 import { initialConfig, useConfigStore } from '../../store/config';
+import { filterConfig, formatConfig } from '../../utils/export';
 
 import { CodeBlock } from './CodeBlock';
 import {
@@ -97,7 +97,7 @@ export function ExportConfigModal(props: ExportConfigModalProps) {
               <Link
                 href="https://docs.rango.exchange/widget-integration/overview"
                 target="_blank">
-                <ExternalLinkIconContainer>
+                <ExternalLinkIconContainer className="icon_container">
                   <ExternalLinkIcon color="gray" size={16} />
                 </ExternalLinkIconContainer>
                 &nbsp;Full Instructions
@@ -109,7 +109,7 @@ export function ExportConfigModal(props: ExportConfigModalProps) {
               <Link
                 href="https://github.com/rango-exchange/widget-examples"
                 target="_blank">
-                <ExternalLinkIconContainer>
+                <ExternalLinkIconContainer className="icon_container">
                   <ExternalLinkIcon color="gray" size={16} />
                 </ExternalLinkIconContainer>
                 &nbsp;More Examples

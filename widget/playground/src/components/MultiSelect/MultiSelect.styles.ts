@@ -22,6 +22,12 @@ export const Select = styled('div', {
     flexWrap: 'wrap',
     gap: '$5',
   },
+  '&:hover': {
+    borderColor: '$info300',
+    '& svg': {
+      color: '$secondary500',
+    },
+  },
 });
 
 export const WalletChip = styled('div', {

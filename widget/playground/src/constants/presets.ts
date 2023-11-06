@@ -248,3 +248,21 @@ export const WIDGET_COLORS: { key: WidgetColorsKeys; label: string }[] = [
     label: 'Foreground',
   },
 ];
+export const DEFAULT_COLORS = {
+  dark: {
+    primary: undefined,
+    secondary: undefined,
+    neutral: undefined,
+    background: undefined,
+    foreground: undefined,
+    info: undefined,
+  },
+  light: {
+    primary: undefined,
+    secondary: undefined,
+    neutral: undefined,
+    background: undefined,
+    foreground: undefined,
+    info: undefined,
+  },
+};

@@ -1,13 +1,16 @@
-import React from 'react';
+import type { WalletType } from '@rango-dev/wallets-shared';
+
+import { allProviders } from '@rango-dev/provider-all';
 import { Checkbox, Divider, Typography } from '@rango-dev/ui';
 import { Provider } from '@rango-dev/wallets-react';
-import { ConfigurationContainer } from '../ChainsConfig';
-import { ExternalWallet } from './ExternalWallet';
-import { allProviders } from '@rango-dev/provider-all';
+import React from 'react';
+
 import { useConfigStore } from '../../store/config';
+import { WC_PROJECT_ID } from '../../utils/configs';
+import { ConfigurationContainer } from '../ChainsConfig';
+
+import { ExternalWallet } from './ExternalWallet';
 import { InternalWallets } from './InternalWallets';
-import { WalletType } from '@rango-dev/wallets-shared';
-import { WC_PROJECT_ID } from '../../configs';
 
 const providers = allProviders({
   walletconnect2: {

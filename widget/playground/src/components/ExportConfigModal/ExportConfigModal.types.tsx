@@ -1,6 +1,6 @@
 import type { WidgetConfig } from '@rango-dev/widget-embedded';
 
-import { getEmbeddedCode, getIframeCode } from '../../helpers';
+import { getEmbeddedCode, getIframeCode } from '../../utils/export';
 
 export type ExportType = 'embedded' | 'iframe' | 'config';
 export type Language = 'jsx' | 'javascript';

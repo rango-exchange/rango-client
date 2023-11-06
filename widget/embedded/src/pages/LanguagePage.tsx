@@ -6,57 +6,34 @@ import {
   RadioRoot,
   Typography,
 } from '@rango-dev/ui';
-import React, { useState } from 'react';
+import React from 'react';
 
 import { Layout } from '../components/Layout';
 import { SettingsContainer } from '../components/SettingsContainer';
 import { navigationRoutes } from '../constants/navigationRoutes';
+import { useLanguage } from '../hooks/useLanguage';
 import { useNavigateBack } from '../hooks/useNavigateBack';
 
-enum Languages {
-  ENGLISH = 'english',
-  FRENCH = 'french',
-  SPANISH = 'spanish',
-}
 export function LanguagePage() {
   const { navigateBackFrom } = useNavigateBack();
-  const [language, setLanguage] = useState(Languages.ENGLISH);
 
-  const languageList = [
-    {
-      id: Languages.ENGLISH,
-      value: Languages.ENGLISH,
+  const { activeLanguage, changeLanguage, languages } = useLanguage();
+
+  const languageList = languages.map((languageItem) => {
+    const { local, label, SVGFlag } = languageItem;
+    return {
+      id: local,
+      value: local,
       title: (
         <Typography variant="title" size="xmedium">
-          {i18n.t('English')}
+          {label}
         </Typography>
       ),
-      onClick: () => setLanguage(Languages.ENGLISH),
-      end: <Radio value={Languages.ENGLISH} />,
-    },
-    {
-      id: Languages.FRENCH,
-      value: Languages.FRENCH,
-      title: (
-        <Typography variant="title" size="xmedium">
-          {i18n.t('French')}
-        </Typography>
-      ),
-      onClick: () => setLanguage(Languages.FRENCH),
-      end: <Radio value={Languages.FRENCH} />,
-    },
-    {
-      id: Languages.SPANISH,
-      value: Languages.SPANISH,
-      title: (
-        <Typography variant="title" size="xmedium">
-          {i18n.t('Spanish')}
-        </Typography>
-      ),
-      onClick: () => setLanguage(Languages.SPANISH),
-      end: <Radio value={Languages.SPANISH} />,
-    },
-  ];
+      onClick: () => changeLanguage(languageItem.local),
+      end: <Radio value={local} />,
+      start: <SVGFlag />,
+    };
+  });
 
   return (
     <Layout
@@ -65,7 +42,7 @@ export function LanguagePage() {
         title: i18n.t('Language'),
       }}>
       <SettingsContainer>
-        <RadioRoot value={language}>
+        <RadioRoot value={activeLanguage}>
           <List
             type={
               <ListItemButton

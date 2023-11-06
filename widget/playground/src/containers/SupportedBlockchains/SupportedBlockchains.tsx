@@ -4,9 +4,9 @@ import { ChainsIcon } from '@rango-dev/ui';
 import React from 'react';
 
 import { MultiSelect } from '../../components/MultiSelect/MultiSelect';
-import { getCategoryNetworks } from '../../helpers';
 import { useConfigStore } from '../../store/config';
 import { useMetaStore } from '../../store/meta';
+import { getCategoryNetworks } from '../../utils/blockchains';
 
 export function SupportedBlockchains({ type }: { type: Type }) {
   const {
@@ -14,6 +14,7 @@ export function SupportedBlockchains({ type }: { type: Type }) {
     onChangeBlockChains,
     onChangeBlockChain,
     onChangeToken,
+    onChangeTokens,
   } = useConfigStore();
   const {
     meta: { blockchains },
@@ -29,7 +30,7 @@ export function SupportedBlockchains({ type }: { type: Type }) {
       title,
       logo,
       name,
-      networks: getCategoryNetworks([blockchain]),
+      supportedNetworks: getCategoryNetworks([blockchain]),
     };
   });
 
@@ -45,12 +46,13 @@ export function SupportedBlockchains({ type }: { type: Type }) {
     }
 
     onChangeBlockChains(items, type);
+    onChangeTokens(undefined, type);
   };
 
   return (
     <MultiSelect
       label="Supported Blockchains"
-      icon={<ChainsIcon />}
+      icon={<ChainsIcon size={24} />}
       type="Blockchains"
       value={
         configBlockchains?.length === allBlockchains.length
@@ -61,7 +63,7 @@ export function SupportedBlockchains({ type }: { type: Type }) {
         configBlockchains || allBlockchains.map((blockchain) => blockchain.name)
       }
       list={allBlockchains}
-      onChange={(items) => handleBlockchainChange(items)}
+      onChange={handleBlockchainChange}
     />
   );
 }

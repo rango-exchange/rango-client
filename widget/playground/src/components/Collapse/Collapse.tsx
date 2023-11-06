@@ -17,7 +17,7 @@ export function Collapse(props: PropsWithChildren<PropTypes>) {
       open={open}
       onOpenChange={toggle}
       trigger={
-        <CollapseHeader>
+        <CollapseHeader className="collapse_header">
           <Typography size="medium" variant="title">
             {title}
           </Typography>
