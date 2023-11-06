@@ -382,26 +382,17 @@ export function ConfirmSwapPage(props: PropTypes) {
             description={
               confirmSwapResult.warnings.slippage.type ===
               SlippageWarningType.HIGH_SLIPPAGE
-                ? i18n.t(
-                    'highSlippage',
-                    { selectedSlippage },
-                    {
-                      message:
-                        ' Caution, your slippage is high (={selectedSlippage}). Your trade may be front run.',
-                    }
-                  )
-                : i18n.t(
-                    'increaseSlippage',
-
-                    {
+                ? i18n.t({
+                    id: ' Caution, your slippage is high (={selectedSlippage}). Your trade may be front run.',
+                    values: { selectedSlippage },
+                  })
+                : i18n.t({
+                    id: 'We recommend you to increase slippage to at least {minRequiredSlippage} for this route.',
+                    values: {
                       minRequiredSlippage:
                         confirmSwapResult.warnings.slippage.slippage,
                     },
-                    {
-                      message:
-                        'We recommend you to increase slippage to at least {minRequiredSlippage} for this route.',
-                    }
-                  )
+                  })
             }>
             <Divider size={18} />
             <Divider size={32} />
