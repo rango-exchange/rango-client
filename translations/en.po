@@ -14,16 +14,6 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:272
-msgid "Request Rejected"
-msgstr "Request Rejected"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:273
-msgid "You've rejected adding {blockchainDisplayName} chain to your wallet."
-msgstr "You've rejected adding {blockchainDisplayName} chain to your wallet."
-
-#. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:37
 #: widget/embedded/src/components/TokenList/TokenList.tsx:128
 #: widget/embedded/src/pages/HistoryPage.tsx:99
@@ -123,6 +113,16 @@ msgstr "{blockchainDisplayName} Chain Added"
 #: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:262
 msgid "{blockchainDisplayName} is added to your wallet, you can use it to swap."
 msgstr "{blockchainDisplayName} is added to your wallet, you can use it to swap."
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:272
+msgid "Request Rejected"
+msgstr "Request Rejected"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:273
+msgid "You've rejected adding {blockchainDisplayName} chain to your wallet."
+msgstr "You've rejected adding {blockchainDisplayName} chain to your wallet."
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:296

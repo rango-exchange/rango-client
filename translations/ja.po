@@ -19,16 +19,6 @@ msgstr ""
 "X-Crowdin-File-ID: 20\n"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:272
-msgid "Request Rejected"
-msgstr "リクエストが拒否されました"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:273
-msgid "You've rejected adding {blockchainDisplayName} chain to your wallet."
-msgstr "{blockchainDisplayName} チェーンをあなたのウォレットに追加することを拒否しました。"
-
-#. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:37
 #: widget/embedded/src/components/TokenList/TokenList.tsx:128
 #: widget/embedded/src/pages/HistoryPage.tsx:99
@@ -128,6 +118,16 @@ msgstr "{blockchainDisplayName} チェーンが追加されました"
 #: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:262
 msgid "{blockchainDisplayName} is added to your wallet, you can use it to swap."
 msgstr "{blockchainDisplayName} がウォレットに追加されました。交換に使用できます。"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:272
+msgid "Request Rejected"
+msgstr "リクエストが拒否されました"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:273
+msgid "You've rejected adding {blockchainDisplayName} chain to your wallet."
+msgstr "{blockchainDisplayName} チェーンをあなたのウォレットに追加することを拒否しました。"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:296
@@ -955,4 +955,3 @@ msgstr "アセットの最大量"
 #: widget/ui/src/containers/TokenInfo/TokenInfo.tsx:181
 msgid "swap to"
 msgstr "スワップ先"
-
