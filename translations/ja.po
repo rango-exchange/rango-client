@@ -15,6 +15,8 @@ msgstr ""
 "Project-Id-Version: testreza\n"
 "Language-Team: Japanese\n"
 "PO-Revision-Date: 2023-11-06 13:55\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: \n"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:37
@@ -49,11 +51,11 @@ msgstr "すべて"
 msgid "More +{count}"
 msgstr "その他 +{count}"
 
-#. js-lingui-explicit-id{}
+#. js-lingui-explicit-id
 #: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:292
 #: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:365
 msgid "Your {blockchainName} wallets"
-msgstr "あなたの {blockchainName} ウォレット"
+msgstr ""
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:306
@@ -944,3 +946,8 @@ msgstr "アセットの最大量"
 msgid "swap to"
 msgstr "スワップ先"
 
+#. js-lingui-explicit-id{}
+#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:292
+#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:365
+#~ msgid "Your {blockchainName} wallets"
+#~ msgstr "あなたの {blockchainName} ウォレット"

@@ -15,6 +15,8 @@ msgstr ""
 "Project-Id-Version: testreza\n"
 "Language-Team: French\n"
 "PO-Revision-Date: 2023-11-06 13:55\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: \n"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:37
@@ -88,7 +90,7 @@ msgstr "L'adresse {destination} ne correspond pas au modèle d'adresse blockchai
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:151
 msgid "Add {chain} chain"
-msgstr "Ajouter une chaîne {chain}"{}
+msgstr "Ajouter une chaîne {chain}\"{}"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:200
@@ -943,4 +945,3 @@ msgstr "montant maximum d'actif"
 #: widget/ui/src/containers/TokenInfo/TokenInfo.tsx:181
 msgid "swap to"
 msgstr "swap vers"
-
