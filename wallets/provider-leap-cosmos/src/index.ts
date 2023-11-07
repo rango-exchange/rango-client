@@ -1,9 +1,15 @@
-import type { Connect, Subscribe, WalletInfo } from '@rango-dev/wallets-shared';
+import type {
+  Connect,
+  Subscribe,
+  Suggest,
+  WalletInfo,
+} from '@rango-dev/wallets-shared';
 import type { BlockchainMeta, SignerFactory } from 'rango-types';
 
 import {
   getCosmosAccounts,
   Networks,
+  suggestCosmosChain,
   WalletTypes,
 } from '@rango-dev/wallets-shared';
 import { cosmosBlockchains } from 'rango-types';
@@ -18,18 +24,35 @@ export const config = {
   defaultNetwork: Networks.COSMOS,
 };
 
+// TODO: check supported valid chain name : Some chain have different names
+const supportedChainWithDifferentName: string[] = [
+  Networks.COSMOS.toLowerCase(),
+  Networks.KI.toLowerCase(),
+  Networks.SECRET.toLowerCase(),
+  Networks.TERRA.toLowerCase(),
+];
+
 export const getInstance = leap_cosmos_instance;
 export const connect: Connect = async ({ instance, network, meta }) => {
   const supportedChains = await getSupportedChains(instance);
-  const leapBlockchainMeta = meta.filter(
-    (chain) =>
+
+  const leapBlockchainMeta = meta.filter((chain) => {
+    const isChainSupported = supportedChains.includes(chain.name.toLowerCase());
+    const isNetworkMatch = chain.name === network;
+    const isDifferentNameSupported = supportedChainWithDifferentName.includes(
+      chain.name.toLocaleLowerCase()
+    );
+
+    return (
       chain.enabled &&
-      (supportedChains.includes(chain.name.toLowerCase()) ||
-        chain.name === network)
-  );
+      (isChainSupported || isNetworkMatch || isDifferentNameSupported)
+    );
+  });
+
   const results = await getCosmosAccounts({
     instance,
     meta: leapBlockchainMeta,
+    network: network || Networks.COSMOS,
   });
   return results;
 };
@@ -38,6 +61,29 @@ export const subscribe: Subscribe = ({ connect, disconnect }) => {
   window.addEventListener('leap_keystorechange', () => {
     disconnect();
     connect();
+  });
+};
+
+export const suggest: Suggest = async (options) => {
+  const { instance, meta, network } = options;
+
+  const supportedChains = await getSupportedChains(instance);
+  const leapBlockchainMeta = meta.filter((chain) => {
+    const isChainSupported = supportedChains.includes(chain.name.toLowerCase());
+    const isNetworkMatch = chain.name === network;
+    const isDifferentNameSupported = supportedChainWithDifferentName.includes(
+      chain.name.toLocaleLowerCase()
+    );
+
+    return (
+      chain.enabled &&
+      (isChainSupported || isNetworkMatch || isDifferentNameSupported)
+    );
+  });
+  await suggestCosmosChain({
+    instance,
+    meta: leapBlockchainMeta,
+    network,
   });
 };
 

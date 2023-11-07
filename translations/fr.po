@@ -1,22 +1,22 @@
 msgid ""
 msgstr ""
-"POT-Creation-Date: 2023-11-05 15:27+0330\n"
+"POT-Creation-Date: 2023-11-06 17:24+0330\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: @lingui/cli\n"
-"Language: ja\n"
-"Project-Id-Version: rango\n"
+"Language: fr\n"
+"Project-Id-Version: testreza\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2023-11-05 12:02\n"
+"PO-Revision-Date: 2023-11-06 14:45\n"
 "Last-Translator: \n"
-"Language-Team: Japanese\n"
-"Plural-Forms: nplurals=1; plural=0;\n"
-"X-Crowdin-Project: rango\n"
-"X-Crowdin-Project-ID: 622238\n"
-"X-Crowdin-Language: ja\n"
-"X-Crowdin-File: /translations/en/messages.po\n"
-"X-Crowdin-File-ID: 26\n"
+"Language-Team: French\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Crowdin-Project: testreza\n"
+"X-Crowdin-Project-ID: 625660\n"
+"X-Crowdin-Language: fr\n"
+"X-Crowdin-File: /translations/en.po\n"
+"X-Crowdin-File-ID: 20\n"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:37
@@ -24,7 +24,7 @@ msgstr ""
 #: widget/embedded/src/pages/HistoryPage.tsx:99
 #: widget/embedded/src/pages/LiquiditySourcePage.tsx:139
 msgid "No results found"
-msgstr "結果が見つかりませんでした"
+msgstr "Aucun résultat trouvé"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:38
@@ -32,98 +32,151 @@ msgstr "結果が見つかりませんでした"
 #: widget/embedded/src/pages/HistoryPage.tsx:101
 #: widget/embedded/src/pages/LiquiditySourcePage.tsx:140
 msgid "Try using different keywords"
-msgstr "別のキーワードを使用してみてください"
+msgstr "Essayez d'utiliser différents mots-clés"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:66
 #: widget/embedded/src/components/BlockchainsSection/BlockchainsSection.tsx:44
 #: widget/embedded/src/pages/SelectBlockchainPage.tsx:38
 msgid "Select Blockchain"
-msgstr "ブロックチェーンを選択"
+msgstr "Sélectionnez la Blockchain"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainsSection/BlockchainsSection.tsx:64
 msgid "All"
-msgstr "すべて"
+msgstr "Tous"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainsSection/BlockchainsSection.tsx:91
 msgid "More +{count}"
-msgstr "その他 +{count}"
+msgstr "Plus +{count}"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:307
+#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:292
+#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:365
+msgid "Your {blockchainName} wallets"
+msgstr "Vos portefeuilles {blockchainName}"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:306
 msgid "Insufficient account balance"
-msgstr "アカウント残高が不足しています"
+msgstr "Solde du compte insuffisant"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:316
+#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:315
 msgid "Proceed anyway"
-msgstr "とにかく続行する"
+msgstr "Continuer quand même"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:451
+#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:374
+msgid "You need to connect a {blockchainName} wallet."
+msgstr "Vous devez connecter un portefeuille {blockchainName}."
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:447
 msgid "Send to a different address"
-msgstr "別のアドレスに送る"
+msgstr "Envoyer à une autre adresse"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:461
+#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:457
 msgid "Your destination address"
-msgstr "宛先アドレス"
+msgstr "Votre adresse de destination"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:220
+#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:471
+msgid "Address {destination} doesn't match the blockchain address pattern."
+msgstr "L'adresse {destination} ne correspond pas au modèle d'adresse blockchain."
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:154
+msgid "Add {chain} chain"
+msgstr "Ajouter une chaîne {chain}"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:203
+#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:236
+msgid "Add {blockchainDisplayName} Chain"
+msgstr "Ajouter une chaîne {blockchainDisplayName}"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:208
+#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:240
+msgid "You should connect a {blockchainDisplayName} supported wallet or choose a different {blockchainDisplayName} address"
+msgstr "Vous devriez connecter un portefeuille pris en charge par {blockchainDisplayName} ou choisir une adresse {blockchainDisplayName} différente"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:223
 msgid "Confirm"
-msgstr "確認する"
+msgstr "Valider"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:285
+#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:258
+msgid "{blockchainDisplayName} Chain Added"
+msgstr "Chaîne {blockchainDisplayName} ajoutée"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:262
+msgid "{blockchainDisplayName} is added to your wallet, you can use it to swap."
+msgstr "{blockchainDisplayName} est ajouté à votre portefeuille, vous pouvez l'utiliser pour échanger."
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:272
+msgid "Request Rejected"
+msgstr "Demande rejetée"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:273
+msgid "You've rejected adding {blockchainDisplayName} chain to your wallet."
+msgstr "Vous avez rejeté l'ajout de la chaîne {blockchainDisplayName} à votre portefeuille."
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:296
 msgid "Show more wallets"
-msgstr "ウォレットをもっと表示"
+msgstr "Afficher plus de portefeuilles"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/HeaderButtons/CancelButton.tsx:14
 msgid "Cancel"
-msgstr "キャンセル"
+msgstr "Abandonner"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/HeaderButtons/HomeButtons.tsx:34
 msgid "Refresh"
-msgstr "更新"
+msgstr "Rafraîchir"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/HeaderButtons/HomeButtons.tsx:47
 msgid "Notifications"
-msgstr "通知"
+msgstr "Notifications"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/HeaderButtons/HomeButtons.tsx:66
 #: widget/embedded/src/pages/ConfirmSwapPage.tsx:324
 msgid "Settings"
-msgstr "設定"
+msgstr "Réglages"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/HeaderButtons/HomeButtons.tsx:74
 msgid "Transactions History"
-msgstr "取引履歴"
+msgstr "Historique des transactions"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/HeaderButtons/WalletButton.tsx:14
 #: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.helpers.tsx:16
 #: widget/embedded/src/constants/messages.ts:5
 msgid "Connect Wallet"
-msgstr "ウォレットに接続"
+msgstr "Connecter le portefeuille"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/LoadingSwapDetails/LoadingSwapDetails.tsx:38
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:367
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:363
 msgid "Swaps steps"
-msgstr "ステップを入れ替えます"
+msgstr "Étapes d'échange"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/NoRoutes/NoRoutes.helper.ts:21
 msgid "Retry"
-msgstr "再試行する"
+msgstr "Réessayer"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/NoRoutes/NoRoutes.helper.ts:42
@@ -133,7 +186,7 @@ msgstr "Reset"
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/NotificationContent/NotificationNotFound.tsx:13
 msgid "You have no notification"
-msgstr "通知がありません"
+msgstr "Vous n'avez aucune notification"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/RouteErrors/RouteErrorsModal.tsx:48
@@ -143,595 +196,669 @@ msgstr "Swapping"
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/RouteErrors/RouteErrorsModal.tsx:56
 msgid "Gas cost"
-msgstr "ガスコスト"
+msgstr "Coût du gaz"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/RouteErrors/RouteErrorsModal.tsx:64
 msgid "Receiving"
-msgstr "受信中"
+msgstr "Réception en cours"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/RouteErrors/RouteErrorsModal.tsx:72
 msgid "Price impact"
-msgstr "価格への影響"
+msgstr "Impact des prix"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/RouteErrors/RouteErrorsModal.tsx:104
 msgid "Details"
-msgstr "詳細"
+msgstr "Détails du produit"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/Slippage/Slippage.tsx:33
 msgid "Slippage tolerance per swap"
-msgstr "スワップごとの滑り止め許容差"
+msgstr "Tolérance avec glissement par swap"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/Slippage/Slippage.tsx:89
 msgid "Custom"
-msgstr "カスタム"
+msgstr "Personnalisé"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/Slippage/SlippageTooltipContent.tsx:11
 msgid "Your transaction will be reverted if the price changes unfavorably by more than this percentage"
-msgstr "価格がこのパーセンテージよりも不利に変更された場合、取引は元に戻されます"
+msgstr "Votre transaction sera annulée si le prix change défavorablement de plus de ce pourcentage"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/Slippage/SlippageTooltipContent.tsx:16
 msgid "Warning"
-msgstr "警告"
+msgstr "Avertissement"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/Slippage/SlippageTooltipContent.tsx:17
 msgid "This setting is applied per step, e.g. 1Inch, Thorchain, etc. and only that step will be reverted, not the whole transaction"
-msgstr "この設定はステップごとに適用されます。例えば、1Inch、Thorchainなど。このステップはトランザクション全体ではなく、元に戻されます。"
+msgstr "Ce paramètre est appliqué par étape, par exemple 1 pouce, Thorchain, etc. et seule cette étape sera annulée, pas la transaction entière"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetails/SwapDetails.Placeholder.tsx:33
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:245
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:241
 msgid "Swap and Bridge"
-msgstr "スワップとブリッジ"
+msgstr "Échanger et Pont"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetails/SwapDetails.Placeholder.tsx:42
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:285
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:281
 msgid "Request ID"
-msgstr "要求ID"
+msgstr "ID de la requête"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetails/SwapDetails.Placeholder.tsx:55
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:300
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:296
 msgid "Created at"
-msgstr "作成日時"
+msgstr "Créé le"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetails/SwapDetails.Placeholder.tsx:68
 msgid "Not found"
-msgstr "見つかりません"
+msgstr "Non trouvé"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/SwapDetails/SwapDetails.Placeholder.tsx:69
+#: widget/ui/src/components/SwapDetailsPlaceholder/SwapDetailsPlaceholder.tsx:39
+msgid "Swap with request ID = {requestId} not found."
+msgstr "L'échange avec la requête ID = {requestId} est introuvable."
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:208
+msgid "You have received {amount} {token} in {conciseAddress} wallet on {chain} chain."
+msgstr ""
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:224
+msgid "Transaction was not sent."
+msgstr "La transaction n'a pas été envoyée."
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:226
-msgid "Transaction was not sent."
-msgstr "トランザクションは送信されませんでした。"
+msgid "{amount} {symbol} on {blockchain} remain in your wallet"
+msgstr "{amount} {symbol} sur {blockchain} restent dans votre portefeuille"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:257
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:253
 msgid "Delete"
-msgstr "削除"
+msgstr "Supprimez"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:277
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:273
 msgid "Try again"
-msgstr "もう一度やり直してください"
+msgstr "Réessayez"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetailsAlerts/SwapDetailsAlerts.tsx:41
 msgid "View transaction"
-msgstr "取引を表示"
+msgstr "Voir la transaction"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetailsAlerts/SwapDetailsAlerts.Warning.tsx:25
 msgid "Change"
-msgstr "変更"
+msgstr "Changement"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetailsAlerts/SwapDetailsAlerts.Warning.tsx:47
 #: widget/ui/src/components/Wallet/Wallet.helpers.ts:31
 msgid "Connect"
-msgstr "接続する"
+msgstr "Connecter"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetailsModal/SwapDetailsCompleteModal.tsx:38
 msgid "Swap Successful"
-msgstr "交代成功"
+msgstr "Echange Réussi"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetailsModal/SwapDetailsCompleteModal.tsx:63
 msgid "Transaction Failed"
-msgstr "トランザクション失敗"
+msgstr "La transaction a échoué"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetailsModal/SwapDetailsCompleteModal.tsx:75
 msgid "Done"
-msgstr "完了"
+msgstr "Fait"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetailsModal/SwapDetailsCompleteModal.tsx:88
 msgid "Diagnosis"
-msgstr "診断"
+msgstr "Diagnostic"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetailsModal/SwapDetailsCompleteModal.tsx:96
 msgid "See Details"
-msgstr "詳細を見る"
+msgstr "Voir les détails"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.Cancel.tsx:13
 msgid "Transaction Cancel"
-msgstr "トランザクションキャンセル"
+msgstr "Opération annulée"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.Cancel.tsx:14
 msgid "Are you sure you want to Cancel this swap?"
-msgstr "このスワップをキャンセルしてもよろしいですか？"
+msgstr "Êtes-vous sûr de vouloir annuler cet échange ?"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.Cancel.tsx:23
 msgid "Yes, Cancel it"
-msgstr "はい、キャンセルします"
+msgstr "Oui, annuler"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.Cancel.tsx:29
 msgid "No, Continue"
-msgstr "いいえ、続行します"
+msgstr "Non, continuer"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.Delete.tsx:13
 msgid "Delete Transaction"
-msgstr "取引を削除"
+msgstr "Supprimer la transaction"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.Delete.tsx:14
 msgid "Are you sure you want to delete this swap?"
-msgstr "このスワップを削除してもよろしいですか？"
+msgstr "Êtes-vous sûr de vouloir supprimer cet échange ?"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.Delete.tsx:23
 msgid "Yes, Delete it"
-msgstr "はい、削除します"
+msgstr "Oui, supprimer"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.Delete.tsx:29
 msgid "No, Cancel"
-msgstr "いいえ、キャンセル"
+msgstr "Non, Annuler"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.helpers.tsx:12
 msgid "Change Network"
-msgstr "ネットワークを変更"
+msgstr "Changer de réseau"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.helpers.tsx:20
 msgid "Network Changed"
-msgstr "ネットワークを変更しました"
+msgstr "Réseau modifié"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/TokenList/TokenList.tsx:268
 msgid "Select Token"
-msgstr "トークンを選択"
+msgstr "Sélectionner un jeton"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/WalletModal/WalletModalContent.tsx:19
 msgid "Wallet Connected"
-msgstr "ウォレットが接続されました"
+msgstr "Portefeuille connecté"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/WalletModal/WalletModalContent.tsx:20
 msgid "Your wallet is connected, you can use it to swap."
-msgstr "ウォレットが接続されています。交換に使用できます。"
+msgstr "Votre portefeuille est connecté, vous pouvez l'utiliser pour échanger."
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/WalletModal/WalletModalContent.tsx:31
 msgid "Failed to Connect"
-msgstr "接続に失敗しました"
+msgstr "Échec de la connexion"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/WalletModal/WalletModalContent.tsx:33
 msgid "Your wallet is not connected. Please try again."
-msgstr "ウォレットが接続されていません。もう一度やり直してください。"
+msgstr "Votre portefeuille n'est pas connecté. Veuillez réessayer."
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/WalletModal/WalletModalContent.tsx:42
 msgid "Connecting to your wallet"
-msgstr "ウォレットに接続中"
+msgstr "Connexion à votre portefeuille"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/WalletModal/WalletModalContent.tsx:43
 msgid "Click connect in your wallet popup."
-msgstr "ウォレットのポップアップでformat@@0をクリックします。"
+msgstr "Cliquez sur se connecter dans la fenêtre pop-up de votre portefeuille."
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/constants/errors.ts:9
 msgid "Failed Network, Please retry your swap."
-msgstr "ネットワークに失敗しました。スワップを再試行してください。"
+msgstr "Réseau échoué, veuillez réessayer votre swap."
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/constants/errors.ts:11
 msgid "Please reset your liquidity sources."
-msgstr "流動性情報をリセットしてください。"
+msgstr "Veuillez réinitialiser vos sources de liquidités."
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/constants/errors.ts:12
 msgid "You have limited the liquidity sources and this might result in Rango finding no routes. Please consider resetting your liquidity sources"
-msgstr "流動性情報源が制限されているため、Rangoにルートが見つからない可能性があります。流動性情報源のリセットを検討してください"
+msgstr "Vous avez limité les sources de liquidités et cela pourrait entraîner une recherche de Rango sans traces. Veuillez envisager de réinitialiser vos sources de liquidités"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/constants/errors.ts:17
 msgid "No Routes Found"
-msgstr "ルートが見つかりません"
+msgstr "Aucune route trouvée"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/constants/errors.ts:22
-msgid "Bridge Limit Error: Please increase your amount"
-msgstr "ブリッジ制限エラー: 金額を増やしてください"
+#: widget/embedded/src/constants/errors.ts:18
+msgid "Reasons why Rango couldn't find a route: low liquidity on token, very low input amount or no routes available for the selected input/output token combination."
+msgstr "Raison pour laquelle Rango n'a pas pu trouver de route : faible liquidité sur jeton, très faible quantité d'entrée ou aucune route disponible pour la combinaison de jeton d'entrée/sortie sélectionnée."
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/constants/errors.ts:23
-msgid "Bridge Limit Error: Please decrease your amount"
-msgstr "ブリッジ制限エラー: 金額を下げてください"
+msgid "Bridge Limit Error: Please increase your amount"
+msgstr "Erreur de limite de pont : veuillez augmenter votre montant"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/constants/errors.ts:26
-msgid "High Price Impact"
-msgstr "価格への影響"
+#: widget/embedded/src/constants/errors.ts:24
+msgid "Bridge Limit Error: Please decrease your amount"
+msgstr "Erreur de limite de pont : veuillez réduire votre montant"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/constants/errors.ts:27
-msgid "Price impact is too high!"
-msgstr "価格の影響が高すぎます!"
+msgid "High Price Impact"
+msgstr "Impact sur les prix élevés"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/constants/errors.ts:28
+msgid "Price impact is too high!"
+msgstr "L'impact sur les prix est trop élevé!"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/constants/errors.ts:29
 msgid "The price impact is significantly higher than the allowed amount. If you are sure, continue, otherwise, change the swap."
-msgstr "価格への影響が許容額より大幅に高くなります。確認している場合は、続けてください。そうでない場合は、スワップを変更してください。"
+msgstr "L'impact sur le prix est nettement plus élevé que le montant autorisé. Si vous êtes sûr, continuez, sinon, changez le swap."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/constants/errors.ts:31
+#: widget/embedded/src/constants/errors.ts:32
 msgid "Confirm High price impact"
-msgstr "高価格の影響を確認する"
+msgstr "Confirmer un impact élevé sur les prix"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/constants/errors.ts:34
+#: widget/embedded/src/constants/errors.ts:35
 msgid "Route updated and price impact is too high, try again later!"
-msgstr "ルートの更新と価格への影響が高すぎます。後でもう一度お試しください！"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/constants/errors.ts:39
-msgid "USD Price Unknown"
-msgstr "USD価格不明"
+msgstr "La mise à jour de la route et l'impact des prix est trop élevé, réessayez plus tard!"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/constants/errors.ts:40
-msgid "USD Price Unknown, Cannot calculate Price Impact."
-msgstr "USD価格が不明です。価格の影響を計算できません。"
+msgid "USD Price Unknown"
+msgstr "Prix USD inconnu"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/constants/errors.ts:41
-msgid "USD Price Unknown, Cannot calculate Price Impact. The price impact may be higher than usual. Are you sure to continue the Swap?"
-msgstr "USD価格が不明です。価格の影響を計算できません。価格の影響は通常よりも高くなる可能性があります。スワップを続行してもよろしいですか？"
+msgid "USD Price Unknown, Cannot calculate Price Impact."
+msgstr "Prix USD inconnu, impossible de calculer l'impact des prix."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/constants/errors.ts:44
+#: widget/embedded/src/constants/errors.ts:42
+msgid "USD Price Unknown, Cannot calculate Price Impact. The price impact may be higher than usual. Are you sure to continue the Swap?"
+msgstr "Prix USD inconnu, impossible de calculer l'impact des prix. L'impact sur le prix peut être plus élevé que d'habitude. Êtes-vous sûr de vouloir continuer le swap?"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/constants/errors.ts:45
 msgid "Confirm USD Price Unknown"
-msgstr "不明なUSD価格を確認"
+msgstr "Confirmer le prix en USD inconnu"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/constants/messages.ts:6
-#: widget/embedded/src/pages/Home.tsx:311
+#: widget/embedded/src/pages/Home.tsx:310
 msgid "Swap"
-msgstr "入れ替え"
+msgstr "Permuter"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/constants/messages.ts:7
 msgid "Swap anyway"
-msgstr "とにかく入れ替え"
+msgstr "Permuter quand même"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/constants/messages.ts:8
 msgid "The route goes through Ethereum. Continue?"
-msgstr "ルートはEthereumを通過します。続行しますか？"
+msgstr "L'itinéraire passe par Ethereum. Continuer ?"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/constants/warnings.ts:10
 msgid "Route has been updated."
-msgstr "ルートが更新されました。"
+msgstr "La route a été mise à jour."
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/constants/warnings.ts:12
 msgid "Output amount changed to {newOutputAmount} ({percentageChange}% change)."
-msgstr "出力量が {newOutputAmount} に変更されました({percentageChange}%変更)。"
+msgstr ""
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/constants/warnings.ts:20
 msgid "Route swappers has been updated."
-msgstr "ルートスワッパーを更新しました。"
+msgstr "Les swappers de route ont été mis à jour."
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/constants/warnings.ts:22
 msgid "Route internal coins has been updated."
-msgstr "ルート内部コインが更新されました。"
+msgstr "Les pièces internes de la route ont été mises à jour."
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/pages/ConfirmSwapPage.tsx:317
 msgid "Confirm Swap"
-msgstr "スワップの確認"
+msgstr "Confirmer l'échange"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/pages/ConfirmSwapPage.tsx:345
 msgid "Start Swap"
-msgstr "スワップを開始"
+msgstr "Début de l'échange"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/pages/ConfirmSwapPage.tsx:367
 msgid "Change settings"
-msgstr "設定の変更"
+msgstr "Modifier les paramètres"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/pages/ConfirmSwapPage.tsx:379
 msgid "High slippage"
-msgstr "ハイスリップページ"
+msgstr "Haut slippage"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/pages/ConfirmSwapPage.tsx:380
 msgid "Low slippage"
-msgstr "すべり低い順"
+msgstr "Slippage bas"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/ConfirmSwapPage.tsx:414
+#: widget/embedded/src/pages/ConfirmSwapPage.tsx:385
+#: widget/ui/src/containers/Warnings/HighSlippageWarning.tsx:22
+msgid " Caution, your slippage is high (={selectedSlippage}). Your trade may be front run."
+msgstr " Attention, votre slippage est élevé (={selectedSlippage}). Votre échange peut être frontal."
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/ConfirmSwapPage.tsx:389
+#: widget/ui/src/containers/Warnings/MinRequiredSlippage.tsx:22
+msgid "We recommend you to increase slippage to at least {minRequiredSlippage} for this route."
+msgstr "Nous vous recommandons d'augmenter le slippage à au moins {minRequiredSlippage} pour cette route."
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/ConfirmSwapPage.tsx:405
 msgid "Confirm anyway"
-msgstr "確認する"
+msgstr "Confirmer quand même"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/ConfirmSwapPage.tsx:433
+#: widget/embedded/src/pages/ConfirmSwapPage.tsx:424
 msgid "You get"
-msgstr "あなたは"
+msgstr "Vous obtenez"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/pages/HistoryPage.tsx:82
 msgid "History"
-msgstr "沿革"
+msgstr "Historique"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/pages/HistoryPage.tsx:89
 msgid "Search Transaction"
-msgstr "トランザクションを検索"
+msgstr "Rechercher une transaction"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/Home.tsx:327
+#: widget/embedded/src/pages/Home.tsx:257
+msgid "Yours: {amount} {symbol}"
+msgstr "Vous: {amount} {symbol}"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/Home.tsx:326
 msgid "From"
-msgstr "差出人:"
+msgstr "A partir de"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/Home.tsx:365
+#: widget/embedded/src/pages/Home.tsx:364
 msgid "To"
-msgstr "終了日"
+msgstr "À"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/pages/LanguagePage.tsx:42
 msgid "Language"
-msgstr "言語"
+msgstr "Langue"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/pages/LanguagePage.tsx:49
 msgid "language"
-msgstr "言語"
+msgstr "Langue"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/pages/LiquiditySourcePage.tsx:131
 msgid "Search {sourceType}"
-msgstr "{sourceType} を検索"
+msgstr "Rechercher dans {sourceType}"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/pages/SelectBlockchainPage.tsx:51
 msgid "Search Blockchain"
-msgstr "ブロックチェーンを検索"
+msgstr "Rechercher dans la Blockchain"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/pages/SelectSwapItemsPage.tsx:81
 msgid "Swap {type}"
-msgstr "{type} を入れ替え"
+msgstr "Échanger {type}"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/pages/SelectSwapItemsPage.tsx:104
 msgid "Search Token"
-msgstr "トークンを検索"
+msgstr "Jeton de recherche"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/pages/SettingsPage.tsx:67
 msgid "Loading failed"
-msgstr "読み込みに失敗しました"
+msgstr "Échec du chargement"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/pages/SettingsPage.tsx:83
 msgid "Enabled bridges"
-msgstr "有効なブリッジ"
+msgstr "Ponts de connexion activés"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/pages/SettingsPage.tsx:100
 msgid "Enabled exchanges"
-msgstr "有効な取引所"
+msgstr "Échanges activés"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/pages/SettingsPage.tsx:130
 #: widget/embedded/src/pages/ThemePage.tsx:76
 #: widget/embedded/src/pages/ThemePage.tsx:85
 msgid "Theme"
-msgstr "テーマ"
+msgstr "Thème"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/pages/SettingsPage.tsx:142
 msgid "Infinite Approval"
-msgstr "永久承認"
+msgstr "Approbation infinie"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/pages/SettingsPage.tsx:151
 msgid "Enabling the 'Infinite Approval' mode grants unrestricted access to smart contracts of DEXes/Bridges, allowing them to utilize the approved token amount without limitations."
-msgstr "「Infinite Approval」モードを有効にすると、DEX/Bridges のスマートコントラクトに無制限にアクセスできるため、承認されたトークンの量を制限なく利用できます。"
+msgstr "Activer le mode \"Approbation infinie\" donne un accès illimité aux contrats intelligents de DEXes/Ponts, leur permettant d'utiliser le montant de jeton approuvé sans restrictions."
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/pages/SettingsPage.tsx:179
 msgid "Setting"
-msgstr "設定"
+msgstr "Réglages"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/pages/ThemePage.tsx:39
 msgid "Light"
-msgstr "ライト"
+msgstr "Lumière"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/pages/ThemePage.tsx:51
 msgid "Dark"
-msgstr "ダーク"
+msgstr "Sombre"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/pages/ThemePage.tsx:63
 msgid "Auto"
-msgstr "自動"
+msgstr "Automatique"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/pages/WalletsPage.tsx:73
 #: widget/ui/src/containers/ConnectWalletsModal/ConnectWalletsModal.tsx:30
 msgid "Connect Wallets"
-msgstr "ウォレットを接続"
+msgstr "Connecter les portefeuilles"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/pages/WalletsPage.tsx:78
 msgid "Choose a wallet to connect."
-msgstr "接続するウォレットを選択してください。"
+msgstr "Choisissez un portefeuille à connecter."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:602
+#: widget/embedded/src/utils/swap.ts:122
+msgid "Required: >= {min} {symbol}"
+msgstr "Requis: >= {min} {symbol}"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/utils/swap.ts:135
+msgid "Required: > {min} {symbol}"
+msgstr "Requis: > {min} {symbol}"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/utils/swap.ts:150
+msgid "Required: <= {max} {symbol}"
+msgstr "Requis: <= {max} {symbol}"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/utils/swap.ts:163
+msgid "Required: < {max} {symbol}"
+msgstr "Requis: < {max} {symbol}"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/utils/swap.ts:598
 msgid " for network fee"
-msgstr " ネットワーク料金で"
+msgstr " pour frais de réseau"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:605
+#: widget/embedded/src/utils/swap.ts:601
 msgid " for swap"
-msgstr " スワップ用"
+msgstr " pour swap"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:608
+#: widget/embedded/src/utils/swap.ts:604
 msgid " for input and network fee"
-msgstr " 入力とネットワーク料金について"
+msgstr " pour les frais d'entrée et de réseau"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:668
+#: widget/embedded/src/utils/swap.ts:606
+msgid "Needs ≈ {requiredAmount} {symbol}{reason}, but you have {currentAmount} {symbol} in your {blockchain} wallet."
+msgstr ""
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/utils/swap.ts:663
 msgid "Waiting for connecting wallet"
-msgstr "ウォレットの接続を待っています"
+msgstr "En attente de connexion au portefeuille"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:672
+#: widget/embedded/src/utils/swap.ts:667
 msgid "Waiting for other running tasks to be finished"
-msgstr "他の実行中のタスクが完了するのを待っています"
+msgstr "En attente de la fin des autres tâches en cours"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:675
+#: widget/embedded/src/utils/swap.ts:670
 msgid "Waiting for changing wallet network"
-msgstr "ウォレットネットワークの変更を待っています"
+msgstr "En attente de changement de réseau du portefeuille"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/utils/time.ts:20
 msgid "year"
-msgstr "年"
+msgstr "Année"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/utils/time.ts:21
 msgid "years"
-msgstr "年"
+msgstr "Années"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/utils/time.ts:25
 msgid "month"
-msgstr "月"
+msgstr "mois"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/utils/time.ts:26
 msgid "months"
-msgstr "ヶ月"
+msgstr "mois"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/utils/time.ts:30
 msgid "day"
-msgstr "日"
+msgstr "jour"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/utils/time.ts:31
 msgid "days"
-msgstr "日"
+msgstr "Jours"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/utils/time.ts:35
 msgid "hour"
-msgstr "時"
+msgstr "heure"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/utils/time.ts:36
 msgid "hours"
-msgstr "時間"
+msgstr "heures"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/utils/time.ts:40
 msgid "minute"
-msgstr "分"
+msgstr "minute"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/utils/time.ts:41
 msgid "minutes"
-msgstr "分"
+msgstr "minutes"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/utils/time.ts:61
 msgid "seconds"
-msgstr "秒"
+msgstr "secondes"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/utils/time.ts:64
 msgid "second"
-msgstr "秒"
+msgstr "seconde"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/utils/time.ts:69
+#: widget/embedded/src/utils/time.ts:73
+msgid "{time} ago"
+msgstr ""
 
 #. js-lingui-explicit-id
 #: widget/ui/src/components/Alert/LoadingFailedAlert.tsx:13
 msgid " Error connecting server, please reload the app and try again."
-msgstr " サーバー接続中にエラーが発生しました。アプリを再読み込みしてもう一度お試しください。"
+msgstr " Erreur de connexion au serveur, veuillez recharger l'application et réessayer."
 
 #. js-lingui-explicit-id
 #: widget/ui/src/components/BottomLogo/BottomLogo.tsx:14
 msgid "Powered By"
-msgstr "Powered By"
+msgstr "Propulsé par"
 
 #. js-lingui-explicit-id
 #: widget/ui/src/components/ChangeSlippageButton/ChangeSlippageButton.tsx:14
 msgid "Change Slippage"
-msgstr "僅用於中文"
+msgstr "Changer le slippage"
 
 #. js-lingui-explicit-id
 #: widget/ui/src/components/LiquiditySourceList/LiquiditySourceList.tsx:112
 msgid "Bridges"
-msgstr "ブリッジ"
+msgstr "Ponts de connexion"
 
 #. js-lingui-explicit-id
 #: widget/ui/src/components/LiquiditySourceList/LiquiditySourceList.tsx:151
 msgid "Exchanges"
-msgstr "交換"
+msgstr "Échanges"
+
+#. js-lingui-explicit-id
+#: widget/ui/src/components/StepDetails/StepDetails.tsx:54
+msgid "Swap on {fromChain} via {swapper}"
+msgstr "Échanger sur {fromChain} via {swapper}"
 
 #. js-lingui-explicit-id
 #: widget/ui/src/components/SwapDetailsPlaceholder/SwapDetailsPlaceholder.tsx:28
 msgid "Swap Details"
-msgstr "スワップの詳細"
+msgstr "Permuter les détails"
 
 #. js-lingui-explicit-id
 #: widget/ui/src/components/SwapListItem/SwapListItem.helpers.ts:8
 msgid "Failed"
-msgstr "失敗しました"
+msgstr "Echoué"
 
 #. js-lingui-explicit-id
 #: widget/ui/src/components/SwapListItem/SwapListItem.helpers.ts:10
@@ -741,202 +868,90 @@ msgstr "Complete"
 #. js-lingui-explicit-id
 #: widget/ui/src/components/SwapListItem/SwapListItem.helpers.ts:12
 msgid "In progress"
-msgstr "進行中"
+msgstr "En cours"
 
 #. js-lingui-explicit-id
 #: widget/ui/src/components/SwapListItem/SwapToken.tsx:118
 msgid "Waiting for bridge transaction"
-msgstr "ブリッジトランザクションを待っています"
+msgstr "En attente de la transaction de pont"
 
 #. js-lingui-explicit-id
 #: widget/ui/src/components/TokenPreview/TokenPreview.tsx:150
 #: widget/ui/src/containers/SwapInput/TokenSection.tsx:45
 #: widget/ui/src/containers/TokenInfo/TokenInfo.tsx:235
 msgid "Chain"
-msgstr "チェーン"
+msgstr "Chaîne"
 
 #. js-lingui-explicit-id
 #: widget/ui/src/components/TokenPreview/TokenPreview.tsx:168
 #: widget/ui/src/containers/SwapInput/TokenSection.tsx:41
 #: widget/ui/src/containers/TokenInfo/TokenInfo.tsx:259
 msgid "Token"
-msgstr "トークン"
+msgstr "Jeton"
 
 #. js-lingui-explicit-id
 #: widget/ui/src/components/Wallet/Wallet.helpers.ts:12
 msgid "Connected"
-msgstr "接続しました"
+msgstr "Connecté"
 
 #. js-lingui-explicit-id
 #: widget/ui/src/components/Wallet/Wallet.helpers.ts:13
 msgid "Disconnect"
-msgstr "接続を解除"
+msgstr "Déconnecter"
 
 #. js-lingui-explicit-id
 #: widget/ui/src/components/Wallet/Wallet.helpers.ts:18
 #: widget/ui/src/components/Wallet/Wallet.helpers.ts:19
 msgid "Install"
-msgstr "インストール"
+msgstr "Installer"
 
 #. js-lingui-explicit-id
 #: widget/ui/src/components/Wallet/Wallet.helpers.ts:24
 msgid "Connecting..."
-msgstr "接続中..."
+msgstr "Connexion en cours..."
 
 #. js-lingui-explicit-id
 #: widget/ui/src/components/Wallet/Wallet.helpers.ts:25
 msgid "Connecting"
-msgstr "接続中"
+msgstr "Connexion en cours"
 
 #. js-lingui-explicit-id
 #: widget/ui/src/components/Wallet/Wallet.helpers.ts:30
 msgid "Disconnected"
-msgstr "切断されました"
+msgstr "Déconnecté"
 
 #. js-lingui-explicit-id
 #: widget/ui/src/components/Wallet/Wallet.helpers.ts:34
 msgid "you need to pass a correct state to Wallet."
-msgstr "ウォレットに正しい状態を渡す必要があります。"
+msgstr "vous devez passer un état correct à Wallet."
 
 #. js-lingui-explicit-id
 #: widget/ui/src/containers/HomePanel/HomePanel.tsx:123
 msgid "SWAP"
-msgstr "SWAP"
+msgstr "ÉCHANGER"
 
 #. js-lingui-explicit-id
 #: widget/ui/src/containers/SwapInput/SwapInput.tsx:26
 #: widget/ui/src/containers/TokenInfo/TokenInfo.tsx:194
 msgid "Balance"
-msgstr "残高"
+msgstr "Solde"
 
 #. js-lingui-explicit-id
 #: widget/ui/src/containers/SwapInput/SwapInput.tsx:33
 msgid "Max"
-msgstr "最大値"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/pages/ConfirmSwapPage.tsx:385
-#: widget/ui/src/containers/Warnings/HighSlippageWarning.tsx:21
-msgid "highSlippage"
-msgstr "highSlippage"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:228
-msgid "remainSymbol"
-msgstr "残りのシンボル"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:256
-msgid "blockchainAdded"
-msgstr "blockchainAdded"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:261
-msgid "blockchainAddedDescription"
-msgstr "blockchainAddedDescription"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/utils/time.ts:69
-#: widget/embedded/src/utils/time.ts:74
-msgid "timeAgo"
-msgstr "timeAgo"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:197
-#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:233
-msgid "addBlockchain"
-msgstr "addBlockchain"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:147
-msgid "addChain"
-msgstr "addChain"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:475
-msgid "addressMatch"
-msgstr "addressMatch"
+msgstr "Max."
 
 #. js-lingui-explicit-id
 #: widget/ui/src/containers/TokenInfo/TokenInfo.tsx:179
 msgid "swap from"
-msgstr "スワップ元"
+msgstr "swap de"
 
 #. js-lingui-explicit-id
 #: widget/ui/src/containers/TokenInfo/TokenInfo.tsx:198
 msgid "maximum amount of asset"
-msgstr "アセットの最大量"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:610
-msgid "balanceWarningMessage"
-msgstr "残高警告メッセージ"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:166
-msgid "requiredMax"
-msgstr "必須の最大値"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:152
-msgid "requiredEqualMax"
-msgstr "requiredEqualMax"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:136
-msgid "requiredMin"
-msgstr "必須最小値"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:122
-msgid "requiredEqualMin"
-msgstr "requiredEqualMin"
-
-#. js-lingui-explicit-id
-#: widget/ui/src/components/StepDetails/StepDetails.tsx:54
-msgid "swapperDescription"
-msgstr "swapperDescription"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.Placeholder.tsx:69
-#: widget/ui/src/components/SwapDetailsPlaceholder/SwapDetailsPlaceholder.tsx:39
-msgid "swapNotFound"
-msgstr "swapNotFound"
+msgstr "montant maximum d'actif"
 
 #. js-lingui-explicit-id
 #: widget/ui/src/containers/TokenInfo/TokenInfo.tsx:181
 msgid "swap to"
-msgstr "スワップ先"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/pages/ConfirmSwapPage.tsx:393
-#: widget/ui/src/containers/Warnings/MinRequiredSlippage.tsx:21
-msgid "increaseSlippage"
-msgstr "increase Slippage"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:208
-msgid "receivedMessage"
-msgstr "receivedMessage"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:376
-msgid "needConnect"
-msgstr "needConnect"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:203
-#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:238
-msgid "addBlockchainDescription"
-msgstr "addBlockchainDescription"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:292
-#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:366
-msgid "yourWallets"
-msgstr "あなたのウォレット"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/pages/Home.tsx:257
-msgid "yourSymbol"
-msgstr "あなたのシンボル"
+msgstr "swap vers"

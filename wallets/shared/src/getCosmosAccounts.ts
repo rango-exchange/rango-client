@@ -1,11 +1,12 @@
+import type { Connect, ProviderConnectResult, Suggest } from './rango';
+import type { Keplr as InstanceType } from '@keplr-wallet/types';
 import type {
   BlockchainMeta,
   CosmosBlockchainMeta,
   CosmosChainInfo,
 } from 'rango-types';
+
 import { deepCopy } from './helpers';
-import { Connect, ProviderConnectResult } from './rango';
-import { Keplr as InstanceType } from '@keplr-wallet/types';
 
 export interface CosmosInfo extends Omit<CosmosChainInfo, 'experimental'> {
   chainId: string;
@@ -57,7 +58,9 @@ export const getCosmosExperimentalChainInfo = (
           ...currency,
           coinImageUrl: window.location.origin + currency.coinImageUrl,
         }));
-        if (!info.gasPriceStep) delete info.gasPriceStep;
+        if (!info.gasPriceStep) {
+          delete info.gasPriceStep;
+        }
         const { experimental, ...otherProperties } = info;
         return (
           (cosmosExperimentalChainsInfo[blockchain.name] = {
@@ -94,7 +97,9 @@ async function getMainAccounts({
   const availableAccountForChains = await Promise.allSettled(accountsPromises);
   const resolvedAccounts: ProviderConnectResult[] = [];
   availableAccountForChains.forEach((result, index) => {
-    if (result.status !== 'fulfilled') return;
+    if (result.status !== 'fulfilled') {
+      return;
+    }
 
     const accounts = result.value;
     const { chainId } = offlineSigners[index];
@@ -125,14 +130,16 @@ async function tryRequestMiscAccounts({
         chainId,
       };
     });
-  const accountsPromises = offlineSigners.map(({ signer }) =>
+  const accountsPromises = offlineSigners.map(async ({ signer }) =>
     signer.getAccounts()
   );
   const availableAccountForChains = await Promise.allSettled(accountsPromises);
 
   const resolvedAccounts: ProviderConnectResult[] = [];
   availableAccountForChains.forEach((result, index) => {
-    if (result.status !== 'fulfilled') return;
+    if (result.status !== 'fulfilled') {
+      return;
+    }
 
     const accounts = result.value;
     const { chainId } = offlineSigners[index];
@@ -163,13 +170,12 @@ export const getCosmosAccounts: Connect = async ({
   if (!!chainInfo) {
     await instance.experimentalSuggestChain(chainInfo.info);
   }
-
   // Getting main chains + target network
   let desiredChainIds: string[] = getCosmosMainChainsIds(
     meta as CosmosBlockchainMeta[]
   );
   if (!!chainInfo) {
-    desiredChainIds.push(chainInfo!.id);
+    desiredChainIds.push(chainInfo.id);
   }
   desiredChainIds = Array.from(new Set(desiredChainIds)).filter(Boolean);
 
@@ -191,4 +197,20 @@ export const getCosmosAccounts: Connect = async ({
 
   const results = [...mainAccounts, ...miscAccounts];
   return results;
+};
+
+export const suggestCosmosChain: Suggest = async (options) => {
+  const { instance, meta, network } = options;
+  const chainInfo = network
+    ? getCosmosExperimentalChainInfo(meta as CosmosBlockchainMeta[])[network]
+    : null;
+
+  if (!chainInfo) {
+    throw new Error(
+      `You need to add ${network} to "COSMOS_EXPERIMENTAL_CHAINS_INFO" first.`
+    );
+  }
+
+  // Asking for add experimental chain to wallet.
+  await instance.experimentalSuggestChain(chainInfo.info);
 };

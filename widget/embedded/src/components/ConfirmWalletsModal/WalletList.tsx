@@ -52,8 +52,8 @@ export function WalletList(props: PropTypes) {
   const [showExperimentalChainModal, setShowExperimentalChainModal] =
     useState(false);
   const [addingExperimentalChainStatus, setAddingExperimentalChainStatus] =
-    useState<'in-progress' | 'completed' | null>(null);
-  const { connect } = useWallets();
+    useState<'in-progress' | 'completed' | 'rejected' | null>(null);
+  const { suggestAndConnect } = useWallets();
   let modalTimerId: ReturnType<typeof setTimeout> | null = null;
   const { list, error, handleClick } = useWalletList({
     config,
@@ -79,8 +79,12 @@ export function WalletList(props: PropTypes) {
   const addExperimentalChain = async (wallet: Wallet) => {
     setShowExperimentalChainModal(false);
     setAddingExperimentalChainStatus('in-progress');
-    await connect(wallet.walletType, wallet.chain);
-    setAddingExperimentalChainStatus('completed');
+    try {
+      await suggestAndConnect(wallet.walletType, wallet.chain);
+      setAddingExperimentalChainStatus('completed');
+    } catch (e) {
+      setAddingExperimentalChainStatus('rejected');
+    }
   };
 
   useEffect(() => {
@@ -106,7 +110,10 @@ export function WalletList(props: PropTypes) {
 
   useEffect(() => {
     let timeout: ReturnType<typeof setTimeout> | null = null;
-    if (addingExperimentalChainStatus === 'completed') {
+    if (
+      addingExperimentalChainStatus === 'completed' ||
+      addingExperimentalChainStatus === 'rejected'
+    ) {
       timeout = setTimeout(
         () => setAddingExperimentalChainStatus(null),
         TIME_TO_CLOSE_MODAL
@@ -145,8 +152,7 @@ export function WalletList(props: PropTypes) {
 
         const connectedWalletDescription = couldAddExperimentalChain
           ? i18n.t({
-              id: 'addChain',
-              message: 'Add {chain} chain',
+              id: 'Add {chain} chain',
               values: { chain },
             })
           : conciseAddress;
@@ -195,15 +201,12 @@ export function WalletList(props: PropTypes) {
                 }}>
                 <MessageBox
                   title={i18n.t({
-                    id: 'addBlockchain',
-                    message: 'Add {blockchainDisplayName} Chain',
+                    id: 'Add {blockchainDisplayName} Chain',
                     values: { blockchainDisplayName },
                   })}
                   type="warning"
                   description={i18n.t({
-                    id: 'addBlockchainDescription',
-                    message:
-                      'You should connect a {blockchainDisplayName} supported wallet or choose a different {blockchainDisplayName} address',
+                    id: 'You should connect a {blockchainDisplayName} supported wallet or choose a different {blockchainDisplayName} address',
                     values: { blockchainDisplayName },
                   })}>
                   <Divider size={18} />
@@ -227,18 +230,15 @@ export function WalletList(props: PropTypes) {
                 open={!!addingExperimentalChainStatus}
                 onClose={setAddingExperimentalChainStatus.bind(null, null)}
                 container={modalContainer}>
-                {addingExperimentalChainStatus === 'in-progress' ? (
+                {addingExperimentalChainStatus === 'in-progress' && (
                   <MessageBox
                     type="loading"
                     title={i18n.t({
-                      id: 'addBlockchain',
-                      message: 'Add {blockchainDisplayName} Chain',
+                      id: 'Add {blockchainDisplayName} Chain',
                       values: { blockchainDisplayName },
                     })}
                     description={i18n.t({
-                      id: 'addBlockchainDescription',
-                      message:
-                        'You should connect a {blockchainDisplayName} supported wallet or choose a different {blockchainDisplayName} address',
+                      id: 'You should connect a {blockchainDisplayName} supported wallet or choose a different {blockchainDisplayName} address',
                       values: { blockchainDisplayName },
                     })}
                     icon={
@@ -250,22 +250,33 @@ export function WalletList(props: PropTypes) {
                       </LogoContainer>
                     }
                   />
-                ) : (
+                )}
+
+                {addingExperimentalChainStatus === 'completed' && (
                   <MessageBox
                     type="success"
                     title={i18n.t({
-                      id: 'blockchainAdded',
-                      message: '{blockchainDisplayName} Chain Added',
+                      id: '{blockchainDisplayName} Chain Added',
                       values: { blockchainDisplayName },
                     })}
                     description={i18n.t({
-                      id: 'blockchainAddedDescription',
-                      message:
-                        '{blockchainDisplayName} is added to your wallet, you can use it to swap.',
+                      id: '{blockchainDisplayName} is added to your wallet, you can use it to swap.',
                       values: { blockchainDisplayName },
                     })}
                   />
                 )}
+
+                {addingExperimentalChainStatus === 'rejected' && (
+                  <MessageBox
+                    type="error"
+                    title={i18n.t('Request Rejected')}
+                    description={i18n.t({
+                      id: "You've rejected adding {blockchainDisplayName} chain to your wallet.",
+                      values: { blockchainDisplayName },
+                    })}
+                  />
+                )}
+
                 <Divider direction="vertical" size={32} />
               </Modal>
             )}

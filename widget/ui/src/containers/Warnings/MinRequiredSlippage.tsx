@@ -1,6 +1,7 @@
-import React from 'react';
 import { i18n } from '@lingui/core';
-import { Divider, Typography, ChangeSlippageButton } from '../../components';
+import React from 'react';
+
+import { ChangeSlippageButton, Divider, Typography } from '../../components';
 import { styled } from '../../theme';
 
 interface PropTypes {
@@ -18,14 +19,10 @@ export function MinRequiredSlippage({
 }: PropTypes) {
   return (
     <StyledMessage variant="body" size="small">
-      {i18n.t(
-        'increaseSlippage',
-        { minRequiredSlippage },
-        {
-          message:
-            'We recommend you to increase slippage to at least {minRequiredSlippage} for this route.',
-        }
-      )}
+      {i18n.t({
+        id: 'We recommend you to increase slippage to at least {minRequiredSlippage} for this route.',
+        values: { minRequiredSlippage },
+      })}
       <Divider size={8} />
       <ChangeSlippageButton onClick={changeSlippage} />
     </StyledMessage>

@@ -1,5 +1,6 @@
+import type { ProviderContext } from './types';
+
 import { createContext } from 'react';
-import { ProviderContext } from './types';
 
 const defaultErrorMesssage = "Context hasn't been initialized yet.";
 const defaultContext: ProviderContext = {
@@ -10,6 +11,9 @@ const defaultContext: ProviderContext = {
     throw new Error(defaultErrorMesssage);
   },
   async disconnectAll() {
+    throw new Error(defaultErrorMesssage);
+  },
+  async suggestAndConnect() {
     throw new Error(defaultErrorMesssage);
   },
   state() {

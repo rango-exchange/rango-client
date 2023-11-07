@@ -255,8 +255,7 @@ export function Home() {
                   <Divider direction="horizontal" size={8} />
                   <Typography size="xsmall" variant="body" color="neutral700">
                     {i18n.t({
-                      id: 'yourSymbol',
-                      message: 'Yours: {amount} {symbol}',
+                      id: 'Yours: {amount} {symbol}',
                       values: {
                         amount: numberToString(
                           swapHasError?.fromAmount || null,

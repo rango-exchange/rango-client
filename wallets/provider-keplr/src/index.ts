@@ -1,9 +1,15 @@
-import type { Connect, Subscribe, WalletInfo } from '@rango-dev/wallets-shared';
+import type {
+  Connect,
+  Subscribe,
+  Suggest,
+  WalletInfo,
+} from '@rango-dev/wallets-shared';
 import type { BlockchainMeta, SignerFactory } from 'rango-types';
 
 import {
   getCosmosAccounts,
   Networks,
+  suggestCosmosChain,
   WalletTypes,
 } from '@rango-dev/wallets-shared';
 import { cosmosBlockchains } from 'rango-types';
@@ -34,6 +40,8 @@ export const subscribe: Subscribe = ({ connect, disconnect }) => {
     connect();
   });
 };
+
+export const suggest: Suggest = suggestCosmosChain;
 
 export const getSigners: (provider: any) => SignerFactory = signer;
 
