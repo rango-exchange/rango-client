@@ -1,7 +1,11 @@
 import type { WidgetConfig } from '../../types';
-import type { StateCreator } from 'zustand';
+import type { StateCreatorWithInitialData } from '../app';
 
-const initConfig: WidgetConfig = { apiKey: '' };
+export const DEFAULT_CONFIG: WidgetConfig = {
+  apiKey: '',
+  multiWallets: true,
+  includeNewLiquiditySources: true,
+};
 
 export type ConfigSlice = {
   config: WidgetConfig;
@@ -9,18 +13,24 @@ export type ConfigSlice = {
   updateConfig: (config: WidgetConfig) => void;
 };
 
-export const createConfigSlice: StateCreator<ConfigSlice> = (set, get) => ({
-  config: initConfig,
+export const createConfigSlice: StateCreatorWithInitialData<
+  WidgetConfig,
+  ConfigSlice,
+  ConfigSlice
+> = (initialData, set, get) => {
+  return {
+    config: { ...DEFAULT_CONFIG, ...initialData },
 
-  // Actions
-  updateConfig: (nextConfig: WidgetConfig) => {
-    const currentConfig = get().config;
+    // Actions
+    updateConfig: (nextConfig: WidgetConfig) => {
+      const currentConfig = get().config;
 
-    set({
-      config: {
-        ...currentConfig,
-        ...nextConfig,
-      },
-    });
-  },
-});
+      set({
+        config: {
+          ...currentConfig,
+          ...nextConfig,
+        },
+      });
+    },
+  };
+};

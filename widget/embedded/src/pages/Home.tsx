@@ -35,8 +35,8 @@ import {
   USD_VALUE_MIN_DECIMALS,
 } from '../constants/routing';
 import { useSwapInput } from '../hooks/useSwapInput';
+import { useAppStore } from '../store/AppStore';
 import { useBestRouteStore } from '../store/bestRoute';
-import { useMetaStore } from '../store/meta';
 import { useUiStore } from '../store/ui';
 import { useWalletsStore } from '../store/wallets';
 import { ButtonState } from '../types';
@@ -112,11 +112,9 @@ export function Home() {
     resetRouteWallets,
   } = useBestRouteStore();
 
-  const {
-    meta: { tokens, blockchains },
-    loadingStatus: loadingMetaStatus,
-  } = useMetaStore();
-
+  const loadingMetaStatus = useAppStore().use.loadingStatus();
+  const tokens = useAppStore().use.tokens()();
+  const blockchains = useAppStore().use.blockchains()();
   const connectedWallets = useWalletsStore.use.connectedWallets();
   const setCurrentPage = useUiStore.use.setCurrentPage();
   const [openWarningModal, setOpenWarningModal] = useState(false);

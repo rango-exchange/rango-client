@@ -3,7 +3,6 @@ import type {
   ConfirmSwap,
   ConfirmSwapFetchResult,
 } from '../hooks/useConfirmSwap';
-import type { WidgetConfig } from '../types';
 
 import { i18n } from '@lingui/core';
 import { useManager } from '@rango-dev/queue-manager-react';
@@ -49,8 +48,8 @@ import {
 } from '../constants/routing';
 import { getRouteWarningMessage } from '../constants/warnings';
 import { useConfirmSwap } from '../hooks/useConfirmSwap';
+import { useAppStore } from '../store/AppStore';
 import { useBestRouteStore } from '../store/bestRoute';
-import { useMetaStore } from '../store/meta';
 import { useSettingsStore } from '../store/settings';
 import { useUiStore } from '../store/ui';
 import { useWalletsStore } from '../store/wallets';
@@ -100,13 +99,8 @@ const Buttons = styled('div', {
   },
 });
 
-type PropTypes = {
-  config?: WidgetConfig;
-};
-
-export function ConfirmSwapPage(props: PropTypes) {
+export function ConfirmSwapPage() {
   //TODO: move component's logics to a custom hook
-  const { config } = props;
   const {
     bestRoute,
     inputAmount,
@@ -127,10 +121,9 @@ export function ConfirmSwapPage(props: PropTypes) {
   const showWalletsOnInit = !routeWalletsConfirmed;
   const [showWallets, setShowWallets] = useState(false);
   const setSelectedSwap = useUiStore.use.setSelectedSwap();
-  const {
-    meta: { tokens, blockchains },
-    loadingStatus: loadingMetaStatus,
-  } = useMetaStore();
+  const loadingMetaStatus = useAppStore().use.loadingStatus();
+  const blockchains = useAppStore().use.blockchains()();
+  const tokens = useAppStore().use.tokens()();
   const slippage = useSettingsStore.use.slippage();
   const customSlippage = useSettingsStore.use.customSlippage();
   const { manager } = useManager();
@@ -414,7 +407,6 @@ export function ConfirmSwapPage(props: PropTypes) {
           onCancel={cancelFetch}
           loading={fetchingConfirmationRoute}
           onCheckBalance={onConfirmSwap}
-          config={config}
         />
       )}
 

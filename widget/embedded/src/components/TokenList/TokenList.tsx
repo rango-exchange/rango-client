@@ -21,8 +21,7 @@ import {
 } from '@rango-dev/ui';
 import React, { forwardRef, useEffect, useState } from 'react';
 
-import { useAppStore } from '../../store/app';
-import { useMetaStore } from '../../store/meta';
+import { useAppStore } from '../../store/AppStore';
 import { useWalletsStore } from '../../store/wallets';
 import { generateRangeColors } from '../../utils/colors';
 
@@ -87,11 +86,11 @@ export function TokenList(props: PropTypes) {
   const { list, searchedFor = '', onChange, selectedBlockchain } = props;
 
   const [tokens, setTokens] = useState<TokenWithBalance[]>(list);
-  const loadingStatus = useMetaStore.use.loadingStatus();
+  const loadingStatus = useAppStore().use.loadingStatus();
+  const blockchains = useAppStore().use.blockchains()();
   const [hasNextPage, setHasNextPage] = useState<boolean>(true);
   const loadingWallet = useWalletsStore.use.loading();
-  const { blockchains } = useMetaStore.use.meta();
-  const { isTokenPinned } = useAppStore();
+  const { isTokenPinned } = useAppStore()();
 
   // eslint-disable-next-line react/display-name
   const innerElementType: React.FC<CommonProps> = forwardRef((render, ref) => {

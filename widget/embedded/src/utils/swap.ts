@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-magic-numbers */
-import type { LoadingStatus } from '../store/meta';
+import type { LoadingStatus } from '../store/slices/data';
 import type { ConnectedWallet } from '../store/wallets';
 import type { ConvertedToken, SwapButtonState, Wallet } from '../types';
 import type {
@@ -30,7 +30,6 @@ import {
   TOKEN_AMOUNT_MAX_DECIMALS,
   TOKEN_AMOUNT_MIN_DECIMALS,
 } from '../constants/routing';
-import { useMetaStore } from '../store/meta';
 import { ButtonState } from '../types';
 
 import { removeDuplicateFrom } from './common';
@@ -406,6 +405,8 @@ export function createBestRouteRequestBody(params: {
   inputAmount: string;
   wallets?: Wallet[];
   selectedWallets?: Wallet[];
+  liquiditySources?: string[];
+  excludeLiquiditySources?: boolean;
   disabledLiquiditySources: string[];
   slippage: number;
   affiliateRef: string | null;
@@ -421,6 +422,8 @@ export function createBestRouteRequestBody(params: {
     wallets,
     selectedWallets,
     disabledLiquiditySources,
+    liquiditySources,
+    excludeLiquiditySources,
     slippage,
     affiliateRef,
     affiliatePercent,
@@ -496,13 +499,18 @@ export function createBestRouteRequestBody(params: {
     selectedWallets: selectedWalletsMap ?? {},
     slippage: slippage.toString(),
     ...(destination && { destination: destination }),
-    ...(disabledLiquiditySources.length > 0 && {
-      swapperGroups: disabledLiquiditySources,
+    ...(excludeLiquiditySources && {
+      swapperGroups: disabledLiquiditySources.concat(liquiditySources ?? []),
       swappersGroupsExclude: true,
+    }),
+    ...(!excludeLiquiditySources && {
+      swapperGroups: liquiditySources?.filter(
+        (liquiditySource) => !disabledLiquiditySources.includes(liquiditySource)
+      ),
+      swappersGroupsExclude: false,
     }),
     ...(checkPrerequisites && { blockchains: filteredBlockchains }),
   };
-
   return requestBody;
 }
 
@@ -716,9 +724,9 @@ export function shouldRetrySwap(pendingSwap: PendingSwap) {
 }
 export function isValidCustomDestination(
   blockchain: string,
-  address: string
+  address: string,
+  blockchains: BlockchainMeta[]
 ): boolean {
-  const blockchains = useMetaStore.getState().meta.blockchains;
   const regex =
     blockchains.find((chain) => chain.name === blockchain)?.addressPatterns ||
     [];

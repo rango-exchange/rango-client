@@ -21,6 +21,7 @@ export function App() {
   return (
     <div className={activeStyle}>
       <WidgetWallets
+        config={overridedConfig}
         providers={config.externalWallets ? config.wallets : []}
         options={{
           walletConnectProjectId: WC_PROJECT_ID,

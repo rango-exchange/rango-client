@@ -1,7 +1,12 @@
 import type { TokenWithBalance } from '../components/TokenList';
 import type { Wallet } from '../types';
 import type { PendingSwap } from '@rango-dev/queue-manager-rango-preset/dist/shared';
-import type { BestRouteResponse, BlockchainMeta, Token } from 'rango-sdk';
+import type {
+  BestRouteResponse,
+  BlockchainMeta,
+  MetaResponse,
+  Token,
+} from 'rango-sdk';
 
 import BigNumber from 'bignumber.js';
 import { create } from 'zustand';
@@ -15,8 +20,9 @@ import {
 } from '../utils/routing';
 import { calcOutputUsdValue } from '../utils/swap';
 
-import { useMetaStore } from './meta';
 import createSelectors from './selectors';
+
+export type Meta = Pick<MetaResponse, 'blockchains' | 'tokens'>;
 
 const getUsdValue = (token: Token | null, amount: string): BigNumber | null =>
   token?.usdPrice
@@ -40,12 +46,12 @@ export interface RouteState {
   setFromBlockchain: (chain: BlockchainMeta | null) => void;
   setToBlockchain: (chian: BlockchainMeta | null) => void;
 
-  setFromToken: (token: Token | null) => void;
-  setToToken: (token: Token | null) => void;
+  setFromToken: (token: Token | null, meta: Meta) => void;
+  setToToken: (token: Token | null, meta: Meta) => void;
   setInputAmount: (amount: string) => void;
   bestRoute: BestRouteResponse | null;
   setRoute: (bestRoute: BestRouteResponse | null) => void;
-  retry: (pendingSwap: PendingSwap) => void;
+  retry: (pendingSwap: PendingSwap, meta: Meta) => void;
   switchFromAndTo: () => void;
   setRouteWalletConfirmed: (flag: boolean) => void;
   setSelectedWallets: (wallets: Wallet[]) => void;
@@ -116,8 +122,8 @@ export const useBestRouteStore = createSelectors(
           };
         });
       },
-      setFromToken: (token) => {
-        const { blockchains } = useMetaStore.getState().meta;
+      setFromToken: (token, meta) => {
+        const { blockchains } = meta;
         return set((state) => ({
           fromToken: token,
           ...(token && {
@@ -148,8 +154,8 @@ export const useBestRouteStore = createSelectors(
           };
         });
       },
-      setToToken: (token) => {
-        const { blockchains } = useMetaStore.getState().meta;
+      setToToken: (token, meta) => {
+        const { blockchains } = meta;
         return set(() => ({
           toToken: token,
           ...(token && {
@@ -173,8 +179,8 @@ export const useBestRouteStore = createSelectors(
           }),
         }));
       },
-      retry: (pendingSwap) => {
-        const { tokens, blockchains } = useMetaStore.getState().meta;
+      retry: (pendingSwap, meta) => {
+        const { tokens, blockchains } = meta;
 
         const {
           fromBlockchain,

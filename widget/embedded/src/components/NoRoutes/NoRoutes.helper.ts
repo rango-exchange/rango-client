@@ -8,7 +8,7 @@ export function makeInfo(
   diagnosisMessage: string | null,
   disabledLiquiditySources: string[],
   hasError: boolean,
-  toggleAllLiquiditySources: (shouldReset: boolean) => void,
+  toggleAllLiquiditySources: () => void,
   refetchBestRoute: () => void
 ): Info {
   if (hasError) {
@@ -38,7 +38,7 @@ export function makeInfo(
         type: 'warning',
         text: errorMessages().liquiditySourcesError.title,
         action: {
-          onClick: () => toggleAllLiquiditySources(true),
+          onClick: toggleAllLiquiditySources,
           title: i18n.t('Reset'),
         },
       },

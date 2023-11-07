@@ -6,6 +6,7 @@ import type { StateCreator } from 'zustand';
 
 import { httpService as sdk } from '../../services/httpService';
 import { containsText } from '../../utils/common';
+import { sortLiquiditySourcesByGroupTitle } from '../../utils/settings';
 import { tokensAreEqual } from '../../utils/wallets';
 
 type BlockchainOptions = {
@@ -18,15 +19,16 @@ type TokenOptions = {
   blockchain?: string;
   searchFor?: string;
 };
-
+export type LoadingStatus = 'loading' | 'success' | 'failed';
 export interface DataSlice {
   _blockchains: BlockchainMeta[];
   _tokens: Token[];
   _popularTokens: Token[];
   _swappers: SwapperMeta[];
-
+  loadingStatus: LoadingStatus;
   blockchains: (options?: BlockchainOptions) => BlockchainMeta[];
   tokens: (options?: TokenOptions) => Token[];
+  swappers: () => SwapperMeta[];
   isTokenPinned: (token: Token) => boolean;
 
   fetch: () => Promise<void>;
@@ -43,7 +45,7 @@ export const createDataSlice: StateCreator<
   _tokens: [],
   _popularTokens: [],
   _swappers: [],
-
+  loadingStatus: 'loading',
   // Selectors
   blockchains: (options) => {
     const blockchainsFromState = get()._blockchains;
@@ -163,41 +165,60 @@ export const createDataSlice: StateCreator<
     );
     return pinned;
   },
+  swappers: () => {
+    const {
+      config: { includeNewLiquiditySources, liquiditySources },
+    } = get();
 
+    const swappers = get()._swappers.filter((swapper) =>
+      includeNewLiquiditySources
+        ? !liquiditySources?.includes(swapper.swapperGroup)
+        : liquiditySources?.includes(swapper.swapperGroup)
+    );
+
+    const sortedSwappers = swappers.sort(sortLiquiditySourcesByGroupTitle);
+
+    return sortedSwappers;
+  },
   // Actions
   fetch: async () => {
-    const response = await sdk().getAllMetadata();
+    try {
+      const response = await sdk().getAllMetadata();
 
-    const blockchains: BlockchainMeta[] = [];
-    const tokens: Token[] = [];
-    const popularTokens: Token[] = response.popularTokens;
-    const swappers: SwapperMeta[] = response.swappers;
+      set({ loadingStatus: 'success' });
+      const blockchains: BlockchainMeta[] = [];
+      const tokens: Token[] = [];
+      const popularTokens: Token[] = response.popularTokens;
+      const swappers: SwapperMeta[] = response.swappers;
 
-    const blockchainsWithAtLeastOneToken = new Set();
+      const blockchainsWithAtLeastOneToken = new Set();
 
-    response.tokens.forEach((token) => {
-      blockchainsWithAtLeastOneToken.add(token.blockchain);
+      response.tokens.forEach((token) => {
+        blockchainsWithAtLeastOneToken.add(token.blockchain);
 
-      tokens.push(token);
-    });
+        tokens.push(token);
+      });
 
-    response.blockchains.forEach((blockchain) => {
-      if (
-        blockchain.enabled &&
-        blockchainsWithAtLeastOneToken.has(blockchain.name)
-      ) {
-        blockchains.push(blockchain);
-      }
-    });
+      response.blockchains.forEach((blockchain) => {
+        if (
+          blockchain.enabled &&
+          blockchainsWithAtLeastOneToken.has(blockchain.name)
+        ) {
+          blockchains.push(blockchain);
+        }
+      });
 
-    // Sort
-    blockchains.sort((a, b) => a.sort - b.sort);
+      // Sort
+      blockchains.sort((a, b) => a.sort - b.sort);
 
-    set({
-      _blockchains: blockchains,
-      _tokens: tokens,
-      _popularTokens: popularTokens,
-      _swappers: swappers,
-    });
+      set({
+        _blockchains: blockchains,
+        _tokens: tokens,
+        _popularTokens: popularTokens,
+        _swappers: swappers,
+      });
+    } catch (error) {
+      set({ loadingStatus: 'failed' });
+    }
   },
 });

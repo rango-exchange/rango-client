@@ -1,14 +1,13 @@
-import type { WidgetConfig } from '../types';
 import type { Asset } from 'rango-sdk';
 
 import { useEffect, useMemo, useRef } from 'react';
 
+import { useAppStore } from '../store/AppStore';
 import { useBestRouteStore } from '../store/bestRoute';
-import { useMetaStore } from '../store/meta';
 import { useSettingsStore } from '../store/settings';
 import { tokensAreEqual } from '../utils/wallets';
 
-export function useSyncStoresWithConfig(config: WidgetConfig | undefined) {
+export function useSyncStoresWithConfig() {
   const {
     setInputAmount,
     setToToken,
@@ -21,10 +20,10 @@ export function useSyncStoresWithConfig(config: WidgetConfig | undefined) {
     toBlockchain,
   } = useBestRouteStore();
 
-  const {
-    meta: { tokens, blockchains },
-    loadingStatus: loadingMetaStatus,
-  } = useMetaStore();
+  const config = useAppStore().use.config();
+  const loadingMetaStatus = useAppStore().use.loadingStatus();
+  const blockchains = useAppStore().use.blockchains()();
+  const tokens = useAppStore().use.tokens()();
 
   const { setAffiliateRef, setAffiliatePercent, setAffiliateWallets } =
     useSettingsStore();
@@ -68,7 +67,10 @@ export function useSyncStoresWithConfig(config: WidgetConfig | undefined) {
       }
 
       if (token || (!token && prevConfigFromToken.current)) {
-        setFromToken(token ?? null);
+        setFromToken(token ?? null, {
+          blockchains: blockchains,
+          tokens: tokens,
+        });
       }
 
       prevConfigFromBlockchain.current = config?.from?.blockchain;
@@ -124,7 +126,10 @@ export function useSyncStoresWithConfig(config: WidgetConfig | undefined) {
       }
 
       if (token || (!token && prevConfigToToken.current)) {
-        setToToken(token ?? null);
+        setToToken(token ?? null, {
+          blockchains,
+          tokens,
+        });
       }
 
       prevConfigToBlockchain.current = config?.to?.blockchain;

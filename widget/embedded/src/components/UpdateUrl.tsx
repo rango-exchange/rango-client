@@ -1,5 +1,3 @@
-import type { WidgetConfig } from '../types';
-
 import { useEffect, useRef } from 'react';
 import {
   createSearchParams,
@@ -10,14 +8,12 @@ import {
 import { navigationRoutes } from '../constants/navigationRoutes';
 import { SearchParams } from '../constants/searchParams';
 import { useSyncStoresWithConfig } from '../hooks/useSyncStoresWithConfig';
+import { useAppStore } from '../store/AppStore';
 import { useBestRouteStore } from '../store/bestRoute';
-import { useMetaStore } from '../store/meta';
 import { useUiStore } from '../store/ui';
 import { searchParamsToToken } from '../utils/routing';
 
-type Props = { config: WidgetConfig | undefined };
-
-export function UpdateUrl(props: Props) {
+export function UpdateUrl() {
   const firstRender = useRef(true);
   const [searchParams, setSearchParams] = useSearchParams();
   const location = useLocation();
@@ -33,10 +29,11 @@ export function UpdateUrl(props: Props) {
   const setToToken = useBestRouteStore.use.setToToken();
   const inputAmount = useBestRouteStore.use.inputAmount();
   const setInputAmount = useBestRouteStore.use.setInputAmount();
-  const loadingStatus = useMetaStore.use.loadingStatus();
-  const { blockchains, tokens } = useMetaStore.use.meta();
+  const loadingStatus = useAppStore().use.loadingStatus();
+  const blockchains = useAppStore().use.blockchains()();
+  const tokens = useAppStore().use.tokens()();
   const setSelectedSwap = useUiStore.use.setSelectedSwap();
-  useSyncStoresWithConfig(props.config);
+  useSyncStoresWithConfig();
 
   useEffect(() => {
     const params: Record<string, string> = {};
@@ -134,13 +131,16 @@ export function UpdateUrl(props: Props) {
       if (!!fromBlockchain) {
         setFromBlockchain(fromBlockchain);
         if (!!fromToken) {
-          setFromToken(fromToken);
+          setFromToken(fromToken, {
+            blockchains: blockchains,
+            tokens: tokens,
+          });
         }
       }
       if (!!toBlockchain) {
         setToBlockchain(toBlockchain);
         if (!!toToken) {
-          setToToken(toToken);
+          setToToken(toToken, { blockchains: blockchains, tokens: tokens });
         }
       }
       if (fromAmount) {

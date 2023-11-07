@@ -14,8 +14,8 @@ import { useEffect } from 'react';
 
 import { errorMessages } from '../constants/errors';
 import { HIGH_SLIPPAGE } from '../constants/swapSettings';
+import { useAppStore } from '../store/AppStore';
 import { useBestRouteStore } from '../store/bestRoute';
-import { useMetaStore } from '../store/meta';
 import { useSettingsStore } from '../store/settings';
 import { useWalletsStore } from '../store/wallets';
 import {
@@ -197,7 +197,10 @@ export function useConfirmSwap(): ConfirmSwap {
   } = useSettingsStore();
   const { connectedWallets } = useWalletsStore();
 
-  const { meta } = useMetaStore();
+  const { liquiditySources, includeNewLiquiditySources } =
+    useAppStore().use.config();
+  const blockchains = useAppStore().use.blockchains()();
+  const tokens = useAppStore().use.tokens()();
 
   const userSlippage = customSlippage || slippage;
 
@@ -225,6 +228,8 @@ export function useConfirmSwap(): ConfirmSwap {
       inputAmount,
       wallets: connectedWallets,
       selectedWallets,
+      liquiditySources,
+      excludeLiquiditySources: includeNewLiquiditySources,
       disabledLiquiditySources,
       slippage: userSlippage,
       affiliateRef,
@@ -281,7 +286,7 @@ export function useConfirmSwap(): ConfirmSwap {
       getWalletsForNewSwap(selectedWallets),
       swapSettings,
       false,
-      meta
+      { blockchains, tokens }
     );
 
     return {

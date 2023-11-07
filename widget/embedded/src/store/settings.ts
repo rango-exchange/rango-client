@@ -1,3 +1,5 @@
+import type { SwapperMeta } from 'rango-sdk';
+
 import { type Language } from '@rango-dev/ui';
 import { create } from 'zustand';
 import { persist, subscribeWithSelector } from 'zustand/middleware';
@@ -7,7 +9,6 @@ import { DEFAULT_LANGUAGE } from '../constants/languages';
 import { DEFAULT_SLIPPAGE } from '../constants/swapSettings';
 import { removeDuplicateFrom } from '../utils/common';
 
-import { useMetaStore } from './meta';
 import createSelectors from './selectors';
 
 export type ThemeMode = 'auto' | 'dark' | 'light';
@@ -31,7 +32,10 @@ export interface SettingsState {
   toggleLiquiditySource: (name: string) => void;
   setTheme: (theme: ThemeMode) => void;
   setLanguage: (language: Language) => void;
-  toggleAllLiquiditySources: (shouldReset?: boolean) => void;
+  toggleAllLiquiditySources: (
+    swappers: SwapperMeta[],
+    shouldReset?: boolean
+  ) => void;
   setAffiliateRef: (affiliateRef: string | null) => void;
   setAffiliatePercent: (affiliatePercent: number | null) => void;
   setAffiliateWallets: (
@@ -102,12 +106,11 @@ export const useSettingsStore = createSelectors(
           set(() => ({
             affiliateWallets,
           })),
-        toggleAllLiquiditySources: (shouldReset?: boolean) =>
+        toggleAllLiquiditySources: (swappers, shouldReset) =>
           set((state) => {
             if (shouldReset) {
               return { disabledLiquiditySources: [] };
             }
-            const { swappers } = useMetaStore.getState().meta;
             const swappersGroup = removeDuplicateFrom(
               swappers.map((swapper) => swapper.swapperGroup)
             );

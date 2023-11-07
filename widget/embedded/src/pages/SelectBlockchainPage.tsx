@@ -7,9 +7,8 @@ import { Layout } from '../components/Layout';
 import { SearchInput } from '../components/SearchInput';
 import { navigationRoutes } from '../constants/navigationRoutes';
 import { useNavigateBack } from '../hooks/useNavigateBack';
-import { useAppStore } from '../store/app';
+import { useAppStore } from '../store/AppStore';
 import { useBestRouteStore } from '../store/bestRoute';
-import { useMetaStore } from '../store/meta';
 
 interface PropTypes {
   type: 'source' | 'destination';
@@ -22,9 +21,9 @@ export function SelectBlockchainPage(props: PropTypes) {
   const [blockchainCategory, setBlockchainCategory] = useState<string>('ALL');
   const setToBlockchain = useBestRouteStore.use.setToBlockchain();
   const setFromBlockchain = useBestRouteStore.use.setFromBlockchain();
-  const { loadingStatus } = useMetaStore();
+  const loadingStatus = useAppStore().use.loadingStatus();
 
-  const blockchains = useAppStore().blockchains({
+  const blockchains = useAppStore().use.blockchains()({
     type: type,
   });
   const routeKey = type === 'source' ? 'fromBlockchain' : 'toBlockchain';

@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 
+import { useAppStore } from '../store/AppStore';
 import { useBestRouteStore } from '../store/bestRoute';
 import { useSettingsStore } from '../store/settings';
 import { debounce } from '../utils/common';
@@ -23,6 +24,9 @@ type UseSwapInput = {
  */
 export function useSwapInput(): UseSwapInput {
   const { fetch: fetchBestRoute, cancelFetch } = useFetchBestRoute();
+  const {
+    config: { liquiditySources, includeNewLiquiditySources },
+  } = useAppStore()();
   const [loading, setLoading] = useState(false);
   const {
     fromToken,
@@ -59,6 +63,8 @@ export function useSwapInput(): UseSwapInput {
         fromToken,
         toToken,
         inputAmount,
+        liquiditySources,
+        excludeLiquiditySources: includeNewLiquiditySources,
         disabledLiquiditySources,
         slippage: userSlippage,
         affiliateRef,

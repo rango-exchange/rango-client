@@ -11,7 +11,7 @@ import {
 } from '@rango-dev/ui';
 import React, { useEffect, useState } from 'react';
 
-import { useMetaStore } from '../../store/meta';
+import { useAppStore } from '../../store/AppStore';
 
 import { filterBlockchains } from './BlockchainList.helpers';
 import { Container, List } from './BlockchainList.styles';
@@ -20,7 +20,7 @@ import { LoadingBlockchainList } from './LoadingBlockchainList';
 export function BlockchainList(props: PropTypes) {
   const { list, searchedFor, onChange, blockchainCategory } = props;
   const [blockchains, setBlockchains] = useState<BlockchainMeta[]>(list);
-  const loadingStatus = useMetaStore.use.loadingStatus();
+  const { loadingStatus } = useAppStore()();
 
   useEffect(() => {
     setBlockchains([

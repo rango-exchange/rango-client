@@ -19,26 +19,22 @@ import { Slippage } from '../components/Slippage';
 import { SlippageTooltipContainer as TooltipContainer } from '../components/Slippage/Slippage.styles';
 import { navigationRoutes } from '../constants/navigationRoutes';
 import { useNavigateBack } from '../hooks/useNavigateBack';
-import { useMetaStore } from '../store/meta';
+import { useAppStore } from '../store/AppStore';
 import { useSettingsStore } from '../store/settings';
 import { getContainer } from '../utils/common';
 import { getUniqueSwappersGroups } from '../utils/settings';
 
-interface PropTypes {
-  supportedSwappers?: string[];
-  singleTheme?: boolean;
-}
-
-export function SettingsPage({ supportedSwappers, singleTheme }: PropTypes) {
+export function SettingsPage() {
   const navigate = useNavigate();
+  const { theme } = useAppStore().use.config();
+  const loadingMetaStatus = useAppStore().use.loadingStatus();
+  const swappers = useAppStore().use.swappers()();
   const { navigateBackFrom } = useNavigateBack();
 
   const infiniteApprove = useSettingsStore.use.infiniteApprove();
   const toggleInfiniteApprove = useSettingsStore.use.toggleInfiniteApprove();
-  const loadingMetaStatus = useMetaStore.use.loadingStatus();
 
-  const supportedUniqueSwappersGroups =
-    getUniqueSwappersGroups(supportedSwappers);
+  const supportedUniqueSwappersGroups = getUniqueSwappersGroups(swappers);
 
   const bridgeSources = supportedUniqueSwappersGroups.filter(
     (uniqueItem) =>
@@ -167,7 +163,7 @@ export function SettingsPage({ supportedSwappers, singleTheme }: PropTypes) {
     exchangeItem,
     // languageItem
   ];
-  if (!singleTheme) {
+  if (!theme?.singleTheme) {
     settingItems.push(themeItem);
   }
   settingItems.push(infiniteApprovalItem);

@@ -1,4 +1,3 @@
-import type { WidgetConfig } from '../..';
 import type { ConfirmSwap } from '../../hooks/useConfirmSwap';
 
 export type PropTypes = {
@@ -6,6 +5,5 @@ export type PropTypes = {
   onClose: () => void;
   onCancel: () => void;
   onCheckBalance: ConfirmSwap['fetch'];
-  config?: WidgetConfig;
   loading: boolean;
 };

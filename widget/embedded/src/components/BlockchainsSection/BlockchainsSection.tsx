@@ -13,8 +13,8 @@ import React from 'react';
 
 import { BLOCKCHAIN_LIST_SIZE } from '../../constants/configs';
 import { usePrepareBlockchainList } from '../../hooks/usePrepareBlockchainList';
+import { useAppStore } from '../../store/AppStore';
 import { useBestRouteStore } from '../../store/bestRoute';
-import { useMetaStore } from '../../store/meta';
 
 import { Container } from './BlockchainsSection.styles';
 
@@ -27,7 +27,7 @@ export function BlockchainsSection(props: PropTypes) {
     selected: blockchain?.name,
   });
 
-  const loadingStatus = useMetaStore.use.loadingStatus();
+  const { loadingStatus } = useAppStore()();
   const resetToBlockchain = useBestRouteStore.use.resetToBlockchain();
   const resetFromBlockchain = useBestRouteStore.use.resetFromBlockchain();
   const hasMoreItemsInList = blockchainsList.more.length > 0;

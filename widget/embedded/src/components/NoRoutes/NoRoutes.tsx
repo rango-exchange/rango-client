@@ -11,7 +11,7 @@ import {
 import React from 'react';
 
 import { errorMessages } from '../../constants/errors';
-import { useMetaStore } from '../../store/meta';
+import { useAppStore } from '../../store/AppStore';
 import { useSettingsStore } from '../../store/settings';
 
 import { makeInfo } from './NoRoutes.helper';
@@ -21,7 +21,8 @@ export function NoRoutes(props: PropTypes) {
   const { diagnosisMessage, fetch, error } = props;
   const disabledLiquiditySources =
     useSettingsStore.use.disabledLiquiditySources();
-  const loadingMetaStatus = useMetaStore.use.loadingStatus();
+  const loadingMetaStatus = useAppStore().use.loadingStatus();
+  const swappers = useAppStore().use.swappers()();
   const toggleAllLiquiditySources =
     useSettingsStore.use.toggleAllLiquiditySources();
 
@@ -31,7 +32,7 @@ export function NoRoutes(props: PropTypes) {
     diagnosisMessage ?? null,
     disabledLiquiditySources,
     hasError,
-    toggleAllLiquiditySources,
+    () => toggleAllLiquiditySources(swappers, true),
     fetch
   );
 
