@@ -206,9 +206,7 @@ export function SwapDetails(props: SwapDetailsProps) {
   const completeModalDesc =
     swap.status === 'success'
       ? i18n.t({
-          id: 'receivedMessage',
-          message:
-            'You have received {amount} {token} in {conciseAddress} wallet on {chain} chain.',
+          id: 'You have received {amount} {token} in {conciseAddress} wallet on {chain} chain.',
           values: {
             amount: numberToString(
               outputAmount,
@@ -226,9 +224,7 @@ export function SwapDetails(props: SwapDetailsProps) {
       : `${i18n.t('Transaction was not sent.')} ${
           lastConvertedTokenInFailedSwap
             ? i18n.t({
-                id: 'remainSymbol',
-                message:
-                  '{amount} {symbol} on {blockchain} remain in your wallet',
+                id: '{amount} {symbol} on {blockchain} remain in your wallet',
                 values: {
                   amount: lastConvertedTokenInFailedSwap.outputAmount,
                   symbol: lastConvertedTokenInFailedSwap.symbol,

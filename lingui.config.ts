@@ -5,7 +5,7 @@ module.exports = {
   format: 'po',
   catalogs: [
     {
-      path: '<rootDir>/translations/{locale}/messages',
+      path: '<rootDir>/translations/{locale}',
       include: ['<rootDir>/widget/embedded/src', '<rootDir>/widget/ui/src'],
       exclude: ['**/node_modules/**'],
     }

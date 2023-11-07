@@ -52,8 +52,7 @@ const StepDetailsComponent = forwardRef<HTMLDivElement, StepDetailsProps>(
             size="small"
             variant="body">
             {i18n.t({
-              id: 'swapperDescription',
-              message: 'Swap on {fromChain} via {swapper}',
+              id: 'Swap on {fromChain} via {swapper}',
               values: {
                 fromChain: step.from.chain.displayName,
                 swapper: step.swapper.displayName,
