@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/provider-walletconnect-2",
-  "version": "0.14.1-next.0",
+  "version": "0.14.1-next.1",
   "license": "MIT",
   "type": "module",
   "module": "./dist/index.js",
@@ -26,7 +26,7 @@
     "@rango-dev/signer-cosmos": "^0.21.1-next.0",
     "@rango-dev/signer-evm": "^0.21.1-next.0",
     "@rango-dev/signer-solana": "^0.21.1-next.0",
-    "@rango-dev/wallets-shared": "^0.21.1-next.0",
+    "@rango-dev/wallets-shared": "^0.21.1-next.1",
     "@solana/web3.js": "^1.67.2",
     "@walletconnect/encoding": "^1.0.2",
     "@walletconnect/modal": "^2.6.2",
