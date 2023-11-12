@@ -30,11 +30,11 @@ export interface Options {
 }
 
 class Wallet<InstanceType = any> {
+  public provider: InstanceType | null;
   private actions: WalletActions;
   private state: State;
   private options: Options;
   private meta: BlockchainMeta[];
-  public provider: InstanceType | null;
 
   constructor(options: Options, actions: WalletActions) {
     this.actions = actions;
@@ -109,10 +109,18 @@ class Wallet<InstanceType = any> {
           // @ts-ignore
           network: requestedNetwork,
           newInstance: this.tryGetInstance.bind(this),
+          getState: this.getState.bind(this),
         });
 
-        // We assume if we reach here (`switchNetwork` not throwing error), Switch successfully has been done.
-        if (requestedNetwork !== this.state.network) {
+        /*
+         * We assume if we reach here (`switchNetwork` not throwing error), Switch successfully has been done.
+         * But for providers with async switch network like wallet-connect, we need to wait for chain change
+         * event before changing network.
+         */
+        if (
+          requestedNetwork !== this.state.network &&
+          !this.options.config.isAsyncSwitchNetwork
+        ) {
           this.updateState({
             network,
           });
@@ -205,7 +213,7 @@ class Wallet<InstanceType = any> {
     this.resetState();
 
     if (this.actions.disconnect) {
-      this.actions.disconnect({
+      void this.actions.disconnect({
         instance: this.provider,
         // On wallet connect, we need to destory the instance and get a whole new instance when we are going to connect
         destroyInstance: () => {
@@ -403,6 +411,7 @@ class Wallet<InstanceType = any> {
       installed: value,
     });
   }
+  // eslint-disable-next-line destructuring/in-methods-params
   private async tryGetInstance({
     network,
     force,

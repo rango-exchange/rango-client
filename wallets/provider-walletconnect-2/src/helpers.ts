@@ -3,10 +3,18 @@ import type { WalletState } from '@rango-dev/wallets-shared';
 import type { ProposalTypes } from '@walletconnect/types';
 import type { BlockchainMeta } from 'rango-types';
 
-import { Networks } from '@rango-dev/wallets-shared';
+import {
+  convertEvmBlockchainMetaToEvmChainInfo,
+  isEvmAddress,
+  Networks,
+} from '@rango-dev/wallets-shared';
 import { WalletConnectModal } from '@walletconnect/modal';
-import { ChainId } from 'caip';
-import { cosmosBlockchains, evmBlockchains } from 'rango-types';
+import { AccountId, ChainId } from 'caip';
+import {
+  cosmosBlockchains,
+  evmBlockchains,
+  isEvmBlockchain,
+} from 'rango-types';
 
 import {
   DEFAULT_COSMOS_METHODS,
@@ -14,6 +22,7 @@ import {
   DEFAULT_ETHEREUM_METHODS,
   DEFAULT_SOLANA_CHAIN_ID,
   DEFAULT_SOLANA_METHODS,
+  EthereumRPCMethods,
   NAMESPACES,
 } from './constants';
 import { getLastSession } from './session';
@@ -191,4 +200,85 @@ export function getChainIdByNetworkName(
   const chainId = String(parseInt(chainIdInHex));
 
   return chainId;
+}
+
+export async function switchOrAddEvmChain(
+  meta: BlockchainMeta[],
+  requestedNetwork: string,
+  currentNetwork: string,
+  instance: any
+) {
+  const evmBlockchains = meta.filter(isEvmBlockchain);
+  const evmNetworksChainInfo =
+    convertEvmBlockchainMetaToEvmChainInfo(evmBlockchains);
+  const targetChain = evmNetworksChainInfo[requestedNetwork];
+  const targetBlockchain = meta.find(
+    (blockchain: BlockchainMeta) => blockchain.name === requestedNetwork
+  );
+  const chainIdInHex = targetBlockchain?.chainId;
+
+  const currentChainId = getChainIdByNetworkName(currentNetwork, meta);
+  const currentChainEip = ChainId.format({
+    namespace: NAMESPACES.ETHEREUM,
+    reference: String(currentChainId),
+  });
+
+  const session = instance.session;
+
+  try {
+    await instance.client.request({
+      topic: session.topic,
+      request: {
+        method: EthereumRPCMethods.SWITCH_CHAIN,
+        params: [
+          {
+            chainId: chainIdInHex,
+          },
+        ],
+      },
+      // It's required to pass current chain, otherwise it won't work
+      chainId: currentChainEip,
+    });
+  } catch (err: any) {
+    const addChainError = 4902;
+    if (
+      err?.code === addChainError ||
+      err?.message?.includes(String(addChainError))
+    ) {
+      await instance.client.request({
+        topic: session.topic,
+        request: {
+          method: EthereumRPCMethods.ADD_CHAIN,
+          params: [targetChain],
+        },
+        // It's required to pass current chain, otherwise it won't work
+        chainId: currentChainEip,
+      });
+    } else {
+      throw err;
+    }
+  }
+}
+
+export function getCurrentEvmAccountAddress(instance: any) {
+  return instance.session.namespaces.eip155.accounts
+    ?.map((account: string) => {
+      return new AccountId(account).address;
+    })
+    ?.filter((address: string) => isEvmAddress(address))?.[0];
+}
+
+export function getEvmAccount(
+  network: string,
+  address: string,
+  meta: BlockchainMeta[]
+) {
+  const currentChainId = getChainIdByNetworkName(network, meta);
+  return AccountId.format({
+    chainId: {
+      namespace: NAMESPACES.ETHEREUM,
+      reference: String(currentChainId),
+    },
+    address,
+  });
 }
