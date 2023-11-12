@@ -13,6 +13,8 @@ export enum NAMESPACES {
   MULTIVERSX = 'multiversx',
 }
 
+export const CHAIN_ID_STORAGE = 'wc@2:client//namespaces';
+
 // Refrence: https://docs.walletconnect.com/2.0/advanced/rpc-reference/solana-rpc
 export enum SolanaRPCMethods {
   GET_ACCOUNTS = 'solana_getAccounts',
@@ -36,6 +38,9 @@ export enum EthereumRPCMethods {
   SIGN_TRANSACTION = 'eth_signTransaction',
   SEND_TRANSACTION = 'eth_sendTransaction',
   SEND_RAW_TRANSACTION = 'eth_sendRawTransaction',
+  SWITCH_CHAIN = 'wallet_switchEthereumChain',
+  ADD_CHAIN = 'wallet_addEthereumChain',
+  GET_CHAIN = 'eth_chainId',
 }
 
 export enum StarknetRPCMethods {
@@ -57,11 +62,16 @@ export const DEFAULT_ETHEREUM_METHODS = [
   EthereumRPCMethods.PERSONAL_SIGN,
   EthereumRPCMethods.SEND_TRANSACTION,
   EthereumRPCMethods.SIGN_TRANSACTION,
+  EthereumRPCMethods.SWITCH_CHAIN,
+  EthereumRPCMethods.ADD_CHAIN,
+  EthereumRPCMethods.GET_CHAIN,
 ];
+
 export const DEFAULT_SOLANA_METHODS = [
   SolanaRPCMethods.SIGN_TRANSACTION,
   SolanaRPCMethods.SIGN_MESSAGE,
 ];
+
 export const DEFAULT_COSMOS_METHODS = [
   CosmosRPCMethods.GET_ACCOUNTS,
   CosmosRPCMethods.SIGN_AMINO,
@@ -73,10 +83,9 @@ export const DEFAULT_SOLANA_CHAIN_ID = '4sGjMW1sUnHzSxGspuhpqLDx6wiyjNtZ';
 
 export const DEFAULT_APP_METADATA = {
   name: 'Rango Exchange',
-  description:
-    'Easiest DEX UX with best price to exchange all coins on all blockchains.',
+  description: 'The Ultimate Cross-Chain Solution',
   url: 'https://app.rango.exchange/',
-  icons: ['https://avatars.githubusercontent.com/u/37784886'],
+  icons: ['https://app.rango.exchange/logo-rounded.png'],
 };
 
 export const RELAY_URL = 'wss://relay.walletconnect.com';
