@@ -175,7 +175,7 @@ export function SettingsPage({ supportedSwappers, singleTheme }: PropTypes) {
   return (
     <Layout
       header={{
-        onBack: navigateBackFrom.bind(null, navigationRoutes.settings),
+        onBack: () => navigateBackFrom(navigationRoutes.settings),
         title: i18n.t('Setting'),
       }}>
       <SettingsContainer>

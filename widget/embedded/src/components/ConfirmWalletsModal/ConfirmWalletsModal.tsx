@@ -18,11 +18,11 @@ import {
 import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { getConfirmSwapErrorMessage } from '../../constants/errors';
+import { getQuoteErrorMessage } from '../../constants/errors';
 import { navigationRoutes } from '../../constants/navigationRoutes';
-import { getRouteWarningMessage } from '../../constants/warnings';
-import { useBestRouteStore } from '../../store/bestRoute';
+import { getQuoteUpdateWarningMessage } from '../../constants/warnings';
 import { useMetaStore } from '../../store/meta';
+import { useQuoteStore } from '../../store/quote';
 import { useWalletsStore } from '../../store/wallets';
 import { confirmSwapDisabled } from '../../utils/swap';
 
@@ -53,20 +53,20 @@ export function ConfirmWalletsModal(props: PropTypes) {
   const { open, onClose, onCancel, onCheckBalance, config, loading } = props;
   const { blockchains } = useMetaStore.use.meta();
   const {
-    bestRoute,
-    setSelectedWallets: selectRouteWallets,
-    routeWalletsConfirmed,
-    setRouteWalletConfirmed,
+    quote,
+    setSelectedWallets: selectQuoteWallets,
+    quoteWalletsConfirmed: quoteWalletsConfirmed,
+    setQuoteWalletConfirmed: setQuoteWalletConfirmed,
     customDestination,
     setCustomDestination,
-  } = useBestRouteStore();
+  } = useQuoteStore();
   const { connectedWallets, selectWallets } = useWalletsStore();
 
   const [showMoreWalletFor, setShowMoreWalletFor] = useState('');
   const [balanceWarnings, setBalanceWarnings] = useState<string[]>([]);
   const [error, setError] = useState('');
-  const [routeWarning, setRouteWarning] = useState<
-    ConfirmSwapWarnings['route'] | null
+  const [quoteWarning, setQuoteWarning] = useState<
+    ConfirmSwapWarnings['quoteUpdate'] | null
   >(null);
   const [destination, setDestination] = useState(customDestination);
   const [showCustomDestination, setShowCustomDestination] = useState(
@@ -74,7 +74,7 @@ export function ConfirmWalletsModal(props: PropTypes) {
   );
   const customDestinationRef = useRef<HTMLDivElement | null>(null);
 
-  const requiredWallets = getRequiredWallets(bestRoute);
+  const requiredWallets = getRequiredWallets(quote);
   const customDestinationEnabled =
     typeof config?.customDestination === 'undefined'
       ? true
@@ -83,13 +83,10 @@ export function ConfirmWalletsModal(props: PropTypes) {
   const lastStepToBlockchain = blockchains.find(
     (blockchain) =>
       blockchain.name ===
-      bestRoute?.result?.swaps[bestRoute?.result?.swaps.length - 1].to
-        .blockchain
+      quote?.result?.swaps[quote?.result?.swaps.length - 1].to.blockchain
   );
   const isWalletRequiredFor = (blockchain: string) =>
-    !!bestRoute?.result?.swaps.find(
-      (swap) => swap.from.blockchain === blockchain
-    );
+    !!quote?.result?.swaps.find((swap) => swap.from.blockchain === blockchain);
 
   const [selectableWallets, setSelectableWallets] = useState<ConnectedWallet[]>(
     connectedWallets.filter((connectedWallet) => {
@@ -175,16 +172,16 @@ export function ConfirmWalletsModal(props: PropTypes) {
       (wallet) => wallet.selected
     );
     selectWallets(lastSelectedWallets);
-    selectRouteWallets(lastSelectedWallets);
+    selectQuoteWallets(lastSelectedWallets);
     setCustomDestination(destination);
-    setRouteWalletConfirmed(true);
+    setQuoteWalletConfirmed(true);
     onClose();
   };
 
   const onConfirmWallets = async () => {
     setBalanceWarnings([]);
     setError('');
-    setRouteWarning(null);
+    setQuoteWarning(null);
     const selectedWallets = connectedWallets.filter((connectedWallet) =>
       selectableWallets.find(
         (selectableWallet) =>
@@ -201,11 +198,11 @@ export function ConfirmWalletsModal(props: PropTypes) {
     if (warnings?.balance?.messages) {
       setBalanceWarnings(warnings.balance.messages);
     }
-    if (warnings?.route) {
-      setRouteWarning(warnings.route);
+    if (warnings?.quoteUpdate) {
+      setQuoteWarning(warnings.quoteUpdate);
     }
     if (result.error) {
-      setError(getConfirmSwapErrorMessage(result.error));
+      setError(getQuoteErrorMessage(result.error));
     }
 
     if (!result.error && (!warnings?.balance?.messages.length || 0 > 0)) {
@@ -249,7 +246,7 @@ export function ConfirmWalletsModal(props: PropTypes) {
     <Modal
       open={open}
       onClose={() => {
-        if (!routeWalletsConfirmed) {
+        if (!quoteWalletsConfirmed) {
           navigate(navigationRoutes.home, { replace: true });
         }
         onClose();
@@ -265,7 +262,7 @@ export function ConfirmWalletsModal(props: PropTypes) {
                 loading,
                 showCustomDestination,
                 destination,
-                bestRoute,
+                quote,
                 selectableWallets,
                 lastStepToBlockchain
               )}
@@ -339,12 +336,12 @@ export function ConfirmWalletsModal(props: PropTypes) {
               <Divider size={12} />
             </>
           )}
-          {routeWarning && (
+          {quoteWarning && (
             <>
               <Alert
                 variant="alarm"
                 type="warning"
-                title={getRouteWarningMessage(routeWarning)}
+                title={getQuoteUpdateWarningMessage(quoteWarning)}
               />
               <Divider size={12} />
             </>

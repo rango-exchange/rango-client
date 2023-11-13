@@ -17,7 +17,7 @@ type Story = StoryObj<typeof StepDetails>;
 export const Main: Story = {
   args: {
     step: { ...step1, alerts: <Alert title="test alert" type="warning" /> },
-    type: 'route-progress',
+    type: 'swap-progress',
     state: 'completed',
   },
 };

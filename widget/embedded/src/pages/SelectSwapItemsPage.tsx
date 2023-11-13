@@ -12,7 +12,7 @@ import { TokenList } from '../components/TokenList/TokenList';
 import { navigationRoutes } from '../constants/navigationRoutes';
 import { useNavigateBack } from '../hooks/useNavigateBack';
 import { useAppStore } from '../store/app';
-import { useBestRouteStore } from '../store/bestRoute';
+import { useQuoteStore } from '../store/quote';
 import { useWalletsStore } from '../store/wallets';
 import { getTokensBalanceFromWalletAndSort } from '../utils/wallets';
 
@@ -31,7 +31,7 @@ export function SelectSwapItemsPage(props: PropTypes) {
     setToToken,
     setFromBlockchain,
     setToBlockchain,
-  } = useBestRouteStore();
+  } = useQuoteStore();
   const { connectedWallets } = useWalletsStore();
   const [searchedFor, setSearchedFor] = useState<string>('');
 

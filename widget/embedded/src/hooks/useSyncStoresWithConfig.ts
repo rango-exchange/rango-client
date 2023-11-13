@@ -3,8 +3,8 @@ import type { Asset } from 'rango-sdk';
 
 import { useEffect, useMemo, useRef } from 'react';
 
-import { useBestRouteStore } from '../store/bestRoute';
 import { useMetaStore } from '../store/meta';
+import { useQuoteStore } from '../store/quote';
 import { useSettingsStore } from '../store/settings';
 import { tokensAreEqual } from '../utils/wallets';
 
@@ -19,7 +19,7 @@ export function useSyncStoresWithConfig(config: WidgetConfig | undefined) {
     toToken,
     fromBlockchain,
     toBlockchain,
-  } = useBestRouteStore();
+  } = useQuoteStore();
 
   const {
     meta: { tokens, blockchains },

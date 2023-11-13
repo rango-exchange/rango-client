@@ -71,7 +71,7 @@ export function WalletsPage({ config }: PropTypes) {
     <Layout
       header={{
         title: i18n.t('Connect Wallets'),
-        onBack: navigateBackFrom.bind(null, navigationRoutes.wallets),
+        onBack: () => navigateBackFrom(navigationRoutes.wallets),
       }}>
       <Container>
         <Typography variant="title" size="xmedium" align="center">

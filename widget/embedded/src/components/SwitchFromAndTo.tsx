@@ -1,7 +1,7 @@
 import { ReverseIcon, styled } from '@rango-dev/ui';
 import React from 'react';
 
-import { useBestRouteStore } from '../store/bestRoute';
+import { useQuoteStore } from '../store/quote';
 
 const SwitchButtonContainer = styled('div', {
   position: 'absolute',
@@ -27,7 +27,7 @@ const StyledButton = styled('div', {
 });
 
 export function SwitchFromAndToButton() {
-  const switchFromAndTo = useBestRouteStore.use.switchFromAndTo();
+  const switchFromAndTo = useQuoteStore.use.switchFromAndTo();
 
   return (
     <SwitchButtonContainer>
