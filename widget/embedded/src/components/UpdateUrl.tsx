@@ -10,10 +10,10 @@ import {
 import { navigationRoutes } from '../constants/navigationRoutes';
 import { SearchParams } from '../constants/searchParams';
 import { useSyncStoresWithConfig } from '../hooks/useSyncStoresWithConfig';
-import { useBestRouteStore } from '../store/bestRoute';
 import { useMetaStore } from '../store/meta';
+import { useQuoteStore } from '../store/quote';
 import { useUiStore } from '../store/ui';
-import { searchParamsToToken } from '../utils/routing';
+import { searchParamsToToken } from '../utils/quote';
 
 type Props = { config: WidgetConfig | undefined };
 
@@ -23,16 +23,16 @@ export function UpdateUrl(props: Props) {
   const location = useLocation();
   const firstRenderSearchParams = useRef(location.search);
   const searchParamsRef = useRef<Record<string, string>>({});
-  const fromBlockchain = useBestRouteStore.use.fromBlockchain();
-  const toBlockchain = useBestRouteStore.use.toBlockchain();
-  const fromToken = useBestRouteStore.use.fromToken();
-  const toToken = useBestRouteStore.use.toToken();
-  const setFromBlockchain = useBestRouteStore.use.setFromBlockchain();
-  const setFromToken = useBestRouteStore.use.setFromToken();
-  const setToBlockchain = useBestRouteStore.use.setToBlockchain();
-  const setToToken = useBestRouteStore.use.setToToken();
-  const inputAmount = useBestRouteStore.use.inputAmount();
-  const setInputAmount = useBestRouteStore.use.setInputAmount();
+  const fromBlockchain = useQuoteStore.use.fromBlockchain();
+  const toBlockchain = useQuoteStore.use.toBlockchain();
+  const fromToken = useQuoteStore.use.fromToken();
+  const toToken = useQuoteStore.use.toToken();
+  const setFromBlockchain = useQuoteStore.use.setFromBlockchain();
+  const setFromToken = useQuoteStore.use.setFromToken();
+  const setToBlockchain = useQuoteStore.use.setToBlockchain();
+  const setToToken = useQuoteStore.use.setToToken();
+  const inputAmount = useQuoteStore.use.inputAmount();
+  const setInputAmount = useQuoteStore.use.setInputAmount();
   const loadingStatus = useMetaStore.use.loadingStatus();
   const { blockchains, tokens } = useMetaStore.use.meta();
   const setSelectedSwap = useUiStore.use.setSelectedSwap();

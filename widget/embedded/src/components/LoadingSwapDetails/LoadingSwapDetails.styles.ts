@@ -10,11 +10,11 @@ export const Container = styled('div', {
     display: 'flex',
   },
 
-  '.route-summary': {
+  '.quote-summary': {
     padding: '$15 $0',
   },
 
-  '.route-summary-item': {
+  '.quote-summary-item': {
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
@@ -26,7 +26,7 @@ export const Container = styled('div', {
     alignItems: 'center',
   },
 
-  '.route-summary-separator': {
+  '.quote-summary-separator': {
     width: '0px',
     height: '$16',
     borderLeft: '1px solid $neutral400',

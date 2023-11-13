@@ -16,7 +16,7 @@ export const secondsToString = (s: number): string => {
 };
 
 export const numberToString = (
-  number: BigNumber | string | null | undefined,
+  number: BigNumber | string | number | null | undefined,
   minDecimals: number | null = null,
   maxDecimals: number | null = null
 ): string => {

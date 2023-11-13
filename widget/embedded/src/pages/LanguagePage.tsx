@@ -38,7 +38,7 @@ export function LanguagePage() {
   return (
     <Layout
       header={{
-        onBack: navigateBackFrom.bind(null, navigationRoutes.settings),
+        onBack: () => navigateBackFrom(navigationRoutes.settings),
         title: i18n.t('Language'),
       }}>
       <SettingsContainer>

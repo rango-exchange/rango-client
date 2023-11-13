@@ -8,8 +8,8 @@ export const Container = styled('div', {
   border: '1px solid transparent',
   variants: {
     type: {
-      'route-details': { border: 'none' },
-      'route-progress': {
+      'quote-details': { border: 'none' },
+      'swap-progress': {
         $$color: '$colors$neutral100',
         [`.${darkTheme} &`]: {
           $$color: '$colors$neutral300',
