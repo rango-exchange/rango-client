@@ -1,8 +1,8 @@
-import type { ConfirmSwapError } from '../types';
+import type { QuoteError } from '../types';
 
 import { i18n } from '@lingui/core';
 
-import { ConfirmSwapErrorTypes } from '../types';
+import { QuoteErrorType } from '../types';
 
 export const errorMessages = () => {
   return {
@@ -13,7 +13,7 @@ export const errorMessages = () => {
         'You have limited the liquidity sources and this might result in Rango finding no routes. Please consider resetting your liquidity sources'
       ),
     },
-    noRoutesError: {
+    noResultError: {
       title: i18n.t('No Routes Found'),
       description: i18n.t(
         "Reasons why Rango couldn't find a route: low liquidity on token, very low input amount or no routes available for the selected input/output token combination."
@@ -31,7 +31,7 @@ export const errorMessages = () => {
       ),
       confirmMessage: i18n.t('Confirm High price impact'),
     },
-    routeUpdatedWithHighValueLoss: {
+    quoteUpdatedWithHighValueLoss: {
       title: i18n.t(
         'Route updated and price impact is too high, try again later!'
       ),
@@ -47,14 +47,12 @@ export const errorMessages = () => {
   };
 };
 
-export function getConfirmSwapErrorMessage(error: ConfirmSwapError) {
+export function getQuoteErrorMessage(error: QuoteError) {
   switch (error.type) {
-    case ConfirmSwapErrorTypes.NO_ROUTE:
-      return error.diagnosisMessage ?? errorMessages().noRoutesError.title;
-    case ConfirmSwapErrorTypes.REQUEST_FAILED:
+    case QuoteErrorType.NO_RESULT:
+      return error.diagnosisMessage ?? errorMessages().noResultError.title;
+    case QuoteErrorType.REQUEST_FAILED:
       return errorMessages().genericServerError;
-    case ConfirmSwapErrorTypes.ROUTE_UPDATED_WITH_HIGH_VALUE_LOSS:
-      return errorMessages().routeUpdatedWithHighValueLoss.title;
     default:
       return '';
   }

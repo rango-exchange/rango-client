@@ -1,6 +1,5 @@
 export * from './I18nManager';
 export * from './Alert';
-export * from './BestRoute';
 export * from './BlockchainsChip';
 export * from './BottomLogo';
 export * from './Button';
@@ -45,7 +44,7 @@ export * from './ListItem';
 export * from './NotFound';
 export * from './MessageBox';
 export * from './IconButton';
-export * from './RouteCost';
+export * from './QuoteCost';
 export * from './TokenAmount';
 export * from './StepDetails';
 export * from './Popover';

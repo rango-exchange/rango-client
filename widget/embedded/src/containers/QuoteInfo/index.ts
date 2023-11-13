@@ -1,0 +1,1 @@
+export { QuoteInfo } from './QuoteInfo';

@@ -13,8 +13,8 @@ import React from 'react';
 
 import { BLOCKCHAIN_LIST_SIZE } from '../../constants/configs';
 import { usePrepareBlockchainList } from '../../hooks/usePrepareBlockchainList';
-import { useBestRouteStore } from '../../store/bestRoute';
 import { useMetaStore } from '../../store/meta';
+import { useQuoteStore } from '../../store/quote';
 
 import { Container } from './BlockchainsSection.styles';
 
@@ -28,8 +28,8 @@ export function BlockchainsSection(props: PropTypes) {
   });
 
   const loadingStatus = useMetaStore.use.loadingStatus();
-  const resetToBlockchain = useBestRouteStore.use.resetToBlockchain();
-  const resetFromBlockchain = useBestRouteStore.use.resetFromBlockchain();
+  const resetToBlockchain = useQuoteStore.use.resetToBlockchain();
+  const resetFromBlockchain = useQuoteStore.use.resetFromBlockchain();
   const hasMoreItemsInList = blockchainsList.more.length > 0;
   /**
    * When only one item is left on list, we will not show the `More` button and will show the item itself instead.

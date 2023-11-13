@@ -1,4 +1,4 @@
-import type { Step } from '../BestRoute/BestRoute.types';
+import type { Step } from './StepDetails.types';
 
 export const step1: Step = {
   swapper: {

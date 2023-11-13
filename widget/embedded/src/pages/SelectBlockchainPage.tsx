@@ -8,8 +8,8 @@ import { SearchInput } from '../components/SearchInput';
 import { navigationRoutes } from '../constants/navigationRoutes';
 import { useNavigateBack } from '../hooks/useNavigateBack';
 import { useAppStore } from '../store/app';
-import { useBestRouteStore } from '../store/bestRoute';
 import { useMetaStore } from '../store/meta';
+import { useQuoteStore } from '../store/quote';
 
 interface PropTypes {
   type: 'source' | 'destination';
@@ -20,8 +20,8 @@ export function SelectBlockchainPage(props: PropTypes) {
   const { navigateBackFrom } = useNavigateBack();
   const [searchedFor, setSearchedFor] = useState<string>('');
   const [blockchainCategory, setBlockchainCategory] = useState<string>('ALL');
-  const setToBlockchain = useBestRouteStore.use.setToBlockchain();
-  const setFromBlockchain = useBestRouteStore.use.setFromBlockchain();
+  const setToBlockchain = useQuoteStore.use.setToBlockchain();
+  const setFromBlockchain = useQuoteStore.use.setFromBlockchain();
   const { loadingStatus } = useMetaStore();
 
   const blockchains = useAppStore().blockchains({
