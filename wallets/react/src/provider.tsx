@@ -32,6 +32,7 @@ function Provider(props: ProviderProps) {
   const wallets = checkWalletProviders(listOfProviders);
 
   // Final API we put in context and it will be available to use for users.
+  // eslint-disable-next-line react/jsx-no-constructed-context-values
   const api: ProviderContext = {
     async connect(type, network) {
       const wallet = wallets.get(type);
@@ -41,7 +42,7 @@ function Provider(props: ProviderProps) {
       const walletInstance = getWalletInstance(wallet);
       const result = await walletInstance.connect(network);
       if (props.autoConnect) {
-        tryPersistWallet({
+        void tryPersistWallet({
           type,
           walletActions: wallet.actions,
           getState: api.state,
@@ -185,10 +186,13 @@ function Provider(props: ProviderProps) {
     if (allBlockChains) {
       wallets.forEach((wallet) => {
         const walletInstance = getWalletInstance(wallet);
-        const supportedChains = walletInstance.getWalletInfo(
+        const walletInfo = walletInstance.getWalletInfo(
           props.allBlockChains || []
-        ).supportedChains;
-        walletInstance.setMeta(supportedChains);
+        );
+        walletInstance.setInfo({
+          supportedBlockchains: walletInfo.supportedChains,
+          isContractWallet: !!walletInfo.isContractWallet,
+        });
       });
     }
   }, [props.allBlockChains]);
@@ -211,7 +215,7 @@ function Provider(props: ProviderProps) {
 
     if (shouldTryAutoConnect) {
       autoConnectInitiated.current = true;
-      (async () => {
+      void (async () => {
         await autoConnect(wallets, getWalletInstance);
       })();
     }

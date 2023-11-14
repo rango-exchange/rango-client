@@ -287,7 +287,7 @@ export type WalletInfo = {
   color: string;
   supportedChains: BlockchainMeta[];
   showOnMobile?: boolean;
-  hideWhenNotInstalled?: boolean;
+  isContractWallet?: boolean;
   mobileWallet?: boolean;
 };
 

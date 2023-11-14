@@ -12,8 +12,13 @@ export type EventHandler = (
   event: Events,
   value: any,
   coreState: State,
-  supportedChains: BlockchainMeta[]
+  info: EventInfo
 ) => void;
+
+export type EventInfo = {
+  supportedBlockchains: BlockchainMeta[];
+  isContractWallet: boolean;
+};
 
 export interface State {
   connected: boolean;
@@ -34,13 +39,16 @@ class Wallet<InstanceType = any> {
   private actions: WalletActions;
   private state: State;
   private options: Options;
-  private meta: BlockchainMeta[];
+  private info: EventInfo;
 
   constructor(options: Options, actions: WalletActions) {
     this.actions = actions;
     this.options = options;
     this.provider = null;
-    this.meta = [];
+    this.info = {
+      supportedBlockchains: [],
+      isContractWallet: false,
+    };
     this.state = {
       connected: false,
       connecting: false,
@@ -55,11 +63,12 @@ class Wallet<InstanceType = any> {
       this.setInstalledAs(true);
     }
   }
+
   async suggestAndConnect(network: Network) {
     if (this.actions.suggest) {
       await this.actions.suggest({
         instance: this.provider,
-        meta: this.meta,
+        meta: this.info.supportedBlockchains,
         network,
       });
     }
@@ -95,7 +104,7 @@ class Wallet<InstanceType = any> {
       if (this.actions.canSwitchNetworkTo) {
         canSwitch = this.actions.canSwitchNetworkTo({
           provider: this.provider,
-          meta: this.meta,
+          meta: this.info.supportedBlockchains,
           network: requestedNetwork || '',
         });
       }
@@ -103,7 +112,7 @@ class Wallet<InstanceType = any> {
       if (networkChanged && canSwitch && !!this.actions.switchNetwork) {
         await this.actions.switchNetwork({
           instance: this.provider,
-          meta: this.meta,
+          meta: this.info.supportedBlockchains,
           // TODO: Fix type error
           // eslint-disable-next-line @typescript-eslint/ban-ts-comment
           // @ts-ignore
@@ -153,7 +162,7 @@ class Wallet<InstanceType = any> {
       var connectResult = await this.actions.connect({
         instance,
         network: requestedNetwork || undefined,
-        meta: this.meta || [],
+        meta: this.info.supportedBlockchains || [],
       });
     } catch (e) {
       this.resetState();
@@ -176,7 +185,8 @@ class Wallet<InstanceType = any> {
         const chainId = blockchain.chainId || Networks.Unknown;
         // Try to map chainId with a Network, if not found, we use chainId directly.
         const network =
-          getBlockChainNameFromId(chainId, this.meta) || Networks.Unknown;
+          getBlockChainNameFromId(chainId, this.info.supportedBlockchains) ||
+          Networks.Unknown;
         // TODO: second parameter should be `string` when we decided to open source the package.
         return accountAddressesWithNetwork(blockchain.accounts, network);
       });
@@ -186,7 +196,9 @@ class Wallet<InstanceType = any> {
     } else {
       const chainId = connectResult.chainId || Networks.Unknown;
       const network =
-        getBlockChainNameFromId(chainId, this.meta) || Networks.Unknown;
+        getBlockChainNameFromId(chainId, this.info.supportedBlockchains) ||
+        Networks.Unknown;
+
       // We fallback to current active network if `chainId` not provided.
       nextAccounts = accountAddressesWithNetwork(
         connectResult.accounts,
@@ -233,7 +245,7 @@ class Wallet<InstanceType = any> {
       // Check if we can eagerly connect to the wallet
       const eagerConnection = await canEagerConnect({
         instance: instance,
-        meta: this.meta,
+        meta: this.info.supportedBlockchains,
       });
 
       if (eagerConnection) {
@@ -260,7 +272,7 @@ class Wallet<InstanceType = any> {
 
     return switchTo({
       network,
-      meta: this.meta,
+      meta: this.info.supportedBlockchains,
       provider,
     });
   }
@@ -286,14 +298,17 @@ class Wallet<InstanceType = any> {
       this.actions.subscribe({
         instance: value,
         state: this.state,
-        meta: this.meta,
+        meta: this.info.supportedBlockchains,
         connect: this.connect.bind(this),
         disconnect: this.disconnect.bind(this),
         updateAccounts: (accounts, chainId) => {
           let network = this.state.network;
           if (chainId) {
             network =
-              getBlockChainNameFromId(chainId, this.meta) || Networks.Unknown;
+              getBlockChainNameFromId(
+                chainId,
+                this.info.supportedBlockchains
+              ) || Networks.Unknown;
           }
 
           const nextAccounts = accountAddressesWithNetwork(accounts, network);
@@ -308,8 +323,13 @@ class Wallet<InstanceType = any> {
     }
   }
 
-  setMeta(value: BlockchainMeta[]) {
-    this.meta = value;
+  setInfo(info: Partial<EventInfo>) {
+    if (typeof info.supportedBlockchains !== 'undefined') {
+      this.info.supportedBlockchains = info.supportedBlockchains;
+    }
+    if (typeof info.isContractWallet !== 'undefined') {
+      this.info.isContractWallet = info.isContractWallet;
+    }
   }
 
   setHandler(handler: EventHandler) {
@@ -319,6 +339,7 @@ class Wallet<InstanceType = any> {
   getState(): State {
     return this.state;
   }
+
   updateState(states: Partial<State>) {
     /*
      * We will notify handler after updating all the states.
@@ -353,12 +374,16 @@ class Wallet<InstanceType = any> {
 
     const state = this.getState();
     updates.forEach(([name, value]) => {
+      const eventInfo: EventInfo = {
+        supportedBlockchains: this.info.supportedBlockchains,
+        isContractWallet: this.info.isContractWallet,
+      };
       this.options.handler(
         this.options.config.type,
         name,
         value,
         state,
-        this.meta
+        eventInfo
       );
     });
   }
@@ -394,7 +419,7 @@ class Wallet<InstanceType = any> {
 
   private updateChainId(chainId: string | number) {
     const network = chainId
-      ? getBlockChainNameFromId(chainId, this.meta)
+      ? getBlockChainNameFromId(chainId, this.info.supportedBlockchains)
       : Networks.Unknown;
 
     this.updateState({
@@ -430,7 +455,7 @@ class Wallet<InstanceType = any> {
       // Trying to connect
       const instanceOptions: GetInstanceOptions = {
         currentProvider: this.provider,
-        meta: this.meta,
+        meta: this.info.supportedBlockchains,
         force: force || false,
         updateChainId: this.updateChainId.bind(this),
         getState: this.getState.bind(this),

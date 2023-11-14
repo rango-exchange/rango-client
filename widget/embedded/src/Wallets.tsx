@@ -53,22 +53,17 @@ function Main(
     .filter(isEvmBlockchain)
     .map((chain) => chain.name);
 
-  const onUpdateState: EventHandler = (
-    type,
-    event,
-    value,
-    state,
-    supportedBlockchains
-  ) => {
+  const onUpdateState: EventHandler = (type, event, value, state, meta) => {
     if (event === Events.ACCOUNTS) {
       if (value) {
         const supportedChainNames: Network[] | null =
-          walletAndSupportedChainsNames(supportedBlockchains);
+          walletAndSupportedChainsNames(meta.supportedBlockchains);
         const data = prepareAccountsForWalletStore(
           type,
           value,
           evmBasedChainNames,
-          supportedChainNames
+          supportedChainNames,
+          meta.isContractWallet
         );
         connectWallet(data, tokens);
       } else {
@@ -100,7 +95,7 @@ function Main(
 
     // propagate updates for Dapps using external wallets
     if (props.onUpdateState) {
-      props.onUpdateState(type, event, value, state, supportedBlockchains);
+      props.onUpdateState(type, event, value, state, meta);
     }
   };
   return (

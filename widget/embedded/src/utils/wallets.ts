@@ -55,8 +55,11 @@ export function mapWalletTypesToWalletInfo(
   return list
     .filter((wallet) => !EXCLUDED_WALLETS.includes(wallet as WalletTypes))
     .filter((wallet) => {
-      const { supportedChains, hideWhenNotInstalled } = getWalletInfo(wallet);
-      if (hideWhenNotInstalled && !getState(wallet).installed) {
+      const { supportedChains, isContractWallet } = getWalletInfo(wallet);
+      const { installed, network } = getState(wallet);
+      const filterContractWallets =
+        isContractWallet && (!installed || (!!chain && network !== chain));
+      if (filterContractWallets) {
         return false;
       }
       if (chain) {
@@ -97,7 +100,8 @@ export function prepareAccountsForWalletStore(
   wallet: WalletType,
   accounts: string[],
   evmBasedChains: string[],
-  supportedChainNames: Network[] | null
+  supportedChainNames: Network[] | null,
+  isContractWallet: boolean
 ): Wallet[] {
   const result: Wallet[] = [];
 
@@ -151,21 +155,29 @@ export function prepareAccountsForWalletStore(
 
     // If it's an evm network, we will add the address to all the evm chains.
     if (isEvmBasedChain || isUnknownAndEvmBased) {
-      /*
-       * all evm chains are not supported in wallets, so we are adding
-       * only to those that are supported by wallet.
-       */
-      const evmChainsSupportedByWallet = supportedBlockchains.filter((chain) =>
-        evmBasedChains.includes(chain)
-      );
-
-      evmChainsSupportedByWallet.forEach((network) => {
+      if (isContractWallet) {
         /*
-         * EVM addresses are not case sensitive.
-         * Some wallets like Binance-chain return some letters in uppercase which produces bugs in our wallet state.
+         * for contract wallets like Safe wallet, we should add only account for the
+         * current connected blockchain not all of the supported blockchains
          */
         addAccount(network, address.toLowerCase());
-      });
+      } else {
+        /*
+         * all evm chains are not supported in wallets, so we are adding
+         * only to those that are supported by wallet.
+         */
+        const evmChainsSupportedByWallet = supportedBlockchains.filter(
+          (chain) => evmBasedChains.includes(chain)
+        );
+
+        evmChainsSupportedByWallet.forEach((network) => {
+          /*
+           * EVM addresses are not case sensitive.
+           * Some wallets like Binance-chain return some letters in uppercase which produces bugs in our wallet state.
+           */
+          addAccount(network, address.toLowerCase());
+        });
+      }
     } else {
       addAccount(network, address);
     }
