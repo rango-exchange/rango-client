@@ -66,11 +66,10 @@ export function useSyncStoresWithConfig() {
         setFromBlockchain(chain ?? null);
       }
 
-      if (token || (!token && prevConfigFromToken.current)) {
-        setFromToken(token ?? null, {
-          blockchains: blockchains,
-          tokens: tokens,
-        });
+      if (token) {
+        setFromToken({ token, meta: { blockchains, tokens } });
+      } else if (!token && prevConfigFromToken.current) {
+        setFromToken({ token: null });
       }
 
       prevConfigFromBlockchain.current = config?.from?.blockchain;
@@ -87,7 +86,7 @@ export function useSyncStoresWithConfig() {
   useEffect(() => {
     if (fromToken && fromTokensConfig) {
       if (!fromTokensConfig.some((token) => tokensAreEqual(token, fromToken))) {
-        setFromToken(null);
+        setFromToken({ token: null });
       }
     }
 
@@ -101,7 +100,7 @@ export function useSyncStoresWithConfig() {
   useEffect(() => {
     if (toToken && toTokensConfig) {
       if (!toTokensConfig.some((token) => tokensAreEqual(token, toToken))) {
-        setToToken(null);
+        setToToken({ token: null });
       }
     }
 
@@ -125,11 +124,10 @@ export function useSyncStoresWithConfig() {
         setToBlockchain(chain ?? null);
       }
 
-      if (token || (!token && prevConfigToToken.current)) {
-        setToToken(token ?? null, {
-          blockchains,
-          tokens,
-        });
+      if (token) {
+        setToToken({ token, meta: { blockchains, tokens } });
+      } else if (!token && prevConfigToToken.current) {
+        setToToken({ token: null });
       }
 
       prevConfigToBlockchain.current = config?.to?.blockchain;

@@ -131,16 +131,22 @@ export function UpdateUrl() {
       if (!!fromBlockchain) {
         setFromBlockchain(fromBlockchain);
         if (!!fromToken) {
-          setFromToken(fromToken, {
-            blockchains: blockchains,
-            tokens: tokens,
+          setFromToken({
+            token: fromToken,
+            meta: {
+              blockchains: blockchains,
+              tokens: tokens,
+            },
           });
         }
       }
       if (!!toBlockchain) {
         setToBlockchain(toBlockchain);
         if (!!toToken) {
-          setToToken(toToken, { blockchains: blockchains, tokens: tokens });
+          setToToken({
+            token: toToken,
+            meta: { blockchains: blockchains, tokens: tokens },
+          });
         }
       }
       if (fromAmount) {

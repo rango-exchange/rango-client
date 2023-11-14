@@ -24,6 +24,8 @@ import createSelectors from './selectors';
 
 export type Meta = Pick<MetaResponse, 'blockchains' | 'tokens'>;
 
+export type SetTokenParams = { token: Token; meta: Meta } | { token: null };
+
 const getUsdValue = (token: Token | null, amount: string): BigNumber | null =>
   token?.usdPrice
     ? new BigNumber(amount || ZERO).multipliedBy(token?.usdPrice || 0)
@@ -46,8 +48,8 @@ export interface RouteState {
   setFromBlockchain: (chain: BlockchainMeta | null) => void;
   setToBlockchain: (chian: BlockchainMeta | null) => void;
 
-  setFromToken: (token: Token | null, meta: Meta) => void;
-  setToToken: (token: Token | null, meta: Meta) => void;
+  setFromToken: (params: SetTokenParams) => void;
+  setToToken: (params: SetTokenParams) => void;
   setInputAmount: (amount: string) => void;
   bestRoute: BestRouteResponse | null;
   setRoute: (bestRoute: BestRouteResponse | null) => void;
@@ -122,18 +124,17 @@ export const useBestRouteStore = createSelectors(
           };
         });
       },
-      setFromToken: (token, meta) => {
-        const { blockchains } = meta;
+      setFromToken: (params) => {
         return set((state) => ({
-          fromToken: token,
-          ...(token && {
+          fromToken: params.token,
+          ...(params.token && {
             fromBlockchain:
-              blockchains.find(
-                (blockchain) => blockchain.name === token.blockchain
+              params.meta.blockchains.find(
+                (blockchain) => blockchain.name === params.token.blockchain
               ) ?? null,
           }),
           ...(!!state.inputAmount && {
-            inputUsdValue: getUsdValue(token, state.inputAmount),
+            inputUsdValue: getUsdValue(params.token, state.inputAmount),
           }),
         }));
       },
@@ -154,14 +155,13 @@ export const useBestRouteStore = createSelectors(
           };
         });
       },
-      setToToken: (token, meta) => {
-        const { blockchains } = meta;
+      setToToken: (params) => {
         return set(() => ({
-          toToken: token,
-          ...(token && {
+          toToken: params.token,
+          ...(params.token && {
             toBlockchain:
-              blockchains.find(
-                (blockchain) => blockchain.name === token.blockchain
+              params.meta.blockchains.find(
+                (blockchain) => blockchain.name === params.token.blockchain
               ) ?? null,
           }),
         }));

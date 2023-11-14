@@ -63,9 +63,9 @@ export function SelectSwapItemsPage(props: PropTypes) {
 
   const updateToken = (token: Token) => {
     if (type === 'source') {
-      setFromToken(token, { blockchains, tokens });
+      setFromToken({ token, meta: { blockchains, tokens } });
     } else {
-      setToToken(token, { blockchains, tokens });
+      setToToken({ token, meta: { blockchains, tokens } });
     }
   };
 
