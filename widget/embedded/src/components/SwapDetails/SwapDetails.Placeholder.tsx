@@ -31,7 +31,7 @@ export function SwapDetailsPlaceholder(props: SwapDetailsPlaceholderPropTypes) {
       noPadding
       header={{
         title: i18n.t('Swap and Bridge'),
-        onBack: navigateBackFrom.bind(null, navigationRoutes.swapDetails),
+        onBack: () => navigateBackFrom(navigationRoutes.swapDetails),
         suffix: <SuffixContainer />,
       }}>
       {showSkeleton && (

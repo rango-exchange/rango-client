@@ -102,7 +102,7 @@ export function LiquiditySourcePage({ sourceType }: PropTypes) {
   return (
     <Layout
       header={{
-        onBack: navigateBackFrom.bind(null, navigationRoutes.settings),
+        onBack: () => navigateBackFrom(navigationRoutes.settings),
         title: i18n.t(sourceType),
         suffix: (
           <LiquiditySourceSuffix>

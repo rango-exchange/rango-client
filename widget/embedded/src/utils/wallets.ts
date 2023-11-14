@@ -174,10 +174,10 @@ export function prepareAccountsForWalletStore(
   return result;
 }
 
-export function getRequiredChains(route: BestRouteResponse | null) {
+export function getRequiredChains(quote: BestRouteResponse | null) {
   const wallets: string[] = [];
 
-  route?.result?.swaps.forEach((swap) => {
+  quote?.result?.swaps.forEach((swap) => {
     const currentStepFromBlockchain = swap.from.blockchain;
     const currentStepToBlockchain = swap.to.blockchain;
     if (!wallets.includes(currentStepFromBlockchain)) {

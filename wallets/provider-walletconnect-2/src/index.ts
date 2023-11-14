@@ -12,8 +12,9 @@ import type {
 import type { ISignClient } from '@walletconnect/types';
 import type { BlockchainMeta, SignerFactory } from 'rango-types';
 
-import { WalletTypes } from '@rango-dev/wallets-shared';
+import { Networks, WalletTypes } from '@rango-dev/wallets-shared';
 import Client from '@walletconnect/sign-client';
+import { AccountId, ChainId } from 'caip';
 import { evmBlockchains } from 'rango-types';
 
 import {
@@ -22,14 +23,22 @@ import {
   EthereumEvents,
   RELAY_URL,
 } from './constants';
-import { createModalInstance, simulateRequest } from './helpers';
+import {
+  createModalInstance,
+  simulateRequest,
+  switchOrAddEvmChain,
+} from './helpers';
 import {
   cleanupSingleSession,
   disconnectSessions,
   getAccountsFromEvent,
   getAccountsFromSession,
+  getPersistedChainId,
+  needSessionRecreateOnSwitchNetwork,
+  persistCurrentChainId,
   tryConnect,
   trySwitchByCreatingNewSession,
+  updateSessionAccounts,
 } from './session';
 import signer from './signer';
 
@@ -51,14 +60,15 @@ export const config: WalletConfig = {
   checkInstallation: false,
   isAsyncInstance: true,
   defaultNetwork: DEFAULT_NETWORK,
+  isAsyncSwitchNetwork: true,
 };
 
 export const getInstance: GetInstance = async (options) => {
   const { currentProvider, getState, meta } = options;
 
   /*
-   *Create a new pair, if exists use the pair,
-   *Or use the already created one.
+   * Create a new pair, if exists use the pair,
+   * Or use the already created one.
    */
   let provider: ISignClient;
   if (!currentProvider) {
@@ -67,7 +77,6 @@ export const getInstance: GetInstance = async (options) => {
         'You need to set `WC_PROJECT_ID` in Wallet Connect provider.'
       );
     }
-
     provider = await Client.init({
       relayUrl: RELAY_URL,
       projectId: envs.WC_PROJECT_ID,
@@ -91,15 +100,29 @@ export const connect: Connect = async ({ instance, network, meta }) => {
   const requestedNetwork = network || DEFAULT_NETWORK;
 
   // Try to restore the session first, if couldn't, create a new session by showing a modal.
-  const session = await tryConnect(client, {
+  const { session, isNew } = await tryConnect(client, {
     network: requestedNetwork,
     meta,
   });
   // Override the value (session).
   instance.session = session;
-
-  const accounts = getAccountsFromSession(session);
-  return accounts;
+  const currentChainId = !isNew
+    ? String(await getPersistedChainId(instance))
+    : undefined;
+  const accounts = getAccountsFromSession(session, currentChainId);
+  /*
+   * TODO: we need to fix next lines to support multiple accounts
+   * for now, it will return the current evm account on the current chain
+   */
+  if (!isNew) {
+    return {
+      chainId: String(currentChainId),
+      accounts: accounts?.[0].accounts,
+    };
+  }
+  const newChainId = accounts?.[accounts.length - 1].chainId;
+  void persistCurrentChainId(instance, newChainId);
+  return accounts?.[accounts.length - 1];
 };
 
 export const subscribe: Subscribe = ({
@@ -126,13 +149,16 @@ export const subscribe: Subscribe = ({
   // Listen to events triggred by wallet. (e.g. accountsChanged and chainChanged)
   client.on('session_event', (args) => {
     if (args.params.event.name === EthereumEvents.ACCOUNTS_CHANGED) {
-      const accounts = args.params.event.data;
-      const chainId = args.params.chainId;
+      const accounts = args.params.event.data.map((account: string) => {
+        return new AccountId(account).address;
+      });
+      const chainId = ChainId.parse(args.params.chainId).reference;
       updateAccounts(accounts);
       updateChainId(chainId);
     } else if (args.params.event.name === EthereumEvents.CHAIN_CHANGED) {
-      const chainId = args.params.chainId;
+      const chainId = args.params.event.data;
       updateChainId(chainId);
+      void persistCurrentChainId(instance, chainId);
     } else {
       console.log('[WC2] session_event not supported', args.params.event);
     }
@@ -149,17 +175,27 @@ export const switchNetwork: SwitchNetwork = async ({
   network,
   instance,
   meta,
+  getState,
 }) => {
-  /**
-   * Wallet connect is a multichain protocol and we can not determine the connected wallet
-   * supports which wallet, `extend`ing session doesn't work during a bug in their utils packages.
-   * So we will try to make a new session with `network` that user needs to switch.
-   */
-  const session = await trySwitchByCreatingNewSession(instance, {
-    network,
-    meta,
-  });
-  instance.session = session;
+  const needRecreateSession = needSessionRecreateOnSwitchNetwork(instance);
+  config.isAsyncSwitchNetwork = true;
+  if (needRecreateSession) {
+    config.isAsyncSwitchNetwork = false;
+    /**
+     * In case of trust wallet that doesn't support switch chain method,
+     * we need to handle it manually by deleting last session and create a new one
+     * with correct chain id.
+     */
+    const session = await trySwitchByCreatingNewSession(instance, {
+      network,
+      meta,
+    });
+    instance.session = session;
+    return;
+  }
+  const currentNetwork = getState?.().network || Networks.ETHEREUM;
+  await updateSessionAccounts(instance, network, currentNetwork, meta);
+  await switchOrAddEvmChain(meta, network, currentNetwork, instance);
 };
 
 /**

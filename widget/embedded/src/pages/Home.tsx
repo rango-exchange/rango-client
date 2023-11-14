@@ -1,32 +1,16 @@
-import type { SwapResult } from 'rango-sdk';
-
 import { i18n } from '@lingui/core';
-import {
-  Alert,
-  BestRoute,
-  BestRouteSkeleton,
-  Button,
-  Divider,
-  styled,
-  SwapInput,
-  Typography,
-  WarningIcon,
-} from '@rango-dev/ui';
+import { Button, styled, SwapInput, WarningIcon } from '@rango-dev/ui';
 import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { HomeButtons } from '../components/HeaderButtons';
 import { Layout } from '../components/Layout';
-import { NoRoutes } from '../components/NoRoutes';
-import { RouteErrors } from '../components/RouteErrors';
 import { SwitchFromAndToButton } from '../components/SwitchFromAndTo';
 import { errorMessages } from '../constants/errors';
 import { navigationRoutes } from '../constants/navigationRoutes';
 import {
   BALANCE_MAX_DECIMALS,
   BALANCE_MIN_DECIMALS,
-  GAS_FEE_MAX_DECIMALS,
-  GAS_FEE_MIN_DECIMALS,
   PERCENTAGE_CHANGE_MAX_DECIMALS,
   PERCENTAGE_CHANGE_MIN_DECIMALS,
   TOKEN_AMOUNT_MAX_DECIMALS,
@@ -34,29 +18,22 @@ import {
   USD_VALUE_MAX_DECIMALS,
   USD_VALUE_MIN_DECIMALS,
 } from '../constants/routing';
+import { QuoteInfo } from '../containers/QuoteInfo';
 import { useSwapInput } from '../hooks/useSwapInput';
 import { useAppStore } from '../store/AppStore';
-import { useBestRouteStore } from '../store/bestRoute';
+import { useQuoteStore } from '../store/quote';
 import { useUiStore } from '../store/ui';
 import { useWalletsStore } from '../store/wallets';
 import { ButtonState } from '../types';
-import { getContainer } from '../utils/common';
-import { getBlockchainShortNameFor } from '../utils/meta';
-import {
-  numberToString,
-  secondsToString,
-  totalArrivalTime,
-} from '../utils/numbers';
-import { getFormattedBestRoute, getPriceImpactLevel } from '../utils/routing';
+import { numberToString } from '../utils/numbers';
+import { getPriceImpact, getPriceImpactLevel } from '../utils/quote';
 import {
   canComputePriceImpact,
   getOutputRatio,
   getPercentageChange,
   getSwapButtonState,
-  getTotalFeeInUsd,
+  hasHighValueLoss,
   hasLimitError,
-  LimitErrorMessage,
-  outputRatioHasWarning,
 } from '../utils/swap';
 import { getBalanceFromWallet } from '../utils/wallets';
 
@@ -76,27 +53,13 @@ const InputsContainer = styled('div', {
   gap: 5,
   alignSelf: 'stretch',
 });
-
-const BestRouteContainer = styled('div', {
-  width: '100%',
-  paddingTop: '$2',
-});
-
-const FooterStepAlarm = styled('div', {
-  paddingBottom: '$15',
-});
-
-const FooterAlert = styled('div', {
-  width: '100%',
-  display: 'flex',
-});
-
 export function Home() {
   const navigate = useNavigate();
   const {
-    fetch: refetchBestRoute,
-    loading: fetchingBestRoute,
-    error: bestRouteError,
+    fetch: fetchQuote,
+    loading: fetchingQuote,
+    error: quoteError,
+    warning: quoteWarning,
   } = useSwapInput();
   const {
     fromToken,
@@ -108,49 +71,40 @@ export function Home() {
     inputUsdValue,
     outputAmount,
     outputUsdValue,
-    bestRoute,
-    resetRouteWallets,
-  } = useBestRouteStore();
+    quote,
+    resetQuoteWallets,
+    setQuoteWarningsConfirmed,
+  } = useQuoteStore();
 
   const loadingMetaStatus = useAppStore().use.loadingStatus();
-  const tokens = useAppStore().use.tokens()();
-  const blockchains = useAppStore().use.blockchains()();
+
   const connectedWallets = useWalletsStore.use.connectedWallets();
   const setCurrentPage = useUiStore.use.setCurrentPage();
-  const [openWarningModal, setOpenWarningModal] = useState(false);
-  const {
-    fromAmountRangeError,
-    swap: swapHasError,
-    recommendation,
-  } = LimitErrorMessage(bestRoute);
+  const [showQuoteWarningModal, setShowQuoteWarningModal] = useState(false);
   const layoutRef = useRef<HTMLDivElement>(null);
-
-  const showBestRoute =
-    !!Number(inputAmount) &&
-    (!!bestRoute || fetchingBestRoute || !!bestRouteError);
 
   const needsToWarnEthOnPath = false;
 
   const outToInRatio = getOutputRatio(inputUsdValue, outputUsdValue);
-  const highValueLoss = outputRatioHasWarning(inputUsdValue, outToInRatio);
+  const highValueLoss = hasHighValueLoss(inputUsdValue, outToInRatio);
 
   const priceImpactInputCanNotBeComputed = !canComputePriceImpact(
-    bestRoute,
+    quote,
     inputAmount,
     inputUsdValue
   );
 
   const priceImpactOutputCanNotBeComputed = !canComputePriceImpact(
-    bestRoute,
+    quote,
     inputAmount,
     outputUsdValue
   );
   const swapButtonState = getSwapButtonState(
     loadingMetaStatus,
     connectedWallets,
-    fetchingBestRoute,
-    bestRoute,
-    hasLimitError(bestRoute),
+    fetchingQuote,
+    quote,
+    hasLimitError(quote),
     highValueLoss,
     priceImpactInputCanNotBeComputed || priceImpactOutputCanNotBeComputed,
     needsToWarnEthOnPath,
@@ -191,7 +145,7 @@ export function Home() {
 
   useEffect(() => {
     setCurrentPage(navigationRoutes.home);
-    resetRouteWallets();
+    resetQuoteWallets();
     return setCurrentPage.bind(null, '');
   }, []);
 
@@ -199,83 +153,9 @@ export function Home() {
     !inputUsdValue || !outputUsdValue || !outputUsdValue.gt(0)
       ? null
       : getPercentageChange(
-          inputUsdValue.toNumber(),
-          outputUsdValue.toNumber()
+          inputUsdValue.toString(),
+          outputUsdValue.toString()
         );
-
-  const getBestRouteSteps = (swaps: SwapResult[]) => {
-    return swaps.map((swap, index) => ({
-      swapper: { displayName: swap.swapperId, image: swap.swapperLogo },
-      from: {
-        token: { displayName: swap.from.symbol, image: swap.from.logo },
-        chain: {
-          displayName:
-            getBlockchainShortNameFor(swap.from.blockchain, blockchains) ?? '',
-          image: swap.from.blockchainLogo,
-        },
-        price: {
-          value:
-            index === 0
-              ? numberToString(
-                  inputAmount,
-                  TOKEN_AMOUNT_MIN_DECIMALS,
-                  TOKEN_AMOUNT_MAX_DECIMALS
-                )
-              : swap.fromAmount,
-        },
-      },
-      to: {
-        token: { displayName: swap.to.symbol, image: swap.to.logo },
-        chain: {
-          displayName:
-            getBlockchainShortNameFor(swap.to.blockchain, blockchains) ?? '',
-          image: swap.to.blockchainLogo,
-        },
-        price: {
-          value: swap.toAmount,
-        },
-      },
-      alerts:
-        swap.swapperId === swapHasError?.swapperId ? (
-          <FooterStepAlarm>
-            <Alert
-              type="error"
-              title={recommendation}
-              footer={
-                <FooterAlert>
-                  <Typography size="xsmall" variant="body" color="neutral700">
-                    {fromAmountRangeError}
-                  </Typography>
-                  <Divider direction="horizontal" size={8} />
-                  <Typography size="xsmall" variant="body" color="neutral700">
-                    |
-                  </Typography>
-                  <Divider direction="horizontal" size={8} />
-                  <Typography size="xsmall" variant="body" color="neutral700">
-                    {i18n.t({
-                      id: 'Yours: {amount} {symbol}',
-                      values: {
-                        amount: numberToString(
-                          swapHasError?.fromAmount || null,
-                          TOKEN_AMOUNT_MIN_DECIMALS,
-                          TOKEN_AMOUNT_MAX_DECIMALS
-                        ),
-                        symbol: swap?.from.symbol,
-                      },
-                    })}
-                  </Typography>
-                </FooterAlert>
-              }
-            />
-          </FooterStepAlarm>
-        ) : undefined,
-    }));
-  };
-
-  const totalFeeInUsd = getTotalFeeInUsd(bestRoute, tokens);
-
-  const bestRouteData = getFormattedBestRoute(bestRoute);
-
   return (
     <Layout
       ref={layoutRef}
@@ -294,8 +174,8 @@ export function Home() {
           onClick={() => {
             if (swapButtonState.state === ButtonState.WAITFORCONNECTING) {
               navigate(navigationRoutes.wallets);
-            } else if (swapButtonState.state === ButtonState.NEEDTOCONFIRM) {
-              setOpenWarningModal(true);
+            } else if (quoteWarning) {
+              setShowQuoteWarningModal(true);
             } else {
               navigate(navigationRoutes.confirmSwap);
             }
@@ -309,9 +189,7 @@ export function Home() {
         suffix: (
           <HomeButtons
             layoutRef={layoutRef.current}
-            onClickRefresh={
-              !!bestRoute || bestRouteError ? refetchBestRoute : undefined
-            }
+            onClickRefresh={!!quote || quoteError ? fetchQuote : undefined}
             onClickHistory={() => navigate(navigationRoutes.swaps)}
             onClickSettings={() => navigate(navigationRoutes.settings)}
           />
@@ -322,6 +200,8 @@ export function Home() {
           <FromContainer>
             <SwapInput
               label={i18n.t('From')}
+              // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+              //@ts-ignore
               mode="From"
               onInputChange={setInputAmount}
               balance={tokenBalance}
@@ -358,7 +238,7 @@ export function Home() {
             <SwitchFromAndToButton />
           </FromContainer>
           <SwapInput
-            sharpBottomStyle={!!bestRoute?.result || fetchingBestRoute}
+            sharpBottomStyle={!!quote?.result || fetchingQuote}
             label={i18n.t('To')}
             mode="To"
             chain={{
@@ -369,18 +249,12 @@ export function Home() {
               displayName: toToken?.symbol || '',
               image: toToken?.image || '',
             }}
-            percentageChange={
-              !!percentageChange?.lt(0)
-                ? numberToString(
-                    percentageChange,
-                    PERCENTAGE_CHANGE_MIN_DECIMALS,
-                    PERCENTAGE_CHANGE_MAX_DECIMALS
-                  )
-                : null
-            }
-            warningLevel={getPriceImpactLevel(
-              percentageChange?.toNumber() ?? 0
+            percentageChange={numberToString(
+              getPriceImpact(inputUsdValue, outputUsdValue),
+              PERCENTAGE_CHANGE_MIN_DECIMALS,
+              PERCENTAGE_CHANGE_MAX_DECIMALS
             )}
+            warningLevel={getPriceImpactLevel(percentageChange ?? 0)}
             price={{
               value: numberToString(
                 outputAmount,
@@ -403,84 +277,23 @@ export function Home() {
             loading={loadingMetaStatus === 'loading'}
           />
         </InputsContainer>
-        {fetchingBestRoute && (
-          <BestRouteContainer>
-            <BestRouteSkeleton type="basic" />
-          </BestRouteContainer>
-        )}
-        {showBestRoute &&
-        !fetchingBestRoute &&
-        bestRouteData?.result?.swaps?.length ? (
-          <BestRouteContainer>
-            <BestRoute
-              type="basic"
-              recommended={true}
-              tooltipContainer={getContainer()}
-              input={{
-                value: numberToString(
-                  inputAmount,
-                  TOKEN_AMOUNT_MIN_DECIMALS,
-                  TOKEN_AMOUNT_MAX_DECIMALS
-                ),
-                usdValue: numberToString(
-                  inputUsdValue,
-                  USD_VALUE_MIN_DECIMALS,
-                  USD_VALUE_MAX_DECIMALS
-                ),
-              }}
-              output={{
-                value: numberToString(
-                  outputAmount,
-                  TOKEN_AMOUNT_MIN_DECIMALS,
-                  TOKEN_AMOUNT_MAX_DECIMALS
-                ),
-                usdValue: numberToString(
-                  outputUsdValue,
-                  USD_VALUE_MIN_DECIMALS,
-                  USD_VALUE_MAX_DECIMALS
-                ),
-              }}
-              steps={getBestRouteSteps(bestRouteData.result.swaps)}
-              percentageChange={numberToString(
-                percentageChange,
-                PERCENTAGE_CHANGE_MIN_DECIMALS,
-                PERCENTAGE_CHANGE_MAX_DECIMALS
-              )}
-              totalFee={numberToString(
-                totalFeeInUsd,
-                GAS_FEE_MIN_DECIMALS,
-                GAS_FEE_MAX_DECIMALS
-              )}
-              totalTime={secondsToString(
-                totalArrivalTime(bestRoute?.result?.swaps)
-              )}
-            />
-          </BestRouteContainer>
-        ) : showBestRoute && !fetchingBestRoute ? (
-          <>
-            <Divider size={20} />
-            <NoRoutes
-              diagnosisMessage={bestRouteData?.diagnosisMessages?.[0]}
-              fetch={refetchBestRoute}
-              error={!!bestRouteError}
-            />
-          </>
-        ) : null}
+        <QuoteInfo
+          quote={quote}
+          loading={fetchingQuote}
+          error={quoteError}
+          warning={quoteWarning}
+          type="basic"
+          refetchQuote={fetchQuote}
+          showWarningModal={showQuoteWarningModal}
+          onOpenWarningModal={() => setShowQuoteWarningModal(true)}
+          onCloseWarningModal={() => setShowQuoteWarningModal(false)}
+          onConfirmWarningModal={() => {
+            setShowQuoteWarningModal(false);
+            setQuoteWarningsConfirmed(true);
+            navigate(navigationRoutes.confirmSwap);
+          }}
+        />
       </Container>
-      <RouteErrors
-        openModal={openWarningModal}
-        onToggle={setOpenWarningModal}
-        totalFeeInUsd={totalFeeInUsd}
-        outputUsdValue={outputUsdValue}
-        inputUsdValue={inputUsdValue}
-        percentageChange={percentageChange}
-        highValueLoss={highValueLoss}
-        priceImpactCanNotBeComputed={
-          priceImpactInputCanNotBeComputed || priceImpactOutputCanNotBeComputed
-        }
-        loading={fetchingBestRoute || loadingMetaStatus === 'loading'}
-        extraSpace={!!bestRoute?.result || !bestRoute}
-      />
     </Layout>
   );
 }

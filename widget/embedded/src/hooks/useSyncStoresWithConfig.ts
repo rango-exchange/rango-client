@@ -3,7 +3,7 @@ import type { Asset } from 'rango-sdk';
 import { useEffect, useMemo, useRef } from 'react';
 
 import { useAppStore } from '../store/AppStore';
-import { useBestRouteStore } from '../store/bestRoute';
+import { useQuoteStore } from '../store/quote';
 import { useSettingsStore } from '../store/settings';
 import { tokensAreEqual } from '../utils/wallets';
 
@@ -18,7 +18,7 @@ export function useSyncStoresWithConfig() {
     toToken,
     fromBlockchain,
     toBlockchain,
-  } = useBestRouteStore();
+  } = useQuoteStore();
 
   const config = useAppStore().use.config();
   const loadingMetaStatus = useAppStore().use.loadingStatus();

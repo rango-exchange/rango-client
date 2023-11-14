@@ -13,8 +13,7 @@ import {
   CopyIcon,
   Divider,
   IconButton,
-  RouteCost,
-  RouteSummary,
+  QuoteCost,
   StepDetails,
   Typography,
   useCopyToClipboard,
@@ -36,17 +35,16 @@ import {
 } from '../../constants/routing';
 import { useNavigateBack } from '../../hooks/useNavigateBack';
 import { useAppStore } from '../../store/AppStore';
-import { useBestRouteStore } from '../../store/bestRoute';
 import { useNotificationStore } from '../../store/notification';
+import { useQuoteStore } from '../../store/quote';
 import {
   numberToString,
   secondsToString,
   totalArrivalTime,
 } from '../../utils/numbers';
-import { getPriceImpactLevel } from '../../utils/routing';
+import { getPriceImpact, getPriceImpactLevel } from '../../utils/quote';
 import {
   getLastConvertedTokenInFailedSwap,
-  getPercentageChange,
   getSwapMessages,
   shouldRetrySwap,
 } from '../../utils/swap';
@@ -54,6 +52,7 @@ import { getSwapDate } from '../../utils/time';
 import { getConciseAddress, getUsdPrice } from '../../utils/wallets';
 import { SuffixContainer } from '../HeaderButtons/HeaderButtons.styles';
 import { Layout } from '../Layout';
+import { QuoteSummary } from '../Quote';
 import {
   SwapDetailsCompleteModal,
   SwapDetailsModal,
@@ -67,7 +66,7 @@ export function SwapDetails(props: SwapDetailsProps) {
   const { canSwitchNetworkTo, connect, getWalletInfo } = useWallets();
   const blockchains = useAppStore().use.blockchains()();
   const tokens = useAppStore().use.tokens()();
-  const retry = useBestRouteStore.use.retry();
+  const retry = useQuoteStore.use.retry();
   const navigate = useNavigate();
   const { navigateBackFrom } = useNavigateBack();
   const [_, handleCopy] = useCopyToClipboard(RESET_INTERVAL);
@@ -200,7 +199,7 @@ export function SwapDetails(props: SwapDetailsProps) {
     USD_VALUE_MAX_DECIMALS
   );
 
-  const percentageChange = getPercentageChange(inputUsdValue, outputUsdValue);
+  const percentageChange = getPriceImpact(inputUsdValue, outputUsdValue);
 
   const completeModalDesc =
     swap.status === 'success'
@@ -238,7 +237,7 @@ export function SwapDetails(props: SwapDetailsProps) {
       noPadding
       header={{
         title: i18n.t('Swap and Bridge'),
-        onBack: navigateBackFrom.bind(null, navigationRoutes.swapDetails),
+        onBack: () => navigateBackFrom(navigationRoutes.swapDetails),
         onCancel:
           swap.status === 'running' ? () => setModalState('cancel') : undefined,
         suffix: swap.status !== 'running' && (
@@ -301,7 +300,7 @@ export function SwapDetails(props: SwapDetailsProps) {
         </HeaderDetails>
 
         <div className="output">
-          <RouteCost
+          <QuoteCost
             fee={numberToString(
               String(totalFee),
               GAS_FEE_MIN_DECIMALS,
@@ -310,7 +309,7 @@ export function SwapDetails(props: SwapDetailsProps) {
             time={secondsToString(totalArrivalTime(swap.steps))}
             steps={numberOfSteps}
           />
-          <RouteSummary
+          <QuoteSummary
             from={{
               price: {
                 value: numberToString(
@@ -348,13 +347,11 @@ export function SwapDetails(props: SwapDetailsProps) {
               },
             }}
             percentageChange={numberToString(
-              percentageChange,
+              String(percentageChange),
               PERCENTAGE_CHANGE_MIN_DECIMALS,
               PERCENTAGE_CHANGE_MAX_DECIMALS
             )}
-            warningLevel={getPriceImpactLevel(
-              percentageChange?.toNumber() ?? 0
-            )}
+            warningLevel={getPriceImpactLevel(percentageChange ?? 0)}
           />
         </div>
         <div className="title-steps">
@@ -376,7 +373,7 @@ export function SwapDetails(props: SwapDetailsProps) {
               <StepDetails
                 key={key}
                 step={step}
-                type="route-progress"
+                type="swap-progress"
                 ref={listRef}
                 state={state}
                 hasSeparator={index !== 0}
@@ -408,7 +405,7 @@ export function SwapDetails(props: SwapDetailsProps) {
         )}
         usdValue={outputUsdValue}
         percentageChange={numberToString(
-          percentageChange,
+          String(percentageChange),
           PERCENTAGE_CHANGE_MIN_DECIMALS,
           PERCENTAGE_CHANGE_MAX_DECIMALS
         )}

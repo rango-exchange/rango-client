@@ -1,14 +1,14 @@
-import type { RouteWarning } from '../types';
+import type { QuoteUpdateWarning } from '../types';
 
 import { i18n } from '@lingui/core';
 
-import { RouteWarningType } from '../types';
+import { QuoteUpdateType } from '../types';
 
-export function getRouteWarningMessage(warning: RouteWarning) {
+export function getQuoteUpdateWarningMessage(warning: QuoteUpdateWarning) {
   switch (warning.type) {
-    case RouteWarningType.ROUTE_UPDATED:
+    case QuoteUpdateType.QUOTE_UPDATED:
       return i18n.t('Route has been updated.');
-    case RouteWarningType.ROUTE_AND_OUTPUT_AMOUNT_UPDATED:
+    case QuoteUpdateType.QUOTE_AND_OUTPUT_AMOUNT_UPDATED:
       return i18n.t(
         'Output amount changed to {newOutputAmount} ({percentageChange}% change).',
         {
@@ -16,9 +16,9 @@ export function getRouteWarningMessage(warning: RouteWarning) {
           percentageChange: warning.percentageChange,
         }
       );
-    case RouteWarningType.ROUTE_SWAPPERS_UPDATED:
+    case QuoteUpdateType.QUOTE_SWAPPERS_UPDATED:
       return i18n.t('Route swappers has been updated.');
-    case RouteWarningType.ROUTE_COINS_UPDATED:
+    case QuoteUpdateType.QUOTE_COINS_UPDATED:
       return i18n.t('Route internal coins has been updated.');
     default:
       return '';

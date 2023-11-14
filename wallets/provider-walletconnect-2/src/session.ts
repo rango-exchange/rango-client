@@ -5,16 +5,19 @@ import type {
   SessionTypes,
   SignClientTypes,
 } from '@walletconnect/types';
+import type { BlockchainMeta } from 'rango-types/lib';
 
 import { Networks, timeout } from '@rango-dev/wallets-shared';
 import { getSdkError } from '@walletconnect/utils';
 import { AccountId } from 'caip';
 
-import { PING_TIMEOUT } from './constants';
+import { CHAIN_ID_STORAGE, PING_TIMEOUT } from './constants';
 import {
   generateOptionalNamespace,
   generateRequiredNamespace,
   getChainIdByNetworkName,
+  getCurrentEvmAccountAddress,
+  getEvmAccount,
   getModal,
   solanaChainIdToNetworkName,
 } from './helpers';
@@ -130,7 +133,7 @@ export function tryGetPairing(
 export async function tryConnect(
   client: SignClient,
   params: ConnectParams
-): Promise<SessionTypes.Struct> {
+): Promise<{ session: SessionTypes.Struct; isNew: boolean }> {
   const { network, meta } = params;
 
   const requiredNamespaces = generateRequiredNamespace(meta, network);
@@ -145,6 +148,7 @@ export async function tryConnect(
   }
 
   // Check if the user has a session, if yes, restore the session and use it.
+  let isNew = false;
   let session: SessionTypes.Struct | undefined;
   const pairing = tryGetPairing(client);
   if (pairing) {
@@ -161,9 +165,10 @@ export async function tryConnect(
       requiredNamespaces,
       optionalNamespaces,
     });
+    isNew = true;
   }
 
-  return session;
+  return { session, isNew };
 }
 
 /**
@@ -275,7 +280,10 @@ export async function disconnectSessions(client: SignClient) {
   return await Promise.all(allPromises);
 }
 
-export function getAccountsFromSession(session: SessionTypes.Struct) {
+export function getAccountsFromSession(
+  session: SessionTypes.Struct,
+  chainId?: string
+) {
   const accounts = Object.values(session.namespaces)
     .map((namespace) => namespace.accounts)
     .flat()
@@ -290,8 +298,21 @@ export function getAccountsFromSession(session: SessionTypes.Struct) {
         accounts: [address],
         chainId: chain,
       };
+    })
+    // TODO: fix, ignore solana and cosmos for now
+    .filter((account) => account.chainId !== Networks.SOLANA);
+  // sort accounts, so connected chain is first item in array
+  if (!!chainId) {
+    accounts.sort((a, b) => {
+      if (a.chainId === chainId) {
+        return 1;
+      }
+      if (b.chainId === chainId) {
+        return -1;
+      }
+      return 0;
     });
-
+  }
   return accounts;
 }
 
@@ -313,4 +334,81 @@ export function getAccountsFromEvent(
     });
 
   return accounts;
+}
+
+/*
+ * Before switch network, we need to update session namespace accounts
+ * to contain both current chain and target chain accoutns.
+ */
+export async function updateSessionAccounts(
+  instance: any,
+  requestedNetwork: string,
+  currentNetwork: string,
+  meta: BlockchainMeta[]
+) {
+  const session = instance.session;
+
+  const namespaces = session.namespaces;
+  let needUpdateNamepspace = false;
+  const accounts = namespaces.eip155.accounts;
+
+  const currentAccountAddress = getCurrentEvmAccountAddress(instance);
+  const requestedAccount = getEvmAccount(
+    requestedNetwork,
+    currentAccountAddress,
+    meta
+  );
+  if (!accounts.includes(requestedAccount)) {
+    accounts.push(requestedAccount);
+    needUpdateNamepspace = true;
+  }
+
+  const currentAccount = getEvmAccount(
+    currentNetwork,
+    currentAccountAddress,
+    meta
+  );
+  if (!accounts.includes(currentAccount)) {
+    accounts.push(currentAccount);
+    needUpdateNamepspace = true;
+  }
+
+  if (needUpdateNamepspace) {
+    const updatedNamespaces = {
+      ...namespaces,
+      eip155: {
+        ...namespaces.eip155,
+        accounts,
+      },
+    };
+    await instance.client.session
+      .update({
+        topic: session.topic,
+        namespaces: updatedNamespaces,
+      })
+      .catch((err: unknown) => {
+        console.log(err);
+      });
+  }
+}
+
+/*
+ * For some wallet e.g. Trust Wallet Mobile which doesn't support
+ * RPC method for switch network, we need to recreate session
+ */
+export function needSessionRecreateOnSwitchNetwork(instance: any): boolean {
+  const TRUST_WALLET_KEYWORD = 'trust';
+  const peerName = instance?.session?.peer?.metadata?.name;
+  return peerName?.toLowerCase()?.includes(TRUST_WALLET_KEYWORD);
+}
+
+export function persistCurrentChainId(instance: any, chainId: string) {
+  return instance.client.core.storage.setItem(CHAIN_ID_STORAGE, {
+    defaultChainId: parseInt(chainId),
+  });
+}
+
+export async function getPersistedChainId(instance: any) {
+  return (await instance.client.core.storage.getItem(CHAIN_ID_STORAGE))
+    ?.defaultChainId;
 }

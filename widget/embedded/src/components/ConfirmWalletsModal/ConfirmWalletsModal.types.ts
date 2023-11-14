@@ -1,4 +1,4 @@
-import type { ConfirmSwap } from '../../hooks/useConfirmSwap';
+import type { ConfirmSwap } from '../../hooks/useConfirmSwap/useConfirmSwap.types';
 
 export type PropTypes = {
   open: boolean;
