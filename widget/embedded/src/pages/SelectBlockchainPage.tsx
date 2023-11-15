@@ -21,7 +21,7 @@ export function SelectBlockchainPage(props: PropTypes) {
   const [blockchainCategory, setBlockchainCategory] = useState<string>('ALL');
   const setToBlockchain = useQuoteStore.use.setToBlockchain();
   const setFromBlockchain = useQuoteStore.use.setFromBlockchain();
-  const loadingStatus = useAppStore().use.loadingStatus();
+  const fetchStatus = useAppStore().use.fetchStatus();
 
   const blockchains = useAppStore().use.blockchains()({
     type: type,
@@ -41,7 +41,7 @@ export function SelectBlockchainPage(props: PropTypes) {
         setCategory={setBlockchainCategory}
         category={blockchainCategory}
         blockchains={blockchains}
-        isLoading={loadingStatus === 'loading'}
+        isLoading={fetchStatus === 'loading'}
       />
       <Divider size={24} />
       <SearchInput

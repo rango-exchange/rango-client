@@ -16,9 +16,9 @@ export function SwapDetailsPage() {
   const pendingSwaps = getPendingSwaps(manager);
   const requestId = useUiStore.use.selectedSwapRequestId();
   const { navigateBackFrom } = useNavigateBack();
-  const { loadingStatus } = useAppStore()();
+  const { fetchStatus: fetchMetaStatus } = useAppStore()();
 
-  const showSkeleton = loading || loadingStatus === 'loading';
+  const showSkeleton = loading || fetchMetaStatus === 'loading';
 
   const selectedSwap = pendingSwaps.find(
     ({ swap }) => swap.requestId === requestId

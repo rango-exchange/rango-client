@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-magic-numbers */
-import type { LoadingStatus } from '../store/slices/data';
+import type { FetchStatus } from '../store/slices/data';
 import type { ConnectedWallet } from '../store/wallets';
 import type {
   ConvertedToken,
@@ -180,7 +180,7 @@ export function getLimitErrorMessage(quote: BestRouteResponse): {
 }
 
 export function getSwapButtonState(
-  loadingMetaStatus: LoadingStatus,
+  loadingMetaStatus: FetchStatus,
   connectedWallets: ConnectedWallet[],
   loading: boolean,
   quote: BestRouteResponse | null,
@@ -751,16 +751,6 @@ export function shouldRetrySwap(pendingSwap: PendingSwap) {
     !!pendingSwap.finishTime &&
     new Date().getTime() - parseInt(pendingSwap.finishTime) < 4 * 3600 * 1000
   );
-}
-export function isValidCustomDestination(
-  blockchain: string,
-  address: string,
-  blockchains: BlockchainMeta[]
-): boolean {
-  const regex =
-    blockchains.find((chain) => chain.name === blockchain)?.addressPatterns ||
-    [];
-  return regex.filter((r) => new RegExp(r).test(address)).length > 0;
 }
 
 export function confirmSwapDisabled(

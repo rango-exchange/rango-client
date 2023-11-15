@@ -21,7 +21,7 @@ export function useSyncStoresWithConfig() {
   } = useQuoteStore();
 
   const config = useAppStore().use.config();
-  const loadingMetaStatus = useAppStore().use.loadingStatus();
+  const fetchMetaStatus = useAppStore().use.fetchStatus();
   const blockchains = useAppStore().use.blockchains()();
   const tokens = useAppStore().use.tokens()();
 
@@ -54,7 +54,7 @@ export function useSyncStoresWithConfig() {
   }, [config?.amount]);
 
   useEffect(() => {
-    if (loadingMetaStatus === 'success') {
+    if (fetchMetaStatus === 'success') {
       const chain = blockchains.find(
         (chain) => chain.name === config?.from?.blockchain
       );
@@ -80,7 +80,7 @@ export function useSyncStoresWithConfig() {
     config?.from?.token?.address,
     config?.from?.token?.blockchain,
     config?.from?.blockchain,
-    loadingMetaStatus,
+    fetchMetaStatus,
   ]);
 
   useEffect(() => {
@@ -112,7 +112,7 @@ export function useSyncStoresWithConfig() {
   }, [toTokensConfig, toBlockchainsConfig]);
 
   useEffect(() => {
-    if (loadingMetaStatus === 'success') {
+    if (fetchMetaStatus === 'success') {
       const chain = blockchains.find(
         (chain) => chain.name === config?.to?.blockchain
       );
@@ -138,7 +138,7 @@ export function useSyncStoresWithConfig() {
     config?.to?.token?.address,
     config?.to?.token?.blockchain,
     config?.to?.blockchain,
-    loadingMetaStatus,
+    fetchMetaStatus,
   ]);
 
   useEffect(() => {

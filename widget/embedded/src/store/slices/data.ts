@@ -19,13 +19,13 @@ type TokenOptions = {
   blockchain?: string;
   searchFor?: string;
 };
-export type LoadingStatus = 'loading' | 'success' | 'failed';
+export type FetchStatus = 'loading' | 'success' | 'failed';
 export interface DataSlice {
   _blockchains: BlockchainMeta[];
   _tokens: Token[];
   _popularTokens: Token[];
   _swappers: SwapperMeta[];
-  loadingStatus: LoadingStatus;
+  fetchStatus: FetchStatus;
   blockchains: (options?: BlockchainOptions) => BlockchainMeta[];
   tokens: (options?: TokenOptions) => Token[];
   swappers: () => SwapperMeta[];
@@ -45,7 +45,7 @@ export const createDataSlice: StateCreator<
   _tokens: [],
   _popularTokens: [],
   _swappers: [],
-  loadingStatus: 'loading',
+  fetchStatus: 'loading',
   // Selectors
   blockchains: (options) => {
     const blockchainsFromState = get()._blockchains;
@@ -167,14 +167,22 @@ export const createDataSlice: StateCreator<
   },
   swappers: () => {
     const {
-      config: { includeNewLiquiditySources, liquiditySources },
+      config: { enableNewLiquiditySources, liquiditySources },
     } = get();
 
-    const swappers = get()._swappers.filter((swapper) =>
-      includeNewLiquiditySources
-        ? !liquiditySources?.includes(swapper.swapperGroup)
-        : liquiditySources?.includes(swapper.swapperGroup)
-    );
+    /*
+     * If the enableNewLiquiditySources flag is set to true, we return all swappers that are not included in the config.
+     * Otherwise, we return all swappers that are included in the config.
+     */
+    const swappers = get()._swappers.filter((swapper) => {
+      const swapperGroupIncludedInLiquiditySources = liquiditySources?.includes(
+        swapper.swapperGroup
+      );
+
+      return enableNewLiquiditySources
+        ? !swapperGroupIncludedInLiquiditySources
+        : swapperGroupIncludedInLiquiditySources;
+    });
 
     const sortedSwappers = swappers.sort(sortLiquiditySourcesByGroupTitle);
 
@@ -185,7 +193,7 @@ export const createDataSlice: StateCreator<
     try {
       const response = await sdk().getAllMetadata();
 
-      set({ loadingStatus: 'success' });
+      set({ fetchStatus: 'success' });
       const blockchains: BlockchainMeta[] = [];
       const tokens: Token[] = [];
       const popularTokens: Token[] = response.popularTokens;
@@ -218,7 +226,8 @@ export const createDataSlice: StateCreator<
         _swappers: swappers,
       });
     } catch (error) {
-      set({ loadingStatus: 'failed' });
+      set({ fetchStatus: 'failed' });
+      throw error;
     }
   },
 });

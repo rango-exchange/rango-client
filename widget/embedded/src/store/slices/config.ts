@@ -4,7 +4,7 @@ import type { StateCreatorWithInitialData } from '../app';
 export const DEFAULT_CONFIG: WidgetConfig = {
   apiKey: '',
   multiWallets: true,
-  includeNewLiquiditySources: true,
+  enableNewLiquiditySources: true,
 };
 
 export type ConfigSlice = {

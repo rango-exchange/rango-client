@@ -29,7 +29,7 @@ export function UpdateUrl() {
   const setToToken = useQuoteStore.use.setToToken();
   const inputAmount = useQuoteStore.use.inputAmount();
   const setInputAmount = useQuoteStore.use.setInputAmount();
-  const loadingStatus = useAppStore().use.loadingStatus();
+  const fetchMetaStatus = useAppStore().use.fetchStatus();
   const blockchains = useAppStore().use.blockchains()();
   const tokens = useAppStore().use.tokens()();
   const setSelectedSwap = useUiStore.use.setSelectedSwap();
@@ -57,7 +57,7 @@ export function UpdateUrl() {
         toChainString = '',
         toTokenString = '',
         fromAmount = '';
-      if (loadingStatus !== 'success') {
+      if (fetchMetaStatus !== 'success') {
         fromChainString = searchParamsRef.current[SearchParams.FROM_CHAIN];
         fromTokenString = searchParamsRef.current[SearchParams.FROM_TOKEN];
         toChainString = searchParamsRef.current[SearchParams.TO_CHAIN];
@@ -106,7 +106,7 @@ export function UpdateUrl() {
   ]);
 
   useEffect(() => {
-    if (loadingStatus === 'success') {
+    if (fetchMetaStatus === 'success') {
       const fromChainString = searchParams.get(SearchParams.FROM_CHAIN);
       const fromTokenString = searchParams.get(SearchParams.FROM_TOKEN);
       const toChainString = searchParams.get(SearchParams.TO_CHAIN);
@@ -153,7 +153,7 @@ export function UpdateUrl() {
         setInputAmount(fromAmount);
       }
     }
-  }, [loadingStatus]);
+  }, [fetchMetaStatus]);
 
   return null;
 }

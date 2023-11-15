@@ -59,7 +59,7 @@ export function Main() {
     }
   }, [config]);
   useEffect(() => {
-    void fetchMeta();
+    void fetchMeta().catch();
     void useSettingsStore.persist.rehydrate();
     void useNotificationStore.persist.rehydrate();
     widgetContext.onConnectWallet(setLastConnectedWalletWithNetwork);

@@ -86,7 +86,7 @@ export function TokenList(props: PropTypes) {
   const { list, searchedFor = '', onChange, selectedBlockchain } = props;
 
   const [tokens, setTokens] = useState<TokenWithBalance[]>(list);
-  const loadingStatus = useAppStore().use.loadingStatus();
+  const fetchStatus = useAppStore().use.fetchStatus();
   const blockchains = useAppStore().use.blockchains()();
   const [hasNextPage, setHasNextPage] = useState<boolean>(true);
   const loadingWallet = useWalletsStore.use.loading();
@@ -267,8 +267,8 @@ export function TokenList(props: PropTypes) {
         {i18n.t('Select Token')}
       </Typography>
       <Divider size={4} />
-      {loadingStatus === 'loading' && <LoadingTokenList size={PAGE_SIZE} />}
-      {loadingStatus === 'success' && <List>{renderList()}</List>}
+      {fetchStatus === 'loading' && <LoadingTokenList size={PAGE_SIZE} />}
+      {fetchStatus === 'success' && <List>{renderList()}</List>}
     </Container>
   );
 }

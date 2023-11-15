@@ -33,7 +33,7 @@ type UseSwapInput = {
  */
 export function useSwapInput(): UseSwapInput {
   const { fetch: fetchQuote, cancelFetch } = useFetchQuote();
-  const { liquiditySources, includeNewLiquiditySources } =
+  const { liquiditySources, enableNewLiquiditySources } =
     useAppStore().use.config();
   const tokens = useAppStore().use.tokens()();
   const {
@@ -80,7 +80,7 @@ export function useSwapInput(): UseSwapInput {
         toToken,
         inputAmount,
         liquiditySources,
-        excludeLiquiditySources: includeNewLiquiditySources,
+        excludeLiquiditySources: enableNewLiquiditySources,
         disabledLiquiditySources,
         slippage: userSlippage,
         affiliateRef,

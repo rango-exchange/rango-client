@@ -29,7 +29,7 @@ export const TIME_TO_CLOSE_MODAL = 3_000;
 export const TIME_TO_IGNORE_MODAL = 300;
 
 export function WalletsPage() {
-  const { config, loadingStatus: loadingMetaStatus } = useAppStore()();
+  const { config, fetchStatus: fetchMetaStatus } = useAppStore()();
   const { navigateBackFrom } = useNavigateBack();
   const [openModal, setOpenModal] = useState(false);
   const [selectedWalletType, setSelectedWalletType] = useState<WalletType>('');
@@ -81,7 +81,7 @@ export function WalletsPage() {
                   onClick={(type) => {
                     void handleClick(type);
                   }}
-                  isLoading={loadingMetaStatus === 'loading'}
+                  isLoading={fetchMetaStatus === 'loading'}
                 />
               </Fragment>
             );

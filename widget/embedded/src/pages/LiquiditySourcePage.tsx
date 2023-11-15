@@ -35,7 +35,7 @@ interface PropTypes {
 }
 
 export function LiquiditySourcePage({ sourceType }: PropTypes) {
-  const loadingMetaStatus = useAppStore().use.loadingStatus();
+  const fetchStatus = useAppStore().use.fetchStatus();
   const swappers = useAppStore().use.swappers()();
   const [searchedFor, setSearchedFor] = useState<string>('');
   const toggleLiquiditySource = useSettingsStore.use.toggleLiquiditySource();
@@ -122,7 +122,7 @@ export function LiquiditySourcePage({ sourceType }: PropTypes) {
           placeholder={i18n.t('Search {sourceType}', { sourceType })}
           onChange={searchHandler}
         />
-        {loadingMetaStatus === 'loading' && <LoadingLiquiditySourceList />}
+        {fetchStatus === 'loading' && <LoadingLiquiditySourceList />}
 
         {!filteredList.length && !!searchedFor ? (
           <NotFoundContainer>
@@ -132,7 +132,7 @@ export function LiquiditySourcePage({ sourceType }: PropTypes) {
             />
           </NotFoundContainer>
         ) : (
-          loadingMetaStatus === 'success' && (
+          fetchStatus === 'success' && (
             <LiquiditySourceList>
               {filteredList.map((sourceItem) => {
                 return (

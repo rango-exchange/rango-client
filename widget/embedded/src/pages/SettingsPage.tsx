@@ -27,7 +27,7 @@ import { getUniqueSwappersGroups } from '../utils/settings';
 export function SettingsPage() {
   const navigate = useNavigate();
   const { theme } = useAppStore().use.config();
-  const loadingMetaStatus = useAppStore().use.loadingStatus();
+  const fetchStatus = useAppStore().use.fetchStatus();
   const swappers = useAppStore().use.swappers()();
   const { navigateBackFrom } = useNavigateBack();
 
@@ -54,7 +54,7 @@ export function SettingsPage() {
   ).length;
 
   const handleEndItem = (totalSelected: number, total: number) => {
-    switch (loadingMetaStatus) {
+    switch (fetchStatus) {
       case 'loading':
         return <Skeleton variant="text" size="medium" width={50} />;
       case 'failed':

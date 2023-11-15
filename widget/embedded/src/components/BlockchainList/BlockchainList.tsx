@@ -20,7 +20,7 @@ import { LoadingBlockchainList } from './LoadingBlockchainList';
 export function BlockchainList(props: PropTypes) {
   const { list, searchedFor, onChange, blockchainCategory } = props;
   const [blockchains, setBlockchains] = useState<BlockchainMeta[]>(list);
-  const { loadingStatus } = useAppStore()();
+  const { fetchStatus } = useAppStore()();
 
   useEffect(() => {
     setBlockchains([
@@ -66,8 +66,8 @@ export function BlockchainList(props: PropTypes) {
         {i18n.t('Select Blockchain')}
       </Typography>
       <Divider size={4} />
-      {loadingStatus === 'loading' && <LoadingBlockchainList />}
-      {loadingStatus === 'success' && renderList()}
+      {fetchStatus === 'loading' && <LoadingBlockchainList />}
+      {fetchStatus === 'success' && renderList()}
     </Container>
   );
 }

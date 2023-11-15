@@ -76,7 +76,7 @@ export function Home() {
     setQuoteWarningsConfirmed,
   } = useQuoteStore();
 
-  const loadingMetaStatus = useAppStore().use.loadingStatus();
+  const fetchMetaStatus = useAppStore().use.fetchStatus();
 
   const connectedWallets = useWalletsStore.use.connectedWallets();
   const setCurrentPage = useUiStore.use.setCurrentPage();
@@ -100,7 +100,7 @@ export function Home() {
     outputUsdValue
   );
   const swapButtonState = getSwapButtonState(
-    loadingMetaStatus,
+    fetchMetaStatus,
     connectedWallets,
     fetchingQuote,
     quote,
@@ -227,8 +227,8 @@ export function Home() {
                   ? errorMessages().unknownPriceError.impactTitle
                   : undefined,
               }}
-              disabled={loadingMetaStatus === 'failed'}
-              loading={loadingMetaStatus === 'loading'}
+              disabled={fetchMetaStatus === 'failed'}
+              loading={fetchMetaStatus === 'loading'}
               onSelectMaxBalance={() => {
                 if (tokenBalance !== '0') {
                   setInputAmount(tokenBalanceReal.split(',').join(''));
@@ -273,8 +273,8 @@ export function Home() {
                 : undefined,
             }}
             onClickToken={() => navigate('to-swap')}
-            disabled={loadingMetaStatus === 'failed'}
-            loading={loadingMetaStatus === 'loading'}
+            disabled={fetchMetaStatus === 'failed'}
+            loading={fetchMetaStatus === 'loading'}
           />
         </InputsContainer>
         <QuoteInfo
