@@ -3,7 +3,6 @@ import type {
   ConfirmSwap,
   ConfirmSwapFetchResult,
 } from '../hooks/useConfirmSwap/useConfirmSwap.types';
-import type { WidgetConfig } from '../types';
 
 import { i18n } from '@lingui/core';
 import { useManager } from '@rango-dev/queue-manager-react';
@@ -69,13 +68,8 @@ const Buttons = styled('div', {
   },
 });
 
-type PropTypes = {
-  config?: WidgetConfig;
-};
-
-export function ConfirmSwapPage(props: PropTypes) {
+export function ConfirmSwapPage() {
   //TODO: move component's logics to a custom hook
-  const { config } = props;
   const {
     quote,
     setInputAmount,
@@ -92,7 +86,6 @@ export function ConfirmSwapPage(props: PropTypes) {
   const showWalletsOnInit = !quoteWalletsConfirmed;
   const [showWallets, setShowWallets] = useState(false);
   const setSelectedSwap = useUiStore.use.setSelectedSwap();
-
   const { manager } = useManager();
   const {
     fetch: confirmSwap,
@@ -296,7 +289,6 @@ export function ConfirmSwapPage(props: PropTypes) {
           onCancel={cancelFetch}
           loading={fetchingConfirmationQuote}
           onCheckBalance={onConfirmSwap}
-          config={config}
         />
       )}
 

@@ -15,14 +15,14 @@ export function LiquiditiesSection() {
   const {
     onChangeSources,
     onChangeBooleansConfig,
-    config: { liquiditySources, includeNewLiquiditySources },
+    config: { liquiditySources, enableNewLiquiditySources },
   } = useConfigStore();
 
   const {
     meta: { swappers },
   } = useMetaStore();
 
-  const excludedMode = includeNewLiquiditySources ?? true;
+  const excludedMode = enableNewLiquiditySources ?? true;
   const uniqueSwappersGroup = removeDuplicates(swappers, 'swapperGroup');
 
   const defaultSelectedItems = (type: LiquidityType) =>
@@ -83,7 +83,7 @@ export function LiquiditiesSection() {
   };
 
   const handleCheckChange = (checked: boolean) => {
-    onChangeBooleansConfig('includeNewLiquiditySources', checked);
+    onChangeBooleansConfig('enableNewLiquiditySources', checked);
     onChangeSources(undefined);
   };
 

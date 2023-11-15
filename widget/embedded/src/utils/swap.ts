@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-magic-numbers */
-import type { LoadingStatus } from '../store/meta';
+import type { FetchStatus } from '../store/slices/data';
 import type { ConnectedWallet } from '../store/wallets';
 import type {
   ConvertedToken,
@@ -35,7 +35,6 @@ import {
   TOKEN_AMOUNT_MAX_DECIMALS,
   TOKEN_AMOUNT_MIN_DECIMALS,
 } from '../constants/routing';
-import { useMetaStore } from '../store/meta';
 import { ButtonState } from '../types';
 
 import { removeDuplicateFrom } from './common';
@@ -181,7 +180,7 @@ export function getLimitErrorMessage(quote: BestRouteResponse): {
 }
 
 export function getSwapButtonState(
-  loadingMetaStatus: LoadingStatus,
+  loadingMetaStatus: FetchStatus,
   connectedWallets: ConnectedWallet[],
   loading: boolean,
   quote: BestRouteResponse | null,
@@ -441,6 +440,8 @@ export function createQuoteRequestBody(params: {
   inputAmount: string;
   wallets?: Wallet[];
   selectedWallets?: Wallet[];
+  liquiditySources?: string[];
+  excludeLiquiditySources?: boolean;
   disabledLiquiditySources: string[];
   slippage: number;
   affiliateRef: string | null;
@@ -456,6 +457,8 @@ export function createQuoteRequestBody(params: {
     wallets,
     selectedWallets,
     disabledLiquiditySources,
+    liquiditySources,
+    excludeLiquiditySources,
     slippage,
     affiliateRef,
     affiliatePercent,
@@ -531,13 +534,18 @@ export function createQuoteRequestBody(params: {
     selectedWallets: selectedWalletsMap ?? {},
     slippage: slippage.toString(),
     ...(destination && { destination: destination }),
-    ...(disabledLiquiditySources.length > 0 && {
-      swapperGroups: disabledLiquiditySources,
+    ...(excludeLiquiditySources && {
+      swapperGroups: disabledLiquiditySources.concat(liquiditySources ?? []),
       swappersGroupsExclude: true,
+    }),
+    ...(!excludeLiquiditySources && {
+      swapperGroups: liquiditySources?.filter(
+        (liquiditySource) => !disabledLiquiditySources.includes(liquiditySource)
+      ),
+      swappersGroupsExclude: false,
     }),
     ...(checkPrerequisites && { blockchains: filteredBlockchains }),
   };
-
   return requestBody;
 }
 
@@ -743,16 +751,6 @@ export function shouldRetrySwap(pendingSwap: PendingSwap) {
     !!pendingSwap.finishTime &&
     new Date().getTime() - parseInt(pendingSwap.finishTime) < 4 * 3600 * 1000
   );
-}
-export function isValidCustomDestination(
-  blockchain: string,
-  address: string
-): boolean {
-  const blockchains = useMetaStore.getState().meta.blockchains;
-  const regex =
-    blockchains.find((chain) => chain.name === blockchain)?.addressPatterns ||
-    [];
-  return regex.filter((r) => new RegExp(r).test(address)).length > 0;
 }
 
 export function confirmSwapDisabled(

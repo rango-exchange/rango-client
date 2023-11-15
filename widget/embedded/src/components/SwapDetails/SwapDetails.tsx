@@ -34,7 +34,7 @@ import {
   USD_VALUE_MIN_DECIMALS,
 } from '../../constants/routing';
 import { useNavigateBack } from '../../hooks/useNavigateBack';
-import { useMetaStore } from '../../store/meta';
+import { useAppStore } from '../../store/AppStore';
 import { useNotificationStore } from '../../store/notification';
 import { useQuoteStore } from '../../store/quote';
 import {
@@ -64,6 +64,8 @@ import { Container, HeaderDetails, StepsList } from './SwapDetails.styles';
 export function SwapDetails(props: SwapDetailsProps) {
   const { swap, requestId, onDelete, onCancel: onCancelProps } = props;
   const { canSwitchNetworkTo, connect, getWalletInfo } = useWallets();
+  const blockchains = useAppStore().use.blockchains()();
+  const tokens = useAppStore().use.tokens()();
   const retry = useQuoteStore.use.retry();
   const navigate = useNavigate();
   const { navigateBackFrom } = useNavigateBack();
@@ -73,9 +75,6 @@ export function SwapDetails(props: SwapDetailsProps) {
   const [showCompletedModal, setShowCompletedModal] = useState<
     'success' | 'failed' | null
   >(null);
-  const {
-    meta: { tokens, blockchains },
-  } = useMetaStore();
 
   const onCancel = () => {
     onCancelProps();
@@ -150,7 +149,7 @@ export function SwapDetails(props: SwapDetailsProps) {
     showNetworkModal: currentStepNetworkStatus,
     setNetworkModal: setModalState,
     message: stepMessage,
-    blockchains,
+    blockchains: blockchains,
   });
   const numberOfSteps = steps.length;
   const [firstStep, lastStep] = [swap.steps[0], swap.steps[numberOfSteps - 1]];
@@ -264,7 +263,7 @@ export function SwapDetails(props: SwapDetailsProps) {
             type="primary"
             size="large"
             onClick={() => {
-              retry(swap);
+              retry(swap, { blockchains: blockchains, tokens: tokens });
               setTimeout(() => {
                 navigate(navigationRoutes.home);
               }, 0);

@@ -7,8 +7,7 @@ import { Layout } from '../components/Layout';
 import { SearchInput } from '../components/SearchInput';
 import { navigationRoutes } from '../constants/navigationRoutes';
 import { useNavigateBack } from '../hooks/useNavigateBack';
-import { useAppStore } from '../store/app';
-import { useMetaStore } from '../store/meta';
+import { useAppStore } from '../store/AppStore';
 import { useQuoteStore } from '../store/quote';
 
 interface PropTypes {
@@ -22,9 +21,9 @@ export function SelectBlockchainPage(props: PropTypes) {
   const [blockchainCategory, setBlockchainCategory] = useState<string>('ALL');
   const setToBlockchain = useQuoteStore.use.setToBlockchain();
   const setFromBlockchain = useQuoteStore.use.setFromBlockchain();
-  const { loadingStatus } = useMetaStore();
+  const fetchStatus = useAppStore().use.fetchStatus();
 
-  const blockchains = useAppStore().blockchains({
+  const blockchains = useAppStore().use.blockchains()({
     type: type,
   });
   const routeKey = type === 'source' ? 'fromBlockchain' : 'toBlockchain';
@@ -42,7 +41,7 @@ export function SelectBlockchainPage(props: PropTypes) {
         setCategory={setBlockchainCategory}
         category={blockchainCategory}
         blockchains={blockchains}
-        isLoading={loadingStatus === 'loading'}
+        isLoading={fetchStatus === 'loading'}
       />
       <Divider size={24} />
       <SearchInput
