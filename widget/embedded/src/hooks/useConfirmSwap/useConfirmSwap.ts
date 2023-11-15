@@ -40,8 +40,8 @@ export function useConfirmSwap(): ConfirmSwap {
     disabledLiquiditySources,
   } = useSettingsStore();
   const { connectedWallets } = useWalletsStore();
-  const blockchains = useAppStore().use.blockchains()();
-  const tokens = useAppStore().use.tokens()();
+  const blockchains = useAppStore().blockchains();
+  const tokens = useAppStore().tokens();
 
   const userSlippage = customSlippage || slippage;
 

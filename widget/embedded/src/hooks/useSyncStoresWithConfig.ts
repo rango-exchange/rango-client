@@ -20,10 +20,10 @@ export function useSyncStoresWithConfig() {
     toBlockchain,
   } = useQuoteStore();
 
-  const config = useAppStore().use.config();
-  const fetchMetaStatus = useAppStore().use.fetchStatus();
-  const blockchains = useAppStore().use.blockchains()();
-  const tokens = useAppStore().use.tokens()();
+  const config = useAppStore().config;
+  const fetchMetaStatus = useAppStore().fetchStatus;
+  const blockchains = useAppStore().blockchains();
+  const tokens = useAppStore().tokens();
 
   const { setAffiliateRef, setAffiliatePercent, setAffiliateWallets } =
     useSettingsStore();

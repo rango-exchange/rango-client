@@ -46,7 +46,7 @@ export function AppRouter({
 }) {
   const isRouterInContext = useInRouterContext();
   const Router = isRouterInContext ? Route : MemoryRouter;
-  const blockchains = useAppStore().use.blockchains()();
+  const blockchains = useAppStore().blockchains();
   const { canSwitchNetworkTo } = useWallets();
 
   const evmChains = blockchains.filter(isEvmBlockchain);

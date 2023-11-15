@@ -51,8 +51,8 @@ const NUMBER_OF_WALLETS_TO_DISPLAY = 2;
 export function ConfirmWalletsModal(props: PropTypes) {
   //TODO: move component's logics to a custom hook
   const { open, onClose, onCancel, onCheckBalance, loading } = props;
-  const config = useAppStore().use.config();
-  const blockchains = useAppStore().use.blockchains()();
+  const config = useAppStore().config;
+  const blockchains = useAppStore().blockchains();
   const {
     quote,
     setSelectedWallets: selectQuoteWallets,

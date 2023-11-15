@@ -33,9 +33,8 @@ type UseSwapInput = {
  */
 export function useSwapInput(): UseSwapInput {
   const { fetch: fetchQuote, cancelFetch } = useFetchQuote();
-  const { liquiditySources, enableNewLiquiditySources } =
-    useAppStore().use.config();
-  const tokens = useAppStore().use.tokens()();
+  const { liquiditySources, enableNewLiquiditySources } = useAppStore().config;
+  const tokens = useAppStore().tokens();
   const {
     fromToken,
     toToken,

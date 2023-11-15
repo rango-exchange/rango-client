@@ -24,7 +24,7 @@ export function NoResult(props: PropTypes) {
   const toggleAllLiquiditySources =
     useSettingsStore.use.toggleAllLiquiditySources();
 
-  const swappers = useAppStore().use.swappers()();
+  const swappers = useAppStore().swappers();
 
   const info = makeInfo(
     error,

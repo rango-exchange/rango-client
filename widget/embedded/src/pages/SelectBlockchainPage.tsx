@@ -21,9 +21,9 @@ export function SelectBlockchainPage(props: PropTypes) {
   const [blockchainCategory, setBlockchainCategory] = useState<string>('ALL');
   const setToBlockchain = useQuoteStore.use.setToBlockchain();
   const setFromBlockchain = useQuoteStore.use.setFromBlockchain();
-  const fetchStatus = useAppStore().use.fetchStatus();
+  const fetchStatus = useAppStore().fetchStatus;
 
-  const blockchains = useAppStore().use.blockchains()({
+  const blockchains = useAppStore().blockchains({
     type: type,
   });
   const routeKey = type === 'source' ? 'fromBlockchain' : 'toBlockchain';

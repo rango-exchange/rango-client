@@ -16,7 +16,7 @@ export function SwapDetailsPage() {
   const pendingSwaps = getPendingSwaps(manager);
   const requestId = useUiStore.use.selectedSwapRequestId();
   const { navigateBackFrom } = useNavigateBack();
-  const { fetchStatus: fetchMetaStatus } = useAppStore()();
+  const { fetchStatus: fetchMetaStatus } = useAppStore();
 
   const showSkeleton = loading || fetchMetaStatus === 'loading';
 

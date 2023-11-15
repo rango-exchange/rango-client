@@ -62,7 +62,7 @@ export function Quote(props: QuoteProps) {
     type,
     recommended = true,
   } = props;
-  const tokens = useAppStore().use.tokens()();
+  const tokens = useAppStore().tokens();
 
   const [expanded, setExpanded] = useState(props.expanded);
   const quoteRef = useRef<HTMLButtonElement | null>(null);

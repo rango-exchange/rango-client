@@ -86,11 +86,11 @@ export function TokenList(props: PropTypes) {
   const { list, searchedFor = '', onChange, selectedBlockchain } = props;
 
   const [tokens, setTokens] = useState<TokenWithBalance[]>(list);
-  const fetchStatus = useAppStore().use.fetchStatus();
-  const blockchains = useAppStore().use.blockchains()();
+  const fetchStatus = useAppStore().fetchStatus;
+  const blockchains = useAppStore().blockchains();
   const [hasNextPage, setHasNextPage] = useState<boolean>(true);
   const loadingWallet = useWalletsStore.use.loading();
-  const { isTokenPinned } = useAppStore()();
+  const { isTokenPinned } = useAppStore();
 
   // eslint-disable-next-line react/display-name
   const innerElementType: React.FC<CommonProps> = forwardRef((render, ref) => {

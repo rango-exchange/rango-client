@@ -27,7 +27,7 @@ export function BlockchainsSection(props: PropTypes) {
     selected: blockchain?.name,
   });
 
-  const { fetchStatus } = useAppStore()();
+  const { fetchStatus } = useAppStore();
   const resetToBlockchain = useQuoteStore.use.resetToBlockchain();
   const resetFromBlockchain = useQuoteStore.use.resetFromBlockchain();
   const hasMoreItemsInList = blockchainsList.more.length > 0;

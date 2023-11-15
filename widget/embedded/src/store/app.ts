@@ -5,7 +5,6 @@ import type { StateCreator } from 'zustand';
 
 import { create } from 'zustand';
 
-import createSelectors from './selectors';
 import { createConfigSlice } from './slices/config';
 import { createDataSlice } from './slices/data';
 
@@ -21,10 +20,8 @@ export type StateCreatorWithInitialData<
 export type AppStoreState = DataSlice & ConfigSlice;
 
 export function createAppStore(initialData?: WidgetConfig) {
-  return createSelectors(
-    create<AppStoreState>()((...a) => ({
-      ...createDataSlice(...a),
-      ...createConfigSlice(initialData, ...a),
-    }))
-  );
+  return create<AppStoreState>()((...a) => ({
+    ...createDataSlice(...a),
+    ...createConfigSlice(initialData, ...a),
+  }));
 }

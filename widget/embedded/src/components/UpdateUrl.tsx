@@ -29,9 +29,9 @@ export function UpdateUrl() {
   const setToToken = useQuoteStore.use.setToToken();
   const inputAmount = useQuoteStore.use.inputAmount();
   const setInputAmount = useQuoteStore.use.setInputAmount();
-  const fetchMetaStatus = useAppStore().use.fetchStatus();
-  const blockchains = useAppStore().use.blockchains()();
-  const tokens = useAppStore().use.tokens()();
+  const fetchMetaStatus = useAppStore().fetchStatus;
+  const blockchains = useAppStore().blockchains();
+  const tokens = useAppStore().tokens();
   const setSelectedSwap = useUiStore.use.setSelectedSwap();
   useSyncStoresWithConfig();
 

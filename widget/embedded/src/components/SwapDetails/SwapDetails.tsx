@@ -64,8 +64,8 @@ import { Container, HeaderDetails, StepsList } from './SwapDetails.styles';
 export function SwapDetails(props: SwapDetailsProps) {
   const { swap, requestId, onDelete, onCancel: onCancelProps } = props;
   const { canSwitchNetworkTo, connect, getWalletInfo } = useWallets();
-  const blockchains = useAppStore().use.blockchains()();
-  const tokens = useAppStore().use.tokens()();
+  const blockchains = useAppStore().blockchains();
+  const tokens = useAppStore().tokens();
   const retry = useQuoteStore.use.retry();
   const navigate = useNavigate();
   const { navigateBackFrom } = useNavigateBack();
