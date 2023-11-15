@@ -1,26 +1,30 @@
-import mitt from 'mitt';
-import {
-  MainEvents,
+import type {
   RemoveNameField,
   Route,
   RouteEvent,
-  RouteEventType,
   RouteExecutionEvents,
-  EventSeverity,
   Step,
   StepEvent,
-  StepEventType,
-  StepExecutionEventStatus,
-  StepExecutionBlockedEventStatus,
 } from '../types';
-import { PendingSwap, PendingSwapStep } from 'rango-types/lib';
-import { getCurrentBlockchainOfOrNull } from '../shared';
+import type { PendingSwap, PendingSwapStep } from 'rango-types/lib';
+
+import mitt from 'mitt';
+
 import {
   getCurrentStepTx,
   getFailedStep,
   getLastSuccessfulStep,
   isApprovalCurrentStepTx,
 } from '../helpers';
+import { getCurrentBlockchainOfOrNull } from '../shared';
+import {
+  EventSeverity,
+  MainEvents,
+  RouteEventType,
+  StepEventType,
+  StepExecutionBlockedEventStatus,
+  StepExecutionEventStatus,
+} from '../types';
 
 type NotifierParams = {
   swap: PendingSwap;
@@ -119,14 +123,19 @@ function getEventPayload(
     route,
     step: routeSteps[routeSteps.length - 1],
   };
-  if (swapStep) result.step = createSteps([swapStep])[0];
-  else {
+  if (swapStep) {
+    result.step = createSteps([swapStep])[0];
+  } else {
     if (type === 'failed') {
       const failedStep = getFailedStep(routeSteps);
-      if (failedStep) result.step = failedStep;
+      if (failedStep) {
+        result.step = failedStep;
+      }
     } else {
       const lastSuccessfulStep = getLastSuccessfulStep(routeSteps);
-      if (lastSuccessfulStep) result.step = lastSuccessfulStep;
+      if (lastSuccessfulStep) {
+        result.step = lastSuccessfulStep;
+      }
     }
   }
 
@@ -151,8 +160,9 @@ function emitRouteEvent(stepEvent: StepEvent, route: Route) {
     default:
       break;
   }
-  if (routeEvent)
+  if (routeEvent) {
     eventEmitter.emit(MainEvents.RouteEvent, { event: routeEvent, route });
+  }
 }
 
 function emitStepEvent(stepEvent: StepEvent, route: Route, step: Step) {
@@ -196,9 +206,11 @@ export function notifier(params: NotifierParams) {
         message = 'Please wait while the transaction is created ...';
         messageSeverity = EventSeverity.INFO;
       } else if (event.status === StepExecutionEventStatus.SEND_TX) {
-        if (params.step && isApprovalCurrentStepTx(params.step))
+        if (params.step && isApprovalCurrentStepTx(params.step)) {
           message = `Please confirm '${step.swapperName}' smart contract access to ${fromAsset}`;
-        else message = 'Please confirm transaction request in your wallet';
+        } else {
+          message = 'Please confirm transaction request in your wallet';
+        }
         messageSeverity = EventSeverity.WARNING;
       } else if (event.status === StepExecutionEventStatus.TX_SENT) {
         message = 'Transaction sent successfully';
@@ -206,9 +218,11 @@ export function notifier(params: NotifierParams) {
       }
       break;
     case StepEventType.CHECK_STATUS:
-      if (params.step && isApprovalCurrentStepTx(params.step))
-        message = 'Checking approve transacation status ...';
-      else message = 'Checking transacation status ...';
+      if (params.step && isApprovalCurrentStepTx(params.step)) {
+        message = 'Checking approve transaction status ...';
+      } else {
+        message = 'Checking transaction status ...';
+      }
       messageSeverity = EventSeverity.INFO;
       break;
     case StepEventType.APPROVAL_TX_SUCCEEDED:
@@ -251,7 +265,10 @@ export function notifier(params: NotifierParams) {
       break;
   }
 
-  if (params.step)
+  if (params.step) {
     emitStepEvent({ ...event, message, messageSeverity }, route, step);
-  else emitRouteEvent({ ...event, message, messageSeverity }, route);
+  }
+  if (params.event.type === StepEventType.FAILED || !params.step) {
+    emitRouteEvent({ ...event, message, messageSeverity }, route);
+  }
 }

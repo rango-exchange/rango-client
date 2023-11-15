@@ -28,14 +28,17 @@ export const tokenToString = (token: Asset) =>
   `${token.symbol}-${token.blockchain}-${token.address ?? ''}`;
 
 export function removeDuplicates<T>(arr: T[], key?: keyof T): T[] {
+  if (!key) {
+    return Array.from(new Set(arr));
+  }
+
   const seen = new Set<T[keyof T]>();
 
   return arr.filter(
     (item) =>
-      !key ||
-      (typeof item[key] !== 'undefined' &&
-        !seen.has(item[key]) &&
-        seen.add(item[key]))
+      typeof item[key] !== 'undefined' &&
+      !seen.has(item[key]) &&
+      seen.add(item[key])
   );
 }
 
@@ -64,7 +67,6 @@ export const excludedWallets = [
   WalletTypes.SAFE,
   WalletTypes.MY_TON_WALLET,
   WalletTypes.WALLET_CONNECT_2,
-  WalletTypes.BINANCE_CHAIN,
 ];
 
 export const onChangeMultiSelects = (

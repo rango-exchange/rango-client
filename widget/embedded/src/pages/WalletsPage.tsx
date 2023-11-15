@@ -1,4 +1,3 @@
-import type { WidgetConfig } from '../types';
 import type { WalletType } from '@rango-dev/wallets-shared';
 
 import { i18n } from '@lingui/core';
@@ -10,14 +9,8 @@ import { WalletModal } from '../components/WalletModal';
 import { navigationRoutes } from '../constants/navigationRoutes';
 import { useNavigateBack } from '../hooks/useNavigateBack';
 import { useWalletList } from '../hooks/useWalletList';
-import { useMetaStore } from '../store/meta';
+import { useAppStore } from '../store/AppStore';
 import { getContainer } from '../utils/common';
-
-interface PropTypes {
-  supportedWallets: WidgetConfig['wallets'];
-  multiWallets: boolean;
-  config?: WidgetConfig;
-}
 
 const ListContainer = styled('div', {
   display: 'grid',
@@ -35,7 +28,8 @@ const Container = styled('div', {
 export const TIME_TO_CLOSE_MODAL = 3_000;
 export const TIME_TO_IGNORE_MODAL = 300;
 
-export function WalletsPage({ config }: PropTypes) {
+export function WalletsPage() {
+  const { config, fetchStatus: fetchMetaStatus } = useAppStore();
   const { navigateBackFrom } = useNavigateBack();
   const [openModal, setOpenModal] = useState(false);
   const [selectedWalletType, setSelectedWalletType] = useState<WalletType>('');
@@ -59,7 +53,6 @@ export function WalletsPage({ config }: PropTypes) {
     },
   });
 
-  const loadingMetaStatus = useMetaStore.use.loadingStatus();
   const selectedWallet = list.find(
     (wallet) => wallet.type === selectedWalletType
   );
@@ -71,7 +64,7 @@ export function WalletsPage({ config }: PropTypes) {
     <Layout
       header={{
         title: i18n.t('Connect Wallets'),
-        onBack: navigateBackFrom.bind(null, navigationRoutes.wallets),
+        onBack: () => navigateBackFrom(navigationRoutes.wallets),
       }}>
       <Container>
         <Typography variant="title" size="xmedium" align="center">
@@ -88,7 +81,7 @@ export function WalletsPage({ config }: PropTypes) {
                   onClick={(type) => {
                     void handleClick(type);
                   }}
-                  isLoading={loadingMetaStatus === 'loading'}
+                  isLoading={fetchMetaStatus === 'loading'}
                 />
               </Fragment>
             );

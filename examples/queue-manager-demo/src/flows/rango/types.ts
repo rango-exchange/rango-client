@@ -1,15 +1,16 @@
-import {
-  WalletType,
-  Network,
-  Networks,
-  EvmTransaction,
-  CosmosTransaction,
-  TransferTransaction,
-  SolanaTransaction,
+import type {
   Asset,
+  CosmosTransaction,
+  EvmTransaction,
+  Network,
+  SolanaTransaction,
   Transaction,
+  TransferTransaction,
+  WalletType,
 } from '@rango-dev/wallets-shared';
-import BigNumber from 'bignumber.js';
+import type BigNumber from 'bignumber.js';
+
+import { Networks } from '@rango-dev/wallets-shared';
 
 export type WalletTypeAndAddress = {
   walletType: WalletType;
@@ -436,11 +437,6 @@ export const OKX_WALLET_SUPPORTED_CHAINS = [
   Networks.AVAX_CCHAIN,
 ];
 
-export const BINANCE_CHAIN_WALLET_SUPPORTED_CHAINS = [
-  Networks.ETHEREUM,
-  Networks.BSC,
-  Networks.BINANCE,
-];
 export const EXODUS_WALLET_SUPPORTED_CHAINS = [
   Networks.SOLANA,
   Networks.ETHEREUM,

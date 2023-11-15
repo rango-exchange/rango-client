@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/provider-mytonwallet",
-  "version": "0.3.1-next.1",
+  "version": "0.7.1-next.3",
   "license": "MIT",
   "type": "module",
   "module": "./dist/index.js",
@@ -20,8 +20,8 @@
     "lint": "eslint \"**/*.{ts,tsx}\" --ignore-path ../../.eslintignore"
   },
   "dependencies": {
-    "@rango-dev/signer-ton": "^0.3.0",
-    "@rango-dev/wallets-shared": "^0.17.1-next.1",
+    "@rango-dev/signer-ton": "^0.7.1-next.0",
+    "@rango-dev/wallets-shared": "^0.21.1-next.3",
     "@tonconnect/sdk": "^2.1.0",
     "rango-types": "^0.1.45"
   },

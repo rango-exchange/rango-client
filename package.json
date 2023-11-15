@@ -66,6 +66,7 @@
     "conventional-commits-filter": "^2.0.7",
     "conventional-commits-parser": "^3.2.4",
     "conventional-recommended-bump": "^6.1.0",
+    "crypto-browserify": "^3.12.0",
     "esbuild": "^0.17.19",
     "eslint": "^8.41.0",
     "eslint-config-prettier": "^8.8.0",

@@ -7,14 +7,7 @@ import type {
   TransactionType,
 } from 'rango-sdk';
 
-import {
-  BestRoute,
-  Button,
-  Divider,
-  Modal,
-  styled,
-  Typography,
-} from '@rango-dev/ui';
+import { Button, Divider, Modal, styled, Typography } from '@rango-dev/ui';
 import { useWallets } from '@rango-dev/wallets-react';
 import { isEvmAddress, Networks } from '@rango-dev/wallets-shared';
 import {
@@ -335,14 +328,14 @@ function SignModal({ type, open, onClose, tokens }: Props) {
           />
 
           <Divider />
-          {bestRoute && (
+          {/* {bestRoute && (
             <BestRoute
               data={bestRoute}
               feeWarning={false}
               totalFee="-"
               totalTime="-"
             />
-          )}
+          )} */}
           <div className="swap-details-container">
             {!!error && (
               <Typography variant="body2" color="error" mb={12}>

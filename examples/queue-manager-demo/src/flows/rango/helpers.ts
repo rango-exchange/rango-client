@@ -1,52 +1,60 @@
-import {
-  AllBlockchains,
-  Network,
-  Networks,
-  WalletType,
-  WalletTypes,
-  XDEFI_WALLET_SUPPORTED_NATIVE_CHAINS,
-} from '@rango-dev/wallets-shared';
-
-import { SUPPORTED_ETH_CHAINS as XDEFI_WALLET_SUPPORTED_EVM_CHAINS } from '@rango-dev/provider-xdefi/src/constants';
-import {
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-throw-literal */
+/* eslint-disable @typescript-eslint/member-ordering */
+/* eslint-disable @typescript-eslint/no-magic-numbers */
+import type {
   APIErrorCode,
-  ApiMethodName,
   BestRoute,
-  BINANCE_CHAIN_WALLET_SUPPORTED_CHAINS,
   Blockchain,
   CheckTxStatusRequest,
   CreateTransactionRequest,
   CreateTransactionResponse,
   ErrorDetail,
-  EXODUS_WALLET_SUPPORTED_CHAINS,
-  NETWORKS_FOR_1INCH,
-  NETWORK_TO_NATIVE_SYMBOL_MAP_FOR_1INCH,
-  OKX_WALLET_SUPPORTED_CHAINS,
   PendingSwap,
   PendingSwapStep,
   RawAccounts,
   SwapperStatusResponse,
-  SWAPPER_ONE_INCH_LIST,
   SwapSavedSettings,
   TokenMeta,
   TransactionName,
   UserWalletBlockchain,
   WalletTypeAndAddress,
 } from './types';
-import { BigNumber } from 'bignumber.js';
-import { CheckApprovalResponse } from 'rango-sdk-basic';
-import { readAccountAddress } from '@rango-dev/wallets-react';
+import type {
+  AllBlockchains,
+  Network,
+  WalletType,
+} from '@rango-dev/wallets-shared';
+import type { BestRouteRequest } from 'rango-sdk';
+import type { CheckApprovalResponse } from 'rango-sdk-basic';
+import type { EvmBlockchainMeta } from 'rango-types';
 
-import { ethers } from 'ethers';
-import { sampleRawAccounts } from './mock';
+import { SUPPORTED_ETH_CHAINS as XDEFI_WALLET_SUPPORTED_EVM_CHAINS } from '@rango-dev/provider-xdefi/src/constants';
+import { readAccountAddress } from '@rango-dev/wallets-react';
 import {
-  EvmBlockchainMeta,
-  SignerError,
+  Networks,
+  WalletTypes,
+  XDEFI_WALLET_SUPPORTED_NATIVE_CHAINS,
+} from '@rango-dev/wallets-shared';
+import { BigNumber } from 'bignumber.js';
+import { ethers } from 'ethers';
+import {
   isCosmosBlockchain,
   isEvmBlockchain,
   isSolanaBlockchain,
+  SignerError,
 } from 'rango-types';
-import type { BestRouteRequest } from 'rango-sdk';
+
+import { sampleRawAccounts } from './mock';
+import {
+  ApiMethodName,
+  EXODUS_WALLET_SUPPORTED_CHAINS,
+  NETWORK_TO_NATIVE_SYMBOL_MAP_FOR_1INCH,
+  NETWORKS_FOR_1INCH,
+  OKX_WALLET_SUPPORTED_CHAINS,
+  SWAPPER_ONE_INCH_LIST,
+} from './types';
+
 const UNKNOWN_COIN_IMAGE = '/coins/unknown.png';
 const BRAVE_USER_AGENT_HEADER = 'X-Brave';
 const url = 'https://api.rango.exchange';
@@ -67,7 +75,9 @@ export function calculatePendingSwap(
   validateBalanceOrFee: boolean
 ): PendingSwap {
   const simulationResult = bestRoute.result;
-  if (!simulationResult) throw Error('Simulation result should not be null');
+  if (!simulationResult) {
+    throw Error('Simulation result should not be null');
+  }
 
   return {
     creationTime: new Date().getTime().toString(),
@@ -211,7 +221,9 @@ export const getBestRoute = async (
 };
 
 export const urlToToken = (s: string | null): TokenMeta | null => {
-  if (!s) return null;
+  if (!s) {
+    return null;
+  }
 
   const ps1 = s.split('--');
   const ps2 = ps1[0].split('.');
@@ -427,10 +439,11 @@ export async function createTransaction(
     }
 
     const result: CreateTransactionResponse = await response.json();
-    if (!result.ok || !result.transaction)
+    if (!result.ok || !result.transaction) {
       throw PrettyError.CreateTransaction(
         result.error || 'bad response from create tx endpoint'
       );
+    }
 
     return result;
   } catch (error: any) {
@@ -439,8 +452,12 @@ export async function createTransaction(
 }
 
 export const prettifyErrorMessage = (obj: unknown): ErrorDetail => {
-  if (!obj) return { extraMessage: '', extraMessageErrorCode: null };
-  if (obj instanceof PrettyError) return obj.getErrorDetail();
+  if (!obj) {
+    return { extraMessage: '', extraMessageErrorCode: null };
+  }
+  if (obj instanceof PrettyError) {
+    return obj.getErrorDetail();
+  }
   if (obj instanceof SignerError) {
     const t = obj.getErrorDetail();
     return {
@@ -449,16 +466,18 @@ export const prettifyErrorMessage = (obj: unknown): ErrorDetail => {
       extraMessageErrorCode: t.code,
     };
   }
-  if (obj instanceof Error)
+  if (obj instanceof Error) {
     return {
       extraMessage: obj.toString(),
       extraMessageErrorCode: null,
     };
-  if (typeof obj !== 'string')
+  }
+  if (typeof obj !== 'string') {
     return {
       extraMessage: JSON.stringify(obj),
       extraMessageErrorCode: null,
     };
+  }
   return { extraMessage: obj, extraMessageErrorCode: null };
 };
 
@@ -475,11 +494,12 @@ export const getEvmApproveUrl = (
     throw Error(`unsupported network: ${network} for getting approve url.`);
   }
 
-  if (evmBlochain.info.transactionUrl)
+  if (evmBlochain.info.transactionUrl) {
     return evmBlochain.info.transactionUrl.replace(
       '{txHash}',
       tx.toLowerCase()
     );
+  }
 
   throw Error(`Explorer url for ${network} is not implemented`);
 };
@@ -504,16 +524,22 @@ export const getCurrentBlockchainOf = (
     step.evmApprovalTransaction?.blockChain ||
     step.cosmosTransaction?.blockChain ||
     step.solanaTransaction?.blockChain;
-  if (b1) return b1;
+  if (b1) {
+    return b1;
+  }
 
   const transferAddress = step.transferTransaction?.fromWalletAddress;
-  if (!transferAddress) throw PrettyError.BlockchainMissing();
+  if (!transferAddress) {
+    throw PrettyError.BlockchainMissing();
+  }
 
   const blockchain =
     Object.keys(swap.wallets).find(
       (b) => swap.wallets[b]?.address === transferAddress
     ) || null;
-  if (blockchain == null) throw PrettyError.BlockchainMissing();
+  if (blockchain == null) {
+    throw PrettyError.BlockchainMissing();
+  }
 
   // TODO: check why it returns string
   return blockchain;
@@ -566,31 +592,43 @@ export function convertRawAccountToFullAccount(
     const notSupportedNetworkByWallet =
       hasLimitation && !isSupported && !isUnknown;
 
-    // Here we check given `network` is not supported by wallet
-    // And also the network is known.
-    if (notSupportedNetworkByWallet) return;
+    /*
+     * Here we check given `network` is not supported by wallet
+     * And also the network is known.
+     */
+    if (notSupportedNetworkByWallet) {
+      return;
+    }
 
-    // In some cases we can handle unknown network by checking its address
-    // pattern and act on it.
-    // Example: showing our evm compatible netwrok when the uknown network is evem.
-    // Otherwise, we stop executing this function.
+    /*
+     * In some cases we can handle unknown network by checking its address
+     * pattern and act on it.
+     * Example: showing our evm compatible netwrok when the uknown network is evem.
+     * Otherwise, we stop executing this function.
+     */
     const isUknownAndEvmBased =
       network === Networks.Unknown && ethers.utils.isAddress(address);
-    if (isUnknown && !isUknownAndEvmBased) return;
+    if (isUnknown && !isUknownAndEvmBased) {
+      return;
+    }
 
     const isEvmBasedChain = evmBasedChains.includes(network);
 
     // If it's an evm network, we will add the address to all the evm chains.
     if (isEvmBasedChain || isUknownAndEvmBased) {
-      // all evm chains are not supported in wallets, so we are adding
-      // only to those that are supported by wallet.
+      /*
+       * all evm chains are not supported in wallets, so we are adding
+       * only to those that are supported by wallet.
+       */
       const evmChainsSupportedByWallet = supportedChains.filter((chain) =>
         evmBasedChains.includes(chain)
       );
 
       evmChainsSupportedByWallet.forEach((network) => {
-        // EVM addresses are not case sensetive.
-        // Some wallets like Binance-chain return some letters in uppercase which produces bugs in our wallet state.
+        /*
+         * EVM addresses are not case sensetive.
+         * Some wallets like Binance-chain return some letters in uppercase which produces bugs in our wallet state.
+         */
         addAccount(network, address.toLowerCase());
       });
     } else {
@@ -611,7 +649,9 @@ export const walletsAndSupportedChainsMetaSelector = (
   blockchains: AllBlockchains
 ): any | null => {
   // TODO WalletsAndSupportedChains can't find model for return type
-  if (Object.entries(blockchains).length === 0) return null;
+  if (Object.entries(blockchains).length === 0) {
+    return null;
+  }
   const blockchainsArray = Object.entries(blockchains).map(
     ([, blockchainMeta]) => blockchainMeta
   );
@@ -619,11 +659,6 @@ export const walletsAndSupportedChainsMetaSelector = (
   const solanaBlockchain = blockchainsArray.filter(isSolanaBlockchain);
   const cosmosBlockchains = blockchainsArray.filter(isCosmosBlockchain);
   return {
-    [WalletTypes.BINANCE_CHAIN]: blockchainsArray.filter((blockchainMeta) =>
-      BINANCE_CHAIN_WALLET_SUPPORTED_CHAINS.includes(
-        blockchainMeta.name as Networks
-      )
-    ),
     [WalletTypes.META_MASK]: evmBlockchains,
     [WalletTypes.COINBASE]: [...evmBlockchains, ...solanaBlockchain],
     [WalletTypes.KEPLR]: cosmosBlockchains.filter(
@@ -654,9 +689,11 @@ export const walletsAndSupportedChainsMetaSelector = (
     [WalletTypes.SAFEPAL]: [
       ...evmBlockchains,
       ...solanaBlockchain,
-      // ...blockchainsArray.filter((blockchainMeta) =>
-      //   SAFEPAL_SUPPORTED_NATIVE_CHAINS.includes(blockchainMeta.name),
-      // ),
+      /*
+       * ...blockchainsArray.filter((blockchainMeta) =>
+       *   SAFEPAL_SUPPORTED_NATIVE_CHAINS.includes(blockchainMeta.name),
+       * ),
+       */
     ],
     [WalletTypes.CLOVER]: [...evmBlockchains, ...solanaBlockchain],
     [WalletTypes.COSMOSTATION]: [
@@ -667,17 +704,19 @@ export const walletsAndSupportedChainsMetaSelector = (
   };
 };
 
-export const walletsAndSupportedChainsNamesSelector = (blockchains) => {
+export const walletsAndSupportedChainsNamesSelector = (blockchains: any) => {
   const walletsAndSupportedChainsMeta =
     walletsAndSupportedChainsMetaSelector(blockchains);
-  if (!walletsAndSupportedChainsMeta) return null;
+  if (!walletsAndSupportedChainsMeta) {
+    return null;
+  }
   const walletsAndSupportedChainsNames: {
     [type: WalletType]: Network[] | undefined;
   } = {};
   for (const key in walletsAndSupportedChainsMeta) {
     walletsAndSupportedChainsNames[key] = walletsAndSupportedChainsMeta[
       key
-    ].map((blockchainMeta) => blockchainMeta.name);
+    ].map((blockchainMeta: { name: any }) => blockchainMeta.name);
   }
   return walletsAndSupportedChainsNames;
 };
@@ -699,8 +738,8 @@ export async function requestSwap(
     AVAX_CCHAIN: '0x2702d89c1c8658b49c45dd460deebcc45faec03c',
     COSMOS: 'cosmos1unf2rcytjxfpz8x8ar63h4qeftadptg5r5qswd',
   };
-  const swappersGroupsBlackList = [];
-  const blockchainsWhiteList = [];
+  const swappersGroupsBlackList: string[] | undefined = [];
+  const blockchainsWhiteList: string[] | undefined = [];
 
   const bestRoute = await getBestRoute(
     from,

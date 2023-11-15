@@ -1,12 +1,12 @@
 import { useInRouterContext, useNavigate } from 'react-router-dom';
 
 import { navigationRoutes } from '../constants/navigationRoutes';
-import { useBestRouteStore } from '../store/bestRoute';
+import { useQuoteStore } from '../store/quote';
 
 export function useNavigateBack() {
   const isRouterInContext = useInRouterContext();
   const navigate = useNavigate();
-  const routeWalletsConfirmed = useBestRouteStore.use.routeWalletsConfirmed();
+  const quoteWalletsConfirmed = useQuoteStore.use.quoteWalletsConfirmed();
 
   navigationRoutes;
 
@@ -26,7 +26,7 @@ export function useNavigateBack() {
         [navigationRoutes.settings, navigationRoutes.wallets].includes(
           currentRoute
         ) &&
-        routeWalletsConfirmed
+        quoteWalletsConfirmed
       ) {
         return navigate('/' + navigationRoutes.confirmSwap, { replace: true });
       }

@@ -23,7 +23,7 @@ import {
   TIME_TO_CLOSE_MODAL,
   TIME_TO_IGNORE_MODAL,
 } from '../../pages/WalletsPage';
-import { useMetaStore } from '../../store/meta';
+import { useAppStore } from '../../store/AppStore';
 import { useWalletsStore } from '../../store/wallets';
 import { getBlockchainDisplayNameFor } from '../../utils/meta';
 import {
@@ -41,10 +41,11 @@ import {
 } from './WalletList.styles';
 
 export function WalletList(props: PropTypes) {
-  const { config, chain, isSelected, selectWallet, limit, onShowMore } = props;
+  const { chain, isSelected, selectWallet, limit, onShowMore } = props;
+  const { config } = useAppStore();
 
   const connectedWallets = useWalletsStore.use.connectedWallets();
-  const { blockchains } = useMetaStore.use.meta();
+  const { blockchains } = useAppStore();
   const [openWalletStateModal, setOpenWalletStateModal] =
     useState<WalletType>('');
   const [experimentalChainWallet, setExperimentalChainWallet] =
@@ -137,7 +138,7 @@ export function WalletList(props: PropTypes) {
         });
         const conciseAddress = address ? getConciseAddress(address) : '';
 
-        const experimentalChain = isExperimentalChain(blockchains, chain);
+        const experimentalChain = isExperimentalChain(blockchains(), chain);
 
         const experimentalChainNotAdded = !connectedWallets.find(
           (connectedWallet) =>
@@ -180,7 +181,7 @@ export function WalletList(props: PropTypes) {
           experimentalChainWallet?.chain
             ? getBlockchainDisplayNameFor(
                 experimentalChainWallet.chain,
-                blockchains
+                blockchains()
               )
             : undefined;
         return (

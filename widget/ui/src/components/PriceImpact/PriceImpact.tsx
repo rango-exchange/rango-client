@@ -9,7 +9,7 @@ import { Container } from './PriceImpact.styles';
 export function PriceImpact(props: PriceImpactProps) {
   const { size, outputUsdValue, percentageChange, warningLevel, error } = props;
 
-  let percentageChangeColor = '$neutral700';
+  let percentageChangeColor = '$neutral600';
   if (!outputUsdValue || warningLevel === 'low') {
     percentageChangeColor = '$warning500';
   } else if (warningLevel === 'high') {
@@ -22,7 +22,7 @@ export function PriceImpact(props: PriceImpactProps) {
         <Typography
           size={size === 'small' ? 'small' : 'medium'}
           variant="body"
-          color={size !== 'small' ? '$neutral600' : '$neutral700'}>
+          color="$neutral600">
           {`~$${outputUsdValue}`}
         </Typography>
       )}

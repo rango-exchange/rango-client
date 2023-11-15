@@ -1,21 +1,21 @@
-import React, { PropsWithChildren, useMemo } from 'react';
-import { Provider as ManagerProvider } from '@rango-dev/queue-manager-react';
+import type { SwapQueueContext } from '@rango-dev/queue-manager-rango-preset';
+import type { Network, WalletType } from '@rango-dev/wallets-shared';
+import type { PropsWithChildren } from 'react';
+
 import {
-  makeQueueDefinition,
-  SwapQueueContext,
   checkWaitingForNetworkChange,
+  makeQueueDefinition,
 } from '@rango-dev/queue-manager-rango-preset';
+import { Provider as ManagerProvider } from '@rango-dev/queue-manager-react';
 import { useWallets } from '@rango-dev/wallets-react';
-import {
-  convertEvmBlockchainMetaToEvmChainInfo,
-  Network,
-  WalletType,
-} from '@rango-dev/wallets-shared';
-import { useMetaStore } from './store/meta';
-import { useWalletsStore } from './store/wallets';
-import { walletAndSupportedChainsNames } from './utils/wallets';
-import { getConfig } from './utils/configs';
+import { convertEvmBlockchainMetaToEvmChainInfo } from '@rango-dev/wallets-shared';
 import { isEvmBlockchain } from 'rango-types';
+import React, { useMemo } from 'react';
+
+import { useAppStore } from './store/AppStore';
+import { useWalletsStore } from './store/wallets';
+import { getConfig } from './utils/configs';
+import { walletAndSupportedChainsNames } from './utils/wallets';
 
 function QueueManager(props: PropsWithChildren) {
   const {
@@ -33,7 +33,7 @@ function QueueManager(props: PropsWithChildren) {
     });
   }, []);
 
-  const { blockchains } = useMetaStore.use.meta();
+  const blockchains = useAppStore().blockchains();
   const connectedWallets = useWalletsStore.use.connectedWallets();
 
   const wallets = {
@@ -43,7 +43,7 @@ function QueueManager(props: PropsWithChildren) {
     })),
   };
 
-  const switchNetwork = (wallet: WalletType, network: Network) => {
+  const switchNetwork = async (wallet: WalletType, network: Network) => {
     if (!canSwitchNetworkTo(wallet, network)) {
       return undefined;
     }

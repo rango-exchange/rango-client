@@ -6,8 +6,8 @@ import { Container, StepSeparator } from './LoadingSwapDetails.styles';
 import { LoadingSwapDetailStep } from './LoadingSwapDetailStep';
 
 export function LoadingSwapDetails() {
-  const routeSummary = (
-    <div className="route-summary-item">
+  const quoteSummary = (
+    <div className="quote-summary-item">
       <div className="token-amount">
         <ChainToken loading size="medium" chainImage="" tokenImage="" />
         <Divider size={8} direction="horizontal" />
@@ -27,10 +27,10 @@ export function LoadingSwapDetails() {
         <Skeleton width={60} height={10} variant="rounded" />
       </div>
 
-      <div className="route-summary">
-        {routeSummary}
-        <div className="route-summary-separator"></div>
-        {routeSummary}
+      <div className="quote-summary">
+        {quoteSummary}
+        <div className="quote-summary-separator"></div>
+        {quoteSummary}
       </div>
 
       <div className="swaps-steps">

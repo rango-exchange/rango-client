@@ -1,4 +1,3 @@
-import type { WidgetConfig } from '../types';
 import type { WalletType } from '@rango-dev/wallets-shared';
 import type { PropsWithChildren } from 'react';
 
@@ -11,7 +10,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 
 import { navigationRoutes } from '../constants/navigationRoutes';
 import { Home } from '../pages/Home';
-import { useMetaStore } from '../store/meta';
+import { useAppStore } from '../store/AppStore';
 
 import { UpdateUrl } from './UpdateUrl';
 
@@ -44,11 +43,10 @@ export function AppRouter({
   lastConnectedWallet: string;
   disconnectedWallet: WalletType | undefined;
   clearDisconnectedWallet: () => void;
-  config: WidgetConfig | undefined;
 }) {
   const isRouterInContext = useInRouterContext();
   const Router = isRouterInContext ? Route : MemoryRouter;
-  const { blockchains } = useMetaStore.use.meta();
+  const blockchains = useAppStore().blockchains();
   const { canSwitchNetworkTo } = useWallets();
 
   const evmChains = blockchains.filter(isEvmBlockchain);
@@ -64,7 +62,7 @@ export function AppRouter({
   return (
     <>
       <Router>{children}</Router>
-      {isRouterInContext && <UpdateUrl config={props.config} />}
+      {isRouterInContext && <UpdateUrl />}
     </>
   );
 }

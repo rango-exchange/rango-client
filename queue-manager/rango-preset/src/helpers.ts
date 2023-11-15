@@ -1,37 +1,45 @@
-import {
+/* eslint-disable destructuring/in-params */
+/* eslint-disable @typescript-eslint/no-magic-numbers */
+/* eslint-disable @typescript-eslint/no-floating-promises */
+import type {
+  PendingSwap,
+  PendingSwapStep,
+  StepStatus,
+  SwapStatus,
+  Wallet,
+} from './shared';
+import type {
+  ArrayElement,
+  Step,
+  SwapQueueContext,
+  SwapQueueDef,
+  SwapStorage,
+} from './types';
+import type {
   ExecuterActions,
+  Manager,
   QueueInfo,
   QueueName,
   QueueType,
 } from '@rango-dev/queue-manager-core';
-import {
-  ArrayElement,
-  BlockReason,
-  StepEventType,
-  SwapActionTypes,
-  SwapQueueContext,
-  SwapQueueDef,
-  SwapStorage,
-  StepExecutionEventStatus,
-  StepExecutionBlockedEventStatus,
-  Step,
-} from './types';
-import {
-  getBlockChainNameFromId,
+import type { Providers } from '@rango-dev/wallets-react';
+import type {
   Meta,
   Network,
-  Networks,
   WalletState,
   WalletType,
 } from '@rango-dev/wallets-shared';
-import { Providers, readAccountAddress } from '@rango-dev/wallets-react';
-
-import {
-  Transaction,
-  TransactionType,
-  EvmBlockchainMeta,
+import type {
   CreateTransactionResponse,
+  EvmBlockchainMeta,
+  Transaction,
 } from 'rango-sdk';
+import type { APIErrorCode, SignerErrorCode } from 'rango-types/lib';
+
+import { Status } from '@rango-dev/queue-manager-core';
+import { readAccountAddress } from '@rango-dev/wallets-react';
+import { getBlockChainNameFromId, Networks } from '@rango-dev/wallets-shared';
+import { TransactionType } from 'rango-sdk';
 
 import {
   DEFAULT_ERROR_CODE,
@@ -39,32 +47,31 @@ import {
   ERROR_MESSAGE_WAIT_FOR_WALLET,
   ERROR_MESSAGE_WAIT_FOR_WALLET_DESCRIPTION,
 } from './constants';
-import { Manager } from '@rango-dev/queue-manager-core';
-import { Status } from '@rango-dev/queue-manager-core';
+import { httpService } from './services';
+import { notifier } from './services/eventEmitter';
 import {
+  getCurrentAddressOf,
   getCurrentBlockchainOf,
   getCurrentBlockchainOfOrNull,
-  getScannerUrl,
-  getRelatedWalletOrNull,
-  MessageSeverity,
-  PendingSwap,
-  PendingSwapNetworkStatus,
-  PendingSwapStep,
-  StepStatus,
-  SwapStatus,
-  Wallet,
   getRelatedWallet,
-  getCurrentAddressOf,
+  getRelatedWalletOrNull,
+  getScannerUrl,
+  MessageSeverity,
+  PendingSwapNetworkStatus,
 } from './shared';
-import { logRPCError } from './shared-sentry';
 import {
-  PrettyError,
   mapAppErrorCodesToAPIErrorCode,
   prettifyErrorMessage,
+  PrettyError,
 } from './shared-errors';
-import { httpService } from './services';
-import { APIErrorCode, SignerErrorCode } from 'rango-types/lib';
-import { notifier } from './services/eventEmitter';
+import { logRPCError } from './shared-sentry';
+import {
+  BlockReason,
+  StepEventType,
+  StepExecutionBlockedEventStatus,
+  StepExecutionEventStatus,
+  SwapActionTypes,
+} from './types';
 
 type WhenTaskBlocked = Parameters<NonNullable<SwapQueueDef['whenTaskBlocked']>>;
 type WhenTaskBlockedEvent = WhenTaskBlocked[0];
@@ -108,7 +115,9 @@ export function inMemoryTransactionsData() {
       swapTransactionToDataMap[hash] || {},
     setTransactionDataByHash: (hash: string, data: TransactionData) => {
       const r = swapTransactionToDataMap[hash];
-      if (!r) swapTransactionToDataMap[hash] = {};
+      if (!r) {
+        swapTransactionToDataMap[hash] = {};
+      }
       swapTransactionToDataMap[hash].response =
         data.response || swapTransactionToDataMap[hash].response;
       swapTransactionToDataMap[hash].receiptReceived =
@@ -213,19 +222,25 @@ export const setCurrentStepTx = (
   const txType = transaction.type;
   switch (txType) {
     case TransactionType.EVM:
-      if (transaction.isApprovalTx)
+      if (transaction.isApprovalTx) {
         currentStep.evmApprovalTransaction = transaction;
-      else currentStep.evmTransaction = transaction;
+      } else {
+        currentStep.evmTransaction = transaction;
+      }
       break;
     case TransactionType.TRON:
-      if (transaction.isApprovalTx)
+      if (transaction.isApprovalTx) {
         currentStep.tronApprovalTransaction = transaction;
-      else currentStep.tronTransaction = transaction;
+      } else {
+        currentStep.tronTransaction = transaction;
+      }
       break;
     case TransactionType.STARKNET:
-      if (transaction.isApprovalTx)
+      if (transaction.isApprovalTx) {
         currentStep.starknetApprovalTransaction = transaction;
-      else currentStep.starknetTransaction = transaction;
+      } else {
+        currentStep.starknetTransaction = transaction;
+      }
       break;
     case TransactionType.COSMOS:
       currentStep.cosmosTransaction = transaction;
@@ -323,12 +338,17 @@ export function updateSwapStatus({
     swap,
     step: currentStep,
   };
-  if (!!nextStepStatus && !!currentStep) currentStep.status = nextStepStatus;
+  if (!!nextStepStatus && !!currentStep) {
+    currentStep.status = nextStepStatus;
+  }
 
-  if (nextStatus) swap.status = nextStatus;
+  if (nextStatus) {
+    swap.status = nextStatus;
+  }
   swap.hasAlreadyProceededToSign = hasAlreadyProceededToSign;
-  if (!!nextStatus && ['failed', 'success'].includes(nextStatus))
+  if (!!nextStatus && ['failed', 'success'].includes(nextStatus)) {
     swap.finishTime = new Date().getTime().toString();
+  }
 
   if (!!message || !!details) {
     swap.extraMessage = message || '';
@@ -361,15 +381,23 @@ export function updateSwapStatus({
       })
       .then()
       .catch();
-  } else if (!!nextStepStatus && ['running'].includes(nextStepStatus))
+  } else if (!!nextStepStatus && ['running'].includes(nextStepStatus)) {
     swap.extraMessageSeverity = MessageSeverity.info;
-  else if (!!nextStepStatus && ['success', 'approved'].includes(nextStepStatus))
+  } else if (
+    !!nextStepStatus &&
+    ['success', 'approved'].includes(nextStepStatus)
+  ) {
     swap.extraMessageSeverity = MessageSeverity.success;
-  else if (nextStepStatus && ['waitingForApproval'].includes(nextStepStatus))
+  } else if (
+    nextStepStatus &&
+    ['waitingForApproval'].includes(nextStepStatus)
+  ) {
     swap.extraMessageSeverity = MessageSeverity.warning;
+  }
 
-  if (nextStepStatus === 'running' && currentStep)
+  if (nextStepStatus === 'running' && currentStep) {
     currentStep.startTransactionTime = new Date().getTime();
+  }
 
   setStorage({
     ...getStorage(),
@@ -395,7 +423,7 @@ export function setStepTransactionIds(
   const currentStep = getCurrentStep(swap)!;
   currentStep.executedTransactionId = txId;
   currentStep.executedTransactionTime = new Date().getTime().toString();
-  if (explorerUrl?.url)
+  if (explorerUrl?.url) {
     currentStep.explorerUrl = [
       ...(currentStep.explorerUrl || []),
       {
@@ -403,11 +431,15 @@ export function setStepTransactionIds(
         description: explorerUrl.description || null,
       },
     ];
+  }
 
   const isApproval = isApprovalCurrentStepTx(currentStep);
 
-  if (isApproval) swap.extraMessage = 'Checking approve transaction status ...';
-  else swap.extraMessage = 'Checking transaction status ...';
+  if (isApproval) {
+    swap.extraMessage = 'Checking approve transaction status ...';
+  } else {
+    swap.extraMessage = 'Checking transaction status ...';
+  }
 
   swap.extraMessageDetail = '';
   swap.extraMessageSeverity = MessageSeverity.info;
@@ -447,7 +479,9 @@ export function markRunningSwapAsWaitingForConnectingWallet(
 ): void {
   const swap = getStorage().swapDetails as SwapStorage['swapDetails'];
   const currentStep = getCurrentStep(swap);
-  if (!currentStep) return;
+  if (!currentStep) {
+    return;
+  }
   const currentTime = new Date();
   swap.lastNotificationTime = currentTime.getTime().toString();
 
@@ -488,7 +522,9 @@ export function markRunningSwapAsSwitchingNetwork({
   const swap = getStorage().swapDetails as SwapStorage['swapDetails'];
 
   const currentStep = getCurrentStep(swap);
-  if (!currentStep) return;
+  if (!currentStep) {
+    return;
+  }
 
   // Generate message
   const { type } = getRequiredWallet(swap);
@@ -529,7 +565,9 @@ export function markRunningSwapAsDependsOnOtherQueues({
   | undefined {
   const swap = getStorage().swapDetails as SwapStorage['swapDetails'];
   const currentStep = getCurrentStep(swap);
-  if (!currentStep) return;
+  if (!currentStep) {
+    return;
+  }
 
   swap.networkStatusExtraMessage = '';
   swap.networkStatusExtraMessageDetail = '';
@@ -555,7 +593,7 @@ export function markRunningSwapAsDependsOnOtherQueues({
   };
 }
 
-export function delay(ms: number): Promise<unknown> {
+export async function delay(ms: number): Promise<unknown> {
   return new Promise((res) => setTimeout(res, ms));
 }
 
@@ -596,7 +634,9 @@ export function isWalletNull(wallet: Wallet | null): boolean {
 export function getEvmProvider(providers: Providers, type: WalletType): any {
   if (type && providers[type]) {
     // we need this because provider can return an instance or a map of instances, so what you are doing here is try to detect that.
-    if (providers[type].size) return providers[type].get(Networks.ETHEREUM);
+    if (providers[type].size) {
+      return providers[type].get(Networks.ETHEREUM);
+    }
 
     return providers[type];
   }
@@ -663,7 +703,9 @@ export async function isNetworkMatchedForTransaction(
     return false;
   }
   const fromBlockChain = getCurrentBlockchainOfOrNull(swap, step);
-  if (!fromBlockChain) return false;
+  if (!fromBlockChain) {
+    return false;
+  }
 
   if (
     meta.evmBasedChains.find(
@@ -685,13 +727,15 @@ export async function isNetworkMatchedForTransaction(
           if (
             blockChain &&
             blockChain.toLowerCase() === fromBlockChain.toLowerCase()
-          )
+          ) {
             return true;
+          }
           if (
             blockChain &&
             blockChain.toLowerCase() !== fromBlockChain.toLowerCase()
-          )
+          ) {
             return false;
+          }
         }
       }
     } catch (e) {
@@ -831,7 +875,9 @@ export function onBlockForChangeNetwork(
   const swap = queue.getStorage().swapDetails as SwapStorage['swapDetails'];
   const currentStep = getCurrentStep(swap);
 
-  if (!currentStep || swap.status !== 'running') return;
+  if (!currentStep || swap.status !== 'running') {
+    return;
+  }
 
   const result = markRunningSwapAsSwitchingNetwork({
     getStorage: queue.getStorage.bind(queue),
@@ -904,7 +950,9 @@ export function onDependsOnOtherQueues(
   const claimerId = claimedBy();
   const isClaimedByAnyQueue = !!claimerId;
 
-  if (claimerId === queue.id) return;
+  if (claimerId === queue.id) {
+    return;
+  }
 
   // Check if any queue `claimed` before, if yes, we don't should do anything.
   if (isClaimedByAnyQueue) {
@@ -960,7 +1008,9 @@ export function isRequiredWalletConnected(
   const walletState = getState(type);
   const { accounts, connected } = walletState;
   const connectedAccounts = accounts || [];
-  if (!connected) return { ok: false, reason: 'not_connected' };
+  if (!connected) {
+    return { ok: false, reason: 'not_connected' };
+  }
 
   const matched = connectedAccounts.some((account) => {
     const { address: accountAddress } = readAccountAddress(account);
@@ -1075,11 +1125,12 @@ export function singTransaction(
       },
       ...updateResult,
     });
-  } else
+  } else {
     notifier({
       event: { type: eventType, status: StepExecutionEventStatus.SEND_TX },
       ...updateResult,
     });
+  }
 
   if (hasAlreadyProceededToSign) {
     failed();
@@ -1109,7 +1160,9 @@ export function singTransaction(
       onFinish();
     },
     (error) => {
-      if (swap.status === 'failed') return;
+      if (swap.status === 'failed') {
+        return;
+      }
 
       const { extraMessage, extraMessageDetail, extraMessageErrorCode } =
         prettifyErrorMessage(error);
@@ -1153,7 +1206,9 @@ export function checkWaitingForConnectWalletChange(params: {
   const { wallet_network, evmChains, manager } = params;
   const [wallet, network] = splitWalletNetwork(wallet_network);
   // We only need change network for EVM chains.
-  if (!evmChains.some((chain) => chain.name == network)) return;
+  if (!evmChains.some((chain) => chain.name == network)) {
+    return;
+  }
 
   manager?.getAll().forEach((q) => {
     const queueStorage = q.list.getStorage() as SwapStorage | undefined;
@@ -1267,7 +1322,9 @@ export function getRunningSwaps(manager: Manager): PendingSwap[] {
     // retry only on affected queues
     const queueStorage = q.list.getStorage() as SwapStorage | undefined;
     const swap = queueStorage?.swapDetails;
-    if (!swap || swap.status !== 'running') return;
+    if (!swap || swap.status !== 'running') {
+      return;
+    }
     result.push(swap);
   });
   return result;
@@ -1290,9 +1347,11 @@ export function resetRunningSwapNotifsOnPageLoad(runningSwaps: PendingSwap[]) {
       | StepExecutionBlockedEventStatus.WAITING_FOR_QUEUE
       | StepExecutionBlockedEventStatus.WAITING_FOR_WALLET_CONNECT
       | undefined;
-    if (currentStep?.networkStatus === PendingSwapNetworkStatus.WaitingForQueue)
+    if (
+      currentStep?.networkStatus === PendingSwapNetworkStatus.WaitingForQueue
+    ) {
       eventSubtype = StepExecutionBlockedEventStatus.WAITING_FOR_QUEUE;
-    else if (swap?.status === 'running') {
+    } else if (swap?.status === 'running') {
       eventSubtype = StepExecutionBlockedEventStatus.WAITING_FOR_WALLET_CONNECT;
     }
     if (!!eventType && !!notifier) {
@@ -1377,22 +1436,25 @@ export function retryOn(
     finalQueueToBeRun = onlyWalletMatched[0];
   }
 
-  if (!canSwitchNetworkTo?.(wallet, network)) finalQueueToBeRun?.unblock();
-  else finalQueueToBeRun?.checkBlock();
+  if (!canSwitchNetworkTo?.(wallet, network)) {
+    finalQueueToBeRun?.unblock();
+  } else {
+    finalQueueToBeRun?.checkBlock();
+  }
 }
 
-/* 
-  For avoiding conflict by making too many requests to wallet, we need to make sure
-  We only run one request at a time (In parallel mode).
-  */
+/*
+ *For avoiding conflict by making too many requests to wallet, we need to make sure
+ *We only run one request at a time (In parallel mode).
+ */
 export function isNeedBlockQueueForParallel(step: PendingSwapStep): boolean {
   return !!step.evmTransaction || !!step.evmApprovalTransaction;
 }
 
 /*
-Create transaction endpoint doesn't return error code on http status code,
-For backward compatibilty with server and sdk, we use this wrapper to reject the promise.
-*/
+ *Create transaction endpoint doesn't return error code on http status code,
+ *For backward compatibilty with server and sdk, we use this wrapper to reject the promise.
+ */
 export async function throwOnOK(
   rawResponse: Promise<CreateTransactionResponse>
 ): Promise<CreateTransactionResponse> {
@@ -1438,7 +1500,9 @@ export function cancelSwap(
   });
 
   reset();
-  if (manager) manager?.retry();
+  if (manager) {
+    manager?.retry();
+  }
 
   return updateResult;
 }

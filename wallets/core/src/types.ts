@@ -81,6 +81,7 @@ export type SwitchNetwork = (options: {
   network: Network;
   meta: BlockchainMeta[];
   newInstance?: TryGetInstance;
+  getState?: () => WalletState;
 }) => Promise<void>;
 
 export type Suggest = (options: {
@@ -121,6 +122,7 @@ export interface WalletConfig {
   defaultNetwork?: Network;
   checkInstallation?: boolean;
   isAsyncInstance?: boolean;
+  isAsyncSwitchNetwork?: boolean;
 }
 
 export type WalletProviders = Map<

@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/provider-walletconnect-2",
-  "version": "0.10.1-next.1",
+  "version": "0.14.1-next.4",
   "license": "MIT",
   "type": "module",
   "module": "./dist/index.js",
@@ -23,22 +23,22 @@
     "@cosmjs/launchpad": "^0.27.1",
     "@keplr-wallet/cosmos": "^0.9.12",
     "@keplr-wallet/simple-fetch": "^0.12.14",
-    "@rango-dev/signer-cosmos": "^0.17.0",
-    "@rango-dev/signer-evm": "^0.17.0",
-    "@rango-dev/signer-solana": "^0.17.0",
-    "@rango-dev/wallets-shared": "^0.17.1-next.1",
+    "@rango-dev/signer-cosmos": "^0.21.1-next.0",
+    "@rango-dev/signer-evm": "^0.21.1-next.0",
+    "@rango-dev/signer-solana": "^0.21.1-next.0",
+    "@rango-dev/wallets-shared": "^0.21.1-next.3",
     "@solana/web3.js": "^1.67.2",
     "@walletconnect/encoding": "^1.0.2",
-    "@walletconnect/modal": "^2.6.1",
-    "@walletconnect/sign-client": "^2.9.1",
-    "@walletconnect/utils": "^2.9.1",
+    "@walletconnect/modal": "^2.6.2",
+    "@walletconnect/sign-client": "^2.10.4",
+    "@walletconnect/utils": "^2.10.4",
     "bs58": "^5.0.0",
     "caip": "^1.1.0",
     "cosmos-wallet": "^1.2.0",
     "rango-types": "^0.1.47"
   },
   "devDependencies": {
-    "@walletconnect/types": "^2.9.1"
+    "@walletconnect/types": "^2.10.4"
   },
   "publishConfig": {
     "access": "public"

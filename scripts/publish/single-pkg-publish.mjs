@@ -33,7 +33,14 @@ export async function publish(changedPkg, channel) {
   // 2. Changelog & Github Release
   if (channel === 'prod') {
     await generateChangelog(updatedPackage, { saveToFile: true });
-    await makeGithubRelease(updatedPackage);
+
+    // It will failed silently, if there is any error.
+    await makeGithubRelease(updatedPackage).catch((e) => {
+      console.log(
+        `::warning::Couldn't make Github Release for ${updatedPackage.name} (next version: ${updatedPackage.version})\n`,
+        e
+      );
+    });
     logAsSection(`[x] Github Release & Changelog generated.`);
   }
 

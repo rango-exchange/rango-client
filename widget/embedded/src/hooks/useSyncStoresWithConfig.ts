@@ -1,14 +1,13 @@
-import type { WidgetConfig } from '../types';
 import type { Asset } from 'rango-sdk';
 
 import { useEffect, useMemo, useRef } from 'react';
 
-import { useBestRouteStore } from '../store/bestRoute';
-import { useMetaStore } from '../store/meta';
+import { useAppStore } from '../store/AppStore';
+import { useQuoteStore } from '../store/quote';
 import { useSettingsStore } from '../store/settings';
 import { tokensAreEqual } from '../utils/wallets';
 
-export function useSyncStoresWithConfig(config: WidgetConfig | undefined) {
+export function useSyncStoresWithConfig() {
   const {
     setInputAmount,
     setToToken,
@@ -19,12 +18,12 @@ export function useSyncStoresWithConfig(config: WidgetConfig | undefined) {
     toToken,
     fromBlockchain,
     toBlockchain,
-  } = useBestRouteStore();
+  } = useQuoteStore();
 
-  const {
-    meta: { tokens, blockchains },
-    loadingStatus: loadingMetaStatus,
-  } = useMetaStore();
+  const config = useAppStore().config;
+  const fetchMetaStatus = useAppStore().fetchStatus;
+  const blockchains = useAppStore().blockchains();
+  const tokens = useAppStore().tokens();
 
   const { setAffiliateRef, setAffiliatePercent, setAffiliateWallets } =
     useSettingsStore();
@@ -55,7 +54,7 @@ export function useSyncStoresWithConfig(config: WidgetConfig | undefined) {
   }, [config?.amount]);
 
   useEffect(() => {
-    if (loadingMetaStatus === 'success') {
+    if (fetchMetaStatus === 'success') {
       const chain = blockchains.find(
         (chain) => chain.name === config?.from?.blockchain
       );
@@ -67,8 +66,10 @@ export function useSyncStoresWithConfig(config: WidgetConfig | undefined) {
         setFromBlockchain(chain ?? null);
       }
 
-      if (token || (!token && prevConfigFromToken.current)) {
-        setFromToken(token ?? null);
+      if (token) {
+        setFromToken({ token, meta: { blockchains, tokens } });
+      } else if (!token && prevConfigFromToken.current) {
+        setFromToken({ token: null });
       }
 
       prevConfigFromBlockchain.current = config?.from?.blockchain;
@@ -79,13 +80,13 @@ export function useSyncStoresWithConfig(config: WidgetConfig | undefined) {
     config?.from?.token?.address,
     config?.from?.token?.blockchain,
     config?.from?.blockchain,
-    loadingMetaStatus,
+    fetchMetaStatus,
   ]);
 
   useEffect(() => {
     if (fromToken && fromTokensConfig) {
       if (!fromTokensConfig.some((token) => tokensAreEqual(token, fromToken))) {
-        setFromToken(null);
+        setFromToken({ token: null });
       }
     }
 
@@ -99,7 +100,7 @@ export function useSyncStoresWithConfig(config: WidgetConfig | undefined) {
   useEffect(() => {
     if (toToken && toTokensConfig) {
       if (!toTokensConfig.some((token) => tokensAreEqual(token, toToken))) {
-        setToToken(null);
+        setToToken({ token: null });
       }
     }
 
@@ -111,7 +112,7 @@ export function useSyncStoresWithConfig(config: WidgetConfig | undefined) {
   }, [toTokensConfig, toBlockchainsConfig]);
 
   useEffect(() => {
-    if (loadingMetaStatus === 'success') {
+    if (fetchMetaStatus === 'success') {
       const chain = blockchains.find(
         (chain) => chain.name === config?.to?.blockchain
       );
@@ -123,8 +124,10 @@ export function useSyncStoresWithConfig(config: WidgetConfig | undefined) {
         setToBlockchain(chain ?? null);
       }
 
-      if (token || (!token && prevConfigToToken.current)) {
-        setToToken(token ?? null);
+      if (token) {
+        setToToken({ token, meta: { blockchains, tokens } });
+      } else if (!token && prevConfigToToken.current) {
+        setToToken({ token: null });
       }
 
       prevConfigToBlockchain.current = config?.to?.blockchain;
@@ -135,7 +138,7 @@ export function useSyncStoresWithConfig(config: WidgetConfig | undefined) {
     config?.to?.token?.address,
     config?.to?.token?.blockchain,
     config?.to?.blockchain,
-    loadingMetaStatus,
+    fetchMetaStatus,
   ]);
 
   useEffect(() => {

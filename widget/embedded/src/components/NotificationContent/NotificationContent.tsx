@@ -10,7 +10,7 @@ import {
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { useMetaStore } from '../../store/meta';
+import { useAppStore } from '../../store/AppStore';
 import { useNotificationStore } from '../../store/notification';
 import { useUiStore } from '../../store/ui';
 
@@ -26,7 +26,8 @@ export function NotificationContent() {
   const { getUnreadNotifications } = useNotificationStore();
 
   const notifications: Notification[] = getUnreadNotifications();
-  const { tokens, blockchains } = useMetaStore.use.meta();
+  const blockchains = useAppStore().blockchains();
+  const tokens = useAppStore().tokens();
   const sortedNotification = notifications
     .sort((a, b) => b.creationTime - a.creationTime)
     .slice(0, MAX_NOTIFICATIONS_DISPLAYED);

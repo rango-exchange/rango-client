@@ -12,10 +12,10 @@ import { globalFont } from './globalStyles';
 import { useLanguage } from './hooks/useLanguage';
 import { useTheme } from './hooks/useTheme';
 import QueueManager from './QueueManager';
-import { useAppStore } from './store/app';
-import { useMetaStore } from './store/meta';
+import { useAppStore } from './store/AppStore';
 import { useNotificationStore } from './store/notification';
 import { useSettingsStore } from './store/settings';
+import { DEFAULT_CONFIG } from './store/slices/config';
 import { initConfig } from './utils/configs';
 import { WidgetContext, WidgetWallets } from './Wallets';
 
@@ -40,18 +40,16 @@ export type WidgetProps = {
   config?: WidgetConfig;
 };
 
-export function Main(props: PropsWithChildren<WidgetProps>) {
-  const { config } = props;
+export function Main() {
   globalFont();
 
+  const { fetch: fetchMeta, config } = useAppStore();
   const { activeTheme } = useTheme(config?.theme || {});
   const { activeLanguage, changeLanguage } = useLanguage();
-
   const [lastConnectedWalletWithNetwork, setLastConnectedWalletWithNetwork] =
     useState<string>('');
   const [disconnectedWallet, setDisconnectedWallet] = useState<WalletType>();
   const widgetContext = useContext(WidgetContext);
-  const fetchMeta = useMetaStore.use.fetchMeta();
 
   useMemo(() => {
     if (config?.apiKey) {
@@ -60,14 +58,12 @@ export function Main(props: PropsWithChildren<WidgetProps>) {
       });
     }
   }, [config]);
-
   useEffect(() => {
-    void fetchMeta();
+    void fetchMeta().catch();
     void useSettingsStore.persist.rehydrate();
     void useNotificationStore.persist.rehydrate();
     widgetContext.onConnectWallet(setLastConnectedWalletWithNetwork);
   }, []);
-
   useEffect(() => {
     if (config?.language) {
       changeLanguage(config.language);
@@ -80,13 +76,12 @@ export function Main(props: PropsWithChildren<WidgetProps>) {
         <QueueManager>
           <WidgetEvents />
           <AppRouter
-            config={config}
             lastConnectedWallet={lastConnectedWalletWithNetwork}
             disconnectedWallet={disconnectedWallet}
             clearDisconnectedWallet={() => {
               setDisconnectedWallet(undefined);
             }}>
-            <AppRoutes config={config} />
+            <AppRoutes />
           </AppRouter>
         </QueueManager>
       </MainContainer>
@@ -95,25 +90,17 @@ export function Main(props: PropsWithChildren<WidgetProps>) {
 }
 
 export function Widget(props: PropsWithChildren<WidgetProps>) {
-  const { updateConfig, config } = useAppStore();
-  useEffect(() => {
-    if (props.config) {
-      updateConfig(props.config);
-    }
-  }, [props.config]);
-
   if (!props.config?.externalWallets) {
     return (
       <WidgetWallets
-        providers={config?.wallets}
+        config={props.config ?? DEFAULT_CONFIG}
+        providers={props.config?.wallets}
         options={{
-          walletConnectProjectId:
-            config?.walletConnectProjectId ||
-            props.config?.walletConnectProjectId,
+          walletConnectProjectId: props.config?.walletConnectProjectId,
         }}>
-        <Main {...props} />
+        <Main />
       </WidgetWallets>
     );
   }
-  return <Main {...props} />;
+  return <Main />;
 }

@@ -54,7 +54,6 @@ export enum WalletTypes {
   TRUST_WALLET = 'trust-wallet',
   KEPLR = 'keplr',
   PHANTOM = 'phantom',
-  BINANCE_CHAIN = 'binance-chain',
   BITGET = 'bitget',
   TRON_LINK = 'tron-link',
   COINBASE = 'coinbase',
@@ -201,6 +200,7 @@ export interface WalletConfig {
   defaultNetwork?: Network;
   checkInstallation?: boolean;
   isAsyncInstance?: boolean;
+  isAsyncSwitchNetwork?: boolean;
 }
 
 export type GetInstanceOptions = {
@@ -256,6 +256,7 @@ export type SwitchNetwork = (options: {
   network: Network;
   meta: BlockchainMeta[];
   newInstance?: TryGetInstance;
+  getState?: () => WalletState;
 }) => Promise<void>;
 
 export type Suggest = (options: {
@@ -285,7 +286,7 @@ export type WalletInfo = {
   color: string;
   supportedChains: BlockchainMeta[];
   showOnMobile?: boolean;
-  hideWhenNotInstalled?: boolean;
+  isContractWallet?: boolean;
   mobileWallet?: boolean;
 };
 

@@ -1,5 +1,6 @@
 import type { Wallet } from '../types';
 import type { WalletType } from '@rango-dev/wallets-shared';
+import type { Token } from 'rango-sdk';
 
 import { create } from 'zustand';
 import { subscribeWithSelector } from 'zustand/middleware';
@@ -11,7 +12,6 @@ import {
   resetConnectedWalletState,
 } from '../utils/wallets';
 
-import { useMetaStore } from './meta';
 import createSelectors from './selectors';
 
 export type TokenBalance = {
@@ -38,11 +38,15 @@ interface WalletsStore {
   connectedWallets: ConnectedWallet[];
   customDestination: string;
   loading: boolean;
-  connectWallet: (accounts: Wallet[]) => void;
+  connectWallet: (accounts: Wallet[], tokens: Token[]) => void;
   disconnectWallet: (walletType: WalletType) => void;
   selectWallets: (wallets: { walletType: string; chain: string }[]) => void;
   clearConnectedWallet: () => void;
-  getWalletsDetails: (accounts: Wallet[], shouldRetry?: boolean) => void;
+  getWalletsDetails: (
+    accounts: Wallet[],
+    tokens: Token[],
+    shouldRetry?: boolean
+  ) => void;
 }
 
 export const useWalletsStore = createSelectors(
@@ -51,7 +55,7 @@ export const useWalletsStore = createSelectors(
       connectedWallets: [],
       customDestination: '',
       loading: false,
-      connectWallet: (accounts) => {
+      connectWallet: (accounts, tokens) => {
         const getWalletsDetails = get().getWalletsDetails;
         set((state) => ({
           loading: true,
@@ -77,7 +81,7 @@ export const useWalletsStore = createSelectors(
               })
             ),
         }));
-        getWalletsDetails(accounts);
+        getWalletsDetails(accounts, tokens);
       },
       disconnectWallet: (walletType) => {
         set((state) => {
@@ -135,9 +139,8 @@ export const useWalletsStore = createSelectors(
           connectedWallets: [],
           selectedWallets: [],
         })),
-      getWalletsDetails: async (accounts, shouldRetry = true) => {
+      getWalletsDetails: async (accounts, tokens, shouldRetry = true) => {
         const getWalletsDetails = get().getWalletsDetails;
-        const { tokens } = useMetaStore.getState().meta;
         set((state) => ({
           loading: true,
           connectedWallets: state.connectedWallets.map((wallet) => {
@@ -173,7 +176,7 @@ export const useWalletsStore = createSelectors(
                     matchedAccount &&
                     shouldRetry
                   ) {
-                    getWalletsDetails([matchedAccount], false);
+                    getWalletsDetails([matchedAccount], tokens, false);
                   }
                   return matchedAccount && retrievedBalanceAccount
                     ? {

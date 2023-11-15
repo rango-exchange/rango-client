@@ -20,6 +20,42 @@ class EVMSigner implements GenericSigner<EvmTransaction> {
     this.session = session;
   }
 
+  static buildTx(evmTx: EvmTransaction, disableV2 = false) {
+    let tx = {};
+    if (evmTx.from) {
+      tx = { ...tx, from: evmTx.from };
+    }
+    if (evmTx.to) {
+      tx = { ...tx, to: evmTx.to };
+    }
+    if (evmTx.data) {
+      tx = { ...tx, data: evmTx.data };
+    }
+    if (evmTx.value) {
+      tx = { ...tx, value: evmTx.value };
+    }
+    if (evmTx.nonce) {
+      tx = { ...tx, nonce: evmTx.nonce };
+    }
+    if (evmTx.gasLimit) {
+      tx = { ...tx, gasLimit: evmTx.gasLimit };
+    }
+    if (evmTx.gasPrice) {
+      const shift = 16;
+      tx = {
+        ...tx,
+        gasPrice: '0x' + parseInt(evmTx.gasPrice).toString(shift),
+      };
+    }
+    if (evmTx.maxFeePerGas && !disableV2) {
+      tx = { ...tx, maxFeePerGas: evmTx.maxFeePerGas };
+    }
+    if (evmTx.maxPriorityFeePerGas && !disableV2) {
+      tx = { ...tx, maxPriorityFeePerGas: evmTx.maxPriorityFeePerGas };
+    }
+    return tx;
+  }
+
   public async signMessage(
     msg: string,
     address: string,
@@ -71,12 +107,13 @@ class EVMSigner implements GenericSigner<EvmTransaction> {
       chainId,
     });
     try {
+      const transaction = EVMSigner.buildTx(tx);
       const hash: string = await this.client.request({
         topic: this.session.topic,
         chainId: requestedFor.caipChainId,
         request: {
           method: EthereumRPCMethods.SEND_TRANSACTION,
-          params: [tx],
+          params: [transaction],
         },
       });
       return {
