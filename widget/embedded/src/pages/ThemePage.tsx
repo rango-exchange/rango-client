@@ -72,7 +72,7 @@ export function ThemePage() {
   return (
     <Layout
       header={{
-        onBack: navigateBackFrom.bind(null, navigationRoutes.settings),
+        onBack: () => navigateBackFrom(navigationRoutes.settings),
         title: i18n.t('Theme'),
       }}>
       <SettingsContainer>

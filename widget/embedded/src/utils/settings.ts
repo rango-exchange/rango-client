@@ -1,4 +1,5 @@
-import { useMetaStore } from '../store/meta';
+import type { SwapperMeta } from 'rango-sdk';
+
 import { useSettingsStore } from '../store/settings';
 
 import { removeDuplicateFrom } from './common';
@@ -14,11 +15,11 @@ export type UniqueSwappersGroupType = {
 };
 
 export function getUniqueSwappersGroups(
-  supportedSwappers?: string[]
+  swappers: SwapperMeta[]
 ): UniqueSwappersGroupType[] {
-  const swappers = useMetaStore.use.meta().swappers;
   const disabledLiquiditySources =
     useSettingsStore.use.disabledLiquiditySources();
+  const supportedSwappers = swappers.map((swapper) => swapper.swapperGroup);
 
   const uniqueSupportedSwappersGroups: Array<UniqueSwappersGroupType> = [];
 
@@ -57,14 +58,14 @@ export function getUniqueSwappersGroups(
 }
 
 export function sortLiquiditySourcesByGroupTitle(
-  a: UniqueSwappersGroupType,
-  b: UniqueSwappersGroupType
+  a: SwapperMeta,
+  b: SwapperMeta
 ) {
-  if (a.groupTitle < b.groupTitle) {
+  if (a.swapperGroup < b.swapperGroup) {
     return -1;
   }
 
-  if (a.groupTitle > b.groupTitle) {
+  if (a.swapperGroup > b.swapperGroup) {
     return 1;
   }
 

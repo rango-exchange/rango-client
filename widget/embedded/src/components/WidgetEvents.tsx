@@ -8,11 +8,13 @@ import {
 } from '@rango-dev/queue-manager-rango-preset';
 import { useEffect } from 'react';
 
+import { useAppStore } from '../store/AppStore';
 import { useNotificationStore } from '../store/notification';
 import { useWalletsStore } from '../store/wallets';
 import { validBlockedStatuses } from '../types/notification';
 
 export function WidgetEvents() {
+  const tokens = useAppStore().use.tokens()();
   const connectedWallets = useWalletsStore.use.connectedWallets();
   const getWalletsDetails = useWalletsStore.use.getWalletsDetails();
   const setNotification = useNotificationStore.use.setNotification();
@@ -38,8 +40,8 @@ export function WidgetEvents() {
             (wallet) => wallet.chain === step?.toBlockchain
           );
 
-        fromAccount && getWalletsDetails([fromAccount]);
-        toAccount && getWalletsDetails([toAccount]);
+        fromAccount && getWalletsDetails([fromAccount], tokens);
+        toAccount && getWalletsDetails([toAccount], tokens);
       }
       if (
         (event.type === StepEventType.TX_EXECUTION_BLOCKED &&

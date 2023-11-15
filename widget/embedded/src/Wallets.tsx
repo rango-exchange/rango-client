@@ -6,10 +6,10 @@ import type { PropsWithChildren } from 'react';
 
 import { Events, Provider } from '@rango-dev/wallets-react';
 import { isEvmBlockchain } from 'rango-sdk';
-import React, { createContext, useRef } from 'react';
+import React, { createContext, useEffect, useRef } from 'react';
 
 import { useWalletProviders } from './hooks/useWalletProviders';
-import { useMetaStore } from './store/meta';
+import { AppStoreProvider, useAppStore } from './store/AppStore';
 import { useWalletsStore } from './store/wallets';
 import {
   prepareAccountsForWalletStore,
@@ -27,18 +27,27 @@ export const WidgetContext = createContext<WidgetContextInterface>({
   },
 });
 
-export function WidgetWallets(
+function Main(
   props: PropsWithChildren<{
     providers: WidgetConfig['wallets'];
     options?: ProvidersOptions;
     onUpdateState?: EventHandler;
+    config: WidgetConfig;
   }>
 ) {
-  const { blockchains } = useMetaStore.use.meta();
+  const updateConfig = useAppStore().use.updateConfig();
+  const blockchains = useAppStore().use.blockchains()();
+  const tokens = useAppStore().use.tokens()();
   const { providers } = useWalletProviders(props.providers, props?.options);
   const disconnectWallet = useWalletsStore.use.disconnectWallet();
   const connectWallet = useWalletsStore.use.connectWallet();
   const onConnectWalletHandler = useRef<OnConnectHandler>();
+
+  useEffect(() => {
+    if (props.config) {
+      updateConfig(props.config);
+    }
+  }, [props.config]);
 
   const evmBasedChainNames = blockchains
     .filter(isEvmBlockchain)
@@ -61,7 +70,7 @@ export function WidgetWallets(
           evmBasedChainNames,
           supportedChainNames
         );
-        connectWallet(data);
+        connectWallet(data, tokens);
       } else {
         disconnectWallet(type);
       }
@@ -110,5 +119,21 @@ export function WidgetWallets(
         {props.children}
       </Provider>
     </WidgetContext.Provider>
+  );
+}
+
+export function WidgetWallets(
+  props: PropsWithChildren<{
+    providers: WidgetConfig['wallets'];
+    options?: ProvidersOptions;
+    onUpdateState?: EventHandler;
+    config: WidgetConfig;
+  }>
+) {
+  const { config, ...otherProps } = props;
+  return (
+    <AppStoreProvider config={config}>
+      <Main {...otherProps} config={config} />
+    </AppStoreProvider>
   );
 }

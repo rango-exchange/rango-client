@@ -31,7 +31,7 @@ interface ConfigState {
       | 'multiWallets'
       | 'customDestination'
       | 'externalWallets'
-      | 'includeNewLiquiditySources',
+      | 'enableNewLiquiditySources',
     value: boolean
   ) => void;
   onChangeBlockChain: (chain?: string, type?: Type) => void;
@@ -90,7 +90,7 @@ export const initialConfig: WidgetConfig = {
   multiWallets: undefined,
   customDestination: undefined,
   language: undefined,
-  includeNewLiquiditySources: undefined,
+  enableNewLiquiditySources: undefined,
   theme: {
     mode: 'auto',
     fontFamily: undefined,

@@ -40,7 +40,7 @@ const StepDetailsComponent = forwardRef<HTMLDivElement, StepDetailsProps>(
         ref={containerRef}
         tabIndex={tabIndex}>
         <div className="swapper">
-          {type === 'route-progress' && hasSeparator && (
+          {type === 'swap-progress' && hasSeparator && (
             <StepSeparator state={state} />
           )}
           <SwapperImage state={state}>
@@ -61,7 +61,7 @@ const StepDetailsComponent = forwardRef<HTMLDivElement, StepDetailsProps>(
           </Typography>
         </div>
         <div className="step-info">
-          <DashedLine invisible={!hasSeparator || type === 'route-progress'} />
+          <DashedLine invisible={!hasSeparator || type === 'swap-progress'} />
           <div className="tokens-container">
             <div className="tokens">
               <ChainToken
@@ -90,7 +90,7 @@ const StepDetailsComponent = forwardRef<HTMLDivElement, StepDetailsProps>(
                 step.to.price.value
               } ${step.to.token.displayName}`}</Typography>
             </div>
-            <Alerts pb={hasSeparator && type === 'route-details'}>
+            <Alerts pb={hasSeparator && type === 'quote-details'}>
               {step.alerts}
             </Alerts>
           </div>

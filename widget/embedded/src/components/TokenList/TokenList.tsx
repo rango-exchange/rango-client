@@ -21,8 +21,7 @@ import {
 } from '@rango-dev/ui';
 import React, { forwardRef, useEffect, useState } from 'react';
 
-import { useAppStore } from '../../store/app';
-import { useMetaStore } from '../../store/meta';
+import { useAppStore } from '../../store/AppStore';
 import { useWalletsStore } from '../../store/wallets';
 import { generateRangeColors } from '../../utils/colors';
 
@@ -87,11 +86,11 @@ export function TokenList(props: PropTypes) {
   const { list, searchedFor = '', onChange, selectedBlockchain } = props;
 
   const [tokens, setTokens] = useState<TokenWithBalance[]>(list);
-  const loadingStatus = useMetaStore.use.loadingStatus();
+  const fetchStatus = useAppStore().use.fetchStatus();
+  const blockchains = useAppStore().use.blockchains()();
   const [hasNextPage, setHasNextPage] = useState<boolean>(true);
   const loadingWallet = useWalletsStore.use.loading();
-  const { blockchains } = useMetaStore.use.meta();
-  const { isTokenPinned } = useAppStore();
+  const { isTokenPinned } = useAppStore()();
 
   // eslint-disable-next-line react/display-name
   const innerElementType: React.FC<CommonProps> = forwardRef((render, ref) => {
@@ -268,8 +267,8 @@ export function TokenList(props: PropTypes) {
         {i18n.t('Select Token')}
       </Typography>
       <Divider size={4} />
-      {loadingStatus === 'loading' && <LoadingTokenList size={PAGE_SIZE} />}
-      {loadingStatus === 'success' && <List>{renderList()}</List>}
+      {fetchStatus === 'loading' && <LoadingTokenList size={PAGE_SIZE} />}
+      {fetchStatus === 'success' && <List>{renderList()}</List>}
     </Container>
   );
 }

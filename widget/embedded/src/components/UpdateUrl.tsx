@@ -1,5 +1,3 @@
-import type { WidgetConfig } from '../types';
-
 import { useEffect, useRef } from 'react';
 import {
   createSearchParams,
@@ -10,33 +8,32 @@ import {
 import { navigationRoutes } from '../constants/navigationRoutes';
 import { SearchParams } from '../constants/searchParams';
 import { useSyncStoresWithConfig } from '../hooks/useSyncStoresWithConfig';
-import { useBestRouteStore } from '../store/bestRoute';
-import { useMetaStore } from '../store/meta';
+import { useAppStore } from '../store/AppStore';
+import { useQuoteStore } from '../store/quote';
 import { useUiStore } from '../store/ui';
-import { searchParamsToToken } from '../utils/routing';
+import { searchParamsToToken } from '../utils/quote';
 
-type Props = { config: WidgetConfig | undefined };
-
-export function UpdateUrl(props: Props) {
+export function UpdateUrl() {
   const firstRender = useRef(true);
   const [searchParams, setSearchParams] = useSearchParams();
   const location = useLocation();
   const firstRenderSearchParams = useRef(location.search);
   const searchParamsRef = useRef<Record<string, string>>({});
-  const fromBlockchain = useBestRouteStore.use.fromBlockchain();
-  const toBlockchain = useBestRouteStore.use.toBlockchain();
-  const fromToken = useBestRouteStore.use.fromToken();
-  const toToken = useBestRouteStore.use.toToken();
-  const setFromBlockchain = useBestRouteStore.use.setFromBlockchain();
-  const setFromToken = useBestRouteStore.use.setFromToken();
-  const setToBlockchain = useBestRouteStore.use.setToBlockchain();
-  const setToToken = useBestRouteStore.use.setToToken();
-  const inputAmount = useBestRouteStore.use.inputAmount();
-  const setInputAmount = useBestRouteStore.use.setInputAmount();
-  const loadingStatus = useMetaStore.use.loadingStatus();
-  const { blockchains, tokens } = useMetaStore.use.meta();
+  const fromBlockchain = useQuoteStore.use.fromBlockchain();
+  const toBlockchain = useQuoteStore.use.toBlockchain();
+  const fromToken = useQuoteStore.use.fromToken();
+  const toToken = useQuoteStore.use.toToken();
+  const setFromBlockchain = useQuoteStore.use.setFromBlockchain();
+  const setFromToken = useQuoteStore.use.setFromToken();
+  const setToBlockchain = useQuoteStore.use.setToBlockchain();
+  const setToToken = useQuoteStore.use.setToToken();
+  const inputAmount = useQuoteStore.use.inputAmount();
+  const setInputAmount = useQuoteStore.use.setInputAmount();
+  const fetchMetaStatus = useAppStore().use.fetchStatus();
+  const blockchains = useAppStore().use.blockchains()();
+  const tokens = useAppStore().use.tokens()();
   const setSelectedSwap = useUiStore.use.setSelectedSwap();
-  useSyncStoresWithConfig(props.config);
+  useSyncStoresWithConfig();
 
   useEffect(() => {
     const params: Record<string, string> = {};
@@ -60,7 +57,7 @@ export function UpdateUrl(props: Props) {
         toChainString = '',
         toTokenString = '',
         fromAmount = '';
-      if (loadingStatus !== 'success') {
+      if (fetchMetaStatus !== 'success') {
         fromChainString = searchParamsRef.current[SearchParams.FROM_CHAIN];
         fromTokenString = searchParamsRef.current[SearchParams.FROM_TOKEN];
         toChainString = searchParamsRef.current[SearchParams.TO_CHAIN];
@@ -109,7 +106,7 @@ export function UpdateUrl(props: Props) {
   ]);
 
   useEffect(() => {
-    if (loadingStatus === 'success') {
+    if (fetchMetaStatus === 'success') {
       const fromChainString = searchParams.get(SearchParams.FROM_CHAIN);
       const fromTokenString = searchParams.get(SearchParams.FROM_TOKEN);
       const toChainString = searchParams.get(SearchParams.TO_CHAIN);
@@ -134,20 +131,29 @@ export function UpdateUrl(props: Props) {
       if (!!fromBlockchain) {
         setFromBlockchain(fromBlockchain);
         if (!!fromToken) {
-          setFromToken(fromToken);
+          setFromToken({
+            token: fromToken,
+            meta: {
+              blockchains: blockchains,
+              tokens: tokens,
+            },
+          });
         }
       }
       if (!!toBlockchain) {
         setToBlockchain(toBlockchain);
         if (!!toToken) {
-          setToToken(toToken);
+          setToToken({
+            token: toToken,
+            meta: { blockchains: blockchains, tokens: tokens },
+          });
         }
       }
       if (fromAmount) {
         setInputAmount(fromAmount);
       }
     }
-  }, [loadingStatus]);
+  }, [fetchMetaStatus]);
 
   return null;
 }

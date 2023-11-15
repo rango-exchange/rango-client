@@ -1,5 +1,3 @@
-import type { WidgetConfig } from '../types';
-
 import React from 'react';
 import { useRoutes } from 'react-router-dom';
 
@@ -18,13 +16,7 @@ import { WalletsPage } from '../pages/WalletsPage';
 
 const getAbsolutePath = (path: string) => path.replace('/', '');
 
-interface PropTypes {
-  config?: WidgetConfig;
-}
-
-export function AppRoutes(props: PropTypes) {
-  const { config } = props;
-
+export function AppRoutes() {
   return useRoutes([
     {
       path: navigationRoutes.home,
@@ -48,12 +40,7 @@ export function AppRoutes(props: PropTypes) {
     },
     {
       path: navigationRoutes.settings,
-      element: (
-        <SettingsPage
-          singleTheme={config?.theme?.singleTheme}
-          supportedSwappers={config?.liquiditySources}
-        />
-      ),
+      element: <SettingsPage />,
     },
     {
       path: navigationRoutes.themes,
@@ -65,21 +52,11 @@ export function AppRoutes(props: PropTypes) {
     },
     {
       path: navigationRoutes.exchanges,
-      element: (
-        <LiquiditySourcePage
-          sourceType="Exchanges"
-          supportedSwappers={config?.liquiditySources}
-        />
-      ),
+      element: <LiquiditySourcePage sourceType="Exchanges" />,
     },
     {
       path: navigationRoutes.bridges,
-      element: (
-        <LiquiditySourcePage
-          sourceType="Bridges"
-          supportedSwappers={config?.liquiditySources}
-        />
-      ),
+      element: <LiquiditySourcePage sourceType="Bridges" />,
     },
     { path: navigationRoutes.swaps, element: <HistoryPage /> },
     {
@@ -88,21 +65,11 @@ export function AppRoutes(props: PropTypes) {
     },
     {
       path: navigationRoutes.wallets,
-      element: (
-        <WalletsPage
-          supportedWallets={config?.wallets}
-          multiWallets={
-            typeof config?.multiWallets === 'undefined'
-              ? true
-              : config.multiWallets
-          }
-          config={config}
-        />
-      ),
+      element: <WalletsPage />,
     },
     {
       path: getAbsolutePath(navigationRoutes.confirmSwap),
-      element: <ConfirmSwapPage config={config} />,
+      element: <ConfirmSwapPage />,
     },
   ]);
 }

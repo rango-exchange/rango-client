@@ -61,7 +61,7 @@ export type WidgetTheme = {
  * @property {{ [key: string]: string }} wallets - If you want to change the default affiliate wallet
  *  addresses, you can provide new values here. (Map of route blockchains to affiliate address)
  */
-export type WidgeAffiliate = {
+export type WidgetAffiliate = {
   ref?: string;
   percent?: number;
   wallets?: { [key: string]: string };
@@ -91,7 +91,7 @@ export type BlockchainAndTokenConfig = {
  * and theme.
  *
  * @property {string} apiKey - The API key used to communicate with Rango API
- * @property {WidgeAffiliate} affiliate - If you want to charge users fee per transaction, you should
+ * @property {WidgetAffiliate} affiliate - If you want to charge users fee per transaction, you should
  * pass `WidgetAffiliate` including affiliateRef, affiliatePercent, and affiliateWallets.
  * @property {number} amount - The default input amount.
  * @property {BlockchainAndTokenConfig} from - The `from` property is an optional property of type
@@ -121,13 +121,13 @@ export type BlockchainAndTokenConfig = {
  * If `externalWallets` is `true`, you should add `WidgetWallets` to your app.
  * @property {Asset} pinnedTokens - The `pinnedTokens` property is an optional array of `Asset` objects that
  * you could use to pin tokens of your choice to the top of the token list.
- * @property {boolean} includeNewLiquiditySources - The `includeNewLiquiditySources` property is a boolean value that when you
+ * @property {boolean} enableNewLiquiditySources - The `enableNewLiquiditySources` property is a boolean value that when you
  * set it to true, whenever a new liquidity source is added, it will be added to your list as well.
  */
 export type WidgetConfig = {
   apiKey: string;
   walletConnectProjectId?: string;
-  affiliate?: WidgeAffiliate;
+  affiliate?: WidgetAffiliate;
   amount?: number;
   from?: BlockchainAndTokenConfig;
   to?: BlockchainAndTokenConfig;
@@ -139,5 +139,5 @@ export type WidgetConfig = {
   theme?: WidgetTheme;
   externalWallets?: boolean;
   pinnedTokens?: Asset[];
-  includeNewLiquiditySources?: boolean;
+  enableNewLiquiditySources?: boolean;
 };
