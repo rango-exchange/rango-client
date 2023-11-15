@@ -11,7 +11,7 @@ import { SearchInput } from '../components/SearchInput';
 import { TokenList } from '../components/TokenList/TokenList';
 import { navigationRoutes } from '../constants/navigationRoutes';
 import { useNavigateBack } from '../hooks/useNavigateBack';
-import { useAppStore } from '../store/app';
+import { useAppStore } from '../store/AppStore';
 import { useQuoteStore } from '../store/quote';
 import { useWalletsStore } from '../store/wallets';
 import { getTokensBalanceFromWalletAndSort } from '../utils/wallets';
@@ -39,10 +39,10 @@ export function SelectSwapItemsPage(props: PropTypes) {
   const selectedBlockchainName = selectedBlockchain?.name ?? '';
 
   // Tokens & Blockchains list
-  const blockchains = useAppStore().blockchains({
+  const blockchains = useAppStore().use.blockchains()({
     type: type,
   });
-  const tokens = useAppStore().tokens({
+  const tokens = useAppStore().use.tokens()({
     type,
     blockchain: selectedBlockchainName,
     searchFor: searchedFor,
@@ -63,9 +63,9 @@ export function SelectSwapItemsPage(props: PropTypes) {
 
   const updateToken = (token: Token) => {
     if (type === 'source') {
-      setFromToken(token);
+      setFromToken({ token, meta: { blockchains, tokens } });
     } else {
-      setToToken(token);
+      setToToken({ token, meta: { blockchains, tokens } });
     }
   };
 

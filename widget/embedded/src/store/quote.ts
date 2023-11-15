@@ -1,7 +1,12 @@
 import type { TokenWithBalance } from '../components/TokenList';
 import type { Wallet } from '../types';
 import type { PendingSwap } from '@rango-dev/queue-manager-rango-preset/dist/shared';
-import type { BestRouteResponse, BlockchainMeta, Token } from 'rango-sdk';
+import type {
+  BestRouteResponse,
+  BlockchainMeta,
+  MetaResponse,
+  Token,
+} from 'rango-sdk';
 
 import BigNumber from 'bignumber.js';
 import { create } from 'zustand';
@@ -12,7 +17,6 @@ import { isPositiveNumber } from '../utils/numbers';
 import { createRetryQuote, getQuoteToTokenUsdPrice } from '../utils/quote';
 import { calcOutputUsdValue } from '../utils/swap';
 
-import { useMetaStore } from './meta';
 import createSelectors from './selectors';
 
 export const getUsdValue = (
@@ -22,6 +26,10 @@ export const getUsdValue = (
   token?.usdPrice
     ? new BigNumber(amount || ZERO).multipliedBy(token?.usdPrice || 0)
     : null;
+
+export type Meta = Pick<MetaResponse, 'blockchains' | 'tokens'>;
+
+export type SetTokenParams = { token: Token; meta: Meta } | { token: null };
 
 export interface QuoteState {
   fromBlockchain: BlockchainMeta | null;
@@ -41,12 +49,12 @@ export interface QuoteState {
   setFromBlockchain: (chain: BlockchainMeta | null) => void;
   setToBlockchain: (chian: BlockchainMeta | null) => void;
 
-  setFromToken: (token: Token | null) => void;
-  setToToken: (token: Token | null) => void;
+  setFromToken: (params: SetTokenParams) => void;
+  setToToken: (params: SetTokenParams) => void;
   setInputAmount: (amount: string) => void;
   quote: BestRouteResponse | null;
   setQuote: (quote: BestRouteResponse | null) => void;
-  retry: (pendingSwap: PendingSwap) => void;
+  retry: (pendingSwap: PendingSwap, meta: Meta) => void;
   switchFromAndTo: () => void;
   setQuoteWalletConfirmed: (flag: boolean) => void;
   setSelectedWallets: (wallets: Wallet[]) => void;
@@ -119,18 +127,17 @@ export const useQuoteStore = createSelectors(
           };
         });
       },
-      setFromToken: (token) => {
-        const { blockchains } = useMetaStore.getState().meta;
+      setFromToken: (params) => {
         return set((state) => ({
-          fromToken: token,
-          ...(token && {
+          fromToken: params.token,
+          ...(params.token && {
             fromBlockchain:
-              blockchains.find(
-                (blockchain) => blockchain.name === token.blockchain
+              params.meta.blockchains.find(
+                (blockchain) => blockchain.name === params.token.blockchain
               ) ?? null,
           }),
           ...(!!state.inputAmount && {
-            inputUsdValue: getUsdValue(token, state.inputAmount),
+            inputUsdValue: getUsdValue(params.token, state.inputAmount),
           }),
         }));
       },
@@ -151,14 +158,13 @@ export const useQuoteStore = createSelectors(
           };
         });
       },
-      setToToken: (token) => {
-        const { blockchains } = useMetaStore.getState().meta;
+      setToToken: (params) => {
         return set(() => ({
-          toToken: token,
-          ...(token && {
+          toToken: params.token,
+          ...(params.token && {
             toBlockchain:
-              blockchains.find(
-                (blockchain) => blockchain.name === token.blockchain
+              params.meta.blockchains.find(
+                (blockchain) => blockchain.name === params.token.blockchain
               ) ?? null,
           }),
         }));
@@ -176,9 +182,8 @@ export const useQuoteStore = createSelectors(
           }),
         }));
       },
-      retry: (pendingSwap) => {
-        const { tokens, blockchains } = useMetaStore.getState().meta;
-
+      retry: (pendingSwap, meta) => {
+        const { tokens, blockchains } = meta;
         const {
           fromBlockchain,
           fromToken,
@@ -186,7 +191,6 @@ export const useQuoteStore = createSelectors(
           toToken,
           inputAmount,
         } = createRetryQuote(pendingSwap, blockchains, tokens);
-
         set({
           fromBlockchain,
           fromToken,

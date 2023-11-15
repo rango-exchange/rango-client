@@ -1,30 +1,31 @@
-import { Network, WalletType } from '@rango-dev/wallets-shared';
-import {
+import type { Network, WalletType } from '@rango-dev/wallets-shared';
+import type {
+  AmountRestrictionType,
+  BestRouteResponse,
+  BlockchainMeta,
   CosmosTransaction,
   EvmTransaction,
+  MetaResponse,
   SimulationResult,
   SolanaTransaction,
   StarknetTransaction,
-  TronTransaction,
-  Transfer as TransferTransaction,
-  AmountRestrictionType,
-  BestRouteResponse,
-  MetaResponse,
-  Token,
   SwapResult,
-  BlockchainMeta,
+  Token,
+  Transfer as TransferTransaction,
+  TronTransaction,
 } from 'rango-sdk';
+import type { TonTransaction } from 'rango-types';
 
-import { PrettyError } from './shared-errors';
 import BigNumber from 'bignumber.js';
-import { numberToString } from './numbers';
 import {
-  TonTransaction,
   isCosmosBlockchain,
   isEvmBlockchain,
   isStarknetBlockchain,
   isTronBlockchain,
 } from 'rango-types';
+
+import { numberToString } from './numbers';
+import { PrettyError } from './shared-errors';
 
 export interface PendingSwapWithQueueID {
   id: string;
@@ -170,8 +171,10 @@ export type PendingSwapStep = {
   starknetTransaction: StarknetTransaction | null;
   tonTransaction: TonTransaction | null;
 
-  // missing fields in older versions
-  // keeping null for backward compatability
+  /*
+   * missing fields in older versions
+   * keeping null for backward compatability
+   */
   swapperLogo: string | null;
   swapperType: string | null;
   fromBlockchainLogo: string | null;
@@ -240,16 +243,22 @@ export const getCurrentBlockchainOf = (
     step.cosmosTransaction?.blockChain ||
     step.solanaTransaction?.blockChain ||
     step.tonTransaction?.blockChain;
-  if (b1) return b1;
+  if (b1) {
+    return b1;
+  }
 
   const transferAddress = step.transferTransaction?.fromWalletAddress;
-  if (!transferAddress) throw PrettyError.BlockchainMissing();
+  if (!transferAddress) {
+    throw PrettyError.BlockchainMissing();
+  }
 
   const blockchain =
     Object.keys(swap.wallets).find(
       (b) => swap.wallets[b]?.address === transferAddress
     ) || null;
-  if (blockchain == null) throw PrettyError.BlockchainMissing();
+  if (blockchain == null) {
+    throw PrettyError.BlockchainMissing();
+  }
 
   return blockchain;
 };
@@ -257,14 +266,15 @@ export const getCurrentBlockchainOf = (
 const getBlockchainMetaExplorerBaseUrl = (
   blockchainMeta: BlockchainMeta
 ): string | undefined => {
-  if (isCosmosBlockchain(blockchainMeta))
+  if (isCosmosBlockchain(blockchainMeta)) {
     return blockchainMeta.info?.explorerUrlToTx;
-  else if (
+  } else if (
     isEvmBlockchain(blockchainMeta) ||
     isStarknetBlockchain(blockchainMeta) ||
     isTronBlockchain(blockchainMeta)
-  )
+  ) {
     return blockchainMeta.info.transactionUrl;
+  }
   return;
 };
 
@@ -275,9 +285,12 @@ export const getScannerUrl = (
 ): string | undefined => {
   const blockchainMeta = blockchainMetaMap[network];
   const baseUrl = getBlockchainMetaExplorerBaseUrl(blockchainMeta);
-  if (!baseUrl) return;
-  if (baseUrl.indexOf('/{txHash}') !== -1)
+  if (!baseUrl) {
+    return;
+  }
+  if (baseUrl.indexOf('/{txHash}') !== -1) {
     return baseUrl.replace('{txHash}', txHash?.toLowerCase());
+  }
   return `${baseUrl}/${txHash?.toLowerCase()}`;
 };
 
@@ -316,7 +329,9 @@ export const getCurrentAddressOf = (
       ? { address: step.transferTransaction?.fromWalletAddress }
       : null) ||
     null;
-  if (result == null) throw PrettyError.WalletMissing();
+  if (result == null) {
+    throw PrettyError.WalletMissing();
+  }
   return result.address;
 };
 
@@ -333,10 +348,11 @@ export function getRelatedWallet(
   const wallet = walletKV?.v || null;
 
   const walletType = wallet?.walletType;
-  if (wallet === null)
+  if (wallet === null) {
     throw PrettyError.AssertionFailed(
       `Wallet for source ${blockchain} not passed: walletType: ${walletType}`
     );
+  }
   return wallet;
 }
 
@@ -373,7 +389,9 @@ export function getUsdFeeOfStep(
   let totalFeeInUsd = new BigNumber(0);
   for (let i = 0; i < step.fee.length; i++) {
     const fee = step.fee[i];
-    if (fee.expenseType === 'DECREASE_FROM_OUTPUT') continue;
+    if (fee.expenseType === 'DECREASE_FROM_OUTPUT') {
+      continue;
+    }
 
     const unitPrice = getUsdPrice(
       fee.asset.blockchain,
@@ -395,10 +413,12 @@ export function calculatePendingSwap(
   wallets: { [p: string]: WalletTypeAndAddress },
   settings: SwapSavedSettings,
   validateBalanceOrFee: boolean,
-  meta: MetaResponse | null
+  meta: Pick<MetaResponse, 'blockchains' | 'tokens'> | null
 ): PendingSwap {
   const simulationResult = bestRoute.result;
-  if (!simulationResult) throw Error('Simulation result should not be null');
+  if (!simulationResult) {
+    throw Error('Simulation result should not be null');
+  }
 
   return {
     creationTime: new Date().getTime().toString(),
@@ -452,7 +472,8 @@ export function calculatePendingSwap(
           expectedOutputAmountHumanReadable: swap.toAmount,
           outputAmount: '',
           feeInUsd: meta
-            ? numberToString(getUsdFeeOfStep(swap, meta?.tokens), null, 8)
+            ? // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+              numberToString(getUsdFeeOfStep(swap, meta?.tokens), null, 8)
             : null,
           estimatedTimeInSeconds: swap.estimatedTimeInSeconds || null,
 

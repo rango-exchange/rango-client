@@ -20,7 +20,7 @@ import {
 } from '../constants/routing';
 import { QuoteInfo } from '../containers/QuoteInfo';
 import { useSwapInput } from '../hooks/useSwapInput';
-import { useMetaStore } from '../store/meta';
+import { useAppStore } from '../store/AppStore';
 import { useQuoteStore } from '../store/quote';
 import { useUiStore } from '../store/ui';
 import { useWalletsStore } from '../store/wallets';
@@ -76,7 +76,7 @@ export function Home() {
     setQuoteWarningsConfirmed,
   } = useQuoteStore();
 
-  const { loadingStatus: loadingMetaStatus } = useMetaStore();
+  const fetchMetaStatus = useAppStore().use.fetchStatus();
 
   const connectedWallets = useWalletsStore.use.connectedWallets();
   const setCurrentPage = useUiStore.use.setCurrentPage();
@@ -100,7 +100,7 @@ export function Home() {
     outputUsdValue
   );
   const swapButtonState = getSwapButtonState(
-    loadingMetaStatus,
+    fetchMetaStatus,
     connectedWallets,
     fetchingQuote,
     quote,
@@ -227,8 +227,8 @@ export function Home() {
                   ? errorMessages().unknownPriceError.impactTitle
                   : undefined,
               }}
-              disabled={loadingMetaStatus === 'failed'}
-              loading={loadingMetaStatus === 'loading'}
+              disabled={fetchMetaStatus === 'failed'}
+              loading={fetchMetaStatus === 'loading'}
               onSelectMaxBalance={() => {
                 if (tokenBalance !== '0') {
                   setInputAmount(tokenBalanceReal.split(',').join(''));
@@ -273,8 +273,8 @@ export function Home() {
                 : undefined,
             }}
             onClickToken={() => navigate('to-swap')}
-            disabled={loadingMetaStatus === 'failed'}
-            loading={loadingMetaStatus === 'loading'}
+            disabled={fetchMetaStatus === 'failed'}
+            loading={fetchMetaStatus === 'loading'}
           />
         </InputsContainer>
         <QuoteInfo

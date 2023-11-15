@@ -25,30 +25,23 @@ import {
 } from '../components/SettingsContainer';
 import { navigationRoutes } from '../constants/navigationRoutes';
 import { useNavigateBack } from '../hooks/useNavigateBack';
-import { useMetaStore } from '../store/meta';
+import { useAppStore } from '../store/AppStore';
 import { useSettingsStore } from '../store/settings';
 import { containsText } from '../utils/numbers';
-import {
-  getUniqueSwappersGroups,
-  sortLiquiditySourcesByGroupTitle,
-} from '../utils/settings';
+import { getUniqueSwappersGroups } from '../utils/settings';
 
 interface PropTypes {
-  supportedSwappers?: string[];
   sourceType: 'Exchanges' | 'Bridges';
 }
 
-export function LiquiditySourcePage({
-  supportedSwappers,
-  sourceType,
-}: PropTypes) {
+export function LiquiditySourcePage({ sourceType }: PropTypes) {
+  const fetchStatus = useAppStore().use.fetchStatus();
+  const swappers = useAppStore().use.swappers()();
   const [searchedFor, setSearchedFor] = useState<string>('');
   const toggleLiquiditySource = useSettingsStore.use.toggleLiquiditySource();
   const { navigateBackFrom } = useNavigateBack();
-  const loadingMetaStatus = useMetaStore.use.loadingStatus();
-
   const supportedUniqueSwappersGroups: Array<UniqueSwappersGroupType> =
-    getUniqueSwappersGroups(supportedSwappers);
+    getUniqueSwappersGroups(swappers);
 
   const validTypes: Array<LiquiditySourceType> = [];
   if (sourceType === 'Exchanges') {
@@ -79,22 +72,20 @@ export function LiquiditySourcePage({
     });
   };
 
-  const list = liquiditySources
-    .sort(sortLiquiditySourcesByGroupTitle)
-    .map((sourceItem) => {
-      const { selected, groupTitle, logo } = sourceItem;
-      return {
-        start: <Image src={logo} size={22} type="circular" />,
-        onClick: () => toggleLiquiditySource(groupTitle),
-        end: <Checkbox checked={selected} />,
-        title: (
-          <Typography variant="title" size="xmedium">
-            {i18n.t(groupTitle)}
-          </Typography>
-        ),
-        ...sourceItem,
-      };
-    });
+  const list = liquiditySources.map((sourceItem) => {
+    const { selected, groupTitle, logo } = sourceItem;
+    return {
+      start: <Image src={logo} size={22} type="circular" />,
+      onClick: () => toggleLiquiditySource(groupTitle),
+      end: <Checkbox checked={selected} />,
+      title: (
+        <Typography variant="title" size="xmedium">
+          {i18n.t(groupTitle)}
+        </Typography>
+      ),
+      ...sourceItem,
+    };
+  });
 
   const searchHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
@@ -131,7 +122,7 @@ export function LiquiditySourcePage({
           placeholder={i18n.t('Search {sourceType}', { sourceType })}
           onChange={searchHandler}
         />
-        {loadingMetaStatus === 'loading' && <LoadingLiquiditySourceList />}
+        {fetchStatus === 'loading' && <LoadingLiquiditySourceList />}
 
         {!filteredList.length && !!searchedFor ? (
           <NotFoundContainer>
@@ -141,7 +132,7 @@ export function LiquiditySourcePage({
             />
           </NotFoundContainer>
         ) : (
-          loadingMetaStatus === 'success' && (
+          fetchStatus === 'success' && (
             <LiquiditySourceList>
               {filteredList.map((sourceItem) => {
                 return (

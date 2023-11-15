@@ -30,7 +30,7 @@ import {
   FooterAlert,
   FooterStepAlarm,
 } from '../../containers/QuoteInfo/QuoteInfo.styles';
-import { useMetaStore } from '../../store/meta';
+import { useAppStore } from '../../store/AppStore';
 import { QuoteErrorType, QuoteWarningType } from '../../types';
 import {
   numberToString,
@@ -54,9 +54,6 @@ import { QuoteSummary } from './QuoteSummary';
 
 export function Quote(props: QuoteProps) {
   const {
-    meta: { tokens },
-  } = useMetaStore();
-  const {
     quote,
     input,
     output,
@@ -65,6 +62,7 @@ export function Quote(props: QuoteProps) {
     type,
     recommended = true,
   } = props;
+  const tokens = useAppStore().use.tokens()();
 
   const [expanded, setExpanded] = useState(props.expanded);
   const quoteRef = useRef<HTMLButtonElement | null>(null);
