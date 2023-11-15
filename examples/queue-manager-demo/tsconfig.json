@@ -1,11 +1,13 @@
 {
   // see https://www.typescriptlang.org/tsconfig to better understand tsconfigs
   "extends": "../../tsconfig.lib.json",
-  "include": ["src", "types", "../../global-wallets-env.d.ts"],
+  "include": ["src", "types"],
   "compilerOptions": {
     "outDir": "dist",
-    "rootDir": "./src",
-    "lib": ["dom", "esnext"]
+    "lib": ["dom", "esnext"],
     // match output dir to input dir. e.g. dist/index instead of dist/src/index
+    "rootDir": "./src",
+    // transpile JSX to React.createElement
+    "jsx": "react"
   }
 }
