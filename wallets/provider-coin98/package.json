@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/provider-coin98",
-  "version": "0.22.1-next.1",
+  "version": "0.22.1-next.2",
   "license": "MIT",
   "type": "module",
   "module": "./dist/index.js",
@@ -22,7 +22,7 @@
   "dependencies": {
     "@rango-dev/signer-evm": "^0.21.1-next.0",
     "@rango-dev/signer-solana": "^0.21.1-next.0",
-    "@rango-dev/wallets-shared": "^0.21.1-next.1",
+    "@rango-dev/wallets-shared": "^0.21.1-next.2",
     "@solana/web3.js": "^1.67.2",
     "bs58": "^5.0.0",
     "rango-types": "^0.1.46"
