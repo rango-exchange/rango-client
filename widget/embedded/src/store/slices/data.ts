@@ -179,7 +179,12 @@ export const createDataSlice: StateCreator<
         swapper.swapperGroup
       );
 
-      return enableNewLiquiditySources
+      const shouldExcludeLiquiditySources =
+        enableNewLiquiditySources ||
+        !liquiditySources ||
+        liquiditySources.length === 0;
+
+      return shouldExcludeLiquiditySources
         ? !swapperGroupIncludedInLiquiditySources
         : swapperGroupIncludedInLiquiditySources;
     });
