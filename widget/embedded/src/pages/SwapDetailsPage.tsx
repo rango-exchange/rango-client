@@ -6,7 +6,7 @@ import { SwapDetails } from '../components/SwapDetails';
 import { SwapDetailsPlaceholder } from '../components/SwapDetails/SwapDetails.Placeholder';
 import { navigationRoutes } from '../constants/navigationRoutes';
 import { useNavigateBack } from '../hooks/useNavigateBack';
-import { useMetaStore } from '../store/meta';
+import { useAppStore } from '../store/AppStore';
 import { useUiStore } from '../store/ui';
 import { getPendingSwaps } from '../utils/queue';
 
@@ -16,9 +16,9 @@ export function SwapDetailsPage() {
   const pendingSwaps = getPendingSwaps(manager);
   const requestId = useUiStore.use.selectedSwapRequestId();
   const { navigateBackFrom } = useNavigateBack();
-  const { loadingStatus } = useMetaStore();
+  const { fetchStatus: fetchMetaStatus } = useAppStore()();
 
-  const showSkeleton = loading || loadingStatus === 'loading';
+  const showSkeleton = loading || fetchMetaStatus === 'loading';
 
   const selectedSwap = pendingSwaps.find(
     ({ swap }) => swap.requestId === requestId

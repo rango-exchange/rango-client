@@ -90,8 +90,9 @@ export function MultiList(props: MultiListPropTypes) {
   };
 
   // Mapping the items to their respective components
-  const items = categoryList.map((item) => {
+  const items = categoryList.map((item, index) => {
     const { logo, title, name } = item;
+    const id = title + index;
     return {
       start: <Image src={logo} size={16} type="circular" />,
       onClick: () => handleChangeList(name),
@@ -101,7 +102,7 @@ export function MultiList(props: MultiListPropTypes) {
           {title}
         </Typography>
       ),
-      id: title,
+      id,
     };
   });
 

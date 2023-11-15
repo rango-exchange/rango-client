@@ -13,7 +13,7 @@ import React from 'react';
 
 import { BLOCKCHAIN_LIST_SIZE } from '../../constants/configs';
 import { usePrepareBlockchainList } from '../../hooks/usePrepareBlockchainList';
-import { useMetaStore } from '../../store/meta';
+import { useAppStore } from '../../store/AppStore';
 import { useQuoteStore } from '../../store/quote';
 
 import { Container } from './BlockchainsSection.styles';
@@ -27,7 +27,7 @@ export function BlockchainsSection(props: PropTypes) {
     selected: blockchain?.name,
   });
 
-  const loadingStatus = useMetaStore.use.loadingStatus();
+  const { fetchStatus } = useAppStore()();
   const resetToBlockchain = useQuoteStore.use.resetToBlockchain();
   const resetFromBlockchain = useQuoteStore.use.resetFromBlockchain();
   const hasMoreItemsInList = blockchainsList.more.length > 0;
@@ -45,11 +45,11 @@ export function BlockchainsSection(props: PropTypes) {
       </Typography>
       <Divider size={12} />
       <Container>
-        {loadingStatus === 'loading' &&
+        {fetchStatus === 'loading' &&
           Array.from(Array(NUMBER_OF_LOADING), (e) => (
             <Skeleton key={e} variant="rounded" height={50} />
           ))}
-        {loadingStatus === 'success' && (
+        {fetchStatus === 'success' && (
           <>
             <BlockchainsChip
               selected={!blockchain}

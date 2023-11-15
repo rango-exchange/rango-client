@@ -2,7 +2,7 @@ import type { QuoteError, QuoteWarning } from '../types';
 
 import { useEffect, useRef, useState } from 'react';
 
-import { useMetaStore } from '../store/meta';
+import { useAppStore } from '../store/AppStore';
 import { useQuoteStore } from '../store/quote';
 import { useSettingsStore } from '../store/settings';
 import { QuoteErrorType } from '../types';
@@ -33,6 +33,9 @@ type UseSwapInput = {
  */
 export function useSwapInput(): UseSwapInput {
   const { fetch: fetchQuote, cancelFetch } = useFetchQuote();
+  const { liquiditySources, enableNewLiquiditySources } =
+    useAppStore().use.config();
+  const tokens = useAppStore().use.tokens()();
   const {
     fromToken,
     toToken,
@@ -41,9 +44,6 @@ export function useSwapInput(): UseSwapInput {
     resetQuote,
     setQuote,
   } = useQuoteStore();
-  const {
-    meta: { tokens },
-  } = useMetaStore();
   const {
     slippage,
     customSlippage,
@@ -79,6 +79,8 @@ export function useSwapInput(): UseSwapInput {
         fromToken,
         toToken,
         inputAmount,
+        liquiditySources,
+        excludeLiquiditySources: enableNewLiquiditySources,
         disabledLiquiditySources,
         slippage: userSlippage,
         affiliateRef,

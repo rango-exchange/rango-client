@@ -5,7 +5,7 @@ import type { BestRouteResponse } from 'rango-sdk';
 import { calculatePendingSwap } from '@rango-dev/queue-manager-rango-preset';
 import { useEffect } from 'react';
 
-import { useMetaStore } from '../../store/meta';
+import { useAppStore } from '../../store/AppStore';
 import { useQuoteStore } from '../../store/quote';
 import { useSettingsStore } from '../../store/settings';
 import { useWalletsStore } from '../../store/wallets';
@@ -40,8 +40,8 @@ export function useConfirmSwap(): ConfirmSwap {
     disabledLiquiditySources,
   } = useSettingsStore();
   const { connectedWallets } = useWalletsStore();
-
-  const { meta } = useMetaStore();
+  const blockchains = useAppStore().use.blockchains()();
+  const tokens = useAppStore().use.tokens()();
 
   const userSlippage = customSlippage || slippage;
 
@@ -105,13 +105,13 @@ export function useConfirmSwap(): ConfirmSwap {
       getWalletsForNewSwap(selectedWallets),
       swapSettings,
       false,
-      meta
+      { blockchains, tokens }
     );
 
     const confirmSwapWarnings = generateWarnings(initialQuote, currentQuote, {
       fromToken,
       toToken,
-      tokens: meta.tokens,
+      tokens: tokens,
       selectedWallets,
       userSlippage,
     });

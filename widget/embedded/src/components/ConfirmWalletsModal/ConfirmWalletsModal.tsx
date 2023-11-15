@@ -21,7 +21,7 @@ import { useNavigate } from 'react-router-dom';
 import { getQuoteErrorMessage } from '../../constants/errors';
 import { navigationRoutes } from '../../constants/navigationRoutes';
 import { getQuoteUpdateWarningMessage } from '../../constants/warnings';
-import { useMetaStore } from '../../store/meta';
+import { useAppStore } from '../../store/AppStore';
 import { useQuoteStore } from '../../store/quote';
 import { useWalletsStore } from '../../store/wallets';
 import { confirmSwapDisabled } from '../../utils/swap';
@@ -50,8 +50,9 @@ const NUMBER_OF_WALLETS_TO_DISPLAY = 2;
 
 export function ConfirmWalletsModal(props: PropTypes) {
   //TODO: move component's logics to a custom hook
-  const { open, onClose, onCancel, onCheckBalance, config, loading } = props;
-  const { blockchains } = useMetaStore.use.meta();
+  const { open, onClose, onCancel, onCheckBalance, loading } = props;
+  const config = useAppStore().use.config();
+  const blockchains = useAppStore().use.blockchains()();
   const {
     quote,
     setSelectedWallets: selectQuoteWallets,
@@ -75,10 +76,6 @@ export function ConfirmWalletsModal(props: PropTypes) {
   const customDestinationRef = useRef<HTMLDivElement | null>(null);
 
   const requiredWallets = getRequiredWallets(quote);
-  const customDestinationEnabled =
-    typeof config?.customDestination === 'undefined'
-      ? true
-      : config.customDestination;
 
   const lastStepToBlockchain = blockchains.find(
     (blockchain) =>
@@ -320,9 +317,6 @@ export function ConfirmWalletsModal(props: PropTypes) {
               chain={showMoreWalletFor}
               isSelected={isSelected}
               selectWallet={onChange}
-              multiWallets={config?.multiWallets ?? true}
-              supportedWallets={config?.wallets ?? []}
-              config={config}
               onShowMore={setShowMoreWalletFor.bind(null, showMoreWalletFor)}
             />
           </div>
@@ -380,9 +374,6 @@ export function ConfirmWalletsModal(props: PropTypes) {
                       chain={requiredWallet}
                       isSelected={isSelected}
                       selectWallet={onChange}
-                      multiWallets={config?.multiWallets ?? true}
-                      supportedWallets={config?.wallets ?? []}
-                      config={config}
                       limit={NUMBER_OF_WALLETS_TO_DISPLAY}
                       onShowMore={() =>
                         setShowMoreWalletFor(blockchain?.name ?? '')
@@ -390,7 +381,7 @@ export function ConfirmWalletsModal(props: PropTypes) {
                     />
                   </ListContainer>
                   {!isLastWallet && <Divider size={32} />}
-                  {isLastWallet && customDestinationEnabled && (
+                  {isLastWallet && config?.customDestination && (
                     <CustomDestination>
                       <CollapsibleRoot
                         ref={customDestinationRef}

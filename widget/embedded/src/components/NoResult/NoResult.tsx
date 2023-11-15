@@ -11,6 +11,7 @@ import {
 import React from 'react';
 
 import { errorMessages } from '../../constants/errors';
+import { useAppStore } from '../../store/AppStore';
 import { useSettingsStore } from '../../store/settings';
 
 import { makeInfo } from './NoResult.helpers';
@@ -23,10 +24,12 @@ export function NoResult(props: PropTypes) {
   const toggleAllLiquiditySources =
     useSettingsStore.use.toggleAllLiquiditySources();
 
+  const swappers = useAppStore().use.swappers()();
+
   const info = makeInfo(
     error,
     disabledLiquiditySources,
-    toggleAllLiquiditySources,
+    () => toggleAllLiquiditySources(swappers, true),
     fetch
   );
 
