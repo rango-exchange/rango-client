@@ -35,9 +35,9 @@ function Main(
     config: WidgetConfig;
   }>
 ) {
-  const updateConfig = useAppStore().use.updateConfig();
-  const blockchains = useAppStore().use.blockchains()();
-  const tokens = useAppStore().use.tokens()();
+  const updateConfig = useAppStore().updateConfig;
+  const blockchains = useAppStore().blockchains();
+  const tokens = useAppStore().tokens();
   const { providers } = useWalletProviders(props.providers, props?.options);
   const disconnectWallet = useWalletsStore.use.disconnectWallet();
   const connectWallet = useWalletsStore.use.connectWallet();

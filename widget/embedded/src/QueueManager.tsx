@@ -33,7 +33,7 @@ function QueueManager(props: PropsWithChildren) {
     });
   }, []);
 
-  const blockchains = useAppStore().use.blockchains()();
+  const blockchains = useAppStore().blockchains();
   const connectedWallets = useWalletsStore.use.connectedWallets();
 
   const wallets = {

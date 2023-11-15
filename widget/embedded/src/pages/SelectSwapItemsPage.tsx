@@ -39,10 +39,10 @@ export function SelectSwapItemsPage(props: PropTypes) {
   const selectedBlockchainName = selectedBlockchain?.name ?? '';
 
   // Tokens & Blockchains list
-  const blockchains = useAppStore().use.blockchains()({
+  const blockchains = useAppStore().blockchains({
     type: type,
   });
-  const tokens = useAppStore().use.tokens()({
+  const tokens = useAppStore().tokens({
     type,
     blockchain: selectedBlockchainName,
     searchFor: searchedFor,

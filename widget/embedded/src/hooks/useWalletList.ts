@@ -37,7 +37,7 @@ export function useWalletList(params: Params) {
   const { config, chain, onBeforeConnect, onConnect } = params;
   const { state, disconnect, getWalletInfo, connect } = useWallets();
   const { connectedWallets } = useWalletsStore();
-  const blockchains = useAppStore().use.blockchains()();
+  const blockchains = useAppStore().blockchains();
 
   /** It can be what has been set by widget config or as a fallback we use all the supported wallets by our library */
   const listAvailableWalletTypes =

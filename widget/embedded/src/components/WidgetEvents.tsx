@@ -14,7 +14,7 @@ import { useWalletsStore } from '../store/wallets';
 import { validBlockedStatuses } from '../types/notification';
 
 export function WidgetEvents() {
-  const tokens = useAppStore().use.tokens()();
+  const tokens = useAppStore().tokens();
   const connectedWallets = useWalletsStore.use.connectedWallets();
   const getWalletsDetails = useWalletsStore.use.getWalletsDetails();
   const setNotification = useNotificationStore.use.setNotification();

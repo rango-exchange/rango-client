@@ -76,7 +76,7 @@ export function Home() {
     setQuoteWarningsConfirmed,
   } = useQuoteStore();
 
-  const fetchMetaStatus = useAppStore().use.fetchStatus();
+  const fetchMetaStatus = useAppStore().fetchStatus;
 
   const connectedWallets = useWalletsStore.use.connectedWallets();
   const setCurrentPage = useUiStore.use.setCurrentPage();

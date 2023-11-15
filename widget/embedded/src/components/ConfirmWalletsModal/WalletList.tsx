@@ -42,10 +42,10 @@ import {
 
 export function WalletList(props: PropTypes) {
   const { chain, isSelected, selectWallet, limit, onShowMore } = props;
-  const { config } = useAppStore()();
+  const { config } = useAppStore();
 
   const connectedWallets = useWalletsStore.use.connectedWallets();
-  const { blockchains } = useAppStore()();
+  const { blockchains } = useAppStore();
   const [openWalletStateModal, setOpenWalletStateModal] =
     useState<WalletType>('');
   const [experimentalChainWallet, setExperimentalChainWallet] =

@@ -26,9 +26,9 @@ import { getUniqueSwappersGroups } from '../utils/settings';
 
 export function SettingsPage() {
   const navigate = useNavigate();
-  const { theme } = useAppStore().use.config();
-  const fetchStatus = useAppStore().use.fetchStatus();
-  const swappers = useAppStore().use.swappers()();
+  const { theme } = useAppStore().config;
+  const fetchStatus = useAppStore().fetchStatus;
+  const swappers = useAppStore().swappers();
   const { navigateBackFrom } = useNavigateBack();
 
   const infiniteApprove = useSettingsStore.use.infiniteApprove();
