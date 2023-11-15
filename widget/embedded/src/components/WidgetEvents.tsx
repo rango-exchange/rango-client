@@ -42,9 +42,8 @@ export function WidgetEvents() {
         toAccount && getWalletsDetails([toAccount]);
       }
       if (
-        (event.type === StepEventType.TX_EXECUTION_BLOCKED &&
-          validBlockedStatuses.includes(event.status)) ||
-        event.type === StepEventType.FAILED
+        event.type === StepEventType.TX_EXECUTION_BLOCKED &&
+        validBlockedStatuses.includes(event.status)
       ) {
         setNotification(event, route);
       } else if (
