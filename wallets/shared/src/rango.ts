@@ -54,7 +54,6 @@ export enum WalletTypes {
   TRUST_WALLET = 'trust-wallet',
   KEPLR = 'keplr',
   PHANTOM = 'phantom',
-  BINANCE_CHAIN = 'binance-chain',
   BITGET = 'bitget',
   TRON_LINK = 'tron-link',
   COINBASE = 'coinbase',
