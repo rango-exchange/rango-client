@@ -35,8 +35,8 @@ interface PropTypes {
 }
 
 export function LiquiditySourcePage({ sourceType }: PropTypes) {
-  const fetchStatus = useAppStore().use.fetchStatus();
-  const swappers = useAppStore().use.swappers()();
+  const fetchStatus = useAppStore().fetchStatus;
+  const swappers = useAppStore().swappers();
   const [searchedFor, setSearchedFor] = useState<string>('');
   const toggleLiquiditySource = useSettingsStore.use.toggleLiquiditySource();
   const { navigateBackFrom } = useNavigateBack();

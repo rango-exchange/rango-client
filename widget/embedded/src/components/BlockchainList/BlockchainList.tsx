@@ -20,7 +20,7 @@ import { LoadingBlockchainList } from './LoadingBlockchainList';
 export function BlockchainList(props: PropTypes) {
   const { list, searchedFor, onChange, blockchainCategory } = props;
   const [blockchains, setBlockchains] = useState<BlockchainMeta[]>(list);
-  const { fetchStatus } = useAppStore()();
+  const { fetchStatus } = useAppStore();
 
   useEffect(() => {
     setBlockchains([

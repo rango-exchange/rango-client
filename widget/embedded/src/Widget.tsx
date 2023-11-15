@@ -43,7 +43,7 @@ export type WidgetProps = {
 export function Main() {
   globalFont();
 
-  const { fetch: fetchMeta, config } = useAppStore()();
+  const { fetch: fetchMeta, config } = useAppStore();
   const { activeTheme } = useTheme(config?.theme || {});
   const { activeLanguage, changeLanguage } = useLanguage();
   const [lastConnectedWalletWithNetwork, setLastConnectedWalletWithNetwork] =
@@ -69,6 +69,7 @@ export function Main() {
       changeLanguage(config.language);
     }
   }, [config?.language]);
+
   return (
     <I18nManager language={activeLanguage}>
       <MainContainer id="swap-container" className={activeTheme()}>

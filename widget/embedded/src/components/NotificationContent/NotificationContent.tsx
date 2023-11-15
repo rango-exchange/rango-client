@@ -26,8 +26,8 @@ export function NotificationContent() {
   const { getUnreadNotifications } = useNotificationStore();
 
   const notifications: Notification[] = getUnreadNotifications();
-  const blockchains = useAppStore().use.blockchains()();
-  const tokens = useAppStore().use.tokens()();
+  const blockchains = useAppStore().blockchains();
+  const tokens = useAppStore().tokens();
   const sortedNotification = notifications
     .sort((a, b) => b.creationTime - a.creationTime)
     .slice(0, MAX_NOTIFICATIONS_DISPLAYED);

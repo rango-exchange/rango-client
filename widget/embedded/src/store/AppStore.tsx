@@ -17,7 +17,7 @@ export function useAppStore() {
     throw new Error('Missing AppStoreContext.Provider in the tree');
   }
 
-  return store;
+  return store();
 }
 
 export function AppStoreProvider(props: AppStoreProviderProps) {
