@@ -1,0 +1,1 @@
+export { WidgetProvider } from './WidgetProvider';

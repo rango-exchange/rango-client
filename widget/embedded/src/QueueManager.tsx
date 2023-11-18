@@ -17,7 +17,7 @@ import { useWalletsStore } from './store/wallets';
 import { getConfig } from './utils/configs';
 import { walletAndSupportedChainsNames } from './utils/wallets';
 
-function QueueManager(props: PropsWithChildren) {
+function QueueManager(props: PropsWithChildren<{ apiKey?: string }>) {
   const {
     providers,
     getSigners,
@@ -29,9 +29,9 @@ function QueueManager(props: PropsWithChildren) {
 
   const swapQueueDef = useMemo(() => {
     return makeQueueDefinition({
-      API_KEY: getConfig('API_KEY'),
+      API_KEY: props.apiKey || getConfig('API_KEY'),
     });
-  }, []);
+  }, [props.apiKey]);
 
   const blockchains = useAppStore().blockchains();
   const connectedWallets = useWalletsStore.use.connectedWallets();

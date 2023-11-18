@@ -1,5 +1,9 @@
-import type { WidgetConfig } from './types';
-import type { ProvidersOptions } from './utils/providers';
+import type {
+  OnConnectHandler,
+  PropTypes,
+  WidgetContextInterface,
+} from './Wallets.types';
+import type { ProvidersOptions } from '../../utils/providers';
 import type { EventHandler } from '@rango-dev/wallets-react';
 import type { Network } from '@rango-dev/wallets-shared';
 import type { PropsWithChildren } from 'react';
@@ -8,18 +12,13 @@ import { Events, Provider } from '@rango-dev/wallets-react';
 import { isEvmBlockchain } from 'rango-sdk';
 import React, { createContext, useEffect, useRef } from 'react';
 
-import { useWalletProviders } from './hooks/useWalletProviders';
-import { AppStoreProvider, useAppStore } from './store/AppStore';
-import { useWalletsStore } from './store/wallets';
+import { useWalletProviders } from '../../hooks/useWalletProviders';
+import { AppStoreProvider, useAppStore } from '../../store/AppStore';
+import { useWalletsStore } from '../../store/wallets';
 import {
   prepareAccountsForWalletStore,
   walletAndSupportedChainsNames,
-} from './utils/wallets';
-
-type OnConnectHandler = (key: string) => void;
-interface WidgetContextInterface {
-  onConnectWallet(handler: OnConnectHandler): void;
-}
+} from '../../utils/wallets';
 
 export const WidgetContext = createContext<WidgetContextInterface>({
   onConnectWallet: () => {
@@ -27,18 +26,14 @@ export const WidgetContext = createContext<WidgetContextInterface>({
   },
 });
 
-function Main(
-  props: PropsWithChildren<{
-    providers: WidgetConfig['wallets'];
-    options?: ProvidersOptions;
-    onUpdateState?: EventHandler;
-    config: WidgetConfig;
-  }>
-) {
+function Main(props: PropsWithChildren<PropTypes>) {
   const updateConfig = useAppStore().updateConfig;
   const blockchains = useAppStore().blockchains();
   const tokens = useAppStore().tokens();
-  const { providers } = useWalletProviders(props.providers, props?.options);
+  const walletOptions: ProvidersOptions = {
+    walletConnectProjectId: props.config?.walletConnectProjectId,
+  };
+  const { providers } = useWalletProviders(props.config.wallets, walletOptions);
   const disconnectWallet = useWalletsStore.use.disconnectWallet();
   const connectWallet = useWalletsStore.use.connectWallet();
   const onConnectWalletHandler = useRef<OnConnectHandler>();
@@ -117,14 +112,7 @@ function Main(
   );
 }
 
-export function WidgetWallets(
-  props: PropsWithChildren<{
-    providers: WidgetConfig['wallets'];
-    options?: ProvidersOptions;
-    onUpdateState?: EventHandler;
-    config: WidgetConfig;
-  }>
-) {
+export function WidgetWallets(props: PropsWithChildren<PropTypes>) {
   const { config, ...otherProps } = props;
   return (
     <AppStoreProvider config={config}>
