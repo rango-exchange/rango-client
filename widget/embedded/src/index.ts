@@ -1,3 +1,4 @@
+import type { WidgetProps } from './containers/Widget';
 import type {
   BlockchainAndTokenConfig,
   WidgetColors,
@@ -5,7 +6,6 @@ import type {
   WidgetConfig,
   WidgetTheme,
 } from './types';
-import type { WidgetProps } from './Widget';
 import type {
   Route,
   RouteEvent,
@@ -39,8 +39,10 @@ import {
 } from '@rango-dev/queue-manager-rango-preset';
 import { useWallets } from '@rango-dev/wallets-react';
 
-import { WidgetWallets } from './Wallets';
-import { Widget } from './Widget';
+import { WidgetWallets } from './containers/Wallets';
+import { Widget } from './containers/Widget';
+import { useWidget } from './containers/WidgetInfo';
+import { WidgetProvider } from './containers/WidgetProvider';
 
 export type {
   WidgetConfig,
@@ -70,7 +72,12 @@ export type {
 };
 export {
   Widget,
+  /**
+   * @deprecated Use `WidgetProvider` instead. This component will be removed in future versions.
+   */
   WidgetWallets,
+  WidgetProvider,
+  useWidget,
   useWallets,
   useWidgetEvents,
   MainEvents,
