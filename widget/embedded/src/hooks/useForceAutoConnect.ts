@@ -1,37 +1,27 @@
-import type { MetaState } from '../store/meta';
-import type { WalletType } from '@rango-dev/wallets-shared';
-
 import { useWallets } from '@rango-dev/wallets-react';
 import { useEffect, useRef } from 'react';
 
-type forceAutoConnectParams = {
-  loadingStatus: MetaState['loadingStatus'];
-  walletType?: WalletType;
-};
+import { SearchParams } from '../constants/searchParams';
+import { useAppStore } from '../store/AppStore';
 
-export function useForceAutoConnect(params: forceAutoConnectParams): void {
-  const { loadingStatus, walletType = '' } = params;
+export function useForceAutoConnect(): void {
   const { connect, state } = useWallets();
-  const initiated = useRef(false);
-
+  const initiated = useRef<{ [key: string]: boolean }>({});
+  const { fetchStatus } = useAppStore();
+  const walletType =
+    new URLSearchParams(location.search).get(SearchParams.AUTO_CONNECT) || '';
   const walletState = state(walletType);
 
   useEffect(() => {
     const shouldTryConnect =
-      loadingStatus === 'success' &&
+      fetchStatus === 'success' &&
       walletType &&
-      walletState &&
       walletState.installed &&
       !walletState.connecting &&
       !walletState.connected;
-
-    if (shouldTryConnect && !initiated.current) {
-      initiated.current = true;
-      connect(walletType)
-        .then()
-        .catch((error: any) => {
-          console.error(error);
-        });
+    if (shouldTryConnect && !initiated.current[walletType]) {
+      initiated.current[walletType] = true;
+      void connect(walletType);
     }
-  }, [walletState, loadingStatus]);
+  }, [walletState, fetchStatus]);
 }
