@@ -4,4 +4,5 @@ export enum SearchParams {
   'TO_CHAIN' = 'toBlockchain',
   'TO_TOKEN' = 'toToken',
   'FROM_AMOUNT' = 'fromAmount',
+  'REFERRER' = 'referrer',
 }

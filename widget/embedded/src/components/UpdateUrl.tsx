@@ -57,6 +57,7 @@ export function UpdateUrl() {
         toChainString = '',
         toTokenString = '',
         fromAmount = '';
+      const referrer = searchParamsRef.current[SearchParams.REFERRER];
       if (fetchMetaStatus !== 'success') {
         fromChainString = searchParamsRef.current[SearchParams.FROM_CHAIN];
         fromTokenString = searchParamsRef.current[SearchParams.FROM_TOKEN];
@@ -90,6 +91,9 @@ export function UpdateUrl() {
           ...(toTokenString && { [SearchParams.TO_TOKEN]: toTokenString }),
           ...(fromAmount && {
             [SearchParams.FROM_AMOUNT]: fromAmount.toString(),
+          }),
+          ...(referrer && {
+            [SearchParams.REFERRER]: referrer,
           }),
         },
         { replace: true }
