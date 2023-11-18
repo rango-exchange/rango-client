@@ -9,7 +9,6 @@ import { MemoryRouter, useInRouterContext } from 'react-router';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 import { navigationRoutes } from '../constants/navigationRoutes';
-import { SearchParams } from '../constants/searchParams';
 import { useForceAutoConnect } from '../hooks/useForceAutoConnect';
 import { Home } from '../pages/Home';
 import { useAppStore } from '../store/AppStore';
@@ -50,14 +49,8 @@ export function AppRouter({
   const Router = isRouterInContext ? Route : MemoryRouter;
   const blockchains = useAppStore().blockchains();
   const { canSwitchNetworkTo } = useWallets();
-  const { loadingStatus } = useMetaStore();
-  const referrerWalletType =
-    new URLSearchParams(location.search).get(SearchParams.REFERRER) ||
-    undefined;
-  useForceAutoConnect({
-    walletType: referrerWalletType,
-    loadingStatus,
-  });
+
+  useForceAutoConnect();
 
   const evmChains = blockchains.filter(isEvmBlockchain);
 
