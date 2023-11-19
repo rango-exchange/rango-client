@@ -901,7 +901,7 @@ msgstr "Esperando una transacción de puente"
 
 #. js-lingui-explicit-id
 #: widget/ui/src/components/TokenPreview/TokenPreview.tsx:150
-#: widget/ui/src/containers/SwapInput/TokenSection.tsx:45
+#: widget/ui/src/containers/SwapInput/TokenSection.tsx:48
 #: widget/ui/src/containers/TokenInfo/TokenInfo.tsx:235
 msgid "Chain"
 msgstr "Cadena"
@@ -955,13 +955,13 @@ msgid "SWAP"
 msgstr "SWAP"
 
 #. js-lingui-explicit-id
-#: widget/ui/src/containers/SwapInput/SwapInput.tsx:26
+#: widget/ui/src/containers/SwapInput/SwapInput.tsx:31
 #: widget/ui/src/containers/TokenInfo/TokenInfo.tsx:194
 msgid "Balance"
 msgstr "Saldo"
 
 #. js-lingui-explicit-id
-#: widget/ui/src/containers/SwapInput/SwapInput.tsx:33
+#: widget/ui/src/containers/SwapInput/SwapInput.tsx:38
 msgid "Max"
 msgstr "Máx"
 

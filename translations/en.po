@@ -896,7 +896,7 @@ msgstr "Waiting for bridge transaction"
 
 #. js-lingui-explicit-id
 #: widget/ui/src/components/TokenPreview/TokenPreview.tsx:150
-#: widget/ui/src/containers/SwapInput/TokenSection.tsx:45
+#: widget/ui/src/containers/SwapInput/TokenSection.tsx:48
 #: widget/ui/src/containers/TokenInfo/TokenInfo.tsx:235
 msgid "Chain"
 msgstr "Chain"
@@ -950,13 +950,13 @@ msgid "SWAP"
 msgstr "SWAP"
 
 #. js-lingui-explicit-id
-#: widget/ui/src/containers/SwapInput/SwapInput.tsx:26
+#: widget/ui/src/containers/SwapInput/SwapInput.tsx:31
 #: widget/ui/src/containers/TokenInfo/TokenInfo.tsx:194
 msgid "Balance"
 msgstr "Balance"
 
 #. js-lingui-explicit-id
-#: widget/ui/src/containers/SwapInput/SwapInput.tsx:33
+#: widget/ui/src/containers/SwapInput/SwapInput.tsx:38
 msgid "Max"
 msgstr "Max"
 
