@@ -16,6 +16,7 @@ function ItemPicker(props: PropTypes) {
     disabled,
   } = props;
 
+  const LogoComponent = logo;
   return (
     <Container>
       <Title>
@@ -32,12 +33,16 @@ function ItemPicker(props: PropTypes) {
         <Title>
           {hasLogo && (
             <>
-              <Image
-                src={logo}
-                size={16}
-                useAsPlaceholder={!logo}
-                type="circular"
-              />
+              {typeof logo === 'string' || logo === undefined ? (
+                <Image
+                  src={logo}
+                  size={16}
+                  useAsPlaceholder={!logo}
+                  type="circular"
+                />
+              ) : (
+                LogoComponent && <LogoComponent size={16} />
+              )}
               <Divider size={4} direction="horizontal" />
             </>
           )}

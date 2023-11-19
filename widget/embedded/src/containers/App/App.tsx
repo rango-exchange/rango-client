@@ -42,9 +42,7 @@ export function Main() {
     widgetContext.onConnectWallet(setLastConnectedWalletWithNetwork);
   }, []);
   useEffect(() => {
-    if (config?.language) {
-      changeLanguage(config.language);
-    }
+    changeLanguage(config?.language);
   }, [config?.language]);
 
   return (

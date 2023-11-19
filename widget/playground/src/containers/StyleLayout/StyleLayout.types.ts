@@ -24,3 +24,8 @@ export type CustomColorsTypes = {
   };
   onResetPreset: () => void;
 };
+
+export enum ModalState {
+  DEFAULT_FONT = 'font',
+  DEFAULT_LANGUAGE = 'language',
+}

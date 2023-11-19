@@ -19,6 +19,7 @@ export { default as GasIcon } from './Gas';
 export { default as InProgressIcon } from './InProgress';
 export { default as InfoErrorIcon } from './InfoError';
 export { default as InfoIcon } from './Info';
+export { default as LanguageIcon } from './Language';
 export { default as LightModeIcon } from './LightMode';
 export { default as LinkIcon } from './Link';
 export { default as LoadingIcon } from './Loading';
