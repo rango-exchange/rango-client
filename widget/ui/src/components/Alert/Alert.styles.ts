@@ -20,11 +20,7 @@ export const Container = styled('div', {
     paddingLeft: '$24',
   },
   '.description': {
-    $$color: '$colors$neutral700',
-    [`.${darkTheme} &`]: {
-      $$color: '$colors$neutral600',
-    },
-    color: '$$color',
+    color: '$neutral700',
     fontSize: '$10',
     lineHeight: '$12',
   },

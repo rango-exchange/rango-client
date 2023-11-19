@@ -10,7 +10,7 @@ export function QuoteErrorsModalItem(props: ModalContentData) {
 
   return (
     <Item>
-      <Typography size="medium" variant="label" color="neutral600">
+      <Typography size="medium" variant="label" className="_title">
         {title}
       </Typography>
       <Typography

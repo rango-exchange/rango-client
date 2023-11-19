@@ -16,7 +16,7 @@ function ListItem(props: ListItemProps) {
       <div className="item-text-container">
         {title && <div className="item-text-title">{title}</div>}
         {description && (
-          <Typography variant="body" size="small" color="neutral600">
+          <Typography variant="body" className="_description" size="small">
             {description}
           </Typography>
         )}
