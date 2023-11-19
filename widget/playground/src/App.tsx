@@ -1,4 +1,4 @@
-import { Widget, WidgetWallets } from '@rango-dev/widget-embedded';
+import { Widget, WidgetProvider } from '@rango-dev/widget-embedded';
 import React, { useEffect } from 'react';
 import { Route, Routes } from 'react-router-dom';
 
@@ -6,7 +6,7 @@ import { ConfigContainer } from './containers/configContainer';
 import { useTheme } from './hooks/useTheme';
 import { useConfigStore } from './store/config';
 import { useMetaStore } from './store/meta';
-import { RANGO_PUBLIC_API_KEY, WC_PROJECT_ID } from './utils/configs';
+import { RANGO_PUBLIC_API_KEY } from './utils/configs';
 
 export function App() {
   const { activeStyle } = useTheme();
@@ -20,18 +20,13 @@ export function App() {
 
   return (
     <div className={activeStyle}>
-      <WidgetWallets
-        config={overridedConfig}
-        providers={config.externalWallets ? config.wallets : []}
-        options={{
-          walletConnectProjectId: WC_PROJECT_ID,
-        }}>
+      <WidgetProvider config={overridedConfig}>
         <ConfigContainer>
           <Routes>
             <Route path="/*" element={<Widget config={overridedConfig} />} />
           </Routes>
         </ConfigContainer>
-      </WidgetWallets>
+      </WidgetProvider>
     </div>
   );
 }

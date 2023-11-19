@@ -2,8 +2,8 @@ import type { PropsWithChildren } from 'react';
 
 import React, { useEffect, useState } from 'react';
 
-import { getConciseAddress } from '../../helper';
 import { styled } from '../../theme';
+import { getConciseAddress } from '../../utils';
 import { Image } from '../common';
 import { Typography } from '../Typography';
 

@@ -41,7 +41,10 @@ export function TokenSection(props: TokenSectionProps) {
                   ? i18n.t('Token')
                   : tokenSymbol}
               </Typography>
-              <Typography variant="body" size="medium" color="$neutral600">
+              <Typography
+                variant="body"
+                size="medium"
+                className="blockchain-name">
                 {error || (!loading && !chain) ? i18n.t('Chain') : chain}
               </Typography>
             </>

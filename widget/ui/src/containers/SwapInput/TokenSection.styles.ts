@@ -36,6 +36,13 @@ export const TokenSectionContainer = styled('div', {
   boxSizing: 'border-box',
   alignItems: 'center',
 
+  '& .blockchain-name': {
+    $$color: '$colors$neutral600',
+    [`.${darkTheme} &`]: {
+      $$color: '$colors$neutral700',
+    },
+    color: '$$color',
+  },
   '& .token-chain-name': {
     display: 'flex',
     flexDirection: 'column',
