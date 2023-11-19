@@ -10,13 +10,9 @@ import React from 'react';
 
 import { Layout } from '../components/Layout';
 import { SettingsContainer } from '../components/SettingsContainer';
-import { navigationRoutes } from '../constants/navigationRoutes';
 import { useLanguage } from '../hooks/useLanguage';
-import { useNavigateBack } from '../hooks/useNavigateBack';
 
 export function LanguagePage() {
-  const { navigateBackFrom } = useNavigateBack();
-
   const { activeLanguage, changeLanguage, languages } = useLanguage();
 
   const languageList = languages.map((languageItem) => {
@@ -38,7 +34,6 @@ export function LanguagePage() {
   return (
     <Layout
       header={{
-        onBack: () => navigateBackFrom(navigationRoutes.settings),
         title: i18n.t('Language'),
       }}>
       <SettingsContainer>

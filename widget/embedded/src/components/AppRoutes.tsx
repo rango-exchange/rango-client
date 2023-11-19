@@ -14,8 +14,6 @@ import { SwapDetailsPage } from '../pages/SwapDetailsPage';
 import { ThemePage } from '../pages/ThemePage';
 import { WalletsPage } from '../pages/WalletsPage';
 
-const getAbsolutePath = (path: string) => path.replace('/', '');
-
 export function AppRoutes() {
   return useRoutes([
     {
@@ -24,51 +22,74 @@ export function AppRoutes() {
     },
     {
       path: navigationRoutes.fromSwap,
-      element: <SelectSwapItemsPage type="source" />,
+      children: [
+        {
+          index: true,
+          element: <SelectSwapItemsPage type="source" />,
+        },
+        {
+          path: navigationRoutes.blockchains,
+          element: <SelectBlockchainPage type="source" />,
+        },
+      ],
     },
     {
       path: navigationRoutes.toSwap,
-      element: <SelectSwapItemsPage type="destination" />,
-    },
-    {
-      path: navigationRoutes.fromBlockchain,
-      element: <SelectBlockchainPage type="source" />,
-    },
-    {
-      path: navigationRoutes.toBlockchain,
-      element: <SelectBlockchainPage type="destination" />,
+      children: [
+        {
+          index: true,
+          element: <SelectSwapItemsPage type="destination" />,
+        },
+        {
+          path: navigationRoutes.blockchains,
+          element: <SelectBlockchainPage type="destination" />,
+        },
+      ],
     },
     {
       path: navigationRoutes.settings,
-      element: <SettingsPage />,
+      children: [
+        {
+          index: true,
+          element: <SettingsPage />,
+        },
+        {
+          path: navigationRoutes.themes,
+          element: <ThemePage />,
+        },
+        {
+          path: navigationRoutes.languages,
+          element: <LanguagePage />,
+        },
+        {
+          path: navigationRoutes.exchanges,
+          element: <LiquiditySourcePage sourceType="Exchanges" />,
+        },
+        {
+          path: navigationRoutes.bridges,
+          element: <LiquiditySourcePage sourceType="Bridges" />,
+        },
+      ],
     },
     {
-      path: navigationRoutes.themes,
-      element: <ThemePage />,
-    },
-    {
-      path: navigationRoutes.languages,
-      element: <LanguagePage />,
-    },
-    {
-      path: navigationRoutes.exchanges,
-      element: <LiquiditySourcePage sourceType="Exchanges" />,
-    },
-    {
-      path: navigationRoutes.bridges,
-      element: <LiquiditySourcePage sourceType="Bridges" />,
-    },
-    { path: navigationRoutes.swaps, element: <HistoryPage /> },
-    {
-      path: navigationRoutes.swapDetails,
-      element: <SwapDetailsPage />,
+      path: navigationRoutes.swaps,
+      children: [
+        {
+          index: true,
+          element: <HistoryPage />,
+        },
+        {
+          path: navigationRoutes.swapDetails,
+          element: <SwapDetailsPage />,
+        },
+      ],
     },
     {
       path: navigationRoutes.wallets,
       element: <WalletsPage />,
     },
     {
-      path: getAbsolutePath(navigationRoutes.confirmSwap),
+      path: navigationRoutes.confirmSwap,
       element: <ConfirmSwapPage />,
     },
   ]);

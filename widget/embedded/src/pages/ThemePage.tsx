@@ -13,8 +13,6 @@ import React from 'react';
 
 import { Layout } from '../components/Layout';
 import { SettingsContainer } from '../components/SettingsContainer';
-import { navigationRoutes } from '../constants/navigationRoutes';
-import { useNavigateBack } from '../hooks/useNavigateBack';
 import { useSettingsStore } from '../store/settings';
 
 type Theme = 'dark' | 'light' | 'auto';
@@ -26,7 +24,6 @@ enum Mode {
 }
 
 export function ThemePage() {
-  const { navigateBackFrom } = useNavigateBack();
   const theme = useSettingsStore.use.theme();
   const setTheme = useSettingsStore.use.setTheme();
 
@@ -72,7 +69,6 @@ export function ThemePage() {
   return (
     <Layout
       header={{
-        onBack: () => navigateBackFrom(navigationRoutes.settings),
         title: i18n.t('Theme'),
       }}>
       <SettingsContainer>
