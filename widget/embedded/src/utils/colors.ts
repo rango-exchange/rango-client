@@ -31,7 +31,7 @@ export const generateRangeColors = (name: string, color: string) => {
   const NUMBER_OF_COLORS = 10;
   const HALF_NUMBER_OF_COLORS = 5;
   const COLOR_SUFFIX = 100;
-  const AMT = 32;
+  const AMT = 25;
 
   let colors = { [name]: color };
   for (let i = 1; i < NUMBER_OF_COLORS; i++) {
@@ -60,6 +60,7 @@ export const generateRangeColors = (name: string, color: string) => {
       };
     }
   }
+
   return colors;
 };
 export const generateColors = (

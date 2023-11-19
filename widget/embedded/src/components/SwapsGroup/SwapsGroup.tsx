@@ -34,7 +34,6 @@ export function SwapsGroup(props: PropTypes) {
                 <Typography
                   variant="label"
                   size="medium"
-                  color="neutral600"
                   className="group-title">
                   {i18n.t(group.title)}
                 </Typography>
@@ -68,7 +67,6 @@ export function SwapsGroup(props: PropTypes) {
                 <Typography
                   variant="label"
                   size="medium"
-                  color="neutral600"
                   className="group-title">
                   {i18n.t(group.title)}
                 </Typography>

@@ -1,4 +1,4 @@
-import { styled, Typography } from '@rango-dev/ui';
+import { darkTheme, styled, Typography } from '@rango-dev/ui';
 
 export const Container = styled('div', {
   display: 'flex',
@@ -40,7 +40,11 @@ export const List = styled('ul', {
         '& a': {
           fontSize: '$12',
           lineHeight: '$16',
-          color: '$neutral600',
+          $$color: '$colors$neutral600',
+          [`.${darkTheme} &`]: {
+            $$color: '$colors$neutral700',
+          },
+          color: '$$color',
           textDecoration: 'none',
         },
       },
@@ -92,6 +96,14 @@ export const TagTitle = styled(Typography, {});
 
 export const BalanceContainer = styled('div', {
   textAlign: 'right',
+
+  '.usd-value': {
+    $$color: '$colors$neutral600',
+    [`.${darkTheme} &`]: {
+      $$color: '$colors$neutral700',
+    },
+    color: '$$color',
+  },
 });
 
 export const End = styled('ul', {

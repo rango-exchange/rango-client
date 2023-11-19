@@ -2,7 +2,7 @@ import type { BestRouteResponse } from 'rango-sdk';
 
 import React from 'react';
 
-import { styled } from '../../theme';
+import { darkTheme, styled } from '../../theme';
 import { Divider } from '../Divider';
 import { AngleRightIcon, GasIcon } from '../Icon';
 
@@ -13,7 +13,11 @@ export const Container = styled('div', {
   padding: '$8',
   borderRadius: '$xs',
   backgroundColor: '$background',
-  color: '$neutral600',
+  $$color: '$colors$neutral600',
+  [`.${darkTheme} &`]: {
+    $$color: '$colors$neutral700',
+  },
+  color: '$$color',
   fontSize: '$12',
 
   '.routes': {

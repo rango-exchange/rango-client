@@ -1,14 +1,16 @@
+import type { LoadingStatus } from '../../types/meta';
+import type { CSSProperties } from '@stitches/react';
+import type { BlockchainMeta } from 'rango-sdk';
+
 import React from 'react';
-import { BlockchainMeta } from 'rango-sdk';
+
+import { LoadingFailedAlert } from '../../components/Alert/LoadingFailedAlert';
+import { NotFoundAlert } from '../../components/Alert/NotFoundAlert';
 import { BlockchainsList } from '../../components/BlockchainsList';
 import { SecondaryPage } from '../../components/SecondaryPage/SecondaryPage';
 import { Spinner } from '../../components/Spinner';
 import { styled } from '../../theme';
-import { CSSProperties } from '@stitches/react';
-import { containsText } from '../../helper';
-import { LoadingStatus } from '../../types/meta';
-import { LoadingFailedAlert } from '../../components/Alert/LoadingFailedAlert';
-import { NotFoundAlert } from '../../components/Alert/NotFoundAlert';
+import { containsText } from '../../utils';
 import { LoaderContainer } from '../TokenSelector/TokenSelector';
 
 const ListContainer = styled('div', {
@@ -56,8 +58,7 @@ export function BlockchainSelector(props: PropTypes) {
       hasHeader={hasHeader}
       textFieldPlaceholder="Search blockchains by name"
       title={`Select ${type} Blockchain`}
-      onBack={onBack}
-    >
+      onBack={onBack}>
       {(searchedFor) => {
         const filteredBlockchains = filterBlockchains(list, searchedFor);
         return (

@@ -1,11 +1,15 @@
-import { Button, styled } from '@rango-dev/ui';
+import { Button, darkTheme, styled } from '@rango-dev/ui';
 
 export const Container = styled('div', {
   display: 'none',
   '@lg': {
     display: 'flex',
     justifyContent: 'center',
-    backgroundColor: '$neutral400',
+    $$color: '#eeeeee',
+    [`.${darkTheme} &`]: {
+      $$color: '$colors$neutral400',
+    },
+    backgroundColor: '$$color',
     width: '100%',
     height: '100vh',
     padding: '$20',

@@ -17,6 +17,13 @@ export const Container = styled('div', {
       },
     },
   },
+  '& .gray-text': {
+    $$color: '$colors$neutral600',
+    [`.${darkTheme} &`]: {
+      $$color: '$colors$neutral700',
+    },
+    color: '$$color',
+  },
   '& .label__container': {
     paddingBottom: '$5',
   },
@@ -61,4 +68,30 @@ export const MaxButton = styled(Button, {
     $$color: '$colors$secondary800',
   },
   backgroundColor: '$$color',
+});
+
+export const ValueTypography = styled('div', {
+  width: 140,
+  textAlign: 'right',
+  whiteSpace: 'nowrap',
+  overflow: 'hidden',
+  textOverflow: 'ellipsis',
+  variants: {
+    hasWarning: {
+      true: {
+        '& ._typography': {
+          color: '$warning500',
+        },
+      },
+      false: {
+        '& ._typography': {
+          $$color: '$colors$neutral600',
+          [`.${darkTheme} &`]: {
+            $$color: '$colors$neutral700',
+          },
+          color: '$$color',
+        },
+      },
+    },
+  },
 });

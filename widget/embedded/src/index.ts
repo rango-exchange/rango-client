@@ -43,6 +43,7 @@ import { WidgetWallets } from './containers/Wallets';
 import { Widget } from './containers/Widget';
 import { useWidget } from './containers/WidgetInfo';
 import { WidgetProvider } from './containers/WidgetProvider';
+import { customizedThemeTokens } from './utils/ui';
 
 export type {
   WidgetConfig,
@@ -80,6 +81,7 @@ export {
   useWidget,
   useWallets,
   useWidgetEvents,
+  customizedThemeTokens,
   MainEvents,
   RouteEventType,
   StepEventType,

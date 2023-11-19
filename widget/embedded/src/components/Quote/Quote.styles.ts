@@ -112,6 +112,13 @@ export const SummaryContainer = styled('div', {
     paddingTop: '$10',
     display: 'flex',
     alignItems: 'center',
+    '.usd-value': {
+      $$color: '$colors$neutral600',
+      [`.${darkTheme} &`]: {
+        $$color: '$colors$neutral700',
+      },
+      color: '$$color',
+    },
   },
 });
 
