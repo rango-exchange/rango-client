@@ -18,7 +18,6 @@ import { SettingsContainer } from '../components/SettingsContainer';
 import { Slippage } from '../components/Slippage';
 import { SlippageTooltipContainer as TooltipContainer } from '../components/Slippage/Slippage.styles';
 import { navigationRoutes } from '../constants/navigationRoutes';
-import { useNavigateBack } from '../hooks/useNavigateBack';
 import { useAppStore } from '../store/AppStore';
 import { useSettingsStore } from '../store/settings';
 import { getContainer } from '../utils/common';
@@ -29,7 +28,6 @@ export function SettingsPage() {
   const { theme } = useAppStore().config;
   const fetchStatus = useAppStore().fetchStatus;
   const swappers = useAppStore().swappers();
-  const { navigateBackFrom } = useNavigateBack();
 
   const infiniteApprove = useSettingsStore.use.infiniteApprove();
   const toggleInfiniteApprove = useSettingsStore.use.toggleInfiniteApprove();
@@ -171,7 +169,6 @@ export function SettingsPage() {
   return (
     <Layout
       header={{
-        onBack: () => navigateBackFrom(navigationRoutes.settings),
         title: i18n.t('Setting'),
       }}>
       <SettingsContainer>

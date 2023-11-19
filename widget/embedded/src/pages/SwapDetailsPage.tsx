@@ -4,7 +4,6 @@ import React from 'react';
 
 import { SwapDetails } from '../components/SwapDetails';
 import { SwapDetailsPlaceholder } from '../components/SwapDetails/SwapDetails.Placeholder';
-import { navigationRoutes } from '../constants/navigationRoutes';
 import { useNavigateBack } from '../hooks/useNavigateBack';
 import { useAppStore } from '../store/AppStore';
 import { useUiStore } from '../store/ui';
@@ -15,7 +14,7 @@ export function SwapDetailsPage() {
   const loading = !state.loadedFromPersistor;
   const pendingSwaps = getPendingSwaps(manager);
   const requestId = useUiStore.use.selectedSwapRequestId();
-  const { navigateBackFrom } = useNavigateBack();
+  const navigateBack = useNavigateBack();
   const { fetchStatus: fetchMetaStatus } = useAppStore();
 
   const showSkeleton = loading || fetchMetaStatus === 'loading';
@@ -36,8 +35,8 @@ export function SwapDetailsPage() {
   const onDelete = async () => {
     if (selectedSwap?.id) {
       try {
-        await manager?.deleteQueue(selectedSwap.id);
-        navigateBackFrom(navigationRoutes.swapDetails);
+        manager?.deleteQueue(selectedSwap.id);
+        navigateBack();
       } catch (e) {
         console.log(e);
       }

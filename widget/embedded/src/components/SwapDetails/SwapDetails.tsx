@@ -22,7 +22,6 @@ import { useWallets } from '@rango-dev/wallets-react';
 import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { navigationRoutes } from '../../constants/navigationRoutes';
 import {
   GAS_FEE_MAX_DECIMALS,
   GAS_FEE_MIN_DECIMALS,
@@ -33,7 +32,6 @@ import {
   USD_VALUE_MAX_DECIMALS,
   USD_VALUE_MIN_DECIMALS,
 } from '../../constants/routing';
-import { useNavigateBack } from '../../hooks/useNavigateBack';
 import { useAppStore } from '../../store/AppStore';
 import { useNotificationStore } from '../../store/notification';
 import { useQuoteStore } from '../../store/quote';
@@ -68,7 +66,6 @@ export function SwapDetails(props: SwapDetailsProps) {
   const tokens = useAppStore().tokens();
   const retry = useQuoteStore.use.retry();
   const navigate = useNavigate();
-  const { navigateBackFrom } = useNavigateBack();
   const [_, handleCopy] = useCopyToClipboard(RESET_INTERVAL);
   const listRef = useRef<HTMLDivElement | null>(null);
   const [modalState, setModalState] = useState<ModalState>(null);
@@ -237,7 +234,6 @@ export function SwapDetails(props: SwapDetailsProps) {
       noPadding
       header={{
         title: i18n.t('Swap and Bridge'),
-        onBack: () => navigateBackFrom(navigationRoutes.swapDetails),
         onCancel:
           swap.status === 'running' ? () => setModalState('cancel') : undefined,
         suffix: swap.status !== 'running' && (
@@ -265,7 +261,8 @@ export function SwapDetails(props: SwapDetailsProps) {
             onClick={() => {
               retry(swap, { blockchains: blockchains, tokens: tokens });
               setTimeout(() => {
-                navigate(navigationRoutes.home);
+                const home = '../../';
+                navigate(home);
               }, 0);
             }}>
             {i18n.t('Try again')}
