@@ -114,6 +114,7 @@ export function SingleList(props: PropTypes) {
             }}>
             <VirtualizedList
               Item={({ index, style }) => {
+                const Icon = virtualList[index].Icon;
                 return (
                   <div
                     style={{
@@ -131,6 +132,8 @@ export function SingleList(props: PropTypes) {
                             size={16}
                             type="circular"
                           />
+                        ) : Icon ? (
+                          <Icon size={16} />
                         ) : null
                       }
                       hasDivider

@@ -9,7 +9,7 @@ interface UseLanguage {
   languages: LanguageItem[];
   defaultLanguage: Language;
   activeLanguage: Language;
-  changeLanguage: (language: Language) => void;
+  changeLanguage: (language?: Language) => void;
 }
 
 export function useLanguage(): UseLanguage {
@@ -22,6 +22,6 @@ export function useLanguage(): UseLanguage {
     activeLanguage: language,
     languages,
     defaultLanguage,
-    changeLanguage: setLanguage,
+    changeLanguage: (language) => setLanguage(language || DEFAULT_LANGUAGE),
   };
 }
