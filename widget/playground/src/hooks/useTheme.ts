@@ -1,31 +1,43 @@
-import { createTheme, theme } from '@rango-dev/ui';
+import {
+  createTheme,
+  darkTheme as defaultDarkTheme,
+  lightTheme as defaultLightTheme,
+} from '@rango-dev/ui';
+import { customizedThemeTokens } from '@rango-dev/widget-embedded';
 import { useEffect, useLayoutEffect, useState } from 'react';
 
 import { NOT_FOUND } from '../constants';
 import { useConfigStore } from '../store/config';
 
 export function useTheme() {
+  const [systemTheme, setSystemTheme] = useState('light');
   const configTheme = useConfigStore.use.config().theme;
   const mode = configTheme?.mode;
 
-  const colors = theme.colors;
+  const { dark, light } = customizedThemeTokens(configTheme?.colors);
 
-  const customLightTheme = createTheme('light-theme-playground', {
-    colors,
-  });
+  const lightThemeClasses = [defaultLightTheme.className];
+  const darkThemeClasses = [defaultDarkTheme.className];
 
-  const customDarkTheme = createTheme('dark-theme-playground', {
-    colors,
-  });
-
-  const [OSTheme, setOSTheme] = useState('light');
+  /*
+   * If theme has been customized, we will push the customized theme to override the default themes.
+   * To be overridden, it should be last thing that has been pushed.
+   */
+  if (light) {
+    const customizedLightTheme = createTheme(light.id, light.tokens);
+    lightThemeClasses.push(customizedLightTheme.className);
+  }
+  if (dark) {
+    const customizedDarkTheme = createTheme(dark.id, dark.tokens);
+    darkThemeClasses.push(customizedDarkTheme.className);
+  }
 
   useEffect(() => {
     const switchThemeListener = (event: MediaQueryListEvent) => {
       if (event.matches) {
-        setOSTheme('dark');
+        setSystemTheme('dark');
       } else {
-        setOSTheme('light');
+        setSystemTheme('light');
       }
     };
 
@@ -33,7 +45,7 @@ export function useTheme() {
       window.matchMedia &&
       window.matchMedia('(prefers-color-scheme: dark)').matches
     ) {
-      setOSTheme('dark');
+      setSystemTheme('dark');
     }
 
     window
@@ -47,10 +59,12 @@ export function useTheme() {
   }, []);
 
   const getActiveTheme = () => {
+    const lightClassNames = lightThemeClasses.join(' ');
+    const darkClassNames = darkThemeClasses.join(' ');
     if (mode === 'auto') {
-      return OSTheme === 'dark' ? customDarkTheme : customLightTheme;
+      return systemTheme === 'dark' ? darkClassNames : lightClassNames;
     }
-    return mode === 'dark' ? customDarkTheme : customLightTheme;
+    return mode === 'dark' ? darkClassNames : lightClassNames;
   };
 
   useLayoutEffect(() => {
@@ -66,21 +80,10 @@ export function useTheme() {
         body.classList.add(searchedClassName);
       }
     }
-    if (mode === 'auto') {
-      if (OSTheme === 'light') {
-        body.classList.add(customLightTheme);
-      } else {
-        body.classList.add(customDarkTheme);
-      }
-    } else if (mode === 'dark') {
-      body.classList.add(customDarkTheme);
-    } else {
-      body.classList.add(customLightTheme);
-    }
-  }, [mode, OSTheme, customLightTheme, customDarkTheme]);
+  }, [mode, systemTheme]);
 
   return {
     activeStyle: getActiveTheme(),
-    activeTheme: mode === 'auto' ? OSTheme : mode,
+    activeTheme: mode === 'auto' ? systemTheme : mode,
   };
 }

@@ -28,7 +28,7 @@ export const SvgWithColor = styled('svg', {
         color: '$info500',
       },
       gray: {
-        color: '$neutral600',
+        color: '$neutral700',
       },
     },
   },

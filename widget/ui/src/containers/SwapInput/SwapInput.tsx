@@ -5,7 +5,12 @@ import React from 'react';
 
 import { Divider, PriceImpact, Skeleton, Typography } from '../../components';
 
-import { Container, InputAmount, MaxButton } from './SwapInput.styles';
+import {
+  Container,
+  InputAmount,
+  MaxButton,
+  ValueTypography,
+} from './SwapInput.styles';
 import { TokenSection } from './TokenSection';
 
 export function SwapInput(props: SwapInputProps) {
@@ -13,13 +18,13 @@ export function SwapInput(props: SwapInputProps) {
     <Container sharpBottomStyle={props.sharpBottomStyle}>
       <div className="label__container">
         <div className="label">
-          <Typography variant="body" size="small" color="$neutral600">
+          <Typography variant="body" size="small" className="gray-text">
             {props.label}
           </Typography>
           {'balance' in props && !props.loading && (
             <div className="balance">
               <Typography
-                color="$neutral600"
+                className="gray-text"
                 mr={4}
                 variant="body"
                 size="xsmall">
@@ -84,21 +89,13 @@ export function SwapInput(props: SwapInputProps) {
                   warningLevel={props.warningLevel}
                 />
               ) : (
-                <Typography
-                  variant="body"
-                  size="medium"
-                  color={!props.price.error ? '$neutral600' : '$warning500'}
-                  style={{
-                    width: 140,
-                    textAlign: 'right',
-                    whiteSpace: 'nowrap',
-                    overflow: 'hidden',
-                    textOverflow: 'ellipsis',
-                  }}>
-                  {props.price.usdValue
-                    ? `~$${props.price.usdValue}`
-                    : props.price.error}
-                </Typography>
+                <ValueTypography hasWarning={!!props.price.error}>
+                  <Typography variant="body" size="medium">
+                    {props.price.usdValue
+                      ? `~$${props.price.usdValue}`
+                      : props.price.error}
+                  </Typography>
+                </ValueTypography>
               )}
             </>
           )}

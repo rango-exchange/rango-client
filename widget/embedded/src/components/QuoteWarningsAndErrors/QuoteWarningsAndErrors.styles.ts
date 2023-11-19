@@ -1,4 +1,4 @@
-import { styled } from '@rango-dev/ui';
+import { darkTheme, styled } from '@rango-dev/ui';
 
 export const Alerts = styled('div', {
   width: '100%',
@@ -19,6 +19,13 @@ export const Item = styled('div', {
   justifyContent: 'space-between',
   alignItems: 'center',
   width: '100%',
+  '._title': {
+    $$color: '$colors$neutral600',
+    [`.${darkTheme} &`]: {
+      $$color: '$colors$neutral700',
+    },
+    color: '$$color',
+  },
 });
 
 export const Action = styled('div', {

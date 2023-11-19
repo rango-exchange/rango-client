@@ -12,7 +12,7 @@ export function OverlayPanel(props: PropsWithChildren<PropTypes>) {
     <Layout>
       <Container>
         <Header onClick={onBack}>
-          <ChevronLeftIcon size={12} />
+          <ChevronLeftIcon size={12} color="black" />
           <Divider size={4} direction="horizontal" />
           <Typography size="medium" variant="label" color="neutral700">
             back

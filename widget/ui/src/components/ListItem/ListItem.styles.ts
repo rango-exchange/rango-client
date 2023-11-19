@@ -22,6 +22,13 @@ export const BaseListItem = styled('li', {
     flexShrink: 1,
     flexBasis: 'auto',
     textAlign: 'left',
+    '._description': {
+      $$color: '$colors$neutral600',
+      [`.${darkTheme} &`]: {
+        $$color: '$colors$neutral700',
+      },
+      color: '$$color',
+    },
 
     '.item-text-title': {
       fontWeight: 'bold',
