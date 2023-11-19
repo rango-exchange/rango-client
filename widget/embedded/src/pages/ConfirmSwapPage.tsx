@@ -119,12 +119,11 @@ export function ConfirmSwapPage() {
           { id: confirmSwapResult.swap.requestId }
         );
         setSelectedSwap(confirmSwapResult.swap.requestId);
-        navigate(
-          '/' + navigationRoutes.swaps + `/${confirmSwapResult.swap.requestId}`,
-          {
-            replace: true,
-          }
-        );
+
+        const swap_url = `../${navigationRoutes.swaps}/${confirmSwapResult.swap.requestId}`;
+        navigate(swap_url, {
+          replace: true,
+        });
         setTimeout(() => {
           setInputAmount('');
         }, 0);
@@ -242,8 +241,10 @@ export function ConfirmSwapPage() {
     <Layout
       header={{
         title: i18n.t('Confirm Swap'),
-        onBack: () => navigate(-1),
-        hasConnectWallet: true,
+        onWallet: () => {
+          const wallets_url = `../${navigationRoutes.wallets}`;
+          navigate(wallets_url);
+        },
         suffix: (
           <Tooltip
             container={getContainer()}
@@ -252,7 +253,7 @@ export function ConfirmSwapPage() {
             <HeaderButton
               size="small"
               variant="ghost"
-              onClick={() => navigate('/' + navigationRoutes.settings)}>
+              onClick={() => navigate('../' + navigationRoutes.settings)}>
               <SettingsIcon size={18} color="black" />
             </HeaderButton>
           </Tooltip>

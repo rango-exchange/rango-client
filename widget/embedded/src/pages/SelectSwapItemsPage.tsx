@@ -23,7 +23,7 @@ interface PropTypes {
 export function SelectSwapItemsPage(props: PropTypes) {
   const { type } = props;
   const navigate = useNavigate();
-  const { navigateBackFrom } = useNavigateBack();
+  const navigateBack = useNavigateBack();
   const {
     fromBlockchain,
     toBlockchain,
@@ -72,27 +72,13 @@ export function SelectSwapItemsPage(props: PropTypes) {
   return (
     <Layout
       header={{
-        onBack: () =>
-          navigateBackFrom(
-            type === 'source'
-              ? navigationRoutes.fromSwap
-              : navigationRoutes.toSwap
-          ),
-        title: i18n.t('Swap {type}', {
-          type: type === 'source' ? 'from' : 'to',
-        }),
+        title: i18n.t('Swap {type}', { type }),
       }}>
       <BlockchainsSection
         blockchains={blockchains}
         type={type == 'source' ? 'from' : 'to'}
         blockchain={type === 'source' ? fromBlockchain : toBlockchain}
-        onMoreClick={() =>
-          navigate(
-            type === 'source'
-              ? navigationRoutes.fromBlockchain
-              : navigationRoutes.toBlockchain
-          )
-        }
+        onMoreClick={() => navigate(navigationRoutes.blockchains)}
         onChange={(blockchain) => {
           updateBlockchain(blockchain);
         }}
@@ -123,7 +109,7 @@ export function SelectSwapItemsPage(props: PropTypes) {
             updateBlockchain(tokenBlockchain);
           }
 
-          navigateBackFrom(navigationRoutes.fromSwap);
+          navigateBack();
         }}
       />
     </Layout>

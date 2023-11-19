@@ -33,7 +33,7 @@ export function SlippageWarningModal(props: PropsTypes) {
         <Button
           size="small"
           variant="ghost"
-          onClick={() => navigate('/' + navigationRoutes.settings)}>
+          onClick={() => navigate('../' + navigationRoutes.settings)}>
           <Typography variant="label" size="medium" color="$neutral900">
             {i18n.t('Change settings')}
           </Typography>

@@ -184,7 +184,10 @@ export function Home() {
         </Button>
       }
       header={{
-        hasConnectWallet: true,
+        onWallet: () => {
+          navigate(navigationRoutes.wallets);
+        },
+        hasBackButton: false,
         title: i18n.t('Swap'),
         suffix: (
           <HomeButtons
@@ -213,7 +216,7 @@ export function Home() {
                 displayName: fromToken?.symbol || '',
                 image: fromToken?.image || '',
               }}
-              onClickToken={() => navigate('from-swap')}
+              onClickToken={() => navigate(navigationRoutes.fromSwap)}
               price={{
                 value: inputAmount,
                 usdValue: priceImpactInputCanNotBeComputed
@@ -272,7 +275,7 @@ export function Home() {
                 ? errorMessages().unknownPriceError.impactTitle
                 : undefined,
             }}
-            onClickToken={() => navigate('to-swap')}
+            onClickToken={() => navigate(navigationRoutes.toSwap)}
             disabled={fetchMetaStatus === 'failed'}
             loading={fetchMetaStatus === 'loading'}
           />

@@ -23,8 +23,6 @@ import {
   NotFoundContainer,
   SettingsContainer,
 } from '../components/SettingsContainer';
-import { navigationRoutes } from '../constants/navigationRoutes';
-import { useNavigateBack } from '../hooks/useNavigateBack';
 import { useAppStore } from '../store/AppStore';
 import { useSettingsStore } from '../store/settings';
 import { containsText } from '../utils/numbers';
@@ -39,7 +37,6 @@ export function LiquiditySourcePage({ sourceType }: PropTypes) {
   const swappers = useAppStore().swappers();
   const [searchedFor, setSearchedFor] = useState<string>('');
   const toggleLiquiditySource = useSettingsStore.use.toggleLiquiditySource();
-  const { navigateBackFrom } = useNavigateBack();
   const supportedUniqueSwappersGroups: Array<UniqueSwappersGroupType> =
     getUniqueSwappersGroups(swappers);
 
@@ -102,7 +99,6 @@ export function LiquiditySourcePage({ sourceType }: PropTypes) {
   return (
     <Layout
       header={{
-        onBack: () => navigateBackFrom(navigationRoutes.settings),
         title: i18n.t(sourceType),
         suffix: (
           <LiquiditySourceSuffix>

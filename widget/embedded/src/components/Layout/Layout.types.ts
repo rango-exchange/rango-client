@@ -1,10 +1,10 @@
 export interface PropTypes {
   header: {
     title: string;
-    hasConnectWallet?: boolean;
+    onWallet?: () => void;
     hasSettings?: boolean;
     suffix?: React.ReactNode;
-    onBack?: () => void;
+    hasBackButton?: boolean;
     onCancel?: () => void;
   };
   hasLogo?: boolean;

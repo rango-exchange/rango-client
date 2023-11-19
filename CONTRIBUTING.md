@@ -76,3 +76,12 @@ Crowdin CLI is command-line tool for management of your localization projects on
 The language code standard used is ISO 639-1. For more details and a list of codes, please refer to the https://www.loc.gov/standards/iso639-2/php/code_list.php .
 
 In the `crowdin.yml` file, you will find the `project_id` and `api_token` values used for synchronizing translations with Crowdin. These values are read from the environment variables `REACT_APP_CROWDIN_PROJECT_ID` and `REACT_APP_CROWDIN_API_KEY` defined in the `.env` file.
+
+
+
+## Technical Notes
+
+### How we handle urls in embedded?
+
+`embedded` is importing in different enviroments (iframe, import as react component and a separate `app`). When it's being used as a react component we let the dApp to use it inside its router and they can load the widget in a separate route (not root `/`, e.g. `/swaps`). In this context we can not use absolute paths because we don't know the basename set by user, so we need to always use relative paths. Relative paths has been defined in [URL spec](https://url.spec.whatwg.org/#urls) so we can be sure it's a long term solution and will work in future or by changing our router librart (e.g. `react-router`).
+

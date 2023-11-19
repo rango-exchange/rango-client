@@ -66,9 +66,6 @@ export function UpdateUrl() {
         fromAmount =
           searchParamsRef.current[SearchParams.FROM_AMOUNT] || inputAmount;
       } else {
-        if (location.state === 'redirect') {
-          return;
-        }
         fromChainString = fromBlockchain?.name || '';
         fromTokenString =
           (fromToken?.symbol || '') +

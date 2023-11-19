@@ -6,8 +6,6 @@ import React, { Fragment, useState } from 'react';
 
 import { Layout } from '../components/Layout';
 import { WalletModal } from '../components/WalletModal';
-import { navigationRoutes } from '../constants/navigationRoutes';
-import { useNavigateBack } from '../hooks/useNavigateBack';
 import { useWalletList } from '../hooks/useWalletList';
 import { useAppStore } from '../store/AppStore';
 import { getContainer } from '../utils/common';
@@ -30,7 +28,6 @@ export const TIME_TO_IGNORE_MODAL = 300;
 
 export function WalletsPage() {
   const { config, fetchStatus: fetchMetaStatus } = useAppStore();
-  const { navigateBackFrom } = useNavigateBack();
   const [openModal, setOpenModal] = useState(false);
   const [selectedWalletType, setSelectedWalletType] = useState<WalletType>('');
   let modalTimerId: ReturnType<typeof setTimeout> | null = null;
@@ -64,7 +61,6 @@ export function WalletsPage() {
     <Layout
       header={{
         title: i18n.t('Connect Wallets'),
-        onBack: () => navigateBackFrom(navigationRoutes.wallets),
       }}>
       <Container>
         <Typography variant="title" size="xmedium" align="center">
