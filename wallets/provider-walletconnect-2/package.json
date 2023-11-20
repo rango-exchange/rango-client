@@ -27,18 +27,18 @@
     "@rango-dev/signer-evm": "^0.21.1-next.0",
     "@rango-dev/signer-solana": "^0.21.1-next.0",
     "@rango-dev/wallets-shared": "^0.21.1-next.3",
-    "@solana/web3.js": "^1.67.2",
-    "@walletconnect/encoding": "^1.0.2",
-    "@walletconnect/modal": "^2.6.2",
-    "@walletconnect/sign-client": "^2.10.4",
-    "@walletconnect/utils": "^2.10.4",
+    "@solana/web3.js": "1.67.2",
+    "@walletconnect/encoding": "1.0.2",
+    "@walletconnect/modal": "2.6.1",
+    "@walletconnect/sign-client": "2.9.1",
+    "@walletconnect/utils": "2.9.1",
     "bs58": "^5.0.0",
     "caip": "^1.1.0",
     "cosmos-wallet": "^1.2.0",
     "rango-types": "^0.1.47"
   },
   "devDependencies": {
-    "@walletconnect/types": "^2.10.4"
+    "@walletconnect/types": "2.9.1"
   },
   "publishConfig": {
     "access": "public"
