@@ -6,11 +6,26 @@ const options = {
   allowedDomains: [/gnosis-safe.io$/, /app.safe.global$/],
   debug: false,
 };
-export const sdk = new SafeAppsSDK(options);
+
+/*
+ * similar to:
+ * https://github.com/wagmi-dev/references/pull/114
+ */
+let SDK = SafeAppsSDK;
+if (
+  typeof SafeAppsSDK !== 'function' &&
+  // @ts-expect-error This import error is not visible to TypeScript
+  typeof SafeAppsSDK.default === 'function'
+) {
+  SDK = (SafeAppsSDK as unknown as { default: typeof SafeAppsSDK }).default;
+}
+export const sdk = new SDK(options);
+
 export async function getSafeInstance(): Promise<any> {
+  const timeout = 200;
   const accountInfo = await Promise.race([
     sdk.safe.getInfo(),
-    new Promise<undefined>((resolve) => setTimeout(resolve, 200)),
+    new Promise<undefined>((resolve) => setTimeout(resolve, timeout)),
   ]);
   return accountInfo ? new SafeAppProvider(accountInfo, sdk as any) : null;
 }
@@ -20,6 +35,7 @@ export async function getTxHash(
 ): Promise<{ txHash: string; hashWasUpdated: boolean }> {
   let txHash;
   let hashWasUpdated = false;
+  const timeout = 5_000;
 
   while (!txHash) {
     try {
@@ -30,7 +46,7 @@ export async function getTxHash(
         queued.txStatus === TransactionStatus.AWAITING_EXECUTION
       ) {
         /** Mimic a status watcher by checking once every 5 seconds */
-        await waitMs(5_000);
+        await waitMs(timeout);
       } else if (queued.txHash) {
         /** The txStatus is in an end-state (e.g. success) so we probably have a valid, on chain txHash*/
         txHash = queued.txHash;
