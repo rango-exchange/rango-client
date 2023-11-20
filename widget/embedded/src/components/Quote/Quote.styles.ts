@@ -1,5 +1,5 @@
 import * as Collapsible from '@radix-ui/react-collapsible';
-import { darkTheme, styled } from '@rango-dev/ui';
+import { darkTheme, Image, styled } from '@rango-dev/ui';
 
 import { CollapsibleContent } from '../ConfirmWalletsModal/ConfirmWallets.styles';
 
