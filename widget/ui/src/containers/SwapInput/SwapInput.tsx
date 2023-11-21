@@ -58,7 +58,7 @@ export function SwapInput(props: SwapInputProps) {
           loading={props.loading}
         />
         <div className="amount">
-          {props.loading ? (
+          {props.loading || (props.mode === 'To' && props.fetchingQuote) ? (
             <>
               <Skeleton variant="text" size="large" width={92} />
               <Divider size={8} />

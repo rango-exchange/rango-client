@@ -1,4 +1,4 @@
-import type { Asset, BlockchainMeta, Token } from 'rango-sdk';
+import type { Asset, BlockchainMeta, SwapperMeta, Token } from 'rango-sdk';
 
 import { tokensAreEqual } from './wallets';
 
@@ -15,6 +15,13 @@ export function getBlockchainShortNameFor(
 ): string | undefined {
   return blockchains.find((blockchain) => blockchain.name === blockchainName)
     ?.shortName;
+}
+
+export function getSwapperDisplayName(
+  swapperId: string,
+  swappers: SwapperMeta[]
+) {
+  return swappers.find((swapper) => swapper.id === swapperId)?.swapperGroup;
 }
 
 export function findToken(t: Asset, tokens: Token[]) {

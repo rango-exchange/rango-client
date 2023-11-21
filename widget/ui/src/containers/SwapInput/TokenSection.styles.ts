@@ -2,6 +2,7 @@ import { Button } from '../../components';
 import { darkTheme, styled } from '../../theme';
 
 export const Container = styled(Button, {
+  maxWidth: '180px',
   backgroundColor: 'transparent',
   color: '$neutral700',
   '&:disabled': {

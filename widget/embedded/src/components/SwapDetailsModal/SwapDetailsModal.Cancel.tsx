@@ -10,8 +10,8 @@ export const CancelContent = ({ onCancel, onClose }: CancelContentProps) => {
       <Divider size={20} />
       <MessageBox
         type="error"
-        title={i18n.t('Transaction Cancel')}
-        description={i18n.t('Are you sure you want to Cancel this swap?')}
+        title={i18n.t('Cancel Swap')}
+        description={i18n.t('Are you sure you want to cancel this swap?')}
       />
       <Divider size={32} />
       <Button

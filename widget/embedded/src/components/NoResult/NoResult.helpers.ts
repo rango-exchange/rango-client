@@ -27,18 +27,6 @@ export function makeInfo(
       },
       description: '',
     };
-  } else if (
-    error?.type === QuoteErrorType.NO_RESULT &&
-    error.diagnosisMessage
-  ) {
-    return {
-      alert: {
-        type: 'error',
-        text: error.diagnosisMessage,
-        action: null,
-      },
-      description: '',
-    };
   } else if (disabledLiquiditySources.length) {
     return {
       alert: {
@@ -50,6 +38,18 @@ export function makeInfo(
         },
       },
       description: errorMessages().liquiditySourcesError.description,
+    };
+  } else if (
+    error?.type === QuoteErrorType.NO_RESULT &&
+    error.diagnosisMessage
+  ) {
+    return {
+      alert: {
+        type: 'error',
+        text: error.diagnosisMessage,
+        action: null,
+      },
+      description: '',
     };
   }
   return {

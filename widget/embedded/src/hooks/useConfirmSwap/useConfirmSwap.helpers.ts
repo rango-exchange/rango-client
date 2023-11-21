@@ -1,12 +1,13 @@
 import type { ConfirmSwapFetchResult } from './useConfirmSwap.types';
 import type { ConfirmSwapWarnings, Wallet } from '../../types';
-import type { BestRouteResponse, Token } from 'rango-sdk';
+import type { BestRouteResponse, BlockchainMeta, Token } from 'rango-sdk';
 
 import { errorMessages } from '../../constants/errors';
 import { QuoteErrorType, QuoteUpdateType } from '../../types';
 import { numberToString } from '../../utils/numbers';
 import {
   generateQuoteWarnings,
+  getPriceImpact,
   isNumberOfSwapsChanged,
   isQuoteChanged,
   isQuoteInternalCoinsUpdated,
@@ -14,10 +15,9 @@ import {
 } from '../../utils/quote';
 import {
   checkSlippageErrors,
-  getBalanceWarnings,
+  generateBalanceWarnings,
   getLimitErrorMessage,
   getMinRequiredSlippage,
-  getPercentageChange,
   getQuoteOutputAmount,
   hasLimitError,
   isOutputAmountChangedALot,
@@ -67,17 +67,20 @@ export function throwErrorIfResponseIsNotValid(response: BestRouteResponse) {
 }
 
 export function generateWarnings(
-  previousQuote: BestRouteResponse,
+  previousQuote: BestRouteResponse | undefined,
   currentQuote: BestRouteResponse,
   params: {
     fromToken: Token;
     toToken: Token;
-    tokens: Token[];
+    meta: { blockchains: BlockchainMeta[]; tokens: Token[] };
     selectedWallets: Wallet[];
     userSlippage: number;
   }
 ): ConfirmSwapWarnings {
-  const quoteChanged = isQuoteChanged(previousQuote, currentQuote);
+  let quoteChanged = false;
+  if (previousQuote) {
+    quoteChanged = isQuoteChanged(previousQuote, currentQuote);
+  }
   const output: ConfirmSwapWarnings = {
     quote: null,
     quoteUpdate: null,
@@ -87,7 +90,7 @@ export function generateWarnings(
   const quoteWarning = generateQuoteWarnings(currentQuote, {
     fromToken: params.fromToken,
     toToken: params.toToken,
-    tokens: params.tokens,
+    tokens: params.meta.tokens,
     userSlippage: params.userSlippage,
   });
 
@@ -95,13 +98,13 @@ export function generateWarnings(
     output.quote = quoteWarning;
   }
 
-  if (quoteChanged) {
+  if (previousQuote && quoteChanged) {
     if (isOutputAmountChangedALot(previousQuote, currentQuote)) {
       output.quoteUpdate = {
         type: QuoteUpdateType.QUOTE_AND_OUTPUT_AMOUNT_UPDATED,
         newOutputAmount: numberToString(getQuoteOutputAmount(currentQuote)),
         percentageChange: numberToString(
-          getPercentageChange(
+          getPriceImpact(
             getQuoteOutputAmount(previousQuote) ?? '',
             getQuoteOutputAmount(currentQuote) ?? ''
           ),
@@ -124,9 +127,10 @@ export function generateWarnings(
     }
   }
 
-  const balanceWarnings = getBalanceWarnings(
+  const balanceWarnings = generateBalanceWarnings(
     currentQuote,
-    params.selectedWallets
+    params.selectedWallets,
+    params.meta.blockchains
   );
   const enoughBalance = balanceWarnings.length === 0;
 
