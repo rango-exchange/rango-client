@@ -10,8 +10,6 @@ import {
 } from '@rango-dev/ui';
 import React from 'react';
 
-import { navigationRoutes } from '../../constants/navigationRoutes';
-import { useNavigateBack } from '../../hooks/useNavigateBack';
 import { SuffixContainer } from '../HeaderButtons/HeaderButtons.styles';
 import { Layout } from '../Layout';
 import { LoadingSwapDetails } from '../LoadingSwapDetails';
@@ -24,14 +22,12 @@ import {
 
 export function SwapDetailsPlaceholder(props: SwapDetailsPlaceholderPropTypes) {
   const { requestId, showSkeleton } = props;
-  const { navigateBackFrom } = useNavigateBack();
 
   return (
     <Layout
       noPadding
       header={{
         title: i18n.t('Swap and Bridge'),
-        onBack: () => navigateBackFrom(navigationRoutes.swapDetails),
         suffix: <SuffixContainer />,
       }}>
       {showSkeleton && (

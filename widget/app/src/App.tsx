@@ -1,6 +1,9 @@
+import type { WidgetConfig } from '@rango-dev/widget-embedded';
+
+import { Widget } from '@rango-dev/widget-embedded';
 import React, { useRef } from 'react';
 import { Route, Routes, useSearchParams } from 'react-router-dom';
-import { Widget, WidgetConfig } from '@rango-dev/widget-embedded';
+
 import { WC_PROJECT_ID } from './constants';
 
 export function App() {
@@ -16,17 +19,18 @@ export function App() {
       config = JSON.parse(configParam, (_, value) => {
         if (typeof value === 'string' && value[0] === '$') {
           return value.replace('$', '#');
-        } else return value;
+        }
+        return value;
       });
     } catch (error) {
       console.error('Widget config param is invalid!');
     }
   } else {
-    /* 
-      TODO:
-      The assumption here is this object won't be created on `iframe` so we are on dev mode.
-      We should consider a more proper way.
-    */
+    /*
+     *TODO:
+     *The assumption here is this object won't be created on `iframe` so we are on dev mode.
+     *We should consider a more proper way.
+     */
 
     config = {
       apiKey: '',
@@ -34,7 +38,9 @@ export function App() {
     };
   }
 
-  if (!!config) configRef.current = config;
+  if (!!config) {
+    configRef.current = config;
+  }
 
   return (
     <div style={{ padding: '20px' }}>

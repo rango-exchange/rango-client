@@ -5,7 +5,6 @@ import React, { useState } from 'react';
 import { BlockchainList } from '../components/BlockchainList';
 import { Layout } from '../components/Layout';
 import { SearchInput } from '../components/SearchInput';
-import { navigationRoutes } from '../constants/navigationRoutes';
 import { useNavigateBack } from '../hooks/useNavigateBack';
 import { useAppStore } from '../store/AppStore';
 import { useQuoteStore } from '../store/quote';
@@ -16,7 +15,7 @@ interface PropTypes {
 
 export function SelectBlockchainPage(props: PropTypes) {
   const { type } = props;
-  const { navigateBackFrom } = useNavigateBack();
+  const navigateBack = useNavigateBack();
   const [searchedFor, setSearchedFor] = useState<string>('');
   const [blockchainCategory, setBlockchainCategory] = useState<string>('ALL');
   const setToBlockchain = useQuoteStore.use.setToBlockchain();
@@ -26,14 +25,10 @@ export function SelectBlockchainPage(props: PropTypes) {
   const blockchains = useAppStore().blockchains({
     type: type,
   });
-  const routeKey = type === 'source' ? 'fromBlockchain' : 'toBlockchain';
 
   return (
     <Layout
       header={{
-        onBack: () => {
-          navigateBackFrom(navigationRoutes[routeKey]);
-        },
         title: i18n.t(`Select Blockchain`),
       }}>
       <Divider size={12} />
@@ -66,8 +61,7 @@ export function SelectBlockchainPage(props: PropTypes) {
           } else {
             setToBlockchain(blockchain);
           }
-
-          navigateBackFrom(navigationRoutes[routeKey]);
+          navigateBack();
         }}
       />
     </Layout>

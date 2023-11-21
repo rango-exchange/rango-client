@@ -5,8 +5,13 @@ export interface PrepareListOptions {
   selected?: string;
 }
 
-export interface PrepareListOutput {
+export interface PrepareOutput {
   list: BlockchainMeta[];
   more: BlockchainMeta[];
+}
+
+export interface UsePrepareList {
+  list: PrepareOutput['list'];
+  more: PrepareOutput['more'];
   history: string[];
 }

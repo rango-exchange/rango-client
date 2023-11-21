@@ -1,6 +1,6 @@
 import type {
   PrepareListOptions,
-  PrepareListOutput,
+  UsePrepareList,
 } from './usePrepareBlockchainList.types';
 import type { BlockchainMeta } from 'rango-sdk';
 
@@ -8,7 +8,7 @@ import { useEffect } from 'react';
 
 import { useSettingsStore } from '../../store/settings';
 
-import { prepare } from './usePrepareBlockchainList.helpers';
+import { isInVisibleList, prepare } from './usePrepareBlockchainList.helpers';
 
 /**
  *
@@ -19,12 +19,21 @@ import { prepare } from './usePrepareBlockchainList.helpers';
 export function usePrepareBlockchainList(
   blockchains: BlockchainMeta[],
   options?: PrepareListOptions
-): PrepareListOutput {
+): UsePrepareList {
   const { preferredBlockchains, addPreferredBlockchain } = useSettingsStore();
 
   useEffect(() => {
     if (options?.selected) {
-      addPreferredBlockchain(options?.selected);
+      const output = prepare(blockchains, preferredBlockchains, options);
+
+      /**
+       * We only add a new blockchain to preferred when it's not in the main list
+       * In this way we can guarantee we will be able to regenerate the same list always.
+       * And also it helps us to avoid jumping for the last item of the main list (e.g. tenth item of our list).
+       */
+      if (!isInVisibleList(options.selected, output)) {
+        addPreferredBlockchain(options?.selected);
+      }
     }
   }, [options?.selected]);
 

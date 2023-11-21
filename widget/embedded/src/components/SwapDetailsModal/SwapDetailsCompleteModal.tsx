@@ -12,8 +12,6 @@ import {
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { navigationRoutes } from '../../constants/navigationRoutes';
-
 export function SwapDetailsCompleteModal(props: CompleteModalPropTypes) {
   const {
     open,
@@ -70,7 +68,10 @@ export function SwapDetailsCompleteModal(props: CompleteModalPropTypes) {
           variant="contained"
           type="primary"
           size="large"
-          onClick={() => navigate(navigationRoutes.home)}>
+          onClick={() => {
+            const home = '../../';
+            navigate(home);
+          }}>
           <Typography variant="title" size="medium" color="neutral100">
             {i18n.t('Done')}
           </Typography>

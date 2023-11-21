@@ -3,9 +3,8 @@ import type { PropsWithChildren } from 'react';
 
 import { BottomLogo, Divider, Header } from '@rango-dev/ui';
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
 
-import { navigationRoutes } from '../../constants/navigationRoutes';
+import { useNavigateBack } from '../../hooks/useNavigateBack';
 import { useUiStore } from '../../store/ui';
 import { useWalletsStore } from '../../store/wallets';
 import { getContainer } from '../../utils/common';
@@ -26,22 +25,26 @@ function LayoutComponent(props: PropsWithChildren<PropTypes>, ref: Ref) {
 
   const connectWalletsButtonDisabled =
     useUiStore.use.connectWalletsButtonDisabled();
-  const navigate = useNavigate();
+  const navigateBack = useNavigateBack();
 
   const onConnectWallet = () => {
-    if (!connectWalletsButtonDisabled) {
-      navigate('/' + navigationRoutes.wallets);
+    if (!connectWalletsButtonDisabled && header.onWallet) {
+      header.onWallet();
     }
   };
+
+  const showBackButton =
+    typeof header.hasBackButton === 'undefined' || header.hasBackButton;
+
   return (
     <Container ref={ref} fixedHeight={fixedHeight} id="swap-box">
       <Header
-        prefix={<>{header.onBack && <BackButton onClick={header.onBack} />}</>}
+        prefix={<>{showBackButton && <BackButton onClick={navigateBack} />}</>}
         title={header.title}
         suffix={
           <>
             {header.suffix}
-            {header.hasConnectWallet && (
+            {header.onWallet && (
               <WalletButton
                 container={getContainer()}
                 onClick={onConnectWallet}

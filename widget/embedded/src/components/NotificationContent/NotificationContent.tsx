@@ -34,7 +34,7 @@ export function NotificationContent() {
 
   const handleOnClick = (requestId: Notification['requestId']) => {
     setSelectedSwap(requestId);
-    navigate(`/swaps/${requestId}`);
+    navigate(`${requestId}`);
   };
 
   return (

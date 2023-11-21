@@ -11,8 +11,6 @@ import { Layout } from '../components/Layout';
 import { SearchInput } from '../components/SearchInput';
 import { SwapsGroup } from '../components/SwapsGroup';
 import { NotFoundContainer } from '../components/SwapsGroup/SwapsGroup.styles';
-import { navigationRoutes } from '../constants/navigationRoutes';
-import { useNavigateBack } from '../hooks/useNavigateBack';
 import { useUiStore } from '../store/ui';
 import { groupSwapsByDate } from '../utils/date';
 import { containsText } from '../utils/numbers';
@@ -51,7 +49,6 @@ const isStepContainsText = (steps: PendingSwapStep[], value: string) => {
 export function HistoryPage() {
   const setSelectedSwap = useUiStore.use.setSelectedSwap();
   const navigate = useNavigate();
-  const { navigateBackFrom } = useNavigateBack();
   const { manager, state } = useManager();
   const list: PendingSwap[] = getPendingSwaps(manager).map(({ swap }) => swap);
   const [searchedFor, setSearchedFor] = useState<string>('');
@@ -78,7 +75,6 @@ export function HistoryPage() {
   return (
     <Layout
       header={{
-        onBack: () => navigateBackFrom(navigationRoutes.swaps),
         title: i18n.t('History'),
       }}>
       <Container>
@@ -108,7 +104,7 @@ export function HistoryPage() {
               list={filteredList}
               onSwapClick={(requestId) => {
                 setSelectedSwap(requestId);
-                navigate(`${requestId}`, { replace: true });
+                navigate(requestId);
               }}
               groupBy={groupSwapsByDate}
               isLoading={loading}

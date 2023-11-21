@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/provider-all",
-  "version": "0.22.1-next.4",
+  "version": "0.22.1-next.5",
   "license": "MIT",
   "type": "module",
   "module": "./dist/index.js",
@@ -38,13 +38,13 @@
     "@rango-dev/provider-metamask": "^0.21.1-next.3",
     "@rango-dev/provider-okx": "^0.21.1-next.3",
     "@rango-dev/provider-phantom": "^0.21.1-next.3",
-    "@rango-dev/provider-safe": "^0.14.1-next.3",
+    "@rango-dev/provider-safe": "^0.14.1-next.4",
     "@rango-dev/provider-safepal": "^0.21.1-next.3",
     "@rango-dev/provider-taho": "^0.21.1-next.3",
     "@rango-dev/provider-tokenpocket": "^0.21.1-next.3",
     "@rango-dev/provider-tron-link": "^0.21.1-next.3",
     "@rango-dev/provider-trustwallet": "^0.21.1-next.3",
-    "@rango-dev/provider-walletconnect-2": "^0.14.1-next.4",
+    "@rango-dev/provider-walletconnect-2": "^0.14.1-next.5",
     "@rango-dev/provider-xdefi": "^0.21.1-next.3"
   },
   "publishConfig": {

@@ -19,7 +19,6 @@ import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { getQuoteErrorMessage } from '../../constants/errors';
-import { navigationRoutes } from '../../constants/navigationRoutes';
 import { getQuoteUpdateWarningMessage } from '../../constants/warnings';
 import { useAppStore } from '../../store/AppStore';
 import { useQuoteStore } from '../../store/quote';
@@ -244,7 +243,8 @@ export function ConfirmWalletsModal(props: PropTypes) {
       open={open}
       onClose={() => {
         if (!quoteWalletsConfirmed) {
-          navigate(navigationRoutes.home, { replace: true });
+          const home = '../';
+          navigate(home, { replace: true });
         }
         onClose();
       }}
