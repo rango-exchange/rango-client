@@ -12,5 +12,4 @@ export type QuoteProps = {
   input: { value: string; usdValue: string };
   output: { value: string; usdValue?: string };
   expanded?: boolean;
-  tooltipContainer?: HTMLElement;
 };

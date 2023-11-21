@@ -1,8 +1,9 @@
 /* eslint-disable @typescript-eslint/no-magic-numbers */
 import type { FetchStatus } from '../store/slices/data';
-import type { ConnectedWallet } from '../store/wallets';
 import type {
   ConvertedToken,
+  QuoteError,
+  QuoteWarning,
   RecommendedSlippages,
   SwapButtonState,
   Wallet,
@@ -35,11 +36,11 @@ import {
   TOKEN_AMOUNT_MAX_DECIMALS,
   TOKEN_AMOUNT_MIN_DECIMALS,
 } from '../constants/routing';
-import { ButtonState } from '../types';
 
 import { removeDuplicateFrom } from './common';
+import { getBlockchainShortNameFor } from './meta';
 import { numberToString } from './numbers';
-import { getRequiredBalanceOfWallet } from './quote';
+import { getPriceImpact, getRequiredBalanceOfWallet } from './quote';
 import { getRequiredChains } from './wallets';
 
 export function getOutputRatio(
@@ -179,63 +180,70 @@ export function getLimitErrorMessage(quote: BestRouteResponse): {
   return { swap, fromAmountRangeError, recommendation };
 }
 
-export function getSwapButtonState(
-  loadingMetaStatus: FetchStatus,
-  connectedWallets: ConnectedWallet[],
-  loading: boolean,
-  quote: BestRouteResponse | null,
-  hasLimitError: boolean,
-  highValueLoss: boolean,
-  priceImpactCanNotBeComputed: boolean,
-  needsToWarnEthOnPath: boolean,
-  inputAmount: string
-): SwapButtonState {
-  if (loadingMetaStatus !== 'success') {
+export function getSwapButtonState(params: {
+  fetchMetaStatus: FetchStatus;
+  anyWalletConnected: boolean;
+  fetchingQuote: boolean;
+  inputAmount: string;
+  quote: BestRouteResponse | null;
+  warning: QuoteWarning | null;
+  error: QuoteError | null;
+  needsToWarnEthOnPath: boolean;
+}): SwapButtonState {
+  const {
+    fetchMetaStatus,
+    anyWalletConnected,
+    fetchingQuote,
+    inputAmount,
+    quote,
+    warning,
+    error,
+    needsToWarnEthOnPath,
+  } = params;
+  if (fetchMetaStatus !== 'success') {
     return {
       title: swapButtonTitles().connectWallet,
-      state: ButtonState.WAITFORCONNECTING,
+      action: 'connect-wallet',
       disabled: true,
     };
   }
-  if (connectedWallets.length == 0) {
+  if (!anyWalletConnected) {
     return {
       title: swapButtonTitles().connectWallet,
-      state: ButtonState.WAITFORCONNECTING,
+      action: 'connect-wallet',
       disabled: false,
     };
   }
   if (
-    loading ||
+    fetchingQuote ||
     !quote ||
     !quote.result ||
-    hasLimitError ||
+    error ||
     !inputAmount ||
     inputAmount === '0'
   ) {
     return {
       title: swapButtonTitles().swap,
+      action: 'confirm-swap',
       disabled: true,
-      state: ButtonState.SWAP,
     };
-  } else if (highValueLoss || priceImpactCanNotBeComputed) {
+  } else if (warning) {
     return {
       title: swapButtonTitles().swapAnyway,
+      action: 'confirm-warning',
       disabled: false,
-      hasWarning: true,
-      state: ButtonState.NEEDTOCONFIRM,
     };
   } else if (needsToWarnEthOnPath) {
     return {
       title: swapButtonTitles().ethWarning,
+      action: 'confirm-warning',
       disabled: false,
-      hasWarning: true,
-      state: ButtonState.WARNING,
     };
   }
   return {
     title: swapButtonTitles().swap,
+    action: 'confirm-swap',
     disabled: false,
-    state: ButtonState.SWAP,
   };
 }
 
@@ -359,7 +367,7 @@ export function checkSlippageWarnings(
   quote.result?.swaps.forEach((swap, index) => {
     if (
       swap.recommendedSlippage?.slippage &&
-      parseInt(swap.recommendedSlippage?.slippage) > userSlippage
+      parseFloat(swap.recommendedSlippage.slippage) > userSlippage
     ) {
       recommendedSlippages.set(index, swap.recommendedSlippage.slippage);
     }
@@ -590,10 +598,7 @@ export function isOutputAmountChangedALot(
   if (!oldOutputAmount || !newOutputAmount) {
     return false;
   }
-  const percentageChange = getPercentageChange(
-    oldOutputAmount,
-    newOutputAmount
-  );
+  const percentageChange = getPriceImpact(oldOutputAmount, newOutputAmount);
   if (!percentageChange) {
     return true;
   }
@@ -601,9 +606,10 @@ export function isOutputAmountChangedALot(
   return percentageChange <= -1;
 }
 
-export function getBalanceWarnings(
+export function generateBalanceWarnings(
   quote: BestRouteResponse,
-  selectedWallets: Wallet[]
+  selectedWallets: Wallet[],
+  blockchains: BlockchainMeta[]
 ) {
   const fee = quote.validationStatus;
   const requiredWallets = getRequiredChains(quote);
@@ -648,7 +654,10 @@ export function getBalanceWarnings(
           symbol,
           reason,
           currentAmount,
-          blockchain: asset.asset.blockchain,
+          blockchain: getBlockchainShortNameFor(
+            asset.asset.blockchain,
+            blockchains
+          ),
         },
       });
       return warningMessage;

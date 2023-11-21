@@ -25,6 +25,8 @@ import {
   PERCENTAGE_CHANGE_MIN_DECIMALS,
   TOKEN_AMOUNT_MAX_DECIMALS,
   TOKEN_AMOUNT_MIN_DECIMALS,
+  USD_VALUE_MAX_DECIMALS,
+  USD_VALUE_MIN_DECIMALS,
 } from '../../constants/routing';
 import {
   FooterAlert,
@@ -32,6 +34,11 @@ import {
 } from '../../containers/QuoteInfo/QuoteInfo.styles';
 import { useAppStore } from '../../store/AppStore';
 import { QuoteErrorType, QuoteWarningType } from '../../types';
+import { getContainer } from '../../utils/common';
+import {
+  getBlockchainShortNameFor,
+  getSwapperDisplayName,
+} from '../../utils/meta';
 import {
   numberToString,
   secondsToString,
@@ -41,6 +48,7 @@ import { getPriceImpact, getPriceImpactLevel } from '../../utils/quote';
 import { getTotalFeeInUsd } from '../../utils/swap';
 
 import {
+  ChainImageContainer,
   Chains,
   Content,
   EXPANDABLE_QUOTE_TRANSITION_DURATION,
@@ -63,19 +71,38 @@ export function Quote(props: QuoteProps) {
     recommended = true,
   } = props;
   const tokens = useAppStore().tokens();
+  const blockchains = useAppStore().blockchains();
+  const swappers = useAppStore().swappers();
 
   const [expanded, setExpanded] = useState(props.expanded);
   const quoteRef = useRef<HTMLButtonElement | null>(null);
+  const prevExpanded = useRef(expanded);
   const totalFee = numberToString(
     getTotalFeeInUsd(quote.result?.swaps ?? [], tokens),
     GAS_FEE_MIN_DECIMALS,
     GAS_FEE_MAX_DECIMALS
   );
   const totalTime = secondsToString(totalArrivalTime(quote.result?.swaps));
-
+  const roundedInput = numberToString(
+    input.value,
+    TOKEN_AMOUNT_MIN_DECIMALS,
+    TOKEN_AMOUNT_MAX_DECIMALS
+  );
+  const roundedOutput = numberToString(
+    output.value,
+    TOKEN_AMOUNT_MIN_DECIMALS,
+    TOKEN_AMOUNT_MAX_DECIMALS
+  );
+  const roundedOutputUsdValue = output.usdValue
+    ? numberToString(
+        output.usdValue,
+        USD_VALUE_MIN_DECIMALS,
+        USD_VALUE_MAX_DECIMALS
+      )
+    : '';
   const priceImpact = getPriceImpact(input.usdValue, output.usdValue ?? null);
   const percentageChange = numberToString(
-    String(priceImpact),
+    priceImpact,
     PERCENTAGE_CHANGE_MIN_DECIMALS,
     PERCENTAGE_CHANGE_MAX_DECIMALS
   );
@@ -87,8 +114,8 @@ export function Quote(props: QuoteProps) {
       const stepHasError =
         (error?.type === QuoteErrorType.BRIDGE_LIMIT &&
           error.swap.swapperId === swap.swapperId) ||
-        (warning?.type === QuoteWarningType.INSUFFICIENT_SLIPPAGE &&
-          warning.recommendedSlippages?.has(index));
+        (error?.type === QuoteErrorType.INSUFFICIENT_SLIPPAGE &&
+          error.recommendedSlippages?.has(index));
       const stepHasWarning =
         warning?.type === QuoteWarningType.INSUFFICIENT_SLIPPAGE &&
         warning.recommendedSlippages?.has(index);
@@ -100,11 +127,17 @@ export function Quote(props: QuoteProps) {
       }
 
       return {
-        swapper: { displayName: swap.swapperId, image: swap.swapperLogo },
+        swapper: {
+          displayName: getSwapperDisplayName(swap.swapperId, swappers),
+          image: swap.swapperLogo,
+        },
         from: {
           token: { displayName: swap.from.symbol, image: swap.from.logo },
           chain: {
-            displayName: swap.from.blockchain,
+            displayName: getBlockchainShortNameFor(
+              swap.from.blockchain,
+              blockchains
+            ),
             image: swap.from.blockchainLogo,
           },
           price: {
@@ -115,17 +148,38 @@ export function Quote(props: QuoteProps) {
                     TOKEN_AMOUNT_MIN_DECIMALS,
                     TOKEN_AMOUNT_MAX_DECIMALS
                   )
-                : swap.fromAmount,
+                : numberToString(
+                    swap.fromAmount,
+                    TOKEN_AMOUNT_MIN_DECIMALS,
+                    TOKEN_AMOUNT_MAX_DECIMALS
+                  ),
+            usdValue: numberToString(
+              (swap.from.usdPrice ?? 0) * parseFloat(swap.fromAmount),
+              USD_VALUE_MIN_DECIMALS,
+              USD_VALUE_MAX_DECIMALS
+            ),
           },
         },
         to: {
           token: { displayName: swap.to.symbol, image: swap.to.logo },
           chain: {
-            displayName: swap.to.blockchain,
+            displayName: getBlockchainShortNameFor(
+              swap.to.blockchain,
+              blockchains
+            ),
             image: swap.to.blockchainLogo,
           },
           price: {
-            value: swap.toAmount,
+            value: numberToString(
+              swap.toAmount,
+              TOKEN_AMOUNT_MIN_DECIMALS,
+              TOKEN_AMOUNT_MAX_DECIMALS
+            ),
+            usdValue: numberToString(
+              (swap.to.usdPrice ?? 0) * parseFloat(swap.toAmount),
+              USD_VALUE_MIN_DECIMALS,
+              USD_VALUE_MAX_DECIMALS
+            ),
           },
         },
         state: stepState,
@@ -183,7 +237,7 @@ export function Quote(props: QuoteProps) {
                         variant="body"
                         color="neutral900">
                         {i18n.t({
-                          id: 'min required Slippage: {minRequiredSlippage}',
+                          id: 'Minimum required slippage is {minRequiredSlippage}',
                           values: {
                             ...(error?.type ===
                               QuoteErrorType.INSUFFICIENT_SLIPPAGE && {
@@ -209,14 +263,16 @@ export function Quote(props: QuoteProps) {
   };
   const steps = getQuoteSteps(quote.result?.swaps ?? []);
   const numberOfSteps = steps.length;
+  const tooltipContainer = getContainer();
 
   useLayoutEffect(() => {
-    if (expanded && quoteRef.current) {
+    if (expanded && !prevExpanded.current && quoteRef.current) {
       setTimeout(() => {
         quoteRef?.current?.scrollIntoView({ behavior: 'smooth' });
       }, EXPANDABLE_QUOTE_TRANSITION_DURATION);
     }
-  }, [expanded]);
+    prevExpanded.current = expanded;
+  }, [expanded, prevExpanded]);
 
   return (
     <>
@@ -235,16 +291,18 @@ export function Quote(props: QuoteProps) {
                 size="small"
                 variant="body"
                 style={{ letterSpacing: 0.4 }}>
-                {`${input.value} ${steps[0].from.token.displayName} = ${
-                  output.value
-                } ${steps[steps.length - 1].to.token.displayName}`}
+                {`${roundedInput} ${
+                  steps[0].from.token.displayName
+                } = ${roundedOutput} ${
+                  steps[steps.length - 1].to.token.displayName
+                }`}
               </Typography>
               <Typography
                 color="$neutral600"
                 ml={2}
                 size="xsmall"
                 variant="body">
-                {`($${output.usdValue})`}
+                {`($${roundedOutputUsdValue})`}
               </Typography>
             </div>
           )}
@@ -252,7 +310,7 @@ export function Quote(props: QuoteProps) {
             <TokenAmount
               type="output"
               direction="vertical"
-              price={{ value: output.value, usdValue: output.usdValue }}
+              price={{ value: roundedOutput, usdValue: roundedOutputUsdValue }}
               token={{
                 displayName: steps[numberOfSteps - 1].to.token.displayName,
                 image: steps[numberOfSteps - 1].to.token.image,
@@ -281,38 +339,48 @@ export function Quote(props: QuoteProps) {
           <Chains
             ref={(ref) => (quoteRef.current = ref)}
             recommended={recommended}
-            onClick={setExpanded.bind(null, (prevState) => !prevState)}>
+            onClick={() => setExpanded((prevState) => !prevState)}>
             <div>
               {steps.map((step, index) => {
                 const key = `item-${index}`;
+                const arrow = (
+                  <IconContainer>
+                    <ChevronRightIcon
+                      size={12}
+                      color="black"
+                      {...(step.state && {
+                        color: step.state === 'error' ? 'error' : 'warning',
+                      })}
+                    />
+                  </IconContainer>
+                );
                 return (
                   <React.Fragment key={key}>
                     <Tooltip
-                      container={props.tooltipContainer}
+                      container={tooltipContainer}
                       side="bottom"
                       sideOffset={4}
                       content={step.from.chain.displayName}>
-                      <Image src={step.from.chain.image} size={16} />
+                      <ChainImageContainer
+                        state={step.state || steps[index - 1]?.state}>
+                        <Image src={step.from.chain.image} size={16} />
+                      </ChainImageContainer>
                     </Tooltip>
                     {index === numberOfSteps - 1 && (
                       <>
-                        <IconContainer>
-                          <ChevronRightIcon size={12} color="black" />
-                        </IconContainer>
+                        {arrow}
                         <Tooltip
-                          container={props.tooltipContainer}
+                          container={tooltipContainer}
                           side="bottom"
                           sideOffset={4}
                           content={step.to.chain.displayName}>
-                          <Image src={step.to.chain.image} size={16} />
+                          <ChainImageContainer state={step.state}>
+                            <Image src={step.to.chain.image} size={16} />
+                          </ChainImageContainer>
                         </Tooltip>
                       </>
                     )}
-                    {index !== numberOfSteps - 1 && (
-                      <IconContainer>
-                        <ChevronRightIcon size={12} color="black" />
-                      </IconContainer>
-                    )}
+                    {index !== numberOfSteps - 1 && <>{arrow}</>}
                   </React.Fragment>
                 );
               })}

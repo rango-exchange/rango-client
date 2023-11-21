@@ -5,19 +5,10 @@ export type PendingSwapSettings = Omit<
   'disabledSwappersIds'
 >;
 
-export enum ButtonState {
-  WAITFORCONNECTING = 'waitForConnecting',
-  SWAP = 'swap',
-  NEEDTOCONFIRM = 'needToConfirm',
-  WARNING = 'warning',
-}
-
-export type SwapButtonState = (
-  | { disabled: true }
-  | { disabled: false; hasWarning?: boolean }
-) & {
+export type SwapButtonState = {
+  disabled: boolean;
   title: string;
-  state: ButtonState;
+  action: 'connect-wallet' | 'confirm-warning' | 'confirm-swap';
 };
 
 export type ConvertedToken = {

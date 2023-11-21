@@ -23,6 +23,7 @@ import { getQuoteUpdateWarningMessage } from '../../constants/warnings';
 import { useAppStore } from '../../store/AppStore';
 import { useQuoteStore } from '../../store/quote';
 import { useWalletsStore } from '../../store/wallets';
+import { getBlockchainShortNameFor } from '../../utils/meta';
 import { confirmSwapDisabled } from '../../utils/swap';
 
 import { getRequiredWallets, isValidAddress } from './ConfirmWallets.helpers';
@@ -285,7 +286,12 @@ export function ConfirmWalletsModal(props: PropTypes) {
             <Typography variant="headline" size="small">
               {i18n.t({
                 id: 'Your {blockchainName} wallets',
-                values: { blockchainName: showMoreWalletFor },
+                values: {
+                  blockchainName: getBlockchainShortNameFor(
+                    showMoreWalletFor,
+                    blockchains
+                  ),
+                },
               })}
             </Typography>
           </ShowMoreHeader>
@@ -355,7 +361,7 @@ export function ConfirmWalletsModal(props: PropTypes) {
                     <Typography variant="title" size="xmedium">
                       {i18n.t({
                         id: 'Your {blockchainName} wallets',
-                        values: { blockchainName: blockchain?.displayName },
+                        values: { blockchainName: blockchain?.shortName },
                       })}
                     </Typography>
                     <Typography
@@ -364,7 +370,7 @@ export function ConfirmWalletsModal(props: PropTypes) {
                       size="medium">
                       {i18n.t({
                         id: 'You need to connect a {blockchainName} wallet.',
-                        values: { blockchainName: blockchain?.displayName },
+                        values: { blockchainName: blockchain?.shortName },
                       })}
                     </Typography>
                   </Title>

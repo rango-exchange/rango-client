@@ -344,7 +344,7 @@ export function SwapDetails(props: SwapDetailsProps) {
               },
             }}
             percentageChange={numberToString(
-              String(percentageChange),
+              percentageChange,
               PERCENTAGE_CHANGE_MIN_DECIMALS,
               PERCENTAGE_CHANGE_MAX_DECIMALS
             )}
@@ -402,7 +402,7 @@ export function SwapDetails(props: SwapDetailsProps) {
         )}
         usdValue={outputUsdValue}
         percentageChange={numberToString(
-          String(percentageChange),
+          percentageChange,
           PERCENTAGE_CHANGE_MIN_DECIMALS,
           PERCENTAGE_CHANGE_MAX_DECIMALS
         )}
