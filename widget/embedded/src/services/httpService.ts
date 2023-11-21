@@ -8,6 +8,6 @@ export const httpService = () => {
   if (rango) {
     return rango;
   }
-  rango = new RangoClient(getConfig('API_KEY'));
+  rango = new RangoClient(getConfig('API_KEY'), getConfig('BASE_URL'));
   return rango;
 };

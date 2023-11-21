@@ -86,11 +86,22 @@ export type BlockchainAndTokenConfig = {
 };
 
 /**
+ * `ExperimentalFeatures`
+ *
+ * @property {boolean} routing
+ *- This property is optional and sets experimental in quote api.
+ */
+type ExperimentalFeatures = {
+  routing?: boolean;
+};
+
+/**
  * The type WidgetConfig defines the configuration options for a widget, including API key, affiliate
  * reference, amount, blockchain and token configurations, liquidity sources, wallet types, language,
  * and theme.
  *
  * @property {string} apiKey - The API key used to communicate with Rango API
+ * @property {string} apiUrl - The API url used to set custom API url
  * @property {WidgetAffiliate} affiliate - If you want to charge users fee per transaction, you should
  * pass `WidgetAffiliate` including affiliateRef, affiliatePercent, and affiliateWallets.
  * @property {number} amount - The default input amount.
@@ -123,9 +134,12 @@ export type BlockchainAndTokenConfig = {
  * you could use to pin tokens of your choice to the top of the token list.
  * @property {boolean} enableNewLiquiditySources - The `enableNewLiquiditySources` property is a boolean value that when you
  * set it to true, whenever a new liquidity source is added, it will be added to your list as well.
+ * @property {ExperimentalFeatures} experimental - The `experimental` property is an optional object that specifies some experimental features.
  */
+
 export type WidgetConfig = {
   apiKey: string;
+  apiUrl?: string;
   walletConnectProjectId?: string;
   affiliate?: WidgetAffiliate;
   amount?: number;
@@ -140,4 +154,5 @@ export type WidgetConfig = {
   externalWallets?: boolean;
   pinnedTokens?: Asset[];
   enableNewLiquiditySources?: boolean;
+  experimental?: ExperimentalFeatures;
 };
