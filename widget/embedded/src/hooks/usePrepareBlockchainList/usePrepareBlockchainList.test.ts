@@ -2,7 +2,7 @@ import type { BlockchainMeta } from 'rango-sdk';
 
 import { beforeEach, describe, expect, it } from 'vitest';
 
-import { MOST_USED_BLOCKChAINS } from './usePrepareBlockchainList.constants';
+import { MOST_USED_BLOCKCHAINS } from './usePrepareBlockchainList.constants';
 import {
   generateSortByPreferredBlockchainsFor,
   prepare,
@@ -20,8 +20,8 @@ describe('usePrepareBlockchainList', () => {
   it('should sort blockchains by most used ones.', () => {
     const sortedBlockchainsList = sample.sort(sortByMostUsedBlockchains);
 
-    const mostUsedCount = MOST_USED_BLOCKChAINS.length;
-    const expected = MOST_USED_BLOCKChAINS;
+    const mostUsedCount = MOST_USED_BLOCKCHAINS.length;
+    const expected = MOST_USED_BLOCKCHAINS;
     const received = sortedBlockchainsList
       .map((blockchain) => blockchain.name)
       .slice(0, mostUsedCount);
@@ -269,5 +269,80 @@ describe('usePrepareBlockchainList', () => {
       ...received.list.map((blockchain) => blockchain.name),
       ...received.more.map((blockchain) => blockchain.name),
     ]);
+  });
+
+  it.only('Last item of the main list should be moved to front if it selected again.', () => {
+    const listLimit = 10;
+    const preferredBlockchains = ['AVAX_CCHAIN', 'BTC'];
+    const expected = [
+      'AVAX_CCHAIN',
+      'BTC',
+      'ETH',
+      'COSMOS',
+      'OSMOSIS',
+      'BSC',
+      'ARBITRUM',
+      'POLYGON',
+      'ZKSYNC',
+      'STARKNET',
+      'OPTIMISM',
+      'POLYGONZK',
+      'LINEA',
+      'TRON',
+      'NEUTRON',
+      'NOBLE',
+      'SOLANA',
+      'CRONOS',
+      'BNB',
+      'AURORA',
+      'MAYA',
+      'THOR',
+      'BOBA',
+      'MOONBEAM',
+      'MOONRIVER',
+      'OKC',
+      'BOBA_AVALANCHE',
+      'LTC',
+      'BCH',
+      'HECO',
+      'STARGAZE',
+      'CRYPTO_ORG',
+      'CHIHUAHUA',
+      'BANDCHAIN',
+      'COMDEX',
+      'REGEN',
+      'IRIS',
+      'EMONEY',
+      'JUNO',
+      'STRIDE',
+      'MARS',
+      'TERRA',
+      'BITSONG',
+      'AKASH',
+      'KI',
+      'PERSISTENCE',
+      'MEDIBLOC',
+      'KUJIRA',
+      'SENTINEL',
+      'INJECTIVE',
+      'SECRET',
+      'KONSTELLATION',
+      'STARNAME',
+      'BITCANNA',
+      'UMEE',
+      'DESMOS',
+      'LUMNETWORK',
+    ];
+
+    const output = prepare(sample, preferredBlockchains, {
+      limit: listLimit,
+    });
+
+    const received = [
+      ...output.list.map((blockchain) => blockchain.name),
+      ...output.more.map((blockchain) => blockchain.name),
+    ];
+
+    expect(expected).toEqual(received);
   });
 });
