@@ -42,7 +42,7 @@ export function useConfirmSwap(): ConfirmSwap {
   const { connectedWallets } = useWalletsStore();
   const blockchains = useAppStore().blockchains();
   const tokens = useAppStore().tokens();
-
+  const { experimental } = useAppStore().config;
   const userSlippage = customSlippage || slippage;
 
   const { fetch: fetchQuote, cancelFetch, loading } = useFetchQuote();
@@ -77,7 +77,9 @@ export function useConfirmSwap(): ConfirmSwap {
       initialQuote: initialQuote,
       destination: customDestination,
     });
-
+    if (experimental?.routing) {
+      requestBody.experimental = true;
+    }
     let currentQuote: BestRouteResponse;
     try {
       currentQuote = await fetchQuote(requestBody).then((response) =>
