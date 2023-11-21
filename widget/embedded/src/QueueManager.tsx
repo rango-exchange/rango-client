@@ -30,6 +30,7 @@ function QueueManager(props: PropsWithChildren<{ apiKey?: string }>) {
   const swapQueueDef = useMemo(() => {
     return makeQueueDefinition({
       API_KEY: props.apiKey || getConfig('API_KEY'),
+      BASE_URL: getConfig('BASE_URL'),
     });
   }, [props.apiKey]);
 

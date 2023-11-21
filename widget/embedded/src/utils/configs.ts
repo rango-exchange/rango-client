@@ -2,6 +2,7 @@ import { RANGO_PUBLIC_API_KEY } from '../constants';
 
 export interface Configs {
   API_KEY: string;
+  BASE_URL?: string;
 }
 
 let configs: Configs = {
@@ -9,7 +10,7 @@ let configs: Configs = {
 };
 
 export function getConfig(name: keyof Configs) {
-  return configs[name];
+  return configs[name] || '';
 }
 
 export function setConfig(name: keyof Configs, value: any) {

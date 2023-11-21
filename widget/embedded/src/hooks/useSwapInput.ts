@@ -33,7 +33,8 @@ type UseSwapInput = {
  */
 export function useSwapInput(): UseSwapInput {
   const { fetch: fetchQuote, cancelFetch } = useFetchQuote();
-  const { liquiditySources, enableNewLiquiditySources } = useAppStore().config;
+  const { liquiditySources, enableNewLiquiditySources, experimental } =
+    useAppStore().config;
   const tokens = useAppStore().tokens();
   const {
     fromToken,
@@ -86,6 +87,9 @@ export function useSwapInput(): UseSwapInput {
         affiliatePercent,
         affiliateWallets,
       });
+      if (experimental?.routing) {
+        requestBody.experimental = true;
+      }
       fetchQuote(requestBody)
         .then((res) => {
           setLoading(false);
