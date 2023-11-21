@@ -120,6 +120,7 @@ export const IconHighlight = styled('div', {
   justifyContent: 'center',
   alignItems: 'center',
   alignSelf: 'flex-start',
+  flexShrink: 0,
   variants: {
     type: {
       success: {

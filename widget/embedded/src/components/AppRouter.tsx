@@ -4,38 +4,13 @@ import type { PropsWithChildren } from 'react';
 import { useQueueManager } from '@rango-dev/queue-manager-rango-preset';
 import { useWallets } from '@rango-dev/wallets-react';
 import { isEvmBlockchain } from 'rango-types';
-import React, { useEffect, useRef } from 'react';
+import React, { Fragment } from 'react';
 import { MemoryRouter, useInRouterContext } from 'react-router';
-import { useLocation, useNavigate } from 'react-router-dom';
 
-import { navigationRoutes } from '../constants/navigationRoutes';
 import { useForceAutoConnect } from '../hooks/useForceAutoConnect';
-import { Home } from '../pages/Home';
 import { useAppStore } from '../store/AppStore';
 
 import { UpdateUrl } from './UpdateUrl';
-
-function Route(props: PropsWithChildren) {
-  const location = useLocation();
-  const navigate = useNavigate();
-  const firstRender = useRef(true);
-  const paths = location.pathname.split('/');
-  const pathMatched = paths[paths.length - 1] === navigationRoutes.confirmSwap;
-  const shouldRedirectToMainPage = pathMatched && firstRender.current;
-
-  useEffect(() => {
-    if (shouldRedirectToMainPage) {
-      navigate('.');
-    }
-    firstRender.current = false;
-  }, []);
-
-  if (shouldRedirectToMainPage) {
-    return <Home />;
-  }
-
-  return <> {props.children}</>;
-}
 
 export function AppRouter({
   children,
@@ -46,7 +21,7 @@ export function AppRouter({
   clearDisconnectedWallet: () => void;
 }) {
   const isRouterInContext = useInRouterContext();
-  const Router = isRouterInContext ? Route : MemoryRouter;
+  const Router = isRouterInContext ? Fragment : MemoryRouter;
   const blockchains = useAppStore().blockchains();
   const { canSwitchNetworkTo } = useWallets();
 

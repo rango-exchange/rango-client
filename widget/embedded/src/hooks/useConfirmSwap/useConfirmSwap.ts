@@ -9,7 +9,6 @@ import { useAppStore } from '../../store/AppStore';
 import { useQuoteStore } from '../../store/quote';
 import { useSettingsStore } from '../../store/settings';
 import { useWalletsStore } from '../../store/wallets';
-import { QuoteErrorType } from '../../types';
 import { createQuoteRequestBody, getWalletsForNewSwap } from '../../utils/swap';
 import { useFetchQuote } from '../useFetchQuote';
 
@@ -25,7 +24,6 @@ export function useConfirmSwap(): ConfirmSwap {
     toToken,
     inputAmount,
     setQuote,
-    resetQuote,
     quote: initialQuote,
     customDestination: customDestinationFromStore,
     setQuoteWarningsConfirmed,
@@ -43,6 +41,8 @@ export function useConfirmSwap(): ConfirmSwap {
   const blockchains = useAppStore().blockchains();
   const tokens = useAppStore().tokens();
   const { experimental } = useAppStore().config;
+  const { enableNewLiquiditySources } = useAppStore().config;
+
   const userSlippage = customSlippage || slippage;
 
   const { fetch: fetchQuote, cancelFetch, loading } = useFetchQuote();
@@ -54,7 +54,7 @@ export function useConfirmSwap(): ConfirmSwap {
     const customDestination =
       params?.customDestination ?? customDestinationFromStore;
 
-    if (!fromToken || !toToken || !inputAmount || !initialQuote) {
+    if (!fromToken || !toToken || !inputAmount) {
       return {
         quote: null,
         swap: null,
@@ -69,12 +69,13 @@ export function useConfirmSwap(): ConfirmSwap {
       inputAmount,
       wallets: connectedWallets,
       selectedWallets,
+      excludeLiquiditySources: enableNewLiquiditySources,
       disabledLiquiditySources,
       slippage: userSlippage,
       affiliateRef,
       affiliatePercent,
       affiliateWallets,
-      initialQuote: initialQuote,
+      initialQuote: initialQuote ?? undefined,
       destination: customDestination,
     });
     if (experimental?.routing) {
@@ -88,12 +89,6 @@ export function useConfirmSwap(): ConfirmSwap {
       setQuote(currentQuote);
     } catch (error: any) {
       const confirmSwapResult = handleQuoteErrors(error);
-      if (
-        confirmSwapResult.error?.type === QuoteErrorType.NO_RESULT ||
-        confirmSwapResult.error?.type === QuoteErrorType.REQUEST_FAILED
-      ) {
-        resetQuote();
-      }
       return confirmSwapResult;
     }
 
@@ -110,13 +105,17 @@ export function useConfirmSwap(): ConfirmSwap {
       { blockchains, tokens }
     );
 
-    const confirmSwapWarnings = generateWarnings(initialQuote, currentQuote, {
-      fromToken,
-      toToken,
-      tokens: tokens,
-      selectedWallets,
-      userSlippage,
-    });
+    const confirmSwapWarnings = generateWarnings(
+      initialQuote ?? undefined,
+      currentQuote,
+      {
+        fromToken,
+        toToken,
+        meta: { blockchains, tokens },
+        selectedWallets,
+        userSlippage,
+      }
+    );
 
     if (confirmSwapWarnings.quoteUpdate) {
       setQuoteWarningsConfirmed(false);

@@ -238,11 +238,12 @@ export function generateQuoteWarnings(
   const outputUsdValue = getUsdValue(toToken, quote.result?.outputAmount ?? '');
 
   if (quote.result && inputUsdValue && outputUsdValue) {
-    const priceImpact = getPercentageChange(
+    const priceImpact = getPriceImpact(
       inputUsdValue.toString(),
       outputUsdValue.toString()
     );
-    const highValueLoss = hasHighValueLoss(inputUsdValue, priceImpact);
+    const highValueLoss =
+      !!priceImpact && hasHighValueLoss(inputUsdValue, priceImpact);
 
     if (highValueLoss) {
       const totalFee = getTotalFeeInUsd(quote.result.swaps, tokens);
@@ -320,13 +321,12 @@ export function generateQuoteErrors(
 export function getPriceImpact(
   inputUsdValue: BigNumber | string | null,
   outputUsdValue: BigNumber | string | null
-) {
+): number | null {
   const outputUsdValueIsInvalid =
     typeof outputUsdValue === 'string'
       ? parseFloat(outputUsdValue) <= 0
       : !outputUsdValue?.gt(0);
-
-  const priceImpact =
+  const percentageChange =
     !inputUsdValue || !outputUsdValue || outputUsdValueIsInvalid
       ? null
       : getPercentageChange(
@@ -334,5 +334,5 @@ export function getPriceImpact(
           outputUsdValue.toString()
         );
 
-  return priceImpact;
+  return percentageChange && percentageChange < 0 ? percentageChange : null;
 }

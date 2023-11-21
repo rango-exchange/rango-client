@@ -5,16 +5,14 @@ import React from 'react';
 
 import { Quote, QuoteSkeleton } from '../../components/Quote';
 import { QuoteWarningsAndErrors } from '../../components/QuoteWarningsAndErrors';
-import {
-  TOKEN_AMOUNT_MAX_DECIMALS,
-  TOKEN_AMOUNT_MIN_DECIMALS,
-  USD_VALUE_MAX_DECIMALS,
-  USD_VALUE_MIN_DECIMALS,
-} from '../../constants/routing';
 import { useQuoteStore } from '../../store/quote';
-import { numberToString } from '../../utils/numbers';
+import { QuoteErrorType } from '../../types';
 
-import { QuoteContainer } from './QuoteInfo.styles';
+import {
+  PositionTopAlerts,
+  QuoteContainer,
+  SkeletonContainer,
+} from './QuoteInfo.styles';
 
 export function QuoteInfo(props: PropTypes) {
   const {
@@ -28,18 +26,45 @@ export function QuoteInfo(props: PropTypes) {
     onOpenWarningModal,
     onCloseWarningModal,
     onConfirmWarningModal,
+    onChangeSettings,
     expanded = false,
+    alertPosition = 'bottom',
   } = props;
   const { inputAmount, inputUsdValue, outputUsdValue, outputAmount } =
     useQuoteStore();
 
-  const showQuote = quote && quote.result && !loading;
+  const noResult =
+    error &&
+    (error.type === QuoteErrorType.NO_RESULT ||
+      error.type === QuoteErrorType.REQUEST_FAILED);
+
+  const showQuote = !noResult && quote && quote.result && !loading;
+
+  const quoteWarningsAndErrors = (warning || error) && (
+    <QuoteWarningsAndErrors
+      warning={warning}
+      error={error}
+      loading={loading}
+      refetchQuote={refetchQuote}
+      showWarningModal={showWarningModal}
+      onOpenWarningModal={onOpenWarningModal}
+      onCloseWarningModal={onCloseWarningModal}
+      onConfirmWarningModal={onConfirmWarningModal}
+      onChangeSettings={onChangeSettings}
+    />
+  );
   return (
     <>
       {loading && (
         <QuoteContainer>
-          <QuoteSkeleton type={type} expanded={expanded} />
+          <SkeletonContainer paddingTop={alertPosition === 'top'}>
+            <QuoteSkeleton type={type} expanded={expanded} />
+          </SkeletonContainer>
         </QuoteContainer>
+      )}
+
+      {alertPosition === 'top' && (
+        <PositionTopAlerts>{quoteWarningsAndErrors}</PositionTopAlerts>
       )}
       {showQuote ? (
         <QuoteContainer>
@@ -51,46 +76,22 @@ export function QuoteInfo(props: PropTypes) {
             expanded={expanded}
             recommended={true}
             input={{
-              value: numberToString(
-                inputAmount,
-                TOKEN_AMOUNT_MIN_DECIMALS,
-                TOKEN_AMOUNT_MAX_DECIMALS
-              ),
-              usdValue: numberToString(
-                inputUsdValue,
-                USD_VALUE_MIN_DECIMALS,
-                USD_VALUE_MAX_DECIMALS
-              ),
+              value: inputAmount,
+              usdValue: inputUsdValue?.toString() ?? '',
             }}
             output={{
-              value: numberToString(
-                outputAmount,
-                TOKEN_AMOUNT_MIN_DECIMALS,
-                TOKEN_AMOUNT_MAX_DECIMALS
-              ),
-              usdValue: numberToString(
-                outputUsdValue,
-                USD_VALUE_MIN_DECIMALS,
-                USD_VALUE_MAX_DECIMALS
-              ),
+              value: outputAmount?.toString() ?? '',
+              usdValue: outputUsdValue?.toString() ?? '',
             }}
           />
         </QuoteContainer>
       ) : null}
 
-      {!warning && !error && <Divider size={16} />}
-
-      {(warning || error) && (
-        <QuoteWarningsAndErrors
-          warning={warning}
-          error={error}
-          loading={loading}
-          refetchQuote={refetchQuote}
-          showWarningModal={showWarningModal}
-          onOpenWarningModal={onOpenWarningModal}
-          onCloseWarningModal={onCloseWarningModal}
-          onConfirmWarningModal={onConfirmWarningModal}
-        />
+      {alertPosition === 'bottom' && (
+        <>
+          {!warning && !error && <Divider size={16} />}
+          {quoteWarningsAndErrors}
+        </>
       )}
     </>
   );

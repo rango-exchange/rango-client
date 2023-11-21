@@ -10,18 +10,22 @@ export const errorMessages = () => {
     liquiditySourcesError: {
       title: i18n.t('Please reset your liquidity sources.'),
       description: i18n.t(
-        'You have limited the liquidity sources and this might result in Rango finding no routes. Please consider resetting your liquidity sources'
+        'You have limited the liquidity sources and this might result in Rango finding no routes. Please consider resetting your liquidity sources.'
       ),
     },
     noResultError: {
-      title: i18n.t('No Routes Found'),
+      title: i18n.t('No Routes Found.'),
       description: i18n.t(
         "Reasons why Rango couldn't find a route: low liquidity on token, very low input amount or no routes available for the selected input/output token combination."
       ),
     },
     bridgeLimitErrors: {
-      increaseAmount: i18n.t('Bridge Limit Error: Please increase your amount'),
-      decreaseAmount: i18n.t('Bridge Limit Error: Please decrease your amount'),
+      increaseAmount: i18n.t(
+        'Bridge Limit Error: Please increase your amount.'
+      ),
+      decreaseAmount: i18n.t(
+        'Bridge Limit Error: Please decrease your amount.'
+      ),
     },
     highValueLossError: {
       impactTitle: i18n.t('High Price Impact'),
@@ -29,7 +33,7 @@ export const errorMessages = () => {
       description: i18n.t(
         'The price impact is significantly higher than the allowed amount. If you are sure, continue, otherwise, change the swap.'
       ),
-      confirmMessage: i18n.t('Confirm High price impact'),
+      confirmMessage: i18n.t('Confirm high price impact'),
     },
     quoteUpdatedWithHighValueLoss: {
       title: i18n.t(
