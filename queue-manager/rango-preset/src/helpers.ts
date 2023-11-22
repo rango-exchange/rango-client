@@ -1019,7 +1019,7 @@ export function isRequiredWalletConnected(
   return { ok: matched, reason: 'account_miss_match' };
 }
 
-export function singTransaction(
+export function signTransaction(
   actions: ExecuterActions<SwapStorage, SwapActionTypes, SwapQueueContext>
 ): void {
   const { setTransactionDataByHash } = inMemoryTransactionsData();
