@@ -36,6 +36,7 @@
     "@rango-dev/provider-leap-cosmos": "^0.21.1-next.3",
     "@rango-dev/provider-math-wallet": "^0.21.1-next.3",
     "@rango-dev/provider-metamask": "^0.21.1-next.3",
+    "@rango-dev/provider-starknet-snap": "^0.21.1-next.3",
     "@rango-dev/provider-okx": "^0.21.1-next.3",
     "@rango-dev/provider-phantom": "^0.21.1-next.3",
     "@rango-dev/provider-safe": "^0.14.1-next.4",
