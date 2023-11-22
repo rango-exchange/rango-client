@@ -37,7 +37,7 @@ msgstr "別のキーワードを使用してみてください"
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:66
 #: widget/embedded/src/components/BlockchainsSection/BlockchainsSection.tsx:44
-#: widget/embedded/src/pages/SelectBlockchainPage.tsx:32
+#: widget/embedded/src/pages/SelectBlockchainPage.tsx:40
 msgid "Select Blockchain"
 msgstr "ブロックチェーンを選択"
 
@@ -643,7 +643,7 @@ msgid "Search {sourceType}"
 msgstr "{sourceType} を検索"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/SelectBlockchainPage.tsx:45
+#: widget/embedded/src/pages/SelectBlockchainPage.tsx:59
 msgid "Search Blockchain"
 msgstr "ブロックチェーンを検索"
 
@@ -865,6 +865,11 @@ msgstr "ブリッジ"
 #: widget/ui/src/components/LiquiditySourceList/LiquiditySourceList.tsx:151
 msgid "Exchanges"
 msgstr "交換"
+
+#. js-lingui-explicit-id
+#: widget/ui/src/components/SelectableCategoryList/SelectableCategoryList.tsx:63
+msgid "{blockchainCategory}"
+msgstr ""
 
 #. js-lingui-explicit-id
 #: widget/ui/src/components/StepDetails/StepDetails.tsx:54
