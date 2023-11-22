@@ -7,7 +7,6 @@ import {
 
 import { navigationRoutes } from '../constants/navigationRoutes';
 import { SearchParams } from '../constants/searchParams';
-import { useSyncStoresWithConfig } from '../hooks/useSyncStoresWithConfig';
 import { useAppStore } from '../store/AppStore';
 import { useQuoteStore } from '../store/quote';
 import { useUiStore } from '../store/ui';
@@ -33,7 +32,6 @@ export function UpdateUrl() {
   const blockchains = useAppStore().blockchains();
   const tokens = useAppStore().tokens();
   const setSelectedSwap = useUiStore.use.setSelectedSwap();
-  useSyncStoresWithConfig();
 
   useEffect(() => {
     const params: Record<string, string> = {};
