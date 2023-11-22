@@ -186,6 +186,7 @@ export const useWalletsStore = createSelectors(
                           retrievedBalanceAccount,
                           tokens
                         ),
+                        loading: false,
                       }
                     : connectedWallet;
                 }
