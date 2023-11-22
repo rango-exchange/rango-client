@@ -1,6 +1,6 @@
 import type { Asset } from 'rango-sdk';
 
-import { useEffect, useMemo, useRef } from 'react';
+import { useEffect, useLayoutEffect, useMemo, useRef } from 'react';
 
 import { useAppStore } from '../store/AppStore';
 import { useQuoteStore } from '../store/quote';
@@ -53,7 +53,14 @@ export function useSyncStoresWithConfig() {
     setInputAmount(config?.amount?.toString() || '');
   }, [config?.amount]);
 
-  useEffect(() => {
+  /*
+   * We update quote tokens in two scenarios.
+   * If default values exist in widget config or search parameters exist in URL.
+   * The logic for updating quote store exists in two useEffect in two locations, and they run in order.If default tokens for quote exist in widget config and also exist in URL, widget config values take precedence over URL values, and URL search parameters don’t affect the widget.
+   * Using useLayoutEffect causes widget config values to apply first.
+   * We may consider replacing this with a better solution in the future.
+   */
+  useLayoutEffect(() => {
     if (fetchMetaStatus === 'success') {
       const chain = blockchains.find(
         (chain) => chain.name === config?.from?.blockchain
@@ -111,7 +118,14 @@ export function useSyncStoresWithConfig() {
     }
   }, [toTokensConfig, toBlockchainsConfig]);
 
-  useEffect(() => {
+  /*
+   * We update quote tokens in two scenarios.
+   * If default values exist in widget config or search parameters exist in URL.
+   * The logic for updating quote store exists in two useEffect in two locations, and they run in order.If default tokens for quote exist in widget config and also exist in URL, widget config values take precedence over URL values, and URL search parameters don’t affect the widget.
+   * Using useLayoutEffect causes widget config values to apply first.
+   * We may consider replacing this with a better solution in the future.
+   */
+  useLayoutEffect(() => {
     if (fetchMetaStatus === 'success') {
       const chain = blockchains.find(
         (chain) => chain.name === config?.to?.blockchain
