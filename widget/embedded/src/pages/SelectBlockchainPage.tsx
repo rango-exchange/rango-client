@@ -1,5 +1,9 @@
 import { i18n } from '@lingui/core';
-import { Divider, SelectableCategoryList } from '@rango-dev/ui';
+import {
+  Divider,
+  getCountCategories,
+  SelectableCategoryList
+} from '@rango-dev/ui';
 import React, { useState } from 'react';
 
 import { BlockchainList } from '../components/BlockchainList';
@@ -23,22 +27,32 @@ export function SelectBlockchainPage(props: PropTypes) {
   const fetchStatus = useAppStore().fetchStatus;
 
   const blockchains = useAppStore().blockchains({
-    type: type,
+    type: type
   });
+
+  const countActiveCategories = getCountCategories(blockchains);
+
+  const showCategory = countActiveCategories !== 1;
 
   return (
     <Layout
       header={{
-        title: i18n.t(`Select Blockchain`),
+        title: i18n.t(`Select Blockchain`)
       }}>
       <Divider size={12} />
-      <SelectableCategoryList
-        setCategory={setBlockchainCategory}
-        category={blockchainCategory}
-        blockchains={blockchains}
-        isLoading={fetchStatus === 'loading'}
-      />
-      <Divider size={24} />
+
+      {showCategory && (
+        <>
+          <SelectableCategoryList
+            setCategory={setBlockchainCategory}
+            category={blockchainCategory}
+            blockchains={blockchains}
+            isLoading={fetchStatus === 'loading'}
+          />
+          <Divider size={24} />
+        </>
+      )}
+
       <SearchInput
         value={searchedFor}
         autoFocus

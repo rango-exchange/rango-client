@@ -37,7 +37,7 @@ msgstr "Intenta usar diferentes palabras clave"
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:66
 #: widget/embedded/src/components/BlockchainsSection/BlockchainsSection.tsx:44
-#: widget/embedded/src/pages/SelectBlockchainPage.tsx:32
+#: widget/embedded/src/pages/SelectBlockchainPage.tsx:40
 msgid "Select Blockchain"
 msgstr "Seleccionar Blockchain"
 
@@ -643,7 +643,7 @@ msgid "Search {sourceType}"
 msgstr "Buscar {sourceType}"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/SelectBlockchainPage.tsx:45
+#: widget/embedded/src/pages/SelectBlockchainPage.tsx:59
 msgid "Search Blockchain"
 msgstr "Buscar Blockchain"
 
@@ -865,6 +865,11 @@ msgstr "Puentes"
 #: widget/ui/src/components/LiquiditySourceList/LiquiditySourceList.tsx:151
 msgid "Exchanges"
 msgstr "Intercambios"
+
+#. js-lingui-explicit-id
+#: widget/ui/src/components/SelectableCategoryList/SelectableCategoryList.tsx:63
+msgid "{blockchainCategory}"
+msgstr ""
 
 #. js-lingui-explicit-id
 #: widget/ui/src/components/StepDetails/StepDetails.tsx:54

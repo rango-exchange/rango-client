@@ -4,19 +4,19 @@ import type { PropTypes } from './SelectableCategoryList.types';
 import { i18n } from '@lingui/core';
 import React from 'react';
 
-import { Divider, Image, Skeleton, Typography } from '..';
+import { Divider, Skeleton, Typography } from '..';
 import { BlockchainsChip } from '../BlockchainsChip';
 
-import { generateBlockchainsLogo } from './SelectableCategoryList.helpers';
 import {
-  Container,
-  FirstImage,
-  ImageContent,
-} from './SelectableCategoryList.styles';
+  blockchainCategoryIcons,
+  blockchainCategoryLabel,
+  hasAnyCategory,
+} from './SelectableCategoryList.helpers';
+import { Container } from './SelectableCategoryList.styles';
 import { BlockchainCategories } from './SelectableCategoryList.types';
 
 export function SelectableCategoryList(props: PropTypes) {
-  const { setCategory, category, blockchains, isLoading } = props;
+  const { setCategory, category, isLoading, blockchains } = props;
   const categories = Object.keys(
     BlockchainCategories
   ) as BlockchainCategories[];
@@ -32,45 +32,46 @@ export function SelectableCategoryList(props: PropTypes) {
           />
         ))}
       {!isLoading &&
-        categories.map((blockchainCategory) => (
-          <BlockchainsChip
-            selected={category === blockchainCategory}
-            key={blockchainCategory}
-            onClick={() => setCategory(blockchainCategory)}>
-            {blockchainCategory !== BlockchainCategories.ALL && (
-              <>
-                <ImageContent>
-                  {generateBlockchainsLogo(blockchains, blockchainCategory).map(
-                    (blockchain, index) =>
-                      index === 0 ? (
-                        <FirstImage
-                          key={`image-${blockchain.name}-${blockchain.chainId}`}
-                          src={blockchain.logo}
-                        />
-                      ) : (
-                        <Image
-                          key={`image-${blockchain.name}-${blockchain.chainId}`}
-                          src={blockchain.logo}
-                          size={15}
-                        />
-                      )
-                  )}
-                </ImageContent>
-                <Divider size={12} />
-              </>
-            )}
-            <Typography
-              size="xsmall"
-              variant="body"
-              color={
-                blockchainCategory === BlockchainCategories.ALL
-                  ? 'secondary500'
-                  : undefined
-              }>
-              {i18n.t(BlockchainCategories[blockchainCategory])}
-            </Typography>
-          </BlockchainsChip>
-        ))}
+        categories.map((blockchainCategory) => {
+          const Logo =
+            blockchainCategory !== BlockchainCategories.ALL
+              ? blockchainCategoryIcons[blockchainCategory]
+              : null;
+
+          const hasBlockchain = hasAnyCategory(blockchains, blockchainCategory);
+
+          return (
+            hasBlockchain && (
+              <BlockchainsChip
+                selected={category === blockchainCategory}
+                key={blockchainCategory}
+                onClick={() => setCategory(blockchainCategory)}>
+                {Logo && (
+                  <>
+                    <Logo size={28} />
+                    <Divider size={12} />
+                  </>
+                )}
+                <Typography
+                  size="xsmall"
+                  variant="body"
+                  color={
+                    blockchainCategory === BlockchainCategories.ALL
+                      ? 'secondary500'
+                      : undefined
+                  }>
+                  {i18n.t({
+                    id: '{blockchainCategory}',
+                    values: {
+                      blockchainCategory:
+                        blockchainCategoryLabel[blockchainCategory],
+                    },
+                  })}
+                </Typography>
+              </BlockchainsChip>
+            )
+          );
+        })}
     </Container>
   );
 }

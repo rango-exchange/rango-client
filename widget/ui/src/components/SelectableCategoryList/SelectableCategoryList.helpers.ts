@@ -1,6 +1,28 @@
 import { type BlockchainMeta, TransactionType } from 'rango-sdk';
 
+import {
+  CosmosCategoryIcon,
+  EvmCategoryIcon,
+  OtherCategoryIcon,
+  UtxoCategoryIcon,
+} from '../../icons';
+
 import { BlockchainCategories } from './SelectableCategoryList.types';
+
+export const blockchainCategoryIcons = {
+  [BlockchainCategories.EVM]: EvmCategoryIcon,
+  [BlockchainCategories.COSMOS]: CosmosCategoryIcon,
+  [BlockchainCategories.UTXO]: UtxoCategoryIcon,
+  [BlockchainCategories.OTHER]: OtherCategoryIcon,
+};
+
+export const blockchainCategoryLabel = {
+  [BlockchainCategories.ALL]: 'All',
+  [BlockchainCategories.EVM]: 'EVM',
+  [BlockchainCategories.COSMOS]: 'Cosmos',
+  [BlockchainCategories.UTXO]: 'UTXO',
+  [BlockchainCategories.OTHER]: 'Other',
+};
 
 const filterByType = (blockchain: BlockchainMeta, type: string): boolean => {
   switch (type) {
@@ -19,17 +41,22 @@ const filterByType = (blockchain: BlockchainMeta, type: string): boolean => {
   }
 };
 
-const blockchainslogo = {
-  [BlockchainCategories.EVM]: ['ETH', 'BSC', 'POLYGON'],
-  [BlockchainCategories.COSMOS]: ['COSMOS', 'OSMOSIS', 'JUNO'],
-  [BlockchainCategories.UTXO]: ['BTC', 'LTC', 'BCH'],
-  [BlockchainCategories.OTHER]: ['STARKNET', 'TRON', 'SOLANA'],
-};
-
-export const generateBlockchainsLogo = (
+export const hasAnyCategory = (
   list: BlockchainMeta[],
-  type: Exclude<BlockchainCategories, 'ALL'>
-) =>
-  list
-    .filter((item) => filterByType(item, type))
-    .filter((item) => blockchainslogo[type].includes(item.name));
+  blockchainType: string
+) => list.some((blockchain) => filterByType(blockchain, blockchainType));
+
+export const getCountCategories = (list: BlockchainMeta[]) => {
+  const categoriesToCheck = Object.values(BlockchainCategories).filter(
+    (category) => category !== BlockchainCategories.ALL
+  );
+
+  const categoriesCount = categoriesToCheck.reduce((count, category) => {
+    const isCategoryPresent = list.some((blockchain) =>
+      filterByType(blockchain, category)
+    );
+    return count + (isCategoryPresent ? 1 : 0);
+  }, 0);
+
+  return categoriesCount;
+};
