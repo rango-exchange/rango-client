@@ -1,29 +1,25 @@
-import { ExecuterActions } from '@rango-dev/queue-manager-core';
+import type { SwapActionTypes, SwapQueueContext, SwapStorage } from '../types';
+import type { ExecuterActions } from '@rango-dev/queue-manager-core';
+
 import {
   ERROR_MESSAGE_DEPENDS_ON_OTHER_QUEUES,
   ERROR_MESSAGE_WAIT_FOR_CHANGE_NETWORK,
   ERROR_MESSAGE_WAIT_FOR_WALLET_DESCRIPTION,
   ERROR_MESSAGE_WAIT_FOR_WALLET_DESCRIPTION_WRONG_WALLET,
 } from '../constants';
-
 import {
+  claimQueue,
   getCurrentStep,
-  isNetworkMatchedForTransaction,
-  isRequiredWalletConnected,
-  updateNetworkStatus,
-  singTransaction,
-  resetNetworkStatus,
   getRequiredWallet,
   isNeedBlockQueueForParallel,
-  claimQueue,
+  isNetworkMatchedForTransaction,
+  isRequiredWalletConnected,
+  resetNetworkStatus,
+  signTransaction,
+  updateNetworkStatus,
 } from '../helpers';
 import { getCurrentBlockchainOf, PendingSwapNetworkStatus } from '../shared';
-import {
-  BlockReason,
-  SwapActionTypes,
-  SwapQueueContext,
-  SwapStorage,
-} from '../types';
+import { BlockReason } from '../types';
 
 /**
  * Excecute a created transaction.
@@ -105,19 +101,18 @@ export async function executeTransaction(
     };
     requestBlock(blockedFor);
     return;
-  } else {
-    // Update network to mark it as network changed successfully.
-    updateNetworkStatus(actions, {
-      message: '',
-      details: 'Wallet network changed successfully',
-      status: PendingSwapNetworkStatus.NetworkChanged,
-    });
   }
+  // Update network to mark it as network changed successfully.
+  updateNetworkStatus(actions, {
+    message: '',
+    details: 'Wallet network changed successfully',
+    status: PendingSwapNetworkStatus.NetworkChanged,
+  });
 
-  /* 
-  For avoiding conflict by making too many requests to wallet, we need to make sure
-  We only run one request at a time (In parallel mode).
-  */
+  /*
+   *For avoiding conflict by making too many requests to wallet, we need to make sure
+   *We only run one request at a time (In parallel mode).
+   */
   const needsToBlockQueue = isNeedBlockQueueForParallel(currentStep);
 
   if (needsToBlockQueue && !isClaimed) {
@@ -131,5 +126,5 @@ export async function executeTransaction(
   }
 
   // All the conditions are met. We can safely send the tx to wallet for sign.
-  singTransaction(actions);
+  signTransaction(actions);
 }

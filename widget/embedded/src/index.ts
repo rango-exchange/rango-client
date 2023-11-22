@@ -1,4 +1,5 @@
 import type { WidgetProps } from './containers/Widget';
+import type { ConnectedWallet } from './store/wallets';
 import type {
   BlockchainAndTokenConfig,
   WidgetColors,
@@ -70,6 +71,7 @@ export type {
   StepApprovalTxSucceededEvent,
   StepOutputRevealedEvent,
   HandleWalletsUpdate,
+  ConnectedWallet,
 };
 export {
   Widget,
