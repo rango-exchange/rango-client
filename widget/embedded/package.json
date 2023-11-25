@@ -3,6 +3,7 @@
   "version": "0.17.1-next.22",
   "license": "MIT",
   "type": "module",
+  "source": "./src/index.ts",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
   "files": [
@@ -12,6 +13,7 @@
   "browserslist": "> 0.5%, last 2 versions, not dead",
   "scripts": {
     "build": "node ../../scripts/build/command.mjs --path widget/embedded",
+    "ts-check": "tsc --declaration --emitDeclarationOnly -p ./tsconfig.json",
     "clean": "rimraf dist",
     "format": "prettier --write '{.,src}/**/*.{ts,tsx}'",
     "lint": "eslint \"**/*.{ts,tsx}\" --ignore-path ../../.eslintignore"
