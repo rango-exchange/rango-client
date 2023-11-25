@@ -21,6 +21,8 @@ class StarknetSigner implements GenericSigner<StarknetTransaction> {
     chainId: string | null
   ): Promise<{ hash: string }> {
     const { calls } = tx;
+    console.log({ tx, chainId, address });
+
     try {
       const response = await this.provider.request({
         method: 'wallet_invokeSnap',
@@ -29,8 +31,8 @@ class StarknetSigner implements GenericSigner<StarknetTransaction> {
           request: {
             method: 'starkNet_sendTransaction',
             params: {
-              contractAddress: address,
-              contractCallData: calls,
+              senderAddress: address,
+              calls: calls,
               chainId,
             },
           },
@@ -38,6 +40,8 @@ class StarknetSigner implements GenericSigner<StarknetTransaction> {
       });
       return response;
     } catch (err) {
+      console.log({ err });
+
       if (SignerError.isSignerError(err)) {
         throw err;
       } else {

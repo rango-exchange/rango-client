@@ -49,7 +49,7 @@ export const installStarknetSnap = async (instance: any) => {
   }
 };
 
-export const recoverAccounts = async (
+export const getAccounts = async (
   instance: any,
   chainId: string
 ): Promise<

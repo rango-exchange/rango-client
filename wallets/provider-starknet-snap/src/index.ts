@@ -19,10 +19,10 @@ import {
 import { starknetBlockchain } from 'rango-types';
 
 import {
+  getAccounts,
   installStarknetSnap,
   isStarknetSnapInstalled,
   metamask as metamask_instance,
-  recoverAccounts,
 } from './helpers';
 import signer from './signer';
 
@@ -43,7 +43,7 @@ export const connect: Connect = async ({ instance, meta }) => {
   let accounts: ProviderConnectResult[] = [];
   if (installed) {
     for (const item of meta) {
-      const addresses = await recoverAccounts(instance, item.chainId || '');
+      const addresses = await getAccounts(instance, item.chainId || '');
       accounts = [
         ...accounts,
         ...addresses.map((item) => ({
@@ -53,8 +53,6 @@ export const connect: Connect = async ({ instance, meta }) => {
       ];
     }
   }
-  console.log({ accounts });
-
   return accounts;
 };
 
