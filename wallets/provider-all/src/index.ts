@@ -18,6 +18,7 @@ import * as okx from '@rango-dev/provider-okx';
 import * as phantom from '@rango-dev/provider-phantom';
 import * as safe from '@rango-dev/provider-safe';
 import * as safepal from '@rango-dev/provider-safepal';
+import * as starknetSnap from '@rango-dev/provider-starknet-snap';
 import * as taho from '@rango-dev/provider-taho';
 import * as tokenpocket from '@rango-dev/provider-tokenpocket';
 import * as tronLink from '@rango-dev/provider-tron-link';
@@ -57,5 +58,6 @@ export const allProviders = (enviroments?: Enviroments) => {
     frontier,
     taho,
     braavos,
+    starknetSnap,
   ];
 };
