@@ -3,7 +3,7 @@
   "version": "0.22.1-next.11",
   "license": "MIT",
   "type": "module",
-  "module": "./dist/index.js",
+  "source": "./src/index.ts",
   "main": "./dist/index.js",
   "exports": "./dist/index.js",
   "typings": "dist/widget/ui/src/index.d.ts",
@@ -14,6 +14,7 @@
   "scripts": {
     "dev": "yarn bundle --watch",
     "build": "node ../../scripts/build/command.mjs --path widget/ui",
+    "ts-check": "tsc --declaration --emitDeclarationOnly -p ./tsconfig.json",
     "build:icons": "svgr svgs/resources/fill --config-file svgs/configs/.svgrrc.default.cjs",
     "type-checking": "tsc --declaration --emitDeclarationOnly",
     "storybook": "storybook dev -p 3000",

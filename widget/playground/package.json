@@ -8,6 +8,7 @@
   "scripts": {
     "dev": "parcel -p 3005 --cache-dir=.parcel-cache",
     "build": "parcel build --cache-dir=.parcel-cache && cp ./vercel.json ./dist",
+    "ts-check": "tsc --declaration --emitDeclarationOnly -p ./tsconfig.json",
     "clean": "rimraf .parcel-cache && rimraf dist",
     "format": "prettier --write '{.,src}/**/*.{ts,tsx}'",
     "lint": "eslint \"**/*.{ts,tsx}\" --ignore-path ../../.eslintignore"
