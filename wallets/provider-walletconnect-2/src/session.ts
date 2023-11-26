@@ -7,7 +7,7 @@ import type {
 } from '@walletconnect/types';
 import type { BlockchainMeta } from 'rango-types/lib';
 
-import { Networks, timeout } from '@rango-dev/wallets-shared';
+import { isEvmAddress, Networks, timeout } from '@rango-dev/wallets-shared';
 import { getSdkError } from '@walletconnect/utils';
 import { AccountId } from 'caip';
 
@@ -282,8 +282,9 @@ export async function disconnectSessions(client: SignClient) {
 
 export function getAccountsFromSession(
   session: SessionTypes.Struct,
-  chainId?: string
+  currentChainId?: string
 ) {
+  let firstEvmAddress = false;
   const accounts = Object.values(session.namespaces)
     .map((namespace) => namespace.accounts)
     .flat()
@@ -294,25 +295,30 @@ export function getAccountsFromSession(
        * It will return the chain id itslef if it's not that specific ID.
        */
       const chain = solanaChainIdToNetworkName(chainId.reference);
+
+      const isEvm = isEvmAddress(address);
+      /*
+       * Note: Based on our wallet core, it's enough to return only connecte
+       * network for evm networks and ignore others.
+       */
+      if (isEvm) {
+        if (currentChainId && chainId.reference !== currentChainId) {
+          return null;
+        } else if (!currentChainId) {
+          if (!!firstEvmAddress) {
+            return null;
+          }
+          firstEvmAddress = true;
+        }
+      }
       return {
         accounts: [address],
         chainId: chain,
       };
     })
-    // TODO: fix, ignore solana and cosmos for now
+    .filter((x): x is { accounts: string[]; chainId: string } => Boolean(x))
+    // TODO: fix, ignore solana for now
     .filter((account) => account.chainId !== Networks.SOLANA);
-  // sort accounts, so connected chain is first item in array
-  if (!!chainId) {
-    accounts.sort((a, b) => {
-      if (a.chainId === chainId) {
-        return 1;
-      }
-      if (b.chainId === chainId) {
-        return -1;
-      }
-      return 0;
-    });
-  }
   return accounts;
 }
 

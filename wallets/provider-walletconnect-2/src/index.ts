@@ -15,7 +15,7 @@ import type { BlockchainMeta, SignerFactory } from 'rango-types';
 import { Networks, WalletTypes } from '@rango-dev/wallets-shared';
 import Client from '@walletconnect/sign-client';
 import { AccountId, ChainId } from 'caip';
-import { evmBlockchains } from 'rango-types';
+import { cosmosBlockchains, evmBlockchains } from 'rango-types';
 
 import {
   DEFAULT_APP_METADATA,
@@ -106,23 +106,9 @@ export const connect: Connect = async ({ instance, network, meta }) => {
   });
   // Override the value (session).
   instance.session = session;
-  const currentChainId = !isNew
-    ? String(await getPersistedChainId(instance))
-    : undefined;
-  const accounts = getAccountsFromSession(session, currentChainId);
-  /*
-   * TODO: we need to fix next lines to support multiple accounts
-   * for now, it will return the current evm account on the current chain
-   */
-  if (!isNew) {
-    return {
-      chainId: String(currentChainId),
-      accounts: accounts?.[0].accounts,
-    };
-  }
-  const newChainId = accounts?.[accounts.length - 1].chainId;
-  void persistCurrentChainId(instance, newChainId);
-  return accounts?.[accounts.length - 1];
+  let currentChainId = !isNew ? await getPersistedChainId(instance) : undefined;
+  currentChainId = currentChainId ? String(currentChainId) : undefined;
+  return getAccountsFromSession(session, currentChainId);
 };
 
 export const subscribe: Subscribe = ({
@@ -221,12 +207,13 @@ export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
   allBlockChains
 ) => {
   const evms = evmBlockchains(allBlockChains);
+  const cosmos = cosmosBlockchains(allBlockChains);
   return {
     name: 'WalletConnect',
     img: 'https://raw.githubusercontent.com/rango-exchange/assets/main/wallets/walletconnect/icon.svg',
     installLink: '',
     color: '#b2dbff',
-    supportedChains: evms,
+    supportedChains: [...evms, ...cosmos],
     showOnMobile: true,
     mobileWallet: true,
   };

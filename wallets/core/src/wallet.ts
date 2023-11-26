@@ -193,6 +193,14 @@ class Wallet<InstanceType = any> {
       // Typescript can not detect we are filtering out null values:(
       nextAccounts = accounts.filter(Boolean);
       nextNetwork = requestedNetwork || this.options.config.defaultNetwork;
+      if (this.options.config.isAsyncSwitchNetwork) {
+        const nextChainId = connectResult[0].chainId || Networks.Unknown;
+        nextNetwork =
+          getBlockChainNameFromId(
+            nextChainId,
+            this.info.supportedBlockchains
+          ) || Networks.Unknown;
+      }
     } else {
       const chainId = connectResult.chainId || Networks.Unknown;
       const network =

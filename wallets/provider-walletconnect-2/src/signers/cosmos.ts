@@ -87,7 +87,9 @@ class COSMOSSigner implements GenericSigner<CosmosTransaction> {
         );
         let signResponse;
         try {
-          signResponse = await this.client.request<AminoSignResponse>({
+          signResponse = await this.client.request<
+            AminoSignResponse['signature']
+          >({
             topic: this.session.topic,
             chainId: requestedFor.caipChainId,
             request: {
@@ -101,8 +103,10 @@ class COSMOSSigner implements GenericSigner<CosmosTransaction> {
         } catch (err) {
           throw new SignerError(SignerErrorCode.SIGN_TX_ERROR, undefined, err);
         }
-
-        const signedTx = getsignedTx(tx, signResponse);
+        const signedTx = getsignedTx(tx, {
+          signed: signDoc,
+          signature: signResponse,
+        });
         const result = await sendTx(
           chainId,
           signedTx,
