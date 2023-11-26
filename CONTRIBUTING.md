@@ -85,3 +85,8 @@ In the `crowdin.yml` file, you will find the `project_id` and `api_token` values
 
 `embedded` is importing in different enviroments (iframe, import as react component and a separate `app`). When it's being used as a react component we let the dApp to use it inside its router and they can load the widget in a separate route (not root `/`, e.g. `/swaps`). In this context we can not use absolute paths because we don't know the basename set by user, so we need to always use relative paths. Relative paths has been defined in [URL spec](https://url.spec.whatwg.org/#urls) so we can be sure it's a long term solution and will work in future or by changing our router librart (e.g. `react-router`).
 
+### HMR
+
+We are using Parcel for our client developments, to HMR working properly, we need to point to source code (instead of dist) for Parcel to be able to detect changes on development. One approach was using `module` field, it's not standard but has meaning for some compiler/building tools, so we decided to use `source` which is a Parcel thing only.
+
+You can check the details on #437 PR.
