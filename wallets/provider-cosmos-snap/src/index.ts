@@ -2,26 +2,28 @@ import type {
   CanEagerConnect,
   CanSwitchNetwork,
   Connect,
+  ProviderConnectResult,
   Subscribe,
-  SwitchNetwork,
   WalletInfo,
 } from '@rango-dev/wallets-shared';
 import type { BlockchainMeta, SignerFactory } from 'rango-types';
 
 import {
   canEagerlyConnectToEvm,
-  canSwitchNetworkToEvm,
-  getEvmAccounts,
   subscribeToEvm,
-  switchNetworkForEvm,
   WalletTypes,
 } from '@rango-dev/wallets-shared';
-import { evmBlockchains } from 'rango-types';
+import { cosmosBlockchains } from 'rango-types';
 
-import { metamask as metamask_instance } from './helpers';
+import {
+  getAddresses,
+  installCosmosSnap,
+  isCosmosSnapInstalled,
+  metamask as metamask_instance,
+} from './helpers';
 import signer from './signer';
 
-const WALLET = WalletTypes.META_MASK;
+const WALLET = WalletTypes.COSMOS_SNAP;
 
 export const config = {
   type: WALLET,
@@ -30,24 +32,28 @@ export const config = {
 export const getInstance = metamask_instance;
 export const connect: Connect = async ({ instance }) => {
   /*
-   * Note: We need to get `chainId` here, because for the first time
-   * after opening the browser, wallet is locked, and don't give us accounts and chainId
-   * on `check` phase, so `network` will be null. For this case we need to get chainId
-   * whenever we are requesting accounts.
+   *  cosmos snap (It's optional)
+   * If the user approves to install Snap, we take the Cosmos addresses and add them to the accounts.
    */
-  const { accounts, chainId } = await getEvmAccounts(instance);
-
-  return {
-    accounts,
-    chainId,
-  };
+  await installCosmosSnap(instance);
+  const installed = await isCosmosSnapInstalled(instance);
+  let accounts: ProviderConnectResult[] = [];
+  if (installed) {
+    const addresses = await getAddresses(instance);
+    accounts = addresses.map((item) => ({
+      accounts: [item.address],
+      chainId: item.chain_id,
+    }));
+  }
+  if (!accounts.length) {
+    throw new Error('You have rejected to install cosmos-snap');
+  }
+  return accounts;
 };
 
 export const subscribe: Subscribe = subscribeToEvm;
 
-export const switchNetwork: SwitchNetwork = switchNetworkForEvm;
-
-export const canSwitchNetworkTo: CanSwitchNetwork = canSwitchNetworkToEvm;
+export const canSwitchNetworkTo: CanSwitchNetwork = () => false;
 
 export const getSigners: (provider: any) => SignerFactory = signer;
 
@@ -56,9 +62,9 @@ export const canEagerConnect: CanEagerConnect = canEagerlyConnectToEvm;
 export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
   allBlockChains
 ) => {
-  const evms = evmBlockchains(allBlockChains);
+  const cosmos = cosmosBlockchains(allBlockChains);
   return {
-    name: 'MetaMask',
+    name: 'Cosmos Snap',
     img: 'https://raw.githubusercontent.com/rango-exchange/assets/main/wallets/metamask/icon.svg',
     installLink: {
       CHROME:
@@ -71,6 +77,6 @@ export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
       DEFAULT: 'https://metamask.io/download/',
     },
     color: '#dac7ae',
-    supportedChains: evms,
+    supportedChains: cosmos,
   };
 };

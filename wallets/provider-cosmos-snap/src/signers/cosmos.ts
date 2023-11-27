@@ -3,7 +3,7 @@
 import type { GenericSigner } from 'rango-types';
 import type { CosmosTransaction } from 'rango-types/lib/api/main';
 
-import { DEFAULT_SNAP_ID, executeTransaction } from './helper';
+import { DEFAULT_SNAP_ID, executeTransaction } from './helpers';
 
 export class DefaultCosmosSnapSigner
   implements GenericSigner<CosmosTransaction>

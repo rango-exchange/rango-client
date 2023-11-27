@@ -1,6 +1,6 @@
 {
-  "name": "@rango-dev/signer-cosmos-snap",
-  "version": "0.17.0",
+  "name": "@rango-dev/provider-cosmos-snap",
+  "version": "0.17.1-next.1",
   "license": "MIT",
   "type": "module",
   "module": "./dist/index.js",
@@ -14,15 +14,13 @@
     "src"
   ],
   "scripts": {
-    "build": "node ../../scripts/build/command.mjs --path signers/signer-cosmos-snap",
+    "build": "node ../../scripts/build/command.mjs --path wallets/provider-cosmos-snap",
     "clean": "rimraf dist",
     "format": "prettier --write '{.,src}/**/*.{ts,tsx}'",
-    "lint": "eslint \"**/*.{ts,tsx}\" --ignore-path ../../.eslintignore",
-    "test": "vitest",
-    "test:watch": "vitest --watch",
-    "test:coverage": "vitest run --coverage"
+    "lint": "eslint \"**/*.{ts,tsx}\" --ignore-path ../../.eslintignore"
   },
   "dependencies": {
+    "@rango-dev/wallets-shared": "^0.17.1-next.1",
     "rango-types": "^0.1.46",
     "@cosmjs/amino": "^0.31.3",
     "@cosmjs/proto-signing": "^0.30.1",

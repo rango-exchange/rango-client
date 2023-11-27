@@ -1,4 +1,22 @@
-export const DEFAULT_SNAP_ID = 'npm:@cosmsnap/snap';
+import { getCoinbaseInstance } from '@rango-dev/wallets-shared';
+
+import { DEFAULT_SNAP_ID } from './signers/helpers';
+
+export function metamask() {
+  const isCoinbaseWalletAvailable = !!getCoinbaseInstance();
+  const { ethereum } = window;
+
+  // Some wallets overriding the metamask. So we need to get it properly.
+  if (isCoinbaseWalletAvailable) {
+    // Getting intance from overrided structure from coinbase.
+    return getCoinbaseInstance('metamask');
+  }
+  if (!!ethereum && ethereum.isMetaMask) {
+    return ethereum;
+  }
+
+  return null;
+}
 
 export const isCosmosSnapInstalled = async (instance: any) => {
   const result = await instance.request({ method: 'wallet_getSnaps' });
