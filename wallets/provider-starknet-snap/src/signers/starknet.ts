@@ -1,10 +1,8 @@
 import type { GenericSigner, StarknetTransaction } from 'rango-types';
-import type { InvocationsSignerDetails } from 'starknet';
 
 import { SignerError, SignerErrorCode } from 'rango-types';
-import { Signer } from 'starknet';
 
-import { getAddressKeyDeriver, getKeysFromAddress } from './helpers';
+import { sendTransaction } from './helpers';
 
 class StarknetSigner implements GenericSigner<StarknetTransaction> {
   private provider: any;
@@ -23,34 +21,19 @@ class StarknetSigner implements GenericSigner<StarknetTransaction> {
     chainId: string | null
   ): Promise<{ hash: string }> {
     const { calls } = tx;
-    /*
-     * const
-     * const { privateKey } = await getKeysFromAddress(keyDeriver, network, state, signerAddress);
-     */
-
-    // console.log({ tx, chainId, address, calls, privateKey });
-    const transactionsDetail = {
-      walletAddress: address,
-      chainId,
-    };
 
     try {
-      const keyDeriver = await getAddressKeyDeriver(this.provider);
-      const { privateKey } = await getKeysFromAddress(
-        this.provider,
-        keyDeriver,
-        chainId as string,
-        address
-      );
-
-      console.log({ privateKey });
-
-      const signer = new Signer(privateKey);
-      const signatures = await signer.signTransaction(
-        calls,
-        transactionsDetail as InvocationsSignerDetails
-      );
-      console.log(signatures);
+      for (const call of calls) {
+        const res = await sendTransaction(
+          this.provider,
+          call.contractAddress,
+          call.entrypoint,
+          (call.calldata as string[]).toString(),
+          address,
+          chainId
+        );
+        console.log({ res });
+      }
 
       return { hash: '' };
     } catch (err) {
