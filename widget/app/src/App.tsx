@@ -43,7 +43,7 @@ export function App() {
   }
 
   return (
-    <div style={{ padding: '20px' }}>
+    <div>
       <Routes>
         <Route path="/*" element={<Widget config={configRef.current} />} />
       </Routes>
