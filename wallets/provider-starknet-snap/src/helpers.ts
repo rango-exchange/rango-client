@@ -1,3 +1,5 @@
+import type { AccContract } from './types';
+
 import { getCoinbaseInstance } from '@rango-dev/wallets-shared';
 
 export const DEFAULT_SNAP_ID = 'npm:@consensys/starknet-snap';
@@ -52,12 +54,7 @@ export const installStarknetSnap = async (instance: any) => {
 export const getAccounts = async (
   instance: any,
   chainId: string
-): Promise<
-  {
-    chainId: string;
-    address: string;
-  }[]
-> => {
+): Promise<AccContract[]> => {
   const START_SCAN_INDEX = 0;
   const MAX_SCANNED = 1;
   const MAX_MISSED = 1;

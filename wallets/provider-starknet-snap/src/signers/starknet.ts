@@ -1,8 +1,10 @@
 import type { GenericSigner, StarknetTransaction } from 'rango-types';
+import type { InvocationsSignerDetails } from 'starknet';
 
 import { SignerError, SignerErrorCode } from 'rango-types';
+import { Signer } from 'starknet';
 
-import { DEFAULT_SNAP_ID } from '../helpers';
+import { getAddressKeyDeriver, getKeysFromAddress } from './helpers';
 
 class StarknetSigner implements GenericSigner<StarknetTransaction> {
   private provider: any;
@@ -21,24 +23,36 @@ class StarknetSigner implements GenericSigner<StarknetTransaction> {
     chainId: string | null
   ): Promise<{ hash: string }> {
     const { calls } = tx;
-    console.log({ tx, chainId, address });
+    /*
+     * const
+     * const { privateKey } = await getKeysFromAddress(keyDeriver, network, state, signerAddress);
+     */
+
+    // console.log({ tx, chainId, address, calls, privateKey });
+    const transactionsDetail = {
+      walletAddress: address,
+      chainId,
+    };
 
     try {
-      const response = await this.provider.request({
-        method: 'wallet_invokeSnap',
-        params: {
-          snapId: DEFAULT_SNAP_ID,
-          request: {
-            method: 'starkNet_sendTransaction',
-            params: {
-              senderAddress: address,
-              calls: calls,
-              chainId,
-            },
-          },
-        },
-      });
-      return response;
+      const keyDeriver = await getAddressKeyDeriver(this.provider);
+      const { privateKey } = await getKeysFromAddress(
+        this.provider,
+        keyDeriver,
+        chainId as string,
+        address
+      );
+
+      console.log({ privateKey });
+
+      const signer = new Signer(privateKey);
+      const signatures = await signer.signTransaction(
+        calls,
+        transactionsDetail as InvocationsSignerDetails
+      );
+      console.log(signatures);
+
+      return { hash: '' };
     } catch (err) {
       console.log({ err });
 

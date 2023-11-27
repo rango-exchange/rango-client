@@ -4,16 +4,13 @@ import type {
   Connect,
   ProviderConnectResult,
   Subscribe,
-  SwitchNetwork,
   WalletInfo,
 } from '@rango-dev/wallets-shared';
 import type { BlockchainMeta, SignerFactory } from 'rango-types';
 
 import {
   canEagerlyConnectToEvm,
-  canSwitchNetworkToEvm,
   subscribeToEvm,
-  switchNetworkForEvm,
   WalletTypes,
 } from '@rango-dev/wallets-shared';
 import { starknetBlockchain } from 'rango-types';
@@ -44,6 +41,8 @@ export const connect: Connect = async ({ instance, meta }) => {
   if (installed) {
     for (const item of meta) {
       const addresses = await getAccounts(instance, item.chainId || '');
+      console.log({ addresses });
+
       accounts = [
         ...accounts,
         ...addresses.map((item) => ({
@@ -58,9 +57,7 @@ export const connect: Connect = async ({ instance, meta }) => {
 
 export const subscribe: Subscribe = subscribeToEvm;
 
-export const switchNetwork: SwitchNetwork = switchNetworkForEvm;
-
-export const canSwitchNetworkTo: CanSwitchNetwork = canSwitchNetworkToEvm;
+export const canSwitchNetworkTo: CanSwitchNetwork = () => false;
 
 export const getSigners: (provider: any) => SignerFactory = signer;
 
