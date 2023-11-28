@@ -103,7 +103,7 @@ class Manager {
   private context: ManagerContext;
   private isPaused = false;
   // The client won't get any update on pause, We are using a polling mode to fix this issue for now.
-  private syncInterval: NodeJS.Timer | null = null;
+  private syncInterval: number | null = null;
 
   /**
    *
@@ -383,7 +383,7 @@ class Manager {
       return;
     }
     this.isPaused = true;
-    this.syncInterval = setInterval(() => {
+    this.syncInterval = window.setInterval(() => {
       void this.sync();
     }, SYNC_POLLING_INTERVAL);
   }
