@@ -1,0 +1,1 @@
+export { DefaultCosmosSnapSigner } from './signer';

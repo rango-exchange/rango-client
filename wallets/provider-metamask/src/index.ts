@@ -2,6 +2,7 @@ import type {
   CanEagerConnect,
   CanSwitchNetwork,
   Connect,
+  ProviderConnectResult,
   Subscribe,
   SwitchNetwork,
   WalletInfo,
@@ -16,10 +17,11 @@ import {
   switchNetworkForEvm,
   WalletTypes,
 } from '@rango-dev/wallets-shared';
-import { evmBlockchains } from 'rango-types';
+import { cosmosBlockchains, evmBlockchains } from 'rango-types';
 
 import { metamask as metamask_instance } from './helpers';
 import signer from './signer';
+import { getAddresses, installCosmosSnap, isCosmosSnapInstalled } from './snap';
 
 const WALLET = WalletTypes.META_MASK;
 
@@ -30,17 +32,28 @@ export const config = {
 export const getInstance = metamask_instance;
 export const connect: Connect = async ({ instance }) => {
   /*
+   *  cosmos snap (It's optional)
+   * If the user approves to install Snap, we take the Cosmos addresses and add them to the accounts.
+   */
+  await installCosmosSnap(instance);
+  const installed = await isCosmosSnapInstalled(instance);
+  let accounts: ProviderConnectResult[] = [];
+  if (installed) {
+    const addresses = await getAddresses(instance);
+    accounts = addresses.map((item) => ({
+      accounts: [item.address],
+      chainId: item.chain_id,
+    }));
+  }
+  /*
    * Note: We need to get `chainId` here, because for the first time
    * after opening the browser, wallet is locked, and don't give us accounts and chainId
    * on `check` phase, so `network` will be null. For this case we need to get chainId
    * whenever we are requesting accounts.
    */
-  const { accounts, chainId } = await getEvmAccounts(instance);
-
-  return {
-    accounts,
-    chainId,
-  };
+  const evm = await getEvmAccounts(instance);
+  accounts = [...accounts, evm];
+  return accounts;
 };
 
 export const subscribe: Subscribe = subscribeToEvm;
@@ -57,6 +70,8 @@ export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
   allBlockChains
 ) => {
   const evms = evmBlockchains(allBlockChains);
+  const cosmos = cosmosBlockchains(allBlockChains);
+
   return {
     name: 'MetaMask',
     img: 'https://raw.githubusercontent.com/rango-exchange/assets/main/wallets/metamask/icon.svg',
@@ -71,6 +86,6 @@ export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
       DEFAULT: 'https://metamask.io/download/',
     },
     color: '#dac7ae',
-    supportedChains: evms,
+    supportedChains: [...evms, ...cosmos],
   };
 };

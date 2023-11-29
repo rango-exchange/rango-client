@@ -5,7 +5,7 @@ import type { CosmosTransaction, GenericSigner } from 'rango-types';
 
 import { BroadcastMode, makeSignDoc } from '@cosmjs/launchpad';
 import { cosmos } from '@keplr-wallet/cosmos';
-import { getsignedTx } from '@rango-dev/signer-cosmos';
+import { getSignedTx } from '@rango-dev/signer-cosmos';
 import { uint8ArrayToHex } from '@rango-dev/wallets-shared';
 import { AccountId, ChainId } from 'caip';
 import { formatDirectSignDoc, stringifySignDocValues } from 'cosmos-wallet';
@@ -102,7 +102,7 @@ class COSMOSSigner implements GenericSigner<CosmosTransaction> {
           throw new SignerError(SignerErrorCode.SIGN_TX_ERROR, undefined, err);
         }
 
-        const signedTx = getsignedTx(tx, signResponse);
+        const signedTx = getSignedTx(tx, signResponse);
         const result = await sendTx(
           chainId,
           signedTx,
