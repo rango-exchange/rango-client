@@ -1,11 +1,11 @@
 import type { SignerFactory } from 'rango-types';
 
-import { DefaultEvmSigner } from '@rango-dev/signer-evm';
 import { DefaultSignerFactory, TransactionType as TxType } from 'rango-types';
+
+import StarknetSigner from './signers/cosmos';
 
 export default function getSigners(provider: any): SignerFactory {
   const signers = new DefaultSignerFactory();
-  signers.registerSigner(TxType.EVM, new DefaultEvmSigner(provider));
-
+  signers.registerSigner(TxType.STARKNET, new StarknetSigner(provider));
   return signers;
 }

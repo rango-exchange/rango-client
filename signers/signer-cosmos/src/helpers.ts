@@ -81,7 +81,7 @@ export const executeCosmosTransaction = async (
       } catch (err) {
         throw new SignerError(SignerErrorCode.SIGN_TX_ERROR, undefined, err);
       }
-      const signedTx = getsignedTx(cosmosTx, signResponse);
+      const signedTx = getSignedTx(cosmosTx, signResponse);
       const result = await cosmosProvider.sendTx(
         chainId,
         signedTx,
@@ -133,7 +133,7 @@ export const executeCosmosTransaction = async (
   }
 };
 
-export function getsignedTx(
+export function getSignedTx(
   cosmosTx: CosmosTransaction,
   signResponse: AminoSignResponse
 ) {
