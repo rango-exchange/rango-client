@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/widget-app",
-  "version": "0.13.1-next.23",
+  "version": "0.13.1-next.24",
   "license": "MIT",
   "private": true,
   "source": "public/index.html",
@@ -15,7 +15,7 @@
   },
   "devDependencies": {},
   "dependencies": {
-    "@rango-dev/widget-embedded": "^0.17.1-next.23",
+    "@rango-dev/widget-embedded": "^0.17.1-next.24",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.8.0"
