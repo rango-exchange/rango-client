@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/widget-app",
-  "version": "0.13.1-next.16",
+  "version": "0.13.1-next.24",
   "license": "MIT",
   "private": true,
   "source": "public/index.html",
@@ -8,13 +8,14 @@
   "scripts": {
     "dev": "parcel -p 3002 --cache-dir=.parcel-cache --no-cache",
     "build": "parcel build --cache-dir=.parcel-cache && cp ./vercel.json ./dist",
+    "ts-check": "tsc --declaration --emitDeclarationOnly -p ./tsconfig.json",
     "clean": "rimraf .parcel-cache && rimraf dist",
     "format": "prettier --write '{.,src}/**/*.{ts,tsx}'",
     "lint": "eslint \"**/*.{ts,tsx}\" --ignore-path ../../.eslintignore"
   },
   "devDependencies": {},
   "dependencies": {
-    "@rango-dev/widget-embedded": "^0.17.1-next.16",
+    "@rango-dev/widget-embedded": "^0.17.1-next.24",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.8.0"

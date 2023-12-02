@@ -1,9 +1,9 @@
 {
   "name": "@rango-dev/provider-safepal",
-  "version": "0.21.1-next.3",
+  "version": "0.21.1-next.4",
   "license": "MIT",
   "type": "module",
-  "module": "./dist/index.js",
+  "source": "./src/index.ts",
   "main": "./dist/index.js",
   "exports": {
     ".": "./dist/index.js"
@@ -15,14 +15,15 @@
   ],
   "scripts": {
     "build": "node ../../scripts/build/command.mjs --path wallets/provider-safepal",
+    "ts-check": "tsc --declaration --emitDeclarationOnly -p ./tsconfig.json",
     "clean": "rimraf dist",
     "format": "prettier --write '{.,src}/**/*.{ts,tsx}'",
     "lint": "eslint \"**/*.{ts,tsx}\" --ignore-path ../../.eslintignore"
   },
   "dependencies": {
-    "@rango-dev/signer-evm": "^0.21.1-next.0",
-    "@rango-dev/signer-solana": "^0.21.1-next.0",
-    "@rango-dev/wallets-shared": "^0.21.1-next.3",
+    "@rango-dev/signer-evm": "^0.21.1-next.1",
+    "@rango-dev/signer-solana": "^0.21.1-next.1",
+    "@rango-dev/wallets-shared": "^0.21.1-next.4",
     "rango-types": "^0.1.46"
   },
   "publishConfig": {

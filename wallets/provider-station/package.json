@@ -1,9 +1,9 @@
 {
   "name": "@rango-dev/provider-station",
-  "version": "0.21.1-next.3",
+  "version": "0.21.1-next.4",
   "license": "MIT",
   "type": "module",
-  "module": "./dist/index.js",
+  "source": "./src/index.ts",
   "main": "./dist/index.js",
   "exports": {
     ".": "./dist/index.js"
@@ -15,6 +15,7 @@
   ],
   "scripts": {
     "build": "node ../../scripts/build/command.mjs --path wallets/provider-station",
+    "ts-check": "tsc --declaration --emitDeclarationOnly -p ./tsconfig.json",
     "clean": "rimraf dist",
     "format": "prettier --write '{.,src}/**/*.{ts,tsx}'",
     "lint": "eslint \"**/*.{ts,tsx}\" --ignore-path ../../.eslintignore"
@@ -23,8 +24,8 @@
     "react": ">=16"
   },
   "dependencies": {
-    "@rango-dev/signer-terra": "^0.21.1-next.0",
-    "@rango-dev/wallets-shared": "^0.21.1-next.3",
+    "@rango-dev/signer-terra": "^0.21.1-next.1",
+    "@rango-dev/wallets-shared": "^0.21.1-next.4",
     "@terra-money/wallet-controller": "^3.11.2",
     "rango-types": "^0.1.46"
   },

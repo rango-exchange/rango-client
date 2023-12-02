@@ -54,7 +54,7 @@ export function QuoteSkeleton(props: PropTypes) {
   );
 
   return (
-    <Container>
+    <Container rounded={type !== 'basic'}>
       <div className="cost-and-tag">
         <div className="cost">
           <Skeleton width={60} height={10} variant="rounded" />

@@ -1,9 +1,9 @@
 {
   "name": "@rango-dev/provider-safe",
-  "version": "0.14.1-next.4",
+  "version": "0.14.1-next.5",
   "license": "MIT",
   "type": "module",
-  "module": "./dist/index.js",
+  "source": "./src/index.ts",
   "main": "./dist/index.js",
   "exports": {
     ".": "./dist/index.js"
@@ -15,14 +15,15 @@
   ],
   "scripts": {
     "build": "node ../../scripts/build/command.mjs --path wallets/provider-safe",
+    "ts-check": "tsc --declaration --emitDeclarationOnly -p ./tsconfig.json",
     "clean": "rimraf dist",
     "format": "prettier --write '{.,src}/**/*.{ts,tsx}'",
     "lint": "eslint \"**/*.{ts,tsx}\" --ignore-path ../../.eslintignore"
   },
   "dependencies": {
     "@ethersproject/abstract-provider": "^5.7.0",
-    "@rango-dev/signer-evm": "^0.21.1-next.0",
-    "@rango-dev/wallets-shared": "^0.21.1-next.3",
+    "@rango-dev/signer-evm": "^0.21.1-next.1",
+    "@rango-dev/wallets-shared": "^0.21.1-next.4",
     "@safe-global/safe-apps-provider": "^0.17.0",
     "@safe-global/safe-apps-sdk": "^7.11.0",
     "rango-types": "^0.1.46"

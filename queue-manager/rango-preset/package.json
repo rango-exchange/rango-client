@@ -1,9 +1,9 @@
 {
   "name": "@rango-dev/queue-manager-rango-preset",
-  "version": "0.22.1-next.5",
+  "version": "0.22.1-next.8",
   "license": "MIT",
   "type": "module",
-  "module": "./dist/index.js",
+  "source": "./src/index.ts",
   "main": "./dist/index.js",
   "exports": {
     ".": "./dist/index.js"
@@ -15,6 +15,7 @@
   ],
   "scripts": {
     "build": "node ../../scripts/build/command.mjs --path queue-manager/rango-preset",
+    "ts-check": "tsc --declaration --emitDeclarationOnly -p ./tsconfig.json",
     "clean": "rimraf dist",
     "format": "prettier --write '{.,src}/**/*.{ts,tsx}'",
     "lint": "eslint \"**/*.{ts,tsx}\" --ignore-path ../../.eslintignore"

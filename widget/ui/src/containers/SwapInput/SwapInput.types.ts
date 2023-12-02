@@ -31,6 +31,7 @@ type FromProps = {
 
 type ToProps = {
   mode: 'To';
+  fetchingQuote?: boolean;
   percentageChange: string | null;
   warningLevel: PriceImpactWarningLevel;
 };

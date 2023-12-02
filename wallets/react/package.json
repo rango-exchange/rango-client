@@ -1,9 +1,9 @@
 {
   "name": "@rango-dev/wallets-react",
-  "version": "0.8.1-next.3",
+  "version": "0.8.1-next.4",
   "license": "MIT",
   "type": "module",
-  "module": "./dist/index.js",
+  "source": "./src/index.ts",
   "main": "./dist/index.js",
   "exports": {
     ".": "./dist/index.js"
@@ -15,6 +15,7 @@
   ],
   "scripts": {
     "build": "node ../../scripts/build/command.mjs --path wallets/react",
+    "ts-check": "tsc --declaration --emitDeclarationOnly -p ./tsconfig.json",
     "clean": "rimraf dist",
     "format": "prettier --write '{.,src}/**/*.{ts,tsx}'",
     "lint": "eslint \"**/*.{ts,tsx}\" --ignore-path ../../.eslintignore"
@@ -25,8 +26,8 @@
     "react-dom": "^17.0.0 || ^18.0.0"
   },
   "dependencies": {
-    "@rango-dev/wallets-core": "^0.22.1-next.3",
-    "@rango-dev/wallets-shared": "^0.21.1-next.3",
+    "@rango-dev/wallets-core": "^0.22.1-next.4",
+    "@rango-dev/wallets-shared": "^0.21.1-next.4",
     "rango-types": "^0.1.46"
   },
   "publishConfig": {

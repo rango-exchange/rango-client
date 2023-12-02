@@ -70,6 +70,7 @@ export function MultiSelect(props: MuliSelectPropTypes) {
               defaultSelectedItems={props.defaultSelectedItems}
               type={type}
               list={list}
+              showCategory={type === 'Blockchains' || type === 'Wallets'}
               icon={
                 type === 'Wallets' ? (
                   <WalletIcon size={18} />

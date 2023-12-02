@@ -9,6 +9,7 @@ export interface PropTypes {
   onOpenWarningModal: () => void;
   onCloseWarningModal: () => void;
   onConfirmWarningModal: () => void;
+  onChangeSettings: () => void;
 }
 
 type ModalPropTypesKeys = keyof Omit<PropTypes, 'extraSpace' | 'loading'>;

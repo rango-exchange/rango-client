@@ -1,6 +1,7 @@
 import type { QuoteError, QuoteWarning } from '../types';
+import type { Token } from 'rango-sdk';
 
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 import { useAppStore } from '../store/AppStore';
 import { useQuoteStore } from '../store/quote';
@@ -19,6 +20,12 @@ import {
 import { useFetchQuote } from './useFetchQuote';
 
 const DEBOUNCE_DELAY = 600;
+const FIRST_INDEX = 0;
+
+type FetchQuoteParams = Omit<
+  Parameters<typeof createQuoteRequestBody>[typeof FIRST_INDEX],
+  'fromToken' | 'toToken'
+> & { fromToken: Token | null; toToken: Token | null };
 
 type UseSwapInput = {
   fetch: () => void;
@@ -33,7 +40,8 @@ type UseSwapInput = {
  */
 export function useSwapInput(): UseSwapInput {
   const { fetch: fetchQuote, cancelFetch } = useFetchQuote();
-  const { liquiditySources, enableNewLiquiditySources } = useAppStore().config;
+  const { liquiditySources, enableNewLiquiditySources, experimental } =
+    useAppStore().config;
   const tokens = useAppStore().tokens();
   const {
     fromToken,
@@ -54,7 +62,6 @@ export function useSwapInput(): UseSwapInput {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<QuoteError | null>(null);
   const [warning, setWarning] = useState<QuoteWarning | null>(null);
-  const prevDisabledLiquiditySources = useRef(disabledLiquiditySources);
   const userSlippage = customSlippage ?? slippage;
   const hasTokensValue = !fromToken || !toToken;
   const shouldSkipRequest =
@@ -68,24 +75,39 @@ export function useSwapInput(): UseSwapInput {
     setWarning(null);
   };
 
-  const fetch: UseSwapInput['fetch'] = () => {
+  const fetch = (params: FetchQuoteParams) => {
+    const {
+      fromToken,
+      toToken,
+      inputAmount,
+      liquiditySources,
+      excludeLiquiditySources,
+      disabledLiquiditySources,
+      slippage,
+      affiliateRef,
+      affiliatePercent,
+      affiliateWallets,
+    } = params;
     if (!loading) {
       resetState(true);
     }
-    if (!shouldSkipRequest) {
+    if (!shouldSkipRequest && fromToken && toToken) {
       resetQuote();
       const requestBody = createQuoteRequestBody({
         fromToken,
         toToken,
         inputAmount,
         liquiditySources,
-        excludeLiquiditySources: enableNewLiquiditySources,
+        excludeLiquiditySources,
         disabledLiquiditySources,
-        slippage: userSlippage,
+        slippage,
         affiliateRef,
         affiliatePercent,
         affiliateWallets,
       });
+      if (experimental?.routing) {
+        requestBody.experimental = true;
+      }
       fetchQuote(requestBody)
         .then((res) => {
           setLoading(false);
@@ -115,11 +137,14 @@ export function useSwapInput(): UseSwapInput {
     }
   };
 
-  const debouncedFetch = debounce(() => {
-    if (!shouldSkipRequest) {
-      fetch();
-    }
-  }, DEBOUNCE_DELAY);
+  const debouncedFetch = useCallback(
+    debounce((params: FetchQuoteParams) => {
+      if (!shouldSkipRequest) {
+        fetch(params);
+      }
+    }, DEBOUNCE_DELAY),
+    [shouldSkipRequest]
+  );
 
   useEffect(() => {
     if (!isPositiveNumber(inputAmount) || inputUsdValue?.eq(0)) {
@@ -132,20 +157,53 @@ export function useSwapInput(): UseSwapInput {
     }
     resetQuote();
     resetState(true);
-    debouncedFetch();
+    debouncedFetch({
+      inputAmount,
+      fromToken,
+      toToken,
+      liquiditySources,
+      excludeLiquiditySources: enableNewLiquiditySources,
+      disabledLiquiditySources,
+      slippage: userSlippage,
+      affiliateRef,
+      affiliatePercent,
+      affiliateWallets,
+    });
     return cancelFetch;
-  }, [inputAmount, shouldSkipRequest]);
+  }, [
+    inputAmount,
+    fromToken?.symbol,
+    fromToken?.address,
+    fromToken?.blockchain,
+    toToken?.symbol,
+    toToken?.address,
+    toToken?.blockchain,
+    shouldSkipRequest,
+    liquiditySources?.length,
+    enableNewLiquiditySources,
+    disabledLiquiditySources.length,
+    userSlippage,
+    affiliateRef,
+    affiliatePercent,
+    JSON.stringify(affiliateWallets),
+  ]);
 
-  useEffect(() => {
-    const disabledLiquiditySourceReset =
-      !!prevDisabledLiquiditySources.current.length &&
-      !disabledLiquiditySources.length;
-    if (!shouldSkipRequest && disabledLiquiditySourceReset) {
-      fetch();
-    }
-    prevDisabledLiquiditySources.current = disabledLiquiditySources;
-    return cancelFetch;
-  }, [disabledLiquiditySources.length]);
-
-  return { fetch, loading, error, warning };
+  return {
+    fetch: () =>
+      fetch({
+        inputAmount,
+        fromToken,
+        toToken,
+        liquiditySources,
+        excludeLiquiditySources: enableNewLiquiditySources,
+        disabledLiquiditySources,
+        slippage: userSlippage,
+        affiliateRef,
+        affiliatePercent,
+        affiliateWallets,
+      }),
+    loading,
+    error,
+    warning,
+  };
 }

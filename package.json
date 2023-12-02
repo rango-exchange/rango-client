@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "engines": {
-    "node": ">=14"
+    "node": ">=18"
   },
   "workspaces": [
     "examples/*",
@@ -27,9 +27,13 @@
     "dev:ui": "nx run-many --target=storybook --projects=@rango-dev/ui",
     "dev:wallets": "node ./scripts/dev-watch/command.mjs --project @rango-dev/wallets-demo",
     "dev:queue-manager": "node ./scripts/dev-watch/command.mjs --project @rango-dev/queue-manager-demo",
-    "dev:widget": "node ./scripts/dev-watch/command.mjs --project @rango-dev/widget-app",
+    "dev:widget:type-checker": "node ./scripts/dev-ts-check/command.mjs --project @rango-dev/widget-app",
+    "dev:widget:dev-server": "yarn --cwd ./widget/app/ dev",
+    "dev:widget": "npm-run-all --parallel dev:widget:dev-server dev:widget:type-checker",
     "dev:wallets-adapter": "node ./scripts/dev-watch/command.mjs --project @rango-dev/wallets-adapter-demo",
-    "dev:playground": "node ./scripts/dev-watch/command.mjs --project @rango-dev/widget-playground",
+    "dev:playground:type-checker": "node ./scripts/dev-ts-check/command.mjs --project @rango-dev/widget-playground",
+    "dev:playground:dev-server": "yarn --cwd ./widget/playground/ dev",
+    "dev:playground": "npm-run-all --parallel dev:playground:dev-server dev:playground:type-checker",
     "lint": "nx run-many --target=lint",
     "format": "nx run-many --target=format",
     "publish": "node ./scripts/publish/command.mjs",

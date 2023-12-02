@@ -63,8 +63,8 @@ export const Container = styled('div', {
 
 export const SwapperImage = styled('div', {
   borderRadius: '100%',
-  width: 'max-content',
-  height: 'max-content',
+  width: '24px',
+  height: '24px',
   overflow: 'hidden',
   border: '1.5px solid transparent',
   variants: {

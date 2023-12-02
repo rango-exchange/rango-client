@@ -24,23 +24,18 @@ import { useAppStore } from '../store/AppStore';
 import { useQuoteStore } from '../store/quote';
 import { useUiStore } from '../store/ui';
 import { useWalletsStore } from '../store/wallets';
-import { ButtonState } from '../types';
 import { numberToString } from '../utils/numbers';
 import { getPriceImpact, getPriceImpactLevel } from '../utils/quote';
-import {
-  canComputePriceImpact,
-  getOutputRatio,
-  getPercentageChange,
-  getSwapButtonState,
-  hasHighValueLoss,
-  hasLimitError,
-} from '../utils/swap';
+import { canComputePriceImpact, getSwapButtonState } from '../utils/swap';
 import { getBalanceFromWallet } from '../utils/wallets';
 
 const Container = styled('div', {
   display: 'flex',
   flexDirection: 'column',
   overflowY: 'visible',
+  '& .quote__container': {
+    paddingTop: '$2',
+  },
 });
 
 const FromContainer = styled('div', {
@@ -85,9 +80,6 @@ export function Home() {
 
   const needsToWarnEthOnPath = false;
 
-  const outToInRatio = getOutputRatio(inputUsdValue, outputUsdValue);
-  const highValueLoss = hasHighValueLoss(inputUsdValue, outToInRatio);
-
   const priceImpactInputCanNotBeComputed = !canComputePriceImpact(
     quote,
     inputAmount,
@@ -99,17 +91,17 @@ export function Home() {
     inputAmount,
     outputUsdValue
   );
-  const swapButtonState = getSwapButtonState(
+
+  const swapButtonState = getSwapButtonState({
     fetchMetaStatus,
-    connectedWallets,
     fetchingQuote,
+    inputAmount,
     quote,
-    hasLimitError(quote),
-    highValueLoss,
-    priceImpactInputCanNotBeComputed || priceImpactOutputCanNotBeComputed,
+    anyWalletConnected: connectedWallets.length > 0,
+    error: quoteError,
+    warning: quoteWarning,
     needsToWarnEthOnPath,
-    inputAmount
-  );
+  });
 
   const tokenBalance =
     !!fromBlockchain && !!fromToken
@@ -152,10 +144,8 @@ export function Home() {
   const percentageChange =
     !inputUsdValue || !outputUsdValue || !outputUsdValue.gt(0)
       ? null
-      : getPercentageChange(
-          inputUsdValue.toString(),
-          outputUsdValue.toString()
-        );
+      : getPriceImpact(inputUsdValue.toString(), outputUsdValue.toString());
+
   return (
     <Layout
       ref={layoutRef}
@@ -167,14 +157,13 @@ export function Home() {
           size="large"
           disabled={swapButtonState.disabled}
           prefix={
-            !swapButtonState.disabled &&
-            swapButtonState.hasWarning && <WarningIcon />
+            swapButtonState.action === 'confirm-warning' && <WarningIcon />
           }
           fullWidth
           onClick={() => {
-            if (swapButtonState.state === ButtonState.WAITFORCONNECTING) {
+            if (swapButtonState.action === 'connect-wallet') {
               navigate(navigationRoutes.wallets);
-            } else if (quoteWarning) {
+            } else if (swapButtonState.action === 'confirm-warning') {
               setShowQuoteWarningModal(true);
             } else {
               navigate(navigationRoutes.confirmSwap);
@@ -203,8 +192,6 @@ export function Home() {
           <FromContainer>
             <SwapInput
               label={i18n.t('From')}
-              // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-              //@ts-ignore
               mode="From"
               onInputChange={setInputAmount}
               balance={tokenBalance}
@@ -244,6 +231,7 @@ export function Home() {
             sharpBottomStyle={!!quote?.result || fetchingQuote}
             label={i18n.t('To')}
             mode="To"
+            fetchingQuote={fetchingQuote}
             chain={{
               displayName: toBlockchain?.displayName || '',
               image: toBlockchain?.logo || '',
@@ -280,22 +268,25 @@ export function Home() {
             loading={fetchMetaStatus === 'loading'}
           />
         </InputsContainer>
-        <QuoteInfo
-          quote={quote}
-          loading={fetchingQuote}
-          error={quoteError}
-          warning={quoteWarning}
-          type="basic"
-          refetchQuote={fetchQuote}
-          showWarningModal={showQuoteWarningModal}
-          onOpenWarningModal={() => setShowQuoteWarningModal(true)}
-          onCloseWarningModal={() => setShowQuoteWarningModal(false)}
-          onConfirmWarningModal={() => {
-            setShowQuoteWarningModal(false);
-            setQuoteWarningsConfirmed(true);
-            navigate(navigationRoutes.confirmSwap);
-          }}
-        />
+        <div className="quote__container">
+          <QuoteInfo
+            quote={quote}
+            loading={fetchingQuote}
+            error={quoteError}
+            warning={quoteWarning}
+            type="basic"
+            refetchQuote={fetchQuote}
+            showWarningModal={showQuoteWarningModal}
+            onOpenWarningModal={() => setShowQuoteWarningModal(true)}
+            onCloseWarningModal={() => setShowQuoteWarningModal(false)}
+            onConfirmWarningModal={() => {
+              setShowQuoteWarningModal(false);
+              setQuoteWarningsConfirmed(true);
+              navigate(navigationRoutes.confirmSwap);
+            }}
+            onChangeSettings={() => navigate(navigationRoutes.settings)}
+          />
+        </div>
       </Container>
     </Layout>
   );

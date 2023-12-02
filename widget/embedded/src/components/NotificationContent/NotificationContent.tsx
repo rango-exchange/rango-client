@@ -10,6 +10,7 @@ import {
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import { navigationRoutes } from '../../constants/navigationRoutes';
 import { useAppStore } from '../../store/AppStore';
 import { useNotificationStore } from '../../store/notification';
 import { useUiStore } from '../../store/ui';
@@ -34,7 +35,7 @@ export function NotificationContent() {
 
   const handleOnClick = (requestId: Notification['requestId']) => {
     setSelectedSwap(requestId);
-    navigate(`${requestId}`);
+    navigate(`${navigationRoutes.swaps}/${requestId}`);
   };
 
   return (

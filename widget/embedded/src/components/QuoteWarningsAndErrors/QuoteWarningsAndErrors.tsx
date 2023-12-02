@@ -3,9 +3,7 @@ import type { PropTypes } from './QuoteWarningsAndErrors.types';
 import { i18n } from '@lingui/core';
 import { Alert, Button, InfoIcon } from '@rango-dev/ui';
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
 
-import { navigationRoutes } from '../../constants/navigationRoutes';
 import { QuoteErrorType, QuoteWarningType } from '../../types';
 import { NoResult } from '../NoResult';
 
@@ -24,9 +22,8 @@ export function QuoteWarningsAndErrors(props: PropTypes) {
     onOpenWarningModal,
     onCloseWarningModal,
     onConfirmWarningModal,
+    onChangeSettings,
   } = props;
-
-  const navigate = useNavigate();
 
   const warningModalHandlers = {
     open: showWarningModal,
@@ -58,20 +55,23 @@ export function QuoteWarningsAndErrors(props: PropTypes) {
             title={alertInfo.title}
             type={alertInfo.alertType}
             variant="alarm"
-            action={
-              alertInfo.action === 'show-info' ? (
+            {...(alertInfo.action === 'show-info' && {
+              action: (
                 <Action onClick={onOpenWarningModal}>
                   <InfoIcon size={12} color="gray" />
                 </Action>
-              ) : (
+              ),
+            })}
+            {...(alertInfo.action === 'change-settings' && {
+              action: (
                 <Button
-                  size="xsmall"
-                  type={'error'}
-                  onClick={() => navigate(navigationRoutes.settings)}>
-                  {i18n.t('Change Settings')}
+                  size="xxsmall"
+                  type={alertInfo.alertType}
+                  onClick={onChangeSettings}>
+                  {i18n.t('Change')}
                 </Button>
-              )
-            }
+              ),
+            })}
           />
         </Alerts>
       )}

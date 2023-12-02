@@ -13,6 +13,7 @@ export const QuoteContainer = styled(Collapsible.Root, {
   overflowY: 'hidden',
   width: '100%',
   borderRadius: '$xm',
+  cursor: 'default',
   variants: {
     recommended: {
       true: {
@@ -107,6 +108,7 @@ export const SummaryContainer = styled('div', {
   '& .summary': {
     width: '100%',
     padding: '$15 $15 $10 $15',
+    cursor: 'default',
   },
   '& .basic-info': {
     paddingTop: '$10',
@@ -167,6 +169,24 @@ export const Chains = styled(Collapsible.Trigger, {
     },
   },
   '& div:nth-child(1)': { display: 'flex' },
+});
+
+export const ChainImageContainer = styled('div', {
+  width: '18px',
+  height: '18px',
+  borderRadius: '100%',
+  border: '1.5px transparent solid',
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  variants: {
+    state: {
+      error: {
+        borderColor: '$error500',
+      },
+      warning: { borderColor: '$warning500' },
+    },
+  },
 });
 
 export const Content = styled(CollapsibleContent, {

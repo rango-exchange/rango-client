@@ -1,8 +1,9 @@
 {
   "name": "@rango-dev/widget-embedded",
-  "version": "0.17.1-next.16",
+  "version": "0.17.1-next.24",
   "license": "MIT",
   "type": "module",
+  "source": "./src/index.ts",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
   "files": [
@@ -12,6 +13,7 @@
   "browserslist": "> 0.5%, last 2 versions, not dead",
   "scripts": {
     "build": "node ../../scripts/build/command.mjs --path widget/embedded",
+    "ts-check": "tsc --declaration --emitDeclarationOnly -p ./tsconfig.json",
     "clean": "rimraf dist",
     "format": "prettier --write '{.,src}/**/*.{ts,tsx}'",
     "lint": "eslint \"**/*.{ts,tsx}\" --ignore-path ../../.eslintignore"
@@ -19,13 +21,13 @@
   "dependencies": {
     "@lingui/core": "4.2.1",
     "@lingui/react": "4.2.1",
-    "@rango-dev/provider-all": "^0.22.1-next.5",
-    "@rango-dev/queue-manager-core": "^0.22.1-next.0",
-    "@rango-dev/queue-manager-rango-preset": "^0.22.1-next.5",
-    "@rango-dev/queue-manager-react": "^0.22.1-next.0",
-    "@rango-dev/ui": "^0.22.1-next.8",
-    "@rango-dev/wallets-react": "^0.8.1-next.3",
-    "@rango-dev/wallets-shared": "^0.21.1-next.3",
+    "@rango-dev/provider-all": "^0.22.1-next.6",
+    "@rango-dev/queue-manager-core": "^0.22.1-next.2",
+    "@rango-dev/queue-manager-rango-preset": "^0.22.1-next.8",
+    "@rango-dev/queue-manager-react": "^0.22.1-next.2",
+    "@rango-dev/ui": "^0.22.1-next.13",
+    "@rango-dev/wallets-react": "^0.8.1-next.4",
+    "@rango-dev/wallets-shared": "^0.21.1-next.4",
     "bignumber.js": "^9.1.1",
     "copy-to-clipboard": "^3.3.3",
     "dayjs": "^1.11.7",

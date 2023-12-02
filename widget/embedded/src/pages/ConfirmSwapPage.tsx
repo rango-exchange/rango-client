@@ -18,7 +18,7 @@ import {
   Typography,
   WalletIcon,
 } from '@rango-dev/ui';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { flushSync } from 'react-dom';
 import { useNavigate } from 'react-router-dom';
 
@@ -31,6 +31,7 @@ import { getQuoteUpdateWarningMessage } from '../constants/warnings';
 import { QuoteInfo } from '../containers/QuoteInfo';
 import { useConfirmSwap } from '../hooks/useConfirmSwap';
 import { useQuoteStore } from '../store/quote';
+import { useSettingsStore } from '../store/settings';
 import { useUiStore } from '../store/ui';
 import { useWalletsStore } from '../store/wallets';
 import { QuoteWarningType } from '../types';
@@ -43,7 +44,6 @@ const Container = styled('div', {
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingBottom: '$10',
   },
   '& .icon': {
     width: '$24',
@@ -51,6 +51,9 @@ const Container = styled('div', {
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  '& .quote-update__alert': {
+    paddingTop: '$10',
   },
 });
 
@@ -86,6 +89,9 @@ export function ConfirmSwapPage() {
   const showWalletsOnInit = !quoteWalletsConfirmed;
   const [showWallets, setShowWallets] = useState(false);
   const setSelectedSwap = useUiStore.use.setSelectedSwap();
+  const disabledLiquiditySources =
+    useSettingsStore.use.disabledLiquiditySources();
+  const prevDisabledLiquiditySources = useRef(disabledLiquiditySources);
   const { manager } = useManager();
   const {
     fetch: confirmSwap,
@@ -151,12 +157,22 @@ export function ConfirmSwapPage() {
       swap: null,
       warnings: null,
     });
-    confirmSwap({ selectedWallets })
+    confirmSwap({ selectedWallets, customDestination })
       .then((res) => {
         setConfirmSwapResult(res);
       })
       .catch((error) => console.error(error));
   };
+
+  useEffect(() => {
+    const disabledLiquiditySourceReset =
+      !!prevDisabledLiquiditySources.current.length &&
+      !disabledLiquiditySources.length;
+    if (disabledLiquiditySourceReset) {
+      void onRefresh();
+    }
+    prevDisabledLiquiditySources.current = disabledLiquiditySources;
+  }, [disabledLiquiditySources.length]);
 
   useEffect(() => {
     if (showWalletsOnInit) {
@@ -237,6 +253,12 @@ export function ConfirmSwapPage() {
     connectedWallets.length,
   ]);
 
+  useLayoutEffect(() => {
+    if (!quote) {
+      navigate(`../`);
+    }
+  }, []);
+
   return (
     <Layout
       header={{
@@ -315,7 +337,7 @@ export function ConfirmSwapPage() {
           </>
         )}
         {confirmSwapResult.warnings?.quoteUpdate && (
-          <>
+          <div className="quote-update__alert">
             <Alert
               variant="alarm"
               type="warning"
@@ -326,13 +348,13 @@ export function ConfirmSwapPage() {
                 )
               }
             />
-            <Divider size={12} />
-          </>
+          </div>
         )}
         <QuoteInfo
           quote={quote}
           type="swap-preview"
           expanded={true}
+          alertPosition="top"
           error={confirmSwapResult.error}
           loading={fetchingConfirmationQuote}
           warning={confirmSwapResult.warnings?.quote ?? null}
@@ -344,6 +366,7 @@ export function ConfirmSwapPage() {
             setShowQuoteWarningModal(false);
             await addNewSwap();
           }}
+          onChangeSettings={() => navigate('../' + navigationRoutes.settings)}
         />
       </Container>
     </Layout>
