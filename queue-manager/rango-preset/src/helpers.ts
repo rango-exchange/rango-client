@@ -22,10 +22,10 @@ import type {
   QueueName,
   QueueType,
 } from '@rango-dev/queue-manager-core';
-import type { Providers } from '@rango-dev/wallets-react';
 import type {
   Meta,
   Network,
+  Providers,
   WalletState,
   WalletType,
 } from '@rango-dev/wallets-shared';
@@ -34,11 +34,15 @@ import type {
   EvmBlockchainMeta,
   Transaction,
 } from 'rango-sdk';
-import type { APIErrorCode, SignerErrorCode } from 'rango-types/lib';
+import type { APIErrorCode, SignerErrorCode } from 'rango-types';
 
 import { Status } from '@rango-dev/queue-manager-core';
-import { readAccountAddress } from '@rango-dev/wallets-react';
-import { getBlockChainNameFromId, Networks } from '@rango-dev/wallets-shared';
+import { readAccountAddress } from '@rango-dev/wallets-core';
+import {
+  getBlockChainNameFromId,
+  getEvmProvider,
+  splitWalletNetwork,
+} from '@rango-dev/wallets-shared';
 import { TransactionType } from 'rango-sdk';
 
 import {
@@ -126,29 +130,6 @@ export function inMemoryTransactionsData() {
         false;
     },
   };
-}
-
-/**
- * Sample inputs are:
- *  - "metamask-ETH"
- *  - "metamask-BSC-BSC:0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
- *  - "token-pocket-BSC-BSC:0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
- * Returns "wallet and network" separately, even if the wallet is dashed inside.
- *
- */
-
-export function splitWalletNetwork(input: string): string[] {
-  const removedAddressInput = input?.split(':')[0] || '';
-  const splittedInput = removedAddressInput.split('-');
-  const network = splittedInput[splittedInput.length - 1];
-  const walletNetwork = splittedInput.slice(0, -1);
-
-  if (walletNetwork[walletNetwork.length - 1] === network) {
-    walletNetwork.pop();
-  }
-  const wallet = walletNetwork.join('-');
-
-  return [wallet, network];
 }
 
 /**
@@ -622,25 +603,6 @@ export function isWalletNull(wallet: Wallet | null): boolean {
     wallet?.blockchains === null ||
     wallet?.blockchains.length === 0
   );
-}
-
-/**
- * On our implementation for `wallets` package, We keep the instance in 2 ways
- * If it's a single chain wallet, it returns the instance directly,
- * If it's a multichain wallet, it returns a `Map` of instances.
- * This function will get the `ETHEREUM` instance in both types.
- */
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export function getEvmProvider(providers: Providers, type: WalletType): any {
-  if (type && providers[type]) {
-    // we need this because provider can return an instance or a map of instances, so what you are doing here is try to detect that.
-    if (providers[type].size) {
-      return providers[type].get(Networks.ETHEREUM);
-    }
-
-    return providers[type];
-  }
-  return null;
 }
 
 /**

@@ -1,15 +1,21 @@
-import {
-  Network,
+import type {
+  CanEagerConnect,
   CanSwitchNetwork,
+  Network,
+  Providers,
   Subscribe,
   SwitchNetwork,
-  Networks,
-  CanEagerConnect,
+  WalletType,
 } from './rango';
-import { convertEvmBlockchainMetaToEvmChainInfo } from './helpers';
-import { switchOrAddNetworkForMetamaskCompatibleWallets } from './helpers';
 import type { BlockchainMeta } from 'rango-types';
+
 import { isEvmBlockchain } from 'rango-types';
+
+import {
+  convertEvmBlockchainMetaToEvmChainInfo,
+  switchOrAddNetworkForMetamaskCompatibleWallets,
+} from './helpers';
+import { Networks } from './rango';
 
 export async function getEvmAccounts(instance: any) {
   const [accounts, chainId] = await Promise.all([
@@ -30,11 +36,13 @@ export const subscribeToEvm: Subscribe = ({
   updateAccounts,
 }) => {
   instance?.on('accountsChanged', (addresses: string[]) => {
-    // TODO: after enabling autoconnect, we can consider this condition
-    // to be removed.
-    // The problem was if a user already connected its wallet,
-    // Metamask is triggering this event on first load, so when autoconnect is disabled,
-    // it's automaticlally change the state of wallet to `connected`.
+    /*
+     * TODO: after enabling autoconnect, we can consider this condition
+     * to be removed.
+     * The problem was if a user already connected its wallet,
+     * Metamask is triggering this event on first load, so when autoconnect is disabled,
+     * it's automaticlally change the state of wallet to `connected`.
+     */
     if (state.connected) {
       updateAccounts(addresses);
     }
@@ -50,8 +58,10 @@ export const canEagerlyConnectToEvm: CanEagerConnect = async ({ instance }) => {
     const accounts: string[] = await instance.request({
       method: 'eth_accounts',
     });
-    if (accounts.length) return true;
-    else return false;
+    if (accounts.length) {
+      return true;
+    }
+    return false;
   } catch (error) {
     return false;
   }
@@ -82,13 +92,17 @@ export function getEthChainsInstance(
   network: Network | null,
   meta: BlockchainMeta[]
 ): Network | null {
-  if (!network) return null;
+  if (!network) {
+    return null;
+  }
   const evmBlockchains = evmNetworkNames(meta);
   return evmBlockchains.includes(network) ? Networks.ETHEREUM : null;
 }
 
 function isEvmNetwork(network: Network | null, meta: BlockchainMeta[]) {
-  if (!network) return false;
+  if (!network) {
+    return false;
+  }
 
   return evmNetworkNames(meta).includes(network);
 }
@@ -113,4 +127,22 @@ export function chooseInstance(
 
 export function getNetworkInstance(provider: any, network: Network) {
   return provider.size ? provider.get(network) : provider;
+}
+
+/**
+ * On our implementation for `wallets` package, We keep the instance in 2 ways
+ * If it's a single chain wallet, it returns the instance directly,
+ * If it's a multichain wallet, it returns a `Map` of instances.
+ * This function will get the `ETHEREUM` instance in both types.
+ */
+export function getEvmProvider(providers: Providers, type: WalletType): any {
+  if (type && providers[type]) {
+    // we need this because provider can return an instance or a map of instances, so what you are doing here is try to detect that.
+    if (providers[type].size) {
+      return providers[type].get(Networks.ETHEREUM);
+    }
+
+    return providers[type];
+  }
+  return null;
 }

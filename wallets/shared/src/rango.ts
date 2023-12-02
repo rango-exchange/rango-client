@@ -296,3 +296,5 @@ export interface Wallet {
   connected: boolean;
   info: Omit<WalletInfo, 'color' | 'supportedChains'>;
 }
+
+export type Providers = { [type in WalletType]?: any };
