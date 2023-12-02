@@ -4,8 +4,9 @@ import { useManager } from '@rango-dev/queue-manager-react';
 import React, { createContext, useContext } from 'react';
 
 import { useWalletsStore } from '../../store/wallets';
-import { getPendingSwaps } from '../../utils/queue';
 import { calculateWalletUsdValue } from '../../utils/wallets';
+
+import { WidgetHistory } from './WidgetInfo.helpers';
 
 export const WidgetInfoContext = createContext<
   WidgetInfoContextInterface | undefined
@@ -13,14 +14,14 @@ export const WidgetInfoContext = createContext<
 
 export function WidgetInfo(props: React.PropsWithChildren) {
   const { manager } = useManager();
-  const swaps = getPendingSwaps(manager);
+  const history = new WidgetHistory(manager);
   const details = useWalletsStore.use.connectedWallets();
   const isLoading = useWalletsStore.use.loading();
   const totalBalance = calculateWalletUsdValue(details);
   const refetch = useWalletsStore.use.getWalletsDetails();
   // eslint-disable-next-line react/jsx-no-constructed-context-values
   const value = {
-    swaps,
+    history,
     wallets: {
       isLoading,
       details,
