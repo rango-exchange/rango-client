@@ -8,8 +8,13 @@ import type {
   WidgetTheme,
 } from './types';
 import type {
+  EventSeverity,
+  PendingSwap,
+  PendingSwapStep,
+  PendingSwapWithQueueID,
   Route,
   RouteEvent,
+  RouteExecutionEvents,
   RouteFailedEvent,
   RouteStartedEvent,
   RouteSucceededEvent,
@@ -28,17 +33,27 @@ import type {
   EventHandler as HandleWalletsUpdate,
   ProviderInterface,
 } from '@rango-dev/wallets-react';
-import type { WalletType } from '@rango-dev/wallets-shared';
+import type {
+  WalletInfo,
+  WalletState,
+  WalletType,
+} from '@rango-dev/wallets-shared';
 
 import {
   MainEvents,
+  PendingSwapNetworkStatus,
   RouteEventType,
   StepEventType,
   StepExecutionBlockedEventStatus,
   StepExecutionEventStatus,
   useEvents as useWidgetEvents,
 } from '@rango-dev/queue-manager-rango-preset';
-import { useWallets } from '@rango-dev/wallets-react';
+import {
+  readAccountAddress,
+  useWallets,
+  Events as WalletEvents,
+} from '@rango-dev/wallets-react';
+import { Networks, WalletTypes } from '@rango-dev/wallets-shared';
 
 import { WidgetWallets } from './containers/Wallets';
 import { Widget } from './containers/Widget';
@@ -89,4 +104,24 @@ export {
   StepEventType,
   StepExecutionEventStatus,
   StepExecutionBlockedEventStatus,
+};
+
+// Internal type exports for Rango
+export type {
+  WalletState,
+  WalletInfo,
+  PendingSwap,
+  PendingSwapWithQueueID,
+  PendingSwapStep,
+  RouteExecutionEvents,
+  EventSeverity,
+};
+
+// Internal function and enum exports for Rango
+export {
+  readAccountAddress,
+  Networks,
+  WalletEvents,
+  WalletTypes,
+  PendingSwapNetworkStatus,
 };
