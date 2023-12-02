@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/provider-leap-cosmos",
-  "version": "0.21.1-next.4",
+  "version": "0.21.1-next.5",
   "license": "MIT",
   "type": "module",
   "source": "./src/index.ts",
@@ -22,7 +22,7 @@
   },
   "dependencies": {
     "@rango-dev/signer-cosmos": "^0.21.1-next.1",
-    "@rango-dev/wallets-shared": "^0.21.1-next.4",
+    "@rango-dev/wallets-shared": "^0.21.1-next.5",
     "rango-types": "^0.1.46"
   },
   "publishConfig": {
