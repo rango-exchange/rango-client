@@ -5,7 +5,7 @@ import stringifyObject from 'stringify-object';
 // @ts-ignore
 import subtractObject from 'subtract-object';
 
-export function clearEmpties<T extends Record<string, any>>(obj: T): T {
+function clearEmpties<T extends Record<string, any>>(obj: T): T {
   for (const key in obj) {
     if (!obj[key] || typeof obj[key] !== 'object') {
       continue;
@@ -79,7 +79,7 @@ export default function App() {
 `;
 }
 
-export function insertAt(
+function insertAt(
   originalString: string,
   insertedString: string,
   index: number
