@@ -9,8 +9,6 @@ import { SwitchFromAndToButton } from '../components/SwitchFromAndTo';
 import { errorMessages } from '../constants/errors';
 import { navigationRoutes } from '../constants/navigationRoutes';
 import {
-  BALANCE_MAX_DECIMALS,
-  BALANCE_MIN_DECIMALS,
   PERCENTAGE_CHANGE_MAX_DECIMALS,
   PERCENTAGE_CHANGE_MIN_DECIMALS,
   TOKEN_AMOUNT_MAX_DECIMALS,
@@ -27,7 +25,7 @@ import { useWalletsStore } from '../store/wallets';
 import { numberToString } from '../utils/numbers';
 import { getPriceImpact, getPriceImpactLevel } from '../utils/quote';
 import { canComputePriceImpact, getSwapButtonState } from '../utils/swap';
-import { getBalanceFromWallet } from '../utils/wallets';
+import { formatBalance } from '../utils/wallets';
 
 const Container = styled('div', {
   display: 'flex',
@@ -73,7 +71,7 @@ export function Home() {
 
   const fetchMetaStatus = useAppStore().fetchStatus;
 
-  const connectedWallets = useWalletsStore.use.connectedWallets();
+  const { connectedWallets, getBalanceFor } = useWalletsStore();
   const setCurrentPage = useUiStore.use.setCurrentPage();
   const [showQuoteWarningModal, setShowQuoteWarningModal] = useState(false);
   const layoutRef = useRef<HTMLDivElement>(null);
@@ -103,36 +101,14 @@ export function Home() {
     needsToWarnEthOnPath,
   });
 
-  const tokenBalance =
-    !!fromBlockchain && !!fromToken
-      ? numberToString(
-          getBalanceFromWallet(
-            connectedWallets,
-            fromBlockchain?.name,
-            fromToken?.symbol,
-            fromToken?.address
-          )?.amount || '0',
-          BALANCE_MIN_DECIMALS,
-          BALANCE_MAX_DECIMALS
-        )
-      : '0';
+  const fromTokenBalance = fromToken ? getBalanceFor(fromToken) : null;
+
+  const fromTokenFormattedBalance =
+    formatBalance(fromTokenBalance)?.amount ?? '0';
 
   const tokenBalanceReal =
     !!fromBlockchain && !!fromToken
-      ? numberToString(
-          getBalanceFromWallet(
-            connectedWallets,
-            fromBlockchain?.name,
-            fromToken?.symbol,
-            fromToken?.address
-          )?.amount || '0',
-          getBalanceFromWallet(
-            connectedWallets,
-            fromBlockchain?.name,
-            fromToken?.symbol,
-            fromToken?.address
-          )?.decimal
-        )
+      ? numberToString(fromTokenBalance?.amount, fromTokenBalance?.decimals)
       : '0';
 
   useEffect(() => {
@@ -194,7 +170,7 @@ export function Home() {
               label={i18n.t('From')}
               mode="From"
               onInputChange={setInputAmount}
-              balance={tokenBalance}
+              balance={fromTokenFormattedBalance}
               chain={{
                 displayName: fromBlockchain?.displayName || '',
                 image: fromBlockchain?.logo || '',
@@ -220,7 +196,7 @@ export function Home() {
               disabled={fetchMetaStatus === 'failed'}
               loading={fetchMetaStatus === 'loading'}
               onSelectMaxBalance={() => {
-                if (tokenBalance !== '0') {
+                if (fromTokenFormattedBalance !== '0') {
                   setInputAmount(tokenBalanceReal.split(',').join(''));
                 }
               }}

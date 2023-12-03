@@ -1,4 +1,3 @@
-import type { TokenWithBalance } from '../components/TokenList';
 import type { Wallet } from '../types';
 import type { PendingSwap } from '@rango-dev/queue-manager-rango-preset/dist/shared';
 import type {
@@ -38,8 +37,8 @@ export interface QuoteState {
   inputUsdValue: BigNumber | null;
   outputAmount: BigNumber | null;
   outputUsdValue: BigNumber | null;
-  fromToken: TokenWithBalance | null;
-  toToken: TokenWithBalance | null;
+  fromToken: Token | null;
+  toToken: Token | null;
   quoteWalletsConfirmed: boolean;
   selectedWallets: Wallet[];
   quoteWarningsConfirmed: boolean;
