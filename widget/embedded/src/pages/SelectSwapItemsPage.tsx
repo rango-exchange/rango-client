@@ -14,7 +14,7 @@ import { useNavigateBack } from '../hooks/useNavigateBack';
 import { useAppStore } from '../store/AppStore';
 import { useQuoteStore } from '../store/quote';
 import { useWalletsStore } from '../store/wallets';
-import { getTokensBalanceFromWalletAndSort } from '../utils/wallets';
+import { sortTokensByBalance } from '../utils/wallets';
 
 interface PropTypes {
   type: 'source' | 'destination';
@@ -32,7 +32,7 @@ export function SelectSwapItemsPage(props: PropTypes) {
     setFromBlockchain,
     setToBlockchain,
   } = useQuoteStore();
-  const { connectedWallets } = useWalletsStore();
+  const getBalanceFor = useWalletsStore.use.getBalanceFor();
   const [searchedFor, setSearchedFor] = useState<string>('');
 
   const selectedBlockchain = type === 'source' ? fromBlockchain : toBlockchain;
@@ -47,10 +47,7 @@ export function SelectSwapItemsPage(props: PropTypes) {
     blockchain: selectedBlockchainName,
     searchFor: searchedFor,
   });
-  const tokensList = getTokensBalanceFromWalletAndSort(
-    tokens,
-    connectedWallets
-  );
+  const tokensList = sortTokensByBalance(tokens, getBalanceFor);
 
   // Actions
   const updateBlockchain = (blockchain: BlockchainMeta) => {

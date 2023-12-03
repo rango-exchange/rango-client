@@ -1,8 +1,8 @@
-import type { TokenWithBalance } from './TokenList.types';
+import type { Token } from 'rango-sdk';
 
 import { containsText } from '../../utils/common';
 
-export const filterTokens = (list: TokenWithBalance[], searchedFor: string) =>
+export const filterTokens = (list: Token[], searchedFor: string) =>
   list.filter(
     (token) =>
       containsText(token.symbol, searchedFor) ||

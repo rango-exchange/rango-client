@@ -1,16 +1,9 @@
 import type { Token } from 'rango-sdk';
 
-export interface TokenWithBalance extends Token {
-  balance?: {
-    amount: string;
-    usdValue: string;
-  };
-}
-
 export interface PropTypes {
-  list: TokenWithBalance[];
+  list: Token[];
   searchedFor?: string;
-  onChange: (token: TokenWithBalance) => void;
+  onChange: (token: Token) => void;
   selectedBlockchain?: string;
 }
 
@@ -22,7 +15,7 @@ export interface RenderDescProps {
   name?: string | null;
   address: string;
   url: string;
-  token: TokenWithBalance;
+  token: Token;
   customCssForTag: TagCSS;
   customCssForTagTitle: TitleCSS;
 }
