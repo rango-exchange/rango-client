@@ -1,7 +1,7 @@
 import type { Type } from '../types';
-import type { ProviderInterface } from '@rango-dev/wallets-react';
 import type { WalletType } from '@rango-dev/wallets-shared';
 import type {
+  ProviderInterface,
   WidgetColors,
   WidgetColorsKeys,
   WidgetConfig,

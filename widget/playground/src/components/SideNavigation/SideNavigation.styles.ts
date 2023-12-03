@@ -1,6 +1,6 @@
 import { styled } from '@rango-dev/ui';
 
-export const Flex = styled('div', {
+const Flex = styled('div', {
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',

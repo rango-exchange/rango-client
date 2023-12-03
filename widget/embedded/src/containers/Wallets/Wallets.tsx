@@ -28,15 +28,14 @@ export const WidgetContext = createContext<WidgetContextInterface>({
 });
 
 function Main(props: PropsWithChildren<PropTypes>) {
-  const updateConfig = useAppStore().updateConfig;
+  const { updateConfig } = useAppStore();
   const blockchains = useAppStore().blockchains();
   const tokens = useAppStore().tokens();
   const walletOptions: ProvidersOptions = {
     walletConnectProjectId: props.config?.walletConnectProjectId,
   };
   const { providers } = useWalletProviders(props.config.wallets, walletOptions);
-  const disconnectWallet = useWalletsStore.use.disconnectWallet();
-  const connectWallet = useWalletsStore.use.connectWallet();
+  const { connectWallet, disconnectWallet } = useWalletsStore();
   const onConnectWalletHandler = useRef<OnConnectHandler>();
   useSyncStoresWithConfig();
 

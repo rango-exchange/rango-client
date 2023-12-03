@@ -15,7 +15,7 @@ msgstr ""
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:37
-#: widget/embedded/src/components/TokenList/TokenList.tsx:127
+#: widget/embedded/src/components/TokenList/TokenList.tsx:125
 #: widget/embedded/src/pages/HistoryPage.tsx:95
 #: widget/embedded/src/pages/LiquiditySourcePage.tsx:126
 msgid "No results found"
@@ -23,7 +23,7 @@ msgstr "No results found"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:38
-#: widget/embedded/src/components/TokenList/TokenList.tsx:128
+#: widget/embedded/src/components/TokenList/TokenList.tsx:126
 #: widget/embedded/src/pages/HistoryPage.tsx:97
 #: widget/embedded/src/pages/LiquiditySourcePage.tsx:127
 msgid "Try using different keywords"
@@ -437,7 +437,7 @@ msgid "Network Changed"
 msgstr "Network Changed"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/TokenList/TokenList.tsx:267
+#: widget/embedded/src/components/TokenList/TokenList.tsx:265
 msgid "Select Token"
 msgstr "Select Token"
 
@@ -553,7 +553,7 @@ msgstr "Confirm USD Price Unknown"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/constants/messages.ts:6
-#: widget/embedded/src/pages/Home.tsx:180
+#: widget/embedded/src/pages/Home.tsx:156
 msgid "Swap"
 msgstr "Swap"
 
@@ -613,12 +613,12 @@ msgid "Search Transaction"
 msgstr "Search Transaction"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/Home.tsx:194
+#: widget/embedded/src/pages/Home.tsx:170
 msgid "From"
 msgstr "From"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/Home.tsx:232
+#: widget/embedded/src/pages/Home.tsx:208
 msgid "To"
 msgstr "To"
 
@@ -643,12 +643,12 @@ msgid "Search Blockchain"
 msgstr "Search Blockchain"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/SelectSwapItemsPage.tsx:75
+#: widget/embedded/src/pages/SelectSwapItemsPage.tsx:72
 msgid "Swap {type}"
 msgstr "Swap {type}"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/SelectSwapItemsPage.tsx:90
+#: widget/embedded/src/pages/SelectSwapItemsPage.tsx:87
 msgid "Search Token"
 msgstr "Search Token"
 

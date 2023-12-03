@@ -1,10 +1,14 @@
 import type { PendingSwap, PendingSwapStep, Wallet } from './shared';
-import type { QueueDef, QueueStorage } from '@rango-dev/queue-manager-core';
-import type { QueueContext } from '@rango-dev/queue-manager-core/dist/queue';
-import type { ConnectResult, Providers } from '@rango-dev/wallets-react';
+import type {
+  QueueContext,
+  QueueDef,
+  QueueStorage,
+} from '@rango-dev/queue-manager-core';
+import type { ConnectResult } from '@rango-dev/wallets-core';
 import type {
   Meta,
   Network,
+  Providers,
   WalletState,
   WalletType,
 } from '@rango-dev/wallets-shared';

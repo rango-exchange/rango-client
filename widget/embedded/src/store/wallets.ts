@@ -1,4 +1,4 @@
-import type { Wallet } from '../types';
+import type { Balance, TokensBalance, Wallet } from '../types';
 import type { WalletType } from '@rango-dev/wallets-shared';
 import type { Token } from 'rango-sdk';
 
@@ -7,8 +7,10 @@ import { subscribeWithSelector } from 'zustand/middleware';
 
 import { httpService } from '../services/httpService';
 import {
+  createTokenHash,
   isAccountAndWalletMatched,
   makeBalanceFor,
+  makeTokensBalance,
   resetConnectedWalletState,
 } from '../utils/wallets';
 
@@ -33,9 +35,9 @@ export interface ConnectedWallet extends Wallet {
   loading: boolean;
   error: boolean;
 }
-
 interface WalletsStore {
   connectedWallets: ConnectedWallet[];
+  balances: TokensBalance;
   customDestination: string;
   loading: boolean;
   connectWallet: (accounts: Wallet[], tokens: Token[]) => void;
@@ -47,12 +49,14 @@ interface WalletsStore {
     tokens: Token[],
     shouldRetry?: boolean
   ) => void;
+  getBalanceFor: (token: Token) => Balance | null;
 }
 
 export const useWalletsStore = createSelectors(
   create<WalletsStore>()(
     subscribeWithSelector((set, get) => ({
       connectedWallets: [],
+      balances: {},
       customDestination: '',
       loading: false,
       connectWallet: (accounts, tokens) => {
@@ -92,21 +96,27 @@ export const useWalletsStore = createSelectors(
                 connectedWallet.walletType !== walletType
             )
             .map((selectedWallet) => selectedWallet.chain);
+
+          const connectedWallets = state.connectedWallets
+            .filter(
+              (connectedWallet) => connectedWallet.walletType !== walletType
+            )
+            .map((connectedWallet) => {
+              const anyWalletSelectedForBlockchain = selectedWallets.includes(
+                connectedWallet.chain
+              );
+              if (anyWalletSelectedForBlockchain) {
+                return connectedWallet;
+              }
+              selectedWallets.push(connectedWallet.chain);
+              return { ...connectedWallet, selected: true };
+            });
+
+          const balances = makeTokensBalance(connectedWallets);
+
           return {
-            connectedWallets: state.connectedWallets
-              .filter(
-                (connectedWallet) => connectedWallet.walletType !== walletType
-              )
-              .map((connectedWallet) => {
-                const anyWalletSelectedForBlockchain = selectedWallets.includes(
-                  connectedWallet.chain
-                );
-                if (anyWalletSelectedForBlockchain) {
-                  return connectedWallet;
-                }
-                selectedWallets.push(connectedWallet.chain);
-                return { ...connectedWallet, selected: true };
-              }),
+            balances,
+            connectedWallets,
           };
         });
       },
@@ -159,9 +169,8 @@ export const useWalletsStore = createSelectors(
           const response = await httpService().getWalletsDetails(data);
           const retrievedBalance = response.wallets;
           if (retrievedBalance) {
-            set((state) => ({
-              loading: false,
-              connectedWallets: state.connectedWallets.map(
+            set((state) => {
+              const connectedWallets = state.connectedWallets.map(
                 (connectedWallet) => {
                   const matchedAccount = accounts.find((account) =>
                     isAccountAndWalletMatched(account, connectedWallet)
@@ -190,27 +199,45 @@ export const useWalletsStore = createSelectors(
                       }
                     : connectedWallet;
                 }
-              ),
-            }));
+              );
+
+              const balances = makeTokensBalance(connectedWallets);
+
+              return {
+                loading: false,
+                balances,
+                connectedWallets,
+              };
+            });
           } else {
             throw new Error('Wallet not found');
           }
         } catch (error) {
-          set((state) => ({
-            loading: false,
-            connectedWallets: state.connectedWallets.map((balance) => {
+          set((state) => {
+            const connectedWallets = state.connectedWallets.map((balance) => {
               return accounts.find((account) =>
                 isAccountAndWalletMatched(account, balance)
               )
                 ? resetConnectedWalletState(balance)
                 : balance;
-            }),
-          }));
+            });
+
+            const balances = makeTokensBalance(connectedWallets);
+
+            return {
+              loading: false,
+              balances,
+              connectedWallets,
+            };
+          });
         }
+      },
+      getBalanceFor: (token) => {
+        const { balances } = get();
+        const tokenHash = createTokenHash(token);
+        const balance = balances[tokenHash];
+        return balance ?? null;
       },
     }))
   )
 );
-
-export const fetchingBalanceSelector = (state: WalletsStore) =>
-  !!state.connectedWallets.find((wallet) => wallet.loading);

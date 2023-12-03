@@ -1,8 +1,8 @@
-import type { TokenWithBalance } from '../components/TokenList';
 import type { ConnectedWallet, TokenBalance } from '../store/wallets';
-import type { Wallet } from '../types';
+import type { Balance, TokenHash, TokensBalance, Wallet } from '../types';
 import type { WalletInfo as ModalWalletInfo } from '@rango-dev/ui';
 import type {
+  Asset,
   Network,
   WalletInfo,
   WalletState,
@@ -29,6 +29,12 @@ import BigNumber from 'bignumber.js';
 import { isCosmosBlockchain } from 'rango-types';
 
 import { ZERO } from '../constants/numbers';
+import {
+  BALANCE_MAX_DECIMALS,
+  BALANCE_MIN_DECIMALS,
+  USD_VALUE_MAX_DECIMALS,
+  USD_VALUE_MIN_DECIMALS,
+} from '../constants/routing';
 import { EXCLUDED_WALLETS } from '../constants/wallets';
 
 import { numberToString } from './numbers';
@@ -218,43 +224,6 @@ export function getRequiredChains(quote: BestRouteResponse | null) {
 
 type Blockchain = { name: string; accounts: ConnectedWallet[] };
 
-export function getBalanceFromWallet(
-  connectedWallets: ConnectedWallet[],
-  chain: string,
-  symbol: string,
-  address: string | null
-): TokenBalance | null {
-  if (connectedWallets.length === 0) {
-    return null;
-  }
-
-  const selectedChainWallets = connectedWallets.filter(
-    (wallet) => wallet.chain === chain
-  );
-  if (selectedChainWallets.length === 0) {
-    return null;
-  }
-
-  return (
-    selectedChainWallets
-      .map(
-        (wallet) =>
-          wallet.balances?.find(
-            (balance) =>
-              (address !== null && balance.address === address) ||
-              (address === null &&
-                balance.address === address &&
-                balance.symbol === symbol)
-          ) || null
-      )
-      .filter((balance) => balance !== null)
-      .sort(
-        (a, b) => parseFloat(b?.amount || '0') - parseFloat(a?.amount || '1')
-      )
-      .find(() => true) || null
-  );
-}
-
 export function isAccountAndWalletMatched(
   account: Wallet,
   connectedWallet: ConnectedWallet
@@ -348,30 +317,6 @@ function numberWithThousandSeparator(number: string | number): string {
   return parts.join('.');
 }
 
-export const sortTokens = (tokens: TokenWithBalance[]): TokenWithBalance[] => {
-  const walletConnected = !!tokens.some((token) => token.balance);
-  if (!walletConnected) {
-    return tokens
-      .filter((token) => !token.address)
-      .concat(
-        tokens.filter((token) => token.address && !token.isSecondaryCoin),
-        tokens.filter((token) => token.isSecondaryCoin)
-      );
-  }
-
-  return tokens
-    .filter((token) => !!token.balance)
-    .sort(
-      (tokenA, tokenB) =>
-        parseFloat(tokenB.balance?.usdValue || '0') -
-        parseFloat(tokenA.balance?.usdValue || '0')
-    )
-    .concat(
-      tokens.filter((token) => !token.balance && !token.isSecondaryCoin),
-      tokens.filter((token) => !token.balance && token.isSecondaryCoin)
-    );
-};
-
 export const getUsdPrice = (
   blockchain: string,
   symbol: string,
@@ -415,98 +360,58 @@ export const getKeplrCompatibleConnectedWallets = (
   );
 };
 
-export function getTokensWithBalance(
-  tokens: TokenWithBalance[],
-  connectedWallets: ConnectedWallet[]
-): TokenWithBalance[] {
-  return tokens.map(({ balance, ...otherProps }) => {
-    const tokenAmount = numberToString(
-      new BigNumber(
-        getBalanceFromWallet(
-          connectedWallets,
-          otherProps.blockchain,
-          otherProps.symbol,
-          otherProps.address
-        )?.amount || ZERO
-      )
-    );
+export function formatBalance(balance: Balance | null): Balance | null {
+  const formattedBalance: Balance | null = balance
+    ? {
+        ...balance,
+        amount: numberToString(
+          balance.amount,
+          BALANCE_MIN_DECIMALS,
+          BALANCE_MAX_DECIMALS
+        ),
+        usdValue: numberToString(
+          balance.usdValue,
+          USD_VALUE_MIN_DECIMALS,
+          USD_VALUE_MAX_DECIMALS
+        ),
+      }
+    : null;
 
-    let tokenUsdValue = '';
-    if (otherProps.usdPrice) {
-      tokenUsdValue = numberToString(
-        new BigNumber(
-          getBalanceFromWallet(
-            connectedWallets,
-            otherProps.blockchain,
-            otherProps.symbol,
-            otherProps.address
-          )?.amount || ZERO
-        ).multipliedBy(otherProps.usdPrice)
-      );
-    }
-
-    return {
-      ...otherProps,
-      ...(tokenAmount !== '0' && {
-        balance: { amount: tokenAmount, usdValue: tokenUsdValue },
-      }),
-    };
-  });
+  return formattedBalance;
 }
 
-export function getTokensBalanceFromWalletAndSort(
-  tokens: TokenWithBalance[],
-  connectedWallets: ConnectedWallet[]
+export function sortTokensByBalance(
+  tokens: Token[],
+  getBalanceFor: (token: Token) => Balance | null
 ) {
-  const list =
-    connectedWallets.length > 0
-      ? getTokensWithBalance(tokens, connectedWallets)
-      : tokens;
-  list.sort((tokenA, tokenB) => {
-    if (tokenA.balance?.usdValue && tokenB.balance?.usdValue) {
+  tokens.sort((token1, token2) => {
+    const token1Balance = getBalanceFor(token1);
+    const token2Balance = getBalanceFor(token2);
+    if (token1Balance?.usdValue && token2Balance?.usdValue) {
       return (
-        parseFloat(tokenB.balance.usdValue) -
-        parseFloat(tokenA.balance.usdValue)
+        parseFloat(token2Balance.usdValue) - parseFloat(token1Balance.usdValue)
       );
     }
 
-    if (!tokenA.balance?.usdValue && tokenB.balance?.usdValue) {
+    if (!token1Balance?.usdValue && token2Balance?.usdValue) {
       return 1;
     }
 
-    if (tokenA.balance?.usdValue && !tokenB.balance?.usdValue) {
+    if (token1Balance?.usdValue && !token2Balance?.usdValue) {
       return -1;
     }
 
-    if (!tokenA.balance?.usdValue && !tokenB.balance?.usdValue) {
+    if (!token1Balance?.usdValue && !token2Balance?.usdValue) {
       return (
-        parseFloat(tokenB.balance?.amount || '0') -
-        parseFloat(tokenA.balance?.amount || '0')
+        parseFloat(token2Balance?.amount || '0') -
+        parseFloat(token1Balance?.amount || '0')
       );
     }
 
     return 0;
   });
 
-  return list;
-}
-
-export function getSortedTokens(
-  chain: BlockchainMeta | null,
-  tokens: Token[],
-  connectedWallets: ConnectedWallet[],
-  otherChainTokens: TokenWithBalance[]
-): TokenWithBalance[] {
-  const fromChainEqualsToToBlockchain =
-    chain?.name === otherChainTokens[0]?.name;
-  if (fromChainEqualsToToBlockchain) {
-    return otherChainTokens;
-  }
-
-  const filteredTokens = tokens.filter(
-    (token) => token.blockchain === chain?.name
-  );
-  return sortTokens(getTokensWithBalance(filteredTokens, connectedWallets));
+  return tokens;
 }
 
 export function tokensAreEqual(
@@ -567,4 +472,45 @@ export function getAddress({
       connectedWallet.walletType === walletType &&
       connectedWallet.chain === chain
   )?.address;
+}
+
+export function createTokenHash(token: Asset): TokenHash {
+  return `${token.blockchain}-${token.symbol}-${token.address ?? ''}`;
+}
+
+export function makeTokensBalance(connectedWallets: ConnectedWallet[]) {
+  return connectedWallets
+    .flatMap((wallet) => wallet.balances)
+    .reduce((balances: TokensBalance, balance) => {
+      const currentBalance = {
+        amount: balance?.amount ?? '',
+        decimals: balance?.decimal ?? 0,
+        usdValue: balance?.usdPrice
+          ? new BigNumber(balance?.usdPrice ?? ZERO)
+              .multipliedBy(balance?.amount)
+              .toString()
+          : '',
+      };
+
+      const tokenHash = balance
+        ? createTokenHash({
+            symbol: balance.symbol,
+            blockchain: balance.chain,
+            address: balance.address,
+          })
+        : null;
+
+      const prevBalance = tokenHash ? balances[tokenHash] : null;
+
+      const shouldUpdateBalance =
+        tokenHash &&
+        (!prevBalance ||
+          (prevBalance && prevBalance.amount < currentBalance.amount));
+
+      if (shouldUpdateBalance) {
+        balances[tokenHash] = currentBalance;
+      }
+
+      return balances;
+    }, {});
 }

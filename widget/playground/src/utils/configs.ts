@@ -1,4 +1,4 @@
-export interface Configs {
+interface Configs {
   API_KEY: string;
   WC_PROJECT_ID: string;
 }
@@ -8,30 +8,13 @@ export interface Configs {
  * it is only for test purpose
  */
 export const RANGO_PUBLIC_API_KEY = 'c6381a79-2817-4602-83bf-6a641a409e32';
-export const WC_PROJECT_ID = 'e24844c5deb5193c1c14840a7af6a40b';
+const WC_PROJECT_ID = 'e24844c5deb5193c1c14840a7af6a40b';
 
-let configs: Configs = {
+const configs: Configs = {
   API_KEY: RANGO_PUBLIC_API_KEY,
-  WC_PROJECT_ID: WC_PROJECT_ID,
+  WC_PROJECT_ID,
 };
 
 export function getConfig(name: keyof Configs) {
   return configs[name];
-}
-
-export function setConfig(name: keyof Configs, value: any) {
-  configs[name] = value;
-
-  return value;
-}
-
-export function initConfig(nextConfigs: Configs) {
-  let clonedConfigs;
-  if (typeof structuredClone === 'function') {
-    clonedConfigs = structuredClone(nextConfigs);
-  } else {
-    clonedConfigs = JSON.parse(JSON.stringify(nextConfigs));
-  }
-  configs = clonedConfigs;
-  return configs;
 }

@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/queue-manager-rango-preset",
-  "version": "0.22.1-next.8",
+  "version": "0.22.1-next.10",
   "license": "MIT",
   "type": "module",
   "source": "./src/index.ts",
@@ -23,7 +23,7 @@
   "peerDependencies": {
     "@rango-dev/queue-manager-core": "*",
     "@rango-dev/queue-manager-react": "*",
-    "@rango-dev/wallets-react": "*",
+    "@rango-dev/wallets-core": "*",
     "@rango-dev/wallets-shared": "*",
     "@sentry/browser": "*",
     "bignumber.js": "*",

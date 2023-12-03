@@ -1,13 +1,14 @@
-import type { EvmBlockchainMeta } from 'rango-types';
-import {
-  EvmNetworksChainInfo,
+import type {
   AddEthereumChainParameter,
-  Network,
-  Networks,
   Connect,
-  Wallet,
+  EvmNetworksChainInfo,
   InstallObjects,
+  Network,
+  Wallet,
 } from './rango';
+import type { EvmBlockchainMeta } from 'rango-types';
+
+import { Networks } from './rango';
 
 export { isAddress as isEvmAddress } from 'ethers/lib/utils.js';
 
@@ -16,7 +17,9 @@ export function deepCopy(obj: any): any {
   let copy;
 
   // Handle the 3 simple types, and null or undefined
-  if (null == obj || 'object' != typeof obj) return obj;
+  if (null == obj || 'object' != typeof obj) {
+    return obj;
+  }
 
   // Handle Date
   if (obj instanceof Date) {
@@ -38,8 +41,9 @@ export function deepCopy(obj: any): any {
   if (obj instanceof Object) {
     copy = {} as any;
     for (const attr in obj) {
-      if (Object.prototype.hasOwnProperty.call(obj, attr))
+      if (Object.prototype.hasOwnProperty.call(obj, attr)) {
         copy[attr] = deepCopy(obj[attr]);
+      }
     }
     return copy;
   }
@@ -61,17 +65,22 @@ export async function switchOrAddNetworkForMetamaskCompatibleWallets(
     });
   } catch (switchError) {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    // To resolve this error: Catch clause variable type annotation must be any or unknown if specified
+    /*
+     * @ts-ignore
+     * To resolve this error: Catch clause variable type annotation must be any or unknown if specified
+     */
     const error = switchError as { code: number };
 
     if (!targetChain) {
       throw new Error(
         `It seems you don't have ${network} network on your wallet. Please add it manually.`
       );
+      /* eslint-disable @typescript-eslint/no-magic-numbers */
     } else if (error.code === 4902 || !error.code) {
-      // Note: on WalletConnect `code` is undefined so we have to use !switchError.code as fallback.
-      // This error code indicates that the chain has not been added to wallet.
+      /*
+       * Note: on WalletConnect `code` is undefined so we have to use !switchError.code as fallback.
+       * This error code indicates that the chain has not been added to wallet.
+       */
       await instance.request({
         method: 'wallet_addEthereumChain',
         params: [targetChain],
@@ -81,7 +90,7 @@ export async function switchOrAddNetworkForMetamaskCompatibleWallets(
   }
 }
 
-export function timeout<T = any>(
+export async function timeout<T = any>(
   forPromise: Promise<any>,
   time: number
 ): Promise<T> {
@@ -122,9 +131,11 @@ export const evmChainsToRpcMap = (
       Object.keys(evmNetworkChainInfo).map((chainName) => {
         const info = evmNetworkChainInfo[chainName];
 
-        // This `if` is only used for satisfying typescript,
-        // Because we iterating over Object.keys(EVM_NETWORKS_CHAIN_INFO)
-        // And obviously it cannot be `undefined` and always has a value.
+        /*
+         * This `if` is only used for satisfying typescript,
+         * Because we iterating over Object.keys(EVM_NETWORKS_CHAIN_INFO)
+         * And obviously it cannot be `undefined` and always has a value.
+         */
         if (info) {
           return [parseInt(info.chainId), info.rpcUrls[0]];
         }
@@ -166,12 +177,17 @@ export function getCoinbaseInstance(
       instances.set(Networks.ETHEREUM, ethInstance);
     }
   }
-  if (!!coinbaseSolana && lookingFor === 'coinbase')
+  if (!!coinbaseSolana && lookingFor === 'coinbase') {
     instances.set(Networks.SOLANA, coinbaseSolana);
+  }
 
-  if (instances.size === 0) return null;
+  if (instances.size === 0) {
+    return null;
+  }
 
-  if (lookingFor === 'metamask') return instances.get(Networks.ETHEREUM);
+  if (lookingFor === 'metamask') {
+    return instances.get(Networks.ETHEREUM);
+  }
 
   return instances;
 }
@@ -189,7 +205,9 @@ function isBrave() {
   const nav: any = navigator;
   if (nav.brave && nav.brave.isBrave) {
     nav.brave.isBrave().then((res: boolean) => {
-      if (res) isBrave = true;
+      if (res) {
+        isBrave = true;
+      }
     });
   }
 
@@ -199,23 +217,45 @@ function isBrave() {
 export function detectInstallLink(install: InstallObjects | string): string {
   if (typeof install !== 'object') {
     return install;
-  } else {
-    let link;
-    if (isBrave()) {
-      link = install.BRAVE;
-    } else if (navigator.userAgent?.toLowerCase().indexOf('chrome') !== -1) {
-      link = install.CHROME;
-    } else if (navigator.userAgent?.toLowerCase().indexOf('firefox') !== -1) {
-      link = install.FIREFOX;
-    } else if (navigator.userAgent?.toLowerCase().indexOf('edge') !== -1) {
-      link = install.EDGE;
-    }
-    return link || install.DEFAULT;
   }
+  let link;
+  if (isBrave()) {
+    link = install.BRAVE;
+  } else if (navigator.userAgent?.toLowerCase().indexOf('chrome') !== -1) {
+    link = install.CHROME;
+  } else if (navigator.userAgent?.toLowerCase().indexOf('firefox') !== -1) {
+    link = install.FIREFOX;
+  } else if (navigator.userAgent?.toLowerCase().indexOf('edge') !== -1) {
+    link = install.EDGE;
+  }
+  return link || install.DEFAULT;
 }
 
 export function detectMobileScreens(): boolean {
   return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
     navigator.userAgent
   );
+}
+
+/**
+ * Sample inputs are:
+ *  - "metamask-ETH"
+ *  - "metamask-BSC-BSC:0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+ *  - "token-pocket-BSC-BSC:0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+ * Returns "wallet and network" separately, even if the wallet is dashed inside.
+ *
+ */
+
+export function splitWalletNetwork(input: string): string[] {
+  const removedAddressInput = input?.split(':')[0] || '';
+  const splittedInput = removedAddressInput.split('-');
+  const network = splittedInput[splittedInput.length - 1];
+  const walletNetwork = splittedInput.slice(0, -1);
+
+  if (walletNetwork[walletNetwork.length - 1] === network) {
+    walletNetwork.pop();
+  }
+  const wallet = walletNetwork.join('-');
+
+  return [wallet, network];
 }

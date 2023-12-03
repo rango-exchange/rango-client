@@ -1,6 +1,9 @@
+import type { MetaResponse } from 'rango-sdk';
+
 import { create } from 'zustand';
-import { MetaResponse } from 'rango-sdk';
+
 import { rango } from '../services/httpService';
+
 import createSelectors from './selectors';
 
 export type LoadingStatus = 'loading' | 'success' | 'failed';
@@ -19,10 +22,12 @@ export const useMetaStore = createSelectors(
       try {
         const response = await rango().getAllMetadata();
         const chainThatHasTokenInMetaResponse = Array.from(
-          new Set(response.tokens.map((t) => t.blockchain)),
+          new Set(response.tokens.map((t) => t.blockchain))
         );
         const enabledChains = response.blockchains.filter(
-          (chain) => chain.enabled && chainThatHasTokenInMetaResponse.includes(chain.name),
+          (chain) =>
+            chain.enabled &&
+            chainThatHasTokenInMetaResponse.includes(chain.name)
         );
         response.blockchains = enabledChains.sort((a, b) => a.sort - b.sort);
         set({ meta: response, loadingStatus: 'success' });
@@ -30,5 +35,5 @@ export const useMetaStore = createSelectors(
         set({ loadingStatus: 'failed' });
       }
     },
-  })),
+  }))
 );

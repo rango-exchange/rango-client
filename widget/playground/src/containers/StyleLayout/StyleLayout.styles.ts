@@ -44,14 +44,7 @@ export const Tab = styled(Button, {
     color: '$secondary500',
   },
 });
-export const CustomThemesContainer = styled('div', {
-  maxHeight: '0%',
-  transition: '0.5s',
-  overflow: 'hidden',
-  ',.more': {
-    maxHeight: '100%',
-  },
-});
+
 export const PresetContent = styled('div', {
   display: 'grid',
   gap: 5,
