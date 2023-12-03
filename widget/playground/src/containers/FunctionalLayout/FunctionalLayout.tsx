@@ -4,7 +4,6 @@ import React, { useState } from 'react';
 import { Collapse } from '../../components/Collapse';
 
 import { FromSection } from './FunctionalLayout.From';
-// import { LiquiditiesSection } from './FunctionalLayout.Liquidities';
 import { LiquiditiesSection } from './FunctionalLayout.Liquidities';
 import { Layout } from './FunctionalLayout.styles';
 import { ToSection } from './FunctionalLayout.To';

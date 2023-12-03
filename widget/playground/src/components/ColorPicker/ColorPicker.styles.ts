@@ -13,13 +13,6 @@ export const ColorContainer = styled('div', {
   width: '$20',
   height: '$20',
 });
-export const Cover = styled('div', {
-  position: 'fixed',
-  top: '0px',
-  right: '0px',
-  bottom: '0px',
-  left: '0px',
-});
 
 export const ColorButton = styled(Button, {
   border: '1px solid $neutral300',

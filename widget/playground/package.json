@@ -18,9 +18,7 @@
     "@types/stringify-object": "^4.0.2"
   },
   "dependencies": {
-    "@rango-dev/provider-all": "^0.22.1-next.7",
     "@rango-dev/ui": "^0.22.1-next.15",
-    "@rango-dev/wallets-react": "^0.8.1-next.5",
     "@rango-dev/wallets-shared": "^0.21.1-next.5",
     "@rango-dev/widget-embedded": "^0.17.1-next.26",
     "rango-sdk": "^0.1.35",

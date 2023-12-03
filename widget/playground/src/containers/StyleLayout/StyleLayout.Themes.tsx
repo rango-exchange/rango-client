@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-magic-numbers */
 import type { Mode } from '../../store/config';
 
 import { ColorsIcon, Divider, Typography } from '@rango-dev/ui';

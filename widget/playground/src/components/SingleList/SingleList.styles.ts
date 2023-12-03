@@ -10,19 +10,9 @@ export const HeaderContainer = styled('div', {
     alignItems: 'center',
   },
 });
-export const SelectButton = styled('div', {
-  padding: '$4',
-  display: 'flex',
-  justifyContent: 'flex-end',
-});
+
 export const RadioList = styled('div', {
   height: '100%',
-});
-export const ItemDivider = styled('li', {
-  margin: '0 auto',
-  width: '100%',
-  height: '1px',
-  backgroundColor: '$neutral300',
 });
 
 export const IconWrapper = styled('div', {
