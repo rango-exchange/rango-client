@@ -1,9 +1,6 @@
 /* eslint-disable @typescript-eslint/no-magic-numbers */
-import type {
-  PropTypes,
-  RenderDescProps,
-  TokenWithBalance,
-} from './TokenList.types';
+import type { PropTypes, RenderDescProps } from './TokenList.types';
+import type { Token } from 'rango-sdk';
 import type { CommonProps } from 'react-window';
 
 import { i18n } from '@lingui/core';
@@ -24,6 +21,7 @@ import React, { forwardRef, useEffect, useState } from 'react';
 import { useAppStore } from '../../store/AppStore';
 import { useWalletsStore } from '../../store/wallets';
 import { generateRangeColors } from '../../utils/colors';
+import { formatBalance } from '../../utils/wallets';
 
 import { LoadingTokenList } from './LoadingTokenList';
 import {
@@ -85,11 +83,11 @@ const renderDesc = (props: RenderDescProps) => {
 export function TokenList(props: PropTypes) {
   const { list, searchedFor = '', onChange, selectedBlockchain } = props;
 
-  const [tokens, setTokens] = useState<TokenWithBalance[]>(list);
+  const [tokens, setTokens] = useState<Token[]>(list);
   const fetchStatus = useAppStore().fetchStatus;
   const blockchains = useAppStore().blockchains();
   const [hasNextPage, setHasNextPage] = useState<boolean>(true);
-  const loadingWallet = useWalletsStore.use.loading();
+  const { getBalanceFor, loading: loadingWallet } = useWalletsStore();
   const { isTokenPinned } = useAppStore();
 
   // eslint-disable-next-line react/display-name
@@ -134,7 +132,7 @@ export function TokenList(props: PropTypes) {
       <VirtualizedList
         Item={({ index, style }) => {
           const token = tokens[index];
-
+          const tokenBalance = formatBalance(getBalanceFor(token));
           const address = token.address || '';
           const blockchain = blockchains.find(
             (blockchain) => blockchain.name === token.blockchain
@@ -229,18 +227,18 @@ export function TokenList(props: PropTypes) {
                       <Skeleton variant="text" size="medium" width={50} />
                     </End>
                   ) : (
-                    tokens[index]?.balance && (
+                    tokenBalance && (
                       <BalanceContainer>
                         <Typography variant="title" size="small">
-                          {token.balance?.amount}
+                          {tokenBalance.amount}
                         </Typography>
                         <div />
-                        {token.balance?.usdValue && (
+                        {tokenBalance.usdValue && (
                           <Typography
                             variant="body"
                             className="usd-value"
                             size="xsmall">
-                            {`$${token.balance?.usdValue}`}
+                            {`$${tokenBalance.usdValue}`}
                           </Typography>
                         )}
                       </BalanceContainer>
