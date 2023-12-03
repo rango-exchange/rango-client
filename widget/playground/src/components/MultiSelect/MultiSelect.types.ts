@@ -7,7 +7,7 @@ export interface CommonListProps {
   onChange: (items?: string[]) => void;
 }
 
-export interface TokensListProps {
+interface TokensListProps {
   type: 'Tokens';
   list: (Token & { checked: boolean })[];
   selectedBlockchains: string[];
