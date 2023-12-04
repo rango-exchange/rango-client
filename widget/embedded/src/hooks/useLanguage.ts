@@ -3,7 +3,7 @@ import type { LanguageItem } from '../constants/languages';
 import { type Language } from '@rango-dev/ui';
 
 import { DEFAULT_LANGUAGE, LANGUAGES } from '../constants/languages';
-import { useSettingsStore } from '../store/settings';
+import { useAppStore } from '../store/AppStore';
 
 interface UseLanguage {
   languages: LanguageItem[];
@@ -13,8 +13,7 @@ interface UseLanguage {
 }
 
 export function useLanguage(): UseLanguage {
-  const language = useSettingsStore.use.language();
-  const setLanguage = useSettingsStore.use.setLanguage();
+  const { setLanguage, language } = useAppStore();
   const languages = LANGUAGES;
   const defaultLanguage = DEFAULT_LANGUAGE;
 

@@ -12,17 +12,14 @@ import React from 'react';
 
 import { errorMessages } from '../../constants/errors';
 import { useAppStore } from '../../store/AppStore';
-import { useSettingsStore } from '../../store/settings';
 
 import { makeInfo } from './NoResult.helpers';
 import { Container, Footer, PrefixIcon } from './NoResult.styles';
 
 export function NoResult(props: PropTypes) {
   const { fetch, error } = props;
-  const disabledLiquiditySources =
-    useSettingsStore.use.disabledLiquiditySources();
-  const toggleAllLiquiditySources =
-    useSettingsStore.use.toggleAllLiquiditySources();
+  const disabledLiquiditySources = useAppStore().disabledLiquiditySources;
+  const toggleAllLiquiditySources = useAppStore().toggleAllLiquiditySources;
 
   const swappers = useAppStore().swappers();
 

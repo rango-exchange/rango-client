@@ -1,6 +1,4 @@
 /* eslint-disable @typescript-eslint/no-magic-numbers */
-import type { WidgetTheme } from '../types';
-
 import {
   createTheme,
   darkTheme as defaultDarkTheme,
@@ -8,7 +6,8 @@ import {
 } from '@rango-dev/ui';
 import { useEffect, useState } from 'react';
 
-import { useSettingsStore } from '../store/settings';
+import { useAppStore } from '../store/AppStore';
+import { type WidgetTheme } from '../types';
 import {
   DEFAULT_FONT_FAMILY,
   DEFAULT_PRIMARY_RADIUS,
@@ -26,8 +25,8 @@ export function useTheme(props: WidgetTheme) {
   } = props;
 
   const [OSTheme, setOSTheme] = useState('light');
-  const theme = useSettingsStore.use.theme();
-  const setTheme = useSettingsStore.use.setTheme();
+
+  const { setTheme, theme } = useAppStore();
 
   const { dark, light } = customizedThemeTokens(colors);
 

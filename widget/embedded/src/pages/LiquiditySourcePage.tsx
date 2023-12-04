@@ -24,7 +24,6 @@ import {
   SettingsContainer,
 } from '../components/SettingsContainer';
 import { useAppStore } from '../store/AppStore';
-import { useSettingsStore } from '../store/settings';
 import { containsText } from '../utils/numbers';
 import { getUniqueSwappersGroups } from '../utils/settings';
 
@@ -35,10 +34,11 @@ interface PropTypes {
 export function LiquiditySourcePage({ sourceType }: PropTypes) {
   const fetchStatus = useAppStore().fetchStatus;
   const swappers = useAppStore().swappers();
+  const disabledLiquiditySources = useAppStore().disabledLiquiditySources;
   const [searchedFor, setSearchedFor] = useState<string>('');
-  const toggleLiquiditySource = useSettingsStore.use.toggleLiquiditySource();
+  const toggleLiquiditySource = useAppStore().toggleLiquiditySource;
   const supportedUniqueSwappersGroups: Array<UniqueSwappersGroupType> =
-    getUniqueSwappersGroups(swappers);
+    getUniqueSwappersGroups(swappers, disabledLiquiditySources);
 
   const validTypes: Array<LiquiditySourceType> = [];
   if (sourceType === 'Exchanges') {

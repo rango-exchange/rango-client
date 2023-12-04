@@ -11,7 +11,9 @@ import {
 } from '@rango-dev/ui';
 import React from 'react';
 
+import { useAppStore } from '../../store/AppStore';
 import { getContainer } from '../../utils/common';
+import { isFeatureHidden } from '../../utils/settings';
 import { NotificationContent } from '../NotificationContent';
 
 import { HeaderButton } from './HeaderButtons.styles';
@@ -25,6 +27,12 @@ export function HomeButtons(props: HomeButtonsPropTypes) {
     onClickSettings,
     onClickNotifications,
   } = props;
+
+  const {
+    config: { features },
+  } = useAppStore();
+
+  const isNotificationsHidden = isFeatureHidden('notification', features);
 
   return (
     <>
@@ -41,25 +49,27 @@ export function HomeButtons(props: HomeButtonsPropTypes) {
         </HeaderButton>
       </Tooltip>
 
-      <Tooltip
-        container={getContainer()}
-        side="top"
-        content={i18n.t('Notifications')}>
-        <Popover
-          align="center"
-          collisionBoundary={layoutRef}
-          collisionPadding={{ right: 20, left: 20 }}
+      {!isNotificationsHidden && (
+        <Tooltip
           container={getContainer()}
-          content={<NotificationContent />}>
-          <HeaderButton
-            size="small"
-            variant="ghost"
-            onClick={onClickNotifications}>
-            <NotificationsIcon size={18} color="black" />
-            <UnreadNotificationsBadge />
-          </HeaderButton>
-        </Popover>
-      </Tooltip>
+          side="top"
+          content={i18n.t('Notifications')}>
+          <Popover
+            align="center"
+            collisionBoundary={layoutRef}
+            collisionPadding={{ right: 20, left: 20 }}
+            container={getContainer()}
+            content={<NotificationContent />}>
+            <HeaderButton
+              size="small"
+              variant="ghost"
+              onClick={onClickNotifications}>
+              <NotificationsIcon size={18} color="black" />
+              <UnreadNotificationsBadge />
+            </HeaderButton>
+          </Popover>
+        </Tooltip>
+      )}
       <Tooltip
         container={getContainer()}
         side="top"

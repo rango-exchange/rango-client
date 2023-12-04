@@ -5,9 +5,11 @@ import { BottomLogo, Divider, Header } from '@rango-dev/ui';
 import React from 'react';
 
 import { useNavigateBack } from '../../hooks/useNavigateBack';
+import { useAppStore } from '../../store/AppStore';
 import { useUiStore } from '../../store/ui';
 import { useWalletsStore } from '../../store/wallets';
 import { getContainer } from '../../utils/common';
+import { isFeatureHidden } from '../../utils/settings';
 import { BackButton, CancelButton, WalletButton } from '../HeaderButtons';
 
 import { Container, Content, Footer } from './Layout.styles';
@@ -22,6 +24,14 @@ function LayoutComponent(props: PropsWithChildren<PropTypes>, ref: Ref) {
     fixedHeight = true,
   } = props;
   const connectedWallets = useWalletsStore.use.connectedWallets();
+  const {
+    config: { features },
+  } = useAppStore();
+
+  const isConnectWalletHidden = isFeatureHidden(
+    'connectWalletButton',
+    features
+  );
 
   const connectWalletsButtonDisabled =
     useUiStore.use.connectWalletsButtonDisabled();
@@ -44,7 +54,7 @@ function LayoutComponent(props: PropsWithChildren<PropTypes>, ref: Ref) {
         suffix={
           <>
             {header.suffix}
-            {header.onWallet && (
+            {header.onWallet && !isConnectWalletHidden && (
               <WalletButton
                 container={getContainer()}
                 onClick={onConnectWallet}
