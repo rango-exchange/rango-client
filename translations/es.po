@@ -140,23 +140,23 @@ msgid "Cancel"
 msgstr "Cancelar"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/HeaderButtons/HomeButtons.tsx:34
+#: widget/embedded/src/components/HeaderButtons/HomeButtons.tsx:42
 msgid "Refresh"
 msgstr "Refrescar"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/HeaderButtons/HomeButtons.tsx:47
+#: widget/embedded/src/components/HeaderButtons/HomeButtons.tsx:56
 msgid "Notifications"
 msgstr "Notificaciones"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/HeaderButtons/HomeButtons.tsx:66
-#: widget/embedded/src/pages/ConfirmSwapPage.tsx:274
+#: widget/embedded/src/components/HeaderButtons/HomeButtons.tsx:76
+#: widget/embedded/src/pages/ConfirmSwapPage.tsx:273
 msgid "Settings"
 msgstr "Ajustes"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/HeaderButtons/HomeButtons.tsx:74
+#: widget/embedded/src/components/HeaderButtons/HomeButtons.tsx:84
 msgid "Transactions History"
 msgstr "Historial de transacciones"
 
@@ -277,12 +277,12 @@ msgid "Confirm anyway"
 msgstr "Confirmar de todos modos"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Slippage/Slippage.tsx:33
+#: widget/embedded/src/components/Slippage/Slippage.tsx:31
 msgid "Slippage tolerance per swap"
 msgstr "Tolerancia de deslizamiento por intercambio"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Slippage/Slippage.tsx:89
+#: widget/embedded/src/components/Slippage/Slippage.tsx:87
 msgid "Custom"
 msgstr "Personalizado"
 
@@ -593,17 +593,17 @@ msgid "Route internal coins has been updated."
 msgstr "Se han actualizado las monedas internas de la ruta."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/ConfirmSwapPage.tsx:265
+#: widget/embedded/src/pages/ConfirmSwapPage.tsx:264
 msgid "Confirm Swap"
 msgstr "Confirmar intercambio"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/ConfirmSwapPage.tsx:295
+#: widget/embedded/src/pages/ConfirmSwapPage.tsx:294
 msgid "Start Swap"
 msgstr "Iniciar intercambio"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/ConfirmSwapPage.tsx:321
+#: widget/embedded/src/pages/ConfirmSwapPage.tsx:320
 msgid "You get"
 msgstr "Obtienes"
 
@@ -658,54 +658,54 @@ msgid "Search Token"
 msgstr "Buscar token"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/SettingsPage.tsx:61
+#: widget/embedded/src/pages/SettingsPage.tsx:72
 msgid "Loading failed"
 msgstr "Error al cargar"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/SettingsPage.tsx:77
+#: widget/embedded/src/pages/SettingsPage.tsx:88
 msgid "Enabled bridges"
 msgstr "Puentes habilitados"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/SettingsPage.tsx:94
+#: widget/embedded/src/pages/SettingsPage.tsx:105
 msgid "Enabled exchanges"
 msgstr "Intercambios habilitados"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/SettingsPage.tsx:124
-#: widget/embedded/src/pages/ThemePage.tsx:72
-#: widget/embedded/src/pages/ThemePage.tsx:81
+#: widget/embedded/src/pages/SettingsPage.tsx:135
+#: widget/embedded/src/pages/ThemePage.tsx:71
+#: widget/embedded/src/pages/ThemePage.tsx:80
 msgid "Theme"
 msgstr "Tema"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/SettingsPage.tsx:136
+#: widget/embedded/src/pages/SettingsPage.tsx:147
 msgid "Infinite Approval"
 msgstr "Aprobación infinita"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/SettingsPage.tsx:145
+#: widget/embedded/src/pages/SettingsPage.tsx:156
 msgid "Enabling the 'Infinite Approval' mode grants unrestricted access to smart contracts of DEXes/Bridges, allowing them to utilize the approved token amount without limitations."
 msgstr "Habilitar el modo 'Aprobación infinita' permite el acceso sin restricciones a contratos inteligentes de DEXes/Bridges, permitiéndoles utilizar la cantidad de fichas aprobadas sin limitaciones."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/SettingsPage.tsx:172
+#: widget/embedded/src/pages/SettingsPage.tsx:183
 msgid "Setting"
 msgstr "Ajustes"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/ThemePage.tsx:36
+#: widget/embedded/src/pages/ThemePage.tsx:35
 msgid "Light"
 msgstr "Claro"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/ThemePage.tsx:48
+#: widget/embedded/src/pages/ThemePage.tsx:47
 msgid "Dark"
 msgstr "Oscuro"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/ThemePage.tsx:60
+#: widget/embedded/src/pages/ThemePage.tsx:59
 msgid "Auto"
 msgstr "Auto"
 
