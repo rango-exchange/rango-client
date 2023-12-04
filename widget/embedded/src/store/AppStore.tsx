@@ -1,7 +1,7 @@
 import type { WidgetConfig } from '../types';
 import type { PropsWithChildren } from 'react';
 
-import React, { createContext, useContext, useRef } from 'react';
+import React, { createContext, useContext, useEffect, useRef } from 'react';
 
 import { createAppStore } from './app';
 
@@ -12,6 +12,12 @@ export const AppStoreContext = createContext<AppStore | null>(null);
 
 export function useAppStore() {
   const store = useContext(AppStoreContext);
+
+  useEffect(() => {
+    if (store && !store.persist.hasHydrated()) {
+      void store.persist.rehydrate();
+    }
+  }, []);
 
   if (!store) {
     throw new Error('Missing AppStoreContext.Provider in the tree');

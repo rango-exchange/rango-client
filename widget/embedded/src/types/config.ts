@@ -86,14 +86,37 @@ export type BlockchainAndTokenConfig = {
 };
 
 /**
- * `ExperimentalFeatures`
+ * `Features`
  *
- * @property {boolean} routing
- *- This property is optional and sets experimental in quote api.
+ * @property {'visible' | 'hidden'} [theme]
+ * - The visibility state for the theme feature. Optional property.
+ *
+ * @property {'visible' | 'hidden'} [language]
+ * - The visibility state for the language feature. Optional property.
+ *
+ * @property {'disabled' | 'enabled'} [experimentalRoute]
+ * - The enablement state for the experimental route feature. Optional property.
+ *
+ * @property {'visible' | 'hidden'} [connectWalletButton]
+ * - The visibility state for the connect wallet button feature. Optional property.
+ *
+ * @property {'visible' | 'hidden'} [notification]
+ * - The visibility state for the notification feature. Optional property.
+ *
+ * @property {'visible' | 'hidden'} [liquiditySource]
+ * - The visibility state for the liquiditySource feature. Optional property.
  */
-type ExperimentalFeatures = {
-  routing?: boolean;
-};
+export type Features = Partial<
+  Record<
+    | 'theme'
+    | 'language'
+    | 'connectWalletButton'
+    | 'notification'
+    | 'liquiditySource',
+    'visible' | 'hidden'
+  >
+> &
+  Partial<Record<'experimentalRoute', 'disabled' | 'enabled'>>;
 
 /**
  * The type WidgetConfig defines the configuration options for a widget, including API key, affiliate
@@ -134,7 +157,14 @@ type ExperimentalFeatures = {
  * you could use to pin tokens of your choice to the top of the token list.
  * @property {boolean} enableNewLiquiditySources - The `enableNewLiquiditySources` property is a boolean value that when you
  * set it to true, whenever a new liquidity source is added, it will be added to your list as well.
- * @property {ExperimentalFeatures} experimental - The `experimental` property is an optional object that specifies some experimental features.
+ * @property {Features} features - An optional object for configuring the visibility or enablement of various features.
+ *   Keys include:
+ *   - 'notification': Visibility state for the notification icon.
+ *   - 'theme': Visibility state for the theme.
+ *   - 'liquiditySource': Visibility state for liquidity source.
+ *   - 'connectWalletButton': Visibility state for the wallet connect icon.
+ *   - 'language': Visibility state for the language.
+ *   - 'experimentalRoute': Enablement state for the experimental route.
  */
 
 export type WidgetConfig = {
@@ -154,5 +184,5 @@ export type WidgetConfig = {
   externalWallets?: boolean;
   pinnedTokens?: Asset[];
   enableNewLiquiditySources?: boolean;
-  experimental?: ExperimentalFeatures;
+  features?: Features;
 };

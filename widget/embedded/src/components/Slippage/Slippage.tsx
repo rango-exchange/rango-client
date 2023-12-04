@@ -14,17 +14,15 @@ import {
   MIN_SLIPPGAE,
   SLIPPAGES,
 } from '../../constants/swapSettings';
-import { useSettingsStore } from '../../store/settings';
+import { useAppStore } from '../../store/AppStore';
 import { getContainer } from '../../utils/common';
 
 import { BaseContainer, Head, SlippageChipsContainer } from './Slippage.styles';
 import { SlippageTooltipContent } from './SlippageTooltipContent';
 
 export function Slippage() {
-  const slippage = useSettingsStore.use.slippage();
-  const setSlippage = useSettingsStore.use.setSlippage();
-  const customSlippage = useSettingsStore.use.customSlippage();
-  const setCustomSlippage = useSettingsStore.use.setCustomSlippage();
+  const { slippage, setSlippage, customSlippage, setCustomSlippage } =
+    useAppStore();
 
   return (
     <BaseContainer>
