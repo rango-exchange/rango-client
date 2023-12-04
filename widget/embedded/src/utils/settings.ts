@@ -1,6 +1,5 @@
+import type { Features } from '../types';
 import type { SwapperMeta } from 'rango-sdk';
-
-import { useSettingsStore } from '../store/settings';
 
 import { removeDuplicateFrom } from './common';
 
@@ -15,10 +14,9 @@ export type UniqueSwappersGroupType = {
 };
 
 export function getUniqueSwappersGroups(
-  swappers: SwapperMeta[]
+  swappers: SwapperMeta[],
+  disabledLiquiditySources: string[]
 ): UniqueSwappersGroupType[] {
-  const disabledLiquiditySources =
-    useSettingsStore.use.disabledLiquiditySources();
   const supportedSwappers = swappers.map((swapper) => swapper.swapperGroup);
 
   const uniqueSupportedSwappersGroups: Array<UniqueSwappersGroupType> = [];
@@ -70,4 +68,12 @@ export function sortLiquiditySourcesByGroupTitle(
   }
 
   return 0;
+}
+
+export function isFeatureHidden(feature: keyof Features, features?: Features) {
+  return features?.[feature] === 'hidden';
+}
+
+export function isFeatureEnabled(feature: keyof Features, features?: Features) {
+  return features?.[feature] === 'enabled';
 }

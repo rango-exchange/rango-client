@@ -11,7 +11,6 @@ import { useLanguage } from '../../hooks/useLanguage';
 import { useTheme } from '../../hooks/useTheme';
 import { useAppStore } from '../../store/AppStore';
 import { useNotificationStore } from '../../store/notification';
-import { useSettingsStore } from '../../store/settings';
 import { WidgetContext } from '../Wallets';
 
 import { MainContainer } from './App.styles';
@@ -29,7 +28,6 @@ export function Main() {
 
   useEffect(() => {
     void fetchMeta().catch();
-    void useSettingsStore.persist.rehydrate();
     void useNotificationStore.persist.rehydrate();
     widgetContext.onConnectWallet(setLastConnectedWalletWithNetwork);
   }, []);

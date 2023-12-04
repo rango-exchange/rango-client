@@ -6,7 +6,7 @@ import type { BlockchainMeta } from 'rango-sdk';
 
 import { useEffect } from 'react';
 
-import { useSettingsStore } from '../../store/settings';
+import { useAppStore } from '../../store/AppStore';
 
 import { isInVisibleList, prepare } from './usePrepareBlockchainList.helpers';
 
@@ -20,7 +20,7 @@ export function usePrepareBlockchainList(
   blockchains: BlockchainMeta[],
   options?: PrepareListOptions
 ): UsePrepareList {
-  const { preferredBlockchains, addPreferredBlockchain } = useSettingsStore();
+  const { preferredBlockchains, addPreferredBlockchain } = useAppStore();
 
   useEffect(() => {
     if (options?.selected) {

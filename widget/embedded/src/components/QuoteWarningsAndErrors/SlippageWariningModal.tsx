@@ -9,7 +9,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { navigationRoutes } from '../../constants/navigationRoutes';
-import { useSettingsStore } from '../../store/settings';
+import { useAppStore } from '../../store/AppStore';
 import { QuoteWarningType } from '../../types';
 import { getContainer } from '../../utils/common';
 
@@ -21,7 +21,7 @@ type PropsTypes = {
 };
 
 export function SlippageWarningModal(props: PropsTypes) {
-  const { customSlippage, slippage } = useSettingsStore();
+  const { customSlippage, slippage } = useAppStore();
   const { open, onClose, onConfirm, warning } = props;
   const navigate = useNavigate();
   const userSlippage = customSlippage ?? slippage;
