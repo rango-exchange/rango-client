@@ -140,23 +140,23 @@ msgid "Cancel"
 msgstr "キャンセル"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/HeaderButtons/HomeButtons.tsx:34
+#: widget/embedded/src/components/HeaderButtons/HomeButtons.tsx:42
 msgid "Refresh"
 msgstr "更新"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/HeaderButtons/HomeButtons.tsx:47
+#: widget/embedded/src/components/HeaderButtons/HomeButtons.tsx:56
 msgid "Notifications"
 msgstr "通知"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/HeaderButtons/HomeButtons.tsx:66
-#: widget/embedded/src/pages/ConfirmSwapPage.tsx:274
+#: widget/embedded/src/components/HeaderButtons/HomeButtons.tsx:76
+#: widget/embedded/src/pages/ConfirmSwapPage.tsx:273
 msgid "Settings"
 msgstr "設定"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/HeaderButtons/HomeButtons.tsx:74
+#: widget/embedded/src/components/HeaderButtons/HomeButtons.tsx:84
 msgid "Transactions History"
 msgstr "取引履歴"
 
@@ -277,12 +277,12 @@ msgid "Confirm anyway"
 msgstr "確認する"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Slippage/Slippage.tsx:33
+#: widget/embedded/src/components/Slippage/Slippage.tsx:31
 msgid "Slippage tolerance per swap"
 msgstr "スワップごとの滑り止め許容差"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Slippage/Slippage.tsx:89
+#: widget/embedded/src/components/Slippage/Slippage.tsx:87
 msgid "Custom"
 msgstr "カスタム"
 
@@ -593,17 +593,17 @@ msgid "Route internal coins has been updated."
 msgstr "ルート内部コインが更新されました。"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/ConfirmSwapPage.tsx:265
+#: widget/embedded/src/pages/ConfirmSwapPage.tsx:264
 msgid "Confirm Swap"
 msgstr "スワップの確認"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/ConfirmSwapPage.tsx:295
+#: widget/embedded/src/pages/ConfirmSwapPage.tsx:294
 msgid "Start Swap"
 msgstr "スワップを開始"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/ConfirmSwapPage.tsx:321
+#: widget/embedded/src/pages/ConfirmSwapPage.tsx:320
 msgid "You get"
 msgstr "あなたは"
 
@@ -658,54 +658,54 @@ msgid "Search Token"
 msgstr "トークンを検索"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/SettingsPage.tsx:61
+#: widget/embedded/src/pages/SettingsPage.tsx:72
 msgid "Loading failed"
 msgstr "読み込みに失敗しました"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/SettingsPage.tsx:77
+#: widget/embedded/src/pages/SettingsPage.tsx:88
 msgid "Enabled bridges"
 msgstr "有効なブリッジ"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/SettingsPage.tsx:94
+#: widget/embedded/src/pages/SettingsPage.tsx:105
 msgid "Enabled exchanges"
 msgstr "有効な取引所"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/SettingsPage.tsx:124
-#: widget/embedded/src/pages/ThemePage.tsx:72
-#: widget/embedded/src/pages/ThemePage.tsx:81
+#: widget/embedded/src/pages/SettingsPage.tsx:135
+#: widget/embedded/src/pages/ThemePage.tsx:71
+#: widget/embedded/src/pages/ThemePage.tsx:80
 msgid "Theme"
 msgstr "テーマ"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/SettingsPage.tsx:136
+#: widget/embedded/src/pages/SettingsPage.tsx:147
 msgid "Infinite Approval"
 msgstr "永久承認"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/SettingsPage.tsx:145
+#: widget/embedded/src/pages/SettingsPage.tsx:156
 msgid "Enabling the 'Infinite Approval' mode grants unrestricted access to smart contracts of DEXes/Bridges, allowing them to utilize the approved token amount without limitations."
 msgstr "「Infinite Approval」モードを有効にすると、DEX/Bridges のスマートコントラクトに無制限にアクセスできるため、承認されたトークンの量を制限なく利用できます。"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/SettingsPage.tsx:172
+#: widget/embedded/src/pages/SettingsPage.tsx:183
 msgid "Setting"
 msgstr "設定"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/ThemePage.tsx:36
+#: widget/embedded/src/pages/ThemePage.tsx:35
 msgid "Light"
 msgstr "ライト"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/ThemePage.tsx:48
+#: widget/embedded/src/pages/ThemePage.tsx:47
 msgid "Dark"
 msgstr "ダーク"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/ThemePage.tsx:60
+#: widget/embedded/src/pages/ThemePage.tsx:59
 msgid "Auto"
 msgstr "自動"
 
