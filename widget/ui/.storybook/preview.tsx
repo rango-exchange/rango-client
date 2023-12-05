@@ -2,7 +2,6 @@ import React from 'react';
 import { Decorator } from '@storybook/react';
 import { lightTheme, darkTheme, styled } from '../src/theme';
 import { globalCss } from '@stitches/react';
-import { I18nManager } from '../src';
 
 // https://storybook.js.org/docs/react/writing-stories/parameters#global-parameters
 export const parameters = {
@@ -56,23 +55,21 @@ export const withTheme: Decorator = (StoryFn, context) => {
   switch (theme) {
     case 'side-by-side':
       return (
-        <I18nManager>
+        <>
           <ThemeBlock position="left" className={lightTheme}>
             <StoryFn />
           </ThemeBlock>
           <ThemeBlock position="right" className={darkTheme}>
             <StoryFn />
           </ThemeBlock>
-        </I18nManager>
+        </>
       );
 
     default:
       return (
-        <I18nManager>
-          <ThemeBlock position="fill" className={storyTheme}>
-            <StoryFn />
-          </ThemeBlock>
-        </I18nManager>
+        <ThemeBlock position="fill" className={storyTheme}>
+          <StoryFn />
+        </ThemeBlock>
       );
   }
 };

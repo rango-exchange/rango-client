@@ -1,10 +1,10 @@
 import type { WalletType } from '@rango-dev/wallets-shared';
 
-import { I18nManager } from '@rango-dev/ui';
 import React, { useContext, useEffect, useState } from 'react';
 
 import { AppRouter } from '../../components/AppRouter';
 import { AppRoutes } from '../../components/AppRoutes';
+import { I18nManager } from '../../components/I18nManager';
 import { WidgetEvents } from '../../components/WidgetEvents';
 import { globalFont } from '../../globalStyles';
 import { useLanguage } from '../../hooks/useLanguage';
