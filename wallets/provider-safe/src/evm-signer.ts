@@ -1,9 +1,11 @@
-import { GenericSigner } from 'rango-types';
-import { EvmTransaction } from 'rango-types/lib/api/main';
-import { TransactionResponse } from '@ethersproject/abstract-provider';
+import type { TransactionResponse } from '@ethersproject/abstract-provider';
+import type { OffChainSignMessageResponse } from '@safe-global/safe-apps-sdk';
+import type { GenericSigner } from 'rango-types';
+import type { EvmTransaction } from 'rango-types/lib/api/main';
+
 import { DefaultEvmSigner } from '@rango-dev/signer-evm';
-import { sdk, getTxHash } from './helpers';
-import { OffChainSignMessageResponse } from '@safe-global/safe-apps-sdk';
+
+import { getTxHash, sdk } from './helpers';
 
 export class CustomEvmSigner implements GenericSigner<EvmTransaction> {
   private signer;
@@ -28,10 +30,14 @@ export class CustomEvmSigner implements GenericSigner<EvmTransaction> {
     hash: string;
     response: TransactionResponse & { hashRequiringUpdate: boolean };
   }> {
-    const result = await this.signer.signAndSendTx(tx, address, chainId);
+    const { hash, response } = await this.signer.signAndSendTx(
+      tx,
+      address,
+      chainId
+    );
     return {
-      hash: result.hash,
-      response: { ...result.response, hashRequiringUpdate: true },
+      hash,
+      response: { ...response, hashRequiringUpdate: true },
     };
   }
 
@@ -41,20 +47,13 @@ export class CustomEvmSigner implements GenericSigner<EvmTransaction> {
     response: TransactionResponse
   ): Promise<{
     hash: string;
-    response: TransactionResponse & {
-      hashWasUpdated: boolean;
-      isMultiSig: true;
-    };
+    response: TransactionResponse;
     chainId: string;
   }> {
-    const result = await getTxHash(safeHash);
+    const { txHash: hash } = await getTxHash(safeHash);
     return {
-      hash: result.txHash,
-      response: {
-        ...response,
-        hashWasUpdated: result.hashWasUpdated,
-        isMultiSig: true,
-      },
+      hash,
+      response,
       chainId,
     };
   }
