@@ -18,7 +18,7 @@ import { MainContainer } from './App.styles';
 export function Main() {
   globalFont();
 
-  const { fetch: fetchMeta, config } = useAppStore();
+  const { config } = useAppStore();
   const { activeTheme } = useTheme(config?.theme || {});
   const { activeLanguage, changeLanguage } = useLanguage();
   const [lastConnectedWalletWithNetwork, setLastConnectedWalletWithNetwork] =
@@ -27,7 +27,6 @@ export function Main() {
   const widgetContext = useContext(WidgetContext);
 
   useEffect(() => {
-    void fetchMeta().catch();
     void useNotificationStore.persist.rehydrate();
     widgetContext.onConnectWallet(setLastConnectedWalletWithNetwork);
   }, []);

@@ -28,7 +28,7 @@ export const WidgetContext = createContext<WidgetContextInterface>({
 });
 
 function Main(props: PropsWithChildren<PropTypes>) {
-  const { updateConfig, updateSettings } = useAppStore();
+  const { updateConfig, updateSettings, fetch: fetchMeta } = useAppStore();
   const blockchains = useAppStore().blockchains();
   const tokens = useAppStore().tokens();
   const walletOptions: ProvidersOptions = {
@@ -38,6 +38,10 @@ function Main(props: PropsWithChildren<PropTypes>) {
   const { connectWallet, disconnectWallet } = useWalletsStore();
   const onConnectWalletHandler = useRef<OnConnectHandler>();
   useSyncStoresWithConfig();
+
+  useEffect(() => {
+    void fetchMeta().catch(console.log);
+  }, []);
 
   useEffect(() => {
     if (props.config) {
