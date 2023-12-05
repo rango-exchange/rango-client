@@ -1,7 +1,9 @@
+import type { Meta } from '../../store/quote';
 import type { Manager } from '@rango-dev/queue-manager-core';
 import type { PendingSwap } from '@rango-dev/queue-manager-rango-preset';
 
 import {
+  cancelSwap,
   getCurrentBlockchainOfOrNull,
   getCurrentStep,
   getRelatedWalletOrNull,
@@ -9,11 +11,17 @@ import {
 
 import { getPendingSwaps } from '../../utils/queue';
 
+interface WidgetHistoryActions {
+  retrySwap: (pendingSwap: PendingSwap, meta: Meta) => void;
+}
+
 export class WidgetHistory {
   private manager: Manager | undefined;
+  private actions: WidgetHistoryActions;
 
-  constructor(manager: Manager | undefined) {
+  constructor(manager: Manager | undefined, actions: WidgetHistoryActions) {
     this.manager = manager;
+    this.actions = actions;
   }
 
   public getAllSwaps() {
@@ -30,6 +38,17 @@ export class WidgetHistory {
 
   public getCurrentStepNetwork(swap: PendingSwap) {
     return this.getCurrentStepInfo(swap).network;
+  }
+
+  public retry(swap: PendingSwap, meta: Meta) {
+    return this.actions.retrySwap(swap, meta);
+  }
+
+  public cancel(id: string) {
+    const queue = this.manager?.get(id);
+    if (queue) {
+      cancelSwap(queue);
+    }
   }
 
   private getCurrentStepInfo(swap: PendingSwap) {

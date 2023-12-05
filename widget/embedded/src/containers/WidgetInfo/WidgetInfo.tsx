@@ -3,6 +3,8 @@ import type { WidgetInfoContextInterface } from './WidgetInfo.types';
 import { useManager } from '@rango-dev/queue-manager-react';
 import React, { createContext, useContext } from 'react';
 
+import { useAppStore } from '../../store/AppStore';
+import { useQuoteStore } from '../../store/quote';
 import { useWalletsStore } from '../../store/wallets';
 import { calculateWalletUsdValue } from '../../utils/wallets';
 
@@ -14,11 +16,17 @@ export const WidgetInfoContext = createContext<
 
 export function WidgetInfo(props: React.PropsWithChildren) {
   const { manager } = useManager();
-  const history = new WidgetHistory(manager);
+  const retrySwap = useQuoteStore.use.retry();
+  const history = new WidgetHistory(manager, { retrySwap });
   const details = useWalletsStore.use.connectedWallets();
   const isLoading = useWalletsStore.use.loading();
   const totalBalance = calculateWalletUsdValue(details);
   const refetch = useWalletsStore.use.getWalletsDetails();
+  const blockchains = useAppStore().blockchains();
+  const tokens = useAppStore().tokens();
+  const swappers = useAppStore().swappers();
+  const loadingStatus = useAppStore().fetchStatus;
+
   // eslint-disable-next-line react/jsx-no-constructed-context-values
   const value = {
     history,
@@ -27,6 +35,12 @@ export function WidgetInfo(props: React.PropsWithChildren) {
       details,
       totalBalance,
       refetch,
+    },
+    meta: {
+      blockchains,
+      tokens,
+      swappers,
+      loadingStatus,
     },
   };
 
