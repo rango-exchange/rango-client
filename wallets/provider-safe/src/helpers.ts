@@ -30,11 +30,8 @@ export async function getSafeInstance(): Promise<any> {
   return accountInfo ? new SafeAppProvider(accountInfo, sdk as any) : null;
 }
 
-export async function getTxHash(
-  safeHash: string
-): Promise<{ txHash: string; hashWasUpdated: boolean }> {
+export async function getTxHash(safeHash: string): Promise<{ txHash: string }> {
   let txHash;
-  let hashWasUpdated = false;
   const timeout = 5_000;
 
   while (!txHash) {
@@ -50,12 +47,10 @@ export async function getTxHash(
       } else if (queued.txHash) {
         /** The txStatus is in an end-state (e.g. success) so we probably have a valid, on chain txHash*/
         txHash = queued.txHash;
-        hashWasUpdated = true;
       }
     } catch {
       txHash = safeHash;
-      hashWasUpdated = true;
     }
   }
-  return { txHash, hashWasUpdated };
+  return { txHash };
 }
