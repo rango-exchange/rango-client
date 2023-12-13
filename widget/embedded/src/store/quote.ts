@@ -1,11 +1,11 @@
 import type { Wallet } from '../types';
-import type { PendingSwap } from '@rango-dev/queue-manager-rango-preset/dist/shared';
 import type {
   BestRouteResponse,
   BlockchainMeta,
   MetaResponse,
   Token,
 } from 'rango-sdk';
+import type { PendingSwap } from 'rango-types';
 
 import BigNumber from 'bignumber.js';
 import { create } from 'zustand';

@@ -1,6 +1,6 @@
 import type { GetStep } from '../SwapDetailsAlerts';
-import type { PendingSwapStep } from '@rango-dev/queue-manager-rango-preset';
 import type { Step, StepDetailsProps } from '@rango-dev/ui';
+import type { PendingSwapStep } from 'rango-types';
 
 import React from 'react';
 

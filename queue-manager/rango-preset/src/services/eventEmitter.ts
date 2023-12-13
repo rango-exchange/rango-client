@@ -6,7 +6,7 @@ import type {
   Step,
   StepEvent,
 } from '../types';
-import type { PendingSwap, PendingSwapStep } from 'rango-types/lib';
+import type { PendingSwap, PendingSwapStep } from 'rango-types';
 
 import mitt from 'mitt';
 

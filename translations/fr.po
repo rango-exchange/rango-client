@@ -21,7 +21,7 @@ msgstr ""
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:37
 #: widget/embedded/src/components/TokenList/TokenList.tsx:125
-#: widget/embedded/src/pages/HistoryPage.tsx:95
+#: widget/embedded/src/pages/HistoryPage.tsx:94
 #: widget/embedded/src/pages/LiquiditySourcePage.tsx:126
 msgid "No results found"
 msgstr "Aucun résultat trouvé"
@@ -29,7 +29,7 @@ msgstr "Aucun résultat trouvé"
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:38
 #: widget/embedded/src/components/TokenList/TokenList.tsx:126
-#: widget/embedded/src/pages/HistoryPage.tsx:97
+#: widget/embedded/src/pages/HistoryPage.tsx:96
 #: widget/embedded/src/pages/LiquiditySourcePage.tsx:127
 msgid "Try using different keywords"
 msgstr "Essayez d'utiliser différents mots-clés"
@@ -169,7 +169,7 @@ msgstr "Connecter le portefeuille"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/LoadingSwapDetails/LoadingSwapDetails.tsx:38
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:356
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:340
 msgid "Swaps steps"
 msgstr "Étapes d'échange"
 
@@ -303,19 +303,19 @@ msgstr "Ce paramètre est appliqué par étape, par exemple 1 pouce, Thorchain, 
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetails/SwapDetails.Placeholder.tsx:30
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:236
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:220
 msgid "Swap and Bridge"
 msgstr "Échanger et Pont"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetails/SwapDetails.Placeholder.tsx:38
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:276
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:260
 msgid "Request ID"
 msgstr "ID de la requête"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetails/SwapDetails.Placeholder.tsx:51
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:291
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:275
 msgid "Created at"
 msgstr "Créé le"
 
@@ -331,27 +331,27 @@ msgid "Swap with request ID = {requestId} not found."
 msgstr "L'échange avec la requête ID = {requestId} est introuvable."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:203
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:187
 msgid "You have received {amount} {token} in {conciseAddress} wallet on {chain} chain."
 msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:219
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:203
 msgid "Transaction was not sent."
 msgstr "La transaction n'a pas été envoyée."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:221
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:205
 msgid "{amount} {symbol} on {blockchain} remain in your wallet"
 msgstr "{amount} {symbol} sur {blockchain} restent dans votre portefeuille"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:247
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:231
 msgid "Delete"
 msgstr "Supprimez"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:268
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:252
 msgid "Try again"
 msgstr "Réessayez"
 
@@ -608,12 +608,12 @@ msgid "You get"
 msgstr "Vous obtenez"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/HistoryPage.tsx:78
+#: widget/embedded/src/pages/HistoryPage.tsx:77
 msgid "History"
 msgstr "Historique"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/HistoryPage.tsx:85
+#: widget/embedded/src/pages/HistoryPage.tsx:84
 msgid "Search Transaction"
 msgstr "Rechercher une transaction"
 
@@ -721,57 +721,57 @@ msgid "Choose a wallet to connect."
 msgstr "Choisissez un portefeuille à connecter."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:125
+#: widget/embedded/src/utils/swap.ts:122
 msgid "Required: >= {min} {symbol}"
 msgstr "Requis: >= {min} {symbol}"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:138
+#: widget/embedded/src/utils/swap.ts:135
 msgid "Required: > {min} {symbol}"
 msgstr "Requis: > {min} {symbol}"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:153
+#: widget/embedded/src/utils/swap.ts:150
 msgid "Required: <= {max} {symbol}"
 msgstr "Requis: <= {max} {symbol}"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:166
+#: widget/embedded/src/utils/swap.ts:163
 msgid "Required: < {max} {symbol}"
 msgstr "Requis: < {max} {symbol}"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:642
+#: widget/embedded/src/utils/swap.ts:639
 msgid " for network fee"
 msgstr " pour frais de réseau"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:645
+#: widget/embedded/src/utils/swap.ts:642
 msgid " for swap"
 msgstr " pour swap"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:648
+#: widget/embedded/src/utils/swap.ts:645
 msgid " for input and network fee"
 msgstr " pour les frais d'entrée et de réseau"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:650
+#: widget/embedded/src/utils/swap.ts:647
 msgid "Needs ≈ {requiredAmount} {symbol}{reason}, but you have {currentAmount} {symbol} in your {blockchain} wallet."
 msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:710
+#: widget/embedded/src/utils/swap.ts:707
 msgid "Waiting for connecting wallet"
 msgstr "En attente de connexion au portefeuille"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:714
+#: widget/embedded/src/utils/swap.ts:711
 msgid "Waiting for other running tasks to be finished"
 msgstr "En attente de la fin des autres tâches en cours"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:717
+#: widget/embedded/src/utils/swap.ts:714
 msgid "Waiting for changing wallet network"
 msgstr "En attente de changement de réseau du portefeuille"
 

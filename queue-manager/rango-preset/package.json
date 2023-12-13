@@ -37,7 +37,7 @@
   "dependencies": {
     "@sentry/browser": "^6.12.0",
     "mitt": "^3.0.0",
-    "rango-types": "^0.1.46",
+    "rango-types": "^0.1.57",
     "uuid": "^9.0.0"
   },
   "publishConfig": {

@@ -15,7 +15,7 @@
     "@rango-dev/ui": "^0.22.1-next.16",
     "@rango-dev/wallets-react": "^0.8.1-next.5",
     "@rango-dev/wallets-shared": "^0.21.1-next.5",
-    "rango-sdk": "^0.1.35",
+    "rango-sdk": "^0.1.44",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   }

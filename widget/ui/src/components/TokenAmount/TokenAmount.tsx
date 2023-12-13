@@ -41,21 +41,23 @@ export function TokenAmount(props: PropTypes) {
           </div>
         </div>
       </div>
-      <div className="usd-value">
-        {props.type === 'input' && (
-          <Typography mr={4} size="small" variant="body" color="$neutral700">
-            {`~$${props.price.usdValue}`}
-          </Typography>
-        )}
-        {props.type === 'output' && (
-          <PriceImpact
-            size="small"
-            outputUsdValue={props.price.usdValue}
-            percentageChange={props.percentageChange}
-            warningLevel={props.warningLevel}
-          />
-        )}
-      </div>
+      {props.price.usdValue && props.price.usdValue !== '0' && (
+        <div className="usd-value">
+          {props.type === 'input' && (
+            <Typography mr={4} size="small" variant="body" color="$neutral700">
+              {`~$${props.price.usdValue}`}
+            </Typography>
+          )}
+          {props.type === 'output' && (
+            <PriceImpact
+              size="small"
+              outputUsdValue={props.price.usdValue}
+              percentageChange={props.percentageChange}
+              warningLevel={props.warningLevel}
+            />
+          )}
+        </div>
+      )}
     </Container>
   );
 }

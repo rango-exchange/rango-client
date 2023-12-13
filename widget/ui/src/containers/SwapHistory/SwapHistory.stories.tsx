@@ -1,7 +1,10 @@
+import type { PropTypes } from './SwapHistory';
+import type { Meta } from '@storybook/react';
+
 import React from 'react';
-import { Meta } from '@storybook/react';
-import { PropTypes, SwapHistory } from './SwapHistory';
+
 import { pendingSwap } from './mock';
+import { SwapHistory } from './SwapHistory';
 
 export default {
   title: 'Containers/Swap History',

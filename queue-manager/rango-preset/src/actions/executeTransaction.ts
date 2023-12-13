@@ -1,6 +1,8 @@
 import type { SwapActionTypes, SwapQueueContext, SwapStorage } from '../types';
 import type { ExecuterActions } from '@rango-dev/queue-manager-core';
 
+import { PendingSwapNetworkStatus } from 'rango-types';
+
 import {
   ERROR_MESSAGE_DEPENDS_ON_OTHER_QUEUES,
   ERROR_MESSAGE_WAIT_FOR_CHANGE_NETWORK,
@@ -18,7 +20,7 @@ import {
   signTransaction,
   updateNetworkStatus,
 } from '../helpers';
-import { getCurrentBlockchainOf, PendingSwapNetworkStatus } from '../shared';
+import { getCurrentBlockchainOf } from '../shared';
 import { BlockReason } from '../types';
 
 /**

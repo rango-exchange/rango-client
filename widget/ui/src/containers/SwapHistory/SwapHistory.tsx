@@ -1,5 +1,5 @@
 import type { PropTypes as SwapMessagesPropTypes } from './SwapMessages';
-import type { PendingSwap } from '../History/types';
+import type { PendingSwap } from 'rango-types';
 
 import React, { useState } from 'react';
 

@@ -1,5 +1,5 @@
 import type { ConfirmSwapWarnings, QuoteError, Wallet } from '../../types';
-import type { PendingSwap } from 'rango-types/lib';
+import type { PendingSwap } from 'rango-types';
 
 export type ConfirmSwapFetchResult = {
   swap: PendingSwap | null;

@@ -1,13 +1,7 @@
 /* eslint-disable destructuring/in-params */
 /* eslint-disable @typescript-eslint/no-magic-numbers */
 /* eslint-disable @typescript-eslint/no-floating-promises */
-import type {
-  PendingSwap,
-  PendingSwapStep,
-  StepStatus,
-  SwapStatus,
-  Wallet,
-} from './shared';
+import type { SwapStatus, Wallet } from './shared';
 import type {
   ArrayElement,
   Step,
@@ -34,7 +28,13 @@ import type {
   EvmBlockchainMeta,
   Transaction,
 } from 'rango-sdk';
-import type { APIErrorCode, SignerErrorCode } from 'rango-types';
+import type {
+  APIErrorCode,
+  PendingSwap,
+  PendingSwapStep,
+  SignerErrorCode,
+  StepStatus,
+} from 'rango-types';
 
 import { Status } from '@rango-dev/queue-manager-core';
 import { readAccountAddress } from '@rango-dev/wallets-core';
@@ -44,6 +44,7 @@ import {
   splitWalletNetwork,
 } from '@rango-dev/wallets-shared';
 import { TransactionType } from 'rango-sdk';
+import { PendingSwapNetworkStatus } from 'rango-types';
 
 import {
   DEFAULT_ERROR_CODE,
@@ -61,7 +62,6 @@ import {
   getRelatedWalletOrNull,
   getScannerUrl,
   MessageSeverity,
-  PendingSwapNetworkStatus,
 } from './shared';
 import {
   mapAppErrorCodesToAPIErrorCode,
@@ -342,7 +342,7 @@ export function updateSwapStatus({
       details && details.includes('Warning')
         ? 'Swap canceled by user.'
         : details;
-    const walletType = getRelatedWalletOrNull(swap, currentStep!)?.walletType;
+    const walletType = getRelatedWalletOrNull(swap, currentStep)?.walletType;
     swap.extraMessageSeverity = MessageSeverity.error;
 
     const failureType = mapAppErrorCodesToAPIErrorCode(errorCode);

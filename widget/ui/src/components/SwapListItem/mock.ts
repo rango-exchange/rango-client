@@ -1,11 +1,12 @@
 /* eslint-disable @typescript-eslint/no-magic-numbers */
-// TODO: fix ts errors
-// eslint-disable-next-line
-// @ts-nocheck
 import type { SwapTokenData } from './SwapListItem.types';
-import type { PendingSwap } from '../../containers/History/types';
+import type { PendingSwap } from 'rango-types';
 
-import { RoutingResultType, TransactionType } from 'rango-sdk';
+import {
+  MessageSeverity,
+  RoutingResultType,
+  TransactionType,
+} from 'rango-types';
 
 export const swap: PendingSwap = {
   creationTime: '1673164511955',
@@ -21,7 +22,7 @@ export const swap: PendingSwap = {
   status: 'running',
   isPaused: false,
   extraMessage: null,
-  extraMessageSeverity: 'info',
+  extraMessageSeverity: MessageSeverity.info,
   extraMessageDetail: '',
   extraMessageErrorCode: null,
   networkStatusExtraMessage: null,
@@ -75,6 +76,7 @@ export const swap: PendingSwap = {
             expenseType: 'FROM_SOURCE_WALLET',
             name: 'Network Fee',
             amount: '0',
+            price: null,
           },
         ],
         estimatedTimeInSeconds: 45,
@@ -150,6 +152,7 @@ export const swap: PendingSwap = {
         includesDestinationTx: false,
         maxRequiredSign: 1,
         warnings: [],
+        internalSwaps: null,
       },
     ],
   },
@@ -164,16 +167,20 @@ export const swap: PendingSwap = {
         'ibc/46b44899322f3cd854d2d46deef881958467cdd4b3b10086da49296bbed94bed',
       fromDecimals: 6,
       fromAmountPrecision: null,
+      fromAmountRestrictionType: 'EXCLUSIVE',
+      estimatedTimeInSeconds: 5,
       fromAmountMinValue: null,
       fromAmountMaxValue: null,
       toBlockchainLogo: 'https://api.rango.exchange/swappers/osmosis.png',
       fromBlockchainLogo: 'https://api.rango.exchange/swappers/osmosis.png',
+      fromUsdPrice: null,
       toBlockchain: 'OSMOSIS',
       fromLogo: 'https://api.rango.exchange/tokens/COSMOS/JUNO.png',
       toSymbol: 'OSMO',
       toSymbolAddress: null,
       toDecimals: 6,
       toLogo: 'https://api.rango.exchange/i/mJQPS2',
+      toUsdPrice: null,
       startTransactionTime: 1673164519916,
       swapperId: 'Osmosis',
       swapperLogo: 'https://api.rango.exchange/swappers/osmosis.png',
@@ -189,6 +196,13 @@ export const swap: PendingSwap = {
           description: null,
         },
       ],
+      starknetApprovalTransaction: null,
+      starknetTransaction: null,
+      tronApprovalTransaction: null,
+      tonTransaction: null,
+      tronTransaction: null,
+      feeInUsd: null,
+      executedTransactionTime: null,
       cosmosTransaction: {
         type: TransactionType.COSMOS,
         fromWalletAddress: 'osmo1unf2rcytjxfpz8x8ar63h4qeftadptg5t0nqcl',
@@ -276,6 +290,7 @@ export const swap: PendingSwap = {
       transferTransaction: null,
       diagnosisUrl: null,
       internalSteps: null,
+      internalSwaps: null,
     },
   ],
 };

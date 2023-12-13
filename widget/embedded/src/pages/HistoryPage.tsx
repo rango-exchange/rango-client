@@ -1,5 +1,4 @@
-import type { PendingSwap } from '@rango-dev/queue-manager-rango-preset';
-import type { PendingSwapStep } from 'rango-types';
+import type { PendingSwap, PendingSwapStep } from 'rango-types';
 
 import { i18n } from '@lingui/core';
 import { useManager } from '@rango-dev/queue-manager-react';

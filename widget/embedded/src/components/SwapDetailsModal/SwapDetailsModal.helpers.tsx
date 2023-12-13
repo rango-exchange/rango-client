@@ -1,7 +1,7 @@
 import type { ModalNetworkValueTypes } from './SwapDetailsModal.types';
 
 import { i18n } from '@lingui/core';
-import { PendingSwapNetworkStatus } from '@rango-dev/queue-manager-rango-preset';
+import { PendingSwapNetworkStatus } from 'rango-types';
 
 export const modalNetworkValues: Record<
   Exclude<PendingSwapNetworkStatus, PendingSwapNetworkStatus.WaitingForQueue>,
