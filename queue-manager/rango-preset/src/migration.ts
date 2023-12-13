@@ -1,11 +1,9 @@
-import {
-  PersistedQueue,
-  Persistor,
-  Status,
-  DB_NAME,
-} from '@rango-dev/queue-manager-core';
+import type { PersistedQueue } from '@rango-dev/queue-manager-core';
+import type { PendingSwap } from 'rango-types';
+
+import { DB_NAME, Persistor, Status } from '@rango-dev/queue-manager-core';
 import { v4 as uuid } from 'uuid';
-import { PendingSwap } from './shared';
+
 import { SwapActionTypes } from './types';
 
 const MIGRATED_KEY = 'migratedToQueueManager';
@@ -49,9 +47,9 @@ async function migration(): Promise<boolean> {
   const convertedSwaps: PersistedQueue[] = [];
 
   swaps.forEach((swap) => {
-    /* 
-      For running task we need to add some more work
-      We need to create a queue task to be run and resume the running task from queue manager.
+    /*
+     *For running task we need to add some more work
+     *We need to create a queue task to be run and resume the running task from queue manager.
      */
     if (swap.status === 'running') {
       const taskId = uuid();
@@ -112,7 +110,9 @@ async function migration(): Promise<boolean> {
   // Getting an instance from persistor, so we can directly put our data inside it.
   const persistor = new Persistor();
 
-  const promises = convertedSwaps.map((queue) => persistor.insertQueue(queue));
+  const promises = convertedSwaps.map(async (queue) =>
+    persistor.insertQueue(queue)
+  );
   await Promise.all(promises);
 
   // Mark as the data has been successfully migrated.

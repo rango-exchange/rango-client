@@ -27,7 +27,7 @@
     "@rango-dev/signer-terra": "^0.21.1-next.1",
     "@rango-dev/wallets-shared": "^0.21.1-next.5",
     "@terra-money/wallet-controller": "^3.11.2",
-    "rango-types": "^0.1.46"
+    "rango-types": "^0.1.57"
   },
   "publishConfig": {
     "access": "public"

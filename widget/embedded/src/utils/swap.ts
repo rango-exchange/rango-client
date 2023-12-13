@@ -8,10 +8,6 @@ import type {
   SwapButtonState,
   Wallet,
 } from '../types';
-import type {
-  PendingSwap,
-  PendingSwapStep,
-} from '@rango-dev/queue-manager-rango-preset';
 import type { WalletType } from '@rango-dev/wallets-shared';
 import type {
   BestRouteRequest,
@@ -21,10 +17,11 @@ import type {
   SwapResult,
   Token,
 } from 'rango-sdk';
+import type { PendingSwap, PendingSwapStep } from 'rango-types';
 
 import { i18n } from '@lingui/core';
-import { PendingSwapNetworkStatus } from '@rango-dev/queue-manager-rango-preset';
 import BigNumber from 'bignumber.js';
+import { PendingSwapNetworkStatus } from 'rango-types';
 
 import { isValidAddress } from '../components/ConfirmWalletsModal/ConfirmWallets.helpers';
 import { errorMessages } from '../constants/errors';

@@ -19204,32 +19204,32 @@ range-parser@^1.2.1, range-parser@~1.2.1:
   resolved "https://registry.yarnpkg.com/range-parser/-/range-parser-1.2.1.tgz#3cf37023d199e1c24d1a55b84800c2f3e6468031"
   integrity sha512-Hrgsx+orqoygnmhFbKaHE6c296J+HTAQXoxEF6gNupROmmGJRoyzfG3ccAveqCBrwr/2yxQ5BVd/GTl5agOwSg==
 
-rango-sdk-basic@^0.1.34:
-  version "0.1.41"
-  resolved "https://registry.yarnpkg.com/rango-sdk-basic/-/rango-sdk-basic-0.1.41.tgz#4402a6a5ef8444e1946b118ca48e365c67e8a6e4"
-  integrity sha512-jJqogE5GwWrTvkw24AMderjrSE7KkY3YHhZRCUyOSO4hEgZKUmxPI3Yf8RaveevWxcvQG8WvPOnQGi4QXCqoRg==
+rango-sdk-basic@^0.1.44:
+  version "0.1.44"
+  resolved "https://registry.yarnpkg.com/rango-sdk-basic/-/rango-sdk-basic-0.1.44.tgz#591e141c59728c886e60cda85ba1c183918b5b45"
+  integrity sha512-rDZqqfcgAimN8YgtnJcZoGIdcqUpT+1ICKYSgOf75mY1UWS8jvKc8Yh8WrX66SFKYynvQ8NZZVcXR+2TJhQOtQ==
   dependencies:
     axios "^1.2.6"
     bignumber.js "^9.1.1"
     eth-rpc-errors "^4.0.3"
     ethers "^5.7.2"
-    rango-types "^0.1.55"
+    rango-types "^0.1.57"
     uuid-random "^1.3.2"
 
-rango-sdk@^0.1.35:
-  version "0.1.41"
-  resolved "https://registry.yarnpkg.com/rango-sdk/-/rango-sdk-0.1.41.tgz#24d056394148b3f34c4ab1351e1c9d220c3ab597"
-  integrity sha512-xDLWCAN6nBHlb1rGMi9EWMYqSwl3dcAnpCMZ08kQl5dGSWxgNG3K72bSgEOrmFjuY9UXmPQXsVQyQIL0WSrZFQ==
+rango-sdk@^0.1.44:
+  version "0.1.44"
+  resolved "https://registry.yarnpkg.com/rango-sdk/-/rango-sdk-0.1.44.tgz#5883bd0b5a77bd5848bcef40e04f5116f38fb640"
+  integrity sha512-vKAJrou1UszbloZG2Kj2/3xCCY9wLK2n2TYzEwVpZlffTkWXtQcP1PVupI4she7bxE7MD6OtJAkUimnx03kS2Q==
   dependencies:
     axios "^1.2.6"
     bignumber.js "^9.1.1"
-    rango-types "^0.1.55"
+    rango-types "^0.1.57"
     uuid-random "^1.3.2"
 
-rango-types@^0.1.45, rango-types@^0.1.46, rango-types@^0.1.47, rango-types@^0.1.55:
-  version "0.1.55"
-  resolved "https://registry.yarnpkg.com/rango-types/-/rango-types-0.1.55.tgz#721a5042a24d53838a19a3432959b3eb15b73734"
-  integrity sha512-oTJa1VHCS4bsr/NP83MxvzZYW7IyORBckJX9YSeFjCQdxmyOfFuCtCNNoHqjdK4Yjb6HX5qew6rJuHUF6mq+YQ==
+rango-types@^0.1.57:
+  version "0.1.57"
+  resolved "https://registry.yarnpkg.com/rango-types/-/rango-types-0.1.57.tgz#0e5378ae2e4114c4c71ad0ec98b86b3966ebe765"
+  integrity sha512-F9bpBQovmP/GMENdFs5I4zZwbsPAHWmUCj33eIbu8ZbNa76/BmbC7nMfhViggNTXC2WHJaFsqhyukOEILU2Tlg==
 
 raw-body@2.5.1:
   version "2.5.1"

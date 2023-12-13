@@ -1,5 +1,5 @@
 import type { GroupBy } from '../components/SwapsGroup/SwapsGroup.types';
-import type { PendingSwap } from '@rango-dev/queue-manager-rango-preset';
+import type { PendingSwap } from 'rango-types';
 
 import dayjs from 'dayjs';
 
