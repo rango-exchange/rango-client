@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/provider-clover",
-  "version": "0.22.1-next.5",
+  "version": "0.22.1-next.6",
   "license": "MIT",
   "type": "module",
   "source": "./src/index.ts",
@@ -21,9 +21,9 @@
     "lint": "eslint \"**/*.{ts,tsx}\" --ignore-path ../../.eslintignore"
   },
   "dependencies": {
-    "@rango-dev/signer-evm": "^0.21.1-next.1",
-    "@rango-dev/signer-solana": "^0.21.1-next.1",
-    "@rango-dev/wallets-shared": "^0.21.1-next.5",
+    "@rango-dev/signer-evm": "^0.21.1-next.2",
+    "@rango-dev/signer-solana": "^0.21.1-next.2",
+    "@rango-dev/wallets-shared": "^0.21.1-next.6",
     "rango-types": "^0.1.57"
   },
   "publishConfig": {
