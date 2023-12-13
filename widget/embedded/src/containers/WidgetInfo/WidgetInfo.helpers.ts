@@ -1,6 +1,6 @@
 import type { Meta } from '../../store/quote';
 import type { Manager } from '@rango-dev/queue-manager-core';
-import type { PendingSwap } from '@rango-dev/queue-manager-rango-preset';
+import type { PendingSwap } from 'rango-types/lib';
 
 import {
   cancelSwap,

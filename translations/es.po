@@ -21,7 +21,7 @@ msgstr ""
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:37
 #: widget/embedded/src/components/TokenList/TokenList.tsx:125
-#: widget/embedded/src/pages/HistoryPage.tsx:95
+#: widget/embedded/src/pages/HistoryPage.tsx:94
 #: widget/embedded/src/pages/LiquiditySourcePage.tsx:126
 msgid "No results found"
 msgstr "No hay resultados"
@@ -29,7 +29,7 @@ msgstr "No hay resultados"
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:38
 #: widget/embedded/src/components/TokenList/TokenList.tsx:126
-#: widget/embedded/src/pages/HistoryPage.tsx:97
+#: widget/embedded/src/pages/HistoryPage.tsx:96
 #: widget/embedded/src/pages/LiquiditySourcePage.tsx:127
 msgid "Try using different keywords"
 msgstr "Intenta usar diferentes palabras clave"
@@ -169,7 +169,7 @@ msgstr "Conectar cartera"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/LoadingSwapDetails/LoadingSwapDetails.tsx:38
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:356
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:340
 msgid "Swaps steps"
 msgstr "Intercambiar pasos"
 
@@ -303,19 +303,19 @@ msgstr "Este ajuste se aplica por paso, p. ej., 1pulgada, Thorchain, etc. y sól
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetails/SwapDetails.Placeholder.tsx:30
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:236
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:220
 msgid "Swap and Bridge"
 msgstr "Intercambiar y Puente"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetails/SwapDetails.Placeholder.tsx:38
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:276
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:260
 msgid "Request ID"
 msgstr "ID de Solicitud"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetails/SwapDetails.Placeholder.tsx:51
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:291
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:275
 msgid "Created at"
 msgstr "Creado el"
 
@@ -331,27 +331,27 @@ msgid "Swap with request ID = {requestId} not found."
 msgstr "Intercambio con ID de solicitud = {requestId} no encontrado."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:203
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:187
 msgid "You have received {amount} {token} in {conciseAddress} wallet on {chain} chain."
 msgstr "Ha recibido {amount} {token} en el monedero {conciseAddress} de la cadena {chain}."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:219
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:203
 msgid "Transaction was not sent."
 msgstr "La transacción no fue enviada."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:221
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:205
 msgid "{amount} {symbol} on {blockchain} remain in your wallet"
 msgstr "{amount} {symbol} en {blockchain} permanecen en su cartera"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:247
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:231
 msgid "Delete"
 msgstr "Eliminar"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:268
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:252
 msgid "Try again"
 msgstr "Inténtalo de nuevo"
 
@@ -608,12 +608,12 @@ msgid "You get"
 msgstr "Obtienes"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/HistoryPage.tsx:78
+#: widget/embedded/src/pages/HistoryPage.tsx:77
 msgid "History"
 msgstr "Historial"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/HistoryPage.tsx:85
+#: widget/embedded/src/pages/HistoryPage.tsx:84
 msgid "Search Transaction"
 msgstr "Buscar transacción"
 
@@ -721,57 +721,57 @@ msgid "Choose a wallet to connect."
 msgstr "Elija una cartera para conectar."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:125
+#: widget/embedded/src/utils/swap.ts:122
 msgid "Required: >= {min} {symbol}"
 msgstr "Requerido: >= {min} {symbol}"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:138
+#: widget/embedded/src/utils/swap.ts:135
 msgid "Required: > {min} {symbol}"
 msgstr "Requerido: > {min} {symbol}"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:153
+#: widget/embedded/src/utils/swap.ts:150
 msgid "Required: <= {max} {symbol}"
 msgstr "Requerido: <= {max} {symbol}"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:166
+#: widget/embedded/src/utils/swap.ts:163
 msgid "Required: < {max} {symbol}"
 msgstr "Requerido: < {max} {symbol}"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:642
+#: widget/embedded/src/utils/swap.ts:639
 msgid " for network fee"
 msgstr " por comisión de red"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:645
+#: widget/embedded/src/utils/swap.ts:642
 msgid " for swap"
 msgstr " para intercambio"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:648
+#: widget/embedded/src/utils/swap.ts:645
 msgid " for input and network fee"
 msgstr " por entrada y tarifa de red"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:650
+#: widget/embedded/src/utils/swap.ts:647
 msgid "Needs ≈ {requiredAmount} {symbol}{reason}, but you have {currentAmount} {symbol} in your {blockchain} wallet."
 msgstr "Necesitas {requiredAmount} {symbol}{reason}, pero tienes {currentAmount} {symbol} en tu monedero {blockchain}."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:710
+#: widget/embedded/src/utils/swap.ts:707
 msgid "Waiting for connecting wallet"
 msgstr "Esperando por conectar cartera"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:714
+#: widget/embedded/src/utils/swap.ts:711
 msgid "Waiting for other running tasks to be finished"
 msgstr "Esperando a que finalicen otras tareas en ejecución"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:717
+#: widget/embedded/src/utils/swap.ts:714
 msgid "Waiting for changing wallet network"
 msgstr "Esperando a cambiar la red del monedero"
 

@@ -10,8 +10,6 @@ import type {
   CreateTransactionRequest,
   CreateTransactionResponse,
   ErrorDetail,
-  PendingSwap,
-  PendingSwapStep,
   RawAccounts,
   SwapperStatusResponse,
   SwapSavedSettings,
@@ -27,7 +25,11 @@ import type {
 } from '@rango-dev/wallets-shared';
 import type { BestRouteRequest } from 'rango-sdk';
 import type { CheckApprovalResponse } from 'rango-sdk-basic';
-import type { EvmBlockchainMeta } from 'rango-types';
+import type {
+  EvmBlockchainMeta,
+  PendingSwap,
+  PendingSwapStep,
+} from 'rango-types';
 
 import { SUPPORTED_ETH_CHAINS as XDEFI_WALLET_SUPPORTED_EVM_CHAINS } from '@rango-dev/provider-xdefi/src/constants';
 import { readAccountAddress } from '@rango-dev/wallets-react';

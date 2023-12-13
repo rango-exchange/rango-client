@@ -6,7 +6,6 @@ import {
   getCurrentBlockchainOfOrNull,
   getCurrentStep,
   getRelatedWalletOrNull,
-  PendingSwapNetworkStatus,
 } from '@rango-dev/queue-manager-rango-preset';
 import {
   Button,
@@ -19,6 +18,7 @@ import {
   useCopyToClipboard,
 } from '@rango-dev/ui';
 import { useWallets } from '@rango-dev/wallets-react';
+import { PendingSwapNetworkStatus } from 'rango-types';
 import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -47,7 +47,7 @@ import {
   shouldRetrySwap,
 } from '../../utils/swap';
 import { getSwapDate } from '../../utils/time';
-import { getConciseAddress, getUsdPrice } from '../../utils/wallets';
+import { getConciseAddress } from '../../utils/wallets';
 import { SuffixContainer } from '../HeaderButtons/HeaderButtons.styles';
 import { Layout } from '../Layout';
 import { QuoteSummary } from '../Quote';
@@ -163,35 +163,19 @@ export function SwapDetails(props: SwapDetailsProps) {
   )?.diagnosisUrl;
 
   const outputUsdValue = numberToString(
-    String(
-      parseFloat(
-        numberToString(
-          outputAmount,
-          TOKEN_AMOUNT_MIN_DECIMALS,
-          TOKEN_AMOUNT_MAX_DECIMALS
-        )
-      ) *
-        (getUsdPrice(
-          lastStep.toBlockchain,
-          lastStep.toSymbol,
-          lastStep.toSymbolAddress,
-          tokens
-        ) || 0)
-    ),
+    parseFloat(
+      numberToString(
+        outputAmount,
+        TOKEN_AMOUNT_MIN_DECIMALS,
+        TOKEN_AMOUNT_MAX_DECIMALS
+      )
+    ) * (lastStep.toUsdPrice || 0),
     USD_VALUE_MIN_DECIMALS,
     USD_VALUE_MAX_DECIMALS
   );
 
   const inputUsdValue = numberToString(
-    String(
-      parseFloat(swap.inputAmount) *
-        (getUsdPrice(
-          firstStep.fromBlockchain,
-          firstStep.fromSymbol,
-          firstStep.fromSymbolAddress,
-          tokens
-        ) || 0)
-    ),
+    parseFloat(swap.inputAmount) * (firstStep.fromUsdPrice || 0),
     USD_VALUE_MIN_DECIMALS,
     USD_VALUE_MAX_DECIMALS
   );

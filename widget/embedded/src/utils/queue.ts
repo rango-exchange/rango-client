@@ -1,5 +1,5 @@
-import { Manager } from '@rango-dev/queue-manager-core';
-import {
+import type { Manager } from '@rango-dev/queue-manager-core';
+import type {
   PendingSwapWithQueueID,
   SwapStorage,
 } from '@rango-dev/queue-manager-rango-preset';

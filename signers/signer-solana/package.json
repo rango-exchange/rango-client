@@ -22,7 +22,7 @@
   },
   "dependencies": {
     "@solana/web3.js": "^1.67.2",
-    "rango-types": "^0.1.46"
+    "rango-types": "^0.1.57"
   },
   "publishConfig": {
     "access": "public"
