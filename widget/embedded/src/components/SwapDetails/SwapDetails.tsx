@@ -57,7 +57,15 @@ import {
 } from '../SwapDetailsModal';
 
 import { getSteps, getStepState, RESET_INTERVAL } from './SwapDetails.helpers';
-import { Container, HeaderDetails, StepsList } from './SwapDetails.styles';
+import {
+  Container,
+  HeaderDetails,
+  outputStyles,
+  requestIdStyles,
+  rowStyles,
+  StepsList,
+  titleStepsStyles,
+} from './SwapDetails.styles';
 
 export function SwapDetails(props: SwapDetailsProps) {
   const { swap, requestId, onDelete, onCancel: onCancelProps } = props;
@@ -255,11 +263,11 @@ export function SwapDetails(props: SwapDetailsProps) {
       }>
       <Container>
         <HeaderDetails>
-          <div className="row">
+          <div className={rowStyles()}>
             <Typography variant="label" size="large" color="neutral700">
               {`${i18n.t('Request ID')}:`}
             </Typography>
-            <div className="request-id">
+            <div className={requestIdStyles()}>
               <Typography variant="label" size="small" color="neutral700">
                 {requestId}
               </Typography>
@@ -270,7 +278,7 @@ export function SwapDetails(props: SwapDetailsProps) {
               </IconButton>
             </div>
           </div>
-          <div className="row">
+          <div className={rowStyles()}>
             <Typography variant="label" size="large" color="neutral700">
               {`${i18n.t('Created at')}:`}
             </Typography>
@@ -280,7 +288,7 @@ export function SwapDetails(props: SwapDetailsProps) {
           </div>
         </HeaderDetails>
 
-        <div className="output">
+        <div className={outputStyles()}>
           <QuoteCost
             fee={numberToString(
               String(totalFee),
@@ -335,7 +343,7 @@ export function SwapDetails(props: SwapDetailsProps) {
             warningLevel={getPriceImpactLevel(percentageChange ?? 0)}
           />
         </div>
-        <div className="title-steps">
+        <div className={titleStepsStyles()}>
           <Typography variant="title" size="small">
             {i18n.t('Swaps steps')}
           </Typography>

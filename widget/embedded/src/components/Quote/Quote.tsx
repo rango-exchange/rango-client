@@ -48,6 +48,7 @@ import { getPriceImpact, getPriceImpactLevel } from '../../utils/quote';
 import { getTotalFeeInUsd } from '../../utils/swap';
 
 import {
+  basicInfoStyles,
   ChainImageContainer,
   Chains,
   Content,
@@ -56,7 +57,9 @@ import {
   HorizontalSeparator,
   IconContainer,
   QuoteContainer,
+  stepsDetailsStyles,
   SummaryContainer,
+  summaryStyles,
 } from './Quote.styles';
 import { QuoteSummary } from './QuoteSummary';
 
@@ -280,10 +283,10 @@ export function Quote(props: QuoteProps) {
         recommended={recommended}
         listItem={type === 'list-item'}
         basic={type === 'basic'}>
-        <div className="summary">
+        <div className={summaryStyles()}>
           <QuoteCost fee={totalFee} time={totalTime} steps={numberOfSteps} />
           {type === 'basic' && (
-            <div className="basic-info">
+            <div className={basicInfoStyles()}>
               <FrameIcon>
                 <InfoIcon size={12} color="gray" />
               </FrameIcon>
@@ -391,7 +394,7 @@ export function Quote(props: QuoteProps) {
           </Chains>
           <Content open={expanded}>
             <HorizontalSeparator />
-            <div className="steps-details">
+            <div className={stepsDetailsStyles()}>
               {steps.map((step, index) => {
                 const key = `item-${index}`;
                 return (

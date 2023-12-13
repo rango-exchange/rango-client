@@ -13,8 +13,12 @@ import {
   Alerts,
   Container,
   DashedLine,
+  stepInfoStyles,
   StepSeparator,
   SwapperImage,
+  swapperStyles,
+  tokensContainerStyles,
+  tokensStyles,
 } from './StepDetails.styles';
 
 const StepDetailsComponent = forwardRef<HTMLDivElement, StepDetailsProps>(
@@ -39,7 +43,7 @@ const StepDetailsComponent = forwardRef<HTMLDivElement, StepDetailsProps>(
         state={state}
         ref={containerRef}
         tabIndex={tabIndex}>
-        <div className="swapper">
+        <div className={swapperStyles()}>
           {type === 'swap-progress' && hasSeparator && (
             <StepSeparator state={state} />
           )}
@@ -60,10 +64,10 @@ const StepDetailsComponent = forwardRef<HTMLDivElement, StepDetailsProps>(
             })}
           </Typography>
         </div>
-        <div className="step-info">
+        <div className={stepInfoStyles()}>
           <DashedLine invisible={!hasSeparator || type === 'swap-progress'} />
-          <div className="tokens-container">
-            <div className="tokens">
+          <div className={tokensContainerStyles()}>
+            <div className={tokensStyles()}>
               <ChainToken
                 chainImage={step.from.chain.image}
                 tokenImage={step.from.token.image}

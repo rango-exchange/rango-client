@@ -9,6 +9,7 @@ import { useManager } from '@rango-dev/queue-manager-react';
 import {
   Alert,
   Button,
+  css,
   Divider,
   IconButton,
   RefreshIcon,
@@ -40,18 +41,7 @@ import { getContainer } from '../utils/common';
 const Container = styled('div', {
   position: 'relative',
   width: '100%',
-  '& .description': {
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  },
-  '& .icon': {
-    width: '$24',
-    height: '$24',
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
+
   '& .quote-update__alert': {
     paddingTop: '$10',
   },
@@ -61,14 +51,29 @@ const Buttons = styled('div', {
   width: '100%',
   display: 'flex',
   justifyContent: 'space-between',
-  '& .confirm-button': {
-    flexGrow: 1,
-    paddingRight: '$10',
-  },
   [`& ${IconButton}`]: {
     width: '$48',
     height: '$48',
   },
+});
+
+const confirmBtnStyles = css({
+  flexGrow: 1,
+  paddingRight: '$10',
+});
+
+const iconStyles = css({
+  width: '$24',
+  height: '$24',
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+});
+
+const descriptionStyles = css({
+  display: 'flex',
+  justifyContent: 'space-between',
+  alignItems: 'center',
 });
 
 export function ConfirmSwapPage() {
@@ -282,7 +287,7 @@ export function ConfirmSwapPage() {
       }}
       footer={
         <Buttons>
-          <div className="confirm-button">
+          <div className={confirmBtnStyles()}>
             <Button
               variant="contained"
               type="primary"
@@ -315,7 +320,7 @@ export function ConfirmSwapPage() {
       )}
 
       <Container>
-        <div className="description">
+        <div className={descriptionStyles()}>
           <Typography variant="title" size="small">
             {i18n.t('You get')}
           </Typography>
@@ -324,7 +329,7 @@ export function ConfirmSwapPage() {
             variant="ghost"
             disabled={fetchingConfirmationQuote}
             onClick={onRefresh}>
-            <div className="icon">
+            <div className={iconStyles()}>
               <RefreshIcon size={16} />
             </div>
           </Button>

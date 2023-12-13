@@ -6,9 +6,15 @@ import React from 'react';
 import { Divider, PriceImpact, Skeleton, Typography } from '../../components';
 
 import {
+  amountStyles,
+  balanceStyles,
   Container,
+  formStyles,
   InputAmount,
+  labelContainerStyles,
+  labelStyles,
   MaxButton,
+  textStyles,
   ValueTypography,
 } from './SwapInput.styles';
 import { TokenSection } from './TokenSection';
@@ -16,15 +22,15 @@ import { TokenSection } from './TokenSection';
 export function SwapInput(props: SwapInputProps) {
   return (
     <Container sharpBottomStyle={props.sharpBottomStyle}>
-      <div className="label__container">
-        <div className="label">
-          <Typography variant="body" size="small" className="gray-text">
+      <div className={labelContainerStyles()}>
+        <div className={labelStyles()}>
+          <Typography variant="body" size="small" className={textStyles()}>
             {props.label}
           </Typography>
           {'balance' in props && !props.loading && (
-            <div className="balance">
+            <div className={balanceStyles()}>
               <Typography
-                className="gray-text"
+                className={textStyles()}
                 mr={4}
                 variant="body"
                 size="xsmall">
@@ -41,13 +47,13 @@ export function SwapInput(props: SwapInputProps) {
             </div>
           )}
           {props.loading && (
-            <div className="balance">
+            <div className={balanceStyles()}>
               <Skeleton variant="text" size="large" width={105} />
             </div>
           )}
         </div>
       </div>
-      <div className="form">
+      <div className={formStyles()}>
         <TokenSection
           chain={props.chain.displayName}
           tokenSymbol={props.token.displayName}
@@ -57,7 +63,7 @@ export function SwapInput(props: SwapInputProps) {
           onClick={props.onClickToken}
           loading={props.loading}
         />
-        <div className="amount">
+        <div className={amountStyles()}>
           {props.loading || (props.mode === 'To' && props.fetchingQuote) ? (
             <>
               <Skeleton variant="text" size="large" width={92} />

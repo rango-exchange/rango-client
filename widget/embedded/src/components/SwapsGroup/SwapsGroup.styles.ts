@@ -1,10 +1,12 @@
-import { darkTheme, styled } from '@rango-dev/ui';
+import { css, darkTheme, styled } from '@rango-dev/ui';
+
+export const groupStyles = css();
 
 export const Group = styled('div', {
   width: '100%',
   display: 'flex',
   flexDirection: 'column',
-  '.group-title': {
+  [`& .${groupStyles}`]: {
     $$color: '$colors$neutral600',
     [`.${darkTheme} &`]: {
       $$color: '$colors$neutral700',
