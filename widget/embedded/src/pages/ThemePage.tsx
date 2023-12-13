@@ -13,7 +13,7 @@ import React from 'react';
 
 import { Layout } from '../components/Layout';
 import { SettingsContainer } from '../components/SettingsContainer';
-import { useSettingsStore } from '../store/settings';
+import { useAppStore } from '../store/AppStore';
 
 type Theme = 'dark' | 'light' | 'auto';
 
@@ -24,8 +24,7 @@ enum Mode {
 }
 
 export function ThemePage() {
-  const theme = useSettingsStore.use.theme();
-  const setTheme = useSettingsStore.use.setTheme();
+  const { setTheme, theme } = useAppStore();
 
   const themesList = [
     {

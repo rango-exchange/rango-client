@@ -19,20 +19,31 @@ import { Slippage } from '../components/Slippage';
 import { SlippageTooltipContainer as TooltipContainer } from '../components/Slippage/Slippage.styles';
 import { navigationRoutes } from '../constants/navigationRoutes';
 import { useAppStore } from '../store/AppStore';
-import { useSettingsStore } from '../store/settings';
 import { getContainer } from '../utils/common';
-import { getUniqueSwappersGroups } from '../utils/settings';
+import { getUniqueSwappersGroups, isFeatureHidden } from '../utils/settings';
 
 export function SettingsPage() {
   const navigate = useNavigate();
   const { theme } = useAppStore().config;
   const fetchStatus = useAppStore().fetchStatus;
   const swappers = useAppStore().swappers();
+  const disabledLiquiditySources = useAppStore().disabledLiquiditySources;
+  const {
+    config: { features },
+  } = useAppStore();
+  const isThemeHidden = isFeatureHidden('theme', features);
 
-  const infiniteApprove = useSettingsStore.use.infiniteApprove();
-  const toggleInfiniteApprove = useSettingsStore.use.toggleInfiniteApprove();
+  const isLiquidityHidden = isFeatureHidden('liquiditySource', features);
 
-  const supportedUniqueSwappersGroups = getUniqueSwappersGroups(swappers);
+  const isLanguageHidden = isFeatureHidden('language', features);
+
+  const infiniteApprove = useAppStore().infiniteApprove;
+  const toggleInfiniteApprove = useAppStore().toggleInfiniteApprove;
+
+  const supportedUniqueSwappersGroups = getUniqueSwappersGroups(
+    swappers,
+    disabledLiquiditySources
+  );
 
   const bridgeSources = supportedUniqueSwappersGroups.filter(
     (uniqueItem) =>
@@ -156,12 +167,12 @@ export function SettingsPage() {
     onClick: toggleInfiniteApprove,
   };
 
-  const settingItems = [
-    bridgeItem,
-    exchangeItem,
-    // languageItem
-  ];
-  if (!theme?.singleTheme) {
+  const settingItems = isLiquidityHidden ? [] : [bridgeItem, exchangeItem];
+
+  if (!isLanguageHidden) {
+    // settingItems.push(languageItem);
+  }
+  if (!theme?.singleTheme && !isThemeHidden) {
     settingItems.push(themeItem);
   }
   settingItems.push(infiniteApprovalItem);

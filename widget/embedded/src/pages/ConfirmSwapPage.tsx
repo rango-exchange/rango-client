@@ -30,8 +30,8 @@ import { navigationRoutes } from '../constants/navigationRoutes';
 import { getQuoteUpdateWarningMessage } from '../constants/warnings';
 import { QuoteInfo } from '../containers/QuoteInfo';
 import { useConfirmSwap } from '../hooks/useConfirmSwap';
+import { useAppStore } from '../store/AppStore';
 import { useQuoteStore } from '../store/quote';
-import { useSettingsStore } from '../store/settings';
 import { useUiStore } from '../store/ui';
 import { useWalletsStore } from '../store/wallets';
 import { QuoteWarningType } from '../types';
@@ -89,8 +89,7 @@ export function ConfirmSwapPage() {
   const showWalletsOnInit = !quoteWalletsConfirmed;
   const [showWallets, setShowWallets] = useState(false);
   const setSelectedSwap = useUiStore.use.setSelectedSwap();
-  const disabledLiquiditySources =
-    useSettingsStore.use.disabledLiquiditySources();
+  const disabledLiquiditySources = useAppStore().disabledLiquiditySources;
   const prevDisabledLiquiditySources = useRef(disabledLiquiditySources);
   const { manager } = useManager();
   const {

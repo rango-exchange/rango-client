@@ -7,8 +7,8 @@ import { useEffect } from 'react';
 
 import { useAppStore } from '../../store/AppStore';
 import { useQuoteStore } from '../../store/quote';
-import { useSettingsStore } from '../../store/settings';
 import { useWalletsStore } from '../../store/wallets';
+import { isFeatureEnabled } from '../../utils/settings';
 import { createQuoteRequestBody, getWalletsForNewSwap } from '../../utils/swap';
 import { useFetchQuote } from '../useFetchQuote';
 
@@ -36,11 +36,11 @@ export function useConfirmSwap(): ConfirmSwap {
     affiliateRef,
     affiliateWallets,
     disabledLiquiditySources,
-  } = useSettingsStore();
+  } = useAppStore();
   const { connectedWallets } = useWalletsStore();
   const blockchains = useAppStore().blockchains();
   const tokens = useAppStore().tokens();
-  const { experimental } = useAppStore().config;
+  const { features } = useAppStore().config;
   const { enableNewLiquiditySources } = useAppStore().config;
 
   const userSlippage = customSlippage || slippage;
@@ -78,7 +78,7 @@ export function useConfirmSwap(): ConfirmSwap {
       initialQuote: initialQuote ?? undefined,
       destination: customDestination,
     });
-    if (experimental?.routing) {
+    if (isFeatureEnabled('experimentalRoute', features)) {
       requestBody.experimental = true;
     }
     let currentQuote: BestRouteResponse;

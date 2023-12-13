@@ -4,7 +4,6 @@ import { useEffect, useLayoutEffect, useMemo, useRef } from 'react';
 
 import { useAppStore } from '../store/AppStore';
 import { useQuoteStore } from '../store/quote';
-import { useSettingsStore } from '../store/settings';
 import { tokensAreEqual } from '../utils/wallets';
 
 export function useSyncStoresWithConfig() {
@@ -26,7 +25,7 @@ export function useSyncStoresWithConfig() {
   const tokens = useAppStore().tokens();
 
   const { setAffiliateRef, setAffiliatePercent, setAffiliateWallets } =
-    useSettingsStore();
+    useAppStore();
 
   const fromTokensConfig = useMemo(
     () => config?.from?.tokens,

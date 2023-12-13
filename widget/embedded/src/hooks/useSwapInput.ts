@@ -5,11 +5,11 @@ import { useCallback, useEffect, useState } from 'react';
 
 import { useAppStore } from '../store/AppStore';
 import { useQuoteStore } from '../store/quote';
-import { useSettingsStore } from '../store/settings';
 import { QuoteErrorType } from '../types';
 import { debounce } from '../utils/common';
 import { isPositiveNumber } from '../utils/numbers';
 import { generateQuoteWarnings } from '../utils/quote';
+import { isFeatureEnabled } from '../utils/settings';
 import { createQuoteRequestBody } from '../utils/swap';
 import { tokensAreEqual } from '../utils/wallets';
 
@@ -40,7 +40,7 @@ type UseSwapInput = {
  */
 export function useSwapInput(): UseSwapInput {
   const { fetch: fetchQuote, cancelFetch } = useFetchQuote();
-  const { liquiditySources, enableNewLiquiditySources, experimental } =
+  const { liquiditySources, enableNewLiquiditySources, features } =
     useAppStore().config;
   const tokens = useAppStore().tokens();
   const {
@@ -58,7 +58,7 @@ export function useSwapInput(): UseSwapInput {
     affiliateRef,
     affiliateWallets,
     disabledLiquiditySources,
-  } = useSettingsStore();
+  } = useAppStore();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<QuoteError | null>(null);
   const [warning, setWarning] = useState<QuoteWarning | null>(null);
@@ -105,7 +105,7 @@ export function useSwapInput(): UseSwapInput {
         affiliatePercent,
         affiliateWallets,
       });
-      if (experimental?.routing) {
+      if (isFeatureEnabled('experimentalRoute', features)) {
         requestBody.experimental = true;
       }
       fetchQuote(requestBody)
