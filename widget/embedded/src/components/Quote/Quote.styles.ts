@@ -1,5 +1,5 @@
 import * as Collapsible from '@radix-ui/react-collapsible';
-import { darkTheme, Image, styled } from '@rango-dev/ui';
+import { css, darkTheme, Image, styled } from '@rango-dev/ui';
 
 import { CollapsibleContent } from '../ConfirmWalletsModal/ConfirmWallets.styles';
 
@@ -32,9 +32,10 @@ export const QuoteContainer = styled(Collapsible.Root, {
       },
     },
   },
-  '& .steps-details': {
-    padding: '$10 $15',
-  },
+});
+
+export const stepsDetailsStyles = css({
+  padding: '$10 $15',
 });
 
 export const SummaryContainer = styled('div', {
@@ -105,22 +106,24 @@ export const SummaryContainer = styled('div', {
       },
     },
   ],
-  '& .summary': {
-    width: '100%',
-    padding: '$15 $15 $10 $15',
-    cursor: 'default',
-  },
-  '& .basic-info': {
-    paddingTop: '$10',
-    display: 'flex',
-    alignItems: 'center',
-    '.usd-value': {
-      $$color: '$colors$neutral600',
-      [`.${darkTheme} &`]: {
-        $$color: '$colors$neutral700',
-      },
-      color: '$$color',
+});
+
+export const summaryStyles = css({
+  width: '100%',
+  padding: '$15 $15 $10 $15',
+  cursor: 'default',
+});
+
+export const basicInfoStyles = css({
+  paddingTop: '$10',
+  display: 'flex',
+  alignItems: 'center',
+  '.usd-value': {
+    $$color: '$colors$neutral600',
+    [`.${darkTheme} &`]: {
+      $$color: '$colors$neutral700',
     },
+    color: '$$color',
   },
 });
 

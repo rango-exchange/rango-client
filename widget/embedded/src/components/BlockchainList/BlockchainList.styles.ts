@@ -1,4 +1,4 @@
-import { styled } from '@rango-dev/ui';
+import { ImageContainer, styled } from '@rango-dev/ui';
 
 export const Container = styled('div', {
   display: 'flex',
@@ -12,7 +12,7 @@ export const List = styled('ul', {
   listStyle: 'none',
   overflowY: 'auto',
   paddingRight: '$5',
-  '.image-container': {
+  [`& ${ImageContainer}`]: {
     borderRadius: '$xm',
     overflow: 'hidden',
   },

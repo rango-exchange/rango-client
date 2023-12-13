@@ -1,4 +1,47 @@
-import { darkTheme, styled, Typography } from '@rango-dev/ui';
+import {
+  css,
+  darkTheme,
+  ImageContainer,
+  styled,
+  Typography,
+} from '@rango-dev/ui';
+
+export const tokenNameStyles = css({
+  position: 'absolute',
+  transform: 'none',
+  transition: 'transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms',
+  textOverflow: 'ellipsis',
+  whiteSpace: 'nowrap',
+  maxWidth: 100,
+  overflow: 'hidden',
+});
+export const descriptionStyles = css({
+  position: 'relative',
+  height: 12,
+  width: 150,
+});
+export const tokenTitleStyles = css({
+  position: 'absolute',
+  transform: 'none',
+  transition: 'transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms',
+  bottom: '-8px',
+});
+export const tokenAddressStyles = css({
+  transform: 'translateY(12px)',
+  visibility: 'hidden',
+  '& a': {
+    fontSize: '$12',
+    lineHeight: '$16',
+    $$color: '$colors$neutral600',
+    [`.${darkTheme} &`]: {
+      $$color: '$colors$neutral700',
+    },
+    color: '$$color',
+    textDecoration: 'none',
+  },
+});
+export const tokenWithoutNameStyles = css({});
+export const usdValueStyles = css();
 
 export const Container = styled('div', {
   display: 'flex',
@@ -23,58 +66,25 @@ export const List = styled('ul', {
   listStyle: 'none',
   '& li': {
     alignItems: 'none',
-    '.description': {
-      position: 'relative',
-      height: 12,
-      width: 150,
-      '.token-title': {
-        position: 'absolute',
-        transform: 'none',
-        transition: 'transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms',
-        bottom: '-8px',
-      },
 
-      '.token-address': {
-        transform: 'translateY(12px)',
-        visibility: 'hidden',
-        '& a': {
-          fontSize: '$12',
-          lineHeight: '$16',
-          $$color: '$colors$neutral600',
-          [`.${darkTheme} &`]: {
-            $$color: '$colors$neutral700',
-          },
-          color: '$$color',
-          textDecoration: 'none',
-        },
-      },
-      '.token-name': {
-        position: 'absolute',
-        transform: 'none',
-        transition: 'transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms',
-        textOverflow: 'ellipsis',
-        whiteSpace: 'nowrap',
-        maxWidth: 100,
-        overflow: 'hidden',
-      },
-    },
     '&:hover': {
-      '.description': {
-        '.token-address': {
+      [`& .${descriptionStyles}`]: {
+        [`& .${tokenAddressStyles}`]: {
           position: 'absolute',
           transform: 'none',
           transition: 'transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms',
           visibility: 'visible',
         },
-        '.token-address-without-name': {
+
+        [`& .${tokenWithoutNameStyles}`]: {
           bottom: '-15px',
         },
-        '.token-name': {
+        [`& .${tokenNameStyles}`]: {
           position: 'absolute',
           transform: 'translateY(-12px)',
           visibility: 'hidden',
         },
-        '.token-title': {
+        [`& .${tokenTitleStyles}`]: {
           position: 'absolute',
           transform: 'translateY(-12px)',
           bottom: '-10px',
@@ -96,8 +106,7 @@ export const TagTitle = styled(Typography, {});
 
 export const BalanceContainer = styled('div', {
   textAlign: 'right',
-
-  '.usd-value': {
+  [`& .${usdValueStyles}`]: {
     $$color: '$colors$neutral600',
     [`.${darkTheme} &`]: {
       $$color: '$colors$neutral700',
@@ -118,7 +127,7 @@ export const Description = styled('div', {
 });
 export const ImageSection = styled('div', {
   position: 'relative',
-  '.image-container': {
+  [`& ${ImageContainer}`]: {
     borderRadius: '$xm',
     overflow: 'hidden',
   },

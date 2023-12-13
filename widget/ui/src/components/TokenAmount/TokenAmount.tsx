@@ -6,12 +6,16 @@ import { ChainToken } from '../ChainToken';
 import { PriceImpact } from '../PriceImpact/PriceImpact';
 import { Typography } from '../Typography';
 
-import { Container } from './TokenAmount.styles';
+import {
+  Container,
+  tokenAmountStyles,
+  usdValueStyles,
+} from './TokenAmount.styles';
 
 export function TokenAmount(props: PropTypes) {
   return (
     <Container direction={props.direction} centerAlign={props.centerAlign}>
-      <div className="token-amount">
+      <div className={tokenAmountStyles()}>
         <ChainToken
           chainImage={props.chain.image}
           tokenImage={props.token.image}
@@ -42,7 +46,7 @@ export function TokenAmount(props: PropTypes) {
         </div>
       </div>
       {props.price.usdValue && props.price.usdValue !== '0' && (
-        <div className="usd-value">
+        <div className={usdValueStyles()}>
           {props.type === 'input' && (
             <Typography mr={4} size="small" variant="body" color="$neutral700">
               {`~$${props.price.usdValue}`}

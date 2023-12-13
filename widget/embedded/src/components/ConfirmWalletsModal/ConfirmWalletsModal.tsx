@@ -28,6 +28,7 @@ import { confirmSwapDisabled } from '../../utils/swap';
 
 import { getRequiredWallets, isValidAddress } from './ConfirmWallets.helpers';
 import {
+  alarmsStyles,
   CollapsibleContent,
   CollapsibleRoot,
   ConfirmButton,
@@ -43,6 +44,7 @@ import {
   Trigger,
   Wallets,
   WalletsContainer,
+  walletsListStyles,
 } from './ConfirmWallets.styles';
 import { WalletList } from './WalletList';
 
@@ -318,7 +320,7 @@ export function ConfirmWalletsModal(props: PropTypes) {
       </Modal>
       {showMoreWalletFor && (
         <WalletsContainer>
-          <div className="wallets-list">
+          <div className={walletsListStyles()}>
             <WalletList
               chain={showMoreWalletFor}
               isSelected={isSelected}
@@ -458,7 +460,7 @@ export function ConfirmWalletsModal(props: PropTypes) {
                         </CollapsibleContent>
                       </CollapsibleRoot>
                       {isAddressMatched && (
-                        <div className="alarms">
+                        <div className={alarmsStyles()}>
                           <Alert
                             variant="alarm"
                             type="error"

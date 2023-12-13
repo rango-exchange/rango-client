@@ -7,7 +7,7 @@ import { Divider } from '../Divider';
 import { Typography } from '../Typography';
 
 import { getColor } from './Alert.helpers';
-import { Container, IconHighlight, Main } from './Alert.styles';
+import { Container, IconHighlight, Main, titleStyles } from './Alert.styles';
 import AlertIcon from './AlertIcon';
 
 export function Alert(props: PropsWithChildren<PropTypes>) {
@@ -28,7 +28,7 @@ export function Alert(props: PropsWithChildren<PropTypes>) {
       type={type}
       variant={variant}>
       <Main variant={variant}>
-        <div className="title">
+        <div className={titleStyles()}>
           <IconHighlight type={type}>
             <AlertIcon type={type} />
           </IconHighlight>

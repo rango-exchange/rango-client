@@ -5,7 +5,13 @@ import React from 'react';
 
 import { ChainToken, Divider, Skeleton, Typography } from '../../components';
 
-import { Container, TokenSectionContainer } from './TokenSection.styles';
+import {
+  chainNameStyles,
+  Container,
+  skeletonStyles,
+  tokenChainStyles,
+  TokenSectionContainer,
+} from './TokenSection.styles';
 
 export function TokenSection(props: TokenSectionProps) {
   const {
@@ -27,9 +33,9 @@ export function TokenSection(props: TokenSectionProps) {
           tokenImage={tokenImage}
           loading={loading}
         />
-        <div className="token-chain-name">
+        <div className={tokenChainStyles()}>
           {loading ? (
-            <div className="token-chain-name__skeleton">
+            <div className={skeletonStyles()}>
               <Skeleton variant="text" size="large" width={92} />
               <Divider size={8} />
               <Skeleton variant="text" size="medium" width={92} />
@@ -44,7 +50,7 @@ export function TokenSection(props: TokenSectionProps) {
               <Typography
                 variant="body"
                 size="medium"
-                className="blockchain-name">
+                className={chainNameStyles()}>
                 {error || (!loading && !chain) ? i18n.t('Chain') : chain}
               </Typography>
             </>

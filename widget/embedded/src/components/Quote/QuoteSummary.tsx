@@ -3,7 +3,7 @@ import type { PriceImpactWarningLevel, Step } from '@rango-dev/ui';
 import { TokenAmount } from '@rango-dev/ui';
 import React from 'react';
 
-import { Container } from './QuoteSummary.styles';
+import { Container, separatorStyles } from './QuoteSummary.styles';
 
 type PropTypes = {
   from: Step['from'];
@@ -27,7 +27,7 @@ export function QuoteSummary(props: PropTypes) {
         }}
         chain={{ image: from.chain.image }}
       />
-      <div className="separator" />
+      <div className={separatorStyles()} />
       <TokenAmount
         direction="horizontal"
         label="Estimated output"

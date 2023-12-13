@@ -1,3 +1,5 @@
+import { css } from '@stitches/react';
+
 import { darkTheme, styled } from '../../theme';
 
 export const Container = styled('div', {
@@ -31,34 +33,10 @@ export const Container = styled('div', {
       error: { borderColor: '$error500' },
     },
   },
-  '& .swapper': {
-    display: 'flex',
-    alignItems: 'center',
-  },
   '& .swapper__description': {
     fontWeight: '$medium',
   },
-  '& .step-info': {
-    display: 'flex',
-    flex: '1',
-    width: '100%',
-    alignItems: 'start',
-    variants: {
-      tx: {
-        true: {
-          paddingLeft: '36px',
-        },
-      },
-    },
-  },
   '& div:nth-child(3)': { display: 'flex', flexDirection: 'column', flex: 1 },
-  '& .tokens-container': { width: '100%' },
-  '& .tokens': {
-    display: 'flex',
-    paddingTop: '$5',
-    paddingBottom: '$10',
-    alignItems: 'center',
-  },
 });
 
 export const SwapperImage = styled('div', {
@@ -130,4 +108,34 @@ export const StepSeparator = styled('div', {
       error: { borderColor: '$error500' },
     },
   },
+});
+
+export const tokensContainerStyles = css({
+  width: '100%',
+});
+
+export const swapperStyles = css({
+  display: 'flex',
+  alignItems: 'center',
+});
+
+export const stepInfoStyles = css({
+  display: 'flex',
+  flex: '1',
+  width: '100%',
+  alignItems: 'start',
+  variants: {
+    tx: {
+      true: {
+        paddingLeft: '36px',
+      },
+    },
+  },
+});
+
+export const tokensStyles = css({
+  display: 'flex',
+  paddingTop: '$5',
+  paddingBottom: '$10',
+  alignItems: 'center',
 });

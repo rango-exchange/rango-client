@@ -1,15 +1,9 @@
-import { darkTheme, styled } from '../../theme';
+import { css, darkTheme, styled } from '../../theme';
 
 export const Container = styled('div', {
   display: 'flex',
   flexDirection: 'column',
   borderRadius: '$xs',
-
-  '.title': {
-    display: 'flex',
-    alignItems: 'center',
-    flex: '1 0 0',
-  },
 
   '.title_typography:first-letter': {
     textTransform: 'uppercase',
@@ -160,4 +154,10 @@ export const IconHighlight = styled('div', {
       },
     },
   },
+});
+
+export const titleStyles = css({
+  display: 'flex',
+  alignItems: 'center',
+  flex: '1 0 0',
 });
