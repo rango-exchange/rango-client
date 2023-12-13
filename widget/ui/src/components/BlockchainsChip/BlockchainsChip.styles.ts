@@ -1,4 +1,5 @@
 import { darkTheme, styled } from '../../theme';
+import { ImageContainer } from '../common';
 
 export const Chip = styled('button', {
   padding: '$10',
@@ -15,7 +16,7 @@ export const Chip = styled('button', {
   cursor: 'pointer',
   border: 0,
   fontFamily: 'inherit',
-  '.image-container': {
+  [`& ${ImageContainer}`]: {
     borderRadius: '$xm',
     overflow: 'hidden',
   },

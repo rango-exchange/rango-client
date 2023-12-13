@@ -1,6 +1,7 @@
 import * as Collapsible from '@radix-ui/react-collapsible';
 import {
   Button,
+  css,
   darkTheme,
   IconButton,
   keyframes,
@@ -110,12 +111,13 @@ export const NavigateBack = styled(IconButton, {
 
 export const WalletsContainer = styled('div', {
   paddingTop: '$20',
-  '& .wallets-list': {
-    display: 'grid',
-    gap: '$10',
-    gridTemplateColumns: ' repeat(3, minmax(0, 1fr))',
-    alignContent: 'baseline',
-  },
+});
+
+export const walletsListStyles = css({
+  display: 'grid',
+  gap: '$10',
+  gridTemplateColumns: ' repeat(3, minmax(0, 1fr))',
+  alignContent: 'baseline',
 });
 
 export const CollapsibleRoot = styled(Collapsible.Root, {
@@ -169,6 +171,10 @@ export const CustomDestination = styled('div', {
     alignItems: 'center',
   },
   '& .alarms': { paddingTop: '5px' },
+});
+
+export const alarmsStyles = css({
+  paddingTop: '5px',
 });
 
 export const ExpandedIcon = styled('div', {

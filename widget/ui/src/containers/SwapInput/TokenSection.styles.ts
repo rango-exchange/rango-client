@@ -1,5 +1,5 @@
 import { Button } from '../../components';
-import { darkTheme, styled } from '../../theme';
+import { css, darkTheme, styled } from '../../theme';
 
 export const Container = styled(Button, {
   maxWidth: '180px',
@@ -28,6 +28,8 @@ export const Container = styled(Button, {
   },
 });
 
+export const chainNameStyles = css();
+
 export const TokenSectionContainer = styled('div', {
   width: '10.625rem',
   padding: '$2 $5',
@@ -36,22 +38,23 @@ export const TokenSectionContainer = styled('div', {
   justifyContent: 'start',
   boxSizing: 'border-box',
   alignItems: 'center',
-
-  '& .blockchain-name': {
+  [`& .${chainNameStyles}`]: {
     $$color: '$colors$neutral600',
     [`.${darkTheme} &`]: {
       $$color: '$colors$neutral700',
     },
     color: '$$color',
   },
-  '& .token-chain-name': {
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'start',
-    paddingLeft: '$10',
-  },
-  '& .token-chain-name__skeleton': {
-    padding: '$5 $0',
-  },
+});
+
+export const tokenChainStyles = css({
+  display: 'flex',
+  flexDirection: 'column',
+  justifyContent: 'center',
+  alignItems: 'start',
+  paddingLeft: '$10',
+});
+
+export const skeletonStyles = css({
+  padding: '$5 $0',
 });

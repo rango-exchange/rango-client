@@ -2,7 +2,7 @@ import React from 'react';
 
 import { styled } from '../../theme';
 
-const ImageContainer = styled('div', {
+export const ImageContainer = styled('div', {
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
@@ -37,7 +37,6 @@ export function Image(props: PropTypes) {
 
   return (
     <ImageContainer
-      className="image-container"
       css={{
         width: size + 'px',
         height: size + 'px',

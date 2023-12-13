@@ -6,7 +6,7 @@ import React from 'react';
 
 import { limitDecimalPlaces } from '../../utils/numbers';
 
-import { Group, SwapList, Time } from './SwapsGroup.styles';
+import { Group, groupStyles, SwapList, Time } from './SwapsGroup.styles';
 
 export function SwapsGroup(props: PropTypes) {
   const { list, onSwapClick, groupBy, isLoading } = props;
@@ -34,7 +34,7 @@ export function SwapsGroup(props: PropTypes) {
                 <Typography
                   variant="label"
                   size="medium"
-                  className="group-title">
+                  className={groupStyles()}>
                   {i18n.t(group.title)}
                 </Typography>
               </Time>
@@ -67,7 +67,7 @@ export function SwapsGroup(props: PropTypes) {
                 <Typography
                   variant="label"
                   size="medium"
-                  className="group-title">
+                  className={groupStyles()}>
                   {i18n.t(group.title)}
                 </Typography>
               </Time>

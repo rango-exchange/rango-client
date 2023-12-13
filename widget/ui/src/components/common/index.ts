@@ -1,2 +1,2 @@
 export { FilledCircle } from './FilledCircle';
-export { Image } from './Image';
+export { Image, ImageContainer } from './Image';
