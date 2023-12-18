@@ -1,4 +1,4 @@
-import type { Asset, Token } from 'rango-sdk';
+import type { TokenType } from '../TokensPanel/TokensPanel.types';
 
 export interface CommonListProps {
   type: 'Blockchains' | 'Bridges' | 'DEXs' | 'Wallets';
@@ -9,9 +9,9 @@ export interface CommonListProps {
 
 export interface TokensListProps {
   type: 'Tokens';
-  list: (Token & { checked: boolean })[];
+  list: TokenType[];
   selectedBlockchains: string[];
-  onChange: (items?: Asset[]) => void;
+  onChange: (selectedTokens?: TokenType[], pinnedTokens?: TokenType[]) => void;
 }
 export type MuliSelectPropTypes = (TokensListProps | CommonListProps) & {
   value?: string[];

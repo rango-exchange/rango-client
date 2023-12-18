@@ -26,6 +26,7 @@ interface ConfigState {
   onChangeSources: (sources?: string[]) => void;
   onChangeBlockChains: (chains?: string[], type?: Type) => void;
   onChangeTokens: (tokens?: Asset[], type?: Type) => void;
+  onChangePinnedTokens: (tokens?: Asset[], type?: Type) => void;
   onChangeBooleansConfig: (
     name:
       | 'multiWallets'
@@ -78,12 +79,14 @@ export const initialConfig: WidgetConfig = {
     token: undefined,
     blockchains: undefined,
     tokens: undefined,
+    pinnedTokens: undefined,
   },
   to: {
     blockchain: undefined,
     token: undefined,
     blockchains: undefined,
     tokens: undefined,
+    pinnedTokens: undefined,
   },
   liquiditySources: undefined,
   wallets: undefined,
@@ -133,6 +136,18 @@ export const useConfigStore = createSelectors(
             } else {
               if (state.config.to) {
                 state.config.to.tokens = tokens;
+              }
+            }
+          }),
+        onChangePinnedTokens: (tokens, type) =>
+          set((state) => {
+            if (type === 'Source') {
+              if (state.config.from) {
+                state.config.from.pinnedTokens = tokens;
+              }
+            } else {
+              if (state.config.to) {
+                state.config.to.pinnedTokens = tokens;
               }
             }
           }),

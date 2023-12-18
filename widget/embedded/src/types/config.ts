@@ -77,12 +77,15 @@ export type WidgetAffiliate = {
  * blockchains. e.g. ['BSC','ETHEREUM']
  * @property {Asset[]} tokens - The `tokens` property is an optional array of `Asset` objects that
  * you could use that to limit tokens to some limited ones.
+ * @property {Asset} pinnedTokens - The `pinnedTokens` property is an optional array of `Asset` objects that
+ * you could use to pin tokens of your choice to the top of the token list.
  */
 export type BlockchainAndTokenConfig = {
   blockchain?: string;
   token?: Asset;
   blockchains?: string[];
   tokens?: Asset[];
+  pinnedTokens?: Asset[];
 };
 
 /**
@@ -130,8 +133,6 @@ type ExperimentalFeatures = {
  * that defines the various properties of the theme, such as colors, fonts, and others.
  * @property {boolean} externalWallets
  * If `externalWallets` is `true`, you should add `WidgetWallets` to your app.
- * @property {Asset} pinnedTokens - The `pinnedTokens` property is an optional array of `Asset` objects that
- * you could use to pin tokens of your choice to the top of the token list.
  * @property {boolean} enableNewLiquiditySources - The `enableNewLiquiditySources` property is a boolean value that when you
  * set it to true, whenever a new liquidity source is added, it will be added to your list as well.
  * @property {ExperimentalFeatures} experimental - The `experimental` property is an optional object that specifies some experimental features.
@@ -152,7 +153,6 @@ export type WidgetConfig = {
   language?: Language;
   theme?: WidgetTheme;
   externalWallets?: boolean;
-  pinnedTokens?: Asset[];
   enableNewLiquiditySources?: boolean;
   experimental?: ExperimentalFeatures;
 };

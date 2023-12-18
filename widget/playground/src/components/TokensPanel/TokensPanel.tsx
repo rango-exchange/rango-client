@@ -27,18 +27,19 @@ export function TokensPanel(props: PropTypes) {
     selectedBlockchains: selectedBlockchainsProps,
     onChange,
   } = props;
-
   const [selectedBlockchain, setSelectedBlockchain] = useState(
     selectedBlockchainsProps[0]
   );
   const [list, setList] = useState(listProps);
   const [showSelectedTokens, setShowSelectedTokens] = useState(false);
 
-  const handleChange = (token: TokenType) => {
+  const handleChange = (token: TokenType, type: 'checked' | 'pinned') => {
     setList((prev) =>
       prev.map((item) => {
         if (tokensAreEqual(token, item)) {
-          return { ...item, checked: !item.checked };
+          const pinnedValue =
+            type === 'checked' && item.checked ? { pinned: false } : {};
+          return { ...item, ...pinnedValue, [type]: !item[type] };
         }
         return item;
       })
@@ -69,7 +70,9 @@ export function TokensPanel(props: PropTypes) {
   const handleConfirmAllList = () => {
     const allChecked = list.filter((item) => item.checked);
     const allSelected = listProps.length === allChecked.length;
-    onChange(allSelected ? undefined : allChecked);
+    const allPinned = list.filter((item) => item.pinned);
+
+    onChange(allSelected ? undefined : allChecked, allPinned);
   };
 
   return (

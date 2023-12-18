@@ -8,6 +8,7 @@ import {
   Image,
   ListItemButton,
   NotFound,
+  PinIcon,
   SearchIcon,
   Switch,
   TextField,
@@ -66,7 +67,7 @@ export function TokensList(props: TokensListProps) {
   };
 
   const toggleTokenSelection = (token: TokenType) => {
-    onChange(token);
+    onChange(token, 'checked');
   };
 
   // Toggle displaying selected tokens
@@ -75,6 +76,11 @@ export function TokensList(props: TokensListProps) {
   };
 
   const resultsNotFound = !virtualList.length && !!searchValue;
+
+  //Change the list of pinned tokens
+  const togglePinToken = (token: TokenType) => {
+    onChange(token, 'pinned');
+  };
 
   return (
     <>
@@ -157,7 +163,31 @@ export function TokensList(props: TokensListProps) {
                       }
                       hasDivider
                       onClick={() => toggleTokenSelection(virtualList[index])}
-                      end={<Checkbox checked={virtualList[index].checked} />}
+                      end={
+                        <>
+                          {virtualList[index].checked && (
+                            <>
+                              <IconButton
+                                variant="ghost"
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  togglePinToken(virtualList[index]);
+                                }}>
+                                <PinIcon
+                                  color={
+                                    virtualList[index].pinned
+                                      ? 'secondary'
+                                      : 'gray'
+                                  }
+                                  size={16}
+                                />
+                              </IconButton>
+                              <Divider direction="horizontal" size={12} />
+                            </>
+                          )}
+                          <Checkbox checked={virtualList[index].checked} />
+                        </>
+                      }
                       title={
                         <Typography variant="title" size="small">
                           {virtualList[index].symbol}

@@ -13,6 +13,7 @@ export function SupportedTokens({ type }: { type: Type }) {
     config: { from, to },
     onChangeTokens,
     onChangeToken,
+    onChangePinnedTokens,
   } = useConfigStore();
   const {
     meta: { tokens, blockchains },
@@ -21,6 +22,7 @@ export function SupportedTokens({ type }: { type: Type }) {
   const selectedType = type === 'Source' ? from : to;
 
   const configTokens = selectedType?.tokens;
+  const pinnedTokens = selectedType?.pinnedTokens;
 
   const seletedBlockchains = selectedType?.blockchains;
   const allTokens = seletedBlockchains
@@ -34,6 +36,8 @@ export function SupportedTokens({ type }: { type: Type }) {
       ...token,
       checked:
         !configTokens || configTokens.some((ct) => tokensAreEqual(ct, token)),
+      pinned:
+        !!pinnedTokens && pinnedTokens.some((ct) => tokensAreEqual(ct, token)),
     };
   });
 
@@ -53,9 +57,17 @@ export function SupportedTokens({ type }: { type: Type }) {
             )
       }
       list={list}
-      onChange={(items) => {
+      onChange={(selectedTokens, pinnedTokens) => {
+        onChangePinnedTokens(
+          pinnedTokens?.map(({ symbol, blockchain, address }) => ({
+            symbol,
+            blockchain,
+            address,
+          })),
+          type
+        );
         onChangeTokens(
-          items?.map(({ symbol, blockchain, address }) => ({
+          selectedTokens?.map(({ symbol, blockchain, address }) => ({
             symbol,
             blockchain,
             address,

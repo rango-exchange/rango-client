@@ -176,7 +176,7 @@ export function TokenList(props: PropTypes) {
                 start={
                   <ImageSection>
                     <Image src={token.image} size={30} />
-                    {isTokenPinned(token) && (
+                    {isTokenPinned(token, props.type) && (
                       <Pin>
                         <PinIcon size={12} color="gray" />
                       </Pin>
