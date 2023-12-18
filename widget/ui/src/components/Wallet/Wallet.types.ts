@@ -21,26 +21,6 @@ export interface Info {
   tooltipText: string;
 }
 
-interface StateConnected {
-  state: WalletState.CONNECTED;
-}
-interface StateDisconnected {
-  state: WalletState.DISCONNECTED;
-}
-interface StateConnecting {
-  state: WalletState.CONNECTING;
-}
-interface StateNotInstalled {
-  state: WalletState.NOT_INSTALLED;
-  link: InstallObjects | string;
-}
-
-type State =
-  | StateConnected
-  | StateDisconnected
-  | StateConnecting
-  | StateNotInstalled;
-
 export interface ContentProps {
   image: string;
   title: string;
@@ -48,9 +28,11 @@ export interface ContentProps {
   descriptionColor?: string;
 }
 
-interface WalletProps {
+export interface WalletPropTypes {
+  state: WalletState;
   title: string;
   image: string;
+  link: InstallObjects | string;
   type: WalletType;
   onClick: (type: WalletType) => void;
   selected?: boolean;
@@ -58,8 +40,6 @@ interface WalletProps {
   isLoading?: boolean;
   container?: HTMLElement;
 }
-
-export type WalletPropTypes = State & WalletProps;
 
 export type SelectablePropTypes = WalletPropTypes & {
   selected: boolean;
