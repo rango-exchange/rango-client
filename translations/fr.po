@@ -648,12 +648,12 @@ msgid "Search Blockchain"
 msgstr "Rechercher dans la Blockchain"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/SelectSwapItemsPage.tsx:72
+#: widget/embedded/src/pages/SelectSwapItemsPage.tsx:75
 msgid "Swap {type}"
 msgstr "Échanger {type}"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/SelectSwapItemsPage.tsx:87
+#: widget/embedded/src/pages/SelectSwapItemsPage.tsx:90
 msgid "Search Token"
 msgstr "Jeton de recherche"
 
