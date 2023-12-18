@@ -1,30 +1,36 @@
 import type { WalletStateContentProps } from './SwapDetailsModal.types';
 
-import { MessageBox, Wallet, WalletState } from '@rango-dev/ui';
+import { MessageBox, Wallet } from '@rango-dev/ui';
 import { useWallets } from '@rango-dev/wallets-react';
 import React from 'react';
 
 import { getContainer } from '../../utils/common';
+import { mapStatusToWalletState } from '../../utils/wallets';
 
 import { WalletContainer } from './SwapDetailsModal.styles';
 
 export const WalletStateContent = (props: WalletStateContentProps) => {
   const { type, title, currentStepWallet, message, showWalletButton } = props;
-  const { connect, getWalletInfo, state: walletState } = useWallets();
+  const { connect, getWalletInfo, state } = useWallets();
   const walletType = currentStepWallet?.walletType;
-  const isConnected = walletType && walletState(walletType).connected;
-  const state = isConnected ? WalletState.CONNECTED : WalletState.DISCONNECTED;
+  const walletState = walletType
+    ? mapStatusToWalletState(state(walletType))
+    : null;
+  const walletInfo = walletType ? getWalletInfo(walletType) : null;
+  const shouldShowWallet =
+    showWalletButton && !!walletType && !!walletState && !!walletInfo;
   return (
     <>
       <MessageBox type={type} title={title} description={message} />
-      {showWalletButton && walletType && (
+      {shouldShowWallet && (
         <WalletContainer>
           <Wallet
             container={getContainer()}
-            title={getWalletInfo(walletType).name}
-            image={getWalletInfo(walletType).img}
+            title={walletInfo.name}
+            image={walletInfo.img}
             type={walletType}
-            state={state}
+            state={walletState}
+            link={walletInfo.installLink}
             onClick={async () => connect(walletType)}
           />
         </WalletContainer>
