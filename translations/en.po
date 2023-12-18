@@ -643,12 +643,12 @@ msgid "Search Blockchain"
 msgstr "Search Blockchain"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/SelectSwapItemsPage.tsx:72
+#: widget/embedded/src/pages/SelectSwapItemsPage.tsx:75
 msgid "Swap {type}"
 msgstr "Swap {type}"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/SelectSwapItemsPage.tsx:87
+#: widget/embedded/src/pages/SelectSwapItemsPage.tsx:90
 msgid "Search Token"
 msgstr "Search Token"
 
