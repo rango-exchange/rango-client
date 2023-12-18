@@ -87,8 +87,8 @@ export function MultiSelect(props: MuliSelectPropTypes) {
           ) : (
             <TokensPanel
               list={list}
-              onChange={(items) => {
-                props.onChange(items);
+              onChange={(selectedTokens, pinnedTokens) => {
+                props.onChange(selectedTokens, pinnedTokens);
                 onBack();
               }}
               selectedBlockchains={props.selectedBlockchains}

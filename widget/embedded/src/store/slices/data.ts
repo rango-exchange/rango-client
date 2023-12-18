@@ -14,7 +14,7 @@ type BlockchainOptions = {
 };
 
 type TokenOptions = {
-  type?: 'source' | 'destination';
+  type: 'source' | 'destination';
   // filter by an specific blockchain
   blockchain?: string;
   searchFor?: string;
@@ -29,7 +29,7 @@ export interface DataSlice {
   blockchains: (options?: BlockchainOptions) => BlockchainMeta[];
   tokens: (options?: TokenOptions) => Token[];
   swappers: () => SwapperMeta[];
-  isTokenPinned: (token: Token) => boolean;
+  isTokenPinned: (token: Token, type: 'source' | 'destination') => boolean;
 
   fetch: () => Promise<void>;
 }
@@ -131,10 +131,10 @@ export const createDataSlice: StateCreator<
       })
       .sort((a, b) => {
         // Check pinned tokens
-        if (get().isTokenPinned(a)) {
+        if (get().isTokenPinned(a, options.type)) {
           return -1;
         }
-        if (get().isTokenPinned(b)) {
+        if (get().isTokenPinned(b, options.type)) {
           return 1;
         }
 
@@ -159,8 +159,12 @@ export const createDataSlice: StateCreator<
 
     return list;
   },
-  isTokenPinned: (token) => {
-    const pinned = !!get().config.pinnedTokens?.some((pinnedToken) =>
+  isTokenPinned: (token, type) => {
+    const pinnedTokens =
+      type === 'source'
+        ? get().config.from?.pinnedTokens
+        : get().config.to?.pinnedTokens;
+    const pinned = !!pinnedTokens?.some((pinnedToken) =>
       tokensAreEqual(pinnedToken, token)
     );
     return pinned;

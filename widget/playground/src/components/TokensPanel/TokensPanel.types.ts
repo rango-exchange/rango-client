@@ -1,14 +1,14 @@
-import type { Asset, Token } from 'rango-sdk';
+import type { Token } from 'rango-sdk';
 
-export type TokenType = Token & { checked: boolean };
+export type TokenType = Token & { checked: boolean; pinned: boolean };
 export interface PropTypes {
   list: TokenType[];
   selectedBlockchains: string[];
-  onChange: (items?: Asset[]) => void;
+  onChange: (selectedTokens?: TokenType[], pinnedTokens?: TokenType[]) => void;
 }
 
 export interface TokensListProps {
-  onChange: (item: TokenType) => void;
+  onChange: (item: TokenType, type: 'checked' | 'pinned') => void;
   onChangeAll: (selected: boolean) => void;
   showSelectedTokens: boolean;
   setShowSelectedTokens: (show: boolean) => void;

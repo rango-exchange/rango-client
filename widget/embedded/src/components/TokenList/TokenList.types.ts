@@ -5,6 +5,7 @@ export interface PropTypes {
   searchedFor?: string;
   onChange: (token: Token) => void;
   selectedBlockchain?: string;
+  type: 'source' | 'destination';
 }
 
 export interface LoadingTokenListProps {
