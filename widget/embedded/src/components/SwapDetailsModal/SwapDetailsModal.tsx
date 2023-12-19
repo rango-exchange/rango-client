@@ -1,7 +1,7 @@
 import type { ModalPropTypes } from './SwapDetailsModal.types';
 
-import { PendingSwapNetworkStatus } from '@rango-dev/queue-manager-rango-preset';
 import { Modal } from '@rango-dev/ui';
+import { PendingSwapNetworkStatus } from 'rango-types';
 import React from 'react';
 
 import { CancelContent } from './SwapDetailsModal.Cancel';

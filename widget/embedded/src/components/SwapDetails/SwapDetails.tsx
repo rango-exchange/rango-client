@@ -6,7 +6,6 @@ import {
   getCurrentBlockchainOfOrNull,
   getCurrentStep,
   getRelatedWalletOrNull,
-  PendingSwapNetworkStatus,
 } from '@rango-dev/queue-manager-rango-preset';
 import {
   Button,
@@ -19,6 +18,7 @@ import {
   useCopyToClipboard,
 } from '@rango-dev/ui';
 import { useWallets } from '@rango-dev/wallets-react';
+import { PendingSwapNetworkStatus } from 'rango-types';
 import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -47,7 +47,7 @@ import {
   shouldRetrySwap,
 } from '../../utils/swap';
 import { getSwapDate } from '../../utils/time';
-import { getConciseAddress, getUsdPrice } from '../../utils/wallets';
+import { getConciseAddress } from '../../utils/wallets';
 import { SuffixContainer } from '../HeaderButtons/HeaderButtons.styles';
 import { Layout } from '../Layout';
 import { QuoteSummary } from '../Quote';
@@ -57,7 +57,15 @@ import {
 } from '../SwapDetailsModal';
 
 import { getSteps, getStepState, RESET_INTERVAL } from './SwapDetails.helpers';
-import { Container, HeaderDetails, StepsList } from './SwapDetails.styles';
+import {
+  Container,
+  HeaderDetails,
+  outputStyles,
+  requestIdStyles,
+  rowStyles,
+  StepsList,
+  titleStepsStyles,
+} from './SwapDetails.styles';
 
 export function SwapDetails(props: SwapDetailsProps) {
   const { swap, requestId, onDelete, onCancel: onCancelProps } = props;
@@ -163,35 +171,19 @@ export function SwapDetails(props: SwapDetailsProps) {
   )?.diagnosisUrl;
 
   const outputUsdValue = numberToString(
-    String(
-      parseFloat(
-        numberToString(
-          outputAmount,
-          TOKEN_AMOUNT_MIN_DECIMALS,
-          TOKEN_AMOUNT_MAX_DECIMALS
-        )
-      ) *
-        (getUsdPrice(
-          lastStep.toBlockchain,
-          lastStep.toSymbol,
-          lastStep.toSymbolAddress,
-          tokens
-        ) || 0)
-    ),
+    parseFloat(
+      numberToString(
+        outputAmount,
+        TOKEN_AMOUNT_MIN_DECIMALS,
+        TOKEN_AMOUNT_MAX_DECIMALS
+      )
+    ) * (lastStep.toUsdPrice || 0),
     USD_VALUE_MIN_DECIMALS,
     USD_VALUE_MAX_DECIMALS
   );
 
   const inputUsdValue = numberToString(
-    String(
-      parseFloat(swap.inputAmount) *
-        (getUsdPrice(
-          firstStep.fromBlockchain,
-          firstStep.fromSymbol,
-          firstStep.fromSymbolAddress,
-          tokens
-        ) || 0)
-    ),
+    parseFloat(swap.inputAmount) * (firstStep.fromUsdPrice || 0),
     USD_VALUE_MIN_DECIMALS,
     USD_VALUE_MAX_DECIMALS
   );
@@ -271,11 +263,11 @@ export function SwapDetails(props: SwapDetailsProps) {
       }>
       <Container>
         <HeaderDetails>
-          <div className="row">
+          <div className={rowStyles()}>
             <Typography variant="label" size="large" color="neutral700">
               {`${i18n.t('Request ID')}:`}
             </Typography>
-            <div className="request-id">
+            <div className={requestIdStyles()}>
               <Typography variant="label" size="small" color="neutral700">
                 {requestId}
               </Typography>
@@ -286,7 +278,7 @@ export function SwapDetails(props: SwapDetailsProps) {
               </IconButton>
             </div>
           </div>
-          <div className="row">
+          <div className={rowStyles()}>
             <Typography variant="label" size="large" color="neutral700">
               {`${i18n.t('Created at')}:`}
             </Typography>
@@ -296,7 +288,7 @@ export function SwapDetails(props: SwapDetailsProps) {
           </div>
         </HeaderDetails>
 
-        <div className="output">
+        <div className={outputStyles()}>
           <QuoteCost
             fee={numberToString(
               String(totalFee),
@@ -351,7 +343,7 @@ export function SwapDetails(props: SwapDetailsProps) {
             warningLevel={getPriceImpactLevel(percentageChange ?? 0)}
           />
         </div>
-        <div className="title-steps">
+        <div className={titleStepsStyles()}>
           <Typography variant="title" size="small">
             {i18n.t('Swaps steps')}
           </Typography>

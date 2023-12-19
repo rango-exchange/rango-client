@@ -10,7 +10,6 @@ The folder structure is as follows:
 - `/queue-manager/react`: This directory integrates the core functionality with React, unlocking features like automatic re-renders. It makes the queue available to the entire React app using context.
 - `/queue-manager/rango-preset`: This directory houses a comprehensive decentralized exchange (DEX) queue with advanced features such as parallel execution and multi-chain support. It is also integrated with Rango, enabling full-cycle swap functionality, including obtaining quotes, creating transactions, and signing them using wallets
 
-
 ### Wallets
 
 We have developed a unified interface for most Web3 wallets, including Bitcoin, EVM, Cosmos, Solana, TON, and more. The library provides a core module that acts as a state manager and provider for the final wallet interface. Each wallet is referred to as a provider and contains the implementation specific to that wallet.
@@ -19,10 +18,9 @@ To add all our providers at once, simply pass the `provider-all`. If you only re
 
 For more information about the wallets, refer to the `/wallets/` directory.
 
-
 ### Widget
 
-The Widget comprises high-level packages that include a user interface (UI) and different versions of our widget, which serves as a decentralized application (dApp). 
+The Widget comprises high-level packages that include a user interface (UI) and different versions of our widget, which serves as a decentralized application (dApp).
 
 Here is the structure:
 `/widget/ui`: This directory contains our UI components and Storybook for visual development and testing.
@@ -48,7 +46,7 @@ Our publish script will do these steps:
 
 Note:
 Libs will be published under `next` tag on npm, which means you need to use `yarn add @rango/test-package@next` to install the published version whenever you need.
-And also all the apps published by `prerelase` workflow will be published under the Vercel's `preview` enviroment. 
+And also all the apps published by `prerelase` workflow will be published under the Vercel's `preview` enviroment.
 
 ### Production relase
 
@@ -56,7 +54,7 @@ Release should be triggered manually and then it will automatically published. Y
 
 `yarn run release`
 
-After release (Green pipleline), make sure you will merge `main` into `next` as well. 
+After release (Green pipleline), make sure you will merge `main` into `next` as well.
 
 `git pull && git checkout next && git pull && git merge main && git push`
 
@@ -69,15 +67,12 @@ First we need to extract the message from our source code using `yarn i18n:extra
 1. Add to `locales: ['en']` in `lingui.config.ts`
 2. Import and add to `messages` in `widget/ui/src/components/I18nManager/I18nManager.tsx`
 
-
 ## Crowdin
 
 Crowdin CLI is command-line tool for management of your localization projects on Crowdin. According to https://crowdin.github.io/crowdin-cli/installation you can install crowdin in os or install globally with command `npm i -g @crowdin/cli`. With Crowdin CLI, you can upload source files by using `yarn i18n:push` and download translations by using `i18n:pull` for keep your localized content up-to-date.
 The language code standard used is ISO 639-1. For more details and a list of codes, please refer to the https://www.loc.gov/standards/iso639-2/php/code_list.php .
 
 In the `crowdin.yml` file, you will find the `project_id` and `api_token` values used for synchronizing translations with Crowdin. These values are read from the environment variables `REACT_APP_CROWDIN_PROJECT_ID` and `REACT_APP_CROWDIN_API_KEY` defined in the `.env` file.
-
-
 
 ## Technical Notes
 
@@ -90,3 +85,12 @@ In the `crowdin.yml` file, you will find the `project_id` and `api_token` values
 We are using Parcel for our client developments, to HMR working properly, we need to point to source code (instead of dist) for Parcel to be able to detect changes on development. One approach was using `module` field, it's not standard but has meaning for some compiler/building tools, so we decided to use `source` which is a Parcel thing only.
 
 You can check the details on #437 PR.
+
+### Styles
+
+We use CSS-in-JS for handling styles. To avoid potential issues with conflicting styles, we don't directly write specific class names. Instead, we prefer using custom tags. If we must use HTML tags with class names, we follow this pattern:
+
+````html
+<htmlTag className="{classNameStyle()}" />
+````
+ This helps keep our styles organized, reduces the chance of conflicts, and makes it easier to manage our code.

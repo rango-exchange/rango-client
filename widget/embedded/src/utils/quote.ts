@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-magic-numbers */
 import type { QuoteError, QuoteWarning, Wallet } from '../types';
-import type { PendingSwap } from '@rango-dev/queue-manager-rango-preset';
 import type { PriceImpactWarningLevel } from '@rango-dev/ui';
 import type {
   SimulationAssetAndAmount,
@@ -12,6 +11,7 @@ import type {
   BlockchainMeta,
   Token,
 } from 'rango-sdk';
+import type { PendingSwap } from 'rango-types';
 
 import { getLastSuccessfulStep } from '@rango-dev/queue-manager-rango-preset';
 import BigNumber from 'bignumber.js';

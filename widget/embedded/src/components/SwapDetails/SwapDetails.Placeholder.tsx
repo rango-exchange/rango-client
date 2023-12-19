@@ -18,6 +18,8 @@ import {
   Container,
   HeaderDetails,
   PlaceholderContainer,
+  requestIdStyles,
+  rowStyles,
 } from './SwapDetails.styles';
 
 export function SwapDetailsPlaceholder(props: SwapDetailsPlaceholderPropTypes) {
@@ -33,11 +35,11 @@ export function SwapDetailsPlaceholder(props: SwapDetailsPlaceholderPropTypes) {
       {showSkeleton && (
         <Container>
           <HeaderDetails>
-            <div className="row">
+            <div className={rowStyles()}>
               <Typography variant="label" size="large" color="neutral700">
                 {`${i18n.t('Request ID')}:`}
               </Typography>
-              <div className="request-id">
+              <div className={requestIdStyles()}>
                 <Typography variant="label" size="small" color="neutral700">
                   <Skeleton width={60} height={10} variant="rounded" />
                 </Typography>
@@ -46,7 +48,7 @@ export function SwapDetailsPlaceholder(props: SwapDetailsPlaceholderPropTypes) {
                 </IconButton>
               </div>
             </div>
-            <div className="row">
+            <div className={rowStyles()}>
               <Typography variant="label" size="large" color="neutral700">
                 {`${i18n.t('Created at')}:`}
               </Typography>

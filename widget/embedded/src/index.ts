@@ -9,8 +9,6 @@ import type {
 } from './types';
 import type {
   EventSeverity,
-  PendingSwap,
-  PendingSwapStep,
   PendingSwapWithQueueID,
   Route,
   RouteEvent,
@@ -38,10 +36,14 @@ import type {
   WalletState,
   WalletType,
 } from '@rango-dev/wallets-shared';
+import type {
+  PendingSwap,
+  PendingSwapNetworkStatus,
+  PendingSwapStep,
+} from 'rango-types';
 
 import {
   MainEvents,
-  PendingSwapNetworkStatus,
   RouteEventType,
   StepEventType,
   StepExecutionBlockedEventStatus,

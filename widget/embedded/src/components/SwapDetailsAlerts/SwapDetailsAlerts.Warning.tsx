@@ -1,8 +1,8 @@
 import type { WaningAlertsProps } from './SwapDetailsAlerts.types';
 
 import { i18n } from '@lingui/core';
-import { PendingSwapNetworkStatus } from '@rango-dev/queue-manager-rango-preset';
 import { Alert, Button } from '@rango-dev/ui';
+import { PendingSwapNetworkStatus } from 'rango-types';
 import React from 'react';
 
 export function WarningAlert(props: WaningAlertsProps) {

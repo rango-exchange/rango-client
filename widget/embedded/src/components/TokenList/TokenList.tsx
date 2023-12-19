@@ -27,6 +27,7 @@ import { LoadingTokenList } from './LoadingTokenList';
 import {
   BalanceContainer,
   Container,
+  descriptionStyles,
   End,
   ImageSection,
   List,
@@ -34,6 +35,11 @@ import {
   Tag,
   TagTitle,
   Title,
+  tokenAddressStyles,
+  tokenNameStyles,
+  tokenTitleStyles,
+  tokenWithoutNameStyles,
+  usdValueStyles,
 } from './TokenList.styles';
 
 const PAGE_SIZE = 20;
@@ -44,11 +50,11 @@ const renderDesc = (props: RenderDescProps) => {
   const length = address.length;
 
   return (
-    <div className="description">
+    <div className={descriptionStyles()}>
       {name ? (
-        <div className="token-name">{name}</div>
+        <div className={tokenNameStyles()}>{name}</div>
       ) : (
-        <Title className="token-title">
+        <Title className={tokenTitleStyles()}>
           <Typography variant="title" size="xmedium">
             {token.symbol}
           </Typography>
@@ -63,7 +69,9 @@ const renderDesc = (props: RenderDescProps) => {
 
       {!!address && (
         <div
-          className={`token-address ${!name && 'token-address-without-name'}`}>
+          className={`${tokenAddressStyles()} ${
+            !name && tokenWithoutNameStyles()
+          }`}>
           <a
             href={url}
             target="_blank"
@@ -176,7 +184,7 @@ export function TokenList(props: PropTypes) {
                 start={
                   <ImageSection>
                     <Image src={token.image} size={30} />
-                    {isTokenPinned(token) && (
+                    {isTokenPinned(token, props.type) && (
                       <Pin>
                         <PinIcon size={12} color="gray" />
                       </Pin>
@@ -236,7 +244,7 @@ export function TokenList(props: PropTypes) {
                         {tokenBalance.usdValue && (
                           <Typography
                             variant="body"
-                            className="usd-value"
+                            className={usdValueStyles()}
                             size="xsmall">
                             {`$${tokenBalance.usdValue}`}
                           </Typography>

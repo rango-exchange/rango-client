@@ -1,4 +1,4 @@
-import { styled } from '@stitches/react';
+import { css, styled } from '../../theme';
 
 export const Container = styled('div', {
   display: 'flex',
@@ -15,13 +15,15 @@ export const Container = styled('div', {
       true: { alignItems: 'center', justifyContent: 'center' },
     },
   },
-  '& .token-amount': {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  '& .usd-value': {
-    display: 'flex',
-    paddingTop: '$5',
-  },
+});
+
+export const tokenAmountStyles = css({
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+});
+
+export const usdValueStyles = css({
+  display: 'flex',
+  paddingTop: '$5',
 });

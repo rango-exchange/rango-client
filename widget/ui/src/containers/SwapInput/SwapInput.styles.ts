@@ -1,5 +1,7 @@
 import { Button, TextField } from '../../components';
-import { darkTheme, styled } from '../../theme';
+import { css, darkTheme, styled } from '../../theme';
+
+export const textStyles = css();
 
 export const Container = styled('div', {
   $$color: '$colors$neutral100',
@@ -17,37 +19,12 @@ export const Container = styled('div', {
       },
     },
   },
-  '& .gray-text': {
+  [`& .${textStyles}`]: {
     $$color: '$colors$neutral600',
     [`.${darkTheme} &`]: {
       $$color: '$colors$neutral700',
     },
     color: '$$color',
-  },
-  '& .label__container': {
-    paddingBottom: '$5',
-  },
-  '& .label': {
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  },
-  '& .balance': {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  '& .form': {
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  },
-  '& .amount': {
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'end',
-    flexGrow: 1,
   },
 });
 
@@ -94,4 +71,34 @@ export const ValueTypography = styled('div', {
       },
     },
   },
+});
+
+export const formStyles = css({
+  display: 'flex',
+  justifyContent: 'space-between',
+  alignItems: 'center',
+});
+
+export const labelStyles = css({
+  display: 'flex',
+  justifyContent: 'space-between',
+  alignItems: 'center',
+});
+
+export const balanceStyles = css({
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+});
+
+export const amountStyles = css({
+  display: 'flex',
+  flexDirection: 'column',
+  justifyContent: 'center',
+  alignItems: 'end',
+  flexGrow: 1,
+});
+
+export const labelContainerStyles = css({
+  paddingBottom: '$5',
 });

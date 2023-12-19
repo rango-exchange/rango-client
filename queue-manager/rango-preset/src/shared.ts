@@ -1,20 +1,18 @@
 import type { Network, WalletType } from '@rango-dev/wallets-shared';
 import type {
-  AmountRestrictionType,
   BestRouteResponse,
   BlockchainMeta,
-  CosmosTransaction,
-  EvmTransaction,
   MetaResponse,
-  SimulationResult,
-  SolanaTransaction,
-  StarknetTransaction,
   SwapResult,
   Token,
-  Transfer as TransferTransaction,
-  TronTransaction,
 } from 'rango-sdk';
-import type { TonTransaction } from 'rango-types';
+import type {
+  PendingSwap,
+  PendingSwapStep,
+  SwapSavedSettings,
+  SwapStepRoute,
+  WalletTypeAndAddress,
+} from 'rango-types';
 
 import BigNumber from 'bignumber.js';
 import {
@@ -86,107 +84,6 @@ export type EventType =
   | 'route_failed_to_find'
   | 'transaction_expired';
 
-export type SwapSavedSettings = {
-  slippage: string;
-  disabledSwappersIds?: string[];
-  disabledSwappersGroups?: string[];
-  infiniteApprove?: boolean;
-};
-
-type InternalStepState =
-  | 'PENDING'
-  | 'CREATED'
-  | 'WAITING'
-  | 'SIGNED'
-  | 'SUCCESSED'
-  | 'FAILED';
-
-export type SwapperStatusStep = {
-  name: string;
-  state: InternalStepState;
-  current: boolean;
-};
-
-export enum PendingSwapNetworkStatus {
-  WaitingForConnectingWallet = 'waitingForConnectingWallet',
-  WaitingForQueue = 'waitingForQueue',
-  WaitingForNetworkChange = 'waitingForNetworkChange',
-  NetworkChanged = 'networkChanged',
-}
-
-export type SwapExplorerUrl = {
-  url: string;
-  description: string | null;
-};
-
-export type StepStatus =
-  | 'created'
-  | 'running'
-  | 'failed'
-  | 'success'
-  | 'waitingForApproval'
-  | 'approved';
-
-export type PendingSwapStep = {
-  // routing data
-  id: number;
-  fromBlockchain: string;
-  fromSymbol: string;
-  fromSymbolAddress: string | null;
-  fromDecimals: number;
-  fromAmountPrecision: string | null;
-  fromAmountMinValue: string | null;
-  fromAmountMaxValue: string | null;
-  fromAmountRestrictionType: AmountRestrictionType | null;
-  fromLogo: string;
-  toBlockchain: string;
-  toSymbol: string;
-  toSymbolAddress: string | null;
-  toDecimals: number;
-  toLogo: string;
-  swapperId: string;
-  expectedOutputAmountHumanReadable: string | null;
-  startTransactionTime: number;
-  internalSteps: SwapperStatusStep[] | null;
-  estimatedTimeInSeconds: number | null;
-
-  // status data
-  status: StepStatus;
-  networkStatus: PendingSwapNetworkStatus | null;
-  executedTransactionId: string | null;
-  executedTransactionTime: string | null;
-  explorerUrl: SwapExplorerUrl[] | null;
-  diagnosisUrl: string | null;
-  outputAmount: string | null;
-
-  // txs data
-  cosmosTransaction: CosmosTransaction | null;
-  transferTransaction: TransferTransaction | null;
-  solanaTransaction: SolanaTransaction | null;
-  evmApprovalTransaction: EvmTransaction | null;
-  evmTransaction: EvmTransaction | null;
-  tronApprovalTransaction: TronTransaction | null;
-  tronTransaction: TronTransaction | null;
-  starknetApprovalTransaction: StarknetTransaction | null;
-  starknetTransaction: StarknetTransaction | null;
-  tonTransaction: TonTransaction | null;
-
-  /*
-   * missing fields in older versions
-   * keeping null for backward compatability
-   */
-  swapperLogo: string | null;
-  swapperType: string | null;
-  fromBlockchainLogo: string | null;
-  toBlockchainLogo: string | null;
-  feeInUsd: string | null;
-};
-
-export type WalletTypeAndAddress = {
-  walletType: WalletType;
-  address: string;
-};
-
 export enum MessageSeverity {
   error = 'error',
   warning = 'warning',
@@ -195,28 +92,6 @@ export enum MessageSeverity {
 }
 
 export type SwapStatus = 'running' | 'failed' | 'success';
-
-export type PendingSwap = {
-  creationTime: string;
-  finishTime: string | null;
-  requestId: string;
-  inputAmount: string;
-  status: SwapStatus;
-  isPaused: boolean;
-  extraMessage: string | null;
-  extraMessageSeverity: MessageSeverity | null;
-  extraMessageErrorCode: string | null;
-  extraMessageDetail: string | null | undefined;
-  networkStatusExtraMessage: string | null;
-  networkStatusExtraMessageDetail: string | null;
-  lastNotificationTime: string | null;
-  wallets: { [p: string]: WalletTypeAndAddress };
-  settings: SwapSavedSettings;
-  steps: PendingSwapStep[];
-  simulationResult: SimulationResult;
-  validateBalanceOrFee: boolean;
-  hasAlreadyProceededToSign?: boolean | null;
-};
 
 export const getCurrentBlockchainOfOrNull = (
   swap: PendingSwap,
@@ -358,8 +233,11 @@ export function getRelatedWallet(
 
 export function getRelatedWalletOrNull(
   swap: PendingSwap,
-  currentStep: PendingSwapStep
+  currentStep: PendingSwapStep | null
 ): WalletTypeAndAddress | null {
+  if (!currentStep) {
+    return null;
+  }
   try {
     return getRelatedWallet(swap, currentStep);
   } catch (e) {
@@ -407,6 +285,49 @@ export function getUsdFeeOfStep(
   return totalFeeInUsd;
 }
 
+function mapSwapStepToPendingSwapStep(
+  swap: SwapResult,
+  meta: Pick<MetaResponse, 'blockchains' | 'tokens'> | null
+): SwapStepRoute {
+  return {
+    // from
+    fromBlockchain: swap.from.blockchain,
+    fromBlockchainLogo: swap.from.blockchainLogo,
+    fromLogo: swap.from.logo,
+    fromSymbol: swap.from.symbol,
+    fromSymbolAddress: swap.from.address,
+    fromDecimals: swap.from.decimals,
+    fromAmountPrecision: swap.fromAmountPrecision,
+    fromAmountMinValue: swap.fromAmountMinValue,
+    fromAmountMaxValue: swap.fromAmountMaxValue,
+    fromAmountRestrictionType: swap.fromAmountRestrictionType,
+    fromUsdPrice: swap.from.usdPrice,
+
+    // to
+    toBlockchain: swap.to.blockchain,
+    toBlockchainLogo: swap.to.blockchainLogo,
+    toSymbol: swap.to.symbol,
+    toSymbolAddress: swap.to.address,
+    toDecimals: swap.to.decimals,
+    toLogo: swap.to.logo,
+    toUsdPrice: swap.to.usdPrice,
+
+    // swapper
+    swapperId: swap.swapperId,
+    swapperLogo: swap.swapperLogo,
+    swapperType: swap.swapperType,
+
+    // route
+    expectedOutputAmountHumanReadable: swap.toAmount,
+    feeInUsd: meta
+      ? // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+        numberToString(getUsdFeeOfStep(swap, meta?.tokens), null, 8)
+      : null,
+    estimatedTimeInSeconds: swap.estimatedTimeInSeconds || null,
+    internalSteps: null,
+  };
+}
+
 export function calculatePendingSwap(
   inputAmount: string,
   bestRoute: BestRouteResponse,
@@ -440,44 +361,23 @@ export function calculatePendingSwap(
     validateBalanceOrFee,
     steps:
       bestRoute.result?.swaps?.map((swap, index) => {
+        const stepRoute = mapSwapStepToPendingSwapStep(swap, meta);
         return {
           id: index + 1,
 
-          // from
-          fromBlockchain: swap.from.blockchain,
-          fromBlockchainLogo: swap.from.blockchainLogo,
-          fromLogo: swap.from.logo,
-          fromSymbol: swap.from.symbol,
-          fromSymbolAddress: swap.from.address,
-          fromDecimals: swap.from.decimals,
-          fromAmountPrecision: swap.fromAmountPrecision,
-          fromAmountMinValue: swap.fromAmountMinValue,
-          fromAmountMaxValue: swap.fromAmountMaxValue,
-          fromAmountRestrictionType: swap.fromAmountRestrictionType,
-
-          // to
-          toBlockchain: swap.to.blockchain,
-          toBlockchainLogo: swap.to.blockchainLogo,
-          toSymbol: swap.to.symbol,
-          toSymbolAddress: swap.to.address,
-          toDecimals: swap.to.decimals,
-          toLogo: swap.to.logo,
-
-          // swapper
-          swapperId: swap.swapperId,
-          swapperLogo: swap.swapperLogo,
-          swapperType: swap.swapperType,
-
-          // output, fee, timing
-          expectedOutputAmountHumanReadable: swap.toAmount,
-          outputAmount: '',
-          feeInUsd: meta
-            ? // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-              numberToString(getUsdFeeOfStep(swap, meta?.tokens), null, 8)
-            : null,
-          estimatedTimeInSeconds: swap.estimatedTimeInSeconds || null,
+          // route
+          ...stepRoute,
+          internalSwaps:
+            swap?.internalSwaps?.map((internalSwap) => {
+              const stepRoute = mapSwapStepToPendingSwapStep(
+                internalSwap,
+                meta
+              );
+              return stepRoute;
+            }) || null,
 
           // status, tracking
+          outputAmount: '',
           status: 'created',
           networkStatus: null,
           startTransactionTime: new Date().getTime(),

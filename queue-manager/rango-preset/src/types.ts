@@ -1,4 +1,4 @@
-import type { PendingSwap, PendingSwapStep, Wallet } from './shared';
+import type { Wallet } from './shared';
 import type {
   QueueContext,
   QueueDef,
@@ -16,6 +16,8 @@ import type { Transaction } from 'rango-sdk';
 import type {
   APIErrorCode,
   EvmBlockchainMeta,
+  PendingSwap,
+  PendingSwapStep,
   SignerFactory,
 } from 'rango-types';
 

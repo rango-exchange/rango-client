@@ -1,16 +1,14 @@
-import { ExecuterActions } from '@rango-dev/queue-manager-core';
-import {
-  StepEventType,
-  SwapActionTypes,
-  SwapQueueContext,
-  SwapStorage,
-} from '../types';
+import type { SwapQueueContext, SwapStorage } from '../types';
+import type { ExecuterActions } from '@rango-dev/queue-manager-core';
+import type { PendingSwapStep } from 'rango-types';
+
 import {
   getCurrentStep,
   getLastSuccessfulStep,
   isTxAlreadyCreated,
 } from '../helpers';
 import { notifier } from '../services/eventEmitter';
+import { StepEventType, SwapActionTypes } from '../types';
 
 /**
  *
@@ -30,7 +28,9 @@ export function scheduleNextStep({
 }: ExecuterActions<SwapStorage, SwapActionTypes, SwapQueueContext>): void {
   const swap = getStorage().swapDetails;
   const currentStep = getCurrentStep(swap);
-  const isFailed = swap.steps.find((step) => step.status === 'failed');
+  const isFailed = swap.steps.find(
+    (step: PendingSwapStep) => step.status === 'failed'
+  );
 
   if (!!currentStep && !isFailed) {
     if (isTxAlreadyCreated(swap, currentStep)) {
@@ -84,7 +84,10 @@ export function scheduleNextStep({
       step: null,
     });
 
-    if (isFailed) failed();
-    else next();
+    if (isFailed) {
+      failed();
+    } else {
+      next();
+    }
   }
 }

@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/signer-ton",
-  "version": "0.7.1-next.1",
+  "version": "0.7.1-next.2",
   "license": "MIT",
   "type": "module",
   "source": "./src/index.ts",
@@ -21,7 +21,7 @@
     "lint": "eslint \"**/*.{ts,tsx}\" --ignore-path ../../.eslintignore"
   },
   "dependencies": {
-    "rango-types": "^0.1.45"
+    "rango-types": "^0.1.57"
   },
   "publishConfig": {
     "access": "public"

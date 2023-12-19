@@ -2,13 +2,22 @@ import { i18n } from '@lingui/core';
 import { ChainToken, Divider, Skeleton, Typography } from '@rango-dev/ui';
 import React from 'react';
 
-import { Container, StepSeparator } from './LoadingSwapDetails.styles';
+import {
+  Container,
+  costStyles,
+  quoteSummaryItemStyles,
+  quoteSummarySeparatorStyles,
+  quoteSummaryStyles,
+  StepSeparator,
+  swapsStepsStyles,
+  tokenAmountStyles,
+} from './LoadingSwapDetails.styles';
 import { LoadingSwapDetailStep } from './LoadingSwapDetailStep';
 
 export function LoadingSwapDetails() {
   const quoteSummary = (
-    <div className="quote-summary-item">
-      <div className="token-amount">
+    <div className={quoteSummaryItemStyles()}>
+      <div className={tokenAmountStyles()}>
         <ChainToken loading size="medium" chainImage="" tokenImage="" />
         <Divider size={8} direction="horizontal" />
         <Skeleton height={15} width={148} variant="rounded" />
@@ -19,7 +28,7 @@ export function LoadingSwapDetails() {
 
   return (
     <Container>
-      <div className="cost">
+      <div className={costStyles()}>
         <Skeleton width={60} height={10} variant="rounded" />
         <Divider size={4} direction="horizontal" />
         <Skeleton width={60} height={10} variant="rounded" />
@@ -27,19 +36,19 @@ export function LoadingSwapDetails() {
         <Skeleton width={60} height={10} variant="rounded" />
       </div>
 
-      <div className="quote-summary">
+      <div className={quoteSummaryStyles()}>
         {quoteSummary}
-        <div className="quote-summary-separator"></div>
+        <div className={quoteSummarySeparatorStyles()}></div>
         {quoteSummary}
       </div>
 
-      <div className="swaps-steps">
+      <div className={swapsStepsStyles()}>
         <Typography variant="title" size="small">
           {i18n.t('Swaps steps')}
         </Typography>
       </div>
 
-      <div className="step-container">
+      <div>
         <LoadingSwapDetailStep extraInfo />
         <StepSeparator />
         <LoadingSwapDetailStep />

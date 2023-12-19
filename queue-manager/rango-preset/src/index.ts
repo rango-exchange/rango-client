@@ -33,18 +33,12 @@ export {
   StepExecutionEventStatus,
   StepExecutionBlockedEventStatus,
 } from './types';
-export type {
-  PendingSwapWithQueueID,
-  PendingSwapStep,
-  PendingSwap,
-  EventType,
-} from './shared';
+export type { PendingSwapWithQueueID, EventType } from './shared';
 export {
   getCurrentBlockchainOfOrNull,
   getRelatedWalletOrNull,
   getRelatedWallet,
   MessageSeverity,
-  PendingSwapNetworkStatus,
   calculatePendingSwap,
 } from './shared';
 export {
