@@ -15,6 +15,8 @@ on:
 jobs:
   prepare:
     uses: yeager-eren/rango-client/.github/workflows/prepare.yaml@next
+    secrets:
+      NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
   crowdin-action:
     runs-on: ubuntu-latest
     steps:
