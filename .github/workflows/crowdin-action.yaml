@@ -1,0 +1,73 @@
+name: crowdin-action
+
+on:
+  push:
+    branches:
+      - main
+      - next
+
+  workflow_dispatch:
+    inputs:
+      branch:
+        description: 'to trigger the workflow manually'
+        required: false
+
+jobs:
+  crowdin-action:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Setup NodeJS
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          cache: 'yarn'
+
+      - name: Git
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+
+      - name: Restore cache
+        uses: actions/cache@v3
+        with:
+          path: '**/node_modules'
+          key: ${{ runner.os }}-${{ hashFiles('**/yarn.lock') }}
+
+      - name: Install packages
+        run: yarn install --frozen-lockfile      
+
+      - name: Extract new source
+        run: yarn run i18n:extract
+          
+      - name: Crowdin push & pull translations
+        uses: crowdin/github-action@v1
+        id: crowdin-download
+        with:
+          upload_sources: true
+          upload_translations: false
+          download_translations: true
+          source: translations/en.po                     
+          translation: translations/%two_letters_code%.po
+          project_id: ${{ secrets.CROWDIN_PROJECT_ID }}  
+          token: ${{ secrets.CROWDIN_PERSONAL_TOKEN }}  
+ 
+          localization_branch_name: l10n_crowdin_translations
+          create_pull_request: true
+          pull_request_title: 'New Crowdin translations'
+          pull_request_body: 'New Crowdin pull request with translations'
+          pull_request_base_branch_name: 'next'        
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+     
+
+      - name: Enable auto-merge for the PR
+        if: steps.crowdin-download.outputs.pull_request_url
+        run: gh pr --repo $GITHUB_REPOSITORY merge ${{ steps.crowdin-download.outputs.pull_request_url }} --auto --merge
+        env:
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+
+    
