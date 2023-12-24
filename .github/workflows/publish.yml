@@ -7,7 +7,7 @@ on:
 
 jobs:
   localization:
-    uses: ./.github/workflows/crowding.yml
+    uses: ./.github/workflows/crowdin.yml
     secrets:
       NPM_TOKEN: ${{ secrets.NPM_TOKEN }} 
 
