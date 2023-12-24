@@ -1,9 +1,10 @@
 name: Publish
 on:
-  push:
-    branches:
-      - 'main'
-      - 'next'
+  workflow_run:
+    workflows: ["crowdin-action"]
+    types:
+      - completed
+
 
 jobs:
   publish:
