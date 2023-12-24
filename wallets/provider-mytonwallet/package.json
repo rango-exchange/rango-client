@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/provider-mytonwallet",
-  "version": "0.7.1-next.7",
+  "version": "0.7.1-next.8",
   "license": "MIT",
   "type": "module",
   "source": "./src/index.ts",
