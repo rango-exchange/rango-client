@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/signer-starknet",
-  "version": "0.23.0",
+  "version": "0.23.1-next.0",
   "license": "MIT",
   "type": "module",
   "source": "./src/index.ts",

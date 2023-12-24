@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/signer-ton",
-  "version": "0.9.0",
+  "version": "0.9.1-next.0",
   "license": "MIT",
   "type": "module",
   "source": "./src/index.ts",
