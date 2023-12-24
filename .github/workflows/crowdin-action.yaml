@@ -5,6 +5,7 @@ on:
     branches:
       - main
       - next
+      - feat/rf-1004-add-github-action-for-sync-translations
 
   workflow_dispatch:
     inputs:
