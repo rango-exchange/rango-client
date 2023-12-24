@@ -3,7 +3,7 @@ description: "Setting up Git, NodeJS and authenticate."
 inputs:
   NPM_TOKEN:
     description: 'Put your NPM_TOKEN'
-    required: true
+    required: false
 
 runs:
   using: "composite"
