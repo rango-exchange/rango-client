@@ -109,6 +109,7 @@ export const SummaryContainer = styled('div', {
 });
 
 export const summaryStyles = css({
+  width: '100%',
   padding: '$15 $15 $10 $15',
   cursor: 'default',
 });
