@@ -20,7 +20,7 @@ msgstr ""
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:37
-#: widget/embedded/src/components/TokenList/TokenList.tsx:133
+#: widget/embedded/src/components/TokenList/TokenList.tsx:135
 #: widget/embedded/src/pages/HistoryPage.tsx:94
 #: widget/embedded/src/pages/LiquiditySourcePage.tsx:126
 msgid "No results found"
@@ -28,7 +28,7 @@ msgstr "Aucun résultat trouvé"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:38
-#: widget/embedded/src/components/TokenList/TokenList.tsx:134
+#: widget/embedded/src/components/TokenList/TokenList.tsx:136
 #: widget/embedded/src/pages/HistoryPage.tsx:96
 #: widget/embedded/src/pages/LiquiditySourcePage.tsx:127
 msgid "Try using different keywords"
@@ -36,18 +36,18 @@ msgstr "Essayez d'utiliser différents mots-clés"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:66
-#: widget/embedded/src/components/BlockchainsSection/BlockchainsSection.tsx:44
+#: widget/embedded/src/components/BlockchainsSection/BlockchainsSection.tsx:46
 #: widget/embedded/src/pages/SelectBlockchainPage.tsx:40
 msgid "Select Blockchain"
 msgstr "Sélectionnez la Blockchain"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/BlockchainsSection/BlockchainsSection.tsx:64
+#: widget/embedded/src/components/BlockchainsSection/BlockchainsSection.tsx:66
 msgid "All"
 msgstr "Tous"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/BlockchainsSection/BlockchainsSection.tsx:91
+#: widget/embedded/src/components/BlockchainsSection/BlockchainsSection.tsx:100
 msgid "More +{count}"
 msgstr "Plus +{count}"
 
@@ -152,6 +152,7 @@ msgstr "Notifications"
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/HeaderButtons/HomeButtons.tsx:76
 #: widget/embedded/src/pages/ConfirmSwapPage.tsx:278
+#: widget/embedded/src/pages/SettingsPage.tsx:184
 msgid "Settings"
 msgstr "Réglages"
 
@@ -168,7 +169,7 @@ msgid "Connect Wallet"
 msgstr "Connecter le portefeuille"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/LoadingSwapDetails/LoadingSwapDetails.tsx:47
+#: widget/embedded/src/components/LoadingSwapDetails/LoadingSwapDetails.tsx:20
 #: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:348
 msgid "Swaps steps"
 msgstr "Étapes d'échange"
@@ -189,17 +190,17 @@ msgid "You have no notification"
 msgstr "Vous n'avez aucune notification"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/Quote.tsx:197
+#: widget/embedded/src/components/Quote/Quote.tsx:198
 msgid "Slippage Error:"
 msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/Quote.tsx:221
+#: widget/embedded/src/components/Quote/Quote.tsx:222
 msgid "Yours: {amount} {symbol}"
 msgstr "Vous: {amount} {symbol}"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/Quote.tsx:242
+#: widget/embedded/src/components/Quote/Quote.tsx:243
 msgid "Minimum required slippage is {minRequiredSlippage}"
 msgstr ""
 
@@ -277,12 +278,12 @@ msgid "Confirm anyway"
 msgstr "Confirmer quand même"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Slippage/Slippage.tsx:31
+#: widget/embedded/src/components/Slippage/Slippage.tsx:35
 msgid "Slippage tolerance per swap"
 msgstr "Tolérance avec glissement par swap"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Slippage/Slippage.tsx:87
+#: widget/embedded/src/components/Slippage/Slippage.tsx:90
 msgid "Custom"
 msgstr "Personnalisé"
 
@@ -302,30 +303,30 @@ msgid "This setting is applied per step, e.g. 1Inch, Thorchain, etc. and only th
 msgstr "Ce paramètre est appliqué par étape, par exemple 1 pouce, Thorchain, etc. et seule cette étape sera annulée, pas la transaction entière"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.Placeholder.tsx:32
+#: widget/embedded/src/components/SwapDetails/SwapDetails.Placeholder.tsx:31
 #: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:228
 msgid "Swap and Bridge"
 msgstr "Échanger et Pont"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.Placeholder.tsx:40
+#: widget/embedded/src/components/SwapDetails/SwapDetails.Placeholder.tsx:39
 #: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:268
 msgid "Request ID"
 msgstr "ID de la requête"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.Placeholder.tsx:53
+#: widget/embedded/src/components/SwapDetails/SwapDetails.Placeholder.tsx:52
 #: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:283
 msgid "Created at"
 msgstr "Créé le"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.Placeholder.tsx:66
+#: widget/embedded/src/components/SwapDetails/SwapDetails.Placeholder.tsx:65
 msgid "Not found"
 msgstr "Non trouvé"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.Placeholder.tsx:67
+#: widget/embedded/src/components/SwapDetails/SwapDetails.Placeholder.tsx:66
 #: widget/ui/src/components/SwapDetailsPlaceholder/SwapDetailsPlaceholder.tsx:39
 msgid "Swap with request ID = {requestId} not found."
 msgstr "L'échange avec la requête ID = {requestId} est introuvable."
@@ -442,7 +443,7 @@ msgid "Network Changed"
 msgstr "Réseau modifié"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/TokenList/TokenList.tsx:273
+#: widget/embedded/src/components/TokenList/TokenList.tsx:277
 msgid "Select Token"
 msgstr "Sélectionner un jeton"
 
@@ -558,7 +559,7 @@ msgstr "Confirmer le prix en USD inconnu"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/constants/messages.ts:6
-#: widget/embedded/src/pages/Home.tsx:156
+#: widget/embedded/src/pages/Home.tsx:159
 msgid "Swap"
 msgstr "Permuter"
 
@@ -618,12 +619,12 @@ msgid "Search Transaction"
 msgstr "Rechercher une transaction"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/Home.tsx:170
+#: widget/embedded/src/pages/Home.tsx:173
 msgid "From"
 msgstr "A partir de"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/Home.tsx:208
+#: widget/embedded/src/pages/Home.tsx:212
 msgid "To"
 msgstr "À"
 
@@ -681,18 +682,13 @@ msgstr "Thème"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/pages/SettingsPage.tsx:147
-msgid "Infinite Approval"
-msgstr "Approbation infinie"
+msgid "Infinite approval"
+msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/SettingsPage.tsx:156
-msgid "Enabling the 'Infinite Approval' mode grants unrestricted access to smart contracts of DEXes/Bridges, allowing them to utilize the approved token amount without limitations."
-msgstr "Activer le mode \"Approbation infinie\" donne un accès illimité aux contrats intelligents de DEXes/Ponts, leur permettant d'utiliser le montant de jeton approuvé sans restrictions."
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/pages/SettingsPage.tsx:183
-msgid "Setting"
-msgstr "Réglages"
+#: widget/embedded/src/pages/SettingsPage.tsx:157
+msgid "Enabling the 'Infinite approval' mode grants unrestricted access to smart contracts of DEXes/Bridges, allowing them to utilize the approved token amount without limitations."
+msgstr ""
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/pages/ThemePage.tsx:35
@@ -710,13 +706,13 @@ msgid "Auto"
 msgstr "Automatique"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/WalletsPage.tsx:63
+#: widget/embedded/src/pages/WalletsPage.tsx:64
 #: widget/ui/src/containers/ConnectWalletsModal/ConnectWalletsModal.tsx:30
 msgid "Connect Wallets"
 msgstr "Connecter les portefeuilles"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/WalletsPage.tsx:67
+#: widget/embedded/src/pages/WalletsPage.tsx:68
 msgid "Choose a wallet to connect."
 msgstr "Choisissez un portefeuille à connecter."
 
@@ -957,13 +953,13 @@ msgid "SWAP"
 msgstr "ÉCHANGER"
 
 #. js-lingui-explicit-id
-#: widget/ui/src/containers/SwapInput/SwapInput.tsx:37
+#: widget/ui/src/containers/SwapInput/SwapInput.tsx:42
 #: widget/ui/src/containers/TokenInfo/TokenInfo.tsx:194
 msgid "Balance"
 msgstr "Solde"
 
 #. js-lingui-explicit-id
-#: widget/ui/src/containers/SwapInput/SwapInput.tsx:44
+#: widget/ui/src/containers/SwapInput/SwapInput.tsx:49
 msgid "Max"
 msgstr "Max."
 
@@ -971,6 +967,21 @@ msgstr "Max."
 #: widget/ui/src/containers/Warnings/HighSlippageWarning.tsx:22
 msgid " Caution, your slippage is high (={selectedSlippage}). Your trade may be front run."
 msgstr " Attention, votre slippage est élevé (={selectedSlippage}). Votre échange peut être frontal."
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/SettingsPage.tsx:147
+#~ msgid "Infinite Approval"
+#~ msgstr "Approbation infinie"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/SettingsPage.tsx:156
+#~ msgid "Enabling the 'Infinite Approval' mode grants unrestricted access to smart contracts of DEXes/Bridges, allowing them to utilize the approved token amount without limitations."
+#~ msgstr "Activer le mode \"Approbation infinie\" donne un accès illimité aux contrats intelligents de DEXes/Ponts, leur permettant d'utiliser le montant de jeton approuvé sans restrictions."
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/SettingsPage.tsx:183
+#~ msgid "Setting"
+#~ msgstr "Réglages"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/Quote/Quote.tsx:185
