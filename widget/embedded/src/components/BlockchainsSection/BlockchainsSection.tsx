@@ -7,6 +7,7 @@ import {
   Divider,
   Image,
   Skeleton,
+  Tooltip,
   Typography,
 } from '@rango-dev/ui';
 import React from 'react';
@@ -15,8 +16,9 @@ import { BLOCKCHAIN_LIST_SIZE } from '../../constants/configs';
 import { usePrepareBlockchainList } from '../../hooks/usePrepareBlockchainList';
 import { useAppStore } from '../../store/AppStore';
 import { useQuoteStore } from '../../store/quote';
+import { getContainer } from '../../utils/common';
 
-import { Container } from './BlockchainsSection.styles';
+import { Blockchains } from './BlockchainsSection.styles';
 
 const NUMBER_OF_LOADING = 12;
 
@@ -38,13 +40,13 @@ export function BlockchainsSection(props: PropTypes) {
   const showMoreButton = !onlyOneItemInList && hasMoreItemsInList;
 
   return (
-    <div>
+    <>
       <Divider size={12} />
       <Typography variant="label" size="large">
         {i18n.t('Select Blockchain')}
       </Typography>
       <Divider size={12} />
-      <Container>
+      <Blockchains>
         {fetchStatus === 'loading' &&
           Array.from(Array(NUMBER_OF_LOADING), (e) => (
             <Skeleton key={e} variant="rounded" height={50} />
@@ -65,12 +67,19 @@ export function BlockchainsSection(props: PropTypes) {
               </Typography>
             </BlockchainsChip>
             {blockchainsList.list.map((item) => (
-              <BlockchainsChip
+              <Tooltip
                 key={item.name}
-                selected={!!blockchain && blockchain.name === item.name}
-                onClick={() => onChange(item)}>
-                <Image src={item.logo} size={30} />
-              </BlockchainsChip>
+                content={item.shortName}
+                side="bottom"
+                sideOffset={2}
+                container={getContainer()}>
+                <BlockchainsChip
+                  key={item.name}
+                  selected={!!blockchain && blockchain.name === item.name}
+                  onClick={() => onChange(item)}>
+                  <Image src={item.logo} size={30} />
+                </BlockchainsChip>
+              </Tooltip>
             ))}
 
             {onlyOneItemInList ? (
@@ -96,7 +105,7 @@ export function BlockchainsSection(props: PropTypes) {
             ) : null}
           </>
         )}
-      </Container>
-    </div>
+      </Blockchains>
+    </>
   );
 }

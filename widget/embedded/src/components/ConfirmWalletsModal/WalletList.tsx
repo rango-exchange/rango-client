@@ -33,7 +33,7 @@ import {
 } from '../../utils/wallets';
 import { WalletModal } from '../WalletModal';
 
-import { WalletButton } from './ConfirmWallets.styles';
+import { ShowMoreWallets } from './ConfirmWallets.styles';
 import {
   LogoContainer,
   Spinner,
@@ -292,14 +292,14 @@ export function WalletList(props: PropTypes) {
         );
       })}
       {shouldShowMoreWallets && (
-        <WalletButton selected={false} onClick={onShowMore.bind(null)}>
+        <ShowMoreWallets selected={false} onClick={onShowMore}>
           <Typography variant="label" size="medium">
             {i18n.t('Show more wallets')}
             <Typography variant="label" size="medium" color="$primary">
               &nbsp;+{numberOfSupportedWallets - (limit ?? 0)}
             </Typography>
           </Typography>
-        </WalletButton>
+        </ShowMoreWallets>
       )}
     </>
   );

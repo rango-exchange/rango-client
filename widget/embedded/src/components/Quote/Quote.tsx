@@ -48,6 +48,7 @@ import { getPriceImpact, getPriceImpactLevel } from '../../utils/quote';
 import { getTotalFeeInUsd } from '../../utils/swap';
 
 import {
+  BasicInfoOutput,
   basicInfoStyles,
   ChainImageContainer,
   Chains,
@@ -290,16 +291,13 @@ export function Quote(props: QuoteProps) {
               <FrameIcon>
                 <InfoIcon size={12} color="gray" />
               </FrameIcon>
-              <Typography
-                size="small"
-                variant="body"
-                style={{ letterSpacing: 0.4 }}>
+              <BasicInfoOutput size="small" variant="body">
                 {`${roundedInput} ${
                   steps[0].from.token.displayName
                 } = ${roundedOutput} ${
                   steps[steps.length - 1].to.token.displayName
                 }`}
-              </Typography>
+              </BasicInfoOutput>
               <Typography
                 color="$neutral600"
                 ml={2}

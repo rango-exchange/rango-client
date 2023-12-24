@@ -4,7 +4,7 @@ import React from 'react';
 
 import { Typography } from '..';
 
-import { Container } from './PriceImpact.styles';
+import { Container, OutputUsdValue } from './PriceImpact.styles';
 
 export function PriceImpact(props: PriceImpactProps) {
   const { size, outputUsdValue, percentageChange, warningLevel, error } = props;
@@ -19,12 +19,12 @@ export function PriceImpact(props: PriceImpactProps) {
   return (
     <Container>
       {outputUsdValue && (
-        <Typography
+        <OutputUsdValue
           size={size === 'small' ? 'small' : 'medium'}
           variant="body"
           color="$neutral600">
           {`~$${outputUsdValue}`}
-        </Typography>
+        </OutputUsdValue>
       )}
       {((outputUsdValue && percentageChange) || !outputUsdValue) && (
         <Typography

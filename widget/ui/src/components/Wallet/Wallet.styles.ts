@@ -30,7 +30,7 @@ export const WalletButton = styled('button', {
   backgroundColor: '$$color',
   alignItems: 'center',
   cursor: 'pointer',
-  width: 110,
+  width: 100,
   position: 'relative',
   fontFamily: 'inherit',
   '&:hover': {

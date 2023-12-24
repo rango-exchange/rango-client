@@ -8,8 +8,10 @@ export const Container = styled('div', {
   overflow: 'hidden !important',
   boxShadow: '15px 15px 15px 0px rgba(0, 0, 0, 0.05)',
   width: '95vw',
+  minWidth: '300px',
   maxWidth: '390px',
   maxHeight: '700px',
+  textAlign: 'left',
   $$color: '$colors$neutral100',
   [`.${darkTheme} &`]: {
     $$color: '$colors$neutral300',
