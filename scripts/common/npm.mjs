@@ -1,14 +1,109 @@
 import fs from 'node:fs/promises';
-import { $ } from 'execa';
+import { $, execa } from 'execa';
 import { join } from 'node:path';
 import { printDirname } from '../common/utils.mjs';
 import { compareSemVer } from 'semver-parser';
 import fetch, { Headers } from 'node-fetch';
+import {
+  NpmGetPackageError,
+  NpmPackageNotFoundError,
+  NpmPublishError,
+  YarnError,
+} from './errors.mjs';
+import { detectChannel } from './github.mjs';
 
 const cwd = join(printDirname(), '..', '..');
 
+/**
+ * Publish a package using `yarn publish`
+ *
+ * @param {import('../common/utils.mjs').Package} pkg
+ */
+export async function publishOnNpm(pkg) {
+  const channel = detectChannel();
+  const distTag = channel === 'prod' ? 'latest' : channel;
+  const output = await execa('yarn', [
+    'publish',
+    pkg.location,
+    '--tag',
+    distTag,
+  ])
+    .then(({ stdout }) => stdout)
+    .catch((error) => {
+      throw new NpmPublishError(error.stderr);
+    });
+
+  return output;
+}
+
+/**
+ * Accept a package and send a request to npm registry for getting information.
+ *
+ * @param {import('./typedefs.mjs').Package} pkg
+ * @returns {Promise<import('./typedefs.mjs').NpmVersions>}
+ */
+export async function getNpmPackage(pkg) {
+  const packageName = pkg.name;
+  const headers = new Headers();
+  // This is to use less bandwidth unless we really need to get the full response.
+  // See https://github.com/npm/npm-registry-client#request
+  headers.append(
+    'Accept',
+    'application/vnd.npm.install-v1+json; q=1.0, application/json; q=0.8, */*'
+  );
+  const response = await fetch(
+    `https://registry.npmjs.org/${escapeName(packageName)}`,
+    {
+      headers,
+    }
+  ).catch((err) => {
+    const msg =
+      err.message || 'An error has occured when trying to get npm package.';
+    throw new NpmGetPackageError(msg);
+  });
+
+  const body = await response.json();
+
+  // A new package which never has been published on npm.
+  if (response.status === 404) {
+    throw new NpmPackageNotFoundError(packageName);
+  } else if (response.status > 300) {
+    const msg = `Package: ${packageName}, Status: ${response.status}, Body: ${body}`;
+    throw new NpmGetPackageError(msg);
+  }
+
+  const versions = {
+    next: body['dist-tags'].next || null,
+    prod: body['dist-tags'].latest || null,
+  };
+
+  return versions;
+}
+
+/**
+ * Getting version from NPM
+ * returns null if found anything.
+ *
+ * @param {import('./typedefs.mjs').Package} pkg
+ * @returns {Promise<import('./typedefs.mjs').NpmVersions | null>}
+ */
+export async function npmVersionFor(pkg) {
+  try {
+    const npmVersions = await getNpmPackage(pkg);
+    return npmVersions;
+  } catch (err) {
+    if (err instanceof NpmPackageNotFoundError) {
+      return null;
+    }
+
+    throw err;
+  }
+}
+
 export async function packagePath(project) {
-  const { stdout: info } = await $`yarn workspaces info`;
+  const { stdout: info } = await $`yarn workspaces info`.catch((error) => {
+    throw new YarnError(`'yarn workspaces info' failed. \n ${error.stderr}`);
+  });
   const workspaces = JSON.parse(info);
   const pkg = workspaces[project];
   const path = pkg.location;
@@ -25,6 +120,25 @@ export async function readPackageJson(project) {
     update: (newContent) => {
       return fs.writeFile(pkgJsonPath, JSON.stringify(newContent, null, 2));
     },
+  };
+}
+
+async function requestNpmPackageInfo(name) {
+  const headers = new Headers();
+  // This is to use less bandwidth unless we really need to get the full response.
+  // See https://github.com/npm/npm-registry-client#request
+  headers.append(
+    'Accept',
+    'application/vnd.npm.install-v1+json; q=1.0, application/json; q=0.8, */*'
+  );
+  const res = await fetch(`https://registry.npmjs.org/${escapeName(name)}`, {
+    headers,
+  });
+  const body = await res.json();
+
+  return {
+    status: res.status,
+    body,
   };
 }
 
@@ -95,36 +209,6 @@ export async function packageVersionOnNPM(project, dist) {
   return {
     npm_version,
     local_version,
-  };
-}
-
-export async function overrideNPMVersionOnLocal(project, dist) {
-  const versions = await packageVersionOnNPM(project, dist);
-
-  if (versions.npm_version !== versions.local_version) {
-    console.log(`::warning::Mismatch version on local and npm for ${project}`);
-    console.log(`${JSON.stringify(versions)}`);
-  }
-
-  return versions;
-}
-
-async function requestNpmPackageInfo(name) {
-  const headers = new Headers();
-  // This is to use less bandwidth unless we really need to get the full response.
-  // See https://github.com/npm/npm-registry-client#request
-  headers.append(
-    'Accept',
-    'application/vnd.npm.install-v1+json; q=1.0, application/json; q=0.8, */*'
-  );
-  const res = await fetch(`https://registry.npmjs.org/${escapeName(name)}`, {
-    headers,
-  });
-  const body = await res.json();
-
-  return {
-    status: res.status,
-    body,
   };
 }
 
