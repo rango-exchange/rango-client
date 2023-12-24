@@ -1,5 +1,5 @@
 import { execa } from 'execa';
-import { detectChannel } from '../publish/utils.mjs';
+import { detectChannel } from '../common/github.mjs';
 import { VERCEL_ORG_ID, VERCEL_PACKAGES, VERCEL_TOKEN } from './config.mjs';
 
 export function getVercelProjectId(packageName) {

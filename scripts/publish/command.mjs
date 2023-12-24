@@ -2,94 +2,189 @@
 'use strict';
 import process from 'node:process';
 
+import { State } from './state.mjs';
+import { checkEnvironments, makeGithubRelease } from '../common/github.mjs';
+import { tryPublish } from './publish.mjs';
+import { getAffectedPackages } from '../common/repository.mjs';
 import {
-  changed,
-  detectChannel,
-  exportNx,
-  getLastReleasedHashId,
+  addPkgFileChangesToStage,
   logAsSection,
-  pushToRemote,
-  tagPackagesAndCommit,
+  sequentiallyRun,
+  throwIfUnableToProceed,
 } from './utils.mjs';
-import { Graph } from '../common/graph/index.mjs';
-import { nxToGraph } from '../common/graph/helpers.mjs';
-import { $ } from 'execa';
-import { performance } from 'node:perf_hooks';
-import { packageNamesToPackagesWithInfo } from '../common/utils.mjs';
-import { publish } from './single-pkg-publish.mjs';
+import { addFileToStage, publishCommitAndTags, push } from '../common/git.mjs';
+import { update } from './package.mjs';
+import { build } from './build.mjs';
+import { should } from '../common/features.mjs';
 
-// TODO: Working directory should be empty.
 async function run() {
-  // Detect last relase and what packages has changed since then.
-  const channel = detectChannel();
-  const useTagForDetectLastRelease = channel === 'prod';
-  const baseCommit = await getLastReleasedHashId(useTagForDetectLastRelease);
-  const changedPkgs = await changed(baseCommit);
+  logAsSection('::group::🔍 Checking environments...');
+  checkEnvironments();
+  console.log('::endgroup::');
 
-  // Info logs
-  logAsSection('Run...', `at ${baseCommit}`);
+  // 1. Detect affected packages and increase version
+  logAsSection('::group::🔍 Anlyzing dependencies...');
+  const affectedPkgs = await getAffectedPackages();
+  const libPkgs = affectedPkgs.filter((pkg) => !pkg.private);
+  const clientPkgs = affectedPkgs.filter((pkg) => pkg.private);
 
-  console.log(
-    changedPkgs
-      .map((pkg) => `- ${pkg.name} (current version: ${pkg.version})`)
-      .join('\n')
-  );
-
-  // If any package has changed, we exit from the process.
-  if (changedPkgs.length === 0) {
-    console.log(`There is no changed package since ${baseCommit}`);
+  if (libPkgs.length === 0) {
+    console.log('No library has changed. Skip.');
     process.exit(0);
   }
 
-  console.log(`::group::Analyze & Depndency Graph`);
-  performance.mark('start-analyze');
-  const nxGraph = await exportNx();
-  const graph = new Graph();
-  nxToGraph(nxGraph, graph);
-  graph.onlyAffected(changedPkgs.map((pkg) => pkg.name));
-  const sortedList = graph.sort();
-  const sortedPackagesToPublish = await packageNamesToPackagesWithInfo([
-    ...sortedList,
-  ]);
-  performance.mark('end-analyze');
+  console.log('Current state:');
+  console.table(libPkgs);
 
-  console.log(
-    `Execution time: ${
-      performance.measure('analyze', 'start-analyze', 'end-analyze').duration
-    }ms`
+  const state = new State(libPkgs);
+  const updateTasks = libPkgs.map((pkg) => {
+    return update(pkg).then((pkgState) => {
+      state.setState(pkg.name, 'gitTag', pkgState.gitTag);
+      state.setState(pkg.name, 'npmVersion', pkgState.npmVersion);
+      state.setState(pkg.name, 'version', pkgState.version);
+    });
+  });
+  await Promise.all(updateTasks);
+
+  const pkgs = state.list();
+  const pkgStates = pkgs.map((pkg) => state.getState(pkg.name));
+
+  console.log('Next state:');
+  console.table(
+    pkgs.map((pkg) => {
+      return {
+        name: pkg.name,
+        ...state.getState(pkg.name),
+      };
+    })
   );
-  console.log(
-    'Packages will be published, in this order:\n',
-    sortedPackagesToPublish.map((pkg) => pkg.name).join(' -> ')
-  );
+
+  throwIfUnableToProceed(pkgStates);
+
   console.log('::endgroup::');
 
-  console.log(`::group::Check local and npm version to be matched.`);
-  await $`yarn upgrade-all`;
-  const { stdout: upgradeAllStdOut } = await $`yarn upgrade-all`;
-  console.log(upgradeAllStdOut);
+  // 2. Build all packacges
+  /**
+   * IMPORTANT NOTE:
+   * We are all the libs in parallel, parcel has a limitation on running `parcel` instances.
+   * So if you are trying to build multiple parcel apps it goes through some erros. here, for publishing libs
+   * We are using esbuild so don't need to do anything.
+   * but if we need, the potential solution is filtering parcel apps and run them secquentially.
+   */
 
+  logAsSection(`::group::🔨 Start building...`);
+  await build(pkgs);
   console.log('::endgroup::');
 
-  const updatedPackages = [];
-  for (const pkg of sortedPackagesToPublish) {
-    const updatedPkg = await publish(pkg, channel);
-    updatedPackages.push(updatedPkg);
+  // 3. Publish
+  logAsSection(`::group::🚀 Start publishing...`);
+  try {
+    await tryPublish(pkgs, {
+      onUpdateState: state.setState.bind(state),
+    });
+  } catch (e) {
+    console.error(e);
+
+    /** @type {import('../common/typedefs.mjs').Package | undefined} */
+    const pkg = e.cause.pkg;
+    if (!pkg) {
+      console.error(
+        "🚨 The error hasn't thrown `pkg`. Here is more information to debug"
+      );
+      console.log(state.toJSON());
+    } else {
+      // Ignoring error since it's possible to file hasn't changed yet.
+      await addPkgFileChangesToStage(pkg).catch(console.warn);
+    }
   }
-  // We did some changes to package's depencies, we need to update lockfile as well.
-  await $`yarn`;
 
-  // Git tag & commit
-  console.log(`::group::Tag, commit and push to repository.`);
-  logAsSection(`Git Tagging..`);
-  const tagOptions =
-    channel === 'prod' ? { skipGitTagging: false } : { skipGitTagging: true };
-  await tagPackagesAndCommit(updatedPackages, tagOptions);
+  console.log('::endgroup::');
 
-  logAsSection(`Pushing tags to remote...`);
-  const branch = channel === 'prod' ? 'main' : 'next';
-  await pushToRemote(branch);
-  logAsSection(`Pushed.`);
+  // 4. Tag and Push
+
+  /**
+   * Our final list will includes only packages that published on NPM.
+   * If a package failed on making changelog, github release, ...
+   * We are considering it's published and should handle those cases manually.
+   */
+  const listPkgsForTag = state.list().filter((pkg) => {
+    const isPublishedOnNpm = !!state.getState(pkg.name, 'npmVersion');
+    return isPublishedOnNpm;
+  });
+
+  logAsSection(
+    '::group::🏷️ Tagging and commit...',
+    `${listPkgsForTag.length} packages for tagging.`
+  );
+  if (listPkgsForTag.length > 0) {
+    performance.mark(`start-publish-tagging`);
+
+    /**
+     * We don't need to tag and mention them while publishing, they have a separate github action.
+     * But we updated their package json to use the latest version of published libs
+     * So we should includes them in our commit.
+     */
+    await sequentiallyRun(
+      clientPkgs.map(
+        (pkg) => () => addFileToStage(`${pkg.location}`).catch(console.warn)
+      )
+    );
+
+    await publishCommitAndTags(listPkgsForTag);
+    await push();
+    performance.mark(`end-publish-tagging`);
+    const duration_build = performance.measure(
+      `publish-tagging`,
+      `start-publish-tagging`,
+      `end-publish-tagging`
+    ).duration;
+    console.log(`Tagged. ${duration_build}ms`);
+  } else {
+    console.log('Skipped.');
+  }
+
+  console.log('::endgroup::');
+
+  // 5. Making github release
+  // NOTE: If any error happens in this step we are don't bail out the process and will continue. A warning will be shown.
+  console.log('::group::🐙 Github release');
+  if (should('generateChangelog')) {
+    if (listPkgsForTag.length > 0) {
+      performance.mark(`start-publish-gh-release`);
+
+      const tasks = listPkgsForTag.map((pkg) => {
+        return makeGithubRelease(pkg)
+          .then(() => {
+            state.setState(pkg.name, 'githubRelease', pkg.version);
+          })
+          .catch(console.warn);
+      });
+
+      await Promise.all(tasks);
+
+      performance.mark(`end-publish-gh-release`);
+      const duration_build = performance.measure(
+        `publish-gh-release`,
+        `start-publish-gh-release`,
+        `end-publish-gh-release`
+      ).duration;
+      console.log(`Finished. ${duration_build}ms`);
+    } else {
+      console.log('Skipped.');
+    }
+  } else {
+    console.log('Skipped as it set on enviroments.');
+  }
+  console.log('::endgroup::');
+
+  // 6. Report
+  console.log('::group::📊 Report');
+  console.table(
+    pkgs.map((pkg) => ({
+      name: pkg.name,
+      ...state.getState(pkg.name),
+    }))
+  );
   console.log('::endgroup::');
 }
 

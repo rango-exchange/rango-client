@@ -2,7 +2,8 @@
 'use strict';
 import process from 'node:process';
 import { workspacePackages } from '../common/utils.mjs';
-import { buildPackages, logAsSection } from '../publish/utils.mjs';
+import { build } from '../publish/build.mjs';
+import { logAsSection } from '../publish/utils.mjs';
 import { deployProjectsToVercel } from './utils.mjs';
 
 // TODO: Working directory should be empty.
@@ -13,7 +14,7 @@ async function run() {
     return pkg.private;
   });
 
-  await buildPackages(privatePackages).catch((e) => {
+  await build(privatePackages).catch((e) => {
     console.log(
       '[-] BUILD FAILED. Ignore it to workflow run the rest of tasks.'
     );

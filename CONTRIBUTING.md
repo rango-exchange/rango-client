@@ -29,34 +29,51 @@ Here is the structure:
 `/widget/playground`: This directory offers a playground environment where you can test and obtain configurations for our widget.
 `/widget/iframe`: This directory contains a JavaScript class that simplifies the process of adding our iframe-based widget to dApps.
 
+
 ## Release workflow
 
-A release can be a lib or an app/client release. We are publishing our libs to `npm` and our apps to `vercel`.
+A release can be a lib or an app/client release. We are publishing our libs to `npm` and deploying our apps (client) on `vercel`.
 
-If a package is app, you need to add the package name to `scripts/publish.config.mjs` and then after getting a `PROJECT_ID` from Vercel, you need to set it as enviroment variable as well.
+If a package is app, you need to add the package name to `scripts/deploy/config.mjs` and then after getting a `PROJECT_ID` from Vercel, you need to set it as enviroment variable as well.
 
-### Prerelase
+There are main commands:
+
+`yarn run publish` for publishing our NPM packages.
+`yarn run deploy` to deploy apps on Vercel.
+
+### Publish
+
+#### Prerelase
 
 Our publish script will do these steps:
 
 1. Get the last release (by using git tags) and calculate changes since then.
-2. Bump the version and create an prerelase tag for the changed packages
-3. Determine the target deplyement by using `publish.config.mjs`
-4. Publish libs to `npm` and apps to `Vercel`
+2. Bump the version for changed packages.
+3. Create changelog, git tags and github release, and publish them to NPM.
+4. Make a publish commit and push the updated packages (version) and tags to origin.
 
 Note:
 Libs will be published under `next` tag on npm, which means you need to use `yarn add @rango/test-package@next` to install the published version whenever you need.
-And also all the apps published by `prerelase` workflow will be published under the Vercel's `preview` enviroment.
 
-### Production relase
+#### Production relase
 
 Release should be triggered manually and then it will automatically published. You only need to run this command on you local machine to release the production:
 
-`yarn run release`
+`yarn run release-prod`
 
-After release (Green pipleline), make sure you will merge `main` into `next` as well.
+After release (Green pipleline), make sure you will merge `main` into `next` as well. 
 
-`git pull && git checkout next && git pull && git merge main && git push`
+`yarn run post-release-prod`
+
+### Deploy
+
+You should manually trigger the `deploy` workflow.
+
+By running `yarn run deploy`, it will build all the apps/clients then will try to deploy them on vercel.
+
+If the workflow is running on `next` branch, it will be deployed as Vercel's `preview`. If not, it's production release.
+
+All the apps published by `prerelase` workflow will be published under the Vercel's `preview` enviroment.
 
 ## Translation
 
