@@ -13,15 +13,12 @@ on:
         required: false
 
 jobs:
-  prepare:
-    uses: yeager-eren/rango-client/.github/workflows/prepare.yaml@next
-    secrets:
-      NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
   crowdin-action:
     runs-on: ubuntu-latest
-    needs:
-      - prepare
     steps:
+      - uses: yeager-eren/rango-client/.github/workflows/prepare.yml@next
+        with:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }} 
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0          
