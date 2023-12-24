@@ -1,3 +1,12 @@
+# [0.22.0](https://github.com/rango-exchange/rango-client/compare/provider-bitget@0.20.0...provider-bitget@0.22.0) (2023-12-24)
+
+
+### Bug Fixes
+
+* fix HMR for widget and playground ([8524820](https://github.com/rango-exchange/rango-client/commit/8524820f10cf0b8921f3db0c4f620ff98daa4103))
+
+
+
 # [0.10.0](https://github.com/rango-exchange/rango-client/compare/provider-bitkeep@0.9.0...provider-bitkeep@0.10.0) (2023-08-03)
 
 

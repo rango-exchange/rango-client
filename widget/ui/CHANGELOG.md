@@ -1,3 +1,23 @@
+# [0.26.0](https://github.com/rango-exchange/rango-client/compare/ui@0.24.0...ui@0.26.0) (2023-12-24)
+
+
+### Bug Fixes
+
+* fix HMR for widget and playground ([8524820](https://github.com/rango-exchange/rango-client/commit/8524820f10cf0b8921f3db0c4f620ff98daa4103))
+* fix quote info bugs ([3668d84](https://github.com/rango-exchange/rango-client/commit/3668d84a43e3d6055b8ff133f546aabce6fcf616))
+* fix wallet button state in swap details page ([ad57603](https://github.com/rango-exchange/rango-client/commit/ad57603885968b2792ed382dc80a3862dc0eebde))
+* improve widget for smaller screens ([75a3107](https://github.com/rango-exchange/rango-client/commit/75a310770ece2969833dda2789bee5b8ccda166e))
+* update blockchain category icons ([5ffd1ac](https://github.com/rango-exchange/rango-client/commit/5ffd1ac9bbe4cee26500c010718f4f530b1349f6))
+* update classNames to new pattern for conflict prevention ([3c89278](https://github.com/rango-exchange/rango-client/commit/3c8927893381774f8bc8dc5b049ffdfccea1ffe4))
+
+
+### Features
+
+* add dark/light theme to playground ([01c4c45](https://github.com/rango-exchange/rango-client/commit/01c4c45cf42a5b9a945e687fbaf3cb141ca19d13))
+* add langugage section to Playground ([c2deaec](https://github.com/rango-exchange/rango-client/commit/c2deaec91813f7e5cc4bccc2be78f5c297cc1a2d))
+
+
+
 # [0.14.0](https://github.com/rango-exchange/rango-client/compare/ui@0.13.0...ui@0.14.0) (2023-08-03)
 
 

@@ -1,3 +1,12 @@
+# [0.26.0](https://github.com/rango-exchange/rango-client/compare/provider-argentx@0.24.0...provider-argentx@0.26.0) (2023-12-24)
+
+
+### Bug Fixes
+
+* fix HMR for widget and playground ([8524820](https://github.com/rango-exchange/rango-client/commit/8524820f10cf0b8921f3db0c4f620ff98daa4103))
+
+
+
 # [0.14.0](https://github.com/rango-exchange/rango-client/compare/provider-argentx@0.13.0...provider-argentx@0.14.0) (2023-08-03)
 
 

@@ -1,3 +1,21 @@
+# [0.25.0](https://github.com/rango-exchange/rango-client/compare/queue-manager-rango-preset@0.24.0...queue-manager-rango-preset@0.25.0) (2023-12-24)
+
+
+### Bug Fixes
+
+* add initial state with props in app store and fix bug of passing liquidity sources via config ([5d50d0f](https://github.com/rango-exchange/rango-client/commit/5d50d0fa18c0519a9464bb205684ecdaf881d936))
+* add wallets-core to rango-preset package dependencies ([0a8920a](https://github.com/rango-exchange/rango-client/commit/0a8920a11db4a8d213e01ee770289242bf1defc8))
+* display transaction url after refreshing ([c976bff](https://github.com/rango-exchange/rango-client/commit/c976bffd3827ee20de5dd0f21be6d430432fff28))
+* fix emitting failed event in swap execution ([cedc535](https://github.com/rango-exchange/rango-client/commit/cedc53523dc8ddc5f339b4da6afa822058bd760d))
+* fix HMR for widget and playground ([8524820](https://github.com/rango-exchange/rango-client/commit/8524820f10cf0b8921f3db0c4f620ff98daa4103))
+
+
+### Features
+
+* add state of wallets' details to useWidget ([2a59055](https://github.com/rango-exchange/rango-client/commit/2a590551cc0a3d663fd9901e125890ff1386c0aa))
+
+
+
 # [0.14.0](https://github.com/rango-exchange/rango-client/compare/queue-manager-rango-preset@0.13.0...queue-manager-rango-preset@0.14.0) (2023-08-03)
 
 
