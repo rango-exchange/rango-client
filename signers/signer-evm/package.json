@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/signer-evm",
-  "version": "0.24.1-next.0",
+  "version": "0.25.0",
   "license": "MIT",
   "type": "module",
   "source": "./src/index.ts",
