@@ -6,6 +6,7 @@ export const BaseListItemButton = styled('button', {
   width: '100%',
   backgroundColor: 'transparent',
   fontFamily: 'inherit',
+  padding: 'unset',
   '&:focus-visible': {
     borderRadius: '$xs',
 

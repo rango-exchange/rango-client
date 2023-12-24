@@ -37,10 +37,13 @@ export const Title = styled('div', {
 });
 
 export const ListContainer = styled('div', {
-  display: 'grid',
+  display: 'flex',
+  justifyContent: 'space-evenly',
+  alignItems: 'center',
   gap: '$10',
-  gridTemplateColumns: ' repeat(3, minmax(0, 1fr))',
-  alignContent: 'baseline',
+  flexWrap: 'wrap',
+  paddingTop: '$5',
+  height: '100%',
 });
 
 export const WalletButton = styled('button', {
@@ -85,6 +88,12 @@ export const WalletButton = styled('button', {
     },
   },
 });
+
+export const ShowMoreWallets = styled(WalletButton, {
+  alignSelf: 'stretch',
+  minHeight: '93px',
+});
+
 export const Trigger = styled(Collapsible.Trigger, {
   padding: '$0',
   border: 'none',
@@ -114,10 +123,13 @@ export const WalletsContainer = styled('div', {
 });
 
 export const walletsListStyles = css({
-  display: 'grid',
+  display: 'flex',
+  justifyContent: 'space-evenly',
+  alignItems: 'center',
   gap: '$10',
-  gridTemplateColumns: ' repeat(3, minmax(0, 1fr))',
-  alignContent: 'baseline',
+  flexWrap: 'wrap',
+  paddingTop: '$5',
+  height: '100%',
 });
 
 export const CollapsibleRoot = styled(Collapsible.Root, {
@@ -167,7 +179,6 @@ export const CustomDestination = styled('div', {
   padding: '$10 $0',
   '& .button__content': {
     display: 'flex',
-    justifyContent: 'center',
     alignItems: 'center',
   },
   '& .alarms': { paddingTop: '5px' },
@@ -196,10 +207,12 @@ export const ConfirmButton = styled('div', {
 });
 
 export const StyledTextField = styled(TextField, {
+  backgroundColor: '$neutral100',
   padding: '$0 $15 $15 $15',
 });
 
 export const CollapsibleContent = styled(Collapsible.Content, {
+  backgroundColor: '$neutral100',
   overflow: 'hidden',
   variants: {
     open: {

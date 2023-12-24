@@ -36,9 +36,9 @@ export function TokenSection(props: TokenSectionProps) {
         <div className={tokenChainStyles()}>
           {loading ? (
             <div className={skeletonStyles()}>
-              <Skeleton variant="text" size="large" width={92} />
+              <Skeleton variant="text" size="large" />
               <Divider size={8} />
-              <Skeleton variant="text" size="medium" width={92} />
+              <Skeleton variant="text" size="medium" />
             </div>
           ) : (
             <>

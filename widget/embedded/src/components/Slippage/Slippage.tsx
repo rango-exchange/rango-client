@@ -1,6 +1,5 @@
 import { i18n } from '@lingui/core';
 import {
-  Chip,
   Divider,
   InfoIcon,
   TextField,
@@ -17,7 +16,12 @@ import {
 import { useAppStore } from '../../store/AppStore';
 import { getContainer } from '../../utils/common';
 
-import { BaseContainer, Head, SlippageChipsContainer } from './Slippage.styles';
+import {
+  BaseContainer,
+  Head,
+  SlippageChip,
+  SlippageChipsContainer,
+} from './Slippage.styles';
 import { SlippageTooltipContent } from './SlippageTooltipContent';
 
 export function Slippage() {
@@ -34,6 +38,7 @@ export function Slippage() {
         <Tooltip
           container={getContainer()}
           side="top"
+          sideOffset={4}
           content={<SlippageTooltipContent />}>
           <InfoIcon color="gray" />
         </Tooltip>
@@ -43,8 +48,7 @@ export function Slippage() {
           const key = `slippage-${index}`;
           return (
             <>
-              <Chip
-                style={{ width: '64px', flexShrink: 0 }}
+              <SlippageChip
                 key={key}
                 onClick={() => {
                   if (customSlippage) {
@@ -55,7 +59,6 @@ export function Slippage() {
                 selected={!customSlippage && slippageItem === slippage}
                 label={`${slippageItem.toString()}%`}
               />
-              <Divider direction="horizontal" size={8} />
             </>
           );
         })}

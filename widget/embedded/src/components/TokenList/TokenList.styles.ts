@@ -18,7 +18,8 @@ export const tokenNameStyles = css({
 export const descriptionStyles = css({
   position: 'relative',
   height: 12,
-  width: 150,
+  width: '30%',
+  maxWidth: '150px',
 });
 export const tokenTitleStyles = css({
   position: 'absolute',
@@ -30,6 +31,9 @@ export const tokenAddressStyles = css({
   transform: 'translateY(12px)',
   visibility: 'hidden',
   '& a': {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
     fontSize: '$12',
     lineHeight: '$16',
     $$color: '$colors$neutral600',
@@ -106,6 +110,10 @@ export const TagTitle = styled(Typography, {});
 
 export const BalanceContainer = styled('div', {
   textAlign: 'right',
+  width: '100%',
+  overflow: 'hidden',
+  textOverflow: 'ellipsis',
+  whiteSpace: 'nowrap',
   [`& .${usdValueStyles}`]: {
     $$color: '$colors$neutral600',
     [`.${darkTheme} &`]: {
@@ -115,7 +123,7 @@ export const BalanceContainer = styled('div', {
   },
 });
 
-export const End = styled('ul', {
+export const End = styled('div', {
   display: 'flex',
   alignItems: 'end',
   flexDirection: 'column',
@@ -139,4 +147,11 @@ export const Pin = styled('div', {
   borderRadius: '50%',
   bottom: -6,
   right: -6,
+});
+
+export const TokenBalance = styled(Typography, {
+  width: '100%',
+  overflow: 'hidden',
+  textOverflow: 'ellipsis',
+  whiteSpace: 'nowrap',
 });

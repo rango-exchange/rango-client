@@ -23,9 +23,7 @@ function TextFieldComponent(props: PropsWithChildren<PropTypes>, ref?: Ref) {
     <>
       {label && (
         <>
-          <Label
-            className="_text"
-            {...(inputAttributes.id && { htmlFor: inputAttributes.id })}>
+          <Label {...(inputAttributes.id && { htmlFor: inputAttributes.id })}>
             <Typography variant="label" size="large">
               {label}
             </Typography>
@@ -39,10 +37,9 @@ function TextFieldComponent(props: PropsWithChildren<PropTypes>, ref?: Ref) {
         variant={variant}
         size={size}
         style={style}
-        className="_text">
+        className="_text-field">
         {prefix || null}
         <Input
-          className="_text"
           {...inputAttributes}
           spellCheck={false}
           suffix={!!suffix}
@@ -56,5 +53,6 @@ function TextFieldComponent(props: PropsWithChildren<PropTypes>, ref?: Ref) {
 
 const TextField = React.forwardRef(TextFieldComponent);
 TextField.displayName = 'TextField';
+TextField.toString = () => '._text-field';
 
 export { TextField };

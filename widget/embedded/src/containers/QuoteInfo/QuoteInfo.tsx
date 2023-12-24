@@ -3,7 +3,8 @@ import type { PropTypes } from './QuoteInfo.types';
 import { Divider } from '@rango-dev/ui';
 import React from 'react';
 
-import { Quote, QuoteSkeleton } from '../../components/Quote';
+import { Quote } from '../../components/Quote';
+import { QuoteSkeleton } from '../../components/QuoteSkeleton';
 import { QuoteWarningsAndErrors } from '../../components/QuoteWarningsAndErrors';
 import { useQuoteStore } from '../../store/quote';
 import { QuoteErrorType } from '../../types';
