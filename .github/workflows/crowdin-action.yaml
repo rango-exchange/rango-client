@@ -16,7 +16,7 @@ jobs:
   crowdin-action:
     runs-on: ubuntu-latest
     steps:
-      - uses: yeager-eren/rango-client/.github/workflows/prepare.yml@next
+      - uses: yeager-eren/rango-client/.github/actions/prepare.yml@next
         with:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }} 
       - uses: actions/checkout@v3
