@@ -36,11 +36,7 @@ import type {
   WalletState,
   WalletType,
 } from '@rango-dev/wallets-shared';
-import type {
-  PendingSwap,
-  PendingSwapNetworkStatus,
-  PendingSwapStep,
-} from 'rango-types';
+import type { PendingSwap, PendingSwapStep } from 'rango-types';
 
 import {
   MainEvents,
@@ -56,6 +52,7 @@ import {
   Events as WalletEvents,
 } from '@rango-dev/wallets-react';
 import { Networks, WalletTypes } from '@rango-dev/wallets-shared';
+import { PendingSwapNetworkStatus } from 'rango-types';
 
 import { WidgetWallets } from './containers/Wallets';
 import { Widget } from './containers/Widget';
