@@ -12,7 +12,7 @@ export function removeEdgeTo(targetNode, graph) {
   for (const node of graph.keys()) {
     graph.set(
       node,
-      graph.get(node).filter((edge) => edge !== targetNode),
+      graph.get(node).filter((edge) => edge !== targetNode)
     );
   }
 }
@@ -43,7 +43,7 @@ export function normalizeNXDependencies(deps) {
   Object.keys(deps).forEach((node) => {
     output.set(
       node,
-      deps[node].map((depNode) => depNode.target),
+      deps[node].map((depNode) => depNode.target)
     );
   });
   return output;
@@ -79,9 +79,6 @@ export function nxToGraph(nx, graph) {
   nodes.forEach((node) => graph.addNode(node));
 
   const edges = detectEdges(normalizeNXDependencies(nx.graph.dependencies));
-  console.log('Detected nodes: ', nodes.length);
-  console.log('Detected nodes that has edge/s: ', edges.size);
-  console.log('Note: these two numbers should be equal.');
 
   edges.forEach((sourceNodeValue, sourceNode) => {
     if (sourceNodeValue.outdeg.length > 0) {
@@ -95,6 +92,11 @@ export function nxToGraph(nx, graph) {
       graph.addEdge(ROOT_KEY, sourceNode);
     }
   });
+
+  return {
+    edgesCount: edges.size,
+    nodesCount: nodes.length,
+  };
 }
 
 export function bubbleUp(result, nodesWithEdges, targetNode) {

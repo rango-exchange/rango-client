@@ -4,6 +4,7 @@ import { readFileSync } from 'fs';
 import { join } from 'path';
 import { execa } from 'execa';
 import process from 'node:process';
+import { NPM_ORG_NAME } from './constants.mjs';
 
 const root = join(printDirname(), '..', '..');
 
@@ -13,12 +14,17 @@ export function printDirname() {
   return __dirname;
 }
 
+/**
+ * Getting workspace members using Yarn.
+ *
+ * @returns {Promise<import('./typedefs.mjs').Package[]>}
+ */
 export async function workspacePackages() {
   const { stdout } = await execa('yarn', ['workspaces', 'info']);
   const result = JSON.parse(stdout);
   const packagesName = Object.keys(result);
   const output = packagesName.map((name) => {
-    const pkgJson = pacakgeJson(result[name].location);
+    const pkgJson = packageJson(result[name].location);
     return {
       name,
       location: result[name].location,
@@ -29,28 +35,70 @@ export async function workspacePackages() {
   return output;
 }
 
-export function pacakgeJson(location) {
+/**
+ * Getting a package json and deserialize it to JS object.
+ * @param {string} location
+ * @returns {Object}
+ */
+export function packageJson(location) {
   const fullPath = join(root, location, 'package.json');
   const file = readFileSync(fullPath);
   return JSON.parse(file);
 }
 
+/**
+ * Getting a name and returns info related to that package name.
+ *
+ * @param {string[]} names Package names for getting information about.
+ * @returns {Promise<import('./typedefs.mjs').Package[]>}
+ */
 export async function packageNamesToPackagesWithInfo(names) {
   const allPackages = await workspacePackages();
-  return names.map((pkgName) =>
-    allPackages.find((pkg) => pkg.name === pkgName)
-  );
+  const packages = [];
+  names.forEach((pkgName) => {
+    const packageInWorkspace = allPackages.find((pkg) => pkg.name === pkgName);
+    if (!!packageInWorkspace) {
+      packages.push(packageInWorkspace);
+    }
+  });
+
+  return packages;
 }
 
-/*
-  Convert:
-  @hello-wrold/a-b -> a-b
-*/
+/**
+ * Getting a package name (e.g. @hello-wrold/a-b) and get the name of pkg (e.g. a-b).
+ *
+ * @param {string} name
+ */
 export function packageNameWithoutScope(name) {
   return name.replace(/@.+\//, '');
 }
 
-// we are adding a fallback, to make sure predefiend VERCEL_PACKAGES always will be true.
+/**
+ * Note: we are adding a fallback, to make sure predefiend VERCEL_PACKAGES always will be true.
+ *
+ * @param {string} name enviroment variable name
+ * @returns {string}
+ */
 export function getEnvWithFallback(name) {
   return process.env[name] || 'NOT SET';
+}
+
+/**
+ *
+ * @param {import('./typedefs.mjs').Package} pkg
+ * @returns
+ */
+export function generateTagName(pkg) {
+  return `${packageNameWithoutScope(pkg.name)}@${pkg.version}`;
+}
+
+/**
+ * Opposite of `generateTagName`
+ *
+ * @param {string} pkgNameWithoutScope
+ * @returns
+ */
+export function tagNameToPkgName(pkgNameWithoutScope) {
+  return `${NPM_ORG_NAME}/${pkgNameWithoutScope}`;
 }
