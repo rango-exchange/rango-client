@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/provider-bitget",
-  "version": "0.21.0",
+  "version": "0.21.1-next.0",
   "license": "MIT",
   "type": "module",
   "source": "./src/index.ts",
@@ -21,9 +21,9 @@
     "lint": "eslint \"**/*.{ts,tsx}\" --ignore-path ../../.eslintignore"
   },
   "dependencies": {
-    "@rango-dev/signer-evm": "^0.24.0",
-    "@rango-dev/signer-tron": "^0.24.0",
-    "@rango-dev/wallets-shared": "^0.24.0",
+    "@rango-dev/signer-evm": "^0.24.1-next.0",
+    "@rango-dev/signer-tron": "^0.24.1-next.0",
+    "@rango-dev/wallets-shared": "^0.24.1-next.0",
     "rango-types": "^0.1.57"
   },
   "publishConfig": {
