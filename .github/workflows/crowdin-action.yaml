@@ -13,33 +13,14 @@ on:
         required: false
 
 jobs:
+  prepare:
+    uses: .github/workflows/prepare.yaml
   crowdin-action:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
         with:
-          fetch-depth: 0
-
-      - name: Setup NodeJS
-        uses: actions/setup-node@v3
-        with:
-          node-version: '18'
-          cache: 'yarn'
-
-      - name: Git
-        run: |
-          git config --global user.name 'github-actions[bot]'
-          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
-
-      - name: Restore cache
-        uses: actions/cache@v3
-        with:
-          path: '**/node_modules'
-          key: ${{ runner.os }}-${{ hashFiles('**/yarn.lock') }}
-
-      - name: Install packages
-        run: yarn install --frozen-lockfile      
-
+          fetch-depth: 0          
       - name: Extract new source
         run: yarn run i18n:extract
           
