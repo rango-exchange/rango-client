@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/provider-braavos",
-  "version": "0.16.0",
+  "version": "0.17.0",
   "license": "MIT",
   "type": "module",
   "source": "./src/index.ts",
@@ -21,8 +21,8 @@
     "lint": "eslint \"**/*.{ts,tsx}\" --ignore-path ../../.eslintignore"
   },
   "dependencies": {
-    "@rango-dev/signer-starknet": "^0.22.0",
-    "@rango-dev/wallets-shared": "^0.22.0",
+    "@rango-dev/signer-starknet": "^0.23.0",
+    "@rango-dev/wallets-shared": "^0.23.0",
     "rango-types": "^0.1.57"
   },
   "publishConfig": {

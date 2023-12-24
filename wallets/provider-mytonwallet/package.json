@@ -21,8 +21,8 @@
     "lint": "eslint \"**/*.{ts,tsx}\" --ignore-path ../../.eslintignore"
   },
   "dependencies": {
-    "@rango-dev/signer-ton": "^0.8.0",
-    "@rango-dev/wallets-shared": "^0.22.0",
+    "@rango-dev/signer-ton": "^0.9.0",
+    "@rango-dev/wallets-shared": "^0.23.0",
     "@tonconnect/sdk": "^2.1.0",
     "rango-types": "^0.1.57"
   },
