@@ -24,9 +24,9 @@
   },
   "dependencies": {
     "@rango-dev/provider-all": "^0.24.1-next.0",
-    "@rango-dev/ui": "^0.24.1-next.0",
+    "@rango-dev/ui": "^0.25.0",
     "@rango-dev/wallets-react": "^0.10.1-next.0",
-    "@rango-dev/wallets-shared": "^0.23.1-next.0",
+    "@rango-dev/wallets-shared": "^0.24.0",
     "rango-types": "^0.1.57"
   },
   "publishConfig": {
