@@ -1,3 +1,3 @@
 # @rango-dev/widget-embedded
 
-Rango Widget
+Rango Embedded Widget
