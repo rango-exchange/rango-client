@@ -11,6 +11,12 @@ on:
       NPM_TOKEN:
         description: 'Put your npm token as env variable.'
         required: true
+      CROWDIN_PROJECT_ID:
+        description: 'You need a crowdin project id to be set.'
+        required: true
+      CROWDIN_PERSONAL_TOKEN:
+        description: 'You need a crowdin token to be set.'
+        required: true
 
 jobs:
   crowdin-action:
