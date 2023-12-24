@@ -14,7 +14,7 @@ on:
 
 jobs:
   prepare:
-    uses: yeager-eren/rango-client/.github/workflows/prepare.yaml@main
+    uses: yeager-eren/rango-client/.github/workflows/prepare.yaml@next
   crowdin-action:
     runs-on: ubuntu-latest
     steps:
