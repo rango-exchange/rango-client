@@ -10,11 +10,9 @@ jobs:
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0
-          
+
       - name: Prepare
         uses: ./.github/actions/prepare
-        with:
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }} 
 
       - name: Checking Conventional Commits
         run: node ./scripts/check-conventional-commits/command.mjs

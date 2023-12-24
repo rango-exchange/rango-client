@@ -12,8 +12,6 @@ jobs:
 
       - name: Prepare
         uses: ./.github/actions/prepare
-        with:
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }} 
 
       - name: Deploy packages
         run: yarn run deploy
