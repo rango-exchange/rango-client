@@ -1,4 +1,4 @@
-import { Button, TextField } from '../../components';
+import { Button, TextField, Typography } from '../../components';
 import { css, darkTheme, styled } from '../../theme';
 
 export const textStyles = css();
@@ -29,12 +29,12 @@ export const Container = styled('div', {
 });
 
 export const InputAmount = styled(TextField, {
+  width: '100%',
   padding: '0',
   fontSize: '$18',
   lineHeight: '$26',
   fontWeight: '$medium',
   textAlign: 'right',
-  width: 140,
   '&:disabled': {
     cursor: 'unset',
   },
@@ -48,7 +48,8 @@ export const MaxButton = styled(Button, {
 });
 
 export const ValueTypography = styled('div', {
-  width: 140,
+  display: 'flex',
+  width: '100%',
   textAlign: 'right',
   whiteSpace: 'nowrap',
   overflow: 'hidden',
@@ -92,6 +93,8 @@ export const balanceStyles = css({
 });
 
 export const amountStyles = css({
+  width: '45%',
+  maxWidth: '170px',
   display: 'flex',
   flexDirection: 'column',
   justifyContent: 'center',
@@ -101,4 +104,12 @@ export const amountStyles = css({
 
 export const labelContainerStyles = css({
   paddingBottom: '$5',
+});
+
+export const UsdPrice = styled(Typography, {
+  width: '100%',
+  textAlign: 'right',
+  whiteSpace: 'nowrap',
+  overflow: 'hidden',
+  textOverflow: 'ellipsis',
 });

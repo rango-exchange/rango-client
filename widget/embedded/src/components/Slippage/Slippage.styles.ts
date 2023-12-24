@@ -1,14 +1,19 @@
-import { styled } from '@rango-dev/ui';
+import { Chip, styled, TextField } from '@rango-dev/ui';
 
 export const BaseContainer = styled('div', {
   paddingTop: '$5',
-  paddingBottom: '30px',
+  padding: '$10 $5',
 });
 
 export const SlippageChipsContainer = styled('div', {
   display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'start',
+  flexWrap: 'wrap',
+  gap: '$10',
+  [`& ${TextField}`]: {
+    flex: '1 1 0',
+    maxWidth: '127px',
+    minWidth: '85px',
+  },
 });
 
 export const Head = styled('div', {
@@ -19,6 +24,11 @@ export const Head = styled('div', {
 });
 
 export const SlippageTooltipContainer = styled('div', {
-  maxWidth: '300px',
+  maxWidth: '280px',
   padding: '$10',
+});
+
+export const SlippageChip = styled(Chip, {
+  width: '61px',
+  flexShrink: 0,
 });

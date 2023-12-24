@@ -25,7 +25,7 @@ import { useWalletsStore } from '../store/wallets';
 import { numberToString } from '../utils/numbers';
 import { getPriceImpact, getPriceImpactLevel } from '../utils/quote';
 import { canComputePriceImpact, getSwapButtonState } from '../utils/swap';
-import { formatBalance } from '../utils/wallets';
+import { formatBalance, isFetchingBalance } from '../utils/wallets';
 
 const Container = styled('div', {
   display: 'flex',
@@ -75,6 +75,9 @@ export function Home() {
   const setCurrentPage = useUiStore.use.setCurrentPage();
   const [showQuoteWarningModal, setShowQuoteWarningModal] = useState(false);
   const layoutRef = useRef<HTMLDivElement>(null);
+  const fetchingBalance =
+    !!fromBlockchain &&
+    isFetchingBalance(connectedWallets, fromBlockchain.name);
 
   const needsToWarnEthOnPath = false;
 
@@ -195,6 +198,7 @@ export function Home() {
               }}
               disabled={fetchMetaStatus === 'failed'}
               loading={fetchMetaStatus === 'loading'}
+              loadingBalance={fetchingBalance}
               onSelectMaxBalance={() => {
                 if (fromTokenFormattedBalance !== '0') {
                   setInputAmount(tokenBalanceReal.split(',').join(''));

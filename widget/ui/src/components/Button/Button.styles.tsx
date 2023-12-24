@@ -524,6 +524,7 @@ export const ButtonBase = styled('button', {
 });
 
 export const Content = styled('span', {
+  flexGrow: 1,
   display: 'inline-block',
   variants: {
     pl: {

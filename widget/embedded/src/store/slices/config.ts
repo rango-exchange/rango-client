@@ -5,6 +5,7 @@ export const DEFAULT_CONFIG: WidgetConfig = {
   apiKey: '',
   multiWallets: true,
   enableNewLiquiditySources: true,
+  customDestination: true,
 };
 
 export type ConfigSlice = {

@@ -5,7 +5,6 @@ import { darkTheme, styled } from '../../theme';
 export const StyledSwitchRoot = styled(RadixSwitch.Root, {
   boxSizing: 'border-box',
   boxShadow: 'none',
-  borderStyle: 'solid',
   width: '24px',
   height: '16px',
   $$color: '$colors$neutral600',
@@ -13,9 +12,8 @@ export const StyledSwitchRoot = styled(RadixSwitch.Root, {
     $$color: '$colors$neutral700',
   },
   backgroundColor: '$$color',
-  borderColor: '$$color',
+  border: 'none',
   borderRadius: '99999px',
-  position: 'relative',
   padding: '0',
   cursor: 'pointer',
   transition: 'all 0.35s',
@@ -32,9 +30,9 @@ export const StyledSwitchRoot = styled(RadixSwitch.Root, {
 });
 
 export const StyledSwitchThumb = styled(RadixSwitch.Thumb, {
-  position: 'absolute',
-  top: '0',
   boxSizing: 'border-box',
+  position: 'relative',
+  left: '$2',
   display: 'block',
   width: '12px',
   height: '12px',

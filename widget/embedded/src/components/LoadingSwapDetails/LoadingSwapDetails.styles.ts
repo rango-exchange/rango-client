@@ -3,7 +3,7 @@ import { css, styled } from '@rango-dev/ui';
 export const Container = styled('div', {
   width: '100%',
   height: '100%',
-  padding: '$0 $20',
+  padding: '$10 $20',
 });
 
 export const StepContainer = styled('div', {
@@ -11,6 +11,7 @@ export const StepContainer = styled('div', {
   borderRadius: '$xm',
   padding: '$10 $15',
 });
+
 export const StepSeparator = styled('div', {
   width: '0px',
   height: '$20',

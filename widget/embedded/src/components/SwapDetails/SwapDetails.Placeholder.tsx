@@ -24,7 +24,6 @@ import {
 
 export function SwapDetailsPlaceholder(props: SwapDetailsPlaceholderPropTypes) {
   const { requestId, showSkeleton } = props;
-
   return (
     <Layout
       noPadding

@@ -5,12 +5,13 @@ import React from 'react';
 import { SkeletonContainer } from './Skeleton.styles';
 
 export function Skeleton(props: PropTypes) {
+  const { width = '100%' } = props;
   const customCss =
     props.variant !== 'text'
       ? {
-          width: props.width,
+          width,
           height: props.height,
         }
-      : { width: props.width };
+      : { width };
   return <SkeletonContainer css={customCss} {...props} />;
 }

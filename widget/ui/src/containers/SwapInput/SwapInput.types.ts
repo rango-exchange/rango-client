@@ -25,6 +25,7 @@ export type BaseProps = {
 type FromProps = {
   mode: 'From';
   balance?: string;
+  loadingBalance: boolean;
   onSelectMaxBalance: () => void;
   onInputChange: (inputAmount: string) => void;
 };
