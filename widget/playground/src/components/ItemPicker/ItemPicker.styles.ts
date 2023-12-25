@@ -33,6 +33,7 @@ export const InputContainer = styled('div', {
 export const Container = styled('div', {
   display: 'flex',
   flexDirection: 'column',
+  width: '100%',
 });
 
 export const Title = styled('div', {
