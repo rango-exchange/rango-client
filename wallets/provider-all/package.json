@@ -29,6 +29,7 @@
     "@rango-dev/provider-coin98": "^0.26.0",
     "@rango-dev/provider-coinbase": "^0.25.0",
     "@rango-dev/provider-cosmostation": "^0.25.0",
+    "@rango-dev/provider-default": "^0.22.0",
     "@rango-dev/provider-enkrypt": "^0.25.0",
     "@rango-dev/provider-exodus": "^0.25.0",
     "@rango-dev/provider-frontier": "^0.25.0",
