@@ -19,39 +19,53 @@ export const groupSwapsByDate: GroupBy = (swaps) => {
       },
     ],
     [
+      'week',
+      {
+        title: 'This week',
+        swaps: [],
+      },
+    ],
+    [
       'month',
       {
-        title: 'Last month',
+        title: 'This month',
         swaps: [],
       },
     ],
     [
       'year',
       {
-        title: 'Last year',
-        swaps: [],
-      },
-    ],
-    [
-      'history',
-      {
-        title: 'History',
+        title: 'This year',
         swaps: [],
       },
     ],
   ]);
 
+  function addYearsToOutput(key: string, swap: PendingSwap) {
+    if (!output.has(key)) {
+      output.set(key, {
+        title: key,
+        swaps: [],
+      });
+    }
+    output.get(key)?.swaps.push(swap);
+  }
+
   const now = dayjs();
   swaps.forEach((swap) => {
-    const swapDate = dayjs(Number(swap.creationTime));
+    const time = Number(swap.creationTime);
+    const swapDate = dayjs(time);
     if (now.isSame(swapDate, 'day')) {
       output.get('today')?.swaps.push(swap);
+    } else if (now.isSame(swapDate, 'week')) {
+      output.get('week')?.swaps.push(swap);
     } else if (now.isSame(swapDate, 'month')) {
       output.get('month')?.swaps.push(swap);
     } else if (now.isSame(swapDate, 'year')) {
       output.get('year')?.swaps.push(swap);
     } else {
-      output.get('history')?.swaps.push(swap);
+      const year = new Date(time).getFullYear().toString();
+      addYearsToOutput(year, swap);
     }
   });
 

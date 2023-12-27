@@ -15,3 +15,5 @@ export const PERCENTAGE_CHANGE_MAX_DECIMALS = 2;
 
 export const BALANCE_MIN_DECIMALS = 8;
 export const BALANCE_MAX_DECIMALS = 8;
+
+export const TOOLTIP_DECIMALS = 12;

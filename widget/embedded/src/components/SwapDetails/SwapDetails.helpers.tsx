@@ -20,7 +20,10 @@ export const getSteps = ({ swap, blockchains, ...args }: GetStep): Step[] => {
   const hasAlreadyProceededToSign = swap.hasAlreadyProceededToSign !== false;
   return swap.steps.map((step, index) => {
     const amountToConvert =
-      index === 0 ? swap.inputAmount : swap.steps[index - 1].outputAmount;
+      index === 0
+        ? swap.inputAmount
+        : swap.steps[index - 1].outputAmount ||
+          swap.steps[index - 1].expectedOutputAmountHumanReadable;
     return {
       from: {
         token: { displayName: step.fromSymbol, image: step.fromLogo ?? '' },
@@ -35,6 +38,7 @@ export const getSteps = ({ swap, blockchains, ...args }: GetStep): Step[] => {
             TOKEN_AMOUNT_MIN_DECIMALS,
             TOKEN_AMOUNT_MAX_DECIMALS
           ),
+          realValue: amountToConvert,
         },
       },
       to: {
@@ -50,6 +54,8 @@ export const getSteps = ({ swap, blockchains, ...args }: GetStep): Step[] => {
             TOKEN_AMOUNT_MIN_DECIMALS,
             TOKEN_AMOUNT_MAX_DECIMALS
           ),
+          realValue:
+            step.outputAmount || step.expectedOutputAmountHumanReadable,
         },
       },
       swapper: { displayName: step.swapperId, image: step.swapperLogo ?? '' },

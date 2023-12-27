@@ -7,6 +7,7 @@ import { ChainToken } from '../../components/ChainToken/ChainToken';
 import { NextIcon } from '../../icons';
 import { Image } from '../common';
 import { Divider } from '../Divider';
+import { Tooltip } from '../Tooltip';
 import { Typography } from '../Typography';
 
 import {
@@ -23,10 +24,17 @@ import {
 
 const StepDetailsComponent = forwardRef<HTMLDivElement, StepDetailsProps>(
   (props, parentRef) => {
-    const { step, hasSeparator, type, state, isFocused, tabIndex } = props;
+    const {
+      step,
+      hasSeparator,
+      type,
+      state,
+      isFocused,
+      tabIndex,
+      tooltipContainer,
+    } = props;
     const containerRef = useRef<HTMLDivElement>(null);
     const isCompleted = state === 'completed' || state === 'error';
-
     useEffect(() => {
       const parentElement = (parentRef as React.RefObject<HTMLDivElement>)
         ?.current;
@@ -73,12 +81,16 @@ const StepDetailsComponent = forwardRef<HTMLDivElement, StepDetailsProps>(
                 tokenImage={step.from.token.image}
                 size="small"
               />
-              <Typography
-                ml={4}
-                mr={4}
-                size="small"
-                color="$neutral700"
-                variant="body">{`${step.from.price.value} ${step.from.token.displayName}`}</Typography>
+              <Tooltip
+                content={step.from.price.realValue}
+                container={tooltipContainer}>
+                <Typography
+                  ml={4}
+                  mr={4}
+                  size="small"
+                  color="$neutral700"
+                  variant="body">{`${step.from.price.value} ${step.from.token.displayName}`}</Typography>
+              </Tooltip>
               <NextIcon color="gray" />
               <Divider size={4} direction="horizontal" />
               <ChainToken
@@ -86,13 +98,17 @@ const StepDetailsComponent = forwardRef<HTMLDivElement, StepDetailsProps>(
                 tokenImage={step.to.token.image}
                 size="small"
               />
-              <Typography
-                ml={4}
-                size="small"
-                color="$neutral700"
-                variant="body">{`${isCompleted ? '' : '~'}${
-                step.to.price.value
-              } ${step.to.token.displayName}`}</Typography>
+              <Tooltip
+                content={step.to.price.realValue}
+                container={tooltipContainer}>
+                <Typography
+                  ml={4}
+                  size="small"
+                  color="$neutral700"
+                  variant="body">{`${isCompleted ? '' : '~'}${
+                  step.to.price.value
+                } ${step.to.token.displayName}`}</Typography>
+              </Tooltip>
             </div>
             <Alerts pb={hasSeparator && type === 'quote-details'}>
               {step.alerts}

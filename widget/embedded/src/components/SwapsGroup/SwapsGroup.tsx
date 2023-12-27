@@ -4,7 +4,8 @@ import { i18n } from '@lingui/core';
 import { Divider, SwapListItem, Typography } from '@rango-dev/ui';
 import React from 'react';
 
-import { limitDecimalPlaces } from '../../utils/numbers';
+import { getContainer } from '../../utils/common';
+import { formatTooltipNumbers, numberToString } from '../../utils/numbers';
 
 import { Group, groupStyles, SwapList, Time } from './SwapsGroup.styles';
 
@@ -21,7 +22,7 @@ export function SwapsGroup(props: PropTypes) {
         swaps,
       },
       {
-        title: 'Last month',
+        title: 'This month',
         swaps,
       },
     ];
@@ -75,6 +76,7 @@ export function SwapsGroup(props: PropTypes) {
               <SwapList>
                 {group.swaps.map((swap) => {
                   const firstStep = swap.steps[0];
+
                   const lastStep = swap.steps[swap.steps.length - 1];
                   return (
                     <React.Fragment key={swap.requestId}>
@@ -84,6 +86,7 @@ export function SwapsGroup(props: PropTypes) {
                         status={swap.status}
                         onClick={onSwapClick}
                         onlyShowTime={group.title === 'Today'}
+                        tooltipContainer={getContainer()}
                         swapTokenData={{
                           from: {
                             token: {
@@ -93,7 +96,7 @@ export function SwapsGroup(props: PropTypes) {
                             blockchain: {
                               image: firstStep.fromBlockchainLogo || '',
                             },
-                            amount: limitDecimalPlaces(swap.inputAmount),
+                            amount: swap.inputAmount,
                           },
                           to: {
                             token: {
@@ -103,11 +106,14 @@ export function SwapsGroup(props: PropTypes) {
                             blockchain: {
                               image: lastStep.toBlockchainLogo || '',
                             },
-                            amount: limitDecimalPlaces(
-                              lastStep.outputAmount || ''
+                            amount: numberToString(
+                              lastStep.outputAmount ||
+                                lastStep.expectedOutputAmountHumanReadable ||
+                                ''
                             ),
-                            estimatedAmount: limitDecimalPlaces(
-                              lastStep.expectedOutputAmountHumanReadable || ''
+                            realAmount: formatTooltipNumbers(
+                              lastStep.outputAmount ||
+                                lastStep.expectedOutputAmountHumanReadable
                             ),
                           },
                         }}
