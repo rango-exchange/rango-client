@@ -12,6 +12,8 @@ import {
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import { RANGO_SWAP_BOX_ID } from '../../constants';
+
 export function SwapDetailsCompleteModal(props: CompleteModalPropTypes) {
   const {
     open,
@@ -31,7 +33,7 @@ export function SwapDetailsCompleteModal(props: CompleteModalPropTypes) {
     <Modal
       open={open}
       onClose={onClose}
-      container={document.getElementById('swap-box') || document.body}>
+      container={document.getElementById(RANGO_SWAP_BOX_ID) || document.body}>
       {status === 'success' ? (
         <MessageBox type="success" title={i18n.t('Swap Successful')}>
           <TokenAmount

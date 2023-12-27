@@ -7,7 +7,7 @@ export const Container = styled('div', {
   borderRadius: '$primary',
   overflow: 'hidden !important',
   boxShadow: '15px 15px 15px 0px rgba(0, 0, 0, 0.05)',
-  width: '95vw',
+  width: '100vw',
   minWidth: '300px',
   maxWidth: '390px',
   maxHeight: '700px',
@@ -20,10 +20,10 @@ export const Container = styled('div', {
   variants: {
     fixedHeight: {
       true: {
-        height: '95vh',
+        height: '100vh',
       },
       false: {
-        height: 'auto',
+        height: 'auto !important',
       },
     },
   },
