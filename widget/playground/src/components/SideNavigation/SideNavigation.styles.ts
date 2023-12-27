@@ -40,11 +40,6 @@ export const Tab = styled(Flex, {
         },
       },
     },
-    active: {
-      true: {
-        position: 'relative',
-      },
-    },
   },
   '&:hover': {
     backgroundColor: '$neutral200',
@@ -54,15 +49,17 @@ export const Tab = styled(Flex, {
 export const Indicator = styled('div', {
   width: '7px',
   height: '64px',
-  borderRadius: '20px 0 0 20px',
+  borderRadius: '0 20px 20px 0',
   backgroundColor: '$secondary500',
   position: 'absolute',
-  transform: 'rotate(180deg)',
+  transition: 'transform 0.4s ease-in-out',
   left: 0,
+  top: 20,
 });
 
 export const TabsContainer = styled(Flex, {
   flexDirection: 'column',
+  position: 'relative',
   width: '100%',
 });
 
