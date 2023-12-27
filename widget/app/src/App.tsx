@@ -43,10 +43,8 @@ export function App() {
   }
 
   return (
-    <div>
-      <Routes>
-        <Route path="/*" element={<Widget config={configRef.current} />} />
-      </Routes>
-    </div>
+    <Routes>
+      <Route path="/*" element={<Widget config={configRef.current} />} />
+    </Routes>
   );
 }

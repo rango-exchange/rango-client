@@ -18,6 +18,7 @@ import {
 import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import { RANGO_SWAP_BOX_ID } from '../../constants';
 import { getQuoteErrorMessage } from '../../constants/errors';
 import { getQuoteUpdateWarningMessage } from '../../constants/warnings';
 import { useAppStore } from '../../store/AppStore';
@@ -238,7 +239,9 @@ export function ConfirmWalletsModal(props: PropTypes) {
     }
   }, [showCustomDestination]);
 
-  const modalContainer = document.querySelector('#swap-box') as HTMLDivElement;
+  const modalContainer = document.getElementById(
+    RANGO_SWAP_BOX_ID
+  ) as HTMLDivElement;
 
   const navigate = useNavigate();
   return (
