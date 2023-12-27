@@ -24,4 +24,5 @@ export type PropTypes = ButtonElement & {
   prefix?: React.ReactNode;
   suffix?: React.ReactNode;
   fullWidth?: boolean;
+  disableRipple?: boolean;
 };

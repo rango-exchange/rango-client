@@ -1,4 +1,4 @@
-import { Button, Collapsible, styled } from '@rango-dev/ui';
+import { Button, Collapsible, darkTheme, styled } from '@rango-dev/ui';
 
 export const Layout = styled('div', {
   borderRadius: '20px',
@@ -34,15 +34,46 @@ export const Tabs = styled('div', {
   display: 'flex',
   border: '3px solid $neutral100',
   flexDirection: 'row',
+  position: 'relative',
 });
 
 export const Tab = styled(Button, {
   color: '$neutral700',
   backgroundColor: 'transparent',
-  '&:hover': {
-    backgroundColor: '$info100',
-    color: '$secondary500',
+  zIndex: 10,
+  variants: {
+    isActive: {
+      true: {
+        transition: 'color 0.8s linear',
+        $$color: '$colors$background',
+        [`.${darkTheme} &`]: {
+          color: '$colors$foreground',
+        },
+        color: '$$color',
+      },
+      false: {
+        '&:hover': {
+          backgroundColor: '$info100',
+          color: '$secondary500',
+          [`.${darkTheme} &`]: {
+            backgroundColor: 'transparent',
+            color: '$neutral700',
+          },
+        },
+      },
+    },
   },
+});
+
+export const BackdropTab = styled('div', {
+  width: '80px',
+  height: '$28',
+  padding: '$4',
+  backgroundColor: '$secondary500',
+  position: 'absolute',
+  borderRadius: '$md',
+  inset: 0,
+  transition: 'transform 0.5s cubic-bezier(0, 0, 0.86, 1.2)',
 });
 
 export const PresetContent = styled('div', {

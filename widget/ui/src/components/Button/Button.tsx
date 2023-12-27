@@ -16,8 +16,11 @@ function ButtonComponent(props: PropsWithChildren<PropTypes>, ref?: Ref) {
     prefix,
     suffix,
     onClick,
+    disableRipple,
     ...otherProps
   } = props;
+
+  const shouldShowRipple = !disabled && !loading && !disableRipple;
 
   return (
     <ButtonBase
@@ -38,7 +41,7 @@ function ButtonComponent(props: PropsWithChildren<PropTypes>, ref?: Ref) {
           {suffix}
         </>
       )}
-      {!disabled && !loading && <Ripple />}
+      {shouldShowRipple && <Ripple />}
     </ButtonBase>
   );
 }
