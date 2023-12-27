@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/provider-argentx",
-  "version": "0.26.1-next.0",
+  "version": "0.26.1-next.1",
   "license": "MIT",
   "type": "module",
   "source": "./src/index.ts",
@@ -21,7 +21,7 @@
     "lint": "eslint \"**/*.{ts,tsx}\" --ignore-path ../../.eslintignore"
   },
   "dependencies": {
-    "@rango-dev/signer-starknet": "^0.25.0",
+    "@rango-dev/signer-starknet": "^0.25.1-next.0",
     "@rango-dev/wallets-shared": "^0.25.1-next.0",
     "rango-types": "^0.1.57"
   },

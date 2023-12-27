@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/widget-embedded",
-  "version": "0.20.1-next.2",
+  "version": "0.20.1-next.3",
   "license": "MIT",
   "type": "module",
   "source": "./src/index.ts",
@@ -21,7 +21,7 @@
   "dependencies": {
     "@lingui/core": "4.2.1",
     "@lingui/react": "4.2.1",
-    "@rango-dev/provider-all": "^0.25.1-next.0",
+    "@rango-dev/provider-all": "^0.25.1-next.1",
     "@rango-dev/queue-manager-core": "^0.25.0",
     "@rango-dev/queue-manager-rango-preset": "^0.25.1-next.0",
     "@rango-dev/queue-manager-react": "^0.24.0",
