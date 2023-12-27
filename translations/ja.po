@@ -19,6 +19,46 @@ msgstr ""
 "X-Crowdin-File-ID: 20\n"
 
 #. js-lingui-explicit-id
+#: widget/embedded/src/utils/time.ts:6
+msgid "Sunday"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/utils/time.ts:7
+msgid "Monday"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/utils/time.ts:8
+msgid "Tuesday"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/utils/time.ts:9
+msgid "Wednesday"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/utils/time.ts:10
+msgid "Thursday"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/utils/time.ts:11
+msgid "Friday"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/utils/time.ts:12
+msgid "Saturday"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/utils/time.ts:22
+msgid "Today"
+msgstr ""
+
+#. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:37
 #: widget/embedded/src/components/TokenList/TokenList.tsx:135
 #: widget/embedded/src/pages/HistoryPage.tsx:94
@@ -170,7 +210,7 @@ msgstr "ウォレットに接続"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/LoadingSwapDetails/LoadingSwapDetails.tsx:20
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:348
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:365
 msgid "Swaps steps"
 msgstr "ステップを入れ替えます"
 
@@ -190,17 +230,17 @@ msgid "You have no notification"
 msgstr "通知がありません"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/Quote.tsx:198
+#: widget/embedded/src/components/Quote/Quote.tsx:213
 msgid "Slippage Error:"
 msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/Quote.tsx:222
+#: widget/embedded/src/components/Quote/Quote.tsx:237
 msgid "Yours: {amount} {symbol}"
 msgstr "あなたの: {amount} {symbol}"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/Quote.tsx:243
+#: widget/embedded/src/components/Quote/Quote.tsx:258
 msgid "Minimum required slippage is {minRequiredSlippage}"
 msgstr ""
 
@@ -304,19 +344,18 @@ msgstr "この設定はステップごとに適用されます。例えば、1In
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetails/SwapDetails.Placeholder.tsx:31
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:228
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:241
 msgid "Swap and Bridge"
 msgstr "スワップとブリッジ"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetails/SwapDetails.Placeholder.tsx:39
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:268
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:281
 msgid "Request ID"
 msgstr "要求ID"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetails/SwapDetails.Placeholder.tsx:52
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:283
 msgid "Created at"
 msgstr "作成日時"
 
@@ -332,27 +371,27 @@ msgid "Swap with request ID = {requestId} not found."
 msgstr "リクエスト ID = {requestId} でスワップが見つかりません。"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:195
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:208
 msgid "You have received {amount} {token} in {conciseAddress} wallet on {chain} chain."
 msgstr "{amount} チェーンの {token} ウォレットで {conciseAddress} {chain} Anamed@@4 を受け取りました。"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:211
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:224
 msgid "Transaction was not sent."
 msgstr "トランザクションは送信されませんでした。"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:213
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:226
 msgid "{amount} {symbol} on {blockchain} remain in your wallet"
 msgstr "{amount} {symbol} の {blockchain} はウォレットに残ります"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:239
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:252
 msgid "Delete"
 msgstr "削除"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:260
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:273
 msgid "Try again"
 msgstr "もう一度やり直してください"
 
@@ -368,27 +407,27 @@ msgid "Connect"
 msgstr "接続する"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsCompleteModal.tsx:36
+#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsCompleteModal.tsx:40
 msgid "Swap Successful"
 msgstr "交代成功"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsCompleteModal.tsx:61
+#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsCompleteModal.tsx:68
 msgid "Transaction Failed"
 msgstr "トランザクション失敗"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsCompleteModal.tsx:76
+#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsCompleteModal.tsx:83
 msgid "Done"
 msgstr "完了"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsCompleteModal.tsx:89
+#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsCompleteModal.tsx:96
 msgid "Diagnosis"
 msgstr "診断"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsCompleteModal.tsx:97
+#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsCompleteModal.tsx:104
 msgid "See Details"
 msgstr "詳細を見る"
 
@@ -559,7 +598,7 @@ msgstr "不明なUSD価格を確認"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/constants/messages.ts:6
-#: widget/embedded/src/pages/Home.tsx:159
+#: widget/embedded/src/pages/Home.tsx:160
 msgid "Swap"
 msgstr "入れ替え"
 
@@ -619,12 +658,12 @@ msgid "Search Transaction"
 msgstr "トランザクションを検索"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/Home.tsx:173
+#: widget/embedded/src/pages/Home.tsx:174
 msgid "From"
 msgstr "差出人:"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/Home.tsx:212
+#: widget/embedded/src/pages/Home.tsx:217
 msgid "To"
 msgstr "終了日"
 
@@ -772,72 +811,6 @@ msgid "Waiting for changing wallet network"
 msgstr "ウォレットネットワークの変更を待っています"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/time.ts:20
-msgid "year"
-msgstr "年"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/utils/time.ts:21
-msgid "years"
-msgstr "年"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/utils/time.ts:25
-msgid "month"
-msgstr "月"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/utils/time.ts:26
-msgid "months"
-msgstr "ヶ月"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/utils/time.ts:30
-msgid "day"
-msgstr "日"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/utils/time.ts:31
-msgid "days"
-msgstr "日"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/utils/time.ts:35
-msgid "hour"
-msgstr "時"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/utils/time.ts:36
-msgid "hours"
-msgstr "時間"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/utils/time.ts:40
-msgid "minute"
-msgstr "分"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/utils/time.ts:41
-msgid "minutes"
-msgstr "分"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/utils/time.ts:61
-msgid "seconds"
-msgstr "秒"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/utils/time.ts:64
-msgid "second"
-msgstr "秒"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/utils/time.ts:69
-#: widget/embedded/src/utils/time.ts:73
-msgid "{time} ago"
-msgstr "{time} 前"
-
-#. js-lingui-explicit-id
 #: widget/ui/src/components/Alert/LoadingFailedAlert.tsx:13
 msgid " Error connecting server, please reload the app and try again."
 msgstr " サーバー接続中にエラーが発生しました。アプリを再読み込みしてもう一度お試しください。"
@@ -868,7 +841,7 @@ msgid "{blockchainCategory}"
 msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/ui/src/components/StepDetails/StepDetails.tsx:58
+#: widget/ui/src/components/StepDetails/StepDetails.tsx:66
 msgid "Swap on {fromChain} via {swapper}"
 msgstr "{fromChain} で {swapper}を入れ替え"
 
@@ -893,7 +866,7 @@ msgid "In progress"
 msgstr "進行中"
 
 #. js-lingui-explicit-id
-#: widget/ui/src/components/SwapListItem/SwapToken.tsx:118
+#: widget/ui/src/components/SwapListItem/SwapToken.tsx:121
 msgid "Waiting for bridge transaction"
 msgstr "ブリッジトランザクションを待っています"
 
@@ -953,13 +926,13 @@ msgid "SWAP"
 msgstr "SWAP"
 
 #. js-lingui-explicit-id
-#: widget/ui/src/containers/SwapInput/SwapInput.tsx:42
+#: widget/ui/src/containers/SwapInput/SwapInput.tsx:48
 #: widget/ui/src/containers/TokenInfo/TokenInfo.tsx:194
 msgid "Balance"
 msgstr "残高"
 
 #. js-lingui-explicit-id
-#: widget/ui/src/containers/SwapInput/SwapInput.tsx:49
+#: widget/ui/src/containers/SwapInput/SwapInput.tsx:55
 msgid "Max"
 msgstr "最大値"
 
@@ -967,6 +940,72 @@ msgstr "最大値"
 #: widget/ui/src/containers/Warnings/HighSlippageWarning.tsx:22
 msgid " Caution, your slippage is high (={selectedSlippage}). Your trade may be front run."
 msgstr " 注意、あなたの滑りが高いです (={selectedSlippage}). あなたの取引は、前払いされる可能性があります。"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/utils/time.ts:20
+#~ msgid "year"
+#~ msgstr "年"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/utils/time.ts:21
+#~ msgid "years"
+#~ msgstr "年"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/utils/time.ts:25
+#~ msgid "month"
+#~ msgstr "月"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/utils/time.ts:26
+#~ msgid "months"
+#~ msgstr "ヶ月"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/utils/time.ts:30
+#~ msgid "day"
+#~ msgstr "日"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/utils/time.ts:31
+#~ msgid "days"
+#~ msgstr "日"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/utils/time.ts:35
+#~ msgid "hour"
+#~ msgstr "時"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/utils/time.ts:36
+#~ msgid "hours"
+#~ msgstr "時間"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/utils/time.ts:40
+#~ msgid "minute"
+#~ msgstr "分"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/utils/time.ts:41
+#~ msgid "minutes"
+#~ msgstr "分"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/utils/time.ts:61
+#~ msgid "seconds"
+#~ msgstr "秒"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/utils/time.ts:64
+#~ msgid "second"
+#~ msgstr "秒"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/utils/time.ts:69
+#: widget/embedded/src/utils/time.ts:73
+#~ msgid "{time} ago"
+#~ msgstr "{time} 前"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/pages/SettingsPage.tsx:147

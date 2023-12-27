@@ -16,6 +16,7 @@ import {
   Tooltip,
   Typography,
 } from '@rango-dev/ui';
+import BigNumber from 'bignumber.js';
 import React, { useLayoutEffect, useRef, useState } from 'react';
 
 import {
@@ -40,6 +41,7 @@ import {
   getSwapperDisplayName,
 } from '../../utils/meta';
 import {
+  formatTooltipNumbers,
   numberToString,
   secondsToString,
   totalArrivalTime,
@@ -52,6 +54,7 @@ import {
   basicInfoStyles,
   ChainImageContainer,
   Chains,
+  ContainerInfoOutput,
   Content,
   EXPANDABLE_QUOTE_TRANSITION_DURATION,
   FrameIcon,
@@ -162,6 +165,14 @@ export function Quote(props: QuoteProps) {
               USD_VALUE_MIN_DECIMALS,
               USD_VALUE_MAX_DECIMALS
             ),
+            realValue: formatTooltipNumbers(
+              index === 0 ? input.value : swap.fromAmount
+            ),
+            realUsdValue: formatTooltipNumbers(
+              new BigNumber(swap.from.usdPrice ?? 0).multipliedBy(
+                swap.fromAmount
+              )
+            ),
           },
         },
         to: {
@@ -183,6 +194,10 @@ export function Quote(props: QuoteProps) {
               (swap.to.usdPrice ?? 0) * parseFloat(swap.toAmount),
               USD_VALUE_MIN_DECIMALS,
               USD_VALUE_MAX_DECIMALS
+            ),
+            realValue: formatTooltipNumbers(swap.toAmount),
+            realUsdValue: formatTooltipNumbers(
+              new BigNumber(swap.to.usdPrice ?? 0).multipliedBy(swap.toAmount)
             ),
           },
         },
@@ -291,27 +306,49 @@ export function Quote(props: QuoteProps) {
               <FrameIcon>
                 <InfoIcon size={12} color="gray" />
               </FrameIcon>
-              <BasicInfoOutput size="small" variant="body">
-                {`${roundedInput} ${
-                  steps[0].from.token.displayName
-                } = ${roundedOutput} ${
-                  steps[steps.length - 1].to.token.displayName
-                }`}
-              </BasicInfoOutput>
-              <Typography
-                color="$neutral600"
-                ml={2}
-                size="xsmall"
-                variant="body">
-                {`($${roundedOutputUsdValue})`}
-              </Typography>
+              <ContainerInfoOutput>
+                <BasicInfoOutput size="small" variant="body">
+                  {`${roundedInput} ${steps[0].from.token.displayName} = `}
+                </BasicInfoOutput>
+                <Tooltip
+                  content={formatTooltipNumbers(output.value)}
+                  container={tooltipContainer}
+                  open={!output.value ? false : undefined}>
+                  <BasicInfoOutput size="small" variant="body">
+                    &nbsp;
+                    {`${roundedOutput} ${
+                      steps[steps.length - 1].to.token.displayName
+                    }`}
+                  </BasicInfoOutput>
+                </Tooltip>
+              </ContainerInfoOutput>
+              <Tooltip
+                content={formatTooltipNumbers(output.usdValue)}
+                container={tooltipContainer}
+                style={{
+                  display: 'flex',
+                }}>
+                <Typography
+                  color="$neutral600"
+                  ml={2}
+                  size="xsmall"
+                  variant="body">
+                  {`($${roundedOutputUsdValue})`}
+                </Typography>
+              </Tooltip>
             </div>
           )}
           {type === 'list-item' && (
             <TokenAmount
               type="output"
               direction="vertical"
-              price={{ value: roundedOutput, usdValue: roundedOutputUsdValue }}
+              tooltipContainer={tooltipContainer}
+              price={{
+                value: roundedOutput,
+                usdValue: roundedOutputUsdValue,
+                realValue: formatTooltipNumbers(output.value),
+                realUsdValue: formatTooltipNumbers(output.usdValue),
+              }}
               token={{
                 displayName: steps[numberOfSteps - 1].to.token.displayName,
                 image: steps[numberOfSteps - 1].to.token.image,
@@ -402,6 +439,7 @@ export function Quote(props: QuoteProps) {
                     step={step}
                     hasSeparator={index !== steps.length - 1}
                     state={step.state}
+                    tooltipContainer={tooltipContainer}
                   />
                 );
               })}

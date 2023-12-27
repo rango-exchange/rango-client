@@ -1,4 +1,5 @@
 import type * as RadixTooltip from '@radix-ui/react-tooltip';
+import type { CSSProperties } from '@stitches/react';
 import type { ComponentProps, ReactNode } from 'react';
 
 type RadixTooltipContentProps = ComponentProps<typeof RadixTooltip.Content>;
@@ -10,4 +11,5 @@ export interface PropTypes {
   sideOffset?: RadixTooltipContentProps['sideOffset'];
   container?: HTMLElement;
   open?: boolean;
+  style?: CSSProperties;
 }

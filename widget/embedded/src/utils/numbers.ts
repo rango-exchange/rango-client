@@ -4,8 +4,7 @@ import type { BestRouteResponse } from 'rango-sdk';
 
 import { BigNumber } from 'bignumber.js';
 
-export const percentToString = (p: number, fractions = 0): string =>
-  (p * 100).toFixed(fractions);
+import { TOOLTIP_DECIMALS } from '../constants/routing';
 
 export const secondsToString = (s: number): string => {
   const seconds = (s % 60).toString().padStart(2, '0');
@@ -96,56 +95,12 @@ export const numberToString = (
   );
 };
 
-export const convertBigNumberToHex = (
-  value: BigNumber,
-  decimals: number
-): string => {
-  return '0x' + value.shiftedBy(decimals).toString(16);
-};
-
 export const uint8ArrayToHex = (buffer: Uint8Array): string => {
   // buffer is an ArrayBuffer
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
   return [...buffer].map((x) => x.toString(16).padStart(2, '0')).join('');
 };
-
-export function dollarToConciseString(num: number | undefined): string {
-  if (!num) {
-    return '-';
-  }
-  if (num < 1) {
-    return ' < 1$';
-  }
-  if (num < 1000) {
-    return numberToString(new BigNumber(num)) + '$';
-  }
-  if (num < 10_000) {
-    return parseInt((num / 100).toString()) / 10 + 'K';
-  }
-  if (num < 1_000_000) {
-    return parseInt((num / 1000).toString()) + 'K';
-  }
-  if (num < 100_000_000) {
-    return parseInt((num / 100000).toString()) / 10 + 'M';
-  }
-  return parseInt((num / 1000000).toString()) + 'M';
-}
-
-export function removeExtraDecimals(num: string, maxDecimals: number): string {
-  try {
-    if (!num.includes('.')) {
-      return num;
-    }
-    const [b, f] = num.split('.');
-    if (f && f.length > maxDecimals) {
-      return `${b}.${f.substring(0, maxDecimals)}`;
-    }
-    return num;
-  } catch (e) {
-    return num;
-  }
-}
 
 export const totalArrivalTime = (
   data: { estimatedTimeInSeconds: number | null }[] | undefined
@@ -167,16 +122,11 @@ export const isPositiveNumber = (text?: string) =>
   !!text && parseFloat(text) > 0;
 10;
 
-export function limitDecimalPlaces(
-  numberString: string,
-  maxDecimalPlaces = 4
-): string {
-  const number = parseFloat(numberString);
-  if (isNaN(number)) {
-    return numberString;
-  } // Return the original string if it's not a valid number
-
-  const multiplier = Math.pow(10, maxDecimalPlaces);
-  const roundedNumber = Math.round(number * multiplier) / multiplier;
-  return roundedNumber.toString();
+export function formatTooltipNumbers(
+  number: BigNumber | string | number | null | undefined
+) {
+  return numberToString(number, TOOLTIP_DECIMALS, TOOLTIP_DECIMALS).replace(
+    /(?:\.0*|(\.\d+?)0*)$/,
+    '$1'
+  );
 }
