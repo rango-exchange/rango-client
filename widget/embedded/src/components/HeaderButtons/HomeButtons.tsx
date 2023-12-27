@@ -20,13 +20,7 @@ import { HeaderButton } from './HeaderButtons.styles';
 import { UnreadNotificationsBadge } from './UnreadNotificationsBadge';
 
 export function HomeButtons(props: HomeButtonsPropTypes) {
-  const {
-    layoutRef,
-    onClickRefresh,
-    onClickHistory,
-    onClickSettings,
-    onClickNotifications,
-  } = props;
+  const { layoutRef, onClickRefresh, onClickHistory, onClickSettings } = props;
 
   const {
     config: { features },
@@ -50,25 +44,24 @@ export function HomeButtons(props: HomeButtonsPropTypes) {
       </Tooltip>
 
       {!isNotificationsHidden && (
-        <Tooltip
+        <Popover
+          align="center"
+          collisionBoundary={layoutRef}
+          collisionPadding={{ right: 20, left: 20 }}
           container={getContainer()}
-          side="top"
-          content={i18n.t('Notifications')}>
-          <Popover
-            align="center"
-            collisionBoundary={layoutRef}
-            collisionPadding={{ right: 20, left: 20 }}
-            container={getContainer()}
-            content={<NotificationContent />}>
-            <HeaderButton
-              size="small"
-              variant="ghost"
-              onClick={onClickNotifications}>
-              <NotificationsIcon size={18} color="black" />
-              <UnreadNotificationsBadge />
-            </HeaderButton>
-          </Popover>
-        </Tooltip>
+          content={<NotificationContent />}>
+          <div>
+            <Tooltip
+              container={getContainer()}
+              side="top"
+              content={i18n.t('Notifications')}>
+              <HeaderButton size="small" variant="ghost">
+                <NotificationsIcon size={18} color="black" />
+                <UnreadNotificationsBadge />
+              </HeaderButton>
+            </Tooltip>
+          </div>
+        </Popover>
       )}
       <Tooltip
         container={getContainer()}

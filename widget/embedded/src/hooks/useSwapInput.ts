@@ -48,6 +48,7 @@ export function useSwapInput(): UseSwapInput {
     toToken,
     inputAmount,
     inputUsdValue,
+    quote,
     resetQuote,
     setQuote,
   } = useQuoteStore();
@@ -63,9 +64,9 @@ export function useSwapInput(): UseSwapInput {
   const [error, setError] = useState<QuoteError | null>(null);
   const [warning, setWarning] = useState<QuoteWarning | null>(null);
   const userSlippage = customSlippage ?? slippage;
-  const hasTokensValue = !fromToken || !toToken;
+  const tokensValueInvalid = !fromToken || !toToken;
   const shouldSkipRequest =
-    hasTokensValue ||
+    tokensValueInvalid ||
     tokensAreEqual(fromToken, toToken) ||
     !isPositiveNumber(inputAmount);
 
@@ -153,6 +154,9 @@ export function useSwapInput(): UseSwapInput {
       return;
     }
     if (shouldSkipRequest) {
+      if (quote) {
+        resetQuote();
+      }
       return;
     }
     resetQuote();
