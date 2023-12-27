@@ -24,7 +24,9 @@ export interface CompleteModalPropTypes {
   onClose: () => void;
   status: 'success' | 'failed';
   priceValue: string;
+  realValue: string;
   usdValue: string;
+  realUsdValue: string;
   percentageChange: string;
   chain: {
     displayName?: string;

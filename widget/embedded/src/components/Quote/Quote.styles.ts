@@ -243,8 +243,12 @@ export const FrameIcon = styled('div', {
 });
 
 export const BasicInfoOutput = styled(Typography, {
-  width: '100%',
   overflow: 'hidden',
   textOverflow: 'ellipsis',
   letterSpacing: 0.4,
+});
+
+export const ContainerInfoOutput = styled('div', {
+  display: 'flex',
+  flexWrap: 'wrap',
 });
