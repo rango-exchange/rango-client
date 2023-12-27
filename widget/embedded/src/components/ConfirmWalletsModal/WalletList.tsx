@@ -18,6 +18,7 @@ import {
 import React, { useEffect, useState } from 'react';
 
 import { useWallets } from '../..';
+import { RANGO_SWAP_BOX_ID } from '../../constants';
 import { useWalletList } from '../../hooks/useWalletList';
 import {
   TIME_TO_CLOSE_MODAL,
@@ -107,7 +108,9 @@ export function WalletList(props: PropTypes) {
     });
   }, [JSON.stringify(list)]);
 
-  const modalContainer = document.querySelector('#swap-box') as HTMLDivElement;
+  const modalContainer = document.getElementById(
+    RANGO_SWAP_BOX_ID
+  ) as HTMLDivElement;
 
   useEffect(() => {
     let timeout: ReturnType<typeof setTimeout> | null = null;

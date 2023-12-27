@@ -1,11 +1,23 @@
-import { WidgetConfig } from '@rango-dev/widget-embedded';
+import type { WidgetConfig } from '@rango-dev/widget-embedded';
+
 import { commonStyles } from './styles';
 
 // Actual app that will be loaded inside the iframe.
 const WIDGET_URL = 'https://widget.rango.exchange/';
 const DEFAULT_CONTAINER_ID = 'rango-widget-container';
+const RANGO_WIDGET_IFRAME_ID = 'rango-widget-iframe';
 
 export class RangoWidget {
+  public init(configuration?: WidgetConfig, rootId?: string): void {
+    const container = this.getContainer(rootId || DEFAULT_CONTAINER_ID);
+    const widget = this.createWidget(configuration);
+
+    container.appendChild(widget);
+
+    widget.onload = () => {
+      widget.style.display = 'block';
+    };
+  }
   /**
    * Encode configuration object into a string that can be passed as url param.
    */
@@ -14,7 +26,8 @@ export class RangoWidget {
       // Take # out of the url parameters
       if (typeof value === 'string' && value[0] === '#') {
         return value.replace('#', '$');
-      } else return value;
+      }
+      return value;
     });
     return configParams;
   }
@@ -46,27 +59,16 @@ export class RangoWidget {
     const url = `${WIDGET_URL}?config=${configs}`;
 
     const widget = document.createElement('iframe');
+    widget.setAttribute('id', RANGO_WIDGET_IFRAME_ID);
     widget.src = url;
+    widget.style.backgroundColor = 'transparent';
+    widget.style.width = commonStyles.width;
+    widget.style.height = commonStyles.height;
     widget.style.maxWidth = commonStyles.maxWidth;
-    widget.style.minWidth = commonStyles.minWidth;
-    widget.width = commonStyles.width;
-    widget.height = commonStyles.height;
+    widget.style.maxHeight = commonStyles.maxHeight;
     widget.style.overflow = commonStyles.overflow;
     widget.style.border = 'none';
-    widget.style.display = 'none';
 
     return widget;
-  }
-
-  public init(configuration?: WidgetConfig, rootId?: string): void {
-    const container = this.getContainer(rootId || DEFAULT_CONTAINER_ID);
-    const widget = this.createWidget(configuration);
-
-    container.style.width = '100%';
-    container.appendChild(widget);
-
-    widget.onload = () => {
-      widget.style.display = 'block';
-    };
   }
 }

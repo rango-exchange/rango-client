@@ -1,7 +1,7 @@
 export const commonStyles = {
-  maxWidth: '512px',
-  height: '720px',
-  width: '100%',
-  minWidth: '415px',
+  width: '100vw',
+  maxWidth: '390px',
+  height: '100vh',
+  maxHeight: '700px',
   overflow: 'hidden',
 };
