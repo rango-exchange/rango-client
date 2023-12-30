@@ -19,8 +19,15 @@ export const SelectButton = styled('div', {
 });
 
 export const SelectDeselectText = styled(Typography, {
-  '&:hover': {
-    color: '$secondary500',
+  variants: {
+    disabled: {
+      true: {},
+      false: {
+        '&:hover': {
+          color: '$secondary500',
+        },
+      },
+    },
   },
 });
 export const CheckList = styled('div', {

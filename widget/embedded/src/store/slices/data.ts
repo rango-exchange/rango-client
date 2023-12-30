@@ -6,6 +6,7 @@ import type { StateCreator } from 'zustand';
 
 import { httpService as sdk } from '../../services/httpService';
 import { containsText } from '../../utils/common';
+import { isTokenExcludedInConfig } from '../../utils/configs';
 import { sortLiquiditySourcesByGroupTitle } from '../../utils/settings';
 import { tokensAreEqual } from '../../utils/wallets';
 
@@ -81,21 +82,18 @@ export const createDataSlice: StateCreator<
     }
 
     const config = get().config;
-    const supportedTokensFromConfig =
+    const supportedTokensConfig =
       (options.type === 'source' ? config.from?.tokens : config.to?.tokens) ??
-      [];
+      {};
     const blockchains = get().blockchains({
       type: options.type,
     });
 
     const list = tokensFromState
       .filter((token) => {
-        // If there is a list of tokens in config, we only keep them.
         if (
-          supportedTokensFromConfig.length > 0 &&
-          !supportedTokensFromConfig.some((asset) => {
-            return tokensAreEqual(asset, token);
-          })
+          supportedTokensConfig &&
+          isTokenExcludedInConfig(token, supportedTokensConfig)
         ) {
           return false;
         }

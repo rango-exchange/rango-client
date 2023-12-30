@@ -37,6 +37,7 @@ export function TokensList(props: TokensListProps) {
     showSelectedTokens,
     setShowSelectedTokens,
     isAllSelected,
+    isExcluded,
   } = props;
   const [searchValue, setSearchValue] = useState('');
   const [virtualList, setVirtualList] = useState(list);
@@ -123,13 +124,14 @@ export function TokensList(props: TokensListProps) {
               <SelectDeselectText
                 variant="label"
                 size="medium"
+                disabled={false}
                 color="neutral900">
                 {isAllSelected ? 'Deselect all' : 'Select all'}
               </SelectDeselectText>
             </SelectButton>
             <div className="select_tokens">
               <Typography size="medium" variant="label" color="neutral900">
-                Selected Tokens
+                {isExcluded ? 'Excluded' : 'Included'} Tokens
               </Typography>
               <Divider direction="horizontal" size={4} />
               <Switch
@@ -165,9 +167,11 @@ export function TokensList(props: TokensListProps) {
                       onClick={() => toggleTokenSelection(virtualList[index])}
                       end={
                         <>
-                          {virtualList[index].checked && (
+                          {((virtualList[index].checked && !isExcluded) ||
+                            (!virtualList[index].checked && isExcluded)) && (
                             <>
                               <IconButton
+                                style={{ padding: 0 }}
                                 variant="ghost"
                                 onClick={(e) => {
                                   e.stopPropagation();
