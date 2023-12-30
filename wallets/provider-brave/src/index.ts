@@ -96,7 +96,7 @@ export const subscribe: Subscribe = ({
   const evm_instance = chooseInstance(instance, meta, Networks.ETHEREUM);
   const sol_instance = chooseInstance(instance, meta, Networks.SOLANA);
 
-  evm_instance?.on('accountsChanged', (addresses: string[]) => {
+  const handleEvmAccountsChanged = (addresses: string[]) => {
     const eth_chainId = meta
       .filter(isEvmBlockchain)
       .find((blockchain) => blockchain.name === Networks.ETHEREUM)?.chainId;
@@ -106,20 +106,34 @@ export const subscribe: Subscribe = ({
       }
       updateAccounts(addresses);
     }
-  });
+  };
 
-  evm_instance?.on('chainChanged', (chainId: string) => {
+  const handleEvmChainChanged = (chainId: string) => {
     updateChainId(chainId);
-  });
+  };
 
-  sol_instance?.on('accountChanged', async () => {
+  const handleSolanaAccountsChanged = async () => {
     if (state.network != Networks.SOLANA) {
       updateChainId(meta.filter(isSolanaBlockchain)[0].chainId);
     }
     const response = await sol_instance.connect();
     const account: string = response.publicKey.toString();
     updateAccounts([account]);
-  });
+  };
+
+  evm_instance?.on('accountsChanged', handleEvmAccountsChanged);
+
+  evm_instance?.on('chainChanged', handleEvmChainChanged);
+
+  sol_instance?.on('accountChanged', handleSolanaAccountsChanged);
+
+  return () => {
+    evm_instance?.off('accountsChanged', handleEvmAccountsChanged);
+
+    evm_instance?.off('chainChanged', handleEvmChainChanged);
+
+    sol_instance?.off('accountChanged', handleSolanaAccountsChanged);
+  };
 };
 
 export const switchNetwork: SwitchNetwork = switchNetworkForEvm;
