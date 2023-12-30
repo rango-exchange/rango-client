@@ -1,8 +1,0 @@
-project_id_env: REACT_APP_CROWDIN_PROJECT_ID # Your Crowdin project ID
-api_token_env: REACT_APP_CROWDIN_API_KEY
-
-preserve_hierarchy: true
-
-files: # Paths to the source and translation files
-  - source:  /translations/en.po
-    translation: /translations/%two_letters_code%.po	
