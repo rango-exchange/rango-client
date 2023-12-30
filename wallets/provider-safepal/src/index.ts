@@ -47,6 +47,7 @@ export const connect: Connect = async ({ instance, meta }) => {
 };
 
 export const subscribe: Subscribe = (options) => {
+  let cleanup: ReturnType<Subscribe>;
   const ethInstance = chooseInstance(
     options.instance,
     options.meta,
@@ -54,8 +55,14 @@ export const subscribe: Subscribe = (options) => {
   );
 
   if (ethInstance) {
-    subscribeToEvm({ ...options, instance: ethInstance });
+    cleanup = subscribeToEvm({ ...options, instance: ethInstance });
   }
+
+  return () => {
+    if (cleanup) {
+      cleanup();
+    }
+  };
 };
 
 export const switchNetwork: SwitchNetwork = switchNetworkForEvm;

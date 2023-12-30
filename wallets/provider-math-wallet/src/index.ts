@@ -1,28 +1,28 @@
-import {
-  Networks,
-  WalletTypes,
+import type {
+  CanEagerConnect,
   CanSwitchNetwork,
   Connect,
   ProviderConnectResult,
   Subscribe,
+  WalletInfo,
+} from '@rango-dev/wallets-shared';
+import type { BlockchainMeta, SignerFactory } from 'rango-types';
+
+import {
+  canEagerlyConnectToEvm,
   chooseInstance,
   getEvmAccounts,
+  Networks,
   subscribeToEvm,
-  WalletInfo,
-  CanEagerConnect,
-  canEagerlyConnectToEvm,
+  WalletTypes,
 } from '@rango-dev/wallets-shared';
+import { evmBlockchains, solanaBlockchain } from 'rango-types';
+
 import {
   getNonEvmAccounts,
   mathWallet as mathWallet_instance,
 } from './helpers';
 import signer from './signer';
-import {
-  SignerFactory,
-  evmBlockchains,
-  solanaBlockchain,
-  BlockchainMeta,
-} from 'rango-types';
 
 const WALLET = WalletTypes.MATH;
 
@@ -49,6 +49,7 @@ export const connect: Connect = async ({ instance, meta }) => {
 };
 
 export const subscribe: Subscribe = (options) => {
+  let cleanup: ReturnType<Subscribe>;
   const ethInstance = chooseInstance(
     options.instance,
     options.meta,
@@ -56,19 +57,26 @@ export const subscribe: Subscribe = (options) => {
   );
 
   if (ethInstance) {
-    subscribeToEvm({ ...options, instance: ethInstance });
+    cleanup = subscribeToEvm({ ...options, instance: ethInstance });
   }
+
+  return () => {
+    if (cleanup) {
+      cleanup();
+    }
+  };
 };
 
 export const canSwitchNetworkTo: CanSwitchNetwork = () => false;
 
 export const getSigners: (provider: any) => SignerFactory = signer;
 
-export const canEagerConnect: CanEagerConnect = ({ instance, meta }) => {
+export const canEagerConnect: CanEagerConnect = async ({ instance, meta }) => {
   const evm_instance = chooseInstance(instance, meta, Networks.ETHEREUM);
   if (evm_instance) {
     return canEagerlyConnectToEvm({ instance: evm_instance, meta });
-  } else return Promise.resolve(false);
+  }
+  return Promise.resolve(false);
 };
 export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
   allBlockChains

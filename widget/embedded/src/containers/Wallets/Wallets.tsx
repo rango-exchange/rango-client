@@ -3,6 +3,7 @@ import type {
   PropTypes,
   WidgetContextInterface,
 } from './Wallets.types';
+import type { Wallet } from '../../types/wallets';
 import type { ProvidersOptions } from '../../utils/providers';
 import type { EventHandler } from '@rango-dev/wallets-react';
 import type { Network } from '@rango-dev/wallets-shared';
@@ -10,7 +11,7 @@ import type { PropsWithChildren } from 'react';
 
 import { Events, Provider } from '@rango-dev/wallets-react';
 import { isEvmBlockchain } from 'rango-sdk';
-import React, { createContext, useEffect, useRef } from 'react';
+import React, { createContext, useEffect, useRef, useState } from 'react';
 
 import { useSyncStoresWithConfig } from '../../hooks/useSyncStoresWithConfig';
 import { useWalletProviders } from '../../hooks/useWalletProviders';
@@ -34,6 +35,7 @@ function Main(props: PropsWithChildren<PropTypes>) {
   const walletOptions: ProvidersOptions = {
     walletConnectProjectId: props.config?.walletConnectProjectId,
   };
+  const [accounts, setAccounts] = useState<Wallet[]>([]);
   const { providers } = useWalletProviders(props.config.wallets, walletOptions);
   const { connectWallet, disconnectWallet } = useWalletsStore();
   const onConnectWalletHandler = useRef<OnConnectHandler>();
@@ -66,7 +68,7 @@ function Main(props: PropsWithChildren<PropTypes>) {
           supportedChainNames,
           meta.isContractWallet
         );
-        connectWallet(data, tokens);
+        setAccounts(data);
       } else {
         disconnectWallet(type);
       }
@@ -99,6 +101,13 @@ function Main(props: PropsWithChildren<PropTypes>) {
       props.onUpdateState(type, event, value, state, meta);
     }
   };
+
+  useEffect(() => {
+    if (accounts.length) {
+      connectWallet(accounts, tokens);
+    }
+  }, [accounts, tokens]);
+
   return (
     <WidgetContext.Provider
       // eslint-disable-next-line react/jsx-no-constructed-context-values

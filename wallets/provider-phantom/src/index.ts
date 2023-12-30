@@ -27,7 +27,7 @@ export const getInstance = phantom_instance;
 export const connect: Connect = getSolanaAccounts;
 
 export const subscribe: Subscribe = ({ instance, updateAccounts, connect }) => {
-  instance?.on('accountChanged', async (publicKey: string) => {
+  const handleAccountsChanged = async (publicKey: string) => {
     const network = Networks.SOLANA;
     if (publicKey) {
       const account = publicKey.toString();
@@ -35,7 +35,12 @@ export const subscribe: Subscribe = ({ instance, updateAccounts, connect }) => {
     } else {
       connect(network);
     }
-  });
+  };
+  instance?.on('accountChanged', handleAccountsChanged);
+
+  return () => {
+    instance?.off('accountChanged', handleAccountsChanged);
+  };
 };
 
 export const canSwitchNetworkTo: CanSwitchNetwork = () => false;
