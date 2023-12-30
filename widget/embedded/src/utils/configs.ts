@@ -1,9 +1,20 @@
+import type { Tokens } from '../types';
+import type { Asset, BlockchainMeta, Token } from 'rango-sdk';
+
 import { RANGO_PUBLIC_API_KEY } from '../constants';
+
+import { tokensAreEqual } from './wallets';
 
 export interface Configs {
   API_KEY: string;
   BASE_URL?: string;
 }
+
+type TokensConfig =
+  | Asset[]
+  | {
+      [blockchain: string]: Tokens;
+    };
 
 let configs: Configs = {
   API_KEY: RANGO_PUBLIC_API_KEY,
@@ -38,3 +49,33 @@ export const DEFAULT_SECONDARY_RADIUS = 25;
 export const DEFAULT_FONT_FAMILY = 'Roboto';
 
 export const THEME_CLASS_NAME_PREFIX = `theme-widget`;
+
+export const isTokenExcludedInConfig = (
+  token: Token | null,
+  tokensConfig?: TokensConfig
+) => {
+  let result = false;
+  if (tokensConfig && token) {
+    if (Array.isArray(tokensConfig)) {
+      result = !tokensConfig.some((asset) => tokensAreEqual(asset, token));
+    } else if (!Array.isArray(tokensConfig) && tokensConfig[token.blockchain]) {
+      result = tokensConfig[token.blockchain].tokens.some((asset) =>
+        tokensAreEqual(asset, token)
+      );
+      const isExcluded = tokensConfig[token.blockchain].isExcluded;
+      return (!isExcluded && !result) || (isExcluded && result);
+    }
+  }
+  return result;
+};
+
+export const isBlockchainExcludedInConfig = (
+  blockchain: BlockchainMeta | null,
+  blockchainsConfig?: string[]
+) => {
+  return (
+    blockchain &&
+    blockchainsConfig &&
+    !blockchainsConfig.includes(blockchain.name)
+  );
+};
