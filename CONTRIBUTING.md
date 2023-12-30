@@ -84,12 +84,32 @@ First we need to extract the message from our source code using `yarn i18n:extra
 1. Add to `locales: ['en']` in `lingui.config.ts`
 2. Import and add to `messages` in `widget/ui/src/components/I18nManager/I18nManager.tsx`
 
+
 ## Crowdin
 
-Crowdin CLI is command-line tool for management of your localization projects on Crowdin. According to https://crowdin.github.io/crowdin-cli/installation you can install crowdin in os or install globally with command `npm i -g @crowdin/cli`. With Crowdin CLI, you can upload source files by using `yarn i18n:push` and download translations by using `i18n:pull` for keep your localized content up-to-date.
-The language code standard used is ISO 639-1. For more details and a list of codes, please refer to the https://www.loc.gov/standards/iso639-2/php/code_list.php .
+Our project uses Crowdin for managing translations. You need access to two secret keys:
 
-In the `crowdin.yml` file, you will find the `project_id` and `api_token` values used for synchronizing translations with Crowdin. These values are read from the environment variables `REACT_APP_CROWDIN_PROJECT_ID` and `REACT_APP_CROWDIN_API_KEY` defined in the `.env` file.
+- `CROWDIN_PROJECT_ID`: This secret key represents the project ID.
+- `CROWDIN_PERSONAL_TOKEN`: Use this secret key for your Crowdin account.
+
+
+ **Source and Translation Files:**
+
+    - The source file is located at: `translations/en.po`
+    - Translation files are located at: `translations/%two_letters_code%.po`
+    
+ **Workflow Execution:**
+
+    - After each pull request merge into the `main` or `next` branch, the workflow is triggered.
+    - The command `i18n:extract` is executed, capturing all new changes and uploading them to Crowdin.
+    - The workflow then interacts with Crowdin, pushing new source content and pulling updated translations.
+    - A pull request titled 'New Crowdin translations' is automatically created, incorporating the latest changes.
+    - If the Crowdin pull request is successful, an automatic merge to the base branch is performed.
+
+The language code standard used is ISO 639-1. For more details and a list of codes, please refer to the https://www.loc.gov/standards/iso639-2/php/code_list.php.
+
+Additionally, there is the option to manually trigger the crowdin workflow if needed.
+
 
 ## Technical Notes
 
