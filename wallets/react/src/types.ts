@@ -86,6 +86,9 @@ export type Disconnect = (options: {
   instance: any;
   destroyInstance: () => void;
 }) => Promise<void>;
+
+type CleanupSubscribe = () => void;
+
 export type Subscribe = (options: {
   instance: any;
   state: WalletState;
@@ -94,7 +97,7 @@ export type Subscribe = (options: {
   updateAccounts: (accounts: string[], chainId?: string) => void;
   connect: (network?: Network) => void;
   disconnect: () => void;
-}) => void;
+}) => CleanupSubscribe | void;
 
 export type SwitchNetwork = (options: {
   instance: any;

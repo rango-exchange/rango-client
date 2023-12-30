@@ -35,10 +35,14 @@ export const connect: Connect = async ({ instance, network, meta }) => {
 };
 
 export const subscribe: Subscribe = ({ connect, disconnect }) => {
-  window.addEventListener('keplr_keystorechange', () => {
+  const handleAccountsChanged = () => {
     disconnect();
     connect();
-  });
+  };
+  window.addEventListener('keplr_keystorechange', handleAccountsChanged);
+  return () => {
+    window.removeEventListener('keplr_keystorechange', handleAccountsChanged);
+  };
 };
 
 export const suggest: Suggest = suggestCosmosChain;

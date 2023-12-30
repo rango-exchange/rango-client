@@ -40,6 +40,7 @@ class Wallet<InstanceType = any> {
   private state: State;
   private options: Options;
   private info: EventInfo;
+  private cleanupSubscribe?: (() => void) | void;
 
   constructor(options: Options, actions: WalletActions) {
     this.actions = actions;
@@ -295,7 +296,7 @@ class Wallet<InstanceType = any> {
   setProvider(value: any) {
     this.provider = value;
     if (!!value && !!this.actions.subscribe) {
-      this.actions.subscribe({
+      const cleanup = this.actions.subscribe({
         instance: value,
         state: this.state,
         meta: this.info.supportedBlockchains,
@@ -320,6 +321,9 @@ class Wallet<InstanceType = any> {
         },
         updateChainId: this.updateChainId.bind(this),
       });
+      this.cleanupSubscribe = cleanup;
+    } else if (!value && this.cleanupSubscribe) {
+      this.cleanupSubscribe();
     }
   }
 
