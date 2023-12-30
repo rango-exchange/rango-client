@@ -25,15 +25,15 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 0      
+          fetch-depth: 0
           token: ${{ secrets.PAT }}
-          
+
       - name: Prepare
         uses: ./.github/actions/prepare
 
       - name: Extract new source
         run: yarn run i18n:extract
-          
+
       - name: Crowdin push & pull translations
         uses: crowdin/github-action@v1
         id: crowdin-download
@@ -41,25 +41,22 @@ jobs:
           upload_sources: true
           upload_translations: false
           download_translations: true
-          source: translations/en.po                     
+          source: translations/en.po
           translation: translations/%two_letters_code%.po
-          project_id: ${{ secrets.CROWDIN_PROJECT_ID }}  
+          project_id: ${{ secrets.CROWDIN_PROJECT_ID }}
           token: ${{ secrets.CROWDIN_PERSONAL_TOKEN }}
-          commit_message: "chore(translation): update translations"
- 
+          commit_message: 'chore(translation): update translations'
+
           localization_branch_name: l10n_crowdin_translations
           create_pull_request: true
           pull_request_title: '🤖chore(translation): update translations'
           pull_request_body: 'New Crowdin pull request with translations'
-          pull_request_base_branch_name: 'next'        
+          pull_request_base_branch_name: 'next'
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-     
+          GITHUB_TOKEN: ${{ secrets.PAT }}
 
       - name: Enable auto-merge for the PR
         if: steps.crowdin-download.outputs.pull_request_url
         run: gh pr --repo $GITHUB_REPOSITORY merge ${{ steps.crowdin-download.outputs.pull_request_url }} --admin --merge
         env:
-          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
-
-    
+          GITHUB_TOKEN: ${{secrets.PAT}}
