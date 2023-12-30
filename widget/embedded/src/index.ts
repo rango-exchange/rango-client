@@ -2,6 +2,7 @@ import type { WidgetProps } from './containers/Widget';
 import type { ConnectedWallet } from './store/wallets';
 import type {
   BlockchainAndTokenConfig,
+  Tokens,
   WidgetColors,
   WidgetColorsKeys,
   WidgetConfig,
@@ -86,6 +87,7 @@ export type {
   StepOutputRevealedEvent,
   HandleWalletsUpdate,
   ConnectedWallet,
+  Tokens,
 };
 export {
   Widget,

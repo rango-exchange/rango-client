@@ -1,4 +1,5 @@
 import type { Type } from '../../types';
+import type { tokensConfigType } from '../../utils/configs';
 
 import { ChainsIcon, Divider, Tooltip } from '@rango-dev/ui';
 import React, { useState } from 'react';
@@ -9,6 +10,7 @@ import { SingleList } from '../../components/SingleList';
 import { useConfigStore } from '../../store/config';
 import { useMetaStore } from '../../store/meta';
 import { tokensAreEqual, tokenToString } from '../../utils/common';
+import { isTokenExcludedInConfig } from '../../utils/configs';
 import { ModalState } from '../FunctionalLayout/FunctionalLayout.types';
 
 export function DefaultChainAndToken({ type }: { type: Type }) {
@@ -23,13 +25,12 @@ export function DefaultChainAndToken({ type }: { type: Type }) {
   } = useMetaStore();
 
   const selectedType = type === 'Source' ? from : to;
-  const configTokens = selectedType?.tokens;
+  const tokensConfig = selectedType?.tokens as tokensConfigType;
   const filteredTokens = selectedType?.blockchain
-    ? tokens.filter(
-        (token) =>
-          token.blockchain === selectedType.blockchain &&
-          (!configTokens || configTokens.some((t) => tokensAreEqual(token, t)))
-      )
+    ? tokens.filter((token) => {
+        const isToken = isTokenExcludedInConfig(token, tokensConfig);
+        return token.blockchain === selectedType.blockchain && !isToken;
+      })
     : [];
   const chainValue = blockchains.find(
     (chain) => chain.name === selectedType?.blockchain
