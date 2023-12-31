@@ -1,12 +1,12 @@
-import type { Mode } from '../../store/config';
-
 import { ColorsIcon, Divider, Typography } from '@rango-dev/ui';
 import React, { useState } from 'react';
 
 import { TABS } from '../../constants';
+import { type Mode } from '../../store/config';
 
 import { Preset } from './StyleLayout.Preset';
 import {
+  BackdropTab,
   Field,
   FieldTitle,
   GeneralContainer,
@@ -14,28 +14,37 @@ import {
   Tabs,
 } from './StyleLayout.styles';
 
+const TAB_WIDTH = 80;
 export function Themes() {
   const [tab, setTab] = useState<Mode>('auto');
-
+  const currentTabIndex = TABS.findIndex((mode) => mode.id === tab);
   const onChangeMode = (mode: Mode) => {
     setTab(mode);
   };
+
   return (
     <>
       <GeneralContainer>
         <Field>
           <Tabs>
-            {TABS.map((item) => (
+            {TABS.map((item, index) => (
               <Tab
                 fullWidth
                 key={item.id}
+                disableRipple={true}
                 type="secondary"
                 onClick={() => onChangeMode(item.id)}
                 size="small"
-                variant={item.id === tab ? 'contained' : 'default'}>
+                isActive={index === currentTabIndex}
+                variant="default">
                 {item.title}
               </Tab>
             ))}
+            <BackdropTab
+              css={{
+                transform: `translateX(${TAB_WIDTH * currentTabIndex}px)`,
+              }}
+            />
           </Tabs>
           <Divider size={16} />
 

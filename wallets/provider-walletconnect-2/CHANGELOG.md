@@ -1,3 +1,14 @@
+# [0.18.0](https://github.com/rango-exchange/rango-client/compare/provider-walletconnect-2@0.16.0...provider-walletconnect-2@0.18.0) (2023-12-24)
+
+
+### Bug Fixes
+
+* clean evm transaction in wallet-connect signer ([f10175c](https://github.com/rango-exchange/rango-client/commit/f10175cdf03dfd70cd05570aa09b7d1f5634d109))
+* fix HMR for widget and playground ([8524820](https://github.com/rango-exchange/rango-client/commit/8524820f10cf0b8921f3db0c4f620ff98daa4103))
+* handle switch network flow for wallet-connect ([8c4a17b](https://github.com/rango-exchange/rango-client/commit/8c4a17b47b2919820a4e0726f6d1c48b8994abe3))
+
+
+
 # [0.7.0](https://github.com/rango-exchange/rango-client/compare/provider-walletconnect-2@0.6.0...provider-walletconnect-2@0.7.0) (2023-08-03)
 
 

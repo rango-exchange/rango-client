@@ -1,10 +1,15 @@
+import type { Tokens } from '@rango-dev/widget-embedded';
 import type { Token } from 'rango-sdk';
 
-export type TokenType = Token & { checked: boolean; pinned: boolean };
+export type TokenType = Token & { checked?: boolean; pinned?: boolean };
 export interface PropTypes {
   list: TokenType[];
   selectedBlockchains: string[];
-  onChange: (selectedTokens?: TokenType[], pinnedTokens?: TokenType[]) => void;
+  onChange: (
+    items?: { [blockchain: string]: Tokens },
+    pinnedTokens?: TokenType[]
+  ) => void;
+  tokensConfig?: { [blockchain: string]: Tokens };
 }
 
 export interface TokensListProps {
@@ -14,6 +19,7 @@ export interface TokensListProps {
   setShowSelectedTokens: (show: boolean) => void;
   list: TokenType[];
   isAllSelected: boolean;
+  isExcluded: boolean;
 }
 
 export interface BlockchainProps {

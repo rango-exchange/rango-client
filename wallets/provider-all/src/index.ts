@@ -6,6 +6,7 @@ import * as clover from '@rango-dev/provider-clover';
 import * as coin98 from '@rango-dev/provider-coin98';
 import * as coinbase from '@rango-dev/provider-coinbase';
 import * as cosmostation from '@rango-dev/provider-cosmostation';
+import * as defaultInjected from '@rango-dev/provider-default';
 import * as enkrypt from '@rango-dev/provider-enkrypt';
 import * as exodus from '@rango-dev/provider-exodus';
 import * as frontier from '@rango-dev/provider-frontier';
@@ -32,6 +33,7 @@ export const allProviders = (enviroments?: Enviroments) => {
 
   return [
     safe,
+    defaultInjected,
     metamask,
     walletconnect2,
     keplr,

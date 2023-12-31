@@ -25,6 +25,7 @@ import { filterConfig, formatConfig } from '../../utils/export';
 import { CodeBlock } from './CodeBlock';
 import {
   APIKeyInputContainer,
+  BackdropTab,
   ButtonsContainer,
   ExternalLinkIconContainer,
   Head,
@@ -37,11 +38,14 @@ import {
 } from './ExportConfigModal.styles';
 import { typesOfCodeBlocks } from './ExportConfigModal.types';
 
+const TAB_WIDTH = 333;
+
 export function ExportConfigModal(props: ExportConfigModalProps) {
   const { open, onClose, config } = props;
 
   const { activeTheme } = useTheme();
   const [selected, setSelected] = useState<ExportType>('embedded');
+  const [selectedIndex, setSelectedIndex] = useState(0);
   const syntaxHighlighterTheme = activeTheme === 'dark' ? dark : prism;
   const { filteredConfigForExport } = filterConfig(config, initialConfig);
   const formatedConfig = formatConfig(filteredConfigForExport);
@@ -126,14 +130,23 @@ export function ExportConfigModal(props: ExportConfigModalProps) {
             <Fragment key={key}>
               <StyledButton
                 size="medium"
-                variant="contained"
+                disableRipple={true}
                 type={selected === type ? 'secondary' : undefined}
-                onClick={() => setSelected(type as ExportType)}>
+                variant={selected !== type ? 'contained' : undefined}
+                onClick={() => {
+                  setSelectedIndex(index);
+                  setSelected(type as ExportType);
+                }}>
                 {type}
               </StyledButton>
             </Fragment>
           );
         })}
+        <BackdropTab
+          css={{
+            transform: `translateX(${TAB_WIDTH * selectedIndex}px)`,
+          }}
+        />
       </ButtonsContainer>
       <Divider size={12} />
       <CodeBlock

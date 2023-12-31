@@ -2,6 +2,7 @@ import { darkTheme, styled } from '../../theme';
 
 export const BaseListItem = styled('li', {
   width: '100%',
+  overflow: 'hidden',
   borderRadius: '$xs',
   display: 'flex',
   alignItems: 'center',
@@ -41,6 +42,7 @@ export const BaseListItem = styled('li', {
     justifyContent: 'center',
     alignItems: 'center',
     paddingLeft: '$10',
+    overflow: 'hidden',
   },
   variants: {
     hasDivider: {

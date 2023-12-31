@@ -6,6 +6,7 @@ type BaseProps = Pick<SwapInputProps, 'token' | 'price'> & {
   direction?: 'vertical' | 'horizontal';
   centerAlign?: boolean;
   label?: string;
+  tooltipContainer?: HTMLElement;
 };
 
 type InputAmountProps = { type: 'input' };

@@ -144,17 +144,18 @@ export function SettingsPage() {
     title: (
       <>
         <Typography variant="title" size="xmedium">
-          {i18n.t('Infinite Approval')}
+          {i18n.t('Infinite approval')}
         </Typography>
         <Divider direction="horizontal" size={4} />
         <Tooltip
           side="top"
+          sideOffset={4}
           container={getContainer()}
           content={
             <TooltipContainer>
               <Typography variant="label" size="medium" color="neutral700">
                 {i18n.t(
-                  "Enabling the 'Infinite Approval' mode grants unrestricted access to smart contracts of DEXes/Bridges, allowing them to utilize the approved token amount without limitations."
+                  "Enabling the 'Infinite approval' mode grants unrestricted access to smart contracts of DEXes/Bridges, allowing them to utilize the approved token amount without limitations."
                 )}
               </Typography>
             </TooltipContainer>
@@ -180,7 +181,7 @@ export function SettingsPage() {
   return (
     <Layout
       header={{
-        title: i18n.t('Setting'),
+        title: i18n.t('Settings'),
       }}>
       <SettingsContainer>
         <Slippage />

@@ -3,7 +3,13 @@ import type { SwapInputProps } from './SwapInput.types';
 import { i18n } from '@lingui/core';
 import React from 'react';
 
-import { Divider, PriceImpact, Skeleton, Typography } from '../../components';
+import {
+  Divider,
+  PriceImpact,
+  Skeleton,
+  Tooltip,
+  Typography,
+} from '../../components';
 
 import {
   amountStyles,
@@ -15,11 +21,16 @@ import {
   labelStyles,
   MaxButton,
   textStyles,
+  UsdPrice,
   ValueTypography,
 } from './SwapInput.styles';
 import { TokenSection } from './TokenSection';
 
 export function SwapInput(props: SwapInputProps) {
+  const showBalance =
+    'balance' in props && !props.loading && !props.loadingBalance;
+  const showBalanceSkeleton =
+    'balance' in props && (props.loading || props.loadingBalance);
   return (
     <Container sharpBottomStyle={props.sharpBottomStyle}>
       <div className={labelContainerStyles()}>
@@ -27,7 +38,7 @@ export function SwapInput(props: SwapInputProps) {
           <Typography variant="body" size="small" className={textStyles()}>
             {props.label}
           </Typography>
-          {'balance' in props && !props.loading && (
+          {showBalance && (
             <div className={balanceStyles()}>
               <Typography
                 className={textStyles()}
@@ -46,7 +57,7 @@ export function SwapInput(props: SwapInputProps) {
               </MaxButton>
             </div>
           )}
-          {props.loading && (
+          {showBalanceSkeleton && (
             <div className={balanceStyles()}>
               <Skeleton variant="text" size="large" width={105} />
             </div>
@@ -66,42 +77,67 @@ export function SwapInput(props: SwapInputProps) {
         <div className={amountStyles()}>
           {props.loading || (props.mode === 'To' && props.fetchingQuote) ? (
             <>
-              <Skeleton variant="text" size="large" width={92} />
+              <Skeleton variant="text" size="large" />
               <Divider size={8} />
-              <Skeleton variant="text" size="medium" width={92} />
+              <Skeleton variant="text" size="medium" />
             </>
           ) : (
             <>
-              <InputAmount
-                disabled={props.disabled || props.mode === 'To'}
-                style={{ padding: 0 }}
-                value={props.price.value}
-                type={'onInputChange' in props ? 'number' : 'text'}
-                size="large"
-                placeholder="0"
-                variant="ghost"
-                min={0}
-                {...('onInputChange' in props && {
-                  onChange: (event: React.ChangeEvent<HTMLInputElement>) =>
-                    props.onInputChange(event.target.value),
-                })}
-              />
+              <Tooltip
+                content={props.price.realValue}
+                container={props.tooltipContainer}
+                open={
+                  !props.price.realValue || props.price.realValue === '0'
+                    ? false
+                    : undefined
+                }>
+                <InputAmount
+                  disabled={props.disabled || props.mode === 'To'}
+                  style={{ padding: 0 }}
+                  value={props.price.value}
+                  type={'onInputChange' in props ? 'number' : 'text'}
+                  size="large"
+                  placeholder="0"
+                  variant="ghost"
+                  min={0}
+                  {...('onInputChange' in props && {
+                    onChange: (event: React.ChangeEvent<HTMLInputElement>) =>
+                      props.onInputChange(event.target.value),
+                  })}
+                />
+              </Tooltip>
               {'percentageChange' in props ? (
                 <PriceImpact
                   size="large"
+                  tooltipProps={{
+                    container: props.tooltipContainer,
+                    side: 'bottom',
+                  }}
                   outputUsdValue={props.price.usdValue}
+                  realOutputUsdValue={props.price.realUsdValue}
                   error={props.price.error}
                   percentageChange={props.percentageChange}
                   warningLevel={props.warningLevel}
                 />
               ) : (
-                <ValueTypography hasWarning={!!props.price.error}>
-                  <Typography variant="body" size="medium">
-                    {props.price.usdValue
-                      ? `~$${props.price.usdValue}`
-                      : props.price.error}
-                  </Typography>
-                </ValueTypography>
+                <Tooltip
+                  content={props.price.realUsdValue}
+                  container={props.tooltipContainer}
+                  open={
+                    !props.price.realUsdValue ||
+                    props.price.realUsdValue === '0'
+                      ? false
+                      : undefined
+                  }
+                  side="bottom">
+                  <ValueTypography hasWarning={!!props.price.error}>
+                    <UsdPrice variant="body" size="medium">
+                      {props.price.usdValue
+                        ? `~$${props.price.usdValue}`
+                        : props.price.error}
+                    </UsdPrice>
+                  </ValueTypography>
+                </Tooltip>
               )}
             </>
           )}

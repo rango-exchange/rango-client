@@ -58,10 +58,14 @@ export const connect: Connect = async ({ instance, network, meta }) => {
 };
 
 export const subscribe: Subscribe = ({ connect, disconnect }) => {
-  window.addEventListener('leap_keystorechange', () => {
+  const handleAccountsChanged = () => {
     disconnect();
     connect();
-  });
+  };
+  window.addEventListener('leap_keystorechange', handleAccountsChanged);
+  return () => {
+    window.removeEventListener('leap_keystorechange', handleAccountsChanged);
+  };
 };
 
 export const suggest: Suggest = async (options) => {

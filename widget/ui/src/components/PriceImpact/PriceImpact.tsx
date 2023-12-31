@@ -2,12 +2,20 @@ import type { PriceImpactProps } from './PriceImpact.types';
 
 import React from 'react';
 
-import { Typography } from '..';
+import { Tooltip, Typography } from '..';
 
-import { Container } from './PriceImpact.styles';
+import { Container, OutputUsdValue } from './PriceImpact.styles';
 
 export function PriceImpact(props: PriceImpactProps) {
-  const { size, outputUsdValue, percentageChange, warningLevel, error } = props;
+  const {
+    size,
+    outputUsdValue,
+    realOutputUsdValue,
+    percentageChange,
+    warningLevel,
+    error,
+    tooltipProps,
+  } = props;
 
   let percentageChangeColor = '$neutral600';
   if (!outputUsdValue || warningLevel === 'low') {
@@ -19,12 +27,22 @@ export function PriceImpact(props: PriceImpactProps) {
   return (
     <Container>
       {outputUsdValue && (
-        <Typography
-          size={size === 'small' ? 'small' : 'medium'}
-          variant="body"
-          color="$neutral600">
-          {`~$${outputUsdValue}`}
-        </Typography>
+        <Tooltip
+          content={realOutputUsdValue}
+          container={tooltipProps?.container}
+          open={
+            !realOutputUsdValue || realOutputUsdValue === '0'
+              ? false
+              : undefined
+          }
+          side={tooltipProps?.side}>
+          <OutputUsdValue
+            size={size === 'small' ? 'small' : 'medium'}
+            variant="body"
+            color="$neutral600">
+            {`~$${outputUsdValue}`}
+          </OutputUsdValue>
+        </Tooltip>
       )}
       {((outputUsdValue && percentageChange) || !outputUsdValue) && (
         <Typography

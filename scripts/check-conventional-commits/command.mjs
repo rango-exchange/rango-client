@@ -1,5 +1,6 @@
 import { execa } from 'execa';
-import { detectChannel, logAsSection } from '../publish/utils.mjs';
+import { logAsSection } from '../publish/utils.mjs';
+import { detectChannel } from '../common/github.mjs';
 import parser from 'conventional-commits-parser';
 import filter from 'conventional-commits-filter';
 
@@ -15,7 +16,9 @@ async function run() {
   ]);
   const commits = logs.split('__________').filter(Boolean);
   const parsedCommits = filter(commits.map(parser.sync));
-  const hasAnyConventionalCommit = parsedCommits.some((commit) => !!commit.type);
+  const hasAnyConventionalCommit = parsedCommits.some(
+    (commit) => !!commit.type
+  );
 
   if (hasAnyConventionalCommit) {
     console.log('found a conventional commit.');

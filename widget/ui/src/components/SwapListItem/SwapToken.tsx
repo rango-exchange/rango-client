@@ -7,6 +7,7 @@ import { NextIcon } from '../../icons';
 import { ChainToken } from '../ChainToken';
 import { Divider } from '../Divider';
 import { Skeleton } from '../Skeleton';
+import { Tooltip } from '../Tooltip';
 import { Typography } from '../Typography';
 
 import {
@@ -72,14 +73,16 @@ export function SwapToken(props: PropTypes) {
         blockchain: fromBlockchain,
       },
       to: {
-        estimatedAmount,
         token: toToken,
         amount: toAmount,
         blockchain: toBlockchain,
+        realAmount,
       },
     },
     status,
+    tooltipContainer,
   } = props;
+
   return (
     <TokenContainer>
       <Images>
@@ -125,9 +128,11 @@ export function SwapToken(props: PropTypes) {
               {fromToken.displayName}
             </Typography>
             {!!fromAmount && (
-              <Typography size="small" variant="body" color="neutral700">
-                {fromAmount}
-              </Typography>
+              <Tooltip content={fromAmount} container={tooltipContainer}>
+                <Typography size="small" variant="body" color="neutral700">
+                  {fromAmount}
+                </Typography>
+              </Tooltip>
             )}
           </TokenInfo>
           <Icon>
@@ -137,10 +142,11 @@ export function SwapToken(props: PropTypes) {
             <Typography size="medium" variant="title">
               {toToken.displayName}
             </Typography>
-
-            <Typography size="small" variant="body" color="neutral700">
-              {toAmount || estimatedAmount}
-            </Typography>
+            <Tooltip content={realAmount} container={tooltipContainer}>
+              <Typography size="small" variant="body" color="neutral700">
+                {toAmount}
+              </Typography>
+            </Tooltip>
           </TokenInfo>
         </Layout>
       )}

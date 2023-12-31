@@ -18,6 +18,7 @@ import {
   useCopyToClipboard,
 } from '@rango-dev/ui';
 import { useWallets } from '@rango-dev/wallets-react';
+import BigNumber from 'bignumber.js';
 import { PendingSwapNetworkStatus } from 'rango-types';
 import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -35,7 +36,9 @@ import {
 import { useAppStore } from '../../store/AppStore';
 import { useNotificationStore } from '../../store/notification';
 import { useQuoteStore } from '../../store/quote';
+import { getContainer } from '../../utils/common';
 import {
+  formatTooltipNumbers,
   numberToString,
   secondsToString,
   totalArrivalTime,
@@ -188,6 +191,16 @@ export function SwapDetails(props: SwapDetailsProps) {
     USD_VALUE_MAX_DECIMALS
   );
 
+  const realOutputUsdValue = outputAmount
+    ? formatTooltipNumbers(
+        new BigNumber(outputAmount).multipliedBy(lastStep.toUsdPrice || 0)
+      )
+    : '';
+
+  const realInputUsdValue = formatTooltipNumbers(
+    new BigNumber(swap.inputAmount).multipliedBy(firstStep.fromUsdPrice || 0)
+  );
+
   const percentageChange = getPriceImpact(inputUsdValue, outputUsdValue);
 
   const completeModalDesc =
@@ -280,7 +293,7 @@ export function SwapDetails(props: SwapDetailsProps) {
           </div>
           <div className={rowStyles()}>
             <Typography variant="label" size="large" color="neutral700">
-              {`${i18n.t('Created at')}:`}
+              {`${i18n.t(swap.finishTime ? 'Finished at' : 'Created at')}:`}
             </Typography>
             <Typography variant="label" size="small" color="neutral700">
               {swapDate}
@@ -307,6 +320,8 @@ export function SwapDetails(props: SwapDetailsProps) {
                   TOKEN_AMOUNT_MAX_DECIMALS
                 ),
                 usdValue: inputUsdValue,
+                realUsdValue: realInputUsdValue,
+                realValue: swap.inputAmount,
               },
               token: {
                 displayName: steps[0].from.token.displayName,
@@ -325,6 +340,8 @@ export function SwapDetails(props: SwapDetailsProps) {
                   TOKEN_AMOUNT_MAX_DECIMALS
                 ),
                 usdValue: outputUsdValue,
+                realUsdValue: realOutputUsdValue,
+                realValue: outputAmount,
               },
               token: {
                 displayName: steps[numberOfSteps - 1].to.token.displayName,
@@ -368,6 +385,7 @@ export function SwapDetails(props: SwapDetailsProps) {
                 hasSeparator={index !== 0}
                 tabIndex={key}
                 isFocused={isFocused}
+                tooltipContainer={getContainer()}
               />
             );
           })}
@@ -393,6 +411,8 @@ export function SwapDetails(props: SwapDetailsProps) {
           TOKEN_AMOUNT_MAX_DECIMALS
         )}
         usdValue={outputUsdValue}
+        realUsdValue={realOutputUsdValue}
+        realValue={formatTooltipNumbers(outputAmount)}
         percentageChange={numberToString(
           percentageChange,
           PERCENTAGE_CHANGE_MIN_DECIMALS,

@@ -22,10 +22,11 @@ import { useAppStore } from '../store/AppStore';
 import { useQuoteStore } from '../store/quote';
 import { useUiStore } from '../store/ui';
 import { useWalletsStore } from '../store/wallets';
-import { numberToString } from '../utils/numbers';
+import { getContainer } from '../utils/common';
+import { formatTooltipNumbers, numberToString } from '../utils/numbers';
 import { getPriceImpact, getPriceImpactLevel } from '../utils/quote';
 import { canComputePriceImpact, getSwapButtonState } from '../utils/swap';
-import { formatBalance } from '../utils/wallets';
+import { formatBalance, isFetchingBalance } from '../utils/wallets';
 
 const Container = styled('div', {
   display: 'flex',
@@ -75,6 +76,9 @@ export function Home() {
   const setCurrentPage = useUiStore.use.setCurrentPage();
   const [showQuoteWarningModal, setShowQuoteWarningModal] = useState(false);
   const layoutRef = useRef<HTMLDivElement>(null);
+  const fetchingBalance =
+    !!fromBlockchain &&
+    isFetchingBalance(connectedWallets, fromBlockchain.name);
 
   const needsToWarnEthOnPath = false;
 
@@ -189,12 +193,17 @@ export function Home() {
                       USD_VALUE_MIN_DECIMALS,
                       USD_VALUE_MAX_DECIMALS
                     ),
+                realUsdValue: priceImpactInputCanNotBeComputed
+                  ? undefined
+                  : formatTooltipNumbers(inputUsdValue),
                 error: priceImpactInputCanNotBeComputed
                   ? errorMessages().unknownPriceError.impactTitle
                   : undefined,
               }}
               disabled={fetchMetaStatus === 'failed'}
               loading={fetchMetaStatus === 'loading'}
+              loadingBalance={fetchingBalance}
+              tooltipContainer={getContainer()}
               onSelectMaxBalance={() => {
                 if (fromTokenFormattedBalance !== '0') {
                   setInputAmount(tokenBalanceReal.split(',').join(''));
@@ -235,6 +244,10 @@ export function Home() {
                     USD_VALUE_MIN_DECIMALS,
                     USD_VALUE_MAX_DECIMALS
                   ),
+              realValue: formatTooltipNumbers(outputAmount),
+              realUsdValue: priceImpactOutputCanNotBeComputed
+                ? undefined
+                : formatTooltipNumbers(outputUsdValue),
               error: priceImpactOutputCanNotBeComputed
                 ? errorMessages().unknownPriceError.impactTitle
                 : undefined,
@@ -242,6 +255,7 @@ export function Home() {
             onClickToken={() => navigate(navigationRoutes.toSwap)}
             disabled={fetchMetaStatus === 'failed'}
             loading={fetchMetaStatus === 'loading'}
+            tooltipContainer={getContainer()}
           />
         </InputsContainer>
         <div className="quote__container">

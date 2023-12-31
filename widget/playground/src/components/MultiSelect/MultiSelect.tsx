@@ -60,7 +60,7 @@ export function MultiSelect(props: MuliSelectPropTypes) {
               <Chip label={`+${value.length - MAX_CHIPS}`} variant="outlined" />
             )}
           </div>
-          <ChevronRightIcon size={12} />
+          <ChevronRightIcon size={12} color="gray" />
         </div>
       </Select>
       {showNextModal && (
@@ -87,6 +87,7 @@ export function MultiSelect(props: MuliSelectPropTypes) {
           ) : (
             <TokensPanel
               list={list}
+              tokensConfig={props.tokensConfig}
               onChange={(selectedTokens, pinnedTokens) => {
                 props.onChange(selectedTokens, pinnedTokens);
                 onBack();

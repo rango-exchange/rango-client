@@ -70,7 +70,6 @@ export const outputStyles = css({
 });
 
 export const titleStepsStyles = css({
-  textAlign: 'left',
   width: '100%',
   padding: '0 $20 $10',
 });

@@ -1,5 +1,5 @@
 import * as Collapsible from '@radix-ui/react-collapsible';
-import { css, darkTheme, Image, styled } from '@rango-dev/ui';
+import { css, darkTheme, Image, styled, Typography } from '@rango-dev/ui';
 
 import { CollapsibleContent } from '../ConfirmWalletsModal/ConfirmWallets.styles';
 
@@ -194,6 +194,7 @@ export const ChainImageContainer = styled('div', {
 
 export const Content = styled(CollapsibleContent, {
   width: '100%',
+  background: 'inherit',
 });
 
 export const IconContainer = styled('div', {
@@ -239,4 +240,15 @@ export const FrameIcon = styled('div', {
   justifyContent: 'center',
   alignItems: 'center',
   display: 'flex',
+});
+
+export const BasicInfoOutput = styled(Typography, {
+  overflow: 'hidden',
+  textOverflow: 'ellipsis',
+  letterSpacing: 0.4,
+});
+
+export const ContainerInfoOutput = styled('div', {
+  display: 'flex',
+  flexWrap: 'wrap',
 });

@@ -2,8 +2,10 @@ import type { GenericSigner, StarknetTransaction } from 'rango-types';
 
 import { SignerError, SignerErrorCode } from 'rango-types';
 
-// TODO - replace with real type
-// tslint:disable-next-line: no-any
+/*
+ * TODO - replace with real type
+ * tslint:disable-next-line: no-any
+ */
 type StarknetExternalProvider = any;
 
 export class DefaultStarknetSigner
@@ -21,6 +23,7 @@ export class DefaultStarknetSigner
 
   async signAndSendTx(tx: StarknetTransaction): Promise<{ hash: string }> {
     try {
+      await this.provider.enable();
       const { transaction_hash } = await this.provider.account.execute(
         tx.calls
       );

@@ -3,6 +3,8 @@ import { css, darkTheme, styled } from '../../theme';
 
 export const Container = styled(Button, {
   maxWidth: '180px',
+  minWidth: '130px',
+  flexGrow: 1,
   backgroundColor: 'transparent',
   color: '$neutral700',
   '&:disabled': {
@@ -31,7 +33,7 @@ export const Container = styled(Button, {
 export const chainNameStyles = css();
 
 export const TokenSectionContainer = styled('div', {
-  width: '10.625rem',
+  maxWidth: '170px',
   padding: '$2 $5',
   display: 'flex',
   borderRadius: '$xs',
@@ -53,8 +55,10 @@ export const tokenChainStyles = css({
   justifyContent: 'center',
   alignItems: 'start',
   paddingLeft: '$10',
+  flexGrow: 1,
 });
 
 export const skeletonStyles = css({
+  width: '100%',
   padding: '$5 $0',
 });

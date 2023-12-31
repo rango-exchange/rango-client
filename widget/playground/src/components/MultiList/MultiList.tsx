@@ -179,6 +179,7 @@ export function MultiList(props: MultiListPropTypes) {
             <SelectDeselectText
               variant="label"
               size="medium"
+              disabled={false}
               color="neutral700">
               {isAllCategorySelected ? 'Deselect all' : 'Select all'}
             </SelectDeselectText>

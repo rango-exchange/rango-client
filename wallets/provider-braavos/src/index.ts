@@ -32,13 +32,17 @@ export const connect: Connect = async ({ instance }) => {
 };
 
 export const subscribe: Subscribe = ({ instance, state, updateAccounts }) => {
-  instance?.on('accountsChanged', (accounts: any) => {
+  const handleAccountsChanged = (accounts: any) => {
     if (state.connected) {
       if (instance) {
         updateAccounts([accounts], Networks.STARKNET);
       }
     }
-  });
+  };
+  instance?.on('accountsChanged', handleAccountsChanged);
+  return () => {
+    instance?.off('accountsChanged', handleAccountsChanged);
+  };
 };
 
 export const canSwitchNetworkTo: CanSwitchNetwork = () => false;

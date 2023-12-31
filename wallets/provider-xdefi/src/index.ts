@@ -59,8 +59,7 @@ export const subscribe: Subscribe = ({
   updateChainId,
   connect,
 }) => {
-  const eth = chooseInstance(instance, meta, Networks.ETHEREUM);
-  eth?.on('chainChanged', (chainId: string) => {
+  const handleChainChanged = (chainId: string) => {
     const network = getBlockChainNameFromId(chainId, meta) || Networks.Unknown;
     /*
      *TODO:
@@ -77,7 +76,13 @@ export const subscribe: Subscribe = ({
      */
     updateChainId(chainId);
     connect(network);
-  });
+  };
+  const eth = chooseInstance(instance, meta, Networks.ETHEREUM);
+  eth?.on('chainChanged', handleChainChanged);
+
+  return () => {
+    eth?.off('chainChanged', handleChainChanged);
+  };
 };
 
 export const switchNetwork: SwitchNetwork = switchNetworkForEvm;
