@@ -5,10 +5,7 @@ import type { SwapResult } from 'rango-sdk';
 import { i18n } from '@lingui/core';
 import {
   Alert,
-  ChevronDownIcon,
-  ChevronRightIcon,
   Divider,
-  Image,
   InfoIcon,
   QuoteCost,
   StepDetails,
@@ -49,17 +46,15 @@ import {
 import { getPriceImpact, getPriceImpactLevel } from '../../utils/quote';
 import { getTotalFeeInUsd } from '../../utils/swap';
 
+import { BlockchainsComponent } from './Blockchains';
 import {
   BasicInfoOutput,
   basicInfoStyles,
-  ChainImageContainer,
-  Chains,
   ContainerInfoOutput,
   Content,
   EXPANDABLE_QUOTE_TRANSITION_DURATION,
   FrameIcon,
   HorizontalSeparator,
-  IconContainer,
   QuoteContainer,
   stepsDetailsStyles,
   SummaryContainer,
@@ -374,59 +369,14 @@ export function Quote(props: QuoteProps) {
           recommended={recommended}
           open={expanded}
           onOpenChange={setExpanded}>
-          <Chains
-            ref={(ref) => (quoteRef.current = ref)}
+          <BlockchainsComponent
+            quoteRef={quoteRef}
             recommended={recommended}
-            onClick={() => setExpanded((prevState) => !prevState)}>
-            <div>
-              {steps.map((step, index) => {
-                const key = `item-${index}`;
-                const arrow = (
-                  <IconContainer>
-                    <ChevronRightIcon
-                      size={12}
-                      color="black"
-                      {...(step.state && {
-                        color: step.state === 'error' ? 'error' : 'warning',
-                      })}
-                    />
-                  </IconContainer>
-                );
-                return (
-                  <React.Fragment key={key}>
-                    <Tooltip
-                      container={tooltipContainer}
-                      side="bottom"
-                      sideOffset={4}
-                      content={step.from.chain.displayName}>
-                      <ChainImageContainer
-                        state={step.state || steps[index - 1]?.state}>
-                        <Image src={step.from.chain.image} size={16} />
-                      </ChainImageContainer>
-                    </Tooltip>
-                    {index === numberOfSteps - 1 && (
-                      <>
-                        {arrow}
-                        <Tooltip
-                          container={tooltipContainer}
-                          side="bottom"
-                          sideOffset={4}
-                          content={step.to.chain.displayName}>
-                          <ChainImageContainer state={step.state}>
-                            <Image src={step.to.chain.image} size={16} />
-                          </ChainImageContainer>
-                        </Tooltip>
-                      </>
-                    )}
-                    {index !== numberOfSteps - 1 && <>{arrow}</>}
-                  </React.Fragment>
-                );
-              })}
-            </div>
-            <IconContainer orientation={expanded ? 'up' : 'down'}>
-              <ChevronDownIcon size={12} color="black" />
-            </IconContainer>
-          </Chains>
+            setExpanded={setExpanded}
+            expanded={expanded}
+            steps={steps}
+            numberOfSteps={numberOfSteps}
+          />
           <Content open={expanded}>
             <HorizontalSeparator />
             <div className={stepsDetailsStyles()}>

@@ -252,3 +252,22 @@ export const ContainerInfoOutput = styled('div', {
   display: 'flex',
   flexWrap: 'wrap',
 });
+
+export const MoreStep = styled('div', {
+  width: '18px',
+  height: '18px',
+  borderRadius: '100%',
+  backgroundColor: '$background',
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+});
+
+export const TooltipContent = styled('div', {
+  display: 'flex',
+  flexDirection: 'row',
+  position: 'relative',
+  '.chainImage': {
+    marginLeft: '-8px',
+  },
+});
