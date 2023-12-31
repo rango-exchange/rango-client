@@ -12,7 +12,6 @@ import {
   css,
   Divider,
   IconButton,
-  RefreshIcon,
   SettingsIcon,
   styled,
   Tooltip,
@@ -26,6 +25,7 @@ import { useNavigate } from 'react-router-dom';
 import { getRequiredWallets } from '../components/ConfirmWalletsModal/ConfirmWallets.helpers';
 import { ConfirmWalletsModal } from '../components/ConfirmWalletsModal/ConfirmWalletsModal';
 import { HeaderButton } from '../components/HeaderButtons/HeaderButtons.styles';
+import { RefreshButton } from '../components/HeaderButtons/RefreshButton';
 import { Layout } from '../components/Layout';
 import { navigationRoutes } from '../constants/navigationRoutes';
 import { getQuoteUpdateWarningMessage } from '../constants/warnings';
@@ -324,15 +324,17 @@ export function ConfirmSwapPage() {
           <Typography variant="title" size="small">
             {i18n.t('You get')}
           </Typography>
-          <Button
-            style={{ padding: '0' }}
-            variant="ghost"
-            disabled={fetchingConfirmationQuote}
-            onClick={onRefresh}>
-            <div className={iconStyles()}>
-              <RefreshIcon size={16} />
-            </div>
-          </Button>
+          <div className={iconStyles()}>
+            <RefreshButton
+              onClick={
+                !fetchingConfirmationQuote &&
+                !showWallets &&
+                !showQuoteWarningModal
+                  ? onRefresh
+                  : undefined
+              }
+            />
+          </div>
         </div>
         {dbErrorMessage && (
           <>
