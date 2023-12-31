@@ -4,7 +4,6 @@ import { i18n } from '@lingui/core';
 import {
   NotificationsIcon,
   Popover,
-  RefreshIcon,
   SettingsIcon,
   Tooltip,
   TransactionIcon,
@@ -17,6 +16,7 @@ import { isFeatureHidden } from '../../utils/settings';
 import { NotificationContent } from '../NotificationContent';
 
 import { HeaderButton } from './HeaderButtons.styles';
+import { RefreshButton } from './RefreshButton';
 import { UnreadNotificationsBadge } from './UnreadNotificationsBadge';
 
 export function HomeButtons(props: HomeButtonsPropTypes) {
@@ -34,13 +34,7 @@ export function HomeButtons(props: HomeButtonsPropTypes) {
         container={getContainer()}
         side="top"
         content={i18n.t('Refresh')}>
-        <HeaderButton
-          variant="ghost"
-          size="small"
-          onClick={onClickRefresh}
-          disabled={!onClickRefresh}>
-          <RefreshIcon size={16} color={!onClickRefresh ? 'gray' : 'black'} />
-        </HeaderButton>
+        <RefreshButton onClick={onClickRefresh} />
       </Tooltip>
 
       {!isNotificationsHidden && (

@@ -161,7 +161,11 @@ export function Home() {
         suffix: (
           <HomeButtons
             layoutRef={layoutRef.current}
-            onClickRefresh={!!quote || quoteError ? fetchQuote : undefined}
+            onClickRefresh={
+              (!!quote || quoteError) && !showQuoteWarningModal
+                ? fetchQuote
+                : undefined
+            }
             onClickHistory={() => navigate(navigationRoutes.swaps)}
             onClickSettings={() => navigate(navigationRoutes.settings)}
           />
