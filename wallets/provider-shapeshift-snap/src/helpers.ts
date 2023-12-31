@@ -14,6 +14,7 @@ export const SHAPESHIFT_SNAP_SUPPORTED_CHAINS = [
   Networks.BTC,
   Networks.BCH,
   Networks.LTC,
+  Networks.DOGE,
 ];
 
 const snapNetworksConfig: {
@@ -59,6 +60,18 @@ const snapNetworksConfig: {
         coin: 'Litecoin',
         // eslint-disable-next-line @typescript-eslint/no-magic-numbers
         addressNList: [0x80000000 + 44, 0x80000000 + 2, 0x80000000 + 0, 0, 0],
+        scriptType: 'p2pkh',
+      },
+    },
+  },
+  {
+    chainId: Networks.DOGE,
+    method: 'doge_getPublicKeys',
+    params: {
+      addressParams: {
+        coin: 'Dogecoin',
+        // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+        addressNList: [0x80000000 + 44, 0x80000000 + 3, 0x80000000 + 0, 0, 0],
         scriptType: 'p2pkh',
       },
     },
@@ -111,9 +124,5 @@ export const getAccounts = async (
   });
 
   const accounts = await Promise.all(accountPromises);
-  // return accounts;
-
-  console.log(accounts);
-
-  return [];
+  return accounts;
 };
