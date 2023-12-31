@@ -42,6 +42,7 @@
     "@rango-dev/provider-phantom": "^0.25.1-next.1",
     "@rango-dev/provider-safe": "^0.18.1-next.1",
     "@rango-dev/provider-safepal": "^0.25.1-next.1",
+    "@rango-dev/provider-shapeshift-snap": "^0.25.1-next.1",
     "@rango-dev/provider-taho": "^0.25.1-next.1",
     "@rango-dev/provider-tokenpocket": "^0.25.1-next.1",
     "@rango-dev/provider-tron-link": "^0.25.1-next.1",
