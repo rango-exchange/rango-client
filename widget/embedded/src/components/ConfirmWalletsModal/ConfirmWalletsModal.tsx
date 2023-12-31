@@ -274,7 +274,7 @@ export function ConfirmWalletsModal(props: PropTypes) {
               type="primary"
               fullWidth
               size="large">
-              Confirm
+              {i18n.t('Confirm')}
             </Button>
           </ConfirmButton>
         ),

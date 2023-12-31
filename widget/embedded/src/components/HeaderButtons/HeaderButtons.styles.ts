@@ -23,7 +23,10 @@ export const ConnectedIcon = styled('div', {
 export const SuffixContainer = styled('div', {
   display: 'flex',
   justifyContent: 'flex-end',
-  width: '$40',
+  minWidth: '$40',
+  button: {
+    padding: 0,
+  },
 });
 
 export const NotificationsBadgeContainer = styled('div', {

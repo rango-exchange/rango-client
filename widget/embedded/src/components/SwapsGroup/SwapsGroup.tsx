@@ -18,11 +18,11 @@ export function SwapsGroup(props: PropTypes) {
 
     const loadingGroups = [
       {
-        title: 'Today',
+        title: i18n.t('Today'),
         swaps,
       },
       {
-        title: 'This month',
+        title: i18n.t('This month'),
         swaps,
       },
     ];
@@ -36,7 +36,7 @@ export function SwapsGroup(props: PropTypes) {
                   variant="label"
                   size="medium"
                   className={groupStyles()}>
-                  {i18n.t(group.title)}
+                  {group.title}
                 </Typography>
               </Time>
               <Divider size={4} />
@@ -69,7 +69,7 @@ export function SwapsGroup(props: PropTypes) {
                   variant="label"
                   size="medium"
                   className={groupStyles()}>
-                  {i18n.t(group.title)}
+                  {group.title}
                 </Typography>
               </Time>
               <Divider size={4} />
@@ -85,8 +85,8 @@ export function SwapsGroup(props: PropTypes) {
                         creationTime={swap.creationTime}
                         status={swap.status}
                         onClick={onSwapClick}
-                        onlyShowTime={group.title === 'Today'}
                         tooltipContainer={getContainer()}
+                        onlyShowTime={group.title === i18n.t('Today')}
                         swapTokenData={{
                           from: {
                             token: {
