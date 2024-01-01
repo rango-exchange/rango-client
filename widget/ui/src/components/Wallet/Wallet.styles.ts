@@ -72,5 +72,5 @@ export const LoadingButton = styled('div', {
   backgroundColor: '$neutral100',
   alignItems: 'center',
   justifyContent: 'center',
-  width: 110,
+  width: 100,
 });

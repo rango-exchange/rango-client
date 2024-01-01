@@ -32,6 +32,7 @@ export interface SwapTokenData {
       image: string;
     };
     amount: string;
+    realAmount: string;
   };
 
   to: {

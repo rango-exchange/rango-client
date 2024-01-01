@@ -4,6 +4,10 @@ import { i18n } from '@lingui/core';
 import { Divider, SwapListItem, Typography } from '@rango-dev/ui';
 import React from 'react';
 
+import {
+  TOKEN_AMOUNT_MAX_DECIMALS,
+  TOKEN_AMOUNT_MIN_DECIMALS,
+} from '../../constants/routing';
 import { getContainer } from '../../utils/common';
 import { formatTooltipNumbers, numberToString } from '../../utils/numbers';
 
@@ -96,7 +100,12 @@ export function SwapsGroup(props: PropTypes) {
                             blockchain: {
                               image: firstStep.fromBlockchainLogo || '',
                             },
-                            amount: swap.inputAmount,
+                            amount: numberToString(
+                              swap.inputAmount,
+                              TOKEN_AMOUNT_MIN_DECIMALS,
+                              TOKEN_AMOUNT_MAX_DECIMALS
+                            ),
+                            realAmount: formatTooltipNumbers(swap.inputAmount),
                           },
                           to: {
                             token: {
@@ -109,7 +118,9 @@ export function SwapsGroup(props: PropTypes) {
                             amount: numberToString(
                               lastStep.outputAmount ||
                                 lastStep.expectedOutputAmountHumanReadable ||
-                                ''
+                                '',
+                              TOKEN_AMOUNT_MIN_DECIMALS,
+                              TOKEN_AMOUNT_MAX_DECIMALS
                             ),
                             realAmount: formatTooltipNumbers(
                               lastStep.outputAmount ||
