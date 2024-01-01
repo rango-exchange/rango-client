@@ -305,6 +305,7 @@ export const swapTokenData: SwapTokenData = {
       image: 'https://api.rango.exchange/swappers/osmosis.png',
     },
     amount: '1.1',
+    realAmount: '1.1',
   },
   to: {
     token: {
