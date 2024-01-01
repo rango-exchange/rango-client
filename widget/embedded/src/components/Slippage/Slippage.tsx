@@ -72,12 +72,12 @@ export function Slippage() {
           value={customSlippage || ''}
           color="dark"
           onChange={(event) => {
-            const parsedValue = parseFloat(event.target.value);
-            if (
-              !parsedValue ||
-              (parsedValue >= MIN_SLIPPGAE && parsedValue <= MAX_SLIPPAGE)
-            ) {
+            const value = event.target.value;
+            const parsedValue = parseFloat(value);
+            if (parsedValue >= MIN_SLIPPGAE && parsedValue <= MAX_SLIPPAGE) {
               setCustomSlippage(parsedValue);
+            } else {
+              setCustomSlippage(null);
             }
           }}
           suffix={

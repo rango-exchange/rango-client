@@ -71,12 +71,13 @@ export function SwapToken(props: PropTypes) {
         token: fromToken,
         amount: fromAmount,
         blockchain: fromBlockchain,
+        realAmount: fromRealAmount,
       },
       to: {
         token: toToken,
         amount: toAmount,
         blockchain: toBlockchain,
-        realAmount,
+        realAmount: toRealAmount,
       },
     },
     status,
@@ -128,7 +129,7 @@ export function SwapToken(props: PropTypes) {
               {fromToken.displayName}
             </Typography>
             {!!fromAmount && (
-              <Tooltip content={fromAmount} container={tooltipContainer}>
+              <Tooltip content={fromRealAmount} container={tooltipContainer}>
                 <Typography size="small" variant="body" color="neutral700">
                   {fromAmount}
                 </Typography>
@@ -142,7 +143,7 @@ export function SwapToken(props: PropTypes) {
             <Typography size="medium" variant="title">
               {toToken.displayName}
             </Typography>
-            <Tooltip content={realAmount} container={tooltipContainer}>
+            <Tooltip content={toRealAmount} container={tooltipContainer}>
               <Typography size="small" variant="body" color="neutral700">
                 {toAmount}
               </Typography>
