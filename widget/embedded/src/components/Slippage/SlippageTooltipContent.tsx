@@ -15,7 +15,7 @@ export function SlippageTooltipContent() {
         <br />
         <b>{i18n.t('Warning')}</b>:
         {i18n.t(
-          'This setting is applied per step, e.g. 1Inch, Thorchain, etc. and only that step will be reverted, not the whole transaction'
+          'This setting is applied per step (e.g. 1Inch, Thorchain, etc) which means only the step will be reverted, not the whole transaction.'
         )}
       </Typography>
     </SlippageTooltipContainer>
