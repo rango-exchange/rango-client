@@ -45,7 +45,7 @@ jobs:
           translation: translations/%two_letters_code%.po
           project_id: ${{ secrets.CROWDIN_PROJECT_ID }}
           token: ${{ secrets.CROWDIN_PERSONAL_TOKEN }}
-          commit_message: 'chore(translation): update translations'
+          commit_message: 'chore(translation): update translations [skip ci]'
 
           localization_branch_name: l10n_crowdin_translations
           create_pull_request: true
