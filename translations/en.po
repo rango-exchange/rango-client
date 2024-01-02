@@ -14,52 +14,6 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/QuoteSummary.tsx:25
-msgid "Swap input"
-msgstr "Swap input"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/QuoteSummary.tsx:44
-msgid "Estimated output"
-msgstr "Estimated output"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapsGroup/SwapsGroup.tsx:29
-#: widget/embedded/src/utils/date.ts:32
-msgid "This month"
-msgstr "This month"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/pages/LiquiditySourcePage.tsx:107
-msgid "Deselect all"
-msgstr "Deselect all"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/pages/LiquiditySourcePage.tsx:107
-msgid "Select all"
-msgstr "Select all"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/pages/SelectSwapItemsPage.tsx:72
-msgid "Source"
-msgstr "Source"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/pages/SelectSwapItemsPage.tsx:73
-msgid "Destination"
-msgstr "Destination"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/utils/date.ts:25
-msgid "This week"
-msgstr "This week"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/utils/date.ts:39
-msgid "This year"
-msgstr "This year"
-
-#. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:37
 #: widget/embedded/src/components/TokenList/TokenList.tsx:135
 #: widget/embedded/src/pages/HistoryPage.tsx:94
@@ -245,6 +199,16 @@ msgstr "Yours: {amount} {symbol}"
 #: widget/embedded/src/components/Quote/Quote.tsx:258
 msgid "Minimum required slippage is {minRequiredSlippage}"
 msgstr "Minimum required slippage is {minRequiredSlippage}"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/Quote/QuoteSummary.tsx:25
+msgid "Swap input"
+msgstr "Swap input"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/Quote/QuoteSummary.tsx:44
+msgid "Estimated output"
+msgstr "Estimated output"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/QuoteWarningsAndErrors/HighValueLossWarningModal.tsx:41
@@ -492,6 +456,12 @@ msgid "Today"
 msgstr "Today"
 
 #. js-lingui-explicit-id
+#: widget/embedded/src/components/SwapsGroup/SwapsGroup.tsx:29
+#: widget/embedded/src/utils/date.ts:32
+msgid "This month"
+msgstr "This month"
+
+#. js-lingui-explicit-id
 #: widget/embedded/src/components/TokenList/TokenList.tsx:277
 msgid "Select Token"
 msgstr "Select Token"
@@ -700,6 +670,16 @@ msgid "Bridges"
 msgstr "Bridges"
 
 #. js-lingui-explicit-id
+#: widget/embedded/src/pages/LiquiditySourcePage.tsx:107
+msgid "Deselect all"
+msgstr "Deselect all"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/LiquiditySourcePage.tsx:107
+msgid "Select all"
+msgstr "Select all"
+
+#. js-lingui-explicit-id
 #: widget/embedded/src/pages/LiquiditySourcePage.tsx:119
 msgid "Search {sourceType}"
 msgstr "Search {sourceType}"
@@ -708,6 +688,16 @@ msgstr "Search {sourceType}"
 #: widget/embedded/src/pages/SelectBlockchainPage.tsx:59
 msgid "Search Blockchain"
 msgstr "Search Blockchain"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/SelectSwapItemsPage.tsx:72
+msgid "Source"
+msgstr "Source"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/SelectSwapItemsPage.tsx:73
+msgid "Destination"
+msgstr "Destination"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/pages/SelectSwapItemsPage.tsx:79
@@ -776,6 +766,16 @@ msgstr "Connect Wallets"
 #: widget/embedded/src/pages/WalletsPage.tsx:68
 msgid "Choose a wallet to connect."
 msgstr "Choose a wallet to connect."
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/utils/date.ts:25
+msgid "This week"
+msgstr "This week"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/utils/date.ts:39
+msgid "This year"
+msgstr "This year"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/utils/swap.ts:122
