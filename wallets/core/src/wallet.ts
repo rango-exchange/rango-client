@@ -1,8 +1,8 @@
 import type { GetInstanceOptions, WalletActions, WalletConfig } from './types';
-import type { Network, WalletType } from '@rango-dev/wallets-shared';
+import type { Network, WalletType } from '@yeager-dev/wallets-shared';
 import type { BlockchainMeta } from 'rango-types';
 
-import { getBlockChainNameFromId, Networks } from '@rango-dev/wallets-shared';
+import { getBlockChainNameFromId, Networks } from '@yeager-dev/wallets-shared';
 
 import { accountAddressesWithNetwork, needsCheckInstallation } from './helpers';
 import { Events } from './types';

@@ -1,5 +1,5 @@
 {
-  "name": "@rango-dev/signer-ton",
+  "name": "@yeager-dev/signer-ton",
   "version": "0.11.0",
   "license": "MIT",
   "type": "module",

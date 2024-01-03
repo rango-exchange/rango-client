@@ -4,10 +4,10 @@ import type {
   CanSwitchNetwork,
   Connect,
   WalletInfo,
-} from '@rango-dev/wallets-shared';
+} from '@yeager-dev/wallets-shared';
 import type { BlockchainMeta, SignerFactory } from 'rango-types';
 
-import { Networks, WalletTypes } from '@rango-dev/wallets-shared';
+import { Networks, WalletTypes } from '@yeager-dev/wallets-shared';
 import { toUserFriendlyAddress } from '@tonconnect/sdk/';
 import { tonBlockchain } from 'rango-types';
 

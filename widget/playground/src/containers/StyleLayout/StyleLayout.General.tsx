@@ -6,7 +6,7 @@ import {
   FontIcon,
   LanguageIcon,
   Typography,
-} from '@rango-dev/ui';
+} from '@yeager-dev/ui';
 import React, { useCallback, useState } from 'react';
 
 import { ItemPicker } from '../../components/ItemPicker';

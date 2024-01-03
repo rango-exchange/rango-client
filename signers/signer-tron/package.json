@@ -1,5 +1,5 @@
 {
-  "name": "@rango-dev/signer-tron",
+  "name": "@yeager-dev/signer-tron",
   "version": "0.25.0",
   "license": "MIT",
   "type": "module",

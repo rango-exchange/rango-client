@@ -1,4 +1,4 @@
-import { Networks } from '@rango-dev/wallets-shared';
+import { Networks } from '@yeager-dev/wallets-shared';
 
 export const DEFAULT_NETWORK = Networks.ETHEREUM;
 export const PING_TIMEOUT = 10_000;

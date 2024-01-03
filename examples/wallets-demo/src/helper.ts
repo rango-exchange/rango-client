@@ -1,8 +1,8 @@
-import type { Network } from '@rango-dev/wallets-shared';
+import type { Network } from '@yeager-dev/wallets-shared';
 import type { BlockchainMeta } from 'rango-sdk';
 
-import { readAccountAddress } from '@rango-dev/wallets-react';
-import { Networks } from '@rango-dev/wallets-shared';
+import { readAccountAddress } from '@yeager-dev/wallets-react';
+import { Networks } from '@yeager-dev/wallets-shared';
 import { isEvmBlockchain } from 'rango-sdk';
 
 export type Blockchain = {

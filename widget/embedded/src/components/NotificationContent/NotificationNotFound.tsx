@@ -1,5 +1,5 @@
 import { i18n } from '@lingui/core';
-import { Divider, NoNotificationIcon, Typography } from '@rango-dev/ui';
+import { Divider, NoNotificationIcon, Typography } from '@yeager-dev/ui';
 import React from 'react';
 
 import { NotFoundContainer } from './NotificationContent.styles';

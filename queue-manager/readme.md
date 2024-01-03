@@ -15,27 +15,27 @@ The `react` package is a wrapper around queue-manager that makes it easy to use 
 ## Rango-Preset
 
 The `rango-preset` package provides some default values, services, and actions of Rango Exchange to use in Rango. It can be used to quickly get started with Rango without having to write all of the boilerplate code yourself.
-First, you need to add `@rango-dev/wallets-react` to your project
+First, you need to add `@yeager-dev/wallets-react` to your project
 
 # Installation
 
 To use `queue-manager` in your project, you can install it using NPM
 
 ```
-yarn add @rango-dev/queue-manager-core @rango-dev/queue-manager-react @rango-dev/queue-manager-rango-preset
+yarn add @yeager-dev/queue-manager-core @yeager-dev/queue-manager-react @yeager-dev/queue-manager-rango-preset
 
 
 # or using NPM
 
-npm install @rango-dev/queue-manager-core @rango-dev/queue-manager-react @rango-dev/queue-manager-rango-preset
+npm install @yeager-dev/queue-manager-core @yeager-dev/queue-manager-react @yeager-dev/queue-manager-rango-preset
 ```
 
 You can also install the individual packages separately:
 
 ```
-npm install @rango-dev/queue-manager-core
-npm install @rango-dev/queue-manager-react
-npm install @rango-dev/queue-manager-rango-preset
+npm install @yeager-dev/queue-manager-core
+npm install @yeager-dev/queue-manager-react
+npm install @yeager-dev/queue-manager-rango-preset
 ```
 
 # Usage
@@ -43,8 +43,8 @@ npm install @rango-dev/queue-manager-rango-preset
 To use `queue-manager`, you need to create a queue definition and pass it to the Provider component of `react` package. You can use the `makeQueueDefinition` function from `rango-preset` package to create a queue definition quickly.
 
 ```js
-import { Provider } from '@rango-dev/queue-manager-react';
-import { SwapQueueContext, makeQueueDefinition } from '@rango-dev/queue-manager-rango-preset';
+import { Provider } from '@yeager-dev/queue-manager-react';
+import { SwapQueueContext, makeQueueDefinition } from '@yeager-dev/queue-manager-rango-preset';
 
 const swapQueueDef = () =>
   makeQueueDefinition({
@@ -61,7 +61,7 @@ return (
 You can then use the useManager to access the queueManager object and get store data using React hooks.
 
 ```
-import { useManager } from "@rango-dev/queue-manager-react";
+import { useManager } from "@yeager-dev/queue-manager-react";
 
   const { manager } = useManager();
   const storage = manager?.getAll();

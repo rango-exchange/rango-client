@@ -1,4 +1,4 @@
-import type { WalletType } from '@rango-dev/wallets-shared';
+import type { WalletType } from '@yeager-dev/wallets-shared';
 
 interface Wallet {
   chain: string;

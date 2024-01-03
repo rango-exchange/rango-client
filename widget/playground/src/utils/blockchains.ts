@@ -1,6 +1,6 @@
 import type { BlockchainMeta } from 'rango-sdk';
 
-import { BlockchainCategories } from '@rango-dev/ui';
+import { BlockchainCategories } from '@yeager-dev/ui';
 import { TransactionType } from 'rango-sdk';
 
 export function getCategoryNetworks(chains: BlockchainMeta[]) {

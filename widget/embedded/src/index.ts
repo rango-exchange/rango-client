@@ -27,16 +27,16 @@ import type {
   StepSucceededEvent,
   StepTxExecutionBlockedEvent,
   StepTxExecutionUpdatedEvent,
-} from '@rango-dev/queue-manager-rango-preset';
+} from '@yeager-dev/queue-manager-rango-preset';
 import type {
   EventHandler as HandleWalletsUpdate,
   ProviderInterface,
-} from '@rango-dev/wallets-react';
+} from '@yeager-dev/wallets-react';
 import type {
   WalletInfo,
   WalletState,
   WalletType,
-} from '@rango-dev/wallets-shared';
+} from '@yeager-dev/wallets-shared';
 import type { PendingSwap, PendingSwapStep } from 'rango-types';
 
 import {
@@ -46,13 +46,13 @@ import {
   StepExecutionBlockedEventStatus,
   StepExecutionEventStatus,
   useEvents as useWidgetEvents,
-} from '@rango-dev/queue-manager-rango-preset';
+} from '@yeager-dev/queue-manager-rango-preset';
 import {
   readAccountAddress,
   useWallets,
   Events as WalletEvents,
-} from '@rango-dev/wallets-react';
-import { Networks, WalletTypes } from '@rango-dev/wallets-shared';
+} from '@yeager-dev/wallets-react';
+import { Networks, WalletTypes } from '@yeager-dev/wallets-shared';
 import { PendingSwapNetworkStatus } from 'rango-types';
 
 import { WidgetWallets } from './containers/Wallets';

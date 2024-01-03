@@ -1,4 +1,4 @@
-import { Networks, ProviderConnectResult } from '@rango-dev/wallets-shared';
+import { Networks, ProviderConnectResult } from '@yeager-dev/wallets-shared';
 
 export async function getSolanaAccounts(
   instance: any

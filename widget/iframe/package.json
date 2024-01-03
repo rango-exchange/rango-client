@@ -1,5 +1,5 @@
 {
-  "name": "@rango-dev/widget-iframe",
+  "name": "@yeager-dev/widget-iframe",
   "version": "0.13.1-next.33",
   "license": "MIT",
   "private": true,
@@ -13,6 +13,6 @@
   },
   "devDependencies": {},
   "dependencies": {
-    "@rango-dev/widget-embedded": "^0.20.1-next.11"
+    "@yeager-dev/widget-embedded": "^0.20.1-next.11"
   }
 }

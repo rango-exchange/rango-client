@@ -7,7 +7,7 @@ import type {
   Suggest,
   SwitchNetwork,
   WalletInfo,
-} from '@rango-dev/wallets-shared';
+} from '@yeager-dev/wallets-shared';
 import type { BlockchainMeta, SignerFactory } from 'rango-types';
 
 import {
@@ -21,7 +21,7 @@ import {
   suggestCosmosChain,
   switchNetworkForEvm,
   WalletTypes,
-} from '@rango-dev/wallets-shared';
+} from '@yeager-dev/wallets-shared';
 import {
   cosmosBlockchains,
   evmBlockchains,

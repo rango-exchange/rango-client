@@ -1,4 +1,4 @@
-import { keyframes, styled } from '@rango-dev/ui';
+import { keyframes, styled } from '@yeager-dev/ui';
 
 export const IconContainer = styled('div', {
   borderRadius: '$lg',

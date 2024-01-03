@@ -2,7 +2,7 @@ import type { SignClient } from '@walletconnect/sign-client/dist/types/client';
 import type { SessionTypes } from '@walletconnect/types';
 import type { EvmTransaction } from 'rango-types/lib/api/main';
 
-import { cleanEvmError } from '@rango-dev/signer-evm';
+import { cleanEvmError } from '@yeager-dev/signer-evm';
 import * as encoding from '@walletconnect/encoding';
 import { AccountId, ChainId } from 'caip';
 import { type GenericSigner } from 'rango-types';

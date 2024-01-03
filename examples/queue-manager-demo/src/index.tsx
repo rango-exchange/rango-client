@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { createRoot } from 'react-dom/client';
-import { Events, Provider } from '@rango-dev/wallets-react';
-import { allProviders } from '@rango-dev/provider-all';
+import { Events, Provider } from '@yeager-dev/wallets-react';
+import { allProviders } from '@yeager-dev/provider-all';
 import { RangoClient } from 'rango-sdk';
 import { App } from './App';
-import { WalletType } from '@rango-dev/wallets-shared';
+import { WalletType } from '@yeager-dev/wallets-shared';
 import { WC_PROJECT_ID } from './configs';
 
 const providers = allProviders({

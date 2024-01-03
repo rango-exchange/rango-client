@@ -1,6 +1,6 @@
 import type { ModalPropTypes } from './SwapDetailsModal.types';
 
-import { Modal } from '@rango-dev/ui';
+import { Modal } from '@yeager-dev/ui';
 import { PendingSwapNetworkStatus } from 'rango-types';
 import React from 'react';
 

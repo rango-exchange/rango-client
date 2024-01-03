@@ -1,5 +1,5 @@
 {
-  "name": "@rango-dev/signer-evm",
+  "name": "@yeager-dev/signer-evm",
   "version": "0.25.0",
   "license": "MIT",
   "type": "module",

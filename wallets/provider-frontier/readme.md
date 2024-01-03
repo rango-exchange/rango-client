@@ -1,1 +1,1 @@
-# @rango-dev/provider-frontier
+# @yeager-dev/provider-frontier

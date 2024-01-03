@@ -1,1 +1,1 @@
-# @rango-dev/provider-cosmostation
+# @yeager-dev/provider-cosmostation

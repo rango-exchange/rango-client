@@ -1,4 +1,4 @@
-import { DefaultTronSigner } from '@rango-dev/signer-tron';
+import { DefaultTronSigner } from '@yeager-dev/signer-tron';
 import {
   DefaultSignerFactory,
   SignerFactory,

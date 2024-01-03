@@ -1,4 +1,4 @@
-import { waitMs } from '@rango-dev/signer-evm';
+import { waitMs } from '@yeager-dev/signer-evm';
 import { SafeAppProvider } from '@safe-global/safe-apps-provider';
 import SafeAppsSDK, { TransactionStatus } from '@safe-global/safe-apps-sdk';
 

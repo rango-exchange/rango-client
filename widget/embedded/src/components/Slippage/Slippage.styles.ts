@@ -1,4 +1,4 @@
-import { Chip, styled, TextField } from '@rango-dev/ui';
+import { Chip, styled, TextField } from '@yeager-dev/ui';
 
 export const BaseContainer = styled('div', {
   paddingTop: '$5',

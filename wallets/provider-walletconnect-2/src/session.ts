@@ -7,7 +7,7 @@ import type {
 } from '@walletconnect/types';
 import type { BlockchainMeta } from 'rango-types/lib';
 
-import { Networks, timeout } from '@rango-dev/wallets-shared';
+import { Networks, timeout } from '@yeager-dev/wallets-shared';
 import { getSdkError } from '@walletconnect/utils';
 import { AccountId } from 'caip';
 

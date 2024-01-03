@@ -1,6 +1,6 @@
 import type { LoadingTokenListProps } from './TokenList.types';
 
-import { Divider, ListItem, Skeleton } from '@rango-dev/ui';
+import { Divider, ListItem, Skeleton } from '@yeager-dev/ui';
 import React from 'react';
 
 import { End, List } from './TokenList.styles';

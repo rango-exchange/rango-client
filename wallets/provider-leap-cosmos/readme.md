@@ -1,1 +1,1 @@
-# @rango-dev/provider-leap-cosmos
+# @yeager-dev/provider-leap-cosmos

@@ -1,4 +1,4 @@
-import { Network } from '@rango-dev/wallets-shared';
+import { Network } from '@yeager-dev/wallets-shared';
 import { Options } from './wallet';
 
 export function formatAddressWithNetwork(

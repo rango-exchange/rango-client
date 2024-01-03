@@ -4,7 +4,7 @@ import type {
   Subscribe,
   SwitchNetwork,
   WalletInfo,
-} from '@rango-dev/wallets-shared';
+} from '@yeager-dev/wallets-shared';
 import type { BlockchainMeta, SignerFactory } from 'rango-types';
 
 import {
@@ -15,7 +15,7 @@ import {
   Networks,
   switchNetworkForEvm,
   WalletTypes,
-} from '@rango-dev/wallets-shared';
+} from '@yeager-dev/wallets-shared';
 import { evmBlockchains, solanaBlockchain } from 'rango-types';
 
 import { coin98 as coin98_instances, getSolanaAccounts } from './helpers';

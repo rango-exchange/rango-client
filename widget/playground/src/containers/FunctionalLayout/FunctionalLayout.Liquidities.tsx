@@ -1,6 +1,6 @@
 import type { LiquidityType } from './FunctionalLayout.types';
 
-import { ChainsIcon, Checkbox, Divider, Typography } from '@rango-dev/ui';
+import { ChainsIcon, Checkbox, Divider, Typography } from '@yeager-dev/ui';
 import React from 'react';
 
 import { MultiSelect } from '../../components/MultiSelect/MultiSelect';

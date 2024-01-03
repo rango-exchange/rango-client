@@ -2,8 +2,8 @@ import {
   createTheme,
   darkTheme as defaultDarkTheme,
   lightTheme as defaultLightTheme,
-} from '@rango-dev/ui';
-import { customizedThemeTokens } from '@rango-dev/widget-embedded';
+} from '@yeager-dev/ui';
+import { customizedThemeTokens } from '@yeager-dev/widget-embedded';
 import { useEffect, useLayoutEffect, useState } from 'react';
 
 import { NOT_FOUND } from '../constants';

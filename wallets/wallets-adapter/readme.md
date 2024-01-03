@@ -1,1 +1,1 @@
-# @rango-dev/provider-adapter
+# @yeager-dev/provider-adapter

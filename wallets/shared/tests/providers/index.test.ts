@@ -2,7 +2,7 @@ import { describe, beforeEach, it, expect } from 'vitest';
 import {
   canEagerlyConnectToEvm,
   getEvmAccounts,
-} from '@rango-dev/wallets-shared';
+} from '@yeager-dev/wallets-shared';
 import { MockEvmProvider } from '../../../../test-utils/mock.evm.provider';
 
 describe('Test EVM Provider', function test() {

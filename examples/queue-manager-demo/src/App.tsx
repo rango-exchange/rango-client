@@ -1,17 +1,17 @@
 import React, { useMemo } from 'react';
-import { Provider as ManagerProvider } from '@rango-dev/queue-manager-react';
+import { Provider as ManagerProvider } from '@yeager-dev/queue-manager-react';
 import { FlowsList } from './components/FlowsList';
 import { meta } from './flows/rango/mock';
-import { useWallets } from '@rango-dev/wallets-react';
+import { useWallets } from '@yeager-dev/wallets-react';
 import { metamaskWallet } from './flows/rango/mock';
 import { Wallet } from './flows/rango/types';
-import { Network, WalletType } from '@rango-dev/wallets-shared';
+import { Network, WalletType } from '@yeager-dev/wallets-shared';
 import { Wallets } from './components/Wallets';
 import { History } from './components/History';
 import {
   SwapQueueContext,
   makeQueueDefinition,
-} from '@rango-dev/queue-manager-rango-preset';
+} from '@yeager-dev/queue-manager-rango-preset';
 import { getConfig } from './configs';
 const wallet: Wallet = metamaskWallet;
 

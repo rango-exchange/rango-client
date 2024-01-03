@@ -1,4 +1,4 @@
-# @rango-dev/widget-iframe
+# @yeager-dev/widget-iframe
 
 It's a javascript code to create an `iframe` for loading Rango's widget to your page.
 

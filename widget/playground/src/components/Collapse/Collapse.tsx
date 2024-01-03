@@ -1,7 +1,7 @@
 import type { PropTypes } from './Collapse.types';
 import type { PropsWithChildren } from 'react';
 
-import { ChevronDownIcon, ChevronUpIcon, Typography } from '@rango-dev/ui';
+import { ChevronDownIcon, ChevronUpIcon, Typography } from '@yeager-dev/ui';
 import React from 'react';
 
 import {

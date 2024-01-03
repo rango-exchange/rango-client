@@ -1,5 +1,5 @@
 {
-  "name": "@rango-dev/signer-terra",
+  "name": "@yeager-dev/signer-terra",
   "version": "0.25.0",
   "license": "MIT",
   "type": "module",

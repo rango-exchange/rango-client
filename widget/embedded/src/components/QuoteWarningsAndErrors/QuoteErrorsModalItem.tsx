@@ -1,6 +1,6 @@
 import type { ModalContentData } from './QuoteWarningsAndErrors.types';
 
-import { Typography } from '@rango-dev/ui';
+import { Typography } from '@yeager-dev/ui';
 import React from 'react';
 
 import { Item } from './QuoteWarningsAndErrors.styles';

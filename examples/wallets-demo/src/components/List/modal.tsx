@@ -1,4 +1,4 @@
-import type { WalletType } from '@rango-dev/wallets-shared';
+import type { WalletType } from '@yeager-dev/wallets-shared';
 import type {
   Asset,
   BestRouteRequest,
@@ -7,9 +7,9 @@ import type {
   TransactionType,
 } from 'rango-sdk';
 
-import { Button, Divider, Modal, styled, Typography } from '@rango-dev/ui';
-import { useWallets } from '@rango-dev/wallets-react';
-import { isEvmAddress, Networks } from '@rango-dev/wallets-shared';
+import { Button, Divider, Modal, styled, Typography } from '@yeager-dev/ui';
+import { useWallets } from '@yeager-dev/wallets-react';
+import { isEvmAddress, Networks } from '@yeager-dev/wallets-shared';
 import {
   isCosmosBlockchain,
   isEvmBlockchain,

@@ -1,7 +1,7 @@
 import type { ModalContentProps } from './WalletModal.types';
 
 import { i18n } from '@lingui/core';
-import { Image, MessageBox, WalletState } from '@rango-dev/ui';
+import { Image, MessageBox, WalletState } from '@yeager-dev/ui';
 import React from 'react';
 
 import {

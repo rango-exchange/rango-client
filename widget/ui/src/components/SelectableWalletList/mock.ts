@@ -1,4 +1,4 @@
-import { Networks, WalletTypes } from '@rango-dev/wallets-shared';
+import { Networks, WalletTypes } from '@yeager-dev/wallets-shared';
 
 export const data = [
   {

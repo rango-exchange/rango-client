@@ -1,4 +1,4 @@
-import { ReverseIcon, styled } from '@rango-dev/ui';
+import { ReverseIcon, styled } from '@yeager-dev/ui';
 import React from 'react';
 
 import { useQuoteStore } from '../store/quote';

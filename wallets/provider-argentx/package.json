@@ -1,5 +1,5 @@
 {
-  "name": "@rango-dev/provider-argentx",
+  "name": "@yeager-dev/provider-argentx",
   "version": "0.26.1-next.2",
   "license": "MIT",
   "type": "module",
@@ -21,8 +21,8 @@
     "lint": "eslint \"**/*.{ts,tsx}\" --ignore-path ../../.eslintignore"
   },
   "dependencies": {
-    "@rango-dev/signer-starknet": "^0.25.1-next.0",
-    "@rango-dev/wallets-shared": "^0.25.1-next.1",
+    "@yeager-dev/signer-starknet": "^0.25.1-next.0",
+    "@yeager-dev/wallets-shared": "^0.25.1-next.1",
     "rango-types": "^0.1.57"
   },
   "publishConfig": {

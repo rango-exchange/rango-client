@@ -1,9 +1,9 @@
 import type {
   ProviderInterface,
   ProviderProps,
-} from '@rango-dev/wallets-react';
+} from '@yeager-dev/wallets-react';
 
-import { Provider } from '@rango-dev/wallets-react';
+import { Provider } from '@yeager-dev/wallets-react';
 import React from 'react';
 
 import Adapter from './adapter';

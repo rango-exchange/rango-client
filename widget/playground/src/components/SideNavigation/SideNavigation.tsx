@@ -1,6 +1,6 @@
 import type { PropTypes } from './SideNavigation.types';
 
-import { InfoIcon, SettingsIcon, StyleIcon } from '@rango-dev/ui';
+import { InfoIcon, SettingsIcon, StyleIcon } from '@yeager-dev/ui';
 import React from 'react';
 
 import { SIDE_TABS_IDS } from '../../constants';

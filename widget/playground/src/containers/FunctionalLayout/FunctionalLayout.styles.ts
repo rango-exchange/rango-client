@@ -1,4 +1,4 @@
-import { Button, styled } from '@rango-dev/ui';
+import { Button, styled } from '@yeager-dev/ui';
 
 export const Layout = styled('div', {
   borderRadius: '20px',

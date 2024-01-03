@@ -3,7 +3,7 @@ import type {
   Subscribe,
   Suggest,
   WalletInfo,
-} from '@rango-dev/wallets-shared';
+} from '@yeager-dev/wallets-shared';
 import type { BlockchainMeta, SignerFactory } from 'rango-types';
 
 import {
@@ -11,7 +11,7 @@ import {
   Networks,
   suggestCosmosChain,
   WalletTypes,
-} from '@rango-dev/wallets-shared';
+} from '@yeager-dev/wallets-shared';
 import { cosmosBlockchains } from 'rango-types';
 
 import { getSupportedChains, leap_cosmos_instance } from './helpers';

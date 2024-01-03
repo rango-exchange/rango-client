@@ -1,7 +1,7 @@
 import type { WaningAlertsProps } from './SwapDetailsAlerts.types';
 
 import { i18n } from '@lingui/core';
-import { Alert, Button } from '@rango-dev/ui';
+import { Alert, Button } from '@yeager-dev/ui';
 import { PendingSwapNetworkStatus } from 'rango-types';
 import React from 'react';
 

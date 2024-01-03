@@ -1,4 +1,4 @@
-import { darkTheme, styled } from '@rango-dev/ui';
+import { darkTheme, styled } from '@yeager-dev/ui';
 
 export const Alerts = styled('div', {
   width: '100%',

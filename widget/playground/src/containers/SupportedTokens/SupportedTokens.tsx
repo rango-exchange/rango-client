@@ -1,7 +1,7 @@
 import type { Type } from '../../types';
 import type { tokensConfigType } from '../../utils/configs';
 
-import { ChainsIcon } from '@rango-dev/ui';
+import { ChainsIcon } from '@yeager-dev/ui';
 import React from 'react';
 
 import { MultiSelect } from '../../components/MultiSelect/MultiSelect';

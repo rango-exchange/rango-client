@@ -1,7 +1,7 @@
 import type { PropTypes } from './ColorPicker.types';
 import type { ColorResult } from 'react-color';
 
-import { Button, Popover, Typography } from '@rango-dev/ui';
+import { Button, Popover, Typography } from '@yeager-dev/ui';
 import React from 'react';
 import { ChromePicker } from 'react-color';
 

@@ -2,7 +2,7 @@ import {
   Network,
   Networks,
   ProviderConnectResult,
-} from '@rango-dev/wallets-shared';
+} from '@yeager-dev/wallets-shared';
 import { SUPPORTED_ETH_CHAINS, SUPPORTED_NETWORKS } from './constants';
 import { SignerError, SignerErrorCode } from 'rango-types';
 

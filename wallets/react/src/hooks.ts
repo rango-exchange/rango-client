@@ -3,7 +3,7 @@ import { WalletContext } from './context';
 import { ProviderContext, WalletActions, WalletConfig } from './types';
 import Wallet, {
   EventHandler as WalletEventHandler,
-} from '@rango-dev/wallets-core';
+} from '@yeager-dev/wallets-core';
 
 /**
  *

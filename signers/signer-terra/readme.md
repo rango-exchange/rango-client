@@ -1,1 +1,1 @@
-# @rango-dev/signer-terra
+# @yeager-dev/signer-terra

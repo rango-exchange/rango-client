@@ -3,7 +3,7 @@ import type { OffChainSignMessageResponse } from '@safe-global/safe-apps-sdk';
 import type { GenericSigner } from 'rango-types';
 import type { EvmTransaction } from 'rango-types/lib/api/main';
 
-import { DefaultEvmSigner } from '@rango-dev/signer-evm';
+import { DefaultEvmSigner } from '@yeager-dev/signer-evm';
 
 import { getTxHash, sdk } from './helpers';
 

@@ -1,1 +1,1 @@
-# @rango-dev/provider-okx
+# @yeager-dev/provider-okx

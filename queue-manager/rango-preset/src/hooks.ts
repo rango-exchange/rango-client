@@ -1,4 +1,4 @@
-import { useManager } from '@rango-dev/queue-manager-react';
+import { useManager } from '@yeager-dev/queue-manager-react';
 import { useEffect, useState } from 'react';
 import {
   checkWaitingForConnectWalletChange,

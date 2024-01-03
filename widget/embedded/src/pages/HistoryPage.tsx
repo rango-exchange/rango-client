@@ -1,8 +1,8 @@
 import type { PendingSwap, PendingSwapStep } from 'rango-types';
 
 import { i18n } from '@lingui/core';
-import { useManager } from '@rango-dev/queue-manager-react';
-import { Divider, NotFound, styled } from '@rango-dev/ui';
+import { useManager } from '@yeager-dev/queue-manager-react';
+import { Divider, NotFound, styled } from '@yeager-dev/ui';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 

@@ -1,4 +1,4 @@
-import { Divider } from '@rango-dev/ui';
+import { Divider } from '@yeager-dev/ui';
 import React, { useState } from 'react';
 
 import { ExportConfigModal } from '../../components/ExportConfigModal';

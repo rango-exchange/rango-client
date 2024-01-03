@@ -7,10 +7,10 @@ import type {
   Transaction,
   TransferTransaction,
   WalletType,
-} from '@rango-dev/wallets-shared';
+} from '@yeager-dev/wallets-shared';
 import type BigNumber from 'bignumber.js';
 
-import { Networks } from '@rango-dev/wallets-shared';
+import { Networks } from '@yeager-dev/wallets-shared';
 
 export type WalletTypeAndAddress = {
   walletType: WalletType;

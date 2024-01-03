@@ -7,7 +7,7 @@ import {
   SettingsIcon,
   Tooltip,
   TransactionIcon,
-} from '@rango-dev/ui';
+} from '@yeager-dev/ui';
 import React from 'react';
 
 import { useAppStore } from '../../store/AppStore';

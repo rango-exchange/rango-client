@@ -1,5 +1,5 @@
 {
-  "name": "@rango-dev/queue-manager-rango-preset",
+  "name": "@yeager-dev/queue-manager-rango-preset",
   "version": "0.25.1-next.1",
   "license": "MIT",
   "type": "module",
@@ -21,10 +21,10 @@
     "lint": "eslint \"**/*.{ts,tsx}\" --ignore-path ../../.eslintignore"
   },
   "peerDependencies": {
-    "@rango-dev/queue-manager-core": "*",
-    "@rango-dev/queue-manager-react": "*",
-    "@rango-dev/wallets-core": "*",
-    "@rango-dev/wallets-shared": "*",
+    "@yeager-dev/queue-manager-core": "*",
+    "@yeager-dev/queue-manager-react": "*",
+    "@yeager-dev/wallets-core": "*",
+    "@yeager-dev/wallets-shared": "*",
     "@sentry/browser": "*",
     "bignumber.js": "*",
     "rango-sdk": "*",

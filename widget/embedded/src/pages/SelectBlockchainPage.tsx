@@ -3,7 +3,7 @@ import {
   Divider,
   getCountCategories,
   SelectableCategoryList,
-} from '@rango-dev/ui';
+} from '@yeager-dev/ui';
 import React, { useState } from 'react';
 
 import { BlockchainList } from '../components/BlockchainList';

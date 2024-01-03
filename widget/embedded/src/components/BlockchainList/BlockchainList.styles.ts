@@ -1,4 +1,4 @@
-import { ImageContainer, styled } from '@rango-dev/ui';
+import { ImageContainer, styled } from '@yeager-dev/ui';
 
 export const Container = styled('div', {
   display: 'flex',

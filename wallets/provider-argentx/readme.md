@@ -1,1 +1,1 @@
-# @rango-dev/provider-argentx
+# @yeager-dev/provider-argentx

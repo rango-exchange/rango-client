@@ -1,4 +1,4 @@
-import { Typography } from '@rango-dev/ui';
+import { Typography } from '@yeager-dev/ui';
 import React from 'react';
 
 import { useNotificationStore } from '../../store/notification';

@@ -1,8 +1,8 @@
-import type { WalletType } from '@rango-dev/wallets-shared';
+import type { WalletType } from '@yeager-dev/wallets-shared';
 import type { PropsWithChildren } from 'react';
 
-import { useQueueManager } from '@rango-dev/queue-manager-rango-preset';
-import { useWallets } from '@rango-dev/wallets-react';
+import { useQueueManager } from '@yeager-dev/queue-manager-rango-preset';
+import { useWallets } from '@yeager-dev/wallets-react';
 import { isEvmBlockchain } from 'rango-types';
 import React, { Fragment } from 'react';
 import { MemoryRouter, useInRouterContext } from 'react-router';

@@ -1,3 +1,3 @@
-# @rango-dev/widget-embedded
+# @yeager-dev/widget-embedded
 
 Rango Embedded Widget

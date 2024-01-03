@@ -5,8 +5,8 @@ import type { CosmosTransaction, GenericSigner } from 'rango-types';
 
 import { BroadcastMode, makeSignDoc } from '@cosmjs/launchpad';
 import { cosmos } from '@keplr-wallet/cosmos';
-import { getsignedTx } from '@rango-dev/signer-cosmos';
-import { uint8ArrayToHex } from '@rango-dev/wallets-shared';
+import { getsignedTx } from '@yeager-dev/signer-cosmos';
+import { uint8ArrayToHex } from '@yeager-dev/wallets-shared';
 import { AccountId, ChainId } from 'caip';
 import { formatDirectSignDoc, stringifySignDocValues } from 'cosmos-wallet';
 import { SignerError, SignerErrorCode } from 'rango-types';

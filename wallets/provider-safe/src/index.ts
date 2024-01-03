@@ -6,7 +6,7 @@ import type {
   Subscribe,
   SwitchNetwork,
   WalletInfo,
-} from '@rango-dev/wallets-shared';
+} from '@yeager-dev/wallets-shared';
 import type { BlockchainMeta, SignerFactory } from 'rango-types';
 
 import {
@@ -15,7 +15,7 @@ import {
   subscribeToEvm,
   switchNetworkForEvm,
   WalletTypes,
-} from '@rango-dev/wallets-shared';
+} from '@yeager-dev/wallets-shared';
 import { evmBlockchains, isEvmBlockchain } from 'rango-types';
 
 import { getSafeInstance } from './helpers';

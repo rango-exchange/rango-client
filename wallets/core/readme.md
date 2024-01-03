@@ -1,1 +1,1 @@
-# @rango-dev/wallets-core
+# @yeager-dev/wallets-core

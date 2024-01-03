@@ -1,6 +1,6 @@
 import type { WidgetInfoContextInterface } from './WidgetInfo.types';
 
-import { useManager } from '@rango-dev/queue-manager-react';
+import { useManager } from '@yeager-dev/queue-manager-react';
 import React, { createContext, useContext } from 'react';
 
 import { useAppStore } from '../../store/AppStore';

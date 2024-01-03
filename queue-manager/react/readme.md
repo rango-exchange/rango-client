@@ -1,1 +1,1 @@
-# @rango-dev/queue-manager-react
+# @yeager-dev/queue-manager-react

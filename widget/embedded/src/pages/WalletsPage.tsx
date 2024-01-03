@@ -1,7 +1,7 @@
-import type { WalletType } from '@rango-dev/wallets-shared';
+import type { WalletType } from '@yeager-dev/wallets-shared';
 
 import { i18n } from '@lingui/core';
-import { styled, Typography, Wallet, WalletState } from '@rango-dev/ui';
+import { styled, Typography, Wallet, WalletState } from '@yeager-dev/ui';
 import React, { Fragment, useState } from 'react';
 
 import { Layout } from '../components/Layout';

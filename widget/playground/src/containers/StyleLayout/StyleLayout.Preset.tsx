@@ -1,7 +1,7 @@
 import type { ColorsTypes, PresetTypes } from './StyleLayout.types';
-import type { WidgetColors } from '@rango-dev/widget-embedded';
+import type { WidgetColors } from '@yeager-dev/widget-embedded';
 
-import { Button, Divider, Switch, Typography } from '@rango-dev/ui';
+import { Button, Divider, Switch, Typography } from '@yeager-dev/ui';
 import React, { useState } from 'react';
 
 import { DEFAULT_COLORS, PRESETS } from '../../constants';

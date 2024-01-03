@@ -4,7 +4,7 @@ import bs58 from 'bs58';
 import {
   SolanaWeb3Signer,
   generalSolanaTransactionExecutor,
-} from '@rango-dev/signer-solana';
+} from '@yeager-dev/signer-solana';
 
 // TODO - replace with real type
 // tslint:disable-next-line: no-any

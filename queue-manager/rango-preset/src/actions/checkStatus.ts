@@ -1,5 +1,5 @@
 import type { SwapQueueContext, SwapStorage } from '../types';
-import type { ExecuterActions } from '@rango-dev/queue-manager-core';
+import type { ExecuterActions } from '@yeager-dev/queue-manager-core';
 import type { Transaction, TransactionStatusResponse } from 'rango-sdk';
 import type { GenericSigner } from 'rango-types';
 

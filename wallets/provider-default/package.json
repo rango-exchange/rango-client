@@ -1,5 +1,5 @@
 {
-  "name": "@rango-dev/provider-default",
+  "name": "@yeager-dev/provider-default",
   "version": "0.22.1-next.1",
   "license": "MIT",
   "type": "module",
@@ -21,8 +21,8 @@
     "lint": "eslint \"**/*.{ts,tsx}\" --ignore-path ../../.eslintignore"
   },
   "dependencies": {
-    "@rango-dev/signer-evm": "^0.25.0",
-    "@rango-dev/wallets-shared": "^0.25.1-next.1",
+    "@yeager-dev/signer-evm": "^0.25.0",
+    "@yeager-dev/wallets-shared": "^0.25.1-next.1",
     "rango-types": "^0.1.57"
   },
   "publishConfig": {

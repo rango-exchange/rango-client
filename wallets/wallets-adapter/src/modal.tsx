@@ -1,7 +1,7 @@
-import type { WalletType } from '@rango-dev/wallets-shared';
+import type { WalletType } from '@yeager-dev/wallets-shared';
 
-import { ConnectWalletsModal } from '@rango-dev/ui';
-import { useWallets } from '@rango-dev/wallets-react';
+import { ConnectWalletsModal } from '@yeager-dev/ui';
+import { useWallets } from '@yeager-dev/wallets-react';
 import React, { useState } from 'react';
 
 import { mapWalletTypesToWalletInfo } from './helpers';

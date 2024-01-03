@@ -3,10 +3,10 @@ import type {
   ManagerContext as Context,
   Events,
   QueueDef,
-} from '@rango-dev/queue-manager-core';
+} from '@yeager-dev/queue-manager-core';
 import type { PropsWithChildren } from 'react';
 
-import { Manager } from '@rango-dev/queue-manager-core';
+import { Manager } from '@yeager-dev/queue-manager-core';
 import React, {
   createContext,
   useContext,

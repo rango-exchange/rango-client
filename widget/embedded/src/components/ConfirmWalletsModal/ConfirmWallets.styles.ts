@@ -7,7 +7,7 @@ import {
   keyframes,
   styled,
   TextField,
-} from '@rango-dev/ui';
+} from '@yeager-dev/ui';
 
 export const EXPANDABLE_TRANSITION_DURATION = 300;
 

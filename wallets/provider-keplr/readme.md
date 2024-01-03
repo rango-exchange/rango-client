@@ -1,1 +1,1 @@
-# @rango-dev/provider-keplr
+# @yeager-dev/provider-keplr

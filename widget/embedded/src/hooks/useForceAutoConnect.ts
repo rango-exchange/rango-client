@@ -1,4 +1,4 @@
-import { useWallets } from '@rango-dev/wallets-react';
+import { useWallets } from '@yeager-dev/wallets-react';
 import { useEffect, useRef } from 'react';
 
 import { SearchParams } from '../constants/searchParams';

@@ -2,7 +2,7 @@ import {
   Network,
   Networks,
   ProviderConnectResult,
-} from '@rango-dev/wallets-shared';
+} from '@yeager-dev/wallets-shared';
 
 export function clover() {
   const { clover, clover_solana } = window;

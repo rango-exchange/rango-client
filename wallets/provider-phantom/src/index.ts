@@ -4,14 +4,14 @@ import type {
   Connect,
   Subscribe,
   WalletInfo,
-} from '@rango-dev/wallets-shared';
+} from '@yeager-dev/wallets-shared';
 import type { BlockchainMeta, SignerFactory } from 'rango-types';
 
 import {
   getSolanaAccounts,
   Networks,
   WalletTypes,
-} from '@rango-dev/wallets-shared';
+} from '@yeager-dev/wallets-shared';
 import { solanaBlockchain } from 'rango-types';
 
 import { phantom as phantom_instance } from './helpers';

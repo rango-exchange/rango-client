@@ -1,5 +1,5 @@
 {
-  "name": "@rango-dev/queue-manager-core",
+  "name": "@yeager-dev/queue-manager-core",
   "version": "0.25.0",
   "license": "MIT",
   "type": "module",

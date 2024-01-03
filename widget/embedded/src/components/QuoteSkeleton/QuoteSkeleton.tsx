@@ -1,6 +1,6 @@
 import type { PropTypes } from './QuoteSkeleton.types';
 
-import { Divider, Skeleton } from '@rango-dev/ui';
+import { Divider, Skeleton } from '@yeager-dev/ui';
 import React from 'react';
 
 import { Chains, Container, Steps } from './QuoteSkeleton.styles';

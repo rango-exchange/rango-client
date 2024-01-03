@@ -5,7 +5,7 @@ import type {
 } from '../hooks/useConfirmSwap/useConfirmSwap.types';
 
 import { i18n } from '@lingui/core';
-import { useManager } from '@rango-dev/queue-manager-react';
+import { useManager } from '@yeager-dev/queue-manager-react';
 import {
   Alert,
   Button,
@@ -17,7 +17,7 @@ import {
   Tooltip,
   Typography,
   WalletIcon,
-} from '@rango-dev/ui';
+} from '@yeager-dev/ui';
 import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { flushSync } from 'react-dom';
 import { useNavigate } from 'react-router-dom';

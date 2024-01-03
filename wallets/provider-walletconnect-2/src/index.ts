@@ -8,11 +8,11 @@ import type {
   SwitchNetwork,
   WalletConfig,
   WalletInfo,
-} from '@rango-dev/wallets-shared';
+} from '@yeager-dev/wallets-shared';
 import type { ISignClient } from '@walletconnect/types';
 import type { BlockchainMeta, SignerFactory } from 'rango-types';
 
-import { Networks, WalletTypes } from '@rango-dev/wallets-shared';
+import { Networks, WalletTypes } from '@yeager-dev/wallets-shared';
 import Client from '@walletconnect/sign-client';
 import { AccountId, ChainId } from 'caip';
 import { evmBlockchains } from 'rango-types';

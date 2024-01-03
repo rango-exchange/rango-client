@@ -1,4 +1,4 @@
-import { ListItem, Skeleton } from '@rango-dev/ui';
+import { ListItem, Skeleton } from '@yeager-dev/ui';
 import React from 'react';
 
 import { List } from './BlockchainList.styles';

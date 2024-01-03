@@ -1,1 +1,1 @@
-# @rango-dev/queue-manager-demo
+# @yeager-dev/queue-manager-demo

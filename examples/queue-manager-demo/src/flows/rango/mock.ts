@@ -1,4 +1,4 @@
-import { Meta, Networks, WalletTypes } from '@rango-dev/wallets-shared';
+import { Meta, Networks, WalletTypes } from '@yeager-dev/wallets-shared';
 import { RawAccounts, Wallet } from './types';
 
 const evmAddress = '0x2702d89c1c8658b49c45dd460deebcc45faec03c';

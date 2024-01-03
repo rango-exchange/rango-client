@@ -1,6 +1,6 @@
 import type { PropTypes } from './Slider.types';
 
-import { Typography } from '@rango-dev/ui';
+import { Typography } from '@yeager-dev/ui';
 import React from 'react';
 
 import {

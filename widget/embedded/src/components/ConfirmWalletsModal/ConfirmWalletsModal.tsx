@@ -14,7 +14,7 @@ import {
   Modal,
   Typography,
   WalletIcon,
-} from '@rango-dev/ui';
+} from '@yeager-dev/ui';
 import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 

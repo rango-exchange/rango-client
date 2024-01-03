@@ -5,11 +5,11 @@ import type {
 } from './Wallets.types';
 import type { Wallet } from '../../types/wallets';
 import type { ProvidersOptions } from '../../utils/providers';
-import type { EventHandler } from '@rango-dev/wallets-react';
-import type { Network } from '@rango-dev/wallets-shared';
+import type { EventHandler } from '@yeager-dev/wallets-react';
+import type { Network } from '@yeager-dev/wallets-shared';
 import type { PropsWithChildren } from 'react';
 
-import { Events, Provider } from '@rango-dev/wallets-react';
+import { Events, Provider } from '@yeager-dev/wallets-react';
 import { isEvmBlockchain } from 'rango-sdk';
 import React, { createContext, useEffect, useRef, useState } from 'react';
 

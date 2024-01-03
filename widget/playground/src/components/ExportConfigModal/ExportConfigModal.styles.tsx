@@ -1,4 +1,4 @@
-import { Button, IconButton, styled } from '@rango-dev/ui';
+import { Button, IconButton, styled } from '@yeager-dev/ui';
 
 export const Link = styled('a', {
   color: '$neutral700',

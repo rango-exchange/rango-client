@@ -1,6 +1,6 @@
 import type { CustomColorsTypes } from './StyleLayout.types';
 import type { Mode } from '../../store/config';
-import type { WidgetColorsKeys } from '@rango-dev/widget-embedded';
+import type { WidgetColorsKeys } from '@yeager-dev/widget-embedded';
 
 import {
   ChevronDownIcon,
@@ -9,7 +9,7 @@ import {
   CustomColorsIcon,
   Divider,
   Typography,
-} from '@rango-dev/ui';
+} from '@yeager-dev/ui';
 import React, { useEffect, useState } from 'react';
 
 import { ColorPicker } from '../../components/ColorPicker';

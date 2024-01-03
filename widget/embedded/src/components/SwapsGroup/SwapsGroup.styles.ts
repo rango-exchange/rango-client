@@ -1,4 +1,4 @@
-import { css, darkTheme, styled } from '@rango-dev/ui';
+import { css, darkTheme, styled } from '@yeager-dev/ui';
 
 export const groupStyles = css();
 

@@ -1,4 +1,4 @@
-import { getCoinbaseInstance } from '@rango-dev/wallets-shared';
+import { getCoinbaseInstance } from '@yeager-dev/wallets-shared';
 
 export function metamask() {
   const isCoinbaseWalletAvailable = !!getCoinbaseInstance();

@@ -1,4 +1,4 @@
-import { DefaultTerraSigner } from '@rango-dev/signer-terra';
+import { DefaultTerraSigner } from '@yeager-dev/signer-terra';
 import { DefaultSignerFactory } from 'rango-types';
 import { SignerFactory, TransactionType as TxType } from 'rango-types';
 

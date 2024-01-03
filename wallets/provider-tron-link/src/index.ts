@@ -3,10 +3,10 @@ import type {
   Connect,
   Subscribe,
   WalletInfo,
-} from '@rango-dev/wallets-shared';
+} from '@yeager-dev/wallets-shared';
 import type { BlockchainMeta, SignerFactory } from 'rango-types';
 
-import { Networks, WalletTypes } from '@rango-dev/wallets-shared';
+import { Networks, WalletTypes } from '@yeager-dev/wallets-shared';
 import { tronBlockchain } from 'rango-types';
 
 import { tronLink as tronLink_instance } from './helpers';

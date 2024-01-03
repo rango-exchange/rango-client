@@ -1,6 +1,6 @@
 import type { PropTypes } from './ItemPicker.types';
 
-import { ChevronRightIcon, Divider, Image, Typography } from '@rango-dev/ui';
+import { ChevronRightIcon, Divider, Image, Typography } from '@yeager-dev/ui';
 import React from 'react';
 
 import { Container, InputContainer, Title } from './ItemPicker.styles';

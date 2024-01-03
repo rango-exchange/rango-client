@@ -1,4 +1,4 @@
-import type { WidgetConfig } from '@rango-dev/widget-embedded';
+import type { WidgetConfig } from '@yeager-dev/widget-embedded';
 
 import { commonStyles } from './styles';
 

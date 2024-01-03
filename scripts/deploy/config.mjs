@@ -1,7 +1,7 @@
 import { getEnvWithFallback } from '../common/utils.mjs';
 import process from 'node:process';
 
-const scope = `@rango-dev`;
+const scope = `@yeager-dev`;
 export const VERCEL_ORG_ID = process.env.VERCEL_ORG_ID;
 export const VERCEL_TOKEN = process.env.VERCEL_TOKEN;
 export const VERCEL_PACKAGES = {

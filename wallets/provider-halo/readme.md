@@ -1,1 +1,1 @@
-# @rango-dev/provider-halo
+# @yeager-dev/provider-halo

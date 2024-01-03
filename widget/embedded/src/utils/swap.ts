@@ -8,7 +8,7 @@ import type {
   SwapButtonState,
   Wallet,
 } from '../types';
-import type { WalletType } from '@rango-dev/wallets-shared';
+import type { WalletType } from '@yeager-dev/wallets-shared';
 import type {
   BestRouteRequest,
   BestRouteResponse,

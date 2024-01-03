@@ -1,1 +1,1 @@
-# @rango-dev/signer-solana
+# @yeager-dev/signer-solana

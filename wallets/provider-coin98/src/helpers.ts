@@ -1,4 +1,4 @@
-import { Networks } from '@rango-dev/wallets-shared';
+import { Networks } from '@yeager-dev/wallets-shared';
 
 export function coin98() {
   const { coin98, ethereum } = window;

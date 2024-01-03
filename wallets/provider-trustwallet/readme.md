@@ -1,1 +1,1 @@
-# @rango-dev/provider-trustwallet
+# @yeager-dev/provider-trustwallet

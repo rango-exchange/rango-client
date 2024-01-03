@@ -7,7 +7,7 @@ import {
   NotFound,
   Skeleton,
   Typography,
-} from '@rango-dev/ui';
+} from '@yeager-dev/ui';
 import React from 'react';
 
 import { SuffixContainer } from '../HeaderButtons/HeaderButtons.styles';

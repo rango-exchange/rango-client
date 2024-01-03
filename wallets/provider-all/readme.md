@@ -1,1 +1,1 @@
-# @rango-dev/provider-all
+# @yeager-dev/provider-all

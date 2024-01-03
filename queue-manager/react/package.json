@@ -1,5 +1,5 @@
 {
-  "name": "@rango-dev/queue-manager-react",
+  "name": "@yeager-dev/queue-manager-react",
   "version": "0.24.0",
   "license": "MIT",
   "type": "module",
@@ -21,7 +21,7 @@
     "lint": "eslint \"**/*.{ts,tsx}\" --ignore-path ../../.eslintignore"
   },
   "peerDependencies": {
-    "@rango-dev/queue-manager-core": "*",
+    "@yeager-dev/queue-manager-core": "*",
     "@types/react": "^17.0.0 || ^18.0.0",
     "react": "^17.0.0 || ^18.0.0",
     "react-dom": "^17.0.0 || ^18.0.0"

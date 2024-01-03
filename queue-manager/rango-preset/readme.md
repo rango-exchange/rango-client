@@ -1,3 +1,3 @@
-# @rango-dev/queue-manager-rango-preset
+# @yeager-dev/queue-manager-rango-preset
 
 // TODO

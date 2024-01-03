@@ -1,7 +1,7 @@
 import type { PropTypes } from './SwapsGroup.types';
 
 import { i18n } from '@lingui/core';
-import { Divider, SwapListItem, Typography } from '@rango-dev/ui';
+import { Divider, SwapListItem, Typography } from '@yeager-dev/ui';
 import React from 'react';
 
 import {

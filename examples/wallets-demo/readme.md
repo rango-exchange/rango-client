@@ -1,1 +1,1 @@
-# @rango-dev/wallets-demo
+# @yeager-dev/wallets-demo

@@ -1,7 +1,7 @@
 import type { CancelContentProps } from './SwapDetailsModal.types';
 
 import { i18n } from '@lingui/core';
-import { Button, Divider, MessageBox, Typography } from '@rango-dev/ui';
+import { Button, Divider, MessageBox, Typography } from '@yeager-dev/ui';
 import React from 'react';
 
 export const CancelContent = ({ onCancel, onClose }: CancelContentProps) => {

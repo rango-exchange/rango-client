@@ -1,1 +1,1 @@
-# @rango-dev/provider-xdefi
+# @yeager-dev/provider-xdefi

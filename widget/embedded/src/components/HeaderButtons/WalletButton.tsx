@@ -1,7 +1,7 @@
 import type { PropTypes } from './HeaderButtons.types';
 
 import { i18n } from '@lingui/core';
-import { Tooltip, WalletIcon } from '@rango-dev/ui';
+import { Tooltip, WalletIcon } from '@yeager-dev/ui';
 import React from 'react';
 
 import { ConnectedIcon, HeaderButton } from './HeaderButtons.styles';

@@ -1,6 +1,6 @@
 import type { CodeBlockProps } from './CodeBlock.types';
 
-import { CopyIcon, Tooltip, useCopyToClipboard } from '@rango-dev/ui';
+import { CopyIcon, Tooltip, useCopyToClipboard } from '@yeager-dev/ui';
 import React from 'react';
 import { PrismLight as SyntaxHighlighter } from 'react-syntax-highlighter';
 import {

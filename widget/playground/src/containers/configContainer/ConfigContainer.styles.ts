@@ -1,4 +1,4 @@
-import { Button, darkTheme, styled } from '@rango-dev/ui';
+import { Button, darkTheme, styled } from '@yeager-dev/ui';
 
 export const Container = styled('div', {
   display: 'none',

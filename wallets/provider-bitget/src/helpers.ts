@@ -1,6 +1,6 @@
-import type { Network } from '@rango-dev/wallets-shared';
+import type { Network } from '@yeager-dev/wallets-shared';
 
-import { Networks } from '@rango-dev/wallets-shared';
+import { Networks } from '@yeager-dev/wallets-shared';
 
 type Provider = Map<Network, any>;
 

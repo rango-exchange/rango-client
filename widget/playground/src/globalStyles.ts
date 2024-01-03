@@ -1,4 +1,4 @@
-import { globalCss } from '@rango-dev/ui';
+import { globalCss } from '@yeager-dev/ui';
 
 export const globalStyles = globalCss({
   body: {

@@ -1,6 +1,6 @@
 import type { PropTypes } from './QuoteSummarySkeleton.types';
 
-import { ChainToken, Divider, Skeleton } from '@rango-dev/ui';
+import { ChainToken, Divider, Skeleton } from '@yeager-dev/ui';
 import React from 'react';
 
 import {

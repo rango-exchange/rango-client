@@ -22,7 +22,7 @@ import type {
   AllBlockchains,
   Network,
   WalletType,
-} from '@rango-dev/wallets-shared';
+} from '@yeager-dev/wallets-shared';
 import type { BestRouteRequest } from 'rango-sdk';
 import type { CheckApprovalResponse } from 'rango-sdk-basic';
 import type {
@@ -31,13 +31,13 @@ import type {
   PendingSwapStep,
 } from 'rango-types';
 
-import { SUPPORTED_ETH_CHAINS as XDEFI_WALLET_SUPPORTED_EVM_CHAINS } from '@rango-dev/provider-xdefi/src/constants';
-import { readAccountAddress } from '@rango-dev/wallets-react';
+import { SUPPORTED_ETH_CHAINS as XDEFI_WALLET_SUPPORTED_EVM_CHAINS } from '@yeager-dev/provider-xdefi/src/constants';
+import { readAccountAddress } from '@yeager-dev/wallets-react';
 import {
   Networks,
   WalletTypes,
   XDEFI_WALLET_SUPPORTED_NATIVE_CHAINS,
-} from '@rango-dev/wallets-shared';
+} from '@yeager-dev/wallets-shared';
 import { BigNumber } from 'bignumber.js';
 import { ethers } from 'ethers';
 import {

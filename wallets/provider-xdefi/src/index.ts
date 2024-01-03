@@ -6,7 +6,7 @@ import type {
   Subscribe,
   SwitchNetwork,
   WalletInfo,
-} from '@rango-dev/wallets-shared';
+} from '@yeager-dev/wallets-shared';
 import type { BlockchainMeta, SignerFactory } from 'rango-types';
 
 import {
@@ -20,7 +20,7 @@ import {
   switchNetworkForEvm,
   WalletTypes,
   XDEFI_WALLET_SUPPORTED_NATIVE_CHAINS,
-} from '@rango-dev/wallets-shared';
+} from '@yeager-dev/wallets-shared';
 
 import { SUPPORTED_ETH_CHAINS } from './constants';
 import { getNonEvmAccounts, xdefi as xdefi_instances } from './helpers';

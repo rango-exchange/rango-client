@@ -1,4 +1,4 @@
-import { BlockchainCategories } from '@rango-dev/ui';
+import { BlockchainCategories } from '@yeager-dev/ui';
 import { type BlockchainMeta, TransactionType } from 'rango-sdk';
 
 import { containsText } from '../../utils/common';

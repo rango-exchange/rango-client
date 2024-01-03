@@ -3,7 +3,7 @@ import {
   SignerFactory,
   TransactionType as TxType,
 } from 'rango-types';
-import { DefaultTonSigner } from '@rango-dev/signer-ton';
+import { DefaultTonSigner } from '@yeager-dev/signer-ton';
 import { TonProvider } from './types';
 
 export default function getSigners(provider: TonProvider): SignerFactory {

@@ -1,1 +1,1 @@
-# @rango-dev/provider-safe
+# @yeager-dev/provider-safe

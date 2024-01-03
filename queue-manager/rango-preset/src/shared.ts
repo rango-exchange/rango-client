@@ -1,4 +1,4 @@
-import type { Network, WalletType } from '@rango-dev/wallets-shared';
+import type { Network, WalletType } from '@yeager-dev/wallets-shared';
 import type {
   BestRouteResponse,
   BlockchainMeta,

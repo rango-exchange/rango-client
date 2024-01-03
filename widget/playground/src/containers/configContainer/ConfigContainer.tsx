@@ -5,7 +5,7 @@ import {
   Divider,
   LogoWithTextIcon,
   Typography,
-} from '@rango-dev/ui';
+} from '@yeager-dev/ui';
 import React, { useState } from 'react';
 
 import { SideNavigation } from '../../components/SideNavigation';

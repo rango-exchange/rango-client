@@ -1,5 +1,5 @@
 import { i18n } from '@lingui/core';
-import { Divider, Skeleton, Typography } from '@rango-dev/ui';
+import { Divider, Skeleton, Typography } from '@yeager-dev/ui';
 import React from 'react';
 
 import { QuoteSummarySkeleton, StepSkeleton } from '../QuoteSkeleton';

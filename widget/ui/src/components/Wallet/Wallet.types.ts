@@ -1,4 +1,4 @@
-import type { InstallObjects, WalletType } from '@rango-dev/wallets-shared';
+import type { InstallObjects, WalletType } from '@yeager-dev/wallets-shared';
 
 export enum WalletState {
   NOT_INSTALLED = 'not_installed',

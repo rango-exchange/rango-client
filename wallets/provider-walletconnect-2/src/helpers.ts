@@ -1,5 +1,5 @@
 import type { CosmosMeta } from './types';
-import type { WalletState } from '@rango-dev/wallets-shared';
+import type { WalletState } from '@yeager-dev/wallets-shared';
 import type { ProposalTypes } from '@walletconnect/types';
 import type { BlockchainMeta } from 'rango-types';
 
@@ -7,7 +7,7 @@ import {
   convertEvmBlockchainMetaToEvmChainInfo,
   isEvmAddress,
   Networks,
-} from '@rango-dev/wallets-shared';
+} from '@yeager-dev/wallets-shared';
 import { WalletConnectModal } from '@walletconnect/modal';
 import { AccountId, ChainId } from 'caip';
 import {

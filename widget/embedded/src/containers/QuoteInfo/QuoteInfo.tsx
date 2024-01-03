@@ -1,6 +1,6 @@
 import type { PropTypes } from './QuoteInfo.types';
 
-import { Divider } from '@rango-dev/ui';
+import { Divider } from '@yeager-dev/ui';
 import React from 'react';
 
 import { Quote } from '../../components/Quote';

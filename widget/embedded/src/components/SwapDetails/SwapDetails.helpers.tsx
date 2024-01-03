@@ -1,5 +1,5 @@
 import type { GetStep } from '../SwapDetailsAlerts';
-import type { Step, StepDetailsProps } from '@rango-dev/ui';
+import type { Step, StepDetailsProps } from '@yeager-dev/ui';
 import type { PendingSwapStep } from 'rango-types';
 
 import React from 'react';

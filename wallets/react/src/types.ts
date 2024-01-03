@@ -1,12 +1,12 @@
 import type {
   EventHandler as WalletEventHandler,
   State as WalletState,
-} from '@rango-dev/wallets-core';
+} from '@yeager-dev/wallets-core';
 import type {
   Network,
   WalletInfo,
   WalletType,
-} from '@rango-dev/wallets-shared';
+} from '@yeager-dev/wallets-shared';
 import type { BlockchainMeta, SignerFactory } from 'rango-types';
 import type { PropsWithChildren } from 'react';
 

@@ -1,1 +1,1 @@
-# @rango-dev/provider-default
+# @yeager-dev/provider-default

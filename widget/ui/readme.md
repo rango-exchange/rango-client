@@ -1,4 +1,4 @@
-# @rango-dev/ui
+# @yeager-dev/ui
 
 ### Icons
 

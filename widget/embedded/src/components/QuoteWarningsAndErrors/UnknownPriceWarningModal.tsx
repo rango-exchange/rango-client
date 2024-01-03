@@ -1,6 +1,6 @@
 import type { UnknownPriceWarning } from '../../types';
 
-import { Button, Divider, MessageBox, Modal, WarningIcon } from '@rango-dev/ui';
+import { Button, Divider, MessageBox, Modal, WarningIcon } from '@yeager-dev/ui';
 import React from 'react';
 
 import { errorMessages } from '../../constants/errors';

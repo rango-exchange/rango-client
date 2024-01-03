@@ -15,7 +15,7 @@ import {
   Skeleton,
   Typography,
   VirtualizedList,
-} from '@rango-dev/ui';
+} from '@yeager-dev/ui';
 import React, { forwardRef, useEffect, useState } from 'react';
 
 import { useAppStore } from '../../store/AppStore';

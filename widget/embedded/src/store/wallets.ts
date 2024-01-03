@@ -1,5 +1,5 @@
 import type { Balance, TokensBalance, Wallet } from '../types';
-import type { WalletType } from '@rango-dev/wallets-shared';
+import type { WalletType } from '@yeager-dev/wallets-shared';
 import type { Token } from 'rango-sdk';
 
 import { create } from 'zustand';

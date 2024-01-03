@@ -1,4 +1,4 @@
-import { styled } from '@rango-dev/ui';
+import { styled } from '@yeager-dev/ui';
 
 export const InputContainer = styled('div', {
   border: '1px solid $neutral300',

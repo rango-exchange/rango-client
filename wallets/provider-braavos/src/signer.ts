@@ -1,4 +1,4 @@
-import { DefaultStarknetSigner } from '@rango-dev/signer-starknet';
+import { DefaultStarknetSigner } from '@yeager-dev/signer-starknet';
 import {
   DefaultSignerFactory,
   SignerFactory,

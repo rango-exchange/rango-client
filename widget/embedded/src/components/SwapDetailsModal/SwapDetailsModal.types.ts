@@ -1,4 +1,4 @@
-import type { WalletType } from '@rango-dev/wallets-shared';
+import type { WalletType } from '@yeager-dev/wallets-shared';
 import type { PendingSwapNetworkStatus } from 'rango-types';
 
 export type ModalState =

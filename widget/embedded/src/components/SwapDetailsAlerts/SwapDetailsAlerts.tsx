@@ -1,7 +1,7 @@
 import type { SwapAlertsProps } from './SwapDetailsAlerts.types';
 
 import { i18n } from '@lingui/core';
-import { Alert, IconButton, LinkIcon } from '@rango-dev/ui';
+import { Alert, IconButton, LinkIcon } from '@yeager-dev/ui';
 import React, { Fragment } from 'react';
 
 import { isNetworkStatusInWarningState } from '../../utils/swap';

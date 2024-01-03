@@ -1,5 +1,5 @@
 {
-  "name": "@rango-dev/wallets-demo",
+  "name": "@yeager-dev/wallets-demo",
   "version": "0.13.1-next.22",
   "license": "MIT",
   "private": true,
@@ -11,10 +11,10 @@
     "clean": "rimraf .parcel-cache && rimraf dist"
   },
   "dependencies": {
-    "@rango-dev/provider-all": "^0.25.1-next.2",
-    "@rango-dev/ui": "^0.26.1-next.5",
-    "@rango-dev/wallets-react": "^0.11.1-next.1",
-    "@rango-dev/wallets-shared": "^0.25.1-next.1",
+    "@yeager-dev/provider-all": "^0.25.1-next.2",
+    "@yeager-dev/ui": "^0.26.1-next.5",
+    "@yeager-dev/wallets-react": "^0.11.1-next.1",
+    "@yeager-dev/wallets-shared": "^0.25.1-next.1",
     "rango-sdk": "^0.1.44",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"

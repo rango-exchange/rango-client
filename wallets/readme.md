@@ -4,27 +4,27 @@ A single interface for Web 3.0 wallets that seamlessly integrates 20+ wallets, b
 
 # Getting Started
 
-First, you need to add `@rango-dev/wallets-react` to your project
+First, you need to add `@yeager-dev/wallets-react` to your project
 
 ```
-yarn add @rango-dev/wallets-react
+yarn add @yeager-dev/wallets-react
 
 # or using NPM
-npm install @rango-dev/wallets-react
+npm install @yeager-dev/wallets-react
 ```
 
 You can only add some specific wallets you need or add all of them at once using:
 
 ```
-yarn add @rango-dev/provider-all
+yarn add @yeager-dev/provider-all
 ```
 
 If you need some specific wallets, take a look at `/wallets/` directory to see the list of available wallets (starts with `provider-*`).
 For example, if you only need `phantom` and `metamask`, you can only add them separately using:
 
 ```
-yarn add @rango-dev/provider-metamask
-yarn add @rango-dev/provider-phantom
+yarn add @yeager-dev/provider-metamask
+yarn add @yeager-dev/provider-phantom
 ```
 
 Then you need to pass them as a list to `wallets-react`. see next section.
@@ -34,8 +34,8 @@ Then you need to pass them as a list to `wallets-react`. see next section.
 After adding the dependencies, you can use them. Using all supported wallets (`provider-all`):
 
 ```js
-import { Provider } from '@rango-dev/wallets-react';
-import { allProviders } from '@rango-dev/provider-all';
+import { Provider } from '@yeager-dev/wallets-react';
+import { allProviders } from '@yeager-dev/provider-all';
 
 const providers = allProviders();
 
@@ -53,9 +53,9 @@ export function App() {
 or some specific wallets:
 
 ```js
-import { Provider } from '@rango-dev/wallets-react';
-import * as metamask from '@rango-dev/provider-metamask';
-import * as phantom from '@rango-dev/provider-phantom';
+import { Provider } from '@yeager-dev/wallets-react';
+import * as metamask from '@yeager-dev/provider-metamask';
+import * as phantom from '@yeager-dev/provider-phantom';
 
 
 const providers = [metamask, phantom];
@@ -73,7 +73,7 @@ export function App() {
 and now you can access to wallets by using `useWallets`.
 
 ```js
-import { useWallets } from '@rango-dev/wallets-react';
+import { useWallets } from '@yeager-dev/wallets-react';
 
 function Example() {
   const { connect, state, disconnect } = useWallets();
@@ -103,8 +103,8 @@ function Example() {
 With the use of auto-connect, after reloading the app, wallet provider will automatically attempt to connect to the last connected wallets. To use the auto-connect feature, you need to pass the `autoConnect` property to wallet provider:
 
 ```js
-import { Provider } from '@rango-dev/wallets-react';
-import { allProviders } from '@rango-dev/provider-all';
+import { Provider } from '@yeager-dev/wallets-react';
+import { allProviders } from '@yeager-dev/provider-all';
 
 const providers = allProviders();
 

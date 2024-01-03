@@ -1,7 +1,7 @@
 import {
   Networks,
   XDEFI_WALLET_SUPPORTED_NATIVE_CHAINS,
-} from '@rango-dev/wallets-shared';
+} from '@yeager-dev/wallets-shared';
 
 export const SUPPORTED_NETWORKS = XDEFI_WALLET_SUPPORTED_NATIVE_CHAINS;
 export const SUPPORTED_ETH_CHAINS = [

@@ -1,1 +1,1 @@
-# @rango-dev/provider-coin98
+# @yeager-dev/provider-coin98

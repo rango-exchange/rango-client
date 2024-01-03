@@ -1,1 +1,1 @@
-# @rango-dev/provider-metamask
+# @yeager-dev/provider-metamask

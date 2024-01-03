@@ -1,6 +1,6 @@
 import type { SignerFactory } from 'rango-types';
 
-import { DefaultEvmSigner } from '@rango-dev/signer-evm';
+import { DefaultEvmSigner } from '@yeager-dev/signer-evm';
 import { DefaultSignerFactory, TransactionType as TxType } from 'rango-types';
 
 export default function getSigners(provider: any): SignerFactory {

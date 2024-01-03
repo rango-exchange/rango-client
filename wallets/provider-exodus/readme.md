@@ -1,1 +1,1 @@
-# @rango-dev/provider-exodus
+# @yeager-dev/provider-exodus

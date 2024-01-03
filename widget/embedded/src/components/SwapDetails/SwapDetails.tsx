@@ -6,7 +6,7 @@ import {
   getCurrentBlockchainOfOrNull,
   getCurrentStep,
   getRelatedWalletOrNull,
-} from '@rango-dev/queue-manager-rango-preset';
+} from '@yeager-dev/queue-manager-rango-preset';
 import {
   Button,
   CopyIcon,
@@ -16,8 +16,8 @@ import {
   StepDetails,
   Typography,
   useCopyToClipboard,
-} from '@rango-dev/ui';
-import { useWallets } from '@rango-dev/wallets-react';
+} from '@yeager-dev/ui';
+import { useWallets } from '@yeager-dev/wallets-react';
 import BigNumber from 'bignumber.js';
 import { PendingSwapNetworkStatus } from 'rango-types';
 import React, { useEffect, useRef, useState } from 'react';

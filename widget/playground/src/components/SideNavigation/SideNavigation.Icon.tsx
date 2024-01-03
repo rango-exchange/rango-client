@@ -1,6 +1,6 @@
 import type { IconLinkPropTypes } from './SideNavigation.types';
 
-import { Divider, Typography } from '@rango-dev/ui';
+import { Divider, Typography } from '@yeager-dev/ui';
 import React from 'react';
 
 import { IconLabelContaienr, IconWrapper } from './SideNavigation.styles';

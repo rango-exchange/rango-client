@@ -1,10 +1,10 @@
-import type { SolanaWeb3Signer } from '@rango-dev/signer-solana';
+import type { SolanaWeb3Signer } from '@yeager-dev/signer-solana';
 import type { Transaction, VersionedTransaction } from '@solana/web3.js';
 import type { SignClient } from '@walletconnect/sign-client/dist/types/client';
 import type { SessionTypes } from '@walletconnect/types';
 import type { GenericSigner, SolanaTransaction } from 'rango-types';
 
-import { generalSolanaTransactionExecutor } from '@rango-dev/signer-solana';
+import { generalSolanaTransactionExecutor } from '@yeager-dev/signer-solana';
 import { PublicKey } from '@solana/web3.js';
 import base58 from 'bs58';
 import { AccountId, ChainId } from 'caip';

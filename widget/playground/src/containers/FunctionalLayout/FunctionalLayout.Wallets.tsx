@@ -1,5 +1,5 @@
-import type { WalletType } from '@rango-dev/wallets-shared';
-import type { WidgetConfig } from '@rango-dev/widget-embedded';
+import type { WalletType } from '@yeager-dev/wallets-shared';
+import type { WidgetConfig } from '@yeager-dev/widget-embedded';
 
 import {
   Checkbox,
@@ -7,9 +7,9 @@ import {
   Switch,
   Typography,
   WalletIcon,
-} from '@rango-dev/ui';
-import { WalletTypes } from '@rango-dev/wallets-shared';
-import { useWallets } from '@rango-dev/widget-embedded';
+} from '@yeager-dev/ui';
+import { WalletTypes } from '@yeager-dev/wallets-shared';
+import { useWallets } from '@yeager-dev/widget-embedded';
 import React from 'react';
 
 import { MultiSelect } from '../../components/MultiSelect/MultiSelect';

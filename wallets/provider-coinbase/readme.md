@@ -1,1 +1,1 @@
-# @rango-dev/provider-coinbase
+# @yeager-dev/provider-coinbase

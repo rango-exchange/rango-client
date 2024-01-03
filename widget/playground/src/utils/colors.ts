@@ -1,5 +1,5 @@
 import type { Mode } from '../store/config';
-import type { WidgetColorsKeys, WidgetTheme } from '@rango-dev/widget-embedded';
+import type { WidgetColorsKeys, WidgetTheme } from '@yeager-dev/widget-embedded';
 
 export const getMainColor = (
   key: WidgetColorsKeys,

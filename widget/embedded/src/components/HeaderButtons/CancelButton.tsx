@@ -1,7 +1,7 @@
 import type { PropTypes } from './HeaderButtons.types';
 
 import { i18n } from '@lingui/core';
-import { Button, Typography } from '@rango-dev/ui';
+import { Button, Typography } from '@yeager-dev/ui';
 import React from 'react';
 
 import { SuffixContainer } from './HeaderButtons.styles';

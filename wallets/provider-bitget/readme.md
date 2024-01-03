@@ -1,1 +1,1 @@
-# @rango-dev/provider-bitget
+# @yeager-dev/provider-bitget

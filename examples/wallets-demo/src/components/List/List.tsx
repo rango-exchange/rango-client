@@ -1,9 +1,9 @@
-import type { WalletInfo } from '@rango-dev/wallets-shared';
+import type { WalletInfo } from '@yeager-dev/wallets-shared';
 import type { Token } from 'rango-sdk';
 
-import { allProviders } from '@rango-dev/provider-all';
-import { useWallets } from '@rango-dev/wallets-react';
-import { sortWalletsBasedOnState } from '@rango-dev/wallets-shared';
+import { allProviders } from '@yeager-dev/provider-all';
+import { useWallets } from '@yeager-dev/wallets-react';
+import { sortWalletsBasedOnState } from '@yeager-dev/wallets-shared';
 import React from 'react';
 
 import { WC_PROJECT_ID } from '../../constants';

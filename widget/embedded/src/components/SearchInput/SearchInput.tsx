@@ -1,6 +1,6 @@
 import type { PropTypes } from './SearchInput.types';
 
-import { CloseIcon, IconButton, SearchIcon, TextField } from '@rango-dev/ui';
+import { CloseIcon, IconButton, SearchIcon, TextField } from '@yeager-dev/ui';
 import React from 'react';
 
 import { IconWrapper } from './SearchInput.styles';

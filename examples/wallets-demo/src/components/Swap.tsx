@@ -1,7 +1,7 @@
 import type { BlockchainMeta, Token } from 'rango-sdk';
 
-import { Image, styled, Typography } from '@rango-dev/ui';
-import { ArrowRightIcon } from '@rango-dev/ui/src/components/Icon';
+import { Image, styled, Typography } from '@yeager-dev/ui';
+import { ArrowRightIcon } from '@yeager-dev/ui/src/components/Icon';
 import React from 'react';
 
 interface swap {

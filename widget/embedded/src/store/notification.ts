@@ -3,7 +3,7 @@ import type {
   Route,
   RouteEvent,
   StepEvent,
-} from '@rango-dev/queue-manager-rango-preset';
+} from '@yeager-dev/queue-manager-rango-preset';
 
 import { create } from 'zustand';
 import { persist, subscribeWithSelector } from 'zustand/middleware';

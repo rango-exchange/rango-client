@@ -1,7 +1,7 @@
-import type { PriceImpactWarningLevel, Step } from '@rango-dev/ui';
+import type { PriceImpactWarningLevel, Step } from '@yeager-dev/ui';
 
 import { i18n } from '@lingui/core';
-import { TokenAmount } from '@rango-dev/ui';
+import { TokenAmount } from '@yeager-dev/ui';
 import React from 'react';
 
 import { getContainer } from '../../utils/common';

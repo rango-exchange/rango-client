@@ -1,6 +1,6 @@
-import type { Language } from '@rango-dev/ui';
-import type { ProviderInterface } from '@rango-dev/wallets-react';
-import type { WalletType } from '@rango-dev/wallets-shared';
+import type { Language } from '@yeager-dev/ui';
+import type { ProviderInterface } from '@yeager-dev/wallets-react';
+import type { WalletType } from '@yeager-dev/wallets-shared';
 import type { Asset } from 'rango-sdk';
 
 /**

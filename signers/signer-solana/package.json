@@ -1,5 +1,5 @@
 {
-  "name": "@rango-dev/signer-solana",
+  "name": "@yeager-dev/signer-solana",
   "version": "0.25.0",
   "license": "MIT",
   "type": "module",

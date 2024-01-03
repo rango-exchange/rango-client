@@ -1,1 +1,1 @@
-# @rango-dev/provider-safepal
+# @yeager-dev/provider-safepal

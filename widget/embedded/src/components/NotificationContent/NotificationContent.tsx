@@ -6,7 +6,7 @@ import {
   ChevronRightIcon,
   ListItemButton,
   Typography,
-} from '@rango-dev/ui';
+} from '@yeager-dev/ui';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 

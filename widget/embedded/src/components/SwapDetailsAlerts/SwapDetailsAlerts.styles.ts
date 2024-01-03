@@ -1,4 +1,4 @@
-import { styled } from '@rango-dev/ui';
+import { styled } from '@yeager-dev/ui';
 
 export const Alerts = styled('div', {
   display: 'flex',

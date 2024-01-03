@@ -4,7 +4,7 @@ import type {
 } from '../../types';
 
 import { i18n } from '@lingui/core';
-import { Button, Divider, MessageBox, Modal, Typography } from '@rango-dev/ui';
+import { Button, Divider, MessageBox, Modal, Typography } from '@yeager-dev/ui';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 

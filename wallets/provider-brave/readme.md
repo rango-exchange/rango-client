@@ -1,1 +1,1 @@
-# @rango-dev/provider-brave
+# @yeager-dev/provider-brave

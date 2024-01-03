@@ -2,7 +2,7 @@ import type { Mode } from '../store/config';
 import type {
   WidgetColors,
   WidgetColorsKeys,
-} from '@rango-dev/widget-embedded';
+} from '@yeager-dev/widget-embedded';
 
 export const TABS: { id: Mode; title: string }[] = [
   {

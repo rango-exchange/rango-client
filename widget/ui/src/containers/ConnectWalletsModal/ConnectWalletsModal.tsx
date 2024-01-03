@@ -1,5 +1,5 @@
 import type { WalletInfo } from '../../components';
-import type { WalletType } from '@rango-dev/wallets-shared';
+import type { WalletType } from '@yeager-dev/wallets-shared';
 
 import { i18n } from '@lingui/core';
 import React from 'react';

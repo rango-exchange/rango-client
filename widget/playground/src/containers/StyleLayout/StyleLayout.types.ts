@@ -1,5 +1,5 @@
 import type { Mode } from '../../store/config';
-import type { WidgetColors } from '@rango-dev/widget-embedded';
+import type { WidgetColors } from '@yeager-dev/widget-embedded';
 
 export enum StyleCollapseState {
   GENERAL = 'general',

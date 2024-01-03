@@ -1,7 +1,7 @@
 import type { PropTypes, Ref } from './Layout.types';
 import type { PropsWithChildren } from 'react';
 
-import { BottomLogo, Divider, Header } from '@rango-dev/ui';
+import { BottomLogo, Divider, Header } from '@yeager-dev/ui';
 import React from 'react';
 
 import { RANGO_SWAP_BOX_ID } from '../../constants';

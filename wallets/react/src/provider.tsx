@@ -1,5 +1,5 @@
 import type { ProviderContext, ProviderProps } from './types';
-import type { WalletType } from '@rango-dev/wallets-shared';
+import type { WalletType } from '@yeager-dev/wallets-shared';
 
 import React, { useEffect, useReducer, useRef } from 'react';
 

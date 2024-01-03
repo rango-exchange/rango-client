@@ -1,5 +1,5 @@
 {
-  "name": "@rango-dev/provider-mytonwallet",
+  "name": "@yeager-dev/provider-mytonwallet",
   "version": "0.10.1-next.1",
   "license": "MIT",
   "type": "module",
@@ -21,8 +21,8 @@
     "lint": "eslint \"**/*.{ts,tsx}\" --ignore-path ../../.eslintignore"
   },
   "dependencies": {
-    "@rango-dev/signer-ton": "^0.11.0",
-    "@rango-dev/wallets-shared": "^0.25.1-next.1",
+    "@yeager-dev/signer-ton": "^0.11.0",
+    "@yeager-dev/wallets-shared": "^0.25.1-next.1",
     "@tonconnect/sdk": "^2.1.0",
     "rango-types": "^0.1.57"
   },

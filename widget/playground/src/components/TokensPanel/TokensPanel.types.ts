@@ -1,4 +1,4 @@
-import type { Tokens } from '@rango-dev/widget-embedded';
+import type { Tokens } from '@yeager-dev/widget-embedded';
 import type { Token } from 'rango-sdk';
 
 export type TokenType = Token & { checked?: boolean; pinned?: boolean };

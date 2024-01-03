@@ -1,6 +1,6 @@
 import type { PropTypes } from './HeaderButtons.types';
 
-import { ChevronLeftIcon } from '@rango-dev/ui';
+import { ChevronLeftIcon } from '@yeager-dev/ui';
 import React from 'react';
 
 import { HeaderButton } from './HeaderButtons.styles';

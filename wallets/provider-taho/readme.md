@@ -1,1 +1,1 @@
-# @rango-dev/provider-taho
+# @yeager-dev/provider-taho

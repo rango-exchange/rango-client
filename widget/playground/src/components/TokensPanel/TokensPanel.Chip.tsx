@@ -1,6 +1,6 @@
 import type { BlockchainProps } from './TokensPanel.types';
 
-import { Typography } from '@rango-dev/ui';
+import { Typography } from '@yeager-dev/ui';
 import React from 'react';
 
 import { ContainerChip } from './TokensPanel.styles';
