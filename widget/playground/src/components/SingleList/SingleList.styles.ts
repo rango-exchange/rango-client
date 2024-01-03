@@ -4,7 +4,7 @@ export const HeaderContainer = styled('div', {
   display: 'flex',
   justifyContent: 'space-between',
   alignItems: 'center',
-
+  paddingTop: '$10',
   '& .header': {
     display: 'flex',
     alignItems: 'center',

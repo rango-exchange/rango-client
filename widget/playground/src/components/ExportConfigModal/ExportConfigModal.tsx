@@ -7,6 +7,7 @@ import {
   CloseIcon,
   Divider,
   ExternalLinkIcon,
+  KeyIcon,
   Modal,
   ModalHeader,
   TextField,
@@ -30,6 +31,7 @@ import {
   ExternalLinkIconContainer,
   Head,
   HelpLinksContainer,
+  Label,
   Link,
   LinkContainer,
   ModalFlex,
@@ -78,7 +80,7 @@ export function ExportConfigModal(props: ExportConfigModalProps) {
       onClose={onClose}
       title="Export Code"
       anchor="center">
-      <Divider size={32} />
+      <Divider size={30} />
       <Head>
         <APIKeyInputContainer>
           <TextField
@@ -90,7 +92,17 @@ export function ExportConfigModal(props: ExportConfigModalProps) {
             }}
             name="apiKey"
             value={apiKey}
-            label="Replace your key"
+            label={
+              <Label>
+                <KeyIcon /> <Divider direction="horizontal" size={'4'} />
+                Replace your key
+              </Label>
+            }
+            labelProps={{
+              color: '$neutral600',
+              size: 'medium',
+              variant: 'label',
+            }}
             type="string"
             placeholder="Enter API Key"
           />
@@ -122,7 +134,8 @@ export function ExportConfigModal(props: ExportConfigModalProps) {
           </LinkContainer>
         </HelpLinksContainer>
       </Head>
-      <Divider size={32} />
+      <Divider size={30} />
+
       <ButtonsContainer>
         {Object.keys(typesOfCodeBlocks).map((type, index) => {
           const key = `block-${index}`;
@@ -148,7 +161,7 @@ export function ExportConfigModal(props: ExportConfigModalProps) {
           }}
         />
       </ButtonsContainer>
-      <Divider size={12} />
+      <Divider size={10} />
       <CodeBlock
         language={typesOfCodeBlocks[selected].language}
         theme={syntaxHighlighterTheme}>

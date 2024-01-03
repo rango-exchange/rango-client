@@ -53,5 +53,4 @@ export const excludedWallets = [
   WalletTypes.LEAP,
   WalletTypes.SAFE,
   WalletTypes.MY_TON_WALLET,
-  WalletTypes.WALLET_CONNECT_2,
 ];

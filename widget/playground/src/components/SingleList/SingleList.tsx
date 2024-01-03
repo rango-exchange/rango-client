@@ -3,25 +3,22 @@ import type { ForwardedRef } from 'react';
 import type { CommonProps } from 'react-window';
 
 import {
-  CloseIcon,
   Divider,
-  IconButton,
   Image,
   ListItemButton,
   NotFound,
   Radio,
   RadioRoot,
-  SearchIcon,
-  TextField,
   Typography,
   VirtualizedList,
 } from '@rango-dev/ui';
 import React, { forwardRef, useEffect, useState } from 'react';
 
+import { SearchInput } from '../SearchInput';
+
 import {
   EmptyContainer,
   HeaderContainer,
-  IconWrapper,
   RadioList,
   StyledButton,
 } from './SingleList.styles';
@@ -73,31 +70,12 @@ export function SingleList(props: PropTypes) {
         </div>
       </HeaderContainer>
       <Divider size={20} />
-      <TextField
-        onChange={(e) => setSearchValue(e.target.value)}
+      <SearchInput
         value={searchValue}
-        variant="contained"
         placeholder={searchPlaceholder}
-        prefix={
-          <IconWrapper>
-            <SearchIcon color="gray" />
-          </IconWrapper>
-        }
-        suffix={
-          <IconButton
-            variant="ghost"
-            onClick={() => setSearchValue('')}
-            size="small">
-            {!!searchValue.length && <CloseIcon color="gray" size={10} />}
-          </IconButton>
-        }
-        style={{
-          padding: 10,
-          borderRadius: 25,
-          alignItems: 'center',
-        }}
+        setValue={(value) => setSearchValue(value)}
       />
-      <Divider size={12} />
+      <Divider size={10} />
       {resultsNotFound ? (
         <EmptyContainer>
           <NotFound

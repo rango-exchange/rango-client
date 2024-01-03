@@ -16,4 +16,5 @@ export const CodeBlockContainer = styled('div', {
   position: 'relative',
   borderRadius: '$sm',
   height: '507px',
+  width: '100%',
 });

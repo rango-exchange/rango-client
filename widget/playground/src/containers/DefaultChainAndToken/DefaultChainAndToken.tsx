@@ -83,7 +83,7 @@ export function DefaultChainAndToken({ type }: { type: Type }) {
         hasLogo={true}
         placeholder="Chain"
       />
-      <Divider size={12} />
+      <Divider size={10} />
       <Tooltip
         content="Choose the default blockchain first"
         open={!chainValue ? undefined : false}

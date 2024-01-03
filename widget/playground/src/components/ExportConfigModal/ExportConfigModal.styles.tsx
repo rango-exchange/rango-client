@@ -39,6 +39,7 @@ export const StyledButton = styled(Button, {
     variant: {
       contained: {
         color: '$neutral600',
+        fontSize: '$14',
         backgroundColor: '$neutral300',
         '&:hover, &:focus': {
           color: '$secondary500',
@@ -51,7 +52,8 @@ export const StyledButton = styled(Button, {
         zIndex: 10,
         transition: 'color 0.8s linear',
         color: '$background',
-        backgroundColor: 'transparent',
+        fontSize: '$14',
+        backgroundColor: '$secondary500',
         '&:hover, &:focus': {
           color: '$background',
           backgroundColor: 'transparent',
@@ -79,10 +81,14 @@ export const Head = styled('div', {
   display: 'flex',
   padding: '$10 0',
   borderBottom: '1px solid $neutral300',
+  borderTop: '1px solid $neutral300',
 });
 
 export const APIKeyInputContainer = styled('div', {
   width: '350px',
+  backgroundColor: '$neutral100',
+  padding: '$5 $10',
+  borderRadius: '$sm',
 });
 
 export const HelpLinksContainer = styled('div', {
@@ -101,4 +107,7 @@ export const ExternalLinkIconContainer = styled('span', {
 export const StyledIconButton = styled(IconButton, {
   width: '48px',
   height: '48px',
+});
+export const Label = styled('span', {
+  display: 'flex',
 });

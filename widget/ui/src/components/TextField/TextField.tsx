@@ -17,14 +17,17 @@ function TextFieldComponent(props: PropsWithChildren<PropTypes>, ref?: Ref) {
     style,
     variant,
     fullWidth,
+    labelProps,
     ...inputAttributes
   } = props;
   return (
     <>
       {label && (
         <>
-          <Label {...(inputAttributes.id && { htmlFor: inputAttributes.id })}>
-            <Typography variant="label" size="large">
+          <Label
+            className="_text"
+            {...(inputAttributes.id && { htmlFor: inputAttributes.id })}>
+            <Typography variant="label" size="large" {...labelProps}>
               {label}
             </Typography>
           </Label>
