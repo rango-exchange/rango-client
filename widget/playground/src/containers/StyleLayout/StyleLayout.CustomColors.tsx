@@ -105,7 +105,7 @@ export function CustomColorsSection(props: CustomColorsTypes) {
     ) {
       onResetPreset();
     }
-  }, [theme.colors]);
+  }, [theme?.colors]);
 
   return (
     <Collapsible
@@ -137,6 +137,7 @@ export function CustomColorsSection(props: CustomColorsTypes) {
         </CustomColors>
       }>
       <Divider size={16} />
+
       {WIDGET_COLORS.map((widgetColor) => (
         <div key={widgetColor.key}>
           <CustomColorCollapsible
@@ -184,6 +185,7 @@ export function CustomColorsSection(props: CustomColorsTypes) {
                   }
                 />
                 <Divider size={16} />
+
                 <ColorPicker
                   label="Dark"
                   placeholder={widgetColor.label}
@@ -216,7 +218,7 @@ export function CustomColorsSection(props: CustomColorsTypes) {
               />
             )}
           </CustomColorCollapsible>
-          <Divider size={12} />
+          <Divider size={10} />
         </div>
       ))}
     </Collapsible>

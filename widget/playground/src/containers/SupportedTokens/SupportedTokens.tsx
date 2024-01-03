@@ -4,7 +4,7 @@ import type { tokensConfigType } from '../../utils/configs';
 import { ChainsIcon } from '@rango-dev/ui';
 import React from 'react';
 
-import { MultiSelect } from '../../components/MultiSelect/MultiSelect';
+import { MultiSelect } from '../../components/MultiSelect';
 import { useConfigStore } from '../../store/config';
 import { useMetaStore } from '../../store/meta';
 import { tokensAreEqual } from '../../utils/common';

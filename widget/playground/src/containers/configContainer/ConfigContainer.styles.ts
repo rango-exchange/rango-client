@@ -1,5 +1,18 @@
 import { Button, darkTheme, styled } from '@rango-dev/ui';
 
+export const Layout = styled('div', {
+  borderRadius: '20px',
+  padding: '$15',
+  backgroundColor: '$background',
+  width: '338px',
+  height: '100%',
+  overflowY: 'auto',
+  flexDirection: 'column',
+  position: 'relative',
+  display: 'flex',
+  justifyContent: 'space-between',
+});
+
 export const Container = styled('div', {
   display: 'none',
   '@lg': {
@@ -39,10 +52,13 @@ export const HeaderContainer = styled('div', {
 
 export const StyledButton = styled(Button, {
   width: '230px',
+  height: '40px',
 });
 
 export const ResetButton = styled(StyledButton, {
   border: '1px solid $secondary500',
+  width: '230px',
+  height: '40px',
 });
 
 export const Content = styled('div', {
@@ -50,6 +66,31 @@ export const Content = styled('div', {
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
+  flexDirection: 'column',
+});
+
+export const BoundaryGuide = styled('div', {
+  borderStyle: 'dashed',
+  borderColor: '$neutral600',
+  borderRadius: '20px',
+  height: '700px',
+  display: 'flex',
+});
+
+export const BoundarySize = styled('div', {
+  display: 'flex',
+  padding: '$6 0',
+  width: '100%',
+  variants: {
+    side: {
+      left: {
+        justifyContent: 'flex-start',
+      },
+      right: {
+        justifyContent: 'flex-end',
+      },
+    },
+  },
 });
 
 export const MobileSection = styled('div', {
@@ -78,4 +119,13 @@ export const MobileContent = styled('div', {
   gap: '$8',
   flexDirection: 'column',
   padding: '20px',
+});
+
+export const BoundarySection = styled('div', {
+  display: 'flex',
+  justifyContent: 'space-between',
+  alignItems: 'center',
+  padding: '$15 $20',
+  background: '$neutral100',
+  borderRadius: '$xm',
 });

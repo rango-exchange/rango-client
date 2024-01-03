@@ -8,4 +8,5 @@ export interface PropTypes {
   variant?: 'custom' | 'regular';
   min?: string;
   max?: string;
+  id: string;
 }

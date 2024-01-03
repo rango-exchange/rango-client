@@ -2,26 +2,23 @@ import type { TokensListProps, TokenType } from './TokensPanel.types';
 
 import {
   Checkbox,
-  CloseIcon,
   Divider,
   IconButton,
   Image,
   ListItemButton,
   NotFound,
   PinIcon,
-  SearchIcon,
   Switch,
-  TextField,
   Typography,
   VirtualizedList,
 } from '@rango-dev/ui';
 import React, { useEffect, useLayoutEffect, useState } from 'react';
 
 import {
-  IconWrapper,
   SelectButton,
   SelectDeselectText,
 } from '../MultiList/MultiList.styles';
+import { SearchInput } from '../SearchInput';
 import { InnerElementType } from '../SingleList';
 import { EmptyContainer } from '../SingleList/SingleList.styles';
 
@@ -85,31 +82,13 @@ export function TokensList(props: TokensListProps) {
 
   return (
     <>
-      <TextField
-        onChange={(e) => setSearchValue(e.target.value)}
+      <SearchInput
         value={searchValue}
-        variant="contained"
         placeholder="Search Tokens"
-        prefix={
-          <IconWrapper>
-            <SearchIcon color="gray" />
-          </IconWrapper>
-        }
-        suffix={
-          <IconButton
-            variant="ghost"
-            onClick={() => setSearchValue('')}
-            size="small">
-            {!!searchValue.length && <CloseIcon color="gray" size={10} />}
-          </IconButton>
-        }
-        style={{
-          padding: 10,
-          borderRadius: 25,
-          alignItems: 'center',
-        }}
+        setValue={(value) => setSearchValue(value)}
       />
-      <Divider size={12} />
+
+      <Divider size={10} />
       {resultsNotFound ? (
         <EmptyContainer>
           <NotFound
@@ -125,12 +104,12 @@ export function TokensList(props: TokensListProps) {
                 variant="label"
                 size="medium"
                 disabled={false}
-                color="neutral900">
+                color="neutral700">
                 {isAllSelected ? 'Deselect all' : 'Select all'}
               </SelectDeselectText>
             </SelectButton>
             <div className="select_tokens">
-              <Typography size="medium" variant="label" color="neutral900">
+              <Typography size="medium" variant="label" color="neutral700">
                 {isExcluded ? 'Excluded' : 'Included'} Tokens
               </Typography>
               <Divider direction="horizontal" size={4} />
@@ -140,7 +119,7 @@ export function TokensList(props: TokensListProps) {
               />
             </div>
           </TokensHeaderList>
-          <Divider size={12} />
+          <Divider size={10} />
           <ListContainer>
             <VirtualizedList
               Item={({ index, style }) => {

@@ -239,7 +239,7 @@ export function TokensPanel(props: PropTypes) {
             variant="label"
             size="medium"
             disabled={!notAllTokensSelected}
-            color={notAllTokensSelected ? 'neutral900' : 'neutral600'}>
+            color={notAllTokensSelected ? 'neutral700' : 'neutral600'}>
             Reset Tokens
           </SelectDeselectText>
         </SelectButton>
