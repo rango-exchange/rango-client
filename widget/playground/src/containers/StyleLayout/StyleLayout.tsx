@@ -4,7 +4,6 @@ import React, { useState } from 'react';
 import { Collapse } from '../../components/Collapse';
 
 import { General } from './StyleLayout.General';
-import { Layout } from './StyleLayout.styles';
 import { Themes } from './StyleLayout.Themes';
 import { StyleCollapseState } from './StyleLayout.types';
 
@@ -20,7 +19,7 @@ export function StyleLayout() {
     }
   };
   return (
-    <Layout>
+    <div>
       <Collapse
         title={StyleCollapseState.GENERAL}
         open={openCollapse === StyleCollapseState.GENERAL}
@@ -34,6 +33,6 @@ export function StyleLayout() {
         toggle={handleOpenCollapse(StyleCollapseState.THEMES)}>
         <Themes />
       </Collapse>
-    </Layout>
+    </div>
   );
 }

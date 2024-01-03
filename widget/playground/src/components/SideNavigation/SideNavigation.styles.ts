@@ -19,6 +19,7 @@ export const Container = styled('div', {
 
 export const IconLabelContaienr = styled(Flex, {
   flexDirection: 'column',
+  padding: '1px 0',
 });
 
 export const IconWrapper = styled(Flex, {

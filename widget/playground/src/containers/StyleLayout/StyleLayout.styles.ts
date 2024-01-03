@@ -1,17 +1,5 @@
 import { Button, Collapsible, darkTheme, styled } from '@rango-dev/ui';
 
-export const Layout = styled('div', {
-  borderRadius: '20px',
-  display: 'flex',
-  padding: '$15',
-  overflowY: 'auto',
-  backgroundColor: '$background',
-  width: '338px',
-  height: '100%',
-  flexDirection: 'column',
-  position: 'relative',
-});
-
 export const GeneralContainer = styled('div', {
   backgroundColor: '$background',
   borderRadius: '$sm',
@@ -173,4 +161,9 @@ export const CustomColorCollapsible = styled(Collapsible, {
       color: '$secondary500',
     },
   },
+});
+
+export const MoreButtonContent = styled('div', {
+  display: 'flex',
+  justifyContent: 'center',
 });

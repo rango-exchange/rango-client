@@ -103,12 +103,14 @@ export function General() {
           <Slider
             showValue
             title="Widget"
+            id="range1"
             value={borderRadius ?? DEFAULT_PRIMARY_RADIUS}
             max="50"
             onChange={handleBorderRadius}
           />
-          <Divider size={8} />
+          <Divider size={4} />
           <Slider
+            id="range2"
             showValue
             title="Button"
             value={secondaryBorderRadius ?? DEFAULT_SECONDARY_RADIUS}

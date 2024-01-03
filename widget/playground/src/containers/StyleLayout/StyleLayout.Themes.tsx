@@ -7,7 +7,6 @@ import { type Mode } from '../../store/config';
 import { Preset } from './StyleLayout.Preset';
 import {
   BackdropTab,
-  Field,
   FieldTitle,
   GeneralContainer,
   Tab,
@@ -25,40 +24,37 @@ export function Themes() {
   return (
     <>
       <GeneralContainer>
-        <Field>
-          <Tabs>
-            {TABS.map((item, index) => (
-              <Tab
-                fullWidth
-                key={item.id}
-                disableRipple={true}
-                type="secondary"
-                onClick={() => onChangeMode(item.id)}
-                size="small"
-                isActive={index === currentTabIndex}
-                variant="default">
-                {item.title}
-              </Tab>
-            ))}
-            <BackdropTab
-              css={{
-                transform: `translateX(${TAB_WIDTH * currentTabIndex}px)`,
-              }}
-            />
-          </Tabs>
-          <Divider size={16} />
+        <Tabs>
+          {TABS.map((item, index) => (
+            <Tab
+              fullWidth
+              key={item.id}
+              disableRipple={true}
+              type="secondary"
+              onClick={() => onChangeMode(item.id)}
+              size="small"
+              isActive={index === currentTabIndex}
+              variant="default">
+              {item.title}
+            </Tab>
+          ))}
+          <BackdropTab
+            css={{
+              transform: `translateX(${TAB_WIDTH * currentTabIndex}px)`,
+            }}
+          />
+        </Tabs>
+        <Divider size={16} />
+        <FieldTitle>
+          <ColorsIcon size={18} color="gray" />
+          <Divider direction="horizontal" size={4} />
+          <Typography size="medium" variant="body">
+            Presets
+          </Typography>
+        </FieldTitle>
 
-          <FieldTitle>
-            <ColorsIcon size={18} color="gray" />
-            <Divider direction="horizontal" size={4} />
-            <Typography size="medium" variant="body">
-              Presets
-            </Typography>
-          </FieldTitle>
-
-          <Divider size={12} />
-          <Preset tab={tab} />
-        </Field>
+        <Divider size={10} />
+        <Preset tab={tab} />
       </GeneralContainer>
     </>
   );

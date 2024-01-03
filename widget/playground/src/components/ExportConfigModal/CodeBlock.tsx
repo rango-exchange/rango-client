@@ -1,7 +1,7 @@
 import type { CodeBlockProps } from './CodeBlock.types';
 
 import { CopyIcon, Tooltip, useCopyToClipboard } from '@rango-dev/ui';
-import React from 'react';
+import React, { useState } from 'react';
 import { PrismLight as SyntaxHighlighter } from 'react-syntax-highlighter';
 import {
   javascript,
@@ -23,27 +23,33 @@ export function CodeBlock(props: CodeBlockProps) {
   const { language, theme, children } = props;
 
   const [, handleCopy] = useCopyToClipboard(RESET_INTERVAL);
-
+  const [open, setOpen] = useState<boolean>(false);
   return (
-    <CodeBlockContainer>
-      <CopyCodeBlock>
-        <Tooltip content="Copy to clipboard" side="top">
-          <CopyCodeBlockButton
-            type="primary"
-            onClick={() => {
-              handleCopy(children);
-            }}>
-            <CopyIcon size={24} />
-          </CopyCodeBlockButton>
-        </Tooltip>
-      </CopyCodeBlock>
-      <SyntaxHighlighter
-        showLineNumbers
-        language={language}
-        customStyle={{ height: '100%', borderRadius: '15px' }}
-        style={theme}>
-        {children}
-      </SyntaxHighlighter>
-    </CodeBlockContainer>
+    <Tooltip side="bottom" open={open} content={<span> Code Copied! </span>}>
+      <CodeBlockContainer>
+        <CopyCodeBlock>
+          <Tooltip content="Copy to clipboard" side="top">
+            <CopyCodeBlockButton
+              type="primary"
+              onClick={() => {
+                handleCopy(children);
+                setOpen(true);
+                setInterval(() => {
+                  setOpen(false);
+                }, RESET_INTERVAL);
+              }}>
+              <CopyIcon size={24} />
+            </CopyCodeBlockButton>
+          </Tooltip>
+        </CopyCodeBlock>
+        <SyntaxHighlighter
+          showLineNumbers
+          language={language}
+          customStyle={{ height: '100%', borderRadius: '15px' }}
+          style={theme}>
+          {children}
+        </SyntaxHighlighter>
+      </CodeBlockContainer>
+    </Tooltip>
   );
 }

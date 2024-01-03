@@ -1,15 +1,9 @@
-import { Button, styled } from '@rango-dev/ui';
+import { css, styled } from '@rango-dev/ui';
 
-export const Layout = styled('div', {
-  borderRadius: '20px',
-  display: 'flex',
-  padding: '$15',
-  backgroundColor: '$background',
-  width: '338px',
-  height: '100%',
-  flexDirection: 'column',
-  position: 'relative',
+export const amountStyles = css({
+  fontSize: '$12',
 });
+export const connectButtonStyles = css({});
 
 export const ExternalSection = styled('div', {
   borderRadius: '20px',
@@ -18,8 +12,12 @@ export const ExternalSection = styled('div', {
   flexDirection: 'column',
   placeContent: 'center',
   backgroundColor: '$background',
-  '& .footer': {
-    maxWidth: '$180',
+});
+
+export const Footer = styled('div', {
+  maxWidth: '$180',
+  [`& .${connectButtonStyles}`]: {
+    padding: '$5 $20',
   },
 });
 
@@ -27,16 +25,6 @@ export const SwitchField = styled('div', {
   display: 'flex',
   justifyContent: 'space-between',
   alignItems: 'center',
-});
-
-export const StyledButton = styled(Button, {
-  variants: {
-    variant: {
-      outlined: {
-        padding: '$5 $20',
-      },
-    },
-  },
 });
 
 export const FromToContainer = styled('div', {
@@ -50,6 +38,10 @@ export const FromAmount = styled('div', {
   border: '1px solid $neutral300',
   borderRadius: '$xm',
   padding: '$2 $5',
+  [`& .${amountStyles}`]: {
+    color: '$neutral700',
+    fontSize: '$12',
+  },
   '&:hover': {
     borderColor: '$info300',
   },

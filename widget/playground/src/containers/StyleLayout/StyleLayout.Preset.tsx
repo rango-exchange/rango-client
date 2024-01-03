@@ -14,6 +14,7 @@ import {
   ColoredCircle,
   ColorsContent,
   Line,
+  MoreButtonContent,
   PresetContent,
   PresetTheme,
   Row,
@@ -103,7 +104,7 @@ export function Preset(props: PresetTypes) {
               }
             />
           </Row>
-          <Divider size={12} />
+          <Divider size={10} />
         </>
       )}
       <Collapse style={{ height }}>
@@ -149,7 +150,7 @@ export function Preset(props: PresetTypes) {
         </PresetContent>
       </Collapse>
       {more > 0 && (
-        <>
+        <MoreButtonContent>
           <Divider size={4} />
           <Button
             size={'small'}
@@ -162,12 +163,12 @@ export function Preset(props: PresetTypes) {
             }>
             {!isShowMore ? `+${more} More` : 'See Less'}
           </Button>
-        </>
+        </MoreButtonContent>
       )}
-
       <Divider size={16} />
       <Line />
       <Divider size={4} />
+
       <CustomColorsSection
         tab={tab}
         selectedPreset={selectedPreset}
