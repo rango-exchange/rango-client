@@ -14,6 +14,11 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. js-lingui-explicit-id
+#: widget/ui/src/components/StepDetails/StepDetails.tsx:107
+msgid "Bridge to {toChain} via {swapper}"
+msgstr "Bridge to {toChain} via {swapper}"
+
+#. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:37
 #: widget/embedded/src/components/TokenList/TokenList.tsx:135
 #: widget/embedded/src/pages/HistoryPage.tsx:94
@@ -166,7 +171,7 @@ msgstr "Connect Wallet"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/LoadingSwapDetails/LoadingSwapDetails.tsx:20
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:365
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:375
 msgid "Swaps steps"
 msgstr "Swaps steps"
 
@@ -309,21 +314,16 @@ msgid "This setting is applied per step (e.g. 1Inch, Thorchain, etc) which means
 msgstr "This setting is applied per step (e.g. 1Inch, Thorchain, etc) which means only the step will be reverted, not the whole transaction."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.Placeholder.tsx:31
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:241
+#: widget/embedded/src/components/SwapDetails/SwapDetails.Placeholder.tsx:26
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:246
 msgid "Swap and Bridge"
 msgstr "Swap and Bridge"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.Placeholder.tsx:39
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:281
+#: widget/embedded/src/components/SwapDetails/SwapDetails.Placeholder.tsx:34
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:286
 msgid "Request ID"
 msgstr "Request ID"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.Placeholder.tsx:52
-msgid "Created at"
-msgstr "Created at"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetails/SwapDetails.Placeholder.tsx:65
@@ -337,32 +337,32 @@ msgid "Swap with request ID = {requestId} not found."
 msgstr "Swap with request ID = {requestId} not found."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:208
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:213
 msgid "You have received {amount} {token} in {conciseAddress} wallet on {chain} chain."
 msgstr "You have received {amount} {token} in {conciseAddress} wallet on {chain} chain."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:224
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:229
 msgid "Transaction was not sent."
 msgstr "Transaction was not sent."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:226
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:231
 msgid "{amount} {symbol} on {blockchain} remain in your wallet"
 msgstr "{amount} {symbol} on {blockchain} remain in your wallet"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:252
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:257
 msgid "Delete"
 msgstr "Delete"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:273
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:278
 msgid "Try again"
 msgstr "Try again"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetailsAlerts/SwapDetailsAlerts.tsx:41
+#: widget/embedded/src/components/SwapDetailsAlerts/SwapDetailsAlerts.tsx:50
 msgid "View transaction"
 msgstr "View transaction"
 
@@ -888,7 +888,8 @@ msgid "{blockchainCategory}"
 msgstr "{blockchainCategory}"
 
 #. js-lingui-explicit-id
-#: widget/ui/src/components/StepDetails/StepDetails.tsx:66
+#: widget/ui/src/components/StepDetails/StepDetails.tsx:74
+#: widget/ui/src/components/StepDetails/StepDetails.tsx:100
 msgid "Swap on {fromChain} via {swapper}"
 msgstr "Swap on {fromChain} via {swapper}"
 
