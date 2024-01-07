@@ -1,13 +1,7 @@
 import type { SwapDetailsPlaceholderPropTypes } from './SwapDetails.types';
 
 import { i18n } from '@lingui/core';
-import {
-  CopyIcon,
-  IconButton,
-  NotFound,
-  Skeleton,
-  Typography,
-} from '@rango-dev/ui';
+import { Divider, NotFound, Skeleton, Typography } from '@rango-dev/ui';
 import React from 'react';
 
 import { SuffixContainer } from '../HeaderButtons/HeaderButtons.styles';
@@ -16,6 +10,7 @@ import { LoadingSwapDetails } from '../LoadingSwapDetails';
 
 import {
   Container,
+  datePlaceholderStyles,
   HeaderDetails,
   PlaceholderContainer,
   requestIdStyles,
@@ -42,14 +37,19 @@ export function SwapDetailsPlaceholder(props: SwapDetailsPlaceholderPropTypes) {
                 <Typography variant="label" size="small" color="neutral700">
                   <Skeleton width={60} height={10} variant="rounded" />
                 </Typography>
-                <IconButton variant="ghost">
-                  <CopyIcon size={16} color="gray" />
-                </IconButton>
+                <Divider direction="horizontal" size={4} />
+                <Skeleton width={16} height={16} variant="rectangular" />
+                <Divider direction="horizontal" size={4} />
+                <Skeleton width={16} height={16} variant="rectangular" />
               </div>
             </div>
             <div className={rowStyles()}>
-              <Typography variant="label" size="large" color="neutral700">
-                {`${i18n.t('Created at')}:`}
+              <Typography
+                className={datePlaceholderStyles()}
+                variant="label"
+                size="large"
+                color="neutral700">
+                <Skeleton width={60} height={10} variant="rounded" />
               </Typography>
               <Typography variant="label" size="small" color="neutral700">
                 <Skeleton width={60} height={10} variant="rounded" />

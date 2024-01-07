@@ -12,6 +12,7 @@ export const Container = styled('div', {
     type: {
       'quote-details': { border: 'none' },
       'swap-progress': {
+        backgroundColor: '$neutral100',
         $$color: '$colors$neutral100',
         [`.${darkTheme} &`]: {
           $$color: '$colors$neutral300',
@@ -33,10 +34,6 @@ export const Container = styled('div', {
       error: { borderColor: '$error500' },
     },
   },
-  '& .swapper__description': {
-    fontWeight: '$medium',
-  },
-  '& div:nth-child(3)': { display: 'flex', flexDirection: 'column', flex: 1 },
 });
 
 export const SwapperImage = styled('div', {
@@ -86,6 +83,26 @@ export const DashedLine = styled('div', {
   },
 });
 
+export const SwapperSeparator = styled('div', {
+  borderLeft: '1px solid transparent',
+  margin: '0 $12',
+  display: 'block',
+  height: '8px',
+  variants: {
+    state: {
+      default: {
+        borderColor: 'transparent',
+      },
+      'in-progress': { borderColor: '$info500' },
+      completed: {
+        borderColor: '$success500',
+      },
+      warning: { borderColor: '$warning500' },
+      error: { borderColor: '$error500' },
+    },
+  },
+});
+
 export const StepSeparator = styled('div', {
   borderLeft: '1px dashed transparent',
   margin: '0 $10',
@@ -114,7 +131,13 @@ export const tokensContainerStyles = css({
   width: '100%',
 });
 
-export const swapperStyles = css({
+export const swappersStyles = css({
+  display: 'flex',
+  flexDirection: 'column',
+  justifyContent: 'center',
+});
+
+export const swapperItemStyles = css({
   display: 'flex',
   alignItems: 'center',
 });
