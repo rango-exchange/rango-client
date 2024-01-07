@@ -12,6 +12,7 @@ import {
   CopyIcon,
   Divider,
   IconButton,
+  LinkIcon,
   QuoteCost,
   StepDetails,
   Typography,
@@ -23,6 +24,7 @@ import { PendingSwapNetworkStatus } from 'rango-types';
 import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import { SCANNER_BASE_URL } from '../../constants';
 import {
   GAS_FEE_MAX_DECIMALS,
   GAS_FEE_MIN_DECIMALS,
@@ -67,6 +69,7 @@ import {
   requestIdStyles,
   rowStyles,
   StepsList,
+  StyledLink,
   titleStepsStyles,
 } from './SwapDetails.styles';
 
@@ -74,6 +77,7 @@ export function SwapDetails(props: SwapDetailsProps) {
   const { swap, requestId, onDelete, onCancel: onCancelProps } = props;
   const { canSwitchNetworkTo, connect, getWalletInfo } = useWallets();
   const blockchains = useAppStore().blockchains();
+  const swappers = useAppStore().swappers();
   const tokens = useAppStore().tokens();
   const retry = useQuoteStore.use.retry();
   const navigate = useNavigate();
@@ -158,6 +162,7 @@ export function SwapDetails(props: SwapDetailsProps) {
     setNetworkModal: setModalState,
     message: stepMessage,
     blockchains: blockchains,
+    swappers: swappers,
   });
   const numberOfSteps = steps.length;
   const [firstStep, lastStep] = [swap.steps[0], swap.steps[numberOfSteps - 1]];
@@ -289,6 +294,11 @@ export function SwapDetails(props: SwapDetailsProps) {
                 onClick={handleCopy.bind(null, requestId || '')}>
                 <CopyIcon size={16} color="gray" />
               </IconButton>
+              <StyledLink
+                target="_blank"
+                href={`${SCANNER_BASE_URL}/swap/${requestId}`}>
+                <LinkIcon size={16} />
+              </StyledLink>
             </div>
           </div>
           <div className={rowStyles()}>

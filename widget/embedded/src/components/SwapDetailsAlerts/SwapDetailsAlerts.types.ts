@@ -6,6 +6,7 @@ import type {
   PendingSwap,
   PendingSwapNetworkStatus,
   PendingSwapStep,
+  SwapperMeta,
 } from 'rango-types';
 
 export interface SwapAlertsProps extends WaningAlertsProps {
@@ -26,4 +27,5 @@ export interface FailedAlertsProps {
 export type GetStep = {
   swap: PendingSwap;
   blockchains: BlockchainMeta[];
+  swappers: SwapperMeta[];
 } & Omit<SwapAlertsProps, 'step' | 'hasAlreadyProceededToSign'>;
