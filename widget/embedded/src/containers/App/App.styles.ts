@@ -1,6 +1,9 @@
 import { styled } from '@rango-dev/ui';
 
 export const MainContainer = styled('div', {
+  width: '100%',
+  minWidth: '300px',
+  maxWidth: '390px',
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',

@@ -1,9 +1,8 @@
 import type { WidgetConfig } from '@rango-dev/widget-embedded';
 
 import { commonStyles } from './styles';
-
 // Actual app that will be loaded inside the iframe.
-const WIDGET_URL = 'https://widget.rango.exchange/';
+const WIDGET_URL = 'http://localhost:3002';
 const DEFAULT_CONTAINER_ID = 'rango-widget-container';
 const RANGO_WIDGET_IFRAME_ID = 'rango-widget-iframe';
 
@@ -11,6 +10,13 @@ export class RangoWidget {
   public init(configuration?: WidgetConfig, rootId?: string): void {
     const container = this.getContainer(rootId || DEFAULT_CONTAINER_ID);
     const widget = this.createWidget(configuration);
+
+    window.addEventListener('message', (event) => {
+      if (event.data.type === 'dimensionsChanged') {
+        console.log('new height:', event.data.height);
+        widget.style.height = event.data.height;
+      }
+    });
 
     container.appendChild(widget);
 
@@ -61,9 +67,8 @@ export class RangoWidget {
     const widget = document.createElement('iframe');
     widget.setAttribute('id', RANGO_WIDGET_IFRAME_ID);
     widget.src = url;
-    widget.style.backgroundColor = 'transparent';
-    widget.style.width = commonStyles.width;
-    widget.style.height = commonStyles.height;
+    widget.style.backgroundColor = 'red';
+    widget.style.width = '100%';
     widget.style.maxWidth = commonStyles.maxWidth;
     widget.style.maxHeight = commonStyles.maxHeight;
     widget.style.overflow = commonStyles.overflow;

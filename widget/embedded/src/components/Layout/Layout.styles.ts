@@ -7,26 +7,13 @@ export const Container = styled('div', {
   borderRadius: '$primary',
   overflow: 'hidden !important',
   boxShadow: '15px 15px 15px 0px rgba(0, 0, 0, 0.05)',
-  width: '100vw',
-  minWidth: '300px',
-  maxWidth: '390px',
-  maxHeight: '700px',
+  width: '100%',
   textAlign: 'left',
   $$color: '$colors$neutral100',
   [`.${darkTheme} &`]: {
     $$color: '$colors$neutral300',
   },
   backgroundColor: '$$color',
-  variants: {
-    fixedHeight: {
-      true: {
-        height: '100vh',
-      },
-      false: {
-        height: 'auto !important',
-      },
-    },
-  },
 });
 
 export const Content = styled('div', {

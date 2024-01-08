@@ -2,7 +2,7 @@ import type { PropTypes, Ref } from './Layout.types';
 import type { PropsWithChildren } from 'react';
 
 import { BottomLogo, Divider, Header } from '@rango-dev/ui';
-import React from 'react';
+import React, { useEffect, useImperativeHandle, useRef } from 'react';
 
 import { RANGO_SWAP_BOX_ID } from '../../constants';
 import { useNavigateBack } from '../../hooks/useNavigateBack';
@@ -16,7 +16,7 @@ import { BackButton, CancelButton, WalletButton } from '../HeaderButtons';
 
 import { Container, Content, Footer } from './Layout.styles';
 
-function LayoutComponent(props: PropsWithChildren<PropTypes>, ref: Ref) {
+function LayoutComponent(props: PropsWithChildren<PropTypes>, outerRef: Ref) {
   const {
     children,
     header,
@@ -49,12 +49,35 @@ function LayoutComponent(props: PropsWithChildren<PropTypes>, ref: Ref) {
   const showBackButton =
     typeof header.hasBackButton === 'undefined' || header.hasBackButton;
 
+  const innerRef = useRef<HTMLDivElement | null>(null);
+  useImperativeHandle(outerRef, () => innerRef.current!, []);
+
+  useEffect(() => {
+    if (innerRef.current) {
+      if (fixedHeight) {
+        innerRef.current.style.height = '700px';
+        window.parent.postMessage(
+          {
+            type: 'dimensionsChanged',
+            height: '700px',
+          },
+          'http://localhost:3000'
+        );
+      } else {
+        innerRef.current.style.height = 'auto !important';
+        window.parent.postMessage(
+          {
+            type: 'dimensionsChanged',
+            height: innerRef.current.clientHeight + 'px',
+          },
+          'http://localhost:3000'
+        );
+      }
+    }
+  }, [fixedHeight]);
+
   return (
-    <Container
-      ref={ref}
-      fixedHeight={fixedHeight}
-      id={RANGO_SWAP_BOX_ID}
-      className={activeTheme()}>
+    <Container ref={innerRef} id={RANGO_SWAP_BOX_ID} className={activeTheme()}>
       <Header
         prefix={<>{showBackButton && <BackButton onClick={navigateBack} />}</>}
         title={header.title}
