@@ -67,13 +67,17 @@ export class RangoWidget {
     const widget = document.createElement('iframe');
     widget.setAttribute('id', RANGO_WIDGET_IFRAME_ID);
     widget.src = url;
+    //Introduce a high-contrast color to enhance visibility when observing the height changes.
     widget.style.backgroundColor = 'red';
     widget.style.width = '100%';
     widget.style.maxWidth = commonStyles.maxWidth;
     widget.style.maxHeight = commonStyles.maxHeight;
     widget.style.overflow = commonStyles.overflow;
     widget.style.border = 'none';
-
+    /*
+     * To prevent layout shifts, we can set an initial height for the iframe.
+     *  widget.style.height = '441px';
+     */
     return widget;
   }
 }

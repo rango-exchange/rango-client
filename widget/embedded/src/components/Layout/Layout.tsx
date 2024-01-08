@@ -61,6 +61,10 @@ function LayoutComponent(props: PropsWithChildren<PropTypes>, outerRef: Ref) {
             type: 'dimensionsChanged',
             height: '700px',
           },
+          /*
+           * Due to cross-origin restrictions, it is necessary to transmit the parent URL to the iframe.
+           * We can dynamically post the parent URL to the iframe within the parent context, eliminating the need for hardcoding this value.
+           */
           'http://localhost:3000'
         );
       } else {
