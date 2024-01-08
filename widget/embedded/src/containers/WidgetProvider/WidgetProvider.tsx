@@ -17,7 +17,8 @@ export function WidgetProvider(props: PropsWithChildren<PropTypes>) {
       API_KEY: config?.apiKey || RANGO_PUBLIC_API_KEY,
       BASE_URL: config?.apiUrl || DEFAULT_BASE_URL,
     });
-  }, [config]);
+  }, [config.apiKey, config.apiUrl]);
+
   return (
     <WidgetWallets config={config} onUpdateState={onUpdateState}>
       <QueueManager apiKey={config.apiKey}>
