@@ -3,6 +3,7 @@ import type { WidgetInfoContextInterface } from './WidgetInfo.types';
 import { useManager } from '@rango-dev/queue-manager-react';
 import React, { createContext, useContext } from 'react';
 
+import { useLanguage } from '../../hooks/useLanguage';
 import { useAppStore } from '../../store/AppStore';
 import { useQuoteStore } from '../../store/quote';
 import { useWalletsStore } from '../../store/wallets';
@@ -26,6 +27,7 @@ export function WidgetInfo(props: React.PropsWithChildren) {
   const tokens = useAppStore().tokens();
   const swappers = useAppStore().swappers();
   const loadingStatus = useAppStore().fetchStatus;
+  const resetLanguage = useLanguage().resetLanguage;
 
   // eslint-disable-next-line react/jsx-no-constructed-context-values
   const value = {
@@ -42,6 +44,7 @@ export function WidgetInfo(props: React.PropsWithChildren) {
       swappers,
       loadingStatus,
     },
+    resetLanguage,
   };
 
   return (
