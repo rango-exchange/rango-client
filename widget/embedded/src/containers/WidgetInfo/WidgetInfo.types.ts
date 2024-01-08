@@ -18,4 +18,5 @@ export interface WidgetInfoContextInterface {
     swappers: SwapperMeta[];
     loadingStatus: FetchStatus;
   };
+  resetLanguage: () => void;
 }
