@@ -22,7 +22,7 @@
     "@rango-dev/ui": "^0.26.1-next.7",
     "@rango-dev/wallets-react": "^0.11.1-next.1",
     "@rango-dev/wallets-shared": "^0.25.1-next.1",
-    "@rango-dev/widget-embedded": "^0.20.1-next.14",
+    "@rango-dev/widget-embedded": "^0.20.1-next.15",
     "rango-sdk": "^0.1.44",
     "react": "^18.2.0",
     "react-color": "^2.19.3",
