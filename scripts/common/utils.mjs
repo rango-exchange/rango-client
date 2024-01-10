@@ -4,7 +4,6 @@ import { readFileSync } from 'fs';
 import { join } from 'path';
 import { execa } from 'execa';
 import process from 'node:process';
-import { NPM_ORG_NAME } from './constants.mjs';
 
 const root = join(printDirname(), '..', '..');
 
@@ -91,14 +90,4 @@ export function getEnvWithFallback(name) {
  */
 export function generateTagName(pkg) {
   return `${packageNameWithoutScope(pkg.name)}@${pkg.version}`;
-}
-
-/**
- * Opposite of `generateTagName`
- *
- * @param {string} pkgNameWithoutScope
- * @returns
- */
-export function tagNameToPkgName(pkgNameWithoutScope) {
-  return `${NPM_ORG_NAME}/${pkgNameWithoutScope}`;
 }

@@ -1,6 +1,7 @@
 import { execa } from 'execa';
 import { generateChangelog } from './changelog.mjs';
 import {
+  GithubCommandError,
   GithubCreateReleaseFailedError,
   GithubGetReleaseError,
   GithubReleaseNotFoundError,
@@ -80,6 +81,48 @@ export async function githubReleaseFor(pkg) {
 
     throw err;
   }
+}
+
+/**
+ *
+ * @param {PullRequestInfo} pr
+ *
+ * @typedef {Object} PullRequestInfo
+ * @property {string} title PR title
+ * @property {string} branch your current branch
+ * @property {string} baseBranch PR will be merge into base branch.
+ * @property {string} templatePath template path for PR
+ *
+ */
+export async function createPullRequest(pr) {
+  const { title, baseBranch, branch, templatePath } = pr;
+
+  if (!title || !baseBranch || !branch || !templatePath) {
+    throw new GithubCommandError(
+      'Creating pull request can not be proceed without required parameters. \n',
+      JSON.stringify({ title, baseBranch, branch, templatePath })
+    );
+  }
+
+  const ghCreateParams = [
+    '--title',
+    title,
+    '--base',
+    baseBranch,
+    '--head',
+    branch,
+    '--body-file',
+    templatePath,
+  ];
+  const output = await execa('gh', ['pr', 'create', ...ghCreateParams])
+    .then(({ stdout }) => stdout)
+    .catch((err) => {
+      throw new GithubCommandError(
+        `gh pr command failed. \n ${err.stdout || err} \n`
+      );
+    });
+
+  return output;
 }
 
 export function checkEnvironments() {
