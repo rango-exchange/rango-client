@@ -19,6 +19,13 @@ export class GithubCreateReleaseFailedError extends Error {
   }
 }
 
+export class GithubCommandError extends Error {
+  name = 'GithubCommandError';
+  constructor(msg) {
+    super(msg);
+  }
+}
+
 export class NpmPackageNotFoundError extends Error {
   name = 'NpmPackageNotFoundError';
   constructor(packageName) {

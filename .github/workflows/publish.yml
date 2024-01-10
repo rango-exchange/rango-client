@@ -3,8 +3,6 @@ on:
   push:
     branches:
       - main
-    tags:
-      - '!*'
   pull_request:
     types:
       - closed
@@ -39,6 +37,14 @@ jobs:
 
       - name: Build, Version & Publish packages
         run: yarn run publish
+        env:
+          REF: ${{ github.ref }}
+          BASE_REF: ${{ github.event.pull_request.base.ref }}
+          GH_TOKEN: ${{ github.token }}
+
+      - name: Creating PR on next 
+        if: ${{ github.ref == 'refs/heads/main' }}
+        run: yarn run post-release-prod
         env:
           REF: ${{ github.ref }}
           BASE_REF: ${{ github.event.pull_request.base.ref }}
