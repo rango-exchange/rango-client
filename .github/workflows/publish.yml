@@ -11,15 +11,15 @@ on:
 
 jobs:
   localization:
-    if: ${{ github.ref == 'refs/heads/next' }}
+    if: ${{ github.ref == 'refs/heads/next' && github.event.pull_request.merged == true }}
     uses: ./.github/workflows/crowdin.yml
     secrets:
-      CROWDIN_PROJECT_ID: ${{ secrets.CROWDIN_PROJECT_ID }} 
-      CROWDIN_PERSONAL_TOKEN: ${{ secrets.CROWDIN_PERSONAL_TOKEN }} 
-      PAT: ${{ secrets.PAT }} 
+      CROWDIN_PROJECT_ID: ${{ secrets.CROWDIN_PROJECT_ID }}
+      CROWDIN_PERSONAL_TOKEN: ${{ secrets.CROWDIN_PERSONAL_TOKEN }}
+      PAT: ${{ secrets.PAT }}
 
   publish:
-    if: ${{ always() }}
+    if: ${{ always() && (github.ref == 'refs/heads/main' || (github.ref == 'refs/heads/next' && github.event.pull_request.merged == true)) }}
     runs-on: ubuntu-latest
     needs:
       - localization
@@ -33,7 +33,7 @@ jobs:
       - name: Prepare
         uses: ./.github/actions/prepare
         with:
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }} 
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Build, Version & Publish packages
         run: yarn run publish
@@ -42,7 +42,7 @@ jobs:
           BASE_REF: ${{ github.event.pull_request.base.ref }}
           GH_TOKEN: ${{ github.token }}
 
-      - name: Creating PR on next 
+      - name: Creating PR on next
         if: ${{ github.ref == 'refs/heads/main' }}
         run: yarn run post-release-prod
         env:
