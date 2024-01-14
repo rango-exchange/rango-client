@@ -1,10 +1,10 @@
 import { styled } from '../../theme';
 
 export const StyledEllipse = styled('ellipse', {
-  cx: 12.5,
-  cy: 12.5,
-  rx: 7.7,
-  ry: 7.7,
+  cx: '12.5px',
+  cy: '12.5px',
+  rx: '7.7px',
+  ry: '7.7px',
   strokeLinecap: 'round',
   fill: 'none',
   strokeDasharray: 100,
