@@ -22,6 +22,7 @@ export type MuliSelectPropTypes = (TokensListProps | CommonListProps) & {
   value?: string[];
   label: string;
   icon: React.ReactNode;
+  disabled?: boolean;
 };
 
 export interface MultiSelectChipProps {

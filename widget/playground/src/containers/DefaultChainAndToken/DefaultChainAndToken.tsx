@@ -82,6 +82,7 @@ export function DefaultChainAndToken({ type }: { type: Type }) {
         title="Default Blockchain"
         hasLogo={true}
         placeholder="Chain"
+        disabled={!blockchains?.length}
       />
       <Divider size={10} />
       <Tooltip

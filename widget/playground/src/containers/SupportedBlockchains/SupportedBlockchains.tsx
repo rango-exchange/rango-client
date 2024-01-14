@@ -64,6 +64,7 @@ export function SupportedBlockchains({ type }: { type: Type }) {
       }
       list={allBlockchains}
       onChange={handleBlockchainChange}
+      disabled={!blockchains?.length}
     />
   );
 }

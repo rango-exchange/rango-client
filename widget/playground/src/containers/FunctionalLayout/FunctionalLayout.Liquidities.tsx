@@ -106,6 +106,7 @@ export function LiquiditiesSection() {
         onChange={(items) =>
           handleChange(allDexsNames, allBridgeNames, items, selectedBridges)
         }
+        disabled={!swappers?.length}
       />
       <Divider size={10} />
       <MultiSelect
@@ -125,6 +126,7 @@ export function LiquiditiesSection() {
         onChange={(items) =>
           handleChange(allBridgeNames, allDexsNames, items, selectedDexs)
         }
+        disabled={!swappers?.length}
       />
       <Divider size={4} />
       <Checkbox
