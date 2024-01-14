@@ -1,10 +1,19 @@
 import type { SignerFactory } from 'rango-types';
 
-import { DefaultEvmSigner } from '@rango-dev/signer-evm';
 import { DefaultSignerFactory, TransactionType as TxType } from 'rango-types';
+
+import ShapeShiftSnapBaseSigner from './signer/shapeShiftSnapBaseSigner';
+import ShapeShiftSnapCosmosSigner from './signer/shapeShiftSnapCosmosSigner';
 
 export default function getSigners(provider: any): SignerFactory {
   const signers = new DefaultSignerFactory();
-  signers.registerSigner(TxType.EVM, new DefaultEvmSigner(provider));
+  signers.registerSigner(
+    TxType.TRANSFER,
+    new ShapeShiftSnapBaseSigner(provider)
+  );
+  signers.registerSigner(
+    TxType.COSMOS,
+    new ShapeShiftSnapCosmosSigner(provider)
+  );
   return signers;
 }

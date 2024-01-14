@@ -1,5 +1,4 @@
 import type {
-  CanEagerConnect,
   Connect,
   Networks,
   ProviderConnectResult,
@@ -33,26 +32,14 @@ export const connect: Connect = async ({ instance }: { instance: any }) => {
     accounts = await getAccounts(instance);
   }
 
+  if (!accounts?.length) {
+    throw new Error('Please make sure ShapeShift Snap is installed.');
+  }
+
   return accounts;
 };
 
 export const getSigners: (provider: any) => SignerFactory = signer;
-
-export const canEagerConnect: CanEagerConnect = async ({
-  instance,
-}: {
-  instance: any;
-}) => {
-  try {
-    const accounts = await getAccounts(instance);
-    if (accounts.length) {
-      return true;
-    }
-    return false;
-  } catch (error) {
-    return false;
-  }
-};
 
 export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
   allBlockChains
