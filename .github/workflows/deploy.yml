@@ -18,7 +18,6 @@ jobs:
         run: yarn run deploy
         env:
           REF: ${{ github.ref }}
-          BASE_REF: ${{ github.event.pull_request.base.ref }}
           GH_TOKEN: ${{ github.token }}
           VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
@@ -26,4 +25,4 @@ jobs:
           VERCEL_PROJECT_Q: ${{ secrets.VERCEL_PROJECT_Q }}
           VERCEL_PROJECT_WALLET_ADAPTER: ${{ secrets.VERCEL_PROJECT_WALLET_ADAPTER }}
           VERCEL_PROJECT_WIDGET_CONFIG: ${{ secrets.VERCEL_PROJECT_WIDGET_CONFIG }}
-          VERCEL_PROJECT_WIDGET_APP: ${{ secrets.VERCEL_PROJECT_WIDGET_APP }}  
+          VERCEL_PROJECT_WIDGET_APP: ${{ secrets.VERCEL_PROJECT_WIDGET_APP }}

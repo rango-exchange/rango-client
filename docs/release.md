@@ -45,14 +45,16 @@ All the apps published by `prerelase` workflow will be published under the Verce
 
 ### Next (Staging)
 
-A publish only will be triggered when a **Pull Request** has been merged. If you try to commit directly into the `next` branch it wouldn't be triggered.
+A publish will be triggered when a **Pull Request** has been merged.
 
 First it tries to extracting translations (if any) and push them onto Crowdin, then releasing libraries will be started.
 _Note 1_: Syncing translations (first workflow) is an optional step which means if it fails we will do the publish anyway.
 
 ### Production
 
-For releasing production, you need to run `yarn release-prod` it will checkout to `next` branch and pull the latest changes then it tries to merge the `next` into `main`.
+For releasing production, you need to run `yarn release-prod` it will checkout to `next` branch and pull the latest changes then it tries to merge the `next` into `main` by `--no-ff` strategy, To make sure that a new commit is made And previous commits that may have `[skips ci]` Do not prevent workflow from triggering.
+
+
 _Note 1_: Make sure you are having permission for `push` on `main`.
 
 In production, we don't run localization workflow (crowdin) since we assume our `/translation` folder is in sync with Crowdin. if you think there is new translation, you can run `crowdin` workflow manually and then try to release.
