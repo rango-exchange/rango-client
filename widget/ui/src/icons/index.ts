@@ -1,3 +1,4 @@
+export { default as AddIcon } from './Add';
 export { default as AutoThemeIcon } from './AutoTheme';
 export { default as BorderRadiusIcon } from './BorderRadius';
 export { default as ChevronDownIcon } from './ChevronDown';

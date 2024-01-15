@@ -1,6 +1,5 @@
-import type { Notification } from '../../types/notification';
-
 import { i18n } from '@lingui/core';
+import { EventSeverity } from '@rango-dev/queue-manager-rango-preset';
 import {
   ChainToken,
   ChevronRightIcon,
@@ -8,12 +7,9 @@ import {
   Typography,
 } from '@rango-dev/ui';
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
 
-import { navigationRoutes } from '../../constants/navigationRoutes';
+import { useNotifications } from '../../hooks/useNotifications';
 import { useAppStore } from '../../store/AppStore';
-import { useNotificationStore } from '../../store/notification';
-import { useUiStore } from '../../store/ui';
 
 import { Container, Images, List } from './NotificationContent.styles';
 import { NotificationNotFound } from './NotificationNotFound';
@@ -21,22 +17,13 @@ import { NotificationNotFound } from './NotificationNotFound';
 const MAX_NOTIFICATIONS_DISPLAYED = 4;
 
 export function NotificationContent() {
-  const navigate = useNavigate();
-  const setSelectedSwap = useUiStore.use.setSelectedSwap();
+  const { onSelect, notifications } = useNotifications();
 
-  const { getUnreadNotifications } = useNotificationStore();
-
-  const notifications: Notification[] = getUnreadNotifications();
   const blockchains = useAppStore().blockchains();
   const tokens = useAppStore().tokens();
   const sortedNotification = notifications
     .sort((a, b) => b.creationTime - a.creationTime)
     .slice(0, MAX_NOTIFICATIONS_DISPLAYED);
-
-  const handleOnClick = (requestId: Notification['requestId']) => {
-    setSelectedSwap(requestId);
-    navigate(`${navigationRoutes.swaps}/${requestId}`);
-  };
 
   return (
     <Container>
@@ -72,9 +59,17 @@ export function NotificationContent() {
             return (
               <ListItemButton
                 key={notificationItem.requestId}
-                onClick={() => handleOnClick(notificationItem.requestId)}
+                onClick={() => onSelect(notificationItem.requestId)}
                 title={
-                  <Typography variant="body" size="small" color="$neutral700">
+                  <Typography
+                    variant="body"
+                    size="small"
+                    color={
+                      notificationItem.event.messageSeverity ===
+                      EventSeverity.WARNING
+                        ? '$foreground'
+                        : '$neutral700'
+                    }>
                     {i18n.t(notificationItem.event.message)}
                   </Typography>
                 }
