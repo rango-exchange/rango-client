@@ -2,11 +2,7 @@ name: Publish
 on:
   push:
     branches:
-      - main
-  pull_request:
-    types:
-      - closed
-    branches:
+      - 'main'
       - 'next'
 
 jobs:
@@ -14,9 +10,9 @@ jobs:
     if: ${{ github.ref == 'refs/heads/next' }}
     uses: ./.github/workflows/crowdin.yml
     secrets:
-      CROWDIN_PROJECT_ID: ${{ secrets.CROWDIN_PROJECT_ID }} 
-      CROWDIN_PERSONAL_TOKEN: ${{ secrets.CROWDIN_PERSONAL_TOKEN }} 
-      PAT: ${{ secrets.PAT }} 
+      CROWDIN_PROJECT_ID: ${{ secrets.CROWDIN_PROJECT_ID }}
+      CROWDIN_PERSONAL_TOKEN: ${{ secrets.CROWDIN_PERSONAL_TOKEN }}
+      PAT: ${{ secrets.PAT }}
 
   publish:
     if: ${{ always() }}
@@ -33,19 +29,17 @@ jobs:
       - name: Prepare
         uses: ./.github/actions/prepare
         with:
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }} 
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Build, Version & Publish packages
         run: yarn run publish
         env:
           REF: ${{ github.ref }}
-          BASE_REF: ${{ github.event.pull_request.base.ref }}
           GH_TOKEN: ${{ github.token }}
 
-      - name: Creating PR on next 
+      - name: Creating PR on next
         if: ${{ github.ref == 'refs/heads/main' }}
         run: yarn run post-release-prod
         env:
           REF: ${{ github.ref }}
-          BASE_REF: ${{ github.event.pull_request.base.ref }}
           GH_TOKEN: ${{ github.token }}

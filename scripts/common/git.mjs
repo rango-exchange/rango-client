@@ -157,13 +157,10 @@ export async function publishCommitAndTags(pkgs) {
   let body = `Affected packages: ${tags.join(',')}`;
 
   /* 
-    When we are pushing a publish commit into main, it triggers a redundant workflow run,
+    When we are pushing a publish commit into main or next, it triggers a redundant workflow run,
     To avoid this, by adding a [skip ci] the workflow run will be skipped.
-    We don't need it on `next` since the next workflow is running on `pullrequest.closed` event.
   */
-  if (channel === 'prod') {
-    body += '\n[skip ci]';
-  }
+  body += '\n[skip ci]';
 
   // Making a publish commit
   await execa('git', ['commit', '-m', message, '-m', body]).catch((error) => {
@@ -244,8 +241,10 @@ export async function checkout(branch) {
   return output;
 }
 
-export async function merge(branch) {
-  const output = await execa('git', ['merge', branch])
+
+export async function merge(branch, mergeOptions) {
+  const { mergeStrategy = '' } = mergeOptions;
+  const output = await execa('git', ['merge', mergeStrategy, branch])
     .then(({ stdout }) => stdout)
     .catch((error) => {
       throw new GitError(`git merge failed. \n ${error.stderr}`);
@@ -253,6 +252,7 @@ export async function merge(branch) {
 
   return output;
 }
+
 
 export async function getLastCommitId() {
   const commitId = await execa('git', ['log', '--format=%s', '-n', 1])
