@@ -1,7 +1,13 @@
 import type { CodeBlockProps } from './CodeBlock.types';
 
-import { CopyIcon, Tooltip, useCopyToClipboard } from '@rango-dev/ui';
-import React, { useState } from 'react';
+import {
+  Alert,
+  CopyIcon,
+  DoneIcon,
+  Tooltip,
+  useCopyToClipboard,
+} from '@rango-dev/ui';
+import React from 'react';
 import { PrismLight as SyntaxHighlighter } from 'react-syntax-highlighter';
 import {
   javascript,
@@ -12,6 +18,9 @@ import {
   CodeBlockContainer,
   CopyCodeBlock,
   CopyCodeBlockButton,
+  CopyCodeBlockButtonDoneIcon,
+  CopyCodeBlockButtonIcon,
+  SuccessfulAlertContainer,
 } from './CodeBlock.styles';
 
 const RESET_INTERVAL = 2_000;
@@ -20,36 +29,42 @@ SyntaxHighlighter.registerLanguage('javascript', javascript);
 SyntaxHighlighter.registerLanguage('jsx', jsx);
 
 export function CodeBlock(props: CodeBlockProps) {
-  const { language, theme, children } = props;
+  const { language, theme, children, selectedType } = props;
 
-  const [, handleCopy] = useCopyToClipboard(RESET_INTERVAL);
-  const [open, setOpen] = useState<boolean>(false);
+  const [isCopied, handleCopy] = useCopyToClipboard(RESET_INTERVAL);
+
   return (
-    <Tooltip side="bottom" open={open} content={<span> Code Copied! </span>}>
-      <CodeBlockContainer>
-        <CopyCodeBlock>
-          <Tooltip content="Copy to clipboard" side="top">
-            <CopyCodeBlockButton
-              type="primary"
-              onClick={() => {
-                handleCopy(children);
-                setOpen(true);
-                setInterval(() => {
-                  setOpen(false);
-                }, RESET_INTERVAL);
-              }}>
+    <CodeBlockContainer>
+      <CopyCodeBlock>
+        <Tooltip content="Copy to clipboard" side="top">
+          <CopyCodeBlockButton
+            type="primary"
+            onClick={() => {
+              handleCopy(children);
+            }}>
+            <CopyCodeBlockButtonDoneIcon visible={isCopied}>
+              <DoneIcon size={24} />
+            </CopyCodeBlockButtonDoneIcon>
+            <CopyCodeBlockButtonIcon visible={!isCopied}>
               <CopyIcon size={24} />
-            </CopyCodeBlockButton>
-          </Tooltip>
-        </CopyCodeBlock>
-        <SyntaxHighlighter
-          showLineNumbers
-          language={language}
-          customStyle={{ height: '100%', borderRadius: '15px' }}
-          style={theme}>
-          {children}
-        </SyntaxHighlighter>
-      </CodeBlockContainer>
-    </Tooltip>
+            </CopyCodeBlockButtonIcon>
+          </CopyCodeBlockButton>
+        </Tooltip>
+      </CopyCodeBlock>
+      <SyntaxHighlighter
+        showLineNumbers
+        language={language}
+        customStyle={{ height: '100%', borderRadius: '15px' }}
+        style={theme}>
+        {children}
+      </SyntaxHighlighter>
+
+      <SuccessfulAlertContainer visible={isCopied}>
+        <Alert
+          type="success"
+          title={`${selectedType || ''} Code copied successfully`}
+        />
+      </SuccessfulAlertContainer>
+    </CodeBlockContainer>
   );
 }

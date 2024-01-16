@@ -9,3 +9,5 @@ export enum SIDE_TABS_IDS {
 }
 
 export const NOT_FOUND = -1;
+
+export const PLAYGROUND_CONTAINER_ID = 'playgroundContainerId';
