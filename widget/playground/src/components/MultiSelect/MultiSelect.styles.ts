@@ -15,17 +15,26 @@ export const Select = styled('div', {
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
-    cursor: 'pointer',
   },
   '& .chips': {
     display: 'flex',
     flexWrap: 'wrap',
     gap: '$5',
   },
-  '&:hover': {
-    borderColor: '$info300',
-    '& svg': {
-      color: '$secondary500',
+
+  variants: {
+    disabled: {
+      false: {
+        '&:hover': {
+          borderColor: '$info300',
+          '& svg': {
+            color: '$secondary500',
+          },
+        },
+        '& .field': {
+          cursor: 'pointer',
+        },
+      },
     },
   },
 });

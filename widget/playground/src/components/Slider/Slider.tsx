@@ -27,7 +27,7 @@ function Slider(props: PropTypes) {
     const sliderEl = document.querySelector(`#${id}`) as HTMLInputElement;
     const sliderValue = parseInt(sliderEl.value);
     const mainValue = sliderValue * (MAX_VALUE / (max as number));
-    sliderEl.style.background = `linear-gradient(to right, #5BABFF ${mainValue}%, #F2F2F2 ${mainValue}%)`;
+    sliderEl.style.background = `linear-gradient(to right, #5BABFF ${mainValue}%, #C8E2FF ${mainValue}%)`;
   };
 
   useEffect(() => {

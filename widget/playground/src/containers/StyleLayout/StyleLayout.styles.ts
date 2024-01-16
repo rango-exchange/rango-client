@@ -61,7 +61,7 @@ export const BackdropTab = styled('div', {
   position: 'absolute',
   borderRadius: '$md',
   inset: 0,
-  transition: 'transform 0.5s cubic-bezier(0, 0, 0.86, 1.2)',
+  transition: 'transform 0.2s cubic-bezier(0, 0, 0.86, 1.2)',
 });
 
 export const PresetContent = styled('div', {

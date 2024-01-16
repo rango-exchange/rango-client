@@ -82,6 +82,7 @@ export function SupportedTokens({ type }: { type: Type }) {
           onChangeTokens(selectedTokens, type);
           onChangeToken(undefined, type);
         }}
+        disabled={!blockchains?.length || !tokens.length}
       />
     </>
   );
