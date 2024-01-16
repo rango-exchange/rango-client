@@ -31,6 +31,7 @@ export * from './Switch';
 export * from './TextField';
 export * from './TokenList';
 export * from './TokenPreview';
+export * from './Toast';
 export * from './Tooltip';
 export * from './Typography';
 export * from './Wallet';
