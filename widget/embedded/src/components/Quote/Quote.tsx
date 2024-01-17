@@ -7,7 +7,6 @@ import {
   Alert,
   Divider,
   InfoIcon,
-  QuoteCost,
   StepDetails,
   TokenAmount,
   Tooltip,
@@ -17,8 +16,6 @@ import BigNumber from 'bignumber.js';
 import React, { useLayoutEffect, useRef, useState } from 'react';
 
 import {
-  GAS_FEE_MAX_DECIMALS,
-  GAS_FEE_MIN_DECIMALS,
   PERCENTAGE_CHANGE_MAX_DECIMALS,
   PERCENTAGE_CHANGE_MIN_DECIMALS,
   TOKEN_AMOUNT_MAX_DECIMALS,
@@ -37,14 +34,8 @@ import {
   getBlockchainShortNameFor,
   getSwapperDisplayName,
 } from '../../utils/meta';
-import {
-  formatTooltipNumbers,
-  numberToString,
-  secondsToString,
-  totalArrivalTime,
-} from '../../utils/numbers';
+import { formatTooltipNumbers, numberToString } from '../../utils/numbers';
 import { getPriceImpact, getPriceImpactLevel } from '../../utils/quote';
-import { getTotalFeeInUsd } from '../../utils/swap';
 
 import {
   BasicInfoOutput,
@@ -59,6 +50,7 @@ import {
   SummaryContainer,
   summaryStyles,
 } from './Quote.styles';
+import { QuoteCostDetails } from './QuoteCostDetails';
 import { QuoteSummary } from './QuoteSummary';
 import { QuoteTrigger } from './QuoteTrigger ';
 
@@ -72,19 +64,12 @@ export function Quote(props: QuoteProps) {
     type,
     recommended = true,
   } = props;
-  const tokens = useAppStore().tokens();
   const blockchains = useAppStore().blockchains();
   const swappers = useAppStore().swappers();
 
   const [expanded, setExpanded] = useState(props.expanded);
   const quoteRef = useRef<HTMLButtonElement | null>(null);
   const prevExpanded = useRef(expanded);
-  const totalFee = numberToString(
-    getTotalFeeInUsd(quote.result?.swaps ?? [], tokens),
-    GAS_FEE_MIN_DECIMALS,
-    GAS_FEE_MAX_DECIMALS
-  );
-  const totalTime = secondsToString(totalArrivalTime(quote.result?.swaps));
   const roundedInput = numberToString(
     input.value,
     TOKEN_AMOUNT_MIN_DECIMALS,
@@ -278,7 +263,6 @@ export function Quote(props: QuoteProps) {
   const steps = getQuoteSteps(quote.result?.swaps ?? []);
   const numberOfSteps = steps.length;
   const tooltipContainer = getContainer();
-
   useLayoutEffect(() => {
     if (expanded && !prevExpanded.current && quoteRef.current) {
       setTimeout(() => {
@@ -295,7 +279,7 @@ export function Quote(props: QuoteProps) {
         listItem={type === 'list-item'}
         basic={type === 'basic'}>
         <div className={summaryStyles()}>
-          <QuoteCost fee={totalFee} time={totalTime} steps={numberOfSteps} />
+          <QuoteCostDetails steps={numberOfSteps} quote={quote} />
           {type === 'basic' && (
             <div className={basicInfoStyles()}>
               <FrameIcon>

@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-magic-numbers */
+import type { FeesGroup, NameOfFees } from '../constants/quote';
 import type { FetchStatus } from '../store/slices/data';
 import type {
   ConvertedToken,
@@ -14,6 +15,7 @@ import type {
   BestRouteResponse,
   BlockchainMeta,
   RecommendedSlippage,
+  SwapFee,
   SwapResult,
   Token,
 } from 'rango-sdk';
@@ -325,6 +327,39 @@ export function getTotalFeeInUsd(
     (totalFee: BigNumber, step) =>
       totalFee.plus(getUsdFeeOfStep(step, allTokens)),
     ZERO
+  );
+}
+
+export function getUsdFee(fee: SwapFee): BigNumber {
+  let totalFeeInUsd = ZERO;
+  totalFeeInUsd = totalFeeInUsd.plus(
+    new BigNumber(fee.amount).multipliedBy(fee.price || 0)
+  );
+
+  return totalFeeInUsd;
+}
+
+export function getTotalFeesInUsd(fees: SwapFee[]): BigNumber {
+  return fees.reduce(
+    (totalFee: BigNumber, fee) => totalFee.plus(getUsdFee(fee)),
+    ZERO
+  );
+}
+export function getFeesGroup(swaps: SwapResult[]): FeesGroup {
+  return swaps.reduce(
+    (result, swap) => {
+      for (const fee of swap.fee) {
+        const name = fee.name as NameOfFees;
+        const feeGroup =
+          fee.expenseType !== 'DECREASE_FROM_OUTPUT'
+            ? result.payable
+            : result.nonePayable;
+
+        feeGroup[name] = [...(feeGroup[name] || []), fee];
+      }
+      return result;
+    },
+    { payable: {}, nonePayable: {} } as FeesGroup
   );
 }
 
