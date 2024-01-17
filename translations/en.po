@@ -14,6 +14,16 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. js-lingui-explicit-id
+#: widget/embedded/src/components/Quote/QuoteTrigger .tsx:73
+msgid "Via:"
+msgstr "Via:"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/Quote/QuoteTrigger .tsx:156
+msgid "Chains:"
+msgstr "Chains:"
+
+#. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:37
 #: widget/embedded/src/components/TokenList/TokenList.tsx:135
 #: widget/embedded/src/pages/HistoryPage.tsx:94
@@ -186,17 +196,17 @@ msgid "You have no notification"
 msgstr "You have no notification"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/Quote.tsx:213
+#: widget/embedded/src/components/Quote/Quote.tsx:208
 msgid "Slippage Error:"
 msgstr "Slippage Error:"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/Quote.tsx:237
+#: widget/embedded/src/components/Quote/Quote.tsx:232
 msgid "Yours: {amount} {symbol}"
 msgstr "Yours: {amount} {symbol}"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/Quote.tsx:258
+#: widget/embedded/src/components/Quote/Quote.tsx:253
 msgid "Minimum required slippage is {minRequiredSlippage}"
 msgstr "Minimum required slippage is {minRequiredSlippage}"
 
