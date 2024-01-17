@@ -5,6 +5,13 @@ import { Typography } from '../Typography';
 
 export const TooltipContent = styled(RadixTooltip.Content, {
   zIndex: '999999',
+  variants: {
+    align: {
+      right: {
+        position: 'absolute',
+      },
+    },
+  },
 });
 
 export const TooltipTypography = styled(Typography, {
