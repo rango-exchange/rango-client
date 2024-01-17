@@ -14,6 +14,70 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. js-lingui-explicit-id
+#: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:95
+msgid "View more info"
+msgstr "View more info"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:105
+msgid "Gas & Fee Explanation"
+msgstr "Gas & Fee Explanation"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:157
+msgid "Total Payable Fee"
+msgstr "Total Payable Fee"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:177
+msgid "Hide non-payable fees"
+msgstr "Hide non-payable fees"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:178
+msgid "Show non-payable fees"
+msgstr "Show non-payable fees"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:188
+msgid "Description"
+msgstr "Description"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:192
+msgid ""
+"The following fees are considered in the transaction output and\n"
+"                you won’t need to pay extra gas for them."
+msgstr ""
+"The following fees are considered in the transaction output and\n"
+"                you won’t need to pay extra gas for them."
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/constants/quote.ts:13
+msgid "Network Fee"
+msgstr "Network Fee"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/constants/quote.ts:14
+msgid "Protocol Fee"
+msgstr "Protocol Fee"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/constants/quote.ts:15
+msgid "Affiliate Fee"
+msgstr "Affiliate Fee"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/constants/quote.ts:16
+msgid "Outbound Fee"
+msgstr "Outbound Fee"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/constants/quote.ts:17
+msgid "Rango Fee"
+msgstr "Rango Fee"
+
+#. js-lingui-explicit-id
 #: widget/embedded/src/components/Quote/QuoteTrigger .tsx:73
 msgid "Via:"
 msgstr "Via:"
@@ -57,44 +121,44 @@ msgid "More +{count}"
 msgstr "More +{count}"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:277
+#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:265
 #: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:227
 msgid "Confirm"
 msgstr "Confirm"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:292
-#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:367
+#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:280
+#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:355
 msgid "Your {blockchainName} wallets"
 msgstr "Your {blockchainName} wallets"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:311
+#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:299
 msgid "Insufficient account balance"
 msgstr "Insufficient account balance"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:320
+#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:308
 msgid "Proceed anyway"
 msgstr "Proceed anyway"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:376
+#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:364
 msgid "You need to connect a {blockchainName} wallet."
 msgstr "You need to connect a {blockchainName} wallet."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:446
+#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:431
 msgid "Send to a different address"
 msgstr "Send to a different address"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:456
+#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:442
 msgid "Your destination address"
 msgstr "Your destination address"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:470
+#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:455
 msgid "Address {destination} doesn't match the blockchain address pattern."
 msgstr "Address {destination} doesn't match the blockchain address pattern."
 
@@ -196,17 +260,17 @@ msgid "You have no notification"
 msgstr "You have no notification"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/Quote.tsx:208
+#: widget/embedded/src/components/Quote/Quote.tsx:193
 msgid "Slippage Error:"
 msgstr "Slippage Error:"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/Quote.tsx:232
+#: widget/embedded/src/components/Quote/Quote.tsx:217
 msgid "Yours: {amount} {symbol}"
 msgstr "Yours: {amount} {symbol}"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/Quote.tsx:253
+#: widget/embedded/src/components/Quote/Quote.tsx:238
 msgid "Minimum required slippage is {minRequiredSlippage}"
 msgstr "Minimum required slippage is {minRequiredSlippage}"
 
@@ -241,6 +305,7 @@ msgid "Price impact"
 msgstr "Price impact"
 
 #. js-lingui-explicit-id
+#: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:116
 #: widget/embedded/src/components/QuoteWarningsAndErrors/HighValueLossWarningModal.tsx:86
 msgid "Details"
 msgstr "Details"
@@ -783,57 +848,57 @@ msgid "This year"
 msgstr "This year"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:122
+#: widget/embedded/src/utils/swap.ts:124
 msgid "Required: >= {min} {symbol}"
 msgstr "Required: >= {min} {symbol}"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:135
+#: widget/embedded/src/utils/swap.ts:137
 msgid "Required: > {min} {symbol}"
 msgstr "Required: > {min} {symbol}"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:150
+#: widget/embedded/src/utils/swap.ts:152
 msgid "Required: <= {max} {symbol}"
 msgstr "Required: <= {max} {symbol}"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:163
+#: widget/embedded/src/utils/swap.ts:165
 msgid "Required: < {max} {symbol}"
 msgstr "Required: < {max} {symbol}"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:639
+#: widget/embedded/src/utils/swap.ts:674
 msgid " for network fee"
 msgstr " for network fee"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:642
+#: widget/embedded/src/utils/swap.ts:677
 msgid " for swap"
 msgstr " for swap"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:645
+#: widget/embedded/src/utils/swap.ts:680
 msgid " for input and network fee"
 msgstr " for input and network fee"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:647
+#: widget/embedded/src/utils/swap.ts:682
 msgid "Needs ≈ {requiredAmount} {symbol}{reason}, but you have {currentAmount} {symbol} in your {blockchain} wallet."
 msgstr "Needs ≈ {requiredAmount} {symbol}{reason}, but you have {currentAmount} {symbol} in your {blockchain} wallet."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:707
+#: widget/embedded/src/utils/swap.ts:742
 msgid "Waiting for connecting wallet"
 msgstr "Waiting for connecting wallet"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:711
+#: widget/embedded/src/utils/swap.ts:746
 msgid "Waiting for other running tasks to be finished"
 msgstr "Waiting for other running tasks to be finished"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:714
+#: widget/embedded/src/utils/swap.ts:749
 msgid "Waiting for changing wallet network"
 msgstr "Waiting for changing wallet network"
 
