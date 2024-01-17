@@ -30,3 +30,8 @@ export type QuoteTriggerImagesProps = {
   open?: boolean;
   className?: string;
 };
+
+export type QuoteCostDetailsProps = {
+  quote: BestRouteResponse;
+  steps: number;
+};
