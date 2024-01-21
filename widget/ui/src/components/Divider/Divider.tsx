@@ -4,10 +4,10 @@ import React from 'react';
 
 import { DividerContainer } from './Divider.styles';
 
-const Default_Size = 12;
+const DEFAULT_SIZE = 12;
 
 export function Divider({
-  size = Default_Size,
+  size = DEFAULT_SIZE,
   direction = 'vertical',
 }: PropTypes) {
   return <DividerContainer size={size} direction={direction} />;

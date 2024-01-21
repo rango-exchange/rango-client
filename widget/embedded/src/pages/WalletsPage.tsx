@@ -2,9 +2,9 @@ import type { WalletType } from '@rango-dev/wallets-shared';
 
 import { i18n } from '@lingui/core';
 import { styled, Typography, Wallet, WalletState } from '@rango-dev/ui';
-import React, { Fragment, useState } from 'react';
+import React, { useState } from 'react';
 
-import { Layout } from '../components/Layout';
+import { Layout, PageContainer } from '../components/Layout';
 import { WalletModal } from '../components/WalletModal';
 import { useWalletList } from '../hooks/useWalletList';
 import { useAppStore } from '../store/AppStore';
@@ -20,7 +20,7 @@ const ListContainer = styled('div', {
   height: '100%',
 });
 
-const Container = styled('div', {
+const Container = styled(PageContainer, {
   textAlign: 'center',
 });
 
@@ -71,16 +71,15 @@ export function WalletsPage() {
           {list.map((wallet, index) => {
             const key = `wallet-${index}-${wallet.type}`;
             return (
-              <Fragment key={key}>
-                <Wallet
-                  {...wallet}
-                  container={getContainer()}
-                  onClick={(type) => {
-                    void handleClick(type);
-                  }}
-                  isLoading={fetchMetaStatus === 'loading'}
-                />
-              </Fragment>
+              <Wallet
+                key={key}
+                {...wallet}
+                container={getContainer()}
+                onClick={(type) => {
+                  void handleClick(type);
+                }}
+                isLoading={fetchMetaStatus === 'loading'}
+              />
             );
           })}
           <WalletModal

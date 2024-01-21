@@ -1,23 +1,22 @@
 import { css, darkTheme, styled } from '@rango-dev/ui';
 
+import { ScrollableArea } from '../Layout';
+
 export const Container = styled('div', {
   display: 'flex',
-  width: '100%',
   flexDirection: 'column',
-  alignItems: 'center',
-  height: '0',
   flexGrow: 1,
+  overflow: 'hidden',
 });
 
 export const HeaderDetails = styled('div', {
   width: '100%',
 });
 
-export const StepsList = styled('div', {
+export const StepsList = styled(ScrollableArea, {
   padding: '$0 $20 $20 $20',
-  width: '100%',
-  overflow: 'auto',
 });
+
 export const Alerts = styled('div', {
   display: 'flex',
   flexDirection: 'column',

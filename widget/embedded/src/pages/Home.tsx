@@ -1,10 +1,11 @@
 import { i18n } from '@lingui/core';
-import { Button, styled, SwapInput, WarningIcon } from '@rango-dev/ui';
-import React, { useEffect, useRef, useState } from 'react';
+import { Button, Divider, styled, SwapInput, WarningIcon } from '@rango-dev/ui';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { HomeButtons } from '../components/HeaderButtons';
-import { Layout } from '../components/Layout';
+import { Layout, PageContainer } from '../components/Layout';
+import { QuoteWarningsAndErrors } from '../components/QuoteWarningsAndErrors';
 import { SwitchFromAndToButton } from '../components/SwitchFromAndTo';
 import { errorMessages } from '../constants/errors';
 import { navigationRoutes } from '../constants/navigationRoutes';
@@ -27,15 +28,6 @@ import { formatTooltipNumbers, numberToString } from '../utils/numbers';
 import { getPriceImpact, getPriceImpactLevel } from '../utils/quote';
 import { canComputePriceImpact, getSwapButtonState } from '../utils/swap';
 import { formatBalance, isFetchingBalance } from '../utils/wallets';
-
-const Container = styled('div', {
-  display: 'flex',
-  flexDirection: 'column',
-  overflowY: 'visible',
-  '& .quote__container': {
-    paddingTop: '$2',
-  },
-});
 
 const FromContainer = styled('div', {
   position: 'relative',
@@ -75,7 +67,6 @@ export function Home() {
   const { connectedWallets, getBalanceFor } = useWalletsStore();
   const setCurrentPage = useUiStore.use.setCurrentPage();
   const [showQuoteWarningModal, setShowQuoteWarningModal] = useState(false);
-  const layoutRef = useRef<HTMLDivElement>(null);
   const fetchingBalance =
     !!fromBlockchain &&
     isFetchingBalance(connectedWallets, fromBlockchain.name);
@@ -128,8 +119,7 @@ export function Home() {
 
   return (
     <Layout
-      ref={layoutRef}
-      fixedHeight={false}
+      height="auto"
       hasLogo
       footer={
         <Button
@@ -160,7 +150,6 @@ export function Home() {
         title: i18n.t('Swap'),
         suffix: (
           <HomeButtons
-            layoutRef={layoutRef.current}
             onClickRefresh={
               (!!quote || quoteError) && !showQuoteWarningModal
                 ? fetchQuote
@@ -171,7 +160,7 @@ export function Home() {
           />
         ),
       }}>
-      <Container>
+      <PageContainer>
         <InputsContainer>
           <FromContainer>
             <SwapInput
@@ -262,26 +251,35 @@ export function Home() {
             tooltipContainer={getContainer()}
           />
         </InputsContainer>
-        <div className="quote__container">
-          <QuoteInfo
-            quote={quote}
-            loading={fetchingQuote}
-            error={quoteError}
-            warning={quoteWarning}
-            type="basic"
-            refetchQuote={fetchQuote}
-            showWarningModal={showQuoteWarningModal}
-            onOpenWarningModal={() => setShowQuoteWarningModal(true)}
-            onCloseWarningModal={() => setShowQuoteWarningModal(false)}
-            onConfirmWarningModal={() => {
-              setShowQuoteWarningModal(false);
-              setQuoteWarningsConfirmed(true);
-              navigate(navigationRoutes.confirmSwap);
-            }}
-            onChangeSettings={() => navigate(navigationRoutes.settings)}
-          />
-        </div>
-      </Container>
+        <Divider size="2" />
+        <QuoteInfo
+          quote={quote}
+          loading={fetchingQuote}
+          error={quoteError}
+          warning={quoteWarning}
+          type="basic"
+        />
+        {quoteWarning || quoteError ? (
+          <>
+            <Divider size="10" />
+            <QuoteWarningsAndErrors
+              warning={quoteWarning}
+              error={quoteError}
+              loading={fetchingQuote}
+              refetchQuote={fetchQuote}
+              showWarningModal={showQuoteWarningModal}
+              onOpenWarningModal={() => setShowQuoteWarningModal(true)}
+              onCloseWarningModal={() => setShowQuoteWarningModal(false)}
+              onConfirmWarningModal={() => {
+                setShowQuoteWarningModal(false);
+                setQuoteWarningsConfirmed(true);
+                navigate(navigationRoutes.confirmSwap);
+              }}
+              onChangeSettings={() => navigate(navigationRoutes.settings)}
+            />
+          </>
+        ) : null}
+      </PageContainer>
     </Layout>
   );
 }
