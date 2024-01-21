@@ -3,7 +3,6 @@ import { SafeAppProvider } from '@safe-global/safe-apps-provider';
 import SafeAppsSDK, { TransactionStatus } from '@safe-global/safe-apps-sdk';
 
 const options = {
-  allowedDomains: [/gnosis-safe.io$/, /app.safe.global$/],
   debug: false,
 };
 
