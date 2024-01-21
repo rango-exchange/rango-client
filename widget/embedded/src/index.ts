@@ -9,7 +9,6 @@ import type {
   WidgetTheme,
 } from './types';
 import type {
-  EventSeverity,
   PendingSwapWithQueueID,
   Route,
   RouteEvent,
@@ -40,6 +39,7 @@ import type {
 import type { PendingSwap, PendingSwapStep } from 'rango-types';
 
 import {
+  EventSeverity,
   MainEvents,
   RouteEventType,
   StepEventType,
@@ -115,7 +115,6 @@ export type {
   PendingSwapWithQueueID,
   PendingSwapStep,
   RouteExecutionEvents,
-  EventSeverity,
 };
 
 // Internal function and enum exports for Rango
@@ -125,4 +124,5 @@ export {
   WalletEvents,
   WalletTypes,
   PendingSwapNetworkStatus,
+  EventSeverity,
 };

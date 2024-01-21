@@ -5,6 +5,7 @@ import React, { createContext, useContext } from 'react';
 
 import { useLanguage } from '../../hooks/useLanguage';
 import { useAppStore } from '../../store/AppStore';
+import { useNotificationStore } from '../../store/notification';
 import { useQuoteStore } from '../../store/quote';
 import { useWalletsStore } from '../../store/wallets';
 import { calculateWalletUsdValue } from '../../utils/wallets';
@@ -28,6 +29,7 @@ export function WidgetInfo(props: React.PropsWithChildren) {
   const swappers = useAppStore().swappers();
   const loadingStatus = useAppStore().fetchStatus;
   const resetLanguage = useLanguage().resetLanguage;
+  const notifications = useNotificationStore().getUnreadNotifications();
 
   // eslint-disable-next-line react/jsx-no-constructed-context-values
   const value = {
@@ -45,6 +47,9 @@ export function WidgetInfo(props: React.PropsWithChildren) {
       loadingStatus,
     },
     resetLanguage,
+    notifications: {
+      list: notifications,
+    },
   };
 
   return (
