@@ -8,7 +8,7 @@ msgstr ""
 "Language: ja\n"
 "Project-Id-Version: rango\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-01-21 08:08\n"
+"PO-Revision-Date: 2024-01-21 13:38\n"
 "Last-Translator: \n"
 "Language-Team: Japanese\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
@@ -21,16 +21,16 @@ msgstr ""
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:37
 #: widget/embedded/src/components/TokenList/TokenList.tsx:135
-#: widget/embedded/src/pages/HistoryPage.tsx:94
-#: widget/embedded/src/pages/LiquiditySourcePage.tsx:129
+#: widget/embedded/src/pages/HistoryPage.tsx:87
+#: widget/embedded/src/pages/LiquiditySourcePage.tsx:128
 msgid "No results found"
 msgstr "結果が見つかりませんでした"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:38
 #: widget/embedded/src/components/TokenList/TokenList.tsx:136
-#: widget/embedded/src/pages/HistoryPage.tsx:96
-#: widget/embedded/src/pages/LiquiditySourcePage.tsx:130
+#: widget/embedded/src/pages/HistoryPage.tsx:89
+#: widget/embedded/src/pages/LiquiditySourcePage.tsx:129
 msgid "Try using different keywords"
 msgstr "別のキーワードを使用してみてください"
 
@@ -146,19 +146,19 @@ msgid "Refresh"
 msgstr "更新"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/HeaderButtons/HomeButtons.tsx:51
+#: widget/embedded/src/components/HeaderButtons/HomeButtons.tsx:50
 msgid "Notifications"
 msgstr "通知"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/HeaderButtons/HomeButtons.tsx:63
-#: widget/embedded/src/pages/ConfirmSwapPage.tsx:278
-#: widget/embedded/src/pages/SettingsPage.tsx:184
+#: widget/embedded/src/components/HeaderButtons/HomeButtons.tsx:62
+#: widget/embedded/src/pages/ConfirmSwapPage.tsx:310
+#: widget/embedded/src/pages/SettingsPage.tsx:183
 msgid "Settings"
 msgstr "設定"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/HeaderButtons/HomeButtons.tsx:71
+#: widget/embedded/src/components/HeaderButtons/HomeButtons.tsx:70
 msgid "Transactions History"
 msgstr "取引履歴"
 
@@ -171,7 +171,7 @@ msgstr "ウォレットに接続"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/LoadingSwapDetails/LoadingSwapDetails.tsx:20
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:375
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:373
 msgid "Swaps steps"
 msgstr "ステップを入れ替えます"
 
@@ -361,50 +361,50 @@ msgid "This setting is applied per step (e.g. 1Inch, Thorchain, etc) which means
 msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.Placeholder.tsx:26
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:246
+#: widget/embedded/src/components/SwapDetails/SwapDetails.Placeholder.tsx:25
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:244
 msgid "Swap and Bridge"
 msgstr "スワップとブリッジ"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.Placeholder.tsx:34
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:286
+#: widget/embedded/src/components/SwapDetails/SwapDetails.Placeholder.tsx:33
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:284
 msgid "Request ID"
 msgstr "要求ID"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.Placeholder.tsx:65
+#: widget/embedded/src/components/SwapDetails/SwapDetails.Placeholder.tsx:64
 msgid "Not found"
 msgstr "見つかりません"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.Placeholder.tsx:66
+#: widget/embedded/src/components/SwapDetails/SwapDetails.Placeholder.tsx:65
 #: widget/ui/src/components/SwapDetailsPlaceholder/SwapDetailsPlaceholder.tsx:39
 msgid "Swap with request ID = {requestId} not found."
 msgstr "リクエスト ID = {requestId} でスワップが見つかりません。"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:213
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:212
 msgid "You have received {amount} {token} in {conciseAddress} wallet on {chain} chain."
 msgstr "{amount} チェーンの {token} ウォレットで {conciseAddress} {chain} Anamed@@4 を受け取りました。"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:229
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:228
 msgid "Transaction was not sent."
 msgstr "トランザクションは送信されませんでした。"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:231
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:230
 msgid "{amount} {symbol} on {blockchain} remain in your wallet"
 msgstr "{amount} {symbol} の {blockchain} はウォレットに残ります"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:257
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:255
 msgid "Delete"
 msgstr "削除"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:278
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:276
 msgid "Try again"
 msgstr "もう一度やり直してください"
 
@@ -625,7 +625,7 @@ msgstr "不明なUSD価格を確認"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/constants/messages.ts:6
-#: widget/embedded/src/pages/Home.tsx:160
+#: widget/embedded/src/pages/Home.tsx:150
 msgid "Swap"
 msgstr "入れ替え"
 
@@ -685,79 +685,79 @@ msgid "Route internal coins has been updated."
 msgstr "ルート内部コインが更新されました。"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/ConfirmSwapPage.tsx:269
+#: widget/embedded/src/pages/ConfirmSwapPage.tsx:301
 msgid "Confirm Swap"
 msgstr "スワップの確認"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/ConfirmSwapPage.tsx:299
+#: widget/embedded/src/pages/ConfirmSwapPage.tsx:331
 msgid "Start Swap"
 msgstr "スワップを開始"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/ConfirmSwapPage.tsx:325
+#: widget/embedded/src/pages/ConfirmSwapPage.tsx:357
 msgid "You get"
 msgstr "あなたは"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/HistoryPage.tsx:77
+#: widget/embedded/src/pages/HistoryPage.tsx:69
 msgid "History"
 msgstr "沿革"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/HistoryPage.tsx:84
+#: widget/embedded/src/pages/HistoryPage.tsx:76
 msgid "Search Transaction"
 msgstr "トランザクションを検索"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/Home.tsx:178
+#: widget/embedded/src/pages/Home.tsx:167
 msgid "From"
 msgstr "差出人:"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/Home.tsx:221
+#: widget/embedded/src/pages/Home.tsx:210
 msgid "To"
 msgstr "終了日"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/LanguagePage.tsx:37
+#: widget/embedded/src/pages/LanguagePage.tsx:36
 msgid "Language"
 msgstr "言語"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/LanguagePage.tsx:44
+#: widget/embedded/src/pages/LanguagePage.tsx:43
 msgid "language"
 msgstr "言語"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/LiquiditySourcePage.tsx:43
+#: widget/embedded/src/pages/LiquiditySourcePage.tsx:42
 #: widget/ui/src/components/LiquiditySourceList/LiquiditySourceList.tsx:151
 msgid "Exchanges"
 msgstr "交換"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/LiquiditySourcePage.tsx:43
+#: widget/embedded/src/pages/LiquiditySourcePage.tsx:42
 #: widget/ui/src/components/LiquiditySourceList/LiquiditySourceList.tsx:112
 msgid "Bridges"
 msgstr "ブリッジ"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/LiquiditySourcePage.tsx:107
+#: widget/embedded/src/pages/LiquiditySourcePage.tsx:106
 msgid "Deselect all"
 msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/LiquiditySourcePage.tsx:107
+#: widget/embedded/src/pages/LiquiditySourcePage.tsx:106
 msgid "Select all"
 msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/LiquiditySourcePage.tsx:119
+#: widget/embedded/src/pages/LiquiditySourcePage.tsx:118
 msgid "Search {sourceType}"
 msgstr "{sourceType} を検索"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/SelectBlockchainPage.tsx:59
+#: widget/embedded/src/pages/SelectBlockchainPage.tsx:58
 msgid "Search Blockchain"
 msgstr "ブロックチェーンを検索"
 
@@ -777,54 +777,54 @@ msgid "Swap {type}"
 msgstr "{type} を入れ替え"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/SelectSwapItemsPage.tsx:94
+#: widget/embedded/src/pages/SelectSwapItemsPage.tsx:95
 msgid "Search Token"
 msgstr "トークンを検索"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/SettingsPage.tsx:72
+#: widget/embedded/src/pages/SettingsPage.tsx:71
 msgid "Loading failed"
 msgstr "読み込みに失敗しました"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/SettingsPage.tsx:88
+#: widget/embedded/src/pages/SettingsPage.tsx:87
 msgid "Enabled bridges"
 msgstr "有効なブリッジ"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/SettingsPage.tsx:105
+#: widget/embedded/src/pages/SettingsPage.tsx:104
 msgid "Enabled exchanges"
 msgstr "有効な取引所"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/SettingsPage.tsx:135
-#: widget/embedded/src/pages/ThemePage.tsx:71
-#: widget/embedded/src/pages/ThemePage.tsx:80
+#: widget/embedded/src/pages/SettingsPage.tsx:134
+#: widget/embedded/src/pages/ThemePage.tsx:70
+#: widget/embedded/src/pages/ThemePage.tsx:79
 msgid "Theme"
 msgstr "テーマ"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/SettingsPage.tsx:147
+#: widget/embedded/src/pages/SettingsPage.tsx:146
 msgid "Infinite approval"
 msgstr "永久承認"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/SettingsPage.tsx:157
+#: widget/embedded/src/pages/SettingsPage.tsx:156
 msgid "Enabling the 'Infinite approval' mode grants unrestricted access to smart contracts of DEXes/Bridges, allowing them to utilize the approved token amount without limitations."
 msgstr "「Infinite承認」モードを有効にすると、DEX/Bridgesのスマートコントラクトへの無制限のアクセスが許可され、承認されたトークンの量を制限なく利用できます。"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/ThemePage.tsx:35
+#: widget/embedded/src/pages/ThemePage.tsx:34
 msgid "Light"
 msgstr "ライト"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/ThemePage.tsx:47
+#: widget/embedded/src/pages/ThemePage.tsx:46
 msgid "Dark"
 msgstr "ダーク"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/ThemePage.tsx:59
+#: widget/embedded/src/pages/ThemePage.tsx:58
 msgid "Auto"
 msgstr "自動"
 
