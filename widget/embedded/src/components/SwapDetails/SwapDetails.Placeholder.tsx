@@ -21,7 +21,6 @@ export function SwapDetailsPlaceholder(props: SwapDetailsPlaceholderPropTypes) {
   const { requestId, showSkeleton } = props;
   return (
     <Layout
-      noPadding
       header={{
         title: i18n.t('Swap and Bridge'),
         suffix: <SuffixContainer />,

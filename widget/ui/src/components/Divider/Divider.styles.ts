@@ -4,6 +4,7 @@ export const DividerContainer = styled('div', {
   flexShrink: 0,
   variants: {
     size: {
+      2: {},
       4: {},
       8: {},
       10: {},
@@ -21,6 +22,20 @@ export const DividerContainer = styled('div', {
     },
   },
   compoundVariants: [
+    {
+      size: 2,
+      direction: 'horizontal',
+      css: {
+        width: 2,
+      },
+    },
+    {
+      size: 2,
+      direction: 'vertical',
+      css: {
+        height: 2,
+      },
+    },
     {
       size: 4,
       direction: 'horizontal',

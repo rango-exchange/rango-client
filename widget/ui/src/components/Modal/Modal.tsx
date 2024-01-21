@@ -62,7 +62,7 @@ export function Modal(props: PropsWithChildren<PropTypes>) {
         setActive(false);
         timeoutRef.current = setTimeout(() => {
           setIsMount(false);
-          container.style.overflow = 'unset';
+          container.style.removeProperty('overflow');
         }, CLOSED_DELAY);
       }
     }

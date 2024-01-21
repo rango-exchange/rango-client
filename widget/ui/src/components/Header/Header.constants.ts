@@ -1,0 +1,1 @@
+export const HEADER_CORNDER_RADIUS = 20;

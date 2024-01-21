@@ -1,10 +1,5 @@
 import { styled } from '@rango-dev/ui';
 
-export const SettingsContainer = styled('div', {
-  height: '100%',
-  overflow: 'hidden',
-});
-
 export const LiquiditySourceList = styled('ul', {
   padding: '$15 $5 0',
   margin: 0,

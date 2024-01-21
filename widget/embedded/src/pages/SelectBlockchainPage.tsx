@@ -7,7 +7,7 @@ import {
 import React, { useState } from 'react';
 
 import { BlockchainList } from '../components/BlockchainList';
-import { Layout } from '../components/Layout';
+import { Layout, PageContainer } from '../components/Layout';
 import { SearchInput } from '../components/SearchInput';
 import { useNavigateBack } from '../hooks/useNavigateBack';
 import { useAppStore } from '../store/AppStore';
@@ -39,45 +39,45 @@ export function SelectBlockchainPage(props: PropTypes) {
       header={{
         title: i18n.t(`Select Blockchain`),
       }}>
-      <Divider size={12} />
+      <PageContainer view>
+        {showCategory && (
+          <>
+            <SelectableCategoryList
+              setCategory={setBlockchainCategory}
+              category={blockchainCategory}
+              blockchains={blockchains}
+              isLoading={fetchStatus === 'loading'}
+            />
+            <Divider size={24} />
+          </>
+        )}
 
-      {showCategory && (
-        <>
-          <SelectableCategoryList
-            setCategory={setBlockchainCategory}
-            category={blockchainCategory}
-            blockchains={blockchains}
-            isLoading={fetchStatus === 'loading'}
-          />
-          <Divider size={24} />
-        </>
-      )}
+        <SearchInput
+          value={searchedFor}
+          autoFocus
+          placeholder={i18n.t('Search Blockchain')}
+          color="light"
+          variant="contained"
+          size="large"
+          setValue={() => setSearchedFor('')}
+          onChange={(event) => setSearchedFor(event.target.value)}
+        />
+        <Divider size={16} />
 
-      <SearchInput
-        value={searchedFor}
-        autoFocus
-        placeholder={i18n.t('Search Blockchain')}
-        color="light"
-        variant="contained"
-        size="large"
-        setValue={() => setSearchedFor('')}
-        onChange={(event) => setSearchedFor(event.target.value)}
-      />
-      <Divider size={16} />
-
-      <BlockchainList
-        list={blockchains}
-        searchedFor={searchedFor}
-        blockchainCategory={blockchainCategory}
-        onChange={(blockchain) => {
-          if (type === 'source') {
-            setFromBlockchain(blockchain);
-          } else {
-            setToBlockchain(blockchain);
-          }
-          navigateBack();
-        }}
-      />
+        <BlockchainList
+          list={blockchains}
+          searchedFor={searchedFor}
+          blockchainCategory={blockchainCategory}
+          onChange={(blockchain) => {
+            if (type === 'source') {
+              setFromBlockchain(blockchain);
+            } else {
+              setToBlockchain(blockchain);
+            }
+            navigateBack();
+          }}
+        />
+      </PageContainer>
     </Layout>
   );
 }

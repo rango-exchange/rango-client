@@ -4,7 +4,6 @@ export interface PropTypes {
   container?: HTMLElement;
 }
 export interface HomeButtonsPropTypes {
-  layoutRef: HTMLDivElement | null;
   onClickRefresh?: () => void;
   onClickHistory?: () => void;
   onClickSettings?: () => void;

@@ -13,8 +13,7 @@ import {
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { Layout } from '../components/Layout';
-import { SettingsContainer } from '../components/SettingsContainer';
+import { Layout, PageContainer } from '../components/Layout';
 import { Slippage } from '../components/Slippage';
 import { SlippageTooltipContainer as TooltipContainer } from '../components/Slippage/Slippage.styles';
 import { navigationRoutes } from '../constants/navigationRoutes';
@@ -183,7 +182,7 @@ export function SettingsPage() {
       header={{
         title: i18n.t('Settings'),
       }}>
-      <SettingsContainer>
+      <PageContainer>
         <Slippage />
         <List
           type={
@@ -191,7 +190,7 @@ export function SettingsPage() {
           }
           items={settingItems}
         />
-      </SettingsContainer>
+      </PageContainer>
     </Layout>
   );
 }

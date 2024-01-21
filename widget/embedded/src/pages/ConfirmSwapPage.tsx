@@ -26,7 +26,8 @@ import { getRequiredWallets } from '../components/ConfirmWalletsModal/ConfirmWal
 import { ConfirmWalletsModal } from '../components/ConfirmWalletsModal/ConfirmWalletsModal';
 import { HeaderButton } from '../components/HeaderButtons/HeaderButtons.styles';
 import { RefreshButton } from '../components/HeaderButtons/RefreshButton';
-import { Layout } from '../components/Layout';
+import { Layout, PageContainer } from '../components/Layout';
+import { QuoteWarningsAndErrors } from '../components/QuoteWarningsAndErrors';
 import { navigationRoutes } from '../constants/navigationRoutes';
 import { getQuoteUpdateWarningMessage } from '../constants/warnings';
 import { QuoteInfo } from '../containers/QuoteInfo';
@@ -37,15 +38,7 @@ import { useUiStore } from '../store/ui';
 import { useWalletsStore } from '../store/wallets';
 import { QuoteWarningType } from '../types';
 import { getContainer } from '../utils/common';
-
-const Container = styled('div', {
-  position: 'relative',
-  width: '100%',
-
-  '& .quote-update__alert': {
-    paddingTop: '$10',
-  },
-});
+import { joinList } from '../utils/ui';
 
 const Buttons = styled('div', {
   width: '100%',
@@ -263,6 +256,45 @@ export function ConfirmSwapPage() {
     }
   }, []);
 
+  const quoteWarning = confirmSwapResult.warnings?.quote ?? null;
+  const quoteError = confirmSwapResult.error;
+  const alerts = [];
+  if (dbErrorMessage) {
+    alerts.push(<Alert type="error" variant="alarm" title={dbErrorMessage} />);
+  }
+
+  if (confirmSwapResult.warnings?.quoteUpdate) {
+    alerts.push(
+      <Alert
+        variant="alarm"
+        type="warning"
+        title={
+          confirmSwapResult.warnings.quoteUpdate &&
+          getQuoteUpdateWarningMessage(confirmSwapResult.warnings.quoteUpdate)
+        }
+      />
+    );
+  }
+
+  if (quoteWarning || quoteError) {
+    alerts.push(
+      <QuoteWarningsAndErrors
+        warning={quoteWarning}
+        error={quoteError}
+        loading={fetchingConfirmationQuote}
+        refetchQuote={onRefresh}
+        showWarningModal={showQuoteWarningModal}
+        onOpenWarningModal={() => setShowQuoteWarningModal(true)}
+        onCloseWarningModal={() => setShowQuoteWarningModal(false)}
+        onConfirmWarningModal={async () => {
+          setShowQuoteWarningModal(false);
+          await addNewSwap();
+        }}
+        onChangeSettings={() => navigate(navigationRoutes.settings)}
+      />
+    );
+  }
+
   return (
     <Layout
       header={{
@@ -319,7 +351,7 @@ export function ConfirmSwapPage() {
         />
       )}
 
-      <Container>
+      <PageContainer>
         <div className={descriptionStyles()}>
           <Typography variant="title" size="small">
             {i18n.t('You get')}
@@ -336,45 +368,20 @@ export function ConfirmSwapPage() {
             />
           </div>
         </div>
-        {dbErrorMessage && (
-          <>
-            <Alert type="error" variant="alarm" title={dbErrorMessage} />
-            <Divider size={12} />
-          </>
-        )}
-        {confirmSwapResult.warnings?.quoteUpdate && (
-          <div className="quote-update__alert">
-            <Alert
-              variant="alarm"
-              type="warning"
-              title={
-                confirmSwapResult.warnings.quoteUpdate &&
-                getQuoteUpdateWarningMessage(
-                  confirmSwapResult.warnings.quoteUpdate
-                )
-              }
-            />
-          </div>
-        )}
+        <Divider size="12" />
+
+        {joinList(alerts, <Divider size={10} />)}
+        {alerts.length > 0 ? <Divider size={10} /> : null}
+
         <QuoteInfo
           quote={quote}
           type="swap-preview"
           expanded={true}
-          alertPosition="top"
           error={confirmSwapResult.error}
           loading={fetchingConfirmationQuote}
           warning={confirmSwapResult.warnings?.quote ?? null}
-          refetchQuote={onRefresh}
-          showWarningModal={showQuoteWarningModal}
-          onOpenWarningModal={() => setShowQuoteWarningModal(true)}
-          onCloseWarningModal={() => setShowQuoteWarningModal(false)}
-          onConfirmWarningModal={async () => {
-            setShowQuoteWarningModal(false);
-            await addNewSwap();
-          }}
-          onChangeSettings={() => navigate('../' + navigationRoutes.settings)}
         />
-      </Container>
+      </PageContainer>
     </Layout>
   );
 }

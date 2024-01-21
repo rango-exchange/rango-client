@@ -1,3 +1,11 @@
+import type { Container } from './Layout.styles';
+import type * as Stitches from '@stitches/react';
+
+type ContainerProps = Stitches.VariantProps<typeof Container>;
+type ContainerHeightProp = NonNullable<
+  Exclude<ContainerProps['height'], object>
+>;
+
 export interface PropTypes {
   header: {
     title: string;
@@ -9,12 +17,5 @@ export interface PropTypes {
   };
   hasLogo?: boolean;
   footer?: React.ReactNode;
-  noPadding?: boolean;
-  fixedHeight?: boolean;
+  height?: ContainerHeightProp;
 }
-
-export type Ref =
-  | ((instance: HTMLDivElement | null) => void)
-  | React.RefObject<HTMLDivElement>
-  | null
-  | undefined;

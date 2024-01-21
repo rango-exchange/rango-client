@@ -14,14 +14,13 @@ import {
 } from '@rango-dev/ui';
 import React, { useState } from 'react';
 
-import { Layout } from '../components/Layout';
+import { Layout, PageContainer } from '../components/Layout';
 import { LoadingLiquiditySourceList } from '../components/LoadingLiquiditySourceList';
 import { SearchInput } from '../components/SearchInput';
 import {
   LiquiditySourceList,
   LiquiditySourceSuffix,
   NotFoundContainer,
-  SettingsContainer,
 } from '../components/SettingsContainer';
 import { useAppStore } from '../store/AppStore';
 import { containsText } from '../utils/numbers';
@@ -109,7 +108,7 @@ export function LiquiditySourcePage({ sourceType }: PropTypes) {
           </LiquiditySourceSuffix>
         ),
       }}>
-      <SettingsContainer>
+      <PageContainer view>
         <SearchInput
           value={searchedFor}
           setValue={setSearchedFor}
@@ -148,7 +147,7 @@ export function LiquiditySourcePage({ sourceType }: PropTypes) {
             </LiquiditySourceList>
           )
         )}
-      </SettingsContainer>
+      </PageContainer>
     </Layout>
   );
 }
