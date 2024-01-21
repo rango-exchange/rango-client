@@ -8,7 +8,7 @@ msgstr ""
 "Language: fr\n"
 "Project-Id-Version: rango\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-01-17 11:43\n"
+"PO-Revision-Date: 2024-01-21 08:08\n"
 "Last-Translator: \n"
 "Language-Team: French\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
@@ -17,77 +17,6 @@ msgstr ""
 "X-Crowdin-Language: fr\n"
 "X-Crowdin-File: en.po\n"
 "X-Crowdin-File-ID: 30\n"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:95
-msgid "View more info"
-msgstr ""
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:105
-msgid "Gas & Fee Explanation"
-msgstr ""
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:157
-msgid "Total Payable Fee"
-msgstr ""
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:177
-msgid "Hide non-payable fees"
-msgstr ""
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:178
-msgid "Show non-payable fees"
-msgstr ""
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:188
-msgid "Description"
-msgstr ""
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:192
-msgid "The following fees are considered in the transaction output and\n"
-"                you won’t need to pay extra gas for them."
-msgstr ""
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/constants/quote.ts:13
-msgid "Network Fee"
-msgstr ""
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/constants/quote.ts:14
-msgid "Protocol Fee"
-msgstr ""
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/constants/quote.ts:15
-msgid "Affiliate Fee"
-msgstr ""
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/constants/quote.ts:16
-msgid "Outbound Fee"
-msgstr ""
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/constants/quote.ts:17
-msgid "Rango Fee"
-msgstr ""
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/QuoteTrigger .tsx:73
-msgid "Via:"
-msgstr ""
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/QuoteTrigger .tsx:156
-msgid "Chains:"
-msgstr ""
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:37
@@ -277,6 +206,48 @@ msgid "Minimum required slippage is {minRequiredSlippage}"
 msgstr "Le slippage minimum requis est {minRequiredSlippage}"
 
 #. js-lingui-explicit-id
+#: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:95
+msgid "View more info"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:105
+msgid "Gas & Fee Explanation"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:116
+#: widget/embedded/src/components/QuoteWarningsAndErrors/HighValueLossWarningModal.tsx:86
+msgid "Details"
+msgstr "Détails du produit"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:157
+msgid "Total Payable Fee"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:177
+msgid "Hide non-payable fees"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:178
+msgid "Show non-payable fees"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:188
+msgid "Description"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:192
+msgid "The following fees are considered in the transaction output and\n"
+"                you won’t need to pay extra gas for them."
+msgstr ""
+
+#. js-lingui-explicit-id
 #: widget/embedded/src/components/Quote/QuoteSummary.tsx:25
 msgid "Swap input"
 msgstr ""
@@ -284,6 +255,16 @@ msgstr ""
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/Quote/QuoteSummary.tsx:44
 msgid "Estimated output"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/Quote/QuoteTrigger .tsx:73
+msgid "Via:"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/Quote/QuoteTrigger .tsx:156
+msgid "Chains:"
 msgstr ""
 
 #. js-lingui-explicit-id
@@ -305,12 +286,6 @@ msgstr "Réception en cours"
 #: widget/embedded/src/components/QuoteWarningsAndErrors/HighValueLossWarningModal.tsx:65
 msgid "Price impact"
 msgstr "Impact des prix"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:116
-#: widget/embedded/src/components/QuoteWarningsAndErrors/HighValueLossWarningModal.tsx:86
-msgid "Details"
-msgstr "Détails du produit"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/QuoteWarningsAndErrors/QuoteWarningsAndErrors.helpers.ts:41
@@ -663,6 +638,31 @@ msgstr "Permuter quand même"
 #: widget/embedded/src/constants/messages.ts:8
 msgid "The route goes through Ethereum. Continue?"
 msgstr "L'itinéraire passe par Ethereum. Continuer ?"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/constants/quote.ts:13
+msgid "Network Fee"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/constants/quote.ts:14
+msgid "Protocol Fee"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/constants/quote.ts:15
+msgid "Affiliate Fee"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/constants/quote.ts:16
+msgid "Outbound Fee"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/constants/quote.ts:17
+msgid "Rango Fee"
+msgstr ""
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/constants/warnings.ts:10
