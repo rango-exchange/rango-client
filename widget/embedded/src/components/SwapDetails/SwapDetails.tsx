@@ -54,7 +54,7 @@ import {
 import { getSwapDate } from '../../utils/time';
 import { getConciseAddress } from '../../utils/wallets';
 import { SuffixContainer } from '../HeaderButtons/HeaderButtons.styles';
-import { Layout } from '../Layout';
+import { Layout, PageContainer } from '../Layout';
 import { QuoteSummary } from '../Quote';
 import {
   SwapDetailsCompleteModal,
@@ -63,7 +63,6 @@ import {
 
 import { getSteps, getStepState, RESET_INTERVAL } from './SwapDetails.helpers';
 import {
-  Container,
   HeaderDetails,
   outputStyles,
   requestIdStyles,
@@ -241,7 +240,6 @@ export function SwapDetails(props: SwapDetailsProps) {
 
   return (
     <Layout
-      noPadding
       header={{
         title: i18n.t('Swap and Bridge'),
         onCancel:
@@ -279,7 +277,7 @@ export function SwapDetails(props: SwapDetailsProps) {
           </Button>
         )
       }>
-      <Container>
+      <PageContainer compact view>
         <HeaderDetails>
           <div className={rowStyles()}>
             <Typography variant="label" size="large" color="neutral700">
@@ -400,7 +398,7 @@ export function SwapDetails(props: SwapDetailsProps) {
             );
           })}
         </StepsList>
-      </Container>
+      </PageContainer>
 
       <SwapDetailsModal
         state={modalState}

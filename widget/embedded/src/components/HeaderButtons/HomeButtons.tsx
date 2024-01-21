@@ -20,7 +20,7 @@ import { RefreshButton } from './RefreshButton';
 import { UnreadNotificationsBadge } from './UnreadNotificationsBadge';
 
 export function HomeButtons(props: HomeButtonsPropTypes) {
-  const { layoutRef, onClickRefresh, onClickHistory, onClickSettings } = props;
+  const { onClickRefresh, onClickHistory, onClickSettings } = props;
 
   const {
     config: { features },
@@ -40,7 +40,6 @@ export function HomeButtons(props: HomeButtonsPropTypes) {
       {!isNotificationsHidden && (
         <Popover
           align="center"
-          collisionBoundary={layoutRef}
           collisionPadding={{ right: 20, left: 20 }}
           container={getContainer()}
           content={<NotificationContent />}>

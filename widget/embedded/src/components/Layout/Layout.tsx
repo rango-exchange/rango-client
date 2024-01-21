@@ -1,8 +1,8 @@
-import type { PropTypes, Ref } from './Layout.types';
+import type { PropTypes } from './Layout.types';
 import type { PropsWithChildren } from 'react';
 
 import { BottomLogo, Divider, Header } from '@rango-dev/ui';
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 
 import { RANGO_SWAP_BOX_ID } from '../../constants';
 import { useNavigateBack } from '../../hooks/useNavigateBack';
@@ -14,17 +14,11 @@ import { getContainer } from '../../utils/common';
 import { isFeatureHidden } from '../../utils/settings';
 import { BackButton, CancelButton, WalletButton } from '../HeaderButtons';
 
+import { onScrollContentAttachStatusToContainer } from './Layout.helpers';
 import { Container, Content, Footer } from './Layout.styles';
 
-function LayoutComponent(props: PropsWithChildren<PropTypes>, ref: Ref) {
-  const {
-    children,
-    header,
-    footer,
-    noPadding,
-    hasLogo = true,
-    fixedHeight = true,
-  } = props;
+function Layout(props: PropsWithChildren<PropTypes>) {
+  const { children, header, footer, hasLogo = true, height = 'fixed' } = props;
   const connectedWallets = useWalletsStore.use.connectedWallets();
   const {
     config: { features, theme },
@@ -49,12 +43,24 @@ function LayoutComponent(props: PropsWithChildren<PropTypes>, ref: Ref) {
   const showBackButton =
     typeof header.hasBackButton === 'undefined' || header.hasBackButton;
 
+  const scrollViewRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    scrollViewRef.current?.addEventListener(
+      'scroll',
+      onScrollContentAttachStatusToContainer
+    );
+
+    return () => {
+      scrollViewRef.current?.removeEventListener(
+        'scroll',
+        onScrollContentAttachStatusToContainer
+      );
+    };
+  }, []);
+
   return (
-    <Container
-      ref={ref}
-      fixedHeight={fixedHeight}
-      id={RANGO_SWAP_BOX_ID}
-      className={activeTheme()}>
+    <Container height={height} id={RANGO_SWAP_BOX_ID} className={activeTheme()}>
       <Header
         prefix={<>{showBackButton && <BackButton onClick={navigateBack} />}</>}
         title={header.title}
@@ -72,7 +78,7 @@ function LayoutComponent(props: PropsWithChildren<PropTypes>, ref: Ref) {
           </>
         }
       />
-      <Content noPadding={noPadding}>{children}</Content>
+      <Content ref={scrollViewRef}>{children}</Content>
       {(hasLogo || footer) && (
         <Footer>
           <div className="footer__content">{footer}</div>
@@ -87,8 +93,4 @@ function LayoutComponent(props: PropsWithChildren<PropTypes>, ref: Ref) {
     </Container>
   );
 }
-
-const Layout = React.forwardRef(LayoutComponent);
-Layout.displayName = 'Layout';
-
 export { Layout };

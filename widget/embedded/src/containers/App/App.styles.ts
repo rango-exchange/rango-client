@@ -6,6 +6,8 @@ export const MainContainer = styled('div', {
   alignItems: 'center',
   fontFamily: '$widget',
   boxSizing: 'border-box',
+  textAlign: 'left',
+
   '& *, *::before, *::after': {
     boxSizing: 'inherit',
   },
