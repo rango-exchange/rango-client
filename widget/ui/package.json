@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/ui",
-  "version": "0.26.1-next.11",
+  "version": "0.26.1-next.12",
   "license": "MIT",
   "type": "module",
   "source": "./src/index.ts",
