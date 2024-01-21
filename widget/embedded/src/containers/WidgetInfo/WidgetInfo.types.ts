@@ -2,6 +2,7 @@ import type { WidgetHistory } from './WidgetInfo.helpers';
 import type { FetchStatus } from '../../store/slices/data';
 import type { ConnectedWallet } from '../../store/wallets';
 import type { Wallet } from '../../types';
+import type { Notification } from '../../types/notification';
 import type { BlockchainMeta, SwapperMeta, Token } from 'rango-sdk';
 
 export interface WidgetInfoContextInterface {
@@ -19,4 +20,7 @@ export interface WidgetInfoContextInterface {
     loadingStatus: FetchStatus;
   };
   resetLanguage: () => void;
+  notifications: {
+    list: Notification[];
+  };
 }
