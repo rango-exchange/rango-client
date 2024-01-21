@@ -51,7 +51,7 @@ jobs:
           create_pull_request: true
           pull_request_title: '🤖chore(translation): update translations'
           pull_request_body: 'New Crowdin pull request with translations'
-          pull_request_base_branch_name: 'next'
+          pull_request_base_branch_name: ${{ github.ref == 'refs/heads/main' && 'main' || 'next' }}
         env:
           GITHUB_TOKEN: ${{ secrets.PAT }}
 
