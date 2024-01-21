@@ -1,6 +1,7 @@
 import type { Notification } from '../../types/notification';
 
 import { i18n } from '@lingui/core';
+import { EventSeverity } from '@rango-dev/queue-manager-rango-preset';
 import {
   ChainToken,
   ChevronRightIcon,
@@ -74,7 +75,15 @@ export function NotificationContent() {
                 key={notificationItem.requestId}
                 onClick={() => handleOnClick(notificationItem.requestId)}
                 title={
-                  <Typography variant="body" size="small" color="$neutral700">
+                  <Typography
+                    variant="body"
+                    size="small"
+                    color={
+                      notificationItem.event.messageSeverity ===
+                      EventSeverity.WARNING
+                        ? '$foreground'
+                        : '$neutral700'
+                    }>
                     {i18n.t(notificationItem.event.message)}
                   </Typography>
                 }
