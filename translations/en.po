@@ -16,16 +16,16 @@ msgstr ""
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:37
 #: widget/embedded/src/components/TokenList/TokenList.tsx:135
-#: widget/embedded/src/pages/HistoryPage.tsx:94
-#: widget/embedded/src/pages/LiquiditySourcePage.tsx:129
+#: widget/embedded/src/pages/HistoryPage.tsx:87
+#: widget/embedded/src/pages/LiquiditySourcePage.tsx:128
 msgid "No results found"
 msgstr "No results found"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:38
 #: widget/embedded/src/components/TokenList/TokenList.tsx:136
-#: widget/embedded/src/pages/HistoryPage.tsx:96
-#: widget/embedded/src/pages/LiquiditySourcePage.tsx:130
+#: widget/embedded/src/pages/HistoryPage.tsx:89
+#: widget/embedded/src/pages/LiquiditySourcePage.tsx:129
 msgid "Try using different keywords"
 msgstr "Try using different keywords"
 
@@ -141,19 +141,19 @@ msgid "Refresh"
 msgstr "Refresh"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/HeaderButtons/HomeButtons.tsx:51
+#: widget/embedded/src/components/HeaderButtons/HomeButtons.tsx:50
 msgid "Notifications"
 msgstr "Notifications"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/HeaderButtons/HomeButtons.tsx:63
-#: widget/embedded/src/pages/ConfirmSwapPage.tsx:278
-#: widget/embedded/src/pages/SettingsPage.tsx:184
+#: widget/embedded/src/components/HeaderButtons/HomeButtons.tsx:62
+#: widget/embedded/src/pages/ConfirmSwapPage.tsx:310
+#: widget/embedded/src/pages/SettingsPage.tsx:183
 msgid "Settings"
 msgstr "Settings"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/HeaderButtons/HomeButtons.tsx:71
+#: widget/embedded/src/components/HeaderButtons/HomeButtons.tsx:70
 msgid "Transactions History"
 msgstr "Transactions History"
 
@@ -166,7 +166,7 @@ msgstr "Connect Wallet"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/LoadingSwapDetails/LoadingSwapDetails.tsx:20
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:375
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:373
 msgid "Swaps steps"
 msgstr "Swaps steps"
 
@@ -359,50 +359,50 @@ msgid "This setting is applied per step (e.g. 1Inch, Thorchain, etc) which means
 msgstr "This setting is applied per step (e.g. 1Inch, Thorchain, etc) which means only the step will be reverted, not the whole transaction."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.Placeholder.tsx:26
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:246
+#: widget/embedded/src/components/SwapDetails/SwapDetails.Placeholder.tsx:25
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:244
 msgid "Swap and Bridge"
 msgstr "Swap and Bridge"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.Placeholder.tsx:34
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:286
+#: widget/embedded/src/components/SwapDetails/SwapDetails.Placeholder.tsx:33
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:284
 msgid "Request ID"
 msgstr "Request ID"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.Placeholder.tsx:65
+#: widget/embedded/src/components/SwapDetails/SwapDetails.Placeholder.tsx:64
 msgid "Not found"
 msgstr "Not found"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.Placeholder.tsx:66
+#: widget/embedded/src/components/SwapDetails/SwapDetails.Placeholder.tsx:65
 #: widget/ui/src/components/SwapDetailsPlaceholder/SwapDetailsPlaceholder.tsx:39
 msgid "Swap with request ID = {requestId} not found."
 msgstr "Swap with request ID = {requestId} not found."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:213
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:212
 msgid "You have received {amount} {token} in {conciseAddress} wallet on {chain} chain."
 msgstr "You have received {amount} {token} in {conciseAddress} wallet on {chain} chain."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:229
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:228
 msgid "Transaction was not sent."
 msgstr "Transaction was not sent."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:231
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:230
 msgid "{amount} {symbol} on {blockchain} remain in your wallet"
 msgstr "{amount} {symbol} on {blockchain} remain in your wallet"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:257
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:255
 msgid "Delete"
 msgstr "Delete"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:278
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:276
 msgid "Try again"
 msgstr "Try again"
 
@@ -623,7 +623,7 @@ msgstr "Confirm USD Price Unknown"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/constants/messages.ts:6
-#: widget/embedded/src/pages/Home.tsx:160
+#: widget/embedded/src/pages/Home.tsx:150
 msgid "Swap"
 msgstr "Swap"
 
@@ -683,79 +683,79 @@ msgid "Route internal coins has been updated."
 msgstr "Route internal coins has been updated."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/ConfirmSwapPage.tsx:269
+#: widget/embedded/src/pages/ConfirmSwapPage.tsx:301
 msgid "Confirm Swap"
 msgstr "Confirm Swap"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/ConfirmSwapPage.tsx:299
+#: widget/embedded/src/pages/ConfirmSwapPage.tsx:331
 msgid "Start Swap"
 msgstr "Start Swap"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/ConfirmSwapPage.tsx:325
+#: widget/embedded/src/pages/ConfirmSwapPage.tsx:357
 msgid "You get"
 msgstr "You get"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/HistoryPage.tsx:77
+#: widget/embedded/src/pages/HistoryPage.tsx:69
 msgid "History"
 msgstr "History"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/HistoryPage.tsx:84
+#: widget/embedded/src/pages/HistoryPage.tsx:76
 msgid "Search Transaction"
 msgstr "Search Transaction"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/Home.tsx:178
+#: widget/embedded/src/pages/Home.tsx:167
 msgid "From"
 msgstr "From"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/Home.tsx:221
+#: widget/embedded/src/pages/Home.tsx:210
 msgid "To"
 msgstr "To"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/LanguagePage.tsx:37
+#: widget/embedded/src/pages/LanguagePage.tsx:36
 msgid "Language"
 msgstr "Language"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/LanguagePage.tsx:44
+#: widget/embedded/src/pages/LanguagePage.tsx:43
 msgid "language"
 msgstr "language"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/LiquiditySourcePage.tsx:43
+#: widget/embedded/src/pages/LiquiditySourcePage.tsx:42
 #: widget/ui/src/components/LiquiditySourceList/LiquiditySourceList.tsx:151
 msgid "Exchanges"
 msgstr "Exchanges"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/LiquiditySourcePage.tsx:43
+#: widget/embedded/src/pages/LiquiditySourcePage.tsx:42
 #: widget/ui/src/components/LiquiditySourceList/LiquiditySourceList.tsx:112
 msgid "Bridges"
 msgstr "Bridges"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/LiquiditySourcePage.tsx:107
+#: widget/embedded/src/pages/LiquiditySourcePage.tsx:106
 msgid "Deselect all"
 msgstr "Deselect all"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/LiquiditySourcePage.tsx:107
+#: widget/embedded/src/pages/LiquiditySourcePage.tsx:106
 msgid "Select all"
 msgstr "Select all"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/LiquiditySourcePage.tsx:119
+#: widget/embedded/src/pages/LiquiditySourcePage.tsx:118
 msgid "Search {sourceType}"
 msgstr "Search {sourceType}"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/SelectBlockchainPage.tsx:59
+#: widget/embedded/src/pages/SelectBlockchainPage.tsx:58
 msgid "Search Blockchain"
 msgstr "Search Blockchain"
 
@@ -775,54 +775,54 @@ msgid "Swap {type}"
 msgstr "Swap {type}"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/SelectSwapItemsPage.tsx:94
+#: widget/embedded/src/pages/SelectSwapItemsPage.tsx:95
 msgid "Search Token"
 msgstr "Search Token"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/SettingsPage.tsx:72
+#: widget/embedded/src/pages/SettingsPage.tsx:71
 msgid "Loading failed"
 msgstr "Loading failed"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/SettingsPage.tsx:88
+#: widget/embedded/src/pages/SettingsPage.tsx:87
 msgid "Enabled bridges"
 msgstr "Enabled bridges"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/SettingsPage.tsx:105
+#: widget/embedded/src/pages/SettingsPage.tsx:104
 msgid "Enabled exchanges"
 msgstr "Enabled exchanges"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/SettingsPage.tsx:135
-#: widget/embedded/src/pages/ThemePage.tsx:71
-#: widget/embedded/src/pages/ThemePage.tsx:80
+#: widget/embedded/src/pages/SettingsPage.tsx:134
+#: widget/embedded/src/pages/ThemePage.tsx:70
+#: widget/embedded/src/pages/ThemePage.tsx:79
 msgid "Theme"
 msgstr "Theme"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/SettingsPage.tsx:147
+#: widget/embedded/src/pages/SettingsPage.tsx:146
 msgid "Infinite approval"
 msgstr "Infinite approval"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/SettingsPage.tsx:157
+#: widget/embedded/src/pages/SettingsPage.tsx:156
 msgid "Enabling the 'Infinite approval' mode grants unrestricted access to smart contracts of DEXes/Bridges, allowing them to utilize the approved token amount without limitations."
 msgstr "Enabling the 'Infinite approval' mode grants unrestricted access to smart contracts of DEXes/Bridges, allowing them to utilize the approved token amount without limitations."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/ThemePage.tsx:35
+#: widget/embedded/src/pages/ThemePage.tsx:34
 msgid "Light"
 msgstr "Light"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/ThemePage.tsx:47
+#: widget/embedded/src/pages/ThemePage.tsx:46
 msgid "Dark"
 msgstr "Dark"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/ThemePage.tsx:59
+#: widget/embedded/src/pages/ThemePage.tsx:58
 msgid "Auto"
 msgstr "Auto"
 
