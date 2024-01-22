@@ -1,3 +1,12 @@
+# [0.26.0](https://github.com/rango-exchange/rango-client/compare/provider-all@0.25.0...provider-all@0.26.0) (2024-01-22)
+
+
+### Features
+
+* add default injected wallet ([238977c](https://github.com/rango-exchange/rango-client/commit/238977c0e3cd09feba9f2557f1b099b9af3afb0d))
+
+
+
 # [0.25.0](https://github.com/rango-exchange/rango-client/compare/provider-all@0.24.0...provider-all@0.25.0) (2023-12-24)
 
 
