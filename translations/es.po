@@ -8,7 +8,7 @@ msgstr ""
 "Language: es\n"
 "Project-Id-Version: rango\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-01-22 10:24\n"
+"PO-Revision-Date: 2024-01-22 14:00\n"
 "Last-Translator: \n"
 "Language-Team: Spanish\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -17,31 +17,6 @@ msgstr ""
 "X-Crowdin-Language: es-ES\n"
 "X-Crowdin-File: en.po\n"
 "X-Crowdin-File-ID: 30\n"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/common/ActivateTabAlert/ActivateTabAlert.tsx:16
-msgid "Activate"
-msgstr ""
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/common/ActivateTabAlert/ActivateTabAlert.tsx:21
-msgid "Another tab is open and handles transactions. You can activate this tab."
-msgstr ""
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/common/ActivateTabModal/ActivateTabModal.tsx:14
-msgid "Activate current tab"
-msgstr ""
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/common/ActivateTabModal/ActivateTabModal.tsx:16
-msgid "Currently, some transactions are running and being handled by other browser tab. If you activate this tab, all transactions that are already in the transaction sign step will expire."
-msgstr ""
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/pages/SwapDetailsPage.tsx:27
-msgid "The request ID is necessary to display the swap details."
-msgstr ""
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:37
@@ -75,6 +50,26 @@ msgstr "Todos"
 #: widget/embedded/src/components/BlockchainsSection/BlockchainsSection.tsx:100
 msgid "More +{count}"
 msgstr "Más +{count}"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/common/ActivateTabAlert/ActivateTabAlert.tsx:16
+msgid "Activate"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/common/ActivateTabAlert/ActivateTabAlert.tsx:21
+msgid "Another tab is open and handles transactions. You can activate this tab."
+msgstr ""
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/common/ActivateTabModal/ActivateTabModal.tsx:14
+msgid "Activate current tab"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/common/ActivateTabModal/ActivateTabModal.tsx:16
+msgid "Currently, some transactions are running and being handled by other browser tab. If you activate this tab, all transactions that are already in the transaction sign step will expire."
+msgstr ""
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/common/ActivateTabModal/ActivateTabModal.tsx:26
@@ -838,6 +833,11 @@ msgstr "Aprobación infinita"
 #: widget/embedded/src/pages/SettingsPage.tsx:156
 msgid "Enabling the 'Infinite approval' mode grants unrestricted access to smart contracts of DEXes/Bridges, allowing them to utilize the approved token amount without limitations."
 msgstr "Habilitar el modo 'Aprobación infinita' permite el acceso sin restricciones a contratos inteligentes de DEXes/Bridges, permitiéndoles utilizar la cantidad de token aprobada sin limitaciones."
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/SwapDetailsPage.tsx:27
+msgid "The request ID is necessary to display the swap details."
+msgstr ""
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/pages/ThemePage.tsx:34
