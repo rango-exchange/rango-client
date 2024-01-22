@@ -5,22 +5,17 @@ import type { SwapResult } from 'rango-sdk';
 import { i18n } from '@lingui/core';
 import {
   Alert,
-  ChevronDownIcon,
-  ChevronRightIcon,
   Divider,
-  Image,
   InfoIcon,
-  QuoteCost,
   StepDetails,
   TokenAmount,
   Tooltip,
   Typography,
 } from '@rango-dev/ui';
+import BigNumber from 'bignumber.js';
 import React, { useLayoutEffect, useRef, useState } from 'react';
 
 import {
-  GAS_FEE_MAX_DECIMALS,
-  GAS_FEE_MIN_DECIMALS,
   PERCENTAGE_CHANGE_MAX_DECIMALS,
   PERCENTAGE_CHANGE_MIN_DECIMALS,
   TOKEN_AMOUNT_MAX_DECIMALS,
@@ -39,30 +34,25 @@ import {
   getBlockchainShortNameFor,
   getSwapperDisplayName,
 } from '../../utils/meta';
-import {
-  numberToString,
-  secondsToString,
-  totalArrivalTime,
-} from '../../utils/numbers';
+import { formatTooltipNumbers, numberToString } from '../../utils/numbers';
 import { getPriceImpact, getPriceImpactLevel } from '../../utils/quote';
-import { getTotalFeeInUsd } from '../../utils/swap';
 
 import {
   BasicInfoOutput,
   basicInfoStyles,
-  ChainImageContainer,
-  Chains,
+  ContainerInfoOutput,
   Content,
   EXPANDABLE_QUOTE_TRANSITION_DURATION,
   FrameIcon,
   HorizontalSeparator,
-  IconContainer,
   QuoteContainer,
   stepsDetailsStyles,
   SummaryContainer,
   summaryStyles,
 } from './Quote.styles';
+import { QuoteCostDetails } from './QuoteCostDetails';
 import { QuoteSummary } from './QuoteSummary';
+import { QuoteTrigger } from './QuoteTrigger ';
 
 export function Quote(props: QuoteProps) {
   const {
@@ -74,19 +64,12 @@ export function Quote(props: QuoteProps) {
     type,
     recommended = true,
   } = props;
-  const tokens = useAppStore().tokens();
   const blockchains = useAppStore().blockchains();
   const swappers = useAppStore().swappers();
 
   const [expanded, setExpanded] = useState(props.expanded);
   const quoteRef = useRef<HTMLButtonElement | null>(null);
   const prevExpanded = useRef(expanded);
-  const totalFee = numberToString(
-    getTotalFeeInUsd(quote.result?.swaps ?? [], tokens),
-    GAS_FEE_MIN_DECIMALS,
-    GAS_FEE_MAX_DECIMALS
-  );
-  const totalTime = secondsToString(totalArrivalTime(quote.result?.swaps));
   const roundedInput = numberToString(
     input.value,
     TOKEN_AMOUNT_MIN_DECIMALS,
@@ -162,6 +145,14 @@ export function Quote(props: QuoteProps) {
               USD_VALUE_MIN_DECIMALS,
               USD_VALUE_MAX_DECIMALS
             ),
+            realValue: formatTooltipNumbers(
+              index === 0 ? input.value : swap.fromAmount
+            ),
+            realUsdValue: formatTooltipNumbers(
+              new BigNumber(swap.from.usdPrice ?? 0).multipliedBy(
+                swap.fromAmount
+              )
+            ),
           },
         },
         to: {
@@ -183,6 +174,10 @@ export function Quote(props: QuoteProps) {
               (swap.to.usdPrice ?? 0) * parseFloat(swap.toAmount),
               USD_VALUE_MIN_DECIMALS,
               USD_VALUE_MAX_DECIMALS
+            ),
+            realValue: formatTooltipNumbers(swap.toAmount),
+            realUsdValue: formatTooltipNumbers(
+              new BigNumber(swap.to.usdPrice ?? 0).multipliedBy(swap.toAmount)
             ),
           },
         },
@@ -268,7 +263,6 @@ export function Quote(props: QuoteProps) {
   const steps = getQuoteSteps(quote.result?.swaps ?? []);
   const numberOfSteps = steps.length;
   const tooltipContainer = getContainer();
-
   useLayoutEffect(() => {
     if (expanded && !prevExpanded.current && quoteRef.current) {
       setTimeout(() => {
@@ -285,33 +279,55 @@ export function Quote(props: QuoteProps) {
         listItem={type === 'list-item'}
         basic={type === 'basic'}>
         <div className={summaryStyles()}>
-          <QuoteCost fee={totalFee} time={totalTime} steps={numberOfSteps} />
+          <QuoteCostDetails steps={numberOfSteps} quote={quote} />
           {type === 'basic' && (
             <div className={basicInfoStyles()}>
               <FrameIcon>
                 <InfoIcon size={12} color="gray" />
               </FrameIcon>
-              <BasicInfoOutput size="small" variant="body">
-                {`${roundedInput} ${
-                  steps[0].from.token.displayName
-                } = ${roundedOutput} ${
-                  steps[steps.length - 1].to.token.displayName
-                }`}
-              </BasicInfoOutput>
-              <Typography
-                color="$neutral600"
-                ml={2}
-                size="xsmall"
-                variant="body">
-                {`($${roundedOutputUsdValue})`}
-              </Typography>
+              <ContainerInfoOutput>
+                <BasicInfoOutput size="small" variant="body">
+                  {`${roundedInput} ${steps[0].from.token.displayName} = `}
+                </BasicInfoOutput>
+                <Tooltip
+                  content={formatTooltipNumbers(output.value)}
+                  container={tooltipContainer}
+                  open={!output.value ? false : undefined}>
+                  <BasicInfoOutput size="small" variant="body">
+                    &nbsp;
+                    {`${roundedOutput} ${
+                      steps[steps.length - 1].to.token.displayName
+                    }`}
+                  </BasicInfoOutput>
+                </Tooltip>
+              </ContainerInfoOutput>
+              <Tooltip
+                content={formatTooltipNumbers(output.usdValue)}
+                container={tooltipContainer}
+                style={{
+                  display: 'flex',
+                }}>
+                <Typography
+                  color="$neutral600"
+                  ml={2}
+                  size="xsmall"
+                  variant="body">
+                  {`($${roundedOutputUsdValue})`}
+                </Typography>
+              </Tooltip>
             </div>
           )}
           {type === 'list-item' && (
             <TokenAmount
               type="output"
               direction="vertical"
-              price={{ value: roundedOutput, usdValue: roundedOutputUsdValue }}
+              tooltipContainer={tooltipContainer}
+              price={{
+                value: roundedOutput,
+                usdValue: roundedOutputUsdValue,
+                realValue: formatTooltipNumbers(output.value),
+                realUsdValue: formatTooltipNumbers(output.usdValue),
+              }}
               token={{
                 displayName: steps[numberOfSteps - 1].to.token.displayName,
                 image: steps[numberOfSteps - 1].to.token.image,
@@ -337,59 +353,13 @@ export function Quote(props: QuoteProps) {
           recommended={recommended}
           open={expanded}
           onOpenChange={setExpanded}>
-          <Chains
-            ref={(ref) => (quoteRef.current = ref)}
+          <QuoteTrigger
+            quoteRef={quoteRef}
             recommended={recommended}
-            onClick={() => setExpanded((prevState) => !prevState)}>
-            <div>
-              {steps.map((step, index) => {
-                const key = `item-${index}`;
-                const arrow = (
-                  <IconContainer>
-                    <ChevronRightIcon
-                      size={12}
-                      color="black"
-                      {...(step.state && {
-                        color: step.state === 'error' ? 'error' : 'warning',
-                      })}
-                    />
-                  </IconContainer>
-                );
-                return (
-                  <React.Fragment key={key}>
-                    <Tooltip
-                      container={tooltipContainer}
-                      side="bottom"
-                      sideOffset={4}
-                      content={step.from.chain.displayName}>
-                      <ChainImageContainer
-                        state={step.state || steps[index - 1]?.state}>
-                        <Image src={step.from.chain.image} size={16} />
-                      </ChainImageContainer>
-                    </Tooltip>
-                    {index === numberOfSteps - 1 && (
-                      <>
-                        {arrow}
-                        <Tooltip
-                          container={tooltipContainer}
-                          side="bottom"
-                          sideOffset={4}
-                          content={step.to.chain.displayName}>
-                          <ChainImageContainer state={step.state}>
-                            <Image src={step.to.chain.image} size={16} />
-                          </ChainImageContainer>
-                        </Tooltip>
-                      </>
-                    )}
-                    {index !== numberOfSteps - 1 && <>{arrow}</>}
-                  </React.Fragment>
-                );
-              })}
-            </div>
-            <IconContainer orientation={expanded ? 'up' : 'down'}>
-              <ChevronDownIcon size={12} color="black" />
-            </IconContainer>
-          </Chains>
+            setExpanded={setExpanded}
+            expanded={expanded}
+            steps={steps}
+          />
           <Content open={expanded}>
             <HorizontalSeparator />
             <div className={stepsDetailsStyles()}>
@@ -402,6 +372,7 @@ export function Quote(props: QuoteProps) {
                     step={step}
                     hasSeparator={index !== steps.length - 1}
                     state={step.state}
+                    tooltipContainer={tooltipContainer}
                   />
                 );
               })}

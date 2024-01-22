@@ -1,3 +1,5 @@
+import { RANGO_SWAP_BOX_ID } from '../constants';
+
 export function removeDuplicateFrom<T>(array: T[]): T[] {
   return Array.from(new Set(array));
 }
@@ -31,4 +33,4 @@ export function containsText(text: string, searchText: string): boolean {
 }
 
 export const getContainer = () =>
-  document.getElementById('swap-box') as HTMLElement;
+  document.getElementById(RANGO_SWAP_BOX_ID) as HTMLElement;

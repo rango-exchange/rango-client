@@ -10,11 +10,4 @@ export type PropTypes = {
   warning: QuoteWarning | null;
   autoScrollOnExpanding?: boolean;
   expanded?: boolean;
-  alertPosition?: 'top' | 'bottom';
-  refetchQuote: () => void;
-  showWarningModal: boolean;
-  onOpenWarningModal: () => void;
-  onCloseWarningModal: () => void;
-  onConfirmWarningModal: () => void;
-  onChangeSettings: () => void;
 };

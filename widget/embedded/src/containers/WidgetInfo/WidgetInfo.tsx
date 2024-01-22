@@ -3,8 +3,11 @@ import type { WidgetInfoContextInterface } from './WidgetInfo.types';
 import { useManager } from '@rango-dev/queue-manager-react';
 import React, { createContext, useContext } from 'react';
 
+import { useLanguage } from '../../hooks/useLanguage';
 import { useAppStore } from '../../store/AppStore';
+import { useNotificationStore } from '../../store/notification';
 import { useQuoteStore } from '../../store/quote';
+import { setCurrentTabAsActive, useUiStore } from '../../store/ui';
 import { useWalletsStore } from '../../store/wallets';
 import { calculateWalletUsdValue } from '../../utils/wallets';
 
@@ -16,6 +19,7 @@ export const WidgetInfoContext = createContext<
 
 export function WidgetInfo(props: React.PropsWithChildren) {
   const { manager } = useManager();
+  const isActiveTab = useUiStore.use.isActiveTab();
   const retrySwap = useQuoteStore.use.retry();
   const history = new WidgetHistory(manager, { retrySwap });
   const details = useWalletsStore.use.connectedWallets();
@@ -26,9 +30,13 @@ export function WidgetInfo(props: React.PropsWithChildren) {
   const tokens = useAppStore().tokens();
   const swappers = useAppStore().swappers();
   const loadingStatus = useAppStore().fetchStatus;
+  const resetLanguage = useLanguage().resetLanguage;
+  const notifications = useNotificationStore().getUnreadNotifications();
 
   // eslint-disable-next-line react/jsx-no-constructed-context-values
-  const value = {
+  const value: WidgetInfoContextInterface = {
+    isActiveTab,
+    setCurrentTabAsActive,
     history,
     wallets: {
       isLoading,
@@ -41,6 +49,10 @@ export function WidgetInfo(props: React.PropsWithChildren) {
       tokens,
       swappers,
       loadingStatus,
+    },
+    resetLanguage,
+    notifications: {
+      list: notifications,
     },
   };
 

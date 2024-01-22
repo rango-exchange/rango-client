@@ -1,53 +1,82 @@
-import type { PropTypes, Ref } from './Layout.types';
+import type { PropTypes } from './Layout.types';
+import type { PendingSwap } from 'rango-types';
 import type { PropsWithChildren } from 'react';
 
+import { useManager } from '@rango-dev/queue-manager-react';
 import { BottomLogo, Divider, Header } from '@rango-dev/ui';
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 
+import { RANGO_SWAP_BOX_ID } from '../../constants';
 import { useNavigateBack } from '../../hooks/useNavigateBack';
+import { useTheme } from '../../hooks/useTheme';
 import { useAppStore } from '../../store/AppStore';
-import { useUiStore } from '../../store/ui';
+import { setCurrentTabAsActive, useUiStore } from '../../store/ui';
 import { useWalletsStore } from '../../store/wallets';
 import { getContainer } from '../../utils/common';
+import { getPendingSwaps } from '../../utils/queue';
 import { isFeatureHidden } from '../../utils/settings';
+import { ActivateTabAlert } from '../common/ActivateTabAlert';
+import { ActivateTabModal } from '../common/ActivateTabModal';
 import { BackButton, CancelButton, WalletButton } from '../HeaderButtons';
 
+import { onScrollContentAttachStatusToContainer } from './Layout.helpers';
 import { Container, Content, Footer } from './Layout.styles';
 
-function LayoutComponent(props: PropsWithChildren<PropTypes>, ref: Ref) {
-  const {
-    children,
-    header,
-    footer,
-    noPadding,
-    hasLogo = true,
-    fixedHeight = true,
-  } = props;
+function Layout(props: PropsWithChildren<PropTypes>) {
+  const { children, header, footer, hasLogo = true, height = 'fixed' } = props;
   const connectedWallets = useWalletsStore.use.connectedWallets();
   const {
-    config: { features },
+    config: { features, theme },
   } = useAppStore();
+  const { activeTheme } = useTheme(theme || {});
 
   const isConnectWalletHidden = isFeatureHidden(
     'connectWalletButton',
     features
   );
 
-  const connectWalletsButtonDisabled =
-    useUiStore.use.connectWalletsButtonDisabled();
+  const {
+    isActiveTab,
+    tabManagerInitiated,
+    showActivateTabModal,
+    setShowActivateTabModal,
+    activateCurrentTab,
+  } = useUiStore();
   const navigateBack = useNavigateBack();
+  const { manager } = useManager();
+  const pendingSwaps: PendingSwap[] = getPendingSwaps(manager).map(
+    ({ swap }) => swap
+  );
+  const hasRunningSwap = pendingSwaps.some((swap) => swap.status === 'running');
+
+  const onActivateTab = () =>
+    activateCurrentTab(setCurrentTabAsActive, hasRunningSwap);
 
   const onConnectWallet = () => {
-    if (!connectWalletsButtonDisabled && header.onWallet) {
-      header.onWallet();
-    }
+    header.onWallet?.();
   };
 
   const showBackButton =
     typeof header.hasBackButton === 'undefined' || header.hasBackButton;
 
+  const scrollViewRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    scrollViewRef.current?.addEventListener(
+      'scroll',
+      onScrollContentAttachStatusToContainer
+    );
+
+    return () => {
+      scrollViewRef.current?.removeEventListener(
+        'scroll',
+        onScrollContentAttachStatusToContainer
+      );
+    };
+  }, []);
+
   return (
-    <Container ref={ref} fixedHeight={fixedHeight} id="swap-box">
+    <Container height={height} id={RANGO_SWAP_BOX_ID} className={activeTheme()}>
       <Header
         prefix={<>{showBackButton && <BackButton onClick={navigateBack} />}</>}
         title={header.title}
@@ -65,13 +94,26 @@ function LayoutComponent(props: PropsWithChildren<PropTypes>, ref: Ref) {
           </>
         }
       />
-      <Content noPadding={noPadding}>{children}</Content>
+      <Content ref={scrollViewRef}>{children}</Content>
+      <ActivateTabModal
+        open={showActivateTabModal}
+        onClose={() => setShowActivateTabModal(false)}
+        onConfirm={onActivateTab}
+      />
       {(hasLogo || footer) && (
         <Footer>
-          <div className="footer__content">{footer}</div>
+          <div className="footer__content">
+            {footer}
+            {tabManagerInitiated && !isActiveTab && (
+              <>
+                <Divider size={12} />
+                <ActivateTabAlert onActivateTab={onActivateTab} />
+              </>
+            )}
+          </div>
+          <Divider size={12} />
           {hasLogo && (
             <div className="footer__logo">
-              <Divider size={12} />
               <BottomLogo />
             </div>
           )}
@@ -80,8 +122,4 @@ function LayoutComponent(props: PropsWithChildren<PropTypes>, ref: Ref) {
     </Container>
   );
 }
-
-const Layout = React.forwardRef(LayoutComponent);
-Layout.displayName = 'Layout';
-
 export { Layout };

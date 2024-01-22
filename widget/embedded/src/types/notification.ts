@@ -3,7 +3,6 @@ import {
   type RouteEvent,
   type Step,
   type StepEvent,
-  StepExecutionBlockedEventStatus,
 } from '@rango-dev/queue-manager-rango-preset';
 
 type NotificationRoute = {
@@ -25,9 +24,3 @@ export type Notification = Pick<Route, 'requestId'> & {
   read: boolean;
   route: NotificationRoute;
 };
-
-export const validBlockedStatuses: StepExecutionBlockedEventStatus[] = [
-  StepExecutionBlockedEventStatus.WAITING_FOR_CHANGE_WALLET_ACCOUNT,
-  StepExecutionBlockedEventStatus.WAITING_FOR_NETWORK_CHANGE,
-  StepExecutionBlockedEventStatus.WAITING_FOR_WALLET_CONNECT,
-];

@@ -53,7 +53,7 @@ export const subscribe: Subscribe = ({
 }) => {
   const evmBlockchainMeta = meta.filter(isEvmBlockchain);
 
-  subscribeToEvm({
+  const cleanup = subscribeToEvm({
     instance,
     state,
     updateChainId,
@@ -62,6 +62,11 @@ export const subscribe: Subscribe = ({
     connect,
     disconnect,
   });
+  return () => {
+    if (cleanup) {
+      cleanup();
+    }
+  };
 };
 
 export const switchNetwork: SwitchNetwork = switchNetworkForEvm;

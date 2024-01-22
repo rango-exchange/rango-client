@@ -1,54 +1,40 @@
-import { darkTheme, styled } from '@rango-dev/ui';
+import { styled } from '@rango-dev/ui';
 
+const WIDGET_HEIGHT = '700px';
 export const Container = styled('div', {
   position: 'relative',
   display: 'flex',
   flexDirection: 'column',
   borderRadius: '$primary',
-  overflow: 'hidden !important',
-  boxShadow: '15px 15px 15px 0px rgba(0, 0, 0, 0.05)',
-  width: '95vw',
+  width: '100vh',
   minWidth: '300px',
   maxWidth: '390px',
-  maxHeight: '700px',
-  textAlign: 'left',
-  $$color: '$colors$neutral100',
-  [`.${darkTheme} &`]: {
-    $$color: '$colors$neutral300',
-  },
-  backgroundColor: '$$color',
+  boxShadow: '15px 15px 15px 0px rgba(0, 0, 0, 0.05)',
+  overflow: 'hidden',
+  backgroundColor: '$background',
+
   variants: {
-    fixedHeight: {
-      true: {
-        height: '95vh',
-      },
-      false: {
+    height: {
+      auto: {
         height: 'auto',
+        maxHeight: WIDGET_HEIGHT,
+      },
+      fixed: {
+        height: WIDGET_HEIGHT,
       },
     },
   },
 });
 
 export const Content = styled('div', {
-  borderTopLeftRadius: '20px',
-  borderTopRightRadius: '20px',
+  position: 'relative',
+  overflow: 'hidden',
+  flexGrow: 1,
   display: 'flex',
   flexDirection: 'column',
-  flex: 1,
-  padding: '$20 $20 $10 $20',
-  backgroundColor: '$background',
-  position: 'relative',
+  padding: 0,
   overflowY: 'auto',
-  overflowX: 'hidden',
-  variants: {
-    noPadding: {
-      true: {
-        padding: '0',
-      },
-    },
-  },
 });
-
 export const Footer = styled('div', {
   backgroundColor: '$background',
   '& .footer__content': {

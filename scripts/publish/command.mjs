@@ -173,7 +173,7 @@ async function run() {
       console.log('Skipped.');
     }
   } else {
-    console.log('Skipped as it set on enviroments.');
+    console.log('Skipped as it set on environments.');
   }
   console.log('::endgroup::');
 

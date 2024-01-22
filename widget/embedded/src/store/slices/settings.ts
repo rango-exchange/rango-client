@@ -15,7 +15,7 @@ export type ThemeMode = 'auto' | 'dark' | 'light';
 
 export interface SettingsSlice {
   theme: ThemeMode;
-  language: Language;
+  language: Language | null;
   disabledLiquiditySources: string[];
   /** Keeping a history of blockchains that user has selected (in Swap process) */
   preferredBlockchains: string[];
@@ -31,7 +31,7 @@ export interface SettingsSlice {
   toggleInfiniteApprove: () => void;
   toggleLiquiditySource: (name: string) => void;
   setTheme: (theme: ThemeMode) => void;
-  setLanguage: (language: Language) => void;
+  setLanguage: (language: Language | null) => void;
   toggleAllLiquiditySources: (
     swappers: SwapperMeta[],
     shouldReset?: boolean
@@ -53,7 +53,7 @@ export const createSettingsSlice: StateCreator<
 > = (set, get) => ({
   disabledLiquiditySources: [],
   theme: 'auto',
-  language: DEFAULT_LANGUAGE,
+  language: null,
   preferredBlockchains: [],
   slippage: DEFAULT_SLIPPAGE,
   customSlippage: null,

@@ -15,9 +15,10 @@ import {
   Typography,
   WalletIcon,
 } from '@rango-dev/ui';
-import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import { RANGO_SWAP_BOX_ID } from '../../constants';
 import { getQuoteErrorMessage } from '../../constants/errors';
 import { getQuoteUpdateWarningMessage } from '../../constants/warnings';
 import { useAppStore } from '../../store/AppStore';
@@ -25,23 +26,20 @@ import { useQuoteStore } from '../../store/quote';
 import { useWalletsStore } from '../../store/wallets';
 import { getBlockchainShortNameFor } from '../../utils/meta';
 import { confirmSwapDisabled } from '../../utils/swap';
+import { CustomCollapsible } from '../CustomCollapsible/CustomCollapsible';
+import { ExpandedIcon } from '../CustomCollapsible/CustomCollapsible.styles';
 
 import { getRequiredWallets, isValidAddress } from './ConfirmWallets.helpers';
 import {
   alarmsStyles,
-  CollapsibleContent,
-  CollapsibleRoot,
   ConfirmButton,
   CustomDestination,
   CustomDestinationButton,
-  EXPANDABLE_TRANSITION_DURATION,
-  ExpandedIcon,
   ListContainer,
   NavigateBack,
   ShowMoreHeader,
   StyledTextField,
   Title,
-  Trigger,
   Wallets,
   WalletsContainer,
   walletsListStyles,
@@ -75,7 +73,6 @@ export function ConfirmWalletsModal(props: PropTypes) {
   const [showCustomDestination, setShowCustomDestination] = useState(
     !!customDestination
   );
-  const customDestinationRef = useRef<HTMLDivElement | null>(null);
 
   const requiredWallets = getRequiredWallets(quote);
 
@@ -230,15 +227,9 @@ export function ConfirmWalletsModal(props: PropTypes) {
     );
   }, [connectedWallets.length]);
 
-  useLayoutEffect(() => {
-    if (showCustomDestination && customDestinationRef.current) {
-      setTimeout(() => {
-        customDestinationRef?.current?.scrollIntoView({ behavior: 'smooth' });
-      }, EXPANDABLE_TRANSITION_DURATION);
-    }
-  }, [showCustomDestination]);
-
-  const modalContainer = document.querySelector('#swap-box') as HTMLDivElement;
+  const modalContainer = document.getElementById(
+    RANGO_SWAP_BOX_ID
+  ) as HTMLDivElement;
 
   const navigate = useNavigate();
   return (
@@ -271,7 +262,7 @@ export function ConfirmWalletsModal(props: PropTypes) {
               type="primary"
               fullWidth
               size="large">
-              Confirm
+              {i18n.t('Confirm')}
             </Button>
           </ConfirmButton>
         ),
@@ -391,10 +382,7 @@ export function ConfirmWalletsModal(props: PropTypes) {
                   {!isLastWallet && <Divider size={32} />}
                   {isLastWallet && config?.customDestination && (
                     <CustomDestination>
-                      <CollapsibleRoot
-                        ref={customDestinationRef}
-                        selected={showCustomDestination}
-                        open={showCustomDestination}
+                      <CustomCollapsible
                         onOpenChange={(checked) => {
                           if (!checked) {
                             resetCustomDestination();
@@ -420,11 +408,11 @@ export function ConfirmWalletsModal(props: PropTypes) {
                               );
                             }
                           }
-                        }}>
-                        <Trigger
-                          onClick={() =>
-                            setShowCustomDestination((prevState) => !prevState)
-                          }>
+                        }}
+                        hasSelected
+                        open={showCustomDestination}
+                        triggerAnchor="top"
+                        trigger={
                           <CustomDestinationButton
                             fullWidth
                             variant="default"
@@ -444,21 +432,21 @@ export function ConfirmWalletsModal(props: PropTypes) {
                               </Typography>
                             </div>
                           </CustomDestinationButton>
-                        </Trigger>
-                        <CollapsibleContent open={showCustomDestination}>
-                          <>
-                            <Divider size={4} />
-                            <StyledTextField
-                              autoFocus
-                              placeholder={i18n.t('Your destination address')}
-                              value={destination}
-                              onChange={(e) => {
-                                setDestination(e.target.value);
-                              }}
-                            />
-                          </>
-                        </CollapsibleContent>
-                      </CollapsibleRoot>
+                        }
+                        onClickTrigger={() =>
+                          setShowCustomDestination((prev) => !prev)
+                        }>
+                        <Divider size={4} />
+                        <StyledTextField
+                          autoFocus
+                          placeholder={i18n.t('Your destination address')}
+                          value={destination}
+                          onChange={(e) => {
+                            setDestination(e.target.value);
+                          }}
+                        />
+                      </CustomCollapsible>
+
                       {isAddressMatched && (
                         <div className={alarmsStyles()}>
                           <Alert

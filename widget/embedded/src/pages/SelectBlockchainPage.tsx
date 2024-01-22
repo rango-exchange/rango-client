@@ -2,12 +2,12 @@ import { i18n } from '@lingui/core';
 import {
   Divider,
   getCountCategories,
-  SelectableCategoryList
+  SelectableCategoryList,
 } from '@rango-dev/ui';
 import React, { useState } from 'react';
 
 import { BlockchainList } from '../components/BlockchainList';
-import { Layout } from '../components/Layout';
+import { Layout, PageContainer } from '../components/Layout';
 import { SearchInput } from '../components/SearchInput';
 import { useNavigateBack } from '../hooks/useNavigateBack';
 import { useAppStore } from '../store/AppStore';
@@ -27,7 +27,7 @@ export function SelectBlockchainPage(props: PropTypes) {
   const fetchStatus = useAppStore().fetchStatus;
 
   const blockchains = useAppStore().blockchains({
-    type: type
+    type,
   });
 
   const countActiveCategories = getCountCategories(blockchains);
@@ -37,47 +37,47 @@ export function SelectBlockchainPage(props: PropTypes) {
   return (
     <Layout
       header={{
-        title: i18n.t(`Select Blockchain`)
+        title: i18n.t(`Select Blockchain`),
       }}>
-      <Divider size={12} />
+      <PageContainer view>
+        {showCategory && (
+          <>
+            <SelectableCategoryList
+              setCategory={setBlockchainCategory}
+              category={blockchainCategory}
+              blockchains={blockchains}
+              isLoading={fetchStatus === 'loading'}
+            />
+            <Divider size={24} />
+          </>
+        )}
 
-      {showCategory && (
-        <>
-          <SelectableCategoryList
-            setCategory={setBlockchainCategory}
-            category={blockchainCategory}
-            blockchains={blockchains}
-            isLoading={fetchStatus === 'loading'}
-          />
-          <Divider size={24} />
-        </>
-      )}
+        <SearchInput
+          value={searchedFor}
+          autoFocus
+          placeholder={i18n.t('Search Blockchain')}
+          color="light"
+          variant="contained"
+          size="large"
+          setValue={() => setSearchedFor('')}
+          onChange={(event) => setSearchedFor(event.target.value)}
+        />
+        <Divider size={16} />
 
-      <SearchInput
-        value={searchedFor}
-        autoFocus
-        placeholder={i18n.t('Search Blockchain')}
-        color="light"
-        variant="contained"
-        size="large"
-        setValue={() => setSearchedFor('')}
-        onChange={(event) => setSearchedFor(event.target.value)}
-      />
-      <Divider size={16} />
-
-      <BlockchainList
-        list={blockchains}
-        searchedFor={searchedFor}
-        blockchainCategory={blockchainCategory}
-        onChange={(blockchain) => {
-          if (type === 'source') {
-            setFromBlockchain(blockchain);
-          } else {
-            setToBlockchain(blockchain);
-          }
-          navigateBack();
-        }}
-      />
+        <BlockchainList
+          list={blockchains}
+          searchedFor={searchedFor}
+          blockchainCategory={blockchainCategory}
+          onChange={(blockchain) => {
+            if (type === 'source') {
+              setFromBlockchain(blockchain);
+            } else {
+              setToBlockchain(blockchain);
+            }
+            navigateBack();
+          }}
+        />
+      </PageContainer>
     </Layout>
   );
 }

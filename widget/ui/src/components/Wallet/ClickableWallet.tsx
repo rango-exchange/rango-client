@@ -1,7 +1,7 @@
 import type { WalletPropTypes } from './Wallet.types';
 
 import { detectInstallLink } from '@rango-dev/wallets-shared';
-import React from 'react';
+import React, { Fragment } from 'react';
 
 import { Image } from '../common';
 import { Divider } from '../Divider';
@@ -20,7 +20,7 @@ import {
 import { WalletState } from './Wallet.types';
 
 function Wallet(props: WalletPropTypes) {
-  const { title, type, image, onClick, isLoading } = props;
+  const { title, type, image, onClick, isLoading, disabled = false } = props;
   const info = makeInfo(props.state);
 
   if (isLoading) {
@@ -35,10 +35,15 @@ function Wallet(props: WalletPropTypes) {
     );
   }
 
+  const WrapperComponent = disabled ? Fragment : Tooltip;
+
   return (
-    <Tooltip container={props.container} content={info.tooltipText} side="top">
+    <WrapperComponent
+      container={props.container}
+      content={info.tooltipText}
+      side="top">
       <WalletButton
-        disabled={props.state == WalletState.CONNECTING}
+        disabled={props.state == WalletState.CONNECTING || disabled}
         onClick={() => {
           if (props.state === WalletState.NOT_INSTALLED) {
             window.open(detectInstallLink(props.link), '_blank');
@@ -64,7 +69,7 @@ function Wallet(props: WalletPropTypes) {
           </Typography>
         </Text>
       </WalletButton>
-    </Tooltip>
+    </WrapperComponent>
   );
 }
 

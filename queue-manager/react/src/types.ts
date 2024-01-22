@@ -1,4 +1,4 @@
-import { Manager } from '@rango-dev/queue-manager-core';
+import type { Manager } from '@rango-dev/queue-manager-core';
 
 export type ManagerContext = Manager | undefined;
 export type ManagerState = {

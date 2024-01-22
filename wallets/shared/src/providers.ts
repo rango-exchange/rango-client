@@ -35,7 +35,7 @@ export const subscribeToEvm: Subscribe = ({
   updateChainId,
   updateAccounts,
 }) => {
-  instance?.on('accountsChanged', (addresses: string[]) => {
+  const handleAccountsChanged = (addresses: string[]) => {
     /*
      * TODO: after enabling autoconnect, we can consider this condition
      * to be removed.
@@ -46,11 +46,22 @@ export const subscribeToEvm: Subscribe = ({
     if (state.connected) {
       updateAccounts(addresses);
     }
-  });
+  };
 
-  instance?.on('chainChanged', (chainId: string) => {
+  const handleChainChanged = (chainId: string) => {
     updateChainId(chainId);
-  });
+  };
+
+  instance?.on('accountsChanged', handleAccountsChanged);
+
+  instance?.on('chainChanged', handleChainChanged);
+
+  const cleanup = () => {
+    instance?.off('chainChanged', handleAccountsChanged);
+    instance?.off('accountsChanged', handleChainChanged);
+  };
+
+  return cleanup;
 };
 
 export const canEagerlyConnectToEvm: CanEagerConnect = async ({ instance }) => {

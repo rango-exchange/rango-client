@@ -1,21 +1,49 @@
+import type { TabManagerInterface } from '../libs/tabManager';
+
 import { create } from 'zustand';
+
+import { TabManager } from '../libs/tabManager';
 
 import createSelectors from './selectors';
 
 interface UiState {
-  connectWalletsButtonDisabled: boolean;
-  selectedSwapRequestId: string | null;
-  currentPage: string;
-  setSelectedSwap: (requestId: string | null) => void;
-  setCurrentPage: (path: string) => void;
+  isActiveTab: boolean;
+  tabManagerInitiated: boolean;
+  showActivateTabModal: boolean;
+  activateCurrentTab: (
+    setCurrentTabAsActive: () => void,
+    hasRunningSwaps: boolean
+  ) => void;
+  setShowActivateTabModal: (flag: boolean) => void;
 }
 
 export const useUiStore = createSelectors(
-  create<UiState>()((set) => ({
-    connectWalletsButtonDisabled: false,
-    selectedSwapRequestId: null,
-    currentPage: '',
-    setSelectedSwap: (requestId) => set({ selectedSwapRequestId: requestId }),
-    setCurrentPage: (path) => set({ currentPage: path }),
+  create<UiState>()((set, get) => ({
+    isActiveTab: false,
+    tabManagerInitiated: false,
+    showActivateTabModal: false,
+    activateCurrentTab: (setCurrentTabAsActive, hasRunningSwaps) => {
+      const { showActivateTabModal } = get();
+
+      if (!showActivateTabModal && hasRunningSwaps) {
+        set({ showActivateTabModal: true });
+      } else if (showActivateTabModal || !hasRunningSwaps) {
+        setCurrentTabAsActive();
+      }
+    },
+    setShowActivateTabModal: (flag) => {
+      set({ showActivateTabModal: flag });
+    },
   }))
 );
+
+const tabManager: TabManagerInterface = new TabManager({
+  onInit: () => useUiStore.setState({ tabManagerInitiated: true }),
+  onClaim: () =>
+    useUiStore.setState({ isActiveTab: true, showActivateTabModal: false }),
+  onRelease: () => useUiStore.setState({ isActiveTab: false }),
+});
+
+export const setCurrentTabAsActive = tabManager.forceClaim;
+
+export const destroyTabManager = tabManager.destroy;

@@ -32,12 +32,17 @@ const Chip = (props: MultiSelectChipProps) => {
 
 export function MultiSelect(props: MuliSelectPropTypes) {
   const [showNextModal, setShowNextModal] = useState(false);
-  const { label, type, value, list } = props;
+  const { label, type, value, list, disabled } = props;
   const valueAll = !value;
   const noneSelected = !valueAll && !value.length;
   const hasValue = !valueAll;
   const showMore = hasValue && value.length > MAX_CHIPS;
   const onBack = () => setShowNextModal(false);
+  const onOpenNextModal = () => {
+    if (!disabled) {
+      setShowNextModal(true);
+    }
+  };
 
   return (
     <>
@@ -49,8 +54,8 @@ export function MultiSelect(props: MuliSelectPropTypes) {
         </Typography>
       </Label>
       <Divider size={4} />
-      <Select>
-        <div className="field" onClick={() => setShowNextModal(true)}>
+      <Select disabled={!!disabled}>
+        <div className="field" onClick={onOpenNextModal}>
           <div className="chips">
             {valueAll && <Chip label={`All ${type}`} />}
             {noneSelected && <Chip label="None Selected" />}
@@ -60,7 +65,7 @@ export function MultiSelect(props: MuliSelectPropTypes) {
               <Chip label={`+${value.length - MAX_CHIPS}`} variant="outlined" />
             )}
           </div>
-          <ChevronRightIcon size={12} />
+          <ChevronRightIcon size={12} color="gray" />
         </div>
       </Select>
       {showNextModal && (
@@ -87,6 +92,7 @@ export function MultiSelect(props: MuliSelectPropTypes) {
           ) : (
             <TokensPanel
               list={list}
+              tokensConfig={props.tokensConfig}
               onChange={(selectedTokens, pinnedTokens) => {
                 props.onChange(selectedTokens, pinnedTokens);
                 onBack();

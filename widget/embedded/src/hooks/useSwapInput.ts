@@ -48,6 +48,7 @@ export function useSwapInput(): UseSwapInput {
     toToken,
     inputAmount,
     inputUsdValue,
+    quote,
     resetQuote,
     setQuote,
   } = useQuoteStore();
@@ -58,14 +59,15 @@ export function useSwapInput(): UseSwapInput {
     affiliateRef,
     affiliateWallets,
     disabledLiquiditySources,
+    fetchStatus,
   } = useAppStore();
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState<QuoteError | null>(null);
   const [warning, setWarning] = useState<QuoteWarning | null>(null);
   const userSlippage = customSlippage ?? slippage;
-  const hasTokensValue = !fromToken || !toToken;
+  const tokensValueInvalid = !fromToken || !toToken;
   const shouldSkipRequest =
-    hasTokensValue ||
+    tokensValueInvalid ||
     tokensAreEqual(fromToken, toToken) ||
     !isPositiveNumber(inputAmount);
 
@@ -147,12 +149,18 @@ export function useSwapInput(): UseSwapInput {
   );
 
   useEffect(() => {
+    if (fetchStatus !== 'success') {
+      return;
+    }
     if (!isPositiveNumber(inputAmount) || inputUsdValue?.eq(0)) {
       resetState(false);
       cancelFetch();
       return;
     }
     if (shouldSkipRequest) {
+      if (quote) {
+        resetQuote();
+      }
       return;
     }
     resetQuote();
@@ -171,6 +179,7 @@ export function useSwapInput(): UseSwapInput {
     });
     return cancelFetch;
   }, [
+    fetchStatus,
     inputAmount,
     fromToken?.symbol,
     fromToken?.address,

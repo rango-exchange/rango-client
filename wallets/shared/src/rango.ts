@@ -49,6 +49,7 @@ export type WalletType = string;
 export type Network = string;
 
 export enum WalletTypes {
+  DEFAULT = 'default',
   META_MASK = 'metamask',
   WALLET_CONNECT_2 = 'wallet-connect-2',
   TRUST_WALLET = 'trust-wallet',
@@ -236,6 +237,8 @@ export type Disconnect = (options: {
   destroyInstance: () => void;
 }) => Promise<void>;
 
+type CleanupSubscribe = () => void;
+
 export type Subscribe = (options: {
   instance: any;
   state: WalletState;
@@ -244,7 +247,7 @@ export type Subscribe = (options: {
   updateAccounts: (accounts: string[], chainId?: string) => void;
   connect: (network?: Network) => void;
   disconnect: () => void;
-}) => void;
+}) => CleanupSubscribe | void;
 
 export type CanEagerConnect = (options: {
   instance: any;

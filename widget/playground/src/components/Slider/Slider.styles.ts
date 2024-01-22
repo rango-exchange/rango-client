@@ -30,19 +30,28 @@ export const RangeWrapper = styled('div', {
   },
   '& .range-custom': {
     height: '3px',
-    backgroundColor: '$secondary500',
+    backgroundColor: '$neutral300',
     '-webkit-appearance': 'none',
+    outline: 'none',
+    appearance: 'none',
+    borderRadius: '3px',
+
     '&::-webkit-slider-thumb': {
       '-webkit-appearance': 'none',
+      appearance: 'none',
       width: '10px',
       height: '8px',
+      borderRadius: '2.5px',
       backgroundColor: '$secondary500',
+      transition: '.2s ease-in-out',
     },
 
     '&::-moz-range-thumb': {
       width: '10px',
       height: '8px',
+      borderRadius: '2.5px',
       backgroundColor: '$secondary500',
+      transition: '.2s ease-in-out',
     },
   },
 });

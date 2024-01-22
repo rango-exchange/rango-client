@@ -23,7 +23,10 @@ export const ConnectedIcon = styled('div', {
 export const SuffixContainer = styled('div', {
   display: 'flex',
   justifyContent: 'flex-end',
-  width: '$40',
+  minWidth: '$40',
+  button: {
+    padding: 0,
+  },
 });
 
 export const NotificationsBadgeContainer = styled('div', {
@@ -37,4 +40,16 @@ export const NotificationsBadgeContainer = styled('div', {
   borderRadius: '7px',
   top: '$0',
   right: '$0',
+});
+
+export const ProgressIcon = styled('div', {
+  padding: '$2',
+  variants: {
+    isRefetched: {
+      true: {
+        transform: `rotate(360deg)`,
+        transition: 'transform 1s ease-in-out',
+      },
+    },
+  },
 });

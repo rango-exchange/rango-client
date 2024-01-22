@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-magic-numbers */
 import type { WidgetTheme } from '../types';
 import type { createTheme } from '@rango-dev/ui';
+import type React from 'react';
 
 import {
   theme as baseThemeTokens,
@@ -69,4 +70,23 @@ export function customizedThemeTokens(
     light,
     dark,
   };
+}
+
+export function joinList(
+  list: React.JSX.Element[],
+  divider: React.JSX.Element
+) {
+  if (list.length <= 1) {
+    return list;
+  }
+
+  const output: React.JSX.Element[] = [];
+  list.forEach((item, index) => {
+    output.push(item);
+    if (index < list.length - 1) {
+      output.push(divider);
+    }
+  });
+
+  return output;
 }

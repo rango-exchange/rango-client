@@ -11,8 +11,7 @@ import {
 } from '@rango-dev/ui';
 import React from 'react';
 
-import { Layout } from '../components/Layout';
-import { SettingsContainer } from '../components/SettingsContainer';
+import { Layout, PageContainer } from '../components/Layout';
 import { useAppStore } from '../store/AppStore';
 
 type Theme = 'dark' | 'light' | 'auto';
@@ -70,7 +69,7 @@ export function ThemePage() {
       header={{
         title: i18n.t('Theme'),
       }}>
-      <SettingsContainer>
+      <PageContainer>
         <RadioRoot
           onValueChange={(value) => setTheme(value as Theme)}
           value={theme}>
@@ -85,7 +84,7 @@ export function ThemePage() {
             items={themesList}
           />
         </RadioRoot>
-      </SettingsContainer>
+      </PageContainer>
     </Layout>
   );
 }

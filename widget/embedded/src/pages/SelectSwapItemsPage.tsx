@@ -6,7 +6,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { BlockchainsSection } from '../components/BlockchainsSection';
-import { Layout } from '../components/Layout';
+import { Layout, PageContainer } from '../components/Layout';
 import { SearchInput } from '../components/SearchInput';
 import { TokenList } from '../components/TokenList/TokenList';
 import { navigationRoutes } from '../constants/navigationRoutes';
@@ -68,51 +68,57 @@ export function SelectSwapItemsPage(props: PropTypes) {
       setToToken({ token, meta: { blockchains, tokens } });
     }
   };
+  const types = {
+    source: i18n.t('Source'),
+    destination: i18n.t('Destination'),
+  };
 
   return (
     <Layout
       header={{
-        title: i18n.t('Swap {type}', { type }),
+        title: i18n.t('Swap {type}', { type: types[type] }),
       }}>
-      <BlockchainsSection
-        blockchains={blockchains}
-        type={type == 'source' ? 'from' : 'to'}
-        blockchain={type === 'source' ? fromBlockchain : toBlockchain}
-        onMoreClick={() => navigate(navigationRoutes.blockchains)}
-        onChange={(blockchain) => {
-          updateBlockchain(blockchain);
-        }}
-      />
-      <Divider size={24} />
-      <SearchInput
-        value={searchedFor}
-        autoFocus
-        placeholder={i18n.t('Search Token')}
-        color="light"
-        variant="contained"
-        size="large"
-        setValue={() => setSearchedFor('')}
-        onChange={(event) => setSearchedFor(event.target.value)}
-      />
-      <Divider size={16} />
-      <TokenList
-        list={tokensList}
-        selectedBlockchain={selectedBlockchainName}
-        searchedFor={searchedFor}
-        type={type}
-        onChange={(token) => {
-          updateToken(token);
+      <PageContainer>
+        <BlockchainsSection
+          blockchains={blockchains}
+          type={type == 'source' ? 'from' : 'to'}
+          blockchain={type === 'source' ? fromBlockchain : toBlockchain}
+          onMoreClick={() => navigate(navigationRoutes.blockchains)}
+          onChange={(blockchain) => {
+            updateBlockchain(blockchain);
+          }}
+        />
+        <Divider size={24} />
+        <SearchInput
+          value={searchedFor}
+          autoFocus
+          placeholder={i18n.t('Search Token')}
+          color="light"
+          variant="contained"
+          size="large"
+          setValue={() => setSearchedFor('')}
+          onChange={(event) => setSearchedFor(event.target.value)}
+        />
+        <Divider size={16} />
+        <TokenList
+          list={tokensList}
+          selectedBlockchain={selectedBlockchainName}
+          searchedFor={searchedFor}
+          type={type}
+          onChange={(token) => {
+            updateToken(token);
 
-          const tokenBlockchain = blockchains.find(
-            (chain) => token.blockchain === chain.name
-          );
-          if (tokenBlockchain) {
-            updateBlockchain(tokenBlockchain);
-          }
+            const tokenBlockchain = blockchains.find(
+              (chain) => token.blockchain === chain.name
+            );
+            if (tokenBlockchain) {
+              updateBlockchain(tokenBlockchain);
+            }
 
-          navigateBack();
-        }}
-      />
+            navigateBack();
+          }}
+        />
+      </PageContainer>
     </Layout>
   );
 }

@@ -26,7 +26,7 @@ function ItemPicker(props: PropTypes) {
           {title}
         </Typography>
       </Title>
-      <Divider size={8} />
+      <Divider size={4} />
       <InputContainer
         onClick={disabled ? undefined : onClick}
         disabled={disabled}>

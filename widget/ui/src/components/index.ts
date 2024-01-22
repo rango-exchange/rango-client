@@ -16,6 +16,7 @@ export * from './Modal';
 export * from './MessageBox';
 export * from './PercentageChange';
 export * from './RadioGroup';
+export * from './RefreshProgressButton';
 export * from './RoutesOverview';
 export * from './SecondaryPage';
 export * from './SelectableWalletList';

@@ -1,7 +1,7 @@
 import * as Collapsible from '@radix-ui/react-collapsible';
 import { css, darkTheme, Image, styled, Typography } from '@rango-dev/ui';
 
-import { CollapsibleContent } from '../ConfirmWalletsModal/ConfirmWallets.styles';
+import { CollapsibleContent } from '../CustomCollapsible/CustomCollapsible.styles';
 
 export const EXPANDABLE_QUOTE_TRANSITION_DURATION = 300;
 
@@ -114,6 +114,15 @@ export const summaryStyles = css({
   cursor: 'default',
 });
 
+export const rowStyles = css({
+  display: 'flex',
+  flexDirection: 'row',
+  justifyContent: 'center',
+  alignItems: 'center',
+  '.blockchainImage': {
+    marginLeft: '-$8',
+  },
+});
 export const basicInfoStyles = css({
   paddingTop: '$10',
   display: 'flex',
@@ -127,7 +136,7 @@ export const basicInfoStyles = css({
   },
 });
 
-export const Chains = styled(Collapsible.Trigger, {
+export const Trigger = styled(Collapsible.Trigger, {
   display: 'flex',
   width: '100%',
   justifyContent: 'space-between',
@@ -171,17 +180,27 @@ export const Chains = styled(Collapsible.Trigger, {
       },
     },
   },
-  '& div:nth-child(1)': { display: 'flex' },
+  '.blockchains_section': {
+    display: 'none',
+  },
+  '@xs': {
+    '.blockchains_section': {
+      display: 'block',
+    },
+  },
 });
 
-export const ChainImageContainer = styled('div', {
+export const ImageContainer = styled('div', {
   width: '18px',
   height: '18px',
   borderRadius: '100%',
-  border: '1.5px transparent solid',
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
+  border: '1.5px transparent solid',
+  img: {
+    borderRadius: '100%',
+  },
   variants: {
     state: {
       error: {
@@ -243,8 +262,32 @@ export const FrameIcon = styled('div', {
 });
 
 export const BasicInfoOutput = styled(Typography, {
-  width: '100%',
   overflow: 'hidden',
   textOverflow: 'ellipsis',
   letterSpacing: 0.4,
+});
+
+export const ContainerInfoOutput = styled('div', {
+  display: 'flex',
+  flexWrap: 'wrap',
+});
+
+export const MoreStep = styled('div', {
+  width: '18px',
+  height: '18px',
+  borderRadius: '100%',
+  backgroundColor: '$background',
+  cursor: 'default',
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  border: '1.5px transparent solid',
+  variants: {
+    state: {
+      error: {
+        borderColor: '$error500',
+      },
+      warning: { borderColor: '$warning500' },
+    },
+  },
 });

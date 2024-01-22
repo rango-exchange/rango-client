@@ -2,6 +2,7 @@ import type { Type } from '../types';
 import type { WalletType } from '@rango-dev/wallets-shared';
 import type {
   ProviderInterface,
+  Tokens,
   WidgetColors,
   WidgetColorsKeys,
   WidgetConfig,
@@ -25,8 +26,11 @@ interface ConfigState {
   onChangeWallets: (wallets?: (WalletType | ProviderInterface)[]) => void;
   onChangeSources: (sources?: string[]) => void;
   onChangeBlockChains: (chains?: string[], type?: Type) => void;
-  onChangeTokens: (tokens?: Asset[], type?: Type) => void;
   onChangePinnedTokens: (tokens?: Asset[], type?: Type) => void;
+  onChangeTokens: (
+    tokens?: { [blockchain: string]: Tokens },
+    type?: Type
+  ) => void;
   onChangeBooleansConfig: (
     name:
       | 'multiWallets'

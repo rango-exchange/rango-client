@@ -2,6 +2,7 @@ import type { WalletType } from '@rango-dev/wallets-shared';
 import type { WidgetConfig } from '@rango-dev/widget-embedded';
 
 import {
+  Button,
   Checkbox,
   Divider,
   Switch,
@@ -12,15 +13,16 @@ import { WalletTypes } from '@rango-dev/wallets-shared';
 import { useWallets } from '@rango-dev/widget-embedded';
 import React from 'react';
 
-import { MultiSelect } from '../../components/MultiSelect/MultiSelect';
+import { MultiSelect } from '../../components/MultiSelect';
 import { NOT_FOUND } from '../../constants';
 import { useConfigStore } from '../../store/config';
 import { getCategoryNetworks } from '../../utils/blockchains';
 import { excludedWallets } from '../../utils/common';
 
 import {
+  connectButtonStyles,
   ExternalSection,
-  StyledButton,
+  Footer,
   SwitchField,
 } from './FunctionalLayout.styles';
 
@@ -106,6 +108,7 @@ export function WalletSection() {
         }
       />
       <Divider size={24} />
+
       <ExternalSection>
         <SwitchField>
           <Typography size="large" variant="label" color="secondary500">
@@ -122,12 +125,13 @@ export function WalletSection() {
           already implemented, check it out here.
         </Typography>
         <Divider size={16} />
-        <div className="footer">
-          <StyledButton
+        <Footer>
+          <Button
             type={externalWallets ? 'primary' : 'secondary'}
             size="small"
             variant="outlined"
             disabled={!externalWallets}
+            className={connectButtonStyles()}
             onClick={() => {
               if (state('metamask').connected) {
                 void disconnect('metamask');
@@ -138,8 +142,8 @@ export function WalletSection() {
             {externalWallets && state('metamask').connected
               ? 'Disconnect MetaMask'
               : 'Connect MetaMask'}
-          </StyledButton>
-        </div>
+          </Button>
+        </Footer>
       </ExternalSection>
     </>
   );

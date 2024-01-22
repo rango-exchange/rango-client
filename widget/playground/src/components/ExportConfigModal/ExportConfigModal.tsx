@@ -7,6 +7,7 @@ import {
   CloseIcon,
   Divider,
   ExternalLinkIcon,
+  KeyIcon,
   Modal,
   ModalHeader,
   TextField,
@@ -18,6 +19,7 @@ import {
   prism,
 } from 'react-syntax-highlighter/dist/esm/styles/prism';
 
+import { PLAYGROUND_CONTAINER_ID } from '../../constants';
 import { useTheme } from '../../hooks/useTheme';
 import { initialConfig, useConfigStore } from '../../store/config';
 import { filterConfig, formatConfig } from '../../utils/export';
@@ -25,10 +27,12 @@ import { filterConfig, formatConfig } from '../../utils/export';
 import { CodeBlock } from './CodeBlock';
 import {
   APIKeyInputContainer,
+  BackdropTab,
   ButtonsContainer,
   ExternalLinkIconContainer,
   Head,
   HelpLinksContainer,
+  Label,
   Link,
   LinkContainer,
   ModalFlex,
@@ -37,11 +41,14 @@ import {
 } from './ExportConfigModal.styles';
 import { typesOfCodeBlocks } from './ExportConfigModal.types';
 
+const TAB_WIDTH = 333;
+
 export function ExportConfigModal(props: ExportConfigModalProps) {
   const { open, onClose, config } = props;
 
   const { activeTheme } = useTheme();
   const [selected, setSelected] = useState<ExportType>('embedded');
+  const [selectedIndex, setSelectedIndex] = useState(0);
   const syntaxHighlighterTheme = activeTheme === 'dark' ? dark : prism;
   const { filteredConfigForExport } = filterConfig(config, initialConfig);
   const formatedConfig = formatConfig(filteredConfigForExport);
@@ -50,6 +57,9 @@ export function ExportConfigModal(props: ExportConfigModalProps) {
 
   return (
     <Modal
+      container={
+        document.getElementById(PLAYGROUND_CONTAINER_ID) as HTMLElement
+      }
       containerStyle={{
         maxWidth: '1109px',
         width: '90%',
@@ -74,7 +84,7 @@ export function ExportConfigModal(props: ExportConfigModalProps) {
       onClose={onClose}
       title="Export Code"
       anchor="center">
-      <Divider size={32} />
+      <Divider size={30} />
       <Head>
         <APIKeyInputContainer>
           <TextField
@@ -86,7 +96,17 @@ export function ExportConfigModal(props: ExportConfigModalProps) {
             }}
             name="apiKey"
             value={apiKey}
-            label="Replace your key"
+            label={
+              <Label>
+                <KeyIcon /> <Divider direction="horizontal" size={'4'} />
+                Replace your key
+              </Label>
+            }
+            labelProps={{
+              color: '$neutral600',
+              size: 'medium',
+              variant: 'label',
+            }}
             type="string"
             placeholder="Enter API Key"
           />
@@ -118,7 +138,8 @@ export function ExportConfigModal(props: ExportConfigModalProps) {
           </LinkContainer>
         </HelpLinksContainer>
       </Head>
-      <Divider size={32} />
+      <Divider size={30} />
+
       <ButtonsContainer>
         {Object.keys(typesOfCodeBlocks).map((type, index) => {
           const key = `block-${index}`;
@@ -126,17 +147,27 @@ export function ExportConfigModal(props: ExportConfigModalProps) {
             <Fragment key={key}>
               <StyledButton
                 size="medium"
-                variant="contained"
+                disableRipple={true}
                 type={selected === type ? 'secondary' : undefined}
-                onClick={() => setSelected(type as ExportType)}>
+                variant={selected !== type ? 'contained' : undefined}
+                onClick={() => {
+                  setSelectedIndex(index);
+                  setSelected(type as ExportType);
+                }}>
                 {type}
               </StyledButton>
             </Fragment>
           );
         })}
+        <BackdropTab
+          css={{
+            transform: `translateX(${TAB_WIDTH * selectedIndex}px)`,
+          }}
+        />
       </ButtonsContainer>
-      <Divider size={12} />
+      <Divider size={10} />
       <CodeBlock
+        selectedType={selected}
         language={typesOfCodeBlocks[selected].language}
         theme={syntaxHighlighterTheme}>
         {typesOfCodeBlocks[selected].generateCode(formatedConfig)}

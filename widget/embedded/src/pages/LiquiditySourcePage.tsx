@@ -14,14 +14,13 @@ import {
 } from '@rango-dev/ui';
 import React, { useState } from 'react';
 
-import { Layout } from '../components/Layout';
+import { Layout, PageContainer } from '../components/Layout';
 import { LoadingLiquiditySourceList } from '../components/LoadingLiquiditySourceList';
 import { SearchInput } from '../components/SearchInput';
 import {
   LiquiditySourceList,
   LiquiditySourceSuffix,
   NotFoundContainer,
-  SettingsContainer,
 } from '../components/SettingsContainer';
 import { useAppStore } from '../store/AppStore';
 import { containsText } from '../utils/numbers';
@@ -40,6 +39,7 @@ export function LiquiditySourcePage({ sourceType }: PropTypes) {
   const supportedUniqueSwappersGroups: Array<UniqueSwappersGroupType> =
     getUniqueSwappersGroups(swappers, disabledLiquiditySources);
 
+  const types = { Exchanges: i18n.t('Exchanges'), Bridges: i18n.t('Bridges') };
   const validTypes: Array<LiquiditySourceType> = [];
   if (sourceType === 'Exchanges') {
     validTypes.push('DEX');
@@ -103,19 +103,21 @@ export function LiquiditySourcePage({ sourceType }: PropTypes) {
         suffix: (
           <LiquiditySourceSuffix>
             <Button variant="ghost" size="xsmall" onClick={toggleAllSources}>
-              {i18n.t(hasSelectAll ? 'Deselect all' : 'Select all')}
+              {hasSelectAll ? i18n.t('Deselect all') : i18n.t('Select all')}
             </Button>
           </LiquiditySourceSuffix>
         ),
       }}>
-      <SettingsContainer>
+      <PageContainer view>
         <SearchInput
           value={searchedFor}
           setValue={setSearchedFor}
           fullWidth
           color="light"
           variant="contained"
-          placeholder={i18n.t('Search {sourceType}', { sourceType })}
+          placeholder={i18n.t('Search {sourceType}', {
+            sourceType: types[sourceType],
+          })}
           onChange={searchHandler}
         />
         {fetchStatus === 'loading' && <LoadingLiquiditySourceList />}
@@ -145,7 +147,7 @@ export function LiquiditySourcePage({ sourceType }: PropTypes) {
             </LiquiditySourceList>
           )
         )}
-      </SettingsContainer>
+      </PageContainer>
     </Layout>
   );
 }

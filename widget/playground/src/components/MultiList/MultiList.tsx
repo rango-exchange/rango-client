@@ -2,26 +2,22 @@ import type { MultiListPropTypes } from './MultiList.types';
 
 import {
   Checkbox,
-  CloseIcon,
   Divider,
-  IconButton,
   Image,
   NotFound,
-  SearchIcon,
   SelectableCategoryList,
-  TextField,
   Typography,
 } from '@rango-dev/ui';
 import React, { useState } from 'react';
 
 import { useMetaStore } from '../../store/meta';
+import { SearchInput } from '../SearchInput';
 import { EmptyContainer, StyledButton } from '../SingleList/SingleList.styles';
 
 import { selectDeselectHandler } from './MultiList.helper';
 import {
   CheckList,
   HeaderContainer,
-  IconWrapper,
   ItemDivider,
   SelectButton,
   SelectDeselectText,
@@ -136,31 +132,12 @@ export function MultiList(props: MultiListPropTypes) {
           <Divider size={20} />
         </>
       )}
-      <TextField
-        onChange={(e) => setSearchValue(e.target.value)}
+      <SearchInput
         value={searchValue}
-        variant="contained"
         placeholder={`Search ${type}`}
-        prefix={
-          <IconWrapper>
-            <SearchIcon color="gray" />
-          </IconWrapper>
-        }
-        suffix={
-          <IconButton
-            variant="ghost"
-            onClick={() => setSearchValue('')}
-            size="small">
-            {!!searchValue.length && <CloseIcon color="gray" size={10} />}
-          </IconButton>
-        }
-        style={{
-          padding: 10,
-          borderRadius: 25,
-          alignItems: 'center',
-        }}
+        setValue={(value) => setSearchValue(value)}
       />
-      <Divider size={12} />
+      <Divider size={10} />
       {resultsNotFound ? (
         <EmptyContainer>
           <NotFound
@@ -179,11 +156,12 @@ export function MultiList(props: MultiListPropTypes) {
             <SelectDeselectText
               variant="label"
               size="medium"
+              disabled={false}
               color="neutral700">
               {isAllCategorySelected ? 'Deselect all' : 'Select all'}
             </SelectDeselectText>
           </SelectButton>
-          <Divider size={12} />
+          <Divider size={10} />
           <CheckList>
             {items.map((item) => {
               return (

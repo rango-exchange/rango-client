@@ -278,7 +278,7 @@ export function TokenList(props: PropTypes) {
       </Typography>
       <Divider size={4} />
       {fetchStatus === 'loading' && <LoadingTokenList size={PAGE_SIZE} />}
-      {fetchStatus === 'success' && <List>{renderList()}</List>}
+      {fetchStatus === 'success' && <List as="ul">{renderList()}</List>}
     </Container>
   );
 }
