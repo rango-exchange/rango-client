@@ -14,9 +14,14 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. js-lingui-explicit-id
+#: widget/embedded/src/pages/SwapDetailsPage.tsx:27
+msgid "The request ID is necessary to display the swap details."
+msgstr "The request ID is necessary to display the swap details."
+
+#. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:37
 #: widget/embedded/src/components/TokenList/TokenList.tsx:135
-#: widget/embedded/src/pages/HistoryPage.tsx:87
+#: widget/embedded/src/pages/HistoryPage.tsx:85
 #: widget/embedded/src/pages/LiquiditySourcePage.tsx:128
 msgid "No results found"
 msgstr "No results found"
@@ -24,7 +29,7 @@ msgstr "No results found"
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:38
 #: widget/embedded/src/components/TokenList/TokenList.tsx:136
-#: widget/embedded/src/pages/HistoryPage.tsx:89
+#: widget/embedded/src/pages/HistoryPage.tsx:87
 #: widget/embedded/src/pages/LiquiditySourcePage.tsx:129
 msgid "Try using different keywords"
 msgstr "Try using different keywords"
@@ -147,7 +152,7 @@ msgstr "Notifications"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/HeaderButtons/HomeButtons.tsx:62
-#: widget/embedded/src/pages/ConfirmSwapPage.tsx:310
+#: widget/embedded/src/pages/ConfirmSwapPage.tsx:308
 #: widget/embedded/src/pages/SettingsPage.tsx:183
 msgid "Settings"
 msgstr "Settings"
@@ -623,7 +628,7 @@ msgstr "Confirm USD Price Unknown"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/constants/messages.ts:6
-#: widget/embedded/src/pages/Home.tsx:150
+#: widget/embedded/src/pages/Home.tsx:153
 msgid "Swap"
 msgstr "Swap"
 
@@ -683,37 +688,37 @@ msgid "Route internal coins has been updated."
 msgstr "Route internal coins has been updated."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/ConfirmSwapPage.tsx:301
+#: widget/embedded/src/pages/ConfirmSwapPage.tsx:299
 msgid "Confirm Swap"
 msgstr "Confirm Swap"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/ConfirmSwapPage.tsx:331
+#: widget/embedded/src/pages/ConfirmSwapPage.tsx:329
 msgid "Start Swap"
 msgstr "Start Swap"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/ConfirmSwapPage.tsx:357
+#: widget/embedded/src/pages/ConfirmSwapPage.tsx:355
 msgid "You get"
 msgstr "You get"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/HistoryPage.tsx:69
+#: widget/embedded/src/pages/HistoryPage.tsx:67
 msgid "History"
 msgstr "History"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/HistoryPage.tsx:76
+#: widget/embedded/src/pages/HistoryPage.tsx:74
 msgid "Search Transaction"
 msgstr "Search Transaction"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/Home.tsx:167
+#: widget/embedded/src/pages/Home.tsx:170
 msgid "From"
 msgstr "From"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/Home.tsx:210
+#: widget/embedded/src/pages/Home.tsx:213
 msgid "To"
 msgstr "To"
 
