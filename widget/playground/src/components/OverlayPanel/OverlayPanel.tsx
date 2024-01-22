@@ -18,7 +18,7 @@ export function OverlayPanel(props: PropsWithChildren<PropTypes>) {
             back
           </Typography>
         </Header>
-        <Divider size={12} />
+        <Divider size={10} />
         {children}
       </Container>
     </Layout>

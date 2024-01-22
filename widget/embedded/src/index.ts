@@ -2,13 +2,13 @@ import type { WidgetProps } from './containers/Widget';
 import type { ConnectedWallet } from './store/wallets';
 import type {
   BlockchainAndTokenConfig,
+  Tokens,
   WidgetColors,
   WidgetColorsKeys,
   WidgetConfig,
   WidgetTheme,
 } from './types';
 import type {
-  EventSeverity,
   PendingSwapWithQueueID,
   Route,
   RouteEvent,
@@ -39,6 +39,7 @@ import type {
 import type { PendingSwap, PendingSwapStep } from 'rango-types';
 
 import {
+  EventSeverity,
   MainEvents,
   RouteEventType,
   StepEventType,
@@ -86,6 +87,7 @@ export type {
   StepOutputRevealedEvent,
   HandleWalletsUpdate,
   ConnectedWallet,
+  Tokens,
 };
 export {
   Widget,
@@ -113,7 +115,6 @@ export type {
   PendingSwapWithQueueID,
   PendingSwapStep,
   RouteExecutionEvents,
-  EventSeverity,
 };
 
 // Internal function and enum exports for Rango
@@ -123,4 +124,5 @@ export {
   WalletEvents,
   WalletTypes,
   PendingSwapNetworkStatus,
+  EventSeverity,
 };

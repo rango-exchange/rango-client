@@ -6,22 +6,13 @@ import { Divider, NotFound, styled } from '@rango-dev/ui';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { Layout } from '../components/Layout';
+import { Layout, PageContainer } from '../components/Layout';
 import { SearchInput } from '../components/SearchInput';
 import { SwapsGroup } from '../components/SwapsGroup';
 import { NotFoundContainer } from '../components/SwapsGroup/SwapsGroup.styles';
-import { useUiStore } from '../store/ui';
 import { groupSwapsByDate } from '../utils/date';
 import { containsText } from '../utils/numbers';
 import { getPendingSwaps } from '../utils/queue';
-
-const Container = styled('div', {
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'flex-start',
-  height: '100%',
-  gap: 15,
-});
 
 const SwapsGroupContainer = styled('div', {
   overflowY: 'visible',
@@ -46,7 +37,6 @@ const isStepContainsText = (steps: PendingSwapStep[], value: string) => {
 };
 
 export function HistoryPage() {
-  const setSelectedSwap = useUiStore.use.setSelectedSwap();
   const navigate = useNavigate();
   const { manager, state } = useManager();
   const list: PendingSwap[] = getPendingSwaps(manager).map(({ swap }) => swap);
@@ -76,7 +66,7 @@ export function HistoryPage() {
       header={{
         title: i18n.t('History'),
       }}>
-      <Container>
+      <PageContainer>
         <SearchInput
           setValue={setSearchedFor}
           fullWidth
@@ -86,6 +76,7 @@ export function HistoryPage() {
           onChange={searchHandler}
           value={searchedFor}
         />
+        <Divider size="16" />
         <SwapsGroupContainer>
           {isEmpty && (
             <NotFoundContainer>
@@ -101,16 +92,13 @@ export function HistoryPage() {
           {!isEmpty && (
             <SwapsGroup
               list={filteredList}
-              onSwapClick={(requestId) => {
-                setSelectedSwap(requestId);
-                navigate(requestId);
-              }}
+              onSwapClick={navigate}
               groupBy={groupSwapsByDate}
               isLoading={loading}
             />
           )}
         </SwapsGroupContainer>
-      </Container>
+      </PageContainer>
     </Layout>
   );
 }

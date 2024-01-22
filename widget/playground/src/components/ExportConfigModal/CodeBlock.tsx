@@ -1,6 +1,12 @@
 import type { CodeBlockProps } from './CodeBlock.types';
 
-import { CopyIcon, Tooltip, useCopyToClipboard } from '@rango-dev/ui';
+import {
+  Alert,
+  CopyIcon,
+  DoneIcon,
+  Tooltip,
+  useCopyToClipboard,
+} from '@rango-dev/ui';
 import React from 'react';
 import { PrismLight as SyntaxHighlighter } from 'react-syntax-highlighter';
 import {
@@ -12,6 +18,9 @@ import {
   CodeBlockContainer,
   CopyCodeBlock,
   CopyCodeBlockButton,
+  CopyCodeBlockButtonDoneIcon,
+  CopyCodeBlockButtonIcon,
+  SuccessfulAlertContainer,
 } from './CodeBlock.styles';
 
 const RESET_INTERVAL = 2_000;
@@ -20,9 +29,9 @@ SyntaxHighlighter.registerLanguage('javascript', javascript);
 SyntaxHighlighter.registerLanguage('jsx', jsx);
 
 export function CodeBlock(props: CodeBlockProps) {
-  const { language, theme, children } = props;
+  const { language, theme, children, selectedType } = props;
 
-  const [, handleCopy] = useCopyToClipboard(RESET_INTERVAL);
+  const [isCopied, handleCopy] = useCopyToClipboard(RESET_INTERVAL);
 
   return (
     <CodeBlockContainer>
@@ -33,7 +42,12 @@ export function CodeBlock(props: CodeBlockProps) {
             onClick={() => {
               handleCopy(children);
             }}>
-            <CopyIcon size={24} />
+            <CopyCodeBlockButtonDoneIcon visible={isCopied}>
+              <DoneIcon size={24} />
+            </CopyCodeBlockButtonDoneIcon>
+            <CopyCodeBlockButtonIcon visible={!isCopied}>
+              <CopyIcon size={24} />
+            </CopyCodeBlockButtonIcon>
           </CopyCodeBlockButton>
         </Tooltip>
       </CopyCodeBlock>
@@ -44,6 +58,13 @@ export function CodeBlock(props: CodeBlockProps) {
         style={theme}>
         {children}
       </SyntaxHighlighter>
+
+      <SuccessfulAlertContainer visible={isCopied}>
+        <Alert
+          type="success"
+          title={`${selectedType || ''} Code copied successfully`}
+        />
+      </SuccessfulAlertContainer>
     </CodeBlockContainer>
   );
 }

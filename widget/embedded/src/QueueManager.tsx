@@ -13,6 +13,7 @@ import { isEvmBlockchain } from 'rango-types';
 import React, { useMemo } from 'react';
 
 import { useAppStore } from './store/AppStore';
+import { useUiStore } from './store/ui';
 import { useWalletsStore } from './store/wallets';
 import { getConfig } from './utils/configs';
 import { walletAndSupportedChainsNames } from './utils/wallets';
@@ -91,6 +92,8 @@ function QueueManager(props: PropsWithChildren<{ apiKey?: string }>) {
     isMobileWallet,
   };
 
+  const isActiveTab = useUiStore.use.isActiveTab();
+
   return (
     <ManagerProvider
       queuesDefs={[swapQueueDef]}
@@ -98,7 +101,7 @@ function QueueManager(props: PropsWithChildren<{ apiKey?: string }>) {
       onPersistedDataLoaded={(manager) => {
         checkWaitingForNetworkChange(manager);
       }}
-      isPaused={false}>
+      isPaused={!isActiveTab}>
       {props.children}
     </ManagerProvider>
   );

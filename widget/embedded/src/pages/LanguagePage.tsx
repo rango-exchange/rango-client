@@ -8,8 +8,7 @@ import {
 } from '@rango-dev/ui';
 import React from 'react';
 
-import { Layout } from '../components/Layout';
-import { SettingsContainer } from '../components/SettingsContainer';
+import { Layout, PageContainer } from '../components/Layout';
 import { useLanguage } from '../hooks/useLanguage';
 
 export function LanguagePage() {
@@ -36,7 +35,7 @@ export function LanguagePage() {
       header={{
         title: i18n.t('Language'),
       }}>
-      <SettingsContainer>
+      <PageContainer>
         <RadioRoot value={activeLanguage}>
           <List
             type={
@@ -49,7 +48,7 @@ export function LanguagePage() {
             items={languageList}
           />
         </RadioRoot>
-      </SettingsContainer>
+      </PageContainer>
     </Layout>
   );
 }

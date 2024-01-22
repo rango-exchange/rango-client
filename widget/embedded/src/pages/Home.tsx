@@ -1,10 +1,11 @@
 import { i18n } from '@lingui/core';
-import { Button, styled, SwapInput, WarningIcon } from '@rango-dev/ui';
-import React, { useEffect, useRef, useState } from 'react';
+import { Button, Divider, styled, SwapInput, WarningIcon } from '@rango-dev/ui';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { HomeButtons } from '../components/HeaderButtons';
-import { Layout } from '../components/Layout';
+import { Layout, PageContainer } from '../components/Layout';
+import { QuoteWarningsAndErrors } from '../components/QuoteWarningsAndErrors';
 import { SwitchFromAndToButton } from '../components/SwitchFromAndTo';
 import { errorMessages } from '../constants/errors';
 import { navigationRoutes } from '../constants/navigationRoutes';
@@ -22,19 +23,11 @@ import { useAppStore } from '../store/AppStore';
 import { useQuoteStore } from '../store/quote';
 import { useUiStore } from '../store/ui';
 import { useWalletsStore } from '../store/wallets';
-import { numberToString } from '../utils/numbers';
+import { getContainer } from '../utils/common';
+import { formatTooltipNumbers, numberToString } from '../utils/numbers';
 import { getPriceImpact, getPriceImpactLevel } from '../utils/quote';
 import { canComputePriceImpact, getSwapButtonState } from '../utils/swap';
 import { formatBalance, isFetchingBalance } from '../utils/wallets';
-
-const Container = styled('div', {
-  display: 'flex',
-  flexDirection: 'column',
-  overflowY: 'visible',
-  '& .quote__container': {
-    paddingTop: '$2',
-  },
-});
 
 const FromContainer = styled('div', {
   position: 'relative',
@@ -50,7 +43,7 @@ export function Home() {
   const navigate = useNavigate();
   const {
     fetch: fetchQuote,
-    loading: fetchingQuote,
+    loading,
     error: quoteError,
     warning: quoteWarning,
   } = useSwapInput();
@@ -72,9 +65,8 @@ export function Home() {
   const fetchMetaStatus = useAppStore().fetchStatus;
 
   const { connectedWallets, getBalanceFor } = useWalletsStore();
-  const setCurrentPage = useUiStore.use.setCurrentPage();
+  const { isActiveTab } = useUiStore();
   const [showQuoteWarningModal, setShowQuoteWarningModal] = useState(false);
-  const layoutRef = useRef<HTMLDivElement>(null);
   const fetchingBalance =
     !!fromBlockchain &&
     isFetchingBalance(connectedWallets, fromBlockchain.name);
@@ -95,7 +87,7 @@ export function Home() {
 
   const swapButtonState = getSwapButtonState({
     fetchMetaStatus,
-    fetchingQuote,
+    fetchingQuote: loading,
     inputAmount,
     quote,
     anyWalletConnected: connectedWallets.length > 0,
@@ -114,10 +106,15 @@ export function Home() {
       ? numberToString(fromTokenBalance?.amount, fromTokenBalance?.decimals)
       : '0';
 
+  const fetchingQuote =
+    fetchMetaStatus === 'success' &&
+    !!inputAmount &&
+    !!fromToken &&
+    !!toToken &&
+    loading;
+
   useEffect(() => {
-    setCurrentPage(navigationRoutes.home);
     resetQuoteWallets();
-    return setCurrentPage.bind(null, '');
   }, []);
 
   const percentageChange =
@@ -127,14 +124,13 @@ export function Home() {
 
   return (
     <Layout
-      ref={layoutRef}
-      fixedHeight={false}
+      height="auto"
       hasLogo
       footer={
         <Button
           type="primary"
           size="large"
-          disabled={swapButtonState.disabled}
+          disabled={swapButtonState.disabled || !isActiveTab}
           prefix={
             swapButtonState.action === 'confirm-warning' && <WarningIcon />
           }
@@ -159,14 +155,17 @@ export function Home() {
         title: i18n.t('Swap'),
         suffix: (
           <HomeButtons
-            layoutRef={layoutRef.current}
-            onClickRefresh={!!quote || quoteError ? fetchQuote : undefined}
+            onClickRefresh={
+              (!!quote || quoteError) && !showQuoteWarningModal
+                ? fetchQuote
+                : undefined
+            }
             onClickHistory={() => navigate(navigationRoutes.swaps)}
             onClickSettings={() => navigate(navigationRoutes.settings)}
           />
         ),
       }}>
-      <Container>
+      <PageContainer>
         <InputsContainer>
           <FromContainer>
             <SwapInput
@@ -192,6 +191,9 @@ export function Home() {
                       USD_VALUE_MIN_DECIMALS,
                       USD_VALUE_MAX_DECIMALS
                     ),
+                realUsdValue: priceImpactInputCanNotBeComputed
+                  ? undefined
+                  : formatTooltipNumbers(inputUsdValue),
                 error: priceImpactInputCanNotBeComputed
                   ? errorMessages().unknownPriceError.impactTitle
                   : undefined,
@@ -199,6 +201,7 @@ export function Home() {
               disabled={fetchMetaStatus === 'failed'}
               loading={fetchMetaStatus === 'loading'}
               loadingBalance={fetchingBalance}
+              tooltipContainer={getContainer()}
               onSelectMaxBalance={() => {
                 if (fromTokenFormattedBalance !== '0') {
                   setInputAmount(tokenBalanceReal.split(',').join(''));
@@ -239,6 +242,10 @@ export function Home() {
                     USD_VALUE_MIN_DECIMALS,
                     USD_VALUE_MAX_DECIMALS
                   ),
+              realValue: formatTooltipNumbers(outputAmount),
+              realUsdValue: priceImpactOutputCanNotBeComputed
+                ? undefined
+                : formatTooltipNumbers(outputUsdValue),
               error: priceImpactOutputCanNotBeComputed
                 ? errorMessages().unknownPriceError.impactTitle
                 : undefined,
@@ -246,28 +253,39 @@ export function Home() {
             onClickToken={() => navigate(navigationRoutes.toSwap)}
             disabled={fetchMetaStatus === 'failed'}
             loading={fetchMetaStatus === 'loading'}
+            tooltipContainer={getContainer()}
           />
         </InputsContainer>
-        <div className="quote__container">
-          <QuoteInfo
-            quote={quote}
-            loading={fetchingQuote}
-            error={quoteError}
-            warning={quoteWarning}
-            type="basic"
-            refetchQuote={fetchQuote}
-            showWarningModal={showQuoteWarningModal}
-            onOpenWarningModal={() => setShowQuoteWarningModal(true)}
-            onCloseWarningModal={() => setShowQuoteWarningModal(false)}
-            onConfirmWarningModal={() => {
-              setShowQuoteWarningModal(false);
-              setQuoteWarningsConfirmed(true);
-              navigate(navigationRoutes.confirmSwap);
-            }}
-            onChangeSettings={() => navigate(navigationRoutes.settings)}
-          />
-        </div>
-      </Container>
+        <Divider size="2" />
+        <QuoteInfo
+          quote={quote}
+          loading={fetchingQuote}
+          error={quoteError}
+          warning={quoteWarning}
+          type="basic"
+        />
+        {quoteWarning || quoteError ? (
+          <>
+            <Divider size="10" />
+            <QuoteWarningsAndErrors
+              warning={quoteWarning}
+              error={quoteError}
+              loading={fetchingQuote}
+              refetchQuote={fetchQuote}
+              showWarningModal={showQuoteWarningModal}
+              confirmationDisabled={!isActiveTab}
+              onOpenWarningModal={() => setShowQuoteWarningModal(true)}
+              onCloseWarningModal={() => setShowQuoteWarningModal(false)}
+              onConfirmWarningModal={() => {
+                setShowQuoteWarningModal(false);
+                setQuoteWarningsConfirmed(true);
+                navigate(navigationRoutes.confirmSwap);
+              }}
+              onChangeSettings={() => navigate(navigationRoutes.settings)}
+            />
+          </>
+        ) : null}
+      </PageContainer>
     </Layout>
   );
 }

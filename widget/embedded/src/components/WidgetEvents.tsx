@@ -11,14 +11,12 @@ import { useEffect } from 'react';
 import { useAppStore } from '../store/AppStore';
 import { useNotificationStore } from '../store/notification';
 import { useWalletsStore } from '../store/wallets';
-import { validBlockedStatuses } from '../types/notification';
 
 export function WidgetEvents() {
   const tokens = useAppStore().tokens();
   const connectedWallets = useWalletsStore.use.connectedWallets();
   const getWalletsDetails = useWalletsStore.use.getWalletsDetails();
   const setNotification = useNotificationStore.use.setNotification();
-  const setAsRead = useNotificationStore.use.setAsRead();
   const widgetEvents = useEvents();
 
   useEffect(() => {
@@ -43,18 +41,8 @@ export function WidgetEvents() {
         fromAccount && getWalletsDetails([fromAccount], tokens);
         toAccount && getWalletsDetails([toAccount], tokens);
       }
-      if (
-        (event.type === StepEventType.TX_EXECUTION_BLOCKED &&
-          validBlockedStatuses.includes(event.status)) ||
-        event.type === StepEventType.FAILED
-      ) {
-        setNotification(event, route);
-      } else if (
-        event.type === StepEventType.TX_EXECUTION ||
-        event.type === StepEventType.CHECK_STATUS
-      ) {
-        setAsRead(route.requestId);
-      }
+
+      setNotification(event, route);
     });
 
     return () => widgetEvents.all.clear();

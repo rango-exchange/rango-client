@@ -4,12 +4,13 @@ export const HeaderContainer = styled('div', {
   display: 'flex',
   justifyContent: 'space-between',
   alignItems: 'center',
-
+  paddingTop: '$10',
   '& .header': {
     display: 'flex',
     alignItems: 'center',
   },
 });
+
 export const SelectButton = styled('div', {
   padding: '$4',
   display: 'flex',
@@ -19,16 +20,25 @@ export const SelectButton = styled('div', {
 });
 
 export const SelectDeselectText = styled(Typography, {
-  '&:hover': {
-    color: '$secondary500',
+  variants: {
+    disabled: {
+      true: {},
+      false: {
+        '&:hover': {
+          color: '$secondary500',
+        },
+      },
+    },
   },
 });
+
 export const CheckList = styled('div', {
   overflow: 'auto',
   height: '90%',
   paddingRight: '$5',
   marginBottom: '$32',
 });
+
 export const ItemDivider = styled('li', {
   margin: '0 auto',
   width: '100%',

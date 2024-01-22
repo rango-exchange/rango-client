@@ -40,6 +40,7 @@ export function SwapListItem(props: PropsWithChildren<PropTypes>) {
     onlyShowTime,
     status,
     swapTokenData,
+    tooltipContainer,
   } = props;
   return (
     <Main onClick={onClick.bind(null, requestId)}>
@@ -57,7 +58,11 @@ export function SwapListItem(props: PropsWithChildren<PropTypes>) {
             {getStatus(status)}
           </Typography>
         </Header>
-        <SwapToken data={swapTokenData} status={status} />
+        <SwapToken
+          data={swapTokenData}
+          status={status}
+          tooltipContainer={tooltipContainer}
+        />
       </Container>
     </Main>
   );

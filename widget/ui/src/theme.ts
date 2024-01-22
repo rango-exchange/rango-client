@@ -147,12 +147,14 @@ export const theme = {
     4: '4px',
     6: '6px',
     8: '8px',
+    10: '10px',
     12: '12px',
     16: '16px',
     18: '18px',
     20: '20px',
     24: '24px',
     28: '28px',
+    30: '30px',
     32: '32px',
     36: '36px',
     40: '40px',
@@ -168,6 +170,7 @@ export const theme = {
   transitions: {},
 };
 const media = {
+  xs: '(min-width: 375px)',
   sm: '(min-width: 640px)',
   md: '(min-width: 768px)',
   lg: '(min-width: 1024px)',

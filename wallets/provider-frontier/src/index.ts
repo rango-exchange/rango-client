@@ -64,7 +64,7 @@ export const subscribe: Subscribe = (options) => {
     Networks.SOLANA
   );
   const { connect, updateAccounts, state, updateChainId, meta } = options;
-  ethInstance?.on('accountsChanged', (addresses: string[]) => {
+  const handleEvmAccountsChanged = (addresses: string[]) => {
     const eth_chainId = meta
       .filter(isEvmBlockchain)
       .find((blockchain) => blockchain.name === Networks.ETHEREUM)?.chainId;
@@ -74,9 +74,9 @@ export const subscribe: Subscribe = (options) => {
       }
       updateAccounts(addresses);
     }
-  });
+  };
 
-  solanaInstance?.on('accountChanged', async (publicKey: string) => {
+  const handleSolanaAccountsChanged = async (publicKey: string) => {
     if (state.network != Networks.SOLANA) {
       updateChainId(meta.filter(isSolanaBlockchain)[0].chainId);
     }
@@ -87,7 +87,16 @@ export const subscribe: Subscribe = (options) => {
     } else {
       connect(network);
     }
-  });
+  };
+  ethInstance?.on('accountsChanged', handleEvmAccountsChanged);
+
+  solanaInstance?.on('accountChanged', handleSolanaAccountsChanged);
+
+  return () => {
+    ethInstance?.off('accountsChanged', handleEvmAccountsChanged);
+
+    solanaInstance?.off('accountChanged', handleSolanaAccountsChanged);
+  };
 };
 export const switchNetwork: SwitchNetwork = async (options) => {
   const instance = chooseInstance(

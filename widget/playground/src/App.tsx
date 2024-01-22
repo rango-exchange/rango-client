@@ -2,6 +2,7 @@ import { Widget, WidgetProvider } from '@rango-dev/widget-embedded';
 import React, { useEffect } from 'react';
 import { Route, Routes } from 'react-router-dom';
 
+import { PLAYGROUND_CONTAINER_ID } from './constants';
 import { ConfigContainer } from './containers/configContainer';
 import { useTheme } from './hooks/useTheme';
 import { useConfigStore } from './store/config';
@@ -19,7 +20,7 @@ export function App() {
   }, []);
 
   return (
-    <div className={activeStyle}>
+    <div id={PLAYGROUND_CONTAINER_ID} className={activeStyle}>
       <WidgetProvider config={overridedConfig}>
         <ConfigContainer>
           <Routes>

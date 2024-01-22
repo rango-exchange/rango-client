@@ -17,6 +17,7 @@ export const StyledSwitchRoot = styled(RadixSwitch.Root, {
   padding: '0',
   cursor: 'pointer',
   transition: 'all 0.35s',
+  overflow: 'hidden',
 
   '&[data-state="checked"]': {
     $$color: '$colors$secondary500',
@@ -41,6 +42,12 @@ export const StyledSwitchThumb = styled(RadixSwitch.Thumb, {
   transition: ' transform 300ms',
   borderRadius: '999999px',
   willChange: 'transform',
+  '&:hover': {
+    boxShadow: 'rgba(0, 0, 0, 0.6) 0px 3px 8px',
+    '-moz-box-shadow': 'rgba(0, 0, 0, 0.6) 0px 3px 8px',
+    '-webkit-box-shadow': 'rgba(0, 0, 0, 0.6) 0px 3px 8px',
+    '-o-box-shadow': 'rgba(0, 0, 0, 0.6) 0px 3px 8px',
+  },
 
   '&[data-state="checked"]': {
     transform: 'translateX(8px)',

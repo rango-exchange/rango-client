@@ -10,7 +10,14 @@ import { mapStatusToWalletState } from '../../utils/wallets';
 import { WalletContainer } from './SwapDetailsModal.styles';
 
 export const WalletStateContent = (props: WalletStateContentProps) => {
-  const { type, title, currentStepWallet, message, showWalletButton } = props;
+  const {
+    type,
+    title,
+    currentStepWallet,
+    message,
+    showWalletButton,
+    walletButtonDisabled,
+  } = props;
   const { connect, getWalletInfo, state } = useWallets();
   const walletType = currentStepWallet?.walletType;
   const walletState = walletType
@@ -31,6 +38,7 @@ export const WalletStateContent = (props: WalletStateContentProps) => {
             type={walletType}
             state={walletState}
             link={walletInfo.installLink}
+            disabled={walletButtonDisabled}
             onClick={async () => connect(walletType)}
           />
         </WalletContainer>

@@ -8,7 +8,10 @@ import {
   TOKEN_AMOUNT_MAX_DECIMALS,
   TOKEN_AMOUNT_MIN_DECIMALS,
 } from '../../constants/routing';
-import { getBlockchainShortNameFor } from '../../utils/meta';
+import {
+  getBlockchainShortNameFor,
+  getSwapperDisplayName,
+} from '../../utils/meta';
 import { numberToString } from '../../utils/numbers';
 import { isNetworkStatusInWarningState } from '../../utils/swap';
 import { SwapDetailsAlerts } from '../SwapDetailsAlerts';
@@ -16,11 +19,19 @@ import { SwapDetailsAlerts } from '../SwapDetailsAlerts';
 export const RESET_INTERVAL = 2_000;
 export const SECONDS = 60;
 
-export const getSteps = ({ swap, blockchains, ...args }: GetStep): Step[] => {
+export const getSteps = ({
+  swap,
+  blockchains,
+  swappers,
+  ...args
+}: GetStep): Step[] => {
   const hasAlreadyProceededToSign = swap.hasAlreadyProceededToSign !== false;
   return swap.steps.map((step, index) => {
     const amountToConvert =
-      index === 0 ? swap.inputAmount : swap.steps[index - 1].outputAmount;
+      index === 0
+        ? swap.inputAmount
+        : swap.steps[index - 1].outputAmount ||
+          swap.steps[index - 1].expectedOutputAmountHumanReadable;
     return {
       from: {
         token: { displayName: step.fromSymbol, image: step.fromLogo ?? '' },
@@ -35,6 +46,7 @@ export const getSteps = ({ swap, blockchains, ...args }: GetStep): Step[] => {
             TOKEN_AMOUNT_MIN_DECIMALS,
             TOKEN_AMOUNT_MAX_DECIMALS
           ),
+          realValue: amountToConvert,
         },
       },
       to: {
@@ -50,9 +62,43 @@ export const getSteps = ({ swap, blockchains, ...args }: GetStep): Step[] => {
             TOKEN_AMOUNT_MIN_DECIMALS,
             TOKEN_AMOUNT_MAX_DECIMALS
           ),
+          realValue:
+            step.outputAmount || step.expectedOutputAmountHumanReadable,
         },
       },
-      swapper: { displayName: step.swapperId, image: step.swapperLogo ?? '' },
+      swapper: {
+        displayName: getSwapperDisplayName(step.swapperId, swappers),
+        image: step.swapperLogo ?? '',
+        type: step.swapperType,
+      },
+      internalSwaps: step.internalSwaps
+        ? step.internalSwaps.map((internalSwap) => {
+            return {
+              from: {
+                blockchain:
+                  getBlockchainShortNameFor(
+                    internalSwap.fromBlockchain,
+                    blockchains
+                  ) ?? '',
+              },
+              to: {
+                blockchain:
+                  getBlockchainShortNameFor(
+                    internalSwap.toBlockchain,
+                    blockchains
+                  ) ?? '',
+              },
+              swapper: {
+                displayName: getSwapperDisplayName(
+                  internalSwap.swapperId,
+                  swappers
+                ),
+                image: internalSwap.swapperLogo ?? '',
+                type: internalSwap.swapperType,
+              },
+            };
+          })
+        : [],
       alerts: (
         <SwapDetailsAlerts
           step={step}

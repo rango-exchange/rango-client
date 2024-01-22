@@ -1,12 +1,14 @@
 import type { Type } from '../../types';
+import type { tokensConfigType } from '../../utils/configs';
 
 import { ChainsIcon } from '@rango-dev/ui';
 import React from 'react';
 
-import { MultiSelect } from '../../components/MultiSelect/MultiSelect';
+import { MultiSelect } from '../../components/MultiSelect';
 import { useConfigStore } from '../../store/config';
 import { useMetaStore } from '../../store/meta';
 import { tokensAreEqual } from '../../utils/common';
+import { isTokenExcludedInConfig } from '../../utils/configs';
 
 export function SupportedTokens({ type }: { type: Type }) {
   const {
@@ -21,61 +23,67 @@ export function SupportedTokens({ type }: { type: Type }) {
 
   const selectedType = type === 'Source' ? from : to;
 
-  const configTokens = selectedType?.tokens;
+  const tokensConfig = selectedType?.tokens as tokensConfigType;
   const pinnedTokens = selectedType?.pinnedTokens;
 
-  const seletedBlockchains = selectedType?.blockchains;
-  const allTokens = seletedBlockchains
-    ? tokens.filter((token) => seletedBlockchains.includes(token.blockchain))
+  const selectedBlockchains = selectedType?.blockchains;
+  const allTokens = selectedBlockchains
+    ? tokens.filter((token) => selectedBlockchains.includes(token.blockchain))
     : tokens;
   const defaultBlockchains =
-    seletedBlockchains || blockchains.map((chain) => chain.name);
+    selectedBlockchains || blockchains.map((chain) => chain.name);
 
-  const list = allTokens.map((token) => {
+  const tokensWithCheck = allTokens.map((token) => {
+    const isToken = isTokenExcludedInConfig(token, tokensConfig);
+    const isExclude =
+      tokensConfig &&
+      tokensConfig[token.blockchain] &&
+      tokensConfig[token.blockchain].isExcluded;
+
     return {
       ...token,
       checked:
-        !configTokens || configTokens.some((ct) => tokensAreEqual(ct, token)),
+        !tokensConfig || (!isExclude && !isToken) || (isExclude && isToken),
       pinned:
         !!pinnedTokens && pinnedTokens.some((ct) => tokensAreEqual(ct, token)),
     };
   });
 
-  const isAllTokens = !configTokens || configTokens.length === list.length;
+  const checkedTokens = tokensWithCheck.filter((item) => item.checked);
+
+  const isAllTokens =
+    !tokensConfig || checkedTokens.length === tokensWithCheck.length;
 
   return (
-    <MultiSelect
-      label="Supported Tokens"
-      type="Tokens"
-      icon={<ChainsIcon size={24} />}
-      selectedBlockchains={defaultBlockchains}
-      value={
-        isAllTokens
-          ? undefined
-          : defaultBlockchains.filter((blockchain) =>
-              configTokens?.some((token) => token.blockchain === blockchain)
-            )
-      }
-      list={list}
-      onChange={(selectedTokens, pinnedTokens) => {
-        onChangePinnedTokens(
-          pinnedTokens?.map(({ symbol, blockchain, address }) => ({
-            symbol,
-            blockchain,
-            address,
-          })),
-          type
-        );
-        onChangeTokens(
-          selectedTokens?.map(({ symbol, blockchain, address }) => ({
-            symbol,
-            blockchain,
-            address,
-          })),
-          type
-        );
-        onChangeToken(undefined, type);
-      }}
-    />
+    <>
+      <MultiSelect
+        label="Supported Tokens"
+        type="Tokens"
+        icon={<ChainsIcon size={24} />}
+        selectedBlockchains={defaultBlockchains}
+        value={
+          isAllTokens
+            ? undefined
+            : defaultBlockchains.filter((blockchain) =>
+                checkedTokens?.some((token) => token.blockchain === blockchain)
+              )
+        }
+        tokensConfig={tokensConfig || {}}
+        list={tokensWithCheck}
+        onChange={(selectedTokens, pinnedTokens) => {
+          onChangePinnedTokens(
+            pinnedTokens?.map(({ symbol, blockchain, address }) => ({
+              symbol,
+              blockchain,
+              address,
+            })),
+            type
+          );
+          onChangeTokens(selectedTokens, type);
+          onChangeToken(undefined, type);
+        }}
+        disabled={!blockchains?.length || !tokens.length}
+      />
+    </>
   );
 }

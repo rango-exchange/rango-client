@@ -13,7 +13,6 @@ export type {
   Step,
   RouteEvent,
   StepEvent,
-  EventSeverity,
   RouteStartedEvent,
   RouteSucceededEvent,
   RouteFailedEvent,
@@ -32,6 +31,7 @@ export {
   RouteEventType,
   StepExecutionEventStatus,
   StepExecutionBlockedEventStatus,
+  EventSeverity,
 } from './types';
 export type { PendingSwapWithQueueID, EventType } from './shared';
 export {

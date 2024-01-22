@@ -12,6 +12,8 @@ export type BaseProps = {
   price: {
     value: string;
     usdValue?: string;
+    realValue?: string;
+    realUsdValue?: string;
     error?: string;
   };
   loading?: boolean;
@@ -20,6 +22,7 @@ export type BaseProps = {
   label: string;
   sharpBottomStyle?: boolean;
   onClickToken: () => void;
+  tooltipContainer?: HTMLElement;
 };
 
 type FromProps = {

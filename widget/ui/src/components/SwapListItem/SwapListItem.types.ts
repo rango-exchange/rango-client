@@ -7,6 +7,7 @@ export interface SwapListItemProps {
   onClick: (requestId: string) => void;
   swapTokenData: SwapTokenData;
   onlyShowTime?: boolean;
+  tooltipContainer?: HTMLElement;
 }
 
 export interface LoadingProps {
@@ -31,6 +32,7 @@ export interface SwapTokenData {
       image: string;
     };
     amount: string;
+    realAmount: string;
   };
 
   to: {
@@ -42,6 +44,6 @@ export interface SwapTokenData {
       image: string;
     };
     amount: string;
-    estimatedAmount?: string;
+    realAmount: string;
   };
 }

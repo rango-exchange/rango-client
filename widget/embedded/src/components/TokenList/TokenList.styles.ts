@@ -51,6 +51,7 @@ export const Container = styled('div', {
   display: 'flex',
   flexDirection: 'column',
   flexGrow: 1,
+  overflow: 'hidden',
 });
 
 export const Title = styled('div', {
@@ -68,6 +69,7 @@ export const List = styled('ul', {
   padding: 0,
   margin: 0,
   listStyle: 'none',
+
   '& li': {
     alignItems: 'none',
 

@@ -7,6 +7,7 @@ import {
   LanguageIcon,
   Typography,
 } from '@rango-dev/ui';
+import { useWidget } from '@rango-dev/widget-embedded';
 import React, { useCallback, useState } from 'react';
 
 import { ItemPicker } from '../../components/ItemPicker';
@@ -37,6 +38,8 @@ export function General() {
   const fontFamily =
     useConfigStore.use.config().theme?.fontFamily || FONTS[0].value;
   const language = useConfigStore.use.config().language || LANGUAGES[0].value;
+  const { resetLanguage } = useWidget();
+
   const handleFontChange = (value: string) => {
     if (value) {
       onChangeTheme({
@@ -49,6 +52,7 @@ export function General() {
   const handleLanguageChange = (value: string) => {
     if (value) {
       onChangeLanguage(value);
+      resetLanguage();
     }
     onBack();
   };
@@ -103,12 +107,14 @@ export function General() {
           <Slider
             showValue
             title="Widget"
+            id="range1"
             value={borderRadius ?? DEFAULT_PRIMARY_RADIUS}
             max="50"
             onChange={handleBorderRadius}
           />
-          <Divider size={8} />
+          <Divider size={4} />
           <Slider
+            id="range2"
             showValue
             title="Button"
             value={secondaryBorderRadius ?? DEFAULT_SECONDARY_RADIUS}

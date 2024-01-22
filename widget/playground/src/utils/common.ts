@@ -49,9 +49,9 @@ export function tokensAreEqual(tokenA?: Asset, tokenB?: Asset) {
 }
 
 export const excludedWallets = [
+  WalletTypes.DEFAULT,
   WalletTypes.STATION,
   WalletTypes.LEAP,
   WalletTypes.SAFE,
   WalletTypes.MY_TON_WALLET,
-  WalletTypes.WALLET_CONNECT_2,
 ];

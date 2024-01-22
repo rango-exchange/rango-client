@@ -7,17 +7,9 @@ html {
 body {
   padding: 0;
   margin: 0;
-  background-color: #eee;
+  background-color: transparent;
 }
 
 #app {
-  height: 100vh;
-}
-
-#swap-container {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
-  width: 100%;
+  min-height: 100vh;
 }

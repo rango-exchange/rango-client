@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-magic-numbers */
 import type { QuoteError, QuoteWarning, Wallet } from '../types';
-import type { PriceImpactWarningLevel } from '@rango-dev/ui';
+import type { PriceImpactWarningLevel, Step } from '@rango-dev/ui';
 import type {
   SimulationAssetAndAmount,
   SimulationValidationStatus,
@@ -34,33 +34,6 @@ import {
   hasLimitError,
   hasProperSlippage,
 } from './swap';
-
-export function searchParamsToToken(
-  tokens: Token[],
-  searchParams: string | null,
-  chain: BlockchainMeta | null
-): Token | null {
-  if (!chain) {
-    return null;
-  }
-  return (
-    tokens.find((token) => {
-      const symbolAndAddress = searchParams?.split('--');
-      if (symbolAndAddress?.length === 1) {
-        return (
-          token.symbol === symbolAndAddress[0] &&
-          token.address === null &&
-          token.blockchain === chain.name
-        );
-      }
-      return (
-        token.symbol === symbolAndAddress?.[0] &&
-        token.address === symbolAndAddress?.[1] &&
-        token.blockchain === chain.name
-      );
-    }) || null
-  );
-}
 
 export function getQuoteToTokenUsdPrice(
   quote: BestRouteResponse | null
@@ -336,3 +309,20 @@ export function getPriceImpact(
 
   return percentageChange && percentageChange < 0 ? percentageChange : null;
 }
+
+export const getUniqueBlockchains = (steps: Step[]) => {
+  const set = new Set();
+  const result: { displayName: string; image: string }[] = [];
+  steps.forEach((step) => {
+    if (!set.has(step.from.chain.displayName)) {
+      set.add(step.from.chain.displayName);
+      result.push(step.from.chain);
+    }
+    if (!set.has(step.to.chain.displayName)) {
+      set.add(step.to.chain.displayName);
+      result.push(step.to.chain);
+    }
+  });
+
+  return result;
+};

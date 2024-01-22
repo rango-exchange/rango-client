@@ -5,13 +5,15 @@ import React from 'react';
 
 import { Typography } from '../Typography';
 
-import { Container, Suffix } from './Header.styles';
+import { Container, globalHeaderStyles, Suffix } from './Header.styles';
 
 export function Header({
   prefix,
   suffix,
   title,
 }: PropsWithChildren<PropTypes>) {
+  globalHeaderStyles();
+
   return (
     <Container>
       {prefix}
@@ -19,6 +21,8 @@ export function Header({
         {title}
       </Typography>
       <Suffix>{suffix}</Suffix>
+      <div className="rng-curve-left"></div>
+      <div className="rng-curve-right"></div>
     </Container>
   );
 }

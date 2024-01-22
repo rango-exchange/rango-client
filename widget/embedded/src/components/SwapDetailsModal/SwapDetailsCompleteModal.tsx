@@ -12,6 +12,9 @@ import {
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import { RANGO_SWAP_BOX_ID } from '../../constants';
+import { getContainer } from '../../utils/common';
+
 export function SwapDetailsCompleteModal(props: CompleteModalPropTypes) {
   const {
     open,
@@ -19,6 +22,8 @@ export function SwapDetailsCompleteModal(props: CompleteModalPropTypes) {
     status,
     priceValue,
     usdValue,
+    realUsdValue,
+    realValue,
     token,
     chain,
     percentageChange,
@@ -31,16 +36,19 @@ export function SwapDetailsCompleteModal(props: CompleteModalPropTypes) {
     <Modal
       open={open}
       onClose={onClose}
-      container={document.getElementById('swap-box') || document.body}>
+      container={document.getElementById(RANGO_SWAP_BOX_ID) || document.body}>
       {status === 'success' ? (
         <MessageBox type="success" title={i18n.t('Swap Successful')}>
           <TokenAmount
             direction="vertical"
+            tooltipContainer={getContainer()}
             type="output"
             centerAlign={true}
             price={{
               value: priceValue,
               usdValue,
+              realUsdValue,
+              realValue,
             }}
             token={token}
             chain={chain}

@@ -1,7 +1,7 @@
 import type { PropTypes } from './Slider.types';
 
 import { Typography } from '@rango-dev/ui';
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import {
   Content,
@@ -10,6 +10,7 @@ import {
   ValueSection,
 } from './Slider.styles';
 
+const MAX_VALUE = 100;
 function Slider(props: PropTypes) {
   const {
     title,
@@ -18,8 +19,20 @@ function Slider(props: PropTypes) {
     onChange,
     variant = 'custom',
     min,
-    max,
+    max = MAX_VALUE,
+    id,
   } = props;
+
+  const progressScript = () => {
+    const sliderEl = document.querySelector(`#${id}`) as HTMLInputElement;
+    const sliderValue = parseInt(sliderEl.value);
+    const mainValue = sliderValue * (MAX_VALUE / (max as number));
+    sliderEl.style.background = `linear-gradient(to right, #5BABFF ${mainValue}%, #C8E2FF ${mainValue}%)`;
+  };
+
+  useEffect(() => {
+    progressScript();
+  }, []);
 
   return (
     <SliderContainer>
@@ -32,10 +45,12 @@ function Slider(props: PropTypes) {
         <RangeWrapper>
           <input
             type="range"
+            id={id}
             min={min || '0'}
             max={max || '100'}
             className={`range range-${variant}`}
             value={value || 0}
+            onInput={progressScript}
             onChange={onChange}
           />
         </RangeWrapper>

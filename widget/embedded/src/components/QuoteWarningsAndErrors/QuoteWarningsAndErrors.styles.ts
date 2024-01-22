@@ -2,7 +2,6 @@ import { darkTheme, styled } from '@rango-dev/ui';
 
 export const Alerts = styled('div', {
   width: '100%',
-  paddingTop: '$10',
 });
 
 export const Flex = styled('div', {

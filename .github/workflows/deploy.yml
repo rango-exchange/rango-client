@@ -1,0 +1,28 @@
+name: Deploy
+on:
+  workflow_dispatch:
+
+jobs:
+  deploy-it:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.PAT }}
+
+      - name: Prepare
+        uses: ./.github/actions/prepare
+
+      - name: Deploy packages
+        run: yarn run deploy
+        env:
+          REF: ${{ github.ref }}
+          GH_TOKEN: ${{ github.token }}
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          VERCEL_PROJECT_WALLETS: ${{ secrets.VERCEL_PROJECT_WALLETS }}
+          VERCEL_PROJECT_Q: ${{ secrets.VERCEL_PROJECT_Q }}
+          VERCEL_PROJECT_WALLET_ADAPTER: ${{ secrets.VERCEL_PROJECT_WALLET_ADAPTER }}
+          VERCEL_PROJECT_WIDGET_CONFIG: ${{ secrets.VERCEL_PROJECT_WIDGET_CONFIG }}
+          VERCEL_PROJECT_WIDGET_APP: ${{ secrets.VERCEL_PROJECT_WIDGET_APP }}

@@ -75,7 +75,7 @@ export const subscribe: Subscribe = ({
   const ethInstance = instance.get(Networks.ETHEREUM);
   const evmBlockchainMeta = meta.filter(isEvmBlockchain);
 
-  subscribeToEvm({
+  const cleanup = subscribeToEvm({
     instance: ethInstance,
     state,
     updateChainId,
@@ -99,6 +99,12 @@ export const subscribe: Subscribe = ({
       }
     }
   });
+
+  return () => {
+    if (cleanup) {
+      cleanup();
+    }
+  };
 };
 
 export const switchNetwork: SwitchNetwork = switchNetworkForEvm;

@@ -3,7 +3,7 @@ import type { LiquidityType } from './FunctionalLayout.types';
 import { ChainsIcon, Checkbox, Divider, Typography } from '@rango-dev/ui';
 import React from 'react';
 
-import { MultiSelect } from '../../components/MultiSelect/MultiSelect';
+import { MultiSelect } from '../../components/MultiSelect';
 import { useConfigStore } from '../../store/config';
 import { useMetaStore } from '../../store/meta';
 import { removeDuplicates } from '../../utils/common';
@@ -106,8 +106,9 @@ export function LiquiditiesSection() {
         onChange={(items) =>
           handleChange(allDexsNames, allBridgeNames, items, selectedBridges)
         }
+        disabled={!swappers?.length}
       />
-      <Divider size={12} />
+      <Divider size={10} />
       <MultiSelect
         label={`${excludedMode ? 'Excluded' : 'Supported'} Bridges`}
         icon={<ChainsIcon size={24} />}
@@ -125,8 +126,9 @@ export function LiquiditiesSection() {
         onChange={(items) =>
           handleChange(allBridgeNames, allDexsNames, items, selectedDexs)
         }
+        disabled={!swappers?.length}
       />
-      <Divider size={24} />
+      <Divider size={4} />
       <Checkbox
         id="new-source"
         onCheckedChange={handleCheckChange}
