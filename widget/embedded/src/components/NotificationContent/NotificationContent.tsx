@@ -13,7 +13,6 @@ import { useNavigate } from 'react-router-dom';
 import { navigationRoutes } from '../../constants/navigationRoutes';
 import { useAppStore } from '../../store/AppStore';
 import { useNotificationStore } from '../../store/notification';
-import { useUiStore } from '../../store/ui';
 
 import { Container, Images, List } from './NotificationContent.styles';
 import { NotificationNotFound } from './NotificationNotFound';
@@ -22,7 +21,6 @@ const MAX_NOTIFICATIONS_DISPLAYED = 4;
 
 export function NotificationContent() {
   const navigate = useNavigate();
-  const setSelectedSwap = useUiStore.use.setSelectedSwap();
 
   const { getUnreadNotifications } = useNotificationStore();
 
@@ -34,7 +32,6 @@ export function NotificationContent() {
     .slice(0, MAX_NOTIFICATIONS_DISPLAYED);
 
   const handleOnClick = (requestId: Notification['requestId']) => {
-    setSelectedSwap(requestId);
     navigate(`${navigationRoutes.swaps}/${requestId}`);
   };
 

@@ -10,8 +10,6 @@ import { MemoryRouter, useInRouterContext } from 'react-router';
 import { useForceAutoConnect } from '../hooks/useForceAutoConnect';
 import { useAppStore } from '../store/AppStore';
 
-import { UpdateUrl } from './UpdateUrl';
-
 export function AppRouter({
   children,
   ...props
@@ -37,10 +35,5 @@ export function AppRouter({
     canSwitchNetworkTo,
   });
 
-  return (
-    <>
-      <Router>{children}</Router>
-      {isRouterInContext && <UpdateUrl />}
-    </>
-  );
+  return <Router>{children}</Router>;
 }

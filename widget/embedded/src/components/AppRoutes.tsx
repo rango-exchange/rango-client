@@ -2,6 +2,8 @@ import React from 'react';
 import { useRoutes } from 'react-router-dom';
 
 import { navigationRoutes } from '../constants/navigationRoutes';
+import { useSyncStoresWithConfig } from '../hooks/useSyncStoresWithConfig';
+import { useSyncUrlAndStore } from '../hooks/useSyncUrlAndStore';
 import { ConfirmSwapPage } from '../pages/ConfirmSwapPage';
 import { HistoryPage } from '../pages/HistoryPage';
 import { Home } from '../pages/Home';
@@ -15,6 +17,15 @@ import { ThemePage } from '../pages/ThemePage';
 import { WalletsPage } from '../pages/WalletsPage';
 
 export function AppRoutes() {
+  /**
+   * The configuration of the widget should initially be applied to the widget state.
+   * If search parameters exist in the URL,
+   * they should be applied later and take precedence over the widget configuration.
+   * To achieve this, it is crucial to execute these hooks in the correct sequence.
+   */
+  useSyncStoresWithConfig();
+  useSyncUrlAndStore();
+
   return useRoutes([
     {
       path: navigationRoutes.home,

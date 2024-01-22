@@ -8,7 +8,6 @@ import { RANGO_SWAP_BOX_ID } from '../../constants';
 import { useNavigateBack } from '../../hooks/useNavigateBack';
 import { useTheme } from '../../hooks/useTheme';
 import { useAppStore } from '../../store/AppStore';
-import { useUiStore } from '../../store/ui';
 import { useWalletsStore } from '../../store/wallets';
 import { getContainer } from '../../utils/common';
 import { isFeatureHidden } from '../../utils/settings';
@@ -36,14 +35,10 @@ function LayoutComponent(props: PropsWithChildren<PropTypes>, ref: Ref) {
     features
   );
 
-  const connectWalletsButtonDisabled =
-    useUiStore.use.connectWalletsButtonDisabled();
   const navigateBack = useNavigateBack();
 
   const onConnectWallet = () => {
-    if (!connectWalletsButtonDisabled && header.onWallet) {
-      header.onWallet();
-    }
+    header.onWallet?.();
   };
 
   const showBackButton =
