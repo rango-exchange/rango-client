@@ -1,4 +1,3 @@
-export * from './I18nManager';
 export * from './Alert';
 export * from './BlockchainsChip';
 export * from './BottomLogo';
