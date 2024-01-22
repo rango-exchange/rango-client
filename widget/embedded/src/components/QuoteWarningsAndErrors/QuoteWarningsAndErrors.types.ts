@@ -5,6 +5,7 @@ export interface PropTypes {
   error: QuoteError | null;
   warning: QuoteWarning | null;
   showWarningModal: boolean;
+  confirmationDisabled: boolean;
   refetchQuote: () => void;
   onOpenWarningModal: () => void;
   onCloseWarningModal: () => void;

@@ -6,6 +6,8 @@ import type { Notification } from '../../types/notification';
 import type { BlockchainMeta, SwapperMeta, Token } from 'rango-sdk';
 
 export interface WidgetInfoContextInterface {
+  isActiveTab: boolean;
+  setCurrentTabAsActive: () => void;
   history: WidgetHistory;
   wallets: {
     details: ConnectedWallet[];

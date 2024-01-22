@@ -48,6 +48,10 @@ export const WalletButton = styled('button', {
     backgroundColor: '$$color',
     outline: 0,
   },
+  '&:disabled': {
+    filter: 'grayscale(1)',
+    pointerEvents: 'none',
+  },
   variants: {
     selected: {
       true: {

@@ -8,6 +8,7 @@ import { Layout, PageContainer } from '../components/Layout';
 import { WalletModal } from '../components/WalletModal';
 import { useWalletList } from '../hooks/useWalletList';
 import { useAppStore } from '../store/AppStore';
+import { useUiStore } from '../store/ui';
 import { getContainer } from '../utils/common';
 
 const ListContainer = styled('div', {
@@ -32,6 +33,7 @@ export function WalletsPage() {
   const [openModal, setOpenModal] = useState(false);
   const [selectedWalletType, setSelectedWalletType] = useState<WalletType>('');
   let modalTimerId: ReturnType<typeof setTimeout> | null = null;
+  const isActiveTab = useUiStore.use.isActiveTab();
 
   const { list, handleClick, error } = useWalletList({
     config,
@@ -79,6 +81,7 @@ export function WalletsPage() {
                   void handleClick(type);
                 }}
                 isLoading={fetchMetaStatus === 'loading'}
+                disabled={!isActiveTab}
               />
             );
           })}
