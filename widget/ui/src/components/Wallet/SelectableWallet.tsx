@@ -14,12 +14,21 @@ import {
 import { type SelectablePropTypes, WalletState } from './Wallet.types';
 
 export function SelectableWallet(props: SelectablePropTypes) {
-  const { title, type, image, onClick, selected, description, state } = props;
+  const {
+    title,
+    type,
+    image,
+    onClick,
+    selected,
+    description,
+    state,
+    disabled = false,
+  } = props;
   const info = makeInfo(props.state);
   return (
     <WalletButton
       selected={selected}
-      disabled={props.state == WalletState.CONNECTING}
+      disabled={props.state == WalletState.CONNECTING || disabled}
       onClick={() => {
         if (props.state === WalletState.NOT_INSTALLED) {
           window.open(detectInstallLink(props.link), '_blank');

@@ -34,6 +34,7 @@ import { QuoteInfo } from '../containers/QuoteInfo';
 import { useConfirmSwap } from '../hooks/useConfirmSwap';
 import { useAppStore } from '../store/AppStore';
 import { useQuoteStore } from '../store/quote';
+import { useUiStore } from '../store/ui';
 import { useWalletsStore } from '../store/wallets';
 import { QuoteWarningType } from '../types';
 import { getContainer } from '../utils/common';
@@ -86,6 +87,7 @@ export function ConfirmSwapPage() {
   const { connectedWallets } = useWalletsStore();
   const showWalletsOnInit = !quoteWalletsConfirmed;
   const [showWallets, setShowWallets] = useState(false);
+  const { isActiveTab } = useUiStore();
   const disabledLiquiditySources = useAppStore().disabledLiquiditySources;
   const prevDisabledLiquiditySources = useRef(disabledLiquiditySources);
   const { manager } = useManager();
@@ -282,6 +284,7 @@ export function ConfirmSwapPage() {
         loading={fetchingConfirmationQuote}
         refetchQuote={onRefresh}
         showWarningModal={showQuoteWarningModal}
+        confirmationDisabled={!isActiveTab}
         onOpenWarningModal={() => setShowQuoteWarningModal(true)}
         onCloseWarningModal={() => setShowQuoteWarningModal(false)}
         onConfirmWarningModal={async () => {
@@ -324,7 +327,7 @@ export function ConfirmSwapPage() {
               size="large"
               fullWidth
               loading={fetchingConfirmationQuote}
-              disabled={!!confirmSwapResult.error}
+              disabled={!!confirmSwapResult.error || !isActiveTab}
               onClick={onStartConfirmSwap}>
               {i18n.t('Start Swap')}
             </Button>

@@ -12,8 +12,15 @@ import { modalNetworkValues } from './SwapDetailsModal.helpers';
 import { WalletStateContent } from './SwapDetailsModal.WalletState';
 
 export function SwapDetailsModal(props: ModalPropTypes) {
-  const { state, onClose, onDelete, onCancel, currentStepWallet, message } =
-    props;
+  const {
+    state,
+    onClose,
+    onDelete,
+    onCancel,
+    currentStepWallet,
+    message,
+    walletButtonDisabled,
+  } = props;
 
   const showWalletStateContent =
     state === PendingSwapNetworkStatus.WaitingForNetworkChange ||
@@ -31,6 +38,7 @@ export function SwapDetailsModal(props: ModalPropTypes) {
           title={modalNetworkValues[state].title}
           currentStepWallet={currentStepWallet}
           message={message}
+          walletButtonDisabled={walletButtonDisabled}
           showWalletButton={
             state !== PendingSwapNetworkStatus.WaitingForNetworkChange
           }

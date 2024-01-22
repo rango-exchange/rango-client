@@ -38,6 +38,7 @@ import {
 import { useAppStore } from '../../store/AppStore';
 import { useNotificationStore } from '../../store/notification';
 import { useQuoteStore } from '../../store/quote';
+import { useUiStore } from '../../store/ui';
 import { getContainer } from '../../utils/common';
 import {
   formatTooltipNumbers,
@@ -79,6 +80,7 @@ export function SwapDetails(props: SwapDetailsProps) {
   const swappers = useAppStore().swappers();
   const tokens = useAppStore().tokens();
   const retry = useQuoteStore.use.retry();
+  const isActiveTab = useUiStore.use.isActiveTab();
   const navigate = useNavigate();
   const [_, handleCopy] = useCopyToClipboard(RESET_INTERVAL);
   const listRef = useRef<HTMLDivElement | null>(null);
@@ -407,6 +409,7 @@ export function SwapDetails(props: SwapDetailsProps) {
         onDelete={onDelete}
         message={stepMessage.detailedMessage.content}
         currentStepWallet={currentStepWallet}
+        walletButtonDisabled={!isActiveTab}
       />
       <SwapDetailsCompleteModal
         open={!!showCompletedModal}

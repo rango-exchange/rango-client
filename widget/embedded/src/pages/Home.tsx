@@ -21,6 +21,7 @@ import { QuoteInfo } from '../containers/QuoteInfo';
 import { useSwapInput } from '../hooks/useSwapInput';
 import { useAppStore } from '../store/AppStore';
 import { useQuoteStore } from '../store/quote';
+import { useUiStore } from '../store/ui';
 import { useWalletsStore } from '../store/wallets';
 import { getContainer } from '../utils/common';
 import { formatTooltipNumbers, numberToString } from '../utils/numbers';
@@ -64,6 +65,7 @@ export function Home() {
   const fetchMetaStatus = useAppStore().fetchStatus;
 
   const { connectedWallets, getBalanceFor } = useWalletsStore();
+  const { isActiveTab } = useUiStore();
   const [showQuoteWarningModal, setShowQuoteWarningModal] = useState(false);
   const fetchingBalance =
     !!fromBlockchain &&
@@ -128,7 +130,7 @@ export function Home() {
         <Button
           type="primary"
           size="large"
-          disabled={swapButtonState.disabled}
+          disabled={swapButtonState.disabled || !isActiveTab}
           prefix={
             swapButtonState.action === 'confirm-warning' && <WarningIcon />
           }
@@ -271,6 +273,7 @@ export function Home() {
               loading={fetchingQuote}
               refetchQuote={fetchQuote}
               showWarningModal={showQuoteWarningModal}
+              confirmationDisabled={!isActiveTab}
               onOpenWarningModal={() => setShowQuoteWarningModal(true)}
               onCloseWarningModal={() => setShowQuoteWarningModal(false)}
               onConfirmWarningModal={() => {

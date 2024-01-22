@@ -15,6 +15,7 @@ import { getContainer } from '../../utils/common';
 
 type PropsTypes = {
   open: boolean;
+  confirmationDisabled: boolean;
   onClose: () => void;
   onConfirm: () => void;
   warning: InsufficientSlippageWarning | HighSlippageWarning;
@@ -22,7 +23,7 @@ type PropsTypes = {
 
 export function SlippageWarningModal(props: PropsTypes) {
   const { customSlippage, slippage } = useAppStore();
-  const { open, onClose, onConfirm, warning } = props;
+  const { open, onClose, onConfirm, warning, confirmationDisabled } = props;
   const navigate = useNavigate();
   const userSlippage = customSlippage ?? slippage;
   return (
@@ -68,6 +69,7 @@ export function SlippageWarningModal(props: PropsTypes) {
           type="primary"
           variant="contained"
           fullWidth
+          disabled={confirmationDisabled}
           onClick={onConfirm}>
           {i18n.t('Confirm anyway')}
         </Button>
