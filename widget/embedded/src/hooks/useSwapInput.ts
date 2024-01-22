@@ -59,8 +59,9 @@ export function useSwapInput(): UseSwapInput {
     affiliateRef,
     affiliateWallets,
     disabledLiquiditySources,
+    fetchStatus,
   } = useAppStore();
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState<QuoteError | null>(null);
   const [warning, setWarning] = useState<QuoteWarning | null>(null);
   const userSlippage = customSlippage ?? slippage;
@@ -148,6 +149,9 @@ export function useSwapInput(): UseSwapInput {
   );
 
   useEffect(() => {
+    if (fetchStatus !== 'success') {
+      return;
+    }
     if (!isPositiveNumber(inputAmount) || inputUsdValue?.eq(0)) {
       resetState(false);
       cancelFetch();
@@ -175,6 +179,7 @@ export function useSwapInput(): UseSwapInput {
     });
     return cancelFetch;
   }, [
+    fetchStatus,
     inputAmount,
     fromToken?.symbol,
     fromToken?.address,

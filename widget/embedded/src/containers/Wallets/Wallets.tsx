@@ -13,7 +13,6 @@ import { Events, Provider } from '@rango-dev/wallets-react';
 import { isEvmBlockchain } from 'rango-sdk';
 import React, { createContext, useEffect, useRef, useState } from 'react';
 
-import { useSyncStoresWithConfig } from '../../hooks/useSyncStoresWithConfig';
 import { useWalletProviders } from '../../hooks/useWalletProviders';
 import { AppStoreProvider, useAppStore } from '../../store/AppStore';
 import { useWalletsStore } from '../../store/wallets';
@@ -39,7 +38,6 @@ function Main(props: PropsWithChildren<PropTypes>) {
   const { providers } = useWalletProviders(props.config.wallets, walletOptions);
   const { connectWallet, disconnectWallet } = useWalletsStore();
   const onConnectWalletHandler = useRef<OnConnectHandler>();
-  useSyncStoresWithConfig();
 
   useEffect(() => {
     void fetchMeta().catch(console.log);

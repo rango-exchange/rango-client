@@ -20,7 +20,7 @@ import {
 } from '@rango-dev/ui';
 import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { flushSync } from 'react-dom';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 import { getRequiredWallets } from '../components/ConfirmWalletsModal/ConfirmWallets.helpers';
 import { ConfirmWalletsModal } from '../components/ConfirmWalletsModal/ConfirmWalletsModal';
@@ -34,7 +34,6 @@ import { QuoteInfo } from '../containers/QuoteInfo';
 import { useConfirmSwap } from '../hooks/useConfirmSwap';
 import { useAppStore } from '../store/AppStore';
 import { useQuoteStore } from '../store/quote';
-import { useUiStore } from '../store/ui';
 import { useWalletsStore } from '../store/wallets';
 import { QuoteWarningType } from '../types';
 import { getContainer } from '../utils/common';
@@ -81,12 +80,12 @@ export function ConfirmSwapPage() {
     quoteWarningsConfirmed,
   } = useQuoteStore();
   const navigate = useNavigate();
+  const location = useLocation();
   const [dbErrorMessage, setDbErrorMessage] = useState<string>('');
 
   const { connectedWallets } = useWalletsStore();
   const showWalletsOnInit = !quoteWalletsConfirmed;
   const [showWallets, setShowWallets] = useState(false);
-  const setSelectedSwap = useUiStore.use.setSelectedSwap();
   const disabledLiquiditySources = useAppStore().disabledLiquiditySources;
   const prevDisabledLiquiditySources = useRef(disabledLiquiditySources);
   const { manager } = useManager();
@@ -121,7 +120,6 @@ export function ConfirmSwapPage() {
           { swapDetails: confirmSwapResult.swap },
           { id: confirmSwapResult.swap.requestId }
         );
-        setSelectedSwap(confirmSwapResult.swap.requestId);
 
         const swap_url = `../${navigationRoutes.swaps}/${confirmSwapResult.swap.requestId}`;
         navigate(swap_url, {
@@ -252,7 +250,7 @@ export function ConfirmSwapPage() {
 
   useLayoutEffect(() => {
     if (!quote) {
-      navigate(`../`);
+      navigate(`../${location.search}`);
     }
   }, []);
 

@@ -10,7 +10,6 @@ import { Layout, PageContainer } from '../components/Layout';
 import { SearchInput } from '../components/SearchInput';
 import { SwapsGroup } from '../components/SwapsGroup';
 import { NotFoundContainer } from '../components/SwapsGroup/SwapsGroup.styles';
-import { useUiStore } from '../store/ui';
 import { groupSwapsByDate } from '../utils/date';
 import { containsText } from '../utils/numbers';
 import { getPendingSwaps } from '../utils/queue';
@@ -38,7 +37,6 @@ const isStepContainsText = (steps: PendingSwapStep[], value: string) => {
 };
 
 export function HistoryPage() {
-  const setSelectedSwap = useUiStore.use.setSelectedSwap();
   const navigate = useNavigate();
   const { manager, state } = useManager();
   const list: PendingSwap[] = getPendingSwaps(manager).map(({ swap }) => swap);
@@ -94,10 +92,7 @@ export function HistoryPage() {
           {!isEmpty && (
             <SwapsGroup
               list={filteredList}
-              onSwapClick={(requestId) => {
-                setSelectedSwap(requestId);
-                navigate(requestId);
-              }}
+              onSwapClick={navigate}
               groupBy={groupSwapsByDate}
               isLoading={loading}
             />

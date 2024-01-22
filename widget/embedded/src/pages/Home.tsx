@@ -21,7 +21,6 @@ import { QuoteInfo } from '../containers/QuoteInfo';
 import { useSwapInput } from '../hooks/useSwapInput';
 import { useAppStore } from '../store/AppStore';
 import { useQuoteStore } from '../store/quote';
-import { useUiStore } from '../store/ui';
 import { useWalletsStore } from '../store/wallets';
 import { getContainer } from '../utils/common';
 import { formatTooltipNumbers, numberToString } from '../utils/numbers';
@@ -43,7 +42,7 @@ export function Home() {
   const navigate = useNavigate();
   const {
     fetch: fetchQuote,
-    loading: fetchingQuote,
+    loading,
     error: quoteError,
     warning: quoteWarning,
   } = useSwapInput();
@@ -65,7 +64,6 @@ export function Home() {
   const fetchMetaStatus = useAppStore().fetchStatus;
 
   const { connectedWallets, getBalanceFor } = useWalletsStore();
-  const setCurrentPage = useUiStore.use.setCurrentPage();
   const [showQuoteWarningModal, setShowQuoteWarningModal] = useState(false);
   const fetchingBalance =
     !!fromBlockchain &&
@@ -87,7 +85,7 @@ export function Home() {
 
   const swapButtonState = getSwapButtonState({
     fetchMetaStatus,
-    fetchingQuote,
+    fetchingQuote: loading,
     inputAmount,
     quote,
     anyWalletConnected: connectedWallets.length > 0,
@@ -106,10 +104,15 @@ export function Home() {
       ? numberToString(fromTokenBalance?.amount, fromTokenBalance?.decimals)
       : '0';
 
+  const fetchingQuote =
+    fetchMetaStatus === 'success' &&
+    !!inputAmount &&
+    !!fromToken &&
+    !!toToken &&
+    loading;
+
   useEffect(() => {
-    setCurrentPage(navigationRoutes.home);
     resetQuoteWallets();
-    return setCurrentPage.bind(null, '');
   }, []);
 
   const percentageChange =

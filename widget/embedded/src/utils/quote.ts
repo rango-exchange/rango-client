@@ -35,33 +35,6 @@ import {
   hasProperSlippage,
 } from './swap';
 
-export function searchParamsToToken(
-  tokens: Token[],
-  searchParams: string | null,
-  chain: BlockchainMeta | null
-): Token | null {
-  if (!chain) {
-    return null;
-  }
-  return (
-    tokens.find((token) => {
-      const symbolAndAddress = searchParams?.split('--');
-      if (symbolAndAddress?.length === 1) {
-        return (
-          token.symbol === symbolAndAddress[0] &&
-          token.address === null &&
-          token.blockchain === chain.name
-        );
-      }
-      return (
-        token.symbol === symbolAndAddress?.[0] &&
-        token.address === symbolAndAddress?.[1] &&
-        token.blockchain === chain.name
-      );
-    }) || null
-  );
-}
-
 export function getQuoteToTokenUsdPrice(
   quote: BestRouteResponse | null
 ): number | null | undefined {
