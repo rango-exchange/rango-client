@@ -1,3 +1,12 @@
+# [0.25.0](https://github.com/rango-exchange/rango-client/compare/queue-manager-react@0.24.0...queue-manager-react@0.25.0) (2024-01-22)
+
+
+### Features
+
+* handle active tab in widget-embedded ([427a3bb](https://github.com/rango-exchange/rango-client/commit/427a3bb42dcaf899c4241aa5bd60c15a3475882a))
+
+
+
 # [0.24.0](https://github.com/rango-exchange/rango-client/compare/queue-manager-react@0.23.0...queue-manager-react@0.24.0) (2023-12-24)
 
 

@@ -1,3 +1,12 @@
+# [0.26.0](https://github.com/rango-exchange/rango-client/compare/provider-cosmostation@0.25.0...provider-cosmostation@0.26.0) (2024-01-22)
+
+
+### Bug Fixes
+
+* cleanup wallets' subscriber when setProvider get null ([88d6a42](https://github.com/rango-exchange/rango-client/commit/88d6a423c49b34b3d9ff567e22df36c3b009bb76))
+
+
+
 # [0.25.0](https://github.com/rango-exchange/rango-client/compare/provider-cosmostation@0.23.0...provider-cosmostation@0.25.0) (2023-12-24)
 
 

@@ -1,3 +1,32 @@
+# [0.21.0](https://github.com/rango-exchange/rango-client/compare/widget-embedded@0.20.0...widget-embedded@0.21.0) (2024-01-22)
+
+
+### Bug Fixes
+
+* address apikey config bug in iframe ([9078657](https://github.com/rango-exchange/rango-client/commit/90786576ffc347f6d3f340b34782d0ed721850a6))
+* address some minor bugs in swapHistory & wallet page loading ([1d4488e](https://github.com/rango-exchange/rango-client/commit/1d4488eee5926c2368bb9ba281ebf9fbc5c433e5))
+* cleanup wallets' subscriber when setProvider get null ([88d6a42](https://github.com/rango-exchange/rango-client/commit/88d6a423c49b34b3d9ff567e22df36c3b009bb76))
+* complete and check missing translations ([c661b81](https://github.com/rango-exchange/rango-client/commit/c661b81301f87193578b8a08ce3cbf65dc060487))
+* fix swap detail styles issue ([e74bb0c](https://github.com/rango-exchange/rango-client/commit/e74bb0cbbdd714f07a3128e1487200eeff25d8ba))
+* fix widget-iframe styles ([403009e](https://github.com/rango-exchange/rango-client/commit/403009ed0946d8a185af53f5004dc6160a5f23f8))
+* persist language in store ([0a33b0f](https://github.com/rango-exchange/rango-client/commit/0a33b0ffe596b704e16328277737595b79a72f89))
+* reset the quote when the source token matches the destination token ([938d30a](https://github.com/rango-exchange/rango-client/commit/938d30a9e93c00e7b9e21afa16683368ea612043))
+* resolve issues for prices and dates, and add tooltips for prices ([7515215](https://github.com/rango-exchange/rango-client/commit/751521513aab2c108cecb150b81e0f921d1b603a))
+* styling issues on layout ([7f0e1bd](https://github.com/rango-exchange/rango-client/commit/7f0e1bd883045d6f0a398eeb353cf5280ac09455))
+
+
+### Features
+
+* add default injected wallet ([238977c](https://github.com/rango-exchange/rango-client/commit/238977c0e3cd09feba9f2557f1b099b9af3afb0d))
+* adding a modal for fee on quote component ([d314516](https://github.com/rango-exchange/rango-client/commit/d314516b0af26ca71abf071462f19c9efef407e7))
+* export notifications from useWidget ([fc50baf](https://github.com/rango-exchange/rango-client/commit/fc50baf1b4043755162a54bcdd07f10fab94da39))
+* for long routes, we should show a shorter version and hide the rest in a button. ([378b3e4](https://github.com/rango-exchange/rango-client/commit/378b3e4508c8d9a32c0b7ba0b4c5f2a5ba32e193))
+* handle active tab in widget-embedded ([427a3bb](https://github.com/rango-exchange/rango-client/commit/427a3bb42dcaf899c4241aa5bd60c15a3475882a))
+* implement auto-refresh for routes ([9dfe80c](https://github.com/rango-exchange/rango-client/commit/9dfe80c00d01078bfd3f693c6a98ceb4038e58fb))
+* update filter tokens interface in widget ([455d70b](https://github.com/rango-exchange/rango-client/commit/455d70b95ca0c03eb3a738451f760ba4e4d6a04e))
+
+
+
 # [0.20.0](https://github.com/rango-exchange/rango-client/compare/widget-embedded@0.19.0...widget-embedded@0.20.0) (2023-12-24)
 
 

@@ -1,3 +1,17 @@
+# [0.26.0](https://github.com/rango-exchange/rango-client/compare/wallets-shared@0.25.0...wallets-shared@0.26.0) (2024-01-22)
+
+
+### Bug Fixes
+
+* cleanup wallets' subscriber when setProvider get null ([88d6a42](https://github.com/rango-exchange/rango-client/commit/88d6a423c49b34b3d9ff567e22df36c3b009bb76))
+
+
+### Features
+
+* add default injected wallet ([238977c](https://github.com/rango-exchange/rango-client/commit/238977c0e3cd09feba9f2557f1b099b9af3afb0d))
+
+
+
 # [0.25.0](https://github.com/rango-exchange/rango-client/compare/wallets-shared@0.23.0...wallets-shared@0.25.0) (2023-12-24)
 
 

@@ -1,3 +1,28 @@
+# [0.27.0](https://github.com/rango-exchange/rango-client/compare/ui@0.26.0...ui@0.27.0) (2024-01-22)
+
+
+### Bug Fixes
+
+* address some minor bugs in swapHistory & wallet page loading ([1d4488e](https://github.com/rango-exchange/rango-client/commit/1d4488eee5926c2368bb9ba281ebf9fbc5c433e5))
+* apply some of playground feedbacks ([c3d6711](https://github.com/rango-exchange/rango-client/commit/c3d671158d5deea377538eef09f90e527f7d1b4e))
+* correct refresh icon style on firefox ([a788ecd](https://github.com/rango-exchange/rango-client/commit/a788ecd36aa91b369f7024ad6f9f3b5cc656c477))
+* correct token data type in storybook ([177f9fa](https://github.com/rango-exchange/rango-client/commit/177f9fa3b13d957f13004bfdb0de1d761f413742))
+* fix swap detail styles issue ([e74bb0c](https://github.com/rango-exchange/rango-client/commit/e74bb0cbbdd714f07a3128e1487200eeff25d8ba))
+* resolve issues for prices and dates, and add tooltips for prices ([7515215](https://github.com/rango-exchange/rango-client/commit/751521513aab2c108cecb150b81e0f921d1b603a))
+* styling issues on layout ([7f0e1bd](https://github.com/rango-exchange/rango-client/commit/7f0e1bd883045d6f0a398eeb353cf5280ac09455))
+
+
+### Features
+
+* add transition for tabs in playground ([067f782](https://github.com/rango-exchange/rango-client/commit/067f78287cd61de0f9ffba0bde6a9815ddd7613c))
+* adding a modal for fee on quote component ([d314516](https://github.com/rango-exchange/rango-client/commit/d314516b0af26ca71abf071462f19c9efef407e7))
+* export notifications from useWidget ([fc50baf](https://github.com/rango-exchange/rango-client/commit/fc50baf1b4043755162a54bcdd07f10fab94da39))
+* for long routes, we should show a shorter version and hide the rest in a button. ([378b3e4](https://github.com/rango-exchange/rango-client/commit/378b3e4508c8d9a32c0b7ba0b4c5f2a5ba32e193))
+* handle active tab in widget-embedded ([427a3bb](https://github.com/rango-exchange/rango-client/commit/427a3bb42dcaf899c4241aa5bd60c15a3475882a))
+* implement auto-refresh for routes ([9dfe80c](https://github.com/rango-exchange/rango-client/commit/9dfe80c00d01078bfd3f693c6a98ceb4038e58fb))
+
+
+
 # [0.26.0](https://github.com/rango-exchange/rango-client/compare/ui@0.24.0...ui@0.26.0) (2023-12-24)
 
 
