@@ -15,6 +15,7 @@ import React, { createContext, useEffect, useRef, useState } from 'react';
 
 import { useWalletProviders } from '../../hooks/useWalletProviders';
 import { AppStoreProvider, useAppStore } from '../../store/AppStore';
+import { useUiStore } from '../../store/ui';
 import { useWalletsStore } from '../../store/wallets';
 import {
   prepareAccountsForWalletStore,
@@ -99,6 +100,7 @@ function Main(props: PropsWithChildren<PropTypes>) {
       props.onUpdateState(type, event, value, state, meta);
     }
   };
+  const isActiveTab = useUiStore.use.isActiveTab();
 
   useEffect(() => {
     if (accounts.length) {
@@ -118,7 +120,7 @@ function Main(props: PropsWithChildren<PropTypes>) {
         allBlockChains={blockchains}
         providers={providers}
         onUpdateState={onUpdateState}
-        autoConnect>
+        autoConnect={!!isActiveTab}>
         {props.children}
       </Provider>
     </WidgetContext.Provider>

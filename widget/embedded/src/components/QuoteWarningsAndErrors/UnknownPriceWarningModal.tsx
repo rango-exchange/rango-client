@@ -8,13 +8,14 @@ import { getContainer } from '../../utils/common';
 
 type Props = {
   open: boolean;
+  confirmationDisabled: boolean;
   onClose: () => void;
   onConfirm: () => void;
   warning: UnknownPriceWarning;
 };
 
 export function UnknownPriceWarningModal(props: Props) {
-  const { open, onClose, onConfirm } = props;
+  const { open, onClose, onConfirm, confirmationDisabled } = props;
 
   return (
     <Modal open={open} onClose={onClose} container={getContainer()}>
@@ -30,6 +31,7 @@ export function UnknownPriceWarningModal(props: Props) {
         size="large"
         prefix={<WarningIcon />}
         fullWidth
+        disabled={confirmationDisabled}
         onClick={onConfirm}>
         {errorMessages().unknownPriceError.confirmMessage}
       </Button>

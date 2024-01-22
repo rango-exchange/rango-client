@@ -39,8 +39,10 @@ export interface WalletPropTypes {
   description?: string;
   isLoading?: boolean;
   container?: HTMLElement;
+  disabled?: boolean;
 }
 
 export type SelectablePropTypes = WalletPropTypes & {
   selected: boolean;
+  disabled?: boolean;
 };

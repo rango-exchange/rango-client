@@ -25,6 +25,7 @@ import {
   TIME_TO_IGNORE_MODAL,
 } from '../../pages/WalletsPage';
 import { useAppStore } from '../../store/AppStore';
+import { useUiStore } from '../../store/ui';
 import { useWalletsStore } from '../../store/wallets';
 import { getBlockchainDisplayNameFor } from '../../utils/meta';
 import {
@@ -44,6 +45,7 @@ import {
 export function WalletList(props: PropTypes) {
   const { chain, isSelected, selectWallet, limit, onShowMore } = props;
   const { config } = useAppStore();
+  const isActiveTab = useUiStore.use.isActiveTab();
 
   const connectedWallets = useWalletsStore.use.connectedWallets();
   const { blockchains } = useAppStore();
@@ -289,6 +291,7 @@ export function WalletList(props: PropTypes) {
               description={connectedWalletDescription}
               onClick={onClick}
               selected={isSelected(wallet.type, chain)}
+              disabled={!isActiveTab}
               {...wallet}
             />
           </>

@@ -28,13 +28,14 @@ import { Flex } from './QuoteWarningsAndErrors.styles';
 
 type Props = {
   open: boolean;
+  confirmationDisabled: boolean;
   onClose: () => void;
   onConfirm: () => void;
   warning: HighValueLossWarning;
 };
 
 export function HighValueLossWarningModal(props: Props) {
-  const { open, onClose, onConfirm, warning } = props;
+  const { open, onClose, onConfirm, warning, confirmationDisabled } = props;
   const type = warning.warningLevel === 'high' ? 'error' : 'warning';
   const highValueLossData = [
     {
@@ -99,6 +100,7 @@ export function HighValueLossWarningModal(props: Props) {
         size="large"
         prefix={<WarningIcon />}
         fullWidth
+        disabled={confirmationDisabled}
         onClick={onConfirm}>
         {errorMessages().highValueLossError.confirmMessage}
       </Button>

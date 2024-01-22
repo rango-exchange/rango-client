@@ -17,8 +17,9 @@ export function QuoteWarningsAndErrors(props: PropTypes) {
   const {
     warning,
     error,
-    refetchQuote,
     showWarningModal,
+    confirmationDisabled,
+    refetchQuote,
     onOpenWarningModal,
     onCloseWarningModal,
     onConfirmWarningModal,
@@ -26,6 +27,7 @@ export function QuoteWarningsAndErrors(props: PropTypes) {
   } = props;
 
   const warningModalHandlers = {
+    confirmationDisabled,
     open: showWarningModal,
     onClose: onCloseWarningModal,
     onConfirm: onConfirmWarningModal,
