@@ -8,7 +8,7 @@ msgstr ""
 "Language: ja\n"
 "Project-Id-Version: rango\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-01-21 13:38\n"
+"PO-Revision-Date: 2024-01-22 09:12\n"
 "Last-Translator: \n"
 "Language-Team: Japanese\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
@@ -19,9 +19,14 @@ msgstr ""
 "X-Crowdin-File-ID: 30\n"
 
 #. js-lingui-explicit-id
+#: widget/embedded/src/pages/SwapDetailsPage.tsx:27
+msgid "The request ID is necessary to display the swap details."
+msgstr ""
+
+#. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:37
 #: widget/embedded/src/components/TokenList/TokenList.tsx:135
-#: widget/embedded/src/pages/HistoryPage.tsx:87
+#: widget/embedded/src/pages/HistoryPage.tsx:85
 #: widget/embedded/src/pages/LiquiditySourcePage.tsx:128
 msgid "No results found"
 msgstr "結果が見つかりませんでした"
@@ -29,7 +34,7 @@ msgstr "結果が見つかりませんでした"
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:38
 #: widget/embedded/src/components/TokenList/TokenList.tsx:136
-#: widget/embedded/src/pages/HistoryPage.tsx:89
+#: widget/embedded/src/pages/HistoryPage.tsx:87
 #: widget/embedded/src/pages/LiquiditySourcePage.tsx:129
 msgid "Try using different keywords"
 msgstr "別のキーワードを使用してみてください"
@@ -152,7 +157,7 @@ msgstr "通知"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/HeaderButtons/HomeButtons.tsx:62
-#: widget/embedded/src/pages/ConfirmSwapPage.tsx:310
+#: widget/embedded/src/pages/ConfirmSwapPage.tsx:308
 #: widget/embedded/src/pages/SettingsPage.tsx:183
 msgid "Settings"
 msgstr "設定"
@@ -625,7 +630,7 @@ msgstr "不明なUSD価格を確認"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/constants/messages.ts:6
-#: widget/embedded/src/pages/Home.tsx:150
+#: widget/embedded/src/pages/Home.tsx:153
 msgid "Swap"
 msgstr "入れ替え"
 
@@ -685,37 +690,37 @@ msgid "Route internal coins has been updated."
 msgstr "ルート内部コインが更新されました。"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/ConfirmSwapPage.tsx:301
+#: widget/embedded/src/pages/ConfirmSwapPage.tsx:299
 msgid "Confirm Swap"
 msgstr "スワップの確認"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/ConfirmSwapPage.tsx:331
+#: widget/embedded/src/pages/ConfirmSwapPage.tsx:329
 msgid "Start Swap"
 msgstr "スワップを開始"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/ConfirmSwapPage.tsx:357
+#: widget/embedded/src/pages/ConfirmSwapPage.tsx:355
 msgid "You get"
 msgstr "あなたは"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/HistoryPage.tsx:69
+#: widget/embedded/src/pages/HistoryPage.tsx:67
 msgid "History"
 msgstr "沿革"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/HistoryPage.tsx:76
+#: widget/embedded/src/pages/HistoryPage.tsx:74
 msgid "Search Transaction"
 msgstr "トランザクションを検索"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/Home.tsx:167
+#: widget/embedded/src/pages/Home.tsx:170
 msgid "From"
 msgstr "差出人:"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/Home.tsx:210
+#: widget/embedded/src/pages/Home.tsx:213
 msgid "To"
 msgstr "終了日"
 
