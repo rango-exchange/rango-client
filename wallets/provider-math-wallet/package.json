@@ -21,6 +21,7 @@
     "lint": "eslint \"**/*.{ts,tsx}\" --ignore-path ../../.eslintignore"
   },
   "dependencies": {
+    "@cosmjs/stargate": "0.32.2",
     "@rango-dev/signer-evm": "^0.25.0",
     "@rango-dev/signer-solana": "^0.25.0",
     "@rango-dev/wallets-shared": "^0.25.1-next.1",
