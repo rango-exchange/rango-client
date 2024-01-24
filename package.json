@@ -101,13 +101,5 @@
   },
   "resolutions": {
     "react-refresh": "0.9.0"
-  },
-  "lint-staged": {
-    "*.{ts,tsx}": [
-      "eslint --fix --quiet"
-    ],
-    "*.{ts,tsx,json}": [
-      "prettier --write"
-    ]
   }
 }
