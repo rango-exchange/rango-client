@@ -29,6 +29,7 @@ export * from './SwapListItem';
 export * from './SwapDetailsPlaceholder';
 export * from './Switch';
 export * from './TextField';
+export * from './Toast';
 export * from './TokenList';
 export * from './TokenPreview';
 export * from './Tooltip';
