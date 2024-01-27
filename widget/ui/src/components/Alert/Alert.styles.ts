@@ -153,6 +153,11 @@ export const IconHighlight = styled('div', {
         backgroundColor: '$$color',
       },
     },
+    align: {
+      center: {
+        alignSelf: 'center',
+      },
+    },
   },
 });
 
