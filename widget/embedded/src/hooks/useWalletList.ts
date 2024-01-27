@@ -9,12 +9,13 @@ import {
   type WalletType,
   WalletTypes,
 } from '@rango-dev/wallets-shared';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 import { useAppStore } from '../store/AppStore';
 import { useWalletsStore } from '../store/wallets';
 import { configWalletsToWalletName } from '../utils/providers';
 import {
+  hashWalletsState,
   isExperimentalChain,
   mapWalletTypesToWalletInfo,
   sortWalletsBasedOnConnectionState,
@@ -39,6 +40,7 @@ export function useWalletList(params: Params) {
   const { state, disconnect, getWalletInfo, connect } = useWallets();
   const { connectedWallets } = useWalletsStore();
   const blockchains = useAppStore().blockchains();
+  const componentWillUnmount = useRef(false);
 
   /** It can be what has been set by widget config or as a fallback we use all the supported wallets by our library */
   const listAvailableWalletTypes =
@@ -87,20 +89,33 @@ export function useWalletList(params: Params) {
     }
   };
 
-  const disconnectConnectingWallets = () => {
+  const disconnectConnectingWallets = useCallback(() => {
     const connectingWallets =
       wallets?.filter((wallet) => wallet.state === WalletState.CONNECTING) ||
       [];
     for (const wallet of connectingWallets) {
       void disconnect(wallet.type);
     }
-  };
+  }, [hashWalletsState(wallets)]);
 
+  /*
+   * The order of useEffects is crucial.
+   * 1- The first useEffect for componentWillUnmount sets its value to true
+   */
   useEffect(() => {
     return () => {
-      disconnectConnectingWallets();
+      componentWillUnmount.current = true;
     };
   }, []);
+
+  // 2- The second useEffect checks if componentWillUnmount is true then it disconnects connecting wallets
+  useEffect(() => {
+    return () => {
+      if (componentWillUnmount.current) {
+        disconnectConnectingWallets();
+      }
+    };
+  }, [disconnectConnectingWallets]);
 
   /*
    * Atm, we only support default injected wallet for the EVM
@@ -141,5 +156,6 @@ export function useWalletList(params: Params) {
     ),
     error,
     handleClick,
+    disconnectConnectingWallets,
   };
 }

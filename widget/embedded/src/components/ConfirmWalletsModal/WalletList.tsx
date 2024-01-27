@@ -59,23 +59,24 @@ export function WalletList(props: PropTypes) {
     useState<'in-progress' | 'completed' | 'rejected' | null>(null);
   const { suggestAndConnect } = useWallets();
   let modalTimerId: ReturnType<typeof setTimeout> | null = null;
-  const { list, error, handleClick } = useWalletList({
-    config,
-    chain,
-    onBeforeConnect: (type) => {
-      modalTimerId = setTimeout(() => {
-        setOpenWalletStateModal(type);
-      }, TIME_TO_IGNORE_MODAL);
-    },
-    onConnect: () => {
-      if (modalTimerId) {
-        clearTimeout(modalTimerId);
-      }
-      setTimeout(() => {
-        setOpenWalletStateModal('');
-      }, TIME_TO_CLOSE_MODAL);
-    },
-  });
+  const { list, error, handleClick, disconnectConnectingWallets } =
+    useWalletList({
+      config,
+      chain,
+      onBeforeConnect: (type) => {
+        modalTimerId = setTimeout(() => {
+          setOpenWalletStateModal(type);
+        }, TIME_TO_IGNORE_MODAL);
+      },
+      onConnect: () => {
+        if (modalTimerId) {
+          clearTimeout(modalTimerId);
+        }
+        setTimeout(() => {
+          setOpenWalletStateModal('');
+        }, TIME_TO_CLOSE_MODAL);
+      },
+    });
   const [sortedList, setSortedList] = useState<WalletInfo[]>(list);
   const numberOfSupportedWallets = list.length;
   const shouldShowMoreWallets = limit && numberOfSupportedWallets - limit > 0;
@@ -132,6 +133,11 @@ export function WalletList(props: PropTypes) {
       }
     };
   }, [addingExperimentalChainStatus]);
+
+  const handleCloseWalletModal = () => {
+    disconnectConnectingWallets();
+    setOpenWalletStateModal('');
+  };
 
   return (
     <>
@@ -193,7 +199,7 @@ export function WalletList(props: PropTypes) {
           <>
             <WalletModal
               open={openWalletStateModal === wallet.type}
-              onClose={() => setOpenWalletStateModal('')}
+              onClose={handleCloseWalletModal}
               image={wallet.image}
               state={wallet.state}
               error={error}
