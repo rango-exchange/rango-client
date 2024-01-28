@@ -3,6 +3,7 @@ import type { StateCreatorWithInitialData } from '../app';
 
 export const DEFAULT_CONFIG: WidgetConfig = {
   apiKey: '',
+  title: undefined,
   multiWallets: true,
   enableNewLiquiditySources: true,
   customDestination: true,
