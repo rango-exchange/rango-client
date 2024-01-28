@@ -8,7 +8,7 @@ msgstr ""
 "Language: es\n"
 "Project-Id-Version: rango\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-01-27 08:55\n"
+"PO-Revision-Date: 2024-01-28 08:02\n"
 "Last-Translator: \n"
 "Language-Team: Spanish\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -441,27 +441,27 @@ msgid "Connect"
 msgstr "Conectar"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsCompleteModal.tsx:41
+#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsCompleteModal.tsx:43
 msgid "Swap Successful"
 msgstr "Intercambio exitoso"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsCompleteModal.tsx:69
+#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsCompleteModal.tsx:71
 msgid "Transaction Failed"
 msgstr "Transacción fallida"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsCompleteModal.tsx:84
+#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsCompleteModal.tsx:86
 msgid "Done"
 msgstr "Hecho"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsCompleteModal.tsx:97
+#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsCompleteModal.tsx:99
 msgid "Diagnosis"
 msgstr "Diagnóstico"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsCompleteModal.tsx:105
+#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsCompleteModal.tsx:107
 msgid "See Details"
 msgstr "Ver detalles"
 
@@ -1023,14 +1023,14 @@ msgstr "Esperando una transacción de puente"
 
 #. js-lingui-explicit-id
 #: widget/ui/src/components/TokenPreview/TokenPreview.tsx:150
-#: widget/ui/src/containers/SwapInput/TokenSection.tsx:54
+#: widget/ui/src/containers/SwapInput/TokenSection.tsx:56
 #: widget/ui/src/containers/TokenInfo/TokenInfo.tsx:235
 msgid "Chain"
 msgstr "Cadena"
 
 #. js-lingui-explicit-id
 #: widget/ui/src/components/TokenPreview/TokenPreview.tsx:168
-#: widget/ui/src/containers/SwapInput/TokenSection.tsx:47
+#: widget/ui/src/containers/SwapInput/TokenSection.tsx:49
 #: widget/ui/src/containers/TokenInfo/TokenInfo.tsx:259
 msgid "Token"
 msgstr "Token"
@@ -1077,13 +1077,13 @@ msgid "SWAP"
 msgstr "SWAP"
 
 #. js-lingui-explicit-id
-#: widget/ui/src/containers/SwapInput/SwapInput.tsx:48
+#: widget/ui/src/containers/SwapInput/SwapInput.tsx:55
 #: widget/ui/src/containers/TokenInfo/TokenInfo.tsx:194
 msgid "Balance"
 msgstr "Saldo"
 
 #. js-lingui-explicit-id
-#: widget/ui/src/containers/SwapInput/SwapInput.tsx:55
+#: widget/ui/src/containers/SwapInput/SwapInput.tsx:62
 msgid "Max"
 msgstr "Máx"
 
