@@ -20,6 +20,7 @@ export function TokenSection(props: TokenSectionProps) {
     tokenImage,
     tokenSymbol,
     chain,
+    chianImageId,
     onClick,
     loading,
   } = props;
@@ -27,6 +28,7 @@ export function TokenSection(props: TokenSectionProps) {
     <Container variant="default" disabled={error || loading} onClick={onClick}>
       <TokenSectionContainer>
         <ChainToken
+          chianImageId={chianImageId}
           size="large"
           useAsPlaceholder={error}
           chainImage={chainImage}

@@ -36,7 +36,6 @@ export const Content = styled('div', {
   overflowY: 'auto',
 });
 export const Footer = styled('div', {
-  backgroundColor: '$background',
   '& .footer__content': {
     padding: '$0 $20',
   },
