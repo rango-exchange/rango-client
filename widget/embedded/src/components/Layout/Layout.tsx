@@ -6,7 +6,7 @@ import { useManager } from '@rango-dev/queue-manager-react';
 import { BottomLogo, Divider, Header } from '@rango-dev/ui';
 import React, { useEffect, useRef } from 'react';
 
-import { RANGO_SWAP_BOX_ID } from '../../constants';
+import { WIDGET_UI_ID } from '../../constants';
 import { useNavigateBack } from '../../hooks/useNavigateBack';
 import { useTheme } from '../../hooks/useTheme';
 import { useAppStore } from '../../store/AppStore';
@@ -76,7 +76,10 @@ function Layout(props: PropsWithChildren<PropTypes>) {
   }, []);
 
   return (
-    <Container height={height} id={RANGO_SWAP_BOX_ID} className={activeTheme()}>
+    <Container
+      height={height}
+      id={WIDGET_UI_ID.SWAP_BOX_ID}
+      className={activeTheme()}>
       <Header
         prefix={<>{showBackButton && <BackButton onClick={navigateBack} />}</>}
         title={header.title}

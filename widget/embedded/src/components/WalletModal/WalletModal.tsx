@@ -3,7 +3,7 @@ import type { PropTypes } from './WalletModal.types';
 import { Divider, Modal } from '@rango-dev/ui';
 import React from 'react';
 
-import { RANGO_SWAP_BOX_ID } from '../../constants';
+import { WIDGET_UI_ID } from '../../constants';
 
 import { ModalContent } from './WalletModalContent';
 
@@ -14,7 +14,9 @@ export function WalletModal(props: PropTypes) {
     <Modal
       open={open}
       onClose={onClose}
-      container={document.getElementById(RANGO_SWAP_BOX_ID) || document.body}>
+      container={
+        document.getElementById(WIDGET_UI_ID.SWAP_BOX_ID) || document.body
+      }>
       <ModalContent {...otherProps} />
       <Divider direction="vertical" size={32} />
     </Modal>

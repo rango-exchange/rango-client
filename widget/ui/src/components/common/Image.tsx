@@ -17,6 +17,7 @@ export const ImageContainer = styled('div', {
 });
 
 type PropTypes = {
+  id?: string;
   size: number;
   useAsPlaceholder?: boolean;
   backgroundColor?: string;

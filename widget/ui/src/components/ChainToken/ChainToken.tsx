@@ -9,7 +9,14 @@ import { tokenChainSizeMap } from './ChainToken.constants';
 import { ChainImageContainer, Container } from './ChainToken.styles';
 
 export const ChainToken: React.FC<PropTypes> = (props) => {
-  const { tokenImage, chainImage, size, useAsPlaceholder, loading } = props;
+  const {
+    tokenImage,
+    chainImage,
+    chianImageId,
+    size,
+    useAsPlaceholder,
+    loading,
+  } = props;
   return (
     <Container
       css={
@@ -43,6 +50,7 @@ export const ChainToken: React.FC<PropTypes> = (props) => {
           />
         ) : (
           <Image
+            id={chianImageId}
             size={tokenChainSizeMap[size].chain}
             src={chainImage}
             type="circular"
