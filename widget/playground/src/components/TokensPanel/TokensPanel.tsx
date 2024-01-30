@@ -5,7 +5,7 @@ import type { Asset } from 'rango-sdk';
 import { ChainsIcon, Checkbox, Divider, Typography } from '@rango-dev/ui';
 import React, { useState } from 'react';
 
-import { tokensAreEqual } from '../../utils/common';
+import { areTokensEqual } from '../../utils/common';
 import {
   HeaderContainer,
   SelectButton,
@@ -53,7 +53,7 @@ export function TokensPanel(props: PropTypes) {
     if (!selected) {
       return [
         ...supportedTokenList[blockchain].tokens.filter(
-          (t) => !tokensAreEqual(t, token)
+          (t) => !areTokensEqual(t, token)
         ),
       ];
     }
@@ -123,7 +123,7 @@ export function TokensPanel(props: PropTypes) {
         tokens:
           !token && !selected
             ? []
-            : allTokensInBlockchain.filter((t) => !tokensAreEqual(t, token)),
+            : allTokensInBlockchain.filter((t) => !areTokensEqual(t, token)),
       },
     };
   };
@@ -141,7 +141,7 @@ export function TokensPanel(props: PropTypes) {
     }
     setList((prev) =>
       prev.map((item) => {
-        if (tokensAreEqual(token, item)) {
+        if (areTokensEqual(token, item)) {
           const pinnedValue =
             type === 'checked' && item.checked ? { pinned: false } : {};
           return { ...item, ...pinnedValue, [type]: !item[type] };

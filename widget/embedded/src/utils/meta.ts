@@ -1,6 +1,6 @@
 import type { Asset, BlockchainMeta, SwapperMeta, Token } from 'rango-sdk';
 
-import { tokensAreEqual } from './wallets';
+import { areTokensEqual } from './wallets';
 
 export function getBlockchainDisplayNameFor(
   blockchainName: string,
@@ -25,7 +25,7 @@ export function getSwapperDisplayName(
 }
 
 export function findToken(t: Asset, tokens: Token[]) {
-  return tokens.find((token) => tokensAreEqual(token, t)) ?? null;
+  return tokens.find((token) => areTokensEqual(token, t)) ?? null;
 }
 
 export function findBlockchain(name: string, blockchains: BlockchainMeta[]) {

@@ -8,7 +8,7 @@ import { httpService as sdk } from '../../services/httpService';
 import { containsText } from '../../utils/common';
 import { isTokenExcludedInConfig } from '../../utils/configs';
 import { sortLiquiditySourcesByGroupTitle } from '../../utils/settings';
-import { tokensAreEqual } from '../../utils/wallets';
+import { areTokensEqual } from '../../utils/wallets';
 
 type BlockchainOptions = {
   type?: 'source' | 'destination';
@@ -163,7 +163,7 @@ export const createDataSlice: StateCreator<
         ? get().config.from?.pinnedTokens
         : get().config.to?.pinnedTokens;
     const pinned = !!pinnedTokens?.some((pinnedToken) =>
-      tokensAreEqual(pinnedToken, token)
+      areTokensEqual(pinnedToken, token)
     );
     return pinned;
   },

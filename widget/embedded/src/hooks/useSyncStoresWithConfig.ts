@@ -8,7 +8,7 @@ import {
   isBlockchainExcludedInConfig,
   isTokenExcludedInConfig,
 } from '../utils/configs';
-import { tokensAreEqual } from '../utils/wallets';
+import { areTokensEqual } from '../utils/wallets';
 
 export function useSyncStoresWithConfig() {
   const {
@@ -50,7 +50,7 @@ export function useSyncStoresWithConfig() {
         (chain) => chain.name === config?.from?.blockchain
       );
       const token = tokens.find((t) =>
-        tokensAreEqual(t, config?.from?.token || null)
+        areTokensEqual(t, config?.from?.token || null)
       );
 
       if (chain || (!chain && prevConfigFromBlockchain.current)) {
@@ -99,7 +99,7 @@ export function useSyncStoresWithConfig() {
         (chain) => chain.name === config?.to?.blockchain
       );
       const token = tokens.find((t) =>
-        tokensAreEqual(t, config?.to?.token || null)
+        areTokensEqual(t, config?.to?.token || null)
       );
 
       if (chain || (!chain && prevConfigToBlockchain.current)) {

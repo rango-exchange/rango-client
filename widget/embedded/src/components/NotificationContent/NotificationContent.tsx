@@ -14,6 +14,7 @@ import { useNavigate } from 'react-router-dom';
 import { navigationRoutes } from '../../constants/navigationRoutes';
 import { useAppStore } from '../../store/AppStore';
 import { useNotificationStore } from '../../store/notification';
+import { areTokensEqual } from '../../utils/wallets';
 
 import { Container, Images, List } from './NotificationContent.styles';
 import { NotificationNotFound } from './NotificationNotFound';
@@ -41,50 +42,40 @@ export function NotificationContent() {
       {sortedNotification.length ? (
         <List>
           {sortedNotification.map((notificationItem) => {
-            const fromToken = tokens.find(
-              (tokenItem) =>
-                tokenItem.address ===
-                  notificationItem.route.from.tokenAddress &&
-                tokenItem.blockchain ===
-                  notificationItem.route.from.blockchain &&
-                tokenItem.symbol === notificationItem.route.from.tokenSymbol
+            const { route, requestId, event } = notificationItem;
+            const fromToken = tokens.find((tokenItem) =>
+              areTokensEqual(tokenItem, route.from)
             );
 
             const fromBlockchain = blockchains.find(
-              (blockchainItem) =>
-                blockchainItem.name === notificationItem.route.from.blockchain
+              (blockchainItem) => blockchainItem.name === route.from.blockchain
             );
 
-            const toToken = tokens.find(
-              (tokenItem) =>
-                tokenItem.address === notificationItem.route.to.tokenAddress &&
-                tokenItem.blockchain === notificationItem.route.to.blockchain &&
-                tokenItem.symbol === notificationItem.route.to.tokenSymbol
+            const toToken = tokens.find((tokenItem) =>
+              areTokensEqual(tokenItem, route.to)
             );
 
             const toBlockchain = blockchains.find(
-              (blockchainItem) =>
-                blockchainItem.name === notificationItem.route.to.blockchain
+              (blockchainItem) => blockchainItem.name === route.to.blockchain
             );
 
             return (
               <ListItemButton
-                key={notificationItem.requestId}
-                onClick={() => handleOnClick(notificationItem.requestId)}
+                key={requestId}
+                onClick={() => handleOnClick(requestId)}
                 title={
                   <Typography
                     variant="body"
                     size="small"
                     color={
-                      notificationItem.event.messageSeverity ===
-                      EventSeverity.WARNING
+                      event.messageSeverity === EventSeverity.WARNING
                         ? '$foreground'
                         : '$neutral700'
                     }>
-                    {i18n.t(notificationItem.event.message)}
+                    {i18n.t(event.message)}
                   </Typography>
                 }
-                id={notificationItem.requestId}
+                id={requestId}
                 start={
                   <Images>
                     <div className="from-chain-token">
