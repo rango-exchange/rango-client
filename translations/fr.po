@@ -8,7 +8,7 @@ msgstr ""
 "Language: fr\n"
 "Project-Id-Version: rango\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-01-28 08:02\n"
+"PO-Revision-Date: 2024-01-30 07:04\n"
 "Last-Translator: \n"
 "Language-Team: French\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
@@ -17,6 +17,11 @@ msgstr ""
 "X-Crowdin-Language: fr\n"
 "X-Crowdin-File: en.po\n"
 "X-Crowdin-File-ID: 30\n"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/NotificationContent/NotificationNotFound.tsx:13
+msgid "There are no notifications."
+msgstr ""
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:37
@@ -205,11 +210,6 @@ msgstr "Réessayer"
 #: widget/embedded/src/components/NoResult/NoResult.helpers.ts:37
 msgid "Reset"
 msgstr "Reset"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/NotificationContent/NotificationNotFound.tsx:13
-msgid "You have no notification"
-msgstr "Vous n'avez aucune notification"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/Quote/Quote.tsx:193
