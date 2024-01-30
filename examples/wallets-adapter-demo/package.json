@@ -12,7 +12,7 @@
   },
   "dependencies": {
     "@rango-dev/provider-all": "^0.26.0",
-    "@rango-dev/wallets-adapter": "^0.21.1-next.1",
+    "@rango-dev/wallets-adapter": "^0.21.1-next.3",
     "rango-sdk": "^0.1.44",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
