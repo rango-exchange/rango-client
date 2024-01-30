@@ -62,22 +62,29 @@ export function HistoryGroupedList(props: PropTypes) {
         swaps,
       },
     ];
-    return loadingGroups.map((group) => (
-      <Group key={group.title}>
-        <Time>
-          <Typography variant="label" size="medium" className={groupStyles()}>
-            {group.title}
-          </Typography>
-        </Time>
-        <Divider size={4} />
-        <SwapList>
-          {group.swaps.map((_, index) => {
-            const key = index + group.title;
-            return <SwapListItem isLoading={true} key={key} />;
-          })}
-        </SwapList>
-      </Group>
-    ));
+    return (
+      <>
+        {loadingGroups.map((group) => (
+          <Group key={group.title}>
+            <Time>
+              <Typography
+                variant="label"
+                size="medium"
+                className={groupStyles()}>
+                {group.title}
+              </Typography>
+            </Time>
+            <Divider size={4} />
+            <SwapList>
+              {group.swaps.map((_, index) => {
+                const key = index + group.title;
+                return <SwapListItem isLoading={true} key={key} />;
+              })}
+            </SwapList>
+          </Group>
+        ))}
+      </>
+    );
   }
 
   return (
