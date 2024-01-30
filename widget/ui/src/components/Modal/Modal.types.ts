@@ -18,4 +18,5 @@ export interface PropTypes {
   containerStyle?: Stitches.CSS<typeof config>;
   footer?: React.ReactNode;
   hasLogo?: boolean;
+  hasCloseIcon?: boolean;
 }

@@ -443,7 +443,7 @@ export function sortTokens(
   return tokens;
 }
 
-export function tokensAreEqual(
+export function areTokensEqual(
   tokenA: Pick<Token, 'blockchain' | 'symbol' | 'address'> | null,
   tokenB: Pick<Token, 'blockchain' | 'symbol' | 'address'> | null
 ) {
