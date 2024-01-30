@@ -14,11 +14,6 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/NotificationContent/NotificationNotFound.tsx:13
-msgid "There are no notifications."
-msgstr "There are no notifications."
-
-#. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:37
 #: widget/embedded/src/components/TokenList/TokenList.tsx:135
 #: widget/embedded/src/pages/HistoryPage.tsx:85
@@ -205,6 +200,11 @@ msgstr "Retry"
 #: widget/embedded/src/components/NoResult/NoResult.helpers.ts:37
 msgid "Reset"
 msgstr "Reset"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/NotificationContent/NotificationNotFound.tsx:13
+msgid "There are no notifications."
+msgstr "There are no notifications."
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/Quote/Quote.tsx:193
