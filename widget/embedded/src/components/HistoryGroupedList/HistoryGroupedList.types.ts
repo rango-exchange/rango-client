@@ -1,13 +1,14 @@
 import type { PendingSwap } from 'rango-types';
 
 export type GroupBy = (list: PendingSwap[]) => {
-  title: string;
   swaps: PendingSwap[];
-}[];
+  groups: string[];
+  groupCounts: number[];
+};
 
 export interface PropTypes {
   list: PendingSwap[];
   onSwapClick: (requestId: string) => void;
-  groupBy?: GroupBy;
+  groupBy: GroupBy;
   isLoading: boolean;
 }

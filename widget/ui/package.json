@@ -45,9 +45,6 @@
     "@svgr/cli": "^8.0.1",
     "@types/react": "^18.0.25",
     "@types/react-dom": "^18.0.8",
-    "@types/react-virtualized-auto-sizer": "^1.0.1",
-    "@types/react-window": "^1.8.5",
-    "@types/react-window-infinite-loader": "^1.0.6",
     "babel-loader": "^9.1.0",
     "husky": "^8.0.2",
     "react": "^18.2.0",
@@ -69,9 +66,7 @@
     "@stitches/react": "^1.2.8",
     "rango-sdk": "^0.1.44",
     "rango-types": "^0.1.57",
-    "react-virtualized-auto-sizer": "^1.0.7",
-    "react-window": "^1.8.8",
-    "react-window-infinite-loader": "^1.0.8",
+    "react-virtuoso": "^4.6.2",
     "rgb-hex": "^4.0.1"
   },
   "publishConfig": {
