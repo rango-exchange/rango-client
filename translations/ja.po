@@ -8,7 +8,7 @@ msgstr ""
 "Language: ja\n"
 "Project-Id-Version: rango\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-01-30 07:32\n"
+"PO-Revision-Date: 2024-01-30 09:15\n"
 "Last-Translator: \n"
 "Language-Team: Japanese\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
@@ -20,7 +20,7 @@ msgstr ""
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:37
-#: widget/embedded/src/components/TokenList/TokenList.tsx:135
+#: widget/embedded/src/components/TokenList/TokenList.tsx:120
 #: widget/embedded/src/pages/HistoryPage.tsx:85
 #: widget/embedded/src/pages/LiquiditySourcePage.tsx:128
 msgid "No results found"
@@ -28,7 +28,7 @@ msgstr "結果が見つかりませんでした"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:38
-#: widget/embedded/src/components/TokenList/TokenList.tsx:136
+#: widget/embedded/src/components/TokenList/TokenList.tsx:121
 #: widget/embedded/src/pages/HistoryPage.tsx:87
 #: widget/embedded/src/pages/LiquiditySourcePage.tsx:129
 msgid "Try using different keywords"
@@ -189,6 +189,20 @@ msgstr "取引履歴"
 #: widget/embedded/src/constants/messages.ts:5
 msgid "Connect Wallet"
 msgstr "ウォレットに接続"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/HistoryGroupedList/HistoryGroupedList.tsx:57
+#: widget/embedded/src/components/HistoryGroupedList/HistoryGroupedList.tsx:117
+#: widget/embedded/src/utils/date.ts:18
+#: widget/embedded/src/utils/time.ts:22
+msgid "Today"
+msgstr "今日"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/HistoryGroupedList/HistoryGroupedList.tsx:61
+#: widget/embedded/src/utils/date.ts:32
+msgid "This month"
+msgstr ""
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/LoadingSwapDetails/LoadingSwapDetails.tsx:20
@@ -516,21 +530,7 @@ msgid "Network Changed"
 msgstr "ネットワークを変更しました"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapsGroup/SwapsGroup.tsx:25
-#: widget/embedded/src/components/SwapsGroup/SwapsGroup.tsx:93
-#: widget/embedded/src/utils/date.ts:18
-#: widget/embedded/src/utils/time.ts:22
-msgid "Today"
-msgstr "今日"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapsGroup/SwapsGroup.tsx:29
-#: widget/embedded/src/utils/date.ts:32
-msgid "This month"
-msgstr ""
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/TokenList/TokenList.tsx:277
+#: widget/embedded/src/components/TokenList/TokenList.tsx:257
 msgid "Select Token"
 msgstr "トークンを選択"
 

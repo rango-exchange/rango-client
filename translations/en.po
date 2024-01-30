@@ -15,7 +15,7 @@ msgstr ""
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:37
-#: widget/embedded/src/components/TokenList/TokenList.tsx:135
+#: widget/embedded/src/components/TokenList/TokenList.tsx:120
 #: widget/embedded/src/pages/HistoryPage.tsx:85
 #: widget/embedded/src/pages/LiquiditySourcePage.tsx:128
 msgid "No results found"
@@ -23,7 +23,7 @@ msgstr "No results found"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:38
-#: widget/embedded/src/components/TokenList/TokenList.tsx:136
+#: widget/embedded/src/components/TokenList/TokenList.tsx:121
 #: widget/embedded/src/pages/HistoryPage.tsx:87
 #: widget/embedded/src/pages/LiquiditySourcePage.tsx:129
 msgid "Try using different keywords"
@@ -184,6 +184,20 @@ msgstr "Transactions History"
 #: widget/embedded/src/constants/messages.ts:5
 msgid "Connect Wallet"
 msgstr "Connect Wallet"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/HistoryGroupedList/HistoryGroupedList.tsx:57
+#: widget/embedded/src/components/HistoryGroupedList/HistoryGroupedList.tsx:117
+#: widget/embedded/src/utils/date.ts:18
+#: widget/embedded/src/utils/time.ts:22
+msgid "Today"
+msgstr "Today"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/HistoryGroupedList/HistoryGroupedList.tsx:61
+#: widget/embedded/src/utils/date.ts:32
+msgid "This month"
+msgstr "This month"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/LoadingSwapDetails/LoadingSwapDetails.tsx:20
@@ -514,21 +528,7 @@ msgid "Network Changed"
 msgstr "Network Changed"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapsGroup/SwapsGroup.tsx:25
-#: widget/embedded/src/components/SwapsGroup/SwapsGroup.tsx:93
-#: widget/embedded/src/utils/date.ts:18
-#: widget/embedded/src/utils/time.ts:22
-msgid "Today"
-msgstr "Today"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapsGroup/SwapsGroup.tsx:29
-#: widget/embedded/src/utils/date.ts:32
-msgid "This month"
-msgstr "This month"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/TokenList/TokenList.tsx:277
+#: widget/embedded/src/components/TokenList/TokenList.tsx:257
 msgid "Select Token"
 msgstr "Select Token"
 
