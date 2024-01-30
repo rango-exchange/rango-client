@@ -8,7 +8,7 @@ msgstr ""
 "Language: es\n"
 "Project-Id-Version: rango\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-01-30 09:15\n"
+"PO-Revision-Date: 2024-01-30 09:53\n"
 "Last-Translator: \n"
 "Language-Team: Spanish\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -192,7 +192,7 @@ msgstr "Conectar cartera"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/HistoryGroupedList/HistoryGroupedList.tsx:57
-#: widget/embedded/src/components/HistoryGroupedList/HistoryGroupedList.tsx:117
+#: widget/embedded/src/components/HistoryGroupedList/HistoryGroupedList.tsx:124
 #: widget/embedded/src/utils/date.ts:18
 #: widget/embedded/src/utils/time.ts:22
 msgid "Today"
