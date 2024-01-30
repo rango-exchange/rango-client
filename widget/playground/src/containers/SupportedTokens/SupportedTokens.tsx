@@ -7,7 +7,7 @@ import React from 'react';
 import { MultiSelect } from '../../components/MultiSelect';
 import { useConfigStore } from '../../store/config';
 import { useMetaStore } from '../../store/meta';
-import { tokensAreEqual } from '../../utils/common';
+import { areTokensEqual } from '../../utils/common';
 import { isTokenExcludedInConfig } from '../../utils/configs';
 
 export function SupportedTokens({ type }: { type: Type }) {
@@ -45,7 +45,7 @@ export function SupportedTokens({ type }: { type: Type }) {
       checked:
         !tokensConfig || (!isExclude && !isToken) || (isExclude && isToken),
       pinned:
-        !!pinnedTokens && pinnedTokens.some((ct) => tokensAreEqual(ct, token)),
+        !!pinnedTokens && pinnedTokens.some((ct) => areTokensEqual(ct, token)),
     };
   });
 

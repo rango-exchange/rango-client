@@ -3,7 +3,7 @@ import type { Asset, BlockchainMeta, Token } from 'rango-sdk';
 
 import { RANGO_PUBLIC_API_KEY } from '../constants';
 
-import { tokensAreEqual } from './wallets';
+import { areTokensEqual } from './wallets';
 
 export interface Configs {
   API_KEY: string;
@@ -57,10 +57,10 @@ export const isTokenExcludedInConfig = (
   let result = false;
   if (tokensConfig && token) {
     if (Array.isArray(tokensConfig)) {
-      result = !tokensConfig.some((asset) => tokensAreEqual(asset, token));
+      result = !tokensConfig.some((asset) => areTokensEqual(asset, token));
     } else if (!Array.isArray(tokensConfig) && tokensConfig[token.blockchain]) {
       result = tokensConfig[token.blockchain].tokens.some((asset) =>
-        tokensAreEqual(asset, token)
+        areTokensEqual(asset, token)
       );
       const isExcluded = tokensConfig[token.blockchain].isExcluded;
       return (!isExcluded && !result) || (isExcluded && result);

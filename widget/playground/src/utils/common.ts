@@ -40,7 +40,7 @@ export function removeDuplicates<T>(arr: T[], key?: keyof T): T[] {
   );
 }
 
-export function tokensAreEqual(tokenA?: Asset, tokenB?: Asset) {
+export function areTokensEqual(tokenA?: Asset, tokenB?: Asset) {
   return (
     tokenA?.blockchain === tokenB?.blockchain &&
     tokenA?.symbol === tokenB?.symbol &&

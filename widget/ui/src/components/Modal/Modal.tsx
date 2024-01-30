@@ -20,7 +20,7 @@ import {
 } from './Modal.styles';
 
 const CLOSED_DELAY = 600;
-const OPEN_DELAY = 10;
+const OPEN_DELAY = 300;
 
 export function Modal(props: PropsWithChildren<PropTypes>) {
   const {
@@ -37,6 +37,7 @@ export function Modal(props: PropsWithChildren<PropTypes>) {
     suffix,
     footer,
     hasLogo = true,
+    hasCloseIcon = true,
   } = props;
   const [active, setActive] = useState(false);
   const [isMount, setIsMount] = useState(false);
@@ -96,7 +97,7 @@ export function Modal(props: PropsWithChildren<PropTypes>) {
                   )}
                   <Flex>
                     {suffix}
-                    {dismissible && (
+                    {dismissible && hasCloseIcon && (
                       <IconButton onClick={onClose} variant="ghost">
                         <CloseIcon color="gray" size={14} />
                       </IconButton>
