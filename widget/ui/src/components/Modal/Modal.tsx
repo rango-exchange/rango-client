@@ -20,7 +20,7 @@ import {
 } from './Modal.styles';
 
 const CLOSED_DELAY = 600;
-const OPEN_DELAY = 300;
+const OPEN_DELAY = 10;
 
 export function Modal(props: PropsWithChildren<PropTypes>) {
   const {
@@ -38,7 +38,9 @@ export function Modal(props: PropsWithChildren<PropTypes>) {
     footer,
     hasLogo = true,
     hasCloseIcon = true,
+    transitionDuration,
   } = props;
+
   const [active, setActive] = useState(false);
   const [isMount, setIsMount] = useState(false);
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -58,13 +60,13 @@ export function Modal(props: PropsWithChildren<PropTypes>) {
         container.style.overflow = 'hidden';
         timeoutRef.current = setTimeout(() => {
           setActive(true);
-        }, OPEN_DELAY);
+        }, transitionDuration?.enter || OPEN_DELAY);
       } else {
         setActive(false);
         timeoutRef.current = setTimeout(() => {
           setIsMount(false);
           container.style.removeProperty('overflow');
-        }, CLOSED_DELAY);
+        }, transitionDuration?.exit || CLOSED_DELAY);
       }
     }
     return () => {
