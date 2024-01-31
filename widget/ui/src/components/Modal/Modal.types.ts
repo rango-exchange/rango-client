@@ -19,4 +19,8 @@ export interface PropTypes {
   footer?: React.ReactNode;
   hasLogo?: boolean;
   hasCloseIcon?: boolean;
+  transitionDuration?: {
+    enter?: number;
+    exit?: number;
+  };
 }
