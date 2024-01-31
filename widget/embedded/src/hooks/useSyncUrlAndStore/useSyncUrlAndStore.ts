@@ -33,6 +33,7 @@ export function useSyncUrlAndStore() {
   const blockchains = useAppStore().blockchains();
   const tokens = useAppStore().tokens();
   const isInRouterContext = useInRouterContext();
+  const { updateIframe } = useAppStore();
 
   const getUrlSearchParams = () => {
     const fromAmount = searchParams.get(SearchParams.FROM_AMOUNT);
@@ -41,6 +42,7 @@ export function useSyncUrlAndStore() {
     const toBlockchain = searchParams.get(SearchParams.TO_BLOCKCHAIN);
     const toToken = searchParams.get(SearchParams.TO_TOKEN);
     const autoConnect = searchParams.get(SearchParams.AUTO_CONNECT);
+    const clientUrl = searchParams.get(SearchParams.CLIENT_URL);
 
     return {
       fromAmount,
@@ -49,6 +51,7 @@ export function useSyncUrlAndStore() {
       toBlockchain,
       toToken,
       autoConnect,
+      clientUrl,
     };
   };
 
@@ -64,7 +67,7 @@ export function useSyncUrlAndStore() {
   };
 
   useEffect(() => {
-    const { autoConnect } = getUrlSearchParams();
+    const { autoConnect, clientUrl } = getUrlSearchParams();
     if (isInRouterContext && fetchMetaStatus === 'success') {
       updateUrlSearchParams({
         [SearchParams.FROM_BLOCKCHAIN]: fromBlockchain?.name,
@@ -73,6 +76,7 @@ export function useSyncUrlAndStore() {
         [SearchParams.TO_TOKEN]: tokenToSearchParam(toToken),
         [SearchParams.FROM_AMOUNT]: inputAmount,
         [SearchParams.AUTO_CONNECT]: autoConnect ?? undefined,
+        [SearchParams.CLIENT_URL]: clientUrl ?? undefined,
       });
     }
   }, [
@@ -132,4 +136,10 @@ export function useSyncUrlAndStore() {
       }
     }
   }, [fetchMetaStatus]);
+
+  // We run this only once, because if the app is embedded into an iframe, the data in url for iframe will not change.
+  useEffect(() => {
+    const { clientUrl } = getUrlSearchParams();
+    updateIframe('clientUrl', clientUrl || undefined);
+  }, []);
 }
