@@ -7,6 +7,8 @@ import { BottomLogo, Divider, Header } from '@rango-dev/ui';
 import React, { useEffect, useRef } from 'react';
 
 import { WIDGET_UI_ID } from '../../constants';
+import { useIframe } from '../../hooks/useIframe';
+import { isAppLoadedIntoIframe } from '../../hooks/useIframe/useIframe.helpers';
 import { useNavigateBack } from '../../hooks/useNavigateBack';
 import { useTheme } from '../../hooks/useTheme';
 import { useAppStore } from '../../store/AppStore';
@@ -24,6 +26,7 @@ import { Container, Content, Footer } from './Layout.styles';
 
 function Layout(props: PropsWithChildren<PropTypes>) {
   const { children, header, footer, hasLogo = true, height = 'fixed' } = props;
+  const { connectHeightObserver, disconnectHeightObserver } = useIframe();
   const connectedWallets = useWalletsStore.use.connectedWallets();
   const {
     config: { features, theme },
@@ -60,6 +63,20 @@ function Layout(props: PropsWithChildren<PropTypes>) {
     typeof header.hasBackButton === 'undefined' || header.hasBackButton;
 
   const scrollViewRef = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const isIframe = isAppLoadedIntoIframe();
+
+    // This feature only will be available in an iframe context.
+    if (isIframe && containerRef.current) {
+      connectHeightObserver(containerRef.current);
+    }
+
+    return () => {
+      disconnectHeightObserver();
+    };
+  }, []);
 
   useEffect(() => {
     scrollViewRef.current?.addEventListener(
@@ -79,7 +96,8 @@ function Layout(props: PropsWithChildren<PropTypes>) {
     <Container
       height={height}
       id={WIDGET_UI_ID.SWAP_BOX_ID}
-      className={activeTheme()}>
+      className={activeTheme()}
+      ref={containerRef}>
       <Header
         prefix={<>{showBackButton && <BackButton onClick={navigateBack} />}</>}
         title={header.title}

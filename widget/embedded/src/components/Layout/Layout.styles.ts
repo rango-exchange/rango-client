@@ -6,7 +6,7 @@ export const Container = styled('div', {
   display: 'flex',
   flexDirection: 'column',
   borderRadius: '$primary',
-  width: '100vh',
+  width: '100vw',
   minWidth: '300px',
   maxWidth: '390px',
   boxShadow: '15px 15px 15px 0px rgba(0, 0, 0, 0.05)',

@@ -9,10 +9,25 @@ export const DEFAULT_CONFIG: WidgetConfig = {
   customDestination: true,
 };
 
-export type ConfigSlice = {
-  config: WidgetConfig;
+interface IframeConfigs {
+  clientUrl?: string;
+}
 
+const DEFAULT_IFRAME_CONFIGS: IframeConfigs = {
+  clientUrl: undefined,
+};
+
+export type ConfigSlice = {
+  // What user can set directly.
+  config: WidgetConfig;
   updateConfig: (config: WidgetConfig) => void;
+
+  // What we are setting based on enviroments.
+  iframe: { clientUrl?: string };
+  updateIframe: <K extends keyof IframeConfigs>(
+    name: K,
+    value: IframeConfigs[K]
+  ) => void;
 };
 
 export const createConfigSlice: StateCreatorWithInitialData<
@@ -22,6 +37,7 @@ export const createConfigSlice: StateCreatorWithInitialData<
 > = (initialData, set, get) => {
   return {
     config: { ...DEFAULT_CONFIG, ...initialData },
+    iframe: DEFAULT_IFRAME_CONFIGS,
 
     // Actions
     updateConfig: (nextConfig: WidgetConfig) => {
@@ -31,6 +47,17 @@ export const createConfigSlice: StateCreatorWithInitialData<
         config: {
           ...currentConfig,
           ...nextConfig,
+        },
+      });
+    },
+
+    updateIframe: (name, value) => {
+      const currentIframeConfig = get().iframe;
+
+      set({
+        iframe: {
+          ...currentIframeConfig,
+          [name]: value,
         },
       });
     },
