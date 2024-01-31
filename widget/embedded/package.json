@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/widget-embedded",
-  "version": "0.21.1-next.5",
+  "version": "0.21.1-next.6",
   "license": "MIT",
   "type": "module",
   "source": "./src/index.ts",
