@@ -190,7 +190,7 @@ export function Quote(props: QuoteProps) {
                 title={
                   error?.type === QuoteErrorType.BRIDGE_LIMIT
                     ? error?.recommendation
-                    : i18n.t('Slippage Error:')
+                    : i18n.t(`Slippage ${stepHasError ? 'Error' : 'Warning'}:`)
                 }
                 footer={
                   <FooterAlert>

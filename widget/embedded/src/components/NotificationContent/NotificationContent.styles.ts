@@ -3,6 +3,7 @@ import { styled } from '@rango-dev/ui';
 export const Container = styled('div', {
   padding: '$10',
   width: '350px',
+  maxWidth: '90vw',
   minHeight: '150px',
 });
 
