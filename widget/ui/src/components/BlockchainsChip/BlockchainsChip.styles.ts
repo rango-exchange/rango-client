@@ -4,6 +4,7 @@ import { ImageContainer } from '../common';
 export const Chip = styled('button', {
   padding: '$10',
   borderRadius: '$sm',
+  width: '100%',
   $$color: '$colors$neutral100',
   [`.${darkTheme} &`]: {
     $$color: '$colors$neutral300',
