@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-magic-numbers */
 import type { PropTypes } from './WalletList.type';
 import type { Wallet } from '../../types';
 import type { WalletInfo } from '@rango-dev/ui';
@@ -42,6 +41,7 @@ import {
   WalletImageContainer,
 } from './WalletList.styles';
 
+const ACCOUNT_ADDRESS_MAX_CHARACTERS = 7;
 export function WalletList(props: PropTypes) {
   const { chain, isSelected, selectWallet, limit, onShowMore } = props;
   const { config } = useAppStore();
@@ -141,7 +141,9 @@ export function WalletList(props: PropTypes) {
           walletType: wallet.type,
           chain,
         });
-        const conciseAddress = address ? getConciseAddress(address) : '';
+        const conciseAddress = address
+          ? getConciseAddress(address, ACCOUNT_ADDRESS_MAX_CHARACTERS)
+          : '';
 
         const experimentalChain = isExperimentalChain(blockchains(), chain);
 

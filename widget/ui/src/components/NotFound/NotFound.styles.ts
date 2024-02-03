@@ -5,4 +5,5 @@ export const Container = styled('div', {
   justifyContent: 'center',
   alignItems: 'center',
   flexDirection: 'column',
+  textAlign: 'center',
 });
