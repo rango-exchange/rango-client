@@ -16,11 +16,7 @@ import {
   subscribeToEvm,
   WalletTypes,
 } from '@rango-dev/wallets-shared';
-import {
-  cosmosBlockchains,
-  evmBlockchains,
-  solanaBlockchain,
-} from 'rango-types';
+import { evmBlockchains, solanaBlockchain } from 'rango-types';
 
 import {
   getNonEvmAccounts,
@@ -87,7 +83,9 @@ export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
 ) => {
   const evms = evmBlockchains(allBlockChains);
   const solana = solanaBlockchain(allBlockChains);
-  const cosmos = cosmosBlockchains(allBlockChains);
+  const cosmos = allBlockChains.filter(
+    (blockchainMeta) => blockchainMeta.name === Networks.COSMOS
+  );
   return {
     name: 'Math Wallet',
     img: 'https://raw.githubusercontent.com/rango-exchange/assets/main/wallets/math/icon.svg',
