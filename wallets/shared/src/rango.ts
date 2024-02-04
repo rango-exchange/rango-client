@@ -154,7 +154,7 @@ export const KEPLR_COMPATIBLE_WALLETS: string[] = [
   WalletTypes.LEAP_COSMOS,
 ];
 
-export const DEFAULT_COSMOS_RPC_URL = 'https://rpc.cosmos.directory/cosmoshub';
+export const DEFAULT_COSMOS_RPC_URL = 'https://cosmos-rpc.polkachu.com';
 
 export type Asset = {
   blockchain: Network;
