@@ -27,9 +27,8 @@ Libs will be published under `next` tag on npm, which means you need to use `yar
 
 #### Production relase
 
-Release should be triggered manually and then it will automatically published. You only need to run this command on you local machine to release the production:
+There is a workflow called `Production Release`, you just need to run this workflow manually and then it will automatically published.
 
-`yarn run release-prod`
 
 ### Deploy flow
 
@@ -52,11 +51,11 @@ _Note 1_: Syncing translations (first workflow) is an optional step which means 
 
 ### Production
 
-For releasing production, you need to run `yarn release-prod` it will checkout to `next` branch and pull the latest changes then it tries to merge the `next` into `main` by `--no-ff` strategy, To make sure that a new commit is made And previous commits that may have `[skips ci]` Do not prevent workflow from triggering.
+For releasing production, you need to run `Production Release` workflow, it will pull the latest translation changes on `next` branch and checkout to `next` branch and pull the latest changes then it tries to merge the `next` into `main` by `--no-ff` strategy, To make sure that a new commit is made And previous commits that may have `[skips ci]` Do not prevent workflow from triggering.
 
 
 _Note 1_: Make sure you are having permission for `push` on `main`.
 
-In production, we don't run localization workflow (crowdin) since we assume our `/translation` folder is in sync with Crowdin. if you think there is new translation, you can run `crowdin` workflow manually and then try to release.
+In production, we don't run localization workflow again (crowdin) since we assume our `/translation` folder is in sync with Crowdin. if you think there is new translation, you can run `crowdin` workflow manually and then try to release.
 
 At the end, a PR will be created to merge `main` into `next` after publishing the libraries. You need to check the PR description and make sure you are considering/doing them.
