@@ -8,7 +8,7 @@ msgstr ""
 "Language: ja\n"
 "Project-Id-Version: rango\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-01-30 09:53\n"
+"PO-Revision-Date: 2024-02-04 06:11\n"
 "Last-Translator: \n"
 "Language-Team: Japanese\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
@@ -74,7 +74,7 @@ msgstr ""
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/common/ActivateTabModal/ActivateTabModal.tsx:26
 #: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:265
-#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:235
+#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:237
 msgid "Confirm"
 msgstr "確認する"
 
@@ -115,44 +115,44 @@ msgid "Address {destination} doesn't match the blockchain address pattern."
 msgstr "アドレス {destination} はブロックチェーンアドレスパターンと一致しません。"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:166
+#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:168
 msgid "Add {chain} chain"
 msgstr "{chain} チェーンを追加"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:215
-#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:248
+#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:217
+#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:250
 msgid "Add {blockchainDisplayName} Chain"
 msgstr "{blockchainDisplayName} チェーンを追加"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:220
-#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:252
+#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:222
+#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:254
 msgid "You should connect a {blockchainDisplayName} supported wallet or choose a different {blockchainDisplayName} address"
 msgstr "{blockchainDisplayName} サポートされているウォレットに接続するか、別の {blockchainDisplayName} アドレスを選択してください"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:270
+#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:272
 msgid "{blockchainDisplayName} Chain Added"
 msgstr "{blockchainDisplayName} チェーンが追加されました"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:274
+#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:276
 msgid "{blockchainDisplayName} is added to your wallet, you can use it to swap."
 msgstr "{blockchainDisplayName} がウォレットに追加されました。交換に使用できます。"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:284
+#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:286
 msgid "Request Rejected"
 msgstr "リクエストが拒否されました"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:285
+#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:287
 msgid "You've rejected adding {blockchainDisplayName} chain to your wallet."
 msgstr "{blockchainDisplayName} チェーンをあなたのウォレットに追加することを拒否しました。"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:309
+#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:311
 msgid "Show more wallets"
 msgstr "ウォレットをもっと表示"
 
@@ -167,19 +167,19 @@ msgid "Refresh"
 msgstr "更新"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/HeaderButtons/HomeButtons.tsx:50
+#: widget/embedded/src/components/HeaderButtons/HomeButtons.tsx:51
 msgid "Notifications"
 msgstr "通知"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/HeaderButtons/HomeButtons.tsx:62
+#: widget/embedded/src/components/HeaderButtons/HomeButtons.tsx:63
 #: widget/embedded/src/pages/ConfirmSwapPage.tsx:311
 #: widget/embedded/src/pages/SettingsPage.tsx:183
 msgid "Settings"
 msgstr "設定"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/HeaderButtons/HomeButtons.tsx:70
+#: widget/embedded/src/components/HeaderButtons/HomeButtons.tsx:71
 msgid "Transactions History"
 msgstr "取引履歴"
 
@@ -224,11 +224,6 @@ msgstr "Reset"
 #: widget/embedded/src/components/NotificationContent/NotificationNotFound.tsx:13
 msgid "There are no notifications."
 msgstr ""
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/Quote.tsx:193
-msgid "Slippage Error:"
-msgstr "スライドページのエラー:"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/Quote/Quote.tsx:217
