@@ -221,12 +221,12 @@ msgid "There are no notifications."
 msgstr "There are no notifications."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/Quote.tsx:217
+#: widget/embedded/src/components/Quote/Quote.tsx:215
 msgid "Yours: {amount} {symbol}"
 msgstr "Yours: {amount} {symbol}"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/Quote.tsx:238
+#: widget/embedded/src/components/Quote/Quote.tsx:236
 msgid "Minimum required slippage is {minRequiredSlippage}"
 msgstr "Minimum required slippage is {minRequiredSlippage}"
 
