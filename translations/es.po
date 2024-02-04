@@ -8,7 +8,7 @@ msgstr ""
 "Language: es\n"
 "Project-Id-Version: rango\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-02-04 06:11\n"
+"PO-Revision-Date: 2024-02-04 13:25\n"
 "Last-Translator: \n"
 "Language-Team: Spanish\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -226,12 +226,12 @@ msgid "There are no notifications."
 msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/Quote.tsx:217
+#: widget/embedded/src/components/Quote/Quote.tsx:215
 msgid "Yours: {amount} {symbol}"
 msgstr "Tu: {amount} {symbol}"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/Quote.tsx:238
+#: widget/embedded/src/components/Quote/Quote.tsx:236
 msgid "Minimum required slippage is {minRequiredSlippage}"
 msgstr "El deslizamiento mínimo requerido es {minRequiredSlippage}"
 
