@@ -70,14 +70,14 @@ export class MathWalletCosmosSigner
         }));
 
         const signAndBroadcastResult =
-          await signingStargateClient.signAndBroadcast(
+          await signingStargateClient.signAndBroadcastSync(
             tx.fromWalletAddress,
             processedMsgs,
             fee as StdFee,
             memo as string
           );
 
-        return { hash: signAndBroadcastResult.transactionHash };
+        return { hash: signAndBroadcastResult };
       } else if (signType === 'DIRECT') {
         throw SignerError.UnimplementedError('signMessage');
       }
