@@ -34,13 +34,13 @@ export const useNotificationStore = createSelectors(
             route: {
               from: {
                 blockchain: fromStep.fromBlockchain,
-                tokenAddress: fromStep.fromSymbolAddress,
-                tokenSymbol: fromStep.fromSymbol,
+                address: fromStep.fromSymbolAddress,
+                symbol: fromStep.fromSymbol,
               },
               to: {
                 blockchain: toStep.toBlockchain,
-                tokenSymbol: toStep.toSymbol,
-                tokenAddress: toStep.toSymbolAddress,
+                address: toStep.toSymbolAddress,
+                symbol: toStep.toSymbol,
               },
             },
           };

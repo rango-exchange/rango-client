@@ -56,6 +56,7 @@ export const tokenChainStyles = css({
   alignItems: 'start',
   paddingLeft: '$10',
   flexGrow: 1,
+  textAlign: 'left',
 });
 
 export const skeletonStyles = css({

@@ -13,7 +13,7 @@ import {
   Typography,
 } from '@rango-dev/ui';
 import BigNumber from 'bignumber.js';
-import React, { useLayoutEffect, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 
 import {
   PERCENTAGE_CHANGE_MAX_DECIMALS,
@@ -42,7 +42,6 @@ import {
   basicInfoStyles,
   ContainerInfoOutput,
   Content,
-  EXPANDABLE_QUOTE_TRANSITION_DURATION,
   FrameIcon,
   HorizontalSeparator,
   QuoteContainer,
@@ -69,7 +68,6 @@ export function Quote(props: QuoteProps) {
 
   const [expanded, setExpanded] = useState(props.expanded);
   const quoteRef = useRef<HTMLButtonElement | null>(null);
-  const prevExpanded = useRef(expanded);
   const roundedInput = numberToString(
     input.value,
     TOKEN_AMOUNT_MIN_DECIMALS,
@@ -190,7 +188,7 @@ export function Quote(props: QuoteProps) {
                 title={
                   error?.type === QuoteErrorType.BRIDGE_LIMIT
                     ? error?.recommendation
-                    : i18n.t('Slippage Error:')
+                    : i18n.t(`Slippage ${stepHasError ? 'Error' : 'Warning'}:`)
                 }
                 footer={
                   <FooterAlert>
@@ -263,14 +261,6 @@ export function Quote(props: QuoteProps) {
   const steps = getQuoteSteps(quote.result?.swaps ?? []);
   const numberOfSteps = steps.length;
   const tooltipContainer = getContainer();
-  useLayoutEffect(() => {
-    if (expanded && !prevExpanded.current && quoteRef.current) {
-      setTimeout(() => {
-        quoteRef?.current?.scrollIntoView({ behavior: 'smooth' });
-      }, EXPANDABLE_QUOTE_TRANSITION_DURATION);
-    }
-    prevExpanded.current = expanded;
-  }, [expanded, prevExpanded]);
 
   return (
     <>

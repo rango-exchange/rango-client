@@ -1,12 +1,11 @@
 import type { PropTypes } from './CustomCollapsible.types';
 import type { PropsWithChildren } from 'react';
 
-import React, { useLayoutEffect, useRef } from 'react';
+import React, { useRef } from 'react';
 
 import {
   CollapsibleContent,
   CollapsibleRoot,
-  EXPANDABLE_TRANSITION_DURATION,
   Trigger,
 } from './CustomCollapsible.styles';
 
@@ -21,14 +20,6 @@ export function CustomCollapsible(props: PropsWithChildren<PropTypes>) {
     triggerAnchor,
   } = props;
   const ref = useRef<HTMLDivElement | null>(null);
-
-  useLayoutEffect(() => {
-    if (open && ref.current) {
-      setTimeout(() => {
-        ref?.current?.scrollIntoView({ behavior: 'smooth' });
-      }, EXPANDABLE_TRANSITION_DURATION);
-    }
-  }, [open]);
 
   return (
     <CollapsibleRoot

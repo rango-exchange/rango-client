@@ -8,13 +8,13 @@ import {
 type NotificationRoute = {
   from: {
     blockchain: Step['fromBlockchain'];
-    tokenSymbol: Step['fromSymbol'];
-    tokenAddress: Step['fromSymbolAddress'];
+    symbol: Step['fromSymbol'];
+    address: Step['fromSymbolAddress'];
   };
   to: {
     blockchain: Step['toBlockchain'];
-    tokenSymbol: Step['toSymbol'];
-    tokenAddress: Step['toSymbolAddress'];
+    symbol: Step['toSymbol'];
+    address: Step['toSymbolAddress'];
   };
 };
 

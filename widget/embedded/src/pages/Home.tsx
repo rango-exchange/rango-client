@@ -62,7 +62,7 @@ export function Home() {
     setQuoteWarningsConfirmed,
   } = useQuoteStore();
 
-  const fetchMetaStatus = useAppStore().fetchStatus;
+  const { config, fetchStatus: fetchMetaStatus } = useAppStore();
 
   const { connectedWallets, getBalanceFor } = useWalletsStore();
   const { isActiveTab } = useUiStore();
@@ -125,7 +125,6 @@ export function Home() {
   return (
     <Layout
       height="auto"
-      hasLogo
       footer={
         <Button
           type="primary"
@@ -152,7 +151,7 @@ export function Home() {
           navigate(navigationRoutes.wallets);
         },
         hasBackButton: false,
-        title: i18n.t('Swap'),
+        title: config.title || i18n.t('Swap'),
         suffix: (
           <HomeButtons
             onClickRefresh={

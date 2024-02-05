@@ -5,15 +5,15 @@ import {
   Button,
   Divider,
   MessageBox,
-  Modal,
   TokenAmount,
   Typography,
 } from '@rango-dev/ui';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { RANGO_SWAP_BOX_ID } from '../../constants';
+import { WIDGET_UI_ID } from '../../constants';
 import { getContainer } from '../../utils/common';
+import { WatermarkedModal } from '../common/WatermarkedModal';
 
 export function SwapDetailsCompleteModal(props: CompleteModalPropTypes) {
   const {
@@ -33,10 +33,12 @@ export function SwapDetailsCompleteModal(props: CompleteModalPropTypes) {
   const navigate = useNavigate();
 
   return (
-    <Modal
+    <WatermarkedModal
       open={open}
       onClose={onClose}
-      container={document.getElementById(RANGO_SWAP_BOX_ID) || document.body}>
+      container={
+        document.getElementById(WIDGET_UI_ID.SWAP_BOX_ID) || document.body
+      }>
       {status === 'success' ? (
         <MessageBox type="success" title={i18n.t('Swap Successful')}>
           <TokenAmount
@@ -105,6 +107,6 @@ export function SwapDetailsCompleteModal(props: CompleteModalPropTypes) {
           {i18n.t('See Details')}
         </Typography>
       </Button>
-    </Modal>
+    </WatermarkedModal>
   );
 }

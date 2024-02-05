@@ -1,12 +1,13 @@
 import { styled } from '@rango-dev/ui';
 
 const WIDGET_HEIGHT = '700px';
+
 export const Container = styled('div', {
   position: 'relative',
   display: 'flex',
   flexDirection: 'column',
   borderRadius: '$primary',
-  width: '100vh',
+  width: '100vw',
   minWidth: '300px',
   maxWidth: '390px',
   boxShadow: '15px 15px 15px 0px rgba(0, 0, 0, 0.05)',
@@ -35,12 +36,17 @@ export const Content = styled('div', {
   padding: 0,
   overflowY: 'auto',
 });
+
 export const Footer = styled('div', {
-  backgroundColor: '$background',
-  '& .footer__content': {
-    padding: '$0 $20',
-  },
+  padding: '0 $20 $10',
   '& .footer__logo': {
-    padding: '$0 $20 $10 $20',
+    opacity: 0,
+    transition: 'opacity 1s ease-in-out',
+    '&.logo__show': {
+      opacity: 1,
+    },
+    '&.logo__hidden': {
+      visibility: 'hidden',
+    },
   },
 });

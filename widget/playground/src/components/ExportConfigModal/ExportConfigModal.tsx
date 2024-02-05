@@ -67,7 +67,7 @@ export function ExportConfigModal(props: ExportConfigModalProps) {
         height: '90%',
         padding: '$20',
       }}
-      hasLogo={false}
+      hasWatermark={false}
       header={
         <ModalHeader>
           <Typography variant="headline" size="large">

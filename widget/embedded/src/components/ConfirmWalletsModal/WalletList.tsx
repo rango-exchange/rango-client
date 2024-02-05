@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-magic-numbers */
 import type { PropTypes } from './WalletList.type';
 import type { Wallet } from '../../types';
 import type { WalletInfo } from '@rango-dev/ui';
@@ -10,7 +9,6 @@ import {
   Divider,
   Image,
   MessageBox,
-  Modal,
   SelectableWallet,
   Typography,
   WalletState,
@@ -18,7 +16,7 @@ import {
 import React, { useEffect, useState } from 'react';
 
 import { useWallets } from '../..';
-import { RANGO_SWAP_BOX_ID } from '../../constants';
+import { WIDGET_UI_ID } from '../../constants';
 import { useWalletList } from '../../hooks/useWalletList';
 import {
   TIME_TO_CLOSE_MODAL,
@@ -33,6 +31,7 @@ import {
   getConciseAddress,
   isExperimentalChain,
 } from '../../utils/wallets';
+import { WatermarkedModal } from '../common/WatermarkedModal';
 import { WalletModal } from '../WalletModal';
 
 import { ShowMoreWallets } from './ConfirmWallets.styles';
@@ -42,6 +41,7 @@ import {
   WalletImageContainer,
 } from './WalletList.styles';
 
+const ACCOUNT_ADDRESS_MAX_CHARACTERS = 7;
 export function WalletList(props: PropTypes) {
   const { chain, isSelected, selectWallet, limit, onShowMore } = props;
   const { config } = useAppStore();
@@ -111,7 +111,7 @@ export function WalletList(props: PropTypes) {
   }, [JSON.stringify(list)]);
 
   const modalContainer = document.getElementById(
-    RANGO_SWAP_BOX_ID
+    WIDGET_UI_ID.SWAP_BOX_ID
   ) as HTMLDivElement;
 
   useEffect(() => {
@@ -141,7 +141,9 @@ export function WalletList(props: PropTypes) {
           walletType: wallet.type,
           chain,
         });
-        const conciseAddress = address ? getConciseAddress(address) : '';
+        const conciseAddress = address
+          ? getConciseAddress(address, ACCOUNT_ADDRESS_MAX_CHARACTERS)
+          : '';
 
         const experimentalChain = isExperimentalChain(blockchains(), chain);
 
@@ -199,7 +201,7 @@ export function WalletList(props: PropTypes) {
               error={error}
             />
             {!!experimentalChainWallet && (
-              <Modal
+              <WatermarkedModal
                 open={!!experimentalChainWallet && showExperimentalChainModal}
                 container={modalContainer}
                 onClose={() => {
@@ -229,10 +231,10 @@ export function WalletList(props: PropTypes) {
                     {i18n.t('Confirm')}
                   </Button>
                 </MessageBox>
-              </Modal>
+              </WatermarkedModal>
             )}
             {addingExperimentalChainStatus && (
-              <Modal
+              <WatermarkedModal
                 open={!!addingExperimentalChainStatus}
                 onClose={setAddingExperimentalChainStatus.bind(null, null)}
                 container={modalContainer}>
@@ -284,7 +286,7 @@ export function WalletList(props: PropTypes) {
                 )}
 
                 <Divider direction="vertical" size={32} />
-              </Modal>
+              </WatermarkedModal>
             )}
             <SelectableWallet
               key={wallet.type}

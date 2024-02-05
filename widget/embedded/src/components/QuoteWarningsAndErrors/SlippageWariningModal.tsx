@@ -4,7 +4,7 @@ import type {
 } from '../../types';
 
 import { i18n } from '@lingui/core';
-import { Button, Divider, MessageBox, Modal, Typography } from '@rango-dev/ui';
+import { Button, Divider, MessageBox, Typography } from '@rango-dev/ui';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -12,6 +12,7 @@ import { navigationRoutes } from '../../constants/navigationRoutes';
 import { useAppStore } from '../../store/AppStore';
 import { QuoteWarningType } from '../../types';
 import { getContainer } from '../../utils/common';
+import { WatermarkedModal } from '../common/WatermarkedModal';
 
 type PropsTypes = {
   open: boolean;
@@ -26,8 +27,9 @@ export function SlippageWarningModal(props: PropsTypes) {
   const { open, onClose, onConfirm, warning, confirmationDisabled } = props;
   const navigate = useNavigate();
   const userSlippage = customSlippage ?? slippage;
+
   return (
-    <Modal
+    <WatermarkedModal
       anchor="bottom"
       open={open}
       prefix={
@@ -74,6 +76,6 @@ export function SlippageWarningModal(props: PropsTypes) {
           {i18n.t('Confirm anyway')}
         </Button>
       </MessageBox>
-    </Modal>
+    </WatermarkedModal>
   );
 }

@@ -1,10 +1,9 @@
 /* eslint-disable @typescript-eslint/no-magic-numbers */
 import type { Asset, Token } from 'rango-sdk';
-import type { CommonProps } from 'react-window';
 
-import React, { forwardRef, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
-import { VirtualizedList } from '../VirtualizedList/VirtualizedList';
+import { VirtualizedList } from '../VirtualizedList';
 
 import { TokenItem } from './TokenItem';
 
@@ -64,40 +63,17 @@ export function TokenList(props: PropTypes) {
     setHasNextPage(list.length > tokens.length);
   }, [tokens.length]);
 
-  // eslint-disable-next-line react/display-name
-  const innerElementType: React.FC<CommonProps> = forwardRef(
-    // eslint-disable-next-line destructuring/in-params, react/prop-types
-    ({ style, ...rest }, ref) => {
-      return (
-        <div
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          ref={ref as any}
-          style={{
-            ...style,
-            // eslint-disable-next-line react/prop-types
-            height: `${parseFloat(style?.height as string) + 8 * 2}px`,
-          }}
-          {...rest}
-        />
-      );
-    }
-  );
-
   return (
     <VirtualizedList
-      Item={({ index, style }) => (
+      itemContent={(index) => (
         <TokenItem
           token={tokens[index]}
-          style={style}
           onClick={changeSelected}
           selected={isSelected(tokens[index])}
         />
       )}
-      hasNextPage={hasNextPage}
-      itemCount={tokens.length}
-      loadNextPage={loadNextPage}
-      innerElementType={innerElementType}
-      size={56}
+      totalCount={tokens.length}
+      endReached={hasNextPage ? loadNextPage : undefined}
     />
   );
 }

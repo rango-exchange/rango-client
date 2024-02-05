@@ -1,4 +1,4 @@
-import { RANGO_SWAP_BOX_ID } from '../constants';
+import { WIDGET_UI_ID } from '../constants';
 
 export function removeDuplicateFrom<T>(array: T[]): T[] {
   return Array.from(new Set(array));
@@ -33,4 +33,4 @@ export function containsText(text: string, searchText: string): boolean {
 }
 
 export const getContainer = () =>
-  document.getElementById(RANGO_SWAP_BOX_ID) as HTMLElement;
+  document.getElementById(WIDGET_UI_ID.SWAP_BOX_ID) as HTMLElement;

@@ -19,13 +19,11 @@ import {
   SelectDeselectText,
 } from '../MultiList/MultiList.styles';
 import { SearchInput } from '../SearchInput';
-import { InnerElementType } from '../SingleList';
 import { EmptyContainer } from '../SingleList/SingleList.styles';
 
 import { ListContainer, TokensHeaderList } from './TokensPanel.styles';
 
 const PAGE_SIZE = 20;
-const ITEM_HEIGHT = 46;
 export function TokensList(props: TokensListProps) {
   const {
     list,
@@ -122,17 +120,14 @@ export function TokensList(props: TokensListProps) {
           <Divider size={10} />
           <ListContainer>
             <VirtualizedList
-              Item={({ index, style }) => {
+              endReached={hasNextPage ? loadNextPage : undefined}
+              itemContent={(index) => {
                 return (
                   <div
                     style={{
-                      ...style,
                       paddingRight: 5,
                     }}>
                     <ListItemButton
-                      style={{
-                        height: style?.height,
-                      }}
                       start={
                         virtualList[index].image ? (
                           <Image
@@ -182,11 +177,7 @@ export function TokensList(props: TokensListProps) {
                   </div>
                 );
               }}
-              hasNextPage={hasNextPage}
-              itemCount={virtualList.length}
-              loadNextPage={loadNextPage}
-              innerElementType={InnerElementType}
-              size={ITEM_HEIGHT}
+              totalCount={virtualList.length}
             />
           </ListContainer>
         </>

@@ -36,8 +36,11 @@ export function Modal(props: PropsWithChildren<PropTypes>) {
     children,
     suffix,
     footer,
-    hasLogo = true,
+    hasWatermark = true,
+    hasCloseIcon = true,
+    transitionDuration,
   } = props;
+
   const [active, setActive] = useState(false);
   const [isMount, setIsMount] = useState(false);
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -57,13 +60,13 @@ export function Modal(props: PropsWithChildren<PropTypes>) {
         container.style.overflow = 'hidden';
         timeoutRef.current = setTimeout(() => {
           setActive(true);
-        }, OPEN_DELAY);
+        }, transitionDuration?.enter || OPEN_DELAY);
       } else {
         setActive(false);
         timeoutRef.current = setTimeout(() => {
           setIsMount(false);
           container.style.removeProperty('overflow');
-        }, CLOSED_DELAY);
+        }, transitionDuration?.exit || CLOSED_DELAY);
       }
     }
     return () => {
@@ -96,7 +99,7 @@ export function Modal(props: PropsWithChildren<PropTypes>) {
                   )}
                   <Flex>
                     {suffix}
-                    {dismissible && (
+                    {dismissible && hasCloseIcon && (
                       <IconButton onClick={onClose} variant="ghost">
                         <CloseIcon color="gray" size={14} />
                       </IconButton>
@@ -105,17 +108,18 @@ export function Modal(props: PropsWithChildren<PropTypes>) {
                 </ModalHeader>
               )}
               <Content>{children}</Content>
-              {(hasLogo || footer) && (
-                <Footer>
-                  <div className="footer__content">{footer}</div>
-                  {hasLogo && (
-                    <div className="footer__logo">
-                      <Divider size={12} />
-                      <BottomLogo />
-                    </div>
-                  )}
-                </Footer>
-              )}
+
+              <Footer>
+                {footer && <div className="footer__content">{footer}</div>}
+
+                <div
+                  className={`footer__logo ${
+                    hasWatermark ? 'logo__show' : 'logo__hidden'
+                  }`}>
+                  <Divider size={12} />
+                  <BottomLogo />
+                </div>
+              </Footer>
             </ModalContainer>
           </BackDrop>,
           container
