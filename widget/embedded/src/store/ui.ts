@@ -1,3 +1,4 @@
+import type { Watermark } from '../hooks/useFetchApiConfig';
 import type { TabManagerInterface } from '../libs/tabManager';
 
 import { create } from 'zustand';
@@ -10,11 +11,13 @@ interface UiState {
   isActiveTab: boolean;
   tabManagerInitiated: boolean;
   showActivateTabModal: boolean;
+  watermark: Watermark;
   activateCurrentTab: (
     setCurrentTabAsActive: () => void,
     hasRunningSwaps: boolean
   ) => void;
   setShowActivateTabModal: (flag: boolean) => void;
+  setWatermark: (watermark: Watermark) => void;
 }
 
 export const useUiStore = createSelectors(
@@ -22,6 +25,8 @@ export const useUiStore = createSelectors(
     isActiveTab: false,
     tabManagerInitiated: false,
     showActivateTabModal: false,
+    watermark: 'NONE',
+    fetchingApiConfig: false,
     activateCurrentTab: (setCurrentTabAsActive, hasRunningSwaps) => {
       const { showActivateTabModal } = get();
 
@@ -33,6 +38,9 @@ export const useUiStore = createSelectors(
     },
     setShowActivateTabModal: (flag) => {
       set({ showActivateTabModal: flag });
+    },
+    setWatermark: (watermark) => {
+      set({ watermark });
     },
   }))
 );

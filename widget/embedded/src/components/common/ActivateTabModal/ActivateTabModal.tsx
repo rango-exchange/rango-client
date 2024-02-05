@@ -1,15 +1,21 @@
 import type { PropTypes } from './ActivateTabModal.types';
 
 import { i18n } from '@lingui/core';
-import { Button, Divider, MessageBox, Modal } from '@rango-dev/ui';
+import { Button, Divider, MessageBox } from '@rango-dev/ui';
 import React from 'react';
 
 import { getContainer } from '../../../utils/common';
+import { WatermarkedModal } from '../WatermarkedModal';
 
 export function ActivateTabModal(props: PropTypes) {
   const { open, onClose, onConfirm } = props;
+
   return (
-    <Modal open={open} dismissible onClose={onClose} container={getContainer()}>
+    <WatermarkedModal
+      open={open}
+      dismissible
+      onClose={onClose}
+      container={getContainer()}>
       <MessageBox
         title={i18n.t('Activate current tab')}
         type="warning"
@@ -26,6 +32,6 @@ export function ActivateTabModal(props: PropTypes) {
           {i18n.t('Confirm')}
         </Button>
       </MessageBox>
-    </Modal>
+    </WatermarkedModal>
   );
 }

@@ -5,7 +5,6 @@ import {
   Button,
   Divider,
   MessageBox,
-  Modal,
   Typography,
   WarningIcon,
 } from '@rango-dev/ui';
@@ -22,6 +21,7 @@ import {
 } from '../../constants/routing';
 import { getContainer } from '../../utils/common';
 import { numberToString } from '../../utils/numbers';
+import { WatermarkedModal } from '../common/WatermarkedModal';
 
 import { QuoteErrorsModalItem } from './QuoteErrorsModalItem';
 import { Flex } from './QuoteWarningsAndErrors.styles';
@@ -37,6 +37,7 @@ type Props = {
 export function HighValueLossWarningModal(props: Props) {
   const { open, onClose, onConfirm, warning, confirmationDisabled } = props;
   const type = warning.warningLevel === 'high' ? 'error' : 'warning';
+
   const highValueLossData = [
     {
       title: i18n.t('Swapping'),
@@ -74,7 +75,7 @@ export function HighValueLossWarningModal(props: Props) {
   ];
 
   return (
-    <Modal open={open} onClose={onClose} container={getContainer()}>
+    <WatermarkedModal open={open} onClose={onClose} container={getContainer()}>
       <MessageBox
         type={type}
         title={errorMessages().highValueLossError.impactTitle}
@@ -104,6 +105,6 @@ export function HighValueLossWarningModal(props: Props) {
         onClick={onConfirm}>
         {errorMessages().highValueLossError.confirmMessage}
       </Button>
-    </Modal>
+    </WatermarkedModal>
   );
 }

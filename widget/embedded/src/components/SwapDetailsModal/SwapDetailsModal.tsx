@@ -1,10 +1,10 @@
 import type { ModalPropTypes } from './SwapDetailsModal.types';
 
-import { Modal } from '@rango-dev/ui';
 import { PendingSwapNetworkStatus } from 'rango-types';
 import React from 'react';
 
 import { WIDGET_UI_ID } from '../../constants';
+import { WatermarkedModal } from '../common/WatermarkedModal';
 
 import { CancelContent } from './SwapDetailsModal.Cancel';
 import { DeleteContent } from './SwapDetailsModal.Delete';
@@ -28,7 +28,7 @@ export function SwapDetailsModal(props: ModalPropTypes) {
     state === PendingSwapNetworkStatus.NetworkChanged;
 
   return (
-    <Modal
+    <WatermarkedModal
       open={!!state}
       onClose={onClose}
       container={
@@ -52,6 +52,6 @@ export function SwapDetailsModal(props: ModalPropTypes) {
       {state === 'cancel' && (
         <CancelContent onClose={onClose} onCancel={onCancel} />
       )}
-    </Modal>
+    </WatermarkedModal>
   );
 }
