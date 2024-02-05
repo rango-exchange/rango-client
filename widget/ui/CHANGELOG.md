@@ -1,3 +1,21 @@
+# [0.28.0](https://github.com/rango-exchange/rango-client/compare/ui@0.27.0...ui@0.28.0) (2024-02-05)
+
+
+### Bug Fixes
+
+* widget ui bugs ([7d97336](https://github.com/rango-exchange/rango-client/commit/7d97336f2bc78a0c2f466124eccfe87772e760ad))
+
+
+### Features
+
+* add right anchor prop to modal component ([f3f2dac](https://github.com/rango-exchange/rango-client/commit/f3f2dacc1c96173dbf5455cf631aae4207c6a27b))
+* add transitionDuration prop to modal component ([b4241c7](https://github.com/rango-exchange/rango-client/commit/b4241c73fab7e341e51c177496f2406ec7346a74))
+* Adding title to config and export IDs for accessing blockchain image and swap input ([c3cdd97](https://github.com/rango-exchange/rango-client/commit/c3cdd979068a44a8d45ced7066a7e514a898325d))
+* feature management from server ([2075ac8](https://github.com/rango-exchange/rango-client/commit/2075ac8514e98df6ac3514fe541eb047ba2e196a))
+* implement toast component ([f88bc8c](https://github.com/rango-exchange/rango-client/commit/f88bc8c9b51299a0612c073e419dc4e75a83b7b1))
+
+
+
 # [0.27.0](https://github.com/rango-exchange/rango-client/compare/ui@0.26.0...ui@0.27.0) (2024-01-22)
 
 
