@@ -69,7 +69,7 @@ msgstr "Currently, some transactions are running and being handled by other brow
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/common/ActivateTabModal/ActivateTabModal.tsx:32
 #: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:267
-#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:237
+#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:231
 msgid "Confirm"
 msgstr "Confirm"
 
@@ -110,44 +110,44 @@ msgid "Address {destination} doesn't match the blockchain address pattern."
 msgstr "Address {destination} doesn't match the blockchain address pattern."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:168
+#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:162
 msgid "Add {chain} chain"
 msgstr "Add {chain} chain"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:217
-#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:250
+#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:211
+#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:244
 msgid "Add {blockchainDisplayName} Chain"
 msgstr "Add {blockchainDisplayName} Chain"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:222
-#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:254
+#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:216
+#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:248
 msgid "You should connect a {blockchainDisplayName} supported wallet or choose a different {blockchainDisplayName} address"
 msgstr "You should connect a {blockchainDisplayName} supported wallet or choose a different {blockchainDisplayName} address"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:272
+#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:266
 msgid "{blockchainDisplayName} Chain Added"
 msgstr "{blockchainDisplayName} Chain Added"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:276
+#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:270
 msgid "{blockchainDisplayName} is added to your wallet, you can use it to swap."
 msgstr "{blockchainDisplayName} is added to your wallet, you can use it to swap."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:286
+#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:280
 msgid "Request Rejected"
 msgstr "Request Rejected"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:287
+#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:281
 msgid "You've rejected adding {blockchainDisplayName} chain to your wallet."
 msgstr "You've rejected adding {blockchainDisplayName} chain to your wallet."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:311
+#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:305
 msgid "Show more wallets"
 msgstr "Show more wallets"
 
@@ -841,13 +841,13 @@ msgid "Auto"
 msgstr "Auto"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/WalletsPage.tsx:72
+#: widget/embedded/src/pages/WalletsPage.tsx:66
 #: widget/ui/src/containers/ConnectWalletsModal/ConnectWalletsModal.tsx:30
 msgid "Connect Wallets"
 msgstr "Connect Wallets"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/WalletsPage.tsx:76
+#: widget/embedded/src/pages/WalletsPage.tsx:70
 msgid "Choose a wallet to connect."
 msgstr "Choose a wallet to connect."
 
