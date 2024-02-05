@@ -25,12 +25,15 @@ import { onScrollContentAttachStatusToContainer } from './Layout.helpers';
 import { Container, Content, Footer } from './Layout.styles';
 
 function Layout(props: PropsWithChildren<PropTypes>) {
-  const { children, header, footer, hasLogo = true, height = 'fixed' } = props;
   const { connectHeightObserver, disconnectHeightObserver } = useIframe();
+  const { children, header, footer, height = 'fixed' } = props;
   const connectedWallets = useWalletsStore.use.connectedWallets();
   const {
     config: { features, theme },
   } = useAppStore();
+  const { watermark } = useUiStore();
+
+  const hasWatermark = watermark === 'FULL';
   const { activeTheme } = useTheme(theme || {});
 
   const isConnectWalletHidden = isFeatureHidden(
@@ -83,7 +86,6 @@ function Layout(props: PropsWithChildren<PropTypes>) {
       'scroll',
       onScrollContentAttachStatusToContainer
     );
-
     return () => {
       scrollViewRef.current?.removeEventListener(
         'scroll',
@@ -121,25 +123,27 @@ function Layout(props: PropsWithChildren<PropTypes>) {
         onClose={() => setShowActivateTabModal(false)}
         onConfirm={onActivateTab}
       />
-      {(hasLogo || footer) && (
-        <Footer>
-          <div className="footer__content">
-            {footer}
-            {tabManagerInitiated && !isActiveTab && (
-              <>
-                <Divider size={12} />
-                <ActivateTabAlert onActivateTab={onActivateTab} />
-              </>
-            )}
-          </div>
-          <Divider size={12} />
-          {hasLogo && (
-            <div className="footer__logo">
-              <BottomLogo />
-            </div>
+
+      <Footer>
+        <div className="footer__content">
+          {footer}
+          {tabManagerInitiated && !isActiveTab && (
+            <>
+              <Divider size={12} />
+              <ActivateTabAlert onActivateTab={onActivateTab} />
+            </>
           )}
-        </Footer>
-      )}
+        </div>
+
+        <Divider size={12} />
+
+        <div
+          className={`footer__logo ${
+            hasWatermark ? 'logo__show' : 'logo__hidden'
+          }`}>
+          <BottomLogo />
+        </div>
+      </Footer>
     </Container>
   );
 }

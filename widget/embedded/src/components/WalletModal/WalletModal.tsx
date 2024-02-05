@@ -1,9 +1,10 @@
 import type { PropTypes } from './WalletModal.types';
 
-import { Divider, Modal } from '@rango-dev/ui';
+import { Divider } from '@rango-dev/ui';
 import React from 'react';
 
 import { WIDGET_UI_ID } from '../../constants';
+import { WatermarkedModal } from '../common/WatermarkedModal';
 
 import { ModalContent } from './WalletModalContent';
 
@@ -11,7 +12,7 @@ export function WalletModal(props: PropTypes) {
   const { open, onClose, ...otherProps } = props;
 
   return (
-    <Modal
+    <WatermarkedModal
       open={open}
       onClose={onClose}
       container={
@@ -19,6 +20,6 @@ export function WalletModal(props: PropTypes) {
       }>
       <ModalContent {...otherProps} />
       <Divider direction="vertical" size={32} />
-    </Modal>
+    </WatermarkedModal>
   );
 }
