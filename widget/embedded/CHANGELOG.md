@@ -1,3 +1,28 @@
+# [0.22.0](https://github.com/rango-exchange/rango-client/compare/widget-embedded@0.21.0...widget-embedded@0.22.0) (2024-02-05)
+
+
+### Bug Fixes
+
+* fix a bug in searching history items and add a skeleton for history list labels ([458a316](https://github.com/rango-exchange/rango-client/commit/458a316b4097cc3586be08b9a1e049b50f29648b))
+* remove auto scroll behavior from collapsible components ([5a4db2a](https://github.com/rango-exchange/rango-client/commit/5a4db2adf9dbf2fbb005933f293d5faedc25fc15))
+* reset wallet state that remains in the connecting ([dbf8bb9](https://github.com/rango-exchange/rango-client/commit/dbf8bb949c1ac308af338de1b8a672928bf98963))
+* widget ui bugs ([7d97336](https://github.com/rango-exchange/rango-client/commit/7d97336f2bc78a0c2f466124eccfe87772e760ad))
+
+
+### Features
+
+* add dynamicHeight to iframe ([08d68b6](https://github.com/rango-exchange/rango-client/commit/08d68b64bb6a3aeb24a9abe83f3dd972d9a09969))
+* add right anchor prop to modal component ([f3f2dac](https://github.com/rango-exchange/rango-client/commit/f3f2dacc1c96173dbf5455cf631aae4207c6a27b))
+* Adding title to config and export IDs for accessing blockchain image and swap input ([c3cdd97](https://github.com/rango-exchange/rango-client/commit/c3cdd979068a44a8d45ced7066a7e514a898325d))
+* feature management from server ([2075ac8](https://github.com/rango-exchange/rango-client/commit/2075ac8514e98df6ac3514fe541eb047ba2e196a))
+
+
+### Reverts
+
+* reset wallet state that remains in the connecting ([d48544d](https://github.com/rango-exchange/rango-client/commit/d48544d2a6a12916ccf879c1d8e50b313d75be1b))
+
+
+
 # [0.21.0](https://github.com/rango-exchange/rango-client/compare/widget-embedded@0.20.0...widget-embedded@0.21.0) (2024-01-22)
 
 
