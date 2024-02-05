@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-magic-numbers */
 import type { PropTypes, RenderDescProps } from './TokenList.types';
 import type { Token } from 'rango-sdk';
-import type { CommonProps } from 'react-window';
 
 import { i18n } from '@lingui/core';
 import {
@@ -16,7 +15,7 @@ import {
   Typography,
   VirtualizedList,
 } from '@rango-dev/ui';
-import React, { forwardRef, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { useAppStore } from '../../store/AppStore';
 import { useWalletsStore } from '../../store/wallets';
@@ -100,20 +99,6 @@ export function TokenList(props: PropTypes) {
   const { getBalanceFor, loading: loadingWallet } = useWalletsStore();
   const { isTokenPinned } = useAppStore();
 
-  // eslint-disable-next-line react/display-name
-  const innerElementType: React.FC<CommonProps> = forwardRef((render, ref) => {
-    return (
-      <div
-        {...render}
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        ref={ref as any}
-        style={{
-          ...render.style,
-          height: `${parseFloat(render.style?.height as string) + 8 * 2}px`,
-        }}
-      />
-    );
-  });
   const loadNextPage = () => {
     setTokens(list.slice(0, tokens.length + PAGE_SIZE));
   };
@@ -140,7 +125,8 @@ export function TokenList(props: PropTypes) {
     }
     return (
       <VirtualizedList
-        Item={({ index, style }) => {
+        endReached={hasNextPage ? loadNextPage : undefined}
+        itemContent={(index) => {
           const token = tokens[index];
           const tokenBalance = formatBalance(getBalanceFor(token));
           const address = token.address || '';
@@ -171,12 +157,10 @@ export function TokenList(props: PropTypes) {
           return (
             <div
               style={{
-                ...style,
                 paddingRight: 5,
               }}>
               <ListItemButton
                 style={{
-                  height: style?.height,
                   width: '100%',
                   overflow: 'hidden',
                 }}
@@ -261,11 +245,7 @@ export function TokenList(props: PropTypes) {
             </div>
           );
         }}
-        hasNextPage={hasNextPage}
-        itemCount={tokens.length}
-        loadNextPage={loadNextPage}
-        innerElementType={innerElementType}
-        size={60}
+        totalCount={tokens.length}
         key={`${selectedBlockchain}-${searchedFor}`}
       />
     );

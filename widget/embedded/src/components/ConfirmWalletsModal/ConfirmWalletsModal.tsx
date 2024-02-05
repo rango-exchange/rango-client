@@ -11,14 +11,13 @@ import {
   ChevronLeftIcon,
   Divider,
   MessageBox,
-  Modal,
   Typography,
   WalletIcon,
 } from '@rango-dev/ui';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { RANGO_SWAP_BOX_ID } from '../../constants';
+import { WIDGET_UI_ID } from '../../constants';
 import { getQuoteErrorMessage } from '../../constants/errors';
 import { getQuoteUpdateWarningMessage } from '../../constants/warnings';
 import { useAppStore } from '../../store/AppStore';
@@ -26,6 +25,7 @@ import { useQuoteStore } from '../../store/quote';
 import { useWalletsStore } from '../../store/wallets';
 import { getBlockchainShortNameFor } from '../../utils/meta';
 import { confirmSwapDisabled } from '../../utils/swap';
+import { WatermarkedModal } from '../common/WatermarkedModal';
 import { CustomCollapsible } from '../CustomCollapsible/CustomCollapsible';
 import { ExpandedIcon } from '../CustomCollapsible/CustomCollapsible.styles';
 
@@ -52,6 +52,7 @@ export function ConfirmWalletsModal(props: PropTypes) {
   //TODO: move component's logics to a custom hook
   const { open, onClose, onCancel, onCheckBalance, loading } = props;
   const config = useAppStore().config;
+
   const blockchains = useAppStore().blockchains();
   const {
     quote,
@@ -228,12 +229,13 @@ export function ConfirmWalletsModal(props: PropTypes) {
   }, [connectedWallets.length]);
 
   const modalContainer = document.getElementById(
-    RANGO_SWAP_BOX_ID
+    WIDGET_UI_ID.SWAP_BOX_ID
   ) as HTMLDivElement;
 
   const navigate = useNavigate();
+
   return (
-    <Modal
+    <WatermarkedModal
       open={open}
       onClose={() => {
         if (!quoteWalletsConfirmed) {
@@ -291,7 +293,7 @@ export function ConfirmWalletsModal(props: PropTypes) {
         ),
       })}
       anchor="center">
-      <Modal
+      <WatermarkedModal
         open={balanceWarnings.length > 0}
         onClose={setBalanceWarnings.bind(null, [])}
         container={modalContainer}>
@@ -308,7 +310,7 @@ export function ConfirmWalletsModal(props: PropTypes) {
             {i18n.t('Proceed anyway')}
           </Button>
         </MessageBox>
-      </Modal>
+      </WatermarkedModal>
       {showMoreWalletFor && (
         <WalletsContainer>
           <div className={walletsListStyles()}>
@@ -467,6 +469,6 @@ export function ConfirmWalletsModal(props: PropTypes) {
           </Wallets>
         </>
       )}
-    </Modal>
+    </WatermarkedModal>
   );
 }

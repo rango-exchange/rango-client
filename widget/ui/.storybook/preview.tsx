@@ -56,7 +56,7 @@ export const withTheme: Decorator = (StoryFn, context) => {
   switch (theme) {
     case 'side-by-side':
       return (
-        <I18nManager>
+        <I18nManager language="en">
           <ThemeBlock position="left" className={lightTheme}>
             <StoryFn />
           </ThemeBlock>
@@ -68,7 +68,7 @@ export const withTheme: Decorator = (StoryFn, context) => {
 
     default:
       return (
-        <I18nManager>
+        <I18nManager language="en">
           <ThemeBlock position="fill" className={storyTheme}>
             <StoryFn />
           </ThemeBlock>

@@ -5,4 +5,6 @@ export enum SearchParams {
   TO_TOKEN = 'toToken',
   FROM_AMOUNT = 'fromAmount',
   AUTO_CONNECT = 'autoConnect',
+  // iframe environments
+  CLIENT_URL = 'clientUrl',
 }

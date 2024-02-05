@@ -10,6 +10,7 @@ import {
   Tooltip,
   Typography,
 } from '../../components';
+import { UI_ID } from '../../constants';
 
 import {
   amountStyles,
@@ -32,7 +33,13 @@ export function SwapInput(props: SwapInputProps) {
   const showBalanceSkeleton =
     'balance' in props && (props.loading || props.loadingBalance);
   return (
-    <Container sharpBottomStyle={props.sharpBottomStyle}>
+    <Container
+      id={
+        props.mode === 'To'
+          ? UI_ID.SWAP_TO_INPUT_CONTAINER_ID
+          : UI_ID.SWAP_FROM_INPUT_CONTAINER_ID
+      }
+      sharpBottomStyle={props.sharpBottomStyle}>
       <div className={labelContainerStyles()}>
         <div className={labelStyles()}>
           <Typography variant="body" size="small" className={textStyles()}>
@@ -67,6 +74,11 @@ export function SwapInput(props: SwapInputProps) {
       <div className={formStyles()}>
         <TokenSection
           chain={props.chain.displayName}
+          chianImageId={
+            props.mode === 'To'
+              ? UI_ID.SWAP_TO_CHAIN_IMAGE_ID
+              : UI_ID.SWAP_FROM_CHAIN_IMAGE_ID
+          }
           tokenSymbol={props.token.displayName}
           error={props.error}
           chainImage={props.chain.image}

@@ -1,6 +1,4 @@
 import type { PropTypes } from './SingleList.types';
-import type { ForwardedRef } from 'react';
-import type { CommonProps } from 'react-window';
 
 import {
   Divider,
@@ -12,7 +10,7 @@ import {
   Typography,
   VirtualizedList,
 } from '@rango-dev/ui';
-import React, { forwardRef, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { SearchInput } from '../SearchInput';
 
@@ -24,8 +22,6 @@ import {
 } from './SingleList.styles';
 
 const PAGE_SIZE = 30;
-const ITEM_HEIGHT = 46;
-const PADDING_SPACE = 8;
 
 export function SingleList(props: PropTypes) {
   const { list, onChange, defaultValue, title, icon, searchPlaceholder } =
@@ -91,18 +87,15 @@ export function SingleList(props: PropTypes) {
               height: '100%',
             }}>
             <VirtualizedList
-              Item={({ index, style }) => {
+              endReached={hasNextPage ? loadNextPage : undefined}
+              itemContent={(index) => {
                 const Icon = virtualList[index].Icon;
                 return (
                   <div
                     style={{
-                      ...style,
                       paddingRight: 5,
                     }}>
                     <ListItemButton
-                      style={{
-                        height: style?.height,
-                      }}
                       start={
                         virtualList[index].image ? (
                           <Image
@@ -128,11 +121,7 @@ export function SingleList(props: PropTypes) {
                   </div>
                 );
               }}
-              hasNextPage={hasNextPage}
-              itemCount={virtualList.length}
-              loadNextPage={loadNextPage}
-              innerElementType={InnerElementType}
-              size={ITEM_HEIGHT}
+              totalCount={virtualList.length}
             />
           </RadioRoot>
         </RadioList>
@@ -151,21 +140,3 @@ export function SingleList(props: PropTypes) {
     </>
   );
 }
-
-export const InnerElementType: React.FC<CommonProps> = forwardRef(
-  (render, ref) => {
-    return (
-      <div
-        {...render}
-        ref={ref as ForwardedRef<HTMLDivElement>}
-        style={{
-          ...render.style,
-          height: `${
-            parseFloat(render.style?.height as string) + PADDING_SPACE * 2
-          }px`,
-        }}
-      />
-    );
-  }
-);
-InnerElementType.displayName = 'InnerElementType';

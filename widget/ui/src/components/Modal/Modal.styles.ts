@@ -25,6 +25,13 @@ export const BackDrop = styled('div', {
         justifyContent: 'center',
         alignItems: 'center',
       },
+      right: {
+        right: '0',
+        left: 'unset',
+        borderTopRightRadius: '0',
+        borderBottomRightRadius: '0',
+        justifyContent: 'end',
+      },
     },
     active: {
       true: {
@@ -51,6 +58,11 @@ export const ModalContainer = styled('div', {
         maxHeight: '95%',
       },
       center: { height: '100%' },
+      right: {
+        borderTopRightRadius: '0',
+        borderBottomRightRadius: '0',
+        transform: 'translateX(100%)',
+      },
     },
     active: {
       true: {
@@ -58,6 +70,15 @@ export const ModalContainer = styled('div', {
       },
     },
   },
+  compoundVariants: [
+    {
+      active: true,
+      anchor: 'right',
+      css: {
+        transform: 'translateX(0)',
+      },
+    },
+  ],
 });
 
 export const Flex = styled('div', {
@@ -95,10 +116,13 @@ export const Content = styled('div', {
 });
 
 export const Footer = styled('div', {
-  '& .footer__content': {
-    padding: '$0 $20',
-  },
+  padding: '0 $20 $10',
   '& .footer__logo': {
-    padding: '$0 $20 $10 $20',
+    '&.logo__show': {
+      opacity: 1,
+    },
+    '&.logo__hidden': {
+      visibility: 'hidden',
+    },
   },
 });

@@ -11,7 +11,7 @@ import { isPositiveNumber } from '../utils/numbers';
 import { generateQuoteWarnings } from '../utils/quote';
 import { isFeatureEnabled } from '../utils/settings';
 import { createQuoteRequestBody } from '../utils/swap';
-import { tokensAreEqual } from '../utils/wallets';
+import { areTokensEqual } from '../utils/wallets';
 
 import {
   handleQuoteErrors,
@@ -68,7 +68,7 @@ export function useSwapInput(): UseSwapInput {
   const tokensValueInvalid = !fromToken || !toToken;
   const shouldSkipRequest =
     tokensValueInvalid ||
-    tokensAreEqual(fromToken, toToken) ||
+    areTokensEqual(fromToken, toToken) ||
     !isPositiveNumber(inputAmount);
 
   const resetState = (loading: boolean) => {

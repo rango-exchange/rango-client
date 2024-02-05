@@ -9,7 +9,7 @@ import { OverlayPanel } from '../../components/OverlayPanel';
 import { SingleList } from '../../components/SingleList';
 import { useConfigStore } from '../../store/config';
 import { useMetaStore } from '../../store/meta';
-import { tokensAreEqual, tokenToString } from '../../utils/common';
+import { areTokensEqual, tokenToString } from '../../utils/common';
 import { isTokenExcludedInConfig } from '../../utils/configs';
 import { ModalState } from '../FunctionalLayout/FunctionalLayout.types';
 
@@ -36,7 +36,7 @@ export function DefaultChainAndToken({ type }: { type: Type }) {
     (chain) => chain.name === selectedType?.blockchain
   );
   const tokenValue = tokens.find((token) =>
-    tokensAreEqual(token, selectedType?.token)
+    areTokensEqual(token, selectedType?.token)
   );
 
   const handleDefaultBlockchainConfirm = (item: string) => {

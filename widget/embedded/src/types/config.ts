@@ -184,6 +184,7 @@ export type Features = Partial<
 export type WidgetConfig = {
   apiKey: string;
   apiUrl?: string;
+  title?: string;
   walletConnectProjectId?: string;
   affiliate?: WidgetAffiliate;
   amount?: number;

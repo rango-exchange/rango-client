@@ -7,6 +7,7 @@ import { AppRouter } from '../../components/AppRouter';
 import { AppRoutes } from '../../components/AppRoutes';
 import { WidgetEvents } from '../../components/WidgetEvents';
 import { globalFont } from '../../globalStyles';
+import { useFetchApiConfig } from '../../hooks/useFetchApiConfig';
 import { useLanguage } from '../../hooks/useLanguage';
 import { useTheme } from '../../hooks/useTheme';
 import { useAppStore } from '../../store/AppStore';
@@ -25,10 +26,11 @@ export function Main() {
     useState<string>('');
   const [disconnectedWallet, setDisconnectedWallet] = useState<WalletType>();
   const widgetContext = useContext(WidgetContext);
-
+  const { fetchApiConfig } = useFetchApiConfig();
   useEffect(() => {
     void useNotificationStore.persist.rehydrate();
     widgetContext.onConnectWallet(setLastConnectedWalletWithNetwork);
+    void fetchApiConfig().catch(console.log);
   }, []);
 
   return (

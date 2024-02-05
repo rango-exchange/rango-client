@@ -7,6 +7,7 @@ type BaseSizes = Exclude<BaseProps['size'], object>;
 export type PropTypes = {
   tokenImage: string;
   chainImage: string;
+  chianImageId?: string;
   size: NonNullable<BaseSizes>;
   useAsPlaceholder?: boolean;
   loading?: boolean;

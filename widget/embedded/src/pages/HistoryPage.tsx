@@ -6,15 +6,15 @@ import { Divider, NotFound, styled } from '@rango-dev/ui';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import { HistoryGroupedList } from '../components/HistoryGroupedList';
+import { NotFoundContainer } from '../components/HistoryGroupedList/HistoryGroupedList.styles';
 import { Layout, PageContainer } from '../components/Layout';
 import { SearchInput } from '../components/SearchInput';
-import { SwapsGroup } from '../components/SwapsGroup';
-import { NotFoundContainer } from '../components/SwapsGroup/SwapsGroup.styles';
 import { groupSwapsByDate } from '../utils/date';
 import { containsText } from '../utils/numbers';
 import { getPendingSwaps } from '../utils/queue';
 
-const SwapsGroupContainer = styled('div', {
+const HistoryGroupedListContainer = styled('div', {
   overflowY: 'visible',
   width: '100%',
   display: 'flex',
@@ -77,7 +77,7 @@ export function HistoryPage() {
           value={searchedFor}
         />
         <Divider size="16" />
-        <SwapsGroupContainer>
+        <HistoryGroupedListContainer>
           {isEmpty && (
             <NotFoundContainer>
               <Divider size={32} />
@@ -90,14 +90,14 @@ export function HistoryPage() {
             </NotFoundContainer>
           )}
           {!isEmpty && (
-            <SwapsGroup
+            <HistoryGroupedList
               list={filteredList}
               onSwapClick={navigate}
               groupBy={groupSwapsByDate}
               isLoading={loading}
             />
           )}
-        </SwapsGroupContainer>
+        </HistoryGroupedListContainer>
       </PageContainer>
     </Layout>
   );

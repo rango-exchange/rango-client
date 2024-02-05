@@ -1,10 +1,11 @@
 import type { UnknownPriceWarning } from '../../types';
 
-import { Button, Divider, MessageBox, Modal, WarningIcon } from '@rango-dev/ui';
+import { Button, Divider, MessageBox, WarningIcon } from '@rango-dev/ui';
 import React from 'react';
 
 import { errorMessages } from '../../constants/errors';
 import { getContainer } from '../../utils/common';
+import { WatermarkedModal } from '../common/WatermarkedModal';
 
 type Props = {
   open: boolean;
@@ -16,9 +17,8 @@ type Props = {
 
 export function UnknownPriceWarningModal(props: Props) {
   const { open, onClose, onConfirm, confirmationDisabled } = props;
-
   return (
-    <Modal open={open} onClose={onClose} container={getContainer()}>
+    <WatermarkedModal open={open} onClose={onClose} container={getContainer()}>
       <MessageBox
         type="warning"
         title={errorMessages().unknownPriceError.impactTitle}
@@ -35,6 +35,6 @@ export function UnknownPriceWarningModal(props: Props) {
         onClick={onConfirm}>
         {errorMessages().unknownPriceError.confirmMessage}
       </Button>
-    </Modal>
+    </WatermarkedModal>
   );
 }

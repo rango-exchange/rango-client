@@ -7,7 +7,6 @@ import {
   CloseIcon,
   Divider,
   IconButton,
-  Modal,
   QuoteCost,
   Tooltip,
   Typography,
@@ -36,6 +35,7 @@ import {
   getTotalFeesInUsd,
   getUsdFee,
 } from '../../utils/swap';
+import { WatermarkedModal } from '../common/WatermarkedModal';
 import { CustomCollapsible } from '../CustomCollapsible/CustomCollapsible';
 import { ExpandedIcon } from '../CustomCollapsible/CustomCollapsible.styles';
 
@@ -96,7 +96,7 @@ export function QuoteCostDetails(props: QuoteCostDetailsProps) {
         tooltipContainer={container}
       />
 
-      <Modal
+      <WatermarkedModal
         container={container}
         open={open}
         header={
@@ -212,7 +212,7 @@ export function QuoteCostDetails(props: QuoteCostDetailsProps) {
             </CustomCollapsible>
           )}
         </ModalContainer>
-      </Modal>
+      </WatermarkedModal>
     </>
   );
 }

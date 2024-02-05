@@ -39,7 +39,8 @@ export function HomeButtons(props: HomeButtonsPropTypes) {
 
       {!isNotificationsHidden && (
         <Popover
-          align="center"
+          align="end"
+          alignOffset={-88}
           collisionPadding={{ right: 20, left: 20 }}
           container={getContainer()}
           content={<NotificationContent />}>
