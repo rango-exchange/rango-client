@@ -551,7 +551,3 @@ export const isFetchingBalance = (
   !!connectedWallets.find(
     (wallet) => wallet.chain === blockchain && wallet.loading
   );
-
-export function hashWalletsState(walletsInfo: ModalWalletInfo[]) {
-  return walletsInfo.map((w) => w.state).join('-');
-}

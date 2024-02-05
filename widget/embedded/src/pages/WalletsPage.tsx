@@ -35,29 +35,23 @@ export function WalletsPage() {
   let modalTimerId: ReturnType<typeof setTimeout> | null = null;
   const isActiveTab = useUiStore.use.isActiveTab();
 
-  const { list, handleClick, error, disconnectConnectingWallets } =
-    useWalletList({
-      config,
-      onBeforeConnect: (type) => {
-        modalTimerId = setTimeout(() => {
-          setOpenModal(true);
-          setSelectedWalletType(type);
-        }, TIME_TO_IGNORE_MODAL);
-      },
-      onConnect: () => {
-        if (modalTimerId) {
-          clearTimeout(modalTimerId);
-        }
-        setTimeout(() => {
-          setOpenModal(false);
-        }, TIME_TO_CLOSE_MODAL);
-      },
-    });
-
-  const handleCloseWalletModal = () => {
-    disconnectConnectingWallets();
-    setOpenModal(false);
-  };
+  const { list, handleClick, error } = useWalletList({
+    config,
+    onBeforeConnect: (type) => {
+      modalTimerId = setTimeout(() => {
+        setOpenModal(true);
+        setSelectedWalletType(type);
+      }, TIME_TO_IGNORE_MODAL);
+    },
+    onConnect: () => {
+      if (modalTimerId) {
+        clearTimeout(modalTimerId);
+      }
+      setTimeout(() => {
+        setOpenModal(false);
+      }, TIME_TO_CLOSE_MODAL);
+    },
+  });
 
   const selectedWallet = list.find(
     (wallet) => wallet.type === selectedWalletType
@@ -93,7 +87,7 @@ export function WalletsPage() {
           })}
           <WalletModal
             open={!!openModal}
-            onClose={handleCloseWalletModal}
+            onClose={() => setOpenModal(false)}
             image={selectedWalletImage}
             state={selectedWalletState}
             error={error}
