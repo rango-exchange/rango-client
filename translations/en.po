@@ -186,18 +186,11 @@ msgid "Connect Wallet"
 msgstr "Connect Wallet"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/HistoryGroupedList/HistoryGroupedList.tsx:57
-#: widget/embedded/src/components/HistoryGroupedList/HistoryGroupedList.tsx:124
+#: widget/embedded/src/components/HistoryGroupedList/HistoryGroupedList.tsx:118
 #: widget/embedded/src/utils/date.ts:18
 #: widget/embedded/src/utils/time.ts:22
 msgid "Today"
 msgstr "Today"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/HistoryGroupedList/HistoryGroupedList.tsx:61
-#: widget/embedded/src/utils/date.ts:32
-msgid "This month"
-msgstr "This month"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/LoadingSwapDetails/LoadingSwapDetails.tsx:20
@@ -862,6 +855,11 @@ msgstr "Choose a wallet to connect."
 #: widget/embedded/src/utils/date.ts:25
 msgid "This week"
 msgstr "This week"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/utils/date.ts:32
+msgid "This month"
+msgstr "This month"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/utils/date.ts:39

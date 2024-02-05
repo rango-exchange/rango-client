@@ -8,7 +8,7 @@ msgstr ""
 "Language: ja\n"
 "Project-Id-Version: rango\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-02-04 13:25\n"
+"PO-Revision-Date: 2024-02-05 08:05\n"
 "Last-Translator: \n"
 "Language-Team: Japanese\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
@@ -191,18 +191,11 @@ msgid "Connect Wallet"
 msgstr "ウォレットに接続"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/HistoryGroupedList/HistoryGroupedList.tsx:57
-#: widget/embedded/src/components/HistoryGroupedList/HistoryGroupedList.tsx:124
+#: widget/embedded/src/components/HistoryGroupedList/HistoryGroupedList.tsx:118
 #: widget/embedded/src/utils/date.ts:18
 #: widget/embedded/src/utils/time.ts:22
 msgid "Today"
 msgstr "今日"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/HistoryGroupedList/HistoryGroupedList.tsx:61
-#: widget/embedded/src/utils/date.ts:32
-msgid "This month"
-msgstr ""
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/LoadingSwapDetails/LoadingSwapDetails.tsx:20
@@ -863,6 +856,11 @@ msgstr "接続するウォレットを選択してください。"
 #. js-lingui-explicit-id
 #: widget/embedded/src/utils/date.ts:25
 msgid "This week"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/utils/date.ts:32
+msgid "This month"
 msgstr ""
 
 #. js-lingui-explicit-id
