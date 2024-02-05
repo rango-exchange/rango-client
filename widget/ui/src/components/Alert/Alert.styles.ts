@@ -39,6 +39,17 @@ export const Container = styled('div', {
           fontWeight: '$medium',
         },
       },
+      toast: {
+        backgroundColor: '$background',
+        padding: '$10',
+        borderRadius: '10px',
+        minWidth: '420px',
+        '.title_typography': {
+          fontSize: '14px',
+          lineHeight: '20px',
+          color: '$neutral700',
+        },
+      },
     },
   },
 
@@ -94,6 +105,9 @@ export const Main = styled('div', {
   display: 'flex',
   alignItems: 'center',
   alignSelf: 'stretch',
+  '.toast_title_container': {
+    gap: '$5',
+  },
   variants: {
     variant: {
       regular: {
@@ -101,6 +115,9 @@ export const Main = styled('div', {
       },
       alarm: {
         justifyContent: 'flex-start',
+      },
+      toast: {
+        justifyContent: 'space-between',
       },
     },
   },

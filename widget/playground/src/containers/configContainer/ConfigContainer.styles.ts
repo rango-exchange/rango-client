@@ -1,4 +1,4 @@
-import { Button, darkTheme, styled } from '@rango-dev/ui';
+import { Button, darkTheme, keyframes, styled } from '@rango-dev/ui';
 
 export const Layout = styled('div', {
   borderRadius: '20px',
@@ -35,6 +35,7 @@ export const LeftSide = styled('div', {
 });
 
 export const Main = styled('div', {
+  position: 'relative',
   justifyContent: 'center',
   alignItems: 'center',
   flexDirection: 'column',
@@ -59,6 +60,9 @@ export const ResetButton = styled(StyledButton, {
   border: '1px solid $secondary500',
   width: '230px',
   height: '40px',
+  '&:disabled': {
+    border: '1px solid $neutral600',
+  },
 });
 
 export const Content = styled('div', {
@@ -128,4 +132,34 @@ export const BoundarySection = styled('div', {
   padding: '$15 $20',
   background: '$neutral100',
   borderRadius: '$xm',
+});
+
+const SuccessfulResetAlertContainerTransform = keyframes({
+  '0%': {
+    transform: 'translateY(24px) translateX(-50%)',
+    opacity: 0,
+  },
+  '100%': {
+    transform: 'translateY(0) translateX(-50%)',
+    opacity: 1,
+  },
+});
+
+export const SuccessfulResetAlertContainer = styled('div', {
+  display: 'inline',
+  position: 'absolute',
+  bottom: '$20',
+  left: '50%',
+  variants: {
+    visible: {
+      true: {
+        animation: `${SuccessfulResetAlertContainerTransform} .5s ease-in-out`,
+        transform: 'translateY(0) translateX(-50%)',
+        opacity: 1,
+      },
+      false: {
+        opacity: 0,
+      },
+    },
+  },
 });

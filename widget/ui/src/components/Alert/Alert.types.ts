@@ -7,6 +7,6 @@ export interface PropTypes {
   title?: ReactNode;
   footer?: ReactNode;
   action?: ReactNode;
-  variant?: 'alarm' | 'regular';
+  variant?: 'alarm' | 'regular' | 'toast';
   containerStyles?: CSSProperties;
 }

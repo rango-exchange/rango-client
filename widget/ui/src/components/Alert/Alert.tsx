@@ -10,6 +10,12 @@ import { getColor } from './Alert.helpers';
 import { Container, IconHighlight, Main, titleStyles } from './Alert.styles';
 import AlertIcon from './AlertIcon';
 
+enum TitleSize {
+  toast = 'medium',
+  regular = 'xsmall',
+  alarm = 'small',
+}
+
 export function Alert(props: PropsWithChildren<PropTypes>) {
   const {
     type,
@@ -28,7 +34,10 @@ export function Alert(props: PropsWithChildren<PropTypes>) {
       type={type}
       variant={variant}>
       <Main variant={variant}>
-        <div className={titleStyles()}>
+        <div
+          className={`${titleStyles()} ${
+            variant === 'toast' && 'toast_title_container'
+          }`}>
           <IconHighlight type={type}>
             <AlertIcon type={type} />
           </IconHighlight>
@@ -38,7 +47,7 @@ export function Alert(props: PropsWithChildren<PropTypes>) {
               color={getColor(type, variant)}
               variant="body"
               className="title_typography"
-              size={variant === 'regular' ? 'xsmall' : 'small'}>
+              size={TitleSize[variant]}>
               {title}
             </Typography>
           )}

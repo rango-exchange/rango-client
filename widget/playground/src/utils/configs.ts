@@ -1,7 +1,10 @@
-import type { Tokens } from '@rango-dev/widget-embedded';
+import type { Tokens, WidgetConfig } from '@rango-dev/widget-embedded';
 import type { Token } from 'rango-sdk';
 
-import { areTokensEqual } from './common';
+import { initialConfig } from '../store/config';
+
+import { areTokensEqual, shallowEqual } from './common';
+import { filterConfig } from './export';
 
 interface Configs {
   API_KEY: string;
@@ -42,4 +45,11 @@ export const isTokenExcludedInConfig = (
     return (!isExcluded && !result) || (isExcluded && result);
   }
   return result;
+};
+
+export const isConfigChanged = (widgetConfig: WidgetConfig) => {
+  return !shallowEqual(
+    filterConfig(initialConfig, initialConfig)?.filteredConfigForExport,
+    filterConfig(widgetConfig, initialConfig)?.filteredConfigForExport
+  );
 };
