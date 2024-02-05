@@ -8,7 +8,7 @@ msgstr ""
 "Language: ja\n"
 "Project-Id-Version: rango\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-02-05 11:10\n"
+"PO-Revision-Date: 2024-02-05 11:57\n"
 "Last-Translator: \n"
 "Language-Team: Japanese\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
@@ -54,22 +54,22 @@ msgstr "その他 +{count}"
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/common/ActivateTabAlert/ActivateTabAlert.tsx:16
 msgid "Activate"
-msgstr ""
+msgstr "有効にする"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/common/ActivateTabAlert/ActivateTabAlert.tsx:21
 msgid "Another tab is open and handles transactions. You can activate this tab."
-msgstr ""
+msgstr "別のタブはオープンでトランザクションを処理します。このタブを有効にすることができます。"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/common/ActivateTabModal/ActivateTabModal.tsx:20
 msgid "Activate current tab"
-msgstr ""
+msgstr "現在のタブを有効にする"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/common/ActivateTabModal/ActivateTabModal.tsx:22
 msgid "Currently, some transactions are running and being handled by other browser tab. If you activate this tab, all transactions that are already in the transaction sign step will expire."
-msgstr ""
+msgstr "現在、一部のトランザクションが実行され、他のブラウザタブで処理されています。 このタブを有効にすると、すでにトランザクション記号のステップにあるすべてのトランザクションが期限切れになります。"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/common/ActivateTabModal/ActivateTabModal.tsx:32
@@ -216,7 +216,7 @@ msgstr "Reset"
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/NotificationContent/NotificationNotFound.tsx:13
 msgid "There are no notifications."
-msgstr ""
+msgstr "通知はありません。"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/Quote/Quote.tsx:215
@@ -231,12 +231,12 @@ msgstr "最小必要なスリップページは {minRequiredSlippage}です"
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:95
 msgid "View more info"
-msgstr ""
+msgstr "詳細情報を表示"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:105
 msgid "Gas & Fee Explanation"
-msgstr ""
+msgstr "ガス&料金の説明"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:116
@@ -247,48 +247,49 @@ msgstr "詳細"
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:157
 msgid "Total Payable Fee"
-msgstr ""
+msgstr "合計支払手数料"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:177
 msgid "Hide non-payable fees"
-msgstr ""
+msgstr "支払い不可能な手数料を非表示"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:178
 msgid "Show non-payable fees"
-msgstr ""
+msgstr "未払い手数料を表示"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:188
 msgid "Description"
-msgstr ""
+msgstr "説明"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:192
 msgid "The following fees are considered in the transaction output and\n"
 "                you won’t need to pay extra gas for them."
-msgstr ""
+msgstr "以下の手数料は取引の出力で考慮され、\n"
+"                余分なガスを支払う必要はありません。"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/Quote/QuoteSummary.tsx:25
 msgid "Swap input"
-msgstr ""
+msgstr "Swap input"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/Quote/QuoteSummary.tsx:44
 msgid "Estimated output"
-msgstr ""
+msgstr "推定された出力"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/Quote/QuoteTrigger .tsx:73
 msgid "Via:"
-msgstr ""
+msgstr "ビア:"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/Quote/QuoteTrigger .tsx:156
 msgid "Chains:"
-msgstr ""
+msgstr "チェーン:"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/QuoteWarningsAndErrors/HighValueLossWarningModal.tsx:43
@@ -381,7 +382,7 @@ msgstr "警告"
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/Slippage/SlippageTooltipContent.tsx:17
 msgid "This setting is applied per step (e.g. 1Inch, Thorchain, etc) which means only the step will be reverted, not the whole transaction."
-msgstr ""
+msgstr "この設定はステップごとに適用されます(例えば、1インチ、Thorchainなど)。これはステップのみが取り消され、トランザクション全体ではありません。"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetails/SwapDetails.Placeholder.tsx:25
@@ -651,27 +652,27 @@ msgstr "ルートはEthereumを通過します。続行しますか？"
 #. js-lingui-explicit-id
 #: widget/embedded/src/constants/quote.ts:13
 msgid "Network Fee"
-msgstr ""
+msgstr "ネットワーク手数料"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/constants/quote.ts:14
 msgid "Protocol Fee"
-msgstr ""
+msgstr "プロトコル手数料"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/constants/quote.ts:15
 msgid "Affiliate Fee"
-msgstr ""
+msgstr "アフィリエイト手数料"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/constants/quote.ts:16
 msgid "Outbound Fee"
-msgstr ""
+msgstr "送金手数料"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/constants/quote.ts:17
 msgid "Rango Fee"
-msgstr ""
+msgstr "Rango手数料"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/constants/warnings.ts:10
@@ -753,12 +754,12 @@ msgstr "ブリッジ"
 #. js-lingui-explicit-id
 #: widget/embedded/src/pages/LiquiditySourcePage.tsx:106
 msgid "Deselect all"
-msgstr ""
+msgstr "すべての選択を解除"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/pages/LiquiditySourcePage.tsx:106
 msgid "Select all"
-msgstr ""
+msgstr "すべて選択"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/pages/LiquiditySourcePage.tsx:118
@@ -773,12 +774,12 @@ msgstr "ブロックチェーンを検索"
 #. js-lingui-explicit-id
 #: widget/embedded/src/pages/SelectSwapItemsPage.tsx:72
 msgid "Source"
-msgstr ""
+msgstr "ソース"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/pages/SelectSwapItemsPage.tsx:73
 msgid "Destination"
-msgstr ""
+msgstr "保存先"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/pages/SelectSwapItemsPage.tsx:79
@@ -825,7 +826,7 @@ msgstr "「Infinite承認」モードを有効にすると、DEX/Bridgesのス�
 #. js-lingui-explicit-id
 #: widget/embedded/src/pages/SwapDetailsPage.tsx:27
 msgid "The request ID is necessary to display the swap details."
-msgstr ""
+msgstr "スワップの詳細を表示するにはリクエスト ID が必要です。"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/pages/ThemePage.tsx:34
@@ -856,17 +857,17 @@ msgstr "接続するウォレットを選択してください。"
 #. js-lingui-explicit-id
 #: widget/embedded/src/utils/date.ts:25
 msgid "This week"
-msgstr ""
+msgstr "今週中"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/utils/date.ts:32
 msgid "This month"
-msgstr ""
+msgstr "今月の"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/utils/date.ts:39
 msgid "This year"
-msgstr ""
+msgstr "年"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/utils/swap.ts:124
@@ -987,7 +988,7 @@ msgstr "{fromChain} で {swapper}を入れ替え"
 #. js-lingui-explicit-id
 #: widget/ui/src/components/StepDetails/StepDetails.tsx:107
 msgid "Bridge to {toChain} via {swapper}"
-msgstr ""
+msgstr "{toChain} 経由で {swapper}に橋"
 
 #. js-lingui-explicit-id
 #: widget/ui/src/components/SwapDetailsPlaceholder/SwapDetailsPlaceholder.tsx:28
