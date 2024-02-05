@@ -4,6 +4,7 @@ import { i18n } from '@lingui/core';
 import {
   Divider,
   GroupedVirtualizedList,
+  Skeleton,
   SwapListItem,
   Typography,
 } from '@rango-dev/ui';
@@ -50,39 +51,29 @@ export function HistoryGroupedList(props: PropTypes) {
   }, [isLoading, loadMore]);
 
   if (isLoading) {
-    const swaps = [{}, {}];
-
-    const loadingGroups = [
-      {
-        title: i18n.t('Today'),
-        swaps,
-      },
-      {
-        title: i18n.t('This month'),
-        swaps,
-      },
-    ];
+    // The number of items presented in each group.
+    const swaps = [1, 2];
+    const loadingGroups = [swaps, swaps];
     return (
       <>
-        {loadingGroups.map((group) => (
-          <Group key={group.title}>
-            <Time>
-              <Typography
-                variant="label"
-                size="medium"
-                className={groupStyles()}>
-                {group.title}
-              </Typography>
-            </Time>
-            <Divider size={4} />
-            <SwapList>
-              {group.swaps.map((_, index) => {
-                const key = index + group.title;
-                return <SwapListItem isLoading={true} key={key} />;
-              })}
-            </SwapList>
-          </Group>
-        ))}
+        {loadingGroups.map((group, index) => {
+          const key = index;
+          return (
+            <Group key={key}>
+              <Time>
+                <Skeleton variant="text" width={60} size="small" />
+                <Divider size={16} />
+              </Time>
+              <Divider size={4} />
+              <SwapList>
+                {group.map((_, index) => {
+                  const key = index;
+                  return <SwapListItem isLoading={true} key={key} />;
+                })}
+              </SwapList>
+            </Group>
+          );
+        })}
       </>
     );
   }
@@ -111,6 +102,9 @@ export function HistoryGroupedList(props: PropTypes) {
       }}
       itemContent={(index, groupIndex) => {
         const swap = swaps[index];
+        if (!swap) {
+          return null;
+        }
         const firstStep = swap.steps[0];
         const lastStep = swap.steps[swap.steps.length - 1];
         return (
