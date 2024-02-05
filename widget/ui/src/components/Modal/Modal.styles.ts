@@ -116,10 +116,13 @@ export const Content = styled('div', {
 });
 
 export const Footer = styled('div', {
-  '& .footer__content': {
-    padding: '$0 $20',
-  },
+  padding: '0 $20 $10',
   '& .footer__logo': {
-    padding: '$0 $20 $10 $20',
+    '&.logo__show': {
+      opacity: 1,
+    },
+    '&.logo__hidden': {
+      visibility: 'hidden',
+    },
   },
 });

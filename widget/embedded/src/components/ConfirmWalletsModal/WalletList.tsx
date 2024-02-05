@@ -9,7 +9,6 @@ import {
   Divider,
   Image,
   MessageBox,
-  Modal,
   SelectableWallet,
   Typography,
   WalletState,
@@ -32,6 +31,7 @@ import {
   getConciseAddress,
   isExperimentalChain,
 } from '../../utils/wallets';
+import { WatermarkedModal } from '../common/WatermarkedModal';
 import { WalletModal } from '../WalletModal';
 
 import { ShowMoreWallets } from './ConfirmWallets.styles';
@@ -207,7 +207,7 @@ export function WalletList(props: PropTypes) {
               error={error}
             />
             {!!experimentalChainWallet && (
-              <Modal
+              <WatermarkedModal
                 open={!!experimentalChainWallet && showExperimentalChainModal}
                 container={modalContainer}
                 onClose={() => {
@@ -237,10 +237,10 @@ export function WalletList(props: PropTypes) {
                     {i18n.t('Confirm')}
                   </Button>
                 </MessageBox>
-              </Modal>
+              </WatermarkedModal>
             )}
             {addingExperimentalChainStatus && (
-              <Modal
+              <WatermarkedModal
                 open={!!addingExperimentalChainStatus}
                 onClose={setAddingExperimentalChainStatus.bind(null, null)}
                 container={modalContainer}>
@@ -292,7 +292,7 @@ export function WalletList(props: PropTypes) {
                 )}
 
                 <Divider direction="vertical" size={32} />
-              </Modal>
+              </WatermarkedModal>
             )}
             <SelectableWallet
               key={wallet.type}

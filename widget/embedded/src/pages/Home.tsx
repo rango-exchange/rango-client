@@ -125,7 +125,6 @@ export function Home() {
   return (
     <Layout
       height="auto"
-      hasLogo
       footer={
         <Button
           type="primary"

@@ -1,0 +1,1 @@
+export { WatermarkedModal } from './WatermarkedModal';

@@ -15,7 +15,6 @@ export interface PropTypes {
     hasBackButton?: boolean;
     onCancel?: () => void;
   };
-  hasLogo?: boolean;
   footer?: React.ReactNode;
   height?: ContainerHeightProp;
 }

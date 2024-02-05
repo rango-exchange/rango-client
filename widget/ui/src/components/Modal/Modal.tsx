@@ -36,7 +36,7 @@ export function Modal(props: PropsWithChildren<PropTypes>) {
     children,
     suffix,
     footer,
-    hasLogo = true,
+    hasWatermark = true,
     hasCloseIcon = true,
     transitionDuration,
   } = props;
@@ -108,17 +108,18 @@ export function Modal(props: PropsWithChildren<PropTypes>) {
                 </ModalHeader>
               )}
               <Content>{children}</Content>
-              {(hasLogo || footer) && (
-                <Footer>
-                  <div className="footer__content">{footer}</div>
-                  {hasLogo && (
-                    <div className="footer__logo">
-                      <Divider size={12} />
-                      <BottomLogo />
-                    </div>
-                  )}
-                </Footer>
-              )}
+
+              <Footer>
+                {footer && <div className="footer__content">{footer}</div>}
+
+                <div
+                  className={`footer__logo ${
+                    hasWatermark ? 'logo__show' : 'logo__hidden'
+                  }`}>
+                  <Divider size={12} />
+                  <BottomLogo />
+                </div>
+              </Footer>
             </ModalContainer>
           </BackDrop>,
           container

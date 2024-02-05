@@ -5,7 +5,6 @@ import {
   Button,
   Divider,
   MessageBox,
-  Modal,
   TokenAmount,
   Typography,
 } from '@rango-dev/ui';
@@ -14,6 +13,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { WIDGET_UI_ID } from '../../constants';
 import { getContainer } from '../../utils/common';
+import { WatermarkedModal } from '../common/WatermarkedModal';
 
 export function SwapDetailsCompleteModal(props: CompleteModalPropTypes) {
   const {
@@ -33,7 +33,7 @@ export function SwapDetailsCompleteModal(props: CompleteModalPropTypes) {
   const navigate = useNavigate();
 
   return (
-    <Modal
+    <WatermarkedModal
       open={open}
       onClose={onClose}
       container={
@@ -107,6 +107,6 @@ export function SwapDetailsCompleteModal(props: CompleteModalPropTypes) {
           {i18n.t('See Details')}
         </Typography>
       </Button>
-    </Modal>
+    </WatermarkedModal>
   );
 }
