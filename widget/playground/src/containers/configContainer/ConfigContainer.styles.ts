@@ -1,4 +1,4 @@
-import { Button, darkTheme, styled } from '@rango-dev/ui';
+import { Button, darkTheme, keyframes, styled } from '@rango-dev/ui';
 
 export const Layout = styled('div', {
   borderRadius: '20px',
@@ -69,12 +69,51 @@ export const Content = styled('div', {
   flexDirection: 'column',
 });
 
+const BoundaryGuideShowTransform = keyframes({
+  '0%': {
+    height: 0,
+    borderWidth: 0,
+  },
+  '70%': {
+    height: '750px',
+    borderWidth: '1px',
+  },
+  '100%': {
+    height: '700px',
+    borderWidth: '1px',
+  },
+});
+
+const BoundaryGuideHideTransform = keyframes({
+  '0%': {
+    height: '700px',
+  },
+  '100%': {
+    height: 0,
+    borderWidth: '1px',
+  },
+});
+
 export const BoundaryGuide = styled('div', {
   borderStyle: 'dashed',
   borderColor: '$neutral600',
   borderRadius: '20px',
-  height: '700px',
   display: 'flex',
+  borderWidth: 0,
+  variants: {
+    visible: {
+      true: {
+        animation: `${BoundaryGuideShowTransform} .5s ease-in-out`,
+        height: '700px',
+        borderWidth: '1px',
+      },
+      false: {
+        animation: `${BoundaryGuideHideTransform} .5s ease-in-out`,
+        height: 0,
+        borderWidth: 0,
+      },
+    },
+  },
 });
 
 export const BoundarySize = styled('div', {
