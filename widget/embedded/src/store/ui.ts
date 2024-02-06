@@ -45,13 +45,9 @@ export const useUiStore = createSelectors(
   }))
 );
 
-const tabManager: TabManagerInterface = new TabManager({
+export const tabManager: TabManagerInterface = new TabManager({
   onInit: () => useUiStore.setState({ tabManagerInitiated: true }),
   onClaim: () =>
     useUiStore.setState({ isActiveTab: true, showActivateTabModal: false }),
   onRelease: () => useUiStore.setState({ isActiveTab: false }),
 });
-
-export const setCurrentTabAsActive = tabManager.forceClaim;
-
-export const destroyTabManager = tabManager.destroy;
