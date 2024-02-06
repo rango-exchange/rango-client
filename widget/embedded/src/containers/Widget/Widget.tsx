@@ -4,13 +4,14 @@ import type { PropsWithChildren } from 'react';
 import React, { useEffect } from 'react';
 
 import { DEFAULT_CONFIG } from '../../store/slices/config';
-import { destroyTabManager } from '../../store/ui';
+import { tabManager } from '../../store/ui';
 import { Main } from '../App';
 import { WidgetProvider } from '../WidgetProvider';
 
 export function Widget(props: PropsWithChildren<WidgetProps>) {
   useEffect(() => {
-    return destroyTabManager;
+    tabManager.init();
+    return tabManager.destroy;
   }, []);
 
   if (!props.config?.externalWallets) {
