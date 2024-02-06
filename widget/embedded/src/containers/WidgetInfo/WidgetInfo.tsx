@@ -7,7 +7,7 @@ import { useLanguage } from '../../hooks/useLanguage';
 import { useAppStore } from '../../store/AppStore';
 import { useNotificationStore } from '../../store/notification';
 import { useQuoteStore } from '../../store/quote';
-import { setCurrentTabAsActive, useUiStore } from '../../store/ui';
+import { tabManager, useUiStore } from '../../store/ui';
 import { useWalletsStore } from '../../store/wallets';
 import { calculateWalletUsdValue } from '../../utils/wallets';
 
@@ -36,7 +36,7 @@ export function WidgetInfo(props: React.PropsWithChildren) {
   // eslint-disable-next-line react/jsx-no-constructed-context-values
   const value: WidgetInfoContextInterface = {
     isActiveTab,
-    setCurrentTabAsActive,
+    setCurrentTabAsActive: tabManager.forceClaim,
     history,
     wallets: {
       isLoading,

@@ -1,3 +1,12 @@
+## [0.22.1](https://github.com/rango-exchange/rango-client/compare/widget-embedded@0.22.0...widget-embedded@0.22.1) (2024-02-06)
+
+
+### Bug Fixes
+
+* fix tab manager error in Next.js ([ce312b8](https://github.com/rango-exchange/rango-client/commit/ce312b833ef92cf30fe8bd52b2d415a2d73ceb8b))
+
+
+
 # [0.22.0](https://github.com/rango-exchange/rango-client/compare/widget-embedded@0.21.0...widget-embedded@0.22.0) (2024-02-05)
 
 

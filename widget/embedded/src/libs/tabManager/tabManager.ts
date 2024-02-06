@@ -18,9 +18,12 @@ export class TabManager implements TabManagerInterface {
     this.channel = new BroadcastChannel(CHANNEL_NAME);
     this.tabId = Math.trunc(Math.random() * MAXIMUM_TAB_ID);
     this.events = events;
+  }
+
+  init = () => {
     this.initEvents();
     void this.tryClaim();
-  }
+  };
 
   /**
    * This is applicable when a user in an inactive tab seeks to activate that tab.
