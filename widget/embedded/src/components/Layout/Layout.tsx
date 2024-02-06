@@ -12,7 +12,7 @@ import { isAppLoadedIntoIframe } from '../../hooks/useIframe/useIframe.helpers';
 import { useNavigateBack } from '../../hooks/useNavigateBack';
 import { useTheme } from '../../hooks/useTheme';
 import { useAppStore } from '../../store/AppStore';
-import { setCurrentTabAsActive, useUiStore } from '../../store/ui';
+import { tabManager, useUiStore } from '../../store/ui';
 import { useWalletsStore } from '../../store/wallets';
 import { getContainer } from '../../utils/common';
 import { getPendingSwaps } from '../../utils/queue';
@@ -56,7 +56,7 @@ function Layout(props: PropsWithChildren<PropTypes>) {
   const hasRunningSwap = pendingSwaps.some((swap) => swap.status === 'running');
 
   const onActivateTab = () =>
-    activateCurrentTab(setCurrentTabAsActive, hasRunningSwap);
+    activateCurrentTab(tabManager.forceClaim, hasRunningSwap);
 
   const onConnectWallet = () => {
     header.onWallet?.();

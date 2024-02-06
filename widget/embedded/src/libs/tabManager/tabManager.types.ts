@@ -22,6 +22,7 @@ export type Events = {
 };
 
 export interface TabManagerInterface {
+  init: () => void;
   forceClaim: () => void;
   isClaimed: () => boolean;
   destroy: () => void;
