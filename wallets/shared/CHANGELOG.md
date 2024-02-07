@@ -1,3 +1,12 @@
+# [0.27.0](https://github.com/rango-exchange/rango-client/compare/wallets-shared@0.26.0...wallets-shared@0.27.0) (2024-02-07)
+
+
+### Bug Fixes
+
+* add ethers to shared package ([5990eff](https://github.com/rango-exchange/rango-client/commit/5990eff3a5cc90d915fafa1048ef02ddeacf225d))
+
+
+
 # [0.26.0](https://github.com/rango-exchange/rango-client/compare/wallets-shared@0.25.0...wallets-shared@0.26.0) (2024-01-22)
 
 
