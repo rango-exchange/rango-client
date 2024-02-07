@@ -35,8 +35,8 @@ export function useConfirmSwap(): ConfirmSwap {
     affiliatePercent,
     affiliateRef,
     affiliateWallets,
-    disabledLiquiditySources,
   } = useAppStore();
+  const disabledLiquiditySources = useAppStore().getDisabledLiquiditySources();
   const { connectedWallets } = useWalletsStore();
   const blockchains = useAppStore().blockchains();
   const tokens = useAppStore().tokens();
