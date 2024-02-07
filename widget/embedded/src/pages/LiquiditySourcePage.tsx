@@ -33,9 +33,10 @@ interface PropTypes {
 export function LiquiditySourcePage({ sourceType }: PropTypes) {
   const fetchStatus = useAppStore().fetchStatus;
   const swappers = useAppStore().swappers();
-  const disabledLiquiditySources = useAppStore().disabledLiquiditySources;
+  const disabledLiquiditySources = useAppStore().getDisabledLiquiditySources();
   const [searchedFor, setSearchedFor] = useState<string>('');
   const toggleLiquiditySource = useAppStore().toggleLiquiditySource;
+  const campaignMode = useAppStore().isInCampaignMode();
   const supportedUniqueSwappersGroups: Array<UniqueSwappersGroupType> =
     getUniqueSwappersGroups(swappers, disabledLiquiditySources);
 
@@ -73,8 +74,12 @@ export function LiquiditySourcePage({ sourceType }: PropTypes) {
     const { selected, groupTitle, logo } = sourceItem;
     return {
       start: <Image src={logo} size={22} type="circular" />,
-      onClick: () => toggleLiquiditySource(groupTitle),
-      end: <Checkbox checked={selected} />,
+      onClick: () => {
+        if (!campaignMode) {
+          toggleLiquiditySource(groupTitle);
+        }
+      },
+      end: <Checkbox checked={selected} disabled={campaignMode} />,
       title: (
         <Typography variant="title" size="xmedium">
           {i18n.t(groupTitle)}
@@ -131,7 +136,7 @@ export function LiquiditySourcePage({ sourceType }: PropTypes) {
           </NotFoundContainer>
         ) : (
           fetchStatus === 'success' && (
-            <LiquiditySourceList>
+            <LiquiditySourceList disabled={campaignMode}>
               {filteredList.map((sourceItem) => {
                 return (
                   <React.Fragment key={sourceItem.id}>

@@ -18,7 +18,7 @@ import { Container, Footer, PrefixIcon } from './NoResult.styles';
 
 export function NoResult(props: PropTypes) {
   const { fetch, error } = props;
-  const disabledLiquiditySources = useAppStore().disabledLiquiditySources;
+  const disabledLiquiditySources = useAppStore().getDisabledLiquiditySources();
   const toggleAllLiquiditySources = useAppStore().toggleAllLiquiditySources;
 
   const swappers = useAppStore().swappers();
