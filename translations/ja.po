@@ -8,7 +8,7 @@ msgstr ""
 "Language: ja\n"
 "Project-Id-Version: rango\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-02-05 11:57\n"
+"PO-Revision-Date: 2024-02-07 12:43\n"
 "Last-Translator: \n"
 "Language-Team: Japanese\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
@@ -19,10 +19,15 @@ msgstr ""
 "X-Crowdin-File-ID: 30\n"
 
 #. js-lingui-explicit-id
+#: widget/embedded/src/pages/SettingsPage.tsx:221
+msgid "Currently, you're in campaign mode with restrictions on liquidity sources. Would you like to switch out of this mode and make use of all available liquidity sources?"
+msgstr ""
+
+#. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:37
 #: widget/embedded/src/components/TokenList/TokenList.tsx:120
 #: widget/embedded/src/pages/HistoryPage.tsx:85
-#: widget/embedded/src/pages/LiquiditySourcePage.tsx:128
+#: widget/embedded/src/pages/LiquiditySourcePage.tsx:133
 msgid "No results found"
 msgstr "結果が見つかりませんでした"
 
@@ -30,7 +35,7 @@ msgstr "結果が見つかりませんでした"
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:38
 #: widget/embedded/src/components/TokenList/TokenList.tsx:121
 #: widget/embedded/src/pages/HistoryPage.tsx:87
-#: widget/embedded/src/pages/LiquiditySourcePage.tsx:129
+#: widget/embedded/src/pages/LiquiditySourcePage.tsx:134
 msgid "Try using different keywords"
 msgstr "別のキーワードを使用してみてください"
 
@@ -174,7 +179,7 @@ msgstr "通知"
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/HeaderButtons/HomeButtons.tsx:63
 #: widget/embedded/src/pages/ConfirmSwapPage.tsx:311
-#: widget/embedded/src/pages/SettingsPage.tsx:183
+#: widget/embedded/src/pages/SettingsPage.tsx:214
 msgid "Settings"
 msgstr "設定"
 
@@ -740,29 +745,29 @@ msgid "language"
 msgstr "言語"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/LiquiditySourcePage.tsx:42
+#: widget/embedded/src/pages/LiquiditySourcePage.tsx:43
 #: widget/ui/src/components/LiquiditySourceList/LiquiditySourceList.tsx:151
 msgid "Exchanges"
 msgstr "交換"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/LiquiditySourcePage.tsx:42
+#: widget/embedded/src/pages/LiquiditySourcePage.tsx:43
 #: widget/ui/src/components/LiquiditySourceList/LiquiditySourceList.tsx:112
 msgid "Bridges"
 msgstr "ブリッジ"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/LiquiditySourcePage.tsx:106
+#: widget/embedded/src/pages/LiquiditySourcePage.tsx:111
 msgid "Deselect all"
 msgstr "すべての選択を解除"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/LiquiditySourcePage.tsx:106
+#: widget/embedded/src/pages/LiquiditySourcePage.tsx:111
 msgid "Select all"
 msgstr "すべて選択"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/LiquiditySourcePage.tsx:118
+#: widget/embedded/src/pages/LiquiditySourcePage.tsx:123
 msgid "Search {sourceType}"
 msgstr "{sourceType} を検索"
 
@@ -792,34 +797,34 @@ msgid "Search Token"
 msgstr "トークンを検索"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/SettingsPage.tsx:71
+#: widget/embedded/src/pages/SettingsPage.tsx:86
 msgid "Loading failed"
 msgstr "読み込みに失敗しました"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/SettingsPage.tsx:87
+#: widget/embedded/src/pages/SettingsPage.tsx:102
 msgid "Enabled bridges"
 msgstr "有効なブリッジ"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/SettingsPage.tsx:104
+#: widget/embedded/src/pages/SettingsPage.tsx:119
 msgid "Enabled exchanges"
 msgstr "有効な取引所"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/SettingsPage.tsx:134
+#: widget/embedded/src/pages/SettingsPage.tsx:149
 #: widget/embedded/src/pages/ThemePage.tsx:70
 #: widget/embedded/src/pages/ThemePage.tsx:79
 msgid "Theme"
 msgstr "テーマ"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/SettingsPage.tsx:146
+#: widget/embedded/src/pages/SettingsPage.tsx:161
 msgid "Infinite approval"
 msgstr "永久承認"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/SettingsPage.tsx:156
+#: widget/embedded/src/pages/SettingsPage.tsx:171
 msgid "Enabling the 'Infinite approval' mode grants unrestricted access to smart contracts of DEXes/Bridges, allowing them to utilize the approved token amount without limitations."
 msgstr "「Infinite承認」モードを有効にすると、DEX/Bridgesのスマートコントラクトへの無制限のアクセスが許可され、承認されたトークンの量を制限なく利用できます。"
 
