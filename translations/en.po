@@ -14,11 +14,6 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/SettingsPage.tsx:221
-msgid "Currently, you're in campaign mode with restrictions on liquidity sources. Would you like to switch out of this mode and make use of all available liquidity sources?"
-msgstr "Currently, you're in campaign mode with restrictions on liquidity sources. Would you like to switch out of this mode and make use of all available liquidity sources?"
-
-#. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:37
 #: widget/embedded/src/components/TokenList/TokenList.tsx:120
 #: widget/embedded/src/pages/HistoryPage.tsx:85
@@ -824,6 +819,11 @@ msgstr "Infinite approval"
 #: widget/embedded/src/pages/SettingsPage.tsx:171
 msgid "Enabling the 'Infinite approval' mode grants unrestricted access to smart contracts of DEXes/Bridges, allowing them to utilize the approved token amount without limitations."
 msgstr "Enabling the 'Infinite approval' mode grants unrestricted access to smart contracts of DEXes/Bridges, allowing them to utilize the approved token amount without limitations."
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/SettingsPage.tsx:221
+msgid "Currently, you're in campaign mode with restrictions on liquidity sources. Would you like to switch out of this mode and make use of all available liquidity sources?"
+msgstr "Currently, you're in campaign mode with restrictions on liquidity sources. Would you like to switch out of this mode and make use of all available liquidity sources?"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/pages/SwapDetailsPage.tsx:27
