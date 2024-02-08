@@ -29,6 +29,7 @@
     "@rango-dev/wallets-react": "^0.13.0",
     "@rango-dev/wallets-shared": "^0.27.0",
     "bignumber.js": "^9.1.1",
+    "ethers": "^5.7.2",
     "copy-to-clipboard": "^3.3.3",
     "dayjs": "^1.11.7",
     "immer": "^9.0.19",
