@@ -1,3 +1,12 @@
+## [0.22.3](https://github.com/rango-exchange/rango-client/compare/widget-embedded@0.22.2...widget-embedded@0.22.3) (2024-02-08)
+
+
+### Bug Fixes
+
+* add ethers dependency to embedded ([5bce05d](https://github.com/rango-exchange/rango-client/commit/5bce05df42c96efa9bdffb09985d5de34cbe647e))
+
+
+
 ## [0.22.2](https://github.com/rango-exchange/rango-client/compare/widget-embedded@0.22.1...widget-embedded@0.22.2) (2024-02-07)
 
 
