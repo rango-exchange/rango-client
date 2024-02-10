@@ -2,9 +2,12 @@ import type { ToastProps } from './Toast.types';
 
 import React, { useEffect } from 'react';
 
+import { CloseIcon } from '../../icons';
+import { Alert } from '../Alert';
 import { IconHighlight } from '../Alert/Alert.styles';
 import AlertIcon from '../Alert/AlertIcon';
 import { Divider } from '../Divider';
+import { IconButton } from '../IconButton';
 
 import { useToast } from './Toast.Provider';
 import {
@@ -14,46 +17,70 @@ import {
   ToastContentContainer,
 } from './Toast.styles';
 
-const DEFAULT_HIDE_DURATION = 3_000;
-
 export const Toast = (props: ToastProps) => {
-  const { id, horizontal, autoHideDuration = DEFAULT_HIDE_DURATION } = props;
+  const {
+    id,
+    autoHideDuration,
+    onClose,
+    type,
+    title,
+    position,
+    hasCloseIcon = true,
+    hideOnTap = true,
+    variant = 'standard',
+  } = props;
   const { removeToast } = useToast();
   useEffect(() => {
-    const timer = setTimeout(() => {
-      removeToast(id);
-    }, autoHideDuration);
+    let cleanup;
 
-    return () => {
-      clearTimeout(timer);
-    };
+    if (autoHideDuration) {
+      const timer = setTimeout(() => {
+        handleClose();
+      }, autoHideDuration);
+
+      cleanup = () => clearTimeout(timer);
+    }
+
+    return cleanup;
   }, [id]);
 
+  const handleClose = () => {
+    removeToast(id, position);
+    onClose?.();
+  };
+
   return (
-    <ToastContentContainer horizontal={horizontal}>
-      {'component' in props ? (
-        props.component
-      ) : (
-        <AlertBox
-          onClick={() => removeToast(id)}
-          type={props.type}
-          style={props.style}>
+    <ToastContentContainer>
+      <AlertBox
+        onClick={hideOnTap ? handleClose : undefined}
+        variant={variant}
+        type={type}>
+        {variant === 'custom' ? (
           <AlertFlexContainer>
-            <IconHighlight type={props.type} align="center">
-              <AlertIcon type={props.type} />
+            <IconHighlight type={type} align="center">
+              <AlertIcon type={type} />
             </IconHighlight>
             <Divider direction="horizontal" size={10} />
-            <StyledTypography
-              variant="body"
-              size="small"
-              color={props.titleColor}
-              hasColor={!!props.titleColor}
-              align="left">
+            <StyledTypography variant="body" size="small" align="left">
               {props.title}
             </StyledTypography>
           </AlertFlexContainer>
-        </AlertBox>
-      )}
+        ) : (
+          <Alert
+            title={title}
+            type={type}
+            variant="alarm"
+            titleAlign="left"
+            action={
+              hasCloseIcon ? (
+                <IconButton variant="ghost" size="xsmall" onClick={handleClose}>
+                  <CloseIcon size={12} />
+                </IconButton>
+              ) : undefined
+            }
+          />
+        )}
+      </AlertBox>
     </ToastContentContainer>
   );
 };
