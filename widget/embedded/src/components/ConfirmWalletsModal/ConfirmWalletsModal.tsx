@@ -270,7 +270,7 @@ export function ConfirmWalletsModal(props: PropTypes) {
         ),
       })}
       {...(showMoreWalletFor && {
-        containerStyle: { padding: '$0' },
+        styles: { container: { padding: '$0' } },
         header: (
           <ShowMoreHeader>
             <NavigateBack

@@ -27,7 +27,7 @@ export function Modal(props: PropsWithChildren<PropTypes>) {
     title,
     open,
     onClose,
-    containerStyle,
+    styles,
     anchor = 'bottom',
     container = document.body,
     prefix,
@@ -84,10 +84,11 @@ export function Modal(props: PropsWithChildren<PropTypes>) {
           <BackDrop
             active={active}
             onClick={handleBackDropClick}
-            anchor={anchor}>
+            anchor={anchor}
+            css={styles?.root}>
             <ModalContainer
               active={active}
-              css={containerStyle}
+              css={styles?.container}
               anchor={anchor}>
               {header ?? (
                 <ModalHeader noTitle={!title && dismissible && !prefix}>
@@ -107,9 +108,9 @@ export function Modal(props: PropsWithChildren<PropTypes>) {
                   </Flex>
                 </ModalHeader>
               )}
-              <Content>{children}</Content>
+              <Content css={styles?.content}>{children}</Content>
 
-              <Footer>
+              <Footer css={styles?.footer}>
                 {footer && <div className="footer__content">{footer}</div>}
 
                 <div
