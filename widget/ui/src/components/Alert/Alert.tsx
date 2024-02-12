@@ -23,25 +23,26 @@ export function Alert(props: PropsWithChildren<PropTypes>) {
     action,
     containerStyles,
     variant = 'regular',
-    titleContainerStyles,
-    titleSize,
-    titleColor,
   } = props;
   const isFooterString = typeof footer === 'string';
 
   return (
-    <Container css={containerStyles} type={type} variant={variant}>
+    <Container
+      className="_alert"
+      css={containerStyles}
+      type={type}
+      variant={variant}>
       <Main variant={variant}>
-        <TitleContainer css={titleContainerStyles}>
+        <TitleContainer>
           <IconHighlight type={type}>
             <AlertIcon type={type} />
           </IconHighlight>
           <Divider direction="horizontal" size={4} />
           {title && (
             <Typography
-              color={titleColor || getColor(type, variant)}
+              color={getColor(type, variant)}
               variant="body"
-              size={titleSize || TitleSize[variant]}>
+              size={TitleSize[variant]}>
               {title}
             </Typography>
           )}

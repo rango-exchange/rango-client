@@ -1,4 +1,4 @@
-import { Alert, Divider } from '@rango-dev/ui';
+import { Alert, Divider, Typography } from '@rango-dev/ui';
 import React, { useEffect, useState } from 'react';
 
 import { ExportConfigModal } from '../../components/ExportConfigModal';
@@ -12,25 +12,25 @@ import {
   SuccessfulResetAlertContainer,
 } from './ConfigContainer.styles';
 
-const DISPLAY_SUCCESSFUL_RESET_TOAST_DURATION = 2_000;
+const TOAST_DURATION = 2_000;
 
 export function Header() {
   const resetConfig = useConfigStore.use.resetConfig();
   const [openExportModal, setOpenExportModal] = useState(false);
   const config = useConfigStore.use.config();
-  const [isReset, setIsReset] = useState(false);
+  const [isToastVisible, setIsToastVisible] = useState(false);
 
   const toggleModal = () => setOpenExportModal((prev) => !prev);
 
   useEffect(() => {
     const timeout = setTimeout(() => {
-      setIsReset(false);
-    }, DISPLAY_SUCCESSFUL_RESET_TOAST_DURATION);
+      setIsToastVisible(false);
+    }, TOAST_DURATION);
 
     return () => {
       clearTimeout(timeout);
     };
-  }, [isReset]);
+  }, [isToastVisible]);
 
   return (
     <>
@@ -40,7 +40,7 @@ export function Header() {
           size="medium"
           variant="ghost"
           onClick={() => {
-            setIsReset(true);
+            setIsToastVisible(true);
             resetConfig();
           }}
           disabled={!isConfigChanged(config)}>
@@ -60,19 +60,20 @@ export function Header() {
           config={config}
         />
       </HeaderContainer>
-      <SuccessfulResetAlertContainer visible={isReset}>
+      <SuccessfulResetAlertContainer visible={true}>
         <Alert
           type="success"
-          title="The system's configuration data reset successfully"
           containerStyles={{
             backgroundColor: '$background',
             padding: '$10',
             borderRadius: '10px',
             minWidth: '420px',
           }}
-          titleContainerStyles={{ gap: '$5' }}
-          titleSize="medium"
-          titleColor="$neutral700"
+          title={
+            <Typography color="$neutral700" variant="body" size="medium">
+              Your applied configuration has been reset.
+            </Typography>
+          }
         />
       </SuccessfulResetAlertContainer>
     </>

@@ -1,6 +1,6 @@
 // TSDX + stiches doesn't work with import statement and has a bug.
 
-import type { PropertyValue } from '@stitches/react';
+import type * as Stitches from '@stitches/react';
 import type { DefaultThemeMap } from '@stitches/react/types/config';
 
 import { createStitches } from '@stitches/react';
@@ -176,7 +176,7 @@ const media = {
   lg: '(min-width: 1024px)',
 };
 const utils = {
-  bc: (value: PropertyValue<'backgroundColor'>) => ({
+  bc: (value: Stitches.PropertyValue<'backgroundColor'>) => ({
     backgroundColor: value,
   }),
 };
@@ -216,6 +216,8 @@ export const { styled, css, createTheme, keyframes, globalCss, config } =
     theme,
     utils,
   });
+
+export type CSS = Stitches.CSS<typeof config>;
 
 export const lightTheme = createTheme('light-theme-ui', {});
 

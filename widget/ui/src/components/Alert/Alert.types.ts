@@ -1,5 +1,5 @@
-import type { BaseSizes } from '../Typography/Typography.types';
 import type { ReactNode } from 'react';
+import type { CSS } from 'src/theme';
 
 export type Type = 'success' | 'warning' | 'error' | 'info' | 'loading';
 
@@ -9,8 +9,5 @@ export interface PropTypes {
   footer?: ReactNode;
   action?: ReactNode;
   variant?: 'alarm' | 'regular';
-  containerStyles?: { [key: string]: string };
-  titleContainerStyles?: { [key: string]: string };
-  titleSize?: BaseSizes;
-  titleColor?: string;
+  containerStyles?: CSS;
 }
