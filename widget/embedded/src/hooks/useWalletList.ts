@@ -9,12 +9,13 @@ import {
   type WalletType,
   WalletTypes,
 } from '@rango-dev/wallets-shared';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 import { useAppStore } from '../store/AppStore';
 import { useWalletsStore } from '../store/wallets';
 import { configWalletsToWalletName } from '../utils/providers';
 import {
+  hashWalletsState,
   isExperimentalChain,
   mapWalletTypesToWalletInfo,
   sortWalletsBasedOnConnectionState,
@@ -87,14 +88,14 @@ export function useWalletList(params: Params) {
     }
   };
 
-  const disconnectConnectingWallets = () => {
+  const disconnectConnectingWallets = useCallback(() => {
     const connectingWallets =
       wallets?.filter((wallet) => wallet.state === WalletState.CONNECTING) ||
       [];
     for (const wallet of connectingWallets) {
       void disconnect(wallet.type);
     }
-  };
+  }, [hashWalletsState(wallets)]);
 
   useEffect(() => {
     return () => {
@@ -141,5 +142,6 @@ export function useWalletList(params: Params) {
     ),
     error,
     handleClick,
+    disconnectConnectingWallets,
   };
 }
