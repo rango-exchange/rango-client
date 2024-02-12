@@ -62,9 +62,17 @@ export function Header() {
       </HeaderContainer>
       <SuccessfulResetAlertContainer visible={isReset}>
         <Alert
-          variant="toast"
           type="success"
           title="The system's configuration data reset successfully"
+          containerStyles={{
+            backgroundColor: '$background',
+            padding: '$10',
+            borderRadius: '10px',
+            minWidth: '420px',
+          }}
+          titleContainerStyles={{ gap: '$5' }}
+          titleSize="medium"
+          titleColor="$neutral700"
         />
       </SuccessfulResetAlertContainer>
     </>

@@ -1,10 +1,7 @@
 import type { Type } from './Alert.types';
 
-export const getColor = (
-  type: Type,
-  variant: 'alarm' | 'regular' | 'toast'
-) => {
-  if (variant !== 'alarm') {
+export const getColor = (type: Type, variant: 'alarm' | 'regular') => {
+  if (variant === 'regular') {
     return undefined;
   }
 

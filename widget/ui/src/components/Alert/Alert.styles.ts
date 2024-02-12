@@ -1,4 +1,4 @@
-import { css, darkTheme, styled } from '../../theme';
+import { darkTheme, styled } from '../../theme';
 
 export const Container = styled('div', {
   display: 'flex',
@@ -37,17 +37,6 @@ export const Container = styled('div', {
         alignItems: 'center',
         '.title_typography': {
           fontWeight: '$medium',
-        },
-      },
-      toast: {
-        backgroundColor: '$background',
-        padding: '$10',
-        borderRadius: '10px',
-        minWidth: '420px',
-        '.title_typography': {
-          fontSize: '14px',
-          lineHeight: '20px',
-          color: '$neutral700',
         },
       },
     },
@@ -105,9 +94,6 @@ export const Main = styled('div', {
   display: 'flex',
   alignItems: 'center',
   alignSelf: 'stretch',
-  '.toast_title_container': {
-    gap: '$5',
-  },
   variants: {
     variant: {
       regular: {
@@ -116,11 +102,14 @@ export const Main = styled('div', {
       alarm: {
         justifyContent: 'flex-start',
       },
-      toast: {
-        justifyContent: 'space-between',
-      },
     },
   },
+});
+
+export const TitleContainer = styled('div', {
+  display: 'flex',
+  alignItems: 'center',
+  flex: '1 0 0',
 });
 
 export const IconHighlight = styled('div', {
@@ -176,10 +165,4 @@ export const IconHighlight = styled('div', {
       },
     },
   },
-});
-
-export const titleStyles = css({
-  display: 'flex',
-  alignItems: 'center',
-  flex: '1 0 0',
 });

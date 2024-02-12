@@ -2,7 +2,7 @@ import type { TypographyContainer } from './Typography.styles';
 import type * as Stitches from '@stitches/react';
 
 type BaseProps = Stitches.VariantProps<typeof TypographyContainer>;
-type BaseSizes = Exclude<BaseProps['size'], object>;
+export type BaseSizes = Exclude<BaseProps['size'], object>;
 type BaseVariants = Exclude<BaseProps['variant'], object>;
 type BaseAlign = Exclude<BaseProps['align'], object>;
 

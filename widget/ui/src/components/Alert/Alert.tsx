@@ -7,11 +7,10 @@ import { Divider } from '../Divider';
 import { Typography } from '../Typography';
 
 import { getColor } from './Alert.helpers';
-import { Container, IconHighlight, Main, titleStyles } from './Alert.styles';
+import { Container, IconHighlight, Main, TitleContainer } from './Alert.styles';
 import AlertIcon from './AlertIcon';
 
 enum TitleSize {
-  toast = 'medium',
   regular = 'xsmall',
   alarm = 'small',
 }
@@ -24,34 +23,29 @@ export function Alert(props: PropsWithChildren<PropTypes>) {
     action,
     containerStyles,
     variant = 'regular',
+    titleContainerStyles,
+    titleSize,
+    titleColor,
   } = props;
   const isFooterString = typeof footer === 'string';
 
   return (
-    <Container
-      className="_alert"
-      style={containerStyles}
-      type={type}
-      variant={variant}>
+    <Container css={containerStyles} type={type} variant={variant}>
       <Main variant={variant}>
-        <div
-          className={`${titleStyles()} ${
-            variant === 'toast' && 'toast_title_container'
-          }`}>
+        <TitleContainer css={titleContainerStyles}>
           <IconHighlight type={type}>
             <AlertIcon type={type} />
           </IconHighlight>
           <Divider direction="horizontal" size={4} />
           {title && (
             <Typography
-              color={getColor(type, variant)}
+              color={titleColor || getColor(type, variant)}
               variant="body"
-              className="title_typography"
-              size={TitleSize[variant]}>
+              size={titleSize || TitleSize[variant]}>
               {title}
             </Typography>
           )}
-        </div>
+        </TitleContainer>
         {action ? <div>{action}</div> : null}
       </Main>
       {footer ? (

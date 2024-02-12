@@ -1,4 +1,4 @@
-import { Button, darkTheme, keyframes, styled } from '@rango-dev/ui';
+import { Button, darkTheme, styled } from '@rango-dev/ui';
 
 export const Layout = styled('div', {
   borderRadius: '20px',
@@ -134,31 +134,21 @@ export const BoundarySection = styled('div', {
   borderRadius: '$xm',
 });
 
-const SuccessfulResetAlertContainerTransform = keyframes({
-  '0%': {
-    transform: 'translateY(24px) translateX(-50%)',
-    opacity: 0,
-  },
-  '100%': {
-    transform: 'translateY(0) translateX(-50%)',
-    opacity: 1,
-  },
-});
-
 export const SuccessfulResetAlertContainer = styled('div', {
   display: 'inline',
   position: 'absolute',
-  bottom: '$20',
+  bottom: '$24',
   left: '50%',
+  transition: 'opacity .5s ease-in-out, transform .5s ease-in-out',
   variants: {
     visible: {
       true: {
-        animation: `${SuccessfulResetAlertContainerTransform} .5s ease-in-out`,
-        transform: 'translateY(0) translateX(-50%)',
         opacity: 1,
+        transform: 'translateY(0) translateX(-50%)',
       },
       false: {
         opacity: 0,
+        transform: 'translateY(24px) translateX(-50%)',
       },
     },
   },
