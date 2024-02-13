@@ -66,6 +66,7 @@ export class MathWalletCosmosSigner
             token: msg.value?.token,
             timeoutHeight: msg.value?.timeout_height,
             timeoutTimestamp: msg.value?.timeout_timestamp,
+            memo: msg.value?.memo,
           },
         }));
 
