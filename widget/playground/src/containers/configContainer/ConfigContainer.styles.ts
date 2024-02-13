@@ -35,11 +35,10 @@ export const LeftSide = styled('div', {
 });
 
 export const Main = styled('div', {
-  justifyContent: 'center',
-  alignItems: 'center',
   flexDirection: 'column',
   display: 'flex',
   width: '100%',
+  overflowY: 'clip',
 });
 
 export const HeaderContainer = styled('div', {
@@ -62,9 +61,10 @@ export const ResetButton = styled(StyledButton, {
 });
 
 export const Content = styled('div', {
-  height: '100%',
+  flex: '1 1 0%',
+  overflow: 'auto',
   display: 'flex',
-  justifyContent: 'center',
+  justifyContent: 'safe center',
   alignItems: 'center',
   flexDirection: 'column',
 });

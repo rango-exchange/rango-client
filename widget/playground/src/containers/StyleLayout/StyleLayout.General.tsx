@@ -148,7 +148,7 @@ export function General() {
         <OverlayPanel onBack={onBack}>
           <SingleList
             onChange={handleLanguageChange}
-            title="Languages"
+            title="Default Language"
             icon={<LanguageIcon size={18} color="gray" />}
             defaultValue={language}
             list={LANGUAGES}
