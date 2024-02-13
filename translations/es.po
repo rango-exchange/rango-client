@@ -8,7 +8,7 @@ msgstr ""
 "Language: es\n"
 "Project-Id-Version: rango\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-02-05 11:57\n"
+"PO-Revision-Date: 2024-02-08 20:14\n"
 "Last-Translator: \n"
 "Language-Team: Spanish\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -22,7 +22,7 @@ msgstr ""
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:37
 #: widget/embedded/src/components/TokenList/TokenList.tsx:120
 #: widget/embedded/src/pages/HistoryPage.tsx:85
-#: widget/embedded/src/pages/LiquiditySourcePage.tsx:128
+#: widget/embedded/src/pages/LiquiditySourcePage.tsx:133
 msgid "No results found"
 msgstr "No hay resultados"
 
@@ -30,7 +30,7 @@ msgstr "No hay resultados"
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:38
 #: widget/embedded/src/components/TokenList/TokenList.tsx:121
 #: widget/embedded/src/pages/HistoryPage.tsx:87
-#: widget/embedded/src/pages/LiquiditySourcePage.tsx:129
+#: widget/embedded/src/pages/LiquiditySourcePage.tsx:134
 msgid "Try using different keywords"
 msgstr "Intenta usar diferentes palabras clave"
 
@@ -174,7 +174,7 @@ msgstr "Notificaciones"
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/HeaderButtons/HomeButtons.tsx:63
 #: widget/embedded/src/pages/ConfirmSwapPage.tsx:311
-#: widget/embedded/src/pages/SettingsPage.tsx:183
+#: widget/embedded/src/pages/SettingsPage.tsx:214
 msgid "Settings"
 msgstr "Ajustes"
 
@@ -740,29 +740,29 @@ msgid "language"
 msgstr "idioma"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/LiquiditySourcePage.tsx:42
+#: widget/embedded/src/pages/LiquiditySourcePage.tsx:43
 #: widget/ui/src/components/LiquiditySourceList/LiquiditySourceList.tsx:151
 msgid "Exchanges"
 msgstr "Intercambios"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/LiquiditySourcePage.tsx:42
+#: widget/embedded/src/pages/LiquiditySourcePage.tsx:43
 #: widget/ui/src/components/LiquiditySourceList/LiquiditySourceList.tsx:112
 msgid "Bridges"
 msgstr "Puentes"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/LiquiditySourcePage.tsx:106
+#: widget/embedded/src/pages/LiquiditySourcePage.tsx:111
 msgid "Deselect all"
 msgstr "Deseleccionar todo"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/LiquiditySourcePage.tsx:106
+#: widget/embedded/src/pages/LiquiditySourcePage.tsx:111
 msgid "Select all"
 msgstr "Seleccionar todo"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/LiquiditySourcePage.tsx:118
+#: widget/embedded/src/pages/LiquiditySourcePage.tsx:123
 msgid "Search {sourceType}"
 msgstr "Buscar {sourceType}"
 
@@ -792,36 +792,41 @@ msgid "Search Token"
 msgstr "Buscar token"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/SettingsPage.tsx:71
+#: widget/embedded/src/pages/SettingsPage.tsx:86
 msgid "Loading failed"
 msgstr "Error al cargar"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/SettingsPage.tsx:87
+#: widget/embedded/src/pages/SettingsPage.tsx:102
 msgid "Enabled bridges"
 msgstr "Puentes habilitados"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/SettingsPage.tsx:104
+#: widget/embedded/src/pages/SettingsPage.tsx:119
 msgid "Enabled exchanges"
 msgstr "Intercambios habilitados"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/SettingsPage.tsx:134
+#: widget/embedded/src/pages/SettingsPage.tsx:149
 #: widget/embedded/src/pages/ThemePage.tsx:70
 #: widget/embedded/src/pages/ThemePage.tsx:79
 msgid "Theme"
 msgstr "Tema"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/SettingsPage.tsx:146
+#: widget/embedded/src/pages/SettingsPage.tsx:161
 msgid "Infinite approval"
 msgstr "Aprobación infinita"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/SettingsPage.tsx:156
+#: widget/embedded/src/pages/SettingsPage.tsx:171
 msgid "Enabling the 'Infinite approval' mode grants unrestricted access to smart contracts of DEXes/Bridges, allowing them to utilize the approved token amount without limitations."
 msgstr "Habilitar el modo 'Aprobación infinita' permite el acceso sin restricciones a contratos inteligentes de DEXes/Bridges, permitiéndoles utilizar la cantidad de token aprobada sin limitaciones."
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/SettingsPage.tsx:221
+msgid "Currently, you're in campaign mode with restrictions on liquidity sources. Would you like to switch out of this mode and make use of all available liquidity sources?"
+msgstr ""
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/pages/SwapDetailsPage.tsx:27

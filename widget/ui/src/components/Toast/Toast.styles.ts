@@ -7,18 +7,7 @@ const toastOpacity = keyframes({
 });
 
 export const ToastContentContainer = styled('div', {
-  variants: {
-    horizontal: {
-      right: {
-        right: 12,
-        animation: `${toastOpacity} .7s`,
-      },
-      left: {
-        left: 12,
-        animation: `${toastOpacity} .7s`,
-      },
-    },
-  },
+  animation: `${toastOpacity} .7s`,
 });
 
 export const ToastContainer = styled('div', {
@@ -28,20 +17,31 @@ export const ToastContainer = styled('div', {
   gap: '$4',
   flexDirection: 'column',
   variants: {
-    horizontal: {
-      right: {
+    position: {
+      'right-top': {
         right: 12,
-      },
-      left: {
-        left: 12,
-      },
-    },
-
-    vertical: {
-      top: {
         top: 2,
       },
-      bottom: {
+      'right-bottom': {
+        right: 12,
+        bottom: 2,
+      },
+      'left-top': {
+        left: 12,
+        top: 2,
+      },
+      'left-bottom': {
+        left: 12,
+        bottom: 2,
+      },
+      'center-top': {
+        left: '50%',
+        transform: 'translateX(-50%)',
+        top: 2,
+      },
+      'center-bottom': {
+        left: '50%',
+        transform: 'translateX(-50%)',
         bottom: 2,
       },
     },
@@ -53,36 +53,73 @@ export const AlertBox = styled('div', {
   borderRadius: '$sm',
   width: '292px',
   minHeight: '52px',
-  backgroundColor: '$background',
-  borderRight: '1px solid',
-  [`.${darkTheme} &`]: {
-    backgroundColor: '#070917',
-  },
-  '&:hover': {
-    backgroundColor: '$info100',
-    [`.${darkTheme} &`]: {
-      backgroundColor: '#111733',
+  variants: {
+    variant: {
+      custom: {
+        backgroundColor: '$background',
+        borderRight: '1px solid',
+        '&:hover': {
+          backgroundColor: '$info100',
+          [`.${darkTheme} &`]: {
+            backgroundColor: '$neutral300',
+          },
+        },
+      },
+      standard: {
+        '& ._alert': {
+          padding: '$10',
+          width: '100%',
+          justifyContent: 'center',
+          alignItems: 'center',
+        },
+      },
+    },
+    type: {
+      error: {},
+      success: {},
+      warning: {},
+      info: {},
+      loading: {},
     },
   },
-  variants: {
-    type: {
-      error: {
+  compoundVariants: [
+    {
+      variant: 'custom',
+      type: 'error',
+
+      css: {
         borderRightColor: '$error500',
       },
-      success: {
+    },
+    {
+      variant: 'custom',
+      type: 'success',
+      css: {
         borderRightColor: '$success500',
       },
-      warning: {
+    },
+    {
+      variant: 'custom',
+      type: 'warning',
+      css: {
         borderRightColor: '$warning500',
       },
-      info: {
-        borderRightColor: '$info500',
-      },
-      loading: {
+    },
+    {
+      variant: 'custom',
+      type: 'info',
+      css: {
         borderRightColor: '$info500',
       },
     },
-  },
+    {
+      variant: 'custom',
+      type: 'loading',
+      css: {
+        borderRightColor: '$info500',
+      },
+    },
+  ],
 });
 
 export const AlertFlexContainer = styled('div', {
@@ -108,6 +145,5 @@ export const StyledTypography = styled(Typography, {
 
 export const ToastStoryContainer = styled('div', {
   display: 'flex',
-  justifyContent: 'center',
   alignItems: 'center',
 });

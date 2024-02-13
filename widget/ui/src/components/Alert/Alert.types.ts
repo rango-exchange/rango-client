@@ -1,3 +1,4 @@
+import type { BaseAlign } from '../Typography/Typography.types';
 import type { ReactNode } from 'react';
 import type { CSS } from 'src/theme';
 
@@ -10,4 +11,5 @@ export interface PropTypes {
   action?: ReactNode;
   variant?: 'alarm' | 'regular';
   containerStyles?: CSS;
+  titleAlign?: BaseAlign;
 }

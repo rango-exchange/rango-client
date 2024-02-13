@@ -40,8 +40,7 @@ type UseSwapInput = {
  */
 export function useSwapInput(): UseSwapInput {
   const { fetch: fetchQuote, cancelFetch } = useFetchQuote();
-  const { liquiditySources, enableNewLiquiditySources, features } =
-    useAppStore().config;
+  const { enableNewLiquiditySources, features } = useAppStore().config;
   const tokens = useAppStore().tokens();
   const {
     fromToken,
@@ -58,9 +57,12 @@ export function useSwapInput(): UseSwapInput {
     affiliatePercent,
     affiliateRef,
     affiliateWallets,
-    disabledLiquiditySources,
     fetchStatus,
   } = useAppStore();
+  const liquiditySources = useAppStore().getLiquiditySources();
+  const disabledLiquiditySources = useAppStore().getDisabledLiquiditySources();
+  const excludeLiquiditySources = useAppStore().excludeLiquiditySources();
+
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<QuoteError | null>(null);
   const [warning, setWarning] = useState<QuoteWarning | null>(null);
@@ -99,7 +101,7 @@ export function useSwapInput(): UseSwapInput {
         fromToken,
         toToken,
         inputAmount,
-        liquiditySources,
+        liquiditySources: liquiditySources,
         excludeLiquiditySources,
         disabledLiquiditySources,
         slippage,
@@ -170,7 +172,7 @@ export function useSwapInput(): UseSwapInput {
       fromToken,
       toToken,
       liquiditySources,
-      excludeLiquiditySources: enableNewLiquiditySources,
+      excludeLiquiditySources,
       disabledLiquiditySources,
       slippage: userSlippage,
       affiliateRef,
@@ -204,7 +206,7 @@ export function useSwapInput(): UseSwapInput {
         fromToken,
         toToken,
         liquiditySources,
-        excludeLiquiditySources: enableNewLiquiditySources,
+        excludeLiquiditySources,
         disabledLiquiditySources,
         slippage: userSlippage,
         affiliateRef,

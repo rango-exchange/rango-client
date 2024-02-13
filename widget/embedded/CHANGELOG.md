@@ -1,3 +1,25 @@
+## [0.22.3](https://github.com/rango-exchange/rango-client/compare/widget-embedded@0.22.2...widget-embedded@0.22.3) (2024-02-08)
+
+
+### Bug Fixes
+
+* add ethers dependency to embedded ([5bce05d](https://github.com/rango-exchange/rango-client/commit/5bce05df42c96efa9bdffb09985d5de34cbe647e))
+
+
+
+## [0.22.2](https://github.com/rango-exchange/rango-client/compare/widget-embedded@0.22.1...widget-embedded@0.22.2) (2024-02-07)
+
+
+
+## [0.22.1](https://github.com/rango-exchange/rango-client/compare/widget-embedded@0.22.0...widget-embedded@0.22.1) (2024-02-06)
+
+
+### Bug Fixes
+
+* fix tab manager error in Next.js ([ce312b8](https://github.com/rango-exchange/rango-client/commit/ce312b833ef92cf30fe8bd52b2d415a2d73ceb8b))
+
+
+
 # [0.22.0](https://github.com/rango-exchange/rango-client/compare/widget-embedded@0.21.0...widget-embedded@0.22.0) (2024-02-05)
 
 

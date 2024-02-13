@@ -18,6 +18,7 @@ export function Alert(props: PropsWithChildren<PropTypes>) {
     action,
     containerStyles,
     variant = 'regular',
+    titleAlign,
   } = props;
   const isFooterString = typeof footer === 'string';
 
@@ -36,6 +37,7 @@ export function Alert(props: PropsWithChildren<PropTypes>) {
           {title && (
             <Typography
               color={getColor(type, variant)}
+              align={titleAlign}
               variant="body"
               className="title_typography"
               size={mapVariantToSize(variant)}>

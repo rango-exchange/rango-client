@@ -1,31 +1,33 @@
+import type { ToastContainer } from './Toast.styles';
 import type { Type } from '../Alert/Alert.types';
-import type { CSSProperties } from '@stitches/react';
+import type * as Stitches from '@stitches/react';
+import type { CSSProperties } from 'react';
 
+type BaseProps = Stitches.VariantProps<typeof ToastContainer>;
+export type ToastPosition = Exclude<BaseProps['position'], object>;
 export interface ProviderPropTypes {
   container: HTMLElement;
-  anchorOrigin?: {
-    horizontal: 'left' | 'right';
-    vertical: 'bottom' | 'top';
-  };
-  containerStyle?: CSSProperties;
 }
 
-export type ToastType = { autoHideDuration?: number; id?: number | string } & (
-  | {
-      title: string;
-      type: Type;
-      titleColor?: string;
-      style?: CSSProperties;
-    }
-  | { component: React.ReactNode }
-);
+export type ToastType = {
+  autoHideDuration?: number;
+  id?: number | string;
+  containerStyle?: CSSProperties;
+  onClose?: () => void;
+  position: ToastPosition;
+  title: string;
+  type: Type;
+  style?: CSSProperties;
+  hasCloseIcon?: boolean;
+  hideOnTap?: boolean;
+  variant?: 'custom' | 'standard';
+};
 
 export type ToastProps = ToastType & {
   id: number | string;
-  horizontal: 'left' | 'right';
 };
 
 export type ProviderContext = {
   addToast: (content: ToastType) => void;
-  removeToast: (id: number | string) => void;
+  removeToast: (id: number | string, position: ToastPosition) => void;
 };
