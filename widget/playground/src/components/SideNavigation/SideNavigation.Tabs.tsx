@@ -5,7 +5,7 @@ import React, { useState } from 'react';
 
 import { Indicator, Tab, TabsContainer } from './SideNavigation.styles';
 
-const TAB_HEIGHT = 95;
+const TAB_HEIGHT = 105;
 const Tabs = (props: TabPropTypes) => {
   const { variant = 'vertical', tabs, onChange, activeLayout } = props;
   const [activeIndex, setActiveIndex] = useState(0);
@@ -29,13 +29,17 @@ const Tabs = (props: TabPropTypes) => {
                 !disabled && !isActive
                   ? () => handleTabClick(tab.id, index)
                   : undefined
-              }>
+              }
+              css={{
+                height: TAB_HEIGHT,
+              }}>
               {tab.content}
             </Tab>
           );
         })}
       <Indicator
         css={{
+          height: TAB_HEIGHT,
           transform: `translateY(${activeIndex * TAB_HEIGHT}px)`,
         }}
       />
