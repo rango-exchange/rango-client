@@ -13,8 +13,8 @@ import { createSettingsSlice } from './slices/settings';
 
 export type StateCreatorWithInitialData<
   T extends Partial<WidgetConfig>,
-  R extends Record<string, unknown>,
-  V extends Record<string, unknown>
+  R extends Partial<AppStoreState>,
+  V extends Partial<AppStoreState>
 > = (
   initialData: T | undefined,
   ...rest: Parameters<StateCreator<R, [], [], V>>

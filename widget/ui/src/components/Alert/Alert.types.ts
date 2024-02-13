@@ -1,3 +1,4 @@
+import type { BaseAlign } from '../Typography/Typography.types';
 import type { CSSProperties, ReactNode } from 'react';
 
 export type Type = 'success' | 'warning' | 'error' | 'info' | 'loading';
@@ -9,4 +10,5 @@ export interface PropTypes {
   action?: ReactNode;
   variant?: 'alarm' | 'regular';
   containerStyles?: CSSProperties;
+  titleAlign?: BaseAlign;
 }

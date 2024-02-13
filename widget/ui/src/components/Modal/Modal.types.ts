@@ -15,7 +15,12 @@ export interface PropTypes {
   prefix?: React.ReactNode;
   suffix?: React.ReactNode;
   container?: HTMLElement;
-  containerStyle?: Stitches.CSS<typeof config>;
+  styles?: {
+    root?: Stitches.CSS<typeof config>;
+    container?: Stitches.CSS<typeof config>;
+    content?: Stitches.CSS<typeof config>;
+    footer?: Stitches.CSS<typeof config>;
+  };
   footer?: React.ReactNode;
   hasWatermark?: boolean;
   hasCloseIcon?: boolean;

@@ -88,7 +88,7 @@ export function ConfirmSwapPage() {
   const showWalletsOnInit = !quoteWalletsConfirmed;
   const [showWallets, setShowWallets] = useState(false);
   const { isActiveTab } = useUiStore();
-  const disabledLiquiditySources = useAppStore().disabledLiquiditySources;
+  const disabledLiquiditySources = useAppStore().getDisabledLiquiditySources();
   const prevDisabledLiquiditySources = useRef(disabledLiquiditySources);
   const { manager } = useManager();
   const {

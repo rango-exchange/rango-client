@@ -1,3 +1,7 @@
+## [0.28.1](https://github.com/rango-exchange/rango-client/compare/ui@0.28.0...ui@0.28.1) (2024-02-07)
+
+
+
 # [0.28.0](https://github.com/rango-exchange/rango-client/compare/ui@0.27.0...ui@0.28.0) (2024-02-05)
 
 

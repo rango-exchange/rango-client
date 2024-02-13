@@ -48,14 +48,12 @@ export const Tab = styled(Flex, {
 });
 
 export const Indicator = styled('div', {
-  width: '7px',
-  height: '64px',
-  borderRadius: '0 20px 20px 0',
+  width: '2px',
   backgroundColor: '$secondary500',
   position: 'absolute',
   transition: 'transform 0.4s ease-in-out',
   left: 0,
-  top: 20,
+  top: 0,
 });
 
 export const TabsContainer = styled(Flex, {

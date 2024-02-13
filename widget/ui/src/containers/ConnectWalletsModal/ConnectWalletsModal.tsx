@@ -30,7 +30,9 @@ export function ConnectWalletsModal(props: PropTypes) {
       title={i18n.t('Connect Wallets')}
       open={open}
       onClose={onClose}
-      containerStyle={{ width: '75%', maxWidth: '30rem', height: '60%' }}>
+      styles={{
+        container: { width: '75%', maxWidth: '30rem', height: '60%' },
+      }}>
       <ModalContent>
         {list.map((info) => (
           <Wallet {...info} key={info.title} onClick={onSelect} />

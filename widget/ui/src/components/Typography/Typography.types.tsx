@@ -4,7 +4,7 @@ import type * as Stitches from '@stitches/react';
 type BaseProps = Stitches.VariantProps<typeof TypographyContainer>;
 type BaseSizes = Exclude<BaseProps['size'], object>;
 type BaseVariants = Exclude<BaseProps['variant'], object>;
-type BaseAlign = Exclude<BaseProps['align'], object>;
+export type BaseAlign = Exclude<BaseProps['align'], object>;
 
 // eslint-disable-next-line @typescript-eslint/no-magic-numbers
 type margin = 2 | 4 | 8 | 12;
