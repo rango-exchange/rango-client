@@ -15,3 +15,12 @@ export const getColor = (type: Type, variant: 'alarm' | 'regular') => {
       return undefined;
   }
 };
+
+export const mapVariantToSize = (variant: 'alarm' | 'regular') => {
+  switch (variant) {
+    case 'alarm':
+      return 'small';
+    case 'regular':
+      return 'xsmall';
+  }
+};

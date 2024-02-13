@@ -60,7 +60,7 @@ export function Header() {
           config={config}
         />
       </HeaderContainer>
-      <SuccessfulResetAlertContainer visible={true}>
+      <SuccessfulResetAlertContainer visible={isToastVisible}>
         <Alert
           type="success"
           containerStyles={{

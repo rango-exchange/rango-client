@@ -6,14 +6,9 @@ import React from 'react';
 import { Divider } from '../Divider';
 import { Typography } from '../Typography';
 
-import { getColor } from './Alert.helpers';
+import { getColor, mapVariantToSize } from './Alert.helpers';
 import { Container, IconHighlight, Main, TitleContainer } from './Alert.styles';
 import AlertIcon from './AlertIcon';
-
-enum TitleSize {
-  regular = 'xsmall',
-  alarm = 'small',
-}
 
 export function Alert(props: PropsWithChildren<PropTypes>) {
   const {
@@ -42,7 +37,8 @@ export function Alert(props: PropsWithChildren<PropTypes>) {
             <Typography
               color={getColor(type, variant)}
               variant="body"
-              size={TitleSize[variant]}>
+              className="title_typography"
+              size={mapVariantToSize(variant)}>
               {title}
             </Typography>
           )}
