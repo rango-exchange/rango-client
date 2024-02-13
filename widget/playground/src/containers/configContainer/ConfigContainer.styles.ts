@@ -74,10 +74,6 @@ const BoundaryGuideShowTransform = keyframes({
     height: 0,
     borderWidth: 0,
   },
-  '70%': {
-    height: '750px',
-    borderWidth: '1px',
-  },
   '100%': {
     height: '700px',
     borderWidth: '1px',
