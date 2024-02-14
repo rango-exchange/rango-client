@@ -1,7 +1,5 @@
-import type {
-  LiquiditySourceType,
-  UniqueSwappersGroupType,
-} from '../utils/settings';
+import type { UniqueSwappersGroupType } from '../utils/settings';
+import type { SwapperType } from 'rango-sdk';
 
 import { i18n } from '@lingui/core';
 import {
@@ -41,7 +39,7 @@ export function LiquiditySourcePage({ sourceType }: PropTypes) {
     getUniqueSwappersGroups(swappers, disabledLiquiditySources);
 
   const types = { Exchanges: i18n.t('Exchanges'), Bridges: i18n.t('Bridges') };
-  const validTypes: Array<LiquiditySourceType> = [];
+  const validTypes: Array<SwapperType> = [];
   if (sourceType === 'Exchanges') {
     validTypes.push('DEX');
   }
