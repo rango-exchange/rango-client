@@ -1,8 +1,9 @@
-import { Divider } from '@rango-dev/ui';
+import { Divider, useToast } from '@rango-dev/ui';
 import React, { useState } from 'react';
 
 import { ExportConfigModal } from '../../components/ExportConfigModal';
 import { useConfigStore } from '../../store/config';
+import { isConfigChanged } from '../../utils/configs';
 
 import {
   HeaderContainer,
@@ -10,10 +11,14 @@ import {
   StyledButton,
 } from './ConfigContainer.styles';
 
+const TOAST_DURATION = 2_000;
+
 export function Header() {
-  const resetConfig = useConfigStore.use.resetConfig();
   const [openExportModal, setOpenExportModal] = useState(false);
+
+  const resetConfig = useConfigStore.use.resetConfig();
   const config = useConfigStore.use.config();
+  const { addToast } = useToast();
 
   const toggleModal = () => setOpenExportModal((prev) => !prev);
 
@@ -23,7 +28,19 @@ export function Header() {
         type="secondary"
         size="medium"
         variant="ghost"
-        onClick={resetConfig.bind(null)}>
+        onClick={() => {
+          resetConfig();
+          addToast({
+            title: 'Your applied configuration has been reset.',
+            autoHideDuration: TOAST_DURATION,
+            type: 'success',
+            position: 'center-bottom',
+            containerStyle: {
+              bottom: '24px',
+            },
+          });
+        }}
+        disabled={!isConfigChanged(config)}>
         Reset Configuration
       </ResetButton>
       <Divider direction="horizontal" size={16} />
