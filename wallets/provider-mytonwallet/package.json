@@ -24,7 +24,7 @@
     "@rango-dev/signer-ton": "^0.11.0",
     "@rango-dev/wallets-shared": "^0.27.1-next.0",
     "@tonconnect/sdk": "^2.1.0",
-    "rango-types": "^0.1.57"
+    "rango-types": "^0.1.59"
   },
   "publishConfig": {
     "access": "public"
