@@ -82,7 +82,6 @@ export function ConfigContainer(props: PropsWithChildren) {
                   </NotSelectableTypography>
                 </BoundarySize>
               )}
-
               <BoundaryGuide visible={showBoundaryGuide}>
                 {props.children}
               </BoundaryGuide>

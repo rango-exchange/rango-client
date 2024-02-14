@@ -8,7 +8,7 @@ msgstr ""
 "Language: fr\n"
 "Project-Id-Version: rango\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-02-08 20:14\n"
+"PO-Revision-Date: 2024-02-14 05:55\n"
 "Last-Translator: \n"
 "Language-Team: French\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
@@ -74,7 +74,7 @@ msgstr "Actuellement, certaines transactions sont en cours d'exécution et sont 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/common/ActivateTabModal/ActivateTabModal.tsx:32
 #: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:267
-#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:231
+#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:237
 msgid "Confirm"
 msgstr "Valider"
 
@@ -115,44 +115,44 @@ msgid "Address {destination} doesn't match the blockchain address pattern."
 msgstr "L'adresse {destination} ne correspond pas au modèle d'adresse blockchain."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:162
+#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:168
 msgid "Add {chain} chain"
 msgstr "Ajouter une chaîne {chain}"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:211
-#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:244
+#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:217
+#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:250
 msgid "Add {blockchainDisplayName} Chain"
 msgstr "Ajouter une chaîne {blockchainDisplayName}"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:216
-#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:248
+#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:222
+#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:254
 msgid "You should connect a {blockchainDisplayName} supported wallet or choose a different {blockchainDisplayName} address"
 msgstr "Vous devriez connecter un portefeuille pris en charge par {blockchainDisplayName} ou choisir une adresse {blockchainDisplayName} différente"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:266
+#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:272
 msgid "{blockchainDisplayName} Chain Added"
 msgstr "Chaîne {blockchainDisplayName} ajoutée"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:270
+#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:276
 msgid "{blockchainDisplayName} is added to your wallet, you can use it to swap."
 msgstr "{blockchainDisplayName} est ajouté à votre portefeuille, vous pouvez l'utiliser pour échanger."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:280
+#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:286
 msgid "Request Rejected"
 msgstr "Demande rejetée"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:281
+#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:287
 msgid "You've rejected adding {blockchainDisplayName} chain to your wallet."
 msgstr "Vous avez rejeté l'ajout de la chaîne {blockchainDisplayName} à votre portefeuille."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:305
+#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:311
 msgid "Show more wallets"
 msgstr "Afficher plus de portefeuilles"
 
@@ -849,13 +849,13 @@ msgid "Auto"
 msgstr "Automatique"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/WalletsPage.tsx:66
+#: widget/embedded/src/pages/WalletsPage.tsx:72
 #: widget/ui/src/containers/ConnectWalletsModal/ConnectWalletsModal.tsx:30
 msgid "Connect Wallets"
 msgstr "Connecter les portefeuilles"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/WalletsPage.tsx:70
+#: widget/embedded/src/pages/WalletsPage.tsx:76
 msgid "Choose a wallet to connect."
 msgstr "Choisissez un portefeuille à connecter."
 
