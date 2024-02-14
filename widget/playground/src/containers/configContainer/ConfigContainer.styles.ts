@@ -73,8 +73,20 @@ export const BoundaryGuide = styled('div', {
   borderStyle: 'dashed',
   borderColor: '$neutral600',
   borderRadius: '20px',
-  height: '700px',
   display: 'flex',
+  transition: 'height .5s ease-in-out, border-width .5s ease-in-out',
+  variants: {
+    visible: {
+      true: {
+        height: '700px',
+        borderWidth: '$1',
+      },
+      false: {
+        height: 0,
+        borderWidth: 0,
+      },
+    },
+  },
 });
 
 export const BoundarySize = styled('div', {
