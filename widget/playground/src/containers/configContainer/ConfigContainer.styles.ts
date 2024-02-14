@@ -58,6 +58,9 @@ export const ResetButton = styled(StyledButton, {
   border: '1px solid $secondary500',
   width: '230px',
   height: '40px',
+  '&:disabled': {
+    border: '1px solid $neutral600',
+  },
 });
 
 export const Content = styled('div', {
