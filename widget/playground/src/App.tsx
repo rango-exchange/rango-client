@@ -1,3 +1,4 @@
+import { ToastProvider } from '@rango-dev/ui';
 import { Widget, WidgetProvider } from '@rango-dev/widget-embedded';
 import React, { useEffect } from 'react';
 import { Route, Routes } from 'react-router-dom';
@@ -20,14 +21,16 @@ export function App() {
   }, []);
 
   return (
-    <div id={PLAYGROUND_CONTAINER_ID} className={activeStyle}>
-      <WidgetProvider config={overridedConfig}>
-        <ConfigContainer>
-          <Routes>
-            <Route path="/*" element={<Widget config={overridedConfig} />} />
-          </Routes>
-        </ConfigContainer>
-      </WidgetProvider>
-    </div>
+    <ToastProvider container={document.body}>
+      <div id={PLAYGROUND_CONTAINER_ID} className={activeStyle}>
+        <WidgetProvider config={overridedConfig}>
+          <ConfigContainer>
+            <Routes>
+              <Route path="/*" element={<Widget config={overridedConfig} />} />
+            </Routes>
+          </ConfigContainer>
+        </WidgetProvider>
+      </div>
+    </ToastProvider>
   );
 }
