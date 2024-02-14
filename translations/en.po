@@ -17,7 +17,7 @@ msgstr ""
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:37
 #: widget/embedded/src/components/TokenList/TokenList.tsx:120
 #: widget/embedded/src/pages/HistoryPage.tsx:85
-#: widget/embedded/src/pages/LiquiditySourcePage.tsx:133
+#: widget/embedded/src/pages/LiquiditySourcePage.tsx:131
 msgid "No results found"
 msgstr "No results found"
 
@@ -25,7 +25,7 @@ msgstr "No results found"
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:38
 #: widget/embedded/src/components/TokenList/TokenList.tsx:121
 #: widget/embedded/src/pages/HistoryPage.tsx:87
-#: widget/embedded/src/pages/LiquiditySourcePage.tsx:134
+#: widget/embedded/src/pages/LiquiditySourcePage.tsx:132
 msgid "Try using different keywords"
 msgstr "Try using different keywords"
 
@@ -737,29 +737,29 @@ msgid "language"
 msgstr "language"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/LiquiditySourcePage.tsx:43
+#: widget/embedded/src/pages/LiquiditySourcePage.tsx:41
 #: widget/ui/src/components/LiquiditySourceList/LiquiditySourceList.tsx:151
 msgid "Exchanges"
 msgstr "Exchanges"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/LiquiditySourcePage.tsx:43
+#: widget/embedded/src/pages/LiquiditySourcePage.tsx:41
 #: widget/ui/src/components/LiquiditySourceList/LiquiditySourceList.tsx:112
 msgid "Bridges"
 msgstr "Bridges"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/LiquiditySourcePage.tsx:111
+#: widget/embedded/src/pages/LiquiditySourcePage.tsx:109
 msgid "Deselect all"
 msgstr "Deselect all"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/LiquiditySourcePage.tsx:111
+#: widget/embedded/src/pages/LiquiditySourcePage.tsx:109
 msgid "Select all"
 msgstr "Select all"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/LiquiditySourcePage.tsx:123
+#: widget/embedded/src/pages/LiquiditySourcePage.tsx:121
 msgid "Search {sourceType}"
 msgstr "Search {sourceType}"
 
