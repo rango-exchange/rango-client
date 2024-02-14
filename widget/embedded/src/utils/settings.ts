@@ -1,15 +1,13 @@
 import type { Features } from '../types';
-import type { SwapperMeta } from 'rango-sdk';
+import type { SwapperMeta, SwapperType } from 'rango-sdk';
 
 import { removeDuplicateFrom } from './common';
-
-export type LiquiditySourceType = 'BRIDGE' | 'AGGREGATOR' | 'DEX';
 
 export type UniqueSwappersGroupType = {
   id: string;
   groupTitle: string;
   logo: string;
-  type: LiquiditySourceType;
+  type: SwapperType;
   selected: boolean;
 };
 
