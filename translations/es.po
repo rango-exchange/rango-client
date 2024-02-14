@@ -8,7 +8,7 @@ msgstr ""
 "Language: es\n"
 "Project-Id-Version: rango\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-02-14 05:55\n"
+"PO-Revision-Date: 2024-02-14 10:53\n"
 "Last-Translator: \n"
 "Language-Team: Spanish\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -22,7 +22,7 @@ msgstr ""
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:37
 #: widget/embedded/src/components/TokenList/TokenList.tsx:120
 #: widget/embedded/src/pages/HistoryPage.tsx:85
-#: widget/embedded/src/pages/LiquiditySourcePage.tsx:133
+#: widget/embedded/src/pages/LiquiditySourcePage.tsx:131
 msgid "No results found"
 msgstr "No hay resultados"
 
@@ -30,7 +30,7 @@ msgstr "No hay resultados"
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:38
 #: widget/embedded/src/components/TokenList/TokenList.tsx:121
 #: widget/embedded/src/pages/HistoryPage.tsx:87
-#: widget/embedded/src/pages/LiquiditySourcePage.tsx:134
+#: widget/embedded/src/pages/LiquiditySourcePage.tsx:132
 msgid "Try using different keywords"
 msgstr "Intenta usar diferentes palabras clave"
 
@@ -740,29 +740,29 @@ msgid "language"
 msgstr "idioma"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/LiquiditySourcePage.tsx:43
+#: widget/embedded/src/pages/LiquiditySourcePage.tsx:41
 #: widget/ui/src/components/LiquiditySourceList/LiquiditySourceList.tsx:151
 msgid "Exchanges"
 msgstr "Intercambios"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/LiquiditySourcePage.tsx:43
+#: widget/embedded/src/pages/LiquiditySourcePage.tsx:41
 #: widget/ui/src/components/LiquiditySourceList/LiquiditySourceList.tsx:112
 msgid "Bridges"
 msgstr "Puentes"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/LiquiditySourcePage.tsx:111
+#: widget/embedded/src/pages/LiquiditySourcePage.tsx:109
 msgid "Deselect all"
 msgstr "Deseleccionar todo"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/LiquiditySourcePage.tsx:111
+#: widget/embedded/src/pages/LiquiditySourcePage.tsx:109
 msgid "Select all"
 msgstr "Seleccionar todo"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/LiquiditySourcePage.tsx:123
+#: widget/embedded/src/pages/LiquiditySourcePage.tsx:121
 msgid "Search {sourceType}"
 msgstr "Buscar {sourceType}"
 
