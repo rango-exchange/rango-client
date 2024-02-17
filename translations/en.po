@@ -14,41 +14,6 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/Quote.tsx:321
-msgid "See All Routes"
-msgstr "See All Routes"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/constants/quote.ts:26
-msgid "Fastest Transfer"
-msgstr "Fastest Transfer"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/constants/quote.ts:27
-msgid "Maximum Return"
-msgstr "Maximum Return"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/constants/quote.ts:28
-msgid "Lowest Fee"
-msgstr "Lowest Fee"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/constants/quote.ts:29
-msgid "Maximum Output"
-msgstr "Maximum Output"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/constants/quote.ts:30
-msgid "Smart Routing"
-msgstr "Smart Routing"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/pages/Routes.tsx:77
-msgid "Routes"
-msgstr "Routes"
-
-#. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:37
 #: widget/embedded/src/components/TokenList/TokenList.tsx:120
 #: widget/embedded/src/pages/HistoryPage.tsx:85
@@ -259,6 +224,11 @@ msgid "Minimum required slippage is {minRequiredSlippage}"
 msgstr "Minimum required slippage is {minRequiredSlippage}"
 
 #. js-lingui-explicit-id
+#: widget/embedded/src/components/Quote/Quote.tsx:321
+msgid "See All Routes"
+msgstr "See All Routes"
+
+#. js-lingui-explicit-id
 #: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:98
 msgid "View more info"
 msgstr "View more info"
@@ -344,6 +314,11 @@ msgid "Price impact"
 msgstr "Price impact"
 
 #. js-lingui-explicit-id
+#: widget/embedded/src/components/QuoteWarningsAndErrors/QuoteWarningsAndErrors.helpers.ts:36
+msgid "You need to increase slippage to at least {minRequiredSlippage} for this route."
+msgstr "You need to increase slippage to at least {minRequiredSlippage} for this route."
+
+#. js-lingui-explicit-id
 #: widget/embedded/src/components/QuoteWarningsAndErrors/QuoteWarningsAndErrors.helpers.ts:60
 #: widget/embedded/src/components/QuoteWarningsAndErrors/SlippageWariningModal.tsx:60
 #: widget/ui/src/containers/Warnings/MinRequiredSlippage.tsx:22
@@ -354,11 +329,6 @@ msgstr "We recommend you to increase slippage to at least {minRequiredSlippage} 
 #: widget/embedded/src/components/QuoteWarningsAndErrors/QuoteWarningsAndErrors.helpers.ts:69
 msgid "Caution, your slippage is high."
 msgstr "Caution, your slippage is high."
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/QuoteWarningsAndErrors/QuoteWarningsAndErrors.helpers.ts:36
-msgid "You need to increase slippage to at least {minRequiredSlippage} for this route."
-msgstr "You need to increase slippage to at least {minRequiredSlippage} for this route."
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/QuoteWarningsAndErrors/QuoteWarningsAndErrors.tsx:73
@@ -707,6 +677,31 @@ msgid "Rango Fee"
 msgstr "Rango Fee"
 
 #. js-lingui-explicit-id
+#: widget/embedded/src/constants/quote.ts:26
+msgid "Fastest Transfer"
+msgstr "Fastest Transfer"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/constants/quote.ts:27
+msgid "Maximum Return"
+msgstr "Maximum Return"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/constants/quote.ts:28
+msgid "Lowest Fee"
+msgstr "Lowest Fee"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/constants/quote.ts:29
+msgid "Maximum Output"
+msgstr "Maximum Output"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/constants/quote.ts:30
+msgid "Smart Routing"
+msgstr "Smart Routing"
+
+#. js-lingui-explicit-id
 #: widget/embedded/src/constants/warnings.ts:10
 msgid "Route has been updated."
 msgstr "Route has been updated."
@@ -797,6 +792,11 @@ msgstr "Select all"
 #: widget/embedded/src/pages/LiquiditySourcePage.tsx:121
 msgid "Search {sourceType}"
 msgstr "Search {sourceType}"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/Routes.tsx:77
+msgid "Routes"
+msgstr "Routes"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/pages/SelectBlockchainPage.tsx:58
