@@ -1,4 +1,4 @@
-import type { HomeButtonsPropTypes } from './HeaderButtons.types';
+import type { HeaderButtonsPropTypes } from './HeaderButtons.types';
 
 import { i18n } from '@lingui/core';
 import {
@@ -19,23 +19,32 @@ import { HeaderButton } from './HeaderButtons.styles';
 import { RefreshButton } from './RefreshButton';
 import { UnreadNotificationsBadge } from './UnreadNotificationsBadge';
 
-export function HomeButtons(props: HomeButtonsPropTypes) {
-  const { onClickRefresh, onClickHistory, onClickSettings } = props;
+export function HeaderButtons(props: HeaderButtonsPropTypes) {
+  const {
+    onClickRefresh,
+    onClickHistory,
+    onClickSettings,
+    hidden = [],
+  } = props;
 
   const {
     config: { features },
   } = useAppStore();
 
-  const isNotificationsHidden = isFeatureHidden('notification', features);
+  const isNotificationsHidden =
+    isFeatureHidden('notification', features) ||
+    hidden.includes('notifications');
 
   return (
     <>
-      <Tooltip
-        container={getContainer()}
-        side="top"
-        content={i18n.t('Refresh')}>
-        <RefreshButton onClick={onClickRefresh} />
-      </Tooltip>
+      {!hidden.includes('refresh') && (
+        <Tooltip
+          container={getContainer()}
+          side="top"
+          content={i18n.t('Refresh')}>
+          <RefreshButton onClick={onClickRefresh} />
+        </Tooltip>
+      )}
 
       {!isNotificationsHidden && (
         <Popover
@@ -57,22 +66,26 @@ export function HomeButtons(props: HomeButtonsPropTypes) {
           </div>
         </Popover>
       )}
-      <Tooltip
-        container={getContainer()}
-        side="top"
-        content={i18n.t('Settings')}>
-        <HeaderButton size="small" variant="ghost" onClick={onClickSettings}>
-          <SettingsIcon size={18} color="black" />
-        </HeaderButton>
-      </Tooltip>
-      <Tooltip
-        container={getContainer()}
-        side="top"
-        content={i18n.t('Transactions History')}>
-        <HeaderButton size="small" variant="ghost" onClick={onClickHistory}>
-          <TransactionIcon size={18} color="black" />
-        </HeaderButton>
-      </Tooltip>
+      {!hidden.includes('settings') && (
+        <Tooltip
+          container={getContainer()}
+          side="top"
+          content={i18n.t('Settings')}>
+          <HeaderButton size="small" variant="ghost" onClick={onClickSettings}>
+            <SettingsIcon size={18} color="black" />
+          </HeaderButton>
+        </Tooltip>
+      )}
+      {!hidden.includes('history') && (
+        <Tooltip
+          container={getContainer()}
+          side="top"
+          content={i18n.t('Transactions History')}>
+          <HeaderButton size="small" variant="ghost" onClick={onClickHistory}>
+            <TransactionIcon size={18} color="black" />
+          </HeaderButton>
+        </Tooltip>
+      )}
     </>
   );
 }

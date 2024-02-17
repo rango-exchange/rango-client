@@ -72,8 +72,8 @@ export function QuoteCostDetails(props: QuoteCostDetailsProps) {
   const [openCollapse, setOpenCollapse] = useState<boolean>(false);
   const { steps, quote } = props;
   const tokens = useAppStore().tokens();
-  const totalTime = secondsToString(totalArrivalTime(quote.result?.swaps));
-  const swaps = quote.result?.swaps ?? [];
+  const totalTime = secondsToString(totalArrivalTime(quote?.swaps));
+  const swaps = quote?.swaps ?? [];
   const container = getContainer();
 
   const totalFee = getTotalFeeInUsd(swaps, tokens);
@@ -83,7 +83,10 @@ export function QuoteCostDetails(props: QuoteCostDetailsProps) {
   return (
     <>
       <QuoteCost
-        onClickFee={() => setOpen(!open)}
+        onClickFee={(e) => {
+          e.stopPropagation();
+          setOpen(!open);
+        }}
         fee={numberToString(
           totalFee,
           GAS_FEE_MIN_DECIMALS,
@@ -110,7 +113,9 @@ export function QuoteCostDetails(props: QuoteCostDetailsProps) {
             </IconButton>
           </ModalHeader>
         }
-        onClose={() => setOpen(false)}>
+        onClose={() => {
+          setOpen(false);
+        }}>
         <ModalContainer>
           <Typography variant="title" size="small">
             {i18n.t('Details')}

@@ -34,7 +34,6 @@ export const Container = styled('div', {
       },
       alarm: {
         padding: '$5 $10',
-        alignItems: 'center',
         '.title_typography': {
           fontWeight: '$medium',
         },

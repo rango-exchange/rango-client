@@ -55,7 +55,7 @@ export function ConfirmWalletsModal(props: PropTypes) {
 
   const blockchains = useAppStore().blockchains();
   const {
-    quote,
+    selectedQuote,
     setSelectedWallets: selectQuoteWallets,
     quoteWalletsConfirmed: quoteWalletsConfirmed,
     setQuoteWalletConfirmed: setQuoteWalletConfirmed,
@@ -70,20 +70,19 @@ export function ConfirmWalletsModal(props: PropTypes) {
   const [quoteWarning, setQuoteWarning] = useState<
     ConfirmSwapWarnings['quoteUpdate'] | null
   >(null);
-  const [destination, setDestination] = useState(customDestination);
   const [showCustomDestination, setShowCustomDestination] = useState(
     !!customDestination
   );
 
-  const requiredWallets = getRequiredWallets(quote);
+  const requiredWallets = getRequiredWallets(selectedQuote?.swaps || null);
 
   const lastStepToBlockchain = blockchains.find(
     (blockchain) =>
       blockchain.name ===
-      quote?.result?.swaps[quote?.result?.swaps.length - 1].to.blockchain
+      selectedQuote?.swaps[selectedQuote?.swaps.length - 1].to.blockchain
   );
   const isWalletRequiredFor = (blockchain: string) =>
-    !!quote?.result?.swaps.find((swap) => swap.from.blockchain === blockchain);
+    !!selectedQuote?.swaps.find((swap) => swap.from.blockchain === blockchain);
 
   const [selectableWallets, setSelectableWallets] = useState<ConnectedWallet[]>(
     connectedWallets.filter((connectedWallet) => {
@@ -104,18 +103,18 @@ export function ConfirmWalletsModal(props: PropTypes) {
         selectableWallet.chain === chain &&
         selectableWallet.selected &&
         (isWalletRequiredFor(chain) ||
-          (!isWalletRequiredFor(chain) && !destination))
+          (!isWalletRequiredFor(chain) && !customDestination))
     );
 
   const isAddressMatched =
-    !!destination &&
+    !!customDestination &&
     showCustomDestination &&
     lastStepToBlockchainMeta &&
-    !isValidAddress(lastStepToBlockchainMeta, destination);
+    !isValidAddress(lastStepToBlockchainMeta, customDestination);
 
   const resetCustomDestination = () => {
     setShowCustomDestination(false);
-    setDestination('');
+    setCustomDestination(null);
     setSelectableWallets((selectableWallets) => {
       let anyWalletSelected = false;
       return selectableWallets.map((selectableWallet) => {
@@ -155,7 +154,7 @@ export function ConfirmWalletsModal(props: PropTypes) {
     onCancel();
     if (wallet.chain === lastStepToBlockchain?.name && showCustomDestination) {
       setShowCustomDestination(false);
-      setDestination('');
+      setCustomDestination(null);
     }
     setSelectableWallets((selectableWallets) =>
       selectableWallets
@@ -170,7 +169,6 @@ export function ConfirmWalletsModal(props: PropTypes) {
     );
     selectWallets(lastSelectedWallets);
     selectQuoteWallets(lastSelectedWallets);
-    setCustomDestination(destination);
     setQuoteWalletConfirmed(true);
     onClose();
   };
@@ -188,9 +186,8 @@ export function ConfirmWalletsModal(props: PropTypes) {
     );
     const result = await onCheckBalance?.({
       selectedWallets,
-      customDestination: destination,
+      customDestination,
     });
-
     const warnings = result.warnings;
     if (warnings?.balance?.messages) {
       setBalanceWarnings(warnings.balance.messages);
@@ -254,8 +251,8 @@ export function ConfirmWalletsModal(props: PropTypes) {
               disabled={confirmSwapDisabled(
                 loading,
                 showCustomDestination,
-                destination,
-                quote,
+                customDestination,
+                selectedQuote,
                 selectableWallets,
                 lastStepToBlockchain
               )}
@@ -442,9 +439,15 @@ export function ConfirmWalletsModal(props: PropTypes) {
                         <StyledTextField
                           autoFocus
                           placeholder={i18n.t('Your destination address')}
-                          value={destination}
+                          value={customDestination || ''}
                           onChange={(e) => {
-                            setDestination(e.target.value);
+                            const value = e.target.value;
+                            if (!value.length) {
+                              setShowCustomDestination(false);
+                              setCustomDestination(null);
+                            } else {
+                              setCustomDestination(value.length ? value : null);
+                            }
                           }}
                         />
                       </CustomCollapsible>
@@ -455,7 +458,7 @@ export function ConfirmWalletsModal(props: PropTypes) {
                             variant="alarm"
                             type="error"
                             title={i18n.t({
-                              values: { destination },
+                              values: { destination: customDestination },
                               id: "Address {destination} doesn't match the blockchain address pattern.",
                             })}
                           />

@@ -101,7 +101,19 @@ function Layout(props: PropsWithChildren<PropTypes>) {
       className={activeTheme()}
       ref={containerRef}>
       <Header
-        prefix={<>{showBackButton && <BackButton onClick={navigateBack} />}</>}
+        prefix={
+          <>
+            {showBackButton && (
+              <BackButton
+                onClick={() => {
+                  navigateBack();
+                  // As an example, used in routes page to add a custom logic when navigating back to the home page.
+                  header.onBack && header.onBack();
+                }}
+              />
+            )}
+          </>
+        }
         title={header.title}
         suffix={
           <>

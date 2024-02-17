@@ -3,7 +3,7 @@ import { Button, Divider, styled, SwapInput, WarningIcon } from '@rango-dev/ui';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { HomeButtons } from '../components/HeaderButtons';
+import { HeaderButtons } from '../components/HeaderButtons';
 import { Layout, PageContainer } from '../components/Layout';
 import { QuoteWarningsAndErrors } from '../components/QuoteWarningsAndErrors';
 import { SwitchFromAndToButton } from '../components/SwitchFromAndTo';
@@ -42,12 +42,6 @@ const InputsContainer = styled('div', {
 export function Home() {
   const navigate = useNavigate();
   const {
-    fetch: fetchQuote,
-    loading,
-    error: quoteError,
-    warning: quoteWarning,
-  } = useSwapInput();
-  const {
     fromToken,
     fromBlockchain,
     toToken,
@@ -57,10 +51,16 @@ export function Home() {
     inputUsdValue,
     outputAmount,
     outputUsdValue,
-    quote,
+    selectedQuote,
+    refetchQuote,
+    error: quoteError,
+    warning: quoteWarning,
+    quotes,
     resetQuoteWallets,
     setQuoteWarningsConfirmed,
+    updateQuotePartialState,
   } = useQuoteStore();
+  const { fetch: fetchQuote, loading } = useSwapInput({ refetchQuote });
 
   const { config, fetchStatus: fetchMetaStatus } = useAppStore();
 
@@ -74,13 +74,13 @@ export function Home() {
   const needsToWarnEthOnPath = false;
 
   const priceImpactInputCanNotBeComputed = !canComputePriceImpact(
-    quote,
+    selectedQuote,
     inputAmount,
     inputUsdValue
   );
 
   const priceImpactOutputCanNotBeComputed = !canComputePriceImpact(
-    quote,
+    selectedQuote,
     inputAmount,
     outputUsdValue
   );
@@ -89,7 +89,7 @@ export function Home() {
     fetchMetaStatus,
     fetchingQuote: loading,
     inputAmount,
-    quote,
+    quote: selectedQuote,
     anyWalletConnected: connectedWallets.length > 0,
     error: quoteError,
     warning: quoteWarning,
@@ -115,6 +115,7 @@ export function Home() {
 
   useEffect(() => {
     resetQuoteWallets();
+    updateQuotePartialState('refetchQuote', true);
   }, []);
 
   const percentageChange =
@@ -153,9 +154,9 @@ export function Home() {
         hasBackButton: false,
         title: config.title || i18n.t('Swap'),
         suffix: (
-          <HomeButtons
+          <HeaderButtons
             onClickRefresh={
-              (!!quote || quoteError) && !showQuoteWarningModal
+              (!!selectedQuote || quoteError) && !showQuoteWarningModal
                 ? fetchQuote
                 : undefined
             }
@@ -210,7 +211,7 @@ export function Home() {
             <SwitchFromAndToButton />
           </FromContainer>
           <SwapInput
-            sharpBottomStyle={!!quote?.result || fetchingQuote}
+            sharpBottomStyle={!!selectedQuote || fetchingQuote}
             label={i18n.t('To')}
             mode="To"
             fetchingQuote={fetchingQuote}
@@ -257,11 +258,20 @@ export function Home() {
         </InputsContainer>
         <Divider size="2" />
         <QuoteInfo
-          quote={quote}
+          quote={selectedQuote}
           loading={fetchingQuote}
           error={quoteError}
+          tagHidden={false}
           warning={quoteWarning}
           type="basic"
+          onClickAllRoutes={
+            !!quotes && quotes.results.length > 1
+              ? () => {
+                  updateQuotePartialState('refetchQuote', false);
+                  navigate(navigationRoutes.routes);
+                }
+              : undefined
+          }
         />
         {quoteWarning || quoteError ? (
           <>

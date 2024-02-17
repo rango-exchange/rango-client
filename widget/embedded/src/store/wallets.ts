@@ -38,7 +38,6 @@ export interface ConnectedWallet extends Wallet {
 interface WalletsStore {
   connectedWallets: ConnectedWallet[];
   balances: TokensBalance;
-  customDestination: string;
   loading: boolean;
   connectWallet: (accounts: Wallet[], tokens: Token[]) => void;
   disconnectWallet: (walletType: WalletType) => void;
@@ -57,7 +56,6 @@ export const useWalletsStore = createSelectors(
     subscribeWithSelector((set, get) => ({
       connectedWallets: [],
       balances: {},
-      customDestination: '',
       loading: false,
       connectWallet: (accounts, tokens) => {
         const getWalletsDetails = get().getWalletsDetails;

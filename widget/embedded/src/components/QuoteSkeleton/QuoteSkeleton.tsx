@@ -8,11 +8,11 @@ import { QuoteSummarySkeleton } from './QuoteSummarySkeleton';
 import { StepSkeleton } from './StepSkeleton';
 
 export function QuoteSkeleton(props: PropTypes) {
-  const { type, expanded, tag = false } = props;
+  const { type, expanded, tagHidden = false } = props;
 
   return (
     <Container rounded={type !== 'basic'}>
-      <QuoteSummarySkeleton type={type} tag={tag} />
+      <QuoteSummarySkeleton type={type} tagHidden={tagHidden} />
       <Chains>
         <Skeleton height={15} variant="rounded" />
       </Chains>
