@@ -3,8 +3,9 @@ export interface PropTypes {
   isConnected?: boolean;
   container?: HTMLElement;
 }
-export interface HomeButtonsPropTypes {
+export interface HeaderButtonsPropTypes {
+  onClickSettings?: () => void;
   onClickRefresh?: () => void;
   onClickHistory?: () => void;
-  onClickSettings?: () => void;
+  hidden?: ('settings' | 'refresh' | 'history' | 'notifications')[];
 }

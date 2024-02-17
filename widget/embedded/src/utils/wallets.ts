@@ -1,5 +1,11 @@
 import type { ConnectedWallet, TokenBalance } from '../store/wallets';
-import type { Balance, TokenHash, TokensBalance, Wallet } from '../types';
+import type {
+  Balance,
+  SelectedQuote,
+  TokenHash,
+  TokensBalance,
+  Wallet,
+} from '../types';
 import type { WalletInfo as ModalWalletInfo } from '@rango-dev/ui';
 import type {
   Asset,
@@ -9,12 +15,7 @@ import type {
   WalletType,
   WalletTypes,
 } from '@rango-dev/wallets-shared';
-import type {
-  BestRouteResponse,
-  BlockchainMeta,
-  Token,
-  WalletDetail,
-} from 'rango-sdk';
+import type { BlockchainMeta, Token, WalletDetail } from 'rango-sdk';
 
 import { WalletState as WalletStatus } from '@rango-dev/ui';
 import { readAccountAddress } from '@rango-dev/wallets-react';
@@ -192,10 +193,10 @@ export function prepareAccountsForWalletStore(
   return result;
 }
 
-export function getRequiredChains(quote: BestRouteResponse | null) {
+export function getRequiredChains(quote: SelectedQuote | null) {
   const wallets: string[] = [];
 
-  quote?.result?.swaps.forEach((swap) => {
+  quote?.swaps.forEach((swap) => {
     const currentStepFromBlockchain = swap.from.blockchain;
     const currentStepToBlockchain = swap.to.blockchain;
     if (!wallets.includes(currentStepFromBlockchain)) {

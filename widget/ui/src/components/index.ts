@@ -51,3 +51,4 @@ export * from './TokenAmount';
 export * from './StepDetails';
 export * from './Popover';
 export * from './Flags';
+export * from './Select';

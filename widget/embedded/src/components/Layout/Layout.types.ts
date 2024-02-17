@@ -14,6 +14,7 @@ export interface PropTypes {
     suffix?: React.ReactNode;
     hasBackButton?: boolean;
     onCancel?: () => void;
+    onBack?: () => void;
   };
   footer?: React.ReactNode;
   height?: ContainerHeightProp;

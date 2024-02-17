@@ -1,22 +1,15 @@
-import { styled } from '@rango-dev/ui';
+import { css, styled } from '@rango-dev/ui';
 
-export const CostAndTag = styled('div', {
-  display: 'flex',
-  justifyContent: 'space-between',
-  alignItems: 'center',
-  height: '22px',
-});
-
-export const Cost = styled('div', {
+export const FlexContent = styled('div', {
   display: 'flex',
 });
 
 export const BasicSummary = styled('div', {
-  padding: '$15 $0 14px $0',
+  padding: '$10 $0 $20',
 });
 
 export const Output = styled('div', {
-  padding: '$6 $0 $15 $0',
+  padding: '$12 $0 $20 $0',
   display: 'flex',
   flexDirection: 'column',
 });
@@ -25,7 +18,6 @@ export const OutputTokenInfo = styled('div', {
   display: 'flex',
   justifyContent: 'start',
   alignItems: 'center',
-  paddingBottom: '$5',
 });
 
 export const QuoteSummary = styled('div', {
@@ -55,3 +47,9 @@ export const TokenAmountLabel = styled('div', {
 });
 
 export const SwapPreview = styled('div', { padding: '$15 $0 $15 $0' });
+
+export const RowStyle = css({
+  display: 'flex',
+  justifyContent: 'space-between',
+  alignItems: 'center',
+});

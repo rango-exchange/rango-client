@@ -13,4 +13,5 @@ export const navigationRoutes = {
   wallets: 'wallets',
   confirmSwap: 'confirm-swap',
   swapDetails: ':requestId',
+  routes: 'routes',
 };

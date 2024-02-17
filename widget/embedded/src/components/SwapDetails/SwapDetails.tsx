@@ -163,7 +163,7 @@ export function SwapDetails(props: SwapDetailsProps) {
     setNetworkModal: setModalState,
     message: stepMessage,
     blockchains: blockchains,
-    swappers: swappers,
+    swappers,
   });
   const numberOfSteps = steps.length;
   const [firstStep, lastStep] = [swap.steps[0], swap.steps[numberOfSteps - 1]];
