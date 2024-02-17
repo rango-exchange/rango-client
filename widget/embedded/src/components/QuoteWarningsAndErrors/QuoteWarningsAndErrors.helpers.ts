@@ -25,6 +25,25 @@ export function makeAlerts(
     title: '',
     action: 'show-info',
   };
+  if (error) {
+    alertInfo.alertType = 'error';
+    if (error.type === QuoteErrorType.BRIDGE_LIMIT) {
+      alertInfo.title = error.recommendation;
+      alertInfo.action = 'show-info';
+    }
+
+    if (error.type === QuoteErrorType.INSUFFICIENT_SLIPPAGE) {
+      alertInfo.title = i18n.t({
+        id: 'You need to increase slippage to at least {minRequiredSlippage} for this route.',
+        values: {
+          minRequiredSlippage: error.minRequiredSlippage,
+        },
+      });
+      alertInfo.action = 'change-settings';
+    }
+
+    return alertInfo;
+  }
   if (warning) {
     if (warning.type === QuoteWarningType.HIGH_VALUE_LOSS) {
       const warningLevel = getPriceImpactLevel(warning.priceImpact);
@@ -49,25 +68,6 @@ export function makeAlerts(
     if (warning.type === QuoteWarningType.HIGH_SLIPPAGE) {
       alertInfo.title = i18n.t('Caution, your slippage is high.');
     }
-    return alertInfo;
-  }
-  if (error) {
-    alertInfo.alertType = 'error';
-    if (error.type === QuoteErrorType.BRIDGE_LIMIT) {
-      alertInfo.title = error.recommendation;
-      alertInfo.action = 'show-info';
-    }
-
-    if (error.type === QuoteErrorType.INSUFFICIENT_SLIPPAGE) {
-      alertInfo.title = i18n.t({
-        id: 'You need to increase slippage to at least {minRequiredSlippage} for this route.',
-        values: {
-          minRequiredSlippage: error.minRequiredSlippage,
-        },
-      });
-      alertInfo.action = 'change-settings';
-    }
-
     return alertInfo;
   }
   return null;

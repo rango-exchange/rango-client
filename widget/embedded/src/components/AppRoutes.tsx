@@ -9,6 +9,7 @@ import { HistoryPage } from '../pages/HistoryPage';
 import { Home } from '../pages/Home';
 import { LanguagePage } from '../pages/LanguagePage';
 import { LiquiditySourcePage } from '../pages/LiquiditySourcePage';
+import { RoutesPage } from '../pages/Routes';
 import { SelectBlockchainPage } from '../pages/SelectBlockchainPage';
 import { SelectSwapItemsPage } from '../pages/SelectSwapItemsPage';
 import { SettingsPage } from '../pages/SettingsPage';
@@ -30,6 +31,10 @@ export function AppRoutes() {
     {
       path: navigationRoutes.home,
       element: <Home />,
+    },
+    {
+      path: navigationRoutes.routes,
+      element: <RoutesPage />,
     },
     {
       path: navigationRoutes.fromSwap,

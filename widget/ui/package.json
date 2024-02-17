@@ -67,7 +67,8 @@
     "rango-sdk": "^0.1.45",
     "rango-types": "^0.1.59",
     "react-virtuoso": "^4.6.2",
-    "rgb-hex": "^4.0.1"
+    "rgb-hex": "^4.0.1",
+    "@radix-ui/react-select": "^2.0.0"
   },
   "publishConfig": {
     "access": "public"

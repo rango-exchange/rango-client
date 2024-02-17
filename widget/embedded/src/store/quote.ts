@@ -1,8 +1,9 @@
-import type { Wallet } from '../types';
+import type { QuoteError, QuoteWarning, SelectedQuote, Wallet } from '../types';
 import type {
-  BestRouteResponse,
   BlockchainMeta,
   MetaResponse,
+  MultiRouteResponse,
+  PreferenceType,
   Token,
 } from 'rango-sdk';
 import type { PendingSwap } from 'rango-types';
@@ -30,6 +31,14 @@ export type Meta = Pick<MetaResponse, 'blockchains' | 'tokens'>;
 
 export type SetTokenParams = { token: Token; meta: Meta } | { token: null };
 
+type SomeQuoteState = {
+  quotes: MultiRouteResponse | null;
+  sortStrategy: PreferenceType;
+  refetchQuote: boolean;
+  error: QuoteError | null;
+  warning: QuoteWarning | null;
+};
+
 export interface QuoteState {
   fromBlockchain: BlockchainMeta | null;
   toBlockchain: BlockchainMeta | null;
@@ -38,27 +47,37 @@ export interface QuoteState {
   outputAmount: BigNumber | null;
   outputUsdValue: BigNumber | null;
   fromToken: Token | null;
+  sortStrategy: PreferenceType;
   toToken: Token | null;
   quoteWalletsConfirmed: boolean;
   selectedWallets: Wallet[];
   quoteWarningsConfirmed: boolean;
+  refetchQuote: boolean;
+  selectedQuote: SelectedQuote | null;
+  quotes: MultiRouteResponse | null;
+  customDestination: string | null;
+  error: QuoteError | null;
+  warning: QuoteWarning | null;
   resetQuote: () => void;
+  resetAlerts: () => void;
+
   resetToBlockchain: () => void;
   resetFromBlockchain: () => void;
   setFromBlockchain: (chain: BlockchainMeta | null) => void;
   setToBlockchain: (chian: BlockchainMeta | null) => void;
-
   setFromToken: (params: SetTokenParams) => void;
   setToToken: (params: SetTokenParams) => void;
+  updateQuotePartialState: <K extends keyof SomeQuoteState>(
+    key: K,
+    value: SomeQuoteState[K]
+  ) => void;
   setInputAmount: (amount: string) => void;
-  quote: BestRouteResponse | null;
-  setQuote: (quote: BestRouteResponse | null) => void;
+  setSelectedQuote: (quote: SelectedQuote | null) => void;
   retry: (pendingSwap: PendingSwap, meta: Meta) => void;
   switchFromAndTo: () => void;
   setQuoteWalletConfirmed: (flag: boolean) => void;
   setSelectedWallets: (wallets: Wallet[]) => void;
-  customDestination: string;
-  setCustomDestination: (address: string) => void;
+  setCustomDestination: (address: string | null) => void;
   resetQuoteWallets: () => void;
   setQuoteWarningsConfirmed: (flag: boolean) => void;
 }
@@ -74,12 +93,22 @@ export const useQuoteStore = createSelectors(
       outputUsdValue: new BigNumber(0),
       toBlockchain: null,
       toToken: null,
-      quote: null,
+      refetchQuote: true,
+      sortStrategy: 'SMART',
+      selectedQuote: null,
+      quotes: null,
+      error: null,
+      warning: null,
       quoteWalletsConfirmed: false,
       selectedWallets: [],
-      customDestination: '',
+      customDestination: null,
       quoteWarningsConfirmed: false,
-      setQuote: (quote) =>
+      updateQuotePartialState: (key, value) =>
+        set((state) => ({
+          ...state,
+          [key]: value,
+        })),
+      setSelectedQuote: (quote) =>
         set((state) => {
           let outputAmount: BigNumber | null = null;
           let outputUsdValue: BigNumber = ZERO;
@@ -87,27 +116,36 @@ export const useQuoteStore = createSelectors(
             return {};
           }
           if (!!quote) {
-            outputAmount = !!quote.result?.outputAmount
-              ? new BigNumber(quote.result?.outputAmount)
+            outputAmount = !!quote?.outputAmount
+              ? new BigNumber(quote?.outputAmount)
               : null;
             outputUsdValue = calcOutputUsdValue(
-              quote.result?.outputAmount,
+              quote?.outputAmount,
               getQuoteToTokenUsdPrice(quote) || state.toToken?.usdPrice
             );
           }
           return {
-            quote: quote,
+            selectedQuote: quote,
             ...(!!quote && {
               outputAmount,
               outputUsdValue,
             }),
           };
         }),
+      resetAlerts: () =>
+        set(() => ({
+          error: null,
+          warning: null,
+        })),
       resetQuote: () =>
         set(() => ({
-          quote: null,
+          selectedQuote: null,
           outputAmount: null,
           outputUsdValue: new BigNumber(0),
+          quotes: null,
+          refetchQuote: true,
+          error: null,
+          warning: null,
         })),
       setFromBlockchain: (chain) => {
         set((state) => {
@@ -118,7 +156,7 @@ export const useQuoteStore = createSelectors(
           return {
             fromBlockchain: chain,
             ...(state.fromToken && {
-              quote: null,
+              selectedQuote: null,
               fromToken: null,
               outputAmount: null,
               outputUsdValue: null,
@@ -149,7 +187,7 @@ export const useQuoteStore = createSelectors(
           return {
             toBlockchain: chain,
             ...(state.toToken && {
-              quote: null,
+              selectedQuote: null,
               toToken: null,
               outputAmount: null,
               outputUsdValue: null,
@@ -174,7 +212,7 @@ export const useQuoteStore = createSelectors(
           ...(!amount && {
             outputAmount: new BigNumber(0),
             outputUsdValue: new BigNumber(0),
-            quote: null,
+            selectedQuote: null,
           }),
           ...(!!state.fromToken && {
             inputUsdValue: getUsdValue(state.fromToken, amount),
@@ -199,7 +237,7 @@ export const useQuoteStore = createSelectors(
           outputUsdValue: new BigNumber(0),
           toBlockchain,
           toToken,
-          quote: null,
+          selectedQuote: null,
         });
       },
       switchFromAndTo: () =>
@@ -220,7 +258,7 @@ export const useQuoteStore = createSelectors(
           fromBlockchain: null,
           outputAmount: null,
           outputUsdValue: null,
-          quote: null,
+          selectedQuote: null,
         })),
       resetToBlockchain: () =>
         set(() => ({
@@ -228,7 +266,7 @@ export const useQuoteStore = createSelectors(
           toBlockchain: null,
           outputAmount: null,
           outputUsdValue: null,
-          quote: null,
+          selectedQuote: null,
         })),
       setQuoteWalletConfirmed: (flag) =>
         set({
@@ -240,7 +278,7 @@ export const useQuoteStore = createSelectors(
         set({
           quoteWalletsConfirmed: false,
           selectedWallets: [],
-          customDestination: '',
+          customDestination: null,
         }),
       setQuoteWarningsConfirmed: (flag) =>
         set({ quoteWarningsConfirmed: flag }),
