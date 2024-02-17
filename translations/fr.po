@@ -8,7 +8,7 @@ msgstr ""
 "Language: fr\n"
 "Project-Id-Version: rango\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-02-17 14:54\n"
+"PO-Revision-Date: 2024-02-17 16:55\n"
 "Last-Translator: \n"
 "Language-Team: French\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
@@ -17,41 +17,6 @@ msgstr ""
 "X-Crowdin-Language: fr\n"
 "X-Crowdin-File: en.po\n"
 "X-Crowdin-File-ID: 30\n"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/Quote.tsx:321
-msgid "See All Routes"
-msgstr ""
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/constants/quote.ts:26
-msgid "Fastest Transfer"
-msgstr ""
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/constants/quote.ts:27
-msgid "Maximum Return"
-msgstr ""
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/constants/quote.ts:28
-msgid "Lowest Fee"
-msgstr ""
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/constants/quote.ts:29
-msgid "Maximum Output"
-msgstr ""
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/constants/quote.ts:30
-msgid "Smart Routing"
-msgstr ""
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/pages/Routes.tsx:77
-msgid "Routes"
-msgstr ""
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:37
@@ -264,6 +229,11 @@ msgid "Minimum required slippage is {minRequiredSlippage}"
 msgstr "Le slippage minimum requis est {minRequiredSlippage}"
 
 #. js-lingui-explicit-id
+#: widget/embedded/src/components/Quote/Quote.tsx:321
+msgid "See All Routes"
+msgstr ""
+
+#. js-lingui-explicit-id
 #: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:98
 msgid "View more info"
 msgstr "Voir plus d'infos"
@@ -347,6 +317,11 @@ msgid "Price impact"
 msgstr "Impact des prix"
 
 #. js-lingui-explicit-id
+#: widget/embedded/src/components/QuoteWarningsAndErrors/QuoteWarningsAndErrors.helpers.ts:36
+msgid "You need to increase slippage to at least {minRequiredSlippage} for this route."
+msgstr "Vous devez augmenter le slippage à au moins {minRequiredSlippage} pour cette route."
+
+#. js-lingui-explicit-id
 #: widget/embedded/src/components/QuoteWarningsAndErrors/QuoteWarningsAndErrors.helpers.ts:60
 #: widget/embedded/src/components/QuoteWarningsAndErrors/SlippageWariningModal.tsx:60
 #: widget/ui/src/containers/Warnings/MinRequiredSlippage.tsx:22
@@ -357,11 +332,6 @@ msgstr "Nous vous recommandons d'augmenter le slippage à au moins {minRequiredS
 #: widget/embedded/src/components/QuoteWarningsAndErrors/QuoteWarningsAndErrors.helpers.ts:69
 msgid "Caution, your slippage is high."
 msgstr "Attention, votre slippage est élevé."
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/QuoteWarningsAndErrors/QuoteWarningsAndErrors.helpers.ts:36
-msgid "You need to increase slippage to at least {minRequiredSlippage} for this route."
-msgstr "Vous devez augmenter le slippage à au moins {minRequiredSlippage} pour cette route."
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/QuoteWarningsAndErrors/QuoteWarningsAndErrors.tsx:73
@@ -710,6 +680,31 @@ msgid "Rango Fee"
 msgstr "Frais de Rango"
 
 #. js-lingui-explicit-id
+#: widget/embedded/src/constants/quote.ts:26
+msgid "Fastest Transfer"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/constants/quote.ts:27
+msgid "Maximum Return"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/constants/quote.ts:28
+msgid "Lowest Fee"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/constants/quote.ts:29
+msgid "Maximum Output"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/constants/quote.ts:30
+msgid "Smart Routing"
+msgstr ""
+
+#. js-lingui-explicit-id
 #: widget/embedded/src/constants/warnings.ts:10
 msgid "Route has been updated."
 msgstr "La route a été mise à jour."
@@ -800,6 +795,11 @@ msgstr "Tout sélectionner"
 #: widget/embedded/src/pages/LiquiditySourcePage.tsx:121
 msgid "Search {sourceType}"
 msgstr "Rechercher dans {sourceType}"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/Routes.tsx:77
+msgid "Routes"
+msgstr ""
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/pages/SelectBlockchainPage.tsx:58
