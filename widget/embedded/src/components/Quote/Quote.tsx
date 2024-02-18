@@ -122,6 +122,14 @@ export function Quote(props: QuoteProps) {
         stepState = 'warning';
       }
 
+      let alertTitle = stepHasError
+        ? i18n.t('Slippage Error')
+        : i18n.t('Slippage Warning');
+
+      if (error?.type === QuoteErrorType.BRIDGE_LIMIT) {
+        alertTitle = error?.recommendation;
+      }
+
       return {
         swapper: {
           displayName: getSwapperDisplayName(swap.swapperId, swappers),
@@ -197,11 +205,7 @@ export function Quote(props: QuoteProps) {
               <Alert
                 variant="alarm"
                 type={stepHasError ? 'error' : 'warning'}
-                title={
-                  error?.type === QuoteErrorType.BRIDGE_LIMIT
-                    ? error?.recommendation
-                    : i18n.t(`Slippage ${stepHasError ? 'Error' : 'Warning'}:`)
-                }
+                title={alertTitle}
                 footer={
                   <FooterAlert>
                     {error?.type === QuoteErrorType.BRIDGE_LIMIT && (
