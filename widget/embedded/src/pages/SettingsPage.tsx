@@ -129,18 +129,16 @@ export function SettingsPage() {
     onClick: () => navigate(navigationRoutes.exchanges),
   };
 
-  /*
-   * const languageItem = {
-   *   id: 'language-item',
-   *   title: (
-   *     <Typography variant="title" size="xmedium">
-   *       {i18n.t('Language')}
-   *     </Typography>
-   *   ),
-   *   end: <ChevronRightIcon color="gray" />,
-   *   onClick: () => navigate(navigationRoutes.languages),
-   * };
-   */
+  const languageItem = {
+    id: 'language-item',
+    title: (
+      <Typography variant="title" size="xmedium">
+        {i18n.t('Language')}
+      </Typography>
+    ),
+    end: <ChevronRightIcon color="gray" />,
+    onClick: () => navigate(navigationRoutes.languages),
+  };
 
   const themeItem = {
     id: 'theme-item',
@@ -185,7 +183,7 @@ export function SettingsPage() {
   const settingItems = isLiquidityHidden ? [] : [bridgeItem, exchangeItem];
 
   if (!isLanguageHidden) {
-    // settingItems.push(languageItem);
+    settingItems.push(languageItem);
   }
   if (!theme?.singleTheme && !isThemeHidden) {
     settingItems.push(themeItem);
