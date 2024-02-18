@@ -97,3 +97,10 @@ export class CustomScriptError extends Error {
     super(msg);
   }
 }
+
+export class CrowdinError extends Error {
+  name = 'CrowdinError';
+  constructor(msg) {
+    super(msg);
+  }
+}
