@@ -83,9 +83,6 @@ export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
 ) => {
   const evms = evmBlockchains(allBlockChains);
   const solana = solanaBlockchain(allBlockChains);
-  const cosmos = allBlockChains.filter(
-    (blockchainMeta) => blockchainMeta.name === Networks.COSMOS
-  );
   return {
     name: 'Math Wallet',
     img: 'https://raw.githubusercontent.com/rango-exchange/assets/main/wallets/math/icon.svg',
@@ -97,6 +94,6 @@ export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
       DEFAULT: 'https://mathwallet.org/en-us/',
     },
     color: '#2b2f25',
-    supportedChains: [...evms, ...solana, ...cosmos],
+    supportedChains: [...evms, ...solana],
   };
 };

@@ -31,6 +31,5 @@ declare global {
     tally: any;
     bitkeep: any;
     mytonwallet: any;
-    offlineSigner: any;
   }
 }

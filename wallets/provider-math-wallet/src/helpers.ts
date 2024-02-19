@@ -6,7 +6,7 @@ type Provider = Map<Network, any>;
 
 export function mathWallet() {
   const instances = new Map();
-  const { solana, ethereum, offlineSigner } = window;
+  const { solana, ethereum } = window;
 
   if (!!solana && solana.isMathWallet) {
     instances.set(Networks.SOLANA, solana);
@@ -14,10 +14,6 @@ export function mathWallet() {
 
   if (ethereum && ethereum.isMathWallet) {
     instances.set(Networks.ETHEREUM, ethereum);
-  }
-
-  if (offlineSigner && offlineSigner.getAccounts) {
-    instances.set(Networks.COSMOS, offlineSigner);
   }
 
   if (instances.size === 0) {
@@ -44,19 +40,6 @@ export async function getNonEvmAccounts(
       accounts: [solanaAccounts],
       chainId: Networks.SOLANA,
     });
-  }
-
-  // Getting Cosmos accounts
-  const cosmosInstance = instances.get(Networks.COSMOS);
-  if (cosmosInstance) {
-    const [firstAccount] = await cosmosInstance.getAccounts();
-
-    if (firstAccount) {
-      results.push({
-        accounts: [firstAccount.address],
-        chainId: Networks.COSMOS,
-      });
-    }
   }
 
   return results;
