@@ -102,7 +102,7 @@ export function Home() {
     formatBalance(fromTokenBalance)?.amount ?? '0';
 
   const tokenBalanceReal =
-    !!fromBlockchain && !!fromToken
+    !!fromBlockchain && !!fromToken && fromTokenBalance?.amount
       ? numberToString(fromTokenBalance?.amount, fromTokenBalance?.decimals)
       : '0';
 
@@ -203,9 +203,7 @@ export function Home() {
               loadingBalance={fetchingBalance}
               tooltipContainer={getContainer()}
               onSelectMaxBalance={() => {
-                if (fromTokenFormattedBalance !== '0') {
-                  setInputAmount(tokenBalanceReal.split(',').join(''));
-                }
+                setInputAmount(tokenBalanceReal.split(',').join(''));
               }}
             />
             <SwitchFromAndToButton />

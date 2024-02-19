@@ -19,9 +19,7 @@ export const DeleteContent = ({ onDelete, onClose }: DeleteContentProps) => {
         type="primary"
         size="large"
         onClick={onDelete}>
-        <Typography variant="title" size="medium" color="neutral100">
-          {i18n.t('Yes, Delete it')}
-        </Typography>
+        {i18n.t('Yes, Delete it')}
       </Button>
       <Divider size={12} />
       <Button variant="outlined" type="primary" size="large" onClick={onClose}>
