@@ -14,6 +14,16 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. js-lingui-explicit-id
+#: widget/embedded/src/components/Quote/Quote.tsx:126
+msgid "Slippage Error"
+msgstr "Slippage Error"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/Quote/Quote.tsx:127
+msgid "Slippage Warning"
+msgstr "Slippage Warning"
+
+#. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:37
 #: widget/embedded/src/components/TokenList/TokenList.tsx:120
 #: widget/embedded/src/pages/HistoryPage.tsx:85
@@ -68,44 +78,44 @@ msgstr "Currently, some transactions are running and being handled by other brow
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/common/ActivateTabModal/ActivateTabModal.tsx:32
-#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:264
+#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:269
 #: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:237
 msgid "Confirm"
 msgstr "Confirm"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:279
-#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:354
+#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:284
+#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:359
 msgid "Your {blockchainName} wallets"
 msgstr "Your {blockchainName} wallets"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:298
+#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:303
 msgid "Insufficient account balance"
 msgstr "Insufficient account balance"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:307
+#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:312
 msgid "Proceed anyway"
 msgstr "Proceed anyway"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:363
+#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:368
 msgid "You need to connect a {blockchainName} wallet."
 msgstr "You need to connect a {blockchainName} wallet."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:430
+#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:435
 msgid "Send to a different address"
 msgstr "Send to a different address"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:441
+#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:446
 msgid "Your destination address"
 msgstr "Your destination address"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:460
+#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:465
 msgid "Address {destination} doesn't match the blockchain address pattern."
 msgstr "Address {destination} doesn't match the blockchain address pattern."
 
@@ -169,7 +179,7 @@ msgstr "Notifications"
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/HeaderButtons/HeaderButtons.tsx:73
 #: widget/embedded/src/pages/ConfirmSwapPage.tsx:312
-#: widget/embedded/src/pages/SettingsPage.tsx:214
+#: widget/embedded/src/pages/SettingsPage.tsx:212
 msgid "Settings"
 msgstr "Settings"
 
@@ -214,17 +224,17 @@ msgid "There are no notifications."
 msgstr "There are no notifications."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/Quote.tsx:227
+#: widget/embedded/src/components/Quote/Quote.tsx:231
 msgid "Yours: {amount} {symbol}"
 msgstr "Yours: {amount} {symbol}"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/Quote.tsx:248
+#: widget/embedded/src/components/Quote/Quote.tsx:252
 msgid "Minimum required slippage is {minRequiredSlippage}"
 msgstr "Minimum required slippage is {minRequiredSlippage}"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/Quote.tsx:321
+#: widget/embedded/src/components/Quote/Quote.tsx:325
 msgid "See All Routes"
 msgstr "See All Routes"
 
@@ -461,12 +471,12 @@ msgid "Done"
 msgstr "Done"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsCompleteModal.tsx:99
+#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsCompleteModal.tsx:98
 msgid "Diagnosis"
 msgstr "Diagnosis"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsCompleteModal.tsx:107
+#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsCompleteModal.tsx:105
 msgid "See Details"
 msgstr "See Details"
 
@@ -481,12 +491,12 @@ msgid "Are you sure you want to cancel this swap?"
 msgstr "Are you sure you want to cancel this swap?"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.Cancel.tsx:23
+#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.Cancel.tsx:22
 msgid "Yes, Cancel it"
 msgstr "Yes, Cancel it"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.Cancel.tsx:29
+#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.Cancel.tsx:26
 msgid "No, Continue"
 msgstr "No, Continue"
 
@@ -501,12 +511,12 @@ msgid "Are you sure you want to delete this swap?"
 msgstr "Are you sure you want to delete this swap?"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.Delete.tsx:23
+#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.Delete.tsx:22
 msgid "Yes, Delete it"
 msgstr "Yes, Delete it"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.Delete.tsx:29
+#: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.Delete.tsx:27
 msgid "No, Cancel"
 msgstr "No, Cancel"
 
@@ -752,12 +762,13 @@ msgid "From"
 msgstr "From"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/Home.tsx:215
+#: widget/embedded/src/pages/Home.tsx:213
 msgid "To"
 msgstr "To"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/pages/LanguagePage.tsx:36
+#: widget/embedded/src/pages/SettingsPage.tsx:136
 msgid "Language"
 msgstr "Language"
 
@@ -839,24 +850,24 @@ msgid "Enabled exchanges"
 msgstr "Enabled exchanges"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/SettingsPage.tsx:149
+#: widget/embedded/src/pages/SettingsPage.tsx:147
 #: widget/embedded/src/pages/ThemePage.tsx:70
 #: widget/embedded/src/pages/ThemePage.tsx:79
 msgid "Theme"
 msgstr "Theme"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/SettingsPage.tsx:161
+#: widget/embedded/src/pages/SettingsPage.tsx:159
 msgid "Infinite approval"
 msgstr "Infinite approval"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/SettingsPage.tsx:171
+#: widget/embedded/src/pages/SettingsPage.tsx:169
 msgid "Enabling the 'Infinite approval' mode grants unrestricted access to smart contracts of DEXes/Bridges, allowing them to utilize the approved token amount without limitations."
 msgstr "Enabling the 'Infinite approval' mode grants unrestricted access to smart contracts of DEXes/Bridges, allowing them to utilize the approved token amount without limitations."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/SettingsPage.tsx:221
+#: widget/embedded/src/pages/SettingsPage.tsx:219
 msgid "Currently, you're in campaign mode with restrictions on liquidity sources. Would you like to switch out of this mode and make use of all available liquidity sources?"
 msgstr "Currently, you're in campaign mode with restrictions on liquidity sources. Would you like to switch out of this mode and make use of all available liquidity sources?"
 
