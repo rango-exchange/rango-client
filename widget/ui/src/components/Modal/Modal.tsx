@@ -60,15 +60,25 @@ export function Modal(props: PropsWithChildren<PropTypes>) {
       if (open) {
         setIsMount(true);
         container.style.overflow = 'hidden';
-        timeoutRef.current = setTimeout(() => {
-          setActive(true);
-        }, transitionDuration?.enter || OPEN_DELAY);
+        timeoutRef.current = setTimeout(
+          () => {
+            setActive(true);
+          },
+          typeof transitionDuration?.enter !== 'undefined'
+            ? transitionDuration?.enter
+            : OPEN_DELAY
+        );
       } else {
         setActive(false);
-        timeoutRef.current = setTimeout(() => {
-          setIsMount(false);
-          container.style.removeProperty('overflow');
-        }, transitionDuration?.exit || CLOSED_DELAY);
+        timeoutRef.current = setTimeout(
+          () => {
+            setIsMount(false);
+            container.style.removeProperty('overflow');
+          },
+          typeof transitionDuration?.exit !== 'undefined'
+            ? transitionDuration?.exit
+            : CLOSED_DELAY
+        );
       }
     }
     return () => {

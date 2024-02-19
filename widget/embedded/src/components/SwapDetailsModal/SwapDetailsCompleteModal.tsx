@@ -95,9 +95,7 @@ export function SwapDetailsCompleteModal(props: CompleteModalPropTypes) {
             type="primary"
             size="large"
             onClick={() => window.open(diagnosisUrl, '_blank')}>
-            <Typography variant="title" size="medium" color="primary">
-              {i18n.t('Diagnosis')}
-            </Typography>
+            {i18n.t('Diagnosis')}
           </Button>
           <Divider size={12} />
         </>

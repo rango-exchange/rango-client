@@ -84,17 +84,22 @@ export function ConfirmWalletsModal(props: PropTypes) {
   const isWalletRequiredFor = (blockchain: string) =>
     !!selectedQuote?.swaps.find((swap) => swap.from.blockchain === blockchain);
 
-  const [selectableWallets, setSelectableWallets] = useState<ConnectedWallet[]>(
+  const getInitialSelectableWallets = () =>
     connectedWallets.filter((connectedWallet) => {
       return (
         connectedWallet.selected &&
         requiredWallets.includes(connectedWallet.chain)
       );
-    })
+    });
+
+  const [selectableWallets, setSelectableWallets] = useState<ConnectedWallet[]>(
+    getInitialSelectableWallets()
   );
   const lastStepToBlockchainMeta = blockchains.find(
     (chain) => chain.name === lastStepToBlockchain?.name
   );
+
+  const isInsufficientBalanceModalOpen = balanceWarnings.length > 0;
 
   const isSelected = (walletType: string, chain: string) =>
     !!selectableWallets.find(
@@ -291,7 +296,7 @@ export function ConfirmWalletsModal(props: PropTypes) {
       })}
       anchor="center">
       <WatermarkedModal
-        open={balanceWarnings.length > 0}
+        open={isInsufficientBalanceModalOpen}
         onClose={setBalanceWarnings.bind(null, [])}
         container={modalContainer}>
         <MessageBox
