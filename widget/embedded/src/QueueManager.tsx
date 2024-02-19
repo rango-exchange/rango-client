@@ -80,9 +80,6 @@ function QueueManager(props: PropsWithChildren<{ apiKey?: string }>) {
       getSupportedChainNames,
     },
     getSigners,
-    //todo: remove Network type
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    //@ts-ignore
     wallets,
     providers: allProviders,
     switchNetwork,
