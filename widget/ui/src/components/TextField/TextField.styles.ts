@@ -91,6 +91,7 @@ export const Input = styled('input', {
   border: 'none',
   outline: 'none',
   fontFamily: 'inherit',
+  maxWidth: '100%',
   variants: {
     suffix: {
       true: { marginRight: '$10' },
