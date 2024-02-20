@@ -16,6 +16,7 @@ import {
   isNeedBlockQueueForParallel,
   isNetworkMatchedForTransaction,
   isRequiredWalletConnected,
+  isWalletNull,
   resetNetworkStatus,
   signTransaction,
   updateNetworkStatus,
@@ -62,7 +63,7 @@ export async function executeTransaction(
       (w) => !w.accounts?.find((account) => account.walletType === type)
     );
     const description =
-      !wallets || isWalletInCompatible
+      isWalletNull(wallets) || isWalletInCompatible
         ? ERROR_MESSAGE_WAIT_FOR_WALLET_DESCRIPTION(type)
         : ERROR_MESSAGE_WAIT_FOR_WALLET_DESCRIPTION_WRONG_WALLET(type, address);
 

@@ -135,12 +135,26 @@ export const CustomColors = styled(Button, {
   display: 'flex',
   justifyContent: 'space-between',
   backgroundColor: 'transparent',
-  '&:hover': {
-    '.title': {
-      color: '$secondary500',
-    },
-    '& svg': {
-      color: '$secondary500',
+  variants: {
+    isDisabled: {
+      false: {
+        '&:hover': {
+          '.title': {
+            color: '$secondary500',
+          },
+          '& svg': {
+            color: '$secondary500',
+          },
+        },
+      },
+      true: {
+        '.title': {
+          color: '$neutral600',
+        },
+        '& svg': {
+          color: '$neutral600',
+        },
+      },
     },
   },
 });

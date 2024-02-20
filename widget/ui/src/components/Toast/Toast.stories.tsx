@@ -16,7 +16,8 @@ export default {
     type: 'success',
     title: 'Please change your wallet network to Polygon',
     autoHideDuration: 5_000,
-    horizontal: 'right',
+    position: 'right-top',
+    variant: 'standard',
   },
   argTypes: {
     type: {
@@ -26,30 +27,26 @@ export default {
         options: ['success', 'warning', 'error', 'info', 'loading'],
       },
     },
+    position: {
+      name: 'position',
+      control: {
+        type: 'select',
+        options: [
+          'right-top',
+          'left-top',
+          'center-top',
+          'right-bottom',
+          'left-bottom',
+          'center-bottom',
+        ],
+      },
+    },
   },
 } as Meta<typeof Toast>;
 
-export const TopToasts = (props: ToastProps) => {
+export const Main = (props: ToastProps) => {
   return (
-    <ToastProvider
-      container={document.body}
-      anchorOrigin={{
-        horizontal: props.horizontal,
-        vertical: 'top',
-      }}>
-      <ToastComponent {...props} />
-    </ToastProvider>
-  );
-};
-
-export const BottomToasts = (props: ToastProps) => {
-  return (
-    <ToastProvider
-      container={document.body}
-      anchorOrigin={{
-        horizontal: props.horizontal,
-        vertical: 'bottom',
-      }}>
+    <ToastProvider container={document.body}>
       <ToastComponent {...props} />
     </ToastProvider>
   );

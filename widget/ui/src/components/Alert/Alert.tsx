@@ -6,8 +6,8 @@ import React from 'react';
 import { Divider } from '../Divider';
 import { Typography } from '../Typography';
 
-import { getColor } from './Alert.helpers';
-import { Container, IconHighlight, Main, titleStyles } from './Alert.styles';
+import { getColor, mapVariantToSize } from './Alert.helpers';
+import { Container, IconHighlight, Main, TitleContainer } from './Alert.styles';
 import AlertIcon from './AlertIcon';
 
 export function Alert(props: PropsWithChildren<PropTypes>) {
@@ -18,17 +18,18 @@ export function Alert(props: PropsWithChildren<PropTypes>) {
     action,
     containerStyles,
     variant = 'regular',
+    titleAlign,
   } = props;
   const isFooterString = typeof footer === 'string';
 
   return (
     <Container
       className="_alert"
-      style={containerStyles}
+      css={containerStyles}
       type={type}
       variant={variant}>
       <Main variant={variant}>
-        <div className={titleStyles()}>
+        <TitleContainer>
           <IconHighlight type={type}>
             <AlertIcon type={type} />
           </IconHighlight>
@@ -36,13 +37,14 @@ export function Alert(props: PropsWithChildren<PropTypes>) {
           {title && (
             <Typography
               color={getColor(type, variant)}
+              align={titleAlign}
               variant="body"
               className="title_typography"
-              size={variant === 'regular' ? 'xsmall' : 'small'}>
+              size={mapVariantToSize(variant)}>
               {title}
             </Typography>
           )}
-        </div>
+        </TitleContainer>
         {action ? <div>{action}</div> : null}
       </Main>
       {footer ? (

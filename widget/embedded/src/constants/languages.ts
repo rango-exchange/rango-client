@@ -1,6 +1,6 @@
 import type { FlagPropTypes, Language } from '@rango-dev/ui';
 
-import { English, French, Japanese, Spanish } from '@rango-dev/ui';
+import { English, French, Japanese, Portuguese, Spanish } from '@rango-dev/ui';
 
 export type LanguageItem = {
   title: string;
@@ -14,6 +14,7 @@ export const LANGUAGES: LanguageItem[] = [
   { title: 'Spanish', label: 'Español', local: 'es', SVGFlag: Spanish },
   { title: 'French', label: 'Français', local: 'fr', SVGFlag: French },
   { title: 'Japanese', label: '日本語', local: 'ja', SVGFlag: Japanese },
+  { title: 'Portuguese', label: 'Português', local: 'pt', SVGFlag: Portuguese },
 ];
 
 export const DEFAULT_LANGUAGE = 'en';

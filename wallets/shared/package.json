@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/wallets-shared",
-  "version": "0.27.0",
+  "version": "0.27.1-next.2",
   "license": "MIT",
   "type": "module",
   "source": "./src/index.ts",
@@ -25,7 +25,7 @@
   },
   "dependencies": {
     "ethers": "^5.7.2",
-    "rango-types": "^0.1.57"
+    "rango-types": "^0.1.59"
   },
   "publishConfig": {
     "access": "public"

@@ -1,18 +1,19 @@
 /* eslint-disable @typescript-eslint/no-magic-numbers */
 import type { FeesGroup, NameOfFees } from '../constants/quote';
 import type { FetchStatus } from '../store/slices/data';
+import type { ConnectedWallet } from '../store/wallets';
 import type {
   ConvertedToken,
   QuoteError,
   QuoteWarning,
   RecommendedSlippages,
+  SelectedQuote,
   SwapButtonState,
   Wallet,
 } from '../types';
 import type { WalletType } from '@rango-dev/wallets-shared';
 import type {
   BestRouteRequest,
-  BestRouteResponse,
   BlockchainMeta,
   RecommendedSlippage,
   SwapFee,
@@ -36,7 +37,6 @@ import {
   TOKEN_AMOUNT_MIN_DECIMALS,
 } from '../constants/routing';
 
-import { removeDuplicateFrom } from './common';
 import { getBlockchainShortNameFor } from './meta';
 import { numberToString } from './numbers';
 import { getPriceImpact, getRequiredBalanceOfWallet } from './quote';
@@ -74,9 +74,9 @@ export function hasHighValueLoss(
   );
 }
 
-export function hasLimitError(quote: BestRouteResponse | null): boolean {
+export function hasLimitError(swaps: SwapResult[]): boolean {
   return (
-    (quote?.result?.swaps || []).filter((swap) => {
+    (swaps || []).filter((swap) => {
       const minimum = !!swap.fromAmountMinValue
         ? new BigNumber(swap.fromAmountMinValue)
         : null;
@@ -91,12 +91,13 @@ export function hasLimitError(quote: BestRouteResponse | null): boolean {
     }).length > 0
   );
 }
-export function getLimitErrorMessage(quote: BestRouteResponse): {
+
+export function getLimitErrorMessage(swaps: SwapResult[]): {
   swap: SwapResult;
   fromAmountRangeError: string;
   recommendation: string;
 } {
-  const swap = (quote.result?.swaps || []).filter((swap) => {
+  const swap = (swaps || []).filter((swap) => {
     const minimum = !!swap.fromAmountMinValue
       ? new BigNumber(swap.fromAmountMinValue)
       : null;
@@ -184,7 +185,7 @@ export function getSwapButtonState(params: {
   anyWalletConnected: boolean;
   fetchingQuote: boolean;
   inputAmount: string;
-  quote: BestRouteResponse | null;
+  quote: SelectedQuote | null;
   warning: QuoteWarning | null;
   error: QuoteError | null;
   needsToWarnEthOnPath: boolean;
@@ -213,14 +214,7 @@ export function getSwapButtonState(params: {
       disabled: false,
     };
   }
-  if (
-    fetchingQuote ||
-    !quote ||
-    !quote.result ||
-    error ||
-    !inputAmount ||
-    inputAmount === '0'
-  ) {
+  if (fetchingQuote || !quote || error || !inputAmount || inputAmount === '0') {
     return {
       title: swapButtonTitles().swap,
       action: 'confirm-swap',
@@ -247,24 +241,24 @@ export function getSwapButtonState(params: {
 }
 
 export function canComputePriceImpact(
-  quote: BestRouteResponse | null,
+  quote: SelectedQuote | null,
   inputAmount: string,
   usdValue: BigNumber | null
 ) {
   return !(
     (!usdValue || usdValue.lte(ZERO)) &&
-    !!quote?.result &&
+    !!quote &&
     !!inputAmount &&
     inputAmount !== '0' &&
     parseFloat(inputAmount || '0') !== 0 &&
-    !!quote.result
+    !!quote
   );
 }
 
-export function requiredWallets(quote: BestRouteResponse | null) {
+export function requiredWallets(quote: SelectedQuote | null) {
   const wallets: string[] = [];
 
-  quote?.result?.swaps.forEach((swap) => {
+  quote?.swaps.forEach((swap) => {
     const currentStepFromBlockchain = swap.from.blockchain;
     const currentStepToBlockchain = swap.to.blockchain;
     let lastAddedWallet = wallets[wallets.length - 1];
@@ -377,10 +371,10 @@ export function hasSlippageError(
 }
 
 export function checkSlippageErrors(
-  quote: BestRouteResponse
+  swaps: SwapResult[]
 ): RecommendedSlippages | null {
   const recommendedSlippages: RecommendedSlippages = new Map();
-  quote.result?.swaps.forEach((swap, index) => {
+  swaps.forEach((swap, index) => {
     if (swap.recommendedSlippage?.error) {
       recommendedSlippages.set(index, swap.recommendedSlippage.slippage);
     }
@@ -392,11 +386,11 @@ export function checkSlippageErrors(
 }
 
 export function checkSlippageWarnings(
-  quote: BestRouteResponse,
+  quote: SelectedQuote,
   userSlippage: number
 ): RecommendedSlippages | null {
   const recommendedSlippages: RecommendedSlippages = new Map();
-  quote.result?.swaps.forEach((swap, index) => {
+  quote?.swaps.forEach((swap, index) => {
     if (
       swap.recommendedSlippage?.slippage &&
       parseFloat(swap.recommendedSlippage.slippage) > userSlippage
@@ -410,12 +404,8 @@ export function checkSlippageWarnings(
   return null;
 }
 
-export function getMinRequiredSlippage(
-  quote: BestRouteResponse
-): string | null {
-  const slippages = quote.result?.swaps.map(
-    (slippage) => slippage.recommendedSlippage
-  );
+export function getMinRequiredSlippage(swaps: SwapResult[]): string | null {
+  const slippages = swaps.map((slippage) => slippage.recommendedSlippage);
   return (
     slippages
       ?.map((s) => s?.slippage || '0')
@@ -436,7 +426,7 @@ export function hasProperSlippage(
 }
 
 export function hasEnoughBalance(
-  quote: BestRouteResponse,
+  quote: SelectedQuote,
   selectedWallets: Wallet[]
 ) {
   const fee = quote.validationStatus;
@@ -463,7 +453,7 @@ export function hasEnoughBalance(
 }
 
 export function hasEnoughBalanceAndProperSlippage(
-  quote: BestRouteResponse,
+  quote: SelectedQuote,
   selectedWallets: Wallet[],
   userSlippage: string,
   minRequiredSlippage: string | null
@@ -478,7 +468,7 @@ export function createQuoteRequestBody(params: {
   fromToken: Token;
   toToken: Token;
   inputAmount: string;
-  wallets?: Wallet[];
+  wallets?: ConnectedWallet[];
   selectedWallets?: Wallet[];
   liquiditySources?: string[];
   excludeLiquiditySources?: boolean;
@@ -487,7 +477,6 @@ export function createQuoteRequestBody(params: {
   affiliateRef: string | null;
   affiliatePercent: number | null;
   affiliateWallets: { [key: string]: string } | null;
-  initialQuote?: BestRouteResponse;
   destination?: string;
 }): BestRouteRequest {
   const {
@@ -503,7 +492,6 @@ export function createQuoteRequestBody(params: {
     affiliateRef,
     affiliatePercent,
     affiliateWallets,
-    initialQuote,
     destination,
   } = params;
   const selectedWalletsMap = selectedWallets?.reduce(
@@ -520,46 +508,18 @@ export function createQuoteRequestBody(params: {
   const connectedWallets: BestRouteRequest['connectedWallets'] = [];
 
   wallets?.forEach((wallet) => {
-    const chainAndAccounts = connectedWallets.find(
-      (connectedWallet) => connectedWallet.blockchain === wallet.chain
-    );
-    if (!!chainAndAccounts) {
-      chainAndAccounts.addresses.push(wallet.address);
-    } else {
-      connectedWallets.push({
-        blockchain: wallet.chain,
-        addresses: [wallet.address],
-      });
-    }
+    connectedWallets.push({
+      blockchain: wallet.chain,
+      addresses: [wallet.address],
+    });
   });
-
-  const checkPrerequisites = !!initialQuote;
-
-  const filteredBlockchains = removeDuplicateFrom(
-    (initialQuote?.result?.swaps || []).reduce(
-      (blockchains: string[], swap) => {
-        blockchains.push(swap.from.blockchain, swap.to.blockchain);
-        // Check if internalSwaps array exists
-        if (swap.internalSwaps && Array.isArray(swap.internalSwaps)) {
-          swap.internalSwaps.map((internalSwap) => {
-            blockchains.push(
-              internalSwap.from.blockchain,
-              internalSwap.to.blockchain
-            );
-          });
-        }
-        return blockchains;
-      },
-      []
-    )
-  );
-
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
   const requestBody: BestRouteRequest = {
     amount: inputAmount.toString(),
     affiliateRef: affiliateRef ?? undefined,
     affiliatePercent: affiliatePercent ?? undefined,
     affiliateWallets: affiliateWallets ?? undefined,
-    checkPrerequisites,
     from: {
       address: fromToken.address,
       blockchain: fromToken.blockchain,
@@ -584,7 +544,6 @@ export function createQuoteRequestBody(params: {
       ),
       swappersGroupsExclude: false,
     }),
-    ...(checkPrerequisites && { blockchains: filteredBlockchains }),
   };
   return requestBody;
 }
@@ -609,8 +568,8 @@ export function getWalletsForNewSwap(selectedWallets: Wallet[]) {
   return wallets;
 }
 
-export function getQuoteOutputAmount(quote: BestRouteResponse) {
-  return quote.result?.outputAmount || null;
+export function getQuoteOutputAmount(quote: SelectedQuote) {
+  return quote?.outputAmount || null;
 }
 
 export function getPercentageChange(input: string, output: string) {
@@ -622,8 +581,8 @@ export function getPercentageChange(input: string, output: string) {
 }
 
 export function isOutputAmountChangedALot(
-  oldQuote: BestRouteResponse,
-  newQuote: BestRouteResponse
+  oldQuote: SelectedQuote,
+  newQuote: SelectedQuote
 ) {
   const oldOutputAmount = getQuoteOutputAmount(oldQuote);
   const newOutputAmount = getQuoteOutputAmount(newQuote);
@@ -639,7 +598,7 @@ export function isOutputAmountChangedALot(
 }
 
 export function generateBalanceWarnings(
-  quote: BestRouteResponse,
+  quote: SelectedQuote,
   selectedWallets: Wallet[],
   blockchains: BlockchainMeta[]
 ) {
@@ -650,6 +609,7 @@ export function generateBalanceWarnings(
       requiredWallets.indexOf(selectedWallet1.chain) -
       requiredWallets.indexOf(selectedWallet2.chain)
   );
+
   return walletsSortedByRequiredWallets
     .flatMap((wallet) => getRequiredBalanceOfWallet(wallet, fee) || [])
     .filter((asset) => !asset.ok)
@@ -797,8 +757,8 @@ export function shouldRetrySwap(pendingSwap: PendingSwap) {
 export function confirmSwapDisabled(
   fetching: boolean,
   showCustomDestination: boolean,
-  customDestination: string,
-  quote: BestRouteResponse | null,
+  customDestination: string | null,
+  quote: SelectedQuote | null,
   selectedWallets: { walletType: string; chain: string }[],
   lastStepToBlockchain?: BlockchainMeta
 ) {

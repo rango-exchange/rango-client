@@ -4688,6 +4688,34 @@
     aria-hidden "^1.1.1"
     react-remove-scroll "2.5.5"
 
+"@radix-ui/react-select@^2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@radix-ui/react-select/-/react-select-2.0.0.tgz#a3511792a51a7018d6559357323a7f52e0e38887"
+  integrity sha512-RH5b7af4oHtkcHS7pG6Sgv5rk5Wxa7XI8W5gvB1N/yiuDGZxko1ynvOiVhFM7Cis2A8zxF9bTOUVbRDzPepe6w==
+  dependencies:
+    "@babel/runtime" "^7.13.10"
+    "@radix-ui/number" "1.0.1"
+    "@radix-ui/primitive" "1.0.1"
+    "@radix-ui/react-collection" "1.0.3"
+    "@radix-ui/react-compose-refs" "1.0.1"
+    "@radix-ui/react-context" "1.0.1"
+    "@radix-ui/react-direction" "1.0.1"
+    "@radix-ui/react-dismissable-layer" "1.0.5"
+    "@radix-ui/react-focus-guards" "1.0.1"
+    "@radix-ui/react-focus-scope" "1.0.4"
+    "@radix-ui/react-id" "1.0.1"
+    "@radix-ui/react-popper" "1.1.3"
+    "@radix-ui/react-portal" "1.0.4"
+    "@radix-ui/react-primitive" "1.0.3"
+    "@radix-ui/react-slot" "1.0.2"
+    "@radix-ui/react-use-callback-ref" "1.0.1"
+    "@radix-ui/react-use-controllable-state" "1.0.1"
+    "@radix-ui/react-use-layout-effect" "1.0.1"
+    "@radix-ui/react-use-previous" "1.0.1"
+    "@radix-ui/react-visually-hidden" "1.0.3"
+    aria-hidden "^1.1.1"
+    react-remove-scroll "2.5.5"
+
 "@radix-ui/react-separator@1.0.3":
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/@radix-ui/react-separator/-/react-separator-1.0.3.tgz#be5a931a543d5726336b112f465f58585c04c8aa"
@@ -19189,20 +19217,25 @@ rango-sdk-basic@^0.1.44:
     rango-types "^0.1.57"
     uuid-random "^1.3.2"
 
-rango-sdk@^0.1.44:
-  version "0.1.44"
-  resolved "https://registry.yarnpkg.com/rango-sdk/-/rango-sdk-0.1.44.tgz#5883bd0b5a77bd5848bcef40e04f5116f38fb640"
-  integrity sha512-vKAJrou1UszbloZG2Kj2/3xCCY9wLK2n2TYzEwVpZlffTkWXtQcP1PVupI4she7bxE7MD6OtJAkUimnx03kS2Q==
+rango-sdk@^0.1.45:
+  version "0.1.45"
+  resolved "https://registry.yarnpkg.com/rango-sdk/-/rango-sdk-0.1.45.tgz#0fe0133fb6627368fb80f632d4f4867cbe626c55"
+  integrity sha512-HLxmf4VMzPu8mHwfaLAvD0GMM27HKon6u1Yd38cpr+VMXJJscUErcMYwkRfpT9GgAv2H73nyvBG7n5xy5RpTlw==
   dependencies:
     axios "^1.2.6"
     bignumber.js "^9.1.1"
-    rango-types "^0.1.57"
+    rango-types "^0.1.59"
     uuid-random "^1.3.2"
 
 rango-types@^0.1.57:
   version "0.1.57"
   resolved "https://registry.yarnpkg.com/rango-types/-/rango-types-0.1.57.tgz#0e5378ae2e4114c4c71ad0ec98b86b3966ebe765"
   integrity sha512-F9bpBQovmP/GMENdFs5I4zZwbsPAHWmUCj33eIbu8ZbNa76/BmbC7nMfhViggNTXC2WHJaFsqhyukOEILU2Tlg==
+
+rango-types@^0.1.59:
+  version "0.1.59"
+  resolved "https://registry.yarnpkg.com/rango-types/-/rango-types-0.1.59.tgz#800c2eda06d36e0099b3e50d8dfcb048c3d9de73"
+  integrity sha512-sdbR2L5KVnGoVE1CVgtZyK21DKcTtivw+ajC15B2d2+BSQFmPQwe/gPAEJb3My6n2iR3rgVUdOoDTcAuZU3WLA==
 
 raw-body@2.5.1:
   version "2.5.1"

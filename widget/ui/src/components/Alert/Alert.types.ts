@@ -1,4 +1,6 @@
-import type { CSSProperties, ReactNode } from 'react';
+import type { BaseAlign } from '../Typography/Typography.types';
+import type { ReactNode } from 'react';
+import type { CSS } from 'src/theme';
 
 export type Type = 'success' | 'warning' | 'error' | 'info' | 'loading';
 
@@ -8,5 +10,6 @@ export interface PropTypes {
   footer?: ReactNode;
   action?: ReactNode;
   variant?: 'alarm' | 'regular';
-  containerStyles?: CSSProperties;
+  containerStyles?: CSS;
+  titleAlign?: BaseAlign;
 }

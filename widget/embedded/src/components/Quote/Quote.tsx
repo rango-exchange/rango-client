@@ -35,19 +35,29 @@ import {
   getSwapperDisplayName,
 } from '../../utils/meta';
 import { formatTooltipNumbers, numberToString } from '../../utils/numbers';
-import { getPriceImpact, getPriceImpactLevel } from '../../utils/quote';
+import {
+  getPriceImpact,
+  getPriceImpactLevel,
+  getRouteTagColor,
+  sortTags,
+} from '../../utils/quote';
 
 import {
+  AllRoutesButton,
   BasicInfoOutput,
   basicInfoStyles,
   ContainerInfoOutput,
   Content,
   FrameIcon,
   HorizontalSeparator,
+  Line,
   QuoteContainer,
   stepsDetailsStyles,
   SummaryContainer,
+  summaryHeaderStyles,
   summaryStyles,
+  Tag,
+  TagContainer,
 } from './Quote.styles';
 import { QuoteCostDetails } from './QuoteCostDetails';
 import { QuoteSummary } from './QuoteSummary';
@@ -61,11 +71,12 @@ export function Quote(props: QuoteProps) {
     error,
     warning,
     type,
-    recommended = true,
+    selected = false,
+    tagHidden = true,
+    onClickAllRoutes,
   } = props;
   const blockchains = useAppStore().blockchains();
   const swappers = useAppStore().swappers();
-
   const [expanded, setExpanded] = useState(props.expanded);
   const quoteRef = useRef<HTMLButtonElement | null>(null);
   const roundedInput = numberToString(
@@ -109,6 +120,14 @@ export function Quote(props: QuoteProps) {
         stepState = 'error';
       } else if (stepHasWarning) {
         stepState = 'warning';
+      }
+
+      let alertTitle = stepHasError
+        ? i18n.t('Slippage Error')
+        : i18n.t('Slippage Warning');
+
+      if (error?.type === QuoteErrorType.BRIDGE_LIMIT) {
+        alertTitle = error?.recommendation;
       }
 
       return {
@@ -184,12 +203,9 @@ export function Quote(props: QuoteProps) {
           stepHasError || stepHasWarning ? (
             <FooterStepAlarm>
               <Alert
+                variant="alarm"
                 type={stepHasError ? 'error' : 'warning'}
-                title={
-                  error?.type === QuoteErrorType.BRIDGE_LIMIT
-                    ? error?.recommendation
-                    : i18n.t(`Slippage ${stepHasError ? 'Error' : 'Warning'}:`)
-                }
+                title={alertTitle}
                 footer={
                   <FooterAlert>
                     {error?.type === QuoteErrorType.BRIDGE_LIMIT && (
@@ -258,18 +274,59 @@ export function Quote(props: QuoteProps) {
       };
     });
   };
-  const steps = getQuoteSteps(quote.result?.swaps ?? []);
+  const steps = getQuoteSteps(quote?.swaps ?? []);
+
   const numberOfSteps = steps.length;
-  const tooltipContainer = getContainer();
+  const container = getContainer();
+  const sortedQuoteTags = sortTags(props.quote.tags || []);
+  const showAllRoutesButton = !!onClickAllRoutes;
 
   return (
     <>
       <SummaryContainer
-        recommended={recommended}
+        selected={selected}
         listItem={type === 'list-item'}
         basic={type === 'basic'}>
         <div className={summaryStyles()}>
-          <QuoteCostDetails steps={numberOfSteps} quote={quote} />
+          {!tagHidden && sortedQuoteTags.length ? (
+            <>
+              <TagContainer>
+                {sortedQuoteTags.map((tag, index) => {
+                  const key = `${tag.value}_${index}`;
+                  return (
+                    <>
+                      <Tag
+                        style={{ color: getRouteTagColor(tag.value) }}
+                        key={key}>
+                        {tag.label}
+                      </Tag>
+                      <Divider size={4} direction="horizontal" />
+                    </>
+                  );
+                })}
+              </TagContainer>
+              <Line />
+              {!showAllRoutesButton && <Divider size={4} />}
+            </>
+          ) : null}
+          <div id="portal-root" className={summaryHeaderStyles()}>
+            <QuoteCostDetails steps={numberOfSteps} quote={quote} />
+
+            {showAllRoutesButton && (
+              <AllRoutesButton
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onClickAllRoutes();
+                }}
+                size="xxsmall"
+                type="secondary"
+                variant="default">
+                <Typography color="secondary" variant="label" size="medium">
+                  {i18n.t('See All Routes')}
+                </Typography>
+              </AllRoutesButton>
+            )}
+          </div>
           {type === 'basic' && (
             <div className={basicInfoStyles()}>
               <FrameIcon>
@@ -281,7 +338,7 @@ export function Quote(props: QuoteProps) {
                 </BasicInfoOutput>
                 <Tooltip
                   content={formatTooltipNumbers(output.value)}
-                  container={tooltipContainer}
+                  container={container}
                   open={!output.value ? false : undefined}>
                   <BasicInfoOutput size="small" variant="body">
                     &nbsp;
@@ -293,7 +350,7 @@ export function Quote(props: QuoteProps) {
               </ContainerInfoOutput>
               <Tooltip
                 content={formatTooltipNumbers(output.usdValue)}
-                container={tooltipContainer}
+                container={container}
                 style={{
                   display: 'flex',
                 }}>
@@ -309,9 +366,9 @@ export function Quote(props: QuoteProps) {
           )}
           {type === 'list-item' && (
             <TokenAmount
+              tooltipContainer={container}
               type="output"
               direction="vertical"
-              tooltipContainer={tooltipContainer}
               price={{
                 value: roundedOutput,
                 usdValue: roundedOutputUsdValue,
@@ -340,12 +397,14 @@ export function Quote(props: QuoteProps) {
           )}
         </div>
         <QuoteContainer
-          recommended={recommended}
+          selected={selected}
+          listItem={type === 'list-item'}
           open={expanded}
           onOpenChange={setExpanded}>
           <QuoteTrigger
+            type={type}
             quoteRef={quoteRef}
-            recommended={recommended}
+            selected={selected}
             setExpanded={setExpanded}
             expanded={expanded}
             steps={steps}
@@ -359,10 +418,10 @@ export function Quote(props: QuoteProps) {
                   <StepDetails
                     type="quote-details"
                     key={key}
+                    tooltipContainer={container}
                     step={step}
                     hasSeparator={index !== steps.length - 1}
                     state={step.state}
-                    tooltipContainer={tooltipContainer}
                   />
                 );
               })}

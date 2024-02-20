@@ -60,12 +60,14 @@ export function ExportConfigModal(props: ExportConfigModalProps) {
       container={
         document.getElementById(PLAYGROUND_CONTAINER_ID) as HTMLElement
       }
-      containerStyle={{
-        maxWidth: '1109px',
-        width: '90%',
-        maxHeight: '865px',
-        height: '90%',
-        padding: '$20',
+      styles={{
+        container: {
+          maxWidth: '1109px',
+          width: '90%',
+          maxHeight: '865px',
+          height: '90%',
+          padding: '$20',
+        },
       }}
       hasWatermark={false}
       header={

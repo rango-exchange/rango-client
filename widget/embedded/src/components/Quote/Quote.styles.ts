@@ -1,5 +1,12 @@
 import * as Collapsible from '@radix-ui/react-collapsible';
-import { css, darkTheme, Image, styled, Typography } from '@rango-dev/ui';
+import {
+  Button,
+  css,
+  darkTheme,
+  Image,
+  styled,
+  Typography,
+} from '@rango-dev/ui';
 
 import { CollapsibleContent } from '../CustomCollapsible/CustomCollapsible.styles';
 
@@ -13,16 +20,9 @@ export const QuoteContainer = styled(Collapsible.Root, {
   overflowY: 'hidden',
   width: '100%',
   borderRadius: '$xm',
-  cursor: 'default',
   variants: {
-    recommended: {
-      true: {
-        $$color: '$colors$info300',
-        [`.${darkTheme} &`]: {
-          $$color: '$colors$secondary800',
-        },
-        backgroundColor: '$$color',
-      },
+    selected: {
+      true: {},
       false: {
         $$color: '$colors$neutral400',
         [`.${darkTheme} &`]: {
@@ -31,13 +31,53 @@ export const QuoteContainer = styled(Collapsible.Root, {
         backgroundColor: '$$color',
       },
     },
+    listItem: {
+      true: {
+        $$color: '$colors$neutral400',
+        [`.${darkTheme} &`]: {
+          $$color: '$colors$neutral200',
+        },
+        backgroundColor: '$$color',
+      },
+      false: {},
+    },
   },
+
+  compoundVariants: [
+    {
+      listItem: false,
+      selected: true,
+      css: {
+        $$color: '$colors$info300',
+        [`.${darkTheme} &`]: {
+          $$color: '$colors$secondary800',
+        },
+        backgroundColor: '$$color',
+      },
+    },
+    {
+      listItem: true,
+      selected: false,
+      css: {
+        cursor: 'pointer',
+        '&:hover': {
+          backgroundColor: '$neutral300',
+          [`.${darkTheme} &`]: {
+            backgroundColor: '$neutral400',
+          },
+        },
+      },
+    },
+  ],
 });
 
 export const stepsDetailsStyles = css({
   padding: '$10 $15',
 });
-
+export const AllRoutesButton = styled(Button, {
+  backgroundColor: 'transparent',
+  border: '1px solid $secondary',
+});
 export const SummaryContainer = styled('div', {
   borderRadius: '$xm',
   display: 'flex',
@@ -45,12 +85,51 @@ export const SummaryContainer = styled('div', {
   alignItems: 'start',
   justifyContent: 'space-between',
   color: '$foreground',
-  cursor: 'pointer',
   boxSizing: 'border-box',
   position: 'relative',
   variants: {
-    recommended: {
+    selected: {
+      true: {},
+      false: {
+        $$color: '$colors$neutral200',
+        [`.${darkTheme} &`]: {
+          $$color: '$colors$neutral500',
+        },
+        backgroundColor: '$$color',
+      },
+    },
+    basic: { true: { borderTopRightRadius: '0', borderTopLeftRadius: '0' } },
+    listItem: {
       true: {
+        $$color: '$colors$neutral200',
+        [`.${darkTheme} &`]: {
+          $$color: '$colors$neutral500',
+        },
+        backgroundColor: '$$color',
+        '&:hover': {
+          backgroundColor: '$neutral300',
+          [`.${darkTheme} &`]: {
+            backgroundColor: '$neutral400',
+          },
+        },
+        cursor: 'pointer',
+      },
+      false: {},
+    },
+  },
+
+  compoundVariants: [
+    {
+      listItem: true,
+      selected: true,
+      css: {
+        border: '1px solid $secondary',
+      },
+    },
+    {
+      listItem: false,
+      selected: true,
+      css: {
         $$color: '$colors$info100',
         [`.${darkTheme} &`]: {
           $$color: '$colors$secondary600',
@@ -60,48 +139,17 @@ export const SummaryContainer = styled('div', {
           backgroundColor: '$$color',
         },
       },
-      false: {
-        $$color: '$colors$neutral200',
-        [`.${darkTheme} &`]: {
-          $$color: '$colors$neutral500',
-        },
-        backgroundColor: '$$color',
-        '&:hover': {
-          backgroundColor: '$$color',
-        },
-      },
-    },
-    basic: { true: { borderTopRightRadius: '0', borderTopLeftRadius: '0' } },
-    listItem: {
-      true: {},
-      false: {},
-    },
-  },
-
-  compoundVariants: [
-    {
-      listItem: true,
-      recommended: true,
-      css: {
-        '&:hover': {
-          $$color: '$colors$secondary200',
-          [`.${darkTheme} &`]: {
-            $$color: '$colors$secondary700',
-          },
-          backgroundColor: '$$color',
-        },
-      },
     },
     {
       listItem: true,
-      recommended: false,
+      selected: false,
       css: {
+        cursor: 'pointer',
         '&:hover': {
-          $$color: '$colors$neutral300',
+          backgroundColor: '$neutral300',
           [`.${darkTheme} &`]: {
-            $$color: '$colors$neutral400',
+            backgroundColor: '$neutral400',
           },
-          backgroundColor: '$$color',
         },
       },
     },
@@ -111,7 +159,15 @@ export const SummaryContainer = styled('div', {
 export const summaryStyles = css({
   width: '100%',
   padding: '$15 $15 $10 $15',
-  cursor: 'default',
+});
+
+export const summaryHeaderStyles = css({
+  display: 'flex',
+  flexDirection: 'row',
+  justifyContent: 'space-between',
+  alignItems: 'center',
+  paddingBottom: '$10',
+  position: 'relative',
 });
 
 export const rowStyles = css({
@@ -124,7 +180,6 @@ export const rowStyles = css({
   },
 });
 export const basicInfoStyles = css({
-  paddingTop: '$10',
   display: 'flex',
   alignItems: 'center',
   '.usd-value': {
@@ -163,14 +218,8 @@ export const Trigger = styled(Collapsible.Trigger, {
         },
       },
     },
-    recommended: {
-      true: {
-        $$color: '$colors$info300',
-        [`.${darkTheme} &`]: {
-          $$color: '$colors$secondary800',
-        },
-        backgroundColor: '$$color',
-      },
+    selected: {
+      true: {},
       false: {
         $$color: '$colors$neutral400',
         [`.${darkTheme} &`]: {
@@ -179,7 +228,31 @@ export const Trigger = styled(Collapsible.Trigger, {
         backgroundColor: '$$color',
       },
     },
+    listItem: {
+      true: {
+        $$color: '$colors$neutral400',
+        [`.${darkTheme} &`]: {
+          $$color: '$colors$neutral200',
+        },
+        backgroundColor: '$$color',
+      },
+      false: {},
+    },
   },
+
+  compoundVariants: [
+    {
+      listItem: false,
+      selected: true,
+      css: {
+        $$color: '$colors$info300',
+        [`.${darkTheme} &`]: {
+          $$color: '$colors$secondary800',
+        },
+        backgroundColor: '$$color',
+      },
+    },
+  ],
   '.blockchains_section': {
     display: 'none',
   },
@@ -289,5 +362,27 @@ export const MoreStep = styled('div', {
       },
       warning: { borderColor: '$warning500' },
     },
+  },
+});
+
+export const Tag = styled('div', {
+  backgroundColor: '$neutral400',
+  borderRadius: '$xs',
+  padding: '$2 $5',
+  fontSize: '$10',
+  fontWeight: 400,
+});
+export const TagContainer = styled('div', {
+  display: 'flex',
+});
+
+export const Line = styled('div', {
+  width: '100%',
+  borderTopWidth: '1px',
+  borderTopStyle: 'solid',
+  borderTopColor: '$neutral',
+  margin: '$5 0',
+  [`.${darkTheme} &`]: {
+    borderTopColor: '$neutral400',
   },
 });

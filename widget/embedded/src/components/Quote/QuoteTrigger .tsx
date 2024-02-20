@@ -44,7 +44,7 @@ const ImageComponent = (props: QuoteTriggerImagesProps) => {
 };
 
 export function QuoteTrigger(props: QuoteTriggerProps) {
-  const { quoteRef, recommended, setExpanded, steps, expanded } = props;
+  const { quoteRef, selected, setExpanded, steps, expanded, type } = props;
   const tooltipContainer = getContainer();
   const numberOfSteps = steps.length;
   const blockchains = getUniqueBlockchains(steps);
@@ -65,9 +65,13 @@ export function QuoteTrigger(props: QuoteTriggerProps) {
 
   return (
     <Trigger
+      listItem={type === 'list-item'}
       ref={(ref) => (quoteRef.current = ref)}
-      recommended={recommended}
-      onClick={() => setExpanded((prevState) => !prevState)}>
+      selected={selected}
+      onClick={(e) => {
+        e.stopPropagation();
+        setExpanded((prevState) => !prevState);
+      }}>
       <div className={rowStyles()}>
         <Typography variant="body" size="xsmall">
           {i18n.t('Via:')}

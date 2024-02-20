@@ -1,4 +1,4 @@
-import { css, darkTheme, styled } from '../../theme';
+import { darkTheme, styled } from '../../theme';
 
 export const Container = styled('div', {
   display: 'flex',
@@ -34,7 +34,6 @@ export const Container = styled('div', {
       },
       alarm: {
         padding: '$5 $10',
-        alignItems: 'center',
         '.title_typography': {
           fontWeight: '$medium',
         },
@@ -106,6 +105,12 @@ export const Main = styled('div', {
   },
 });
 
+export const TitleContainer = styled('div', {
+  display: 'flex',
+  alignItems: 'center',
+  flex: '1 0 0',
+});
+
 export const IconHighlight = styled('div', {
   borderRadius: '$lg',
   width: '$20',
@@ -159,10 +164,4 @@ export const IconHighlight = styled('div', {
       },
     },
   },
-});
-
-export const titleStyles = css({
-  display: 'flex',
-  alignItems: 'center',
-  flex: '1 0 0',
 });

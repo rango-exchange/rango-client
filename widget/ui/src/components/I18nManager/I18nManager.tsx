@@ -15,12 +15,14 @@ import { messages as enMessages } from '../../../../../translations/en';
 import { messages as esMessages } from '../../../../../translations/es';
 import { messages as frMessages } from '../../../../../translations/fr';
 import { messages as jaMessages } from '../../../../../translations/ja';
+import { messages as ptMessages } from '../../../../../translations/pt';
 
 const messages = {
   en: enMessages,
   es: esMessages,
   ja: jaMessages,
   fr: frMessages,
+  pt: ptMessages,
 };
 
 i18n.load(messages);

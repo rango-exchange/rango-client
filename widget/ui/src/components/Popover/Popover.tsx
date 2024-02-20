@@ -13,12 +13,12 @@ export const PopoverContentComponent = (
   props: PropsWithChildren<ContentType>,
   forwardedRef: Ref
 ) => {
-  const { container, children, ...rest } = props;
+  const { container, children, styles, ...rest } = props;
   return (
     <RadixPopover.Portal container={container}>
       <PopoverContainer {...rest} ref={forwardedRef}>
         {children}
-        <PopoverArrow />
+        <PopoverArrow css={styles?.arrowStyles} />
       </PopoverContainer>
     </RadixPopover.Portal>
   );
@@ -38,6 +38,7 @@ export function Popover(props: PropsWithChildren<PropTypes>) {
     collisionBoundary = [],
     collisionPadding = 0,
     container = document.body,
+    ...rest
   } = props;
   return (
     <RadixPopover.Root>
@@ -49,7 +50,8 @@ export function Popover(props: PropsWithChildren<PropTypes>) {
         collisionPadding={collisionPadding}
         side={side}
         sideOffset={sideOffset}
-        container={container}>
+        container={container}
+        {...rest}>
         {content}
       </PopoverContent>
     </RadixPopover.Root>

@@ -28,6 +28,10 @@ export const CheckboxRoot = styled(RadixCheckbox.Root, {
     backgroundColor: '$$color',
     borderColor: '$$color',
   },
+  '&[data-disabled]': {
+    backgroundColor: '$neutral600',
+    borderColor: '$neutral700',
+  },
 });
 
 export const CheckboxIndicator = styled(RadixCheckbox.CheckboxIndicator, {

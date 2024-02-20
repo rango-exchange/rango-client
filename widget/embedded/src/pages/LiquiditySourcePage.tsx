@@ -1,7 +1,5 @@
-import type {
-  LiquiditySourceType,
-  UniqueSwappersGroupType,
-} from '../utils/settings';
+import type { UniqueSwappersGroupType } from '../utils/settings';
+import type { SwapperType } from 'rango-sdk';
 
 import { i18n } from '@lingui/core';
 import {
@@ -33,14 +31,15 @@ interface PropTypes {
 export function LiquiditySourcePage({ sourceType }: PropTypes) {
   const fetchStatus = useAppStore().fetchStatus;
   const swappers = useAppStore().swappers();
-  const disabledLiquiditySources = useAppStore().disabledLiquiditySources;
+  const disabledLiquiditySources = useAppStore().getDisabledLiquiditySources();
   const [searchedFor, setSearchedFor] = useState<string>('');
   const toggleLiquiditySource = useAppStore().toggleLiquiditySource;
+  const campaignMode = useAppStore().isInCampaignMode();
   const supportedUniqueSwappersGroups: Array<UniqueSwappersGroupType> =
     getUniqueSwappersGroups(swappers, disabledLiquiditySources);
 
   const types = { Exchanges: i18n.t('Exchanges'), Bridges: i18n.t('Bridges') };
-  const validTypes: Array<LiquiditySourceType> = [];
+  const validTypes: Array<SwapperType> = [];
   if (sourceType === 'Exchanges') {
     validTypes.push('DEX');
   }
@@ -73,8 +72,12 @@ export function LiquiditySourcePage({ sourceType }: PropTypes) {
     const { selected, groupTitle, logo } = sourceItem;
     return {
       start: <Image src={logo} size={22} type="circular" />,
-      onClick: () => toggleLiquiditySource(groupTitle),
-      end: <Checkbox checked={selected} />,
+      onClick: () => {
+        if (!campaignMode) {
+          toggleLiquiditySource(groupTitle);
+        }
+      },
+      end: <Checkbox checked={selected} disabled={campaignMode} />,
       title: (
         <Typography variant="title" size="xmedium">
           {i18n.t(groupTitle)}
@@ -131,7 +134,7 @@ export function LiquiditySourcePage({ sourceType }: PropTypes) {
           </NotFoundContainer>
         ) : (
           fetchStatus === 'success' && (
-            <LiquiditySourceList>
+            <LiquiditySourceList disabled={campaignMode}>
               {filteredList.map((sourceItem) => {
                 return (
                   <React.Fragment key={sourceItem.id}>
