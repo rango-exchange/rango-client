@@ -1,3 +1,24 @@
+# [0.29.0](https://github.com/rango-exchange/rango-client/compare/ui@0.28.1...ui@0.29.0) (2024-02-20)
+
+
+### Bug Fixes
+
+* apply playground improvements ([0ccf48b](https://github.com/rango-exchange/rango-client/commit/0ccf48bc14f582e55137a9c54df2f5679038f6d0))
+* fix widget ui minor bugs ([b881755](https://github.com/rango-exchange/rango-client/commit/b881755d59af22b41d8314f9925ecc4de04169db))
+
+
+### Features
+
+* add disabled state to reset configuration button and add successful reset toast - last changes ([3308718](https://github.com/rango-exchange/rango-client/commit/3308718f6a7699b946ec9471a96c2cd5ef1f5c19))
+* add portuguese language to widget ([a7d40e2](https://github.com/rango-exchange/rango-client/commit/a7d40e2604eede900901865fc5ff1707819929a6))
+* add TuneIcon & add style prop to popover ([6ba684d](https://github.com/rango-exchange/rango-client/commit/6ba684dcc230e4da35fe4c1f379fb60b957a9fa7))
+* add various transitions to toast component ([76e910c](https://github.com/rango-exchange/rango-client/commit/76e910ccd920714d42d8ba7011c3bf3ea09a1bbb))
+* change modal & toast interface ([009612e](https://github.com/rango-exchange/rango-client/commit/009612e09c2f269872b1e639fbcf7df8cce76f74))
+* implement multi routing in widget ([5003446](https://github.com/rango-exchange/rango-client/commit/50034463d25c552584201d0bd0d6a970fdda1d78))
+* passing enabled swappers/bridges to widget through the url for campaigns ([06a42a3](https://github.com/rango-exchange/rango-client/commit/06a42a3b1e3986a2735189d2e9f2d6b3725edd64))
+
+
+
 ## [0.28.1](https://github.com/rango-exchange/rango-client/compare/ui@0.28.0...ui@0.28.1) (2024-02-07)
 
 
