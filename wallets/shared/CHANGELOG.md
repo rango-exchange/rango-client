@@ -1,3 +1,17 @@
+# [0.28.0](https://github.com/rango-exchange/rango-client/compare/wallets-shared@0.27.0...wallets-shared@0.28.0) (2024-02-20)
+
+
+### Bug Fixes
+
+* fix some swap messages in widget-embedded ([f859190](https://github.com/rango-exchange/rango-client/commit/f85919050b0c8f3bb0f91d4f3b87a58cca29601b))
+
+
+### Features
+
+* add cosmos account and signer for math wallet ([e43a489](https://github.com/rango-exchange/rango-client/commit/e43a48936a63804d688f3ad1408244d7f2ff32f2))
+
+
+
 # [0.27.0](https://github.com/rango-exchange/rango-client/compare/wallets-shared@0.26.0...wallets-shared@0.27.0) (2024-02-07)
 
 
