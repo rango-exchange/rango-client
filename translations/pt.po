@@ -8,7 +8,7 @@ msgstr ""
 "Language: pt\n"
 "Project-Id-Version: rango\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-02-19 14:17\n"
+"PO-Revision-Date: 2024-02-20 09:32\n"
 "Last-Translator: \n"
 "Language-Team: Portuguese\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -17,16 +17,6 @@ msgstr ""
 "X-Crowdin-Language: pt-PT\n"
 "X-Crowdin-File: en.po\n"
 "X-Crowdin-File-ID: 30\n"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/Quote.tsx:126
-msgid "Slippage Error"
-msgstr "Erro Slippage"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/Quote.tsx:127
-msgid "Slippage Warning"
-msgstr "Aviso Slippage"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:37
@@ -227,6 +217,16 @@ msgstr "Reset"
 #: widget/embedded/src/components/NotificationContent/NotificationNotFound.tsx:13
 msgid "There are no notifications."
 msgstr "Não há notificações."
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/Quote/Quote.tsx:126
+msgid "Slippage Error"
+msgstr "Erro Slippage"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/Quote/Quote.tsx:127
+msgid "Slippage Warning"
+msgstr "Aviso Slippage"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/Quote/Quote.tsx:231
