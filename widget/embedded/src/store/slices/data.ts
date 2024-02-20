@@ -168,9 +168,18 @@ export const createDataSlice: StateCreator<
     return pinned;
   },
   swappers: () => {
-    const {
-      config: { enableNewLiquiditySources, liquiditySources },
-    } = get();
+    const { config, campaignMode } = get();
+
+    const campaignModeLiquiditySource = campaignMode.liquiditySources?.length
+      ? campaignMode.liquiditySources
+      : null;
+
+    const liquiditySources =
+      campaignModeLiquiditySource ?? config.liquiditySources;
+
+    const enableNewLiquiditySources = campaignModeLiquiditySource
+      ? false
+      : config.enableNewLiquiditySources;
 
     /*
      * If the enableNewLiquiditySources flag is set to true, we return all swappers that are not included in the config.

@@ -35,11 +35,10 @@ export const LeftSide = styled('div', {
 });
 
 export const Main = styled('div', {
-  justifyContent: 'center',
-  alignItems: 'center',
   flexDirection: 'column',
   display: 'flex',
   width: '100%',
+  overflowY: 'clip',
 });
 
 export const HeaderContainer = styled('div', {
@@ -59,12 +58,16 @@ export const ResetButton = styled(StyledButton, {
   border: '1px solid $secondary500',
   width: '230px',
   height: '40px',
+  '&:disabled': {
+    border: '1px solid $neutral600',
+  },
 });
 
 export const Content = styled('div', {
-  height: '100%',
+  flex: '1 1 0%',
+  overflow: 'auto',
   display: 'flex',
-  justifyContent: 'center',
+  justifyContent: 'safe center',
   alignItems: 'center',
   flexDirection: 'column',
 });
@@ -73,8 +76,20 @@ export const BoundaryGuide = styled('div', {
   borderStyle: 'dashed',
   borderColor: '$neutral600',
   borderRadius: '20px',
-  height: '700px',
   display: 'flex',
+  transition: 'height .5s ease-in-out, border-width .5s ease-in-out',
+  variants: {
+    visible: {
+      true: {
+        height: '700px',
+        borderWidth: '$1',
+      },
+      false: {
+        height: 0,
+        borderWidth: 0,
+      },
+    },
+  },
 });
 
 export const BoundarySize = styled('div', {

@@ -1,35 +1,50 @@
 import { i18n } from '@lingui/core';
 import {
+  Alert,
+  Button,
   ChevronRightIcon,
   Divider,
   InfoIcon,
   List,
   ListItemButton,
   Skeleton,
+  styled,
   Switch,
   Tooltip,
   Typography,
 } from '@rango-dev/ui';
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import {
+  useInRouterContext,
+  useNavigate,
+  useSearchParams,
+} from 'react-router-dom';
 
 import { Layout, PageContainer } from '../components/Layout';
 import { Slippage } from '../components/Slippage';
 import { SlippageTooltipContainer as TooltipContainer } from '../components/Slippage/Slippage.styles';
 import { navigationRoutes } from '../constants/navigationRoutes';
+import { SearchParams } from '../constants/searchParams';
 import { useAppStore } from '../store/AppStore';
 import { getContainer } from '../utils/common';
 import { getUniqueSwappersGroups, isFeatureHidden } from '../utils/settings';
+
+const ResetAction = styled('div', {
+  paddingLeft: '$8',
+});
 
 export function SettingsPage() {
   const navigate = useNavigate();
   const { theme } = useAppStore().config;
   const fetchStatus = useAppStore().fetchStatus;
   const swappers = useAppStore().swappers();
-  const disabledLiquiditySources = useAppStore().disabledLiquiditySources;
+  const disabledLiquiditySources = useAppStore().getDisabledLiquiditySources();
   const {
     config: { features },
+    isInCampaignMode,
+    updateCampaignMode,
   } = useAppStore();
+  const campaignMode = isInCampaignMode();
   const isThemeHidden = isFeatureHidden('theme', features);
 
   const isLiquidityHidden = isFeatureHidden('liquiditySource', features);
@@ -114,18 +129,16 @@ export function SettingsPage() {
     onClick: () => navigate(navigationRoutes.exchanges),
   };
 
-  /*
-   * const languageItem = {
-   *   id: 'language-item',
-   *   title: (
-   *     <Typography variant="title" size="xmedium">
-   *       {i18n.t('Language')}
-   *     </Typography>
-   *   ),
-   *   end: <ChevronRightIcon color="gray" />,
-   *   onClick: () => navigate(navigationRoutes.languages),
-   * };
-   */
+  const languageItem = {
+    id: 'language-item',
+    title: (
+      <Typography variant="title" size="xmedium">
+        {i18n.t('Language')}
+      </Typography>
+    ),
+    end: <ChevronRightIcon color="gray" />,
+    onClick: () => navigate(navigationRoutes.languages),
+  };
 
   const themeItem = {
     id: 'theme-item',
@@ -170,12 +183,28 @@ export function SettingsPage() {
   const settingItems = isLiquidityHidden ? [] : [bridgeItem, exchangeItem];
 
   if (!isLanguageHidden) {
-    // settingItems.push(languageItem);
+    settingItems.push(languageItem);
   }
   if (!theme?.singleTheme && !isThemeHidden) {
     settingItems.push(themeItem);
   }
   settingItems.push(infiniteApprovalItem);
+
+  const [, setSearchParams] = useSearchParams();
+  const isRouterInContext = useInRouterContext();
+
+  const onClick = () => {
+    if (isRouterInContext && campaignMode) {
+      setSearchParams(
+        (prev) => {
+          prev.delete(SearchParams.LIQUIDITY_SOURCES);
+          return prev;
+        },
+        { replace: true }
+      );
+      updateCampaignMode('liquiditySources', undefined);
+    }
+  };
 
   return (
     <Layout
@@ -183,6 +212,22 @@ export function SettingsPage() {
         title: i18n.t('Settings'),
       }}>
       <PageContainer>
+        {campaignMode && (
+          <Alert
+            type="info"
+            variant="alarm"
+            title={i18n.t(
+              "Currently, you're in campaign mode with restrictions on liquidity sources. Would you like to switch out of this mode and make use of all available liquidity sources?"
+            )}
+            action={
+              <ResetAction>
+                <Button type="secondary" size="small" onClick={onClick}>
+                  Reset
+                </Button>
+              </ResetAction>
+            }
+          />
+        )}
         <Slippage />
         <List
           type={

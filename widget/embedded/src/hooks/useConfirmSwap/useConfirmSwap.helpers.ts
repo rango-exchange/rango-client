@@ -1,6 +1,12 @@
 import type { ConfirmSwapFetchResult } from './useConfirmSwap.types';
-import type { ConfirmSwapWarnings, Wallet } from '../../types';
-import type { BestRouteResponse, BlockchainMeta, Token } from 'rango-sdk';
+import type {
+  ConfirmSwapWarnings,
+  QuoteErrorResponse,
+  QuoteResponse,
+  SelectedQuote,
+  Wallet,
+} from '../../types';
+import type { BlockchainMeta, SwapResult, Token } from 'rango-sdk';
 
 import { errorMessages } from '../../constants/errors';
 import { QuoteErrorType, QuoteUpdateType } from '../../types';
@@ -26,8 +32,8 @@ import {
 /**
  * A request can be successful but in body of the response, it can be some case which is considered as failed.
  */
-export function throwErrorIfResponseIsNotValid(response: BestRouteResponse) {
-  if (!response.result) {
+export function throwErrorIfResponseIsNotValid(response: QuoteResponse) {
+  if (!response.swaps) {
     throw new Error(errorMessages().noResultError.title, {
       cause: {
         type: QuoteErrorType.NO_RESULT,
@@ -35,40 +41,49 @@ export function throwErrorIfResponseIsNotValid(response: BestRouteResponse) {
       },
     });
   }
-  const limitError = hasLimitError(response);
+  const quoteError = getQuoteError(response.swaps);
+  if (quoteError) {
+    throw new Error(quoteError.message, {
+      cause: quoteError.options,
+    });
+  }
+}
+
+export function getQuoteError(swaps: SwapResult[]): QuoteErrorResponse | null {
+  const limitError = hasLimitError(swaps);
   if (limitError) {
     const { swap, recommendation, fromAmountRangeError } =
-      getLimitErrorMessage(response);
-
-    throw new Error('bridge limit error', {
-      cause: {
+      getLimitErrorMessage(swaps);
+    return {
+      message: 'bridge limit error',
+      options: {
         type: QuoteErrorType.BRIDGE_LIMIT,
-        swap: swap,
+        swap,
         recommendation,
         fromAmountRangeError,
       },
-    });
+    };
   }
 
-  const recommendedSlippages = checkSlippageErrors(response);
+  const recommendedSlippages = checkSlippageErrors(swaps);
 
   if (recommendedSlippages) {
-    const minRequiredSlippage = getMinRequiredSlippage(response);
-    throw new Error('', {
-      cause: {
+    const minRequiredSlippage = getMinRequiredSlippage(swaps);
+    return {
+      message: '',
+      options: {
         type: QuoteErrorType.INSUFFICIENT_SLIPPAGE,
         recommendedSlippages,
         minRequiredSlippage,
       },
-    });
+    };
   }
-
-  return response;
+  return null;
 }
 
 export function generateWarnings(
-  previousQuote: BestRouteResponse | undefined,
-  currentQuote: BestRouteResponse,
+  previousQuote: SelectedQuote | undefined,
+  currentQuote: SelectedQuote,
   params: {
     fromToken: Token;
     toToken: Token;
@@ -132,6 +147,7 @@ export function generateWarnings(
     params.selectedWallets,
     params.meta.blockchains
   );
+
   const enoughBalance = balanceWarnings.length === 0;
 
   if (!enoughBalance) {

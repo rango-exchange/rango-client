@@ -27,7 +27,7 @@ export function Modal(props: PropsWithChildren<PropTypes>) {
     title,
     open,
     onClose,
-    containerStyle,
+    styles,
     anchor = 'bottom',
     container = document.body,
     prefix,
@@ -46,6 +46,8 @@ export function Modal(props: PropsWithChildren<PropTypes>) {
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const handleBackDropClick = (event: React.MouseEvent<HTMLDivElement>) => {
+    event.stopPropagation();
+
     if (event.target === event.currentTarget && dismissible) {
       onClose();
     }
@@ -58,15 +60,25 @@ export function Modal(props: PropsWithChildren<PropTypes>) {
       if (open) {
         setIsMount(true);
         container.style.overflow = 'hidden';
-        timeoutRef.current = setTimeout(() => {
-          setActive(true);
-        }, transitionDuration?.enter || OPEN_DELAY);
+        timeoutRef.current = setTimeout(
+          () => {
+            setActive(true);
+          },
+          typeof transitionDuration?.enter !== 'undefined'
+            ? transitionDuration?.enter
+            : OPEN_DELAY
+        );
       } else {
         setActive(false);
-        timeoutRef.current = setTimeout(() => {
-          setIsMount(false);
-          container.style.removeProperty('overflow');
-        }, transitionDuration?.exit || CLOSED_DELAY);
+        timeoutRef.current = setTimeout(
+          () => {
+            setIsMount(false);
+            container.style.removeProperty('overflow');
+          },
+          typeof transitionDuration?.exit !== 'undefined'
+            ? transitionDuration?.exit
+            : CLOSED_DELAY
+        );
       }
     }
     return () => {
@@ -84,10 +96,11 @@ export function Modal(props: PropsWithChildren<PropTypes>) {
           <BackDrop
             active={active}
             onClick={handleBackDropClick}
-            anchor={anchor}>
+            anchor={anchor}
+            css={styles?.root}>
             <ModalContainer
               active={active}
-              css={containerStyle}
+              css={styles?.container}
               anchor={anchor}>
               {header ?? (
                 <ModalHeader noTitle={!title && dismissible && !prefix}>
@@ -107,9 +120,9 @@ export function Modal(props: PropsWithChildren<PropTypes>) {
                   </Flex>
                 </ModalHeader>
               )}
-              <Content>{children}</Content>
+              <Content css={styles?.content}>{children}</Content>
 
-              <Footer>
+              <Footer css={styles?.footer}>
                 {footer && <div className="footer__content">{footer}</div>}
 
                 <div

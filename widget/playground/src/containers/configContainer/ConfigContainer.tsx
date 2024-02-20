@@ -5,6 +5,7 @@ import {
   Divider,
   HeightIcon,
   LogoWithTextIcon,
+  NotSelectableTypography,
   Switch,
   Typography,
   WidthIcon,
@@ -67,29 +68,36 @@ export function ConfigContainer(props: PropsWithChildren) {
         <Main>
           <Header />
           <Content>
-            {showBoundaryGuide && (
-              <BoundarySize side="right">
-                <WidthIcon size={16} color="gray" />
-                <Divider size={4} direction="horizontal" />
-                <Typography variant="label" size="medium" color="neutral600">
-                  Max Width: 390 px
-                </Typography>
-              </BoundarySize>
-            )}
-            <BoundaryGuide
-              style={{ borderWidth: showBoundaryGuide ? '1px' : 0 }}>
-              {props.children}
-            </BoundaryGuide>
-
-            {showBoundaryGuide && (
-              <BoundarySize side="left">
-                <HeightIcon size={16} color="gray" />
-                <Divider size={4} direction="horizontal" />
-                <Typography variant="label" size="medium" color="neutral600">
-                  Max Height: 700 px
-                </Typography>
-              </BoundarySize>
-            )}
+            <div>
+              {/* div element added to wrap BoundarySizes and ensure the correct alignment of BoundarySize text */}
+              {showBoundaryGuide && (
+                <BoundarySize side="right">
+                  <WidthIcon size={16} color="gray" />
+                  <Divider size={4} direction="horizontal" />
+                  <NotSelectableTypography
+                    variant="label"
+                    size="medium"
+                    color="neutral600">
+                    Max Width: 390 px
+                  </NotSelectableTypography>
+                </BoundarySize>
+              )}
+              <BoundaryGuide visible={showBoundaryGuide}>
+                {props.children}
+              </BoundaryGuide>
+              {showBoundaryGuide && (
+                <BoundarySize side="left">
+                  <HeightIcon size={16} color="gray" />
+                  <Divider size={4} direction="horizontal" />
+                  <NotSelectableTypography
+                    variant="label"
+                    size="medium"
+                    color="neutral600">
+                    Max Height: 700 px
+                  </NotSelectableTypography>
+                </BoundarySize>
+              )}
+            </div>
           </Content>
         </Main>
       </Container>

@@ -3,21 +3,23 @@ import type { PropTypes } from './QuoteSummarySkeleton.types';
 import { ChainToken, Divider, Skeleton } from '@rango-dev/ui';
 import React from 'react';
 
+import { Line } from '../Quote/Quote.styles';
+
 import {
   BasicSummary,
-  Cost,
-  CostAndTag,
+  FlexContent,
   Output,
   OutputTokenInfo,
   QuoteSummary,
   QuoteSummarySeparator,
+  RowStyle,
   SwapPreview,
   TokenAmount,
   TokenAmountLabel,
 } from './QuoteSummarySkeleton.styles';
 
 export function QuoteSummarySkeleton(props: PropTypes) {
-  const { type, tag = false } = props;
+  const { type, tagHidden = true } = props;
   const quotePreview = (
     <QuoteSummary>
       <TokenAmount>
@@ -32,19 +34,36 @@ export function QuoteSummarySkeleton(props: PropTypes) {
       <Skeleton height={12} width={64} variant="rounded" />
     </QuoteSummary>
   );
+  const showAllRoutesSkeleton = type === 'basic' && !tagHidden;
 
   return (
     <div>
-      <CostAndTag>
-        <Cost>
+      {!tagHidden && (
+        <>
+          <FlexContent>
+            <Skeleton width={65} height={14} variant="rounded" />
+            <Divider size={4} direction="horizontal" />
+            <Skeleton width={65} height={14} variant="rounded" />
+            <Divider size={4} direction="horizontal" />
+            <Skeleton width={65} height={14} variant="rounded" />
+          </FlexContent>
+          <Line />
+          {!showAllRoutesSkeleton && <Divider size={4} />}
+        </>
+      )}
+      <div className={RowStyle()}>
+        <FlexContent>
           <Skeleton width={60} height={10} variant="rounded" />
           <Divider size={4} direction="horizontal" />
           <Skeleton width={60} height={10} variant="rounded" />
           <Divider size={4} direction="horizontal" />
           <Skeleton width={60} height={10} variant="rounded" />
-        </Cost>
-        {tag && <Skeleton height={22} width={100} variant="rounded" />}
-      </CostAndTag>
+        </FlexContent>
+        {showAllRoutesSkeleton && (
+          <Skeleton width={100} height={22} variant="rounded" />
+        )}
+      </div>
+
       {type === 'basic' && (
         <BasicSummary>
           <Skeleton height={15} width={148} variant="rounded" />
@@ -57,7 +76,7 @@ export function QuoteSummarySkeleton(props: PropTypes) {
             <Divider direction="horizontal" size={4} />
             <Skeleton height={15} width={150} variant="rounded" />
           </OutputTokenInfo>
-          <Divider size={4} />
+          <Divider size={10} />
           <Skeleton height={10} width={184} variant="rounded" />
         </Output>
       )}

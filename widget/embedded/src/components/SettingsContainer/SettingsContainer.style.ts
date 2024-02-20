@@ -6,6 +6,13 @@ export const LiquiditySourceList = styled('ul', {
   listStyle: 'none',
   height: '100%',
   overflowY: 'auto',
+  variants: {
+    disabled: {
+      true: {
+        pointerEvents: 'none',
+      },
+    },
+  },
 });
 
 export const LiquiditySourceSuffix = styled('div', {

@@ -2,7 +2,12 @@
 
 import type { PriceImpactWarningLevel } from '@rango-dev/ui';
 import type BigNumber from 'bignumber.js';
-import type { SwapResult } from 'rango-sdk';
+import type {
+  BlockchainValidationStatus,
+  RouteTag,
+  RoutingResultType,
+  SwapResult,
+} from 'rango-sdk';
 
 export enum QuoteErrorType {
   NO_RESULT,
@@ -104,4 +109,25 @@ export type ConfirmSwapWarnings = {
   quote: QuoteWarning | null;
   quoteUpdate: QuoteUpdateWarning | null;
   balance: { messages: string[] } | null;
+};
+
+export type QuoteResponse = {
+  requestId: string;
+  swaps?: SwapResult[];
+  diagnosisMessages: string[] | null;
+};
+
+export type SelectedQuote = {
+  swaps: SwapResult[];
+  requestId: string;
+  outputAmount?: string;
+  resultType?: RoutingResultType;
+  tags?: RouteTag[];
+  validationStatus: BlockchainValidationStatus[] | null;
+  requestAmount: string;
+};
+
+export type QuoteErrorResponse = {
+  message: string;
+  options: QuoteError;
 };

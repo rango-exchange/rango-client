@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/signer-evm",
-  "version": "0.25.0",
+  "version": "0.25.1-next.0",
   "license": "MIT",
   "type": "module",
   "source": "./src/index.ts",
@@ -27,7 +27,7 @@
     "@ethersproject/abstract-provider": "^5.7.0",
     "eth-rpc-errors": "^4.0.3",
     "ethers": "^5.7.2",
-    "rango-types": "^0.1.57"
+    "rango-types": "^0.1.59"
   },
   "publishConfig": {
     "access": "public"

@@ -10,10 +10,7 @@ export const ERROR_MESSAGE_WAIT_FOR_WALLET_DESCRIPTION_WRONG_WALLET = (
   }`;
 export const ERROR_MESSAGE_WAIT_FOR_WALLET_DESCRIPTION = (
   type: string | null
-): string =>
-  `Please connect to ${
-    type || 'your wallet'
-  } by using bellow button or top right button on page.`;
+): string => `Please connect your ${type ?? ''} wallet.`;
 export const ERROR_MESSAGE_WAIT_FOR_CHANGE_NETWORK = (
   network: string | null
 ): string => `Please change your network to ${network}.`;

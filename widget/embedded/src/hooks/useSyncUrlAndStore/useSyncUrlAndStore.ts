@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import {
   useInRouterContext,
   useLocation,
@@ -33,7 +33,9 @@ export function useSyncUrlAndStore() {
   const blockchains = useAppStore().blockchains();
   const tokens = useAppStore().tokens();
   const isInRouterContext = useInRouterContext();
-  const { updateIframe } = useAppStore();
+  const { updateIframe, updateCampaignMode } = useAppStore();
+  const campaignMode = useAppStore().isInCampaignMode();
+  const liquiditySourcesParamsRef = useRef<string>();
 
   const getUrlSearchParams = () => {
     const fromAmount = searchParams.get(SearchParams.FROM_AMOUNT);
@@ -43,6 +45,7 @@ export function useSyncUrlAndStore() {
     const toToken = searchParams.get(SearchParams.TO_TOKEN);
     const autoConnect = searchParams.get(SearchParams.AUTO_CONNECT);
     const clientUrl = searchParams.get(SearchParams.CLIENT_URL);
+    const liquiditySources = searchParams.get(SearchParams.LIQUIDITY_SOURCES);
 
     return {
       fromAmount,
@@ -52,6 +55,7 @@ export function useSyncUrlAndStore() {
       toToken,
       autoConnect,
       clientUrl,
+      liquiditySources,
     };
   };
 
@@ -77,6 +81,9 @@ export function useSyncUrlAndStore() {
         [SearchParams.FROM_AMOUNT]: inputAmount,
         [SearchParams.AUTO_CONNECT]: autoConnect ?? undefined,
         [SearchParams.CLIENT_URL]: clientUrl ?? undefined,
+        [SearchParams.LIQUIDITY_SOURCES]: campaignMode
+          ? liquiditySourcesParamsRef.current
+          : undefined,
       });
     }
   }, [
@@ -86,16 +93,24 @@ export function useSyncUrlAndStore() {
     fromToken,
     toBlockchain,
     toToken,
+    campaignMode,
   ]);
 
   useEffect(() => {
     if (!isInRouterContext) {
       return;
     }
+
     const searchParams = getUrlSearchParams();
+
+    if (!liquiditySourcesParamsRef.current && searchParams.liquiditySources) {
+      liquiditySourcesParamsRef.current = searchParams.liquiditySources;
+    }
+
     if (searchParams.fromAmount) {
       setInputAmount(searchParams.fromAmount);
     }
+
     if (fetchMetaStatus === 'success') {
       const fromBlockchain = blockchains.find(
         (blockchain) => blockchain.name === searchParams.fromBlockchain
@@ -113,6 +128,7 @@ export function useSyncUrlAndStore() {
         searchParams.toToken,
         toBlockchain ?? null
       );
+
       if (!!fromBlockchain) {
         setFromBlockchain(fromBlockchain);
         if (!!fromToken) {
@@ -125,6 +141,7 @@ export function useSyncUrlAndStore() {
           });
         }
       }
+
       if (!!toBlockchain) {
         setToBlockchain(toBlockchain);
         if (!!toToken) {
@@ -137,9 +154,14 @@ export function useSyncUrlAndStore() {
     }
   }, [fetchMetaStatus]);
 
-  // We run this only once, because if the app is embedded into an iframe, the data in url for iframe will not change.
   useEffect(() => {
-    const { clientUrl } = getUrlSearchParams();
+    const { clientUrl, liquiditySources } = getUrlSearchParams();
+    // We run this only once, because if the app is embedded into an iframe, the data in url for iframe will not change.
     updateIframe('clientUrl', clientUrl || undefined);
+
+    updateCampaignMode(
+      'liquiditySources',
+      liquiditySources?.split(',') ?? undefined
+    );
   }, []);
 }

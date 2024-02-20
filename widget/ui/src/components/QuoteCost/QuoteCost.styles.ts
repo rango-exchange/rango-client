@@ -5,7 +5,6 @@ export const Container = styled('div', {
   display: 'flex',
   justifyContent: 'start',
   alignItems: 'center',
-  paddingBottom: '$10',
 });
 
 export const Separator = styled('div', {

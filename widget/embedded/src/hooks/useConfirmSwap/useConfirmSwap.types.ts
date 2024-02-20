@@ -15,5 +15,5 @@ export type ConfirmSwap = {
 
 export type Params = {
   selectedWallets: Wallet[];
-  customDestination?: string;
+  customDestination: string | null;
 };
