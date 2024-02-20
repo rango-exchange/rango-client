@@ -1,3 +1,12 @@
+# [0.28.0](https://github.com/rango-exchange/rango-client/compare/queue-manager-rango-preset@0.27.0...queue-manager-rango-preset@0.28.0) (2024-02-20)
+
+
+### Bug Fixes
+
+* fix some swap messages in widget-embedded ([f859190](https://github.com/rango-exchange/rango-client/commit/f85919050b0c8f3bb0f91d4f3b87a58cca29601b))
+
+
+
 # [0.27.0](https://github.com/rango-exchange/rango-client/compare/queue-manager-rango-preset@0.26.0...queue-manager-rango-preset@0.27.0) (2024-02-07)
 
 

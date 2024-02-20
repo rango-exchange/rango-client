@@ -1,3 +1,22 @@
+# [0.23.0](https://github.com/rango-exchange/rango-client/compare/widget-embedded@0.22.3...widget-embedded@0.23.0) (2024-02-20)
+
+
+### Bug Fixes
+
+* fix some swap messages in widget-embedded ([f859190](https://github.com/rango-exchange/rango-client/commit/f85919050b0c8f3bb0f91d4f3b87a58cca29601b))
+* fix widget ui minor bugs ([b881755](https://github.com/rango-exchange/rango-client/commit/b881755d59af22b41d8314f9925ecc4de04169db))
+* reset connecting state on close wallet modal ([5d2fa8d](https://github.com/rango-exchange/rango-client/commit/5d2fa8dfffa9542824f6c2a4543c7dea48f5a6ae))
+
+
+### Features
+
+* add portuguese language to widget ([a7d40e2](https://github.com/rango-exchange/rango-client/commit/a7d40e2604eede900901865fc5ff1707819929a6))
+* change modal & toast interface ([009612e](https://github.com/rango-exchange/rango-client/commit/009612e09c2f269872b1e639fbcf7df8cce76f74))
+* implement multi routing in widget ([5003446](https://github.com/rango-exchange/rango-client/commit/50034463d25c552584201d0bd0d6a970fdda1d78))
+* passing enabled swappers/bridges to widget through the url for campaigns ([06a42a3](https://github.com/rango-exchange/rango-client/commit/06a42a3b1e3986a2735189d2e9f2d6b3725edd64))
+
+
+
 ## [0.22.3](https://github.com/rango-exchange/rango-client/compare/widget-embedded@0.22.2...widget-embedded@0.22.3) (2024-02-08)
 
 

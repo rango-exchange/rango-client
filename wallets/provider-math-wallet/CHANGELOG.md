@@ -1,3 +1,17 @@
+# [0.28.0](https://github.com/rango-exchange/rango-client/compare/provider-math-wallet@0.27.0...provider-math-wallet@0.28.0) (2024-02-20)
+
+
+### Bug Fixes
+
+* fix cosmjs incompatible dependency version problem ([bf76c4c](https://github.com/rango-exchange/rango-client/commit/bf76c4ca19db0f28ceaa83d89982f0972ec730ac))
+
+
+### Features
+
+* add cosmos account and signer for math wallet ([e43a489](https://github.com/rango-exchange/rango-client/commit/e43a48936a63804d688f3ad1408244d7f2ff32f2))
+
+
+
 # [0.27.0](https://github.com/rango-exchange/rango-client/compare/provider-math-wallet@0.26.0...provider-math-wallet@0.27.0) (2024-02-07)
 
 
