@@ -14,16 +14,6 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/Quote.tsx:126
-msgid "Slippage Error"
-msgstr "Slippage Error"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/Quote.tsx:127
-msgid "Slippage Warning"
-msgstr "Slippage Warning"
-
-#. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:37
 #: widget/embedded/src/components/TokenList/TokenList.tsx:120
 #: widget/embedded/src/pages/HistoryPage.tsx:85
@@ -222,6 +212,16 @@ msgstr "Reset"
 #: widget/embedded/src/components/NotificationContent/NotificationNotFound.tsx:13
 msgid "There are no notifications."
 msgstr "There are no notifications."
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/Quote/Quote.tsx:126
+msgid "Slippage Error"
+msgstr "Slippage Error"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/Quote/Quote.tsx:127
+msgid "Slippage Warning"
+msgstr "Slippage Warning"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/Quote/Quote.tsx:231
