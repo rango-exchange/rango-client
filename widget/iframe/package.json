@@ -13,6 +13,6 @@
   },
   "devDependencies": {},
   "dependencies": {
-    "@rango-dev/widget-embedded": "^0.22.4-next.12"
+    "@rango-dev/widget-embedded": "^0.22.4-next.13"
   }
 }
