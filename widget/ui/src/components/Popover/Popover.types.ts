@@ -1,3 +1,4 @@
+import type { CSS } from '../../theme';
 import type { ReactNode } from 'react';
 
 export type Ref =
@@ -16,6 +17,9 @@ export interface ContentType {
   collisionBoundary?: Element | null | Array<Element | null>;
   collisionPadding?: number | Partial<Record<Side, number>>;
   container?: HTMLElement;
+  styles?: {
+    arrowStyles?: CSS;
+  };
 }
 
 export type PropTypes = ContentType & {
