@@ -46,6 +46,7 @@ export { default as SearchIcon } from './Search';
 export { default as SwapIcon } from './Swap';
 export { default as TimeIcon } from './Time';
 export { default as TransactionIcon } from './Transaction';
+export { default as TuneIcon } from './Tune';
 export { default as UtxoCategoryIcon } from './UtxoCategory';
 export { default as WalletIcon } from './Wallet';
 export { default as WarningIcon } from './Warning';
