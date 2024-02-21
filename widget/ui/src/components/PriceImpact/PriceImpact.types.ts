@@ -1,9 +1,10 @@
 import type { PropTypes as TooltipPropTypes } from '../Tooltip/Tooltip.types';
+import type { TypographyPropTypes } from '../Typography';
 
 export type PriceImpactWarningLevel = 'low' | 'high' | undefined;
 
 export type PriceImpactProps = {
-  size: 'small' | 'large';
+  size: TypographyPropTypes['size'];
   outputUsdValue?: string;
   realOutputUsdValue?: string;
   error?: string;
