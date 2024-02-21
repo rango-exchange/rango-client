@@ -120,7 +120,7 @@ export function SwapInput(props: SwapInputProps) {
               </Tooltip>
               {'percentageChange' in props ? (
                 <PriceImpact
-                  size="large"
+                  size="medium"
                   tooltipProps={{
                     container: props.tooltipContainer,
                     side: 'bottom',

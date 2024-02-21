@@ -37,3 +37,5 @@ export const HIGH_PRIORITY_TAGS: TagValue[] = [
   'FASTEST',
   'HIGH_IMPACT',
 ];
+
+export const GAS_FEE_MAX = 30;

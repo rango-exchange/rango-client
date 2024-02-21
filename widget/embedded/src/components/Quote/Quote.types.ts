@@ -40,4 +40,7 @@ export type QuoteTriggerImagesProps = {
 export type QuoteCostDetailsProps = {
   quote: SelectedQuote | null;
   steps: number;
+  fee: string;
+  time: string;
+  feeWarning?: boolean;
 };

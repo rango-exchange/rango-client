@@ -365,13 +365,6 @@ export const MoreStep = styled('div', {
   },
 });
 
-export const Tag = styled('div', {
-  backgroundColor: '$neutral400',
-  borderRadius: '$xs',
-  padding: '$2 $5',
-  fontSize: '$10',
-  fontWeight: 400,
-});
 export const TagContainer = styled('div', {
   display: 'flex',
 });
