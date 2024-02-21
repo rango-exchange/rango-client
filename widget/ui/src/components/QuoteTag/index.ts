@@ -1,0 +1,1 @@
+export { QuoteTag } from './QuoteTag';

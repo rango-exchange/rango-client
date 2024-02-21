@@ -1,5 +1,6 @@
 import type { QuoteCostDetailsProps } from './Quote.types';
 import type { NameOfFees } from '../../constants/quote';
+import type BigNumber from 'bignumber.js';
 
 import { i18n } from '@lingui/core';
 import {
@@ -11,7 +12,6 @@ import {
   Tooltip,
   Typography,
 } from '@rango-dev/ui';
-import BigNumber from 'bignumber.js';
 import React, { useState } from 'react';
 
 import { NAME_OF_FEES } from '../../constants/quote';
@@ -21,20 +21,9 @@ import {
   USD_VALUE_MAX_DECIMALS,
   USD_VALUE_MIN_DECIMALS,
 } from '../../constants/routing';
-import { useAppStore } from '../../store/AppStore';
 import { getContainer } from '../../utils/common';
-import {
-  formatTooltipNumbers,
-  numberToString,
-  secondsToString,
-  totalArrivalTime,
-} from '../../utils/numbers';
-import {
-  getFeesGroup,
-  getTotalFeeInUsd,
-  getTotalFeesInUsd,
-  getUsdFee,
-} from '../../utils/swap';
+import { formatTooltipNumbers, numberToString } from '../../utils/numbers';
+import { getFeesGroup, getTotalFeesInUsd, getUsdFee } from '../../utils/swap';
 import { WatermarkedModal } from '../common/WatermarkedModal';
 import { CustomCollapsible } from '../CustomCollapsible/CustomCollapsible';
 import { ExpandedIcon } from '../CustomCollapsible/CustomCollapsible.styles';
@@ -46,8 +35,6 @@ import {
   ModalHeader,
   trigger,
 } from './QuoteCostDetails.styles';
-
-const GAS_FEE_MAX = 30;
 
 const NonPayableFee = (props: { fee: BigNumber; label: string }) => {
   return !props.fee.isZero() ? (
@@ -70,13 +57,9 @@ const NonPayableFee = (props: { fee: BigNumber; label: string }) => {
 export function QuoteCostDetails(props: QuoteCostDetailsProps) {
   const [open, setOpen] = useState<boolean>(false);
   const [openCollapse, setOpenCollapse] = useState<boolean>(false);
-  const { steps, quote } = props;
-  const tokens = useAppStore().tokens();
-  const totalTime = secondsToString(totalArrivalTime(quote?.swaps));
+  const { steps, quote, fee, time, feeWarning } = props;
   const swaps = quote?.swaps ?? [];
   const container = getContainer();
-
-  const totalFee = getTotalFeeInUsd(swaps, tokens);
 
   const feesGroup = getFeesGroup(swaps);
 
@@ -87,13 +70,9 @@ export function QuoteCostDetails(props: QuoteCostDetailsProps) {
           e.stopPropagation();
           setOpen(!open);
         }}
-        fee={numberToString(
-          totalFee,
-          GAS_FEE_MIN_DECIMALS,
-          GAS_FEE_MAX_DECIMALS
-        )}
-        feeWarning={totalFee.gte(new BigNumber(GAS_FEE_MAX))}
-        time={totalTime}
+        fee={fee}
+        feeWarning={feeWarning}
+        time={time}
         steps={steps}
         tooltipGas={i18n.t('View more info')}
         tooltipContainer={container}
@@ -164,7 +143,7 @@ export function QuoteCostDetails(props: QuoteCostDetailsProps) {
             <Typography variant="label" size="medium">
               $
               {numberToString(
-                totalFee,
+                fee,
                 USD_VALUE_MIN_DECIMALS,
                 USD_VALUE_MAX_DECIMALS
               )}
