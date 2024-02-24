@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "private": true,
   "engines": {
-    "node": ">=20"
+    "node": ">=20",
+    "npm": "please-use-yarn"
   },
   "workspaces": [
     "examples/*",
