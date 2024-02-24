@@ -52,6 +52,7 @@ export function NoResult(props: PropTypes) {
           <Alert
             type={info.alert.type}
             title={info.alert.text}
+            titleAlign={'center'}
             action={
               info.alert.action && (
                 <Button

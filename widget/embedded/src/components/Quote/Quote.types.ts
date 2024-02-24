@@ -12,6 +12,7 @@ export type QuoteProps = {
   expanded?: boolean;
   tagHidden?: boolean;
   selected?: boolean;
+  showModalFee?: boolean;
   onClickAllRoutes?: () => void;
 };
 
@@ -43,4 +44,5 @@ export type QuoteCostDetailsProps = {
   fee: string;
   time: string;
   feeWarning?: boolean;
+  showModalFee: boolean;
 };

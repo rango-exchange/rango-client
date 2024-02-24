@@ -1,6 +1,13 @@
 import type { PropTypes } from './ItemPicker.types';
 
-import { ChevronRightIcon, Divider, Image, Typography } from '@rango-dev/ui';
+import {
+  ChevronRightIcon,
+  Divider,
+  Image,
+  InfoIcon,
+  Tooltip,
+  Typography,
+} from '@rango-dev/ui';
 import React from 'react';
 
 import { Container, InputContainer, Title } from './ItemPicker.styles';
@@ -13,6 +20,7 @@ function ItemPicker(props: PropTypes) {
     iconTitle,
     hasLogo,
     placeholder,
+    tooltip,
     disabled,
   } = props;
 
@@ -25,6 +33,13 @@ function ItemPicker(props: PropTypes) {
         <Typography size="medium" variant="body">
           {title}
         </Typography>
+        <Divider size={4} direction="horizontal" />
+
+        {tooltip && (
+          <Tooltip content={tooltip} side="top">
+            <InfoIcon size={14} color="gray" />
+          </Tooltip>
+        )}
       </Title>
       <Divider size={4} />
       <InputContainer
@@ -46,7 +61,11 @@ function ItemPicker(props: PropTypes) {
               <Divider size={4} direction="horizontal" />
             </>
           )}
-          <Typography size="medium" variant="label" color="neutral700">
+          <Typography
+            className="title_typography"
+            size="medium"
+            variant="label"
+            color="neutral700">
             {label || placeholder}
           </Typography>
         </Title>

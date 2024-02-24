@@ -22,6 +22,7 @@ export function QuoteInfo(props: PropTypes) {
     expanded = false,
     tagHidden,
     onClick,
+    showModalFee,
     selected,
     onClickAllRoutes,
   } = props;
@@ -57,6 +58,7 @@ export function QuoteInfo(props: PropTypes) {
       <Quote
         quote={quote}
         error={error}
+        showModalFee={showModalFee}
         warning={warning}
         tagHidden={tagHidden}
         selected={selected}

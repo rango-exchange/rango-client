@@ -58,6 +58,8 @@ export function useSwapInput({
     selectedQuote,
     sortStrategy,
     resetQuote,
+    error,
+    warning,
     setSelectedQuote,
     updateQuotePartialState,
   } = useQuoteStore();
@@ -184,7 +186,7 @@ export function useSwapInput({
     }
     if (shouldSkipRequest) {
       setLoading(false);
-      if (selectedQuote) {
+      if (selectedQuote || error || warning) {
         resetQuote();
       }
       return;

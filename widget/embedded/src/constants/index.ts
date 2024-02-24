@@ -6,5 +6,6 @@ export const SCANNER_BASE_URL = 'https://scan.rango.exchange';
 
 export const WIDGET_UI_ID = {
   SWAP_BOX_ID: 'rango-swap-box',
+  EXPANDED_BOX_ID: 'rango-expanded-box',
   ...UI_ID,
 };

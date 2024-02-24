@@ -75,7 +75,21 @@ export function HighValueLossWarningModal(props: Props) {
   ];
 
   return (
-    <WatermarkedModal open={open} onClose={onClose} container={getContainer()}>
+    <WatermarkedModal
+      footer={
+        <Button
+          type="primary"
+          size="large"
+          prefix={<WarningIcon />}
+          fullWidth
+          disabled={confirmationDisabled}
+          onClick={onConfirm}>
+          {errorMessages().highValueLossError.confirmMessage}
+        </Button>
+      }
+      open={open}
+      onClose={onClose}
+      container={getContainer()}>
       <MessageBox
         type={type}
         title={errorMessages().highValueLossError.impactTitle}
@@ -94,17 +108,6 @@ export function HighValueLossWarningModal(props: Props) {
           })}
         </Flex>
       </Flex>
-
-      <Divider size={32} />
-      <Button
-        type="primary"
-        size="large"
-        prefix={<WarningIcon />}
-        fullWidth
-        disabled={confirmationDisabled}
-        onClick={onConfirm}>
-        {errorMessages().highValueLossError.confirmMessage}
-      </Button>
     </WatermarkedModal>
   );
 }

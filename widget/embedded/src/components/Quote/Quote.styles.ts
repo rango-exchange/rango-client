@@ -123,7 +123,7 @@ export const SummaryContainer = styled('div', {
       listItem: true,
       selected: true,
       css: {
-        border: '1px solid $secondary',
+        outline: '1px solid $secondary',
       },
     },
     {
