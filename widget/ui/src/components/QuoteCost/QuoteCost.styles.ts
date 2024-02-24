@@ -31,6 +31,8 @@ const blinker = keyframes({
 export const itemStyles = css({
   display: 'flex',
   alignItems: 'center',
+  cursor: 'default',
+
   '&.feeSection': {
     cursor: 'pointer',
     '&:hover': {

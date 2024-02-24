@@ -1,7 +1,6 @@
 import type { QuoteError, QuoteWarning } from '../../types';
 
 export interface PropTypes {
-  loading: boolean;
   error: QuoteError | null;
   warning: QuoteWarning | null;
   showWarningModal: boolean;

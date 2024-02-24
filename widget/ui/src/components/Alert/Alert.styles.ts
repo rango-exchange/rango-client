@@ -4,7 +4,9 @@ export const Container = styled('div', {
   display: 'flex',
   flexDirection: 'column',
   borderRadius: '$xs',
-
+  '.title_typography': {
+    width: '100%',
+  },
   '.title_typography:first-letter': {
     textTransform: 'uppercase',
   },

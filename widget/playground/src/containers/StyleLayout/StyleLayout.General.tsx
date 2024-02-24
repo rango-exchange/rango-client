@@ -1,8 +1,10 @@
+import type { WidgetVariant } from '@rango-dev/widget-embedded';
 import type { ChangeEvent } from 'react';
 
 import {
   BorderRadiusIcon,
   Divider,
+  ExternalLinkIcon,
   FontIcon,
   LanguageIcon,
   Typography,
@@ -20,6 +22,7 @@ import {
   FONTS,
   LANGUAGES,
 } from '../../constants';
+import { VARIANTS } from '../../constants/variants';
 import { useConfigStore } from '../../store/config';
 
 import { Field, FieldTitle, GeneralContainer } from './StyleLayout.styles';
@@ -31,6 +34,8 @@ export function General() {
   const onBack = () => setModalState(null);
   const onChangeLanguage = useConfigStore.use.onChangeLanguage();
   const onChangeTheme = useConfigStore.use.onChangeTheme();
+  const onChangeVariant = useConfigStore.use.onChangeVariant();
+
   const borderRadius = useConfigStore.use.config().theme?.borderRadius;
 
   const secondaryBorderRadius =
@@ -38,6 +43,8 @@ export function General() {
   const fontFamily =
     useConfigStore.use.config().theme?.fontFamily || FONTS[0].value;
   const language = useConfigStore.use.config().language || LANGUAGES[0].value;
+  const variant = useConfigStore.use.config().variant || VARIANTS[0].value;
+
   const { resetLanguage } = useWidget();
 
   const handleFontChange = (value: string) => {
@@ -46,6 +53,15 @@ export function General() {
         name: 'fontFamily',
         value: value === FONTS[0].value ? undefined : value,
       });
+    }
+    onBack();
+  };
+
+  const handleVariantChange = (value: string) => {
+    if (value) {
+      onChangeVariant(
+        value === VARIANTS[0].value ? undefined : (value as WidgetVariant)
+      );
     }
     onBack();
   };
@@ -130,6 +146,20 @@ export function General() {
           title="Fonts"
           iconTitle={<FontIcon size={18} />}
         />
+
+        <Divider size={24} />
+        <ItemPicker
+          onClick={() => setModalState(ModalState.DEFAULT_VARIANT)}
+          value={{ label: variant }}
+          title="Variants"
+          tooltip={
+            <div>
+              You can display all potential routes next to the
+              <br /> widget box by selecting the expandable option.
+            </div>
+          }
+          iconTitle={<ExternalLinkIcon color="gray" size={18} />}
+        />
       </GeneralContainer>
       {modalState === ModalState.DEFAULT_FONT && (
         <OverlayPanel onBack={onBack}>
@@ -143,7 +173,18 @@ export function General() {
           />
         </OverlayPanel>
       )}
-
+      {modalState === ModalState.DEFAULT_VARIANT && (
+        <OverlayPanel onBack={onBack}>
+          <SingleList
+            onChange={handleVariantChange}
+            title="Variants"
+            icon={<ExternalLinkIcon color="gray" size={18} />}
+            defaultValue={variant}
+            list={VARIANTS}
+            searchPlaceholder="Search Variant"
+          />
+        </OverlayPanel>
+      )}
       {modalState === ModalState.DEFAULT_LANGUAGE && (
         <OverlayPanel onBack={onBack}>
           <SingleList

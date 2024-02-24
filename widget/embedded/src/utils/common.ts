@@ -34,3 +34,6 @@ export function containsText(text: string, searchText: string): boolean {
 
 export const getContainer = () =>
   document.getElementById(WIDGET_UI_ID.SWAP_BOX_ID) as HTMLElement;
+
+export const getExpanded = () =>
+  document.getElementById(WIDGET_UI_ID.EXPANDED_BOX_ID) as HTMLElement;

@@ -22,7 +22,7 @@ import { ActivateTabModal } from '../common/ActivateTabModal';
 import { BackButton, CancelButton, WalletButton } from '../HeaderButtons';
 
 import { onScrollContentAttachStatusToContainer } from './Layout.helpers';
-import { Container, Content, Footer } from './Layout.styles';
+import { Container, Content, Footer, LayoutContainer } from './Layout.styles';
 
 function Layout(props: PropsWithChildren<PropTypes>) {
   const { connectHeightObserver, disconnectHeightObserver } = useIframe();
@@ -98,7 +98,7 @@ function Layout(props: PropsWithChildren<PropTypes>) {
     <Container
       height={height}
       id={WIDGET_UI_ID.SWAP_BOX_ID}
-      className={activeTheme()}
+      className={`${activeTheme()} ${LayoutContainer()}`}
       ref={containerRef}>
       <Header
         prefix={
