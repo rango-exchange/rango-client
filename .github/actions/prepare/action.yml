@@ -22,9 +22,7 @@ runs:
 
     - name: Auth
       if: ${{ inputs.NPM_TOKEN != 0 }}
-      run: |
-        echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> .npmrc
-        npm whoami
+      run: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> .npmrc
       env:
         NPM_TOKEN: ${{ inputs.NPM_TOKEN }}
       shell: 'bash'
