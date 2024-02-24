@@ -96,7 +96,6 @@
     "stream-browserify": "^3.0.0",
     "tty-browserify": "^0.0.1",
     "util": "^0.12.3",
-    "vercel": "^28.16.12",
     "vitest": "^0.33.0",
     "vm-browserify": "^1.1.2"
   },
