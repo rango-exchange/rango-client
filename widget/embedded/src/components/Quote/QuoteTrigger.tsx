@@ -9,8 +9,9 @@ import {
   Tooltip,
   Typography,
 } from '@rango-dev/ui';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 
+import useMobileDetect from '../../hooks/useMobileDetect';
 import { getContainer } from '../../utils/common';
 import { getUniqueBlockchains } from '../../utils/quote';
 
@@ -24,7 +25,6 @@ import {
 
 const MAX_STEPS = 4;
 const MAX_BLOCKCHAINS = 6;
-const MIN_WIDTH_WINDOW = 375;
 
 const ImageComponent = (props: QuoteTriggerImagesProps) => {
   const tooltipContainer = getContainer();
@@ -48,20 +48,7 @@ export function QuoteTrigger(props: QuoteTriggerProps) {
   const tooltipContainer = getContainer();
   const numberOfSteps = steps.length;
   const blockchains = getUniqueBlockchains(steps);
-  const [isMobile, setIsMobile] = useState(false);
-
-  //choose the screen size
-  const handleResize = () => {
-    if (window.innerWidth < MIN_WIDTH_WINDOW) {
-      setIsMobile(true);
-    } else {
-      setIsMobile(false);
-    }
-  };
-
-  useEffect(() => {
-    window.addEventListener('resize', handleResize);
-  });
+  const isMobile = useMobileDetect();
 
   return (
     <Trigger

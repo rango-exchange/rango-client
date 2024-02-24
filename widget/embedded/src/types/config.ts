@@ -3,6 +3,8 @@ import type { ProviderInterface } from '@rango-dev/wallets-react';
 import type { WalletType } from '@rango-dev/wallets-shared';
 import type { Asset } from 'rango-sdk';
 
+export type WidgetVariant = 'default' | 'expandable';
+
 /**
  * The above type defines a set of optional color properties for a widget.
  * @property {string} background
@@ -179,6 +181,9 @@ export type Features = Partial<
  *   - 'connectWalletButton': Visibility state for the wallet connect icon.
  *   - 'language': Visibility state for the language.
  *   - 'experimentalRoute': Enablement state for the experimental route.
+ * @property {WidgetVariant} variant
+ *   If it is expandable, multiple routes will show up on the home page;
+ *   if not, you will need to go to a different page to see the suggested routes.
  */
 
 export type WidgetConfig = {
@@ -199,4 +204,5 @@ export type WidgetConfig = {
   externalWallets?: boolean;
   enableNewLiquiditySources?: boolean;
   features?: Features;
+  variant?: WidgetVariant;
 };

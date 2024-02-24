@@ -57,7 +57,7 @@ const NonPayableFee = (props: { fee: BigNumber; label: string }) => {
 export function QuoteCostDetails(props: QuoteCostDetailsProps) {
   const [open, setOpen] = useState<boolean>(false);
   const [openCollapse, setOpenCollapse] = useState<boolean>(false);
-  const { steps, quote, fee, time, feeWarning } = props;
+  const { steps, quote, fee, time, feeWarning, showModalFee } = props;
   const swaps = quote?.swaps ?? [];
   const container = getContainer();
 
@@ -66,15 +66,19 @@ export function QuoteCostDetails(props: QuoteCostDetailsProps) {
   return (
     <>
       <QuoteCost
-        onClickFee={(e) => {
-          e.stopPropagation();
-          setOpen(!open);
-        }}
+        onClickFee={
+          showModalFee
+            ? (e) => {
+                e.stopPropagation();
+                setOpen(!open);
+              }
+            : undefined
+        }
         fee={fee}
         feeWarning={feeWarning}
         time={time}
         steps={steps}
-        tooltipGas={i18n.t('View more info')}
+        tooltipGas={showModalFee ? i18n.t('View more info') : undefined}
         tooltipContainer={container}
       />
 

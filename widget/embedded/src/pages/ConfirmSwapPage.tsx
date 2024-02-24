@@ -282,7 +282,6 @@ export function ConfirmSwapPage() {
       <QuoteWarningsAndErrors
         warning={quoteWarning}
         error={quoteError}
-        loading={fetchingConfirmationQuote}
         refetchQuote={onRefresh}
         showWarningModal={showQuoteWarningModal}
         confirmationDisabled={!isActiveTab}

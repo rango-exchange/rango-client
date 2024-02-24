@@ -69,7 +69,7 @@ import {
 } from './Quote.styles';
 import { QuoteCostDetails } from './QuoteCostDetails';
 import { QuoteSummary } from './QuoteSummary';
-import { QuoteTrigger } from './QuoteTrigger ';
+import { QuoteTrigger } from './QuoteTrigger';
 
 export function Quote(props: QuoteProps) {
   const {
@@ -81,6 +81,7 @@ export function Quote(props: QuoteProps) {
     type,
     selected = false,
     tagHidden = true,
+    showModalFee = true,
     onClickAllRoutes,
   } = props;
   const blockchains = useAppStore().blockchains();
@@ -323,11 +324,12 @@ export function Quote(props: QuoteProps) {
           ) : null}
           <div id="portal-root" className={summaryHeaderStyles()}>
             <QuoteCostDetails
-              steps={numberOfSteps}
               quote={quote}
               time={totalTime}
               fee={fee}
               feeWarning={totalFee.gte(new BigNumber(GAS_FEE_MAX))}
+              showModalFee={showModalFee}
+              steps={numberOfSteps}
             />
 
             {showAllRoutesButton && (
