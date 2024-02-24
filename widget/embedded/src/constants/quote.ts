@@ -22,13 +22,28 @@ export type FeesGroup = {
   nonePayable: { [key in NameOfFees]?: SwapFee[] };
 };
 
-export const ROUTE_SORTING_STRATEGY: { [key in PreferenceType]: string } = {
-  SPEED: i18n.t('Fastest Transfer'),
-  NET_OUTPUT: i18n.t('Maximum Return'),
-  FEE: i18n.t('Lowest Fee'),
-  PRICE: i18n.t('Maximum Output'),
-  SMART: i18n.t('Smart Routing'),
-};
+export const ROUTE_STRATEGY: { value: PreferenceType; label: string }[] = [
+  {
+    value: 'SMART',
+    label: i18n.t('Smart Routing'),
+  },
+  {
+    value: 'FEE',
+    label: i18n.t('Lowest Fee'),
+  },
+  {
+    value: 'SPEED',
+    label: i18n.t('Fastest Transfer'),
+  },
+  {
+    value: 'NET_OUTPUT',
+    label: i18n.t('Maximum Return'),
+  },
+  {
+    value: 'PRICE',
+    label: i18n.t('Maximum Output'),
+  },
+];
 
 export const HIGH_PRIORITY_TAGS: TagValue[] = [
   'RECOMMENDED',
