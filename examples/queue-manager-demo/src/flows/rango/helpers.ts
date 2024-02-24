@@ -782,16 +782,3 @@ export async function requestSwap(
 
   return newSwap;
 }
-
-export function logRPCError(
-  error: unknown,
-  swap: PendingSwap,
-  currentStep: PendingSwapStep | undefined,
-  walletType: WalletType | undefined
-) {
-  try {
-    // Sending to sentry
-  } catch (e) {
-    console.log({ e });
-  }
-}

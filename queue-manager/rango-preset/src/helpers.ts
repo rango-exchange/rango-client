@@ -36,6 +36,7 @@ import type {
   StepStatus,
 } from 'rango-types';
 
+import { warn } from '@rango-dev/logging-core';
 import { Status } from '@rango-dev/queue-manager-core';
 import { readAccountAddress } from '@rango-dev/wallets-core';
 import {
@@ -52,6 +53,7 @@ import {
   ERROR_MESSAGE_WAIT_FOR_WALLET,
   ERROR_MESSAGE_WAIT_FOR_WALLET_DESCRIPTION,
 } from './constants';
+import { RangoPresetError } from './errors';
 import { httpService } from './services';
 import { notifier } from './services/eventEmitter';
 import {
@@ -68,7 +70,6 @@ import {
   prettifyErrorMessage,
   PrettyError,
 } from './shared-errors';
-import { logRPCError } from './shared-sentry';
 import {
   BlockReason,
   StepEventType,
@@ -1129,12 +1130,18 @@ export function signTransaction(
       const { extraMessage, extraMessageDetail, extraMessageErrorCode } =
         prettifyErrorMessage(error);
 
-      logRPCError(
-        error?.trace?.stack || error?.trace || error?.root || error,
-        swap,
-        currentStep,
-        sourceWallet?.walletType
+      // Logging RPC errors
+      const log_msg = new RangoPresetError(
+        error?.trace?.stack || error?.trace || error?.root || error
       );
+      warn(log_msg, {
+        tags: {
+          requestId: swap.requestId,
+          rpc: true,
+          swapper: currentStep?.swapperId || '',
+          walletType: sourceWallet?.walletType || '',
+        },
+      });
 
       const updateResult = updateSwapStatus({
         getStorage,

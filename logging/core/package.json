@@ -1,0 +1,29 @@
+{
+  "name": "@rango-dev/logging-core",
+  "version": "0.1.0",
+  "license": "MIT",
+  "type": "module",
+  "source": "./src/index.ts",
+  "main": "./dist/index.js",
+  "exports": {
+    ".": "./dist/index.js"
+  },
+  "typings": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "src"
+  ],
+  "dependencies": {
+    "@rango-dev/logging-types": "^0.1.0"
+  },
+  "scripts": {
+    "build": "node ../../scripts/build/command.mjs --path logging/core",
+    "ts-check": "tsc --declaration --emitDeclarationOnly -p ./tsconfig.json",
+    "clean": "rimraf dist",
+    "format": "prettier --write '{.,src}/**/*.{ts,tsx}'",
+    "lint": "eslint \"**/*.{ts,tsx}\" --ignore-path ../../.eslintignore"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
