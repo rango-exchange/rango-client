@@ -6,6 +6,7 @@ export interface ListPropTypes {
   type?: React.ReactElement;
   items: (ListItemProps & {
     id: string;
+    type?: React.ReactElement;
   })[];
   as?: 'div' | 'ul';
   css?: Stitches.CSS;

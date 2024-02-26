@@ -5,6 +5,21 @@ import { getEmbeddedCode, getIframeCode } from '../../utils/export';
 export type ExportType = 'embedded' | 'iframe' | 'config';
 export type Language = 'jsx' | 'javascript';
 
+export const typesOfCodeBlocksTabs = [
+  {
+    id: 'embedded',
+    title: 'Embedded',
+  },
+  {
+    id: 'iframe',
+    title: 'Iframe',
+  },
+  {
+    id: 'config',
+    title: 'Config',
+  },
+];
+
 export const typesOfCodeBlocks: {
   [key in ExportType]: {
     language: Language;
