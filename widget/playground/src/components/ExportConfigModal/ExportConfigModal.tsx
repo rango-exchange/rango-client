@@ -10,10 +10,11 @@ import {
   KeyIcon,
   Modal,
   ModalHeader,
+  Tabs,
   TextField,
   Typography,
 } from '@rango-dev/ui';
-import React, { Fragment, useState } from 'react';
+import React, { useState } from 'react';
 import {
   atomDark as dark,
   prism,
@@ -27,8 +28,6 @@ import { filterConfig, formatConfig } from '../../utils/export';
 import { CodeBlock } from './CodeBlock';
 import {
   APIKeyInputContainer,
-  BackdropTab,
-  ButtonsContainer,
   ExternalLinkIconContainer,
   Head,
   HelpLinksContainer,
@@ -36,19 +35,19 @@ import {
   Link,
   LinkContainer,
   ModalFlex,
-  StyledButton,
   StyledIconButton,
+  TabsContainer,
 } from './ExportConfigModal.styles';
-import { typesOfCodeBlocks } from './ExportConfigModal.types';
-
-const TAB_WIDTH = 333;
+import {
+  typesOfCodeBlocks,
+  typesOfCodeBlocksTabs,
+} from './ExportConfigModal.types';
 
 export function ExportConfigModal(props: ExportConfigModalProps) {
   const { open, onClose, config } = props;
 
   const { activeTheme } = useTheme();
   const [selected, setSelected] = useState<ExportType>('embedded');
-  const [selectedIndex, setSelectedIndex] = useState(0);
   const syntaxHighlighterTheme = activeTheme === 'dark' ? dark : prism;
   const { filteredConfigForExport } = filterConfig(config, initialConfig);
   const formatedConfig = formatConfig(filteredConfigForExport);
@@ -141,32 +140,15 @@ export function ExportConfigModal(props: ExportConfigModalProps) {
         </HelpLinksContainer>
       </Head>
       <Divider size={30} />
-
-      <ButtonsContainer>
-        {Object.keys(typesOfCodeBlocks).map((type, index) => {
-          const key = `block-${index}`;
-          return (
-            <Fragment key={key}>
-              <StyledButton
-                size="medium"
-                disableRipple={true}
-                type={selected === type ? 'secondary' : undefined}
-                variant={selected !== type ? 'contained' : undefined}
-                onClick={() => {
-                  setSelectedIndex(index);
-                  setSelected(type as ExportType);
-                }}>
-                {type}
-              </StyledButton>
-            </Fragment>
-          );
-        })}
-        <BackdropTab
-          css={{
-            transform: `translateX(${TAB_WIDTH * selectedIndex}px)`,
-          }}
+      <TabsContainer>
+        <Tabs
+          items={typesOfCodeBlocksTabs}
+          onChange={(item) => setSelected(item.id as ExportType)}
+          value={selected}
+          type="secondary"
+          borderRadius="medium"
         />
-      </ButtonsContainer>
+      </TabsContainer>
       <Divider size={10} />
       <CodeBlock
         selectedType={selected}

@@ -1,22 +1,14 @@
-import { ColorsIcon, Divider, Typography } from '@rango-dev/ui';
+import { ColorsIcon, Divider, Tabs, Typography } from '@rango-dev/ui';
 import React, { useState } from 'react';
 
 import { TABS } from '../../constants';
 import { type Mode } from '../../store/config';
 
 import { Preset } from './StyleLayout.Preset';
-import {
-  BackdropTab,
-  FieldTitle,
-  GeneralContainer,
-  Tab,
-  Tabs,
-} from './StyleLayout.styles';
+import { FieldTitle, GeneralContainer } from './StyleLayout.styles';
 
-const TAB_WIDTH = 80;
 export function Themes() {
   const [tab, setTab] = useState<Mode>('auto');
-  const currentTabIndex = TABS.findIndex((mode) => mode.id === tab);
   const onChangeMode = (mode: Mode) => {
     setTab(mode);
   };
@@ -24,26 +16,14 @@ export function Themes() {
   return (
     <>
       <GeneralContainer>
-        <Tabs>
-          {TABS.map((item, index) => (
-            <Tab
-              fullWidth
-              key={item.id}
-              disableRipple={true}
-              type="secondary"
-              onClick={() => onChangeMode(item.id)}
-              size="small"
-              isActive={index === currentTabIndex}
-              variant="default">
-              {item.title}
-            </Tab>
-          ))}
-          <BackdropTab
-            css={{
-              transform: `translateX(${TAB_WIDTH * currentTabIndex}px)`,
-            }}
-          />
-        </Tabs>
+        <Tabs
+          onChange={(item) => onChangeMode(item.id as Mode)}
+          value={tab}
+          items={TABS}
+          type={'secondary'}
+          borderRadius={'full'}
+        />
+
         <Divider size={16} />
         <FieldTitle>
           <ColorsIcon size={18} color="gray" />

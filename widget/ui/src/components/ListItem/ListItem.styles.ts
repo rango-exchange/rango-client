@@ -35,6 +35,7 @@ export const BaseListItem = styled('li', {
       fontWeight: 'bold',
       display: 'flex',
       alignItems: 'center',
+      color: '$foreground',
     },
   },
   '.item-end-container': {

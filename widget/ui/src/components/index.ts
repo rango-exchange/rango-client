@@ -53,3 +53,5 @@ export * from './Popover';
 export * from './Flags';
 export * from './Select';
 export * from './QuoteTag';
+export * from './Tabs';
+export type { SvgIconProps } from './SvgIcon';

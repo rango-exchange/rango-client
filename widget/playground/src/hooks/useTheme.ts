@@ -11,10 +11,10 @@ import { useConfigStore } from '../store/config';
 
 export function useTheme() {
   const [systemTheme, setSystemTheme] = useState('light');
-  const configTheme = useConfigStore.use.config().theme;
-  const mode = configTheme?.mode;
+  const themeConfig = useConfigStore.use.config().theme;
+  const mode = themeConfig?.mode;
 
-  const { dark, light } = customizedThemeTokens(configTheme?.colors);
+  const { dark, light } = customizedThemeTokens(themeConfig?.colors);
 
   const lightThemeClasses = [defaultLightTheme.className];
   const darkThemeClasses = [defaultDarkTheme.className];
