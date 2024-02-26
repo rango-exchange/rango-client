@@ -5,7 +5,6 @@ export const navigationRoutes = {
   blockchains: 'blockchains',
   settings: 'settings',
   liquiditySources: 'liquidity-sources',
-  themes: 'themes',
   bridges: 'bridges',
   exchanges: 'exchanges',
   languages: 'languages',
