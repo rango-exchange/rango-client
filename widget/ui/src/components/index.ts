@@ -11,7 +11,7 @@ export * from './Chip';
 export * from './common';
 export * from './Divider';
 export * from './Drawer';
-export * from './ExpandedRoute';
+export * from './FullExpandedQuote';
 export * from './Header';
 export * from './Modal';
 export * from './MessageBox';

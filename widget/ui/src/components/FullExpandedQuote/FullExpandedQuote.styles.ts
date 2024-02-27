@@ -3,7 +3,7 @@ import { PriceImpact } from '../PriceImpact';
 
 export const tokenLabelStyles = css({});
 
-const FlexCenter = styled('div', {
+export const FlexCenter = styled('div', {
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
@@ -39,6 +39,13 @@ export const RouteContainer = styled('div', {
 export const RouteHeader = styled('div', {
   display: 'flex',
   justifyContent: 'space-between',
+  variants: {
+    loading: {
+      true: {
+        padding: '$2',
+      },
+    },
+  },
 });
 
 export const TagsContainer = styled('div', {
@@ -49,10 +56,9 @@ export const TagsContainer = styled('div', {
 export const Steps = styled('div', {
   display: 'flex',
   height: '85px',
-  padding: '$2',
 });
 
-export const Step = styled('div', {
+export const StepItem = styled('div', {
   padding: '$2',
   display: 'flex',
   width: '100%',
@@ -172,7 +178,7 @@ export const lastStepStyle = css({
     content: '',
     position: 'absolute',
     top: '50%',
-    right: '0',
+    right: '-3px',
     transform: 'translate(-50%, -50%) rotate(45deg)',
     width: '$6',
     height: '$6',
@@ -183,4 +189,20 @@ export const lastStepStyle = css({
       borderColor: '$secondary600',
     },
   },
+});
+
+// Styles for the skeleton
+
+export const Separator = styled('div', {
+  height: '$12',
+  marginLeft: '$10',
+  marginRight: '$10',
+  borderLeft: '1px solid $neutral700',
+});
+
+export const OutputLoading = styled(FlexCenter, {
+  padding: '0 $2',
+  height: '85px',
+  gap: '$10',
+  flexDirection: 'column',
 });
