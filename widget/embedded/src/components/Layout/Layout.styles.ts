@@ -41,6 +41,9 @@ export const Content = styled('div', {
 
 export const Footer = styled('div', {
   padding: '0 $20 $10',
+  '& .footer__alert': {
+    paddingTop: '$10',
+  },
   '& .footer__logo': {
     opacity: 0,
     transition: 'opacity 1s ease-in-out',

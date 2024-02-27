@@ -23,6 +23,9 @@ const MainContainer = styled('div', {
   gridTemplateColumns: 'auto auto',
   alignItems: 'flex-start',
   height: 700,
+  '& .footer__alert': {
+    paddingTop: '0',
+  },
 });
 export const TIME_TO_NAVIGATE_ANOTHER_PAGE = 300;
 

@@ -138,13 +138,13 @@ function Layout(props: PropsWithChildren<PropTypes>) {
 
       <Footer>
         <div className="footer__content">
-          {footer}
           {tabManagerInitiated && !isActiveTab && (
-            <>
-              <Divider size={12} />
+            <div className="footer__alert">
               <ActivateTabAlert onActivateTab={onActivateTab} />
-            </>
+              <Divider size={10} />
+            </div>
           )}
+          {footer}
         </div>
 
         <Divider size={12} />
