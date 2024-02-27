@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/provider-all",
-  "version": "0.28.0",
+  "version": "0.28.1-next.0",
   "license": "MIT",
   "type": "module",
   "source": "./src/index.ts",
@@ -22,7 +22,7 @@
   },
   "dependencies": {
     "@rango-dev/provider-argentx": "^0.29.0",
-    "@rango-dev/provider-bitget": "^0.25.0",
+    "@rango-dev/provider-bitget": "^0.25.1-next.0",
     "@rango-dev/provider-braavos": "^0.22.0",
     "@rango-dev/provider-brave": "^0.29.0",
     "@rango-dev/provider-clover": "^0.29.0",
