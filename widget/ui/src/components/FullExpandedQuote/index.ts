@@ -1,0 +1,1 @@
+export { FullExpandedQuote } from './FullExpandedQuote';
