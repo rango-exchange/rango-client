@@ -13,14 +13,12 @@ export function ActivateTabAlert(props: PropTypes) {
           variant="contained"
           size="xxsmall"
           type="warning">
-          {i18n.t('Activate')}
+          {i18n.t('Activate this tab')}
         </Button>
       }
       type="warning"
       variant="alarm"
-      title={i18n.t(
-        'Another tab is open and handles transactions. You can activate this tab.'
-      )}
+      title={i18n.t('Another tab is open and handles transactions.')}
     />
   );
 }
