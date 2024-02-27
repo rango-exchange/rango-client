@@ -120,6 +120,7 @@ class Wallet<InstanceType = any> {
           network: requestedNetwork,
           newInstance: this.tryGetInstance.bind(this),
           getState: this.getState.bind(this),
+          updateChainId: this.updateChainId.bind(this),
         });
 
         /*
@@ -194,6 +195,21 @@ class Wallet<InstanceType = any> {
       // Typescript can not detect we are filtering out null values:(
       nextAccounts = accounts.filter(Boolean);
       nextNetwork = requestedNetwork || this.options.config.defaultNetwork;
+      /*
+       * For providers like wallet connect with async switch network support,
+       * it's not a correct assumption that current network after connection request
+       * equals to the requested network. (for example in case of session reconnect.)
+       * In this case, we could assume that the first item in connect result equals to
+       * the current chain. Otherwise, the state of wallet-core will be wrong.
+       */
+      if (this.options.config.isAsyncSwitchNetwork) {
+        const nextChainId = connectResult[0].chainId || Networks.Unknown;
+        nextNetwork =
+          getBlockChainNameFromId(
+            nextChainId,
+            this.info.supportedBlockchains
+          ) || Networks.Unknown;
+      }
     } else {
       const chainId = connectResult.chainId || Networks.Unknown;
       const network =

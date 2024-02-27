@@ -1,4 +1,3 @@
-import type { CosmosMeta } from './types';
 import type { WalletState } from '@rango-dev/wallets-shared';
 import type { ProposalTypes } from '@walletconnect/types';
 import type { BlockchainMeta } from 'rango-types';
@@ -10,18 +9,12 @@ import {
 } from '@rango-dev/wallets-shared';
 import { WalletConnectModal } from '@walletconnect/modal';
 import { AccountId, ChainId } from 'caip';
-import {
-  cosmosBlockchains,
-  evmBlockchains,
-  isEvmBlockchain,
-} from 'rango-types';
+import { evmBlockchains, isEvmBlockchain } from 'rango-types';
 
 import {
-  DEFAULT_COSMOS_METHODS,
   DEFAULT_ETHEREUM_EVENTS,
   DEFAULT_ETHEREUM_METHODS,
   DEFAULT_SOLANA_CHAIN_ID,
-  DEFAULT_SOLANA_METHODS,
   EthereumRPCMethods,
   NAMESPACES,
 } from './constants';
@@ -47,75 +40,21 @@ type FinalNamespaces = {
   [key in NAMESPACES]?: ProposalTypes.BaseRequiredNamespace;
 };
 
-export function generateRequiredNamespace(
-  meta: BlockchainMeta[],
-  network: string
-): FinalNamespaces | undefined {
-  const evm = evmBlockchains(meta);
-  const cosmos = cosmosBlockchains(meta);
-
-  const requiredEvmChain = evm.find((chain) => chain.name === network);
-  const requiredCosmosChain = cosmos.find((chain) => chain.name === network);
-  const requiredSolanaChain = network === Networks.SOLANA;
-
-  if (requiredEvmChain) {
-    return {
-      [NAMESPACES.ETHEREUM]: {
-        events: DEFAULT_ETHEREUM_EVENTS,
-        methods: DEFAULT_ETHEREUM_METHODS,
-        chains: [
-          new ChainId({
-            namespace: NAMESPACES.ETHEREUM,
-            reference: String(parseInt(requiredEvmChain.chainId)),
-          }).toString(),
-        ],
-      },
-    };
-  } else if (!!requiredCosmosChain) {
-    return {
-      [NAMESPACES.COSMOS]: {
-        events: [],
-        methods: DEFAULT_COSMOS_METHODS,
-        chains: [
-          new ChainId({
-            namespace: NAMESPACES.COSMOS,
-            reference: requiredCosmosChain.chainId!,
-          }).toString(),
-        ],
-      },
-    };
-  } else if (requiredSolanaChain) {
-    return {
-      [NAMESPACES.SOLANA]: {
-        events: [],
-        methods: DEFAULT_SOLANA_METHODS,
-        chains: [`solana:${DEFAULT_SOLANA_CHAIN_ID}`],
-      },
-    };
-  }
-
-  return undefined;
-}
-
+/*
+ * Some wallets like 1inch (android) has problem when we pass cosmos chains in optional namespace
+ * Also some wallets like keplr mobile doesn't work when we don't pass cosmos chains in required namespace
+ * It seems to be a bug in their current implementation.
+ */
 export function generateOptionalNamespace(
   meta: BlockchainMeta[]
 ): FinalNamespaces | undefined {
   const evm = evmBlockchains(meta);
-  const cosmos = cosmosBlockchains(meta);
   const evmChains = evm.map((chain) => {
     return new ChainId({
       namespace: NAMESPACES.ETHEREUM,
       reference: String(parseInt(chain.chainId)),
     }).toString();
   });
-  const cosmosChains = cosmos
-    .filter((chain): chain is CosmosMeta => !!chain.chainId)
-    .map((chain) => {
-      return new ChainId({
-        namespace: NAMESPACES.COSMOS,
-        reference: chain.chainId,
-      }).toString();
-    });
 
   const namespaces: FinalNamespaces = {
     [NAMESPACES.ETHEREUM]: {
@@ -123,21 +62,7 @@ export function generateOptionalNamespace(
       events: DEFAULT_ETHEREUM_EVENTS,
       chains: evmChains,
     },
-    [NAMESPACES.SOLANA]: {
-      methods: DEFAULT_SOLANA_METHODS,
-      events: [],
-      chains: [`solana:${DEFAULT_SOLANA_CHAIN_ID}`],
-    },
   };
-
-  if (cosmosChains.length) {
-    namespaces[NAMESPACES.COSMOS] = {
-      methods: DEFAULT_COSMOS_METHODS,
-      events: [],
-      chains: cosmosChains,
-    };
-  }
-
   return namespaces;
 }
 
@@ -281,4 +206,35 @@ export function getEvmAccount(
     },
     address,
   });
+}
+
+// It's enough to return only connected network for the EVM networks and ignore others
+export function filterEvmAccounts(
+  accounts: {
+    address: string;
+    chainId: string;
+  }[],
+  currentChainId?: string
+) {
+  let firstEvmAddress = false;
+  return accounts
+    .filter(({ address, chainId }) => {
+      const isEvm = isEvmAddress(address);
+      if (isEvm) {
+        if (currentChainId && chainId !== currentChainId) {
+          return false;
+        }
+        if (!currentChainId) {
+          if (firstEvmAddress) {
+            return false;
+          }
+          firstEvmAddress = true;
+        }
+      }
+      return true;
+    })
+    .map(({ address, chainId }) => ({
+      accounts: [address],
+      chainId: chainId,
+    }));
 }

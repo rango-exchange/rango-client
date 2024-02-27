@@ -116,6 +116,12 @@ class EVMSigner implements GenericSigner<EvmTransaction> {
           params: [transaction],
         },
       });
+      // Some wallets e.g. Rainbow wallet are returning invalid hash (e.g. 'null') in case of the rejection
+      if (!hash?.startsWith('0x')) {
+        throw new Error(
+          `Received an invalid hash on signing the transaction. (hash=${hash})`
+        );
+      }
       return {
         hash,
       };
