@@ -1,0 +1,56 @@
+# Learn how to add code owners here:
+# https://help.github.com/en/articles/about-code-owners
+
+# Infra
+/crowdin.yml @nikaaru
+/lingui.config.ts @yeager-eren  @nikaaru
+/.github @yeager-eren @RanGojo @nikaaru
+/scripts @yeager-eren @nikaaru
+
+# Queue manager
+/queue-manager/* @yeager-eren @samobasquiat
+
+# Logging
+/logging/* @yeager-eren
+
+# Wallets
+/signers/* @RanGojo @mikasackermn
+/wallets/* @yeager-eren
+/wallets/core @yeager-eren
+/wallets/react @yeager-eren
+/wallets/provider-all @yeager-eren
+/wallets/provider-argentx @RanGojo @RanGojo
+/wallets/provider-bitget @samobasquiat
+/wallets/provider-braavos @RanGojo @samobasquiat
+/wallets/provider-brave @Ikari-Shinji-re
+/wallets/provider-clover @RanGojo
+/wallets/provider-coin98 @Ikari-Shinji-re
+/wallets/provider-coinbase @yeager-eren
+/wallets/provider-cosmostation @Ikari-Shinji-re
+/wallets/provider-default @RanGojo
+/wallets/provider-enkrypt @Ikari-Shinji-re
+/wallets/provider-exodus @mikasackermn
+/wallets/provider-frontier @samobasquiat
+/wallets/provider-halo @samobasquiat
+/wallets/provider-keplr @RanGojo
+/wallets/provider-leap-cosmos @samobasquiat
+/wallets/provider-math-wallet @Ikari-Shinji-re
+/wallets/provider-metamask @yeager-eren
+/wallets/provider-mytonwallet @Ikari-Shinji-re
+/wallets/provider-okx @mikasackermn
+/wallets/provider-phantom @RanGojo @mikasackermn
+/wallets/provider-safe @samobasquiat
+/wallets/provider-safepal @Ikari-Shinji-re
+/wallets/provider-station @mikasackermn
+/wallets/provider-taho @mikasackermn
+/wallets/provider-tokenpocket @mikasackermn
+/wallets/provider-tron-link @RanGojo
+/wallets/provider-trustwallet @mikasackermn
+/wallets/provider-walletconnect2 @RanGojo @yeager-eren @samobasquiat @mikasackermn
+/wallets/provider-xdefi @RanGojo
+
+# Widget
+/widget/embedded/store @yeager-eren @Ikari-Shinji-re
+/widget/iframe @yeager-eren @Ikari-Shinji-re
+/widget/playground @samobasquiat @mikasackermn
+/widget/ui @mikasackermn @Ikari-Shinji-re
