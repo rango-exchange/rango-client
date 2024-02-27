@@ -12,6 +12,7 @@ import type {
 import type { ISignClient } from '@walletconnect/types';
 import type { BlockchainMeta, SignerFactory } from 'rango-types';
 
+import { debug, error as logError } from '@rango-dev/logging-core';
 import { Networks, WalletTypes } from '@rango-dev/wallets-shared';
 import Client from '@walletconnect/sign-client';
 import { AccountId, ChainId } from 'caip';
@@ -21,10 +22,13 @@ import {
   DEFAULT_APP_METADATA,
   DEFAULT_NETWORK,
   EthereumEvents,
+  EthereumRPCMethods,
+  NAMESPACES,
   RELAY_URL,
 } from './constants';
 import {
   createModalInstance,
+  filterEvmAccounts,
   simulateRequest,
   switchOrAddEvmChain,
 } from './helpers';
@@ -34,10 +38,9 @@ import {
   getAccountsFromEvent,
   getAccountsFromSession,
   getPersistedChainId,
-  needSessionRecreateOnSwitchNetwork,
+  ignoreNamespaceMethods,
   persistCurrentChainId,
   tryConnect,
-  trySwitchByCreatingNewSession,
   updateSessionAccounts,
 } from './session';
 import signer from './signer';
@@ -94,35 +97,15 @@ export const getInstance: GetInstance = async (options) => {
   };
 };
 
-export const connect: Connect = async ({ instance, network, meta }) => {
+export const connect: Connect = async ({ instance, meta }) => {
   const { client } = instance as WCInstance;
-
-  const requestedNetwork = network || DEFAULT_NETWORK;
-
   // Try to restore the session first, if couldn't, create a new session by showing a modal.
-  const { session, isNew } = await tryConnect(client, {
-    network: requestedNetwork,
-    meta,
-  });
+  const session = await tryConnect(client, { meta });
   // Override the value (session).
   instance.session = session;
-  const currentChainId = !isNew
-    ? String(await getPersistedChainId(instance))
-    : undefined;
-  const accounts = getAccountsFromSession(session, currentChainId);
-  /*
-   * TODO: we need to fix next lines to support multiple accounts
-   * for now, it will return the current evm account on the current chain
-   */
-  if (!isNew) {
-    return {
-      chainId: String(currentChainId),
-      accounts: accounts?.[0].accounts,
-    };
-  }
-  const newChainId = accounts?.[accounts.length - 1].chainId;
-  void persistCurrentChainId(instance, newChainId);
-  return accounts?.[accounts.length - 1];
+  const currentChainId = await getPersistedChainId(client);
+  const accounts = getAccountsFromSession(session);
+  return filterEvmAccounts(accounts, currentChainId);
 };
 
 export const subscribe: Subscribe = ({
@@ -158,7 +141,7 @@ export const subscribe: Subscribe = ({
     } else if (args.params.event.name === EthereumEvents.CHAIN_CHANGED) {
       const chainId = args.params.event.data;
       updateChainId(chainId);
-      void persistCurrentChainId(instance, chainId);
+      void persistCurrentChainId(instance.client, chainId);
     } else {
       console.log('[WC2] session_event not supported', args.params.event);
     }
@@ -176,26 +159,40 @@ export const switchNetwork: SwitchNetwork = async ({
   instance,
   meta,
   getState,
+  updateChainId,
 }) => {
-  const needRecreateSession = needSessionRecreateOnSwitchNetwork(instance);
-  config.isAsyncSwitchNetwork = true;
-  if (needRecreateSession) {
-    config.isAsyncSwitchNetwork = false;
-    /**
-     * In case of trust wallet that doesn't support switch chain method,
-     * we need to handle it manually by deleting last session and create a new one
-     * with correct chain id.
-     */
-    const session = await trySwitchByCreatingNewSession(instance, {
-      network,
-      meta,
-    });
-    instance.session = session;
-    return;
+  const evm = evmBlockchains(meta);
+  const chainId = evm.find((chain) => chain.name === network)?.chainId;
+  if (!chainId) {
+    const error = new Error(`There is no match for ${chainId}`);
+    logError(error);
+    throw error;
   }
-  const currentNetwork = getState?.().network || Networks.ETHEREUM;
-  await updateSessionAccounts(instance, network, currentNetwork, meta);
-  await switchOrAddEvmChain(meta, network, currentNetwork, instance);
+  const chaindIdStr = new ChainId({
+    namespace: NAMESPACES.ETHEREUM,
+    reference: String(parseInt(chainId)),
+  }).toString();
+
+  const session = instance.session;
+  const evmNamespace = session.namespaces[NAMESPACES.ETHEREUM];
+  const authorizedChains = evmNamespace?.chains || [];
+  const authorizedMethods = evmNamespace?.methods || [];
+
+  if (
+    authorizedMethods.includes(EthereumRPCMethods.SWITCH_CHAIN) &&
+    !ignoreNamespaceMethods(instance)
+  ) {
+    const currentNetwork = getState?.().network || Networks.ETHEREUM;
+    await updateSessionAccounts(instance, network, currentNetwork, meta);
+    await switchOrAddEvmChain(meta, network, currentNetwork, instance);
+  } else if (authorizedChains.includes(chaindIdStr)) {
+    updateChainId(chainId);
+    return;
+  } else {
+    const error = new Error(`Chain ${chainId} is not configured.`);
+    logError(error);
+    throw error;
+  }
 };
 
 /**
@@ -211,7 +208,7 @@ export const disconnect: Disconnect = async ({ instance }) => {
   const { client } = instance as WCInstance;
 
   if (client) {
-    void disconnectSessions(client);
+    void disconnectSessions(client).catch((error) => debug(error));
   }
 };
 

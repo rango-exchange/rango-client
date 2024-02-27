@@ -84,6 +84,7 @@ export type SwitchNetwork = (options: {
   meta: BlockchainMeta[];
   newInstance?: TryGetInstance;
   getState?: () => WalletState;
+  updateChainId: (chainId: string) => void;
 }) => Promise<void>;
 
 export type Suggest = (options: {
