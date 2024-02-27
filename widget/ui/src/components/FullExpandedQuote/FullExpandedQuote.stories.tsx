@@ -1,14 +1,14 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import { ExpandedRoute } from './ExpandedRoute';
+import { FullExpandedQuote } from './FullExpandedQuote';
 import { steps, tags } from './mock';
 
-const meta: Meta<typeof ExpandedRoute> = {
-  component: ExpandedRoute,
+const meta: Meta<typeof FullExpandedQuote> = {
+  component: FullExpandedQuote,
 };
 
 export default meta;
-type Story = StoryObj<typeof ExpandedRoute>;
+type Story = StoryObj<typeof FullExpandedQuote>;
 
 export const Main: Story = {
   args: {
