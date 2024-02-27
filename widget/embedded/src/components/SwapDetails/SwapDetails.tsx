@@ -111,7 +111,7 @@ export function SwapDetails(props: SwapDetailsProps) {
         setAsRead(swap.requestId);
       }
     }
-  }, [swap.status]);
+  }, [swap.status, swap.requestId]);
 
   useEffect(() => {
     if (showSwitchNetwork) {
