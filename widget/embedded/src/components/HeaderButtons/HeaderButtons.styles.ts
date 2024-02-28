@@ -5,6 +5,12 @@ export const HeaderButton = styled(IconButton, {
   position: 'relative',
   padding: '0',
   overflow: 'unset',
+  '&:hover': {
+    backgroundColor: '$info100',
+    [`.${darkTheme} &`]: {
+      backgroundColor: '$neutral',
+    },
+  },
 });
 
 export const ConnectedIcon = styled('div', {
@@ -31,7 +37,6 @@ export const SuffixContainer = styled('div', {
 
 export const NotificationsBadgeContainer = styled('div', {
   position: 'absolute',
-  backgroundColor: '$secondary500',
   width: '14px',
   height: '14px',
   display: 'flex',
@@ -40,6 +45,16 @@ export const NotificationsBadgeContainer = styled('div', {
   borderRadius: '7px',
   top: '$0',
   right: '$0',
+  variants: {
+    isSever: {
+      true: {
+        backgroundColor: '$error500',
+      },
+      false: {
+        backgroundColor: '$secondary500',
+      },
+    },
+  },
 });
 
 export const ProgressIcon = styled('div', {
@@ -52,4 +67,12 @@ export const ProgressIcon = styled('div', {
       },
     },
   },
+});
+
+export const InProgressTransactionBadgeContainer = styled('div', {
+  position: 'absolute',
+  right: '$4',
+  top: '$4',
+  backgroundColor: '$background',
+  borderRadius: '100%',
 });

@@ -16,6 +16,7 @@ import { isFeatureHidden } from '../../utils/settings';
 import { NotificationContent } from '../NotificationContent';
 
 import { HeaderButton } from './HeaderButtons.styles';
+import InProgressTransactionBadge from './InProgressTransactionBadge';
 import { RefreshButton } from './RefreshButton';
 import { UnreadNotificationsBadge } from './UnreadNotificationsBadge';
 
@@ -83,6 +84,7 @@ export function HeaderButtons(props: HeaderButtonsPropTypes) {
           content={i18n.t('Transactions History')}>
           <HeaderButton size="small" variant="ghost" onClick={onClickHistory}>
             <TransactionIcon size={18} color="black" />
+            <InProgressTransactionBadge />
           </HeaderButton>
         </Tooltip>
       )}
