@@ -6,4 +6,5 @@ export type PropTypes = {
   fetch: (shouldChangeSelectedQuote?: boolean) => void;
   showModalFee?: boolean;
   hasSort?: boolean;
+  fullExpandedMode?: boolean;
 };

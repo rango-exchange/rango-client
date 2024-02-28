@@ -9,6 +9,7 @@ import { LayoutContainer } from '../../components/Layout/Layout.styles';
 import { Quotes } from '../../components/Quotes';
 import { SelectStrategy } from '../../components/Quotes/SelectStrategy';
 import { WIDGET_UI_ID } from '../../constants';
+import { useAppStore } from '../../store/AppStore';
 import { getExpanded } from '../../utils/common';
 
 import { Container, Content } from './ExpandedQuotes.styles';
@@ -19,6 +20,8 @@ export function ExpandedQuotes(props: PropTypes) {
   const { fetch, loading, onClickOnQuote, onClickRefresh, isVisible } = props;
   const [isDelayedVisible, setIsDelayedVisible] = useState(false);
   const containerClass = isDelayedVisible ? '' : 'is-hidden';
+  const { config } = useAppStore();
+  const fullExpandedMode = config?.variant === 'full-expanded';
 
   useEffect(() => {
     let timeout: ReturnType<typeof setTimeout> | null = null;
@@ -43,6 +46,7 @@ export function ExpandedQuotes(props: PropTypes) {
 
   return (
     <Container
+      expandMode={config?.variant === 'full-expanded' ? 'full' : 'default'}
       className={`${containerClass} ${LayoutContainer()}`}
       id={WIDGET_UI_ID.EXPANDED_BOX_ID}>
       <Header
@@ -64,6 +68,7 @@ export function ExpandedQuotes(props: PropTypes) {
           hasSort={false}
           loading={loading}
           onClickOnQuote={onClickOnQuote}
+          fullExpandedMode={fullExpandedMode}
         />
       </Content>
     </Container>

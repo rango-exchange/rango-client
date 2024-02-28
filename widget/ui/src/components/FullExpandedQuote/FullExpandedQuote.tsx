@@ -45,7 +45,7 @@ export function FullExpandedQuote(props: PropTypes) {
     warningLevel,
     tooltipContainer,
     onClick,
-    selected,
+    selected = false,
   } = props;
 
   const steps: DataLoadedProps['steps'] = loading

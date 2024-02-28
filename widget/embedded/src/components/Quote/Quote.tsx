@@ -6,6 +6,7 @@ import { i18n } from '@lingui/core';
 import {
   Alert,
   Divider,
+  FullExpandedQuote,
   InfoIcon,
   QuoteTag,
   StepDetails,
@@ -33,7 +34,7 @@ import {
 } from '../../containers/QuoteInfo/QuoteInfo.styles';
 import { useAppStore } from '../../store/AppStore';
 import { QuoteErrorType, QuoteWarningType } from '../../types';
-import { getContainer } from '../../utils/common';
+import { getContainer, getExpanded } from '../../utils/common';
 import {
   getBlockchainShortNameFor,
   getSwapperDisplayName,
@@ -83,6 +84,7 @@ export function Quote(props: QuoteProps) {
     tagHidden = true,
     showModalFee = true,
     onClickAllRoutes,
+    fullExpandedMode = false,
   } = props;
   const blockchains = useAppStore().blockchains();
   const tokens = useAppStore().tokens();
@@ -298,157 +300,172 @@ export function Quote(props: QuoteProps) {
     GAS_FEE_MAX_DECIMALS
   );
 
-  return (
-    <>
-      <SummaryContainer
-        selected={selected}
-        listItem={type === 'list-item'}
-        basic={type === 'basic'}>
-        <div className={summaryStyles()}>
-          {!tagHidden && sortedQuoteTags.length ? (
-            <>
-              <TagContainer>
-                {sortedQuoteTags.map((tag, index) => {
-                  const key = `${tag.value}_${index}`;
-                  return (
-                    <>
-                      <QuoteTag label={tag.label} key={key} value={tag.value} />
-                      <Divider size={4} direction="horizontal" />
-                    </>
-                  );
-                })}
-              </TagContainer>
-              <Line />
-              {!showAllRoutesButton && <Divider size={4} />}
-            </>
-          ) : null}
-          <div id="portal-root" className={summaryHeaderStyles()}>
-            <QuoteCostDetails
-              quote={quote}
-              time={totalTime}
-              fee={fee}
-              feeWarning={totalFee.gte(new BigNumber(GAS_FEE_MAX))}
-              showModalFee={showModalFee}
-              steps={numberOfSteps}
-            />
+  return fullExpandedMode ? (
+    <FullExpandedQuote
+      selected={selected}
+      fee={fee}
+      time={totalTime}
+      tooltipContainer={getExpanded()}
+      steps={steps}
+      tags={sortedQuoteTags}
+      percentageChange={percentageChange}
+      warningLevel={priceImpactWarningLevel}
+      outputPrice={{
+        value: roundedOutput,
+        usdValue: roundedOutputUsdValue,
+        realValue: formatTooltipNumbers(output.value),
+        realUsdValue: formatTooltipNumbers(output.usdValue),
+      }}
+    />
+  ) : (
+    <SummaryContainer
+      selected={selected}
+      listItem={type === 'list-item'}
+      basic={type === 'basic'}>
+      <div className={summaryStyles()}>
+        {!tagHidden && sortedQuoteTags.length ? (
+          <>
+            <TagContainer>
+              {sortedQuoteTags.map((tag, index) => {
+                const key = `${tag.value}_${index}`;
+                return (
+                  <>
+                    <QuoteTag label={tag.label} key={key} value={tag.value} />
+                    <Divider size={4} direction="horizontal" />
+                  </>
+                );
+              })}
+            </TagContainer>
+            <Line />
+            {!showAllRoutesButton && <Divider size={4} />}
+          </>
+        ) : null}
+        <div id="portal-root" className={summaryHeaderStyles()}>
+          <QuoteCostDetails
+            quote={quote}
+            time={totalTime}
+            fee={fee}
+            feeWarning={totalFee.gte(new BigNumber(GAS_FEE_MAX))}
+            showModalFee={showModalFee}
+            steps={numberOfSteps}
+          />
 
-            {showAllRoutesButton && (
-              <AllRoutesButton
-                onClick={(e) => {
-                  e.stopPropagation();
-                  onClickAllRoutes();
-                }}
-                size="xxsmall"
-                type="secondary"
-                variant="default">
-                <Typography color="secondary" variant="label" size="medium">
-                  {i18n.t('See All Routes')}
-                </Typography>
-              </AllRoutesButton>
-            )}
-          </div>
-          {type === 'basic' && (
-            <div className={basicInfoStyles()}>
-              <FrameIcon>
-                <InfoIcon size={12} color="gray" />
-              </FrameIcon>
-              <ContainerInfoOutput>
-                <BasicInfoOutput size="small" variant="body">
-                  {`${roundedInput} ${steps[0].from.token.displayName} = `}
-                </BasicInfoOutput>
-                <Tooltip
-                  content={formatTooltipNumbers(output.value)}
-                  container={container}
-                  open={!output.value ? false : undefined}>
-                  <BasicInfoOutput size="small" variant="body">
-                    &nbsp;
-                    {`${roundedOutput} ${
-                      steps[steps.length - 1].to.token.displayName
-                    }`}
-                  </BasicInfoOutput>
-                </Tooltip>
-              </ContainerInfoOutput>
-              <Tooltip
-                content={formatTooltipNumbers(output.usdValue)}
-                container={container}
-                style={{
-                  display: 'flex',
-                }}>
-                <Typography
-                  color="$neutral600"
-                  ml={2}
-                  size="xsmall"
-                  variant="body">
-                  {`($${roundedOutputUsdValue})`}
-                </Typography>
-              </Tooltip>
-            </div>
+          {showAllRoutesButton && (
+            <AllRoutesButton
+              onClick={(e) => {
+                e.stopPropagation();
+                onClickAllRoutes();
+              }}
+              size="xxsmall"
+              type="secondary"
+              variant="default">
+              <Typography color="secondary" variant="label" size="medium">
+                {i18n.t('See All Routes')}
+              </Typography>
+            </AllRoutesButton>
           )}
-          {type === 'list-item' && (
-            <TokenAmount
-              tooltipContainer={container}
-              type="output"
-              direction="vertical"
-              price={{
-                value: roundedOutput,
-                usdValue: roundedOutputUsdValue,
-                realValue: formatTooltipNumbers(output.value),
-                realUsdValue: formatTooltipNumbers(output.usdValue),
-              }}
-              token={{
-                displayName: steps[numberOfSteps - 1].to.token.displayName,
-                image: steps[numberOfSteps - 1].to.token.image,
-              }}
-              chain={{ image: steps[numberOfSteps - 1].to.chain.image }}
+        </div>
+        {type === 'basic' && (
+          <div className={basicInfoStyles()}>
+            <FrameIcon>
+              <InfoIcon size={12} color="gray" />
+            </FrameIcon>
+            <ContainerInfoOutput>
+              <BasicInfoOutput size="small" variant="body">
+                {`${roundedInput} ${steps[0].from.token.displayName} = `}
+              </BasicInfoOutput>
+              <Tooltip
+                content={formatTooltipNumbers(output.value)}
+                container={container}
+                open={!output.value ? false : undefined}>
+                <BasicInfoOutput size="small" variant="body">
+                  &nbsp;
+                  {`${roundedOutput} ${
+                    steps[steps.length - 1].to.token.displayName
+                  }`}
+                </BasicInfoOutput>
+              </Tooltip>
+            </ContainerInfoOutput>
+            <Tooltip
+              content={formatTooltipNumbers(output.usdValue)}
+              container={container}
+              style={{
+                display: 'flex',
+              }}>
+              <Typography
+                color="$neutral600"
+                ml={2}
+                size="xsmall"
+                variant="body">
+                {`($${roundedOutputUsdValue})`}
+              </Typography>
+            </Tooltip>
+          </div>
+        )}
+        {type === 'list-item' && (
+          <TokenAmount
+            tooltipContainer={container}
+            type="output"
+            direction="vertical"
+            price={{
+              value: roundedOutput,
+              usdValue: roundedOutputUsdValue,
+              realValue: formatTooltipNumbers(output.value),
+              realUsdValue: formatTooltipNumbers(output.usdValue),
+            }}
+            token={{
+              displayName: steps[numberOfSteps - 1].to.token.displayName,
+              image: steps[numberOfSteps - 1].to.token.image,
+            }}
+            chain={{ image: steps[numberOfSteps - 1].to.chain.image }}
+            percentageChange={percentageChange}
+            warningLevel={priceImpactWarningLevel}
+          />
+        )}
+        {type === 'swap-preview' && (
+          <>
+            <QuoteSummary
+              from={steps[0].from}
+              to={steps[numberOfSteps - 1].to}
               percentageChange={percentageChange}
               warningLevel={priceImpactWarningLevel}
             />
-          )}
-          {type === 'swap-preview' && (
-            <>
-              <QuoteSummary
-                from={steps[0].from}
-                to={steps[numberOfSteps - 1].to}
-                percentageChange={percentageChange}
-                warningLevel={priceImpactWarningLevel}
-              />
-              <Divider size={4} />
-            </>
-          )}
-        </div>
-        <QuoteContainer
+            <Divider size={4} />
+          </>
+        )}
+      </div>
+      <QuoteContainer
+        selected={selected}
+        listItem={type === 'list-item'}
+        open={expanded}
+        onOpenChange={setExpanded}>
+        <QuoteTrigger
+          type={type}
+          quoteRef={quoteRef}
           selected={selected}
-          listItem={type === 'list-item'}
-          open={expanded}
-          onOpenChange={setExpanded}>
-          <QuoteTrigger
-            type={type}
-            quoteRef={quoteRef}
-            selected={selected}
-            setExpanded={setExpanded}
-            expanded={expanded}
-            steps={steps}
-          />
-          <Content open={expanded}>
-            <HorizontalSeparator />
-            <div className={stepsDetailsStyles()}>
-              {steps.map((step, index) => {
-                const key = `item-${index}`;
-                return (
-                  <StepDetails
-                    type="quote-details"
-                    key={key}
-                    tooltipContainer={container}
-                    step={step}
-                    hasSeparator={index !== steps.length - 1}
-                    state={step.state}
-                  />
-                );
-              })}
-            </div>
-          </Content>
-        </QuoteContainer>
-      </SummaryContainer>
-    </>
+          setExpanded={setExpanded}
+          expanded={expanded}
+          steps={steps}
+        />
+        <Content open={expanded}>
+          <HorizontalSeparator />
+          <div className={stepsDetailsStyles()}>
+            {steps.map((step, index) => {
+              const key = `item-${index}`;
+              return (
+                <StepDetails
+                  type="quote-details"
+                  key={key}
+                  tooltipContainer={container}
+                  step={step}
+                  hasSeparator={index !== steps.length - 1}
+                  state={step.state}
+                />
+              );
+            })}
+          </div>
+        </Content>
+      </QuoteContainer>
+    </SummaryContainer>
   );
 }

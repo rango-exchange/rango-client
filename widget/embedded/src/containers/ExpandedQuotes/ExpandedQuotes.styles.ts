@@ -10,6 +10,18 @@ export const Container = styled('div', {
   [`.${darkTheme} &`]: {
     backgroundColor: '$neutral300',
   },
+
+  variants: {
+    expandMode: {
+      default: {
+        width: '390px',
+      },
+      full: {
+        width: '719px',
+      },
+    },
+  },
+
   '&.is-hidden': {
     width: 0,
     opacity: 0,

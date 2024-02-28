@@ -2,7 +2,7 @@ import type { PropTypes } from './Quotes.types';
 import type { MultiRouteSimulationResult } from 'rango-sdk';
 
 import { i18n } from '@lingui/core';
-import { Divider, Typography } from '@rango-dev/ui';
+import { Divider, FullExpandedQuote, Typography } from '@rango-dev/ui';
 import React from 'react';
 
 import { QuoteInfo } from '../../containers/QuoteInfo';
@@ -26,6 +26,7 @@ export function Quotes(props: PropTypes) {
     fetch,
     showModalFee,
     hasSort = true,
+    fullExpandedMode = false,
   } = props;
   const {
     selectedQuote,
@@ -69,11 +70,15 @@ export function Quotes(props: PropTypes) {
       {loading &&
         Array.from({ length: ITEM_SKELETON_COUNT }, (_, index) => (
           <React.Fragment key={index}>
-            <QuoteSkeleton
-              tagHidden={false}
-              type="list-item"
-              expanded={false}
-            />
+            {fullExpandedMode ? (
+              <FullExpandedQuote loading />
+            ) : (
+              <QuoteSkeleton
+                tagHidden={false}
+                type="list-item"
+                expanded={false}
+              />
+            )}
             <Divider size={16} />
           </React.Fragment>
         ))}
@@ -106,6 +111,7 @@ export function Quotes(props: PropTypes) {
                       loading={loading}
                       error={quoteError?.options || null}
                       warning={quoteWarning}
+                      fullExpandedMode={fullExpandedMode}
                       onClick={(quote) => {
                         if (!quoteError) {
                           updateQuotePartialState('warning', quoteWarning);
@@ -124,7 +130,11 @@ export function Quotes(props: PropTypes) {
               })
             : showNoResultMessage && (
                 <ErrorsContainer>
-                  <NoResult error={error} fetch={fetch} />
+                  <NoResult
+                    size={fullExpandedMode ? 'large' : 'small'}
+                    error={error}
+                    fetch={fetch}
+                  />
                 </ErrorsContainer>
               )}
         </>

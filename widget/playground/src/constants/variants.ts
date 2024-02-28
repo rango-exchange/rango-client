@@ -4,7 +4,11 @@ export const VARIANTS = [
     value: 'default',
   },
   {
-    name: 'Expandable',
-    value: 'expandable',
+    name: 'Expanded',
+    value: 'expanded',
+  },
+  {
+    name: 'Full Expanded',
+    value: 'full-expanded',
   },
 ];
