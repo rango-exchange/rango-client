@@ -1,4 +1,4 @@
-import type { Tokens } from '../types';
+import type { Tokens, WidgetVariant } from '../types';
 import type { Asset, BlockchainMeta, Token } from 'rango-sdk';
 
 import { RANGO_PUBLIC_API_KEY } from '../constants';
@@ -78,4 +78,8 @@ export const isBlockchainExcludedInConfig = (
     blockchainsConfig &&
     !blockchainsConfig.includes(blockchain.name)
   );
+};
+
+export const isVarianExpandable = (variant?: WidgetVariant) => {
+  return variant === 'expanded' || variant === 'full-expanded';
 };

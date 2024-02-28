@@ -14,4 +14,5 @@ export type PropTypes = {
   onClickAllRoutes?: () => void;
   selected?: boolean;
   showModalFee?: boolean;
+  fullExpandedMode?: boolean;
 };

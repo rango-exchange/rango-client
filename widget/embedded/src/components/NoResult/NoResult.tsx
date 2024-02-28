@@ -13,16 +13,24 @@ import React from 'react';
 import { errorMessages } from '../../constants/errors';
 import { useAppStore } from '../../store/AppStore';
 
-import { makeInfo } from './NoResult.helpers';
-import { Container, Footer, PrefixIcon } from './NoResult.styles';
+import {
+  makeInfo,
+  NoRouteIconSize,
+  NoRouteTitleSize,
+} from './NoResult.helpers';
+import {
+  Container,
+  ErrorDescription,
+  Footer,
+  PrefixIcon,
+} from './NoResult.styles';
 
 export function NoResult(props: PropTypes) {
-  const { fetch, error } = props;
+  const { fetch, error, size = 'small' } = props;
   const disabledLiquiditySources = useAppStore().getDisabledLiquiditySources();
   const toggleAllLiquiditySources = useAppStore().toggleAllLiquiditySources;
 
   const swappers = useAppStore().swappers();
-
   const info = makeInfo(
     error,
     disabledLiquiditySources,
@@ -32,27 +40,30 @@ export function NoResult(props: PropTypes) {
 
   return (
     <Container>
-      <NoRouteIcon size={24} color="gray" />
+      <NoRouteIcon size={NoRouteIconSize[size]} color="gray" />
       <Divider size={4} />
-      <Typography variant="title" size="small">
+      <Typography variant="title" size={NoRouteTitleSize[size]}>
         {errorMessages().noResultError.title}
       </Typography>
+      {size === 'large' && <Divider size={4} />}
       {!!info.description && (
-        <Typography
-          variant="body"
-          size="small"
-          align="center"
-          color="neutral700">
-          {info.description}
-        </Typography>
+        <ErrorDescription size={size}>
+          <Typography
+            variant="body"
+            size="small"
+            align="center"
+            color="neutral700">
+            {info.description}
+          </Typography>
+        </ErrorDescription>
       )}
-      <Divider size={4} />
+      <Divider size={size === 'large' ? '24' : '4'} />
       {!!info.alert && (
-        <Footer>
+        <Footer size={size}>
           <Alert
             type={info.alert.type}
             title={info.alert.text}
-            titleAlign={'center'}
+            titleAlign={'left'}
             action={
               info.alert.action && (
                 <Button

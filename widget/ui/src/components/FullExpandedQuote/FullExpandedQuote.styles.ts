@@ -158,7 +158,7 @@ export const OutputSection = styled(FlexCenter, {
 
 export const VerticalLine = styled('div', {
   display: 'flex',
-  width: '50%',
+  width: 'calc(50% + 1px)',
   borderRight: '1px dashed',
   height: '$10',
   borderColor: '$info300',

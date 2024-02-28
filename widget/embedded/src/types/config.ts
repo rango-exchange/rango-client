@@ -3,7 +3,7 @@ import type { ProviderInterface } from '@rango-dev/wallets-react';
 import type { WalletType } from '@rango-dev/wallets-shared';
 import type { Asset } from 'rango-sdk';
 
-export type WidgetVariant = 'default' | 'expandable';
+export type WidgetVariant = 'default' | 'expanded' | 'full-expanded';
 
 /**
  * The above type defines a set of optional color properties for a widget.
@@ -182,7 +182,8 @@ export type Features = Partial<
  *   - 'language': Visibility state for the language.
  *   - 'experimentalRoute': Enablement state for the experimental route.
  * @property {WidgetVariant} variant
- *   If it is expandable, multiple routes will show up on the home page;
+ *   If it is expanded, multiple routes will show up on the home page;
+ *   If it is full-expanded, multiple routes will show up on the home page with full routes;
  *   if not, you will need to go to a different page to see the suggested routes.
  */
 
