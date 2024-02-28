@@ -5,7 +5,7 @@ import { EventSeverity } from '@rango-dev/queue-manager-rango-preset';
 import {
   ChainToken,
   ChevronRightIcon,
-  ListItemButton,
+  Divider,
   Typography,
 } from '@rango-dev/ui';
 import React from 'react';
@@ -16,7 +16,12 @@ import { useAppStore } from '../../store/AppStore';
 import { useNotificationStore } from '../../store/notification';
 import { areTokensEqual } from '../../utils/wallets';
 
-import { Container, Images, List } from './NotificationContent.styles';
+import {
+  Container,
+  Images,
+  List,
+  ListItem,
+} from './NotificationContent.styles';
 import { NotificationNotFound } from './NotificationNotFound';
 
 const MAX_NOTIFICATIONS_DISPLAYED = 4;
@@ -41,7 +46,7 @@ export function NotificationContent() {
     <Container>
       {sortedNotification.length ? (
         <List>
-          {sortedNotification.map((notificationItem) => {
+          {sortedNotification.map((notificationItem, index) => {
             const { route, requestId, event } = notificationItem;
             const fromToken = tokens.find((tokenItem) =>
               areTokensEqual(tokenItem, route.from)
@@ -60,42 +65,47 @@ export function NotificationContent() {
             );
 
             return (
-              <ListItemButton
-                key={requestId}
-                onClick={() => handleOnClick(requestId)}
-                title={
-                  <Typography
-                    variant="body"
-                    size="small"
-                    color={
-                      event.messageSeverity === EventSeverity.WARNING
-                        ? '$foreground'
-                        : '$neutral700'
-                    }>
-                    {i18n.t(event.message)}
-                  </Typography>
-                }
-                id={requestId}
-                start={
-                  <Images>
-                    <div className="from-chain-token">
-                      <ChainToken
-                        tokenImage={fromToken ? fromToken.image : ''}
-                        chainImage={fromBlockchain ? fromBlockchain.logo : ''}
-                        size="small"
-                      />
-                    </div>
-                    <div className="to-chain-token">
-                      <ChainToken
-                        tokenImage={toToken ? toToken.image : ''}
-                        chainImage={toBlockchain ? toBlockchain.logo : ''}
-                        size="small"
-                      />
-                    </div>
-                  </Images>
-                }
-                end={<ChevronRightIcon size={12} color="gray" />}
-              />
+              <React.Fragment key={requestId}>
+                {index > 0 && <Divider size={4} />}
+                <ListItem
+                  onClick={() => handleOnClick(requestId)}
+                  actionRequired={
+                    event.messageSeverity === EventSeverity.WARNING
+                  }
+                  title={
+                    <Typography
+                      variant="body"
+                      size="small"
+                      color={
+                        event.messageSeverity === EventSeverity.WARNING
+                          ? '$foreground'
+                          : '$neutral700'
+                      }>
+                      {i18n.t(event.message)}
+                    </Typography>
+                  }
+                  id={requestId}
+                  start={
+                    <Images>
+                      <div className="from-chain-token">
+                        <ChainToken
+                          tokenImage={fromToken ? fromToken.image : ''}
+                          chainImage={fromBlockchain ? fromBlockchain.logo : ''}
+                          size="small"
+                        />
+                      </div>
+                      <div className="to-chain-token">
+                        <ChainToken
+                          tokenImage={toToken ? toToken.image : ''}
+                          chainImage={toBlockchain ? toBlockchain.logo : ''}
+                          size="small"
+                        />
+                      </div>
+                    </Images>
+                  }
+                  end={<ChevronRightIcon size={12} color="gray" />}
+                />
+              </React.Fragment>
             );
           })}
         </List>
