@@ -155,4 +155,4 @@ For better user experience, wallet provider tries to connect to a wallet only wh
 | TronLink       | Tron                                                         | -                                                 | &cross;              | -                                    |
 | Trust Wallet   | EVM,Solana                                                   | Solana                                            | &check;              | https://trustwallet.com/             |
 | Wallet Connect | Evm,Solana,Cosmos                                            | Solana,Cosmos                                     | &cross;              | -                                    |
-| XDefi          | EVM,Solana,Binance,BTC,LTC,Thorchain,Terra,Doge,Cosmos       | Doge,Cosmos                                       | &check;              | https://www.xdefi.io/                |
+| XDefi          | EVM,Solana,Binance,BTC,LTC,Thorchain,Terra,Doge,Cosmos,Akash,Axelar,Crypto.org,Juno,Kujira,Mars,Osmosis,Stargaze,Stride       |                                      | &check;              | https://www.xdefi.io/                |

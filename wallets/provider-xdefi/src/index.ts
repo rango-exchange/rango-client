@@ -7,13 +7,13 @@ import type {
   SwitchNetwork,
   WalletInfo,
 } from '@rango-dev/wallets-shared';
-import type { BlockchainMeta, SignerFactory } from 'rango-types';
 
 import {
   canEagerlyConnectToEvm,
   canSwitchNetworkToEvm,
   chooseInstance,
   getBlockChainNameFromId,
+  getCosmosAccounts,
   getEvmAccounts,
   getSolanaAccounts,
   Networks,
@@ -21,8 +21,10 @@ import {
   WalletTypes,
   XDEFI_WALLET_SUPPORTED_NATIVE_CHAINS,
 } from '@rango-dev/wallets-shared';
+import { type BlockchainMeta, type SignerFactory } from 'rango-types';
+import { cosmosBlockchains, isCosmosBlockchain } from 'rango-types';
 
-import { SUPPORTED_ETH_CHAINS } from './constants';
+import { SUPPORTED_COSMOS_CHAINS, SUPPORTED_ETH_CHAINS } from './constants';
 import { getNonEvmAccounts, xdefi as xdefi_instances } from './helpers';
 import signer from './signer';
 
@@ -39,6 +41,7 @@ export const getInstance = xdefi_instances;
 export const connect: Connect = async ({ instance, meta }) => {
   const ethInstance = chooseInstance(instance, meta, Networks.ETHEREUM);
   const solInstance = chooseInstance(instance, meta, Networks.SOLANA);
+  const cosmosInstance = chooseInstance(instance, meta, Networks.COSMOS);
   if (!ethInstance || !ethInstance.__XDEFI) {
     throw new Error("Please 'Prioritise' XDEFI and refresh the page.");
   }
@@ -50,7 +53,33 @@ export const connect: Connect = async ({ instance, meta }) => {
     meta,
   });
 
-  return [evmResult, ...nonEvmResults, solanaAccounts as ProviderConnectResult];
+  const cosmosAccounts: ProviderConnectResult[] = [];
+  if (cosmosInstance) {
+    const cosmosBlockchainMeta = meta.filter(
+      (blockchainMeta: BlockchainMeta) =>
+        isCosmosBlockchain(blockchainMeta) &&
+        SUPPORTED_COSMOS_CHAINS.includes(blockchainMeta.name as Networks)
+    );
+    const requestedNetwork = Networks.COSMOS;
+
+    const cosmosResult = await getCosmosAccounts({
+      instance: cosmosInstance,
+      meta: cosmosBlockchainMeta,
+      network: requestedNetwork,
+    });
+    if (Array.isArray(cosmosResult)) {
+      cosmosAccounts.push(...cosmosResult);
+    } else {
+      cosmosAccounts.push(cosmosResult);
+    }
+  }
+
+  return [
+    evmResult,
+    ...nonEvmResults,
+    solanaAccounts as ProviderConnectResult,
+    ...cosmosAccounts,
+  ];
 };
 
 export const subscribe: Subscribe = ({
@@ -100,22 +129,34 @@ export const canEagerConnect: CanEagerConnect = async ({ instance, meta }) => {
 };
 export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
   allBlockChains
-) => ({
-  name: 'XDefi',
-  img: 'https://raw.githubusercontent.com/rango-exchange/assets/main/wallets/xdefi/icon.svg',
-  installLink: {
-    CHROME:
-      'https://chrome.google.com/webstore/detail/xdefi-wallet/hmeobnfnfcmdkdcmlblgagmfpfboieaf',
-    BRAVE:
-      'https://chrome.google.com/webstore/detail/xdefi-wallet/hmeobnfnfcmdkdcmlblgagmfpfboieaf',
-    DEFAULT: 'https://xdefi.io/',
-  },
-  color: '#0646c7',
-  supportedChains: allBlockChains.filter((blockchainMeta) =>
-    [
-      ...SUPPORTED_ETH_CHAINS,
-      ...XDEFI_WALLET_SUPPORTED_NATIVE_CHAINS,
-      Networks.SOLANA,
-    ].includes(blockchainMeta.name as Networks)
-  ),
-});
+) => {
+  const supportedCosmosChains = cosmosBlockchains(allBlockChains).filter(
+    (blockchainMeta: BlockchainMeta) =>
+      !!blockchainMeta.info &&
+      SUPPORTED_COSMOS_CHAINS.includes(blockchainMeta.name as Networks)
+  );
+
+  const supportedChains = [
+    ...allBlockChains.filter((blockchainMeta) =>
+      [
+        ...SUPPORTED_ETH_CHAINS,
+        ...XDEFI_WALLET_SUPPORTED_NATIVE_CHAINS,
+        Networks.SOLANA,
+      ].includes(blockchainMeta.name as Networks)
+    ),
+    ...supportedCosmosChains,
+  ];
+  return {
+    name: 'XDefi',
+    img: 'https://raw.githubusercontent.com/rango-exchange/assets/main/wallets/xdefi/icon.svg',
+    installLink: {
+      CHROME:
+        'https://chrome.google.com/webstore/detail/xdefi-wallet/hmeobnfnfcmdkdcmlblgagmfpfboieaf',
+      BRAVE:
+        'https://chrome.google.com/webstore/detail/xdefi-wallet/hmeobnfnfcmdkdcmlblgagmfpfboieaf',
+      DEFAULT: 'https://xdefi.io/',
+    },
+    color: '#0646c7',
+    supportedChains,
+  };
+};
