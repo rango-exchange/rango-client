@@ -14,6 +14,7 @@ export type QuoteProps = {
   selected?: boolean;
   showModalFee?: boolean;
   onClickAllRoutes?: () => void;
+  fullExpandedMode?: boolean;
 };
 
 export type optionProps = {

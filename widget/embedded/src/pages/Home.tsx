@@ -16,6 +16,7 @@ import { useAppStore } from '../store/AppStore';
 import { useQuoteStore } from '../store/quote';
 import { useUiStore } from '../store/ui';
 import { useWalletsStore } from '../store/wallets';
+import { isVarianExpandable } from '../utils/configs';
 import { getSwapButtonState } from '../utils/swap';
 
 const MainContainer = styled('div', {
@@ -67,7 +68,7 @@ export function Home() {
     warning: quoteWarning,
     needsToWarnEthOnPath,
   });
-  const isExpandable = config?.variant === 'expandable' && !isMobile;
+  const isExpandable = isVarianExpandable(config?.variant) && !isMobile;
   const hasInputs =
     !!inputAmount && !!fromToken && !!toToken && inputAmount !== '0';
   const fetchingQuote = hasInputs && fetchMetaStatus === 'success' && loading;

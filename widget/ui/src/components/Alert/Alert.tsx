@@ -45,7 +45,12 @@ export function Alert(props: PropsWithChildren<PropTypes>) {
             </Typography>
           )}
         </TitleContainer>
-        {action ? <div>{action}</div> : null}
+        {action ? (
+          <>
+            <Divider direction="horizontal" size={'20'} />
+            <div>{action}</div>
+          </>
+        ) : null}
       </Main>
       {footer ? (
         <div className={`footer ${isFooterString ? 'description' : ''}`}>

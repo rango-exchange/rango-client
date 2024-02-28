@@ -6,8 +6,26 @@ export const Container = styled('div', {
   alignItems: 'center',
 });
 
+export const ErrorDescription = styled('div', {
+  variants: {
+    size: {
+      small: {},
+      large: {
+        maxWidth: '316px',
+      },
+    },
+  },
+});
+
 export const Footer = styled('div', {
-  width: '100%',
+  variants: {
+    size: {
+      small: {
+        width: '100%',
+      },
+      large: {},
+    },
+  },
 });
 
 export const PrefixIcon = styled('div', {

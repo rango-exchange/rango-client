@@ -25,6 +25,7 @@ export function QuoteInfo(props: PropTypes) {
     showModalFee,
     selected,
     onClickAllRoutes,
+    fullExpandedMode = false,
   } = props;
   const { inputAmount, inputUsdValue, toToken } = useQuoteStore();
 
@@ -65,6 +66,7 @@ export function QuoteInfo(props: PropTypes) {
         type={type}
         expanded={expanded}
         onClickAllRoutes={onClickAllRoutes}
+        fullExpandedMode={fullExpandedMode}
         input={{
           value: inputAmount,
           usdValue: inputUsdValue?.toString() ?? '',
