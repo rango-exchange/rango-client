@@ -160,9 +160,13 @@ export const createSettingsSlice: StateCreator<
     const isLiquidityHidden = isFeatureHidden('liquiditySource', features);
 
     set({
-      ...(isThemeHidden && { theme: 'auto' }),
-      ...(isLanguageHidden && { language: DEFAULT_LANGUAGE }),
-      ...(isLiquidityHidden && { disabledLiquiditySources: [] }),
+      ...(isThemeHidden && { theme: nextConfig.theme?.mode || 'auto' }),
+      ...(isLanguageHidden && {
+        language: nextConfig.language || DEFAULT_LANGUAGE,
+      }),
+      ...(isLiquidityHidden && {
+        disabledLiquiditySources: nextConfig.liquiditySources || [],
+      }),
     });
   },
 });
