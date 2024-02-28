@@ -44,6 +44,7 @@ export const BaseListItem = styled('li', {
     alignItems: 'center',
     paddingLeft: '$10',
     overflow: 'hidden',
+    flexShrink: 0,
   },
   variants: {
     hasDivider: {
