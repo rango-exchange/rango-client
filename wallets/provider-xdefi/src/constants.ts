@@ -12,3 +12,15 @@ export const SUPPORTED_ETH_CHAINS = [
   Networks.FANTOM,
   Networks.ARBITRUM,
 ];
+export const SUPPORTED_COSMOS_CHAINS = [
+  Networks.COSMOS,
+  Networks.AKASH,
+  Networks.AXELAR,
+  Networks.CRYPTO_ORG,
+  Networks.JUNO,
+  Networks.KUJIRA,
+  Networks.MARS,
+  Networks.OSMOSIS,
+  Networks.STARGAZE,
+  Networks.STRIDE,
+];
