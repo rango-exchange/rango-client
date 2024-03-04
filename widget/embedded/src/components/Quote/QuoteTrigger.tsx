@@ -11,7 +11,7 @@ import {
 } from '@rango-dev/ui';
 import React from 'react';
 
-import useMobileDetect from '../../hooks/useMobileDetect';
+import useScreenDetect from '../../hooks/useScreenDetect';
 import { getContainer } from '../../utils/common';
 import { getUniqueBlockchains } from '../../utils/quote';
 
@@ -48,7 +48,7 @@ export function QuoteTrigger(props: QuoteTriggerProps) {
   const tooltipContainer = getContainer();
   const numberOfSteps = steps.length;
   const blockchains = getUniqueBlockchains(steps);
-  const isMobile = useMobileDetect();
+  const { isTablet, isMobile } = useScreenDetect();
 
   return (
     <Trigger
@@ -72,7 +72,7 @@ export function QuoteTrigger(props: QuoteTriggerProps) {
             </IconContainer>
           );
 
-          return isMobile ? (
+          return isMobile || isTablet ? (
             <>
               <ImageComponent
                 content={step.swapper.displayName}

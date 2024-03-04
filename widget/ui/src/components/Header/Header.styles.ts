@@ -16,7 +16,7 @@ export const Container = styled('div', {
   display: 'flex',
   justifyContent: 'space-between',
   alignItems: 'center',
-  padding: '$15 $20',
+  padding: '$20 $20 $15 $20',
   $$color: '$colors$neutral100',
   [`.${darkTheme} &`]: {
     $$color: '$colors$neutral300',
