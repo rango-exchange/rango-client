@@ -55,7 +55,7 @@ export const TagsContainer = styled('div', {
 
 export const Steps = styled('div', {
   display: 'flex',
-  height: '85px',
+  height: '102px',
 });
 
 export const StepItem = styled('div', {
@@ -109,8 +109,8 @@ export const SwapperContainer = styled(FlexCenter, {
 export const SwapperImage = styled(FlexCenter, {
   borderRadius: '$lg',
   position: 'relative',
-  width: '$18',
-  height: '$18',
+  width: '$24',
+  height: '$24',
   border: '1px solid transparent',
   variants: {
     state: {
@@ -127,10 +127,10 @@ export const SwapperImage = styled(FlexCenter, {
 export const IconHighlight = styled(FlexCenter, {
   borderRadius: '$lg',
   position: 'absolute',
-  width: '$8',
-  height: '$8',
-  bottom: -2,
-  right: -2,
+  width: '$10',
+  height: '$10',
+  bottom: -3,
+  right: -3,
   variants: {
     type: {
       warning: {
@@ -153,7 +153,7 @@ export const IconHighlight = styled(FlexCenter, {
 
 export const OutputSection = styled(FlexCenter, {
   flexDirection: 'column',
-  paddingLeft: '$4',
+  paddingLeft: '$8',
 });
 
 export const VerticalLine = styled('div', {

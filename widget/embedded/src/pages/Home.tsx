@@ -10,14 +10,14 @@ import { navigationRoutes } from '../constants/navigationRoutes';
 import { ExpandedQuotes } from '../containers/ExpandedQuotes';
 import { Inputs } from '../containers/Inputs';
 import { QuoteInfo } from '../containers/QuoteInfo';
-import useMobileDetect from '../hooks/useMobileDetect';
+import useScreenDetect from '../hooks/useScreenDetect';
 import { useSwapInput } from '../hooks/useSwapInput';
 import { useAppStore } from '../store/AppStore';
 import { useQuoteStore } from '../store/quote';
 import { useUiStore } from '../store/ui';
 import { useWalletsStore } from '../store/wallets';
-import { isVarianExpandable } from '../utils/configs';
-import { getSwapButtonState } from '../utils/swap';
+import { isVariantExpandable } from '../utils/configs';
+import { getSwapButtonState, isTokensIdentical } from '../utils/swap';
 
 const MainContainer = styled('div', {
   display: 'grid',
@@ -47,7 +47,7 @@ export function Home() {
     updateQuotePartialState,
   } = useQuoteStore();
   const [isVisibleExpanded, setIsVisibleExpanded] = useState<boolean>(false);
-  const isMobile = useMobileDetect();
+  const { isLargeScreen, isExtraLargeScreen } = useScreenDetect();
 
   const { fetch: fetchQuote, loading } = useSwapInput({ refetchQuote });
   const { config, fetchStatus: fetchMetaStatus } = useAppStore();
@@ -68,9 +68,20 @@ export function Home() {
     warning: quoteWarning,
     needsToWarnEthOnPath,
   });
-  const isExpandable = isVarianExpandable(config?.variant) && !isMobile;
+
+  const isExpandable = isVariantExpandable(
+    isLargeScreen,
+    isExtraLargeScreen,
+    config?.variant
+  );
+
   const hasInputs =
-    !!inputAmount && !!fromToken && !!toToken && inputAmount !== '0';
+    !!inputAmount &&
+    !!fromToken &&
+    !!toToken &&
+    inputAmount !== '0' &&
+    !isTokensIdentical(fromToken, toToken);
+
   const fetchingQuote = hasInputs && fetchMetaStatus === 'success' && loading;
 
   const hasValidQuotes =

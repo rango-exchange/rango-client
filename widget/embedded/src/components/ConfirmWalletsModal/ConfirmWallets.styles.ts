@@ -72,7 +72,7 @@ export const ShowMoreWallets = styled(WalletButton, {
   minHeight: '93px',
 });
 export const ShowMoreHeader = styled('div', {
-  padding: '$20',
+  padding: '$20 $20 $15 $20',
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',

@@ -775,3 +775,11 @@ export function confirmSwapDisabled(
       !isValidAddress(lastStepToBlockchain, customDestination))
   );
 }
+
+export function isTokensIdentical(tokenA: Token, tokenB: Token) {
+  return (
+    tokenA.blockchain === tokenB.blockchain &&
+    tokenA.symbol === tokenB.symbol &&
+    tokenA.address === tokenB.address
+  );
+}

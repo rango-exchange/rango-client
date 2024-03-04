@@ -85,7 +85,7 @@ export function FullExpandedQuote(props: PropTypes) {
               ) : (
                 <LeftSection>
                   <ChainToken
-                    size="small"
+                    size="xmedium"
                     chainImage={step.from.chain.image}
                     tokenImage={step.from.token.image}
                   />
@@ -116,20 +116,21 @@ export function FullExpandedQuote(props: PropTypes) {
                     <SwapperContainer>
                       <SwapperImage state={step.state}>
                         <Image
-                          size={15}
+                          size={22}
                           type="circular"
                           src={step.swapper.image}
                         />
                         {step.state && (
                           <IconHighlight type={step.state}>
                             {step.state === 'error' ? (
-                              <ErrorIcon size={6} color="error" />
+                              <ErrorIcon size={8} color="error" />
                             ) : (
-                              <WarningIcon size={6} color="warning" />
+                              <WarningIcon size={8} color="warning" />
                             )}
                           </IconHighlight>
                         )}
                       </SwapperImage>
+                      <Divider size={2} />
                       <Typography size="xsmall" variant="body" align="center">
                         {step.swapper.displayName}
                       </Typography>
@@ -149,6 +150,7 @@ export function FullExpandedQuote(props: PropTypes) {
               tokenImage={steps[numberOfSteps - 1].to.token.image}
               size="medium"
             />
+            <Divider size={4} />
             <div>
               <Tooltip
                 content={props.outputPrice.realValue}
@@ -158,7 +160,7 @@ export function FullExpandedQuote(props: PropTypes) {
                   {props.outputPrice.value}
                 </Typography>
                 <Divider size={4} direction="horizontal" />
-                <Typography size="large" variant="body">
+                <Typography size="xmedium" variant="title">
                   {steps[numberOfSteps - 1].to.token.displayName}
                 </Typography>
               </Tooltip>
