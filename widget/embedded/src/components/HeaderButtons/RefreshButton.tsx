@@ -63,6 +63,7 @@ function RefreshButton({ onClick }: { onClick: (() => void) | undefined }) {
     <HeaderButton
       variant="ghost"
       size="small"
+      style={{ paddingTop: 0, paddingBottom: 0 }}
       onClick={handleRefreshClick}
       disabled={!onClick}>
       <ProgressIcon

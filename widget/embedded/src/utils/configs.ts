@@ -80,6 +80,13 @@ export const isBlockchainExcludedInConfig = (
   );
 };
 
-export const isVarianExpandable = (variant?: WidgetVariant) => {
-  return variant === 'expanded' || variant === 'full-expanded';
+export const isVariantExpandable = (
+  isLargeScreen: boolean,
+  isExtraLargeScreen: boolean,
+  variant?: WidgetVariant
+) => {
+  return (
+    (variant === 'expanded' && (isLargeScreen || isExtraLargeScreen)) ||
+    (variant === 'full-expanded' && isExtraLargeScreen)
+  );
 };
