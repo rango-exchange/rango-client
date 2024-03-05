@@ -1,10 +1,11 @@
 import type { PropTypes } from './WidgetProvider.types';
 import type { PropsWithChildren } from 'react';
 
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo } from 'react';
 
 import { DEFAULT_BASE_URL, RANGO_PUBLIC_API_KEY } from '../../constants';
 import QueueManager from '../../QueueManager';
+import { tabManager } from '../../store/ui';
 import { initConfig } from '../../utils/configs';
 import { WidgetWallets } from '../Wallets';
 import { WidgetInfo } from '../WidgetInfo';
@@ -18,6 +19,11 @@ export function WidgetProvider(props: PropsWithChildren<PropTypes>) {
       BASE_URL: config?.apiUrl || DEFAULT_BASE_URL,
     });
   }, [config.apiKey, config.apiUrl]);
+
+  useEffect(() => {
+    tabManager.init();
+    return tabManager.destroy;
+  }, []);
 
   return (
     <WidgetWallets config={config} onUpdateState={onUpdateState}>
