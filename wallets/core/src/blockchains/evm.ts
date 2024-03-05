@@ -2,13 +2,13 @@ import { BlockchainProvider } from '../hub';
 
 type ChainId = string;
 interface Config {
-  id: string;
+  category: string;
   defaultChainId: ChainId;
 }
 
 function evm(config: Config) {
   const b = new BlockchainProvider({
-    id: config.id,
+    category: config.category,
   });
 
   b.and('connect', connect);

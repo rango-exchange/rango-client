@@ -5,15 +5,14 @@ import { BlockchainProvider } from './blockchain';
 describe('blockchain construction', () => {
   test('should be initialized correctly.', () => {
     const config = {
-      id: 'blockchain-id',
+      category: 'evm',
     };
     const blockchain = new BlockchainProvider(config);
-    expect(blockchain.id).toBe(config.id);
+    expect(blockchain.category).toBe(config.category);
   });
 
   test('add actions and run them.', () => {
     const config = {
-      id: 'blockchain-id',
       category: 'evm',
     };
     const blockchain = new BlockchainProvider(config);
@@ -31,7 +30,6 @@ describe('blockchain construction', () => {
 
   test('subscribers should be added and removed correctly', () => {
     const config = {
-      id: 'blockchain-id',
       category: 'evm',
     };
     const blockchain = new BlockchainProvider(config);
