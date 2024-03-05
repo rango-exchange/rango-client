@@ -23,13 +23,12 @@ export function makeAlerts(
   const alertInfo: AlertInfo = {
     alertType: 'warning',
     title: '',
-    action: 'show-info',
+    action: null,
   };
   if (error) {
     alertInfo.alertType = 'error';
     if (error.type === QuoteErrorType.BRIDGE_LIMIT) {
       alertInfo.title = error.recommendation;
-      alertInfo.action = 'show-info';
     }
 
     if (error.type === QuoteErrorType.INSUFFICIENT_SLIPPAGE) {
@@ -50,7 +49,7 @@ export function makeAlerts(
       if (warningLevel === 'high') {
         alertInfo.alertType = 'error';
       }
-      alertInfo.action = null;
+      alertInfo.action = 'show-info';
       alertInfo.title = errorMessages().highValueLossError.title;
     }
     if (warning.type === QuoteWarningType.UNKNOWN_PRICE) {

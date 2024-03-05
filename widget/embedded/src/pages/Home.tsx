@@ -1,3 +1,5 @@
+import type { SelectedQuote } from '../types';
+
 import { i18n } from '@lingui/core';
 import { Button, Divider, styled, WarningIcon } from '@rango-dev/ui';
 import React, { useEffect, useState } from 'react';
@@ -114,6 +116,13 @@ export function Home() {
     }
   };
 
+  const onClickOnQuote = (quote: SelectedQuote) => {
+    if (selectedQuote?.requestId !== quote.requestId) {
+      setShowQuoteWarningModal(false);
+      setSelectedQuote(quote);
+    }
+  };
+
   return (
     <MainContainer>
       <Layout
@@ -215,7 +224,7 @@ export function Home() {
       {isExpandable ? (
         <ExpandedQuotes
           loading={fetchingQuote}
-          onClickOnQuote={(quote) => setSelectedQuote(quote)}
+          onClickOnQuote={onClickOnQuote}
           fetch={fetchQuote}
           onClickRefresh={onClickRefresh}
           isVisible={isVisibleExpanded}
