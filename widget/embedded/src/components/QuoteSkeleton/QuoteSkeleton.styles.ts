@@ -27,7 +27,7 @@ export const Steps = styled('div', {
 });
 
 export const StepSeparator = styled('div', {
-  borderLeft: '1px dashed black',
+  borderLeft: '1px dashed $foreground',
   minHeight: ' 0',
   margin: '0px 11.5px',
   alignSelf: 'stretch',
