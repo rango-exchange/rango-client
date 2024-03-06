@@ -1,10 +1,14 @@
-type Item = {
-  value: string;
+type Item<T> = {
+  value: T;
   label: string;
 };
-export type PropTypes = {
-  options: Item[];
-  handleItemClick?: (item: Item) => void;
-  value: Item;
+
+type Variant = 'filled' | 'outlined';
+
+export type PropTypes<T> = {
+  options: Item<T>[];
+  handleItemClick?: (item: Item<T>) => void;
+  value: string;
   container?: HTMLElement;
+  variant: Variant;
 };

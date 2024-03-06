@@ -1,5 +1,3 @@
-import type { PreferenceType } from 'rango-sdk';
-
 import { Select } from '@rango-dev/ui';
 import React from 'react';
 
@@ -16,17 +14,11 @@ export function SelectStrategy(props: { container: HTMLElement }) {
       <Select
         container={props.container}
         options={ROUTE_STRATEGY}
-        value={
-          ROUTE_STRATEGY.find(
-            (strategy) => strategy.value === sortStrategy
-          ) as {
-            value: PreferenceType;
-            label: string;
-          }
-        }
+        value={sortStrategy}
         handleItemClick={(item) => {
-          updateQuotePartialState('sortStrategy', item.value as PreferenceType);
+          updateQuotePartialState('sortStrategy', item.value);
         }}
+        variant="filled"
       />
     </SelectContainer>
   );

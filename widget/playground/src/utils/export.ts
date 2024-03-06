@@ -38,6 +38,15 @@ export function filterConfig(
 
   const filteredConfigForExport = Object.assign({}, userSelectedConfig);
 
+  if (filteredConfigForExport.liquiditySources?.length) {
+    // When we have at least 1 item in liquidity sources, we expose excludeLiquiditySources to improve clarity and avoid bugs
+
+    filteredConfigForExport.excludeLiquiditySources =
+      config.excludeLiquiditySources === undefined
+        ? true // if excludeLiquiditySources is empty, the default value for it is true
+        : config.excludeLiquiditySources;
+  }
+
   if (!filteredConfigForExport.apiKey) {
     filteredConfigForExport.apiKey = config.apiKey;
   }
