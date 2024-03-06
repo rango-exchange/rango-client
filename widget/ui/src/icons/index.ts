@@ -66,5 +66,6 @@ export { default as TuneIcon } from './Tune';
 export { default as UtxoCategoryIcon } from './UtxoCategory';
 export { default as WalletIcon } from './Wallet';
 export { default as WarningIcon } from './Warning';
+export { default as WidgetIcon } from './Widget';
 export { default as WidthIcon } from './Width';
 export { default as XIcon } from './X';

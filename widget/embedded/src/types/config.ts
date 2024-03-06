@@ -171,8 +171,8 @@ export type Features = Partial<
  * that defines the various properties of the theme, such as colors, fonts, and others.
  * @property {boolean} externalWallets
  * If `externalWallets` is `true`, you should add `WidgetWallets` to your app.
- * @property {boolean} enableNewLiquiditySources - The `enableNewLiquiditySources` property is a boolean value that when you
- * set it to true, whenever a new liquidity source is added, it will be added to your list as well.
+ * @property {boolean} excludeLiquiditySources - The `excludeLiquiditySources` property is a boolean value that when you
+ * set it to true, the list of liquidity sources provided in `liquiditySources` will be excluded; otherwise, they will be included.
  * @property {Features} features - An optional object for configuring the visibility or enablement of various features.
  *   Keys include:
  *   - 'notification': Visibility state for the notification icon.
@@ -203,7 +203,7 @@ export type WidgetConfig = {
   language?: Language;
   theme?: WidgetTheme;
   externalWallets?: boolean;
-  enableNewLiquiditySources?: boolean;
+  excludeLiquiditySources?: boolean;
   features?: Features;
   variant?: WidgetVariant;
 };

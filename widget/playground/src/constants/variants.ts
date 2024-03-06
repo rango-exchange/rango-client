@@ -1,14 +1,16 @@
-export const VARIANTS = [
+import type { WidgetVariant } from '@rango-dev/widget-embedded';
+
+export const VARIANTS: { label: string; value: WidgetVariant }[] = [
   {
-    name: 'Default',
-    value: 'default',
+    label: 'Default',
+    value: 'default' as WidgetVariant,
   },
   {
-    name: 'Expanded',
-    value: 'expanded',
+    label: 'Expanded',
+    value: 'expanded' as WidgetVariant,
   },
   {
-    name: 'Full Expanded',
-    value: 'full-expanded',
+    label: 'Full Expanded',
+    value: 'full-expanded' as WidgetVariant,
   },
 ];

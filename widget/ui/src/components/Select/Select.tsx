@@ -8,10 +8,10 @@ import { Typography } from '../Typography';
 
 import { SelectContent, SelectItem, SelectTrigger } from './select.styles';
 
-export function SelectComponent(props: PropTypes) {
+export function SelectComponent<T extends string>(props: PropTypes<T>) {
   const [open, setOpen] = useState(false);
   const selectRef = useRef<HTMLDivElement>(null);
-  const { options, value, container, handleItemClick } = props;
+  const { options, value, container, handleItemClick, variant } = props;
   const handleToggle = () => {
     setOpen((prev) => !prev);
   };
@@ -29,17 +29,20 @@ export function SelectComponent(props: PropTypes) {
     };
   }, []);
 
+  const selectedLabel = options.find((option) => option.value === value)?.label;
+
   return (
     <div ref={selectRef}>
-      <Select.Root value={value?.value} open={open}>
+      <Select.Root value={value} open={open}>
         <SelectTrigger
+          variant={variant}
           onKeyDown={(event) => event.key === 'Enter' && handleToggle()}
           onClick={handleToggle}
           open={open}
-          aria-label={value?.label}>
+          aria-label={selectedLabel}>
           <Select.Value>
             <Typography variant="body" size="small">
-              {value?.label}
+              {selectedLabel}
             </Typography>
           </Select.Value>
 
@@ -63,11 +66,11 @@ export function SelectComponent(props: PropTypes) {
                     key={option.value}
                     value={option.value}>
                     <Select.ItemText>
-                      <Typography variant="body" size="small">
+                      <Typography variant="body" size="small" className="_text">
                         {option.label}
                       </Typography>
                     </Select.ItemText>
-                    {option.value === value?.value && (
+                    {option.value === value && (
                       <DoneIcon size={14} color="secondary" />
                     )}
                   </SelectItem>
