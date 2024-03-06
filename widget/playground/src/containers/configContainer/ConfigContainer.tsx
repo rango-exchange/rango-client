@@ -3,26 +3,23 @@ import type { PropsWithChildren } from 'react';
 import {
   DesktopIcon,
   Divider,
-  HeightIcon,
   LogoWithTextIcon,
-  NotSelectableTypography,
   Switch,
   Typography,
-  WidthIcon,
 } from '@rango-dev/ui';
 import React, { useState } from 'react';
 
 import { SideNavigation } from '../../components/SideNavigation';
 import { SIDE_TABS_IDS } from '../../constants';
+import { RANGO_DOCS_URL, RANGO_WEBSITE_URL } from '../../constants/urls';
 import { globalStyles } from '../../globalStyles';
+import BoundaryGuideContainer from '../BoundaryGuideContainer/BoundaryGuideContainer';
 import { FunctionalLayout } from '../FunctionalLayout';
 import { StyleLayout } from '../StyleLayout';
 
 import { Header } from './ConfigContainer.Header';
 import {
-  BoundaryGuide,
   BoundarySection,
-  BoundarySize,
   Container,
   Content,
   Layout,
@@ -31,6 +28,7 @@ import {
   Main,
   MobileContent,
   MobileSection,
+  StyledButton,
 } from './ConfigContainer.styles';
 
 export function ConfigContainer(props: PropsWithChildren) {
@@ -68,36 +66,9 @@ export function ConfigContainer(props: PropsWithChildren) {
         <Main>
           <Header />
           <Content>
-            <div>
-              {/* div element added to wrap BoundarySizes and ensure the correct alignment of BoundarySize text */}
-              {showBoundaryGuide && (
-                <BoundarySize side="right">
-                  <WidthIcon size={16} color="gray" />
-                  <Divider size={4} direction="horizontal" />
-                  <NotSelectableTypography
-                    variant="label"
-                    size="medium"
-                    color="neutral600">
-                    Max Width: 390 px
-                  </NotSelectableTypography>
-                </BoundarySize>
-              )}
-              <BoundaryGuide visible={showBoundaryGuide}>
-                {props.children}
-              </BoundaryGuide>
-              {showBoundaryGuide && (
-                <BoundarySize side="left">
-                  <HeightIcon size={16} color="gray" />
-                  <Divider size={4} direction="horizontal" />
-                  <NotSelectableTypography
-                    variant="label"
-                    size="medium"
-                    color="neutral600">
-                    Max Height: 700 px
-                  </NotSelectableTypography>
-                </BoundarySize>
-              )}
-            </div>
+            <BoundaryGuideContainer show={showBoundaryGuide}>
+              {props.children}
+            </BoundaryGuideContainer>
           </Content>
         </Main>
       </Container>
@@ -118,6 +89,23 @@ export function ConfigContainer(props: PropsWithChildren) {
             color="neutral700">
             To use the Playground page, You must use the Desktop version
           </Typography>
+          <Divider size={40} />
+          <StyledButton
+            type="secondary"
+            size="medium"
+            variant="contained"
+            onClick={() => window.open(RANGO_DOCS_URL, '_blank')}>
+            Rango Widget Docs
+          </StyledButton>
+          <Divider size={10} />
+          <StyledButton
+            type="secondary"
+            size="medium"
+            variant="ghost"
+            onClick={() => window.open(RANGO_WEBSITE_URL, '_blank')}
+            css={{ border: '1px solid $secondary500' }}>
+            Rango Website
+          </StyledButton>
         </MobileContent>
       </MobileSection>
     </>

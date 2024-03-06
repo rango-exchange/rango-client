@@ -9,22 +9,9 @@ export const SelectTrigger = styled(Select.Trigger, {
   justifyContent: 'space-between',
   alignItems: 'center',
   cursor: 'pointer',
-  padding: '$5 $10',
-  border: 0,
   outline: 0,
   whiteSpace: 'nowrap',
-  borderRadius: '$sm',
-  backgroundColor: '$neutral300',
-  [`.${darkTheme} &`]: {
-    backgroundColor: '$neutral400',
-  },
   width: '100%',
-  '&:hover': {
-    backgroundColor: '$info100',
-    [`.${darkTheme} &`]: {
-      backgroundColor: '$neutral',
-    },
-  },
   '& svg': {
     transition: `all ${EXPANDABLE_QUOTE_TRANSITION_DURATION}ms ease`,
   },
@@ -41,6 +28,35 @@ export const SelectTrigger = styled(Select.Trigger, {
       false: {
         '& svg': {
           transform: 'rotate(0)',
+        },
+      },
+    },
+    variant: {
+      filled: {
+        border: 0,
+        borderRadius: '$sm',
+        padding: '$5 $10',
+        backgroundColor: '$neutral300',
+        [`.${darkTheme} &`]: {
+          backgroundColor: '$neutral400',
+        },
+        '&:hover': {
+          backgroundColor: '$info100',
+          [`.${darkTheme} &`]: {
+            backgroundColor: '$neutral',
+          },
+        },
+      },
+      outlined: {
+        backgroundColor: 'transparent',
+        padding: '$10',
+        border: '1px solid $neutral300',
+        borderRadius: '$xm',
+        '&:hover': {
+          borderColor: '$info300',
+          '& svg': {
+            color: '$secondary500',
+          },
         },
       },
     },
@@ -69,8 +85,12 @@ export const SelectItem = styled(Select.Item, {
 
   '&:hover': {
     backgroundColor: '$info100',
+    '& ._text': {
+      color: '$secondary500',
+    },
     [`.${darkTheme} &`]: {
       backgroundColor: '$neutral',
+      color: '$secondary500',
     },
   },
 });

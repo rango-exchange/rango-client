@@ -177,12 +177,12 @@ export const createDataSlice: StateCreator<
     const liquiditySources =
       campaignModeLiquiditySource ?? config.liquiditySources;
 
-    const enableNewLiquiditySources = campaignModeLiquiditySource
+    const excludeLiquiditySources = campaignModeLiquiditySource
       ? false
-      : config.enableNewLiquiditySources;
+      : config.excludeLiquiditySources;
 
     /*
-     * If the enableNewLiquiditySources flag is set to true, we return all swappers that are not included in the config.
+     * If the excludeLiquiditySources flag is set to true, we return all swappers that are not included in the config.
      * Otherwise, we return all swappers that are included in the config.
      */
     const swappers = get()._swappers.filter((swapper) => {
@@ -191,7 +191,7 @@ export const createDataSlice: StateCreator<
       );
 
       const shouldExcludeLiquiditySources =
-        enableNewLiquiditySources ||
+        excludeLiquiditySources ||
         !liquiditySources ||
         liquiditySources.length === 0;
 
