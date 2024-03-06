@@ -67,7 +67,6 @@ interface ConfigState {
     mode: 'light' | 'dark';
     color?: string;
     singleTheme?: boolean;
-    resetColors: boolean;
   }) => void;
   onSelectTheme: (colors: { light: WidgetColors; dark: WidgetColors }) => void;
   onChangeLanguage: (value: string) => void;
@@ -225,34 +224,22 @@ export const useConfigStore = createSelectors(
               }
             }
           }),
-        onChangeColors: ({ name, mode, color, singleTheme, resetColors }) =>
+        onChangeColors: ({ name, mode, color, singleTheme }) =>
           set((state) => {
             if (state.config?.theme?.colors) {
               let themes = { ...state.config.theme, singleTheme };
-              // If the resetColors is true, all the colors should reset to the default state, because the colors are changing in the new tab.
-              if (resetColors) {
-                themes = {
-                  ...themes,
-                  colors: {
-                    ...DEFAULT_COLORS,
-                    [mode]: {
-                      ...DEFAULT_COLORS[mode],
-                      [name]: color,
-                    },
+
+              themes = {
+                ...themes,
+                colors: {
+                  ...state.config.theme.colors,
+                  [mode]: {
+                    ...state?.config?.theme.colors[mode],
+                    [name]: color,
                   },
-                };
-              } else {
-                themes = {
-                  ...themes,
-                  colors: {
-                    ...state.config.theme.colors,
-                    [mode]: {
-                      ...state?.config?.theme.colors[mode],
-                      [name]: color,
-                    },
-                  },
-                };
-              }
+                },
+              };
+
               state.config.theme = { ...themes };
             }
           }),

@@ -438,6 +438,7 @@ export function Quote(props: QuoteProps) {
         selected={selected}
         listItem={type === 'list-item'}
         open={expanded}
+        className="quote_container"
         onOpenChange={setExpanded}>
         <QuoteTrigger
           type={type}

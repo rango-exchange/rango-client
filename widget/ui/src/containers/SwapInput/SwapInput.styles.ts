@@ -45,6 +45,12 @@ export const MaxButton = styled(Button, {
     $$color: '$colors$secondary800',
   },
   backgroundColor: '$$color',
+  '& ._typography': {
+    color: '$colors$secondary500',
+    [`.${darkTheme} &`]: {
+      color: '$colors$secondary400',
+    },
+  },
 });
 
 export const ValueTypography = styled('div', {
