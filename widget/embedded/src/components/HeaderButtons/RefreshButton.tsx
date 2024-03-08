@@ -1,78 +1,58 @@
 import { RefreshProgressButton } from '@rango-dev/ui';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 import { HeaderButton, ProgressIcon } from './HeaderButtons.styles';
 
-const REFRESH_INTERVAL = 1000;
-const MAX_ELAPSED_TIME = 60;
-const MAX_PERCENTAGE = 100;
+const PROGRESS_DURATION = 60;
 
 function RefreshButton({ onClick }: { onClick: (() => void) | undefined }) {
-  const [elapsedTime, setElapsedTime] = useState(0);
-  const [isRefetched, setIsRefetched] = useState(false);
+  const isDisabled = !onClick;
+  const [isRefreshed, setIsRefreshed] = useState(false);
+  const [isPaused, setIsPaused] = useState(isDisabled);
+  const ref = useRef<HTMLButtonElement>(null);
 
-  const handleVisibilityChange = (interval?: number) => {
-    if (document.hidden && interval) {
-      // Tab is inactive, clear the interval
-      clearTimeout(interval);
-    }
+  const handleVisibilityChange = () => {
+    setIsPaused(document.hidden || isDisabled);
   };
 
   useEffect(() => {
-    let interval: number | undefined;
-    if (onClick) {
-      interval = window.setInterval(() => {
-        setElapsedTime((prevTime) => prevTime + 1);
+    setIsPaused(isDisabled);
 
-        if (elapsedTime === MAX_ELAPSED_TIME) {
-          handleRefreshClick();
-        }
-      }, REFRESH_INTERVAL);
-    } else {
-      clearTimeout(interval);
-    }
-
-    document.addEventListener('visibilitychange', () =>
-      handleVisibilityChange(interval)
-    );
+    document.addEventListener('visibilitychange', handleVisibilityChange);
 
     return () => {
-      document.removeEventListener('visibilitychange', () =>
-        handleVisibilityChange(interval)
-      );
-      if (interval) {
-        clearInterval(interval);
-      }
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
     };
-  }, [elapsedTime, onClick]);
-
-  const clearTimeout = (interval?: number) => {
-    if (interval) {
-      clearInterval(interval);
-    }
-    setElapsedTime(0);
-  };
+  }, [onClick]);
 
   const handleRefreshClick = () => {
     onClick?.();
-    setElapsedTime(0);
-    setIsRefetched(true);
+    setIsPaused(true);
+    setIsRefreshed(true);
+  };
+
+  const handleRefreshComplete = () => {
+    setIsPaused(false);
+    setIsRefreshed(false);
   };
 
   return (
     <HeaderButton
       variant="ghost"
+      ref={ref}
       size="small"
       style={{ paddingTop: 0, paddingBottom: 0 }}
       onClick={handleRefreshClick}
-      disabled={!onClick}>
+      disabled={isDisabled}>
       <ProgressIcon
-        onTransitionEnd={() => setIsRefetched(false)}
-        isRefetched={isRefetched}>
+        onTransitionEnd={handleRefreshComplete}
+        isRefreshed={isRefreshed}>
         <RefreshProgressButton
           size={24}
           color={!onClick ? 'gray' : 'black'}
-          progress={(elapsedTime / MAX_ELAPSED_TIME) * MAX_PERCENTAGE}
+          isPaused={isPaused}
+          onProgressEnd={() => ref?.current?.click()}
+          progressDuration={PROGRESS_DURATION}
         />
       </ProgressIcon>
     </HeaderButton>

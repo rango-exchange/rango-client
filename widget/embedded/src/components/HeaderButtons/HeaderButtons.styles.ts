@@ -60,7 +60,7 @@ export const NotificationsBadgeContainer = styled('div', {
 export const ProgressIcon = styled('div', {
   padding: '$2',
   variants: {
-    isRefetched: {
+    isRefreshed: {
       true: {
         transform: `rotate(360deg)`,
         transition: 'transform 1s ease-in-out',

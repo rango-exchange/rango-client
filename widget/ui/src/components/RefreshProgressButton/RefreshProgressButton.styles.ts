@@ -1,23 +1,43 @@
-import { styled } from '../../theme';
+import { keyframes, styled } from '../../theme';
 
-export const StyledEllipse = styled('ellipse', {
-  cx: '12.5px',
-  cy: '12.5px',
-  rx: '7.7px',
-  ry: '7.7px',
-  strokeLinecap: 'round',
-  fill: 'none',
-  strokeDasharray: 100,
-  transform: `rotate(20deg)`,
-  transformOrigin: 'center',
+export const AnimationRefresh = keyframes({
+  '0%': {
+    strokeDashoffset: '0',
+  },
+  '100%': {
+    strokeDashoffset: '-30',
+  },
+});
+
+export const StyledCircle = styled('circle', {
   variants: {
-    type: {
-      'in-progress': {
-        stroke: '$info500',
-        strokeWidth: 2,
+    color: {
+      primary: {
+        stroke: '$primary500',
       },
-      basic: {
-        strokeWidth: 1.8,
+      secondary: {
+        stroke: '$secondary500',
+      },
+      error: {
+        stroke: '$error500',
+      },
+      warning: {
+        stroke: '$warning500',
+      },
+      success: {
+        stroke: '$success500',
+      },
+      black: {
+        stroke: '$foreground',
+      },
+      white: {
+        stroke: '$background',
+      },
+      info: {
+        stroke: '$info500',
+      },
+      gray: {
+        stroke: '$neutral700',
       },
     },
   },
