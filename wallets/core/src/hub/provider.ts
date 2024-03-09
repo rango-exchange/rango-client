@@ -1,4 +1,4 @@
-import type { BlockchainProvider } from './blockchain';
+import type { EvmActions, RemoveThisParameter } from '../actions/evm/interface';
 import type { State as V1State } from '../wallet';
 
 type State = Omit<V1State, 'reachable'>;
@@ -6,6 +6,13 @@ type SetState = <K extends keyof State>(name: K, value: State[K]) => void;
 type GetState = <K extends keyof State>(name: K) => State[K];
 
 type Browsers = 'FIREFOX' | 'CHROME' | 'EDGE' | 'BRAVE' | 'DEFAULT';
+interface CommonBlockchains {
+  evm: RemoveThisParameter<EvmActions>;
+  solana: any;
+  cosmos: string;
+}
+
+// Record<'evm', EvmActions> | Record<'solana', any>;
 
 type _WalletInfo = {
   name: string;
@@ -22,7 +29,7 @@ type _WalletInfo = {
 
 class Provider {
   public id: string;
-  private providers: Map<string, typeof BlockchainProvider> = new Map();
+  private providers = new Map();
   private _state: State;
 
   constructor(id: string) {
@@ -37,7 +44,10 @@ class Provider {
     };
   }
 
-  add(id: string, blockchain: BlockchainProvider) {
+  add<K extends keyof CommonBlockchains>(
+    id: K,
+    blockchain: CommonBlockchains[K]
+  ) {
     this.providers.set(id, blockchain);
     return this;
   }
@@ -58,7 +68,7 @@ class Provider {
     return this.providers;
   }
 
-  get(id: string) {
+  get<K extends keyof CommonBlockchains>(id: K): CommonBlockchains[K] {
     return this.providers.get(id);
   }
 }

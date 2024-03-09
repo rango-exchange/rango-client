@@ -1,7 +1,7 @@
 // CAIP string;
 type Result = string[];
 
-function connect(chain: any): Result {
+function connect(_chain: any): Result {
   return [];
 }
 

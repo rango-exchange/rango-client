@@ -5,9 +5,7 @@ import { useConnect } from './use';
 
 describe('predefined uses should works correctly', () => {
   test('connecting should update internal state.', () => {
-    const blockchain = new BlockchainProvider({
-      category: 'evm',
-    });
+    const blockchain = new BlockchainProvider<any>();
     const connect = vi.fn(() => {
       return ['0x000000000000000000000000000000000000dead'];
     });

@@ -1,6 +1,7 @@
 // Some helpers to simplify the code.
 
 import type { Context } from './blockchain';
+import type { EvmActions } from '../actions/evm/interface';
 
 // TODO: it should be imported.
 type ConnectResult = string[];
@@ -13,4 +14,6 @@ export function useConnect(this: Context, accounts: ConnectResult) {
   return accounts;
 }
 
-export const evm = [{ name: 'connect', cb: useConnect }];
+export const evm: { name: keyof EvmActions; cb: any }[] = [
+  { name: 'connect', cb: useConnect },
+];

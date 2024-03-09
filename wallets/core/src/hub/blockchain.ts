@@ -1,9 +1,10 @@
-interface Config {}
+import type {
+  AnyFunction,
+  RemoveThisParameter,
+} from '../actions/evm/interface';
 
-type CommonActionNames = 'connect';
-type ActionName = CommonActionNames | Omit<string, CommonActionNames>;
-// eslint-disable-next-line @typescript-eslint/ban-types
-type ActionCb<T extends Function> = T;
+type ActionName<K> = K | Omit<K, string>;
+
 type SubscriberCb = () => () => void;
 type State = {
   accounts: null | string[];
@@ -11,16 +12,15 @@ type State = {
 };
 type SetState = <K extends keyof State>(name: K, value: State[K]) => void;
 type GetState = <K extends keyof State>(name: K) => State[K];
-type ActionType<T> = Map<keyof T, T[keyof T]>;
+type ActionType<T> = Map<ActionName<keyof T>, T[keyof T]>;
 
 export type Context = {
   state: () => [GetState, SetState];
 };
 
-// eslint-disable-next-line @typescript-eslint/ban-types
-class BlockchainProvider<T extends Record<string, Function>> {
+class BlockchainProvider<T extends Record<keyof T, AnyFunction>> {
   private actions: ActionType<T> = new Map();
-  private onActions: ActionType<T> = new Map();
+  private onActions = new Map<keyof T, AnyFunction>();
   private subscriberCleanUps: Set<SubscriberCb> = new Set();
   private _state: State;
 
@@ -50,7 +50,12 @@ class BlockchainProvider<T extends Record<string, Function>> {
 
     const cbWithContext = cb.bind(context);
 
-    this.actions.set(name, cbWithContext);
+    this.actions.set(
+      name,
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore-next-line
+      cbWithContext
+    );
     return this;
   }
 
@@ -58,16 +63,17 @@ class BlockchainProvider<T extends Record<string, Function>> {
    * if action runs successfuly, then it will run the `cb` fucntion.
    * TODO: This implementation acccepts only one `cb` for each `name`. It's better to be able set multiple `and`.
    */
-  and<K extends keyof T>(name: K, cb: T[K]) {
+  and<K extends keyof T>(name: K, cb: AnyFunction) {
     // TODO: this should be moved to a shared variable
     const cbWithContext = cb.bind({
       state: this.state.bind(this),
     });
+
     this.onActions.set(name, cbWithContext);
     return this;
   }
 
-  use<K extends keyof T>(list: { name: K; cb: T[K] }[]) {
+  use<K extends keyof T>(list: { name: K; cb: AnyFunction }[]) {
     list.forEach((action) => {
       this.and(action.name, action.cb);
     });
@@ -79,7 +85,7 @@ class BlockchainProvider<T extends Record<string, Function>> {
     const cb = this.actions.get(name);
     if (!cb) {
       throw new Error(
-        `Couldn't find ${name} action. Are you sure you've added the action?`
+        `Couldn't find ${name.toString()} action. Are you sure you've added the action?`
       );
     }
 
@@ -112,22 +118,24 @@ class BlockchainProvider<T extends Record<string, Function>> {
     return this.subscriberCleanUps.size;
   }
 
-  build(): T {
+  build() {
     const api = new Proxy(
       {},
       {
-        get: (target, property) => {
-          if (this.actions.get(property as string)) {
-            return this.actions.get(property as string);
-          }
-          throw new Error("doesn't exists");
+        get: () => {
+          // if (this.actions.get(property as string)) {
+          return this.run;
+          /*
+           * }
+           * throw new Error("doesn't exists");
+           */
         },
         set: () => {
           throw new Error('You can not set anything on this object.');
         },
       }
     );
-    return api as T;
+    return api as RemoveThisParameter<T>;
   }
 }
 

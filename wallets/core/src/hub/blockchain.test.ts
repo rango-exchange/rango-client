@@ -3,19 +3,8 @@ import { describe, expect, test } from 'vitest';
 import { BlockchainProvider } from './blockchain';
 
 describe('blockchain construction', () => {
-  test('should be initialized correctly.', () => {
-    const config = {
-      category: 'evm',
-    };
-    const blockchain = new BlockchainProvider(config);
-    expect(blockchain.category).toBe(config.category);
-  });
-
   test('add actions and run them.', () => {
-    const config = {
-      category: 'evm',
-    };
-    const blockchain = new BlockchainProvider(config);
+    const blockchain = new BlockchainProvider<any>();
     blockchain.action('hello', () => 'hello world');
     blockchain.action('bye', () => 'bye bye');
     blockchain
@@ -29,10 +18,7 @@ describe('blockchain construction', () => {
   });
 
   test('subscribers should be added and removed correctly', () => {
-    const config = {
-      category: 'evm',
-    };
-    const blockchain = new BlockchainProvider(config);
+    const blockchain = new BlockchainProvider<any>();
     blockchain.subscriber(() => {
       // noop
       return () => {

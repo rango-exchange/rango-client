@@ -1,18 +1,16 @@
+import type { EvmActions } from '../actions/evm/interface';
+
 import { beforeEach, describe, expect, test } from 'vitest';
 
 import { BlockchainProvider } from './blockchain';
 import { Provider } from './provider';
 
 describe('providers', () => {
-  let blockchainProviders: BlockchainProvider[] = [];
+  let blockchainProviders: BlockchainProvider<EvmActions>[] = [];
 
   beforeEach(() => {
-    const someBlockchain = new BlockchainProvider({
-      id: 'eth-provider',
-    });
-    const anotherBlockchain = new BlockchainProvider({
-      id: 'pol-blockchain',
-    });
+    const someBlockchain = new BlockchainProvider<EvmActions>();
+    const anotherBlockchain = new BlockchainProvider<EvmActions>();
 
     blockchainProviders = [someBlockchain, anotherBlockchain];
 
@@ -24,7 +22,7 @@ describe('providers', () => {
   test('Initialize providers correctly', () => {
     const wallet = new Provider('rangomask');
     const [blockchain1, blockchain2] = blockchainProviders;
-    wallet.add(blockchain1).add(blockchain2);
+    wallet.add('evm', blockchain1.build()).add('solana', blockchain2.build());
 
     const allProviders = wallet.getAll();
     expect(allProviders.size).toBe(2);
@@ -33,7 +31,7 @@ describe('providers', () => {
   test('updating states', () => {
     const wallet = new Provider('rangomask');
     const [blockchain1, blockchain2] = blockchainProviders;
-    wallet.add(blockchain1).add(blockchain2);
+    wallet.add('evm', blockchain1.build()).add('solana', blockchain2.build());
 
     const [getState, setState] = wallet.state();
     setState('connected', true);
@@ -46,10 +44,10 @@ describe('providers', () => {
   test('run actions', () => {
     const wallet = new Provider('rangomask');
     const [blockchain1, blockchain2] = blockchainProviders;
-    blockchain2.action('hello', () => 'hello world');
-    wallet.add(blockchain1).add(blockchain2);
+    blockchain2.action('connect', () => 'hello world');
+    wallet.add('evm', blockchain1.build()).add('solana', blockchain2.build());
 
-    expect(blockchain2.run('hello')).toBe('hello world');
-    expect(() => blockchain1.run('hello')).toThrowError();
+    expect(blockchain2.run('connect')).toBe('hello world');
+    expect(() => blockchain1.run('connect')).toThrowError();
   });
 });
