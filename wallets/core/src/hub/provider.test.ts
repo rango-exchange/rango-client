@@ -1,4 +1,5 @@
 import type { EvmActions } from '../actions/evm/interface';
+import type { SolanaActions } from '../actions/solana/interface';
 
 import { beforeEach, describe, expect, test } from 'vitest';
 
@@ -6,52 +7,58 @@ import { BlockchainProvider } from './blockchain';
 import { Provider } from './provider';
 
 describe('providers', () => {
-  let blockchainProviders: BlockchainProvider<EvmActions>[] = [];
+  let blockchainProviders: {
+    evm: BlockchainProvider<EvmActions>;
+    solana: BlockchainProvider<SolanaActions>;
+  };
 
   beforeEach(() => {
-    const someBlockchain = new BlockchainProvider<EvmActions>();
-    const anotherBlockchain = new BlockchainProvider<EvmActions>();
+    const evmBlockchain = new BlockchainProvider<EvmActions>();
+    const solanaBlockchain = new BlockchainProvider<SolanaActions>();
 
-    blockchainProviders = [someBlockchain, anotherBlockchain];
+    blockchainProviders = {
+      evm: evmBlockchain,
+      solana: solanaBlockchain,
+    };
 
     return () => {
-      blockchainProviders = [];
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore-next-line
+      blockchainProviders = undefined;
     };
   });
 
   test('Initialize providers correctly', () => {
-    const wallet = new Provider('rangomask');
-    const [blockchain1, blockchain2] = blockchainProviders;
-    wallet.add('evm', blockchain1.build()).add('solana', blockchain2.build());
+    const wallet = new Provider('garbage');
+    const { evm, solana } = blockchainProviders;
+    wallet.add('evm', evm.build()).add('solana', solana.build());
 
     const allProviders = wallet.getAll();
     expect(allProviders.size).toBe(2);
   });
 
   test('updating states', () => {
-    const wallet = new Provider('rangomask');
-    const [blockchain1, blockchain2] = blockchainProviders;
-    wallet.add('evm', blockchain1.build()).add('solana', blockchain2.build());
+    const wallet = new Provider('garbage');
+    const { evm, solana } = blockchainProviders;
+    wallet.add('evm', evm.build()).add('solana', solana.build());
 
     const [getState, setState] = wallet.state();
     setState('connected', true);
     const isConnected = getState('connected');
     expect(isConnected).toBe(true);
-
-    // TODO: state values should have validation
   });
 
   test('run actions', () => {
-    const wallet = new Provider('rangomask');
-    const [blockchain1, blockchain2] = blockchainProviders;
-    blockchain2.action('connect', () => [
+    const wallet = new Provider('garbage');
+    const { evm, solana } = blockchainProviders;
+    solana.action('connect', () => [
       '0x000000000000000000000000000000000000dead',
     ]);
-    wallet.add('evm', blockchain1.build()).add('solana', blockchain2.build());
+    wallet.add('evm', evm.build()).add('solana', solana.build());
 
-    expect(blockchain2.run('connect')).toBe([
+    expect(solana.run('connect')).toStrictEqual([
       '0x000000000000000000000000000000000000dead',
     ]);
-    expect(() => blockchain1.run('connect')).toThrowError();
+    expect(() => evm.run('connect')).toThrowError();
   });
 });

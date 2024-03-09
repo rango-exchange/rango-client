@@ -89,8 +89,6 @@ class BlockchainProvider<T extends Record<keyof T, AnyFunction>> {
       );
     }
 
-    console.log({ aaa: this.onActions.get(name), all: this.onActions });
-
     let result = cb(...args);
     const thenShouldRun = this.onActions.get(name);
     if (thenShouldRun) {
