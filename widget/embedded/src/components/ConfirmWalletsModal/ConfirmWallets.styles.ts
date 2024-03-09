@@ -1,11 +1,4 @@
-import {
-  Button,
-  css,
-  darkTheme,
-  IconButton,
-  styled,
-  TextField,
-} from '@rango-dev/ui';
+import { css, darkTheme, IconButton, styled, TextField } from '@rango-dev/ui';
 
 export const Title = styled('div', {
   display: 'flex',
@@ -130,10 +123,11 @@ export const StyledTextField = styled(TextField, {
 
 export const Wallets = styled('div', { overflow: 'visible', width: '100%' });
 
-export const CustomDestinationButton = styled(Button, {
+export const CustomDestinationButton = styled('div', {
   width: '100%',
-  borderRadius: '$sm !important',
-  padding: '$15 !important',
+  borderRadius: '$sm',
+  display: 'flex',
+  padding: '$15',
   justifyContent: 'space-between',
   alignItems: 'center',
   $$color: '$colors$neutral100',

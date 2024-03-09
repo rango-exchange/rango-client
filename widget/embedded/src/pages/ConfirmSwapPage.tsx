@@ -371,7 +371,13 @@ export function ConfirmSwapPage() {
         </div>
         <Divider size="12" />
 
-        {joinList(alerts, <Divider size={10} />)}
+        {joinList(
+          alerts.map((alert, index) => ({
+            element: alert,
+            key: `alert-${index}`,
+          })),
+          <Divider size={10} />
+        )}
         {alerts.length > 0 ? <Divider size={10} /> : null}
 
         <QuoteInfo

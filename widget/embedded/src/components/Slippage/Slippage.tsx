@@ -47,19 +47,17 @@ export function Slippage() {
         {SLIPPAGES.map((slippageItem, index) => {
           const key = `slippage-${index}`;
           return (
-            <>
-              <SlippageChip
-                key={key}
-                onClick={() => {
-                  if (customSlippage) {
-                    setCustomSlippage(null);
-                  }
-                  setSlippage(slippageItem);
-                }}
-                selected={!customSlippage && slippageItem === slippage}
-                label={`${slippageItem.toString()}%`}
-              />
-            </>
+            <SlippageChip
+              key={key}
+              onClick={() => {
+                if (customSlippage) {
+                  setCustomSlippage(null);
+                }
+                setSlippage(slippageItem);
+              }}
+              selected={!customSlippage && slippageItem === slippage}
+              label={`${slippageItem.toString()}%`}
+            />
           );
         })}
         <TextField

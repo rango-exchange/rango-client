@@ -329,10 +329,10 @@ export function Quote(props: QuoteProps) {
               {sortedQuoteTags.map((tag, index) => {
                 const key = `${tag.value}_${index}`;
                 return (
-                  <>
-                    <QuoteTag label={tag.label} key={key} value={tag.value} />
+                  <React.Fragment key={key}>
+                    <QuoteTag label={tag.label} value={tag.value} />
                     <Divider size={4} direction="horizontal" />
-                  </>
+                  </React.Fragment>
                 );
               })}
             </TagContainer>
