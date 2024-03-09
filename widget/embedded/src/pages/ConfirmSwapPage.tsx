@@ -378,8 +378,6 @@ export function ConfirmSwapPage() {
           quote={selectedQuote}
           type="swap-preview"
           expanded={true}
-          selected
-          tagHidden
           error={confirmSwapResult.error}
           loading={fetchingConfirmationQuote}
           warning={confirmSwapResult.warnings?.quote ?? null}

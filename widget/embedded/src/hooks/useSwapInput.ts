@@ -46,7 +46,8 @@ export function useSwapInput({
   refetchQuote,
 }: UseSwapInputProps): UseSwapInput {
   const { fetch: fetchQuote, cancelFetch } = useFetchAllQuotes();
-  const { enableNewLiquiditySources, features } = useAppStore().config;
+  const { excludeLiquiditySources: configExcludeLiquiditySources, features } =
+    useAppStore().config;
   const connectedWallets = useWalletsStore.use.connectedWallets();
 
   const tokens = useAppStore().tokens();
@@ -223,7 +224,7 @@ export function useSwapInput({
     toToken?.blockchain,
     shouldSkipRequest,
     liquiditySources?.length,
-    enableNewLiquiditySources,
+    configExcludeLiquiditySources,
     disabledLiquiditySources.length,
     userSlippage,
     affiliateRef,

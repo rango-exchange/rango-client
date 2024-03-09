@@ -19,7 +19,7 @@ import React, { useEffect, useState } from 'react';
 
 import { useAppStore } from '../../store/AppStore';
 import { useWalletsStore } from '../../store/wallets';
-import { generateRangeColors } from '../../utils/colors';
+import { generateShade, isBright } from '../../utils/colors';
 import { formatBalance } from '../../utils/wallets';
 
 import { LoadingTokenList } from './LoadingTokenList';
@@ -133,23 +133,24 @@ export function TokenList(props: PropTypes) {
           const blockchain = blockchains.find(
             (blockchain) => blockchain.name === token.blockchain
           );
-          const color = generateRangeColors(
-            token.symbol,
-            blockchain?.color || ''
+          const lightShade = generateShade(
+            blockchain?.color || '',
+            isBright(blockchain?.color || '') ? 5 : 125
           );
+          const darkShade = generateShade(blockchain?.color || '', -100);
 
           const customCssForTag = {
-            $$color: color[`${token.symbol}100`],
+            $$color: lightShade,
             [`.${darkTheme} &`]: {
-              $$color: color[`${token.symbol}900`],
+              $$color: darkShade,
             },
             backgroundColor: '$$color',
           };
 
           const customCssForTagTitle = {
-            $$color: color[`${token.symbol}700`],
+            $$color: darkShade,
             [`.${darkTheme} &`]: {
-              $$color: color[`${token.symbol}100`],
+              $$color: lightShade,
             },
             color: '$$color',
           };

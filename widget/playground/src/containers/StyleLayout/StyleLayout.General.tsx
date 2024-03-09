@@ -1,13 +1,13 @@
-import type { WidgetVariant } from '@rango-dev/widget-embedded';
 import type { ChangeEvent } from 'react';
 
 import {
   BorderRadiusIcon,
   Divider,
-  ExternalLinkIcon,
   FontIcon,
   LanguageIcon,
+  Select,
   Typography,
+  WidgetIcon,
 } from '@rango-dev/ui';
 import { useWidget } from '@rango-dev/widget-embedded';
 import React, { useCallback, useState } from 'react';
@@ -21,6 +21,7 @@ import {
   DEFAULT_SECONDARY_RADIUS,
   FONTS,
   LANGUAGES,
+  PLAYGROUND_CONTAINER_ID,
 } from '../../constants';
 import { VARIANTS } from '../../constants/variants';
 import { useConfigStore } from '../../store/config';
@@ -57,14 +58,6 @@ export function General() {
     onBack();
   };
 
-  const handleVariantChange = (value: string) => {
-    if (value) {
-      onChangeVariant(
-        value === VARIANTS[0].value ? undefined : (value as WidgetVariant)
-      );
-    }
-    onBack();
-  };
   const handleLanguageChange = (value: string) => {
     if (value) {
       onChangeLanguage(value);
@@ -100,6 +93,30 @@ export function General() {
   return (
     <>
       <GeneralContainer>
+        <Field>
+          <FieldTitle>
+            <WidgetIcon size={18} />
+            <Divider direction="horizontal" size={4} />
+            <Typography size="medium" variant="body">
+              Widget Variant
+            </Typography>
+          </FieldTitle>
+          <Divider size={16} />
+          <Select
+            variant="outlined"
+            container={
+              document.getElementById(PLAYGROUND_CONTAINER_ID) as HTMLElement
+            }
+            options={VARIANTS}
+            value={variant}
+            handleItemClick={(item) =>
+              onChangeVariant(
+                item.value === VARIANTS[0].value ? undefined : item.value
+              )
+            }
+          />
+        </Field>
+        <Divider size={24} />
         <ItemPicker
           onClick={() => setModalState(ModalState.DEFAULT_LANGUAGE)}
           value={{
@@ -146,20 +163,6 @@ export function General() {
           title="Fonts"
           iconTitle={<FontIcon size={18} />}
         />
-
-        <Divider size={24} />
-        <ItemPicker
-          onClick={() => setModalState(ModalState.DEFAULT_VARIANT)}
-          value={{ label: variant }}
-          title="Variants"
-          tooltip={
-            <div>
-              You can display all potential routes next to the
-              <br /> widget box by selecting the expandable option.
-            </div>
-          }
-          iconTitle={<ExternalLinkIcon color="gray" size={18} />}
-        />
       </GeneralContainer>
       {modalState === ModalState.DEFAULT_FONT && (
         <OverlayPanel onBack={onBack}>
@@ -170,18 +173,6 @@ export function General() {
             defaultValue={fontFamily}
             list={FONTS}
             searchPlaceholder="Search Font"
-          />
-        </OverlayPanel>
-      )}
-      {modalState === ModalState.DEFAULT_VARIANT && (
-        <OverlayPanel onBack={onBack}>
-          <SingleList
-            onChange={handleVariantChange}
-            title="Variants"
-            icon={<ExternalLinkIcon color="gray" size={18} />}
-            defaultValue={variant}
-            list={VARIANTS}
-            searchPlaceholder="Search Variant"
           />
         </OverlayPanel>
       )}

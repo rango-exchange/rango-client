@@ -179,7 +179,9 @@ export function MultiList(props: MultiListPropTypes) {
         <StyledButton
           type="primary"
           size="medium"
-          disabled={!selectedItems.length}
+          disabled={
+            type !== 'DEXs' && type !== 'Bridges' && !selectedItems.length
+          }
           variant="contained"
           onClick={handleConfirm}>
           Confirm
