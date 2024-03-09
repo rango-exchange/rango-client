@@ -31,7 +31,7 @@ type _WalletInfo = {
 
 class Provider {
   public id: string;
-  private providers = new Map();
+  private blockchainProviders = new Map();
   private _state: State;
 
   constructor(id: string) {
@@ -50,7 +50,7 @@ class Provider {
     id: K,
     blockchain: CommonBlockchains[K]
   ) {
-    this.providers.set(id, blockchain);
+    this.blockchainProviders.set(id, blockchain);
     return this;
   }
 
@@ -67,11 +67,11 @@ class Provider {
   }
 
   getAll() {
-    return this.providers;
+    return this.blockchainProviders;
   }
 
   get<K extends keyof CommonBlockchains>(id: K): CommonBlockchains[K] {
-    return this.providers.get(id);
+    return this.blockchainProviders.get(id);
   }
 }
 
