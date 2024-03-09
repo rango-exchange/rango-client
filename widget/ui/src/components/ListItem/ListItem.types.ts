@@ -5,5 +5,7 @@ export type ListItemProps = {
   end?: React.ReactNode;
   as?: 'div' | 'li';
   onClick?: () => void;
+  onKeyUp?: React.KeyboardEventHandler<HTMLLIElement>;
   hasDivider?: boolean;
+  tabIndex?: number;
 };
