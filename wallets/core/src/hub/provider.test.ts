@@ -61,4 +61,19 @@ describe('providers', () => {
     ]);
     expect(() => evm.run('connect')).toThrowError();
   });
+
+  test('sets config properly', () => {
+    const sample = {
+      name: 'Garbage Wallet',
+      icon: 'https://somewhereininternet.com/icon.svg',
+      extensions: {
+        homepage: 'https://app.rango.exchange',
+      },
+    };
+    const wallet = new Provider('garbage');
+    expect(wallet.info()).toBe(undefined);
+
+    wallet.config('info', sample);
+    expect(wallet.info()).toStrictEqual(sample);
+  });
 });

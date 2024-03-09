@@ -6,7 +6,7 @@ type State = Omit<V1State, 'reachable'>;
 type SetState = <K extends keyof State>(name: K, value: State[K]) => void;
 type GetState = <K extends keyof State>(name: K) => State[K];
 
-type Browsers = 'FIREFOX' | 'CHROME' | 'EDGE' | 'BRAVE' | 'DEFAULT';
+type Browsers = 'firefox' | 'chrome' | 'edge' | 'brave' | 'homepage';
 interface CommonBlockchains {
   // TODO: I think we don't need `RemoveThisParameter`, because we went the opposite.
   evm: RemoveThisParameter<EvmActions>;
@@ -14,25 +14,21 @@ interface CommonBlockchains {
   cosmos: string;
 }
 
-// Record<'evm', EvmActions> | Record<'solana', any>;
-
-type _WalletInfo = {
+type Info = {
   name: string;
-  img: string;
-  installLink: Record<Browsers, string> | string;
-  color: string;
-  /*
-   *   supportedChains: BlockchainMeta[];
-   *   showOnMobile?: boolean;
-   *   isContractWallet?: boolean;
-   *   mobileWallet?: boolean;
-   */
+  icon: string;
+  extensions: Partial<Record<Browsers, string>>;
 };
 
-class Provider {
+interface Config {
+  info: Info;
+}
+
+export class Provider {
   public id: string;
   private blockchainProviders = new Map();
   private _state: State;
+  private _configs = new Map<keyof Config, Config[keyof Config]>();
 
   constructor(id: string) {
     this.id = id;
@@ -73,6 +69,13 @@ class Provider {
   get<K extends keyof CommonBlockchains>(id: K): CommonBlockchains[K] {
     return this.blockchainProviders.get(id);
   }
-}
 
-export { Provider };
+  info(): Info | undefined {
+    return this._configs.get('info');
+  }
+
+  config<K extends keyof Config>(name: K, value: Config[K]) {
+    this._configs.set(name, value);
+    return this;
+  }
+}
