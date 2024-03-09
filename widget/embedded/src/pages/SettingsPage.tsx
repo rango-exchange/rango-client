@@ -32,7 +32,6 @@ export function SettingsPage() {
       updateCampaignMode('liquiditySources', undefined);
     }
   };
-
   return (
     <Layout
       header={{

@@ -136,11 +136,13 @@ export function LiquiditySourcePage({ sourceType }: PropTypes) {
           fetchStatus === 'success' && (
             <LiquiditySourceList disabled={campaignMode}>
               {filteredList.map((sourceItem) => {
+                const { groupTitle, ...otherProps } = sourceItem;
+
                 return (
                   <React.Fragment key={sourceItem.id}>
                     <ListItemButton
                       style={{ height: '61px' }}
-                      {...sourceItem}
+                      {...otherProps}
                       selected={false}
                       hasDivider
                     />

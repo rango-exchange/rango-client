@@ -417,17 +417,7 @@ export function ConfirmWalletsModal(props: PropTypes) {
                         open={showCustomDestination}
                         triggerAnchor="top"
                         trigger={
-                          <CustomDestinationButton
-                            fullWidth
-                            variant="default"
-                            suffix={
-                              <ExpandedIcon
-                                orientation={
-                                  showCustomDestination ? 'up' : 'down'
-                                }>
-                                <ChevronDownIcon size={10} color="gray" />
-                              </ExpandedIcon>
-                            }>
+                          <CustomDestinationButton>
                             <div className="button__content">
                               <WalletIcon size={18} color="info" />
                               <Divider size={4} direction="horizontal" />
@@ -435,6 +425,12 @@ export function ConfirmWalletsModal(props: PropTypes) {
                                 {i18n.t('Send to a different address')}
                               </Typography>
                             </div>
+                            <ExpandedIcon
+                              orientation={
+                                showCustomDestination ? 'up' : 'down'
+                              }>
+                              <ChevronDownIcon size={10} color="gray" />
+                            </ExpandedIcon>
                           </CustomDestinationButton>
                         }
                         onClickTrigger={() =>
