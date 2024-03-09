@@ -1,4 +1,5 @@
 import type { EvmActions, RemoveThisParameter } from '../actions/evm/interface';
+import type { SolanaActions } from '../actions/solana/interface';
 import type { State as V1State } from '../wallet';
 
 type State = Omit<V1State, 'reachable'>;
@@ -7,8 +8,9 @@ type GetState = <K extends keyof State>(name: K) => State[K];
 
 type Browsers = 'FIREFOX' | 'CHROME' | 'EDGE' | 'BRAVE' | 'DEFAULT';
 interface CommonBlockchains {
+  // TODO: I think we don't need `RemoveThisParameter`, because we went the opposite.
   evm: RemoveThisParameter<EvmActions>;
-  solana: any;
+  solana: RemoveThisParameter<SolanaActions>;
   cosmos: string;
 }
 

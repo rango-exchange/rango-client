@@ -44,10 +44,14 @@ describe('providers', () => {
   test('run actions', () => {
     const wallet = new Provider('rangomask');
     const [blockchain1, blockchain2] = blockchainProviders;
-    blockchain2.action('connect', () => 'hello world');
+    blockchain2.action('connect', () => [
+      '0x000000000000000000000000000000000000dead',
+    ]);
     wallet.add('evm', blockchain1.build()).add('solana', blockchain2.build());
 
-    expect(blockchain2.run('connect')).toBe('hello world');
+    expect(blockchain2.run('connect')).toBe([
+      '0x000000000000000000000000000000000000dead',
+    ]);
     expect(() => blockchain1.run('connect')).toThrowError();
   });
 });

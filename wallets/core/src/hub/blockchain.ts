@@ -81,7 +81,7 @@ class BlockchainProvider<T extends Record<keyof T, AnyFunction>> {
     return this;
   }
 
-  run<K extends keyof T>(name: K) {
+  run<K extends keyof T>(name: K, ...args: any[]) {
     const cb = this.actions.get(name);
     if (!cb) {
       throw new Error(
@@ -91,7 +91,7 @@ class BlockchainProvider<T extends Record<keyof T, AnyFunction>> {
 
     console.log({ aaa: this.onActions.get(name), all: this.onActions });
 
-    let result = cb();
+    let result = cb(...args);
     const thenShouldRun = this.onActions.get(name);
     if (thenShouldRun) {
       result = thenShouldRun(result);
@@ -119,12 +119,18 @@ class BlockchainProvider<T extends Record<keyof T, AnyFunction>> {
   }
 
   build() {
+    /*
+     * TODO: can we use `this` instead of {}?
+     * i guess not, because then we should hide internal methods.
+     */
     const api = new Proxy(
       {},
       {
-        get: () => {
+        get: (_, property) => {
+          // TODO: better typing?
+          const prop = property as any;
+          return this.run.bind(this, prop);
           // if (this.actions.get(property as string)) {
-          return this.run;
           /*
            * }
            * throw new Error("doesn't exists");

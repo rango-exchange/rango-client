@@ -1,50 +1,41 @@
 import type { EvmActions } from '../src/actions/evm/interface';
+import type { SolanaActions } from '../src/actions/solana/interface';
 
-import { assert, test } from 'vitest';
+import { describe, expect, test, vi } from 'vitest';
 
 import { BlockchainProvider, Provider } from '../src/hub';
-import { evm } from '../src/hub/use';
 
-test('predefined blockchains', () => {
-  // Wallet Code
-  const connect = (chain: string) => {
-    //
-    return [chain];
-  };
-  const subscriber = () => {
-    //
+describe('check Provider works with Blockchain correctly', () => {
+  test('connect successfully when two blockchain type has been added to Provider', () => {
+    // Wallet Code
+    const evmConnect = vi.fn((_chain: string) => {
+      return ['0x000000000000000000000000000000000000dead'];
+    });
+    const solanaConnect = vi.fn(() => {
+      return ['1nc1nerator11111111111111111111111111111111'];
+    });
 
-    return () => {
-      //
-    };
-  };
+    const evmProvider = new BlockchainProvider<EvmActions>()
+      .action('connect', evmConnect)
+      .build();
+    const solanaProvider = new BlockchainProvider<SolanaActions>()
+      .action('connect', solanaConnect)
+      .build();
 
-  const evm_provider = new BlockchainProvider<EvmActions>()
-    .action('connect', connect)
-    .action('disconnect', (aa) => {
-      //
-      return aa;
-    })
-    .subscriber(subscriber)
-    .use(evm)
-    .use([
-      {
-        name: 'connect',
-        // name: 'connect2',
-        cb: () => {
-          //
-        },
-      },
-    ])
-    .build();
+    const garbageWallet = new Provider('garbage-wallet');
+    garbageWallet.add('evm', evmProvider);
+    garbageWallet.add('solana', solanaProvider);
+    const evmResult = garbageWallet.get('evm')?.connect('0x1');
+    const solanaResult = garbageWallet.get('solana')?.connect();
 
-  const meow_wallet = new Provider('meow-wallet');
-  meow_wallet.add('evm', evm_provider);
+    expect(evmResult).toStrictEqual([
+      '0x000000000000000000000000000000000000dead',
+    ]);
+    expect(solanaResult).toStrictEqual([
+      '1nc1nerator11111111111111111111111111111111',
+    ]);
 
-  // -------------------- Hub side --------------------
-
-  // TODO: how it should know which blockchain provider should be used?
-  const _result = meow_wallet.get('evm')?.connect('0x1');
-
-  assert(true);
+    expect(evmConnect).toBeCalledTimes(1);
+    expect(solanaConnect).toBeCalledTimes(1);
+  });
 });
