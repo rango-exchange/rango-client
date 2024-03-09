@@ -87,7 +87,7 @@ export function MultiSelect(props: MuliSelectPropTypes) {
                 props.onChange(items);
                 onBack();
               }}
-              label={`Supported ${type}`}
+              label={label}
             />
           ) : (
             <TokensPanel
