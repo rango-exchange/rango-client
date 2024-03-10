@@ -48,13 +48,13 @@ msgstr "More +{count}"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/common/ActivateTabAlert/ActivateTabAlert.tsx:16
-msgid "Activate"
-msgstr "Activate"
+msgid "Activate this tab"
+msgstr "Activate this tab"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/common/ActivateTabAlert/ActivateTabAlert.tsx:21
-msgid "Another tab is open and handles transactions. You can activate this tab."
-msgstr "Another tab is open and handles transactions. You can activate this tab."
+msgid "Another tab is open and handles transactions."
+msgstr "Another tab is open and handles transactions."
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/common/ActivateTabModal/ActivateTabModal.tsx:20
@@ -95,17 +95,17 @@ msgid "You need to connect a {blockchainName} wallet."
 msgstr "You need to connect a {blockchainName} wallet."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:435
+#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:425
 msgid "Send to a different address"
 msgstr "Send to a different address"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:446
+#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:442
 msgid "Your destination address"
 msgstr "Your destination address"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:465
+#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:461
 msgid "Address {destination} doesn't match the blockchain address pattern."
 msgstr "Address {destination} doesn't match the blockchain address pattern."
 
@@ -157,24 +157,24 @@ msgid "Cancel"
 msgstr "Cancel"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/HeaderButtons/HeaderButtons.tsx:44
+#: widget/embedded/src/components/HeaderButtons/HeaderButtons.tsx:45
 msgid "Refresh"
 msgstr "Refresh"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/HeaderButtons/HeaderButtons.tsx:60
+#: widget/embedded/src/components/HeaderButtons/HeaderButtons.tsx:61
 msgid "Notifications"
 msgstr "Notifications"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/HeaderButtons/HeaderButtons.tsx:73
-#: widget/embedded/src/pages/ConfirmSwapPage.tsx:312
-#: widget/embedded/src/pages/SettingsPage.tsx:212
+#: widget/embedded/src/components/HeaderButtons/HeaderButtons.tsx:74
+#: widget/embedded/src/pages/ConfirmSwapPage.tsx:311
+#: widget/embedded/src/pages/SettingsPage.tsx:38
 msgid "Settings"
 msgstr "Settings"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/HeaderButtons/HeaderButtons.tsx:83
+#: widget/embedded/src/components/HeaderButtons/HeaderButtons.tsx:84
 msgid "Transactions History"
 msgstr "Transactions History"
 
@@ -199,12 +199,13 @@ msgid "Swaps steps"
 msgstr "Swaps steps"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/NoResult/NoResult.helpers.ts:25
+#: widget/embedded/src/components/NoResult/NoResult.helpers.ts:28
 msgid "Retry"
 msgstr "Retry"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/NoResult/NoResult.helpers.ts:37
+#: widget/embedded/src/components/NoResult/NoResult.helpers.ts:40
+#: widget/embedded/src/pages/SettingsPage.tsx:51
 msgid "Reset"
 msgstr "Reset"
 
@@ -214,68 +215,68 @@ msgid "There are no notifications."
 msgstr "There are no notifications."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/Quote.tsx:126
+#: widget/embedded/src/components/Quote/Quote.tsx:138
 msgid "Slippage Error"
 msgstr "Slippage Error"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/Quote.tsx:127
+#: widget/embedded/src/components/Quote/Quote.tsx:139
 msgid "Slippage Warning"
 msgstr "Slippage Warning"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/Quote.tsx:231
+#: widget/embedded/src/components/Quote/Quote.tsx:243
 msgid "Yours: {amount} {symbol}"
 msgstr "Yours: {amount} {symbol}"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/Quote.tsx:252
+#: widget/embedded/src/components/Quote/Quote.tsx:264
 msgid "Minimum required slippage is {minRequiredSlippage}"
 msgstr "Minimum required slippage is {minRequiredSlippage}"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/Quote.tsx:325
+#: widget/embedded/src/components/Quote/Quote.tsx:363
 msgid "See All Routes"
 msgstr "See All Routes"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:98
+#: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:81
 msgid "View more info"
 msgstr "View more info"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:108
+#: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:91
 msgid "Gas & Fee Explanation"
 msgstr "Gas & Fee Explanation"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:121
-#: widget/embedded/src/components/QuoteWarningsAndErrors/HighValueLossWarningModal.tsx:88
+#: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:104
+#: widget/embedded/src/components/QuoteWarningsAndErrors/HighValueLossWarningModal.tsx:102
 msgid "Details"
 msgstr "Details"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:162
+#: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:145
 msgid "Total Payable Fee"
 msgstr "Total Payable Fee"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:182
+#: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:165
 msgid "Hide non-payable fees"
 msgstr "Hide non-payable fees"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:183
+#: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:166
 msgid "Show non-payable fees"
 msgstr "Show non-payable fees"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:193
+#: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:176
 msgid "Description"
 msgstr "Description"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:197
+#: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:180
 msgid ""
 "The following fees are considered in the transaction output and\n"
 "                you won’t need to pay extra gas for them."
@@ -294,14 +295,19 @@ msgid "Estimated output"
 msgstr "Estimated output"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/QuoteTrigger .tsx:77
+#: widget/embedded/src/components/Quote/QuoteTrigger.tsx:64
 msgid "Via:"
 msgstr "Via:"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/QuoteTrigger .tsx:160
+#: widget/embedded/src/components/Quote/QuoteTrigger.tsx:147
 msgid "Chains:"
 msgstr "Chains:"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/Quotes/Quotes.tsx:92
+msgid "Sort by"
+msgstr "Sort by"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/QuoteWarningsAndErrors/HighValueLossWarningModal.tsx:43
@@ -324,19 +330,19 @@ msgid "Price impact"
 msgstr "Price impact"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/QuoteWarningsAndErrors/QuoteWarningsAndErrors.helpers.ts:36
+#: widget/embedded/src/components/QuoteWarningsAndErrors/QuoteWarningsAndErrors.helpers.ts:35
 msgid "You need to increase slippage to at least {minRequiredSlippage} for this route."
 msgstr "You need to increase slippage to at least {minRequiredSlippage} for this route."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/QuoteWarningsAndErrors/QuoteWarningsAndErrors.helpers.ts:60
+#: widget/embedded/src/components/QuoteWarningsAndErrors/QuoteWarningsAndErrors.helpers.ts:59
 #: widget/embedded/src/components/QuoteWarningsAndErrors/SlippageWariningModal.tsx:60
 #: widget/ui/src/containers/Warnings/MinRequiredSlippage.tsx:22
 msgid "We recommend you to increase slippage to at least {minRequiredSlippage} for this route."
 msgstr "We recommend you to increase slippage to at least {minRequiredSlippage} for this route."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/QuoteWarningsAndErrors/QuoteWarningsAndErrors.helpers.ts:69
+#: widget/embedded/src/components/QuoteWarningsAndErrors/QuoteWarningsAndErrors.helpers.ts:68
 msgid "Caution, your slippage is high."
 msgstr "Caution, your slippage is high."
 
@@ -377,7 +383,7 @@ msgid "Slippage tolerance per swap"
 msgstr "Slippage tolerance per swap"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Slippage/Slippage.tsx:90
+#: widget/embedded/src/components/Slippage/Slippage.tsx:88
 msgid "Custom"
 msgstr "Custom"
 
@@ -531,7 +537,7 @@ msgid "Network Changed"
 msgstr "Network Changed"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/TokenList/TokenList.tsx:257
+#: widget/embedded/src/components/TokenList/TokenList.tsx:258
 msgid "Select Token"
 msgstr "Select Token"
 
@@ -647,7 +653,7 @@ msgstr "Confirm USD Price Unknown"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/constants/messages.ts:6
-#: widget/embedded/src/pages/Home.tsx:155
+#: widget/embedded/src/pages/Home.tsx:156
 msgid "Swap"
 msgstr "Swap"
 
@@ -687,29 +693,29 @@ msgid "Rango Fee"
 msgstr "Rango Fee"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/constants/quote.ts:26
-msgid "Fastest Transfer"
-msgstr "Fastest Transfer"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/constants/quote.ts:27
-msgid "Maximum Return"
-msgstr "Maximum Return"
-
-#. js-lingui-explicit-id
 #: widget/embedded/src/constants/quote.ts:28
+msgid "Smart Routing"
+msgstr "Smart Routing"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/constants/quote.ts:32
 msgid "Lowest Fee"
 msgstr "Lowest Fee"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/constants/quote.ts:29
-msgid "Maximum Output"
-msgstr "Maximum Output"
+#: widget/embedded/src/constants/quote.ts:36
+msgid "Fastest Transfer"
+msgstr "Fastest Transfer"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/constants/quote.ts:30
-msgid "Smart Routing"
-msgstr "Smart Routing"
+#: widget/embedded/src/constants/quote.ts:40
+msgid "Maximum Return"
+msgstr "Maximum Return"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/constants/quote.ts:44
+msgid "Maximum Output"
+msgstr "Maximum Output"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/constants/warnings.ts:10
@@ -732,17 +738,84 @@ msgid "Route internal coins has been updated."
 msgstr "Route internal coins has been updated."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/ConfirmSwapPage.tsx:303
+#: widget/embedded/src/containers/ExpandedQuotes/ExpandedQuotes.tsx:53
+#: widget/embedded/src/pages/Routes.tsx:48
+msgid "Routes"
+msgstr "Routes"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/containers/Inputs/Inputs.tsx:77
+msgid "From"
+msgstr "From"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/containers/Inputs/Inputs.tsx:120
+msgid "To"
+msgstr "To"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/containers/Settings/Lists.tsx:47
+msgid "Light"
+msgstr "Light"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/containers/Settings/Lists.tsx:56
+msgid "Dark"
+msgstr "Dark"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/containers/Settings/Lists.tsx:65
+msgid "Auto"
+msgstr "Auto"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/containers/Settings/Lists.tsx:133
+msgid "Loading failed"
+msgstr "Loading failed"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/containers/Settings/Lists.tsx:149
+msgid "Enabled bridges"
+msgstr "Enabled bridges"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/containers/Settings/Lists.tsx:167
+msgid "Enabled exchanges"
+msgstr "Enabled exchanges"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/containers/Settings/Lists.tsx:185
+#: widget/embedded/src/pages/LanguagePage.tsx:38
+msgid "Language"
+msgstr "Language"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/containers/Settings/Lists.tsx:198
+msgid "Infinite approval"
+msgstr "Infinite approval"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/containers/Settings/Lists.tsx:208
+msgid "Enabling the 'Infinite approval' mode grants unrestricted access to smart contracts of DEXes/Bridges, allowing them to utilize the approved token amount without limitations."
+msgstr "Enabling the 'Infinite approval' mode grants unrestricted access to smart contracts of DEXes/Bridges, allowing them to utilize the approved token amount without limitations."
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/containers/Settings/Lists.tsx:228
+msgid "Theme"
+msgstr "Theme"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/ConfirmSwapPage.tsx:302
 msgid "Confirm Swap"
 msgstr "Confirm Swap"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/ConfirmSwapPage.tsx:333
+#: widget/embedded/src/pages/ConfirmSwapPage.tsx:332
 msgid "Start Swap"
 msgstr "Start Swap"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/ConfirmSwapPage.tsx:359
+#: widget/embedded/src/pages/ConfirmSwapPage.tsx:358
 msgid "You get"
 msgstr "You get"
 
@@ -757,23 +830,7 @@ msgid "Search Transaction"
 msgstr "Search Transaction"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/Home.tsx:172
-msgid "From"
-msgstr "From"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/pages/Home.tsx:213
-msgid "To"
-msgstr "To"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/pages/LanguagePage.tsx:36
-#: widget/embedded/src/pages/SettingsPage.tsx:136
-msgid "Language"
-msgstr "Language"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/pages/LanguagePage.tsx:43
+#: widget/embedded/src/pages/LanguagePage.tsx:51
 msgid "language"
 msgstr "language"
 
@@ -805,11 +862,6 @@ msgid "Search {sourceType}"
 msgstr "Search {sourceType}"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/Routes.tsx:77
-msgid "Routes"
-msgstr "Routes"
-
-#. js-lingui-explicit-id
 #: widget/embedded/src/pages/SelectBlockchainPage.tsx:58
 msgid "Search Blockchain"
 msgstr "Search Blockchain"
@@ -835,39 +887,7 @@ msgid "Search Token"
 msgstr "Search Token"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/SettingsPage.tsx:86
-msgid "Loading failed"
-msgstr "Loading failed"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/pages/SettingsPage.tsx:102
-msgid "Enabled bridges"
-msgstr "Enabled bridges"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/pages/SettingsPage.tsx:119
-msgid "Enabled exchanges"
-msgstr "Enabled exchanges"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/pages/SettingsPage.tsx:147
-#: widget/embedded/src/pages/ThemePage.tsx:70
-#: widget/embedded/src/pages/ThemePage.tsx:79
-msgid "Theme"
-msgstr "Theme"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/pages/SettingsPage.tsx:159
-msgid "Infinite approval"
-msgstr "Infinite approval"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/pages/SettingsPage.tsx:169
-msgid "Enabling the 'Infinite approval' mode grants unrestricted access to smart contracts of DEXes/Bridges, allowing them to utilize the approved token amount without limitations."
-msgstr "Enabling the 'Infinite approval' mode grants unrestricted access to smart contracts of DEXes/Bridges, allowing them to utilize the approved token amount without limitations."
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/pages/SettingsPage.tsx:219
+#: widget/embedded/src/pages/SettingsPage.tsx:45
 msgid "Currently, you're in campaign mode with restrictions on liquidity sources. Would you like to switch out of this mode and make use of all available liquidity sources?"
 msgstr "Currently, you're in campaign mode with restrictions on liquidity sources. Would you like to switch out of this mode and make use of all available liquidity sources?"
 
@@ -875,21 +895,6 @@ msgstr "Currently, you're in campaign mode with restrictions on liquidity source
 #: widget/embedded/src/pages/SwapDetailsPage.tsx:27
 msgid "The request ID is necessary to display the swap details."
 msgstr "The request ID is necessary to display the swap details."
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/pages/ThemePage.tsx:34
-msgid "Light"
-msgstr "Light"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/pages/ThemePage.tsx:46
-msgid "Dark"
-msgstr "Dark"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/pages/ThemePage.tsx:58
-msgid "Auto"
-msgstr "Auto"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/pages/WalletsPage.tsx:72
