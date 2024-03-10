@@ -185,6 +185,8 @@ export type Features = Partial<
  *   If it is expanded, multiple routes will show up on the home page;
  *   If it is full-expanded, multiple routes will show up on the home page with full routes;
  *   if not, you will need to go to a different page to see the suggested routes.
+ * @property {boolean} enableCentralizedSwappers
+ * If you want to enable routing from the centralized protocols like XO Swap, you could set this parameter to true.
  */
 
 export type WidgetConfig = {
@@ -206,4 +208,5 @@ export type WidgetConfig = {
   excludeLiquiditySources?: boolean;
   features?: Features;
   variant?: WidgetVariant;
+  enableCentralizedSwappers?: boolean;
 };

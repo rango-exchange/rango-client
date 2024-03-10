@@ -300,6 +300,8 @@ export function Quote(props: QuoteProps) {
     GAS_FEE_MAX_DECIMALS
   );
 
+  const feeWarning = totalFee.gte(new BigNumber(GAS_FEE_MAX));
+
   return fullExpandedMode ? (
     <FullExpandedQuote
       selected={selected}
@@ -308,6 +310,7 @@ export function Quote(props: QuoteProps) {
       tooltipContainer={getExpanded()}
       steps={steps}
       tags={sortedQuoteTags}
+      feeWarning={feeWarning}
       percentageChange={percentageChange}
       warningLevel={priceImpactWarningLevel}
       outputPrice={{
@@ -329,10 +332,10 @@ export function Quote(props: QuoteProps) {
               {sortedQuoteTags.map((tag, index) => {
                 const key = `${tag.value}_${index}`;
                 return (
-                  <>
-                    <QuoteTag label={tag.label} key={key} value={tag.value} />
+                  <React.Fragment key={key}>
+                    <QuoteTag label={tag.label} value={tag.value} />
                     <Divider size={4} direction="horizontal" />
-                  </>
+                  </React.Fragment>
                 );
               })}
             </TagContainer>
@@ -345,7 +348,7 @@ export function Quote(props: QuoteProps) {
             quote={quote}
             time={totalTime}
             fee={fee}
-            feeWarning={totalFee.gte(new BigNumber(GAS_FEE_MAX))}
+            feeWarning={feeWarning}
             showModalFee={showModalFee}
             steps={numberOfSteps}
           />

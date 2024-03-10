@@ -198,7 +198,7 @@ export function WalletList(props: PropTypes) {
               )
             : undefined;
         return (
-          <>
+          <React.Fragment key={`${wallet.title}_${blockchainDisplayName}`}>
             <WalletModal
               open={openWalletStateModal === wallet.type}
               onClose={handleCloseWalletModal}
@@ -302,7 +302,7 @@ export function WalletList(props: PropTypes) {
               disabled={!isActiveTab}
               {...wallet}
             />
-          </>
+          </React.Fragment>
         );
       })}
       {shouldShowMoreWallets && (

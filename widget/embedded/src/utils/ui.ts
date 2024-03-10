@@ -1,12 +1,12 @@
 /* eslint-disable @typescript-eslint/no-magic-numbers */
 import type { WidgetTheme } from '../types';
 import type { createTheme } from '@rango-dev/ui';
-import type React from 'react';
 
 import {
   theme as baseThemeTokens,
   darkColors as defaultDarkColors,
 } from '@rango-dev/ui';
+import React from 'react';
 
 import { generateColors } from '../utils/colors';
 import { toHash } from '../utils/hash';
@@ -73,18 +73,20 @@ export function customizedThemeTokens(
 }
 
 export function joinList(
-  list: React.JSX.Element[],
+  list: { element: React.JSX.Element; key: string }[],
   divider: React.JSX.Element
 ) {
   if (list.length <= 1) {
-    return list;
+    return list.map(({ element, key }) => React.cloneElement(element, { key }));
   }
 
   const output: React.JSX.Element[] = [];
   list.forEach((item, index) => {
-    output.push(item);
+    const { element, key } = item;
+    output.push(React.cloneElement(element, { key }));
     if (index < list.length - 1) {
-      output.push(divider);
+      const key = `divider-${index}`;
+      output.push(React.cloneElement(divider, { key }));
     }
   });
 

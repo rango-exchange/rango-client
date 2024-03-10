@@ -24,6 +24,7 @@ export const Container = styled('div', {
 
   '&.is-hidden': {
     width: 0,
+    height: 0,
     opacity: 0,
     marginLeft: 0,
   },

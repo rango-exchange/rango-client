@@ -12,6 +12,7 @@ export const Container = styled('div', {
   position: 'relative',
   display: 'flex',
   justifyContent: 'center',
+  paddingTop: '40px',
   transition: 'width .5s ease-in-out',
   margin: 'auto',
   height: '100%',
@@ -40,9 +41,8 @@ export const Container = styled('div', {
 
 export const BoundaryGuide = styled('div', {
   position: 'absolute',
-  top: '50%',
+  top: '40px',
   left: 0,
-  transform: 'translate(0, -50%)',
   width: '100%',
   outlineStyle: 'dashed',
   outlineColor: '$neutral600',

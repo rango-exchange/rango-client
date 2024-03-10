@@ -45,6 +45,7 @@ export function FullExpandedQuote(props: PropTypes) {
     warningLevel,
     tooltipContainer,
     onClick,
+    feeWarning,
     selected = false,
   } = props;
 
@@ -64,6 +65,7 @@ export function FullExpandedQuote(props: PropTypes) {
               fee={props.fee}
               time={props.time}
               steps={numberOfSteps}
+              feeWarning={feeWarning}
             />
             <TagsContainer>
               {props.tags.map((tag) => (
