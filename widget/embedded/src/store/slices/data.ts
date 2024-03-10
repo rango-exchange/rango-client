@@ -207,7 +207,10 @@ export const createDataSlice: StateCreator<
   // Actions
   fetch: async () => {
     try {
-      const response = await sdk().getAllMetadata();
+      const { enableCentralizedSwappers } = get().config;
+      const response = await sdk().getAllMetadata({
+        enableCentralizedSwappers,
+      });
 
       set({ fetchStatus: 'success' });
       const blockchains: BlockchainMeta[] = [];

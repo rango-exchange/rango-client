@@ -104,9 +104,8 @@ export function SettingsLists() {
     disabledLiquiditySources
   );
 
-  const bridgeSources = supportedUniqueSwappersGroups.filter(
-    (uniqueItem) =>
-      uniqueItem.type === 'BRIDGE' || uniqueItem.type === 'AGGREGATOR'
+  const bridgeSources = supportedUniqueSwappersGroups.filter((uniqueItem) =>
+    ['BRIDGE', 'AGGREGATOR', 'OFF_CHAIN'].includes(uniqueItem.type)
   );
 
   const totalBridgeSources = bridgeSources.length;

@@ -46,8 +46,11 @@ export function useSwapInput({
   refetchQuote,
 }: UseSwapInputProps): UseSwapInput {
   const { fetch: fetchQuote, cancelFetch } = useFetchAllQuotes();
-  const { excludeLiquiditySources: configExcludeLiquiditySources, features } =
-    useAppStore().config;
+  const {
+    excludeLiquiditySources: configExcludeLiquiditySources,
+    features,
+    enableCentralizedSwappers,
+  } = useAppStore().config;
   const connectedWallets = useWalletsStore.use.connectedWallets();
 
   const tokens = useAppStore().tokens();
@@ -119,6 +122,7 @@ export function useSwapInput({
         affiliateRef,
         affiliatePercent,
         affiliateWallets,
+        enableCentralizedSwappers,
       });
       if (isFeatureEnabled('experimentalRoute', features)) {
         requestBody.experimental = true;
