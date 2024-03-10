@@ -25,7 +25,7 @@ const MainContainer = styled('div', {
   display: 'grid',
   gridTemplateColumns: 'auto auto',
   alignItems: 'flex-start',
-  height: 700,
+  maxHeight: 700,
   '& .footer__alert': {
     paddingTop: '0',
   },
