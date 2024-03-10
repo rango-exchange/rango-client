@@ -11,11 +11,21 @@ import React, { useEffect, useReducer } from 'react';
  *  "translations/*": ["../../translations/*"]
  *}
  */
+import { messages as deMessages } from '../../../../../translations/de';
+import { messages as elMessages } from '../../../../../translations/el';
 import { messages as enMessages } from '../../../../../translations/en';
 import { messages as esMessages } from '../../../../../translations/es';
+import { messages as fiMessages } from '../../../../../translations/fi';
 import { messages as frMessages } from '../../../../../translations/fr';
+import { messages as itMessages } from '../../../../../translations/it';
 import { messages as jaMessages } from '../../../../../translations/ja';
+import { messages as nlMessages } from '../../../../../translations/nl';
+import { messages as plMessages } from '../../../../../translations/pl';
 import { messages as ptMessages } from '../../../../../translations/pt';
+import { messages as ruMessages } from '../../../../../translations/ru';
+import { messages as svMessages } from '../../../../../translations/sv';
+import { messages as ukMessages } from '../../../../../translations/uk';
+import { messages as zhMessages } from '../../../../../translations/zh';
 
 const messages = {
   en: enMessages,
@@ -23,6 +33,16 @@ const messages = {
   ja: jaMessages,
   fr: frMessages,
   pt: ptMessages,
+  zh: zhMessages,
+  ru: ruMessages,
+  de: deMessages,
+  uk: ukMessages,
+  sv: svMessages,
+  fi: fiMessages,
+  nl: nlMessages,
+  el: elMessages,
+  it: itMessages,
+  pl: plMessages,
 };
 
 i18n.load(messages);
