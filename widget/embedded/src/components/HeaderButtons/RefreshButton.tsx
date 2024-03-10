@@ -70,7 +70,7 @@ function RefreshButton({ onClick }: { onClick: (() => void) | undefined }) {
         onTransitionEnd={() => setIsRefetched(false)}
         isRefetched={isRefetched}>
         <RefreshProgressButton
-          size={24}
+          size={22}
           color={!onClick ? 'gray' : 'black'}
           progress={(elapsedTime / MAX_ELAPSED_TIME) * MAX_PERCENTAGE}
         />
