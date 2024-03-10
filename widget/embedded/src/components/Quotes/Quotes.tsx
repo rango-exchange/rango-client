@@ -79,7 +79,7 @@ export function Quotes(props: PropTypes) {
                 expanded={false}
               />
             )}
-            <Divider size={16} />
+            {index !== ITEM_SKELETON_COUNT - 1 && <Divider size={16} />}
           </React.Fragment>
         ))}
 
@@ -97,9 +97,10 @@ export function Quotes(props: PropTypes) {
             </>
           )}
           {hasQuotes
-            ? sortQuotes.map((quote) => {
+            ? sortQuotes.map((quote, index) => {
                 const quoteWarning = getQuoteWarning(quote);
                 const quoteError = getQuoteError(quote.swaps);
+                const lastIndex = sortQuotes.length - 1 === index;
 
                 return (
                   <React.Fragment key={quote.requestId}>
@@ -124,7 +125,7 @@ export function Quotes(props: PropTypes) {
                       }}
                       type="list-item"
                     />
-                    <Divider size={16} />
+                    {!lastIndex && <Divider size={16} />}
                   </React.Fragment>
                 );
               })
