@@ -44,8 +44,7 @@ export function LiquiditySourcePage({ sourceType }: PropTypes) {
     validTypes.push('DEX');
   }
   if (sourceType === 'Bridges') {
-    validTypes.push('BRIDGE');
-    validTypes.push('AGGREGATOR');
+    validTypes.push('BRIDGE', 'AGGREGATOR', 'OFF_CHAIN');
   }
 
   const liquiditySources = supportedUniqueSwappersGroups.filter((uniqueItem) =>
