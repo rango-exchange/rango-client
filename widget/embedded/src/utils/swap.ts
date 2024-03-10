@@ -478,6 +478,7 @@ export function createQuoteRequestBody(params: {
   affiliatePercent: number | null;
   affiliateWallets: { [key: string]: string } | null;
   destination?: string;
+  enableCentralizedSwappers?: boolean;
 }): BestRouteRequest {
   const {
     fromToken,
@@ -493,6 +494,7 @@ export function createQuoteRequestBody(params: {
     affiliatePercent,
     affiliateWallets,
     destination,
+    enableCentralizedSwappers,
   } = params;
   const selectedWalletsMap = selectedWallets?.reduce(
     (
@@ -544,6 +546,7 @@ export function createQuoteRequestBody(params: {
       ),
       swappersGroupsExclude: false,
     }),
+    enableCentralizedSwappers,
   };
   return requestBody;
 }

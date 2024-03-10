@@ -73,14 +73,14 @@ export function QuoteTrigger(props: QuoteTriggerProps) {
           );
 
           return isMobile || isTablet ? (
-            <>
+            <React.Fragment key={key}>
               <ImageComponent
                 content={step.swapper.displayName}
                 src={step.swapper.image}
                 state={step.state}
               />
               {index !== numberOfSteps - 1 && <>{arrow}</>}
-            </>
+            </React.Fragment>
           ) : (
             <React.Fragment key={key}>
               {numberOfSteps <= MAX_STEPS ||
@@ -148,12 +148,11 @@ export function QuoteTrigger(props: QuoteTriggerProps) {
             </Typography>
             <Divider direction="horizontal" size={4} />
             {blockchains.map((blockchain, index) => (
-              <>
+              <React.Fragment key={blockchain.displayName}>
                 {blockchains.length <= MAX_BLOCKCHAINS ||
                 (blockchains.length > MAX_BLOCKCHAINS &&
                   index < MAX_BLOCKCHAINS - 1) ? (
                   <ImageComponent
-                    key={blockchain.displayName}
                     content={''}
                     src={blockchain.image}
                     open={false}
@@ -190,7 +189,7 @@ export function QuoteTrigger(props: QuoteTriggerProps) {
                     </Tooltip>
                   )
                 )}
-              </>
+              </React.Fragment>
             ))}
 
             <Divider direction="horizontal" size={32} />

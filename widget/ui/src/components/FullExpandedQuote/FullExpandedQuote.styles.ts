@@ -20,6 +20,12 @@ export const RouteContainer = styled('div', {
   [`.${darkTheme} &`]: {
     backgroundColor: '$neutral500',
   },
+  '&:hover': {
+    backgroundColor: '$neutral300',
+    [`.${darkTheme} &`]: {
+      backgroundColor: '$neutral400',
+    },
+  },
   variants: {
     selected: {
       true: {
