@@ -10,6 +10,7 @@ type BaseProps = {
   tooltipContainer?: HTMLElement;
   onClick?: () => void;
   selected?: boolean;
+  feeWarning?: boolean;
 };
 
 export type DataLoadedProps = {
