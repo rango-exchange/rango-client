@@ -1,5 +1,7 @@
 import { i18n } from '@lingui/core';
 import {
+  Alert,
+  Divider,
   List,
   ListItemButton,
   Radio,
@@ -36,6 +38,12 @@ export function LanguagePage() {
         title: i18n.t('Language'),
       }}>
       <PageContainer>
+        <Alert
+          type="warning"
+          variant="alarm"
+          title="Important Notice: Machine translations are in use"
+        />
+        <Divider size={'8'} />
         <RadioRoot value={activeLanguage}>
           <List
             type={
