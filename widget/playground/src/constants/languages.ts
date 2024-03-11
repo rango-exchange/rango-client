@@ -1,4 +1,20 @@
-import { English, French, Japanese, Portuguese, Spanish } from '@rango-dev/ui';
+import {
+  Chinese,
+  English,
+  Finland,
+  French,
+  German,
+  Greece,
+  Italian,
+  Japanese,
+  Netherlands,
+  Poland,
+  Portuguese,
+  Russian,
+  Spanish,
+  Swedish,
+  Ukrainian,
+} from '@rango-dev/ui';
 
 export const LANGUAGES = [
   { name: 'English', value: 'en', Icon: English },
@@ -6,4 +22,14 @@ export const LANGUAGES = [
   { name: 'French', value: 'fr', Icon: French },
   { name: 'Japanese', value: 'ja', Icon: Japanese },
   { name: 'Portuguese', value: 'pt', Icon: Portuguese },
+  { name: 'Chinese', value: 'zh', Icon: Chinese },
+  { name: 'Russian', value: 'ru', Icon: Russian },
+  { name: 'German', value: 'de', Icon: German },
+  { name: 'Ukrainian', value: 'uk', Icon: Ukrainian },
+  { name: 'Swedish', value: 'sv', Icon: Swedish },
+  { name: 'Finnish', value: 'fi', Icon: Finland },
+  { name: 'Dutch', value: 'nl', Icon: Netherlands },
+  { name: 'Greek', value: 'el', Icon: Greece },
+  { name: 'Italian', value: 'it', Icon: Italian },
+  { name: 'Polish', value: 'pl', Icon: Poland },
 ];

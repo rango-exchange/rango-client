@@ -1,4 +1,4 @@
-import { darkTheme, IconButton, styled } from '@rango-dev/ui';
+import { css, darkTheme, IconButton, styled } from '@rango-dev/ui';
 
 export const HeaderButton = styled(IconButton, {
   width: '$24',
@@ -75,4 +75,22 @@ export const InProgressTransactionBadgeContainer = styled('div', {
   top: '$4',
   backgroundColor: '$background',
   borderRadius: '100%',
+});
+
+export const rowStyles = css({
+  display: 'flex',
+  flexDirection: 'row',
+  justifyContent: 'center',
+  alignItems: 'center',
+});
+
+export const WalletImageContainer = styled('div', {
+  borderRadius: '100%',
+  border: '1.5px transparent solid',
+  '&:not(:first-child)': {
+    marginLeft: '-$6',
+  },
+  img: {
+    borderRadius: '100%',
+  },
 });

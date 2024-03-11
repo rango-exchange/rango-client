@@ -14,6 +14,7 @@ import {
   USD_VALUE_MAX_DECIMALS,
   USD_VALUE_MIN_DECIMALS,
 } from '../../constants/routing';
+import { useAppStore } from '../../store/AppStore';
 import { useQuoteStore } from '../../store/quote';
 import { useWalletsStore } from '../../store/wallets';
 import { getContainer } from '../../utils/common';
@@ -39,6 +40,9 @@ export function Inputs(props: PropTypes) {
     selectedQuote,
   } = useQuoteStore();
   const { connectedWallets, getBalanceFor } = useWalletsStore();
+  const {
+    config: { variant },
+  } = useAppStore();
 
   const fromTokenBalance = fromToken ? getBalanceFor(fromToken) : null;
 
@@ -116,7 +120,9 @@ export function Inputs(props: PropTypes) {
         <SwitchFromAndToButton />
       </FromContainer>
       <SwapInput
-        sharpBottomStyle={!!selectedQuote || fetchingQuote}
+        sharpBottomStyle={
+          variant === 'default' && (!!selectedQuote || fetchingQuote)
+        }
         label={i18n.t('To')}
         mode="To"
         fetchingQuote={fetchingQuote}

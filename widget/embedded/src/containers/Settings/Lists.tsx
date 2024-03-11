@@ -50,7 +50,7 @@ const themesList = [
   },
   {
     id: ThemeModeEnum.DARK,
-    icon: <DarkModeIcon color="black" size={16} />,
+    icon: <DarkModeIcon color="black" size={14} />,
     tooltip: (
       <Typography size="xsmall" variant="body">
         {i18n.t('Dark')}
@@ -69,7 +69,7 @@ const themesList = [
 ];
 
 const getThemeIcon = (theme: ThemeMode) => {
-  const iconProps: SvgIconProps = { color: 'gray', size: 12 };
+  const iconProps: SvgIconProps = { color: 'gray', size: 14 };
 
   switch (theme) {
     case 'auto':
@@ -156,7 +156,7 @@ export function SettingsLists() {
       </>
     ),
     onClick: () => navigate(navigationRoutes.bridges),
-    start: <BridgeIcon color="gray" size={12} />,
+    start: <BridgeIcon color="gray" size={14} />,
   };
 
   const exchangeItem = {
@@ -173,7 +173,7 @@ export function SettingsLists() {
         <ChevronRightIcon color="gray" />
       </>
     ),
-    start: <ExchangeIcon color="gray" size={12} />,
+    start: <ExchangeIcon color="gray" size={14} />,
     onClick: () => navigate(navigationRoutes.exchanges),
   };
 
@@ -184,7 +184,7 @@ export function SettingsLists() {
         {i18n.t('Language')}
       </Typography>
     ),
-    start: <LanguageIcon color="gray" size={12} />,
+    start: <LanguageIcon color="gray" size={14} />,
     end: <ChevronRightIcon color="gray" />,
     onClick: () => navigate(navigationRoutes.languages),
   };
@@ -214,7 +214,7 @@ export function SettingsLists() {
         </Tooltip>
       </>
     ),
-    start: <DoneIcon color="gray" size={12} />,
+    start: <DoneIcon color="gray" size={14} />,
     end: <Switch checked={infiniteApprove} />,
     onClick: toggleInfiniteApprove,
   };

@@ -109,6 +109,8 @@ export function SwapDetails(props: SwapDetailsProps) {
       if (swap.status === 'success' || swap.status === 'failed') {
         setShowCompletedModal(swap.status);
         setAsRead(swap.requestId);
+      } else if (showCompletedModal) {
+        setShowCompletedModal(null);
       }
     }
   }, [swap.status, swap.requestId]);

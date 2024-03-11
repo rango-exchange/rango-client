@@ -53,13 +53,13 @@ msgstr "その他 +{count}"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/common/ActivateTabAlert/ActivateTabAlert.tsx:16
-msgid "Activate"
-msgstr "有効にする"
+msgid "Activate this tab"
+msgstr ""
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/common/ActivateTabAlert/ActivateTabAlert.tsx:21
-msgid "Another tab is open and handles transactions. You can activate this tab."
-msgstr "別のタブはオープンでトランザクションを処理します。このタブを有効にすることができます。"
+msgid "Another tab is open and handles transactions."
+msgstr ""
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/common/ActivateTabModal/ActivateTabModal.tsx:20
@@ -100,17 +100,17 @@ msgid "You need to connect a {blockchainName} wallet."
 msgstr "{blockchainName} ウォレットに接続する必要があります。"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:435
+#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:425
 msgid "Send to a different address"
 msgstr "別のアドレスに送る"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:446
+#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:442
 msgid "Your destination address"
 msgstr "宛先アドレス"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:465
+#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:461
 msgid "Address {destination} doesn't match the blockchain address pattern."
 msgstr "アドレス {destination} はブロックチェーンアドレスパターンと一致しません。"
 
@@ -162,24 +162,24 @@ msgid "Cancel"
 msgstr "キャンセル"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/HeaderButtons/HeaderButtons.tsx:44
+#: widget/embedded/src/components/HeaderButtons/HeaderButtons.tsx:45
 msgid "Refresh"
 msgstr "更新"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/HeaderButtons/HeaderButtons.tsx:60
+#: widget/embedded/src/components/HeaderButtons/HeaderButtons.tsx:61
 msgid "Notifications"
 msgstr "通知"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/HeaderButtons/HeaderButtons.tsx:73
-#: widget/embedded/src/pages/ConfirmSwapPage.tsx:312
-#: widget/embedded/src/pages/SettingsPage.tsx:212
+#: widget/embedded/src/components/HeaderButtons/HeaderButtons.tsx:74
+#: widget/embedded/src/pages/ConfirmSwapPage.tsx:311
+#: widget/embedded/src/pages/SettingsPage.tsx:38
 msgid "Settings"
 msgstr "設定"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/HeaderButtons/HeaderButtons.tsx:83
+#: widget/embedded/src/components/HeaderButtons/HeaderButtons.tsx:84
 msgid "Transactions History"
 msgstr "取引履歴"
 
@@ -204,12 +204,13 @@ msgid "Swaps steps"
 msgstr "ステップを入れ替えます"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/NoResult/NoResult.helpers.ts:25
+#: widget/embedded/src/components/NoResult/NoResult.helpers.ts:28
 msgid "Retry"
 msgstr "再試行する"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/NoResult/NoResult.helpers.ts:37
+#: widget/embedded/src/components/NoResult/NoResult.helpers.ts:40
+#: widget/embedded/src/pages/SettingsPage.tsx:51
 msgid "Reset"
 msgstr "Reset"
 
@@ -219,71 +220,73 @@ msgid "There are no notifications."
 msgstr "通知はありません。"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/Quote.tsx:126
+#: widget/embedded/src/components/Quote/Quote.tsx:138
 msgid "Slippage Error"
 msgstr "スライドページエラー"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/Quote.tsx:127
+#: widget/embedded/src/components/Quote/Quote.tsx:139
 msgid "Slippage Warning"
 msgstr "滑り止めの警告"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/Quote.tsx:231
+#: widget/embedded/src/components/Quote/Quote.tsx:243
 msgid "Yours: {amount} {symbol}"
 msgstr "あなたの: {amount} {symbol}"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/Quote.tsx:252
+#: widget/embedded/src/components/Quote/Quote.tsx:264
 msgid "Minimum required slippage is {minRequiredSlippage}"
 msgstr "最小必要なスリップページは {minRequiredSlippage}です"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/Quote.tsx:325
+#: widget/embedded/src/components/Quote/Quote.tsx:363
 msgid "See All Routes"
 msgstr "すべてのルートを見る"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:98
+#: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:81
 msgid "View more info"
 msgstr "詳細情報を表示"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:108
+#: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:91
 msgid "Gas & Fee Explanation"
 msgstr "ガス&料金の説明"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:121
-#: widget/embedded/src/components/QuoteWarningsAndErrors/HighValueLossWarningModal.tsx:88
+#: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:104
+#: widget/embedded/src/components/QuoteWarningsAndErrors/HighValueLossWarningModal.tsx:102
 msgid "Details"
 msgstr "詳細"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:162
+#: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:145
 msgid "Total Payable Fee"
 msgstr "合計支払手数料"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:182
+#: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:165
 msgid "Hide non-payable fees"
 msgstr "支払い不可能な手数料を非表示"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:183
+#: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:166
 msgid "Show non-payable fees"
 msgstr "未払い手数料を表示"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:193
+#: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:176
 msgid "Description"
 msgstr "説明"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:197
-msgid "The following fees are considered in the transaction output and\n"
+#: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:180
+msgid ""
+"The following fees are considered in the transaction output and\n"
 "                you won’t need to pay extra gas for them."
-msgstr "以下の手数料は取引の出力で考慮され、\n"
+msgstr ""
+"以下の手数料は取引の出力で考慮され、\n"
 "                余分なガスを支払う必要はありません。"
 
 #. js-lingui-explicit-id
@@ -297,14 +300,19 @@ msgid "Estimated output"
 msgstr "推定された出力"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/QuoteTrigger .tsx:77
+#: widget/embedded/src/components/Quote/QuoteTrigger.tsx:64
 msgid "Via:"
 msgstr "ビア:"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/QuoteTrigger .tsx:160
+#: widget/embedded/src/components/Quote/QuoteTrigger.tsx:147
 msgid "Chains:"
 msgstr "チェーン:"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/Quotes/Quotes.tsx:92
+msgid "Sort by"
+msgstr ""
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/QuoteWarningsAndErrors/HighValueLossWarningModal.tsx:43
@@ -327,19 +335,19 @@ msgid "Price impact"
 msgstr "価格への影響"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/QuoteWarningsAndErrors/QuoteWarningsAndErrors.helpers.ts:36
+#: widget/embedded/src/components/QuoteWarningsAndErrors/QuoteWarningsAndErrors.helpers.ts:35
 msgid "You need to increase slippage to at least {minRequiredSlippage} for this route."
 msgstr "このルートについては、少なくとも {minRequiredSlippage} まで滑りやすくする必要があります。"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/QuoteWarningsAndErrors/QuoteWarningsAndErrors.helpers.ts:60
+#: widget/embedded/src/components/QuoteWarningsAndErrors/QuoteWarningsAndErrors.helpers.ts:59
 #: widget/embedded/src/components/QuoteWarningsAndErrors/SlippageWariningModal.tsx:60
 #: widget/ui/src/containers/Warnings/MinRequiredSlippage.tsx:22
 msgid "We recommend you to increase slippage to at least {minRequiredSlippage} for this route."
 msgstr "このルートについては、少なくとも {minRequiredSlippage} への滑りを増やすことをお勧めします。"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/QuoteWarningsAndErrors/QuoteWarningsAndErrors.helpers.ts:69
+#: widget/embedded/src/components/QuoteWarningsAndErrors/QuoteWarningsAndErrors.helpers.ts:68
 msgid "Caution, your slippage is high."
 msgstr "注意、あなたの滑りは高いです。"
 
@@ -380,7 +388,7 @@ msgid "Slippage tolerance per swap"
 msgstr "スワップごとの滑り止め許容差"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Slippage/Slippage.tsx:90
+#: widget/embedded/src/components/Slippage/Slippage.tsx:88
 msgid "Custom"
 msgstr "カスタム"
 
@@ -534,7 +542,7 @@ msgid "Network Changed"
 msgstr "ネットワークを変更しました"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/TokenList/TokenList.tsx:257
+#: widget/embedded/src/components/TokenList/TokenList.tsx:258
 msgid "Select Token"
 msgstr "トークンを選択"
 
@@ -650,7 +658,7 @@ msgstr "不明なUSD価格を確認"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/constants/messages.ts:6
-#: widget/embedded/src/pages/Home.tsx:155
+#: widget/embedded/src/pages/Home.tsx:156
 msgid "Swap"
 msgstr "入れ替え"
 
@@ -690,29 +698,29 @@ msgid "Rango Fee"
 msgstr "Rango手数料"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/constants/quote.ts:26
-msgid "Fastest Transfer"
-msgstr "最速送金"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/constants/quote.ts:27
-msgid "Maximum Return"
-msgstr "最大返品数"
-
-#. js-lingui-explicit-id
 #: widget/embedded/src/constants/quote.ts:28
+msgid "Smart Routing"
+msgstr "スマートルーティング"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/constants/quote.ts:32
 msgid "Lowest Fee"
 msgstr "最低手数料"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/constants/quote.ts:29
-msgid "Maximum Output"
-msgstr "最大出力"
+#: widget/embedded/src/constants/quote.ts:36
+msgid "Fastest Transfer"
+msgstr "最速送金"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/constants/quote.ts:30
-msgid "Smart Routing"
-msgstr "スマートルーティング"
+#: widget/embedded/src/constants/quote.ts:40
+msgid "Maximum Return"
+msgstr "最大返品数"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/constants/quote.ts:44
+msgid "Maximum Output"
+msgstr "最大出力"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/constants/warnings.ts:10
@@ -735,17 +743,84 @@ msgid "Route internal coins has been updated."
 msgstr "ルート内部コインが更新されました。"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/ConfirmSwapPage.tsx:303
+#: widget/embedded/src/containers/ExpandedQuotes/ExpandedQuotes.tsx:53
+#: widget/embedded/src/pages/Routes.tsx:48
+msgid "Routes"
+msgstr "ルート"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/containers/Inputs/Inputs.tsx:77
+msgid "From"
+msgstr "差出人:"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/containers/Inputs/Inputs.tsx:120
+msgid "To"
+msgstr "終了日"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/containers/Settings/Lists.tsx:47
+msgid "Light"
+msgstr "ライト"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/containers/Settings/Lists.tsx:56
+msgid "Dark"
+msgstr "ダーク"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/containers/Settings/Lists.tsx:65
+msgid "Auto"
+msgstr "自動"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/containers/Settings/Lists.tsx:133
+msgid "Loading failed"
+msgstr "読み込みに失敗しました"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/containers/Settings/Lists.tsx:149
+msgid "Enabled bridges"
+msgstr "有効なブリッジ"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/containers/Settings/Lists.tsx:167
+msgid "Enabled exchanges"
+msgstr "有効な取引所"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/containers/Settings/Lists.tsx:185
+#: widget/embedded/src/pages/LanguagePage.tsx:38
+msgid "Language"
+msgstr "言語"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/containers/Settings/Lists.tsx:198
+msgid "Infinite approval"
+msgstr "永久承認"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/containers/Settings/Lists.tsx:208
+msgid "Enabling the 'Infinite approval' mode grants unrestricted access to smart contracts of DEXes/Bridges, allowing them to utilize the approved token amount without limitations."
+msgstr "「Infinite承認」モードを有効にすると、DEX/Bridgesのスマートコントラクトへの無制限のアクセスが許可され、承認されたトークンの量を制限なく利用できます。"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/containers/Settings/Lists.tsx:228
+msgid "Theme"
+msgstr "テーマ"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/pages/ConfirmSwapPage.tsx:302
 msgid "Confirm Swap"
 msgstr "スワップの確認"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/ConfirmSwapPage.tsx:333
+#: widget/embedded/src/pages/ConfirmSwapPage.tsx:332
 msgid "Start Swap"
 msgstr "スワップを開始"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/ConfirmSwapPage.tsx:359
+#: widget/embedded/src/pages/ConfirmSwapPage.tsx:358
 msgid "You get"
 msgstr "あなたは"
 
@@ -760,23 +835,7 @@ msgid "Search Transaction"
 msgstr "トランザクションを検索"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/Home.tsx:172
-msgid "From"
-msgstr "差出人:"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/pages/Home.tsx:213
-msgid "To"
-msgstr "終了日"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/pages/LanguagePage.tsx:36
-#: widget/embedded/src/pages/SettingsPage.tsx:136
-msgid "Language"
-msgstr "言語"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/pages/LanguagePage.tsx:43
+#: widget/embedded/src/pages/LanguagePage.tsx:51
 msgid "language"
 msgstr "言語"
 
@@ -808,11 +867,6 @@ msgid "Search {sourceType}"
 msgstr "{sourceType} を検索"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/Routes.tsx:77
-msgid "Routes"
-msgstr "ルート"
-
-#. js-lingui-explicit-id
 #: widget/embedded/src/pages/SelectBlockchainPage.tsx:58
 msgid "Search Blockchain"
 msgstr "ブロックチェーンを検索"
@@ -838,39 +892,7 @@ msgid "Search Token"
 msgstr "トークンを検索"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/SettingsPage.tsx:86
-msgid "Loading failed"
-msgstr "読み込みに失敗しました"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/pages/SettingsPage.tsx:102
-msgid "Enabled bridges"
-msgstr "有効なブリッジ"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/pages/SettingsPage.tsx:119
-msgid "Enabled exchanges"
-msgstr "有効な取引所"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/pages/SettingsPage.tsx:147
-#: widget/embedded/src/pages/ThemePage.tsx:70
-#: widget/embedded/src/pages/ThemePage.tsx:79
-msgid "Theme"
-msgstr "テーマ"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/pages/SettingsPage.tsx:159
-msgid "Infinite approval"
-msgstr "永久承認"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/pages/SettingsPage.tsx:169
-msgid "Enabling the 'Infinite approval' mode grants unrestricted access to smart contracts of DEXes/Bridges, allowing them to utilize the approved token amount without limitations."
-msgstr "「Infinite承認」モードを有効にすると、DEX/Bridgesのスマートコントラクトへの無制限のアクセスが許可され、承認されたトークンの量を制限なく利用できます。"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/pages/SettingsPage.tsx:219
+#: widget/embedded/src/pages/SettingsPage.tsx:45
 msgid "Currently, you're in campaign mode with restrictions on liquidity sources. Would you like to switch out of this mode and make use of all available liquidity sources?"
 msgstr "現在、流動性情報源に制限があるキャンペーンモードです。 このモードを切り替えて、利用可能なすべての流動性源を使用しますか？"
 
@@ -878,21 +900,6 @@ msgstr "現在、流動性情報源に制限があるキャンペーンモード
 #: widget/embedded/src/pages/SwapDetailsPage.tsx:27
 msgid "The request ID is necessary to display the swap details."
 msgstr "スワップの詳細を表示するにはリクエスト ID が必要です。"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/pages/ThemePage.tsx:34
-msgid "Light"
-msgstr "ライト"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/pages/ThemePage.tsx:46
-msgid "Dark"
-msgstr "ダーク"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/pages/ThemePage.tsx:58
-msgid "Auto"
-msgstr "自動"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/pages/WalletsPage.tsx:72
@@ -1151,4 +1158,3 @@ msgstr "アセットの最大量"
 #: widget/ui/src/containers/TokenInfo/TokenInfo.tsx:181
 msgid "swap to"
 msgstr "スワップ先"
-

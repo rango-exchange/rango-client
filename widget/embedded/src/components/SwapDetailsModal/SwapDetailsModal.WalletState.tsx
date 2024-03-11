@@ -1,5 +1,6 @@
 import type { WalletStateContentProps } from './SwapDetailsModal.types';
 
+import { debug } from '@rango-dev/logging-core';
 import { MessageBox, Wallet } from '@rango-dev/ui';
 import { useWallets } from '@rango-dev/wallets-react';
 import React from 'react';
@@ -39,7 +40,10 @@ export const WalletStateContent = (props: WalletStateContentProps) => {
             state={walletState}
             link={walletInfo.installLink}
             disabled={walletButtonDisabled}
-            onClick={async () => connect(walletType)}
+            // TODO we need to show an error modal when user reject the connection
+            onClick={async () =>
+              connect(walletType).catch((error) => debug(error))
+            }
           />
         </WalletContainer>
       )}
