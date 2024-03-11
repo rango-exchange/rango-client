@@ -53,7 +53,7 @@ export function SkeletonItemLeft() {
     <div
       style={{
         display: 'flex',
-        alignItems: 'end',
+        alignItems: 'center',
       }}>
       <Skeleton variant="rounded" width={42} height={49} />
     </div>
