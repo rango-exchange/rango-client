@@ -41,11 +41,11 @@ export function QuoteSummarySkeleton(props: PropTypes) {
       {!tagHidden && (
         <>
           <FlexContent>
-            <Skeleton width={65} height={14} variant="rounded" />
+            <Skeleton width={65} height={20} variant="rounded" />
             <Divider size={4} direction="horizontal" />
-            <Skeleton width={65} height={14} variant="rounded" />
+            <Skeleton width={65} height={20} variant="rounded" />
             <Divider size={4} direction="horizontal" />
-            <Skeleton width={65} height={14} variant="rounded" />
+            <Skeleton width={65} height={20} variant="rounded" />
           </FlexContent>
           <Line />
           {!showAllRoutesSkeleton && <Divider size={4} />}
@@ -60,7 +60,7 @@ export function QuoteSummarySkeleton(props: PropTypes) {
           <Skeleton width={60} height={10} variant="rounded" />
         </FlexContent>
         {showAllRoutesSkeleton && (
-          <Skeleton width={100} height={22} variant="rounded" />
+          <Skeleton width={85} height={24} variant="rounded" />
         )}
       </div>
 
@@ -88,6 +88,7 @@ export function QuoteSummarySkeleton(props: PropTypes) {
             <QuoteSummarySeparator />
             {quotePreview}
           </SwapPreview>
+          <Divider size={12} />
         </>
       )}
     </div>

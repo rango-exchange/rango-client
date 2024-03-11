@@ -750,11 +750,7 @@ export function getLastConvertedTokenInFailedSwap(
 }
 
 export function shouldRetrySwap(pendingSwap: PendingSwap) {
-  return (
-    pendingSwap.status === 'failed' &&
-    !!pendingSwap.finishTime &&
-    new Date().getTime() - parseInt(pendingSwap.finishTime) < 4 * 3600 * 1000
-  );
+  return pendingSwap.status === 'failed';
 }
 
 export function confirmSwapDisabled(

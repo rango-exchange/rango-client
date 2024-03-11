@@ -8,11 +8,19 @@ export const Container = styled('div', {
   backgroundColor: '$$color',
   borderBottomLeftRadius: '$xm',
   borderBottomRightRadius: '$xm',
-  padding: '$15 ',
+  padding: '$15',
   variants: {
     rounded: {
       true: {
         borderRadius: '$xm',
+      },
+    },
+    expanded: {
+      true: {
+        paddingBottom: '3px',
+      },
+      false: {
+        paddingBottom: '$12',
       },
     },
   },
