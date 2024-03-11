@@ -1,9 +1,20 @@
 import type { WidgetConfig } from '../../types';
 import type { EventHandler } from '@rango-dev/wallets-react';
 
-export type OnConnectHandler = (key: string) => void;
+export type OnWalletConnectionChange = (key: string) => void;
 export interface WidgetContextInterface {
-  onConnectWallet(handler: OnConnectHandler): void;
+  /**
+   * A wallet connection handler, utilized within the wallet provider,
+   * is linked to the useBootstrap hook for synchronizing the state of the last connected wallet.
+   * It's important not to override this handler in other locations.
+   */
+  onConnectWallet(handler: OnWalletConnectionChange): void;
+  /**
+   * A wallet disconnection handler, utilized within the wallet provider,
+   * is linked to the useBootstrap hook for synchronizing the state of the last disconnected wallet.
+   * It's important not to override this handler in other locations.
+   */
+  onDisconnectWallet(handler: OnWalletConnectionChange): void;
 }
 
 export interface PropTypes {

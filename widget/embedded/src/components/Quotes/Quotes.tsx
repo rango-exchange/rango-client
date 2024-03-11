@@ -67,6 +67,18 @@ export function Quotes(props: PropTypes) {
 
   return (
     <>
+      {hasSort && (
+        <>
+          <StrategyContent>
+            <Typography size="xmedium" variant="title">
+              {i18n.t('Sort by')}
+            </Typography>
+            <SelectStrategy container={getContainer()} />
+          </StrategyContent>
+          <Divider size="10" />
+        </>
+      )}
+
       {loading &&
         Array.from({ length: ITEM_SKELETON_COUNT }, (_, index) => (
           <React.Fragment key={index}>
@@ -85,17 +97,6 @@ export function Quotes(props: PropTypes) {
 
       {!loading && (
         <>
-          {hasSort && (
-            <>
-              <StrategyContent>
-                <Typography size="xmedium" variant="title">
-                  {i18n.t('Sort by')}
-                </Typography>
-                <SelectStrategy container={getContainer()} />
-              </StrategyContent>
-              <Divider size="10" />
-            </>
-          )}
           {hasQuotes
             ? sortQuotes.map((quote, index) => {
                 const quoteWarning = getQuoteWarning(quote);

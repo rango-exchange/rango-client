@@ -381,25 +381,18 @@ export function formatBalance(balance: Balance | null): Balance | null {
   return formattedBalance;
 }
 
-function sortTokensByBalance(
+export function compareTokenBalance(
   token1Balance: Balance | null,
   token2Balance: Balance | null
 ): number {
-  if (token1Balance?.usdValue && token2Balance?.usdValue) {
+  if (token1Balance?.usdValue || token2Balance?.usdValue) {
     return (
-      parseFloat(token2Balance.usdValue) - parseFloat(token1Balance.usdValue)
+      parseFloat(token2Balance?.usdValue || '0') -
+      parseFloat(token1Balance?.usdValue || '0')
     );
   }
 
-  if (!token1Balance?.usdValue && token2Balance?.usdValue) {
-    return 1;
-  }
-
-  if (token1Balance?.usdValue && !token2Balance?.usdValue) {
-    return -1;
-  }
-
-  if (!token1Balance?.usdValue && !token2Balance?.usdValue) {
+  if (token1Balance?.amount || token2Balance?.amount) {
     return (
       parseFloat(token2Balance?.amount || '0') -
       parseFloat(token1Balance?.amount || '0')
@@ -407,41 +400,6 @@ function sortTokensByBalance(
   }
 
   return 0;
-}
-
-function sortTokensByPinnedToken(
-  token1: Token,
-  token2: Token,
-  isTokenPinned: (token: Token) => boolean
-): number {
-  const isToken1Pinned = isTokenPinned(token1);
-  const isToken2Pinned = isTokenPinned(token2);
-
-  if (isToken1Pinned === isToken2Pinned) {
-    return 0;
-  }
-  if (isToken1Pinned) {
-    return -1;
-  }
-  return 1;
-}
-export function sortTokens(
-  tokens: Token[],
-  getBalanceFor: (token: Token) => Balance | null,
-  isTokenPinned: (token: Token) => boolean
-) {
-  tokens.sort((token1, token2) => {
-    const token1Balance = getBalanceFor(token1);
-    const token2Balance = getBalanceFor(token2);
-    // Check pinned tokens
-    const isTokenPin = sortTokensByPinnedToken(token1, token2, isTokenPinned);
-
-    return isTokenPin !== 0
-      ? isTokenPin
-      : sortTokensByBalance(token1Balance, token2Balance);
-  });
-
-  return tokens;
 }
 
 export function areTokensEqual(

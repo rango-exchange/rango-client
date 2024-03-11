@@ -87,6 +87,7 @@ export function ConfirmSwapPage() {
   const { connectedWallets } = useWalletsStore();
   const showWalletsOnInit = !quoteWalletsConfirmed;
   const [showWallets, setShowWallets] = useState(false);
+  const [isConfirming, setIsConfirming] = useState(false);
   const { isActiveTab } = useUiStore();
   const disabledLiquiditySources = useAppStore().getDisabledLiquiditySources();
   const prevDisabledLiquiditySources = useRef(disabledLiquiditySources);
@@ -137,7 +138,9 @@ export function ConfirmSwapPage() {
   };
 
   const onConfirm = async () => {
+    setIsConfirming(true);
     await addNewSwap();
+    setIsConfirming(false);
   };
 
   const onStartConfirmSwap = async () => {
@@ -326,7 +329,7 @@ export function ConfirmSwapPage() {
               type="primary"
               size="large"
               fullWidth
-              loading={fetchingConfirmationQuote}
+              loading={fetchingConfirmationQuote || isConfirming}
               disabled={!!confirmSwapResult.error || !isActiveTab}
               onClick={onStartConfirmSwap}>
               {i18n.t('Start Swap')}
@@ -336,7 +339,8 @@ export function ConfirmSwapPage() {
             variant="contained"
             type="primary"
             size="large"
-            loading={fetchingConfirmationQuote}
+            loading={fetchingConfirmationQuote || isConfirming}
+            disabled={!isActiveTab}
             onClick={setShowWallets.bind(null, true)}>
             <WalletIcon size={24} />
           </IconButton>
@@ -383,7 +387,8 @@ export function ConfirmSwapPage() {
         <QuoteInfo
           quote={selectedQuote}
           type="swap-preview"
-          expanded={true}
+          expanded
+          tagHidden
           error={confirmSwapResult.error}
           loading={fetchingConfirmationQuote}
           warning={confirmSwapResult.warnings?.quote ?? null}

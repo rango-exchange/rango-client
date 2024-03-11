@@ -97,7 +97,7 @@ export function HighValueLossWarningModal(props: Props) {
       />
 
       <Flex>
-        <Divider size={20} />
+        <Divider size="4" />
         <Typography size="small" variant="title">
           {i18n.t('Details')}
         </Typography>

@@ -109,6 +109,18 @@ export function useWalletList(params: Params) {
    * but we have ethereum injected
    */
   const shouldShowDefaultInjectedWallet = (wallets: WalletInfo[]) => {
+    // don't show default injected wallet when it's not installed
+    const defaultWallet = wallets.find(
+      (wallet) => wallet.type === WalletTypes.DEFAULT
+    );
+    if (!defaultWallet || defaultWallet.state === WalletState.NOT_INSTALLED) {
+      return false;
+    }
+
+    /*
+     * if we have another evm wallet installed (except wallet connect),
+     * there is no need to show default injected wallet anymore
+     */
     const isEvmWalletInstalledExceptDefault = wallets.filter(
       (wallet) =>
         wallet.state != WalletState.NOT_INSTALLED &&
