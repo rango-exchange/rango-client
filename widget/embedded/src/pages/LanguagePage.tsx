@@ -12,9 +12,11 @@ import React from 'react';
 
 import { Layout, PageContainer } from '../components/Layout';
 import { useLanguage } from '../hooks/useLanguage';
+import { useNavigateBack } from '../hooks/useNavigateBack';
 
 export function LanguagePage() {
   const { activeLanguage, changeLanguage, languages } = useLanguage();
+  const navigateBack = useNavigateBack();
 
   const languageList = languages.map((languageItem) => {
     const { local, label, SVGFlag } = languageItem;
@@ -26,7 +28,10 @@ export function LanguagePage() {
           {label}
         </Typography>
       ),
-      onClick: () => changeLanguage(languageItem.local),
+      onClick: () => {
+        changeLanguage(languageItem.local);
+        navigateBack();
+      },
       end: <Radio value={local} />,
       start: <SVGFlag />,
     };

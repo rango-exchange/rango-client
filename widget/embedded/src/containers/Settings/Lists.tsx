@@ -29,6 +29,7 @@ import { useNavigate } from 'react-router-dom';
 import { SlippageTooltipContainer as TooltipContainer } from '../../components/Slippage/Slippage.styles';
 import { navigationRoutes } from '../../constants/navigationRoutes';
 import { ThemeModeEnum } from '../../constants/settings';
+import { useLanguage } from '../../hooks/useLanguage';
 import { useAppStore } from '../../store/AppStore';
 import { getContainer } from '../../utils/common';
 import { getUniqueSwappersGroups, isFeatureHidden } from '../../utils/settings';
@@ -85,6 +86,10 @@ export function SettingsLists() {
   const navigate = useNavigate();
   const { theme: themeConfig } = useAppStore().config;
   const { setTheme, theme } = useAppStore();
+  const { activeLanguage, languages } = useLanguage();
+  const currentLanguage = languages.find(
+    (language) => language.local === activeLanguage
+  )?.label;
 
   const fetchStatus = useAppStore().fetchStatus;
   const swappers = useAppStore().swappers();
@@ -122,7 +127,7 @@ export function SettingsLists() {
     (uniqueItem) => uniqueItem.selected
   ).length;
 
-  const handleEndItem = (totalSelected: number, total: number) => {
+  const handleSwapperEndItem = (totalSelected: number, total: number) => {
     switch (fetchStatus) {
       case 'loading':
         return <Skeleton variant="text" size="medium" width={50} />;
@@ -150,7 +155,7 @@ export function SettingsLists() {
     ),
     end: (
       <>
-        {handleEndItem(totalSelectedBridgeSources, totalBridgeSources)}
+        {handleSwapperEndItem(totalSelectedBridgeSources, totalBridgeSources)}
         <Divider direction="horizontal" size={8} />
         <ChevronRightIcon color="black" />
       </>
@@ -168,7 +173,10 @@ export function SettingsLists() {
     ),
     end: (
       <>
-        {handleEndItem(totalSelectedExchangeSources, totalExchangeSources)}
+        {handleSwapperEndItem(
+          totalSelectedExchangeSources,
+          totalExchangeSources
+        )}
         <Divider direction="horizontal" size={8} />
         <ChevronRightIcon color="gray" />
       </>
@@ -185,7 +193,15 @@ export function SettingsLists() {
       </Typography>
     ),
     start: <LanguageIcon color="gray" size={14} />,
-    end: <ChevronRightIcon color="gray" />,
+    end: (
+      <>
+        <Typography variant="body" size="medium">
+          {currentLanguage}
+        </Typography>
+        <Divider direction="horizontal" size={8} />
+        <ChevronRightIcon color="gray" />,
+      </>
+    ),
     onClick: () => navigate(navigationRoutes.languages),
   };
 
