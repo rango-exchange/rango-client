@@ -21,12 +21,11 @@ export function useTheme(props: WidgetTheme) {
     fontFamily = DEFAULT_FONT_FAMILY,
     borderRadius = DEFAULT_PRIMARY_RADIUS,
     secondaryBorderRadius = DEFAULT_SECONDARY_RADIUS,
-    mode = 'auto',
   } = props;
 
   const [OSTheme, setOSTheme] = useState('light');
 
-  const { setTheme, theme } = useAppStore();
+  const { theme } = useAppStore();
 
   const { dark, light } = customizedThemeTokens(colors);
 
@@ -80,12 +79,6 @@ export function useTheme(props: WidgetTheme) {
         .removeEventListener('change', switchThemeListener);
     };
   }, []);
-
-  useEffect(() => {
-    if (mode !== 'auto') {
-      setTheme(mode);
-    }
-  }, [mode]);
 
   const getActiveTheme = () => {
     const lightClassNames = lightThemeClasses.join(' ');
