@@ -1,4 +1,4 @@
-import type { PreferenceType, SwapFee, TagValue } from 'rango-sdk';
+import type { SwapFee, TagValue } from 'rango-sdk';
 
 import { i18n } from '@lingui/core';
 
@@ -21,29 +21,6 @@ export type FeesGroup = {
   payable: { [key in NameOfFees]?: SwapFee[] };
   nonePayable: { [key in NameOfFees]?: SwapFee[] };
 };
-
-export const ROUTE_STRATEGY: { value: PreferenceType; label: string }[] = [
-  {
-    value: 'SMART',
-    label: i18n.t('Smart Routing'),
-  },
-  {
-    value: 'FEE',
-    label: i18n.t('Lowest Fee'),
-  },
-  {
-    value: 'SPEED',
-    label: i18n.t('Fastest Transfer'),
-  },
-  {
-    value: 'NET_OUTPUT',
-    label: i18n.t('Maximum Return'),
-  },
-  {
-    value: 'PRICE',
-    label: i18n.t('Maximum Output'),
-  },
-];
 
 export const HIGH_PRIORITY_TAGS: TagValue[] = [
   'RECOMMENDED',
