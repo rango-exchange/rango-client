@@ -14,11 +14,6 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/constants/errors.ts:33
-msgid "The price impact is significantly higher than the allowed amount."
-msgstr "The price impact is significantly higher than the allowed amount."
-
-#. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:37
 #: widget/embedded/src/components/TokenList/TokenList.tsx:120
 #: widget/embedded/src/pages/HistoryPage.tsx:85
@@ -620,6 +615,11 @@ msgstr "High Price Impact"
 #: widget/embedded/src/constants/errors.ts:32
 msgid "Price impact is too high!"
 msgstr "Price impact is too high!"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/constants/errors.ts:33
+msgid "The price impact is significantly higher than the allowed amount."
+msgstr "The price impact is significantly higher than the allowed amount."
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/constants/errors.ts:36
