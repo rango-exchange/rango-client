@@ -23,7 +23,7 @@ export function StepSkeleton(props: PropTypes) {
       </StepTitle>
       <StepContent>
         <StepSeparator hideSeparator={!separator} />
-        <StepTokens>
+        <StepTokens extraSpace={separator}>
           <StepTokenInfo>
             <ChainToken size="small" loading chainImage="" tokenImage="" />
             <Divider direction="horizontal" size={8} />

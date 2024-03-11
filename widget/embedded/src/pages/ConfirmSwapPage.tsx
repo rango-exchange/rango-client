@@ -383,7 +383,8 @@ export function ConfirmSwapPage() {
         <QuoteInfo
           quote={selectedQuote}
           type="swap-preview"
-          expanded={true}
+          expanded
+          tagHidden
           error={confirmSwapResult.error}
           loading={fetchingConfirmationQuote}
           warning={confirmSwapResult.warnings?.quote ?? null}

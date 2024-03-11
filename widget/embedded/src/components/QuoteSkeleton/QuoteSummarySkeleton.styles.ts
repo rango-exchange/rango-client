@@ -9,7 +9,7 @@ export const BasicSummary = styled('div', {
 });
 
 export const Output = styled('div', {
-  padding: '$12 $0 $20 $0',
+  padding: '14px $0 $20 $0',
   display: 'flex',
   flexDirection: 'column',
 });
@@ -27,7 +27,7 @@ export const QuoteSummary = styled('div', {
 });
 
 export const QuoteSummarySeparator = styled('div', {
-  height: '$28',
+  height: '$24',
   marginLeft: '13px',
   borderLeft: '1px solid $neutral700',
 });

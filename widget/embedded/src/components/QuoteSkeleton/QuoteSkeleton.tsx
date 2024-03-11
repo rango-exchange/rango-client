@@ -11,7 +11,7 @@ export function QuoteSkeleton(props: PropTypes) {
   const { type, expanded, tagHidden = false } = props;
 
   return (
-    <Container rounded={type !== 'basic'}>
+    <Container expanded={expanded} rounded={type !== 'basic'}>
       <QuoteSummarySkeleton type={type} tagHidden={tagHidden} />
       <Chains>
         <Skeleton height={15} variant="rounded" />
@@ -19,7 +19,7 @@ export function QuoteSkeleton(props: PropTypes) {
 
       {expanded && (
         <Steps>
-          <Divider size={20} />
+          <Divider size={24} />
           <StepSkeleton />
           <StepSkeleton />
           <StepSkeleton separator={false} />
