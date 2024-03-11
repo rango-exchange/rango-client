@@ -1,5 +1,5 @@
 import type {
-  OnConnectHandler,
+  OnWalletConnectionChange,
   PropTypes,
   WidgetContextInterface,
 } from './Wallets.types';
@@ -10,7 +10,7 @@ import type { PropsWithChildren } from 'react';
 import { Events, Provider } from '@rango-dev/wallets-react';
 import { type Network } from '@rango-dev/wallets-shared';
 import { isEvmBlockchain } from 'rango-sdk';
-import React, { createContext, useEffect, useRef } from 'react';
+import React, { createContext, useEffect, useMemo, useRef } from 'react';
 
 import { useWalletProviders } from '../../hooks/useWalletProviders';
 import { AppStoreProvider, useAppStore } from '../../store/AppStore';
@@ -25,6 +25,9 @@ export const WidgetContext = createContext<WidgetContextInterface>({
   onConnectWallet: () => {
     return;
   },
+  onDisconnectWallet: () => {
+    return;
+  },
 });
 
 function Main(props: PropsWithChildren<PropTypes>) {
@@ -36,7 +39,8 @@ function Main(props: PropsWithChildren<PropTypes>) {
   };
   const { providers } = useWalletProviders(props.config.wallets, walletOptions);
   const { connectWallet, disconnectWallet } = useWalletsStore();
-  const onConnectWalletHandler = useRef<OnConnectHandler>();
+  const onConnectWalletHandler = useRef<OnWalletConnectionChange>();
+  const onDisconnectWalletHandler = useRef<OnWalletConnectionChange>();
 
   useEffect(() => {
     void fetchMeta().catch(console.log);
@@ -70,6 +74,13 @@ function Main(props: PropsWithChildren<PropTypes>) {
         }
       } else {
         disconnectWallet(type);
+        if (!!onDisconnectWalletHandler.current) {
+          onDisconnectWalletHandler.current(type);
+        } else {
+          console.warn(
+            `onDisconnectWallet handler hasn't been set. Are you sure?`
+          );
+        }
       }
     }
     if (event === Events.ACCOUNTS && state.connected) {
@@ -102,14 +113,20 @@ function Main(props: PropsWithChildren<PropTypes>) {
   };
   const isActiveTab = useUiStore.use.isActiveTab();
 
+  const handlers = useMemo(
+    () => ({
+      onConnectWallet: (handler: OnWalletConnectionChange) => {
+        onConnectWalletHandler.current = handler;
+      },
+      onDisconnectWallet: (handler: OnWalletConnectionChange) => {
+        onDisconnectWalletHandler.current = handler;
+      },
+    }),
+    []
+  );
+
   return (
-    <WidgetContext.Provider
-      // eslint-disable-next-line react/jsx-no-constructed-context-values
-      value={{
-        onConnectWallet: (handler) => {
-          onConnectWalletHandler.current = handler;
-        },
-      }}>
+    <WidgetContext.Provider value={handlers}>
       <Provider
         allBlockChains={blockchains}
         providers={providers}
