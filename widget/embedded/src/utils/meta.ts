@@ -31,3 +31,24 @@ export function findToken(t: Asset, tokens: Token[]) {
 export function findBlockchain(name: string, blockchains: BlockchainMeta[]) {
   return blockchains.find((blockchain) => blockchain.name === name) ?? null;
 }
+
+export function isTokenNative(
+  token: Token,
+  blockchain: BlockchainMeta | undefined
+) {
+  if (!blockchain || !token) {
+    return false;
+  }
+
+  for (const feeAsset of blockchain.feeAssets) {
+    if (
+      token?.blockchain === feeAsset?.blockchain &&
+      token?.symbol === feeAsset?.symbol &&
+      token?.address === feeAsset?.address
+    ) {
+      return true;
+    }
+  }
+
+  return false;
+}
