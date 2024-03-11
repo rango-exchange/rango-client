@@ -199,7 +199,7 @@ export function SettingsLists() {
           {currentLanguage}
         </Typography>
         <Divider direction="horizontal" size={8} />
-        <ChevronRightIcon color="gray" />,
+        <ChevronRightIcon color="gray" />
       </>
     ),
     onClick: () => navigate(navigationRoutes.languages),
