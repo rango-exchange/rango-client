@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useLayoutEffect, useState } from 'react';
 
 /*
  * mobile: screen <= 480
@@ -37,7 +37,7 @@ const useScreenDetect = () => {
     setIsExtraLargeScreen(window.innerWidth > MIN_EXTRA_LARGE_SCREEN_WIDTH);
   };
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     handleResize(); // Initial check
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
