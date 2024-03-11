@@ -152,12 +152,18 @@ export function QuoteTrigger(props: QuoteTriggerProps) {
                 {blockchains.length <= MAX_BLOCKCHAINS ||
                 (blockchains.length > MAX_BLOCKCHAINS &&
                   index < MAX_BLOCKCHAINS - 1) ? (
-                  <ImageComponent
-                    content={''}
-                    src={blockchain.image}
-                    open={false}
-                    className={index !== 0 ? 'blockchainImage' : ''}
-                  />
+                  <Tooltip
+                    container={tooltipContainer}
+                    side="bottom"
+                    content={blockchain.displayName}
+                    sideOffset={4}>
+                    <ImageComponent
+                      content={''}
+                      src={blockchain.image}
+                      open={false}
+                      className={index !== 0 ? 'blockchainImage' : ''}
+                    />
+                  </Tooltip>
                 ) : (
                   index === MAX_BLOCKCHAINS - 1 && (
                     <Tooltip
