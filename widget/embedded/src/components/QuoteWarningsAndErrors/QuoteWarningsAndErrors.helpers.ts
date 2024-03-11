@@ -66,6 +66,7 @@ export function makeAlerts(
     }
     if (warning.type === QuoteWarningType.HIGH_SLIPPAGE) {
       alertInfo.title = i18n.t('Caution, your slippage is high.');
+      alertInfo.action = 'change-settings';
     }
     return alertInfo;
   }
