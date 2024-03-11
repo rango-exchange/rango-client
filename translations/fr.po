@@ -8,7 +8,7 @@ msgstr ""
 "Language: fr\n"
 "Project-Id-Version: rango\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-02-20 09:32\n"
+"PO-Revision-Date: 2024-03-11 16:11\n"
 "Last-Translator: \n"
 "Language-Team: French\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
@@ -19,10 +19,15 @@ msgstr ""
 "X-Crowdin-File-ID: 30\n"
 
 #. js-lingui-explicit-id
+#: widget/embedded/src/constants/errors.ts:33
+msgid "The price impact is significantly higher than the allowed amount."
+msgstr "L'impact sur les prix est nettement plus élevé que le montant autorisé."
+
+#. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:37
 #: widget/embedded/src/components/TokenList/TokenList.tsx:120
 #: widget/embedded/src/pages/HistoryPage.tsx:85
-#: widget/embedded/src/pages/LiquiditySourcePage.tsx:131
+#: widget/embedded/src/pages/LiquiditySourcePage.tsx:130
 msgid "No results found"
 msgstr "Aucun résultat trouvé"
 
@@ -30,7 +35,7 @@ msgstr "Aucun résultat trouvé"
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:38
 #: widget/embedded/src/components/TokenList/TokenList.tsx:121
 #: widget/embedded/src/pages/HistoryPage.tsx:87
-#: widget/embedded/src/pages/LiquiditySourcePage.tsx:132
+#: widget/embedded/src/pages/LiquiditySourcePage.tsx:131
 msgid "Try using different keywords"
 msgstr "Essayez d'utiliser différents mots-clés"
 
@@ -54,12 +59,12 @@ msgstr "Plus +{count}"
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/common/ActivateTabAlert/ActivateTabAlert.tsx:16
 msgid "Activate this tab"
-msgstr ""
+msgstr "Activer cet onglet"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/common/ActivateTabAlert/ActivateTabAlert.tsx:21
 msgid "Another tab is open and handles transactions."
-msgstr ""
+msgstr "Un autre onglet est ouvert et gère les transactions."
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/common/ActivateTabModal/ActivateTabModal.tsx:20
@@ -173,7 +178,7 @@ msgstr "Notifications"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/HeaderButtons/HeaderButtons.tsx:74
-#: widget/embedded/src/pages/ConfirmSwapPage.tsx:311
+#: widget/embedded/src/pages/ConfirmSwapPage.tsx:314
 #: widget/embedded/src/pages/SettingsPage.tsx:38
 msgid "Settings"
 msgstr "Réglages"
@@ -184,7 +189,7 @@ msgid "Transactions History"
 msgstr "Historique des transactions"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/HeaderButtons/WalletButton.tsx:14
+#: widget/embedded/src/components/HeaderButtons/WalletButton.tsx:22
 #: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.helpers.tsx:16
 #: widget/embedded/src/constants/messages.ts:5
 msgid "Connect Wallet"
@@ -199,7 +204,7 @@ msgstr "Aujourd'hui"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/LoadingSwapDetails/LoadingSwapDetails.tsx:20
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:375
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:377
 msgid "Swaps steps"
 msgstr "Étapes d'échange"
 
@@ -240,7 +245,7 @@ msgid "Minimum required slippage is {minRequiredSlippage}"
 msgstr "Le slippage minimum requis est {minRequiredSlippage}"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/Quote.tsx:363
+#: widget/embedded/src/components/Quote/Quote.tsx:366
 msgid "See All Routes"
 msgstr "Voir toutes les routes"
 
@@ -282,11 +287,9 @@ msgstr "Libellé"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/Quote/QuoteCostDetails.tsx:180
-msgid ""
-"The following fees are considered in the transaction output and\n"
+msgid "The following fees are considered in the transaction output and\n"
 "                you won’t need to pay extra gas for them."
-msgstr ""
-"Les frais suivants sont pris en compte dans la production de la transaction et\n"
+msgstr "Les frais suivants sont pris en compte dans la production de la transaction et\n"
 "                vous n'aurez pas besoin de payer du gaz supplémentaire pour eux."
 
 #. js-lingui-explicit-id
@@ -310,9 +313,9 @@ msgid "Chains:"
 msgstr "Chaînes :"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quotes/Quotes.tsx:92
+#: widget/embedded/src/components/Quotes/Quotes.tsx:74
 msgid "Sort by"
-msgstr ""
+msgstr "Trier par"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/QuoteWarningsAndErrors/HighValueLossWarningModal.tsx:43
@@ -409,13 +412,13 @@ msgstr "Ce paramètre est appliqué par étape (par exemple 1Inch, Thorchain, et
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetails/SwapDetails.Placeholder.tsx:25
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:246
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:248
 msgid "Swap and Bridge"
 msgstr "Échanger et Pont"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetails/SwapDetails.Placeholder.tsx:33
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:286
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:288
 msgid "Request ID"
 msgstr "ID de la requête"
 
@@ -431,27 +434,27 @@ msgid "Swap with request ID = {requestId} not found."
 msgstr "L'échange avec la requête ID = {requestId} est introuvable."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:214
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:216
 msgid "You have received {amount} {token} in {conciseAddress} wallet on {chain} chain."
 msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:230
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:232
 msgid "Transaction was not sent."
 msgstr "La transaction n'a pas été envoyée."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:232
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:234
 msgid "{amount} {symbol} on {blockchain} remain in your wallet"
 msgstr "{amount} {symbol} sur {blockchain} restent dans votre portefeuille"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:257
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:259
 msgid "Delete"
 msgstr "Supprimez"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:278
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:280
 msgid "Try again"
 msgstr "Réessayez"
 
@@ -622,11 +625,6 @@ msgid "Price impact is too high!"
 msgstr "L'impact sur les prix est trop élevé!"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/constants/errors.ts:33
-msgid "The price impact is significantly higher than the allowed amount. If you are sure, continue, otherwise, change the swap."
-msgstr "L'impact sur le prix est nettement plus élevé que le montant autorisé. Si vous êtes sûr, continuez, sinon, changez le swap."
-
-#. js-lingui-explicit-id
 #: widget/embedded/src/constants/errors.ts:36
 msgid "Confirm high price impact"
 msgstr "Confirmer l'impact élevé du prix"
@@ -749,78 +747,78 @@ msgid "Routes"
 msgstr "Routes"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/containers/Inputs/Inputs.tsx:77
+#: widget/embedded/src/containers/Inputs/Inputs.tsx:81
 msgid "From"
 msgstr "A partir de"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/containers/Inputs/Inputs.tsx:120
+#: widget/embedded/src/containers/Inputs/Inputs.tsx:126
 msgid "To"
 msgstr "À"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/containers/Settings/Lists.tsx:47
+#: widget/embedded/src/containers/Settings/Lists.tsx:48
 msgid "Light"
 msgstr "Lumière"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/containers/Settings/Lists.tsx:56
+#: widget/embedded/src/containers/Settings/Lists.tsx:57
 msgid "Dark"
 msgstr "Sombre"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/containers/Settings/Lists.tsx:65
+#: widget/embedded/src/containers/Settings/Lists.tsx:66
 msgid "Auto"
 msgstr "Automatique"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/containers/Settings/Lists.tsx:133
+#: widget/embedded/src/containers/Settings/Lists.tsx:137
 msgid "Loading failed"
 msgstr "Échec du chargement"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/containers/Settings/Lists.tsx:149
+#: widget/embedded/src/containers/Settings/Lists.tsx:153
 msgid "Enabled bridges"
 msgstr "Ponts de connexion activés"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/containers/Settings/Lists.tsx:167
+#: widget/embedded/src/containers/Settings/Lists.tsx:171
 msgid "Enabled exchanges"
 msgstr "Échanges activés"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/containers/Settings/Lists.tsx:185
-#: widget/embedded/src/pages/LanguagePage.tsx:38
+#: widget/embedded/src/containers/Settings/Lists.tsx:192
+#: widget/embedded/src/pages/LanguagePage.tsx:43
 msgid "Language"
 msgstr "Langue"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/containers/Settings/Lists.tsx:198
+#: widget/embedded/src/containers/Settings/Lists.tsx:213
 msgid "Infinite approval"
 msgstr "Approbation infinie"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/containers/Settings/Lists.tsx:208
+#: widget/embedded/src/containers/Settings/Lists.tsx:223
 msgid "Enabling the 'Infinite approval' mode grants unrestricted access to smart contracts of DEXes/Bridges, allowing them to utilize the approved token amount without limitations."
 msgstr "Activer le mode « approbation infinie» permet un accès illimité aux contrats intelligents de DEXes/Ponts, leur permettant d'utiliser le montant de jeton approuvé sans restrictions."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/containers/Settings/Lists.tsx:228
+#: widget/embedded/src/containers/Settings/Lists.tsx:243
 msgid "Theme"
 msgstr "Thème"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/ConfirmSwapPage.tsx:302
+#: widget/embedded/src/pages/ConfirmSwapPage.tsx:305
 msgid "Confirm Swap"
 msgstr "Confirmer l'échange"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/ConfirmSwapPage.tsx:332
+#: widget/embedded/src/pages/ConfirmSwapPage.tsx:335
 msgid "Start Swap"
 msgstr "Début de l'échange"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/ConfirmSwapPage.tsx:358
+#: widget/embedded/src/pages/ConfirmSwapPage.tsx:362
 msgid "You get"
 msgstr "Vous obtenez"
 
@@ -835,7 +833,7 @@ msgid "Search Transaction"
 msgstr "Rechercher une transaction"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/LanguagePage.tsx:51
+#: widget/embedded/src/pages/LanguagePage.tsx:56
 msgid "language"
 msgstr "Langue"
 
@@ -852,17 +850,17 @@ msgid "Bridges"
 msgstr "Ponts de connexion"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/LiquiditySourcePage.tsx:109
+#: widget/embedded/src/pages/LiquiditySourcePage.tsx:108
 msgid "Deselect all"
 msgstr "Désélectionner tout"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/LiquiditySourcePage.tsx:109
+#: widget/embedded/src/pages/LiquiditySourcePage.tsx:108
 msgid "Select all"
 msgstr "Tout sélectionner"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/LiquiditySourcePage.tsx:121
+#: widget/embedded/src/pages/LiquiditySourcePage.tsx:120
 msgid "Search {sourceType}"
 msgstr "Rechercher dans {sourceType}"
 
@@ -872,22 +870,22 @@ msgid "Search Blockchain"
 msgstr "Rechercher dans la Blockchain"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/SelectSwapItemsPage.tsx:72
+#: widget/embedded/src/pages/SelectSwapItemsPage.tsx:67
 msgid "Source"
 msgstr "Source"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/SelectSwapItemsPage.tsx:73
+#: widget/embedded/src/pages/SelectSwapItemsPage.tsx:68
 msgid "Destination"
 msgstr "Destination"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/SelectSwapItemsPage.tsx:79
+#: widget/embedded/src/pages/SelectSwapItemsPage.tsx:74
 msgid "Swap {type}"
 msgstr "Échanger {type}"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/SelectSwapItemsPage.tsx:95
+#: widget/embedded/src/pages/SelectSwapItemsPage.tsx:90
 msgid "Search Token"
 msgstr "Jeton de recherche"
 
@@ -948,37 +946,37 @@ msgid "Required: < {max} {symbol}"
 msgstr "Requis: < {max} {symbol}"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:634
+#: widget/embedded/src/utils/swap.ts:637
 msgid " for network fee"
 msgstr " pour frais de réseau"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:637
+#: widget/embedded/src/utils/swap.ts:640
 msgid " for swap"
 msgstr " pour swap"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:640
+#: widget/embedded/src/utils/swap.ts:643
 msgid " for input and network fee"
 msgstr " pour les frais d'entrée et de réseau"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:642
+#: widget/embedded/src/utils/swap.ts:645
 msgid "Needs ≈ {requiredAmount} {symbol}{reason}, but you have {currentAmount} {symbol} in your {blockchain} wallet."
 msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:702
+#: widget/embedded/src/utils/swap.ts:705
 msgid "Waiting for connecting wallet"
 msgstr "En attente de connexion au portefeuille"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:706
+#: widget/embedded/src/utils/swap.ts:709
 msgid "Waiting for other running tasks to be finished"
 msgstr "En attente de la fin des autres tâches en cours"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:709
+#: widget/embedded/src/utils/swap.ts:712
 msgid "Waiting for changing wallet network"
 msgstr "En attente de changement de réseau du portefeuille"
 
@@ -1158,3 +1156,4 @@ msgstr "montant maximum d'actif"
 #: widget/ui/src/containers/TokenInfo/TokenInfo.tsx:181
 msgid "swap to"
 msgstr "swap vers"
+
