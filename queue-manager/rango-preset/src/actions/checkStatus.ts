@@ -27,7 +27,7 @@ import { prettifyErrorMessage } from '../shared-errors';
 import { StepEventType, SwapActionTypes } from '../types';
 
 const INTERVAL_FOR_CHECK_STATUS = 5_000;
-const INTERVAL_FOR_CHECK_APPROVAL = 2_000;
+const INTERVAL_FOR_CHECK_APPROVAL = 5_000;
 
 /**
  * Subscribe to status of swap transaction by checking from server periodically.

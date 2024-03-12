@@ -6,11 +6,14 @@ import { build } from '../publish/build.mjs';
 import { logAsSection } from '../publish/utils.mjs';
 import { deployProjectsToVercel } from './utils.mjs';
 
+const EXCLUDED_PACKAGES = ['@rango-dev/widget-iframe'];
+
 // TODO: Working directory should be empty.
 async function run() {
-  // Detect last relase and what packages has changed since then.
+  // Detect last release and what packages has changed since then.
   const packages = await workspacePackages();
   const privatePackages = packages.filter((pkg) => {
+    if (EXCLUDED_PACKAGES.includes(pkg.name)) return false;
     return pkg.private;
   });
 
@@ -18,14 +21,14 @@ async function run() {
     console.log(
       '[-] BUILD FAILED. Ignore it to workflow run the rest of tasks.'
     );
-    console.log(e);
+    throw e;
   });
   logAsSection('[x] Build for VERCEL');
   await deployProjectsToVercel(privatePackages).catch((e) => {
     console.log(
       '[-] DEPLOY FAILED. Ignore it to workflow run the rest of tasks.'
     );
-    console.log(e);
+    throw e;
   });
   logAsSection('[x] Deploy to VERCEL');
 }
