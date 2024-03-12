@@ -24,7 +24,7 @@ export async function deploySingleProjectToVercel(pkg) {
   console.log(`start deplyoing ${pkg.name}...`);
 
   await execa(
-    'npx',
+    'yarn',
     [
       'vercel',
       'pull',

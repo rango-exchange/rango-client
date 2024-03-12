@@ -15,7 +15,9 @@ jobs:
         uses: ./.github/actions/prepare
 
       - name: Deploy packages
-        run: yarn run deploy
+        run: |
+          yarn global add vercel
+          yarn run deploy
         env:
           REF: ${{ github.ref }}
           GH_TOKEN: ${{ github.token }}

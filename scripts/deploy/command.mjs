@@ -18,14 +18,14 @@ async function run() {
     console.log(
       '[-] BUILD FAILED. Ignore it to workflow run the rest of tasks.'
     );
-    console.log(e);
+    throw e;
   });
   logAsSection('[x] Build for VERCEL');
   await deployProjectsToVercel(privatePackages).catch((e) => {
     console.log(
       '[-] DEPLOY FAILED. Ignore it to workflow run the rest of tasks.'
     );
-    console.log(e);
+    throw e;
   });
   logAsSection('[x] Deploy to VERCEL');
 }
