@@ -169,6 +169,7 @@ export function Home() {
           <Inputs
             fetchingQuote={fetchingQuote}
             fetchMetaStatus={fetchMetaStatus}
+            isExpandable={isExpandable}
             onClickToken={(mode) => {
               onHandleNavigation(
                 mode === 'from'

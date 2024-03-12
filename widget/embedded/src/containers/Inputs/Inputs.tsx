@@ -14,7 +14,6 @@ import {
   USD_VALUE_MAX_DECIMALS,
   USD_VALUE_MIN_DECIMALS,
 } from '../../constants/routing';
-import { useAppStore } from '../../store/AppStore';
 import { useQuoteStore } from '../../store/quote';
 import { useWalletsStore } from '../../store/wallets';
 import { getContainer } from '../../utils/common';
@@ -26,7 +25,7 @@ import { formatBalance, isFetchingBalance } from '../../utils/wallets';
 import { Container, FromContainer } from './Inputs.styles';
 
 export function Inputs(props: PropTypes) {
-  const { fetchingQuote, fetchMetaStatus, onClickToken } = props;
+  const { fetchingQuote, fetchMetaStatus, onClickToken, isExpandable } = props;
   const {
     fromToken,
     fromBlockchain,
@@ -40,10 +39,6 @@ export function Inputs(props: PropTypes) {
     selectedQuote,
   } = useQuoteStore();
   const { connectedWallets, getBalanceFor } = useWalletsStore();
-  const {
-    config: { variant },
-  } = useAppStore();
-
   const fromTokenBalance = fromToken ? getBalanceFor(fromToken) : null;
 
   const fromTokenFormattedBalance =
@@ -120,9 +115,7 @@ export function Inputs(props: PropTypes) {
         <SwitchFromAndToButton />
       </FromContainer>
       <SwapInput
-        sharpBottomStyle={
-          variant === 'default' && (!!selectedQuote || fetchingQuote)
-        }
+        sharpBottomStyle={!isExpandable && (!!selectedQuote || fetchingQuote)}
         label={i18n.t('To')}
         mode="To"
         fetchingQuote={fetchingQuote}
