@@ -1,3 +1,12 @@
+# [0.15.0](https://github.com/rango-exchange/rango-client/compare/wallets-react@0.14.0...wallets-react@0.15.0) (2024-03-12)
+
+
+### Bug Fixes
+
+* fix wallet connect namespace and switch network ([c8f31b3](https://github.com/rango-exchange/rango-client/commit/c8f31b3ddf4ceeaf745bc089f530b6a4b1eb9637))
+
+
+
 # [0.14.0](https://github.com/rango-exchange/rango-client/compare/wallets-react@0.13.0...wallets-react@0.14.0) (2024-02-20)
 
 
