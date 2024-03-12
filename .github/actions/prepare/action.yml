@@ -1,18 +1,15 @@
 name: Setup Environments
 description: 'Setting up Git, NodeJS and authenticate.'
-inputs:
-  NPM_TOKEN:
-    description: 'Put your NPM_TOKEN'
-    required: false
 
 runs:
   using: 'composite'
   steps:
     - name: Setup NodeJS
-      uses: actions/setup-node@v3
+      uses: actions/setup-node@v4
       with:
-        node-version: '18'
+        node-version: '20'
         cache: 'yarn'
+        registry-url: 'https://registry.npmjs.org'
 
     - name: Git
       run: |
@@ -20,17 +17,8 @@ runs:
         git config --global user.email 'github-actions[bot]@users.noreply.github.com'
       shell: 'bash'
 
-    - name: Auth
-      if: ${{ inputs.NPM_TOKEN != 0 }}
-      run: |
-        echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> .npmrc
-        npm whoami
-      env:
-        NPM_TOKEN: ${{ inputs.NPM_TOKEN }}
-      shell: 'bash'
-
     - name: Restore cache
-      uses: actions/cache@v3
+      uses: actions/cache@v4
       with:
         path: '**/node_modules'
         key: ${{ runner.os }}-${{ hashFiles('**/yarn.lock') }}

@@ -478,6 +478,7 @@ export function createQuoteRequestBody(params: {
   affiliatePercent: number | null;
   affiliateWallets: { [key: string]: string } | null;
   destination?: string;
+  enableCentralizedSwappers?: boolean;
 }): BestRouteRequest {
   const {
     fromToken,
@@ -493,6 +494,7 @@ export function createQuoteRequestBody(params: {
     affiliatePercent,
     affiliateWallets,
     destination,
+    enableCentralizedSwappers,
   } = params;
   const selectedWalletsMap = selectedWallets?.reduce(
     (
@@ -544,6 +546,7 @@ export function createQuoteRequestBody(params: {
       ),
       swappersGroupsExclude: false,
     }),
+    enableCentralizedSwappers,
   };
   return requestBody;
 }
@@ -747,11 +750,7 @@ export function getLastConvertedTokenInFailedSwap(
 }
 
 export function shouldRetrySwap(pendingSwap: PendingSwap) {
-  return (
-    pendingSwap.status === 'failed' &&
-    !!pendingSwap.finishTime &&
-    new Date().getTime() - parseInt(pendingSwap.finishTime) < 4 * 3600 * 1000
-  );
+  return pendingSwap.status === 'failed';
 }
 
 export function confirmSwapDisabled(
@@ -773,5 +772,13 @@ export function confirmSwapDisabled(
       !!customDestination &&
       lastStepToBlockchain &&
       !isValidAddress(lastStepToBlockchain, customDestination))
+  );
+}
+
+export function isTokensIdentical(tokenA: Token, tokenB: Token) {
+  return (
+    tokenA.blockchain === tokenB.blockchain &&
+    tokenA.symbol === tokenB.symbol &&
+    tokenA.address === tokenB.address
   );
 }

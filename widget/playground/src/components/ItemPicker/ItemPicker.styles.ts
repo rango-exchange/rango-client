@@ -34,6 +34,9 @@ export const Container = styled('div', {
   display: 'flex',
   flexDirection: 'column',
   width: '100%',
+  '.title_typography': {
+    textTransform: 'capitalize',
+  },
 });
 
 export const Title = styled('div', {

@@ -44,8 +44,7 @@ export function LiquiditySourcePage({ sourceType }: PropTypes) {
     validTypes.push('DEX');
   }
   if (sourceType === 'Bridges') {
-    validTypes.push('BRIDGE');
-    validTypes.push('AGGREGATOR');
+    validTypes.push('BRIDGE', 'AGGREGATOR', 'OFF_CHAIN');
   }
 
   const liquiditySources = supportedUniqueSwappersGroups.filter((uniqueItem) =>
@@ -136,11 +135,13 @@ export function LiquiditySourcePage({ sourceType }: PropTypes) {
           fetchStatus === 'success' && (
             <LiquiditySourceList disabled={campaignMode}>
               {filteredList.map((sourceItem) => {
+                const { groupTitle, ...otherProps } = sourceItem;
+
                 return (
                   <React.Fragment key={sourceItem.id}>
                     <ListItemButton
                       style={{ height: '61px' }}
-                      {...sourceItem}
+                      {...otherProps}
                       selected={false}
                       hasDivider
                     />

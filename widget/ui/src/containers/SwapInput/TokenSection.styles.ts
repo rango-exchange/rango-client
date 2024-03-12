@@ -24,7 +24,7 @@ export const Container = styled(Button, {
   '&:hover': {
     $$color: '$colors$info100',
     [`.${darkTheme} &`]: {
-      $$color: '$colors$neutral400',
+      $$color: '$colors$neutral100',
     },
     backgroundColor: '$$color !important',
   },

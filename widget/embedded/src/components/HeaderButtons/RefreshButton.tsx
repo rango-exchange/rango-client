@@ -63,13 +63,14 @@ function RefreshButton({ onClick }: { onClick: (() => void) | undefined }) {
     <HeaderButton
       variant="ghost"
       size="small"
+      style={{ paddingTop: 0, paddingBottom: 0 }}
       onClick={handleRefreshClick}
       disabled={!onClick}>
       <ProgressIcon
         onTransitionEnd={() => setIsRefetched(false)}
         isRefetched={isRefetched}>
         <RefreshProgressButton
-          size={24}
+          size={22}
           color={!onClick ? 'gray' : 'black'}
           progress={(elapsedTime / MAX_ELAPSED_TIME) * MAX_PERCENTAGE}
         />

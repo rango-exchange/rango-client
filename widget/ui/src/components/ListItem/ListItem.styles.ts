@@ -35,6 +35,7 @@ export const BaseListItem = styled('li', {
       fontWeight: 'bold',
       display: 'flex',
       alignItems: 'center',
+      color: '$foreground',
     },
   },
   '.item-end-container': {
@@ -43,6 +44,7 @@ export const BaseListItem = styled('li', {
     alignItems: 'center',
     paddingLeft: '$10',
     overflow: 'hidden',
+    flexShrink: 0,
   },
   variants: {
     hasDivider: {

@@ -14,7 +14,6 @@ import { SelectBlockchainPage } from '../pages/SelectBlockchainPage';
 import { SelectSwapItemsPage } from '../pages/SelectSwapItemsPage';
 import { SettingsPage } from '../pages/SettingsPage';
 import { SwapDetailsPage } from '../pages/SwapDetailsPage';
-import { ThemePage } from '../pages/ThemePage';
 import { WalletsPage } from '../pages/WalletsPage';
 
 export function AppRoutes() {
@@ -68,10 +67,6 @@ export function AppRoutes() {
         {
           index: true,
           element: <SettingsPage />,
-        },
-        {
-          path: navigationRoutes.themes,
-          element: <ThemePage />,
         },
         {
           path: navigationRoutes.languages,

@@ -9,7 +9,6 @@ import { WC_PROJECT_ID } from './constants';
 export function App() {
   const [searchParams] = useSearchParams();
   const configRef = useRef<WidgetConfig>();
-
   const configParam = searchParams.get('config');
 
   let config: WidgetConfig | undefined = undefined;

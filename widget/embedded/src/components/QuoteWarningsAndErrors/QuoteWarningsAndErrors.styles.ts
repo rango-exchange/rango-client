@@ -8,7 +8,7 @@ export const Flex = styled('div', {
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'flex-start',
-  gap: 10,
+  gap: '$5',
   width: '100%',
 });
 

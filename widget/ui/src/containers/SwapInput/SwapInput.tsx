@@ -58,7 +58,7 @@ export function SwapInput(props: SwapInputProps) {
                 variant="default"
                 size="xsmall"
                 onClick={props.onSelectMaxBalance}>
-                <Typography variant="body" size="xsmall" color="secondary500">
+                <Typography variant="body" size="xsmall">
                   {i18n.t('Max')}
                 </Typography>
               </MaxButton>
@@ -120,7 +120,7 @@ export function SwapInput(props: SwapInputProps) {
               </Tooltip>
               {'percentageChange' in props ? (
                 <PriceImpact
-                  size="large"
+                  size="medium"
                   tooltipProps={{
                     container: props.tooltipContainer,
                     side: 'bottom',

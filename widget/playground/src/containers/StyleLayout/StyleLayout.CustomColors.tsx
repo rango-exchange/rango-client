@@ -54,11 +54,9 @@ export function CustomColorsSection(props: CustomColorsTypes) {
 
   const [openCustomColor, setOpenCustomColor] = useState<string | null>(null);
   const onChangeColors = useConfigStore.use.onChangeColors();
-  const onChangeTheme = useConfigStore.use.onChangeTheme();
   const isAutoTab = tab === 'auto';
-
+  const singleTheme = !isAutoTab;
   const { theme } = useConfigStore.use.config();
-  const [selectedColorTab, setSelectedColorTab] = useState<Mode>(tab);
 
   const isOpenCustomColors =
     tab === openCustomColors.tab && openCustomColors.value;
@@ -74,34 +72,20 @@ export function CustomColorsSection(props: CustomColorsTypes) {
     setOpenCustomColor(null);
   }, [tab]);
 
-  const onChangeColor = (
-    name: WidgetColorsKeys,
-    mode: 'light' | 'dark',
-    color?: string
-  ) => {
-    const resetColors = selectedColorTab !== tab;
-    setSelectedColorTab(tab);
-
-    onChangeTheme({ name: 'mode', value: tab });
+  const onResetColor = (name: WidgetColorsKeys, mode: 'light' | 'dark') => {
+    const color = !!selectedPreset ? selectedPreset[mode][name] : undefined;
     onChangeColors({
       name,
       mode,
       color,
-      singleTheme: !isAutoTab,
-      resetColors,
+      singleTheme,
     });
-  };
-
-  const onResetColor = (name: WidgetColorsKeys, mode: 'light' | 'dark') => {
-    const color = !!selectedPreset ? selectedPreset[mode][name] : undefined;
-    onChangeColor(name, mode, color);
   };
 
   useEffect(() => {
     if (
       !shallowEqual(theme?.colors?.dark || {}, selectedPreset?.dark || {}) &&
-      !shallowEqual(theme?.colors?.light || {}, selectedPreset?.light || {}) &&
-      selectedColorTab === tab
+      !shallowEqual(theme?.colors?.light || {}, selectedPreset?.light || {})
     ) {
       onResetPreset();
     }
@@ -112,6 +96,11 @@ export function CustomColorsSection(props: CustomColorsTypes) {
     (tab === 'light' && !!selectedPreset?.dark?.primary) || // The light tab and a system or dark theme is selected
     (tab === 'dark' && !!selectedPreset?.light?.primary); // The dark tab and a system or light theme is selected
 
+  useEffect(() => {
+    if (isCustomColorDisabled) {
+      setOpenCustomColor(null);
+    }
+  }, [isCustomColorDisabled]);
   return (
     <Collapsible
       open={isOpenCustomColors && !isCustomColorDisabled}
@@ -183,7 +172,12 @@ export function CustomColorsSection(props: CustomColorsTypes) {
                   placeholder={widgetColor.label}
                   color={getMainColor(widgetColor.key, tab, theme, 'light')}
                   onChangeColor={(color) =>
-                    onChangeColor(widgetColor.key, 'light', color)
+                    onChangeColors({
+                      name: widgetColor.key,
+                      mode: 'light',
+                      color,
+                      singleTheme,
+                    })
                   }
                   onReset={() => onResetColor(widgetColor.key, 'light')}
                   resetDisable={
@@ -198,7 +192,12 @@ export function CustomColorsSection(props: CustomColorsTypes) {
                   placeholder={widgetColor.label}
                   color={getMainColor(widgetColor.key, tab, theme, 'dark')}
                   onChangeColor={(color) =>
-                    onChangeColor(widgetColor.key, 'dark', color)
+                    onChangeColors({
+                      name: widgetColor.key,
+                      mode: 'dark',
+                      color,
+                      singleTheme,
+                    })
                   }
                   resetDisable={
                     getMainColor(widgetColor.key, tab, theme, 'dark') ===
@@ -213,7 +212,12 @@ export function CustomColorsSection(props: CustomColorsTypes) {
                 placeholder={widgetColor.label}
                 color={getMainColor(widgetColor.key, tab, theme) || ''}
                 onChangeColor={(color) =>
-                  onChangeColor(widgetColor.key, tab, color)
+                  onChangeColors({
+                    name: widgetColor.key,
+                    mode: tab,
+                    color,
+                    singleTheme,
+                  })
                 }
                 onReset={() => onResetColor(widgetColor.key, tab)}
                 resetDisable={

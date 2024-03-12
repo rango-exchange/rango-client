@@ -28,4 +28,5 @@ export type CustomColorsTypes = {
 export enum ModalState {
   DEFAULT_FONT = 'font',
   DEFAULT_LANGUAGE = 'language',
+  DEFAULT_VARIANT = 'variant',
 }

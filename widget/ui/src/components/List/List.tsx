@@ -7,12 +7,11 @@ import { ListItem } from '../ListItem';
 import { BaseList } from './List.styles';
 
 function List(props: ListPropTypes) {
-  const container = props.type;
-
   return (
     <BaseList as={props.as}>
       {props.items.map((item) => {
-        const { id, ...itemProps } = item;
+        const { id, type, ...itemProps } = item;
+        const container = type || props.type;
 
         if (!!container) {
           return React.cloneElement(container, {

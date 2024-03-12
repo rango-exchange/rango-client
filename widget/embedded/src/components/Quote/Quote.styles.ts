@@ -55,19 +55,6 @@ export const QuoteContainer = styled(Collapsible.Root, {
         backgroundColor: '$$color',
       },
     },
-    {
-      listItem: true,
-      selected: false,
-      css: {
-        cursor: 'pointer',
-        '&:hover': {
-          backgroundColor: '$neutral300',
-          [`.${darkTheme} &`]: {
-            backgroundColor: '$neutral400',
-          },
-        },
-      },
-    },
   ],
 });
 
@@ -107,6 +94,18 @@ export const SummaryContainer = styled('div', {
         },
         backgroundColor: '$$color',
         '&:hover': {
+          '& .quote_container': {
+            '& button': {
+              backgroundColor: '$neutral500',
+              [`.${darkTheme} &`]: {
+                backgroundColor: '$neutral200',
+              },
+            },
+            backgroundColor: '$neutral500',
+            [`.${darkTheme} &`]: {
+              backgroundColor: '$neutral200',
+            },
+          },
           backgroundColor: '$neutral300',
           [`.${darkTheme} &`]: {
             backgroundColor: '$neutral400',
@@ -123,7 +122,7 @@ export const SummaryContainer = styled('div', {
       listItem: true,
       selected: true,
       css: {
-        border: '1px solid $secondary',
+        outline: '1px solid $secondary',
       },
     },
     {
@@ -365,13 +364,6 @@ export const MoreStep = styled('div', {
   },
 });
 
-export const Tag = styled('div', {
-  backgroundColor: '$neutral400',
-  borderRadius: '$xs',
-  padding: '$2 $5',
-  fontSize: '$10',
-  fontWeight: 400,
-});
 export const TagContainer = styled('div', {
   display: 'flex',
 });
@@ -383,6 +375,6 @@ export const Line = styled('div', {
   borderTopColor: '$neutral',
   margin: '$5 0',
   [`.${darkTheme} &`]: {
-    borderTopColor: '$neutral400',
+    borderTopColor: '$neutral800',
   },
 });

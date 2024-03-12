@@ -1,4 +1,4 @@
-import { styled } from '@rango-dev/ui';
+import { darkTheme, ListItemButton, styled } from '@rango-dev/ui';
 
 export const Container = styled('div', {
   padding: '$10',
@@ -14,6 +14,19 @@ export const List = styled('ul', {
 
   '.to-chain-token': {
     transform: 'translateX(-3px)',
+  },
+});
+
+export const ListItem = styled(ListItemButton, {
+  variants: {
+    actionRequired: {
+      true: {
+        backgroundColor: '$error300',
+        [`.${darkTheme} &`]: {
+          backgroundColor: '$error600',
+        },
+      },
+    },
   },
 });
 

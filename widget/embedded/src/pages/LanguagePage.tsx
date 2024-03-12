@@ -1,5 +1,7 @@
 import { i18n } from '@lingui/core';
 import {
+  Alert,
+  Divider,
   List,
   ListItemButton,
   Radio,
@@ -10,9 +12,11 @@ import React from 'react';
 
 import { Layout, PageContainer } from '../components/Layout';
 import { useLanguage } from '../hooks/useLanguage';
+import { useNavigateBack } from '../hooks/useNavigateBack';
 
 export function LanguagePage() {
   const { activeLanguage, changeLanguage, languages } = useLanguage();
+  const navigateBack = useNavigateBack();
 
   const languageList = languages.map((languageItem) => {
     const { local, label, SVGFlag } = languageItem;
@@ -24,7 +28,10 @@ export function LanguagePage() {
           {label}
         </Typography>
       ),
-      onClick: () => changeLanguage(languageItem.local),
+      onClick: () => {
+        changeLanguage(languageItem.local);
+        navigateBack();
+      },
       end: <Radio value={local} />,
       start: <SVGFlag />,
     };
@@ -36,6 +43,12 @@ export function LanguagePage() {
         title: i18n.t('Language'),
       }}>
       <PageContainer>
+        <Alert
+          type="warning"
+          variant="alarm"
+          title="Important Notice: Machine translations are in use"
+        />
+        <Divider size={'8'} />
         <RadioRoot value={activeLanguage}>
           <List
             type={

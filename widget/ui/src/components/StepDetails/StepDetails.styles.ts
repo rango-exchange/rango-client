@@ -69,7 +69,7 @@ export const Alerts = styled('div', {
 });
 
 export const DashedLine = styled('div', {
-  borderLeft: '1px dashed black',
+  borderLeft: '1px dashed $foreground',
   minHeight: '64px',
   margin: '0 11.5px',
   alignSelf: 'stretch',

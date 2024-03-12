@@ -27,6 +27,7 @@ export const Container = styled('div', {
     height: '100vh',
     padding: '$20',
     flexDirection: 'row',
+    overflow: 'clip',
   },
 });
 
@@ -38,7 +39,7 @@ export const Main = styled('div', {
   flexDirection: 'column',
   display: 'flex',
   width: '100%',
-  overflowY: 'clip',
+  overflow: 'clip',
 });
 
 export const HeaderContainer = styled('div', {
@@ -66,51 +67,17 @@ export const ResetButton = styled(StyledButton, {
 export const Content = styled('div', {
   flex: '1 1 0%',
   overflow: 'auto',
-  display: 'flex',
-  justifyContent: 'safe center',
-  alignItems: 'center',
-  flexDirection: 'column',
-});
-
-export const BoundaryGuide = styled('div', {
-  borderStyle: 'dashed',
-  borderColor: '$neutral600',
-  borderRadius: '20px',
-  display: 'flex',
-  transition: 'height .5s ease-in-out, border-width .5s ease-in-out',
-  variants: {
-    visible: {
-      true: {
-        height: '700px',
-        borderWidth: '$1',
-      },
-      false: {
-        height: 0,
-        borderWidth: 0,
-      },
-    },
-  },
-});
-
-export const BoundarySize = styled('div', {
-  display: 'flex',
-  padding: '$6 0',
-  width: '100%',
-  variants: {
-    side: {
-      left: {
-        justifyContent: 'flex-start',
-      },
-      right: {
-        justifyContent: 'flex-end',
-      },
-    },
-  },
+  padding: '$10',
 });
 
 export const MobileSection = styled('div', {
   background:
-    'linear-gradient(to right bottom, $colors$info100 3%,  $neutral100 94%, $colors$info100 97%)',
+    'linear-gradient(to right bottom, $info300 0%, $neutral100 30%, $neutral100 70%, $info300 100%)',
+
+  [`.${darkTheme} &`]: {
+    background:
+      'linear-gradient(to right bottom, $secondary900 0%, $neutral100 30%, $neutral100 70%, $secondary900 100%)',
+  },
   display: 'flex',
   minHeight: '100vh',
   flexDirection: 'column',

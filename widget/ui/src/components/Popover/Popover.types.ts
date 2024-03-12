@@ -20,6 +20,8 @@ export interface ContentType {
   styles?: {
     arrowStyles?: CSS;
   };
+  hasArrow?: boolean;
+  onOpenChange?: (open: boolean) => void;
 }
 
 export type PropTypes = ContentType & {

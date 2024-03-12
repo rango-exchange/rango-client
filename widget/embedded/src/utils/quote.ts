@@ -1,10 +1,11 @@
 /* eslint-disable @typescript-eslint/no-magic-numbers */
 import type { QuoteWarning, SelectedQuote, Wallet } from '../types';
-import type { PriceImpactWarningLevel, Step } from '@rango-dev/ui';
 import type {
+  PriceImpactWarningLevel,
   SimulationAssetAndAmount,
   SimulationValidationStatus,
-} from '@rango-dev/ui/dist/widget/ui/src/types/swaps';
+  Step,
+} from '@rango-dev/ui';
 import type {
   Asset,
   BlockchainMeta,
@@ -12,7 +13,6 @@ import type {
   MultiRouteSimulationResult,
   PreferenceType,
   RouteTag,
-  TagValue,
   Token,
 } from 'rango-sdk';
 import type { PendingSwap } from 'rango-types';
@@ -371,20 +371,4 @@ export const sortTags = (tags: RouteTag[]): RouteTag[] => {
   };
 
   return tags.sort(customSort);
-};
-
-export const getRouteTagColor = (tag: TagValue): string => {
-  switch (tag) {
-    case 'FASTEST':
-      return '#06C270';
-    case 'RECOMMENDED':
-      return '#469BF5';
-    case 'LOWEST_FEE':
-      return '#FF4DAD';
-    case 'HIGH_IMPACT':
-      return '#FF3B3B';
-    case 'CENTRALIZED':
-    default:
-      return '#FFF1D4';
-  }
 };

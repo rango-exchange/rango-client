@@ -1,89 +1,64 @@
+import type { SelectedQuote } from '../types';
+
 import { i18n } from '@lingui/core';
-import { Button, Divider, styled, SwapInput, WarningIcon } from '@rango-dev/ui';
+import { Button, Divider, styled, WarningIcon } from '@rango-dev/ui';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { HeaderButtons } from '../components/HeaderButtons';
 import { Layout, PageContainer } from '../components/Layout';
 import { QuoteWarningsAndErrors } from '../components/QuoteWarningsAndErrors';
-import { SwitchFromAndToButton } from '../components/SwitchFromAndTo';
-import { errorMessages } from '../constants/errors';
 import { navigationRoutes } from '../constants/navigationRoutes';
-import {
-  PERCENTAGE_CHANGE_MAX_DECIMALS,
-  PERCENTAGE_CHANGE_MIN_DECIMALS,
-  TOKEN_AMOUNT_MAX_DECIMALS,
-  TOKEN_AMOUNT_MIN_DECIMALS,
-  USD_VALUE_MAX_DECIMALS,
-  USD_VALUE_MIN_DECIMALS,
-} from '../constants/routing';
+import { ExpandedQuotes } from '../containers/ExpandedQuotes';
+import { Inputs } from '../containers/Inputs';
 import { QuoteInfo } from '../containers/QuoteInfo';
+import useScreenDetect from '../hooks/useScreenDetect';
 import { useSwapInput } from '../hooks/useSwapInput';
 import { useAppStore } from '../store/AppStore';
 import { useQuoteStore } from '../store/quote';
 import { useUiStore } from '../store/ui';
 import { useWalletsStore } from '../store/wallets';
-import { getContainer } from '../utils/common';
-import { formatTooltipNumbers, numberToString } from '../utils/numbers';
-import { getPriceImpact, getPriceImpactLevel } from '../utils/quote';
-import { canComputePriceImpact, getSwapButtonState } from '../utils/swap';
-import { formatBalance, isFetchingBalance } from '../utils/wallets';
+import { isVariantExpandable } from '../utils/configs';
+import { getSwapButtonState, isTokensIdentical } from '../utils/swap';
 
-const FromContainer = styled('div', {
-  position: 'relative',
+const MainContainer = styled('div', {
+  display: 'grid',
+  gridTemplateColumns: 'auto auto',
+  alignItems: 'flex-start',
+  maxHeight: 700,
+  '& .footer__alert': {
+    paddingTop: '0',
+  },
 });
+export const TIME_TO_NAVIGATE_ANOTHER_PAGE = 300;
 
-const InputsContainer = styled('div', {
-  display: 'flex',
-  flexDirection: 'column',
-  gap: 5,
-  alignSelf: 'stretch',
-});
 export function Home() {
   const navigate = useNavigate();
   const {
     fromToken,
-    fromBlockchain,
     toToken,
-    toBlockchain,
-    setInputAmount,
     inputAmount,
-    inputUsdValue,
-    outputAmount,
-    outputUsdValue,
     selectedQuote,
     refetchQuote,
     error: quoteError,
     warning: quoteWarning,
     quotes,
+    setSelectedQuote,
     resetQuoteWallets,
     setQuoteWarningsConfirmed,
     updateQuotePartialState,
   } = useQuoteStore();
-  const { fetch: fetchQuote, loading } = useSwapInput({ refetchQuote });
+  const [isVisibleExpanded, setIsVisibleExpanded] = useState<boolean>(false);
+  const { isLargeScreen, isExtraLargeScreen } = useScreenDetect();
 
+  const { fetch: fetchQuote, loading } = useSwapInput({ refetchQuote });
   const { config, fetchStatus: fetchMetaStatus } = useAppStore();
 
-  const { connectedWallets, getBalanceFor } = useWalletsStore();
+  const { connectedWallets } = useWalletsStore();
   const { isActiveTab } = useUiStore();
   const [showQuoteWarningModal, setShowQuoteWarningModal] = useState(false);
-  const fetchingBalance =
-    !!fromBlockchain &&
-    isFetchingBalance(connectedWallets, fromBlockchain.name);
 
   const needsToWarnEthOnPath = false;
-
-  const priceImpactInputCanNotBeComputed = !canComputePriceImpact(
-    selectedQuote,
-    inputAmount,
-    inputUsdValue
-  );
-
-  const priceImpactOutputCanNotBeComputed = !canComputePriceImpact(
-    selectedQuote,
-    inputAmount,
-    outputUsdValue
-  );
 
   const swapButtonState = getSwapButtonState({
     fetchMetaStatus,
@@ -96,203 +71,166 @@ export function Home() {
     needsToWarnEthOnPath,
   });
 
-  const fromTokenBalance = fromToken ? getBalanceFor(fromToken) : null;
+  const isExpandable = isVariantExpandable(
+    isLargeScreen,
+    isExtraLargeScreen,
+    config?.variant
+  );
 
-  const fromTokenFormattedBalance =
-    formatBalance(fromTokenBalance)?.amount ?? '0';
-
-  const tokenBalanceReal =
-    !!fromBlockchain && !!fromToken && fromTokenBalance?.amount
-      ? numberToString(fromTokenBalance?.amount, fromTokenBalance?.decimals)
-      : '0';
-
-  const fetchingQuote =
-    fetchMetaStatus === 'success' &&
+  const hasInputs =
     !!inputAmount &&
     !!fromToken &&
     !!toToken &&
-    loading;
+    inputAmount !== '0' &&
+    !isTokensIdentical(fromToken, toToken);
+
+  const fetchingQuote = hasInputs && fetchMetaStatus === 'success' && loading;
+
+  const hasValidQuotes =
+    !isExpandable || (isExpandable && quotes?.results.length);
+  const hasWarningOrError = quoteWarning || quoteError;
+  const showMessages = hasValidQuotes && hasWarningOrError;
 
   useEffect(() => {
     resetQuoteWallets();
     updateQuotePartialState('refetchQuote', true);
   }, []);
 
-  const percentageChange =
-    !inputUsdValue || !outputUsdValue || !outputUsdValue.gt(0)
-      ? null
-      : getPriceImpact(inputUsdValue.toString(), outputUsdValue.toString());
+  useEffect(() => {
+    setIsVisibleExpanded(hasInputs);
+  }, [hasInputs]);
+
+  const onClickRefresh =
+    (!!selectedQuote || quoteError) && !showQuoteWarningModal
+      ? fetchQuote
+      : undefined;
+
+  const onHandleNavigation = (route: string) => {
+    if (isExpandable && isVisibleExpanded) {
+      setIsVisibleExpanded(false);
+      setTimeout(() => {
+        navigate(route);
+      }, TIME_TO_NAVIGATE_ANOTHER_PAGE);
+    } else {
+      navigate(route);
+    }
+  };
+
+  const onClickOnQuote = (quote: SelectedQuote) => {
+    if (selectedQuote?.requestId !== quote.requestId) {
+      setShowQuoteWarningModal(false);
+      setSelectedQuote(quote);
+    }
+  };
 
   return (
-    <Layout
-      height="auto"
-      footer={
-        <Button
-          type="primary"
-          size="large"
-          disabled={swapButtonState.disabled || !isActiveTab}
-          prefix={
-            swapButtonState.action === 'confirm-warning' && <WarningIcon />
-          }
-          fullWidth
-          onClick={() => {
-            if (swapButtonState.action === 'connect-wallet') {
-              navigate(navigationRoutes.wallets);
-            } else if (swapButtonState.action === 'confirm-warning') {
-              setShowQuoteWarningModal(true);
-            } else {
-              navigate(navigationRoutes.confirmSwap);
+    <MainContainer>
+      <Layout
+        height="auto"
+        footer={
+          <Button
+            type="primary"
+            size="large"
+            disabled={swapButtonState.disabled || !isActiveTab}
+            prefix={
+              swapButtonState.action === 'confirm-warning' && <WarningIcon />
             }
-          }}>
-          {swapButtonState.title}
-        </Button>
-      }
-      header={{
-        onWallet: () => {
-          navigate(navigationRoutes.wallets);
-        },
-        hasBackButton: false,
-        title: config.title || i18n.t('Swap'),
-        suffix: (
-          <HeaderButtons
-            onClickRefresh={
-              (!!selectedQuote || quoteError) && !showQuoteWarningModal
-                ? fetchQuote
-                : undefined
-            }
-            onClickHistory={() => navigate(navigationRoutes.swaps)}
-            onClickSettings={() => navigate(navigationRoutes.settings)}
-          />
-        ),
-      }}>
-      <PageContainer>
-        <InputsContainer>
-          <FromContainer>
-            <SwapInput
-              label={i18n.t('From')}
-              mode="From"
-              onInputChange={setInputAmount}
-              balance={fromTokenFormattedBalance}
-              chain={{
-                displayName: fromBlockchain?.displayName || '',
-                image: fromBlockchain?.logo || '',
-              }}
-              token={{
-                displayName: fromToken?.symbol || '',
-                image: fromToken?.image || '',
-              }}
-              onClickToken={() => navigate(navigationRoutes.fromSwap)}
-              price={{
-                value: inputAmount,
-                usdValue: priceImpactInputCanNotBeComputed
-                  ? undefined
-                  : numberToString(
-                      inputUsdValue,
-                      USD_VALUE_MIN_DECIMALS,
-                      USD_VALUE_MAX_DECIMALS
-                    ),
-                realUsdValue: priceImpactInputCanNotBeComputed
-                  ? undefined
-                  : formatTooltipNumbers(inputUsdValue),
-                error: priceImpactInputCanNotBeComputed
-                  ? errorMessages().unknownPriceError.impactTitle
-                  : undefined,
-              }}
-              disabled={fetchMetaStatus === 'failed'}
-              loading={fetchMetaStatus === 'loading'}
-              loadingBalance={fetchingBalance}
-              tooltipContainer={getContainer()}
-              onSelectMaxBalance={() => {
-                setInputAmount(tokenBalanceReal.split(',').join(''));
+            fullWidth
+            onClick={() => {
+              if (swapButtonState.action === 'connect-wallet') {
+                onHandleNavigation(navigationRoutes.wallets);
+              } else if (swapButtonState.action === 'confirm-warning') {
+                setShowQuoteWarningModal(true);
+              } else {
+                onHandleNavigation(navigationRoutes.confirmSwap);
+              }
+            }}>
+            {swapButtonState.title}
+          </Button>
+        }
+        header={{
+          onWallet: () => {
+            onHandleNavigation(navigationRoutes.wallets);
+          },
+          hasBackButton: false,
+          title: config.title || i18n.t('Swap'),
+          suffix: (
+            <HeaderButtons
+              hidden={isExpandable ? ['refresh'] : undefined}
+              onClickRefresh={onClickRefresh}
+              onClickHistory={() => onHandleNavigation(navigationRoutes.swaps)}
+              onClickSettings={() => {
+                onHandleNavigation(navigationRoutes.settings);
               }}
             />
-            <SwitchFromAndToButton />
-          </FromContainer>
-          <SwapInput
-            sharpBottomStyle={!!selectedQuote || fetchingQuote}
-            label={i18n.t('To')}
-            mode="To"
+          ),
+        }}>
+        <PageContainer>
+          <Inputs
             fetchingQuote={fetchingQuote}
-            chain={{
-              displayName: toBlockchain?.displayName || '',
-              image: toBlockchain?.logo || '',
+            fetchMetaStatus={fetchMetaStatus}
+            isExpandable={isExpandable}
+            onClickToken={(mode) => {
+              onHandleNavigation(
+                mode === 'from'
+                  ? navigationRoutes.fromSwap
+                  : navigationRoutes.toSwap
+              );
             }}
-            token={{
-              displayName: toToken?.symbol || '',
-              image: toToken?.image || '',
-            }}
-            percentageChange={numberToString(
-              getPriceImpact(inputUsdValue, outputUsdValue),
-              PERCENTAGE_CHANGE_MIN_DECIMALS,
-              PERCENTAGE_CHANGE_MAX_DECIMALS
-            )}
-            warningLevel={getPriceImpactLevel(percentageChange ?? 0)}
-            price={{
-              value: numberToString(
-                outputAmount,
-                TOKEN_AMOUNT_MIN_DECIMALS,
-                TOKEN_AMOUNT_MAX_DECIMALS
-              ),
-              usdValue: priceImpactOutputCanNotBeComputed
-                ? undefined
-                : numberToString(
-                    outputUsdValue,
-                    USD_VALUE_MIN_DECIMALS,
-                    USD_VALUE_MAX_DECIMALS
-                  ),
-              realValue: formatTooltipNumbers(outputAmount),
-              realUsdValue: priceImpactOutputCanNotBeComputed
-                ? undefined
-                : formatTooltipNumbers(outputUsdValue),
-              error: priceImpactOutputCanNotBeComputed
-                ? errorMessages().unknownPriceError.impactTitle
-                : undefined,
-            }}
-            onClickToken={() => navigate(navigationRoutes.toSwap)}
-            disabled={fetchMetaStatus === 'failed'}
-            loading={fetchMetaStatus === 'loading'}
-            tooltipContainer={getContainer()}
           />
-        </InputsContainer>
-        <Divider size="2" />
-        <QuoteInfo
-          quote={selectedQuote}
-          loading={fetchingQuote}
-          error={quoteError}
-          tagHidden={false}
-          warning={quoteWarning}
-          type="basic"
-          onClickAllRoutes={
-            !!quotes && quotes.results.length > 1
-              ? () => {
-                  updateQuotePartialState('refetchQuote', false);
-                  navigate(navigationRoutes.routes);
-                }
-              : undefined
-          }
-        />
-        {quoteWarning || quoteError ? (
-          <>
-            <Divider size="10" />
-            <QuoteWarningsAndErrors
-              warning={quoteWarning}
-              error={quoteError}
+          <Divider size="2" />
+          {!isExpandable ? (
+            <QuoteInfo
+              quote={selectedQuote}
               loading={fetchingQuote}
-              refetchQuote={fetchQuote}
-              showWarningModal={showQuoteWarningModal}
-              confirmationDisabled={!isActiveTab}
-              onOpenWarningModal={() => setShowQuoteWarningModal(true)}
-              onCloseWarningModal={() => setShowQuoteWarningModal(false)}
-              onConfirmWarningModal={() => {
-                setShowQuoteWarningModal(false);
-                setQuoteWarningsConfirmed(true);
-                navigate(navigationRoutes.confirmSwap);
-              }}
-              onChangeSettings={() => navigate(navigationRoutes.settings)}
+              error={quoteError}
+              tagHidden={false}
+              warning={quoteWarning}
+              type="basic"
+              onClickAllRoutes={
+                !!quotes && quotes.results.length > 1
+                  ? () => {
+                      updateQuotePartialState('refetchQuote', false);
+                      onHandleNavigation(navigationRoutes.routes);
+                    }
+                  : undefined
+              }
             />
-          </>
-        ) : null}
-      </PageContainer>
-    </Layout>
+          ) : null}
+
+          {showMessages ? (
+            <>
+              <Divider size="10" />
+              <QuoteWarningsAndErrors
+                warning={quoteWarning}
+                error={quoteError}
+                refetchQuote={fetchQuote}
+                showWarningModal={showQuoteWarningModal}
+                confirmationDisabled={!isActiveTab}
+                onOpenWarningModal={() => setShowQuoteWarningModal(true)}
+                onCloseWarningModal={() => setShowQuoteWarningModal(false)}
+                onConfirmWarningModal={() => {
+                  setShowQuoteWarningModal(false);
+                  setQuoteWarningsConfirmed(true);
+                  onHandleNavigation(navigationRoutes.confirmSwap);
+                }}
+                onChangeSettings={() =>
+                  onHandleNavigation(navigationRoutes.settings)
+                }
+              />
+            </>
+          ) : null}
+        </PageContainer>
+      </Layout>
+      {isExpandable ? (
+        <ExpandedQuotes
+          loading={fetchingQuote}
+          onClickOnQuote={onClickOnQuote}
+          fetch={fetchQuote}
+          onClickRefresh={onClickRefresh}
+          isVisible={isVisibleExpanded}
+        />
+      ) : null}
+    </MainContainer>
   );
 }

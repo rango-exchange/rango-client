@@ -163,7 +163,16 @@ export async function publishCommitAndTags(pkgs) {
   body += '\n[skip ci]';
 
   // Making a publish commit
-  await execa('git', ['commit', '-m', message, '-m', body]).catch((error) => {
+  await execa('git', [
+    'commit',
+    '-m',
+    message,
+    '-m',
+    body,
+    // We need to pass no-verify to bypass commitlint.
+    // NOTE: it will bypass precommit and commit-msg hooks.
+    '--no-verify',
+  ]).catch((error) => {
     throw new GitError(`git commit failed. \n ${error.stderr}`);
   });
 
@@ -241,7 +250,6 @@ export async function checkout(branch) {
   return output;
 }
 
-
 export async function merge(branch, mergeOptions) {
   const { mergeStrategy = '' } = mergeOptions;
   const output = await execa('git', ['merge', mergeStrategy, branch])
@@ -252,7 +260,6 @@ export async function merge(branch, mergeOptions) {
 
   return output;
 }
-
 
 export async function getLastCommitId() {
   const commitId = await execa('git', ['log', '--format=%s', '-n', 1])

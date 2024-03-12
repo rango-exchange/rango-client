@@ -1,3 +1,4 @@
+import { EventSeverity } from '@rango-dev/queue-manager-rango-preset';
 import { Typography } from '@rango-dev/ui';
 import React from 'react';
 
@@ -8,10 +9,17 @@ import { NotificationsBadgeContainer } from './HeaderButtons.styles';
 export function UnreadNotificationsBadge() {
   const { getUnreadNotifications } = useNotificationStore();
 
-  const notificationsCount = getUnreadNotifications().length;
+  const notificationsList = getUnreadNotifications();
+
+  const notificationsCount = notificationsList.length;
+
+  const hasSeverNotification = !!notificationsList.find(
+    (notificationItem) =>
+      notificationItem.event.messageSeverity === EventSeverity.WARNING
+  );
 
   return notificationsCount ? (
-    <NotificationsBadgeContainer>
+    <NotificationsBadgeContainer isSever={hasSeverNotification}>
       <Typography variant="body" size="xsmall" color="$background">
         {notificationsCount}
       </Typography>

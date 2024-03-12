@@ -1,11 +1,11 @@
-import type { ConnectParams, CreateSessionParams, WCInstance } from './types';
+import type { ConnectParams, CreateSessionParams } from './types';
 import type { SignClient } from '@walletconnect/sign-client/dist/types/client';
 import type {
   PairingTypes,
   SessionTypes,
   SignClientTypes,
 } from '@walletconnect/types';
-import type { BlockchainMeta } from 'rango-types/lib';
+import type { BlockchainMeta } from 'rango-types';
 
 import { Networks, timeout } from '@rango-dev/wallets-shared';
 import { getSdkError } from '@walletconnect/utils';
@@ -14,8 +14,6 @@ import { AccountId } from 'caip';
 import { CHAIN_ID_STORAGE, PING_TIMEOUT } from './constants';
 import {
   generateOptionalNamespace,
-  generateRequiredNamespace,
-  getChainIdByNetworkName,
   getCurrentEvmAccountAddress,
   getEvmAccount,
   getModal,
@@ -34,11 +32,11 @@ export function getLastSession(client: SignClient) {
  */
 export async function restoreSession(
   client: SignClient,
-  pairing: PairingTypes.Struct
+  pairingTopic: PairingTypes.Struct['topic']
 ): Promise<SessionTypes.Struct | undefined> {
   await timeout(
     client.ping({
-      topic: pairing.topic,
+      topic: pairingTopic,
     }),
     PING_TIMEOUT
   );
@@ -133,27 +131,18 @@ export function tryGetPairing(
 export async function tryConnect(
   client: SignClient,
   params: ConnectParams
-): Promise<{ session: SessionTypes.Struct; isNew: boolean }> {
-  const { network, meta } = params;
+): Promise<SessionTypes.Struct> {
+  const { meta } = params;
 
-  const requiredNamespaces = generateRequiredNamespace(meta, network);
-  /**
-   * We try to get all of our supported chains as optional.
-   * Currently, it only works on Trust Wallet (Note: the response is buggy and only returns eip155 optional namespaces).
-   */
+  // We try to get all of our supported chains as optional.
   const optionalNamespaces = generateOptionalNamespace(meta);
 
-  if (!requiredNamespaces) {
-    throw new Error(`Couldn't generate required namespace for ${network}`);
-  }
-
   // Check if the user has a session, if yes, restore the session and use it.
-  let isNew = false;
   let session: SessionTypes.Struct | undefined;
   const pairing = tryGetPairing(client);
   if (pairing) {
     try {
-      session = await restoreSession(client, pairing);
+      session = await restoreSession(client, pairing.topic);
     } catch (e) {
       await disconnectSessions(client);
     }
@@ -162,67 +151,12 @@ export async function tryConnect(
   // In case of connecting for the first time or session couldn't be restored, we will create a new session.
   if (!session) {
     session = await createSession(client, {
-      requiredNamespaces,
+      requiredNamespaces: {},
       optionalNamespaces,
     });
-    isNew = true;
   }
 
-  return { session, isNew };
-}
-
-/**
- * Wallet connect is a multichain protocol and we can not determine the connected wallet
- * supports which wallet, `extend`ing session doesn't work during a bug in their utils packages.
- * So we will try to make a new session with `network` that user needs to switch.
- */
-export async function trySwitchByCreatingNewSession(
-  instance: WCInstance,
-  params: ConnectParams
-): Promise<SessionTypes.Struct> {
-  const { client, session } = instance;
-  const { network, meta } = params;
-
-  if (!session) {
-    throw new Error(
-      'For switching network, you need to have an active session!'
-    );
-  }
-
-  // If a session has the chain id in its namespace, we can use that session.
-  const chainId = getChainIdByNetworkName(network, params.meta) || network;
-  const requestedSession = getSessionByChainId(client, chainId);
-  if (requestedSession) {
-    return requestedSession;
-  }
-
-  // Creating a new session for requested network.
-  const requiredNamespaces = generateRequiredNamespace(meta, network);
-  if (!requiredNamespaces) {
-    throw new Error(`Couldn't generate requiredNamespaces for ${network}`);
-  }
-
-  const createdSession = await createSession(client, { requiredNamespaces });
-
-  return createdSession;
-}
-
-/**
- *
- * Looking for a chainId in sessions and return the session if found.
- *
- */
-function getSessionByChainId(
-  client: WCInstance['client'],
-  chainId: string
-): SessionTypes.Struct | undefined {
-  const sessions = client.session.getAll();
-  const requestedSession = sessions.find((session) => {
-    const accounts = getAccountsFromSession(session);
-    return accounts.find((account) => account.chainId === chainId);
-  });
-
-  return requestedSession;
+  return session;
 }
 
 /**
@@ -277,13 +211,13 @@ export async function disconnectSessions(client: SignClient) {
     );
   }
 
+  // reset the current chain id
+  void persistCurrentChainId(client, undefined);
+
   return await Promise.all(allPromises);
 }
 
-export function getAccountsFromSession(
-  session: SessionTypes.Struct,
-  chainId?: string
-) {
+export function getAccountsFromSession(session: SessionTypes.Struct) {
   const accounts = Object.values(session.namespaces)
     .map((namespace) => namespace.accounts)
     .flat()
@@ -295,24 +229,10 @@ export function getAccountsFromSession(
        */
       const chain = solanaChainIdToNetworkName(chainId.reference);
       return {
-        accounts: [address],
+        address,
         chainId: chain,
       };
-    })
-    // TODO: fix, ignore solana and cosmos for now
-    .filter((account) => account.chainId !== Networks.SOLANA);
-  // sort accounts, so connected chain is first item in array
-  if (!!chainId) {
-    accounts.sort((a, b) => {
-      if (a.chainId === chainId) {
-        return 1;
-      }
-      if (b.chainId === chainId) {
-        return -1;
-      }
-      return 0;
     });
-  }
   return accounts;
 }
 
@@ -393,22 +313,39 @@ export async function updateSessionAccounts(
 }
 
 /*
- * For some wallet e.g. Trust Wallet Mobile which doesn't support
- * RPC method for switch network, we need to recreate session
+ * Certain wallets, such as Trust Wallet and 1inch, are providing incorrect methods in
+ * response to session proposal requests. These wallets do not support certain optional
+ * RPC methods like "wallet_xyz," but they include them in the response under the session namespace.
+ * For the time being, we should avoid their session namespace response.
+ * see also: https://github.com/trustwallet/wallet-core/issues/3588
  */
-export function needSessionRecreateOnSwitchNetwork(instance: any): boolean {
-  const TRUST_WALLET_KEYWORD = 'trust';
+export function ignoreNamespaceMethods(instance: any): boolean {
+  const WALLETS_WITH_WRONG_NAMESPACE_METHODS = ['trust', '1inch'];
   const peerName = instance?.session?.peer?.metadata?.name;
-  return peerName?.toLowerCase()?.includes(TRUST_WALLET_KEYWORD);
+  return WALLETS_WITH_WRONG_NAMESPACE_METHODS.some((name) =>
+    peerName?.toLowerCase()?.includes(name)
+  );
 }
 
-export function persistCurrentChainId(instance: any, chainId: string) {
-  return instance.client.core.storage.setItem(CHAIN_ID_STORAGE, {
-    defaultChainId: parseInt(chainId),
+export async function persistCurrentChainId(
+  client: SignClient,
+  chainId?: string
+) {
+  return client.core.storage.setItem(CHAIN_ID_STORAGE, {
+    defaultChainId: chainId ? parseInt(chainId) : '',
   });
 }
 
-export async function getPersistedChainId(instance: any) {
-  return (await instance.client.core.storage.getItem(CHAIN_ID_STORAGE))
-    ?.defaultChainId;
+/*
+ * get the latest chain id from the storage,
+ * used for setting current chain id in session reconnect.
+ */
+export async function getPersistedChainId(client: SignClient) {
+  try {
+    const chainId = (await client.core.storage.getItem(CHAIN_ID_STORAGE))
+      ?.defaultChainId;
+    return !!chainId ? String(chainId) : undefined;
+  } catch {
+    return undefined;
+  }
 }

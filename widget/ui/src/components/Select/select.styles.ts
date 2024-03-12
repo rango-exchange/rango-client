@@ -9,92 +9,88 @@ export const SelectTrigger = styled(Select.Trigger, {
   justifyContent: 'space-between',
   alignItems: 'center',
   cursor: 'pointer',
-  backgroundColor: '$secondary',
-  padding: '$5 $10',
-  border: 0,
+  outline: 0,
   whiteSpace: 'nowrap',
-
+  width: '100%',
   '& svg': {
     transition: `all ${EXPANDABLE_QUOTE_TRANSITION_DURATION}ms ease`,
   },
-
+  '& ._typography': {
+    whiteSpace: 'nowrap',
+  },
   variants: {
     open: {
       true: {
-        borderTopLeftRadius: '$sm',
-        borderTopRightRadius: '$sm',
-        '& ._typography, & svg': {
-          color: '$secondary',
-        },
-
         '& svg': {
           transform: 'rotate(180deg)',
         },
-        backgroundColor: '$neutral100',
-        [`.${darkTheme} &`]: {
-          backgroundColor: '$neutral300',
-        },
       },
       false: {
-        borderRadius: '$md',
-        '& ._typography, & svg': {
-          color: '$background',
-          [`.${darkTheme} &`]: {
-            color: '$foreground',
-          },
-        },
         '& svg': {
           transform: 'rotate(0)',
         },
       },
     },
-  },
-  width: '100%',
-  '& ._typography': {
-    whiteSpace: 'nowrap',
-    overflow: 'hidden',
-    textOverflow: 'ellipsis',
-    width: '52px',
-    '@xs': {
-      width: 'auto',
+    variant: {
+      filled: {
+        border: 0,
+        borderRadius: '$sm',
+        padding: '$5 $10',
+        backgroundColor: '$neutral300',
+        [`.${darkTheme} &`]: {
+          backgroundColor: '$neutral400',
+        },
+        '&:hover': {
+          backgroundColor: '$info100',
+          [`.${darkTheme} &`]: {
+            backgroundColor: '$neutral',
+          },
+        },
+      },
+      outlined: {
+        backgroundColor: 'transparent',
+        padding: '$10',
+        border: '1px solid $neutral300',
+        borderRadius: '$xm',
+        '&:hover': {
+          borderColor: '$info300',
+          '& svg': {
+            color: '$secondary500',
+          },
+        },
+      },
     },
   },
 });
 
 export const SelectContent = styled(Select.Content, {
-  padding: '$5 $10',
-  width: '100%',
-  position: 'absolute',
-  top: '38px',
-  maxHeight: '146px',
+  width: 'var(--radix-select-trigger-width)',
+  maxHeight: 'var(--radix-select-content-available-height)',
   overflowY: 'auto',
-  borderBottomLeftRadius: '$sm',
-  borderBottomRightRadius: '$sm',
+  borderRadius: '$sm',
   boxShadow: '-5px 5px 10px 0px rgba(86, 86, 86, 0.10)',
-  backgroundColor: '$neutral100',
-  [`.${darkTheme} &`]: {
-    backgroundColor: '$neutral300',
-  },
+  backgroundColor: '$background',
 });
 
 export const SelectItem = styled(Select.Item, {
-  padding: '$10 0',
-  borderTop: '1px solid',
-  borderColor: '$neutral300',
-  [`.${darkTheme} &`]: {
-    borderColor: '$neutral400',
-  },
+  padding: '$10',
   listStyleType: 'none',
+  display: 'flex',
+  justifyContent: 'space-between',
+  alignItems: 'center',
   cursor: 'pointer',
-  '&:hover': {
-    '& ._typography': {
-      color: '$colors$secondary',
-    },
-  },
   '&:focus': {
     outline: 'none',
-    '& ._typography': {
-      color: '$colors$secondary',
+  },
+
+  '&:hover': {
+    backgroundColor: '$info100',
+    '& ._text': {
+      color: '$secondary500',
+    },
+    [`.${darkTheme} &`]: {
+      backgroundColor: '$neutral',
+      color: '$secondary500',
     },
   },
 });

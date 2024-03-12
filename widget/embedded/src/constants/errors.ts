@@ -31,7 +31,7 @@ export const errorMessages = () => {
       impactTitle: i18n.t('High Price Impact'),
       title: i18n.t('Price impact is too high!'),
       description: i18n.t(
-        'The price impact is significantly higher than the allowed amount. If you are sure, continue, otherwise, change the swap.'
+        'The price impact is significantly higher than the allowed amount.'
       ),
       confirmMessage: i18n.t('Confirm high price impact'),
     },
