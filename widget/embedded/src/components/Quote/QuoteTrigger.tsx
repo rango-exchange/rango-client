@@ -9,8 +9,9 @@ import {
   Tooltip,
   Typography,
 } from '@rango-dev/ui';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 
+import useScreenDetect from '../../hooks/useScreenDetect';
 import { getContainer } from '../../utils/common';
 import { getUniqueBlockchains } from '../../utils/quote';
 
@@ -24,7 +25,6 @@ import {
 
 const MAX_STEPS = 4;
 const MAX_BLOCKCHAINS = 6;
-const MIN_WIDTH_WINDOW = 375;
 
 const ImageComponent = (props: QuoteTriggerImagesProps) => {
   const tooltipContainer = getContainer();
@@ -48,20 +48,7 @@ export function QuoteTrigger(props: QuoteTriggerProps) {
   const tooltipContainer = getContainer();
   const numberOfSteps = steps.length;
   const blockchains = getUniqueBlockchains(steps);
-  const [isMobile, setIsMobile] = useState(false);
-
-  //choose the screen size
-  const handleResize = () => {
-    if (window.innerWidth < MIN_WIDTH_WINDOW) {
-      setIsMobile(true);
-    } else {
-      setIsMobile(false);
-    }
-  };
-
-  useEffect(() => {
-    window.addEventListener('resize', handleResize);
-  });
+  const { isTablet, isMobile } = useScreenDetect();
 
   return (
     <Trigger
@@ -85,15 +72,15 @@ export function QuoteTrigger(props: QuoteTriggerProps) {
             </IconContainer>
           );
 
-          return isMobile ? (
-            <>
+          return isMobile || isTablet ? (
+            <React.Fragment key={key}>
               <ImageComponent
                 content={step.swapper.displayName}
                 src={step.swapper.image}
                 state={step.state}
               />
               {index !== numberOfSteps - 1 && <>{arrow}</>}
-            </>
+            </React.Fragment>
           ) : (
             <React.Fragment key={key}>
               {numberOfSteps <= MAX_STEPS ||
@@ -161,17 +148,22 @@ export function QuoteTrigger(props: QuoteTriggerProps) {
             </Typography>
             <Divider direction="horizontal" size={4} />
             {blockchains.map((blockchain, index) => (
-              <>
+              <React.Fragment key={blockchain.displayName}>
                 {blockchains.length <= MAX_BLOCKCHAINS ||
                 (blockchains.length > MAX_BLOCKCHAINS &&
                   index < MAX_BLOCKCHAINS - 1) ? (
-                  <ImageComponent
-                    key={blockchain.displayName}
-                    content={''}
-                    src={blockchain.image}
-                    open={false}
-                    className={index !== 0 ? 'blockchainImage' : ''}
-                  />
+                  <Tooltip
+                    container={tooltipContainer}
+                    side="bottom"
+                    content={blockchain.displayName}
+                    sideOffset={4}>
+                    <ImageComponent
+                      content={''}
+                      src={blockchain.image}
+                      open={false}
+                      className={index !== 0 ? 'blockchainImage' : ''}
+                    />
+                  </Tooltip>
                 ) : (
                   index === MAX_BLOCKCHAINS - 1 && (
                     <Tooltip
@@ -203,7 +195,7 @@ export function QuoteTrigger(props: QuoteTriggerProps) {
                     </Tooltip>
                   )
                 )}
-              </>
+              </React.Fragment>
             ))}
 
             <Divider direction="horizontal" size={32} />

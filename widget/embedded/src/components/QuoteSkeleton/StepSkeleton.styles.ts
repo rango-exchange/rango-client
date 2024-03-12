@@ -11,6 +11,13 @@ export const StepTokens = styled('div', {
   paddingBottom: '$10',
   display: 'flex',
   alignItems: 'center',
+  variants: {
+    extraSpace: {
+      true: {
+        paddingBottom: '$40',
+      },
+    },
+  },
 });
 
 export const StepTokenInfo = styled('div', {

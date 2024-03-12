@@ -1,6 +1,6 @@
+import type { CSS } from '../../theme';
 import type { BaseAlign } from '../Typography/Typography.types';
 import type { ReactNode } from 'react';
-import type { CSS } from 'src/theme';
 
 export type Type = 'success' | 'warning' | 'error' | 'info' | 'loading';
 

@@ -1,15 +1,31 @@
 import { styled } from '@rango-dev/ui';
 
 export const Container = styled('div', {
-  minHeight: '162px',
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
-  justifyContent: 'center',
+});
+
+export const ErrorDescription = styled('div', {
+  variants: {
+    size: {
+      small: {},
+      large: {
+        maxWidth: '316px',
+      },
+    },
+  },
 });
 
 export const Footer = styled('div', {
-  width: '100%',
+  variants: {
+    size: {
+      small: {
+        width: '100%',
+      },
+      large: {},
+    },
+  },
 });
 
 export const PrefixIcon = styled('div', {

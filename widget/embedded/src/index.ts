@@ -7,6 +7,7 @@ import type {
   WidgetColorsKeys,
   WidgetConfig,
   WidgetTheme,
+  WidgetVariant,
 } from './types';
 import type {
   PendingSwapWithQueueID,
@@ -89,6 +90,7 @@ export type {
   HandleWalletsUpdate,
   ConnectedWallet,
   Tokens,
+  WidgetVariant,
 };
 export {
   Widget,

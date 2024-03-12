@@ -47,7 +47,7 @@ export const connect: Connect = async ({ instance, meta }) => {
   if (tronInstance) {
     const res = await tronInstance.request({ method: 'tron_requestAccounts' });
     if (!res) {
-      throw new Error('Please unlock your TronLink extension first.');
+      throw new Error('Please unlock your Bitget extension first.');
     }
     // eslint-disable-next-line @typescript-eslint/no-magic-numbers
     if (!!res?.code && !!res.message && res.code !== 200) {

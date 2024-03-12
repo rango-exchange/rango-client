@@ -9,6 +9,9 @@ import {
   type QuoteRequestFailed,
 } from '../../types';
 
+const SMALL_NO_ROUTE__ICON_SIZE = 24;
+const LARGE_NO_ROUTE_ICON_SIZE = 60;
+
 export function makeInfo(
   error: NoResultError | QuoteRequestFailed | null,
   disabledLiquiditySources: string[],
@@ -56,4 +59,14 @@ export function makeInfo(
     alert: null,
     description: errorMessages().noResultError.description,
   };
+}
+
+export enum NoRouteIconSize {
+  small = SMALL_NO_ROUTE__ICON_SIZE,
+  large = LARGE_NO_ROUTE_ICON_SIZE,
+}
+
+export enum NoRouteTitleSize {
+  small = 'small',
+  large = 'medium',
 }

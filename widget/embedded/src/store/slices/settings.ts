@@ -153,16 +153,22 @@ export const createSettingsSlice: StateCreator<
       language,
     })),
   updateSettings: (nextConfig: WidgetConfig) => {
-    const { features } = nextConfig;
+    const { features, theme } = nextConfig;
 
     const isThemeHidden = isFeatureHidden('theme', features);
     const isLanguageHidden = isFeatureHidden('language', features);
     const isLiquidityHidden = isFeatureHidden('liquiditySource', features);
+    const singleTheme = theme?.singleTheme;
 
     set({
-      ...(isThemeHidden && { theme: 'auto' }),
-      ...(isLanguageHidden && { language: DEFAULT_LANGUAGE }),
-      ...(isLiquidityHidden && { disabledLiquiditySources: [] }),
+      ...(isThemeHidden && { theme: nextConfig.theme?.mode || 'auto' }),
+      ...(singleTheme && { theme: nextConfig.theme?.mode || 'light' }),
+      ...(isLanguageHidden && {
+        language: nextConfig.language || DEFAULT_LANGUAGE,
+      }),
+      ...(isLiquidityHidden && {
+        disabledLiquiditySources: nextConfig.liquiditySources || [],
+      }),
     });
   },
 });

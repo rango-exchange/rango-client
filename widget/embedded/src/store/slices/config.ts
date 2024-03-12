@@ -6,8 +6,9 @@ export const DEFAULT_CONFIG: WidgetConfig = {
   apiKey: '',
   title: undefined,
   multiWallets: true,
-  enableNewLiquiditySources: true,
+  excludeLiquiditySources: true,
   customDestination: true,
+  variant: 'default',
 };
 
 interface IframeConfigs {
@@ -72,7 +73,7 @@ export const createConfigSlice: StateCreatorWithInitialData<
       const { config, campaignMode } = get();
       return campaignMode.liquiditySources?.length
         ? false
-        : !!config.enableNewLiquiditySources;
+        : !!config.excludeLiquiditySources;
     },
     isInCampaignMode: () => {
       const { campaignMode } = get();

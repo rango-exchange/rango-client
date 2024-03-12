@@ -3,6 +3,7 @@ import type { NoResultError, QuoteRequestFailed } from '../../types';
 export interface PropTypes {
   fetch: () => void;
   error: NoResultError | QuoteRequestFailed | null;
+  size?: 'small' | 'large';
 }
 
 type AlertAction = {

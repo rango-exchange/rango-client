@@ -3,19 +3,22 @@
   "version": "1.0.0",
   "private": true,
   "engines": {
-    "node": ">=18"
+    "node": ">=20",
+    "npm": "please-use-yarn"
   },
   "workspaces": [
     "examples/*",
     "widget/*",
     "queue-manager/*",
     "wallets/*",
-    "signers/*"
+    "signers/*",
+    "logging/*"
   ],
   "scripts": {
     "clean-root": "rimraf .parcel-cache && nx clear-cache",
     "clean": "yarn clean-root && nx run-many --target=clean",
     "prepare": "husky install && yarn i18n:compile",
+    "build:logging": "nx run-many --target=build  --projects=@rango-dev/logging-*",
     "build:signers": "nx run-many --target=build --projects=@rango-dev/signer-* --parallel=5",
     "build:wallets": "nx run-many --target=build --projects=@rango-dev/signer-*,@rango-dev/wallets-*,@rango-dev/provider-* --exclude @rango-dev/wallets-demo --parallel=5",
     "build:queue-manager": "nx run-many --target=build --projects=@rango-dev/queue-manager-* --exclude=@rango-dev/queue-manager-demo",
@@ -45,15 +48,18 @@
     "i18n:compile": "lingui compile --typescript",
     "i18n": "yarn i18n:extract && yarn i18n:compile",
     "test": "vitest",
-    "test:coverage": "vitest run --coverage"
+    "test:coverage": "vitest run --coverage",
+    "commitlint": "commitlint --edit"
   },
   "dependencies": {
     "husky": "^8.0.3",
     "tslib": "^2.4.1",
-    "typescript": "^4.9.3"
+    "typescript": "^5.3.3"
   },
   "devDependencies": {
     "@babel/core": "^7.22.5",
+    "@commitlint/cli": "^18.6.1",
+    "@commitlint/config-conventional": "^18.6.2",
     "@lingui/cli": "^4.2.1",
     "@nrwl/workspace": "^15.9.2",
     "@types/react": "^18.0.26",
@@ -70,7 +76,7 @@
     "conventional-commits-parser": "^3.2.4",
     "conventional-recommended-bump": "^6.1.0",
     "crypto-browserify": "^3.12.0",
-    "esbuild": "^0.17.19",
+    "esbuild": "^0.20.1",
     "eslint": "^8.41.0",
     "eslint-config-prettier": "^8.8.0",
     "eslint-plugin-destructuring": "^2.2.1",
@@ -84,7 +90,7 @@
     "npm-run-all": "^4.1.5",
     "nx": "16.2.1",
     "os-browserify": "^0.3.0",
-    "parcel": "^2.9.3",
+    "parcel": "^2.11.0",
     "prettier": "^2.7.1",
     "punycode": "^1.4.1",
     "querystring-es3": "^0.2.1",
@@ -95,7 +101,6 @@
     "stream-browserify": "^3.0.0",
     "tty-browserify": "^0.0.1",
     "util": "^0.12.3",
-    "vercel": "^28.16.12",
     "vitest": "^0.33.0",
     "vm-browserify": "^1.1.2"
   },

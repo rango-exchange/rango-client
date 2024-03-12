@@ -2,7 +2,6 @@
 dist/
 lerna-debug.log
 .vercel
-.npmrc
 
 # i18n
 translations/**/*.ts

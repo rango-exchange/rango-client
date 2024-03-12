@@ -9,4 +9,5 @@ export interface PropTypes {
   placeholder?: string;
   hasLogo?: boolean;
   disabled?: boolean;
+  tooltip?: React.ReactNode;
 }

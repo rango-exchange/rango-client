@@ -3,15 +3,15 @@ import type { PropTypes } from './Select.types';
 import * as Select from '@radix-ui/react-select';
 import React, { useEffect, useRef, useState } from 'react';
 
-import { ChevronDownIcon, ChevronUpIcon } from '../../icons';
+import { ChevronDownIcon, ChevronUpIcon, DoneIcon } from '../../icons';
 import { Typography } from '../Typography';
 
 import { SelectContent, SelectItem, SelectTrigger } from './select.styles';
 
-export function SelectComponent(props: PropTypes) {
+export function SelectComponent<T extends string>(props: PropTypes<T>) {
   const [open, setOpen] = useState(false);
   const selectRef = useRef<HTMLDivElement>(null);
-  const { options, value, container, handleItemClick } = props;
+  const { options, value, container, handleItemClick, variant } = props;
   const handleToggle = () => {
     setOpen((prev) => !prev);
   };
@@ -29,49 +29,52 @@ export function SelectComponent(props: PropTypes) {
     };
   }, []);
 
+  const selectedLabel = options.find((option) => option.value === value)?.label;
+
   return (
     <div ref={selectRef}>
-      <Select.Root value={value.value} open={open}>
+      <Select.Root value={value} open={open}>
         <SelectTrigger
+          variant={variant}
           onKeyDown={(event) => event.key === 'Enter' && handleToggle()}
           onClick={handleToggle}
           open={open}
-          aria-label={value.label}>
+          aria-label={selectedLabel}>
           <Select.Value>
             <Typography variant="body" size="small">
-              {value.label}
+              {selectedLabel}
             </Typography>
           </Select.Value>
 
           <Select.Icon className="SelectIcon">
-            <ChevronDownIcon size={12} />
+            <ChevronDownIcon size={12} color="black" />
           </Select.Icon>
         </SelectTrigger>
         <Select.Portal container={container}>
-          <SelectContent>
+          <SelectContent position="popper" sideOffset={5}>
             <Select.ScrollUpButton className="SelectScrollButton">
               <ChevronUpIcon />
             </Select.ScrollUpButton>
             <Select.Viewport className="SelectViewport">
               <Select.Group>
-                {options.map(
-                  (option) =>
-                    option.value !== value?.value && (
-                      <SelectItem
-                        onClick={() => {
-                          handleItemClick && handleItemClick(option);
-                          handleToggle();
-                        }}
-                        key={option.value}
-                        value={option.value}>
-                        <Select.ItemText>
-                          <Typography variant="body" size="small">
-                            {option.label}
-                          </Typography>
-                        </Select.ItemText>
-                      </SelectItem>
-                    )
-                )}
+                {options.map((option) => (
+                  <SelectItem
+                    onClick={() => {
+                      handleItemClick && handleItemClick(option);
+                      handleToggle();
+                    }}
+                    key={option.value}
+                    value={option.value}>
+                    <Select.ItemText>
+                      <Typography variant="body" size="small" className="_text">
+                        {option.label}
+                      </Typography>
+                    </Select.ItemText>
+                    {option.value === value && (
+                      <DoneIcon size={14} color="secondary" />
+                    )}
+                  </SelectItem>
+                ))}
               </Select.Group>
             </Select.Viewport>
             <Select.ScrollDownButton className="SelectScrollButton">

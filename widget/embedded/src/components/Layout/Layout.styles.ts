@@ -1,19 +1,21 @@
-import { styled } from '@rango-dev/ui';
+import { css, styled } from '@rango-dev/ui';
 
 const WIDGET_HEIGHT = '700px';
 
-export const Container = styled('div', {
-  position: 'relative',
+export const LayoutContainer = css({
+  borderRadius: '$primary',
   display: 'flex',
   flexDirection: 'column',
-  borderRadius: '$primary',
+  overflow: 'hidden',
+  boxShadow: '15px 15px 15px 0px rgba(0, 0, 0, 0.05)',
+});
+
+export const Container = styled('div', {
+  position: 'relative',
   width: '100vw',
   minWidth: '300px',
   maxWidth: '390px',
-  boxShadow: '15px 15px 15px 0px rgba(0, 0, 0, 0.05)',
-  overflow: 'hidden',
   backgroundColor: '$background',
-
   variants: {
     height: {
       auto: {
@@ -39,6 +41,9 @@ export const Content = styled('div', {
 
 export const Footer = styled('div', {
   padding: '0 $20 $10',
+  '& .footer__alert': {
+    paddingTop: '$10',
+  },
   '& .footer__logo': {
     opacity: 0,
     transition: 'opacity 1s ease-in-out',

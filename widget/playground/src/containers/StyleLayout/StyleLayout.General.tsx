@@ -5,7 +5,9 @@ import {
   Divider,
   FontIcon,
   LanguageIcon,
+  Select,
   Typography,
+  WidgetIcon,
 } from '@rango-dev/ui';
 import { useWidget } from '@rango-dev/widget-embedded';
 import React, { useCallback, useState } from 'react';
@@ -19,7 +21,9 @@ import {
   DEFAULT_SECONDARY_RADIUS,
   FONTS,
   LANGUAGES,
+  PLAYGROUND_CONTAINER_ID,
 } from '../../constants';
+import { VARIANTS } from '../../constants/variants';
 import { useConfigStore } from '../../store/config';
 
 import { Field, FieldTitle, GeneralContainer } from './StyleLayout.styles';
@@ -31,6 +35,8 @@ export function General() {
   const onBack = () => setModalState(null);
   const onChangeLanguage = useConfigStore.use.onChangeLanguage();
   const onChangeTheme = useConfigStore.use.onChangeTheme();
+  const onChangeVariant = useConfigStore.use.onChangeVariant();
+
   const borderRadius = useConfigStore.use.config().theme?.borderRadius;
 
   const secondaryBorderRadius =
@@ -38,6 +44,8 @@ export function General() {
   const fontFamily =
     useConfigStore.use.config().theme?.fontFamily || FONTS[0].value;
   const language = useConfigStore.use.config().language || LANGUAGES[0].value;
+  const variant = useConfigStore.use.config().variant || VARIANTS[0].value;
+
   const { resetLanguage } = useWidget();
 
   const handleFontChange = (value: string) => {
@@ -49,6 +57,7 @@ export function General() {
     }
     onBack();
   };
+
   const handleLanguageChange = (value: string) => {
     if (value) {
       onChangeLanguage(value);
@@ -84,6 +93,30 @@ export function General() {
   return (
     <>
       <GeneralContainer>
+        <Field>
+          <FieldTitle>
+            <WidgetIcon size={18} />
+            <Divider direction="horizontal" size={4} />
+            <Typography size="medium" variant="body">
+              Widget Variant
+            </Typography>
+          </FieldTitle>
+          <Divider size={16} />
+          <Select
+            variant="outlined"
+            container={
+              document.getElementById(PLAYGROUND_CONTAINER_ID) as HTMLElement
+            }
+            options={VARIANTS}
+            value={variant}
+            handleItemClick={(item) =>
+              onChangeVariant(
+                item.value === VARIANTS[0].value ? undefined : item.value
+              )
+            }
+          />
+        </Field>
+        <Divider size={24} />
         <ItemPicker
           onClick={() => setModalState(ModalState.DEFAULT_LANGUAGE)}
           value={{
@@ -143,7 +176,6 @@ export function General() {
           />
         </OverlayPanel>
       )}
-
       {modalState === ModalState.DEFAULT_LANGUAGE && (
         <OverlayPanel onBack={onBack}>
           <SingleList

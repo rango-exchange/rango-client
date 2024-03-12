@@ -15,14 +15,14 @@ export function LiquiditiesSection() {
   const {
     onChangeSources,
     onChangeBooleansConfig,
-    config: { liquiditySources, enableNewLiquiditySources },
+    config: { liquiditySources, excludeLiquiditySources },
   } = useConfigStore();
 
   const {
     meta: { swappers },
   } = useMetaStore();
 
-  const excludedMode = enableNewLiquiditySources ?? true;
+  const excludedMode = excludeLiquiditySources ?? true;
   const uniqueSwappersGroup = removeDuplicates(swappers, 'swapperGroup');
 
   const defaultSelectedItems = (type: LiquidityType) =>
@@ -71,10 +71,11 @@ export function LiquiditiesSection() {
         ...(previousSelection || (excludedMode ? [] : otherCategoryList)),
         ...currentSelection,
       ]);
-    } else if (currentConfig.length === uniqueSwappersGroup.length) {
-      sources = excludedMode
-        ? removeDuplicates([...categories, ...currentConfig])
-        : undefined;
+    } else if (
+      currentConfig.length === uniqueSwappersGroup.length &&
+      excludedMode
+    ) {
+      sources = removeDuplicates([...categories, ...currentConfig]);
     } else {
       sources = currentConfig;
     }
@@ -83,8 +84,12 @@ export function LiquiditiesSection() {
   };
 
   const handleCheckChange = (checked: boolean) => {
-    onChangeBooleansConfig('enableNewLiquiditySources', checked);
-    onChangeSources(undefined);
+    onChangeBooleansConfig('excludeLiquiditySources', checked);
+    if (checked === false) {
+      onChangeSources([...allBridgeNames, ...allDexsNames]);
+    } else {
+      onChangeSources(undefined);
+    }
   };
 
   return (

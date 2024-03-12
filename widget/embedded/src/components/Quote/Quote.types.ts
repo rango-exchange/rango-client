@@ -12,7 +12,9 @@ export type QuoteProps = {
   expanded?: boolean;
   tagHidden?: boolean;
   selected?: boolean;
+  showModalFee?: boolean;
   onClickAllRoutes?: () => void;
+  fullExpandedMode?: boolean;
 };
 
 export type optionProps = {
@@ -40,4 +42,8 @@ export type QuoteTriggerImagesProps = {
 export type QuoteCostDetailsProps = {
   quote: SelectedQuote | null;
   steps: number;
+  fee: string;
+  time: string;
+  feeWarning?: boolean;
+  showModalFee: boolean;
 };

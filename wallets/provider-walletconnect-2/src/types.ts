@@ -15,7 +15,6 @@ export interface CreateSessionParams {
 }
 
 export interface ConnectParams {
-  network: string;
   meta: BlockchainMeta[];
 }
 

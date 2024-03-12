@@ -8,11 +8,19 @@ export const Container = styled('div', {
   backgroundColor: '$$color',
   borderBottomLeftRadius: '$xm',
   borderBottomRightRadius: '$xm',
-  padding: '$15 ',
+  padding: '$15',
   variants: {
     rounded: {
       true: {
         borderRadius: '$xm',
+      },
+    },
+    expanded: {
+      true: {
+        paddingBottom: '3px',
+      },
+      false: {
+        paddingBottom: '$12',
       },
     },
   },
@@ -27,7 +35,7 @@ export const Steps = styled('div', {
 });
 
 export const StepSeparator = styled('div', {
-  borderLeft: '1px dashed black',
+  borderLeft: '1px dashed $foreground',
   minHeight: ' 0',
   margin: '0px 11.5px',
   alignSelf: 'stretch',

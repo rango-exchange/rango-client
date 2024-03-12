@@ -18,6 +18,10 @@ export const ChainImageContainer = styled('div', {
         right: '-3px',
         bottom: '-3px',
       },
+      xmedium: {
+        right: '-3px',
+        bottom: '-3px',
+      },
       medium: {
         right: '0',
         bottom: '0',

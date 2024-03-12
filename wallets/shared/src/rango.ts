@@ -108,6 +108,10 @@ export enum Networks {
   GNOSIS = 'GNOSIS',
   COSMOS = 'COSMOS',
   OSMOSIS = 'OSMOSIS',
+  AXELAR = 'AXELAR',
+  MARS = 'MARS',
+  STRIDE = 'STRIDE',
+  MAYA = 'MAYA',
   AKASH = 'AKASH',
   IRIS = 'IRIS',
   PERSISTENCE = 'PERSISTENCE',
@@ -146,6 +150,8 @@ export const XDEFI_WALLET_SUPPORTED_NATIVE_CHAINS: string[] = [
   Networks.THORCHAIN,
   Networks.BCH,
   Networks.BINANCE,
+  Networks.MAYA,
+  Networks.DOGE,
 ];
 
 export const KEPLR_COMPATIBLE_WALLETS: string[] = [
@@ -262,6 +268,7 @@ export type SwitchNetwork = (options: {
   meta: BlockchainMeta[];
   newInstance?: TryGetInstance;
   getState?: () => WalletState;
+  updateChainId: (chainId: string) => void;
 }) => Promise<void>;
 
 export type Suggest = (options: {

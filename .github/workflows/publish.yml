@@ -17,11 +17,12 @@ jobs:
 
       - name: Prepare
         uses: ./.github/actions/prepare
-        with:
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Build, Version & Publish packages
         run: yarn run publish
         env:
           REF: ${{ github.ref }}
           GH_TOKEN: ${{ github.token }}
+          # Github will create .npmrc based on this env variable.
+          # https://docs.github.com/en/actions/publishing-packages/publishing-nodejs-packages#publishing-packages-to-the-npm-registry
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
