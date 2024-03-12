@@ -8,7 +8,7 @@ msgstr ""
 "Language: pl\n"
 "Project-Id-Version: rango\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-03-11 16:36\n"
+"PO-Revision-Date: 2024-03-12 08:20\n"
 "Last-Translator: \n"
 "Language-Team: Polish\n"
 "Plural-Forms: nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && (n%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && n%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);\n"
@@ -311,6 +311,31 @@ msgstr "Łańcuchy"
 #: widget/embedded/src/components/Quotes/Quotes.tsx:74
 msgid "Sort by"
 msgstr "Sortuj według"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/Quotes/SelectStrategy.tsx:17
+msgid "Smart Routing"
+msgstr "Inteligentne Trasowanie"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/Quotes/SelectStrategy.tsx:21
+msgid "Lowest Fee"
+msgstr "Najniższa opłata"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/Quotes/SelectStrategy.tsx:25
+msgid "Fastest Transfer"
+msgstr "Najszybszy transfer"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/Quotes/SelectStrategy.tsx:29
+msgid "Maximum Return"
+msgstr "Maksymalny zwrot"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/Quotes/SelectStrategy.tsx:33
+msgid "Maximum Output"
+msgstr "Maksymalna wartość wyjściowa"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/QuoteWarningsAndErrors/HighValueLossWarningModal.tsx:43
@@ -696,31 +721,6 @@ msgid "Rango Fee"
 msgstr "Opłata Rango"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/constants/quote.ts:28
-msgid "Smart Routing"
-msgstr "Inteligentne Trasowanie"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/constants/quote.ts:32
-msgid "Lowest Fee"
-msgstr "Najniższa opłata"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/constants/quote.ts:36
-msgid "Fastest Transfer"
-msgstr "Najszybszy transfer"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/constants/quote.ts:40
-msgid "Maximum Return"
-msgstr "Maksymalny zwrot"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/constants/quote.ts:44
-msgid "Maximum Output"
-msgstr "Maksymalna wartość wyjściowa"
-
-#. js-lingui-explicit-id
 #: widget/embedded/src/constants/warnings.ts:10
 msgid "Route has been updated."
 msgstr "Trasa została zaktualizowana."
@@ -747,12 +747,12 @@ msgid "Routes"
 msgstr "Trasy"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/containers/Inputs/Inputs.tsx:81
+#: widget/embedded/src/containers/Inputs/Inputs.tsx:76
 msgid "From"
 msgstr "Od"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/containers/Inputs/Inputs.tsx:126
+#: widget/embedded/src/containers/Inputs/Inputs.tsx:119
 msgid "To"
 msgstr "Do"
 
