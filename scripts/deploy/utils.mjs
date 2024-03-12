@@ -21,12 +21,11 @@ export async function deploySingleProjectToVercel(pkg) {
     console.log(`::warning::Couldn't find PROJECT_ID env for ${pkg.name}`);
   }
 
-  console.log(`start deplyoing ${pkg.name}...`);
+  console.log(`start deploying ${pkg.name}...`);
 
   await execa(
-    'yarn',
+    'vercel',
     [
-      'vercel',
       'pull',
       '--cwd',
       pkg.location,
@@ -39,15 +38,13 @@ export async function deploySingleProjectToVercel(pkg) {
     { env }
   );
   await execa(
-    'yarn',
-    ['vercel', 'build', '--cwd', pkg.location, '--token', VERCEL_TOKEN],
+    'vercel',
+    ['build', '--cwd', pkg.location, '--token', VERCEL_TOKEN],
     { env }
   );
-  await execa(
-    'yarn',
-    ['vercel', pkg.location, '--prebuilt', '--token', VERCEL_TOKEN],
-    { env }
-  );
+  await execa('vercel', [pkg.location, '--prebuilt', '--token', VERCEL_TOKEN], {
+    env,
+  });
 
   console.log(`${pkg.name} deployed.`);
 }
