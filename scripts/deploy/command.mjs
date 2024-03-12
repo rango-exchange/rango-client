@@ -8,7 +8,7 @@ import { deployProjectsToVercel } from './utils.mjs';
 
 // TODO: Working directory should be empty.
 async function run() {
-  // Detect last relase and what packages has changed since then.
+  // Detect last release and what packages has changed since then.
   const packages = await workspacePackages();
   const privatePackages = packages.filter((pkg) => {
     return pkg.private;
