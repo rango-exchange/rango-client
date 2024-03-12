@@ -1,3 +1,12 @@
+# [0.29.0](https://github.com/rango-exchange/rango-client/compare/provider-xdefi@0.28.0...provider-xdefi@0.29.0) (2024-03-12)
+
+
+### Features
+
+* add new chains to xdefi ([f780a9f](https://github.com/rango-exchange/rango-client/commit/f780a9f5ad5b4d42b5ea63cfc382059963f5332e))
+
+
+
 # [0.28.0](https://github.com/rango-exchange/rango-client/compare/provider-xdefi@0.27.0...provider-xdefi@0.28.0) (2024-02-20)
 
 

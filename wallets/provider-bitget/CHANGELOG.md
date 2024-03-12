@@ -1,3 +1,7 @@
+# [0.26.0](https://github.com/rango-exchange/rango-client/compare/provider-bitget@0.25.0...provider-bitget@0.26.0) (2024-03-12)
+
+
+
 # [0.25.0](https://github.com/rango-exchange/rango-client/compare/provider-bitget@0.24.0...provider-bitget@0.25.0) (2024-02-20)
 
 

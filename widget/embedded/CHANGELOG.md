@@ -1,3 +1,48 @@
+## [0.24.1](https://github.com/rango-exchange/rango-client/compare/widget-embedded@0.24.0...widget-embedded@0.24.1) (2024-03-12)
+
+
+
+# [0.24.0](https://github.com/rango-exchange/rango-client/compare/widget-embedded@0.23.0...widget-embedded@0.24.0) (2024-03-12)
+
+
+### Bug Fixes
+
+* add a default variant to widget config store ([5f7c18e](https://github.com/rango-exchange/rango-client/commit/5f7c18e54d88ca44eb86de6fff6c252599d3adb9))
+* apply minor improvements to the widget ([c4454e5](https://github.com/rango-exchange/rango-client/commit/c4454e5c3dd1257b48d18a975cb3d1ac19ce3f26))
+* close completeModal when requestId is changed ([f00bee8](https://github.com/rango-exchange/rango-client/commit/f00bee8f9852f66157517c9a4d0bebf38b9a961d))
+* correct default values of hidden features ([10ac5cf](https://github.com/rango-exchange/rango-client/commit/10ac5cf6db419567cc439db785615b00565461d7))
+* correct height of widget & address full-expanded hover & spacing ([6390316](https://github.com/rango-exchange/rango-client/commit/639031622644ee99d3e708f1a783c16e7268fa20))
+* correct set-as-read behavior in swap-details ([b0b5310](https://github.com/rango-exchange/rango-client/commit/b0b53103aef10083c2887f61bf68356eb26698e6))
+* correct sharp styles in swap inputs in different variants ([8fd3232](https://github.com/rango-exchange/rango-client/commit/8fd3232f9353537da2dfdefd201d7f15b17b2434))
+* default theme shouldn't be override on what user has set ([6e64239](https://github.com/rango-exchange/rango-client/commit/6e64239873bd673279bd163f5b54e49744b8abc2))
+* fix bugs in displaying quote error modals ([c72a21e](https://github.com/rango-exchange/rango-client/commit/c72a21e233e48b20a9af0cf44d334fb752b1988b))
+* fix console warning in widget ([d2353f2](https://github.com/rango-exchange/rango-client/commit/d2353f21945d38cfef4051d80b9577b7ab4da620))
+* fix default injected wallet display logic and catch unhandled errors ([6654fcc](https://github.com/rango-exchange/rango-client/commit/6654fcc73481ac8e572da92be4346e059613febe))
+* fix full expanded design issues ([d1aaaa3](https://github.com/rango-exchange/rango-client/commit/d1aaaa30404da6ef8c1ff264a52e718db74f438f))
+* fix queue manager context in widget embedded ([312fe8c](https://github.com/rango-exchange/rango-client/commit/312fe8cfef6b5adb245c81f303694142cb99641b))
+* fix unmounting router on changing language ([80e96dd](https://github.com/rango-exchange/rango-client/commit/80e96ddabd863a65f5e94d6631aecd23f9d12126))
+* fix widget icon size issue and add connected wallet tooltip ([476267f](https://github.com/rango-exchange/rango-client/commit/476267feea9e176829a6df4bf0dbe6eef5ad4366))
+* get theme from config when singleTheme is true ([8fa3caa](https://github.com/rango-exchange/rango-client/commit/8fa3caa2cf2965923c6427187283ecf53737c792))
+* improve search token ([2f7bacc](https://github.com/rango-exchange/rango-client/commit/2f7bacc5358d4fc6da21c0883e46d49293f98a33))
+* remove redundant punctuation from settings page ([51f3825](https://github.com/rango-exchange/rango-client/commit/51f3825fb4a1073de5baef7b9fa988990e2a7d36))
+
+
+### Features
+
+* add an expand mode for our compact widget ([eb90daa](https://github.com/rango-exchange/rango-client/commit/eb90daa540592c81efdca6e33032f6dbef371180))
+* add enabling centralized swappers to config ([55f6f7d](https://github.com/rango-exchange/rango-client/commit/55f6f7d746aeab4dc65421c641c920c8687712d3))
+* add full expanded variant to widget ([a3907a0](https://github.com/rango-exchange/rango-client/commit/a3907a0be9f0716c366a2c482253191eebd66301))
+* add more languages to widget ([04f7855](https://github.com/rango-exchange/rango-client/commit/04f78551784b52e286f7f6206337d97bf8401063))
+* add sort filter for multi routing (compact mode) ([d90ddc6](https://github.com/rango-exchange/rango-client/commit/d90ddc6959c63a1ec2ef5908c09fc6ab8c3da23c))
+* implement expanded-mode route ([e75fcad](https://github.com/rango-exchange/rango-client/commit/e75fcad751dfdce0c4d84d08f2c9b41935584a75))
+* improve header buttons and notifications ([5f2188d](https://github.com/rango-exchange/rango-client/commit/5f2188d5cae62576bf13a5cefdc83625b9910c11))
+* improve playground mobile view and widget variants and liquidity sources ([3c2a4a6](https://github.com/rango-exchange/rango-client/commit/3c2a4a6375818d01a4c6682e03a60aa6972a8a02))
+* redesign switching theme in settings ([7fe0bc5](https://github.com/rango-exchange/rango-client/commit/7fe0bc510a56b717bed1bb20d7889d549c7144a1))
+* update active tab warning position ([9420667](https://github.com/rango-exchange/rango-client/commit/9420667d36ac508245fdf05901c1cb3074a3508b))
+* update colours for quote variant for rango/default theme ([897683f](https://github.com/rango-exchange/rango-client/commit/897683f5aa550af9a74e011e4ab3d734d7c595f7))
+
+
+
 # [0.23.0](https://github.com/rango-exchange/rango-client/compare/widget-embedded@0.22.3...widget-embedded@0.23.0) (2024-02-20)
 
 
