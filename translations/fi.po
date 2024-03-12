@@ -8,7 +8,7 @@ msgstr ""
 "Language: fi\n"
 "Project-Id-Version: rango\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-03-11 16:36\n"
+"PO-Revision-Date: 2024-03-12 08:20\n"
 "Last-Translator: \n"
 "Language-Team: Finnish\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -311,6 +311,31 @@ msgstr "Ketjut:"
 #: widget/embedded/src/components/Quotes/Quotes.tsx:74
 msgid "Sort by"
 msgstr "Järjestä"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/Quotes/SelectStrategy.tsx:17
+msgid "Smart Routing"
+msgstr "Älykäs Reititys"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/Quotes/SelectStrategy.tsx:21
+msgid "Lowest Fee"
+msgstr "Alin Maksu"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/Quotes/SelectStrategy.tsx:25
+msgid "Fastest Transfer"
+msgstr "Nopein Siirto"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/Quotes/SelectStrategy.tsx:29
+msgid "Maximum Return"
+msgstr "Suurin Palautus"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/Quotes/SelectStrategy.tsx:33
+msgid "Maximum Output"
+msgstr "Suurin Ulostulo"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/QuoteWarningsAndErrors/HighValueLossWarningModal.tsx:43
@@ -696,31 +721,6 @@ msgid "Rango Fee"
 msgstr "Rango Maksu"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/constants/quote.ts:28
-msgid "Smart Routing"
-msgstr "Älykäs Reititys"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/constants/quote.ts:32
-msgid "Lowest Fee"
-msgstr "Alin Maksu"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/constants/quote.ts:36
-msgid "Fastest Transfer"
-msgstr "Nopein Siirto"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/constants/quote.ts:40
-msgid "Maximum Return"
-msgstr "Suurin Palautus"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/constants/quote.ts:44
-msgid "Maximum Output"
-msgstr "Suurin Ulostulo"
-
-#. js-lingui-explicit-id
 #: widget/embedded/src/constants/warnings.ts:10
 msgid "Route has been updated."
 msgstr "Reitti on päivitetty."
@@ -747,12 +747,12 @@ msgid "Routes"
 msgstr "Reitit"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/containers/Inputs/Inputs.tsx:81
+#: widget/embedded/src/containers/Inputs/Inputs.tsx:76
 msgid "From"
 msgstr "Alkaen"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/containers/Inputs/Inputs.tsx:126
+#: widget/embedded/src/containers/Inputs/Inputs.tsx:119
 msgid "To"
 msgstr "Vastaanottaja"
 
