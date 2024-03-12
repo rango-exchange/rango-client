@@ -8,7 +8,7 @@ msgstr ""
 "Language: zh\n"
 "Project-Id-Version: rango\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-03-11 16:36\n"
+"PO-Revision-Date: 2024-03-12 08:20\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
@@ -311,6 +311,31 @@ msgstr "链："
 #: widget/embedded/src/components/Quotes/Quotes.tsx:74
 msgid "Sort by"
 msgstr "排序方式"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/Quotes/SelectStrategy.tsx:17
+msgid "Smart Routing"
+msgstr "智能路由"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/Quotes/SelectStrategy.tsx:21
+msgid "Lowest Fee"
+msgstr "最低费用"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/Quotes/SelectStrategy.tsx:25
+msgid "Fastest Transfer"
+msgstr "最快的传输"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/Quotes/SelectStrategy.tsx:29
+msgid "Maximum Return"
+msgstr "最大返回"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/Quotes/SelectStrategy.tsx:33
+msgid "Maximum Output"
+msgstr "最大输出"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/QuoteWarningsAndErrors/HighValueLossWarningModal.tsx:43
@@ -696,31 +721,6 @@ msgid "Rango Fee"
 msgstr "Rango 费用"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/constants/quote.ts:28
-msgid "Smart Routing"
-msgstr "智能路由"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/constants/quote.ts:32
-msgid "Lowest Fee"
-msgstr "最低费用"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/constants/quote.ts:36
-msgid "Fastest Transfer"
-msgstr "最快的传输"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/constants/quote.ts:40
-msgid "Maximum Return"
-msgstr "最大返回"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/constants/quote.ts:44
-msgid "Maximum Output"
-msgstr "最大输出"
-
-#. js-lingui-explicit-id
 #: widget/embedded/src/constants/warnings.ts:10
 msgid "Route has been updated."
 msgstr "路由已更新。"
@@ -747,12 +747,12 @@ msgid "Routes"
 msgstr "路由"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/containers/Inputs/Inputs.tsx:81
+#: widget/embedded/src/containers/Inputs/Inputs.tsx:76
 msgid "From"
 msgstr "来自"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/containers/Inputs/Inputs.tsx:126
+#: widget/embedded/src/containers/Inputs/Inputs.tsx:119
 msgid "To"
 msgstr "收件人"
 
