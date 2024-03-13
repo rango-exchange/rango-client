@@ -150,7 +150,7 @@ export function SettingsLists() {
     id: 'bridge-item',
     title: (
       <Typography variant="title" size="xmedium">
-        {i18n.t('Enabled bridges')}
+        {i18n.t('Bridges')}
       </Typography>
     ),
     end: (
@@ -168,7 +168,7 @@ export function SettingsLists() {
     id: 'exchange-item',
     title: (
       <Typography variant="title" size="xmedium">
-        {i18n.t('Enabled exchanges')}
+        {i18n.t('Exchanges')}
       </Typography>
     ),
     end: (
