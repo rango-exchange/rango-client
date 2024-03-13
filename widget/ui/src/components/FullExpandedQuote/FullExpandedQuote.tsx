@@ -168,7 +168,8 @@ export function FullExpandedQuote(props: PropTypes) {
               </Tooltip>
             </div>
             <StyledPriceImpact
-              size="xsmall"
+              size="small"
+              outputColor="$neutral700"
               warningLevel={warningLevel}
               outputUsdValue={props.outputPrice.usdValue}
               realOutputUsdValue={props.outputPrice.realUsdValue}
