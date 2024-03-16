@@ -1,1 +1,1 @@
-export { Quotes } from './Quotes';
+export { RefreshModal } from './RefreshModal';

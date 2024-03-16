@@ -20,7 +20,7 @@ import { isFeatureHidden } from '../../utils/settings';
 import { ActivateTabAlert } from '../common/ActivateTabAlert';
 import { ActivateTabModal } from '../common/ActivateTabModal';
 import { BackButton, CancelButton, WalletButton } from '../HeaderButtons';
-import { RefreshModal } from '../RefreshModal/RefreshModal';
+import { RefreshModal } from '../RefreshModal';
 
 import { onScrollContentAttachStatusToContainer } from './Layout.helpers';
 import { Container, Content, Footer, LayoutContainer } from './Layout.styles';
