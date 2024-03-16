@@ -3,7 +3,8 @@ import type { SolanaActions } from '../src/actions/solana/interface';
 
 import { describe, expect, test, vi } from 'vitest';
 
-import { BlockchainProvider, Provider } from '../src/hub';
+import { BlockchainProvider } from '../src/hub';
+import { ProviderBuilder } from '../src/hub/provider';
 
 describe('check Provider works with Blockchain correctly', () => {
   test('connect successfully when two blockchain type has been added to Provider', () => {
@@ -22,9 +23,11 @@ describe('check Provider works with Blockchain correctly', () => {
       .action('connect', solanaConnect)
       .build();
 
-    const garbageWallet = new Provider('garbage-wallet');
-    garbageWallet.add('evm', evmProvider);
-    garbageWallet.add('solana', solanaProvider);
+    const garbageWalletBuilder = new ProviderBuilder('garbage-wallet');
+    garbageWalletBuilder.add('evm', evmProvider);
+    garbageWalletBuilder.add('solana', solanaProvider);
+
+    const garbageWallet = garbageWalletBuilder.build();
     const evmResult = garbageWallet.get('evm')?.connect('0x1');
     const solanaResult = garbageWallet.get('solana')?.connect();
 
@@ -65,9 +68,10 @@ describe('check Provider works with Blockchain correctly', () => {
         },
       ])
       .build();
-    const garbageWallet = new Provider('garbage-wallet');
-    garbageWallet.add('evm', evmProvider);
+    const garbageWalletBuilder = new ProviderBuilder('garbage-wallet');
+    garbageWalletBuilder.add('evm', evmProvider);
 
+    const garbageWallet = garbageWalletBuilder.build();
     const evmResult = garbageWallet.get('evm')?.connect('0x1');
 
     expect(evmResult).toStrictEqual([

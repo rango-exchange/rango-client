@@ -26,12 +26,26 @@ interface Config {
 
 export class Provider {
   public id: string;
-  private blockchainProviders = new Map();
+  /*
+   * TODO:
+   * It has some ts erros when I try to type it:
+   * Map<keyof CommonBlockchains,CommonBlockchains[keyof CommonBlockchains]>
+   */
+  private blockchainProviders: Map<any, any>;
   private _state: State;
-  private _configs = new Map<keyof Config, Config[keyof Config]>();
+  private _configs: Map<keyof Config, Config[keyof Config]>;
 
-  constructor(id: string) {
+  constructor(
+    id: string,
+    blockchains: Map<
+      keyof CommonBlockchains,
+      CommonBlockchains[keyof CommonBlockchains]
+    >,
+    configs: Provider['_configs']
+  ) {
     this.id = id;
+    this._configs = configs;
+    this.blockchainProviders = blockchains;
 
     this._state = {
       connected: false,
@@ -40,14 +54,6 @@ export class Provider {
       accounts: null,
       network: null,
     };
-  }
-
-  add<K extends keyof CommonBlockchains>(
-    id: K,
-    blockchain: CommonBlockchains[K]
-  ) {
-    this.blockchainProviders.set(id, blockchain);
-    return this;
   }
 
   state(): [GetState, SetState] {
@@ -73,9 +79,32 @@ export class Provider {
   info(): Info | undefined {
     return this._configs.get('info');
   }
+}
+
+export class ProviderBuilder {
+  private id: string;
+  private blockchainProviders = new Map();
+  private configs = new Map<keyof Config, Config[keyof Config]>();
+
+  constructor(id: string) {
+    this.id = id;
+  }
+
+  add<K extends keyof CommonBlockchains>(
+    id: K,
+    blockchain: CommonBlockchains[K]
+  ) {
+    this.blockchainProviders.set(id, blockchain);
+    return this;
+  }
 
   config<K extends keyof Config>(name: K, value: Config[K]) {
-    this._configs.set(name, value);
+    this.configs.set(name, value);
     return this;
+  }
+
+  build(): Provider {
+    // TODO: add some validations here.
+    return new Provider(this.id, this.blockchainProviders, this.configs);
   }
 }
