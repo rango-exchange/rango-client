@@ -18,7 +18,9 @@
     "ts-check": "tsc --declaration --emitDeclarationOnly -p ./tsconfig.json",
     "clean": "rimraf dist",
     "format": "prettier --write '{.,src}/**/*.{ts,tsx}'",
-    "lint": "eslint \"**/*.{ts,tsx}\" --ignore-path ../../.eslintignore"
+    "lint": "eslint \"**/*.{ts,tsx}\" --ignore-path ../../.eslintignore",
+    "test": "vitest",
+    "coverage": "vitest run --coverage"
   },
   "peerDependencies": {
     "@types/react": "^17.0.0 || ^18.0.0",
