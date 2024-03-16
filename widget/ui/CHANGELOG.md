@@ -1,3 +1,30 @@
+# [0.30.0](https://github.com/rango-exchange/rango-client/compare/ui@0.29.0...ui@0.30.0) (2024-03-12)
+
+
+### Bug Fixes
+
+* correct height of widget & address full-expanded hover & spacing ([6390316](https://github.com/rango-exchange/rango-client/commit/639031622644ee99d3e708f1a783c16e7268fa20))
+* fix console warning in widget ([d2353f2](https://github.com/rango-exchange/rango-client/commit/d2353f21945d38cfef4051d80b9577b7ab4da620))
+* fix full expanded design issues ([d1aaaa3](https://github.com/rango-exchange/rango-client/commit/d1aaaa30404da6ef8c1ff264a52e718db74f438f))
+* fix widget icon size issue and add connected wallet tooltip ([476267f](https://github.com/rango-exchange/rango-client/commit/476267feea9e176829a6df4bf0dbe6eef5ad4366))
+
+
+### Features
+
+* add a loading state for full-expanded-quote ([5c8fbe7](https://github.com/rango-exchange/rango-client/commit/5c8fbe744ae40f0d17e9c69d0653842d67a0d8a1))
+* add an expand mode for our compact widget ([eb90daa](https://github.com/rango-exchange/rango-client/commit/eb90daa540592c81efdca6e33032f6dbef371180))
+* add full expanded variant to widget ([a3907a0](https://github.com/rango-exchange/rango-client/commit/a3907a0be9f0716c366a2c482253191eebd66301))
+* add more languages to widget ([04f7855](https://github.com/rango-exchange/rango-client/commit/04f78551784b52e286f7f6206337d97bf8401063))
+* add sort filter for multi routing (compact mode) ([d90ddc6](https://github.com/rango-exchange/rango-client/commit/d90ddc6959c63a1ec2ef5908c09fc6ab8c3da23c))
+* implement expanded-mode route ([e75fcad](https://github.com/rango-exchange/rango-client/commit/e75fcad751dfdce0c4d84d08f2c9b41935584a75))
+* improve header buttons and notifications ([5f2188d](https://github.com/rango-exchange/rango-client/commit/5f2188d5cae62576bf13a5cefdc83625b9910c11))
+* improve playground mobile view and widget variants and liquidity sources ([3c2a4a6](https://github.com/rango-exchange/rango-client/commit/3c2a4a6375818d01a4c6682e03a60aa6972a8a02))
+* improve popover props & add some icons ([7bfd0dd](https://github.com/rango-exchange/rango-client/commit/7bfd0dd334054e0886420fff292ebe9858fb2300))
+* redesign switching theme in settings ([7fe0bc5](https://github.com/rango-exchange/rango-client/commit/7fe0bc510a56b717bed1bb20d7889d549c7144a1))
+* update colours for quote variant for rango/default theme ([897683f](https://github.com/rango-exchange/rango-client/commit/897683f5aa550af9a74e011e4ab3d734d7c595f7))
+
+
+
 # [0.29.0](https://github.com/rango-exchange/rango-client/compare/ui@0.28.1...ui@0.29.0) (2024-02-20)
 
 

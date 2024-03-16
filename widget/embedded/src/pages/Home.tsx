@@ -2,6 +2,7 @@ import type { SelectedQuote } from '../types';
 
 import { i18n } from '@lingui/core';
 import { Button, Divider, styled, WarningIcon } from '@rango-dev/ui';
+import BigNumber from 'bignumber.js';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -27,7 +28,7 @@ const MainContainer = styled('div', {
   alignItems: 'flex-start',
   maxHeight: 700,
   '& .footer__alert': {
-    paddingTop: '0',
+    paddingTop: '0 !important',
   },
 });
 export const TIME_TO_NAVIGATE_ANOTHER_PAGE = 300;
@@ -81,7 +82,7 @@ export function Home() {
     !!inputAmount &&
     !!fromToken &&
     !!toToken &&
-    inputAmount !== '0' &&
+    new BigNumber(inputAmount).gt(0) &&
     !isTokensIdentical(fromToken, toToken);
 
   const fetchingQuote = hasInputs && fetchMetaStatus === 'success' && loading;
@@ -169,6 +170,7 @@ export function Home() {
           <Inputs
             fetchingQuote={fetchingQuote}
             fetchMetaStatus={fetchMetaStatus}
+            isExpandable={isExpandable}
             onClickToken={(mode) => {
               onHandleNavigation(
                 mode === 'from'

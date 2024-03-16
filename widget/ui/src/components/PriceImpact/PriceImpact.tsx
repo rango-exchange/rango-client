@@ -10,6 +10,7 @@ export function PriceImpact(props: PriceImpactProps) {
   const {
     size = 'medium',
     outputUsdValue,
+    outputColor,
     realOutputUsdValue,
     percentageChange,
     warningLevel,
@@ -37,7 +38,10 @@ export function PriceImpact(props: PriceImpactProps) {
               : undefined
           }
           side={tooltipProps?.side}>
-          <OutputUsdValue size={size} variant="body" color="$neutral600">
+          <OutputUsdValue
+            size={size}
+            variant="body"
+            color={outputColor || '$neutral600'}>
             {`~$${outputUsdValue}`}
           </OutputUsdValue>
         </Tooltip>

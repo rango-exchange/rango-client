@@ -1,7 +1,6 @@
 import { I18nManager } from '@rango-dev/ui';
 import React from 'react';
 
-import { AppRouter } from '../../components/AppRouter';
 import { AppRoutes } from '../../components/AppRoutes';
 import { WidgetEvents } from '../../components/WidgetEvents';
 import { useBootstrap } from '../../hooks/useBootstrap';
@@ -21,9 +20,7 @@ export function Main() {
     <I18nManager language={activeLanguage}>
       <MainContainer id="swap-container" className={activeTheme()}>
         <WidgetEvents />
-        <AppRouter>
-          <AppRoutes />
-        </AppRouter>
+        <AppRoutes />
       </MainContainer>
     </I18nManager>
   );

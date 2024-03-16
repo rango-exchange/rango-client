@@ -8,6 +8,7 @@ export const DEFAULT_CONFIG: WidgetConfig = {
   multiWallets: true,
   excludeLiquiditySources: true,
   customDestination: true,
+  variant: 'default',
 };
 
 interface IframeConfigs {

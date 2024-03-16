@@ -34,6 +34,8 @@ function Main(props: PropsWithChildren<PropTypes>) {
   const { updateConfig, updateSettings, fetch: fetchMeta } = useAppStore();
   const blockchains = useAppStore().blockchains();
   const tokens = useAppStore().tokens();
+  const config = useAppStore().config;
+
   const walletOptions: ProvidersOptions = {
     walletConnectProjectId: props.config?.walletConnectProjectId,
   };
@@ -50,6 +52,10 @@ function Main(props: PropsWithChildren<PropTypes>) {
     if (props.config) {
       updateConfig(props.config);
       updateSettings(props.config);
+      window['__rango'] = {
+        config,
+        dappConfig: props.config,
+      };
     }
   }, [props.config]);
 

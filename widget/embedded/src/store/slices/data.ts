@@ -155,12 +155,22 @@ export const createDataSlice: StateCreator<
           }
         }
 
-        //3. sort by token popularity
+        const blockChainA = blockchainsMapByName.get(tokenA.blockchain);
+        const blockChainB = blockchainsMapByName.get(tokenB.blockchain);
+
+        //3. sort by native token
+        const isNativeTokenA = isTokenNative(tokenA, blockChainA);
+        const isNativeTokenB = isTokenNative(tokenB, blockChainB);
+        if (isNativeTokenA !== isNativeTokenB) {
+          return isNativeTokenA ? -1 : 1;
+        }
+
+        //4. sort by token popularity
         if (tokenA.isPopular !== tokenB.isPopular) {
           return tokenA.isPopular ? -1 : 1;
         }
 
-        //4. sort by search phrase
+        //5. sort by search phrase
         if (options.searchFor) {
           const symbolSearchForCompare = compareWithSearchFor(
             tokenA,
@@ -170,16 +180,6 @@ export const createDataSlice: StateCreator<
           if (symbolSearchForCompare) {
             return symbolSearchForCompare;
           }
-        }
-
-        const blockChainA = blockchainsMapByName.get(tokenA.blockchain);
-        const blockChainB = blockchainsMapByName.get(tokenB.blockchain);
-
-        //5. sort by native token
-        const isNativeTokenA = isTokenNative(tokenA, blockChainA);
-        const isNativeTokenB = isTokenNative(tokenB, blockChainB);
-        if (isNativeTokenA !== isNativeTokenB) {
-          return isNativeTokenA ? -1 : 1;
         }
 
         //6. sort by token isSecondary

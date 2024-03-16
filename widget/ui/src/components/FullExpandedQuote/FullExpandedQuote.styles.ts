@@ -61,7 +61,7 @@ export const TagsContainer = styled('div', {
 
 export const Steps = styled('div', {
   display: 'flex',
-  height: '102px',
+  height: '85px',
 });
 
 export const StepItem = styled('div', {
@@ -82,6 +82,7 @@ export const RightSection = styled('div', {
   borderColor: '$info300',
   display: 'flex',
   flexDirection: 'column',
+  justifyContent: 'flex-end',
   gap: '2px',
   [`.${darkTheme} &`]: {
     borderColor: '$secondary600',
@@ -207,8 +208,14 @@ export const Separator = styled('div', {
 });
 
 export const OutputLoading = styled(FlexCenter, {
-  padding: '0 $2',
+  padding: '$10 $2 0',
   height: '85px',
   gap: '$10',
   flexDirection: 'column',
+});
+
+export const SkeletonItemLeftContainer = styled('div', {
+  display: 'flex',
+  alignItems: 'center',
+  paddingTop: '$25',
 });

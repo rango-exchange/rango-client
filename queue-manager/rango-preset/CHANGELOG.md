@@ -1,3 +1,21 @@
+## [0.29.1](https://github.com/rango-exchange/rango-client/compare/queue-manager-rango-preset@0.29.0...queue-manager-rango-preset@0.29.1) (2024-03-12)
+
+
+### Bug Fixes
+
+* increase approval checking interval ([e6444c8](https://github.com/rango-exchange/rango-client/commit/e6444c84dd216ddcf949b49708bb2c358fee2d88))
+
+
+
+# [0.29.0](https://github.com/rango-exchange/rango-client/compare/queue-manager-rango-preset@0.28.0...queue-manager-rango-preset@0.29.0) (2024-03-12)
+
+
+### Features
+
+* logging packages to be able to create log records and capture them. ([ca9b7e9](https://github.com/rango-exchange/rango-client/commit/ca9b7e918d67bf0d93e5b8313264c5984f3adb4e))
+
+
+
 # [0.28.0](https://github.com/rango-exchange/rango-client/compare/queue-manager-rango-preset@0.27.0...queue-manager-rango-preset@0.28.0) (2024-02-20)
 
 

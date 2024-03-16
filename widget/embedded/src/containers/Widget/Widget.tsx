@@ -3,17 +3,23 @@ import type { PropsWithChildren } from 'react';
 
 import React from 'react';
 
+import { AppRouter } from '../../components/AppRouter';
 import { DEFAULT_CONFIG } from '../../store/slices/config';
 import { Main } from '../App';
 import { WidgetProvider } from '../WidgetProvider';
 
 export function Widget(props: PropsWithChildren<WidgetProps>) {
-  if (!props.config?.externalWallets) {
-    return (
-      <WidgetProvider config={props.config ?? DEFAULT_CONFIG}>
+  const isExternalWalletsEnabled = props.config?.externalWallets;
+
+  return (
+    <AppRouter>
+      {isExternalWalletsEnabled ? (
         <Main />
-      </WidgetProvider>
-    );
-  }
-  return <Main />;
+      ) : (
+        <WidgetProvider config={props.config ?? DEFAULT_CONFIG}>
+          <Main />
+        </WidgetProvider>
+      )}
+    </AppRouter>
+  );
 }
