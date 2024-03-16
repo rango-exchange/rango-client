@@ -15,7 +15,7 @@
   },
   "devDependencies": {},
   "dependencies": {
-    "@rango-dev/widget-embedded": "^0.24.2-next.1",
+    "@rango-dev/widget-embedded": "^0.24.2-next.2",
     "@rango-dev/logging-subscriber": "^0.2.0",
     "@rango-dev/logging-console": "^0.2.0",
     "react": "^18.2.0",
