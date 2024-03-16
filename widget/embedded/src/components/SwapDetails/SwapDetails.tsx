@@ -43,7 +43,7 @@ import { getContainer } from '../../utils/common';
 import {
   formatTooltipNumbers,
   numberToString,
-  secondsToString,
+  roundedSecondsToString,
   totalArrivalTime,
 } from '../../utils/numbers';
 import { getPriceImpact, getPriceImpactLevel } from '../../utils/quote';
@@ -320,7 +320,7 @@ export function SwapDetails(props: SwapDetailsProps) {
               GAS_FEE_MIN_DECIMALS,
               GAS_FEE_MAX_DECIMALS
             )}
-            time={secondsToString(totalArrivalTime(swap.steps))}
+            time={roundedSecondsToString(totalArrivalTime(swap.steps))}
             steps={numberOfSteps}
           />
           <QuoteSummary

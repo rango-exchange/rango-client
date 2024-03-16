@@ -6,6 +6,7 @@ export type PriceImpactWarningLevel = 'low' | 'high' | undefined;
 export type PriceImpactProps = {
   size: TypographyPropTypes['size'];
   outputUsdValue?: string;
+  outputColor?: string;
   realOutputUsdValue?: string;
   error?: string;
   percentageChange?: string | null;

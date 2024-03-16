@@ -42,7 +42,7 @@ import {
 import {
   formatTooltipNumbers,
   numberToString,
-  secondsToString,
+  roundedSecondsToString,
   totalArrivalTime,
 } from '../../utils/numbers';
 import {
@@ -292,7 +292,7 @@ export function Quote(props: QuoteProps) {
   const container = getContainer();
   const sortedQuoteTags = sortTags(props.quote.tags || []);
   const showAllRoutesButton = !!onClickAllRoutes;
-  const totalTime = secondsToString(totalArrivalTime(quote?.swaps));
+  const totalTime = roundedSecondsToString(totalArrivalTime(quote?.swaps));
   const totalFee = getTotalFeeInUsd(quote?.swaps ?? [], tokens);
   const fee = numberToString(
     totalFee,

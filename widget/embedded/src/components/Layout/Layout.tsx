@@ -4,7 +4,7 @@ import type { PropsWithChildren } from 'react';
 
 import { useManager } from '@rango-dev/queue-manager-react';
 import { BottomLogo, Divider, Header } from '@rango-dev/ui';
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 import { WIDGET_UI_ID } from '../../constants';
 import { useIframe } from '../../hooks/useIframe';
@@ -20,6 +20,7 @@ import { isFeatureHidden } from '../../utils/settings';
 import { ActivateTabAlert } from '../common/ActivateTabAlert';
 import { ActivateTabModal } from '../common/ActivateTabModal';
 import { BackButton, CancelButton, WalletButton } from '../HeaderButtons';
+import { RefreshModal } from '../RefreshModal/RefreshModal';
 
 import { onScrollContentAttachStatusToContainer } from './Layout.helpers';
 import { Container, Content, Footer, LayoutContainer } from './Layout.styles';
@@ -27,6 +28,8 @@ import { Container, Content, Footer, LayoutContainer } from './Layout.styles';
 function Layout(props: PropsWithChildren<PropTypes>) {
   const { connectHeightObserver, disconnectHeightObserver } = useIframe();
   const { children, header, footer, height = 'fixed' } = props;
+  const { fetchStatus } = useAppStore();
+  const [openRefreshModal, setOpenRefreshModal] = useState(false);
   const connectedWallets = useWalletsStore.use.connectedWallets();
   const {
     config: { features, theme },
@@ -94,6 +97,10 @@ function Layout(props: PropsWithChildren<PropTypes>) {
     };
   }, []);
 
+  useEffect(() => {
+    setOpenRefreshModal(fetchStatus === 'failed');
+  }, [fetchStatus]);
+
   return (
     <Container
       height={height}
@@ -156,6 +163,10 @@ function Layout(props: PropsWithChildren<PropTypes>) {
           <BottomLogo />
         </div>
       </Footer>
+      <RefreshModal
+        open={openRefreshModal}
+        onClose={() => setOpenRefreshModal(false)}
+      />
     </Container>
   );
 }

@@ -1,3 +1,7 @@
+# [0.24.0](https://github.com/rango-exchange/rango-client/compare/wallets-adapter@0.23.0...wallets-adapter@0.24.0) (2024-03-12)
+
+
+
 # [0.23.0](https://github.com/rango-exchange/rango-client/compare/wallets-adapter@0.22.1...wallets-adapter@0.23.0) (2024-02-20)
 
 
