@@ -24,18 +24,24 @@ beforeEach(() => {
       name: 'Rango',
       blockchain: rangoBlockchain.name,
       address: '0x0000000000000000068701000000000000000000',
+      isSecondaryCoin: false,
+      isPopular: false,
     },
     {
       ...createToken(),
       symbol: 'DJG',
       name: 'Django',
       blockchain: rangoBlockchain.name,
+      isSecondaryCoin: false,
+      isPopular: false,
     },
     {
       ...createToken(),
       symbol: 'RABO',
       name: 'Rainbow',
       blockchain: rangoBlockchain.name,
+      isSecondaryCoin: false,
+      isPopular: false,
     },
   ];
 
@@ -90,7 +96,28 @@ describe('check sorting tokens is working correctly in app store', () => {
     });
 
     const firstResult = tokens[0].symbol;
-    expect(firstResult).equal(rangoToken.symbol);
+    expect(firstResult).toBe(rangoToken.symbol);
+  });
+
+  test('put native tokens first', async () => {
+    const rangoToken = customTokens[0];
+    appStoreState._blockchainsMapByName.set(rangoToken.blockchain, {
+      ...rangoBlockchain,
+      feeAssets: [
+        {
+          address: rangoToken.address,
+          blockchain: rangoToken.blockchain,
+          symbol: rangoToken.symbol,
+        },
+      ],
+    });
+
+    const tokens = appStoreState.tokens({
+      type: 'source',
+    });
+
+    const firstResult = tokens[0].symbol;
+    expect(firstResult).toBe(rangoToken.symbol);
   });
 
   test('put popular tokens first', async () => {
@@ -112,24 +139,6 @@ describe('check sorting tokens is working correctly in app store', () => {
     assert(result.every((token) => token.isPopular === true));
   });
 
-  test('should be first when search contains some part of token address', async () => {
-    const tokens = appStoreState.tokens({
-      type: 'source',
-      searchFor: '68701',
-    });
-
-    const firstResult = tokens[0]?.symbol;
-    expect(firstResult).equal('RNG');
-  });
-
-  test.skip('should be the first token equal to the native token of the selected blockchain', async () => {
-    const tokens = appStoreState.tokens({
-      type: 'source',
-      blockchain: 'POLYGON',
-    });
-    expect(tokens[0]?.symbol).equal('MATIC');
-  });
-
   test('put secondary tokens at the end of list', async () => {
     const tokens = appStoreState.tokens({
       type: 'source',
@@ -137,77 +146,200 @@ describe('check sorting tokens is working correctly in app store', () => {
     expect(tokens[tokens.length - 1]?.isSecondaryCoin).toBe(true);
   });
 
-  test.skip('should be the second token equal to the token whose blockchain has the lowest sort value', async () => {
+  test('put popular token with lowest blockchain sort at first', async () => {
+    const rangoToken = customTokens[0];
+    const rangoIndex = appStoreState._tokens.findIndex(
+      (tokenItem) => tokenItem.symbol === rangoToken.symbol
+    );
+    appStoreState._tokens[rangoIndex].isPopular = true;
+    appStoreState._blockchainsMapByName.set(rangoToken.blockchain, {
+      ...rangoBlockchain,
+      sort: 0,
+    });
+
     const tokens = appStoreState.tokens({
       type: 'source',
     });
-    expect(tokens[2]?.symbol).equal('BTC');
+
+    const firstResult = tokens[0].symbol;
+    expect(firstResult).toBe(rangoToken.symbol);
   });
 
-  test.todo('pinned tokens + balance combination');
-  test.todo('pinned tokens + balance + popular combination');
+  test('put pinned token first and tokens with balances second', async () => {
+    const rangoToken = customTokens[0];
+    const djangoToken = customTokens[1];
+
+    appStoreState.config.from = {
+      ...appStoreState.config.from,
+      pinnedTokens: [
+        {
+          symbol: rangoToken.symbol,
+          address: rangoToken.address,
+          blockchain: rangoToken.blockchain,
+        },
+      ],
+    };
+
+    const tokens = appStoreState.tokens({
+      type: 'source',
+      getBalanceFor: (token: Token) => {
+        if (token.symbol === djangoToken.symbol) {
+          return {
+            amount: '100',
+            decimals: 12,
+            usdValue: '5000',
+          };
+        }
+        return null;
+      },
+    });
+
+    const firstResult = tokens[0].symbol;
+    const secondResult = tokens[1].symbol;
+    expect(firstResult).toBe(rangoToken.symbol);
+    expect(secondResult).toBe(djangoToken.symbol);
+  });
+
+  test('put pinned token first and tokens with balances second and popular tokens followed', async () => {
+    const rangoToken = customTokens[0];
+    const djangoToken = customTokens[1];
+
+    appStoreState.config.from = {
+      ...appStoreState.config.from,
+      pinnedTokens: [
+        {
+          symbol: rangoToken.symbol,
+          address: rangoToken.address,
+          blockchain: rangoToken.blockchain,
+        },
+      ],
+    };
+
+    const tokens = appStoreState.tokens({
+      type: 'source',
+      getBalanceFor: (token: Token) => {
+        if (token.symbol === djangoToken.symbol) {
+          return {
+            amount: '100',
+            decimals: 12,
+            usdValue: '5000',
+          };
+        }
+        return null;
+      },
+    });
+
+    const firstResult = tokens[0].symbol;
+    const secondResult = tokens[1].symbol;
+
+    const popularTokensCount = tokens.reduce((previousValue, current) => {
+      if (current.isPopular) {
+        return previousValue + 1;
+      }
+      return previousValue;
+    }, 0);
+    const popularResult = tokens.slice(2, popularTokensCount);
+
+    expect(firstResult).toBe(rangoToken.symbol);
+    expect(secondResult).toBe(djangoToken.symbol);
+    assert(popularResult.every((token) => token.isPopular === true));
+  });
 });
 
 describe('search in tokens', () => {
-  test('search by token symbol when symbol is exact matched', async () => {
+  test('should be first result when the symbol is exactly equal to the search term', async () => {
     const tokens = appStoreState.tokens({
       type: 'source',
       searchFor: 'rng',
     });
     const firstResult = tokens[0]?.symbol;
-    expect(firstResult).equal('RNG');
+    expect(firstResult).toBe('RNG');
   });
 
-  test('search by token name when name is exact matched', async () => {
+  test('should be first result when the token name is exactly equal to the search term', async () => {
     const tokens = appStoreState.tokens({
       type: 'source',
       searchFor: 'Rango',
     });
 
     const firstResult = tokens[0]?.symbol;
-    expect(firstResult).equal('RNG');
+    expect(firstResult).toBe('RNG');
   });
 
-  test('should be first result when search starts with first symbol characters', async () => {
+  test('should be first result when symbol characters starts with search term ', async () => {
     const tokens = appStoreState.tokens({
       type: 'source',
       searchFor: 'dj',
     });
 
     const firstResult = tokens[0]?.symbol;
-    expect(firstResult).equal('DJG');
+    expect(firstResult).toBe('DJG');
   });
 
-  test('should be first result when search contains characters from symbol', async () => {
+  test('should be first result when symbol characters contains search term', async () => {
     const tokens = appStoreState.tokens({
       type: 'source',
-      searchFor: 'ng',
+      searchFor: 'abo',
     });
 
     const firstResult = tokens[0]?.symbol;
-    expect(firstResult).equal('RNG');
+    expect(firstResult).toBe('RABO');
   });
 
-  test('should be first result when search starts with first token name characters', async () => {
+  test('should be first result when token name characters starts with search term', async () => {
     const tokens = appStoreState.tokens({
       type: 'source',
       searchFor: 'rang',
     });
 
     const firstResult = tokens[0]?.symbol;
-    expect(firstResult).equal('RNG');
+    expect(firstResult).toBe('RNG');
   });
 
-  // TODO: I'm not sure which one is correct, Rango or Django
-  test.skip('should be first result when search contains characters from token name', async () => {
+  test('should be first result when token name characters contains search term', async () => {
+    const tokens = appStoreState.tokens({
+      type: 'source',
+      searchFor: 'ngo',
+    });
+
+    // If there is more than one result, priority is given to the string that is shorter
+    const firstResult = tokens[0]?.symbol;
+    expect(firstResult).toBe('RNG');
+  });
+
+  test('should be first result when address contains searched term', async () => {
+    const tokens = appStoreState.tokens({
+      type: 'source',
+      searchFor: '68701',
+    });
+
+    const firstResult = tokens[0]?.symbol;
+    expect(firstResult).toBe('RNG');
+  });
+
+  test('put pinned token first and popular tokens followed when token name or symbol contains search term', async () => {
+    const djangoToken = customTokens[1];
+
+    appStoreState.config.from = {
+      ...appStoreState.config.from,
+      pinnedTokens: [
+        {
+          symbol: djangoToken.symbol,
+          address: djangoToken.address,
+          blockchain: djangoToken.blockchain,
+        },
+      ],
+    };
+
     const tokens = appStoreState.tokens({
       type: 'source',
       searchFor: 'ngo',
     });
 
     const firstResult = tokens[0]?.symbol;
-    expect(firstResult).equal('RNG');
-  });
+    const secondResult = tokens[1]?.symbol;
 
-  test.todo('pinned tokens + search combination');
+    expect(firstResult).toBe(djangoToken.symbol);
+    expect(secondResult).toBe('RNG');
+  });
 });
