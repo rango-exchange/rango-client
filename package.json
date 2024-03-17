@@ -47,8 +47,8 @@
     "i18n:extract": "lingui extract --clean",
     "i18n:compile": "lingui compile --typescript",
     "i18n": "yarn i18n:extract && yarn i18n:compile",
-    "test": "vitest",
-    "test:coverage": "vitest run --coverage",
+    "test": "nx run-many --target=test",
+    "test:coverage": "nx run-many --target=test:coverage",
     "commitlint": "commitlint --edit"
   },
   "dependencies": {
