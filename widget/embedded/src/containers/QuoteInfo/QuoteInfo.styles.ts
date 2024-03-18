@@ -8,6 +8,13 @@ export const QuoteContainer = styled('div', {
 });
 export const FooterStepAlarm = styled('div', {
   paddingBottom: '$15',
+  variants: {
+    dense: {
+      true: {
+        paddingBottom: 0,
+      },
+    },
+  },
 });
 
 export const FooterAlert = styled('div', {

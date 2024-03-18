@@ -14,6 +14,9 @@ export interface PropTypes {
   sideOffset?: RadixTooltipContentProps['sideOffset'];
   container?: HTMLElement;
   open?: boolean;
-  style?: Stitches.CSSProperties;
+  styles?: {
+    root?: Stitches.CSSProperties;
+    content?: Stitches.CSSProperties;
+  };
   align?: BaseAlign;
 }
