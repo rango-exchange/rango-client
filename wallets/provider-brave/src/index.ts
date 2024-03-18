@@ -121,18 +121,18 @@ export const subscribe: Subscribe = ({
     updateAccounts([account]);
   };
 
-  evm_instance?.on('accountsChanged', handleEvmAccountsChanged);
+  evm_instance?.on?.('accountsChanged', handleEvmAccountsChanged);
 
-  evm_instance?.on('chainChanged', handleEvmChainChanged);
+  evm_instance?.on?.('chainChanged', handleEvmChainChanged);
 
-  sol_instance?.on('accountChanged', handleSolanaAccountsChanged);
+  sol_instance?.on?.('accountChanged', handleSolanaAccountsChanged);
 
   return () => {
-    evm_instance?.off('accountsChanged', handleEvmAccountsChanged);
+    evm_instance?.off?.('accountsChanged', handleEvmAccountsChanged);
 
-    evm_instance?.off('chainChanged', handleEvmChainChanged);
+    evm_instance?.off?.('chainChanged', handleEvmChainChanged);
 
-    sol_instance?.off('accountChanged', handleSolanaAccountsChanged);
+    sol_instance?.off?.('accountChanged', handleSolanaAccountsChanged);
   };
 };
 
