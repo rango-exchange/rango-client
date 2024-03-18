@@ -101,7 +101,7 @@ export const subscribe: Subscribe = ({
     connect();
   };
 
-  window.cosmostation.cosmos.on('accountChanged', handleCosmosAccountChanged);
+  window.cosmostation.cosmos.on?.('accountChanged', handleCosmosAccountChanged);
 
   return () => {
     if (cleanupEvm) {
