@@ -107,10 +107,10 @@ export const subscribe: Subscribe = ({
     connect(network);
   };
   const eth = chooseInstance(instance, meta, Networks.ETHEREUM);
-  eth?.on('chainChanged', handleChainChanged);
+  eth?.on?.('chainChanged', handleChainChanged);
 
   return () => {
-    eth?.off('chainChanged', handleChainChanged);
+    eth?.off?.('chainChanged', handleChainChanged);
   };
 };
 

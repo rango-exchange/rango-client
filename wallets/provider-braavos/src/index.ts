@@ -39,9 +39,9 @@ export const subscribe: Subscribe = ({ instance, state, updateAccounts }) => {
       }
     }
   };
-  instance?.on('accountsChanged', handleAccountsChanged);
+  instance?.on?.('accountsChanged', handleAccountsChanged);
   return () => {
-    instance?.off('accountsChanged', handleAccountsChanged);
+    instance?.off?.('accountsChanged', handleAccountsChanged);
   };
 };
 
