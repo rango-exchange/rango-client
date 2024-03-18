@@ -5,6 +5,7 @@ import { styled, Typography, Wallet, WalletState } from '@rango-dev/ui';
 import React, { useState } from 'react';
 
 import { Layout, PageContainer } from '../components/Layout';
+import { WalletChainsModal } from '../components/WalletChainsModal';
 import { WalletModal } from '../components/WalletModal';
 import { useWalletList } from '../hooks/useWalletList';
 import { useAppStore } from '../store/AppStore';
@@ -31,28 +32,38 @@ export const TIME_TO_IGNORE_MODAL = 300;
 export function WalletsPage() {
   const { config, fetchStatus: fetchMetaStatus } = useAppStore();
   const [openModal, setOpenModal] = useState(false);
+  const [openChainsModal, setOpenChainsModal] = useState(false);
   const [selectedWalletType, setSelectedWalletType] = useState<WalletType>('');
   let modalTimerId: ReturnType<typeof setTimeout> | null = null;
   const isActiveTab = useUiStore.use.isActiveTab();
 
-  const { list, handleClick, error, disconnectConnectingWallets } =
-    useWalletList({
-      config,
-      onBeforeConnect: (type) => {
-        modalTimerId = setTimeout(() => {
-          setOpenModal(true);
-          setSelectedWalletType(type);
-        }, TIME_TO_IGNORE_MODAL);
-      },
-      onConnect: () => {
-        if (modalTimerId) {
-          clearTimeout(modalTimerId);
-        }
-        setTimeout(() => {
-          setOpenModal(false);
-        }, TIME_TO_CLOSE_MODAL);
-      },
-    });
+  const {
+    list,
+    handleClick,
+    handleConfirmChainTypes,
+    error,
+    disconnectConnectingWallets,
+  } = useWalletList({
+    config,
+    onBeforeConnect: (type) => {
+      modalTimerId = setTimeout(() => {
+        setOpenModal(true);
+        setSelectedWalletType(type);
+      }, TIME_TO_IGNORE_MODAL);
+    },
+    onConnect: () => {
+      if (modalTimerId) {
+        clearTimeout(modalTimerId);
+      }
+      setTimeout(() => {
+        setOpenModal(false);
+      }, TIME_TO_CLOSE_MODAL);
+    },
+    onShowChainTypesModal: (type) => {
+      setSelectedWalletType(type);
+      setOpenChainsModal(true);
+    },
+  });
 
   const handleCloseWalletModal = () => {
     disconnectConnectingWallets();
@@ -97,6 +108,16 @@ export function WalletsPage() {
             image={selectedWalletImage}
             state={selectedWalletState}
             error={error}
+          />
+          <WalletChainsModal
+            open={openChainsModal}
+            onClose={() => setOpenChainsModal(false)}
+            onConfirm={(chainTypes) => {
+              setOpenChainsModal(false);
+              void handleConfirmChainTypes(selectedWalletType, chainTypes);
+            }}
+            selectedWalletType={selectedWalletType}
+            selectedWalletImage={selectedWalletImage}
           />
         </ListContainer>
       </Container>

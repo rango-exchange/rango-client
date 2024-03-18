@@ -1,12 +1,13 @@
 import type { WidgetConfig } from '../types';
 import type { WalletInfo } from '@rango-dev/ui';
+import type { ChainTypes, WalletType } from '@rango-dev/wallets-shared';
 import type { BlockchainMeta } from 'rango-sdk';
 
 import { WalletState } from '@rango-dev/ui';
 import { useWallets } from '@rango-dev/wallets-react';
 import {
   KEPLR_COMPATIBLE_WALLETS,
-  type WalletType,
+  WALLET_SUPPORTED_CHAIN_TYPES,
   WalletTypes,
 } from '@rango-dev/wallets-shared';
 import { useCallback, useEffect, useState } from 'react';
@@ -28,6 +29,7 @@ interface Params {
   chain?: string;
   onBeforeConnect?: (walletType: string) => void;
   onConnect?: (walletType: string) => void;
+  onShowChainTypesModal?: (walletType: string) => void;
 }
 
 /**
@@ -36,7 +38,8 @@ interface Params {
  * you can use this list whenever you need to show the list of wallets and needed callbacks
  */
 export function useWalletList(params: Params) {
-  const { config, chain, onBeforeConnect, onConnect } = params;
+  const { config, chain, onBeforeConnect, onConnect, onShowChainTypesModal } =
+    params;
   const { state, disconnect, getWalletInfo, connect } = useWallets();
   const { connectedWallets } = useWalletsStore();
   const blockchains = useAppStore().blockchains();
@@ -79,6 +82,15 @@ export function useWalletList(params: Params) {
         if (!config?.multiWallets && atLeastOneWalletIsConnected) {
           return;
         }
+        if (
+          WALLET_SUPPORTED_CHAIN_TYPES.find(
+            (walletSupportedChainTypes) =>
+              walletSupportedChainTypes.walletType === type
+          )
+        ) {
+          onShowChainTypesModal?.(type);
+          return;
+        }
         onBeforeConnect?.(type);
         await connect(type);
         onConnect?.(type);
@@ -86,6 +98,17 @@ export function useWalletList(params: Params) {
     } catch (e) {
       setError('Error: ' + (e as any)?.message);
     }
+  };
+
+  const handleConfirmChainTypes = async (
+    type: WalletType,
+    selectedChainTypes: ChainTypes[]
+  ) => {
+    console.log(selectedChainTypes); // TODO: connect wallet based on selected chain types
+
+    onBeforeConnect?.(type);
+    await connect(type);
+    onConnect?.(type);
   };
 
   const disconnectConnectingWallets = useCallback(() => {
@@ -154,6 +177,7 @@ export function useWalletList(params: Params) {
     ),
     error,
     handleClick,
+    handleConfirmChainTypes,
     disconnectConnectingWallets,
   };
 }

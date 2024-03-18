@@ -29,9 +29,11 @@ import { getBlockchainDisplayNameFor } from '../../utils/meta';
 import {
   getAddress,
   getConciseAddress,
+  getRequiredChainType,
   isExperimentalChain,
 } from '../../utils/wallets';
 import { WatermarkedModal } from '../common/WatermarkedModal';
+import { WalletChainsModal } from '../WalletChainsModal';
 import { WalletModal } from '../WalletModal';
 
 import { ShowMoreWallets } from './ConfirmWallets.styles';
@@ -46,11 +48,12 @@ export function WalletList(props: PropTypes) {
   const { chain, isSelected, selectWallet, limit, onShowMore } = props;
   const { config } = useAppStore();
   const isActiveTab = useUiStore.use.isActiveTab();
+  const [openModal, setOpenModal] = useState(false);
+  const [openChainsModal, setOpenChainsModal] = useState(false);
+  const [selectedWalletType, setSelectedWalletType] = useState<WalletType>('');
 
   const connectedWallets = useWalletsStore.use.connectedWallets();
   const { blockchains } = useAppStore();
-  const [openWalletStateModal, setOpenWalletStateModal] =
-    useState<WalletType>('');
   const [experimentalChainWallet, setExperimentalChainWallet] =
     useState<Wallet | null>(null);
   const [showExperimentalChainModal, setShowExperimentalChainModal] =
@@ -59,24 +62,34 @@ export function WalletList(props: PropTypes) {
     useState<'in-progress' | 'completed' | 'rejected' | null>(null);
   const { suggestAndConnect } = useWallets();
   let modalTimerId: ReturnType<typeof setTimeout> | null = null;
-  const { list, error, handleClick, disconnectConnectingWallets } =
-    useWalletList({
-      config,
-      chain,
-      onBeforeConnect: (type) => {
-        modalTimerId = setTimeout(() => {
-          setOpenWalletStateModal(type);
-        }, TIME_TO_IGNORE_MODAL);
-      },
-      onConnect: () => {
-        if (modalTimerId) {
-          clearTimeout(modalTimerId);
-        }
-        setTimeout(() => {
-          setOpenWalletStateModal('');
-        }, TIME_TO_CLOSE_MODAL);
-      },
-    });
+  const {
+    list,
+    error,
+    handleClick,
+    handleConfirmChainTypes,
+    disconnectConnectingWallets,
+  } = useWalletList({
+    config,
+    chain,
+    onBeforeConnect: (type) => {
+      modalTimerId = setTimeout(() => {
+        setOpenModal(true);
+        setSelectedWalletType(type);
+      }, TIME_TO_IGNORE_MODAL);
+    },
+    onConnect: () => {
+      if (modalTimerId) {
+        clearTimeout(modalTimerId);
+      }
+      setTimeout(() => {
+        setOpenModal(false);
+      }, TIME_TO_CLOSE_MODAL);
+    },
+    onShowChainTypesModal: (type) => {
+      setSelectedWalletType(type);
+      setOpenChainsModal(true);
+    },
+  });
   const [sortedList, setSortedList] = useState<WalletInfo[]>(list);
   const numberOfSupportedWallets = list.length;
   const shouldShowMoreWallets = limit && numberOfSupportedWallets - limit > 0;
@@ -136,11 +149,36 @@ export function WalletList(props: PropTypes) {
 
   const handleCloseWalletModal = () => {
     disconnectConnectingWallets();
-    setOpenWalletStateModal('');
+    setOpenModal(false);
   };
+
+  const selectedWallet = list.find(
+    (wallet) => wallet.type === selectedWalletType
+  );
+  const selectedWalletImage = selectedWallet?.image || '';
+  const selectedWalletState =
+    selectedWallet?.state || WalletState.NOT_INSTALLED;
 
   return (
     <>
+      <WalletModal
+        open={!!openModal}
+        onClose={handleCloseWalletModal}
+        image={selectedWalletImage}
+        state={selectedWalletState}
+        error={error}
+      />
+      <WalletChainsModal
+        open={openChainsModal}
+        onClose={() => setOpenChainsModal(false)}
+        onConfirm={(chainTypes) => {
+          setOpenChainsModal(false);
+          void handleConfirmChainTypes(selectedWalletType, chainTypes);
+        }}
+        selectedWalletType={selectedWalletType}
+        selectedWalletImage={selectedWalletImage}
+        requiredChainType={getRequiredChainType(blockchains(), chain)}
+      />
       {sortedList.slice(0, limit).map((wallet) => {
         const address = getAddress({
           connectedWallets,
@@ -199,13 +237,6 @@ export function WalletList(props: PropTypes) {
             : undefined;
         return (
           <React.Fragment key={`${wallet.title}_${blockchainDisplayName}`}>
-            <WalletModal
-              open={openWalletStateModal === wallet.type}
-              onClose={handleCloseWalletModal}
-              image={wallet.image}
-              state={wallet.state}
-              error={error}
-            />
             {!!experimentalChainWallet && (
               <WatermarkedModal
                 open={!!experimentalChainWallet && showExperimentalChainModal}
