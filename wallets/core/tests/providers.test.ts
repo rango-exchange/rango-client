@@ -7,12 +7,12 @@ import { BlockchainProviderBuilder } from '../src/hub';
 import { ProviderBuilder } from '../src/hub/provider';
 
 describe('check Provider works with Blockchain correctly', () => {
-  test('connect successfully when two blockchain type has been added to Provider', () => {
+  test('connect successfully when two blockchain type has been added to Provider', async () => {
     // Wallet Code
     const evmConnect = vi.fn((_chain: string) => {
       return ['0x000000000000000000000000000000000000dead'];
     });
-    const solanaConnect = vi.fn(() => {
+    const solanaConnect = vi.fn(async () => {
       return ['1nc1nerator11111111111111111111111111111111'];
     });
 
@@ -31,7 +31,7 @@ describe('check Provider works with Blockchain correctly', () => {
 
     const garbageWallet = garbageWalletBuilder.build();
     const evmResult = garbageWallet.get('evm')?.connect('0x1');
-    const solanaResult = garbageWallet.get('solana')?.connect();
+    const solanaResult = await garbageWallet.get('solana')?.connect();
 
     expect(evmResult).toStrictEqual([
       '0x000000000000000000000000000000000000dead',

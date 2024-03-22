@@ -25,6 +25,14 @@ interface Config {
   namespace: string;
 }
 
+/**
+ * Note: This only works native async, if we are going to support for old transpilers like Babel.
+ */
+// eslint-disable-next-line @typescript-eslint/ban-types
+function isAsync(fn: Function) {
+  return fn.constructor.name === 'AsyncFunction';
+}
+
 // TODO: Show a warning if subscribers and subscriberCleanUps doesn't match and call correctly.
 class BlockchainProvider<T extends Record<keyof T, AnyFunction>> {
   public namespace: Config['namespace'];
@@ -90,12 +98,24 @@ class BlockchainProvider<T extends Record<keyof T, AnyFunction>> {
     };
 
     // First run the action (or cb) then tries to run what has been set using `.and`
-    let result = cb.bind(context)(...args);
-    const thenShouldRun = this.onActions.get(name);
-    if (thenShouldRun) {
-      result = thenShouldRun.bind(context)(result);
-    }
-    return result;
+    const isCbAsync = isAsync(cb);
+    const cbWithContext = cb.bind(context);
+
+    const runThen = () => {
+      const result = cbWithContext(...args);
+      const nextAction = this.onActions.get(name);
+      if (!nextAction) {
+        return result;
+      }
+
+      const nextActionWithContext = nextAction.bind(context);
+      if (isCbAsync) {
+        return result.then(nextActionWithContext);
+      }
+      return nextActionWithContext(result);
+    };
+
+    return runThen();
   }
 
   destroy() {
@@ -179,17 +199,27 @@ class BlockchainProviderBuilder<T extends Record<keyof T, AnyFunction>> {
     const api = new Proxy(blockchainProvider, {
       get: (_, property) => {
         // TODO: better typing?
-        const prop = property as any;
+        const prop: any = property;
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore-next-line
+        const targetValue = blockchainProvider[prop];
 
         // These are functions that actually has something inside themselves then will call the actual action.
-        if (property === 'init') {
-          return blockchainProvider.init.bind(blockchainProvider);
+        const allowedMethods = ['init', 'destroy', 'state'];
+        if (typeof prop === 'string' && allowedMethods.includes(prop)) {
+          return targetValue.bind(blockchainProvider);
         }
-        if (property === 'destroy') {
-          return blockchainProvider.destroy.bind(blockchainProvider);
-        }
-        if (property === 'state') {
-          return blockchainProvider.state.bind(blockchainProvider);
+
+        /*
+         * This is useful accessing values like `version`, If we don't do this, we should whitelist
+         * All the values as well, So it can be confusing for someone that only wants to add a public value to `BlockchainProvider`
+         */
+        const allowedPublicValues = ['string', 'number'];
+        if (
+          typeof prop === 'string' &&
+          allowedPublicValues.includes(typeof targetValue)
+        ) {
+          return targetValue;
         }
 
         return blockchainProvider.run.bind(blockchainProvider, prop);
