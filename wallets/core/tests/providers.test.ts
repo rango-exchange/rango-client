@@ -3,7 +3,7 @@ import type { SolanaActions } from '../src/actions/solana/interface';
 
 import { describe, expect, test, vi } from 'vitest';
 
-import { BlockchainProvider } from '../src/hub';
+import { BlockchainProviderBuilder } from '../src/hub';
 import { ProviderBuilder } from '../src/hub/provider';
 
 describe('check Provider works with Blockchain correctly', () => {
@@ -16,10 +16,12 @@ describe('check Provider works with Blockchain correctly', () => {
       return ['1nc1nerator11111111111111111111111111111111'];
     });
 
-    const evmProvider = new BlockchainProvider<EvmActions>()
+    const evmProvider = new BlockchainProviderBuilder<EvmActions>()
+      .config('namespace', 'eip155')
       .action('connect', evmConnect)
       .build();
-    const solanaProvider = new BlockchainProvider<SolanaActions>()
+    const solanaProvider = new BlockchainProviderBuilder<SolanaActions>()
+      .config('namespace', 'solana')
       .action('connect', solanaConnect)
       .build();
 
@@ -57,11 +59,15 @@ describe('check Provider works with Blockchain correctly', () => {
     const evmDisconnect = vi.fn();
     const afterDisconnect = vi.fn();
 
-    const evmProvider = new BlockchainProvider<EvmActions>()
+    const evmProvider = new BlockchainProviderBuilder<EvmActions>()
+      .config('namespace', 'eip155')
       .action('connect', evmConnect)
       .action('disconnect', evmDisconnect)
-      .and('disconnect', afterDisconnect)
       .use([
+        {
+          name: 'disconnect',
+          cb: afterDisconnect,
+        },
         {
           name: 'connect',
           cb: afterConnect,

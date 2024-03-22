@@ -1,3 +1,3 @@
-export { BlockchainProvider } from './blockchain';
-export { Provider } from './provider';
+export { BlockchainProvider, BlockchainProviderBuilder } from './blockchain';
+export { Provider, ProviderBuilder } from './provider';
 export { Hub } from './hub';

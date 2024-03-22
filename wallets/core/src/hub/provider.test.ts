@@ -3,18 +3,25 @@ import type { SolanaActions } from '../actions/solana/interface';
 
 import { beforeEach, describe, expect, test } from 'vitest';
 
-import { BlockchainProvider } from './blockchain';
+import { BlockchainProviderBuilder } from './blockchain';
 import { ProviderBuilder } from './provider';
 
 describe('providers', () => {
   let blockchainProviders: {
-    evm: BlockchainProvider<EvmActions>;
-    solana: BlockchainProvider<SolanaActions>;
+    evm: BlockchainProviderBuilder<EvmActions>;
+    solana: BlockchainProviderBuilder<SolanaActions>;
   };
 
   beforeEach(() => {
-    const evmBlockchain = new BlockchainProvider<EvmActions>();
-    const solanaBlockchain = new BlockchainProvider<SolanaActions>();
+    const evmBlockchain = new BlockchainProviderBuilder<EvmActions>().config(
+      'namespace',
+      'eip155'
+    );
+    const solanaBlockchain =
+      new BlockchainProviderBuilder<SolanaActions>().config(
+        'namespace',
+        'solana'
+      );
 
     blockchainProviders = {
       evm: evmBlockchain,
@@ -80,5 +87,29 @@ describe('providers', () => {
     const wallet = builder.build();
 
     expect(wallet.info()).toStrictEqual(sample);
+  });
+
+  test('.init should works on Provider', () => {
+    const builder = new ProviderBuilder('garbage');
+    let count = 0;
+    builder.init(() => {
+      count++;
+    });
+    const wallet = builder.build();
+    expect(count).toBe(0);
+    wallet.init();
+    wallet.init();
+    wallet.init();
+    expect(count).toBe(1);
+  });
+
+  test(".init shouldn't do anything when use hasn't set anything", () => {
+    const builder = new ProviderBuilder('garbage');
+    const wallet = builder.build();
+    expect(() => {
+      wallet.init();
+      wallet.init();
+      wallet.init();
+    }).not.toThrow();
   });
 });

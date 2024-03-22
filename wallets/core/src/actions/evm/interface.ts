@@ -4,6 +4,7 @@ export interface EvmActions {
   // TODO: it's disabling `action` type infer.
 
   // [k: string]: (...args: any[]) => any;
+  init: () => void;
   connect: (chain: string) => Accounts;
   disconnect: (chain: string) => void;
   suggest: (chain: string) => void;

@@ -1,21 +1,25 @@
 import { describe, expect, test, vi } from 'vitest';
 
-import { BlockchainProvider } from './blockchain';
+import { BlockchainProviderBuilder } from './blockchain';
 import { useConnect } from './use';
 
 describe('predefined uses should works correctly', () => {
   test('connecting should update internal state.', () => {
-    const blockchain = new BlockchainProvider<any>();
+    const blockchainBuilder = new BlockchainProviderBuilder<{
+      connect: () => string[];
+    }>();
+    blockchainBuilder.config('namespace', 'bip139');
+
+    // add connect action and useConnect to add it state.
     const connect = vi.fn(() => {
       return ['0x000000000000000000000000000000000000dead'];
     });
+    blockchainBuilder.action('connect', connect);
 
-    // add connect action and useConnect to add it state.
-    blockchain.action('connect', connect);
     const useConnectFn = vi.fn(useConnect);
-    const uses = [{ name: 'connect', cb: useConnectFn }];
-    blockchain.use(uses);
-    blockchain.run('connect');
+    blockchainBuilder.use([{ name: 'connect', cb: useConnectFn }]);
+    const blockchain = blockchainBuilder.build();
+    blockchain.connect();
 
     const [getState] = blockchain.state();
     const accounts = getState('accounts');

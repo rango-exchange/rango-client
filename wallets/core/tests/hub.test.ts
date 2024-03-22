@@ -2,7 +2,7 @@ import type { EvmActions } from '../src/actions/evm/interface';
 
 import { expect, test, vi } from 'vitest';
 
-import { BlockchainProvider } from '../src/hub';
+import { BlockchainProviderBuilder } from '../src/hub';
 import { Hub } from '../src/hub/hub';
 import { ProviderBuilder } from '../src/hub/provider';
 
@@ -14,7 +14,8 @@ test('connect through hub', () => {
     ];
   });
 
-  const evmProvider = new BlockchainProvider<EvmActions>()
+  const evmProvider = new BlockchainProviderBuilder<EvmActions>()
+    .config('namespace', 'eip155')
     .action('connect', evmConnect)
     .build();
   const garbageWalletBuilder = new ProviderBuilder('garbage-wallet');
