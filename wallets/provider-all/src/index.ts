@@ -1,3 +1,8 @@
+import type {
+  ProviderInterface,
+  ProviderV1Interface,
+} from '@rango-dev/wallets-core';
+
 import * as argentx from '@rango-dev/provider-argentx';
 import * as bitget from '@rango-dev/provider-bitget';
 import * as braavos from '@rango-dev/provider-braavos';
@@ -16,7 +21,7 @@ import * as leapCosmos from '@rango-dev/provider-leap-cosmos';
 import * as mathwallet from '@rango-dev/provider-math-wallet';
 import * as metamask from '@rango-dev/provider-metamask';
 import * as okx from '@rango-dev/provider-okx';
-import * as phantom from '@rango-dev/provider-phantom';
+import { provider as phantom } from '@rango-dev/provider-phantom';
 import * as safe from '@rango-dev/provider-safe';
 import * as safepal from '@rango-dev/provider-safepal';
 import * as taho from '@rango-dev/provider-taho';
@@ -28,36 +33,38 @@ import * as xdefi from '@rango-dev/provider-xdefi';
 
 type Enviroments = Record<string, Record<string, string>>;
 
-export const allProviders = (enviroments?: Enviroments) => {
+export const allProviders = (
+  enviroments?: Enviroments
+): (ProviderInterface | ProviderV1Interface)[] => {
   walletconnect2.init(enviroments?.walletconnect2 || {});
 
   return [
-    safe,
-    defaultInjected,
-    metamask,
-    walletconnect2,
-    keplr,
+    safe satisfies ProviderInterface,
+    defaultInjected satisfies ProviderInterface,
+    metamask satisfies ProviderInterface,
+    walletconnect2 satisfies ProviderInterface,
+    keplr satisfies ProviderInterface,
     phantom,
-    argentx,
-    tronLink,
-    trustwallet,
-    bitget,
-    enkrypt,
-    xdefi,
-    clover,
-    safepal,
-    brave,
-    coin98,
-    coinbase,
-    cosmostation,
-    exodus,
-    mathwallet,
-    okx,
-    tokenpocket,
-    halo,
-    leapCosmos,
-    frontier,
-    taho,
-    braavos,
+    argentx satisfies ProviderInterface,
+    tronLink satisfies ProviderInterface,
+    trustwallet satisfies ProviderInterface,
+    bitget satisfies ProviderInterface,
+    enkrypt satisfies ProviderInterface,
+    xdefi satisfies ProviderInterface,
+    clover satisfies ProviderInterface,
+    safepal satisfies ProviderInterface,
+    brave satisfies ProviderInterface,
+    coin98 satisfies ProviderInterface,
+    coinbase satisfies ProviderInterface,
+    cosmostation satisfies ProviderInterface,
+    exodus satisfies ProviderInterface,
+    mathwallet satisfies ProviderInterface,
+    okx satisfies ProviderInterface,
+    tokenpocket satisfies ProviderInterface,
+    halo satisfies ProviderInterface,
+    leapCosmos satisfies ProviderInterface,
+    frontier satisfies ProviderInterface,
+    taho satisfies ProviderInterface,
+    braavos satisfies ProviderInterface,
   ];
 };

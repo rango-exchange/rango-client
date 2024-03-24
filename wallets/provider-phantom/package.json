@@ -21,6 +21,7 @@
     "lint": "eslint \"**/*.{ts,tsx}\" --ignore-path ../../.eslintignore"
   },
   "dependencies": {
+    "@rango-dev/wallets-core": "0.29.1-next.0",
     "@rango-dev/signer-solana": "^0.26.0",
     "@rango-dev/wallets-shared": "^0.28.1-next.0",
     "rango-types": "^0.1.59"
