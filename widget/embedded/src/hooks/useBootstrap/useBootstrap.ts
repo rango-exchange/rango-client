@@ -1,6 +1,18 @@
 import type { WalletType } from '../..';
+import type {
+  RouteEventData,
+  StepEventData,
+} from '@rango-dev/queue-manager-rango-preset';
 
-import { useQueueManager } from '@rango-dev/queue-manager-rango-preset';
+import {
+  isApprovalTX,
+  MainEvents,
+  RouteEventType,
+  StepEventType,
+  StepExecutionEventStatus,
+  useEvents,
+  useQueueManager,
+} from '@rango-dev/queue-manager-rango-preset';
 import { splitWalletNetwork } from '@rango-dev/wallets-shared';
 import { isEvmBlockchain } from 'rango-sdk';
 import { useContext, useEffect, useState } from 'react';
@@ -11,6 +23,7 @@ import { globalFont } from '../../globalStyles';
 import { useAppStore } from '../../store/AppStore';
 import { useNotificationStore } from '../../store/notification';
 import { tabManager } from '../../store/ui';
+import { useWalletsStore } from '../../store/wallets';
 import { useFetchApiConfig } from '../useFetchApiConfig';
 import { useForceAutoConnect } from '../useForceAutoConnect';
 
@@ -18,11 +31,16 @@ export function useBootstrap() {
   globalFont();
   useForceAutoConnect();
   const blockchains = useAppStore().blockchains();
+  const tokens = useAppStore().tokens();
   const { canSwitchNetworkTo } = useWallets();
+  const connectedWallets = useWalletsStore.use.connectedWallets();
+  const getWalletsDetails = useWalletsStore.use.getWalletsDetails();
+  const setNotification = useNotificationStore.use.setNotification();
   const [lastConnectedWalletWithNetwork, setLastConnectedWalletWithNetwork] =
     useState('');
   const [disconnectedWallet, setDisconnectedWallet] = useState<WalletType>();
   const widgetContext = useContext(WidgetContext);
+  const widgetEvents = useEvents();
 
   const evmChains = blockchains.filter(isEvmBlockchain);
 
@@ -69,4 +87,50 @@ export function useBootstrap() {
 
     return tabManager.destroy;
   }, []);
+
+  useEffect(() => {
+    const handleStepEvent = (widgetEvent: StepEventData) => {
+      const { event, step, route } = widgetEvent;
+      const shouldRefetchBalance =
+        (event.type === StepEventType.TX_EXECUTION &&
+          event.status === StepExecutionEventStatus.TX_SENT &&
+          !isApprovalTX(step)) ||
+        event.type === StepEventType.SUCCEEDED;
+
+      if (shouldRefetchBalance) {
+        const fromAccount = connectedWallets.find(
+          (account) => account.chain === step?.fromBlockchain
+        );
+        const toAccount =
+          step?.fromBlockchain !== step?.toBlockchain &&
+          connectedWallets.find(
+            (wallet) => wallet.chain === step?.toBlockchain
+          );
+
+        fromAccount && getWalletsDetails([fromAccount], tokens);
+        toAccount && getWalletsDetails([toAccount], tokens);
+      }
+
+      setNotification(event, route);
+    };
+    widgetEvents.on(MainEvents.StepEvent, handleStepEvent);
+
+    return () => widgetEvents.off(MainEvents.StepEvent, handleStepEvent);
+  }, [widgetEvents, connectedWallets.length]);
+
+  useEffect(() => {
+    const handleRouteEvent = (widgetEvent: RouteEventData) => {
+      const { event, route } = widgetEvent;
+
+      if (
+        event.type === RouteEventType.FAILED ||
+        event.type === RouteEventType.SUCCEEDED
+      ) {
+        setNotification(event, route);
+      }
+    };
+    widgetEvents.on(MainEvents.RouteEvent, handleRouteEvent);
+
+    return () => widgetEvents.off(MainEvents.RouteEvent, handleRouteEvent);
+  }, [widgetEvents, connectedWallets.length]);
 }
