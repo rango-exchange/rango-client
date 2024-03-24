@@ -1,13 +1,13 @@
 import { describe, expect, test, vi } from 'vitest';
 
-import { BlockchainProviderBuilder } from './blockchain';
+import { NamespaceBuilder } from '../builders/namespace';
 
-describe('check BlockchainProviderBuilder works as expected', () => {
+describe('check NamespaceBuilder works as expected', () => {
   const NAMESPACE = 'bip122';
   const PROVIDER_ID = 'garbage provider';
 
   test('add actions and run them.', () => {
-    const builder = new BlockchainProviderBuilder<{
+    const builder = new NamespaceBuilder<{
       hello: () => void;
       bye: () => void;
       chainable: () => void;
@@ -33,7 +33,7 @@ describe('check BlockchainProviderBuilder works as expected', () => {
   });
 
   test('subscribers should be added and removed correctly', () => {
-    const builder = new BlockchainProviderBuilder<{
+    const builder = new NamespaceBuilder<{
       //
     }>();
     builder.config('namespace', NAMESPACE);
@@ -56,7 +56,7 @@ describe('check BlockchainProviderBuilder works as expected', () => {
   });
 
   test('call .init only once.', () => {
-    const builder = new BlockchainProviderBuilder<any>();
+    const builder = new NamespaceBuilder<any>();
     builder.config('namespace', NAMESPACE);
     builder.config('providerId', PROVIDER_ID);
     let count = 0;
@@ -75,7 +75,7 @@ describe('check BlockchainProviderBuilder works as expected', () => {
     const after = vi.fn();
     const connectAction = vi.fn();
     const disconnectAction = vi.fn();
-    const builder = new BlockchainProviderBuilder<{
+    const builder = new NamespaceBuilder<{
       connect: () => void;
       disconnect: () => void;
     }>();

@@ -1,7 +1,4 @@
-import type {
-  BlockchainProvider,
-  State as BlockchainState,
-} from './blockchain';
+import type { State as BlockchainState, Namespace } from './namespace';
 import type { Provider, State as ProviderState } from './provider';
 import type { Store } from './store';
 
@@ -100,6 +97,8 @@ export class Hub {
       blockchain.store(this.#options.store);
     }
 
+    console.log('[hub]', this.#options);
+
     this.#providers.set(id, blockchain);
     return this;
   }
@@ -119,9 +118,7 @@ export class Hub {
     output.forEach((result) => {
       const blockchains: BlockchainState[] = [];
       result.blockchains.forEach((b) => {
-        const [getBlockchainState] = b as ReturnType<
-          BlockchainProvider<any>['state']
-        >;
+        const [getBlockchainState] = b as ReturnType<Namespace<any>['state']>;
 
         blockchains.push(getBlockchainState());
       });

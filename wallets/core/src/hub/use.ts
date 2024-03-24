@@ -1,6 +1,6 @@
 // Some helpers to simplify the code.
 
-import type { Context } from './blockchain';
+import type { Context } from './namespace';
 import type { EvmActions } from '../actions/evm/interface';
 import type { SolanaActions } from '../actions/solana/interface';
 

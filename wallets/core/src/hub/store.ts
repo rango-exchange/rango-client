@@ -81,47 +81,47 @@ const providers: ProvidersStateCreator = (set, get) => ({
 
 /************ Blockchain Provider ************/
 
-export interface BlockchainProviderConfig {
+export interface NamespaceConfig {
   providerId: string;
   namespace: string;
 }
-export interface BlockchainProviderData {
+export interface NamespaceData {
   accounts: null | string[];
   network: null | string;
   connected: boolean;
   connecting: boolean;
 }
 
-type BlockchainProvidersState = {
+type NamespaceState = {
   list: Record<
     string,
     {
-      config: BlockchainProviderConfig;
-      data: BlockchainProviderData;
+      config: NamespaceConfig;
+      data: NamespaceData;
       error: unknown;
     }
   >;
 };
 
-interface BlockchainProvidersActions {
-  addBlockchainProvider: (id: string, config: BlockchainProviderConfig) => void;
-  updateStatus: <K extends keyof BlockchainProviderData>(
+interface NamespaceActions {
+  addNamespace: (id: string, config: NamespaceConfig) => void;
+  updateStatus: <K extends keyof NamespaceData>(
     id: string,
     key: K,
-    value: BlockchainProviderData[K]
+    value: NamespaceData[K]
   ) => void;
 }
 
-type BlockchainProvidersStateCreator = StateCreator<
+type NamespaceStateCreator = StateCreator<
   State,
   [],
   [],
-  BlockchainProvidersState & BlockchainProvidersActions
+  NamespaceState & NamespaceActions
 >;
 
-const blockchainProviders: BlockchainProvidersStateCreator = (set, get) => ({
+const namespaces: NamespaceStateCreator = (set, get) => ({
   list: {},
-  addBlockchainProvider: (id, config) => {
+  addNamespace: (id, config) => {
     const item = {
       data: {
         accounts: null,
@@ -135,18 +135,18 @@ const blockchainProviders: BlockchainProvidersStateCreator = (set, get) => ({
 
     set(
       produce((state: State) => {
-        state.blockchainProviders.list[id] = item;
+        state.namespaces.list[id] = item;
       })
     );
   },
   updateStatus: (id, key, value) => {
-    if (!get().blockchainProviders.list[id]) {
+    if (!get().namespaces.list[id]) {
       throw new Error(`No blockchain provider with '${id}' found.`);
     }
 
     set(
       produce((state: State) => {
-        state.blockchainProviders.list[id].data[key] = value;
+        state.namespaces.list[id].data[key] = value;
       })
     );
   },
@@ -171,7 +171,7 @@ const hub: HubStateCreator = () => ({
 interface State {
   hub: HubState;
   providers: ProviderState & ProviderActions;
-  blockchainProviders: BlockchainProvidersState & BlockchainProvidersActions;
+  namespaces: NamespaceState & NamespaceActions;
 }
 
 export type Store = StoreApi<State>;
@@ -180,7 +180,7 @@ export const createStore = (): Store => {
     return {
       hub: hub(...api),
       providers: providers(...api),
-      blockchainProviders: blockchainProviders(...api),
+      namespaces: namespaces(...api),
     };
   });
 };

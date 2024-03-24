@@ -3,8 +3,7 @@ import type { SolanaActions } from '../src/actions/solana/interface';
 
 import { describe, expect, test, vi } from 'vitest';
 
-import { BlockchainProviderBuilder } from '../src/hub';
-import { ProviderBuilder } from '../src/hub/provider';
+import { NamespaceBuilder, ProviderBuilder } from '../src/builders';
 import { garbageWalletInfo } from '../src/test-utils/fixtures';
 
 describe('check Provider works with Blockchain correctly', () => {
@@ -19,12 +18,12 @@ describe('check Provider works with Blockchain correctly', () => {
       return ['1nc1nerator11111111111111111111111111111111'];
     });
 
-    const evmProvider = new BlockchainProviderBuilder<EvmActions>()
+    const evmProvider = new NamespaceBuilder<EvmActions>()
       .config('namespace', 'eip155')
       .config('providerId', walletName)
       .action('connect', evmConnect)
       .build();
-    const solanaProvider = new BlockchainProviderBuilder<SolanaActions>()
+    const solanaProvider = new NamespaceBuilder<SolanaActions>()
       .config('namespace', 'solana')
       .config('providerId', walletName)
       .action('connect', solanaConnect)
@@ -67,7 +66,7 @@ describe('check Provider works with Blockchain correctly', () => {
     const evmDisconnect = vi.fn();
     const afterDisconnect = vi.fn();
 
-    const evmProvider = new BlockchainProviderBuilder<EvmActions>()
+    const evmProvider = new NamespaceBuilder<EvmActions>()
       .config('namespace', 'eip155')
       .config('providerId', walletName)
       .action('connect', evmConnect)

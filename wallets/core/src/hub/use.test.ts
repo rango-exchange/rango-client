@@ -1,6 +1,7 @@
 import { beforeEach, describe, expect, test, vi } from 'vitest';
 
-import { BlockchainProviderBuilder } from './blockchain';
+import { NamespaceBuilder } from '../builders';
+
 import { createStore, type Store } from './store';
 import { useConnect } from './use';
 
@@ -18,7 +19,7 @@ describe('predefined uses should works correctly', () => {
   });
 
   test('connecting should update internal state.', () => {
-    const blockchainBuilder = new BlockchainProviderBuilder<{
+    const blockchainBuilder = new NamespaceBuilder<{
       connect: () => string[];
     }>();
     blockchainBuilder.config('namespace', 'bip139');

@@ -2,9 +2,8 @@ import type { EvmActions } from '../src/actions/evm/interface';
 
 import { beforeEach, describe, expect, test, vi } from 'vitest';
 
-import { BlockchainProviderBuilder } from '../src/hub';
+import { NamespaceBuilder, ProviderBuilder } from '../src/builders';
 import { Hub } from '../src/hub/hub';
-import { ProviderBuilder } from '../src/hub/provider';
 import { createStore, type Store } from '../src/hub/store';
 import { garbageWalletInfo } from '../src/test-utils/fixtures';
 
@@ -30,7 +29,7 @@ describe('aa', () => {
       ];
     });
 
-    const evmProvider = new BlockchainProviderBuilder<EvmActions>()
+    const evmProvider = new NamespaceBuilder<EvmActions>()
       .config('namespace', 'eip155')
       .config('providerId', walletName)
       .action('connect', evmConnect)

@@ -5,29 +5,29 @@ import type { SolanaActions } from '../actions/solana/interface';
 
 import { beforeEach, describe, expect, test, vi } from 'vitest';
 
+import { NamespaceBuilder } from '../builders/namespace';
+import { ProviderBuilder } from '../builders/provider';
 import { garbageWalletInfo } from '../test-utils/fixtures';
 
-import { BlockchainProviderBuilder } from './blockchain';
-import { ProviderBuilder } from './provider';
 import { createStore } from './store';
 
 describe('providers', () => {
-  let blockchainProviders: {
-    evm: BlockchainProviderBuilder<EvmActions>;
-    solana: BlockchainProviderBuilder<SolanaActions>;
+  let namespaces: {
+    evm: NamespaceBuilder<EvmActions>;
+    solana: NamespaceBuilder<SolanaActions>;
   };
   let store: Store;
 
   beforeEach(() => {
     store = createStore();
-    const evmBlockchain = new BlockchainProviderBuilder<EvmActions>()
+    const evmBlockchain = new NamespaceBuilder<EvmActions>()
       .config('namespace', 'eip155')
       .config('providerId', 'garbage');
-    const solanaBlockchain = new BlockchainProviderBuilder<SolanaActions>()
+    const solanaBlockchain = new NamespaceBuilder<SolanaActions>()
       .config('namespace', 'solana')
       .config('providerId', 'garbage');
 
-    blockchainProviders = {
+    namespaces = {
       evm: evmBlockchain,
       solana: solanaBlockchain,
     };
@@ -35,7 +35,7 @@ describe('providers', () => {
     return () => {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore-next-line
-      (store = undefined), (blockchainProviders = undefined);
+      (store = undefined), (namespaces = undefined);
     };
   });
 
@@ -44,7 +44,7 @@ describe('providers', () => {
       'info',
       garbageWalletInfo
     );
-    const { evm, solana } = blockchainProviders;
+    const { evm, solana } = namespaces;
     builder.add('evm', evm.build()).add('solana', solana.build());
     const wallet = builder.build();
 
@@ -57,7 +57,7 @@ describe('providers', () => {
       'info',
       garbageWalletInfo
     );
-    const { evm, solana } = blockchainProviders;
+    const { evm, solana } = namespaces;
     builder.add('evm', evm.build()).add('solana', solana.build());
 
     const wallet = builder.build();
@@ -72,7 +72,7 @@ describe('providers', () => {
       'info',
       garbageWalletInfo
     );
-    const { evm, solana } = blockchainProviders;
+    const { evm, solana } = namespaces;
     solana.action('connect', async () => [
       '0x000000000000000000000000000000000000dead',
     ]);
@@ -132,7 +132,7 @@ describe('providers', () => {
       garbageWalletInfo
     );
 
-    const { evm, solana } = blockchainProviders;
+    const { evm, solana } = namespaces;
     builder.add('evm', evm.build()).add('solana', solana.build());
     const wallet = builder.build();
 
@@ -161,7 +161,7 @@ describe('providers', () => {
       setState('installed', false);
     });
 
-    const { evm } = blockchainProviders;
+    const { evm } = namespaces;
     const evmBlockchain = evm.action('connect', connect).build();
 
     const builder = new ProviderBuilder('garbage', { store })

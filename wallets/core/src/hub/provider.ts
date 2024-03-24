@@ -18,7 +18,7 @@ type GetState = {
   <K extends keyof State>(name: K): State[K];
 };
 
-export interface CommonBlockchains {
+export interface CommonNamespaces {
   // TODO: I think we don't need `RemoveThisParameter`, because we went the opposite.
   evm: RemoveThisParameter<EvmActions>;
   solana: RemoveThisParameter<SolanaActions>;
@@ -27,7 +27,7 @@ export interface CommonBlockchains {
 
 type Fn = (this: Provider, ...args: any) => any;
 
-interface InternalMethods {
+export interface InternalMethods {
   init?: Fn;
 }
 export class Provider {
@@ -37,9 +37,9 @@ export class Provider {
   /*
    * TODO:
    * It has some ts erros when I try to type it:
-   * Map<keyof CommonBlockchains,CommonBlockchains[keyof CommonBlockchains]>
+   * Map<keyof CommonNamespaces,CommonNamespaces[keyof CommonNamespaces]>
    */
-  #blockchainProviders: Map<any, any>;
+  #namespaces: Map<any, any>;
   #initiated = false;
   // TODO: better name and also better typing for sure.
   #internalMethods: InternalMethods = {};
@@ -48,9 +48,9 @@ export class Provider {
 
   constructor(
     id: string,
-    blockchains: Map<
-      keyof CommonBlockchains,
-      CommonBlockchains[keyof CommonBlockchains]
+    namespaces: Map<
+      keyof CommonNamespaces,
+      CommonNamespaces[keyof CommonNamespaces]
     >,
     configs: ProviderConfig,
     options: {
@@ -62,7 +62,7 @@ export class Provider {
     this.#configs = configs;
     // it should be only created here, to make sure `after/before` will work properly.
     this.#internalMethods = options.internalMethods;
-    this.#blockchainProviders = blockchains;
+    this.#namespaces = namespaces;
 
     if (options.store) {
       this.#store = options.store;
@@ -114,11 +114,11 @@ export class Provider {
 
   // TODO: Could we somehow type some part of the ReturnType at least?
   getAll() {
-    return this.#blockchainProviders;
+    return this.#namespaces;
   }
 
-  get<K extends keyof CommonBlockchains>(id: K): CommonBlockchains[K] {
-    return this.#blockchainProviders.get(id);
+  get<K extends keyof CommonNamespaces>(id: K): CommonNamespaces[K] {
+    return this.#namespaces.get(id);
   }
 
   // TODO: Could we somehow type some part of the ReturnType at least?
@@ -127,9 +127,9 @@ export class Provider {
       // If we didn't found any match, we will return `undefined`.
       let result: object | undefined = undefined;
 
-      this.#blockchainProviders.forEach((blockchainProvider) => {
-        if (blockchainProvider.namespace === options.namespace) {
-          result = blockchainProvider;
+      this.#namespaces.forEach((namespace) => {
+        if (namespace.namespace === options.namespace) {
+          result = namespace;
         }
       });
 
@@ -154,19 +154,19 @@ export class Provider {
     const definedInitByUser = this.#internalMethods.init;
     if (!definedInitByUser) {
       console.debug(
-        "[BlockchainProvider] this blockchain provider doesn't have any `init` implemented."
+        "[Namespace] this namespace doesn't have any `init` implemented."
       );
       return;
     }
 
     if (this.#initiated) {
-      console.log('[BlockchainProvider] initiated already.');
+      console.log('[Namespace] initiated already.');
       return;
     }
 
     definedInitByUser.bind(this)();
     this.#initiated = true;
-    console.debug('[BlockchainProvider] initiated successfully.');
+    console.debug('[Namespace] initiated successfully.');
   }
 
   before(action: string, cb: AnyFunction) {
@@ -176,8 +176,8 @@ export class Provider {
     };
     const cbWithContext = cb.bind(context);
 
-    this.#blockchainProviders.forEach((blockchainProvider) => {
-      blockchainProvider.before(action, cbWithContext);
+    this.#namespaces.forEach((namespace) => {
+      namespace.before(action, cbWithContext);
     });
     return this;
   }
@@ -187,8 +187,8 @@ export class Provider {
       state: this.state.bind(this),
     };
     const cbWithContext = cb.bind(context);
-    this.#blockchainProviders.forEach((blockchainProvider) => {
-      blockchainProvider.after(action, cbWithContext);
+    this.#namespaces.forEach((namespace) => {
+      namespace.after(action, cbWithContext);
     });
     return this;
   }
@@ -210,62 +210,10 @@ export class Provider {
       throw new Error('For setup store, you should set `store` first.');
     }
     store.getState().providers.addProvider(this.id, this.#configs);
+    this.#namespaces.forEach((provider) => {
+      provider.store(store);
+    });
   }
 }
 
-type ProviderBuilderOptions = { store?: Store };
-export class ProviderBuilder {
-  private id: string;
-  private blockchainProviders = new Map();
-  private methods: InternalMethods = {};
-  #configs: Partial<ProviderConfig> = {};
-  #options: Partial<ProviderBuilderOptions>;
-
-  constructor(id: string, options?: ProviderBuilderOptions) {
-    this.id = id;
-    this.#options = options || {};
-  }
-
-  add<K extends keyof CommonBlockchains>(
-    id: K,
-    blockchain: CommonBlockchains[K]
-  ) {
-    if (this.#options.store) {
-      /*
-       * TODO: CommonBlockchains only returning specific interface for each namespace
-       * in fact it should return each namespace + default methods on `BlockchainPorivder`
-       */
-
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore-next-line
-      blockchain.store(this.#options.store);
-    }
-    this.blockchainProviders.set(id, blockchain);
-    return this;
-  }
-
-  config<K extends keyof ProviderConfig>(name: K, value: ProviderConfig[K]) {
-    this.#configs[name] = value;
-    return this;
-  }
-
-  init(cb: Exclude<InternalMethods['init'], undefined>) {
-    this.methods.init = cb;
-    return this;
-  }
-
-  build(): Provider {
-    if (this.#isConfigsValid(this.#configs)) {
-      return new Provider(this.id, this.blockchainProviders, this.#configs, {
-        internalMethods: this.methods,
-        store: this.#options.store,
-      });
-    }
-
-    throw new Error('You need to set all required configs.');
-  }
-
-  #isConfigsValid(config: Partial<ProviderConfig>): config is ProviderConfig {
-    return !!config.info;
-  }
-}
+export type ProviderBuilderOptions = { store?: Store };
