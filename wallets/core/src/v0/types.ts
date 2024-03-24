@@ -1,5 +1,5 @@
-import type { Provider } from './hub';
 import type { State as WalletState } from './wallet';
+import type { Provider } from '../hub';
 import type {
   Network,
   WalletInfo,

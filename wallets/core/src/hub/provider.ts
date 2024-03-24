@@ -6,7 +6,7 @@ import type {
   RemoveThisParameter,
 } from '../actions/evm/interface';
 import type { SolanaActions } from '../actions/solana/interface';
-import type { State as V1State } from '../wallet';
+import type { State as V1State } from '../v0/wallet';
 
 export type State = Omit<V1State, 'reachable' | 'accounts' | 'network'>;
 type SetState = <K extends keyof Pick<State, 'installed'>>(

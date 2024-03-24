@@ -1,9 +1,9 @@
-export type { EventHandler, State, Options } from './wallet';
-export * from './types';
+export type { EventHandler, State, Options } from './v0/wallet';
+export * from './v0/types';
 
-export { Persistor } from './persistor';
-export * from './helpers';
-export { default } from './wallet';
+export { Persistor } from './v0/persistor';
+export * from './v0/helpers';
+export { default } from './v0/wallet';
 
 export {
   Hub,
