@@ -1,4 +1,8 @@
-import type { Provider } from './provider';
+import type {
+  BlockchainProvider,
+  State as BlockchainState,
+} from './blockchain';
+import type { Provider, State as ProviderState } from './provider';
 
 /*
  *
@@ -17,6 +21,18 @@ import type { Provider } from './provider';
  *
  */
 
+type HubState = {
+  [key in string]: ProviderState & {
+    blockchains: BlockchainState[];
+  };
+};
+
+type RunAllResult = {
+  id: string;
+  provider: unknown;
+  blockchains: unknown[];
+};
+
 export class Hub {
   private providers = new Map<string, Provider>();
 
@@ -30,25 +46,47 @@ export class Hub {
     this.init();
   }
 
-  eagerConnect() {
-    /*
-     * TODO: run eagerConnect on all instances.
-     *
-     * use runAll
-     */
-    throw new Error('Not Implemented');
-  }
-  disconnect() {
-    /*
-     * TODO run eagerConnect on all instances.
-     * use runAll
-     */
-    throw new Error('Not Implemented');
+  init() {
+    this.runAll('init');
   }
 
-  runAll() {
+  // TODO: can we suggest some predefined string using ts?
+  runAll(action: string): RunAllResult[] {
+    console.log('running all for ', action);
+    const output: RunAllResult[] = [];
+
     // run action on all providers eagerConnect, disconnect
-    throw new Error('Not Implemented');
+    const providers = this.providers.values();
+    for (const provider of providers) {
+      // Calling `action` on `Provider` if exists.
+
+      const providerOutput: RunAllResult = {
+        id: provider.id,
+        provider: undefined,
+        blockchains: [],
+      };
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore-next-line
+      if (provider[action]) {
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore-next-line
+        providerOutput.provider = provider[action]();
+      }
+
+      // Blockchain instances can have their own `action` as well. we will call them as well.
+      const blockchains = provider.getAll().values();
+      // blockchains: { id: keyof CommonBlockchains; blockchain: unknown }[];
+      for (const blockchain of blockchains) {
+        if (blockchain[action]) {
+          const result = blockchain[action]();
+          providerOutput.blockchains.push(result);
+        }
+      }
+
+      output.push(providerOutput);
+    }
+
+    return output;
   }
 
   add(id: string, blockchain: Provider) {
@@ -60,9 +98,33 @@ export class Hub {
     return this.providers.get(providerId);
   }
 
-  private init() {
-    // TODO
-    this.eagerConnect();
-    throw new Error('Not Implemented');
+  getAll() {
+    return this.providers;
+  }
+
+  state(): HubState {
+    const output = this.runAll('state');
+    const res: HubState = {};
+
+    output.forEach((result) => {
+      const blockchains: BlockchainState[] = [];
+      result.blockchains.forEach((b) => {
+        const [getBlockchainState] = b as ReturnType<
+          BlockchainProvider<any>['state']
+        >;
+
+        blockchains.push(getBlockchainState());
+      });
+
+      const [getProviderState] = result.provider as ReturnType<
+        Provider['state']
+      >;
+
+      res[result.id] = {
+        ...(getProviderState() || {}),
+        blockchains: blockchains,
+      };
+    });
+    return res;
   }
 }

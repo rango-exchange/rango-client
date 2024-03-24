@@ -1,3 +1,4 @@
+import type { Provider } from './hub';
 import type { State as WalletState } from './wallet';
 import type {
   Network,
@@ -137,3 +138,4 @@ export type WalletProviders = Map<
 >;
 
 export type ProviderInterface = { config: WalletConfig } & WalletActions;
+export type ProviderV1Interface = Provider;
