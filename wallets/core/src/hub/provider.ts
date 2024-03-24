@@ -1,10 +1,6 @@
 /* eslint-disable @typescript-eslint/ban-types */
 import type { ProviderConfig, Store } from './store';
-import type {
-  AnyFunction,
-  EvmActions,
-  RemoveThisParameter,
-} from '../actions/evm/interface';
+import type { AnyFunction, EvmActions } from '../actions/evm/interface';
 import type { SolanaActions } from '../actions/solana/interface';
 import type { State as V1State } from '../v0/wallet';
 
@@ -20,8 +16,8 @@ type GetState = {
 
 export interface CommonNamespaces {
   // TODO: I think we don't need `RemoveThisParameter`, because we went the opposite.
-  evm: RemoveThisParameter<EvmActions>;
-  solana: RemoveThisParameter<SolanaActions>;
+  evm: EvmActions;
+  solana: SolanaActions;
   cosmos: string;
 }
 

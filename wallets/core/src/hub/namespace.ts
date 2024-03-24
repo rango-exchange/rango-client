@@ -1,5 +1,8 @@
 import type { NamespaceConfig, NamespaceData, Store } from './store';
-import type { AnyFunction } from '../actions/evm/interface';
+import type {
+  AnyFunction,
+  FunctionWithContext,
+} from '../actions/evm/interface';
 
 type ActionName<K> = K | Omit<K, string>;
 
@@ -10,7 +13,10 @@ type GetState = {
   (): State;
   <K extends keyof State>(name: K): State[K];
 };
-export type ActionType<T> = Map<ActionName<keyof T>, T[keyof T]>;
+export type ActionType<T> = Map<
+  ActionName<keyof T>,
+  FunctionWithContext<T[keyof T], Context>
+>;
 
 export type Context = {
   state: () => [GetState, SetState];
@@ -21,6 +27,14 @@ interface Config {
 }
 
 /**
+ * This actually define what kind of action will be implemented in namespaces.
+ * For example evm namespace will have .connect(chain: string) and .switchNetwork
+ * But solana namespace only have: `.connect()`.
+ * This actions will be passed to this generic.
+ */
+type SpecificMethods<T> = Record<keyof T, AnyFunction>;
+
+/**
  * Note: This only works native async, if we are going to support for old transpilers like Babel.
  */
 // eslint-disable-next-line @typescript-eslint/ban-types
@@ -29,7 +43,7 @@ function isAsync(fn: Function) {
 }
 
 // TODO: Show a warning if subscribers and subscriberCleanUps doesn't match and call correctly.
-class Namespace<T extends Record<keyof T, AnyFunction>> {
+class Namespace<T extends SpecificMethods<T>> {
   public namespace: Config['namespace'];
   private actions: ActionType<T>;
   private andActions = new Map<keyof T, AnyFunction>();
@@ -102,13 +116,10 @@ class Namespace<T extends Record<keyof T, AnyFunction>> {
       beforeAction();
     }
 
-    const context = {
-      state: this.state.bind(this),
-    };
-
+    const context = this.#context();
     // First run the action (or cb) then tries to run what has been set using `.and`
     const isCbAsync = isAsync(cb);
-    const cbWithContext = cb.bind(context);
+    const cbWithContext = cb.bind(null, context);
 
     const runThen = () => {
       let result = cbWithContext(...args);
@@ -148,12 +159,14 @@ class Namespace<T extends Record<keyof T, AnyFunction>> {
       return;
     }
 
-    const definedInitByUser = this.actions.get('init');
+    const definedInitByUser = this.actions
+      .get('init')
+      ?.bind(null, this.#context());
     if (definedInitByUser) {
       definedInitByUser();
     } else {
       console.debug(
-        "[Namespace] this blockchain provider doesn't have any `init` implemented."
+        "[Namespace] this namespace doesn't have any `init` implemented."
       );
     }
 
@@ -200,6 +213,12 @@ class Namespace<T extends Record<keyof T, AnyFunction>> {
 
   #storeId() {
     return `${this.#configs.providerId}$$${this.#configs.namespace}`;
+  }
+
+  #context(): Context {
+    return {
+      state: this.state.bind(this),
+    };
   }
 }
 

@@ -68,7 +68,7 @@ const providers: ProvidersStateCreator = (set, get) => ({
   },
   updateStatus: (id, key, value) => {
     if (!get().providers.list[id]) {
-      throw new Error(`No blockchain provider with '${id}' found.`);
+      throw new Error(`No namespace namespace with '${id}' found.`);
     }
 
     set(
@@ -79,7 +79,7 @@ const providers: ProvidersStateCreator = (set, get) => ({
   },
 });
 
-/************ Blockchain Provider ************/
+/************ Namespace ************/
 
 export interface NamespaceConfig {
   providerId: string;
@@ -141,7 +141,7 @@ const namespaces: NamespaceStateCreator = (set, get) => ({
   },
   updateStatus: (id, key, value) => {
     if (!get().namespaces.list[id]) {
-      throw new Error(`No blockchain provider with '${id}' found.`);
+      throw new Error(`No namespace with '${id}' found.`);
     }
 
     set(

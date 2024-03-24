@@ -1,7 +1,6 @@
 import type {
-  AddThisParameter,
   AnyFunction,
-  RemoveThisParameter,
+  FunctionWithContext,
 } from '../actions/evm/interface';
 import type { ActionType, Context, SubscriberCb } from '../hub/namespace';
 import type { NamespaceConfig } from '../hub/store';
@@ -19,9 +18,8 @@ export class NamespaceBuilder<T extends Record<keyof T, AnyFunction>> {
     return this;
   }
 
-  // TODO: Explain type
-  action<K extends keyof T>(name: K, cb: AddThisParameter<T[K], Context>) {
-    this.actions.set(name, cb as unknown as T[K]);
+  action<K extends keyof T>(name: K, cb: FunctionWithContext<T[K], Context>) {
+    this.actions.set(name, cb);
     return this;
   }
 
@@ -118,7 +116,7 @@ export class NamespaceBuilder<T extends Record<keyof T, AnyFunction>> {
         throw new Error('You can not set anything on this object.');
       },
     });
-    return api as RemoveThisParameter<T> &
+    return api as unknown as T &
       Pick<Namespace<T>, (typeof allowedMethods)[number]>;
   }
 }
