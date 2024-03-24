@@ -1,37 +1,55 @@
 import type { EvmActions } from '../src/actions/evm/interface';
 
-import { expect, test, vi } from 'vitest';
+import { beforeEach, describe, expect, test, vi } from 'vitest';
 
 import { BlockchainProviderBuilder } from '../src/hub';
 import { Hub } from '../src/hub/hub';
 import { ProviderBuilder } from '../src/hub/provider';
+import { createStore, type Store } from '../src/hub/store';
 import { garbageWalletInfo } from '../src/test-utils/fixtures';
 
-test('connect through hub', () => {
-  const evmConnect = vi.fn((_chain: string) => {
-    return [
-      '0x000000000000000000000000000000000000dead',
-      '0x0000000000000000000000000000000000000000',
-    ];
+describe('aa', () => {
+  const walletName = 'garbage-wallet';
+  let store: Store;
+
+  beforeEach(() => {
+    store = createStore();
+
+    return () => {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore-next-line
+      store = undefined;
+    };
   });
 
-  const evmProvider = new BlockchainProviderBuilder<EvmActions>()
-    .config('namespace', 'eip155')
-    .action('connect', evmConnect)
-    .build();
-  const garbageWalletBuilder = new ProviderBuilder('garbage-wallet').config(
-    'info',
-    garbageWalletInfo
-  );
-  garbageWalletBuilder.add('evm', evmProvider);
-  const garbageWallet = garbageWalletBuilder.build();
+  test('connect through hub', () => {
+    const evmConnect = vi.fn((_chain: string) => {
+      return [
+        '0x000000000000000000000000000000000000dead',
+        '0x0000000000000000000000000000000000000000',
+      ];
+    });
 
-  const myHub = new Hub().add(garbageWallet.id, garbageWallet);
+    const evmProvider = new BlockchainProviderBuilder<EvmActions>()
+      .config('namespace', 'eip155')
+      .config('providerId', walletName)
+      .action('connect', evmConnect)
+      .build();
+    const garbageWalletBuilder = new ProviderBuilder(walletName, {
+      store,
+    }).config('info', garbageWalletInfo);
+    garbageWalletBuilder.add('evm', evmProvider);
+    const garbageWallet = garbageWalletBuilder.build();
 
-  const evmResult = myHub.get(garbageWallet.id)?.get('evm').connect('0x0');
+    const myHub = new Hub().add(garbageWallet.id, garbageWallet);
+    const wallet = myHub.get(garbageWallet.id);
+    // this is only for checking `.store` to has been set.
+    wallet?.state();
+    const evmResult = wallet?.get('evm').connect('0x0');
 
-  expect(evmResult).toStrictEqual([
-    '0x000000000000000000000000000000000000dead',
-    '0x0000000000000000000000000000000000000000',
-  ]);
+    expect(evmResult).toStrictEqual([
+      '0x000000000000000000000000000000000000dead',
+      '0x0000000000000000000000000000000000000000',
+    ]);
+  });
 });

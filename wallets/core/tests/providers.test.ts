@@ -8,6 +8,8 @@ import { ProviderBuilder } from '../src/hub/provider';
 import { garbageWalletInfo } from '../src/test-utils/fixtures';
 
 describe('check Provider works with Blockchain correctly', () => {
+  const walletName = 'garbage-wallet';
+
   test('connect successfully when two blockchain type has been added to Provider', async () => {
     // Wallet Code
     const evmConnect = vi.fn((_chain: string) => {
@@ -19,14 +21,16 @@ describe('check Provider works with Blockchain correctly', () => {
 
     const evmProvider = new BlockchainProviderBuilder<EvmActions>()
       .config('namespace', 'eip155')
+      .config('providerId', walletName)
       .action('connect', evmConnect)
       .build();
     const solanaProvider = new BlockchainProviderBuilder<SolanaActions>()
       .config('namespace', 'solana')
+      .config('providerId', walletName)
       .action('connect', solanaConnect)
       .build();
 
-    const garbageWalletBuilder = new ProviderBuilder('garbage-wallet').config(
+    const garbageWalletBuilder = new ProviderBuilder(walletName).config(
       'info',
       garbageWalletInfo
     );
@@ -65,6 +69,7 @@ describe('check Provider works with Blockchain correctly', () => {
 
     const evmProvider = new BlockchainProviderBuilder<EvmActions>()
       .config('namespace', 'eip155')
+      .config('providerId', walletName)
       .action('connect', evmConnect)
       .action('disconnect', evmDisconnect)
       .use([

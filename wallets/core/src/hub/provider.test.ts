@@ -35,7 +35,7 @@ describe('providers', () => {
     return () => {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore-next-line
-      blockchainProviders = undefined;
+      (store = undefined), (blockchainProviders = undefined);
     };
   });
 
