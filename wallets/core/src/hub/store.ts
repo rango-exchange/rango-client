@@ -52,7 +52,6 @@ type ProvidersStateCreator = StateCreator<
 const providers: ProvidersStateCreator = (set, get) => ({
   list: {},
   addProvider: (id, config) => {
-    // TODO: fix init data
     const item = {
       data: {
         installed: false,
@@ -82,8 +81,15 @@ const providers: ProvidersStateCreator = (set, get) => ({
 
 /************ Blockchain Provider ************/
 
-interface BlockchainProviderConfig {
+export interface BlockchainProviderConfig {
+  providerId: string;
   namespace: string;
+}
+export interface BlockchainProviderData {
+  accounts: null | string[];
+  network: null | string;
+  connected: boolean;
+  connecting: boolean;
 }
 
 type BlockchainProvidersState = {
@@ -91,21 +97,59 @@ type BlockchainProvidersState = {
     string,
     {
       config: BlockchainProviderConfig;
-      data: unknown;
+      data: BlockchainProviderData;
       error: unknown;
     }
   >;
 };
 
-type BlochchainProvidersStateCreator = StateCreator<
+interface BlockchainProvidersActions {
+  addBlockchainProvider: (id: string, config: BlockchainProviderConfig) => void;
+  updateStatus: <K extends keyof BlockchainProviderData>(
+    id: string,
+    key: K,
+    value: BlockchainProviderData[K]
+  ) => void;
+}
+
+type BlockchainProvidersStateCreator = StateCreator<
   State,
   [],
   [],
-  BlockchainProvidersState
+  BlockchainProvidersState & BlockchainProvidersActions
 >;
 
-const blockchainProviders: BlochchainProvidersStateCreator = () => ({
+const blockchainProviders: BlockchainProvidersStateCreator = (set, get) => ({
   list: {},
+  addBlockchainProvider: (id, config) => {
+    const item = {
+      data: {
+        accounts: null,
+        network: null,
+        connected: false,
+        connecting: false,
+      },
+      error: '',
+      config,
+    };
+
+    set(
+      produce((state: State) => {
+        state.blockchainProviders.list[id] = item;
+      })
+    );
+  },
+  updateStatus: (id, key, value) => {
+    if (!get().blockchainProviders.list[id]) {
+      throw new Error(`No blockchain provider with '${id}' found.`);
+    }
+
+    set(
+      produce((state: State) => {
+        state.blockchainProviders.list[id].data[key] = value;
+      })
+    );
+  },
 });
 
 /************ Hub ************/
@@ -127,7 +171,7 @@ const hub: HubStateCreator = () => ({
 interface State {
   hub: HubState;
   providers: ProviderState & ProviderActions;
-  blockchainProviders: BlockchainProvidersState;
+  blockchainProviders: BlockchainProvidersState & BlockchainProvidersActions;
 }
 
 export type Store = StoreApi<State>;

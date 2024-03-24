@@ -20,15 +20,12 @@ describe('providers', () => {
 
   beforeEach(() => {
     store = createStore();
-    const evmBlockchain = new BlockchainProviderBuilder<EvmActions>().config(
-      'namespace',
-      'eip155'
-    );
-    const solanaBlockchain =
-      new BlockchainProviderBuilder<SolanaActions>().config(
-        'namespace',
-        'solana'
-      );
+    const evmBlockchain = new BlockchainProviderBuilder<EvmActions>()
+      .config('namespace', 'eip155')
+      .config('providerId', 'garbage');
+    const solanaBlockchain = new BlockchainProviderBuilder<SolanaActions>()
+      .config('namespace', 'solana')
+      .config('providerId', 'garbage');
 
     blockchainProviders = {
       evm: evmBlockchain,
@@ -56,14 +53,14 @@ describe('providers', () => {
   });
 
   test('updating states', () => {
-    const builder = new ProviderBuilder('garbage').config(
+    const builder = new ProviderBuilder('garbage', { store }).config(
       'info',
       garbageWalletInfo
     );
     const { evm, solana } = blockchainProviders;
     builder.add('evm', evm.build()).add('solana', solana.build());
 
-    const wallet = builder.build().store(store);
+    const wallet = builder.build();
     const [getState, setState] = wallet.state();
     setState('installed', true);
     const isInstalled = getState('installed');
@@ -71,7 +68,7 @@ describe('providers', () => {
   });
 
   test('run actions', async () => {
-    const builder = new ProviderBuilder('garbage').config(
+    const builder = new ProviderBuilder('garbage', { store }).config(
       'info',
       garbageWalletInfo
     );
@@ -81,7 +78,7 @@ describe('providers', () => {
     ]);
     builder.add('evm', evm.build()).add('solana', solana.build());
 
-    const wallet = builder.build().store(store);
+    const wallet = builder.build();
     const result = await wallet.get('solana').connect();
 
     expect(result).toStrictEqual([
@@ -130,13 +127,14 @@ describe('providers', () => {
   });
 
   test('A provider can be found using its namespace', () => {
-    const builder = new ProviderBuilder('garbage').config(
+    const builder = new ProviderBuilder('garbage', { store }).config(
       'info',
       garbageWalletInfo
     );
+
     const { evm, solana } = blockchainProviders;
     builder.add('evm', evm.build()).add('solana', solana.build());
-    const wallet = builder.build().store(store);
+    const wallet = builder.build();
 
     const result = wallet.findBy({
       namespace: 'solana',
@@ -166,10 +164,10 @@ describe('providers', () => {
     const { evm } = blockchainProviders;
     const evmBlockchain = evm.action('connect', connect).build();
 
-    const builder = new ProviderBuilder('garbage')
+    const builder = new ProviderBuilder('garbage', { store })
       .add('evm', evmBlockchain)
       .config('info', garbageWalletInfo);
-    const wallet = builder.build().store(store);
+    const wallet = builder.build();
 
     const [getState] = wallet.state();
     const result = wallet.get('evm');

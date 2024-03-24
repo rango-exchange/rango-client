@@ -39,13 +39,10 @@ export class Provider {
    * It has some ts erros when I try to type it:
    * Map<keyof CommonBlockchains,CommonBlockchains[keyof CommonBlockchains]>
    */
-  private blockchainProviders: Map<any, any>;
-  private initiated = false;
+  #blockchainProviders: Map<any, any>;
+  #initiated = false;
   // TODO: better name and also better typing for sure.
-  private internalMethods: Map<
-    keyof InternalMethods,
-    InternalMethods[keyof InternalMethods]
-  > = new Map();
+  #internalMethods: InternalMethods = {};
   #store: Store | undefined;
   #configs: ProviderConfig;
 
@@ -56,13 +53,21 @@ export class Provider {
       CommonBlockchains[keyof CommonBlockchains]
     >,
     configs: ProviderConfig,
-    internalMethods: Provider['internalMethods']
+    options: {
+      internalMethods: InternalMethods;
+      store?: Store;
+    }
   ) {
     this.id = id;
     this.#configs = configs;
-    // it should be only created here, to make sure `after/before` will work correctly
-    this.blockchainProviders = blockchains;
-    this.internalMethods = internalMethods;
+    // it should be only created here, to make sure `after/before` will work properly.
+    this.#internalMethods = options.internalMethods;
+    this.#blockchainProviders = blockchains;
+
+    if (options.store) {
+      this.#store = options.store;
+      this.#setupStore();
+    }
   }
 
   state(): [GetState, SetState] {
@@ -109,11 +114,11 @@ export class Provider {
 
   // TODO: Could we somehow type some part of the ReturnType at least?
   getAll() {
-    return this.blockchainProviders;
+    return this.#blockchainProviders;
   }
 
   get<K extends keyof CommonBlockchains>(id: K): CommonBlockchains[K] {
-    return this.blockchainProviders.get(id);
+    return this.#blockchainProviders.get(id);
   }
 
   // TODO: Could we somehow type some part of the ReturnType at least?
@@ -122,7 +127,7 @@ export class Provider {
       // If we didn't found any match, we will return `undefined`.
       let result: object | undefined = undefined;
 
-      this.blockchainProviders.forEach((blockchainProvider) => {
+      this.#blockchainProviders.forEach((blockchainProvider) => {
         if (blockchainProvider.namespace === options.namespace) {
           result = blockchainProvider;
         }
@@ -146,7 +151,7 @@ export class Provider {
   }
 
   init() {
-    const definedInitByUser = this.internalMethods.get('init');
+    const definedInitByUser = this.#internalMethods.init;
     if (!definedInitByUser) {
       console.debug(
         "[BlockchainProvider] this blockchain provider doesn't have any `init` implemented."
@@ -154,13 +159,13 @@ export class Provider {
       return;
     }
 
-    if (this.initiated) {
+    if (this.#initiated) {
       console.log('[BlockchainProvider] initiated already.');
       return;
     }
 
     definedInitByUser.bind(this)();
-    this.initiated = true;
+    this.#initiated = true;
     console.debug('[BlockchainProvider] initiated successfully.');
   }
 
@@ -171,7 +176,7 @@ export class Provider {
     };
     const cbWithContext = cb.bind(context);
 
-    this.blockchainProviders.forEach((blockchainProvider) => {
+    this.#blockchainProviders.forEach((blockchainProvider) => {
       blockchainProvider.before(action, cbWithContext);
     });
     return this;
@@ -182,7 +187,7 @@ export class Provider {
       state: this.state.bind(this),
     };
     const cbWithContext = cb.bind(context);
-    this.blockchainProviders.forEach((blockchainProvider) => {
+    this.#blockchainProviders.forEach((blockchainProvider) => {
       blockchainProvider.after(action, cbWithContext);
     });
     return this;
@@ -195,26 +200,46 @@ export class Provider {
       );
     }
     this.#store = store;
-
-    this.#store.getState().providers.addProvider(this.id, this.#configs);
+    this.#setupStore();
     return this;
+  }
+
+  #setupStore() {
+    const store = this.#store;
+    if (!store) {
+      throw new Error('For setup store, you should set `store` first.');
+    }
+    store.getState().providers.addProvider(this.id, this.#configs);
   }
 }
 
+type ProviderBuilderOptions = { store?: Store };
 export class ProviderBuilder {
   private id: string;
   private blockchainProviders = new Map();
-  private methods: Map<'init', Fn> = new Map();
+  private methods: InternalMethods = {};
   #configs: Partial<ProviderConfig> = {};
+  #options: Partial<ProviderBuilderOptions>;
 
-  constructor(id: string) {
+  constructor(id: string, options?: ProviderBuilderOptions) {
     this.id = id;
+    this.#options = options || {};
   }
 
   add<K extends keyof CommonBlockchains>(
     id: K,
     blockchain: CommonBlockchains[K]
   ) {
+    if (this.#options.store) {
+      /*
+       * TODO: CommonBlockchains only returning specific interface for each namespace
+       * in fact it should return each namespace + default methods on `BlockchainPorivder`
+       */
+
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore-next-line
+      blockchain.store(this.#options.store);
+    }
     this.blockchainProviders.set(id, blockchain);
     return this;
   }
@@ -225,24 +250,22 @@ export class ProviderBuilder {
   }
 
   init(cb: Exclude<InternalMethods['init'], undefined>) {
-    this.methods.set('init', cb);
+    this.methods.init = cb;
     return this;
   }
 
   build(): Provider {
-    if (this.#isConfigValid(this.#configs)) {
-      return new Provider(
-        this.id,
-        this.blockchainProviders,
-        this.#configs,
-        this.methods
-      );
+    if (this.#isConfigsValid(this.#configs)) {
+      return new Provider(this.id, this.blockchainProviders, this.#configs, {
+        internalMethods: this.methods,
+        store: this.#options.store,
+      });
     }
 
     throw new Error('You need to set all required configs.');
   }
 
-  #isConfigValid(config: Partial<ProviderConfig>): config is ProviderConfig {
+  #isConfigsValid(config: Partial<ProviderConfig>): config is ProviderConfig {
     return !!config.info;
   }
 }

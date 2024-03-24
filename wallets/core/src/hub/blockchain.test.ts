@@ -4,6 +4,7 @@ import { BlockchainProviderBuilder } from './blockchain';
 
 describe('check BlockchainProviderBuilder works as expected', () => {
   const NAMESPACE = 'bip122';
+  const PROVIDER_ID = 'garbage provider';
 
   test('add actions and run them.', () => {
     const builder = new BlockchainProviderBuilder<{
@@ -13,6 +14,7 @@ describe('check BlockchainProviderBuilder works as expected', () => {
       chain2: () => void;
     }>();
     builder.config('namespace', NAMESPACE);
+    builder.config('providerId', PROVIDER_ID);
     builder.action('hello', () => 'hello world');
     builder.action('bye', () => 'bye bye');
     builder
@@ -35,6 +37,7 @@ describe('check BlockchainProviderBuilder works as expected', () => {
       //
     }>();
     builder.config('namespace', NAMESPACE);
+    builder.config('providerId', PROVIDER_ID);
     const cleanUpCb = vi.fn();
     const subscriberCb = vi.fn(() => {
       return cleanUpCb;
@@ -55,6 +58,7 @@ describe('check BlockchainProviderBuilder works as expected', () => {
   test('call .init only once.', () => {
     const builder = new BlockchainProviderBuilder<any>();
     builder.config('namespace', NAMESPACE);
+    builder.config('providerId', PROVIDER_ID);
     let count = 0;
     builder.action('init', () => {
       count++;
@@ -76,6 +80,7 @@ describe('check BlockchainProviderBuilder works as expected', () => {
       disconnect: () => void;
     }>();
     builder.config('namespace', NAMESPACE);
+    builder.config('providerId', PROVIDER_ID);
     builder.action('connect', connectAction);
     builder.action('disconnect', disconnectAction);
     const blockchain = builder.build();

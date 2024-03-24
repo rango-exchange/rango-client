@@ -1,4 +1,9 @@
 import type {
+  BlockchainProviderConfig,
+  BlockchainProviderData,
+  Store,
+} from './store';
+import type {
   AnyFunction,
   RemoveThisParameter,
 } from '../actions/evm/interface';
@@ -6,10 +11,7 @@ import type {
 type ActionName<K> = K | Omit<K, string>;
 
 type SubscriberCb = () => () => void;
-export type State = {
-  accounts: null | string[];
-  network: null | string;
-};
+export type State = BlockchainProviderData;
 type SetState = <K extends keyof State>(name: K, value: State[K]) => void;
 type GetState = {
   (): State;
@@ -42,37 +44,44 @@ class BlockchainProvider<T extends Record<keyof T, AnyFunction>> {
   private afterActions = new Map<keyof T, AnyFunction>();
   private subscribers: Set<SubscriberCb>;
   private subscriberCleanUps: Set<AnyFunction> = new Set();
-  private _state: State;
   private initiated = false;
+  #store: Store | undefined;
+  #configs: BlockchainProviderConfig;
 
   constructor(
-    namespace: Config['namespace'],
+    config: BlockchainProviderConfig,
     actions: ActionType<T>,
     subscribers: Set<SubscriberCb>,
     use: Map<keyof T, AnyFunction>
   ) {
-    this.namespace = namespace;
+    this.namespace = config.namespace;
+    this.#configs = config;
     this.actions = actions;
     this.subscribers = subscribers;
     this.andActions = use;
-
-    this._state = {
-      accounts: null,
-      network: null,
-    };
   }
 
   state(): [GetState, SetState] {
+    const store = this.#store;
+    if (!store) {
+      throw new Error(
+        'You need to set your store using `.store` method first.'
+      );
+    }
+
+    const id = this.#storeId();
     const setState: SetState = (name, value) => {
-      this._state[name] = value;
+      store.getState().blockchainProviders.updateStatus(id, name, value);
     };
 
     const getState: GetState = <K extends keyof State>(name?: K) => {
-      if (name) {
-        return this._state[name];
+      const state: State = store.getState().blockchainProviders.list[id].data;
+
+      if (!name) {
+        return state;
       }
 
-      return this._state;
+      return state[name];
     };
 
     return [getState, setState];
@@ -174,16 +183,38 @@ class BlockchainProvider<T extends Record<keyof T, AnyFunction>> {
     this.beforeActions.set(name, cb);
     return this;
   }
+
+  store(store: Store) {
+    if (this.#store) {
+      console.warn(
+        "You've already set an store for your BlockchainProvider. Old store will be replaced by the new one."
+      );
+    }
+    this.#store = store;
+
+    const id = this.#storeId();
+    this.#store
+      .getState()
+      .blockchainProviders.addBlockchainProvider(id, this.#configs);
+    return this;
+  }
+
+  #storeId() {
+    return `${this.#configs.providerId}$$${this.#configs.namespace}`;
+  }
 }
 
 class BlockchainProviderBuilder<T extends Record<keyof T, AnyFunction>> {
-  private configs = new Map<keyof Config, Config[keyof Config]>();
   private actions: ActionType<T> = new Map();
   private subscribers: Set<SubscriberCb> = new Set();
   private useCallbacks = new Map<keyof T, AnyFunction>();
+  #configs: Partial<BlockchainProviderConfig> = {};
 
-  config<K extends keyof Config>(name: K, value: Config[K]) {
-    this.configs.set(name, value);
+  config<K extends keyof BlockchainProviderConfig>(
+    name: K,
+    value: BlockchainProviderConfig[K]
+  ) {
+    this.#configs[name] = value;
     return this;
   }
 
@@ -206,19 +237,53 @@ class BlockchainProviderBuilder<T extends Record<keyof T, AnyFunction>> {
   }
 
   build() {
-    const namespace = this.configs.get('namespace');
-    if (!namespace) {
-      throw new Error(
-        'You should set an CAIP namespace for your blockchain provider.'
-      );
+    const requiredConfigs: (keyof BlockchainProviderConfig)[] = [
+      'namespace',
+      'providerId',
+    ];
+
+    if (this.#isConfigsValid(this.#configs, requiredConfigs)) {
+      return this.#buildApi(this.#configs);
     }
 
+    throw new Error(
+      `You need to set all required configs. required fields: ${requiredConfigs.join(
+        ', '
+      )}`
+    );
+  }
+
+  #isConfigsValid(
+    config: Partial<BlockchainProviderConfig>,
+    required: (keyof BlockchainProviderConfig)[]
+  ): config is BlockchainProviderConfig {
+    return required.every((key) => !!config[key]);
+  }
+
+  #buildApi(config: BlockchainProviderConfig) {
     const blockchainProvider = new BlockchainProvider<T>(
-      namespace,
+      config,
       this.actions,
       this.subscribers,
       this.useCallbacks
     );
+
+    // These are functions that actually has something inside themselves then will call the actual action.
+    const allowedMethods: readonly (keyof BlockchainProvider<T>)[] = [
+      'init',
+      'destroy',
+      'state',
+      'after',
+      'before',
+      'store',
+    ];
+
+    /*
+     * This is useful accessing values like `version`, If we don't do this, we should whitelist
+     * All the values as well, So it can be confusing for someone that only wants to add a public value to `BlockchainProvider`
+     */
+    const allowedPublicValues = ['string', 'number'];
+
     const api = new Proxy(blockchainProvider, {
       get: (_, property) => {
         // TODO: better typing?
@@ -227,17 +292,17 @@ class BlockchainProviderBuilder<T extends Record<keyof T, AnyFunction>> {
         // @ts-ignore-next-line
         const targetValue = blockchainProvider[prop];
 
-        // These are functions that actually has something inside themselves then will call the actual action.
-        const allowedMethods = ['init', 'destroy', 'state', 'after', 'before'];
-        if (typeof prop === 'string' && allowedMethods.includes(prop)) {
+        if (typeof prop === 'string' && allowedMethods.includes(prop as any)) {
+          /*
+           * TODO: There is a problem with `allowedMethods`.
+           * Some of them, they are returning `this` after running, in that case user facing with incorrect interface.
+           * e.g:
+           *  const blockchain = blockchainBuilder.build().store(store);
+           *  blockchain.connect();
+           */
           return targetValue.bind(blockchainProvider);
         }
 
-        /*
-         * This is useful accessing values like `version`, If we don't do this, we should whitelist
-         * All the values as well, So it can be confusing for someone that only wants to add a public value to `BlockchainProvider`
-         */
-        const allowedPublicValues = ['string', 'number'];
         if (
           typeof prop === 'string' &&
           allowedPublicValues.includes(typeof targetValue)
@@ -252,10 +317,7 @@ class BlockchainProviderBuilder<T extends Record<keyof T, AnyFunction>> {
       },
     });
     return api as RemoveThisParameter<T> &
-      Pick<
-        BlockchainProvider<T>,
-        'init' | 'destroy' | 'state' | 'after' | 'before'
-      >;
+      Pick<BlockchainProvider<T>, (typeof allowedMethods)[number]>;
   }
 }
 

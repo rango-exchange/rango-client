@@ -1,14 +1,28 @@
-import { describe, expect, test, vi } from 'vitest';
+import { beforeEach, describe, expect, test, vi } from 'vitest';
 
 import { BlockchainProviderBuilder } from './blockchain';
+import { createStore, type Store } from './store';
 import { useConnect } from './use';
 
 describe('predefined uses should works correctly', () => {
+  let store: Store;
+
+  beforeEach(() => {
+    store = createStore();
+
+    return () => {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore-next-line
+      store = undefined;
+    };
+  });
+
   test('connecting should update internal state.', () => {
     const blockchainBuilder = new BlockchainProviderBuilder<{
       connect: () => string[];
     }>();
     blockchainBuilder.config('namespace', 'bip139');
+    blockchainBuilder.config('providerId', 'garbage provider');
 
     // add connect action and useConnect to add it state.
     const connect = vi.fn(() => {
@@ -19,6 +33,7 @@ describe('predefined uses should works correctly', () => {
     const useConnectFn = vi.fn(useConnect);
     blockchainBuilder.use([{ name: 'connect', cb: useConnectFn }]);
     const blockchain = blockchainBuilder.build();
+    blockchain.store(store);
     blockchain.connect();
 
     const [getState] = blockchain.state();
