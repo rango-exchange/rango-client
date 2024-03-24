@@ -1,16 +1,19 @@
-import { WalletConfig, WalletType } from '@rango-dev/wallets-shared';
-import Wallet, { Persistor } from '@rango-dev/wallets-core';
 import type {
-  Options,
-  State as WalletState,
-  EventHandler as WalletEventHandler,
-} from '@rango-dev/wallets-core';
-import {
+  ProviderInterface,
   State,
   WalletActions,
-  ProviderInterface,
   WalletProviders,
 } from './types';
+import type Wallet from '@rango-dev/wallets-core';
+import type {
+  Options,
+  EventHandler as WalletEventHandler,
+  State as WalletState,
+} from '@rango-dev/wallets-core';
+import type { WalletConfig, WalletType } from '@rango-dev/wallets-shared';
+
+import { Persistor } from '@rango-dev/wallets-core';
+
 import { LAST_CONNECTED_WALLETS } from './constants';
 
 export function choose(wallets: any[], type: WalletType): any | null {
@@ -110,19 +113,23 @@ export async function tryPersistWallet({
     const wallets = persistor.getItem(LAST_CONNECTED_WALLETS);
 
     /*
-      If on the last attempt we are unable to eagerly connect to any wallet and the user connects any wallet manualy,
-      persistance will be outdated and will need to be removed.
-    */
+     *If on the last attempt we are unable to eagerly connect to any wallet and the user connects any wallet manually,
+     *persistance will be outdated and will need to be removed.
+     */
     const shouldClearPersistance = wallets?.find(
       (walletType) => !getState(walletType).connected
     );
 
-    if (shouldClearPersistance) clearPersistance();
+    if (shouldClearPersistance) {
+      clearPersistance();
+    }
 
     const walletAlreadyPersisted = !!wallets?.find((wallet) => wallet === type);
-    if (wallets && !walletAlreadyPersisted)
+    if (wallets && !walletAlreadyPersisted) {
       persistor.setItem(LAST_CONNECTED_WALLETS, wallets.concat(type));
-    else persistor.setItem(LAST_CONNECTED_WALLETS, [type]);
+    } else {
+      persistor.setItem(LAST_CONNECTED_WALLETS, [type]);
+    }
   }
 }
 
@@ -136,24 +143,27 @@ export function tryRemoveWalletFromPersistance({
   if (walletActions.canEagerConnect) {
     const persistor = new Persistor<string[]>();
     const wallets = persistor.getItem(LAST_CONNECTED_WALLETS);
-    if (wallets)
+    if (wallets) {
       persistor.setItem(
         LAST_CONNECTED_WALLETS,
         wallets.filter((wallet) => wallet !== type)
       );
+    }
   }
 }
 
 export function clearPersistance() {
   const persistor = new Persistor<string[]>();
   const wallets = persistor.getItem(LAST_CONNECTED_WALLETS);
-  if (wallets) persistor.removeItem(LAST_CONNECTED_WALLETS);
+  if (wallets) {
+    persistor.removeItem(LAST_CONNECTED_WALLETS);
+  }
 }
 
 /*
-  If a wallet has multiple providers and one of them can be eagerly connected,
-  then the whole wallet will support it at that point and we try to connect to that wallet as usual in eagerConnect method.
-*/
+ *If a wallet has multiple providers and one of them can be eagerly connected,
+ *then the whole wallet will support it at that point and we try to connect to that wallet as usual in eagerConnect method.
+ */
 export async function autoConnect(
   wallets: WalletProviders,
   getWalletInstance: (wallet: {
@@ -181,7 +191,7 @@ export async function autoConnect(
     });
 
     const result = await Promise.allSettled(
-      connect_promises.map(({ eagerConnect }) => eagerConnect())
+      connect_promises.map(async ({ eagerConnect }) => eagerConnect())
     );
 
     const canRestoreAnyConnection = !!result.find(
@@ -189,36 +199,39 @@ export async function autoConnect(
     );
 
     /*
-      After successfully connecting to at least one wallet,
-      we will removing the other wallets from persistence.
-      If we are unable to connect to any wallet,
-      the persistence will not be removed and the eager connection will be retried with another page load.
+     *After successfully connecting to at least one wallet,
+     *we will removing the other wallets from persistence.
+     *If we are unable to connect to any wallet,
+     *the persistence will not be removed and the eager connection will be retried with another page load.
      */
     if (canRestoreAnyConnection) {
       const walletsToRemoveFromPersistance: WalletType[] = [];
-      result.forEach(({ status }, index) => {
-        if (status === 'rejected')
+      result.forEach((promiseResult, index) => {
+        const { status } = promiseResult;
+        if (status === 'rejected') {
           walletsToRemoveFromPersistance.push(
             connect_promises[index].walletType
           );
+        }
       });
 
-      if (walletsToRemoveFromPersistance.length)
+      if (walletsToRemoveFromPersistance.length) {
         persistor.setItem(
           LAST_CONNECTED_WALLETS,
           lastConnectedWallets.filter(
             (walletType) => !walletsToRemoveFromPersistance.includes(walletType)
           )
         );
+      }
     }
   }
 }
 /*
-  Our event handler includes an internal state updater, and a notifier
-  for the outside listener.
-  On creating first wallet refrence, and on chaning `props.onUpdateState`
-  we are using this function.
-*/
+ *Our event handler includes an internal state updater, and a notifier
+ *for the outside listener.
+ *On creating first wallet reference, and on changing `props.onUpdateState`
+ *we are using this function.
+ */
 export function makeEventHandler(
   dispatcher: any,
   onUpdateState?: WalletEventHandler

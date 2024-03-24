@@ -28,7 +28,8 @@
   "dependencies": {
     "@rango-dev/wallets-core": "^0.29.1-next.0",
     "@rango-dev/wallets-shared": "^0.28.1-next.0",
-    "rango-types": "^0.1.59"
+    "rango-types": "^0.1.59",
+    "caip": "^1.1.0"
   },
   "publishConfig": {
     "access": "public"
