@@ -3,6 +3,7 @@ import type {
   State as BlockchainState,
 } from './blockchain';
 import type { Provider, State as ProviderState } from './provider';
+import type { Store } from './store';
 
 /*
  *
@@ -33,10 +34,15 @@ type RunAllResult = {
   blockchains: unknown[];
 };
 
+interface HubOptions {
+  store?: Store;
+}
 export class Hub {
-  private providers = new Map<string, Provider>();
+  #providers = new Map<string, Provider>();
+  #options: HubOptions;
 
-  constructor() {
+  constructor(options?: HubOptions) {
+    this.#options = options ?? {};
     /*
      * TODO:
      * config:
@@ -56,7 +62,7 @@ export class Hub {
     const output: RunAllResult[] = [];
 
     // run action on all providers eagerConnect, disconnect
-    const providers = this.providers.values();
+    const providers = this.#providers.values();
     for (const provider of providers) {
       // Calling `action` on `Provider` if exists.
 
@@ -90,16 +96,20 @@ export class Hub {
   }
 
   add(id: string, blockchain: Provider) {
-    this.providers.set(id, blockchain);
+    if (this.#options.store) {
+      blockchain.store(this.#options.store);
+    }
+
+    this.#providers.set(id, blockchain);
     return this;
   }
 
   get(providerId: string) {
-    return this.providers.get(providerId);
+    return this.#providers.get(providerId);
   }
 
   getAll() {
-    return this.providers;
+    return this.#providers;
   }
 
   state(): HubState {

@@ -35,13 +35,16 @@ describe('aa', () => {
       .config('providerId', walletName)
       .action('connect', evmConnect)
       .build();
-    const garbageWalletBuilder = new ProviderBuilder(walletName, {
-      store,
-    }).config('info', garbageWalletInfo);
+    const garbageWalletBuilder = new ProviderBuilder(walletName).config(
+      'info',
+      garbageWalletInfo
+    );
     garbageWalletBuilder.add('evm', evmProvider);
     const garbageWallet = garbageWalletBuilder.build();
 
-    const myHub = new Hub().add(garbageWallet.id, garbageWallet);
+    const myHub = new Hub({
+      store,
+    }).add(garbageWallet.id, garbageWallet);
     const wallet = myHub.get(garbageWallet.id);
     // this is only for checking `.store` to has been set.
     wallet?.state();

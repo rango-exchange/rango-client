@@ -191,12 +191,20 @@ class BlockchainProvider<T extends Record<keyof T, AnyFunction>> {
       );
     }
     this.#store = store;
+    this.#setupStore();
 
+    return this;
+  }
+
+  #setupStore() {
+    const store = this.#store;
+    if (!store) {
+      throw new Error('For setup store, you should set `store` first.');
+    }
     const id = this.#storeId();
-    this.#store
+    store
       .getState()
       .blockchainProviders.addBlockchainProvider(id, this.#configs);
-    return this;
   }
 
   #storeId() {
