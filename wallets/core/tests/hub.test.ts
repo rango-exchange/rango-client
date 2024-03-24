@@ -5,6 +5,7 @@ import { expect, test, vi } from 'vitest';
 import { BlockchainProviderBuilder } from '../src/hub';
 import { Hub } from '../src/hub/hub';
 import { ProviderBuilder } from '../src/hub/provider';
+import { garbageWalletInfo } from '../src/test-utils/fixtures';
 
 test('connect through hub', () => {
   const evmConnect = vi.fn((_chain: string) => {
@@ -18,7 +19,10 @@ test('connect through hub', () => {
     .config('namespace', 'eip155')
     .action('connect', evmConnect)
     .build();
-  const garbageWalletBuilder = new ProviderBuilder('garbage-wallet');
+  const garbageWalletBuilder = new ProviderBuilder('garbage-wallet').config(
+    'info',
+    garbageWalletInfo
+  );
   garbageWalletBuilder.add('evm', evmProvider);
   const garbageWallet = garbageWalletBuilder.build();
 

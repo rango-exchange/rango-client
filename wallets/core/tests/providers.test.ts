@@ -5,6 +5,7 @@ import { describe, expect, test, vi } from 'vitest';
 
 import { BlockchainProviderBuilder } from '../src/hub';
 import { ProviderBuilder } from '../src/hub/provider';
+import { garbageWalletInfo } from '../src/test-utils/fixtures';
 
 describe('check Provider works with Blockchain correctly', () => {
   test('connect successfully when two blockchain type has been added to Provider', async () => {
@@ -25,7 +26,10 @@ describe('check Provider works with Blockchain correctly', () => {
       .action('connect', solanaConnect)
       .build();
 
-    const garbageWalletBuilder = new ProviderBuilder('garbage-wallet');
+    const garbageWalletBuilder = new ProviderBuilder('garbage-wallet').config(
+      'info',
+      garbageWalletInfo
+    );
     garbageWalletBuilder.add('evm', evmProvider);
     garbageWalletBuilder.add('solana', solanaProvider);
 
@@ -74,7 +78,10 @@ describe('check Provider works with Blockchain correctly', () => {
         },
       ])
       .build();
-    const garbageWalletBuilder = new ProviderBuilder('garbage-wallet');
+    const garbageWalletBuilder = new ProviderBuilder('garbage-wallet').config(
+      'info',
+      garbageWalletInfo
+    );
     garbageWalletBuilder.add('evm', evmProvider);
 
     const garbageWallet = garbageWalletBuilder.build();

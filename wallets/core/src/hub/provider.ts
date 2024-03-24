@@ -1,39 +1,53 @@
-import type { EvmActions, RemoveThisParameter } from '../actions/evm/interface';
+/* eslint-disable @typescript-eslint/ban-types */
+import type { ProviderConfig, Store } from './store';
+import type {
+  AnyFunction,
+  EvmActions,
+  RemoveThisParameter,
+} from '../actions/evm/interface';
 import type { SolanaActions } from '../actions/solana/interface';
 import type { State as V1State } from '../wallet';
 
-type State = Omit<V1State, 'reachable'>;
-type SetState = <K extends keyof State>(name: K, value: State[K]) => void;
-type GetState = <K extends keyof State>(name: K) => State[K];
+export type State = Omit<V1State, 'reachable' | 'accounts' | 'network'>;
+type SetState = <K extends keyof Pick<State, 'installed'>>(
+  name: K,
+  value: State[K]
+) => void;
+type GetState = {
+  (): State;
+  <K extends keyof State>(name: K): State[K];
+};
 
-type Browsers = 'firefox' | 'chrome' | 'edge' | 'brave' | 'homepage';
-interface CommonBlockchains {
+export interface CommonBlockchains {
   // TODO: I think we don't need `RemoveThisParameter`, because we went the opposite.
   evm: RemoveThisParameter<EvmActions>;
   solana: RemoveThisParameter<SolanaActions>;
   cosmos: string;
 }
 
-type Info = {
-  name: string;
-  icon: string;
-  extensions: Partial<Record<Browsers, string>>;
-};
+type Fn = (this: Provider, ...args: any) => any;
 
-interface Config {
-  info: Info;
+interface InternalMethods {
+  init?: Fn;
 }
-
 export class Provider {
   public id: string;
+  public version = '1.0';
+
   /*
    * TODO:
    * It has some ts erros when I try to type it:
    * Map<keyof CommonBlockchains,CommonBlockchains[keyof CommonBlockchains]>
    */
   private blockchainProviders: Map<any, any>;
-  private _state: State;
-  private _configs: Map<keyof Config, Config[keyof Config]>;
+  private initiated = false;
+  // TODO: better name and also better typing for sure.
+  private internalMethods: Map<
+    keyof InternalMethods,
+    InternalMethods[keyof InternalMethods]
+  > = new Map();
+  #store: Store | undefined;
+  #configs: ProviderConfig;
 
   constructor(
     id: string,
@@ -41,33 +55,59 @@ export class Provider {
       keyof CommonBlockchains,
       CommonBlockchains[keyof CommonBlockchains]
     >,
-    configs: Provider['_configs']
+    configs: ProviderConfig,
+    internalMethods: Provider['internalMethods']
   ) {
     this.id = id;
-    this._configs = configs;
+    this.#configs = configs;
+    // it should be only created here, to make sure `after/before` will work correctly
     this.blockchainProviders = blockchains;
-
-    this._state = {
-      connected: false,
-      connecting: false,
-      installed: false,
-      accounts: null,
-      network: null,
-    };
+    this.internalMethods = internalMethods;
   }
 
   state(): [GetState, SetState] {
+    const store = this.#store;
+    if (!store) {
+      throw new Error(
+        'You need to set your store using `.store` method first.'
+      );
+    }
+
     const setState: SetState = (name, value) => {
-      this._state[name] = value;
+      switch (name) {
+        case 'installed':
+          return store.getState().providers.updateStatus(this.id, name, value);
+        default:
+          throw new Error('Unhandled state for provider');
+      }
     };
 
-    const getState: GetState = (name) => {
-      return this._state[name];
+    const getState: GetState = <K extends keyof State>(name?: K) => {
+      const state: State = {
+        installed: store.getState().providers.list[this.id].data.installed,
+        // TODO: Not implemented
+        connected: false,
+        connecting: false,
+      };
+
+      if (!name) {
+        return state;
+      }
+
+      switch (name) {
+        case 'installed':
+        case 'connected':
+        case 'connecting':
+          return state[name];
+        default:
+          throw new Error('Unhandled state for provider');
+      }
     };
 
     return [getState, setState];
   }
 
+  // TODO: Could we somehow type some part of the ReturnType at least?
   getAll() {
     return this.blockchainProviders;
   }
@@ -76,15 +116,96 @@ export class Provider {
     return this.blockchainProviders.get(id);
   }
 
-  info(): Info | undefined {
-    return this._configs.get('info');
+  // TODO: Could we somehow type some part of the ReturnType at least?
+  findBy(options: { namespace?: string }): object | undefined {
+    if (options.namespace) {
+      // If we didn't found any match, we will return `undefined`.
+      let result: object | undefined = undefined;
+
+      this.blockchainProviders.forEach((blockchainProvider) => {
+        if (blockchainProvider.namespace === options.namespace) {
+          result = blockchainProvider;
+        }
+      });
+
+      return result;
+    }
+
+    throw new Error('You need to set some filters.');
+  }
+
+  info(): ProviderConfig['info'] | undefined {
+    const store = this.#store;
+    if (!store) {
+      throw new Error(
+        'You need to set your store using `.store` method first.'
+      );
+    }
+
+    return store.getState().providers.list[this.id].config.info;
+  }
+
+  init() {
+    const definedInitByUser = this.internalMethods.get('init');
+    if (!definedInitByUser) {
+      console.debug(
+        "[BlockchainProvider] this blockchain provider doesn't have any `init` implemented."
+      );
+      return;
+    }
+
+    if (this.initiated) {
+      console.log('[BlockchainProvider] initiated already.');
+      return;
+    }
+
+    definedInitByUser.bind(this)();
+    this.initiated = true;
+    console.debug('[BlockchainProvider] initiated successfully.');
+  }
+
+  before(action: string, cb: AnyFunction) {
+    // TODO: `before` and `after` is duplicated
+    const context = {
+      state: this.state.bind(this),
+    };
+    const cbWithContext = cb.bind(context);
+
+    this.blockchainProviders.forEach((blockchainProvider) => {
+      blockchainProvider.before(action, cbWithContext);
+    });
+    return this;
+  }
+
+  after(action: string, cb: AnyFunction) {
+    const context = {
+      state: this.state.bind(this),
+    };
+    const cbWithContext = cb.bind(context);
+    this.blockchainProviders.forEach((blockchainProvider) => {
+      blockchainProvider.after(action, cbWithContext);
+    });
+    return this;
+  }
+
+  store(store: Store) {
+    if (this.#store) {
+      console.warn(
+        "You've already set an store for your Provider. Old store will be replaced by the new one."
+      );
+    }
+    this.#store = store;
+
+    this.#store.getState().providers.addProvider(this.id, this.#configs);
+    return this;
   }
 }
 
 export class ProviderBuilder {
   private id: string;
   private blockchainProviders = new Map();
-  private configs = new Map<keyof Config, Config[keyof Config]>();
+  private methods: Map<'init', Fn> = new Map();
+  #configs: Partial<ProviderConfig> = {};
 
   constructor(id: string) {
     this.id = id;
@@ -98,13 +219,30 @@ export class ProviderBuilder {
     return this;
   }
 
-  config<K extends keyof Config>(name: K, value: Config[K]) {
-    this.configs.set(name, value);
+  config<K extends keyof ProviderConfig>(name: K, value: ProviderConfig[K]) {
+    this.#configs[name] = value;
+    return this;
+  }
+
+  init(cb: Exclude<InternalMethods['init'], undefined>) {
+    this.methods.set('init', cb);
     return this;
   }
 
   build(): Provider {
-    // TODO: add some validations here.
-    return new Provider(this.id, this.blockchainProviders, this.configs);
+    if (this.#isConfigValid(this.#configs)) {
+      return new Provider(
+        this.id,
+        this.blockchainProviders,
+        this.#configs,
+        this.methods
+      );
+    }
+
+    throw new Error('You need to set all required configs.');
+  }
+
+  #isConfigValid(config: Partial<ProviderConfig>): config is ProviderConfig {
+    return !!config.info;
   }
 }
