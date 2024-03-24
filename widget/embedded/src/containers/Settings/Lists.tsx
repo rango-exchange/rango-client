@@ -178,7 +178,7 @@ export function SettingsLists() {
           totalExchangeSources
         )}
         <Divider direction="horizontal" size={8} />
-        <ChevronRightIcon color="gray" />
+        <ChevronRightIcon color="black" />
       </>
     ),
     start: <ExchangeIcon color="gray" size={14} />,
@@ -199,7 +199,7 @@ export function SettingsLists() {
           {currentLanguage}
         </Typography>
         <Divider direction="horizontal" size={8} />
-        <ChevronRightIcon color="gray" />
+        <ChevronRightIcon color="black" />
       </>
     ),
     onClick: () => navigate(navigationRoutes.languages),
