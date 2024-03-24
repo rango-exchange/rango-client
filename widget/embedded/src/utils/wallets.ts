@@ -20,6 +20,7 @@ import type { BlockchainMeta, Token, WalletDetail } from 'rango-sdk';
 import { WalletState as WalletStatus } from '@rango-dev/ui';
 import { readAccountAddress } from '@rango-dev/wallets-react';
 import {
+  ChainTypes,
   detectInstallLink,
   getCosmosExperimentalChainInfo,
   isEvmAddress,
@@ -221,6 +222,37 @@ export function getRequiredChains(quote: SelectedQuote | null) {
     }
   });
   return wallets;
+}
+
+export function getRequiredChainType(
+  blockchains: BlockchainMeta[],
+  chain: string
+) {
+  const selectedBlockchain = blockchains.find(
+    (blockchain) => blockchain.name === chain
+  );
+
+  if (!selectedBlockchain) {
+    return null;
+  }
+
+  switch (selectedBlockchain.type) {
+    case 'EVM':
+      return ChainTypes.EVM;
+    case 'STARKNET':
+      return ChainTypes.STARKNET;
+    case 'TRANSFER':
+      return ChainTypes.UTXO;
+    case 'TRON':
+      return ChainTypes.TRON;
+    case 'COSMOS':
+      return ChainTypes.COSMOS;
+    case 'SOLANA':
+      return ChainTypes.SOLANA;
+
+    default:
+      return null;
+  }
 }
 
 type Blockchain = { name: string; accounts: ConnectedWallet[] };

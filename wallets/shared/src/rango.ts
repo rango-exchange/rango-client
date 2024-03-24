@@ -81,6 +81,15 @@ export enum WalletTypes {
   MY_TON_WALLET = 'mytonwallet',
 }
 
+export enum ChainTypes {
+  SOLANA = 'SOLANA',
+  EVM = 'EVM',
+  COSMOS = 'COSMOS',
+  UTXO = 'UTXO',
+  STARKNET = 'STARKNET',
+  TRON = 'TRON',
+}
+
 export enum Networks {
   BTC = 'BTC',
   BSC = 'BSC',
@@ -143,6 +152,16 @@ export enum Networks {
   // Using instead of null
   Unknown = 'Unkown',
 }
+
+export const WALLET_SUPPORTED_CHAIN_TYPES: {
+  walletType: WalletTypes;
+  chainTypes: ChainTypes[];
+}[] = [
+  {
+    walletType: WalletTypes.PHANTOM,
+    chainTypes: [ChainTypes.SOLANA, ChainTypes.EVM, ChainTypes.UTXO],
+  },
+];
 
 export const XDEFI_WALLET_SUPPORTED_NATIVE_CHAINS: string[] = [
   Networks.BTC,
