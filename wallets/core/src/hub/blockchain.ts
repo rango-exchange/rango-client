@@ -37,7 +37,9 @@ function isAsync(fn: Function) {
 class BlockchainProvider<T extends Record<keyof T, AnyFunction>> {
   public namespace: Config['namespace'];
   private actions: ActionType<T>;
-  private onActions = new Map<keyof T, AnyFunction>();
+  private andActions = new Map<keyof T, AnyFunction>();
+  private beforeActions = new Map<keyof T, AnyFunction>();
+  private afterActions = new Map<keyof T, AnyFunction>();
   private subscribers: Set<SubscriberCb>;
   private subscriberCleanUps: Set<AnyFunction> = new Set();
   private _state: State;
@@ -52,7 +54,7 @@ class BlockchainProvider<T extends Record<keyof T, AnyFunction>> {
     this.namespace = namespace;
     this.actions = actions;
     this.subscribers = subscribers;
-    this.onActions = use;
+    this.andActions = use;
 
     this._state = {
       accounts: null,
@@ -81,16 +83,21 @@ class BlockchainProvider<T extends Record<keyof T, AnyFunction>> {
    * TODO: This implementation acccepts only one `cb` for each `name`. It's better to be able set multiple `and`.
    */
   and<K extends keyof T>(name: K, cb: AnyFunction) {
-    this.onActions.set(name, cb);
+    this.andActions.set(name, cb);
     return this;
   }
 
   run<K extends keyof T>(name: K, ...args: any[]) {
     const cb = this.actions.get(name);
+
     if (!cb) {
       throw new Error(
         `Couldn't find "${name.toString()}" action. Are you sure you've added the action?`
       );
+    }
+    const beforeAction = this.beforeActions.get(name);
+    if (beforeAction) {
+      beforeAction();
     }
 
     const context = {
@@ -102,17 +109,23 @@ class BlockchainProvider<T extends Record<keyof T, AnyFunction>> {
     const cbWithContext = cb.bind(context);
 
     const runThen = () => {
-      const result = cbWithContext(...args);
-      const nextAction = this.onActions.get(name);
-      if (!nextAction) {
-        return result;
+      let result = cbWithContext(...args);
+      const andAction = this.andActions.get(name);
+      const afterAction = this.afterActions.get(name);
+
+      if (andAction) {
+        const nextActionWithContext = andAction.bind(context);
+        if (isCbAsync) {
+          return result.then(nextActionWithContext).finally(afterAction);
+        }
+
+        result = nextActionWithContext(result);
       }
 
-      const nextActionWithContext = nextAction.bind(context);
-      if (isCbAsync) {
-        return result.then(nextActionWithContext);
+      if (afterAction) {
+        afterAction();
       }
-      return nextActionWithContext(result);
+      return result;
     };
 
     return runThen();
@@ -150,6 +163,16 @@ class BlockchainProvider<T extends Record<keyof T, AnyFunction>> {
 
     this.initiated = true;
     console.debug('[BlockchainProvider] initiated successfully.');
+  }
+
+  after<K extends keyof T>(name: K, cb: AnyFunction) {
+    this.afterActions.set(name, cb);
+    return this;
+  }
+
+  before<K extends keyof T>(name: K, cb: AnyFunction) {
+    this.beforeActions.set(name, cb);
+    return this;
   }
 }
 
@@ -205,7 +228,7 @@ class BlockchainProviderBuilder<T extends Record<keyof T, AnyFunction>> {
         const targetValue = blockchainProvider[prop];
 
         // These are functions that actually has something inside themselves then will call the actual action.
-        const allowedMethods = ['init', 'destroy', 'state'];
+        const allowedMethods = ['init', 'destroy', 'state', 'after', 'before'];
         if (typeof prop === 'string' && allowedMethods.includes(prop)) {
           return targetValue.bind(blockchainProvider);
         }
@@ -229,7 +252,10 @@ class BlockchainProviderBuilder<T extends Record<keyof T, AnyFunction>> {
       },
     });
     return api as RemoveThisParameter<T> &
-      Pick<BlockchainProvider<T>, 'init' | 'destroy' | 'state'>;
+      Pick<
+        BlockchainProvider<T>,
+        'init' | 'destroy' | 'state' | 'after' | 'before'
+      >;
   }
 }
 

@@ -29,7 +29,9 @@
   },
   "dependencies": {
     "@rango-dev/wallets-shared": "^0.28.1-next.0",
-    "rango-types": "^0.1.59"
+    "rango-types": "^0.1.59",
+    "zustand": "^4.5.2",
+    "immer": "^10.0.4"
   },
   "publishConfig": {
     "access": "public"

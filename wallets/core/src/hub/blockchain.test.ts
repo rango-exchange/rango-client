@@ -65,4 +65,35 @@ describe('check BlockchainProviderBuilder works as expected', () => {
 
     expect(count).toBe(1);
   });
+
+  test('after and before should be called before target action', () => {
+    const before = vi.fn();
+    const after = vi.fn();
+    const connectAction = vi.fn();
+    const disconnectAction = vi.fn();
+    const builder = new BlockchainProviderBuilder<{
+      connect: () => void;
+      disconnect: () => void;
+    }>();
+    builder.config('namespace', NAMESPACE);
+    builder.action('connect', connectAction);
+    builder.action('disconnect', disconnectAction);
+    const blockchain = builder.build();
+
+    blockchain.connect();
+    expect(connectAction).toBeCalledTimes(1);
+    expect(before).toBeCalledTimes(0);
+    expect(after).toBeCalledTimes(0);
+
+    blockchain.before('connect', before);
+    blockchain.connect();
+    expect(connectAction).toBeCalledTimes(2);
+    expect(before).toBeCalledTimes(1);
+    expect(after).toBeCalledTimes(0);
+
+    blockchain.after('connect', after);
+    blockchain.connect();
+    expect(before).toBeCalledTimes(2);
+    expect(after).toBeCalledTimes(1);
+  });
 });
