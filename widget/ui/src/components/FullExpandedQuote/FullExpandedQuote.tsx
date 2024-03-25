@@ -12,6 +12,11 @@ import { Tooltip } from '../Tooltip';
 import { Typography } from '../Typography';
 
 import {
+  ITEM_SKELETON_COUNT,
+  shortenAmount,
+  TOOLTIP_SIDE_OFFSET,
+} from './FullExpandedQuote.helpers';
+import {
   SkeletonHeader,
   SkeletonItemLeft,
   SkeletonItemRight,
@@ -28,16 +33,15 @@ import {
   Steps,
   StyledPriceImpact,
   SwapperContainer,
+  SwapperContent,
   SwapperImage,
+  SwapperImagesContainer,
   SwapperSection,
   TagsContainer,
   VerticalLine,
 } from './FullExpandedQuote.styles';
 import { TokenSection } from './FullExpandedQuote.TokenSection';
 import { TooltipContent } from './FullExpandedQuote.Tooltip';
-
-const ITEM_SKELETON_COUNT = 3;
-const TOOLTIP_SIDE_OFFSET = 5;
 
 export function FullExpandedQuote(props: PropTypes) {
   const {
@@ -105,6 +109,7 @@ export function FullExpandedQuote(props: PropTypes) {
                   content: {
                     borderRadius: '5px',
                     padding: '10px',
+                    backgroundColor: '$background !important',
                   },
                 }}
                 content={
@@ -122,9 +127,12 @@ export function FullExpandedQuote(props: PropTypes) {
                     <SkeletonItemLeft />
                   ) : (
                     <TokenSection
+                      style={{
+                        opacity: hoveredItemIndex === index - 1 ? 0 : 1,
+                      }}
                       chainImage={step.from.chain.image}
                       tokenImage={step.from.token.image}
-                      amount={step.from.price.value}
+                      amount={shortenAmount(step.from.price.value)}
                       name={step.from.token.displayName}
                       tooltipProps={{
                         content: step.from.price.realValue,
@@ -138,32 +146,61 @@ export function FullExpandedQuote(props: PropTypes) {
                       <SkeletonItemRight />
                     ) : (
                       <>
-                        <SwapperContainer
-                          onMouseEnter={() => setHoveredItemIndex(index)}
-                          onMouseLeave={() => setHoveredItemIndex(null)}>
-                          <SwapperImage state={step.state}>
-                            <Image
-                              size={22}
-                              type="circular"
-                              src={step.swapper.image}
-                            />
-                            {step.state && (
-                              <IconHighlight type={step.state}>
-                                {step.state === 'error' ? (
-                                  <ErrorIcon size={8} color="error" />
-                                ) : (
-                                  <WarningIcon size={8} color="warning" />
-                                )}
-                              </IconHighlight>
-                            )}
-                          </SwapperImage>
-                          <Divider size={2} />
-                          <Typography
-                            size="xsmall"
-                            variant="body"
-                            align="center">
-                            {step.swapper.displayName}
-                          </Typography>
+                        <SwapperContainer>
+                          <SwapperContent
+                            onMouseEnter={() => setHoveredItemIndex(index)}
+                            onMouseLeave={() => setHoveredItemIndex(null)}>
+                            <SwapperImagesContainer>
+                              {!step.internalSwaps ? (
+                                <SwapperImage state={step.state}>
+                                  <Image
+                                    size={22}
+                                    type="circular"
+                                    src={step.swapper.image}
+                                  />
+                                </SwapperImage>
+                              ) : (
+                                step.internalSwaps.map(
+                                  (internalswap, iIndex) => {
+                                    const key = `${iIndex}-swapper-image`;
+                                    return (
+                                      <SwapperImage
+                                        state={step.state}
+                                        key={key}
+                                        style={{
+                                          marginRight: !iIndex
+                                            ? '-10px'
+                                            : '0px',
+                                        }}>
+                                        <Image
+                                          size={22}
+                                          type="circular"
+                                          src={internalswap.swapper.image}
+                                        />
+                                      </SwapperImage>
+                                    );
+                                  }
+                                )
+                              )}
+                              {step.state && (
+                                <IconHighlight type={step.state}>
+                                  {step.state === 'error' ? (
+                                    <ErrorIcon size={8} color="error" />
+                                  ) : (
+                                    <WarningIcon size={8} color="warning" />
+                                  )}
+                                </IconHighlight>
+                              )}
+                            </SwapperImagesContainer>
+
+                            <Divider size={2} />
+                            <Typography
+                              size="xsmall"
+                              variant="body"
+                              align="center">
+                              {step.swapper.displayName}
+                            </Typography>
+                          </SwapperContent>
                         </SwapperContainer>
 
                         <VerticalLine />
@@ -177,7 +214,7 @@ export function FullExpandedQuote(props: PropTypes) {
                       }}
                       chainImage={step.to.chain.image}
                       tokenImage={step.to.token.image}
-                      amount={step.to.price.value}
+                      amount={shortenAmount(step.to.price.value)}
                       name={step.to.token.displayName}
                     />
                   )}

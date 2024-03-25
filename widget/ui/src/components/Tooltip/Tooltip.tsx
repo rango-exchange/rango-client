@@ -22,6 +22,7 @@ export function Tooltip(props: PropsWithChildren<PropTypes>) {
     styles,
     align,
   } = props;
+
   return (
     <RadixTooltip.Provider delayDuration={0}>
       <RadixTooltip.Root open={open}>
@@ -31,7 +32,7 @@ export function Tooltip(props: PropsWithChildren<PropTypes>) {
         <RadixTooltip.Portal container={container}>
           <TooltipContent align={align} side={side} sideOffset={sideOffset}>
             <TooltipTypography
-              style={styles?.content}
+              css={styles?.content}
               variant="label"
               size="medium"
               color={color}>

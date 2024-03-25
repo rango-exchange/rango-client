@@ -75,7 +75,7 @@ export const Steps = styled('div', {
 });
 
 export const StepItem = styled('div', {
-  padding: '$2',
+  padding: '$5 $2',
   display: 'flex',
   width: '100%',
   variants: {
@@ -150,6 +150,15 @@ export const SwapperContainer = styled(FlexCenter, {
       color: '$neutral900',
     },
   },
+});
+
+export const SwapperContent = styled(FlexCenter, {
+  flexDirection: 'column',
+  width: 'fit-content',
+});
+
+export const SwapperImagesContainer = styled(FlexCenter, {
+  position: 'relative',
 });
 
 export const SwapperImage = styled(FlexCenter, {
