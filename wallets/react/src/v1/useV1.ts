@@ -5,7 +5,7 @@ import type {
 } from '../v0/types';
 import type { WalletInfo } from '@rango-dev/wallets-shared';
 
-import { Hub } from '@rango-dev/wallets-core';
+import { createStore, Hub } from '@rango-dev/wallets-core';
 import { ChainId } from 'caip';
 import { useEffect, useRef, useState } from 'react';
 
@@ -15,7 +15,12 @@ export type UseV1Props = Omit<ProviderProps, 'providers'> & {
   providers: ProviderV1Interface[];
 };
 export function useV1(props: UseV1Props): ProviderContext {
-  const hub = useRef(new Hub());
+  const store = useRef(createStore());
+  const hub = useRef(
+    new Hub({
+      store: store.current,
+    })
+  );
   const [currentRender, rerender] = useState(0);
 
   // Initialize instances
@@ -52,6 +57,10 @@ export function useV1(props: UseV1Props): ProviderContext {
      * Some of wallets, take some time to be fully injected and loaded.
      */
     document.addEventListener('readystatechange', initHubWhenPageIsReady);
+
+    store.current.subscribe(() => {
+      rerender(currentRender + 1);
+    });
   }, []);
 
   return {
@@ -133,9 +142,9 @@ export function useV1(props: UseV1Props): ProviderContext {
         }
       });
 
-      const namespaces: string[] = [];
-      wallet.getAll().forEach((blockchainProvider) => {
-        namespaces.push(blockchainProvider.namespace);
+      const namespacesNames: string[] = [];
+      wallet.getAll().forEach((namespaces) => {
+        namespacesNames.push(namespaces.namespace);
       });
 
       return {
@@ -149,7 +158,7 @@ export function useV1(props: UseV1Props): ProviderContext {
         mobileWallet: false,
         showOnMobile: false,
         extras: {
-          namespaces,
+          namespaces: namespacesNames,
         },
       };
     },
