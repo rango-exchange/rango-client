@@ -7,10 +7,10 @@ import type { SolanaActions } from '../actions/solana/interface';
 // TODO: it should be imported.
 type ConnectResult = string[];
 
-export function useConnect(this: Context, accounts: ConnectResult) {
-  console.log({ accounts, uThis: this });
+export function useConnect(context: Context, accounts: ConnectResult) {
+  console.log({ accounts, uThis: context });
   // TODO: Address Verification (CAIP)
-  const [, setState] = this.state();
+  const [, setState] = context.state();
   setState('accounts', accounts);
   return accounts;
 }

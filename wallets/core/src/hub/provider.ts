@@ -1,12 +1,12 @@
 /* eslint-disable @typescript-eslint/ban-types */
 import type { Context } from './namespace';
 import type { ProviderConfig, Store } from './store';
+import type { EvmActions } from '../actions/evm/interface';
+import type { SolanaActions } from '../actions/solana/interface';
 import type {
   AnyFunction,
-  EvmActions,
   FunctionWithContext,
-} from '../actions/evm/interface';
-import type { SolanaActions } from '../actions/solana/interface';
+} from '../namespaces/common/types';
 import type { State as V1State } from '../v0/wallet';
 
 export type State = Omit<V1State, 'reachable' | 'accounts' | 'network'>;

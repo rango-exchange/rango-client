@@ -2,7 +2,7 @@ import type { NamespaceConfig, NamespaceData, Store } from './store';
 import type {
   AnyFunction,
   FunctionWithContext,
-} from '../actions/evm/interface';
+} from '../namespaces/common/types';
 
 type ActionName<K> = K | Omit<K, string>;
 
@@ -32,7 +32,7 @@ interface Config {
  * But solana namespace only have: `.connect()`.
  * This actions will be passed to this generic.
  */
-type SpecificMethods<T> = Record<keyof T, AnyFunction>;
+export type SpecificMethods<T> = Record<keyof T, AnyFunction>;
 
 /**
  * Note: This only works native async, if we are going to support for old transpilers like Babel.

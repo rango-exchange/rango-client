@@ -1,3 +1,6 @@
+import { common } from './namespaces/common';
+import { solana } from './namespaces/solana';
+
 export type { EventHandler, State, Options } from './v0/wallet';
 export * from './v0/types';
 
@@ -15,5 +18,12 @@ export {
   createStore,
 } from './hub';
 export { NamespaceBuilder, ProviderBuilder } from './builders';
+export type { NamespaceApi } from './builders';
 export type { SolanaActions } from './actions/solana/interface';
 export type { EvmActions } from './actions/evm/interface';
+
+// TODO: It's better to use `esm exports in package.json` instead of scope them like this.
+export const namespaces = {
+  solana: solana,
+  common: common,
+};

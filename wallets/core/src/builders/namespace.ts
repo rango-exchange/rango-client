@@ -1,13 +1,31 @@
 import type {
+  ActionType,
+  Context,
+  SpecificMethods,
+  SubscriberCb,
+} from '../hub/namespace';
+import type { NamespaceConfig } from '../hub/store';
+import type {
   AnyFunction,
   FunctionWithContext,
-} from '../actions/evm/interface';
-import type { ActionType, Context, SubscriberCb } from '../hub/namespace';
-import type { NamespaceConfig } from '../hub/store';
+} from '../namespaces/common/types';
 
 import { Namespace } from '../hub';
 
-export class NamespaceBuilder<T extends Record<keyof T, AnyFunction>> {
+// These are functions that actually has something inside themselves then will call the actual action.
+const allowedMethods = [
+  'init',
+  'destroy',
+  'state',
+  'after',
+  'before',
+  'store',
+] as const;
+
+export type NamespaceApi<T extends SpecificMethods<T>> = T &
+  Pick<Namespace<T>, (typeof allowedMethods)[number]>;
+
+export class NamespaceBuilder<T extends SpecificMethods<T>> {
   private actions: ActionType<T> = new Map();
   private subscribers: Set<SubscriberCb> = new Set();
   private useCallbacks = new Map<keyof T, AnyFunction>();
@@ -68,16 +86,6 @@ export class NamespaceBuilder<T extends Record<keyof T, AnyFunction>> {
       this.useCallbacks
     );
 
-    // These are functions that actually has something inside themselves then will call the actual action.
-    const allowedMethods: readonly (keyof Namespace<T>)[] = [
-      'init',
-      'destroy',
-      'state',
-      'after',
-      'before',
-      'store',
-    ];
-
     /*
      * This is useful accessing values like `version`, If we don't do this, we should whitelist
      * All the values as well, So it can be confusing for someone that only wants to add a public value to `Namespace`
@@ -116,7 +124,6 @@ export class NamespaceBuilder<T extends Record<keyof T, AnyFunction>> {
         throw new Error('You can not set anything on this object.');
       },
     });
-    return api as unknown as T &
-      Pick<Namespace<T>, (typeof allowedMethods)[number]>;
+    return api as unknown as NamespaceApi<T>;
   }
 }
