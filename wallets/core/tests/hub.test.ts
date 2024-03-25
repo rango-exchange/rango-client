@@ -1,4 +1,4 @@
-import type { EvmActions } from '../src/actions/evm/interface';
+import type { EvmActions } from '../src/namespaces/evm/types';
 
 import { beforeEach, describe, expect, test, vi } from 'vitest';
 

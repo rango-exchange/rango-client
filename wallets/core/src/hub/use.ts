@@ -1,8 +1,8 @@
 // Some helpers to simplify the code.
 
 import type { Context } from './namespace';
-import type { EvmActions } from '../actions/evm/interface';
-import type { SolanaActions } from '../actions/solana/interface';
+import type { EvmActions } from '../namespaces/evm/types';
+import type { SolanaActions } from '../namespaces/solana/types';
 
 // TODO: it should be imported.
 type ConnectResult = string[];

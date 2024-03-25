@@ -1,5 +1,6 @@
-import type { Accounts, EvmActions } from '../src/actions/evm/interface';
-import type { SolanaActions } from '../src/actions/solana/interface';
+import type { Accounts } from '../src/namespaces/common/types';
+import type { EvmActions } from '../src/namespaces/evm/types';
+import type { SolanaActions } from '../src/namespaces/solana/types';
 
 import { describe, expect, test, vi } from 'vitest';
 

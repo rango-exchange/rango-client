@@ -1,7 +1,7 @@
 import type { Provider } from './provider';
 import type { Store } from './store';
-import type { EvmActions } from '../actions/evm/interface';
-import type { SolanaActions } from '../actions/solana/interface';
+import type { EvmActions } from '../namespaces/evm/types';
+import type { SolanaActions } from '../namespaces/solana/types';
 
 import { beforeEach, describe, expect, test, vi } from 'vitest';
 

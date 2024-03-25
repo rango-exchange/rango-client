@@ -19,3 +19,14 @@ export type TaskWithVoidReturn<T extends SpecificMethods<T>> = readonly [
   keyof T,
   VoidReturn<FunctionWithContext<T[keyof T], any>>
 ];
+
+// TODO: TS could evaluate a pattern on string as well. template literal type, I guess.
+export type Accounts = string[];
+
+export interface CommonActions {
+  init: () => void;
+}
+
+export interface AutoImplementedActionsByRecommended {
+  disconnect: () => void;
+}
