@@ -79,6 +79,7 @@ export enum WalletTypes {
   ENKRYPT = 'enkrypt',
   TAHO = 'taho',
   MY_TON_WALLET = 'mytonwallet',
+  LEDGER = 'ledger',
 }
 
 export enum Networks {
