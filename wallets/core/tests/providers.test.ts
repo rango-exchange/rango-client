@@ -11,7 +11,7 @@ describe('check Provider works with Blockchain correctly', () => {
 
   test('connect successfully when two blockchain type has been added to Provider', async () => {
     // Wallet Code
-    const evmConnect = vi.fn((_chain: string) => {
+    const evmConnect = vi.fn((_context, _chain: string) => {
       return ['0x000000000000000000000000000000000000dead'];
     });
     const solanaConnect = vi.fn(async () => {
@@ -52,7 +52,7 @@ describe('check Provider works with Blockchain correctly', () => {
   });
 
   test('check post actions to work correctly.', () => {
-    const evmConnect = vi.fn((_chain: string) => {
+    const evmConnect = vi.fn((_context, _chain: string) => {
       return [
         '0x000000000000000000000000000000000000dead',
         '0x0000000000000000000000000000000000000000',

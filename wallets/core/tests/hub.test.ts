@@ -22,7 +22,7 @@ describe('aa', () => {
   });
 
   test('connect through hub', () => {
-    const evmConnect = vi.fn((_chain: string) => {
+    const evmConnect = vi.fn((_context, _chain: string) => {
       return [
         '0x000000000000000000000000000000000000dead',
         '0x0000000000000000000000000000000000000000',

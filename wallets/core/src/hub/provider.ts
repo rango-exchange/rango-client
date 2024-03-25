@@ -1,6 +1,11 @@
 /* eslint-disable @typescript-eslint/ban-types */
+import type { Context } from './namespace';
 import type { ProviderConfig, Store } from './store';
-import type { AnyFunction, EvmActions } from '../actions/evm/interface';
+import type {
+  AnyFunction,
+  EvmActions,
+  FunctionWithContext,
+} from '../actions/evm/interface';
 import type { SolanaActions } from '../actions/solana/interface';
 import type { State as V1State } from '../v0/wallet';
 
@@ -84,12 +89,33 @@ export class Provider {
     };
 
     const getState: GetState = <K extends keyof State>(name?: K) => {
+      const allNamespaces = store.getState().namespaces.list;
+      const currentProviderNamespaces = Object.keys(allNamespaces).filter(
+        (key) => allNamespaces[key].config.providerId === this.id
+      );
+
+      // TODO: I'm not sure what strategy is good for `connected` and `connecting` is better. reconsider it in future.
+      const installed = store.getState().providers.list[this.id].data.installed;
+      const connected =
+        currentProviderNamespaces.length > 0
+          ? currentProviderNamespaces.every(
+              (key) => allNamespaces[key].data.connected
+            )
+          : false;
+      const connecting =
+        currentProviderNamespaces.length > 0
+          ? currentProviderNamespaces.some(
+              (key) => allNamespaces[key].data.connecting
+            )
+          : false;
+
       const state: State = {
-        installed: store.getState().providers.list[this.id].data.installed,
-        // TODO: Not implemented
-        connected: false,
-        connecting: false,
+        installed,
+        connected,
+        connecting,
       };
+
+      console.log({ allNamespaces, currentProviderNamespaces, state });
 
       if (!name) {
         return state;
@@ -165,7 +191,7 @@ export class Provider {
     console.debug('[Namespace] initiated successfully.');
   }
 
-  before(action: string, cb: AnyFunction) {
+  before(action: string, cb: FunctionWithContext<AnyFunction, Context>) {
     // TODO: `before` and `after` is duplicated
     const context = {
       state: this.state.bind(this),

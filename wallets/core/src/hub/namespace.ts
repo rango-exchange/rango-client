@@ -47,6 +47,7 @@ class Namespace<T extends SpecificMethods<T>> {
   public namespace: Config['namespace'];
   private actions: ActionType<T>;
   private andActions = new Map<keyof T, AnyFunction>();
+  // `context` for these two can be Namespace context or Provider context
   private beforeActions = new Map<keyof T, AnyFunction>();
   private afterActions = new Map<keyof T, AnyFunction>();
   private subscribers: Set<SubscriberCb>;
@@ -180,13 +181,28 @@ class Namespace<T extends SpecificMethods<T>> {
     console.debug('[Namespace] initiated successfully.');
   }
 
-  after<K extends keyof T>(name: K, cb: AnyFunction) {
-    this.afterActions.set(name, cb);
+  after<K extends keyof T, C = unknown>(
+    name: K,
+    cb: FunctionWithContext<AnyFunction, C>,
+    options?: { context?: C }
+  ) {
+    const cbWithContext = options?.context
+      ? cb.bind(null, options.context)
+      : cb.bind(null, this.#context() as C);
+
+    this.afterActions.set(name, cbWithContext);
     return this;
   }
 
-  before<K extends keyof T>(name: K, cb: AnyFunction) {
-    this.beforeActions.set(name, cb);
+  before<K extends keyof T, C = unknown>(
+    name: K,
+    cb: FunctionWithContext<AnyFunction, C>,
+    options?: { context?: C }
+  ) {
+    const cbWithContext = options?.context
+      ? cb.bind(null, options.context)
+      : cb.bind(null, this.#context() as C);
+    this.beforeActions.set(name, cbWithContext);
     return this;
   }
 
