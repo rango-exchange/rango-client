@@ -1,5 +1,5 @@
 import type {
-  ProviderInterface,
+  LegacyProviderInterface,
   ProviderProps,
 } from '@rango-dev/wallets-react';
 
@@ -10,7 +10,7 @@ import Adapter from './adapter';
 
 function AdapterProvider({ children, ...props }: ProviderProps) {
   const list = props.providers.map(
-    (provider: ProviderInterface) => provider.config.type
+    (provider: LegacyProviderInterface) => provider.config.type
   );
 
   return (

@@ -1,6 +1,6 @@
 import type {
+  LegacyProviderInterface,
   ProviderContext,
-  ProviderInterface,
   ProviderProps,
 } from './types';
 import type { WalletType } from '@rango-dev/wallets-shared';
@@ -22,7 +22,7 @@ import {
 import { useInitializers } from './hooks';
 
 export type UseV0Props = Omit<ProviderProps, 'providers'> & {
-  providers: ProviderInterface[];
+  providers: LegacyProviderInterface[];
 };
 
 export function useLegacy(props: UseV0Props): ProviderContext {

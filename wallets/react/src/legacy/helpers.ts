@@ -1,5 +1,5 @@
 import type {
-  ProviderInterface,
+  LegacyProviderInterface,
   State,
   WalletActions,
   WalletProviders,
@@ -74,7 +74,7 @@ export function availableWallets(providersState: State): WalletType[] {
 }
 
 export function checkWalletProviders(
-  list: ProviderInterface[]
+  list: LegacyProviderInterface[]
 ): WalletProviders {
   const wallets: WalletProviders = new Map();
 

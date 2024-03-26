@@ -75,8 +75,4 @@ export type WalletProviders = Map<
 >;
 
 export type { NextProviderInterface } from '@rango-dev/wallets-core';
-export type {
-  LegacyProviderInterface as ProviderInterface,
-  WalletActions,
-  WalletConfig,
-};
+export type { LegacyProviderInterface, WalletActions, WalletConfig };
