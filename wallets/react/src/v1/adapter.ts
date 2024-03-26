@@ -1,79 +1,13 @@
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-nocheck
-
-// An adapter to use wallet v1 interface.
-
 import type { ProviderInterface } from '../v0/types';
 import type {
+  Hub,
   Provider,
+  State,
   EventHandler as WalletEventHandler,
 } from '@rango-dev/wallets-core';
 import type { WalletInfo } from '@rango-dev/wallets-shared';
 
-import { hubProviders } from '@rango-dev/provider-all';
-import { Events, Hub } from '@rango-dev/wallets-core';
-
-/*
- * rename: installLink to extensions: default -> homepage, lowercase, removed string mode.
- * deprecated: supportedChains, showOnMobile, isContractWallet, mobileWallet, color
- */
-
-// maybe remvove
-export class HubAdapter {
-  private hub: Hub;
-
-  constructor() {
-    this.hub = new Hub();
-    const envs = {};
-    hubProviders(envs).forEach((provider) => {
-      this.hub.add(provider.id, provider);
-    });
-  }
-
-  getWalletInfo(type: string): WalletInfo | undefined {
-    const wallet = this.hub.get(type);
-    if (wallet) {
-      const info = wallet.info();
-
-      if (!info) {
-        throw new Error('Your provider should have required `info`.');
-      }
-
-      const installLink: Exclude<WalletInfo['installLink'], string> = {
-        DEFAULT: '',
-      };
-
-      Object.keys(info.extensions).forEach((key) => {
-        if (key === 'homepage') {
-          installLink.DEFAULT = info.extensions[key]!;
-        }
-        const allowedKeys = ['firefox', 'chrome', 'brave', 'edge'];
-        if (allowedKeys.includes(key)) {
-          const keyUppercase = key.toUpperCase() as keyof Exclude<
-            WalletInfo['installLink'],
-            string
-          >;
-          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-          // @ts-ignore-next-line
-          installLink[keyUppercase] = info.extensions[key];
-        }
-      });
-
-      return {
-        name: info.name,
-        img: info.icon,
-        installLink: installLink,
-        // We don't have this values anymore, fill them with some values that communicate this.
-        color: 'red',
-        supportedChains: [],
-        isContractWallet: false,
-        mobileWallet: false,
-        showOnMobile: false,
-      };
-    }
-    return;
-  }
-}
+import { Events, guessNamespacesStateSelector } from '@rango-dev/wallets-core';
 
 export function providerAdapter(hubProvider: Provider): ProviderInterface {
   return {
@@ -158,32 +92,64 @@ export function providerAdapter(hubProvider: Provider): ProviderInterface {
 
 export function checkHubStateAndTriggerEvents(
   hub: Hub,
+  current: State,
+  previous: State,
   onUpdateState: WalletEventHandler
 ) {
   const result = hub.state();
-  console.log(result);
+  console.log('[checkHubStateAndTriggerEvents]', result, { previous, current });
 
-  const providersId = Object.keys(result);
-  providersId.forEach((id) => {
-    const provider = result[id];
+  hub.getAll().forEach((_provider, providerId) => {
+    const currentProviderState = guessNamespacesStateSelector(
+      current,
+      providerId
+    );
+    const previousProviderState = guessNamespacesStateSelector(
+      previous,
+      providerId
+    );
+
     const coreState = {
-      connected: provider.connected,
-      connecting: provider.connecting,
-      installed: provider.installed,
+      connected: currentProviderState.connected,
+      connecting: currentProviderState.connecting,
+      installed: currentProviderState.installed,
       accounts: [],
       network: null,
       reachable: true,
     };
+
     const eventInfo = {
       supportedBlockchains: [],
       isContractWallet: false,
     };
-    onUpdateState(
-      id,
-      Events.INSTALLED,
-      provider.installed,
-      coreState,
-      eventInfo
-    );
+
+    if (previousProviderState.installed !== currentProviderState.installed) {
+      onUpdateState(
+        providerId,
+        Events.INSTALLED,
+        currentProviderState.installed,
+        coreState,
+        eventInfo
+      );
+    }
+    if (previousProviderState.connecting !== currentProviderState.connecting) {
+      onUpdateState(
+        providerId,
+        Events.CONNECTING,
+        currentProviderState.connecting,
+        coreState,
+        eventInfo
+      );
+    }
+    if (previousProviderState.connected !== currentProviderState.connected) {
+      onUpdateState(
+        providerId,
+        Events.CONNECTED,
+        currentProviderState.connected,
+        coreState,
+        eventInfo
+      );
+    }
+    // TODO: ACCOUNTS, NETWORK
   });
 }

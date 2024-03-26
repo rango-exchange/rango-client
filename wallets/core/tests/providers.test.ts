@@ -60,7 +60,7 @@ describe('check Provider works with Blockchain correctly', () => {
       ];
     });
 
-    const afterConnect = vi.fn((accounts: Accounts) => {
+    const afterConnect = vi.fn((_context, accounts: Accounts) => {
       return accounts.map((account) => `eip155:${account}`);
     });
 
@@ -73,14 +73,8 @@ describe('check Provider works with Blockchain correctly', () => {
       .action('connect', evmConnect)
       .action('disconnect', evmDisconnect)
       .use([
-        {
-          name: 'disconnect',
-          cb: afterDisconnect,
-        },
-        {
-          name: 'connect',
-          cb: afterConnect,
-        },
+        ['disconnect', afterDisconnect],
+        ['connect', afterConnect],
       ])
       .build();
     const garbageWalletBuilder = new ProviderBuilder('garbage-wallet').config(
@@ -98,7 +92,7 @@ describe('check Provider works with Blockchain correctly', () => {
     ]);
 
     garbageWallet.get('evm')?.connect('0x1');
-    garbageWallet.get('evm')?.disconnect('0x1');
+    garbageWallet.get('evm')?.disconnect();
     expect(evmConnect).toBeCalledTimes(2);
     expect(afterConnect).toBeCalledTimes(2);
 

@@ -32,7 +32,10 @@ interface Config {
  * But solana namespace only have: `.connect()`.
  * This actions will be passed to this generic.
  */
-export type SpecificMethods<T> = Record<keyof T, AnyFunction>;
+export type SpecificMethods<T> = Record<
+  keyof T extends string ? keyof T : never,
+  AnyFunction
+>;
 
 /**
  * Note: This only works native async, if we are going to support for old transpilers like Babel.
@@ -96,8 +99,8 @@ class Namespace<T extends SpecificMethods<T>> {
   }
 
   /*
-   * if action runs successfuly, then it will run the `cb` fucntion.
-   * TODO: This implementation acccepts only one `cb` for each `name`. It's better to be able set multiple `and`.
+   * if action runs successfully, then it will run the `cb` function.
+   * TODO: This implementation accepts only one `cb` for each `name`. It's better to be able set multiple `and`.
    */
   and<K extends keyof T>(name: K, cb: AnyFunction) {
     this.andActions.set(name, cb);
@@ -128,7 +131,7 @@ class Namespace<T extends SpecificMethods<T>> {
       const afterAction = this.afterActions.get(name);
 
       if (andAction) {
-        const nextActionWithContext = andAction.bind(context);
+        const nextActionWithContext = andAction.bind(null, context);
         if (isCbAsync) {
           return result.then(nextActionWithContext).finally(afterAction);
         }

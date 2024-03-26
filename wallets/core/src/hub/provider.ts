@@ -7,9 +7,9 @@ import type {
 } from '../namespaces/common/types';
 import type { EvmActions } from '../namespaces/evm/types';
 import type { SolanaActions } from '../namespaces/solana/types';
-import type { State as V1State } from '../v0/wallet';
+import type { LegacyState as V0State } from '../v0/wallet';
 
-export type State = Omit<V1State, 'reachable' | 'accounts' | 'network'>;
+export type State = Omit<V0State, 'reachable' | 'accounts' | 'network'>;
 type SetState = <K extends keyof Pick<State, 'installed'>>(
   name: K,
   value: State[K]
@@ -89,33 +89,9 @@ export class Provider {
     };
 
     const getState: GetState = <K extends keyof State>(name?: K) => {
-      const allNamespaces = store.getState().namespaces.list;
-      const currentProviderNamespaces = Object.keys(allNamespaces).filter(
-        (key) => allNamespaces[key].config.providerId === this.id
-      );
-
-      // TODO: I'm not sure what strategy is good for `connected` and `connecting` is better. reconsider it in future.
-      const installed = store.getState().providers.list[this.id].data.installed;
-      const connected =
-        currentProviderNamespaces.length > 0
-          ? currentProviderNamespaces.every(
-              (key) => allNamespaces[key].data.connected
-            )
-          : false;
-      const connecting =
-        currentProviderNamespaces.length > 0
-          ? currentProviderNamespaces.some(
-              (key) => allNamespaces[key].data.connecting
-            )
-          : false;
-
-      const state: State = {
-        installed,
-        connected,
-        connecting,
-      };
-
-      console.log({ allNamespaces, currentProviderNamespaces, state });
+      const state: State = store
+        .getState()
+        .providers.guessNamespacesState(this.id);
 
       if (!name) {
         return state;

@@ -26,9 +26,9 @@ export type NamespaceApi<T extends SpecificMethods<T>> = T &
   Pick<Namespace<T>, (typeof allowedMethods)[number]>;
 
 export class NamespaceBuilder<T extends SpecificMethods<T>> {
-  private actions: ActionType<T> = new Map();
-  private subscribers: Set<SubscriberCb> = new Set();
-  private useCallbacks = new Map<keyof T, AnyFunction>();
+  #namespaceActions: ActionType<T> = new Map();
+  #subscribers: Set<SubscriberCb> = new Set();
+  #useCallbacks = new Map<keyof T, AnyFunction>();
   #configs: Partial<NamespaceConfig> = {};
 
   config<K extends keyof NamespaceConfig>(name: K, value: NamespaceConfig[K]) {
@@ -36,21 +36,54 @@ export class NamespaceBuilder<T extends SpecificMethods<T>> {
     return this;
   }
 
-  action<K extends keyof T>(name: K, cb: FunctionWithContext<T[K], Context>) {
-    this.actions.set(name, cb);
+  /*
+   * TODO: `context` wont be inferred correctly if the `cb` hasn't any params. I was testing it in a unit test.
+   * Test case:
+   * builder.action([
+   *  [
+   *    'disconnect',
+   *    (context) => {
+   *    },
+   *  ],
+   */
+  action<K extends keyof T>(
+    action: (readonly [K, FunctionWithContext<T[K], Context>])[]
+  ): NamespaceBuilder<T>;
+
+  action<K extends keyof T>(
+    action: K,
+    cb: FunctionWithContext<T[K], Context>
+  ): NamespaceBuilder<T>;
+
+  action<K extends keyof T>(
+    action: (readonly [K, FunctionWithContext<T[K], Context>])[] | K,
+    cb?: FunctionWithContext<T[K], Context>
+  ) {
+    if (Array.isArray(action)) {
+      action.forEach(([name, cb]) => {
+        this.#namespaceActions.set(name, cb);
+      });
+      return this;
+    }
+    if (!!cb) {
+      this.#namespaceActions.set(action, cb);
+    }
     return this;
   }
 
-  use<K extends keyof T>(list: { name: K; cb: AnyFunction }[]) {
-    list.forEach((action) => {
-      this.useCallbacks.set(action.name, action.cb);
+  // TODO: Instead of AnyFunction we should somehow infer the return type of T[K] and consider it as the args of `K`
+  use<K extends keyof T>(
+    list: (readonly [K, FunctionWithContext<AnyFunction, Context>])[]
+  ) {
+    list.forEach(([name, cb]) => {
+      this.#useCallbacks.set(name, cb);
     });
 
     return this;
   }
 
   subscriber(cb: SubscriberCb) {
-    this.subscribers.add(cb);
+    this.#subscribers.add(cb);
     return this;
   }
 
@@ -81,9 +114,9 @@ export class NamespaceBuilder<T extends SpecificMethods<T>> {
   #buildApi(config: NamespaceConfig) {
     const namespace = new Namespace<T>(
       config,
-      this.actions,
-      this.subscribers,
-      this.useCallbacks
+      this.#namespaceActions,
+      this.#subscribers,
+      this.#useCallbacks
     );
 
     /*
@@ -124,6 +157,7 @@ export class NamespaceBuilder<T extends SpecificMethods<T>> {
         throw new Error('You can not set anything on this object.');
       },
     });
+
     return api as unknown as NamespaceApi<T>;
   }
 }

@@ -9,6 +9,8 @@ import { createStore, Hub } from '@rango-dev/wallets-core';
 import { ChainId } from 'caip';
 import { useEffect, useRef, useState } from 'react';
 
+import { checkHubStateAndTriggerEvents } from './adapter';
+
 // import { checkHubStateAndTriggerEvents } from './adapter';
 
 export type UseV1Props = Omit<ProviderProps, 'providers'> & {
@@ -58,7 +60,16 @@ export function useV1(props: UseV1Props): ProviderContext {
      */
     document.addEventListener('readystatechange', initHubWhenPageIsReady);
 
-    store.current.subscribe(() => {
+    store.current.subscribe((curr, prev) => {
+      console.log('[store][subscribe]', prev, curr);
+      if (props.onUpdateState) {
+        checkHubStateAndTriggerEvents(
+          hub.current,
+          curr,
+          prev,
+          props.onUpdateState
+        );
+      }
       rerender(currentRender + 1);
     });
   }, []);
@@ -76,10 +87,6 @@ export function useV1(props: UseV1Props): ProviderContext {
       }
 
       if (!network) {
-        const timeout = 100;
-        setTimeout(() => {
-          rerender(currentRender + 1);
-        }, timeout);
         return hub.current.runAll('connect');
       }
 
@@ -102,8 +109,17 @@ export function useV1(props: UseV1Props): ProviderContext {
       // @ts-ignore-next-line
       return result.connect(network);
     },
-    disconnect(_type) {
-      throw new Error('not implemented');
+    async disconnect(type) {
+      const wallet = hub.current.get(type);
+      if (!wallet) {
+        throw new Error(
+          `You should add ${type} to provider first then call 'connect'.`
+        );
+      }
+
+      wallet.getAll().forEach((namespace) => {
+        return namespace.disconnect();
+      });
     },
     disconnectAll() {
       throw new Error('not implemented');

@@ -1,14 +1,14 @@
 import { common } from './namespaces/common';
 import { solana } from './namespaces/solana';
 
-export type { EventHandler, State, Options } from './v0/wallet';
+export type { EventHandler, LegacyState, Options } from './v0/wallet';
 export * from './v0/types';
 
 export { Persistor } from './v0/persistor';
 export * from './v0/helpers';
 export { default } from './v0/wallet';
 
-export type { Store } from './hub';
+export type { Store, State } from './hub';
 export {
   Hub,
   Provider,
@@ -16,6 +16,7 @@ export {
   solana as solanaUse,
   evm as evmUse,
   createStore,
+  guessNamespacesStateSelector,
 } from './hub';
 export { NamespaceBuilder, ProviderBuilder } from './builders';
 export type { NamespaceApi } from './builders';

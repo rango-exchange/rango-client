@@ -1,8 +1,11 @@
+import type { State as InternalProviderState } from './provider';
 import type { StoreApi } from 'zustand/vanilla';
 
 import { produce } from 'immer';
 import { type StateCreator } from 'zustand';
 import { createStore as createZustandStore } from 'zustand/vanilla';
+
+import { guessNamespacesStateSelector } from './selectors';
 
 // TODO: unknown means it hasn't been completed yet.
 
@@ -42,12 +45,12 @@ interface ProviderActions {
   ) => void;
 }
 
-type ProvidersStateCreator = StateCreator<
-  State,
-  [],
-  [],
-  ProviderState & ProviderActions
->;
+interface ProviderSelectors {
+  guessNamespacesState: (id: string) => InternalProviderState;
+}
+
+type ProviderStore = ProviderState & ProviderActions & ProviderSelectors;
+type ProvidersStateCreator = StateCreator<State, [], [], ProviderStore>;
 
 const providers: ProvidersStateCreator = (set, get) => ({
   list: {},
@@ -76,6 +79,9 @@ const providers: ProvidersStateCreator = (set, get) => ({
         state.providers.list[id].data[key] = value;
       })
     );
+  },
+  guessNamespacesState: (providerId: string): InternalProviderState => {
+    return guessNamespacesStateSelector(get(), providerId);
   },
 });
 
@@ -112,12 +118,8 @@ interface NamespaceActions {
   ) => void;
 }
 
-type NamespaceStateCreator = StateCreator<
-  State,
-  [],
-  [],
-  NamespaceState & NamespaceActions
->;
+type NamespaceStore = NamespaceState & NamespaceActions;
+type NamespaceStateCreator = StateCreator<State, [], [], NamespaceStore>;
 
 const namespaces: NamespaceStateCreator = (set, get) => ({
   list: {},
@@ -168,10 +170,10 @@ const hub: HubStateCreator = () => ({
 
 /************ State ************/
 
-interface State {
+export interface State {
   hub: HubState;
-  providers: ProviderState & ProviderActions;
-  namespaces: NamespaceState & NamespaceActions;
+  providers: ProviderStore;
+  namespaces: NamespaceStore;
 }
 
 export type Store = StoreApi<State>;

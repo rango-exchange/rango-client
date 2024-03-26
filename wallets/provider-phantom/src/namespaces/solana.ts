@@ -1,10 +1,6 @@
 import type { SolanaActions } from '@rango-dev/wallets-core';
 
-import {
-  NamespaceBuilder,
-  namespaces,
-  solanaUse,
-} from '@rango-dev/wallets-core';
+import { NamespaceBuilder, namespaces } from '@rango-dev/wallets-core';
 import { getSolanaAccounts } from '@rango-dev/wallets-shared';
 
 import { WALLET_ID } from '../constants';
@@ -28,15 +24,8 @@ const solana = new NamespaceBuilder<SolanaActions>()
     console.log('you are a trader?', result);
     return result.accounts;
   })
-  .use(solanaUse)
-  .use([
-    {
-      name: 'connect',
-      cb: function () {
-        console.log(this);
-      },
-    },
-  ])
+  .action(namespaces.solana.actions.recommended)
+  .use(namespaces.solana.and.recommended)
   .build();
 
 namespaces.common.utils.apply(

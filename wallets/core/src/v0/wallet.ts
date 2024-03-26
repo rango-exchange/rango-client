@@ -11,7 +11,7 @@ export type EventHandler = (
   type: WalletType,
   event: Events,
   value: any,
-  coreState: State,
+  coreState: LegacyState,
   info: EventInfo
 ) => void;
 
@@ -20,7 +20,7 @@ export type EventInfo = {
   isContractWallet: boolean;
 };
 
-export interface State {
+export interface LegacyState {
   connected: boolean;
   connecting: boolean;
   reachable: boolean;
@@ -37,7 +37,7 @@ export interface Options {
 class Wallet<InstanceType = any> {
   public provider: InstanceType | null;
   private actions: WalletActions;
-  private state: State;
+  private state: LegacyState;
   private options: Options;
   private info: EventInfo;
   private cleanupSubscribe?: (() => void) | void;
@@ -356,11 +356,11 @@ class Wallet<InstanceType = any> {
     this.options.handler = handler;
   }
 
-  getState(): State {
+  getState(): LegacyState {
     return this.state;
   }
 
-  updateState(states: Partial<State>) {
+  updateState(states: Partial<LegacyState>) {
     /*
      * We will notify handler after updating all the states.
      * Because when we call `handler` it will has latest states.

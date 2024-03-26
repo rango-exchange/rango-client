@@ -8,7 +8,7 @@ import type Wallet from '@rango-dev/wallets-core';
 import type {
   Options,
   EventHandler as WalletEventHandler,
-  State as WalletState,
+  LegacyState as WalletState,
 } from '@rango-dev/wallets-core';
 import type { WalletConfig, WalletType } from '@rango-dev/wallets-shared';
 

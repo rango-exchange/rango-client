@@ -32,7 +32,7 @@ describe('predefined uses should works correctly', () => {
     blockchainBuilder.action('connect', connect);
 
     const useConnectFn = vi.fn(useConnect);
-    blockchainBuilder.use([{ name: 'connect', cb: useConnectFn }]);
+    blockchainBuilder.use([['connect', useConnectFn]]);
     const blockchain = blockchainBuilder.build();
     blockchain.store(store);
     blockchain.connect();

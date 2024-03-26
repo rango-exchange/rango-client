@@ -21,16 +21,23 @@ function Provider(props: ProviderProps) {
     },
     async connect(type: string, network: string | undefined) {
       if (v1Providers.find((provider) => provider.id === type)) {
-        return v1Api.connect(type, network);
+        return await v1Api.connect(type, network);
       }
 
       return await v0Api.connect(type, network);
     },
     async disconnect(type: string) {
+      if (v1Providers.find((provider) => provider.id === type)) {
+        return await v1Api.disconnect(type);
+      }
+
       return await v0Api.disconnect(type);
     },
     async disconnectAll() {
-      return await v0Api.disconnectAll();
+      return await Promise.allSettled([
+        v1Api.disconnectAll(),
+        v0Api.disconnectAll(),
+      ]);
     },
     getSigners(type: string) {
       return v0Api.getSigners(type);

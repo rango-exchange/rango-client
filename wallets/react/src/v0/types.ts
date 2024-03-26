@@ -4,7 +4,7 @@ import type {
   WalletActions,
   WalletConfig,
   EventHandler as WalletEventHandler,
-  State as WalletState,
+  LegacyState as WalletState,
 } from '@rango-dev/wallets-core';
 import type {
   Network,
