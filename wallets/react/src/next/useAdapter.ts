@@ -9,7 +9,7 @@ import { createStore, Hub } from '@rango-dev/wallets-core';
 import { ChainId } from 'caip';
 import { useEffect, useRef, useState } from 'react';
 
-import { checkHubStateAndTriggerEvents } from './adapter';
+import { checkHubStateAndTriggerEvents } from './utils';
 
 export type UseAdapterProps = Omit<ProviderProps, 'providers'> & {
   providers: NextProviderInterface[];
@@ -180,7 +180,7 @@ export function useAdapter(props: UseAdapterProps): ProviderContext {
       throw new Error('not implemented');
     },
     state(type) {
-      // TODO: We can use `guessNamespacesStateSelector` here as well.
+      // TODO: We can use `guessProviderStateSelector` here as well.
       const result = hub.current.state();
       const provider = result[type];
 

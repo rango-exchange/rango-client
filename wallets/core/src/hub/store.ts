@@ -5,7 +5,10 @@ import { produce } from 'immer';
 import { type StateCreator } from 'zustand';
 import { createStore as createZustandStore } from 'zustand/vanilla';
 
-import { guessNamespacesStateSelector } from './selectors';
+import {
+  guessProviderStateSelector,
+  namespaceStateSelector,
+} from './selectors';
 
 // TODO: unknown means it hasn't been completed yet.
 
@@ -81,7 +84,7 @@ const providers: ProvidersStateCreator = (set, get) => ({
     );
   },
   guessNamespacesState: (providerId: string): InternalProviderState => {
-    return guessNamespacesStateSelector(get(), providerId);
+    return guessProviderStateSelector(get(), providerId);
   },
 });
 
@@ -117,8 +120,11 @@ interface NamespaceActions {
     value: NamespaceData[K]
   ) => void;
 }
+interface NamespaceSelectors {
+  getNamespaceData(storeId: string): NamespaceData;
+}
 
-type NamespaceStore = NamespaceState & NamespaceActions;
+type NamespaceStore = NamespaceState & NamespaceActions & NamespaceSelectors;
 type NamespaceStateCreator = StateCreator<State, [], [], NamespaceStore>;
 
 const namespaces: NamespaceStateCreator = (set, get) => ({
@@ -151,6 +157,9 @@ const namespaces: NamespaceStateCreator = (set, get) => ({
         state.namespaces.list[id].data[key] = value;
       })
     );
+  },
+  getNamespaceData(storeId) {
+    return namespaceStateSelector(get(), storeId);
   },
 });
 

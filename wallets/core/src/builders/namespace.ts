@@ -22,8 +22,13 @@ const allowedMethods = [
   'store',
 ] as const;
 
+type PublicValues = {
+  namespace: string;
+};
+
 export type NamespaceApi<T extends SpecificMethods<T>> = T &
-  Pick<Namespace<T>, (typeof allowedMethods)[number]>;
+  Pick<Namespace<T>, (typeof allowedMethods)[number]> &
+  PublicValues;
 
 export class NamespaceBuilder<T extends SpecificMethods<T>> {
   #namespaceActions: ActionType<T> = new Map();
@@ -87,7 +92,7 @@ export class NamespaceBuilder<T extends SpecificMethods<T>> {
     return this;
   }
 
-  build() {
+  build(): NamespaceApi<T> {
     const requiredConfigs: (keyof NamespaceConfig)[] = [
       'namespace',
       'providerId',

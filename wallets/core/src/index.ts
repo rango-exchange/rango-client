@@ -16,7 +16,8 @@ export {
   solana as solanaUse,
   evm as evmUse,
   createStore,
-  guessNamespacesStateSelector,
+  guessProviderStateSelector,
+  namespaceStateSelector,
 } from './hub';
 export { NamespaceBuilder, ProviderBuilder } from './builders';
 export type { NamespaceApi } from './builders';

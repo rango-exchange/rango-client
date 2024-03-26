@@ -79,13 +79,13 @@ describe('providers', () => {
     builder.add('evm', evm.build()).add('solana', solana.build());
 
     const wallet = builder.build();
-    const result = await wallet.get('solana').connect();
+    const result = await wallet.get('solana')?.connect();
 
     expect(result).toStrictEqual([
       '0x000000000000000000000000000000000000dead',
     ]);
     // Since we didn't add any action regarding connect for `evm`
-    expect(() => wallet.get('evm').connect('0x1')).toThrowError();
+    expect(() => wallet.get('evm')?.connect('0x1')).toThrowError();
   });
 
   test('sets config properly', () => {
@@ -174,7 +174,7 @@ describe('providers', () => {
 
     // Adding `after` then make it will run
     wallet.before('connect', before);
-    result.connect('whatever');
+    result?.connect('whatever');
 
     expect(connect).toBeCalledTimes(1);
     expect(before).toBeCalledTimes(1);
@@ -182,7 +182,7 @@ describe('providers', () => {
 
     // Adding `after` then make it will run
     wallet.after('connect', after);
-    result.connect('whatever');
+    result?.connect('whatever');
     expect(connect).toBeCalledTimes(2);
     expect(after).toBeCalledTimes(1);
 

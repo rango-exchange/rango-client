@@ -7,7 +7,7 @@
 import type { State } from '.';
 import type { State as InternalProviderState } from './provider';
 
-export function guessNamespacesStateSelector(
+export function guessProviderStateSelector(
   state: State,
   providerId: string
 ): InternalProviderState {
@@ -36,4 +36,8 @@ export function guessNamespacesStateSelector(
     connected,
     connecting,
   };
+}
+
+export function namespaceStateSelector(state: State, storeId: string) {
+  return state.namespaces.list[storeId].data;
 }

@@ -4,6 +4,8 @@ import type {
   FunctionWithContext,
 } from '../namespaces/common/types';
 
+import { isAsync } from './helpers';
+
 type ActionName<K> = K | Omit<K, string>;
 
 export type SubscriberCb = () => () => void;
@@ -32,18 +34,7 @@ interface Config {
  * But solana namespace only have: `.connect()`.
  * This actions will be passed to this generic.
  */
-export type SpecificMethods<T> = Record<
-  keyof T extends string ? keyof T : never,
-  AnyFunction
->;
-
-/**
- * Note: This only works native async, if we are going to support for old transpilers like Babel.
- */
-// eslint-disable-next-line @typescript-eslint/ban-types
-function isAsync(fn: Function) {
-  return fn.constructor.name === 'AsyncFunction';
-}
+export type SpecificMethods<T> = Record<keyof T, AnyFunction>;
 
 // TODO: Show a warning if subscribers and subscriberCleanUps doesn't match and call correctly.
 class Namespace<T extends SpecificMethods<T>> {
@@ -86,7 +77,7 @@ class Namespace<T extends SpecificMethods<T>> {
     };
 
     const getState: GetState = <K extends keyof State>(name?: K) => {
-      const state: State = store.getState().namespaces.list[id].data;
+      const state: State = store.getState().namespaces.getNamespaceData(id);
 
       if (!name) {
         return state;

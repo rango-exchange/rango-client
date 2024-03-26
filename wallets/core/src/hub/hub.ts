@@ -78,10 +78,12 @@ export class Hub {
 
       // Blockchain instances can have their own `action` as well. we will call them as well.
       const blockchains = provider.getAll().values();
-      // blockchains: { id: keyof CommonBlockchains; blockchain: unknown }[];
       for (const blockchain of blockchains) {
-        if (blockchain[action]) {
-          const result = blockchain[action]();
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore-next-line
+        const actionFn = blockchain[action];
+        if (actionFn) {
+          const result = actionFn();
           providerOutput.blockchains.push(result);
         }
       }
