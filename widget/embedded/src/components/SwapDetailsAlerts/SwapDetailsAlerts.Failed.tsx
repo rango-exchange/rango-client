@@ -13,6 +13,11 @@ export function FailedAlert(props: FailedAlertsProps) {
     <Alert
       type="error"
       title={message.shortMessage}
+      containerStyles={{
+        '& .footer': {
+          paddingTop: '$0',
+        },
+      }}
       action={
         message.detailedMessage.content && (
           <IconButton
