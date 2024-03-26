@@ -8,3 +8,4 @@ export {
   guessProviderStateSelector,
   namespaceStateSelector,
 } from './selectors';
+export { generateStoreId } from './helpers';

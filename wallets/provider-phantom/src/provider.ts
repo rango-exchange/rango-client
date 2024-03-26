@@ -5,12 +5,12 @@ import { phantom as phantomInstance } from './legacy/helpers';
 import { solana } from './namespaces/solana';
 
 const provider = new ProviderBuilder(WALLET_ID)
-  .init(function () {
-    const [, setState] = this.state();
+  .init(function (context) {
+    const [, setState] = context.state();
 
     if (phantomInstance()) {
       setState('installed', true);
-      console.debug('[phantom] instance detected.', this);
+      console.debug('[phantom] instance detected.', context);
     }
   })
   .config('info', info)

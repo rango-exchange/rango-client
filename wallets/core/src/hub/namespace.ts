@@ -4,7 +4,7 @@ import type {
   FunctionWithContext,
 } from '../namespaces/common/types';
 
-import { isAsync } from './helpers';
+import { generateStoreId, isAsync } from './helpers';
 
 type ActionName<K> = K | Omit<K, string>;
 
@@ -222,7 +222,7 @@ class Namespace<T extends SpecificMethods<T>> {
   }
 
   #storeId() {
-    return `${this.#configs.providerId}$$${this.#configs.namespace}`;
+    return generateStoreId(this.#configs.providerId, this.#configs.namespace);
   }
 
   #context(): Context {

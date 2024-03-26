@@ -1,3 +1,4 @@
+import { generateStoreId } from './hub';
 import { common } from './namespaces/common';
 import { solana } from './namespaces/solana';
 
@@ -28,4 +29,8 @@ export type { EvmActions } from './namespaces/evm/types';
 export const namespaces = {
   solana: solana,
   common: common,
+};
+
+export const helpers = {
+  generateStoreId,
 };

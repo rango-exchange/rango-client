@@ -11,7 +11,9 @@ import type { CosmosActions } from '../namespaces/cosmos/types';
 import type { EvmActions } from '../namespaces/evm/types';
 import type { SolanaActions } from '../namespaces/solana/types';
 
-export type Context = {};
+export type Context = {
+  state: () => [GetState, SetState];
+};
 export type State = Omit<V0State, 'reachable' | 'accounts' | 'network'>;
 type SetState = <K extends keyof Pick<State, 'installed'>>(
   name: K,
@@ -221,8 +223,10 @@ export class Provider {
     });
   }
 
-  #context() {
-    return {};
+  #context(): Context {
+    return {
+      state: this.state.bind(this),
+    };
   }
 }
 

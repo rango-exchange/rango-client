@@ -5,3 +5,7 @@
 export function isAsync(fn: Function) {
   return fn.constructor.name === 'AsyncFunction';
 }
+
+export function generateStoreId(providerId: string, namespace: string) {
+  return `${providerId}$$${namespace}`;
+}
