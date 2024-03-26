@@ -1,13 +1,13 @@
 /* eslint-disable @typescript-eslint/ban-types */
 import type { Context } from './namespace';
 import type { ProviderConfig, Store } from './store';
+import type { LegacyState as V0State } from '../legacy/wallet';
 import type {
   AnyFunction,
   FunctionWithContext,
 } from '../namespaces/common/types';
 import type { EvmActions } from '../namespaces/evm/types';
 import type { SolanaActions } from '../namespaces/solana/types';
-import type { LegacyState as V0State } from '../v0/wallet';
 
 export type State = Omit<V0State, 'reachable' | 'accounts' | 'network'>;
 type SetState = <K extends keyof Pick<State, 'installed'>>(

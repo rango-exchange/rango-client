@@ -137,5 +137,5 @@ export type WalletProviders = Map<
   }
 >;
 
-export type ProviderInterface = { config: WalletConfig } & WalletActions;
-export type ProviderV1Interface = Provider;
+export type LegacyProviderInterface = { config: WalletConfig } & WalletActions;
+export type NextProviderInterface = Provider;

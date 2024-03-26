@@ -1,8 +1,8 @@
 import type {
+  NextProviderInterface,
   ProviderContext,
   ProviderProps,
-  ProviderV1Interface,
-} from '../v0/types';
+} from '../legacy/types';
 import type { WalletInfo } from '@rango-dev/wallets-shared';
 
 import { createStore, Hub } from '@rango-dev/wallets-core';
@@ -11,12 +11,10 @@ import { useEffect, useRef, useState } from 'react';
 
 import { checkHubStateAndTriggerEvents } from './adapter';
 
-// import { checkHubStateAndTriggerEvents } from './adapter';
-
-export type UseV1Props = Omit<ProviderProps, 'providers'> & {
-  providers: ProviderV1Interface[];
+export type UseAdapterProps = Omit<ProviderProps, 'providers'> & {
+  providers: NextProviderInterface[];
 };
-export function useV1(props: UseV1Props): ProviderContext {
+export function useAdapter(props: UseAdapterProps): ProviderContext {
   const store = useRef(createStore());
   const hub = useRef(
     new Hub({
@@ -182,9 +180,9 @@ export function useV1(props: UseV1Props): ProviderContext {
       throw new Error('not implemented');
     },
     state(type) {
+      // TODO: We can use `guessNamespacesStateSelector` here as well.
       const result = hub.current.state();
       const provider = result[type];
-      console.log({ type, result });
 
       const coreState = {
         connected: provider.connected,

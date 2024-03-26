@@ -1,6 +1,6 @@
 import type {
-  ProviderInterface,
-  ProviderV1Interface,
+  LegacyProviderInterface,
+  NextProviderInterface,
   WalletActions,
   WalletConfig,
   EventHandler as WalletEventHandler,
@@ -49,7 +49,7 @@ export type ProviderProps = PropsWithChildren<{
   onUpdateState?: WalletEventHandler;
   allBlockChains?: BlockchainMeta[];
   autoConnect?: boolean;
-  providers: (ProviderInterface | ProviderV1Interface)[];
+  providers: (LegacyProviderInterface | NextProviderInterface)[];
 }>;
 
 export enum Events {
@@ -74,5 +74,9 @@ export type WalletProviders = Map<
   }
 >;
 
-export type { ProviderV1Interface } from '@rango-dev/wallets-core';
-export type { ProviderInterface, WalletActions, WalletConfig };
+export type { NextProviderInterface } from '@rango-dev/wallets-core';
+export type {
+  LegacyProviderInterface as ProviderInterface,
+  WalletActions,
+  WalletConfig,
+};

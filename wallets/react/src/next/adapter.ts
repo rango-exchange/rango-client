@@ -1,4 +1,4 @@
-import type { ProviderInterface } from '../v0/types';
+import type { ProviderInterface } from '../legacy/types';
 import type {
   Hub,
   Provider,
@@ -86,7 +86,6 @@ export function providerAdapter(hubProvider: Provider): ProviderInterface {
     switchNetwork: () => {
       throw new Error('Not implemented');
     },
-    // v1: hubProvider,
   };
 }
 

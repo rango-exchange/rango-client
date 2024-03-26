@@ -25,7 +25,7 @@ export type UseV0Props = Omit<ProviderProps, 'providers'> & {
   providers: ProviderInterface[];
 };
 
-export function useV0(props: UseV0Props): ProviderContext {
+export function useLegacy(props: UseV0Props): ProviderContext {
   const [providersState, dispatch] = useReducer(state_reducer, {});
   const autoConnectInitiated = useRef(false);
 

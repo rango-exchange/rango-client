@@ -1,12 +1,12 @@
 import { common } from './namespaces/common';
 import { solana } from './namespaces/solana';
 
-export type { EventHandler, LegacyState, Options } from './v0/wallet';
-export * from './v0/types';
+export type { EventHandler, LegacyState, Options } from './legacy/wallet';
+export * from './legacy/types';
 
-export { Persistor } from './v0/persistor';
-export * from './v0/helpers';
-export { default } from './v0/wallet';
+export { Persistor } from './legacy/persistor';
+export * from './legacy/helpers';
+export { default } from './legacy/wallet';
 
 export type { Store, State } from './hub';
 export {

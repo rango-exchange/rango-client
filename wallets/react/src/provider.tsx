@@ -1,66 +1,85 @@
-import type { ProviderProps } from './v0/types';
+import type { ProviderProps } from './legacy/types';
 
 import React from 'react';
 
-import { WalletContext } from './v0/context';
-import { useV0 } from './v0/useV0';
-import { isV0Provider, isV1Provider } from './v1/helpers';
-import { useV1 } from './v1/useV1';
+import { WalletContext } from './legacy/context';
+import { useLegacy } from './legacy/useLegacy';
+import { isLegacyProvider, isNextProvider } from './next/helpers';
+import { useAdapter } from './next/useAdapter';
 
 function Provider(props: ProviderProps) {
   const { providers, ...restProps } = props;
-  const v0Providers = providers.filter(isV0Provider);
-  const v1Providers = providers.filter(isV1Provider);
-  const v0Api = useV0({ ...restProps, providers: v0Providers });
-  const v1Api = useV1({ ...restProps, providers: v1Providers });
+  const legacyProviders = providers.filter(isLegacyProvider);
+  const nextProviders = providers.filter(isNextProvider);
+
+  // For gradual migrating and backward compatibility, we are supporting new version by an adapter besides of the old one.
+  const legacyApi = useLegacy({ ...restProps, providers: legacyProviders });
+  const nextApi = useAdapter({ ...restProps, providers: nextProviders });
 
   // eslint-disable-next-line react/jsx-no-constructed-context-values
   const api = {
     canSwitchNetworkTo(type: string, network: string) {
-      return v0Api.canSwitchNetworkTo(type, network);
+      if (nextProviders.find((provider) => provider.id === type)) {
+        throw new Error(
+          "New version doesn't have support for this method yet."
+        );
+      }
+      return legacyApi.canSwitchNetworkTo(type, network);
     },
     async connect(type: string, network: string | undefined) {
-      if (v1Providers.find((provider) => provider.id === type)) {
-        return await v1Api.connect(type, network);
+      if (nextProviders.find((provider) => provider.id === type)) {
+        return await nextApi.connect(type, network);
       }
 
-      return await v0Api.connect(type, network);
+      return await legacyApi.connect(type, network);
     },
     async disconnect(type: string) {
-      if (v1Providers.find((provider) => provider.id === type)) {
-        return await v1Api.disconnect(type);
+      if (nextProviders.find((provider) => provider.id === type)) {
+        return await nextApi.disconnect(type);
       }
 
-      return await v0Api.disconnect(type);
+      return await legacyApi.disconnect(type);
     },
     async disconnectAll() {
       return await Promise.allSettled([
-        v1Api.disconnectAll(),
-        v0Api.disconnectAll(),
+        nextApi.disconnectAll(),
+        legacyApi.disconnectAll(),
       ]);
     },
     getSigners(type: string) {
-      return v0Api.getSigners(type);
+      if (nextProviders.find((provider) => provider.id === type)) {
+        throw new Error(
+          "New version doesn't have support for this method yet."
+        );
+      }
+      return legacyApi.getSigners(type);
     },
     getWalletInfo(type: string) {
-      if (v1Providers.find((provider) => provider.id === type)) {
-        return v1Api.getWalletInfo(type);
+      if (nextProviders.find((provider) => provider.id === type)) {
+        return nextApi.getWalletInfo(type);
       }
 
-      return v0Api.getWalletInfo(type);
+      return legacyApi.getWalletInfo(type);
     },
     providers() {
-      return v0Api.providers();
+      // TODO: use nextApi here.
+      return legacyApi.providers();
     },
     state(type: string) {
-      if (v1Providers.find((provider) => provider.id === type)) {
-        return v1Api.state(type);
+      if (nextProviders.find((provider) => provider.id === type)) {
+        return nextApi.state(type);
       }
 
-      return v0Api.state(type);
+      return legacyApi.state(type);
     },
     async suggestAndConnect(type: string, network: string) {
-      return await v0Api.suggestAndConnect(type, network);
+      if (nextProviders.find((provider) => provider.id === type)) {
+        throw new Error(
+          "New version doesn't have support for this method yet."
+        );
+      }
+
+      return await legacyApi.suggestAndConnect(type, network);
     },
   };
 

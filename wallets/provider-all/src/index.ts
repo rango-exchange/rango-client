@@ -1,6 +1,6 @@
 import type {
-  ProviderInterface,
-  ProviderV1Interface,
+  LegacyProviderInterface,
+  NextProviderInterface,
 } from '@rango-dev/wallets-core';
 
 import * as argentx from '@rango-dev/provider-argentx';
@@ -35,36 +35,36 @@ type Enviroments = Record<string, Record<string, string>>;
 
 export const allProviders = (
   enviroments?: Enviroments
-): (ProviderInterface | ProviderV1Interface)[] => {
+): (LegacyProviderInterface | NextProviderInterface)[] => {
   walletconnect2.init(enviroments?.walletconnect2 || {});
 
   return [
-    safe satisfies ProviderInterface,
-    defaultInjected satisfies ProviderInterface,
-    metamask satisfies ProviderInterface,
-    walletconnect2 satisfies ProviderInterface,
-    keplr satisfies ProviderInterface,
+    safe satisfies LegacyProviderInterface,
+    defaultInjected satisfies LegacyProviderInterface,
+    metamask satisfies LegacyProviderInterface,
+    walletconnect2 satisfies LegacyProviderInterface,
+    keplr satisfies LegacyProviderInterface,
     phantom,
-    argentx satisfies ProviderInterface,
-    tronLink satisfies ProviderInterface,
-    trustwallet satisfies ProviderInterface,
-    bitget satisfies ProviderInterface,
-    enkrypt satisfies ProviderInterface,
-    xdefi satisfies ProviderInterface,
-    clover satisfies ProviderInterface,
-    safepal satisfies ProviderInterface,
-    brave satisfies ProviderInterface,
-    coin98 satisfies ProviderInterface,
-    coinbase satisfies ProviderInterface,
-    cosmostation satisfies ProviderInterface,
-    exodus satisfies ProviderInterface,
-    mathwallet satisfies ProviderInterface,
-    okx satisfies ProviderInterface,
-    tokenpocket satisfies ProviderInterface,
-    halo satisfies ProviderInterface,
-    leapCosmos satisfies ProviderInterface,
-    frontier satisfies ProviderInterface,
-    taho satisfies ProviderInterface,
-    braavos satisfies ProviderInterface,
+    argentx satisfies LegacyProviderInterface,
+    tronLink satisfies LegacyProviderInterface,
+    trustwallet satisfies LegacyProviderInterface,
+    bitget satisfies LegacyProviderInterface,
+    enkrypt satisfies LegacyProviderInterface,
+    xdefi satisfies LegacyProviderInterface,
+    clover satisfies LegacyProviderInterface,
+    safepal satisfies LegacyProviderInterface,
+    brave satisfies LegacyProviderInterface,
+    coin98 satisfies LegacyProviderInterface,
+    coinbase satisfies LegacyProviderInterface,
+    cosmostation satisfies LegacyProviderInterface,
+    exodus satisfies LegacyProviderInterface,
+    mathwallet satisfies LegacyProviderInterface,
+    okx satisfies LegacyProviderInterface,
+    tokenpocket satisfies LegacyProviderInterface,
+    halo satisfies LegacyProviderInterface,
+    leapCosmos satisfies LegacyProviderInterface,
+    frontier satisfies LegacyProviderInterface,
+    taho satisfies LegacyProviderInterface,
+    braavos satisfies LegacyProviderInterface,
   ];
 };
