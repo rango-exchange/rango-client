@@ -24,7 +24,7 @@ export const AlertFooter = styled('div', {
   variants: {
     open: {
       true: {
-        maxHeight: '20px',
+        maxHeight: '$40',
       },
     },
   },

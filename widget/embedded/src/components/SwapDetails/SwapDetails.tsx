@@ -240,7 +240,8 @@ export function SwapDetails(props: SwapDetailsProps) {
                 },
               })
             : ''
-        }`;
+        }
+        ${stepMessage.detailedMessage.content || stepMessage.shortMessage}`;
 
   return (
     <Layout
