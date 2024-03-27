@@ -29,7 +29,11 @@ export function Tooltip(props: PropsWithChildren<PropTypes>) {
           <TriggerContent>{children}</TriggerContent>
         </RadixTooltip.Trigger>
         <RadixTooltip.Portal container={container}>
-          <TooltipContent align={align} side={side} sideOffset={sideOffset}>
+          <TooltipContent
+            collisionBoundary={container}
+            align={align}
+            side={side}
+            sideOffset={sideOffset}>
             <TooltipTypography variant="label" size="medium" color={color}>
               {content}
             </TooltipTypography>

@@ -69,6 +69,12 @@ export function Slippage() {
           variant="contained"
           value={customSlippage || ''}
           color="dark"
+          onKeyDown={(event) => {
+            const disallowedKeys = ['-', '+'];
+            if (disallowedKeys.includes(event.key)) {
+              event.preventDefault();
+            }
+          }}
           onChange={(event) => {
             const value = event.target.value;
             const parsedValue = parseFloat(value);

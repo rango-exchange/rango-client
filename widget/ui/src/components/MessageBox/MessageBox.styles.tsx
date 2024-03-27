@@ -9,6 +9,9 @@ export const Container = styled('div', {
 
 export const Description = styled('div', {
   textAlign: 'center',
+  '& ._typography': {
+    whiteSpace: 'pre-line',
+  },
 });
 
 export const IconHighlight = styled('div', {

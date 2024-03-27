@@ -20,7 +20,7 @@ import {
 } from './Modal.styles';
 
 const CLOSED_DELAY = 600;
-const OPEN_DELAY = 10;
+const OPEN_DELAY = 100;
 
 export function Modal(props: PropsWithChildren<PropTypes>) {
   const {
