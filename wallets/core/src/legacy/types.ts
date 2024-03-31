@@ -1,5 +1,4 @@
 import type { LegacyState as WalletState } from './wallet';
-import type { Provider } from '../hub';
 import type {
   Network,
   WalletInfo,
@@ -138,4 +137,3 @@ export type WalletProviders = Map<
 >;
 
 export type LegacyProviderInterface = { config: WalletConfig } & WalletActions;
-export type NextProviderInterface = Provider;

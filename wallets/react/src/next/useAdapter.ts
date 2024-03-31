@@ -1,8 +1,5 @@
-import type {
-  NextProviderInterface,
-  ProviderContext,
-  ProviderProps,
-} from '../legacy/types';
+import type { ProviderContext, ProviderProps } from '../legacy/types';
+import type { V1 } from '@rango-dev/wallets-core';
 import type { WalletInfo } from '@rango-dev/wallets-shared';
 
 import { createStore, Hub } from '@rango-dev/wallets-core';
@@ -12,7 +9,7 @@ import { useEffect, useRef, useState } from 'react';
 import { checkHubStateAndTriggerEvents } from './utils';
 
 export type UseAdapterProps = Omit<ProviderProps, 'providers'> & {
-  providers: NextProviderInterface[];
+  providers: V1[];
 };
 export function useAdapter(props: UseAdapterProps): ProviderContext {
   const store = useRef(createStore());

@@ -1,8 +1,4 @@
-import type {
-  LegacyProviderInterface,
-  ProviderContext,
-  ProviderProps,
-} from './types';
+import type { ProviderContext, ProviderProps, VLegacy } from './types';
 import type { WalletType } from '@rango-dev/wallets-shared';
 
 import { useEffect, useReducer, useRef } from 'react';
@@ -22,7 +18,7 @@ import {
 import { useInitializers } from './hooks';
 
 export type UseV0Props = Omit<ProviderProps, 'providers'> & {
-  providers: LegacyProviderInterface[];
+  providers: VLegacy[];
 };
 
 export function useLegacy(props: UseV0Props): ProviderContext {

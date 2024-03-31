@@ -34,3 +34,6 @@ export const namespaces = {
 export const helpers = {
   generateStoreId,
 };
+
+export { pickVersion, defineVersions } from './versions';
+export type { VLegacy, V1 } from './versions';

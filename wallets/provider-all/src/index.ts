@@ -1,7 +1,5 @@
-import type {
-  LegacyProviderInterface,
-  NextProviderInterface,
-} from '@rango-dev/wallets-core';
+import type { VLegacy } from '@rango-dev/wallets-core';
+import type { Versions } from '@rango-dev/wallets-core/dist/versions';
 
 import * as argentx from '@rango-dev/provider-argentx';
 import * as bitget from '@rango-dev/provider-bitget';
@@ -21,7 +19,7 @@ import * as leapCosmos from '@rango-dev/provider-leap-cosmos';
 import * as mathwallet from '@rango-dev/provider-math-wallet';
 import * as metamask from '@rango-dev/provider-metamask';
 import * as okx from '@rango-dev/provider-okx';
-import { provider as phantom } from '@rango-dev/provider-phantom';
+import { versions as phantom } from '@rango-dev/provider-phantom';
 import * as safe from '@rango-dev/provider-safe';
 import * as safepal from '@rango-dev/provider-safepal';
 import * as taho from '@rango-dev/provider-taho';
@@ -35,36 +33,36 @@ type Enviroments = Record<string, Record<string, string>>;
 
 export const allProviders = (
   enviroments?: Enviroments
-): (LegacyProviderInterface | NextProviderInterface)[] => {
+): (VLegacy | Versions)[] => {
   walletconnect2.init(enviroments?.walletconnect2 || {});
 
   return [
-    safe satisfies LegacyProviderInterface,
-    defaultInjected satisfies LegacyProviderInterface,
-    metamask satisfies LegacyProviderInterface,
-    walletconnect2 satisfies LegacyProviderInterface,
-    keplr satisfies LegacyProviderInterface,
+    safe satisfies VLegacy,
+    defaultInjected satisfies VLegacy,
+    metamask satisfies VLegacy,
+    walletconnect2 satisfies VLegacy,
+    keplr satisfies VLegacy,
     phantom,
-    argentx satisfies LegacyProviderInterface,
-    tronLink satisfies LegacyProviderInterface,
-    trustwallet satisfies LegacyProviderInterface,
-    bitget satisfies LegacyProviderInterface,
-    enkrypt satisfies LegacyProviderInterface,
-    xdefi satisfies LegacyProviderInterface,
-    clover satisfies LegacyProviderInterface,
-    safepal satisfies LegacyProviderInterface,
-    brave satisfies LegacyProviderInterface,
-    coin98 satisfies LegacyProviderInterface,
-    coinbase satisfies LegacyProviderInterface,
-    cosmostation satisfies LegacyProviderInterface,
-    exodus satisfies LegacyProviderInterface,
-    mathwallet satisfies LegacyProviderInterface,
-    okx satisfies LegacyProviderInterface,
-    tokenpocket satisfies LegacyProviderInterface,
-    halo satisfies LegacyProviderInterface,
-    leapCosmos satisfies LegacyProviderInterface,
-    frontier satisfies LegacyProviderInterface,
-    taho satisfies LegacyProviderInterface,
-    braavos satisfies LegacyProviderInterface,
+    argentx satisfies VLegacy,
+    tronLink satisfies VLegacy,
+    trustwallet satisfies VLegacy,
+    bitget satisfies VLegacy,
+    enkrypt satisfies VLegacy,
+    xdefi satisfies VLegacy,
+    clover satisfies VLegacy,
+    safepal satisfies VLegacy,
+    brave satisfies VLegacy,
+    coin98 satisfies VLegacy,
+    coinbase satisfies VLegacy,
+    cosmostation satisfies VLegacy,
+    exodus satisfies VLegacy,
+    mathwallet satisfies VLegacy,
+    okx satisfies VLegacy,
+    tokenpocket satisfies VLegacy,
+    halo satisfies VLegacy,
+    leapCosmos satisfies VLegacy,
+    frontier satisfies VLegacy,
+    taho satisfies VLegacy,
+    braavos satisfies VLegacy,
   ];
 };

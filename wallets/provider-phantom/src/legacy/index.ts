@@ -1,3 +1,4 @@
+import type { VLegacy } from '@rango-dev/wallets-core';
 import type {
   CanEagerConnect,
   CanSwitchNetwork,
@@ -19,14 +20,14 @@ import signer from './signer';
 
 const WALLET = WalletTypes.PHANTOM;
 
-export const config = {
+const config = {
   type: WALLET,
 };
 
-export const getInstance = phantom_instance;
-export const connect: Connect = getSolanaAccounts;
+const getInstance = phantom_instance;
+const connect: Connect = getSolanaAccounts;
 
-export const subscribe: Subscribe = ({ instance, updateAccounts, connect }) => {
+const subscribe: Subscribe = ({ instance, updateAccounts, connect }) => {
   const handleAccountsChanged = async (publicKey: string) => {
     const network = Networks.SOLANA;
     if (publicKey) {
@@ -43,9 +44,9 @@ export const subscribe: Subscribe = ({ instance, updateAccounts, connect }) => {
   };
 };
 
-export const canSwitchNetworkTo: CanSwitchNetwork = () => false;
+const canSwitchNetworkTo: CanSwitchNetwork = () => false;
 
-export const getSigners: (provider: any) => SignerFactory = signer;
+const getSigners: (provider: any) => SignerFactory = signer;
 
 export const canEagerConnect: CanEagerConnect = async ({ instance }) => {
   try {
@@ -56,7 +57,7 @@ export const canEagerConnect: CanEagerConnect = async ({ instance }) => {
   }
 };
 
-export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
+const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
   allBlockChains
 ) => {
   const solana = solanaBlockchain(allBlockChains);
@@ -73,3 +74,15 @@ export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
     supportedChains: solana,
   };
 };
+
+const v0: VLegacy = {
+  config,
+  getInstance,
+  connect,
+  subscribe,
+  canSwitchNetworkTo,
+  getSigners,
+  getWalletInfo,
+};
+
+export { v0 };

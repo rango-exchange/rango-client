@@ -1,9 +1,4 @@
-import type {
-  LegacyProviderInterface,
-  State,
-  WalletActions,
-  WalletProviders,
-} from './types';
+import type { State, VLegacy, WalletActions, WalletProviders } from './types';
 import type Wallet from '@rango-dev/wallets-core';
 import type {
   Options,
@@ -73,9 +68,7 @@ export function availableWallets(providersState: State): WalletType[] {
   });
 }
 
-export function checkWalletProviders(
-  list: LegacyProviderInterface[]
-): WalletProviders {
+export function checkWalletProviders(list: VLegacy[]): WalletProviders {
   const wallets: WalletProviders = new Map();
 
   list.forEach((provider) => {
