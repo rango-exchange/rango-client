@@ -1,25 +1,30 @@
-import type { ProviderProps } from './legacy/types';
+import type { ProviderContext, ProviderProps } from './legacy/types';
 
 import React from 'react';
 
 import { WalletContext } from './legacy/context';
 import { useLegacy } from './legacy/useLegacy';
-import { isLegacyProvider, isNextProvider } from './next/helpers';
+import { findProviderByType, splitProviders } from './next/helpers';
 import { useAdapter } from './next/useAdapter';
 
 function Provider(props: ProviderProps) {
   const { providers, ...restProps } = props;
-  const legacyProviders = providers.filter(isLegacyProvider);
-  const nextProviders = providers.filter(isNextProvider);
+  const [legacyProviders, nextProviders] = splitProviders(providers, {
+    isExperimentalEnabled: restProps.configs?.isExperimentalEnabled,
+  });
 
   // For gradual migrating and backward compatibility, we are supporting new version by an adapter besides of the old one.
   const legacyApi = useLegacy({ ...restProps, providers: legacyProviders });
-  const nextApi = useAdapter({ ...restProps, providers: nextProviders });
+  const nextApi = useAdapter({
+    ...restProps,
+    providers: nextProviders,
+    __all: providers,
+  });
 
   // eslint-disable-next-line react/jsx-no-constructed-context-values
   const api = {
     canSwitchNetworkTo(type: string, network: string) {
-      if (nextProviders.find((provider) => provider.id === type)) {
+      if (findProviderByType(nextProviders, type)) {
         throw new Error(
           "New version doesn't have support for this method yet."
         );
@@ -62,8 +67,15 @@ function Provider(props: ProviderProps) {
       return legacyApi.getWalletInfo(type);
     },
     providers() {
-      // TODO: use nextApi here.
-      return legacyApi.providers();
+      let output: ReturnType<ProviderContext['providers']> = {};
+      if (nextProviders.length > 0) {
+        output = { ...output, ...nextApi.providers() };
+      }
+      if (legacyProviders.length > 0) {
+        output = { ...output, ...legacyApi.providers() };
+      }
+
+      return output;
     },
     state(type: string) {
       if (nextProviders.find((provider) => provider.id === type)) {

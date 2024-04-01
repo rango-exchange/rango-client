@@ -1,6 +1,3 @@
-import type { VLegacy } from '@rango-dev/wallets-core';
-import type { Versions } from '@rango-dev/wallets-core/dist/versions';
-
 import * as argentx from '@rango-dev/provider-argentx';
 import * as bitget from '@rango-dev/provider-bitget';
 import * as braavos from '@rango-dev/provider-braavos';
@@ -28,41 +25,44 @@ import * as tronLink from '@rango-dev/provider-tron-link';
 import * as trustwallet from '@rango-dev/provider-trustwallet';
 import * as walletconnect2 from '@rango-dev/provider-walletconnect-2';
 import * as xdefi from '@rango-dev/provider-xdefi';
+import {
+  legacyProviderImportsToVersionsInterface,
+  type Versions,
+  type VLegacy,
+} from '@rango-dev/wallets-core';
 
 type Enviroments = Record<string, Record<string, string>>;
 
-export const allProviders = (
-  enviroments?: Enviroments
-): (VLegacy | Versions)[] => {
+export const allProviders = (enviroments?: Enviroments): Versions[] => {
   walletconnect2.init(enviroments?.walletconnect2 || {});
 
   return [
-    safe satisfies VLegacy,
-    defaultInjected satisfies VLegacy,
-    metamask satisfies VLegacy,
-    walletconnect2 satisfies VLegacy,
-    keplr satisfies VLegacy,
+    legacyProviderImportsToVersionsInterface(safe satisfies VLegacy),
+    legacyProviderImportsToVersionsInterface(defaultInjected satisfies VLegacy),
+    legacyProviderImportsToVersionsInterface(metamask satisfies VLegacy),
+    legacyProviderImportsToVersionsInterface(walletconnect2 satisfies VLegacy),
+    legacyProviderImportsToVersionsInterface(keplr satisfies VLegacy),
     phantom,
-    argentx satisfies VLegacy,
-    tronLink satisfies VLegacy,
-    trustwallet satisfies VLegacy,
-    bitget satisfies VLegacy,
-    enkrypt satisfies VLegacy,
-    xdefi satisfies VLegacy,
-    clover satisfies VLegacy,
-    safepal satisfies VLegacy,
-    brave satisfies VLegacy,
-    coin98 satisfies VLegacy,
-    coinbase satisfies VLegacy,
-    cosmostation satisfies VLegacy,
-    exodus satisfies VLegacy,
-    mathwallet satisfies VLegacy,
-    okx satisfies VLegacy,
-    tokenpocket satisfies VLegacy,
-    halo satisfies VLegacy,
-    leapCosmos satisfies VLegacy,
-    frontier satisfies VLegacy,
-    taho satisfies VLegacy,
-    braavos satisfies VLegacy,
+    legacyProviderImportsToVersionsInterface(argentx satisfies VLegacy),
+    legacyProviderImportsToVersionsInterface(tronLink satisfies VLegacy),
+    legacyProviderImportsToVersionsInterface(trustwallet satisfies VLegacy),
+    legacyProviderImportsToVersionsInterface(bitget satisfies VLegacy),
+    legacyProviderImportsToVersionsInterface(enkrypt satisfies VLegacy),
+    legacyProviderImportsToVersionsInterface(xdefi satisfies VLegacy),
+    legacyProviderImportsToVersionsInterface(clover satisfies VLegacy),
+    legacyProviderImportsToVersionsInterface(safepal satisfies VLegacy),
+    legacyProviderImportsToVersionsInterface(brave satisfies VLegacy),
+    legacyProviderImportsToVersionsInterface(coin98 satisfies VLegacy),
+    legacyProviderImportsToVersionsInterface(coinbase satisfies VLegacy),
+    legacyProviderImportsToVersionsInterface(cosmostation satisfies VLegacy),
+    legacyProviderImportsToVersionsInterface(exodus satisfies VLegacy),
+    legacyProviderImportsToVersionsInterface(mathwallet satisfies VLegacy),
+    legacyProviderImportsToVersionsInterface(okx satisfies VLegacy),
+    legacyProviderImportsToVersionsInterface(tokenpocket satisfies VLegacy),
+    legacyProviderImportsToVersionsInterface(halo satisfies VLegacy),
+    legacyProviderImportsToVersionsInterface(leapCosmos satisfies VLegacy),
+    legacyProviderImportsToVersionsInterface(frontier satisfies VLegacy),
+    legacyProviderImportsToVersionsInterface(taho satisfies VLegacy),
+    legacyProviderImportsToVersionsInterface(braavos satisfies VLegacy),
   ];
 };

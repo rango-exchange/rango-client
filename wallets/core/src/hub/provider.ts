@@ -46,11 +46,6 @@ export class Provider {
   public id: string;
   public version = '1.0';
 
-  /*
-   * TODO:
-   * It has some ts erros when I try to type it:
-   * Map<keyof CommonNamespaces,CommonNamespaces[keyof CommonNamespaces]>
-   */
   #namespaces: NamespacesMap<keyof CommonNamespaces, CommonNamespaces>;
   #initiated = false;
   // TODO: better name and also better typing for sure.

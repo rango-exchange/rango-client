@@ -9,7 +9,7 @@ type VersionedV1 = ['1.0.0', V1];
 type AvailableVersions = VersionedVLegacy | VersionedV1;
 export type Versions = AvailableVersions[];
 // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-type VersionInterface<T extends AvailableVersions[]> = T[1];
+export type VersionInterface<T extends AvailableVersions[]> = T[1];
 
 type SemVer<T extends [string, any]> = T extends [infer U, any] ? U : never;
 type MatchVersion<T extends Versions, Version> = Extract<
@@ -57,4 +57,10 @@ export function defineVersions(): DefineVersionsApi {
     },
   };
   return api;
+}
+
+export function legacyProviderImportsToVersionsInterface(
+  provider: VLegacy
+): Versions {
+  return defineVersions().version('0.0.0', provider).build();
 }

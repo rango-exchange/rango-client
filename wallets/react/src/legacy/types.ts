@@ -1,5 +1,6 @@
 import type {
   V1,
+  Versions,
   VLegacy,
   WalletActions,
   WalletConfig,
@@ -49,7 +50,10 @@ export type ProviderProps = PropsWithChildren<{
   onUpdateState?: WalletEventHandler;
   allBlockChains?: BlockchainMeta[];
   autoConnect?: boolean;
-  providers: (VLegacy | V1)[];
+  providers: Versions[];
+  configs?: {
+    isExperimentalEnabled?: boolean;
+  };
 }>;
 
 export enum Events {

@@ -1,15 +1,18 @@
 import type { ProviderContext, ProviderProps } from '../legacy/types';
-import type { V1 } from '@rango-dev/wallets-core';
+import type { V1, Versions } from '@rango-dev/wallets-core';
 import type { WalletInfo } from '@rango-dev/wallets-shared';
 
 import { createStore, Hub } from '@rango-dev/wallets-core';
 import { ChainId } from 'caip';
 import { useEffect, useRef, useState } from 'react';
 
+import { splitProviders } from './helpers';
 import { checkHubStateAndTriggerEvents } from './utils';
 
 export type UseAdapterProps = Omit<ProviderProps, 'providers'> & {
   providers: V1[];
+  // This is only will be used to access some parts of the legacy provider that doesn't exists in Hub.
+  __all: Versions[];
 };
 export function useAdapter(props: UseAdapterProps): ProviderContext {
   const store = useRef(createStore());
@@ -174,7 +177,24 @@ export function useAdapter(props: UseAdapterProps): ProviderContext {
       };
     },
     providers() {
-      throw new Error('not implemented');
+      const output: ReturnType<ProviderContext['providers']> = {};
+      const [legacy] = splitProviders(props.__all);
+
+      for (const id in hub.current.getAll().keys()) {
+        const provider = legacy.find((legacyProvider) => {
+          legacyProvider.config.type === id;
+        });
+
+        if (provider) {
+          output[id] = provider.getInstance;
+        } else {
+          console.warn(
+            `You have a provider that hasn't legacy provider. it causes some problems since we need some legacy functionality. Method: providers(), Provider Id: ${id}`
+          );
+        }
+      }
+
+      return output;
     },
     state(type) {
       // TODO: We can use `guessProviderStateSelector` here as well.

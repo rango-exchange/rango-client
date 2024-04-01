@@ -35,5 +35,9 @@ export const helpers = {
   generateStoreId,
 };
 
-export { pickVersion, defineVersions } from './versions';
-export type { VLegacy, V1 } from './versions';
+export {
+  pickVersion,
+  defineVersions,
+  legacyProviderImportsToVersionsInterface,
+} from './versions';
+export type { VLegacy, V1, Versions } from './versions';
