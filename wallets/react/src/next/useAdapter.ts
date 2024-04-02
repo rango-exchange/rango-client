@@ -73,8 +73,31 @@ export function useAdapter(props: UseAdapterProps): ProviderContext {
   }, []);
 
   return {
-    canSwitchNetworkTo(_type, _network) {
-      throw new Error('not implemented');
+    canSwitchNetworkTo(type, network) {
+      const [legacy] = splitProviders(props.__all);
+
+      const provider = legacy.find((legacyProvider) => {
+        legacyProvider.config.type === type;
+      });
+
+      if (!provider) {
+        console.warn(
+          `You have a provider that hasn't legacy provider. it causes some problems since we need some legacy functionality. Method: providers(), Provider Id: ${type}`
+        );
+        return false;
+      }
+
+      const switchTo = provider.canSwitchNetworkTo;
+
+      if (!switchTo) {
+        return false;
+      }
+
+      return switchTo({
+        network,
+        meta: props.allBlockChains || [],
+        provider: provider.getInstance,
+      });
     },
     connect(type, network) {
       const wallet = hub.current.get(type);

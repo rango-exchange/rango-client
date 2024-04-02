@@ -22,24 +22,24 @@ function Provider(props: ProviderProps) {
   });
 
   // eslint-disable-next-line react/jsx-no-constructed-context-values
-  const api = {
+  const api: ProviderContext = {
     canSwitchNetworkTo(type: string, network: string) {
       if (findProviderByType(nextProviders, type)) {
-        throw new Error(
-          "New version doesn't have support for this method yet."
-        );
+        return nextApi.canSwitchNetworkTo(type, network);
       }
       return legacyApi.canSwitchNetworkTo(type, network);
     },
     async connect(type: string, network: string | undefined) {
-      if (nextProviders.find((provider) => provider.id === type)) {
+      const nextProvider = findProviderByType(nextProviders, type);
+      if (nextProvider) {
         return await nextApi.connect(type, network);
       }
 
       return await legacyApi.connect(type, network);
     },
-    async disconnect(type: string) {
-      if (nextProviders.find((provider) => provider.id === type)) {
+    async disconnect(type) {
+      const nextProvider = findProviderByType(nextProviders, type);
+      if (nextProvider) {
         return await nextApi.disconnect(type);
       }
 
@@ -52,7 +52,8 @@ function Provider(props: ProviderProps) {
       ]);
     },
     getSigners(type: string) {
-      if (nextProviders.find((provider) => provider.id === type)) {
+      const nextProvider = findProviderByType(nextProviders, type);
+      if (nextProvider) {
         throw new Error(
           "New version doesn't have support for this method yet."
         );
@@ -60,7 +61,8 @@ function Provider(props: ProviderProps) {
       return legacyApi.getSigners(type);
     },
     getWalletInfo(type: string) {
-      if (nextProviders.find((provider) => provider.id === type)) {
+      const nextProvider = findProviderByType(nextProviders, type);
+      if (nextProvider) {
         return nextApi.getWalletInfo(type);
       }
 
@@ -77,15 +79,19 @@ function Provider(props: ProviderProps) {
 
       return output;
     },
-    state(type: string) {
-      if (nextProviders.find((provider) => provider.id === type)) {
+    state(type) {
+      const nextProvider = findProviderByType(nextProviders, type);
+
+      if (nextProvider) {
         return nextApi.state(type);
       }
 
       return legacyApi.state(type);
     },
     async suggestAndConnect(type: string, network: string) {
-      if (nextProviders.find((provider) => provider.id === type)) {
+      const nextProvider = findProviderByType(nextProviders, type);
+
+      if (nextProvider) {
         throw new Error(
           "New version doesn't have support for this method yet."
         );
