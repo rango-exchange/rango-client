@@ -1,4 +1,5 @@
 import type { State as InternalProviderState } from './provider';
+import type { Namespaces } from '../namespaces/common/types';
 import type { StoreApi } from 'zustand/vanilla';
 
 import { produce } from 'immer';
@@ -15,10 +16,13 @@ import {
 /************ Providers ************/
 
 type Browsers = 'firefox' | 'chrome' | 'edge' | 'brave' | 'homepage';
-type ProviderInfo = {
+type Property<N extends string, V> = { name: N; value: V };
+type DetachedInstances = Property<'detached', Namespaces[]>;
+export type ProviderInfo = {
   name: string;
   icon: string;
   extensions: Partial<Record<Browsers, string>>;
+  properties?: DetachedInstances[];
 };
 
 export interface ProviderConfig {

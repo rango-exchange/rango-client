@@ -1,6 +1,8 @@
 import type { WidgetConfig } from '../types';
 import type { ProvidersOptions } from '../utils/providers';
+import type { ExtendedModalWalletInfo } from '../utils/wallets';
 import type { WalletInfo } from '@rango-dev/ui';
+import type { Namespaces } from '@rango-dev/wallets-core';
 import type { BlockchainMeta } from 'rango-sdk';
 
 import { WalletState } from '@rango-dev/ui';
@@ -31,12 +33,19 @@ interface Params {
   onConnect?: (walletType: string) => void;
 }
 
+interface Api {
+  list: ExtendedModalWalletInfo[];
+  error: string;
+  handleClick: (type: WalletType, namespaces?: Namespaces[]) => Promise<void>;
+  disconnectConnectingWallets: () => void;
+}
+
 /**
  * gets list of wallets with their information and an action for handling click callback fo UI
  * we need to share the logic of rendering list of wallets and handle clicking on them in different places
  * you can use this list whenever you need to show the list of wallets and needed callbacks
  */
-export function useWalletList(params: Params) {
+export function useWalletList(params: Params): Api {
   const { config, chain, onBeforeConnect, onConnect } = params;
   const { state, disconnect, getWalletInfo, connect } = useWallets();
   const { connectedWallets } = useWalletsStore();
@@ -68,8 +77,10 @@ export function useWalletList(params: Params) {
         connectedWallet.chain === chain
     );
 
-  const handleClick = async (type: WalletType) => {
+  const handleClick = async (type: WalletType, namespaces?: Namespaces[]) => {
     const wallet = state(type);
+    const info = getWalletInfo(type);
+    console.log({ info });
     try {
       if (error) {
         setError('');
@@ -84,7 +95,9 @@ export function useWalletList(params: Params) {
           return;
         }
         onBeforeConnect?.(type);
-        await connect(type);
+
+        await connect(type, namespaces);
+
         onConnect?.(type);
       }
     } catch (e) {

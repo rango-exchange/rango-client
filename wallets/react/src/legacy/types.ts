@@ -1,4 +1,6 @@
 import type {
+  Namespaces,
+  ProviderInfo,
   V1,
   Versions,
   VLegacy,
@@ -27,22 +29,27 @@ export type ConnectResult = {
 
 export type Providers = { [type in WalletType]?: any };
 
+export type ExtendedWalletInfo = WalletInfo & {
+  properties?: ProviderInfo['properties'];
+};
+
 export type ProviderContext = {
   /**
    *
    * @param type String
    * @param network String CAIP-2 e.g. eip155:1
    */
-  connect(type: WalletType, network?: Network): Promise<ConnectResult>;
+  connect(
+    type: WalletType,
+    namespaces?: Namespaces[]
+  ): Promise<ConnectResult | ConnectResult[]>;
   disconnect(type: WalletType): Promise<void>;
   disconnectAll(): Promise<PromiseSettledResult<any>[]>;
   state(type: WalletType): WalletState;
   canSwitchNetworkTo(type: WalletType, network: Network): boolean;
   providers(): Providers;
   getSigners(type: WalletType): SignerFactory;
-  getWalletInfo(
-    type: WalletType
-  ): WalletInfo & { extras?: { namespaces?: string[] } };
+  getWalletInfo(type: WalletType): ExtendedWalletInfo;
   suggestAndConnect(type: WalletType, network: Network): Promise<ConnectResult>;
 };
 

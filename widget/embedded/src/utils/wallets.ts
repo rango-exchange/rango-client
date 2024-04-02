@@ -7,10 +7,11 @@ import type {
   Wallet,
 } from '../types';
 import type { WalletInfo as ModalWalletInfo } from '@rango-dev/ui';
+import type { ProviderInfo } from '@rango-dev/wallets-core';
+import type { ExtendedWalletInfo } from '@rango-dev/wallets-react';
 import type {
   Asset,
   Network,
-  WalletInfo,
   WalletState,
   WalletType,
   WalletTypes,
@@ -40,6 +41,10 @@ import { EXCLUDED_WALLETS } from '../constants/wallets';
 
 import { numberToString } from './numbers';
 
+export type ExtendedModalWalletInfo = ModalWalletInfo & {
+  properties?: ProviderInfo['properties'];
+};
+
 export function mapStatusToWalletState(state: WalletState): WalletStatus {
   switch (true) {
     case state.connected:
@@ -55,10 +60,10 @@ export function mapStatusToWalletState(state: WalletState): WalletStatus {
 
 export function mapWalletTypesToWalletInfo(
   getState: (type: WalletType) => WalletState,
-  getWalletInfo: (type: WalletType) => WalletInfo,
+  getWalletInfo: (type: WalletType) => ExtendedWalletInfo,
   list: WalletType[],
   chain?: string
-): ModalWalletInfo[] {
+): ExtendedModalWalletInfo[] {
   return list
     .filter((wallet) => !EXCLUDED_WALLETS.includes(wallet as WalletTypes))
     .filter((wallet) => {
@@ -77,7 +82,7 @@ export function mapWalletTypesToWalletInfo(
       return true;
     })
     .map((type) => {
-      const { name, img: image, installLink } = getWalletInfo(type);
+      const { name, img: image, installLink, properties } = getWalletInfo(type);
       const state = mapStatusToWalletState(getState(type));
       return {
         title: name,
@@ -85,6 +90,7 @@ export function mapWalletTypesToWalletInfo(
         link: detectInstallLink(installLink),
         state,
         type,
+        properties,
       };
     });
 }
@@ -456,8 +462,8 @@ export function areTokensEqual(
 }
 
 export function sortWalletsBasedOnConnectionState(
-  wallets: ModalWalletInfo[]
-): ModalWalletInfo[] {
+  wallets: ExtendedModalWalletInfo[]
+): ExtendedModalWalletInfo[] {
   return wallets.sort(
     (a, b) =>
       Number(b.state === WalletStatus.CONNECTED) -

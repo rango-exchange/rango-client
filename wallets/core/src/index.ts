@@ -24,6 +24,8 @@ export { NamespaceBuilder, ProviderBuilder } from './builders';
 export type { NamespaceApi } from './builders';
 export type { SolanaActions } from './namespaces/solana/types';
 export type { EvmActions } from './namespaces/evm/types';
+export type { ProviderInfo } from './hub/store';
+export { Namespaces } from './namespaces/common/types';
 
 // TODO: It's better to use `esm exports in package.json` instead of scope them like this.
 export const namespaces = {

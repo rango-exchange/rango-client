@@ -1,3 +1,4 @@
+import type { Namespaces } from '@rango-dev/wallets-core';
 import type { WalletType } from '@rango-dev/wallets-shared';
 
 import { i18n } from '@lingui/core';
@@ -5,7 +6,10 @@ import { styled, Typography, Wallet, WalletState } from '@rango-dev/ui';
 import React, { useState } from 'react';
 
 import { Layout, PageContainer } from '../components/Layout';
-import { WalletModal } from '../components/WalletModal';
+import {
+  WalletModal,
+  WalletNamespacesListModal,
+} from '../components/WalletModal';
 import { useWalletList } from '../hooks/useWalletList';
 import { useAppStore } from '../store/AppStore';
 import { useUiStore } from '../store/ui';
@@ -28,9 +32,17 @@ const Container = styled(PageContainer, {
 export const TIME_TO_CLOSE_MODAL = 3_000;
 export const TIME_TO_IGNORE_MODAL = 300;
 
+interface NamespaceValue {
+  providerId: string;
+  namespaces: Namespaces[];
+}
+
 export function WalletsPage() {
   const { config, fetchStatus: fetchMetaStatus } = useAppStore();
   const [openModal, setOpenModal] = useState(false);
+  const [openNamespacesModal, setOpenNamespacesModal] = useState<
+    NamespaceValue | undefined
+  >(undefined);
   const [selectedWalletType, setSelectedWalletType] = useState<WalletType>('');
   let modalTimerId: ReturnType<typeof setTimeout> | null = null;
   const isActiveTab = useUiStore.use.isActiveTab();
@@ -78,13 +90,24 @@ export function WalletsPage() {
         <ListContainer>
           {list.map((wallet, index) => {
             const key = `wallet-${index}-${wallet.type}`;
+
             return (
               <Wallet
                 key={key}
                 {...wallet}
                 container={getContainer()}
                 onClick={(type) => {
-                  void handleClick(type);
+                  const detachedInstances = wallet.properties?.find(
+                    (item) => item.name === 'detached'
+                  );
+                  if (detachedInstances) {
+                    setOpenNamespacesModal({
+                      providerId: type,
+                      namespaces: detachedInstances.value,
+                    });
+                  } else {
+                    void handleClick(type);
+                  }
                 }}
                 isLoading={fetchMetaStatus === 'loading'}
                 disabled={!isActiveTab}
@@ -97,6 +120,18 @@ export function WalletsPage() {
             image={selectedWalletImage}
             state={selectedWalletState}
             error={error}
+          />
+          <WalletNamespacesListModal
+            open={!!openNamespacesModal}
+            onClose={() => setOpenNamespacesModal(undefined)}
+            onConfirm={(namespaces) => {
+              console.log('user selected these:', { namespaces });
+              if (openNamespacesModal) {
+                void handleClick(openNamespacesModal.providerId, namespaces);
+              }
+              setOpenNamespacesModal(undefined);
+            }}
+            namespaces={openNamespacesModal?.namespaces || []}
           />
         </ListContainer>
       </Container>

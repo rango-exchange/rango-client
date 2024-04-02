@@ -1,5 +1,11 @@
 import type { SpecificMethods } from '../../hub/namespace';
 
+export enum Namespaces {
+  Solana = 'solana',
+  Evm = 'evm',
+  Cosmos = 'cosmos',
+}
+
 export type AnyFunction = (...args: any[]) => any;
 
 export type FunctionWithContext<T, C> = T extends (...args: infer P) => infer R

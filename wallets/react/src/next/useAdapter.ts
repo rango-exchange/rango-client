@@ -3,7 +3,6 @@ import type { V1, Versions } from '@rango-dev/wallets-core';
 import type { WalletInfo } from '@rango-dev/wallets-shared';
 
 import { createStore, Hub } from '@rango-dev/wallets-core';
-import { ChainId } from 'caip';
 import { useEffect, useRef, useState } from 'react';
 
 import { splitProviders } from './helpers';
@@ -97,7 +96,7 @@ export function useAdapter(props: UseAdapterProps): ProviderContext {
         provider: provider.getInstance,
       });
     },
-    connect(type, network) {
+    async connect(type, namespaces) {
       const wallet = hub.current.get(type);
       if (!wallet) {
         throw new Error(
@@ -105,28 +104,34 @@ export function useAdapter(props: UseAdapterProps): ProviderContext {
         );
       }
 
-      if (!network) {
+      if (!namespaces) {
+        // TODO: I think this should be wallet.connect()
         return hub.current.runAll('connect');
       }
 
-      const { namespace } = ChainId.parse(network);
-      if (!namespace) {
-        throw new Error('Please use a valid CAIP-2 as your network');
-      }
+      // TODO: CommonBlockchains somehow.
+      const targetNamespaces: object[] = [];
+      namespaces.forEach((namespace) => {
+        const result = wallet.findBy({
+          namespace: namespace,
+        });
 
-      const result = wallet.findBy({
-        namespace: namespace,
+        if (!result) {
+          throw new Error(
+            `We couldn't find any provider matched with your request chain`
+          );
+        }
+
+        targetNamespaces.push(result);
       });
 
-      if (!result) {
-        throw new Error(
-          `We couldn't find any provider matched with your request chain`
-        );
-      }
+      const finalResult = targetNamespaces.map((namespace) =>
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore-next-line
+        namespace.connect()
+      );
 
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore-next-line
-      return result.connect(network);
+      return finalResult;
     },
     async disconnect(type) {
       const wallet = hub.current.get(type);
@@ -190,11 +195,6 @@ export function useAdapter(props: UseAdapterProps): ProviderContext {
         }
       });
 
-      const namespacesNames: string[] = [];
-      wallet.getAll().forEach((namespaces) => {
-        namespacesNames.push(namespaces.namespace);
-      });
-
       return {
         name: info.name,
         img: info.icon,
@@ -205,9 +205,7 @@ export function useAdapter(props: UseAdapterProps): ProviderContext {
         isContractWallet: false,
         mobileWallet: false,
         showOnMobile: false,
-        extras: {
-          namespaces: namespacesNames,
-        },
+        properties: wallet.info()?.properties,
       };
     },
     providers() {
