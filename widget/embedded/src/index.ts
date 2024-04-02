@@ -30,7 +30,7 @@ import type {
 } from '@rango-dev/queue-manager-rango-preset';
 import type {
   EventHandler as HandleWalletsUpdate,
-  ProviderInterface,
+  VLegacy,
 } from '@rango-dev/wallets-react';
 import type {
   WalletInfo,
@@ -69,7 +69,7 @@ export type {
   WidgetTheme,
   WidgetColors,
   WidgetColorsKeys,
-  ProviderInterface,
+  VLegacy as ProviderInterface,
   BlockchainAndTokenConfig,
   WidgetProps,
   RouteEvent,

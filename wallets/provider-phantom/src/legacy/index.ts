@@ -8,20 +8,16 @@ import type {
 } from '@rango-dev/wallets-shared';
 import type { BlockchainMeta, SignerFactory } from 'rango-types';
 
-import {
-  getSolanaAccounts,
-  Networks,
-  WalletTypes,
-} from '@rango-dev/wallets-shared';
+import { getSolanaAccounts, Networks } from '@rango-dev/wallets-shared';
 import { solanaBlockchain } from 'rango-types';
+
+import { WALLET_ID } from '../constants';
 
 import { phantom as phantom_instance } from './helpers';
 import signer from './signer';
 
-const WALLET = WalletTypes.PHANTOM;
-
 const config = {
-  type: WALLET,
+  type: WALLET_ID,
 };
 
 const getInstance = phantom_instance;

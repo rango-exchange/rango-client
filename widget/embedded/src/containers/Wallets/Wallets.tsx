@@ -33,6 +33,7 @@ function Main(props: PropsWithChildren<PropTypes>) {
   const tokens = useAppStore().tokens();
   const walletOptions: ProvidersOptions = {
     walletConnectProjectId: props.config?.walletConnectProjectId,
+    experimentalWallet: props.config.features?.experimentalWallet,
   };
   const { providers } = useWalletProviders(props.config.wallets, walletOptions);
   const { connectWallet, disconnectWallet } = useWalletsStore();
@@ -114,7 +115,13 @@ function Main(props: PropsWithChildren<PropTypes>) {
         allBlockChains={blockchains}
         providers={providers}
         onUpdateState={onUpdateState}
-        autoConnect={!!isActiveTab}>
+        autoConnect={!!isActiveTab}
+        configs={{
+          isExperimentalEnabled:
+            props.config.features?.experimentalWallet === 'enabled'
+              ? true
+              : false,
+        }}>
         {props.children}
       </Provider>
     </WidgetContext.Provider>

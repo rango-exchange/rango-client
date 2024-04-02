@@ -35,6 +35,9 @@ export function App() {
       config = {
         apiKey: '',
         walletConnectProjectId: WC_PROJECT_ID,
+        features: {
+          experimentalWallet: 'enabled',
+        },
       };
     }
     if (!!config) {

@@ -1,4 +1,5 @@
 import type { WidgetConfig } from '../types';
+import type { ProvidersOptions } from '../utils/providers';
 import type { WalletInfo } from '@rango-dev/ui';
 import type { BlockchainMeta } from 'rango-sdk';
 
@@ -42,10 +43,13 @@ export function useWalletList(params: Params) {
   const blockchains = useAppStore().blockchains();
 
   /** It can be what has been set by widget config or as a fallback we use all the supported wallets by our library */
+  const walletOptions: ProvidersOptions = {
+    walletConnectProjectId: config?.walletConnectProjectId,
+    experimentalWallet: config?.features?.experimentalWallet,
+  };
   const listAvailableWalletTypes =
-    configWalletsToWalletName(config?.wallets, {
-      walletConnectProjectId: config?.walletConnectProjectId,
-    }) || ALL_SUPPORTED_WALLETS;
+    configWalletsToWalletName(config?.wallets, walletOptions) ||
+    ALL_SUPPORTED_WALLETS;
 
   const wallets = mapWalletTypesToWalletInfo(
     state,
@@ -84,6 +88,7 @@ export function useWalletList(params: Params) {
         onConnect?.(type);
       }
     } catch (e) {
+      console.log(e);
       setError('Error: ' + (e as any)?.message);
     }
   };
