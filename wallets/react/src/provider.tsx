@@ -54,9 +54,7 @@ function Provider(props: ProviderProps) {
     getSigners(type: string) {
       const nextProvider = findProviderByType(nextProviders, type);
       if (nextProvider) {
-        throw new Error(
-          "New version doesn't have support for this method yet."
-        );
+        return nextApi.getSigners(type);
       }
       return legacyApi.getSigners(type);
     },

@@ -75,11 +75,9 @@ export function useAdapter(props: UseAdapterProps): ProviderContext {
   return {
     canSwitchNetworkTo(type, network) {
       const [legacy] = splitProviders(props.__all);
-
       const provider = legacy.find((legacyProvider) => {
         legacyProvider.config.type === type;
       });
-
       if (!provider) {
         console.warn(
           `You have a provider that hasn't legacy provider. it causes some problems since we need some legacy functionality. Method: providers(), Provider Id: ${type}`
@@ -143,10 +141,23 @@ export function useAdapter(props: UseAdapterProps): ProviderContext {
       });
     },
     disconnectAll() {
-      throw new Error('not implemented');
+      throw new Error('`disconnectAll` not implemented');
     },
-    getSigners(_type) {
-      throw new Error('not implemented');
+    getSigners(type) {
+      const [legacy] = splitProviders(props.__all);
+      const provider = legacy.find((legacyProvider) => {
+        legacyProvider.config.type === type;
+      });
+      if (!provider) {
+        console.warn(
+          `You have a provider that hasn't legacy provider. it causes some problems since we need some legacy functionality. Method: providers(), Provider Id: ${type}`
+        );
+        throw new Error(
+          `You need to have legacy implementation to use 'getSigners'. Provider Id: ${type}`
+        );
+      }
+
+      return provider.getSigners(provider.getInstance);
     },
     getWalletInfo(type) {
       const wallet = hub.current.get(type);
@@ -237,7 +248,7 @@ export function useAdapter(props: UseAdapterProps): ProviderContext {
       return coreState;
     },
     suggestAndConnect(_type, _network): never {
-      throw new Error('not implemented');
+      throw new Error('`suggestAndConnect` is not implemented');
     },
   };
 }
