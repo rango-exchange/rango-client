@@ -77,10 +77,10 @@ export const subscribe: Subscribe = ({
     updateChainId(chainId);
     connect(network);
   };
-  eth?.on('chainChanged', handleChainChanged);
+  eth?.on?.('chainChanged', handleChainChanged);
 
   return () => {
-    eth?.off('chainChanged', handleChainChanged);
+    eth?.off?.('chainChanged', handleChainChanged);
   };
 };
 

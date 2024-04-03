@@ -52,13 +52,13 @@ export const subscribeToEvm: Subscribe = ({
     updateChainId(chainId);
   };
 
-  instance?.on('accountsChanged', handleAccountsChanged);
+  instance?.on?.('accountsChanged', handleAccountsChanged);
 
-  instance?.on('chainChanged', handleChainChanged);
+  instance?.on?.('chainChanged', handleChainChanged);
 
   const cleanup = () => {
-    instance?.off('accountsChanged', handleAccountsChanged);
-    instance?.off('chainChanged', handleChainChanged);
+    instance?.off?.('accountsChanged', handleAccountsChanged);
+    instance?.off?.('chainChanged', handleChainChanged);
   };
 
   return cleanup;
