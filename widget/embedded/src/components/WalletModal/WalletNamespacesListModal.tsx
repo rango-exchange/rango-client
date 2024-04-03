@@ -1,4 +1,4 @@
-import type { Namespaces } from '@rango-dev/wallets-core';
+import type { NamespaceAndNetwork } from '@rango-dev/wallets-core';
 
 import { i18n } from '@lingui/core';
 import {
@@ -22,20 +22,22 @@ import {
 interface PropTypes {
   open: boolean;
   onClose: () => void;
-  onConfirm: (namespaces: Namespaces[]) => void;
-  namespaces: Namespaces[];
+  onConfirm: (namespaces: NamespaceAndNetwork[]) => void;
+  namespaces: NamespaceAndNetwork[];
 }
 
 export function WalletNamespacesListModal(props: PropTypes) {
-  const [selectedNamespaces, setSelectedNamespaces] = useState<Namespaces[]>(
-    []
-  );
+  const [selectedNamespaces, setSelectedNamespaces] = useState<
+    NamespaceAndNetwork[]
+  >([]);
   const selectedWalletImage = 'todo';
 
-  const onSelect = (value: Namespaces) =>
+  const onSelect = (value: NamespaceAndNetwork) =>
     setSelectedNamespaces((selectedNamespace) =>
-      selectedNamespace.includes(value)
-        ? selectedNamespace.filter((namespace) => namespace !== value)
+      isExists(selectedNamespace, value)
+        ? selectedNamespace.filter(
+            (namespace) => namespace.namespace !== value.namespace
+          )
         : selectedNamespace.concat(value)
     );
 
@@ -64,13 +66,13 @@ export function WalletNamespacesListModal(props: PropTypes) {
       <NamespaceList>
         {props.namespaces.map((namespace) => (
           <ListItemButton
-            key={namespace}
-            id={namespace}
-            title={namespace}
+            key={namespace.namespace}
+            id={namespace.namespace}
+            title={namespace.namespace}
             hasDivider
             style={{ height: 60 }}
             onClick={() => onSelect(namespace)}
-            end={<Checkbox checked={selectedNamespaces.includes(namespace)} />}
+            end={<Checkbox checked={isExists(selectedNamespaces, namespace)} />}
           />
         ))}
       </NamespaceList>
@@ -81,5 +83,12 @@ export function WalletNamespacesListModal(props: PropTypes) {
         {i18n.t('Confirm')}
       </Button>
     </WatermarkedModal>
+  );
+}
+
+// TODO: better naming
+function isExists(list: NamespaceAndNetwork[], namespace: NamespaceAndNetwork) {
+  return !!list.find(
+    (selectedNamespace) => selectedNamespace.namespace === namespace.namespace
   );
 }

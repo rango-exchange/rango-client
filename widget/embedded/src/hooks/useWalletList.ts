@@ -2,7 +2,7 @@ import type { WidgetConfig } from '../types';
 import type { ProvidersOptions } from '../utils/providers';
 import type { ExtendedModalWalletInfo } from '../utils/wallets';
 import type { WalletInfo } from '@rango-dev/ui';
-import type { Namespaces } from '@rango-dev/wallets-core';
+import type { NamespaceAndNetwork } from '@rango-dev/wallets-core';
 import type { BlockchainMeta } from 'rango-sdk';
 
 import { WalletState } from '@rango-dev/ui';
@@ -36,7 +36,10 @@ interface Params {
 interface Api {
   list: ExtendedModalWalletInfo[];
   error: string;
-  handleClick: (type: WalletType, namespaces?: Namespaces[]) => Promise<void>;
+  handleClick: (
+    type: WalletType,
+    namespaces?: NamespaceAndNetwork[]
+  ) => Promise<void>;
   disconnectConnectingWallets: () => void;
 }
 
@@ -77,7 +80,10 @@ export function useWalletList(params: Params): Api {
         connectedWallet.chain === chain
     );
 
-  const handleClick = async (type: WalletType, namespaces?: Namespaces[]) => {
+  const handleClick = async (
+    type: WalletType,
+    namespaces?: NamespaceAndNetwork[]
+  ) => {
     const wallet = state(type);
     const info = getWalletInfo(type);
     console.log({ info });

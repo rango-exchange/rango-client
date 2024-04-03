@@ -1,5 +1,6 @@
 import { generateStoreId } from './hub';
 import { common } from './namespaces/common';
+import { evm } from './namespaces/evm';
 import { solana } from './namespaces/solana';
 
 export type { EventHandler, LegacyState, Options } from './legacy/wallet';
@@ -14,8 +15,6 @@ export {
   Hub,
   Provider,
   Namespace,
-  solana as solanaUse,
-  evm as evmUse,
   createStore,
   guessProviderStateSelector,
   namespaceStateSelector,
@@ -30,6 +29,7 @@ export { Namespaces } from './namespaces/common/types';
 // TODO: It's better to use `esm exports in package.json` instead of scope them like this.
 export const namespaces = {
   solana: solana,
+  evm: evm,
   common: common,
 };
 

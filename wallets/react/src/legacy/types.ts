@@ -1,5 +1,5 @@
 import type {
-  Namespaces,
+  NamespaceAndNetwork,
   ProviderInfo,
   V1,
   Versions,
@@ -41,7 +41,7 @@ export type ProviderContext = {
    */
   connect(
     type: WalletType,
-    namespaces?: Namespaces[]
+    namespaces?: NamespaceAndNetwork[]
   ): Promise<ConnectResult | ConnectResult[]>;
   disconnect(type: WalletType): Promise<void>;
   disconnectAll(): Promise<PromiseSettledResult<any>[]>;

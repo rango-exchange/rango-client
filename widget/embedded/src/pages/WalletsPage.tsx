@@ -1,4 +1,4 @@
-import type { Namespaces } from '@rango-dev/wallets-core';
+import type { NamespaceAndNetwork } from '@rango-dev/wallets-core';
 import type { WalletType } from '@rango-dev/wallets-shared';
 
 import { i18n } from '@lingui/core';
@@ -34,7 +34,7 @@ export const TIME_TO_IGNORE_MODAL = 300;
 
 interface NamespaceValue {
   providerId: string;
-  namespaces: Namespaces[];
+  namespaces: NamespaceAndNetwork[];
 }
 
 export function WalletsPage() {
@@ -103,7 +103,14 @@ export function WalletsPage() {
                   if (detachedInstances) {
                     setOpenNamespacesModal({
                       providerId: type,
-                      namespaces: detachedInstances.value,
+                      /*
+                       * TODO: What i'm trying to here is connecting a namespace with no force to connect to a specific network.
+                       * Code here works but it has implicit intentions.
+                       */
+                      namespaces: detachedInstances.value.map((namespace) => ({
+                        namespace,
+                        network: undefined,
+                      })),
                     });
                   } else {
                     void handleClick(type);

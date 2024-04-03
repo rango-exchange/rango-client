@@ -1,4 +1,5 @@
 import type { LegacyState as WalletState } from './wallet';
+import type { Namespaces } from '../namespaces/common/types';
 import type {
   Network,
   WalletInfo,
@@ -137,3 +138,6 @@ export type WalletProviders = Map<
 >;
 
 export type LegacyProviderInterface = { config: WalletConfig } & WalletActions;
+
+// TODO: make it type safe by connecting `namespace` and `network`
+export type NamespaceAndNetwork = { namespace: Namespaces; network: any };

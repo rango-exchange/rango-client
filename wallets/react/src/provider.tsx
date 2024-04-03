@@ -23,13 +23,13 @@ function Provider(props: ProviderProps) {
 
   // eslint-disable-next-line react/jsx-no-constructed-context-values
   const api: ProviderContext = {
-    canSwitchNetworkTo(type: string, network: string) {
+    canSwitchNetworkTo(type, network) {
       if (findProviderByType(nextProviders, type)) {
         return nextApi.canSwitchNetworkTo(type, network);
       }
       return legacyApi.canSwitchNetworkTo(type, network);
     },
-    async connect(type: string, network: string | undefined) {
+    async connect(type, network) {
       const nextProvider = findProviderByType(nextProviders, type);
       if (nextProvider) {
         return await nextApi.connect(type, network);
@@ -51,14 +51,14 @@ function Provider(props: ProviderProps) {
         legacyApi.disconnectAll(),
       ]);
     },
-    getSigners(type: string) {
+    getSigners(type) {
       const nextProvider = findProviderByType(nextProviders, type);
       if (nextProvider) {
         return nextApi.getSigners(type);
       }
       return legacyApi.getSigners(type);
     },
-    getWalletInfo(type: string) {
+    getWalletInfo(type) {
       const nextProvider = findProviderByType(nextProviders, type);
       if (nextProvider) {
         return nextApi.getWalletInfo(type);
@@ -86,7 +86,7 @@ function Provider(props: ProviderProps) {
 
       return legacyApi.state(type);
     },
-    async suggestAndConnect(type: string, network: string) {
+    async suggestAndConnect(type, network) {
       const nextProvider = findProviderByType(nextProviders, type);
 
       if (nextProvider) {

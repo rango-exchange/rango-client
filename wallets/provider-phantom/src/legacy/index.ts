@@ -21,7 +21,15 @@ const config = {
 };
 
 const getInstance = phantom_instance;
-const connect: Connect = getSolanaAccounts;
+export const connect: Connect = async ({ instance, meta }) => {
+  const solanaInstance = instance.get(Networks.SOLANA);
+  const result = await getSolanaAccounts({
+    instance: solanaInstance,
+    meta,
+  });
+
+  return result;
+};
 
 const subscribe: Subscribe = ({ instance, updateAccounts, connect }) => {
   const handleAccountsChanged = async (publicKey: string) => {

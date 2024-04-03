@@ -139,7 +139,9 @@ export class Provider {
       return result;
     }
 
-    throw new Error('You need to set some filters.');
+    throw new Error(
+      `Couldn't found any namespace. Make sure you've passed correct options to 'findBy'`
+    );
   }
 
   info(): ProviderConfig['info'] | undefined {

@@ -113,12 +113,12 @@ export function useAdapter(props: UseAdapterProps): ProviderContext {
       const targetNamespaces: object[] = [];
       namespaces.forEach((namespace) => {
         const result = wallet.findBy({
-          namespace: namespace,
+          namespace: namespace.namespace,
         });
 
         if (!result) {
           throw new Error(
-            `We couldn't find any provider matched with your request chain`
+            `We couldn't find any provider matched with your request namespace. (requested namespace: ${namespace.namespace})`
           );
         }
 

@@ -37,11 +37,18 @@ export function useLegacy(props: UseV0Props): ProviderContext {
   // Final API we put in context and it will be available to use for users.
   // eslint-disable-next-line react/jsx-no-constructed-context-values
   const api: ProviderContext = {
-    async connect(type, network) {
+    async connect(type, namespaces) {
       const wallet = wallets.get(type);
       if (!wallet) {
         throw new Error(`You should add ${type} to provider first.`);
       }
+
+      // Legacy providers doesn't implemented multiple namespaces, so it will always be one value.
+      let network = undefined;
+      if (namespaces && namespaces.length > 0) {
+        network = namespaces[0].network;
+      }
+
       const walletInstance = getWalletInstance(wallet);
       const result = await walletInstance.connect(network);
       if (props.autoConnect) {

@@ -7,5 +7,5 @@ import type {
 export interface EvmActions
   extends AutoImplementedActionsByRecommended,
     CommonActions {
-  connect: (chain: string) => Accounts;
+  connect: (chain?: string) => Promise<Accounts>;
 }
