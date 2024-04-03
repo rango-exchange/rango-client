@@ -22,7 +22,10 @@ export {
 export { NamespaceBuilder, ProviderBuilder } from './builders';
 export type { NamespaceApi } from './builders';
 export type { SolanaActions } from './namespaces/solana/types';
-export type { EvmActions } from './namespaces/evm/types';
+export type {
+  EvmActions,
+  NamespaceProvider as EvmNamespaceProvider,
+} from './namespaces/evm/types';
 export type { ProviderInfo } from './hub/store';
 export { Namespaces } from './namespaces/common/types';
 

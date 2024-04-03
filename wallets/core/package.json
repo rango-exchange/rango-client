@@ -33,6 +33,9 @@
     "zustand": "^4.5.2",
     "immer": "^10.0.4"
   },
+  "devDependencies": {
+    "viem": "^2.9.8"
+  },
   "publishConfig": {
     "access": "public"
   }

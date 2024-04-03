@@ -1,3 +1,4 @@
+import type { EvmNamespaceProvider } from '@rango-dev/wallets-core';
 import type { Network } from '@rango-dev/wallets-shared';
 
 import { Networks } from '@rango-dev/wallets-shared';
@@ -24,4 +25,18 @@ export function phantom(): Provider | null {
   }
 
   return instances;
+}
+
+export function evmPhantom() {
+  const instances = phantom();
+
+  const evmInstance = instances?.get(Networks.ETHEREUM);
+
+  if (!instances || !evmInstance) {
+    throw new Error(
+      'Are you sure Phantom injected and you have enabled evm correctly?'
+    );
+  }
+
+  return evmInstance as EvmNamespaceProvider;
 }
