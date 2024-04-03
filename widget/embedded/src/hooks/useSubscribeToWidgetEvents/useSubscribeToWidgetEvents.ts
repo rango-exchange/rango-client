@@ -1,3 +1,5 @@
+import type { RouteEventData, StepEventData } from '../..';
+
 import {
   isApprovalTX,
   MainEvents,
@@ -8,11 +10,11 @@ import {
 } from '@rango-dev/queue-manager-rango-preset';
 import { useEffect } from 'react';
 
-import { useAppStore } from '../store/AppStore';
-import { useNotificationStore } from '../store/notification';
-import { useWalletsStore } from '../store/wallets';
+import { useAppStore } from '../../store/AppStore';
+import { useNotificationStore } from '../../store/notification';
+import { useWalletsStore } from '../../store/wallets';
 
-export function WidgetEvents() {
+export function useSubscribeToWidgetEvents() {
   const tokens = useAppStore().tokens();
   const connectedWallets = useWalletsStore.use.connectedWallets();
   const getWalletsDetails = useWalletsStore.use.getWalletsDetails();
@@ -20,7 +22,7 @@ export function WidgetEvents() {
   const widgetEvents = useEvents();
 
   useEffect(() => {
-    widgetEvents.on(MainEvents.StepEvent, (widgetEvent) => {
+    const handleStepEvent = (widgetEvent: StepEventData) => {
       const { event, step, route } = widgetEvent;
       const shouldRefetchBalance =
         (event.type === StepEventType.TX_EXECUTION &&
@@ -43,13 +45,14 @@ export function WidgetEvents() {
       }
 
       setNotification(event, route);
-    });
+    };
+    widgetEvents.on(MainEvents.StepEvent, handleStepEvent);
 
-    return () => widgetEvents.all.clear();
+    return () => widgetEvents.off(MainEvents.StepEvent, handleStepEvent);
   }, [widgetEvents, connectedWallets.length]);
 
   useEffect(() => {
-    widgetEvents.on(MainEvents.RouteEvent, (widgetEvent) => {
+    const handleRouteEvent = (widgetEvent: RouteEventData) => {
       const { event, route } = widgetEvent;
 
       if (
@@ -58,10 +61,9 @@ export function WidgetEvents() {
       ) {
         setNotification(event, route);
       }
-    });
+    };
+    widgetEvents.on(MainEvents.RouteEvent, handleRouteEvent);
 
-    return () => widgetEvents.all.clear();
+    return () => widgetEvents.off(MainEvents.RouteEvent, handleRouteEvent);
   }, [widgetEvents, connectedWallets.length]);
-
-  return null;
 }
