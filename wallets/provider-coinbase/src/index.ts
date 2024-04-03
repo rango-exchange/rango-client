@@ -93,14 +93,14 @@ export const subscribe: Subscribe = (options) => {
       connect(network);
     }
   };
-  ethInstance?.on('accountsChanged', handleEvmAccountsChanged);
+  ethInstance?.on?.('accountsChanged', handleEvmAccountsChanged);
 
-  solanaInstance?.on('accountChanged', handleSolanaAccountChanged);
+  solanaInstance?.on?.('accountChanged', handleSolanaAccountChanged);
 
   return () => {
-    ethInstance?.off('accountsChanged', handleEvmAccountsChanged);
+    ethInstance?.off?.('accountsChanged', handleEvmAccountsChanged);
 
-    solanaInstance?.off('accountChanged', handleSolanaAccountChanged);
+    solanaInstance?.off?.('accountChanged', handleSolanaAccountChanged);
   };
 };
 export const switchNetwork: SwitchNetwork = switchNetworkForEvm;

@@ -36,10 +36,10 @@ export const subscribe: Subscribe = ({ instance, updateAccounts, connect }) => {
       connect(network);
     }
   };
-  instance?.on('accountChanged', handleAccountsChanged);
+  instance?.on?.('accountChanged', handleAccountsChanged);
 
   return () => {
-    instance?.off('accountChanged', handleAccountsChanged);
+    instance?.off?.('accountChanged', handleAccountsChanged);
   };
 };
 
