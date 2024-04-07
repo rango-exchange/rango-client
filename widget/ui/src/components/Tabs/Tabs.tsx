@@ -56,7 +56,7 @@ export function TabsComponent(props: PropTypes) {
       {tabItems.map((item, index) => (
         <Tooltip
           key={item.id}
-          style={{ width: '100%' }}
+          styles={{ root: { width: '100%' } }}
           container={container}
           side="bottom"
           sideOffset={2}
