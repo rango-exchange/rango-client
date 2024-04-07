@@ -53,15 +53,19 @@ export function QuoteCost(props: PropTypes) {
           {time}
         </Typography>
       </div>
-      <Separator />
-      <div className={itemStyles()}>
-        <div className={iconStyles()}>
-          <NumberIcon size={16} color="gray" />
-        </div>
-        <Typography ml={2} align="center" variant="body" size="small">
-          {steps}
-        </Typography>
-      </div>
+      {!!steps && (
+        <>
+          <Separator />
+          <div className={itemStyles()}>
+            <div className={iconStyles()}>
+              <NumberIcon size={16} color="gray" />
+            </div>
+            <Typography ml={2} align="center" variant="body" size="small">
+              {steps}
+            </Typography>
+          </div>
+        </>
+      )}
     </Container>
   );
 }
