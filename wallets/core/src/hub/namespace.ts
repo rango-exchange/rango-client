@@ -98,6 +98,31 @@ class Namespace<T extends SpecificMethods<T>> {
     return this;
   }
 
+  after<K extends keyof T, C = unknown>(
+    name: K,
+    cb: FunctionWithContext<AnyFunction, C>,
+    options?: { context?: C }
+  ) {
+    const cbWithContext = options?.context
+      ? cb.bind(null, options.context)
+      : cb.bind(null, this.#context() as C);
+
+    this.afterActions.set(name, cbWithContext);
+    return this;
+  }
+
+  before<K extends keyof T, C = unknown>(
+    name: K,
+    cb: FunctionWithContext<AnyFunction, C>,
+    options?: { context?: C }
+  ) {
+    const cbWithContext = options?.context
+      ? cb.bind(null, options.context)
+      : cb.bind(null, this.#context() as C);
+    this.beforeActions.set(name, cbWithContext);
+    return this;
+  }
+
   run<K extends keyof T>(name: K, ...args: any[]) {
     const cb = this.actions.get(name);
 
@@ -173,31 +198,6 @@ class Namespace<T extends SpecificMethods<T>> {
 
     this.initiated = true;
     console.debug('[Namespace] initiated successfully.');
-  }
-
-  after<K extends keyof T, C = unknown>(
-    name: K,
-    cb: FunctionWithContext<AnyFunction, C>,
-    options?: { context?: C }
-  ) {
-    const cbWithContext = options?.context
-      ? cb.bind(null, options.context)
-      : cb.bind(null, this.#context() as C);
-
-    this.afterActions.set(name, cbWithContext);
-    return this;
-  }
-
-  before<K extends keyof T, C = unknown>(
-    name: K,
-    cb: FunctionWithContext<AnyFunction, C>,
-    options?: { context?: C }
-  ) {
-    const cbWithContext = options?.context
-      ? cb.bind(null, options.context)
-      : cb.bind(null, this.#context() as C);
-    this.beforeActions.set(name, cbWithContext);
-    return this;
   }
 
   store(store: Store) {

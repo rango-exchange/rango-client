@@ -5,11 +5,15 @@ import type {
 } from '@rango-dev/wallets-core';
 
 import {
+  CAIP,
   Events,
+  formatAddressWithNetwork,
   guessProviderStateSelector,
   helpers,
   namespaceStateSelector,
 } from '@rango-dev/wallets-core';
+
+import { mapCaipNamespaceToNetwork } from './helpers';
 
 export function checkHubStateAndTriggerEvents(
   hub: Hub,
@@ -48,7 +52,15 @@ export function checkHubStateAndTriggerEvents(
         currentNamespaceState.accounts?.sort().toString()
       ) {
         if (currentNamespaceState.accounts) {
-          accounts = [...accounts, ...currentNamespaceState.accounts];
+          const formattedAddresses = currentNamespaceState.accounts.map(
+            (account) => {
+              const { chainId, address } = CAIP.AccountId.parse(account);
+              const network = mapCaipNamespaceToNetwork(chainId);
+              return formatAddressWithNetwork(address, network);
+            }
+          );
+
+          accounts = [...accounts, ...formattedAddresses];
           hasAccountChanged = true;
         }
       }

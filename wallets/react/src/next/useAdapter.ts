@@ -40,13 +40,6 @@ export function useAdapter(props: UseAdapterProps): ProviderContext {
       ) {
         hub.current.init();
 
-        /*
-         * checkHubStateAndTriggerEvents(
-         *   hub.current,
-         *   makeEventHandler(dispatch, props.onUpdateState)
-         * );
-         */
-
         rerender(currentRender + 1);
       }
     };

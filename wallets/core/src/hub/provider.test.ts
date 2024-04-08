@@ -85,7 +85,9 @@ describe('providers', () => {
       '0x000000000000000000000000000000000000dead',
     ]);
     // Since we didn't add any action regarding connect for `evm`
-    expect(() => wallet.get('evm')?.connect('0x1')).toThrowError();
+    await expect(async () =>
+      wallet.get('evm')?.connect('0x1')
+    ).rejects.toThrowError();
   });
 
   test('sets config properly', () => {

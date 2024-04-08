@@ -1,9 +1,11 @@
-import {
-  pickVersion,
+import type {
+  CAIP,
   type V1,
   type Versions,
   type VLegacy,
 } from '@rango-dev/wallets-core';
+
+import { pickVersion } from '@rango-dev/wallets-core';
 
 export function splitProviders(
   providers: Versions[],
@@ -38,4 +40,19 @@ export function findProviderByType(
   type: string
 ): V1 | undefined {
   return providers.find((provider) => provider.id === type);
+}
+
+export function mapCaipNamespaceToNetwork(
+  chainId: CAIP.ChainIdParams | string
+): string {
+  if (typeof chainId === 'string') {
+    return chainId;
+  }
+  const useNamespaceAsNetworkFor = ['solana'];
+
+  if (useNamespaceAsNetworkFor.includes(chainId.namespace.toLowerCase())) {
+    return chainId.namespace.toUpperCase();
+  }
+
+  return chainId.reference;
 }

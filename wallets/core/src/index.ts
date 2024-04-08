@@ -1,3 +1,5 @@
+import * as CAIP from 'caip';
+
 import { generateStoreId } from './hub';
 import { common } from './namespaces/common';
 import { evm } from './namespaces/evm';
@@ -46,3 +48,6 @@ export {
   legacyProviderImportsToVersionsInterface,
 } from './versions';
 export type { VLegacy, V1, Versions } from './versions';
+
+// TODO: This may not be a good idea, because it may causes breaking changes.
+export { CAIP };
