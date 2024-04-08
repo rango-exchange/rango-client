@@ -75,18 +75,24 @@ export const getSteps = ({
         ? step.internalSwaps.map((internalSwap) => {
             return {
               from: {
-                blockchain:
-                  getBlockchainShortNameFor(
-                    internalSwap.fromBlockchain,
-                    blockchains
-                  ) ?? '',
+                chain: {
+                  displayName:
+                    getBlockchainShortNameFor(
+                      internalSwap.fromBlockchain,
+                      blockchains
+                    ) ?? '',
+                  image: internalSwap.fromBlockchainLogo ?? '',
+                },
               },
               to: {
-                blockchain:
-                  getBlockchainShortNameFor(
-                    internalSwap.toBlockchain,
-                    blockchains
-                  ) ?? '',
+                chain: {
+                  displayName:
+                    getBlockchainShortNameFor(
+                      internalSwap.toBlockchain,
+                      blockchains
+                    ) ?? '',
+                  image: internalSwap.toBlockchainLogo ?? '',
+                },
               },
               swapper: {
                 displayName: getSwapperDisplayName(

@@ -98,7 +98,7 @@ export function QuoteTrigger(props: QuoteTriggerProps) {
                   <Tooltip
                     container={tooltipContainer}
                     side="bottom"
-                    align="right"
+                    align="end"
                     sideOffset={4}
                     content={
                       <div className={rowStyles()}>
@@ -169,7 +169,7 @@ export function QuoteTrigger(props: QuoteTriggerProps) {
                     <Tooltip
                       container={tooltipContainer}
                       side="bottom"
-                      align="right"
+                      align="end"
                       sideOffset={4}
                       content={
                         <div className={rowStyles()}>
