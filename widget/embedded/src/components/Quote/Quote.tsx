@@ -50,7 +50,7 @@ import {
   getPriceImpactLevel,
   sortTags,
 } from '../../utils/quote';
-import { getTotalFeeInUsd } from '../../utils/swap';
+import { getTotalFeeInUsd, getUsdFeeOfStep } from '../../utils/swap';
 
 import {
   AllRoutesButton,
@@ -116,17 +116,26 @@ export function Quote(props: QuoteProps) {
   );
   const priceImpactWarningLevel = getPriceImpactLevel(priceImpact ?? 0);
 
-  const getQuoteSteps = (swaps: SwapResult[]): Step[] => {
+  const getQuoteSteps = (
+    swaps: SwapResult[],
+    internalSwap?: boolean
+  ): Step[] => {
     return swaps.map((swap, index) => {
       let stepState: 'error' | 'warning' | undefined = undefined;
-      const stepHasError =
-        (error?.type === QuoteErrorType.BRIDGE_LIMIT &&
-          error.swap.swapperId === swap.swapperId) ||
-        (error?.type === QuoteErrorType.INSUFFICIENT_SLIPPAGE &&
-          error.recommendedSlippages?.has(index));
-      const stepHasWarning =
+      const hasBridgeLimitError =
+        error?.type === QuoteErrorType.BRIDGE_LIMIT &&
+        error.swap.swapperId === swap.swapperId;
+
+      const hasSlippageError =
+        error?.type === QuoteErrorType.INSUFFICIENT_SLIPPAGE &&
+        error.recommendedSlippages?.has(index);
+
+      const hasSlippageWarning =
         warning?.type === QuoteWarningType.INSUFFICIENT_SLIPPAGE &&
         warning.recommendedSlippages?.has(index);
+
+      const stepHasError = hasBridgeLimitError || hasSlippageError;
+      const stepHasWarning = hasSlippageWarning;
 
       if (stepHasError) {
         stepState = 'error';
@@ -138,7 +147,7 @@ export function Quote(props: QuoteProps) {
         ? i18n.t('Slippage Error')
         : i18n.t('Slippage Warning');
 
-      if (error?.type === QuoteErrorType.BRIDGE_LIMIT) {
+      if (hasBridgeLimitError) {
         alertTitle = error?.recommendation;
       }
 
@@ -158,7 +167,7 @@ export function Quote(props: QuoteProps) {
           },
           price: {
             value:
-              index === 0
+              index === 0 && !internalSwap
                 ? numberToString(
                     input.value,
                     TOKEN_AMOUNT_MIN_DECIMALS,
@@ -213,76 +222,86 @@ export function Quote(props: QuoteProps) {
         state: stepState,
         alerts:
           stepHasError || stepHasWarning ? (
-            <FooterStepAlarm>
+            <FooterStepAlarm dense={fullExpandedMode}>
               <Alert
                 variant="alarm"
                 type={stepHasError ? 'error' : 'warning'}
                 title={alertTitle}
                 footer={
-                  <FooterAlert>
-                    {error?.type === QuoteErrorType.BRIDGE_LIMIT && (
-                      <>
-                        <Typography
-                          size="xsmall"
-                          variant="body"
-                          color="neutral900">
-                          {error.fromAmountRangeError}
-                        </Typography>
-                        <Divider direction="horizontal" size={8} />
-                        <Typography
-                          size="xsmall"
-                          variant="body"
-                          color="neutral900">
-                          |
-                        </Typography>
-                        <Divider direction="horizontal" size={8} />
-                        <Typography
-                          size="xsmall"
-                          variant="body"
-                          color="neutral900">
-                          {i18n.t({
-                            id: 'Yours: {amount} {symbol}',
-                            values: {
-                              amount: numberToString(
-                                swap.fromAmount,
-                                TOKEN_AMOUNT_MIN_DECIMALS,
-                                TOKEN_AMOUNT_MAX_DECIMALS
-                              ),
-                              symbol: swap?.from.symbol,
-                            },
-                          })}
-                        </Typography>
-                      </>
-                    )}
-                    {(error?.type === QuoteErrorType.INSUFFICIENT_SLIPPAGE ||
-                      warning?.type ===
-                        QuoteWarningType.INSUFFICIENT_SLIPPAGE) && (
-                      <Typography
-                        size="xsmall"
-                        variant="body"
-                        color="neutral900">
-                        {i18n.t({
-                          id: 'Minimum required slippage is {minRequiredSlippage}',
-                          values: {
-                            ...(error?.type ===
-                              QuoteErrorType.INSUFFICIENT_SLIPPAGE && {
-                              minRequiredSlippage:
-                                error.recommendedSlippages?.get(index),
-                            }),
-                            ...(warning?.type ===
-                              QuoteWarningType.INSUFFICIENT_SLIPPAGE && {
-                              minRequiredSlippage:
-                                warning.recommendedSlippages?.get(index),
-                            }),
-                          },
-                        })}
-                      </Typography>
-                    )}
-                  </FooterAlert>
+                  !fullExpandedMode ? (
+                    <FooterAlert>
+                      {hasBridgeLimitError && (
+                        <>
+                          <Typography
+                            size="xsmall"
+                            variant="body"
+                            color="neutral900">
+                            {error.fromAmountRangeError}
+                          </Typography>
+                          <Divider direction="horizontal" size={8} />
+                          <Typography
+                            size="xsmall"
+                            variant="body"
+                            color="neutral900">
+                            |
+                          </Typography>
+                          <Divider direction="horizontal" size={8} />
+                          <Typography
+                            size="xsmall"
+                            variant="body"
+                            color="neutral900">
+                            {i18n.t({
+                              id: 'Yours: {amount} {symbol}',
+                              values: {
+                                amount: numberToString(
+                                  swap.fromAmount,
+                                  TOKEN_AMOUNT_MIN_DECIMALS,
+                                  TOKEN_AMOUNT_MAX_DECIMALS
+                                ),
+                                symbol: swap?.from.symbol,
+                              },
+                            })}
+                          </Typography>
+                        </>
+                      )}
+                      {(hasSlippageError || hasSlippageWarning) &&
+                        !hasBridgeLimitError && (
+                          <Typography
+                            size="xsmall"
+                            variant="body"
+                            color="neutral900">
+                            {i18n.t({
+                              id: 'Minimum required slippage is {minRequiredSlippage}',
+                              values: {
+                                ...(error?.type ===
+                                  QuoteErrorType.INSUFFICIENT_SLIPPAGE && {
+                                  minRequiredSlippage:
+                                    error.recommendedSlippages?.get(index),
+                                }),
+                                ...(warning?.type ===
+                                  QuoteWarningType.INSUFFICIENT_SLIPPAGE && {
+                                  minRequiredSlippage:
+                                    warning.recommendedSlippages?.get(index),
+                                }),
+                              },
+                            })}
+                          </Typography>
+                        )}
+                    </FooterAlert>
+                  ) : null
                 }
               />
             </FooterStepAlarm>
           ) : undefined,
+        time: roundedSecondsToString(swap.estimatedTimeInSeconds),
+        fee: numberToString(
+          getUsdFeeOfStep(swap, tokens),
+          GAS_FEE_MIN_DECIMALS,
+          GAS_FEE_MAX_DECIMALS
+        ),
+        internalSwaps: swap.internalSwaps
+          ? getQuoteSteps(swap.internalSwaps)
+          : undefined,
       };
     });
   };
@@ -392,8 +411,8 @@ export function Quote(props: QuoteProps) {
             <Tooltip
               content={formatTooltipNumbers(output.usdValue)}
               container={container}
-              style={{
-                display: 'flex',
+              styles={{
+                root: { display: 'flex' },
               }}>
               <Typography
                 color="$neutral600"
