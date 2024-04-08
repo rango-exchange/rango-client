@@ -15,6 +15,7 @@ export type QuoteProps = {
   showModalFee?: boolean;
   onClickAllRoutes?: () => void;
   fullExpandedMode?: boolean;
+  container?: HTMLElement;
 };
 
 export type optionProps = {
@@ -29,6 +30,7 @@ export type QuoteTriggerProps = {
   setExpanded: React.Dispatch<React.SetStateAction<boolean | undefined>>;
   steps: Step[];
   expanded?: boolean;
+  container?: HTMLElement;
 };
 
 export type QuoteTriggerImagesProps = {
@@ -37,6 +39,7 @@ export type QuoteTriggerImagesProps = {
   src: string;
   open?: boolean;
   className?: string;
+  container?: HTMLElement;
 };
 
 export type QuoteCostDetailsProps = {

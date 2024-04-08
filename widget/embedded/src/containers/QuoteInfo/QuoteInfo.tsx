@@ -26,6 +26,7 @@ export function QuoteInfo(props: PropTypes) {
     selected,
     onClickAllRoutes,
     fullExpandedMode = false,
+    container,
   } = props;
   const { inputAmount, inputUsdValue, toToken } = useQuoteStore();
 
@@ -59,6 +60,7 @@ export function QuoteInfo(props: PropTypes) {
       <Quote
         quote={quote}
         error={error}
+        container={container}
         showModalFee={showModalFee}
         warning={warning}
         tagHidden={tagHidden}

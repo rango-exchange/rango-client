@@ -26,6 +26,7 @@ export function HeaderButtons(props: HeaderButtonsPropTypes) {
     onClickHistory,
     onClickSettings,
     hidden = [],
+    container,
   } = props;
 
   const {
@@ -40,7 +41,7 @@ export function HeaderButtons(props: HeaderButtonsPropTypes) {
     <>
       {!hidden.includes('refresh') && (
         <Tooltip
-          container={getContainer()}
+          container={container || getContainer()}
           side="top"
           content={i18n.t('Refresh')}>
           <RefreshButton onClick={onClickRefresh} />
