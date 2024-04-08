@@ -15,4 +15,5 @@ export type PropTypes = {
   selected?: boolean;
   showModalFee?: boolean;
   fullExpandedMode?: boolean;
+  container?: HTMLElement;
 };
