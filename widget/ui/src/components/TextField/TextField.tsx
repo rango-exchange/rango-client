@@ -20,6 +20,16 @@ function TextFieldComponent(props: PropsWithChildren<PropTypes>, ref?: Ref) {
     labelProps,
     ...inputAttributes
   } = props;
+
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (inputAttributes?.type === 'number') {
+      const disallowedKeys = ['-', '+'];
+      if (disallowedKeys.includes(event.key)) {
+        event.preventDefault();
+      }
+    }
+  };
+
   return (
     <>
       {label && (
@@ -44,6 +54,7 @@ function TextFieldComponent(props: PropsWithChildren<PropTypes>, ref?: Ref) {
         {prefix || null}
         <Input
           {...inputAttributes}
+          onKeyDown={handleKeyDown}
           spellCheck={false}
           suffix={!!suffix}
           ref={ref}
