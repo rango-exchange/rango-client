@@ -27,6 +27,7 @@ export function Quotes(props: PropTypes) {
     showModalFee,
     hasSort = true,
     fullExpandedMode = false,
+    container: propContainer,
   } = props;
   const {
     selectedQuote,
@@ -39,6 +40,7 @@ export function Quotes(props: PropTypes) {
   } = useQuoteStore();
   const { slippage, customSlippage } = useAppStore();
   const tokens = useAppStore().tokens();
+  const container = propContainer || getContainer();
   const hasQuotes = !!quotes && quotes.results.length;
   const userSlippage = customSlippage ?? slippage;
   const getQuoteWarning = (quote: MultiRouteSimulationResult) => {
@@ -73,7 +75,7 @@ export function Quotes(props: PropTypes) {
             <Typography size="xmedium" variant="title">
               {i18n.t('Sort by')}
             </Typography>
-            <SelectStrategy container={getContainer()} />
+            <SelectStrategy container={container} />
           </StrategyContent>
           <Divider size="10" />
         </>
@@ -107,6 +109,7 @@ export function Quotes(props: PropTypes) {
                   <React.Fragment key={quote.requestId}>
                     <QuoteInfo
                       showModalFee={showModalFee}
+                      container={container}
                       selected={selectedQuote?.requestId === quote.requestId}
                       tagHidden={false}
                       quote={{ ...quote, requestAmount: quotes.requestAmount }}
