@@ -37,7 +37,7 @@ export interface CompleteModalPropTypes {
     displayName: string;
     image: string;
   };
-  description?: string;
+  description?: React.ReactNode;
   diagnosisUrl?: string | null;
 }
 
