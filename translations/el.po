@@ -8,7 +8,7 @@ msgstr ""
 "Language: el\n"
 "Project-Id-Version: rango\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-04-09 07:45\n"
+"PO-Revision-Date: 2024-04-09 07:52\n"
 "Last-Translator: \n"
 "Language-Team: Greek\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -17,26 +17,6 @@ msgstr ""
 "X-Crowdin-Language: el\n"
 "X-Crowdin-File: en.po\n"
 "X-Crowdin-File-ID: 30\n"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/RefreshModal/RefreshModal.tsx:22
-msgid "Something wrong"
-msgstr "Κάτι λάθος"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/RefreshModal/RefreshModal.tsx:24
-msgid "Something Wrong. Please refresh the app"
-msgstr "Κάτι Λάθος. Παρακαλώ ανανεώστε την εφαρμογή"
-
-#. js-lingui-explicit-id
-#: widget/ui/src/components/FullExpandedQuote/FullExpandedQuote.Tooltip.tsx:37
-msgid "Aggregated Transaction"
-msgstr "Συγκεντρωτική Συναλλαγή"
-
-#. js-lingui-explicit-id
-#: widget/ui/src/components/SwapListItem/SwapListItem.helpers.ts:10
-msgid "Completed"
-msgstr "Ολοκληρώθηκε"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:37
@@ -427,6 +407,16 @@ msgid "Confirm anyway"
 msgstr "Επιβεβαίωση ούτως ή άλλως"
 
 #. js-lingui-explicit-id
+#: widget/embedded/src/components/RefreshModal/RefreshModal.tsx:22
+msgid "Something wrong"
+msgstr "Κάτι λάθος"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/RefreshModal/RefreshModal.tsx:24
+msgid "Something Wrong. Please refresh the app"
+msgstr "Κάτι Λάθος. Παρακαλώ ανανεώστε την εφαρμογή"
+
+#. js-lingui-explicit-id
 #: widget/embedded/src/components/Slippage/Slippage.tsx:35
 msgid "Slippage tolerance per swap"
 msgstr "Ανοχή ολίσθησης ανά ανταλλαγή"
@@ -798,6 +788,20 @@ msgid "Loading failed"
 msgstr "Αποτυχία φόρτωσης"
 
 #. js-lingui-explicit-id
+#: widget/embedded/src/containers/Settings/Lists.tsx:153
+#: widget/embedded/src/pages/LiquiditySourcePage.tsx:41
+#: widget/ui/src/components/LiquiditySourceList/LiquiditySourceList.tsx:112
+msgid "Bridges"
+msgstr "Γέφυρες"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/containers/Settings/Lists.tsx:171
+#: widget/embedded/src/pages/LiquiditySourcePage.tsx:41
+#: widget/ui/src/components/LiquiditySourceList/LiquiditySourceList.tsx:151
+msgid "Exchanges"
+msgstr "Ανταλλαγές"
+
+#. js-lingui-explicit-id
 #: widget/embedded/src/containers/Settings/Lists.tsx:192
 #: widget/embedded/src/pages/LanguagePage.tsx:43
 msgid "Language"
@@ -847,20 +851,6 @@ msgstr "Αναζήτηση Συναλλαγής"
 #: widget/embedded/src/pages/LanguagePage.tsx:56
 msgid "language"
 msgstr "γλώσσα"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/containers/Settings/Lists.tsx:171
-#: widget/embedded/src/pages/LiquiditySourcePage.tsx:41
-#: widget/ui/src/components/LiquiditySourceList/LiquiditySourceList.tsx:151
-msgid "Exchanges"
-msgstr "Ανταλλαγές"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/containers/Settings/Lists.tsx:153
-#: widget/embedded/src/pages/LiquiditySourcePage.tsx:41
-#: widget/ui/src/components/LiquiditySourceList/LiquiditySourceList.tsx:112
-msgid "Bridges"
-msgstr "Γέφυρες"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/pages/LiquiditySourcePage.tsx:108
@@ -1044,6 +1034,11 @@ msgid "Change Slippage"
 msgstr "Αλλαγή Ολίσθησης"
 
 #. js-lingui-explicit-id
+#: widget/ui/src/components/FullExpandedQuote/FullExpandedQuote.Tooltip.tsx:37
+msgid "Aggregated Transaction"
+msgstr "Συγκεντρωτική Συναλλαγή"
+
+#. js-lingui-explicit-id
 #: widget/ui/src/components/SelectableCategoryList/SelectableCategoryList.tsx:63
 msgid "{blockchainCategory}"
 msgstr ""
@@ -1068,6 +1063,11 @@ msgstr "Λεπτομέρειες Ανταλλαγής"
 #: widget/ui/src/components/SwapListItem/SwapListItem.helpers.ts:8
 msgid "Failed"
 msgstr "Απέτυχε"
+
+#. js-lingui-explicit-id
+#: widget/ui/src/components/SwapListItem/SwapListItem.helpers.ts:10
+msgid "Completed"
+msgstr "Ολοκληρώθηκε"
 
 #. js-lingui-explicit-id
 #: widget/ui/src/components/SwapListItem/SwapListItem.helpers.ts:12
