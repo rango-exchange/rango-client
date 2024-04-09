@@ -125,6 +125,27 @@ export async function createPullRequest(pr) {
   return output;
 }
 
+export async function createComment(comment) {
+  const {commentBody, issueNumber} = comment;
+
+  if (!issueNumber || !commentBody) {
+    throw new GithubCommandError(
+      'Creating comment cannot proceed without required parameters. \n',
+      JSON.stringify({ issueNumber, commentBody })
+    );
+  }
+
+    const output = await execa('gh', ['issue', 'comment', issueNumber, '--body', commentBody])
+    .then(({ stdout }) => stdout)
+    .catch((err) => {
+      throw new GithubCommandError(
+        `Failed to add comment to issue. \n ${err.stdout || err} \n`
+      );
+    });
+
+    return output;
+}
+
 export function checkEnvironments() {
   const envs = {
     NPM_TOKEN: !!process.env.NPM_TOKEN,
