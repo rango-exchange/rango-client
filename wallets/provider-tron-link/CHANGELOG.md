@@ -1,3 +1,12 @@
+# [0.30.0](https://github.com/rango-exchange/rango-client/compare/provider-tron-link@0.29.0...provider-tron-link@0.30.0) (2024-04-09)
+
+
+### Bug Fixes
+
+* fix tron-link wallet connecting error ([ad61471](https://github.com/rango-exchange/rango-client/commit/ad614712d4a22a86164d6decf820fef19ff45f3c))
+
+
+
 # [0.29.0](https://github.com/rango-exchange/rango-client/compare/provider-tron-link@0.28.0...provider-tron-link@0.29.0) (2024-03-12)
 
 
