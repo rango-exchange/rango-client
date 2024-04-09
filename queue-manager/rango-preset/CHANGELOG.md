@@ -1,3 +1,12 @@
+# [0.30.0](https://github.com/rango-exchange/rango-client/compare/queue-manager-rango-preset@0.29.1...queue-manager-rango-preset@0.30.0) (2024-04-09)
+
+
+### Bug Fixes
+
+* fix widget event hook ([c8547b6](https://github.com/rango-exchange/rango-client/commit/c8547b6a31354afe13aa32c0b72be5b62b3f0d67))
+
+
+
 ## [0.29.1](https://github.com/rango-exchange/rango-client/compare/queue-manager-rango-preset@0.29.0...queue-manager-rango-preset@0.29.1) (2024-03-12)
 
 

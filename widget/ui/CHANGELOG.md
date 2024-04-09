@@ -1,3 +1,20 @@
+# [0.31.0](https://github.com/rango-exchange/rango-client/compare/ui@0.30.0...ui@0.31.0) (2024-04-09)
+
+
+### Bug Fixes
+
+* address tooltips position ([5ee60d1](https://github.com/rango-exchange/rango-client/commit/5ee60d1622dab29091d97578d417a2187f2ca6cf))
+* correct showing wallets on mobile screens ([89ead7f](https://github.com/rango-exchange/rango-client/commit/89ead7f68e88352dfd69c2a3d1c6cb0b8cf2e5d5))
+* fix modal transition duration ([2fb2536](https://github.com/rango-exchange/rango-client/commit/2fb2536e0349585730611ef356d6f7b7fe7d36a8))
+* fix number textfield getting value ([5e603a8](https://github.com/rango-exchange/rango-client/commit/5e603a8ad222701ed93da7ed6f3fc393ab279c15))
+
+
+### Features
+
+* implement hover state for full-expanded-route ([1c851d7](https://github.com/rango-exchange/rango-client/commit/1c851d7c62b71fe8f4aa6c05edbc0d6cc78d5437))
+
+
+
 # [0.30.0](https://github.com/rango-exchange/rango-client/compare/ui@0.29.0...ui@0.30.0) (2024-03-12)
 
 

@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/provider-frontier",
-  "version": "0.29.1-next.0",
+  "version": "0.30.0",
   "license": "MIT",
   "type": "module",
   "source": "./src/index.ts",
@@ -23,7 +23,7 @@
   "dependencies": {
     "@rango-dev/signer-evm": "^0.26.0",
     "@rango-dev/signer-solana": "^0.26.0",
-    "@rango-dev/wallets-shared": "^0.29.1-next.0",
+    "@rango-dev/wallets-shared": "^0.30.0",
     "rango-types": "^0.1.59"
   },
   "publishConfig": {
