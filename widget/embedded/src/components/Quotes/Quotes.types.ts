@@ -7,4 +7,5 @@ export type PropTypes = {
   showModalFee?: boolean;
   hasSort?: boolean;
   fullExpandedMode?: boolean;
+  container?: HTMLElement;
 };

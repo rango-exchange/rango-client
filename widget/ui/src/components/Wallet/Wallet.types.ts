@@ -13,6 +13,7 @@ export type WalletInfo = {
   title: string;
   image: string;
   type: string;
+  showOnMobile?: boolean;
 };
 
 export interface Info {

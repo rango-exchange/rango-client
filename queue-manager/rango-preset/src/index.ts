@@ -13,6 +13,8 @@ export type {
   Step,
   RouteEvent,
   StepEvent,
+  RouteEventData,
+  StepEventData,
   RouteStartedEvent,
   RouteSucceededEvent,
   RouteFailedEvent,

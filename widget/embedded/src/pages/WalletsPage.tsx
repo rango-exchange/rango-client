@@ -13,12 +13,11 @@ import { getContainer } from '../utils/common';
 
 const ListContainer = styled('div', {
   display: 'flex',
-  justifyContent: 'space-evenly',
+  justifyContent: 'center',
   alignItems: 'center',
   gap: '$10',
   flexWrap: 'wrap',
   paddingTop: '$5',
-  height: '100%',
 });
 
 const Container = styled(PageContainer, {

@@ -39,6 +39,16 @@ export const RouteContainer = styled('div', {
         borderColor: 'transparent',
       },
     },
+    hovered: {
+      true: {
+        '&:hover': {
+          backgroundColor: '$neutral200',
+          [`.${darkTheme} &`]: {
+            backgroundColor: '$neutral500',
+          },
+        },
+      },
+    },
   },
 });
 
@@ -61,34 +71,65 @@ export const TagsContainer = styled('div', {
 
 export const Steps = styled('div', {
   display: 'flex',
-  height: '102px',
+  height: '85px',
 });
 
 export const StepItem = styled('div', {
-  padding: '$2',
+  padding: '$10 $5 $5 0',
+  height: '100px',
   display: 'flex',
   width: '100%',
+  variants: {
+    isHovered: {
+      true: {
+        backgroundColor: '$neutral400',
+        boxShadow: '4px 4px 10px 0 #0000001A',
+        borderRadius: '$xs',
+        zIndex: 10,
+      },
+    },
+  },
 });
 
-export const LeftSection = styled(FlexCenter, {
+export const StepItemContainer = styled('div', {
+  width: '100%',
+  display: 'flex',
+  height: '100%',
+});
+
+export const TokenSectionContainer = styled(FlexCenter, {
   minWidth: '42px',
   position: 'relative',
+  variants: {
+    isInternalSwap: {
+      true: {
+        flexDirection: 'column',
+        gap: '$5',
+
+        '& .token-info': {
+          position: 'static',
+          flexDirection: 'column-reverse',
+        },
+      },
+    },
+  },
 });
 
-export const RightSection = styled('div', {
+export const SwapperSection = styled('div', {
   width: '100%',
   height: '50%',
   borderBottom: '1px dashed',
   borderColor: '$info300',
   display: 'flex',
   flexDirection: 'column',
+  justifyContent: 'flex-end',
   gap: '2px',
   [`.${darkTheme} &`]: {
     borderColor: '$secondary600',
   },
 });
 
-export const FromToken = styled(FlexCenter, {
+export const TokenInfo = styled(FlexCenter, {
   position: 'absolute',
   flexDirection: 'column',
   bottom: 0,
@@ -110,6 +151,15 @@ export const SwapperContainer = styled(FlexCenter, {
       color: '$neutral900',
     },
   },
+});
+
+export const SwapperContent = styled(FlexCenter, {
+  flexDirection: 'column',
+  width: 'fit-content',
+});
+
+export const SwapperImagesContainer = styled(FlexCenter, {
+  position: 'relative',
 });
 
 export const SwapperImage = styled(FlexCenter, {
@@ -183,7 +233,7 @@ export const lastStepStyle = css({
   '&::after': {
     content: '',
     position: 'absolute',
-    top: '50%',
+    bottom: '-6px',
     right: '-3px',
     transform: 'translate(-50%, -50%) rotate(45deg)',
     width: '$6',
@@ -207,8 +257,51 @@ export const Separator = styled('div', {
 });
 
 export const OutputLoading = styled(FlexCenter, {
-  padding: '0 $2',
+  padding: '$10 $2 0',
   height: '85px',
   gap: '$10',
   flexDirection: 'column',
+});
+
+export const SkeletonItemLeftContainer = styled('div', {
+  display: 'flex',
+  alignItems: 'center',
+  paddingTop: '$25',
+});
+
+// Styles for the tooltip
+
+export const TooltipContainer = styled('div', {
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'flex-start',
+  flexDirection: 'column',
+  gap: '$10',
+});
+
+export const TooltipHeader = styled('div', {
+  width: '100%',
+  variants: {
+    hasFooter: {
+      true: {
+        paddingBottom: '$5',
+        borderBottom: '1px solid',
+        borderColor: '$neutral500',
+        [`.${darkTheme} &`]: {
+          borderColor: '$neutral800',
+        },
+      },
+    },
+  },
+});
+
+export const TooltipFooter = styled(FlexCenter, {
+  width: '100%',
+  flexDirection: 'column',
+  alignItems: 'stretch',
+  gap: '$10',
+});
+
+export const Icon = styled('div', {
+  paddingBottom: '$20',
 });

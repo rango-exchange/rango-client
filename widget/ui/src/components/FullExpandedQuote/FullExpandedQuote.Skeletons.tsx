@@ -7,6 +7,7 @@ import {
   FlexCenter,
   OutputLoading,
   Separator,
+  SkeletonItemLeftContainer,
   VerticalLine,
 } from './FullExpandedQuote.styles';
 
@@ -24,11 +25,7 @@ export function SkeletonHeader() {
         css={{
           gap: '$5',
         }}>
-        <Skeleton width={74} variant="text" size="large" />
-        <Skeleton width={80} variant="text" size="large" />
-        <Skeleton width={75} variant="text" size="large" />
-        <Skeleton width={52} variant="text" size="large" />
-        <Skeleton width={95} variant="text" size="large" />
+        <Skeleton width={153} variant="text" size="large" />
       </FlexCenter>
     </>
   );
@@ -39,7 +36,7 @@ export function SkeletonOutput() {
     <OutputLoading>
       <ChainToken
         useAsPlaceholder={true}
-        size="medium"
+        size="large"
         chainImage=""
         tokenImage=""
         loading={true}
@@ -50,13 +47,9 @@ export function SkeletonOutput() {
 }
 export function SkeletonItemLeft() {
   return (
-    <div
-      style={{
-        display: 'flex',
-        alignItems: 'center',
-      }}>
+    <SkeletonItemLeftContainer>
       <Skeleton variant="rounded" width={42} height={49} />
-    </div>
+    </SkeletonItemLeftContainer>
   );
 }
 

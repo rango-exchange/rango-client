@@ -8,7 +8,7 @@ msgstr ""
 "Language: el\n"
 "Project-Id-Version: rango\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-03-12 08:20\n"
+"PO-Revision-Date: 2024-04-09 07:52\n"
 "Last-Translator: \n"
 "Language-Team: Greek\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -162,24 +162,25 @@ msgid "Cancel"
 msgstr "Ακύρωση"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/HeaderButtons/HeaderButtons.tsx:45
+#: widget/embedded/src/components/HeaderButtons/HeaderButtons.tsx:46
+#: widget/embedded/src/components/RefreshModal/RefreshModal.tsx:34
 msgid "Refresh"
 msgstr "Ανανέωση"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/HeaderButtons/HeaderButtons.tsx:61
+#: widget/embedded/src/components/HeaderButtons/HeaderButtons.tsx:62
 msgid "Notifications"
 msgstr "Ειδοποιήσεις"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/HeaderButtons/HeaderButtons.tsx:74
+#: widget/embedded/src/components/HeaderButtons/HeaderButtons.tsx:75
 #: widget/embedded/src/pages/ConfirmSwapPage.tsx:314
 #: widget/embedded/src/pages/SettingsPage.tsx:38
 msgid "Settings"
 msgstr "Ρυθμίσεις"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/HeaderButtons/HeaderButtons.tsx:84
+#: widget/embedded/src/components/HeaderButtons/HeaderButtons.tsx:85
 msgid "Transactions History"
 msgstr "Ιστορικό Συναλλαγών"
 
@@ -199,7 +200,7 @@ msgstr "Σήμερα"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/LoadingSwapDetails/LoadingSwapDetails.tsx:20
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:377
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:398
 msgid "Swaps steps"
 msgstr "Βήματα swaps"
 
@@ -220,27 +221,27 @@ msgid "There are no notifications."
 msgstr "Δεν υπάρχουν ειδοποιήσεις."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/Quote.tsx:138
+#: widget/embedded/src/components/Quote/Quote.tsx:148
 msgid "Slippage Error"
 msgstr "Σφάλμα Ολίσθησης"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/Quote.tsx:139
+#: widget/embedded/src/components/Quote/Quote.tsx:149
 msgid "Slippage Warning"
 msgstr "Προειδοποίηση Ολίσθησης"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/Quote.tsx:243
+#: widget/embedded/src/components/Quote/Quote.tsx:254
 msgid "Yours: {amount} {symbol}"
 msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/Quote.tsx:264
+#: widget/embedded/src/components/Quote/Quote.tsx:274
 msgid "Minimum required slippage is {minRequiredSlippage}"
 msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/Quote.tsx:366
+#: widget/embedded/src/components/Quote/Quote.tsx:386
 msgid "See All Routes"
 msgstr "Δείτε Όλες Τις Διαδρομές"
 
@@ -298,17 +299,17 @@ msgid "Estimated output"
 msgstr "Εκτιμώμενη έξοδος"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/QuoteTrigger.tsx:64
+#: widget/embedded/src/components/Quote/QuoteTrigger.tsx:65
 msgid "Via:"
 msgstr "Βιέννη:"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/QuoteTrigger.tsx:147
+#: widget/embedded/src/components/Quote/QuoteTrigger.tsx:150
 msgid "Chains:"
 msgstr "Αλυσίδες:"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quotes/Quotes.tsx:74
+#: widget/embedded/src/components/Quotes/Quotes.tsx:76
 msgid "Sort by"
 msgstr "Ταξινόμηση κατά"
 
@@ -406,6 +407,16 @@ msgid "Confirm anyway"
 msgstr "Επιβεβαίωση ούτως ή άλλως"
 
 #. js-lingui-explicit-id
+#: widget/embedded/src/components/RefreshModal/RefreshModal.tsx:22
+msgid "Something wrong"
+msgstr "Κάτι λάθος"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/RefreshModal/RefreshModal.tsx:24
+msgid "Something Wrong. Please refresh the app"
+msgstr "Κάτι Λάθος. Παρακαλώ ανανεώστε την εφαρμογή"
+
+#. js-lingui-explicit-id
 #: widget/embedded/src/components/Slippage/Slippage.tsx:35
 msgid "Slippage tolerance per swap"
 msgstr "Ανοχή ολίσθησης ανά ανταλλαγή"
@@ -432,13 +443,13 @@ msgstr "Αυτή η ρύθμιση εφαρμόζεται ανά βήμα (π.χ
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetails/SwapDetails.Placeholder.tsx:25
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:248
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:269
 msgid "Swap and Bridge"
 msgstr "Εναλλαγή και γέφυρα"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetails/SwapDetails.Placeholder.tsx:33
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:288
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:309
 msgid "Request ID"
 msgstr "Αναγνωριστικό Αίτησης"
 
@@ -454,27 +465,27 @@ msgid "Swap with request ID = {requestId} not found."
 msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:216
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:221
 msgid "You have received {amount} {token} in {conciseAddress} wallet on {chain} chain."
 msgstr "Έχετε λάβει {amount} {token} στο {conciseAddress} πορτοφόλι στο {chain} chain."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:232
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:244
 msgid "Transaction was not sent."
 msgstr "Η συναλλαγή δεν στάλθηκε."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:234
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:246
 msgid "{amount} {symbol} on {blockchain} remain in your wallet"
 msgstr "{amount} {symbol} στο {blockchain} παραμένουν στο πορτοφόλι σας"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:259
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:280
 msgid "Delete"
 msgstr "Διαγραφή"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:280
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:301
 msgid "Try again"
 msgstr "Προσπαθήστε ξανά"
 
@@ -681,7 +692,7 @@ msgstr "Επιβεβαίωση Τιμής Usd Άγνωστο"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/constants/messages.ts:6
-#: widget/embedded/src/pages/Home.tsx:156
+#: widget/embedded/src/pages/Home.tsx:157
 msgid "Swap"
 msgstr "Εναλλαγή"
 
@@ -752,7 +763,7 @@ msgid "From"
 msgstr "Από"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/containers/Inputs/Inputs.tsx:119
+#: widget/embedded/src/containers/Inputs/Inputs.tsx:117
 msgid "To"
 msgstr "Προς"
 
@@ -778,13 +789,17 @@ msgstr "Αποτυχία φόρτωσης"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/containers/Settings/Lists.tsx:153
-msgid "Enabled bridges"
-msgstr "Ενεργοποιημένες γέφυρες"
+#: widget/embedded/src/pages/LiquiditySourcePage.tsx:41
+#: widget/ui/src/components/LiquiditySourceList/LiquiditySourceList.tsx:112
+msgid "Bridges"
+msgstr "Γέφυρες"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/containers/Settings/Lists.tsx:171
-msgid "Enabled exchanges"
-msgstr "Ενεργοποιημένες ανταλλαγές"
+#: widget/embedded/src/pages/LiquiditySourcePage.tsx:41
+#: widget/ui/src/components/LiquiditySourceList/LiquiditySourceList.tsx:151
+msgid "Exchanges"
+msgstr "Ανταλλαγές"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/containers/Settings/Lists.tsx:192
@@ -838,18 +853,6 @@ msgid "language"
 msgstr "γλώσσα"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/LiquiditySourcePage.tsx:41
-#: widget/ui/src/components/LiquiditySourceList/LiquiditySourceList.tsx:151
-msgid "Exchanges"
-msgstr "Ανταλλαγές"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/pages/LiquiditySourcePage.tsx:41
-#: widget/ui/src/components/LiquiditySourceList/LiquiditySourceList.tsx:112
-msgid "Bridges"
-msgstr "Γέφυρες"
-
-#. js-lingui-explicit-id
 #: widget/embedded/src/pages/LiquiditySourcePage.tsx:108
 msgid "Deselect all"
 msgstr "Αποεπιλογή όλων"
@@ -900,13 +903,13 @@ msgid "The request ID is necessary to display the swap details."
 msgstr "Το αναγνωριστικό αιτήματος είναι απαραίτητο για την εμφάνιση των λεπτομερειών ανταλλαγής."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/WalletsPage.tsx:72
+#: widget/embedded/src/pages/WalletsPage.tsx:71
 #: widget/ui/src/containers/ConnectWalletsModal/ConnectWalletsModal.tsx:30
 msgid "Connect Wallets"
 msgstr "Σύνδεση Πορτοφολιών"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/WalletsPage.tsx:76
+#: widget/embedded/src/pages/WalletsPage.tsx:75
 msgid "Choose a wallet to connect."
 msgstr "Επιλέξτε ένα πορτοφόλι για σύνδεση."
 
@@ -1031,6 +1034,11 @@ msgid "Change Slippage"
 msgstr "Αλλαγή Ολίσθησης"
 
 #. js-lingui-explicit-id
+#: widget/ui/src/components/FullExpandedQuote/FullExpandedQuote.Tooltip.tsx:37
+msgid "Aggregated Transaction"
+msgstr "Συγκεντρωτική Συναλλαγή"
+
+#. js-lingui-explicit-id
 #: widget/ui/src/components/SelectableCategoryList/SelectableCategoryList.tsx:63
 msgid "{blockchainCategory}"
 msgstr ""
@@ -1058,8 +1066,8 @@ msgstr "Απέτυχε"
 
 #. js-lingui-explicit-id
 #: widget/ui/src/components/SwapListItem/SwapListItem.helpers.ts:10
-msgid "Complete"
-msgstr "Complete"
+msgid "Completed"
+msgstr "Ολοκληρώθηκε"
 
 #. js-lingui-explicit-id
 #: widget/ui/src/components/SwapListItem/SwapListItem.helpers.ts:12

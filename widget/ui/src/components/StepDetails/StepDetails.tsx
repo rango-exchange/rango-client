@@ -43,8 +43,8 @@ const StepDetailsComponent = forwardRef<HTMLDivElement, StepDetailsProps>(
       ? step.internalSwaps
       : [
           {
-            from: { blockchain: from.chain.displayName },
-            to: { blockchain: to.chain.displayName },
+            from,
+            to,
             swapper,
           },
         ];
@@ -100,14 +100,14 @@ const StepDetailsComponent = forwardRef<HTMLDivElement, StepDetailsProps>(
                         ? i18n.t({
                             id: 'Swap on {fromChain} via {swapper}',
                             values: {
-                              fromChain: swapperItem.from.blockchain,
+                              fromChain: swapperItem.from.chain.displayName,
                               swapper: swapperItem.swapper.displayName,
                             },
                           })
                         : i18n.t({
                             id: 'Bridge to {toChain} via {swapper}',
                             values: {
-                              toChain: swapperItem.to.blockchain,
+                              toChain: swapperItem.to.chain.displayName,
                               swapper: swapperItem.swapper.displayName,
                             },
                           })}
