@@ -5,6 +5,7 @@ import type { BlockchainMeta } from 'rango-sdk';
 import { WalletState } from '@rango-dev/ui';
 import { useWallets } from '@rango-dev/wallets-react';
 import {
+  detectMobileScreens,
   KEPLR_COMPATIBLE_WALLETS,
   type WalletType,
   WalletTypes,
@@ -47,12 +48,18 @@ export function useWalletList(params: Params) {
       walletConnectProjectId: config?.walletConnectProjectId,
     }) || ALL_SUPPORTED_WALLETS;
 
-  const wallets = mapWalletTypesToWalletInfo(
+  let wallets = mapWalletTypesToWalletInfo(
     state,
     getWalletInfo,
     listAvailableWalletTypes,
     chain
   );
+
+  wallets = detectMobileScreens()
+    ? wallets.filter(
+        (wallet) => wallet.showOnMobile || state(wallet.type).installed
+      )
+    : wallets;
 
   const sortedWallets = sortWalletsBasedOnConnectionState(wallets);
   const [error, setError] = useState('');

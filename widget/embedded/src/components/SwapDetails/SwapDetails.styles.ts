@@ -1,4 +1,4 @@
-import { css, darkTheme, styled } from '@rango-dev/ui';
+import { css, darkTheme, styled, Typography } from '@rango-dev/ui';
 
 import { ScrollableArea } from '../Layout';
 
@@ -84,4 +84,13 @@ export const StyledLink = styled('a', {
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
+});
+
+export const ErrorMessages = styled('div', {
+  display: 'flex',
+  flexDirection: 'column',
+  gap: '$5',
+});
+export const MessageText = styled(Typography, {
+  wordBreak: 'break-all',
 });

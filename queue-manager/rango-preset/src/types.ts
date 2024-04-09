@@ -278,7 +278,10 @@ export type RouteEvent =
   | RouteSucceededEvent
   | RouteFailedEvent;
 
+export type RouteEventData = { route: Route; event: RouteEvent };
+export type StepEventData = { route: Route; step: Step; event: StepEvent };
+
 export type RouteExecutionEvents = {
-  [MainEvents.RouteEvent]: { route: Route; event: RouteEvent };
-  [MainEvents.StepEvent]: { route: Route; step: Step; event: StepEvent };
+  [MainEvents.RouteEvent]: RouteEventData;
+  [MainEvents.StepEvent]: StepEventData;
 };

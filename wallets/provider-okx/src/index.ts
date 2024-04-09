@@ -63,10 +63,10 @@ export const subscribe: Subscribe = ({ instance, updateAccounts, meta }) => {
     const [{ accounts, chainId }] = await getSolanaAccounts(instance);
     updateAccounts(accounts, chainId);
   };
-  ethInstance?.on('accountsChanged', handleEvmAccountsChanged);
+  ethInstance?.on?.('accountsChanged', handleEvmAccountsChanged);
 
   return () => {
-    ethInstance?.off('accountsChanged', handleEvmAccountsChanged);
+    ethInstance?.off?.('accountsChanged', handleEvmAccountsChanged);
   };
 };
 

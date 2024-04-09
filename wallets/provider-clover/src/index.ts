@@ -58,7 +58,7 @@ export const subscribe: Subscribe = ({
 }) => {
   const ethInstance = chooseInstance(instance, meta, Networks.ETHEREUM);
   const solanaInstance = chooseInstance(instance, meta, Networks.SOLANA);
-  ethInstance?.on('accountsChanged', async (addresses: string[]) => {
+  ethInstance?.on?.('accountsChanged', async (addresses: string[]) => {
     if (state.connected) {
       if (ethInstance) {
         const eth_chainId = meta

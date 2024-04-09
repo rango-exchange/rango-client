@@ -129,6 +129,7 @@ export const StepSeparator = styled('div', {
 
 export const tokensContainerStyles = css({
   width: '100%',
+  overflow: 'hidden',
 });
 
 export const swappersStyles = css({

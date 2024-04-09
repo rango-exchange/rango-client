@@ -107,9 +107,7 @@ export function Inputs(props: PropTypes) {
           loadingBalance={fetchingBalance}
           tooltipContainer={getContainer()}
           onSelectMaxBalance={() => {
-            if (fromTokenFormattedBalance !== '0') {
-              setInputAmount(tokenBalanceReal.split(',').join(''));
-            }
+            setInputAmount(tokenBalanceReal.split(',').join(''));
           }}
         />
         <SwitchFromAndToButton />

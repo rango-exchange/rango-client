@@ -19,18 +19,27 @@ export function Tooltip(props: PropsWithChildren<PropTypes>) {
     container,
     open,
     side = 'top',
-    style,
+    styles,
     align,
   } = props;
+
   return (
     <RadixTooltip.Provider delayDuration={0}>
       <RadixTooltip.Root open={open}>
-        <RadixTooltip.Trigger asChild style={style}>
+        <RadixTooltip.Trigger asChild style={styles?.root}>
           <TriggerContent>{children}</TriggerContent>
         </RadixTooltip.Trigger>
         <RadixTooltip.Portal container={container}>
-          <TooltipContent align={align} side={side} sideOffset={sideOffset}>
-            <TooltipTypography variant="label" size="medium" color={color}>
+          <TooltipContent
+            align={align}
+            side={side}
+            sideOffset={sideOffset}
+            collisionBoundary={container}>
+            <TooltipTypography
+              css={styles?.content}
+              variant="label"
+              size="medium"
+              color={color}>
               {content}
             </TooltipTypography>
           </TooltipContent>

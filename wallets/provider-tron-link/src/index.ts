@@ -37,9 +37,7 @@ export const connect: Connect = async ({ instance }) => {
       throw new Error(r.message);
     }
   }
-  const address = instance.tronWeb.address.fromHex(
-    (await instance.tronWeb.trx.getAccount()).address.toString()
-  );
+  const address = instance.tronWeb.defaultAddress.base58;
   // TODO check connected network
   return { accounts: address ? [address] : [], chainId: Networks.TRON };
 };

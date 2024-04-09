@@ -8,6 +8,7 @@ export const Container = styled('div', {
 });
 
 export const Description = styled('div', {
+  width: '100%',
   textAlign: 'center',
 });
 

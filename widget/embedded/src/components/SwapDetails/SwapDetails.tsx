@@ -43,7 +43,7 @@ import { getContainer } from '../../utils/common';
 import {
   formatTooltipNumbers,
   numberToString,
-  secondsToString,
+  roundedSecondsToString,
   totalArrivalTime,
 } from '../../utils/numbers';
 import { getPriceImpact, getPriceImpactLevel } from '../../utils/quote';
@@ -64,7 +64,9 @@ import {
 
 import { getSteps, getStepState, RESET_INTERVAL } from './SwapDetails.helpers';
 import {
+  ErrorMessages,
   HeaderDetails,
+  MessageText,
   outputStyles,
   requestIdStyles,
   rowStyles,
@@ -211,36 +213,55 @@ export function SwapDetails(props: SwapDetailsProps) {
 
   const percentageChange = getPriceImpact(inputUsdValue, outputUsdValue);
 
+  const stepDetailMessage =
+    stepMessage.detailedMessage.content || stepMessage.shortMessage;
+
   const completeModalDesc =
-    swap.status === 'success'
-      ? i18n.t({
-          id: 'You have received {amount} {token} in {conciseAddress} wallet on {chain} chain.',
-          values: {
-            amount: numberToString(
-              outputAmount,
-              TOKEN_AMOUNT_MIN_DECIMALS,
-              TOKEN_AMOUNT_MAX_DECIMALS
-            ),
-            token: steps[numberOfSteps - 1].to.token.displayName,
-            conciseAddress: getConciseAddress(
-              swap.wallets[steps[numberOfSteps - 1].to.chain.displayName]
-                ?.address || ''
-            ),
-            chain: steps[numberOfSteps - 1].to.chain.displayName,
-          },
-        })
-      : `${i18n.t('Transaction was not sent.')} ${
-          lastConvertedTokenInFailedSwap
-            ? i18n.t({
+    swap.status === 'success' ? (
+      i18n.t({
+        id: 'You have received {amount} {token} in {conciseAddress} wallet on {chain} chain.',
+        values: {
+          amount: numberToString(
+            outputAmount,
+            TOKEN_AMOUNT_MIN_DECIMALS,
+            TOKEN_AMOUNT_MAX_DECIMALS
+          ),
+          token: steps[numberOfSteps - 1].to.token.displayName,
+          conciseAddress: getConciseAddress(
+            swap.wallets[steps[numberOfSteps - 1].to.chain.displayName]
+              ?.address || ''
+          ),
+          chain: steps[numberOfSteps - 1].to.chain.displayName,
+        },
+      })
+    ) : (
+      <ErrorMessages>
+        <Typography
+          variant="body"
+          size="medium"
+          color="neutral700"
+          align="center">
+          {!stepDetailMessage ? i18n.t('Transaction was not sent.') : ''}
+          {lastConvertedTokenInFailedSwap
+            ? `${i18n.t({
                 id: '{amount} {symbol} on {blockchain} remain in your wallet',
                 values: {
                   amount: lastConvertedTokenInFailedSwap.outputAmount,
                   symbol: lastConvertedTokenInFailedSwap.symbol,
                   blockchain: lastConvertedTokenInFailedSwap.blockchain,
                 },
-              })
-            : ''
-        }`;
+              })}`
+            : ''}
+        </Typography>
+        <MessageText
+          align="center"
+          variant="body"
+          size="medium"
+          color="neutral700">
+          {stepDetailMessage}
+        </MessageText>
+      </ErrorMessages>
+    );
 
   return (
     <Layout
@@ -320,7 +341,7 @@ export function SwapDetails(props: SwapDetailsProps) {
               GAS_FEE_MIN_DECIMALS,
               GAS_FEE_MAX_DECIMALS
             )}
-            time={secondsToString(totalArrivalTime(swap.steps))}
+            time={roundedSecondsToString(totalArrivalTime(swap.steps))}
             steps={numberOfSteps}
           />
           <QuoteSummary

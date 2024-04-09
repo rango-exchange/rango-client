@@ -6,12 +6,19 @@ import { BigNumber } from 'bignumber.js';
 
 import { TOOLTIP_DECIMALS } from '../constants/routing';
 
-export const secondsToString = (s: number): string => {
-  const seconds = (s % 60).toString().padStart(2, '0');
-  const minutes = parseInt((s / 60).toString())
+/*
+ * if time > 1h -> rounded with 5 minutes precision
+ * if time < 1h -> rounded with 15 seconds precision
+ */
+export const roundedSecondsToString = (s: number): string => {
+  const seconds = Math.floor((s % 60) / 15) * 15;
+  const minutes = parseInt((s / 60).toString());
+  if (minutes >= 60) {
+    return `${Math.floor(minutes / 5) * 5}:00`;
+  }
+  return `${minutes.toString().padStart(2, '0')}:${seconds
     .toString()
-    .padStart(2, '0');
-  return `${minutes}:${seconds}`;
+    .padStart(2, '0')}`;
 };
 
 export const numberToString = (
