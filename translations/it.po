@@ -8,7 +8,7 @@ msgstr ""
 "Language: it\n"
 "Project-Id-Version: rango\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-04-09 07:45\n"
+"PO-Revision-Date: 2024-04-09 07:52\n"
 "Last-Translator: \n"
 "Language-Team: Italian\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -17,26 +17,6 @@ msgstr ""
 "X-Crowdin-Language: it\n"
 "X-Crowdin-File: en.po\n"
 "X-Crowdin-File-ID: 30\n"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/RefreshModal/RefreshModal.tsx:22
-msgid "Something wrong"
-msgstr "Qualcosa di sbagliato"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/RefreshModal/RefreshModal.tsx:24
-msgid "Something Wrong. Please refresh the app"
-msgstr "Qualcosa di sbagliato. Si prega di aggiornare l'applicazione"
-
-#. js-lingui-explicit-id
-#: widget/ui/src/components/FullExpandedQuote/FullExpandedQuote.Tooltip.tsx:37
-msgid "Aggregated Transaction"
-msgstr "Transazione Aggregata"
-
-#. js-lingui-explicit-id
-#: widget/ui/src/components/SwapListItem/SwapListItem.helpers.ts:10
-msgid "Completed"
-msgstr "Completato"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:37
@@ -427,6 +407,16 @@ msgid "Confirm anyway"
 msgstr "Conferma comunque"
 
 #. js-lingui-explicit-id
+#: widget/embedded/src/components/RefreshModal/RefreshModal.tsx:22
+msgid "Something wrong"
+msgstr "Qualcosa di sbagliato"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/RefreshModal/RefreshModal.tsx:24
+msgid "Something Wrong. Please refresh the app"
+msgstr "Qualcosa di sbagliato. Si prega di aggiornare l'applicazione"
+
+#. js-lingui-explicit-id
 #: widget/embedded/src/components/Slippage/Slippage.tsx:35
 msgid "Slippage tolerance per swap"
 msgstr "Tolleranza slippage per swap"
@@ -798,6 +788,20 @@ msgid "Loading failed"
 msgstr "Caricamento fallito"
 
 #. js-lingui-explicit-id
+#: widget/embedded/src/containers/Settings/Lists.tsx:153
+#: widget/embedded/src/pages/LiquiditySourcePage.tsx:41
+#: widget/ui/src/components/LiquiditySourceList/LiquiditySourceList.tsx:112
+msgid "Bridges"
+msgstr "Ponti"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/containers/Settings/Lists.tsx:171
+#: widget/embedded/src/pages/LiquiditySourcePage.tsx:41
+#: widget/ui/src/components/LiquiditySourceList/LiquiditySourceList.tsx:151
+msgid "Exchanges"
+msgstr "Scambi"
+
+#. js-lingui-explicit-id
 #: widget/embedded/src/containers/Settings/Lists.tsx:192
 #: widget/embedded/src/pages/LanguagePage.tsx:43
 msgid "Language"
@@ -847,20 +851,6 @@ msgstr "Ricerca Transazione"
 #: widget/embedded/src/pages/LanguagePage.tsx:56
 msgid "language"
 msgstr "lingua"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/containers/Settings/Lists.tsx:171
-#: widget/embedded/src/pages/LiquiditySourcePage.tsx:41
-#: widget/ui/src/components/LiquiditySourceList/LiquiditySourceList.tsx:151
-msgid "Exchanges"
-msgstr "Scambi"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/containers/Settings/Lists.tsx:153
-#: widget/embedded/src/pages/LiquiditySourcePage.tsx:41
-#: widget/ui/src/components/LiquiditySourceList/LiquiditySourceList.tsx:112
-msgid "Bridges"
-msgstr "Ponti"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/pages/LiquiditySourcePage.tsx:108
@@ -1044,6 +1034,11 @@ msgid "Change Slippage"
 msgstr "Cambia Slippage"
 
 #. js-lingui-explicit-id
+#: widget/ui/src/components/FullExpandedQuote/FullExpandedQuote.Tooltip.tsx:37
+msgid "Aggregated Transaction"
+msgstr "Transazione Aggregata"
+
+#. js-lingui-explicit-id
 #: widget/ui/src/components/SelectableCategoryList/SelectableCategoryList.tsx:63
 msgid "{blockchainCategory}"
 msgstr "{blockchainCategory}"
@@ -1068,6 +1063,11 @@ msgstr "Scambia Dettagli"
 #: widget/ui/src/components/SwapListItem/SwapListItem.helpers.ts:8
 msgid "Failed"
 msgstr "Fallito"
+
+#. js-lingui-explicit-id
+#: widget/ui/src/components/SwapListItem/SwapListItem.helpers.ts:10
+msgid "Completed"
+msgstr "Completato"
 
 #. js-lingui-explicit-id
 #: widget/ui/src/components/SwapListItem/SwapListItem.helpers.ts:12
