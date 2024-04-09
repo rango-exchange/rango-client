@@ -54,5 +54,9 @@ export function mapCaipNamespaceToNetwork(
     return chainId.namespace.toUpperCase();
   }
 
+  if (chainId.namespace.toLowerCase() === 'eip155') {
+    return 'ETH';
+  }
+
   return chainId.reference;
 }

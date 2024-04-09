@@ -1,6 +1,8 @@
 import type { NamespaceProvider } from './types';
 import type { Context } from '../../hub/namespace';
 
+import { AccountId } from 'caip';
+
 import { recommended as commonRecommended } from '../common/actions';
 
 import { getAccounts } from './utils';
@@ -23,8 +25,18 @@ export function connect(instance: () => NamespaceProvider) {
 
       const result = await getAccounts(evmInstance);
 
-      console.log('you are a trader? using evm?', result);
-      return result.accounts;
+      const formatAccounts = result.accounts.map((account) =>
+        AccountId.format({
+          address: account,
+          // TODO: export from core
+          chainId: {
+            namespace: 'eip155',
+            reference: '1',
+          },
+        })
+      );
+      console.log('you are a trader? using evm?', result, formatAccounts);
+      return formatAccounts;
     },
   ] as const;
 }
