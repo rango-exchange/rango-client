@@ -73,17 +73,17 @@ function Main(props: PropsWithChildren<PropTypes>) {
         disconnectWallet(type);
       }
     }
-    if (event === Events.ACCOUNTS && state.connected) {
+    if (
+      (event === Events.ACCOUNTS && state.connected) ||
+      // Hub works differently, and this check should be enough.
+      (event === Events.ACCOUNTS && meta.isHub)
+    ) {
       const key = `${type}-${state.network}-${value}`;
 
-      if (state.connected) {
-        if (!!onConnectWalletHandler.current) {
-          onConnectWalletHandler.current(key);
-        } else {
-          console.warn(
-            `onConnectWallet handler hasn't been set. Are you sure?`
-          );
-        }
+      if (!!onConnectWalletHandler.current) {
+        onConnectWalletHandler.current(key);
+      } else {
+        console.warn(`onConnectWallet handler hasn't been set. Are you sure?`);
       }
     }
 

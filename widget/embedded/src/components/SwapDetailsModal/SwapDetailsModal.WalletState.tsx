@@ -1,13 +1,21 @@
 import type { WalletStateContentProps } from './SwapDetailsModal.types';
+import type { NamespaceAndNetwork } from '@rango-dev/wallets-core';
 
 import { MessageBox, Wallet } from '@rango-dev/ui';
 import { useWallets } from '@rango-dev/wallets-react';
-import React from 'react';
+import React, { useState } from 'react';
 
 import { getContainer } from '../../utils/common';
 import { mapStatusToWalletState } from '../../utils/wallets';
+import { WalletNamespacesListModal } from '../WalletModal';
 
 import { WalletContainer } from './SwapDetailsModal.styles';
+
+// TODO: Same as widget/embedded/src/pages/WalletsPage.tsx
+interface NamespaceValue {
+  providerId: string;
+  namespaces: NamespaceAndNetwork[];
+}
 
 export const WalletStateContent = (props: WalletStateContentProps) => {
   const {
@@ -26,6 +34,13 @@ export const WalletStateContent = (props: WalletStateContentProps) => {
   const walletInfo = walletType ? getWalletInfo(walletType) : null;
   const shouldShowWallet =
     showWalletButton && !!walletType && !!walletState && !!walletInfo;
+  const detachedInstances = walletInfo?.properties?.find(
+    (item) => item.name === 'detached'
+  );
+  const [openNamespacesModal, setOpenNamespacesModal] = useState<
+    NamespaceValue | undefined
+  >(undefined);
+
   return (
     <>
       <MessageBox type={type} title={title} description={message} />
@@ -39,7 +54,35 @@ export const WalletStateContent = (props: WalletStateContentProps) => {
             state={walletState}
             link={walletInfo.installLink}
             disabled={walletButtonDisabled}
-            onClick={async () => connect(walletType)}
+            onClick={() => {
+              if (detachedInstances) {
+                setOpenNamespacesModal({
+                  providerId: walletType,
+                  /*
+                   * TODO: What i'm trying to here is connecting a namespace with no force to connect to a specific network.
+                   * Code here works but it has implicit intentions.
+                   */
+                  namespaces: detachedInstances.value.map((namespace) => ({
+                    namespace,
+                    network: undefined,
+                  })),
+                });
+              } else {
+                void connect(walletType);
+              }
+            }}
+          />
+          <WalletNamespacesListModal
+            open={!!openNamespacesModal}
+            onClose={() => setOpenNamespacesModal(undefined)}
+            onConfirm={(namespaces) => {
+              console.log('user selected these:', { namespaces });
+              if (openNamespacesModal) {
+                void connect(openNamespacesModal.providerId, namespaces);
+              }
+              setOpenNamespacesModal(undefined);
+            }}
+            namespaces={openNamespacesModal?.namespaces || []}
           />
         </WalletContainer>
       )}
