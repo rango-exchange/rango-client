@@ -1,11 +1,9 @@
-import type {
+import { type V1, type Versions, type VLegacy } from '@rango-dev/wallets-core';
+import {
   CAIP,
-  type V1,
-  type Versions,
-  type VLegacy,
+  formatAddressWithNetwork,
+  pickVersion,
 } from '@rango-dev/wallets-core';
-
-import { pickVersion } from '@rango-dev/wallets-core';
 
 export function splitProviders(
   providers: Versions[],
@@ -59,4 +57,10 @@ export function mapCaipNamespaceToNetwork(
   }
 
   return chainId.reference;
+}
+
+export function fromAccountIdToLegacyAddressFormat(account: string) {
+  const { chainId, address } = CAIP.AccountId.parse(account);
+  const network = mapCaipNamespaceToNetwork(chainId);
+  return formatAddressWithNetwork(address, network);
 }

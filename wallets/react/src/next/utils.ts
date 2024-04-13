@@ -5,15 +5,13 @@ import type {
 } from '@rango-dev/wallets-core';
 
 import {
-  CAIP,
   Events,
-  formatAddressWithNetwork,
   guessProviderStateSelector,
   helpers,
   namespaceStateSelector,
 } from '@rango-dev/wallets-core';
 
-import { mapCaipNamespaceToNetwork } from './helpers';
+import { fromAccountIdToLegacyAddressFormat } from './helpers';
 
 export function checkHubStateAndTriggerEvents(
   hub: Hub,
@@ -21,9 +19,6 @@ export function checkHubStateAndTriggerEvents(
   previous: State,
   onUpdateState: WalletEventHandler
 ) {
-  const result = hub.state();
-  console.log('[checkHubStateAndTriggerEvents]', result, { previous, current });
-
   hub.getAll().forEach((provider, providerId) => {
     const currentProviderState = guessProviderStateSelector(
       current,
@@ -41,23 +36,31 @@ export function checkHubStateAndTriggerEvents(
      * current value: []
      */
     let hasAccountChanged = false;
+    let hasNetworkChanged = false;
+    // It will pick the last network from namespaces.
+    let maybeNetwork = null;
     provider.getAll().forEach((namespace) => {
       const storeId = helpers.generateStoreId(providerId, namespace.namespace);
       const currentNamespaceState = namespaceStateSelector(current, storeId);
       const previousNamespaceState = namespaceStateSelector(previous, storeId);
 
-      //
+      if (currentNamespaceState.network !== null) {
+        maybeNetwork = currentNamespaceState.network;
+      }
+
+      // Check for network
+      if (currentNamespaceState.network !== previousNamespaceState.network) {
+        hasNetworkChanged = true;
+      }
+
+      // Check for accounts
       if (
         previousNamespaceState.accounts?.sort().toString() !==
         currentNamespaceState.accounts?.sort().toString()
       ) {
         if (currentNamespaceState.accounts) {
           const formattedAddresses = currentNamespaceState.accounts.map(
-            (account) => {
-              const { chainId, address } = CAIP.AccountId.parse(account);
-              const network = mapCaipNamespaceToNetwork(chainId);
-              return formatAddressWithNetwork(address, network);
-            }
+            fromAccountIdToLegacyAddressFormat
           );
 
           accounts = [...accounts, ...formattedAddresses];
@@ -71,13 +74,14 @@ export function checkHubStateAndTriggerEvents(
       connecting: currentProviderState.connecting,
       installed: currentProviderState.installed,
       accounts: accounts,
-      network: null,
+      network: maybeNetwork,
       reachable: true,
     };
 
     const eventInfo = {
       supportedBlockchains: [],
       isContractWallet: false,
+      isHub: true,
     };
 
     if (previousProviderState.installed !== currentProviderState.installed) {
@@ -112,6 +116,15 @@ export function checkHubStateAndTriggerEvents(
         providerId,
         Events.ACCOUNTS,
         accounts,
+        coreState,
+        eventInfo
+      );
+    }
+    if (hasNetworkChanged) {
+      onUpdateState(
+        providerId,
+        Events.NETWORK,
+        maybeNetwork,
         coreState,
         eventInfo
       );

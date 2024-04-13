@@ -18,6 +18,8 @@ export type EventHandler = (
 export type EventInfo = {
   supportedBlockchains: BlockchainMeta[];
   isContractWallet: boolean;
+  // This is for Hub and be able to make it compatible with legacy behavior.
+  isHub: boolean;
 };
 
 export interface LegacyState {
@@ -49,6 +51,7 @@ class Wallet<InstanceType = any> {
     this.info = {
       supportedBlockchains: [],
       isContractWallet: false,
+      isHub: false,
     };
     this.state = {
       connected: false,
@@ -397,6 +400,7 @@ class Wallet<InstanceType = any> {
       const eventInfo: EventInfo = {
         supportedBlockchains: this.info.supportedBlockchains,
         isContractWallet: this.info.isContractWallet,
+        isHub: false,
       };
       this.options.handler(
         this.options.config.type,

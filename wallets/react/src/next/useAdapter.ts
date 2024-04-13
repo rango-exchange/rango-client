@@ -1,11 +1,11 @@
 import type { ProviderContext, ProviderProps } from '../legacy/types';
-import type { V1, Versions } from '@rango-dev/wallets-core';
+import type { Store, V1, Versions } from '@rango-dev/wallets-core';
 import type { WalletInfo } from '@rango-dev/wallets-shared';
 
 import { createStore, Hub } from '@rango-dev/wallets-core';
 import { useEffect, useRef, useState } from 'react';
 
-import { splitProviders } from './helpers';
+import { fromAccountIdToLegacyAddressFormat, splitProviders } from './helpers';
 import { checkHubStateAndTriggerEvents } from './utils';
 
 export type UseAdapterProps = Omit<ProviderProps, 'providers'> & {
@@ -13,32 +13,53 @@ export type UseAdapterProps = Omit<ProviderProps, 'providers'> & {
   // This is only will be used to access some parts of the legacy provider that doesn't exists in Hub.
   __all: Versions[];
 };
-export function useAdapter(props: UseAdapterProps): ProviderContext {
-  const store = useRef(createStore());
-  const hub = useRef(
-    new Hub({
-      store: store.current,
-    })
-  );
-  const [currentRender, rerender] = useState(0);
 
-  // Initialize instances
-  useEffect(() => {
+export function useAdapter(props: UseAdapterProps): ProviderContext {
+  const store = useRef<Store>(null);
+  // https://react.dev/reference/react/useRef#avoiding-recreating-the-ref-contents
+  function getStore() {
+    if (store.current !== null) {
+      return store.current;
+    }
+    const createdStore = createStore();
+    //eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    //@ts-ignore
+    store.current = createdStore;
+    return createdStore;
+  }
+
+  const hub = useRef<Hub>(null);
+  function getHub() {
+    if (hub.current !== null) {
+      return hub.current;
+    }
+    const createdHub = new Hub({
+      store: getStore(),
+    });
     /*
      * First add providers to hub
      * This helps to `getWalletInfo` be usable, before initialize.
      */
     props.providers.forEach((provider) => {
-      hub.current.add(provider.id, provider);
+      createdHub.add(provider.id, provider);
     });
 
+    //eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    //@ts-ignore
+    hub.current = createdHub;
+    return createdHub;
+  }
+  const [currentRender, rerender] = useState(0);
+
+  // Initialize instances
+  useEffect(() => {
     // Then will call init whenever page is ready.
     const initHubWhenPageIsReady = (event: Event) => {
       if (
         event.target &&
         (event.target as Document).readyState === 'complete'
       ) {
-        hub.current.init();
+        getHub().init();
 
         rerender(currentRender + 1);
       }
@@ -50,11 +71,10 @@ export function useAdapter(props: UseAdapterProps): ProviderContext {
      */
     document.addEventListener('readystatechange', initHubWhenPageIsReady);
 
-    store.current.subscribe((curr, prev) => {
-      console.log('[store][subscribe]', prev, curr);
+    getStore().subscribe((curr, prev) => {
       if (props.onUpdateState) {
         checkHubStateAndTriggerEvents(
-          hub.current,
+          getHub(),
           curr,
           prev,
           props.onUpdateState
@@ -68,7 +88,7 @@ export function useAdapter(props: UseAdapterProps): ProviderContext {
     canSwitchNetworkTo(type, network) {
       const [legacy] = splitProviders(props.__all);
       const provider = legacy.find((legacyProvider) => {
-        legacyProvider.config.type === type;
+        return legacyProvider.config.type === type;
       });
       if (!provider) {
         console.warn(
@@ -90,7 +110,7 @@ export function useAdapter(props: UseAdapterProps): ProviderContext {
       });
     },
     async connect(type, namespaces) {
-      const wallet = hub.current.get(type);
+      const wallet = getHub().get(type);
       if (!wallet) {
         throw new Error(
           `You should add ${type} to provider first then call 'connect'.`
@@ -99,7 +119,7 @@ export function useAdapter(props: UseAdapterProps): ProviderContext {
 
       if (!namespaces) {
         // TODO: I think this should be wallet.connect()
-        return hub.current.runAll('connect');
+        return getHub().runAll('connect');
       }
 
       // TODO: CommonBlockchains somehow.
@@ -127,7 +147,7 @@ export function useAdapter(props: UseAdapterProps): ProviderContext {
       return finalResult;
     },
     async disconnect(type) {
-      const wallet = hub.current.get(type);
+      const wallet = getHub().get(type);
       if (!wallet) {
         throw new Error(
           `You should add ${type} to provider first then call 'connect'.`
@@ -144,21 +164,23 @@ export function useAdapter(props: UseAdapterProps): ProviderContext {
     getSigners(type) {
       const [legacy] = splitProviders(props.__all);
       const provider = legacy.find((legacyProvider) => {
-        legacyProvider.config.type === type;
+        return legacyProvider.config.type === type;
       });
+
+      console.log('[getSigners]', { legacy, provider });
       if (!provider) {
         console.warn(
-          `You have a provider that hasn't legacy provider. it causes some problems since we need some legacy functionality. Method: providers(), Provider Id: ${type}`
+          `You have a provider that hasn't legacy provider. it causes some problems since we need some legacy functionality. Method: getSigners(), Provider Id: ${type}`
         );
         throw new Error(
           `You need to have legacy implementation to use 'getSigners'. Provider Id: ${type}`
         );
       }
 
-      return provider.getSigners(provider.getInstance);
+      return provider.getSigners(provider.getInstance());
     },
     getWalletInfo(type) {
-      const wallet = hub.current.get(type);
+      const wallet = getHub().get(type);
       if (!wallet) {
         throw new Error(`You should add ${type} to provider first.`);
       }
@@ -166,6 +188,21 @@ export function useAdapter(props: UseAdapterProps): ProviderContext {
       const info = wallet.info();
       if (!info) {
         throw new Error('Your provider should have required `info`.');
+      }
+
+      // TODO: duplicated code.
+      const [legacy] = splitProviders(props.__all);
+      const provider = legacy.find((legacyProvider) => {
+        return legacyProvider.config.type === type;
+      });
+
+      if (!provider) {
+        console.warn(
+          `You have a provider that hasn't legacy provider. it causes some problems since we need some legacy functionality. Method: getWalletInfo(), Provider Id: ${type}`
+        );
+        throw new Error(
+          `You need to have legacy implementation to use 'getWalletInfo'. Provider Id: ${type}`
+        );
       }
 
       const installLink: Exclude<WalletInfo['installLink'], string> = {
@@ -194,7 +231,8 @@ export function useAdapter(props: UseAdapterProps): ProviderContext {
         installLink: installLink,
         // We don't have this values anymore, fill them with some values that communicate this.
         color: 'red',
-        supportedChains: [],
+        supportedChains: provider.getWalletInfo(props.allBlockChains || [])
+          .supportedChains,
         isContractWallet: false,
         mobileWallet: false,
         showOnMobile: false,
@@ -205,34 +243,47 @@ export function useAdapter(props: UseAdapterProps): ProviderContext {
       const output: ReturnType<ProviderContext['providers']> = {};
       const [legacy] = splitProviders(props.__all);
 
-      for (const id in hub.current.getAll().keys()) {
-        const provider = legacy.find((legacyProvider) => {
-          legacyProvider.config.type === id;
-        });
+      Array.from(getHub().getAll().keys()).forEach((id) => {
+        const provider = legacy.find(
+          (legacyProvider) => legacyProvider.config.type === id
+        );
 
         if (provider) {
-          output[id] = provider.getInstance;
+          output[id] = provider.getInstance();
         } else {
           console.warn(
             `You have a provider that hasn't legacy provider. it causes some problems since we need some legacy functionality. Method: providers(), Provider Id: ${id}`
           );
         }
-      }
+      });
 
       return output;
     },
     state(type) {
       // TODO: We can use `guessProviderStateSelector` here as well.
-      const result = hub.current.state();
+      const result = getHub().state();
       const provider = result[type];
 
+      if (!provider) {
+        throw new Error(
+          `It seems your requested provider doesn't exist in hub. Provider Id: ${type}`
+        );
+      }
+
+      const accounts = provider.namespaces
+        .filter((namespace) => namespace.connected)
+        .flatMap((namespace) =>
+          namespace.accounts?.map(fromAccountIdToLegacyAddressFormat)
+        )
+        .filter((account): account is string => !!account);
+
       const coreState = {
+        // TODO: When only one namespaces is selected, what will happens?
         connected: provider.connected,
         connecting: provider.connecting,
         installed: provider.installed,
         reachable: true,
-        // TODO: use provider.blockchains
-        accounts: [],
+        accounts: accounts,
         network: null,
       };
 
