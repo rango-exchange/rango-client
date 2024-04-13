@@ -21,22 +21,14 @@ export function matchAndGenerateProviders(
   providers: WidgetConfig['wallets'],
   options?: ProvidersOptions
 ): Versions[] {
-  const { walletConnectProjectId = '', experimentalWallet = 'disabled' } =
-    options || {};
+  const { walletConnectProjectId = '' } = options || {};
   const envs = {
     walletconnect2: {
       WC_PROJECT_ID: walletConnectProjectId,
     },
   };
-  console.log({
-    experimentalWallet,
-    options,
-    allProvidersRaw: allProviders(envs),
-  });
 
   const all = allProviders(envs);
-
-  console.log({ all });
 
   if (providers) {
     const selectedProviders: Versions[] = [];

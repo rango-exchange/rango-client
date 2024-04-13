@@ -1,4 +1,4 @@
-import type { State as BlockchainState, Namespace } from './namespace';
+import type { Namespace, State as NamespaceState } from './namespace';
 import type { Provider, State as ProviderState } from './provider';
 import type { Store } from './store';
 
@@ -21,14 +21,14 @@ import type { Store } from './store';
 
 type HubState = {
   [key in string]: ProviderState & {
-    blockchains: BlockchainState[];
+    namespaces: NamespaceState[];
   };
 };
 
 type RunAllResult = {
   id: string;
   provider: unknown;
-  blockchains: unknown[];
+  namespaces: unknown[];
 };
 
 interface HubOptions {
@@ -55,18 +55,18 @@ export class Hub {
 
   // TODO: can we suggest some predefined string using ts?
   runAll(action: string): RunAllResult[] {
-    console.log('running all for ', action);
     const output: RunAllResult[] = [];
 
     // run action on all providers eagerConnect, disconnect
     const providers = this.#providers.values();
+
     for (const provider of providers) {
       // Calling `action` on `Provider` if exists.
 
       const providerOutput: RunAllResult = {
         id: provider.id,
         provider: undefined,
-        blockchains: [],
+        namespaces: [],
       };
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore-next-line
@@ -76,15 +76,15 @@ export class Hub {
         providerOutput.provider = provider[action]();
       }
 
-      // Blockchain instances can have their own `action` as well. we will call them as well.
-      const blockchains = provider.getAll().values();
-      for (const blockchain of blockchains) {
+      // Namespace instances can have their own `action` as well. we will call them as well.
+      const namespaces = provider.getAll().values();
+      for (const namespace of namespaces) {
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore-next-line
-        const actionFn = blockchain[action];
+        const actionFn = namespace[action];
         if (actionFn) {
           const result = actionFn();
-          providerOutput.blockchains.push(result);
+          providerOutput.namespaces.push(result);
         }
       }
 
@@ -94,14 +94,11 @@ export class Hub {
     return output;
   }
 
-  add(id: string, blockchain: Provider) {
+  add(id: string, provider: Provider) {
     if (this.#options.store) {
-      blockchain.store(this.#options.store);
+      provider.store(this.#options.store);
     }
-
-    console.log('[hub]', this.#options);
-
-    this.#providers.set(id, blockchain);
+    this.#providers.set(id, provider);
     return this;
   }
 
@@ -118,11 +115,11 @@ export class Hub {
     const res: HubState = {};
 
     output.forEach((result) => {
-      const blockchains: BlockchainState[] = [];
-      result.blockchains.forEach((b) => {
-        const [getBlockchainState] = b as ReturnType<Namespace<any>['state']>;
+      const namespaces: NamespaceState[] = [];
+      result.namespaces.forEach((b) => {
+        const [getNamespaceState] = b as ReturnType<Namespace<any>['state']>;
 
-        blockchains.push(getBlockchainState());
+        namespaces.push(getNamespaceState());
       });
 
       const [getProviderState] = result.provider as ReturnType<
@@ -131,7 +128,7 @@ export class Hub {
 
       res[result.id] = {
         ...(getProviderState() || {}),
-        blockchains: blockchains,
+        namespaces: namespaces,
       };
     });
     return res;
