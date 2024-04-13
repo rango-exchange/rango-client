@@ -155,3 +155,8 @@ export const BackdropTab = styled('div', {
     },
   },
 });
+
+export const TabsContainer = styled('div', {
+  width: '250px',
+  height: '$40',
+});

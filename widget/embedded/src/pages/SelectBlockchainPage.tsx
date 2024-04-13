@@ -33,6 +33,7 @@ export function SelectBlockchainPage(props: PropTypes) {
   const countActiveCategories = getCountCategories(blockchains);
 
   const showCategory = countActiveCategories !== 1;
+  console.log(blockchains);
 
   return (
     <Layout

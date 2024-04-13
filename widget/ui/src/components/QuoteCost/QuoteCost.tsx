@@ -3,6 +3,7 @@ import type { PropTypes } from './QuoteCost.types';
 import React from 'react';
 
 import { GasIcon, NumberIcon, TimeIcon } from '../../icons';
+import { Divider } from '../Divider';
 import { Tooltip } from '../Tooltip';
 import { Typography } from '../Typography';
 
@@ -38,9 +39,10 @@ export function QuoteCost(props: PropTypes) {
           <div className={iconStyles()}>
             <GasIcon size={12} color={'gray'} />
           </div>
-          <Typography ml={2} align="center" variant="body" size="small">
+          <Typography align="center" variant="body" size="small">
             ${fee}
           </Typography>
+          <Divider direction="horizontal" size={2} />
         </div>
       </Tooltip>
 
@@ -49,9 +51,10 @@ export function QuoteCost(props: PropTypes) {
         <div className={iconStyles()}>
           <TimeIcon size={12} color="gray" />
         </div>
-        <Typography ml={2} align="center" variant="body" size="small">
+        <Typography align="center" variant="body" size="small">
           {time}
         </Typography>
+        <Divider direction="horizontal" size={2} />
       </div>
       {!!steps && (
         <>
@@ -60,9 +63,10 @@ export function QuoteCost(props: PropTypes) {
             <div className={iconStyles()}>
               <NumberIcon size={16} color="gray" />
             </div>
-            <Typography ml={2} align="center" variant="body" size="small">
+            <Typography align="center" variant="body" size="small">
               {steps}
             </Typography>
+            <Divider direction="horizontal" size={2} />
           </div>
         </>
       )}

@@ -70,7 +70,7 @@ const StepDetailsComponent = forwardRef<HTMLDivElement, StepDetailsProps>(
             <SwapperImage state={state}>
               <Image size={22} src={step.swapper.image} />
             </SwapperImage>
-            <Typography ml={8} size="medium" variant="label">
+            <Typography size="medium" variant="label">
               {i18n.t({
                 id: 'Swap on {fromChain} via {swapper}',
                 values: {
@@ -79,6 +79,7 @@ const StepDetailsComponent = forwardRef<HTMLDivElement, StepDetailsProps>(
                 },
               })}
             </Typography>
+            <Divider direction="horizontal" size={8} />
           </div>
         )}
 
@@ -95,7 +96,7 @@ const StepDetailsComponent = forwardRef<HTMLDivElement, StepDetailsProps>(
                     <SwapperImage state={state}>
                       <Image size={22} src={swapperItem.swapper.image} />
                     </SwapperImage>
-                    <Typography ml={8} size="medium" variant="label">
+                    <Typography size="medium" variant="label">
                       {swapperItem?.swapper.type === 'DEX'
                         ? i18n.t({
                             id: 'Swap on {fromChain} via {swapper}',
@@ -112,6 +113,7 @@ const StepDetailsComponent = forwardRef<HTMLDivElement, StepDetailsProps>(
                             },
                           })}
                     </Typography>
+                    <Divider direction="horizontal" size={8} />
                   </div>
                   {index !== swappers.length - 1 && (
                     <SwapperSeparator state={state} />
@@ -134,13 +136,14 @@ const StepDetailsComponent = forwardRef<HTMLDivElement, StepDetailsProps>(
               <Tooltip
                 content={step.from.price.realValue}
                 container={tooltipContainer}>
+                <Divider direction="horizontal" size={4} />
                 <Typography
-                  ml={4}
-                  mr={4}
                   size="small"
                   color="$neutral700"
                   variant="body">{`${step.from.price.value} ${step.from.token.displayName}`}</Typography>
               </Tooltip>
+              <Divider direction="horizontal" size={4} />
+
               <NextIcon color="gray" />
               <Divider size={4} direction="horizontal" />
               <ChainToken
@@ -151,13 +154,12 @@ const StepDetailsComponent = forwardRef<HTMLDivElement, StepDetailsProps>(
               <Tooltip
                 content={step.to.price.realValue}
                 container={tooltipContainer}>
-                <Typography
-                  ml={4}
-                  size="small"
-                  color="$neutral700"
-                  variant="body">{`${isCompleted ? '' : '~'}${
-                  step.to.price.value
-                } ${step.to.token.displayName}`}</Typography>
+                <Typography size="small" color="$neutral700" variant="body">{`${
+                  isCompleted ? '' : '~'
+                }${step.to.price.value} ${
+                  step.to.token.displayName
+                }`}</Typography>
+                <Divider direction="horizontal" size={4} />
               </Tooltip>
             </div>
             <Alerts pb={hasSeparator && type === 'quote-details'}>

@@ -1,7 +1,12 @@
 import type { BlockchainMeta, Token } from 'rango-sdk';
 
-import { Image, styled, Typography } from '@rango-dev/ui';
-import { ArrowRightIcon } from '@rango-dev/ui/src/components/Icon';
+import {
+  ChevronRightIcon,
+  Divider,
+  Image,
+  styled,
+  Typography,
+} from '@rango-dev/ui';
 import React from 'react';
 
 interface swap {
@@ -44,7 +49,8 @@ export function SwapComponent(props: PropTypes) {
       {!!from && (
         <Content>
           <Image size={54} src={fromToken?.image} />
-          <Typography variant="body" mt={12} size="medium">
+          <Divider size={12} />
+          <Typography variant="body" size="medium">
             {from.token}
           </Typography>
           <div />
@@ -58,12 +64,13 @@ export function SwapComponent(props: PropTypes) {
         </Content>
       )}
 
-      <ArrowRightIcon size={32} color="black" />
+      <ChevronRightIcon size={32} color="black" />
 
       {!!to && (
         <Content>
           <Image size={54} src={toToken?.image} />
-          <Typography variant="body" size="medium" mt={12}>
+          <Divider size={12} />
+          <Typography variant="body" size="medium">
             {to.token}
           </Typography>
           <div />

@@ -415,11 +415,7 @@ export function Quote(props: QuoteProps) {
               styles={{
                 root: { display: 'flex' },
               }}>
-              <Typography
-                color="$neutral600"
-                ml={2}
-                size="xsmall"
-                variant="body">
+              <Typography color="$neutral600" size="xsmall" variant="body">
                 {`($${roundedOutputUsdValue})`}
               </Typography>
             </Tooltip>

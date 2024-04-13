@@ -1,12 +1,34 @@
 import type { PropTypes } from './Tabs.types';
 import type { Meta } from '@storybook/react';
 
-import React from 'react';
+import React, { useState } from 'react';
+
+import { themes } from './mock';
+import { TabsContainer } from './Tabs.styles';
 
 import { Tabs } from '.';
 
-export default { title: 'Components/Tabs', component: Tabs } as Meta<
-  typeof Tabs
->;
+export default {
+  title: 'Components/Tabs',
+  component: Tabs,
+  args: {
+    type: 'primary',
+    borderRadius: 'small',
+    value: 'light',
+    items: themes,
+  },
+} as Meta<typeof Tabs>;
 
-export const Main = (args: PropTypes) => <Tabs {...args} />;
+export const Main = (args: PropTypes) => {
+  const [value, setValue] = useState(args.value);
+
+  return (
+    <TabsContainer>
+      <Tabs
+        {...args}
+        value={value}
+        onChange={(item) => setValue(item.id as string)}
+      />
+    </TabsContainer>
+  );
+};

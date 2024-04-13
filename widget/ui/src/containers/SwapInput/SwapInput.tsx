@@ -47,11 +47,7 @@ export function SwapInput(props: SwapInputProps) {
           </Typography>
           {showBalance && (
             <div className={balanceStyles()}>
-              <Typography
-                className={textStyles()}
-                mr={4}
-                variant="body"
-                size="xsmall">
+              <Typography className={textStyles()} variant="body" size="xsmall">
                 {i18n.t('Balance')}: {props.balance}
               </Typography>
               <MaxButton

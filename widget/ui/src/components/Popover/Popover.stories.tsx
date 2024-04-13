@@ -3,9 +3,8 @@ import type { Meta } from '@storybook/react';
 
 import React from 'react';
 
-import { NotificationsIcon } from '../../icons';
+import { AddIcon, NotificationsIcon } from '../../icons';
 import { Button } from '../Button';
-import { AddWalletIcon } from '../Icon';
 import { List } from '../List';
 
 import { Popover } from './Popover';
@@ -52,7 +51,7 @@ export const Main = (props: PropTypes) => (
   <div style={{ display: 'flex' }}>
     <Popover {...props}>
       <Button>
-        <AddWalletIcon size={24} />
+        <AddIcon size={24} />
       </Button>
     </Popover>
     <Popover {...props}>

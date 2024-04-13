@@ -3,7 +3,8 @@ import type { PropTypes } from './TokenAmount.types';
 import React from 'react';
 
 import { ChainToken } from '../ChainToken';
-import { PriceImpact } from '../PriceImpact/PriceImpact';
+import { Divider } from '../Divider';
+import { PriceImpact } from '../PriceImpact';
 import { Tooltip } from '../Tooltip';
 import { Typography } from '../Typography';
 
@@ -24,9 +25,12 @@ export function TokenAmount(props: PropTypes) {
         />
         <div>
           {props.label && (
-            <Typography ml={4} size="xsmall" variant="body" color="$neutral700">
-              {props.label}
-            </Typography>
+            <>
+              <Typography size="xsmall" variant="body" color="$neutral700">
+                {props.label}
+              </Typography>
+              <Divider direction="horizontal" size={4} />
+            </>
           )}
           <div>
             <Tooltip
@@ -34,19 +38,20 @@ export function TokenAmount(props: PropTypes) {
               open={!props.price.realValue ? false : undefined}
               container={props.tooltipContainer}>
               <Typography
-                ml={4}
                 size="medium"
                 variant="title"
                 style={{ fontWeight: 600 }}>
                 {props.price.value}
               </Typography>
+              <Divider direction="horizontal" size={4} />
+
               <Typography
-                ml={8}
                 size="medium"
                 variant="title"
                 style={{ fontWeight: 400 }}>
                 {props.token.displayName}
               </Typography>
+              <Divider direction="horizontal" size={8} />
             </Tooltip>
           </div>
         </div>
@@ -57,11 +62,7 @@ export function TokenAmount(props: PropTypes) {
             content={props.price.realUsdValue}
             container={props.tooltipContainer}>
             {props.type === 'input' && (
-              <Typography
-                mr={4}
-                size="small"
-                variant="body"
-                color="$neutral700">
+              <Typography size="small" variant="body" color="$neutral700">
                 {`~$${props.price.usdValue}`}
               </Typography>
             )}
