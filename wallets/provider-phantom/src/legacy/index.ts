@@ -9,7 +9,7 @@ import type {
 import type { BlockchainMeta, SignerFactory } from 'rango-types';
 
 import { getSolanaAccounts, Networks } from '@rango-dev/wallets-shared';
-import { solanaBlockchain } from 'rango-types';
+import { evmBlockchains, solanaBlockchain } from 'rango-types';
 
 import { WALLET_ID } from '../constants';
 
@@ -65,6 +65,8 @@ const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
   allBlockChains
 ) => {
   const solana = solanaBlockchain(allBlockChains);
+  const evms = evmBlockchains(allBlockChains);
+
   return {
     name: 'Phantom',
     img: 'https://raw.githubusercontent.com/rango-exchange/assets/main/wallets/phantom/icon.svg',
@@ -75,7 +77,7 @@ const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
       DEFAULT: 'https://phantom.app/',
     },
     color: '#4d40c6',
-    supportedChains: solana,
+    supportedChains: [...solana, ...evms],
   };
 };
 
