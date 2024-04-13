@@ -8,13 +8,14 @@ import type {
 import type { BlockchainMeta, SignerFactory } from 'rango-types';
 
 import {
+  chooseInstance,
   getSolanaAccounts,
   Networks,
   WalletTypes,
 } from '@rango-dev/wallets-shared';
 import { solanaBlockchain } from 'rango-types';
 
-import { phantom as phantom_instance } from './helpers';
+import { getBitcoinAccounts, phantom as phantom_instance } from './helpers';
 import signer from './signer';
 
 const WALLET = WalletTypes.PHANTOM;
@@ -24,9 +25,36 @@ export const config = {
 };
 
 export const getInstance = phantom_instance;
-export const connect: Connect = getSolanaAccounts;
+export const connect: Connect = async ({ instance, meta }) => {
+  const solanaInstance = chooseInstance(instance, meta, Networks.SOLANA);
+  const bitcoinInstance = chooseInstance(instance, meta, Networks.BTC);
 
-export const subscribe: Subscribe = ({ instance, updateAccounts, connect }) => {
+  const result = [];
+  if (solanaInstance) {
+    const solanaAccounts = await getSolanaAccounts({
+      instance: solanaInstance,
+    });
+    result.push(solanaAccounts);
+  }
+
+  if (bitcoinInstance) {
+    const bitcoinAccounts = await getBitcoinAccounts({
+      instance: bitcoinInstance,
+    });
+    result.push(bitcoinAccounts);
+  }
+
+  return result;
+};
+
+export const subscribe: Subscribe = ({
+  instance,
+  updateAccounts,
+  connect,
+  meta,
+}) => {
+  const solanaInstance = chooseInstance(instance, meta, Networks.SOLANA);
+
   const handleAccountsChanged = async (publicKey: string) => {
     const network = Networks.SOLANA;
     if (publicKey) {
@@ -36,10 +64,10 @@ export const subscribe: Subscribe = ({ instance, updateAccounts, connect }) => {
       connect(network);
     }
   };
-  instance?.on?.('accountChanged', handleAccountsChanged);
+  solanaInstance?.on('accountChanged', handleAccountsChanged);
 
   return () => {
-    instance?.off?.('accountChanged', handleAccountsChanged);
+    solanaInstance?.off('accountChanged', handleAccountsChanged);
   };
 };
 
@@ -47,9 +75,11 @@ export const canSwitchNetworkTo: CanSwitchNetwork = () => false;
 
 export const getSigners: (provider: any) => SignerFactory = signer;
 
-export const canEagerConnect: CanEagerConnect = async ({ instance }) => {
+export const canEagerConnect: CanEagerConnect = async ({ instance, meta }) => {
+  const solanaInstance = chooseInstance(instance, meta, Networks.SOLANA);
+
   try {
-    const result = await instance.connect({ onlyIfTrusted: true });
+    const result = await solanaInstance.connect({ onlyIfTrusted: true });
     return !!result;
   } catch (error) {
     return false;
@@ -60,6 +90,10 @@ export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
   allBlockChains
 ) => {
   const solana = solanaBlockchain(allBlockChains);
+  const bitcoin = allBlockChains.filter(
+    (blockchain) => blockchain.name === Networks.BTC
+  );
+
   return {
     name: 'Phantom',
     img: 'https://raw.githubusercontent.com/rango-exchange/assets/main/wallets/phantom/icon.svg',
@@ -70,6 +104,6 @@ export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
       DEFAULT: 'https://phantom.app/',
     },
     color: '#4d40c6',
-    supportedChains: solana,
+    supportedChains: [...solana, ...bitcoin],
   };
 };
