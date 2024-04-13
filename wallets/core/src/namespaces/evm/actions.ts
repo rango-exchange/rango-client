@@ -1,5 +1,6 @@
-import type { NamespaceProvider } from './types';
+import type { EvmActions, NamespaceProvider } from './types';
 import type { Context } from '../../hub/namespace';
+import type { FunctionWithContext } from '../common/types';
 
 import { AccountId } from 'caip';
 
@@ -10,7 +11,9 @@ import { getAccounts } from './utils';
 export const recommended = [...commonRecommended];
 
 // TODO: Make returned function type safe.
-export function connect(instance: () => NamespaceProvider) {
+export function connect(
+  instance: () => NamespaceProvider
+): ['connect', FunctionWithContext<EvmActions['connect'], Context>] {
   return [
     'connect',
     async (_context: Context, _chain: any) => {
@@ -36,7 +39,10 @@ export function connect(instance: () => NamespaceProvider) {
         })
       );
       console.log('you are a trader? using evm?', result, formatAccounts);
-      return formatAccounts;
+      return {
+        accounts: formatAccounts,
+        network: result.chainId,
+      };
     },
   ] as const;
 }

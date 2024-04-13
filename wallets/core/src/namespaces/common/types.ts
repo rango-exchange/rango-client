@@ -28,6 +28,10 @@ export type TaskWithVoidReturn<T extends SpecificMethods<T>> = readonly [
 
 // TODO: TS could evaluate a pattern on string as well. template literal type, I guess.
 export type Accounts = string[];
+export type AccountsWithActiveChain = {
+  accounts: Accounts;
+  network: string;
+};
 
 export interface CommonActions {
   init: () => void;

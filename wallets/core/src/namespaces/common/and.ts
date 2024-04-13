@@ -1,4 +1,4 @@
-import type { Accounts } from './types';
+import type { Accounts, AccountsWithActiveChain } from './types';
 import type { Context } from '../../hub/namespace';
 
 import { AccountId } from 'caip';
@@ -6,12 +6,14 @@ import { AccountId } from 'caip';
 export function connectAndUpdateState() {
   return [
     'connect',
-    async (context: Context, accounts: Accounts) => {
-      console.log({ accounts, uThis: context });
-      // TODO: Address Verification (CAIP)
+    async (context: Context, accounts: Accounts | AccountsWithActiveChain) => {
+      const acc = Array.isArray(accounts)
+        ? { accounts, network: null }
+        : accounts;
 
+      console.log({ accounts, acc, uThis: context });
       if (
-        !accounts.every((account) => {
+        !acc.accounts.every((account) => {
           try {
             AccountId.parse(account);
             return true;
@@ -21,12 +23,15 @@ export function connectAndUpdateState() {
         })
       ) {
         throw new Error(
-          `Your provider should format account addresses in CAIP-10 format. Your provided accounts: ${accounts}`
+          `Your provider should format account addresses in CAIP-10 format. Your provided accounts: ${acc}`
         );
       }
 
       const [, setState] = context.state();
-      setState('accounts', accounts);
+      setState('accounts', acc.accounts);
+      if (acc.network) {
+        setState('network', acc.network);
+      }
       return accounts;
     },
   ] as const;

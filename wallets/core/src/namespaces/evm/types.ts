@@ -1,5 +1,5 @@
 import type {
-  Accounts,
+  AccountsWithActiveChain,
   AutoImplementedActionsByRecommended,
   CommonActions,
 } from '../common/types';
@@ -7,7 +7,7 @@ import type {
 export interface EvmActions
   extends AutoImplementedActionsByRecommended,
     CommonActions {
-  connect: (chain?: string) => Promise<Accounts>;
+  connect: (chain?: string) => Promise<AccountsWithActiveChain>;
 }
 
 export type { EIP1193Provider as NamespaceProvider } from 'viem';
