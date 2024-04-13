@@ -22,7 +22,7 @@ export function ExpandedQuotes(props: PropTypes) {
   const containerClass = isDelayedVisible ? '' : 'is-hidden';
   const { config } = useAppStore();
   const fullExpandedMode = config?.variant === 'full-expanded';
-
+  const container = getExpanded();
   useEffect(() => {
     let timeout: ReturnType<typeof setTimeout> | null = null;
 
@@ -53,8 +53,9 @@ export function ExpandedQuotes(props: PropTypes) {
         title={i18n.t('Routes')}
         suffix={
           <>
-            <SelectStrategy container={getExpanded()} />
+            <SelectStrategy container={container} />
             <HeaderButtons
+              container={container}
               onClickRefresh={onClickRefresh}
               hidden={['history', 'notifications', 'settings']}
             />
@@ -67,6 +68,7 @@ export function ExpandedQuotes(props: PropTypes) {
           fetch={fetch}
           hasSort={false}
           loading={loading}
+          container={getExpanded()}
           onClickOnQuote={onClickOnQuote}
           fullExpandedMode={fullExpandedMode}
         />

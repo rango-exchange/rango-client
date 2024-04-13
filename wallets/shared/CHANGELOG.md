@@ -1,3 +1,12 @@
+# [0.30.0](https://github.com/rango-exchange/rango-client/compare/wallets-shared@0.29.0...wallets-shared@0.30.0) (2024-04-09)
+
+
+### Bug Fixes
+
+* fix the connection problem that happens when another wallet takes over the requested one ([42df212](https://github.com/rango-exchange/rango-client/commit/42df2120aadd84c95045b0bf76844c19305fb59a))
+
+
+
 # [0.29.0](https://github.com/rango-exchange/rango-client/compare/wallets-shared@0.28.0...wallets-shared@0.29.0) (2024-03-12)
 
 

@@ -85,6 +85,7 @@ export function Quote(props: QuoteProps) {
     showModalFee = true,
     onClickAllRoutes,
     fullExpandedMode = false,
+    container: propContainer,
   } = props;
   const blockchains = useAppStore().blockchains();
   const tokens = useAppStore().tokens();
@@ -308,7 +309,7 @@ export function Quote(props: QuoteProps) {
   const steps = getQuoteSteps(quote?.swaps ?? []);
 
   const numberOfSteps = steps.length;
-  const container = getContainer();
+  const container = propContainer || getContainer();
   const sortedQuoteTags = sortTags(props.quote.tags || []);
   const showAllRoutesButton = !!onClickAllRoutes;
   const totalTime = roundedSecondsToString(totalArrivalTime(quote?.swaps));
@@ -467,6 +468,7 @@ export function Quote(props: QuoteProps) {
           quoteRef={quoteRef}
           selected={selected}
           setExpanded={setExpanded}
+          container={container}
           expanded={expanded}
           steps={steps}
         />

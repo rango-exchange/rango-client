@@ -4,12 +4,12 @@ import type { ListPropTypes, SvgIconProps } from '@rango-dev/ui';
 import { i18n } from '@lingui/core';
 import {
   AutoThemeIcon,
-  BridgeIcon,
+  BridgesIcon,
   ChevronRightIcon,
   DarkModeIcon,
   Divider,
-  DoneIcon,
   ExchangeIcon,
+  InfinityIcon,
   InfoIcon,
   LanguageIcon,
   LightModeIcon,
@@ -42,7 +42,7 @@ const ThemeSection = styled('div', {
 const themesList = [
   {
     id: ThemeModeEnum.LIGHT,
-    icon: <LightModeIcon color="black" size={16} />,
+    icon: <LightModeIcon color="black" size={24} />,
     tooltip: (
       <Typography size="xsmall" variant="body">
         {i18n.t('Light')}
@@ -51,7 +51,7 @@ const themesList = [
   },
   {
     id: ThemeModeEnum.DARK,
-    icon: <DarkModeIcon color="black" size={14} />,
+    icon: <DarkModeIcon color="black" size={24} />,
     tooltip: (
       <Typography size="xsmall" variant="body">
         {i18n.t('Dark')}
@@ -60,7 +60,7 @@ const themesList = [
   },
   {
     id: ThemeModeEnum.AUTO,
-    icon: <AutoThemeIcon color="black" size={16} />,
+    icon: <AutoThemeIcon color="black" size={24} />,
     tooltip: (
       <Typography size="xsmall" variant="body">
         {i18n.t('Auto')}
@@ -70,7 +70,7 @@ const themesList = [
 ];
 
 const getThemeIcon = (theme: ThemeMode) => {
-  const iconProps: SvgIconProps = { color: 'gray', size: 14 };
+  const iconProps: SvgIconProps = { color: 'gray', size: 16 };
 
   switch (theme) {
     case 'auto':
@@ -161,7 +161,7 @@ export function SettingsLists() {
       </>
     ),
     onClick: () => navigate(navigationRoutes.bridges),
-    start: <BridgeIcon color="gray" size={14} />,
+    start: <BridgesIcon color="gray" size={16} />,
   };
 
   const exchangeItem = {
@@ -178,10 +178,10 @@ export function SettingsLists() {
           totalExchangeSources
         )}
         <Divider direction="horizontal" size={8} />
-        <ChevronRightIcon color="gray" />
+        <ChevronRightIcon color="black" />
       </>
     ),
-    start: <ExchangeIcon color="gray" size={14} />,
+    start: <ExchangeIcon color="gray" size={16} />,
     onClick: () => navigate(navigationRoutes.exchanges),
   };
 
@@ -192,14 +192,14 @@ export function SettingsLists() {
         {i18n.t('Language')}
       </Typography>
     ),
-    start: <LanguageIcon color="gray" size={14} />,
+    start: <LanguageIcon color="gray" size={16} />,
     end: (
       <>
         <Typography variant="body" size="medium">
           {currentLanguage}
         </Typography>
         <Divider direction="horizontal" size={8} />
-        <ChevronRightIcon color="gray" />
+        <ChevronRightIcon color="black" />
       </>
     ),
     onClick: () => navigate(navigationRoutes.languages),
@@ -230,7 +230,7 @@ export function SettingsLists() {
         </Tooltip>
       </>
     ),
-    start: <DoneIcon color="gray" size={14} />,
+    start: <InfinityIcon color="gray" size={16} />,
     end: <Switch checked={infiniteApprove} />,
     onClick: toggleInfiniteApprove,
   };

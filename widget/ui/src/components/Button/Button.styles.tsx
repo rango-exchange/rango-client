@@ -549,10 +549,9 @@ const ripple = keyframes({
 
 export const RippleContainer = styled('div', {
   position: 'absolute',
-  top: '0',
-  right: '0',
-  bottom: '0',
-  left: '0',
+  inset: '0',
+  overflow: 'hidden',
+  borderRadius: '$sm',
 
   '& span': {
     transform: 'scale(0)',
