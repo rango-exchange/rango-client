@@ -20,7 +20,7 @@ export function guessProviderStateSelector(
   const installed = state.providers.list[providerId].data.installed;
   const connected =
     currentProviderNamespaces.length > 0
-      ? currentProviderNamespaces.every(
+      ? currentProviderNamespaces.some(
           (key) => allNamespaces[key].data.connected
         )
       : false;
