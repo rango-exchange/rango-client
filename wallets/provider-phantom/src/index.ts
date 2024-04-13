@@ -2,6 +2,7 @@ import type {
   CanEagerConnect,
   CanSwitchNetwork,
   Connect,
+  ProviderConnectResult,
   Subscribe,
   WalletInfo,
 } from '@rango-dev/wallets-shared';
@@ -31,16 +32,18 @@ export const connect: Connect = async ({ instance, meta }) => {
 
   const result = [];
   if (solanaInstance) {
-    const solanaAccounts = await getSolanaAccounts({
+    const solanaAccounts = (await getSolanaAccounts({
       instance: solanaInstance,
-    });
+      meta,
+    })) as ProviderConnectResult;
     result.push(solanaAccounts);
   }
 
   if (bitcoinInstance) {
-    const bitcoinAccounts = await getBitcoinAccounts({
+    const bitcoinAccounts = (await getBitcoinAccounts({
       instance: bitcoinInstance,
-    });
+      meta,
+    })) as ProviderConnectResult;
     result.push(bitcoinAccounts);
   }
 
