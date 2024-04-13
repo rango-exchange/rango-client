@@ -24,6 +24,7 @@
     "@rango-dev/signer-solana": "^0.26.0",
     "@rango-dev/wallets-shared": "^0.30.0",
     "bitcoinjs-lib": "6.1.5",
+    "coinselect": "^3.1.12",
     "rango-types": "^0.1.59"
   },
   "publishConfig": {

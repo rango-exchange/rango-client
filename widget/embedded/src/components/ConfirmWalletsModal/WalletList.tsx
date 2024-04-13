@@ -57,6 +57,9 @@ export function WalletList(props: PropTypes) {
     useState(false);
   const [addingExperimentalChainStatus, setAddingExperimentalChainStatus] =
     useState<'in-progress' | 'completed' | 'rejected' | null>(null);
+  const [showAddNetworkToWalletModal, setShowAddNetworkToWalletModal] =
+    useState(false);
+
   const { suggestAndConnect } = useWallets();
   let modalTimerId: ReturnType<typeof setTimeout> | null = null;
   const { list, error, handleClick, disconnectConnectingWallets } =
@@ -147,6 +150,7 @@ export function WalletList(props: PropTypes) {
           walletType: wallet.type,
           chain,
         });
+
         const conciseAddress = address
           ? getConciseAddress(address, ACCOUNT_ADDRESS_MAX_CHARACTERS)
           : '';
@@ -181,6 +185,8 @@ export function WalletList(props: PropTypes) {
               address: address ?? '',
             });
             setShowExperimentalChainModal(true);
+          } else if (wallet.state === WalletState.CONNECTED && !address) {
+            setShowAddNetworkToWalletModal(true);
           } else {
             selectWallet({
               walletType: wallet.type,
@@ -206,6 +212,36 @@ export function WalletList(props: PropTypes) {
               state={wallet.state}
               error={error}
             />
+            {showAddNetworkToWalletModal && (
+              <WatermarkedModal
+                open={showAddNetworkToWalletModal}
+                container={modalContainer}
+                onClose={() => {
+                  setShowAddNetworkToWalletModal(false);
+                }}>
+                <MessageBox
+                  title={i18n.t({
+                    id: '{blockchainDisplayName} chain is not connected',
+                    values: { blockchainDisplayName: chain },
+                  })}
+                  type="error"
+                  description={i18n.t({
+                    id: '{blockchainDisplayName} chain is not connected. You should connect {blockchainDisplayName} chain for the selected wallet.',
+                    values: { blockchainDisplayName: chain },
+                  })}>
+                  <Divider size={18} />
+                  <Divider size={32} />
+                  <Button
+                    onClick={() => setShowAddNetworkToWalletModal(false)}
+                    variant="outlined"
+                    type="primary"
+                    fullWidth
+                    size="large">
+                    {i18n.t('Confirm')}
+                  </Button>
+                </MessageBox>
+              </WatermarkedModal>
+            )}
             {!!experimentalChainWallet && (
               <WatermarkedModal
                 open={!!experimentalChainWallet && showExperimentalChainModal}

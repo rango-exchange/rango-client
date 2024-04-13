@@ -14,7 +14,7 @@ import {
   Networks,
   WalletTypes,
 } from '@rango-dev/wallets-shared';
-import { solanaBlockchain } from 'rango-types';
+import { solanaBlockchain, TransactionType } from 'rango-types';
 
 import { getBitcoinAccounts, phantom as phantom_instance } from './helpers';
 import signer from './signer';
@@ -27,24 +27,47 @@ export const config = {
 
 export const getInstance = phantom_instance;
 export const connect: Connect = async ({ instance, meta }) => {
+  const selectedTransactionTypes: TransactionType[] = [
+    TransactionType.SOLANA,
+    TransactionType.TRANSFER,
+  ];
+
   const solanaInstance = chooseInstance(instance, meta, Networks.SOLANA);
   const bitcoinInstance = chooseInstance(instance, meta, Networks.BTC);
 
   const result = [];
-  if (solanaInstance) {
-    const solanaAccounts = (await getSolanaAccounts({
-      instance: solanaInstance,
-      meta,
-    })) as ProviderConnectResult;
-    result.push(solanaAccounts);
+  if (
+    solanaInstance &&
+    selectedTransactionTypes.includes(TransactionType.SOLANA)
+  ) {
+    try {
+      const solanaAccounts = (await getSolanaAccounts({
+        instance: solanaInstance,
+        meta,
+      })) as ProviderConnectResult;
+      result.push(solanaAccounts);
+    } catch (error) {
+      throw new Error(
+        'Could not connect Solana account. Consider adding Solana to your wallet.'
+      );
+    }
   }
 
-  if (bitcoinInstance) {
-    const bitcoinAccounts = (await getBitcoinAccounts({
-      instance: bitcoinInstance,
-      meta,
-    })) as ProviderConnectResult;
-    result.push(bitcoinAccounts);
+  if (
+    bitcoinInstance &&
+    selectedTransactionTypes.includes(TransactionType.TRANSFER)
+  ) {
+    try {
+      const bitcoinAccounts = (await getBitcoinAccounts({
+        instance: bitcoinInstance,
+        meta,
+      })) as ProviderConnectResult;
+      result.push(bitcoinAccounts);
+    } catch (error) {
+      throw new Error(
+        'Could not connect Bitcoin account. Consider adding Bitcoin to your wallet.'
+      );
+    }
   }
 
   return result;
