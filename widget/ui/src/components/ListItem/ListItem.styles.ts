@@ -50,13 +50,15 @@ export const BaseListItem = styled('li', {
     hasDivider: {
       true: {
         borderBottom: '1px solid',
-        $$color: '$colors$neutral300',
+        borderColor: '$neutral300',
         [`.${darkTheme} &`]: {
-          $$color: '$colors$neutral400',
+          borderColor: '$neutral400',
         },
-        borderColor: '$$color',
         borderBottomRightRadius: 0,
         borderBottomLeftRadius: 0,
+        '&:hover': {
+          borderRadius: 0,
+        },
       },
     },
   },

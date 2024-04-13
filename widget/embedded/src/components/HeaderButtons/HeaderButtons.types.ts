@@ -8,4 +8,5 @@ export interface HeaderButtonsPropTypes {
   onClickRefresh?: () => void;
   onClickHistory?: () => void;
   hidden?: ('settings' | 'refresh' | 'history' | 'notifications')[];
+  container?: HTMLElement;
 }

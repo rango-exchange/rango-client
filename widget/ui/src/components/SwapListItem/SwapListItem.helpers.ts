@@ -7,7 +7,7 @@ export function getStatus(status: Status): string {
     case 'failed':
       return i18n.t('Failed');
     case 'success':
-      return i18n.t('Complete');
+      return i18n.t('Completed');
     default:
       return i18n.t('In progress');
   }

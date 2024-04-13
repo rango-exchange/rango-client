@@ -1,3 +1,22 @@
+# [0.25.0](https://github.com/rango-exchange/rango-client/compare/widget-embedded@0.24.1...widget-embedded@0.25.0) (2024-04-09)
+
+
+### Bug Fixes
+
+* address tooltips position ([5ee60d1](https://github.com/rango-exchange/rango-client/commit/5ee60d1622dab29091d97578d417a2187f2ca6cf))
+* correct showing wallets on mobile screens ([89ead7f](https://github.com/rango-exchange/rango-client/commit/89ead7f68e88352dfd69c2a3d1c6cb0b8cf2e5d5))
+* fix export refresh modal ([0c0ec6c](https://github.com/rango-exchange/rango-client/commit/0c0ec6c7f22116a9b5d5c8d2b6a74ebf421fc015))
+* fix widget event hook ([c8547b6](https://github.com/rango-exchange/rango-client/commit/c8547b6a31354afe13aa32c0b72be5b62b3f0d67))
+
+
+### Features
+
+* attach config object to window for debugging purposes ([70597b7](https://github.com/rango-exchange/rango-client/commit/70597b78e31ef2da1ef2d20ed398e5bdf0b59a63))
+* implement hover state for full-expanded-route ([1c851d7](https://github.com/rango-exchange/rango-client/commit/1c851d7c62b71fe8f4aa6c05edbc0d6cc78d5437))
+* show a modal with page reload when meta hasn't loaded ([0d3842f](https://github.com/rango-exchange/rango-client/commit/0d3842f9c2d7210cfd5a967d1f0e663ef3125421))
+
+
+
 ## [0.24.1](https://github.com/rango-exchange/rango-client/compare/widget-embedded@0.24.0...widget-embedded@0.24.1) (2024-03-12)
 
 

@@ -27,8 +27,8 @@ const MAX_STEPS = 4;
 const MAX_BLOCKCHAINS = 6;
 
 const ImageComponent = (props: QuoteTriggerImagesProps) => {
-  const tooltipContainer = getContainer();
-  const { content, src, className, open, state } = props;
+  const { content, src, className, open, state, container } = props;
+  const tooltipContainer = container || getContainer();
   return (
     <Tooltip
       container={tooltipContainer}
@@ -44,8 +44,9 @@ const ImageComponent = (props: QuoteTriggerImagesProps) => {
 };
 
 export function QuoteTrigger(props: QuoteTriggerProps) {
-  const { quoteRef, selected, setExpanded, steps, expanded, type } = props;
-  const tooltipContainer = getContainer();
+  const { quoteRef, selected, setExpanded, steps, expanded, type, container } =
+    props;
+  const tooltipContainer = container || getContainer();
   const numberOfSteps = steps.length;
   const blockchains = getUniqueBlockchains(steps);
   const { isTablet, isMobile } = useScreenDetect();
@@ -78,6 +79,7 @@ export function QuoteTrigger(props: QuoteTriggerProps) {
                 content={step.swapper.displayName}
                 src={step.swapper.image}
                 state={step.state}
+                container={container}
               />
               {index !== numberOfSteps - 1 && <>{arrow}</>}
             </React.Fragment>
@@ -90,6 +92,7 @@ export function QuoteTrigger(props: QuoteTriggerProps) {
                     content={step.swapper.displayName}
                     src={step.swapper.image}
                     state={step.state}
+                    container={container}
                   />
                   {index !== numberOfSteps - 1 && <>{arrow}</>}
                 </>
@@ -182,6 +185,7 @@ export function QuoteTrigger(props: QuoteTriggerProps) {
                                   src={chain.image}
                                   open={false}
                                   className={i > index ? 'blockchainImage' : ''}
+                                  container={container}
                                 />
                               )
                           )}

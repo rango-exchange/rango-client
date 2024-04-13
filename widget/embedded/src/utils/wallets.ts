@@ -77,7 +77,12 @@ export function mapWalletTypesToWalletInfo(
       return true;
     })
     .map((type) => {
-      const { name, img: image, installLink } = getWalletInfo(type);
+      const {
+        name,
+        img: image,
+        installLink,
+        showOnMobile,
+      } = getWalletInfo(type);
       const state = mapStatusToWalletState(getState(type));
       return {
         title: name,
@@ -85,6 +90,7 @@ export function mapWalletTypesToWalletInfo(
         link: detectInstallLink(installLink),
         state,
         type,
+        showOnMobile,
       };
     });
 }

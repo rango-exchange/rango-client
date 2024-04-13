@@ -8,7 +8,7 @@ msgstr ""
 "Language: nl\n"
 "Project-Id-Version: rango\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-03-12 08:20\n"
+"PO-Revision-Date: 2024-04-09 07:52\n"
 "Last-Translator: \n"
 "Language-Team: Dutch\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -162,24 +162,25 @@ msgid "Cancel"
 msgstr "annuleren"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/HeaderButtons/HeaderButtons.tsx:45
+#: widget/embedded/src/components/HeaderButtons/HeaderButtons.tsx:46
+#: widget/embedded/src/components/RefreshModal/RefreshModal.tsx:34
 msgid "Refresh"
 msgstr "Vernieuwen"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/HeaderButtons/HeaderButtons.tsx:61
+#: widget/embedded/src/components/HeaderButtons/HeaderButtons.tsx:62
 msgid "Notifications"
 msgstr "Notificaties"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/HeaderButtons/HeaderButtons.tsx:74
+#: widget/embedded/src/components/HeaderButtons/HeaderButtons.tsx:75
 #: widget/embedded/src/pages/ConfirmSwapPage.tsx:314
 #: widget/embedded/src/pages/SettingsPage.tsx:38
 msgid "Settings"
 msgstr "Instellingen"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/HeaderButtons/HeaderButtons.tsx:84
+#: widget/embedded/src/components/HeaderButtons/HeaderButtons.tsx:85
 msgid "Transactions History"
 msgstr "Transacties geschiedenis"
 
@@ -199,7 +200,7 @@ msgstr "vandaag"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/LoadingSwapDetails/LoadingSwapDetails.tsx:20
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:377
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:398
 msgid "Swaps steps"
 msgstr "Swaps stappen"
 
@@ -220,27 +221,27 @@ msgid "There are no notifications."
 msgstr "Er zijn geen meldingen."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/Quote.tsx:138
+#: widget/embedded/src/components/Quote/Quote.tsx:148
 msgid "Slippage Error"
 msgstr "Slippage Fout"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/Quote.tsx:139
+#: widget/embedded/src/components/Quote/Quote.tsx:149
 msgid "Slippage Warning"
 msgstr "Slippage Waarschuwing"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/Quote.tsx:243
+#: widget/embedded/src/components/Quote/Quote.tsx:254
 msgid "Yours: {amount} {symbol}"
 msgstr "Jours: {amount} {symbol}"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/Quote.tsx:264
+#: widget/embedded/src/components/Quote/Quote.tsx:274
 msgid "Minimum required slippage is {minRequiredSlippage}"
 msgstr "Minimum vereiste slippage is {minRequiredSlippage}"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/Quote.tsx:366
+#: widget/embedded/src/components/Quote/Quote.tsx:386
 msgid "See All Routes"
 msgstr "Alle routes bekijken"
 
@@ -298,17 +299,17 @@ msgid "Estimated output"
 msgstr "Geschatte uitvoer"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/QuoteTrigger.tsx:64
+#: widget/embedded/src/components/Quote/QuoteTrigger.tsx:65
 msgid "Via:"
 msgstr "Via:"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/QuoteTrigger.tsx:147
+#: widget/embedded/src/components/Quote/QuoteTrigger.tsx:150
 msgid "Chains:"
 msgstr "Kettingen:"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quotes/Quotes.tsx:74
+#: widget/embedded/src/components/Quotes/Quotes.tsx:76
 msgid "Sort by"
 msgstr "Sorteren op"
 
@@ -406,6 +407,16 @@ msgid "Confirm anyway"
 msgstr "Toch bevestigen"
 
 #. js-lingui-explicit-id
+#: widget/embedded/src/components/RefreshModal/RefreshModal.tsx:22
+msgid "Something wrong"
+msgstr "Iets mis"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/RefreshModal/RefreshModal.tsx:24
+msgid "Something Wrong. Please refresh the app"
+msgstr "Er is iets misgegaan. Vernieuw de app"
+
+#. js-lingui-explicit-id
 #: widget/embedded/src/components/Slippage/Slippage.tsx:35
 msgid "Slippage tolerance per swap"
 msgstr "Slippage tolerantie per swap"
@@ -432,13 +443,13 @@ msgstr "Deze instelling wordt toegepast per stap (bv. 1Inch, Thorchain, enz.) wa
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetails/SwapDetails.Placeholder.tsx:25
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:248
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:269
 msgid "Swap and Bridge"
 msgstr "Wissel en brug"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetails/SwapDetails.Placeholder.tsx:33
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:288
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:309
 msgid "Request ID"
 msgstr "ID aanvragen"
 
@@ -454,27 +465,27 @@ msgid "Swap with request ID = {requestId} not found."
 msgstr "Wissel met verzoek-ID = {requestId} niet gevonden."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:216
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:221
 msgid "You have received {amount} {token} in {conciseAddress} wallet on {chain} chain."
 msgstr "Je hebt {amount} {token} ontvangen in de {conciseAddress} portemonnee in {chain} keten."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:232
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:244
 msgid "Transaction was not sent."
 msgstr "Transactie is niet verzonden."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:234
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:246
 msgid "{amount} {symbol} on {blockchain} remain in your wallet"
 msgstr "{amount} {symbol} van {blockchain} blijven in uw portemonnee"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:259
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:280
 msgid "Delete"
 msgstr "Verwijderen"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:280
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:301
 msgid "Try again"
 msgstr "Opnieuw proberen"
 
@@ -681,7 +692,7 @@ msgstr "Onbekende USD prijs bevestigen"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/constants/messages.ts:6
-#: widget/embedded/src/pages/Home.tsx:156
+#: widget/embedded/src/pages/Home.tsx:157
 msgid "Swap"
 msgstr "Wisselen"
 
@@ -752,7 +763,7 @@ msgid "From"
 msgstr "van"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/containers/Inputs/Inputs.tsx:119
+#: widget/embedded/src/containers/Inputs/Inputs.tsx:117
 msgid "To"
 msgstr "tot"
 
@@ -778,13 +789,17 @@ msgstr "Laden mislukt"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/containers/Settings/Lists.tsx:153
-msgid "Enabled bridges"
-msgstr "bridges ingeschakeld"
+#: widget/embedded/src/pages/LiquiditySourcePage.tsx:41
+#: widget/ui/src/components/LiquiditySourceList/LiquiditySourceList.tsx:112
+msgid "Bridges"
+msgstr "Bruggen"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/containers/Settings/Lists.tsx:171
-msgid "Enabled exchanges"
-msgstr "Ingeschakelde uitwisselingen"
+#: widget/embedded/src/pages/LiquiditySourcePage.tsx:41
+#: widget/ui/src/components/LiquiditySourceList/LiquiditySourceList.tsx:151
+msgid "Exchanges"
+msgstr "Uitwisselingen"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/containers/Settings/Lists.tsx:192
@@ -838,18 +853,6 @@ msgid "language"
 msgstr "Taal"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/LiquiditySourcePage.tsx:41
-#: widget/ui/src/components/LiquiditySourceList/LiquiditySourceList.tsx:151
-msgid "Exchanges"
-msgstr "Uitwisselingen"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/pages/LiquiditySourcePage.tsx:41
-#: widget/ui/src/components/LiquiditySourceList/LiquiditySourceList.tsx:112
-msgid "Bridges"
-msgstr "Bruggen"
-
-#. js-lingui-explicit-id
 #: widget/embedded/src/pages/LiquiditySourcePage.tsx:108
 msgid "Deselect all"
 msgstr "Deselecteer alles"
@@ -900,13 +903,13 @@ msgid "The request ID is necessary to display the swap details."
 msgstr "Het verzoek-ID is nodig om de swap-gegevens weer te geven."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/WalletsPage.tsx:72
+#: widget/embedded/src/pages/WalletsPage.tsx:71
 #: widget/ui/src/containers/ConnectWalletsModal/ConnectWalletsModal.tsx:30
 msgid "Connect Wallets"
 msgstr "Verbind Portemonnees"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/WalletsPage.tsx:76
+#: widget/embedded/src/pages/WalletsPage.tsx:75
 msgid "Choose a wallet to connect."
 msgstr "Kies een portemonnee om te verbinden."
 
@@ -1031,6 +1034,11 @@ msgid "Change Slippage"
 msgstr "Wijzig slippage"
 
 #. js-lingui-explicit-id
+#: widget/ui/src/components/FullExpandedQuote/FullExpandedQuote.Tooltip.tsx:37
+msgid "Aggregated Transaction"
+msgstr "Geaggregeerde transactie"
+
+#. js-lingui-explicit-id
 #: widget/ui/src/components/SelectableCategoryList/SelectableCategoryList.tsx:63
 msgid "{blockchainCategory}"
 msgstr "{blockchainCategory}"
@@ -1058,8 +1066,8 @@ msgstr "Mislukt"
 
 #. js-lingui-explicit-id
 #: widget/ui/src/components/SwapListItem/SwapListItem.helpers.ts:10
-msgid "Complete"
-msgstr "Complete"
+msgid "Completed"
+msgstr "Voltooid"
 
 #. js-lingui-explicit-id
 #: widget/ui/src/components/SwapListItem/SwapListItem.helpers.ts:12
