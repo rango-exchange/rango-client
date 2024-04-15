@@ -15,6 +15,7 @@ const evm = new NamespaceBuilder<EvmActions>()
     ...namespaces.evm.actions.recommended,
     namespaces.evm.actions.connect(evmPhantom),
   ])
+  .subscriber(namespaces.evm.actions.changeAccountSubscriber(evmPhantom))
   .use(namespaces.evm.and.recommended)
   .build();
 

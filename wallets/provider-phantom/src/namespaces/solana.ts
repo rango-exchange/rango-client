@@ -1,10 +1,10 @@
 import type { SolanaActions } from '@rango-dev/wallets-core';
 
 import { CAIP, NamespaceBuilder, namespaces } from '@rango-dev/wallets-core';
-import { getSolanaAccounts, Networks } from '@rango-dev/wallets-shared';
+import { getSolanaAccounts } from '@rango-dev/wallets-shared';
 
 import { WALLET_ID } from '../constants';
-import { phantom as phantomInstance } from '../legacy/helpers';
+import { solanaPhantom } from '../legacy/helpers';
 
 const solana = new NamespaceBuilder<SolanaActions>()
   .config('namespace', 'solana')
@@ -13,14 +13,7 @@ const solana = new NamespaceBuilder<SolanaActions>()
     console.log('[phantom]init called from solana cb');
   })
   .action('connect', async function () {
-    const instance = phantomInstance();
-    const solanaInstance = instance?.get(Networks.SOLANA);
-
-    if (!instance || !solanaInstance) {
-      throw new Error(
-        'Are you sure Phantom injected and you have enabled solana correctly?'
-      );
-    }
+    const solanaInstance = solanaPhantom();
 
     const result = await getSolanaAccounts({
       instance: solanaInstance,
@@ -45,6 +38,7 @@ const solana = new NamespaceBuilder<SolanaActions>()
     return formatAccounts;
   })
   .action(namespaces.solana.actions.recommended)
+  .subscriber(namespaces.solana.actions.changeAccountSubscriber(solanaPhantom))
   .use(namespaces.solana.and.recommended)
   .build();
 

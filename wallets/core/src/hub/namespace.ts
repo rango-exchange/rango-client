@@ -8,7 +8,7 @@ import { generateStoreId, isAsync } from './helpers';
 
 type ActionName<K> = K | Omit<K, string>;
 
-export type SubscriberCb = () => () => void;
+export type SubscriberCb = (context: Context) => () => void;
 export type State = NamespaceData;
 type SetState = <K extends keyof State>(name: K, value: State[K]) => void;
 type GetState = {
@@ -192,7 +192,7 @@ class Namespace<T extends SpecificMethods<T>> {
 
     // If there is any subscribes, we will call them and they can be cleanUp using destroy.
     this.subscribers.forEach((subscriber) => {
-      const cleanUp = subscriber();
+      const cleanUp = subscriber(this.#context());
       this.subscriberCleanUps.add(cleanUp);
     });
 

@@ -9,3 +9,6 @@ export interface SolanaActions
     CommonActions {
   connect: () => Promise<Accounts>;
 }
+
+// TODO: injected solana type.
+export type NamespaceProvider = any;

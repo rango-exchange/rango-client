@@ -40,3 +40,18 @@ export function evmPhantom() {
 
   return evmInstance as EvmNamespaceProvider;
 }
+
+export function solanaPhantom() {
+  const instance = phantom();
+  const solanaInstance = instance?.get(Networks.SOLANA);
+
+  if (!instance || !solanaInstance) {
+    throw new Error(
+      'Are you sure Phantom injected and you have enabled solana correctly?'
+    );
+  }
+
+  return solanaInstance;
+}
+
+export const EVM_SUPPORTED_CHAINS = [Networks.ETHEREUM, Networks.POLYGON];
