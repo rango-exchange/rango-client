@@ -22,6 +22,10 @@ const compileMemo = (memo: string): Buffer => {
   return Bitcoin.script.compile([Bitcoin.opcodes.OP_RETURN, data]); // Compile OP_RETURN script
 };
 
+const isUtxoSegwit = (scriptPubKey: string) => {
+  return scriptPubKey?.startsWith('0014');
+};
+
 export class PhantomTransferSigner implements GenericSigner<Transfer> {
   private provider: TransferExternalProvider;
   constructor(provider: TransferExternalProvider) {
@@ -76,21 +80,17 @@ export class PhantomTransferSigner implements GenericSigner<Transfer> {
         value: parseInt(utxo.value),
       };
 
-      fromattedUtxo.witnessUtxo = {
-        script: Buffer.from(utxo.script, 'hex'),
-        value: parseInt(utxo.value),
-      };
+      if (isUtxoSegwit(utxo.script)) {
+        // for segwit inputs, you only need the output script and value as an object.
+        fromattedUtxo.witnessUtxo = {
+          script: Buffer.from(utxo.script, 'hex'),
+          value: parseInt(utxo.value),
+        };
+      } else {
+        // for non segwit inputs, we must pass the full transaction buffer
+        fromattedUtxo.nonWitnessUtxo = Buffer.from(utxo.txId, 'hex');
+      }
 
-      /*
-       * if (true) {
-       *   fromattedUtxo.witnessUtxo = {
-       *     script: Buffer.from(utxo.script, 'hex'),
-       *     value: parseInt(utxo.value),
-       *   };
-       * } else {
-       *   fromattedUtxo.nonWitnessUtxo = Buffer.from(utxo.txId, 'hex');
-       * }
-       */
       return fromattedUtxo;
     });
 

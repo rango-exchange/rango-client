@@ -13,6 +13,7 @@ import {
   Typography,
   WalletState,
 } from '@rango-dev/ui';
+import { TransactionType } from 'rango-sdk';
 import React, { useEffect, useState } from 'react';
 
 import { useWallets } from '../..';
@@ -33,6 +34,7 @@ import {
 } from '../../utils/wallets';
 import { WatermarkedModal } from '../common/WatermarkedModal';
 import { WalletModal } from '../WalletModal';
+import { WalletTransactionTypesModal } from '../WalletTransactionTypesModal';
 
 import { ShowMoreWallets } from './ConfirmWallets.styles';
 import {
@@ -40,6 +42,11 @@ import {
   Spinner,
   WalletImageContainer,
 } from './WalletList.styles';
+
+interface TransactionTypesModalConfig {
+  providerType: string;
+  availableTransactionTypes: TransactionType[];
+}
 
 const ACCOUNT_ADDRESS_MAX_CHARACTERS = 7;
 export function WalletList(props: PropTypes) {
@@ -59,6 +66,8 @@ export function WalletList(props: PropTypes) {
     useState<'in-progress' | 'completed' | 'rejected' | null>(null);
   const [showAddNetworkToWalletModal, setShowAddNetworkToWalletModal] =
     useState(false);
+  const [transactionTypesModalConfig, setTransactionTypesModalConfig] =
+    useState<TransactionTypesModalConfig | null>(null);
 
   const { suggestAndConnect } = useWallets();
   let modalTimerId: ReturnType<typeof setTimeout> | null = null;
@@ -177,7 +186,17 @@ export function WalletList(props: PropTypes) {
 
         const onClick = () => {
           if (wallet.state === WalletState.DISCONNECTED) {
-            void handleClick(wallet.type);
+            if (wallet.type === 'phantom') {
+              setTransactionTypesModalConfig({
+                providerType: wallet.type,
+                availableTransactionTypes: [
+                  TransactionType.SOLANA,
+                  TransactionType.TRANSFER,
+                ],
+              });
+            } else {
+              void handleClick(wallet.type);
+            }
           } else if (couldAddExperimentalChain) {
             setExperimentalChainWallet({
               walletType: wallet.type,
@@ -242,6 +261,20 @@ export function WalletList(props: PropTypes) {
                 </MessageBox>
               </WatermarkedModal>
             )}
+            <WalletTransactionTypesModal
+              open={!!transactionTypesModalConfig}
+              onClose={() => setTransactionTypesModalConfig(null)}
+              onConfirm={(transactionTypes) => {
+                void handleClick(
+                  transactionTypesModalConfig?.providerType as string,
+                  transactionTypes
+                );
+                setTransactionTypesModalConfig(null);
+              }}
+              transactionTypes={
+                transactionTypesModalConfig?.availableTransactionTypes
+              }
+            />
             {!!experimentalChainWallet && (
               <WatermarkedModal
                 open={!!experimentalChainWallet && showExperimentalChainModal}

@@ -26,20 +26,16 @@ export const config = {
 };
 
 export const getInstance = phantom_instance;
-export const connect: Connect = async ({ instance, meta }) => {
-  const selectedTransactionTypes: TransactionType[] = [
-    TransactionType.SOLANA,
-    TransactionType.TRANSFER,
-  ];
-
+export const connect: Connect = async ({
+  instance,
+  meta,
+  transactionTypes,
+}) => {
   const solanaInstance = chooseInstance(instance, meta, Networks.SOLANA);
   const bitcoinInstance = chooseInstance(instance, meta, Networks.BTC);
 
   const result = [];
-  if (
-    solanaInstance &&
-    selectedTransactionTypes.includes(TransactionType.SOLANA)
-  ) {
+  if (solanaInstance && transactionTypes?.includes(TransactionType.SOLANA)) {
     try {
       const solanaAccounts = (await getSolanaAccounts({
         instance: solanaInstance,
@@ -47,16 +43,15 @@ export const connect: Connect = async ({ instance, meta }) => {
       })) as ProviderConnectResult;
       result.push(solanaAccounts);
     } catch (error) {
-      throw new Error(
-        'Could not connect Solana account. Consider adding Solana to your wallet.'
-      );
+      if (transactionTypes) {
+        throw new Error(
+          'Could not connect Solana account. Consider adding Solana to your wallet.'
+        );
+      }
     }
   }
 
-  if (
-    bitcoinInstance &&
-    selectedTransactionTypes.includes(TransactionType.TRANSFER)
-  ) {
+  if (bitcoinInstance && transactionTypes?.includes(TransactionType.TRANSFER)) {
     try {
       const bitcoinAccounts = (await getBitcoinAccounts({
         instance: bitcoinInstance,
@@ -64,9 +59,11 @@ export const connect: Connect = async ({ instance, meta }) => {
       })) as ProviderConnectResult;
       result.push(bitcoinAccounts);
     } catch (error) {
-      throw new Error(
-        'Could not connect Bitcoin account. Consider adding Bitcoin to your wallet.'
-      );
+      if (transactionTypes) {
+        throw new Error(
+          'Could not connect Bitcoin account. Consider adding Bitcoin to your wallet.'
+        );
+      }
     }
   }
 
@@ -103,13 +100,27 @@ export const getSigners: (provider: any) => SignerFactory = signer;
 
 export const canEagerConnect: CanEagerConnect = async ({ instance, meta }) => {
   const solanaInstance = chooseInstance(instance, meta, Networks.SOLANA);
+  const bitcoinInstance = chooseInstance(instance, meta, Networks.BTC);
 
   try {
     const result = await solanaInstance.connect({ onlyIfTrusted: true });
-    return !!result;
+    if (result) {
+      return true;
+    }
   } catch (error) {
-    return false;
+    /* empty */
   }
+
+  try {
+    const result = await bitcoinInstance.requestAccounts();
+    if (result) {
+      return true;
+    }
+  } catch (error) {
+    /* empty */
+  }
+
+  return false;
 };
 
 export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (

@@ -7,7 +7,11 @@ import type {
   WalletInfo,
   WalletType,
 } from '@rango-dev/wallets-shared';
-import type { BlockchainMeta, SignerFactory } from 'rango-types';
+import type {
+  BlockchainMeta,
+  SignerFactory,
+  TransactionType,
+} from 'rango-types';
 import type { PropsWithChildren } from 'react';
 
 export type State = {
@@ -23,7 +27,11 @@ export type ConnectResult = {
 export type Providers = { [type in WalletType]?: any };
 
 export type ProviderContext = {
-  connect(type: WalletType, network?: Network): Promise<ConnectResult>;
+  connect(
+    type: WalletType,
+    network?: Network,
+    transactionTypes?: TransactionType[]
+  ): Promise<ConnectResult>;
   disconnect(type: WalletType): Promise<void>;
   disconnectAll(): Promise<PromiseSettledResult<any>[]>;
   state(type: WalletType): WalletState;
