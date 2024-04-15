@@ -39,10 +39,10 @@ export function QuoteCost(props: PropTypes) {
           <div className={iconStyles()}>
             <GasIcon size={12} color={'gray'} />
           </div>
+          <Divider direction="horizontal" size={2} />
           <Typography align="center" variant="body" size="small">
             ${fee}
           </Typography>
-          <Divider direction="horizontal" size={2} />
         </div>
       </Tooltip>
 
@@ -51,10 +51,10 @@ export function QuoteCost(props: PropTypes) {
         <div className={iconStyles()}>
           <TimeIcon size={12} color="gray" />
         </div>
+        <Divider direction="horizontal" size={2} />
         <Typography align="center" variant="body" size="small">
           {time}
         </Typography>
-        <Divider direction="horizontal" size={2} />
       </div>
       {!!steps && (
         <>
@@ -63,10 +63,10 @@ export function QuoteCost(props: PropTypes) {
             <div className={iconStyles()}>
               <NumberIcon size={16} color="gray" />
             </div>
+            <Divider direction="horizontal" size={2} />
             <Typography align="center" variant="body" size="small">
               {steps}
             </Typography>
-            <Divider direction="horizontal" size={2} />
           </div>
         </>
       )}
