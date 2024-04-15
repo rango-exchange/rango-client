@@ -24,6 +24,7 @@ import {
 
 interface PropTypes {
   open: boolean;
+  image?: string;
   onClose: () => void;
   onConfirm: (transactionTypes: TransactionType[]) => void;
   transactionTypes?: TransactionType[];
@@ -33,7 +34,6 @@ export function WalletTransactionTypesModal(props: PropTypes) {
   const [selectedTransactionTypes, setSelectedTransactionTypes] = useState<
     TransactionType[]
   >([]);
-  const selectedWalletImage = 'todo';
 
   const onSelect = (transactionType: TransactionType) =>
     setSelectedTransactionTypes((selectedTransactionTypes) =>
@@ -58,7 +58,7 @@ export function WalletTransactionTypesModal(props: PropTypes) {
         icon={
           <LogoContainer>
             <WalletImageContainer>
-              <Image src={selectedWalletImage} size={45} />
+              <Image src={props.image} size={45} />
             </WalletImageContainer>
             <Spinner />
           </LogoContainer>

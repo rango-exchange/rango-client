@@ -45,6 +45,7 @@ import {
 
 interface TransactionTypesModalConfig {
   providerType: string;
+  providerImage: string;
   availableTransactionTypes: TransactionType[];
 }
 
@@ -189,6 +190,7 @@ export function WalletList(props: PropTypes) {
             if (wallet.type === 'phantom') {
               setTransactionTypesModalConfig({
                 providerType: wallet.type,
+                providerImage: wallet.image,
                 availableTransactionTypes: [
                   TransactionType.SOLANA,
                   TransactionType.TRANSFER,
@@ -263,6 +265,7 @@ export function WalletList(props: PropTypes) {
             )}
             <WalletTransactionTypesModal
               open={!!transactionTypesModalConfig}
+              image={transactionTypesModalConfig?.providerImage}
               onClose={() => setTransactionTypesModalConfig(null)}
               onConfirm={(transactionTypes) => {
                 void handleClick(

@@ -31,6 +31,7 @@ export const TIME_TO_IGNORE_MODAL = 300;
 
 interface TransactionTypesModalConfig {
   providerType: string;
+  providerImage: string;
   availableTransactionTypes: TransactionType[];
 }
 
@@ -98,6 +99,7 @@ export function WalletsPage() {
                   ) {
                     setTransactionTypesModalConfig({
                       providerType: type,
+                      providerImage: wallet.image,
                       availableTransactionTypes: [
                         TransactionType.SOLANA,
                         TransactionType.TRANSFER,
@@ -129,6 +131,7 @@ export function WalletsPage() {
               );
               setTransactionTypesModalConfig(null);
             }}
+            image={transactionTypesModalConfig?.providerImage}
             transactionTypes={
               transactionTypesModalConfig?.availableTransactionTypes
             }
