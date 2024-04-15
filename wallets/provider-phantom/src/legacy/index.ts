@@ -13,7 +13,7 @@ import { evmBlockchains, solanaBlockchain } from 'rango-types';
 
 import { WALLET_ID } from '../constants';
 
-import { phantom as phantom_instance } from './helpers';
+import { EVM_SUPPORTED_CHAINS, phantom as phantom_instance } from './helpers';
 import signer from './signer';
 
 const config = {
@@ -48,7 +48,9 @@ const subscribe: Subscribe = ({ instance, updateAccounts, connect }) => {
   };
 };
 
-const canSwitchNetworkTo: CanSwitchNetwork = () => false;
+export const canSwitchNetworkTo: CanSwitchNetwork = ({ network }) => {
+  return EVM_SUPPORTED_CHAINS.includes(network as Networks);
+};
 
 const getSigners: (provider: any) => SignerFactory = signer;
 
@@ -77,7 +79,12 @@ const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
       DEFAULT: 'https://phantom.app/',
     },
     color: '#4d40c6',
-    supportedChains: [...solana, ...evms],
+    supportedChains: [
+      ...solana,
+      ...evms.filter((chain) =>
+        EVM_SUPPORTED_CHAINS.includes(chain.name as Networks)
+      ),
+    ],
   };
 };
 

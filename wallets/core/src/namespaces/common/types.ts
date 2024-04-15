@@ -4,6 +4,7 @@ export enum Namespaces {
   Solana = 'solana',
   Evm = 'evm',
   Cosmos = 'cosmos',
+  Utxo = 'utxo',
 }
 
 export type AnyFunction = (...args: any[]) => any;

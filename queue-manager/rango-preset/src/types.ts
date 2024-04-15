@@ -71,15 +71,10 @@ export interface SwapQueueContext extends QueueContext {
   switchNetwork: (
     wallet: WalletType,
     network: Network
-  ) => Promise<ConnectResult | undefined> | undefined;
+  ) => Promise<ConnectResult | ConnectResult[] | undefined> | undefined;
   canSwitchNetworkTo: (type: WalletType, network: Network) => boolean;
-  connect: (
-    wallet: WalletType,
-    network: Network
-  ) => Promise<ConnectResult> | undefined;
   state: (type: WalletType) => WalletState;
   isMobileWallet: (type: WalletType) => boolean;
-
   // Dynamically will be added to context.
   claimedBy?: string;
   resetClaimedBy?: () => void;

@@ -140,4 +140,7 @@ export type WalletProviders = Map<
 export type LegacyProviderInterface = { config: WalletConfig } & WalletActions;
 
 // TODO: make it type safe by connecting `namespace` and `network`
-export type NamespaceAndNetwork = { namespace: Namespaces; network: any };
+export type NamespaceAndNetwork = {
+  namespace: Namespaces | 'DISCOVER_MODE';
+  network: any;
+};

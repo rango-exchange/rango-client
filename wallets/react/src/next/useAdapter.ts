@@ -1,12 +1,23 @@
 import type { ProviderContext, ProviderProps } from '../legacy/types';
-import type { Store, V1, Versions } from '@rango-dev/wallets-core';
+import type {
+  NamespaceAndNetwork,
+  Namespaces,
+  Store,
+  V1,
+  Versions,
+} from '@rango-dev/wallets-core';
 import type { WalletInfo } from '@rango-dev/wallets-shared';
 
 import { createStore, Hub } from '@rango-dev/wallets-core';
 import { useEffect, useRef, useState } from 'react';
 
-import { fromAccountIdToLegacyAddressFormat, splitProviders } from './helpers';
-import { checkHubStateAndTriggerEvents } from './utils';
+import { fromAccountIdToLegacyAddressFormat } from './helpers';
+import {
+  checkHubStateAndTriggerEvents,
+  convertNamespaceNetworkToEvmChainId,
+  discoverNamespace,
+  getLegacyProvider,
+} from './utils';
 
 export type UseAdapterProps = Omit<ProviderProps, 'providers'> & {
   providers: V1[];
@@ -50,6 +61,20 @@ export function useAdapter(props: UseAdapterProps): ProviderContext {
     return createdHub;
   }
   const [currentRender, rerender] = useState(0);
+  // useEffect will run `subscribe` once, so we need a refrence and mutate the value if it's changes.
+  const dataRef = useRef({
+    onUpdateState: props.onUpdateState,
+    __all: props.__all,
+    allBlockChains: props.allBlockChains,
+  });
+
+  useEffect(() => {
+    dataRef.current = {
+      onUpdateState: props.onUpdateState,
+      __all: props.__all,
+      allBlockChains: props.allBlockChains,
+    };
+  }, [props]);
 
   // Initialize instances
   useEffect(() => {
@@ -72,12 +97,14 @@ export function useAdapter(props: UseAdapterProps): ProviderContext {
     document.addEventListener('readystatechange', initHubWhenPageIsReady);
 
     getStore().subscribe((curr, prev) => {
-      if (props.onUpdateState) {
+      if (dataRef.current.onUpdateState) {
         checkHubStateAndTriggerEvents(
           getHub(),
           curr,
           prev,
-          props.onUpdateState
+          dataRef.current.onUpdateState,
+          dataRef.current.__all,
+          dataRef.current.allBlockChains
         );
       }
       rerender(currentRender + 1);
@@ -86,17 +113,7 @@ export function useAdapter(props: UseAdapterProps): ProviderContext {
 
   return {
     canSwitchNetworkTo(type, network) {
-      const [legacy] = splitProviders(props.__all);
-      const provider = legacy.find((legacyProvider) => {
-        return legacyProvider.config.type === type;
-      });
-      if (!provider) {
-        console.warn(
-          `You have a provider that hasn't legacy provider. it causes some problems since we need some legacy functionality. Method: providers(), Provider Id: ${type}`
-        );
-        return false;
-      }
-
+      const provider = getLegacyProvider(props.__all, type);
       const switchTo = provider.canSwitchNetworkTo;
 
       if (!switchTo) {
@@ -106,7 +123,7 @@ export function useAdapter(props: UseAdapterProps): ProviderContext {
       return switchTo({
         network,
         meta: props.allBlockChains || [],
-        provider: provider.getInstance,
+        provider: provider.getInstance(),
       });
     },
     async connect(type, namespaces) {
@@ -123,10 +140,17 @@ export function useAdapter(props: UseAdapterProps): ProviderContext {
       }
 
       // TODO: CommonBlockchains somehow.
-      const targetNamespaces: object[] = [];
+      const targetNamespaces: [NamespaceAndNetwork, object][] = [];
       namespaces.forEach((namespace) => {
+        let targetNamespace: Namespaces;
+        if (namespace.namespace === 'DISCOVER_MODE') {
+          targetNamespace = discoverNamespace(namespace.network);
+        } else {
+          targetNamespace = namespace.namespace;
+        }
+
         const result = wallet.findBy({
-          namespace: namespace.namespace,
+          namespace: targetNamespace,
         });
 
         if (!result) {
@@ -135,14 +159,20 @@ export function useAdapter(props: UseAdapterProps): ProviderContext {
           );
         }
 
-        targetNamespaces.push(result);
+        targetNamespaces.push([namespace, result]);
       });
 
-      const finalResult = targetNamespaces.map((namespace) =>
+      const finalResult = targetNamespaces.map(([info, namespace]) => {
+        const chain =
+          convertNamespaceNetworkToEvmChainId(
+            info,
+            props.allBlockChains || []
+          ) || info.network;
+
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore-next-line
-        namespace.connect()
-      );
+        return namespace.connect(chain);
+      });
 
       return finalResult;
     },
@@ -162,21 +192,7 @@ export function useAdapter(props: UseAdapterProps): ProviderContext {
       throw new Error('`disconnectAll` not implemented');
     },
     getSigners(type) {
-      const [legacy] = splitProviders(props.__all);
-      const provider = legacy.find((legacyProvider) => {
-        return legacyProvider.config.type === type;
-      });
-
-      console.log('[getSigners]', { legacy, provider });
-      if (!provider) {
-        console.warn(
-          `You have a provider that hasn't legacy provider. it causes some problems since we need some legacy functionality. Method: getSigners(), Provider Id: ${type}`
-        );
-        throw new Error(
-          `You need to have legacy implementation to use 'getSigners'. Provider Id: ${type}`
-        );
-      }
-
+      const provider = getLegacyProvider(props.__all, type);
       return provider.getSigners(provider.getInstance());
     },
     getWalletInfo(type) {
@@ -190,20 +206,7 @@ export function useAdapter(props: UseAdapterProps): ProviderContext {
         throw new Error('Your provider should have required `info`.');
       }
 
-      // TODO: duplicated code.
-      const [legacy] = splitProviders(props.__all);
-      const provider = legacy.find((legacyProvider) => {
-        return legacyProvider.config.type === type;
-      });
-
-      if (!provider) {
-        console.warn(
-          `You have a provider that hasn't legacy provider. it causes some problems since we need some legacy functionality. Method: getWalletInfo(), Provider Id: ${type}`
-        );
-        throw new Error(
-          `You need to have legacy implementation to use 'getWalletInfo'. Provider Id: ${type}`
-        );
-      }
+      const provider = getLegacyProvider(props.__all, type);
 
       const installLink: Exclude<WalletInfo['installLink'], string> = {
         DEFAULT: '',
@@ -241,19 +244,13 @@ export function useAdapter(props: UseAdapterProps): ProviderContext {
     },
     providers() {
       const output: ReturnType<ProviderContext['providers']> = {};
-      const [legacy] = splitProviders(props.__all);
 
       Array.from(getHub().getAll().keys()).forEach((id) => {
-        const provider = legacy.find(
-          (legacyProvider) => legacyProvider.config.type === id
-        );
-
-        if (provider) {
+        try {
+          const provider = getLegacyProvider(props.__all, id);
           output[id] = provider.getInstance();
-        } else {
-          console.warn(
-            `You have a provider that hasn't legacy provider. it causes some problems since we need some legacy functionality. Method: providers(), Provider Id: ${id}`
-          );
+        } catch (e) {
+          console.warn(e);
         }
       });
 
