@@ -19,6 +19,11 @@ import { solanaBlockchain, TransactionType } from 'rango-types';
 import { getBitcoinAccounts, phantom as phantom_instance } from './helpers';
 import signer from './signer';
 
+const SOLANA_CONNECT_ERROR_MSG =
+  'Could not connect Solana account. Consider adding Solana to your wallet.';
+const BTC_CONNECT_ERROR_MSG =
+  'Could not connect Bitcoin account. Consider adding Bitcoin to your wallet.';
+
 const WALLET = WalletTypes.PHANTOM;
 
 export const config = {
@@ -35,7 +40,16 @@ export const connect: Connect = async ({
   const bitcoinInstance = chooseInstance(instance, meta, Networks.BTC);
 
   const result = [];
-  if (solanaInstance && transactionTypes?.includes(TransactionType.SOLANA)) {
+
+  if (!solanaInstance && transactionTypes?.includes(TransactionType.SOLANA)) {
+    // If user opted to connect Solana and Solana instance is not available
+    throw new Error(SOLANA_CONNECT_ERROR_MSG);
+  }
+
+  if (
+    solanaInstance &&
+    (!transactionTypes || transactionTypes.includes(TransactionType.SOLANA))
+  ) {
     try {
       const solanaAccounts = (await getSolanaAccounts({
         instance: solanaInstance,
@@ -43,15 +57,24 @@ export const connect: Connect = async ({
       })) as ProviderConnectResult;
       result.push(solanaAccounts);
     } catch (error) {
+      // If transactionTypes is not available it means that autoConnect is happening so we ignore the error
       if (transactionTypes) {
-        throw new Error(
-          'Could not connect Solana account. Consider adding Solana to your wallet.'
-        );
+        throw new Error(SOLANA_CONNECT_ERROR_MSG);
       }
     }
   }
 
-  if (bitcoinInstance && transactionTypes?.includes(TransactionType.TRANSFER)) {
+  if (
+    !bitcoinInstance &&
+    transactionTypes?.includes(TransactionType.TRANSFER)
+  ) {
+    throw new Error(BTC_CONNECT_ERROR_MSG);
+  }
+
+  if (
+    bitcoinInstance &&
+    (!transactionTypes || transactionTypes?.includes(TransactionType.TRANSFER))
+  ) {
     try {
       const bitcoinAccounts = (await getBitcoinAccounts({
         instance: bitcoinInstance,
@@ -60,9 +83,7 @@ export const connect: Connect = async ({
       result.push(bitcoinAccounts);
     } catch (error) {
       if (transactionTypes) {
-        throw new Error(
-          'Could not connect Bitcoin account. Consider adding Bitcoin to your wallet.'
-        );
+        throw new Error(BTC_CONNECT_ERROR_MSG);
       }
     }
   }
