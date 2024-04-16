@@ -75,10 +75,18 @@ export async function executeSolanaTransaction(
   const DefaultSolanaSigner: SolanaWeb3Signer = async (
     solanaWeb3Transaction
   ) => {
-    const signedTransaction = await solanaProvider.signTransaction(
-      solanaWeb3Transaction
-    );
-    return signedTransaction.serialize();
+    try {
+      const signedTransaction = await solanaProvider.signTransaction(
+        solanaWeb3Transaction
+      );
+      return signedTransaction.serialize();
+    } catch (e: any) {
+      const REJECTION_CODE = 4001;
+      if (e && Object.hasOwn(e, 'code') && e.code === REJECTION_CODE) {
+        throw new SignerError(SignerErrorCode.REJECTED_BY_USER, undefined, e);
+      }
+      throw new SignerError(SignerErrorCode.SIGN_TX_ERROR, undefined, e);
+    }
   };
   return await generalSolanaTransactionExecutor(tx, DefaultSolanaSigner);
 }
