@@ -121,7 +121,6 @@ export const getSigners: (provider: any) => SignerFactory = signer;
 
 export const canEagerConnect: CanEagerConnect = async ({ instance, meta }) => {
   const solanaInstance = chooseInstance(instance, meta, Networks.SOLANA);
-  const bitcoinInstance = chooseInstance(instance, meta, Networks.BTC);
 
   try {
     const result = await solanaInstance.connect({ onlyIfTrusted: true });
@@ -129,16 +128,7 @@ export const canEagerConnect: CanEagerConnect = async ({ instance, meta }) => {
       return true;
     }
   } catch (error) {
-    /* empty */
-  }
-
-  try {
-    const result = await bitcoinInstance.requestAccounts();
-    if (result) {
-      return true;
-    }
-  } catch (error) {
-    /* empty */
+    return false;
   }
 
   return false;
