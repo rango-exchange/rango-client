@@ -156,42 +156,6 @@ export const getSolanaAccounts: Connect = async ({ instance }) => {
   };
 };
 
-export function getCoinbaseInstance(
-  lookingFor: 'coinbase' | 'metamask' = 'coinbase'
-) {
-  const { ethereum, coinbaseSolana } = window;
-  const instances = new Map();
-  if (ethereum) {
-    const checker =
-      lookingFor === 'metamask' ? 'isMetaMask' : 'isCoinbaseWallet';
-
-    // If only Coinbase Wallet is installed
-    if (lookingFor === 'coinbase' && ethereum[checker]) {
-      instances.set(Networks.ETHEREUM, ethereum);
-    }
-    // If Coinbase Wallet and Metamask is installed at the same time.
-    else if (ethereum.providers?.length) {
-      const ethInstance = ethereum.providers.find((provider: any) => {
-        return provider[checker];
-      });
-      instances.set(Networks.ETHEREUM, ethInstance);
-    }
-  }
-  if (!!coinbaseSolana && lookingFor === 'coinbase') {
-    instances.set(Networks.SOLANA, coinbaseSolana);
-  }
-
-  if (instances.size === 0) {
-    return null;
-  }
-
-  if (lookingFor === 'metamask') {
-    return instances.get(Networks.ETHEREUM);
-  }
-
-  return instances;
-}
-
 export function sortWalletsBasedOnState(wallets: Wallet[]): Wallet[] {
   return wallets.sort(
     (a, b) =>
