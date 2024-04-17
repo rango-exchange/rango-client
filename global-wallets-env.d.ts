@@ -12,6 +12,7 @@ declare global {
     solana: any;
     phantom: any;
     xfi: any;
+    coinbaseWalletExtension: any;
     coinbaseSolana: any;
     coin98: any;
     keplr: any;
