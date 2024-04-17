@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/signer-solana",
-  "version": "0.26.0",
+  "version": "0.26.1-next.1",
   "license": "MIT",
   "type": "module",
   "source": "./src/index.ts",
@@ -21,8 +21,12 @@
     "lint": "eslint \"**/*.{ts,tsx}\" --ignore-path ../../.eslintignore"
   },
   "dependencies": {
-    "@solana/web3.js": "^1.67.2",
+    "@solana/web3.js": "^1.91.4",
+    "promise-retry": "^2.0.1",
     "rango-types": "^0.1.59"
+  },
+  "devDependencies": {
+    "@types/promise-retry": "^1.1.6"
   },
   "publishConfig": {
     "access": "public"
