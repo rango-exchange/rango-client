@@ -1,4 +1,8 @@
-import type { BlockchainMeta, EvmBlockchainMeta } from 'rango-types';
+import type {
+  BlockchainMeta,
+  EvmBlockchainMeta,
+  TransactionType,
+} from 'rango-types';
 
 export const IS_DEV =
   !process.env.NODE_ENV || process.env.NODE_ENV === 'development';
@@ -238,6 +242,7 @@ export type Connect = (options: {
   instance: any;
   network?: Network;
   meta: BlockchainMeta[];
+  transactionTypes?: TransactionType[];
 }) => Promise<ProviderConnectResult | ProviderConnectResult[]>;
 
 export type Disconnect = (options: {

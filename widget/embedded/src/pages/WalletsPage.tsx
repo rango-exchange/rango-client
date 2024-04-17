@@ -2,10 +2,12 @@ import type { WalletType } from '@rango-dev/wallets-shared';
 
 import { i18n } from '@lingui/core';
 import { styled, Typography, Wallet, WalletState } from '@rango-dev/ui';
+import { TransactionType } from 'rango-sdk';
 import React, { useState } from 'react';
 
 import { Layout, PageContainer } from '../components/Layout';
 import { WalletModal } from '../components/WalletModal';
+import { WalletTransactionTypesModal } from '../components/WalletTransactionTypesModal';
 import { useWalletList } from '../hooks/useWalletList';
 import { useAppStore } from '../store/AppStore';
 import { useUiStore } from '../store/ui';
@@ -27,9 +29,17 @@ const Container = styled(PageContainer, {
 export const TIME_TO_CLOSE_MODAL = 3_000;
 export const TIME_TO_IGNORE_MODAL = 300;
 
+interface TransactionTypesModalConfig {
+  providerType: string;
+  providerImage: string;
+  availableTransactionTypes: TransactionType[];
+}
+
 export function WalletsPage() {
   const { config, fetchStatus: fetchMetaStatus } = useAppStore();
   const [openModal, setOpenModal] = useState(false);
+  const [transactionTypesModalConfig, setTransactionTypesModalConfig] =
+    useState<TransactionTypesModalConfig | null>(null);
   const [selectedWalletType, setSelectedWalletType] = useState<WalletType>('');
   let modalTimerId: ReturnType<typeof setTimeout> | null = null;
   const isActiveTab = useUiStore.use.isActiveTab();
@@ -83,7 +93,21 @@ export function WalletsPage() {
                 {...wallet}
                 container={getContainer()}
                 onClick={(type) => {
-                  void handleClick(type);
+                  if (
+                    wallet.type === 'phantom' &&
+                    wallet.state === WalletState.DISCONNECTED
+                  ) {
+                    setTransactionTypesModalConfig({
+                      providerType: type,
+                      providerImage: wallet.image,
+                      availableTransactionTypes: [
+                        TransactionType.SOLANA,
+                        TransactionType.TRANSFER,
+                      ],
+                    });
+                  } else {
+                    void handleClick(type);
+                  }
                 }}
                 isLoading={fetchMetaStatus === 'loading'}
                 disabled={!isActiveTab}
@@ -96,6 +120,21 @@ export function WalletsPage() {
             image={selectedWalletImage}
             state={selectedWalletState}
             error={error}
+          />
+          <WalletTransactionTypesModal
+            open={!!transactionTypesModalConfig}
+            onClose={() => setTransactionTypesModalConfig(null)}
+            onConfirm={(transactionTypes) => {
+              void handleClick(
+                transactionTypesModalConfig?.providerType as string,
+                transactionTypes
+              );
+              setTransactionTypesModalConfig(null);
+            }}
+            image={transactionTypesModalConfig?.providerImage}
+            transactionTypes={
+              transactionTypesModalConfig?.availableTransactionTypes
+            }
           />
         </ListContainer>
       </Container>

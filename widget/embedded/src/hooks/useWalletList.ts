@@ -1,6 +1,6 @@
 import type { WidgetConfig } from '../types';
 import type { WalletInfo } from '@rango-dev/ui';
-import type { BlockchainMeta } from 'rango-sdk';
+import type { BlockchainMeta, TransactionType } from 'rango-sdk';
 
 import { WalletState } from '@rango-dev/ui';
 import { useWallets } from '@rango-dev/wallets-react';
@@ -71,7 +71,10 @@ export function useWalletList(params: Params) {
         connectedWallet.chain === chain
     );
 
-  const handleClick = async (type: WalletType) => {
+  const handleClick = async (
+    type: WalletType,
+    transactionTypes?: TransactionType[]
+  ) => {
     const wallet = state(type);
     try {
       if (error) {
@@ -87,7 +90,7 @@ export function useWalletList(params: Params) {
           return;
         }
         onBeforeConnect?.(type);
-        await connect(type);
+        await connect(type, undefined, transactionTypes);
         onConnect?.(type);
       }
     } catch (e) {

@@ -4,7 +4,11 @@ import type {
   WalletInfo,
   WalletType,
 } from '@rango-dev/wallets-shared';
-import type { BlockchainMeta, SignerFactory } from 'rango-types';
+import type {
+  BlockchainMeta,
+  SignerFactory,
+  TransactionType,
+} from 'rango-types';
 
 export type State = {
   [key: string]: WalletState | undefined;
@@ -59,6 +63,7 @@ export type Connect = (options: {
   instance: any;
   network?: Network;
   meta: BlockchainMeta[];
+  transactionTypes?: TransactionType[];
 }) => Promise<ProviderConnectResult | ProviderConnectResult[]>;
 
 export type Disconnect = (options: {
