@@ -65,10 +65,7 @@ class Wallet<InstanceType = any> {
     }
   }
 
-  async suggestAndConnect(
-    network: Network,
-    transactionTypes?: TransactionType[]
-  ) {
+  async suggestAndConnect(network: Network) {
     if (this.actions.suggest) {
       await this.actions.suggest({
         instance: this.provider,
@@ -76,7 +73,7 @@ class Wallet<InstanceType = any> {
         network,
       });
     }
-    return await this.connect(network, transactionTypes);
+    return await this.connect(network);
   }
 
   async connect(network?: Network, transactionTypes?: TransactionType[]) {
