@@ -42,9 +42,6 @@ export const connect: Connect = async ({ instance, meta }) => {
   const ethInstance = chooseInstance(instance, meta, Networks.ETHEREUM);
   const solInstance = chooseInstance(instance, meta, Networks.SOLANA);
   const cosmosInstance = chooseInstance(instance, meta, Networks.COSMOS);
-  if (!ethInstance || !ethInstance.__XDEFI) {
-    throw new Error("Please 'Prioritise' XDEFI and refresh the page.");
-  }
 
   const evmResult = await getEvmAccounts(ethInstance);
   const nonEvmResults = await getNonEvmAccounts(instance);
