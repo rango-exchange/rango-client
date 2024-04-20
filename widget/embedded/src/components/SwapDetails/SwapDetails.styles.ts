@@ -92,5 +92,5 @@ export const ErrorMessages = styled('div', {
   gap: '$5',
 });
 export const MessageText = styled(Typography, {
-  wordBreak: 'break-all',
+  wordBreak: 'break-word',
 });
