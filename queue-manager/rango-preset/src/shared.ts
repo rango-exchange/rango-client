@@ -18,6 +18,7 @@ import BigNumber from 'bignumber.js';
 import {
   isCosmosBlockchain,
   isEvmBlockchain,
+  isSolanaBlockchain,
   isStarknetBlockchain,
   isTronBlockchain,
 } from 'rango-types';
@@ -149,6 +150,9 @@ const getBlockchainMetaExplorerBaseUrl = (
     isTronBlockchain(blockchainMeta)
   ) {
     return blockchainMeta.info.transactionUrl;
+  } else if (isSolanaBlockchain(blockchainMeta)) {
+    const SOLANA_EXPLORER_URL = 'https://solscan.io/tx/{txHash}';
+    return SOLANA_EXPLORER_URL;
   }
   return;
 };
@@ -164,9 +168,9 @@ export const getScannerUrl = (
     return;
   }
   if (baseUrl.indexOf('/{txHash}') !== -1) {
-    return baseUrl.replace('{txHash}', txHash?.toLowerCase());
+    return baseUrl.replace('{txHash}', txHash);
   }
-  return `${baseUrl}/${txHash?.toLowerCase()}`;
+  return `${baseUrl}/${txHash}`;
 };
 
 export function getNextStep(
