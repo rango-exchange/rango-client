@@ -205,6 +205,7 @@ export function Home() {
               <QuoteWarningsAndErrors
                 warning={quoteWarning}
                 error={quoteError}
+                couldChangeSettings={true}
                 refetchQuote={fetchQuote}
                 showWarningModal={showQuoteWarningModal}
                 confirmationDisabled={!isActiveTab}
