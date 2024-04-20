@@ -183,33 +183,35 @@ class Wallet<InstanceType = any> {
     let nextAccounts: string[] = [];
     let nextNetwork: Network | null | undefined = null;
     if (Array.isArray(connectResult)) {
+      let activeEvmNetwork: Network | null = null;
       const accounts = connectResult.flatMap((blockchain) => {
         const chainId = blockchain.chainId || Networks.Unknown;
         // Try to map chainId with a Network, if not found, we use chainId directly.
         const network =
           getBlockChainNameFromId(chainId, this.info.supportedBlockchains) ||
           Networks.Unknown;
+
+        /*
+         * When connecting to an evm instance, it will return address and wallet's active chain.
+         * On switch network we are comparing state's network and what passed as requestedNetwork.
+         * This code is for making sure we are setting correct active chain in state if it's evm.
+         */
+        if (!activeEvmNetwork && network !== Networks.Unknown) {
+          const blockchainMeta = this.info.supportedBlockchains.find(
+            (blockchain) => blockchain.name === network
+          );
+          if (blockchainMeta?.info?.infoType === 'EvmMetaInfo') {
+            activeEvmNetwork = network;
+          }
+        }
         // TODO: second parameter should be `string` when we decided to open source the package.
         return accountAddressesWithNetwork(blockchain.accounts, network);
       });
-      // Typescript can not detect we are filtering out null values:(
       nextAccounts = accounts.filter(Boolean);
-      nextNetwork = requestedNetwork || this.options.config.defaultNetwork;
-      /*
-       * For providers like wallet connect with async switch network support,
-       * it's not a correct assumption that current network after connection request
-       * equals to the requested network. (for example in case of session reconnect.)
-       * In this case, we could assume that the first item in connect result equals to
-       * the current chain. Otherwise, the state of wallet-core will be wrong.
-       */
-      if (this.options.config.isAsyncSwitchNetwork) {
-        const nextChainId = connectResult[0].chainId || Networks.Unknown;
-        nextNetwork =
-          getBlockChainNameFromId(
-            nextChainId,
-            this.info.supportedBlockchains
-          ) || Networks.Unknown;
-      }
+      nextNetwork =
+        activeEvmNetwork ||
+        requestedNetwork ||
+        this.options.config.defaultNetwork;
     } else {
       const chainId = connectResult.chainId || Networks.Unknown;
       const network =
