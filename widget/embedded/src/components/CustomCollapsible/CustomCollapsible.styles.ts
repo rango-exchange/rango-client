@@ -23,6 +23,7 @@ const slideUp = keyframes({
 
 export const CollapsibleRoot = styled(Collapsible.Root, {
   borderRadius: '$sm',
+  overflow: 'hidden',
   variants: {
     selected: {
       true: {

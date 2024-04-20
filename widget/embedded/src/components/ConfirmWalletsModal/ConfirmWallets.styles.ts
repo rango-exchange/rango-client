@@ -104,7 +104,7 @@ export const CustomDestination = styled('div', {
     backgroundColor: '$neutral100',
   },
   '& .collapsible_root': {
-    backgroundColor: '$neutral200',
+    backgroundColor: '$neutral100',
   },
 });
 
@@ -135,7 +135,8 @@ export const CustomDestinationButton = styled('div', {
     $$color: '$colors$neutral300',
   },
   backgroundColor: '$$color',
-
+  borderBottomRightRadius: '0',
+  borderBottomLeftRadius: '0',
   '&:hover': {
     $$color: '$colors$info100',
     [`.${darkTheme} &`]: {
