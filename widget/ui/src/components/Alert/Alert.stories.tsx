@@ -1,4 +1,4 @@
-import type { PropTypes } from './Alert.types';
+import type { AlertPropTypes } from './Alert.types';
 import type { Meta } from '@storybook/react';
 
 import React from 'react';
@@ -32,7 +32,7 @@ export default {
   },
 } as Meta<typeof Alert>;
 
-export const Main = (args: PropTypes) => (
+export const Main = (args: AlertPropTypes) => (
   <div style={{ width: 350 }}>
     <Alert
       {...args}
@@ -40,7 +40,7 @@ export const Main = (args: PropTypes) => (
     />
   </div>
 );
-export const WithoutFooter = (args: PropTypes) => (
+export const WithoutFooter = (args: AlertPropTypes) => (
   <div style={{ width: 350 }}>
     <Alert {...args} variant="alarm" />
   </div>
