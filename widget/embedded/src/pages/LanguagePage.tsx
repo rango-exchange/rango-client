@@ -40,7 +40,7 @@ export function LanguagePage() {
   return (
     <Layout
       header={{
-        title: i18n.t('Language'),
+        title: i18n.t('Language2'),
       }}>
       <PageContainer>
         <Alert
