@@ -6,7 +6,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { ChevronDownIcon, ChevronUpIcon, DoneIcon } from '../../icons';
 import { Typography } from '../Typography';
 
-import { SelectContent, SelectItem, SelectTrigger } from './select.styles';
+import { SelectContent, SelectItem, SelectTrigger } from './Select.styles';
 
 export function SelectComponent<T extends string>(props: PropTypes<T>) {
   const [open, setOpen] = useState(false);

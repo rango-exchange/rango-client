@@ -1,5 +1,5 @@
-import React from 'react';
 import copy from 'copy-to-clipboard';
+import React from 'react';
 
 export function useCopyToClipboard(resetInterval?: number) {
   const [isCopied, setCopied] = React.useState(false);

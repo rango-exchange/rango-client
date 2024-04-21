@@ -2,7 +2,8 @@ import type { CollapsibleProps } from './Collapsible.types';
 
 import React, { useState } from 'react';
 
-import { ChevronUpIcon } from '../../icons';
+import { ChevronDownIcon } from '../../icons';
+import { Button } from '../Button';
 import { Typography } from '../Typography';
 
 import { CollapsibleComponent as Collapsible } from './Collapsible';
@@ -12,14 +13,6 @@ export default {
   component: Collapsible,
   args: {
     open: false,
-    trigger: (
-      <>
-        <Typography size="medium" variant="title">
-          Trigger
-        </Typography>
-        <ChevronUpIcon size={10} color="gray" />
-      </>
-    ),
   },
   argTypes: {
     open: {
@@ -36,6 +29,14 @@ export const Main = (args: CollapsibleProps) => {
   return (
     <Collapsible
       {...args}
+      trigger={
+        <Button onClick={() => setOpen(!open)}>
+          <Typography size="medium" variant="title">
+            Trigger
+          </Typography>
+          <ChevronDownIcon size={10} color="gray" />
+        </Button>
+      }
       open={open || args.open}
       onOpenChange={() => setOpen(!open)}>
       <Typography size="medium" variant="title">

@@ -411,15 +411,9 @@ export function Quote(props: QuoteProps) {
             </ContainerInfoOutput>
             <Tooltip
               content={formatTooltipNumbers(output.usdValue)}
-              container={container}
-              styles={{
-                root: { display: 'flex' },
-              }}>
-              <Typography
-                color="$neutral600"
-                ml={2}
-                size="xsmall"
-                variant="body">
+              container={container}>
+              <Divider size={2} direction="horizontal" />
+              <Typography color="$neutral600" size="xsmall" variant="body">
                 {`($${roundedOutputUsdValue})`}
               </Typography>
             </Tooltip>
