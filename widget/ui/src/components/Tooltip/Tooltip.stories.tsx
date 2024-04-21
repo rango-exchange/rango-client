@@ -3,7 +3,7 @@ import type { Meta } from '@storybook/react';
 
 import React from 'react';
 
-import { AddWalletIcon } from '../Icon';
+import { AddIcon } from '../../icons';
 
 import { Tooltip } from './Tooltip';
 
@@ -37,7 +37,7 @@ export default {
 export const Main = (props: PropTypes) => (
   <div>
     <Tooltip {...props}>
-      <AddWalletIcon size={24} />
+      <AddIcon size={24} />
     </Tooltip>
   </div>
 );

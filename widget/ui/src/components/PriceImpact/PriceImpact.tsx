@@ -2,7 +2,7 @@ import type { PriceImpactProps } from './PriceImpact.types';
 
 import React from 'react';
 
-import { Tooltip, Typography } from '..';
+import { Divider, Tooltip, Typography } from '..';
 
 import { Container, OutputUsdValue } from './PriceImpact.styles';
 
@@ -47,21 +47,21 @@ export function PriceImpact(props: PriceImpactProps) {
         </Tooltip>
       )}
       {((outputUsdValue && percentageChange) || !outputUsdValue) && (
-        <Typography
-          size={size}
-          variant="body"
-          ml={4}
-          color={percentageChangeColor}>
-          {outputUsdValue &&
-            percentageChange &&
-            `(${
-              percentageChange.includes('-')
-                ? percentageChange
-                : `-${percentageChange}`
-            }${percentageChange ? '%' : '-'})`}
+        <>
+          <Divider direction="horizontal" size={4} />
 
-          {!outputUsdValue && error}
-        </Typography>
+          <Typography size={size} variant="body" color={percentageChangeColor}>
+            {outputUsdValue &&
+              percentageChange &&
+              `(${
+                percentageChange.includes('-')
+                  ? percentageChange
+                  : `-${percentageChange}`
+              }${percentageChange ? '%' : '-'})`}
+
+            {!outputUsdValue && error}
+          </Typography>
+        </>
       )}
     </Container>
   );

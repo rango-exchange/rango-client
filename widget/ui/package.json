@@ -62,10 +62,10 @@
     "@radix-ui/react-tooltip": "^1.0.2",
     "@rango-dev/wallets-shared": "^0.30.1-next.0",
     "@stitches/react": "^1.2.8",
+    "copy-to-clipboard": "^3.3.3",
     "rango-sdk": "^0.1.45",
     "rango-types": "^0.1.59",
-    "react-virtuoso": "^4.6.2",
-    "rgb-hex": "^4.0.1"
+    "react-virtuoso": "^4.6.2"
   },
   "publishConfig": {
     "access": "public"
