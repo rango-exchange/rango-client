@@ -3,7 +3,8 @@ import type { PropTypes } from './TokenAmount.types';
 import React from 'react';
 
 import { ChainToken } from '../ChainToken';
-import { PriceImpact } from '../PriceImpact/PriceImpact';
+import { Divider } from '../Divider';
+import { PriceImpact } from '../PriceImpact';
 import { Tooltip } from '../Tooltip';
 import { Typography } from '../Typography';
 
@@ -22,9 +23,11 @@ export function TokenAmount(props: PropTypes) {
           tokenImage={props.token.image}
           size="medium"
         />
+
+        <Divider direction="horizontal" size={4} />
         <div>
           {props.label && (
-            <Typography ml={4} size="xsmall" variant="body" color="$neutral700">
+            <Typography size="xsmall" variant="body" color="$neutral700">
               {props.label}
             </Typography>
           )}
@@ -34,14 +37,13 @@ export function TokenAmount(props: PropTypes) {
               open={!props.price.realValue ? false : undefined}
               container={props.tooltipContainer}>
               <Typography
-                ml={4}
                 size="medium"
                 variant="title"
                 style={{ fontWeight: 600 }}>
                 {props.price.value}
               </Typography>
+              <Divider direction="horizontal" size={8} />
               <Typography
-                ml={8}
                 size="medium"
                 variant="title"
                 style={{ fontWeight: 400 }}>
@@ -57,13 +59,12 @@ export function TokenAmount(props: PropTypes) {
             content={props.price.realUsdValue}
             container={props.tooltipContainer}>
             {props.type === 'input' && (
-              <Typography
-                mr={4}
-                size="small"
-                variant="body"
-                color="$neutral700">
-                {`~$${props.price.usdValue}`}
-              </Typography>
+              <>
+                <Typography size="small" variant="body" color="$neutral700">
+                  {`~$${props.price.usdValue}`}
+                </Typography>
+                <Divider direction="horizontal" size={4} />
+              </>
             )}
           </Tooltip>
           {props.type === 'output' && (
