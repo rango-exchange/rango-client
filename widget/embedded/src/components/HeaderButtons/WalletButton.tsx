@@ -16,8 +16,9 @@ import {
 
 function WalletButton(props: PropTypes) {
   const { config } = useAppStore();
-
-  const { list } = useWalletList({ config });
+  const { list } = useWalletList({
+    config,
+  });
   const connectedWallets = list.filter(
     (wallet) => wallet.state === 'connected'
   );
