@@ -5,6 +5,7 @@ import { Button, Divider, Switch, Typography } from '@rango-dev/ui';
 import React, { useState } from 'react';
 
 import { DEFAULT_COLORS, PRESETS } from '../../constants';
+import { useTheme } from '../../hooks/useTheme';
 import { useConfigStore } from '../../store/config';
 import { shallowEqual } from '../../utils/common';
 
@@ -40,6 +41,8 @@ const EACH_COL_HEIGHT = 41;
 const TWO_ROWS_NUMBER_OF_COLS = 4;
 const ONE_ROW_NUMBER_OF_COLS = 2;
 export function Preset(props: PresetTypes) {
+  const { activeStyle } = useTheme();
+
   const { theme } = useConfigStore.use.config();
   const { tab } = props;
   const [showMore, setShowMore] = useState({
@@ -95,7 +98,7 @@ export function Preset(props: PresetTypes) {
               Show Widget in Dark Theme
             </Typography>
             <Switch
-              checked={theme?.mode === 'dark'}
+              checked={activeStyle.indexOf('dark') !== -1}
               onChange={(checked) =>
                 onChangeTheme({
                   name: 'mode',
