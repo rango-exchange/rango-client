@@ -1,3 +1,12 @@
+# [0.32.0](https://github.com/rango-exchange/rango-client/compare/wallets-core@0.31.0...wallets-core@0.32.0) (2024-04-23)
+
+
+### Bug Fixes
+
+* set current state for current network in conencting multi-chain wallets ([dc62af0](https://github.com/rango-exchange/rango-client/commit/dc62af03f0edc10400394ba600c7d83e1250b4e8))
+
+
+
 # [0.31.0](https://github.com/rango-exchange/rango-client/compare/wallets-core@0.30.0...wallets-core@0.31.0) (2024-04-09)
 
 

@@ -1,3 +1,21 @@
+# [0.26.0](https://github.com/rango-exchange/rango-client/compare/widget-embedded@0.25.0...widget-embedded@0.26.0) (2024-04-23)
+
+
+### Bug Fixes
+
+* address passing wallet-connect project id ([80a6b80](https://github.com/rango-exchange/rango-client/commit/80a6b8046cc93bc8e88b84a201331b2e7adc0c73))
+* fix token selector hover ui for token explorer link ([ede0fac](https://github.com/rango-exchange/rango-client/commit/ede0fac0e987b0cd6983ccd427207d78f65eeb96))
+* fix token selector infinite loader ([1122dd6](https://github.com/rango-exchange/rango-client/commit/1122dd6db1fecadd41d56f22d5dfd95fbaa645a0))
+* remove setting option from confirm swap page ([1f204c1](https://github.com/rango-exchange/rango-client/commit/1f204c1ebf544348a2969aa35c2cf8c9841ea3ff))
+
+
+### Features
+
+* add animation for switch swap button ([601af2d](https://github.com/rango-exchange/rango-client/commit/601af2dde7ed87c7aa803cb0b79a13c21ff0386d))
+* add unit test for app store ([9df49a8](https://github.com/rango-exchange/rango-client/commit/9df49a8aaf0d03fea01d9e9790953c7326e8999d))
+
+
+
 # [0.25.0](https://github.com/rango-exchange/rango-client/compare/widget-embedded@0.24.1...widget-embedded@0.25.0) (2024-04-09)
 
 

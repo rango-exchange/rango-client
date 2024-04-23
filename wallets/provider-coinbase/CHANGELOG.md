@@ -1,3 +1,12 @@
+# [0.31.0](https://github.com/rango-exchange/rango-client/compare/provider-coinbase@0.30.0...provider-coinbase@0.31.0) (2024-04-23)
+
+
+### Bug Fixes
+
+* resolve conflicts between evm providers ([9a6734c](https://github.com/rango-exchange/rango-client/commit/9a6734cf1537bf0504cf9058d4d775313a9e8e80))
+
+
+
 # [0.30.0](https://github.com/rango-exchange/rango-client/compare/provider-coinbase@0.29.0...provider-coinbase@0.30.0) (2024-04-09)
 
 
