@@ -38,6 +38,13 @@ export function useSyncUrlAndStore() {
   const liquiditySourcesParamsRef = useRef<string>();
 
   const getUrlSearchParams = () => {
+    const utmQueryParams: Record<string, string> = {};
+
+    for (const [key, value] of searchParams.entries()) {
+      if (key.startsWith('utm_')) {
+        utmQueryParams[key] = value;
+      }
+    }
     const fromAmount = searchParams.get(SearchParams.FROM_AMOUNT);
     const fromBlockchain = searchParams.get(SearchParams.FROM_BLOCKCHAIN);
     const fromToken = searchParams.get(SearchParams.FROM_TOKEN);
@@ -56,6 +63,7 @@ export function useSyncUrlAndStore() {
       autoConnect,
       clientUrl,
       liquiditySources,
+      utmQueryParams,
     };
   };
 
@@ -71,7 +79,7 @@ export function useSyncUrlAndStore() {
   };
 
   useEffect(() => {
-    const { autoConnect, clientUrl } = getUrlSearchParams();
+    const { autoConnect, clientUrl, utmQueryParams } = getUrlSearchParams();
     if (isInRouterContext && fetchMetaStatus === 'success') {
       updateUrlSearchParams({
         [SearchParams.FROM_BLOCKCHAIN]: fromBlockchain?.name,
@@ -84,6 +92,7 @@ export function useSyncUrlAndStore() {
         [SearchParams.LIQUIDITY_SOURCES]: campaignMode
           ? liquiditySourcesParamsRef.current
           : undefined,
+        ...utmQueryParams,
       });
     }
   }, [
