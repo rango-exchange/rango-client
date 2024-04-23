@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/provider-all",
-  "version": "0.31.0",
+  "version": "0.31.1-next.0",
   "license": "MIT",
   "type": "module",
   "source": "./src/index.ts",
@@ -47,7 +47,7 @@
     "@rango-dev/provider-tokenpocket": "^0.31.0",
     "@rango-dev/provider-tron-link": "^0.31.0",
     "@rango-dev/provider-trustwallet": "^0.31.0",
-    "@rango-dev/provider-walletconnect-2": "^0.24.0",
+    "@rango-dev/provider-walletconnect-2": "^0.24.1-next.0",
     "@rango-dev/provider-xdefi": "^0.31.0"
   },
   "publishConfig": {
