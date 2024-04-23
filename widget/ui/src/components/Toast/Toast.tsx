@@ -4,8 +4,8 @@ import React, { useEffect, useState } from 'react';
 
 import { CloseIcon } from '../../icons';
 import { Alert } from '../Alert';
+import AlertIcon from '../Alert/Alert.icon';
 import { IconHighlight } from '../Alert/Alert.styles';
-import AlertIcon from '../Alert/AlertIcon';
 import { Divider } from '../Divider';
 import { IconButton } from '../IconButton';
 

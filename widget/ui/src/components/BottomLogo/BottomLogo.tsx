@@ -2,7 +2,7 @@ import { i18n } from '@lingui/core';
 import React from 'react';
 
 import { Divider } from '../Divider';
-import { Logo } from '../Logo/Logo';
+import { Logo } from '../Logo';
 import { Typography } from '../Typography';
 
 import { Container, StyledAnchor } from './BottomLogo.styles';

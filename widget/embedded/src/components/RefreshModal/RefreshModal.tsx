@@ -19,9 +19,9 @@ export function RefreshModal(props: PropTypes) {
       onClose={onClose}
       container={getContainer()}>
       <MessageBox
-        title={i18n.t('Something wrong')}
+        title={i18n.t('Something went wrong')}
         type="error"
-        description={i18n.t('Something Wrong. Please refresh the app')}>
+        description={i18n.t('Something went wrong. Please refresh the app.')}>
         <Divider size={30} />
         <RefreshButton
           variant="outlined"

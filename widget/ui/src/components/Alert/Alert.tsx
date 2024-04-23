@@ -7,8 +7,8 @@ import { Divider } from '../Divider';
 import { Typography } from '../Typography';
 
 import { getColor, mapVariantToSize } from './Alert.helpers';
+import AlertIcon from './Alert.icon';
 import { Container, IconHighlight, Main, TitleContainer } from './Alert.styles';
-import AlertIcon from './AlertIcon';
 
 export function Alert(props: PropsWithChildren<PropTypes>) {
   const {
