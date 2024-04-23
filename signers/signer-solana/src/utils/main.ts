@@ -1,0 +1,68 @@
+import type { SolanaExternalProvider, SolanaWeb3Signer } from './types';
+import type { SolanaTransaction } from 'rango-types';
+
+import { SignerError, SignerErrorCode } from 'rango-types';
+
+import { getSolanaConnection } from './helpers';
+import { prepareTransaction } from './prepare';
+import { transactionSenderAndConfirmationWaiter } from './send';
+import { simulateTransaction } from './simulate';
+
+/*
+ * https://docs.phantom.app/integrating/sending-a-transaction
+ * https://station.jup.ag/docs/apis/troubleshooting
+ */
+export const generalSolanaTransactionExecutor = async (
+  tx: SolanaTransaction,
+  DefaultSolanaSigner: SolanaWeb3Signer
+): Promise<string> => {
+  const connection = getSolanaConnection();
+  const latestBlock = await connection.getLatestBlockhash('confirmed');
+
+  const finalTx = prepareTransaction(tx, latestBlock.blockhash);
+  const raw = await DefaultSolanaSigner(finalTx);
+
+  // We first simulate whether the transaction would be successful
+  await simulateTransaction(finalTx, tx.txType);
+
+  const serializedTransaction = Buffer.from(raw);
+  const { txId, txResponse } = await transactionSenderAndConfirmationWaiter({
+    connection,
+    serializedTransaction,
+    blockhashWithExpiryBlockHeight: {
+      blockhash: latestBlock.blockhash,
+      lastValidBlockHeight: latestBlock.lastValidBlockHeight,
+    },
+  });
+  if (!txId || !txResponse) {
+    throw new SignerError(
+      SignerErrorCode.SEND_TX_ERROR,
+      undefined,
+      'Error confirming the transaction'
+    );
+  }
+  return txId;
+};
+
+export async function executeSolanaTransaction(
+  tx: SolanaTransaction,
+  solanaProvider: SolanaExternalProvider
+): Promise<string> {
+  const DefaultSolanaSigner: SolanaWeb3Signer = async (
+    solanaWeb3Transaction
+  ) => {
+    try {
+      const signedTransaction = await solanaProvider.signTransaction(
+        solanaWeb3Transaction
+      );
+      return signedTransaction.serialize();
+    } catch (e: any) {
+      const REJECTION_CODE = 4001;
+      if (e && Object.hasOwn(e, 'code') && e.code === REJECTION_CODE) {
+        throw new SignerError(SignerErrorCode.REJECTED_BY_USER, undefined, e);
+      }
+      throw new SignerError(SignerErrorCode.SIGN_TX_ERROR, undefined, e);
+    }
+  };
+  return await generalSolanaTransactionExecutor(tx, DefaultSolanaSigner);
+}

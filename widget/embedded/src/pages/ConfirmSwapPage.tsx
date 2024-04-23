@@ -12,9 +12,7 @@ import {
   css,
   Divider,
   IconButton,
-  SettingsIcon,
   styled,
-  Tooltip,
   Typography,
   WalletIcon,
 } from '@rango-dev/ui';
@@ -24,7 +22,6 @@ import { useLocation, useNavigate } from 'react-router-dom';
 
 import { getRequiredWallets } from '../components/ConfirmWalletsModal/ConfirmWallets.helpers';
 import { ConfirmWalletsModal } from '../components/ConfirmWalletsModal/ConfirmWalletsModal';
-import { HeaderButton } from '../components/HeaderButtons/HeaderButtons.styles';
 import { RefreshButton } from '../components/HeaderButtons/RefreshButton';
 import { Layout, PageContainer } from '../components/Layout';
 import { QuoteWarningsAndErrors } from '../components/QuoteWarningsAndErrors';
@@ -37,7 +34,6 @@ import { useQuoteStore } from '../store/quote';
 import { useUiStore } from '../store/ui';
 import { useWalletsStore } from '../store/wallets';
 import { QuoteWarningType } from '../types';
-import { getContainer } from '../utils/common';
 import { joinList } from '../utils/ui';
 
 const Buttons = styled('div', {
@@ -285,6 +281,7 @@ export function ConfirmSwapPage() {
       <QuoteWarningsAndErrors
         warning={quoteWarning}
         error={quoteError}
+        couldChangeSettings={false}
         refetchQuote={onRefresh}
         showWarningModal={showQuoteWarningModal}
         confirmationDisabled={!isActiveTab}
@@ -307,19 +304,6 @@ export function ConfirmSwapPage() {
           const wallets_url = `../${navigationRoutes.wallets}`;
           navigate(wallets_url);
         },
-        suffix: (
-          <Tooltip
-            container={getContainer()}
-            side="bottom"
-            content={i18n.t('Settings')}>
-            <HeaderButton
-              size="small"
-              variant="ghost"
-              onClick={() => navigate('../' + navigationRoutes.settings)}>
-              <SettingsIcon size={18} color="black" />
-            </HeaderButton>
-          </Tooltip>
-        ),
       }}
       footer={
         <Buttons>

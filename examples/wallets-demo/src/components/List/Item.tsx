@@ -14,7 +14,6 @@ import {
   Tooltip,
   Typography,
 } from '@rango-dev/ui';
-import { InfoCircleIcon } from '@rango-dev/ui/src/components/Icon';
 import { readAccountAddress, useWallets } from '@rango-dev/wallets-react';
 import { detectInstallLink, Networks } from '@rango-dev/wallets-shared';
 import React, { useState } from 'react';
@@ -159,7 +158,7 @@ function Item({
             {walletState.connected && !canSwitchNetwork && (
               <>
                 <Tooltip content="Only default network is supported for this wallet.">
-                  <InfoCircleIcon size={24} color="success" />
+                  <InfoErrorIcon size={24} color="success" />
                 </Tooltip>
                 <Divider size={12} direction="horizontal" />
               </>

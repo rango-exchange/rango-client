@@ -253,13 +253,15 @@ export function SwapDetails(props: SwapDetailsProps) {
               })}`
             : ''}
         </Typography>
-        <MessageText
-          align="center"
-          variant="body"
-          size="medium"
-          color="neutral700">
-          {stepDetailMessage}
-        </MessageText>
+        {stepDetailMessage && (
+          <MessageText
+            align="center"
+            variant="body"
+            size="medium"
+            color="neutral700">
+            <b>Reason:</b> {stepDetailMessage}
+          </MessageText>
+        )}
       </ErrorMessages>
     );
 

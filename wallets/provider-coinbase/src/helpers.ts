@@ -1,4 +1,25 @@
-import { Networks, ProviderConnectResult } from '@rango-dev/wallets-shared';
+import type { ProviderConnectResult } from '@rango-dev/wallets-shared';
+
+import { Networks } from '@rango-dev/wallets-shared';
+
+export function coinbase() {
+  const { coinbaseWalletExtension, coinbaseSolana } = window;
+
+  const instances = new Map();
+  if (coinbaseWalletExtension) {
+    instances.set(Networks.ETHEREUM, coinbaseWalletExtension);
+  }
+
+  if (!!coinbaseSolana) {
+    instances.set(Networks.SOLANA, coinbaseSolana);
+  }
+
+  if (instances.size === 0) {
+    return null;
+  }
+
+  return instances;
+}
 
 export async function getSolanaAccounts(
   instance: any
