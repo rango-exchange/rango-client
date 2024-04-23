@@ -8,7 +8,7 @@ msgstr ""
 "Language: ja\n"
 "Project-Id-Version: rango\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-04-09 07:52\n"
+"PO-Revision-Date: 2024-04-23 13:37\n"
 "Last-Translator: \n"
 "Language-Team: Japanese\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
@@ -19,8 +19,18 @@ msgstr ""
 "X-Crowdin-File-ID: 30\n"
 
 #. js-lingui-explicit-id
+#: widget/embedded/src/components/RefreshModal/RefreshModal.tsx:22
+msgid "Something went wrong"
+msgstr "問題が発生しました"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/RefreshModal/RefreshModal.tsx:24
+msgid "Something went wrong. Please refresh the app."
+msgstr "問題が発生しました。アプリを更新してください。"
+
+#. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:37
-#: widget/embedded/src/components/TokenList/TokenList.tsx:120
+#: widget/embedded/src/components/TokenList/TokenList.tsx:121
 #: widget/embedded/src/pages/HistoryPage.tsx:85
 #: widget/embedded/src/pages/LiquiditySourcePage.tsx:130
 msgid "No results found"
@@ -28,7 +38,7 @@ msgstr "結果が見つかりませんでした"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:38
-#: widget/embedded/src/components/TokenList/TokenList.tsx:121
+#: widget/embedded/src/components/TokenList/TokenList.tsx:122
 #: widget/embedded/src/pages/HistoryPage.tsx:87
 #: widget/embedded/src/pages/LiquiditySourcePage.tsx:131
 msgid "Try using different keywords"
@@ -174,7 +184,6 @@ msgstr "通知"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/HeaderButtons/HeaderButtons.tsx:75
-#: widget/embedded/src/pages/ConfirmSwapPage.tsx:314
 #: widget/embedded/src/pages/SettingsPage.tsx:38
 msgid "Settings"
 msgstr "設定"
@@ -185,7 +194,7 @@ msgid "Transactions History"
 msgstr "取引履歴"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/HeaderButtons/WalletButton.tsx:22
+#: widget/embedded/src/components/HeaderButtons/WalletButton.tsx:25
 #: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.helpers.tsx:16
 #: widget/embedded/src/constants/messages.ts:5
 msgid "Connect Wallet"
@@ -200,7 +209,7 @@ msgstr "今日"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/LoadingSwapDetails/LoadingSwapDetails.tsx:20
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:398
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:400
 msgid "Swaps steps"
 msgstr "ステップを入れ替えます"
 
@@ -366,7 +375,6 @@ msgstr "このルートについては、少なくとも {minRequiredSlippage} �
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/QuoteWarningsAndErrors/QuoteWarningsAndErrors.helpers.ts:59
 #: widget/embedded/src/components/QuoteWarningsAndErrors/SlippageWariningModal.tsx:60
-#: widget/ui/src/containers/Warnings/MinRequiredSlippage.tsx:22
 msgid "We recommend you to increase slippage to at least {minRequiredSlippage} for this route."
 msgstr "このルートについては、少なくとも {minRequiredSlippage} への滑りを増やすことをお勧めします。"
 
@@ -376,7 +384,7 @@ msgid "Caution, your slippage is high."
 msgstr "注意、あなたの滑りは高いです。"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/QuoteWarningsAndErrors/QuoteWarningsAndErrors.tsx:73
+#: widget/embedded/src/components/QuoteWarningsAndErrors/QuoteWarningsAndErrors.tsx:77
 #: widget/embedded/src/components/SwapDetailsAlerts/SwapDetailsAlerts.Warning.tsx:25
 msgid "Change"
 msgstr "変更"
@@ -407,16 +415,6 @@ msgid "Confirm anyway"
 msgstr "確認する"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/RefreshModal/RefreshModal.tsx:22
-msgid "Something wrong"
-msgstr "何か間違っています"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/RefreshModal/RefreshModal.tsx:24
-msgid "Something Wrong. Please refresh the app"
-msgstr "何かが間違っています。アプリを更新してください"
-
-#. js-lingui-explicit-id
 #: widget/embedded/src/components/Slippage/Slippage.tsx:35
 msgid "Slippage tolerance per swap"
 msgstr "スワップごとの滑り止め許容差"
@@ -443,13 +441,13 @@ msgstr "この設定はステップごとに適用されます(例えば、1イ�
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetails/SwapDetails.Placeholder.tsx:25
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:269
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:271
 msgid "Swap and Bridge"
 msgstr "スワップとブリッジ"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetails/SwapDetails.Placeholder.tsx:33
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:309
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:311
 msgid "Request ID"
 msgstr "要求ID"
 
@@ -460,7 +458,6 @@ msgstr "見つかりません"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetails/SwapDetails.Placeholder.tsx:65
-#: widget/ui/src/components/SwapDetailsPlaceholder/SwapDetailsPlaceholder.tsx:39
 msgid "Swap with request ID = {requestId} not found."
 msgstr "リクエスト ID = {requestId} でスワップが見つかりません。"
 
@@ -480,12 +477,12 @@ msgid "{amount} {symbol} on {blockchain} remain in your wallet"
 msgstr "{amount} {symbol} の {blockchain} はウォレットに残ります"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:280
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:282
 msgid "Delete"
 msgstr "削除"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:301
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:303
 msgid "Try again"
 msgstr "もう一度やり直してください"
 
@@ -576,7 +573,7 @@ msgid "Network Changed"
 msgstr "ネットワークを変更しました"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/TokenList/TokenList.tsx:258
+#: widget/embedded/src/components/TokenList/TokenList.tsx:260
 msgid "Select Token"
 msgstr "トークンを選択"
 
@@ -790,14 +787,12 @@ msgstr "読み込みに失敗しました"
 #. js-lingui-explicit-id
 #: widget/embedded/src/containers/Settings/Lists.tsx:153
 #: widget/embedded/src/pages/LiquiditySourcePage.tsx:41
-#: widget/ui/src/components/LiquiditySourceList/LiquiditySourceList.tsx:112
 msgid "Bridges"
 msgstr "ブリッジ"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/containers/Settings/Lists.tsx:171
 #: widget/embedded/src/pages/LiquiditySourcePage.tsx:41
-#: widget/ui/src/components/LiquiditySourceList/LiquiditySourceList.tsx:151
 msgid "Exchanges"
 msgstr "交換"
 
@@ -823,17 +818,17 @@ msgid "Theme"
 msgstr "テーマ"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/ConfirmSwapPage.tsx:305
+#: widget/embedded/src/pages/ConfirmSwapPage.tsx:302
 msgid "Confirm Swap"
 msgstr "スワップの確認"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/ConfirmSwapPage.tsx:335
+#: widget/embedded/src/pages/ConfirmSwapPage.tsx:319
 msgid "Start Swap"
 msgstr "スワップを開始"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/ConfirmSwapPage.tsx:362
+#: widget/embedded/src/pages/ConfirmSwapPage.tsx:346
 msgid "You get"
 msgstr "あなたは"
 
@@ -1019,19 +1014,9 @@ msgid "Saturday"
 msgstr "土曜日"
 
 #. js-lingui-explicit-id
-#: widget/ui/src/components/Alert/LoadingFailedAlert.tsx:13
-msgid " Error connecting server, please reload the app and try again."
-msgstr " サーバー接続中にエラーが発生しました。アプリを再読み込みしてもう一度お試しください。"
-
-#. js-lingui-explicit-id
 #: widget/ui/src/components/BottomLogo/BottomLogo.tsx:14
 msgid "Powered By"
 msgstr "Powered By"
-
-#. js-lingui-explicit-id
-#: widget/ui/src/components/ChangeSlippageButton/ChangeSlippageButton.tsx:14
-msgid "Change Slippage"
-msgstr "僅用於中文"
 
 #. js-lingui-explicit-id
 #: widget/ui/src/components/FullExpandedQuote/FullExpandedQuote.Tooltip.tsx:37
@@ -1044,20 +1029,15 @@ msgid "{blockchainCategory}"
 msgstr "{blockchainCategory}"
 
 #. js-lingui-explicit-id
-#: widget/ui/src/components/StepDetails/StepDetails.tsx:74
-#: widget/ui/src/components/StepDetails/StepDetails.tsx:100
+#: widget/ui/src/components/StepDetails/StepDetails.tsx:75
+#: widget/ui/src/components/StepDetails/StepDetails.tsx:102
 msgid "Swap on {fromChain} via {swapper}"
 msgstr "{fromChain} で {swapper}を入れ替え"
 
 #. js-lingui-explicit-id
-#: widget/ui/src/components/StepDetails/StepDetails.tsx:107
+#: widget/ui/src/components/StepDetails/StepDetails.tsx:109
 msgid "Bridge to {toChain} via {swapper}"
 msgstr "{toChain} 経由で {swapper}に橋"
-
-#. js-lingui-explicit-id
-#: widget/ui/src/components/SwapDetailsPlaceholder/SwapDetailsPlaceholder.tsx:28
-msgid "Swap Details"
-msgstr "スワップの詳細"
 
 #. js-lingui-explicit-id
 #: widget/ui/src/components/SwapListItem/SwapListItem.helpers.ts:8
@@ -1078,20 +1058,6 @@ msgstr "進行中"
 #: widget/ui/src/components/SwapListItem/SwapToken.tsx:122
 msgid "Waiting for bridge transaction"
 msgstr "ブリッジトランザクションを待っています"
-
-#. js-lingui-explicit-id
-#: widget/ui/src/components/TokenPreview/TokenPreview.tsx:150
-#: widget/ui/src/containers/SwapInput/TokenSection.tsx:56
-#: widget/ui/src/containers/TokenInfo/TokenInfo.tsx:235
-msgid "Chain"
-msgstr "チェーン"
-
-#. js-lingui-explicit-id
-#: widget/ui/src/components/TokenPreview/TokenPreview.tsx:168
-#: widget/ui/src/containers/SwapInput/TokenSection.tsx:49
-#: widget/ui/src/containers/TokenInfo/TokenInfo.tsx:259
-msgid "Token"
-msgstr "トークン"
 
 #. js-lingui-explicit-id
 #: widget/ui/src/components/Wallet/Wallet.helpers.ts:12
@@ -1130,38 +1096,22 @@ msgid "you need to pass a correct state to Wallet."
 msgstr "ウォレットに正しい状態を渡す必要があります。"
 
 #. js-lingui-explicit-id
-#: widget/ui/src/containers/HomePanel/HomePanel.tsx:123
-msgid "SWAP"
-msgstr "SWAP"
-
-#. js-lingui-explicit-id
-#: widget/ui/src/containers/SwapInput/SwapInput.tsx:55
-#: widget/ui/src/containers/TokenInfo/TokenInfo.tsx:194
+#: widget/ui/src/containers/SwapInput/SwapInput.tsx:51
 msgid "Balance"
 msgstr "残高"
 
 #. js-lingui-explicit-id
-#: widget/ui/src/containers/SwapInput/SwapInput.tsx:62
+#: widget/ui/src/containers/SwapInput/SwapInput.tsx:59
 msgid "Max"
 msgstr "最大値"
 
 #. js-lingui-explicit-id
-#: widget/ui/src/containers/Warnings/HighSlippageWarning.tsx:22
-msgid " Caution, your slippage is high (={selectedSlippage}). Your trade may be front run."
-msgstr " 注意、あなたの滑りが高いです (={selectedSlippage}). あなたの取引は、前払いされる可能性があります。"
+#: widget/ui/src/containers/SwapInput/TokenSection.tsx:49
+msgid "Token"
+msgstr "トークン"
 
 #. js-lingui-explicit-id
-#: widget/ui/src/containers/TokenInfo/TokenInfo.tsx:179
-msgid "swap from"
-msgstr "スワップ元"
-
-#. js-lingui-explicit-id
-#: widget/ui/src/containers/TokenInfo/TokenInfo.tsx:198
-msgid "maximum amount of asset"
-msgstr "アセットの最大量"
-
-#. js-lingui-explicit-id
-#: widget/ui/src/containers/TokenInfo/TokenInfo.tsx:181
-msgid "swap to"
-msgstr "スワップ先"
+#: widget/ui/src/containers/SwapInput/TokenSection.tsx:56
+msgid "Chain"
+msgstr "チェーン"
 
