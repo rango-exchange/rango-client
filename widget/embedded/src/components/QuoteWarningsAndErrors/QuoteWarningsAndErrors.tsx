@@ -17,6 +17,7 @@ export function QuoteWarningsAndErrors(props: PropTypes) {
   const {
     warning,
     error,
+    couldChangeSettings,
     showWarningModal,
     confirmationDisabled,
     refetchQuote,
@@ -44,6 +45,9 @@ export function QuoteWarningsAndErrors(props: PropTypes) {
       ? error
       : null
   );
+  if (alertInfo && !couldChangeSettings) {
+    alertInfo.action = null;
+  }
 
   const showAlerts = !!alertInfo;
 

@@ -8,7 +8,7 @@ import { SUPPORTED_ETH_CHAINS, SUPPORTED_NETWORKS } from './constants';
 type Provider = Map<Network, any>;
 
 export function xdefi() {
-  const { xfi, ethereum } = window;
+  const { xfi } = window;
 
   if (!xfi) {
     return null;
@@ -30,8 +30,8 @@ export function xdefi() {
   if (xfi.binance) {
     instances.set(Networks.BINANCE, xfi.binance);
   }
-  if (ethereum?.__XDEFI) {
-    instances.set(Networks.ETHEREUM, ethereum);
+  if (xfi.ethereum) {
+    instances.set(Networks.ETHEREUM, xfi.ethereum);
   }
   if (xfi.dogecoin) {
     instances.set(Networks.DOGE, xfi.dogecoin);

@@ -1,1 +1,0 @@
-export { PercentageChange } from './PercentageChange';

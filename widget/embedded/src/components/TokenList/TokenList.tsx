@@ -31,6 +31,7 @@ import {
   ImageSection,
   List,
   Pin,
+  StyledLink,
   Tag,
   TagTitle,
   Title,
@@ -72,17 +73,17 @@ const renderDesc = (props: RenderDescProps) => {
           className={`${tokenAddressStyles()} ${
             !name && tokenWithoutNameStyles()
           }`}>
-          <a
+          {length > 10
+            ? `${address.slice(0, 5)}...${address.slice(length - 6, length)}`
+            : address}{' '}
+          <Divider size={4} direction="horizontal" />
+          <StyledLink
             href={url}
             target="_blank"
             rel="nofollow noreferrer"
             onClick={(e) => e.stopPropagation()}>
-            {length > 10
-              ? `${address.slice(0, 5)}...${address.slice(length - 6, length)}`
-              : address}{' '}
-            <Divider size={4} direction="horizontal" />
-            <ExternalLinkIcon color="gray" size={12} />
-          </a>
+            <ExternalLinkIcon size={12} />
+          </StyledLink>
         </div>
       )}
     </div>
@@ -109,7 +110,7 @@ export function TokenList(props: PropTypes) {
 
   useEffect(() => {
     setTokens(list.slice(0, PAGE_SIZE));
-  }, [list]);
+  }, [list.length]);
 
   const renderList = () => {
     if (!tokens.length && !!searchedFor) {
@@ -164,6 +165,7 @@ export function TokenList(props: PropTypes) {
                 style={{
                   width: '100%',
                   overflow: 'hidden',
+                  height: '60px',
                 }}
                 tab-index={index}
                 key={`${token.symbol}${token.address}`}

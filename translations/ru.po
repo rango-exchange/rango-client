@@ -8,7 +8,7 @@ msgstr ""
 "Language: ru\n"
 "Project-Id-Version: rango\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-04-09 07:52\n"
+"PO-Revision-Date: 2024-04-23 13:37\n"
 "Last-Translator: \n"
 "Language-Team: Russian\n"
 "Plural-Forms: nplurals=4; plural=((n%10==1 && n%100!=11) ? 0 : ((n%10 >= 2 && n%10 <=4 && (n%100 < 12 || n%100 > 14)) ? 1 : ((n%10 == 0 || (n%10 >= 5 && n%10 <=9)) || (n%100 >= 11 && n%100 <= 14)) ? 2 : 3));\n"
@@ -19,8 +19,18 @@ msgstr ""
 "X-Crowdin-File-ID: 30\n"
 
 #. js-lingui-explicit-id
+#: widget/embedded/src/components/RefreshModal/RefreshModal.tsx:22
+msgid "Something went wrong"
+msgstr "Что-то пошло не так"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/RefreshModal/RefreshModal.tsx:24
+msgid "Something went wrong. Please refresh the app."
+msgstr "Что-то пошло не так. Пожалуйста, обновите приложение."
+
+#. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:37
-#: widget/embedded/src/components/TokenList/TokenList.tsx:120
+#: widget/embedded/src/components/TokenList/TokenList.tsx:121
 #: widget/embedded/src/pages/HistoryPage.tsx:85
 #: widget/embedded/src/pages/LiquiditySourcePage.tsx:130
 msgid "No results found"
@@ -28,7 +38,7 @@ msgstr "Ничего не найдено"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/BlockchainList/BlockchainList.tsx:38
-#: widget/embedded/src/components/TokenList/TokenList.tsx:121
+#: widget/embedded/src/components/TokenList/TokenList.tsx:122
 #: widget/embedded/src/pages/HistoryPage.tsx:87
 #: widget/embedded/src/pages/LiquiditySourcePage.tsx:131
 msgid "Try using different keywords"
@@ -174,7 +184,6 @@ msgstr "Уведомления"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/HeaderButtons/HeaderButtons.tsx:75
-#: widget/embedded/src/pages/ConfirmSwapPage.tsx:314
 #: widget/embedded/src/pages/SettingsPage.tsx:38
 msgid "Settings"
 msgstr "Настройки"
@@ -185,7 +194,7 @@ msgid "Transactions History"
 msgstr "История транзакций"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/HeaderButtons/WalletButton.tsx:22
+#: widget/embedded/src/components/HeaderButtons/WalletButton.tsx:25
 #: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.helpers.tsx:16
 #: widget/embedded/src/constants/messages.ts:5
 msgid "Connect Wallet"
@@ -200,7 +209,7 @@ msgstr "Сегодня"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/LoadingSwapDetails/LoadingSwapDetails.tsx:20
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:398
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:400
 msgid "Swaps steps"
 msgstr "Меняет шаги"
 
@@ -366,7 +375,6 @@ msgstr "Вам нужно увеличить проскальзывание по
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/QuoteWarningsAndErrors/QuoteWarningsAndErrors.helpers.ts:59
 #: widget/embedded/src/components/QuoteWarningsAndErrors/SlippageWariningModal.tsx:60
-#: widget/ui/src/containers/Warnings/MinRequiredSlippage.tsx:22
 msgid "We recommend you to increase slippage to at least {minRequiredSlippage} for this route."
 msgstr "Мы рекомендуем вам увеличить проскальзывание по крайней мере до {minRequiredSlippage} для этого маршрута."
 
@@ -376,7 +384,7 @@ msgid "Caution, your slippage is high."
 msgstr "Внимание, ваше проскальзывание высоко."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/QuoteWarningsAndErrors/QuoteWarningsAndErrors.tsx:73
+#: widget/embedded/src/components/QuoteWarningsAndErrors/QuoteWarningsAndErrors.tsx:77
 #: widget/embedded/src/components/SwapDetailsAlerts/SwapDetailsAlerts.Warning.tsx:25
 msgid "Change"
 msgstr "Изменить"
@@ -407,16 +415,6 @@ msgid "Confirm anyway"
 msgstr "Все равно подтвердить"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/RefreshModal/RefreshModal.tsx:22
-msgid "Something wrong"
-msgstr "Что-то не так"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/RefreshModal/RefreshModal.tsx:24
-msgid "Something Wrong. Please refresh the app"
-msgstr "Что-то не так. Пожалуйста, обновите приложение"
-
-#. js-lingui-explicit-id
 #: widget/embedded/src/components/Slippage/Slippage.tsx:35
 msgid "Slippage tolerance per swap"
 msgstr "Допустимость проскальзывания на смену"
@@ -443,13 +441,13 @@ msgstr "Этот параметр применяется на каждом ша�
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetails/SwapDetails.Placeholder.tsx:25
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:269
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:271
 msgid "Swap and Bridge"
 msgstr "Поменять местами"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetails/SwapDetails.Placeholder.tsx:33
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:309
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:311
 msgid "Request ID"
 msgstr "ID запроса"
 
@@ -460,7 +458,6 @@ msgstr "Не найдено"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/SwapDetails/SwapDetails.Placeholder.tsx:65
-#: widget/ui/src/components/SwapDetailsPlaceholder/SwapDetailsPlaceholder.tsx:39
 msgid "Swap with request ID = {requestId} not found."
 msgstr "Поменять на ID запроса = {requestId} не найдено."
 
@@ -480,12 +477,12 @@ msgid "{amount} {symbol} on {blockchain} remain in your wallet"
 msgstr "{amount} {symbol} на {blockchain} остается в вашем кошельке"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:280
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:282
 msgid "Delete"
 msgstr "Удалить"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:301
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:303
 msgid "Try again"
 msgstr "Попробовать еще раз"
 
@@ -576,7 +573,7 @@ msgid "Network Changed"
 msgstr "Сеть изменена"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/TokenList/TokenList.tsx:258
+#: widget/embedded/src/components/TokenList/TokenList.tsx:260
 msgid "Select Token"
 msgstr "Выбрать токен"
 
@@ -790,14 +787,12 @@ msgstr "Не удалось загрузить"
 #. js-lingui-explicit-id
 #: widget/embedded/src/containers/Settings/Lists.tsx:153
 #: widget/embedded/src/pages/LiquiditySourcePage.tsx:41
-#: widget/ui/src/components/LiquiditySourceList/LiquiditySourceList.tsx:112
 msgid "Bridges"
 msgstr "Мосты"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/containers/Settings/Lists.tsx:171
 #: widget/embedded/src/pages/LiquiditySourcePage.tsx:41
-#: widget/ui/src/components/LiquiditySourceList/LiquiditySourceList.tsx:151
 msgid "Exchanges"
 msgstr "Обмены"
 
@@ -823,17 +818,17 @@ msgid "Theme"
 msgstr "Тема"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/ConfirmSwapPage.tsx:305
+#: widget/embedded/src/pages/ConfirmSwapPage.tsx:302
 msgid "Confirm Swap"
 msgstr "Подтверждение смены"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/ConfirmSwapPage.tsx:335
+#: widget/embedded/src/pages/ConfirmSwapPage.tsx:319
 msgid "Start Swap"
 msgstr "Начать обмен"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/ConfirmSwapPage.tsx:362
+#: widget/embedded/src/pages/ConfirmSwapPage.tsx:346
 msgid "You get"
 msgstr "Вы получаете"
 
@@ -1019,19 +1014,9 @@ msgid "Saturday"
 msgstr "Суббота"
 
 #. js-lingui-explicit-id
-#: widget/ui/src/components/Alert/LoadingFailedAlert.tsx:13
-msgid " Error connecting server, please reload the app and try again."
-msgstr " Ошибка при подключении к серверу, перезагрузите приложение и повторите попытку."
-
-#. js-lingui-explicit-id
 #: widget/ui/src/components/BottomLogo/BottomLogo.tsx:14
 msgid "Powered By"
 msgstr "Работает на"
-
-#. js-lingui-explicit-id
-#: widget/ui/src/components/ChangeSlippageButton/ChangeSlippageButton.tsx:14
-msgid "Change Slippage"
-msgstr "Изменить проскальзывание"
 
 #. js-lingui-explicit-id
 #: widget/ui/src/components/FullExpandedQuote/FullExpandedQuote.Tooltip.tsx:37
@@ -1044,20 +1029,15 @@ msgid "{blockchainCategory}"
 msgstr "{blockchainCategory}"
 
 #. js-lingui-explicit-id
-#: widget/ui/src/components/StepDetails/StepDetails.tsx:74
-#: widget/ui/src/components/StepDetails/StepDetails.tsx:100
+#: widget/ui/src/components/StepDetails/StepDetails.tsx:75
+#: widget/ui/src/components/StepDetails/StepDetails.tsx:102
 msgid "Swap on {fromChain} via {swapper}"
 msgstr "Поменять на {fromChain} через {swapper}"
 
 #. js-lingui-explicit-id
-#: widget/ui/src/components/StepDetails/StepDetails.tsx:107
+#: widget/ui/src/components/StepDetails/StepDetails.tsx:109
 msgid "Bridge to {toChain} via {swapper}"
 msgstr "Мост к {toChain} через {swapper}"
-
-#. js-lingui-explicit-id
-#: widget/ui/src/components/SwapDetailsPlaceholder/SwapDetailsPlaceholder.tsx:28
-msgid "Swap Details"
-msgstr "Детали обмена"
 
 #. js-lingui-explicit-id
 #: widget/ui/src/components/SwapListItem/SwapListItem.helpers.ts:8
@@ -1078,20 +1058,6 @@ msgstr "В процессе"
 #: widget/ui/src/components/SwapListItem/SwapToken.tsx:122
 msgid "Waiting for bridge transaction"
 msgstr "Ожидание транзакции по мосту"
-
-#. js-lingui-explicit-id
-#: widget/ui/src/components/TokenPreview/TokenPreview.tsx:150
-#: widget/ui/src/containers/SwapInput/TokenSection.tsx:56
-#: widget/ui/src/containers/TokenInfo/TokenInfo.tsx:235
-msgid "Chain"
-msgstr "Цепь"
-
-#. js-lingui-explicit-id
-#: widget/ui/src/components/TokenPreview/TokenPreview.tsx:168
-#: widget/ui/src/containers/SwapInput/TokenSection.tsx:49
-#: widget/ui/src/containers/TokenInfo/TokenInfo.tsx:259
-msgid "Token"
-msgstr "Токен"
 
 #. js-lingui-explicit-id
 #: widget/ui/src/components/Wallet/Wallet.helpers.ts:12
@@ -1130,38 +1096,22 @@ msgid "you need to pass a correct state to Wallet."
 msgstr "необходимо передать Кошельку правильное состояние."
 
 #. js-lingui-explicit-id
-#: widget/ui/src/containers/HomePanel/HomePanel.tsx:123
-msgid "SWAP"
-msgstr "SWAP"
-
-#. js-lingui-explicit-id
-#: widget/ui/src/containers/SwapInput/SwapInput.tsx:55
-#: widget/ui/src/containers/TokenInfo/TokenInfo.tsx:194
+#: widget/ui/src/containers/SwapInput/SwapInput.tsx:51
 msgid "Balance"
 msgstr "Баланс"
 
 #. js-lingui-explicit-id
-#: widget/ui/src/containers/SwapInput/SwapInput.tsx:62
+#: widget/ui/src/containers/SwapInput/SwapInput.tsx:59
 msgid "Max"
 msgstr "Макс"
 
 #. js-lingui-explicit-id
-#: widget/ui/src/containers/Warnings/HighSlippageWarning.tsx:22
-msgid " Caution, your slippage is high (={selectedSlippage}). Your trade may be front run."
-msgstr " Внимание, высокая проскальзывание (={selectedSlippage}). Ваша сделка может быть переднего запуска."
+#: widget/ui/src/containers/SwapInput/TokenSection.tsx:49
+msgid "Token"
+msgstr "Токен"
 
 #. js-lingui-explicit-id
-#: widget/ui/src/containers/TokenInfo/TokenInfo.tsx:179
-msgid "swap from"
-msgstr "поменять на"
-
-#. js-lingui-explicit-id
-#: widget/ui/src/containers/TokenInfo/TokenInfo.tsx:198
-msgid "maximum amount of asset"
-msgstr "максимальная сумма актива"
-
-#. js-lingui-explicit-id
-#: widget/ui/src/containers/TokenInfo/TokenInfo.tsx:181
-msgid "swap to"
-msgstr "поменять на"
+#: widget/ui/src/containers/SwapInput/TokenSection.tsx:56
+msgid "Chain"
+msgstr "Цепь"
 

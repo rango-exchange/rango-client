@@ -30,6 +30,7 @@ export const tokenTitleStyles = css({
 export const tokenAddressStyles = css({
   transform: 'translateY(12px)',
   visibility: 'hidden',
+  display: 'flex',
   '& a': {
     display: 'flex',
     justifyContent: 'center',
@@ -156,4 +157,10 @@ export const TokenBalance = styled(Typography, {
   overflow: 'hidden',
   textOverflow: 'ellipsis',
   whiteSpace: 'nowrap',
+});
+
+export const StyledLink = styled('a', {
+  '& svg:hover': {
+    color: '$colors$info',
+  },
 });
