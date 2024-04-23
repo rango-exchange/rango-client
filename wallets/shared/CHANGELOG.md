@@ -1,3 +1,17 @@
+# [0.31.0](https://github.com/rango-exchange/rango-client/compare/wallets-shared@0.30.0...wallets-shared@0.31.0) (2024-04-23)
+
+
+### Bug Fixes
+
+* resolve conflicts between evm providers ([9a6734c](https://github.com/rango-exchange/rango-client/commit/9a6734cf1537bf0504cf9058d4d775313a9e8e80))
+
+
+### Features
+
+* add solflare snap connect and signer ([42aa2b0](https://github.com/rango-exchange/rango-client/commit/42aa2b039dd910e8e44db473e1acd28689a8b43b))
+
+
+
 # [0.30.0](https://github.com/rango-exchange/rango-client/compare/wallets-shared@0.29.0...wallets-shared@0.30.0) (2024-04-09)
 
 

@@ -1,3 +1,12 @@
+# [0.31.0](https://github.com/rango-exchange/rango-client/compare/provider-okx@0.30.0...provider-okx@0.31.0) (2024-04-23)
+
+
+### Bug Fixes
+
+* update okx wallet supported chains ([5d24823](https://github.com/rango-exchange/rango-client/commit/5d248235067138bfd82288bf3bef2f2b54b8ce09))
+
+
+
 # [0.30.0](https://github.com/rango-exchange/rango-client/compare/provider-okx@0.29.0...provider-okx@0.30.0) (2024-04-09)
 
 

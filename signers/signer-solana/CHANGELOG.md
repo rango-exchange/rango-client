@@ -1,3 +1,17 @@
+# [0.27.0](https://github.com/rango-exchange/rango-client/compare/signer-solana@0.26.0...signer-solana@0.27.0) (2024-04-23)
+
+
+### Bug Fixes
+
+* improve solana transaction sign flow ([65b7be0](https://github.com/rango-exchange/rango-client/commit/65b7be0ce02bed88c98280999b615bc405e95cb6))
+
+
+### Features
+
+* add solflare snap connect and signer ([42aa2b0](https://github.com/rango-exchange/rango-client/commit/42aa2b039dd910e8e44db473e1acd28689a8b43b))
+
+
+
 # [0.26.0](https://github.com/rango-exchange/rango-client/compare/signer-solana@0.25.0...signer-solana@0.26.0) (2024-02-20)
 
 
