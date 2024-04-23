@@ -1,1 +1,0 @@
-export { SwapDetailsPlaceholder } from './SwapDetailsPlaceholder';

@@ -60,6 +60,7 @@ export { default as WalletIcon } from './Wallet';
 export { default as WarningIcon } from './Warning';
 export { default as WidgetIcon } from './Widget';
 export { default as WidthIcon } from './Width';
+export { default as BullhornIcon } from './Bullhorn';
 export { default as ChainsIcon } from './Chains';
 export { default as ColorsIcon } from './Colors';
 export { default as DiscordIcon } from './Discord';

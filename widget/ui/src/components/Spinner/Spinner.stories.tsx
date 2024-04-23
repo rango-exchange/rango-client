@@ -1,6 +1,10 @@
-import { Meta } from '@storybook/react';
+/* eslint-disable @typescript-eslint/no-magic-numbers */
+import type { PropTypes } from './Spinner.types';
+import type { Meta } from '@storybook/react';
+
 import React from 'react';
-import { Spinner, PropTypes } from './Spinner';
+
+import { Spinner } from './Spinner';
 
 export default {
   title: 'Components/Spinner',

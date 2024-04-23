@@ -1,3 +1,5 @@
+import type { WidgetConfig } from '@rango-dev/widget-embedded';
+
 import { ToastProvider } from '@rango-dev/ui';
 import { Widget, WidgetProvider } from '@rango-dev/widget-embedded';
 import React, { useEffect } from 'react';
@@ -15,7 +17,13 @@ export function App() {
   const fetchMeta = useMetaStore.use.fetchMeta();
   const config = useConfigStore.use.config();
 
-  const overridedConfig = { ...config, apiKey: RANGO_PUBLIC_API_KEY };
+  const overridedConfig: WidgetConfig = {
+    ...config,
+    apiKey: RANGO_PUBLIC_API_KEY,
+    features: {
+      theme: 'hidden',
+    },
+  };
   useEffect(() => {
     void fetchMeta();
   }, []);

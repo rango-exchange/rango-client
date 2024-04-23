@@ -13,7 +13,6 @@ import {
   canEagerlyConnectToEvm,
   canSwitchNetworkToEvm,
   chooseInstance,
-  getCoinbaseInstance as coinbase_instance,
   getEvmAccounts,
   Networks,
   switchNetworkForEvm,
@@ -26,7 +25,7 @@ import {
   solanaBlockchain,
 } from 'rango-types';
 
-import { getSolanaAccounts } from './helpers';
+import { coinbase as coinbase_instance, getSolanaAccounts } from './helpers';
 import signer from './signer';
 
 const WALLET = WalletTypes.COINBASE;

@@ -247,10 +247,9 @@ export const useQuoteStore = createSelectors(
           toBlockchain: state.fromBlockchain,
           toToken: state.fromToken,
           inputAmount: state.outputAmount?.toString() || '',
-          inputUsdValue: getUsdValue(
-            state.toToken,
-            state.outputAmount?.toString() || ''
-          ),
+          inputUsdValue: state.toToken
+            ? getUsdValue(state.toToken, state.outputAmount?.toString() || '')
+            : new BigNumber(0),
         })),
       resetFromBlockchain: () =>
         set(() => ({
