@@ -42,6 +42,7 @@
     "@rango-dev/provider-phantom": "^0.30.1-next.2",
     "@rango-dev/provider-safe": "^0.23.1-next.0",
     "@rango-dev/provider-safepal": "^0.30.1-next.2",
+    "@rango-dev/provider-solflare-snap": "^0.1.0",
     "@rango-dev/provider-taho": "^0.30.1-next.0",
     "@rango-dev/provider-tokenpocket": "^0.30.1-next.0",
     "@rango-dev/provider-tron-link": "^0.30.1-next.0",
