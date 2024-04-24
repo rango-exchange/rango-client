@@ -1,4 +1,4 @@
-import type { PropTypes } from './Alert.types';
+import type { AlertPropTypes } from './Alert.types';
 import type { PropsWithChildren } from 'react';
 
 import React from 'react';
@@ -10,7 +10,7 @@ import { getColor, mapVariantToSize } from './Alert.helpers';
 import AlertIcon from './Alert.icon';
 import { Container, IconHighlight, Main, TitleContainer } from './Alert.styles';
 
-export function Alert(props: PropsWithChildren<PropTypes>) {
+export function Alert(props: PropsWithChildren<AlertPropTypes>) {
   const {
     type,
     title,
