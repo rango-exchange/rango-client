@@ -20,8 +20,9 @@ export function printDirname() {
  * @returns {Promise<import('./typedefs.mjs').Package[]>}
  */
 export async function workspacePackages() {
-  const { stdout } = await execa('yarn', ['workspaces', 'info']);
-  const result = JSON.parse(stdout);
+  // --json flag guarantees that whether it is run with yarn or node, the output always has a consistent result.
+  const { stdout } = await execa('yarn', ['workspaces', '--json', 'info']);
+  const result = JSON.parse(JSON.parse(stdout).data) ;
   const packagesName = Object.keys(result);
   const output = packagesName.map((name) => {
     const pkgJson = packageJson(result[name].location);
