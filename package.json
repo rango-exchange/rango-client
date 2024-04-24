@@ -108,5 +108,8 @@
   },
   "resolutions": {
     "react-refresh": "0.9.0"
+  },
+  "@parcel/resolver-default": {
+    "packageExports": true
   }
 }
