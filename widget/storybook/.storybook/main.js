@@ -4,14 +4,14 @@ module.exports = {
   addons: [
     getAbsolutePath('@storybook/addon-links'),
     getAbsolutePath('@storybook/addon-essentials'),
-    '@chromatic-com/storybook',
+    '@chromatic-com/storybook'
   ],
   // https://storybook.js.org/docs/react/configure/typescript#mainjs-configuration
   typescript: {
     check: true, // type-check stories during Storybook build
   },
 
-  framework: getAbsolutePath('@storybook/react-vite'),
+  framework: getAbsolutePath("@storybook/react-vite"),
   docs: {
     autodocs: true,
     reactDocgen: false,
