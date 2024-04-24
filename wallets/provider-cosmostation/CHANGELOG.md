@@ -1,3 +1,7 @@
+# [0.32.0](https://github.com/rango-exchange/rango-client/compare/provider-cosmostation@0.31.0...provider-cosmostation@0.32.0) (2024-04-24)
+
+
+
 # [0.31.0](https://github.com/rango-exchange/rango-client/compare/provider-cosmostation@0.30.0...provider-cosmostation@0.31.0) (2024-04-23)
 
 

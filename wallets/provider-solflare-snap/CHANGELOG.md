@@ -1,3 +1,7 @@
+# [0.3.0](https://github.com/rango-exchange/rango-client/compare/provider-solflare-snap@0.2.0...provider-solflare-snap@0.3.0) (2024-04-24)
+
+
+
 # 0.2.0 (2024-04-23)
 
 
