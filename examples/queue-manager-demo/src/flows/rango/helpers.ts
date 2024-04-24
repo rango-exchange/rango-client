@@ -31,7 +31,7 @@ import type {
   PendingSwapStep,
 } from 'rango-types';
 
-import { SUPPORTED_ETH_CHAINS as XDEFI_WALLET_SUPPORTED_EVM_CHAINS } from '@rango-dev/provider-xdefi/src/constants';
+import { SUPPORTED_ETH_CHAINS as XDEFI_WALLET_SUPPORTED_EVM_CHAINS } from '@rango-dev/provider-xdefi';
 import { readAccountAddress } from '@rango-dev/wallets-react';
 import {
   Networks,
