@@ -157,3 +157,6 @@ export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
     supportedChains,
   };
 };
+
+// it is required in /examples/queue-manager-demo
+export { SUPPORTED_ETH_CHAINS } from './constants';
