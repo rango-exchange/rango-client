@@ -19,6 +19,11 @@ jobs:
         env:
           REF: ${{ github.ref }}
 
+      - name: Test
+        run: |
+          node ./scripts/build-libs/command.mjs
+          yarn run test
+
       # for preview deployment for specific project, add vercel project id in environment section
       - name: Preview Deployment
         id: deploy
