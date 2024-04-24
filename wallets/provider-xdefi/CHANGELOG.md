@@ -1,3 +1,11 @@
+## [0.32.1](https://github.com/rango-exchange/rango-client/compare/provider-xdefi@0.32.0...provider-xdefi@0.32.1) (2024-04-24)
+
+
+
+# [0.32.0](https://github.com/rango-exchange/rango-client/compare/provider-xdefi@0.31.0...provider-xdefi@0.32.0) (2024-04-24)
+
+
+
 # [0.31.0](https://github.com/rango-exchange/rango-client/compare/provider-xdefi@0.30.0...provider-xdefi@0.31.0) (2024-04-23)
 
 

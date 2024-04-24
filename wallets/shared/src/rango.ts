@@ -80,6 +80,7 @@ export enum WalletTypes {
   TAHO = 'taho',
   MY_TON_WALLET = 'mytonwallet',
   SOLFLARE_SNAP = 'solflare-snap',
+  LEDGER = 'ledger',
 }
 
 export enum Networks {
