@@ -1,3 +1,16 @@
+## [0.32.1](https://github.com/rango-exchange/rango-client/compare/provider-all@0.32.0...provider-all@0.32.1) (2024-04-24)
+
+
+
+# [0.32.0](https://github.com/rango-exchange/rango-client/compare/provider-all@0.31.0...provider-all@0.32.0) (2024-04-24)
+
+
+### Features
+
+* add ethereum for ledger ([084aae2](https://github.com/rango-exchange/rango-client/commit/084aae28adaf0310dffe3a3100dd783252393053))
+
+
+
 # [0.31.0](https://github.com/rango-exchange/rango-client/compare/provider-all@0.30.0...provider-all@0.31.0) (2024-04-23)
 
 
