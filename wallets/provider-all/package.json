@@ -36,6 +36,7 @@
     "@rango-dev/provider-halo": "^0.31.0",
     "@rango-dev/provider-keplr": "^0.31.0",
     "@rango-dev/provider-leap-cosmos": "^0.31.0",
+    "@rango-dev/provider-ledger": "^0.1.0",
     "@rango-dev/provider-math-wallet": "^0.31.0",
     "@rango-dev/provider-metamask": "^0.31.0",
     "@rango-dev/provider-okx": "^0.31.0",
