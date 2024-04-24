@@ -17,4 +17,5 @@ export const VERCEL_PACKAGES = {
     'VERCEL_PROJECT_WIDGET_CONFIG'
   ),
   [`${scope}/widget-app`]: getEnvWithFallback('VERCEL_PROJECT_WIDGET_APP'),
+  [`${scope}/storybook`]: getEnvWithFallback('VERCEL_PROJECT_STORYBOOK'),
 };

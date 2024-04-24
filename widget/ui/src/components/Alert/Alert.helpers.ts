@@ -1,6 +1,6 @@
-import type { PropTypes, Type } from './Alert.types';
+import type { AlertPropTypes, Type } from './Alert.types';
 
-export const getColor = (type: Type, variant: PropTypes['variant']) => {
+export const getColor = (type: Type, variant: AlertPropTypes['variant']) => {
   if (variant === 'regular') {
     return undefined;
   }
@@ -16,7 +16,7 @@ export const getColor = (type: Type, variant: PropTypes['variant']) => {
   }
 };
 
-export const mapVariantToSize = (variant: PropTypes['variant']) => {
+export const mapVariantToSize = (variant: AlertPropTypes['variant']) => {
   switch (variant) {
     case 'alarm':
       return 'small';

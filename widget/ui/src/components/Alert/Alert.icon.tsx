@@ -1,4 +1,4 @@
-import type { PropTypes } from './Alert.types';
+import type { AlertPropTypes } from './Alert.types';
 
 import React from 'react';
 
@@ -10,7 +10,7 @@ import {
 } from '../../icons';
 import { Spinner } from '../Spinner';
 
-function AlertIcon(props: Pick<PropTypes, 'type'>) {
+function AlertIcon(props: Pick<AlertPropTypes, 'type'>) {
   switch (props.type) {
     case 'success':
       return <CompleteIcon color={props.type} size={12} />;
