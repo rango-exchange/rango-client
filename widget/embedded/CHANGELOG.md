@@ -1,3 +1,12 @@
+## [0.27.2](https://github.com/rango-exchange/rango-client/compare/widget-embedded@0.27.1...widget-embedded@0.27.2) (2024-04-27)
+
+
+### Bug Fixes
+
+* make sure to correctly pass validation parameters when setting up a new swap ([4f6d37e](https://github.com/rango-exchange/rango-client/commit/4f6d37ea9b59caca4d0064c1b33b05077b0b59a3))
+
+
+
 ## [0.27.1](https://github.com/rango-exchange/rango-client/compare/widget-embedded@0.27.0...widget-embedded@0.27.1) (2024-04-24)
 
 
