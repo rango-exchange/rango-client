@@ -89,14 +89,6 @@ export function useConfirmSwap(): ConfirmSwap {
           slippage: userSlippage.toString(),
           disabledSwappersGroups: disabledLiquiditySources,
         };
-        const swap = calculatePendingSwap(
-          inputAmount.toString(),
-          result,
-          getWalletsForNewSwap(selectedWallets),
-          swapSettings,
-          false,
-          { blockchains, tokens }
-        );
 
         const confirmSwapWarnings = generateWarnings(
           initialQuote ?? undefined,
@@ -113,6 +105,17 @@ export function useConfirmSwap(): ConfirmSwap {
           setQuoteWarningsConfirmed(false);
         }
         resetAlerts();
+
+        const proceedAnyway = !!confirmSwapWarnings.balance;
+
+        const swap = calculatePendingSwap(
+          inputAmount.toString(),
+          result,
+          getWalletsForNewSwap(selectedWallets),
+          swapSettings,
+          proceedAnyway ? false : true,
+          { blockchains, tokens }
+        );
 
         return {
           quote: currentQuote,
