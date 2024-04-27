@@ -10,9 +10,14 @@ import { WalletContext } from './context';
  *
  *
  */
+export type GetWalletInstance = (wallet: {
+  actions: WalletActions;
+  config: WalletConfig;
+}) => Wallet;
+
 export function useInitializers(
   onChangeState: WalletEventHandler
-): (wallet: { actions: WalletActions; config: WalletConfig }) => Wallet {
+): GetWalletInstance {
   const availableWallets = useRef<{
     [key: string]: Wallet | undefined;
   }>({});

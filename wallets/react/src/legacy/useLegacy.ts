@@ -1,10 +1,9 @@
 import type { ProviderContext, ProviderProps, VLegacy } from './types';
 import type { WalletType } from '@rango-dev/wallets-shared';
 
-import { useEffect, useReducer, useRef } from 'react';
+import { useEffect, useReducer } from 'react';
 
 import {
-  autoConnect,
   availableWallets,
   checkWalletProviders,
   clearPersistance,
@@ -16,6 +15,7 @@ import {
   tryRemoveWalletFromPersistance,
 } from './helpers';
 import { useInitializers } from './hooks';
+import { useAutoConnect } from './useAutoConnect';
 
 export type UseV0Props = Omit<ProviderProps, 'providers'> & {
   providers: VLegacy[];
@@ -23,7 +23,6 @@ export type UseV0Props = Omit<ProviderProps, 'providers'> & {
 
 export function useLegacy(props: UseV0Props): ProviderContext {
   const [providersState, dispatch] = useReducer(state_reducer, {});
-  const autoConnectInitiated = useRef(false);
 
   // Get (or add) wallet instance (`provider`s will be wrapped in a `Wallet`)
   const getWalletInstance = useInitializers(
@@ -33,6 +32,13 @@ export function useLegacy(props: UseV0Props): ProviderContext {
   // Getting providers from props and put all of them in a `Map` with an appropriate interface.
   const listOfProviders = props.providers;
   const wallets = checkWalletProviders(listOfProviders);
+
+  useAutoConnect({
+    wallets,
+    allBlockChains: props.allBlockChains,
+    autoConnect: props.autoConnect,
+    getWalletInstanceFromLegacy: getWalletInstance,
+  });
 
   // Final API we put in context and it will be available to use for users.
   // eslint-disable-next-line react/jsx-no-constructed-context-values
@@ -218,22 +224,6 @@ export function useLegacy(props: UseV0Props): ProviderContext {
       );
     });
   }, [props.onUpdateState]);
-
-  // Running auto connect on instances
-  useEffect(() => {
-    const shouldTryAutoConnect =
-      props.allBlockChains &&
-      props.allBlockChains.length &&
-      props.autoConnect &&
-      !autoConnectInitiated.current;
-
-    if (shouldTryAutoConnect) {
-      autoConnectInitiated.current = true;
-      void (async () => {
-        await autoConnect(wallets, getWalletInstance);
-      })();
-    }
-  }, [props.autoConnect, props.allBlockChains]);
 
   return api;
 }
