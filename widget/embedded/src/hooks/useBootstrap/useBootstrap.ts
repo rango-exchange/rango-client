@@ -57,7 +57,9 @@ export function useBootstrap() {
      * it the future we should add a safer soloution like considering array of handlers .
      * https://github.com/rango-exchange/rango-client/pull/630/files#r1518846728
      */
-    widgetContext.onConnectWallet(setLastConnectedWalletWithNetwork);
+    widgetContext.onConnectWallet((walletType) => {
+      setLastConnectedWalletWithNetwork(walletType);
+    });
     widgetContext.onDisconnectWallet((walletType) => {
       setDisconnectedWallet(walletType);
       if (
@@ -70,5 +72,5 @@ export function useBootstrap() {
     void fetchApiConfig().catch(console.log);
 
     return tabManager.destroy;
-  }, []);
+  }, [lastConnectedWalletWithNetwork]);
 }
