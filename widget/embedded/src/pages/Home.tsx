@@ -23,8 +23,7 @@ import { isVariantExpandable } from '../utils/configs';
 import { getSwapButtonState, isTokensIdentical } from '../utils/swap';
 
 const MainContainer = styled('div', {
-  display: 'grid',
-  gridTemplateColumns: 'auto auto',
+  display: 'flex',
   alignItems: 'flex-start',
   maxHeight: 700,
   '& .footer__alert': {
