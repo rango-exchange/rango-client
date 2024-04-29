@@ -381,8 +381,18 @@ export function Quote(props: QuoteProps) {
               }}
               size="xxsmall"
               type="secondary"
-              variant="default">
-              <Typography color="secondary" variant="label" size="medium">
+              variant="default"
+              css={{
+                paddingLeft: '$10',
+                paddingRight: '$10',
+                paddingTop: '$5',
+                paddingBottom: '$5',
+              }}>
+              <Typography
+                color="secondary"
+                variant="body"
+                size="xsmall"
+                className="allRoutesLabel">
                 {i18n.t('See All Routes')}
               </Typography>
             </AllRoutesButton>
