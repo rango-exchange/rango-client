@@ -63,7 +63,25 @@ export const stepsDetailsStyles = css({
 });
 export const AllRoutesButton = styled(Button, {
   backgroundColor: 'transparent',
-  border: '1px solid $secondary',
+  border: '1px solid $secondary600',
+  [`.${darkTheme} &`]: {
+    border: '1px solid $secondary',
+  },
+  transition: 'background-color 0.3s ease',
+  '&:hover': {
+    backgroundColor: '$secondary600',
+    [`.${darkTheme} &`]: {
+      backgroundColor: '$secondary',
+    },
+    '.allRoutesLabel': {
+      $$color: '$colors$background',
+      [`.${darkTheme} &`]: {
+        $$color: '$colors$foreground',
+      },
+      color: '$$color',
+      transition: 'color 0.3s ease',
+    },
+  },
 });
 export const SummaryContainer = styled('div', {
   borderRadius: '$xm',
