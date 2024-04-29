@@ -85,8 +85,6 @@ export function useWalletList(params: Params): Api {
     namespaces?: NamespaceAndNetwork[]
   ) => {
     const wallet = state(type);
-    const info = getWalletInfo(type);
-    console.log({ info });
     try {
       if (error) {
         setError('');

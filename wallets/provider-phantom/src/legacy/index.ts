@@ -8,7 +8,11 @@ import type {
 } from '@rango-dev/wallets-shared';
 import type { BlockchainMeta, SignerFactory } from 'rango-types';
 
-import { getSolanaAccounts, Networks } from '@rango-dev/wallets-shared';
+import {
+  chooseInstance,
+  getSolanaAccounts,
+  Networks,
+} from '@rango-dev/wallets-shared';
 import { evmBlockchains, solanaBlockchain } from 'rango-types';
 
 import { WALLET_ID } from '../constants';
@@ -21,7 +25,7 @@ const config = {
 };
 
 const getInstance = phantom_instance;
-export const connect: Connect = async ({ instance, meta }) => {
+const connect: Connect = async ({ instance, meta }) => {
   const solanaInstance = instance.get(Networks.SOLANA);
   const result = await getSolanaAccounts({
     instance: solanaInstance,
@@ -48,15 +52,16 @@ const subscribe: Subscribe = ({ instance, updateAccounts, connect }) => {
   };
 };
 
-export const canSwitchNetworkTo: CanSwitchNetwork = ({ network }) => {
+const canSwitchNetworkTo: CanSwitchNetwork = ({ network }) => {
   return EVM_SUPPORTED_CHAINS.includes(network as Networks);
 };
 
 const getSigners: (provider: any) => SignerFactory = signer;
 
-export const canEagerConnect: CanEagerConnect = async ({ instance }) => {
+const canEagerConnect: CanEagerConnect = async ({ instance, meta }) => {
+  const solanaInstance = chooseInstance(instance, meta, Networks.SOLANA);
   try {
-    const result = await instance.connect({ onlyIfTrusted: true });
+    const result = await solanaInstance.connect({ onlyIfTrusted: true });
     return !!result;
   } catch (error) {
     return false;
@@ -96,6 +101,7 @@ const v0: VLegacy = {
   canSwitchNetworkTo,
   getSigners,
   getWalletInfo,
+  canEagerConnect,
 };
 
 export { v0 };

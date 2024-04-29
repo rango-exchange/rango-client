@@ -100,7 +100,7 @@ export function WalletsPage() {
                   const detachedInstances = wallet.properties?.find(
                     (item) => item.name === 'detached'
                   );
-                  if (detachedInstances) {
+                  if (detachedInstances && wallet.state !== 'connected') {
                     setOpenNamespacesModal({
                       providerId: type,
                       /*

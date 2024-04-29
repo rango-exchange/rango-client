@@ -1,9 +1,23 @@
-import { type V1, type Versions, type VLegacy } from '@rango-dev/wallets-core';
+import type { UseAdapterProps } from './useAdapter';
+import type {
+  Hub,
+  NamespaceAndNetwork,
+  Namespaces,
+  V1,
+  Versions,
+  VLegacy,
+} from '@rango-dev/wallets-core';
+
 import {
   CAIP,
   formatAddressWithNetwork,
   pickVersion,
 } from '@rango-dev/wallets-core';
+
+import {
+  convertNamespaceNetworkToEvmChainId,
+  discoverNamespace,
+} from './utils';
 
 export function splitProviders(
   providers: Versions[],
@@ -63,4 +77,68 @@ export function fromAccountIdToLegacyAddressFormat(account: string) {
   const { chainId, address } = CAIP.AccountId.parse(account);
   const network = mapCaipNamespaceToNetwork(chainId);
   return formatAddressWithNetwork(address, network);
+}
+
+export function connect(
+  type: string,
+  namespaces: NamespaceAndNetwork[] | undefined,
+  deps: {
+    getHub: () => Hub;
+    allBlockChains: UseAdapterProps['allBlockChains'];
+  }
+) {
+  const { getHub, allBlockChains } = deps;
+  const wallet = getHub().get(type);
+  if (!wallet) {
+    throw new Error(
+      `You should add ${type} to provider first then call 'connect'.`
+    );
+  }
+
+  if (!namespaces) {
+    /*
+     * TODO: I think this should be wallet.connect()
+     * TODO: This isn't needed anymore since we can add a discovery namespace.
+     * TODO: if the next line uncomnented, make sure we are handling autoconnect persist as well.
+     * return getHub().runAll('connect');
+     */
+    throw new Error(
+      'Passing namespace to `connect` is required. you can pass DISCOVERY_MODE for legacy.'
+    );
+  }
+
+  // TODO: CommonBlockchains somehow.
+  const targetNamespaces: [NamespaceAndNetwork, object][] = [];
+  namespaces.forEach((namespace) => {
+    let targetNamespace: Namespaces;
+    if (namespace.namespace === 'DISCOVER_MODE') {
+      targetNamespace = discoverNamespace(namespace.network);
+    } else {
+      targetNamespace = namespace.namespace;
+    }
+
+    const result = wallet.findBy({
+      namespace: targetNamespace,
+    });
+
+    if (!result) {
+      throw new Error(
+        `We couldn't find any provider matched with your request namespace. (requested namespace: ${namespace.namespace})`
+      );
+    }
+
+    targetNamespaces.push([namespace, result]);
+  });
+
+  const finalResult = targetNamespaces.map(([info, namespace]) => {
+    const chain =
+      convertNamespaceNetworkToEvmChainId(info, allBlockChains || []) ||
+      info.network;
+
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore-next-line
+    return namespace.connect(chain);
+  });
+
+  return finalResult;
 }

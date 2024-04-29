@@ -11,7 +11,9 @@ import type { WalletInfo } from '@rango-dev/wallets-shared';
 import { createStore, Hub } from '@rango-dev/wallets-core';
 import { useEffect, useRef, useState } from 'react';
 
+import { addWalletToStorage, removeWalletsFromStorage } from './autoConnect';
 import { fromAccountIdToLegacyAddressFormat } from './helpers';
+import { useAutoConnect } from './useAutoConnect';
 import {
   checkHubStateAndTriggerEvents,
   convertNamespaceNetworkToEvmChainId,
@@ -40,7 +42,7 @@ export function useAdapter(props: UseAdapterProps): ProviderContext {
   }
 
   const hub = useRef<Hub>(null);
-  function getHub() {
+  function getHub(): Hub {
     if (hub.current !== null) {
       return hub.current;
     }
@@ -60,8 +62,8 @@ export function useAdapter(props: UseAdapterProps): ProviderContext {
     hub.current = createdHub;
     return createdHub;
   }
-  const [currentRender, rerender] = useState(0);
-  // useEffect will run `subscribe` once, so we need a refrence and mutate the value if it's changes.
+  const [, rerender] = useState(0);
+  // useEffect will run `subscribe` once, so we need a reference and mutate the value if it's changes.
   const dataRef = useRef({
     onUpdateState: props.onUpdateState,
     __all: props.__all,
@@ -86,7 +88,7 @@ export function useAdapter(props: UseAdapterProps): ProviderContext {
       ) {
         getHub().init();
 
-        rerender(currentRender + 1);
+        rerender((currentRender) => currentRender + 1);
       }
     };
 
@@ -107,9 +109,16 @@ export function useAdapter(props: UseAdapterProps): ProviderContext {
           dataRef.current.allBlockChains
         );
       }
-      rerender(currentRender + 1);
+      rerender((currentRender) => currentRender + 1);
     });
   }, []);
+
+  useAutoConnect({
+    getHub,
+    autoConnect: props.autoConnect,
+    allBlockChains: props.allBlockChains,
+    allProviders: props.__all,
+  });
 
   return {
     canSwitchNetworkTo(type, network) {
@@ -135,8 +144,15 @@ export function useAdapter(props: UseAdapterProps): ProviderContext {
       }
 
       if (!namespaces) {
-        // TODO: I think this should be wallet.connect()
-        return getHub().runAll('connect');
+        /*
+         * TODO: I think this should be wallet.connect()
+         * TODO: This isn't needed anymore since we can add a discovery namespace.
+         * TODO: if the next line uncomnented, make sure we are handling autoconnect persist as well.
+         * return getHub().runAll('connect');
+         */
+        throw new Error(
+          'Passing namespace to `connect` is required. you can pass DISCOVERY_MODE for legacy.'
+        );
       }
 
       // TODO: CommonBlockchains somehow.
@@ -174,6 +190,14 @@ export function useAdapter(props: UseAdapterProps): ProviderContext {
         return namespace.connect(chain);
       });
 
+      const legacyProvider = getLegacyProvider(props.__all, type);
+      if (legacyProvider.canEagerConnect) {
+        const namespaces = targetNamespaces.map(
+          (targetNamespace) => targetNamespace[0].namespace
+        );
+        addWalletToStorage(type, namespaces);
+      }
+
       return finalResult;
     },
     async disconnect(type) {
@@ -187,6 +211,10 @@ export function useAdapter(props: UseAdapterProps): ProviderContext {
       wallet.getAll().forEach((namespace) => {
         return namespace.disconnect();
       });
+
+      if (props.autoConnect) {
+        removeWalletsFromStorage([type]);
+      }
     },
     disconnectAll() {
       throw new Error('`disconnectAll` not implemented');

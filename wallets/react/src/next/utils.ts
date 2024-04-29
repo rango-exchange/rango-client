@@ -1,6 +1,7 @@
 import type { ProviderProps } from '../legacy/types';
 import type {
   Hub,
+  LegacyProviderInterface,
   NamespaceAndNetwork,
   State,
   Versions,
@@ -228,7 +229,10 @@ export function discoverNamespace(network: Networks): Namespaces {
   }
 }
 
-export function getLegacyProvider(allProviders: Versions[], type: string) {
+export function getLegacyProvider(
+  allProviders: Versions[],
+  type: string
+): LegacyProviderInterface {
   const [legacy] = splitProviders(allProviders);
   const provider = legacy.find((legacyProvider) => {
     return legacyProvider.config.type === type;
