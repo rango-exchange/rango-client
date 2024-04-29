@@ -4,10 +4,14 @@
   "license": "MIT",
   "private": true,
   "source": "public/index.html",
+  "main": "dist/index.html",
+  "targets": {
+    "main": false
+  },
   "browserslist": "> 0.5%, last 2 versions, not dead",
   "scripts": {
     "dev": "parcel -p 3005 --cache-dir=.parcel-cache --no-cache",
-    "build": "parcel build --cache-dir=.parcel-cache && cp ./vercel.json ./dist",
+    "build": "parcel build --cache-dir=.parcel-cache",
     "ts-check": "tsc --declaration --emitDeclarationOnly -p ./tsconfig.json",
     "clean": "rimraf .parcel-cache && rimraf dist",
     "format": "prettier --write '{.,src}/**/*.{ts,tsx}'",
