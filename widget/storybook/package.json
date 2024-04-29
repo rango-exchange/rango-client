@@ -11,7 +11,7 @@
   ],
   "scripts": {
     "dev": "storybook dev -p 3000",
-    "build": "storybook build && cp ./vercel.json ./storybook-static",
+    "build": "storybook build",
     "ts-check": "tsc --declaration --emitDeclarationOnly -p ./tsconfig.json",
     "type-checking": "tsc --declaration --emitDeclarationOnly",
     "clean": "rimraf storybook-static",

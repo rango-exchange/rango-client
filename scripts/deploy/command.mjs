@@ -3,13 +3,13 @@
 import process from 'node:process';
 import { build } from '../publish/build.mjs';
 import { logAsSection } from '../publish/utils.mjs';
-import { deployProjectsToVercel, getClientsListToBeDeployed } from './utils.mjs';
-
-
+import {
+  deployProjectsToVercel,
+  getClientsListToBeDeployed,
+} from './utils.mjs';
 
 // TODO: Working directory should be empty.
 async function run() {
-  
   const listPackagesToBeDeployed = await getClientsListToBeDeployed();
   logAsSection('[x] Check Environment');
 
