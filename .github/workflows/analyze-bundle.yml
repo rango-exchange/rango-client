@@ -1,0 +1,54 @@
+name: Analyze widget bundle
+on:
+  pull_request:
+    types: [opened, reopened, synchronize]
+
+jobs:
+  build:
+    name: Build widget-embedded package
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+    steps:
+      - name: Checkout pr
+        uses: actions/checkout@v2
+        with:
+          path: pr
+
+      - name: Checkout next
+        uses: actions/checkout@v2
+        with:
+          ref: next
+          path: next
+
+      - name: Setup NodeJS
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          registry-url: 'https://registry.npmjs.org'
+
+      # Please remove this section before merging the pull request.
+      - name: Copy items for testing this pr
+        run: cp -rf pr/widget/embedded/package.json next/widget/embedded/package.json && cp -rf pr/scripts/analyze-bundle next/scripts/analyze-bundle
+      #
+
+      - name: Build next
+        run: cd next && yarn && cd widget/embedded && yarn analyze
+
+      - name: Analyze next bundle
+        uses: exoego/esbuild-bundle-analyzer@v1
+        with:
+          metafiles: 'next/widget/embedded/out/meta.json'
+          analyze_directory: 'next/analyze'
+
+      - name: Copy next bundle_analysis.json to proper location
+        run: cd next/analyze && mkdir -p base/bundle && cp bundle_analysis.json base/bundle/bundle_analysis.json
+
+      - name: Build pr
+        run: cd pr && yarn && cd widget/embedded && yarn analyze && cd ../../.. && mv -f pr/widget/embedded/out/meta.json next/widget/embedded/out
+
+      - name: Analyze pr bundle
+        uses: exoego/esbuild-bundle-analyzer@v1
+        with:
+          metafiles: 'next/widget/embedded/out/meta.json'
+          analyze_directory: 'next/analyze'

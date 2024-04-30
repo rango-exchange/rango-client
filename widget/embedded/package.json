@@ -19,7 +19,8 @@
     "lint": "eslint \"**/*.{ts,tsx}\" --ignore-path ../../.eslintignore",
     "test": "vitest",
     "test:watch": "vitest --watch",
-    "test:coverage": "vitest run --coverage"
+    "test:coverage": "vitest run --coverage",
+    "analyze": "node ../../scripts/build-libs/command.mjs && node ../../scripts/analyze-bundle/command.mjs"
   },
   "dependencies": {
     "@lingui/core": "4.2.1",
