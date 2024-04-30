@@ -1,4 +1,4 @@
-import type { ConfirmSwap, Params } from './useConfirmSwap.types';
+import type { ConfirmSwap } from './useConfirmSwap.types';
 import type { PendingSwapSettings, SelectedQuote } from '../../types';
 import type { ConfirmRouteRequest } from 'rango-sdk';
 
@@ -39,7 +39,7 @@ export function useConfirmSwap(): ConfirmSwap {
 
   useEffect(() => cancelFetch, []);
 
-  const fetch: ConfirmSwap['fetch'] = async (params: Params) => {
+  const fetch: ConfirmSwap['fetch'] = async (params) => {
     const selectedWallets = params.selectedWallets;
     const customDestination =
       params?.customDestination ?? customDestinationFromStore;
@@ -67,7 +67,7 @@ export function useConfirmSwap(): ConfirmSwap {
     };
 
     try {
-      return await fetchQuote(requestBody).then((response) => {
+      return await fetchQuote(requestBody, true).then((response) => {
         const { result } = response;
 
         throwErrorIfResponseIsNotValid({
