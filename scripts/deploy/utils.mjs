@@ -41,7 +41,7 @@ export async function deploySingleProjectToVercel(pkg) {
     console.log(`::warning::Couldn't find PROJECT_ID env for ${pkg.name}`);
   }
 
-  console.log(`start deploying ${pkg.name}...`);
+  console.log(`start deploying ${pkg.name} (environment: ${deployTo})...`);
 
   await execa(
     'vercel',
@@ -62,12 +62,6 @@ export async function deploySingleProjectToVercel(pkg) {
   const configPath = join(currentDir, 'vercel.json');
   await makeOutputFolderForBuildOutputApi(pkg.location, configPath);
 
-  await execa(
-    'vercel',
-    ['build', '--cwd', pkg.location, '--token', VERCEL_TOKEN],
-    { env }
-  );
-
   const vercelResult = await execa(
     'vercel',
     [pkg.location, '--prebuilt', '--token', VERCEL_TOKEN],
@@ -76,7 +70,7 @@ export async function deploySingleProjectToVercel(pkg) {
     .then((result) => result.stdout)
     .catch((err) => {
       throw new VercelError(
-        `An error occurred on deploy ${pkg.name} package \n ${err.message} \n ${err.stderr}`
+        `An error occurred on deploy ${pkg.name} package \n\n command: vercel ${pkg.location} --prebuilt \n\n message: \n ${err.message} \n\n stderr:\n ${err.stderr} \n\n stack: ${err.stack}`
       );
     });
 
@@ -85,7 +79,7 @@ export async function deploySingleProjectToVercel(pkg) {
     .then((result) => result.stdout)
     .catch((err) => {
       throw new VercelError(
-        `An error occurred on get url preview for ${pkg.name} package \n ${err.message} \n ${err.stderr}`
+        `An error occurred on get url preview for ${pkg.name} package \n\n command: tail -1 \n\n message: \n ${err.message} \n\n stderr:\n ${err.stderr}`
       );
     });
 
@@ -188,8 +182,15 @@ export async function getVercelJsonAndMakeBuildOutputApi(configPath) {
     rewrites: configJsonRewrites,
   });
 
+  if (routes.error) {
+    throw new Error(
+      `An error occurred during reading reading config.json. \n\n ${routes.error}`
+    );
+  }
+
+  const configRoutes = routes.routes;
   // This copied from `vercel build` output.
-  routes.routes.unshift({
+  configRoutes.unshift({
     src: '^/[^./]+\\.[0-9a-f]{8}\\.(css|js|png|jpg|webp|avif|svg)$',
     headers: {
       'cache-control': 's-maxage=31536000, immutable',
@@ -199,7 +200,7 @@ export async function getVercelJsonAndMakeBuildOutputApi(configPath) {
 
   const config = {
     version: 3,
-    routes,
+    routes: configRoutes,
   };
 
   return config;
@@ -222,7 +223,7 @@ export async function makeOutputFolderForBuildOutputApi(
 
   if (!pkg.main) {
     throw new Error(
-      "We relying on `main` field inside your package.json. Make sure you've set it."
+      `We relying on 'main' field inside your package.json. Make sure you've set it for ${pkg.name}.`
     );
   }
 
@@ -237,9 +238,11 @@ export async function makeOutputFolderForBuildOutputApi(
   );
   await mkdir(targetStaticDir, { recursive: true });
   await cp(mainDir, targetStaticDir, { recursive: true });
+  console.log(`copied. path: ${targetStaticDir}`);
 
   console.log(`creating config.json for ${pkgLocation}...`);
   const buildOutput = await getVercelJsonAndMakeBuildOutputApi(configPath);
   const targetConfigPath = join(targetDir, 'config.json');
   await writeFile(targetConfigPath, JSON.stringify(buildOutput));
+  console.log(`created. path: ${targetConfigPath}`);
 }
