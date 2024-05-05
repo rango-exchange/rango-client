@@ -4,6 +4,10 @@
   "license": "MIT",
   "private": true,
   "source": "public/index.html",
+  "main": "dist/index.html",
+  "targets": {
+    "main": false
+  },
   "browserslist": "> 0.5%, last 2 versions, not dead",
   "scripts": {
     "dev": "parcel --cache-dir=.parcel-cache",
