@@ -1,4 +1,4 @@
-import type { SwapInputProps } from './SwapInput.types';
+import type { SwapInputPropTypes } from './SwapInput.types';
 
 import { i18n } from '@lingui/core';
 import React from 'react';
@@ -27,7 +27,7 @@ import {
 } from './SwapInput.styles';
 import { TokenSection } from './TokenSection';
 
-export function SwapInput(props: SwapInputProps) {
+export function SwapInput(props: SwapInputPropTypes) {
   const showBalance =
     'balance' in props && !props.loading && !props.loadingBalance;
   const showBalanceSkeleton =

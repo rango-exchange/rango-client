@@ -5,7 +5,7 @@ import type * as Stitches from '@stitches/react';
 type BaseProps = Stitches.VariantProps<typeof BackDrop>;
 type BaseAnchor = Exclude<BaseProps['anchor'], object>;
 
-export interface PropTypes {
+export interface ModalPropTypes {
   title?: string;
   open: boolean;
   onClose: () => void;

@@ -1,4 +1,4 @@
-import type { PropTypes } from './NotFound.types';
+import type { NotFoundPropTypes } from './NotFound.types';
 
 import React from 'react';
 
@@ -8,7 +8,7 @@ import { Typography } from '../Typography';
 
 import { Container } from './NotFound.styles';
 
-export function NotFound(props: PropTypes) {
+export function NotFound(props: NotFoundPropTypes) {
   return (
     <Container>
       <SearchIcon color="secondary" size={26} />

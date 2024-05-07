@@ -23,7 +23,7 @@ export type ToastType = {
   variant?: 'custom' | 'standard';
 };
 
-export type ToastProps = ToastType & {
+export type ToastPropTypes = ToastType & {
   id: number | string;
 };
 

@@ -1,4 +1,4 @@
-import type { PropTypes } from './Chip.types';
+import type { ChipPropTypes } from './Chip.types';
 
 import React from 'react';
 
@@ -6,7 +6,7 @@ import { Typography } from '../Typography';
 
 import { ChipContainer } from './Chip.styles';
 
-export function Chip(props: PropTypes) {
+export function Chip(props: ChipPropTypes) {
   const { label, selected, prefix, suffix, ...otherProps } = props;
   return (
     <ChipContainer selected={selected} {...otherProps}>

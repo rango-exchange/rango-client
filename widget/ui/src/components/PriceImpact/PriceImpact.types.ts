@@ -1,9 +1,9 @@
-import type { PropTypes as TooltipPropTypes } from '../Tooltip/Tooltip.types';
+import type { TooltipPropTypes } from '../Tooltip/Tooltip.types';
 import type { TypographyPropTypes } from '../Typography';
 
 export type PriceImpactWarningLevel = 'low' | 'high' | undefined;
 
-export type PriceImpactProps = {
+export type PriceImpactPropTypes = {
   size: TypographyPropTypes['size'];
   outputUsdValue?: string;
   outputColor?: string;

@@ -1,8 +1,8 @@
-import type { SwapInputProps } from '../../containers/SwapInput/SwapInput.types';
-import type { PriceImpactProps } from '../PriceImpact/PriceImpact.types';
+import type { SwapInputPropTypes } from '../../containers/SwapInput/SwapInput.types';
+import type { PriceImpactPropTypes } from '../PriceImpact/PriceImpact.types';
 
-type BaseProps = Pick<SwapInputProps, 'token' | 'price'> & {
-  chain: Pick<SwapInputProps['chain'], 'image'>;
+type BaseProps = Pick<SwapInputPropTypes, 'token' | 'price'> & {
+  chain: Pick<SwapInputPropTypes['chain'], 'image'>;
   direction?: 'vertical' | 'horizontal';
   centerAlign?: boolean;
   label?: string;
@@ -12,7 +12,7 @@ type BaseProps = Pick<SwapInputProps, 'token' | 'price'> & {
 type InputAmountProps = { type: 'input' };
 
 type OutputAmountProps = Pick<
-  PriceImpactProps,
+  PriceImpactPropTypes,
   'percentageChange' | 'warningLevel'
 > & {
   type: 'output';

@@ -1,4 +1,4 @@
-import type { PropTypes } from './Tooltip.types';
+import type { TooltipPropTypes } from './Tooltip.types';
 import type { PropsWithChildren } from 'react';
 
 import * as RadixTooltip from '@radix-ui/react-tooltip';
@@ -10,7 +10,7 @@ import {
   TriggerContent,
 } from './Tooltip.styles';
 
-export function Tooltip(props: PropsWithChildren<PropTypes>) {
+export function Tooltip(props: PropsWithChildren<TooltipPropTypes>) {
   const {
     children,
     content,

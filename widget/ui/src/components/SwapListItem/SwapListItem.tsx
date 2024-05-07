@@ -1,4 +1,4 @@
-import type { PropTypes } from './SwapListItem.types';
+import type { SwapListItemPropTypes } from './SwapListItem.types';
 import type { PropsWithChildren } from 'react';
 
 import React from 'react';
@@ -18,7 +18,7 @@ import {
 import { StatusColors } from './SwapListItem.types';
 import { SwapToken } from './SwapToken';
 
-export function SwapListItem(props: PropsWithChildren<PropTypes>) {
+export function SwapListItem(props: PropsWithChildren<SwapListItemPropTypes>) {
   if ('isLoading' in props) {
     return (
       <LoadingMain>

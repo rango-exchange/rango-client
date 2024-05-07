@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-magic-numbers */
-import type { PropTypes } from './SelectableCategoryList.types';
+import type { SelectableCategoryListPropTypes } from './SelectableCategoryList.types';
 
 import { i18n } from '@lingui/core';
 import React from 'react';
@@ -15,7 +15,7 @@ import {
 import { Container } from './SelectableCategoryList.styles';
 import { BlockchainCategories } from './SelectableCategoryList.types';
 
-export function SelectableCategoryList(props: PropTypes) {
+export function SelectableCategoryList(props: SelectableCategoryListPropTypes) {
   const { setCategory, category, isLoading, blockchains } = props;
   const categories = Object.keys(
     BlockchainCategories

@@ -40,4 +40,4 @@ type ToProps = {
   warningLevel: PriceImpactWarningLevel;
 };
 
-export type SwapInputProps = BaseProps & (FromProps | ToProps);
+export type SwapInputPropTypes = BaseProps & (FromProps | ToProps);

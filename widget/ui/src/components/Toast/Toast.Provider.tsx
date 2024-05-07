@@ -2,7 +2,7 @@ import type {
   ProviderContext,
   ProviderPropTypes,
   ToastPosition,
-  ToastProps,
+  ToastPropTypes,
   ToastType,
 } from './Toast.types';
 import type { PropsWithChildren } from 'react';
@@ -17,7 +17,7 @@ import { ToastContainer } from './Toast.styles';
 const ToastContext = createContext<ProviderContext | undefined>(undefined);
 
 const renderToastContainer = (
-  toasts: ToastProps[],
+  toasts: ToastPropTypes[],
   position: ToastPosition
 ) => (
   <>
@@ -35,14 +35,18 @@ export const ToastProvider = (props: PropsWithChildren<ProviderPropTypes>) => {
   const generateId = useMemo(() => idGenerator(), []);
 
   const { children, container } = props;
-  const [leftTopToasts, setLeftTopToasts] = useState<ToastProps[]>([]);
-  const [leftBottomToasts, setLeftBottomToasts] = useState<ToastProps[]>([]);
-  const [rightTopToasts, setRightTopToasts] = useState<ToastProps[]>([]);
-  const [rightBottomToasts, setRightBottomToasts] = useState<ToastProps[]>([]);
-  const [centerTopToasts, setCenterTopToasts] = useState<ToastProps[]>([]);
-  const [centerBottomToasts, setCenterBottomToasts] = useState<ToastProps[]>(
+  const [leftTopToasts, setLeftTopToasts] = useState<ToastPropTypes[]>([]);
+  const [leftBottomToasts, setLeftBottomToasts] = useState<ToastPropTypes[]>(
     []
   );
+  const [rightTopToasts, setRightTopToasts] = useState<ToastPropTypes[]>([]);
+  const [rightBottomToasts, setRightBottomToasts] = useState<ToastPropTypes[]>(
+    []
+  );
+  const [centerTopToasts, setCenterTopToasts] = useState<ToastPropTypes[]>([]);
+  const [centerBottomToasts, setCenterBottomToasts] = useState<
+    ToastPropTypes[]
+  >([]);
 
   const getToastSetter = (position: ToastPosition) => {
     switch (position) {

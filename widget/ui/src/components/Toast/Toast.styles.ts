@@ -346,8 +346,3 @@ export const StyledTypography = styled(Typography, {
     },
   },
 });
-
-export const ToastStoryContainer = styled('div', {
-  display: 'flex',
-  alignItems: 'center',
-});

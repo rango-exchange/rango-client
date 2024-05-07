@@ -24,6 +24,6 @@ export interface ContentType {
   onOpenChange?: (open: boolean) => void;
 }
 
-export type PropTypes = ContentType & {
+export type PopoverPropTypes = ContentType & {
   content: ReactNode;
 };

@@ -5,7 +5,7 @@ import type { ComponentProps, ReactNode } from 'react';
 
 type RadixTooltipContentProps = ComponentProps<typeof RadixTooltip.Content>;
 
-export interface PropTypes {
+export interface TooltipPropTypes {
   content: ReactNode;
   side?: RadixTooltipContentProps['side'];
   color?: 'primary' | 'error' | 'warning' | 'success';

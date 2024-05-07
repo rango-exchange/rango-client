@@ -1,5 +1,5 @@
 import type { InputContainer } from './TextField.styles';
-import type { PropTypes as TypographyProps } from '../Typography/Typography.types';
+import type { TypographyPropTypes } from '../Typography';
 import type * as Stitches from '@stitches/react';
 
 type BaseProps = Stitches.VariantProps<typeof InputContainer>;
@@ -12,12 +12,12 @@ export type Ref =
   | null
   | undefined;
 
-export type PropTypes = {
+export type TextFieldPropTypes = {
   label?: string | React.ReactNode;
   prefix?: React.ReactNode;
   suffix?: React.ReactNode;
   size?: BaseSizes;
   variant?: BaseVariants;
   fullWidth?: boolean;
-  labelProps?: TypographyProps;
+  labelProps?: TypographyPropTypes;
 } & Omit<React.InputHTMLAttributes<HTMLInputElement>, 'prefix' | 'size'>;
