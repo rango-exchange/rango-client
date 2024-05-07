@@ -1,4 +1,4 @@
-import type { PropTypes } from './Checkbox.types';
+import type { CheckboxPropTypes } from './Checkbox.types';
 import type { PropsWithChildren } from 'react';
 
 import React from 'react';
@@ -13,7 +13,7 @@ import {
   Label,
 } from './Checkbox.styles';
 
-export function Checkbox(props: PropsWithChildren<PropTypes>) {
+export function Checkbox(props: PropsWithChildren<CheckboxPropTypes>) {
   const { id, label, ...otherProps } = props;
   const hasLabel = id && label;
   return (

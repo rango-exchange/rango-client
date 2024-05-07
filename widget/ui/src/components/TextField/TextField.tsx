@@ -1,4 +1,4 @@
-import type { PropTypes, Ref } from './TextField.types';
+import type { Ref, TextFieldPropTypes } from './TextField.types';
 import type { PropsWithChildren } from 'react';
 
 import React from 'react';
@@ -8,7 +8,10 @@ import { Typography } from '../Typography';
 
 import { Input, InputContainer, Label } from './TextField.styles';
 
-function TextFieldComponent(props: PropsWithChildren<PropTypes>, ref?: Ref) {
+function TextFieldComponent(
+  props: PropsWithChildren<TextFieldPropTypes>,
+  ref?: Ref
+) {
   const {
     label,
     prefix,

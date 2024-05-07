@@ -17,4 +17,4 @@ type OtherVariant = {
   height: number;
 };
 
-export type PropTypes = TextVariant | OtherVariant;
+export type SkeletonPropTypes = TextVariant | OtherVariant;

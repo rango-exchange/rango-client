@@ -17,8 +17,6 @@
     "ts-check": "tsc --declaration --emitDeclarationOnly -p ./tsconfig.json",
     "build:icons": "svgr svgs/resources/fill --config-file svgs/configs/.svgrrc.default.cjs",
     "type-checking": "tsc --declaration --emitDeclarationOnly",
-    "storybook": "storybook dev -p 3000",
-    "build-storybook": "storybook build",
     "clean": "rimraf dist",
     "format": "prettier --write '{.,src}/**/*.{ts,tsx}'",
     "lint": "eslint \"**/*.{ts,tsx}\" --ignore-path ../../.eslintignore"
@@ -33,16 +31,8 @@
     "@babel/preset-env": "^7.21.4",
     "@babel/preset-react": "^7.18.6",
     "@babel/preset-typescript": "^7.21.4",
-    "@chromatic-com/storybook": "^1",
     "@lingui/core": "4.2.1",
     "@lingui/react": "4.2.1",
-    "@storybook/addon-essentials": "^8.0.8",
-    "@storybook/addon-info": "^5.3.21",
-    "@storybook/addon-links": "^8.0.8",
-    "@storybook/addons": "^7.1.1",
-    "@storybook/react": "^8.0.8",
-    "@storybook/react-vite": "^8.0.8",
-    "@storybook/react-webpack5": "^8.0.8",
     "@svgr/babel-plugin-remove-jsx-attribute": "8.0.0",
     "@svgr/cli": "^8.0.1",
     "@types/react": "^18.0.25",
@@ -50,8 +40,7 @@
     "babel-loader": "^9.1.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-is": "^18.2.0",
-    "storybook": "^8.0.8"
+    "react-is": "^18.2.0"
   },
   "dependencies": {
     "@radix-ui/react-checkbox": "^1.0.1",

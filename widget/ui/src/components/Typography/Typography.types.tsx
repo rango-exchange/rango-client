@@ -6,7 +6,7 @@ type BaseSizes = Exclude<BaseProps['size'], object>;
 type BaseVariants = Exclude<BaseProps['variant'], object>;
 export type BaseAlign = Exclude<BaseProps['align'], object>;
 
-export interface PropTypes {
+export interface TypographyPropTypes {
   variant: BaseVariants;
   size: BaseSizes;
   align?: BaseAlign;

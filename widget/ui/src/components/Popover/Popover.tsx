@@ -1,4 +1,4 @@
-import type { ContentType, PropTypes, Ref } from './Popover.types';
+import type { ContentType, PopoverPropTypes, Ref } from './Popover.types';
 import type { PropsWithChildren } from 'react';
 
 import * as RadixPopover from '@radix-ui/react-popover';
@@ -27,7 +27,7 @@ export const PopoverContentComponent = (
 const PopoverContent = React.forwardRef(PopoverContentComponent);
 PopoverContent.displayName = 'PopoverContent';
 
-export function Popover(props: PropsWithChildren<PropTypes>) {
+export function Popover(props: PropsWithChildren<PopoverPropTypes>) {
   const {
     children,
     content,

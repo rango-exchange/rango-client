@@ -1,4 +1,4 @@
-import type { PropTypes } from './Typography.types';
+import type { TypographyPropTypes } from './Typography.types';
 import type { PropsWithChildren } from 'react';
 
 import React from 'react';
@@ -10,7 +10,7 @@ export function Typography({
   className,
   color,
   ...props
-}: PropsWithChildren<PropTypes>) {
+}: PropsWithChildren<TypographyPropTypes>) {
   const customCss = color
     ? {
         color: color.startsWith('$') ? color : `$${color}`,

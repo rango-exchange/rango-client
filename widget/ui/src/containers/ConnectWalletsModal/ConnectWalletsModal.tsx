@@ -1,28 +1,13 @@
-import type { WalletInfo } from '../../components';
-import type { WalletType } from '@rango-dev/wallets-shared';
+import type { ConnectWalletsModalPropTypes } from './ConnectWalletsModal.types';
 
 import { i18n } from '@lingui/core';
 import React from 'react';
 
 import { Modal, Wallet } from '../../components';
-import { styled } from '../../theme';
 
-export interface PropTypes {
-  open: boolean;
-  list: WalletInfo[];
-  onSelect: (walletType: WalletType) => void;
-  onClose: () => void;
-  error?: string;
-}
+import { ModalContent } from './ConnectWalletsModal.styles';
 
-const ModalContent = styled('div', {
-  display: 'grid',
-  gap: '$8',
-  gridTemplateColumns: 'repeat(2, minmax(0, 1fr))',
-  overflow: 'auto',
-});
-
-export function ConnectWalletsModal(props: PropTypes) {
+export function ConnectWalletsModal(props: ConnectWalletsModalPropTypes) {
   const { open, list, onSelect, onClose } = props;
 
   return (

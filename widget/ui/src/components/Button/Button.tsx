@@ -1,4 +1,4 @@
-import type { PropTypes, Ref } from './Button.types';
+import type { ButtonPropTypes, Ref } from './Button.types';
 import type { PropsWithChildren } from 'react';
 
 import React from 'react';
@@ -8,7 +8,7 @@ import { Spinner } from '../Spinner';
 import { ButtonBase, Content } from './Button.styles';
 import Ripple from './Ripple';
 
-function ButtonComponent(props: PropsWithChildren<PropTypes>, ref?: Ref) {
+function ButtonComponent(props: PropsWithChildren<ButtonPropTypes>, ref?: Ref) {
   const {
     children,
     loading,
