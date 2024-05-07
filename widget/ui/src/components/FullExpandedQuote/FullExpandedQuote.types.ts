@@ -1,15 +1,15 @@
-import type { SwapInputProps } from '../../containers/SwapInput/SwapInput.types';
-import type { PropTypes as ChainTokenPropTypes } from '../ChainToken/ChainToken.types';
-import type { PriceImpactProps } from '../PriceImpact/PriceImpact.types';
+import type { SwapInputPropTypes } from '../../containers/SwapInput/SwapInput.types';
+import type { ChainTokenPropTypes } from '../ChainToken';
+import type { PriceImpactPropTypes } from '../PriceImpact/PriceImpact.types';
 import type { PropTypes as QuoteCostProps } from '../QuoteCost/QuoteCost.types';
 import type { InternalSwap, Step } from '../StepDetails/StepDetails.types';
-import type { PropTypes as TooltipPropTypes } from '../Tooltip/Tooltip.types';
+import type { TooltipPropTypes } from '../Tooltip/Tooltip.types';
 import type { CSSProperties } from '@stitches/react';
 import type { RouteTag } from 'rango-sdk';
 
 type BaseProps = {
-  percentageChange?: PriceImpactProps['percentageChange'];
-  warningLevel?: PriceImpactProps['warningLevel'];
+  percentageChange?: PriceImpactPropTypes['percentageChange'];
+  warningLevel?: PriceImpactPropTypes['warningLevel'];
   tooltipContainer?: HTMLElement;
   onClick?: () => void;
   selected?: boolean;
@@ -21,7 +21,7 @@ export type DataLoadedProps = {
   tags: RouteTag[];
   time: QuoteCostProps['time'];
   fee: QuoteCostProps['fee'];
-  outputPrice: SwapInputProps['price'];
+  outputPrice: SwapInputPropTypes['price'];
   loading?: false;
 };
 type LoadingProps = {

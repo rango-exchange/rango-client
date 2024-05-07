@@ -1,4 +1,4 @@
-import type { PropTypes } from './Modal.types';
+import type { ModalPropTypes } from './Modal.types';
 import type { PropsWithChildren } from 'react';
 
 import React, { useEffect, useRef, useState } from 'react';
@@ -22,7 +22,7 @@ import {
 const CLOSED_DELAY = 600;
 const OPEN_DELAY = 100;
 
-export function Modal(props: PropsWithChildren<PropTypes>) {
+export function Modal(props: PropsWithChildren<ModalPropTypes>) {
   const {
     title,
     open,

@@ -1,4 +1,4 @@
-import type { PropTypes } from './Select.types';
+import type { SelectPropTypes } from './Select.types';
 
 import * as Select from '@radix-ui/react-select';
 import React, { useEffect, useRef, useState } from 'react';
@@ -8,7 +8,7 @@ import { Typography } from '../Typography';
 
 import { SelectContent, SelectItem, SelectTrigger } from './Select.styles';
 
-export function SelectComponent<T extends string>(props: PropTypes<T>) {
+export function SelectComponent<T extends string>(props: SelectPropTypes<T>) {
   const [open, setOpen] = useState(false);
   const selectRef = useRef<HTMLDivElement>(null);
   const { options, value, container, handleItemClick, variant } = props;

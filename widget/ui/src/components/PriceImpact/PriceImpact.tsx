@@ -1,4 +1,4 @@
-import type { PriceImpactProps } from './PriceImpact.types';
+import type { PriceImpactPropTypes } from './PriceImpact.types';
 
 import React from 'react';
 
@@ -6,7 +6,7 @@ import { Divider, Tooltip, Typography } from '..';
 
 import { Container, OutputUsdValue } from './PriceImpact.styles';
 
-export function PriceImpact(props: PriceImpactProps) {
+export function PriceImpact(props: PriceImpactPropTypes) {
   const {
     size = 'medium',
     outputUsdValue,

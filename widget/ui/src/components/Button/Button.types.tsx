@@ -15,7 +15,7 @@ export type Ref =
 
 type ButtonElement = Omit<HTMLAttributes<HTMLButtonElement>, 'prefix'>;
 
-export type PropTypes = ButtonElement & {
+export type ButtonPropTypes = ButtonElement & {
   size?: BaseSizes;
   variant?: BaseVariants;
   type?: BaseTypes;

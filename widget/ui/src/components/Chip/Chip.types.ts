@@ -12,4 +12,4 @@ interface ChipProps {
   suffix?: ReactNode;
 }
 
-export type PropTypes = ButtonElement & ChipProps;
+export type ChipPropTypes = ButtonElement & ChipProps;

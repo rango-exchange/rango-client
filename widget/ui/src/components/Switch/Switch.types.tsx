@@ -1,4 +1,4 @@
-export interface PropTypes {
+export interface SwitchPropTypes {
   checked: boolean;
   onChange?: (checked: boolean) => void;
 }

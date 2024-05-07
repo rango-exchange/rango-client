@@ -1,4 +1,4 @@
-import type { ToastProps } from './Toast.types';
+import type { ToastPropTypes } from './Toast.types';
 
 import React, { useEffect, useState } from 'react';
 
@@ -19,7 +19,7 @@ import {
   toastContentStyles,
 } from './Toast.styles';
 
-export const Toast = (props: ToastProps) => {
+export const Toast = (props: ToastPropTypes) => {
   const {
     id,
     autoHideDuration,

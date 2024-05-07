@@ -1,12 +1,12 @@
-import type { PropTypes as RadioType } from '../Radio/Radio.types';
+import type { RadioPropTypes } from '../Radio';
 import type { CSSProperties } from '@stitches/react';
 
-export interface PropTypes {
+export interface RadioGroupPropTypes {
   options: {
     label: string;
-    value: RadioType['value'];
+    value: RadioPropTypes['value'];
   }[];
-  value: RadioType['value'];
+  value: RadioPropTypes['value'];
   onChange: (value: string) => void;
   direction?: 'vertical' | 'horizontal';
   style?: CSSProperties;

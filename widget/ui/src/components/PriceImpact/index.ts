@@ -1,2 +1,5 @@
 export { PriceImpact } from './PriceImpact';
-export type { PriceImpactWarningLevel } from './PriceImpact.types';
+export type {
+  PriceImpactWarningLevel,
+  PriceImpactPropTypes,
+} from './PriceImpact.types';

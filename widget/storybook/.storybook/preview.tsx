@@ -5,8 +5,6 @@ import { I18nManager, darkTheme, lightTheme, styled } from '@rango-dev/ui';
 
 // https://storybook.js.org/docs/react/writing-stories/parameters#global-parameters
 export const parameters = {
-  // https://storybook.js.org/docs/react/essentials/actions#automatically-matching-args
-  actions: { argTypesRegex: '^on.*' },
   docs: {
     story: {
       iframeHeight: 300,

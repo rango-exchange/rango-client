@@ -14,7 +14,7 @@ export interface LoadingProps {
   isLoading: true;
 }
 
-export type PropTypes = SwapListItemProps | LoadingProps;
+export type SwapListItemPropTypes = SwapListItemProps | LoadingProps;
 
 export const StatusColors = {
   failed: 'error500',

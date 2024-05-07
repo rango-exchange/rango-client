@@ -1,10 +1,10 @@
-import type { PropTypes } from './Skeleton.types';
+import type { SkeletonPropTypes } from './Skeleton.types';
 
 import React from 'react';
 
 import { SkeletonContainer } from './Skeleton.styles';
 
-export function Skeleton(props: PropTypes) {
+export function Skeleton(props: SkeletonPropTypes) {
   const { width = '100%' } = props;
   const customCss =
     props.variant !== 'text'

@@ -21,7 +21,7 @@ type BaseProps = Stitches.VariantProps<typeof Tabs>;
 type BaseType = Exclude<BaseProps['type'], object>;
 type BaseBorderRadius = Exclude<BaseProps['borderRadius'], object>;
 
-export interface PropTypes {
+export interface TabsPropTypes {
   items: Item[];
   container?: HTMLElement;
   onChange: (item: Item) => void;

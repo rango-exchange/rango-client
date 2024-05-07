@@ -1,13 +1,13 @@
 import type { SwapperType } from 'rango-sdk';
 import type { ReactNode } from 'react';
-import type { SwapInputProps } from 'src/containers/SwapInput/SwapInput.types';
+import type { SwapInputPropTypes } from 'src/containers/SwapInput/SwapInput.types';
 
-type BaseStep = Pick<SwapInputProps, 'chain' | 'token' | 'price'>;
+type BaseStep = Pick<SwapInputPropTypes, 'chain' | 'token' | 'price'>;
 type BaseInternalStep = {
   chain: BaseStep['chain'];
 } & Partial<Pick<BaseStep, 'token' | 'price'>>;
 
-type SwapperInfo = SwapInputProps['chain'] & {
+type SwapperInfo = SwapInputPropTypes['chain'] & {
   type?: SwapperType;
 };
 
