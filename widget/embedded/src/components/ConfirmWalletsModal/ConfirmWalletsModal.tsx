@@ -437,7 +437,6 @@ export function ConfirmWalletsModal(props: PropTypes) {
                         }>
                         <Divider size={4} />
                         <StyledTextField
-                          autoFocus
                           placeholder={i18n.t('Your destination address')}
                           value={customDestination || ''}
                           onChange={(e) => {
@@ -449,6 +448,7 @@ export function ConfirmWalletsModal(props: PropTypes) {
                               setCustomDestination(value.length ? value : null);
                             }
                           }}
+                          {...(!customDestination && { autoFocus: true })}
                         />
                       </CustomCollapsible>
 
