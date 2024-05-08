@@ -17,10 +17,8 @@ import {
   WalletIcon,
 } from '@rango-dev/ui';
 import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
-import { flushSync } from 'react-dom';
 import { useLocation, useNavigate } from 'react-router-dom';
 
-import { getRequiredWallets } from '../components/ConfirmWalletsModal/ConfirmWallets.helpers';
 import { ConfirmWalletsModal } from '../components/ConfirmWalletsModal/ConfirmWalletsModal';
 import { RefreshButton } from '../components/HeaderButtons/RefreshButton';
 import { Layout, PageContainer } from '../components/Layout';
@@ -32,8 +30,6 @@ import { useConfirmSwap } from '../hooks/useConfirmSwap';
 import { useAppStore } from '../store/AppStore';
 import { useQuoteStore } from '../store/quote';
 import { useUiStore } from '../store/ui';
-import { useWalletsStore } from '../store/wallets';
-import { QuoteWarningType } from '../types';
 import { joinList } from '../utils/ui';
 
 const Buttons = styled('div', {
@@ -72,7 +68,6 @@ export function ConfirmSwapPage() {
     setInputAmount,
     selectedWallets,
     quoteWalletsConfirmed,
-    setQuoteWalletConfirmed,
     customDestination,
     quoteWarningsConfirmed,
   } = useQuoteStore();
@@ -80,7 +75,6 @@ export function ConfirmSwapPage() {
   const location = useLocation();
   const [dbErrorMessage, setDbErrorMessage] = useState<string>('');
 
-  const { connectedWallets } = useWalletsStore();
   const showWalletsOnInit = !quoteWalletsConfirmed;
   const [showWallets, setShowWallets] = useState(false);
   const [isConfirming, setIsConfirming] = useState(false);
@@ -189,65 +183,6 @@ export function ConfirmSwapPage() {
         .catch((error) => console.error(error));
     }
   }, []);
-
-  useEffect(() => {
-    const quoteChanged =
-      confirmSwapResult.warnings?.quote?.type &&
-      Object.values(QuoteWarningType).includes(
-        confirmSwapResult.warnings?.quote?.type
-      );
-
-    const selectedWalletDisconnected =
-      selectedWallets.length < 1 ||
-      !selectedWallets.every((selectedWallet) =>
-        connectedWallets.find(
-          (connectedWallet) =>
-            selectedWallet.address === connectedWallet.address &&
-            selectedWallet.walletType === connectedWallet.walletType &&
-            selectedWallet.chain === connectedWallet.chain
-        )
-      );
-
-    let quoteWalletsChanged = false;
-
-    if (quoteChanged) {
-      let requiredWallets = getRequiredWallets(selectedQuote?.swaps || null);
-
-      const lastStepToBlockchain =
-        selectedQuote?.swaps[selectedQuote.swaps.length - 1].to.blockchain;
-
-      const isLastWalletRequired = !!selectedQuote?.swaps.find(
-        (swap) => swap.from.blockchain === lastStepToBlockchain
-      );
-
-      if (!isLastWalletRequired) {
-        requiredWallets = requiredWallets.slice(
-          -requiredWallets.length,
-          requiredWallets.length - 1
-        );
-      }
-
-      const allRequiredWalletsSelected = requiredWallets.every(
-        (requiredWallet) =>
-          selectedWallets.find(
-            (selectedWallet) => selectedWallet.chain === requiredWallet
-          )
-      );
-
-      if (!allRequiredWalletsSelected) {
-        quoteWalletsChanged = true;
-      }
-    }
-
-    if (selectedQuote && (selectedWalletDisconnected || quoteWalletsChanged)) {
-      queueMicrotask(() => flushSync(setShowWallets.bind(null, true)));
-      setQuoteWalletConfirmed(false);
-    }
-  }, [
-    confirmSwapResult.warnings?.quote,
-    selectedWallets.length,
-    connectedWallets.length,
-  ]);
 
   useLayoutEffect(() => {
     if (!selectedQuote) {
