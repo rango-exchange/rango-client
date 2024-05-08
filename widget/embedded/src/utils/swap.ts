@@ -40,7 +40,7 @@ import {
 import { getBlockchainShortNameFor } from './meta';
 import { numberToString } from './numbers';
 import { getPriceImpact, getRequiredBalanceOfWallet } from './quote';
-import { getRequiredChains } from './wallets';
+import { getQuoteWallets } from './wallets';
 
 export function getOutputRatio(
   inputUsdValue: BigNumber | null,
@@ -253,24 +253,6 @@ export function canComputePriceImpact(
     parseFloat(inputAmount || '0') !== 0 &&
     !!quote
   );
-}
-
-export function requiredWallets(quote: SelectedQuote | null) {
-  const wallets: string[] = [];
-
-  quote?.swaps.forEach((swap) => {
-    const currentStepFromBlockchain = swap.from.blockchain;
-    const currentStepToBlockchain = swap.to.blockchain;
-    let lastAddedWallet = wallets[wallets.length - 1];
-    if (currentStepFromBlockchain != lastAddedWallet) {
-      wallets.push(currentStepFromBlockchain);
-    }
-    lastAddedWallet = wallets[wallets.length - 1];
-    if (currentStepToBlockchain != lastAddedWallet) {
-      wallets.push(currentStepToBlockchain);
-    }
-  });
-  return wallets;
 }
 
 export const getUsdPrice = (
@@ -606,7 +588,7 @@ export function generateBalanceWarnings(
   blockchains: BlockchainMeta[]
 ) {
   const fee = quote.validationStatus;
-  const requiredWallets = getRequiredChains(quote);
+  const requiredWallets = getQuoteWallets({ filter: 'required', quote });
   const walletsSortedByRequiredWallets = selectedWallets.sort(
     (selectedWallet1, selectedWallet2) =>
       requiredWallets.indexOf(selectedWallet1.chain) -
@@ -753,25 +735,43 @@ export function shouldRetrySwap(pendingSwap: PendingSwap) {
   return pendingSwap.status === 'failed';
 }
 
-export function confirmSwapDisabled(
+export function isConfirmSwapDisabled(
   fetching: boolean,
   showCustomDestination: boolean,
   customDestination: string | null,
   quote: SelectedQuote | null,
   selectedWallets: { walletType: string; chain: string }[],
-  lastStepToBlockchain?: BlockchainMeta
-) {
+  lastStepToBlockchain: BlockchainMeta | undefined
+): boolean {
+  if (!quote || fetching) {
+    return true;
+  }
+
+  const allWallets = getQuoteWallets({ filter: 'all', quote });
+
+  const requiredWallets = getQuoteWallets({ filter: 'required', quote });
+
+  const everyWalletSelected = allWallets.every((blockchain) =>
+    selectedWallets.some(
+      (selectedWallet) => selectedWallet.chain === blockchain
+    )
+  );
+
+  const everyRequiredWalletSelected = requiredWallets.every((wallet) =>
+    selectedWallets.some((selectedWallet) => selectedWallet.chain === wallet)
+  );
+
+  const customDestinationIsValid =
+    customDestination && lastStepToBlockchain
+      ? isValidAddress(lastStepToBlockchain, customDestination)
+      : false;
+
   return (
-    fetching ||
-    (!showCustomDestination &&
-      !requiredWallets(quote).every((chain) =>
-        selectedWallets.map((wallet) => wallet.chain).includes(chain)
-      )) ||
-    (!!showCustomDestination && !customDestination) ||
-    (!!showCustomDestination &&
+    (!showCustomDestination && !everyWalletSelected) ||
+    (showCustomDestination && !customDestination) ||
+    (showCustomDestination &&
       !!customDestination &&
-      lastStepToBlockchain &&
-      !isValidAddress(lastStepToBlockchain, customDestination))
+      (!customDestinationIsValid || !everyRequiredWalletSelected))
   );
 }
 
