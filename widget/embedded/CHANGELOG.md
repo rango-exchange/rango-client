@@ -1,3 +1,12 @@
+## [0.27.3](https://github.com/rango-exchange/rango-client/compare/widget-embedded@0.27.2...widget-embedded@0.27.3) (2024-05-08)
+
+
+### Bug Fixes
+
+* disable the confirm wallet button if all required wallets are not selected ([521883f](https://github.com/rango-exchange/rango-client/commit/521883f9e381d311bf0cdad275b234646da2a648))
+
+
+
 ## [0.27.2](https://github.com/rango-exchange/rango-client/compare/widget-embedded@0.27.1...widget-embedded@0.27.2) (2024-04-27)
 
 
