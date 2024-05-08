@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/provider-ledger",
-  "version": "0.2.1-next.1",
+  "version": "0.2.1-next.2",
   "license": "MIT",
   "type": "module",
   "source": "./src/index.ts",
@@ -23,7 +23,7 @@
   "dependencies": {
     "@ledgerhq/hw-app-eth": "^6.35.7",
     "@ledgerhq/hw-transport-webhid": "^6.28.5",
-    "@rango-dev/wallets-shared": "^0.32.1-next.0",
+    "@rango-dev/wallets-shared": "^0.32.1-next.1",
     "ethers": "^6.11.1",
     "rango-types": "^0.1.59"
   },
