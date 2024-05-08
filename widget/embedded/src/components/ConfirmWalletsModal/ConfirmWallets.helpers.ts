@@ -1,22 +1,4 @@
-import type { BlockchainMeta, SwapResult } from 'rango-sdk';
-
-export function getRequiredWallets(swaps: SwapResult[] | null): string[] {
-  const wallets: string[] = [];
-
-  swaps?.forEach((swap) => {
-    const currentStepFromBlockchain = swap.from.blockchain;
-    const currentStepToBlockchain = swap.to.blockchain;
-    let lastAddedWallet = wallets[wallets.length - 1];
-    if (currentStepFromBlockchain != lastAddedWallet) {
-      wallets.push(currentStepFromBlockchain);
-    }
-    lastAddedWallet = wallets[wallets.length - 1];
-    if (currentStepToBlockchain != lastAddedWallet) {
-      wallets.push(currentStepToBlockchain);
-    }
-  });
-  return wallets;
-}
+import type { BlockchainMeta } from 'rango-sdk';
 
 export function isValidAddress(
   chain: BlockchainMeta,
