@@ -24,12 +24,13 @@ import { useAppStore } from '../../store/AppStore';
 import { useQuoteStore } from '../../store/quote';
 import { useWalletsStore } from '../../store/wallets';
 import { getBlockchainShortNameFor } from '../../utils/meta';
-import { confirmSwapDisabled } from '../../utils/swap';
+import { isConfirmSwapDisabled } from '../../utils/swap';
+import { getQuoteWallets } from '../../utils/wallets';
 import { WatermarkedModal } from '../common/WatermarkedModal';
 import { CustomCollapsible } from '../CustomCollapsible/CustomCollapsible';
 import { ExpandedIcon } from '../CustomCollapsible/CustomCollapsible.styles';
 
-import { getRequiredWallets, isValidAddress } from './ConfirmWallets.helpers';
+import { isValidAddress } from './ConfirmWallets.helpers';
 import {
   alarmsStyles,
   ConfirmButton,
@@ -74,7 +75,15 @@ export function ConfirmWalletsModal(props: PropTypes) {
     !!customDestination
   );
 
-  const requiredWallets = getRequiredWallets(selectedQuote?.swaps || null);
+  const quoteWallets = getQuoteWallets({
+    filter: 'all',
+    quote: selectedQuote,
+  });
+
+  const requiredWallets = getQuoteWallets({
+    filter: 'required',
+    quote: selectedQuote,
+  });
 
   const lastStepToBlockchain = blockchains.find(
     (blockchain) =>
@@ -82,21 +91,17 @@ export function ConfirmWalletsModal(props: PropTypes) {
       selectedQuote?.swaps[selectedQuote?.swaps.length - 1].to.blockchain
   );
   const isWalletRequiredFor = (blockchain: string) =>
-    !!selectedQuote?.swaps.find((swap) => swap.from.blockchain === blockchain);
+    requiredWallets.includes(blockchain);
 
   const getInitialSelectableWallets = () =>
     connectedWallets.filter((connectedWallet) => {
       return (
-        connectedWallet.selected &&
-        requiredWallets.includes(connectedWallet.chain)
+        connectedWallet.selected && quoteWallets.includes(connectedWallet.chain)
       );
     });
 
   const [selectableWallets, setSelectableWallets] = useState<ConnectedWallet[]>(
     getInitialSelectableWallets()
-  );
-  const lastStepToBlockchainMeta = blockchains.find(
-    (chain) => chain.name === lastStepToBlockchain?.name
   );
 
   const isInsufficientBalanceModalOpen = balanceWarnings.length > 0;
@@ -114,8 +119,8 @@ export function ConfirmWalletsModal(props: PropTypes) {
   const isAddressMatched =
     !!customDestination &&
     showCustomDestination &&
-    lastStepToBlockchainMeta &&
-    !isValidAddress(lastStepToBlockchainMeta, customDestination);
+    lastStepToBlockchain &&
+    !isValidAddress(lastStepToBlockchain, customDestination);
 
   const resetCustomDestination = () => {
     setShowCustomDestination(false);
@@ -182,15 +187,9 @@ export function ConfirmWalletsModal(props: PropTypes) {
     setBalanceWarnings([]);
     setError('');
     setQuoteWarning(null);
-    const selectedWallets = connectedWallets.filter((connectedWallet) =>
-      selectableWallets.find(
-        (selectableWallet) =>
-          selectableWallet.chain === connectedWallet.chain &&
-          selectableWallet.walletType === connectedWallet.walletType
-      )
-    );
+
     const result = await onCheckBalance?.({
-      selectedWallets,
+      selectedWallets: selectableWallets.filter((wallet) => wallet.selected),
       customDestination,
     });
     const warnings = result.warnings;
@@ -223,7 +222,7 @@ export function ConfirmWalletsModal(props: PropTypes) {
           return (
             !anyWalletSelected &&
             connectedWallet.selected &&
-            requiredWallets.includes(connectedWallet.chain)
+            quoteWallets.includes(connectedWallet.chain)
           );
         })
       )
@@ -253,7 +252,7 @@ export function ConfirmWalletsModal(props: PropTypes) {
           <ConfirmButton>
             <Button
               loading={loading}
-              disabled={confirmSwapDisabled(
+              disabled={isConfirmSwapDisabled(
                 loading,
                 showCustomDestination,
                 customDestination,
@@ -344,13 +343,13 @@ export function ConfirmWalletsModal(props: PropTypes) {
             </>
           )}
           <Wallets>
-            {requiredWallets.map((requiredWallet, index) => {
+            {quoteWallets.map((requiredWallet, index) => {
               const blockchain = blockchains.find(
                 (blockchain) => blockchain.name === requiredWallet
               );
 
               const key = `wallet-${index}`;
-              const isLastWallet = index === requiredWallets.length - 1;
+              const isLastWallet = index === quoteWallets.length - 1;
 
               return (
                 <div key={key}>

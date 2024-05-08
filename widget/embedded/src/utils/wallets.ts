@@ -199,34 +199,47 @@ export function prepareAccountsForWalletStore(
   return result;
 }
 
-export function getRequiredChains(quote: SelectedQuote | null) {
-  const wallets: string[] = [];
+export function getQuoteWallets(params: {
+  filter: 'all' | 'required';
+  quote: SelectedQuote | null;
+}): string[] {
+  const { filter, quote } = params;
+  const wallets = new Set<string>();
 
-  quote?.swaps.forEach((swap) => {
+  quote?.swaps.forEach((swap, swapIndex) => {
     const currentStepFromBlockchain = swap.from.blockchain;
     const currentStepToBlockchain = swap.to.blockchain;
-    if (!wallets.includes(currentStepFromBlockchain)) {
-      wallets.push(currentStepFromBlockchain);
-    }
-    if (!wallets.includes(currentStepToBlockchain)) {
-      wallets.push(currentStepToBlockchain);
-    }
+    wallets.add(currentStepFromBlockchain);
 
     // Check if internalSwaps array exists
-    if (swap.internalSwaps && Array.isArray(swap.internalSwaps)) {
-      swap.internalSwaps.forEach((internalSwap) => {
+    if (swap.internalSwaps) {
+      const { internalSwaps } = swap;
+      internalSwaps.forEach((internalSwap, internalSwapIndex) => {
         const internalStepFromBlockchain = internalSwap.from.blockchain;
         const internalStepToBlockchain = internalSwap.to.blockchain;
-        if (!wallets.includes(internalStepFromBlockchain)) {
-          wallets.push(internalStepFromBlockchain);
+        const isLastStep = swapIndex === quote.swaps.length - 1;
+        const isLastInternalStep =
+          internalSwapIndex === internalSwaps.length - 1;
+
+        if (
+          (!isLastStep && !isLastInternalStep) ||
+          (isLastStep &&
+            currentStepToBlockchain !== internalStepFromBlockchain) ||
+          filter === 'all'
+        ) {
+          wallets.add(internalStepFromBlockchain);
         }
-        if (!wallets.includes(internalStepToBlockchain)) {
-          wallets.push(internalStepToBlockchain);
+        if (filter === 'all') {
+          wallets.add(internalStepToBlockchain);
         }
       });
     }
+
+    if (filter === 'all') {
+      wallets.add(currentStepToBlockchain);
+    }
   });
-  return wallets;
+  return Array.from(wallets);
 }
 
 type Blockchain = { name: string; accounts: ConnectedWallet[] };
