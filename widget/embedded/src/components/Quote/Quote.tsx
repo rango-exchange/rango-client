@@ -90,6 +90,8 @@ export function Quote(props: QuoteProps) {
   const blockchains = useAppStore().blockchains();
   const tokens = useAppStore().tokens();
   const swappers = useAppStore().swappers();
+  const { customSlippage, slippage } = useAppStore();
+  const userSlippage = customSlippage || slippage;
   const [expanded, setExpanded] = useState(props.expanded);
   const quoteRef = useRef<HTMLButtonElement | null>(null);
   const roundedInput = numberToString(
@@ -149,7 +151,7 @@ export function Quote(props: QuoteProps) {
         : i18n.t('Slippage Warning');
 
       if (hasBridgeLimitError) {
-        alertTitle = error?.recommendation;
+        alertTitle = i18n.t('Bridge Limit Error');
       }
 
       return {
@@ -229,50 +231,43 @@ export function Quote(props: QuoteProps) {
                 type={stepHasError ? 'error' : 'warning'}
                 title={alertTitle}
                 footer={
-                  !fullExpandedMode ? (
-                    <FooterAlert>
-                      {hasBridgeLimitError && (
-                        <>
-                          <Typography
-                            size="xsmall"
-                            variant="body"
-                            color="neutral900">
-                            {error.fromAmountRangeError}
-                          </Typography>
-                          <Divider direction="horizontal" size={8} />
-                          <Typography
-                            size="xsmall"
-                            variant="body"
-                            color="neutral900">
-                            |
-                          </Typography>
-                          <Divider direction="horizontal" size={8} />
-                          <Typography
-                            size="xsmall"
-                            variant="body"
-                            color="neutral900">
-                            {i18n.t({
-                              id: 'Yours: {amount} {symbol}',
-                              values: {
-                                amount: numberToString(
-                                  swap.fromAmount,
-                                  TOKEN_AMOUNT_MIN_DECIMALS,
-                                  TOKEN_AMOUNT_MAX_DECIMALS
-                                ),
-                                symbol: swap?.from.symbol,
-                              },
-                            })}
-                          </Typography>
-                        </>
-                      )}
-                      {(hasSlippageError || hasSlippageWarning) &&
-                        !hasBridgeLimitError && (
+                  <FooterAlert>
+                    {hasBridgeLimitError && (
+                      <div>
+                        <Typography
+                          size="xsmall"
+                          variant="body"
+                          color="neutral900">
+                          {error.fromAmountRangeError}
+                        </Typography>
+                        <Divider direction="vertical" size={2} />
+                        <Typography
+                          size="xsmall"
+                          variant="body"
+                          color="neutral900">
+                          {i18n.t({
+                            id: 'Yours: {amount} {symbol}',
+                            values: {
+                              amount: numberToString(
+                                swap.fromAmount,
+                                TOKEN_AMOUNT_MIN_DECIMALS,
+                                TOKEN_AMOUNT_MAX_DECIMALS
+                              ),
+                              symbol: swap?.from.symbol,
+                            },
+                          })}
+                        </Typography>
+                      </div>
+                    )}
+                    {(hasSlippageError || hasSlippageWarning) &&
+                      !hasBridgeLimitError && (
+                        <div>
                           <Typography
                             size="xsmall"
                             variant="body"
                             color="neutral900">
                             {i18n.t({
-                              id: 'Minimum required slippage is {minRequiredSlippage}',
+                              id: 'Minimum required slippage: {minRequiredSlippage}',
                               values: {
                                 ...(error?.type ===
                                   QuoteErrorType.INSUFFICIENT_SLIPPAGE && {
@@ -287,9 +282,21 @@ export function Quote(props: QuoteProps) {
                               },
                             })}
                           </Typography>
-                        )}
-                    </FooterAlert>
-                  ) : null
+                          <Divider direction="vertical" size={2} />
+                          <Typography
+                            size="xsmall"
+                            variant="body"
+                            color="neutral900">
+                            {i18n.t({
+                              id: 'Yours: {userSlippage}',
+                              values: {
+                                userSlippage,
+                              },
+                            })}
+                          </Typography>
+                        </div>
+                      )}
+                  </FooterAlert>
                 }
               />
             </FooterStepAlarm>

@@ -111,7 +111,7 @@ export function FullExpandedQuote(props: PropTypes) {
                   content: {
                     borderRadius: '5px',
                     padding: '10px',
-                    backgroundColor: '$background !important',
+                    backgroundColor: '$neutral400 !important',
                   },
                 }}
                 content={
