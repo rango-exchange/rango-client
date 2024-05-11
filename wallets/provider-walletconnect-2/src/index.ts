@@ -47,13 +47,15 @@ import signer from './signer';
 
 const WALLET = WalletTypes.WALLET_CONNECT_2;
 
-// TODO: In version 2, It will be moved to constructor.
-type Enviroments = Record<string, string>;
-let envs: Enviroments = {
+export interface Environments extends Record<string, string> {
+  WC_PROJECT_ID: string;
+}
+
+let envs: Environments = {
   WC_PROJECT_ID: '',
 };
-export const init = (enviroments: Enviroments) => {
-  envs = enviroments;
+export const init = (environments: Environments) => {
+  envs = environments;
 
   createModalInstance(envs.WC_PROJECT_ID);
 };
