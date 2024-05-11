@@ -44,7 +44,6 @@ import {
 const ACCOUNT_ADDRESS_MAX_CHARACTERS = 7;
 export function WalletList(props: PropTypes) {
   const { chain, isSelected, selectWallet, limit, onShowMore } = props;
-  const { config } = useAppStore();
   const isActiveTab = useUiStore.use.isActiveTab();
 
   const connectedWallets = useWalletsStore.use.connectedWallets();
@@ -61,7 +60,6 @@ export function WalletList(props: PropTypes) {
   let modalTimerId: ReturnType<typeof setTimeout> | null = null;
   const { list, error, handleClick, disconnectConnectingWallets } =
     useWalletList({
-      config,
       chain,
       onBeforeConnect: (type) => {
         modalTimerId = setTimeout(() => {

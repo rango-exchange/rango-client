@@ -21,6 +21,7 @@ export function matchAndGenerateProviders(
     walletconnect2: {
       WC_PROJECT_ID: options?.walletConnectProjectId || '',
     },
+    selectedProviders: providers,
   });
 
   if (providers) {
