@@ -427,8 +427,8 @@ export function areTokensEqual(
 ) {
   return (
     tokenA?.blockchain === tokenB?.blockchain &&
-    tokenA?.symbol === tokenB?.symbol &&
-    tokenA?.address === tokenB?.address
+    tokenA?.symbol.toLowerCase() === tokenB?.symbol.toLowerCase() &&
+    tokenA?.address?.toLowerCase() === tokenB?.address?.toLowerCase()
   );
 }
 
