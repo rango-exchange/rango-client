@@ -82,7 +82,7 @@ export function useWalletList(params: Params) {
         const atLeastOneWalletIsConnected = !!wallets.find(
           (w) => w.state === WalletState.CONNECTED
         );
-        if (!config?.multiWallets && atLeastOneWalletIsConnected) {
+        if (config?.multiWallets === false && atLeastOneWalletIsConnected) {
           return;
         }
         onBeforeConnect?.(type);
