@@ -1,4 +1,3 @@
-import type { WidgetConfig } from '../types';
 import type { WalletInfo } from '@rango-dev/ui';
 import type { BlockchainMeta } from 'rango-sdk';
 
@@ -25,7 +24,6 @@ import {
 const ALL_SUPPORTED_WALLETS = Object.values(WalletTypes);
 
 interface Params {
-  config?: WidgetConfig;
   chain?: string;
   onBeforeConnect?: (walletType: string) => void;
   onConnect?: (walletType: string) => void;
@@ -37,7 +35,8 @@ interface Params {
  * you can use this list whenever you need to show the list of wallets and needed callbacks
  */
 export function useWalletList(params: Params) {
-  const { config, chain, onBeforeConnect, onConnect } = params;
+  const { chain, onBeforeConnect, onConnect } = params;
+  const { config } = useAppStore();
   const { state, disconnect, getWalletInfo, connect } = useWallets();
   const { connectedWallets } = useWalletsStore();
   const blockchains = useAppStore().blockchains();

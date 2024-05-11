@@ -1,3 +1,7 @@
+import type { Environments as WalletConnectEnvironments } from '@rango-dev/provider-walletconnect-2';
+import type { ProviderInterface } from '@rango-dev/wallets-react';
+import type { WalletType } from '@rango-dev/wallets-shared';
+
 import * as argentx from '@rango-dev/provider-argentx';
 import * as bitget from '@rango-dev/provider-bitget';
 import * as braavos from '@rango-dev/provider-braavos';
@@ -28,10 +32,23 @@ import * as trustwallet from '@rango-dev/provider-trustwallet';
 import * as walletconnect2 from '@rango-dev/provider-walletconnect-2';
 import * as xdefi from '@rango-dev/provider-xdefi';
 
-type Enviroments = Record<string, Record<string, string>>;
+import { isWalletConnectExcluded } from './helpers';
 
-export const allProviders = (enviroments?: Enviroments) => {
-  walletconnect2.init(enviroments?.walletconnect2 || {});
+interface Options {
+  walletconnect2: WalletConnectEnvironments;
+  selectedProviders?: (WalletType | ProviderInterface)[];
+}
+
+export const allProviders = (options?: Options) => {
+  if (!isWalletConnectExcluded(options?.selectedProviders)) {
+    if (!!options?.walletconnect2?.WC_PROJECT_ID) {
+      walletconnect2.init(options.walletconnect2);
+    } else {
+      throw new Error(
+        'WalletConnect has been included in your providers. Passing a Project ID is required. Make sure you are passing "WC_PROJECT_ID".'
+      );
+    }
+  }
 
   return [
     safe,

@@ -28,7 +28,7 @@ export const TIME_TO_CLOSE_MODAL = 3_000;
 export const TIME_TO_IGNORE_MODAL = 300;
 
 export function WalletsPage() {
-  const { config, fetchStatus: fetchMetaStatus } = useAppStore();
+  const { fetchStatus: fetchMetaStatus } = useAppStore();
   const [openModal, setOpenModal] = useState(false);
   const [selectedWalletType, setSelectedWalletType] = useState<WalletType>('');
   let modalTimerId: ReturnType<typeof setTimeout> | null = null;
@@ -36,7 +36,6 @@ export function WalletsPage() {
 
   const { list, handleClick, error, disconnectConnectingWallets } =
     useWalletList({
-      config,
       onBeforeConnect: (type) => {
         modalTimerId = setTimeout(() => {
           setOpenModal(true);
