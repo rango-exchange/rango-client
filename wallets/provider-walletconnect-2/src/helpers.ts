@@ -15,6 +15,7 @@ import {
   DEFAULT_ETHEREUM_EVENTS,
   DEFAULT_ETHEREUM_METHODS,
   DEFAULT_SOLANA_CHAIN_ID,
+  DEFAULT_SOLANA_METHODS,
   EthereumRPCMethods,
   NAMESPACES,
 } from './constants';
@@ -61,6 +62,11 @@ export function generateOptionalNamespace(
       methods: DEFAULT_ETHEREUM_METHODS,
       events: DEFAULT_ETHEREUM_EVENTS,
       chains: evmChains,
+    },
+    [NAMESPACES.SOLANA]: {
+      chains: [`solana:${DEFAULT_SOLANA_CHAIN_ID}`],
+      methods: DEFAULT_SOLANA_METHODS,
+      events: [],
     },
   };
   return namespaces;

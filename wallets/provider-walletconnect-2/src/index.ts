@@ -16,11 +16,12 @@ import { debug, error as logError } from '@rango-dev/logging-core';
 import { Networks, WalletTypes } from '@rango-dev/wallets-shared';
 import Client from '@walletconnect/sign-client';
 import { AccountId, ChainId } from 'caip';
-import { evmBlockchains } from 'rango-types';
+import { evmBlockchains, solanaBlockchain } from 'rango-types';
 
 import {
   DEFAULT_APP_METADATA,
   DEFAULT_NETWORK,
+  DEFAULT_SOLANA_CHAIN_ID,
   EthereumEvents,
   EthereumRPCMethods,
   NAMESPACES,
@@ -107,6 +108,14 @@ export const connect: Connect = async ({ instance, meta }) => {
   instance.session = session;
   const currentChainId = await getPersistedChainId(client);
   const accounts = getAccountsFromSession(session);
+
+  const solanaAccount = accounts?.find(
+    (account) => account.chainId === DEFAULT_SOLANA_CHAIN_ID
+  );
+  if (solanaAccount) {
+    solanaAccount.chainId = 'SOLANA';
+  }
+
   return filterEvmAccounts(accounts, currentChainId);
 };
 
@@ -220,12 +229,13 @@ export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
   allBlockChains
 ) => {
   const evms = evmBlockchains(allBlockChains);
+  const solana = solanaBlockchain(allBlockChains);
   return {
     name: 'WalletConnect',
     img: 'https://raw.githubusercontent.com/rango-exchange/assets/main/wallets/walletconnect/icon.svg',
     installLink: '',
     color: '#b2dbff',
-    supportedChains: evms,
+    supportedChains: [...evms, ...solana],
     showOnMobile: true,
     mobileWallet: true,
   };
