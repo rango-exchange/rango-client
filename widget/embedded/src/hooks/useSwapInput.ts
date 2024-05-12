@@ -1,6 +1,6 @@
 import type { Token } from 'rango-sdk';
 
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 import { useAppStore } from '../store/AppStore';
 import { useQuoteStore } from '../store/quote';
@@ -80,6 +80,7 @@ export function useSwapInput({
   const excludeLiquiditySources = useAppStore().excludeLiquiditySources();
 
   const [loading, setLoading] = useState(true);
+  const prevInputAmount = useRef(inputAmount);
   const userSlippage = customSlippage ?? slippage;
   const tokensValueInvalid = !fromToken || !toToken;
   const shouldSkipRequest =
@@ -174,9 +175,7 @@ export function useSwapInput({
 
   const debouncedFetch = useCallback(
     debounce((params: FetchQuoteParams) => {
-      if (!shouldSkipRequest) {
-        fetch(params);
-      }
+      fetch(params);
     }, DEBOUNCE_DELAY),
     [shouldSkipRequest]
   );
@@ -204,7 +203,14 @@ export function useSwapInput({
 
     resetQuote();
     resetState(true);
-    debouncedFetch({
+
+    let fetchQuotes = fetch;
+    if (prevInputAmount.current && prevInputAmount.current != inputAmount) {
+      fetchQuotes = debouncedFetch;
+    }
+    prevInputAmount.current = inputAmount;
+
+    fetchQuotes({
       inputAmount,
       fromToken,
       toToken,
