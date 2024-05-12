@@ -17,7 +17,7 @@ import {
   WalletIcon,
 } from '@rango-dev/ui';
 import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import { ConfirmWalletsModal } from '../components/ConfirmWalletsModal/ConfirmWalletsModal';
 import { RefreshButton } from '../components/HeaderButtons/RefreshButton';
@@ -72,7 +72,6 @@ export function ConfirmSwapPage() {
     quoteWarningsConfirmed,
   } = useQuoteStore();
   const navigate = useNavigate();
-  const location = useLocation();
   const [dbErrorMessage, setDbErrorMessage] = useState<string>('');
 
   const showWalletsOnInit = !quoteWalletsConfirmed;
@@ -185,10 +184,10 @@ export function ConfirmSwapPage() {
   }, []);
 
   useLayoutEffect(() => {
-    if (!selectedQuote) {
+    if (!selectedQuote?.requestId) {
       navigate(`../${location.search}`);
     }
-  }, []);
+  }, [selectedQuote?.requestId]);
 
   const quoteWarning = confirmSwapResult.warnings?.quote ?? null;
   const quoteError = confirmSwapResult.error;
