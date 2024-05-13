@@ -1,5 +1,5 @@
 import type { GetInstanceOptions, WalletActions, WalletConfig } from './types';
-import type { Network, WalletType } from '@rango-dev/wallets-shared';
+import type { Namespace, Network, WalletType } from '@rango-dev/wallets-shared';
 import type { BlockchainMeta } from 'rango-types';
 
 import { getBlockChainNameFromId, Networks } from '@rango-dev/wallets-shared';
@@ -76,7 +76,7 @@ class Wallet<InstanceType = any> {
     return await this.connect(network);
   }
 
-  async connect(network?: Network) {
+  async connect(network?: Network, namespaces?: Namespace[]) {
     // If it's connecting, nothing do.
     if (this.state.connecting) {
       throw new Error('Connecting...');
@@ -165,6 +165,7 @@ class Wallet<InstanceType = any> {
         instance,
         network: requestedNetwork || undefined,
         meta: this.info.supportedBlockchains || [],
+        namespaces,
       });
     } catch (e) {
       this.resetState();

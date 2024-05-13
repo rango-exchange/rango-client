@@ -1,7 +1,6 @@
 import type { PropTypes } from './WalletList.type';
-import type { Wallet } from '../../types';
-import type { WalletInfo } from '@rango-dev/ui';
-import type { WalletType } from '@rango-dev/wallets-shared';
+import type { Wallet, WalletInfoWithNamespaces } from '../../types';
+import type { Namespace, WalletType } from '@rango-dev/wallets-shared';
 
 import { i18n } from '@lingui/core';
 import {
@@ -33,6 +32,7 @@ import {
 } from '../../utils/wallets';
 import { WatermarkedModal } from '../common/WatermarkedModal';
 import { WalletModal } from '../WalletModal';
+import { WalletNamespacesModal } from '../WalletNamespacesModal';
 
 import { ShowMoreWallets } from './ConfirmWallets.styles';
 import {
@@ -40,6 +40,13 @@ import {
   Spinner,
   WalletImageContainer,
 } from './WalletList.styles';
+
+interface WalletNamespacesModalState {
+  providerType: string;
+  providerImage: string;
+  availableNamespaces?: Namespace[];
+  singleNamespace?: boolean;
+}
 
 const ACCOUNT_ADDRESS_MAX_CHARACTERS = 7;
 export function WalletList(props: PropTypes) {
@@ -56,26 +63,34 @@ export function WalletList(props: PropTypes) {
     useState(false);
   const [addingExperimentalChainStatus, setAddingExperimentalChainStatus] =
     useState<'in-progress' | 'completed' | 'rejected' | null>(null);
+  const [namespacesModalState, setNamespacesModalState] =
+    useState<WalletNamespacesModalState | null>(null);
   const { suggestAndConnect } = useWallets();
   let modalTimerId: ReturnType<typeof setTimeout> | null = null;
-  const { list, error, handleClick, disconnectConnectingWallets } =
-    useWalletList({
-      chain,
-      onBeforeConnect: (type) => {
-        modalTimerId = setTimeout(() => {
-          setOpenWalletStateModal(type);
-        }, TIME_TO_IGNORE_MODAL);
-      },
-      onConnect: () => {
-        if (modalTimerId) {
-          clearTimeout(modalTimerId);
-        }
-        setTimeout(() => {
-          setOpenWalletStateModal('');
-        }, TIME_TO_CLOSE_MODAL);
-      },
-    });
-  const [sortedList, setSortedList] = useState<WalletInfo[]>(list);
+  const {
+    list,
+    error,
+    handleClick,
+    disconnectWallet,
+    disconnectConnectingWallets,
+  } = useWalletList({
+    chain,
+    onBeforeConnect: (type) => {
+      modalTimerId = setTimeout(() => {
+        setOpenWalletStateModal(type);
+      }, TIME_TO_IGNORE_MODAL);
+    },
+    onConnect: () => {
+      if (modalTimerId) {
+        clearTimeout(modalTimerId);
+      }
+      setTimeout(() => {
+        setOpenWalletStateModal('');
+      }, TIME_TO_CLOSE_MODAL);
+    },
+  });
+  const [sortedList, setSortedList] =
+    useState<WalletInfoWithNamespaces[]>(list);
   const numberOfSupportedWallets = list.length;
   const shouldShowMoreWallets = limit && numberOfSupportedWallets - limit > 0;
 
@@ -88,6 +103,15 @@ export function WalletList(props: PropTypes) {
     } catch (e) {
       setAddingExperimentalChainStatus('rejected');
     }
+  };
+
+  const handleOpenNamespacesModal = (wallet: WalletInfoWithNamespaces) => {
+    setNamespacesModalState({
+      providerType: wallet.type,
+      providerImage: wallet.image,
+      availableNamespaces: wallet.namespaces,
+      singleNamespace: wallet.singleNamespace,
+    });
   };
 
   useEffect(() => {
@@ -169,9 +193,16 @@ export function WalletList(props: PropTypes) {
             })
           : conciseAddress;
 
-        const onClick = () => {
+        const onClick = async () => {
           if (wallet.state === WalletState.DISCONNECTED) {
-            void handleClick(wallet.type);
+            if (!!wallet.namespaces) {
+              handleOpenNamespacesModal(wallet);
+            } else {
+              void handleClick(wallet.type);
+            }
+          } else if (!!wallet.namespaces && !conciseAddress) {
+            await disconnectWallet(wallet.type);
+            handleOpenNamespacesModal(wallet);
           } else if (couldAddExperimentalChain) {
             setExperimentalChainWallet({
               walletType: wallet.type,
@@ -203,6 +234,20 @@ export function WalletList(props: PropTypes) {
               image={wallet.image}
               state={wallet.state}
               error={error}
+            />
+            <WalletNamespacesModal
+              open={!!namespacesModalState}
+              onClose={() => setNamespacesModalState(null)}
+              onConfirm={(namespaces) => {
+                void handleClick(
+                  namespacesModalState?.providerType as string,
+                  namespaces
+                );
+                setNamespacesModalState(null);
+              }}
+              image={namespacesModalState?.providerImage}
+              namespaces={namespacesModalState?.availableNamespaces}
+              singleNamespace={namespacesModalState?.singleNamespace}
             />
             {!!experimentalChainWallet && (
               <WatermarkedModal
