@@ -1,5 +1,5 @@
-import { Network } from '@rango-dev/wallets-shared';
-import { Options } from './wallet';
+import type { Options } from './wallet';
+import type { Network } from '@rango-dev/wallets-shared';
 
 export function formatAddressWithNetwork(
   address: string,
@@ -12,7 +12,9 @@ export function accountAddressesWithNetwork(
   addresses: string[] | null,
   network?: Network | null
 ) {
-  if (!addresses) return [];
+  if (!addresses) {
+    return [];
+  }
 
   return addresses.map((address) => {
     return formatAddressWithNetwork(address, network);

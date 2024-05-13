@@ -34,13 +34,13 @@ function Provider(props: ProviderProps) {
   // Final API we put in context and it will be available to use for users.
   // eslint-disable-next-line react/jsx-no-constructed-context-values
   const api: ProviderContext = {
-    async connect(type, network) {
+    async connect(type, network, namespaces) {
       const wallet = wallets.get(type);
       if (!wallet) {
         throw new Error(`You should add ${type} to provider first.`);
       }
       const walletInstance = getWalletInstance(wallet);
-      const result = await walletInstance.connect(network);
+      const result = await walletInstance.connect(network, namespaces);
       if (props.autoConnect) {
         void tryPersistWallet({
           type,

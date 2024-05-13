@@ -3,6 +3,7 @@ import type {
   State as WalletState,
 } from '@rango-dev/wallets-core';
 import type {
+  Namespace,
   Network,
   WalletInfo,
   WalletType,
@@ -23,7 +24,11 @@ export type ConnectResult = {
 export type Providers = { [type in WalletType]?: any };
 
 export type ProviderContext = {
-  connect(type: WalletType, network?: Network): Promise<ConnectResult>;
+  connect(
+    type: WalletType,
+    network?: Network,
+    namespaces?: Namespace[]
+  ): Promise<ConnectResult>;
   disconnect(type: WalletType): Promise<void>;
   disconnectAll(): Promise<PromiseSettledResult<any>[]>;
   state(type: WalletType): WalletState;

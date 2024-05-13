@@ -5,6 +5,7 @@ import type {
   TokenHash,
   TokensBalance,
   Wallet,
+  WalletInfoWithNamespaces,
 } from '../types';
 import type { WalletInfo as ModalWalletInfo } from '@rango-dev/ui';
 import type {
@@ -58,7 +59,7 @@ export function mapWalletTypesToWalletInfo(
   getWalletInfo: (type: WalletType) => WalletInfo,
   list: WalletType[],
   chain?: string
-): ModalWalletInfo[] {
+): WalletInfoWithNamespaces[] {
   return list
     .filter((wallet) => !EXCLUDED_WALLETS.includes(wallet as WalletTypes))
     .filter((wallet) => {
@@ -82,6 +83,8 @@ export function mapWalletTypesToWalletInfo(
         img: image,
         installLink,
         showOnMobile,
+        namespaces,
+        singleNamespace,
       } = getWalletInfo(type);
       const state = mapStatusToWalletState(getState(type));
       return {
@@ -91,6 +94,8 @@ export function mapWalletTypesToWalletInfo(
         state,
         type,
         showOnMobile,
+        namespaces,
+        singleNamespace,
       };
     });
 }
@@ -433,8 +438,8 @@ export function areTokensEqual(
 }
 
 export function sortWalletsBasedOnConnectionState(
-  wallets: ModalWalletInfo[]
-): ModalWalletInfo[] {
+  wallets: WalletInfoWithNamespaces[]
+): WalletInfoWithNamespaces[] {
   return wallets.sort(
     (a, b) =>
       Number(b.state === WalletStatus.CONNECTED) -
