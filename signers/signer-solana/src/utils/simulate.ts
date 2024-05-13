@@ -14,10 +14,11 @@ type SimulationResponseError =
 
 export async function simulateTransaction(
   tx: Transaction | VersionedTransaction,
-  type: 'VERSIONED' | 'LEGACY'
+  type: 'VERSIONED' | 'LEGACY',
+  customSolanaRPC?: string
 ) {
   if (type === 'VERSIONED') {
-    const connection = getSolanaConnection();
+    const connection = getSolanaConnection(customSolanaRPC);
 
     // We first simulate whether the transaction would be successful
     const { value: simulatedTransactionResponse } =

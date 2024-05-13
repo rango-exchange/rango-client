@@ -144,7 +144,7 @@ function Provider(props: ProviderProps) {
       }
       const walletInstance = getWalletInstance(wallet);
       const provider = walletInstance.provider;
-      const result = walletInstance.getSigners(provider);
+      const result = walletInstance.getSigners(provider, props.signerConfig);
 
       return result;
     },

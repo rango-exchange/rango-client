@@ -14,16 +14,17 @@ import { simulateTransaction } from './simulate';
  */
 export const generalSolanaTransactionExecutor = async (
   tx: SolanaTransaction,
-  DefaultSolanaSigner: SolanaWeb3Signer
+  DefaultSolanaSigner: SolanaWeb3Signer,
+  customSolanaRPC?: string
 ): Promise<string> => {
-  const connection = getSolanaConnection();
+  const connection = getSolanaConnection(customSolanaRPC);
   const latestBlock = await connection.getLatestBlockhash('confirmed');
 
   const finalTx = prepareTransaction(tx, latestBlock.blockhash);
   const raw = await DefaultSolanaSigner(finalTx);
 
   // We first simulate whether the transaction would be successful
-  await simulateTransaction(finalTx, tx.txType);
+  await simulateTransaction(finalTx, tx.txType, customSolanaRPC);
 
   const serializedTransaction = Buffer.from(raw);
   const { txId, txResponse } = await transactionSenderAndConfirmationWaiter({
@@ -46,7 +47,8 @@ export const generalSolanaTransactionExecutor = async (
 
 export async function executeSolanaTransaction(
   tx: SolanaTransaction,
-  solanaProvider: SolanaExternalProvider
+  solanaProvider: SolanaExternalProvider,
+  customSolanaRPC?: string
 ): Promise<string> {
   const DefaultSolanaSigner: SolanaWeb3Signer = async (
     solanaWeb3Transaction
@@ -64,5 +66,9 @@ export async function executeSolanaTransaction(
       throw new SignerError(SignerErrorCode.SIGN_TX_ERROR, undefined, e);
     }
   };
-  return await generalSolanaTransactionExecutor(tx, DefaultSolanaSigner);
+  return await generalSolanaTransactionExecutor(
+    tx,
+    DefaultSolanaSigner,
+    customSolanaRPC
+  );
 }

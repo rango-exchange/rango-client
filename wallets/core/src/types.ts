@@ -116,7 +116,7 @@ export interface WalletActions {
   // Optional, but should be provided at the same time.
   suggest?: Suggest;
   switchNetwork?: SwitchNetwork;
-  getSigners: (provider: any) => SignerFactory;
+  getSigners: (provider: any, signerConfig?: any) => SignerFactory;
   canSwitchNetworkTo?: CanSwitchNetwork;
   canEagerConnect?: CanEagerConnect;
   getWalletInfo(allBlockChains: BlockchainMeta[]): WalletInfo;

@@ -7,9 +7,11 @@ import { executeSolanaTransaction } from './utils/main';
 
 export class DefaultSolanaSigner implements GenericSigner<SolanaTransaction> {
   private provider: SolanaExternalProvider;
+  private customSolanaRPC?: string;
 
-  constructor(provider: SolanaExternalProvider) {
+  constructor(provider: SolanaExternalProvider, customSolanaRPC?: string) {
     this.provider = provider;
+    this.customSolanaRPC = customSolanaRPC;
   }
 
   async signMessage(msg: string): Promise<string> {
@@ -28,7 +30,11 @@ export class DefaultSolanaSigner implements GenericSigner<SolanaTransaction> {
   }
 
   async signAndSendTx(tx: SolanaTransaction): Promise<{ hash: string }> {
-    const hash = await executeSolanaTransaction(tx, this.provider);
+    const hash = await executeSolanaTransaction(
+      tx,
+      this.provider,
+      this.customSolanaRPC
+    );
     return { hash };
   }
 }

@@ -137,7 +137,8 @@ function Main(props: PropsWithChildren<PropTypes>) {
         allBlockChains={blockchains}
         providers={providers}
         onUpdateState={onUpdateState}
-        autoConnect={!!isActiveTab}>
+        autoConnect={!!isActiveTab}
+        signerConfig={config.signerConfig}>
         {props.children}
       </Provider>
     </WidgetContext.Provider>

@@ -103,6 +103,10 @@ export type BlockchainAndTokenConfig = {
   tokens?: Asset[] | { [blockchain: string]: Tokens };
 };
 
+export type SignerConfig = {
+  customSolanaRPC?: string;
+};
+
 /**
  * `Features`
  *
@@ -187,6 +191,8 @@ export type Features = Partial<
  *   if not, you will need to go to a different page to see the suggested routes.
  * @property {boolean} enableCentralizedSwappers
  * If you want to enable routing from the centralized protocols like XO Swap, you could set this parameter to true.
+ * @property {string} customSolanaRPC
+ * Custom Solana RPC address to be used for simulation and confirm transactions
  */
 
 export type WidgetConfig = {
@@ -209,4 +215,5 @@ export type WidgetConfig = {
   features?: Features;
   variant?: WidgetVariant;
   enableCentralizedSwappers?: boolean;
+  signerConfig?: SignerConfig;
 };

@@ -44,6 +44,7 @@ export type ProviderProps = PropsWithChildren<{
   allBlockChains?: BlockchainMeta[];
   autoConnect?: boolean;
   providers: ProviderInterface[];
+  signerConfig: any;
 }>;
 
 export enum Events {
