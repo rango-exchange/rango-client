@@ -3,28 +3,28 @@ import type {
   Disconnect,
   WalletInfo,
 } from '@rango-dev/wallets-shared';
-import type { BlockchainMeta, SignerFactory } from 'rango-types';
 
-import { Networks, WalletTypes } from '@rango-dev/wallets-shared';
+import { Namespace, Networks, WalletTypes } from '@rango-dev/wallets-shared';
+import { type BlockchainMeta, type SignerFactory } from 'rango-types';
 
 import {
-  getLedgerAccounts,
+  getEthereumAccounts,
   getLedgerInstance,
+  getSolanaAccounts,
   transportDisconnect,
 } from './helpers';
 import signer from './signer';
 
-const WALLET = WalletTypes.LEDGER;
-
 export const config = {
-  type: WALLET,
+  type: WalletTypes.LEDGER,
 };
 
 export const getInstance = getLedgerInstance;
-export const connect: Connect = async () => {
-  const ledgerAccounts = await getLedgerAccounts();
-
-  return ledgerAccounts;
+export const connect: Connect = async ({ namespaces }) => {
+  if (namespaces?.includes(Namespace.Solana)) {
+    return await getSolanaAccounts();
+  }
+  return await getEthereumAccounts();
 };
 
 export const disconnect: Disconnect = async () => {
@@ -36,9 +36,22 @@ export const getSigners: (provider: any) => SignerFactory = signer;
 export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
   allBlockChains
 ) => {
+  const supportedChains: BlockchainMeta[] = [];
+
   const ethereumBlockchain = allBlockChains.find(
     (chain) => chain.name === Networks.ETHEREUM
   );
+  if (ethereumBlockchain) {
+    supportedChains.push(ethereumBlockchain);
+  }
+
+  const solanaBlockchain = allBlockChains.find(
+    (chain) => chain.name === Networks.SOLANA
+  );
+  if (solanaBlockchain) {
+    supportedChains.push(solanaBlockchain);
+  }
+
   return {
     name: 'Ledger',
     img: 'https://raw.githubusercontent.com/rango-exchange/assets/main/wallets/ledger/icon.svg',
@@ -47,6 +60,8 @@ export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
         'https://support.ledger.com/hc/en-us/articles/4404389606417-Download-and-install-Ledger-Live?docs=true',
     },
     color: 'black',
-    supportedChains: ethereumBlockchain ? [ethereumBlockchain] : [],
+    supportedChains,
+    namespaces: [Namespace.Evm, Namespace.Solana],
+    singleNamespace: true,
   };
 };

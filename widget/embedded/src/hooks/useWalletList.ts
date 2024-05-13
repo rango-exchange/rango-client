@@ -1,4 +1,5 @@
 import type { WalletInfo } from '@rango-dev/ui';
+import type { Namespace, WalletType } from '@rango-dev/wallets-shared';
 import type { BlockchainMeta } from 'rango-sdk';
 
 import { WalletState } from '@rango-dev/ui';
@@ -6,7 +7,6 @@ import { useWallets } from '@rango-dev/wallets-react';
 import {
   detectMobileScreens,
   KEPLR_COMPATIBLE_WALLETS,
-  type WalletType,
   WalletTypes,
 } from '@rango-dev/wallets-shared';
 import { useCallback, useEffect, useState } from 'react';
@@ -70,7 +70,7 @@ export function useWalletList(params: Params) {
         connectedWallet.chain === chain
     );
 
-  const handleClick = async (type: WalletType) => {
+  const handleClick = async (type: WalletType, namespaces?: Namespace[]) => {
     const wallet = state(type);
     try {
       if (error) {
@@ -86,7 +86,7 @@ export function useWalletList(params: Params) {
           return;
         }
         onBeforeConnect?.(type);
-        await connect(type);
+        await connect(type, undefined, namespaces);
         onConnect?.(type);
       }
     } catch (e) {
@@ -102,6 +102,13 @@ export function useWalletList(params: Params) {
       void disconnect(wallet.type);
     }
   }, [hashWalletsState(wallets)]);
+
+  const disconnectWallet = async (type: WalletType) => {
+    const wallet = state(type);
+    if (wallet.connected) {
+      await disconnect(type);
+    }
+  };
 
   useEffect(() => {
     return () => {
@@ -161,5 +168,6 @@ export function useWalletList(params: Params) {
     error,
     handleClick,
     disconnectConnectingWallets,
+    disconnectWallet,
   };
 }

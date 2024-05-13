@@ -146,6 +146,15 @@ export enum Networks {
   Unknown = 'Unkown',
 }
 
+export enum Namespace {
+  Solana = 'Solana',
+  Evm = 'EVM',
+  Cosmos = 'Cosmos',
+  Utxo = 'UTXO',
+  Starknet = 'Starknet',
+  Tron = 'Tron',
+}
+
 export const XDEFI_WALLET_SUPPORTED_NATIVE_CHAINS: string[] = [
   Networks.BTC,
   Networks.LTC,
@@ -240,6 +249,7 @@ export type Connect = (options: {
   instance: any;
   network?: Network;
   meta: BlockchainMeta[];
+  namespaces?: Namespace[];
 }) => Promise<ProviderConnectResult | ProviderConnectResult[]>;
 
 export type Disconnect = (options: {
@@ -302,6 +312,8 @@ export type WalletInfo = {
   showOnMobile?: boolean;
   isContractWallet?: boolean;
   mobileWallet?: boolean;
+  namespaces?: Namespace[];
+  singleNamespace?: boolean;
 };
 
 export interface Wallet {
