@@ -108,15 +108,15 @@ export const connect: Connect = async ({ instance, meta }) => {
   instance.session = session;
   const currentChainId = await getPersistedChainId(client);
   const accounts = getAccountsFromSession(session);
-
-  const solanaAccount = accounts?.find(
+  const filteredAccounts = filterEvmAccounts(accounts, currentChainId);
+  const solanaAccount = filteredAccounts.find(
     (account) => account.chainId === DEFAULT_SOLANA_CHAIN_ID
   );
   if (solanaAccount) {
     solanaAccount.chainId = 'SOLANA';
   }
 
-  return filterEvmAccounts(accounts, currentChainId);
+  return filteredAccounts;
 };
 
 export const subscribe: Subscribe = ({
@@ -228,14 +228,18 @@ export const getSigners: (provider: WCInstance) => SignerFactory = signer;
 export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
   allBlockChains
 ) => {
-  const evms = evmBlockchains(allBlockChains);
+  let supportedChains: BlockchainMeta[] = evmBlockchains(allBlockChains);
   const solana = solanaBlockchain(allBlockChains);
+  if (solana?.length > 0) {
+    supportedChains = supportedChains.concat(solana);
+  }
+
   return {
     name: 'WalletConnect',
     img: 'https://raw.githubusercontent.com/rango-exchange/assets/main/wallets/walletconnect/icon.svg',
     installLink: '',
     color: '#b2dbff',
-    supportedChains: [...evms, ...solana],
+    supportedChains,
     showOnMobile: true,
     mobileWallet: true,
   };
