@@ -14,9 +14,14 @@ export class SolflareSnapSolanaSigner
   implements GenericSigner<SolanaTransaction>
 {
   private provider: SolflareMetaMask;
+  private config: any;
 
   constructor(provider: SolflareMetaMask) {
     this.provider = provider;
+  }
+
+  setConfig(config: any) {
+    this.config = config;
   }
 
   async signMessage(): Promise<string> {
@@ -25,12 +30,16 @@ export class SolflareSnapSolanaSigner
 
   async signAndSendTx(tx: SolanaTransaction): Promise<{ hash: string }> {
     try {
-      const connection = getSolanaConnection();
+      const connection = getSolanaConnection(this.config?.customSolanaRPC);
       const latestBlock = await connection.getLatestBlockhash('confirmed');
 
       const finalTx = prepareTransaction(tx, latestBlock.blockhash);
 
-      await simulateTransaction(finalTx, tx.txType);
+      await simulateTransaction(
+        finalTx,
+        tx.txType,
+        this.config?.customSolanaRPC
+      );
 
       const hash = await this.provider.signAndSendTransaction(finalTx);
 
