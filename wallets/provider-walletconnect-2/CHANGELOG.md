@@ -1,3 +1,12 @@
+# [0.26.0](https://github.com/rango-exchange/rango-client/compare/provider-walletconnect-2@0.25.0...provider-walletconnect-2@0.26.0) (2024-05-14)
+
+
+### Features
+
+* detect proper error related to wallet connect params ([a0d8d95](https://github.com/rango-exchange/rango-client/commit/a0d8d95ed977fffbd0244f498c81f7ce3550ee71))
+
+
+
 # [0.25.0](https://github.com/rango-exchange/rango-client/compare/provider-walletconnect-2@0.24.0...provider-walletconnect-2@0.25.0) (2024-04-24)
 
 

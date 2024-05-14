@@ -1,3 +1,7 @@
+# [0.27.0](https://github.com/rango-exchange/rango-client/compare/provider-braavos@0.26.0...provider-braavos@0.27.0) (2024-05-14)
+
+
+
 # [0.26.0](https://github.com/rango-exchange/rango-client/compare/provider-braavos@0.25.0...provider-braavos@0.26.0) (2024-04-24)
 
 

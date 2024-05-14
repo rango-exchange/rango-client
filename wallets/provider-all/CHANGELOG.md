@@ -1,3 +1,12 @@
+# [0.33.0](https://github.com/rango-exchange/rango-client/compare/provider-all@0.32.1...provider-all@0.33.0) (2024-05-14)
+
+
+### Features
+
+* detect proper error related to wallet connect params ([a0d8d95](https://github.com/rango-exchange/rango-client/commit/a0d8d95ed977fffbd0244f498c81f7ce3550ee71))
+
+
+
 ## [0.32.1](https://github.com/rango-exchange/rango-client/compare/provider-all@0.32.0...provider-all@0.32.1) (2024-04-24)
 
 

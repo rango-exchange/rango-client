@@ -1,3 +1,12 @@
+# [0.28.0](https://github.com/rango-exchange/rango-client/compare/signer-solana@0.27.0...signer-solana@0.28.0) (2024-05-14)
+
+
+### Features
+
+* clean solana signer simulation errors ([5d623ab](https://github.com/rango-exchange/rango-client/commit/5d623ab632945cb28581ea896fb95d7c84f92607))
+
+
+
 # [0.27.0](https://github.com/rango-exchange/rango-client/compare/signer-solana@0.26.0...signer-solana@0.27.0) (2024-04-23)
 
 
