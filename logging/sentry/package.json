@@ -20,7 +20,7 @@
     "@sentry/browser": "^7.102.1"
   },
   "scripts": {
-    "build": "node ../../scripts/build/command.mjs --path logging/sentry",
+    "build": "node ../../scripts/build/command.mjs --path logging/sentry --packageName logging-sentry",
     "ts-check": "tsc --declaration --emitDeclarationOnly -p ./tsconfig.json",
     "clean": "rimraf dist",
     "format": "prettier --write '{.,src}/**/*.{ts,tsx}'",

@@ -12,7 +12,7 @@
   ],
   "browserslist": "> 0.5%, last 2 versions, not dead",
   "scripts": {
-    "build": "node ../../scripts/build/command.mjs --path widget/embedded",
+    "build": "node ../../scripts/build/command.mjs --path widget/embedded --packageName widget-embedded",
     "ts-check": "tsc --declaration --emitDeclarationOnly -p ./tsconfig.json",
     "clean": "rimraf dist",
     "format": "prettier --write '{.,src}/**/*.{ts,tsx}'",

@@ -4,12 +4,16 @@ import { $ } from 'execa';
 import { join } from 'path';
 import process from 'process';
 import { printDirname } from '../common/utils.mjs';
+import fs from 'fs/promises';
 
 const root = join(printDirname(), '..', '..');
 
 async function run() {
-  const optionDefinitions = [{ name: 'path', type: String }];
-  const { path } = commandLineArgs(optionDefinitions);
+  const optionDefinitions = [
+    { name: 'path', type: String },
+    { name: 'packageName', type: String },
+  ];
+  const { path, packageName } = commandLineArgs(optionDefinitions);
 
   if (!path) {
     throw new Error('You need to specify package name.');
@@ -35,9 +39,15 @@ async function run() {
     packages: 'external',
     outdir: `${pkgPath}/dist`,
     entryPoints: [entryPoint],
+    metafile: true,
   });
-  await Promise.all([typeCheckingTask, esbuildTask]);
+  const result = await Promise.all([typeCheckingTask, esbuildTask]);
   console.log(`[build] ${path} built successfully.`);
+
+  await fs.writeFile(
+    `dist/${packageName}.build.json`,
+    JSON.stringify(result[1].metafile)
+  );
 }
 
 run().catch((e) => {

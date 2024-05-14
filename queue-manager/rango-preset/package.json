@@ -14,7 +14,7 @@
     "src"
   ],
   "scripts": {
-    "build": "node ../../scripts/build/command.mjs --path queue-manager/rango-preset",
+    "build": "node ../../scripts/build/command.mjs --path queue-manager/rango-preset --packageName queue-manager-rango-preset",
     "ts-check": "tsc --declaration --emitDeclarationOnly -p ./tsconfig.json",
     "clean": "rimraf dist",
     "format": "prettier --write '{.,src}/**/*.{ts,tsx}'",
