@@ -42,7 +42,7 @@ export function PriceImpact(props: PriceImpactPropTypes) {
             size={size}
             variant="body"
             color={outputColor || '$neutral600'}>
-            {`~$${outputUsdValue}`}
+            {outputUsdValue === '0' ? '0.00' : `~$${outputUsdValue}`}
           </OutputUsdValue>
         </Tooltip>
       )}

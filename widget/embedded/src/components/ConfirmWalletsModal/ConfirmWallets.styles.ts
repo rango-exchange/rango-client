@@ -34,7 +34,7 @@ export const WalletButton = styled('button', {
   position: 'relative',
 
   '&:hover': {
-    $$color: '$colors$info100',
+    $$color: '$colors$secondary100',
     [`.${darkTheme} &`]: {
       $$color: '$colors$neutral100',
     },
@@ -42,7 +42,7 @@ export const WalletButton = styled('button', {
   },
 
   '&:focus-visible': {
-    $$color: '$colors$info100',
+    $$color: '$colors$secondary100',
     [`.${darkTheme} &`]: {
       $$color: '$colors$info700',
     },
@@ -138,14 +138,14 @@ export const CustomDestinationButton = styled('div', {
   borderBottomRightRadius: '0',
   borderBottomLeftRadius: '0',
   '&:hover': {
-    $$color: '$colors$info100',
+    $$color: '$colors$secondary100',
     [`.${darkTheme} &`]: {
       $$color: '$colors$neutral100',
     },
     backgroundColor: '$$color',
   },
   '&:focus-visible': {
-    $$background: '$colors$info100',
+    $$background: '$colors$secondary100',
     [`.${darkTheme} &`]: {
       $$background: '$colors$info700',
     },

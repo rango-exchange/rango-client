@@ -14,7 +14,7 @@ export const theme = {
     primary600: '#0B27C5',
 
     secondary: '#469BF5',
-    secondary100: '#E9F4FF',
+    secondary100: '#E9F3FF',
     secondary200: '#D6EAFF',
     secondary300: '#C8E3FF',
     secondary400: '#B5D9FF',

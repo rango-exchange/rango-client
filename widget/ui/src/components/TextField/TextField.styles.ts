@@ -31,7 +31,7 @@ export const InputContainer = styled('div', {
         },
         backgroundColor: '$$color',
         '&:hover': {
-          $$color: '$colors$info100',
+          $$color: '$colors$secondary100',
           [`.${darkTheme} &`]: {
             $$color: '$colors$neutral100',
           },
@@ -42,7 +42,7 @@ export const InputContainer = styled('div', {
         backgroundColor: 'transparent',
         border: '1px solid $neutral100',
         '&:hover': {
-          $$color: '$colors$info100',
+          $$color: '$colors$secondary100',
           [`.${darkTheme} &`]: {
             $$color: '$colors$neutral400',
           },
