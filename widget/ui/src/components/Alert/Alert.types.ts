@@ -4,7 +4,7 @@ import type { ReactNode } from 'react';
 
 export type Type = 'success' | 'warning' | 'error' | 'info' | 'loading';
 
-export interface PropTypes {
+export interface AlertPropTypes {
   type: Type;
   title?: ReactNode;
   footer?: ReactNode;

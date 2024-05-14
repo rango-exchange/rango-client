@@ -21,7 +21,7 @@ export function getSwapperDisplayName(
   swapperId: string,
   swappers: SwapperMeta[]
 ) {
-  return swappers.find((swapper) => swapper.id === swapperId)?.swapperGroup;
+  return swappers.find((swapper) => swapper.id === swapperId)?.title;
 }
 
 export function findToken(t: Asset, tokens: Token[]) {

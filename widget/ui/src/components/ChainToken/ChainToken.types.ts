@@ -4,7 +4,7 @@ import type * as Stitches from '@stitches/react';
 type BaseProps = Stitches.VariantProps<typeof ChainImageContainer>;
 type BaseSizes = Exclude<BaseProps['size'], object>;
 
-export type PropTypes = {
+export type ChainTokenPropTypes = {
   tokenImage: string;
   chainImage: string;
   chianImageId?: string;

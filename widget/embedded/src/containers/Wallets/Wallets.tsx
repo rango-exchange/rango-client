@@ -39,7 +39,7 @@ function Main(props: PropsWithChildren<PropTypes>) {
   const walletOptions: ProvidersOptions = {
     walletConnectProjectId: props.config?.walletConnectProjectId,
   };
-  const { providers } = useWalletProviders(props.config.wallets, walletOptions);
+  const { providers } = useWalletProviders(config.wallets, walletOptions);
   const { connectWallet, disconnectWallet } = useWalletsStore();
   const onConnectWalletHandler = useRef<OnWalletConnectionChange>();
   const onDisconnectWalletHandler = useRef<OnWalletConnectionChange>();

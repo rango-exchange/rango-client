@@ -8,7 +8,7 @@ msgstr ""
 "Language: sv\n"
 "Project-Id-Version: rango\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-04-23 13:37\n"
+"PO-Revision-Date: 2024-05-14 11:33\n"
 "Last-Translator: \n"
 "Language-Team: Swedish\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -17,6 +17,31 @@ msgstr ""
 "X-Crowdin-Language: sv-SE\n"
 "X-Crowdin-File: en.po\n"
 "X-Crowdin-File-ID: 30\n"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/Quote/Quote.tsx:154
+msgid "Bridge Limit Error"
+msgstr "Bridgegräns fel"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/Quote/Quote.tsx:269
+msgid "Minimum required slippage: {minRequiredSlippage}"
+msgstr "Minsta obligatoriska halkning: {minRequiredSlippage}"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/Quote/Quote.tsx:290
+msgid "Yours: {userSlippage}"
+msgstr "Er: {userSlippage}"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/WalletNamespacesModal/WalletNamespacesModal.tsx:93
+msgid "Select chain types"
+msgstr "Välj kedjetyper"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/WalletNamespacesModal/WalletNamespacesModal.tsx:94
+msgid "This wallet supports multiple chains. Select which chain you'd like to connect to."
+msgstr "Denna plånbok stöder flera kedjor. Välj vilken kedja du vill ansluta till."
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/RefreshModal/RefreshModal.tsx:22
@@ -83,86 +108,87 @@ msgstr "För närvarande körs och hanteras vissa transaktioner av andra webblä
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/common/ActivateTabModal/ActivateTabModal.tsx:32
-#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:269
-#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:237
+#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:268
+#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:280
+#: widget/embedded/src/components/WalletNamespacesModal/WalletNamespacesModal.tsx:138
 msgid "Confirm"
 msgstr "Bekräfta"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:284
-#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:359
+#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:283
+#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:358
 msgid "Your {blockchainName} wallets"
 msgstr "Dina {blockchainName} plånböcker"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:303
+#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:302
 msgid "Insufficient account balance"
 msgstr "Otillräckligt saldo"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:312
+#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:311
 msgid "Proceed anyway"
 msgstr "Fortsätt ändå"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:368
+#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:367
 msgid "You need to connect a {blockchainName} wallet."
 msgstr "Du måste ansluta en {blockchainName} plånbok."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:425
+#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:424
 msgid "Send to a different address"
 msgstr "Skicka till en annan adress"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:442
+#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:440
 msgid "Your destination address"
 msgstr "Din destinationsadress"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:461
+#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:460
 msgid "Address {destination} doesn't match the blockchain address pattern."
 msgstr "Adress {destination} matchar inte blockkedjans adressmönster."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:168
+#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:190
 msgid "Add {chain} chain"
 msgstr "Lägg till {chain} kedja"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:217
-#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:250
+#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:260
+#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:293
 msgid "Add {blockchainDisplayName} Chain"
 msgstr "Lägg till {blockchainDisplayName} Chain"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:222
-#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:254
+#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:265
+#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:297
 msgid "You should connect a {blockchainDisplayName} supported wallet or choose a different {blockchainDisplayName} address"
 msgstr "Du bör ansluta en {blockchainDisplayName} stödd plånbok eller välja en annan {blockchainDisplayName} -adress"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:272
+#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:315
 msgid "{blockchainDisplayName} Chain Added"
 msgstr "{blockchainDisplayName} kedja tillagd"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:276
+#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:319
 msgid "{blockchainDisplayName} is added to your wallet, you can use it to swap."
 msgstr "{blockchainDisplayName} läggs till i din plånbok, du kan använda den för att växa."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:286
+#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:329
 msgid "Request Rejected"
 msgstr "Begäran avvisad"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:287
+#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:330
 msgid "You've rejected adding {blockchainDisplayName} chain to your wallet."
 msgstr "Du har avböjt att lägga till {blockchainDisplayName} kedjan i din plånbok."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:311
+#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:354
 msgid "Show more wallets"
 msgstr "Visa fler plånböcker"
 
@@ -194,7 +220,7 @@ msgid "Transactions History"
 msgstr "Transaktionshistorik"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/HeaderButtons/WalletButton.tsx:25
+#: widget/embedded/src/components/HeaderButtons/WalletButton.tsx:22
 #: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.helpers.tsx:16
 #: widget/embedded/src/constants/messages.ts:5
 msgid "Connect Wallet"
@@ -230,27 +256,22 @@ msgid "There are no notifications."
 msgstr "Det finns inga meddelanden."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/Quote.tsx:148
+#: widget/embedded/src/components/Quote/Quote.tsx:150
 msgid "Slippage Error"
 msgstr "Slippage Fel"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/Quote.tsx:149
+#: widget/embedded/src/components/Quote/Quote.tsx:151
 msgid "Slippage Warning"
 msgstr "Slippage Varning"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/Quote.tsx:254
+#: widget/embedded/src/components/Quote/Quote.tsx:248
 msgid "Yours: {amount} {symbol}"
 msgstr "Yours: {amount} {symbol}"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/Quote.tsx:274
-msgid "Minimum required slippage is {minRequiredSlippage}"
-msgstr "Minsta obligatoriska slippage är {minRequiredSlippage}"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/Quote.tsx:386
+#: widget/embedded/src/components/Quote/Quote.tsx:403
 msgid "See All Routes"
 msgstr "Se alla rutter"
 
@@ -689,7 +710,7 @@ msgstr "Bekräfta USD pris okänt"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/constants/messages.ts:6
-#: widget/embedded/src/pages/Home.tsx:157
+#: widget/embedded/src/pages/Home.tsx:156
 msgid "Swap"
 msgstr "Byt"
 
@@ -818,17 +839,17 @@ msgid "Theme"
 msgstr "Tema"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/ConfirmSwapPage.tsx:302
+#: widget/embedded/src/pages/ConfirmSwapPage.tsx:236
 msgid "Confirm Swap"
 msgstr "Bekräfta byte"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/ConfirmSwapPage.tsx:319
+#: widget/embedded/src/pages/ConfirmSwapPage.tsx:253
 msgid "Start Swap"
 msgstr "Starta byte"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/ConfirmSwapPage.tsx:346
+#: widget/embedded/src/pages/ConfirmSwapPage.tsx:280
 msgid "You get"
 msgstr "Du får"
 
@@ -898,13 +919,13 @@ msgid "The request ID is necessary to display the swap details."
 msgstr "Begäran ID är nödvändigt för att visa swap detaljer."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/WalletsPage.tsx:71
-#: widget/ui/src/containers/ConnectWalletsModal/ConnectWalletsModal.tsx:30
+#: widget/embedded/src/pages/WalletsPage.tsx:80
+#: widget/ui/src/containers/ConnectWalletsModal/ConnectWalletsModal.tsx:15
 msgid "Connect Wallets"
 msgstr "Anslut plånböcker"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/WalletsPage.tsx:75
+#: widget/embedded/src/pages/WalletsPage.tsx:84
 msgid "Choose a wallet to connect."
 msgstr "Välj en plånbok att ansluta."
 
@@ -944,37 +965,37 @@ msgid "Required: < {max} {symbol}"
 msgstr "Krävs: < {max} {symbol}"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:637
+#: widget/embedded/src/utils/swap.ts:619
 msgid " for network fee"
 msgstr " för nätverksavgift"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:640
+#: widget/embedded/src/utils/swap.ts:622
 msgid " for swap"
 msgstr " för byte"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:643
+#: widget/embedded/src/utils/swap.ts:625
 msgid " for input and network fee"
 msgstr " för in- och nätverksavgift"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:645
+#: widget/embedded/src/utils/swap.ts:627
 msgid "Needs ≈ {requiredAmount} {symbol}{reason}, but you have {currentAmount} {symbol} in your {blockchain} wallet."
 msgstr "Behövs ↑ {requiredAmount} {symbol}{reason}, men du har {currentAmount} {symbol} i din {blockchain} plånbok."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:705
+#: widget/embedded/src/utils/swap.ts:687
 msgid "Waiting for connecting wallet"
 msgstr "Väntar på att ansluta plånbok"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:709
+#: widget/embedded/src/utils/swap.ts:691
 msgid "Waiting for other running tasks to be finished"
 msgstr "Väntar på att andra pågående uppgifter ska vara klara"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:712
+#: widget/embedded/src/utils/swap.ts:694
 msgid "Waiting for changing wallet network"
 msgstr "Väntar på att byta plånboksnätverk"
 

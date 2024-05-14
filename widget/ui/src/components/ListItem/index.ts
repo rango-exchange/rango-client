@@ -1,2 +1,2 @@
-export type { ListItemProps } from './ListItem.types';
+export type { ListItemPropTypes } from './ListItem.types';
 export { ListItem } from './ListItem';

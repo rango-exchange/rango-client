@@ -5,7 +5,7 @@ type Item<T> = {
 
 type Variant = 'filled' | 'outlined';
 
-export type PropTypes<T> = {
+export type SelectPropTypes<T> = {
   options: Item<T>[];
   handleItemClick?: (item: Item<T>) => void;
   value: string;

@@ -14,4 +14,5 @@ interface ComponentProps {
   label?: never;
 }
 
-export type PropTypes = RadixCheckboxProps & (ComponentProps | WithLabelProps);
+export type CheckboxPropTypes = RadixCheckboxProps &
+  (ComponentProps | WithLabelProps);

@@ -16,6 +16,7 @@ export function useSyncStoresWithConfig() {
     setToToken,
     setToBlockchain,
     setFromBlockchain,
+    resetQuote,
     setFromToken,
     fromToken,
     toToken,
@@ -46,6 +47,7 @@ export function useSyncStoresWithConfig() {
 
   useEffect(() => {
     if (fetchMetaStatus === 'success') {
+      resetQuote();
       const chain = blockchains.find(
         (chain) => chain.name === config?.from?.blockchain
       );
@@ -95,6 +97,7 @@ export function useSyncStoresWithConfig() {
 
   useEffect(() => {
     if (fetchMetaStatus === 'success') {
+      resetQuote();
       const chain = blockchains.find(
         (chain) => chain.name === config?.to?.blockchain
       );

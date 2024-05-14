@@ -271,7 +271,7 @@ describe('usePrepareBlockchainList', () => {
     ]);
   });
 
-  it.only('Last item of the main list should be moved to front if it selected again.', () => {
+  it('Last item of the main list should be moved to front if it selected again.', () => {
     const listLimit = 10;
     const preferredBlockchains = ['AVAX_CCHAIN', 'BTC'];
     const expected = [

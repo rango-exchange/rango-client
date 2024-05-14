@@ -1,4 +1,4 @@
-import type { PropTypes } from './RadioGroup.types';
+import type { RadioGroupPropTypes } from './RadioGroup.types';
 
 import React from 'react';
 
@@ -12,7 +12,7 @@ import {
   RadioRoot,
 } from './RadioGroup.styles';
 
-export function RadioGroup(props: PropTypes) {
+export function RadioGroup(props: RadioGroupPropTypes) {
   const { value, onChange, direction = 'vertical', style, options } = props;
   return (
     <Container>

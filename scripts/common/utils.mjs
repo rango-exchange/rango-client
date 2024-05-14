@@ -20,8 +20,9 @@ export function printDirname() {
  * @returns {Promise<import('./typedefs.mjs').Package[]>}
  */
 export async function workspacePackages() {
-  const { stdout } = await execa('yarn', ['workspaces', 'info']);
-  const result = JSON.parse(stdout);
+  // --json flag guarantees that whether it is run with yarn or node, the output always has a consistent result.
+  const { stdout } = await execa('yarn', ['workspaces', '--json', 'info']);
+  const result = JSON.parse(JSON.parse(stdout).data);
   const packagesName = Object.keys(result);
   const output = packagesName.map((name) => {
     const pkgJson = packageJson(result[name].location);
@@ -35,13 +36,19 @@ export async function workspacePackages() {
   return output;
 }
 
+export function convertPackageLocationToFullPath(pkgLocation) {
+  const fullPath = join(root, pkgLocation);
+  return fullPath;
+}
+
 /**
  * Getting a package json and deserialize it to JS object.
  * @param {string} location
  * @returns {Object}
  */
 export function packageJson(location) {
-  const fullPath = join(root, location, 'package.json');
+  const pkgPath = convertPackageLocationToFullPath(location);
+  const fullPath = join(pkgPath, 'package.json');
   const file = readFileSync(fullPath);
   return JSON.parse(file);
 }
@@ -102,4 +109,3 @@ export function generateTagName(pkg) {
 export function tagNameToPkgName(pkgNameWithoutScope) {
   return `${NPM_ORG_NAME}/${pkgNameWithoutScope}`;
 }
-

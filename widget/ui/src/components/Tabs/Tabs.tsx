@@ -1,4 +1,4 @@
-import type { PropTypes } from './Tabs.types';
+import type { TabsPropTypes } from './Tabs.types';
 
 import React, { useEffect, useRef, useState } from 'react';
 
@@ -8,7 +8,7 @@ import { Tooltip } from '../Tooltip';
 import { BackdropTab, Tab, Tabs } from './Tabs.styles';
 
 const INITIAL_RENDER_DELAY = 100;
-export function TabsComponent(props: PropTypes) {
+export function TabsComponent(props: TabsPropTypes) {
   const {
     items: tabItems,
     onChange,

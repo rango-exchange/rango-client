@@ -1,7 +1,7 @@
-import type { PropTypes } from './ChainToken.types';
+import type { ChainTokenPropTypes } from './ChainToken.types';
 
 export const tokenChainSizeMap: {
-  [key in PropTypes['size']]: { token: number; chain: number };
+  [key in ChainTokenPropTypes['size']]: { token: number; chain: number };
 } = {
   small: { token: 17, chain: 10 },
   xmedium: { token: 22, chain: 10 },

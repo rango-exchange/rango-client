@@ -20,7 +20,7 @@ async function run() {
 
   console.log(`[build] Running for ${path}`);
 
-  const typeCheckingTask = await $({
+  const typeCheckingTask = $({
     cwd: pkgPath,
     stderr: process.stderr,
     stdout: process.stdout,

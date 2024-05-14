@@ -27,7 +27,7 @@
     "build:all": "nx run-many --target=build",
     "build": "nx affected --target=build --parallel=3",
     "build:non-demo": "nx affected --target=build --parallel=3 --exclude=@rango-dev/queue-manager-demo,@rango-dev/wallets-demo,@rango-dev/wallets-adapter-demo,@rango-dev/widget-app,@rango-dev/widget-playground",
-    "dev:ui": "nx run-many --target=storybook --projects=@rango-dev/ui",
+    "dev:ui": "nx run @rango-dev/storybook:dev",
     "dev:wallets": "node ./scripts/dev-watch/command.mjs --project @rango-dev/wallets-demo",
     "dev:queue-manager": "node ./scripts/dev-watch/command.mjs --project @rango-dev/queue-manager-demo",
     "dev:widget:type-checker": "node ./scripts/dev-ts-check/command.mjs --project @rango-dev/widget-app",
@@ -104,7 +104,8 @@
     "tty-browserify": "^0.0.1",
     "util": "^0.12.3",
     "vitest": "^0.33.0",
-    "vm-browserify": "^1.1.2"
+    "vm-browserify": "^1.1.2",
+    "@vercel/routing-utils": "^3.1.0"
   },
   "resolutions": {
     "react-refresh": "0.9.0"
