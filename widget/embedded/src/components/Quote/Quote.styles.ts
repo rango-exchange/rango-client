@@ -147,7 +147,7 @@ export const SummaryContainer = styled('div', {
       listItem: false,
       selected: true,
       css: {
-        $$color: '$colors$info100',
+        $$color: '$colors$secondary100',
         [`.${darkTheme} &`]: {
           $$color: '$colors$secondary600',
         },

@@ -93,7 +93,7 @@ export const Tab = styled(Button, {
       isActive: false,
       css: {
         '&:hover': {
-          backgroundColor: '$info100',
+          backgroundColor: '$secondary100',
           color: '$secondary500',
           [`.${darkTheme} &`]: {
             backgroundColor: 'transparent',

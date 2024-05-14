@@ -6,7 +6,7 @@ export const HeaderButton = styled(IconButton, {
   padding: '0',
   overflow: 'unset',
   '&:hover': {
-    backgroundColor: '$info100',
+    backgroundColor: '$secondary100',
     [`.${darkTheme} &`]: {
       backgroundColor: '$neutral',
     },

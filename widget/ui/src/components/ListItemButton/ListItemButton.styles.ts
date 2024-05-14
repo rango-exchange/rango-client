@@ -4,7 +4,7 @@ import { ListItem } from '../ListItem/ListItem';
 export const BaseListItemButton = styled(ListItem, {
   transition: 'all 0.35s',
   '&:hover': {
-    $$color: '$colors$info100',
+    $$color: '$colors$secondary100',
     [`.${darkTheme} &`]: {
       $$color: '$colors$neutral100',
     },
@@ -19,7 +19,7 @@ export const BaseListItemButton = styled(ListItem, {
     borderRadius: '$xs',
 
     outline: 0,
-    $$color: '$colors$info100',
+    $$color: '$colors$secondary100',
     [`.${darkTheme} &`]: {
       $$color: '$colors$info700',
     },

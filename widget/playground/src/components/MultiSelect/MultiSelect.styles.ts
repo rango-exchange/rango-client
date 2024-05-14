@@ -48,7 +48,7 @@ export const WalletChip = styled('div', {
   variants: {
     variant: {
       contained: {
-        backgroundColor: '$info100',
+        backgroundColor: '$secondary100',
       },
       outlined: {
         backgroundColor: 'transparent',

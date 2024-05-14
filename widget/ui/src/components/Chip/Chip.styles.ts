@@ -17,7 +17,7 @@ export const ChipContainer = styled('button', {
   backgroundColor: '$$color',
 
   '&:hover': {
-    $$color: '$colors$info100',
+    $$color: '$colors$secondary100',
     [`.${darkTheme} &`]: {
       $$color: '$colors$neutral100',
     },
@@ -25,7 +25,7 @@ export const ChipContainer = styled('button', {
   },
 
   '&:focus-visible': {
-    $$color: '$colors$info100',
+    $$color: '$colors$secondary100',
     [`.${darkTheme} &`]: {
       $$color: '$colors$info700',
     },
