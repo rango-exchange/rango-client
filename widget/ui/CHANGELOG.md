@@ -1,3 +1,13 @@
+# [0.34.0](https://github.com/rango-exchange/rango-client/compare/ui@0.33.0...ui@0.34.0) (2024-05-14)
+
+
+### Features
+
+* add a new package to deploy the storybook preview ([06aaa44](https://github.com/rango-exchange/rango-client/commit/06aaa444408f07c7a053432af081c9758f157052))
+* migrate storybook components to new package ([d926ae2](https://github.com/rango-exchange/rango-client/commit/d926ae220360077ef49ee919dbb2e15f6bec0548))
+
+
+
 # [0.33.0](https://github.com/rango-exchange/rango-client/compare/ui@0.32.0...ui@0.33.0) (2024-04-24)
 
 
