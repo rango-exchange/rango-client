@@ -4,7 +4,7 @@ import type {
   Suggest,
   WalletInfo,
 } from '@rango-dev/wallets-shared';
-import type { BlockchainMeta, SignerFactory } from 'rango-types';
+import type { BlockchainMeta } from 'rango-types';
 
 import {
   getCosmosAccounts,
@@ -91,7 +91,7 @@ export const suggest: Suggest = async (options) => {
   });
 };
 
-export const getSigners: (provider: any) => SignerFactory = signer;
+export const getSigners = signer;
 
 export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
   allBlockChains

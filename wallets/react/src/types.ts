@@ -8,7 +8,11 @@ import type {
   WalletInfo,
   WalletType,
 } from '@rango-dev/wallets-shared';
-import type { BlockchainMeta, SignerFactory } from 'rango-types';
+import type {
+  BlockchainMeta,
+  DefaultSignerFactory,
+  SignerFactory,
+} from 'rango-types';
 import type { PropsWithChildren } from 'react';
 
 export type State = {
@@ -141,7 +145,10 @@ export interface WalletActions {
   // Optional, but should be provided at the same time.
   suggest?: Suggest;
   switchNetwork?: SwitchNetwork;
-  getSigners: (provider: any) => SignerFactory;
+  getSigners: (
+    provider: any,
+    defaultSigners: DefaultSignerFactory
+  ) => SignerFactory;
   canSwitchNetworkTo?: CanSwitchNetwork;
   canEagerConnect?: CanEagerConnect;
   getWalletInfo(allBlockChains: BlockchainMeta[]): WalletInfo;

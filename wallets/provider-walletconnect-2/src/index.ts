@@ -10,7 +10,7 @@ import type {
   WalletInfo,
 } from '@rango-dev/wallets-shared';
 import type { ISignClient } from '@walletconnect/types';
-import type { BlockchainMeta, SignerFactory } from 'rango-types';
+import type { BlockchainMeta } from 'rango-types';
 
 import { debug, error as logError } from '@rango-dev/logging-core';
 import { Networks, WalletTypes } from '@rango-dev/wallets-shared';
@@ -214,7 +214,7 @@ export const disconnect: Disconnect = async ({ instance }) => {
   }
 };
 
-export const getSigners: (provider: WCInstance) => SignerFactory = signer;
+export const getSigners = signer;
 
 export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
   allBlockChains

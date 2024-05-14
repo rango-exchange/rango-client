@@ -5,7 +5,7 @@ import type {
 } from '@rango-dev/wallets-shared';
 
 import { Namespace, Networks, WalletTypes } from '@rango-dev/wallets-shared';
-import { type BlockchainMeta, type SignerFactory } from 'rango-types';
+import { type BlockchainMeta } from 'rango-types';
 
 import {
   getEthereumAccounts,
@@ -31,7 +31,7 @@ export const disconnect: Disconnect = async () => {
   void transportDisconnect();
 };
 
-export const getSigners: (provider: any) => SignerFactory = signer;
+export const getSigners = signer;
 
 export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
   allBlockChains

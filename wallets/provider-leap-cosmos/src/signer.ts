@@ -1,14 +1,15 @@
-import { DefaultCosmosSigner } from '@rango-dev/signer-cosmos';
-import { Networks, getNetworkInstance } from '@rango-dev/wallets-shared';
-import {
-  DefaultSignerFactory,
-  SignerFactory,
-  TransactionType as TxType,
-} from 'rango-types';
+import type { DefaultSignerFactory, SignerFactory } from 'rango-types';
 
-export default function getSigners(provider: any): SignerFactory {
+import { DefaultCosmosSigner } from '@rango-dev/signer-cosmos';
+import { getNetworkInstance, Networks } from '@rango-dev/wallets-shared';
+import { TransactionType as TxType } from 'rango-types';
+
+export default function getSigners(
+  provider: any,
+  defaultSigners: DefaultSignerFactory
+): SignerFactory {
   const cosmosProvider = getNetworkInstance(provider, Networks.COSMOS);
-  const signers = new DefaultSignerFactory();
+  const signers = defaultSigners;
   signers.registerSigner(
     TxType.COSMOS,
     new DefaultCosmosSigner(cosmosProvider)

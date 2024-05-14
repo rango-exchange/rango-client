@@ -21,7 +21,7 @@ import {
   WalletTypes,
   XDEFI_WALLET_SUPPORTED_NATIVE_CHAINS,
 } from '@rango-dev/wallets-shared';
-import { type BlockchainMeta, type SignerFactory } from 'rango-types';
+import { type BlockchainMeta } from 'rango-types';
 import { cosmosBlockchains, isCosmosBlockchain } from 'rango-types';
 
 import { SUPPORTED_COSMOS_CHAINS, SUPPORTED_ETH_CHAINS } from './constants';
@@ -115,7 +115,7 @@ export const switchNetwork: SwitchNetwork = switchNetworkForEvm;
 
 export const canSwitchNetworkTo: CanSwitchNetwork = canSwitchNetworkToEvm;
 
-export const getSigners: (provider: any) => SignerFactory = signer;
+export const getSigners = signer;
 
 export const canEagerConnect: CanEagerConnect = async ({ instance, meta }) => {
   const evm_instance = chooseInstance(instance, meta, Networks.ETHEREUM);

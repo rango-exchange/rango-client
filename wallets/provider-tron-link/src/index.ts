@@ -4,7 +4,7 @@ import type {
   Subscribe,
   WalletInfo,
 } from '@rango-dev/wallets-shared';
-import type { BlockchainMeta, SignerFactory } from 'rango-types';
+import type { BlockchainMeta } from 'rango-types';
 
 import { Networks, WalletTypes } from '@rango-dev/wallets-shared';
 import { tronBlockchain } from 'rango-types';
@@ -61,7 +61,7 @@ export const subscribe: Subscribe = ({ updateAccounts, disconnect }) => {
 
 export const canSwitchNetworkTo: CanSwitchNetwork = () => false;
 
-export const getSigners: (provider: any) => SignerFactory = signer;
+export const getSigners = signer;
 
 export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
   allBlockChains

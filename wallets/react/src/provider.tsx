@@ -1,6 +1,7 @@
 import type { ProviderContext, ProviderProps } from './types';
 import type { WalletType } from '@rango-dev/wallets-shared';
 
+import { DefaultSignerFactory } from 'rango-types';
 import React, { useEffect, useReducer, useRef } from 'react';
 
 import { WalletContext } from './context';
@@ -144,7 +145,10 @@ function Provider(props: ProviderProps) {
       }
       const walletInstance = getWalletInstance(wallet);
       const provider = walletInstance.provider;
-      const result = walletInstance.getSigners(provider, props.signerConfig);
+      const result = walletInstance.getSigners(
+        provider,
+        new DefaultSignerFactory(props.signerConfig)
+      );
 
       return result;
     },

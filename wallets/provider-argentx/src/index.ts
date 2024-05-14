@@ -5,7 +5,7 @@ import type {
   Subscribe,
   WalletInfo,
 } from '@rango-dev/wallets-shared';
-import type { BlockchainMeta, SignerFactory } from 'rango-types';
+import type { BlockchainMeta } from 'rango-types';
 
 import { Networks, WalletTypes } from '@rango-dev/wallets-shared';
 import { starknetBlockchain } from 'rango-types';
@@ -61,7 +61,7 @@ export const subscribe: Subscribe = ({ instance, state, updateAccounts }) => {
 
 export const canSwitchNetworkTo: CanSwitchNetwork = () => false;
 
-export const getSigners: (provider: any) => SignerFactory = signer;
+export const getSigners = signer;
 
 export const canEagerConnect: CanEagerConnect = ({ instance }) =>
   instance.isPreauthorized();

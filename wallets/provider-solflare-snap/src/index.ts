@@ -4,7 +4,7 @@ import type {
   Subscribe,
   WalletInfo,
 } from '@rango-dev/wallets-shared';
-import type { BlockchainMeta, SignerFactory } from 'rango-types';
+import type { BlockchainMeta } from 'rango-types';
 
 import { Networks, WalletTypes } from '@rango-dev/wallets-shared';
 import { solanaBlockchain } from 'rango-types';
@@ -46,7 +46,7 @@ export const subscribe: Subscribe = ({ instance, disconnect }) => {
   instance?.on('disconnect', async () => disconnect());
 };
 
-export const getSigners: (provider: any) => SignerFactory = signer;
+export const getSigners = signer;
 
 export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
   allBlockChains

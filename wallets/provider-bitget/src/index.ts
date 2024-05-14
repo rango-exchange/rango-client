@@ -7,7 +7,7 @@ import type {
   SwitchNetwork,
   WalletInfo,
 } from '@rango-dev/wallets-shared';
-import type { BlockchainMeta, SignerFactory } from 'rango-types';
+import type { BlockchainMeta } from 'rango-types';
 
 import {
   canEagerlyConnectToEvm,
@@ -118,7 +118,7 @@ export const canEagerConnect: CanEagerConnect = async ({ instance, meta }) => {
   }
   return Promise.resolve(false);
 };
-export const getSigners: (provider: any) => SignerFactory = signer;
+export const getSigners = signer;
 
 export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
   allBlockChains

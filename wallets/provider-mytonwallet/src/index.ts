@@ -5,7 +5,7 @@ import type {
   Connect,
   WalletInfo,
 } from '@rango-dev/wallets-shared';
-import type { BlockchainMeta, SignerFactory } from 'rango-types';
+import type { BlockchainMeta } from 'rango-types';
 
 import { Networks, WalletTypes } from '@rango-dev/wallets-shared';
 import { toUserFriendlyAddress } from '@tonconnect/sdk/';
@@ -70,7 +70,7 @@ export const canEagerConnect: CanEagerConnect = async ({ instance }) => {
 export const canSwitchNetworkTo: CanSwitchNetwork = () => false;
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const getSigners: (provider: any) => SignerFactory = signer;
+export const getSigners = signer;
 
 export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
   allBlockChains

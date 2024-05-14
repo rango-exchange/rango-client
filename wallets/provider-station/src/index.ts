@@ -4,7 +4,7 @@ import type {
   Subscribe,
   WalletInfo,
 } from '@rango-dev/wallets-shared';
-import type { BlockchainMeta, SignerFactory } from 'rango-types';
+import type { BlockchainMeta } from 'rango-types';
 
 import { WalletTypes } from '@rango-dev/wallets-shared';
 import { ConnectType } from '@terra-money/wallet-controller';
@@ -81,7 +81,7 @@ export const subscribe: Subscribe = ({
 
 export const canSwitchNetworkTo: CanSwitchNetwork = () => false;
 
-export const getSigners: (provider: any) => SignerFactory = signer;
+export const getSigners = signer;
 
 export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
   allBlockChains

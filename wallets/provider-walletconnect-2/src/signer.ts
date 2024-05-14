@@ -1,18 +1,21 @@
 import type { WCInstance } from './types';
-import type { SignerFactory } from 'rango-types';
+import type { DefaultSignerFactory, SignerFactory } from 'rango-types';
 
-import { DefaultSignerFactory, TransactionType as TxType } from 'rango-types';
+import { TransactionType as TxType } from 'rango-types';
 
 import COSMOSSigner from './signers/cosmos';
 import EVMSigner from './signers/evm';
 import SOLANASigner from './signers/solana';
 
-export default function getSigners(instance: WCInstance): SignerFactory {
+export default function getSigners(
+  instance: WCInstance,
+  defaultSigners: DefaultSignerFactory
+): SignerFactory {
   if (!instance.session) {
     throw new Error('Session is required for wallet connect signers.');
   }
 
-  const signers = new DefaultSignerFactory();
+  const signers = defaultSigners;
   signers.registerSigner(
     TxType.EVM,
     new EVMSigner(instance.client, instance.session)

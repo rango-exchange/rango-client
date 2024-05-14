@@ -6,7 +6,7 @@ import type {
   Subscribe,
   WalletInfo,
 } from '@rango-dev/wallets-shared';
-import type { BlockchainMeta, SignerFactory } from 'rango-types';
+import type { BlockchainMeta } from 'rango-types';
 
 import {
   canEagerlyConnectToEvm,
@@ -69,7 +69,7 @@ export const subscribe: Subscribe = (options) => {
 
 export const canSwitchNetworkTo: CanSwitchNetwork = () => false;
 
-export const getSigners: (provider: any) => SignerFactory = signer;
+export const getSigners = signer;
 
 export const canEagerConnect: CanEagerConnect = async ({ instance, meta }) => {
   const evm_instance = chooseInstance(instance, meta, Networks.ETHEREUM);
