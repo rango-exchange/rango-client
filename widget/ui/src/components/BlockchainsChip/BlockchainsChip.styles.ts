@@ -22,7 +22,7 @@ export const Chip = styled('button', {
     overflow: 'hidden',
   },
   '&:hover': {
-    $$color: '$colors$info100',
+    $$color: '$colors$secondary100',
     [`.${darkTheme} &`]: {
       $$color: '$colors$neutral100',
     },
@@ -30,7 +30,7 @@ export const Chip = styled('button', {
   },
   '&:focus-visible': {
     outline: 0,
-    $$color: '$colors$info100',
+    $$color: '$colors$secondary100',
     [`.${darkTheme} &`]: {
       $$color: '$colors$info700',
     },

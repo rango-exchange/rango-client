@@ -16,14 +16,14 @@ export const Trigger = styled(Collapsible.Trigger, {
   border: 0,
   width: '100%',
   '&:hover': {
-    $$color: '$colors$info100',
+    $$color: '$colors$secondary100',
     [`.${darkTheme} &`]: {
       $$color: '$colors$neutral100',
     },
     backgroundColor: '$$color',
   },
   '&:focus-visible': {
-    $$color: '$colors$info100',
+    $$color: '$colors$secondary100',
     [`.${darkTheme} &`]: {
       $$color: '$colors$info700',
     },

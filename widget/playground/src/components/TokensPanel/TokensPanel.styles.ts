@@ -45,7 +45,7 @@ export const ContainerChip = styled('div', {
         backgroundColor: '$neutral300',
       },
       regular: {
-        backgroundColor: '$info100',
+        backgroundColor: '$secondary100',
       },
     },
   },
