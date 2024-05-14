@@ -59,7 +59,8 @@ Follow these steps for the release:
 2. When workflow finished, make sure you've updated changelog and created a PR, as it explained below.
 3. Run the `Deploy` workflow if the publish was successful.
 4. Promote our clients (widget and playground) to production on Vercel (ask the team if you don't have access).
-5. Run `yarn post-release` to merge main into next to make sure they are in sync.
+5. Create a pull request from the `main` branch to `next` to update the `next` branch , ensuring not to merge it using the `Rebase and merge` strategy; instead, use the `Create a merge commit` strategy for merging.
+
 
 **NOTE 1:**
 
@@ -73,7 +74,6 @@ Ensure you update widget-examples using `yarn add @rango-dev/widget-embedded@lat
 
 For releasing production, you need to run `Production Release` workflow, it will pull the latest translation changes on `next` branch and checkout to `next` branch and pull the latest changes then it tries to merge the `next` into `main` by `--no-ff` strategy, To make sure that a new commit is made And previous commits that may have `[skips ci]` Do not prevent workflow from triggering.
 
-_Note 1_: Make sure you are having permission for `push` on `next`.
 
 We are running `crowdin` workflow inside `release` workflow which means before any release we will extract and push strings to Crowdin then pull all the strings from Crowdin to make sure we have latest changes on releases.
 
