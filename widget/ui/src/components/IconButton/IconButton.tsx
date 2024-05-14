@@ -1,4 +1,4 @@
-import type { PropTypes } from './IconButton.types';
+import type { IconButtonPropTypes } from './IconButton.types';
 import type { PropsWithChildren, Ref } from 'react';
 
 import React from 'react';
@@ -7,7 +7,7 @@ import { Button } from '../Button';
 
 // border-radius: 100% + overflow: hidden
 function IconButtonComponent(
-  props: PropsWithChildren<PropTypes>,
+  props: PropsWithChildren<IconButtonPropTypes>,
   ref: Ref<HTMLButtonElement>
 ) {
   const { style, ...otherProps } = props;

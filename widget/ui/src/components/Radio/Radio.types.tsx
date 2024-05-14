@@ -1,3 +1,3 @@
-export interface PropTypes {
+export interface RadioPropTypes {
   value: string;
 }

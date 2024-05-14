@@ -1,4 +1,4 @@
-export type ListItemProps = {
+export type ListItemPropTypes = {
   title?: string | React.ReactElement;
   description?: string | React.ReactElement;
   start?: React.ReactNode;

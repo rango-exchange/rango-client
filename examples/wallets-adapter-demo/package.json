@@ -4,6 +4,10 @@
   "license": "MIT",
   "private": true,
   "source": "public/index.html",
+  "main": "dist/index.html",
+  "targets": {
+    "main": false
+  },
   "browserslist": "> 0.5%, last 2 versions, not dead",
   "scripts": {
     "dev": "parcel --cache-dir=.parcel-cache",
@@ -11,8 +15,8 @@
     "clean": "rimraf .parcel-cache && rimraf dist"
   },
   "dependencies": {
-    "@rango-dev/provider-all": "^0.32.1",
-    "@rango-dev/wallets-adapter": "^0.27.1",
+    "@rango-dev/provider-all": "^0.32.2-next.5",
+    "@rango-dev/wallets-adapter": "^0.27.2-next.7",
     "rango-sdk": "^0.1.45",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"

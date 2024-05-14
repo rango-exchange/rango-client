@@ -15,7 +15,6 @@ import { useQuoteStore } from '../store/quote';
 export function RoutesPage() {
   const navigate = useNavigate();
   const navigateBack = useNavigateBack();
-
   const {
     selectedQuote,
     refetchQuote,
@@ -41,6 +40,7 @@ export function RoutesPage() {
       header={{
         onWallet: () => {
           navigate(wallets_url);
+          updateQuotePartialState('refetchQuote', true);
         },
         onBack: () => {
           updateQuotePartialState('refetchQuote', false);
@@ -52,7 +52,10 @@ export function RoutesPage() {
               !!selectedQuote || quoteError ? fetchQuote : undefined
             }
             hidden={['notifications', 'history']}
-            onClickSettings={() => navigate(settings_url)}
+            onClickSettings={() => {
+              navigate(settings_url);
+              updateQuotePartialState('refetchQuote', true);
+            }}
           />
         ),
       }}>

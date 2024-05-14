@@ -143,7 +143,7 @@ For better user experience, wallet provider tries to connect to a wallet only wh
 | Halo           | -                                                            | -                                                 | &cross;              | https://halo.social/                 |
 | Keplr          | Cosmos                                                       | -                                                 | &cross;              | https://www.keplr.app/               |
 | Leap Cosmos    | Cosmos                                                       | Cosmos                                            | &cross;              | https://www.leapwallet.io/cosmos     |
-| Ledger         | Ethereum                                                     |-                                                  | &cross;              | https://www.ledger.com/              |
+| Ledger         | Ethereum,Solana                                              |-                                                  | &cross;              | https://www.ledger.com/              |
 | Math Wallet    | BTC,EVM,Solana,Aptos,Tron,Polkadot,Cosmos                    | BTC,Aptos,Tron,Polkadot,Cosmos                    | &check;              | https://mathwallet.org/en-us/        |
 | Metamask       | EVM                                                          | -                                                 | &check;              | -                                    |
 | OKX            | EVM,Solana,Cosmos                                            | Cosmos                                            | &check;              | https://www.okx.com/web3             |

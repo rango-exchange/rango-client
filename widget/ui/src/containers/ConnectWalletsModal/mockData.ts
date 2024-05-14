@@ -6,28 +6,32 @@ import { WalletState } from '../../components';
 
 export const walletsInfo: WalletInfo[] = [
   {
-    image: 'https://app.rango.exchange/wallets/coinbase.svg',
+    image:
+      'https://raw.githubusercontent.com/rango-exchange/assets/main/wallets/coinbase/icon.svg',
     title: 'Coinbase',
     state: WalletState.DISCONNECTED,
     link: '',
     type: WalletTypes.COINBASE,
   },
   {
-    image: 'https://app.rango.exchange/wallets/coinbase.svg',
+    image:
+      'https://raw.githubusercontent.com/rango-exchange/assets/main/wallets/coinbase/icon.svg',
     title: 'Coinbase',
     state: WalletState.CONNECTED,
     link: '',
     type: WalletTypes.COINBASE,
   },
   {
-    image: 'https://app.rango.exchange/wallets/coinbase.svg',
+    image:
+      'https://raw.githubusercontent.com/rango-exchange/assets/main/wallets/coinbase/icon.svg',
     title: 'Coinbase',
     state: WalletState.CONNECTING,
     link: '',
     type: WalletTypes.COINBASE,
   },
   {
-    image: 'https://app.rango.exchange/wallets/coinbase.svg',
+    image:
+      'https://raw.githubusercontent.com/rango-exchange/assets/main/wallets/coinbase/icon.svg',
     title: 'Coinbase',
     state: WalletState.NOT_INSTALLED,
     type: WalletTypes.COINBASE,
@@ -35,84 +39,96 @@ export const walletsInfo: WalletInfo[] = [
     link: 'https://chrome.google.com/webstore/detail/coinbase-wallet-extension/hnfanknocfeofbddgcijnmhnfnkdnaad?hl=en',
   },
   {
-    image: 'https://app.rango.exchange/wallets/coinbase.svg',
+    image:
+      'https://raw.githubusercontent.com/rango-exchange/assets/main/wallets/coinbase/icon.svg',
     title: 'Coinbase',
     state: WalletState.DISCONNECTED,
     link: '',
     type: WalletTypes.COINBASE,
   },
   {
-    image: 'https://app.rango.exchange/wallets/coinbase.svg',
+    image:
+      'https://raw.githubusercontent.com/rango-exchange/assets/main/wallets/coinbase/icon.svg',
     title: 'Coinbase',
     state: WalletState.CONNECTED,
     link: '',
     type: WalletTypes.COINBASE,
   },
   {
-    image: 'https://app.rango.exchange/wallets/coinbase.svg',
+    image:
+      'https://raw.githubusercontent.com/rango-exchange/assets/main/wallets/coinbase/icon.svg',
     title: 'Coinbase',
     state: WalletState.DISCONNECTED,
     link: '',
     type: WalletTypes.COINBASE,
   },
   {
-    image: 'https://app.rango.exchange/wallets/coinbase.svg',
+    image:
+      'https://raw.githubusercontent.com/rango-exchange/assets/main/wallets/coinbase/icon.svg',
     title: 'Coinbase',
     state: WalletState.DISCONNECTED,
     link: '',
     type: WalletTypes.COINBASE,
   },
   {
-    image: 'https://app.rango.exchange/wallets/coinbase.svg',
+    image:
+      'https://raw.githubusercontent.com/rango-exchange/assets/main/wallets/coinbase/icon.svg',
     title: 'Coinbase',
     state: WalletState.DISCONNECTED,
     link: '',
     type: WalletTypes.COINBASE,
   },
   {
-    image: 'https://app.rango.exchange/wallets/coinbase.svg',
+    image:
+      'https://raw.githubusercontent.com/rango-exchange/assets/main/wallets/coinbase/icon.svg',
     title: 'Coinbase',
     state: WalletState.DISCONNECTED,
     link: '',
     type: WalletTypes.COINBASE,
   },
   {
-    image: 'https://app.rango.exchange/wallets/coinbase.svg',
+    image:
+      'https://raw.githubusercontent.com/rango-exchange/assets/main/wallets/coinbase/icon.svg',
     title: 'Coinbase',
     state: WalletState.DISCONNECTED,
     link: '',
     type: WalletTypes.COINBASE,
   },
   {
-    image: 'https://app.rango.exchange/wallets/coinbase.svg',
+    image:
+      'https://raw.githubusercontent.com/rango-exchange/assets/main/wallets/coinbase/icon.svg',
     title: 'Coinbase',
     state: WalletState.DISCONNECTED,
     link: '',
     type: WalletTypes.COINBASE,
   },
   {
-    image: 'https://app.rango.exchange/wallets/coinbase.svg',
+    image:
+      'https://raw.githubusercontent.com/rango-exchange/assets/main/wallets/coinbase/icon.svg',
     title: 'Coinbase',
     state: WalletState.DISCONNECTED,
     link: '',
     type: WalletTypes.COINBASE,
   },
   {
-    image: 'https://app.rango.exchange/wallets/coinbase.svg',
+    image:
+      'https://raw.githubusercontent.com/rango-exchange/assets/main/wallets/coinbase/icon.svg',
     title: 'Coinbase',
     state: WalletState.DISCONNECTED,
     link: '',
     type: WalletTypes.COINBASE,
   },
   {
-    image: 'https://app.rango.exchange/wallets/coinbase.svg',
+    image:
+      'https://raw.githubusercontent.com/rango-exchange/assets/main/wallets/coinbase/icon.svg',
     title: 'Coinbase',
     state: WalletState.DISCONNECTED,
     link: '',
     type: WalletTypes.COINBASE,
   },
   {
-    image: 'https://app.rango.exchange/wallets/coinbase.svg',
+    image:
+      'https://raw.githubusercontent.com/rango-exchange/assets/main/wallets/coinbase/icon.svg',
     title: 'Coinbase',
     state: WalletState.DISCONNECTED,
     link: '',

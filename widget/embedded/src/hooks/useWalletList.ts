@@ -1,5 +1,5 @@
-import type { WidgetConfig } from '../types';
 import type { WalletInfo } from '@rango-dev/ui';
+import type { Namespace, WalletType } from '@rango-dev/wallets-shared';
 import type { BlockchainMeta } from 'rango-sdk';
 
 import { WalletState } from '@rango-dev/ui';
@@ -7,7 +7,6 @@ import { useWallets } from '@rango-dev/wallets-react';
 import {
   detectMobileScreens,
   KEPLR_COMPATIBLE_WALLETS,
-  type WalletType,
   WalletTypes,
 } from '@rango-dev/wallets-shared';
 import { useCallback, useEffect, useState } from 'react';
@@ -25,7 +24,6 @@ import {
 const ALL_SUPPORTED_WALLETS = Object.values(WalletTypes);
 
 interface Params {
-  config?: WidgetConfig;
   chain?: string;
   onBeforeConnect?: (walletType: string) => void;
   onConnect?: (walletType: string) => void;
@@ -37,7 +35,8 @@ interface Params {
  * you can use this list whenever you need to show the list of wallets and needed callbacks
  */
 export function useWalletList(params: Params) {
-  const { config, chain, onBeforeConnect, onConnect } = params;
+  const { chain, onBeforeConnect, onConnect } = params;
+  const { config } = useAppStore();
   const { state, disconnect, getWalletInfo, connect } = useWallets();
   const { connectedWallets } = useWalletsStore();
   const blockchains = useAppStore().blockchains();
@@ -71,7 +70,7 @@ export function useWalletList(params: Params) {
         connectedWallet.chain === chain
     );
 
-  const handleClick = async (type: WalletType) => {
+  const handleClick = async (type: WalletType, namespaces?: Namespace[]) => {
     const wallet = state(type);
     try {
       if (error) {
@@ -83,11 +82,11 @@ export function useWalletList(params: Params) {
         const atLeastOneWalletIsConnected = !!wallets.find(
           (w) => w.state === WalletState.CONNECTED
         );
-        if (!config?.multiWallets && atLeastOneWalletIsConnected) {
+        if (config?.multiWallets === false && atLeastOneWalletIsConnected) {
           return;
         }
         onBeforeConnect?.(type);
-        await connect(type);
+        await connect(type, undefined, namespaces);
         onConnect?.(type);
       }
     } catch (e) {
@@ -103,6 +102,13 @@ export function useWalletList(params: Params) {
       void disconnect(wallet.type);
     }
   }, [hashWalletsState(wallets)]);
+
+  const disconnectWallet = async (type: WalletType) => {
+    const wallet = state(type);
+    if (wallet.connected) {
+      await disconnect(type);
+    }
+  };
 
   useEffect(() => {
     return () => {
@@ -162,5 +168,6 @@ export function useWalletList(params: Params) {
     error,
     handleClick,
     disconnectConnectingWallets,
+    disconnectWallet,
   };
 }

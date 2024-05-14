@@ -8,7 +8,7 @@ msgstr ""
 "Language: zh\n"
 "Project-Id-Version: rango\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-04-23 13:37\n"
+"PO-Revision-Date: 2024-05-14 11:33\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
@@ -17,6 +17,31 @@ msgstr ""
 "X-Crowdin-Language: zh-CN\n"
 "X-Crowdin-File: en.po\n"
 "X-Crowdin-File-ID: 30\n"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/Quote/Quote.tsx:154
+msgid "Bridge Limit Error"
+msgstr "桥接限制错误"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/Quote/Quote.tsx:269
+msgid "Minimum required slippage: {minRequiredSlippage}"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/Quote/Quote.tsx:290
+msgid "Yours: {userSlippage}"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/WalletNamespacesModal/WalletNamespacesModal.tsx:93
+msgid "Select chain types"
+msgstr "选择链类型"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/WalletNamespacesModal/WalletNamespacesModal.tsx:94
+msgid "This wallet supports multiple chains. Select which chain you'd like to connect to."
+msgstr "这个钱包支持多个链。选择你想要连接的链。"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/RefreshModal/RefreshModal.tsx:22
@@ -83,86 +108,87 @@ msgstr "目前，有些交易正在运行，正在由其他浏览器选项卡处
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/common/ActivateTabModal/ActivateTabModal.tsx:32
-#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:269
-#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:237
+#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:268
+#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:280
+#: widget/embedded/src/components/WalletNamespacesModal/WalletNamespacesModal.tsx:138
 msgid "Confirm"
 msgstr "确认"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:284
-#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:359
+#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:283
+#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:358
 msgid "Your {blockchainName} wallets"
 msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:303
+#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:302
 msgid "Insufficient account balance"
 msgstr "账户余额不足"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:312
+#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:311
 msgid "Proceed anyway"
 msgstr "仍然继续"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:368
+#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:367
 msgid "You need to connect a {blockchainName} wallet."
 msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:425
+#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:424
 msgid "Send to a different address"
 msgstr "发送到另一个地址"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:442
+#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:440
 msgid "Your destination address"
 msgstr "您的目的地址"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:461
+#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:460
 msgid "Address {destination} doesn't match the blockchain address pattern."
 msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:168
+#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:190
 msgid "Add {chain} chain"
 msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:217
-#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:250
+#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:260
+#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:293
 msgid "Add {blockchainDisplayName} Chain"
 msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:222
-#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:254
+#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:265
+#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:297
 msgid "You should connect a {blockchainDisplayName} supported wallet or choose a different {blockchainDisplayName} address"
 msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:272
+#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:315
 msgid "{blockchainDisplayName} Chain Added"
 msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:276
+#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:319
 msgid "{blockchainDisplayName} is added to your wallet, you can use it to swap."
 msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:286
+#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:329
 msgid "Request Rejected"
 msgstr "请求被拒绝"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:287
+#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:330
 msgid "You've rejected adding {blockchainDisplayName} chain to your wallet."
 msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:311
+#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:354
 msgid "Show more wallets"
 msgstr "显示更多钱包"
 
@@ -194,7 +220,7 @@ msgid "Transactions History"
 msgstr "交易历史"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/HeaderButtons/WalletButton.tsx:25
+#: widget/embedded/src/components/HeaderButtons/WalletButton.tsx:22
 #: widget/embedded/src/components/SwapDetailsModal/SwapDetailsModal.helpers.tsx:16
 #: widget/embedded/src/constants/messages.ts:5
 msgid "Connect Wallet"
@@ -230,27 +256,22 @@ msgid "There are no notifications."
 msgstr "没有通知。"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/Quote.tsx:148
+#: widget/embedded/src/components/Quote/Quote.tsx:150
 msgid "Slippage Error"
 msgstr "翻转错误"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/Quote.tsx:149
+#: widget/embedded/src/components/Quote/Quote.tsx:151
 msgid "Slippage Warning"
 msgstr "翻转警告"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/Quote.tsx:254
+#: widget/embedded/src/components/Quote/Quote.tsx:248
 msgid "Yours: {amount} {symbol}"
 msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/Quote.tsx:274
-msgid "Minimum required slippage is {minRequiredSlippage}"
-msgstr ""
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/Quote/Quote.tsx:386
+#: widget/embedded/src/components/Quote/Quote.tsx:403
 msgid "See All Routes"
 msgstr "查看所有路由"
 
@@ -689,7 +710,7 @@ msgstr "确认美元价格未知"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/constants/messages.ts:6
-#: widget/embedded/src/pages/Home.tsx:157
+#: widget/embedded/src/pages/Home.tsx:156
 msgid "Swap"
 msgstr "切换"
 
@@ -818,17 +839,17 @@ msgid "Theme"
 msgstr "主题"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/ConfirmSwapPage.tsx:302
+#: widget/embedded/src/pages/ConfirmSwapPage.tsx:236
 msgid "Confirm Swap"
 msgstr "确认切换"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/ConfirmSwapPage.tsx:319
+#: widget/embedded/src/pages/ConfirmSwapPage.tsx:253
 msgid "Start Swap"
 msgstr "启动交换机"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/ConfirmSwapPage.tsx:346
+#: widget/embedded/src/pages/ConfirmSwapPage.tsx:280
 msgid "You get"
 msgstr "你得到了"
 
@@ -898,13 +919,13 @@ msgid "The request ID is necessary to display the swap details."
 msgstr "请求ID是显示交换详细信息所必需的。"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/WalletsPage.tsx:71
-#: widget/ui/src/containers/ConnectWalletsModal/ConnectWalletsModal.tsx:30
+#: widget/embedded/src/pages/WalletsPage.tsx:80
+#: widget/ui/src/containers/ConnectWalletsModal/ConnectWalletsModal.tsx:15
 msgid "Connect Wallets"
 msgstr "连接钱包"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/WalletsPage.tsx:75
+#: widget/embedded/src/pages/WalletsPage.tsx:84
 msgid "Choose a wallet to connect."
 msgstr "选择要连接的钱包。"
 
@@ -944,37 +965,37 @@ msgid "Required: < {max} {symbol}"
 msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:637
+#: widget/embedded/src/utils/swap.ts:619
 msgid " for network fee"
 msgstr " 网络费用"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:640
+#: widget/embedded/src/utils/swap.ts:622
 msgid " for swap"
 msgstr " 换行"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:643
+#: widget/embedded/src/utils/swap.ts:625
 msgid " for input and network fee"
 msgstr " 输入和网络费用"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:645
+#: widget/embedded/src/utils/swap.ts:627
 msgid "Needs ≈ {requiredAmount} {symbol}{reason}, but you have {currentAmount} {symbol} in your {blockchain} wallet."
 msgstr ""
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:705
+#: widget/embedded/src/utils/swap.ts:687
 msgid "Waiting for connecting wallet"
 msgstr "正在等待连接钱包"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:709
+#: widget/embedded/src/utils/swap.ts:691
 msgid "Waiting for other running tasks to be finished"
 msgstr "等待其他正在运行的任务完成"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:712
+#: widget/embedded/src/utils/swap.ts:694
 msgid "Waiting for changing wallet network"
 msgstr "正在等待更改钱包网络"
 

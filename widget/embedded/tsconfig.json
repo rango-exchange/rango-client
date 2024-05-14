@@ -10,6 +10,7 @@
   "compilerOptions": {
     "module": "esnext",
     "outDir": "dist",
+    "downlevelIteration": true,
     "lib": ["dom", "esnext"],
     // match output dir to input dir. e.g. dist/index instead of dist/src/index
     "rootDir": "./src",

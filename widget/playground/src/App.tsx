@@ -24,6 +24,13 @@ export function App() {
       theme: 'hidden',
     },
   };
+
+  /*
+   * Playground widget provider should contain all wallets so we need to remove 'wallets' from config
+   * to make sure we can access to list of all wallets in playground
+   */
+  const playgroundConfig = { ...overridedConfig, wallets: undefined };
+
   useEffect(() => {
     void fetchMeta();
   }, []);
@@ -31,7 +38,7 @@ export function App() {
   return (
     <ToastProvider container={document.body}>
       <div id={PLAYGROUND_CONTAINER_ID} className={activeStyle}>
-        <WidgetProvider config={overridedConfig}>
+        <WidgetProvider config={playgroundConfig}>
           <ConfigContainer>
             <Routes>
               <Route path="/*" element={<Widget config={overridedConfig} />} />

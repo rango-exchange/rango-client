@@ -43,4 +43,4 @@ export * from './Flags';
 export * from './Select';
 export * from './QuoteTag';
 export * from './Tabs';
-export type { SvgIconProps } from './SvgIcon';
+export type { SvgIconProps, SvgIconPropsWithChildren } from './SvgIcon';

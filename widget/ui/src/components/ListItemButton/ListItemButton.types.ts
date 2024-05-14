@@ -1,7 +1,7 @@
-import type { ListItemProps } from '../ListItem';
+import type { ListItemPropTypes } from '../ListItem';
 import type { CSSProperties } from '@stitches/react';
 
-export type ListItemButtonProps = Omit<ListItemProps, 'onClick'> & {
+export type ListItemButtonProps = Omit<ListItemPropTypes, 'onClick'> & {
   id: string;
   onClick: (id: string) => void;
   style?: CSSProperties;
