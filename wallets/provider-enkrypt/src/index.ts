@@ -27,6 +27,7 @@ const WALLET = WalletTypes.ENKRYPT;
 
 export const config = {
   type: WALLET,
+  isAsyncInstance: true,
 };
 
 export const connect: Connect = async ({ instance }) => {

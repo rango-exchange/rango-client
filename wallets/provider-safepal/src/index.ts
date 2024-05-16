@@ -27,6 +27,7 @@ const WALLET = WalletTypes.SAFEPAL;
 export const config = {
   type: WALLET,
   defaultNetwork: Networks.ETHEREUM,
+  isAsyncInstance: true,
 };
 
 export const getInstance = safepal_instance;

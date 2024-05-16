@@ -34,6 +34,7 @@ const WALLET = WalletTypes.BRAVE;
 export const config = {
   type: WALLET,
   defaultNetwork: Networks.ETHEREUM,
+  isAsyncInstance: true,
 };
 
 export const getInstance = brave_instances;

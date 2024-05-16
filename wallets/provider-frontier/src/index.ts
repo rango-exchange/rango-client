@@ -33,6 +33,7 @@ const WALLET = WalletTypes.FRONTIER;
 export const config = {
   type: WALLET,
   defaultNetwork: Networks.ETHEREUM,
+  isAsyncInstance: true,
 };
 
 export const getInstance = frontier_instance;

@@ -25,6 +25,7 @@ const WALLET = WalletTypes.TRUST_WALLET;
 
 export const config = {
   type: WALLET,
+  isAsyncInstance: true,
 };
 
 export const getInstance = trustwallet_instance;

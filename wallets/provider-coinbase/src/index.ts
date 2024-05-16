@@ -33,6 +33,7 @@ const WALLET = WalletTypes.COINBASE;
 export const config = {
   type: WALLET,
   defaultNetwork: Networks.ETHEREUM,
+  isAsyncInstance: true,
 };
 
 export const getInstance = coinbase_instance;

@@ -1,18 +1,24 @@
 import type { ProviderConnectResult } from '@rango-dev/wallets-shared';
 
-import { Networks } from '@rango-dev/wallets-shared';
+import { getEvmInstanceFor, Networks } from '@rango-dev/wallets-shared';
 
-export function okx_instance() {
+const getEvmInstance = getEvmInstanceFor('OKX Wallet');
+
+export async function okx_instance() {
   const { okxwallet } = window;
-  if (!okxwallet) {
-    return null;
-  }
   const instances = new Map();
-  if (okxwallet) {
-    instances.set(Networks.ETHEREUM, okxwallet);
-  }
-  if (okxwallet.solana) {
+
+  if (okxwallet?.solana) {
     instances.set(Networks.SOLANA, okxwallet.solana);
+  }
+
+  const evmInstance = await getEvmInstance();
+  if (evmInstance) {
+    instances.set(Networks.ETHEREUM, evmInstance);
+  }
+
+  if (instances.size === 0) {
+    return null;
   }
 
   return instances;

@@ -1,17 +1,21 @@
 import type { ProviderConnectResult } from '@rango-dev/wallets-shared';
 
-import { Networks } from '@rango-dev/wallets-shared';
+import { getEvmInstanceFor, Networks } from '@rango-dev/wallets-shared';
 
-export function coinbase() {
-  const { coinbaseWalletExtension, coinbaseSolana } = window;
+const getEvmInstance = getEvmInstanceFor('Coinbase Wallet');
+
+export async function coinbase() {
+  const { coinbaseSolana } = window;
 
   const instances = new Map();
-  if (coinbaseWalletExtension) {
-    instances.set(Networks.ETHEREUM, coinbaseWalletExtension);
-  }
 
   if (!!coinbaseSolana) {
     instances.set(Networks.SOLANA, coinbaseSolana);
+  }
+
+  const evmInstance = await getEvmInstance();
+  if (evmInstance) {
+    instances.set(Networks.ETHEREUM, evmInstance);
   }
 
   if (instances.size === 0) {

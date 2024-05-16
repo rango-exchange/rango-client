@@ -1,8 +1,8 @@
-export function trustWallet() {
-  const { trustwallet } = window;
-  
-  if (!!trustwallet && (trustwallet?.isTrust || trustwallet?.isTrustWallet)) {
-    return trustwallet;
-  }
-  return null;
+import { getEvmInstanceFor } from '@rango-dev/wallets-shared';
+
+const getEvmInstance = getEvmInstanceFor('Trust Wallet');
+
+export async function trustWallet() {
+  const instance = await getEvmInstance();
+  return instance;
 }

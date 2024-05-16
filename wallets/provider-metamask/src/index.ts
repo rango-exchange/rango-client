@@ -12,22 +12,25 @@ import {
   canEagerlyConnectToEvm,
   canSwitchNetworkToEvm,
   getEvmAccounts,
+  getEvmInstanceFor,
   subscribeToEvm,
   switchNetworkForEvm,
   WalletTypes,
 } from '@rango-dev/wallets-shared';
 import { evmBlockchains } from 'rango-types';
 
-import { metamask as metamask_instance } from './helpers';
 import signer from './signer';
 
 const WALLET = WalletTypes.META_MASK;
 
 export const config = {
   type: WALLET,
+  isAsyncInstance: true,
 };
 
-export const getInstance = metamask_instance;
+const getEvmInstance = getEvmInstanceFor('MetaMask');
+
+export const getInstance = getEvmInstance;
 export const connect: Connect = async ({ instance }) => {
   /*
    * Note: We need to get `chainId` here, because for the first time

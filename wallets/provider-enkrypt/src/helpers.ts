@@ -1,6 +1,8 @@
-export function enkrypt() {
-  const { enkrypt } = window;
-  const ethereum = enkrypt?.providers?.ethereum;
-  if (!ethereum) return null;
-  return ethereum;
+import { getEvmInstanceFor } from '@rango-dev/wallets-shared';
+
+const getEvmInstance = getEvmInstanceFor('Enkrypt');
+
+export async function enkrypt() {
+  const instance = await getEvmInstance();
+  return instance;
 }

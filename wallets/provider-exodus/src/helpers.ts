@@ -1,13 +1,26 @@
-import { Networks, ProviderConnectResult } from '@rango-dev/wallets-shared';
+import type { ProviderConnectResult } from '@rango-dev/wallets-shared';
 
-export function exodus_instances() {
+import { getEvmInstanceFor, Networks } from '@rango-dev/wallets-shared';
+
+const getEvmInstance = getEvmInstanceFor('Exodus');
+
+export async function exodus_instances() {
   const { exodus } = window;
-
-  if (!exodus) return null;
-
   const instances = new Map();
-  if (exodus.ethereum) instances.set(Networks.ETHEREUM, exodus.ethereum);
-  if (exodus.solana) instances.set(Networks.SOLANA, exodus.solana);
+
+  if (exodus?.solana) {
+    instances.set(Networks.SOLANA, exodus.solana);
+  }
+
+  const evmInstance = await getEvmInstance();
+  if (evmInstance) {
+    instances.set(Networks.ETHEREUM, evmInstance);
+  }
+
+  if (instances.size === 0) {
+    return null;
+  }
+
   return instances;
 }
 

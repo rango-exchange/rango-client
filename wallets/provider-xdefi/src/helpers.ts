@@ -1,13 +1,15 @@
 import type { Network, ProviderConnectResult } from '@rango-dev/wallets-shared';
 
-import { Networks } from '@rango-dev/wallets-shared';
+import { getEvmInstanceFor, Networks } from '@rango-dev/wallets-shared';
 import { SignerError, SignerErrorCode } from 'rango-types';
 
 import { SUPPORTED_ETH_CHAINS, SUPPORTED_NETWORKS } from './constants';
 
 type Provider = Map<Network, any>;
 
-export function xdefi() {
+const getEvmInstance = getEvmInstanceFor('XDEFI');
+
+export async function xdefi() {
   const { xfi } = window;
 
   if (!xfi) {
@@ -30,9 +32,6 @@ export function xdefi() {
   if (xfi.binance) {
     instances.set(Networks.BINANCE, xfi.binance);
   }
-  if (xfi.ethereum) {
-    instances.set(Networks.ETHEREUM, xfi.ethereum);
-  }
   if (xfi.dogecoin) {
     instances.set(Networks.DOGE, xfi.dogecoin);
   }
@@ -46,6 +45,10 @@ export function xdefi() {
     instances.set(Networks.COSMOS, xfi.keplr);
   }
 
+  const evmInstance = await getEvmInstance();
+  if (evmInstance) {
+    instances.set(Networks.ETHEREUM, evmInstance);
+  }
   return instances;
 }
 

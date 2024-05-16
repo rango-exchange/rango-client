@@ -1,14 +1,24 @@
-import { Networks } from '@rango-dev/wallets-shared';
+import { getEvmInstanceFor, Networks } from '@rango-dev/wallets-shared';
 
-export function brave() {
-  const { ethereum, braveSolana } = window;
+const getEvmInstance = getEvmInstanceFor('Brave Wallet');
+
+export async function brave() {
+  const { braveSolana } = window;
 
   const instances = new Map();
 
-  if (ethereum?.isBraveWallet) instances.set(Networks.ETHEREUM, ethereum);
-  if (braveSolana) instances.set(Networks.SOLANA, braveSolana);
+  if (braveSolana) {
+    instances.set(Networks.SOLANA, braveSolana);
+  }
 
-  if (instances.size === 0) return null;
+  const evmInstance = await getEvmInstance();
+  if (evmInstance) {
+    instances.set(Networks.ETHEREUM, evmInstance);
+  }
+
+  if (instances.size === 0) {
+    return null;
+  }
 
   return instances;
 }
