@@ -1,7 +1,7 @@
 import { i18n } from '@lingui/core';
 import {
   Divider,
-  getCountCategories,
+  getCategoriesCount,
   SelectableCategoryList,
 } from '@rango-dev/ui';
 import React, { useState } from 'react';
@@ -30,9 +30,9 @@ export function SelectBlockchainPage(props: PropTypes) {
     type,
   });
 
-  const countActiveCategories = getCountCategories(blockchains);
+  const activeCategoriesCount = getCategoriesCount(blockchains);
 
-  const showCategory = countActiveCategories !== 1;
+  const showCategory = activeCategoriesCount !== 1;
 
   return (
     <Layout

@@ -49,6 +49,7 @@ export function mapWalletTypesToWalletInfo(
       state,
       type,
       showOnMobile: showOnMobile || false,
+      blockchainTypes: [],
     };
   });
 }

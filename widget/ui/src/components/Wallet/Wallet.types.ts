@@ -1,4 +1,5 @@
 import type { InstallObjects, WalletType } from '@rango-dev/wallets-shared';
+import type { TransactionType } from 'rango-sdk';
 
 export enum WalletState {
   NOT_INSTALLED = 'not_installed',
@@ -14,6 +15,7 @@ export type WalletInfo = {
   image: string;
   type: string;
   showOnMobile?: boolean;
+  blockchainTypes: TransactionType[];
 };
 
 export interface Info {

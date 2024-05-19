@@ -16,9 +16,17 @@ import type {
   WalletType,
   WalletTypes,
 } from '@rango-dev/wallets-shared';
-import type { BlockchainMeta, Token, WalletDetail } from 'rango-sdk';
+import type {
+  BlockchainMeta,
+  Token,
+  TransactionType,
+  WalletDetail,
+} from 'rango-sdk';
 
-import { WalletState as WalletStatus } from '@rango-dev/ui';
+import {
+  BlockchainCategories,
+  WalletState as WalletStatus,
+} from '@rango-dev/ui';
 import { readAccountAddress } from '@rango-dev/wallets-react';
 import {
   detectInstallLink,
@@ -39,6 +47,7 @@ import {
 } from '../constants/routing';
 import { EXCLUDED_WALLETS } from '../constants/wallets';
 
+import { isBlockchainTypeInCategory, removeDuplicateFrom } from './common';
 import { numberToString } from './numbers';
 
 export function mapStatusToWalletState(state: WalletState): WalletStatus {
@@ -64,6 +73,7 @@ export function mapWalletTypesToWalletInfo(
     .filter((wallet) => !EXCLUDED_WALLETS.includes(wallet as WalletTypes))
     .filter((wallet) => {
       const { supportedChains, isContractWallet } = getWalletInfo(wallet);
+
       const { installed, network } = getState(wallet);
       const filterContractWallets =
         isContractWallet && (!installed || (!!chain && network !== chain));
@@ -85,7 +95,12 @@ export function mapWalletTypesToWalletInfo(
         showOnMobile,
         namespaces,
         singleNamespace,
+        supportedChains,
       } = getWalletInfo(type);
+      const blockchainTypes = removeDuplicateFrom(
+        supportedChains.map((item) => item.type)
+      );
+
       const state = mapStatusToWalletState(getState(type));
       return {
         title: name,
@@ -96,6 +111,7 @@ export function mapWalletTypesToWalletInfo(
         showOnMobile,
         namespaces,
         singleNamespace,
+        blockchainTypes,
       };
     });
 }
@@ -537,4 +553,39 @@ export const isFetchingBalance = (
 
 export function hashWalletsState(walletsInfo: ModalWalletInfo[]) {
   return walletsInfo.map((w) => w.state).join('-');
+}
+
+export function filterBlockchainsByWalletTypes(
+  wallets: ModalWalletInfo[],
+  blockchains: BlockchainMeta[]
+) {
+  const uniqueBlockchainTypes = new Set<TransactionType>();
+  wallets.forEach((wallet) => {
+    wallet.blockchainTypes.forEach((type) => {
+      uniqueBlockchainTypes.add(type);
+    });
+  });
+  const filteredBlockchains = blockchains.filter((blockchain) =>
+    uniqueBlockchainTypes.has(blockchain.type)
+  );
+
+  return filteredBlockchains;
+}
+
+export function filterWalletsByCategory(
+  wallets: WalletInfoWithNamespaces[],
+  category: string
+) {
+  if (category === BlockchainCategories.ALL) {
+    return wallets;
+  }
+
+  return wallets.filter((wallet) => {
+    for (const type of wallet.blockchainTypes) {
+      if (isBlockchainTypeInCategory(type, category)) {
+        return true;
+      }
+    }
+    return false;
+  });
 }
