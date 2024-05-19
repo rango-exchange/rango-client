@@ -11,6 +11,7 @@ export const walletsInfo: WalletInfo[] = [
     state: WalletState.DISCONNECTED,
     link: '',
     type: WalletTypes.COINBASE,
+    blockchainTypes: [],
   },
   {
     image:
@@ -19,6 +20,7 @@ export const walletsInfo: WalletInfo[] = [
     state: WalletState.CONNECTED,
     link: '',
     type: WalletTypes.COINBASE,
+    blockchainTypes: [],
   },
   {
     image:
@@ -27,6 +29,7 @@ export const walletsInfo: WalletInfo[] = [
     state: WalletState.CONNECTING,
     link: '',
     type: WalletTypes.COINBASE,
+    blockchainTypes: [],
   },
   {
     image:
@@ -34,6 +37,7 @@ export const walletsInfo: WalletInfo[] = [
     title: 'Coinbase',
     state: WalletState.NOT_INSTALLED,
     type: WalletTypes.COINBASE,
+    blockchainTypes: [],
 
     link: 'https://chrome.google.com/webstore/detail/coinbase-wallet-extension/hnfanknocfeofbddgcijnmhnfnkdnaad?hl=en',
   },
@@ -44,6 +48,7 @@ export const walletsInfo: WalletInfo[] = [
     state: WalletState.DISCONNECTED,
     link: '',
     type: WalletTypes.COINBASE,
+    blockchainTypes: [],
   },
   {
     image:
@@ -52,6 +57,7 @@ export const walletsInfo: WalletInfo[] = [
     state: WalletState.CONNECTED,
     link: '',
     type: WalletTypes.COINBASE,
+    blockchainTypes: [],
   },
   {
     image:
@@ -60,6 +66,7 @@ export const walletsInfo: WalletInfo[] = [
     state: WalletState.DISCONNECTED,
     link: '',
     type: WalletTypes.COINBASE,
+    blockchainTypes: [],
   },
   {
     image:
@@ -68,6 +75,7 @@ export const walletsInfo: WalletInfo[] = [
     state: WalletState.DISCONNECTED,
     link: '',
     type: WalletTypes.COINBASE,
+    blockchainTypes: [],
   },
   {
     image:
@@ -76,6 +84,7 @@ export const walletsInfo: WalletInfo[] = [
     state: WalletState.DISCONNECTED,
     link: '',
     type: WalletTypes.COINBASE,
+    blockchainTypes: [],
   },
   {
     image:
@@ -84,6 +93,7 @@ export const walletsInfo: WalletInfo[] = [
     state: WalletState.DISCONNECTED,
     link: '',
     type: WalletTypes.COINBASE,
+    blockchainTypes: [],
   },
   {
     image:
@@ -92,6 +102,7 @@ export const walletsInfo: WalletInfo[] = [
     state: WalletState.DISCONNECTED,
     link: '',
     type: WalletTypes.COINBASE,
+    blockchainTypes: [],
   },
   {
     image:
@@ -100,6 +111,7 @@ export const walletsInfo: WalletInfo[] = [
     state: WalletState.DISCONNECTED,
     link: '',
     type: WalletTypes.COINBASE,
+    blockchainTypes: [],
   },
   {
     image:
@@ -108,6 +120,7 @@ export const walletsInfo: WalletInfo[] = [
     state: WalletState.DISCONNECTED,
     link: '',
     type: WalletTypes.COINBASE,
+    blockchainTypes: [],
   },
   {
     image:
@@ -116,6 +129,7 @@ export const walletsInfo: WalletInfo[] = [
     state: WalletState.DISCONNECTED,
     link: '',
     type: WalletTypes.COINBASE,
+    blockchainTypes: [],
   },
   {
     image:
@@ -124,6 +138,7 @@ export const walletsInfo: WalletInfo[] = [
     state: WalletState.DISCONNECTED,
     link: '',
     type: WalletTypes.COINBASE,
+    blockchainTypes: [],
   },
   {
     image:
@@ -132,5 +147,6 @@ export const walletsInfo: WalletInfo[] = [
     state: WalletState.DISCONNECTED,
     link: '',
     type: WalletTypes.COINBASE,
+    blockchainTypes: [],
   },
 ];
