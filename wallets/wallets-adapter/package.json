@@ -14,7 +14,7 @@
     "src"
   ],
   "scripts": {
-    "build": "node ../../scripts/build/command.mjs --path wallets/wallets-adapter --packageName wallets-adapter",
+    "build": "node ../../scripts/build/command.mjs --path wallets/wallets-adapter",
     "clean": "rimraf dist",
     "format": "prettier --write '{.,src}/**/*.{ts,tsx}'",
     "lint": "eslint \"**/*.{ts,tsx}\" --ignore-path ../../.eslintignore"

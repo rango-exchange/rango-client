@@ -24,9 +24,8 @@ function formatBundleSizeDiff(bundleSizeDiff, initialBundleSize) {
   )} (${sign}${diffPercentage}%)`;
 }
 
-async function findBuildJsonFiles(directory, excludedPaths = []) {
+async function findBuildJsonFiles(directory) {
   const files = [];
-  const excludedPathsWithNodeModules = excludedPaths.concat(['node_modules']);
 
   async function traverseDirectory(currentDir) {
     const dirContents = await fs.readdir(currentDir);
@@ -36,7 +35,6 @@ async function findBuildJsonFiles(directory, excludedPaths = []) {
       const isDirectory = stats.isDirectory();
 
       if (isDirectory) {
-        if (excludedPathsWithNodeModules.includes(item)) continue;
         await traverseDirectory(itemPath);
       } else if (item.endsWith('.build.json')) {
         files.push(itemPath);
@@ -51,6 +49,10 @@ async function findBuildJsonFiles(directory, excludedPaths = []) {
 async function parseBuildJsonFiles(files) {
   const packagesAndBundleSize = {};
 
+  /**
+   * ESBuild meta file interface:
+   * https://esbuild.github.io/api/#metafile
+   */
   for (const build of files) {
     const data = JSON.parse(await fs.readFile(build, 'utf8'));
     const outputBytes = Object.values(data.outputs)
@@ -124,17 +126,36 @@ async function compareBuildJsonFiles(targetBranchBuilds, currentBranchBuilds) {
 }
 
 function getPackageName(fileName) {
-  return `@rango-dev/${fileName.split('.build.json')[0]}`;
+  const SCOPE = '@rango-dev';
+  return `${SCOPE}/${fileName.split('.build.json')[0]}`;
 }
 
 async function run() {
-  const currentDirectory = process.cwd();
-  const targetBranchBuilds = await findBuildJsonFiles(currentDirectory, [
-    'current-branch',
-  ]);
-  const currentBranchBuilds = await findBuildJsonFiles(
-    path.join(currentDirectory, 'current-branch')
-  );
+  const [, currentBranchDirectory, targetBranchDirectory] = process.argv;
+
+  const targetBranchPath = path.join(process.cwd(), targetBranchDirectory);
+  const currentBranchPath = path.join(process.cwd(), currentBranchDirectory);
+
+  let directoryIsMissing;
+  try {
+    const pathsStats = await Promise.all([
+      fs.stat(targetBranchPath),
+      fs.stat(currentBranchPath),
+    ]);
+    directoryIsMissing = pathsStats.some((stat) => !stat.isDirectory());
+  } catch (error) {
+    directoryIsMissing = true;
+  }
+
+  if (directoryIsMissing) {
+    console.log(
+      'Directories for the target or current branch do not exist, the bundle size comparison will be skipped.'
+    );
+    return;
+  }
+
+  const targetBranchBuilds = await findBuildJsonFiles(targetBranchPath);
+  const currentBranchBuilds = await findBuildJsonFiles(currentBranchPath);
 
   const comparison = await compareBuildJsonFiles(
     targetBranchBuilds,
@@ -143,9 +164,7 @@ async function run() {
   console.table(comparison);
 }
 
-run().catch((error) =>
-  console.error(
-    "Error: There's a problem when making the report for the package bundles.",
-    error
-  )
-);
+run().catch((error) => {
+  console.error(error);
+  process.exit(1);
+});

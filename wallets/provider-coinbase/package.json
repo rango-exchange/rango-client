@@ -14,7 +14,7 @@
     "src"
   ],
   "scripts": {
-    "build": "node ../../scripts/build/command.mjs --path wallets/provider-coinbase --packageName provider-coinbase",
+    "build": "node ../../scripts/build/command.mjs --path wallets/provider-coinbase",
     "ts-check": "tsc --declaration --emitDeclarationOnly -p ./tsconfig.json",
     "clean": "rimraf dist",
     "format": "prettier --write '{.,src}/**/*.{ts,tsx}'",
