@@ -21,6 +21,5 @@ type NotificationRoute = {
 export type Notification = Pick<Route, 'requestId'> & {
   event: RouteEvent | StepEvent;
   creationTime: number;
-  read: boolean;
   route: NotificationRoute;
 };
