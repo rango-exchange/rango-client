@@ -16,8 +16,8 @@ import { useForceAutoConnect } from '../useForceAutoConnect';
 import { useSubscribeToWidgetEvents } from '../useSubscribeToWidgetEvents';
 
 export function useBootstrap() {
-  globalFont();
   useForceAutoConnect();
+  globalFont();
   useSubscribeToWidgetEvents();
   const blockchains = useAppStore().blockchains();
   const { canSwitchNetworkTo } = useWallets();

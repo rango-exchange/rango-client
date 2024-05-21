@@ -4,6 +4,7 @@ import { BlockchainCategories } from '@rango-dev/ui';
 import { TransactionType } from 'rango-sdk';
 
 import { WIDGET_UI_ID } from '../constants';
+import { SUPPORTED_FONTS } from '../constants/fonts';
 import {
   MIN_LENGTH_SYMBOL_CONTAINS,
   MIN_LENGTH_SYMBOL_START_WITH,
@@ -240,4 +241,9 @@ export const isBlockchainTypeInCategory = (
     default:
       return blockchainType === category;
   }
+};
+
+export const getFontUrlByName = (fontName: string) => {
+  const font = SUPPORTED_FONTS.find((font) => font.value === fontName);
+  return font?.url;
 };
