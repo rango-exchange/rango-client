@@ -17,8 +17,8 @@ import { NotificationContent } from '../NotificationContent';
 
 import { HeaderButton } from './HeaderButtons.styles';
 import InProgressTransactionBadge from './InProgressTransactionBadge';
+import { NotificationsBadge } from './NotificationsBadge';
 import { RefreshButton } from './RefreshButton';
-import { UnreadNotificationsBadge } from './UnreadNotificationsBadge';
 
 export function HeaderButtons(props: HeaderButtonsPropTypes) {
   const {
@@ -52,6 +52,7 @@ export function HeaderButtons(props: HeaderButtonsPropTypes) {
         <Popover
           align="end"
           alignOffset={-88}
+          sideOffset={15}
           collisionPadding={{ right: 20, left: 20 }}
           container={getContainer()}
           content={<NotificationContent />}>
@@ -62,7 +63,7 @@ export function HeaderButtons(props: HeaderButtonsPropTypes) {
               content={i18n.t('Notifications')}>
               <HeaderButton size="small" variant="ghost">
                 <NotificationsIcon size={18} color="black" />
-                <UnreadNotificationsBadge />
+                <NotificationsBadge />
               </HeaderButton>
             </Tooltip>
           </div>

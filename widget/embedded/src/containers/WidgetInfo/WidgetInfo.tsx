@@ -31,7 +31,7 @@ export function WidgetInfo(props: React.PropsWithChildren) {
   const swappers = useAppStore().swappers();
   const loadingStatus = useAppStore().fetchStatus;
   const resetLanguage = useLanguage().resetLanguage;
-  const notifications = useNotificationStore().getUnreadNotifications();
+  const notifications = useNotificationStore().getNotifications();
 
   // eslint-disable-next-line react/jsx-no-constructed-context-values
   const value: WidgetInfoContextInterface = {

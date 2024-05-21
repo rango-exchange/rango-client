@@ -23,6 +23,11 @@ import type {
 import type { PendingSwap, PendingSwapStep } from 'rango-types';
 
 import { i18n } from '@lingui/core';
+import {
+  type RouteEvent,
+  RouteEventType,
+  type StepEvent,
+} from '@rango-dev/queue-manager-rango-preset';
 import BigNumber from 'bignumber.js';
 import { PendingSwapNetworkStatus } from 'rango-types';
 
@@ -780,5 +785,12 @@ export function isTokensIdentical(tokenA: Token, tokenB: Token) {
     tokenA.blockchain === tokenB.blockchain &&
     tokenA.symbol === tokenB.symbol &&
     tokenA.address === tokenB.address
+  );
+}
+
+export function isSwapFinished(event: RouteEvent | StepEvent) {
+  return (
+    event.type === RouteEventType.FAILED ||
+    event.type === RouteEventType.SUCCEEDED
   );
 }
