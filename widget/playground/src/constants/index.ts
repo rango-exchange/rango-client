@@ -1,4 +1,3 @@
-export * from './fonts';
 export * from './languages';
 export * from './presets';
 export * from './styles';
