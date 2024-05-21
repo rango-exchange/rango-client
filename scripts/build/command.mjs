@@ -3,17 +3,14 @@ import * as esbuild from 'esbuild';
 import { $ } from 'execa';
 import { join } from 'path';
 import process from 'process';
-import { printDirname } from '../common/utils.mjs';
+import { packageJson, printDirname } from '../common/utils.mjs';
 import fs from 'fs/promises';
 
 const root = join(printDirname(), '..', '..');
 
 async function run() {
-  const optionDefinitions = [
-    { name: 'path', type: String },
-    { name: 'packageName', type: String },
-  ];
-  const { path, packageName } = commandLineArgs(optionDefinitions);
+  const optionDefinitions = [{ name: 'path', type: String }];
+  const { path } = commandLineArgs(optionDefinitions);
 
   if (!path) {
     throw new Error('You need to specify package name.');
@@ -21,6 +18,7 @@ async function run() {
 
   const pkgPath = `${root}/${path}`;
   const entryPoint = `${pkgPath}/src/index.ts`;
+  const packageName = packageJson(path).name.split('/')[1];
 
   console.log(`[build] Running for ${path}`);
 

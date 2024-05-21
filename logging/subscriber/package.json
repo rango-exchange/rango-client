@@ -17,7 +17,7 @@
     "@rango-dev/logging-types": "^0.3.0"
   },
   "scripts": {
-    "build": "node ../../scripts/build/command.mjs --path logging/subscriber --packageName logging-subscriber",
+    "build": "node ../../scripts/build/command.mjs --path logging/subscriber",
     "ts-check": "tsc --declaration --emitDeclarationOnly -p ./tsconfig.json",
     "clean": "rimraf dist",
     "format": "prettier --write '{.,src}/**/*.{ts,tsx}'",
