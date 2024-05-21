@@ -4,12 +4,13 @@ import {
   BorderRadiusIcon,
   Divider,
   FontIcon,
+  InfoErrorIcon,
   LanguageIcon,
   Select,
   Typography,
   WidgetIcon,
 } from '@rango-dev/ui';
-import { useWidget } from '@rango-dev/widget-embedded';
+import { SUPPORTED_FONTS, useWidget } from '@rango-dev/widget-embedded';
 import React, { useCallback, useState } from 'react';
 
 import { ItemPicker } from '../../components/ItemPicker';
@@ -19,10 +20,10 @@ import { Slider } from '../../components/Slider';
 import {
   DEFAULT_PRIMARY_RADIUS,
   DEFAULT_SECONDARY_RADIUS,
-  FONTS,
   LANGUAGES,
   PLAYGROUND_CONTAINER_ID,
 } from '../../constants';
+import { DEFAULT_FONT } from '../../constants/fonts';
 import { VARIANTS } from '../../constants/variants';
 import { useConfigStore } from '../../store/config';
 
@@ -42,7 +43,7 @@ export function General() {
   const secondaryBorderRadius =
     useConfigStore.use.config().theme?.secondaryBorderRadius;
   const fontFamily =
-    useConfigStore.use.config().theme?.fontFamily || FONTS[0].value;
+    useConfigStore.use.config().theme?.fontFamily || DEFAULT_FONT;
   const language = useConfigStore.use.config().language || LANGUAGES[0].value;
   const variant = useConfigStore.use.config().variant || VARIANTS[0].value;
 
@@ -52,7 +53,7 @@ export function General() {
     if (value) {
       onChangeTheme({
         name: 'fontFamily',
-        value: value === FONTS[0].value ? undefined : value,
+        value: value === DEFAULT_FONT ? undefined : value,
       });
     }
     onBack();
@@ -163,6 +164,14 @@ export function General() {
           title="Fonts"
           iconTitle={<FontIcon size={18} />}
         />
+        <Divider size={12} />
+        <FieldTitle>
+          <InfoErrorIcon color="gray" size={14} />
+          <Divider direction="horizontal" size={4} />
+          <Typography size="small" variant="body" color="neutral600">
+            Fonts should be loaded from Google Fonts separately
+          </Typography>
+        </FieldTitle>
       </GeneralContainer>
       {modalState === ModalState.DEFAULT_FONT && (
         <OverlayPanel onBack={onBack}>
@@ -171,7 +180,7 @@ export function General() {
             title="Fonts"
             icon={<FontIcon size={18} />}
             defaultValue={fontFamily}
-            list={FONTS}
+            list={SUPPORTED_FONTS}
             searchPlaceholder="Search Font"
           />
         </OverlayPanel>

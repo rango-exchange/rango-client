@@ -6,10 +6,10 @@ import {
 } from '@rango-dev/ui';
 import { useEffect, useState } from 'react';
 
+import { DEFAULT_FONT_FAMILY } from '../constants/fonts';
 import { useAppStore } from '../store/AppStore';
 import { type WidgetTheme } from '../types';
 import {
-  DEFAULT_FONT_FAMILY,
   DEFAULT_PRIMARY_RADIUS,
   DEFAULT_SECONDARY_RADIUS,
 } from '../utils/configs';

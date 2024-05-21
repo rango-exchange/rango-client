@@ -28,7 +28,7 @@ export type WidgetColors = {
  * radius, width, and height.
  * @property {'auto' | 'light' | 'dark'} mode - The mode property is used to specify the default theme for
  * the widget.
- * @property {string} fontFamily - The font family to be used in the widget.
+ * @property {string} fontFamily - The font family to be used in the widget. If you want to do this, include the font of your choice in your HTML file.
  * @property {{ light?: WidgetColors; dark?: WidgetColors }} colors - The `colors` property is a sub-property of the `WidgetTheme` object that
  * defines the color scheme for the widget. It is of type `Colors`, which is likely another object that
  * contains specific color values for various parts of the widget (e.g. background color, text color,
