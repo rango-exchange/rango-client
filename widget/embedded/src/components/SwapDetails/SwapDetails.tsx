@@ -96,21 +96,20 @@ export function SwapDetails(props: SwapDetailsProps) {
     setModalState(null);
   };
 
-  const getUnreadNotifications =
-    useNotificationStore.use.getUnreadNotifications();
-  const setAsRead = useNotificationStore.use.setAsRead();
-  const unreadNotifications = getUnreadNotifications();
+  const getNotifications = useNotificationStore.use.getNotifications();
+  const removeNotification = useNotificationStore.use.removeNotification();
+  const notifications = getNotifications();
   const currentStep = getCurrentStep(swap);
   const currentStepNetworkStatus = currentStep?.networkStatus;
 
   useEffect(() => {
-    const existNotification = unreadNotifications.find(
+    const existNotification = notifications.find(
       (n) => n.requestId === swap.requestId
     );
     if (existNotification) {
       if (swap.status === 'success' || swap.status === 'failed') {
         setShowCompletedModal(swap.status);
-        setAsRead(swap.requestId);
+        removeNotification(swap.requestId);
       } else if (showCompletedModal) {
         setShowCompletedModal(null);
       }

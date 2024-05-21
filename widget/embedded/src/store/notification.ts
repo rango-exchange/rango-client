@@ -1,26 +1,31 @@
 import type { Notification } from '../types/notification';
-import type {
-  Route,
-  RouteEvent,
-  StepEvent,
-} from '@rango-dev/queue-manager-rango-preset';
 
+import {
+  type PendingSwapWithQueueID,
+  type Route,
+  type RouteEvent,
+  type StepEvent,
+} from '@rango-dev/queue-manager-rango-preset';
 import { create } from 'zustand';
 import { persist, subscribeWithSelector } from 'zustand/middleware';
 
 import createSelectors from './selectors';
 
 export interface NotificationState {
+  isSynced: boolean;
   notifications: Notification[];
   setNotification: (event: RouteEvent | StepEvent, route: Route) => void;
-  setAsRead: (requestId: Notification['requestId']) => void;
-  getUnreadNotifications: () => Notification[];
+  removeNotification: (requestId: Notification['requestId']) => void;
+  getNotifications: () => Notification[];
+  syncNotifications: (swaps: PendingSwapWithQueueID[]) => void;
+  clearNotifications: () => void;
 }
 
 export const useNotificationStore = createSelectors(
   create<NotificationState>()(
     persist(
       subscribeWithSelector((set, get) => ({
+        isSynced: false,
         notifications: [],
         setNotification: (event, route) => {
           const fromStep = route.steps[0];
@@ -29,7 +34,6 @@ export const useNotificationStore = createSelectors(
           const notification: Notification = {
             event,
             creationTime: Date.now(),
-            read: false,
             requestId: route.requestId,
             route: {
               from: {
@@ -53,24 +57,65 @@ export const useNotificationStore = createSelectors(
             notifications: [...excludedList, notification],
           }));
         },
-        setAsRead: (requestId) => {
+        removeNotification: (requestId) => {
           set((state) => ({
-            notifications: state.notifications.map((notificationItem) =>
-              notificationItem.requestId === requestId
-                ? { ...notificationItem, read: true }
-                : notificationItem
+            notifications: state.notifications.filter(
+              (notification) => notification.requestId !== requestId
             ),
           }));
         },
-        getUnreadNotifications: () => {
-          return get().notifications.filter(
-            (notificationItem) => !notificationItem.read
-          );
+        getNotifications: () => {
+          const { isSynced, notifications } = get();
+          return isSynced ? notifications : [];
         },
+        syncNotifications: (swaps) => {
+          const { isSynced, notifications } = get();
+
+          if (!isSynced) {
+            const nextNotifications: Notification[] = [];
+            notifications.forEach((notification) => {
+              const swapExist = swaps.some(
+                (swap) => swap.swap.requestId === notification.requestId
+              );
+              if (swapExist) {
+                nextNotifications.push(notification);
+              }
+            });
+
+            set({ isSynced: true, notifications: nextNotifications });
+          }
+        },
+        clearNotifications: () => set({ notifications: [] }),
       })),
+
       {
         name: 'notification',
         skipHydration: true,
+        partialize: ({ isSynced, ...otherProps }) => otherProps,
+        version: 1,
+        migrate: (persistedState, version) => {
+          if (version === 0) {
+            /**
+             * Eliminate the persistence of read notifications,
+             * and remove the "read" flag from other notifications to align with the current modifications in the notification store structure.
+             */
+            const oldNotifications = (
+              persistedState as {
+                notifications: (Notification & { read: boolean })[];
+              }
+            ).notifications;
+
+            (persistedState as NotificationState).notifications =
+              oldNotifications
+                .filter(
+                  (notification: Notification & { read: boolean }) =>
+                    !notification.read
+                )
+                .map(({ read, ...otherProps }) => otherProps);
+          }
+
+          return persistedState as NotificationState;
+        },
       }
     )
   )

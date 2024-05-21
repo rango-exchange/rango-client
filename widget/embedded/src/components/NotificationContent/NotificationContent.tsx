@@ -17,7 +17,10 @@ import { useNotificationStore } from '../../store/notification';
 import { areTokensEqual } from '../../utils/wallets';
 
 import {
+  ClearAllButton,
   Container,
+  Header,
+  IconContainer,
   Images,
   List,
   ListItem,
@@ -29,9 +32,9 @@ const MAX_NOTIFICATIONS_DISPLAYED = 4;
 export function NotificationContent() {
   const navigate = useNavigate();
 
-  const { getUnreadNotifications } = useNotificationStore();
+  const { getNotifications, clearNotifications } = useNotificationStore();
 
-  const notifications: Notification[] = getUnreadNotifications();
+  const notifications: Notification[] = getNotifications();
   const blockchains = useAppStore().blockchains();
   const tokens = useAppStore().tokens();
   const sortedNotification = notifications
@@ -44,6 +47,24 @@ export function NotificationContent() {
 
   return (
     <Container>
+      {sortedNotification.length > 0 && (
+        <>
+          <Header>
+            <Typography variant="label" size="medium">
+              {i18n.t('Notifications')}
+            </Typography>
+            <ClearAllButton
+              variant="ghost"
+              size="xsmall"
+              onClick={clearNotifications}>
+              <Typography variant="body" size="xsmall">
+                {i18n.t('Clear all')}
+              </Typography>
+            </ClearAllButton>
+          </Header>
+          <Divider direction="vertical" size={4} />
+        </>
+      )}
       {sortedNotification.length ? (
         <List>
           {sortedNotification.map((notificationItem, index) => {
@@ -103,7 +124,11 @@ export function NotificationContent() {
                       </div>
                     </Images>
                   }
-                  end={<ChevronRightIcon size={12} color="gray" />}
+                  end={
+                    <IconContainer>
+                      <ChevronRightIcon size={12} color="gray" />
+                    </IconContainer>
+                  }
                 />
               </React.Fragment>
             );
