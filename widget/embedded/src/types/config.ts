@@ -103,6 +103,10 @@ export type BlockchainAndTokenConfig = {
   tokens?: Asset[] | { [blockchain: string]: Tokens };
 };
 
+export type SignersConfig = {
+  customSolanaRPC?: string;
+};
+
 /**
  * `Features`
  *
@@ -209,4 +213,5 @@ export type WidgetConfig = {
   features?: Features;
   variant?: WidgetVariant;
   enableCentralizedSwappers?: boolean;
+  signers?: SignersConfig;
 };
