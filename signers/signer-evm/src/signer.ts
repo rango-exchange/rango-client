@@ -1,16 +1,18 @@
-import {
+import type {
   TransactionRequest,
   TransactionResponse,
 } from '@ethersproject/abstract-provider';
 import type { GenericSigner } from 'rango-types';
-import { EvmTransaction } from 'rango-types/lib/api/main';
+import type { EvmTransaction } from 'rango-types/lib/api/main';
+
 import { providers } from 'ethers';
-import { cleanEvmError, getTenderlyError, waitMs } from './helper';
 import {
   RPCErrorCode as RangoRPCErrorCode,
   SignerError,
   SignerErrorCode,
 } from 'rango-types';
+
+import { cleanEvmError, getTenderlyError, waitMs } from './helper';
 import { RPCErrorCode } from './types';
 
 type ProviderType = ConstructorParameters<typeof providers.Web3Provider>[0];
@@ -21,6 +23,7 @@ const waitWithMempoolCheck = async (
   txHash: string,
   confirmations?: number
 ) => {
+  const TIMEOUT = 3_000;
   let finished = false;
   return await Promise.race([
     (async () => {
@@ -29,11 +32,15 @@ const waitWithMempoolCheck = async (
     })(),
     (async () => {
       while (!finished) {
-        await waitMs(3_000);
-        if (finished) return null;
+        await waitMs(TIMEOUT);
+        if (finished) {
+          return null;
+        }
         try {
           const mempoolTx = await provider.getTransaction(txHash);
-          if (!mempoolTx) return null;
+          if (!mempoolTx) {
+            return null;
+          }
         } catch (error) {
           console.log({ error });
           return null;
@@ -51,6 +58,42 @@ export class DefaultEvmSigner implements GenericSigner<EvmTransaction> {
   constructor(provider: ProviderType) {
     this.provider = new providers.Web3Provider(provider);
     this.signer = this.provider.getSigner();
+  }
+
+  static buildTx(evmTx: EvmTransaction, disableV2 = false): TransactionRequest {
+    const TO_STRING_BASE = 16;
+    let tx: TransactionRequest = {};
+    if (evmTx.from) {
+      tx = { ...tx, from: evmTx.from };
+    }
+    if (evmTx.to) {
+      tx = { ...tx, to: evmTx.to };
+    }
+    if (evmTx.data) {
+      tx = { ...tx, data: evmTx.data };
+    }
+    if (evmTx.value) {
+      tx = { ...tx, value: evmTx.value };
+    }
+    if (evmTx.nonce) {
+      tx = { ...tx, nonce: evmTx.nonce };
+    }
+    if (evmTx.gasLimit) {
+      tx = { ...tx, gasLimit: evmTx.gasLimit };
+    }
+    if (!disableV2 && evmTx.maxFeePerGas && evmTx.maxPriorityFeePerGas) {
+      tx = {
+        ...tx,
+        maxFeePerGas: evmTx.maxFeePerGas,
+        maxPriorityFeePerGas: evmTx.maxPriorityFeePerGas,
+      };
+    } else if (evmTx.gasPrice) {
+      tx = {
+        ...tx,
+        gasPrice: '0x' + parseInt(evmTx.gasPrice).toString(TO_STRING_BASE),
+      };
+    }
+    return tx;
   }
 
   async signMessage(msg: string): Promise<string> {
@@ -105,9 +148,8 @@ export class DefaultEvmSigner implements GenericSigner<EvmTransaction> {
           const transaction = DefaultEvmSigner.buildTx(tx, true);
           const response = await this.signer.sendTransaction(transaction);
           return { hash: response.hash, response };
-        } else {
-          throw error;
         }
+        throw error;
       }
     } catch (error) {
       throw cleanEvmError(error);
@@ -121,8 +163,10 @@ export class DefaultEvmSigner implements GenericSigner<EvmTransaction> {
     confirmations?: number
   ): Promise<{ hash: string; response?: TransactionResponse }> {
     try {
-      // if we have transaction response, use that to wait
-      // otherwise, try to get tx response from the wallet provider
+      /*
+       * if we have transaction response, use that to wait
+       * otherwise, try to get tx response from the wallet provider
+       */
       if (txResponse) {
         // if we use waitWithMempoolCheck here, we can't detect replaced tx anymore
         await txResponse?.wait(confirmations);
@@ -130,19 +174,27 @@ export class DefaultEvmSigner implements GenericSigner<EvmTransaction> {
       }
 
       // ignore wait if wallet not connected yet
-      if (!this.provider) return { hash: txHash };
+      if (!this.provider) {
+        return { hash: txHash };
+      }
       this.signer = this.provider.getSigner();
 
-      // don't proceed if signer chain changed or chain id is not specified
-      // because if user change the wallet network, we receive null on getTransaction
-      if (!chainId) return { hash: txHash };
-      const signerChainId = await this.signer.getChainId();
-      if (!signerChainId || parseInt(chainId) != signerChainId)
+      /*
+       * don't proceed if signer chain changed or chain id is not specified
+       * because if user change the wallet network, we receive null on getTransaction
+       */
+      if (!chainId) {
         return { hash: txHash };
+      }
+      const signerChainId = await this.signer.getChainId();
+      if (!signerChainId || parseInt(chainId) != signerChainId) {
+        return { hash: txHash };
+      }
 
       const tx = await this.provider.getTransaction(txHash);
-      if (!tx)
+      if (!tx) {
         throw Error(`Transaction hash '${txHash}' not found in blockchain.`);
+      }
 
       await waitWithMempoolCheck(this.provider, tx, txHash, confirmations);
       return { hash: txHash };
@@ -151,9 +203,9 @@ export class DefaultEvmSigner implements GenericSigner<EvmTransaction> {
       if (
         error?.code === RPCErrorCode.TRANSACTION_REPLACED &&
         error?.replacement
-      )
+      ) {
         return { hash: error?.replacement?.hash, response: error?.replacement };
-      else if (error?.code === RPCErrorCode.CALL_EXCEPTION) {
+      } else if (error?.code === RPCErrorCode.CALL_EXCEPTION) {
         const tError = await getTenderlyError(chainId, txHash);
         if (!!tError) {
           throw new SignerError(
@@ -167,31 +219,12 @@ export class DefaultEvmSigner implements GenericSigner<EvmTransaction> {
           /**
            * In cases where the is no error returen from tenderly, we could ignore
            * the error and proceed with check status flow.
-           * */
+           *
+           */
           return { hash: txHash };
         }
       }
       throw cleanEvmError(error);
     }
-  }
-
-  static buildTx(evmTx: EvmTransaction, disableV2 = false): TransactionRequest {
-    let tx: TransactionRequest = {};
-    if (evmTx.from) tx = { ...tx, from: evmTx.from };
-    if (evmTx.to) tx = { ...tx, to: evmTx.to };
-    if (evmTx.data) tx = { ...tx, data: evmTx.data };
-    if (evmTx.value) tx = { ...tx, value: evmTx.value };
-    if (evmTx.nonce) tx = { ...tx, nonce: evmTx.nonce };
-    if (evmTx.gasLimit) tx = { ...tx, gasLimit: evmTx.gasLimit };
-    if (evmTx.gasPrice)
-      tx = {
-        ...tx,
-        gasPrice: '0x' + parseInt(evmTx.gasPrice).toString(16),
-      };
-    if (evmTx.maxFeePerGas && !disableV2)
-      tx = { ...tx, maxFeePerGas: evmTx.maxFeePerGas };
-    if (evmTx.maxPriorityFeePerGas && !disableV2)
-      tx = { ...tx, maxPriorityFeePerGas: evmTx.maxPriorityFeePerGas };
-    return tx;
   }
 }
