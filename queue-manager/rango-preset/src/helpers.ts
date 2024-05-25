@@ -288,6 +288,7 @@ export function updateSwapStatus({
   details,
   errorCode = null,
   hasAlreadyProceededToSign,
+  trace = null,
 }: {
   getStorage: ExecuterActions<
     SwapStorage,
@@ -305,6 +306,7 @@ export function updateSwapStatus({
   details?: string | null | undefined;
   errorCode?: APIErrorCode | SignerErrorCode | null;
   hasAlreadyProceededToSign?: boolean;
+  trace?: Error | null | undefined;
 }): {
   swap: PendingSwap;
   step: PendingSwapStep | null;
@@ -354,7 +356,10 @@ export function updateSwapStatus({
         requestId: swap.requestId,
         step: currentStep?.id || 1,
         eventType: failureType,
-        reason: errorReason || '',
+        reason:
+          trace?.message && typeof trace?.message === 'string'
+            ? trace?.message
+            : errorReason || '',
         tags: walletType
           ? {
               wallet: walletType,
@@ -1151,6 +1156,7 @@ export function signTransaction(
         message: extraMessage,
         details: extraMessageDetail,
         errorCode: extraMessageErrorCode,
+        trace: error?.trace,
       });
 
       notifier({
