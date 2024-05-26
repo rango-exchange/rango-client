@@ -24,6 +24,24 @@ jobs:
           node ./scripts/build-libs/command.mjs
           yarn run test
 
+      - name: Hash Current Branch Name
+        id: hash_curret_branch_name
+        run: |
+          hashed_name=$(echo -n "${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}" | base64)
+          echo "hashed=${hashed_name}">> $GITHUB_OUTPUT
+
+      #In the test step, we build all packages, and the build meta files are generated.
+      #Therefore, this step should be executed after the test step.
+      - name: Upload Build Meta
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{steps.hash_curret_branch_name.outputs.hashed}}
+          path: |
+            **/**/**.build.json
+            !**/node_modules/**
+          retention-days: 30
+          overwrite: true
+
       # for preview deployment for specific project, add vercel project id in environment section
       - name: Preview Deployment
         id: deploy
@@ -86,3 +104,34 @@ jobs:
         run: |
           echo "url=${{ needs.check.outputs.storybook_url }}">> $GITHUB_OUTPUT
           echo "Preview URL: ${{ needs.check.outputs.storybook_url}}"
+
+  analyze-bundle:
+    needs: check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: ${{ github.ref }}
+
+      - name: Prepare
+        uses: ./.github/actions/prepare
+
+      - name: Hash Target Branch Name
+        id: hash_target_branch_name
+        run: |
+          hashed_name=$(printf "%s" "${{ github.base_ref }}" | base64)
+          echo "hashed=${hashed_name}">> $GITHUB_OUTPUT
+
+      - name: Download Current Branch Build Meta
+        uses: actions/download-artifact@v4
+        continue-on-error: true
+        with:
+          name: ${{steps.hash_curret_branch_name.outputs.hashed}}
+          path: 'current-branch'
+
+      - name: Analyze Bundles And Create Report
+        run: node ./scripts/analyze-bundle/command.mjs --currentBranchDirectory current-branch --targetBranchDirectory target-branch --targetBranchArtifactName ${{steps.hash_target_branch_name.outputs.hashed}}
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPOSITORY: ${{ github.repository }}

@@ -88,6 +88,7 @@
     "eslint-plugin-react-hooks": "^4.6.0",
     "ethereum-waffle": "^4.0.10",
     "execa": "^7.1.1",
+    "filesize": "^10.1.2",
     "lint-staged": "^13.2.2",
     "npm-run-all": "^4.1.5",
     "nx": "16.2.1",
