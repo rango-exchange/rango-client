@@ -30,6 +30,8 @@ jobs:
           hashed_name=$(echo -n "${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}" | base64)
           echo "hashed=${hashed_name}">> $GITHUB_OUTPUT
 
+      #In the test step, we build all packages, and the build meta files are generated.
+      #Therefore, this step should be executed after the test step.
       - name: Upload Build Meta
         uses: actions/upload-artifact@v4
         with:
@@ -112,7 +114,10 @@ jobs:
           fetch-depth: 0
           ref: ${{ github.ref }}
 
-      - name: Hash Current Branch Name
+      - name: Prepare
+        uses: ./.github/actions/prepare
+
+      - name: Hash Target Branch Name
         id: hash_target_branch_name
         run: |
           hashed_name=$(printf "%s" "${{ github.base_ref }}" | base64)
@@ -125,27 +130,8 @@ jobs:
           name: ${{steps.hash_curret_branch_name.outputs.hashed}}
           path: 'current-branch'
 
-      - name: Set Up jq
-        run: sudo apt-get install -y jq
-
-      - name: List Artifacts
-        id: list_artifacts
-        run: |
-          curl -s -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
-          "https://api.github.com/repos/${{ github.repository }}/actions/artifacts" \
-          | jq --arg ARTIFACT_NAME "${{ steps.hash_target_branch_name.outputs.hashed }}" '.artifacts | map(select(.name == $ARTIFACT_NAME)) | .[0]' > artifact.json
-
-      - name: Extract Target Branch Artifact Download URL
-        id: get_artifact_url
-        run: |
-          cat artifact.json
-          echo "artifact_url=$(jq -r .archive_download_url artifact.json)" >> $GITHUB_OUTPUT
-
-      - name: Download Target Branch Artifact
-        if: steps.get_artifact_url.outputs.artifact_url != 'null'
-        run: |
-          curl -L -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" -o artifact.zip "${{ steps.get_artifact_url.outputs.artifact_url }}"
-          unzip artifact.zip -d ./target-branch
-
       - name: Analyze Bundles And Create Report
-        run: node ./scripts/analyze-bundle/command.mjs current-branch target-branch
+        run: node ./scripts/analyze-bundle/command.mjs --currentBranchDirectory current-branch --targetBranchDirectory target-branch --targetBranchArtifactName ${{steps.hash_target_branch_name.outputs.hashed}}
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPOSITORY: ${{ github.repository }}

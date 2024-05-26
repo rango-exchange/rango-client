@@ -3,8 +3,13 @@ import * as esbuild from 'esbuild';
 import { $ } from 'execa';
 import { join } from 'path';
 import process from 'process';
-import { packageJson, printDirname } from '../common/utils.mjs';
+import {
+  packageJson,
+  packageNameWithoutScope,
+  printDirname,
+} from '../common/utils.mjs';
 import fs from 'fs/promises';
+import { BUILD_META_FILE_SUFFIX } from '../common/constants.mjs';
 
 const root = join(printDirname(), '..', '..');
 
@@ -18,7 +23,7 @@ async function run() {
 
   const pkgPath = `${root}/${path}`;
   const entryPoint = `${pkgPath}/src/index.ts`;
-  const packageName = packageJson(path).name.split('/')[1];
+  const packageName = packageNameWithoutScope(packageJson(path).name);
 
   console.log(`[build] Running for ${path}`);
 
@@ -43,7 +48,7 @@ async function run() {
   console.log(`[build] ${path} built successfully.`);
 
   await fs.writeFile(
-    `dist/${packageName}.build.json`,
+    `dist/${packageName}${BUILD_META_FILE_SUFFIX}`,
     JSON.stringify(result[1].metafile)
   );
 }
