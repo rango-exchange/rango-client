@@ -1,3 +1,12 @@
+# [0.27.0](https://github.com/rango-exchange/rango-client/compare/signer-evm@0.26.0...signer-evm@0.27.0) (2024-05-25)
+
+
+### Bug Fixes
+
+* exclude the gas price from evm transaction specifications in version 2 ([49c5005](https://github.com/rango-exchange/rango-client/commit/49c50058f717f439833fe4cff216e5a45fbe252d))
+
+
+
 # [0.26.0](https://github.com/rango-exchange/rango-client/compare/signer-evm@0.25.0...signer-evm@0.26.0) (2024-02-20)
 
 
