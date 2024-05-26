@@ -1,7 +1,6 @@
 import { I18nManager } from '@rango-dev/ui';
 import React from 'react';
 
-import { AppRoutes } from '../../components/AppRoutes';
 import { useBootstrap } from '../../hooks/useBootstrap';
 import { useLanguage } from '../../hooks/useLanguage';
 import { useTheme } from '../../hooks/useTheme';
@@ -18,7 +17,7 @@ export function Main() {
   return (
     <I18nManager language={activeLanguage}>
       <MainContainer id="swap-container" className={activeTheme()}>
-        <AppRoutes />
+        <div>this is a test</div>
       </MainContainer>
     </I18nManager>
   );
