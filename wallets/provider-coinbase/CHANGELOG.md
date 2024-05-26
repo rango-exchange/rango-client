@@ -1,3 +1,7 @@
+## [0.33.2](https://github.com/rango-exchange/rango-client/compare/provider-coinbase@0.33.1...provider-coinbase@0.33.2) (2024-05-26)
+
+
+
 ## [0.33.1](https://github.com/rango-exchange/rango-client/compare/provider-coinbase@0.33.0...provider-coinbase@0.33.1) (2024-05-25)
 
 

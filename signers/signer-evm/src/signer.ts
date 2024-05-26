@@ -219,12 +219,15 @@ export class DefaultEvmSigner implements GenericSigner<EvmTransaction> {
           /**
            * In cases where the is no error returen from tenderly, we could ignore
            * the error and proceed with check status flow.
-           *
            */
           return { hash: txHash };
         }
       }
-      throw cleanEvmError(error);
+      /**
+       * Ignore other errors in confirming transaction and proceed with check status flow,
+       * Some times rpc gives internal error or other type of errors even if the transaction succeeded
+       */
+      return { hash: txHash };
     }
   }
 }

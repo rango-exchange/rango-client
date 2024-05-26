@@ -1,3 +1,7 @@
+## [0.27.1](https://github.com/rango-exchange/rango-client/compare/signer-evm@0.27.0...signer-evm@0.27.1) (2024-05-26)
+
+
+
 # [0.27.0](https://github.com/rango-exchange/rango-client/compare/signer-evm@0.26.0...signer-evm@0.27.0) (2024-05-25)
 
 
