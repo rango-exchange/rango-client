@@ -1,6 +1,6 @@
 export const MetamaskErrorCodes = {
   rpc: {
-    invalidInput: -32000,
+    // invalidInput: -32000,
     resourceNotFound: -32001,
     resourceUnavailable: -32002,
     transactionRejected: -32003,

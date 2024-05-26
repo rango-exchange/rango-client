@@ -351,15 +351,20 @@ export function updateSwapStatus({
     const failureType = mapAppErrorCodesToAPIErrorCode(errorCode);
     updatedResult.failureType = failureType;
 
+    // If trace of error was available, we will send it to the api (except user rejection)
+    const errorReasonForAPI =
+      errorCode !== 'USER_REJECT' &&
+      trace?.message &&
+      typeof trace.message === 'string'
+        ? trace.message
+        : errorReason || '';
+
     httpService()
       .reportFailure({
         requestId: swap.requestId,
         step: currentStep?.id || 1,
         eventType: failureType,
-        reason:
-          trace?.message && typeof trace?.message === 'string'
-            ? trace?.message
-            : errorReason || '',
+        reason: errorReasonForAPI,
         tags: walletType
           ? {
               wallet: walletType,
