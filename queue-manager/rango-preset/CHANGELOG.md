@@ -1,3 +1,7 @@
+## [0.33.2](https://github.com/rango-exchange/rango-client/compare/queue-manager-rango-preset@0.33.1...queue-manager-rango-preset@0.33.2) (2024-05-26)
+
+
+
 ## [0.33.1](https://github.com/rango-exchange/rango-client/compare/queue-manager-rango-preset@0.33.0...queue-manager-rango-preset@0.33.1) (2024-05-25)
 
 
