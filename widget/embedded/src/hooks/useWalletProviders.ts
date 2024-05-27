@@ -14,16 +14,12 @@ export function useWalletProviders(
   const clearConnectedWallet = useWalletsStore.use.clearConnectedWallet();
   let generateProviders: ProviderInterface[] = matchAndGenerateProviders(
     providers,
-    {
-      walletConnectProjectId: options?.walletConnectProjectId,
-    }
+    options
   );
 
   useEffect(() => {
     clearConnectedWallet();
-    generateProviders = matchAndGenerateProviders(providers, {
-      walletConnectProjectId: options?.walletConnectProjectId,
-    });
+    generateProviders = matchAndGenerateProviders(providers, options);
   }, [providers?.length]);
 
   return {
