@@ -56,7 +56,8 @@ export function useWalletList(params: Params) {
 
   wallets = detectMobileScreens()
     ? wallets.filter(
-        (wallet) => wallet.showOnMobile || state(wallet.type).installed
+        (wallet) =>
+          wallet.showOnMobile !== false && state(wallet.type).installed
       )
     : wallets;
 
@@ -137,9 +138,11 @@ export function useWalletList(params: Params) {
     const isEvmWalletInstalledExceptDefault = wallets.filter(
       (wallet) =>
         wallet.state != WalletState.NOT_INSTALLED &&
-        ![WalletTypes.DEFAULT, WalletTypes.WALLET_CONNECT_2].includes(
-          wallet.type as WalletTypes
-        ) &&
+        ![
+          WalletTypes.DEFAULT,
+          WalletTypes.WALLET_CONNECT_2,
+          WalletTypes.LEDGER,
+        ].includes(wallet.type as WalletTypes) &&
         getWalletInfo(wallet.type).supportedChains.filter(
           (blockchain) => blockchain.type == 'EVM'
         ).length > 0
