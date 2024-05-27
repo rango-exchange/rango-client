@@ -45,6 +45,8 @@ export function useWalletList(params: Params) {
   const listAvailableWalletTypes =
     configWalletsToWalletName(config?.wallets, {
       walletConnectProjectId: config?.walletConnectProjectId,
+      walletConnectListedDesktopWalletLink:
+        config.__UNSTABLE_OR_INTERNAL__?.walletConnectListedDesktopWalletLink,
     }) || ALL_SUPPORTED_WALLETS;
 
   let wallets = mapWalletTypesToWalletInfo(
