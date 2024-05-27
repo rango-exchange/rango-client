@@ -63,5 +63,6 @@ export const getWalletInfo: (allBlockChains: BlockchainMeta[]) => WalletInfo = (
     supportedChains,
     namespaces: [Namespace.Evm, Namespace.Solana],
     singleNamespace: true,
+    showOnMobile: false,
   };
 };
