@@ -27,7 +27,7 @@ jobs:
       #In the test step, we build all packages, and the build meta files are generated.
       #Therefore, this step should be executed after the test step.
       - id: upload_artifacts
-        name: Upload build artifacts
+        name: Upload Build Artifacts
         uses: ./.github/actions/upload-build-artifacts
 
       # for preview deployment for specific project, add vercel project id in environment section
@@ -105,7 +105,7 @@ jobs:
       - name: Prepare
         uses: ./.github/actions/prepare
 
-      - name: Download Current Branch Build Meta
+      - name: Download Build Information For Current Branch
         uses: actions/download-artifact@v4
         continue-on-error: true
         with:
