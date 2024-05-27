@@ -1,4 +1,4 @@
-name: Upload build artifacts
+name: Upload Build Artifacts
 description: 'Upload ESBuild build artifacts'
 outputs:
   hashed:
@@ -14,7 +14,7 @@ runs:
         hashed_name=$(echo -n "${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}" | base64 -w 0)
         echo "hashed=${hashed_name}">> $GITHUB_OUTPUT
       shell: 'bash'
-    - name: Upload Build Meta
+    - name: Upload Build Information
       uses: actions/upload-artifact@v4
       with:
         name: ${{steps.hash_current_branch_name.outputs.hashed}}
