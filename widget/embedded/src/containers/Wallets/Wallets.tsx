@@ -38,6 +38,9 @@ function Main(props: PropsWithChildren<PropTypes>) {
 
   const walletOptions: ProvidersOptions = {
     walletConnectProjectId: props.config?.walletConnectProjectId,
+    walletConnectListedDesktopWalletLink:
+      props.config.__UNSTABLE_OR_INTERNAL__
+        ?.walletConnectListedDesktopWalletLink,
   };
   const { providers } = useWalletProviders(config.wallets, walletOptions);
   const { connectWallet, disconnectWallet } = useWalletsStore();

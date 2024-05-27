@@ -214,4 +214,9 @@ export type WidgetConfig = {
   variant?: WidgetVariant;
   enableCentralizedSwappers?: boolean;
   signers?: SignersConfig;
+
+  // These are likely to change or remove at anytime. Please use with a caution.
+  __UNSTABLE_OR_INTERNAL__?: {
+    walletConnectListedDesktopWalletLink?: string;
+  };
 };

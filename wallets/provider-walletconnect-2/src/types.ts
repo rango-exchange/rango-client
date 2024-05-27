@@ -2,6 +2,11 @@ import type { SignClient } from '@walletconnect/sign-client/dist/types/client';
 import type { ProposalTypes, SessionTypes } from '@walletconnect/types';
 import type { BlockchainMeta, CosmosBlockchainMeta } from 'rango-types/lib';
 
+export interface Environments extends Record<string, string | undefined> {
+  WC_PROJECT_ID: string;
+  // This is useful for directly opening a listed WC wallet. you will need to pass a url.
+  DISABLE_MODAL_AND_OPEN_LINK?: string;
+}
 export interface WCInstance {
   client: SignClient;
   session: SessionTypes.Struct | null;
@@ -16,6 +21,7 @@ export interface CreateSessionParams {
 
 export interface ConnectParams {
   meta: BlockchainMeta[];
+  envs: Environments;
 }
 
 export interface CosmosMeta extends CosmosBlockchainMeta {
