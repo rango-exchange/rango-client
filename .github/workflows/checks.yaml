@@ -115,7 +115,7 @@ jobs:
       - name: Hash Target Branch Name
         id: hash_target_branch_name
         run: |
-          hashed_name=$(printf "%s" "${{ github.base_ref }}" | base64)
+          hashed_name=$(printf "%s" "${{ github.base_ref }}" | base64 -w 0)
           echo "hashed=${hashed_name}">> $GITHUB_OUTPUT
 
       - name: Analyze Bundles And Create Report
