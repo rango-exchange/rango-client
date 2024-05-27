@@ -11,7 +11,7 @@ runs:
     - name: Hash Current Branch Name
       id: hash_current_branch_name
       run: |
-        hashed_name=$(echo -n "${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}" | base64)
+        hashed_name=$(echo -n "${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}" | base64 -w 0)
         echo "hashed=${hashed_name}">> $GITHUB_OUTPUT
       shell: 'bash'
     - name: Upload Build Meta
