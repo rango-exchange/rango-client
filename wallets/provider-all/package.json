@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/provider-all",
-  "version": "0.33.3-next.0",
+  "version": "0.33.3-next.1",
   "license": "MIT",
   "type": "module",
   "source": "./src/index.ts",
@@ -36,7 +36,7 @@
     "@rango-dev/provider-halo": "^0.33.3-next.0",
     "@rango-dev/provider-keplr": "^0.33.1-next.1",
     "@rango-dev/provider-leap-cosmos": "^0.33.1-next.1",
-    "@rango-dev/provider-ledger": "^0.3.1-next.2",
+    "@rango-dev/provider-ledger": "^0.3.1-next.3",
     "@rango-dev/provider-math-wallet": "^0.33.3-next.0",
     "@rango-dev/provider-metamask": "^0.33.3-next.0",
     "@rango-dev/provider-okx": "^0.33.3-next.0",
