@@ -1,4 +1,5 @@
 import type { PropTypes } from './WalletNamespacesModal.types';
+import type { Namespace } from '@rango-dev/wallets-shared';
 import type { BlockchainMeta } from 'rango-sdk';
 
 import { i18n } from '@lingui/core';
@@ -11,7 +12,7 @@ import {
   Radio,
   RadioRoot,
 } from '@rango-dev/ui';
-import { Namespace } from '@rango-dev/wallets-shared';
+import { namespaceMainBlockchain } from '@rango-dev/wallets-shared';
 import React, { useMemo, useState } from 'react';
 
 import { WIDGET_UI_ID } from '../../constants';
@@ -24,15 +25,6 @@ import {
 } from '../WalletModal/WalletModalContent.styles';
 
 import { NamespaceList } from './WalletNamespacesModal.styles';
-
-export const namespaceMainBlockchain: Record<Namespace, string> = {
-  [Namespace.Evm]: 'ETH',
-  [Namespace.Solana]: 'SOLANA',
-  [Namespace.Cosmos]: 'COSMOS',
-  [Namespace.Utxo]: 'BTC',
-  [Namespace.Starknet]: 'STARKNET',
-  [Namespace.Tron]: 'TRON',
-};
 
 const getBlockchainLogo = (
   blockchains: BlockchainMeta[],
