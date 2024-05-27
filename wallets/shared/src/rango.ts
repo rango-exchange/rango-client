@@ -155,6 +155,15 @@ export enum Namespace {
   Tron = 'Tron',
 }
 
+export const namespaceMainBlockchain: Record<Namespace, string> = {
+  [Namespace.Evm]: 'ETH',
+  [Namespace.Solana]: 'SOLANA',
+  [Namespace.Cosmos]: 'COSMOS',
+  [Namespace.Utxo]: 'BTC',
+  [Namespace.Starknet]: 'STARKNET',
+  [Namespace.Tron]: 'TRON',
+};
+
 export const XDEFI_WALLET_SUPPORTED_NATIVE_CHAINS: string[] = [
   Networks.BTC,
   Networks.LTC,
@@ -320,7 +329,7 @@ export interface Wallet {
   type: WalletType;
   extensionAvailable: boolean;
   connected: boolean;
-  info: Omit<WalletInfo, 'color' | 'supportedChains'>;
+  info: Omit<WalletInfo, 'color'>;
 }
 
 export type Providers = { [type in WalletType]?: any };
