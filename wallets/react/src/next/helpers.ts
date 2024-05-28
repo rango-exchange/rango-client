@@ -11,6 +11,8 @@ import type {
 import {
   CAIP,
   formatAddressWithNetwork,
+  isDiscoverMode,
+  isEvmNamespace,
   pickVersion,
 } from '@rango-dev/wallets-core';
 
@@ -111,7 +113,7 @@ export function connect(
   const targetNamespaces: [NamespaceAndNetwork, object][] = [];
   namespaces.forEach((namespace) => {
     let targetNamespace: Namespaces;
-    if (namespace.namespace === 'DISCOVER_MODE') {
+    if (isDiscoverMode(namespace)) {
       targetNamespace = discoverNamespace(namespace.network);
     } else {
       targetNamespace = namespace.namespace;
@@ -131,9 +133,10 @@ export function connect(
   });
 
   const finalResult = targetNamespaces.map(([info, namespace]) => {
-    const chain =
-      convertNamespaceNetworkToEvmChainId(info, allBlockChains || []) ||
-      info.network;
+    const evmChain = isEvmNamespace(info)
+      ? convertNamespaceNetworkToEvmChainId(info, allBlockChains || [])
+      : undefined;
+    const chain = evmChain || info.network;
 
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore-next-line

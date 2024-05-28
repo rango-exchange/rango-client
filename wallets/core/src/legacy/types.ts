@@ -1,5 +1,8 @@
 import type { LegacyState as WalletState } from './wallet';
-import type { Namespaces } from '../namespaces/common/types';
+import type {
+  Namespaces,
+  NetworkTypeForNamespace,
+} from '../namespaces/common/types';
 import type {
   Network,
   WalletInfo,
@@ -139,8 +142,35 @@ export type WalletProviders = Map<
 
 export type LegacyProviderInterface = { config: WalletConfig } & WalletActions;
 
-// TODO: make it type safe by connecting `namespace` and `network`
-export type NamespaceAndNetwork = {
-  namespace: Namespaces | 'DISCOVER_MODE';
-  network: any;
+export type NamespacesWithDiscoverMode = Namespaces | 'DISCOVER_MODE';
+export type NamespaceAndNetwork2<
+  T extends NamespacesWithDiscoverMode = NamespacesWithDiscoverMode
+> = {
+  /**
+   * By default, you should specify namespace (e.g. evm).
+   * For backward compatibility with legacy implementation, DISCOVER_MODE will try to map a list of known (and hardcoded) networks to a namespace.
+   */
+  namespace: T;
+  /**
+   * In some cases, we need to connect a specific network on a namespace. e.g. Polygon on EVM.
+   */
+  network: NetworkTypeForNamespace<T>;
 };
+
+export type NamespaceWithDiscoverMode = {
+  namespace: 'DISCOVER_MODE';
+  network: string;
+};
+export type NamespaceAndNetwork<T extends Namespaces = Namespaces> =
+  | {
+      /**
+       * By default, you should specify namespace (e.g. evm).
+       * For backward compatibility with legacy implementation, DISCOVER_MODE will try to map a list of known (and hardcoded) networks to a namespace.
+       */
+      namespace: T;
+      /**
+       * In some cases, we need to connect a specific network on a namespace. e.g. Polygon on EVM.
+       */
+      network: NetworkTypeForNamespace<T>;
+    }
+  | NamespaceWithDiscoverMode;

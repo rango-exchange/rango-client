@@ -160,7 +160,7 @@ export function checkHubStateAndTriggerEvents(
  * TODO: Make sure network mapped correctly.
  * TODO: Make sure Networks is up to date.
  */
-export function discoverNamespace(network: Networks): Namespaces {
+export function discoverNamespace(network: string): Namespaces {
   switch (network) {
     case Networks.AKASH:
     case Networks.BANDCHAIN:
@@ -251,7 +251,7 @@ export function getLegacyProvider(
 }
 
 export function convertNamespaceNetworkToEvmChainId(
-  namespace: NamespaceAndNetwork,
+  namespace: NamespaceAndNetwork<Namespaces.Evm>,
   meta: BlockchainMeta[]
 ) {
   const evmBlockchainsList = meta.filter(isEvmBlockchain);

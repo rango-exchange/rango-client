@@ -1,4 +1,4 @@
-import type { NamespaceAndNetwork } from '@rango-dev/wallets-core';
+import type { NamespaceValue } from '../components/SwapDetailsModal';
 import type { WalletType } from '@rango-dev/wallets-shared';
 
 import { i18n } from '@lingui/core';
@@ -31,11 +31,6 @@ const Container = styled(PageContainer, {
 
 export const TIME_TO_CLOSE_MODAL = 3_000;
 export const TIME_TO_IGNORE_MODAL = 300;
-
-interface NamespaceValue {
-  providerId: string;
-  namespaces: NamespaceAndNetwork[];
-}
 
 export function WalletsPage() {
   const { config, fetchStatus: fetchMetaStatus } = useAppStore();

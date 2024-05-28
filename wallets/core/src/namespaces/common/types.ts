@@ -1,4 +1,5 @@
 import type { SpecificMethods } from '../../hub/namespace';
+import type { NamespacesWithDiscoverMode } from '../../legacy/types';
 
 export enum Namespaces {
   Solana = 'solana',
@@ -6,6 +7,27 @@ export enum Namespaces {
   Cosmos = 'cosmos',
   Utxo = 'utxo',
 }
+interface NamespaceNetworkType {
+  [Namespaces.Evm]: string;
+  [Namespaces.Solana]: undefined;
+  [Namespaces.Cosmos]: string;
+  [Namespaces.Utxo]: string;
+}
+
+export type NetworkTypeForNamespace<T extends NamespacesWithDiscoverMode> =
+  T extends 'DISCOVER_MODE'
+    ? string
+    : T extends Namespaces
+    ? NamespaceNetworkType[T]
+    : never;
+/*
+ * export type NetworkTypeForNamespace<T extends NamespacesWithDiscoverMode> =
+ *   T extends 'DISCOVER_MODE'
+ *     ? string
+ *     : T extends Namespaces
+ *     ? NamespaceNetworkType[T]
+ *     : never;
+ */
 
 export type AnyFunction = (...args: any[]) => any;
 

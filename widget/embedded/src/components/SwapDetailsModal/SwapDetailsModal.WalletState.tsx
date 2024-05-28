@@ -1,5 +1,7 @@
-import type { WalletStateContentProps } from './SwapDetailsModal.types';
-import type { NamespaceAndNetwork } from '@rango-dev/wallets-core';
+import type {
+  NamespaceValue,
+  WalletStateContentProps,
+} from './SwapDetailsModal.types';
 
 import { MessageBox, Wallet } from '@rango-dev/ui';
 import { useWallets } from '@rango-dev/wallets-react';
@@ -10,12 +12,6 @@ import { mapStatusToWalletState } from '../../utils/wallets';
 import { WalletNamespacesListModal } from '../WalletModal';
 
 import { WalletContainer } from './SwapDetailsModal.styles';
-
-// TODO: Same as widget/embedded/src/pages/WalletsPage.tsx
-interface NamespaceValue {
-  providerId: string;
-  namespaces: NamespaceAndNetwork[];
-}
 
 export const WalletStateContent = (props: WalletStateContentProps) => {
   const {

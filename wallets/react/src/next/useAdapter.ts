@@ -8,7 +8,12 @@ import type {
 } from '@rango-dev/wallets-core';
 import type { WalletInfo } from '@rango-dev/wallets-shared';
 
-import { createStore, Hub } from '@rango-dev/wallets-core';
+import {
+  createStore,
+  Hub,
+  isDiscoverMode,
+  isEvmNamespace,
+} from '@rango-dev/wallets-core';
 import { useEffect, useRef, useState } from 'react';
 
 import { addWalletToStorage, removeWalletsFromStorage } from './autoConnect';
@@ -159,7 +164,7 @@ export function useAdapter(props: UseAdapterProps): ProviderContext {
       const targetNamespaces: [NamespaceAndNetwork, object][] = [];
       namespaces.forEach((namespace) => {
         let targetNamespace: Namespaces;
-        if (namespace.namespace === 'DISCOVER_MODE') {
+        if (isDiscoverMode(namespace)) {
           targetNamespace = discoverNamespace(namespace.network);
         } else {
           targetNamespace = namespace.namespace;
@@ -179,11 +184,13 @@ export function useAdapter(props: UseAdapterProps): ProviderContext {
       });
 
       const finalResult = targetNamespaces.map(([info, namespace]) => {
-        const chain =
-          convertNamespaceNetworkToEvmChainId(
-            info,
-            props.allBlockChains || []
-          ) || info.network;
+        const evmChain = isEvmNamespace(info)
+          ? convertNamespaceNetworkToEvmChainId(
+              info,
+              props.allBlockChains || []
+            )
+          : undefined;
+        const chain = evmChain || info.network;
 
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore-next-line

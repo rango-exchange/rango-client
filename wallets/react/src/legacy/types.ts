@@ -42,7 +42,7 @@ export type ProviderContext = {
   connect(
     type: WalletType,
     namespaces?: NamespaceAndNetwork[]
-  ): Promise<ConnectResult | ConnectResult[]>;
+  ): Promise<ConnectResult[]>;
   disconnect(type: WalletType): Promise<void>;
   disconnectAll(): Promise<PromiseSettledResult<any>[]>;
   state(type: WalletType): WalletState;

@@ -65,7 +65,7 @@ export function useLegacy(props: UseV0Props): ProviderContext {
         });
       }
 
-      return result;
+      return [result];
     },
     async disconnect(type) {
       const wallet = wallets.get(type);

@@ -1,3 +1,4 @@
+import type { NamespaceAndNetwork } from '@rango-dev/wallets-core';
 import type { WalletType } from '@rango-dev/wallets-shared';
 import type { PendingSwapNetworkStatus } from 'rango-types';
 
@@ -56,3 +57,8 @@ export interface WalletStateContentProps extends ModalNetworkValueTypes {
 export type CancelContentProps = Pick<ModalPropTypes, 'onClose' | 'onCancel'>;
 
 export type DeleteContentProps = Pick<ModalPropTypes, 'onClose' | 'onDelete'>;
+
+export interface NamespaceValue {
+  providerId: string;
+  namespaces: NamespaceAndNetwork[];
+}
