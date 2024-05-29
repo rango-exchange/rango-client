@@ -98,27 +98,35 @@ export const createDataSlice: StateCreator<
     const blockchains = get().blockchains({
       type: options.type,
     });
-
-    const includedTokens = new Set();
-    const excludedTokens = new Set();
-
+    const includedTokens = new Set<string>();
+    const excludedTokens = new Set<string>();
     if (supportedTokensConfig) {
+      const shouldIncludeOrExcludeTokens = (
+        tokenBlockchain: string,
+        requestedBlockchain?: string
+      ) => !requestedBlockchain || tokenBlockchain === requestedBlockchain;
+
       if (Array.isArray(supportedTokensConfig)) {
-        supportedTokensConfig.forEach((token) =>
-          includedTokens.add(createTokenHash(token))
-        );
-      } else if (!Array.isArray(supportedTokensConfig)) {
-        Object.values(supportedTokensConfig).forEach((value) => {
-          value.tokens.forEach((token) => {
-            if (token.blockchain === options.blockchain) {
+        supportedTokensConfig.forEach((token) => {
+          if (
+            shouldIncludeOrExcludeTokens(token.blockchain, options.blockchain)
+          ) {
+            includedTokens.add(createTokenHash(token));
+          }
+        });
+      } else {
+        for (const blockchain in supportedTokensConfig) {
+          if (shouldIncludeOrExcludeTokens(blockchain, options.blockchain)) {
+            const value = supportedTokensConfig[blockchain];
+            value.tokens.forEach((token) => {
               if (value.isExcluded) {
                 excludedTokens.add(createTokenHash(token));
               } else {
                 includedTokens.add(createTokenHash(token));
               }
-            }
-          });
-        });
+            });
+          }
+        }
       }
     }
 
