@@ -7,12 +7,17 @@ import { customizedThemeTokens } from '@rango-dev/widget-embedded';
 import { useEffect, useLayoutEffect, useState } from 'react';
 
 import { NOT_FOUND } from '../constants';
-import { useConfigStore } from '../store/config';
+import { initialConfig, useConfigStore } from '../store/config';
+import { filterConfig } from '../utils/export';
 
 export function useTheme() {
   const [systemTheme, setSystemTheme] = useState('light');
-  const themeConfig = useConfigStore.use.config().theme;
-  const mode = themeConfig?.mode;
+  const config = useConfigStore.use.config();
+  const { filteredConfigForExport } = filterConfig(config, initialConfig);
+
+  const themeConfig = filteredConfigForExport.theme;
+
+  const mode = config.theme?.mode;
 
   const { dark, light } = customizedThemeTokens(themeConfig?.colors);
 

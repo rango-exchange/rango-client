@@ -1,9 +1,8 @@
-import type { Type } from '../types';
+import type { ColorsType, Type } from '../types';
 import type { WalletType } from '@rango-dev/wallets-shared';
 import type {
   ProviderInterface,
   Tokens,
-  WidgetColors,
   WidgetColorsKeys,
   WidgetConfig,
   WidgetVariant,
@@ -14,7 +13,7 @@ import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { immer } from 'zustand/middleware/immer';
 
-import { DEFAULT_COLORS } from '../constants';
+import { DEFAULT_THEME_COLORS } from '../constants';
 import { getConfig } from '../utils/configs';
 
 import createSelectors from './selectors';
@@ -68,7 +67,7 @@ interface ConfigState {
     color?: string;
     singleTheme?: boolean;
   }) => void;
-  onSelectTheme: (colors: { light: WidgetColors; dark: WidgetColors }) => void;
+  onSelectTheme: (colors: ColorsType) => void;
   onChangeLanguage: (value: string) => void;
   resetConfig: () => void;
   onChangeVariant: (variant?: WidgetVariant) => void;
@@ -108,7 +107,7 @@ export const initialConfig: WidgetConfig = {
     width: undefined,
     height: undefined,
     singleTheme: undefined,
-    colors: DEFAULT_COLORS,
+    colors: DEFAULT_THEME_COLORS,
   },
 };
 

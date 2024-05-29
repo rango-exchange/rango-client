@@ -8,17 +8,20 @@ import { Route, Routes } from 'react-router-dom';
 import { PLAYGROUND_CONTAINER_ID } from './constants';
 import { ConfigContainer } from './containers/configContainer';
 import { useTheme } from './hooks/useTheme';
-import { useConfigStore } from './store/config';
+import { initialConfig, useConfigStore } from './store/config';
 import { useMetaStore } from './store/meta';
 import { RANGO_PUBLIC_API_KEY } from './utils/configs';
+import { filterConfig } from './utils/export';
 
 export function App() {
   const { activeStyle } = useTheme();
   const fetchMeta = useMetaStore.use.fetchMeta();
   const config = useConfigStore.use.config();
+  const { filteredConfigForExport } = filterConfig(config, initialConfig);
 
   const overridedConfig: WidgetConfig = {
-    ...config,
+    theme: {},
+    ...filteredConfigForExport,
     apiKey: RANGO_PUBLIC_API_KEY,
     features: {
       theme: 'hidden',

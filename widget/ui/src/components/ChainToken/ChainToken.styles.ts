@@ -36,9 +36,9 @@ export const ChainImageContainer = styled('div', {
     },
     hasBorder: {
       true: {
-        $$borderColor: '$colors$secondary400',
+        $$borderColor: '$colors$secondary250',
         [`.${darkTheme} &`]: {
-          $$borderColor: '$colors$secondary600',
+          $$borderColor: '$colors$secondary550',
         },
         border: '1px solid $$borderColor',
       },
@@ -56,7 +56,7 @@ export const TokenImageContainer = styled('div', {
   variants: {
     hasBorder: {
       true: {
-        $$borderColor: '$colors$secondary600',
+        $$borderColor: '$colors$secondary550',
         [`.${darkTheme} &`]: {
           $$borderColor: '$colors$secondary500',
         },

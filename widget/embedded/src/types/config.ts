@@ -14,14 +14,18 @@ export type WidgetVariant = 'default' | 'expanded' | 'full-expanded';
  *
  */
 export type WidgetColorsKeys = keyof WidgetColors;
-export type WidgetColors = {
+
+export type ThemeColors = {
+  [key in string]?: string;
+};
+
+export interface WidgetColors extends ThemeColors {
   background?: string;
   foreground?: string;
   neutral?: string;
   primary?: string;
   secondary?: string;
-  info?: string;
-};
+}
 
 /**
  * The `WidgetTheme` defines the properties of a widget theme, including mode, font family, colors, border

@@ -8,14 +8,15 @@ import {
 } from '@rango-dev/ui';
 import React from 'react';
 
-import { generateColors } from '../utils/colors';
+import { expandToGenerateThemeColors } from '../utils/colors';
 import { toHash } from '../utils/hash';
 
 import { THEME_CLASS_NAME_PREFIX } from './configs';
 
+type Tokens = Parameters<typeof createTheme>[0];
 interface CustomizedThemeValues {
   id: string;
-  tokens: Parameters<typeof createTheme>[0];
+  tokens: Tokens;
 }
 
 interface CustomizedTheme {
@@ -27,48 +28,42 @@ export function customizedThemeTokens(
   colors: WidgetTheme['colors']
 ): CustomizedTheme {
   const baseColors = baseThemeTokens.colors;
+  const baseDarkColors = {
+    ...baseColors,
+    ...defaultDarkColors,
+  };
+  let lightTheme: CustomizedTheme['light'] = undefined;
+  let darkTheme: CustomizedTheme['dark'] = undefined;
 
-  const darkColorsWithDefaults = generateColors(
-    {
-      ...baseColors,
-      ...defaultDarkColors,
-    },
-    true,
-    colors?.dark
-  );
-  const lightColorsWithDefaults = generateColors(
-    baseColors,
-    false,
-    colors?.light
-  );
-  const hasDefaultDarkColors = Object.keys(darkColorsWithDefaults).length > 0;
-  const hasDefaultLightColors = Object.keys(lightColorsWithDefaults).length > 0;
-
-  let light: CustomizedTheme['light'] = undefined;
-  let dark: CustomizedTheme['dark'] = undefined;
-
-  if (hasDefaultLightColors) {
-    const tokens = { colors: lightColorsWithDefaults };
+  if (colors?.light) {
+    const lightColors = expandToGenerateThemeColors(baseColors, colors.light);
+    const tokens = { colors: lightColors };
     const id = `${THEME_CLASS_NAME_PREFIX}-light-${toHash(tokens)}`;
-    light = {
+    lightTheme = {
       id,
-      tokens,
+      tokens: tokens as Tokens,
     };
   }
-  if (hasDefaultDarkColors) {
-    const tokens = {
-      colors: darkColorsWithDefaults,
-    };
+
+  if (colors?.dark) {
+    const darkColors = expandToGenerateThemeColors(
+      baseDarkColors,
+      colors.dark,
+      {
+        reverseNeutralRange: true,
+      }
+    );
+    const tokens = { colors: darkColors };
     const id = `${THEME_CLASS_NAME_PREFIX}-dark-${toHash(tokens)}`;
-    dark = {
+    darkTheme = {
       id,
-      tokens,
+      tokens: tokens as Tokens,
     };
   }
 
   return {
-    light,
-    dark,
+    light: lightTheme,
+    dark: darkTheme,
   };
 }
 
