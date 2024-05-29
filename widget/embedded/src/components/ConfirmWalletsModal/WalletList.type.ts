@@ -6,4 +6,5 @@ export type PropTypes = {
   selectWallet: (wallet: Wallet) => void;
   limit?: number;
   onShowMore: () => void;
+  onConnect?: (walletType: string) => void;
 };

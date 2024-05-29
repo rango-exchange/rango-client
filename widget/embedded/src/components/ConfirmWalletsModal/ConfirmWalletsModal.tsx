@@ -18,7 +18,7 @@ import {
   Typography,
   WalletIcon,
 } from '@rango-dev/ui';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { WIDGET_UI_ID } from '../../constants';
@@ -59,6 +59,7 @@ const NUMBER_OF_WALLETS_TO_DISPLAY = 2;
 export function ConfirmWalletsModal(props: PropTypes) {
   //TODO: move component's logics to a custom hook
   const { open, onClose, onCancel, onCheckBalance, loading } = props;
+  const navigate = useNavigate();
   const config = useAppStore().config;
 
   const customDestinationInputRef = useRef<HTMLInputElement | null>(null);
@@ -104,16 +105,34 @@ export function ConfirmWalletsModal(props: PropTypes) {
   const isWalletRequiredFor = (blockchain: string) =>
     requiredWallets.includes(blockchain);
 
-  const getInitialSelectableWallets = () =>
-    connectedWallets.filter((connectedWallet) => {
-      return (
-        connectedWallet.selected && quoteWallets.includes(connectedWallet.chain)
-      );
-    });
+  const getInitialSelectableWallets = useCallback(
+    () =>
+      connectedWallets.filter((connectedWallet) => {
+        return (
+          connectedWallet.selected &&
+          quoteWallets.includes(connectedWallet.chain)
+        );
+      }),
+    [connectedWallets.length, quoteWallets.length]
+  );
 
   const [selectableWallets, setSelectableWallets] = useState<ConnectedWallet[]>(
     getInitialSelectableWallets()
   );
+  const [nextSelectedWallets, setNextSelectedWallets] = useState<
+    {
+      blockchain: string;
+      walletType: string;
+    }[]
+  >([]);
+
+  const addNextSelectedWallets = (blockchain: string, walletType: string) =>
+    setNextSelectedWallets((prevState) =>
+      prevState.concat({
+        blockchain,
+        walletType,
+      })
+    );
 
   const isInsufficientBalanceModalOpen = balanceWarnings.length > 0;
 
@@ -206,7 +225,11 @@ export function ConfirmWalletsModal(props: PropTypes) {
     }
 
     onCancel();
-    if (wallet.chain === lastStepToBlockchain?.name && showCustomDestination) {
+    if (
+      wallet.chain === lastStepToBlockchain?.name &&
+      showCustomDestination &&
+      !isWalletRequiredFor(lastStepToBlockchain.name)
+    ) {
       setShowCustomDestination(false);
       setCustomDestination(null);
     }
@@ -273,10 +296,30 @@ export function ConfirmWalletsModal(props: PropTypes) {
   };
 
   useEffect(() => {
-    setSelectableWallets((selectableWallets) =>
-      selectableWallets.concat(
+    setSelectableWallets((selectableWallets) => {
+      let nextState: typeof selectableWallets = [];
+
+      //if wallet disconnected we should unselect the wallet from the list
+      selectableWallets.forEach((selectableWallet) => {
+        const walletDisconnected = !connectedWallets.some(
+          (connectedWallet) =>
+            connectedWallet.chain === selectableWallet.chain &&
+            connectedWallet.walletType === selectableWallet.walletType &&
+            connectedWallet.address === selectableWallet.address
+        );
+        if (!walletDisconnected) {
+          nextState.push(selectableWallet);
+        }
+      });
+
+      /**
+       * We confirm if a newly connected wallet for a blockchain is marked as selected in the store,
+       * but there are no selected wallets for that blockchain in our list.
+       * If this condition is met, we include the wallet in our list as selected.
+       */
+      nextState = nextState.concat(
         connectedWallets.filter((connectedWallet) => {
-          const anyWalletSelected = !!selectableWallets.find(
+          const anyWalletSelected = !!nextState.find(
             (selectableWallet) =>
               selectableWallet.chain === connectedWallet.chain
           );
@@ -287,15 +330,34 @@ export function ConfirmWalletsModal(props: PropTypes) {
             quoteWallets.includes(connectedWallet.chain)
           );
         })
-      )
-    );
-  }, [connectedWallets.length]);
+      );
+      return nextState;
+    });
+  }, [connectedWallets.length, quoteWallets.length]);
+
+  useEffect(() => {
+    const nextState: typeof nextSelectedWallets = [];
+
+    if (nextSelectedWallets.length > 0) {
+      nextSelectedWallets.forEach((selectedWallet) => {
+        const wallet = connectedWallets.find(
+          (wallet) =>
+            wallet.chain === selectedWallet.blockchain &&
+            wallet.walletType === selectedWallet.walletType
+        );
+        if (wallet) {
+          onChange(wallet);
+        } else {
+          nextState.push(selectedWallet);
+        }
+      });
+      setNextSelectedWallets(nextState);
+    }
+  }, [connectedWallets.length, nextSelectedWallets.length]);
 
   const modalContainer = document.getElementById(
     WIDGET_UI_ID.SWAP_BOX_ID
   ) as HTMLDivElement;
-
-  const navigate = useNavigate();
 
   return (
     <WatermarkedModal
@@ -381,7 +443,10 @@ export function ConfirmWalletsModal(props: PropTypes) {
               chain={showMoreWalletFor}
               isSelected={isSelected}
               selectWallet={onChange}
-              onShowMore={setShowMoreWalletFor.bind(null, showMoreWalletFor)}
+              onShowMore={() => setShowMoreWalletFor(showMoreWalletFor)}
+              onConnect={(walletType) => {
+                addNextSelectedWallets(showMoreWalletFor, walletType);
+              }}
             />
           </div>
         </WalletsContainer>
@@ -442,6 +507,9 @@ export function ConfirmWalletsModal(props: PropTypes) {
                       onShowMore={() =>
                         setShowMoreWalletFor(blockchain?.name ?? '')
                       }
+                      onConnect={(walletType) => {
+                        addNextSelectedWallets(requiredWallet, walletType);
+                      }}
                     />
                   </ListContainer>
                   {!isLastWallet && <Divider size={32} />}
@@ -501,12 +569,7 @@ export function ConfirmWalletsModal(props: PropTypes) {
                           suffix={renderCustomDestinationSuffix()}
                           onChange={(e) => {
                             const value = e.target.value;
-                            if (!value.length) {
-                              setShowCustomDestination(false);
-                              setCustomDestination(null);
-                            } else {
-                              setCustomDestination(value.length ? value : null);
-                            }
+                            setCustomDestination(value);
                           }}
                           {...(!customDestination && { autoFocus: true })}
                         />
