@@ -34,7 +34,7 @@ export const ContainerChip = styled('div', {
   cursor: 'pointer',
   gap: '$10',
   '&:hover': {
-    borderColor: '$info300',
+    borderColor: '$secondary200',
   },
   variants: {
     variant: {

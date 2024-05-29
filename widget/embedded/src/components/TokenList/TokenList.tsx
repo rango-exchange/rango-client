@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-magic-numbers */
 import type { PropTypes, RenderDescProps } from './TokenList.types';
-import type { Token } from 'rango-sdk';
+import type { BlockchainMeta, Token } from 'rango-sdk';
 
 import { i18n } from '@lingui/core';
 import {
@@ -19,7 +19,7 @@ import React, { useEffect, useState } from 'react';
 
 import { useAppStore } from '../../store/AppStore';
 import { useWalletsStore } from '../../store/wallets';
-import { generateShade, isBright } from '../../utils/colors';
+import { createTintsAndShades } from '../../utils/colors';
 import { formatBalance } from '../../utils/wallets';
 
 import { LoadingTokenList } from './LoadingTokenList';
@@ -133,25 +133,20 @@ export function TokenList(props: PropTypes) {
           const address = token.address || '';
           const blockchain = blockchains.find(
             (blockchain) => blockchain.name === token.blockchain
-          );
-          const lightShade = generateShade(
-            blockchain?.color || '',
-            isBright(blockchain?.color || '') ? 5 : 125
-          );
-          const darkShade = generateShade(blockchain?.color || '', -100);
-
+          ) as BlockchainMeta;
+          const colors = createTintsAndShades(blockchain.color, 'main');
           const customCssForTag = {
-            $$color: lightShade,
+            $$color: colors.main250,
             [`.${darkTheme} &`]: {
-              $$color: darkShade,
+              $$color: colors.main850,
             },
             backgroundColor: '$$color',
           };
 
           const customCssForTagTitle = {
-            $$color: darkShade,
+            $$color: colors.main600,
             [`.${darkTheme} &`]: {
-              $$color: lightShade,
+              $$color: colors.main200,
             },
             color: '$$color',
           };

@@ -1,17 +1,25 @@
 import { ColorsIcon, Divider, Tabs, Typography } from '@rango-dev/ui';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { TABS } from '../../constants';
-import { type Mode } from '../../store/config';
+import { type Mode, useConfigStore } from '../../store/config';
 
 import { Preset } from './StyleLayout.Preset';
 import { FieldTitle, GeneralContainer } from './StyleLayout.styles';
 
 export function Themes() {
-  const [tab, setTab] = useState<Mode>('auto');
+  const { theme } = useConfigStore.use.config();
+
+  const [tab, setTab] = useState<Mode>(theme?.mode || 'auto');
   const onChangeMode = (mode: Mode) => {
     setTab(mode);
   };
+
+  useEffect(() => {
+    if (theme?.colors?.light && theme?.colors?.dark) {
+      setTab('auto');
+    }
+  }, [theme?.colors]);
 
   return (
     <>

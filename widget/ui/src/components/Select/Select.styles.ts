@@ -53,7 +53,7 @@ export const SelectTrigger = styled(Select.Trigger, {
         border: '1px solid $neutral300',
         borderRadius: '$xm',
         '&:hover': {
-          borderColor: '$info300',
+          borderColor: '$secondary200',
           '& svg': {
             color: '$secondary500',
           },

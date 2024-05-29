@@ -1,10 +1,13 @@
 import type { Mode } from '../store/config';
+import type { PresetType } from '../types';
 import type {
   WidgetColors,
   WidgetColorsKeys,
 } from '@rango-dev/widget-embedded';
 
-const DEFAULT_PRESET_ID = 1;
+import { rangoDarkColors } from '@rango-dev/ui';
+
+export const DEFAULT_PRESET_ID = 'DEFAULT_THEME_COLORS';
 
 export const TABS: { id: Mode; title: string }[] = [
   {
@@ -23,20 +26,15 @@ export const TABS: { id: Mode; title: string }[] = [
   },
 ];
 
-export const PRESETS: {
-  id: number;
-  dark?: WidgetColors;
-  light?: WidgetColors;
-}[] = [
+export const PRESETS: PresetType = [
   {
-    id: 1,
+    id: 'DEFAULT_THEME_COLORS',
     dark: {
       primary: '#1C3CF1',
       secondary: '#2284ED',
       neutral: '#222222',
       background: '#010101',
       foreground: '#FDFDFD',
-      info: '#5BABFF',
     },
     light: {
       primary: '#1C3CF1',
@@ -44,213 +42,102 @@ export const PRESETS: {
       neutral: '#E6E6E6',
       background: '#FDFDFD',
       foreground: '#010101',
-      info: '#5BABFF',
+    },
+  },
+  {
+    id: 'RANGO_THEME',
+    dark: {
+      ...rangoDarkColors,
+      primary: '#1C3CF1',
+      secondary: '#2284ED',
+    },
+    light: {
+      primary: '#1C3CF1',
+      secondary: '#469BF5',
+      neutral: '#E6E6E6',
+      background: '#FDFDFD',
+      foreground: '#010101',
+    },
+  },
+  {
+    id: 1,
+    dark: {
+      primary: '#4c228a',
+      secondary: '#51278F',
+      neutral: '#222222',
+      foreground: '#FDFDFD',
+      background: '#010101',
+    },
+    light: {
+      primary: '#4c228a',
+      secondary: '#51278F',
+      neutral: '#E6E6E6',
+      foreground: '#010101',
+      background: '#FDFDFD',
     },
   },
   {
     id: 2,
     dark: {
-      neutral: '#161C38',
-      primary: '#1C3CF1',
-      secondary: '#2284ED',
-      background: '#070917',
       foreground: '#FDFDFD',
-      info: '#5BABFF',
+      background: '#010101',
+      primary: '#bb00b2',
+      secondary: '#7c1ca4',
+      neutral: '#222222',
     },
     light: {
-      primary: '#1C3CF1',
-      secondary: '#469BF5',
-      neutral: '#E6E6E6',
       background: '#FDFDFD',
       foreground: '#010101',
-      info: '#5BABFF',
+      primary: '#bb00b2',
+      secondary: '#7c1ca4',
+      neutral: '#E6E6E6',
     },
   },
   {
     id: 3,
-    light: {
-      primary: '#1C3CF1',
-      secondary: '#469BF5',
-      neutral: '#E6E6E6',
-      background: '#FDFDFD',
-      foreground: '#010101',
-      info: '#5BABFF',
+    dark: {
+      primary: '#574660',
+      neutral: '#222222',
+      secondary: '#a002b0',
+      background: '#010101',
+      foreground: '#FDFDFD',
     },
   },
   {
     id: 4,
     dark: {
-      primary: '#1C3CF1',
-      secondary: '#2284ED',
-      neutral: '#222222',
-      background: '#010101',
       foreground: '#FDFDFD',
-      info: '#5BABFF',
+      background: '#010101',
+      secondary: '#6606e6',
+      primary: '#6606e6',
+      neutral: '#222222',
+    },
+    light: {
+      background: '#FDFDFD',
+      foreground: '#010101',
+      neutral: '#E6E6E6',
+      secondary: '#6606e6',
+      primary: '#6606e6',
     },
   },
   {
     id: 5,
     dark: {
-      neutral: '#161C38',
-      primary: '#1C3CF1',
-      secondary: '#2284ED',
-      background: '#070917',
+      background: '#010101',
+      primary: '#4838D4',
       foreground: '#FDFDFD',
-      info: '#5BABFF',
+      secondary: '#7161ff',
+      neutral: '#222222',
     },
   },
   {
     id: 6,
     dark: {
-      primary: '#4c228a',
-      secondary: '#6D49A6',
-      neutral: '#2c284b',
-      info: '#6B3CB1',
-      foreground: '#fcf7ff',
-      background: '#120f29ff',
-    },
-    light: {
-      primary: '#4c228a',
-      secondary: '#51278F',
-      neutral: '#9793AD',
-      info: '#744AB2',
-      foreground: '#120f29ff',
-      background: '#fcf7ff',
-    },
-  },
-  {
-    id: 7,
-    light: {
-      primary: '#4c228a',
-      secondary: '#51278F',
-      neutral: '#9793AD',
-      info: '#744AB2',
-      foreground: '#120f29ff',
-      background: '#fcf7ff',
-    },
-  },
-  {
-    id: 8,
-    dark: {
-      primary: '#4c228a',
-      secondary: '#6D49A6',
-      neutral: '#2c284b',
-      info: '#6B3CB1',
-      foreground: '#fcf7ff',
-      background: '#120f29ff',
-    },
-  },
-  {
-    id: 9,
-    dark: {
-      foreground: '#fffeffff',
-      background: '#110114ff',
-      primary: '#bb00b2',
-      secondary: '#93398f',
-      neutral: '#332C33',
-      info: '#F9BDF9',
-    },
-    light: {
-      background: '#fffeffff',
-      foreground: '#2f0146ff',
-      primary: '#bb00b2',
-      secondary: '#7c1ca4',
-      neutral: '#9C9C9C',
-      info: '#F9BDF9',
-    },
-  },
-  {
-    id: 10,
-    light: {
-      background: '#fffeffff',
-      foreground: '#2f0146ff',
-      primary: '#bb00b2',
-      secondary: '#7c1ca4',
-      neutral: '#9C9C9C',
-      info: '#F9BDF9',
-    },
-  },
-  {
-    id: 11,
-    dark: {
-      foreground: '#fffeffff',
-      background: '#110114ff',
-      primary: '#bb00b2',
-      secondary: '#93398f',
-      neutral: '#332C33',
-      info: '#F9BDF9',
-    },
-  },
-
-  {
-    id: 12,
-    dark: {
-      primary: '#4e4951',
-      neutral: '#47404A',
-      secondary: '#a002b0',
-      background: '#252028ff',
-      foreground: '#cdc8d0',
-    },
-  },
-  {
-    id: 13,
-    dark: {
-      foreground: '#fff',
-      background: '#171721ff',
-      secondary: '#885ac4',
-      primary: '#6606e6',
-      neutral: '#3B3B41',
-      info: '#7758A0',
-    },
-    light: {
-      background: '#fff',
-      foreground: '#171721ff',
-      neutral: '#A0A0A0',
-      secondary: '#6606e6',
-      primary: '#6606e6',
-      info: '#7758A0',
-    },
-  },
-  {
-    id: 14,
-    light: {
-      background: '#fff',
-      foreground: '#171721ff',
-      neutral: '#9E9DA0',
-      secondary: '#6606e6',
-      primary: '#6606e6',
-      info: '#7758A0',
-    },
-  },
-  {
-    id: 15,
-    dark: {
-      foreground: '#fff',
-      background: '#171721ff',
-      secondary: '#885ac4',
-      primary: '#6606e6',
-      neutral: '#33333D',
-      info: '#7758A0',
-    },
-  },
-  {
-    id: 16,
-    dark: {
-      background: '#0c1536ff',
-      primary: '#8574f9',
-      foreground: '#c4d1fdff',
-      secondary: '#7161ff',
-      neutral: '#212567',
-    },
-  },
-  {
-    id: 17,
-    dark: {
-      background: '#0c0f12ff',
-      primary: '#e0c072ff',
-      foreground: '#f2e8d0',
-      secondary: '#b0a385',
-      neutral: '#2D2D33',
+      background: '#010101',
+      primary: '#E0C072',
+      foreground: '#FDFDFD',
+      secondary: '#B0A385',
+      neutral: '#222222',
     },
   },
 ];
@@ -269,10 +156,6 @@ export const WIDGET_COLORS: { key: WidgetColorsKeys; label: string }[] = [
     label: 'Neutral',
   },
   {
-    key: 'info',
-    label: 'Info',
-  },
-  {
     key: 'background',
     label: 'Background',
   },
@@ -281,7 +164,8 @@ export const WIDGET_COLORS: { key: WidgetColorsKeys; label: string }[] = [
     label: 'Foreground',
   },
 ];
-export const DEFAULT_COLORS = {
+
+export const DEFAULT_THEME_COLORS = {
   dark: PRESETS.find((preset) => preset.id === DEFAULT_PRESET_ID)
     ?.dark as WidgetColors,
   light: PRESETS.find((preset) => preset.id === DEFAULT_PRESET_ID)

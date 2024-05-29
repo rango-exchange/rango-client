@@ -23,7 +23,7 @@ export const CheckboxRoot = styled(RadixCheckbox.Root, {
   '&[data-state="checked"]': {
     $$color: '$colors$secondary500',
     [`.${darkTheme} &`]: {
-      $$color: '$colors$secondary400',
+      $$color: '$colors$secondary250',
     },
     backgroundColor: '$$color',
     borderColor: '$$color',

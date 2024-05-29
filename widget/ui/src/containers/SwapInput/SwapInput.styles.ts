@@ -51,7 +51,7 @@ export const InputAmount = styled(TextField, {
   },
 });
 export const MaxButton = styled(Button, {
-  $$color: '$colors$info300',
+  $$color: '$colors$secondary200',
   [`.${darkTheme} &`]: {
     $$color: '$colors$secondary800',
   },
@@ -59,7 +59,7 @@ export const MaxButton = styled(Button, {
   '& ._typography': {
     color: '$colors$secondary500',
     [`.${darkTheme} &`]: {
-      color: '$colors$secondary400',
+      color: '$colors$secondary250',
     },
   },
 });

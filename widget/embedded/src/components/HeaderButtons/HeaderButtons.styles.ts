@@ -17,7 +17,7 @@ export const ConnectedIcon = styled('div', {
   position: 'absolute',
   background: '$secondary500',
   [`.${darkTheme} &`]: {
-    $$color: '$colors$secondary400',
+    $$color: '$colors$secondary250',
   },
   width: '$6',
   height: '$6',

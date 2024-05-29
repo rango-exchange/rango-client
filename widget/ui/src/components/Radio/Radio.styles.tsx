@@ -17,7 +17,7 @@ export const StyledItem = styled(Radio.Item, {
   '&[data-state="checked"]': {
     $$color: '$colors$secondary500',
     [`.${darkTheme} &`]: {
-      $$color: '$colors$secondary400',
+      $$color: '$colors$secondary250',
     },
     backgroundColor: '$$color',
     borderColor: '$$color',
