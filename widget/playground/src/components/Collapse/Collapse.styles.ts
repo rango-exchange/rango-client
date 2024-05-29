@@ -5,7 +5,7 @@ export const CollapseContainer = styled(Collapsible, {
   backgroundColor: '$neutral100',
   border: '1px solid $neutral100',
   '&:hover': {
-    borderColor: '$info300',
+    borderColor: '$secondary200',
     '& .collapse_header > svg': {
       color: '$secondary500',
     },

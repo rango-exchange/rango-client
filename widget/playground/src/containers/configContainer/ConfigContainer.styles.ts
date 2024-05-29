@@ -72,7 +72,7 @@ export const Content = styled('div', {
 
 export const MobileSection = styled('div', {
   background:
-    'linear-gradient(to right bottom, $info300 0%, $neutral100 30%, $neutral100 70%, $info300 100%)',
+    'linear-gradient(to right bottom, $secondary200 0%, $neutral100 30%, $neutral100 70%, $secondary200 100%)',
 
   [`.${darkTheme} &`]: {
     background:

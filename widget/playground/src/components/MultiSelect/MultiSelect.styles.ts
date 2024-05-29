@@ -26,7 +26,7 @@ export const Select = styled('div', {
     disabled: {
       false: {
         '&:hover': {
-          borderColor: '$info300',
+          borderColor: '$secondary200',
           '& svg': {
             color: '$secondary500',
           },

@@ -58,7 +58,7 @@ export const WalletButton = styled('button', {
         outlineWidth: 1,
         $$outline: '$colors$secondary500',
         [`.${darkTheme} &`]: {
-          $$outline: '$colors$secondary400',
+          $$outline: '$colors$secondary250',
         },
         outlineColor: '$$outline',
         outlineStyle: 'solid',

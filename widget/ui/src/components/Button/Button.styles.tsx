@@ -128,7 +128,7 @@ export const ButtonBase = styled('button', {
         },
         color: '$$color',
         '&:hover': {
-          background: '$primary600',
+          background: '$primary550',
           $$color: '$colors$background',
           [`.${darkTheme} &`]: {
             $$color: '$colors$foreground',
@@ -153,7 +153,7 @@ export const ButtonBase = styled('button', {
           transition: 'background 0s',
         },
         '&:focus-visible': {
-          background: '$primary600',
+          background: '$primary550',
           outline: 0,
         },
       },
@@ -165,12 +165,12 @@ export const ButtonBase = styled('button', {
         color: '$primary500',
         borderColor: '$primary500',
         '&:hover': {
-          color: '$primary600',
-          borderColor: '$primary600',
+          color: '$primary550',
+          borderColor: '$primary550',
         },
         '&:focus-visible': {
-          color: '$primary600',
-          borderColor: '$primary600',
+          color: '$primary550',
+          borderColor: '$primary550',
           outline: 0,
         },
       },
@@ -181,10 +181,10 @@ export const ButtonBase = styled('button', {
       css: {
         color: '$primary500',
         '&:hover': {
-          color: '$primary600',
+          color: '$primary550',
         },
         '&:focus-visible': {
-          color: '$primary600',
+          color: '$primary550',
           outline: 0,
         },
       },
@@ -200,7 +200,7 @@ export const ButtonBase = styled('button', {
         },
         color: '$$color',
         '&:hover': {
-          background: '$secondary600',
+          background: '$secondary550',
           $$color: '$colors$background',
           [`.${darkTheme} &`]: {
             $$color: '$colors$foreground',
@@ -211,11 +211,11 @@ export const ButtonBase = styled('button', {
           background: '$secondary500',
         },
         '&:focus': {
-          background: '$secondary600',
+          background: '$secondary550',
           outline: 0,
         },
         '&:focus-visible': {
-          background: '$secondary600',
+          background: '$secondary550',
           outline: 0,
         },
       },
@@ -227,20 +227,20 @@ export const ButtonBase = styled('button', {
         color: '$secondary500',
         borderColor: '$secondary500',
         '&:hover': {
-          color: '$secondary600',
-          borderColor: '$secondary600',
+          color: '$secondary550',
+          borderColor: '$secondary550',
         },
         '&:visited': {
           color: '$secondary500',
           borderColor: '$secondary500',
         },
         '&:focus': {
-          color: '$secondary600',
+          color: '$secondary550',
           borderColor: '$secondary500',
           outline: 0,
         },
         '&:focus-visible': {
-          color: '$secondary600',
+          color: '$secondary550',
           borderColor: '$secondary500',
           outline: 0,
         },
@@ -252,17 +252,17 @@ export const ButtonBase = styled('button', {
       css: {
         color: '$secondary500',
         '&:hover': {
-          color: '$secondary600',
+          color: '$secondary550',
         },
         '&:visited': {
           color: '$secondary500',
         },
         '&:focus': {
-          color: '$secondary600',
+          color: '$secondary550',
           outline: 0,
         },
         '&:focus-visible': {
-          color: '$secondary600',
+          color: '$secondary550',
           outline: 0,
         },
       },

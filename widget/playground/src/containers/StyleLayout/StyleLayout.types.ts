@@ -1,5 +1,5 @@
 import type { Mode } from '../../store/config';
-import type { WidgetColors } from '@rango-dev/widget-embedded';
+import type { ColorsType } from '../../types';
 
 export enum StyleCollapseState {
   GENERAL = 'general',
@@ -18,10 +18,7 @@ export type ColorsTypes = {
 
 export type CustomColorsTypes = {
   tab: Mode;
-  selectedPreset?: {
-    light: WidgetColors;
-    dark: WidgetColors;
-  };
+  selectedPreset?: ColorsType;
   onResetPreset: () => void;
 };
 

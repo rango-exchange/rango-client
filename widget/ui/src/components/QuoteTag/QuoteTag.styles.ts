@@ -15,7 +15,7 @@ export const TagContainer = styled('div', {
         [`& .${getLabelStyles}`]: {
           color: '$secondary500',
           [`.${darkTheme} &`]: {
-            color: '$secondary400',
+            color: '$secondary250',
           },
         },
       },
