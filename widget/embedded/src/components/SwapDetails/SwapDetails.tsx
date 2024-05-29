@@ -12,9 +12,10 @@ import {
   CopyIcon,
   Divider,
   IconButton,
-  LinkIcon,
   QuoteCost,
+  RangoExplorerIcon,
   StepDetails,
+  Tooltip,
   Typography,
   useCopyToClipboard,
 } from '@rango-dev/ui';
@@ -321,7 +322,12 @@ export function SwapDetails(props: SwapDetailsProps) {
               <StyledLink
                 target="_blank"
                 href={`${SCANNER_BASE_URL}/swap/${requestId}`}>
-                <LinkIcon size={16} />
+                <Tooltip
+                  container={getContainer()}
+                  content={i18n.t('View on Rango Explorer')}
+                  side="bottom">
+                  <RangoExplorerIcon size={20} />
+                </Tooltip>
               </StyledLink>
             </div>
           </div>

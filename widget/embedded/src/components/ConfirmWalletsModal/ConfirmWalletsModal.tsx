@@ -1,6 +1,7 @@
 import type { PropTypes } from './ConfirmWalletsModal.types';
 import type { ConnectedWallet } from '../../store/wallets';
 import type { ConfirmSwapWarnings, Wallet } from '../../types';
+import type { MouseEvent } from 'react';
 
 import { i18n } from '@lingui/core';
 import {
@@ -9,12 +10,15 @@ import {
   Button,
   ChevronDownIcon,
   ChevronLeftIcon,
+  CloseIcon,
   Divider,
+  IconButton,
   MessageBox,
+  PasteIcon,
   Typography,
   WalletIcon,
 } from '@rango-dev/ui';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { WIDGET_UI_ID } from '../../constants';
@@ -23,7 +27,10 @@ import { getQuoteUpdateWarningMessage } from '../../constants/warnings';
 import { useAppStore } from '../../store/AppStore';
 import { useQuoteStore } from '../../store/quote';
 import { useWalletsStore } from '../../store/wallets';
-import { getBlockchainShortNameFor } from '../../utils/meta';
+import {
+  getBlockchainDisplayNameFor,
+  getBlockchainShortNameFor,
+} from '../../utils/meta';
 import { isConfirmSwapDisabled } from '../../utils/swap';
 import { getQuoteWallets } from '../../utils/wallets';
 import { WatermarkedModal } from '../common/WatermarkedModal';
@@ -54,6 +61,8 @@ export function ConfirmWalletsModal(props: PropTypes) {
   const { open, onClose, onCancel, onCheckBalance, loading } = props;
   const config = useAppStore().config;
 
+  const customDestinationInputRef = useRef<HTMLInputElement | null>(null);
+
   const blockchains = useAppStore().blockchains();
   const {
     selectedQuote,
@@ -74,6 +83,8 @@ export function ConfirmWalletsModal(props: PropTypes) {
   const [showCustomDestination, setShowCustomDestination] = useState(
     !!customDestination
   );
+
+  const isFirefox = navigator?.userAgent.includes('Firefox');
 
   const quoteWallets = getQuoteWallets({
     filter: 'all',
@@ -143,6 +154,39 @@ export function ConfirmWalletsModal(props: PropTypes) {
     });
   };
 
+  const handleClearCustomDestination = () => setCustomDestination('');
+
+  const handlePasteCustomDestination = async (
+    event: MouseEvent<HTMLButtonElement>
+  ) => {
+    event.preventDefault();
+    if (navigator.clipboard !== undefined) {
+      const pastedText = await navigator.clipboard.readText();
+      setCustomDestination(pastedText);
+      customDestinationInputRef?.current?.focus();
+    }
+  };
+
+  const handleCustomDestinationCollapsibleOpenChange = (checked: boolean) => {
+    if (!checked) {
+      resetCustomDestination();
+    } else {
+      if (!isWalletRequiredFor(lastStepToBlockchain?.name ?? '')) {
+        setSelectableWallets((selectableWallets) =>
+          selectableWallets.map((selectableWallet) => {
+            if (selectableWallet.chain === lastStepToBlockchain?.name) {
+              return {
+                ...selectableWallet,
+                selected: false,
+              };
+            }
+            return selectableWallet;
+          })
+        );
+      }
+    }
+  };
+
   const onChange = (wallet: Wallet) => {
     if (showMoreWalletFor) {
       setShowMoreWalletFor('');
@@ -208,6 +252,24 @@ export function ConfirmWalletsModal(props: PropTypes) {
     } else {
       setBalanceWarnings(warnings?.balance?.messages ?? []);
     }
+  };
+
+  const renderCustomDestinationSuffix = () => {
+    if (customDestination) {
+      return (
+        <IconButton onClick={handleClearCustomDestination} variant="ghost">
+          <CloseIcon size={12} color="gray" />
+        </IconButton>
+      );
+    } else if (!isFirefox) {
+      return (
+        <IconButton onClick={handlePasteCustomDestination} variant="ghost">
+          <PasteIcon size={16} />
+        </IconButton>
+      );
+    }
+
+    return null;
   };
 
   useEffect(() => {
@@ -386,32 +448,9 @@ export function ConfirmWalletsModal(props: PropTypes) {
                   {isLastWallet && config?.customDestination && (
                     <CustomDestination>
                       <CustomCollapsible
-                        onOpenChange={(checked) => {
-                          if (!checked) {
-                            resetCustomDestination();
-                          } else {
-                            if (
-                              !isWalletRequiredFor(
-                                lastStepToBlockchain?.name ?? ''
-                              )
-                            ) {
-                              setSelectableWallets((selectableWallets) =>
-                                selectableWallets.map((selectableWallet) => {
-                                  if (
-                                    selectableWallet.chain ===
-                                    lastStepToBlockchain?.name
-                                  ) {
-                                    return {
-                                      ...selectableWallet,
-                                      selected: false,
-                                    };
-                                  }
-                                  return selectableWallet;
-                                })
-                              );
-                            }
-                          }
-                        }}
+                        onOpenChange={
+                          handleCustomDestinationCollapsibleOpenChange
+                        }
                         hasSelected
                         open={showCustomDestination}
                         triggerAnchor="top"
@@ -420,7 +459,14 @@ export function ConfirmWalletsModal(props: PropTypes) {
                             <div className="button__content">
                               <WalletIcon size={18} color="info" />
                               <Divider size={4} direction="horizontal" />
-                              <Typography variant="label" size="medium">
+                              <Typography
+                                variant="label"
+                                size="medium"
+                                color={
+                                  showCustomDestination
+                                    ? '$neutral600'
+                                    : undefined
+                                }>
                                 {i18n.t('Send to a different address')}
                               </Typography>
                             </div>
@@ -428,17 +474,31 @@ export function ConfirmWalletsModal(props: PropTypes) {
                               orientation={
                                 showCustomDestination ? 'up' : 'down'
                               }>
-                              <ChevronDownIcon size={10} color="gray" />
+                              <ChevronDownIcon size={10} color="secondary" />
                             </ExpandedIcon>
                           </CustomDestinationButton>
                         }
                         onClickTrigger={() =>
                           setShowCustomDestination((prev) => !prev)
                         }>
-                        <Divider size={4} />
                         <StyledTextField
-                          placeholder={i18n.t('Your destination address')}
+                          ref={customDestinationInputRef}
+                          style={{
+                            padding: 0,
+                            paddingRight: customDestination ? '8px' : '5px',
+                          }}
+                          autoFocus
+                          placeholder={i18n.t(
+                            'Enter {blockchainName} address',
+                            {
+                              blockchainName: getBlockchainDisplayNameFor(
+                                requiredWallet,
+                                blockchains
+                              ),
+                            }
+                          )}
                           value={customDestination || ''}
+                          suffix={renderCustomDestinationSuffix()}
                           onChange={(e) => {
                             const value = e.target.value;
                             if (!value.length) {
