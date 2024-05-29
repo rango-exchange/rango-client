@@ -50,7 +50,8 @@ interface WalletNamespacesModalState {
 
 const ACCOUNT_ADDRESS_MAX_CHARACTERS = 7;
 export function WalletList(props: PropTypes) {
-  const { chain, isSelected, selectWallet, limit, onShowMore } = props;
+  const { chain, isSelected, selectWallet, limit, onShowMore, onConnect } =
+    props;
   const isActiveTab = useUiStore.use.isActiveTab();
 
   const connectedWallets = useWalletsStore.use.connectedWallets();
@@ -80,7 +81,8 @@ export function WalletList(props: PropTypes) {
         setOpenWalletStateModal(type);
       }, TIME_TO_IGNORE_MODAL);
     },
-    onConnect: () => {
+    onConnect: (type) => {
+      onConnect?.(type);
       if (modalTimerId) {
         clearTimeout(modalTimerId);
       }

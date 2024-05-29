@@ -65,10 +65,15 @@ export const useWalletsStore = createSelectors(
             .filter((wallet) => wallet.walletType !== accounts[0].walletType)
             .concat(
               accounts.map((account) => {
-                const shouldMarkWalletAsSelected = !state.connectedWallets.find(
+                const shouldMarkWalletAsSelected = !state.connectedWallets.some(
                   (connectedWallet) =>
                     connectedWallet.chain === account.chain &&
-                    connectedWallet.selected
+                    connectedWallet.selected &&
+                    /**
+                     * Sometimes, the connect function can be called multiple times for a particular wallet type when using the auto-connect feature.
+                     * This check is there to make sure the chosen wallet doesn't end up unselected.
+                     */
+                    connectedWallet.walletType !== account.walletType
                 );
                 return {
                   balances: [],
