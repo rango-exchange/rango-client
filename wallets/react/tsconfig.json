@@ -3,6 +3,8 @@
   "extends": "../../tsconfig.lib.json",
   "include": ["src", "types"],
   "compilerOptions": {
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
     "outDir": "dist",
     "rootDir": "./src",
     "lib": ["dom", "esnext"],

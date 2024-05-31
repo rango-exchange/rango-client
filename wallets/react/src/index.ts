@@ -1,4 +1,4 @@
-import { Provider as CoreProvider } from '@rango-dev/wallets-core';
+import { Provider } from '@rango-dev/wallets-core';
 
 export * from './legacy/helpers';
 export { default as Provider } from './provider';
@@ -9,5 +9,5 @@ export type { EventHandler } from '@rango-dev/wallets-core';
 export { Events, readAccountAddress } from '@rango-dev/wallets-core';
 
 export const Core = {
-  Provider: CoreProvider,
+  Provider: Provider,
 };

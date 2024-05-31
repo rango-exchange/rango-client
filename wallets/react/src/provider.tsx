@@ -2,10 +2,10 @@ import type { ProviderContext, ProviderProps } from './legacy/types';
 
 import React from 'react';
 
+import { findProviderByType, splitProviders } from './hub/helpers';
+import { useAdapter } from './hub/useAdapter';
 import { WalletContext } from './legacy/context';
 import { useLegacy } from './legacy/useLegacy';
-import { findProviderByType, splitProviders } from './next/helpers';
-import { useAdapter } from './next/useAdapter';
 
 function Provider(props: ProviderProps) {
   const { providers, ...restProps } = props;

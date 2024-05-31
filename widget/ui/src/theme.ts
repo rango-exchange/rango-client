@@ -1,7 +1,8 @@
-// TSDX + stiches doesn't work with import statement and has a bug.
-
-import type { PropertyValue, CSS as StitchesCSS } from '@stitches/react';
-import type { DefaultThemeMap } from '@stitches/react/types/config';
+import type {
+  DefaultThemeMap,
+  PropertyValue,
+  CSS as StitchesCSS,
+} from '@stitches/react';
 
 import { createStitches } from '@stitches/react';
 
@@ -209,10 +210,8 @@ export const darkColors = {
 
 /* ----------------------- End of Values ----------------------- */
 
-const typedCreateStiches = createStitches;
-
 export const { styled, css, createTheme, keyframes, globalCss, config } =
-  typedCreateStiches<'', typeof media, typeof theme, DefaultThemeMap>({
+  createStitches<'', typeof media, typeof theme, DefaultThemeMap>({
     media,
     theme,
     utils,
