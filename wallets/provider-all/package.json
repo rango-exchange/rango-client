@@ -41,6 +41,7 @@
     "@rango-dev/provider-metamask": "^0.33.3-next.0",
     "@rango-dev/provider-okx": "^0.33.3-next.0",
     "@rango-dev/provider-phantom": "^0.33.1-next.2",
+    "@rango-dev/provider-rabby": "^0.1.0",
     "@rango-dev/provider-safe": "^0.26.3-next.0",
     "@rango-dev/provider-safepal": "^0.33.3-next.0",
     "@rango-dev/provider-solflare-snap": "^0.4.3-next.0",
