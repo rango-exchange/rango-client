@@ -1,3 +1,7 @@
+# [0.34.0](https://github.com/rango-exchange/rango-client/compare/provider-okx@0.33.2...provider-okx@0.34.0) (2024-06-01)
+
+
+
 ## [0.33.2](https://github.com/rango-exchange/rango-client/compare/provider-okx@0.33.1...provider-okx@0.33.2) (2024-05-26)
 
 

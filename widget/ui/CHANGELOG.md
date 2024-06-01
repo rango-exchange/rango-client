@@ -1,3 +1,19 @@
+# [0.35.0](https://github.com/rango-exchange/rango-client/compare/ui@0.34.0...ui@0.35.0) (2024-06-01)
+
+
+### Bug Fixes
+
+* update design for not-selected blockchain or token ([8915101](https://github.com/rango-exchange/rango-client/commit/8915101d4e7a7092fbb5f38bbd95789e124f8ae3))
+
+
+### Features
+
+* generate theme color tints and shades using the new method of overriding them separately ([a46b8a9](https://github.com/rango-exchange/rango-client/commit/a46b8a93bff1d8d6766c2fd636091983a8ee1baa))
+* update explorer icon and add paste to custom destination ([61468a0](https://github.com/rango-exchange/rango-client/commit/61468a0e227517b91def21a85a8f7d72b7411862))
+* update wallets page to add filter by transaction types (category) ([0aa7c73](https://github.com/rango-exchange/rango-client/commit/0aa7c73333bd32912f7b2e90a660f3f43e64f4f7))
+
+
+
 # [0.34.0](https://github.com/rango-exchange/rango-client/compare/ui@0.33.0...ui@0.34.0) (2024-05-14)
 
 
