@@ -1,6 +1,6 @@
 {
   "name": "@rango-dev/provider-clover",
-  "version": "0.34.3-next.0",
+  "version": "0.35.0",
   "license": "MIT",
   "type": "module",
   "source": "./src/index.ts",
@@ -22,8 +22,8 @@
   },
   "dependencies": {
     "@rango-dev/signer-evm": "^0.27.1",
-    "@rango-dev/signer-solana": "^0.28.1-next.2",
-    "@rango-dev/wallets-shared": "^0.33.1-next.1",
+    "@rango-dev/signer-solana": "^0.29.0",
+    "@rango-dev/wallets-shared": "^0.34.0",
     "rango-types": "^0.1.59"
   },
   "publishConfig": {

@@ -1,3 +1,7 @@
+# [0.35.0](https://github.com/rango-exchange/rango-client/compare/provider-argentx@0.34.0...provider-argentx@0.35.0) (2024-06-01)
+
+
+
 # [0.34.0](https://github.com/rango-exchange/rango-client/compare/provider-argentx@0.33.0...provider-argentx@0.34.0) (2024-05-14)
 
 
