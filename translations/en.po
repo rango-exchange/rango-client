@@ -14,6 +14,26 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. js-lingui-explicit-id
+#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:559
+msgid "Enter {blockchainName} address"
+msgstr "Enter {blockchainName} address"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/NotificationContent/NotificationContent.tsx:61
+msgid "Clear all"
+msgstr "Clear all"
+
+#. js-lingui-explicit-id
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:327
+msgid "View on Rango Explorer"
+msgstr "View on Rango Explorer"
+
+#. js-lingui-explicit-id
+#: widget/ui/src/containers/SwapInput/TokenSection.tsx:56
+msgid "Select Chain"
+msgstr "Select Chain"
+
+#. js-lingui-explicit-id
 #: widget/embedded/src/components/Quote/Quote.tsx:154
 msgid "Bridge Limit Error"
 msgstr "Bridge Limit Error"
@@ -103,87 +123,82 @@ msgstr "Currently, some transactions are running and being handled by other brow
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/common/ActivateTabModal/ActivateTabModal.tsx:32
-#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:268
-#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:280
+#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:392
+#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:282
 #: widget/embedded/src/components/WalletNamespacesModal/WalletNamespacesModal.tsx:138
 msgid "Confirm"
 msgstr "Confirm"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:283
-#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:358
+#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:407
+#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:485
 msgid "Your {blockchainName} wallets"
 msgstr "Your {blockchainName} wallets"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:302
+#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:426
 msgid "Insufficient account balance"
 msgstr "Insufficient account balance"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:311
+#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:435
 msgid "Proceed anyway"
 msgstr "Proceed anyway"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:367
+#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:494
 msgid "You need to connect a {blockchainName} wallet."
 msgstr "You need to connect a {blockchainName} wallet."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:424
+#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:538
 msgid "Send to a different address"
 msgstr "Send to a different address"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:440
-msgid "Your destination address"
-msgstr "Your destination address"
-
-#. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:460
+#: widget/embedded/src/components/ConfirmWalletsModal/ConfirmWalletsModal.tsx:583
 msgid "Address {destination} doesn't match the blockchain address pattern."
 msgstr "Address {destination} doesn't match the blockchain address pattern."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:190
+#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:192
 msgid "Add {chain} chain"
 msgstr "Add {chain} chain"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:260
-#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:293
+#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:262
+#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:295
 msgid "Add {blockchainDisplayName} Chain"
 msgstr "Add {blockchainDisplayName} Chain"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:265
-#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:297
+#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:267
+#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:299
 msgid "You should connect a {blockchainDisplayName} supported wallet or choose a different {blockchainDisplayName} address"
 msgstr "You should connect a {blockchainDisplayName} supported wallet or choose a different {blockchainDisplayName} address"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:315
+#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:317
 msgid "{blockchainDisplayName} Chain Added"
 msgstr "{blockchainDisplayName} Chain Added"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:319
+#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:321
 msgid "{blockchainDisplayName} is added to your wallet, you can use it to swap."
 msgstr "{blockchainDisplayName} is added to your wallet, you can use it to swap."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:329
+#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:331
 msgid "Request Rejected"
 msgstr "Request Rejected"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:330
+#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:332
 msgid "You've rejected adding {blockchainDisplayName} chain to your wallet."
 msgstr "You've rejected adding {blockchainDisplayName} chain to your wallet."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:354
+#: widget/embedded/src/components/ConfirmWalletsModal/WalletList.tsx:356
 msgid "Show more wallets"
 msgstr "Show more wallets"
 
@@ -199,18 +214,19 @@ msgid "Refresh"
 msgstr "Refresh"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/HeaderButtons/HeaderButtons.tsx:62
+#: widget/embedded/src/components/HeaderButtons/HeaderButtons.tsx:63
+#: widget/embedded/src/components/NotificationContent/NotificationContent.tsx:54
 msgid "Notifications"
 msgstr "Notifications"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/HeaderButtons/HeaderButtons.tsx:75
+#: widget/embedded/src/components/HeaderButtons/HeaderButtons.tsx:76
 #: widget/embedded/src/pages/SettingsPage.tsx:38
 msgid "Settings"
 msgstr "Settings"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/HeaderButtons/HeaderButtons.tsx:85
+#: widget/embedded/src/components/HeaderButtons/HeaderButtons.tsx:86
 msgid "Transactions History"
 msgstr "Transactions History"
 
@@ -230,7 +246,7 @@ msgstr "Today"
 
 #. js-lingui-explicit-id
 #: widget/embedded/src/components/LoadingSwapDetails/LoadingSwapDetails.tsx:20
-#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:400
+#: widget/embedded/src/components/SwapDetails/SwapDetails.tsx:405
 msgid "Swaps steps"
 msgstr "Swaps steps"
 
@@ -591,7 +607,8 @@ msgid "Network Changed"
 msgstr "Network Changed"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/components/TokenList/TokenList.tsx:260
+#: widget/embedded/src/components/TokenList/TokenList.tsx:255
+#: widget/ui/src/containers/SwapInput/TokenSection.tsx:49
 msgid "Select Token"
 msgstr "Select Token"
 
@@ -916,13 +933,13 @@ msgid "The request ID is necessary to display the swap details."
 msgstr "The request ID is necessary to display the swap details."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/WalletsPage.tsx:80
+#: widget/embedded/src/pages/WalletsPage.tsx:101
 #: widget/ui/src/containers/ConnectWalletsModal/ConnectWalletsModal.tsx:15
 msgid "Connect Wallets"
 msgstr "Connect Wallets"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/pages/WalletsPage.tsx:84
+#: widget/embedded/src/pages/WalletsPage.tsx:116
 msgid "Choose a wallet to connect."
 msgstr "Choose a wallet to connect."
 
@@ -942,57 +959,57 @@ msgid "This year"
 msgstr "This year"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:125
+#: widget/embedded/src/utils/swap.ts:130
 msgid "Required: >= {min} {symbol}"
 msgstr "Required: >= {min} {symbol}"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:138
+#: widget/embedded/src/utils/swap.ts:143
 msgid "Required: > {min} {symbol}"
 msgstr "Required: > {min} {symbol}"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:153
+#: widget/embedded/src/utils/swap.ts:158
 msgid "Required: <= {max} {symbol}"
 msgstr "Required: <= {max} {symbol}"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:166
+#: widget/embedded/src/utils/swap.ts:171
 msgid "Required: < {max} {symbol}"
 msgstr "Required: < {max} {symbol}"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:619
+#: widget/embedded/src/utils/swap.ts:624
 msgid " for network fee"
 msgstr " for network fee"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:622
+#: widget/embedded/src/utils/swap.ts:627
 msgid " for swap"
 msgstr " for swap"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:625
+#: widget/embedded/src/utils/swap.ts:630
 msgid " for input and network fee"
 msgstr " for input and network fee"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:627
+#: widget/embedded/src/utils/swap.ts:632
 msgid "Needs ≈ {requiredAmount} {symbol}{reason}, but you have {currentAmount} {symbol} in your {blockchain} wallet."
 msgstr "Needs ≈ {requiredAmount} {symbol}{reason}, but you have {currentAmount} {symbol} in your {blockchain} wallet."
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:687
+#: widget/embedded/src/utils/swap.ts:692
 msgid "Waiting for connecting wallet"
 msgstr "Waiting for connecting wallet"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:691
+#: widget/embedded/src/utils/swap.ts:696
 msgid "Waiting for other running tasks to be finished"
 msgstr "Waiting for other running tasks to be finished"
 
 #. js-lingui-explicit-id
-#: widget/embedded/src/utils/swap.ts:694
+#: widget/embedded/src/utils/swap.ts:699
 msgid "Waiting for changing wallet network"
 msgstr "Waiting for changing wallet network"
 
@@ -1114,21 +1131,11 @@ msgid "you need to pass a correct state to Wallet."
 msgstr "you need to pass a correct state to Wallet."
 
 #. js-lingui-explicit-id
-#: widget/ui/src/containers/SwapInput/SwapInput.tsx:51
+#: widget/ui/src/containers/SwapInput/SwapInput.tsx:55
 msgid "Balance"
 msgstr "Balance"
 
 #. js-lingui-explicit-id
-#: widget/ui/src/containers/SwapInput/SwapInput.tsx:59
+#: widget/ui/src/containers/SwapInput/SwapInput.tsx:63
 msgid "Max"
 msgstr "Max"
-
-#. js-lingui-explicit-id
-#: widget/ui/src/containers/SwapInput/TokenSection.tsx:49
-msgid "Token"
-msgstr "Token"
-
-#. js-lingui-explicit-id
-#: widget/ui/src/containers/SwapInput/TokenSection.tsx:56
-msgid "Chain"
-msgstr "Chain"
