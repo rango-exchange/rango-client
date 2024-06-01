@@ -1,3 +1,12 @@
+# [0.29.0](https://github.com/rango-exchange/rango-client/compare/wallets-adapter@0.28.2...wallets-adapter@0.29.0) (2024-06-01)
+
+
+### Features
+
+* update wallets page to add filter by transaction types (category) ([0aa7c73](https://github.com/rango-exchange/rango-client/commit/0aa7c73333bd32912f7b2e90a660f3f43e64f4f7))
+
+
+
 ## [0.28.2](https://github.com/rango-exchange/rango-client/compare/wallets-adapter@0.28.1...wallets-adapter@0.28.2) (2024-05-26)
 
 
