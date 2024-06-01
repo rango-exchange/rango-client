@@ -1,3 +1,5 @@
+import { ChainImageContainer } from 'src/components/ChainToken/ChainToken.styles';
+
 import { Button } from '../../components';
 import { css, darkTheme, styled } from '../../theme';
 
@@ -6,12 +8,14 @@ export const Container = styled(Button, {
   minWidth: '130px',
   flexGrow: 1,
   backgroundColor: 'transparent',
+  borderRadius: '$xs',
+
   color: '$neutral700',
   '&:disabled': {
     color: '$neutral600',
   },
   '&:focus-visible': {
-    $$color: '$colors$info100',
+    $$color: '$colors$secondary100',
     [`.${darkTheme} &`]: {
       $$color: '$colors$info700',
     },
@@ -22,11 +26,19 @@ export const Container = styled(Button, {
     backgroundColor: 'transparent',
   },
   '&:hover': {
-    $$color: '$colors$info100',
+    $$color: '$colors$secondary100',
     [`.${darkTheme} &`]: {
       $$color: '$colors$neutral100',
     },
     backgroundColor: '$$color !important',
+
+    [`& ${ChainImageContainer}`]: {
+      $$color: '$colors$secondary100',
+      [`.${darkTheme} &`]: {
+        $$color: '$colors$neutral100',
+      },
+      backgroundColor: '$$color !important',
+    },
   },
 });
 

@@ -34,7 +34,7 @@ export const WalletButton = styled('button', {
   position: 'relative',
 
   '&:hover': {
-    $$color: '$colors$info100',
+    $$color: '$colors$secondary100',
     [`.${darkTheme} &`]: {
       $$color: '$colors$neutral100',
     },
@@ -42,7 +42,7 @@ export const WalletButton = styled('button', {
   },
 
   '&:focus-visible': {
-    $$color: '$colors$info100',
+    $$color: '$colors$secondary100',
     [`.${darkTheme} &`]: {
       $$color: '$colors$info700',
     },
@@ -118,7 +118,7 @@ export const ConfirmButton = styled('div', {
 
 export const StyledTextField = styled(TextField, {
   backgroundColor: '$neutral100',
-  padding: '$0 $15 $15 $15',
+  padding: '$15',
 });
 
 export const Wallets = styled('div', { overflow: 'visible', width: '100%' });
@@ -137,15 +137,8 @@ export const CustomDestinationButton = styled('div', {
   backgroundColor: '$$color',
   borderBottomRightRadius: '0',
   borderBottomLeftRadius: '0',
-  '&:hover': {
-    $$color: '$colors$info100',
-    [`.${darkTheme} &`]: {
-      $$color: '$colors$neutral100',
-    },
-    backgroundColor: '$$color',
-  },
   '&:focus-visible': {
-    $$background: '$colors$info100',
+    $$background: '$colors$secondary100',
     [`.${darkTheme} &`]: {
       $$background: '$colors$info700',
     },

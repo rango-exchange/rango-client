@@ -52,7 +52,8 @@ export function CustomColorsSection(props: CustomColorsTypes) {
     value: boolean;
   }>({ tab, value: false });
 
-  const [openCustomColor, setOpenCustomColor] = useState<string | null>(null);
+  const [openCustomColor, setOpenCustomColor] =
+    useState<WidgetColorsKeys | null>(null);
   const onChangeColors = useConfigStore.use.onChangeColors();
   const isAutoTab = tab === 'auto';
   const singleTheme = !isAutoTab;
@@ -61,7 +62,7 @@ export function CustomColorsSection(props: CustomColorsTypes) {
   const isOpenCustomColors =
     tab === openCustomColors.tab && openCustomColors.value;
 
-  const handleOpenCollapse = (key: string) => {
+  const handleOpenCollapse = (key: WidgetColorsKeys) => {
     if (openCustomColor === key) {
       setOpenCustomColor(null);
     } else {
@@ -73,7 +74,7 @@ export function CustomColorsSection(props: CustomColorsTypes) {
   }, [tab]);
 
   const onResetColor = (name: WidgetColorsKeys, mode: 'light' | 'dark') => {
-    const color = !!selectedPreset ? selectedPreset[mode][name] : undefined;
+    const color = !!selectedPreset ? selectedPreset?.[mode]?.[name] : undefined;
     onChangeColors({
       name,
       mode,
@@ -93,8 +94,8 @@ export function CustomColorsSection(props: CustomColorsTypes) {
 
   const isCustomColorDisabled =
     (tab === 'auto' && theme?.singleTheme) || // The system tab and a single theme is selected
-    (tab === 'light' && !!selectedPreset?.dark?.primary) || // The light tab and a system or dark theme is selected
-    (tab === 'dark' && !!selectedPreset?.light?.primary); // The dark tab and a system or light theme is selected
+    (tab === 'light' && !!selectedPreset?.dark) || // The light tab and a system or dark theme is selected
+    (tab === 'dark' && !!selectedPreset?.light); // The dark tab and a system or light theme is selected
 
   useEffect(() => {
     if (isCustomColorDisabled) {
@@ -143,11 +144,17 @@ export function CustomColorsSection(props: CustomColorsTypes) {
               <Row>
                 <Row>
                   <Colors
-                    mainColor={getMainColor(widgetColor.key, tab, theme)}
+                    mainColor={getMainColor(widgetColor.key, tab, {
+                      singleTheme: theme?.singleTheme,
+                      colors: theme?.colors,
+                    })}
                     secondColor={
                       isAutoTab
-                        ? getMainColor(widgetColor.key, tab, theme, 'dark') ||
-                          ''
+                        ? getMainColor(widgetColor.key, tab, {
+                            singleTheme: theme?.singleTheme,
+                            colors: theme?.colors,
+                            mode: 'dark',
+                          }) || ''
                         : undefined
                     }
                   />
@@ -170,7 +177,11 @@ export function CustomColorsSection(props: CustomColorsTypes) {
                 <ColorPicker
                   label="Light"
                   placeholder={widgetColor.label}
-                  color={getMainColor(widgetColor.key, tab, theme, 'light')}
+                  color={getMainColor(widgetColor.key, tab, {
+                    singleTheme: theme?.singleTheme,
+                    colors: theme?.colors,
+                    mode: 'light',
+                  })}
                   onChangeColor={(color) =>
                     onChangeColors({
                       name: widgetColor.key,
@@ -181,8 +192,11 @@ export function CustomColorsSection(props: CustomColorsTypes) {
                   }
                   onReset={() => onResetColor(widgetColor.key, 'light')}
                   resetDisable={
-                    getMainColor(widgetColor.key, tab, theme, 'light') ===
-                    selectedPreset?.light[widgetColor.key]
+                    getMainColor(widgetColor.key, tab, {
+                      singleTheme: theme?.singleTheme,
+                      colors: theme?.colors,
+                      mode: 'light',
+                    }) === selectedPreset?.light?.[widgetColor.key]
                   }
                 />
                 <Divider size={16} />
@@ -190,7 +204,11 @@ export function CustomColorsSection(props: CustomColorsTypes) {
                 <ColorPicker
                   label="Dark"
                   placeholder={widgetColor.label}
-                  color={getMainColor(widgetColor.key, tab, theme, 'dark')}
+                  color={getMainColor(widgetColor.key, tab, {
+                    singleTheme: theme?.singleTheme,
+                    colors: theme?.colors,
+                    mode: 'dark',
+                  })}
                   onChangeColor={(color) =>
                     onChangeColors({
                       name: widgetColor.key,
@@ -200,8 +218,11 @@ export function CustomColorsSection(props: CustomColorsTypes) {
                     })
                   }
                   resetDisable={
-                    getMainColor(widgetColor.key, tab, theme, 'dark') ===
-                    selectedPreset?.dark[widgetColor.key]
+                    getMainColor(widgetColor.key, tab, {
+                      singleTheme: theme?.singleTheme,
+                      colors: theme?.colors,
+                      mode: 'dark',
+                    }) === selectedPreset?.dark?.[widgetColor.key]
                   }
                   onReset={() => onResetColor(widgetColor.key, 'dark')}
                 />
@@ -210,7 +231,13 @@ export function CustomColorsSection(props: CustomColorsTypes) {
               <ColorPicker
                 label="Main"
                 placeholder={widgetColor.label}
-                color={getMainColor(widgetColor.key, tab, theme) || ''}
+                color={
+                  getMainColor(widgetColor.key, tab, {
+                    singleTheme: theme?.singleTheme,
+                    colors: theme?.colors,
+                    mode: 'dark',
+                  }) || ''
+                }
                 onChangeColor={(color) =>
                   onChangeColors({
                     name: widgetColor.key,
@@ -221,9 +248,13 @@ export function CustomColorsSection(props: CustomColorsTypes) {
                 }
                 onReset={() => onResetColor(widgetColor.key, tab)}
                 resetDisable={
-                  getMainColor(widgetColor.key, tab, theme) ===
+                  getMainColor(widgetColor.key, tab, {
+                    singleTheme: theme?.singleTheme,
+                    colors: theme?.colors,
+                    mode: 'dark',
+                  }) ===
                   (selectedPreset
-                    ? selectedPreset[tab][widgetColor.key]
+                    ? selectedPreset?.[tab]?.[widgetColor.key]
                     : undefined)
                 }
               />

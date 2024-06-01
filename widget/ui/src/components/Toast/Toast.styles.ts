@@ -263,7 +263,7 @@ export const AlertBox = styled('div', {
         backgroundColor: '$background',
         borderRight: '1px solid',
         '&:hover': {
-          backgroundColor: '$info100',
+          backgroundColor: '$secondary100',
           [`.${darkTheme} &`]: {
             backgroundColor: '$neutral300',
           },

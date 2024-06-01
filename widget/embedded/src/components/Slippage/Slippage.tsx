@@ -67,7 +67,7 @@ export function Slippage() {
           step="0.01"
           fullWidth
           variant="contained"
-          value={customSlippage || ''}
+          value={customSlippage === null ? '' : customSlippage}
           color="dark"
           onChange={(event) => {
             const value = event.target.value;

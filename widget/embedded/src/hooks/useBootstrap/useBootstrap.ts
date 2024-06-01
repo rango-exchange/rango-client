@@ -14,11 +14,13 @@ import { tabManager } from '../../store/ui';
 import { useFetchApiConfig } from '../useFetchApiConfig';
 import { useForceAutoConnect } from '../useForceAutoConnect';
 import { useSubscribeToWidgetEvents } from '../useSubscribeToWidgetEvents';
+import { useSyncNotifications } from '../useSyncNotifications';
 
 export function useBootstrap() {
-  globalFont();
   useForceAutoConnect();
+  globalFont();
   useSubscribeToWidgetEvents();
+  useSyncNotifications();
   const blockchains = useAppStore().blockchains();
   const { canSwitchNetworkTo } = useWallets();
   const [lastConnectedWalletWithNetwork, setLastConnectedWalletWithNetwork] =

@@ -6,7 +6,11 @@ import { Image } from '../common';
 import { Skeleton } from '../Skeleton';
 
 import { tokenChainSizeMap } from './ChainToken.constants';
-import { ChainImageContainer, Container } from './ChainToken.styles';
+import {
+  ChainImageContainer,
+  Container,
+  TokenImageContainer,
+} from './ChainToken.styles';
 
 export const ChainToken: React.FC<ChainTokenPropTypes> = (props) => {
   const {
@@ -17,6 +21,7 @@ export const ChainToken: React.FC<ChainTokenPropTypes> = (props) => {
     useAsPlaceholder,
     loading,
   } = props;
+
   return (
     <Container
       css={
@@ -34,14 +39,19 @@ export const ChainToken: React.FC<ChainTokenPropTypes> = (props) => {
           width={tokenChainSizeMap[size].token}
         />
       ) : (
-        <Image
-          size={tokenChainSizeMap[size].token}
-          src={tokenImage}
-          type="circular"
-          {...((useAsPlaceholder || !tokenImage) && { useAsPlaceholder: true })}
-        />
+        <TokenImageContainer hasBorder={!tokenImage}>
+          <Image
+            size={tokenChainSizeMap[size].token}
+            src={tokenImage}
+            type="circular"
+            {...((useAsPlaceholder || !tokenImage) && {
+              useAsPlaceholder: true,
+              backgroundColor: 'transparent',
+            })}
+          />
+        </TokenImageContainer>
       )}
-      <ChainImageContainer size={size}>
+      <ChainImageContainer size={size} hasBorder={!chainImage}>
         {loading ? (
           <Skeleton
             variant="circular"
@@ -56,7 +66,7 @@ export const ChainToken: React.FC<ChainTokenPropTypes> = (props) => {
             type="circular"
             {...((useAsPlaceholder || !chainImage) && {
               useAsPlaceholder: true,
-              backgroundColor: '$secondary300',
+              backgroundColor: 'transparent',
             })}
           />
         )}

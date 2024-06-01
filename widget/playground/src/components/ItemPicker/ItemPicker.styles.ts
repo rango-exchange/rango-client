@@ -10,7 +10,7 @@ export const InputContainer = styled('div', {
   cursor: 'pointer',
   alignItems: 'center',
   '&:hover': {
-    borderColor: '$info300',
+    borderColor: '$secondary200',
     '& svg': {
       color: '$secondary500',
     },

@@ -11,18 +11,15 @@ export const theme = {
   colors: {
     primary: '#1C3CF1',
     primary500: '#1C3CF1',
-    primary600: '#0B27C5',
+    primary550: '#0B27C4',
 
     secondary: '#469BF5',
-    secondary100: '#E9F4FF',
-    secondary200: '#D6EAFF',
-    secondary300: '#C8E3FF',
-    secondary400: '#B5D9FF',
+    secondary100: '#E9F3FF',
+    secondary150: '#D6EAFF',
+    secondary200: '#C8E2FF',
+    secondary250: '#B5D9FF',
     secondary500: '#469BF5',
-    secondary600: '#2284ED',
-    secondary700: '#242D5B',
-    secondary800: '#131C49',
-    secondary900: '#0E1744',
+    secondary550: '#2284ED',
 
     neutral: '#E6E6E6',
     neutral100: '#F9F9F9',
@@ -184,9 +181,9 @@ const utils = {
 
 export const darkColors = {
   secondary: '#2284ED',
-  secondary400: '#469BF5',
+  secondary250: '#469BF5',
   secondary500: '#2284ED',
-  secondary600: '#2B3462',
+  secondary550: '#2B3462',
 
   neutral: '#222222',
   neutral900: '#E9E9E9',
@@ -228,3 +225,16 @@ export const darkTheme = createTheme('dark-theme-ui', {
     s: '0px 3px 5px 3px #222, 0px 6px 10px 3px #222, 0px 1px 18px 3px #222',
   },
 });
+
+export const rangoDarkColors = {
+  neutral: '#161C38',
+  neutral100: '#101327',
+  neutral200: '#0D122C',
+  neutral300: '#0F142E',
+  neutral400: '#111733',
+  neutral500: '#161C38',
+  neutral800: '#B8B8B8',
+  neutral900: '#E9E9E9',
+  background: '#070917',
+  foreground: '#FDFDFD',
+};

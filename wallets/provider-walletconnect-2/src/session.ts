@@ -1,4 +1,4 @@
-import type { ConnectParams, CreateSessionParams } from './types';
+import type { ConnectParams, CreateSessionParams, Environments } from './types';
 import type { SignClient } from '@walletconnect/sign-client/dist/types/client';
 import type {
   PairingTypes,
@@ -56,7 +56,10 @@ export async function restoreSession(
  */
 export async function createSession(
   client: SignClient,
-  options: CreateSessionParams
+  options: CreateSessionParams,
+  configs: {
+    envs: Environments;
+  }
 ): Promise<SessionTypes.Struct> {
   const { requiredNamespaces, optionalNamespaces, pairingTopic } = options;
 
@@ -70,27 +73,37 @@ export async function createSession(
     // Open QRCode modal if a URI was returned (i.e. we're not connecting an existing pairing).
     let onCloseModal;
     if (uri) {
-      // Create a flat array of all requested chains across namespaces.
-      const allNamespaces = {
-        ...(requiredNamespaces || {}),
-        ...(optionalNamespaces || {}),
-      };
+      /*
+       * There are some wallets have been listed in WC itself (https://docs.walletconnect.com/cloud/explorer-submission),
+       * Using `DISABLE_MODAL_AND_OPEN_LINK` option, we can directly open a specific desktop wallet.
+       */
+      const redirectLink = configs.envs.DISABLE_MODAL_AND_OPEN_LINK;
+      if (redirectLink) {
+        const url = `${redirectLink}/wc?uri=${encodeURIComponent(uri)}`;
+        window.open(url, '_blank', 'noreferrer noopener');
+      } else {
+        // Create a flat array of all requested chains across namespaces.
+        const allNamespaces = {
+          ...(requiredNamespaces || {}),
+          ...(optionalNamespaces || {}),
+        };
 
-      const standaloneChains = Object.values(allNamespaces)
-        .map((namespace) => namespace.chains)
-        .flat() as string[];
+        const standaloneChains = Object.values(allNamespaces)
+          .map((namespace) => namespace.chains)
+          .flat() as string[];
 
-      const modal = getModal();
-      void modal.openModal({ uri, standaloneChains });
+        const modal = getModal();
+        void modal.openModal({ uri, standaloneChains });
 
-      onCloseModal = new Promise((_, reject) => {
-        modal.subscribeModal((state) => {
-          // the modal was closed so reject the promise
-          if (!state.open) {
-            reject(new Error('Modal has been closed.'));
-          }
+        onCloseModal = new Promise((_, reject) => {
+          modal.subscribeModal((state) => {
+            // the modal was closed so reject the promise
+            if (!state.open) {
+              reject(new Error('Modal has been closed.'));
+            }
+          });
         });
-      });
+      }
     }
 
     const session = approval();
@@ -150,10 +163,16 @@ export async function tryConnect(
 
   // In case of connecting for the first time or session couldn't be restored, we will create a new session.
   if (!session) {
-    session = await createSession(client, {
-      requiredNamespaces: {},
-      optionalNamespaces,
-    });
+    session = await createSession(
+      client,
+      {
+        requiredNamespaces: {},
+        optionalNamespaces,
+      },
+      {
+        envs: params.envs,
+      }
+    );
   }
 
   return session;

@@ -1,13 +1,13 @@
 import type { ColorsTypes, PresetTypes } from './StyleLayout.types';
-import type { WidgetColors } from '@rango-dev/widget-embedded';
+import type { ColorsType } from '../../types';
 
 import { Button, Divider, Switch, Typography } from '@rango-dev/ui';
 import React, { useState } from 'react';
 
-import { DEFAULT_COLORS, PRESETS } from '../../constants';
+import { DEFAULT_THEME_COLORS, PRESETS } from '../../constants';
 import { useTheme } from '../../hooks/useTheme';
 import { useConfigStore } from '../../store/config';
-import { shallowEqual } from '../../utils/common';
+import { isPresetSelected, removeDuplicatePresets } from '../../utils/colors';
 
 import { CustomColorsSection } from './StyleLayout.CustomColors';
 import {
@@ -49,10 +49,7 @@ export function Preset(props: PresetTypes) {
     tab,
     value: false,
   });
-  const [selectedPreset, setSelectedPreset] = useState<{
-    light: WidgetColors;
-    dark: WidgetColors;
-  }>({
+  const [selectedPreset, setSelectedPreset] = useState<ColorsType>({
     light: theme?.colors?.light || {},
     dark: theme?.colors?.dark || {},
   });
@@ -63,12 +60,14 @@ export function Preset(props: PresetTypes) {
   const isDarkTab = tab === 'dark';
   const isLightTab = tab === 'light';
   const isAutoTab = tab === 'auto';
-  const PRESETS_FILTER = PRESETS.filter(
+  let PRESETS_FILTER = PRESETS.filter(
     (preset) =>
-      (isDarkTab && !!preset[tab] && !preset.light) ||
-      (isLightTab && !!preset[tab] && !preset.dark) ||
+      ((isDarkTab || isLightTab) && !!preset[tab]) ||
       (isAutoTab && !!preset.dark && !!preset.light)
   );
+  PRESETS_FILTER = isLightTab
+    ? removeDuplicatePresets(PRESETS_FILTER)
+    : PRESETS_FILTER;
   const presetsSize = PRESETS_FILTER.length;
   const more =
     presetsSize -
@@ -78,12 +77,10 @@ export function Preset(props: PresetTypes) {
     ? EACH_COL_HEIGHT * 2
     : EACH_COL_HEIGHT * (isAutoTab ? presetsSize : Math.ceil(presetsSize / 2));
 
-  const onSelectPreset = (customTheme: {
-    dark: WidgetColors;
-    light: WidgetColors;
-  }) => {
-    onSelectTheme(customTheme);
-    setSelectedPreset(customTheme);
+  const onSelectPreset = (preset: ColorsType) => {
+    const selectedPreset = isAutoTab ? preset : { [tab]: preset[tab] };
+    onSelectTheme(selectedPreset);
+    setSelectedPreset(selectedPreset);
     onChangeTheme({ name: 'singleTheme', value: isAutoTab ? undefined : true });
     if (!isAutoTab) {
       onChangeTheme({ name: 'mode', value: tab });
@@ -116,16 +113,12 @@ export function Preset(props: PresetTypes) {
           {PRESETS_FILTER.map((preset) => (
             <PresetTheme
               variant="default"
-              isSelected={
-                theme?.colors &&
-                shallowEqual(theme?.colors?.dark || {}, preset.dark || {}) &&
-                shallowEqual(theme?.colors?.light || {}, preset.light || {})
-              }
+              isSelected={isPresetSelected(preset, selectedPreset, tab)}
               key={preset.id}
               onClick={() =>
                 onSelectPreset({
-                  dark: preset.dark || {},
-                  light: preset.light || {},
+                  dark: preset.dark,
+                  light: preset.light,
                 })
               }>
               {!isAutoTab ? (
@@ -175,7 +168,7 @@ export function Preset(props: PresetTypes) {
       <CustomColorsSection
         tab={tab}
         selectedPreset={selectedPreset}
-        onResetPreset={() => setSelectedPreset(DEFAULT_COLORS)}
+        onResetPreset={() => setSelectedPreset(DEFAULT_THEME_COLORS)}
       />
     </>
   );

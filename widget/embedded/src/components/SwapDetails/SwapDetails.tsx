@@ -12,9 +12,10 @@ import {
   CopyIcon,
   Divider,
   IconButton,
-  LinkIcon,
   QuoteCost,
+  RangoExplorerIcon,
   StepDetails,
+  Tooltip,
   Typography,
   useCopyToClipboard,
 } from '@rango-dev/ui';
@@ -96,21 +97,20 @@ export function SwapDetails(props: SwapDetailsProps) {
     setModalState(null);
   };
 
-  const getUnreadNotifications =
-    useNotificationStore.use.getUnreadNotifications();
-  const setAsRead = useNotificationStore.use.setAsRead();
-  const unreadNotifications = getUnreadNotifications();
+  const getNotifications = useNotificationStore.use.getNotifications();
+  const removeNotification = useNotificationStore.use.removeNotification();
+  const notifications = getNotifications();
   const currentStep = getCurrentStep(swap);
   const currentStepNetworkStatus = currentStep?.networkStatus;
 
   useEffect(() => {
-    const existNotification = unreadNotifications.find(
+    const existNotification = notifications.find(
       (n) => n.requestId === swap.requestId
     );
     if (existNotification) {
       if (swap.status === 'success' || swap.status === 'failed') {
         setShowCompletedModal(swap.status);
-        setAsRead(swap.requestId);
+        removeNotification(swap.requestId);
       } else if (showCompletedModal) {
         setShowCompletedModal(null);
       }
@@ -322,7 +322,12 @@ export function SwapDetails(props: SwapDetailsProps) {
               <StyledLink
                 target="_blank"
                 href={`${SCANNER_BASE_URL}/swap/${requestId}`}>
-                <LinkIcon size={16} />
+                <Tooltip
+                  container={getContainer()}
+                  content={i18n.t('View on Rango Explorer')}
+                  side="bottom">
+                  <RangoExplorerIcon size={20} />
+                </Tooltip>
               </StyledLink>
             </div>
           </div>

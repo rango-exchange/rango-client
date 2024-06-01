@@ -6,10 +6,10 @@ import { useNotificationStore } from '../../store/notification';
 
 import { NotificationsBadgeContainer } from './HeaderButtons.styles';
 
-export function UnreadNotificationsBadge() {
-  const { getUnreadNotifications } = useNotificationStore();
+export function NotificationsBadge() {
+  const { getNotifications } = useNotificationStore();
 
-  const notificationsList = getUnreadNotifications();
+  const notificationsList = getNotifications();
 
   const notificationsCount = notificationsList.length;
 

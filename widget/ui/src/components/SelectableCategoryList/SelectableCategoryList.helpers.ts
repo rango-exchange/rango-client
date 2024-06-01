@@ -46,7 +46,7 @@ export const hasAnyCategory = (
   blockchainType: string
 ) => list.some((blockchain) => filterByType(blockchain, blockchainType));
 
-export const getCountCategories = (list: BlockchainMeta[]) => {
+export const getCategoriesCount = (list: BlockchainMeta[]) => {
   const categoriesToCheck = Object.values(BlockchainCategories).filter(
     (category) => category !== BlockchainCategories.ALL
   );

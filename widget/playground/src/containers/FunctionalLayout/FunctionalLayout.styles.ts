@@ -43,7 +43,7 @@ export const FromAmount = styled('div', {
     fontSize: '$12',
   },
   '&:hover': {
-    borderColor: '$info300',
+    borderColor: '$secondary200',
   },
 });
 

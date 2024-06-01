@@ -1,0 +1,23 @@
+name: Build libraries then upload build artifacts
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build-and-upload:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Prepare
+        uses: ./.github/actions/prepare
+
+      - name: Build Libraries
+        run: |
+          node ./scripts/build-libs/command.mjs
+
+      - id: upload_artifacts
+        name: Upload Build Artifacts
+        uses: ./.github/actions/upload-build-artifacts

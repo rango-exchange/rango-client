@@ -31,7 +31,7 @@ export const RouteContainer = styled('div', {
       true: {
         $$color: '$colors$secondary500',
         [`.${darkTheme} &`]: {
-          $$color: '$colors$secondary400',
+          $$color: '$colors$secondary250',
         },
         borderColor: '$$color',
       },
@@ -119,13 +119,13 @@ export const SwapperSection = styled('div', {
   width: '100%',
   height: '50%',
   borderBottom: '1px dashed',
-  borderColor: '$info300',
+  borderColor: '$secondary200',
   display: 'flex',
   flexDirection: 'column',
   justifyContent: 'flex-end',
   gap: '2px',
   [`.${darkTheme} &`]: {
-    borderColor: '$secondary600',
+    borderColor: '$secondary550',
   },
 });
 
@@ -217,9 +217,9 @@ export const VerticalLine = styled('div', {
   width: 'calc(50% + 1px)',
   borderRight: '1px dashed',
   height: '$10',
-  borderColor: '$info300',
+  borderColor: '$secondary200',
   [`.${darkTheme} &`]: {
-    borderColor: '$secondary600',
+    borderColor: '$secondary550',
   },
 });
 
@@ -240,9 +240,9 @@ export const lastStepStyle = css({
     height: '$6',
     borderTop: '2px solid',
     borderRight: '2px solid',
-    borderColor: '$info300',
+    borderColor: '$secondary200',
     [`.${darkTheme} &`]: {
-      borderColor: '$secondary600',
+      borderColor: '$secondary550',
     },
   },
 });

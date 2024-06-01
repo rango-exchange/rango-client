@@ -30,14 +30,14 @@ export const Main = styled('button', {
   cursor: 'pointer',
   fontFamily: 'inherit',
   '&:hover': {
-    $$color: '$colors$info100',
+    $$color: '$colors$secondary100',
     [`.${darkTheme} &`]: {
       $$color: '$colors$neutral100',
     },
     backgroundColor: '$$color',
   },
   '&:focus-visible': {
-    $$color: '$colors$info100',
+    $$color: '$colors$secondary100',
     [`.${darkTheme} &`]: {
       $$color: '$colors$info700',
     },

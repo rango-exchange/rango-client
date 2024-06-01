@@ -34,14 +34,14 @@ export const WalletButton = styled('button', {
   position: 'relative',
   fontFamily: 'inherit',
   '&:hover': {
-    $$color: '$colors$info100',
+    $$color: '$colors$secondary100',
     [`.${darkTheme} &`]: {
       $$color: '$colors$neutral100',
     },
     backgroundColor: '$$color',
   },
   '&:focus-visible': {
-    $$color: '$colors$info100',
+    $$color: '$colors$secondary100',
     [`.${darkTheme} &`]: {
       $$color: '$colors$info700',
     },
@@ -58,7 +58,7 @@ export const WalletButton = styled('button', {
         outlineWidth: 1,
         $$outline: '$colors$secondary500',
         [`.${darkTheme} &`]: {
-          $$outline: '$colors$secondary400',
+          $$outline: '$colors$secondary250',
         },
         outlineColor: '$$outline',
         outlineStyle: 'solid',

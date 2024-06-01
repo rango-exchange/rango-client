@@ -29,7 +29,11 @@ import { TokenSection } from './TokenSection';
 
 export function SwapInput(props: SwapInputPropTypes) {
   const showBalance =
-    'balance' in props && !props.loading && !props.loadingBalance;
+    'balance' in props &&
+    !props.loading &&
+    !props.loadingBalance &&
+    props.token.displayName;
+
   const showBalanceSkeleton =
     'balance' in props && (props.loading || props.loadingBalance);
   return (
@@ -108,6 +112,7 @@ export function SwapInput(props: SwapInputPropTypes) {
                   size="large"
                   placeholder="0"
                   variant="ghost"
+                  isZero={props.price.value === '0'}
                   min={0}
                   {...('onInputChange' in props && {
                     onChange: (event: React.ChangeEvent<HTMLInputElement>) =>
@@ -142,7 +147,9 @@ export function SwapInput(props: SwapInputPropTypes) {
                   <ValueTypography hasWarning={!!props.price.error}>
                     <UsdPrice variant="body" size="medium">
                       {props.price.usdValue
-                        ? `~$${props.price.usdValue}`
+                        ? props.price.usdValue === '0'
+                          ? '0.00'
+                          : `~$${props.price.usdValue}`
                         : props.price.error}
                     </UsdPrice>
                   </ValueTypography>

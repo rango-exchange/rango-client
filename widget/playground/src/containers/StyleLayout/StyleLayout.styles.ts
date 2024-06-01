@@ -1,4 +1,4 @@
-import { Button, Collapsible, styled } from '@rango-dev/ui';
+import { Button, Collapsible, darkTheme, styled } from '@rango-dev/ui';
 
 export const GeneralContainer = styled('div', {
   backgroundColor: '$background',
@@ -31,7 +31,7 @@ export const PresetTheme = styled(Button, {
     width: '100%',
   },
   '&:hover': {
-    borderColor: '$info300',
+    borderColor: '$secondary200',
   },
   variants: {
     isSelected: {
@@ -39,7 +39,11 @@ export const PresetTheme = styled(Button, {
         borderColor: '$secondary500',
       },
       false: {
-        borderColor: '$neutral300',
+        $$color: '$colors$neutral300',
+        [`.${darkTheme} &`]: {
+          $$color: '$colors$neutral400',
+        },
+        borderColor: '$$color',
       },
     },
   },
@@ -122,7 +126,7 @@ export const CustomColorCollapsible = styled(Collapsible, {
   padding: '$4 $15',
   cursor: 'pointer',
   '&:hover': {
-    borderColor: '$info300',
+    borderColor: '$secondary200',
     '& svg': {
       color: '$secondary500',
     },

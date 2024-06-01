@@ -41,7 +41,7 @@ export const SelectTrigger = styled(Select.Trigger, {
           backgroundColor: '$neutral400',
         },
         '&:hover': {
-          backgroundColor: '$info100',
+          backgroundColor: '$secondary100',
           [`.${darkTheme} &`]: {
             backgroundColor: '$neutral',
           },
@@ -53,7 +53,7 @@ export const SelectTrigger = styled(Select.Trigger, {
         border: '1px solid $neutral300',
         borderRadius: '$xm',
         '&:hover': {
-          borderColor: '$info300',
+          borderColor: '$secondary200',
           '& svg': {
             color: '$secondary500',
           },
@@ -84,7 +84,7 @@ export const SelectItem = styled(Select.Item, {
   },
 
   '&:hover': {
-    backgroundColor: '$info100',
+    backgroundColor: '$secondary100',
     '& ._text': {
       color: '$secondary500',
     },

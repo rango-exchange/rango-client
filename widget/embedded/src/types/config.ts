@@ -14,21 +14,25 @@ export type WidgetVariant = 'default' | 'expanded' | 'full-expanded';
  *
  */
 export type WidgetColorsKeys = keyof WidgetColors;
-export type WidgetColors = {
+
+export type ThemeColors = {
+  [key in string]?: string;
+};
+
+export interface WidgetColors extends ThemeColors {
   background?: string;
   foreground?: string;
   neutral?: string;
   primary?: string;
   secondary?: string;
-  info?: string;
-};
+}
 
 /**
  * The `WidgetTheme` defines the properties of a widget theme, including mode, font family, colors, border
  * radius, width, and height.
  * @property {'auto' | 'light' | 'dark'} mode - The mode property is used to specify the default theme for
  * the widget.
- * @property {string} fontFamily - The font family to be used in the widget.
+ * @property {string} fontFamily - The font family to be used in the widget. If you want to do this, include the font of your choice in your HTML file.
  * @property {{ light?: WidgetColors; dark?: WidgetColors }} colors - The `colors` property is a sub-property of the `WidgetTheme` object that
  * defines the color scheme for the widget. It is of type `Colors`, which is likely another object that
  * contains specific color values for various parts of the widget (e.g. background color, text color,
@@ -101,6 +105,10 @@ export type BlockchainAndTokenConfig = {
   blockchains?: string[];
   pinnedTokens?: Asset[];
   tokens?: Asset[] | { [blockchain: string]: Tokens };
+};
+
+export type SignersConfig = {
+  customSolanaRPC?: string;
 };
 
 /**
@@ -209,4 +217,10 @@ export type WidgetConfig = {
   features?: Features;
   variant?: WidgetVariant;
   enableCentralizedSwappers?: boolean;
+  signers?: SignersConfig;
+
+  // These are likely to change or remove at anytime. Please use with a caution.
+  __UNSTABLE_OR_INTERNAL__?: {
+    walletConnectListedDesktopWalletLink?: string;
+  };
 };

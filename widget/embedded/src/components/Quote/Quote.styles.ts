@@ -48,7 +48,7 @@ export const QuoteContainer = styled(Collapsible.Root, {
       listItem: false,
       selected: true,
       css: {
-        $$color: '$colors$info300',
+        $$color: '$colors$secondary200',
         [`.${darkTheme} &`]: {
           $$color: '$colors$secondary800',
         },
@@ -63,13 +63,13 @@ export const stepsDetailsStyles = css({
 });
 export const AllRoutesButton = styled(Button, {
   backgroundColor: 'transparent',
-  border: '1px solid $secondary600',
+  border: '1px solid $secondary550',
   [`.${darkTheme} &`]: {
     border: '1px solid $secondary',
   },
   transition: 'background-color 0.3s ease',
   '&:hover': {
-    backgroundColor: '$secondary600',
+    backgroundColor: '$secondary550',
     [`.${darkTheme} &`]: {
       backgroundColor: '$secondary',
     },
@@ -147,9 +147,9 @@ export const SummaryContainer = styled('div', {
       listItem: false,
       selected: true,
       css: {
-        $$color: '$colors$info100',
+        $$color: '$colors$secondary100',
         [`.${darkTheme} &`]: {
-          $$color: '$colors$secondary600',
+          $$color: '$colors$secondary550',
         },
         backgroundColor: '$$color',
         '&:hover': {
@@ -262,7 +262,7 @@ export const Trigger = styled(Collapsible.Trigger, {
       listItem: false,
       selected: true,
       css: {
-        $$color: '$colors$info300',
+        $$color: '$colors$secondary200',
         [`.${darkTheme} &`]: {
           $$color: '$colors$secondary800',
         },

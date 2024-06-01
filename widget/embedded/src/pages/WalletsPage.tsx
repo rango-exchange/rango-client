@@ -1,7 +1,15 @@
 import type { Namespace, WalletType } from '@rango-dev/wallets-shared';
 
 import { i18n } from '@lingui/core';
-import { styled, Typography, Wallet, WalletState } from '@rango-dev/ui';
+import {
+  Divider,
+  getCategoriesCount,
+  SelectableCategoryList,
+  styled,
+  Typography,
+  Wallet,
+  WalletState,
+} from '@rango-dev/ui';
 import React, { useState } from 'react';
 
 import { Layout, PageContainer } from '../components/Layout';
@@ -11,6 +19,10 @@ import { useWalletList } from '../hooks/useWalletList';
 import { useAppStore } from '../store/AppStore';
 import { useUiStore } from '../store/ui';
 import { getContainer } from '../utils/common';
+import {
+  filterBlockchainsByWalletTypes,
+  filterWalletsByCategory,
+} from '../utils/wallets';
 
 interface NamespacesModalState {
   providerType: string;
@@ -37,6 +49,9 @@ export const TIME_TO_IGNORE_MODAL = 300;
 
 export function WalletsPage() {
   const { fetchStatus: fetchMetaStatus } = useAppStore();
+  const [blockchainCategory, setBlockchainCategory] = useState<string>('ALL');
+  const blockchains = useAppStore().blockchains();
+
   const [openModal, setOpenModal] = useState(false);
   const [namespacesModalState, setNamespacesModalState] =
     useState<NamespacesModalState | null>(null);
@@ -74,17 +89,34 @@ export function WalletsPage() {
   const selectedWalletState =
     selectedWallet?.state || WalletState.NOT_INSTALLED;
 
+  const filteredBlockchains = filterBlockchainsByWalletTypes(list, blockchains);
+  const activeCategoriesCount = getCategoriesCount(filteredBlockchains);
+  const showCategory = activeCategoriesCount !== 1;
+
+  const filteredWallets = filterWalletsByCategory(list, blockchainCategory);
+
   return (
     <Layout
       header={{
         title: i18n.t('Connect Wallets'),
       }}>
       <Container>
+        {showCategory && (
+          <>
+            <SelectableCategoryList
+              setCategory={setBlockchainCategory}
+              category={blockchainCategory}
+              blockchains={filteredBlockchains}
+              isLoading={fetchMetaStatus === 'loading'}
+            />
+            <Divider size={24} />
+          </>
+        )}
         <Typography variant="title" size="xmedium" align="center">
           {i18n.t('Choose a wallet to connect.')}
         </Typography>
         <ListContainer>
-          {list.map((wallet, index) => {
+          {filteredWallets.map((wallet, index) => {
             const key = `wallet-${index}-${wallet.type}`;
             return (
               <Wallet

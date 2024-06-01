@@ -5,6 +5,9 @@ import { allProviders } from '@rango-dev/provider-all';
 
 export interface ProvidersOptions {
   walletConnectProjectId?: WidgetConfig['walletConnectProjectId'];
+  walletConnectListedDesktopWalletLink?: NonNullable<
+    WidgetConfig['__UNSTABLE_OR_INTERNAL__']
+  >['walletConnectListedDesktopWalletLink'];
 }
 
 /**
@@ -20,6 +23,8 @@ export function matchAndGenerateProviders(
   const all = allProviders({
     walletconnect2: {
       WC_PROJECT_ID: options?.walletConnectProjectId || '',
+      DISABLE_MODAL_AND_OPEN_LINK:
+        options?.walletConnectListedDesktopWalletLink,
     },
     selectedProviders: providers,
   });

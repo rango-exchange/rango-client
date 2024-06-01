@@ -59,6 +59,7 @@ import { Networks, WalletTypes } from '@rango-dev/wallets-shared';
 import { PendingSwapNetworkStatus } from 'rango-types';
 
 import { WIDGET_UI_ID as UI_ID } from './constants';
+import { SUPPORTED_FONTS } from './constants/fonts';
 import { WidgetWallets } from './containers/Wallets';
 import { Widget } from './containers/Widget';
 import { useWidget } from './containers/WidgetInfo';
@@ -113,6 +114,7 @@ export {
   StepExecutionEventStatus,
   StepExecutionBlockedEventStatus,
   UI_ID,
+  SUPPORTED_FONTS,
 };
 
 // Internal type exports for Rango

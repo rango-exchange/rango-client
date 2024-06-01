@@ -26,7 +26,7 @@ export const Select = styled('div', {
     disabled: {
       false: {
         '&:hover': {
-          borderColor: '$info300',
+          borderColor: '$secondary200',
           '& svg': {
             color: '$secondary500',
           },
@@ -48,7 +48,7 @@ export const WalletChip = styled('div', {
   variants: {
     variant: {
       contained: {
-        backgroundColor: '$info100',
+        backgroundColor: '$secondary100',
       },
       outlined: {
         backgroundColor: 'transparent',

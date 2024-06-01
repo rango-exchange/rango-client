@@ -1,6 +1,10 @@
 import type { Token } from 'rango-sdk';
 
+import { BlockchainCategories } from '@rango-dev/ui';
+import { TransactionType } from 'rango-sdk';
+
 import { WIDGET_UI_ID } from '../constants';
+import { SUPPORTED_FONTS } from '../constants/fonts';
 import {
   MIN_LENGTH_SYMBOL_CONTAINS,
   MIN_LENGTH_SYMBOL_START_WITH,
@@ -218,3 +222,28 @@ export function compareWithSearchFor(
 
   return 0;
 }
+
+export const isBlockchainTypeInCategory = (
+  blockchainType: TransactionType,
+  category: string
+): boolean => {
+  switch (category) {
+    case BlockchainCategories.ALL:
+      return true;
+    case BlockchainCategories.UTXO:
+      return blockchainType === TransactionType.TRANSFER;
+    case BlockchainCategories.OTHER:
+      return (
+        blockchainType !== TransactionType.TRANSFER &&
+        blockchainType !== TransactionType.COSMOS &&
+        blockchainType !== TransactionType.EVM
+      );
+    default:
+      return blockchainType === category;
+  }
+};
+
+export const getFontUrlByName = (fontName: string) => {
+  const font = SUPPORTED_FONTS.find((font) => font.value === fontName);
+  return font?.url;
+};

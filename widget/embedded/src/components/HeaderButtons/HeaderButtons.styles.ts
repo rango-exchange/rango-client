@@ -6,7 +6,7 @@ export const HeaderButton = styled(IconButton, {
   padding: '0',
   overflow: 'unset',
   '&:hover': {
-    backgroundColor: '$info100',
+    backgroundColor: '$secondary100',
     [`.${darkTheme} &`]: {
       backgroundColor: '$neutral',
     },
@@ -17,7 +17,7 @@ export const ConnectedIcon = styled('div', {
   position: 'absolute',
   background: '$secondary500',
   [`.${darkTheme} &`]: {
-    $$color: '$colors$secondary400',
+    $$color: '$colors$secondary250',
   },
   width: '$6',
   height: '$6',

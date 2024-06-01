@@ -1,4 +1,4 @@
-import { styled } from '../../theme';
+import { darkTheme, styled } from '../../theme';
 import { Image } from '../common';
 
 export const Container = styled('div', {
@@ -9,9 +9,12 @@ export const Container = styled('div', {
 
 export const ChainImageContainer = styled('div', {
   position: 'absolute',
-  border: '0.5px solid $background',
   borderRadius: '100%',
-  backgroundColor: '$background',
+  $$color: '$colors$neutral100',
+  [`.${darkTheme} &`]: {
+    $$color: '$colors$neutral300',
+  },
+  backgroundColor: '$$color',
   variants: {
     size: {
       small: {
@@ -30,6 +33,36 @@ export const ChainImageContainer = styled('div', {
         right: '-5px',
         bottom: '-5px',
       },
+    },
+    hasBorder: {
+      true: {
+        $$borderColor: '$colors$secondary250',
+        [`.${darkTheme} &`]: {
+          $$borderColor: '$colors$secondary550',
+        },
+        border: '1px solid $$borderColor',
+      },
+      false: {},
+    },
+  },
+});
+export const TokenImageContainer = styled('div', {
+  borderRadius: '100%',
+  width: '$30',
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+
+  variants: {
+    hasBorder: {
+      true: {
+        $$borderColor: '$colors$secondary550',
+        [`.${darkTheme} &`]: {
+          $$borderColor: '$colors$secondary500',
+        },
+        border: '1px solid $$borderColor',
+      },
+      false: {},
     },
   },
 });

@@ -1,4 +1,4 @@
-import type { WCInstance } from './types';
+import type { Environments, WCInstance } from './types';
 import type {
   CanSwitchNetwork,
   Connect,
@@ -47,13 +47,13 @@ import signer from './signer';
 
 const WALLET = WalletTypes.WALLET_CONNECT_2;
 
-export interface Environments extends Record<string, string> {
-  WC_PROJECT_ID: string;
-}
-
 let envs: Environments = {
   WC_PROJECT_ID: '',
+  DISABLE_MODAL_AND_OPEN_LINK: undefined,
 };
+
+export type { Environments };
+
 export const init = (environments: Environments) => {
   envs = environments;
 
@@ -102,7 +102,7 @@ export const getInstance: GetInstance = async (options) => {
 export const connect: Connect = async ({ instance, meta }) => {
   const { client } = instance as WCInstance;
   // Try to restore the session first, if couldn't, create a new session by showing a modal.
-  const session = await tryConnect(client, { meta });
+  const session = await tryConnect(client, { meta, envs });
   // Override the value (session).
   instance.session = session;
   const currentChainId = await getPersistedChainId(client);
