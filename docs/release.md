@@ -29,7 +29,6 @@ Libs will be published under `next` tag on npm, which means you need to use `yar
 
 There is a workflow called `Production Release`, you just need to run this workflow manually and then it will automatically published.
 
-
 ### Deploy flow
 
 You should manually trigger the `deploy` workflow.
@@ -51,54 +50,35 @@ _Note 1_: Syncing translations (first workflow) is an optional step which means 
 
 ### Production
 
-#### Overview
-
 Follow these steps for the release:
 
-1. Run the `Production Release` workflow manually.
-2. When workflow finished, make sure you've updated changelog and created a PR, as it explained below.
-3. Run the `Deploy` workflow if the publish was successful.
-4. Promote our clients (widget and playground) to production on Vercel (ask the team if you don't have access).
-5. Create a pull request from the `main` branch to `next` to update the `next` branch , ensuring not to merge it using the `Rebase and merge` strategy; instead, use the `Create a merge commit` strategy for merging.
-
-
-**NOTE 1:**
-
-Ensure you send a highlight note on Telegram [like this](https://t.me/c/1797229876/15255/23609) at the end.
-
-**NOTE 2:**
-
-Ensure you update widget-examples using `yarn add @rango-dev/widget-embedded@latest`. Then open a new PR on the repo to ensure all examples are on the latest version.
-
-#### Details
+#### 1. Run the `Production Release` workflow manually.
 
 For releasing production, you need to run `Production Release` workflow, it will pull the latest translation changes on `next` branch and checkout to `next` branch and pull the latest changes then it tries to merge the `next` into `main` by `--no-ff` strategy, To make sure that a new commit is made And previous commits that may have `[skips ci]` Do not prevent workflow from triggering.
 
-
 We are running `crowdin` workflow inside `release` workflow which means before any release we will extract and push strings to Crowdin then pull all the strings from Crowdin to make sure we have latest changes on releases.
 
-Before deploying and after releasing production, you will need to manually increase the `widget/app` and `widget/playground` version and write the changelog.
+#### 2. When workflow finished running, increase `widget/app` and `widget/playground` version and update changelog.
 
-**NOTE:** Create a hotfix branch then do the following steps to commit changes to open a PR.
+You should submit a pull request to the main branch from a new hotfix branch, incrementing the minor version by 1. Additionally, please remember to update the 'CHANGELOG.md' file located at the root of the repository. To do this you can follow the following steps:
 
-Steps:
-If widget has any updates:
+1. If widget has any updates:
 
 ```shell
 cd widget/app
 yarn version --minor --no-git-tag-version
 ```
 
-if playground has any changes:
+2. if playground has any changes:
 
 ```shell
 cd widget/playground
 yarn version --minor --no-git-tag-version
 ```
 
-Then you need to update `/CHANGELOG.md` (root) and list all the changes into widget or playground. you can use the template at the end of list. _Don't forget to use correct date and version (that you've ran before)._
+3. Then you need to update `/CHANGELOG.md` (root) and list all the changes into widget or playground. you can use the template at the end of list. _Don't forget to use correct date and version (that you've ran before)._
 
-Finally, you can commit your changes, run the following commands from workspace's root:
+4. Finally, you can commit your changes, run the following commands from workspace's root:
 
 ```shell
 git add CHANGELOG.md
@@ -107,3 +87,19 @@ git add widget/playground/package.json
 
 git commit -m "chore(release): deploy" -m "[skip ci]"
 ```
+
+#### 3. Run the `Deploy` workflow if the publish was successful.
+
+#### 4. Promote our clients (widget and playground) to production on Vercel (ask the team if you don't have access).
+
+#### 5. Create a pull request from the `main` branch to `next` to update the `next` branch.
+
+Please keep in mind that this PR should be merged using the `Create a merge commit` strategy instead of the default `Rebase and merge` strategy.
+
+**NOTE 1:**
+
+Ensure you send a highlight note on Telegram [like this](https://t.me/c/1797229876/15255/23609) at the end.
+
+**NOTE 2:**
+
+Ensure you update widget-examples using `yarn add @rango-dev/widget-embedded@latest`. Then open a new PR on the repo to ensure all examples are on the latest version.

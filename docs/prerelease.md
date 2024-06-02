@@ -46,7 +46,7 @@ Ensure you've added this config to your `~/.gitconfig`
 Then, open files with the following command:
 
 ```shell
-git difftool origin/main -y 
+git difftool origin/main -y
 ```
 
 For a specific path:
@@ -66,20 +66,20 @@ Before each release, we are doing some manual tests on different environments to
 #### Codesandbox
 
 You can use the following Codesandbox template:
-https://codesandbox.io/p/sandbox/mystifying-haze-fdmkv6
+https://codesandbox.io/p/sandbox/sweet-wing-2jf5j3
 
 #### widget-examples
 
 You can find it here:
 https://github.com/rango-exchange/widget-examples
 
-Update `widget-embedded` version to latest ***next*** version using this command:
+Update `widget-embedded` version to latest **_next_** version using this command:
 
 ```shell
 yarn add @rango-dev/widget-embedded@next
 ```
 
-Note: don’t commit your changes to the repo, We will doing it after  release the production successfully which means we only commit `production` version to the repo. More details is on `Post Release` document.
+Note: don’t commit your changes to the repo, We will doing it after release the production successfully which means we only commit `production` version to the repo. More details is on `Post Release` document.
 
 #### Playground
 
