@@ -108,9 +108,7 @@ export async function compareBuildJsonFiles(
     changes[getPackageName(item)] = {
       'current branch': size(currentBranchPackagesAndBundlesSize[item]),
       'target branch': size(0),
-      diff: formatBundleSizeDiff(
-        formatBundleSizeDiff(currentBranchPackagesAndBundlesSize[item], 0)
-      ),
+      diff: formatBundleSizeDiff(currentBranchPackagesAndBundlesSize[item], 0),
     };
   });
 
