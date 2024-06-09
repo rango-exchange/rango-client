@@ -24,7 +24,11 @@ export function layer(client: Client): Layer {
           const tags = payload.data.tags as Parameters<Scope['setTags']>[0];
           scope.setTags(tags);
         }
-
+        /*
+         * https://forum.sentry.io/t/error-object-details-not-showing-up-in-sentry/7081/3
+         * We could use this to capture normalized error fields in sentry
+         */
+        scope.setExtra('error', payload.message);
         client.captureException(payload.message);
       });
     },
