@@ -2,7 +2,7 @@ import type { SignClient } from '@walletconnect/sign-client/dist/types/client';
 import type { SessionTypes } from '@walletconnect/types';
 import type { EvmTransaction } from 'rango-types/lib/api/main';
 
-import { cleanEvmError } from '@rango-dev/signer-evm';
+import { cleanEvmError, DefaultEvmSigner } from '@rango-dev/signer-evm';
 import * as encoding from '@walletconnect/encoding';
 import { AccountId, ChainId } from 'caip';
 import { type GenericSigner } from 'rango-types';
@@ -18,42 +18,6 @@ class EVMSigner implements GenericSigner<EvmTransaction> {
   constructor(client: SignClient, session: SessionTypes.Struct) {
     this.client = client;
     this.session = session;
-  }
-
-  static buildTx(evmTx: EvmTransaction, disableV2 = false) {
-    let tx = {};
-    if (evmTx.from) {
-      tx = { ...tx, from: evmTx.from };
-    }
-    if (evmTx.to) {
-      tx = { ...tx, to: evmTx.to };
-    }
-    if (evmTx.data) {
-      tx = { ...tx, data: evmTx.data };
-    }
-    if (evmTx.value) {
-      tx = { ...tx, value: evmTx.value };
-    }
-    if (evmTx.nonce) {
-      tx = { ...tx, nonce: evmTx.nonce };
-    }
-    if (evmTx.gasLimit) {
-      tx = { ...tx, gasLimit: evmTx.gasLimit };
-    }
-    if (evmTx.gasPrice) {
-      const shift = 16;
-      tx = {
-        ...tx,
-        gasPrice: '0x' + parseInt(evmTx.gasPrice).toString(shift),
-      };
-    }
-    if (evmTx.maxFeePerGas && !disableV2) {
-      tx = { ...tx, maxFeePerGas: evmTx.maxFeePerGas };
-    }
-    if (evmTx.maxPriorityFeePerGas && !disableV2) {
-      tx = { ...tx, maxPriorityFeePerGas: evmTx.maxPriorityFeePerGas };
-    }
-    return tx;
   }
 
   public async signMessage(
@@ -107,7 +71,7 @@ class EVMSigner implements GenericSigner<EvmTransaction> {
       chainId,
     });
     try {
-      const transaction = EVMSigner.buildTx(tx);
+      const transaction = DefaultEvmSigner.buildTx(tx);
       const hash: string = await this.client.request({
         topic: this.session.topic,
         chainId: requestedFor.caipChainId,
@@ -125,8 +89,16 @@ class EVMSigner implements GenericSigner<EvmTransaction> {
       return {
         hash,
       };
-    } catch (error) {
-      throw cleanEvmError(error);
+    } catch (error: any) {
+      const modifiedError = cleanEvmError(error);
+      const session = this.session;
+      const context = {
+        namspaces: session?.namespaces,
+        peering: session?.peer?.metadata,
+        code: error?.code,
+      };
+      modifiedError.context = context;
+      throw modifiedError;
     }
   }
 
