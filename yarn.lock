@@ -8827,6 +8827,15 @@ axios@^1.3.4, axios@^1.6.0, axios@^1.6.5:
     form-data "^4.0.0"
     proxy-from-env "^1.1.0"
 
+axios@^1.7.2:
+  version "1.7.2"
+  resolved "https://registry.yarnpkg.com/axios/-/axios-1.7.2.tgz#b625db8a7051fbea61c35a3cbb3a1daa7b9c7621"
+  integrity sha512-2A8QhOMrbomlDuiLeK9XibIBzuHeRcqqNOHp0Cyp5EoJ1IFDh+XZH3A6BkXtv0K4gFGCI0Y4BM7B1wOEi0Rmgw==
+  dependencies:
+    follow-redirects "^1.15.6"
+    form-data "^4.0.0"
+    proxy-from-env "^1.1.0"
+
 babel-core@^7.0.0-bridge.0:
   version "7.0.0-bridge.0"
   resolved "https://registry.yarnpkg.com/babel-core/-/babel-core-7.0.0-bridge.0.tgz#95a492ddd90f9b4e9a4a1da14eb335b87b634ece"
@@ -16271,14 +16280,14 @@ rango-sdk-basic@^0.1.44:
     rango-types "^0.1.57"
     uuid-random "^1.3.2"
 
-rango-sdk@^0.1.45:
-  version "0.1.45"
-  resolved "https://registry.yarnpkg.com/rango-sdk/-/rango-sdk-0.1.45.tgz#0fe0133fb6627368fb80f632d4f4867cbe626c55"
-  integrity sha512-HLxmf4VMzPu8mHwfaLAvD0GMM27HKon6u1Yd38cpr+VMXJJscUErcMYwkRfpT9GgAv2H73nyvBG7n5xy5RpTlw==
+rango-sdk@^0.1.49:
+  version "0.1.49"
+  resolved "https://registry.yarnpkg.com/rango-sdk/-/rango-sdk-0.1.49.tgz#0ae9a422fc91277fce4851822648539b67be343e"
+  integrity sha512-imP+rP5Tv/noy+HMEVwLr+3GrdmobVDfzfmIogmhXJTXDYnuqdrliBBMkIveCdNdrp3NL0sAZ2CdHTCqr0DLfg==
   dependencies:
-    axios "^1.2.6"
+    axios "^1.7.2"
     bignumber.js "^9.1.1"
-    rango-types "^0.1.59"
+    rango-types "^0.1.69"
     uuid-random "^1.3.2"
 
 rango-types@^0.1.57:
@@ -16286,11 +16295,10 @@ rango-types@^0.1.57:
   resolved "https://registry.yarnpkg.com/rango-types/-/rango-types-0.1.57.tgz#0e5378ae2e4114c4c71ad0ec98b86b3966ebe765"
   integrity sha512-F9bpBQovmP/GMENdFs5I4zZwbsPAHWmUCj33eIbu8ZbNa76/BmbC7nMfhViggNTXC2WHJaFsqhyukOEILU2Tlg==
 
-rango-types@^0.1.59:
-  version "0.1.59"
-  resolved "https://registry.yarnpkg.com/rango-types/-/rango-types-0.1.59.tgz#800c2eda06d36e0099b3e50d8dfcb048c3d9de73"
-  integrity sha512-sdbR2L5KVnGoVE1CVgtZyK21DKcTtivw+ajC15B2d2+BSQFmPQwe/gPAEJb3My6n2iR3rgVUdOoDTcAuZU3WLA==
-
+rango-types@^0.1.69:
+  version "0.1.69"
+  resolved "https://registry.yarnpkg.com/rango-types/-/rango-types-0.1.69.tgz#36a7cebc149f6775855a02353300dbff8dfe297e"
+  integrity sha512-q/SzeEP6E6C50TfFulzuHYLQEGbXhb3C5CuO9Ljc2IT98JOMVGf84DCXa9Clm8ChRQB99Or0uBieScYP+4jDIA==
 
 raw-body@2.5.1:
   version "2.5.1"
