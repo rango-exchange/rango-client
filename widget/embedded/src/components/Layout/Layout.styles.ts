@@ -7,7 +7,7 @@ export const LayoutContainer = css({
   display: 'flex',
   flexDirection: 'column',
   overflow: 'hidden',
-  boxShadow: '15px 15px 15px 0px rgba(0, 0, 0, 0.05)',
+  boxShadow: '$mainContainer',
 });
 
 export const Container = styled('div', {

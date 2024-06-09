@@ -30,6 +30,7 @@ export function useTheme(props: WidgetTheme) {
   const { dark, light } = customizedThemeTokens(colors);
 
   const baseTheme = createTheme({
+    shadows: props.shadows || {},
     radii: {
       primary: `${borderRadius}px`,
       secondary: `${secondaryBorderRadius}px`,
