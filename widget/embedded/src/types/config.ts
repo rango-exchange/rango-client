@@ -1,4 +1,4 @@
-import type { Language } from '@rango-dev/ui';
+import type { Language, theme } from '@rango-dev/ui';
 import type { ProviderInterface } from '@rango-dev/wallets-react';
 import type { WalletType } from '@rango-dev/wallets-shared';
 import type { Asset } from 'rango-sdk';
@@ -49,6 +49,7 @@ export type WidgetTheme = {
   mode?: 'auto' | 'light' | 'dark';
   fontFamily?: string;
   colors?: { light?: WidgetColors; dark?: WidgetColors };
+  shadows?: typeof theme.shadows;
   borderRadius?: number;
   secondaryBorderRadius?: number;
   width?: number;

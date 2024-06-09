@@ -162,7 +162,8 @@ export const theme = {
   borderWidths: {},
   borderStyles: {},
   shadows: {
-    s: '0px 3px 5px 3px #f0f2f5, 0px 6px 10px 3px #f0f2f5, 0px 1px 18px 3px #f0f2f5',
+    /** Shadow for swap box */
+    mainContainer: '15px 15px 15px 0px rgba(0, 0, 0, 0.05)',
   },
   zIndices: {},
   transitions: {},
@@ -221,9 +222,6 @@ export const lightTheme = createTheme('light-theme-ui', {});
 
 export const darkTheme = createTheme('dark-theme-ui', {
   colors: darkColors,
-  shadows: {
-    s: '0px 3px 5px 3px #222, 0px 6px 10px 3px #222, 0px 1px 18px 3px #222',
-  },
 });
 
 export const rangoDarkColors = {
