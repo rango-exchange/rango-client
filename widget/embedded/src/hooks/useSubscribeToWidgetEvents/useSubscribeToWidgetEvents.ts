@@ -15,10 +15,10 @@ import { useNotificationStore } from '../../store/notification';
 import { useWalletsStore } from '../../store/wallets';
 
 export function useSubscribeToWidgetEvents() {
-  const tokens = useAppStore().tokens();
   const connectedWallets = useWalletsStore.use.connectedWallets();
   const getWalletsDetails = useWalletsStore.use.getWalletsDetails();
   const setNotification = useNotificationStore.use.setNotification();
+  const { findToken } = useAppStore();
   const widgetEvents = useEvents();
 
   useEffect(() => {
@@ -40,8 +40,8 @@ export function useSubscribeToWidgetEvents() {
             (wallet) => wallet.chain === step?.toBlockchain
           );
 
-        fromAccount && getWalletsDetails([fromAccount], tokens);
-        toAccount && getWalletsDetails([toAccount], tokens);
+        fromAccount && getWalletsDetails([fromAccount], findToken);
+        toAccount && getWalletsDetails([toAccount], findToken);
       }
 
       setNotification(event, route);

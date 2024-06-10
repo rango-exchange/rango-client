@@ -42,6 +42,7 @@ export {
   getRelatedWallet,
   MessageSeverity,
   calculatePendingSwap,
+  getUsdPrice,
 } from './shared';
 export {
   updateSwapStatus,
