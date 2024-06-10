@@ -6,7 +6,6 @@ import type {
   PreferenceType,
   Token,
 } from 'rango-sdk';
-import type { PendingSwap } from 'rango-types';
 
 import BigNumber from 'bignumber.js';
 import { create } from 'zustand';
@@ -14,7 +13,7 @@ import { subscribeWithSelector } from 'zustand/middleware';
 
 import { ZERO } from '../constants/numbers';
 import { isPositiveNumber } from '../utils/numbers';
-import { createRetryQuote, getQuoteToTokenUsdPrice } from '../utils/quote';
+import { getQuoteToTokenUsdPrice } from '../utils/quote';
 import { calcOutputUsdValue } from '../utils/swap';
 
 import createSelectors from './selectors';
@@ -38,7 +37,13 @@ type SomeQuoteState = {
   error: QuoteError | null;
   warning: QuoteWarning | null;
 };
-
+export type RetryQuote = {
+  fromBlockchain: BlockchainMeta | null;
+  fromToken?: Token;
+  toBlockchain: BlockchainMeta | null;
+  toToken?: Token;
+  inputAmount: string;
+};
 export interface QuoteState {
   fromBlockchain: BlockchainMeta | null;
   toBlockchain: BlockchainMeta | null;
@@ -73,7 +78,7 @@ export interface QuoteState {
   ) => void;
   setInputAmount: (amount: string) => void;
   setSelectedQuote: (quote: SelectedQuote | null) => void;
-  retry: (pendingSwap: PendingSwap, meta: Meta) => void;
+  retry: (retryQuote: RetryQuote) => void;
   switchFromAndTo: () => void;
   setQuoteWalletConfirmed: (flag: boolean) => void;
   setSelectedWallets: (wallets: Wallet[]) => void;
@@ -219,15 +224,15 @@ export const useQuoteStore = createSelectors(
           }),
         }));
       },
-      retry: (pendingSwap, meta) => {
-        const { tokens, blockchains } = meta;
+      retry: (retryQuote) => {
         const {
           fromBlockchain,
           fromToken,
           toBlockchain,
           toToken,
           inputAmount,
-        } = createRetryQuote(pendingSwap, blockchains, tokens);
+        } = retryQuote;
+
         set({
           fromBlockchain,
           fromToken,

@@ -1,14 +1,14 @@
 // We keep all the received data from server in this slice
 
 import type { ConfigSlice } from './config';
-import type { Balance } from '../../types';
-import type { BlockchainMeta, SwapperMeta, Token } from 'rango-sdk';
+import type { Balance, TokenHash } from '../../types';
+import type { Asset, BlockchainMeta, SwapperMeta, Token } from 'rango-sdk';
 import type { StateCreator } from 'zustand';
 
 import { httpService as sdk } from '../../services/httpService';
 import { compareWithSearchFor, containsText } from '../../utils/common';
 import { isTokenExcludedInConfig } from '../../utils/configs';
-import { isTokenNative } from '../../utils/meta';
+import { createTokenHash, isTokenNative } from '../../utils/meta';
 import { sortLiquiditySourcesByGroupTitle } from '../../utils/settings';
 import { areTokensEqual, compareTokenBalance } from '../../utils/wallets';
 
@@ -24,10 +24,12 @@ type TokenOptions = {
   getBalanceFor?: (token: Token) => Balance | null;
 };
 
+export type FindToken = (asset: Asset) => Token | undefined;
+
 export type FetchStatus = 'loading' | 'success' | 'failed';
 export interface DataSlice {
   _blockchainsMapByName: Map<string, BlockchainMeta>;
-  _tokens: Token[];
+  _tokensMapByTokenHash: Map<TokenHash, Token>;
   _popularTokens: Token[];
   _swappers: SwapperMeta[];
   fetchStatus: FetchStatus;
@@ -35,6 +37,7 @@ export interface DataSlice {
   tokens: (options?: TokenOptions) => Token[];
   swappers: () => SwapperMeta[];
   isTokenPinned: (token: Token, type: 'source' | 'destination') => boolean;
+  findToken: FindToken;
   fetch: () => Promise<void>;
 }
 
@@ -46,7 +49,7 @@ export const createDataSlice: StateCreator<
 > = (set, get) => ({
   // State
   _blockchainsMapByName: new Map<string, BlockchainMeta>(),
-  _tokens: [],
+  _tokensMapByTokenHash: new Map<TokenHash, Token>(),
   _popularTokens: [],
   _swappers: [],
   fetchStatus: 'loading',
@@ -81,7 +84,8 @@ export const createDataSlice: StateCreator<
     return list;
   },
   tokens: (options) => {
-    const tokensFromState = get()._tokens;
+    const tokensMapByHashToken = get()._tokensMapByTokenHash;
+    const tokensFromState = Array.from(tokensMapByHashToken?.values() || []);
     const blockchainsMapByName = get()._blockchainsMapByName;
 
     if (!options || !options?.type) {
@@ -197,6 +201,12 @@ export const createDataSlice: StateCreator<
 
     return list;
   },
+  findToken: (asset) => {
+    const tokensMapByHashToken = get()._tokensMapByTokenHash;
+    const tokenHash = createTokenHash(asset);
+    const token = tokensMapByHashToken.get(tokenHash);
+    return token;
+  },
   isTokenPinned: (token, type) => {
     const pinnedTokens =
       type === 'source'
@@ -258,6 +268,10 @@ export const createDataSlice: StateCreator<
         BlockchainMeta
       >();
 
+      const tokensMapByHashToken: Map<TokenHash, Token> = new Map<
+        TokenHash,
+        Token
+      >();
       const tokens: Token[] = [];
       const popularTokens: Token[] = response.popularTokens;
       const swappers: SwapperMeta[] = response.swappers;
@@ -283,9 +297,14 @@ export const createDataSlice: StateCreator<
         }
       });
 
+      tokens.forEach((token) => {
+        const tokenHash = createTokenHash(token);
+        tokensMapByHashToken.set(tokenHash, token);
+      });
+
       set({
         _blockchainsMapByName: blockchainsMapByName,
-        _tokens: tokens,
+        _tokensMapByTokenHash: tokensMapByHashToken,
         _popularTokens: popularTokens,
         _swappers: swappers,
       });

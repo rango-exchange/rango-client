@@ -39,7 +39,7 @@ export function Quotes(props: PropTypes) {
     error,
   } = useQuoteStore();
   const { slippage, customSlippage } = useAppStore();
-  const tokens = useAppStore().tokens();
+  const { findToken } = useAppStore();
   const container = propContainer || getContainer();
   const hasQuotes = !!quotes && quotes.results.length;
   const userSlippage = customSlippage ?? slippage;
@@ -56,7 +56,7 @@ export function Quotes(props: PropTypes) {
       fromToken,
       toToken,
       userSlippage,
-      tokens,
+      findToken,
     });
   };
   const showNoResultMessage =

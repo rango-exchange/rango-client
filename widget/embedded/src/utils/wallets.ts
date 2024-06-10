@@ -1,15 +1,14 @@
+import type { FindToken } from '../store/slices/data';
 import type { ConnectedWallet, TokenBalance } from '../store/wallets';
 import type {
   Balance,
   SelectedQuote,
-  TokenHash,
   TokensBalance,
   Wallet,
   WalletInfoWithNamespaces,
 } from '../types';
 import type { WalletInfo as ModalWalletInfo } from '@rango-dev/ui';
 import type {
-  Asset,
   Network,
   WalletInfo,
   WalletState,
@@ -48,6 +47,7 @@ import {
 import { EXCLUDED_WALLETS } from '../constants/wallets';
 
 import { isBlockchainTypeInCategory, removeDuplicateFrom } from './common';
+import { createTokenHash } from './meta';
 import { numberToString } from './numbers';
 
 export function mapStatusToWalletState(state: WalletState): WalletStatus {
@@ -278,7 +278,7 @@ export function isAccountAndWalletMatched(
 
 export function makeBalanceFor(
   retrievedBalance: WalletDetail,
-  tokens: Token[]
+  findToken: FindToken
 ): TokenBalance[] {
   const { blockChain: chain, balances = [] } = retrievedBalance;
   return (
@@ -293,13 +293,7 @@ export function makeBalanceFor(
         .shiftedBy(-tokenBalance.amount.decimals)
         .toFixed(),
       logo: '',
-      usdPrice:
-        getUsdPrice(
-          chain,
-          tokenBalance.asset.symbol,
-          tokenBalance.asset.address,
-          tokens
-        ) || null,
+      usdPrice: findToken(tokenBalance.asset)?.usdPrice || null,
     })) || []
   );
 }
@@ -358,20 +352,6 @@ function numberWithThousandSeparator(number: string | number): string {
   return parts.join('.');
 }
 
-export const getUsdPrice = (
-  blockchain: string,
-  symbol: string,
-  address: string | null,
-  allTokens: Token[]
-): number | null => {
-  const token = allTokens?.find(
-    (t) =>
-      t.blockchain === blockchain &&
-      t.symbol?.toUpperCase() === symbol?.toUpperCase() &&
-      t.address === address
-  );
-  return token?.usdPrice || null;
-};
 export const isExperimentalChain = (
   blockchains: BlockchainMeta[],
   wallet: string
@@ -500,10 +480,6 @@ export function getAddress({
       connectedWallet.walletType === walletType &&
       connectedWallet.chain === chain
   )?.address;
-}
-
-export function createTokenHash(token: Asset): TokenHash {
-  return `${token.blockchain}-${token.symbol}-${token.address ?? ''}`;
 }
 
 export function makeTokensBalance(connectedWallets: ConnectedWallet[]) {

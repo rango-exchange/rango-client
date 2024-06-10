@@ -14,7 +14,6 @@ import { useNavigate } from 'react-router-dom';
 import { navigationRoutes } from '../../constants/navigationRoutes';
 import { useAppStore } from '../../store/AppStore';
 import { useNotificationStore } from '../../store/notification';
-import { areTokensEqual } from '../../utils/wallets';
 
 import {
   ClearAllButton,
@@ -36,7 +35,7 @@ export function NotificationContent() {
 
   const notifications: Notification[] = getNotifications();
   const blockchains = useAppStore().blockchains();
-  const tokens = useAppStore().tokens();
+  const { findToken } = useAppStore();
   const sortedNotification = notifications
     .sort((a, b) => b.creationTime - a.creationTime)
     .slice(0, MAX_NOTIFICATIONS_DISPLAYED);
@@ -69,17 +68,13 @@ export function NotificationContent() {
         <List>
           {sortedNotification.map((notificationItem, index) => {
             const { route, requestId, event } = notificationItem;
-            const fromToken = tokens.find((tokenItem) =>
-              areTokensEqual(tokenItem, route.from)
-            );
+            const fromToken = findToken(route.from);
 
             const fromBlockchain = blockchains.find(
               (blockchainItem) => blockchainItem.name === route.from.blockchain
             );
 
-            const toToken = tokens.find((tokenItem) =>
-              areTokensEqual(tokenItem, route.to)
-            );
+            const toToken = findToken(route.to);
 
             const toBlockchain = blockchains.find(
               (blockchainItem) => blockchainItem.name === route.to.blockchain
