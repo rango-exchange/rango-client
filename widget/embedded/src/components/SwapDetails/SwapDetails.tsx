@@ -46,7 +46,11 @@ import {
   roundedSecondsToString,
   totalArrivalTime,
 } from '../../utils/numbers';
-import { getPriceImpact, getPriceImpactLevel } from '../../utils/quote';
+import {
+  createRetryQuote,
+  getPriceImpact,
+  getPriceImpactLevel,
+} from '../../utils/quote';
 import {
   getLastConvertedTokenInFailedSwap,
   getSwapMessages,
@@ -80,7 +84,7 @@ export function SwapDetails(props: SwapDetailsProps) {
   const { canSwitchNetworkTo, connect, getWalletInfo } = useWallets();
   const blockchains = useAppStore().blockchains();
   const swappers = useAppStore().swappers();
-  const tokens = useAppStore().tokens();
+  const { findToken } = useAppStore();
   const retry = useQuoteStore.use.retry();
   const isActiveTab = useUiStore.use.isActiveTab();
   const navigate = useNavigate();
@@ -293,7 +297,8 @@ export function SwapDetails(props: SwapDetailsProps) {
             type="primary"
             size="large"
             onClick={() => {
-              retry(swap, { blockchains: blockchains, tokens: tokens });
+              const swapInput = createRetryQuote(swap, blockchains, findToken);
+              retry(swapInput);
               setTimeout(() => {
                 const home = '../../';
                 navigate(home);

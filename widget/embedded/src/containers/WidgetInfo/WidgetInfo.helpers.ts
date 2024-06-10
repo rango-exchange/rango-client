@@ -1,4 +1,5 @@
-import type { Meta } from '../../store/quote';
+import type { Meta, RetryQuote } from '../../store/quote';
+import type { FindToken } from '../../store/slices/data';
 import type { Manager } from '@rango-dev/queue-manager-core';
 import type { PendingSwap } from 'rango-types/lib';
 
@@ -10,9 +11,11 @@ import {
 } from '@rango-dev/queue-manager-rango-preset';
 
 import { getPendingSwaps } from '../../utils/queue';
+import { createRetryQuote } from '../../utils/quote';
 
 interface WidgetHistoryActions {
-  retrySwap: (pendingSwap: PendingSwap, meta: Meta) => void;
+  retrySwap: (retryQuote: RetryQuote) => void;
+  findToken: FindToken;
 }
 
 export class WidgetHistory {
@@ -41,7 +44,13 @@ export class WidgetHistory {
   }
 
   public retry(swap: PendingSwap, meta: Meta) {
-    return this.actions.retrySwap(swap, meta);
+    const retryQuote = createRetryQuote(
+      swap,
+      meta.blockchains,
+      this.actions.findToken
+    );
+
+    return this.actions.retrySwap(retryQuote);
   }
 
   public cancel(id: string) {

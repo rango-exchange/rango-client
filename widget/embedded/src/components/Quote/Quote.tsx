@@ -88,7 +88,7 @@ export function Quote(props: QuoteProps) {
     container: propContainer,
   } = props;
   const blockchains = useAppStore().blockchains();
-  const tokens = useAppStore().tokens();
+  const { findToken } = useAppStore();
   const swappers = useAppStore().swappers();
   const { customSlippage, slippage } = useAppStore();
   const userSlippage = customSlippage || slippage;
@@ -303,7 +303,7 @@ export function Quote(props: QuoteProps) {
           ) : undefined,
         time: roundedSecondsToString(swap.estimatedTimeInSeconds),
         fee: numberToString(
-          getUsdFeeOfStep(swap, tokens),
+          getUsdFeeOfStep(swap, findToken),
           GAS_FEE_MIN_DECIMALS,
           GAS_FEE_MAX_DECIMALS
         ),
@@ -320,7 +320,7 @@ export function Quote(props: QuoteProps) {
   const sortedQuoteTags = sortTags(props.quote.tags || []);
   const showAllRoutesButton = !!onClickAllRoutes;
   const totalTime = roundedSecondsToString(totalArrivalTime(quote?.swaps));
-  const totalFee = getTotalFeeInUsd(quote?.swaps ?? [], tokens);
+  const totalFee = getTotalFeeInUsd(quote?.swaps ?? [], findToken);
   const fee = numberToString(
     totalFee,
     GAS_FEE_MIN_DECIMALS,

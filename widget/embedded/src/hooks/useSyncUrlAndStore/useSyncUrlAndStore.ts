@@ -10,7 +10,7 @@ import { useAppStore } from '../../store/AppStore';
 import { useQuoteStore } from '../../store/quote';
 
 import {
-  searchParamToToken,
+  convertTokenSearchParamToAsset,
   tokenToSearchParam,
 } from './useSyncUrlAndStore.helpers';
 
@@ -36,7 +36,7 @@ export function useSyncUrlAndStore() {
   const { updateIframe, updateCampaignMode } = useAppStore();
   const campaignMode = useAppStore().isInCampaignMode();
   const liquiditySourcesParamsRef = useRef<string>();
-
+  const { findToken } = useAppStore();
   const getUrlSearchParams = () => {
     const utmQueryParams: Record<string, string> = {};
 
@@ -124,19 +124,26 @@ export function useSyncUrlAndStore() {
       const fromBlockchain = blockchains.find(
         (blockchain) => blockchain.name === searchParams.fromBlockchain
       );
-      const fromToken = searchParamToToken(
-        tokens,
-        searchParams.fromToken,
-        fromBlockchain ?? null
-      );
+
+      const fromToken =
+        searchParams.fromToken && fromBlockchain
+          ? findToken(
+              convertTokenSearchParamToAsset(
+                searchParams.fromToken,
+                fromBlockchain
+              )
+            )
+          : undefined;
       const toBlockchain = blockchains.find(
         (blockchain) => blockchain.name === searchParams.toBlockchain
       );
-      const toToken = searchParamToToken(
-        tokens,
-        searchParams.toToken,
-        toBlockchain ?? null
-      );
+
+      const toToken =
+        searchParams.toToken && toBlockchain
+          ? findToken(
+              convertTokenSearchParamToAsset(searchParams.toToken, toBlockchain)
+            )
+          : undefined;
 
       if (!!fromBlockchain) {
         setFromBlockchain(fromBlockchain);

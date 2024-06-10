@@ -1,3 +1,4 @@
+import type { FindToken } from './slices/data';
 import type { Balance, TokensBalance, Wallet } from '../types';
 import type { WalletType } from '@rango-dev/wallets-shared';
 import type { Token } from 'rango-sdk';
@@ -6,8 +7,8 @@ import { create } from 'zustand';
 import { subscribeWithSelector } from 'zustand/middleware';
 
 import { httpService } from '../services/httpService';
+import { createTokenHash } from '../utils/meta';
 import {
-  createTokenHash,
   isAccountAndWalletMatched,
   makeBalanceFor,
   makeTokensBalance,
@@ -39,13 +40,13 @@ interface WalletsStore {
   connectedWallets: ConnectedWallet[];
   balances: TokensBalance;
   loading: boolean;
-  connectWallet: (accounts: Wallet[], tokens: Token[]) => void;
+  connectWallet: (accounts: Wallet[], findToken: FindToken) => void;
   disconnectWallet: (walletType: WalletType) => void;
   selectWallets: (wallets: { walletType: string; chain: string }[]) => void;
   clearConnectedWallet: () => void;
   getWalletsDetails: (
     accounts: Wallet[],
-    tokens: Token[],
+    findToken: FindToken,
     shouldRetry?: boolean
   ) => void;
   getBalanceFor: (token: Token) => Balance | null;
@@ -57,7 +58,7 @@ export const useWalletsStore = createSelectors(
       connectedWallets: [],
       balances: {},
       loading: false,
-      connectWallet: (accounts, tokens) => {
+      connectWallet: (accounts, findToken) => {
         const getWalletsDetails = get().getWalletsDetails;
         set((state) => ({
           loading: true,
@@ -83,7 +84,7 @@ export const useWalletsStore = createSelectors(
               })
             ),
         }));
-        getWalletsDetails(accounts, tokens);
+        getWalletsDetails(accounts, findToken);
       },
       disconnectWallet: (walletType) => {
         set((state) => {
@@ -147,7 +148,7 @@ export const useWalletsStore = createSelectors(
           connectedWallets: [],
           selectedWallets: [],
         })),
-      getWalletsDetails: async (accounts, tokens, shouldRetry = true) => {
+      getWalletsDetails: async (accounts, findToken, shouldRetry = true) => {
         const getWalletsDetails = get().getWalletsDetails;
         set((state) => ({
           loading: true,
@@ -183,7 +184,7 @@ export const useWalletsStore = createSelectors(
                     matchedAccount &&
                     shouldRetry
                   ) {
-                    getWalletsDetails([matchedAccount], tokens, false);
+                    getWalletsDetails([matchedAccount], findToken, false);
                   }
                   return matchedAccount && retrievedBalanceAccount
                     ? {
@@ -191,7 +192,7 @@ export const useWalletsStore = createSelectors(
                         explorerUrl: retrievedBalanceAccount.explorerUrl,
                         balances: makeBalanceFor(
                           retrievedBalanceAccount,
-                          tokens
+                          findToken
                         ),
                         loading: false,
                       }
