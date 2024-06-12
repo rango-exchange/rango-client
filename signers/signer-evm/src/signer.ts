@@ -63,14 +63,18 @@ export class DefaultEvmSigner implements GenericSigner<EvmTransaction> {
   static buildTx(evmTx: EvmTransaction, disableV2 = false): TransactionRequest {
     const TO_STRING_BASE = 16;
     let tx: TransactionRequest = {};
+    /*
+     * it's better to pass 0x instead of undefined, otherwise some wallets could face issue
+     * https://github.com/WalletConnect/web3modal/issues/1082#issuecomment-1637793242
+     */
+    tx = {
+      data: evmTx.data || '0x',
+    };
     if (evmTx.from) {
       tx = { ...tx, from: evmTx.from };
     }
     if (evmTx.to) {
       tx = { ...tx, to: evmTx.to };
-    }
-    if (evmTx.data) {
-      tx = { ...tx, data: evmTx.data };
     }
     if (evmTx.value) {
       tx = { ...tx, value: evmTx.value };
