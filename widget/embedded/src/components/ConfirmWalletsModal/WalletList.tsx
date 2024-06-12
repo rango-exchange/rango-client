@@ -196,8 +196,27 @@ export function WalletList(props: PropTypes) {
             })
           : conciseAddress;
 
+        console.log({ conciseAddress });
+
         const onClick = async () => {
-          if (wallet.state === WalletState.DISCONNECTED) {
+          const detachedInstances = wallet.properties?.find(
+            (item) => item.name === 'detached'
+          );
+          const hubCondition =
+            detachedInstances && wallet.state !== 'connected';
+
+          console.log({
+            wallet,
+            hubCondition,
+            address,
+            connectedWallets,
+            walletType: wallet.type,
+            chain,
+          });
+
+          if (hubCondition) {
+            handleOpenNamespacesModal(wallet);
+          } else if (wallet.state === WalletState.DISCONNECTED) {
             if (!!wallet.namespaces) {
               handleOpenNamespacesModal(wallet);
             } else {

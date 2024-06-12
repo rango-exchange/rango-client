@@ -80,6 +80,7 @@ function Main(props: PropsWithChildren<PropTypes>) {
           meta.isContractWallet
         );
         if (data.length) {
+          console.log('EventHandler', { data });
           connectWallet(data, findToken);
         }
       } else {
