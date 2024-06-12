@@ -1,225 +1,103 @@
-import type { ProviderContext, ProviderProps } from './types';
-import type { WalletType } from '@rango-dev/wallets-shared';
+import type { ProviderContext, ProviderProps } from './legacy/types';
 
-import React, { useEffect, useReducer, useRef } from 'react';
+import React from 'react';
 
-import { WalletContext } from './context';
-import {
-  autoConnect,
-  availableWallets,
-  checkWalletProviders,
-  clearPersistance,
-  connectedWallets,
-  defaultWalletState,
-  makeEventHandler,
-  state_reducer,
-  tryPersistWallet,
-  tryRemoveWalletFromPersistance,
-} from './helpers';
-import { useInitializers } from './hooks';
+import { findProviderByType, splitProviders } from './hub/helpers';
+import { useAdapter } from './hub/useAdapter';
+import { WalletContext } from './legacy/context';
+import { useLegacy } from './legacy/useLegacy';
 
 function Provider(props: ProviderProps) {
-  const [providersState, dispatch] = useReducer(state_reducer, {});
-  const autoConnectInitiated = useRef(false);
+  const { providers, ...restProps } = props;
+  const [legacyProviders, nextProviders] = splitProviders(providers, {
+    isExperimentalEnabled: restProps.configs?.isExperimentalEnabled,
+  });
 
-  // Get (or add) wallet instance (`provider`s will be wraped in a `Wallet`)
-  const getWalletInstance = useInitializers(
-    makeEventHandler(dispatch, props.onUpdateState)
-  );
+  // For gradual migrating and backward compatibility, we are supporting new version by an adapter besides of the old one.
+  const legacyApi = useLegacy({ ...restProps, providers: legacyProviders });
+  const nextApi = useAdapter({
+    ...restProps,
+    providers: nextProviders,
+    __all: providers,
+  });
 
-  // Getting providers from props and put all of them in a `Map` with an appropriate interface.
-  const listOfProviders = props.providers;
-  const wallets = checkWalletProviders(listOfProviders);
-
-  // Final API we put in context and it will be available to use for users.
   // eslint-disable-next-line react/jsx-no-constructed-context-values
   const api: ProviderContext = {
-    async connect(type, network, namespaces) {
-      const wallet = wallets.get(type);
-      if (!wallet) {
-        throw new Error(`You should add ${type} to provider first.`);
+    canSwitchNetworkTo(type, network) {
+      if (findProviderByType(nextProviders, type)) {
+        return nextApi.canSwitchNetworkTo(type, network);
       }
-      const walletInstance = getWalletInstance(wallet);
-      const result = await walletInstance.connect(network, namespaces);
-      if (props.autoConnect) {
-        void tryPersistWallet({
-          type,
-          walletActions: wallet.actions,
-          getState: api.state,
-        });
+      return legacyApi.canSwitchNetworkTo(type, network);
+    },
+    async connect(type, network) {
+      const nextProvider = findProviderByType(nextProviders, type);
+      if (nextProvider) {
+        return await nextApi.connect(type, network);
       }
 
-      return result;
+      return await legacyApi.connect(type, network);
     },
     async disconnect(type) {
-      const wallet = wallets.get(type);
-      if (!wallet) {
-        throw new Error(`You should add ${type} to provider first.`);
+      const nextProvider = findProviderByType(nextProviders, type);
+      if (nextProvider) {
+        return await nextApi.disconnect(type);
       }
 
-      const walletInstance = getWalletInstance(wallet);
-      await walletInstance.disconnect();
-      if (props.autoConnect) {
-        tryRemoveWalletFromPersistance({ type, walletActions: wallet.actions });
-      }
+      return await legacyApi.disconnect(type);
     },
     async disconnectAll() {
-      const disconnect_promises: Promise<any>[] = [];
-
-      /*
-       * When a wallet is initializing, a record will be added to `providersState`
-       * So we use them to know what wallet has been initialized then we need to
-       * filter connected wallets only.
-       */
-      connectedWallets(providersState).forEach((type) => {
-        const wallet = wallets.get(type);
-
-        if (wallet) {
-          const walletInstance = getWalletInstance(wallet);
-          disconnect_promises.push(walletInstance.disconnect());
-        }
-      });
-
-      if (props.autoConnect) {
-        clearPersistance();
-      }
-      return await Promise.allSettled(disconnect_promises);
-    },
-
-    async suggestAndConnect(type, network) {
-      const wallet = wallets.get(type);
-      if (!wallet) {
-        throw new Error(`You should add ${type} to provider first.`);
-      }
-      const walletInstance = getWalletInstance(wallet);
-      const result = await walletInstance.suggestAndConnect(network);
-
-      return result;
-    },
-
-    state(type) {
-      return providersState[type] || defaultWalletState;
-    },
-    canSwitchNetworkTo(type, network) {
-      const wallet = wallets.get(type);
-      if (!wallet) {
-        return false;
-      }
-
-      const walletInstance = getWalletInstance(wallet);
-      return walletInstance.canSwitchNetworkTo
-        ? walletInstance.canSwitchNetworkTo(network, walletInstance.provider)
-        : false;
-    },
-    providers() {
-      const providers: { [type in WalletType]?: any } = {};
-      availableWallets(providersState).forEach((type) => {
-        const wallet = wallets.get(type);
-        if (wallet) {
-          const walletInstance = getWalletInstance(wallet);
-          providers[type] = walletInstance.provider;
-        }
-      });
-
-      return providers;
-    },
-    getWalletInfo(type) {
-      const wallet = wallets.get(type);
-      if (!wallet) {
-        throw new Error(`You should add ${type} to provider first.`);
-      }
-
-      /*
-       * Get wallet info could be used in render methods to show wallets data
-       * So, addWalletRef method shouldn't be called in this method
-       */
-
-      return wallet.actions.getWalletInfo(props.allBlockChains || []);
+      return await Promise.allSettled([
+        nextApi.disconnectAll(),
+        legacyApi.disconnectAll(),
+      ]);
     },
     getSigners(type) {
-      const wallet = wallets.get(type);
-
-      if (!wallet) {
-        throw new Error(`You should add ${type} to provider first.`);
+      const nextProvider = findProviderByType(nextProviders, type);
+      if (nextProvider) {
+        return nextApi.getSigners(type);
       }
-      const walletInstance = getWalletInstance(wallet);
-      const provider = walletInstance.provider;
-      const result = walletInstance.getSigners(provider);
+      return legacyApi.getSigners(type);
+    },
+    getWalletInfo(type) {
+      const nextProvider = findProviderByType(nextProviders, type);
+      if (nextProvider) {
+        return nextApi.getWalletInfo(type);
+      }
 
-      return result;
+      return legacyApi.getWalletInfo(type);
+    },
+    providers(): ReturnType<ProviderContext['providers']> {
+      let output: ReturnType<ProviderContext['providers']> = {};
+      if (nextProviders.length > 0) {
+        output = { ...output, ...nextApi.providers() };
+      }
+      if (legacyProviders.length > 0) {
+        output = { ...output, ...legacyApi.providers() };
+      }
+
+      return output;
+    },
+    state(type) {
+      const nextProvider = findProviderByType(nextProviders, type);
+
+      if (nextProvider) {
+        return nextApi.state(type);
+      }
+
+      return legacyApi.state(type);
+    },
+    async suggestAndConnect(type, network) {
+      const nextProvider = findProviderByType(nextProviders, type);
+
+      if (nextProvider) {
+        throw new Error(
+          "New version doesn't have support for this method yet."
+        );
+      }
+
+      return await legacyApi.suggestAndConnect(type, network);
     },
   };
-
-  useEffect(() => {
-    wallets.forEach((wallet) => {
-      const walletInstance = getWalletInstance(wallet);
-      const runOnInit = () => {
-        if (walletInstance.onInit) {
-          walletInstance.onInit();
-        }
-      };
-
-      const initWhenPageIsReady = (event: Event) => {
-        if (
-          event.target &&
-          (event.target as Document).readyState === 'complete'
-        ) {
-          runOnInit();
-
-          document.removeEventListener('readystatechange', initWhenPageIsReady);
-        }
-      };
-
-      // Try to run, maybe it's ready.
-      runOnInit();
-
-      /*
-       * Try again when the page has been completely loaded.
-       * Some of wallets, take some time to be fully injected and loaded.
-       */
-      document.addEventListener('readystatechange', initWhenPageIsReady);
-    });
-  }, []);
-
-  useEffect(() => {
-    const allBlockChains = props.allBlockChains;
-    if (allBlockChains) {
-      wallets.forEach((wallet) => {
-        const walletInstance = getWalletInstance(wallet);
-        const walletInfo = walletInstance.getWalletInfo(
-          props.allBlockChains || []
-        );
-        walletInstance.setInfo({
-          supportedBlockchains: walletInfo.supportedChains,
-          isContractWallet: !!walletInfo.isContractWallet,
-        });
-      });
-    }
-  }, [props.allBlockChains]);
-
-  useEffect(() => {
-    wallets.forEach((wallet) => {
-      const walletInstance = getWalletInstance(wallet);
-      walletInstance.setHandler(
-        makeEventHandler(dispatch, props.onUpdateState)
-      );
-    });
-  }, [props.onUpdateState]);
-
-  useEffect(() => {
-    const shouldTryAutoConnect =
-      props.allBlockChains &&
-      props.allBlockChains.length &&
-      props.autoConnect &&
-      !autoConnectInitiated.current;
-
-    if (shouldTryAutoConnect) {
-      autoConnectInitiated.current = true;
-      void (async () => {
-        await autoConnect(wallets, getWalletInstance);
-      })();
-    }
-  }, [props.autoConnect, props.allBlockChains]);
 
   return (
     <WalletContext.Provider value={api}>

@@ -1,7 +1,7 @@
 import type { TransactionResponse } from '@ethersproject/abstract-provider';
 import type { OffChainSignMessageResponse } from '@safe-global/safe-apps-sdk';
 import type { GenericSigner } from 'rango-types';
-import type { EvmTransaction } from 'rango-types/lib/api/main';
+import type { EvmTransaction } from 'rango-types/mainApi';
 
 import { DefaultEvmSigner } from '@rango-dev/signer-evm';
 

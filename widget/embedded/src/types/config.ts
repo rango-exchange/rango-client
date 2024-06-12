@@ -1,5 +1,5 @@
 import type { Language, theme } from '@rango-dev/ui';
-import type { ProviderInterface } from '@rango-dev/wallets-react';
+import type { LegacyProviderInterface } from '@rango-dev/wallets-core';
 import type { WalletType } from '@rango-dev/wallets-shared';
 import type { Asset } from 'rango-sdk';
 
@@ -132,6 +132,9 @@ export type SignersConfig = {
  *
  * @property {'visible' | 'hidden'} [liquiditySource]
  * - The visibility state for the liquiditySource feature. Optional property.
+ *
+ * @property {'disabled' | 'enabled'} [experimentalWallet]
+ * - Enable our experimental version of wallets. Default: disable on production, enabled on dev.
  */
 export type Features = Partial<
   Record<
@@ -143,7 +146,8 @@ export type Features = Partial<
     'visible' | 'hidden'
   >
 > &
-  Partial<Record<'experimentalRoute', 'disabled' | 'enabled'>>;
+  Partial<Record<'experimentalRoute', 'disabled' | 'enabled'>> &
+  Partial<Record<'experimentalWallet', 'disabled' | 'enabled'>>;
 
 /**
  * The type WidgetConfig defines the configuration options for a widget, including API key, affiliate
@@ -208,7 +212,7 @@ export type WidgetConfig = {
   from?: BlockchainAndTokenConfig;
   to?: BlockchainAndTokenConfig;
   liquiditySources?: string[];
-  wallets?: (WalletType | ProviderInterface)[];
+  wallets?: (WalletType | LegacyProviderInterface)[];
   multiWallets?: boolean;
   customDestination?: boolean;
   language?: Language;

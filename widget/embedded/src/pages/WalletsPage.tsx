@@ -1,4 +1,5 @@
-import type { Namespace, WalletType } from '@rango-dev/wallets-shared';
+import type { Namespaces } from '@rango-dev/wallets-core';
+import type { WalletType } from '@rango-dev/wallets-shared';
 
 import { i18n } from '@lingui/core';
 import {
@@ -24,10 +25,10 @@ import {
   filterWalletsByCategory,
 } from '../utils/wallets';
 
-interface NamespacesModalState {
+export interface NamespacesModalState {
   providerType: string;
   providerImage: string;
-  availableNamespaces?: Namespace[];
+  availableNamespaces?: Namespaces[];
   singleNamespace?: boolean;
 }
 
@@ -118,20 +119,34 @@ export function WalletsPage() {
         <ListContainer>
           {filteredWallets.map((wallet, index) => {
             const key = `wallet-${index}-${wallet.type}`;
+
             return (
               <Wallet
                 key={key}
                 {...wallet}
                 container={getContainer()}
                 onClick={(type) => {
-                  if (
+                  const detachedInstances = wallet.properties?.find(
+                    (item) => item.name === 'detached'
+                  );
+
+                  const legacyCondition =
                     !!wallet.namespaces &&
-                    wallet.state === WalletState.DISCONNECTED
-                  ) {
+                    wallet.state === WalletState.DISCONNECTED;
+                  const hubCondition =
+                    detachedInstances && wallet.state !== 'connected';
+
+                  if (legacyCondition || hubCondition) {
+                    const isHub = !!wallet.properties;
+
+                    const availableNamespaces = isHub
+                      ? detachedInstances?.value
+                      : wallet.namespaces;
+
                     setNamespacesModalState({
                       providerType: type,
                       providerImage: wallet.image,
-                      availableNamespaces: wallet.namespaces,
+                      availableNamespaces,
                       singleNamespace: wallet.singleNamespace,
                     });
                   } else {
@@ -154,11 +169,16 @@ export function WalletsPage() {
             open={!!namespacesModalState}
             onClose={() => setNamespacesModalState(null)}
             onConfirm={(namespaces) => {
-              void handleClick(
-                namespacesModalState?.providerType as string,
-                namespaces
-              );
-              setNamespacesModalState(null);
+              if (namespacesModalState) {
+                void handleClick(
+                  namespacesModalState?.providerType,
+                  namespaces.map((ns) => ({
+                    namespace: ns,
+                    network: undefined,
+                  }))
+                );
+                setNamespacesModalState(null);
+              }
             }}
             image={namespacesModalState?.providerImage}
             namespaces={namespacesModalState?.availableNamespaces}

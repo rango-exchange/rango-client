@@ -4,10 +4,11 @@ import type {
   Connect,
   Subscribe,
   WalletInfo,
-} from '@rango-dev/wallets-shared';
+} from '@rango-dev/wallets-core/legacy';
 import type { BlockchainMeta, SignerFactory } from 'rango-types';
 
-import { Networks, WalletTypes } from '@rango-dev/wallets-shared';
+import { Networks } from '@rango-dev/wallets-core/legacy';
+import { WalletTypes } from '@rango-dev/wallets-shared';
 import { starknetBlockchain } from 'rango-types';
 
 import { argentx as argentx_instances } from './helpers';

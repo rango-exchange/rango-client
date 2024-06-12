@@ -1,0 +1,10 @@
+{
+  "extends": "../../tsconfig.lib.json",
+  "include": ["src", "types", "../../global-wallets-env.d.ts"],
+  "compilerOptions": {
+    "outDir": "dist",
+    "rootDir": "./src",
+    "lib": ["dom", "esnext"],
+    "moduleResolution": "Bundler"
+  }
+}

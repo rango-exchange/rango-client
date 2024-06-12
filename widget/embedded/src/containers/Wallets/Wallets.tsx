@@ -4,7 +4,7 @@ import type {
   WidgetContextInterface,
 } from './Wallets.types';
 import type { ProvidersOptions } from '../../utils/providers';
-import type { EventHandler } from '@rango-dev/wallets-react';
+import type { LegacyEventHandler as EventHandler } from '@rango-dev/wallets-core';
 import type { PropsWithChildren } from 'react';
 
 import { Events, Provider } from '@rango-dev/wallets-react';
@@ -41,6 +41,7 @@ function Main(props: PropsWithChildren<PropTypes>) {
     walletConnectListedDesktopWalletLink:
       props.config.__UNSTABLE_OR_INTERNAL__
         ?.walletConnectListedDesktopWalletLink,
+    experimentalWallet: props.config.features?.experimentalWallet,
   };
   const { providers } = useWalletProviders(config.wallets, walletOptions);
   const { connectWallet, disconnectWallet } = useWalletsStore();
@@ -92,17 +93,17 @@ function Main(props: PropsWithChildren<PropTypes>) {
         }
       }
     }
-    if (event === Events.ACCOUNTS && state.connected) {
+    if (
+      (event === Events.ACCOUNTS && state.connected) ||
+      // Hub works differently, and this check should be enough.
+      (event === Events.ACCOUNTS && meta.isHub)
+    ) {
       const key = `${type}-${state.network}-${value}`;
 
-      if (state.connected) {
-        if (!!onConnectWalletHandler.current) {
-          onConnectWalletHandler.current(key);
-        } else {
-          console.warn(
-            `onConnectWallet handler hasn't been set. Are you sure?`
-          );
-        }
+      if (!!onConnectWalletHandler.current) {
+        onConnectWalletHandler.current(key);
+      } else {
+        console.warn(`onConnectWallet handler hasn't been set. Are you sure?`);
       }
     }
 
@@ -140,7 +141,13 @@ function Main(props: PropsWithChildren<PropTypes>) {
         allBlockChains={blockchains}
         providers={providers}
         onUpdateState={onUpdateState}
-        autoConnect={!!isActiveTab}>
+        autoConnect={!!isActiveTab}
+        configs={{
+          isExperimentalEnabled:
+            props.config.features?.experimentalWallet === 'enabled'
+              ? true
+              : false,
+        }}>
         {props.children}
       </Provider>
     </WidgetContext.Provider>

@@ -1,10 +1,10 @@
-import type { Namespace } from '@rango-dev/wallets-shared';
+import type { Namespaces } from '@rango-dev/wallets-core';
 
 export interface PropTypes {
   open: boolean;
   image?: string;
   onClose: () => void;
-  onConfirm: (namespaces: Namespace[]) => void;
-  namespaces?: Namespace[];
+  onConfirm: (namespaces: Namespaces[]) => void;
+  namespaces?: Namespaces[];
   singleNamespace?: boolean;
 }

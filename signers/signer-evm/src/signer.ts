@@ -3,7 +3,7 @@ import type {
   TransactionResponse,
 } from '@ethersproject/abstract-provider';
 import type { GenericSigner } from 'rango-types';
-import type { EvmTransaction } from 'rango-types/lib/api/main';
+import type { EvmTransaction } from 'rango-types/mainApi';
 
 import { providers } from 'ethers';
 import {

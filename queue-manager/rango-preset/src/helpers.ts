@@ -24,28 +24,28 @@ import type {
   WalletType,
 } from '@rango-dev/wallets-shared';
 import type {
-  CreateTransactionResponse,
-  EvmBlockchainMeta,
-  Transaction,
-} from 'rango-sdk';
-import type {
   APIErrorCode,
   PendingSwap,
   PendingSwapStep,
   SignerErrorCode,
   StepStatus,
 } from 'rango-types';
+import type {
+  CreateTransactionResponse,
+  EvmBlockchainMeta,
+  Transaction,
+} from 'rango-types/mainApi';
 
 import { warn } from '@rango-dev/logging-core';
 import { Status } from '@rango-dev/queue-manager-core';
-import { readAccountAddress } from '@rango-dev/wallets-core';
+import { readAccountAddress } from '@rango-dev/wallets-core/legacy';
 import {
   getBlockChainNameFromId,
   getEvmProvider,
   splitWalletNetwork,
 } from '@rango-dev/wallets-shared';
-import { TransactionType } from 'rango-sdk';
 import { PendingSwapNetworkStatus, SignerError } from 'rango-types';
+import { TransactionType } from 'rango-types/mainApi';
 
 import {
   DEFAULT_ERROR_CODE,

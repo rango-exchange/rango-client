@@ -1,5 +1,5 @@
 import type { Environments as WalletConnectEnvironments } from '@rango-dev/provider-walletconnect-2';
-import type { ProviderInterface } from '@rango-dev/wallets-react';
+import type { LegacyProviderInterface } from '@rango-dev/wallets-core';
 import type { WalletType } from '@rango-dev/wallets-shared';
 
 import * as argentx from '@rango-dev/provider-argentx';
@@ -21,7 +21,7 @@ import * as ledger from '@rango-dev/provider-ledger';
 import * as mathwallet from '@rango-dev/provider-math-wallet';
 import * as metamask from '@rango-dev/provider-metamask';
 import * as okx from '@rango-dev/provider-okx';
-import * as phantom from '@rango-dev/provider-phantom';
+import { versions as phantom } from '@rango-dev/provider-phantom';
 import * as safe from '@rango-dev/provider-safe';
 import * as safepal from '@rango-dev/provider-safepal';
 import * as solflareSnap from '@rango-dev/provider-solflare-snap';
@@ -31,15 +31,19 @@ import * as tronLink from '@rango-dev/provider-tron-link';
 import * as trustwallet from '@rango-dev/provider-trustwallet';
 import * as walletconnect2 from '@rango-dev/provider-walletconnect-2';
 import * as xdefi from '@rango-dev/provider-xdefi';
+import {
+  legacyProviderImportsToVersionsInterface,
+  type Versions,
+} from '@rango-dev/wallets-core/utils';
 
 import { isWalletConnectExcluded } from './helpers';
 
 interface Options {
   walletconnect2: WalletConnectEnvironments;
-  selectedProviders?: (WalletType | ProviderInterface)[];
+  selectedProviders?: (WalletType | LegacyProviderInterface)[];
 }
 
-export const allProviders = (options?: Options) => {
+export const allProviders = (options?: Options): Versions[] => {
   if (!isWalletConnectExcluded(options?.selectedProviders)) {
     if (!!options?.walletconnect2?.WC_PROJECT_ID) {
       walletconnect2.init(options.walletconnect2);
@@ -51,34 +55,90 @@ export const allProviders = (options?: Options) => {
   }
 
   return [
-    safe,
-    defaultInjected,
-    metamask,
-    solflareSnap,
-    walletconnect2,
-    keplr,
+    legacyProviderImportsToVersionsInterface(
+      safe satisfies LegacyProviderInterface
+    ),
+    legacyProviderImportsToVersionsInterface(
+      defaultInjected satisfies LegacyProviderInterface
+    ),
+    legacyProviderImportsToVersionsInterface(
+      metamask satisfies LegacyProviderInterface
+    ),
+    legacyProviderImportsToVersionsInterface(
+      solflareSnap satisfies LegacyProviderInterface
+    ),
+    legacyProviderImportsToVersionsInterface(
+      walletconnect2 satisfies LegacyProviderInterface
+    ),
+    legacyProviderImportsToVersionsInterface(
+      keplr satisfies LegacyProviderInterface
+    ),
     phantom,
-    argentx,
-    tronLink,
-    trustwallet,
-    bitget,
-    enkrypt,
-    xdefi,
-    clover,
-    safepal,
-    brave,
-    coin98,
-    coinbase,
-    cosmostation,
-    exodus,
-    mathwallet,
-    okx,
-    tokenpocket,
-    halo,
-    leapCosmos,
-    frontier,
-    taho,
-    braavos,
-    ledger,
+    legacyProviderImportsToVersionsInterface(
+      argentx satisfies LegacyProviderInterface
+    ),
+    legacyProviderImportsToVersionsInterface(
+      tronLink satisfies LegacyProviderInterface
+    ),
+    legacyProviderImportsToVersionsInterface(
+      trustwallet satisfies LegacyProviderInterface
+    ),
+    legacyProviderImportsToVersionsInterface(
+      bitget satisfies LegacyProviderInterface
+    ),
+    legacyProviderImportsToVersionsInterface(
+      enkrypt satisfies LegacyProviderInterface
+    ),
+    legacyProviderImportsToVersionsInterface(
+      xdefi satisfies LegacyProviderInterface
+    ),
+    legacyProviderImportsToVersionsInterface(
+      clover satisfies LegacyProviderInterface
+    ),
+    legacyProviderImportsToVersionsInterface(
+      safepal satisfies LegacyProviderInterface
+    ),
+    legacyProviderImportsToVersionsInterface(
+      brave satisfies LegacyProviderInterface
+    ),
+    legacyProviderImportsToVersionsInterface(
+      coin98 satisfies LegacyProviderInterface
+    ),
+    legacyProviderImportsToVersionsInterface(
+      coinbase satisfies LegacyProviderInterface
+    ),
+    legacyProviderImportsToVersionsInterface(
+      cosmostation satisfies LegacyProviderInterface
+    ),
+    legacyProviderImportsToVersionsInterface(
+      exodus satisfies LegacyProviderInterface
+    ),
+    legacyProviderImportsToVersionsInterface(
+      mathwallet satisfies LegacyProviderInterface
+    ),
+    legacyProviderImportsToVersionsInterface(
+      okx satisfies LegacyProviderInterface
+    ),
+    legacyProviderImportsToVersionsInterface(
+      tokenpocket satisfies LegacyProviderInterface
+    ),
+    legacyProviderImportsToVersionsInterface(
+      halo satisfies LegacyProviderInterface
+    ),
+    legacyProviderImportsToVersionsInterface(
+      leapCosmos satisfies LegacyProviderInterface
+    ),
+    legacyProviderImportsToVersionsInterface(
+      frontier satisfies LegacyProviderInterface
+    ),
+    legacyProviderImportsToVersionsInterface(
+      taho satisfies LegacyProviderInterface
+    ),
+    legacyProviderImportsToVersionsInterface(
+      braavos satisfies LegacyProviderInterface
+    ),
+    legacyProviderImportsToVersionsInterface(
+      ledger satisfies LegacyProviderInterface
+    ),
   ];
 };

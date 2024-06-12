@@ -5,12 +5,13 @@ import type {
   SelectedQuote,
   TokensBalance,
   Wallet,
-  WalletInfoWithNamespaces,
+  WithNamespacesInfo,
 } from '../types';
 import type { WalletInfo as ModalWalletInfo } from '@rango-dev/ui';
+import type { ProviderInfo } from '@rango-dev/wallets-core';
+import type { ExtendedWalletInfo } from '@rango-dev/wallets-react';
 import type {
   Network,
-  WalletInfo,
   WalletState,
   WalletType,
   WalletTypes,
@@ -26,7 +27,7 @@ import {
   BlockchainCategories,
   WalletState as WalletStatus,
 } from '@rango-dev/ui';
-import { readAccountAddress } from '@rango-dev/wallets-react';
+import { legacyReadAccountAddress as readAccountAddress } from '@rango-dev/wallets-core';
 import {
   detectInstallLink,
   getCosmosExperimentalChainInfo,
@@ -50,6 +51,11 @@ import { isBlockchainTypeInCategory, removeDuplicateFrom } from './common';
 import { createTokenHash } from './meta';
 import { numberToString } from './numbers';
 
+export type ExtendedModalWalletInfo = ModalWalletInfo &
+  WithNamespacesInfo & {
+    properties?: ProviderInfo['properties'];
+  };
+
 export function mapStatusToWalletState(state: WalletState): WalletStatus {
   switch (true) {
     case state.connected:
@@ -65,10 +71,10 @@ export function mapStatusToWalletState(state: WalletState): WalletStatus {
 
 export function mapWalletTypesToWalletInfo(
   getState: (type: WalletType) => WalletState,
-  getWalletInfo: (type: WalletType) => WalletInfo,
+  getWalletInfo: (type: WalletType) => ExtendedWalletInfo,
   list: WalletType[],
   chain?: string
-): WalletInfoWithNamespaces[] {
+): ExtendedModalWalletInfo[] {
   return list
     .filter((wallet) => !EXCLUDED_WALLETS.includes(wallet as WalletTypes))
     .filter((wallet) => {
@@ -96,6 +102,7 @@ export function mapWalletTypesToWalletInfo(
         namespaces,
         singleNamespace,
         supportedChains,
+        properties,
       } = getWalletInfo(type);
       const blockchainTypes = removeDuplicateFrom(
         supportedChains.map((item) => item.type)
@@ -112,6 +119,7 @@ export function mapWalletTypesToWalletInfo(
         namespaces,
         singleNamespace,
         blockchainTypes,
+        properties,
       };
     });
 }
@@ -434,8 +442,8 @@ export function areTokensEqual(
 }
 
 export function sortWalletsBasedOnConnectionState(
-  wallets: WalletInfoWithNamespaces[]
-): WalletInfoWithNamespaces[] {
+  wallets: ExtendedModalWalletInfo[]
+): ExtendedModalWalletInfo[] {
   return wallets.sort(
     (a, b) =>
       Number(b.state === WalletStatus.CONNECTED) -
@@ -549,7 +557,7 @@ export function filterBlockchainsByWalletTypes(
 }
 
 export function filterWalletsByCategory(
-  wallets: WalletInfoWithNamespaces[],
+  wallets: ExtendedModalWalletInfo[],
   category: string
 ) {
   if (category === BlockchainCategories.ALL) {

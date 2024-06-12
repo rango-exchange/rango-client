@@ -1,6 +1,6 @@
 import type { SignClient } from '@walletconnect/sign-client/dist/types/client';
 import type { SessionTypes } from '@walletconnect/types';
-import type { EvmTransaction } from 'rango-types/lib/api/main';
+import type { EvmTransaction } from 'rango-types/mainApi';
 
 import { cleanEvmError, DefaultEvmSigner } from '@rango-dev/signer-evm';
 import * as encoding from '@walletconnect/encoding';

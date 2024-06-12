@@ -31,9 +31,9 @@ import type {
   StepTxExecutionUpdatedEvent,
 } from '@rango-dev/queue-manager-rango-preset';
 import type {
-  EventHandler as HandleWalletsUpdate,
-  ProviderInterface,
-} from '@rango-dev/wallets-react';
+  LegacyEventHandler as HandleWalletsUpdate,
+  LegacyProviderInterface,
+} from '@rango-dev/wallets-core';
 import type {
   WalletInfo,
   WalletState,
@@ -51,10 +51,10 @@ import {
   useEvents as useWidgetEvents,
 } from '@rango-dev/queue-manager-rango-preset';
 import {
-  readAccountAddress,
-  useWallets,
-  Events as WalletEvents,
-} from '@rango-dev/wallets-react';
+  legacyReadAccountAddress as readAccountAddress,
+  LegacyEvents as WalletEvents,
+} from '@rango-dev/wallets-core';
+import { useWallets } from '@rango-dev/wallets-react';
 import { Networks, WalletTypes } from '@rango-dev/wallets-shared';
 import { PendingSwapNetworkStatus } from 'rango-types';
 
@@ -72,7 +72,7 @@ export type {
   WidgetTheme,
   WidgetColors,
   WidgetColorsKeys,
-  ProviderInterface,
+  LegacyProviderInterface as ProviderInterface,
   BlockchainAndTokenConfig,
   WidgetProps,
   RouteEvent,

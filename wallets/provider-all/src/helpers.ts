@@ -1,10 +1,10 @@
-import type { ProviderInterface } from '@rango-dev/wallets-react';
+import type { LegacyProviderInterface } from '@rango-dev/wallets-core/legacy';
 import type { WalletType } from '@rango-dev/wallets-shared';
 
 import { WalletTypes } from '@rango-dev/wallets-shared';
 
 export const isWalletConnectExcluded = (
-  selectedProviders?: (WalletType | ProviderInterface)[]
+  selectedProviders?: (WalletType | LegacyProviderInterface)[]
 ) =>
   selectedProviders &&
   !selectedProviders.find((provider) =>

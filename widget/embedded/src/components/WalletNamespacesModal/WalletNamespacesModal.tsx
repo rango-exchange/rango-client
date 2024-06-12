@@ -11,7 +11,7 @@ import {
   Radio,
   RadioRoot,
 } from '@rango-dev/ui';
-import { Namespace } from '@rango-dev/wallets-shared';
+import { Namespaces } from '@rango-dev/wallets-core';
 import React, { useMemo, useState } from 'react';
 
 import { WIDGET_UI_ID } from '../../constants';
@@ -25,13 +25,13 @@ import {
 
 import { NamespaceList } from './WalletNamespacesModal.styles';
 
-export const namespaceMainBlockchain: Record<Namespace, string> = {
-  [Namespace.Evm]: 'ETH',
-  [Namespace.Solana]: 'SOLANA',
-  [Namespace.Cosmos]: 'COSMOS',
-  [Namespace.Utxo]: 'BTC',
-  [Namespace.Starknet]: 'STARKNET',
-  [Namespace.Tron]: 'TRON',
+export const namespaceMainBlockchain: Record<Namespaces, string> = {
+  [Namespaces.Evm]: 'ETH',
+  [Namespaces.Solana]: 'SOLANA',
+  [Namespaces.Cosmos]: 'COSMOS',
+  [Namespaces.Utxo]: 'BTC',
+  [Namespaces.Starknet]: 'STARKNET',
+  [Namespaces.Tron]: 'TRON',
 };
 
 const getBlockchainLogo = (
@@ -45,7 +45,9 @@ const getBlockchainLogo = (
 export function WalletNamespacesModal(props: PropTypes) {
   const { singleNamespace, namespaces } = props;
 
-  const [selectedNamespaces, setSelectedNamespaces] = useState<Namespace[]>([]);
+  const [selectedNamespaces, setSelectedNamespaces] = useState<Namespaces[]>(
+    []
+  );
 
   const blockchains = useAppStore().blockchains();
 
@@ -61,7 +63,7 @@ export function WalletNamespacesModal(props: PropTypes) {
     [namespaces]
   );
 
-  const onSelect = (namespace: Namespace) => {
+  const onSelect = (namespace: Namespaces) => {
     if (singleNamespace) {
       setSelectedNamespaces([namespace]);
     } else {
