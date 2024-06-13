@@ -56,8 +56,8 @@ describe('check hub', () => {
     const evmResult = await wallet?.get('evm')?.connect('0x0');
 
     expect(evmResult?.accounts).toStrictEqual([
-      '0x000000000000000000000000000000000000dead',
-      '0x0000000000000000000000000000000000000000',
+      'eip155:0x1:0x000000000000000000000000000000000000dead',
+      'eip155:0x1:0x0000000000000000000000000000000000000000',
     ]);
   });
 });

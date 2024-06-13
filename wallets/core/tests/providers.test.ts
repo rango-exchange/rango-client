@@ -16,20 +16,24 @@ describe('check Provider works with Blockchain correctly', () => {
 
   test('connect successfully when two blockchain type has been added to Provider', async () => {
     // Wallet Code
+    const spyOnEvmConnect = vi.fn();
     const evmConnect: FunctionWithContext<
       EvmActions['connect'],
       Context
     > = async (_context, _chain) => {
+      spyOnEvmConnect();
       return {
         accounts: ['eip155:0x1:0x000000000000000000000000000000000000dead'],
         network: 'eth',
       };
     };
 
+    const spyOnSolanaConnect = vi.fn();
     const solanaConnect: FunctionWithContext<
       SolanaActions['connect'],
       Context
     > = async () => {
+      spyOnSolanaConnect();
       return ['solana:mainnet:1nc1nerator11111111111111111111111111111111'];
     };
 
@@ -55,14 +59,14 @@ describe('check Provider works with Blockchain correctly', () => {
     const solanaResult = await garbageWallet.get('solana')?.connect();
 
     expect(evmResult?.accounts).toStrictEqual([
-      '0x000000000000000000000000000000000000dead',
+      'eip155:0x1:0x000000000000000000000000000000000000dead',
     ]);
     expect(solanaResult).toStrictEqual([
-      '1nc1nerator11111111111111111111111111111111',
+      'solana:mainnet:1nc1nerator11111111111111111111111111111111',
     ]);
 
-    expect(evmConnect).toBeCalledTimes(1);
-    expect(solanaConnect).toBeCalledTimes(1);
+    expect(spyOnEvmConnect).toBeCalledTimes(1);
+    expect(spyOnSolanaConnect).toBeCalledTimes(1);
   });
 
   test('check post actions to work correctly.', async () => {
@@ -107,8 +111,8 @@ describe('check Provider works with Blockchain correctly', () => {
     const evmResult = await garbageWallet.get('evm')?.connect('0x1');
 
     expect(evmResult?.accounts).toStrictEqual([
-      'eip155:0x000000000000000000000000000000000000dead',
-      'eip155:0x0000000000000000000000000000000000000000',
+      'eip155:0x1:0x000000000000000000000000000000000000dead',
+      'eip155:0x1:0x0000000000000000000000000000000000000000',
     ]);
 
     await garbageWallet.get('evm')?.connect('0x1');
