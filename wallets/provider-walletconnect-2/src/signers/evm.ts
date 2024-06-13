@@ -66,11 +66,11 @@ class EVMSigner implements GenericSigner<EvmTransaction> {
     address: string,
     chainId: string | null
   ): Promise<{ hash: string }> {
-    const requestedFor = this.isNetworkAndAccountExistInSession({
-      address,
-      chainId,
-    });
     try {
+      const requestedFor = this.isNetworkAndAccountExistInSession({
+        address,
+        chainId,
+      });
       const transaction = DefaultEvmSigner.buildTx(tx);
       const hash: string = await this.client.request({
         topic: this.session.topic,
