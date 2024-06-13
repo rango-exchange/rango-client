@@ -27,12 +27,12 @@ describe('check Provider works with Blockchain correctly', () => {
     });
 
     const evmProvider = new NamespaceBuilder<EvmActions>()
-      .config('namespace', 'eip155')
+      .config('namespaceId', 'eip155')
       .config('providerId', walletName)
       .action('connect', evmConnect)
       .build();
     const solanaProvider = new NamespaceBuilder<SolanaActions>()
-      .config('namespace', 'solana')
+      .config('namespaceId', 'solana')
       .config('providerId', walletName)
       .action('connect', solanaConnect)
       .build();
@@ -84,11 +84,11 @@ describe('check Provider works with Blockchain correctly', () => {
     const afterDisconnect = vi.fn();
 
     const evmProvider = new NamespaceBuilder<EvmActions>()
-      .config('namespace', 'eip155')
+      .config('namespaceId', 'eip155')
       .config('providerId', walletName)
       .action('connect', evmConnect)
       .action('disconnect', evmDisconnect)
-      .use([
+      .andUse([
         ['disconnect', afterDisconnect],
         ['connect', andConnect],
       ])

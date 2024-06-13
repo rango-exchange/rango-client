@@ -93,8 +93,14 @@ const providers: ProvidersStateCreator = (set, get) => ({
 /************ Namespace ************/
 
 export interface NamespaceConfig {
+  /*
+   * Usage:
+   * 1. Using for creating a unique store id
+   * 2. for compatibility with legacy, the name will be used there to lookup from providers.
+   */
   providerId: string;
-  namespace: string;
+  /** We will use this value to create a unique store id */
+  namespaceId: string;
 }
 export interface NamespaceData {
   accounts: null | string[];

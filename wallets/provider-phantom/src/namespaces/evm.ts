@@ -13,14 +13,14 @@ import { WALLET_ID } from '../constants.js';
 import { evmPhantom } from '../legacy/helpers.js';
 
 const evm = new NamespaceBuilder<EvmActions>()
-  .config('namespace', 'evm')
+  .config('namespaceId', 'evm')
   .config('providerId', WALLET_ID)
   .action('init', () => {
     console.log('[phantom]init called from evm cb');
   })
   .action([...actions.recommended, actions.connect(evmPhantom)])
   .subscriber(actions.changeAccountSubscriber(evmPhantom))
-  .use(and.recommended)
+  .andUse(and.recommended)
   .build();
 
 utils.apply('before', before.recommended, evm);

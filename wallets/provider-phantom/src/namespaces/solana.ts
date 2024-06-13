@@ -18,7 +18,7 @@ import { WALLET_ID } from '../constants.js';
 import { solanaPhantom } from '../legacy/helpers.js';
 
 const solana = new NamespaceBuilder<SolanaActions>()
-  .config('namespace', 'solana')
+  .config('namespaceId', 'solana')
   .config('providerId', WALLET_ID)
   .action('init', () => {
     console.log('[phantom]init called from solana cb');
@@ -50,7 +50,7 @@ const solana = new NamespaceBuilder<SolanaActions>()
   })
   .action(actions.recommended)
   .subscriber(actions.changeAccountSubscriber(solanaPhantom))
-  .use(and.recommended)
+  .andUse(and.recommended)
   .build();
 
 utils.apply('before', before.recommended, solana);

@@ -14,7 +14,10 @@ import type {
 
 import { Namespace } from '../hub/mod.js';
 
-// These are functions that actually has something inside themselves then will call the actual action.
+/**
+ * There are Namespace's methods that should be called directly on Proxy object.
+ * The Proxy object is creating in `.build`.
+ */
 export const allowedMethods = [
   'init',
   'destroy',
@@ -27,63 +30,117 @@ export const allowedMethods = [
 export class NamespaceBuilder<T extends SpecificMethods<T>> {
   #namespaceActions: ActionType<T> = new Map();
   #subscribers: Set<SubscriberCb> = new Set();
-  #useCallbacks = new Map<keyof T, AnyFunction>();
+  #andUseList = new Map<keyof T, AnyFunction>();
   #configs: Partial<NamespaceConfig> = {};
 
-  config<K extends keyof NamespaceConfig>(name: K, value: NamespaceConfig[K]) {
+  /** There are some predefined configs that can be set for each namespace separately */
+  public config<K extends keyof NamespaceConfig>(
+    name: K,
+    value: NamespaceConfig[K]
+  ) {
     this.#configs[name] = value;
     return this;
   }
 
-  action<K extends keyof T>(
+  /**
+   * Getting a list of actions.
+   *
+   * e.g.:
+   * ```ts
+   * .action([
+   *      ["connect", () => {}],
+   *      ["disconnect", () => {}]
+   * ])
+   * ```
+   *
+   */
+  public action<K extends keyof T>(
     action: (readonly [K, FunctionWithContext<T[K], Context>])[]
   ): NamespaceBuilder<T>;
 
-  action<K extends keyof T>(
+  /**
+   *
+   * Add a single action
+   *
+   * e.g.:
+   * ```ts
+   * .action( ["connect", () => {}] )
+   * ```
+   */
+  public action<K extends keyof T>(
     action: K,
-    cb: FunctionWithContext<T[K], Context>
+    actionFn: FunctionWithContext<T[K], Context>
   ): NamespaceBuilder<T>;
 
-  action<K extends keyof T>(
+  /**
+   *
+   * Actions are piece of functionality that a namespace can have, for example it can be a `connect` function
+   * or a sign function or even a function for updating namespace's internal state. Actions are flexible and can be anything.
+   *
+   * Generally, each standard namespace (e.g. evm) has an standard interface defined in `src/namespaces/`
+   * and provider (which includes namespaces) authors will implement those actions.
+   *
+   * You can call this function by a list of actions or a single action.
+   *
+   */
+  public action<K extends keyof T>(
     action: (readonly [K, FunctionWithContext<T[K], Context>])[] | K,
-    cb?: FunctionWithContext<T[K], Context>
+    actionFn?: FunctionWithContext<T[K], Context>
   ) {
+    // List mode
     if (Array.isArray(action)) {
-      action.forEach(([name, cb]) => {
-        this.#namespaceActions.set(name, cb);
+      action.forEach(([name, actionFnForItem]) => {
+        this.#namespaceActions.set(name, actionFnForItem);
       });
       return this;
     }
-    if (!!cb) {
-      this.#namespaceActions.set(action, cb);
+
+    // Single action mode
+    if (!!actionFn) {
+      this.#namespaceActions.set(action, actionFn);
     }
+
     return this;
   }
 
   /**
-   * Provide a list of actions to be called after a **successful** run. (`and` hook)
-   *
-   * @param list
-   * @returns
+   * Getting a list of `and` functions.
+   * Instead of setting `and` one by one, you can put them in a list and use `andUse` to apply them.
+   * e.g.
+   * ```ts
+   * .andUse([
+   *    ['connect', () =>{}],
+   *    ['disconnect', () =>{}],
+   * ])
+   * ```
    */
-  use<K extends keyof T>(
+  public andUse<K extends keyof T>(
     list: (readonly [K, FunctionWithContext<AndFunction<T, K>, Context>])[]
   ) {
     list.forEach(([name, cb]) => {
-      this.#useCallbacks.set(name, cb);
+      this.#andUseList.set(name, cb);
     });
 
     return this;
   }
 
-  subscriber(cb: SubscriberCb) {
+  /**
+   * Subscribers are special actions that will be run on init phase.
+   * Each subscriber should have its own cleanup function as well which will be called when a namespace is destroying.
+   */
+  public subscriber(cb: SubscriberCb) {
     this.#subscribers.add(cb);
     return this;
   }
 
-  build(): NamespaceApi<T> {
+  /**
+   * By calling build, an instance of Namespace will be built.
+   *
+   * Note: it's not exactly a `Namespace`, it returns a Proxy which add more convenient use like `namespace.connect()` instead of `namespace.run("connect")`
+   */
+  public build(): NamespaceApi<T> {
     const requiredConfigs: (keyof NamespaceConfig)[] = [
-      'namespace',
+      'namespaceId',
       'providerId',
     ];
 
@@ -105,12 +162,15 @@ export class NamespaceBuilder<T extends SpecificMethods<T>> {
     return required.every((key) => !!config[key]);
   }
 
+  /**
+   * Build a Proxy object to call actions in a more convenient way. e.g `.connect()` instead of `.run(connect)`
+   */
   #buildApi(config: NamespaceConfig): NamespaceApi<T> {
     const namespace = new Namespace<T>(
       config,
       this.#namespaceActions,
       this.#subscribers,
-      this.#useCallbacks
+      this.#andUseList
     );
 
     const api = new Proxy(namespace, {

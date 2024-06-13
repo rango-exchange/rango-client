@@ -61,7 +61,7 @@ class Namespace<T extends SpecificMethods<T>> {
     subscribers: Set<SubscriberCb>,
     use: Map<keyof T, AnyFunction>
   ) {
-    this.namespace = config.namespace;
+    this.namespace = config.namespaceId;
     this.#configs = config;
     this.actions = actions;
     this.subscribers = subscribers;
@@ -231,7 +231,7 @@ class Namespace<T extends SpecificMethods<T>> {
   }
 
   #storeId() {
-    return generateStoreId(this.#configs.providerId, this.#configs.namespace);
+    return generateStoreId(this.#configs.providerId, this.#configs.namespaceId);
   }
 
   #context(): Context {

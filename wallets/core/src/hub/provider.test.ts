@@ -21,10 +21,10 @@ describe('providers', () => {
   beforeEach(() => {
     store = createStore();
     const evmBlockchain = new NamespaceBuilder<EvmActions>()
-      .config('namespace', 'eip155')
+      .config('namespaceId', 'eip155')
       .config('providerId', 'garbage');
     const solanaBlockchain = new NamespaceBuilder<SolanaActions>()
-      .config('namespace', 'solana')
+      .config('namespaceId', 'solana')
       .config('providerId', 'garbage');
 
     namespaces = {

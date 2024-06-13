@@ -33,7 +33,7 @@ describe('check hub', () => {
     });
 
     const evmProvider = new NamespaceBuilder<EvmActions>()
-      .config('namespace', 'eip155')
+      .config('namespaceId', 'eip155')
       .config('providerId', walletName)
       .action('connect', evmConnect)
       .build();

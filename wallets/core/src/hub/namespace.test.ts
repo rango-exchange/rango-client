@@ -13,7 +13,7 @@ describe('check NamespaceBuilder works as expected', () => {
       chainable: () => void;
       chain2: () => void;
     }>();
-    builder.config('namespace', NAMESPACE);
+    builder.config('namespaceId', NAMESPACE);
     builder.config('providerId', PROVIDER_ID);
     builder.action('hello', () => 'hello world');
     builder.action('bye', () => 'bye bye');
@@ -36,7 +36,7 @@ describe('check NamespaceBuilder works as expected', () => {
     const builder = new NamespaceBuilder<{
       //
     }>();
-    builder.config('namespace', NAMESPACE);
+    builder.config('namespaceId', NAMESPACE);
     builder.config('providerId', PROVIDER_ID);
     const cleanUpCb = vi.fn();
     const subscriberCb = vi.fn(() => {
@@ -57,7 +57,7 @@ describe('check NamespaceBuilder works as expected', () => {
 
   test('call .init only once.', () => {
     const builder = new NamespaceBuilder<any>();
-    builder.config('namespace', NAMESPACE);
+    builder.config('namespaceId', NAMESPACE);
     builder.config('providerId', PROVIDER_ID);
     let count = 0;
     builder.action('init', () => {
@@ -79,7 +79,7 @@ describe('check NamespaceBuilder works as expected', () => {
       connect: () => void;
       disconnect: () => void;
     }>();
-    builder.config('namespace', NAMESPACE);
+    builder.config('namespaceId', NAMESPACE);
     builder.config('providerId', PROVIDER_ID);
     builder.action('connect', connectAction);
     builder.action('disconnect', disconnectAction);
