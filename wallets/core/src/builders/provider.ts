@@ -1,12 +1,12 @@
-import type { NamespaceInterface } from './types.js';
+import type { FindProxiedNamespace } from './types.js';
 import type {
   CommonNamespaces,
   ExtendableInternalActions,
   ProviderBuilderOptions,
-} from '../hub/provider.js';
-import type { ProviderConfig } from '../hub/store.js';
+} from '../hub/provider/mod.js';
+import type { ProviderConfig } from '../hub/store/mod.js';
 
-import { Provider } from '../hub/provider.js';
+import { Provider } from '../hub/provider/mod.js';
 
 export class ProviderBuilder {
   #id: string;
@@ -22,7 +22,7 @@ export class ProviderBuilder {
 
   public add<K extends keyof CommonNamespaces>(
     id: K,
-    namespace: NamespaceInterface<K, CommonNamespaces>
+    namespace: FindProxiedNamespace<K, CommonNamespaces>
   ) {
     if (this.#options.store) {
       namespace.store(this.#options.store);

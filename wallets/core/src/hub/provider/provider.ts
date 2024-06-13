@@ -1,52 +1,28 @@
-/* eslint-disable @typescript-eslint/ban-types */
-import type { Actions } from './namespace.js';
-import type { ProviderConfig, Store } from './store.js';
-import type { ProxiedNamespace } from '../builders/mod.js';
-import type { LegacyState as V0State } from '../legacy/wallet.js';
+import type {
+  CommonNamespaces,
+  Context,
+  ExtendableInternalActions,
+  GetState,
+  NamespacesMap,
+  SetState,
+  State,
+} from './types.js';
+import type { FindProxiedNamespace } from '../../builders/mod.js';
 import type {
   AnyFunction,
   FunctionWithContext,
-} from '../namespaces/common/types.js';
-import type { CosmosActions } from '../namespaces/cosmos/types.js';
-import type { EvmActions } from '../namespaces/evm/types.js';
-import type { SolanaActions } from '../namespaces/solana/types.js';
+} from '../../namespaces/common/types.js';
+import type { ProviderConfig, Store } from '../store/mod.js';
 
-export type Context = {
-  state: () => [GetState, SetState];
-};
-export type State = Omit<V0State, 'reachable' | 'accounts' | 'network'>;
-type SetState = <K extends keyof Pick<State, 'installed'>>(
-  name: K,
-  value: State[K]
-) => void;
-type GetState = {
-  (): State;
-  <K extends keyof State>(name: K): State[K];
-};
-
-export interface CommonNamespaces {
-  evm: EvmActions;
-  solana: SolanaActions;
-  cosmos: CosmosActions;
-}
-
-export interface ExtendableInternalActions {
-  init?: FunctionWithContext<AnyFunction, Context>;
-}
-
-type NamespaceInterface<K extends keyof T, T> = T[K] extends Actions<T[K]>
-  ? ProxiedNamespace<T[K]>
-  : never;
-
-type NamespacesMap<K extends keyof T, T> = Map<K, NamespaceInterface<K, T>>;
+const VERSION = '1.0';
 
 export class Provider {
-  public id: string;
-  public version = '1.0';
+  public readonly id: string;
+  public readonly version = VERSION;
 
   #namespaces: NamespacesMap<keyof CommonNamespaces, CommonNamespaces>;
   #initiated = false;
-  #extendInternalMethods: ExtendableInternalActions = {};
+  #extendInternalActions: ExtendableInternalActions = {};
   #store: Store | undefined;
   #configs: ProviderConfig;
 
@@ -66,7 +42,7 @@ export class Provider {
     this.id = id;
     this.#configs = configs;
     // it should be only created here, to make sure `after/before` will work properly.
-    this.#extendInternalMethods = options.extendInternalActions;
+    this.#extendInternalActions = options.extendInternalActions;
     this.#namespaces = namespaces;
 
     if (options.store) {
@@ -75,23 +51,38 @@ export class Provider {
     }
   }
 
-  state(): [GetState, SetState] {
+  /**
+   * Getting state of a provider
+   *
+   * **Note:**
+   *    Each namespace has it's own state as well, in Legacy we didn't have this separation and all of them was accessible through Provider itself
+   *    To be compatible with legacy, `getState` has a logic to guess the final state to produce same state as legacy.
+   */
+  public state(): [GetState, SetState] {
     const store = this.#store;
     if (!store) {
       throw new Error(
-        'You need to set your store using `.store` method first.'
+        `Any store detected for ${this.id}. You need to set your store using '.store' method first.`
       );
     }
 
+    /**
+     * State updater
+     */
     const setState: SetState = (name, value) => {
       switch (name) {
         case 'installed':
           return store.getState().providers.updateStatus(this.id, name, value);
         default:
-          throw new Error('Unhandled state for provider');
+          throw new Error(
+            `Unhandled state update for provider. (provider id: ${this.id}, state name: ${name})`
+          );
       }
     };
 
+    /**
+     * State getter
+     */
     const getState: GetState = <K extends keyof State>(name?: K) => {
       const state: State = store
         .getState()
@@ -114,19 +105,21 @@ export class Provider {
     return [getState, setState];
   }
 
-  getAll() {
+  public getAll(): NamespacesMap<keyof CommonNamespaces, CommonNamespaces> {
     return this.#namespaces;
   }
 
-  get<K extends keyof CommonNamespaces>(id: K) {
+  public get<K extends keyof CommonNamespaces>(
+    id: K
+  ): FindProxiedNamespace<K, CommonNamespaces> | undefined {
     return this.#namespaces.get(id) as unknown as
-      | NamespaceInterface<K, CommonNamespaces>
+      | FindProxiedNamespace<K, CommonNamespaces>
       | undefined;
   }
 
-  findByNamespace<K extends keyof CommonNamespaces>(
+  public findByNamespace<K extends keyof CommonNamespaces>(
     namespaceLookingFor: K | string
-  ): NamespaceInterface<K, CommonNamespaces> | undefined {
+  ): FindProxiedNamespace<K, CommonNamespaces> | undefined {
     // If we didn't found any match, we will return `undefined`.
     let result: object | undefined = undefined;
 
@@ -139,7 +132,7 @@ export class Provider {
     return result;
   }
 
-  info(): ProviderConfig['info'] | undefined {
+  public info(): ProviderConfig['info'] | undefined {
     const store = this.#store;
     if (!store) {
       throw new Error(
@@ -150,8 +143,8 @@ export class Provider {
     return store.getState().providers.list[this.id].config.info;
   }
 
-  init() {
-    const definedInitByUser = this.#extendInternalMethods.init;
+  public init(): void {
+    const definedInitByUser = this.#extendInternalActions.init;
     if (!definedInitByUser) {
       console.debug(
         "[Namespace] this namespace doesn't have any `init` implemented."
@@ -169,17 +162,23 @@ export class Provider {
     console.debug('[Namespace] initiated successfully.');
   }
 
-  before(action: string, cb: FunctionWithContext<AnyFunction, Context>) {
+  public before(
+    action: string,
+    cb: FunctionWithContext<AnyFunction, Context>
+  ): this {
     this.#addHook('before', action, cb);
     return this;
   }
 
-  after(action: string, cb: FunctionWithContext<AnyFunction, Context>) {
+  public after(
+    action: string,
+    cb: FunctionWithContext<AnyFunction, Context>
+  ): this {
     this.#addHook('after', action, cb);
     return this;
   }
 
-  store(store: Store) {
+  public store(store: Store): this {
     if (this.#store) {
       console.warn(
         "You've already set an store for your Provider. Old store will be replaced by the new one."
@@ -194,7 +193,7 @@ export class Provider {
     hookName: 'after' | 'before',
     action: string,
     cb: FunctionWithContext<AnyFunction, Context>
-  ) {
+  ): this {
     const context = {
       state: this.state.bind(this),
     };
@@ -213,7 +212,7 @@ export class Provider {
     return this;
   }
 
-  #setupStore() {
+  #setupStore(): void {
     const store = this.#store;
     if (!store) {
       throw new Error('For setup store, you should set `store` first.');
@@ -230,5 +229,3 @@ export class Provider {
     };
   }
 }
-
-export type ProviderBuilderOptions = { store?: Store };

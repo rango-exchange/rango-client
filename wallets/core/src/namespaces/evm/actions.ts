@@ -1,5 +1,5 @@
 import type { EvmActions, ProviderApi } from './types.js';
-import type { Context, Subscriber } from '../../hub/namespace.js';
+import type { Context, Subscriber } from '../../hub/namespaces/mod.js';
 import type { CaipAccount, FunctionWithContext } from '../common/types.js';
 
 import { AccountId } from 'caip';

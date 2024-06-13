@@ -1,6 +1,6 @@
 import type { Task, TaskWithVoidReturn } from './types.js';
 import type { ProxiedNamespace } from '../../builders/mod.js';
-import type { Actions } from '../../hub/namespace.js';
+import type { Actions } from '../../hub/namespaces/mod.js';
 
 const allowedApplyMethods = ['after', 'and', 'before'] as const;
 

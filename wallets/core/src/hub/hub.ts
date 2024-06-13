@@ -1,6 +1,6 @@
-import type { Namespace, State as NamespaceState } from './namespace.js';
-import type { Provider, State as ProviderState } from './provider.js';
-import type { Store } from './store.js';
+import type { Namespace, State as NamespaceState } from './namespaces/mod.js';
+import type { Provider, State as ProviderState } from './provider/mod.js';
+import type { Store } from './store/mod.js';
 
 type HubState = {
   [key in string]: ProviderState & {

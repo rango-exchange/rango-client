@@ -1,5 +1,5 @@
 import type { Accounts, AccountsWithActiveChain } from './types.js';
-import type { Context } from '../../hub/namespace.js';
+import type { Context } from '../../hub/namespaces/mod.js';
 
 import { isValidCaipAddress } from './helpers.js';
 

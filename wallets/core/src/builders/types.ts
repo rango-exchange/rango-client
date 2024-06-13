@@ -1,5 +1,5 @@
 import type { allowedMethods } from './namespace.js';
-import type { Actions, Namespace } from '../hub/namespace.js';
+import type { Actions, Namespace } from '../hub/namespaces/mod.js';
 
 // These should be matched with `/hub/namespace.ts` public values.
 type NamespacePublicValues = {
@@ -15,7 +15,14 @@ export type ProxiedNamespace<T extends Actions<T>> = T &
   Pick<Namespace<T>, (typeof allowedMethods)[number]> &
   NamespacePublicValues;
 
-export type NamespaceInterface<K extends keyof T, T> = T[K] extends Actions<
+/**
+ * This is useful when you gave a list of namespaces and want to map a key to corresponding namespace.
+ *
+ * e.g:
+ * Type List = { evm: EvmActions, solana: SolanaActions};
+ * FindProxiedNamespace<"solana", List>
+ */
+export type FindProxiedNamespace<K extends keyof T, T> = T[K] extends Actions<
   T[K]
 >
   ? ProxiedNamespace<T[K]>

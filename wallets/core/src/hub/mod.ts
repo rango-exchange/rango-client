@@ -1,10 +1,10 @@
-export { Namespace } from './namespace.js';
-export { Provider } from './provider.js';
+export { Namespace } from './namespaces/mod.js';
+export { Provider } from './provider/mod.js';
 export { Hub } from './hub.js';
-export type { Store, State, ProviderInfo } from './store.js';
-export { createStore } from './store.js';
+export type { Store, State, ProviderInfo } from './store/mod.js';
 export {
+  createStore,
   guessProviderStateSelector,
   namespaceStateSelector,
-} from './selectors.js';
+} from './store/mod.js';
 export { generateStoreId } from './helpers.js';

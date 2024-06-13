@@ -1,10 +1,12 @@
+import type { Context } from '../src/hub/namespaces/types.js';
+import type { FunctionWithContext } from '../src/namespaces/common/types.js';
 import type { EvmActions } from '../src/namespaces/evm/types.js';
 
-import { beforeEach, describe, expect, test, vi } from 'vitest';
+import { beforeEach, describe, expect, test } from 'vitest';
 
 import { NamespaceBuilder, ProviderBuilder } from '../src/builders/mod.js';
 import { Hub } from '../src/hub/hub.js';
-import { createStore, type Store } from '../src/hub/store.js';
+import { createStore, type Store } from '../src/hub/store/mod.js';
 import { garbageWalletInfo } from '../src/test-utils/fixtures.js';
 
 describe('check hub', () => {
@@ -22,19 +24,20 @@ describe('check hub', () => {
   });
 
   test('connect through hub', async () => {
-    const evmConnect = vi.fn(async (_context, _chain) => {
+    const evmConnect: FunctionWithContext<
+      EvmActions['connect'],
+      Context
+    > = async (_context, _chain) => {
       return {
         accounts: [
-          '0x000000000000000000000000000000000000dead',
-          '0x0000000000000000000000000000000000000000',
+          'eip155:0x1:0x000000000000000000000000000000000000dead',
+          'eip155:0x1:0x0000000000000000000000000000000000000000',
         ],
         network: 'eth',
       };
-    });
+    };
 
-    const evmProvider = new NamespaceBuilder<EvmActions>()
-      .config('namespaceId', 'eip155')
-      .config('providerId', walletName)
+    const evmProvider = new NamespaceBuilder<EvmActions>('eip155', walletName)
       .action('connect', evmConnect)
       .build();
     const garbageWalletBuilder = new ProviderBuilder(walletName).config(

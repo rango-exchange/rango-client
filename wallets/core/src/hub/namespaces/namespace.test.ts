@@ -1,6 +1,6 @@
 import { describe, expect, test, vi } from 'vitest';
 
-import { NamespaceBuilder } from '../builders/namespace.js';
+import { NamespaceBuilder } from '../../builders/namespace.js';
 
 describe('check NamespaceBuilder works as expected', () => {
   const NAMESPACE = 'bip122';

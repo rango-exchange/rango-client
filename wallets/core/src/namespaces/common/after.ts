@@ -1,4 +1,4 @@
-import type { Context } from '../../hub/namespace.js';
+import type { Context } from '../../hub/namespaces/mod.js';
 
 function intoConnectionFinished() {
   return [

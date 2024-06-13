@@ -1,4 +1,4 @@
-import type { ProviderConfig } from '../hub/store.js';
+import type { ProviderConfig } from '../hub/store/mod.js';
 
 export const garbageWalletInfo: ProviderConfig['info'] = {
   name: 'Garbage Wallet',

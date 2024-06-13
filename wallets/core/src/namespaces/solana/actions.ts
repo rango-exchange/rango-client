@@ -1,5 +1,5 @@
 import type { ProviderApi } from './types.js';
-import type { Subscriber } from '../../hub/namespace.js';
+import type { Subscriber } from '../../hub/namespaces/mod.js';
 
 import { AccountId } from 'caip';
 

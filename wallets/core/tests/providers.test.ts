@@ -1,4 +1,4 @@
-import type { Context } from '../src/hub/namespace.js';
+import type { Context } from '../src/hub/namespaces/mod.js';
 import type {
   AccountsWithActiveChain,
   FunctionWithContext,
@@ -16,24 +16,30 @@ describe('check Provider works with Blockchain correctly', () => {
 
   test('connect successfully when two blockchain type has been added to Provider', async () => {
     // Wallet Code
-    const evmConnect = vi.fn(async (_context, _chain) => {
+    const evmConnect: FunctionWithContext<
+      EvmActions['connect'],
+      Context
+    > = async (_context, _chain) => {
       return {
-        accounts: ['0x000000000000000000000000000000000000dead'],
+        accounts: ['eip155:0x1:0x000000000000000000000000000000000000dead'],
         network: 'eth',
       };
-    });
-    const solanaConnect = vi.fn(async () => {
-      return ['1nc1nerator11111111111111111111111111111111'];
-    });
+    };
 
-    const evmProvider = new NamespaceBuilder<EvmActions>()
-      .config('namespaceId', 'eip155')
-      .config('providerId', walletName)
+    const solanaConnect: FunctionWithContext<
+      SolanaActions['connect'],
+      Context
+    > = async () => {
+      return ['solana:mainnet:1nc1nerator11111111111111111111111111111111'];
+    };
+
+    const evmProvider = new NamespaceBuilder<EvmActions>('eip155', walletName)
       .action('connect', evmConnect)
       .build();
-    const solanaProvider = new NamespaceBuilder<SolanaActions>()
-      .config('namespaceId', 'solana')
-      .config('providerId', walletName)
+    const solanaProvider = new NamespaceBuilder<SolanaActions>(
+      'solana',
+      walletName
+    )
       .action('connect', solanaConnect)
       .build();
 
@@ -75,17 +81,15 @@ describe('check Provider works with Blockchain correctly', () => {
 
     const andConnect = vi.fn((_context, result: AccountsWithActiveChain) => {
       return {
-        ...result,
-        accounts: result.accounts.map((account) => `eip155:${account}`),
+        network: result.network,
+        accounts: result.accounts.map((account) => `eip155:0x1:${account}`),
       };
     });
 
     const evmDisconnect = vi.fn();
     const afterDisconnect = vi.fn();
 
-    const evmProvider = new NamespaceBuilder<EvmActions>()
-      .config('namespaceId', 'eip155')
-      .config('providerId', walletName)
+    const evmProvider = new NamespaceBuilder<EvmActions>('eip155', walletName)
       .action('connect', evmConnect)
       .action('disconnect', evmDisconnect)
       .andUse([

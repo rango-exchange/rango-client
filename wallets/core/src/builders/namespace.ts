@@ -5,8 +5,8 @@ import type {
   AndUseActions,
   Context,
   Subscriber,
-} from '../hub/namespace.js';
-import type { NamespaceConfig } from '../hub/store.js';
+} from '../hub/namespaces/mod.js';
+import type { NamespaceConfig } from '../hub/store/mod.js';
 import type {
   AndFunction,
   FunctionWithContext,
@@ -122,6 +122,7 @@ export class NamespaceBuilder<T extends Actions<T>> {
    * ])
    * ```
    */
+  // TODO: it has a known type problem where a key will be type checked with return type of the whole list (T). see: providers.test.ts at 97
   public andUse<K extends keyof T>(
     list: (readonly [K, FunctionWithContext<AndFunction<T, K>, Context>])[]
   ) {

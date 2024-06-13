@@ -1,15 +1,14 @@
-import type { Provider } from './provider.js';
-import type { Store } from './store.js';
-import type { EvmActions } from '../namespaces/evm/types.js';
-import type { SolanaActions } from '../namespaces/solana/types.js';
+import type { Provider } from './mod.js';
+import type { EvmActions } from '../../namespaces/evm/types.js';
+import type { SolanaActions } from '../../namespaces/solana/types.js';
+import type { Store } from '../store/mod.js';
 
 import { beforeEach, describe, expect, test, vi } from 'vitest';
 
-import { NamespaceBuilder } from '../builders/namespace.js';
-import { ProviderBuilder } from '../builders/provider.js';
-import { garbageWalletInfo } from '../test-utils/fixtures.js';
-
-import { createStore } from './store.js';
+import { NamespaceBuilder } from '../../builders/namespace.js';
+import { ProviderBuilder } from '../../builders/provider.js';
+import { garbageWalletInfo } from '../../test-utils/fixtures.js';
+import { createStore } from '../store/mod.js';
 
 describe('providers', () => {
   let namespaces: {

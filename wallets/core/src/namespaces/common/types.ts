@@ -1,4 +1,4 @@
-import type { Actions } from '../../hub/namespace.js';
+import type { Actions } from '../../hub/namespaces/mod.js';
 import type { NamespacesWithDiscoverMode } from '../../legacy/types.js';
 
 export enum Namespaces {
@@ -28,6 +28,8 @@ export type NetworkTypeForNamespace<T extends NamespacesWithDiscoverMode> =
 
 export type AnyFunction = (...args: any[]) => any;
 export type AnyPromiseFunction = (...args: any[]) => Promise<any>;
+
+export type PromiseReturnType<T> = T extends Promise<infer U> ? U : never;
 
 export type AndFunction<
   T extends Record<string, AnyPromiseFunction>,
