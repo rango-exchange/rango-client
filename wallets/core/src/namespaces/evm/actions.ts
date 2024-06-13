@@ -1,5 +1,5 @@
 import type { EvmActions, ProviderApi } from './types.js';
-import type { Context, SubscriberCb } from '../../hub/namespace.js';
+import type { Context, Subscriber } from '../../hub/namespace.js';
 import type { CaipAccount, FunctionWithContext } from '../common/types.js';
 
 import { AccountId } from 'caip';
@@ -55,7 +55,7 @@ export function connect(
 
 export function changeAccountSubscriber(
   instance: () => ProviderApi
-): SubscriberCb {
+): Subscriber {
   return (context) => {
     const evmInstance = instance();
 

@@ -1,4 +1,4 @@
-import type { SpecificMethods } from '../../hub/namespace.js';
+import type { Actions } from '../../hub/namespace.js';
 import type { NamespacesWithDiscoverMode } from '../../legacy/types.js';
 
 export enum Namespaces {
@@ -42,12 +42,12 @@ export type VoidReturn<T> = T extends (...args: infer P) => any
   ? (...args: P) => void
   : never;
 
-export type Task<T extends SpecificMethods<T>> = readonly [
+export type Task<T extends Actions<T>> = readonly [
   keyof T,
   FunctionWithContext<T[keyof T], unknown>
 ];
 
-export type TaskWithVoidReturn<T extends SpecificMethods<T>> = readonly [
+export type TaskWithVoidReturn<T extends Actions<T>> = readonly [
   keyof T,
   VoidReturn<FunctionWithContext<T[keyof T], any>>
 ];

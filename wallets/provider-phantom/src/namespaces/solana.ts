@@ -17,9 +17,7 @@ import { getSolanaAccounts } from '@rango-dev/wallets-shared';
 import { WALLET_ID } from '../constants.js';
 import { solanaPhantom } from '../legacy/helpers.js';
 
-const solana = new NamespaceBuilder<SolanaActions>()
-  .config('namespaceId', 'solana')
-  .config('providerId', WALLET_ID)
+const solana = new NamespaceBuilder<SolanaActions>('solana', WALLET_ID)
   .action('init', () => {
     console.log('[phantom]init called from solana cb');
   })

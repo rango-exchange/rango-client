@@ -1,5 +1,5 @@
 import type { ProviderApi } from './types.js';
-import type { SubscriberCb } from '../../hub/namespace.js';
+import type { Subscriber } from '../../hub/namespace.js';
 
 import { AccountId } from 'caip';
 
@@ -11,7 +11,7 @@ export const recommended = [...commonRecommended];
 
 export function changeAccountSubscriber(
   instance: () => ProviderApi
-): SubscriberCb {
+): Subscriber {
   return (context) => {
     const solanaInstance = instance();
 

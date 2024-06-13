@@ -92,16 +92,11 @@ const providers: ProvidersStateCreator = (set, get) => ({
 
 /************ Namespace ************/
 
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface NamespaceConfig {
-  /*
-   * Usage:
-   * 1. Using for creating a unique store id
-   * 2. for compatibility with legacy, the name will be used there to lookup from providers.
-   */
-  providerId: string;
-  /** We will use this value to create a unique store id */
-  namespaceId: string;
+  // Currently, namespace doesn't has any config.
 }
+
 export interface NamespaceData {
   accounts: null | string[];
   network: null | string;
@@ -109,11 +104,16 @@ export interface NamespaceData {
   connecting: boolean;
 }
 
+interface NamespaceInfo {
+  providerId: string;
+  namespaceId: string;
+}
+
 type NamespaceState = {
   list: Record<
     string,
     {
-      config: NamespaceConfig;
+      info: NamespaceInfo;
       data: NamespaceData;
       error: unknown;
     }
@@ -121,7 +121,7 @@ type NamespaceState = {
 };
 
 interface NamespaceActions {
-  addNamespace: (id: string, config: NamespaceConfig) => void;
+  addNamespace: (id: string, config: NamespaceInfo) => void;
   updateStatus: <K extends keyof NamespaceData>(
     id: string,
     key: K,
@@ -137,7 +137,7 @@ type NamespaceStateCreator = StateCreator<State, [], [], NamespaceStore>;
 
 const namespaces: NamespaceStateCreator = (set, get) => ({
   list: {},
-  addNamespace: (id, config) => {
+  addNamespace: (id, info) => {
     const item = {
       data: {
         accounts: null,
@@ -146,7 +146,7 @@ const namespaces: NamespaceStateCreator = (set, get) => ({
         connecting: false,
       },
       error: '',
-      config,
+      info,
     };
 
     set(

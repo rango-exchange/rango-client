@@ -50,7 +50,7 @@ export function checkHubStateAndTriggerEvents(
     // It will pick the last network from namespaces.
     let maybeNetwork = null;
     provider.getAll().forEach((namespace) => {
-      const storeId = generateStoreId(providerId, namespace.namespace);
+      const storeId = generateStoreId(providerId, namespace.namespaceId);
       const currentNamespaceState = namespaceStateSelector(current, storeId);
       const previousNamespaceState = namespaceStateSelector(previous, storeId);
 

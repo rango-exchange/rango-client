@@ -12,9 +12,7 @@ import {
 import { WALLET_ID } from '../constants.js';
 import { evmPhantom } from '../legacy/helpers.js';
 
-const evm = new NamespaceBuilder<EvmActions>()
-  .config('namespaceId', 'evm')
-  .config('providerId', WALLET_ID)
+const evm = new NamespaceBuilder<EvmActions>('evm', WALLET_ID)
   .action('init', () => {
     console.log('[phantom]init called from evm cb');
   })

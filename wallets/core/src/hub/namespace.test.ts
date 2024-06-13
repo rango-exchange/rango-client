@@ -12,9 +12,7 @@ describe('check NamespaceBuilder works as expected', () => {
       bye: () => void;
       chainable: () => void;
       chain2: () => void;
-    }>();
-    builder.config('namespaceId', NAMESPACE);
-    builder.config('providerId', PROVIDER_ID);
+    }>(NAMESPACE, PROVIDER_ID);
     builder.action('hello', () => 'hello world');
     builder.action('bye', () => 'bye bye');
     builder
@@ -35,9 +33,7 @@ describe('check NamespaceBuilder works as expected', () => {
   test('subscribers should be added and removed correctly', () => {
     const builder = new NamespaceBuilder<{
       //
-    }>();
-    builder.config('namespaceId', NAMESPACE);
-    builder.config('providerId', PROVIDER_ID);
+    }>(NAMESPACE, PROVIDER_ID);
     const cleanUpCb = vi.fn();
     const subscriberCb = vi.fn(() => {
       return cleanUpCb;
@@ -56,9 +52,7 @@ describe('check NamespaceBuilder works as expected', () => {
   });
 
   test('call .init only once.', () => {
-    const builder = new NamespaceBuilder<any>();
-    builder.config('namespaceId', NAMESPACE);
-    builder.config('providerId', PROVIDER_ID);
+    const builder = new NamespaceBuilder<any>(NAMESPACE, PROVIDER_ID);
     let count = 0;
     builder.action('init', () => {
       count++;
@@ -78,9 +72,7 @@ describe('check NamespaceBuilder works as expected', () => {
     const builder = new NamespaceBuilder<{
       connect: () => void;
       disconnect: () => void;
-    }>();
-    builder.config('namespaceId', NAMESPACE);
-    builder.config('providerId', PROVIDER_ID);
+    }>(NAMESPACE, PROVIDER_ID);
     builder.action('connect', connectAction);
     builder.action('disconnect', disconnectAction);
     const blockchain = builder.build();

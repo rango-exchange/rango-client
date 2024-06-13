@@ -1,14 +1,14 @@
-import type { NamespaceApi } from './types.js';
+import type { ProxiedNamespace } from './types.js';
 import type {
-  ActionType,
+  Actions,
+  ActionsMap,
+  AndUseActions,
   Context,
-  SpecificMethods,
-  SubscriberCb,
+  Subscriber,
 } from '../hub/namespace.js';
 import type { NamespaceConfig } from '../hub/store.js';
 import type {
   AndFunction,
-  AnyFunction,
   FunctionWithContext,
 } from '../namespaces/common/types.js';
 
@@ -27,11 +27,19 @@ export const allowedMethods = [
   'store',
 ] as const;
 
-export class NamespaceBuilder<T extends SpecificMethods<T>> {
-  #namespaceActions: ActionType<T> = new Map();
-  #subscribers: Set<SubscriberCb> = new Set();
-  #andUseList = new Map<keyof T, AnyFunction>();
-  #configs: Partial<NamespaceConfig> = {};
+export class NamespaceBuilder<T extends Actions<T>> {
+  #id: string;
+  #providerId: string;
+  #actions: ActionsMap<T> = new Map();
+  #subscribers: Set<Subscriber> = new Set();
+  #andUseList: AndUseActions<T> = new Map();
+  #configs: NamespaceConfig;
+
+  constructor(id: string, providerId: string) {
+    this.#id = id;
+    this.#providerId = providerId;
+    this.#configs = {};
+  }
 
   /** There are some predefined configs that can be set for each namespace separately */
   public config<K extends keyof NamespaceConfig>(
@@ -90,14 +98,14 @@ export class NamespaceBuilder<T extends SpecificMethods<T>> {
     // List mode
     if (Array.isArray(action)) {
       action.forEach(([name, actionFnForItem]) => {
-        this.#namespaceActions.set(name, actionFnForItem);
+        this.#actions.set(name, actionFnForItem);
       });
       return this;
     }
 
     // Single action mode
     if (!!actionFn) {
-      this.#namespaceActions.set(action, actionFn);
+      this.#actions.set(action, actionFn);
     }
 
     return this;
@@ -128,7 +136,7 @@ export class NamespaceBuilder<T extends SpecificMethods<T>> {
    * Subscribers are special actions that will be run on init phase.
    * Each subscriber should have its own cleanup function as well which will be called when a namespace is destroying.
    */
-  public subscriber(cb: SubscriberCb) {
+  public subscriber(cb: Subscriber) {
     this.#subscribers.add(cb);
     return this;
   }
@@ -138,40 +146,29 @@ export class NamespaceBuilder<T extends SpecificMethods<T>> {
    *
    * Note: it's not exactly a `Namespace`, it returns a Proxy which add more convenient use like `namespace.connect()` instead of `namespace.run("connect")`
    */
-  public build(): NamespaceApi<T> {
-    const requiredConfigs: (keyof NamespaceConfig)[] = [
-      'namespaceId',
-      'providerId',
-    ];
-
-    if (this.#isConfigsValid(this.#configs, requiredConfigs)) {
+  public build(): ProxiedNamespace<T> {
+    if (this.#isConfigsValid(this.#configs)) {
       return this.#buildApi(this.#configs);
     }
 
-    throw new Error(
-      `You need to set all required configs. required fields: ${requiredConfigs.join(
-        ', '
-      )}`
-    );
+    throw new Error(`You namespace config isn't valid.`);
   }
 
-  #isConfigsValid(
-    config: Partial<NamespaceConfig>,
-    required: (keyof NamespaceConfig)[]
-  ): config is NamespaceConfig {
-    return required.every((key) => !!config[key]);
+  // Currently, namespace doesn't has any config.
+  #isConfigsValid(_config: NamespaceConfig): boolean {
+    return true;
   }
 
   /**
    * Build a Proxy object to call actions in a more convenient way. e.g `.connect()` instead of `.run(connect)`
    */
-  #buildApi(config: NamespaceConfig): NamespaceApi<T> {
-    const namespace = new Namespace<T>(
-      config,
-      this.#namespaceActions,
-      this.#subscribers,
-      this.#andUseList
-    );
+  #buildApi(configs: NamespaceConfig): ProxiedNamespace<T> {
+    const namespace = new Namespace<T>(this.#id, this.#providerId, {
+      configs,
+      actions: this.#actions,
+      subscribers: this.#subscribers,
+      andUse: this.#andUseList,
+    });
 
     const api = new Proxy(namespace, {
       get: (_, property) => {
@@ -206,6 +203,6 @@ export class NamespaceBuilder<T extends SpecificMethods<T>> {
       },
     });
 
-    return api as unknown as NamespaceApi<T>;
+    return api as unknown as ProxiedNamespace<T>;
   }
 }

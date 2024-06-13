@@ -7,7 +7,7 @@ export {
   guessProviderStateSelector,
   namespaceStateSelector,
 } from './hub/mod.js';
-export type { NamespaceApi, NamespaceInterface } from './builders/mod.js';
+export type { ProxiedNamespace, NamespaceInterface } from './builders/mod.js';
 export { NamespaceBuilder, ProviderBuilder } from './builders/mod.js';
 export { Namespaces } from './namespaces/common/types.js';
 

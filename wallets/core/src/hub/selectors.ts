@@ -13,7 +13,7 @@ export function guessProviderStateSelector(
 ): InternalProviderState {
   const allNamespaces = state.namespaces.list;
   const currentProviderNamespaces = Object.keys(allNamespaces).filter(
-    (key) => allNamespaces[key].config.providerId === providerId
+    (key) => allNamespaces[key].info.providerId === providerId
   );
 
   // TODO: I'm not sure what strategy is good for `connected` and `connecting` is better. reconsider it in future.

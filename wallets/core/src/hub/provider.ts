@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/ban-types */
-import type { SpecificMethods } from './namespace.js';
+import type { Actions } from './namespace.js';
 import type { ProviderConfig, Store } from './store.js';
-import type { NamespaceApi } from '../builders/mod.js';
+import type { ProxiedNamespace } from '../builders/mod.js';
 import type { LegacyState as V0State } from '../legacy/wallet.js';
 import type {
   AnyFunction,
@@ -34,10 +34,8 @@ export interface ExtendableInternalActions {
   init?: FunctionWithContext<AnyFunction, Context>;
 }
 
-type NamespaceInterface<K extends keyof T, T> = T[K] extends SpecificMethods<
-  T[K]
->
-  ? NamespaceApi<T[K]>
+type NamespaceInterface<K extends keyof T, T> = T[K] extends Actions<T[K]>
+  ? ProxiedNamespace<T[K]>
   : never;
 
 type NamespacesMap<K extends keyof T, T> = Map<K, NamespaceInterface<K, T>>;
@@ -133,7 +131,7 @@ export class Provider {
     let result: object | undefined = undefined;
 
     this.#namespaces.forEach((namespace) => {
-      if (namespace.namespace === namespaceLookingFor) {
+      if (namespace.namespaceId === namespaceLookingFor) {
         result = namespace;
       }
     });

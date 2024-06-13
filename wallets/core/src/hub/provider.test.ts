@@ -20,12 +20,11 @@ describe('providers', () => {
 
   beforeEach(() => {
     store = createStore();
-    const evmBlockchain = new NamespaceBuilder<EvmActions>()
-      .config('namespaceId', 'eip155')
-      .config('providerId', 'garbage');
-    const solanaBlockchain = new NamespaceBuilder<SolanaActions>()
-      .config('namespaceId', 'solana')
-      .config('providerId', 'garbage');
+    const evmBlockchain = new NamespaceBuilder<EvmActions>('eip155', 'garbage');
+    const solanaBlockchain = new NamespaceBuilder<SolanaActions>(
+      'solana',
+      'garbage'
+    );
 
     namespaces = {
       evm: evmBlockchain,
@@ -142,7 +141,7 @@ describe('providers', () => {
     expect(result).toBeDefined();
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore-next-line
-    expect(result?.namespace).toBe('solana');
+    expect(result?.namespaceId).toBe('solana');
 
     const result2 = provider.findByNamespace('evm');
     expect(result2).toBeUndefined();
