@@ -25,6 +25,7 @@
     "@ledgerhq/hw-app-eth": "^6.36.0",
     "@ledgerhq/hw-app-solana": "^7.1.6",
     "@ledgerhq/hw-transport-webhid": "^6.28.6",
+    "@rango-dev/wallets-core": "^0.35.1-next.0",
     "@rango-dev/signer-solana": "^0.29.1-next.0",
     "@rango-dev/wallets-shared": "^0.34.1-next.0",
     "@solana/web3.js": "^1.91.4",

@@ -1,5 +1,8 @@
+import type { ProvidersOptions } from '../utils/providers';
+import type { ExtendedModalWalletInfo } from '../utils/wallets';
 import type { WalletInfo } from '@rango-dev/ui';
-import type { Namespace, WalletType } from '@rango-dev/wallets-shared';
+import type { LegacyNamespaceAndNetwork as NamespaceAndNetwork } from '@rango-dev/wallets-core';
+import type { WalletType } from '@rango-dev/wallets-shared';
 import type { BlockchainMeta } from 'rango-sdk';
 
 import { WalletState } from '@rango-dev/ui';
@@ -29,12 +32,23 @@ interface Params {
   onConnect?: (walletType: string) => void;
 }
 
+interface Api {
+  list: ExtendedModalWalletInfo[];
+  error: string;
+  handleClick: (
+    type: WalletType,
+    namespaces?: NamespaceAndNetwork[]
+  ) => Promise<void>;
+  disconnectWallet: (type: WalletType) => Promise<void>;
+  disconnectConnectingWallets: () => void;
+}
+
 /**
  * gets list of wallets with their information and an action for handling click callback fo UI
  * we need to share the logic of rendering list of wallets and handle clicking on them in different places
  * you can use this list whenever you need to show the list of wallets and needed callbacks
  */
-export function useWalletList(params: Params) {
+export function useWalletList(params: Params): Api {
   const { chain, onBeforeConnect, onConnect } = params;
   const { config } = useAppStore();
   const { state, disconnect, getWalletInfo, connect } = useWallets();
@@ -42,12 +56,13 @@ export function useWalletList(params: Params) {
   const blockchains = useAppStore().blockchains();
 
   /** It can be what has been set by widget config or as a fallback we use all the supported wallets by our library */
+  const walletOptions: ProvidersOptions = {
+    walletConnectProjectId: config?.walletConnectProjectId,
+    experimentalWallet: config?.features?.experimentalWallet,
+  };
   const listAvailableWalletTypes =
-    configWalletsToWalletName(config?.wallets, {
-      walletConnectProjectId: config?.walletConnectProjectId,
-      walletConnectListedDesktopWalletLink:
-        config.__UNSTABLE_OR_INTERNAL__?.walletConnectListedDesktopWalletLink,
-    }) || ALL_SUPPORTED_WALLETS;
+    configWalletsToWalletName(config?.wallets, walletOptions) ||
+    ALL_SUPPORTED_WALLETS;
 
   let wallets = mapWalletTypesToWalletInfo(
     state,
@@ -73,7 +88,10 @@ export function useWalletList(params: Params) {
         connectedWallet.chain === chain
     );
 
-  const handleClick = async (type: WalletType, namespaces?: Namespace[]) => {
+  const handleClick = async (
+    type: WalletType,
+    namespaces?: NamespaceAndNetwork[]
+  ) => {
     const wallet = state(type);
     try {
       if (error) {
@@ -89,10 +107,13 @@ export function useWalletList(params: Params) {
           return;
         }
         onBeforeConnect?.(type);
-        await connect(type, undefined, namespaces);
+
+        await connect(type, namespaces);
+
         onConnect?.(type);
       }
     } catch (e) {
+      console.log(e);
       setError('Error: ' + (e as any)?.message);
     }
   };

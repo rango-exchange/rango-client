@@ -49,7 +49,14 @@ function QueueManager(props: PropsWithChildren<{ apiKey?: string }>) {
     if (!canSwitchNetworkTo(wallet, network)) {
       return undefined;
     }
-    return connect(wallet, network);
+    const result = await connect(wallet, [
+      {
+        namespace: 'DISCOVER_MODE',
+        network,
+      },
+    ]);
+
+    return result;
   };
 
   const isMobileWallet = (walletType: WalletType): boolean =>
@@ -84,7 +91,6 @@ function QueueManager(props: PropsWithChildren<{ apiKey?: string }>) {
     providers: allProviders,
     switchNetwork,
     canSwitchNetworkTo,
-    connect,
     state,
     isMobileWallet,
   };

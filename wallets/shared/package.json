@@ -5,10 +5,13 @@
   "type": "module",
   "source": "./src/index.ts",
   "main": "./dist/index.js",
+  "typings": "./dist/index.d.ts",
   "exports": {
-    ".": "./dist/index.js"
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
   },
-  "typings": "dist/index.d.ts",
   "files": [
     "dist",
     "src"
@@ -24,6 +27,7 @@
     "test:coverage": "vitest run --coverage"
   },
   "dependencies": {
+    "@rango-dev/wallets-core": "^0.35.1-next.0",
     "ethers": "^5.7.2",
     "rango-types": "^0.1.69"
   },

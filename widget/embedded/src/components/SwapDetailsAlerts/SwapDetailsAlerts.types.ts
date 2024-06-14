@@ -15,7 +15,7 @@ export interface SwapAlertsProps extends WaningAlertsProps {
 }
 
 export interface WaningAlertsProps extends FailedAlertsProps {
-  switchNetwork: (() => Promise<ConnectResult>) | undefined;
+  switchNetwork: (() => Promise<ConnectResult[]>) | undefined;
   showNetworkModal: PendingSwapNetworkStatus | null | undefined;
   setNetworkModal: (network: ModalState) => void;
 }

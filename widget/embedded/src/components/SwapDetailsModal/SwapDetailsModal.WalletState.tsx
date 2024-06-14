@@ -1,5 +1,5 @@
 import type { WalletStateContentProps } from './SwapDetailsModal.types';
-import type { Namespace } from '@rango-dev/wallets-shared';
+import type { NamespacesModalState } from '../../pages/WalletsPage';
 
 import { debug } from '@rango-dev/logging-core';
 import { MessageBox, Wallet } from '@rango-dev/ui';
@@ -11,13 +11,6 @@ import { mapStatusToWalletState } from '../../utils/wallets';
 import { WalletNamespacesModal } from '../WalletNamespacesModal';
 
 import { WalletContainer } from './SwapDetailsModal.styles';
-
-interface NamespacesModalState {
-  providerType: string;
-  providerImage: string;
-  availableNamespaces?: Namespace[];
-  singleNamespace?: boolean;
-}
 
 export const WalletStateContent = (props: WalletStateContentProps) => {
   const {
@@ -38,6 +31,9 @@ export const WalletStateContent = (props: WalletStateContentProps) => {
   const walletInfo = walletType ? getWalletInfo(walletType) : null;
   const shouldShowWallet =
     showWalletButton && !!walletType && !!walletState && !!walletInfo;
+  const detachedInstances = walletInfo?.properties?.find(
+    (item) => item.name === 'detached'
+  );
 
   return (
     <>
@@ -52,37 +48,50 @@ export const WalletStateContent = (props: WalletStateContentProps) => {
             state={walletState}
             link={walletInfo.installLink}
             disabled={walletButtonDisabled}
-            // TODO we need to show an error modal when user reject the connection
             onClick={async () => {
-              if (walletInfo.namespaces) {
+              const legacyCondition = !!walletInfo.namespaces;
+              const hubCondition = !!detachedInstances;
+
+              if (hubCondition || legacyCondition) {
+                const isHub = !!walletInfo.properties;
+
+                const availableNamespaces = isHub
+                  ? detachedInstances?.value
+                  : walletInfo.namespaces;
+
                 setNamespacesModalState({
                   providerType: walletType,
                   providerImage: walletInfo.img,
-                  availableNamespaces: walletInfo.namespaces,
+                  availableNamespaces,
                   singleNamespace: walletInfo.singleNamespace,
                 });
               } else {
-                connect(walletType).catch((error) => debug(error));
+                void connect(walletType).catch((error) => debug(error));
               }
             }}
           />
+          <WalletNamespacesModal
+            open={!!namespacesModalState}
+            onClose={() => setNamespacesModalState(null)}
+            onConfirm={(namespaces) => {
+              console.log('user selected these:', { namespaces });
+              if (namespacesModalState) {
+                void connect(
+                  namespacesModalState.providerType,
+                  namespaces.map((ns) => ({
+                    namespace: ns,
+                    network: undefined,
+                  }))
+                ).catch((error) => debug(error));
+              }
+              setNamespacesModalState(null);
+            }}
+            image={namespacesModalState?.providerImage}
+            namespaces={namespacesModalState?.availableNamespaces}
+            singleNamespace={namespacesModalState?.singleNamespace}
+          />
         </WalletContainer>
       )}
-      <WalletNamespacesModal
-        open={!!namespacesModalState}
-        onClose={() => setNamespacesModalState(null)}
-        onConfirm={(namespaces) => {
-          connect(
-            namespacesModalState?.providerType as string,
-            undefined,
-            namespaces
-          ).catch((error) => debug(error));
-          setNamespacesModalState(null);
-        }}
-        image={namespacesModalState?.providerImage}
-        namespaces={namespacesModalState?.availableNamespaces}
-        singleNamespace={namespacesModalState?.singleNamespace}
-      />
     </>
   );
 };

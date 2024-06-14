@@ -14,16 +14,26 @@ import { BUILD_META_FILE_SUFFIX } from '../common/constants.mjs';
 const root = join(printDirname(), '..', '..');
 
 async function run() {
-  const optionDefinitions = [{ name: 'path', type: String }];
-  const { path } = commandLineArgs(optionDefinitions);
+  const optionDefinitions = [
+    { name: 'path', type: String },
+    // It accepts a comma separated file paths. e.g. src/main.ts,src/net.ts
+    { name: 'inputs', type: String },
+  ];
+  const { path, inputs } = commandLineArgs(optionDefinitions);
 
   if (!path) {
     throw new Error('You need to specify package name.');
   }
 
   const pkgPath = `${root}/${path}`;
-  const entryPoint = `${pkgPath}/src/index.ts`;
   const packageName = packageNameWithoutScope(packageJson(path).name);
+
+  let entryPoints = [];
+  if (!inputs) {
+    entryPoints = [`${pkgPath}/src/index.ts`];
+  } else {
+    entryPoints = inputs.split(',').map((input) => `${pkgPath}/${input}`);
+  }
 
   console.log(`[build] Running for ${path}`);
 
@@ -31,7 +41,7 @@ async function run() {
     cwd: pkgPath,
     stderr: process.stderr,
     stdout: process.stdout,
-  })`tsc --declaration --emitDeclarationOnly`;
+  })`tsc --declaration --emitDeclarationOnly -p tsconfig.build.json`;
   const esbuildTask = esbuild.build({
     bundle: true,
     minify: true,
@@ -41,7 +51,7 @@ async function run() {
     format: 'esm',
     packages: 'external',
     outdir: `${pkgPath}/dist`,
-    entryPoints: [entryPoint],
+    entryPoints: entryPoints,
     metafile: true,
   });
   const result = await Promise.all([typeCheckingTask, esbuildTask]);

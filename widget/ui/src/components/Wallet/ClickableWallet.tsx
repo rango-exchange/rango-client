@@ -1,7 +1,8 @@
 import type { WalletPropTypes } from './Wallet.types';
+import type { PropsWithChildren } from 'react';
 
 import { detectInstallLink } from '@rango-dev/wallets-shared';
-import React, { Fragment } from 'react';
+import React from 'react';
 
 import { Image } from '../common';
 import { Divider } from '../Divider';
@@ -35,13 +36,25 @@ function Wallet(props: WalletPropTypes) {
     );
   }
 
-  const WrapperComponent = disabled ? Fragment : Tooltip;
+  const TooltipWrapperIfNeeded = (
+    props: PropsWithChildren<{ container: WalletPropTypes['container'] }>
+  ) => {
+    if (disabled) {
+      return props.children;
+    }
+
+    return (
+      <Tooltip
+        container={props.container}
+        content={info.tooltipText}
+        side="top">
+        {props.children}
+      </Tooltip>
+    );
+  };
 
   return (
-    <WrapperComponent
-      container={props.container}
-      content={info.tooltipText}
-      side="top">
+    <TooltipWrapperIfNeeded container={props.container}>
       <WalletButton
         disabled={props.state == WalletState.CONNECTING || disabled}
         onClick={() => {
@@ -69,7 +82,7 @@ function Wallet(props: WalletPropTypes) {
           </Typography>
         </Text>
       </WalletButton>
-    </WrapperComponent>
+    </TooltipWrapperIfNeeded>
   );
 }
 

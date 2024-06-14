@@ -1,0 +1,17 @@
+{
+  // see https://www.typescriptlang.org/tsconfig to better understand tsconfigs
+  "extends": "../../tsconfig.lib.json",
+  "include": [
+    "src",
+    "types",
+    "../../global-wallets-env.d.ts",
+    "./global-env.d.ts"
+  ],
+  "compilerOptions": {
+    "outDir": "dist",
+    "downlevelIteration": true,
+    "lib": ["dom", "esnext"],
+    "rootDir": "./src",
+    "jsx": "react"
+  }
+}

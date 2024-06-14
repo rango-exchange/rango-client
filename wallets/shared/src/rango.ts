@@ -1,40 +1,27 @@
+import type { Network, WalletType } from '@rango-dev/wallets-core/legacy';
+import type { Namespaces } from '@rango-dev/wallets-core/namespaces/common';
 import type { BlockchainMeta, EvmBlockchainMeta } from 'rango-types';
+
+import { Networks } from '@rango-dev/wallets-core/legacy';
+
+export type {
+  WalletType,
+  Network,
+  Connect,
+  Disconnect,
+  Subscribe,
+  CanEagerConnect,
+  SwitchNetwork,
+  Suggest,
+  CanSwitchNetwork,
+} from '@rango-dev/wallets-core/legacy';
+export {
+  Networks,
+  getBlockChainNameFromId,
+} from '@rango-dev/wallets-core/legacy';
 
 export const IS_DEV =
   !process.env.NODE_ENV || process.env.NODE_ENV === 'development';
-
-export const getBlockChainNameFromId = (
-  chainId: string | number,
-  blockchains: BlockchainMeta[]
-): Network | null => {
-  chainId =
-    typeof chainId === 'string' && chainId.startsWith('0x')
-      ? parseInt(chainId)
-      : chainId;
-
-  /*
-   * Sometimes providers are passing `Network` as chainId.
-   * If chainId is a `Network`, we return itself.
-   */
-  const allNetworks = Object.values(Networks) as string[];
-  if (allNetworks.includes(String(chainId))) {
-    return chainId as Networks;
-  }
-
-  if (chainId === 'Binance-Chain-Tigris') {
-    return Networks.BINANCE;
-  }
-  return (
-    blockchains
-      .filter((blockchainMeta) => !!blockchainMeta.chainId)
-      .find((blockchainMeta) => {
-        const blockchainChainId = blockchainMeta.chainId?.startsWith('0x')
-          ? parseInt(blockchainMeta.chainId)
-          : blockchainMeta.chainId;
-        return blockchainChainId == chainId;
-      })?.name || null
-  );
-};
 
 export const getBlockchainChainIdByName = (
   netwok: Network,
@@ -44,9 +31,6 @@ export const getBlockchainChainIdByName = (
 export const uint8ArrayToHex = (buffer: Uint8Array): string => {
   return Buffer.from(buffer).toString('hex');
 };
-
-export type WalletType = string;
-export type Network = string;
 
 export enum WalletTypes {
   DEFAULT = 'default',
@@ -81,78 +65,6 @@ export enum WalletTypes {
   MY_TON_WALLET = 'mytonwallet',
   SOLFLARE_SNAP = 'solflare-snap',
   LEDGER = 'ledger',
-}
-
-export enum Networks {
-  BTC = 'BTC',
-  BSC = 'BSC',
-  LTC = 'LTC',
-  THORCHAIN = 'THOR',
-  BCH = 'BCH',
-  BINANCE = 'BNB',
-  ETHEREUM = 'ETH',
-  POLYGON = 'POLYGON',
-  TERRA = 'TERRA',
-  POLKADOT = '',
-  TRON = 'TRON',
-  DOGE = 'DOGE',
-  HARMONY = 'HARMONY',
-  AVAX_CCHAIN = 'AVAX_CCHAIN',
-  FANTOM = 'FANTOM',
-  MOONBEAM = 'MOONBEAM',
-  ARBITRUM = 'ARBITRUM',
-  BOBA = 'BOBA',
-  OPTIMISM = 'OPTIMISM',
-  FUSE = 'FUSE',
-  CRONOS = 'CRONOS',
-  SOLANA = 'SOLANA',
-  MOONRIVER = 'MOONRIVER',
-  GNOSIS = 'GNOSIS',
-  COSMOS = 'COSMOS',
-  OSMOSIS = 'OSMOSIS',
-  AXELAR = 'AXELAR',
-  MARS = 'MARS',
-  STRIDE = 'STRIDE',
-  MAYA = 'MAYA',
-  AKASH = 'AKASH',
-  IRIS = 'IRIS',
-  PERSISTENCE = 'PERSISTENCE',
-  SENTINEL = 'SENTINEL',
-  REGEN = 'REGEN',
-  CRYPTO_ORG = 'CRYPTO_ORG',
-  SIF = 'SIF',
-  CHIHUAHUA = 'CHIHUAHUA',
-  JUNO = 'JUNO',
-  KUJIRA = 'KUJIRA',
-  STARNAME = 'STARNAME',
-  COMDEX = 'COMDEX',
-  STARGAZE = 'STARGAZE',
-  DESMOS = 'DESMOS',
-  BITCANNA = 'BITCANNA',
-  SECRET = 'SECRET',
-  INJECTIVE = 'INJECTIVE',
-  LUMNETWORK = 'LUMNETWORK',
-  BANDCHAIN = 'BANDCHAIN',
-  EMONEY = 'EMONEY',
-  BITSONG = 'BITSONG',
-  KI = 'KI',
-  MEDIBLOC = 'MEDIBLOC',
-  KONSTELLATION = 'KONSTELLATION',
-  UMEE = 'UMEE',
-  STARKNET = 'STARKNET',
-  TON = 'TON',
-
-  // Using instead of null
-  Unknown = 'Unkown',
-}
-
-export enum Namespace {
-  Solana = 'Solana',
-  Evm = 'EVM',
-  Cosmos = 'Cosmos',
-  Utxo = 'UTXO',
-  Starknet = 'Starknet',
-  Tron = 'Tron',
 }
 
 export const XDEFI_WALLET_SUPPORTED_NATIVE_CHAINS: string[] = [
@@ -245,56 +157,6 @@ export type ProviderConnectResult = {
   chainId: string;
 };
 
-export type Connect = (options: {
-  instance: any;
-  network?: Network;
-  meta: BlockchainMeta[];
-  namespaces?: Namespace[];
-}) => Promise<ProviderConnectResult | ProviderConnectResult[]>;
-
-export type Disconnect = (options: {
-  instance: any;
-  destroyInstance: () => void;
-}) => Promise<void>;
-
-type CleanupSubscribe = () => void;
-
-export type Subscribe = (options: {
-  instance: any;
-  state: WalletState;
-  meta: BlockchainMeta[];
-  updateChainId: (chainId: string) => void;
-  updateAccounts: (accounts: string[], chainId?: string) => void;
-  connect: (network?: Network) => void;
-  disconnect: () => void;
-}) => CleanupSubscribe | void;
-
-export type CanEagerConnect = (options: {
-  instance: any;
-  meta: BlockchainMeta[];
-}) => Promise<boolean>;
-
-export type SwitchNetwork = (options: {
-  instance: any;
-  network: Network;
-  meta: BlockchainMeta[];
-  newInstance?: TryGetInstance;
-  getState?: () => WalletState;
-  updateChainId: (chainId: string) => void;
-}) => Promise<void>;
-
-export type Suggest = (options: {
-  instance: any;
-  network: Network;
-  meta: BlockchainMeta[];
-}) => Promise<void>;
-
-export type CanSwitchNetwork = (options: {
-  network: Network;
-  meta: BlockchainMeta[];
-  provider: any;
-}) => boolean;
-
 export type InstallObjects = {
   CHROME?: string;
   FIREFOX?: string;
@@ -312,7 +174,7 @@ export type WalletInfo = {
   showOnMobile?: boolean;
   isContractWallet?: boolean;
   mobileWallet?: boolean;
-  namespaces?: Namespace[];
+  namespaces?: Namespaces[];
   singleNamespace?: boolean;
 };
 

@@ -1,6 +1,6 @@
 import type { TransactionLike } from 'ethers';
 import type { GenericSigner } from 'rango-types';
-import type { EvmTransaction } from 'rango-types/lib/api/main';
+import type { EvmTransaction } from 'rango-types/mainApi';
 
 import { JsonRpcProvider, Transaction } from 'ethers';
 import { SignerError } from 'rango-types';

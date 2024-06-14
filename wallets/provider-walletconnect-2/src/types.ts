@@ -1,6 +1,6 @@
 import type { SignClient } from '@walletconnect/sign-client/dist/types/client';
 import type { ProposalTypes, SessionTypes } from '@walletconnect/types';
-import type { BlockchainMeta, CosmosBlockchainMeta } from 'rango-types/lib';
+import type { BlockchainMeta, CosmosBlockchainMeta } from 'rango-types';
 
 export interface Environments extends Record<string, string | undefined> {
   WC_PROJECT_ID: string;

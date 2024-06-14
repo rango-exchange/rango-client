@@ -60,35 +60,82 @@ export const useWalletsStore = createSelectors(
       loading: false,
       connectWallet: (accounts, findToken) => {
         const getWalletsDetails = get().getWalletsDetails;
-        set((state) => ({
-          loading: true,
-          connectedWallets: state.connectedWallets
-            .filter((wallet) => wallet.walletType !== accounts[0].walletType)
-            .concat(
-              accounts.map((account) => {
-                const shouldMarkWalletAsSelected = !state.connectedWallets.some(
-                  (connectedWallet) =>
-                    connectedWallet.chain === account.chain &&
-                    connectedWallet.selected &&
-                    /**
-                     * Sometimes, the connect function can be called multiple times for a particular wallet type when using the auto-connect feature.
-                     * This check is there to make sure the chosen wallet doesn't end up unselected.
-                     */
-                    connectedWallet.walletType !== account.walletType
-                );
-                return {
-                  balances: [],
-                  address: account.address,
-                  chain: account.chain,
-                  explorerUrl: null,
-                  walletType: account.walletType,
-                  selected: shouldMarkWalletAsSelected,
-                  loading: true,
-                  error: false,
-                };
-              })
-            ),
-        }));
+
+        set((state) => {
+          const nextConnectedWallets = state.connectedWallets;
+
+          /**
+           * In some cases like changing account, this function will be called as well. which means walletType (name) + blockchain will be same but the address will be different.
+           * To handle this scenario we need to make sure getting rid of the old entry and add new one to `connectedWallets`.
+           * In other cases (a new account is adding to list), we simply push it to `connectedList`
+           */
+          for (const account of accounts) {
+            const shouldMarkWalletAsSelected = !state.connectedWallets.some(
+              (connectedWallet) =>
+                connectedWallet.chain === account.chain &&
+                connectedWallet.selected &&
+                /**
+                 * Sometimes, the connect function can be called multiple times for a particular wallet type when using the auto-connect feature.
+                 * This check is there to make sure the chosen wallet doesn't end up unselected.
+                 */
+                connectedWallet.walletType !== account.walletType
+            );
+
+            const newConnectedWallet = {
+              balances: [],
+              address: account.address,
+              chain: account.chain,
+              explorerUrl: null,
+              walletType: account.walletType,
+              selected: shouldMarkWalletAsSelected,
+              loading: true,
+              error: false,
+            };
+
+            const sameWalletAndBlockchainAccountIndexInConnectedWallets =
+              nextConnectedWallets.findIndex(
+                (connectedWallet) =>
+                  connectedWallet.walletType === account.walletType &&
+                  connectedWallet.chain === account.chain
+              );
+
+            const sameWalletAndBlockchainConnectedWallet:
+              | ConnectedWallet
+              | undefined =
+              state.connectedWallets[
+                sameWalletAndBlockchainAccountIndexInConnectedWallets
+              ];
+
+            const isSameWalletAndBlockchainAdded =
+              sameWalletAndBlockchainAccountIndexInConnectedWallets >= 0;
+
+            const isSameAddressExists = sameWalletAndBlockchainConnectedWallet
+              ? sameWalletAndBlockchainConnectedWallet.address ===
+                account.address
+              : false;
+
+            if (isSameWalletAndBlockchainAdded) {
+              if (!isSameAddressExists) {
+                /*
+                 * Mutating original object isn't good generally, to avoid copying memory over and over I chose this path for now.
+                 * We can change it to copying the original object and then mutating the copied version in future if needed.
+                 */
+                state.connectedWallets[
+                  sameWalletAndBlockchainAccountIndexInConnectedWallets
+                ] = newConnectedWallet;
+              }
+
+              // if same entry (walletType + blockchain + address) exists, we simply ignore it.
+            } else {
+              nextConnectedWallets.push(newConnectedWallet);
+            }
+          }
+
+          return {
+            loading: true,
+            connectedWallets: nextConnectedWallets,
+          };
+        });
         getWalletsDetails(accounts, findToken);
       },
       disconnectWallet: (walletType) => {

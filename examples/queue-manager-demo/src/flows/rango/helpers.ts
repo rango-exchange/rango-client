@@ -32,7 +32,7 @@ import type {
 } from 'rango-types';
 
 import { SUPPORTED_ETH_CHAINS as XDEFI_WALLET_SUPPORTED_EVM_CHAINS } from '@rango-dev/provider-xdefi';
-import { readAccountAddress } from '@rango-dev/wallets-react';
+import { legacyReadAccountAddress as readAccountAddress } from '@rango-dev/wallets-core';
 import {
   Networks,
   WalletTypes,

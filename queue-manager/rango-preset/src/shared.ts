@@ -1,18 +1,18 @@
 import type { Network, WalletType } from '@rango-dev/wallets-shared';
 import type {
-  BestRouteResponse,
-  BlockchainMeta,
-  MetaResponse,
-  SwapResult,
-  Token,
-} from 'rango-sdk';
-import type {
   PendingSwap,
   PendingSwapStep,
   SwapSavedSettings,
   SwapStepRoute,
   WalletTypeAndAddress,
 } from 'rango-types';
+import type {
+  BestRouteResponse,
+  BlockchainMeta,
+  MetaResponse,
+  SwapResult,
+  Token,
+} from 'rango-types/mainApi';
 
 import BigNumber from 'bignumber.js';
 import {

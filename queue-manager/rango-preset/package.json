@@ -27,7 +27,7 @@
     "@rango-dev/wallets-shared": "*",
     "bignumber.js": "*",
     "rango-sdk": "*",
-    "rango-types": "*",
+    "rango-types": "^0.1.67",
     "uuid": "*"
   },
   "devDependencies": {

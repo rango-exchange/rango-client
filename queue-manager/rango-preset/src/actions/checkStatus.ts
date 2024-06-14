@@ -1,7 +1,10 @@
 import type { SwapQueueContext, SwapStorage } from '../types';
 import type { ExecuterActions } from '@rango-dev/queue-manager-core';
-import type { Transaction, TransactionStatusResponse } from 'rango-sdk';
 import type { GenericSigner } from 'rango-types';
+import type {
+  Transaction,
+  TransactionStatusResponse,
+} from 'rango-types/mainApi';
 
 import { DEFAULT_ERROR_CODE } from '../constants';
 import {

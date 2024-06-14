@@ -1,6 +1,8 @@
 import type { PropTypes } from './WalletList.type';
-import type { Wallet, WalletInfoWithNamespaces } from '../../types';
-import type { Namespace, WalletType } from '@rango-dev/wallets-shared';
+import type { Wallet } from '../../types';
+import type { ExtendedModalWalletInfo } from '../../utils/wallets';
+import type { Namespaces } from '@rango-dev/wallets-core';
+import type { WalletType } from '@rango-dev/wallets-shared';
 
 import { i18n } from '@lingui/core';
 import {
@@ -44,7 +46,7 @@ import {
 interface WalletNamespacesModalState {
   providerType: string;
   providerImage: string;
-  availableNamespaces?: Namespace[];
+  availableNamespaces?: Namespaces[];
   singleNamespace?: boolean;
 }
 
@@ -91,8 +93,7 @@ export function WalletList(props: PropTypes) {
       }, TIME_TO_CLOSE_MODAL);
     },
   });
-  const [sortedList, setSortedList] =
-    useState<WalletInfoWithNamespaces[]>(list);
+  const [sortedList, setSortedList] = useState<ExtendedModalWalletInfo[]>(list);
   const numberOfSupportedWallets = list.length;
   const shouldShowMoreWallets = limit && numberOfSupportedWallets - limit > 0;
 
@@ -107,7 +108,7 @@ export function WalletList(props: PropTypes) {
     }
   };
 
-  const handleOpenNamespacesModal = (wallet: WalletInfoWithNamespaces) => {
+  const handleOpenNamespacesModal = (wallet: ExtendedModalWalletInfo) => {
     setNamespacesModalState({
       providerType: wallet.type,
       providerImage: wallet.image,
@@ -195,8 +196,27 @@ export function WalletList(props: PropTypes) {
             })
           : conciseAddress;
 
+        console.log({ conciseAddress });
+
         const onClick = async () => {
-          if (wallet.state === WalletState.DISCONNECTED) {
+          const detachedInstances = wallet.properties?.find(
+            (item) => item.name === 'detached'
+          );
+          const hubCondition =
+            detachedInstances && wallet.state !== 'connected';
+
+          console.log({
+            wallet,
+            hubCondition,
+            address,
+            connectedWallets,
+            walletType: wallet.type,
+            chain,
+          });
+
+          if (hubCondition) {
+            handleOpenNamespacesModal(wallet);
+          } else if (wallet.state === WalletState.DISCONNECTED) {
             if (!!wallet.namespaces) {
               handleOpenNamespacesModal(wallet);
             } else {
@@ -243,7 +263,10 @@ export function WalletList(props: PropTypes) {
               onConfirm={(namespaces) => {
                 void handleClick(
                   namespacesModalState?.providerType as string,
-                  namespaces
+                  namespaces.map((ns) => ({
+                    namespace: ns,
+                    network: undefined,
+                  }))
                 );
                 setNamespacesModalState(null);
               }}

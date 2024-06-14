@@ -4,7 +4,7 @@ import type {
   QueueDef,
   QueueStorage,
 } from '@rango-dev/queue-manager-core';
-import type { ConnectResult } from '@rango-dev/wallets-core';
+import type { ConnectResult } from '@rango-dev/wallets-core/legacy';
 import type {
   Meta,
   Network,
@@ -12,7 +12,6 @@ import type {
   WalletState,
   WalletType,
 } from '@rango-dev/wallets-shared';
-import type { Transaction } from 'rango-sdk';
 import type {
   APIErrorCode,
   EvmBlockchainMeta,
@@ -20,6 +19,7 @@ import type {
   PendingSwapStep,
   SignerFactory,
 } from 'rango-types';
+import type { Transaction } from 'rango-types/mainApi';
 
 export type RemoveNameField<T, U extends string> = {
   [Property in keyof T as Exclude<Property, U>]: T[Property];
@@ -71,15 +71,10 @@ export interface SwapQueueContext extends QueueContext {
   switchNetwork: (
     wallet: WalletType,
     network: Network
-  ) => Promise<ConnectResult | undefined> | undefined;
+  ) => Promise<ConnectResult | ConnectResult[] | undefined> | undefined;
   canSwitchNetworkTo: (type: WalletType, network: Network) => boolean;
-  connect: (
-    wallet: WalletType,
-    network: Network
-  ) => Promise<ConnectResult> | undefined;
   state: (type: WalletType) => WalletState;
   isMobileWallet: (type: WalletType) => boolean;
-
   // Dynamically will be added to context.
   claimedBy?: string;
   resetClaimedBy?: () => void;

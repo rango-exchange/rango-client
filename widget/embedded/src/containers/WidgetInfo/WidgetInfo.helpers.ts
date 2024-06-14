@@ -1,7 +1,7 @@
 import type { Meta, RetryQuote } from '../../store/quote';
 import type { FindToken } from '../../store/slices/data';
 import type { Manager } from '@rango-dev/queue-manager-core';
-import type { PendingSwap } from 'rango-types/lib';
+import type { PendingSwap } from 'rango-types';
 
 import {
   cancelSwap,
