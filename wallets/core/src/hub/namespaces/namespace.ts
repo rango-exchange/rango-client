@@ -100,7 +100,7 @@ class Namespace<T extends Actions<T>> {
       ? action.bind(null, options.context)
       : action.bind(null, this.#context() as C);
 
-    const nextAfterActions = this.#beforeActions.get(name) || [];
+    const nextAfterActions = this.#afterActions.get(name) || [];
     nextAfterActions.push(actionWithContext);
 
     this.#afterActions.set(name, nextAfterActions);

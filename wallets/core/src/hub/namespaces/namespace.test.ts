@@ -43,9 +43,11 @@ describe('check NamespaceBuilder works as expected', () => {
     expect(count).toBe(1);
   });
 
-  test('after and before should be called before target action', () => {
-    const before = vi.fn();
-    const after = vi.fn();
+  test('should be called before/after target action correctly even with multiple hook assigned to an action name', () => {
+    const beforeAction = vi.fn();
+    const anotherBeforeAction = vi.fn();
+    const afterAction = vi.fn();
+    const anotherAfterAction = vi.fn();
     const connectAction = vi.fn();
     const disconnectAction = vi.fn();
     const builder = new NamespaceBuilder<{
@@ -58,18 +60,26 @@ describe('check NamespaceBuilder works as expected', () => {
 
     blockchain.connect();
     expect(connectAction).toBeCalledTimes(1);
-    expect(before).toBeCalledTimes(0);
-    expect(after).toBeCalledTimes(0);
+    expect(beforeAction).toBeCalledTimes(0);
+    expect(anotherBeforeAction).toBeCalledTimes(0);
+    expect(afterAction).toBeCalledTimes(0);
+    expect(anotherAfterAction).toBeCalledTimes(0);
 
-    blockchain.before('connect', before);
+    blockchain.before('connect', beforeAction);
+    blockchain.before('connect', anotherBeforeAction);
     blockchain.connect();
     expect(connectAction).toBeCalledTimes(2);
-    expect(before).toBeCalledTimes(1);
-    expect(after).toBeCalledTimes(0);
+    expect(beforeAction).toBeCalledTimes(1);
+    expect(anotherBeforeAction).toBeCalledTimes(1);
+    expect(afterAction).toBeCalledTimes(0);
+    expect(anotherAfterAction).toBeCalledTimes(0);
 
-    blockchain.after('connect', after);
+    blockchain.after('connect', afterAction);
+    blockchain.after('connect', anotherAfterAction);
     blockchain.connect();
-    expect(before).toBeCalledTimes(2);
-    expect(after).toBeCalledTimes(1);
+    expect(beforeAction).toBeCalledTimes(2);
+    expect(anotherBeforeAction).toBeCalledTimes(2);
+    expect(afterAction).toBeCalledTimes(1);
+    expect(anotherAfterAction).toBeCalledTimes(1);
   });
 });
