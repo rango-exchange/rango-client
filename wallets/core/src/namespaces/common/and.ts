@@ -15,6 +15,7 @@ export function connectAndUpdateStateForSingleNetwork() {
 
       const [, setState] = context.state();
       setState('accounts', accounts);
+      setState('connected', true);
       return accounts;
     },
   ] as const;
@@ -33,6 +34,7 @@ export function connectAndUpdateStateForMultiNetworks() {
       const [, setState] = context.state();
       setState('accounts', accounts.accounts);
       setState('network', accounts.network);
+      setState('connected', true);
       return accounts;
     },
   ] as const;

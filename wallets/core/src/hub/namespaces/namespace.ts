@@ -129,10 +129,8 @@ class Namespace<T extends Actions<T>> {
         `Couldn't find "${name.toString()}" action. Are you sure you've added the action?`
       );
     }
-    console.log(`run [${name}]`, this.#beforeActions.size);
     const beforeActions = this.#beforeActions.get(name);
     if (beforeActions) {
-      console.log(`called`, beforeActions);
       beforeActions.forEach((beforeAction) => beforeAction());
     }
 
@@ -149,7 +147,11 @@ class Namespace<T extends Actions<T>> {
       if (andAction) {
         const nextActionWithContext = andAction.bind(null, context);
         if (isActionAsync) {
-          return result.then(nextActionWithContext).finally(afterActions);
+          return result.then(nextActionWithContext).finally(() => {
+            if (afterActions) {
+              afterActions.forEach((beforeAction) => beforeAction());
+            }
+          });
         }
 
         result = nextActionWithContext(result);

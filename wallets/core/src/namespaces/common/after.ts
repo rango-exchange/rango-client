@@ -6,7 +6,6 @@ function intoConnectionFinished() {
     (context: Context) => {
       const [, setState] = context.state();
       setState('connecting', false);
-      setState('connected', true);
     },
   ] as const;
 }
