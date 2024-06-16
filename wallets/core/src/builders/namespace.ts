@@ -4,7 +4,6 @@ import type {
   ActionsMap,
   AndUseActions,
   Context,
-  Subscriber,
 } from '../hub/namespaces/mod.js';
 import type { NamespaceConfig } from '../hub/store/mod.js';
 import type {
@@ -20,7 +19,6 @@ import { Namespace } from '../hub/mod.js';
  */
 export const allowedMethods = [
   'init',
-  'destroy',
   'state',
   'after',
   'before',
@@ -31,7 +29,6 @@ export class NamespaceBuilder<T extends Actions<T>> {
   #id: string;
   #providerId: string;
   #actions: ActionsMap<T> = new Map();
-  #subscribers: Set<Subscriber> = new Set();
   #andUseList: AndUseActions<T> = new Map();
   #configs: NamespaceConfig;
 
@@ -132,16 +129,6 @@ export class NamespaceBuilder<T extends Actions<T>> {
 
     return this;
   }
-
-  /**
-   * Subscribers are special actions that will be run on init phase.
-   * Each subscriber should have its own cleanup function as well which will be called when a namespace is destroying.
-   */
-  public subscriber(cb: Subscriber) {
-    this.#subscribers.add(cb);
-    return this;
-  }
-
   /**
    * By calling build, an instance of Namespace will be built.
    *
@@ -167,7 +154,6 @@ export class NamespaceBuilder<T extends Actions<T>> {
     const namespace = new Namespace<T>(this.#id, this.#providerId, {
       configs,
       actions: this.#actions,
-      subscribers: this.#subscribers,
       andUse: this.#andUseList,
     });
 

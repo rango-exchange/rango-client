@@ -1,6 +1,8 @@
 import type { EvmActions, ProviderApi } from './types.js';
 import type { Context, Subscriber } from '../../hub/namespaces/mod.js';
+import type { SubscriberCleanUp } from '../../hub/namespaces/types.js';
 import type { CaipAccount, FunctionWithContext } from '../common/types.js';
+import type { EIP1193EventMap } from 'viem';
 
 import { AccountId } from 'caip';
 
@@ -26,7 +28,6 @@ export function connect(
       }
 
       if (chain) {
-        // TODO: Check failed scenario to not stuck in a loop
         await switchOrAddNetwork(evmInstance, chain);
       }
 
@@ -55,35 +56,45 @@ export function connect(
 
 export function changeAccountSubscriber(
   instance: () => ProviderApi
-): Subscriber {
-  return (context) => {
-    const evmInstance = instance();
+): [Subscriber, SubscriberCleanUp] {
+  const evmInstance = instance();
+  let eventCallback: EIP1193EventMap['accountsChanged'];
 
-    if (!evmInstance) {
-      throw new Error(
-        'Are your wallet injected correctly and is evm compatible?'
+  return [
+    (context) => {
+      if (!evmInstance) {
+        throw new Error(
+          'Trying to subscribe to your EVM wallet, but seems its instance is not available.'
+        );
+      }
+
+      const [, setState] = context.state();
+
+      eventCallback = (accounts) => {
+        const formatAccounts = accounts.map((account) =>
+          AccountId.format({
+            address: account,
+            chainId: {
+              namespace: CAIP_NAMESPACE,
+              reference: CAIP_ETHEREUM_CHAIN_ID,
+            },
+          })
+        );
+
+        setState('accounts', formatAccounts);
+        console.log('[evm] Accounts changed:', accounts, { context });
+      };
+      evmInstance.on('accountsChanged', eventCallback);
+    },
+    () => {
+      if (eventCallback && evmInstance) {
+        evmInstance.removeListener('accountsChanged', eventCallback);
+      }
+      console.log(
+        '[evm] accountsChanged cleaned up.',
+        !!eventCallback,
+        !!evmInstance
       );
-    }
-
-    const [, setState] = context.state();
-
-    evmInstance.on('accountsChanged', (accounts) => {
-      const formatAccounts = accounts.map((account) =>
-        AccountId.format({
-          address: account,
-          chainId: {
-            namespace: CAIP_NAMESPACE,
-            reference: CAIP_ETHEREUM_CHAIN_ID,
-          },
-        })
-      );
-
-      setState('accounts', formatAccounts);
-      console.log('[evm] Accounts changed:', accounts, { context });
-    });
-
-    return () => {
-      // TODO: Write clean up
-    };
-  };
+    },
+  ];
 }

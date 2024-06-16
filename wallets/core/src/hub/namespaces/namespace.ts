@@ -6,7 +6,6 @@ import type {
   GetState,
   SetState,
   State,
-  Subscriber,
 } from './types.js';
 import type {
   AndFunction,
@@ -17,11 +16,6 @@ import type { NamespaceConfig, Store } from '../store/mod.js';
 
 import { generateStoreId, isAsync } from '../helpers.js';
 
-/*
- * TODO: Currently, Each hook (`and`, `after`, ...) only accepts one callback.
- * Which means we only can have one `and` hook for `connect` as an example.
- * That would be great to let set more than one cb for any hook.
- */
 class Namespace<T extends Actions<T>> {
   public readonly namespaceId: string;
   public readonly providerId: string;
@@ -29,10 +23,8 @@ class Namespace<T extends Actions<T>> {
   #actions: ActionsMap<T>;
   #andActions: AndUseActions<T> = new Map();
   // `context` for these two can be Namespace context or Provider context
-  #beforeActions = new Map<keyof T, AnyFunction>();
-  #afterActions = new Map<keyof T, AnyFunction>();
-  #subscribers: Set<Subscriber>;
-  #subscriberCleanUps: Set<AnyFunction> = new Set();
+  #beforeActions = new Map<keyof T, AnyFunction[]>();
+  #afterActions = new Map<keyof T, AnyFunction[]>();
   #initiated = false;
   #store: Store | undefined;
   // Namespace doesn't has any configs now, but we will need the feature in future
@@ -46,18 +38,16 @@ class Namespace<T extends Actions<T>> {
     options: {
       configs: NamespaceConfig;
       actions: ActionsMap<T>;
-      subscribers: Set<Subscriber>;
       andUse: AndUseActions<T>;
     }
   ) {
-    const { configs, actions, subscribers, andUse } = options;
+    const { configs, actions, andUse } = options;
 
     this.namespaceId = id;
     this.providerId = providerId;
 
     this.#configs = configs;
     this.#actions = actions;
-    this.#subscribers = subscribers;
     this.#andActions = andUse;
   }
 
@@ -91,9 +81,10 @@ class Namespace<T extends Actions<T>> {
    * This hook helps us to run a sync function if action ran successfully.
    * For example, if we have a `connect` action, we can add function to be run after `connect` if it ran successfully.
    *
+   * TODO: for each action only one `and` can be set right now. that would be great to support more than one `and` action.
    */
-  public and<K extends keyof T>(name: K, cb: AndFunction<T, K>) {
-    this.#andActions.set(name, cb);
+  public and<K extends keyof T>(name: K, action: AndFunction<T, K>) {
+    this.#andActions.set(name, action);
     return this;
   }
 
@@ -102,77 +93,75 @@ class Namespace<T extends Actions<T>> {
    */
   public after<K extends keyof T, C = unknown>(
     name: K,
-    cb: FunctionWithContext<AnyFunction, C>,
+    action: FunctionWithContext<AnyFunction, C>,
     options?: { context?: C }
   ) {
-    const cbWithContext = options?.context
-      ? cb.bind(null, options.context)
-      : cb.bind(null, this.#context() as C);
+    const actionWithContext = options?.context
+      ? action.bind(null, options.context)
+      : action.bind(null, this.#context() as C);
 
-    this.#afterActions.set(name, cbWithContext);
+    const nextAfterActions = this.#beforeActions.get(name) || [];
+    nextAfterActions.push(actionWithContext);
+
+    this.#afterActions.set(name, nextAfterActions);
     return this;
   }
 
   public before<K extends keyof T, C = unknown>(
     name: K,
-    cb: FunctionWithContext<AnyFunction, C>,
+    action: FunctionWithContext<AnyFunction, C>,
     options?: { context?: C }
   ) {
-    const cbWithContext = options?.context
-      ? cb.bind(null, options.context)
-      : cb.bind(null, this.#context() as C);
-    this.#beforeActions.set(name, cbWithContext);
+    const actionWithContext = options?.context
+      ? action.bind(null, options.context)
+      : action.bind(null, this.#context() as C);
+
+    const nextBeforeActions = this.#beforeActions.get(name) || [];
+    this.#beforeActions.set(name, nextBeforeActions.concat(actionWithContext));
     return this;
   }
 
   public run<K extends keyof T>(name: K, ...args: any[]) {
-    const cb = this.#actions.get(name);
+    const action = this.#actions.get(name);
 
-    if (!cb) {
+    if (!action) {
       throw new Error(
         `Couldn't find "${name.toString()}" action. Are you sure you've added the action?`
       );
     }
-    const beforeAction = this.#beforeActions.get(name);
-    if (beforeAction) {
-      beforeAction();
+    console.log(`run [${name}]`, this.#beforeActions.size);
+    const beforeActions = this.#beforeActions.get(name);
+    if (beforeActions) {
+      console.log(`called`, beforeActions);
+      beforeActions.forEach((beforeAction) => beforeAction());
     }
 
     const context = this.#context();
     // First run the action (or cb) then tries to run what has been set using `.and`
-    const isCbAsync = isAsync(cb);
-    const cbWithContext = cb.bind(null, context);
+    const isActionAsync = isAsync(action);
+    const actionWithContext = action.bind(null, context);
 
     const runThen = () => {
-      let result = cbWithContext(...args);
+      let result = actionWithContext(...args);
       const andAction = this.#andActions.get(name);
-      const afterAction = this.#afterActions.get(name);
+      const afterActions = this.#afterActions.get(name);
 
       if (andAction) {
         const nextActionWithContext = andAction.bind(null, context);
-        if (isCbAsync) {
-          return result.then(nextActionWithContext).finally(afterAction);
+        if (isActionAsync) {
+          return result.then(nextActionWithContext).finally(afterActions);
         }
 
         result = nextActionWithContext(result);
       }
 
-      if (afterAction) {
-        afterAction();
+      if (afterActions) {
+        afterActions.forEach((beforeAction) => beforeAction());
       }
       return result;
     };
 
     return runThen();
-  }
-
-  public destroy() {
-    this.#subscriberCleanUps.forEach((subscriberCleanUp) => {
-      subscriberCleanUp();
-      this.#subscriberCleanUps.delete(subscriberCleanUp);
-    });
-
-    return this;
   }
 
   public init() {
@@ -191,12 +180,6 @@ class Namespace<T extends Actions<T>> {
         "[Namespace] this namespace doesn't have any `init` implemented."
       );
     }
-
-    // If there is any subscribes, we will call them and they can be cleanUp using destroy.
-    this.#subscribers.forEach((subscriber) => {
-      const cleanUp = subscriber(this.#context());
-      this.#subscriberCleanUps.add(cleanUp);
-    });
 
     this.#initiated = true;
     console.debug('[Namespace] initiated successfully.');

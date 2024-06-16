@@ -30,27 +30,6 @@ describe('check NamespaceBuilder works as expected', () => {
     }).toThrowError();
   });
 
-  test('subscribers should be added and removed correctly', () => {
-    const builder = new NamespaceBuilder<{
-      //
-    }>(NAMESPACE, PROVIDER_ID);
-    const cleanUpCb = vi.fn();
-    const subscriberCb = vi.fn(() => {
-      return cleanUpCb;
-    });
-    builder.subscriber(subscriberCb);
-    const blockchain = builder.build();
-
-    expect(subscriberCb).toBeCalledTimes(0);
-    expect(cleanUpCb).toBeCalledTimes(0);
-    blockchain.init();
-    expect(subscriberCb).toBeCalledTimes(1);
-    expect(cleanUpCb).toBeCalledTimes(0);
-    blockchain.destroy();
-    expect(subscriberCb).toBeCalledTimes(1);
-    expect(cleanUpCb).toBeCalledTimes(1);
-  });
-
   test('call .init only once.', () => {
     const builder = new NamespaceBuilder<any>(NAMESPACE, PROVIDER_ID);
     let count = 0;

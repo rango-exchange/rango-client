@@ -17,6 +17,9 @@ import { getSolanaAccounts } from '@rango-dev/wallets-shared';
 import { WALLET_ID } from '../constants.js';
 import { solanaPhantom } from '../legacy/helpers.js';
 
+const [changeAccountSubscriber, changeAccountCleanup] =
+  actions.changeAccountSubscriber(solanaPhantom);
+
 const solana = new NamespaceBuilder<SolanaActions>('solana', WALLET_ID)
   .action('init', () => {
     console.log('[phantom]init called from solana cb');
@@ -47,12 +50,19 @@ const solana = new NamespaceBuilder<SolanaActions>('solana', WALLET_ID)
     return formatAccounts;
   })
   .action(actions.recommended)
-  .subscriber(actions.changeAccountSubscriber(solanaPhantom))
   .andUse(and.recommended)
   .build();
 
-utils.apply('before', before.recommended, solana);
+utils.apply(
+  'before',
+  [...before.recommended, ['connect', changeAccountSubscriber]],
+  solana
+);
 
-utils.apply('after', after.recommended, solana);
+utils.apply(
+  'after',
+  [...after.recommended, ['disconnect', changeAccountCleanup]],
+  solana
+);
 
 export { solana };

@@ -17,4 +17,4 @@ export interface SolanaActions
  * If Phantom's interface is what Solana wallets are supporting, another option would be define that type here.
  *
  */
-export type ProviderApi = any;
+export type ProviderApi = Record<string, any>;
