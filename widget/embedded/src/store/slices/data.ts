@@ -324,33 +324,40 @@ export const createDataSlice: StateCreator<
     }
   },
   setSupportedTokens: (options) => {
-    const tokens = get()._tokensMapByBlockchainName;
+    const tokensMapByBlockchainName = get()._tokensMapByBlockchainName;
     let nextState: Record<TokenHash, Token> = {};
     if (Array.isArray(options.data.tokens)) {
       options.data.tokens.forEach((token) => {
         const tokenHash = createTokenHash(token);
-        const tokenFromMeta = tokens?.[token.blockchain]?.[tokenHash];
+        const tokenFromMeta =
+          tokensMapByBlockchainName?.[token.blockchain]?.[tokenHash];
         if (tokenFromMeta) {
           nextState[tokenHash] = tokenFromMeta;
         }
       });
+    } else if (!options.data.blockchains) {
+      nextState = Object.fromEntries(get()._tokensMapByTokenHash.entries());
     } else {
-      if (!options.data.blockchains) {
-        nextState = Object.fromEntries(get()._tokensMapByTokenHash.entries());
-      }
-      options.data.blockchains?.forEach((blockchain) => {
+      options.data.blockchains.forEach((blockchain) => {
         const value = !Array.isArray(options.data.tokens)
           ? options.data.tokens?.[blockchain]
           : undefined;
-        if ((!value || value?.isExcluded) && tokens?.[blockchain]) {
-          nextState = { ...nextState, ...tokens[blockchain] };
+        if (
+          (!value || value?.isExcluded) &&
+          tokensMapByBlockchainName?.[blockchain]
+        ) {
+          nextState = {
+            ...nextState,
+            ...tokensMapByBlockchainName[blockchain],
+          };
         }
         value?.tokens.forEach((token) => {
           const tokenHash = createTokenHash(token);
           if (value.isExcluded) {
             delete nextState?.[tokenHash];
           } else {
-            const tokenFromMeta = tokens?.[blockchain]?.[tokenHash];
+            const tokenFromMeta =
+              tokensMapByBlockchainName?.[blockchain]?.[tokenHash];
             if (tokenFromMeta) {
               nextState = {
                 ...nextState,
@@ -361,6 +368,7 @@ export const createDataSlice: StateCreator<
         });
       });
     }
+
     const propertyForUpdate: keyof DataSlice =
       options.type === 'source'
         ? '_supportedSourceTokens'
