@@ -21,7 +21,7 @@
   "dependencies": {
     "@rango-dev/logging-console": "^0.4.0",
     "@rango-dev/logging-subscriber": "^0.4.0",
-    "@rango-dev/widget-embedded": "^0.29.1-next.4",
+    "@rango-dev/widget-embedded": "^0.29.1-next.5",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.8.0"
