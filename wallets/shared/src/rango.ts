@@ -178,6 +178,7 @@ export const KEPLR_COMPATIBLE_WALLETS: string[] = [
   WalletTypes.KEPLR,
   WalletTypes.COSMOSTATION,
   WalletTypes.LEAP_COSMOS,
+  WalletTypes.XDEFI,
 ];
 
 export const DEFAULT_COSMOS_RPC_URL = 'https://cosmos-rpc.polkachu.com';
