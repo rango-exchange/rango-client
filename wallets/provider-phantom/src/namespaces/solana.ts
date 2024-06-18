@@ -51,6 +51,7 @@ const solana = new NamespaceBuilder<SolanaActions>('solana', WALLET_ID)
   })
   .action(actions.recommended)
   .andUse(and.recommended)
+  .orUse([['connect', changeAccountCleanup]])
   .build();
 
 utils.apply(

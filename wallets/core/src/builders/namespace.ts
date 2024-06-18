@@ -2,12 +2,13 @@ import type { ProxiedNamespace } from './types.js';
 import type {
   Actions,
   ActionsMap,
-  AndUseActions,
   Context,
+  SingleHookActions,
 } from '../hub/namespaces/mod.js';
 import type { NamespaceConfig } from '../hub/store/mod.js';
 import type {
   AndFunction,
+  AnyFunction,
   FunctionWithContext,
 } from '../namespaces/common/types.js';
 
@@ -29,7 +30,8 @@ export class NamespaceBuilder<T extends Actions<T>> {
   #id: string;
   #providerId: string;
   #actions: ActionsMap<T> = new Map();
-  #andUseList: AndUseActions<T> = new Map();
+  #andUseList: SingleHookActions<T> = new Map();
+  #orUseList: SingleHookActions<T> = new Map();
   #configs: NamespaceConfig;
 
   constructor(id: string, providerId: string) {
@@ -129,6 +131,17 @@ export class NamespaceBuilder<T extends Actions<T>> {
 
     return this;
   }
+
+  public orUse<K extends keyof T>(
+    list: (readonly [K, FunctionWithContext<AnyFunction, Context>])[]
+  ) {
+    list.forEach(([name, cb]) => {
+      this.#orUseList.set(name, cb);
+    });
+
+    return this;
+  }
+
   /**
    * By calling build, an instance of Namespace will be built.
    *
@@ -155,6 +168,7 @@ export class NamespaceBuilder<T extends Actions<T>> {
       configs,
       actions: this.#actions,
       andUse: this.#andUseList,
+      orUse: this.#orUseList,
     });
 
     const api = new Proxy(namespace, {

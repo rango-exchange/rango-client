@@ -1,10 +1,11 @@
 import type {
   Actions,
   ActionsMap,
-  AndUseActions,
   Context,
   GetState,
+  HookActions,
   SetState,
+  SingleHookActions,
   State,
 } from './types.js';
 import type {
@@ -16,15 +17,22 @@ import type { NamespaceConfig, Store } from '../store/mod.js';
 
 import { generateStoreId, isAsync } from '../helpers.js';
 
+import {
+  ACTION_NOT_FOUND_ERROR,
+  NO_STORE_FOUND_ERROR,
+  OR_ACTION_FAILED_ERROR,
+} from './errors.js';
+
 class Namespace<T extends Actions<T>> {
   public readonly namespaceId: string;
   public readonly providerId: string;
 
   #actions: ActionsMap<T>;
-  #andActions: AndUseActions<T> = new Map();
+  #andActions: SingleHookActions<T> = new Map();
+  #orActions: SingleHookActions<T> = new Map();
   // `context` for these two can be Namespace context or Provider context
-  #beforeActions = new Map<keyof T, AnyFunction[]>();
-  #afterActions = new Map<keyof T, AnyFunction[]>();
+  #beforeActions: HookActions<T> = new Map();
+  #afterActions: HookActions<T> = new Map();
   #initiated = false;
   #store: Store | undefined;
   // Namespace doesn't has any configs now, but we will need the feature in future
@@ -38,10 +46,11 @@ class Namespace<T extends Actions<T>> {
     options: {
       configs: NamespaceConfig;
       actions: ActionsMap<T>;
-      andUse: AndUseActions<T>;
+      andUse: SingleHookActions<T>;
+      orUse: SingleHookActions<T>;
     }
   ) {
-    const { configs, actions, andUse } = options;
+    const { configs, actions, andUse, orUse } = options;
 
     this.namespaceId = id;
     this.providerId = providerId;
@@ -49,6 +58,7 @@ class Namespace<T extends Actions<T>> {
     this.#configs = configs;
     this.#actions = actions;
     this.#andActions = andUse;
+    this.#orActions = orUse;
   }
 
   public state(): [GetState, SetState] {
@@ -121,49 +131,28 @@ class Namespace<T extends Actions<T>> {
     return this;
   }
 
-  public run<K extends keyof T>(name: K, ...args: any[]) {
+  public run<K extends keyof T>(
+    name: K,
+    ...args: any[]
+  ): unknown | Promise<unknown> {
     const action = this.#actions.get(name);
-
     if (!action) {
-      throw new Error(
-        `Couldn't find "${name.toString()}" action. Are you sure you've added the action?`
-      );
-    }
-    const beforeActions = this.#beforeActions.get(name);
-    if (beforeActions) {
-      beforeActions.forEach((beforeAction) => beforeAction());
+      throw new Error(ACTION_NOT_FOUND_ERROR(name.toString()));
     }
 
-    const context = this.#context();
-    // First run the action (or cb) then tries to run what has been set using `.and`
-    const isActionAsync = isAsync(action);
-    const actionWithContext = action.bind(null, context);
+    /*
+     * Action can be both, sync or async. To simplify the process we can not make `sync` mode to async
+     * Since every user's sync action will be an async function and affect what user expect,
+     * it makes all the actions async and it doesn't match with Namespace interface (e.g. EvmActions)
+     *
+     * To avoid this issue and also not duplicating code, I broke the process into smaller methods
+     * and two main methods to run actions: tryRunAsyncAction & tryRunAction.
+     */
+    const result = isAsync(action)
+      ? this.#tryRunAsyncAction(name, args)
+      : this.#tryRunAction(name, args);
 
-    const runThen = () => {
-      let result = actionWithContext(...args);
-      const andAction = this.#andActions.get(name);
-      const afterActions = this.#afterActions.get(name);
-
-      if (andAction) {
-        const nextActionWithContext = andAction.bind(null, context);
-        if (isActionAsync) {
-          return result.then(nextActionWithContext).finally(() => {
-            if (afterActions) {
-              afterActions.forEach((beforeAction) => beforeAction());
-            }
-          });
-        }
-
-        result = nextActionWithContext(result);
-      }
-
-      if (afterActions) {
-        afterActions.forEach((beforeAction) => beforeAction());
-      }
-      return result;
-    };
-
-    return runThen();
+    return result;
   }
 
   public init() {
@@ -199,10 +188,96 @@ class Namespace<T extends Actions<T>> {
     return this;
   }
 
-  #setupStore() {
+  #tryRunAction<K extends keyof T>(name: K, params: any[]): unknown {
+    this.#tryRunBeforeActions(name);
+
+    const action = this.#actions.get(name);
+    if (!action) {
+      throw new Error(ACTION_NOT_FOUND_ERROR(name.toString()));
+    }
+
+    const context = this.#context();
+
+    let result;
+    try {
+      result = action(context, ...params);
+      result = this.#tryRunAndAction(result, name);
+    } catch (e) {
+      this.#tryRunOrAction(e, name);
+    } finally {
+      this.#tryRunAfterActions(name);
+    }
+
+    return result;
+  }
+
+  async #tryRunAsyncAction<K extends keyof T>(
+    name: K,
+    params: any[]
+  ): Promise<unknown> {
+    this.#tryRunBeforeActions(name);
+
+    const action = this.#actions.get(name);
+    if (!action) {
+      throw new Error(ACTION_NOT_FOUND_ERROR(name.toString()));
+    }
+
+    const context = this.#context();
+    return await action(context, ...params)
+      .then((result: unknown) => this.#tryRunAndAction(result, name))
+      .catch((e: unknown) => this.#tryRunOrAction(e, name))
+      .finally(() => this.#tryRunAfterActions(name));
+  }
+
+  #tryRunAfterActions<K extends keyof T>(actionName: K) {
+    const afterActions = this.#afterActions.get(actionName);
+
+    if (afterActions) {
+      afterActions.forEach((afterAction) => afterAction());
+    }
+  }
+
+  #tryRunBeforeActions<K extends keyof T>(actionName: K): void {
+    const beforeActions = this.#beforeActions.get(actionName);
+    if (beforeActions) {
+      beforeActions.forEach((beforeAction) => beforeAction());
+    }
+  }
+
+  #tryRunAndAction<K extends keyof T>(result: unknown, actionName: K): unknown {
+    const andAction = this.#andActions.get(actionName);
+
+    if (andAction) {
+      const context = this.#context();
+      result = andAction(context, result);
+    }
+    return result;
+  }
+
+  #tryRunOrAction<K extends keyof T>(
+    actionError: unknown,
+    actionName: K
+  ): void {
+    const orAction = this.#orActions.get(actionName);
+
+    if (orAction) {
+      try {
+        const context = this.#context();
+        orAction(context);
+      } catch (orError) {
+        throw new Error(OR_ACTION_FAILED_ERROR(actionName.toString()), {
+          cause: actionError,
+        });
+      }
+    } else {
+      throw actionError;
+    }
+  }
+
+  #setupStore(): void {
     const store = this.#store;
     if (!store) {
-      throw new Error('For setup store, you should set `store` first.');
+      throw new Error(NO_STORE_FOUND_ERROR);
     }
     const id = this.#storeId();
     store.getState().namespaces.addNamespace(id, {

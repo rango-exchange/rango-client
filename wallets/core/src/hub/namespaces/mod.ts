@@ -2,7 +2,7 @@ export type {
   Subscriber,
   State,
   ActionsMap,
-  AndUseActions,
+  SingleHookActions,
   Context,
   Actions,
 } from './types.js';

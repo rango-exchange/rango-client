@@ -123,4 +123,58 @@ describe('check Provider works with Blockchain correctly', () => {
     expect(evmDisconnect).toBeCalledTimes(1);
     expect(afterDisconnect).toBeCalledTimes(1);
   });
+
+  test('check `and` and `or` actions to work correctly.', async () => {
+    const spyOnSuccessAndAction = vi.fn((_ctx, value) => value);
+    const spyOnThrowAndAction = vi.fn();
+    const spyOnThrowAndActionWithOr = vi.fn();
+
+    const spyOnSuccessOrAction = vi.fn();
+    const spyOnThrowOrAction = vi.fn();
+
+    const garbageProvider = new NamespaceBuilder<{
+      successfulAction: () => string;
+      throwErrorAction: () => void;
+      throwErrorActionWithOr: () => void;
+    }>('eip155', walletName)
+      .action('successfulAction', () => {
+        return 'yay!';
+      })
+      .action([
+        [
+          'throwErrorAction',
+          () => {
+            throw new Error('whatever');
+          },
+        ],
+        [
+          'throwErrorActionWithOr',
+          () => {
+            throw new Error('whatever');
+          },
+        ],
+      ])
+      .andUse([
+        ['successfulAction', spyOnSuccessAndAction],
+        ['throwErrorAction', spyOnThrowAndAction],
+        ['throwErrorActionWithOr', spyOnThrowAndActionWithOr],
+      ])
+      .orUse([
+        ['successfulAction', spyOnSuccessOrAction],
+        ['throwErrorActionWithOr', spyOnThrowOrAction],
+      ])
+      .build();
+
+    garbageProvider.successfulAction();
+    expect(spyOnSuccessAndAction).toBeCalledTimes(1);
+    expect(spyOnSuccessAndAction).toHaveLastReturnedWith('yay!');
+
+    expect(() => garbageProvider.throwErrorAction()).toThrowError();
+    expect(spyOnThrowAndAction).toBeCalledTimes(0);
+
+    garbageProvider.throwErrorActionWithOr();
+    expect(spyOnThrowAndActionWithOr).toBeCalledTimes(0);
+    expect(spyOnSuccessOrAction).toBeCalledTimes(0);
+    expect(spyOnThrowOrAction).toBeCalledTimes(1);
+  });
 });

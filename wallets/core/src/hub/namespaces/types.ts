@@ -23,6 +23,8 @@ export type ActionsMap<T> = Map<
 >;
 
 export type AndUseActions<T> = Map<keyof T, AnyFunction>;
+export type SingleHookActions<T> = Map<keyof T, AnyFunction>;
+export type HookActions<T> = Map<keyof T, AnyFunction[]>;
 export type Context = {
   state: () => [GetState, SetState];
 };

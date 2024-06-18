@@ -21,6 +21,7 @@ const evm = new NamespaceBuilder<EvmActions>('evm', WALLET_ID)
   })
   .action([...actions.recommended, actions.connect(evmPhantom)])
   .andUse(and.recommended)
+  .orUse([['connect', changeAccountCleanup]])
   .build();
 
 utils.apply(
