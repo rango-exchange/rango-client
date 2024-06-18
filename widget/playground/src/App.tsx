@@ -26,6 +26,9 @@ export function App() {
     features: {
       theme: 'hidden',
     },
+    _INTERNAL_SETTINGS_: {
+      autoUpdateSettings: true,
+    },
   };
 
   /*
