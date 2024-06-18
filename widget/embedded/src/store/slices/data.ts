@@ -1,7 +1,7 @@
 // We keep all the received data from server in this slice
 
 import type { ConfigSlice } from './config';
-import type { Balance, TokenHash } from '../../types';
+import type { Balance, BlockchainAndTokenConfig, TokenHash } from '../../types';
 import type { Asset, BlockchainMeta, SwapperMeta, Token } from 'rango-sdk';
 import type { StateCreator } from 'zustand';
 
@@ -29,6 +29,9 @@ export type FetchStatus = 'loading' | 'success' | 'failed';
 export interface DataSlice {
   _blockchainsMapByName: Map<string, BlockchainMeta>;
   _tokensMapByTokenHash: Map<TokenHash, Token>;
+  _tokensMapByBlockchainName: Record<string, Record<TokenHash, Token>>;
+  _supportedSourceTokens: Map<TokenHash, Token>;
+  _supportedDestinationTokens: Map<TokenHash, Token>;
   _popularTokens: Token[];
   _swappers: SwapperMeta[];
   fetchStatus: FetchStatus;
@@ -38,6 +41,13 @@ export interface DataSlice {
   isTokenPinned: (token: Token, type: 'source' | 'destination') => boolean;
   findToken: FindToken;
   fetch: () => Promise<void>;
+  setSupportedTokens: (options: {
+    type: 'source' | 'destination';
+    data: {
+      blockchains: BlockchainAndTokenConfig['blockchains'];
+      tokens: BlockchainAndTokenConfig['tokens'];
+    };
+  }) => void;
 }
 
 export const createDataSlice: StateCreator<
@@ -47,8 +57,11 @@ export const createDataSlice: StateCreator<
   DataSlice
 > = (set, get) => ({
   // State
-  _blockchainsMapByName: new Map<string, BlockchainMeta>(),
-  _tokensMapByTokenHash: new Map<TokenHash, Token>(),
+  _blockchainsMapByName: new Map(),
+  _tokensMapByTokenHash: new Map(),
+  _tokensMapByBlockchainName: {},
+  _supportedSourceTokens: new Map(),
+  _supportedDestinationTokens: new Map(),
   _popularTokens: [],
   _swappers: [],
   fetchStatus: 'loading',
@@ -83,65 +96,24 @@ export const createDataSlice: StateCreator<
     return list;
   },
   tokens: (options) => {
-    const tokensMapByHashToken = get()._tokensMapByTokenHash;
-    const tokensFromState = Array.from(tokensMapByHashToken?.values() || []);
+    const supportedSourceTokens = get()._supportedSourceTokens;
+    const supportedDestinationTokens = get()._supportedDestinationTokens;
+    const supportedTokens =
+      options?.type === 'source'
+        ? supportedSourceTokens
+        : supportedDestinationTokens;
+    const tokensFromState = Array.from(supportedTokens.values());
     const blockchainsMapByName = get()._blockchainsMapByName;
-
     if (!options || !options?.type) {
       return tokensFromState;
     }
 
-    const config = get().config;
-    const supportedTokensConfig =
-      (options.type === 'source' ? config.from?.tokens : config.to?.tokens) ??
-      {};
     const blockchains = get().blockchains({
       type: options.type,
     });
-    const includedTokens = new Set<string>();
-    const excludedTokens = new Set<string>();
-    if (supportedTokensConfig) {
-      const shouldIncludeOrExcludeTokens = (
-        tokenBlockchain: string,
-        requestedBlockchain?: string
-      ) => !requestedBlockchain || tokenBlockchain === requestedBlockchain;
-
-      if (Array.isArray(supportedTokensConfig)) {
-        supportedTokensConfig.forEach((token) => {
-          if (
-            shouldIncludeOrExcludeTokens(token.blockchain, options.blockchain)
-          ) {
-            includedTokens.add(createTokenHash(token));
-          }
-        });
-      } else {
-        for (const blockchain in supportedTokensConfig) {
-          if (shouldIncludeOrExcludeTokens(blockchain, options.blockchain)) {
-            const value = supportedTokensConfig[blockchain];
-            value.tokens.forEach((token) => {
-              if (value.isExcluded) {
-                excludedTokens.add(createTokenHash(token));
-              } else {
-                includedTokens.add(createTokenHash(token));
-              }
-            });
-          }
-        }
-      }
-    }
 
     const list = tokensFromState
       .filter((token) => {
-        const tokenExcluded =
-          (includedTokens.size > 0 &&
-            !includedTokens.has(createTokenHash(token))) ||
-          (excludedTokens.size > 0 &&
-            excludedTokens.has(createTokenHash(token)));
-
-        if (tokenExcluded) {
-          return false;
-        }
-
         // If a specific blockchain has passed, we only keep that blockchain's tokens.
         if (!!options.blockchain && token.blockchain !== options.blockchain) {
           return false;
@@ -294,17 +266,18 @@ export const createDataSlice: StateCreator<
       const response = await sdk().getAllMetadata({
         enableCentralizedSwappers,
       });
-
       set({ fetchStatus: 'success' });
       const blockchainsMapByName: Map<string, BlockchainMeta> = new Map<
         string,
         BlockchainMeta
       >();
 
-      const tokensMapByHashToken: Map<TokenHash, Token> = new Map<
+      const tokensMapByTokenHash: Map<TokenHash, Token> = new Map<
         TokenHash,
         Token
       >();
+      const tokensMapByBlockchainName: DataSlice['_tokensMapByBlockchainName'] =
+        {};
       const tokens: Token[] = [];
       const popularTokens: Token[] = response.popularTokens;
       const swappers: SwapperMeta[] = response.swappers;
@@ -332,12 +305,17 @@ export const createDataSlice: StateCreator<
 
       tokens.forEach((token) => {
         const tokenHash = createTokenHash(token);
-        tokensMapByHashToken.set(tokenHash, token);
+        if (!tokensMapByBlockchainName[token.blockchain]) {
+          tokensMapByBlockchainName[token.blockchain] = {};
+        }
+        tokensMapByTokenHash.set(tokenHash, token);
+        tokensMapByBlockchainName[token.blockchain][tokenHash] = token;
       });
 
       set({
         _blockchainsMapByName: blockchainsMapByName,
-        _tokensMapByTokenHash: tokensMapByHashToken,
+        _tokensMapByTokenHash: tokensMapByTokenHash,
+        _tokensMapByBlockchainName: tokensMapByBlockchainName,
         _popularTokens: popularTokens,
         _swappers: swappers,
       });
@@ -345,5 +323,51 @@ export const createDataSlice: StateCreator<
       set({ fetchStatus: 'failed' });
       throw error;
     }
+  },
+  setSupportedTokens: (options) => {
+    const tokens = get()._tokensMapByBlockchainName;
+    let nextState: Record<TokenHash, Token> = {};
+    if (Array.isArray(options.data.tokens)) {
+      options.data.tokens.forEach((token) => {
+        const tokenHash = createTokenHash(token);
+        const tokenFromMeta = tokens?.[token.blockchain]?.[tokenHash];
+        if (tokenFromMeta) {
+          nextState[tokenHash] = tokenFromMeta;
+        }
+      });
+    } else {
+      if (!options.data.blockchains) {
+        nextState = Object.fromEntries(get()._tokensMapByTokenHash.entries());
+      }
+      options.data.blockchains?.forEach((blockchain) => {
+        const value = !Array.isArray(options.data.tokens)
+          ? options.data.tokens?.[blockchain]
+          : undefined;
+        if ((!value || value?.isExcluded) && tokens?.[blockchain]) {
+          nextState = { ...nextState, ...tokens[blockchain] };
+        } else {
+          value?.tokens.forEach((token) => {
+            const tokenHash = createTokenHash(token);
+            if (value.isExcluded) {
+              delete nextState?.[tokenHash];
+            } else {
+              const tokenFromMeta = tokens?.[blockchain]?.[tokenHash];
+              if (tokenFromMeta) {
+                nextState = {
+                  ...nextState,
+                  [tokenHash]: tokenFromMeta,
+                };
+              }
+            }
+          });
+        }
+      });
+    }
+    const propertyForUpdate: keyof DataSlice =
+      options.type === 'source'
+        ? '_supportedSourceTokens'
+        : '_supportedDestinationTokens';
+
+    set({ [propertyForUpdate]: new Map(Object.entries(nextState)) });
   },
 });
