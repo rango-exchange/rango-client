@@ -148,6 +148,7 @@ For better user experience, wallet provider tries to connect to a wallet only wh
 | Metamask       | EVM                                                          | -                                                 | &check;              | -                                    |
 | OKX            | EVM,Solana,Cosmos                                            | Cosmos                                            | &check;              | https://www.okx.com/web3             |
 | Phantom        | Solana,Ethereum,Polygon                                      | Ethereum,Polygon                                  | &check;              | -                                    |
+| Rabby          | EVM                                                          | -                                                 | &check;              | https://rabby.io/                    |
 | Safe           | EVM                                                          | -                                                 | &check;              | https://safe.global/                 |
 | SafePal        | EVM,Solana,BTC,Tron,LTC,Doge,Aptos,TON                       | BTC,Tron,LTC,Doge,Aptos,TON                       | &cross;              | https://www.safepal.com/             |
 | Solflare Snap  | Solana                                                       | -                                                 | &cross;              | https://solflare.com/metamask        |
