@@ -241,6 +241,8 @@ export function createInitialAppStore() {
     _blockchainsMapByName: new Map<string, BlockchainMeta>(
       blockchains.map((meta) => [meta.name, meta])
     ),
+    _supportedSourceTokens: tokens,
+    _supportedDestinationTokens: tokens,
   };
 }
 

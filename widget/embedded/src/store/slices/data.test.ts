@@ -52,6 +52,12 @@ beforeEach(() => {
   customTokens.forEach((token) => {
     const tokenHash = createTokenHash(token);
     initData._tokensMapByTokenHash.set(tokenHash, token);
+    initData._supportedSourceTokens = Array.from(
+      initData._tokensMapByTokenHash.values()
+    );
+    initData._supportedDestinationTokens = Array.from(
+      initData._tokensMapByTokenHash.values()
+    );
   });
 
   const appStore = createAppStore();

@@ -30,8 +30,8 @@ export interface DataSlice {
   _blockchainsMapByName: Map<string, BlockchainMeta>;
   _tokensMapByTokenHash: Map<TokenHash, Token>;
   _tokensMapByBlockchainName: Record<string, Record<TokenHash, Token>>;
-  _supportedSourceTokens: Map<TokenHash, Token>;
-  _supportedDestinationTokens: Map<TokenHash, Token>;
+  _supportedSourceTokens: Token[];
+  _supportedDestinationTokens: Token[];
   _popularTokens: Token[];
   _swappers: SwapperMeta[];
   fetchStatus: FetchStatus;
@@ -60,8 +60,8 @@ export const createDataSlice: StateCreator<
   _blockchainsMapByName: new Map(),
   _tokensMapByTokenHash: new Map(),
   _tokensMapByBlockchainName: {},
-  _supportedSourceTokens: new Map(),
-  _supportedDestinationTokens: new Map(),
+  _supportedSourceTokens: [],
+  _supportedDestinationTokens: [],
   _popularTokens: [],
   _swappers: [],
   fetchStatus: 'loading',
@@ -98,11 +98,10 @@ export const createDataSlice: StateCreator<
   tokens: (options) => {
     const supportedSourceTokens = get()._supportedSourceTokens;
     const supportedDestinationTokens = get()._supportedDestinationTokens;
-    const supportedTokens =
+    const tokensFromState =
       options?.type === 'source'
         ? supportedSourceTokens
         : supportedDestinationTokens;
-    const tokensFromState = Array.from(supportedTokens.values());
     const blockchainsMapByName = get()._blockchainsMapByName;
     if (!options || !options?.type) {
       return tokensFromState;
@@ -345,22 +344,21 @@ export const createDataSlice: StateCreator<
           : undefined;
         if ((!value || value?.isExcluded) && tokens?.[blockchain]) {
           nextState = { ...nextState, ...tokens[blockchain] };
-        } else {
-          value?.tokens.forEach((token) => {
-            const tokenHash = createTokenHash(token);
-            if (value.isExcluded) {
-              delete nextState?.[tokenHash];
-            } else {
-              const tokenFromMeta = tokens?.[blockchain]?.[tokenHash];
-              if (tokenFromMeta) {
-                nextState = {
-                  ...nextState,
-                  [tokenHash]: tokenFromMeta,
-                };
-              }
-            }
-          });
         }
+        value?.tokens.forEach((token) => {
+          const tokenHash = createTokenHash(token);
+          if (value.isExcluded) {
+            delete nextState?.[tokenHash];
+          } else {
+            const tokenFromMeta = tokens?.[blockchain]?.[tokenHash];
+            if (tokenFromMeta) {
+              nextState = {
+                ...nextState,
+                [tokenHash]: tokenFromMeta,
+              };
+            }
+          }
+        });
       });
     }
     const propertyForUpdate: keyof DataSlice =
@@ -368,6 +366,6 @@ export const createDataSlice: StateCreator<
         ? '_supportedSourceTokens'
         : '_supportedDestinationTokens';
 
-    set({ [propertyForUpdate]: new Map(Object.entries(nextState)) });
+    set({ [propertyForUpdate]: Object.values(nextState) });
   },
 });
