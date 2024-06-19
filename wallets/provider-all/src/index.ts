@@ -28,6 +28,7 @@ import * as safepal from '@rango-dev/provider-safepal';
 import * as solflareSnap from '@rango-dev/provider-solflare-snap';
 import * as taho from '@rango-dev/provider-taho';
 import * as tokenpocket from '@rango-dev/provider-tokenpocket';
+import * as tomo from '@rango-dev/provider-tomo';
 import * as tronLink from '@rango-dev/provider-tron-link';
 import * as trustwallet from '@rango-dev/provider-trustwallet';
 import * as walletconnect2 from '@rango-dev/provider-walletconnect-2';
@@ -75,6 +76,7 @@ export const allProviders = (options?: Options) => {
     mathwallet,
     okx,
     tokenpocket,
+    tomo,
     halo,
     leapCosmos,
     frontier,
