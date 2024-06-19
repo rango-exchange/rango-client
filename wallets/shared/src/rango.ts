@@ -82,6 +82,7 @@ export enum WalletTypes {
   SOLFLARE_SNAP = 'solflare-snap',
   LEDGER = 'ledger',
   Rabby = 'rabby',
+  TOMO = 'tomo',
 }
 
 export enum Networks {
